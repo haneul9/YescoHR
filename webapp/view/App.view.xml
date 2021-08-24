@@ -1,0 +1,21 @@
+<mvc:View
+	controllerName="com.yescohr.ZUI5_YescoHR.controller.App"
+	displayBlock="true"
+	height="100%"
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:mvc="sap.ui.core.mvc">
+	<App
+		id="app"
+		busy="{appView>/busy}"
+		busyIndicatorDelay="{appView>/delay}">
+		<l:VerticalLayout class="sapUiContentPadding" width="100%">
+			<FlexBox>
+				<items>
+					<Text text="Top Menu" />
+				</items>
+			</FlexBox>
+			<App id="layout" />
+		</l:VerticalLayout>
+	</App>
+</mvc:View>

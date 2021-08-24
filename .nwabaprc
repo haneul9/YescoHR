@@ -1,0 +1,13 @@
+{
+    "base": "./dist",
+    "conn_usestrictssl" : false,
+    "conn_server": "http://yeshrsapdev.lsyesco.co.kr:8000/",
+    "conn_client" : "100",
+    "conn_user": "HR10",
+    "conn_password": "qwer1234",
+    "git_diff_commit": "",
+    "abap_package": "$TMP",
+    "abap_bsp": "ZUI5_YESCOHR",
+    "abap_bsp_text": "UI5 upload through VSCode App",
+    "abap_transport": "YHDK900010"
+}
