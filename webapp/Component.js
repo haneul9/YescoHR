@@ -9,7 +9,7 @@ sap.ui.define(
   function (UIComponent, Device, models, ListSelector, ErrorHandler) {
     'use strict';
 
-    return UIComponent.extend('com.yescohr.ZUI5_YescoHR.Component', {
+    return UIComponent.extend('sap.ui.yesco.Component', {
       metadata: {
         manifest: 'json',
       },

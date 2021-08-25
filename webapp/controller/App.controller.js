@@ -8,7 +8,7 @@ sap.ui.define(
   function (BaseController, JSONModel) {
     'use strict';
 
-    return BaseController.extend('com.yescohr.ZUI5_YescoHR.controller.App', {
+    return BaseController.extend('sap.ui.yesco.controller.App', {
       onInit: function () {
         // Moment, Lodash test
         const day = moment();

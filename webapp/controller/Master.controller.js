@@ -23,7 +23,7 @@ sap.ui.define(
   ) {
     'use strict';
 
-    return BaseController.extend('com.yescohr.ZUI5_YescoHR.controller.Master', {
+    return BaseController.extend('sap.ui.yesco.controller.Master', {
       formatter: formatter,
 
       /* =========================================================== */
@@ -161,7 +161,7 @@ sap.ui.define(
         if (!this.byId('viewSettingsDialog')) {
           Fragment.load({
             id: this.getView().getId(),
-            name: 'com.yescohr.ZUI5_YescoHR.view.ViewSettingsDialog',
+            name: 'sap.ui.yesco.view.ViewSettingsDialog',
             controller: this,
           }).then(
             function (oDialog) {

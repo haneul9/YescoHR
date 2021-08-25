@@ -1,7 +1,8 @@
 <mvc:View
-	controllerName="com.yescohr.ZUI5_YescoHR.controller.Master"
+	controllerName="sap.ui.yesco.controller.Master"
 	xmlns="sap.m"
 	xmlns:semantic="sap.f.semantic"
+	xmlns:yesco="sap.ui.yesco.control"
 	xmlns:mvc="sap.ui.core.mvc">
 
 	<semantic:SemanticPage
@@ -63,6 +64,7 @@
 									priority="NeverOverflow"/>
 							</layoutData>
 						</SearchField>
+						<yesco:Placeholder width="150px" />
 						<ToolbarSpacer/>
 						<Button
 							id="sortButton"

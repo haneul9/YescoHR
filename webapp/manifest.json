@@ -2,7 +2,7 @@
   "_version": "1.12.0",
 
   "sap.app": {
-    "id": "com.yescohr.ZUI5_YescoHR",
+    "id": "sap.ui.yesco",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "title": "{{appTitle}}",
@@ -49,7 +49,7 @@
 
   "sap.ui5": {
     "rootView": {
-      "viewName": "com.yescohr.ZUI5_YescoHR.view.App",
+      "viewName": "sap.ui.yesco.view.App",
       "type": "XML",
       "async": true,
       "id": "app"
@@ -73,7 +73,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "com.yescohr.ZUI5_YescoHR.i18n.i18n"
+          "bundleName": "sap.ui.yesco.i18n.i18n"
         }
       },
       "": {
@@ -82,11 +82,22 @@
       }
     },
 
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        },
+        {
+          "uri": "css/placeholder.css"
+        }
+      ]
+    },
+
     "routing": {
       "config": {
         "routerClass": "sap.f.routing.Router",
         "viewType": "XML",
-        "viewPath": "com.yescohr.ZUI5_YescoHR.view",
+        "viewPath": "sap.ui.yesco.view",
         "controlId": "layout",
         "controlAggregation": "pages",
         "bypassed": {

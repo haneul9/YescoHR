@@ -6,13 +6,13 @@
   function (BaseObject, Log) {
     'use strict';
 
-    return BaseObject.extend('com.yescohr.ZUI5_YescoHR.controller.ListSelector', {
+    return BaseObject.extend('sap.ui.yesco.controller.ListSelector', {
       /**
        * Provides a convenience API for selecting list items. All the functions will wait until the initial load of the a List passed to the instance by the setBoundMasterList
        * function.
        * @class
        * @public
-       * @alias com.yescohr.ZUI5_YescoHR.controller.ListSelector
+       * @alias sap.ui.yesco.controller.ListSelector
        */
 
       constructor: function () {

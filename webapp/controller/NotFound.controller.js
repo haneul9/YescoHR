@@ -5,7 +5,7 @@ sap.ui.define(
   function (BaseController) {
     'use strict';
 
-    return BaseController.extend('com.yescohr.ZUI5_YescoHR.controller.NotFound', {
+    return BaseController.extend('sap.ui.yesco.controller.NotFound', {
       onInit: function () {
         this.getRouter().getTarget('notFound').attachDisplay(this._onNotFoundDisplayed, this);
       },

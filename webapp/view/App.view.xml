@@ -1,5 +1,5 @@
 <mvc:View
-	controllerName="com.yescohr.ZUI5_YescoHR.controller.App"
+	controllerName="sap.ui.yesco.controller.App"
 	displayBlock="true"
 	height="100%"
 	xmlns="sap.m"

@@ -5,6 +5,6 @@ sap.ui.define(
   function (BaseController) {
     'use strict';
 
-    return BaseController.extend('com.yescohr.ZUI5_YescoHR.controller.DetailObjectNotFound', {});
+    return BaseController.extend('sap.ui.yesco.controller.DetailObjectNotFound', {});
   }
 );
