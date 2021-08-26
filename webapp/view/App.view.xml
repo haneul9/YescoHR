@@ -4,18 +4,23 @@
 	height="100%"
 	xmlns="sap.m"
 	xmlns:l="sap.ui.layout"
-	xmlns:mvc="sap.ui.core.mvc">
+	xmlns:mvc="sap.ui.core.mvc"
+>
 	<App
 		id="app"
 		busy="{appView>/busy}"
-		busyIndicatorDelay="{appView>/delay}">
-		<l:VerticalLayout class="sapUiContentPadding" width="100%">
+		busyIndicatorDelay="{appView>/delay}"
+	>
+		<l:VerticalLayout
+			class="sapUiContentPadding"
+			width="100%"
+		>
 			<FlexBox>
 				<items>
-					<Text text="Top Menu" />
+					<Text text="Top Menu"/>
 				</items>
 			</FlexBox>
-			<App id="layout" />
+			<App id="layout"/>
 		</l:VerticalLayout>
 	</App>
 </mvc:View>

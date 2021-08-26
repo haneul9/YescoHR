@@ -1,5 +1,8 @@
 node_modules
 dist
+.vscode
+
+OdataTest.http
 
 !common/.keep
 !control/.keep
