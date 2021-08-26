@@ -2,10 +2,11 @@ sap.ui.define(
   [
     './BaseController', //
     'sap/ui/model/json/JSONModel',
-    'ExtensionLibs/moment',
-    'ExtensionLibs/lodash',
+    'sap/ui/yesco/common/appUtils',
+    'sap/ui/yesco/extension/moment',
+    'sap/ui/yesco/extension/lodash',
   ],
-  function (BaseController, JSONModel) {
+  function (BaseController, JSONModel, AppUtils) {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.controller.App', {
@@ -17,6 +18,8 @@ sap.ui.define(
         console.time('lodash');
         console.log(_.join(['1', '2', '3'], '~'));
         console.timeEnd('lodash');
+
+        console.log(AppUtils.getDevice());
 
         const iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
 

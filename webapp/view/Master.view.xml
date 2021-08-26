@@ -64,7 +64,6 @@
 									priority="NeverOverflow"/>
 							</layoutData>
 						</SearchField>
-						<yesco:Placeholder width="150px" />
 						<ToolbarSpacer/>
 						<Button
 							id="sortButton"
@@ -96,6 +95,7 @@
 					</ObjectListItem>
 				</items>
 			</List>
+			<yesco:Placeholder id="testPlaceholder" width="100%" />
 		</semantic:content>
 	</semantic:SemanticPage>
 </mvc:View>
