@@ -1,11 +1,11 @@
 sap.ui.define(
   [
-    './BaseController', //
+    'sap/m/library',
     'sap/ui/model/json/JSONModel',
     '../model/formatter',
-    'sap/m/library',
+    './BaseController', //
   ],
-  function (BaseController, JSONModel, formatter, mobileLibrary) {
+  function (mobileLibrary, JSONModel, formatter, BaseController) {
     'use strict';
 
     // shortcut for sap.m.URLHelper
