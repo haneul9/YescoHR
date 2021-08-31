@@ -48,6 +48,50 @@ sap.ui.define(
         // apply content density mode to root view
         this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
       },
+
+      onHomePress: function () {
+        // var iconTabHeader = this.byId('iconTabHeader');
+        // iconTabHeader.setSelectedKey('invalidKey');
+
+        // var label = this.byId('labelId');
+        // label.setText('Home Screen');
+        this.getOwnerComponent().getRouter().navTo('master');
+      },
+
+      onSelectTab: function (event) {
+        // var label = this.byId('labelId');
+        var tab = event.getParameter('item');
+
+        // label.setText(tab.getText());
+      },
+
+      navigateTo: function (evt) {
+        // var label = this.byId('labelId');
+        // this.getOwnerComponent().getRouter().navTo(label);
+      },
+      navigateToHome: function (evt) {
+        this.getRouter().navTo('master');
+      },
+      navigateToCarousel: function (evt) {
+        this.getRouter().navTo('carousel');
+      },
+      navigateToPage1: function (evt) {
+        this.getRouter().navTo('page1');
+      },
+      navigateToPage2: function (evt) {
+        this.getRouter().navTo('page2');
+      },
+      navigateToUserForm: function (evt) {
+        this.getRouter().navTo('userform');
+      },
+      navigateToAppConfig: function (evt) {
+        this.getRouter().navTo('appconfig');
+      },
+      navigateToRouting: function (evt) {
+        this.getRouter().navTo('page1');
+      },
+
+      onUserNamePress: function () {},
     });
   }
 );
