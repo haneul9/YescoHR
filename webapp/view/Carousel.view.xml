@@ -1,0 +1,19 @@
+<View
+	xmlns="sap.m"
+	xmlns:layout="sap.ui.layout"
+	xmlns:core="sap.ui.core"
+	controllerName="sap.ui.yesco.controller.Carousel"
+>
+	<Carousel>
+		<pages>
+			<Image
+				src="https://picsum.photos/200/300"
+				alt="Example picture of speakers"
+			/>
+			<Image
+				src="https://picsum.photos/200/300"
+				alt="Example picture of USB flash drive"
+			/>
+		</pages>
+	</Carousel>
+</View>

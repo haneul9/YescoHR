@@ -3,24 +3,141 @@
 	displayBlock="true"
 	height="100%"
 	xmlns="sap.m"
-	xmlns:l="sap.ui.layout"
+	xmlns:tnt="sap.tnt"
 	xmlns:mvc="sap.ui.core.mvc"
 >
+	<tnt:ToolHeader>
+		<Button
+			icon="sap-icon://home"
+			type="Transparent"
+			press="navigateToHome"
+		>
+			<layoutData>
+				<OverflowToolbarLayoutData priority="NeverOverflow"/>
+			</layoutData>
+		</Button>
+		<ToolbarSpacer width="20px"/>
+		<Button
+			text="Home"
+			type="Transparent"
+			id="home"
+			press="navigateToHome"
+		>
+			<layoutData>
+				<OverflowToolbarLayoutData priority="Low"/>
+			</layoutData>
+		</Button>
+		<Button
+			text="Carousel"
+			type="Transparent"
+			press="navigateToCarousel"
+		>
+			<layoutData>
+				<OverflowToolbarLayoutData priority="Low"/>
+			</layoutData>
+		</Button>
+		<Button
+			text="JSON Data"
+			type="Transparent"
+			press="navigateToUserForm"
+		>
+			<layoutData>
+				<OverflowToolbarLayoutData priority="Low"/>
+			</layoutData>
+		</Button>
+		<Button
+			text="Resource Data"
+			type="Transparent"
+			press="navigateToAppConfig"
+		>
+			<layoutData>
+				<OverflowToolbarLayoutData priority="Low"/>
+			</layoutData>
+		</Button>
+		<Button
+			text="OData"
+			type="Transparent"
+		>
+			<layoutData>
+				<OverflowToolbarLayoutData priority="Low"/>
+			</layoutData>
+		</Button>
+		<Button
+			text="Routing"
+			type="Transparent"
+			press="navigateToRouting"
+		>
+			<layoutData>
+				<OverflowToolbarLayoutData priority="Low"/>
+			</layoutData>
+		</Button>
+		<Button
+			text="List"
+			type="Transparent"
+		>
+			<layoutData>
+				<OverflowToolbarLayoutData priority="Low"/>
+			</layoutData>
+		</Button>
+		<Button
+			text="Tools"
+			type="Transparent"
+		>
+			<layoutData>
+				<OverflowToolbarLayoutData priority="Low"/>
+			</layoutData>
+		</Button>
+		<tnt:ToolHeaderUtilitySeparator/>
+		<ToolbarSpacer>
+			<layoutData>
+				<OverflowToolbarLayoutData
+					priority="NeverOverflow"
+					minWidth="20px"
+				/>
+			</layoutData>
+		</ToolbarSpacer>
+		<Button
+			text="Alan Smith"
+			type="Transparent"
+			press="onUserNamePress"
+		>
+			<layoutData>
+				<OverflowToolbarLayoutData priority="NeverOverflow"/>
+			</layoutData>
+		</Button>
+		<Button
+			icon="sap-icon://home"
+			type="Transparent"
+			press="onHomePress"
+		>
+			<layoutData>
+				<OverflowToolbarLayoutData priority="NeverOverflow"/>
+			</layoutData>
+		</Button>
+		<IconTabHeader
+			id="iconTabHeader"
+			selectedKey="invalidKey"
+			select="onSelectTab"
+			showOverflowSelectList="true"
+			backgroundDesign="Transparent"
+		>
+			<layoutData>
+				<OverflowToolbarLayoutData
+					priority="NeverOverflow"
+					shrinkable="true"
+				/>
+			</layoutData>
+			<items>
+				<IconTabFilter text="Documentation"/>
+				<IconTabFilter text="Explored"/>
+				<IconTabFilter text="API Reference"/>
+				<IconTabFilter text="Demo Apps"/>
+			</items>
+		</IconTabHeader>
+	</tnt:ToolHeader>
 	<App
-		id="app"
+		id="layout"
 		busy="{appView>/busy}"
 		busyIndicatorDelay="{appView>/delay}"
-	>
-		<l:VerticalLayout
-			class="sapUiContentPadding"
-			width="100%"
-		>
-			<FlexBox>
-				<items>
-					<Text text="Top Menu"/>
-				</items>
-			</FlexBox>
-			<App id="layout"/>
-		</l:VerticalLayout>
-	</App>
+	/>
 </mvc:View>
