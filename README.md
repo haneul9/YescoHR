@@ -176,6 +176,9 @@ const fDecimal = 1.25;
 // prefix "b"
 const bIsNew = true;
 ```
+
+<div class="page"/>
+
 * **RegExp**
 ```javascript
 // prefix "r"
