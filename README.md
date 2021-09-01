@@ -101,12 +101,15 @@ date: "1 September 2021"
 >   * 상수를 표현하는 이름은 반드시 모두 대문자로 지정하되 '_' 사용하여 단어들을 구분한다.
 >   * 축약형 이름의 사용은 피한다.
 >   * Boolean 변수 이름은 부정적인(거짓인) 이름을 사용하지 않는다.
+
 * **String**
 ```javascript
+// prefix "s"
 const sId = 'approvalTable';
 ```
 * **Object**
 ```javascript
+// prefix "o"
 const oTable = sap.ui.getCore().byId('approvalTable');
 const oPayload = {
     name: 'Kim',
@@ -115,10 +118,12 @@ const oPayload = {
 ```
 * **jQuery Object**
 ```javascript
+// prefix "$"
 const $Table = $('#approvalTable');
 ```
 * **Int**
 ```javascript
+// prefix "i"
 const iCount = 0;
 ```
 
@@ -127,6 +132,7 @@ const iCount = 0;
 
 * **Map associative array**
 ```javascript
+// prefix "m"
 const mDatas = [
     {
         idx: 1,
@@ -142,6 +148,7 @@ const mDatas = [
 ```
 * **Array**
 ```javascript
+// prefix "a"
 const aMenus = [
     'first menu',
     'second menu',
@@ -150,23 +157,28 @@ const aMenus = [
 ```
 * **Date**
 ```javascript
+// prefix "d"
 const dToday = new Date();
 const dToday = moment();
 ```
 * **Float**
 ```javascript
+// prefix "f"
 const fDecimal = 1.25;
 ```
 * **Boolean**
 ```javascript
+// prefix "b"
 const bIsNew = true;
 ```
 * **RegExp**
 ```javascript
+// prefix "r"
 const rPattern = /\w+/;
 ```
 * **Function**
 ```javascript
+// prefix "fn"
 const fnSuccess = (res) => {
     // do something
     console.log(res);
@@ -174,6 +186,7 @@ const fnSuccess = (res) => {
 ```
 * **Variant types**
 ```javascript
+// prefix "v"
 let vDate;
 vDate = '2021-09-01';
 ...
