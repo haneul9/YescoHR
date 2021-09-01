@@ -1,22 +1,30 @@
-Yesco HR 개발 표준 정의서
+Yesco HR WEB개발 표준 정의서
 ========================
 
-# 1. 개요
+<br />
+
+## 1. 개요
     프로젝트의  개발 시 개발생산성 향상 및 운영의 효율화를 위해 반드시 준수되어야 하는 준수사항을 정의함
 
-    1. 제시된 표준은 철저히 준수한다.
-    2. 새로운 정의가 추가로 필요한 경우는 본 자료를 작성한 담당자와 협의하여 해당 내용을 정의하고, 본 표준서에 수록한 후 프로젝트팀 전체에 공지한다.
-    3. 모든 화면은 최대 응답속도 7초 이내를 목표로 Design 되어야 한다.
-    4. 표준을 준수하지 못할 경우에는 PM 및 인수책임자의 허가를 받아야 하며, 그럴 경우에도 해당 시스템 내에는 일정한 표준을 정의하여 적용시켜야 한다.(품질계획서 기준을 따른다)
-    5. 본 표준안은 최소한의 필수사항을 지키도록 유도하고 해서는 안되는 것들을 지적하는 내용이며, 개개인의 다양한 능력과 개념들로 본 표준을 확장시켜 시스템에 적용시키도록 한다.
+    * 제시된 표준은 철저히 준수한다.
+    * 새로운 정의가 추가로 필요한 경우는 본 자료를 작성한 담당자와 협의하여 해당 내용을 정의하고, 본 표준서에 수록한 후 프로젝트팀 전체에 공지한다.
+    * 모든 화면은 최대 응답속도 7초 이내를 목표로 Design 되어야 한다.
+    * 표준을 준수하지 못할 경우에는 PM 및 인수책임자의 허가를 받아야 하며, 그럴 경우에도 해당 시스템 내에는 일정한 표준을 정의하여 적용시켜야 한다.(품질계획서 기준을 따른다)
+    * 본 표준안은 최소한의 필수사항을 지키도록 유도하고 해서는 안되는 것들을 지적하는 내용이며, 개개인의 다양한 능력과 개념들로 본 표준을 확장시켜 시스템에 적용시키도록 한다.
 
-# 2. Coding Convention 
+<br />
+
+## 2. Coding Convention 
     아래의 Airbnb, SAPUI5 스타일을 준수한다.
-## 2.1 [Airbnb JavaScript 스타일 가이드](https://github.com/tipjs/javascript-style-guide)
-## 2.2 [SAPUI5 Coding Guidelines](https://blog.sap-press.com/sapui5-coding-guidelines)
+### 2.1 [Airbnb JavaScript 스타일 가이드](https://github.com/tipjs/javascript-style-guide)
+* <https://github.com/tipjs/javascript-style-guide>
+### 2.2 [SAPUI5 Coding Guidelines](https://blog.sap-press.com/sapui5-coding-guidelines)
+* <https://blog.sap-press.com/sapui5-coding-guidelines>
 
-# 3. 명명규칙
-## 3.1 폴더 구조
+<div class="page"/>
+
+## 3. 명명규칙
+### 3.1 폴더 구조
     /webapp <ROOT>
         /common <공통 Script>
         /control <Custom UI5 Object>
@@ -25,7 +33,10 @@ Yesco HR 개발 표준 정의서
         /fragment <SAPUI5 Fragment>
         /libs <External Library>
         /view <SAPUI5 View>
-## 3.2 파일
+
+<br />
+
+### 3.2 파일
     다음과 같은 파일 네이밍 규칙을 준수한다.
 
 * Controller [파스칼 표기법]
@@ -53,7 +64,10 @@ Yesco HR 개발 표준 정의서
 업무.css
 조합 예: medical.css
 ```
-## 3.3 변수
+
+<br />
+
+### 3.3 변수
     * 모든 이름은 영어로 작성한다.
     * 컬렉션의 이름은 반드시 복수형으로 사용한다.
     * 변수의 이름은 대소문자를 혼용할 수 있지만 반드시 소문자로 시작한다.
@@ -80,6 +94,9 @@ const $Table = $('#approvalTable');
 ```javascript
 const iCount = 0;
 ```
+
+<div class="page"/>
+
 * **Map associative array**
 ```javascript
 const mDatas = [
@@ -135,7 +152,9 @@ vDate = "2021-09-01";
 vDate = moment();
 ```
 
-# 4. 주석
+<div class="page"/>
+
+## 4. 주석
     * 프로그램의 이해를 도와 향후 유지보수가 용이하게 한다.
     * 전체적인 프로그램 설명은 프로그램 앞부분에 위치시킨다.
     * 각 Function 앞에 Function의 Parameter, Return Value의 의미와 Function의 간략한 설명을 기술한다.
