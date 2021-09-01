@@ -12,11 +12,11 @@ Yesco HR 개발 표준 정의서
 
 # 2. Coding Convention 
     아래의 Airbnb, SAPUI5 스타일을 준수한다.
-##2.1 [Airbnb JavaScript 스타일 가이드](https://github.com/tipjs/javascript-style-guide)
-##2.2 [SAPUI5 Coding Guidelines](https://blog.sap-press.com/sapui5-coding-guidelines)
+## 2.1 [Airbnb JavaScript 스타일 가이드](https://github.com/tipjs/javascript-style-guide)
+## 2.2 [SAPUI5 Coding Guidelines](https://blog.sap-press.com/sapui5-coding-guidelines)
 
 # 3. 명명규칙
-##3.1 폴더 구조
+## 3.1 폴더 구조
     /webapp <ROOT>
         /common <공통 Script>
         /control <Custom UI5 Object>
@@ -25,7 +25,7 @@ Yesco HR 개발 표준 정의서
         /fragment <SAPUI5 Fragment>
         /libs <External Library>
         /view <SAPUI5 View>
-##3.2 파일
+## 3.2 파일
     다음과 같은 파일 네이밍 규칙을 준수한다.
 
 * Controller [파스칼 표기법]
@@ -53,7 +53,7 @@ Yesco HR 개발 표준 정의서
 업무.css
 조합 예: medical.css
 ```
-##3.3 변수
+## 3.3 변수
     * 모든 이름은 영어로 작성한다.
     * 컬렉션의 이름은 반드시 복수형으로 사용한다.
     * 변수의 이름은 대소문자를 혼용할 수 있지만 반드시 소문자로 시작한다.
