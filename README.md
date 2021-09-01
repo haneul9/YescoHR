@@ -1,9 +1,26 @@
-Yesco HR WEB개발 표준 정의서
-========================
+# Yesco HR WEB개발 표준 정의서
 
 <br />
 
-## 1. 개요
+## 목차<hr/>
+
+  - [1. 개요](#1-개요)
+  - [2. Coding Convention](#2-coding-convention)
+    - [2.1 Airbnb JavaScript 스타일 가이드](#21-airbnb-javascript-스타일-가이드)
+    - [2.2 SAPUI5 Coding Guidelines](#22-sapui5-coding-guidelines)
+  - [3. 명명규칙](#3-명명규칙)
+    - [3.1 폴더 구조](#31-폴더-구조)
+    - [3.2 파일](#32-파일)
+    - [3.3 변수](#33-변수)
+  - [4. 주석](#4-주석)
+    - [4.1 JSDoc Guidelines](#41-jsdoc-guidelines)
+    - [4.2 상수](#42-상수)
+
+<br />
+
+<div class="page"/>
+
+## 1. 개요<hr/>
 >   프로젝트의  개발 시 개발생산성 향상 및 운영의 효율화를 위해 반드시 준수되어야 하는 준수사항을 정의함
 >   + 제시된 표준은 철저히 준수한다.
 >   + 새로운 정의가 추가로 필요한 경우는 본 자료를 작성한 담당자와 협의하여 해당 내용을 정의하고, 본 표준서에 수록한 후 프로젝트팀 전체에 공지한다.
@@ -13,16 +30,16 @@ Yesco HR WEB개발 표준 정의서
 
 <br />
 
-## 2. Coding Convention 
+## 2. Coding Convention<hr/>
 >   아래의 Airbnb, SAPUI5 스타일을 준수한다.
 ### 2.1 Airbnb JavaScript 스타일 가이드
 * <https://github.com/tipjs/javascript-style-guide>
 ### 2.2 SAPUI5 Coding Guidelines
 * <https://blog.sap-press.com/sapui5-coding-guidelines>
 
-<div class="page"/>
+<br />
 
-## 3. 명명규칙
+## 3. 명명규칙<hr/>
 ### 3.1 폴더 구조
     /webapp <ROOT>
         /common <공통 Script>
@@ -33,7 +50,7 @@ Yesco HR WEB개발 표준 정의서
         /libs <External Library>
         /view <SAPUI5 View>
 
-<br />
+<div class="page"/>
 
 ### 3.2 파일
 >    다음과 같은 파일 네이밍 규칙을 준수한다.
@@ -64,7 +81,7 @@ Yesco HR WEB개발 표준 정의서
 조합 예: medical.css
 ```
 
-<br />
+<div class="page"/>
 
 ### 3.3 변수
 >   * 모든 이름은 영어로 작성한다.
@@ -153,7 +170,7 @@ vDate = moment();
 
 <div class="page"/>
 
-## 4. 주석
+## 4. 주석<hr/>
 >   * 프로그램의 이해를 도와 향후 유지보수가 용이하게 한다.
 >   * 전체적인 프로그램 설명은 프로그램 앞부분에 위치시킨다.
 >   * 각 Function 앞에 Function의 Parameter, Return Value의 의미와 Function의 간략한 설명을 기술한다.
@@ -161,6 +178,8 @@ vDate = moment();
 >   * JSDoc 표준을 준수한다.
 >   * JSDoc에 의해 처리될 주석은 /**으로 시작해 */으로 종결된다. 각 라인마다 으로 시작한다.
 >   * 사양서에 기술할 필요가 없는 주석은 자유롭게 기술한다.(/* */,//사용)
+
+<br />
 
 ### 4.1 JSDoc Guidelines
 * <https://sapui5.hana.ondemand.com/sdk/#/topic/eeaa5de14e5f4fc1ac796bc0c1ada5fb>
@@ -183,6 +202,7 @@ function computeAverage(a, b) {
     return (a + b) / 2;
 }
 ```
+
 ### 4.2 상수
 ```javascript
 /**
