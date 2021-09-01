@@ -75,13 +75,13 @@ Yesco HR WEB개발 표준 정의서
 >   * Boolean 변수 이름은 부정적인(거짓인) 이름을 사용하지 않는다.
 * **String**
 ```javascript
-const sId = "approvalTable";
+const sId = 'approvalTable';
 ```
 * **Object**
 ```javascript
-const oTable = sap.ui.getCore().byId("approvalTable");
+const oTable = sap.ui.getCore().byId('approvalTable');
 const oPayload = {
-    name: "Kim",
+    name: 'Kim',
     age: 31,
 };
 ```
@@ -101,22 +101,22 @@ const iCount = 0;
 const mDatas = [
     {
         idx: 1,
-        title: "First subject",
-        content: "It's First content",
+        title: 'First subject',
+        content: 'It\'s First content',
     },
     {
         idx: 2,
-        title: "Second subject",
-        content: "It's Second content",
+        title: 'Second subject',
+        content: 'It\'s Second content',
     },
 ];
 ```
 * **Array**
 ```javascript
 const aMenus = [
-    "first menu",
-    "second menu",
-    "third menu",
+    'first menu',
+    'second menu',
+    'third menu',
 ];
 ```
 * **Date**
@@ -146,7 +146,7 @@ const fnSuccess = (res) => {
 * **Variant types**
 ```javascript
 let vDate;
-vDate = "2021-09-01";
+vDate = '2021-09-01';
 ...
 vDate = moment();
 ```
@@ -193,5 +193,5 @@ const PER_PAGE_COUNT = 10;
 /**
  * @constant {string} blue 색상코드
  */
-const YESCO_BLUE = "#0072c6";
+const YESCO_BLUE = '#0072c6';
 ```
