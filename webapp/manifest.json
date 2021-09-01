@@ -52,7 +52,7 @@
       "viewName": "sap.ui.yesco.view.App",
       "type": "XML",
       "async": true,
-      "id": "app"
+      "id": "layout"
     },
 
     "dependencies": {
@@ -116,6 +116,11 @@
           "pattern": "Products/{objectId}",
           "name": "object",
           "target": ["master", "object"]
+        },
+        {
+          "pattern": "carousel",
+          "name": "carousel",
+          "target": ["carousel"]
         }
       ],
 
@@ -131,6 +136,12 @@
           "viewLevel": 1,
           "controlAggregation": "midColumnPages"
         },
+        "carousel": {
+					"viewType": "XML",
+					"viewName": "Carousel",
+          "clearControlAggregation": true,
+					"viewLevel": 2
+				},
         "detailObjectNotFound": {
           "viewName": "DetailObjectNotFound",
           "viewId": "detailObjectNotFound",
