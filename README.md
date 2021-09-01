@@ -163,7 +163,8 @@ vDate = moment();
     * JSDoc에 의해 처리될 주석은 /**으로 시작해 */으로 종결된다. 각 라인마다 으로 시작한다.
     * 사양서에 기술할 필요가 없는 주석은 자유롭게 기술한다.(/* */,//사용)
 
-* [JSDoc Guidelines](https://sapui5.hana.ondemand.com/sdk/#/topic/eeaa5de14e5f4fc1ac796bc0c1ada5fb)
+* JSDoc Guidelines
+    [https://sapui5.hana.ondemand.com/sdk/#/topic/eeaa5de14e5f4fc1ac796bc0c1ada5fb](https://sapui5.hana.ondemand.com/sdk/#/topic/eeaa5de14e5f4fc1ac796bc0c1ada5fb)
 
 ```javascript
 /**
