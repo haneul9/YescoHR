@@ -102,6 +102,11 @@ date: "1 September 2021"
 >   * 축약형 이름의 사용은 피한다.
 >   * Boolean 변수 이름은 부정적인(거짓인) 이름을 사용하지 않는다.
 
+* **Constant**
+```javascript
+// 대문자와 '_' 조합
+const HTTP_REQUEST_SUCCESS = 'HTTP_REQUEST_SUCCESS';
+```
 * **String**
 ```javascript
 // prefix "s"
