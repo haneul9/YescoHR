@@ -12,8 +12,10 @@ Yesco HR 개발 표준 정의서
 
 # 2. Coding Convention 
     아래의 Airbnb, SAPUI5 스타일을 준수한다.
-## 2.1 [Airbnb JavaScript 스타일 가이드](https://github.com/tipjs/javascript-style-guide)
-## 2.2 [SAPUI5 Coding Guidelines](https://blog.sap-press.com/sapui5-coding-guidelines)
+## 2.1 [Airbnb JavaScript 스타일 가이드]
+    https://github.com/tipjs/javascript-style-guide
+## 2.2 [SAPUI5 Coding Guidelines]
+    https://blog.sap-press.com/sapui5-coding-guidelines
 
 # 3. 명명규칙
 ## 3.1 폴더 구조
@@ -144,7 +146,8 @@ vDate = moment();
     * JSDoc에 의해 처리될 주석은 /**으로 시작해 */으로 종결된다. 각 라인마다 으로 시작한다.
     * 사양서에 기술할 필요가 없는 주석은 자유롭게 기술한다.(/* */,//사용)
 
-* [JSDoc Guidelines](https://sapui5.hana.ondemand.com/sdk/#/topic/eeaa5de14e5f4fc1ac796bc0c1ada5fb)
+* [JSDoc Guidelines]
+    https://sapui5.hana.ondemand.com/sdk/#/topic/eeaa5de14e5f4fc1ac796bc0c1ada5fb
 
 ```javascript
 /**
