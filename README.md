@@ -1,9 +1,15 @@
+---
+title: "YESCO-HR WEB개발표준정의서"
+author: "hhsung@lsitc.com"
+date: "1 September 2021"
+---
+
 # Yesco HR WEB개발 표준 정의서
 
-<br />
+<br /><br />
 
-## 목차<hr/>
-
+## 목차
+---
   - [1. 개요](#1-개요)
   - [2. Coding Convention](#2-coding-convention)
     - [2.1 Airbnb JavaScript 스타일 가이드](#21-airbnb-javascript-스타일-가이드)
@@ -20,17 +26,18 @@
 
 <div class="page"/>
 
-## 1. 개요<hr/>
+## 1. 개요
+---
 >   프로젝트의  개발 시 개발생산성 향상 및 운영의 효율화를 위해 반드시 준수되어야 하는 준수사항을 정의함
 >   + 제시된 표준은 철저히 준수한다.
 >   + 새로운 정의가 추가로 필요한 경우는 본 자료를 작성한 담당자와 협의하여 해당 내용을 정의하고, 본 표준서에 수록한 후 프로젝트팀 전체에 공지한다.
->   + 모든 화면은 최대 응답속도 7초 이내를 목표로 Design 되어야 한다.
 >   + 표준을 준수하지 못할 경우에는 PM 및 인수책임자의 허가를 받아야 하며, 그럴 경우에도 해당 시스템 내에는 일정한 표준을 정의하여 적용시켜야 한다.(품질계획서 기준을 따른다)
 >   + 본 표준안은 최소한의 필수사항을 지키도록 유도하고 해서는 안되는 것들을 지적하는 내용이며, 개개인의 다양한 능력과 개념들로 본 표준을 확장시켜 시스템에 적용시키도록 한다.
 
 <br />
 
-## 2. Coding Convention<hr/>
+## 2. Coding Convention
+---
 >   아래의 Airbnb, SAPUI5 스타일을 준수한다.
 ### 2.1 Airbnb JavaScript 스타일 가이드
 * <https://github.com/tipjs/javascript-style-guide>
@@ -39,7 +46,8 @@
 
 <br />
 
-## 3. 명명규칙<hr/>
+## 3. 명명규칙
+---
 ### 3.1 폴더 구조
     /webapp <ROOT>
         /common <공통 Script>
@@ -50,6 +58,7 @@
         /libs <External Library>
         /view <SAPUI5 View>
 
+**[⬆ back to top](#목차)**
 <div class="page"/>
 
 ### 3.2 파일
@@ -81,6 +90,7 @@
 조합 예: medical.css
 ```
 
+**[⬆ back to top](#목차)**
 <div class="page"/>
 
 ### 3.3 변수
@@ -92,12 +102,19 @@
 >   * 축약형 이름의 사용은 피한다.
 >   * Boolean 변수 이름은 부정적인(거짓인) 이름을 사용하지 않는다.
 
+* **Constant**
+```javascript
+// 대문자와 '_' 조합
+const HTTP_REQUEST_SUCCESS = 'HTTP_REQUEST_SUCCESS';
+```
 * **String**
 ```javascript
+// prefix "s"
 const sId = 'approvalTable';
 ```
 * **Object**
 ```javascript
+// prefix "o"
 const oTable = sap.ui.getCore().byId('approvalTable');
 const oPayload = {
     name: 'Kim',
@@ -106,17 +123,21 @@ const oPayload = {
 ```
 * **jQuery Object**
 ```javascript
+// prefix "$"
 const $Table = $('#approvalTable');
 ```
 * **Int**
 ```javascript
+// prefix "i"
 const iCount = 0;
 ```
 
+**[⬆ back to top](#목차)**
 <div class="page"/>
 
 * **Map associative array**
 ```javascript
+// prefix "m"
 const mDatas = [
     {
         idx: 1,
@@ -132,6 +153,7 @@ const mDatas = [
 ```
 * **Array**
 ```javascript
+// prefix "a"
 const aMenus = [
     'first menu',
     'second menu',
@@ -140,23 +162,31 @@ const aMenus = [
 ```
 * **Date**
 ```javascript
+// prefix "d"
 const dToday = new Date();
 const dToday = moment();
 ```
 * **Float**
 ```javascript
+// prefix "f"
 const fDecimal = 1.25;
 ```
 * **Boolean**
 ```javascript
+// prefix "b"
 const bIsNew = true;
 ```
+
+<div class="page"/>
+
 * **RegExp**
 ```javascript
+// prefix "r"
 const rPattern = /\w+/;
 ```
 * **Function**
 ```javascript
+// prefix "fn"
 const fnSuccess = (res) => {
     // do something
     console.log(res);
@@ -164,15 +194,18 @@ const fnSuccess = (res) => {
 ```
 * **Variant types**
 ```javascript
+// prefix "v"
 let vDate;
 vDate = '2021-09-01';
 ...
 vDate = moment();
 ```
 
+**[⬆ back to top](#목차)**
 <div class="page"/>
 
-## 4. 주석<hr/>
+## 4. 주석
+---
 >   * 프로그램의 이해를 도와 향후 유지보수가 용이하게 한다.
 >   * 전체적인 프로그램 설명은 프로그램 앞부분에 위치시킨다.
 >   * 각 Function 앞에 Function의 Parameter, Return Value의 의미와 Function의 간략한 설명을 기술한다.
@@ -180,8 +213,6 @@ vDate = moment();
 >   * JSDoc 표준을 준수한다.
 >   * JSDoc에 의해 처리될 주석은 /**으로 시작해 */으로 종결된다. 각 라인마다 으로 시작한다.
 >   * 사양서에 기술할 필요가 없는 주석은 자유롭게 기술한다.(/* */,//사용)
-
-<br />
 
 ### 4.1 JSDoc Guidelines
 * <https://sapui5.hana.ondemand.com/sdk/#/topic/eeaa5de14e5f4fc1ac796bc0c1ada5fb>
@@ -217,3 +248,5 @@ const PER_PAGE_COUNT = 10;
  */
 const YESCO_BLUE = '#0072c6';
 ```
+
+**[⬆ back to top](#목차)**
