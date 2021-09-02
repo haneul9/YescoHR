@@ -4,87 +4,77 @@
 	height="100%"
 	xmlns="sap.m"
 	xmlns:tnt="sap.tnt"
-	xmlns:mvc="sap.ui.core.mvc"
->
+	xmlns:mvc="sap.ui.core.mvc">
 	<tnt:ToolHeader>
 		<Button
 			icon="sap-icon://home"
 			type="Transparent"
-			press="navigateToHome"
-		>
+			press="navigateToHome">
 			<layoutData>
-				<OverflowToolbarLayoutData priority="NeverOverflow"/>
+				<OverflowToolbarLayoutData priority="NeverOverflow" />
 			</layoutData>
 		</Button>
-		<ToolbarSpacer width="20px"/>
+		<ToolbarSpacer width="20px" />
 		<Button
 			text="Home"
 			type="Transparent"
 			id="home"
-			press="navigateToHome"
-		>
+			press="navigateToHome">
 			<layoutData>
-				<OverflowToolbarLayoutData priority="Low"/>
+				<OverflowToolbarLayoutData priority="Low" />
 			</layoutData>
 		</Button>
 		<Button
 			text="Carousel"
 			type="Transparent"
-			press="navigateToCarousel"
-		>
+			press="navigateToCarousel">
 			<layoutData>
-				<OverflowToolbarLayoutData priority="Low"/>
+				<OverflowToolbarLayoutData priority="Low" />
 			</layoutData>
 		</Button>
 		<Button
 			text="JSON Data"
 			type="Transparent"
-			press="navigateToUserForm"
-		>
+			press="navigateToUserForm">
 			<layoutData>
-				<OverflowToolbarLayoutData priority="Low"/>
+				<OverflowToolbarLayoutData priority="Low" />
 			</layoutData>
 		</Button>
 		<Button
 			text="Resource Data"
 			type="Transparent"
-			press="navigateToAppConfig"
-		>
+			press="navigateToAppConfig">
 			<layoutData>
-				<OverflowToolbarLayoutData priority="Low"/>
+				<OverflowToolbarLayoutData priority="Low" />
 			</layoutData>
 		</Button>
 		<Button
 			text="OData"
-			type="Transparent"
-		>
+			type="Transparent">
 			<layoutData>
-				<OverflowToolbarLayoutData priority="Low"/>
+				<OverflowToolbarLayoutData priority="Low" />
 			</layoutData>
 		</Button>
 		<Button
 			text="Routing"
 			type="Transparent"
-			press="navigateToRouting"
-		>
+			press="navigateToRouting">
 			<layoutData>
-				<OverflowToolbarLayoutData priority="Low"/>
+				<OverflowToolbarLayoutData priority="Low" />
 			</layoutData>
 		</Button>
 		<Button
 			text="List"
-			type="Transparent"
-		>
+			type="Transparent">
 			<layoutData>
-				<OverflowToolbarLayoutData priority="Low"/>
+				<OverflowToolbarLayoutData priority="Low" />
 			</layoutData>
 		</Button>
 		<Button
 			text="Tools"
-			type="Transparent"
-		>
+			type="Transparent">
 			<layoutData>
-				<OverflowToolbarLayoutData priority="Low"/>
+				<OverflowToolbarLayoutData priority="Low" />
 			</layoutData>
 		</Button>
 		<tnt:ToolHeaderUtilitySeparator/>
@@ -99,28 +89,24 @@
 		<Button
 			text="Alan Smith"
 			type="Transparent"
-			press="onUserNamePress"
-		>
+			press="onUserNamePress">
 			<layoutData>
-				<OverflowToolbarLayoutData priority="NeverOverflow"/>
+				<OverflowToolbarLayoutData priority="NeverOverflow" />
 			</layoutData>
 		</Button>
 		<Button
 			icon="sap-icon://home"
 			type="Transparent"
-			press="onHomePress"
-		>
+			press="onHomePress">
 			<layoutData>
-				<OverflowToolbarLayoutData priority="NeverOverflow"/>
+				<OverflowToolbarLayoutData priority="NeverOverflow" />
 			</layoutData>
 		</Button>
 		<IconTabHeader
 			id="iconTabHeader"
 			selectedKey="invalidKey"
 			select="onSelectTab"
-			showOverflowSelectList="true"
-			backgroundDesign="Transparent"
-		>
+			backgroundDesign="Transparent">
 			<layoutData>
 				<OverflowToolbarLayoutData
 					priority="NeverOverflow"
@@ -128,16 +114,15 @@
 				/>
 			</layoutData>
 			<items>
-				<IconTabFilter text="Documentation"/>
-				<IconTabFilter text="Explored"/>
-				<IconTabFilter text="API Reference"/>
-				<IconTabFilter text="Demo Apps"/>
+				<IconTabFilter key="itf1" text="Documentation" />
+				<IconTabFilter key="itf2" text="Explored" />
+				<IconTabFilter key="itf3" text="API Reference" />
+				<IconTabFilter key="itf4" text="Demo Apps" />
 			</items>
 		</IconTabHeader>
 	</tnt:ToolHeader>
 	<App
-		id="layout"
+		id="app"
 		busy="{appView>/busy}"
-		busyIndicatorDelay="{appView>/delay}"
-	/>
+		busyIndicatorDelay="{appView>/delay}" />
 </mvc:View>

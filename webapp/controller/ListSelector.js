@@ -1,9 +1,12 @@
 ﻿sap.ui.define(
   [
-    'sap/base/Log',
-    'sap/ui/base/Object', //
+    'sap/base/Log', // prettier 방지용 주석
+    'sap/ui/base/Object',
   ],
-  (Log, BaseObject) => {
+  (
+    Log, // prettier 방지용 주석
+    BaseObject
+  ) => {
     'use strict';
 
     return BaseObject.extend('sap.ui.yesco.controller.ListSelector', {
@@ -80,21 +83,14 @@
             }
 
             oList.getItems().some((oItem) => {
-              if (
-                oItem.getBindingContext() &&
-                oItem.getBindingContext().getPath() === sBindingPath
-              ) {
+              if (oItem.getBindingContext() && oItem.getBindingContext().getPath() === sBindingPath) {
                 oList.setSelectedItem(oItem);
                 return true;
               }
             });
           },
           () => {
-            Log.warning(
-              'Could not select the list item with the path' +
-                sBindingPath +
-                ' because the list encountered an error or had no items'
-            );
+            Log.warning('Could not select the list item with the path' + sBindingPath + ' because the list encountered an error or had no items');
           }
         );
       },

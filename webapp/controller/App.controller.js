@@ -1,20 +1,25 @@
 sap.ui.define(
   [
-    'sap/ui/model/json/JSONModel',
+    'sap/ui/model/json/JSONModel', // prettier 방지용 주석
     'sap/ui/yesco/common/appUtils',
+    'sap/ui/yesco/controller/BaseController',
     'sap/ui/yesco/extension/lodash',
     'sap/ui/yesco/extension/moment',
-    './BaseController',
   ],
-  (JSONModel, appUtils, lodashjs, momentjs, BaseController) => {
+  (
+    JSONModel, // prettier 방지용 주석
+    appUtils,
+    BaseController,
+    lodashjs,
+    momentjs
+  ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.controller.App', {
       onInit() {
         // Moment, Lodash test
         const day = moment();
-        this.debug(day);
-        this.debug(day);
+        this.debug(day); // BaseController에 선언됨
 
         this.debug('lodash');
         this.debug(_.join(['1', '2', '3'], '~'));
@@ -56,7 +61,7 @@ sap.ui.define(
 
         // var label = this.byId('labelId');
         // label.setText('Home Screen');
-        this.getRouter().navTo('master');
+        this.getRouter().navTo('appHome');
 
         // TODO : master 전환 후 callback 호출 필요(ex: localStorage, sessionStorage, global temporary variables/functions 등 제거 callback)
       },
@@ -74,7 +79,7 @@ sap.ui.define(
       },
 
       navigateToHome(event) {
-        this.getRouter().navTo('master');
+        this.getRouter().navTo('appHome');
       },
 
       navigateToCarousel(event) {

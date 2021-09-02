@@ -7,11 +7,6 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.controller.Carousel', {
-      /**
-       * @override
-       */
-      onInit() {},
-    });
+    return BaseController.extend('sap.ui.yesco.controller.DetailNotFound', {});
   }
 );

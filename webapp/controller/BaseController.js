@@ -1,10 +1,16 @@
 sap.ui.define(
   [
-    'sap/base/Log',
-    'sap/ui/core/mvc/Controller', //
+    'sap/base/Log', // prettier 방지용 주석
+    'sap/ui/core/mvc/Controller',
     'sap/ui/core/routing/History',
+    'sap/ui/core/UIComponent',
   ],
-  (Log, Controller, History) => {
+  (
+    Log, // prettier 방지용 주석
+    Controller,
+    History,
+    UIComponent
+  ) => {
     'use strict';
 
     return Controller.extend('sap.ui.yesco.controller.BaseController', {
@@ -14,7 +20,8 @@ sap.ui.define(
        * @returns {sap.ui.core.routing.Router} the router for this component
        */
       getRouter() {
-        return this.getOwnerComponent().getRouter();
+        // return this.getOwnerComponent().getRouter();
+        return UIComponent.getRouterFor(this);
       },
 
       /**
@@ -59,8 +66,15 @@ sap.ui.define(
         if (sPreviousHash) {
           history.go(-1);
         } else {
-          this.getRouter().navTo('master', {}, true);
+          this.getRouter().navTo('appHome', {}, true);
         }
+      },
+
+      onDisplayNotFound() {
+        // display the "notFound" target without changing the hash
+        this.getRouter().getTargets().display('notFound', {
+          fromTarget: 'home',
+        });
       },
 
       debug(...args) {

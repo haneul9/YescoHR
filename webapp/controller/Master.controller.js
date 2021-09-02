@@ -1,6 +1,6 @@
 sap.ui.define(
   [
-    'sap/m/GroupHeaderListItem',
+    'sap/m/GroupHeaderListItem', // prettier 방지용 주석
     'sap/ui/Device',
     'sap/ui/core/Fragment',
     'sap/ui/model/Filter',
@@ -8,10 +8,10 @@ sap.ui.define(
     'sap/ui/model/Sorter',
     'sap/ui/model/json/JSONModel',
     '../model/formatter',
-    './BaseController', //
+    './BaseController',
   ],
   (
-    GroupHeaderListItem,
+    GroupHeaderListItem, // prettier 방지용 주석
     Device,
     Fragment,
     Filter,
@@ -126,9 +126,7 @@ sap.ui.define(
         const sQuery = oEvent.getParameter('query');
 
         if (sQuery) {
-          this._oListFilterState.aSearch = [
-            new Filter('ProductName', FilterOperator.Contains, sQuery),
-          ];
+          this._oListFilterState.aSearch = [new Filter('ProductName', FilterOperator.Contains, sQuery)];
         } else {
           this._oListFilterState.aSearch = [];
         }
@@ -357,16 +355,10 @@ sap.ui.define(
 
         // changes the noDataText of the list in case there are no filter results
         if (aFilters.length !== 0) {
-          oMasterViewModel.setProperty(
-            '/noDataText',
-            this.getResourceBundle().getText('masterListNoDataWithFilterOrSearchText')
-          );
+          oMasterViewModel.setProperty('/noDataText', this.getResourceBundle().getText('masterListNoDataWithFilterOrSearchText'));
         } else if (this._oListFilterState.aSearch.length > 0) {
           // only reset the no data text to default when no new search was triggered
-          oMasterViewModel.setProperty(
-            '/noDataText',
-            this.getResourceBundle().getText('masterListNoDataText')
-          );
+          oMasterViewModel.setProperty('/noDataText', this.getResourceBundle().getText('masterListNoDataText'));
         }
       },
 
@@ -378,14 +370,8 @@ sap.ui.define(
       _updateFilterBar(sFilterBarText) {
         const oMasterViewModel = this.getModel('masterView');
 
-        oMasterViewModel.setProperty(
-          '/isFilterBarVisible',
-          this._oListFilterState.aFilter.length > 0
-        );
-        oMasterViewModel.setProperty(
-          '/filterBarLabel',
-          this.getResourceBundle().getText('masterFilterBarText', [sFilterBarText])
-        );
+        oMasterViewModel.setProperty('/isFilterBarVisible', this._oListFilterState.aFilter.length > 0);
+        oMasterViewModel.setProperty('/filterBarLabel', this.getResourceBundle().getText('masterFilterBarText', [sFilterBarText]));
       },
     });
   }

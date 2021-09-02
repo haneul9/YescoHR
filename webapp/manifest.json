@@ -4,7 +4,11 @@
   "sap.app": {
     "id": "sap.ui.yesco",
     "type": "application",
-    "i18n": "i18n/i18n.properties",
+    "i18n": {
+      "bundleUrl": "i18n/i18n.properties",
+      "supportedLocales": ["ko"],
+      "fallbackLocale": ""
+    },
     "title": "{{appTitle}}",
     "description": "{{appDescription}}",
 
@@ -52,7 +56,7 @@
       "viewName": "sap.ui.yesco.view.App",
       "type": "XML",
       "async": true,
-      "id": "layout"
+      "id": "app"
     },
 
     "dependencies": {
@@ -73,7 +77,9 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "sap.ui.yesco.i18n.i18n"
+          "bundleName": "sap.ui.yesco.i18n.i18n",
+          "supportedLocales": ["ko"],
+          "fallbackLocale": ""
         }
       },
       "": {
@@ -95,10 +101,10 @@
 
     "routing": {
       "config": {
-        "routerClass": "sap.f.routing.Router",
+        "routerClass": "sap.m.routing.Router",
         "viewType": "XML",
         "viewPath": "sap.ui.yesco.view",
-        "controlId": "layout",
+        "controlId": "app",
         "controlAggregation": "pages",
         "bypassed": {
           "target": "notFound"
@@ -109,26 +115,32 @@
       "routes": [
         {
           "pattern": "",
-          "name": "master",
-          "target": "master"
+          "name": "appHome",
+          "target": "home"
         },
         {
-          "pattern": "Products/{objectId}",
-          "name": "object",
-          "target": ["master", "object"]
-        },
-        {
-          "pattern": "carousel",
-          "name": "carousel",
-          "target": ["carousel"]
+          "pattern": "employees",
+          "name": "employeeList",
+          "target": "employees"
         }
       ],
 
       "targets": {
-        "master": {
-          "viewName": "Master",
-          "viewLevel": 1,
-          "viewId": "master"
+        "home": {
+          "viewId": "home",
+          "viewName": "Home",
+          "viewLevel": 1
+        },
+        "employees": {
+          "viewId": "employeeList",
+          "viewPath": "sap.ui.yesco.view.employee",
+          "viewName": "EmployeeList",
+          "viewLevel": 2
+        },
+        "notFound": {
+          "viewId": "notFound",
+          "viewName": "NotFound",
+          "transition": "show"
         },
         "object": {
           "viewName": "Detail",
@@ -137,19 +149,15 @@
           "controlAggregation": "midColumnPages"
         },
         "carousel": {
-					"viewType": "XML",
-					"viewName": "Carousel",
+          "viewType": "XML",
+          "viewName": "Carousel",
           "clearControlAggregation": true,
-					"viewLevel": 2
-				},
-        "detailObjectNotFound": {
-          "viewName": "DetailObjectNotFound",
-          "viewId": "detailObjectNotFound",
-          "controlAggregation": "midColumnPages"
+          "viewLevel": 2
         },
-        "notFound": {
-          "viewName": "NotFound",
-          "viewId": "notFound"
+        "detailObjectNotFound": {
+          "viewName": "DetailNotFound",
+          "viewId": "detailNotFound",
+          "controlAggregation": "midColumnPages"
         }
       }
     }

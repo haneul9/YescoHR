@@ -1,11 +1,16 @@
 sap.ui.define(
   [
-    'sap/m/library',
+    'sap/m/library', // prettier 방지용 주석
     'sap/ui/model/json/JSONModel',
     '../model/formatter',
-    './BaseController', //
+    './BaseController',
   ],
-  (mobileLibrary, JSONModel, formatter, BaseController) => {
+  (
+    mobileLibrary, // prettier 방지용 주석
+    JSONModel,
+    formatter,
+    BaseController
+  ) => {
     'use strict';
 
     // shortcut for sap.m.URLHelper
@@ -31,10 +36,7 @@ sap.ui.define(
 
         this.setModel(oDetailViewModel, 'detailView');
 
-        this.getOwnerComponent()
-          .getModel()
-          .metadataLoaded()
-          .then(this._onMetadataLoaded.bind(this));
+        this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
       },
 
       /* =========================================================== */
@@ -48,11 +50,7 @@ sap.ui.define(
       onSendEmailPress() {
         const oDetailViewModel = this.getModel('detailView');
 
-        URLHelper.triggerEmail(
-          null,
-          oDetailViewModel.getProperty('/shareSendEmailSubject'),
-          oDetailViewModel.getProperty('/shareSendEmailMessage')
-        );
+        URLHelper.triggerEmail(null, oDetailViewModel.getProperty('/shareSendEmailSubject'), oDetailViewModel.getProperty('/shareSendEmailMessage'));
       },
 
       /* =========================================================== */
@@ -129,18 +127,8 @@ sap.ui.define(
 
         this.getOwnerComponent().oListSelector.selectAListItem(sPath);
 
-        oDetailViewModel.setProperty(
-          '/shareSendEmailSubject',
-          oResourceBundle.getText('shareSendEmailObjectSubject', [sObjectId])
-        );
-        oDetailViewModel.setProperty(
-          '/shareSendEmailMessage',
-          oResourceBundle.getText('shareSendEmailObjectMessage', [
-            sObjectName,
-            sObjectId,
-            location.href,
-          ])
-        );
+        oDetailViewModel.setProperty('/shareSendEmailSubject', oResourceBundle.getText('shareSendEmailObjectSubject', [sObjectId]));
+        oDetailViewModel.setProperty('/shareSendEmailMessage', oResourceBundle.getText('shareSendEmailObjectMessage', [sObjectName, sObjectId, location.href]));
       },
 
       _onMetadataLoaded() {

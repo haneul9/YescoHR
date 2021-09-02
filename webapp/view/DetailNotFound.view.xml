@@ -1,5 +1,5 @@
 <mvc:View
-	controllerName="sap.ui.yesco.controller.DetailObjectNotFound"
+	controllerName="sap.ui.yesco.controller.DetailNotFound"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc">
 

@@ -1,12 +1,18 @@
 sap.ui.define(
   [
-    'sap/ui/core/UIComponent', //
+    'sap/ui/core/UIComponent', // prettier 방지용 주석
     'sap/ui/Device',
     './model/models',
     './controller/ListSelector',
     './controller/ErrorHandler',
   ],
-  (UIComponent, Device, models, ListSelector, ErrorHandler) => {
+  (
+    UIComponent, // prettier 방지용 주석
+    Device,
+    models,
+    ListSelector,
+    ErrorHandler
+  ) => {
     'use strict';
 
     return UIComponent.extend('sap.ui.yesco.Component', {
@@ -56,10 +62,7 @@ sap.ui.define(
       getContentDensityClass() {
         if (!Object.prototype.hasOwnProperty.call(this, '_sContentDensityClass')) {
           // check whether FLP has already set the content density class; do nothing in this case
-          if (
-            document.body.classList.contains('sapUiSizeCozy') ||
-            document.body.classList.contains('sapUiSizeCompact')
-          ) {
+          if (document.body.classList.contains('sapUiSizeCozy') || document.body.classList.contains('sapUiSizeCompact')) {
             this._sContentDensityClass = '';
           } else if (!Device.support.touch) {
             // apply "compact" mode if touch is not supported
