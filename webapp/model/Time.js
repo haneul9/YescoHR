@@ -1,4 +1,4 @@
-sap.ui.define(['sap/ui/model/type/Time'], function (TypeTime) {
+sap.ui.define(['sap/ui/model/type/Time'], (TypeTime) => {
   'use strict';
 
   const DEFAULT_PATTERN = 'HH:mm:ss';

@@ -1,12 +1,12 @@
 sap.ui.define(
   [
-    'sap/ui/base/Object', //
     'sap/m/MessageBox',
+    'sap/ui/base/Object', //
   ],
-  function (UI5Object, MessageBox) {
+  (MessageBox, BaseObject) => {
     'use strict';
 
-    return UI5Object.extend('sap.ui.yesco.controller.ErrorHandler', {
+    return BaseObject.extend('sap.ui.yesco.controller.ErrorHandler', {
       /**
        * Handles application errors by automatically attaching to the model events and displaying errors when needed.
        * @class
@@ -21,13 +21,13 @@ sap.ui.define(
         this._bMessageOpen = false;
         this._sErrorText = this._oResourceBundle.getText('errorText');
 
-        this._oModel.attachMetadataFailed(function (oEvent) {
-          var oParams = oEvent.getParameters();
+        this._oModel.attachMetadataFailed((oEvent) => {
+          const oParams = oEvent.getParameters();
           this._showServiceError(oParams.response);
         }, this);
 
-        this._oModel.attachRequestFailed(function (oEvent) {
-          var oParams = oEvent.getParameters();
+        this._oModel.attachRequestFailed((oEvent) => {
+          const oParams = oEvent.getParameters();
           // An entity that was not found in the service is also throwing a 404 error in oData.
           // We already cover this case with a notFound target so we skip it here.
           // A request that cannot be sent to the server is a technical error that we have to handle though
@@ -47,19 +47,20 @@ sap.ui.define(
        * @param {string} sDetails a technical error to be displayed on request
        * @private
        */
-      _showServiceError: function (sDetails) {
+      _showServiceError(sDetails) {
         if (this._bMessageOpen) {
           return;
         }
         this._bMessageOpen = true;
+
         MessageBox.error(this._sErrorText, {
           id: 'serviceErrorMessageBox',
           details: sDetails,
           styleClass: this._oComponent.getContentDensityClass(),
           actions: [MessageBox.Action.CLOSE],
-          onClose: function () {
+          onClose: () => {
             this._bMessageOpen = false;
-          }.bind(this),
+          },
         });
       },
     });

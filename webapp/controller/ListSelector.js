@@ -1,9 +1,9 @@
 ﻿sap.ui.define(
   [
-    'sap/ui/base/Object', //
     'sap/base/Log',
+    'sap/ui/base/Object', //
   ],
-  function (BaseObject, Log) {
+  (Log, BaseObject) => {
     'use strict';
 
     return BaseObject.extend('sap.ui.yesco.controller.ListSelector', {
@@ -14,39 +14,35 @@
        * @public
        * @alias sap.ui.yesco.controller.ListSelector
        */
-
       constructor: function () {
-        this._oWhenListHasBeenSet = new Promise(
-          function (fnResolveListHasBeenSet) {
-            this._fnResolveListHasBeenSet = fnResolveListHasBeenSet;
-          }.bind(this)
-        );
+        this._oWhenListHasBeenSet = new Promise((fnResolveListHasBeenSet) => {
+          this._fnResolveListHasBeenSet = fnResolveListHasBeenSet;
+        });
         // This promise needs to be created in the constructor, since it is allowed to
         // invoke selectItem functions before calling setBoundMasterList
-        this.oWhenListLoadingIsDone = new Promise(
-          function (fnResolve, fnReject) {
-            // Used to wait until the setBound masterList function is invoked
-            this._oWhenListHasBeenSet.then(
-              function (oList) {
-                oList.getBinding('items').attachEventOnce(
-                  'dataReceived',
-                  function () {
-                    if (this._oList.getItems().length) {
-                      fnResolve({
-                        list: oList,
-                      });
-                    } else {
-                      // No items in the list
-                      fnReject({
-                        list: oList,
-                      });
-                    }
-                  }.bind(this)
-                );
-              }.bind(this)
-            );
-          }.bind(this)
-        );
+        this.oWhenListLoadingIsDone = new Promise((fnResolve, fnReject) => {
+          // Used to wait until the setBound masterList function is invoked
+          this._oWhenListHasBeenSet.then((oList) => {
+            const items = oList.getBinding('items');
+
+            if (!items) {
+              return;
+            }
+
+            items.attachEventOnce('dataReceived', () => {
+              if (this._oList.getItems().length) {
+                fnResolve({
+                  list: oList,
+                });
+              } else {
+                // No items in the list
+                fnReject({
+                  list: oList,
+                });
+              }
+            });
+          });
+        });
       },
 
       /**
@@ -55,7 +51,7 @@
        * @param {sap.m.List} oList The list all the select functions will be invoked on.
        * @public
        */
-      setBoundMasterList: function (oList) {
+      setBoundMasterList(oList) {
         this._oList = oList;
         this._fnResolveListHasBeenSet(oList);
       },
@@ -66,11 +62,11 @@
        * @param {string} sBindingPath the binding path matching the binding path of a list item
        * @public
        */
-      selectAListItem: function (sBindingPath) {
+      selectAListItem(sBindingPath) {
         this.oWhenListLoadingIsDone.then(
-          function () {
-            var oList = this._oList,
-              oSelectedItem;
+          () => {
+            const oList = this._oList;
+            let oSelectedItem;
 
             if (oList.getMode() === 'None') {
               return;
@@ -83,7 +79,7 @@
               return;
             }
 
-            oList.getItems().some(function (oItem) {
+            oList.getItems().some((oItem) => {
               if (
                 oItem.getBindingContext() &&
                 oItem.getBindingContext().getPath() === sBindingPath
@@ -92,8 +88,8 @@
                 return true;
               }
             });
-          }.bind(this),
-          function () {
+          },
+          () => {
             Log.warning(
               'Could not select the list item with the path' +
                 sBindingPath +
@@ -108,13 +104,11 @@
        * Does not trigger 'selectionChange' event on master list, though.
        * @public
        */
-      clearMasterListSelection: function () {
+      clearMasterListSelection() {
         //use promise to make sure that 'this._oList' is available
-        this._oWhenListHasBeenSet.then(
-          function () {
-            this._oList.removeSelections(true);
-          }.bind(this)
-        );
+        this._oWhenListHasBeenSet.then(() => {
+          this._oList.removeSelections(true);
+        });
       },
     });
   }

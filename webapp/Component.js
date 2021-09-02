@@ -6,7 +6,7 @@ sap.ui.define(
     './controller/ListSelector',
     './controller/ErrorHandler',
   ],
-  function (UIComponent, Device, models, ListSelector, ErrorHandler) {
+  (UIComponent, Device, models, ListSelector, ErrorHandler) => {
     'use strict';
 
     return UIComponent.extend('sap.ui.yesco.Component', {
@@ -20,7 +20,7 @@ sap.ui.define(
        * @public
        * @override
        */
-      init: function () {
+      init() {
         this.oListSelector = new ListSelector();
         this._oErrorHandler = new ErrorHandler(this);
 
@@ -40,7 +40,7 @@ sap.ui.define(
        * @public
        * @override
        */
-      destroy: function () {
+      destroy() {
         this.oListSelector.destroy();
         this._oErrorHandler.destroy();
         // call the base component's destroy function
@@ -53,8 +53,8 @@ sap.ui.define(
        * @public
        * @return {string} css class, either 'sapUiSizeCompact' or 'sapUiSizeCozy' - or an empty string if no css class should be set
        */
-      getContentDensityClass: function () {
-        if (this._sContentDensityClass === undefined) {
+      getContentDensityClass() {
+        if (!Object.prototype.hasOwnProperty.call(this, '_sContentDensityClass')) {
           // check whether FLP has already set the content density class; do nothing in this case
           if (
             document.body.classList.contains('sapUiSizeCozy') ||

@@ -5,11 +5,11 @@ sap.ui.define(
     '../model/formatter',
     './BaseController', //
   ],
-  function (mobileLibrary, JSONModel, formatter, BaseController) {
+  (mobileLibrary, JSONModel, formatter, BaseController) => {
     'use strict';
 
     // shortcut for sap.m.URLHelper
-    var URLHelper = mobileLibrary.URLHelper;
+    const URLHelper = mobileLibrary.URLHelper;
 
     return BaseController.extend('sap.ui.yesco.controller.Detail', {
       formatter: formatter,
@@ -18,18 +18,18 @@ sap.ui.define(
       /* lifecycle methods                                           */
       /* =========================================================== */
 
-      onInit: function () {
+      onInit() {
         // Model used to manipulate control states. The chosen values make sure,
         // detail page is busy indication immediately so there is no break in
         // between the busy indication for loading the view's meta data
-        var oViewModel = new JSONModel({
+        const oDetailViewModel = new JSONModel({
           busy: false,
           delay: 0,
         });
 
         this.getRouter().getRoute('object').attachPatternMatched(this._onObjectMatched, this);
 
-        this.setModel(oViewModel, 'detailView');
+        this.setModel(oDetailViewModel, 'detailView');
 
         this.getOwnerComponent()
           .getModel()
@@ -45,13 +45,13 @@ sap.ui.define(
        * Event handler when the share by E-Mail button has been clicked
        * @public
        */
-      onSendEmailPress: function () {
-        var oViewModel = this.getModel('detailView');
+      onSendEmailPress() {
+        const oDetailViewModel = this.getModel('detailView');
 
         URLHelper.triggerEmail(
           null,
-          oViewModel.getProperty('/shareSendEmailSubject'),
-          oViewModel.getProperty('/shareSendEmailMessage')
+          oDetailViewModel.getProperty('/shareSendEmailSubject'),
+          oDetailViewModel.getProperty('/shareSendEmailMessage')
         );
       },
 
@@ -65,19 +65,18 @@ sap.ui.define(
        * @param {sap.ui.base.Event} oEvent pattern match event in route 'object'
        * @private
        */
-      _onObjectMatched: function (oEvent) {
-        var sObjectId = oEvent.getParameter('arguments').objectId;
+      _onObjectMatched(oEvent) {
+        const sObjectId = oEvent.getParameter('arguments').objectId;
+
         this.getModel('appView').setProperty('/layout', 'TwoColumnsMidExpanded');
         this.getModel()
           .metadataLoaded()
-          .then(
-            function () {
-              var sObjectPath = this.getModel().createKey('Products', {
-                ProductID: sObjectId,
-              });
-              this._bindView('/' + sObjectPath);
-            }.bind(this)
-          );
+          .then(() => {
+            var sObjectPath = this.getModel().createKey('Products', {
+              ProductID: sObjectId,
+            });
+            this._bindView('/' + sObjectPath);
+          });
       },
 
       /**
@@ -87,30 +86,30 @@ sap.ui.define(
        * @param {string} sObjectPath path to the object to be bound to the view.
        * @private
        */
-      _bindView: function (sObjectPath) {
+      _bindView(sObjectPath) {
         // Set busy indicator during view binding
-        var oViewModel = this.getModel('detailView');
+        const oDetailViewModel = this.getModel('detailView');
 
         // If the view was not bound yet its not busy, only if the binding requests data it is set to busy again
-        oViewModel.setProperty('/busy', false);
+        oDetailViewModel.setProperty('/busy', false);
 
         this.getView().bindElement({
           path: sObjectPath,
           events: {
             change: this._onBindingChange.bind(this),
-            dataRequested: function () {
-              oViewModel.setProperty('/busy', true);
+            dataRequested() {
+              oDetailViewModel.setProperty('/busy', true);
             },
-            dataReceived: function () {
-              oViewModel.setProperty('/busy', false);
+            dataReceived() {
+              oDetailViewModel.setProperty('/busy', false);
             },
           },
         });
       },
 
-      _onBindingChange: function () {
-        var oView = this.getView();
-        var oElementBinding = oView.getElementBinding();
+      _onBindingChange() {
+        const oDetailView = this.getView();
+        const oElementBinding = oDetailView.getElementBinding();
 
         // No data for the binding
         if (!oElementBinding.getBoundContext()) {
@@ -121,20 +120,20 @@ sap.ui.define(
           return;
         }
 
-        var sPath = oElementBinding.getPath(),
-          oResourceBundle = this.getResourceBundle(),
-          oObject = oView.getModel().getObject(sPath),
-          sObjectId = oObject.ProductID,
-          sObjectName = oObject.ProductName,
-          oViewModel = this.getModel('detailView');
+        const sPath = oElementBinding.getPath();
+        const oResourceBundle = this.getResourceBundle();
+        const oObject = oDetailView.getModel().getObject(sPath);
+        const sObjectId = oObject.ProductID;
+        const sObjectName = oObject.ProductName;
+        const oDetailViewModel = this.getModel('detailView');
 
         this.getOwnerComponent().oListSelector.selectAListItem(sPath);
 
-        oViewModel.setProperty(
+        oDetailViewModel.setProperty(
           '/shareSendEmailSubject',
           oResourceBundle.getText('shareSendEmailObjectSubject', [sObjectId])
         );
-        oViewModel.setProperty(
+        oDetailViewModel.setProperty(
           '/shareSendEmailMessage',
           oResourceBundle.getText('shareSendEmailObjectMessage', [
             sObjectName,
@@ -144,55 +143,46 @@ sap.ui.define(
         );
       },
 
-      _onMetadataLoaded: function () {
+      _onMetadataLoaded() {
         // Store original busy indicator delay for the detail view
-        var iOriginalViewBusyDelay = this.getView().getBusyIndicatorDelay(),
-          oViewModel = this.getModel('detailView');
+        const iOriginalViewBusyDelay = this.getView().getBusyIndicatorDelay();
+        const oDetailViewModel = this.getModel('detailView');
 
         // Make sure busy indicator is displayed immediately when
         // detail view is displayed for the first time
-        oViewModel.setProperty('/delay', 0);
-
+        oDetailViewModel.setProperty('/delay', 0);
         // Binding the view will set it to not busy - so the view is always busy if it is not bound
-        oViewModel.setProperty('/busy', true);
+        oDetailViewModel.setProperty('/busy', true);
         // Restore original busy indicator delay for the detail view
-        oViewModel.setProperty('/delay', iOriginalViewBusyDelay);
+        oDetailViewModel.setProperty('/delay', iOriginalViewBusyDelay);
       },
 
       /**
        * Set the full screen mode to false and navigate to master page
        */
-      onCloseDetailPress: function () {
+      onCloseDetailPress() {
         this.getModel('appView').setProperty('/actionButtonsInfo/midColumn/fullScreen', false);
         // No item should be selected on master after detail page is closed
         this.getOwnerComponent().oListSelector.clearMasterListSelection();
-        this.getRouter().navTo('master');
+        this.getRouter().navTo('master'); // TODO : master 전환 공통 function 호출로 수정 필요 (master 전환 후 callback 호출 때문)
       },
 
       /**
        * Toggle between full and non full screen mode.
        */
-      toggleFullScreen: function () {
-        var bFullScreen = this.getModel('appView').getProperty(
-          '/actionButtonsInfo/midColumn/fullScreen'
-        );
-        this.getModel('appView').setProperty(
-          '/actionButtonsInfo/midColumn/fullScreen',
-          !bFullScreen
-        );
+      toggleFullScreen() {
+        const oAppViewModel = this.getModel('appView');
+        const bFullScreen = oAppViewModel.getProperty('/actionButtonsInfo/midColumn/fullScreen');
+
+        oAppViewModel.setProperty('/actionButtonsInfo/midColumn/fullScreen', !bFullScreen);
+
         if (!bFullScreen) {
           // store current layout and go full screen
-          this.getModel('appView').setProperty(
-            '/previousLayout',
-            this.getModel('appView').getProperty('/layout')
-          );
-          this.getModel('appView').setProperty('/layout', 'MidColumnFullScreen');
+          oAppViewModel.setProperty('/previousLayout', oAppViewModel.getProperty('/layout'));
+          oAppViewModel.setProperty('/layout', 'MidColumnFullScreen');
         } else {
           // reset to previous layout
-          this.getModel('appView').setProperty(
-            '/layout',
-            this.getModel('appView').getProperty('/previousLayout')
-          );
+          oAppViewModel.setProperty('/layout', oAppViewModel.getProperty('/previousLayout'));
         }
       },
     });

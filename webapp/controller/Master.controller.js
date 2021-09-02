@@ -10,7 +10,7 @@ sap.ui.define(
     '../model/formatter',
     './BaseController', //
   ],
-  function (
+  (
     GroupHeaderListItem,
     Device,
     Fragment,
@@ -20,7 +20,7 @@ sap.ui.define(
     JSONModel,
     formatter,
     BaseController
-  ) {
+  ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.controller.Master', {
@@ -34,32 +34,34 @@ sap.ui.define(
        * Called when the master list controller is instantiated. It sets up the event handling for the master/detail communication and other lifecycle tasks.
        * @public
        */
-      onInit: function () {
+      onInit() {
         // Control state model
-        var oList = this.byId('list'),
-          oViewModel = this._createViewModel(),
-          // Put down master list's original value for busy indicator delay,
-          // so it can be restored later on. Busy handling on the master list is
-          // taken care of by the master list itself.
-          iOriginalBusyDelay = oList.getBusyIndicatorDelay();
+        const oList = this.byId('list');
+        const oViewModel = this._createViewModel();
+        // Put down master list's original value for busy indicator delay,
+        // so it can be restored later on. Busy handling on the master list is
+        // taken care of by the master list itself.
+        const iOriginalBusyDelay = oList.getBusyIndicatorDelay();
 
         this._oGroupFunctions = {
-          UnitPrice: function (oContext) {
-            var iNumber = oContext.getProperty('UnitPrice'),
-              key,
-              text;
+          UnitPrice(oContext) {
+            const oResourceBundle = this.getResourceBundle();
+            const iNumber = oContext.getProperty('UnitPrice');
+            let key;
+            let text;
+
             if (iNumber <= 20) {
               key = 'LE20';
-              text = this.getResourceBundle().getText('masterGroup1Header1');
+              text = oResourceBundle.getText('masterGroup1Header1');
             } else {
               key = 'GT20';
-              text = this.getResourceBundle().getText('masterGroup1Header2');
+              text = oResourceBundle.getText('masterGroup1Header2');
             }
             return {
               key: key,
               text: text,
             };
-          }.bind(this),
+          },
         };
 
         this._oList = oList;
@@ -79,12 +81,12 @@ sap.ui.define(
         });
 
         this.getView().addEventDelegate({
-          onBeforeFirstShow: function () {
+          onBeforeFirstShow: () => {
             this.getOwnerComponent().oListSelector.setBoundMasterList(oList);
-          }.bind(this),
+          },
         });
 
-        this.getRouter().getRoute('master').attachPatternMatched(this._onMasterMatched, this);
+        this.getRouter().getRoute('master').attachPatternMatched(this._onMasterMatched, this); // TODO : master 전환 공통 function 호출로 수정 필요 (master 전환 후 callback 호출 때문)
         this.getRouter().attachBypassed(this.onBypassed, this);
       },
 
@@ -98,7 +100,7 @@ sap.ui.define(
        * @param {sap.ui.base.Event} oEvent the update finished event
        * @public
        */
-      onUpdateFinished: function (oEvent) {
+      onUpdateFinished(oEvent) {
         // update the master list object counter after new data is loaded
         this._updateListItemCount(oEvent.getParameter('total'));
       },
@@ -111,7 +113,7 @@ sap.ui.define(
        * @param {sap.ui.base.Event} oEvent the search event
        * @public
        */
-      onSearch: function (oEvent) {
+      onSearch(oEvent) {
         if (oEvent.getParameters().refreshButtonPressed) {
           // Search field's 'refresh' button has been pressed.
           // This is visible if you select any master list item.
@@ -121,7 +123,7 @@ sap.ui.define(
           return;
         }
 
-        var sQuery = oEvent.getParameter('query');
+        const sQuery = oEvent.getParameter('query');
 
         if (sQuery) {
           this._oListFilterState.aSearch = [
@@ -138,7 +140,7 @@ sap.ui.define(
        * and group settings and refreshes the list binding.
        * @public
        */
-      onRefresh: function () {
+      onRefresh() {
         this._oList.getBinding('items').refresh();
       },
 
@@ -147,10 +149,10 @@ sap.ui.define(
        * @param {sap.ui.base.Event} oEvent the button press event
        * @public
        */
-      onOpenViewSettings: function (oEvent) {
-        var sDialogTab = 'filter';
+      onOpenViewSettings(oEvent) {
+        let sDialogTab = 'filter';
         if (oEvent.getSource() instanceof sap.m.Button) {
-          var sButtonId = oEvent.getSource().getId();
+          const sButtonId = oEvent.getSource().getId();
           if (sButtonId.match('sort')) {
             sDialogTab = 'sort';
           } else if (sButtonId.match('group')) {
@@ -163,14 +165,12 @@ sap.ui.define(
             id: this.getView().getId(),
             name: 'sap.ui.yesco.view.ViewSettingsDialog',
             controller: this,
-          }).then(
-            function (oDialog) {
-              // connect dialog to the root view of this component (models, lifecycle)
-              this.getView().addDependent(oDialog);
-              oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
-              oDialog.open(sDialogTab);
-            }.bind(this)
-          );
+          }).then((oDialog) => {
+            // connect dialog to the root view of this component (models, lifecycle)
+            this.getView().addDependent(oDialog);
+            oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
+            oDialog.open(sDialogTab);
+          });
         } else {
           this.byId('viewSettingsDialog').open(sDialogTab);
         }
@@ -185,23 +185,26 @@ sap.ui.define(
        * @param {sap.ui.base.Event} oEvent the confirm event
        * @public
        */
-      onConfirmViewSettingsDialog: function (oEvent) {
-        var aFilterItems = oEvent.getParameters().filterItems,
-          aFilters = [],
-          aCaptions = [];
+      onConfirmViewSettingsDialog(oEvent) {
+        const aFilterItems = oEvent.getParameters().filterItems;
+        const aFilters = [];
+        const aCaptions = [];
 
         // update filter state:
         // combine the filter array and the filter string
-        aFilterItems.forEach(function (oItem) {
+        aFilterItems.forEach((oItem) => {
           switch (oItem.getKey()) {
-            case 'Filter1':
+            case 'Filter1': {
               aFilters.push(new Filter('UnitPrice', FilterOperator.LE, 100));
               break;
-            case 'Filter2':
+            }
+            case 'Filter2': {
               aFilters.push(new Filter('UnitPrice', FilterOperator.GT, 100));
               break;
-            default:
+            }
+            default: {
               break;
+            }
           }
           aCaptions.push(oItem.getText());
         });
@@ -217,22 +220,23 @@ sap.ui.define(
        * @param {sap.ui.base.Event} oEvent the confirm event
        * @private
        */
-      _applySortGroup: function (oEvent) {
-        var mParams = oEvent.getParameters(),
-          sPath,
-          bDescending,
-          aSorters = [];
+      _applySortGroup(oEvent) {
+        const mParams = oEvent.getParameters();
+        const aSorters = [];
+        let sPath;
+        let bDescending;
+
         // apply sorter to binding
         // (grouping comes before sorting)
         if (mParams.groupItem) {
           sPath = mParams.groupItem.getKey();
           bDescending = mParams.groupDescending;
-          var vGroup = this._oGroupFunctions[sPath];
-          aSorters.push(new Sorter(sPath, bDescending, vGroup));
+          aSorters.push(new Sorter(sPath, bDescending, this._oGroupFunctions[sPath]));
+        } else {
+          sPath = mParams.sortItem.getKey();
+          bDescending = mParams.sortDescending;
+          aSorters.push(new Sorter(sPath, bDescending));
         }
-        sPath = mParams.sortItem.getKey();
-        bDescending = mParams.sortDescending;
-        aSorters.push(new Sorter(sPath, bDescending));
         this._oList.getBinding('items').sort(aSorters);
       },
 
@@ -241,9 +245,9 @@ sap.ui.define(
        * @param {sap.ui.base.Event} oEvent the list selectionChange event
        * @public
        */
-      onSelectionChange: function (oEvent) {
-        var oList = oEvent.getSource(),
-          bSelected = oEvent.getParameter('selected');
+      onSelectionChange(oEvent) {
+        const oList = oEvent.getSource();
+        const bSelected = oEvent.getParameter('selected');
 
         // skip navigation when deselecting an item in multi selection mode
         if (!(oList.getMode() === 'MultiSelect' && !bSelected)) {
@@ -257,7 +261,7 @@ sap.ui.define(
        * If there was an object selected in the master list, that selection is removed.
        * @public
        */
-      onBypassed: function () {
+      onBypassed() {
         this._oList.removeSelections(true);
       },
 
@@ -269,7 +273,7 @@ sap.ui.define(
        * @public
        * @returns {sap.m.GroupHeaderListItem} group header with non-capitalized caption.
        */
-      createGroupHeader: function (oGroup) {
+      createGroupHeader(oGroup) {
         return new GroupHeaderListItem({
           title: oGroup.text,
           upperCase: false,
@@ -281,7 +285,7 @@ sap.ui.define(
        * We navigate back in the browser historz
        * @public
        */
-      onNavBack: function () {
+      onNavBack() {
         history.go(-1);
       },
 
@@ -289,19 +293,21 @@ sap.ui.define(
       /* begin: internal methods                                     */
       /* =========================================================== */
 
-      _createViewModel: function () {
+      _createViewModel() {
+        const oResourceBundle = this.getResourceBundle();
+
         return new JSONModel({
           isFilterBarVisible: false,
           filterBarLabel: '',
           delay: 0,
-          title: this.getResourceBundle().getText('masterTitleCount', [0]),
-          noDataText: this.getResourceBundle().getText('masterListNoDataText'),
+          title: oResourceBundle.getText('masterTitleCount', [0]),
+          noDataText: oResourceBundle.getText('masterListNoDataText'),
           sortBy: 'ProductName',
           groupBy: 'None',
         });
       },
 
-      _onMasterMatched: function () {
+      _onMasterMatched() {
         //Set the layout property of the FCL control to 'OneColumn'
         this.getModel('appView').setProperty('/layout', 'OneColumn');
       },
@@ -312,8 +318,9 @@ sap.ui.define(
        * @param {sap.m.ObjectListItem} oItem selected Item
        * @private
        */
-      _showDetail: function (oItem) {
-        var bReplace = !Device.system.phone;
+      _showDetail(oItem) {
+        const bReplace = !Device.system.phone;
+
         // set the layout property of FCL control to show two columns
         this.getModel('appView').setProperty('/layout', 'TwoColumnsMidExpanded');
         this.getRouter().navTo(
@@ -330,11 +337,10 @@ sap.ui.define(
        * @param {integer} iTotalItems the total number of items in the list
        * @private
        */
-      _updateListItemCount: function (iTotalItems) {
-        var sTitle;
+      _updateListItemCount(iTotalItems) {
         // only update the counter if the length is final
         if (this._oList.getBinding('items').isLengthFinal()) {
-          sTitle = this.getResourceBundle().getText('masterTitleCount', [iTotalItems]);
+          const sTitle = this.getResourceBundle().getText('masterTitleCount', [iTotalItems]);
           this.getModel('masterView').setProperty('/title', sTitle);
         }
       },
@@ -343,19 +349,21 @@ sap.ui.define(
        * Internal helper method to apply both filter and search state together on the list binding
        * @private
        */
-      _applyFilterSearch: function () {
-        var aFilters = this._oListFilterState.aSearch.concat(this._oListFilterState.aFilter),
-          oViewModel = this.getModel('masterView');
+      _applyFilterSearch() {
+        const aFilters = this._oListFilterState.aSearch.concat(this._oListFilterState.aFilter);
+        const oMasterViewModel = this.getModel('masterView');
+
         this._oList.getBinding('items').filter(aFilters, 'Application');
+
         // changes the noDataText of the list in case there are no filter results
         if (aFilters.length !== 0) {
-          oViewModel.setProperty(
+          oMasterViewModel.setProperty(
             '/noDataText',
             this.getResourceBundle().getText('masterListNoDataWithFilterOrSearchText')
           );
         } else if (this._oListFilterState.aSearch.length > 0) {
           // only reset the no data text to default when no new search was triggered
-          oViewModel.setProperty(
+          oMasterViewModel.setProperty(
             '/noDataText',
             this.getResourceBundle().getText('masterListNoDataText')
           );
@@ -367,10 +375,14 @@ sap.ui.define(
        * @param {string} sFilterBarText the selected filter value
        * @private
        */
-      _updateFilterBar: function (sFilterBarText) {
-        var oViewModel = this.getModel('masterView');
-        oViewModel.setProperty('/isFilterBarVisible', this._oListFilterState.aFilter.length > 0);
-        oViewModel.setProperty(
+      _updateFilterBar(sFilterBarText) {
+        const oMasterViewModel = this.getModel('masterView');
+
+        oMasterViewModel.setProperty(
+          '/isFilterBarVisible',
+          this._oListFilterState.aFilter.length > 0
+        );
+        oMasterViewModel.setProperty(
           '/filterBarLabel',
           this.getResourceBundle().getText('masterFilterBarText', [sFilterBarText])
         );

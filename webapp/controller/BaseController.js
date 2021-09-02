@@ -1,9 +1,10 @@
 sap.ui.define(
   [
+    'sap/base/Log',
     'sap/ui/core/mvc/Controller', //
     'sap/ui/core/routing/History',
   ],
-  function (Controller, History) {
+  (Log, Controller, History) => {
     'use strict';
 
     return Controller.extend('sap.ui.yesco.controller.BaseController', {
@@ -12,7 +13,7 @@ sap.ui.define(
        * @public
        * @returns {sap.ui.core.routing.Router} the router for this component
        */
-      getRouter: function () {
+      getRouter() {
         return this.getOwnerComponent().getRouter();
       },
 
@@ -22,7 +23,7 @@ sap.ui.define(
        * @param {string} sName the model name
        * @returns {sap.ui.model.Model} the model instance
        */
-      getModel: function (sName) {
+      getModel(sName) {
         return this.getView().getModel(sName);
       },
 
@@ -33,7 +34,7 @@ sap.ui.define(
        * @param {string} sName the model name
        * @returns {sap.ui.mvc.View} the view instance
        */
-      setModel: function (oModel, sName) {
+      setModel(oModel, sName) {
         return this.getView().setModel(oModel, sName);
       },
 
@@ -42,7 +43,7 @@ sap.ui.define(
        * @public
        * @returns {sap.ui.model.resource.ResourceModel} the resourceModel of the component
        */
-      getResourceBundle: function () {
+      getResourceBundle() {
         return this.getOwnerComponent().getModel('i18n').getResourceBundle();
       },
 
@@ -52,14 +53,20 @@ sap.ui.define(
        * If not, it will replace the current entry of the browser history with the master route.
        * @public
        */
-      onNavBack: function () {
-        var sPreviousHash = History.getInstance().getPreviousHash();
+      onNavBack() {
+        const sPreviousHash = History.getInstance().getPreviousHash();
 
-        if (sPreviousHash !== undefined) {
+        if (sPreviousHash) {
           history.go(-1);
         } else {
           this.getRouter().navTo('master', {}, true);
         }
+      },
+
+      debug(...args) {
+        setTimeout(() => {
+          Log.info(args);
+        }, 0);
       },
     });
   }

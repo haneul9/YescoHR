@@ -1,29 +1,30 @@
 sap.ui.define(
   [
-    './BaseController', //
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/appUtils',
-    'sap/ui/yesco/extension/moment',
     'sap/ui/yesco/extension/lodash',
+    'sap/ui/yesco/extension/moment',
+    './BaseController',
   ],
-  function (BaseController, JSONModel, appUtils) {
+  (JSONModel, appUtils, lodashjs, momentjs, BaseController) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.controller.App', {
-      onInit: function () {
+      onInit() {
         // Moment, Lodash test
         const day = moment();
-        console.log(day);
+        this.debug(day);
+        this.debug(day);
 
-        console.time('lodash');
-        console.log(_.join(['1', '2', '3'], '~'));
-        console.timeEnd('lodash');
+        this.debug('lodash');
+        this.debug(_.join(['1', '2', '3'], '~'));
+        this.debug('lodash');
 
-        console.log(appUtils.getDevice());
+        this.debug(appUtils.getDevice());
 
         const iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
 
-        const oViewModel = new JSONModel({
+        const oAppViewModel = new JSONModel({
           busy: false,
           delay: 0,
           layout: 'OneColumn',
@@ -34,11 +35,11 @@ sap.ui.define(
             },
           },
         });
-        this.setModel(oViewModel, 'appView');
+        this.setModel(oAppViewModel, 'appView');
 
         const fnSetAppNotBusy = function () {
-          oViewModel.setProperty('/busy', false);
-          oViewModel.setProperty('/delay', iOriginalBusyDelay);
+          oAppViewModel.setProperty('/busy', false);
+          oAppViewModel.setProperty('/delay', iOriginalBusyDelay);
         };
 
         // since then() has no "reject"-path attach to the MetadataFailed-Event to disable the busy indicator in case of an error
@@ -49,49 +50,58 @@ sap.ui.define(
         this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
       },
 
-      onHomePress: function () {
+      onHomePress() {
         // var iconTabHeader = this.byId('iconTabHeader');
         // iconTabHeader.setSelectedKey('invalidKey');
 
         // var label = this.byId('labelId');
         // label.setText('Home Screen');
-        this.getOwnerComponent().getRouter().navTo('master');
+        this.getRouter().navTo('master');
+
+        // TODO : master 전환 후 callback 호출 필요(ex: localStorage, sessionStorage, global temporary variables/functions 등 제거 callback)
       },
 
-      onSelectTab: function (event) {
+      onSelectTab(event) {
         // var label = this.byId('labelId');
-        var tab = event.getParameter('item');
+        const tab = event.getParameter('item');
 
         // label.setText(tab.getText());
       },
 
-      navigateTo: function (evt) {
+      navigateTo(event) {
         // var label = this.byId('labelId');
-        // this.getOwnerComponent().getRouter().navTo(label);
+        // this.getRouter().navTo(label);
       },
-      navigateToHome: function (evt) {
+
+      navigateToHome(event) {
         this.getRouter().navTo('master');
       },
-      navigateToCarousel: function (evt) {
+
+      navigateToCarousel(event) {
         this.getRouter().navTo('carousel');
       },
-      navigateToPage1: function (evt) {
-        this.getRouter().navTo('page1');
-      },
-      navigateToPage2: function (evt) {
-        this.getRouter().navTo('page2');
-      },
-      navigateToUserForm: function (evt) {
-        this.getRouter().navTo('userform');
-      },
-      navigateToAppConfig: function (evt) {
-        this.getRouter().navTo('appconfig');
-      },
-      navigateToRouting: function (evt) {
+
+      navigateToPage1(event) {
         this.getRouter().navTo('page1');
       },
 
-      onUserNamePress: function () {},
+      navigateToPage2(event) {
+        this.getRouter().navTo('page2');
+      },
+
+      navigateToUserForm(event) {
+        this.getRouter().navTo('userform');
+      },
+
+      navigateToAppConfig(event) {
+        this.getRouter().navTo('appconfig');
+      },
+
+      navigateToRouting(event) {
+        this.getRouter().navTo('page1');
+      },
+
+      onUserNamePress() {},
     });
   }
 );

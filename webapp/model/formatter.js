@@ -1,4 +1,4 @@
-sap.ui.define([], function () {
+sap.ui.define([], () => {
   'use strict';
 
   return {
@@ -9,7 +9,7 @@ sap.ui.define([], function () {
      * @param {string} sValue value to be formatted
      * @returns {string} formatted currency value with 2 digits
      */
-    currencyValue: function (sValue) {
+    currencyValue(sValue) {
       if (!sValue) {
         return '';
       }
