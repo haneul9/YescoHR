@@ -1,7 +1,7 @@
 specVersion: '1.0'
+type: application
 metadata:
   name: ZUI5_YescoHR
-type: application
 # https://sap.github.io/ui5-tooling/pages/extensibility/CustomServerMiddleware/
 server:
   customMiddleware:
@@ -10,3 +10,6 @@ server:
       afterMiddleware: compression
       configuration:
         baseUri: https://services.odata.org/v2/Northwind/Northwind.svc/
+resources:
+  configuration:
+    propertiesFileSourceEncoding: UTF-8
