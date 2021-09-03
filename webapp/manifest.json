@@ -4,11 +4,7 @@
   "sap.app": {
     "id": "sap.ui.yesco",
     "type": "application",
-    "i18n": {
-      "bundleUrl": "i18n/i18n.properties",
-      "supportedLocales": ["ko"],
-      "fallbackLocale": ""
-    },
+    "i18n": "i18n/i18n.properties",
     "title": "{{appTitle}}",
     "description": "{{appDescription}}",
 
@@ -19,7 +15,7 @@
     "resources": "resources.json",
     "dataSources": {
       "mainService": {
-        "uri": "sap/opu/odata/sap/ZHR_COMMON_SRV",
+        "uri": "/sap/opu/odata/sap/ZHR_COMMON_SRV",
         "type": "OData",
         "settings": {
           "odataVersion": "2.0",
