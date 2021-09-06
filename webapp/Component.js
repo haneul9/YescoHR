@@ -32,10 +32,11 @@ sap.ui.define(
         // set the device model
         this.setModel(models.createDeviceModel(), 'device');
 
-        // set invoice model - remote
-        var oConfig = this.getMetadata().getConfig();
-        var oCommonModel = new ODataModel(oConfig.commonLocal);
-        this.setModel(oCommonModel);
+        // set common model - local or remote
+        const oConfig = this.getMetadata().getConfig();
+
+        let sCommonServiceUrl = window.location.hostname === 'localhost' ? oConfig.commonLocal : oConfig.commonRemote;
+        this.setModel(new ODataModel(sCommonServiceUrl));
 
         this.oListSelector = new ListSelector();
         this._oErrorHandler = new ErrorHandler(this);
