@@ -1,0 +1,1 @@
+sap.ui.define(["./BaseController"],e=>{"use strict";return e.extend("sap.ui.yesco.controller.DetailNotFound",{})});
