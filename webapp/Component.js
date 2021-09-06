@@ -5,13 +5,15 @@ sap.ui.define(
     './model/models',
     './controller/ListSelector',
     './controller/ErrorHandler',
+    'sap/ui/model/odata/v2/ODataModel',
   ],
   (
     UIComponent, // prettier 방지용 주석
     Device,
     models,
     ListSelector,
-    ErrorHandler
+    ErrorHandler,
+    ODataModel
   ) => {
     'use strict';
 
@@ -27,11 +29,16 @@ sap.ui.define(
        * @override
        */
       init() {
-        this.oListSelector = new ListSelector();
-        this._oErrorHandler = new ErrorHandler(this);
-
         // set the device model
         this.setModel(models.createDeviceModel(), 'device');
+
+        // set invoice model - remote
+        var oConfig = this.getMetadata().getConfig();
+        var oCommonModel = new ODataModel(oConfig.commonLocal);
+        this.setModel(oCommonModel);
+
+        this.oListSelector = new ListSelector();
+        this._oErrorHandler = new ErrorHandler(this);
 
         // call the base component's init function and create the App view
         UIComponent.prototype.init.apply(this, arguments);
@@ -49,6 +56,7 @@ sap.ui.define(
       destroy() {
         this.oListSelector.destroy();
         this._oErrorHandler.destroy();
+
         // call the base component's destroy function
         UIComponent.prototype.destroy.apply(this, arguments);
       },

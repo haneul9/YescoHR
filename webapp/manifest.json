@@ -15,7 +15,7 @@
     "resources": "resources.json",
     "dataSources": {
       "mainService": {
-        "uri": "http://localhost:8080/http://yeshrsapdev.lsyesco.co.kr:8000/sap/opu/odata/sap/ZHR_COMMON_SRV",
+        "uri": "/v2/sap/opu/odata/sap/ZHR_COMMON_SRV",
         "type": "OData",
         "settings": {
           "odataVersion": "2.0",
@@ -64,6 +64,11 @@
       }
     },
 
+    "config": {
+      "commonLocal": "/v2/sap/opu/odata/sap/ZHR_COMMON_SRV",
+      "commonRemote": "/sap/opu/odata/sap/ZHR_COMMON_SRV"
+    },
+
     "contentDensities": {
       "compact": true,
       "cozy": true
@@ -77,10 +82,6 @@
           "supportedLocales": ["ko"],
           "fallbackLocale": ""
         }
-      },
-      "": {
-        "dataSource": "mainService",
-        "preload": false
       }
     },
 
