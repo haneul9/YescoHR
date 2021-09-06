@@ -3,15 +3,19 @@
   "description": "",
   "scripts": {
     "build": "ui5 build",
-    "start": "ui5 serve -o index.html",
+    "start": "npm-run-all --parallel start:webapp proxy",
+    "start:webapp": "ui5 serve -o index.html",
+    "proxy": "node proxy.js",
     "deploy": "ui5 build && npx nwabap upload"
   },
   "devDependencies": {
     "@ui5/cli": "^2.12.1",
+    "cors-anywhere": "^0.4.4",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-jsdoc": "^36.0.7",
     "eslint-plugin-ui5": "^0.1.0",
+    "npm-run-all": "^4.1.5",
     "nwabap-ui5uploader": "^1.2.0",
     "prettier": "2.3.2",
     "ui5-middleware-simpleproxy": "^0.2.1"

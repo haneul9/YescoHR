@@ -15,7 +15,7 @@
     "resources": "resources.json",
     "dataSources": {
       "mainService": {
-        "uri": "/sap/opu/odata/sap/ZHR_COMMON_SRV",
+        "uri": "http://localhost:8080/http://yeshrsapdev.lsyesco.co.kr:8000/sap/opu/odata/sap/ZHR_COMMON_SRV",
         "type": "OData",
         "settings": {
           "odataVersion": "2.0",
