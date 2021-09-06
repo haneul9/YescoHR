@@ -6,6 +6,11 @@ metadata:
 server:
   customMiddleware:
     - name: ui5-middleware-simpleproxy
+      mountPath: /resources/
+      afterMiddleware: compression
+      configuration:
+        baseUri: https://sapui5.hana.ondemand.com/resources/
+    - name: ui5-middleware-simpleproxy
       mountPath: /v2/
       afterMiddleware: compression
       configuration:
