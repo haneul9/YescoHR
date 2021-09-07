@@ -1,6 +1,7 @@
 node_modules
 .vscode
 .vscode/settings.json
+.nwabaprc
 
 OdataTest.http
 

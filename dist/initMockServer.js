@@ -1,1 +1,0 @@
-sap.ui.define(["sap/ui/yesco/localService/mockserver","sap/m/MessageBox"],(e,s)=>{"use strict";e.init().catch(e=>{s.error(e.message)}).finally(()=>{sap.ui.require(["sap/ui/core/ComponentSupport"])})});

@@ -9,6 +9,7 @@
     "abap_bsp_text": "UI5 upload through VSCode App",
     "abap_package": "zhr1",
     "abap_transport": "YHDK900010",
+    "calcappindex": true,
     "preserve_unselected": true,
-    "git_diff_commit": "65081154d07754b35214bd2ad142f1d95098f9a6"
+    "git_diff_commit": "8d5c7bb466c14eca1e74eb7254f38f501bd7d15d"
 }
