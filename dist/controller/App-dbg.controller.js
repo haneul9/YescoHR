@@ -1,14 +1,14 @@
 sap.ui.define(
   [
     'sap/ui/model/json/JSONModel', // prettier 방지용 주석
-    'sap/ui/yesco/common/appUtils',
+    'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/controller/BaseController',
     'sap/ui/yesco/extension/lodash',
     'sap/ui/yesco/extension/moment',
   ],
   (
     JSONModel, // prettier 방지용 주석
-    appUtils,
+    AppUtils,
     BaseController,
     lodashjs,
     momentjs
@@ -25,7 +25,7 @@ sap.ui.define(
         this.debug(_.join(['1', '2', '3'], '~'));
         this.debug('lodash');
 
-        this.debug(appUtils.getDevice());
+        this.debug(AppUtils.getDevice());
 
         const iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
 
@@ -42,14 +42,15 @@ sap.ui.define(
         });
         this.setModel(oAppViewModel, 'appView');
 
-        const fnSetAppNotBusy = function () {
+        const fnSetAppNotBusy = function fnSetAppNotBusy() {
           oAppViewModel.setProperty('/busy', false);
           oAppViewModel.setProperty('/delay', iOriginalBusyDelay);
         };
 
         // since then() has no "reject"-path attach to the MetadataFailed-Event to disable the busy indicator in case of an error
-        this.getOwnerComponent().getModel().metadataLoaded().then(fnSetAppNotBusy);
-        this.getOwnerComponent().getModel().attachMetadataFailed(fnSetAppNotBusy);
+        const model = this.getOwnerComponent().getModel();
+        model.metadataLoaded().then(fnSetAppNotBusy);
+        model.attachMetadataFailed(fnSetAppNotBusy);
 
         // apply content density mode to root view
         this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());

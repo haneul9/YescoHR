@@ -4,12 +4,14 @@ sap.ui.define(
     'sap/ui/core/mvc/Controller',
     'sap/ui/core/routing/History',
     'sap/ui/core/UIComponent',
+    'sap/ui/yesco/common/AppUtils',
   ],
   (
     Log, // prettier 방지용 주석
     Controller,
     History,
-    UIComponent
+    UIComponent,
+    AppUtils
   ) => {
     'use strict';
 
@@ -22,6 +24,17 @@ sap.ui.define(
       getRouter() {
         // return this.getOwnerComponent().getRouter();
         return UIComponent.getRouterFor(this);
+      },
+
+      /**
+       * Service URL for Model
+       * @public
+       * @param {string} sServiceName a service name. e.g. ZHR_COMMON_SRV
+       * @param {object} oUIComponent component object. e.g. this.getOwnerComponent()
+       * @returns {string} a service URL. e.g. /sap/opu/odata/sap/ZHR_COMMON_SRV
+       */
+      getServiceUrl(...args) {
+        return AppUtils.getServiceUrl(...args);
       },
 
       /**
@@ -78,7 +91,7 @@ sap.ui.define(
       },
 
       debug(...args) {
-        setTimeout(() => console.log(...args), 0);
+        return AppUtils.debug(...args);
       },
     });
   }

@@ -2,18 +2,20 @@ sap.ui.define(
   [
     'sap/ui/core/UIComponent', // prettier 방지용 주석
     'sap/ui/Device',
-    './model/models',
-    './controller/ListSelector',
-    './controller/ErrorHandler',
     'sap/ui/model/odata/v2/ODataModel',
+    'sap/ui/yesco/common/AppUtils',
+    './model/models',
+    './controller/ErrorHandler',
+    './controller/ListSelector',
   ],
   (
     UIComponent, // prettier 방지용 주석
     Device,
+    ODataModel,
+    AppUtils,
     models,
-    ListSelector,
     ErrorHandler,
-    ODataModel
+    ListSelector
   ) => {
     'use strict';
 
@@ -32,10 +34,9 @@ sap.ui.define(
         // set the device model
         this.setModel(models.createDeviceModel(), 'device');
 
-        // set invoice model - remote
-        var oConfig = this.getMetadata().getConfig();
-        var oCommonModel = new ODataModel(oConfig.commonLocal);
-        this.setModel(oCommonModel);
+        // set common model
+        const sCommonServiceUrl = AppUtils.getServiceUrl('ZHR_COMMON_SRV', this);
+        this.setModel(new ODataModel(sCommonServiceUrl));
 
         this.oListSelector = new ListSelector();
         this._oErrorHandler = new ErrorHandler(this);
@@ -56,6 +57,7 @@ sap.ui.define(
       destroy() {
         this.oListSelector.destroy();
         this._oErrorHandler.destroy();
+
         // call the base component's destroy function
         UIComponent.prototype.destroy.apply(this, arguments);
       },
