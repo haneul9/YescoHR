@@ -5,9 +5,10 @@
     "conn_client" : "100",
     "conn_user": "HR11",
     "conn_password": "qwert!2345",
-    "git_diff_commit": "74d4129bdb89c55f6d7be4df91fcef7f2044403a",
-    "abap_package": "$TMP",
     "abap_bsp": "ZUI5_YESCOHR",
     "abap_bsp_text": "UI5 upload through VSCode App",
-    "abap_transport": "YHDK900010"
+    "abap_package": "zhr1",
+    "abap_transport": "YHDK900010",
+    "preserve_unselected": true,
+    "git_diff_commit": "65081154d07754b35214bd2ad142f1d95098f9a6"
 }
