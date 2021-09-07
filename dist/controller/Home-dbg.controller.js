@@ -17,7 +17,7 @@ sap.ui.define(
 
         oModel.read('/EmpLoginInfoSet', {
           filters: [
-            new Filter('Pernr', FilterOperator.EQ, '1'), //
+            new Filter('Pernr', FilterOperator.EQ, '1'), // prettier 방지용 주석
           ],
           success: (oData, response) => {
             this.debug(oData, response);
