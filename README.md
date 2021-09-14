@@ -49,14 +49,16 @@ date: "1 September 2021"
 ## 3. 명명규칙
 ---
 ### 3.1 폴더 구조
-    /webapp <ROOT>
-        /common <공통 Script>
-        /control <Custom UI5 Object>
-        /controller <SAPUI5 Controller>
-        /css <Page Style>
-        /fragment <SAPUI5 Fragment>
-        /libs <External Library>
-        /view <SAPUI5 View>
+```js
+|-+ webapp //ROOT
+  |-+ common //공통 Script
+  |-+ control //Custom UI5 Object
+  |-+ controller //SAPUI5 Controller
+  |-+ css //Page Style
+  |-+ fragment //SAPUI5 Fragment
+  |-+ libs //External Library
+  |-+ view //SAPUI5 View
+```
 
 **[⬆ back to top](#목차)**
 <div class="page"/>
