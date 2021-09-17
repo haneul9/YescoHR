@@ -54,7 +54,7 @@
     },
 
     "dependencies": {
-      "minUI5Version": "1.66.0",
+      "minUI5Version": "1.72.0",
       "libs": {
         "sap.ui.core": {},
         "sap.m": {},
@@ -87,12 +87,17 @@
 
     "resources": {
       "css": [
-        {
-          "uri": "css/style.css"
-        },
-        {
-          "uri": "css/placeholder.css"
-        }
+        { "uri": "css/noto-sans-kr.css" },
+        { "uri": "css/style.css" },
+        { "uri": "css/placeholder.css" },
+        { "uri": "css/util/font-size.css" },
+        { "uri": "css/util/font-weight.css" },
+        { "uri": "css/util/line-height.css" },
+        { "uri": "css/util/margin.css" },
+        { "uri": "css/util/padding.css" },
+        { "uri": "css/util/border.css" },
+        { "uri": "css/util/width-height.css" },
+        { "uri": "localService/RevealGrid.css" }
       ]
     },
 

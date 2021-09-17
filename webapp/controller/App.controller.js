@@ -1,13 +1,15 @@
 sap.ui.define(
   [
-    'sap/ui/model/json/JSONModel', // prettier 방지용 주석
+    // prettier 방지용 주석
+    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/controller/BaseController',
     'sap/ui/yesco/extension/lodash',
     'sap/ui/yesco/extension/moment',
   ],
   (
-    JSONModel, // prettier 방지용 주석
+    // prettier 방지용 주석
+    JSONModel,
     AppUtils,
     BaseController,
     lodashjs,
@@ -32,13 +34,6 @@ sap.ui.define(
         const oAppViewModel = new JSONModel({
           busy: false,
           delay: 0,
-          layout: 'OneColumn',
-          previousLayout: '',
-          actionButtonsInfo: {
-            midColumn: {
-              fullScreen: false,
-            },
-          },
         });
         this.setModel(oAppViewModel, 'appView');
 

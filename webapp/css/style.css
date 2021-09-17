@@ -1,7 +1,6 @@
-/*  ProductRating */
-.myAppDemoWTProductRating {
-  padding: 0.75rem;
-}
-.myAppDemoWTProductRating .sapMRI {
-  vertical-align: initial;
-}
+@charset "utf-8";
+
+html *:not(.sapUiIcon):not(i) { font-family: NotoSansKR !important }
+
+.sapUiCal.px-0 .sapUiCalMonthView { padding-right: 0 !important; padding-left: 0 !important }
+.font-1b-rem .sapMBtnInner { font-size: 1.125rem }

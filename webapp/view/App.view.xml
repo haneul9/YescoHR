@@ -1,10 +1,11 @@
 <mvc:View
 	controllerName="sap.ui.yesco.controller.App"
-	displayBlock="true"
-	height="100%"
 	xmlns="sap.m"
-	xmlns:tnt="sap.tnt"
-	xmlns:mvc="sap.ui.core.mvc">
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:f="sap.f"
+	height="100%"
+	displayBlock="true">
+<!--
 	<tnt:ToolHeader>
 		<Button
 			icon="sap-icon://home"
@@ -121,8 +122,10 @@
 			</items>
 		</IconTabHeader>
 	</tnt:ToolHeader>
+-->
 	<App
 		id="app"
+		autoFocus="false"
 		busy="{appView>/busy}"
 		busyIndicatorDelay="{appView>/delay}" />
 </mvc:View>
