@@ -2,130 +2,35 @@
 	controllerName="sap.ui.yesco.controller.App"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:f="sap.f"
-	height="100%"
-	displayBlock="true">
-<!--
-	<tnt:ToolHeader>
-		<Button
-			icon="sap-icon://home"
-			type="Transparent"
-			press="navigateToHome">
+	xmlns:control="sap.ui.yesco.control"
+	displayBlock="true"
+>
+<OverflowToolbar id="homeMenu" asyncMode="true" busy="{/busy}" busyIndicatorDelay="{/delay}">
+		<ImageContent
+			class="logo"
+			src="image/logo_yesco.gif"
+			description="yesco eHR Home"
+			press=".onHomePress"
+		>
 			<layoutData>
-				<OverflowToolbarLayoutData priority="NeverOverflow" />
+				<OverflowToolbarLayoutData priority="NeverOverflow"/>
+			</layoutData>
+		</ImageContent>
+		<ToolbarSpacer/>
+		<!-- Home Menu Position -->
+		<ToolbarSpacer/>
+		<Button icon="sap-icon://group-2" type="Transparent"/>
+		<Button icon="sap-icon://action-settings" type="Transparent">
+			<layoutData>
+				<OverflowToolbarLayoutData priority="NeverOverflow"/>
 			</layoutData>
 		</Button>
-		<ToolbarSpacer width="20px" />
-		<Button
-			text="Home"
-			type="Transparent"
-			id="home"
-			press="navigateToHome">
-			<layoutData>
-				<OverflowToolbarLayoutData priority="Low" />
-			</layoutData>
-		</Button>
-		<Button
-			text="Carousel"
-			type="Transparent"
-			press="navigateToCarousel">
-			<layoutData>
-				<OverflowToolbarLayoutData priority="Low" />
-			</layoutData>
-		</Button>
-		<Button
-			text="JSON Data"
-			type="Transparent"
-			press="navigateToUserForm">
-			<layoutData>
-				<OverflowToolbarLayoutData priority="Low" />
-			</layoutData>
-		</Button>
-		<Button
-			text="Resource Data"
-			type="Transparent"
-			press="navigateToAppConfig">
-			<layoutData>
-				<OverflowToolbarLayoutData priority="Low" />
-			</layoutData>
-		</Button>
-		<Button
-			text="OData"
-			type="Transparent">
-			<layoutData>
-				<OverflowToolbarLayoutData priority="Low" />
-			</layoutData>
-		</Button>
-		<Button
-			text="Routing"
-			type="Transparent"
-			press="navigateToRouting">
-			<layoutData>
-				<OverflowToolbarLayoutData priority="Low" />
-			</layoutData>
-		</Button>
-		<Button
-			text="List"
-			type="Transparent">
-			<layoutData>
-				<OverflowToolbarLayoutData priority="Low" />
-			</layoutData>
-		</Button>
-		<Button
-			text="Tools"
-			type="Transparent">
-			<layoutData>
-				<OverflowToolbarLayoutData priority="Low" />
-			</layoutData>
-		</Button>
-		<tnt:ToolHeaderUtilitySeparator/>
-		<ToolbarSpacer>
-			<layoutData>
-				<OverflowToolbarLayoutData
-					priority="NeverOverflow"
-					minWidth="20px"
-				/>
-			</layoutData>
-		</ToolbarSpacer>
-		<Button
-			text="Alan Smith"
-			type="Transparent"
-			press="onUserNamePress">
-			<layoutData>
-				<OverflowToolbarLayoutData priority="NeverOverflow" />
-			</layoutData>
-		</Button>
-		<Button
-			icon="sap-icon://home"
-			type="Transparent"
-			press="onHomePress">
-			<layoutData>
-				<OverflowToolbarLayoutData priority="NeverOverflow" />
-			</layoutData>
-		</Button>
-		<IconTabHeader
-			id="iconTabHeader"
-			selectedKey="invalidKey"
-			select="onSelectTab"
-			backgroundDesign="Transparent">
-			<layoutData>
-				<OverflowToolbarLayoutData
-					priority="NeverOverflow"
-					shrinkable="true"
-				/>
-			</layoutData>
-			<items>
-				<IconTabFilter key="itf1" text="Documentation" />
-				<IconTabFilter key="itf2" text="Explored" />
-				<IconTabFilter key="itf3" text="API Reference" />
-				<IconTabFilter key="itf4" text="Demo Apps" />
-			</items>
-		</IconTabHeader>
-	</tnt:ToolHeader>
--->
+	</OverflowToolbar>
 	<App
 		id="app"
 		autoFocus="false"
 		busy="{appView>/busy}"
-		busyIndicatorDelay="{appView>/delay}" />
+		busyIndicatorDelay="{appView>/delay}"
+		class="app-body"
+	/>
 </mvc:View>

@@ -1,6 +1,7 @@
 sap.ui.define(
   [
-    'sap/ui/core/UIComponent', // prettier 방지용 주석
+    // prettier 방지용 주석
+    'sap/ui/core/UIComponent',
     'sap/ui/Device',
     'sap/ui/model/odata/v2/ODataModel',
     'sap/ui/yesco/common/AppUtils',
@@ -9,7 +10,8 @@ sap.ui.define(
     './controller/ListSelector',
   ],
   (
-    UIComponent, // prettier 방지용 주석
+    // prettier 방지용 주석
+    UIComponent,
     Device,
     ODataModel,
     AppUtils,
@@ -19,9 +21,27 @@ sap.ui.define(
   ) => {
     'use strict';
 
+    const urlPrefix = (window.location.hostname === 'localhost' ? '/proxy' : '') + '/sap/opu/odata/sap/';
+
     return UIComponent.extend('sap.ui.yesco.Component', {
       metadata: {
         manifest: 'json',
+        properties: {
+          urlPrefix: {
+            name: 'urlPrefix',
+            type: 'string',
+            defaultValue: urlPrefix,
+          },
+          odataServiceNames: {
+            name: 'odataServiceNames',
+            type: 'array',
+            defaultValue: [
+              // prettier 방지용 주석
+              { serviceName: 'ZHR_COMMON_SRV' },
+              { serviceName: 'ZHR_BENEFIT_SRV', modelName: 'benefit' },
+            ],
+          },
+        },
       },
 
       /**
@@ -30,19 +50,22 @@ sap.ui.define(
        * @public
        * @override
        */
-      init() {
+      init(...args) {
         // set the device model
         this.setModel(models.createDeviceModel(), 'device');
 
-        // set common model
-        const sCommonServiceUrl = AppUtils.getServiceUrl('ZHR_COMMON_SRV', this);
-        this.setModel(new ODataModel(sCommonServiceUrl));
+        // model preload
+        const aServiceNames = this.getOdataServiceNames();
+        aServiceNames.forEach(({ serviceName: sServiceName, modelName: sModelName }) => {
+          const sServiceUrl = AppUtils.getServiceUrl(sServiceName, this);
+          this.setModel(new ODataModel(sServiceUrl), sModelName);
+        });
 
         this.oListSelector = new ListSelector();
         this._oErrorHandler = new ErrorHandler(this);
 
         // call the base component's init function and create the App view
-        UIComponent.prototype.init.apply(this, arguments);
+        UIComponent.prototype.init.apply(this, args);
 
         // create the views based on the url/hash
         this.getRouter().initialize();
@@ -54,12 +77,12 @@ sap.ui.define(
        * @public
        * @override
        */
-      destroy() {
+      destroy(...args) {
         this.oListSelector.destroy();
         this._oErrorHandler.destroy();
 
         // call the base component's destroy function
-        UIComponent.prototype.destroy.apply(this, arguments);
+        UIComponent.prototype.destroy.apply(this, args);
       },
 
       /**

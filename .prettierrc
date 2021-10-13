@@ -1,7 +1,7 @@
 {
   "useTabs": false,
   "tabWidth": 2,
-  "printWidth": 300,
+  "printWidth": 200,
   "quoteProps": "as-needed",
   "singleQuote": true,
   "jsxSingleQuote": false,

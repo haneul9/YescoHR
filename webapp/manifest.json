@@ -11,16 +11,7 @@
       "version": "1.0.0"
     },
     "ach": "set-ach",
-    "resources": "resources.json",
-    "dataSources": {
-      "mainService": {
-        "uri": "/sap/opu/odata/sap/ZHR_COMMON_SRV",
-        "type": "OData",
-        "settings": {
-          "odataVersion": "2.0"
-        }
-      }
-    }
+    "resources": "resources.json"
   },
 
   "sap.fiori": {
@@ -54,18 +45,11 @@
     },
 
     "dependencies": {
-      "minUI5Version": "1.72.0",
+      "minUI5Version": "1.71.28",
       "libs": {
         "sap.ui.core": {},
         "sap.m": {},
         "sap.f": {}
-      }
-    },
-
-    "config": {
-      "urlPrefix": {
-        "local": "/v2",
-        "SICF": "/sap/opu/odata/sap/"
       }
     },
 

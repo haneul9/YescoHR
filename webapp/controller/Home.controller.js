@@ -8,9 +8,9 @@ sap.ui.define(
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
+    'sap/ui/unified/library',
     'sap/ui/unified/CalendarLegendItem',
     'sap/ui/unified/DateTypeRange',
-    'sap/ui/unified/library',
     'sap/ui/yesco/controller/BaseController',
     'sap/ui/yesco/localService/RevealGrid',
   ],
@@ -23,9 +23,9 @@ sap.ui.define(
     Filter,
     FilterOperator,
     JSONModel,
+    unifiedLibrary,
     CalendarLegendItem,
     DateTypeRange,
-    unifiedLibrary,
     BaseController,
     RevealGrid
   ) => {
@@ -33,16 +33,12 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.controller.Home', {
       onInit() {
-        setTimeout(() => {
-          const oTopMenuManifests = new JSONModel(sap.ui.require.toUrl('sap/ui/yesco/localService/topMenuManifests.json'));
-          this.byId('top-menu').setModel(oTopMenuManifests);
-        }, 0);
+        // const personalizationGridModel = new JSONModel(sap.ui.require.toUrl('sap/ui/yesco/localService/personalizationGridData.json'));
+        const personalizationGridModel = new JSONModel();
+        personalizationGridModel.loadData('localService/personalizationGridData.json');
+        this.getView().setModel(personalizationGridModel, 'personalizationGridModel');
 
-        const oCardManifests = new JSONModel(sap.ui.require.toUrl('sap/ui/yesco/localService/cardManifests.json'));
         const oGrid = this.byId('personalization-grid');
-
-        this.getView().setModel(oCardManifests, 'manifests');
-
         oGrid.addDragDropConfig(
           new DragInfo({
             sourceAggregation: 'items',
@@ -72,7 +68,7 @@ sap.ui.define(
               }
 
               oGrid.insertItem(oDragged, iDropPosition);
-              oGrid.focusItem(iDropPosition);
+              // oGrid.focusItem(iDropPosition);
             },
           })
         );

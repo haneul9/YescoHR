@@ -9,9 +9,9 @@ server:
       mountPath: /resources/
       afterMiddleware: compression
       configuration:
-        baseUri: https://sapui5.hana.ondemand.com/resources/
+        baseUri: https://sapui5.hana.ondemand.com/1.71.28/resources/
     - name: ui5-middleware-simpleproxy
-      mountPath: /v2/
+      mountPath: /proxy/
       afterMiddleware: compression
       configuration:
         secure: false

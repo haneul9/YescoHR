@@ -1,190 +1,193 @@
 <mvc:View
 	controllerName="sap.ui.yesco.controller.Home"
 	xmlns="sap.m"
-	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:cards="sap.f.cards"
 	xmlns:f="sap.f"
-	xmlns:card="sap.f.cards"
-	xmlns:u="sap.ui.unified"
-	xmlns:w="sap.ui.integration.widgets"
-	xmlns:ctrl="sap.ui.yesco.control"
-	xmlns:template="http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1">
-	<Page enableScrolling="false">
-		<customHeader>
-			<OverflowToolbar design="Transparent">
-				<Title text="Title and Actions" />
-				<ToolbarSpacer />
-				<HBox
-					id="top-menu"
-					justifyContent="SpaceBetween"
-					busyIndicatorDelay="0"
-					busy="true">
-					<template:repeat list="{/items}" var="menu">
-						<ctrl:TopMenuItem text="{menu>title}" class="px-1-rem font-1b-rem font-bold" />
-    			</template:repeat>
-					<!-- <ctrl:TopMenuItem text="근태" class="px-1-rem font-1b-rem font-bold" />
-					<ctrl:TopMenuItem text="인사" class="px-1-rem font-1b-rem font-bold" />
-					<ctrl:TopMenuItem text="급여" class="px-1-rem font-1b-rem font-bold" />
-					<ctrl:TopMenuItem text="복리후생" class="px-1-rem font-1b-rem font-bold" />
-					<ctrl:TopMenuItem text="교육/인재개발" class="px-1-rem font-1b-rem font-bold" />
-					<ctrl:TopMenuItem text="평가" class="px-1-rem font-1b-rem font-bold" />
-					<ctrl:TopMenuItem text="MSS" class="px-1-rem font-1b-rem font-bold" />
-					<ctrl:TopMenuItem text="HASS" class="px-1-rem font-1b-rem font-bold" /> -->
-				</HBox>
-				<ToolbarSpacer />
-				<Button icon="sap-icon://group-2" />
-				<Button icon="sap-icon://action-settings" />
-<!--
-				<Button text="Group 1" type="Transparent">
-					<layoutData>
-						<OverflowToolbarLayoutData priority="NeverOverflow,High,Low,AlwaysOverflow" />
-					</layoutData>
-				</Button>
-				<Label text="OverflowToolbar provides a See more (...) button for overflow.">
-					<layoutData>
-						<ToolbarLayoutData shrinkable="false" />
-					</layoutData>
-				</Label>
-				<Button text="Accept" type="Accept">
-					<layoutData>
-						<ToolbarLayoutData shrinkable="true" />
-					</layoutData>
-				</Button>
-				<Label text="This is a long non-shrinkable label">
-					<layoutData>
-						<ToolbarLayoutData shrinkable="false" />
-					</layoutData>
-				</Label>
-				<Button text="Reject" type="Reject">
-					<layoutData>
-						<ToolbarLayoutData shrinkable="true" />
-					</layoutData>
-				</Button>
-				<Button text="Big Big Big Big Big Big Big Big Button">
-					<layoutData>
-						<ToolbarLayoutData shrinkable="true" />
-					</layoutData>
-				</Button>
--->
-			</OverflowToolbar>
-			<!-- <f:ShellBar
-				title="Application Title"
-				secondTitle="Short description"
-				showCopilot="true"
-				showSearch="true"
-				showMenuButton="true"
-				showNavButton="true"
-				showNotifications="true"
-				showProductSwitcher="true"
-				notificationsNumber="2">
-				<profile>
-					<Avatar initials="UI"/>
-				</profile>
-			</f:ShellBar> -->
-		</customHeader>
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:widgets="sap.ui.integration.widgets"
+	xmlns:unified="sap.ui.unified"
+>
+	<Page
+		showHeader="false"
+		enableScrolling="false"
+	>
 		<content>
 			<ScrollContainer
 				height="100%"
-				vertical="true">
-
+				vertical="true"
+			>
 				<ToggleButton
 					id="reveal-grid-button"
 					text="Reveal Grid"
 					press="onRevealGrid"
-					class="sapUiSmallMarginBegin sapUiSmallMarginTop sapUiTinyMarginBottom" />
-
+					class="sapUiSmallMarginBegin sapUiSmallMarginTop sapUiTinyMarginBottom"
+				/>
 				<HBox justifyContent="Center">
 					<f:GridContainer
 						id="personalization-grid"
 						class="sapUiSmallMarginTopBottom mx-auto"
-						snapToRow="true">
+						snapToRow="true"
+					>
 						<f:layout>
-							<f:GridContainerSettings rowSize="150px" columns="4" columnSize="372px" gap="30px" />
+							<f:GridContainerSettings
+								rowSize="150px"
+								columns="4"
+								columnSize="372px"
+								gap="30px"
+							/>
 						</f:layout>
-						<f:layoutXL><!-- 1440px ~ -->
-							<f:GridContainerSettings rowSize="150px" columns="4" columnSize="372px" gap="30px" />
+						<f:layoutXL>
+							<!-- 1440px ~ -->
+							<f:GridContainerSettings
+								rowSize="150px"
+								columns="4"
+								columnSize="372px"
+								gap="30px"
+							/>
 						</f:layoutXL>
-						<f:layoutL><!-- 1023px ~ 1439px -->
-							<f:GridContainerSettings rowSize="150px" columns="3" columnSize="372px" gap="30px" />
+						<f:layoutL>
+							<!-- 1023px ~ 1439px -->
+							<f:GridContainerSettings
+								rowSize="150px"
+								columns="3"
+								columnSize="372px"
+								gap="30px"
+							/>
 						</f:layoutL>
-						<f:layoutM><!-- 600px ~ 1023px -->
-							<f:GridContainerSettings rowSize="150px" columns="2" columnSize="372px" gap="30px" />
+						<f:layoutM>
+							<!-- 600px ~ 1023px -->
+							<f:GridContainerSettings
+								rowSize="150px"
+								columns="2"
+								columnSize="372px"
+								gap="30px"
+							/>
 						</f:layoutM>
-						<f:layoutS><!-- 375px ~ 599px -->
-							<f:GridContainerSettings rowSize="150px" columns="1" columnSize="372px" gap="30px" />
+						<f:layoutS>
+							<!-- 375px ~ 599px -->
+							<f:GridContainerSettings
+								rowSize="150px"
+								columns="1"
+								columnSize="372px"
+								gap="30px"
+							/>
 						</f:layoutS>
-						<f:layoutXS><!-- 0 ~ 374px -->
-							<f:GridContainerSettings rowSize="150px" columns="1" columnSize="372px" gap="30px" />
+						<f:layoutXS>
+							<!-- 0 ~ 374px -->
+							<f:GridContainerSettings
+								rowSize="150px"
+								columns="1"
+								columnSize="372px"
+								gap="30px"
+							/>
 						</f:layoutXS>
-
-						<GenericTile header="Sales Fulfillment Application Title" subheader="Subtitle" width="100%">
+						<GenericTile
+							header="Sales Fulfillment Application Title"
+							subheader="Subtitle"
+							width="100%"
+						>
 							<layoutData>
-								<f:GridContainerItemLayoutData minRows="2" columns="1" />
+								<f:GridContainerItemLayoutData minRows="2"/>
 							</layoutData>
-							<TileContent unit="EUR" footer="Current Quarter">
-								<ImageContent src="sap-icon://home-share" />
+							<TileContent
+								unit="EUR"
+								footer="Current Quarter"
+							>
+								<ImageContent src="sap-icon://home-share"/>
 							</TileContent>
 						</GenericTile>
-
-						<w:Card manifest="{manifests>/listContent/largeList}">
-							<w:layoutData>
-								<f:GridContainerItemLayoutData minRows="2" columns="2" />
-							</w:layoutData>
-						</w:Card>
-
+						<widgets:Card manifest="{personalizationGridModel>/listContent/largeList}">
+							<widgets:layoutData>
+								<f:GridContainerItemLayoutData
+									minRows="2"
+									columns="2"
+								/>
+							</widgets:layoutData>
+						</widgets:Card>
 						<f:Card>
 							<f:layoutData>
-								<f:GridContainerItemLayoutData minRows="3" columns="1" />
+								<f:GridContainerItemLayoutData minRows="3"/>
 							</f:layoutData>
 							<f:header>
-								<card:Header title="My Team Calendar" />
+								<cards:Header title="My Team Calendar"/>
 							</f:header>
 							<f:content>
-								<HBox width="100%" justifyContent="Center">
+								<HBox
+									width="100%"
+									justifyContent="Center"
+								>
 									<VBox>
-										<u:Calendar id="team-calendar" legend="team-calendar-legend" showWeekNumbers="false" class="px-0" />
-										<ToggleButton text="Special Days" press="handleShowSpecialDays" class="sapUiSmallMarginBottom sapUiNoPadding" />
-										<u:CalendarLegend id="team-calendar-legend" columnWidth="100px" standardItems="{= 'Today,Selected,WorkingDay,NonWorkingDay'.split(',') }" class="sapUiNoPadding" />
+										<unified:Calendar
+											id="team-calendar"
+											legend="team-calendar-legend"
+											showWeekNumbers="false"
+											class="px-0"
+										/>
+										<ToggleButton
+											text="Special Days"
+											press="handleShowSpecialDays"
+											class="sapUiSmallMarginBottom sapUiNoPadding"
+										/>
+										<unified:CalendarLegend
+											id="team-calendar-legend"
+											columnWidth="100px"
+											standardItems="{= 'Today,Selected,WorkingDay,NonWorkingDay'.split(',') }"
+											class="sapUiNoPadding"
+										/>
 									</VBox>
 								</HBox>
 							</f:content>
 						</f:Card>
-
-						<w:Card manifest="{manifests>/listContent/smallList}">
-							<w:layoutData>
-								<f:GridContainerItemLayoutData minRows="2" columns="1" />
-							</w:layoutData>
-						</w:Card>
-
-						<w:Card manifest="{manifests>/listContent/mediumList}">
-							<w:layoutData>
-								<f:GridContainerItemLayoutData minRows="3" columns="1" />
-							</w:layoutData>
-						</w:Card>
-
-						<GenericTile header="Cumulative Totals" subheader="Subtitle" width="100%">
+						<widgets:Card manifest="{personalizationGridModel>/listContent/smallList}">
+							<widgets:layoutData>
+								<f:GridContainerItemLayoutData minRows="2"/>
+							</widgets:layoutData>
+						</widgets:Card>
+						<widgets:Card manifest="{personalizationGridModel>/listContent/mediumList}">
+							<widgets:layoutData>
+								<f:GridContainerItemLayoutData minRows="3"/>
+							</widgets:layoutData>
+						</widgets:Card>
+						<GenericTile
+							header="Cumulative Totals"
+							subheader="Subtitle"
+							width="100%"
+						>
 							<layoutData>
-								<f:GridContainerItemLayoutData minRows="2" columns="1" />
+								<f:GridContainerItemLayoutData minRows="2"/>
 							</layoutData>
-							<TileContent unit="Unit" footer="Footer Text">
-								<NumericContent value="12" />
+							<TileContent
+								unit="Unit"
+								footer="Footer Text"
+							>
+								<NumericContent value="12"/>
 							</TileContent>
 						</GenericTile>
-
-						<GenericTile header="Travel and Expenses" subheader="Access Concur" width="100%">
+						<GenericTile
+							header="Travel and Expenses"
+							subheader="Access Concur"
+							width="100%"
+						>
 							<layoutData>
-								<f:GridContainerItemLayoutData minRows="2" columns="1" />
+								<f:GridContainerItemLayoutData minRows="2"/>
 							</layoutData>
 							<TileContent>
-								<ImageContent src="sap-icon://travel-expense" />
+								<ImageContent src="sap-icon://travel-expense"/>
 							</TileContent>
 						</GenericTile>
-
-						<GenericTile header="Success Map" subheader="Access Success Map" width="100%">
+						<GenericTile
+							header="Success Map"
+							subheader="Access Success Map"
+							width="100%"
+						>
 							<layoutData>
-								<f:GridContainerItemLayoutData minRows="2" columns="1" />
+								<f:GridContainerItemLayoutData minRows="2"/>
 							</layoutData>
-							<TileContent unit="EUR" footer="Current Quarter">
-								<ImageContent src="sap-icon://map-3" />
+							<TileContent
+								unit="EUR"
+								footer="Current Quarter"
+							>
+								<ImageContent src="sap-icon://map-3"/>
 							</TileContent>
 						</GenericTile>
 					</f:GridContainer>

@@ -13,7 +13,7 @@
     "eslint-plugin-jsdoc": "^36.0.7",
     "eslint-plugin-ui5": "^0.1.0",
     "nwabap-ui5uploader": "^1.2.0",
-    "prettier": "2.3.2",
+    "prettier": "^2.4.1",
     "ui5-middleware-proxy": "0.0.11",
     "ui5-middleware-simpleproxy": "^0.2.1"
   },
