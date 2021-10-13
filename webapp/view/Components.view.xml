@@ -1,0 +1,873 @@
+<mvc:View
+	controllerName="sap.ui.yesco.controller.Components"
+	xmlns="sap.m"
+	xmlns:table="sap.ui.table"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:u="sap.ui.unified"
+	xmlns:yesco="sap.ui.yesco.control"
+>
+	<Page
+		backgroundDesign="Standard"
+		contentOnlyBusy="false"
+		enableScrolling="true"
+		floatingFooter="false"
+		navButtonTooltip=""
+		showFooter="true"
+		showHeader="true"
+		showNavButton="false"
+		showSubHeader="true"
+		title="Components"
+		titleLevel="Auto"
+	>
+		<content>
+			<VBox width="auto">
+				<items>
+					<HBox
+						class="sapUiResponsiveMargin"
+						width="auto"
+					>
+						<items>
+							<VBox>
+								<items>
+									<Title
+										level="H3"
+										text="Label"
+									/>
+									<HBox>
+										<items>
+											<Label
+												text="Label A (required)"
+												labelFor="input-a"
+											/>
+											<Input
+												id="input-a"
+												required="true"
+											/>
+											<Label
+												text="Label B (bold)"
+												labelFor="input-b"
+												design="Bold"
+											/>
+											<Input id="input-b"/>
+											<Label
+												text="Label C (normal)"
+												labelFor="input-c"
+											/>
+											<Input id="input-c"/>
+										</items>
+									</HBox>
+								</items>
+							</VBox>
+						</items>
+					</HBox>
+					<HBox
+						class="sapUiResponsiveMargin"
+						width="auto"
+					>
+						<items>
+							<VBox>
+								<items>
+									<Title
+										level="H3"
+										text="Input"
+									/>
+									<HBox>
+										<items>
+											<Input
+												id="nameInput"
+												placeholder="이름을 입력하세요."
+												valueStateText="Name must not be empty. Maximum 10 characters."
+												value="{
+													path: '/name',
+													type: 'sap.ui.model.type.String',
+													constraints: {
+														minLength: 1,
+														maxLength: 10
+													}
+												}"
+											/>
+											<Input
+												id="productInput"
+												placeholder="Enter product"
+												showSuggestion="true"
+												showValueHelp="true"
+												valueHelpRequest=".onValueHelpRequest"
+												suggestionItems="{/ProductCollection}"
+												class="test0"
+											>
+												<suggestionItems>
+													<core:Item text="{Name}"/>
+												</suggestionItems>
+											</Input>
+											<Input
+												value="10"
+												description="명"
+												width="100px"
+												fieldWidth="60%"
+											/>
+											<Input
+												id="InputNoEdit"
+												value="No edit"
+												type="Text"
+												placeholder="Product"
+												enabled="true"
+												editable="false"
+											/>
+											<Input
+												id="InputDisabled"
+												value="Disabled"
+												type="Text"
+												placeholder="Product"
+												enabled="false"
+											/>
+											<Input
+												valueState="Success"
+												value="Value state Success"
+											/>
+											<Input
+												valueState="Warning"
+												valueStateText="Warning message. Extra long text used as a warning message. Extra long text used as a warning message - 2. Extra long text used as a warning message - 3. Extra long text used as a warning message - 4. Extra long text used as a warning message - 5."
+												value="Value state Warning."
+											/>
+											<Input
+												valueState="Error"
+												value="Value state Error"
+											/>
+											<Input
+												valueState="Information"
+												value="Value state Information"
+											/>
+										</items>
+									</HBox>
+								</items>
+							</VBox>
+						</items>
+					</HBox>
+					<HBox
+						class="sapUiResponsiveMargin"
+						width="auto"
+					>
+						<items>
+							<VBox>
+								<items>
+									<Title
+										level="H3"
+										text="TextArea"
+									/>
+									<HBox>
+										<items>
+											<TextArea
+												value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat"
+												rows="5"
+												width="500px"
+											/>
+										</items>
+									</HBox>
+								</items>
+							</VBox>
+						</items>
+					</HBox>
+					<HBox
+						class="sapUiResponsiveMargin"
+						width="auto"
+					>
+						<items>
+							<VBox>
+								<items>
+									<Title
+										level="H3"
+										text="ComboBox and Select"
+									/>
+									<HBox>
+										<items>
+											<ComboBox items="{
+												path: '/ProductCollection',
+												sorter: {
+													path: 'text'
+												},
+												templateShareable: true
+											}">
+												<core:Item
+													key="{ProductId}"
+													text="{Name}"
+												/>
+											</ComboBox>
+											<Select
+												forceSelection="false"
+												selectedKey="{/SelectedProduct}"
+												items="{
+													path: '/ProductCollection',
+													sorter: {
+														path: 'Name'
+													},
+													templateShareable: true
+												}"
+											>
+												<core:Item
+													key="{ProductId}"
+													text="{Name}"
+												/>
+											</Select>
+											<MultiComboBox
+												selectionChange="handleSelectionChange"
+												selectionFinish="handleSelectionFinish"
+												width="350px"
+												items="{
+													path: '/ProductCollection',
+													sorter: {
+														path: 'Name'
+													},
+													templateShareable: true
+												}"
+											>
+												<core:Item
+													key="{ProductId}"
+													text="{Name}"
+												/>
+											</MultiComboBox>
+										</items>
+									</HBox>
+								</items>
+							</VBox>
+						</items>
+					</HBox>
+					<HBox
+						class="sapUiResponsiveMargin"
+						width="auto"
+					>
+						<items>
+							<VBox>
+								<items>
+									<Title
+										level="H3"
+										text="Radio Button"
+									/>
+									<HBox>
+										<items>
+											<RadioButtonGroup
+												id="rbg1"
+												width="100%"
+												columns="6"
+												class="sapUiMediumMarginBottom"
+											>
+												<yesco:RadioButton
+													id="RB1-1"
+													text="Long Option Number 1"
+													outerSize="50%"
+													innerSize="35%"
+												/>
+												<yesco:RadioButton
+													id="RB1-2"
+													text="Option 2"
+													enabled="false"
+													outerSize="50%"
+													innerSize="35%"
+												/>
+												<yesco:RadioButton
+													id="RB1-3"
+													text="Nr. 3"
+													editable="false"
+													outerSize="50%"
+													innerSize="35%"
+												/>
+												<yesco:RadioButton
+													id="RB1-4"
+													text="Long Option 4"
+													outerSize="50%"
+													innerSize="35%"
+												/>
+												<yesco:RadioButton
+													id="RB1-5"
+													text="Option 5"
+													outerSize="50%"
+													innerSize="35%"
+												/>
+												<yesco:RadioButton
+													id="RB1-6"
+													text="Nr. 6"
+													outerSize="50%"
+													innerSize="35%"
+												/>
+											</RadioButtonGroup>
+										</items>
+									</HBox>
+								</items>
+							</VBox>
+						</items>
+					</HBox>
+					<HBox
+						class="sapUiResponsiveMargin"
+						width="auto"
+					>
+						<items>
+							<VBox>
+								<items>
+									<Title
+										level="H3"
+										text="CheckBox"
+									/>
+									<HBox>
+										<items>
+											<CheckBox
+												text="Option a"
+												selected="true"
+											/>
+											<CheckBox text="Option b"/>
+											<CheckBox
+												text="Option c"
+												selected="true"
+											/>
+											<CheckBox text="Option d"/>
+											<CheckBox
+												text="Option e"
+												enabled="false"
+											/>
+											<CheckBox
+												text="Option partially selected"
+												selected="true"
+												partiallySelected="true"
+											/>
+											<CheckBox
+												text="Warning"
+												valueState="Warning"
+											/>
+											<CheckBox
+												text="Warning disabled"
+												valueState="Warning"
+												enabled="false"
+												selected="true"
+											/>
+											<CheckBox
+												text="Error"
+												valueState="Error"
+											/>
+											<CheckBox
+												text="Error disabled"
+												valueState="Error"
+												enabled="false"
+												selected="true"
+											/>
+											<CheckBox
+												text="Information"
+												valueState="Information"
+											/>
+											<CheckBox
+												text="Information disabled"
+												valueState="Information"
+												enabled="false"
+												selected="true"
+											/>
+											<CheckBox
+												text="Checkbox with wrapping='true' and long text"
+												wrapping="true"
+												width="150px"
+											/>
+										</items>
+									</HBox>
+								</items>
+							</VBox>
+						</items>
+					</HBox>
+					<HBox
+						class="sapUiResponsiveMargin"
+						width="auto"
+					>
+						<items>
+							<VBox>
+								<items>
+									<Title
+										level="H3"
+										text="Date and Time Picker "
+									/>
+									<HBox>
+										<items>
+											<DatePicker
+												id="DP1"
+												placeholder="Enter Date"
+												class="sapUiSmallMarginBottom test1"
+											/>
+											<DateRangeSelection
+												id="DRS2"
+												class="test2"
+											/>
+											<TimePicker
+												id="TP1"
+												width="100%"
+												placeholder="Enter Time"
+												class="test3"
+											/>
+											<DateTimePicker
+												id="DTP1"
+												width="100%"
+												placeholder="Enter Date &amp; Time"
+												class="test4"
+											/>
+										</items>
+									</HBox>
+								</items>
+							</VBox>
+						</items>
+					</HBox>
+					<HBox
+						class="sapUiResponsiveMargin"
+						width="auto"
+					>
+						<items>
+							<VBox>
+								<items>
+									<Title
+										level="H3"
+										text="Switch"
+									/>
+									<HBox>
+										<items>
+											<Switch state="true">
+												<layoutData>
+													<FlexItemData growFactor="1"/>
+												</layoutData>
+											</Switch>
+											<Switch
+												state="true"
+												enabled="false"
+											>
+												<layoutData>
+													<FlexItemData growFactor="1"/>
+												</layoutData>
+											</Switch>
+											<Switch
+												state="true"
+												customTextOn=" "
+												customTextOff=" "
+											>
+												<layoutData>
+													<FlexItemData growFactor="1"/>
+												</layoutData>
+											</Switch>
+											<Switch
+												state="true"
+												customTextOn=" "
+												customTextOff=" "
+												enabled="false"
+											>
+												<layoutData>
+													<FlexItemData growFactor="1"/>
+												</layoutData>
+											</Switch>
+											<Switch
+												type="AcceptReject"
+												state="true"
+											>
+												<layoutData>
+													<FlexItemData growFactor="1"/>
+												</layoutData>
+											</Switch>
+											<Switch
+												type="AcceptReject"
+												state="true"
+												enabled="false"
+											>
+												<layoutData>
+													<FlexItemData growFactor="1"/>
+												</layoutData>
+											</Switch>
+										</items>
+									</HBox>
+								</items>
+							</VBox>
+						</items>
+					</HBox>
+					<HBox
+						class="sapUiResponsiveMargin"
+						width="auto"
+					>
+						<items>
+							<VBox>
+								<items>
+									<Title
+										level="H3"
+										text="Button"
+									/>
+									<HBox>
+										<items>
+											<Button
+												text="Default"
+												ariaDescribedBy="defaultButtonDescription genericButtonDescription"
+											>
+												<layoutData>
+													<FlexItemData growFactor="1"/>
+												</layoutData>
+											</Button>
+											<Button
+												type="Accept"
+												text="Accept"
+												ariaDescribedBy="acceptButtonDescription genericButtonDescription"
+											>
+												<layoutData>
+													<FlexItemData growFactor="1"/>
+												</layoutData>
+											</Button>
+											<Button
+												type="Reject"
+												text="Reject"
+												ariaDescribedBy="rejectButtonDescription genericButtonDescription"
+											>
+												<layoutData>
+													<FlexItemData growFactor="1"/>
+												</layoutData>
+											</Button>
+											<Button
+												text="Coming Soon"
+												ariaDescribedBy="comingSoonButtonDescription genericButtonDescription"
+												enabled="false"
+											>
+												<layoutData>
+													<FlexItemData growFactor="1"/>
+												</layoutData>
+											</Button>
+											<Button
+												type="Emphasized"
+												text="Emphasized"
+											/>
+											<Button text="Default"/>
+											<Button
+												text="Transparent"
+												type="Transparent"
+											/>
+											<Button
+												icon="sap-icon://action"
+												type="Transparent"
+												text="With Icon"
+											/>
+										</items>
+									</HBox>
+								</items>
+							</VBox>
+						</items>
+					</HBox>
+					<HBox
+						class="sapUiResponsiveMargin"
+						width="auto"
+					>
+						<items>
+							<VBox>
+								<items>
+									<Title
+										level="H3"
+										text="Message Strip"
+									/>
+									<HBox>
+										<items>
+											<MessageStrip
+												text="Default (Information) with default icon and close button:"
+												showIcon="true"
+												showCloseButton="true"
+												class="sapUiMediumMarginBottom"
+											/>
+											<MessageStrip
+												text="Error with default icon and close button:"
+												type="Error"
+												showIcon="true"
+												showCloseButton="true"
+												class="sapUiMediumMarginBottom"
+											/>
+											<MessageStrip
+												text="Warning with default icon and close button:"
+												type="Warning"
+												showIcon="true"
+												showCloseButton="true"
+												class="sapUiMediumMarginBottom"
+											/>
+										</items>
+									</HBox>
+									<HBox>
+										<items>
+											<MessageStrip
+												text="Success with default icon and close button:"
+												type="Success"
+												showIcon="true"
+												showCloseButton="true"
+												class="sapUiMediumMarginBottom"
+											/>
+											<MessageStrip
+												text="Information with default icon."
+												type="Information"
+												showIcon="true"
+												class="sapUiMediumMarginBottom"
+											/>
+										</items>
+									</HBox>
+									<HBox>
+										<items>
+											<MessageStrip
+												text="Information with custom icon"
+												type="Information"
+												showIcon="true"
+												customIcon="sap-icon://locked"
+												class="sapUiMediumMarginBottom"
+											/>
+											<MessageStrip
+												text="Error with link"
+												type="Error"
+												showCloseButton="true"
+												class="sapUiMediumMarginBottom"
+											>
+												<link>
+													<Link
+														text="Open SAP Homepage"
+														target="_blank"
+														href="http://www.sap.com"
+													/>
+												</link>
+											</MessageStrip>
+										</items>
+									</HBox>
+								</items>
+							</VBox>
+						</items>
+					</HBox>
+					<HBox
+						class="sapUiResponsiveMargin"
+						width="auto"
+					>
+						<items>
+							<VBox>
+								<items>
+									<Title
+										level="H3"
+										text="Progress Indicator"
+									/>
+									<HBox>
+										<items>
+											<ProgressIndicator
+												class="sapUiSmallMarginBottom"
+												percentValue="30"
+												displayValue="30%"
+												showValue="true"
+												state="None"
+												width="200px"
+											/>
+											<ProgressIndicator
+												class="sapUiSmallMarginBottom"
+												percentValue="50"
+												showValue="false"
+												state="Error"
+												width="200px"
+											/>
+										</items>
+									</HBox>
+									<HBox>
+										<items>
+											<ProgressIndicator
+												class="sapUiSmallMarginBottom"
+												percentValue="99"
+												displayValue="0.99GB of 1GB"
+												showValue="true"
+												state="Success"
+												width="200px"
+											/>
+											<ProgressIndicator
+												class="sapUiSmallMarginBottom"
+												percentValue="25"
+												displayValue="25%"
+												showValue="true"
+												state="Warning"
+												width="200px"
+											/>
+											<ProgressIndicator
+												class="sapUiSmallMarginBottom"
+												percentValue="40"
+												displayValue="40%"
+												showValue="true"
+												state="Information"
+												width="200px"
+											/>
+										</items>
+									</HBox>
+								</items>
+							</VBox>
+						</items>
+					</HBox>
+					<HBox
+						class="sapUiResponsiveMargin"
+						width="auto"
+					>
+						<items>
+							<VBox>
+								<items>
+									<Title
+										level="H3"
+										text="Table"
+									/>
+									<table:Table
+										width="90%"
+										rows="{/ProductCollection}"
+										selectionMode="MultiToggle"
+										visibleRowCount="7"
+										ariaLabelledBy="title"
+									>
+										<table:extension>
+											<OverflowToolbar style="Clear">
+												<Title
+													id="title"
+													text="Products"
+												/>
+											</OverflowToolbar>
+										</table:extension>
+										<table:columns>
+											<table:Column width="11rem">
+												<Label text="Product Name"/>
+												<table:template>
+													<Text
+														text="{Name}"
+														wrapping="false"
+													/>
+												</table:template>
+											</table:Column>
+											<table:Column width="11rem">
+												<Label text="Product Id"/>
+												<table:template>
+													<Input value="{ProductId}"/>
+												</table:template>
+											</table:Column>
+											<table:Column
+												width="6rem"
+												hAlign="End"
+											>
+												<Label text="Quantity"/>
+												<table:template>
+													<Label text="{Quantity}"/>
+												</table:template>
+											</table:Column>
+											<table:Column width="9rem">
+												<Label text="Status"/>
+												<table:template>
+													<ObjectStatus
+														text="{Status}"
+														state="{
+															path: 'Available'
+														}"
+													/>
+												</table:template>
+											</table:Column>
+											<table:Column width="9rem">
+												<Label text="Price"/>
+												<table:template>
+													<u:Currency
+														value="{Price}"
+														currency="{CurrencyCode}"
+													/>
+												</table:template>
+											</table:Column>
+											<table:Column width="12rem">
+												<Label text="Supplier"/>
+												<table:template>
+													<ComboBox
+														value="{SupplierName}"
+														items="{
+															path: '/Suppliers',
+															templateShareable: true
+														}"
+													>
+														<core:Item text="{Name}"/>
+													</ComboBox>
+												</table:template>
+											</table:Column>
+											<table:Column width="9rem">
+												<Label text="Image"/>
+												<table:template>
+													<Link
+														text="Show Image"
+														href="{ProductPicUrl}"
+														target="_blank"
+													/>
+												</table:template>
+											</table:Column>
+											<table:Column width="9rem">
+												<Label text="Details"/>
+												<table:template>
+													<Button text="Show Details"/>
+												</table:template>
+											</table:Column>
+											<table:Column width="7rem">
+												<Label text="Heavy Weight"/>
+												<table:template>
+													<CheckBox selected="{
+														path: 'Heavy',
+														type: 'sap.ui.model.type.String'
+													}"/>
+												</table:template>
+											</table:Column>
+											<table:Column width="12rem">
+												<Label text="Main Category"/>
+												<table:template>
+													<Select
+														selectedKey="{Category}"
+														items="{
+															path: '/Categories',
+															templateShareable: true
+														}"
+													>
+														<core:Item
+															text="{Name}"
+															key="{Name}"
+														/>
+													</Select>
+												</table:template>
+											</table:Column>
+											<table:Column width="12rem">
+												<Label text="Additional Categories"/>
+												<table:template>
+													<Select
+														selectedKey="{Category}"
+														items="{
+															path: '/Categories',
+															templateShareable: true
+														}"
+													>
+														<core:Item
+															text="{Name}"
+															key="{Name}"
+														/>
+													</Select>
+												</table:template>
+											</table:Column>
+											<table:Column
+												width="6rem"
+												hAlign="Center"
+											>
+												<Label text="Status"/>
+												<table:template>
+													<core:Icon src="{
+														path: 'Available'
+													}"/>
+												</table:template>
+											</table:Column>
+											<table:Column
+												width="11rem"
+												hAlign="Center"
+											>
+												<Label text="Delivery Date"/>
+												<table:template>
+													<DatePicker value="{
+														path: 'DeliveryDate',
+														type: 'sap.ui.model.type.Date',
+														formatOptions: {
+															source: {
+																pattern: 'timestamp'
+															}
+														}
+													}"/>
+												</table:template>
+											</table:Column>
+										</table:columns>
+									</table:Table>
+								</items>
+							</VBox>
+						</items>
+					</HBox>
+				</items>
+			</VBox>
+		</content>
+	</Page>
+</mvc:View>
