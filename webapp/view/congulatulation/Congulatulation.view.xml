@@ -1,0 +1,42 @@
+<mvc:View
+	controllerName="sap.ui.yesco.controller.congulatulation.Congulatulation"
+	xmlns="sap.m"
+	xmlns:semantic="sap.f.semantic"
+	xmlns:mvc="sap.ui.core.mvc"
+    xmlns:table="sap.ui.table"
+>
+    <VBox>
+        <HBox 
+            justifyContent="Begin"> 
+            <Label text="ESS > "/>
+            <Label text="복리후생 > "/>
+            <Label text="경조금"/>
+        </HBox>
+        <HBox 
+            justifyContent="Begin"> 
+            <Label 
+                text="신청일" 
+                design="Bold"/>
+            <DateRangeSelection 
+                id="SearchDate"/>
+            <Button text= "검색" press=".onSearch" icon="sap-icon://search"/>
+            <Button text= "신청" press=".onClick"/>
+        </HBox>
+        <!-- <HBox 
+            justifyContent="Begin"> 
+        </HBox> -->
+        <Table
+            id= "ConguTable"
+            selectionMode="None"
+            noData= "데이터없습니다."
+            enableColumnReordering= "false"
+            enableColumnFreeze= "false"
+            enableBusyIndicator= "true"
+            visibleRowCount= "1"
+            showOverlay= "false"
+            showNoData= "true"
+            width= "auto"
+            rowHeight= "37"
+            columnHeaderHeight= "38" />
+    </VBox>
+</mvc:View>
