@@ -16,24 +16,24 @@ html, body { box-sizing:border-box; overflow:hidden }
 .sapMHBox > div {margin-right: 1rem !important;}
 
 :root{
-    /* Font Color */
-        --FontColorNormal:#484c50;
-        --FontColorDisabled:#c1c3c8;
-    /* Border Color */
-        --BorderColorNormal:#c0c0c0;
-        --BorderColorHover:#1d85c8;
-        --BorderColorActive:#1d85c8;
-        --BorderColorFocus:#1d85c8;
-        --BorderColorDisabled:#d6d6d6;
-        --BorderColorReadonly:#bdbdbd;
-        --BorderColorSuccess:#28a745;
-        --BorderColorError:#dc3545;
-        --BorderColorWarning:#ffc107;
-        --BorderColorInfomation:#17a2b8;
-        /* background Color */
-            --BackgroundColorHover:#1d85c8;
-            --BackgroundColorActive:#1d85c8;
-            --BackgroundColorFocus:#1d85c8;
+/* Font Color */
+--FontColorNormal:#484c50;
+--FontColorDisabled:#c1c3c8;
+/* Border Color */
+--BorderColorNormal:#c0c0c0;
+--BorderColorHover:#1d85c8;
+--BorderColorActive:#1d85c8;
+--BorderColorFocus:#1d85c8;
+--BorderColorDisabled:#d6d6d6;
+--BorderColorReadonly:#bdbdbd;
+--BorderColorSuccess:#28a745;
+--BorderColorError:#dc3545;
+--BorderColorWarning:#ffc107;
+--BorderColorInfomation:#17a2b8;
+/* background Color */
+--BackgroundColorHover:#1d85c8;
+--BackgroundColorActive:#1d85c8;
+--BackgroundColorFocus:#1d85c8;
 }
 
 /* 공통 Scroll Bar */

@@ -5,7 +5,7 @@
 	xmlns:control="sap.ui.yesco.control"
 	displayBlock="true"
 >
-<OverflowToolbar id="homeMenu" asyncMode="true" busy="{/busy}" busyIndicatorDelay="{/delay}">
+<OverflowToolbar id="homeMenu" asyncMode="true" busy="{appView>/busy}" busyIndicatorDelay="{appView>/delay}">
 		<ImageContent
 			class="logo"
 			src="image/logo_yesco.gif"

@@ -106,7 +106,7 @@
         },
         {
           "pattern": "components",
-          "name": "Common components",
+          "name": "commonComponents",
           "target": "components"
         },
         {
@@ -123,11 +123,11 @@
           "viewLevel": 1
         },
         "components": {
-					"viewName": "Components",
-					"viewId": "components",
-					"viewLevel": 1,
-					"title": "Components"
-				},
+          "viewName": "Components",
+          "viewId": "components",
+          "viewLevel": 1,
+          "title": "Components"
+        },
         "employees": {
           "viewId": "employeeList",
           "viewPath": "sap.ui.yesco.view.employee",

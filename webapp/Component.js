@@ -23,6 +23,7 @@ sap.ui.define(
 
     const urlPrefix = (window.location.hostname === 'localhost' ? '/proxy' : '') + '/sap/opu/odata/sap/';
 
+    // class Component extends UIComponent 선언으로 실행하면 new 키워드 사용없이 invoke 할 수 없다는 에러가 발생함
     return UIComponent.extend('sap.ui.yesco.Component', {
       metadata: {
         manifest: 'json',

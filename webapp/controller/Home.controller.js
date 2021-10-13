@@ -31,7 +31,8 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.controller.Home', {
+    // return BaseController.extend('sap.ui.yesco.controller.Home', {
+    class Home extends BaseController {
       onInit() {
         // const personalizationGridModel = new JSONModel(sap.ui.require.toUrl('sap/ui/yesco/localService/personalizationGridData.json'));
         const personalizationGridModel = new JSONModel();
@@ -87,31 +88,32 @@ sap.ui.define(
         });
 
         const oModel = this.getOwnerComponent().getModel();
+        const sUrl = '/EmpLoginInfoSet';
 
-        oModel.read('/EmpLoginInfoSet', {
+        oModel.read(sUrl, {
           filters: [
-            new Filter('Pernr', FilterOperator.EQ, '1'), // prettier 방지용 주석
+            new Filter('Pernr', FilterOperator.EQ, '50007'), // prettier 방지용 주석
           ],
-          success: (oData, response) => {
-            this.debug(oData, response);
+          success: (oData, oResponse) => {
+            this.debug(`${sUrl} success.`, oData, oResponse);
           },
           error: (oError) => {
-            this.debug(oError);
+            this.debug(`${sUrl} error.`, oError);
           },
         });
-      },
+      }
 
       onNavToEmployees() {
         this.getRouter().navTo('employeeList');
-      },
+      }
 
       onRevealGrid() {
         RevealGrid.toggle('personalization-grid', this.getView());
-      },
+      }
 
       onExit() {
         RevealGrid.destroy('personalization-grid', this.getView());
-      },
+      }
 
       handleShowSpecialDays(oEvent) {
         const oTeamCalendar = this.byId('team-calendar');
@@ -151,7 +153,6 @@ sap.ui.define(
             new DateTypeRange({
               startDate: new Date('2021-09-12'),
               type: 'Type11',
-              color: '#ff0000',
             })
           );
 
@@ -159,7 +160,6 @@ sap.ui.define(
             new DateTypeRange({
               startDate: new Date('2021-09-13'),
               type: 'Type11',
-              color: '#ff69b4',
             })
           );
 
@@ -181,7 +181,9 @@ sap.ui.define(
           oTeamCalendar.destroySpecialDates();
           oTeamCalendarLegend.destroyItems();
         }
-      },
-    });
+      }
+    }
+
+    return Home;
   }
 );

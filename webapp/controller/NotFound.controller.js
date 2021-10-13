@@ -7,16 +7,17 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.controller.NotFound', {
+    // return BaseController.extend('sap.ui.yesco.controller.NotFound', {
+    class NotFound extends BaseController {
       onInit() {
         this.getRouter().getTarget('notFound').attachDisplay(this._onNotFoundDisplayed, this);
-      },
+      }
 
       _onNotFoundDisplayed(oEvent) {
         this._oData = oEvent.getParameter('data');
 
         this.getModel('appView').setProperty('/layout', 'OneColumn');
-      },
+      }
 
       // override the parent's onNavBack (inherited from BaseController)
       onNavBack() {
@@ -29,7 +30,9 @@ sap.ui.define(
 
         // call the parent's onNavBack
         BaseController.prototype.onNavBack.apply(this, arguments);
-      },
-    });
+      }
+    }
+
+    return NotFound;
   }
 );

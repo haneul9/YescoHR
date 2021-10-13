@@ -1,13 +1,13 @@
 sap.ui.define(
   [
-    'sap/base/Log', // prettier 방지용 주석
+    // prettier 방지용 주석
     'sap/ui/core/mvc/Controller',
     'sap/ui/core/routing/History',
     'sap/ui/core/UIComponent',
     'sap/ui/yesco/common/AppUtils',
   ],
   (
-    Log, // prettier 방지용 주석
+    // prettier 방지용 주석
     Controller,
     History,
     UIComponent,
@@ -15,7 +15,8 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return Controller.extend('sap.ui.yesco.controller.BaseController', {
+    // return Controller.extend('sap.ui.yesco.controller.BaseController', {
+    class BaseController extends Controller {
       /**
        * Convenience method for accessing the router in every controller of the application.
        * @public
@@ -24,7 +25,7 @@ sap.ui.define(
       getRouter() {
         // return this.getOwnerComponent().getRouter();
         return UIComponent.getRouterFor(this);
-      },
+      }
 
       /**
        * Service URL for Model
@@ -35,17 +36,7 @@ sap.ui.define(
        */
       getServiceUrl(...args) {
         return AppUtils.getServiceUrl(...args);
-      },
-
-      /**
-       * Convenience method for getting the view model by name in every controller of the application.
-       * @public
-       * @param {string} sName the model name
-       * @returns {sap.ui.model.Model} the model instance
-       */
-      getModel(sName) {
-        return this.getView().getModel(sName);
-      },
+      }
 
       /**
        * Convenience method for setting the view model in every controller of the application.
@@ -54,9 +45,29 @@ sap.ui.define(
        * @param {string} sName the model name
        * @returns {sap.ui.mvc.View} the view instance
        */
-      setModel(oModel, sName) {
+      setViewModel(oModel, sName) {
         return this.getView().setModel(oModel, sName);
-      },
+      }
+
+      /**
+       * Convenience method for getting the view model by name in every controller of the application.
+       * @public
+       * @param {string} sName the model name
+       * @returns {sap.ui.model.Model} the model instance
+       */
+      getViewModel(sName) {
+        return this.getView().getModel(sName);
+      }
+
+      /**
+       * Convenience method for getting the component model by name in every controller of the application.
+       * @public
+       * @param {string} sName the model name
+       * @returns {sap.ui.model.Model} the model instance
+       */
+      getModel(sName) {
+        return this.getOwnerComponent().getModel(sName);
+      }
 
       /**
        * Convenience method for getting the resource bundle.
@@ -65,7 +76,7 @@ sap.ui.define(
        */
       getResourceBundle() {
         return this.getOwnerComponent().getModel('i18n').getResourceBundle();
-      },
+      }
 
       /**
        * Event handler for navigating back.
@@ -81,18 +92,25 @@ sap.ui.define(
         } else {
           this.getRouter().navTo('appHome', {}, true);
         }
-      },
+      }
 
       onDisplayNotFound() {
         // display the "notFound" target without changing the hash
         this.getRouter().getTargets().display('notFound', {
           fromTarget: 'home',
         });
-      },
+      }
 
+      /**
+       * Convenience method for logging.
+       * @protected
+       */
       debug(...args) {
-        return AppUtils.debug(...args);
-      },
-    });
+        AppUtils.debug(...args);
+        return this;
+      }
+    }
+
+    return BaseController;
   }
 );

@@ -10,6 +10,5 @@
     "abap_package": "zhr1",
     "abap_transport": "YHDK900010",
     "calcappindex": true,
-    "preserve_unselected": true,
-    "git_diff_commit": "ba8a28ca8e9fa476aeccd47ab45fd57fb2651929"
+    "preserve_unselected": true
 }
