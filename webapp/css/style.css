@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-html *:not(.sapUiIcon):not(.sapMMsgStripCloseButton):not(i) { font-family: NotoSansKR !important }
+html *:not(.sapUiIcon):not(.sapMMsgStripCloseButton):not(i) { font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif; }
 html, body { box-sizing:border-box; overflow:hidden }
 
 .app-body { height:calc(100% - 3rem) !important }

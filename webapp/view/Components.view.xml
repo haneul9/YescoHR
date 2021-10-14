@@ -94,7 +94,7 @@
 												showValueHelp="true"
 												valueHelpRequest=".onValueHelpRequest"
 												suggestionItems="{/ProductCollection}"
-												class="test0"
+												class="sapIcon_Search"
 											>
 												<suggestionItems>
 													<core:Item text="{Name}"/>
@@ -385,23 +385,23 @@
 											<DatePicker
 												id="DP1"
 												placeholder="Enter Date"
-												class="sapUiSmallMarginBottom test1"
+												class="sapUiSmallMarginBottom sapIcon_Date"
 											/>
 											<DateRangeSelection
 												id="DRS2"
-												class="test2"
+												class="sapIcon_Date"
 											/>
 											<TimePicker
 												id="TP1"
 												width="100%"
 												placeholder="Enter Time"
-												class="test3"
+												class="sapIcon_Time"
 											/>
 											<DateTimePicker
 												id="DTP1"
 												width="100%"
 												placeholder="Enter Date &amp; Time"
-												class="test4"
+												class="sapIcon_Datetime"
 											/>
 										</items>
 									</HBox>
@@ -849,15 +849,18 @@
 											>
 												<Label text="Delivery Date"/>
 												<table:template>
-													<DatePicker value="{
-														path: 'DeliveryDate',
-														type: 'sap.ui.model.type.Date',
-														formatOptions: {
-															source: {
-																pattern: 'timestamp'
+													<DatePicker
+														value="{
+															path: 'DeliveryDate',
+															type: 'sap.ui.model.type.Date',
+															formatOptions: {
+																source: {
+																	pattern: 'timestamp'
+																}
 															}
-														}
-													}"/>
+														}"
+														class="sapIcon_Date"
+													/>
 												</table:template>
 											</table:Column>
 										</table:columns>
