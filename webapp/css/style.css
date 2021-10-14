@@ -63,6 +63,7 @@ html.sap-desktop:not(.sapUiNativeScrollbars) ::-webkit-scrollbar-thumb{border-ra
 html.sap-desktop .sapMCb:not(.sapMCbBgDis):not(.sapMCbHasLabel):focus>.sapMCbBg{outline-style:none !important;}
 
 /* 공통 Etc Style */
+.sapMLabel{line-height:1.875rem;}
 .sapMInputBaseDisabled{opacity:1;}
 .sapMComboBox > div:hover .sapUiIcon{background:var(--BackgroundColorHover);}
 .sapMComboBox > div:hover .sapUiIcon::before{color:#fff;}
