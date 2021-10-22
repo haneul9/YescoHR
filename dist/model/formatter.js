@@ -1,1 +1,0 @@
-sap.ui.define([],()=>{"use strict";return{currencyValue(e){if(!e){return""}return parseFloat(e).toFixed(2)}}});

@@ -94,7 +94,7 @@
 												showValueHelp="true"
 												valueHelpRequest=".onValueHelpRequest"
 												suggestionItems="{/ProductCollection}"
-												class="test0"
+												class="sapIcon_Search"
 											>
 												<suggestionItems>
 													<core:Item text="{Name}"/>
@@ -385,23 +385,23 @@
 											<DatePicker
 												id="DP1"
 												placeholder="Enter Date"
-												class="sapUiSmallMarginBottom test1"
+												class="sapUiSmallMarginBottom sapIcon_Date"
 											/>
 											<DateRangeSelection
 												id="DRS2"
-												class="test2"
+												class="sapIcon_Date"
 											/>
 											<TimePicker
 												id="TP1"
 												width="100%"
 												placeholder="Enter Time"
-												class="test3"
+												class="sapIcon_Time"
 											/>
 											<DateTimePicker
 												id="DTP1"
 												width="100%"
 												placeholder="Enter Date &amp; Time"
-												class="test4"
+												class="sapIcon_Datetime"
 											/>
 										</items>
 									</HBox>
@@ -849,15 +849,200 @@
 											>
 												<Label text="Delivery Date"/>
 												<table:template>
-													<DatePicker value="{
-														path: 'DeliveryDate',
-														type: 'sap.ui.model.type.Date',
-														formatOptions: {
-															source: {
-																pattern: 'timestamp'
+													<DatePicker
+														value="{
+															path: 'DeliveryDate',
+															type: 'sap.ui.model.type.Date',
+															formatOptions: {
+																source: {
+																	pattern: 'timestamp'
+																}
 															}
-														}
+														}"
+														class="sapIcon_Date"
+													/>
+												</table:template>
+											</table:Column>
+										</table:columns>
+									</table:Table>
+								</items>
+							</VBox>
+						</items>
+					</HBox>
+					<HBox
+						class="sapUiResponsiveMargin"
+						width="auto"
+					>
+						<items>
+							<VBox>
+								<items>
+									<Title
+										level="H3"
+										text="Table fixed column"
+									/>
+									<table:Table
+										width="90%"
+										rows="{/ProductCollection}"
+										selectionMode="MultiToggle"
+										visibleRowCount="7"
+										ariaLabelledBy="title"
+										fixedColumnCount="2"
+									>
+										<table:extension>
+											<OverflowToolbar style="Clear">
+												<Title
+													id="title2"
+													text="Products"
+												/>
+											</OverflowToolbar>
+										</table:extension>
+										<table:columns>
+											<table:Column width="11rem">
+												<Label text="Product Name"/>
+												<table:template>
+													<Text
+														text="{Name}"
+														wrapping="false"
+													/>
+												</table:template>
+											</table:Column>
+											<table:Column width="11rem">
+												<Label text="Product Id"/>
+												<table:template>
+													<Input value="{ProductId}"/>
+												</table:template>
+											</table:Column>
+											<table:Column
+												width="6rem"
+												hAlign="End"
+											>
+												<Label text="Quantity"/>
+												<table:template>
+													<Label text="{Quantity}"/>
+												</table:template>
+											</table:Column>
+											<table:Column width="9rem">
+												<Label text="Status"/>
+												<table:template>
+													<ObjectStatus
+														text="{Status}"
+														state="{
+															path: 'Available'
+														}"
+													/>
+												</table:template>
+											</table:Column>
+											<table:Column width="9rem">
+												<Label text="Price"/>
+												<table:template>
+													<u:Currency
+														value="{Price}"
+														currency="{CurrencyCode}"
+													/>
+												</table:template>
+											</table:Column>
+											<table:Column width="12rem">
+												<Label text="Supplier"/>
+												<table:template>
+													<ComboBox
+														value="{SupplierName}"
+														items="{
+															path: '/Suppliers',
+															templateShareable: true
+														}"
+													>
+														<core:Item text="{Name}"/>
+													</ComboBox>
+												</table:template>
+											</table:Column>
+											<table:Column width="9rem">
+												<Label text="Image"/>
+												<table:template>
+													<Link
+														text="Show Image"
+														href="{ProductPicUrl}"
+														target="_blank"
+													/>
+												</table:template>
+											</table:Column>
+											<table:Column width="9rem">
+												<Label text="Details"/>
+												<table:template>
+													<Button text="Show Details"/>
+												</table:template>
+											</table:Column>
+											<table:Column width="7rem">
+												<Label text="Heavy Weight"/>
+												<table:template>
+													<CheckBox selected="{
+														path: 'Heavy',
+														type: 'sap.ui.model.type.String'
 													}"/>
+												</table:template>
+											</table:Column>
+											<table:Column width="12rem">
+												<Label text="Main Category"/>
+												<table:template>
+													<Select
+														selectedKey="{Category}"
+														items="{
+															path: '/Categories',
+															templateShareable: true
+														}"
+													>
+														<core:Item
+															text="{Name}"
+															key="{Name}"
+														/>
+													</Select>
+												</table:template>
+											</table:Column>
+											<table:Column width="12rem">
+												<Label text="Additional Categories"/>
+												<table:template>
+													<Select
+														selectedKey="{Category}"
+														items="{
+															path: '/Categories',
+															templateShareable: true
+														}"
+													>
+														<core:Item
+															text="{Name}"
+															key="{Name}"
+														/>
+													</Select>
+												</table:template>
+											</table:Column>
+											<table:Column
+												width="6rem"
+												hAlign="Center"
+											>
+												<Label text="Status"/>
+												<table:template>
+													<core:Icon src="{
+														path: 'Available'
+													}"/>
+												</table:template>
+											</table:Column>
+											<table:Column
+												width="11rem"
+												hAlign="Center"
+											>
+												<Label text="Delivery Date"/>
+												<table:template>
+													<DatePicker
+														value="{
+															path: 'DeliveryDate',
+															type: 'sap.ui.model.type.Date',
+															formatOptions: {
+																source: {
+																	pattern: 'timestamp'
+																}
+															}
+														}"
+														class="sapIcon_Date"
+													/>
 												</table:template>
 											</table:Column>
 										</table:columns>

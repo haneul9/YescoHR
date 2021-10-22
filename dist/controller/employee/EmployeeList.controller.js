@@ -1,1 +1,0 @@
-sap.ui.define(["sap/ui/yesco/controller/BaseController"],e=>{"use strict";return e.extend("sap.ui.yesco.controller.employee.EmployeeList",{})});

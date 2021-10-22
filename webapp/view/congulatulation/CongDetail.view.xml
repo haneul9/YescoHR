@@ -1,0 +1,365 @@
+<mvc:View
+	controllerName="sap.ui.yesco.controller.congulatulation.CongDetail"
+	xmlns="sap.m"
+	xmlns:semantic="sap.f.semantic"
+	xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+>
+    <VBox>
+        <items>
+            <HBox>
+                <items>
+                    <Text text="ESS > "/>
+                    <Text text="복리후생 > "/>
+                    <Text text="경조금"/>
+                </items>
+            </HBox>
+            <HBox>
+                <items>
+                    <core:Icon 
+                        src="sap-icon://information" />
+                    <Link
+                        text="안내"
+                        href=""
+                        target="_blank"
+                    />
+                </items>
+            </HBox>
+            <HBox 
+                justifyContent="SpaceBetween">
+                <items>
+                    <Label 
+                        text="● 대상자" 
+                        design="Bold"/>
+                    <HBox 
+                        alignItems="End">
+                        <items>
+                            <Button 
+                                text= "재작성"
+                                press=".onRewriteBtn"
+                                visible= "{= ${/FormData/ZappStatAl} === '45' }"
+                                />
+                            <Button 
+                                text= "임시저장" 
+                                press=".onSaveBtn" 
+                                visible= "{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }"
+                                />
+                            <Button 
+                                text= "신청" 
+                                press=".onApplyBtn" 
+                                visible= "{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }"
+                                />
+                            <Button 
+                                text= "취소" 
+                                press=".onCancelBtn" 
+                                visible= "{= ${/FormData/ZappStatAl} === '20' }"
+                                />
+                            <Button 
+                                text= "삭제" 
+                                press=".onDeleteBtn" 
+                                visible= "{= ${/FormData/ZappStatAl} === '10' || ${/FormData/ZappStatAl} === '45' }"
+                                />
+                        </items>
+                    </HBox>
+                </items>
+            </HBox>
+            <VBox>
+                <items>
+                    <HBox>
+                        <items>
+                            <HBox>
+                                <items>
+                                    <Label text= "성명" />
+                                    <Text text= "{/FormData/Ename}" />
+                                </items>
+                            </HBox>
+                            <HBox>
+                                <items>
+                                    <Label text= "소속" />
+                                    <Text text= "{/FormData/Pernr}" />
+                                </items>
+                            </HBox>
+                        </items>
+                    </HBox>
+                    <HBox>
+                        <items>
+                            <HBox>
+                                <items>
+                                    <Label text= "직급/직위" />
+                                    <Text text= "{/FormData/Zzjikgbtl}" />
+                                </items>
+                            </HBox>
+                            <HBox>
+                                <items>
+                                    <Label text= "직책" />
+                                    <Text text= "{/FormData/Zzjikcht}" />
+                                </items>
+                            </HBox>
+                        </items>
+                    </HBox>
+                </items>
+            </VBox>
+            <HBox>
+                <items>
+                    <Label 
+                        text="● 신청내역" 
+                        design="Bold"/>
+                </items>
+            </HBox>
+            <VBox>
+                <items>
+                    <HBox>
+                        <items>
+                            <HBox>
+                                <items>
+                                    <Label text= "경조유형" />
+                                    <Select
+                                        id= 'BenefitType'
+                                        selectedKey="{/FormData/Concode}"
+                                        items="{/BenefitType}"
+                                        width="200px"
+                                        change= 'onTypeChange'
+                                        editable= "{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }"
+                                    >
+                                        <core:Item
+                                            text="{Ztext}"
+                                            key="{Zcode}"
+                                        />
+                                    </Select>
+                                </items>
+                            </HBox>
+                            <HBox>
+                                <items>
+                                    <Label text= "대상자 생년월일" />
+                                    <DatePicker
+                                        dateValue= '{/FormData/Zbirthday}'
+                                        editable= "{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }"
+                                    />
+                                </items>
+                            </HBox>
+                        </items>
+                    </HBox>
+                    <HBox>
+                        <items>
+                            <HBox>
+                                <items>
+                                    <Label text= "경조사유" />
+                                    <Select
+                                        id= 'BenefitCause'
+                                        selectedKey="{/FormData/Conresn}"
+                                        items="{/BenefitCause}"
+                                        width="200px"
+                                        change= '.onCauseChange'
+                                        editable= "{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }"
+                                    >
+                                        <core:Item
+                                            text="{Ztext}"
+                                            key="{Zcode}"
+                                        />
+                                    </Select>
+                                </items>
+                            </HBox>
+                            <HBox>
+                                <items>
+                                    <Label text= "증빙상 경조일" />
+                                    <DatePicker
+                                        dateValue= '{/FormData/Conddate}'
+                                        change= '.onBenefitChangeDate'
+                                        editable= "{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }"
+                                    />
+                                </items>
+                            </HBox>
+                        </items>
+                    </HBox>
+                    <HBox>
+                        <items>
+                            <HBox>
+                                <items>
+                                    <Label text= "대상자 관계" />
+                                    <Select
+                                        id= 'BenefitRelation'
+                                        selectedKey="{/FormData/Kdsvh}"
+                                        items="{/BenefitRelation}"
+                                        width="200px"
+                                        editable= "{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }"
+                                    >
+                                        <core:Item
+                                            text="{Ztext}"
+                                            key="{Zcode}"
+                                        />
+                                    </Select>
+                                </items>
+                            </HBox>
+                            <HBox>
+                                <items>
+                                    <Label text= "실재 경조일" />
+                                    <DatePicker
+                                        dateValue= '{/FormData/Conrdate}'
+                                        editable= "{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }"
+                                    />
+                                </items>
+                            </HBox>
+                        </items>
+                    </HBox>
+                    <HBox>
+                        <items>
+                            <HBox>
+                                <items>
+                                    <Label text= "대상자 성명" />
+                                    <Input 
+                                        value= "{/FormData/Zname}" 
+                                        editable= "{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }"
+                                    />
+                                    <Button 
+                                        text= "선택" 
+                                        press=".onTargetDialog" 
+                                        enabled= "{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }"
+                                    />
+                                </items>
+                            </HBox>
+                            <HBox>
+                                <items>
+                                    <Label text= "행사장소" />
+                                    <Input 
+                                        value= "{/FormData/Zeloc}" 
+                                        editable= "{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }"
+                                    />
+                                </items>
+                            </HBox>
+                        </items>
+                    </HBox>
+                    <HBox>
+                        <items>
+                            <HBox>
+                                <items>
+                                    <Label text= "기본급(원)" />
+                                    <Text text= "{/FormData/ZbacBetT}" />
+                                </items>
+                            </HBox>
+                            <HBox>
+                                <items>
+                                    <Label text= "지급율" />
+                                    <Text text= "{/FormData/PayrtT}" />
+                                </items>
+                            </HBox>
+                        </items>
+                    </HBox>
+                    <HBox>
+                        <items>
+                            <HBox>
+                                <items>
+                                    <Label text= "지급액(원)" />
+                                    <Text text= "{/FormData/ZpayBetT}" />
+                                </items>
+                            </HBox>
+                            <HBox>
+                                <items>
+                                    <Label text= "화환여부(Y/N)" />
+                                    <Text text= "{/FormData/Zflower}" />
+                                </items>
+                            </HBox>
+                        </items>
+                    </HBox>
+                </items>
+            </VBox>
+            <HBox>
+                <items>
+                    <Label 
+                        text="● 신청자" 
+                        design="Bold"/>
+                </items>
+            </HBox>
+            <VBox>
+                <items>
+                    <HBox>
+                        <items>
+                            <HBox>
+                                <items>
+                                    <Label text= "성명" />
+                                    <Text text= "{/FormData/Apename}" />
+                                </items>
+                            </HBox>
+                            <HBox>
+                                <items>
+                                    <Label text= "소속" />
+                                    <Text text= "{/FormData/Appernr}" />
+                                </items>
+                            </HBox>
+                        </items>
+                    </HBox>
+                    <HBox>
+                        <items>
+                            <HBox>
+                                <items>
+                                    <Label text= "직급/직위" />
+                                    <Text text= "{/FormData/Apjikgbtl}" />
+                                </items>
+                            </HBox>
+                            <HBox>
+                                <items>
+                                    <Label text= "신청일시" />
+                                    <Text 
+                                        text= "{
+                                            path: '/FormData/Appdt',
+                                            formatter: '.setAppdt'
+                                        }"
+                                    />
+                                </items>
+                            </HBox>
+                        </items>
+                    </HBox>
+                </items>
+            </VBox>
+            <HBox
+                visible= "{= ${/FormData/ZappStatAl} !== '' }"
+            >
+                <items>
+                    <Label 
+                        text="● 결재내역" 
+                        design="Bold"
+                        />
+                </items>
+            </HBox>
+            <VBox
+                visible= "{= ${/FormData/ZappStatAl} !== '' }"
+            >
+                <items>
+                    <HBox>
+                        <items>
+                            <HBox>
+                                <items>
+                                    <Label text= "결재문서번호" />
+                                    <Text text= "{/FormData/Docno}" />
+                                </items>
+                            </HBox>
+                            <HBox>
+                                <items>
+                                    <Label text= "결재상태" />
+                                    <Text text= "{/FormData/ZappStxtAl}" />
+                                </items>
+                            </HBox>
+                        </items>
+                    </HBox>
+                    <HBox>
+                        <items>
+                            <HBox>
+                                <items>
+                                    <Label text= "담당자 결재일시" />
+                                    <Text text= "{/FormData/Stfdt}" />
+                                </items>
+                            </HBox>
+                            <HBox
+                                visible= "{= ${/FormData/ZappStatAl} === '45' || ${/FormData/ZappStatAl} === '65'}"
+                            >
+                                <items>
+                                    <Label text= "반려사유" />
+                                    <Text text= "{/FormData/ZappResn}" />
+                                </items>
+                            </HBox>
+                        </items>
+                    </HBox>
+                </items>
+            </VBox>
+        </items>
+    </VBox>
+</mvc:View>
