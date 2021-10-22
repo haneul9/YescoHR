@@ -7,7 +7,6 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    // return BaseController.extend('sap.ui.yesco.controller.NotFound', {
     class NotFound extends BaseController {
       onInit() {
         this.getRouter().getTarget('notFound').attachDisplay(this._onNotFoundDisplayed, this);

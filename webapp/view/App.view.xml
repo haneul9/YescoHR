@@ -3,34 +3,24 @@
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:control="sap.ui.yesco.control"
-	displayBlock="true"
->
-<OverflowToolbar id="homeMenu" asyncMode="true" busy="{appView>/busy}" busyIndicatorDelay="{appView>/delay}">
-		<ImageContent
-			class="logo"
-			src="image/logo_yesco.gif"
-			description="yesco eHR Home"
-			press=".onHomePress"
-		>
-			<layoutData>
-				<OverflowToolbarLayoutData priority="NeverOverflow"/>
-			</layoutData>
+	displayBlock="true">
+	<OverflowToolbar id="homeMenuToolbar" asyncMode="true" busy="{appView>/busy}" busyIndicatorDelay="0" class="home-menu-toolbar">
+		<ImageContent class="logo" src="image/logo-yesco.gif" description="yesco eHR Home" press=".navToHome">
+			<layoutData><OverflowToolbarLayoutData priority="NeverOverflow"/></layoutData>
 		</ImageContent>
-		<ToolbarSpacer/>
+
+		<ToolbarSpacer />
+
 		<!-- Home Menu Position -->
-		<ToolbarSpacer/>
-		<Button icon="sap-icon://group-2" type="Transparent"/>
+
+		<ToolbarSpacer />
+
+		<Button icon="sap-icon://group-2" type="Transparent" />
+
 		<Button icon="sap-icon://action-settings" type="Transparent">
-			<layoutData>
-				<OverflowToolbarLayoutData priority="NeverOverflow"/>
-			</layoutData>
+			<layoutData><OverflowToolbarLayoutData priority="NeverOverflow" /></layoutData>
 		</Button>
 	</OverflowToolbar>
-	<App
-		id="app"
-		autoFocus="false"
-		busy="{appView>/busy}"
-		busyIndicatorDelay="{appView>/delay}"
-		class="app-body"
-	/>
+
+	<App id="app" class="app-body" autoFocus="false" busy="{appView>/busy}" busyIndicatorDelay="0" />
 </mvc:View>

@@ -38,12 +38,11 @@
 
   "sap.ui5": {
     "rootView": {
+      "id": "app",
       "viewName": "sap.ui.yesco.view.App",
       "type": "XML",
-      "async": true,
-      "id": "app"
+      "async": true
     },
-
     "dependencies": {
       "minUI5Version": "1.71.28",
       "libs": {
@@ -52,12 +51,10 @@
         "sap.f": {}
       }
     },
-
     "contentDensities": {
       "compact": true,
       "cozy": true
     },
-
     "models": {
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
@@ -68,7 +65,6 @@
         }
       }
     },
-
     "resources": {
       "css": [
         { "uri": "css/noto-sans-kr.css" },
@@ -84,7 +80,6 @@
         { "uri": "localService/RevealGrid.css" }
       ]
     },
-
     "routing": {
       "config": {
         "routerClass": "sap.m.routing.Router",
@@ -97,11 +92,10 @@
         },
         "async": true
       },
-
       "routes": [
         {
           "pattern": "",
-          "name": "appHome",
+          "name": "ehrHome",
           "target": "home"
         },
         {
@@ -115,7 +109,6 @@
           "target": "employees"
         }
       ],
-
       "targets": {
         "home": {
           "viewId": "home",
@@ -123,37 +116,38 @@
           "viewLevel": 1
         },
         "components": {
-          "viewName": "Components",
           "viewId": "components",
+          "viewName": "Components",
           "viewLevel": 1,
           "title": "Components"
         },
         "employees": {
           "viewId": "employeeList",
-          "viewPath": "sap.ui.yesco.view.employee",
           "viewName": "EmployeeList",
-          "viewLevel": 2
+          "viewLevel": 2,
+          "viewPath": "sap.ui.yesco.view.employee"
         },
         "notFound": {
           "viewId": "notFound",
           "viewName": "NotFound",
           "transition": "show"
         },
-        "object": {
-          "viewName": "Detail",
+        "detail": {
           "viewId": "detail",
+          "viewName": "Detail",
           "viewLevel": 1,
           "controlAggregation": "midColumnPages"
         },
         "carousel": {
-          "viewType": "XML",
+          "viewId": "carousel",
           "viewName": "Carousel",
-          "clearControlAggregation": true,
-          "viewLevel": 2
+          "viewLevel": 2,
+          "viewType": "XML",
+          "clearControlAggregation": true
         },
         "detailObjectNotFound": {
-          "viewName": "DetailNotFound",
           "viewId": "detailNotFound",
+          "viewName": "DetailNotFound",
           "controlAggregation": "midColumnPages"
         }
       }

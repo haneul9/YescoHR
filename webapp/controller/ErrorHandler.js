@@ -1,15 +1,17 @@
 sap.ui.define(
   [
-    'sap/m/MessageBox', // prettier 방지용 주석
+    // prettier 방지용 주석
     'sap/ui/base/Object',
+    'sap/ui/yesco/control/MessageBox',
   ],
   (
-    MessageBox, // prettier 방지용 주석
-    BaseObject
+    // prettier 방지용 주석
+    BaseObject,
+    MessageBox
   ) => {
     'use strict';
 
-    return BaseObject.extend('sap.ui.yesco.controller.ErrorHandler', {
+    class ErrorHandler extends BaseObject {
       /**
        * Handles application errors by automatically attaching to the model events and displaying errors when needed.
        * @class
@@ -17,7 +19,9 @@ sap.ui.define(
        * @public
        * @alias sap.ui.yesco.controller.ErrorHandler
        */
-      constructor: function (oComponent) {
+      constructor(oComponent) {
+        super(oComponent);
+
         this._oResourceBundle = oComponent.getModel('i18n').getResourceBundle();
         this._oComponent = oComponent;
         this._oModel = oComponent.getModel();
@@ -38,7 +42,7 @@ sap.ui.define(
             this._showServiceError(oParams.response);
           }
         }, this);
-      },
+      }
 
       /**
        * Shows a {@link sap.m.MessageBox} when a service call has failed.
@@ -61,7 +65,9 @@ sap.ui.define(
             this._bMessageOpen = false;
           },
         });
-      },
-    });
+      }
+    }
+
+    return ErrorHandler;
   }
 );

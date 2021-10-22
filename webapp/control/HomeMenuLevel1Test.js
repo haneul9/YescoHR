@@ -15,9 +15,9 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    class HomeMenuItem extends Button {
-      constructor(...args) {
-        super(...args);
+    return Button.extend('sap.ui.yesco.control.HomeMenuLevel1', {
+      constructor: function (...args) {
+        Button.apply(this, args);
 
         this.submenuPopover = false;
 
@@ -36,25 +36,15 @@ sap.ui.define(
         } else {
           this.addStyleClass('px-5-px font-bold');
         }
-      }
+      },
 
       onmouseover(oEvent) {
-        console.log('sap.ui.yesco.control.HomeMenuItem.onmouseover', this.data('menuProperties'), oEvent);
-        // if (!this.submenuPopover) {
-        //   this.submenuPopover = true;
-        //   console.log('sap.ui.yesco.control.HomeMenuItem.mouseover', this.data('menuProperties'), oEvent);
-        // }
-      }
+        console.log('sap.ui.yesco.control.HomeMenuToolbarItemTest.onmouseover', this.data('menuProperties'), oEvent);
+      },
 
       onmouseout(oEvent) {
-        console.log('sap.ui.yesco.control.HomeMenuItem.onmouseout', this.data('menuProperties'), oEvent);
-        // if (this.submenuPopover) {
-        //   this.submenuPopover = false;
-        //   console.log('sap.ui.yesco.control.HomeMenuItem.mouseout', this.data('menuProperties'), oEvent);
-        // }
-      }
-    }
-
-    return HomeMenuItem;
+        console.log('sap.ui.yesco.control.HomeMenuToolbarItemTest.onmouseout', this.data('menuProperties'), oEvent);
+      },
+    });
   }
 );

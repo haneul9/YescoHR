@@ -59,7 +59,7 @@ sap.ui.define(
         const aServiceNames = this.getOdataServiceNames();
         aServiceNames.forEach(({ serviceName: sServiceName, modelName: sModelName }) => {
           const sServiceUrl = AppUtils.getServiceUrl(sServiceName, this);
-          this.setModel(new ODataModel(sServiceUrl), sModelName);
+          this.setModel(new ODataModel(sServiceUrl, { loadMetadataAsync: true }), sModelName);
         });
 
         this.oListSelector = new ListSelector();

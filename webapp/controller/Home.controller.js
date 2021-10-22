@@ -31,13 +31,12 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    // return BaseController.extend('sap.ui.yesco.controller.Home', {
     class Home extends BaseController {
       onInit() {
         // const personalizationGridModel = new JSONModel(sap.ui.require.toUrl('sap/ui/yesco/localService/personalizationGridData.json'));
-        const personalizationGridModel = new JSONModel();
-        personalizationGridModel.loadData('localService/personalizationGridData.json');
-        this.getView().setModel(personalizationGridModel, 'personalizationGridModel');
+        const oPersonalizationGridModel = new JSONModel();
+        oPersonalizationGridModel.loadData('localService/personalizationGridData.json');
+        this.setViewModel(oPersonalizationGridModel, 'personalizationGridModel');
 
         const oGrid = this.byId('personalization-grid');
         oGrid.addDragDropConfig(
@@ -87,10 +86,10 @@ sap.ui.define(
           }
         });
 
-        const oModel = this.getOwnerComponent().getModel();
+        const oCommonModel = this.getModel(); // ZHR_COMMON_SRV
         const sUrl = '/EmpLoginInfoSet';
 
-        oModel.read(sUrl, {
+        oCommonModel.read(sUrl, {
           filters: [
             new Filter('Pernr', FilterOperator.EQ, '50007'), // prettier 방지용 주석
           ],

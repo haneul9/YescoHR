@@ -15,8 +15,22 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    // return Controller.extend('sap.ui.yesco.controller.BaseController', {
     class BaseController extends Controller {
+      onInit() {
+        this.debug('BaseController.onInit');
+
+        const delegateEvents = {};
+        if (typeof this.onBeforeShow === 'function') {
+          delegateEvents.onBeforeShow = this.onBeforeShow;
+        }
+        if (typeof this.onAfterShow === 'function') {
+          delegateEvents.onAfterShow = this.onAfterShow;
+        }
+        if (delegateEvents.onBeforeShow || delegateEvents.onAfterShow) {
+          this.getView().addEventDelegate(delegateEvents, this);
+        }
+      }
+
       /**
        * Convenience method for accessing the router in every controller of the application.
        * @public
@@ -79,6 +93,16 @@ sap.ui.define(
       }
 
       /**
+       * Convenience method for getting the resource bundle text.
+       * @public
+       * @returns {string} The value belonging to the key, if found; otherwise the key itself.
+       */
+      getText(...aArgs) {
+        const sKey = aArgs.shift();
+        return this.getResourceBundle().getText(sKey, aArgs);
+      }
+
+      /**
        * Event handler for navigating back.
        * It there is a history entry we go one step back in the browser history
        * If not, it will replace the current entry of the browser history with the master route.
@@ -90,7 +114,7 @@ sap.ui.define(
         if (sPreviousHash) {
           history.go(-1);
         } else {
-          this.getRouter().navTo('appHome', {}, true);
+          this.getRouter().navTo('ehrHome', {}, true);
         }
       }
 

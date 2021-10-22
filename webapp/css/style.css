@@ -7,6 +7,8 @@ html, body { box-sizing:border-box; overflow:hidden }
 .logo { margin:auto 0 !important; width:145px !important; height:43px !important }
 .sapUiCal.px-0 .sapUiCalMonthView { padding-right: 0 !important; padding-left: 0 !important }
 .font-1b-rem .sapMBtnInner { font-size: 1.125rem }
+.home-menu-level1 {margin:0 !important; border-bottom:solid 0.25rem transparent; padding:0.8125rem 1rem; cursor:default}
+.home-menu-level1-hover {border-bottom-color:#f00}
 .menu-mss bdi {color:#f00}
 .menu-hass bdi {color:#00f}
 
