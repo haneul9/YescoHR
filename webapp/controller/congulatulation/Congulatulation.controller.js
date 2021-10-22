@@ -14,46 +14,44 @@ sap.ui.define(
       BaseController,
     ) => {
       'use strict';
-      return BaseController.extend('sap.ui.yesco.controller.congulatulation.Congulatulation', {
+
+      class Congulatulation extends BaseController {
         onInit() {
-            const oSearchDate = this.byId('SearchDate');
-            const dDate = new Date(new Date().getFullYear(), new Date().getMonth() - 1, new Date().getDate() + 1);
-            
-            oSearchDate.setDateValue(dDate);
-            oSearchDate.setSecondDateValue(new Date());
-        },
+          this.getView().addEventDelegate(
+            {
+                onBeforeShow: this.onBeforeShow,
+                onAfterShow: this.onAfterShow
+            },
+            this
+          );
+        }
+
+        onBeforeShow() {
+          const oListModel = new JSONModel({
+            Data: []
+          });
+          const oSearchDate = this.byId('SearchDate');
+          const dDate = new Date();
+          const dDate2 = new Date(dDate.getFullYear(), dDate.getMonth() - 1, dDate.getDate() + 1);
+          
+          this.setViewModel(oListModel);
+          oSearchDate.setDateValue(dDate2);
+          oSearchDate.setSecondDateValue(dDate);
+        }
+
+        onAfterShow() {
+          this.onSearch();
+        }
 
         onClick() {
-          if (!this.byId('detailDialog')) {
-            Fragment.load({
-              id: this.getView().getId(),
-              name: 'sap.ui.yesco.view.congulatulation.DetailDialog',
-              controller: this,
-            }).then((oDialog) => {
-              // connect dialog to the root view of this component (models, lifecycle)
-              this.getView().addDependent(oDialog);
-              // oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
-              oDialog.open();
-            });
-          } else {
-            this.byId('detailDialog').open();
-          }
-        },
+          this.getRouter().navTo("congDetail", {oDataKey: "N"});
+        }
 
         onSearch() {
-            // const model = this.getOwnerComponent().getModel("benefit");
-          // model.metadataLoaded().then(this.onSearch);
-          // model.attachMetadataFailed(onSearch);
           const oModel = this.getModel("benefit");
           const oSearchDate = this.byId('SearchDate');
-
-          // const sPath = oModel.createKey("/ConExpenseApplSet", {
-          //   Prcty: ,
-          //   Actty: ,
-          //   Apbeg: oSearchDate.getDateValue(),
-          //   Apend: oSearchDate.getSecondDateValue(),
-          //   Pernr: ,
-          // });
+          const oListModel = this.getViewModel();
+          const oController = this;
 
           oModel.read("/ConExpenseApplSet", {
             async: false,
@@ -62,19 +60,38 @@ sap.ui.define(
 							new sap.ui.model.Filter("Actty", sap.ui.model.FilterOperator.EQ, "E"),
 							new sap.ui.model.Filter("Apbeg", sap.ui.model.FilterOperator.EQ, oSearchDate.getDateValue()),
 							new sap.ui.model.Filter("Apend", sap.ui.model.FilterOperator.EQ, oSearchDate.getSecondDateValue()),
-							new sap.ui.model.Filter("Pernr", sap.ui.model.FilterOperator.EQ, "500006"),
+							new sap.ui.model.Filter("Pernr", sap.ui.model.FilterOperator.EQ, "50006"),
 						],
             success: function (oData) {
               if (oData) {
                 // Common.log(oData);
+                const oList = oData.results;
+                let vNo = 0;
+
+                oList.forEach(e =>{
+                  vNo = vNo + 1;
+                  e.No = vNo;
+                });
+                
+                oListModel.setProperty('/CongList', oList);
+                oController.byId("conguTable").setVisibleRowCount(oList.length);
               }
             },
-            error: function (oResponse) {
+            error: function (oRespnse) {
               // Common.log(oResponse);
             }
           });
-        },
-      });
+        }
+
+        onSelectRow(oEvent) {
+          const vPath = oEvent.getParameters().rowBindingContext.getPath();
+          const oRowData = this.getViewModel().getProperty(vPath);
+          
+          this.getRouter().navTo("congDetail", {oDataKey: oRowData.Appno});
+        }
+      }
+
+      return Congulatulation;
     }
   );
   

@@ -71,7 +71,7 @@
 
     "resources": {
       "css": [
-        { "uri": "css/webfonts/pretendard-subset.css" },
+        { "uri": "css/noto-sans-kr.css" },
         { "uri": "css/style.css" },
         { "uri": "css/placeholder.css" },
         { "uri": "css/util/font-size.css" },
@@ -105,6 +105,16 @@
           "target": "home"
         },
         {
+          "pattern": "congulatulation",
+          "name": "congulatulation",
+          "target": "congulatulation"
+        },
+        {
+          "pattern": "congDetail/{oDataKey}",
+          "name": "congDetail",
+          "target": "congDetail"
+        },
+        {
           "pattern": "components",
           "name": "commonComponents",
           "target": "components"
@@ -127,6 +137,18 @@
           "viewId": "components",
           "viewLevel": 1,
           "title": "Components"
+        },
+        "congulatulation": {
+          "viewId": "congulatulation",
+          "viewPath": "sap.ui.yesco.view.congulatulation",
+          "viewName": "Congulatulation",
+          "viewLevel": 2
+        },
+        "congDetail": {
+          "viewId": "congDetail",
+          "viewPath": "sap.ui.yesco.view.congulatulation",
+          "viewName": "CongDetail",
+          "viewLevel": 2
         },
         "employees": {
           "viewId": "employeeList",
