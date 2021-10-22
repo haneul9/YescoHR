@@ -6,7 +6,7 @@
 		contentWidth="100%"
 		contentMinWidth="300px"
 		contentHeight="300px"
-		offsetY="-1"
+		offsetY="1"
 		showHeader="false"
 		showArrow="false"
 		bounce="false"

@@ -53,6 +53,9 @@ sap.ui.define(
             this.oMenuPopover = oPopover
               .setModel(this.getModel())
               .attachAfterClose(() => {
+                setTimeout(() => {
+                  this.$().toggleClass('home-menu-level1-hover', false);
+                }, 0);
                 this.oMenuPopover.setModel(null).destroy();
                 this.oMenuPopover = null;
               })

@@ -7,7 +7,7 @@ html, body { box-sizing:border-box; overflow:hidden }
 .logo { margin:auto 0 !important; width:145px !important; height:43px !important }
 .sapUiCal.px-0 .sapUiCalMonthView { padding-right: 0 !important; padding-left: 0 !important }
 .font-1b-rem .sapMBtnInner { font-size: 1.125rem }
-.home-menu-level1 {margin:0 !important; border-bottom:solid 0.25rem transparent; padding:0.8125rem 1rem; cursor:default}
+.home-menu-level1 {margin:0 !important; border-bottom:solid 0.25rem transparent; padding:0.425rem 1rem; cursor:default}
 .home-menu-level1-hover {border-bottom-color:#f00}
 .menu-mss bdi {color:#f00}
 .menu-hass bdi {color:#00f}
@@ -18,24 +18,24 @@ html, body { box-sizing:border-box; overflow:hidden }
 .sapMHBox > div {margin-right: 1rem !important;}
 
 :root{
-    /* Font Color */
-        --FontColorNormal:#484c50;
-        --FontColorDisabled:#c1c3c8;
-    /* Border Color */
-        --BorderColorNormal:#c0c0c0;
-        --BorderColorHover:#1d85c8;
-        --BorderColorActive:#1d85c8;
-        --BorderColorFocus:#1d85c8;
-        --BorderColorDisabled:#d6d6d6;
-        --BorderColorReadonly:#bdbdbd;
-        --BorderColorSuccess:#28a745;
-        --BorderColorError:#dc3545;
-        --BorderColorWarning:#ffc107;
-        --BorderColorInfomation:#17a2b8;
-        /* background Color */
-            --BackgroundColorHover:#1d85c8;
-            --BackgroundColorActive:#1d85c8;
-            --BackgroundColorFocus:#1d85c8;
+/* Font Color */
+--FontColorNormal:#484c50;
+--FontColorDisabled:#c1c3c8;
+/* Border Color */
+--BorderColorNormal:#c0c0c0;
+--BorderColorHover:#1d85c8;
+--BorderColorActive:#1d85c8;
+--BorderColorFocus:#1d85c8;
+--BorderColorDisabled:#d6d6d6;
+--BorderColorReadonly:#bdbdbd;
+--BorderColorSuccess:#28a745;
+--BorderColorError:#dc3545;
+--BorderColorWarning:#ffc107;
+--BorderColorInfomation:#17a2b8;
+/* background Color */
+--BackgroundColorHover:#1d85c8;
+--BackgroundColorActive:#1d85c8;
+--BackgroundColorFocus:#1d85c8;
 }
 
 /* 공통 Scroll Bar */
