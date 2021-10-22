@@ -110,9 +110,19 @@
           "target": "congulatulation"
         },
         {
-          "pattern": "congDetail/{oDataKey}",
+          "pattern": "m/congulatulation",
+          "name": "congulatulationMobile",
+          "target": "m/congulatulation"
+        },
+        {
+          "pattern": "congulatulation/congDetail/{oDataKey}",
           "name": "congDetail",
           "target": "congDetail"
+        },
+        {
+          "pattern": "m/congulatulation/congDetail/{oDataKey}",
+          "name": "congDetailMobile",
+          "target": "m/congDetail"
         },
         {
           "pattern": "components",
@@ -147,6 +157,18 @@
         "congDetail": {
           "viewId": "congDetail",
           "viewPath": "sap.ui.yesco.view.congulatulation",
+          "viewName": "CongDetail",
+          "viewLevel": 2
+        },
+        "m/congulatulation": {
+          "viewId": "congulatulationMobile",
+          "viewPath": "sap.ui.yesco.view.congulatulation.m",
+          "viewName": "Congulatulation",
+          "viewLevel": 2
+        },
+        "m/congDetail": {
+          "viewId": "congDetailMobile",
+          "viewPath": "sap.ui.yesco.view.congulatulation.m",
           "viewName": "CongDetail",
           "viewLevel": 2
         },
