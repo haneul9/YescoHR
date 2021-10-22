@@ -260,7 +260,7 @@ sap.ui.define(
        */
       handleMenuLink(oEvent) {
         if (!oEvent.getSource().getBindingContext().getProperty('Mepop')) {
-          this.oController.getViewModel('appView').setProperty('/busy', true);
+          // this.oController.getViewModel('appView').setProperty('/busy', true);
         }
       }
     }

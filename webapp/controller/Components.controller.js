@@ -11,8 +11,8 @@ sap.ui.define(
   (BaseController, JSONModel, formatter, Fragment, Filter, FilterOperator, MessageToast) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.controller.Components', {
-      formatter: formatter,
+    class Components extends BaseController {
+      formatter;
 
       /* =========================================================== */
       /* lifecycle methods                                           */
@@ -22,12 +22,14 @@ sap.ui.define(
        * Called when the worklist controller is instantiated.
        * @public
        */
-      onInit: function () {
+      onInit() {
         var oModel = new JSONModel(sap.ui.require.toUrl('sap/ui/yesco/localService/mockdata/products.json'));
         // The default limit of the model is set to 100. We want to show all the entries.
         oModel.setSizeLimit(100000);
         this.getView().setModel(oModel);
-      },
+      }
+
+      onAfterShow() {}
 
       /* =========================================================== */
       /* event handlers                                              */
@@ -42,7 +44,7 @@ sap.ui.define(
        * @param {sap.ui.base.Event} oEvent the update finished event
        * @public
        */
-      onUpdateFinished: function (oEvent) {
+      onUpdateFinished(oEvent) {
         // update the worklist's object counter after the table update
         var sTitle,
           oTable = oEvent.getSource(),
@@ -55,29 +57,29 @@ sap.ui.define(
           sTitle = this.getResourceBundle().getText('worklistTableTitle');
         }
         this.getModel('worklistView').setProperty('/worklistTableTitle', sTitle);
-      },
+      }
 
       /**
        * Event handler when a table item gets pressed
        * @param {sap.ui.base.Event} oEvent the table selectionChange event
        * @public
        */
-      onPress: function (oEvent) {
+      onPress(oEvent) {
         // The source is the list item that got pressed
         this._showObject(oEvent.getSource());
-      },
+      }
 
       /**
        * Event handler for navigating back.
        * We navigate back in the browser history
        * @public
        */
-      onNavBack: function () {
+      onNavBack() {
         // eslint-disable-next-line sap-no-history-manipulation
         history.go(-1);
-      },
+      }
 
-      onSearch: function (oEvent) {
+      onSearch(oEvent) {
         if (oEvent.getParameters().refreshButtonPressed) {
           // Search field's 'refresh' button has been pressed.
           // This is visible if you select any master list item.
@@ -93,17 +95,17 @@ sap.ui.define(
           }
           this._applySearch(aTableSearchState);
         }
-      },
+      }
 
       /**
        * Event handler for refresh event. Keeps filter, sort
        * and group settings and refreshes the list binding.
        * @public
        */
-      onRefresh: function () {
+      onRefresh() {
         var oTable = this.byId('table');
         oTable.getBinding('items').refresh();
-      },
+      }
 
       /* =========================================================== */
       /* internal methods                                            */
@@ -115,18 +117,18 @@ sap.ui.define(
        * @param {sap.m.ObjectListItem} oItem selected Item
        * @private
        */
-      _showObject: function (oItem) {
+      _showObject(oItem) {
         this.getRouter().navTo('object', {
           objectId: oItem.getBindingContext().getProperty('ProductID'),
         });
-      },
+      }
 
       /**
        * Internal helper method to apply both filter and search state together on the list binding
        * @param {sap.ui.model.Filter[]} aTableSearchState An array of filters for the search
        * @private
        */
-      _applySearch: function (aTableSearchState) {
+      _applySearch(aTableSearchState) {
         var oTable = this.byId('table'),
           oViewModel = this.getModel('worklistView');
         oTable.getBinding('items').filter(aTableSearchState, 'Application');
@@ -134,7 +136,7 @@ sap.ui.define(
         if (aTableSearchState.length !== 0) {
           oViewModel.setProperty('/tableNoDataText', this.getResourceBundle().getText('worklistNoDataWithSearchText'));
         }
-      },
+      }
 
       onValueHelpRequest(oEvent) {
         var sInputValue = oEvent.getSource().getValue(),
@@ -156,16 +158,16 @@ sap.ui.define(
           // Open ValueHelpDialog filtered by the input's value
           oDialog.open(sInputValue);
         });
-      },
+      }
 
-      onValueHelpSearch: function (oEvent) {
+      onValueHelpSearch(oEvent) {
         var sValue = oEvent.getParameter('value');
         var oFilter = new Filter('Name', FilterOperator.Contains, sValue);
 
         oEvent.getSource().getBinding('items').filter([oFilter]);
-      },
+      }
 
-      onValueHelpClose: function (oEvent) {
+      onValueHelpClose(oEvent) {
         var oSelectedItem = oEvent.getParameter('selectedItem');
         oEvent.getSource().getBinding('items').filter([]);
 
@@ -174,9 +176,9 @@ sap.ui.define(
         }
 
         this.byId('productInput').setValue(oSelectedItem.getTitle());
-      },
+      }
 
-      handleSelectionChange: function (oEvent) {
+      handleSelectionChange(oEvent) {
         var changedItems = oEvent.getParameter('changedItems') || [oEvent.getParameter('changedItem')];
         var isSelected = oEvent.getParameter('selected');
         var isSelectAllTriggered = oEvent.getParameter('selectAll');
@@ -193,9 +195,9 @@ sap.ui.define(
         };
 
         MessageToast.show(fnLogChangedItems());
-      },
+      }
 
-      handleSelectionFinish: function (oEvent) {
+      handleSelectionFinish(oEvent) {
         var selectedItems = oEvent.getParameter('selectedItems');
         var messageText = "Event 'selectionFinished': [";
 
@@ -211,7 +213,9 @@ sap.ui.define(
         MessageToast.show(messageText, {
           width: 'auto',
         });
-      },
-    });
+      }
+    }
+
+    return Components;
   }
 );

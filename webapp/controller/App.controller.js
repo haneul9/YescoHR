@@ -31,19 +31,6 @@ sap.ui.define(
         this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
 
         new HomeMenu(this, true);
-        // const oModel = this.getModel(/* ZHR_COMMON_SRV */);
-        // const sUrl = '/GetMenuUrlSet';
-        // const sPath = oModel.createKey(sUrl, {
-        //   Menid: '7110',
-        // });
-        // oModel.read(sPath, {
-        //   success: (oData) => {
-        //     this.debug(`${sUrl} success.`, oData, oResponse);
-        //   },
-        //   error: (oError) => {
-        //     this.debug(`${sUrl} error.`, oError);
-        //   },
-        // });
       }
 
       setAppBusy() {

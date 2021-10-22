@@ -67,7 +67,7 @@
     },
     "resources": {
       "css": [
-        { "uri": "css/noto-sans-kr.css" },
+        { "uri": "css/webfonts/pretendard-subset.css" },
         { "uri": "css/style.css" },
         { "uri": "css/placeholder.css" },
         { "uri": "css/util/font-size.css" },
