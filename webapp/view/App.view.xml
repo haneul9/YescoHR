@@ -4,7 +4,7 @@
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:control="sap.ui.yesco.control"
 	displayBlock="true">
-	<OverflowToolbar id="homeMenuToolbar" asyncMode="true" busy="{appView>/busy}" busyIndicatorDelay="0" class="home-menu-toolbar">
+	<OverflowToolbar id="homeMenuToolbar" asyncMode="true" busy="{app>/busy}" busyIndicatorDelay="0" class="home-menu-toolbar">
 		<ImageContent class="logo" src="image/logo-yesco.gif" description="yesco eHR Home" press=".navToHome">
 			<layoutData><OverflowToolbarLayoutData priority="NeverOverflow"/></layoutData>
 		</ImageContent>
@@ -22,5 +22,5 @@
 		</Button>
 	</OverflowToolbar>
 
-	<App id="app" class="app-body" autoFocus="false" busy="{appView>/busy}" busyIndicatorDelay="0" />
+	<App id="app" class="app-body" autoFocus="false" busy="{app>/busy}" busyIndicatorDelay="0" />
 </mvc:View>

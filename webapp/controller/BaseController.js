@@ -29,6 +29,20 @@ sap.ui.define(
         if (delegateEvents.onBeforeShow || delegateEvents.onAfterShow) {
           this.getView().addEventDelegate(delegateEvents, this);
         }
+
+        this.getRouter()
+          .attachBypassed((oEvent) => {
+            var sHash = oEvent.getParameter('hash');
+            // do something here, i.e. send logging data to the back end for analysis
+            // telling what resource the user tried to access...
+            this.debug(`Sorry, but the hash '${sHash}' is invalid.`, 'The resource was not found.');
+          })
+          .attachRouteMatched((oEvent) => {
+            var sRouteName = oEvent.getParameter('name');
+            // do something, i.e. send usage statistics to back end
+            // in order to improve our app and the user experience (Build-Measure-Learn cycle)
+            this.debug(`User accessed route ${sRouteName}, timestamp = ${new Date().getTime()}`);
+          });
       }
 
       /**
@@ -112,9 +126,9 @@ sap.ui.define(
         const sPreviousHash = History.getInstance().getPreviousHash();
 
         if (sPreviousHash) {
-          history.go(-1);
+          window.history.go(-1);
         } else {
-          this.getRouter().navTo('ehrHome', {}, true);
+          this.getRouter().navTo('ehrHome', {}, true /* no history */);
         }
       }
 

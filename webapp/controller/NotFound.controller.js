@@ -1,9 +1,13 @@
 sap.ui.define(
   [
-    'sap/ui/yesco/controller/BaseController', // prettier 방지용 주석
+    // prettier 방지용 주석
+    'sap/ui/yesco/controller/BaseController',
+    'sap/ui/yesco/common/AppUtils',
   ],
   (
-    BaseController // prettier 방지용 주석
+    // prettier 방지용 주석
+    BaseController,
+    AppUtils
   ) => {
     'use strict';
 
@@ -15,11 +19,13 @@ sap.ui.define(
       _onNotFoundDisplayed(oEvent) {
         this._oData = oEvent.getParameter('data');
 
-        this.getModel('appView').setProperty('/layout', 'OneColumn');
+        // this.getModel('app').setProperty('/layout', 'OneColumn');
+
+        AppUtils.setAppBusy(false, this);
       }
 
       // override the parent's onNavBack (inherited from BaseController)
-      onNavBack() {
+      onNavBack(...args) {
         // in some cases we could display a certain target when the back button is pressed
         if (this._oData && this._oData.fromTarget) {
           this.getRouter().getTargets().display(this._oData.fromTarget);
@@ -28,7 +34,7 @@ sap.ui.define(
         }
 
         // call the parent's onNavBack
-        BaseController.prototype.onNavBack.apply(this, arguments);
+        super.onNavBack(...args);
       }
     }
 

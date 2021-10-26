@@ -5,32 +5,35 @@ sap.ui.define(
   ],
   function (
     // prettier 방지용 주석
-    MessageBox
+    SapMMessageBox
   ) {
     'use strict';
 
-    return {
+    const MessageBox = {
+      ...SapMMessageBox,
       alert(vMessage, mOptions = {}) {
-        MessageBox.alert(vMessage, { ...mOptions, title: '{i18n>MSG_ALERT}' });
+        SapMMessageBox.alert(vMessage, { ...mOptions, title: '{i18n>MSG_ALERT}' });
       },
       confirm(vMessage, mOptions = {}) {
-        MessageBox.confirm(vMessage, { ...mOptions, title: '{i18n>MSG_CONFIRM}' });
+        SapMMessageBox.confirm(vMessage, { ...mOptions, title: '{i18n>MSG_CONFIRM}' });
       },
       error(vMessage, mOptions = {}) {
-        MessageBox.error(vMessage, { ...mOptions, title: '{i18n>MSG_ERROR}' });
+        SapMMessageBox.error(vMessage, { ...mOptions, title: '{i18n>MSG_ERROR}' });
       },
       information(vMessage, mOptions = {}) {
-        MessageBox.information(vMessage, { ...mOptions, title: '{i18n>MSG_INFORMATION}' });
+        SapMMessageBox.information(vMessage, { ...mOptions, title: '{i18n>MSG_INFORMATION}' });
       },
       show(vMessage, mOptions = {}) {
-        MessageBox.show(vMessage, { ...mOptions, title: '{i18n>MSG_SHOW}' });
+        SapMMessageBox.show(vMessage, { ...mOptions, title: '{i18n>MSG_SHOW}' });
       },
       success(vMessage, mOptions = {}) {
-        MessageBox.success(vMessage, { ...mOptions, title: '{i18n>MSG_SUCCESS}' });
+        SapMMessageBox.success(vMessage, { ...mOptions, title: '{i18n>MSG_SUCCESS}' });
       },
       warning(vMessage, mOptions = {}) {
-        MessageBox.warning(vMessage, { ...mOptions, title: '{i18n>MSG_WARNING}' });
+        SapMMessageBox.warning(vMessage, { ...mOptions, title: '{i18n>MSG_WARNING}' });
       },
     };
+
+    return MessageBox;
   }
 );

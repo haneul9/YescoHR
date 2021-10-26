@@ -5,7 +5,6 @@ sap.ui.define(
     'sap/m/LabelDesign',
     'sap/m/OverflowToolbarLayoutData',
     'sap/m/OverflowToolbarPriority',
-    'sap/ui/core/Fragment',
     'sap/ui/model/json/JSONModel',
   ],
   (
@@ -14,7 +13,6 @@ sap.ui.define(
     LabelDesign,
     OverflowToolbarLayoutData,
     OverflowToolbarPriority,
-    Fragment,
     JSONModel
   ) => {
     'use strict';
@@ -23,7 +21,7 @@ sap.ui.define(
       constructor(mMenu, oHomeMenu) {
         super({
           text: mMenu.Mname,
-          tooltip: `${mMenu.Mname}(${mMenu.Mnid1}:${mMenu.Menid})`,
+          tooltip: `${mMenu.Mname} (${mMenu.Mnid1}:${mMenu.Menid})`,
           design: LabelDesign.Bold,
           wrapping: true,
           layoutData: new OverflowToolbarLayoutData({
@@ -32,7 +30,6 @@ sap.ui.define(
         });
 
         this.oHomeMenu = oHomeMenu;
-        this.oMenuPopover = null;
 
         this.addStyleClass('home-menu-level1').addStyleClass(mMenu.StyleClasses).setModel(new JSONModel(mMenu));
       }
@@ -40,33 +37,9 @@ sap.ui.define(
       /**
        * Top 메뉴 mouseover 이벤트 처리 : 메뉴 popover가 열려있지 않으면 열어줌
        */
-      onmouseover() {
-        if (!this.oMenuPopover) {
-          Fragment.load({
-            name: 'sap.ui.yesco.fragment.HomeMenuPopover',
-            controller: this.oHomeMenu,
-          }).then((oPopover) => {
-            setTimeout(() => {
-              this.$().toggleClass('home-menu-level1-hover', true).siblings().toggleClass('home-menu-level1-hover', false);
-            }, 0);
-
-            this.oMenuPopover = oPopover
-              .setModel(this.getModel())
-              .attachAfterClose(() => {
-                setTimeout(() => {
-                  this.$().toggleClass('home-menu-level1-hover', false);
-                }, 0);
-                this.oMenuPopover.setModel(null).destroy();
-                this.oMenuPopover = null;
-              })
-              .openBy(this);
-          });
-        } else {
-          setTimeout(() => {
-            this.$().toggleClass('home-menu-level1-hover', true).siblings().toggleClass('home-menu-level1-hover', false);
-          }, 0);
-
-          this.oMenuPopover.openBy(this);
+      onmouseover(oEvent) {
+        if (oEvent.target.id === oEvent.toElement.id && oEvent.toElement.tagName === 'SPAN') {
+          this.oHomeMenu.openMenuPopoverBy(this);
         }
       }
 
@@ -76,28 +49,14 @@ sap.ui.define(
       onmouseout(oEvent) {
         // 브라우저 밖으로 마우스 이동시
         if (!oEvent.toElement) {
-          this.closeMenuPopover();
-          return;
-        }
-
-        // 메뉴 Label 내부로 마우스 이동시
-        if (oEvent.toElement.nodeName === 'BDI') {
+          this.oHomeMenu.closeMenuPopover();
           return;
         }
 
         // OverflowToolbar로 마우스 이동시 || Overflow 영역으로 숨겨진 메뉴 버튼에서 밖으로 이동시
         const classList = oEvent.toElement.classList;
         if (classList.contains('home-menu-toolbar') || classList.contains('sapMPopoverScroll')) {
-          this.closeMenuPopover();
-        }
-      }
-
-      closeMenuPopover() {
-        if (this.oMenuPopover && this.oMenuPopover.isOpen()) {
-          setTimeout(() => {
-            this.$().toggleClass('home-menu-level1-hover', false);
-          }, 0);
-          this.oMenuPopover.close();
+          this.oHomeMenu.closeMenuPopover();
         }
       }
     }

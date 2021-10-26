@@ -3,6 +3,7 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/core/UIComponent',
     'sap/ui/Device',
+    'sap/ui/model/json/JSONModel',
     'sap/ui/model/odata/v2/ODataModel',
     'sap/ui/yesco/common/AppUtils',
     './model/models',
@@ -13,6 +14,7 @@ sap.ui.define(
     // prettier 방지용 주석
     UIComponent,
     Device,
+    JSONModel,
     ODataModel,
     AppUtils,
     models,
@@ -52,17 +54,21 @@ sap.ui.define(
        * @override
        */
       init(...args) {
-        // set the device model
+        // set the device model.
         this.setModel(models.createDeviceModel(), 'device');
 
-        // model preload
+        // set busy indicator value model.
+        this.setModel(new JSONModel({ busy: true, delay: 0 }), 'app');
+
+        // S4HANA odata model preload.
         const aServiceNames = this.getOdataServiceNames();
         aServiceNames.forEach(({ serviceName: sServiceName, modelName: sModelName }) => {
           const sServiceUrl = AppUtils.getServiceUrl(sServiceName, this);
-          this.setModel(new ODataModel(sServiceUrl, { loadMetadataAsync: true }), sModelName);
+          const oServiceModel = new ODataModel(sServiceUrl, { loadMetadataAsync: true });
+          this.setModel(oServiceModel, sModelName);
         });
 
-        this.oListSelector = new ListSelector();
+        this._oListSelector = new ListSelector();
         this._oErrorHandler = new ErrorHandler(this);
 
         // call the base component's init function and create the App view
@@ -79,7 +85,7 @@ sap.ui.define(
        * @override
        */
       destroy(...args) {
-        this.oListSelector.destroy();
+        this._oListSelector.destroy();
         this._oErrorHandler.destroy();
 
         // call the base component's destroy function

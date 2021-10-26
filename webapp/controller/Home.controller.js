@@ -86,7 +86,7 @@ sap.ui.define(
           }
         });
 
-        const oCommonModel = this.getModel(); // ZHR_COMMON_SRV
+        const oCommonModel = this.getModel(/* ZHR_COMMON_SRV */);
         const sUrl = '/EmpLoginInfoSet';
 
         oCommonModel.read(sUrl, {

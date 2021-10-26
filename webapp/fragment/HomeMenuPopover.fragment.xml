@@ -12,22 +12,21 @@
 		bounce="false"
 		enableScrolling="false"
 		horizontalScrolling="false"
-		placement="Bottom"
-		initialFocus="">
+		placement="Bottom">
 		<HBox items="{/Children}" width="100%" justifyContent="Center" wrap="Wrap">
 			<List items="{ path: 'Children', templateShareable: false }" width="10rem" rememberSelections="false" showSeparators="None" showNoData="false">
 				<headerToolbar>
 					<Toolbar>
-						<Label text="{Mname}" visible="{= !${Meurl} }" /><!-- 링크가 없는 경우 -->
-						<Link text="{Mname}" visible="{= !!${Meurl} &amp;&amp; !${Mepop} }" href="/index.html#/{Meurl}" subtle="true" press=".handleMenuLink" /><!-- 메뉴 이동인 경우 -->
-						<Link text="{Mname}" visible="{= !!${Meurl} &amp;&amp; !!${Mepop} }" href="{Meurl}" target="_blank" subtle="true" press=".handleMenuLink" /><!-- 외부 링크인 경우 -->
+						<Label text="{Mname}" visible="{= !${Mnurl} }" /><!-- 링크가 없는 경우 -->
+						<Link text="{Mname}" visible="{= !!${Mnurl} &amp;&amp; !${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" press=".handleMenuLink" /><!-- 메뉴 이동인 경우 -->
+						<Link text="{Mname}" visible="{= !!${Mnurl} &amp;&amp; ${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" target="_blank" /><!-- 외부 링크인 경우 -->
 					</Toolbar>
 				</headerToolbar>
 				<CustomListItem>
 					<HBox>
-						<core:Icon size="1rem" src="{= ${Favor === 'X'} ? 'sap-icon://favorite' : 'sap-icon://unfavorite' }" press=".toggleFavorite" />
-						<Link text="{Mname}" visible="{= !!${Meurl} &amp;&amp; !${Mepop} }" href="/index.html#/{Meurl}" subtle="true" press=".handleMenuLink" /><!-- 메뉴 이동인 경우 -->
-						<Link text="{Mname}" visible="{= !!${Meurl} &amp;&amp; !!${Mepop} }" href="{Meurl}" target="_blank" subtle="true" press=".handleMenuLink" /><!-- 외부 링크인 경우 -->
+						<core:Icon size="1rem" src="{= ${Favor} ? 'sap-icon://favorite' : 'sap-icon://unfavorite' }" press=".toggleFavorite" />
+						<Link text="{Mname}" visible="{= !!${Mnurl} &amp;&amp; !${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" press=".handleMenuLink" /><!-- 메뉴 이동인 경우 -->
+						<Link text="{Mname}" visible="{= !!${Mnurl} &amp;&amp; ${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" target="_blank" /><!-- 외부 링크인 경우 -->
 					</HBox>
 				</CustomListItem>
 			</List>

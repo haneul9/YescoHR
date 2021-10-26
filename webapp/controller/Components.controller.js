@@ -1,14 +1,26 @@
 sap.ui.define(
   [
-    './BaseController', //
-    'sap/ui/model/json/JSONModel',
+    // prettier 방지용 주석
+    './BaseController',
     '../model/formatter',
+    'sap/m/MessageToast',
     'sap/ui/core/Fragment',
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
-    'sap/m/MessageToast',
+    'sap/ui/model/json/JSONModel',
+    'sap/ui/yesco/common/AppUtils',
   ],
-  (BaseController, JSONModel, formatter, Fragment, Filter, FilterOperator, MessageToast) => {
+  (
+    // prettier 방지용 주석
+    BaseController,
+    formatter,
+    MessageToast,
+    Fragment,
+    Filter,
+    FilterOperator,
+    JSONModel,
+    AppUtils
+  ) => {
     'use strict';
 
     class Components extends BaseController {
@@ -18,18 +30,16 @@ sap.ui.define(
       /* lifecycle methods                                           */
       /* =========================================================== */
 
-      /**
-       * Called when the worklist controller is instantiated.
-       * @public
-       */
-      onInit() {
+      onBeforeShow() {
         var oModel = new JSONModel(sap.ui.require.toUrl('sap/ui/yesco/localService/mockdata/products.json'));
         // The default limit of the model is set to 100. We want to show all the entries.
         oModel.setSizeLimit(100000);
         this.getView().setModel(oModel);
       }
 
-      onAfterShow() {}
+      onAfterShow() {
+        AppUtils.setAppBusy(false, this);
+      }
 
       /* =========================================================== */
       /* event handlers                                              */
@@ -76,7 +86,7 @@ sap.ui.define(
        */
       onNavBack() {
         // eslint-disable-next-line sap-no-history-manipulation
-        history.go(-1);
+        window.history.go(-1);
       }
 
       onSearch(oEvent) {
