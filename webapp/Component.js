@@ -8,7 +8,6 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     './model/models',
     './controller/ErrorHandler',
-    './controller/ListSelector',
   ],
   (
     // prettier 방지용 주석
@@ -18,8 +17,7 @@ sap.ui.define(
     ODataModel,
     AppUtils,
     models,
-    ErrorHandler,
-    ListSelector
+    ErrorHandler
   ) => {
     'use strict';
 
@@ -68,7 +66,6 @@ sap.ui.define(
           this.setModel(oServiceModel, sModelName);
         });
 
-        this._oListSelector = new ListSelector();
         this._oErrorHandler = new ErrorHandler(this);
 
         // call the base component's init function and create the App view
@@ -80,12 +77,11 @@ sap.ui.define(
 
       /**
        * The component is destroyed by UI5 automatically.
-       * In this method, the ListSelector and ErrorHandler are destroyed.
+       * In this method, the ErrorHandler are destroyed.
        * @public
        * @override
        */
       destroy(...args) {
-        this._oListSelector.destroy();
         this._oErrorHandler.destroy();
 
         // call the base component's destroy function
