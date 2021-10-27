@@ -16,6 +16,7 @@ sap.ui.define(
       'use strict';
 
       class Congulatulation extends BaseController {
+
         onInit() {
           this.getView().addEventDelegate(
             {
@@ -41,10 +42,72 @@ sap.ui.define(
 
         onAfterShow() {
           this.onSearch();
+          this.getTotalPay();
+        }
+
+        rowHighlight(sValue) {
+          switch (sValue) {
+            case "10":
+            case "90":
+              return sap.ui.core.IndicationColor.Indication01;
+            case "20":
+            case "30":
+            case "50":
+              return sap.ui.core.IndicationColor.Indication03;
+            case "40":
+              return sap.ui.core.IndicationColor.Indication04;
+            case "45":
+            case "65":
+              return sap.ui.core.IndicationColor.Indication02;
+            case "60":
+              return sap.ui.core.IndicationColor.Indication05;
+            default:
+              return null;
+          }
         }
 
         onClick() {
           this.getRouter().navTo("congDetail", {oDataKey: "N"});
+        }
+
+        formatNumber(vNum) {
+          if(!vNum || vNum === '') return '0';
+
+          return vNum;
+        }
+
+        formatStatusTxt(vStatus) {
+          Indication02
+        }
+
+        getPayComma(vPay) {
+          if(vPay) return `${vPay}만원`;
+
+          return '';
+        }
+
+        getTotalPay() {
+          const oModel = this.getModel("benefit");
+          const oTotalModel = this.getViewModel();
+          const oController = this;
+
+          oModel.read("/ConExpenseMyconSet", {
+            async: false,
+            filters: [
+							new sap.ui.model.Filter("Pernr", sap.ui.model.FilterOperator.EQ, "50006"),
+						],
+            success: function (oData) {
+              if (oData) {
+                // Common.log(oData);
+                const oTotal = oData.results[0];
+
+                oTotalModel.setProperty("/Total", oTotal);
+              }
+            },
+            error: function (oRespnse) {
+              // Common.log(oResponse);
+            }
+          });
         }
 
         onSearch() {

@@ -33,18 +33,9 @@ sap.ui.define(
         }
 
         onAfterShow() {
-          this.getBenefitType(this);
-
           setTimeout(() => {
-            this.onTypeChange();
-          }, 100);
-        }
-
-        setAppdt(vAppdt) {
-          if(vAppdt) 
-            return `${vAppdt.slice(0, 4)}.${vAppdt.slice(4, 6)}.${vAppdt.slice(6, 8)}, ${vAppdt.slice(9, 11)}:${vAppdt.slice(11, 13)}`;
-    
-          return "";
+            this.getBenefitType(this);
+          }, 150);
         }
 
         onObjectMatched(oEvent) { 
@@ -95,7 +86,7 @@ sap.ui.define(
         }
          
         // 경조유형
-        getBenefitType(oEvent) {
+        getBenefitType(oController) {
           const oModel = this.getModel("benefit");
           const oDetailModel = this.getViewModel();
 
@@ -109,8 +100,11 @@ sap.ui.define(
             success: function (oData) {
               if (oData) {
                 oDetailModel.setProperty('/BenefitType', oData.results);
+                oDetailModel.setProperty('/FormData/Concode', oData.results[0].Zcode);
 
-                if(!oEvent) oDetailModel.setProperty('/FormData/Concode', oData.results[0].Zcode);
+                setTimeout(() => {
+                  oController.onTypeChange();
+                }, 150);
               }
             },
             error: function (oRespnse) {
@@ -151,7 +145,7 @@ sap.ui.define(
 
                 setTimeout(() => {
                   oController.onCauseChange();
-                }, 100);
+                }, 150);
               }
             },
             error: function (oRespnse) {
@@ -239,22 +233,28 @@ sap.ui.define(
 
         // 대상자 성명 선택시
         onTargetDialog() {
+          const oDetailModel = this.getViewModel();
+
           this.getTargetList(this);
-              // load asynchronous XML fragment
-          if (!this.byId('targetSettingsDialog')) {
-            Fragment.load({
-              id: this.getView().getId(),
-              name: 'sap.ui.yesco.view.congulatulation.TargetDialog',
-              controller: this,
-            }).then((oDialog) => {
-              // connect dialog to the root view of this component (models, lifecycle)
-              this.getView().addDependent(oDialog);
-              oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
-              oDialog.open();
-            });
-          } else {
-            this.byId('targetSettingsDialog').open();
-          }
+
+          setTimeout(() => {
+            if(oDetailModel.getProperty('/TargetList').length === 1) return;
+                // load asynchronous XML fragment
+            if (!this.byId('targetSettingsDialog')) {
+              Fragment.load({
+                id: this.getView().getId(),
+                name: 'sap.ui.yesco.view.congulatulation.TargetDialog',
+                controller: this,
+              }).then((oDialog) => {
+                // connect dialog to the root view of this component (models, lifecycle)
+                this.getView().addDependent(oDialog);
+                oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
+                oDialog.open();
+              });
+            } else {
+              this.byId('targetSettingsDialog').open();
+            }
+          }, 150);
         }
         
         // 대상자 리스트 조회
@@ -263,7 +263,7 @@ sap.ui.define(
           const oDetailModel = this.getViewModel();
   
           oModel.read("/ConExpenseSupportListSet", {
-            async: false,
+            async: true,
             filters: [
               new sap.ui.model.Filter("Werks", sap.ui.model.FilterOperator.EQ, '1000'),
               new sap.ui.model.Filter("Pernr", sap.ui.model.FilterOperator.EQ, "50006"),
@@ -276,7 +276,13 @@ sap.ui.define(
                 const oTargetList = oData.results;
                 
                 oDetailModel.setProperty('/TargetList', oTargetList);
-                oController.byId("targetTable").setVisibleRowCount(oTargetList.length);
+
+                if(oTargetList.length === 1) {
+                  oDetailModel.setProperty("/FormData/Zbirthday", oTargetList[0].Zbirthday);
+                  oDetailModel.setProperty("/FormData/Kdsvh", oTargetList[0].Kdsvh);
+                  oDetailModel.setProperty("/FormData/Zname", oTargetList[0].Zname);
+                }else 
+                  oController.byId("targetTable").setVisibleRowCount(oTargetList.length);
               }
             },
             error: function (oRespnse) {

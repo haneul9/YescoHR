@@ -1,0 +1,35 @@
+<mvc:View
+	controllerName="sap.ui.yesco.controller.Applicant"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:grid="sap.ui.layout.cssgrid"
+>
+	<VBox>
+		<items>
+			<HBox>
+				<items>
+					<Title
+						text="신청자"
+						level="H2"
+					/>
+				</items>
+			</HBox>
+			<grid:CSSGrid
+				gridTemplateColumns="1fr 3fr 1fr 3fr"
+				gridGap="8px"
+			>
+				<Label text="성명"/>
+				<Text text="{/FormData/Apename}"/>
+				<Label text="소속"/>
+				<Text text="{/FormData/Appernr}"/>
+				<Label text="직급/직위"/>
+				<Text text="{/FormData/Apjikgbtl}"/>
+				<Label text="신청일시"/>
+				<Text text="{
+					path: '/FormData/Appdt',
+					formatter: '.setAppdt'
+				}"/>
+			</grid:CSSGrid>
+		</items>
+	</VBox>
+</mvc:View>
