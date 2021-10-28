@@ -1,7 +1,6 @@
-<mvc:View
-	controllerName="sap.ui.yesco.controller.Applicant"
+<core:FragmentDefinition
 	xmlns="sap.m"
-	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
 	xmlns:grid="sap.ui.layout.cssgrid"
 >
 	<VBox>
@@ -19,17 +18,17 @@
 				gridGap="8px"
 			>
 				<Label text="성명"/>
-				<Text text="{/FormData/Apename}"/>
+				<Text text="{FormData>/Apename}"/>
 				<Label text="소속"/>
-				<Text text="{/FormData/Appernr}"/>
+				<Text text="{FormData>/Appernr}"/>
 				<Label text="직급/직위"/>
-				<Text text="{/FormData/Apjikgbtl}"/>
+				<Text text="{FormData>/Apjikgbtl}"/>
 				<Label text="신청일시"/>
 				<Text text="{
-					path: '/FormData/Appdt',
+					path: 'FormData>/Appdt',
 					formatter: '.setAppdt'
 				}"/>
 			</grid:CSSGrid>
 		</items>
 	</VBox>
-</mvc:View>
+</core:FragmentDefinition>

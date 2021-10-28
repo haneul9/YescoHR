@@ -21,30 +21,30 @@
 									text="재작성"
 									type="Emphasized"
 									press=".onRewriteBtn"
-									visible="{= ${/FormData/ZappStatAl} === '45' }"
+									visible="{= ${FormData>/ZappStatAl} === '45' }"
 								/>
 								<Button
 									text="임시저장"
 									type="Emphasized"
 									press=".onSaveBtn"
-									visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }"
+									visible="{= ${FormData>/ZappStatAl} === '10' || !${FormData>/ZappStatAl} }"
 								/>
 								<Button
 									text="신청"
 									type="Emphasized"
 									press=".onApplyBtn"
-									visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }"
+									visible="{= ${FormData>/ZappStatAl} === '10' || !${FormData>/ZappStatAl} }"
 								/>
 								<Button
 									text="취소"
 									press=".onCancelBtn"
-									visible="{= ${/FormData/ZappStatAl} === '20' }"
+									visible="{= ${FormData>/ZappStatAl} === '20' }"
 								/>
 								<Button
 									text="삭제"
 									type="Reject"
 									press=".onDeleteBtn"
-									visible="{= ${/FormData/ZappStatAl} === '10' || ${/FormData/ZappStatAl} === '45' }"
+									visible="{= ${FormData>/ZappStatAl} === '10' || ${FormData>/ZappStatAl} === '45' }"
 								/>
 								<Button
 									icon="sap-icon://action"
@@ -106,11 +106,11 @@
 							<Label text="경조유형"/>
 							<Select
 								id="BenefitType"
-								selectedKey="{/FormData/Concode}"
+								selectedKey="{FormData>/Concode}"
 								items="{/BenefitType}"
 								width="200px"
 								change="onTypeChange"
-								editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }"
+								editable="{= ${FormData>/ZappStatAl} === '10' || !${FormData>/ZappStatAl} }"
 							>
 								<core:Item
 									text="{Ztext}"
@@ -119,17 +119,17 @@
 							</Select>
 							<Label text="대상자 생년월일"/>
 							<DatePicker
-								dateValue="{/FormData/Zbirthday}"
-								editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }"
+								dateValue="{FormData>/Zbirthday}"
+								editable="{= ${FormData>/ZappStatAl} === '10' || !${FormData>/ZappStatAl} }"
 							/>
 							<Label text="경조사유"/>
 							<Select
 								id="BenefitCause"
-								selectedKey="{/FormData/Conresn}"
+								selectedKey="{FormData>/Conresn}"
 								items="{/BenefitCause}"
 								width="200px"
 								change=".onCauseChange"
-								editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }"
+								editable="{= ${FormData>/ZappStatAl} === '10' || !${FormData>/ZappStatAl} }"
 							>
 								<core:Item
 									text="{Ztext}"
@@ -138,17 +138,17 @@
 							</Select>
 							<Label text="증빙상 경조일"/>
 							<DatePicker
-								dateValue="{/FormData/Conddate}"
+								dateValue="{FormData>/Conddate}"
 								change=".onBenefitChangeDate"
-								editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }"
+								editable="{= ${FormData>/ZappStatAl} === '10' || !${FormData>/ZappStatAl} }"
 							/>
 							<Label text="대상자 관계"/>
 							<Select
 								id="BenefitRelation"
-								selectedKey="{/FormData/Kdsvh}"
+								selectedKey="{FormData>/Kdsvh}"
 								items="{/BenefitRelation}"
 								width="200px"
-								editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }"
+								editable="{= ${FormData>/ZappStatAl} === '10' || !${FormData>/ZappStatAl} }"
 							>
 								<core:Item
 									text="{Ztext}"
@@ -157,47 +157,53 @@
 							</Select>
 							<Label text="실재 경조일"/>
 							<DatePicker
-								dateValue="{/FormData/Conrdate}"
-								editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }"
+								dateValue="{FormData>/Conrdate}"
+								editable="{= ${FormData>/ZappStatAl} === '10' || !${FormData>/ZappStatAl} }"
 							/>
 							<Label text="대상자 성명"/>
 							<HBox>
 								<items>
 									<Input
-										value="{/FormData/Zname}"
-										editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }"
+										value="{FormData>/Zname}"
+										editable="{= ${FormData>/ZappStatAl} === '10' || !${FormData>/ZappStatAl} }"
 									/>
 									<Button
 										text="선택"
 										press=".onTargetDialog"
-										enabled="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }"
+										enabled="{= ${FormData>/ZappStatAl} === '10' || !${FormData>/ZappStatAl} }"
 									/>
 								</items>
 							</HBox>
 							<Label text="행사장소"/>
 							<Input
-								value="{/FormData/Zeloc}"
-								editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }"
+								value="{FormData>/Zeloc}"
+								editable="{= ${FormData>/ZappStatAl} === '10' || !${FormData>/ZappStatAl} }"
 							/>
 							<Label text="기본급(원)"/>
-							<Text text="{/FormData/ZbacBetT}"/>
+							<Text text="{FormData>/ZbacBetT}"/>
 							<Label text="지급율"/>
-							<Text text="{/FormData/PayrtT}"/>
+							<Text text="{FormData>/PayrtT}"/>
 							<Label text="지급액(원)"/>
-							<Text text="{/FormData/ZpayBetT}"/>
+							<Text text="{FormData>/ZpayBetT}"/>
 							<Label text="화환여부(Y/N)"/>
-							<Text text="{/FormData/Zflower}"/>
+							<Text text="{FormData>/Zflower}"/>
 						</grid:CSSGrid>
 					</items>
 				</VBox>
 				<HBox>
 					<items>
-						<mvc:XMLView viewName="sap.ui.yesco.view.Applicant"/>
+						<core:Fragment
+							fragmentName="sap.ui.yesco.fragment.Applicant"
+							type="XML"
+						/>
 					</items>
 				</HBox>
-				<HBox visible="{= ${/FormData/ZappStatAl} !== '' }">
+				<HBox visible="{= ${FormData>/ZappStatAl} !== '' }">
 					<items>
-						<mvc:XMLView viewName="sap.ui.yesco.view.ApprovalDetails"/>
+						<core:Fragment
+							fragmentName="sap.ui.yesco.fragment.ApprovalDetails"
+							type="XML"
+						/>
 					</items>
 				</HBox>
 			</items>
