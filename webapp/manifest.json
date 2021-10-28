@@ -127,6 +127,11 @@
           "pattern": "employees",
           "name": "employeeList",
           "target": "employees"
+        },
+        {
+          "pattern": "attendance",
+          "name": "attendance",
+          "target": "attendance"
         }
       ],
       "targets": {
@@ -175,6 +180,12 @@
           "viewName": "EmployeeList",
           "viewLevel": 2,
           "viewPath": "sap.ui.yesco.view.employee"
+        },
+        "attendance": {
+          "viewId": "list",
+          "viewPath": "sap.ui.yesco.view.attendance",
+          "viewName": "List",
+          "viewLevel": 2
         }
       }
     }

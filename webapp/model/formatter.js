@@ -16,5 +16,22 @@ sap.ui.define([], () => {
 
       return parseFloat(sValue).toFixed(2);
     },
+
+    rowHighlight(sValue) {
+      switch (sValue) {
+        case '10':
+          return sap.ui.core.IndicationColor.Indication01;
+        case '20':
+          return sap.ui.core.IndicationColor.Indication03;
+        case '40':
+          return sap.ui.core.IndicationColor.Indication04;
+        case '45':
+          return sap.ui.core.IndicationColor.Indication02;
+        case '60':
+          return sap.ui.core.IndicationColor.Indication05;
+        default:
+          return null;
+      }
+    },
   };
 });
