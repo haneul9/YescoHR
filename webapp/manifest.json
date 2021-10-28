@@ -182,7 +182,7 @@
           "viewPath": "sap.ui.yesco.view.employee"
         },
         "attendance": {
-          "viewId": "list",
+          "viewId": "attendanceList",
           "viewPath": "sap.ui.yesco.view.attendance",
           "viewName": "List",
           "viewLevel": 2

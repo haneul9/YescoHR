@@ -1,11 +1,9 @@
-<mvc:View
-	controllerName="sap.ui.yesco.controller.attendance.List"
+<mvc:View controllerName="sap.ui.yesco.controller.attendance.List"
 	xmlns="sap.m"
 	xmlns:table="sap.ui.table"
 	xmlns:core="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:grid="sap.ui.layout.cssgrid"
->
+	xmlns:grid="sap.ui.layout.cssgrid">
 	<Page showHeader="false">
 		<VBox>
 			<HBox justifyContent="SpaceBetween">
@@ -13,233 +11,100 @@
 					<Text text="근태 > 근태신청"/>
 				</HBox>
 				<HBox>
-					<Button
-						type="Emphasized"
-						text="신규신청"
-					/>
-					<Button
-						type="Emphasized"
-						text="변경신청"
-					/>
-					<Button
-						type="Emphasized"
-						text="취소신청"
-					/>
+					<Button type="Emphasized" text="신규신청" />
+					<Button type="Emphasized" text="변경신청" />
+					<Button type="Emphasized" text="취소신청" />
 				</HBox>
 			</HBox>
 			<HBox justifyContent="SpaceAround">
-				<VBox
-					class="hCardBox"
-					width="33%"
-				>
+				<VBox class="hCardBox" width="33%">
 					<HBox justifyContent="SpaceBetween">
 						<HBox justifyContent="Start">
-							<Title
-								level="H2"
-								text="대상자 정보"
-							/>
+							<Title level="H2" text="대상자 정보" />
 						</HBox>
-						<Button
-							type="Transparent"
-							icon="sap-icon://employee-approvals"
-						/>
+						<Button type="Transparent" icon="sap-icon://employee-approvals" />
 					</HBox>
 					<HBox>
-						<VBox
-							width="30%"
-							justifyContent="Center"
-							alignItems="Center"
-						>
-							<Image
-								src="https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1"
-								height="50px"
-								width="50px"
-							/>
+						<VBox width="30%" justifyContent="Center" alignItems="Center">
+							<Image src="https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1" height="50px" width="50px" />
 						</VBox>
 						<VBox>
-							<Text
-								text="홍길동 팀장"
-								textAlign="Begin"
-								textDirection="Inherit"
-								width=""
-								wrapping="true"
-								wrappingType="Normal"
-							/>
-							<Text
-								text="예스코홀딩스 인사기획팀"
-								textAlign="Begin"
-								textDirection="Inherit"
-								width=""
-								wrapping="true"
-								wrappingType="Normal"
-							/>
-							<Text
-								text="경영관리직 / 12345"
-								textAlign="Begin"
-								textDirection="Inherit"
-								width=""
-								wrapping="true"
-								wrappingType="Normal"
-							/>
+							<Text text="홍길동 팀장" textAlign="Begin" textDirection="Inherit" width="" wrapping="true" wrappingType="Normal" />
+							<Text text="예스코홀딩스 인사기획팀" textAlign="Begin" textDirection="Inherit" width="" wrapping="true" wrappingType="Normal" />
+							<Text text="경영관리직 / 12345" textAlign="Begin" textDirection="Inherit" width="" wrapping="true" wrappingType="Normal" />
 						</VBox>
 					</HBox>
 				</VBox>
-				<VBox
-					class="hCardBox"
-					width="33%"
-				>
-                    <HBox justifyContent="SpaceBetween">
-                        <Title
-                            level="H2"
-                            text="나의 휴가현황"
-                        />
-                        <Button
-                            type="Transparent"
-                            icon="sap-icon://detail-view"
-                        />
-                    </HBox>
-					<HBox>
-						<Label
-							text="연차휴가"
-							design="Bold"
-						/>
-						<VBox width="80%">
-							<ProgressIndicator
-								class="sapUiSmallMarginBottom"
-								percentValue="80"
-								displayValue="80%"
-								showValue="false"
-								state="None"
-								width="100%"
-							/>
-							<HBox justifyContent="SpaceBetween">
-								<Text text="0" />
-								<Text text="52" />
-							</HBox>
-						</VBox>
-					</HBox>
-					<HBox>
-						<Label
-							text="하계휴가"
-							design="Bold"
-						/>
-						<VBox width="80%">
-							<ProgressIndicator
-								class="sapUiSmallMarginBottom"
-								percentValue="80"
-								displayValue="80%"
-								showValue="false"
-								state="None"
-								width="100%"
-							/>
-							<HBox justifyContent="SpaceBetween">
-								<Text text="0" />
-								<Text text="52" />
-							</HBox>
-						</VBox>
-					</HBox>
-					<HBox>
-						<Label
-							text="보건휴가"
-							design="Bold"
-						/>
-						<VBox width="80%">
-							<ProgressIndicator
-								class="sapUiSmallMarginBottom"
-								percentValue="80"
-								displayValue="80%"
-								showValue="false"
-								state="None"
-								width="100%"
-							/>
-							<HBox justifyContent="SpaceBetween">
-								<Text text="0" />
-								<Text text="52" />
-							</HBox>
-						</VBox>
-					</HBox>
-				</VBox>
-				<VBox
-					class="hCardBox"
-					width="33%"
-				>
+				<VBox class="hCardBox" width="33%">
 					<HBox justifyContent="SpaceBetween">
-						<Title
-							text="조회조건"
-							level="H2"
-						/>
-						<Button
-							type="Transparent"
-							icon="sap-icon://search"
-						/>
+						<Title level="H2" text="나의 휴가현황" />
+						<Button type="Transparent" icon="sap-icon://detail-view" />
 					</HBox>
-					<grid:CSSGrid
-						gridTemplateColumns="1fr 3fr"
-						gridGap="8px"
-					>
-						<Label
-							text="신청일"
-							design="Bold"
-						/>
-						<DateRangeSelection
-							width="90%"
-							class="sapIcon_Date"
-						/>
+					<HBox>
+						<Label text="연차휴가" design="Bold" />
+						<VBox width="80%">
+							<ProgressIndicator class="sapUiSmallMarginBottom" percentValue="80" displayValue="80%" showValue="false" state="None" width="100%" />
+							<HBox justifyContent="SpaceBetween">
+								<Text text="0" />
+								<Text text="52" />
+							</HBox>
+						</VBox>
+					</HBox>
+					<HBox>
+						<Label text="하계휴가" design="Bold" />
+						<VBox width="80%">
+							<ProgressIndicator class="sapUiSmallMarginBottom" percentValue="80" displayValue="80%" showValue="false" state="None" width="100%" />
+							<HBox justifyContent="SpaceBetween">
+								<Text text="0" />
+								<Text text="52" />
+							</HBox>
+						</VBox>
+					</HBox>
+					<HBox>
+						<Label text="보건휴가" design="Bold" />
+						<VBox width="80%">
+							<ProgressIndicator class="sapUiSmallMarginBottom" percentValue="80" displayValue="80%" showValue="false" state="None" width="100%" />
+							<HBox justifyContent="SpaceBetween">
+								<Text text="0" />
+								<Text text="52" />
+							</HBox>
+						</VBox>
+					</HBox>
+				</VBox>
+				<VBox class="hCardBox" width="33%">
+					<HBox justifyContent="SpaceBetween">
+						<Title text="조회조건" level="H2" />
+						<Button type="Transparent" icon="sap-icon://search" />
+					</HBox>
+					<grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="8px">
+						<Label text="신청일" design="Bold" />
+						<DateRangeSelection width="90%" class="sapIcon_Date" />
 					</grid:CSSGrid>
 				</VBox>
 			</HBox>
 			<VBox class="vCardBox">
 				<HBox justifyContent="SpaceBetween">
 					<HBox>
-						<Title
-							level="H3"
-							text="신청내역"
-						/>
+						<Title level="H3" text="신청내역" />
 						<Text text="total 12"/>
 					</HBox>
 					<HBox>
 						<HBox>
-							<core:Icon
-								src="sap-icon://circle-task-2"
-								color="#bdbdbd"
-							/>
+							<core:Icon src="sap-icon://circle-task-2" color="#bdbdbd" />
 							<Label text="작성중 {/listinfo/progressCount}"/>
-							<core:Icon
-								src="sap-icon://circle-task-2"
-								color="#ffc107"
-							/>
+							<core:Icon src="sap-icon://circle-task-2" color="#ffc107" />
 							<Label text="신청 {/listinfo/applyCount}"/>
-							<core:Icon
-								src="sap-icon://circle-task-2"
-								color="#28a745"
-							/>
+							<core:Icon src="sap-icon://circle-task-2" color="#28a745" />
 							<Label text="승인 {/listinfo/approveCount}"/>
-							<core:Icon
-								src="sap-icon://circle-task-2"
-								color="#dc3545"
-							/>
+							<core:Icon src="sap-icon://circle-task-2" color="#dc3545" />
 							<Label text="반려 {/listinfo/rejectCount}"/>
-							<core:Icon
-								src="sap-icon://circle-task-2"
-								color="#1d85c8"
-							/>
+							<core:Icon src="sap-icon://circle-task-2" color="#1d85c8" />
 							<Label text="완료 {/listinfo/completeCount}"/>
 						</HBox>
-						<Button
-							icon="sap-icon://excel-attachment"
-							text="Excel"
-						/>
+						<Button icon="sap-icon://excel-attachment" text="Excel" />
 					</HBox>
 				</HBox>
-				<table:Table
-					id="conguTable"
-					width="100%"
-					rows="{/list}"
-					selectionMode="MultiToggle"
-					rowHeight="37"
-					columnHeaderHeight="38"
-					visibleRowCount="{/listinfo/rowcount}"
-				>
+				<table:Table id="conguTable" width="100%" rows="{/list}" selectionMode="MultiToggle" rowHeight="37" columnHeaderHeight="38" visibleRowCount="{/listinfo/rowcount}">
 					<table:rowSettingsTemplate>
 						<table:RowSettings highlight="{
 							path: 'ZappSAl',
@@ -247,154 +112,80 @@
 						}"/>
 					</table:rowSettingsTemplate>
 					<table:columns>
-						<table:Column width="8%">
+						<table:Column width="8%" filterProperty="ZappStxtAl" sortProperty="ZappStxtAl">
 							<Label text="상태"/>
 							<table:template>
-								<Text
-									text="{ZappStxtAl}"
-									width="100%"
-									textAlign="Center"
-								>
+								<Text text="{ZappStxtAl}" width="100%" textAlign="Center">
 									<customData>
-										<core:CustomData
-											key="status"
-											value="{ZappSAl}"
-											writeToDom="true"
-										/>
+										<core:CustomData key="status" value="{ZappSAl}" writeToDom="true" />
 									</customData>
 								</Text>
 							</table:template>
 						</table:Column>
-						<table:Column width="8%">
+						<table:Column width="8%" filterProperty="Appty" sortProperty="Appty">
 							<Label text="구분"/>
 							<table:template>
-								<Text
-									text="{Appty}"
-									width="100%"
-									textAlign="Center"
-									wrapping="false"
-									class="tableRow_Text"
-								/>
+								<Text text="{Appty}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
 							</table:template>
 						</table:Column>
-						<table:Column width="8%">
+						<table:Column width="8%" filterProperty="Pernr" sortProperty="Pernr">
 							<Label text="사번"/>
 							<table:template>
-								<Text
-									text="{Pernr}"
-									width="100%"
-									textAlign="Center"
-									wrapping="false"
-									class="tableRow_Text"
-								/>
+								<Text text="{Pernr}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
 							</table:template>
 						</table:Column>
-						<table:Column width="8%">
+						<table:Column width="8%" filterProperty="Ename" sortProperty="Ename">
 							<Label text="성명"/>
 							<table:template>
-								<Text
-									text="{Ename}"
-									width="100%"
-									textAlign="Center"
-									wrapping="false"
-									class="tableRow_Text"
-								/>
+								<Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
 							</table:template>
 						</table:Column>
-						<table:Column width="8%">
+						<table:Column width="8%" filterProperty="Orgtx" sortProperty="Orgtx">
 							<Label text="부서"/>
 							<table:template>
-								<Text
-									text="{Orgtx}"
-									width="100%"
-									textAlign="Center"
-									wrapping="false"
-									class="tableRow_Text"
-								/>
+								<Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
 							</table:template>
 						</table:Column>
-						<table:Column width="8%">
+						<table:Column width="8%" filterProperty="Zzjikgbt" sortProperty="Zzjikgbt">
 							<Label text="직급"/>
 							<table:template>
-								<Text
-									text="{Zzjikgbt}"
-									width="100%"
-									textAlign="Center"
-									wrapping="false"
-									class="tableRow_Text"
-								/>
+								<Text text="{Zzjikgbt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
 							</table:template>
 						</table:Column>
-						<table:Column width="8%">
+						<table:Column width="8%" filterProperty="Awart" sortProperty="Awart">
 							<Label text="근태"/>
 							<table:template>
-								<Text
-									text="{Awart}"
-									width="100%"
-									textAlign="Center"
-									wrapping="false"
-									class="tableRow_Text"
-								/>
+								<Text text="{Awart}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
 							</table:template>
 						</table:Column>
-						<table:Column width="8%">
+						<table:Column width="8%" filterProperty="Begda" sortProperty="Begda">
 							<Label text="시작일"/>
 							<table:template>
-								<Text
-									text="{Begda}"
-									width="100%"
-									textAlign="Center"
-									wrapping="false"
-									class="tableRow_Text"
-								/>
+								<Text text="{Begda}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
 							</table:template>
 						</table:Column>
-						<table:Column width="8%">
+						<table:Column width="8%" filterProperty="Endda" sortProperty="Endda">
 							<Label text="종료일"/>
 							<table:template>
-								<Text
-									text="{Endda}"
-									width="100%"
-									textAlign="Center"
-									wrapping="false"
-									class="tableRow_Text"
-								/>
+								<Text text="{Endda}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
 							</table:template>
 						</table:Column>
-						<table:Column width="8%">
+						<table:Column width="8%" filterProperty="Range" sortProperty="Range">
 							<Label text="기간"/>
 							<table:template>
-								<Text
-									text="{Range}"
-									width="100%"
-									textAlign="Center"
-									wrapping="false"
-									class="tableRow_Text"
-								/>
+								<Text text="{Range}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
 							</table:template>
 						</table:Column>
-						<table:Column width="8%">
+						<table:Column width="8%" filterProperty="Endda" sortProperty="Endda">
 							<Label text="신청일"/>
 							<table:template>
-								<Text
-									text="{Endda}"
-									width="100%"
-									textAlign="Center"
-									wrapping="false"
-									class="tableRow_Text"
-								/>
+								<Text text="{Endda}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
 							</table:template>
 						</table:Column>
-						<table:Column width="8%">
+						<table:Column width="8%" filterProperty="Endda" sortProperty="Endda">
 							<Label text="결재일"/>
 							<table:template>
-								<Text
-									text="{Endda}"
-									width="100%"
-									textAlign="Center"
-									wrapping="false"
-									class="tableRow_Text"
-								/>
+								<Text text="{Endda}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
 							</table:template>
 						</table:Column>
 					</table:columns>
