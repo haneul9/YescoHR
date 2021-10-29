@@ -32,32 +32,41 @@ sap.ui.define(
         }
 
         onBeforeShow() {
+          const oInfoModel = new JSONModel({
+            TargetInfo: {}
+          });
+          this.setViewModel(oInfoModel);
+
           const oSearchDate = this.byId('SearchDate');
           const dDate = new Date();
           const dDate2 = new Date(dDate.getFullYear(), dDate.getMonth() - 1, dDate.getDate() + 1);
           
           oSearchDate.setDateValue(dDate2);
           oSearchDate.setSecondDateValue(dDate);
+          this.getInfo(this);
         }
 
         onAfterShow() {
-          const oCommonModel = this.getModel();
+          
+        }
+
+        getInfo(oController) {
+          const oCommonModel = oController.getModel();
           const sUrl = '/EmpLoginInfoSet';
-          const oInfoModel = new JSONModel();
+          const oInfoModel = this.getViewModel();
 
           oCommonModel.read(sUrl, {
             success: (oData, oResponse) => {
-              this.debug(`${sUrl} success.`, oData, oResponse);
+              oController.debug(`${sUrl} success.`, oData, oResponse);
               const oLoginInfo = oData.results[0];
 
               oLoginInfo.Hide = "o";
               oInfoModel.setData({TargetInfo: oLoginInfo});
-              this.setViewModel(oInfoModel);              
-              this.onSearch();
-              this.getTotalPay();
+              oController.onSearch();
+              oController.getTotalPay();
             },
             error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
+              oController.debug(`${sUrl} error.`, oError);
             },
           });
         }

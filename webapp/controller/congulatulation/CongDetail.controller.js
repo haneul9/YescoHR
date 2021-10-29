@@ -27,7 +27,12 @@ sap.ui.define(
         }
 
         onBeforeShow() {    
-          this.getEmpInfo(this);      
+          const oInfoModel = new JSONModel({
+            FormData: {}
+          });
+          this.setViewModel(oInfoModel);
+          
+          this.getEmpInfo(this);
           this.getRouter().getRoute("congDetail").attachPatternMatched(this.onObjectMatched, this);
         }
 
@@ -44,20 +49,16 @@ sap.ui.define(
         getEmpInfo(oController) {
           const oCommonModel = oController.getModel();
           const sUrl = '/EmpLoginInfoSet';
-          const oInfoModel = new JSONModel({
-            FormData: {}
-          });
 
           oCommonModel.read(sUrl, {
             success: (oData, oResponse) => {
               oController.debug(`${sUrl} success.`, oData, oResponse);
               const oLoginInfo = oData.results[0];
+              const oInfoModel = oController.getViewModel();
               
               oInfoModel.setProperty("/FormData/Pernr", oLoginInfo);
               oInfoModel.setProperty("/FormData/Ename", oLoginInfo);
               oInfoModel.setProperty("/DetailTargetInfo", oLoginInfo);
-
-              oController.setViewModel(oInfoModel);
             },
             error: (oError) => {
               oController.debug(`${sUrl} error.`, oError);

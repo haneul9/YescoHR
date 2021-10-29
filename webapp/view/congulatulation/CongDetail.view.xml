@@ -72,7 +72,7 @@
 				<HBox>
 					<core:Fragment fragmentName="sap.ui.yesco.fragment.ApplyInfo" type="XML" />
 				</HBox>
-				<HBox visible="{= ${/FormData/ZappStatAl} !== '' }">
+				<HBox visible="{= !!${/FormData/ZappStatAl} }">
 					<core:Fragment fragmentName="sap.ui.yesco.fragment.PaymentDetails" type="XML" />
 				</HBox>
 			</VBox>
