@@ -1,0 +1,25 @@
+{
+    "list": [
+        {
+            "ZappSAl": "10",
+            "ZappStxtAl": "작성중",
+            "Appty": "신규",
+            "Pernr": "10001",
+            "Ename": "김일번",
+            "Orgtx": "인재개발팀",
+            "Zzjikgbt": "대리",
+            "Awart": "연차",
+            "Begda": "2021.01.01",
+            "Endda": "2021.01.01",
+            "Range": "1일"
+        }
+    ],
+    "listinfo": {
+        "rowcount": 1,
+        "progressCount": 1,
+        "applyCount": 0,
+        "approveCount": 0,
+        "rejectCount": 0,
+        "completeCount": 0
+    }
+}
