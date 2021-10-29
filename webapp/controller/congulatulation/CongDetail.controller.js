@@ -26,7 +26,8 @@ sap.ui.define(
           );
         }
 
-        onBeforeShow() {          
+        onBeforeShow() {    
+          this.getEmpInfo(this);      
           this.getRouter().getRoute("congDetail").attachPatternMatched(this.onObjectMatched, this);
         }
 
@@ -40,9 +41,8 @@ sap.ui.define(
           window.history.go(-1);
         }
 
-        onObjectMatched(oEvent) {
-          const sDataKey = oEvent.getParameter("arguments").oDataKey;
-          const oCommonModel = this.getModel();
+        getEmpInfo(oController) {
+          const oCommonModel = oController.getModel();
           const sUrl = '/EmpLoginInfoSet';
           const oInfoModel = new JSONModel({
             FormData: {}
@@ -50,23 +50,27 @@ sap.ui.define(
 
           oCommonModel.read(sUrl, {
             success: (oData, oResponse) => {
-              this.debug(`${sUrl} success.`, oData, oResponse);
+              oController.debug(`${sUrl} success.`, oData, oResponse);
               const oLoginInfo = oData.results[0];
               
               oInfoModel.setProperty("/FormData/Pernr", oLoginInfo);
               oInfoModel.setProperty("/FormData/Ename", oLoginInfo);
               oInfoModel.setProperty("/DetailTargetInfo", oLoginInfo);
 
-              this.setViewModel(oInfoModel);
-
-              if(sDataKey !== "N") {
-                this.getTargetData(this, sDataKey);
-              }
+              oController.setViewModel(oInfoModel);
             },
             error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
+              oController.debug(`${sUrl} error.`, oError);
             },
           });
+        }
+
+        onObjectMatched(oEvent) {
+          const sDataKey = oEvent.getParameter("arguments").oDataKey;
+          
+          if(sDataKey !== "N") {
+            this.getTargetData(this, sDataKey);
+          }
         }
         
         // 상세조회

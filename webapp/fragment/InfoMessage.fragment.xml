@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
     <HBox>
-        <MessageStrip text="{= !${/InfoMessage} ? '안내를 위한 공간입니다.' : ${/InfoMessage}}" showIcon="true" showCloseButton="true" class="sapUiMediumMarginBottom" />
+        <MessageStrip text="{= !${/InfoMessage} ? '안내를 위한 공간입니다.' : ${/InfoMessage} }" showIcon="true" showCloseButton="true" />
         <!-- <HBox fitContainer="true">
             <core:Icon src="sap-icon://travel-request"/>
             <TextArea growing="true" editable="false" rows="1" value="{= !${/InfoMessage} ? '안내를 위한 공간입니다.' : ${/InfoMessage}}" width="100%">
