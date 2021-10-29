@@ -4,6 +4,7 @@ sap.ui.define(
       'sap/ui/model/json/JSONModel',
       'sap/ui/core/Fragment',
       '../../model/formatter',
+      '../../common/EmpInfo',
       '../BaseController',
     ],
     (
@@ -11,6 +12,7 @@ sap.ui.define(
       JSONModel,
       Fragment,
       formatter,
+      EmpInfo,
       BaseController,
     ) => {
       'use strict';
@@ -32,43 +34,22 @@ sap.ui.define(
         }
 
         onBeforeShow() {
-          const oInfoModel = new JSONModel({
-            TargetInfo: {}
-          });
-          this.setViewModel(oInfoModel);
+          const oViewModel = new JSONModel();
+          this.setViewModel(oViewModel);
 
+          EmpInfo.getInfo.call(this, 'o');
+          
           const oSearchDate = this.byId('SearchDate');
           const dDate = new Date();
           const dDate2 = new Date(dDate.getFullYear(), dDate.getMonth() - 1, dDate.getDate() + 1);
           
           oSearchDate.setDateValue(dDate2);
           oSearchDate.setSecondDateValue(dDate);
-          this.getInfo(this);
         }
 
         onAfterShow() {
-          
-        }
-
-        getInfo(oController) {
-          const oCommonModel = oController.getModel();
-          const sUrl = '/EmpLoginInfoSet';
-          const oInfoModel = this.getViewModel();
-
-          oCommonModel.read(sUrl, {
-            success: (oData, oResponse) => {
-              oController.debug(`${sUrl} success.`, oData, oResponse);
-              const oLoginInfo = oData.results[0];
-
-              oLoginInfo.Hide = "o";
-              oInfoModel.setData({TargetInfo: oLoginInfo});
-              oController.onSearch();
-              oController.getTotalPay();
-            },
-            error: (oError) => {
-              oController.debug(`${sUrl} error.`, oError);
-            },
-          });
+          this.onSearch();
+          this.getTotalPay();
         }
       
         rowHighlight(sValue) {
