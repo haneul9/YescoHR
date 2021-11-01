@@ -1,19 +1,24 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/m/Label',
     'sap/ui/core/Fragment',
+    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/control/HomeMenuLevel1',
     'sap/ui/yesco/common/AppUtils',
   ],
   (
     // prettier 방지용 주석
+    Label,
     Fragment,
+    JSONModel,
     MessageBox,
     HomeMenuLevel1,
     AppUtils
   ) => {
     'use strict';
+
     class HomeMenu {
       constructor(oController, bTestMode) {
         this.oController = oController;
@@ -23,53 +28,15 @@ sap.ui.define(
         this.aMenuFavorites = null;
 
         if (bTestMode === true) {
-          this.aMenuLevel4Test = [
-            {
-              Pinfo: 'X',
-              Menid: '7110',
-              Mnurl: 'components',
-              Mentx: '인사 3',
-            },
-            {
-              Pinfo: 'X',
-              Menid: '7210',
-              Mnurl: 'https://www.google.co.kr',
-              Mentx: '인사 3',
-            },
-          ];
-          this.aMenuLevel3Test = [
-            {
-              Mnid1: '70000',
-              Mnid2: '71000',
-              Mnid3: '7110',
-              Mnnm3: '인사 3',
-              Mnsrt: '001',
-              Menid: '7110',
-              Mepop: '',
-              Device: 'A',
-              Mnetc: '',
-              Pwchk: '',
-              Favor: 'X',
-            },
-            {
-              Mnid1: '70000',
-              Mnid2: '72000',
-              Mnid3: '7210',
-              Mnnm3: '근태 3',
-              Mnsrt: '002',
-              Menid: '7210',
-              Mepop: 'X',
-              Device: 'A',
-              Mnetc: '',
-              Pwchk: '',
-              Favor: '',
-            },
-          ];
+          this.retrieveTestMenu();
+        } else {
+          this.retrieveMenu();
         }
-
-        this.retrieveMenu();
       }
 
+      /**
+       * 메뉴 정보 조회 및 메뉴 생성
+       */
       retrieveMenu() {
         const sUrl = '/GetMenuLvSet';
         this.oController.getModel(/* ZHR_COMMON_SRV */).create(
@@ -90,14 +57,14 @@ sap.ui.define(
               this.oController.debug(`${sUrl} success.`, oData, oResponse);
 
               this.buildHomeMenu(oData).then(() => {
-                AppUtils.setAppBusy(false, this.oController);
+                AppUtils.setMenuBusy(false, this.oController);
               });
             },
             error: (oError) => {
               this.oController.debug(`${sUrl} error.`, oError);
 
               this.buildHomeMenu().then(() => {
-                AppUtils.setAppBusy(false, this.oController);
+                AppUtils.setMenuBusy(false, this.oController);
               });
             },
           }
@@ -105,9 +72,20 @@ sap.ui.define(
       }
 
       /**
-       * 메뉴 구성
-       * @param {*} mMenuRawData
-       * @returns
+       * 테스트용 메뉴 데이터 생성
+       */
+      retrieveTestMenu() {
+        const oModel = new JSONModel(sap.ui.require.toUrl('sap/ui/yesco/localService/menu.json'));
+        oModel
+          .dataLoaded()
+          .then(() => this.buildHomeMenu(oModel.getData()))
+          .then(() => AppUtils.setMenuBusy(false, this.oController));
+      }
+
+      /**
+       * 메뉴 생성
+       * @param {map} mMenuRawData OData 조회 메뉴 정보
+       * @returns {promise} 메뉴 생성 완료 대기 promise
        */
       buildHomeMenu(mMenuRawData = {}) {
         return new Promise((resolve) => {
@@ -131,8 +109,11 @@ sap.ui.define(
 
       /**
        * 메뉴 tree 정보 생성
-       * @param {*} param0
-       * @returns
+       * @param {map} GetMenuLv1Nav 1 level 메뉴 정보
+       * @param {map} GetMenuLv2Nav 2 level 메뉴 정보
+       * @param {map} GetMenuLv3Nav 3 level 메뉴 정보
+       * @param {map} GetMenuLv4Nav 메뉴 속성 정보
+       * @returns {array} 메뉴 tree 정보
        */
       getMenuTree({ GetMenuLv1Nav = {}, GetMenuLv2Nav = {}, GetMenuLv3Nav = {}, GetMenuLv4Nav = {} }) {
         const { results: aMenuLevel1 = [] } = GetMenuLv1Nav;
@@ -228,6 +209,10 @@ sap.ui.define(
         });
       }
 
+      /**
+       * Top 메뉴 mouseover에 의한 popover 열기
+       * @param {object} oMenuButton
+       */
       openMenuPopoverBy(oMenuButton) {
         // 메뉴에 mouseover evet 발생시 mouseover 스타일 적용, 다른 메뉴의 mouseover 스타일 제거
         setTimeout(() => {
@@ -265,6 +250,9 @@ sap.ui.define(
         }
       }
 
+      /**
+       * 메뉴 popover 닫기
+       */
       closeMenuPopover() {
         if (this.oMenuPopover && this.oMenuPopover.isOpen()) {
           this.oMenuPopover.close();
@@ -273,7 +261,7 @@ sap.ui.define(
 
       /**
        * 메뉴의 즐겨찾기 클릭 이벤트 처리
-       * @param {*} oEvent
+       * @param {object} oEvent
        */
       toggleFavorite(oEvent) {
         const oEventSource = oEvent.getSource();
@@ -296,6 +284,8 @@ sap.ui.define(
 
               oContext.getModel().setProperty(`${oContext.getPath()}/Favor`, bFavor ? '' : 'X');
               oEventSource.setSrc(bFavor ? 'sap-icon://unfavorite' : 'sap-icon://favorite');
+
+              // TODO : 즐겨찾기 portlet 갱신
             },
             error: (oError) => {
               this.oController.debug(`${sUrl} error.`, oError);
@@ -306,19 +296,40 @@ sap.ui.define(
         );
       }
 
-      formatMenuUrl(Mnurl, Mepop) {
-        if (/^https?:/.test(Mnurl)) {
-          return Mnurl;
+      /**
+       *
+       * @param {string} sMnurl 메뉴 URL
+       * @param {boolean} bMepop popup 메뉴 여부
+       * @returns {string} anchor href 속성값
+       */
+      formatMenuUrl(sMnurl, bMepop) {
+        if (/^https?:/.test(sMnurl)) {
+          return sMnurl;
         }
-        if (/^javascript:/.test(Mnurl)) {
-          return Mnurl;
+        if (/^javascript:/.test(sMnurl)) {
+          return sMnurl;
         }
-        return `${location.origin}${location.pathname}#/${(Mnurl || '').replace(/^\/+/, '')}`;
+        return 'javascript:;'; // Routing URL 노출을 막기위해 anchor의 href 속성에서 URL을 제거
+        // return `${location.origin}${location.pathname}#/${(Mnurl || '').replace(/^\/+/, '')}`;
       }
 
       /**
-       * 메뉴 링크 클릭 이벤트 처리
-       * @param {*} oEvent
+       *
+       * @param {string} sMnurl 메뉴 URL
+       * @param {boolean} bMepop popup 메뉴 여부
+       * @returns {string} anchor target 속성값
+       */
+      formatMenuTarget(sMnurl, bMepop) {
+        if (/^https?:/.test(sMnurl)) {
+          return '_blank';
+        }
+        return '_self';
+      }
+
+      /**
+       * 메뉴 link click event 처리
+       *  - http|https|javascript로 시작되는 경우에는 anchor 본연의 link 기능으로 동작함
+       * @param {object} oEvent
        */
       handleMenuLink(oEvent) {
         oEvent.preventDefault();
@@ -326,47 +337,55 @@ sap.ui.define(
         this.closeMenuPopover();
 
         const oContext = oEvent.getSource().getBindingContext();
-        if (!oContext.getProperty('Mepop')) {
-          AppUtils.setAppBusy(true, this.oController);
-
-          const oCommonModel = this.oController.getModel(/* ZHR_COMMON_SRV */);
-          const sUrl = oCommonModel.createKey('/GetMenuUrlSet', {
-            Menid: oContext.getProperty('Menid'),
-          });
-
-          oCommonModel.read(sUrl, {
-            success: (oData, oResponse) => {
-              this.oController.debug(`${sUrl} success.`, oData, oResponse);
-
-              oData.Mnurl = 'commonComponents'; // TODO remove
-
-              if (oData.Mnurl) {
-                this.oController.getRouter().navTo(oData.Mnurl);
-              } else {
-                MessageBox.error(
-                  this.oController.getText('MSG_01003'), // 메뉴 오류입니다.
-                  {
-                    onClose: () => {
-                      AppUtils.setAppBusy(false, this.oController);
-                    },
-                  }
-                );
-              }
-            },
-            error: (oError) => {
-              this.oController.debug(`${sUrl} error.`, oError);
-
-              MessageBox.error(
-                this.oController.getText('MSG_01003'), // 메뉴 오류입니다.
-                {
-                  onClose: () => {
-                    AppUtils.setAppBusy(false, this.oController);
-                  },
-                }
-              );
-            },
-          });
+        if (oContext.getProperty('Mepop')) {
+          return;
         }
+
+        AppUtils.setAppBusy(true, this.oController);
+        AppUtils.setMenuBusy(true, this.oController);
+
+        const oCommonModel = this.oController.getModel(/* ZHR_COMMON_SRV */);
+        const sUrl = oCommonModel.createKey('/GetMenuUrlSet', {
+          Menid: oContext.getProperty('Menid'),
+        });
+
+        oCommonModel.read(sUrl, {
+          success: (oData, oResponse) => {
+            this.oController.debug(`${sUrl} success.`, oData, oResponse);
+
+            oData.Mnurl = 'components';
+            if (oData.Mnurl) {
+              // this.oController.getRouter().navTo(oData.Mnurl);
+              this.oController
+                .getRouter()
+                .getTargets()
+                .display(oData.Mnurl)
+                .then(() => {
+                  AppUtils.setAppBusy(false, this.oController);
+                  AppUtils.setMenuBusy(false, this.oController);
+                });
+            } else {
+              this.failMenuLink();
+            }
+          },
+          error: (oError) => {
+            this.oController.debug(`${sUrl} error.`, oError);
+
+            this.failMenuLink();
+          },
+        });
+      }
+
+      failMenuLink() {
+        MessageBox.error(
+          this.oController.getText('MSG_01003'), // 메뉴 오류입니다.
+          {
+            onClose: () => {
+              AppUtils.setAppBusy(false, this.oController);
+              AppUtils.setMenuBusy(false, this.oController);
+            },
+          }
+        );
       }
     }
 

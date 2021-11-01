@@ -1,5 +1,5 @@
 {
-  "_version": "1.12.0",
+  "_version": "1.17.0",
 
   "sap.app": {
     "id": "sap.ui.yesco",
@@ -60,7 +60,7 @@
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
           "bundleName": "sap.ui.yesco.i18n.i18n",
-          "supportedLocales": ["ko"],
+          "supportedLocales": ["ko", "en"],
           "fallbackLocale": ""
         }
       }
@@ -124,12 +124,17 @@
           "target": "components"
         },
         {
-          "pattern": "employees",
-          "name": "employeeList",
-          "target": "employees"
+          "pattern": "timeline",
+          "name": "timeline",
+          "target": "timeline"
         }
       ],
       "targets": {
+        "home": {
+          "viewId": "home",
+          "viewName": "Home",
+          "viewLevel": 1
+        },
         "notFound": {
           "viewId": "notFound",
           "viewName": "NotFound",
@@ -141,10 +146,12 @@
           "viewLevel": 1,
           "title": "Components"
         },
-        "home": {
-          "viewId": "home",
-          "viewName": "Home",
-          "viewLevel": 1
+        "timeline": {
+          "viewId": "timeline",
+          "viewPath": "sap.ui.yesco.view.timeline",
+          "viewName": "Timeline",
+          "viewLevel": 1,
+          "title": "Timeline Sample"
         },
         "congulatulation": {
           "viewId": "congulatulation",
@@ -169,12 +176,6 @@
           "viewPath": "sap.ui.yesco.view.congulatulation.m",
           "viewName": "CongDetail",
           "viewLevel": 2
-        },
-        "employees": {
-          "viewId": "employeeList",
-          "viewName": "EmployeeList",
-          "viewLevel": 2,
-          "viewPath": "sap.ui.yesco.view.employee"
         }
       }
     }

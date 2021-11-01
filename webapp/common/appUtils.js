@@ -22,6 +22,12 @@ sap.ui.define(
         }, 0);
       },
 
+      setMenuBusy(state, oController) {
+        setTimeout(() => {
+          oController.getModel('app').setProperty('/busyMenu', state);
+        }, 0);
+      },
+
       /**
        * Service URL for Model
        * @public
@@ -77,7 +83,7 @@ sap.ui.define(
       },
 
       debug(...args) {
-        setTimeout(() => console.log(...args), 0);
+        setTimeout(() => console.log(...args));
       },
     };
   }

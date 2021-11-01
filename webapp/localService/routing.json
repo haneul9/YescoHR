@@ -1,0 +1,89 @@
+{
+  "routing": {
+    "config": {
+      "routerClass": "sap.m.routing.Router",
+      "viewType": "XML",
+      "viewPath": "sap.ui.yesco.view",
+      "controlId": "app",
+      "controlAggregation": "pages",
+      "bypassed": {
+        "target": "notFound"
+      },
+      "async": true
+    },
+    "routes": [
+      {
+        "pattern": "",
+        "name": "ehrHome",
+        "target": "home"
+      },
+      {
+        "pattern": "congulatulation",
+        "name": "congulatulation",
+        "target": "congulatulation"
+      },
+      {
+        "pattern": "m/congulatulation",
+        "name": "congulatulationMobile",
+        "target": "m/congulatulation"
+      },
+      {
+        "pattern": "congulatulation/congDetail/{oDataKey}",
+        "name": "congDetail",
+        "target": "congDetail"
+      },
+      {
+        "pattern": "m/congulatulation/congDetail/{oDataKey}",
+        "name": "congDetailMobile",
+        "target": "m/congDetail"
+      },
+      {
+        "pattern": "components",
+        "name": "commonComponents",
+        "target": "components"
+      }
+    ],
+    "targets": {
+      "notFound": {
+        "viewId": "notFound",
+        "viewName": "NotFound",
+        "transition": "show"
+      },
+      "components": {
+        "viewId": "components",
+        "viewName": "Components",
+        "viewLevel": 1,
+        "title": "Components"
+      },
+      "home": {
+        "viewId": "home",
+        "viewName": "Home",
+        "viewLevel": 1
+      },
+      "congulatulation": {
+        "viewId": "congulatulation",
+        "viewPath": "sap.ui.yesco.view.congulatulation",
+        "viewName": "Congulatulation",
+        "viewLevel": 2
+      },
+      "congDetail": {
+        "viewId": "congDetail",
+        "viewPath": "sap.ui.yesco.view.congulatulation",
+        "viewName": "CongDetail",
+        "viewLevel": 2
+      },
+      "m/congulatulation": {
+        "viewId": "congulatulationMobile",
+        "viewPath": "sap.ui.yesco.view.congulatulation.m",
+        "viewName": "Congulatulation",
+        "viewLevel": 2
+      },
+      "m/congDetail": {
+        "viewId": "congDetailMobile",
+        "viewPath": "sap.ui.yesco.view.congulatulation.m",
+        "viewName": "CongDetail",
+        "viewLevel": 2
+      }
+    }
+  }
+}

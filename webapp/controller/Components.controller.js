@@ -37,10 +37,6 @@ sap.ui.define(
         this.getView().setModel(oModel);
       }
 
-      onAfterShow() {
-        AppUtils.setAppBusy(false, this);
-      }
-
       /* =========================================================== */
       /* event handlers                                              */
       /* =========================================================== */

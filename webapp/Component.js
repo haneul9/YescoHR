@@ -66,6 +66,20 @@ sap.ui.define(
           this.setModel(oServiceModel, sModelName);
         });
 
+        const sUrl = '/EmpLoginInfoSet';
+        this.getModel(/* ZHR_COMMON_SRV */).read(sUrl, {
+          success: (oData, oResponse) => {
+            AppUtils.debug(`${sUrl} success.`, oData, oResponse);
+
+            this.setModel(new JSONModel(oData), 'session');
+          },
+          error: (oError) => {
+            AppUtils.debug(`${sUrl} error.`, oError);
+
+            this.setModel(new JSONModel(), 'session');
+          },
+        });
+
         this._oErrorHandler = new ErrorHandler(this);
 
         // call the base component's init function and create the App view

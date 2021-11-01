@@ -9,7 +9,7 @@ sap.ui.define(
   ) {
     'use strict';
 
-    const MessageBox = {
+    return {
       ...SapMMessageBox,
       alert(vMessage, mOptions = {}) {
         SapMMessageBox.alert(vMessage, { ...mOptions, title: '{i18n>MSG_ALERT}' });
@@ -33,7 +33,5 @@ sap.ui.define(
         SapMMessageBox.warning(vMessage, { ...mOptions, title: '{i18n>MSG_WARNING}' });
       },
     };
-
-    return MessageBox;
   }
 );

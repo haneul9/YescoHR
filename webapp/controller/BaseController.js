@@ -4,6 +4,8 @@ sap.ui.define(
     'sap/ui/core/mvc/Controller',
     'sap/ui/core/routing/History',
     'sap/ui/core/UIComponent',
+    'sap/ui/model/Filter',
+    'sap/ui/model/FilterOperator',
     'sap/ui/yesco/common/AppUtils',
   ],
   (
@@ -11,6 +13,8 @@ sap.ui.define(
     Controller,
     History,
     UIComponent,
+    Filter,
+    FilterOperator,
     AppUtils
   ) => {
     'use strict';
@@ -19,30 +23,75 @@ sap.ui.define(
       onInit() {
         this.debug('BaseController.onInit');
 
-        const delegateEvents = {};
-        if (typeof this.onBeforeShow === 'function') {
-          delegateEvents.onBeforeShow = this.onBeforeShow;
-        }
-        if (typeof this.onAfterShow === 'function') {
-          delegateEvents.onAfterShow = this.onAfterShow;
-        }
-        if (delegateEvents.onBeforeShow || delegateEvents.onAfterShow) {
-          this.getView().addEventDelegate(delegateEvents, this);
-        }
-
         this.getRouter()
+          .attachBeforeRouteMatched((oEvent) => {
+            // Router.navTo 로 들어오는 경우에만 event 발생
+            this.debug('beforeRouteMatched', oEvent.getParameters());
+          })
           .attachBypassed((oEvent) => {
-            var sHash = oEvent.getParameter('hash');
+            this.debug('bypassed', oEvent);
+
             // do something here, i.e. send logging data to the back end for analysis
             // telling what resource the user tried to access...
+            var sHash = oEvent.getParameter('hash');
             this.debug(`Sorry, but the hash '${sHash}' is invalid.`, 'The resource was not found.');
           })
           .attachRouteMatched((oEvent) => {
-            var sRouteName = oEvent.getParameter('name');
+            this.debug('routeMatched', oEvent);
+
+            const oView = oEvent.getParameter('view');
+            oView.setVisible(false);
+
+            // 메뉴 권한 체크
+            const sUrl = '/GetMenuidRoleSet';
+            this.getModel(/* ZHR_COMMON_SRV */).read(sUrl, {
+              filters: [
+                new Filter('Menid', FilterOperator.EQ, '7000'), // prettier 방지용 주석
+              ],
+              success: (oData, oResponse) => {
+                this.debug(`${sUrl} success.`, oData, oResponse);
+
+                oView.setVisible(true);
+              },
+              error: (oError) => {
+                this.debug(`${sUrl} error.`, oError);
+
+                this.getRouter().getTargets().display('notFound', {
+                  fromTarget: 'home',
+                });
+              },
+            });
+
             // do something, i.e. send usage statistics to back end
             // in order to improve our app and the user experience (Build-Measure-Learn cycle)
+            var sRouteName = oEvent.getParameter('name');
             this.debug(`User accessed route ${sRouteName}, timestamp = ${new Date().getTime()}`);
+
+            // this.navToNotFound();
+          })
+          .attachRoutePatternMatched((oEvent) => {
+            this.debug('routePatternMatched', oEvent);
           });
+
+        // Routing 체크를 강제하기 위해 각 업무 controller에서는 onInit overriding을 사용하지 않도록 함
+        this.getView().addEventDelegate(
+          {
+            onBeforeShow: this.onBeforeShow,
+            onAfterShow: this.onAfterShow,
+          },
+          this
+        );
+      }
+
+      onBeforeShow() {
+        this.debug('BaseController.onBeforeShow');
+      }
+
+      onAfterShow() {
+        this.debug('BaseController.onAfterShow');
+
+        AppUtils.setAppBusy(false, this);
+        AppUtils.setMenuBusy(false, this);
       }
 
       /**
@@ -132,7 +181,7 @@ sap.ui.define(
         }
       }
 
-      onDisplayNotFound() {
+      navToNotFound() {
         // display the "notFound" target without changing the hash
         this.getRouter().getTargets().display('notFound', {
           fromTarget: 'home',

@@ -1,0 +1,39 @@
+{
+  "Employees": [
+    {
+      "Icon": "sap-icon://employee",
+      "Photo": "employee.png",
+      "Name": "그룹/회사입사일",
+      "HireDate": "2010.01.01",
+      "HireDateTime": "Date(1262271600000)"
+    },
+    {
+      "Icon": "sap-icon://org-chart",
+      "Photo": "card.png",
+      "Name": "부서배치일",
+      "HireDate": "2015.01.01",
+      "HireDateTime": "Date(1420038000000)"
+    },
+    {
+      "Icon": "sap-icon://drill-up",
+      "Photo": "card.png",
+      "Name": "직급승진일",
+      "HireDate": "2016.01.01",
+      "HireDateTime": "Date(1451574000000)"
+    },
+    {
+      "Icon": "sap-icon://manager",
+      "Photo": "card.png",
+      "Name": "직책임용일",
+      "HireDate": "2016.01.01",
+      "HireDateTime": "Date(1451574000000)"
+    },
+    {
+      "Icon": "sap-icon://thumb-up",
+      "Photo": "goldbars48.png",
+      "Name": "10년 장기근속",
+      "HireDate": "2019.12.31",
+      "HireDateTime": "Date(1577718000000)"
+    }
+  ]
+}

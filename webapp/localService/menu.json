@@ -1,0 +1,285 @@
+{
+  "Pernr": "00050007",
+  "Werks": "1000",
+  "Rolid": "",
+  "Langu": "KO",
+  "Device": "",
+  "GetMenuLv4Nav": {
+    "results": [
+      {
+        "Pinfo": "X",
+        "Menid": "7110",
+        "Mnurl": "components",
+        "Mentx": "인사 3"
+      },
+      {
+        "Pinfo": "X",
+        "Menid": "7210",
+        "Mnurl": "https://www.google.co.kr",
+        "Mentx": "근태 3"
+      }
+    ]
+  },
+  "GetMenuLv3Nav": {
+    "results": [
+      {
+        "Mnid1": "70000",
+        "Mnid2": "71000",
+        "Mnid3": "7110",
+        "Mnnm3": "인사 3",
+        "Mnsrt": "001",
+        "Menid": "7110",
+        "Mepop": "",
+        "Device": "A",
+        "Mnetc": "",
+        "Pwchk": "",
+        "Favor": "X"
+      },
+      {
+        "Mnid1": "70000",
+        "Mnid2": "72000",
+        "Mnid3": "7210",
+        "Mnnm3": "근태 3",
+        "Mnsrt": "002",
+        "Menid": "7210",
+        "Mepop": "X",
+        "Device": "A",
+        "Mnetc": "",
+        "Pwchk": "",
+        "Favor": ""
+      }
+    ]
+  },
+  "GetMenuLv2Nav": {
+    "results": [
+      {
+        "Mnid1": "70000",
+        "Mnid2": "71000",
+        "Mnnm2": "인사",
+        "Mnsrt": "001",
+        "Menid": "7100",
+        "Mepop": "",
+        "Device": "A",
+        "Mnetc": "",
+        "Pwchk": "",
+        "Favor": ""
+      },
+      {
+        "Mnid1": "70000",
+        "Mnid2": "72000",
+        "Mnnm2": "근태",
+        "Mnsrt": "002",
+        "Menid": "7200",
+        "Mepop": "",
+        "Device": "A",
+        "Mnetc": "",
+        "Pwchk": "",
+        "Favor": ""
+      },
+      {
+        "Mnid1": "70000",
+        "Mnid2": "73000",
+        "Mnnm2": "급여",
+        "Mnsrt": "003",
+        "Menid": "7300",
+        "Mepop": "",
+        "Device": "A",
+        "Mnetc": "",
+        "Pwchk": "",
+        "Favor": ""
+      },
+      {
+        "Mnid1": "70000",
+        "Mnid2": "74000",
+        "Mnnm2": "복리후생",
+        "Mnsrt": "004",
+        "Menid": "7400",
+        "Mepop": "",
+        "Device": "A",
+        "Mnetc": "",
+        "Pwchk": "",
+        "Favor": ""
+      },
+      {
+        "Mnid1": "70000",
+        "Mnid2": "75000",
+        "Mnnm2": "교육/인재개발",
+        "Mnsrt": "005",
+        "Menid": "7500",
+        "Mepop": "",
+        "Device": "A",
+        "Mnetc": "",
+        "Pwchk": "",
+        "Favor": ""
+      },
+      {
+        "Mnid1": "70000",
+        "Mnid2": "76000",
+        "Mnnm2": "평가",
+        "Mnsrt": "006",
+        "Menid": "7600",
+        "Mepop": "",
+        "Device": "A",
+        "Mnetc": "",
+        "Pwchk": "",
+        "Favor": ""
+      },
+      {
+        "Mnid1": "80000",
+        "Mnid2": "81000",
+        "Mnnm2": "인사",
+        "Mnsrt": "001",
+        "Menid": "8100",
+        "Mepop": "",
+        "Device": "A",
+        "Mnetc": "",
+        "Pwchk": "",
+        "Favor": ""
+      },
+      {
+        "Mnid1": "80000",
+        "Mnid2": "82000",
+        "Mnnm2": "근태",
+        "Mnsrt": "002",
+        "Menid": "8200",
+        "Mepop": "",
+        "Device": "A",
+        "Mnetc": "",
+        "Pwchk": "",
+        "Favor": ""
+      },
+      {
+        "Mnid1": "80000",
+        "Mnid2": "83000",
+        "Mnnm2": "급여",
+        "Mnsrt": "003",
+        "Menid": "8300",
+        "Mepop": "",
+        "Device": "A",
+        "Mnetc": "",
+        "Pwchk": "",
+        "Favor": ""
+      },
+      {
+        "Mnid1": "80000",
+        "Mnid2": "84000",
+        "Mnnm2": "복리후생",
+        "Mnsrt": "004",
+        "Menid": "8400",
+        "Mepop": "",
+        "Device": "A",
+        "Mnetc": "",
+        "Pwchk": "",
+        "Favor": ""
+      },
+      {
+        "Mnid1": "80000",
+        "Mnid2": "85000",
+        "Mnnm2": "교육/인재개발",
+        "Mnsrt": "005",
+        "Menid": "8500",
+        "Mepop": "",
+        "Device": "A",
+        "Mnetc": "",
+        "Pwchk": "",
+        "Favor": ""
+      },
+      {
+        "Mnid1": "80000",
+        "Mnid2": "86000",
+        "Mnnm2": "평가",
+        "Mnsrt": "006",
+        "Menid": "8600",
+        "Mepop": "",
+        "Device": "A",
+        "Mnetc": "",
+        "Pwchk": "",
+        "Favor": ""
+      }
+    ]
+  },
+  "GetMenuLv1Nav": {
+    "results": [
+      {
+        "Mnid1": "10000",
+        "Mnnm1": "인사",
+        "Mnsrt": "001",
+        "Menid": "1000",
+        "Mepop": "",
+        "Device": "A",
+        "Mnetc": "",
+        "Pwchk": ""
+      },
+      {
+        "Mnid1": "20000",
+        "Mnnm1": "근태",
+        "Mnsrt": "002",
+        "Menid": "2000",
+        "Mepop": "",
+        "Device": "A",
+        "Mnetc": "",
+        "Pwchk": ""
+      },
+      {
+        "Mnid1": "30000",
+        "Mnnm1": "급여",
+        "Mnsrt": "003",
+        "Menid": "3000",
+        "Mepop": "",
+        "Device": "A",
+        "Mnetc": "",
+        "Pwchk": ""
+      },
+      {
+        "Mnid1": "40000",
+        "Mnnm1": "복리후생",
+        "Mnsrt": "004",
+        "Menid": "4000",
+        "Mepop": "",
+        "Device": "A",
+        "Mnetc": "",
+        "Pwchk": ""
+      },
+      {
+        "Mnid1": "50000",
+        "Mnnm1": "교육/인재개발",
+        "Mnsrt": "005",
+        "Menid": "5000",
+        "Mepop": "",
+        "Device": "A",
+        "Mnetc": "",
+        "Pwchk": ""
+      },
+      {
+        "Mnid1": "60000",
+        "Mnnm1": "평가",
+        "Mnsrt": "006",
+        "Menid": "6000",
+        "Mepop": "",
+        "Device": "A",
+        "Mnetc": "",
+        "Pwchk": ""
+      },
+      {
+        "Mnid1": "70000",
+        "Mnnm1": "MSS",
+        "Mnsrt": "007",
+        "Menid": "7000",
+        "Mepop": "",
+        "Device": "A",
+        "Mnetc": "",
+        "Pwchk": ""
+      },
+      {
+        "Mnid1": "80000",
+        "Mnnm1": "HASS",
+        "Mnsrt": "008",
+        "Menid": "8000",
+        "Mepop": "",
+        "Device": "A",
+        "Mnetc": "",
+        "Pwchk": ""
+      }
+    ]
+  }
+}

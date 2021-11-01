@@ -19,14 +19,14 @@
 					<Toolbar>
 						<Label text="{Mname}" visible="{= !${Mnurl} }" /><!-- 링크가 없는 경우 -->
 						<Link text="{Mname}" visible="{= !!${Mnurl} &amp;&amp; !${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" press=".handleMenuLink" /><!-- 메뉴 이동인 경우 -->
-						<Link text="{Mname}" visible="{= !!${Mnurl} &amp;&amp; ${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" target="_blank" /><!-- 외부 링크인 경우 -->
+						<Link text="{Mname}" visible="{= !!${Mnurl} &amp;&amp; ${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" target="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuTarget' }" /><!-- http|https|javascript로 시작되는 경우 -->
 					</Toolbar>
 				</headerToolbar>
 				<CustomListItem>
 					<HBox>
 						<core:Icon size="1rem" src="{= ${Favor} ? 'sap-icon://favorite' : 'sap-icon://unfavorite' }" press=".toggleFavorite" />
 						<Link text="{Mname}" visible="{= !!${Mnurl} &amp;&amp; !${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" press=".handleMenuLink" /><!-- 메뉴 이동인 경우 -->
-						<Link text="{Mname}" visible="{= !!${Mnurl} &amp;&amp; ${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" target="_blank" /><!-- 외부 링크인 경우 -->
+						<Link text="{Mname}" visible="{= !!${Mnurl} &amp;&amp; ${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" target="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuTarget' }" /><!-- http|https|javascript로 시작되는 경우 -->
 					</HBox>
 				</CustomListItem>
 			</List>

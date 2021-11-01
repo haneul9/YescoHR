@@ -5,8 +5,6 @@ sap.ui.define(
     'sap/ui/core/dnd/DragInfo',
     'sap/ui/core/dnd/DropLayout',
     'sap/ui/core/dnd/DropPosition',
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/unified/library',
     'sap/ui/unified/CalendarLegendItem',
@@ -20,8 +18,6 @@ sap.ui.define(
     DragInfo,
     DropLayout,
     DropPosition,
-    Filter,
-    FilterOperator,
     JSONModel,
     unifiedLibrary,
     CalendarLegendItem,
@@ -32,7 +28,7 @@ sap.ui.define(
     'use strict';
 
     class Home extends BaseController {
-      onInit() {
+      onBeforeShow() {
         // const personalizationGridModel = new JSONModel(sap.ui.require.toUrl('sap/ui/yesco/localService/personalizationGridData.json'));
         const oPersonalizationGridModel = new JSONModel();
         oPersonalizationGridModel.loadData('localService/personalizationGridData.json');
@@ -85,25 +81,6 @@ sap.ui.define(
             oGrid.addStyleClass('sapUiSmallMargin');
           }
         });
-
-        const oCommonModel = this.getModel(/* ZHR_COMMON_SRV */);
-        const sUrl = '/EmpLoginInfoSet';
-
-        oCommonModel.read(sUrl, {
-          filters: [
-            new Filter('Pernr', FilterOperator.EQ, '50007'), // prettier 방지용 주석
-          ],
-          success: (oData, oResponse) => {
-            this.debug(`${sUrl} success.`, oData, oResponse);
-          },
-          error: (oError) => {
-            this.debug(`${sUrl} error.`, oError);
-          },
-        });
-      }
-
-      onNavToEmployees() {
-        this.getRouter().navTo('employeeList');
       }
 
       onRevealGrid() {
