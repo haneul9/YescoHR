@@ -40,6 +40,7 @@ sap.ui.define(
               // prettier 방지용 주석
               { serviceName: 'ZHR_COMMON_SRV' },
               { serviceName: 'ZHR_BENEFIT_SRV', modelName: 'benefit' },
+              { serviceName: 'ZHR_WORKTIME_SRV', modelName: 'worktime' },
             ],
           },
         },
@@ -62,7 +63,7 @@ sap.ui.define(
         const aServiceNames = this.getOdataServiceNames();
         aServiceNames.forEach(({ serviceName: sServiceName, modelName: sModelName }) => {
           const sServiceUrl = AppUtils.getServiceUrl(sServiceName, this);
-          const oServiceModel = new ODataModel(sServiceUrl, { loadMetadataAsync: true });
+          const oServiceModel = new ODataModel(sServiceUrl, { loadMetadataAsync: true, useBatch: false });
           this.setModel(oServiceModel, sModelName);
         });
 
