@@ -79,7 +79,7 @@
 						<Button icon="sap-icon://excel-attachment" text="Excel" />
 					</HBox>
 				</HBox>
-				<table:Table id="conguTable" width="100%" rows="{/CongList}" selectionMode="None" rowHeight="37" columnHeaderHeight="38" cellClick=".onSelectRow" fixedColumnCount="7">
+				<table:Table id="conguTable" width="100%" selectionMode="None" rowHeight="37" columnHeaderHeight="38" cellClick=".onSelectRow" fixedColumnCount="7">
 					<table:rowSettingsTemplate>
 						<table:RowSettings highlight="{
 							path: 'ZappStatAl',

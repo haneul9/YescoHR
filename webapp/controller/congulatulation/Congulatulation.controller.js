@@ -85,8 +85,6 @@ sap.ui.define(
         const oTotalModel = this.getViewModel();
 
         oModel.read('/ConExpenseMyconSet', {
-          async: false,
-          filters: [new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, oTotalModel.getProperty('/TargetInfo/Pernr'))],
           success: function (oData) {
             if (oData) {
               // Common.log(oData);
@@ -108,13 +106,11 @@ sap.ui.define(
         const oController = this;
 
         oModel.read('/ConExpenseApplSet', {
-          async: false,
           filters: [
             new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'),
             new sap.ui.model.Filter('Actty', sap.ui.model.FilterOperator.EQ, 'E'),
             new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, oSearchDate.getDateValue()),
             new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, oSearchDate.getSecondDateValue()),
-            new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, oListModel.getProperty('/TargetInfo/Pernr')),
           ],
           success: function (oData) {
             if (oData) {
@@ -159,7 +155,10 @@ sap.ui.define(
               oListModel.setProperty('/Reject', `반려 ${vNum4}`);
               oListModel.setProperty('/Complete', `완료 ${vNum5}`);
               oListModel.setProperty('/CongList', oList);
-              oController.byId('conguTable').setVisibleRowCount(oList.length);
+
+              const table = oController.byId('conguTable');
+              table.bindRows('/CongList');
+              table.setVisibleRowCount(oList.length);
             }
           },
           error: function (oRespnse) {
