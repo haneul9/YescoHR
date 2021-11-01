@@ -2,7 +2,7 @@ sap.ui.define([], () => {
   'use strict';
 
   return {
-    get({ bTargetChangeButtonHide = true }) {
+    get(bTargetChangeButtonHide = false) {
       const oCommonModel = this.getModel();
       const sUrl = '/EmpLoginInfoSet';
       const oViewModel = this.getViewModel();
@@ -13,8 +13,10 @@ sap.ui.define([], () => {
           this.debug(`${sUrl} success.`, oData, oResponse);
           const oLoginInfo = oData.results[0];
 
-          if (bTargetChangeButtonHide === true) {
+          if (bTargetChangeButtonHide) {
             oLoginInfo.Hide = true;
+          }else {
+            oLoginInfo.Hide = false;
           }
 
           oViewModelData.TargetInfo = oLoginInfo || {};
