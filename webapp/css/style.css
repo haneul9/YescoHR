@@ -332,6 +332,8 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt{outline-style:none !important;}
 .hCardBox {border: 1px solid whitesmoke; border-radius: 10px; padding: 6px; box-shadow: 2px 2px 5px var(--BorderColorReadonly);}
 .vCardBox {margin: 16px 12px 0 12px; border: 1px solid whitesmoke; border-radius: 10px; padding: 6px; box-shadow: 2px 2px 5px var(--BorderColorReadonly);}
 
+.row-link .sapUiTableCCnt .sapUiTableCtrl>tbody>tr { cursor:pointer; }
+
 .sapUiTableRowHighlight.sapUiTableRowHighlightIndication01 {background-color: var(--BorderColorReadonly) !important;}
 .sapUiTableRowHighlight.sapUiTableRowHighlightIndication02 {background-color: var(--BorderColorError) !important;}
 .sapUiTableRowHighlight.sapUiTableRowHighlightIndication03 {background-color: var(--BorderColorWarning) !important;}
@@ -342,8 +344,12 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt{outline-style:none !important;}
 .sapMObjStatus.sapMObjStatusIndication05>.sapMObjStatusText {color:var(--BackgroundColorFocus) !important;}
 
 .sapMText[data-status="10"] {color: var(--BorderColorReadonly) !important;}
+.sapMText[data-status="90"] {color: var(--BorderColorReadonly) !important;}
 .sapMText[data-status="20"] {color: var(--BorderColorWarning) !important;}
+.sapMText[data-status="30"] {color: var(--BorderColorWarning) !important;}
+.sapMText[data-status="50"] {color: var(--BorderColorWarning) !important;}
 .sapMText[data-status="40"] {color: var(--BorderColorSuccess) !important;}
 .sapMText[data-status="45"] {color: var(--BorderColorError) !important;}
+.sapMText[data-status="65"] {color: var(--BorderColorError) !important;}
 .sapMText[data-status="60"] {color: var(--BorderColorFocus) !important;}
 /* -- DEVELOPER Temporary style */
