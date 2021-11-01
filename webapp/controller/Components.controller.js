@@ -24,7 +24,10 @@ sap.ui.define(
     'use strict';
 
     class Components extends BaseController {
-      formatter;
+      constructor() {
+        super();
+        this.formatter = formatter;
+      }
 
       /* =========================================================== */
       /* lifecycle methods                                           */

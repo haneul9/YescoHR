@@ -328,3 +328,29 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt{outline-style:none !important;}
 .sapIcon_Date .sapUiIcon::before{content:'달력';font-size:0;background-size:auto 70%;background-image:url(./images/icon_date.png);}
 .sapIcon_Time .sapUiIcon::before{content:'시간';font-size:0;background-size:auto 70%;background-image:url(./images/icon_time.png);}
 .sapIcon_Datetime .sapUiIcon::before{content:'달력, 시간';font-size:0;background-size:auto 70%;background-image:url(./images/icon_datetime.png);}
+
+/* DEVELOPER Temporary style */
+.hCardBox {border: 1px solid whitesmoke; border-radius: 10px; padding: 6px; box-shadow: 2px 2px 5px var(--BorderColorReadonly);}
+.vCardBox {margin: 16px 12px 0 12px; border: 1px solid whitesmoke; border-radius: 10px; padding: 6px; box-shadow: 2px 2px 5px var(--BorderColorReadonly);}
+
+.row-link .sapUiTableCCnt .sapUiTableCtrl>tbody>tr { cursor:pointer; }
+
+.sapUiTableRowHighlight.sapUiTableRowHighlightIndication01 {background-color: var(--BorderColorReadonly) !important;}
+.sapUiTableRowHighlight.sapUiTableRowHighlightIndication02 {background-color: var(--BorderColorError) !important;}
+.sapUiTableRowHighlight.sapUiTableRowHighlightIndication03 {background-color: var(--BorderColorWarning) !important;}
+.sapUiTableRowHighlight.sapUiTableRowHighlightIndication04 {background-color: var(--BorderColorSuccess) !important;}
+.sapUiTableRowHighlight.sapUiTableRowHighlightIndication05 {background-color: var(--BorderColorFocus) !important;}
+
+.sapMObjStatus.sapMObjStatusIndication02>.sapMObjStatusText {color:var(--BorderColorError) !important;}
+.sapMObjStatus.sapMObjStatusIndication05>.sapMObjStatusText {color:var(--BackgroundColorFocus) !important;}
+
+.sapMText[data-status="10"] {color: var(--BorderColorReadonly) !important;}
+.sapMText[data-status="90"] {color: var(--BorderColorReadonly) !important;}
+.sapMText[data-status="20"] {color: var(--BorderColorWarning) !important;}
+.sapMText[data-status="30"] {color: var(--BorderColorWarning) !important;}
+.sapMText[data-status="50"] {color: var(--BorderColorWarning) !important;}
+.sapMText[data-status="40"] {color: var(--BorderColorSuccess) !important;}
+.sapMText[data-status="45"] {color: var(--BorderColorError) !important;}
+.sapMText[data-status="65"] {color: var(--BorderColorError) !important;}
+.sapMText[data-status="60"] {color: var(--BorderColorFocus) !important;}
+/* -- DEVELOPER Temporary style */

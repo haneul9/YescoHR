@@ -1,0 +1,181 @@
+<mvc:View controllerName="sap.ui.yesco.controller.attendance.List"
+	xmlns="sap.m"
+	xmlns:table="sap.ui.table"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:grid="sap.ui.layout.cssgrid">
+	<Page showHeader="false">
+		<VBox>
+			<HBox justifyContent="SpaceBetween">
+				<Breadcrumbs currentLocationText="근태신청" separatorStyle="GreaterThan">
+					<Link text="근태"/>
+				</Breadcrumbs>
+				<HBox>
+					<Button type="Emphasized" text="신규신청" busyIndicatorDelay="0" busy="{/busy}" />
+					<Button type="Emphasized" text="변경신청" busyIndicatorDelay="0" busy="{/busy}" />
+					<Button type="Emphasized" text="취소신청" busyIndicatorDelay="0" busy="{/busy}" />
+				</HBox>
+			</HBox>
+			<HBox justifyContent="SpaceAround">
+				<VBox class="hCardBox" width="33%">
+					<core:Fragment fragmentName="sap.ui.yesco.fragment.TargetInfo" type="XML" />
+				</VBox>
+				<VBox class="hCardBox" width="33%">
+					<HBox justifyContent="SpaceBetween">
+						<Title level="H2" text="나의 휴가현황" />
+						<Button type="Transparent" icon="sap-icon://detail-view" />
+					</HBox>
+					<HBox>
+						<Label text="연차휴가" design="Bold" />
+						<VBox width="80%">
+							<ProgressIndicator class="sapUiSmallMarginBottom" percentValue="80" displayValue="80%" showValue="false" state="Information" width="100%" />
+							<HBox justifyContent="SpaceBetween">
+								<Text text="0" />
+								<Text text="52" />
+							</HBox>
+						</VBox>
+					</HBox>
+					<HBox>
+						<Label text="하계휴가" design="Bold" />
+						<VBox width="80%">
+							<ProgressIndicator class="sapUiSmallMarginBottom" percentValue="80" displayValue="80%" showValue="false" state="Error" width="100%" />
+							<HBox justifyContent="SpaceBetween">
+								<Text text="0" />
+								<Text text="52" />
+							</HBox>
+						</VBox>
+					</HBox>
+					<HBox>
+						<Label text="보건휴가" design="Bold" />
+						<VBox width="80%">
+							<ProgressIndicator class="sapUiSmallMarginBottom" percentValue="80" displayValue="80%" showValue="false" state="Success" width="100%" />
+							<HBox justifyContent="SpaceBetween">
+								<Text text="0" />
+								<Text text="52" />
+							</HBox>
+						</VBox>
+					</HBox>
+				</VBox>
+				<VBox class="hCardBox" width="33%" busyIndicatorDelay="0" busy="{/busy}">
+					<HBox justifyContent="SpaceBetween">
+						<Title text="{i18n>LABEL_00202}" level="H2" />
+						<Button type="Transparent" icon="sap-icon://search" press=".search" />
+					</HBox>
+					<grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="8px">
+						<Label text="{i18n>LABEL_00266}" design="Bold" />
+						<DateRangeSelection width="90%" class="sapIcon_Date" dateValue="{/search/Apbeg}" secondDateValue="{/search/Apend}" />
+					</grid:CSSGrid>
+				</VBox>
+			</HBox>
+			<VBox class="vCardBox">
+				<HBox justifyContent="SpaceBetween">
+					<HBox>
+						<Title level="H3" text="{i18n>LABEL_00129}" />
+						<Text text="total {/listinfo/totalCount}"/>
+					</HBox>
+					<HBox>
+						<HBox>
+							<core:Icon src="sap-icon://circle-task-2" color="#bdbdbd" />
+							<Label text="{i18n>LABEL_00128} {/listinfo/progressCount}"/>
+							<core:Icon src="sap-icon://circle-task-2" color="#ffc107" />
+							<Label text="{i18n>LABEL_00121} {/listinfo/applyCount}"/>
+							<core:Icon src="sap-icon://circle-task-2" color="#28a745" />
+							<Label text="{i18n>LABEL_00123} {/listinfo/approveCount}"/>
+							<core:Icon src="sap-icon://circle-task-2" color="#dc3545" />
+							<Label text="{i18n>LABEL_00124} {/listinfo/rejectCount}"/>
+							<core:Icon src="sap-icon://circle-task-2" color="#1d85c8" />
+							<Label text="{i18n>LABEL_00117} {/listinfo/completeCount}"/>
+						</HBox>
+						<Button icon="sap-icon://excel-attachment" text="Excel" press=".onExelDownload" busyIndicatorDelay="0" busy="{/busy}" />
+					</HBox>
+				</HBox>
+				<table:Table id="attendanceTable" width="100%" class="row-link" rows="{/list}" selectionMode="MultiToggle" visibleRowCount="{/listinfo/rowCount}" busyIndicatorDelay="0" busy="{/busy}">
+					<table:rowSettingsTemplate>
+						<table:RowSettings highlight="{
+							path: 'ZappStatAl',
+							formatter: '.formatter.rowHighlight'
+						}"/>
+					</table:rowSettingsTemplate>
+					<table:columns>
+						<table:Column width="8%" filterProperty="ZappStxtAl" sortProperty="ZappStxtAl">
+							<Label text="상태"/>
+							<table:template>
+								<Text text="{ZappStxtAl}" width="100%" textAlign="Center">
+									<customData>
+										<core:CustomData key="status" value="{ZappStatAl}" writeToDom="true" />
+									</customData>
+								</Text>
+							</table:template>
+						</table:Column>
+						<table:Column width="8%" filterProperty="Dettx" sortProperty="Appty">
+							<Label text="구분"/>
+							<table:template>
+								<Text text="{Dettx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+							</table:template>
+						</table:Column>
+						<table:Column width="8%" filterProperty="Appernr" sortProperty="Pernr">
+							<Label text="{i18n>LABEL_00209}"/>
+							<table:template>
+								<Text text="{Appernr}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+							</table:template>
+						</table:Column>
+						<table:Column width="8%" filterProperty="Apename" sortProperty="Ename">
+							<Label text="{i18n>LABEL_00210}"/>
+							<table:template>
+								<Text text="{Apename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+							</table:template>
+						</table:Column>
+						<table:Column width="8%" filterProperty="Aporgtx" sortProperty="Orgtx">
+							<Label text="{i18n>LABEL_00224}"/>
+							<table:template>
+								<Text text="{Aporgtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+							</table:template>
+						</table:Column>
+						<table:Column width="8%" filterProperty="Apzzjikgbtx" sortProperty="Zzjikgbt">
+							<Label text="{i18n>LABEL_00215}"/>
+							<table:template>
+								<Text text="{Apzzjikgbtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+							</table:template>
+						</table:Column>
+						<table:Column width="8%" filterProperty="Atext" sortProperty="Awart">
+							<Label text="근태"/>
+							<table:template>
+								<Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+							</table:template>
+						</table:Column>
+						<table:Column width="8%" filterProperty="Apbeg" sortProperty="Begda">
+							<Label text="시작일"/>
+							<table:template>
+								<Text text="{Apbeg}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+							</table:template>
+						</table:Column>
+						<table:Column width="8%" filterProperty="Apend" sortProperty="Endda">
+							<Label text="종료일"/>
+							<table:template>
+								<Text text="{Apend}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+							</table:template>
+						</table:Column>
+						<table:Column width="8%" filterProperty="Period" sortProperty="Range">
+							<Label text="기간"/>
+							<table:template>
+								<Text text="{Period}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+							</table:template>
+						</table:Column>
+						<table:Column width="8%" filterProperty="Appdt" sortProperty="Endda">
+							<Label text="{i18n>LABEL_00266}"/>
+							<table:template>
+								<Text text="{Appdt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+							</table:template>
+						</table:Column>
+						<table:Column width="8%" filterProperty="Sgndt" sortProperty="Endda">
+							<Label text="결재일"/>
+							<table:template>
+								<Text text="{Sgndt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+							</table:template>
+						</table:Column>
+					</table:columns>
+				</table:Table>
+			</VBox>
+		</VBox>
+	</Page>
+</mvc:View>

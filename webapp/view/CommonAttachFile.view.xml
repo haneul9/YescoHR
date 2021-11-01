@@ -1,0 +1,19 @@
+<mvc:View controllerName="sap.ui.yesco.controller.AttachFileAction"
+    xmlns:oDataFileUploader="sap.ui.yesco.control.ODataFileUploader"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:u="sap.ui.unified"
+    xmlns:mvc="sap.ui.core.mvc">
+    <VBox>
+        <HBox justifyContent="SpaceBetween" alignContent="Center" alignItems="Center" fitContainer="true">
+            <HBox alignContent="Center" alignItems="Center">
+                <Label text="첨부파일" required="{= !!Settings>/Required}" />
+                <MessageStrip text="{= !!Settings>/InfoMessage}" enableFormattedText="true" showIcon="true" showCloseButton="false" visible="{= !!Settings>/InfoMessage}" />
+            </HBox>
+            <HBox visible="{= !!Settings>/Editable}">
+                <Button press=".onPressHelpBtn" text="안내" visible="{= !!Settings>/HelpButton}" />
+                <xmlns:oDataFileUploader id="ATTACHFILE_BTN" name= "UploadFile" modelName= 'ZHR_COMMON_SRV' slug= """" maximumFileSize= "10" multiple= "true" uploadOnChange= "false" mimeType= "[]," fileType="{Settings>FileTypes}" buttonText= "업로드" buttonOnly= "true" uploadComplete= ".uploadComplete" uploadAborted= ".uploadAborted" fileSizeExceed= ".fileSizeExceed" typeMissmatch= ".typeMissmatch" change= ".onFileChange" />
+</HBox>
+</HBox>
+</VBox>
+</mvc:View>

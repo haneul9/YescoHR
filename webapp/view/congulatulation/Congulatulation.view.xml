@@ -1,211 +1,219 @@
-<mvc:View
-	controllerName="sap.ui.yesco.controller.congulatulation.Congulatulation"
+<mvc:View controllerName="sap.ui.yesco.controller.congulatulation.Congulatulation"
 	xmlns="sap.m"
-	xmlns:semantic="sap.f.semantic"
 	xmlns:mvc="sap.ui.core.mvc"
-    xmlns:table="sap.ui.table"
->
-    <VBox>
-        <items>
-            <HBox>
-                <items>
-                    <Text text="ESS > "/>
-                    <Text text="복리후생 > "/>
-                    <Text text="경조금"/>
-                </items>
-            </HBox>
-            <HBox>
-                <items>
-                    <Label 
-                        text="신청일" 
-                        design="Bold"/>
-                    <DateRangeSelection 
-                        id="SearchDate"/>
-                    <Button text= "검색" press=".onSearch" icon="sap-icon://search"/>
-                    <Button text= "신청" press=".onClick"/>
-                </items>
-            </HBox>
-            <table:Table
-                id= "conguTable"
-                width="90%"
-                rows="{/CongList}"
-                selectionMode="None"
-                rowHeight= "37"
-                columnHeaderHeight= "38"
-                cellClick= '.onSelectRow'
-                fixedColumnCount= '7'
-            >
-                <table:columns>
-                    <table:Column width="50px">
-                        <Label text="No."/>
-                        <table:template>
-                            <Text
-                                text="{No}"
-                                wrapping="false"
-                            />
-                        </table:template>
-                    </table:Column>
-                    <table:Column width="100px">
-                        <Label text="상태"/>
-                        <table:template>
-                            <Text
-                                text="{ZappStxtAl}"
-                                wrapping="false"
-                            />
-                        </table:template>
-                    </table:Column>
-                    <table:Column width="100px">
-                        <Label text="사번"/>
-                        <table:template>
-                            <Text
-                                text="{Pernr}"
-                                wrapping="false"
-                            />
-                        </table:template>
-                    </table:Column>
-                    <table:Column width="80px">
-                        <Label text="성명"/>
-                        <table:template>
-                            <Text
-                                text="{Ename}"
-                                wrapping="false"
-                            />
-                        </table:template>
-                    </table:Column>
-                    <table:Column width="100px">
-                        <Label text="직급명칭"/>
-                        <table:template>
-                            <Text
-                                text="{Zzjikgbt}"
-                                wrapping="false"
-                            />
-                        </table:template>
-                    </table:Column>
-                    <table:Column width="100px">
-                        <Label text="소속부서"/>
-                        <table:template>
-                            <Text
-                                text="{Orgtx}"
-                                wrapping="false"
-                            />
-                        </table:template>
-                    </table:Column>
-                    <table:Column width="100px">
-                        <Label text="지원대상"/>
-                        <table:template>
-                            <Text
-                                text="{Zname}"
-                                wrapping="false"
-                            />
-                        </table:template>
-                    </table:Column>
-                    <table:Column width="80px">
-                        <Label text="관계"/>
-                        <table:template>
-                            <Text
-                                text="{Famtx}"
-                                wrapping="false"
-                            />
-                        </table:template>
-                    </table:Column>
-                    <table:Column width="100px">
-                        <Label text="경조구분"/>
-                        <table:template>
-                            <Text
-                                text="{Context}"
-                                wrapping="false"
-                            />
-                        </table:template>
-                    </table:Column>
-                    <table:Column width="150px">
-                        <Label text="경조사유"/>
-                        <table:template>
-                            <Text
-                                text="{Conretx}"
-                                wrapping="false"
-                            />
-                        </table:template>
-                    </table:Column>
-                    <table:Column width="100px">
-                        <Label text="경조일"/>
-                        <table:template>
-                            <Text
-                                text="{
-                                    path: 'Conddate',
-                                    type: 'sap.ui.model.type.Date'
-                                }"
-                                wrapping="false"
-                            />
-                        </table:template>
-                    </table:Column>
-                    <table:Column width="100px">
-                        <Label text="실제경조일"/>
-                        <table:template>
-                            <Text
-                                text="{
-                                    path: 'Conrdate',
-                                    type: 'sap.ui.model.type.Date'
-                                }"
-                                wrapping="false"
-                            />
-                        </table:template>
-                    </table:Column>
-                    <table:Column width="100px">
-                        <Label text="지급금액"/>
-                        <table:template>
-                            <Text
-                                text="{ZpayBetT}"
-                                wrapping="false"
-                            />
-                        </table:template>
-                    </table:Column>
-                    <table:Column width="50px">
-                        <Label text="증빙"/>
-                        <table:template>
-                            <Text
-                                text="{Docynt}"
-                                wrapping="false"
-                            />
-                        </table:template>
-                    </table:Column>
-                    <table:Column width="100px">
-                        <Label text="신청일"/>
-                        <table:template>
-                            <Text
-                                text="{
-                                    path: 'Appda',
-                                    type: 'sap.ui.model.type.Date'
-                                }"
-                                wrapping="false"
-                            />
-                        </table:template>
-                    </table:Column>
-                    <table:Column width="100px">
-                        <Label text="결재일"/>
-                        <table:template>
-                            <Text
-                                text="{
-                                    path: 'Sgnda',
-                                    type: 'sap.ui.model.type.Date'
-                                }"
-                                wrapping="false"
-                            />
-                        </table:template>
-                    </table:Column>
-                    <table:Column width="100px">
-                        <Label text="지급일"/>
-                        <table:template>
-                            <Text
-                                text="{
-                                    path: 'Paydt',
-                                    type: 'sap.ui.model.type.Date'
-                                }"
-                                wrapping="false"
-                            />
-                        </table:template>
-                    </table:Column>
-                </table:columns>
-            </table:Table>
-        </items>
-    </VBox>
+	xmlns:table="sap.ui.table"
+	xmlns:core="sap.ui.core">
+	<Page showHeader="false">
+		<content>
+			<VBox>
+				<HBox justifyContent="SpaceBetween">
+					<HBox>
+						<Text text="복리후생 > 경조금"/>
+					</HBox>
+					<HBox>
+						<Button text="신청" type="Emphasized" press=".onClick" />
+						<Button icon="sap-icon://action" type="Transparent" text="프린트" />
+						<Button icon="sap-icon://action" type="Transparent" text="도움말" />
+					</HBox>
+				</HBox>
+				<HBox justifyContent="SpaceBetween">
+					<HBox width="33%">
+						<core:Fragment fragmentName="sap.ui.yesco.fragment.TargetInfo" type="XML" />
+					</HBox>
+					<HBox width="33%">
+						<VBox>
+							<Title level="H2" text="나의 경조금은" />
+							<Text text="입사 이후 지원받은 경조금 내역입니다."/>
+							<HBox>
+								<VBox>
+									<Label design="Bold" text="건수" />
+									<ObjectStatus text="{
+											path: '/Total/Pycnt',
+											formatter: '.formatNumber'
+										}" state="Indication02" />
+								</VBox>
+								<VBox>
+									<Label design="Bold" text="금액" />
+									<ObjectStatus text="{
+											path: '/Total/ZpayBetT',
+											formatter: '.formatPay'
+										}" state="Indication02" />
+								</VBox>
+							</HBox>
+							<HBox>
+								<Text text="향후 예상되는 경조사는"/>
+								<ObjectStatus text="{/Total/Excon}" state="Indication05" />
+								<Text text="입니다."/>
+							</HBox>
+						</VBox>
+					</HBox>
+					<VBox width="auto">
+						<HBox justifyContent="SpaceBetween">
+							<Title text="조회조건" level="H2" />
+							<Button type="Transparent" press=".onSearch" icon="sap-icon://search" />
+						</HBox>
+						<HBox>
+							<Label text="신청일" design="Bold" />
+							<DateRangeSelection id="SearchDate"/>
+						</HBox>
+					</VBox>
+				</HBox>
+				<HBox justifyContent="SpaceBetween">
+					<HBox>
+						<Title level="H3" text="신청내역" />
+						<Text text="total 12"/>
+					</HBox>
+					<HBox>
+						<HBox>
+							<core:Icon src="sap-icon://circle-task-2" color="#bdbdbd" />
+							<ObjectStatus text="{/Writing}" state="None" />
+							<core:Icon src="sap-icon://circle-task-2" color="#ffc107" />
+							<ObjectStatus text="{/Apply}" state="Indication03" />
+							<core:Icon src="sap-icon://circle-task-2" color="#28a745" />
+							<ObjectStatus text="{/Approval}" state="Indication04" />
+							<core:Icon src="sap-icon://circle-task-2" color="#dc3545" />
+							<ObjectStatus text="{/Reject}" state="Indication02" />
+							<core:Icon src="sap-icon://circle-task-2" color="#17a2b8" />
+							<ObjectStatus text="{/Complete}" state="Indication05" />
+						</HBox>
+						<Button icon="sap-icon://excel-attachment" text="Excel" />
+					</HBox>
+				</HBox>
+				<table:Table id="conguTable" width="100%" rows="{/CongList}" selectionMode="None" rowHeight="37" columnHeaderHeight="38" cellClick=".onSelectRow" fixedColumnCount="7">
+					<table:rowSettingsTemplate>
+						<table:RowSettings highlight="{
+							path: 'ZappStatAl',
+							formatter: '.rowHighlight'
+						}"/>
+					</table:rowSettingsTemplate>
+					<table:columns>
+						<table:Column width="50px">
+							<Label text="No."/>
+							<table:template>
+								<Text text="{No}" textAlign="Center" width="100%" wrapping="false" />
+							</table:template>
+						</table:Column>
+						<table:Column width="100px">
+							<Label text="상태"/>
+							<table:template>
+								<ObjectStatus text="{ZappStxtAl}" state="{
+										path: 'ZappStatAl',
+										formatter: '.rowHighlight'
+									}" />
+								<!-- <Text text="{ZappStxtAl}" width="100%" textAlign="Center" wrapping="false"> -->
+								<!-- <customData> <core:CustomData key="status" value="{ZappStatAl}" writeToDom="true" />
+									</customData> -->
+								<!-- </Text> -->
+							</table:template>
+						</table:Column>
+						<table:Column width="100px">
+							<Label text="사번"/>
+							<table:template>
+								<Text text="{Pernr}" textAlign="Center" width="100%" wrapping="false" />
+							</table:template>
+						</table:Column>
+						<table:Column width="80px">
+							<Label text="성명"/>
+							<table:template>
+								<Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" />
+							</table:template>
+						</table:Column>
+						<table:Column width="100px">
+							<Label text="직급명칭"/>
+							<table:template>
+								<Text text="{Zzjikgbt}" textAlign="Center" width="100%" wrapping="false" />
+							</table:template>
+						</table:Column>
+						<table:Column width="100px">
+							<Label text="소속부서"/>
+							<table:template>
+								<Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" />
+							</table:template>
+						</table:Column>
+						<table:Column width="100px">
+							<Label text="지원대상"/>
+							<table:template>
+								<Text text="{Zname}" width="100%" textAlign="Center" wrapping="false" />
+							</table:template>
+						</table:Column>
+						<table:Column width="80px">
+							<Label text="관계"/>
+							<table:template>
+								<Text text="{Famtx}" textAlign="Center" width="100%" wrapping="false" />
+							</table:template>
+						</table:Column>
+						<table:Column width="100px">
+							<Label text="경조구분"/>
+							<table:template>
+								<Text text="{Context}" textAlign="Center" wrapping="false" width="100%" />
+							</table:template>
+						</table:Column>
+						<table:Column width="150px">
+							<Label text="경조사유"/>
+							<table:template>
+								<Text text="{Conretx}" textAlign="Center" width="100%" wrapping="false" />
+							</table:template>
+						</table:Column>
+						<table:Column width="100px">
+							<Label text="경조일"/>
+							<table:template>
+								<Text text="{
+										path: 'Conddate',
+										type: 'sap.ui.model.type.Date'
+									}" textAlign="Center" width="100%" wrapping="false" />
+							</table:template>
+						</table:Column>
+						<table:Column width="100px">
+							<Label text="실제경조일"/>
+							<table:template>
+								<Text text="{
+										path: 'Conrdate',
+										type: 'sap.ui.model.type.Date'
+									}" textAlign="Center" width="100%" wrapping="false" />
+							</table:template>
+						</table:Column>
+						<table:Column width="100px">
+							<Label text="지급금액"/>
+							<table:template>
+								<Text text="{ZpayBetT}" textAlign="Center" width="100%" wrapping="false" />
+							</table:template>
+						</table:Column>
+						<table:Column width="50px">
+							<Label text="증빙"/>
+							<table:template>
+								<Text text="{Docynt}" textAlign="Center" width="100%" wrapping="false" />
+							</table:template>
+						</table:Column>
+						<table:Column width="auto">
+							<Label text="신청일"/>
+							<table:template>
+								<Text text="{
+										path: 'Appda',
+										type: 'sap.ui.model.type.Date'
+									}" textAlign="Center" width="100%" wrapping="false" />
+							</table:template>
+						</table:Column>
+						<table:Column width="auto">
+							<Label text="결재일"/>
+							<table:template>
+								<Text text="{
+										path: 'Sgnda',
+										type: 'sap.ui.model.type.Date'
+									}" textAlign="Center" width="100%" wrapping="false" />
+							</table:template>
+						</table:Column>
+						<table:Column width="auto">
+							<Label text="지급일"/>
+							<table:template>
+								<Text text="{
+										path: 'Paydt',
+										type: 'sap.ui.model.type.Date'
+									}" textAlign="Center" width="100%" wrapping="false" />
+							</table:template>
+						</table:Column>
+					</table:columns>
+				</table:Table>
+			</VBox>
+		</content>
+	</Page>
 </mvc:View>

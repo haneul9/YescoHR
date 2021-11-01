@@ -1,23 +1,29 @@
+/* eslint-disable no-useless-call */
 sap.ui.define(
     [
-      'sap/m/library', // prettier 방지용 주석
       'sap/ui/model/json/JSONModel',
       'sap/ui/core/Fragment',
       'sap/m/MessageBox',
       '../../model/formatter',
+      '../../common/EmpInfo',
       '../BaseController',
     ],
     (
-      mobileLibrary, // prettier 방지용 주석
       JSONModel,
       Fragment,
       MessageBox,
       formatter,
+      EmpInfo,
       BaseController,
     ) => {
       'use strict';
 
       class CongDetail extends BaseController {
+        constructor() {
+          super();
+          this.formatter = formatter;
+        }
+
         onInit() {
           this.getView().addEventDelegate(
             {
@@ -28,64 +34,54 @@ sap.ui.define(
           );
         }
 
-        onBeforeShow() {          
-          this.getRouter().getRoute("congDetail").attachPatternMatched(this.onObjectMatched, this);
+        onBeforeShow() {    
+          const oViewModel = new JSONModel();
+          this.setViewModel(oViewModel);
+
+          EmpInfo.getInfo.call(this);
         }
 
         onAfterShow() {
-          this.getBenefitType(this);
-
+          this.getRouter().getRoute("congDetail").attachPatternMatched(this.onObjectMatched, this);
+          
           setTimeout(() => {
-            this.onTypeChange();
-          }, 100);
+            this.getBenefitType(this);
+          }, 0);
         }
 
-        setAppdt(vAppdt) {
-          if(vAppdt) 
-            return `${vAppdt.slice(0, 4)}.${vAppdt.slice(4, 6)}.${vAppdt.slice(6, 8)}, ${vAppdt.slice(9, 11)}:${vAppdt.slice(11, 13)}`;
-    
-          return "";
+        onNavBack() {
+          window.history.go(-1);
         }
 
-        onObjectMatched(oEvent) { 
+        onObjectMatched(oEvent) {
           const sDataKey = oEvent.getParameter("arguments").oDataKey;
-          let oDetailModel= new JSONModel();
-
+          
           if(sDataKey !== "N") {
-            this.getTargetData(this, sDataKey);
-          }else {
-            oDetailModel.setData({
-              FormData: {
-                Appernr: '50006', 
-                Pernr: '50006',
-                Ename: '조용필',
-                ZappStatAl: '',
-              }
-            })
+            this.getTargetData.call(this, sDataKey);
           }
-
-          this.setViewModel(oDetailModel);
         }
         
         // 상세조회
-        getTargetData(oController, sDataKey) {
-          const oModel = oController.getModel("benefit");
+        getTargetData(sDataKey) {
+          const oModel = this.getModel("benefit");
+          const oDetailModel= this.getViewModel();
 
           oModel.read("/ConExpenseApplSet", {
-            async: false,
+            async: true,
             filters: [
-							new sap.ui.model.Filter("Prcty", sap.ui.model.FilterOperator.EQ, "D"),
-							new sap.ui.model.Filter("Actty", sap.ui.model.FilterOperator.EQ, "E"),
-							new sap.ui.model.Filter("Pernr", sap.ui.model.FilterOperator.EQ, "50006"),
-							new sap.ui.model.Filter("Appno", sap.ui.model.FilterOperator.EQ, sDataKey),
-						],
+              new sap.ui.model.Filter("Prcty", sap.ui.model.FilterOperator.EQ, "D"),
+              new sap.ui.model.Filter("Actty", sap.ui.model.FilterOperator.EQ, "E"),
+              new sap.ui.model.Filter("Pernr", sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty("/TargetInfo/Pernr")),
+              new sap.ui.model.Filter("Appno", sap.ui.model.FilterOperator.EQ, sDataKey),
+            ],
             success: function (oData) {
               if (oData) {
                 // Common.log(oData);
                 const oTargetData = oData.results[0];
-                const oDetailModel= oController.getViewModel();
 
-                oDetailModel.setData({FormData: oTargetData});
+                oDetailModel.setProperty("/FormData", oTargetData);
+                oDetailModel.setProperty("/ApplyInfo", oTargetData);
+                oDetailModel.setProperty("/PaymentDetails", oTargetData);
               }
             },
             error: function (oRespnse) {
@@ -93,24 +89,30 @@ sap.ui.define(
             }
           });
         }
-         
+          
         // 경조유형
-        getBenefitType(oEvent) {
+        getBenefitType(oController) {
           const oModel = this.getModel("benefit");
           const oDetailModel = this.getViewModel();
 
           oModel.read("/BenefitCodeListSet", {
             async: false,
             filters: [
-							new sap.ui.model.Filter("Cdnum", sap.ui.model.FilterOperator.EQ, "BE0001"),
-							new sap.ui.model.Filter("Werks", sap.ui.model.FilterOperator.EQ, '1000'),
-							new sap.ui.model.Filter("Datum", sap.ui.model.FilterOperator.EQ, new Date()),
-						],
+              new sap.ui.model.Filter("Cdnum", sap.ui.model.FilterOperator.EQ, "BE0001"),
+              new sap.ui.model.Filter("Werks", sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty("/TargetInfo/Werks")),
+              new sap.ui.model.Filter("Datum", sap.ui.model.FilterOperator.EQ, new Date()),
+            ],
             success: function (oData) {
               if (oData) {
-                oDetailModel.setProperty('/BenefitType', oData.results);
+                const oList = oData.results;
+                oDetailModel.setProperty('/BenefitType', oList);
 
-                if(!oEvent) oDetailModel.setProperty('/FormData/Concode', oData.results[0].Zcode);
+                if(!oDetailModel.getProperty("/FormData"))
+                  oDetailModel.setProperty("/FormData", {});
+
+                setTimeout(() => {
+                  oController.onTypeChange();
+                }, 0);
               }
             },
             error: function (oRespnse) {
@@ -137,13 +139,12 @@ sap.ui.define(
           oDetailModel.setProperty('/FormData/Context', sSelectText);
 
           oModel.read("/BenefitCodeListSet", {
-            async: false,
             filters: [
-							new sap.ui.model.Filter("Cdnum", sap.ui.model.FilterOperator.EQ, "BE0002"),
-							new sap.ui.model.Filter("Werks", sap.ui.model.FilterOperator.EQ, '1000'),
-							new sap.ui.model.Filter("Datum", sap.ui.model.FilterOperator.EQ, new Date()),
-							new sap.ui.model.Filter("Upcod", sap.ui.model.FilterOperator.EQ, sSelectKey),
-						],
+              new sap.ui.model.Filter("Cdnum", sap.ui.model.FilterOperator.EQ, "BE0002"),
+              new sap.ui.model.Filter("Werks", sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty("/TargetInfo/Werks")),
+              new sap.ui.model.Filter("Datum", sap.ui.model.FilterOperator.EQ, new Date()),
+              new sap.ui.model.Filter("Upcod", sap.ui.model.FilterOperator.EQ, sSelectKey),
+            ],
             success: function (oData) {
               if (oData) {
                 oDetailModel.setProperty('/BenefitCause', oData.results);
@@ -151,7 +152,7 @@ sap.ui.define(
 
                 setTimeout(() => {
                   oController.onCauseChange();
-                }, 100);
+                }, 150);
               }
             },
             error: function (oRespnse) {
@@ -181,12 +182,12 @@ sap.ui.define(
           oModel.read("/BenefitCodeListSet", {
             async: false,
             filters: [
-							new sap.ui.model.Filter("Cdnum", sap.ui.model.FilterOperator.EQ, "BE0003"),
-							new sap.ui.model.Filter("Werks", sap.ui.model.FilterOperator.EQ, '1000'),
+              new sap.ui.model.Filter("Cdnum", sap.ui.model.FilterOperator.EQ, "BE0003"),
+              new sap.ui.model.Filter("Werks", sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty("/TargetInfo/Werks")),
               new sap.ui.model.Filter("Datum", sap.ui.model.FilterOperator.EQ, new Date()),
-							new sap.ui.model.Filter("Upcod", sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/FormData/Concode')),
-							new sap.ui.model.Filter("Upcod2", sap.ui.model.FilterOperator.EQ, sSelectKey),
-						],
+              new sap.ui.model.Filter("Upcod", sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/FormData/Concode')),
+              new sap.ui.model.Filter("Upcod2", sap.ui.model.FilterOperator.EQ, sSelectKey),
+            ],
             success: function (oData) {
               if (oData) {
                 oDetailModel.setProperty('/BenefitRelation', oData.results);
@@ -202,17 +203,17 @@ sap.ui.define(
         onBenefitChangeDate() {
           this.getNomalPay(this);
         }
-  
+
         // 기본급, 지급율 등 받아옴
         getNomalPay(oController) {
           const oModel = this.getModel("benefit");
           const oDetailModel = this.getViewModel();
-  
+
           oModel.read("/ConExpenseCheckListSet", {
             async: false,
             filters: [
-              new sap.ui.model.Filter("Werks", sap.ui.model.FilterOperator.EQ, '1000'),
-              new sap.ui.model.Filter("Pernr", sap.ui.model.FilterOperator.EQ, "50006"),
+              new sap.ui.model.Filter("Werks", sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty("/TargetInfo/Werks")),
+              new sap.ui.model.Filter("Pernr", sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty("/TargetInfo/Pernr")),
               new sap.ui.model.Filter("Concode", sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/FormData/Concode')),
               new sap.ui.model.Filter("Conresn", sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/FormData/Conresn')),
               new sap.ui.model.Filter("Conddate", sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/FormData/Conddate')),
@@ -239,34 +240,40 @@ sap.ui.define(
 
         // 대상자 성명 선택시
         onTargetDialog() {
+          const oDetailModel = this.getViewModel();
+
           this.getTargetList(this);
-              // load asynchronous XML fragment
-          if (!this.byId('targetSettingsDialog')) {
-            Fragment.load({
-              id: this.getView().getId(),
-              name: 'sap.ui.yesco.view.congulatulation.TargetDialog',
-              controller: this,
-            }).then((oDialog) => {
-              // connect dialog to the root view of this component (models, lifecycle)
-              this.getView().addDependent(oDialog);
-              oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
-              oDialog.open();
-            });
-          } else {
-            this.byId('targetSettingsDialog').open();
-          }
+
+          setTimeout(() => {
+            if(oDetailModel.getProperty('/TargetList').length === 1) return;
+                // load asynchronous XML fragment
+            if (!this.byId('targetSettingsDialog')) {
+              Fragment.load({
+                id: this.getView().getId(),
+                name: 'sap.ui.yesco.view.congulatulation.TargetDialog',
+                controller: this,
+              }).then((oDialog) => {
+                // connect dialog to the root view of this component (models, lifecycle)
+                this.getView().addDependent(oDialog);
+                oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
+                oDialog.open();
+              });
+            } else {
+              this.byId('targetSettingsDialog').open();
+            }
+          }, 150);
         }
         
         // 대상자 리스트 조회
         getTargetList(oController) {
           const oModel = this.getModel("benefit");
           const oDetailModel = this.getViewModel();
-  
+
           oModel.read("/ConExpenseSupportListSet", {
-            async: false,
+            async: true,
             filters: [
-              new sap.ui.model.Filter("Werks", sap.ui.model.FilterOperator.EQ, '1000'),
-              new sap.ui.model.Filter("Pernr", sap.ui.model.FilterOperator.EQ, "50006"),
+              new sap.ui.model.Filter("Werks", sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty("/TargetInfo/Werks")),
+              new sap.ui.model.Filter("Pernr", sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty("/TargetInfo/Pernr")),
               new sap.ui.model.Filter("Concode", sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/FormData/Concode')),
               new sap.ui.model.Filter("Conresn", sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/FormData/Conresn')),
               new sap.ui.model.Filter("Datum", sap.ui.model.FilterOperator.EQ, new Date()),
@@ -276,7 +283,13 @@ sap.ui.define(
                 const oTargetList = oData.results;
                 
                 oDetailModel.setProperty('/TargetList', oTargetList);
-                oController.byId("targetTable").setVisibleRowCount(oTargetList.length);
+
+                if(oTargetList.length === 1) {
+                  oDetailModel.setProperty("/FormData/Zbirthday", oTargetList[0].Zbirthday);
+                  oDetailModel.setProperty("/FormData/Kdsvh", oTargetList[0].Kdsvh);
+                  oDetailModel.setProperty("/FormData/Zname", oTargetList[0].Zname);
+                }else 
+                  oController.byId("targetTable").setVisibleRowCount(oTargetList.length);
               }
             },
             error: function (oRespnse) {
@@ -355,9 +368,9 @@ sap.ui.define(
             if (fVal && fVal === "저장") {
               let oSendObject = {};
 
-              oSendObject = oDetailModel.getProperty('/FormData');
+              oSendObject = oDetailModel.getProperty("/FormData");
               oSendObject.Prcty = 'T';
-              oSendObject.Pernr = '50006';
+              oSendObject.Pernr = oDetailModel.getProperty("/TargetInfo/Pernr");
               oSendObject.Actty = 'E';
 
               oModel.create("/ConExpenseApplSet", oSendObject, {
@@ -372,7 +385,7 @@ sap.ui.define(
               })
             }
           }
-  
+
           MessageBox.confirm("저장 하시겠습니까?", {
             title: "경조금 신청",
             actions: ["저장", "취소"],
@@ -393,9 +406,9 @@ sap.ui.define(
               let oSendObject = {};
               const vStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
 
-              oSendObject = oDetailModel.getProperty('/FormData');
+              oSendObject = oDetailModel.getProperty("/FormData");
               oSendObject.Prcty = 'C';
-              oSendObject.Pernr = '50006';
+              oSendObject.Pernr = oDetailModel.getProperty("/TargetInfo/Pernr");
               oSendObject.Actty = 'E';
               oSendObject.Appno = !vStatus || vStatus === '45' ? '' : oDetailModel.getProperty('/FormData/Appno');
 
@@ -411,7 +424,7 @@ sap.ui.define(
               })
             }
           }
-  
+
           MessageBox.confirm("신청 하시겠습니까?", {
             title: "경조금 신청",
             actions: ["신청", "취소"],
@@ -429,9 +442,9 @@ sap.ui.define(
             if (fVal && fVal === "확인") {
               let oSendObject = {};
 
-              oSendObject = oDetailModel.getProperty('/FormData');
+              oSendObject = oDetailModel.getProperty("/FormData");
               oSendObject.Prcty = 'W';
-              oSendObject.Pernr = '50006';
+              oSendObject.Pernr = oDetailModel.getProperty("/TargetInfo/Pernr");
               oSendObject.Actty = 'E';
 
               oModel.create("/ConExpenseApplSet", oSendObject, {
@@ -446,7 +459,7 @@ sap.ui.define(
               })
             }
           }
-  
+
           MessageBox.confirm("취소 하시겠습니까?", {
             title: "경조금 신청",
             actions: ["확인", "취소"],
@@ -479,7 +492,7 @@ sap.ui.define(
               })
             }
           }
-  
+
           MessageBox.confirm("삭제 하시겠습니까?", {
             title: "경조금 신청",
             actions: ["삭제", "취소"],
