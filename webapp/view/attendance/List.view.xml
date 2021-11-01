@@ -18,22 +18,7 @@
 			</HBox>
 			<HBox justifyContent="SpaceAround">
 				<VBox class="hCardBox" width="33%">
-					<HBox justifyContent="SpaceBetween">
-						<HBox justifyContent="Start">
-							<Title level="H2" text="대상자 정보" />
-						</HBox>
-						<Button type="Transparent" icon="sap-icon://employee-approvals" />
-					</HBox>
-					<HBox>
-						<VBox width="30%" justifyContent="Center" alignItems="Center">
-							<Image src="https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1" height="50px" width="50px" />
-						</VBox>
-						<VBox>
-							<Text text="홍길동 팀장" textAlign="Begin" textDirection="Inherit" width="" wrapping="true" wrappingType="Normal" />
-							<Text text="예스코홀딩스 인사기획팀" textAlign="Begin" textDirection="Inherit" width="" wrapping="true" wrappingType="Normal" />
-							<Text text="경영관리직 / 12345" textAlign="Begin" textDirection="Inherit" width="" wrapping="true" wrappingType="Normal" />
-						</VBox>
-					</HBox>
+					<core:Fragment fragmentName="sap.ui.yesco.fragment.TargetInfo" type="XML" />
 				</VBox>
 				<VBox class="hCardBox" width="33%">
 					<HBox justifyContent="SpaceBetween">
@@ -78,7 +63,7 @@
 					</HBox>
 					<grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="8px">
 						<Label text="신청일" design="Bold" />
-						<DateRangeSelection width="90%" class="sapIcon_Date" />
+						<DateRangeSelection width="90%" class="sapIcon_Date" dateValue="{/search/Apbeg}" secondDateValue="{/search/Apend}" />
 					</grid:CSSGrid>
 				</VBox>
 			</HBox>
@@ -86,7 +71,7 @@
 				<HBox justifyContent="SpaceBetween">
 					<HBox>
 						<Title level="H3" text="신청내역" />
-						<Text text="total 12"/>
+						<Text text="total {/listinfo/totalCount}"/>
 					</HBox>
 					<HBox>
 						<HBox>
