@@ -44,7 +44,7 @@ sap.ui.define(
 
             // 메뉴 권한 체크
             const sUrl = '/GetMenuidRoleSet';
-            this.getModel(/* ZHR_COMMON_SRV */).read(sUrl, {
+            this.getModel('common').read(sUrl, {
               filters: [
                 new Filter('Menid', FilterOperator.EQ, '7000'), // prettier 방지용 주석
               ],

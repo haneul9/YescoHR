@@ -38,7 +38,7 @@ sap.ui.define(
             type: 'array',
             defaultValue: [
               // prettier 방지용 주석
-              { serviceName: 'ZHR_COMMON_SRV' },
+              { serviceName: 'ZHR_COMMON_SRV', modelName: 'common' },
               { serviceName: 'ZHR_BENEFIT_SRV', modelName: 'benefit' },
               { serviceName: 'ZHR_WORKTIME_SRV', modelName: 'worktime' },
             ],
@@ -68,7 +68,7 @@ sap.ui.define(
         });
 
         const sUrl = '/EmpLoginInfoSet';
-        this.getModel(/* ZHR_COMMON_SRV */).read(sUrl, {
+        this.getModel('common').read(sUrl, {
           success: (oData, oResponse) => {
             AppUtils.debug(`${sUrl} success.`, oData, oResponse);
 

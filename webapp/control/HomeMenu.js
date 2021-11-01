@@ -39,7 +39,7 @@ sap.ui.define(
        */
       retrieveMenu() {
         const sUrl = '/GetMenuLvSet';
-        this.oController.getModel(/* ZHR_COMMON_SRV */).create(
+        this.oController.getModel('common').create(
           sUrl,
           {
             Pernr: '50007',
@@ -269,7 +269,7 @@ sap.ui.define(
         const bFavor = oContext.getProperty('Favor');
         const sUrl = '/MenuFavoriteSet';
 
-        this.oController.getModel(/* ZHR_COMMON_SRV */).create(
+        this.oController.getModel('common').create(
           sUrl,
           {
             Menid: oContext.getProperty('Menid'),
@@ -344,7 +344,7 @@ sap.ui.define(
         AppUtils.setAppBusy(true, this.oController);
         AppUtils.setMenuBusy(true, this.oController);
 
-        const oCommonModel = this.oController.getModel(/* ZHR_COMMON_SRV */);
+        const oCommonModel = this.oController.getModel('common');
         const sUrl = oCommonModel.createKey('/GetMenuUrlSet', {
           Menid: oContext.getProperty('Menid'),
         });
