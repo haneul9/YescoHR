@@ -12,8 +12,8 @@
             </HBox>
             <HBox visible="{= !!Settings>/Editable}">
                 <Button press=".onPressHelpBtn" text="안내" visible="{= !!Settings>/HelpButton}" />
-                <xmlns:oDataFileUploader id="ATTACHFILE_BTN" name= "UploadFile" modelName= 'ZHR_COMMON_SRV' slug= """" maximumFileSize= "10" multiple= "true" uploadOnChange= "false" mimeType= "[]," fileType="{Settings>FileTypes}" buttonText= "업로드" buttonOnly= "true" uploadComplete= ".uploadComplete" uploadAborted= ".uploadAborted" fileSizeExceed= ".fileSizeExceed" typeMissmatch= ".typeMissmatch" change= ".onFileChange" />
-</HBox>
-</HBox>
-</VBox>
+                <xmlns:oDataFileUploader id="ATTACHFILE_BTN" name= "UploadFile" modelName="ZHR_COMMON_SRV" slug="" maximumFileSize= "10" multiple= "true" uploadOnChange= "false" mimeType= "[]," fileType="{Settings>FileTypes}" buttonText= "업로드" buttonOnly= "true" uploadComplete= ".uploadComplete" uploadAborted= ".uploadAborted" fileSizeExceed= ".fileSizeExceed" typeMissmatch= ".typeMissmatch" change= ".onFileChange" />
+            </HBox>
+        </HBox>
+    </VBox>
 </mvc:View>

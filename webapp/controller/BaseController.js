@@ -39,28 +39,28 @@ sap.ui.define(
           .attachRouteMatched((oEvent) => {
             this.debug('routeMatched', oEvent);
 
-            const oView = oEvent.getParameter('view');
-            oView.setVisible(false);
+            // const oView = oEvent.getParameter('view');
+            // oView.setVisible(false);
 
             // 메뉴 권한 체크
-            const sUrl = '/GetMenuidRoleSet';
-            this.getModel(/* ZHR_COMMON_SRV */).read(sUrl, {
-              filters: [
-                new Filter('Menid', FilterOperator.EQ, '7000'), // prettier 방지용 주석
-              ],
-              success: (oData, oResponse) => {
-                this.debug(`${sUrl} success.`, oData, oResponse);
+            // const sUrl = '/GetMenuidRoleSet';
+            // this.getModel(/* ZHR_COMMON_SRV */).read(sUrl, {
+            //   filters: [
+            //     new Filter('Menid', FilterOperator.EQ, '7000'), // prettier 방지용 주석
+            //   ],
+            //   success: (oData, oResponse) => {
+            //     this.debug(`${sUrl} success.`, oData, oResponse);
 
-                oView.setVisible(true);
-              },
-              error: (oError) => {
-                this.debug(`${sUrl} error.`, oError);
+            //     oView.setVisible(true);
+            //   },
+            //   error: (oError) => {
+            //     this.debug(`${sUrl} error.`, oError);
 
-                this.getRouter().getTargets().display('notFound', {
-                  fromTarget: 'home',
-                });
-              },
-            });
+            //     this.getRouter().getTargets().display('notFound', {
+            //       fromTarget: 'home',
+            //     });
+            //   },
+            // });
 
             // do something, i.e. send usage statistics to back end
             // in order to improve our app and the user experience (Build-Measure-Learn cycle)
