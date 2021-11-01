@@ -1,0 +1,45 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:table="sap.ui.table"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:u="sap.ui.unified">
+    <VBox id="ATTACHBOX">
+        <HBox justifyContent="SpaceBetween">
+            <HBox>
+                <Title level="H2" text="첨부파일" />
+                <Text text="증빙자료를 꼭 등록 해주세요."/>
+            </HBox>
+            <HBox>
+                <u:FileUploader id="ATTACHFILE_BTN" multiple="true" change=".AttachFileAction.onFileChange" uploadComplete= ".uploadComplete" icon="sap-icon://add" buttonText= "추가" buttonOnly= "true"/>
+                <!-- <Button icon="sap-icon://add" text="추가" /> -->
+                <Button icon="sap-icon://less" text="삭제" />
+            </HBox>
+        </HBox>
+        <table:Table id="attachTable" width="100%" selectionMode="MultiToggle" columnHeaderHeight="38" rowHeight="37" visibleRowCount="1" rows="{/Data}">
+            <table:columns>
+                <table:Column width="4%">
+                    <Label text="No"/>
+                    <table:template>
+                        <Text text="{idx}" width="100%" textAlign="Center" />
+                    </table:template>
+                </table:Column>
+                <table:Column width="8%">
+                    <Label text="유형"/>
+                    <table:template>
+                        <Select selectedKey="{gubun}">
+                            <core:Item key="00" text="선택" />
+                            <core:Item key="10" text="5대암" />
+                            <core:Item key="20" text="난임" />
+                        </Select>
+                    </table:template>
+                </table:Column>
+                <table:Column>
+                    <Label text="첨부파일" width="100%" />
+                    <table:template>
+                        <Link text="{Fname}" width="100%" textAlign="Begin" />
+                    </table:template>
+                </table:Column>
+            </table:columns>
+        </table:Table>
+    </VBox>
+</core:FragmentDefinition>

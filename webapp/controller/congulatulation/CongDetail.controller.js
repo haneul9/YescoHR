@@ -5,8 +5,9 @@ sap.ui.define(
       'sap/ui/core/Fragment',
       'sap/m/MessageBox',
       '../../model/formatter',
-      '../../common/EmpInfo',
-      '../BaseController',
+      'sap/ui/yesco/common/EmpInfo',
+      'sap/ui/yesco/controller/BaseController',
+      'sap/ui/yesco/common/AttachFileAction',
     ],
     (
       JSONModel,
@@ -15,6 +16,7 @@ sap.ui.define(
       formatter,
       EmpInfo,
       BaseController,
+      AttachFileAction,
     ) => {
       'use strict';
 
@@ -22,23 +24,14 @@ sap.ui.define(
         constructor() {
           super();
           this.formatter = formatter;
-        }
-
-        onInit() {
-          this.getView().addEventDelegate(
-            {
-                onBeforeShow: this.onBeforeShow,
-                onAfterShow: this.onAfterShow
-            },
-            this
-          );
+          this.AttachFileAction = AttachFileAction;
         }
 
         onBeforeShow() {    
-          const oViewModel = new JSONModel();
+          const oViewModel = new JSONModel({FormData: {}});
           this.setViewModel(oViewModel);
 
-          EmpInfo.getInfo.call(this);
+          EmpInfo.get.call(this);
         }
 
         onAfterShow() {
@@ -47,6 +40,7 @@ sap.ui.define(
           setTimeout(() => {
             this.getBenefitType(this);
           }, 0);
+          super.onAfterShow();
         }
 
         onNavBack() {
@@ -374,7 +368,6 @@ sap.ui.define(
               oSendObject.Actty = 'E';
 
               oModel.create("/ConExpenseApplSet", oSendObject, {
-                async: false,
                 success: function (oData) {
                   MessageBox.alert("저장되었습니다.", { title: "안내"});
                   oController.getRouter().navTo("congulatulation");
@@ -411,11 +404,13 @@ sap.ui.define(
               oSendObject.Pernr = oDetailModel.getProperty("/TargetInfo/Pernr");
               oSendObject.Actty = 'E';
               oSendObject.Appno = !vStatus || vStatus === '45' ? '' : oDetailModel.getProperty('/FormData/Appno');
+              // oSendObject.ConExpenseNav1 = [];
 
               oModel.create("/ConExpenseApplSet", oSendObject, {
-                async: false,
                 success: function (oData) {
                   MessageBox.alert("신청되었습니다.", { title: "안내"});
+                  AttachFileAction.uploadFile.call(oController, oData.results[0].Appno, "hr01");
+
                   oController.getRouter().navTo("congulatulation");
                 },
                 error: function (oRespnse) {

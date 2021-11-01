@@ -65,13 +65,10 @@
 						<Text text="{/FormData/Zflower}"/>
 					</grid:CSSGrid>
 				</VBox>
-				<HBox>
-					<!-- <mvc:XMLView viewName="sap.ui.yesco.view.CommonAttachFile"/> -->
-					<!-- <core:Fragment fragmentName="sap.ui.yesco.fragment.Applicant" type="XML" /> -->
-				</HBox>
-				<HBox>
-					<core:Fragment fragmentName="sap.ui.yesco.fragment.ApplyInfo" type="XML" />
-				</HBox>
+				<core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
+				<!-- <mvc:XMLView viewName="sap.ui.yesco.view.CommonAttachFile"/> -->
+				<!-- <core:Fragment fragmentName="sap.ui.yesco.fragment.Applicant" type="XML" /> -->
+				<core:Fragment fragmentName="sap.ui.yesco.fragment.ApplyInfo" type="XML" />
 				<HBox visible="{= !!${/FormData/ZappStatAl} }">
 					<core:Fragment fragmentName="sap.ui.yesco.fragment.PaymentDetails" type="XML" />
 				</HBox>

@@ -4,7 +4,7 @@ sap.ui.define(
     'sap/ui/model/json/JSONModel',
     'sap/ui/core/Fragment',
     '../../model/formatter',
-    '../../common/EmpInfo',
+    'sap/ui/yesco/common/EmpInfo',
     '../BaseController',
   ],
   (
@@ -24,10 +24,10 @@ sap.ui.define(
       }
 
       onBeforeShow() {
-        const oViewModel = new JSONModel();
+        const oViewModel = new JSONModel({ Data: [] });
         this.setViewModel(oViewModel);
 
-        EmpInfo.getInfo.call(this, 'o');
+        EmpInfo.get.call(this, true);
 
         const oSearchDate = this.byId('SearchDate');
         const dDate = new Date();
