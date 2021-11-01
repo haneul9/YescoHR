@@ -74,7 +74,7 @@ sap.ui.define(
       /**************************
        * Functions
        *************************/
-      count({ mTableData }) {
+      count(mTableData) {
         const oViewModel = this.getViewModel();
         const aZappStatAls = mTableData.map((obj) => obj.ZappStatAl);
         const oOccurCount = _.defaults(_.countBy(aZappStatAls), {
@@ -100,12 +100,14 @@ sap.ui.define(
         });
       },
 
-      export({ aColumns, mTableData, sFileName }) {
+      export({ mColumns, mTableData, sFileName }) {
         const sToday = moment().format('YYYYMMDD');
+
+        if (!mTableData.length) return;
 
         const oSettings = {
           workbook: {
-            columns: aColumns,
+            columns: mColumns,
             hierarchyLevel: 'Level',
           },
           dataSource: mTableData,

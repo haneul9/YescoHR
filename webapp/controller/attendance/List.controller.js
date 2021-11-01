@@ -71,7 +71,7 @@ sap.ui.define(
           ],
           success: (oData) => {
             oViewModel.setProperty('/list', oData.results);
-            TableUtils.count.call(this, { mTableData: oData.results });
+            TableUtils.count.call(this, oData.results);
 
             oViewModel.setProperty('/busy', false);
           },
@@ -83,8 +83,10 @@ sap.ui.define(
         });
       }
 
-      createColumnConfig() {
-        const aCols = [
+      onExelDownload() {
+        const mTableData = this.getViewModel().getProperty('/list');
+        const sFileName = '근태신청_목록';
+        const mColumns = [
           { label: '상태', property: 'ZappStxtAl', type: exportLibrary.EdmType.String },
           { label: '구분', property: 'Dettx', type: exportLibrary.EdmType.String },
           { label: '사번', property: 'Appernr', type: exportLibrary.EdmType.String },
@@ -99,15 +101,7 @@ sap.ui.define(
           { label: '결재일', property: 'Sgndt', type: exportLibrary.EdmType.Date },
         ];
 
-        return aCols;
-      }
-
-      onExelDownload() {
-        const aColumns = this.createColumnConfig();
-        const mTableData = this.getViewModel().getProperty('/list');
-        const sFileName = '근태신청_목록';
-
-        TableUtils.export({ aColumns, mTableData, sFileName });
+        TableUtils.export({ mColumns, mTableData, sFileName });
       }
     }
 
