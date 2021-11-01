@@ -27,7 +27,7 @@ sap.ui.define(
         const oViewModel = new JSONModel({Data: []});
         this.setViewModel(oViewModel);
 
-        EmpInfo.get.call(this, false);
+        EmpInfo.get.call(this, true);
         
         const oSearchDate = this.byId('SearchDate');
         const dDate = new Date();
