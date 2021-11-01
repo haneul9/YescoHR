@@ -27,21 +27,11 @@ sap.ui.define(
           this.AttachFileAction = AttachFileAction;
         }
 
-        onInit() {
-          this.getView().addEventDelegate(
-            {
-                onBeforeShow: this.onBeforeShow,
-                onAfterShow: this.onAfterShow
-            },
-            this
-          );
-        }
-
         onBeforeShow() {    
           const oViewModel = new JSONModel({FormData: {}});
           this.setViewModel(oViewModel);
 
-          EmpInfo.getInfo.call(this);
+          EmpInfo.get.call(this);
         }
 
         onAfterShow() {
@@ -50,6 +40,7 @@ sap.ui.define(
           setTimeout(() => {
             this.getBenefitType(this);
           }, 0);
+          super.onAfterShow();
         }
 
         onNavBack() {
