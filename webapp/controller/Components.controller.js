@@ -25,6 +25,7 @@ sap.ui.define(
 
     class Components extends BaseController {
       constructor() {
+        super();
         this.formatter = formatter;
       }
 

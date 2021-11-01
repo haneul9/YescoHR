@@ -7,9 +7,9 @@
 	<Page showHeader="false">
 		<VBox>
 			<HBox justifyContent="SpaceBetween">
-				<HBox>
-					<Text text="근태 > 근태신청"/>
-				</HBox>
+				<Breadcrumbs currentLocationText="근태신청" separatorStyle="GreaterThan">
+					<Link text="근태"/>
+				</Breadcrumbs>
 				<HBox>
 					<Button type="Emphasized" text="신규신청" />
 					<Button type="Emphasized" text="변경신청" />
@@ -43,7 +43,7 @@
 					<HBox>
 						<Label text="연차휴가" design="Bold" />
 						<VBox width="80%">
-							<ProgressIndicator class="sapUiSmallMarginBottom" percentValue="80" displayValue="80%" showValue="false" state="None" width="100%" />
+							<ProgressIndicator class="sapUiSmallMarginBottom" percentValue="80" displayValue="80%" showValue="false" state="Information" width="100%" />
 							<HBox justifyContent="SpaceBetween">
 								<Text text="0" />
 								<Text text="52" />
@@ -53,7 +53,7 @@
 					<HBox>
 						<Label text="하계휴가" design="Bold" />
 						<VBox width="80%">
-							<ProgressIndicator class="sapUiSmallMarginBottom" percentValue="80" displayValue="80%" showValue="false" state="None" width="100%" />
+							<ProgressIndicator class="sapUiSmallMarginBottom" percentValue="80" displayValue="80%" showValue="false" state="Error" width="100%" />
 							<HBox justifyContent="SpaceBetween">
 								<Text text="0" />
 								<Text text="52" />
@@ -63,7 +63,7 @@
 					<HBox>
 						<Label text="보건휴가" design="Bold" />
 						<VBox width="80%">
-							<ProgressIndicator class="sapUiSmallMarginBottom" percentValue="80" displayValue="80%" showValue="false" state="None" width="100%" />
+							<ProgressIndicator class="sapUiSmallMarginBottom" percentValue="80" displayValue="80%" showValue="false" state="Success" width="100%" />
 							<HBox justifyContent="SpaceBetween">
 								<Text text="0" />
 								<Text text="52" />
@@ -104,7 +104,7 @@
 						<Button icon="sap-icon://excel-attachment" text="Excel" />
 					</HBox>
 				</HBox>
-				<table:Table id="conguTable" width="100%" rows="{/list}" selectionMode="MultiToggle" rowHeight="37" columnHeaderHeight="38" visibleRowCount="{/listinfo/rowcount}">
+				<table:Table id="conguTable" width="100%" rows="{/list}" selectionMode="MultiToggle" visibleRowCount="{/listinfo/rowCount}">
 					<table:rowSettingsTemplate>
 						<table:RowSettings highlight="{
 							path: 'ZappSAl',
