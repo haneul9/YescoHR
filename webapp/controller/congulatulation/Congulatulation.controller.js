@@ -85,7 +85,6 @@ sap.ui.define(
         const oTotalModel = this.getViewModel();
 
         oModel.read("/ConExpenseMyconSet", {
-          async: false,
           filters: [
             new sap.ui.model.Filter("Pernr", sap.ui.model.FilterOperator.EQ, oTotalModel.getProperty("/TargetInfo/Pernr")),
           ],
@@ -110,7 +109,6 @@ sap.ui.define(
         const oController = this;
 
         oModel.read("/ConExpenseApplSet", {
-          async: false,
           filters: [
             new sap.ui.model.Filter("Prcty", sap.ui.model.FilterOperator.EQ, "L"),
             new sap.ui.model.Filter("Actty", sap.ui.model.FilterOperator.EQ, "E"),
