@@ -23,21 +23,11 @@ sap.ui.define(
         this.formatter = formatter;
       }
 
-      onInit() {
-        this.getView().addEventDelegate(
-          {
-              onBeforeShow: this.onBeforeShow,
-              onAfterShow: this.onAfterShow
-          },
-          this
-        );
-      }
-
       onBeforeShow() {
         const oViewModel = new JSONModel({Data: []});
         this.setViewModel(oViewModel);
 
-        EmpInfo.getInfo.call(this, 'o');
+        EmpInfo.get.call(this, false);
         
         const oSearchDate = this.byId('SearchDate');
         const dDate = new Date();
@@ -50,6 +40,7 @@ sap.ui.define(
       onAfterShow() {
         this.onSearch();
         this.getTotalPay();
+        super.onAfterShow();
       }
     
       rowHighlight(sValue) {
