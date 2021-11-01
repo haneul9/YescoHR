@@ -1,11 +1,13 @@
 sap.ui.define(
   [
-    'sap/ui/export/Spreadsheet', //
+    'sap/ui/export/library', //
+    'sap/ui/export/Spreadsheet',
     'sap/ui/yesco/extension/moment',
     'sap/ui/yesco/extension/lodash',
   ],
   (
-    Spreadsheet //
+    exportLibrary, //
+    Spreadsheet
   ) => {
     'use strict';
 
@@ -76,10 +78,17 @@ sap.ui.define(
         });
       },
 
-      export({ mColumns, mTableData, sFileName }) {
-        const sToday = moment().format('YYYYMMDD');
-
+      export({ oTable, mTableData, sFileName }) {
         if (!mTableData.length) return;
+
+        const sToday = moment().format('YYYYMMDD');
+        const mColumns = oTable.getColumns().map((col) => {
+          return {
+            label: col.getLabel().getText(),
+            property: col.getTemplate().getBindingInfo('text').parts[0].path,
+            type: exportLibrary.EdmType.String,
+          };
+        });
 
         const oSettings = {
           workbook: {
