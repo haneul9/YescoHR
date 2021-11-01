@@ -5,8 +5,9 @@ sap.ui.define(
       'sap/ui/core/Fragment',
       'sap/m/MessageBox',
       '../../model/formatter',
-      '../../common/EmpInfo',
-      '../BaseController',
+      'sap/ui/yesco/common/EmpInfo',
+      'sap/ui/yesco/controller/BaseController',
+      'sap/ui/yesco/common/AttachFileAction',
     ],
     (
       JSONModel,
@@ -15,6 +16,7 @@ sap.ui.define(
       formatter,
       EmpInfo,
       BaseController,
+      AttachFileAction,
     ) => {
       'use strict';
 
@@ -22,6 +24,7 @@ sap.ui.define(
         constructor() {
           super();
           this.formatter = formatter;
+          this.AttachFileAction = AttachFileAction;
         }
 
         onInit() {
@@ -35,7 +38,7 @@ sap.ui.define(
         }
 
         onBeforeShow() {    
-          const oViewModel = new JSONModel();
+          const oViewModel = new JSONModel({FormData: {}});
           this.setViewModel(oViewModel);
 
           EmpInfo.getInfo.call(this);
@@ -416,6 +419,8 @@ sap.ui.define(
                 async: false,
                 success: function (oData) {
                   MessageBox.alert("신청되었습니다.", { title: "안내"});
+                  AttachFileAction.uploadFile.call(oController, oData.results[0].Appno, "hr01");
+
                   oController.getRouter().navTo("congulatulation");
                 },
                 error: function (oRespnse) {
