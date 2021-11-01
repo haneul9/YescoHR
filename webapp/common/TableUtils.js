@@ -48,30 +48,6 @@ sap.ui.define(
 
     return {
       /**************************
-       * Formatter
-       *************************/
-      rowHighlight(sValue) {
-        switch (parseInt(sValue, 10)) {
-          case STATE_IN_PROGRESS1:
-          case STATE_IN_PROGRESS2:
-            return sap.ui.core.IndicationColor.Indication01;
-          case STATE_APPLY1:
-          case STATE_APPLY2:
-          case STATE_APPLY3:
-            return sap.ui.core.IndicationColor.Indication03;
-          case STATE_APPROVE:
-            return sap.ui.core.IndicationColor.Indication04;
-          case STATE_REJECT1:
-          case STATE_REJECT2:
-            return sap.ui.core.IndicationColor.Indication02;
-          case STATE_COMPLETE:
-            return sap.ui.core.IndicationColor.Indication05;
-          default:
-            return null;
-        }
-      },
-
-      /**************************
        * Functions
        *************************/
       count(mTableData) {
@@ -112,13 +88,42 @@ sap.ui.define(
           },
           dataSource: mTableData,
           fileName: `${sFileName}_${sToday}.xlsx`,
-          worker: false, // We need to disable worker because we are using a MockServer as OData Service
+          worker: false,
         };
 
         const oSheet = new Spreadsheet(oSettings);
         oSheet.build().finally(function () {
           oSheet.destroy();
         });
+      },
+
+      /**************************
+       * Formatter
+       *************************/
+      rowHighlight(sValue) {
+        switch (parseInt(sValue, 10)) {
+          case STATE_IN_PROGRESS1:
+          case STATE_IN_PROGRESS2:
+            // 작성중
+            return sap.ui.core.IndicationColor.Indication01;
+          case STATE_APPLY1:
+          case STATE_APPLY2:
+          case STATE_APPLY3:
+            // 신청
+            return sap.ui.core.IndicationColor.Indication03;
+          case STATE_APPROVE:
+            // 승인
+            return sap.ui.core.IndicationColor.Indication04;
+          case STATE_REJECT1:
+          case STATE_REJECT2:
+            // 반려
+            return sap.ui.core.IndicationColor.Indication02;
+          case STATE_COMPLETE:
+            // 완료
+            return sap.ui.core.IndicationColor.Indication05;
+          default:
+            return null;
+        }
       },
     };
   }
