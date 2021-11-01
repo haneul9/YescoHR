@@ -28,11 +28,11 @@ sap.ui.define(
         this.formatter = TableUtils;
       }
 
-      onInit() {
+      onBeforeShow() {
         const oViewModel = new JSONModel({
           busy: false,
           search: {
-            Apbeg: moment().subtract(1, 'month').startOf('month').hours(9).toDate(),
+            Apbeg: moment().subtract(1, 'month').add(1, 'day').hours(9).toDate(),
             Apend: moment().hours(9).toDate(),
           },
           listinfo: {
