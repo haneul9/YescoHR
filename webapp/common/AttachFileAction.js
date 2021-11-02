@@ -2,9 +2,13 @@
 sap.ui.define(
     [
       'sap/m/MessageBox',
+      'sap/ui/yesco/common/AppUtils',
+      'sap/ui/core/UIComponent',
     ],
     (
         MessageBox,
+        AppUtils,
+        UIComponent,
     ) => {
         'use strict';
 
@@ -147,7 +151,9 @@ sap.ui.define(
             },
 
             uploadFile(Appno, Type) {
-                const oModel = this.getModel('common');
+                // const oModel = this.getModel('common');
+                const sServiceUrl = AppUtils.getServiceUrl('ZHR_COMMON_SRV', this.getOwnerComponent());
+                const oModel = new sap.ui.model.odata.ODataModel(sServiceUrl, true, undefined, undefined, undefined, undefined, undefined, false);
                 const Attachbox = this.byId("ATTACHBOX");
                 const vAttachDatas = Attachbox.getModel().getProperty("/Data") || [];
                 const aDeleteFiles = Attachbox.getModel().getProperty("/DelelteDatas") || [];
@@ -195,7 +201,7 @@ sap.ui.define(
                             jQuery.ajax({
                                 type: "POST",
                                 async: false,
-                                url: $.app.getDestination() + "/sap/opu/odata/sap/ZHR_COMMON_SRV/FileAttachSet/",
+                                url: "/proxy/sap/opu/odata/sap/ZHR_COMMON_SRV/FileUploadSet/",
                                 headers: oHeaders,
                                 cache: false,
                                 contentType: elem.type,

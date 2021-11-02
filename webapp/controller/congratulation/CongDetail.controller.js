@@ -101,8 +101,18 @@ sap.ui.define(
                 const oList = oData.results;
                 oDetailModel.setProperty('/BenefitType', oList);
 
-                if(!oDetailModel.getProperty("/FormData"))
-                  oDetailModel.setProperty("/FormData", {});
+                if(oDetailModel.getProperty("/FormData") !== null && typeof oDetailModel.getProperty("/FormData") === "object" && !Object.keys(oDetailModel.getProperty("/FormData")).length) {
+                  oDetailModel.setProperty("/ApplyInfo", {
+                    Appernr: oDetailModel.getProperty("/TargetInfo/Pernr"),
+                    Apename: oDetailModel.getProperty("/TargetInfo/Ename"),
+                    Apjikgbtl: oDetailModel.getProperty("/TargetInfo/Zzjiktlt"),
+                    Appdt: new Date(),
+                  });
+
+                //  oDetailModel.setProperty("/FormData", oDetailModel.getProperty("/TargetInfo"));
+                 oDetailModel.setProperty("/FormData/Apename", oDetailModel.getProperty("/TargetInfo/Ename"));
+                 oDetailModel.setProperty("/FormData/Appernr", oDetailModel.getProperty("/TargetInfo/Pernr"));
+                }
 
                 setTimeout(() => {
                   oController.onTypeChange();
@@ -364,6 +374,7 @@ sap.ui.define(
               oSendObject = oDetailModel.getProperty("/FormData");
               oSendObject.Prcty = 'T';
               oSendObject.Actty = 'E';
+              oSendObject.ConExpenseNav1 = [];
 
               oModel.create("/ConExpenseApplSet", oSendObject, {
                 success: function (oData) {
@@ -392,7 +403,7 @@ sap.ui.define(
           
           if(this.checkError(this)) return;
 
-          AttachFileAction.uploadFile.call(oController, oDetailModel.getProperty("/FormData/Appno"), "hr01");
+          // AttachFileAction.uploadFile.call(oController, oDetailModel.getProperty("/FormData/Appno"), "HR01");
           const onPressApply = function (fVal) {
             if (fVal && fVal === "신청") {
               let oSendObject = {};
@@ -407,7 +418,7 @@ sap.ui.define(
               oModel.create("/ConExpenseApplSet", oSendObject, {
                 success: function (oData) {
                   MessageBox.alert("신청되었습니다.", { title: "안내"});
-                  AttachFileAction.uploadFile.call(oController, oData.results[0].Appno, "hr01");
+                  // AttachFileAction.uploadFile.call(oController, oData.results[0].Appno, "HR01");
 
                   oController.getRouter().navTo("congratulation");
                 },
