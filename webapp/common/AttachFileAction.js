@@ -32,11 +32,16 @@ sap.ui.define(
                 const oFileUploader = this.byId("ATTACHFILE_BTN");
                 // const f1 = document.getElementById("ATTACHFILE_BTN-fu_input-inner");
                 const JSonModel = oAttachbox.getModel();
-                const vFileData = !JSonModel.getProperty("/Data") ? JSonModel.setProperty("/Data", []) : JSonModel.getProperty("/Data");
                 const aFileList = [];
                 const vMode = JSonModel.getProperty("/Settings/Mode");
                 const vMax = JSonModel.getProperty("/Settings/Max");
                 const files = oEvent.getParameters().files;
+                let vFileData = JSonModel.getProperty("/Data");
+
+                if(!vFileData) {
+                    JSonModel.setProperty("/Data", []);
+                    vFileData = JSonModel.getProperty("/Data");
+                }
 
                 if (files) {
                     vFileData.forEach(function(elem) {

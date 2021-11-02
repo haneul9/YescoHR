@@ -11,6 +11,7 @@ html, body { box-sizing:border-box; overflow:hidden }
 .home-menu-level1-hover {border-bottom-color:#f00}
 .menu-mss bdi {color:#f00}
 .menu-hass bdi {color:#00f}
+.yescoUi .sapSuiteUiCommonsTimelineItemHeader {display:flex; flex-direction:column}
 .yescoUi .sapSuiteUiCommonsTimelineItemShellDateTime {display:none !important}
 
 /**

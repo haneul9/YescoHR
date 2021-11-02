@@ -368,7 +368,6 @@ sap.ui.define(
               oSendObject.Actty = 'E';
 
               oModel.create("/ConExpenseApplSet", oSendObject, {
-                async: false,
                 success: function (oData) {
                   MessageBox.alert("저장되었습니다.", { title: "안내"});
                   oController.getRouter().navTo("congulatulation");
@@ -405,9 +404,9 @@ sap.ui.define(
               oSendObject.Pernr = oDetailModel.getProperty("/TargetInfo/Pernr");
               oSendObject.Actty = 'E';
               oSendObject.Appno = !vStatus || vStatus === '45' ? '' : oDetailModel.getProperty('/FormData/Appno');
+              // oSendObject.ConExpenseNav1 = [];
 
               oModel.create("/ConExpenseApplSet", oSendObject, {
-                async: false,
                 success: function (oData) {
                   MessageBox.alert("신청되었습니다.", { title: "안내"});
                   AttachFileAction.uploadFile.call(oController, oData.results[0].Appno, "hr01");
