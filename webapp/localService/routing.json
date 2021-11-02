@@ -18,22 +18,22 @@
         "target": "home"
       },
       {
-        "pattern": "congulatulation",
-        "name": "congulatulation",
-        "target": "congulatulation"
+        "pattern": "congratulation",
+        "name": "congratulation",
+        "target": "congratulation"
       },
       {
-        "pattern": "m/congulatulation",
+        "pattern": "m/congratulation",
         "name": "congulatulationMobile",
-        "target": "m/congulatulation"
+        "target": "m/congratulation"
       },
       {
-        "pattern": "congulatulation/congDetail/{oDataKey}",
+        "pattern": "congratulation/congDetail/{oDataKey}",
         "name": "congDetail",
         "target": "congDetail"
       },
       {
-        "pattern": "m/congulatulation/congDetail/{oDataKey}",
+        "pattern": "m/congratulation/congDetail/{oDataKey}",
         "name": "congDetailMobile",
         "target": "m/congDetail"
       },
@@ -60,27 +60,27 @@
         "viewName": "Home",
         "viewLevel": 1
       },
-      "congulatulation": {
-        "viewId": "congulatulation",
-        "viewPath": "sap.ui.yesco.view.congulatulation",
-        "viewName": "Congulatulation",
+      "congratulation": {
+        "viewId": "congratulation",
+        "viewPath": "sap.ui.yesco.view.congratulation",
+        "viewName": "Congratulation",
         "viewLevel": 2
       },
       "congDetail": {
         "viewId": "congDetail",
-        "viewPath": "sap.ui.yesco.view.congulatulation",
+        "viewPath": "sap.ui.yesco.view.congratulation",
         "viewName": "CongDetail",
         "viewLevel": 2
       },
-      "m/congulatulation": {
+      "m/congratulation": {
         "viewId": "congulatulationMobile",
-        "viewPath": "sap.ui.yesco.view.congulatulation.m",
-        "viewName": "Congulatulation",
+        "viewPath": "sap.ui.yesco.view.congratulation.m",
+        "viewName": "Congratulation",
         "viewLevel": 2
       },
       "m/congDetail": {
         "viewId": "congDetailMobile",
-        "viewPath": "sap.ui.yesco.view.congulatulation.m",
+        "viewPath": "sap.ui.yesco.view.congratulation.m",
         "viewName": "CongDetail",
         "viewLevel": 2
       }

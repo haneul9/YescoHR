@@ -85,8 +85,8 @@ sap.ui.define(
                 const oAttachbox = oController.byId("ATTACHBOX");
                 const oAttachFileList = oController.byId("attachTable");
                 const oFileUploader = oController.byId("ATTACHFILE_BTN");
-                const oModel = oController.getModel();
-                const JSonModel = oAttachbox.getModel();
+                const oModel = oController.getModel('common');
+                const JSonModel = oAttachbox.getViewModel();
                 const vAttachFileDatas = JSonModel.getProperty("/Data");
                 const vAsync = JSonModel.getProperty("/Settings/ReadAsync");
                 const Datas = { Data: [] };
@@ -147,10 +147,10 @@ sap.ui.define(
             },
 
             uploadFile(Appno, Type) {
-                const oModel = sap.ui.getCore().getModel();
-                const Attachbox = sap.ui.getCore().byId("ATTACHBOX");
-                const vAttachDatas = oAttachbox.getModel().getProperty("/Data") || [];
-                const aDeleteFiles = oAttachbox.getModel().getProperty("/DelelteDatas") || [];
+                const oModel = this.getModel('common');
+                const Attachbox = this.byId("ATTACHBOX");
+                const vAttachDatas = Attachbox.getModel().getProperty("/Data") || [];
+                const aDeleteFiles = Attachbox.getModel().getProperty("/DelelteDatas") || [];
         
                 try {
                     const _handleSuccess = function (data) {                        
@@ -173,7 +173,7 @@ sap.ui.define(
                         });
         
                         if(!bDeleteFlag) {
-                            sap.m.MessageToast.show(this.getBundleText("MSG_00031"), { my: "center center", at: "center center"});
+                            sap.m.MessageToast.show("파일 업로드에 실패하였습니다.", { my: "center center", at: "center center"});
                             return;
                         }
                     }
@@ -190,7 +190,7 @@ sap.ui.define(
                                 "slug": [Appno, Type, encodeURI(elem.Fname)].join("|")
                             };
             
-                            common.Common.log(oHeaders.slug);
+                            // common.Common.log(oHeaders.slug);
                             
                             jQuery.ajax({
                                 type: "POST",
