@@ -29,6 +29,12 @@ sap.ui.define(
       onBeforeShow() {
         const oViewModel = new JSONModel({
           busy: false,
+          navigation: {
+            current: '근태신청',
+            links: [
+              { name: '근태' }, //
+            ],
+          },
           search: {
             Apbeg: moment().subtract(1, 'month').add(1, 'day').hours(9).toDate(),
             Apend: moment().hours(9).toDate(),

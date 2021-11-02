@@ -7,9 +7,7 @@
 	<Page showHeader="false">
 		<VBox>
 			<HBox justifyContent="SpaceBetween">
-				<Breadcrumbs currentLocationText="근태신청" separatorStyle="GreaterThan">
-					<Link text="근태"/>
-				</Breadcrumbs>
+				<core:Fragment fragmentName="sap.ui.yesco.fragment.Navigation" type="XML" />
 				<HBox>
 					<Button type="Emphasized" text="신규신청" busyIndicatorDelay="0" busy="{/busy}" />
 					<Button type="Emphasized" text="변경신청" busyIndicatorDelay="0" busy="{/busy}" />
