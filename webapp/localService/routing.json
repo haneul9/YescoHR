@@ -24,7 +24,7 @@
       },
       {
         "pattern": "m/congratulation",
-        "name": "congulatulationMobile",
+        "name": "congratulationMobile",
         "target": "m/congratulation"
       },
       {
@@ -73,7 +73,7 @@
         "viewLevel": 2
       },
       "m/congratulation": {
-        "viewId": "congulatulationMobile",
+        "viewId": "congratulationMobile",
         "viewPath": "sap.ui.yesco.view.congratulation.m",
         "viewName": "Congratulation",
         "viewLevel": 2
