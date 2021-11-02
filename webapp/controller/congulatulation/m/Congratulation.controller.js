@@ -15,7 +15,7 @@ sap.ui.define(
     ) => {
       'use strict';
 
-      class Congulatulation extends BaseController {
+      class Congratulation extends BaseController {
 
         onInit() {
           this.getView().addEventDelegate(
@@ -154,7 +154,7 @@ sap.ui.define(
         }
       }
 
-      return Congulatulation;
+      return Congratulation;
     }
   );
   
