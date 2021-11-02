@@ -1,0 +1,24 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <HBox justifyContent="SpaceBetween">
+        <HBox>
+            <Title level="H3" text="{i18n>LABEL_00129}" />
+            <Text text="total {/listinfo/totalCount}"/>
+        </HBox>
+        <HBox>
+            <HBox>
+                <core:Icon src="sap-icon://circle-task-2" color="#bdbdbd" />
+                <Label text="{i18n>LABEL_00128} {/listinfo/progressCount}"/>
+                <core:Icon src="sap-icon://circle-task-2" color="#ffc107" />
+                <Label text="{i18n>LABEL_00121} {/listinfo/applyCount}"/>
+                <core:Icon src="sap-icon://circle-task-2" color="#28a745" />
+                <Label text="{i18n>LABEL_00123} {/listinfo/approveCount}"/>
+                <core:Icon src="sap-icon://circle-task-2" color="#dc3545" />
+                <Label text="{i18n>LABEL_00124} {/listinfo/rejectCount}"/>
+                <core:Icon src="sap-icon://circle-task-2" color="#1d85c8" />
+                <Label text="{i18n>LABEL_00117} {/listinfo/completeCount}"/>
+            </HBox>
+            <Button icon="sap-icon://excel-attachment" text="Excel" press=".onExelDownload" busyIndicatorDelay="0" busy="{/busy}" />
+        </HBox>
+    </HBox>
+</core:FragmentDefinition>
