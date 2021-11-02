@@ -1,0 +1,37 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <HBox justifyContent="SpaceBetween">
+        <Title level="H2" text="나의 휴가현황" />
+        <Button type="Transparent" icon="sap-icon://detail-view" />
+    </HBox>
+    <HBox>
+        <Label text="연차휴가" design="Bold" />
+        <VBox width="80%">
+            <ProgressIndicator class="sapUiSmallMarginBottom" percentValue="40" displayValue="40%" showValue="true" state="Information" width="100%" />
+            <HBox justifyContent="SpaceBetween">
+                <Text text="0" />
+                <Text text="52" />
+            </HBox>
+        </VBox>
+    </HBox>
+    <HBox>
+        <Label text="하계휴가" design="Bold" />
+        <VBox width="80%">
+            <ProgressIndicator class="sapUiSmallMarginBottom" percentValue="80" displayValue="80%" showValue="true" state="Error" width="100%" />
+            <HBox justifyContent="SpaceBetween">
+                <Text text="0" />
+                <Text text="52" />
+            </HBox>
+        </VBox>
+    </HBox>
+    <HBox>
+        <Label text="보건휴가" design="Bold" />
+        <VBox width="80%">
+            <ProgressIndicator class="sapUiSmallMarginBottom" percentValue="80" displayValue="80%" showValue="true" state="Success" width="100%" />
+            <HBox justifyContent="SpaceBetween">
+                <Text text="0" />
+                <Text text="52" />
+            </HBox>
+        </VBox>
+    </HBox>
+</core:FragmentDefinition>
