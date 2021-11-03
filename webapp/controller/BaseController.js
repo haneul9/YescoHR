@@ -1,18 +1,18 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/core/UIComponent',
     'sap/ui/core/mvc/Controller',
     'sap/ui/core/routing/History',
-    'sap/ui/core/UIComponent',
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
     'sap/ui/yesco/common/AppUtils',
   ],
   (
     // prettier 방지용 주석
+    UIComponent,
     Controller,
     History,
-    UIComponent,
     Filter,
     FilterOperator,
     AppUtils
@@ -180,7 +180,7 @@ sap.ui.define(
       navToNotFound() {
         // display the "notFound" target without changing the hash
         this.getRouter().getTargets().display('notFound', {
-          fromTarget: 'home',
+          from: 'home',
         });
       }
 

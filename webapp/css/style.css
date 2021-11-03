@@ -1,32 +1,33 @@
 @charset "utf-8";
 
-html *:not(.sapUiIcon):not(.sapMMsgStripCloseButton):not(i) { font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif; }
-html, body { box-sizing:border-box; overflow:hidden }
+html *:not(.sapUiIcon):not(.sapMMsgStripCloseButton):not(i) {font-family:Pretendard,-apple-system,BlinkMacSystemFont,system-ui,Roboto,'Helvetica Neue','Segoe UI','Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif}
+html, body {box-sizing:border-box; overflow:hidden}
 
-.app-body { height:calc(100% - 3rem) !important }
-.logo { margin:auto 0 !important; width:145px !important; height:43px !important }
-.sapUiCal.px-0 .sapUiCalMonthView { padding-right: 0 !important; padding-left: 0 !important }
-.font-1b-rem .sapMBtnInner { font-size: 1.125rem }
-.home-menu-level1 {margin:0 !important; border-bottom:solid 0.25rem transparent; padding:0.425rem 1rem; cursor:default}
-.home-menu-level1-hover {border-bottom-color:#f00}
+.app-body {height:calc(100% - 3rem) !important}
+.logo {margin:auto 0 !important; width:145px !important; height:43px !important}
+.font-1b-rem .sapMBtnInner {font-size: 1.125rem}
+.app-menu-level1 {margin:0 !important; border-bottom:solid 0.25rem transparent; padding:0.425rem 1rem; cursor:default}
+.app-menu-level1-hover {border-bottom-color:#f00}
 .menu-mss bdi {color:#f00}
 .menu-hass bdi {color:#00f}
-.yescoUi .sapSuiteUiCommonsTimelineItemBarH {height:12px; background:linear-gradient(to right,blue 0%,red 100%)}
-.yescoUi .sapSuiteUiCommonsTimelineItemHeader {display:flex; flex-direction:column}
-.yescoUi .sapSuiteUiCommonsTimelineItemShellDateTime {display:none !important}
-.yescoUi .ninebox-11 {background-color:#d3f9d8}
-.yescoUi .ninebox-12 {background-color:#fff9db}
-.yescoUi .ninebox-13 {background-color:#ffe3e3}
-.yescoUi .ninebox-21 {background-color:#d0ebff}
-.yescoUi .ninebox-22 {background-color:#d3f9d8}
-.yescoUi .ninebox-23 {background-color:#fff9db}
-.yescoUi .ninebox-31 {background-color:#f1f3f5}
-.yescoUi .ninebox-32 {background-color:#d0ebff}
-.yescoUi .ninebox-33 {background-color:#d3f9d8}
-.yescoUi .ninebox .sapMHBox > div {margin-right:0 !important}
-.yescoUi .ninebox .sapMHBox.ninebox-item {margin-right:.25rem !important}
-.yescoUi .ninebox-item {margin:.25rem !important}
-.yescoUi .ninebox-item img {vertical-align:middle}
+.sapUiCal.px-0 .sapUiCalMonthView {padding-right: 0 !important; padding-left: 0 !important}
+
+.sampleUi .sapSuiteUiCommonsTimelineItemBarH {height:12px; background:linear-gradient(to right,blue 0%,red 100%)}
+.sampleUi .sapSuiteUiCommonsTimelineItemHeader {display:flex; flex-direction:column}
+.sampleUi .sapSuiteUiCommonsTimelineItemShellDateTime {display:none !important}
+.sampleUi .ninebox-11 {background-color:#d3f9d8}
+.sampleUi .ninebox-12 {background-color:#fff9db}
+.sampleUi .ninebox-13 {background-color:#ffe3e3}
+.sampleUi .ninebox-21 {background-color:#d0ebff}
+.sampleUi .ninebox-22 {background-color:#d3f9d8}
+.sampleUi .ninebox-23 {background-color:#fff9db}
+.sampleUi .ninebox-31 {background-color:#f1f3f5}
+.sampleUi .ninebox-32 {background-color:#d0ebff}
+.sampleUi .ninebox-33 {background-color:#d3f9d8}
+.sampleUi .ninebox .sapMHBox > div {margin-right:0 !important}
+.sampleUi .ninebox .sapMHBox.ninebox-item {margin-right:.25rem !important}
+.sampleUi .ninebox-item {margin:.25rem !important; width:11.5rem; height:4.5rem}
+.sampleUi .ninebox-item img {vertical-align:middle}
 
 /**
 *   Publishing

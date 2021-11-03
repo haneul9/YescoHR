@@ -119,6 +119,11 @@
           "target": "m/congDetail"
         },
         {
+          "pattern": "attendance",
+          "name": "attendance",
+          "target": "attendance"
+        },
+        {
           "pattern": "components",
           "name": "commonComponents",
           "target": "components"
@@ -132,16 +137,12 @@
           "pattern": "ninebox",
           "name": "ninebox",
           "target": "ninebox"
-        },
-        {
-          "pattern": "attendance",
-          "name": "attendance",
-          "target": "attendance"
         }
       ],
       "targets": {
         "home": {
           "viewId": "home",
+          "viewPath": "sap.ui.yesco.view.home",
           "viewName": "Home",
           "viewLevel": 1
         },
@@ -149,26 +150,6 @@
           "viewId": "notFound",
           "viewName": "NotFound",
           "transition": "show"
-        },
-        "components": {
-          "viewId": "components",
-          "viewName": "Components",
-          "viewLevel": 1,
-          "title": "Components"
-        },
-        "timeline": {
-          "viewId": "timeline",
-          "viewPath": "sap.ui.yesco.view.timeline",
-          "viewName": "Timeline",
-          "viewLevel": 1,
-          "title": "Timeline Sample"
-        },
-        "ninebox": {
-          "viewId": "ninebox",
-          "viewPath": "sap.ui.yesco.view.ninebox",
-          "viewName": "Ninebox",
-          "viewLevel": 1,
-          "title": "Ninebox Sample"
         },
         "congulatulation": {
           "viewId": "congulatulation",
@@ -199,6 +180,27 @@
           "viewPath": "sap.ui.yesco.view.attendance",
           "viewName": "List",
           "viewLevel": 2
+        },
+        "components": {
+          "viewId": "components",
+          "viewPath": "sap.ui.yesco.view.zample",
+          "viewName": "Components",
+          "viewLevel": 1,
+          "title": "Components"
+        },
+        "timeline": {
+          "viewId": "timeline",
+          "viewPath": "sap.ui.yesco.view.zample",
+          "viewName": "Timeline",
+          "viewLevel": 1,
+          "title": "Timeline Sample"
+        },
+        "ninebox": {
+          "viewId": "ninebox",
+          "viewPath": "sap.ui.yesco.view.zample",
+          "viewName": "Ninebox",
+          "viewLevel": 1,
+          "title": "Ninebox Sample"
         }
       }
     }

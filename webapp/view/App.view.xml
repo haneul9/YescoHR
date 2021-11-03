@@ -1,24 +1,26 @@
-<mvc:View
-	controllerName="sap.ui.yesco.controller.App"
+<mvc:View controllerName="sap.ui.yesco.controller.App"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:control="sap.ui.yesco.control"
-	displayBlock="true">
-	<OverflowToolbar id="homeMenuToolbar" asyncMode="true" busy="{app>/busyMenu}" busyIndicatorDelay="0" class="home-menu-toolbar">
+	xmlns:control="sap.ui.yesco.control" displayBlock="true">
+	<OverflowToolbar id="appMenuToolbar" asyncMode="true" busy="{app>/busyMenu}" busyIndicatorDelay="0" class="app-menu-toolbar">
 		<ImageContent class="logo" src="image/logo-yesco.gif" description="yesco eHR Home" press=".navToHome">
-			<layoutData><OverflowToolbarLayoutData priority="NeverOverflow"/></layoutData>
+			<layoutData>
+				<OverflowToolbarLayoutData priority="NeverOverflow"/>
+			</layoutData>
 		</ImageContent>
 
 		<ToolbarSpacer />
 
-		<!-- Home Menu Position -->
+		<!-- App Menu Position -->
 
 		<ToolbarSpacer />
 
 		<Button icon="sap-icon://bell" type="Transparent" />
 
 		<Button icon="sap-icon://action-settings" type="Transparent">
-			<layoutData><OverflowToolbarLayoutData priority="NeverOverflow" /></layoutData>
+			<layoutData>
+				<OverflowToolbarLayoutData priority="NeverOverflow" />
+			</layoutData>
 		</Button>
 	</OverflowToolbar>
 

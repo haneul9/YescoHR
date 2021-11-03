@@ -3,23 +3,21 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/m/Label',
     'sap/ui/core/Fragment',
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
-    'sap/ui/yesco/control/HomeMenuLevel1',
+    'sap/ui/yesco/control/app/MenuLevel1',
     'sap/ui/yesco/common/AppUtils',
   ],
   (
     // prettier 방지용 주석
     Label,
     Fragment,
-    JSONModel,
     MessageBox,
-    HomeMenuLevel1,
+    MenuLevel1,
     AppUtils
   ) => {
     'use strict';
 
-    class HomeMenu {
+    class Menus {
       constructor(oController) {
         this.oController = oController;
         this.oMenuPopover = null;
@@ -52,14 +50,14 @@ sap.ui.define(
             success: (oData, oResponse) => {
               this.oController.debug(`${sUrl} success.`, oData, oResponse);
 
-              this.buildHomeMenu(oData).then(() => {
+              this.buildAppMenu(oData).then(() => {
                 AppUtils.setMenuBusy(false, this.oController);
               });
             },
             error: (oError) => {
               this.oController.debug(`${sUrl} error.`, oError);
 
-              this.buildHomeMenu().then(() => {
+              this.buildAppMenu().then(() => {
                 AppUtils.setMenuBusy(false, this.oController);
               });
             },
@@ -72,20 +70,20 @@ sap.ui.define(
        * @param {map} mMenuRawData OData 조회 메뉴 정보
        * @returns {promise} 메뉴 생성 완료 대기 promise
        */
-      buildHomeMenu(mMenuRawData = {}) {
+      buildAppMenu(mMenuRawData = {}) {
         return new Promise((resolve) => {
           const aMenuTree = this.getMenuTree(mMenuRawData);
-          const oHomeMenuToolbar = this.oController.byId('homeMenuToolbar');
+          const oAppMenuToolbar = this.oController.byId('appMenuToolbar');
 
           if (!aMenuTree.length) {
-            oHomeMenuToolbar.insertContent(new Label({ text: '{i18n>MSG_01001}' }), 2); // 조회된 메뉴가 없습니다.
+            oAppMenuToolbar.insertContent(new Label({ text: '{i18n>MSG_01001}' }), 2); // 조회된 메뉴가 없습니다.
             resolve();
             return;
           }
 
-          // Home menu 생성
+          // App menu 생성
           aMenuTree.forEach((mMenu, i) => {
-            oHomeMenuToolbar.insertContent(new HomeMenuLevel1(mMenu, this), i + 2); // Home logo, ToolbarSpacer 이후부터 menu 추가
+            oAppMenuToolbar.insertContent(new MenuLevel1(mMenu, this), i + 2); // App logo, ToolbarSpacer 이후부터 menu 추가
           });
 
           resolve();
@@ -344,22 +342,22 @@ sap.ui.define(
         // 메뉴에 mouseover evet 발생시 mouseover 스타일 적용, 다른 메뉴의 mouseover 스타일 제거
         setTimeout(() => {
           const $MenuButton = oMenuButton.$();
-          $MenuButton.toggleClass('home-menu-level1-hover', true);
-          $MenuButton.siblings().toggleClass('home-menu-level1-hover', false);
+          $MenuButton.toggleClass('app-menu-level1-hover', true);
+          $MenuButton.siblings().toggleClass('app-menu-level1-hover', false);
         }, 0);
 
         if (!this.oMenuPopover) {
           Fragment.load({
-            name: 'sap.ui.yesco.fragment.HomeMenuPopover',
+            name: 'sap.ui.yesco.fragment.app.MenuPopover',
             controller: this,
           }).then((oPopover) => {
             this.oMenuPopover = oPopover;
             this.oMenuPopover
-              .attachBeforeClose(function (oEvent) {
+              .attachBeforeClose((oEvent) => {
                 const $MenuButton = oEvent.getParameter('openBy').$();
                 setTimeout(() => {
-                  $MenuButton.toggleClass('home-menu-level1-hover', false);
-                  $MenuButton.siblings().toggleClass('home-menu-level1-hover', false);
+                  $MenuButton.toggleClass('app-menu-level1-hover', false);
+                  $MenuButton.siblings().toggleClass('app-menu-level1-hover', false);
                 }, 0);
               })
               .attachAfterClose(function () {
@@ -524,6 +522,6 @@ sap.ui.define(
       }
     }
 
-    return HomeMenu;
+    return Menus;
   }
 );

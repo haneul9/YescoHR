@@ -17,8 +17,8 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    class HomeMenuLevel1 extends Label {
-      constructor(mMenu, oHomeMenu) {
+    class MenuLevel1 extends Label {
+      constructor(mMenu, oAppMenu) {
         super({
           text: mMenu.Mname,
           tooltip: `${mMenu.Mname} (${mMenu.Mnid1}:${mMenu.Menid})`,
@@ -29,9 +29,9 @@ sap.ui.define(
           }),
         });
 
-        this.oHomeMenu = oHomeMenu;
+        this.oAppMenu = oAppMenu;
 
-        this.addStyleClass('home-menu-level1').addStyleClass(mMenu.StyleClasses).setModel(new JSONModel(mMenu));
+        this.addStyleClass('app-menu-level1').addStyleClass(mMenu.StyleClasses).setModel(new JSONModel(mMenu));
       }
 
       /**
@@ -39,7 +39,7 @@ sap.ui.define(
        */
       onmouseover(oEvent) {
         if (oEvent.target.id === oEvent.toElement.id && oEvent.toElement.tagName === 'SPAN') {
-          this.oHomeMenu.openMenuPopoverBy(this);
+          this.oAppMenu.openMenuPopoverBy(this);
         }
       }
 
@@ -49,18 +49,18 @@ sap.ui.define(
       onmouseout(oEvent) {
         // 브라우저 밖으로 마우스 이동시
         if (!oEvent.toElement) {
-          this.oHomeMenu.closeMenuPopover();
+          this.oAppMenu.closeMenuPopover();
           return;
         }
 
         // OverflowToolbar로 마우스 이동시 || Overflow 영역으로 숨겨진 메뉴 버튼에서 밖으로 이동시
         const classList = oEvent.toElement.classList;
-        if (classList.contains('home-menu-toolbar') || classList.contains('sapMPopoverScroll')) {
-          this.oHomeMenu.closeMenuPopover();
+        if (classList.contains('app-menu-toolbar') || classList.contains('sapMPopoverScroll')) {
+          this.oAppMenu.closeMenuPopover();
         }
       }
     }
 
-    return HomeMenuLevel1;
+    return MenuLevel1;
   }
 );
