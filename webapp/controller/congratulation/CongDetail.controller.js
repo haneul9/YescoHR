@@ -101,8 +101,18 @@ sap.ui.define(
                 const oList = oData.results;
                 oDetailModel.setProperty('/BenefitType', oList);
 
-                if(!oDetailModel.getProperty("/FormData"))
-                  oDetailModel.setProperty("/FormData", {});
+                if(oDetailModel.getProperty("/FormData") !== null && typeof oDetailModel.getProperty("/FormData") === "object" && !Object.keys(oDetailModel.getProperty("/FormData")).length) {
+                  oDetailModel.setProperty("/ApplyInfo", {
+                    Appernr: oDetailModel.getProperty("/TargetInfo/Pernr"),
+                    Apename: oDetailModel.getProperty("/TargetInfo/Ename"),
+                    Apjikgbtl: oDetailModel.getProperty("/TargetInfo/Zzjiktlt"),
+                    Appdt: new Date(),
+                  });
+
+                //  oDetailModel.setProperty("/FormData", oDetailModel.getProperty("/TargetInfo"));
+                 oDetailModel.setProperty("/FormData/Apename", oDetailModel.getProperty("/TargetInfo/Ename"));
+                 oDetailModel.setProperty("/FormData/Appernr", oDetailModel.getProperty("/TargetInfo/Pernr"));
+                }
 
                 setTimeout(() => {
                   oController.onTypeChange();
@@ -244,7 +254,7 @@ sap.ui.define(
             if (!this.byId('targetSettingsDialog')) {
               Fragment.load({
                 id: this.getView().getId(),
-                name: 'sap.ui.yesco.view.congulatulation.TargetDialog',
+                name: 'sap.ui.yesco.view.congratulation.TargetDialog',
                 controller: this,
               }).then((oDialog) => {
                 // connect dialog to the root view of this component (models, lifecycle)
@@ -267,7 +277,6 @@ sap.ui.define(
             async: true,
             filters: [
               new sap.ui.model.Filter("Werks", sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty("/TargetInfo/Werks")),
-              new sap.ui.model.Filter("Pernr", sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty("/TargetInfo/Pernr")),
               new sap.ui.model.Filter("Concode", sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/FormData/Concode')),
               new sap.ui.model.Filter("Conresn", sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/FormData/Conresn')),
               new sap.ui.model.Filter("Datum", sap.ui.model.FilterOperator.EQ, new Date()),
@@ -364,13 +373,13 @@ sap.ui.define(
 
               oSendObject = oDetailModel.getProperty("/FormData");
               oSendObject.Prcty = 'T';
-              oSendObject.Pernr = oDetailModel.getProperty("/TargetInfo/Pernr");
               oSendObject.Actty = 'E';
+              oSendObject.ConExpenseNav1 = [];
 
               oModel.create("/ConExpenseApplSet", oSendObject, {
                 success: function (oData) {
                   MessageBox.alert("저장되었습니다.", { title: "안내"});
-                  oController.getRouter().navTo("congulatulation");
+                  oController.getRouter().navTo("congratulation");
                 },
                 error: function (oRespnse) {
                   // Common.log(oResponse);
@@ -394,6 +403,7 @@ sap.ui.define(
           
           if(this.checkError(this)) return;
 
+          // AttachFileAction.uploadFile.call(oController, oDetailModel.getProperty("/FormData/Appno"), "HR01");
           const onPressApply = function (fVal) {
             if (fVal && fVal === "신청") {
               let oSendObject = {};
@@ -401,17 +411,16 @@ sap.ui.define(
 
               oSendObject = oDetailModel.getProperty("/FormData");
               oSendObject.Prcty = 'C';
-              oSendObject.Pernr = oDetailModel.getProperty("/TargetInfo/Pernr");
               oSendObject.Actty = 'E';
               oSendObject.Appno = !vStatus || vStatus === '45' ? '' : oDetailModel.getProperty('/FormData/Appno');
-              // oSendObject.ConExpenseNav1 = [];
+              oSendObject.ConExpenseNav1 = [];
 
               oModel.create("/ConExpenseApplSet", oSendObject, {
                 success: function (oData) {
                   MessageBox.alert("신청되었습니다.", { title: "안내"});
-                  AttachFileAction.uploadFile.call(oController, oData.results[0].Appno, "hr01");
+                  // AttachFileAction.uploadFile.call(oController, oData.results[0].Appno, "HR01");
 
-                  oController.getRouter().navTo("congulatulation");
+                  oController.getRouter().navTo("congratulation");
                 },
                 error: function (oRespnse) {
                   // Common.log(oResponse);
@@ -439,14 +448,14 @@ sap.ui.define(
 
               oSendObject = oDetailModel.getProperty("/FormData");
               oSendObject.Prcty = 'W';
-              oSendObject.Pernr = oDetailModel.getProperty("/TargetInfo/Pernr");
               oSendObject.Actty = 'E';
+              oSendObject.ConExpenseNav1 = [];
 
               oModel.create("/ConExpenseApplSet", oSendObject, {
                 async: false,
                 success: function () {
                   MessageBox.alert("신청이 취소되었습니다.", { title: "안내"});
-                  oController.getRouter().navTo("congulatulation");
+                  oController.getRouter().navTo("congratulation");
                 },
                 error: function (oRespnse) {
                   // Common.log(oResponse);
@@ -479,7 +488,7 @@ sap.ui.define(
                 async: false,
                 success: function () {
                   MessageBox.alert("삭제되었습니다.", { title: "안내"});
-                  oController.getRouter().navTo("congulatulation");
+                  oController.getRouter().navTo("congratulation");
                 },
                 error: function (oRespnse) {
                   // Common.log(oResponse);

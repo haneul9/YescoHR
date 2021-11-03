@@ -1,0 +1,6 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Breadcrumbs currentLocationText="{/navigation/current}" links="{/navigation/links}" separatorStyle="GreaterThan">
+        <Link text="{name}"/>
+    </Breadcrumbs>
+</core:FragmentDefinition>

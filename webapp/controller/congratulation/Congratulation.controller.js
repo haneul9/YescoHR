@@ -17,7 +17,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    class Congulatulation extends BaseController {
+    class Congratulation extends BaseController {
       constructor() {
         super();
         this.formatter = formatter;
@@ -173,6 +173,6 @@ sap.ui.define(
       }
     }
 
-    return Congulatulation;
+    return Congratulation;
   }
 );

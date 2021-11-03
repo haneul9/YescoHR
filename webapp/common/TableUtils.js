@@ -104,6 +104,34 @@ sap.ui.define(
         });
       },
 
+      /**
+       * @param {Object} o = {
+       * 		table: sap.ui.table.Table instance
+       * 		colIndices: rowspan을 적용할 column index array
+       * 		theadOrTbody: "header" or "table"
+       * 	}
+       */
+      adjustRowSpan(o) {
+        if (!o.colIndices.length) return;
+
+        o.colIndices.forEach((colIndex) => {
+          const sId = `#${o.table.getId()}-${o.theadOrTbody} tbody>tr td:nth-child(${colIndex + 1}):visible`;
+          const $Tds = $(sId).get();
+          const $PrevTD = tds.shift();
+
+          $Tds.forEach((td) => {
+            const p = $($PrevTD);
+            const c = $(td);
+            if (c.text() === p.text()) {
+              p.attr('rowspan', Number(p.attr('rowspan') || 1) + 1);
+              c.hide();
+            } else {
+              $PrevTD = td;
+            }
+          });
+        });
+      },
+
       /**************************
        * Formatter
        *************************/

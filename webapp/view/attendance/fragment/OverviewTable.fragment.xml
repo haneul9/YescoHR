@@ -1,0 +1,90 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:table="sap.ui.table"
+    xmlns:core="sap.ui.core">
+    <table:Table id="attendanceTable" width="100%" class="row-link" rows="{/list}" selectionMode="MultiToggle" visibleRowCount="{/listinfo/rowCount}" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}">
+        <table:rowSettingsTemplate>
+            <table:RowSettings highlight="{
+							path: 'ZappStatAl',
+							formatter: '.formatter.rowHighlight'
+						}"/>
+        </table:rowSettingsTemplate>
+        <table:columns>
+            <table:Column width="8%" filterProperty="ZappStxtAl" sortProperty="ZappStxtAl">
+                <Label text="상태"/>
+                <table:template>
+                    <Text text="{ZappStxtAl}" width="100%" textAlign="Center">
+                        <customData>
+                            <core:CustomData key="status" value="{ZappStatAl}" writeToDom="true" />
+                        </customData>
+                    </Text>
+                </table:template>
+            </table:Column>
+            <table:Column width="8%" filterProperty="Dettx" sortProperty="Appty">
+                <Label text="구분"/>
+                <table:template>
+                    <Text text="{Dettx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </table:template>
+            </table:Column>
+            <table:Column width="8%" filterProperty="Appernr" sortProperty="Pernr">
+                <Label text="{i18n>LABEL_00209}"/>
+                <table:template>
+                    <Text text="{Appernr}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </table:template>
+            </table:Column>
+            <table:Column width="8%" filterProperty="Apename" sortProperty="Ename">
+                <Label text="{i18n>LABEL_00210}"/>
+                <table:template>
+                    <Text text="{Apename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </table:template>
+            </table:Column>
+            <table:Column width="8%" filterProperty="Aporgtx" sortProperty="Orgtx">
+                <Label text="{i18n>LABEL_00224}"/>
+                <table:template>
+                    <Text text="{Aporgtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </table:template>
+            </table:Column>
+            <table:Column width="8%" filterProperty="Apzzjikgbtx" sortProperty="Zzjikgbt">
+                <Label text="{i18n>LABEL_00215}"/>
+                <table:template>
+                    <Text text="{Apzzjikgbtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </table:template>
+            </table:Column>
+            <table:Column width="8%" filterProperty="Atext" sortProperty="Awart">
+                <Label text="근태"/>
+                <table:template>
+                    <Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </table:template>
+            </table:Column>
+            <table:Column width="8%" filterProperty="Apbeg" sortProperty="Begda">
+                <Label text="시작일"/>
+                <table:template>
+                    <Text text="{Apbeg}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </table:template>
+            </table:Column>
+            <table:Column width="8%" filterProperty="Apend" sortProperty="Endda">
+                <Label text="종료일"/>
+                <table:template>
+                    <Text text="{Apend}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </table:template>
+            </table:Column>
+            <table:Column width="8%" filterProperty="Period" sortProperty="Range">
+                <Label text="기간"/>
+                <table:template>
+                    <Text text="{Period}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </table:template>
+            </table:Column>
+            <table:Column width="8%" filterProperty="Appdt" sortProperty="Endda">
+                <Label text="{i18n>LABEL_00266}"/>
+                <table:template>
+                    <Text text="{Appdt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </table:template>
+            </table:Column>
+            <table:Column width="8%" filterProperty="Sgndt" sortProperty="Endda">
+                <Label text="결재일"/>
+                <table:template>
+                    <Text text="{Sgndt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </table:template>
+            </table:Column>
+        </table:columns>
+    </table:Table>
+</core:FragmentDefinition>
