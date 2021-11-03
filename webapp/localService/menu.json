@@ -7,28 +7,40 @@
   "GetMenuLv4Nav": {
     "results": [
       {
-        "Pinfo": "X",
+        "Pinfo": "",
         "Menid": "7110",
         "Mnurl": "components",
-        "Mentx": "인사 3"
+        "Mentx": "퍼블용 컴포넌트"
       },
       {
-        "Pinfo": "X",
+        "Pinfo": "",
+        "Menid": "7120",
+        "Mnurl": "timeline",
+        "Mentx": "Timeline sample"
+      },
+      {
+        "Pinfo": "",
+        "Menid": "7130",
+        "Mnurl": "ninebox",
+        "Mentx": "9 Box Model"
+      },
+      {
+        "Pinfo": "",
         "Menid": "7210",
         "Mnurl": "https://www.google.co.kr",
-        "Mentx": "근태 3"
+        "Mentx": "구글"
       }
     ]
   },
   "GetMenuLv3Nav": {
     "results": [
       {
-        "Mnid1": "70000",
-        "Mnid2": "71000",
-        "Mnid3": "7110",
-        "Mnnm3": "인사 3",
+        "Mnid1": "X0000",
+        "Mnid2": "X1000",
+        "Mnid3": "X110",
+        "Mnnm3": "퍼블용 컴포넌트",
         "Mnsrt": "001",
-        "Menid": "7110",
+        "Menid": "X110",
         "Mepop": "",
         "Device": "A",
         "Mnetc": "",
@@ -36,12 +48,38 @@
         "Favor": "X"
       },
       {
-        "Mnid1": "70000",
-        "Mnid2": "72000",
-        "Mnid3": "7210",
-        "Mnnm3": "근태 3",
+        "Mnid1": "X0000",
+        "Mnid2": "X1000",
+        "Mnid3": "X120",
+        "Mnnm3": "Timeline sample",
         "Mnsrt": "002",
-        "Menid": "7210",
+        "Menid": "X120",
+        "Mepop": "",
+        "Device": "A",
+        "Mnetc": "",
+        "Pwchk": "",
+        "Favor": ""
+      },
+      {
+        "Mnid1": "X0000",
+        "Mnid2": "X1000",
+        "Mnid3": "X130",
+        "Mnnm3": "9 Box Model",
+        "Mnsrt": "003",
+        "Menid": "X130",
+        "Mepop": "",
+        "Device": "A",
+        "Mnetc": "",
+        "Pwchk": "",
+        "Favor": ""
+      },
+      {
+        "Mnid1": "X0000",
+        "Mnid2": "X2000",
+        "Mnid3": "X210",
+        "Mnnm3": "구글",
+        "Mnsrt": "001",
+        "Menid": "X210",
         "Mepop": "X",
         "Device": "A",
         "Mnetc": "",
@@ -195,6 +233,18 @@
         "Mnetc": "",
         "Pwchk": "",
         "Favor": ""
+      },
+      {
+        "Mnid1": "X0000",
+        "Mnid2": "X1000",
+        "Mnnm2": "샘플",
+        "Mnsrt": "999",
+        "Menid": "X100",
+        "Mepop": "",
+        "Device": "A",
+        "Mnetc": "",
+        "Pwchk": "",
+        "Favor": ""
       }
     ]
   },
@@ -275,6 +325,16 @@
         "Mnnm1": "HASS",
         "Mnsrt": "008",
         "Menid": "8000",
+        "Mepop": "",
+        "Device": "A",
+        "Mnetc": "",
+        "Pwchk": ""
+      },
+      {
+        "Mnid1": "X0000",
+        "Mnnm1": "Samples",
+        "Mnsrt": "999",
+        "Menid": "X000",
         "Mepop": "",
         "Device": "A",
         "Mnetc": "",

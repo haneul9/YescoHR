@@ -156,9 +156,7 @@ sap.ui.define(
               oListModel.setProperty('/Complete', `완료 ${vNum5}`);
               oListModel.setProperty('/CongList', oList);
 
-              const table = oController.byId('conguTable');
-              table.bindRows('/CongList');
-              table.setVisibleRowCount(oList.length);
+              oController.byId('conguTable').setVisibleRowCount(oList.length);
             }
           },
           error: function (oRespnse) {

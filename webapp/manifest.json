@@ -129,6 +129,11 @@
           "target": "timeline"
         },
         {
+          "pattern": "ninebox",
+          "name": "ninebox",
+          "target": "ninebox"
+        },
+        {
           "pattern": "attendance",
           "name": "attendance",
           "target": "attendance"
@@ -157,6 +162,13 @@
           "viewName": "Timeline",
           "viewLevel": 1,
           "title": "Timeline Sample"
+        },
+        "ninebox": {
+          "viewId": "ninebox",
+          "viewPath": "sap.ui.yesco.view.ninebox",
+          "viewName": "Ninebox",
+          "viewLevel": 1,
+          "title": "Ninebox Sample"
         },
         "congulatulation": {
           "viewId": "congulatulation",

@@ -18,7 +18,7 @@ sap.ui.define(
         // apply content density mode to root view
         this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
 
-        new HomeMenu(this, true);
+        new HomeMenu(this);
       }
 
       navToHome() {

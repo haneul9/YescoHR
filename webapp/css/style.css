@@ -11,8 +11,22 @@ html, body { box-sizing:border-box; overflow:hidden }
 .home-menu-level1-hover {border-bottom-color:#f00}
 .menu-mss bdi {color:#f00}
 .menu-hass bdi {color:#00f}
+.yescoUi .sapSuiteUiCommonsTimelineItemBarH {height:12px; background:linear-gradient(to right,blue 0%,red 100%)}
 .yescoUi .sapSuiteUiCommonsTimelineItemHeader {display:flex; flex-direction:column}
 .yescoUi .sapSuiteUiCommonsTimelineItemShellDateTime {display:none !important}
+.yescoUi .ninebox-11 {background-color:#d3f9d8}
+.yescoUi .ninebox-12 {background-color:#fff9db}
+.yescoUi .ninebox-13 {background-color:#ffe3e3}
+.yescoUi .ninebox-21 {background-color:#d0ebff}
+.yescoUi .ninebox-22 {background-color:#d3f9d8}
+.yescoUi .ninebox-23 {background-color:#fff9db}
+.yescoUi .ninebox-31 {background-color:#f1f3f5}
+.yescoUi .ninebox-32 {background-color:#d0ebff}
+.yescoUi .ninebox-33 {background-color:#d3f9d8}
+.yescoUi .ninebox .sapMHBox > div {margin-right:0 !important}
+.yescoUi .ninebox .sapMHBox.ninebox-item {margin-right:.25rem !important}
+.yescoUi .ninebox-item {margin:.25rem !important}
+.yescoUi .ninebox-item img {vertical-align:middle}
 
 /**
 *   Publishing

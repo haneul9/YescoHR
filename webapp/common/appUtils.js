@@ -20,12 +20,14 @@ sap.ui.define(
         setTimeout(() => {
           oController.getModel('app').setProperty('/busy', state);
         }, 0);
+        return this;
       },
 
       setMenuBusy(state, oController) {
         setTimeout(() => {
           oController.getModel('app').setProperty('/busyMenu', state);
         }, 0);
+        return this;
       },
 
       /**
@@ -84,6 +86,7 @@ sap.ui.define(
 
       debug(...args) {
         setTimeout(() => console.log(...args));
+        return this;
       },
     };
   }

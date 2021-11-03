@@ -24,10 +24,10 @@ sap.ui.define(
         this.debug('BaseController.onInit');
 
         this.getRouter()
-          .attachBeforeRouteMatched((oEvent) => {
-            // Router.navTo 로 들어오는 경우에만 event 발생
-            this.debug('beforeRouteMatched', oEvent.getParameters());
-          })
+          // .attachBeforeRouteMatched((oEvent) => {
+          //   // Router.navTo 로 들어오는 경우에만 event 발생
+          //   this.debug('beforeRouteMatched', oEvent.getParameters());
+          // })
           .attachBypassed((oEvent) => {
             this.debug('bypassed', oEvent);
 
@@ -46,7 +46,8 @@ sap.ui.define(
             const sUrl = '/GetMenuidRoleSet';
             this.getModel('common').read(sUrl, {
               filters: [
-                new Filter('Menid', FilterOperator.EQ, '7000'), // prettier 방지용 주석
+                // prettier 방지용 주석
+                new Filter('Menid', FilterOperator.EQ, '7000'), // TODO : Menid 찾기
               ],
               success: (oData, oResponse) => {
                 this.debug(`${sUrl} success.`, oData, oResponse);
@@ -56,9 +57,7 @@ sap.ui.define(
               error: (oError) => {
                 this.debug(`${sUrl} error.`, oError);
 
-                this.getRouter().getTargets().display('notFound', {
-                  fromTarget: 'home',
-                });
+                this.getRouter().getTargets().display('notFound', { from: 'home' });
               },
             });
 
@@ -66,8 +65,6 @@ sap.ui.define(
             // in order to improve our app and the user experience (Build-Measure-Learn cycle)
             var sRouteName = oEvent.getParameter('name');
             this.debug(`User accessed route ${sRouteName}, timestamp = ${new Date().getTime()}`);
-
-            // this.navToNotFound();
           })
           .attachRoutePatternMatched((oEvent) => {
             this.debug('routePatternMatched', oEvent);
@@ -90,8 +87,7 @@ sap.ui.define(
       onAfterShow() {
         this.debug('BaseController.onAfterShow');
 
-        AppUtils.setAppBusy(false, this);
-        AppUtils.setMenuBusy(false, this);
+        AppUtils.setAppBusy(false, this).setMenuBusy(false, this);
       }
 
       /**
