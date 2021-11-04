@@ -2,11 +2,11 @@
 sap.ui.define(
     [
       'sap/m/MessageBox',
-      'sap/ui/yesco/common/AppUtils',
+      'sap/ui/yesco/common/odata/ServiceManager',
     ],
     (
         MessageBox,
-        AppUtils,
+        ServiceManager,
     ) => {
         'use strict';
 
@@ -38,7 +38,7 @@ sap.ui.define(
                 const vMode = JSonModel.getProperty("/Settings/Mode");
                 const vMax = JSonModel.getProperty("/Settings/Max");
                 const files = oEvent.getParameters().files;
-                const vFileData = JSonModel.getProperty("/Data");
+                let vFileData = JSonModel.getProperty("/Data");
 
                 // File 데이터 초기화
                 if(!vFileData) {
@@ -61,14 +61,14 @@ sap.ui.define(
                         return;
                     }
 
-                    const iFileLeng = aFileList.length;
+                    const iFileLeng = aFileList.length + 1;
 
                     for (let i = 0; i < files.length; i++) {
                         files[i].New = true;
                         files[i].Fname = files[i].name;
                         files[i].Type = files[i].type;
                         files[i].Zbinkey = String(parseInt(Math.random() * 100000000000000));
-                        files[i].Idx = iFileLeng + 1;
+                        files[i].Idx = iFileLeng;
 
                         aFileList.push(files[i]);
                     }
@@ -156,7 +156,7 @@ sap.ui.define(
 
             uploadFile(Appno, Type) {
                 // const oModel = this.getModel('common');
-                const sServiceUrl = AppUtils.getServiceUrl('ZHR_COMMON_SRV', this.getOwnerComponent());
+                const sServiceUrl = ServiceManager.getServiceUrl('ZHR_COMMON_SRV', this.getOwnerComponent());
                 const oModel = new sap.ui.model.odata.ODataModel(sServiceUrl, true, undefined, undefined, undefined, undefined, undefined, false);
                 const Attachbox = this.byId("ATTACHBOX");
                 const vAttachDatas = Attachbox.getModel().getProperty("/Data") || [];
@@ -205,7 +205,7 @@ sap.ui.define(
                             jQuery.ajax({
                                 type: "POST",
                                 async: false,
-                                url: "/proxy/sap/opu/odata/sap/ZHR_COMMON_SRV/FileAttachSet/",
+                                url: sServiceUrl + "/FileAttachSet/",
                                 headers: oHeaders,
                                 cache: false,
                                 contentType: elem.type,
@@ -223,7 +223,7 @@ sap.ui.define(
 
             // 임시저장
             // uploadTemporaryFile(vBinkey, Type) {
-            //     const sServiceUrl = AppUtils.getServiceUrl('ZHR_COMMON_SRV', this.getOwnerComponent());
+            //     const sServiceUrl = ServiceManager.getServiceUrl('ZHR_COMMON_SRV', this.getOwnerComponent());
             //     const oModel = new sap.ui.model.odata.ODataModel(sServiceUrl, true, undefined, undefined, undefined, undefined, undefined, false);
             //     const Attachbox = this.byId("ATTACHBOX");
             //     const vAttachDatas = Attachbox.getModel().getProperty("/Data") || [];

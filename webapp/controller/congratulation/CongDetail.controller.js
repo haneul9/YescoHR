@@ -64,7 +64,7 @@ sap.ui.define(
         }
 
         formatFlowerTxt(vFlower) {
-          return !vFlower ? '' : vFlower === "X" ? "N" : "Y";
+          return !vFlower && vFlower === undefined ? '' : vFlower === "X" ? "N" : "Y";
         }
 
         // AttachFileTable Settings
