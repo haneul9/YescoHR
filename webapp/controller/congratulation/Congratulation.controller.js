@@ -1,20 +1,18 @@
 sap.ui.define(
   [
-    'sap/m/library', // prettier 방지용 주석
     'sap/ui/model/json/JSONModel',
-    'sap/ui/core/Fragment',
     '../../model/formatter',
     'sap/ui/yesco/common/EmpInfo',
     '../BaseController',
+    'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/extension/moment',
   ],
   (
-    mobileLibrary, // prettier 방지용 주석
     JSONModel,
-    Fragment,
     formatter,
     EmpInfo,
-    BaseController
+    BaseController,
+    ServiceNames
   ) => {
     'use strict';
 
@@ -82,7 +80,7 @@ sap.ui.define(
       }
 
       getTotalPay() {
-        const oModel = this.getModel('benefit');
+        const oModel = this.getModel(ServiceNames.BENEFIT);
         const oTotalModel = this.getViewModel();
 
         oModel.read('/ConExpenseMyconSet', {
@@ -101,7 +99,7 @@ sap.ui.define(
       }
 
       onSearch() {
-        const oModel = this.getModel('benefit');
+        const oModel = this.getModel(ServiceNames.BENEFIT);
         const oSearchDate = this.byId('SearchDate');
         const oListModel = this.getViewModel();
         const oController = this;

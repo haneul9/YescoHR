@@ -8,6 +8,7 @@ sap.ui.define(
       'sap/ui/yesco/common/EmpInfo',
       'sap/ui/yesco/controller/BaseController',
       'sap/ui/yesco/common/AttachFileAction',
+      'sap/ui/yesco/common/odata/ServiceNames',
       'sap/ui/yesco/extension/moment',
     ],
     (
@@ -18,6 +19,7 @@ sap.ui.define(
       EmpInfo,
       BaseController,
       AttachFileAction,
+      ServiceNames
     ) => {
       'use strict';
 
@@ -79,7 +81,7 @@ sap.ui.define(
         
         // 상세조회
         getTargetData(sDataKey) {
-          const oModel = this.getModel("benefit");
+          const oModel = this.getModel(ServiceNames.BENEFIT);
           const oDetailModel= this.getViewModel();
 
           oModel.read("/ConExpenseApplSet", {
@@ -107,7 +109,7 @@ sap.ui.define(
           
         // 경조유형
         getBenefitType(oController) {
-          const oModel = this.getModel("benefit");
+          const oModel = this.getModel(ServiceNames.BENEFIT);
           const oDetailModel = this.getViewModel();
 
           oModel.read("/BenefitCodeListSet", {
@@ -148,7 +150,7 @@ sap.ui.define(
 
         // 경조유형 선택시
         onTypeChange(oEvent) {
-          const oModel = this.getModel("benefit");
+          const oModel = this.getModel(ServiceNames.BENEFIT);
           const oController = this;
           const oDetailModel = this.getViewModel();
           const sSelectKey = oEvent ? oEvent.getSource().getSelectedKey() : oDetailModel.getProperty('/FormData/Concode');
@@ -188,7 +190,7 @@ sap.ui.define(
 
         // 경조사유 선택시
         onCauseChange(oEvent) {
-          const oModel = this.getModel("benefit");
+          const oModel = this.getModel(ServiceNames.BENEFIT);
           const oDetailModel = this.getViewModel();
           const oController = this;
           const sSelectKey = oEvent ? oEvent.getSource().getSelectedKey() : oDetailModel.getProperty('/FormData/Conresn');
@@ -246,7 +248,7 @@ sap.ui.define(
 
         // 기본급, 지급율 등 받아옴
         getNomalPay() {
-          const oModel = this.getModel("benefit");
+          const oModel = this.getModel(ServiceNames.BENEFIT);
           const oDetailModel = this.getViewModel();
           const vConcode = oDetailModel.getProperty('/FormData/Concode');
           const vConresn = oDetailModel.getProperty('/FormData/Conresn');
@@ -310,7 +312,7 @@ sap.ui.define(
         
         // 대상자 리스트 조회
         getTargetList(oController) {
-          const oModel = this.getModel("benefit");
+          const oModel = this.getModel(ServiceNames.BENEFIT);
           const oDetailModel = this.getViewModel();
 
           oModel.read("/ConExpenseSupportListSet", {
@@ -416,7 +418,7 @@ sap.ui.define(
 
         // Appno
         getAppno(oController) {
-          const oModel = oController.getModel("common");
+          const oModel = oController.getModel(ServiceNames.COMMON);
           const oDetailModel= oController.getViewModel();
 
           oModel.read("/CreateAppnoSet", {
@@ -475,7 +477,7 @@ sap.ui.define(
 
         // 임시저장
         onSaveBtn() {
-          const oModel = this.getModel("benefit");
+          const oModel = this.getModel(ServiceNames.BENEFIT);
           const oDetailModel = this.getViewModel();
           const oController = this;
           const vStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
@@ -521,7 +523,7 @@ sap.ui.define(
 
         // 신청
         onApplyBtn() {
-          const oModel = this.getModel("benefit");
+          const oModel = this.getModel(ServiceNames.BENEFIT);
           const oDetailModel = this.getViewModel();
           const oController = this;
           const vStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
@@ -569,7 +571,7 @@ sap.ui.define(
 
         // 취소
         onCancelBtn() {
-          const oModel = this.getModel("benefit");
+          const oModel = this.getModel(ServiceNames.BENEFIT);
           const oDetailModel = this.getViewModel();
           const oController = this;
           
@@ -603,7 +605,7 @@ sap.ui.define(
 
         // 삭제
         onDeleteBtn() {
-          const oModel = this.getModel("benefit");
+          const oModel = this.getModel(ServiceNames.BENEFIT);
           const oDetailModel = this.getViewModel();
           const oController = this;
           

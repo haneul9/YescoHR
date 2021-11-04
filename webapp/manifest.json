@@ -151,10 +151,10 @@
           "viewName": "NotFound",
           "transition": "show"
         },
-        "congulatulation": {
-          "viewId": "congulatulation",
-          "viewPath": "sap.ui.yesco.view.congulatulation",
-          "viewName": "Congulatulation",
+        "congratulation": {
+          "viewId": "congratulation",
+          "viewPath": "sap.ui.yesco.view.congratulation",
+          "viewName": "congratulation",
           "viewLevel": 2
         },
         "congDetail": {
