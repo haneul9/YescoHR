@@ -1,49 +1,32 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/core/UIComponent',
     'sap/ui/Device',
+    'sap/ui/core/UIComponent',
     'sap/ui/model/json/JSONModel',
-    'sap/ui/model/odata/v2/ODataModel',
     'sap/ui/yesco/common/AppUtils',
-    './model/models',
-    './controller/ErrorHandler',
+    'sap/ui/yesco/common/odata/ServiceManager',
+    'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/controller/ErrorHandler',
+    'sap/ui/yesco/model/models',
   ],
   (
     // prettier 방지용 주석
-    UIComponent,
     Device,
+    UIComponent,
     JSONModel,
-    ODataModel,
     AppUtils,
-    models,
-    ErrorHandler
+    ServiceManager,
+    ServiceNames,
+    ErrorHandler,
+    models
   ) => {
     'use strict';
-
-    const urlPrefix = (window.location.hostname === 'localhost' ? '/proxy' : '') + '/sap/opu/odata/sap/';
 
     // class Component extends UIComponent 선언으로 실행하면 new 키워드 사용없이 invoke 할 수 없다는 에러가 발생함
     return UIComponent.extend('sap.ui.yesco.Component', {
       metadata: {
         manifest: 'json',
-        properties: {
-          urlPrefix: {
-            name: 'urlPrefix',
-            type: 'string',
-            defaultValue: urlPrefix,
-          },
-          odataServiceNames: {
-            name: 'odataServiceNames',
-            type: 'array',
-            defaultValue: [
-              // prettier 방지용 주석
-              { serviceName: 'ZHR_COMMON_SRV', modelName: 'common' },
-              { serviceName: 'ZHR_BENEFIT_SRV', modelName: 'benefit' },
-              { serviceName: 'ZHR_WORKTIME_SRV', modelName: 'worktime' },
-            ],
-          },
-        },
       },
 
       /**
@@ -60,15 +43,14 @@ sap.ui.define(
         this.setModel(new JSONModel({ busy: true, delay: 0 }), 'app');
 
         // S4HANA odata model preload.
-        const aServiceNames = this.getOdataServiceNames();
-        aServiceNames.forEach(({ serviceName: sServiceName, modelName: sModelName }) => {
-          const sServiceUrl = AppUtils.getServiceUrl(sServiceName, this);
-          const oServiceModel = new ODataModel(sServiceUrl, { loadMetadataAsync: true, useBatch: false });
-          this.setModel(oServiceModel, sModelName);
+        const aServiceNames = ServiceManager.getServiceNames();
+        aServiceNames.forEach((sServiceName) => {
+          const oServiceModel = ServiceManager.getODataModel(sServiceName);
+          this.setModel(oServiceModel, sServiceName);
         });
 
         const sUrl = '/EmpLoginInfoSet';
-        this.getModel('common').read(sUrl, {
+        this.getModel(ServiceNames.COMMON).read(sUrl, {
           success: (oData, oResponse) => {
             AppUtils.debug(`${sUrl} success.`, oData, oResponse);
 

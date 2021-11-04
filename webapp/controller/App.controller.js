@@ -1,12 +1,12 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/yesco/control/HomeMenu',
+    'sap/ui/yesco/control/app/Menus',
     'sap/ui/yesco/controller/BaseController',
   ],
   (
     // prettier 방지용 주석
-    HomeMenu,
+    Menus,
     BaseController
   ) => {
     'use strict';
@@ -18,7 +18,7 @@ sap.ui.define(
         // apply content density mode to root view
         this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
 
-        new HomeMenu(this, true);
+        new Menus(this);
       }
 
       navToHome() {

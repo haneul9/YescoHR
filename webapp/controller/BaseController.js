@@ -1,21 +1,23 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/core/UIComponent',
     'sap/ui/core/mvc/Controller',
     'sap/ui/core/routing/History',
-    'sap/ui/core/UIComponent',
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/odata/ServiceNames',
   ],
   (
     // prettier 방지용 주석
+    UIComponent,
     Controller,
     History,
-    UIComponent,
     Filter,
     FilterOperator,
-    AppUtils
+    AppUtils,
+    ServiceNames
   ) => {
     'use strict';
 
@@ -24,10 +26,10 @@ sap.ui.define(
         this.debug('BaseController.onInit');
 
         this.getRouter()
-          .attachBeforeRouteMatched((oEvent) => {
-            // Router.navTo 로 들어오는 경우에만 event 발생
-            this.debug('beforeRouteMatched', oEvent.getParameters());
-          })
+          // .attachBeforeRouteMatched((oEvent) => {
+          //   // Router.navTo 로 들어오는 경우에만 event 발생
+          //   this.debug('beforeRouteMatched', oEvent.getParameters());
+          // })
           .attachBypassed((oEvent) => {
             this.debug('bypassed', oEvent);
 
@@ -44,9 +46,10 @@ sap.ui.define(
 
             // 메뉴 권한 체크
             const sUrl = '/GetMenuidRoleSet';
-            this.getModel('common').read(sUrl, {
+            this.getModel(ServiceNames.COMMON).read(sUrl, {
               filters: [
-                new Filter('Menid', FilterOperator.EQ, '7000'), // prettier 방지용 주석
+                // prettier 방지용 주석
+                new Filter('Menid', FilterOperator.EQ, '7000'), // TODO : Menid 찾기
               ],
               success: (oData, oResponse) => {
                 this.debug(`${sUrl} success.`, oData, oResponse);
@@ -56,9 +59,7 @@ sap.ui.define(
               error: (oError) => {
                 this.debug(`${sUrl} error.`, oError);
 
-                this.getRouter().getTargets().display('notFound', {
-                  fromTarget: 'home',
-                });
+                this.getRouter().getTargets().display('notFound', { from: 'home' });
               },
             });
 
@@ -66,8 +67,6 @@ sap.ui.define(
             // in order to improve our app and the user experience (Build-Measure-Learn cycle)
             var sRouteName = oEvent.getParameter('name');
             this.debug(`User accessed route ${sRouteName}, timestamp = ${new Date().getTime()}`);
-
-            // this.navToNotFound();
           })
           .attachRoutePatternMatched((oEvent) => {
             this.debug('routePatternMatched', oEvent);
@@ -90,8 +89,7 @@ sap.ui.define(
       onAfterShow() {
         this.debug('BaseController.onAfterShow');
 
-        AppUtils.setAppBusy(false, this);
-        AppUtils.setMenuBusy(false, this);
+        AppUtils.setAppBusy(false, this).setMenuBusy(false, this);
       }
 
       /**
@@ -102,17 +100,6 @@ sap.ui.define(
       getRouter() {
         // return this.getOwnerComponent().getRouter();
         return UIComponent.getRouterFor(this);
-      }
-
-      /**
-       * Service URL for Model
-       * @public
-       * @param {string} sServiceName a service name. e.g. ZHR_COMMON_SRV
-       * @param {object} oUIComponent component object. e.g. this.getOwnerComponent()
-       * @returns {string} a service URL. e.g. /sap/opu/odata/sap/ZHR_COMMON_SRV
-       */
-      getServiceUrl(...args) {
-        return AppUtils.getServiceUrl(...args);
       }
 
       /**
@@ -184,7 +171,7 @@ sap.ui.define(
       navToNotFound() {
         // display the "notFound" target without changing the hash
         this.getRouter().getTargets().display('notFound', {
-          fromTarget: 'home',
+          from: 'home',
         });
       }
 

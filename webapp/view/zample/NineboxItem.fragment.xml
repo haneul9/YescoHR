@@ -1,0 +1,13 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core">
+  <HBox alignContent="Center" alignItems="Center" backgroundDesign="Solid" class="ninebox-item">
+    <Image src="{photo}" width="40px" height="40px" />
+    <VBox>
+      <Text text="{name} {title} {org}" />
+      <HBox>
+        <core:Icon src="sap-icon://employee" press=".onPress1" />
+        <core:Icon src="sap-icon://org-chart" press=".onPress2" class="ml-0h-rem" />
+      </HBox>
+    </VBox>
+  </HBox>
+</core:FragmentDefinition>
