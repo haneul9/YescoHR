@@ -7,6 +7,7 @@ sap.ui.define(
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/odata/ServiceNames',
   ],
   (
     // prettier 방지용 주석
@@ -15,7 +16,8 @@ sap.ui.define(
     History,
     Filter,
     FilterOperator,
-    AppUtils
+    AppUtils,
+    ServiceNames
   ) => {
     'use strict';
 
@@ -44,7 +46,7 @@ sap.ui.define(
 
             // 메뉴 권한 체크
             const sUrl = '/GetMenuidRoleSet';
-            this.getModel('common').read(sUrl, {
+            this.getModel(ServiceNames.COMMON).read(sUrl, {
               filters: [
                 // prettier 방지용 주석
                 new Filter('Menid', FilterOperator.EQ, '7000'), // TODO : Menid 찾기
@@ -98,17 +100,6 @@ sap.ui.define(
       getRouter() {
         // return this.getOwnerComponent().getRouter();
         return UIComponent.getRouterFor(this);
-      }
-
-      /**
-       * Service URL for Model
-       * @public
-       * @param {string} sServiceName a service name. e.g. ZHR_COMMON_SRV
-       * @param {object} oUIComponent component object. e.g. this.getOwnerComponent()
-       * @returns {string} a service URL. e.g. /sap/opu/odata/sap/ZHR_COMMON_SRV
-       */
-      getServiceUrl(...args) {
-        return AppUtils.getServiceUrl(...args);
       }
 
       /**

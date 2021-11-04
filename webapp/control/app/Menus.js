@@ -6,6 +6,7 @@ sap.ui.define(
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/control/app/MenuLevel1',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/odata/ServiceNames',
   ],
   (
     // prettier 방지용 주석
@@ -13,7 +14,8 @@ sap.ui.define(
     Fragment,
     MessageBox,
     MenuLevel1,
-    AppUtils
+    AppUtils,
+    ServiceNames
   ) => {
     'use strict';
 
@@ -33,7 +35,7 @@ sap.ui.define(
        */
       retrieveMenu() {
         const sUrl = '/GetMenuLvSet';
-        this.oController.getModel('common').create(
+        this.oController.getModel(ServiceNames.COMMON).create(
           sUrl,
           {
             Pernr: '50007',
@@ -394,7 +396,7 @@ sap.ui.define(
         const bFavor = oContext.getProperty('Favor');
         const sUrl = '/MenuFavoriteSet';
 
-        this.oController.getModel('common').create(
+        this.oController.getModel(ServiceNames.COMMON).create(
           sUrl,
           {
             Menid: oContext.getProperty('Menid'),
@@ -480,7 +482,7 @@ sap.ui.define(
           return;
         }
 
-        const oCommonModel = this.oController.getModel('common');
+        const oCommonModel = this.oController.getModel(ServiceNames.COMMON);
         const sUrl = oCommonModel.createKey('/GetMenuUrlSet', {
           Menid: sMenid,
         });

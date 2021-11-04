@@ -3,11 +3,13 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/base/Object',
     'sap/ui/yesco/control/MessageBox',
+    'sap/ui/yesco/common/odata/ServiceNames',
   ],
   (
     // prettier 방지용 주석
     BaseObject,
-    MessageBox
+    MessageBox,
+    ServiceNames
   ) => {
     'use strict';
 
@@ -24,7 +26,7 @@ sap.ui.define(
 
         this._oResourceBundle = oComponent.getModel('i18n').getResourceBundle();
         this._oComponent = oComponent;
-        this._oModel = oComponent.getModel('common');
+        this._oModel = oComponent.getModel(ServiceNames.COMMON);
         this._bMessageOpen = false;
         this._sErrorText = this._oResourceBundle.getText('errorText');
 
