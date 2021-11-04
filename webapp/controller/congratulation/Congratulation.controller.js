@@ -6,6 +6,7 @@ sap.ui.define(
     '../../model/formatter',
     'sap/ui/yesco/common/EmpInfo',
     '../BaseController',
+    'sap/ui/yesco/extension/moment',
   ],
   (
     mobileLibrary, // prettier 방지용 주석
@@ -30,8 +31,8 @@ sap.ui.define(
         EmpInfo.get.call(this, true);
 
         const oSearchDate = this.byId('SearchDate');
-        const dDate = new Date();
-        const dDate2 = new Date(dDate.getFullYear(), dDate.getMonth() - 1, dDate.getDate() + 1);
+        const dDate = moment(new Date()).hours(10).toDate();
+        const dDate2 = moment(new Date(dDate.getFullYear(), dDate.getMonth() - 1, dDate.getDate() + 1)).hours(10).toDate();
 
         oSearchDate.setDateValue(dDate2);
         oSearchDate.setSecondDateValue(dDate);

@@ -40,21 +40,23 @@
 						<Select id="BenefitCause" items="{/BenefitCause}" selectedKey="{/FormData/Conresn}" width="200px" change=".onCauseChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
 							<core:Item text="{Ztext}" key="{Zcode}" />
 						</Select>
-						<Label text="증빙상 경조일"/>
+						<Label text="경조일"/>
 						<DatePicker dateValue="{/FormData/Conddate}" change=".onBenefitChangeDate" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
 						<Label text="대상자 관계"/>
 						<Select id="BenefitRelation" items="{/BenefitRelation}" selectedKey="{/FormData/Kdsvh}" width="200px" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
 							<core:Item text="{Ztext}" key="{Zcode}" />
 						</Select>
-						<Label text="실재 경조일"/>
-						<DatePicker dateValue="{/FormData/Conrdate}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+						<Label text="행사장소"/>
+						<Input value="{/FormData/Zeloc}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+						<!-- <Label text="실재 경조일"/>
+						<DatePicker dateValue="{/FormData/Conrdate}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" /> -->
 						<Label text="대상자 성명"/>
 						<HBox>
 							<Input value="{/FormData/Zname}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
-							<Button text="선택" press=".onTargetDialog" enabled="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+							<Button id="RelationBtn" text="선택" press=".onTargetDialog" enabled="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
 						</HBox>
-						<Label text="행사장소"/>
-						<Input value="{/FormData/Zeloc}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+						<HBox ></HBox>
+						<HBox ></HBox>
 						<Label text="기본급(원)"/>
 						<Text text="{/FormData/ZbacBetT}"/>
 						<Label text="지급율"/>
@@ -62,7 +64,10 @@
 						<Label text="지급액(원)"/>
 						<Text text="{/FormData/ZpayBetT}"/>
 						<Label text="화환여부(Y/N)"/>
-						<Text text="{/FormData/Zflower}"/>
+						<Text text="{
+							path: '/FormData/Zflower',
+							formatter: '.formatFlowerTxt'
+						}"/>
 					</grid:CSSGrid>
 				</VBox>
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />

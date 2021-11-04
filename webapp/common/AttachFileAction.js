@@ -3,12 +3,10 @@ sap.ui.define(
     [
       'sap/m/MessageBox',
       'sap/ui/yesco/common/AppUtils',
-      'sap/ui/core/UIComponent',
     ],
     (
         MessageBox,
         AppUtils,
-        UIComponent,
     ) => {
         'use strict';
 
@@ -40,14 +38,15 @@ sap.ui.define(
                 const vMode = JSonModel.getProperty("/Settings/Mode");
                 const vMax = JSonModel.getProperty("/Settings/Max");
                 const files = oEvent.getParameters().files;
-                let vFileData = JSonModel.getProperty("/Data");
+                const vFileData = JSonModel.getProperty("/Data");
 
+                // File 데이터 초기화
                 if(!vFileData) {
                     JSonModel.setProperty("/Data", []);
                     vFileData = JSonModel.getProperty("/Data");
                 }
 
-                if (files) {
+                if (!!files) {
                     vFileData.forEach(function(elem) {
                         aFileList.push(elem);
                     });
@@ -62,16 +61,22 @@ sap.ui.define(
                         return;
                     }
 
+                    const iFileLeng = aFileList.length;
+
                     for (let i = 0; i < files.length; i++) {
                         files[i].New = true;
                         files[i].Fname = files[i].name;
                         files[i].Type = files[i].type;
+                        files[i].Zbinkey = String(parseInt(Math.random() * 100000000000000));
+                        files[i].Idx = iFileLeng + 1;
 
                         aFileList.push(files[i]);
                     }
 
-                    JSonModel.setProperty("/Settings/Length", aFileList.length);
+                    JSonModel.setProperty("/Settings/Length", iFileLeng);
                     JSonModel.setProperty("/Data", aFileList);
+
+                    this.byId("attachTable").setVisibleRowCount(iFileLeng);
                 }
 
                 oFileUploader.clear();
@@ -84,15 +89,14 @@ sap.ui.define(
             /*
             * 첨부파일 리스트를 Binding한다.
             */
-            refreshAttachFileList(oController, vAppno, vType) {
+            refreshAttachFileList(vAppno = '', vType) {
                 // const f1 = document.getElementById("ATTACHFILE_BTN-fu_input-inner");
-                const oAttachbox = oController.byId("ATTACHBOX");
-                const oAttachFileList = oController.byId("attachTable");
-                const oFileUploader = oController.byId("ATTACHFILE_BTN");
-                const oModel = oController.getModel('common');
+                const oAttachbox = this.byId("ATTACHBOX");
+                const oAttachFileList = this.byId("attachTable");
+                const oFileUploader = this.byId("ATTACHFILE_BTN");
+                const oModel = this.getModel('common');
                 const JSonModel = oAttachbox.getViewModel();
                 const vAttachFileDatas = JSonModel.getProperty("/Data");
-                const vAsync = JSonModel.getProperty("/Settings/ReadAsync");
                 const Datas = { Data: [] };
 
                 JSonModel.setProperty("/Settings/Length", 0);
@@ -112,10 +116,10 @@ sap.ui.define(
                 oAttachFileList.removeSelections(true);
 
                 oModel.read("/FileListSet", {
-                    async: vAsync || false,
+                    async: false,
                     filters: [
-                        new sap.ui.model.Filter("Appnm", sap.ui.model.FilterOperator.EQ, vType),
-                        new sap.ui.model.Filter("Appno", sap.ui.model.FilterOperator.EQ, vAppno)
+                        new sap.ui.model.Filter("Appno", sap.ui.model.FilterOperator.EQ, vAppno),
+                        new sap.ui.model.Filter("Zworktyp", sap.ui.model.FilterOperator.EQ, vType)
                     ],
                     success: function (data) {
                         if (data && data.results.length) {
@@ -160,12 +164,12 @@ sap.ui.define(
         
                 try {
                     const _handleSuccess = function (data) {                        
-                        common.Common.log("파일 업로드를 완료하였습니다." + ", " + data);
+                        console.log("파일 업로드를 완료하였습니다." + ", " + data);
                     };
                     const _handleError = function (data) {
                         const errorMsg = "파일 업로드에 실패하였습니다.";
         
-                        common.Common.log("Error: " + data);
+                        console.log("Error: " + data);
                         sap.m.MessageToast.show(errorMsg, { my: "center center", at: "center center"});
                     };
         
@@ -201,7 +205,7 @@ sap.ui.define(
                             jQuery.ajax({
                                 type: "POST",
                                 async: false,
-                                url: "/proxy/sap/opu/odata/sap/ZHR_COMMON_SRV/FileUploadSet/",
+                                url: "/proxy/sap/opu/odata/sap/ZHR_COMMON_SRV/FileAttachSet/",
                                 headers: oHeaders,
                                 cache: false,
                                 contentType: elem.type,
@@ -215,7 +219,58 @@ sap.ui.define(
                 } catch (oException) {
                     jQuery.sap.log.error("File upload failed:\n" + oException.message);
                 }
-            }
+            },
+
+            // 임시저장
+            // uploadTemporaryFile(vBinkey, Type) {
+            //     const sServiceUrl = AppUtils.getServiceUrl('ZHR_COMMON_SRV', this.getOwnerComponent());
+            //     const oModel = new sap.ui.model.odata.ODataModel(sServiceUrl, true, undefined, undefined, undefined, undefined, undefined, false);
+            //     const Attachbox = this.byId("ATTACHBOX");
+            //     const vAttachDatas = Attachbox.getModel().getProperty("/Data") || [];
+        
+            //     try {
+            //         const _handleSuccess = function (data) {                        
+            //             // common.Common.log("파일 업로드를 완료하였습니다." + ", " + data);
+            //         };
+            //         const _handleError = function (data) {
+            //             const errorMsg = "파일 업로드에 실패하였습니다.";
+        
+            //             // common.Common.log("Error: " + data);
+            //             sap.m.MessageToast.show(errorMsg, { my: "center center", at: "center center"});
+            //         };
+        
+            //         // 신규 등록된 파일만 업로드
+            //         if (!vAttachDatas) return;
+        
+            //         vAttachDatas.forEach(function (elem) {
+            //             if(elem.New === true) {
+            //                 oModel.refreshSecurityToken();
+            //                 const oRequest = oModel._createRequest();
+            //                 const oHeaders = {
+            //                     "x-csrf-token": oRequest.headers["x-csrf-token"],
+            //                     "slug": [vBinkey, Type, encodeURI(elem.Fname)].join("|")
+            //                 };
+            
+            //                 // common.Common.log(oHeaders.slug);
+                            
+            //                 jQuery.ajax({
+            //                     type: "POST",
+            //                     async: false,
+            //                     url: "/proxy/sap/opu/odata/sap/ZHR_BENEFIT_SRV/BinaryFileTabSet/",
+            //                     headers: oHeaders,
+            //                     cache: false,
+            //                     contentType: elem.type,
+            //                     processData: false,
+            //                     data: elem,
+            //                     success: _handleSuccess.bind(this),
+            //                     error: _handleError.bind(this)
+            //                 });
+            //             }
+            //         }.bind(this));
+            //     } catch (oException) {
+            //         jQuery.sap.log.error("File upload failed:\n" + oException.message);
+            //     }
+            // }
         }
     }
 );
