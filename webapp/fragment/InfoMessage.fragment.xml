@@ -1,13 +1,10 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <HBox>
-        <!-- <MessageStrip text="{= !${/InfoMessage} ? '안내를 위한 공간입니다.' : ${/InfoMessage} }" showIcon="true" showCloseButton="true" /> -->
-        <HBox justifyContent="SpaceBetween">
-            <HBox>
-                <core:Icon src="sap-icon://travel-request"/>
-                <Text text="안내를 위한 공간입니다."/>
-            </HBox>
-            <Button type="Transparent" icon="sap-icon://decline" />
+    <HBox id='InfoMegBox' justifyContent="SpaceBetween" visible="true">
+        <HBox>
+            <core:Icon src="sap-icon://travel-request"/>
+            <Text text="{= !${/InfoMessage} ? '안내를 위한 공간입니다.' : ${/InfoMessage} }"/>
         </HBox>
+        <Button press=".formatter.onInfoMsgClose" type="Transparent" icon="sap-icon://decline" />
     </HBox>
 </core:FragmentDefinition>

@@ -472,13 +472,13 @@ sap.ui.define(
 
           if(this.checkError(this)) return;
                     
-          if(!vStatus || vStatus === '45') {
-            this.getAppno(this);
-          }
+          const onPressSave = function (fVal) {
+            if (fVal && fVal === "저장") {                
+              if(!vStatus || vStatus === '45') {
+                oController.getAppno(oController);
+              }
 
-          setTimeout(() => {            
-            const onPressSave = function (fVal) {
-              if (fVal && fVal === "저장") {                
+              setTimeout(() => {   
                 let oSendObject = {};
                 const oSendData = oController.sendDataFormat(oDetailModel.getProperty("/FormData"));
 
@@ -498,15 +498,15 @@ sap.ui.define(
                     // Common.log(oResponse);
                   }
                 })
-              }
+              }, 500);
             }
-  
-            MessageBox.confirm("저장 하시겠습니까?", {
-              title: "경조금 신청",
-              actions: ["저장", "취소"],
-              onClose: onPressSave
-            });
-          }, 200);
+          }
+
+          MessageBox.confirm("저장 하시겠습니까?", {
+            title: "경조금 신청",
+            actions: ["저장", "취소"],
+            onClose: onPressSave
+          });
         }
 
         // 신청
@@ -518,20 +518,20 @@ sap.ui.define(
           
           if(this.checkError(this)) return;
 
-          if(!vStatus || vStatus === '45') {
-            this.getAppno(this);
-          }
-          
-          setTimeout(() => {
-            const onPressApply = function (fVal) {
-              if (fVal && fVal === "신청") {
+          const onPressApply = function (fVal) {
+            if (fVal && fVal === "신청") {
+              if(!vStatus || vStatus === '45') {
+                oController.getAppno(oController);
+              }
+              
+              setTimeout(() => {
                 let oSendObject = {};
                 const oSendData = oController.sendDataFormat(oDetailModel.getProperty("/FormData"));
                 
                 oSendObject = oSendData;
                 oSendObject.Prcty = 'C';
                 oSendObject.Actty = 'E';
-  
+
                 oModel.create("/ConExpenseApplSet", oSendObject, {
                   success: function (oData) {
                     // FileUpload
@@ -544,15 +544,15 @@ sap.ui.define(
                     // Common.log(oResponse);
                   }
                 })
-              }
+              }, 500);
             }
-  
-            MessageBox.confirm("신청 하시겠습니까?", {
-              title: "경조금 신청",
-              actions: ["신청", "취소"],
-              onClose: onPressApply
-            });
-          }, 200);
+          }
+
+          MessageBox.confirm("신청 하시겠습니까?", {
+            title: "경조금 신청",
+            actions: ["신청", "취소"],
+            onClose: onPressApply
+          });
         }
 
         // 취소

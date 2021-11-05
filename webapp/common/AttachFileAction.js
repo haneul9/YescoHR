@@ -168,8 +168,12 @@ sap.ui.define(
                 })
             },
 
+            /*
+            *   첨부파일 Upload
+            */
             uploadFile(Appno, Type) {
                 // const oModel = this.getModel(ServiceNames.COMMON);
+                const oController = this;
                 const sServiceUrl = ServiceManager.getServiceUrl('ZHR_COMMON_SRV', this.getOwnerComponent());
                 const oModel = new sap.ui.model.odata.ODataModel(sServiceUrl, true, undefined, undefined, undefined, undefined, undefined, false);
                 const Attachbox = this.byId("ATTACHBOX");
@@ -188,22 +192,23 @@ sap.ui.define(
                     };
         
                     // 파일 삭제
-                    if(aDeleteFiles.length) {
-                        const bDeleteFlag = true;
+                    if(!!aDeleteFiles.length) {
+                        let bDeleteFlag = true;
+
                         aDeleteFiles.some(function(elem) {
-                            bDeleteFlag = common.AttachFileAction.callDeleteFileService(elem);
-        
-                            return !bDeleteFlag;
+                            bDeleteFlag = oController.AttachFileAction.callDeleteFileService(oController, elem);
                         });
         
-                        if(!bDeleteFlag) {
-                            sap.m.MessageToast.show("파일 업로드에 실패하였습니다.", { my: "center center", at: "center center"});
-                            return;
-                        }
+                        setTimeout(() => {
+                            if(!bDeleteFlag) {
+                                sap.m.MessageToast.show("파일 업로드에 실패하였습니다.", { my: "center center", at: "center center"});
+                                return;
+                            }
+                        }, 1000);
                     }
         
                     // 신규 등록된 파일만 업로드
-                    if (!vAttachDatas) return;
+                    if (vAttachDatas.every(e => !e.New)) return;
         
                     vAttachDatas.forEach(function (elem) {
                         if(elem.New === true) {
@@ -262,10 +267,12 @@ sap.ui.define(
                         });
 
                         const aResult = aFileDatas.filter(e => {
-                            !aSelectFiles.includes(e);
+                            return !aSelectFiles.includes(e);
                         });
 
-                        oJSonModel.setProperty("/Data", aFileDatas);
+                        oJSonModel.setProperty("/Data", aResult);
+                        oJSonModel.setProperty("/DelelteDatas", aSelectFiles);
+                        oTable.setVisibleRowCount(aResult.length);
                         sap.m.MessageToast.show("파일 삭제가 완료되었습니다.", { my: "center center", at: "center center"}); // 파일 삭제가 완료되었습니다.
                     }
                 };
@@ -274,6 +281,35 @@ sap.ui.define(
                     title: "확인",
                     actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
                     onClose: deleteProcess
+                });
+            },
+
+            /*
+            * 첨부파일 삭제 oData
+            */
+            callDeleteFileService: function(oController, fileInfo) {
+                const oModel = oController.getModel(ServiceNames.COMMON);
+                const sPath = oModel.createKey("/FileListSet", {
+                    Appno: fileInfo.Appno,
+                    Zworktyp: fileInfo.Zworktyp,
+                    Zfileseq: fileInfo.Zfileseq,
+                });
+        
+                oModel.remove(sPath, {
+                    async: false,
+                    success: function () {
+                        return true;
+                    },
+                    error: function (res) {
+                        const errData = common.Common.parseError(res);
+                        
+                        if(errData.Error && errData.Error === "E") {
+                            sap.m.MessageBox.error(errData.ErrorMessage, {
+                                title: oController.getBundleText("확인")
+                            });
+                        }
+                        return false;
+                    }
                 });
             },
 

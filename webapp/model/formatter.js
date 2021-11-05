@@ -30,6 +30,10 @@ sap.ui.define([], () => {
       return "";
     },
 
+    onInfoMsgClose() {
+      this.byId('InfoMegBox').setVisible(false);
+    },
+
     rowHighlight(sValue) {
       switch (sValue) {
         case '10':
