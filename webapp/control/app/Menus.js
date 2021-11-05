@@ -144,6 +144,12 @@ sap.ui.define(
                 Mnurl: 'https://www.google.co.kr',
                 Mentx: '구글',
               },
+              {
+                Pinfo: '',
+                Menid: 'X220',
+                Mnurl: 'congratulation',
+                Mentx: '경조금',
+              },
             ]
           );
 
@@ -198,6 +204,19 @@ sap.ui.define(
                 Mnsrt: '001',
                 Menid: 'X210',
                 Mepop: 'X',
+                Device: 'A',
+                Mnetc: '',
+                Pwchk: '',
+                Favor: '',
+              },
+              {
+                Mnid1: 'X0000',
+                Mnid2: 'X2000',
+                Mnid3: 'X220',
+                Mnnm3: '경조금',
+                Mnsrt: '002',
+                Menid: 'X220',
+                Mepop: '',
                 Device: 'A',
                 Mnetc: '',
                 Pwchk: '',
@@ -472,13 +491,14 @@ sap.ui.define(
 
         const sMenid = oContext.getProperty('Menid');
         if (/^X/.test(sMenid)) {
-          this.oController
-            .getRouter()
-            .getTargets()
-            .display(this.mMenuProperties[sMenid].Mnurl)
-            .then(() => {
-              AppUtils.setAppBusy(false, this.oController).setMenuBusy(false, this.oController);
-            });
+          this.oController.getRouter().navTo(this.mMenuProperties[sMenid].Mnurl);
+          // this.oController
+          //   .getRouter()
+          //   .getTargets()
+          //   .display(this.mMenuProperties[sMenid].Mnurl)
+          //   .then(() => {
+          //     AppUtils.setAppBusy(false, this.oController).setMenuBusy(false, this.oController);
+          //   });
           return;
         }
 
@@ -492,14 +512,14 @@ sap.ui.define(
             this.oController.debug(`${sUrl} success.`, oData, oResponse);
 
             if (oData.Mnurl) {
-              // this.oController.getRouter().navTo(oData.Mnurl);
-              this.oController
-                .getRouter()
-                .getTargets()
-                .display(oData.Mnurl)
-                .then(() => {
-                  AppUtils.setAppBusy(false, this.oController).setMenuBusy(false, this.oController);
-                });
+              this.oController.getRouter().navTo(oData.Mnurl);
+              // this.oController
+              //   .getRouter()
+              //   .getTargets()
+              //   .display(oData.Mnurl)
+              //   .then(() => {
+              //     AppUtils.setAppBusy(false, this.oController).setMenuBusy(false, this.oController);
+              //   });
             } else {
               this.failMenuLink();
             }
