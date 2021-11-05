@@ -7,9 +7,9 @@
 			<HBox justifyContent="SpaceBetween">
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.Navigation" type="XML" />
 				<HBox>
-					<Button type="Emphasized" text="신규신청" busyIndicatorDelay="0" busy="{/busy}" />
-					<Button type="Emphasized" text="변경신청" busyIndicatorDelay="0" busy="{/busy}" />
-					<Button type="Emphasized" text="취소신청" busyIndicatorDelay="0" busy="{/busy}" />
+					<Button type="Emphasized" text="신규신청" press=".onPressNewApprBtn" busyIndicatorDelay="0" busy="{/busy}" />
+					<Button type="Emphasized" text="변경신청" press=".onPressModApprBtn" busyIndicatorDelay="0" busy="{/busy}" />
+					<Button type="Emphasized" text="취소신청" press=".onPressCancApprBtn" busyIndicatorDelay="0" busy="{/busy}" />
 				</HBox>
 			</HBox>
 			<HBox justifyContent="SpaceAround">

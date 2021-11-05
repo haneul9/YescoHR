@@ -5,9 +5,11 @@ sap.ui.define(
     'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/controller/BaseController',
+    'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/EmpInfo',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/extension/moment',
+    'sap/ui/yesco/extension/lodash',
   ],
   (
     // prettier 방지용 주석
@@ -15,6 +17,7 @@ sap.ui.define(
     FilterOperator,
     JSONModel,
     BaseController,
+    ServiceNames,
     EmpInfo,
     TableUtils
   ) => {
@@ -35,6 +38,7 @@ sap.ui.define(
               { name: '근태' }, //
             ],
           },
+          quota: {},
           search: {
             Apbeg: moment().subtract(1, 'month').add(1, 'day').hours(9).toDate(),
             Apend: moment().hours(9).toDate(),
@@ -57,12 +61,52 @@ sap.ui.define(
         const bTargetChangeButtonHide = true;
         EmpInfo.get.call(this, { bTargetChangeButtonHide });
 
+        // 휴가쿼터 조회
+        this.retrieveQuota();
+
         // 목록 조회
         this.search();
       }
 
+      retrieveQuota() {
+        const oModel = this.getModel(ServiceNames.WORKTIME);
+        const oViewModel = this.getViewModel();
+        const sUrl = '/AbsQuotaListSet';
+        // const sPernr = oViewModel.getProperty('/TargetInfo/Pernr');
+        const sPernr = '50013';
+
+        oModel.read(sUrl, {
+          filters: [
+            new Filter('Pernr', FilterOperator.EQ, sPernr), //
+          ],
+          success: (oData) => {
+            this.debug(`${sUrl} success.`, oData);
+
+            oViewModel.setProperty(
+              '/quota',
+              _.reduce(
+                oData.results,
+                (acc, { Ktart, Kotxt, Crecnt, Usecnt }) => ({
+                  ...acc,
+                  [Ktart]: {
+                    Kotxt,
+                    Crecnt: parseInt(Crecnt, 10),
+                    Usecnt: parseInt(Usecnt, 10),
+                    Rate: (parseInt(Usecnt, 10) / parseInt(Crecnt, 10)) * 100,
+                  },
+                }),
+                {}
+              )
+            );
+          },
+          error: (oError) => {
+            this.debug(`${sUrl} error.`, oError);
+          },
+        });
+      }
+
       search() {
-        const oModel = this.getModel('worktime');
+        const oModel = this.getModel(ServiceNames.WORKTIME);
         const oViewModel = this.getViewModel();
         const oSearchConditions = oViewModel.getProperty('/search');
         const sUrl = '/LeaveApplContentSet';
@@ -94,6 +138,18 @@ sap.ui.define(
         const sFileName = '근태신청_목록';
 
         TableUtils.export({ oTable, mTableData, sFileName });
+      }
+
+      onPressNewApprBtn() {
+        this.getRouter().navTo('attendanceDetail', { type: 'n' });
+      }
+
+      onPressModApprBtn() {
+        this.getRouter().navTo('attendanceDetail', { type: 'm' });
+      }
+
+      onPressCancApprBtn() {
+        this.getRouter().navTo('attendanceDetail', { type: 'c' });
       }
     }
 
