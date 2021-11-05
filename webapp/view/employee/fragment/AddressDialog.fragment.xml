@@ -1,0 +1,35 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:grid="sap.ui.layout.cssgrid">
+    <Dialog id="addressDialog" showHeader="false" contentWidth="700px">
+        <buttons>
+            <Button type="Emphasized" text="저장"/>
+            <Button text="닫기" press=".onAddressDialogClose"/>
+        </buttons>
+        <Panel expanded="true" headerText="주소정보">
+            <content>
+                <grid:CSSGrid gridTemplateColumns="1fr 4fr" gridGap="8px">
+                    <Label text="주소유형" />
+                    <ComboBox width="250px" selectedKey="02" items="{ path: '/employee/personal/address/typelist' }">
+                        <core:Item key="{key}" text="{data}" />
+                    </ComboBox>
+                    <Label text="적용시작일" />
+                    <DatePicker width="250px" class="sapIcon_Date" />
+                    <Label text="시/도" />
+                    <ComboBox width="250px" selectedKey="01" items="{ path: '/employee/personal/address/sidolist' }">
+                        <core:Item key="{key}" text="{data}" />
+                    </ComboBox>
+                    <Label text="우편번호" />
+                    <HBox width="100%">
+                        <Input width="250px" value="{/employee/personal/address/form/zip}" editable="false" />
+                        <Button text="검색" press=".openSearchZipcodePopup"/>
+                    </HBox>
+                    <Label text="주소" />
+                    <Input width="500px" value="{/employee/personal/address/form/address1}" editable="false" />
+                    <Label text="상세주소" />
+                    <Input width="500px" value="{/employee/personal/address/form/address2}" />
+                </grid:CSSGrid>
+            </content>
+        </Panel>
+    </Dialog>
+</core:FragmentDefinition>
