@@ -9,6 +9,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/EmpInfo',
     'sap/ui/yesco/common/TableUtils',
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/extension/moment',
     'sap/ui/yesco/extension/lodash',
   ],
@@ -21,7 +22,8 @@ sap.ui.define(
     BaseController,
     ServiceNames,
     EmpInfo,
-    TableUtils
+    TableUtils,
+    MessageBox
   ) => {
     'use strict';
 
@@ -33,7 +35,14 @@ sap.ui.define(
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
+          busy: false,
           navigation: {
+            current: '사원프로파일',
+            links: [
+              { name: '인사' }, //
+            ],
+          },
+          sidenavigation: {
             isShow: true,
             width: '20%',
             search: {
@@ -255,10 +264,10 @@ sap.ui.define(
       onToggleNavigation(oEvent) {
         const bState = oEvent.getParameter('state');
 
-        this.getView().getModel().setProperty('/navigation/isShow', bState);
+        this.getView().getModel().setProperty('/sidenavigation/isShow', bState);
         this.getView()
           .getModel()
-          .setProperty('/navigation/width', bState ? '20%' : '4%');
+          .setProperty('/sidenavigation/width', bState ? '20%' : '4%');
         this.getView()
           .getModel()
           .setProperty('/employee/width', bState ? '80%' : '96%');
@@ -310,11 +319,11 @@ sap.ui.define(
       }
 
       openModifyAddressDialog() {
-        MessageBox.warning('준비중입니다.', { title: '경고' });
+        MessageBox.warning('준비중입니다.');
       }
 
       onDeleteAddress() {
-        MessageBox.warning('준비중입니다.', { title: '경고' });
+        MessageBox.warning('준비중입니다.');
       }
 
       openSearchZipcodePopup() {
