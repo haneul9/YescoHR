@@ -1,0 +1,63 @@
+<mvc:View controllerName="sap.ui.yesco.controller.attendance.Detail"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:table="sap.ui.table"
+    xmlns:mvc="sap.ui.core.mvc">
+    <Page showHeader="false">
+        <VBox>
+            <HBox justifyContent="SpaceBetween">
+                <core:Fragment fragmentName="sap.ui.yesco.fragment.Navigation" type="XML" />
+                <HBox>
+                    <Button type="Emphasized" text="신청" enabled="{= ${/form/hasrow}}" busyIndicatorDelay="0" busy="{/busy}" />
+                    <Button text="이전" press=".onPressBackBtn" />
+                </HBox>
+            </HBox>
+            <core:Fragment fragmentName="sap.ui.yesco.fragment.DetailTargetInfo" type="XML" />
+            <VBox class="vCardBox">
+                <HBox justifyContent="SpaceBetween">
+                    <Title level="H2" text="신청내역" />
+                    <HBox>
+                        <Button icon="sap-icon://add" text="추가" press=".onPressAddBtn" />
+                        <Button icon="sap-icon://less" text="삭제" press=".onPressDelBtn" enabled="{= ${/form/hasrow}}" />
+                    </HBox>
+                </HBox>
+                <table:Table id="approveTable" width="100%" rows="{/form/list}" visibleRowCount="{/form/rowcount}" noData="{i18n>MSG_00001}">
+                    <table:columns>
+                        <table:Column width="15%">
+                            <Label text="근태유형" />
+                            <table:template>
+                                <Text text="{Atext}" width="100%" textAlign="Center" />
+                            </table:template>
+                        </table:Column>
+                        <table:Column width="15%">
+                            <Label text="시작일" />
+                            <table:template>
+                                <Text text="{BegdaTxt}" width="100%" textAlign="Center" />
+                            </table:template>
+                        </table:Column>
+                        <table:Column width="15%">
+                            <Label text="종료일" />
+                            <table:template>
+                                <Text text="{EnddaTxt}" width="100%" textAlign="Center" />
+                            </table:template>
+                        </table:Column>
+                        <table:Column width="15%">
+                            <Label text="기간" />
+                            <table:template>
+                                <Text text="{Abrtg}" width="100%" textAlign="Center" />
+                            </table:template>
+                        </table:Column>
+                        <table:Column width="40%">
+                            <Label text="사유" />
+                            <table:template>
+                                <Text text="{Tmrsn}" width="100%" textAlign="Center" />
+                            </table:template>
+                        </table:Column>
+                    </table:columns>
+                </table:Table>
+            </VBox>
+            <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
+            <core:Fragment fragmentName="sap.ui.yesco.fragment.ApplyInfo" type="XML" />
+        </VBox>
+    </Page>
+</mvc:View>
