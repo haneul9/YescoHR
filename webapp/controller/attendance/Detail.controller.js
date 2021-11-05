@@ -9,6 +9,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/EmpInfo',
     'sap/ui/yesco/common/AttachFileAction',
+    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/extension/moment',
     'sap/ui/yesco/extension/lodash',
@@ -23,6 +24,7 @@ sap.ui.define(
     ServiceNames,
     EmpInfo,
     AttachFileAction,
+    TableUtils,
     MessageBox
   ) => {
     'use strict';
@@ -36,7 +38,7 @@ sap.ui.define(
       onBeforeShow() {
         const oViewModel = new JSONModel({
           busy: false,
-          type: 'N',
+          type: 'n',
           appno: null,
           navigation: {
             current: '신규신청',
@@ -51,10 +53,10 @@ sap.ui.define(
             list: [],
             dialog: {
               calcCompleted: false,
+              awartCodeList: [{ Awart: 'ALL', Atext: this.getText('LABEL_00268'), Alldf: true }],
               data: {
                 Awart: 'ALL',
               },
-              awartCodeList: [{ Awart: 'ALL', Atext: this.getText('LABEL_00268'), Alldf: true }],
             },
           },
         });
@@ -65,6 +67,21 @@ sap.ui.define(
 
         // 대상자 정보
         EmpInfo.get.call(this);
+
+        // Multiple table generate
+        const oTable = this.byId('approveMultipleTable');
+        oTable.addEventDelegate(
+          {
+            onAfterRendering: () => {
+              TableUtils.adjustRowSpan({
+                table: oTable,
+                colIndices: [0, 7],
+                theadOrTbody: 'header',
+              });
+            },
+          },
+          oTable
+        );
       }
 
       onObjectMatched(oEvent) {
@@ -130,9 +147,11 @@ sap.ui.define(
         this.openFormDialog();
       }
 
+      onPressChangeBtn() {}
+
       onPressDelBtn() {
         const oViewModel = this.getViewModel();
-        const oTable = this.byId('approveTable');
+        const oTable = this.byId('approveSingleTable');
         const aSelectedIndices = oTable.getSelectedIndices();
         const mTableData = oViewModel.getProperty('/form/list');
 
@@ -241,15 +260,13 @@ sap.ui.define(
 
         oModel.read(sUrl, {
           filters: [
-            new Filter('Pernr', FilterOperator.EQ, '50007'), //
-            new Filter('Prcty', FilterOperator.EQ, 'C'),
+            new Filter('Prcty', FilterOperator.EQ, 'C'), //
             new Filter('Awart', FilterOperator.EQ, Awart),
             new Filter('Begda', FilterOperator.EQ, moment(Begda).hour(9).toDate()),
             new Filter('Endda', FilterOperator.EQ, moment(Endda).hour(9).toDate()),
           ],
           success: (oData) => {
             this.debug(`${sUrl} success.`, oData);
-            // oViewModel.setProperty('/form/dialog/awartCodeList', [...mAwartCodeList, ...oData.results]);
           },
           error: (oError) => {
             this.debug(`${sUrl} error.`, oError);

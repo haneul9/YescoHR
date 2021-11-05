@@ -117,7 +117,7 @@ sap.ui.define(
         o.colIndices.forEach((colIndex) => {
           const sId = `#${o.table.getId()}-${o.theadOrTbody} tbody>tr td:nth-child(${colIndex + 1}):visible`;
           const $Tds = $(sId).get();
-          const $PrevTD = tds.shift();
+          const $PrevTD = $Tds.shift();
 
           $Tds.forEach((td) => {
             const p = $($PrevTD);
