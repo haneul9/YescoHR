@@ -14,7 +14,7 @@ sap.ui.define(
           const oViewModelData = this.getViewModel().getData();
 
           oViewModelData.TargetInfo = {
-            ...oSessionModel.getData().results[0],
+            ...oSessionModel.getData(),
             Hide: bTargetChangeButtonHide,
           };
           oViewModel.setData(oViewModelData);
