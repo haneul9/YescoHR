@@ -7,11 +7,14 @@
 		</HBox>
 		<grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="8px">
 			<Label text="결재문서번호"/>
-			<Text text="{/PaymentDetails/Docno}"/>
+			<Text text="{
+				path: '/PaymentDetails/Docno',
+				formatter: '.formatter.getDocnoTxt'
+			}"/>
 			<Label text="결재상태"/>
 			<Text text="{/PaymentDetails/ZappStxtAl}"/>
 			<Label text="담당자 결재일시"/>
-			<Text text="{/PaymentDetails/Stfdt}"/>
+			<Text text="{/PaymentDetails/Sgnda}"/>
 			<Label visible="{= ${/PaymentDetails/ZappStatAl} === '45' || ${/PaymentDetails/ZappStatAl} === '65' || !!${/PaymentDetails/ZappResn}}" text="반려사유" />
 			<Text visible="{= ${/PaymentDetails/ZappStatAl} === '45' || ${/PaymentDetails/ZappStatAl} === '65' || !!${/PaymentDetails/ZappResn}}" text="{/PaymentDetails/ZappResn}" />
 		</grid:CSSGrid>

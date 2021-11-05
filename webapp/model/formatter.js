@@ -34,6 +34,10 @@ sap.ui.define([], () => {
       this.byId('InfoMegBox').setVisible(false);
     },
 
+    getDocnoTxt(sDocno) {
+      return sDocno === '00000000000000' ? '' : sDocno;
+    },
+
     rowHighlight(sValue) {
       switch (sValue) {
         case '10':
