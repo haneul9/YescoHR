@@ -120,6 +120,7 @@
         },
         { "pattern": "attendance", "name": "attendance", "target": "attendance" },
         { "pattern": "attendance/{type}/:appno:", "name": "attendanceDetail", "target": "attendanceDetail" },
+        { "pattern": "employee/:pernr:", "name": "employee", "target": "employee" },
         {
           "pattern": "components",
           "name": "commonComponents",
@@ -174,6 +175,7 @@
         },
         "attendance": { "viewId": "attendanceList", "viewPath": "sap.ui.yesco.view.attendance", "viewName": "List", "viewLevel": 2 },
         "attendanceDetail": { "viewId": "attendanceDetail", "viewPath": "sap.ui.yesco.view.attendance", "viewName": "Detail", "viewLevel": 2 },
+        "employee": { "viewId": "employee", "viewPath": "sap.ui.yesco.view.employee", "viewName": "Employee", "viewLevel": 2 },
         "components": {
           "viewId": "components",
           "viewPath": "sap.ui.yesco.view.zample",
