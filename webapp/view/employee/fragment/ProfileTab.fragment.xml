@@ -1,0 +1,8 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <HBox class="customBox">
+        <ToggleButton id="baseButton" text="기본" pressed="true" press=".onToggleProfile"/>
+        <ToggleButton id="actionButton" text="발령" press=".onToggleProfile"/>
+        <ToggleButton id="personalButton" text="신상" press=".onToggleProfile"/>
+    </HBox>
+</core:FragmentDefinition>
