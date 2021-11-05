@@ -54,12 +54,25 @@ sap.ui.define(
           success: (oData, oResponse) => {
             AppUtils.debug(`${sUrl} success.`, oData, oResponse);
 
-            this.setModel(new JSONModel(oData), 'session');
+            const sessionData = (oData.results || [])[0] || {};
+            delete sessionData.__metadata;
+
+            if (sessionData.Werks === '1000') {
+              sessionData.Logo = 'yesco-holdings';
+            } else if (sessionData.Werks === '2000') {
+              sessionData.Logo = 'yesco';
+            } else if (sessionData.Werks === '3000') {
+              sessionData.Logo = 'hanseong';
+            } else {
+              sessionData.Logo = 'unknown';
+            }
+
+            this.setModel(new JSONModel(sessionData), 'session');
           },
           error: (oError) => {
             AppUtils.debug(`${sUrl} error.`, oError);
 
-            this.setModel(new JSONModel(), 'session');
+            this.setModel(new JSONModel({ Logo: 'unknown' }), 'session');
           },
         });
 

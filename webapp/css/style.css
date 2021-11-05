@@ -4,7 +4,9 @@ html *:not(.sapUiIcon):not(.sapMMsgStripCloseButton):not(i) {font-family:Pretend
 html, body {box-sizing:border-box; overflow:hidden}
 
 .app-body {height:calc(100% - 3rem) !important}
-.logo {margin:auto 0 !important; width:145px !important; height:43px !important}
+.logo {margin:auto 0 !important}
+.logo-yesco-holdings {width:182px !important; height:30px !important}
+.logo-yesco, .logo-hanseong, .logo-unknown {width:145px !important; height:43px !important}
 .font-1b-rem .sapMBtnInner {font-size: 1.125rem}
 .app-menu-level1 {margin:0 !important; border-bottom:solid 0.25rem transparent; padding:0.425rem 1rem; cursor:default}
 .app-menu-level1-hover {border-bottom-color:#f00}

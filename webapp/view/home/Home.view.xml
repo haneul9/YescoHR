@@ -8,7 +8,7 @@
 	<Page showHeader="false" enableScrolling="false">
 		<content>
 			<ScrollContainer height="100%" vertical="true">
-				<ToggleButton id="reveal-grid-button" text="Reveal Grid" press="onRevealGrid" class="sapUiSmallMarginBegin sapUiSmallMarginTop sapUiTinyMarginBottom" />
+				<!-- <ToggleButton id="reveal-grid-button" text="Reveal Grid" press="onRevealGrid" class="sapUiSmallMarginBegin sapUiSmallMarginTop sapUiTinyMarginBottom" /> -->
 				<HBox justifyContent="Center">
 					<f:GridContainer id="personalization-grid" class="sapUiSmallMarginTopBottom mx-auto" snapToRow="true">
 						<f:layout>

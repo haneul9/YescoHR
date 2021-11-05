@@ -65,6 +65,8 @@ sap.ui.define(
 
               oGrid.insertItem(oDragged, iDropPosition);
               // oGrid.focusItem(iDropPosition);
+
+              //
             },
           })
         );
@@ -83,13 +85,13 @@ sap.ui.define(
         });
       }
 
-      onRevealGrid() {
-        RevealGrid.toggle('personalization-grid', this.getView());
-      }
+      // onRevealGrid() {
+      //   RevealGrid.toggle('personalization-grid', this.getView());
+      // }
 
-      onExit() {
-        RevealGrid.destroy('personalization-grid', this.getView());
-      }
+      // onExit() {
+      //   RevealGrid.destroy('personalization-grid', this.getView());
+      // }
 
       handleShowSpecialDays(oEvent) {
         const oTeamCalendar = this.byId('team-calendar');

@@ -3,7 +3,7 @@
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:control="sap.ui.yesco.control" displayBlock="true">
 	<OverflowToolbar id="appMenuToolbar" asyncMode="true" busy="{app>/busyMenu}" busyIndicatorDelay="0" class="app-menu-toolbar">
-		<ImageContent class="logo" src="{app>/logo}" description="yesco eHR Home" press=".navToHome">
+		<ImageContent id="logoImage" src="{ path: 'session>/Logo', formatter: '.getLogoPath' }" description="{session>/Logo} eHR Home" press=".navToHome">
 			<layoutData>
 				<OverflowToolbarLayoutData priority="NeverOverflow"/>
 			</layoutData>
