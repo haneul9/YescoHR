@@ -67,18 +67,6 @@ sap.ui.define(
           return !vFlower && vFlower === undefined ? '' : vFlower === "X" ? "N" : "Y";
         }
 
-        // AttachFileTable Settings
-        settingsAttachTable(oController) {
-          const oDetailModel = oController.getViewModel();
-          const sStatus = oDetailModel.getProperty("/FormData/ZappStatAl");
-          const sAppno = oDetailModel.getProperty("/FormData/Appno");
-
-          oDetailModel.setProperty("/Settings/Editable", !sStatus || sStatus === '10');
-          oDetailModel.setProperty("/Settings/Gubun", false);
-
-          AttachFileAction.refreshAttachFileList.call(this, sAppno, 'HR01');
-        };
-        
         // 상세조회
         getTargetData(sDataKey) {
           const oModel = this.getModel(ServiceNames.BENEFIT);
@@ -488,11 +476,9 @@ sap.ui.define(
             this.getAppno(this);
           }
 
-          setTimeout(() => {
-            AttachFileAction.uploadFile.call(this, oDetailModel.getProperty("/FormData/Appno"), "HR01");
-            
+          setTimeout(() => {            
             const onPressSave = function (fVal) {
-              if (fVal && fVal === "저장") {
+              if (fVal && fVal === "저장") {                
                 let oSendObject = {};
                 const oSendData = oController.sendDataFormat(oDetailModel.getProperty("/FormData"));
 
@@ -502,8 +488,10 @@ sap.ui.define(
   
                 oModel.create("/ConExpenseApplSet", oSendObject, {
                   success: function (oData) {
+                    // FileUpload
+                    AttachFileAction.uploadFile.call(oController, oDetailModel.getProperty("/FormData/Appno"), "HR01");
+
                     MessageBox.alert("저장되었습니다.", { title: "안내"});
-                    // AttachFileAction.uploadFile.call(oController, oDetailModel.getProperty("/FormData/Appno"), "HR01");
                     oController.getRouter().navTo("congratulation");
                   },
                   error: function (oRespnse) {
@@ -535,8 +523,6 @@ sap.ui.define(
           }
           
           setTimeout(() => {
-            AttachFileAction.uploadFile.call(this, oDetailModel.getProperty("/FormData/Appno"), "HR01");
-
             const onPressApply = function (fVal) {
               if (fVal && fVal === "신청") {
                 let oSendObject = {};
@@ -545,13 +531,13 @@ sap.ui.define(
                 oSendObject = oSendData;
                 oSendObject.Prcty = 'C';
                 oSendObject.Actty = 'E';
-                // oSendObject.Appno = !vStatus || vStatus === '45' ? '' : oSendData.Appno;
   
                 oModel.create("/ConExpenseApplSet", oSendObject, {
                   success: function (oData) {
-                    MessageBox.alert("신청되었습니다.", { title: "안내"});
-                    // AttachFileAction.uploadFile.call(oController, oData.results[0].Appno, "HR01");
-  
+                    // FileUpload
+                    AttachFileAction.uploadFile.call(oController, oDetailModel.getProperty("/FormData/Appno"), "HR01");
+
+                    MessageBox.alert("신청되었습니다.", { title: "안내"});  
                     oController.getRouter().navTo("congratulation");
                   },
                   error: function (oRespnse) {
@@ -634,6 +620,18 @@ sap.ui.define(
             actions: ["삭제", "취소"],
             onClose: onPressApply
           });
+        }
+
+        // AttachFileTable Settings
+        settingsAttachTable(oController) {
+          const oDetailModel = oController.getViewModel();
+          const sStatus = oDetailModel.getProperty("/FormData/ZappStatAl");
+          const sAppno = oDetailModel.getProperty("/FormData/Appno") || '';
+
+          oDetailModel.setProperty("/Settings/Editable", !sStatus || sStatus === '10');
+          oDetailModel.setProperty("/Settings/Gubun", false);
+
+          AttachFileAction.refreshAttachFileList.call(this, sAppno, 'HR01');
         }
       }
       

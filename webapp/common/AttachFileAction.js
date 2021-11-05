@@ -3,10 +3,12 @@ sap.ui.define(
     [
       'sap/m/MessageBox',
       'sap/ui/yesco/common/odata/ServiceManager',
+      'sap/ui/yesco/common/odata/ServiceNames',
     ],
     (
         MessageBox,
         ServiceManager,
+        ServiceNames,
     ) => {
         'use strict';
 
@@ -65,10 +67,10 @@ sap.ui.define(
 
                     for (let i = 0; i < files.length; i++) {
                         files[i].New = true;
-                        files[i].Fname = files[i].name;
+                        files[i].Zfilename = files[i].name;
                         files[i].Type = files[i].type;
                         files[i].Zbinkey = String(parseInt(Math.random() * 100000000000000));
-                        files[i].Idx = iFileLeng;
+                        files[i].Seqnr = iFileLeng;
 
                         aFileList.push(files[i]);
                     }
@@ -87,6 +89,17 @@ sap.ui.define(
             },
 
             /*
+            * 첨부파일 링크 Click
+            */
+            onFileLink(oEvent) {
+                var vFileInfo = oEvent.getSource().getBindingContext().getProperty();
+
+                if(!vFileInfo) return;
+
+                window.open(vFileInfo.Url, '_blank');
+            },
+
+            /*
             * 첨부파일 리스트를 Binding한다.
             */
             refreshAttachFileList(vAppno = '', vType) {
@@ -94,12 +107,12 @@ sap.ui.define(
                 const oAttachbox = this.byId("ATTACHBOX");
                 const oAttachFileList = this.byId("attachTable");
                 const oFileUploader = this.byId("ATTACHFILE_BTN");
-                const oModel = this.getModel('common');
-                const JSonModel = oAttachbox.getViewModel();
+                const oModel = this.getModel(ServiceNames.COMMON);
+                const JSonModel = this.getViewModel();
                 const vAttachFileDatas = JSonModel.getProperty("/Data");
                 const Datas = { Data: [] };
 
-                JSonModel.setProperty("/Settings/Length", 0);
+                // JSonModel.setProperty("/Settings/Length", 0);
                 JSonModel.setProperty("/Data", []);
 
                 // if(!vAppnm) {
@@ -113,7 +126,7 @@ sap.ui.define(
 
                 oFileUploader.clear();
                 oFileUploader.setValue("");
-                oAttachFileList.removeSelections(true);
+                // oAttachFileList.removeSelections(true);
 
                 oModel.read("/FileListSet", {
                     async: false,
@@ -125,9 +138,9 @@ sap.ui.define(
                         if (data && data.results.length) {
                             data.results.forEach(function (elem) {
                                 elem.New = false;
-                                elem.Type = elem.Fname.substring(elem.Fname.lastIndexOf(".") + 1);
-                                elem.Url = elem.Url.replace(/retriveScpAttach/, "retriveAttach");
-                                elem.Mresource_convert = "data:${mimetype};base64,${resource}".interpolate(elem.Mimetype, elem.Mresource);
+                                // elem.Type = elem.Zfilename.substring(elem.Zfilename.lastIndexOf(".") + 1);
+                                elem.Url = elem.Fileuri.replace(/retriveScpAttach/, "retriveAttach");
+                                // elem.Mresource_convert = "data:${mimetype};base64,${resource}".interpolate(elem.Mimetype, elem.Mresource);
 
                                 Datas.Data.push(elem);
                             });
@@ -142,12 +155,13 @@ sap.ui.define(
 
                         JSonModel.setProperty("/Settings/Length", Datas.Data.length);
                         JSonModel.setProperty("/Data", Datas.Data);
+                        oAttachFileList.setVisibleRowCount(Datas.Data.length);
 
                         oAttachbox.setBusy(false);
                         // if(typeof common.AttachFileAction.fnRetrieveCallback === "function") common.AttachFileAction.fnRetrieveCallback.call(this);
                     },
                     error: function (res) {
-                        common.Common.log(res);
+                        // common.Common.log(res);
                         oAttachbox.setBusy(false);
                         // if(typeof common.AttachFileAction.fnRetrieveCallback === "function") common.AttachFileAction.fnRetrieveCallback.call(this);
                     }
@@ -155,7 +169,7 @@ sap.ui.define(
             },
 
             uploadFile(Appno, Type) {
-                // const oModel = this.getModel('common');
+                // const oModel = this.getModel(ServiceNames.COMMON);
                 const sServiceUrl = ServiceManager.getServiceUrl('ZHR_COMMON_SRV', this.getOwnerComponent());
                 const oModel = new sap.ui.model.odata.ODataModel(sServiceUrl, true, undefined, undefined, undefined, undefined, undefined, false);
                 const Attachbox = this.byId("ATTACHBOX");
@@ -197,7 +211,7 @@ sap.ui.define(
                             const oRequest = oModel._createRequest();
                             const oHeaders = {
                                 "x-csrf-token": oRequest.headers["x-csrf-token"],
-                                "slug": [Appno, Type, encodeURI(elem.Fname)].join("|")
+                                "slug": [Appno, Type, encodeURI(elem.Zfilename)].join("|")
                             };
             
                             // common.Common.log(oHeaders.slug);
@@ -205,7 +219,7 @@ sap.ui.define(
                             jQuery.ajax({
                                 type: "POST",
                                 async: false,
-                                url: sServiceUrl + "/FileAttachSet/",
+                                url: sServiceUrl + "/FileUploadSet/",
                                 headers: oHeaders,
                                 cache: false,
                                 contentType: elem.type,
@@ -219,6 +233,48 @@ sap.ui.define(
                 } catch (oException) {
                     jQuery.sap.log.error("File upload failed:\n" + oException.message);
                 }
+            },
+
+            /*
+            * 첨부된 파일을 삭제처리
+            */
+            onDeleteAttachFile: function () {
+                const oController = this;
+                const oAttachbox = this.byId("ATTACHBOX");
+                const oJSonModel = oAttachbox.getModel();
+                const oTable = this.byId("attachTable");
+                const aFileDatas = oJSonModel.getProperty("/Data");
+                const aContexts = oTable.getSelectedIndices();
+
+                if (!aContexts.length) {
+                    sap.m.MessageBox.alert("삭제할 파일을 선택하세요."); // 삭제할 파일을 선택하세요.
+                    return;
+                }
+
+                // oTable.removeSelections(true);
+
+                var deleteProcess = function (fVal) {
+                    if(fVal === sap.m.MessageBox.Action.YES) {   
+                        const aSelectFiles = [];
+
+                        aContexts.forEach(e => {
+                            aSelectFiles.push(aFileDatas[e]);
+                        });
+
+                        const aResult = aFileDatas.filter(e => {
+                            !aSelectFiles.includes(e);
+                        });
+
+                        oJSonModel.setProperty("/Data", aFileDatas);
+                        sap.m.MessageToast.show("파일 삭제가 완료되었습니다.", { my: "center center", at: "center center"}); // 파일 삭제가 완료되었습니다.
+                    }
+                };
+
+                sap.m.MessageBox.show("선택한 파일을 삭제하시겠습니까?", {
+                    title: "확인",
+                    actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
+                    onClose: deleteProcess
+                });
             },
 
             // 임시저장
@@ -248,7 +304,7 @@ sap.ui.define(
             //                 const oRequest = oModel._createRequest();
             //                 const oHeaders = {
             //                     "x-csrf-token": oRequest.headers["x-csrf-token"],
-            //                     "slug": [vBinkey, Type, encodeURI(elem.Fname)].join("|")
+            //                     "slug": [vBinkey, Type, encodeURI(elem.Zfilename)].join("|")
             //                 };
             
             //                 // common.Common.log(oHeaders.slug);

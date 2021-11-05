@@ -12,7 +12,7 @@
             <HBox>
                 <u:FileUploader id="ATTACHFILE_BTN" visible="{/Settings/Editable}" maximumFileSize="10" multiple="true" change=".AttachFileAction.onFileChange" uploadComplete= ".uploadComplete" icon="sap-icon://add" buttonText= "추가" buttonOnly= "true"/>
                 <!-- <Button icon="sap-icon://add" text="추가" /> -->
-                <Button icon="sap-icon://less" visible="{/Settings/Editable}" text="삭제" />
+                <Button icon="sap-icon://less" visible="{/Settings/Editable}" text="삭제" press=".AttachFileAction.onDeleteAttachFile" />
             </HBox>
         </HBox>
         <table:Table id="attachTable" width="100%" selectionMode="MultiToggle" columnHeaderHeight="38" rowHeight="37" visibleRowCount="1" rows="{/Data}">
@@ -20,7 +20,7 @@
                 <table:Column width="4%">
                     <Label text="No"/>
                     <table:template>
-                        <Text text="{Idx}" width="100%" textAlign="Center" />
+                        <Text text="{Seqnr}" width="100%" textAlign="Center" />
                     </table:template>
                 </table:Column>
                 <table:Column width="8%" visible="{/Settings/Gubun}">
@@ -36,7 +36,7 @@
                 <table:Column>
                     <Label text="첨부파일" width="100%" />
                     <table:template>
-                        <Link text="{Fname}" width="100%" textAlign="Begin" />
+                        <Link press=".AttachFileAction.onFileLink" text="{Zfilename}" width="100%" textAlign="Begin" />
                     </table:template>
                 </table:Column>
             </table:columns>
