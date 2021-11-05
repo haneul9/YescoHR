@@ -29,7 +29,7 @@ sap.ui.define(
 
       getLogoPath(sLogo) {
         this.byId('logoImage').addStyleClass(`logo-${sLogo}`);
-        return `/image/logo-${sLogo}.png`;
+        return `image/logo-${sLogo}.png`;
       }
     }
 

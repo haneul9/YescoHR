@@ -141,7 +141,7 @@
         "home": {
           "viewId": "home",
           "viewPath": "sap.ui.yesco.view.home",
-          "viewName": "Home",
+          "viewName": "Portlets",
           "viewLevel": 1
         },
         "notFound": {
