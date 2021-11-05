@@ -13,7 +13,7 @@
                 </HBox>
             </HBox>
             <core:Fragment fragmentName="sap.ui.yesco.fragment.DetailTargetInfo" type="XML" />
-            <VBox class="vCardBox">
+            <VBox class="vCardBox" visible="{= ${/type} !== 'm'}">
                 <HBox justifyContent="SpaceBetween">
                     <Title level="H2" text="신청내역" />
                     <HBox>
@@ -21,40 +21,20 @@
                         <Button icon="sap-icon://less" text="삭제" press=".onPressDelBtn" enabled="{= ${/form/hasrow}}" />
                     </HBox>
                 </HBox>
-                <table:Table id="approveTable" width="100%" rows="{/form/list}" visibleRowCount="{/form/rowcount}" noData="{i18n>MSG_00001}">
-                    <table:columns>
-                        <table:Column width="15%">
-                            <Label text="근태유형" />
-                            <table:template>
-                                <Text text="{Atext}" width="100%" textAlign="Center" />
-                            </table:template>
-                        </table:Column>
-                        <table:Column width="15%">
-                            <Label text="시작일" />
-                            <table:template>
-                                <Text text="{BegdaTxt}" width="100%" textAlign="Center" />
-                            </table:template>
-                        </table:Column>
-                        <table:Column width="15%">
-                            <Label text="종료일" />
-                            <table:template>
-                                <Text text="{EnddaTxt}" width="100%" textAlign="Center" />
-                            </table:template>
-                        </table:Column>
-                        <table:Column width="15%">
-                            <Label text="기간" />
-                            <table:template>
-                                <Text text="{Abrtg}" width="100%" textAlign="Center" />
-                            </table:template>
-                        </table:Column>
-                        <table:Column width="40%">
-                            <Label text="사유" />
-                            <table:template>
-                                <Text text="{Tmrsn}" width="100%" textAlign="Center" />
-                            </table:template>
-                        </table:Column>
-                    </table:columns>
-                </table:Table>
+                <HBox>
+                    <core:Fragment fragmentName="sap.ui.yesco.view.attendance.fragment.SingleTable" type="XML" />
+                </HBox>
+            </VBox>
+            <VBox class="vCardBox" visible="{= ${/type} === 'm'}">
+                <HBox justifyContent="SpaceBetween">
+                    <Title level="H2" text="신청내역" />
+                    <HBox>
+                        <Button icon="sap-icon://edit" text="변경" press=".onPressChangeBtn" enabled="{= ${/form/hasrow}}" />
+                    </HBox>
+                </HBox>
+                <HBox>
+                    <core:Fragment fragmentName="sap.ui.yesco.view.attendance.fragment.MultipleTable" type="XML" />
+                </HBox>
             </VBox>
             <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
             <core:Fragment fragmentName="sap.ui.yesco.fragment.ApplyInfo" type="XML" />
