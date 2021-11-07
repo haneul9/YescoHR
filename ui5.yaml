@@ -19,7 +19,7 @@ server:
         debug: true
         langu: 'KO'
         client: '100'
-        baseUri: http://yeshrsapdev.lsyesco.co.kr:8000/
+        baseUri: https://yeshrsapdev.yescoholdings.com:8443/
 resources:
   configuration:
     propertiesFileSourceEncoding: UTF-8
