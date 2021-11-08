@@ -29,12 +29,12 @@ sap.ui.define(
 
     class Portlets extends BaseController {
       onBeforeShow() {
-        // const personalizationGridModel = new JSONModel(sap.ui.require.toUrl('sap/ui/yesco/localService/personalizationGridData.json'));
-        const oPersonalizationGridModel = new JSONModel();
-        oPersonalizationGridModel.loadData('localService/personalizationGridData.json');
-        this.setViewModel(oPersonalizationGridModel, 'personalizationGridModel');
+        // const p13nGridModel = new JSONModel(sap.ui.require.toUrl('sap/ui/yesco/localService/p13nGridData.json'));
+        const oP13nGridModel = new JSONModel();
+        oP13nGridModel.loadData('localService/p13nGridData.json');
+        this.setViewModel(oP13nGridModel, 'p13nGridModel');
 
-        const oGrid = this.byId('personalization-grid');
+        const oGrid = this.byId('p13n-grid');
         oGrid.addDragDropConfig(
           new DragInfo({
             sourceAggregation: 'items',
@@ -84,11 +84,11 @@ sap.ui.define(
       }
 
       // onRevealGrid() {
-      //   RevealGrid.toggle('personalization-grid', this.getView());
+      //   RevealGrid.toggle('p13n-grid', this.getView());
       // }
 
       // onExit() {
-      //   RevealGrid.destroy('personalization-grid', this.getView());
+      //   RevealGrid.destroy('p13n-grid', this.getView());
       // }
 
       handleShowSpecialDays(oEvent) {

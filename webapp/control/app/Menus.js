@@ -20,8 +20,8 @@ sap.ui.define(
     'use strict';
 
     class Menus {
-      constructor(oController) {
-        this.oController = oController;
+      constructor(oAppController) {
+        this.oAppController = oAppController;
         this.oMenuPopover = null;
         this.mMenuUrl = null;
         this.mMenuProperties = null;
@@ -35,7 +35,7 @@ sap.ui.define(
        */
       retrieveMenu() {
         const sUrl = '/GetMenuLvSet';
-        this.oController.getModel(ServiceNames.COMMON).create(
+        this.oAppController.getModel(ServiceNames.COMMON).create(
           sUrl,
           {
             Pernr: '50007',
@@ -50,17 +50,17 @@ sap.ui.define(
           },
           {
             success: (oData, oResponse) => {
-              this.oController.debug(`${sUrl} success.`, oData, oResponse);
+              this.debug(`${sUrl} success.`, oData, oResponse);
 
               this.buildAppMenu(oData).then(() => {
-                AppUtils.setMenuBusy(false, this.oController);
+                AppUtils.setMenuBusy(false, this.oAppController);
               });
             },
             error: (oError) => {
-              this.oController.debug(`${sUrl} error.`, oError);
+              this.debug(`${sUrl} error.`, oError);
 
               this.buildAppMenu().then(() => {
-                AppUtils.setMenuBusy(false, this.oController);
+                AppUtils.setMenuBusy(false, this.oAppController);
               });
             },
           }
@@ -75,7 +75,7 @@ sap.ui.define(
       buildAppMenu(mMenuRawData = {}) {
         return new Promise((resolve) => {
           const aMenuTree = this.getMenuTree(mMenuRawData);
-          const oAppMenuToolbar = this.oController.byId('appMenuToolbar');
+          const oAppMenuToolbar = this.oAppController.byId('appMenuToolbar');
 
           if (!aMenuTree.length) {
             oAppMenuToolbar.insertContent(new Label({ text: '{i18n>MSG_01001}' }), 2); // 조회된 메뉴가 없습니다.
@@ -108,170 +108,16 @@ sap.ui.define(
 
         const mLevel1SubMenu = {};
         const mLevel2SubMenu = {};
-        const bLocalhost = /^localhost/.test(location.hostname);
-        const bDev = /^yeshrsapdev/.test(location.hostname);
+        const bIsLocal = /^localhost/.test(location.hostname);
+        const bIsDev = /^yeshrsapdev/.test(location.hostname);
 
         this.mMenuUrl = {};
         this.mMenuProperties = {};
         this.aMenuFavorites = [];
 
-        if (bLocalhost || bDev) {
-          aMenuLevel4.splice(
-            ...[
-              aMenuLevel4.length,
-              0,
-              {
-                Pinfo: '',
-                Menid: 'X110',
-                Mnurl: 'components',
-                Mentx: '퍼블용 컴포넌트',
-              },
-              {
-                Pinfo: '',
-                Menid: 'X120',
-                Mnurl: 'timeline',
-                Mentx: 'Timeline sample',
-              },
-              {
-                Pinfo: '',
-                Menid: 'X130',
-                Mnurl: 'ninebox',
-                Mentx: '9 Box Model',
-              },
-              {
-                Pinfo: '',
-                Menid: 'X210',
-                Mnurl: 'https://www.google.co.kr',
-                Mentx: '구글',
-              },
-              {
-                Pinfo: '',
-                Menid: 'X220',
-                Mnurl: 'congratulation',
-                Mentx: '경조금',
-              },
-            ]
-          );
-
-          aMenuLevel3.splice(
-            ...[
-              aMenuLevel3.length,
-              0,
-              {
-                Mnid1: 'X0000',
-                Mnid2: 'X1000',
-                Mnid3: 'X110',
-                Mnnm3: '퍼블용 컴포넌트',
-                Mnsrt: '001',
-                Menid: 'X110',
-                Mepop: '',
-                Device: 'A',
-                Mnetc: '',
-                Pwchk: '',
-                Favor: 'X',
-              },
-              {
-                Mnid1: 'X0000',
-                Mnid2: 'X1000',
-                Mnid3: 'X120',
-                Mnnm3: 'Timeline sample',
-                Mnsrt: '002',
-                Menid: 'X120',
-                Mepop: '',
-                Device: 'A',
-                Mnetc: '',
-                Pwchk: '',
-                Favor: '',
-              },
-              {
-                Mnid1: 'X0000',
-                Mnid2: 'X1000',
-                Mnid3: 'X130',
-                Mnnm3: '9 Box Model',
-                Mnsrt: '003',
-                Menid: 'X130',
-                Mepop: '',
-                Device: 'A',
-                Mnetc: '',
-                Pwchk: '',
-                Favor: '',
-              },
-              {
-                Mnid1: 'X0000',
-                Mnid2: 'X2000',
-                Mnid3: 'X210',
-                Mnnm3: '구글',
-                Mnsrt: '001',
-                Menid: 'X210',
-                Mepop: 'X',
-                Device: 'A',
-                Mnetc: '',
-                Pwchk: '',
-                Favor: '',
-              },
-              {
-                Mnid1: 'X0000',
-                Mnid2: 'X2000',
-                Mnid3: 'X220',
-                Mnnm3: '경조금',
-                Mnsrt: '002',
-                Menid: 'X220',
-                Mepop: '',
-                Device: 'A',
-                Mnetc: '',
-                Pwchk: '',
-                Favor: '',
-              },
-            ]
-          );
-
-          aMenuLevel2.splice(
-            ...[
-              aMenuLevel2.length,
-              0,
-              {
-                Mnid1: 'X0000',
-                Mnid2: 'X1000',
-                Mnnm2: '샘플 1',
-                Mnsrt: '001',
-                Menid: 'X100',
-                Mepop: '',
-                Device: 'A',
-                Mnetc: '',
-                Pwchk: '',
-                Favor: '',
-              },
-              {
-                Mnid1: 'X0000',
-                Mnid2: 'X2000',
-                Mnnm2: '샘플 2',
-                Mnsrt: '002',
-                Menid: 'X200',
-                Mepop: '',
-                Device: 'A',
-                Mnetc: '',
-                Pwchk: '',
-                Favor: '',
-              },
-            ]
-          );
-
-          aMenuLevel1.splice(
-            ...[
-              aMenuLevel1.length,
-              0,
-              {
-                Mnid1: 'X0000',
-                Mnnm1: 'Samples',
-                Mnsrt: '999',
-                Menid: 'X000',
-                Mepop: '',
-                Device: 'A',
-                Mnetc: '',
-                Pwchk: '',
-              },
-            ]
-          );
+        // 개발자 PC || 개발 서버 : 샘플 메뉴 정보 추가
+        if (bIsLocal || bIsDev) {
+          this.appendSampleMenu({ aMenuLevel1, aMenuLevel2, aMenuLevel3, aMenuLevel4 });
         }
 
         // 각 메뉴 속성 정리
@@ -355,6 +201,184 @@ sap.ui.define(
         });
       }
 
+      appendSampleMenu({ aMenuLevel1, aMenuLevel2, aMenuLevel3, aMenuLevel4 }) {
+        aMenuLevel4.splice(
+          ...[
+            aMenuLevel4.length,
+            0,
+            {
+              Pinfo: '',
+              Menid: 'X110',
+              Mnurl: 'sampleComponents',
+              Mentx: '퍼블용 컴포넌트',
+            },
+            {
+              Pinfo: '',
+              Menid: 'X120',
+              Mnurl: 'sampleTimeline',
+              Mentx: 'Timeline sample',
+            },
+            {
+              Pinfo: '',
+              Menid: 'X130',
+              Mnurl: 'sampleNinebox',
+              Mentx: '9 Box Model',
+            },
+            {
+              Pinfo: '',
+              Menid: 'X140',
+              Mnurl: 'sampleDonutChart',
+              Mentx: 'Donut Chart',
+            },
+            {
+              Pinfo: '',
+              Menid: 'X210',
+              Mnurl: 'https://www.google.co.kr',
+              Mentx: '구글',
+            },
+            {
+              Pinfo: '',
+              Menid: 'X220',
+              Mnurl: 'congratulation',
+              Mentx: '경조금',
+            },
+          ]
+        );
+
+        aMenuLevel3.splice(
+          ...[
+            aMenuLevel3.length,
+            0,
+            {
+              Mnid1: 'X0000',
+              Mnid2: 'X1000',
+              Mnid3: 'X110',
+              Mnnm3: '퍼블용 컴포넌트',
+              Mnsrt: '001',
+              Menid: 'X110',
+              Mepop: '',
+              Device: 'A',
+              Mnetc: '',
+              Pwchk: '',
+              Favor: 'X',
+            },
+            {
+              Mnid1: 'X0000',
+              Mnid2: 'X1000',
+              Mnid3: 'X120',
+              Mnnm3: 'Timeline',
+              Mnsrt: '002',
+              Menid: 'X120',
+              Mepop: '',
+              Device: 'A',
+              Mnetc: '',
+              Pwchk: '',
+              Favor: '',
+            },
+            {
+              Mnid1: 'X0000',
+              Mnid2: 'X1000',
+              Mnid3: 'X130',
+              Mnnm3: '9 Box Model',
+              Mnsrt: '003',
+              Menid: 'X130',
+              Mepop: '',
+              Device: 'A',
+              Mnetc: '',
+              Pwchk: '',
+              Favor: '',
+            },
+            {
+              Mnid1: 'X0000',
+              Mnid2: 'X1000',
+              Mnid3: 'X140',
+              Mnnm3: 'Donut Chart',
+              Mnsrt: '004',
+              Menid: 'X140',
+              Mepop: '',
+              Device: 'A',
+              Mnetc: '',
+              Pwchk: '',
+              Favor: '',
+            },
+            {
+              Mnid1: 'X0000',
+              Mnid2: 'X2000',
+              Mnid3: 'X210',
+              Mnnm3: '구글',
+              Mnsrt: '001',
+              Menid: 'X210',
+              Mepop: 'X',
+              Device: 'A',
+              Mnetc: '',
+              Pwchk: '',
+              Favor: '',
+            },
+            {
+              Mnid1: 'X0000',
+              Mnid2: 'X2000',
+              Mnid3: 'X220',
+              Mnnm3: '경조금',
+              Mnsrt: '002',
+              Menid: 'X220',
+              Mepop: '',
+              Device: 'A',
+              Mnetc: '',
+              Pwchk: '',
+              Favor: '',
+            },
+          ]
+        );
+
+        aMenuLevel2.splice(
+          ...[
+            aMenuLevel2.length,
+            0,
+            {
+              Mnid1: 'X0000',
+              Mnid2: 'X1000',
+              Mnnm2: '샘플 1',
+              Mnsrt: '001',
+              Menid: 'X100',
+              Mepop: '',
+              Device: 'A',
+              Mnetc: '',
+              Pwchk: '',
+              Favor: '',
+            },
+            {
+              Mnid1: 'X0000',
+              Mnid2: 'X2000',
+              Mnnm2: '샘플 2',
+              Mnsrt: '002',
+              Menid: 'X200',
+              Mepop: '',
+              Device: 'A',
+              Mnetc: '',
+              Pwchk: '',
+              Favor: '',
+            },
+          ]
+        );
+
+        aMenuLevel1.splice(
+          ...[
+            aMenuLevel1.length,
+            0,
+            {
+              Mnid1: 'X0000',
+              Mnnm1: 'Samples',
+              Mnsrt: '999',
+              Menid: 'X000',
+              Mepop: '',
+              Device: 'A',
+              Mnetc: '',
+              Pwchk: '',
+            },
+          ]
+        );
+      }
+
       /**
        * Top 메뉴 mouseover에 의한 popover 열기
        * @param {object} oMenuButton
@@ -415,7 +439,7 @@ sap.ui.define(
         const bFavor = oContext.getProperty('Favor');
         const sUrl = '/MenuFavoriteSet';
 
-        this.oController.getModel(ServiceNames.COMMON).create(
+        this.oAppController.getModel(ServiceNames.COMMON).create(
           sUrl,
           {
             Menid: oContext.getProperty('Menid'),
@@ -426,7 +450,7 @@ sap.ui.define(
           },
           {
             success: (oData, oResponse) => {
-              this.oController.debug(`${sUrl} success.`, oData, oResponse);
+              this.debug(`${sUrl} success.`, oData, oResponse);
 
               oContext.getModel().setProperty(`${oContext.getPath()}/Favor`, bFavor ? '' : 'X');
               oEventSource.setSrc(bFavor ? 'sap-icon://unfavorite' : 'sap-icon://favorite');
@@ -434,9 +458,9 @@ sap.ui.define(
               // TODO : 즐겨찾기 portlet 갱신
             },
             error: (oError) => {
-              this.oController.debug(`${sUrl} error.`, oError);
+              this.debug(`${sUrl} error.`, oError);
 
-              MessageBox.error(this.oController.getText('MSG_00008', 'MSG_01002')); // {즐겨찾기 수정}중 오류가 발생하였습니다.
+              MessageBox.error(this.oAppController.getText('MSG_00008', 'MSG_01002')); // {즐겨찾기 수정}중 오류가 발생하였습니다.
             },
           }
         );
@@ -448,6 +472,7 @@ sap.ui.define(
        * @param {boolean} bMepop popup 메뉴 여부
        * @returns {string} anchor href 속성값
        */
+      // eslint-disable-next-line no-unused-vars
       formatMenuUrl(sMnurl, bMepop) {
         if (/^https?:/.test(sMnurl)) {
           return sMnurl;
@@ -465,6 +490,7 @@ sap.ui.define(
        * @param {boolean} bMepop popup 메뉴 여부
        * @returns {string} anchor target 속성값
        */
+      // eslint-disable-next-line no-unused-vars
       formatMenuTarget(sMnurl, bMepop) {
         if (/^https?:/.test(sMnurl)) {
           return '_blank';
@@ -487,45 +513,31 @@ sap.ui.define(
           return;
         }
 
-        AppUtils.setAppBusy(true, this.oController).setMenuBusy(true, this.oController);
+        AppUtils.setAppBusy(true, this.oAppController).setMenuBusy(true, this.oAppController);
 
         const sMenid = oContext.getProperty('Menid');
         if (/^X/.test(sMenid)) {
-          this.oController.getRouter().navTo(this.mMenuProperties[sMenid].Mnurl);
-          // this.oController
-          //   .getRouter()
-          //   .getTargets()
-          //   .display(this.mMenuProperties[sMenid].Mnurl)
-          //   .then(() => {
-          //     AppUtils.setAppBusy(false, this.oController).setMenuBusy(false, this.oController);
-          //   });
+          this.moveToMenu(this.mMenuProperties[sMenid].Mnurl);
           return;
         }
 
-        const oCommonModel = this.oController.getModel(ServiceNames.COMMON);
+        const oCommonModel = this.oAppController.getModel(ServiceNames.COMMON);
         const sUrl = oCommonModel.createKey('/GetMenuUrlSet', {
           Menid: sMenid,
         });
 
         oCommonModel.read(sUrl, {
           success: (oData, oResponse) => {
-            this.oController.debug(`${sUrl} success.`, oData, oResponse);
+            this.debug(`${sUrl} success.`, oData, oResponse);
 
             if (oData.Mnurl) {
-              this.oController.getRouter().navTo(oData.Mnurl);
-              // this.oController
-              //   .getRouter()
-              //   .getTargets()
-              //   .display(oData.Mnurl)
-              //   .then(() => {
-              //     AppUtils.setAppBusy(false, this.oController).setMenuBusy(false, this.oController);
-              //   });
+              this.moveToMenu(oData.Mnurl);
             } else {
               this.failMenuLink();
             }
           },
           error: (oError) => {
-            this.oController.debug(`${sUrl} error.`, oError);
+            this.debug(`${sUrl} error.`, oError);
 
             this.failMenuLink();
           },
@@ -534,13 +546,29 @@ sap.ui.define(
 
       failMenuLink() {
         MessageBox.error(
-          this.oController.getText('MSG_01003'), // 메뉴 오류입니다.
+          this.oAppController.getText('MSG_01003'), // 메뉴 오류입니다.
           {
             onClose: () => {
-              AppUtils.setAppBusy(false, this.oController).setMenuBusy(false, this.oController);
+              AppUtils.setAppBusy(false, this.oAppController).setMenuBusy(false, this.oAppController);
             },
           }
         );
+      }
+
+      moveToMenu(sMenuUrl) {
+        this.oAppController;
+        this.oAppController.getRouter().navTo(sMenuUrl);
+        // this.oAppController
+        //   .getRouter()
+        //   .getTargets()
+        //   .display(sMenuUrl)
+        //   .then(() => {
+        //     AppUtils.setAppBusy(false, this.oAppController).setMenuBusy(false, this.oAppController);
+        //   });
+      }
+
+      debug(...args) {
+        this.oAppController.debug(...args);
       }
     }
 

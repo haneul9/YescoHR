@@ -1,9 +1,8 @@
 <mvc:View controllerName="sap.ui.yesco.controller.App"
 	xmlns="sap.m"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:control="sap.ui.yesco.control" displayBlock="true">
-	<OverflowToolbar id="appMenuToolbar" asyncMode="true" busy="{app>/busyMenu}" busyIndicatorDelay="0" class="app-menu-toolbar">
-		<ImageContent id="logoImage" src="{ path: 'session>/Logo', formatter: '.getLogoPath' }" description="{session>/Logo} eHR Home" press=".navToHome">
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true">
+	<OverflowToolbar id="appMenuToolbar" asyncMode="true" busy="{appModel>/isMenuBusy}" busyIndicatorDelay="0" class="app-menu-toolbar">
+		<ImageContent id="logoImage" src="{ path: 'sessionModel>/Logo', formatter: '.getLogoPath' }" description="{sessionModel>/Logo} eHR Home" press=".navToHome">
 			<layoutData>
 				<OverflowToolbarLayoutData priority="NeverOverflow"/>
 			</layoutData>
@@ -17,12 +16,12 @@
 
 		<Button icon="sap-icon://bell" type="Transparent" />
 
-		<Button icon="sap-icon://action-settings" type="Transparent">
+		<Button icon="sap-icon://action-settings" type="Transparent" visible="{appModel>/isAtHome}">
 			<layoutData>
 				<OverflowToolbarLayoutData priority="NeverOverflow" />
 			</layoutData>
 		</Button>
 	</OverflowToolbar>
 
-	<App id="app" class="app-body" autoFocus="false" busy="{app>/busy}" busyIndicatorDelay="0" />
+	<App id="app" class="app-body" autoFocus="false" busy="{appModel>/isAppBusy}" busyIndicatorDelay="0" />
 </mvc:View>

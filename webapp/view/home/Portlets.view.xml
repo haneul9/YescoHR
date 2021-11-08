@@ -10,7 +10,7 @@
 			<ScrollContainer height="100%" vertical="true">
 				<!-- <ToggleButton id="reveal-grid-button" text="Reveal Grid" press="onRevealGrid" class="sapUiSmallMarginBegin sapUiSmallMarginTop sapUiTinyMarginBottom" /> -->
 				<HBox justifyContent="Center">
-					<f:GridContainer id="personalization-grid" class="sapUiSmallMarginTopBottom mx-auto" snapToRow="true">
+					<f:GridContainer id="p13n-grid" class="sapUiSmallMarginTopBottom mx-auto" snapToRow="true">
 						<f:layout>
 							<f:GridContainerSettings rowSize="150px" columns="4" columnSize="372px" gap="30px" />
 						</f:layout>
@@ -42,7 +42,7 @@
 								<ImageContent src="sap-icon://home-share"/>
 							</TileContent>
 						</GenericTile>
-						<widgets:Card manifest="{personalizationGridModel>/listContent/largeList}">
+						<widgets:Card manifest="{p13nGridModel>/listContent/largeList}">
 							<widgets:layoutData>
 								<f:GridContainerItemLayoutData minRows="2" columns="2" />
 							</widgets:layoutData>
@@ -64,12 +64,12 @@
 								</HBox>
 							</f:content>
 						</f:Card>
-						<widgets:Card manifest="{personalizationGridModel>/listContent/smallList}">
+						<widgets:Card manifest="{p13nGridModel>/listContent/smallList}">
 							<widgets:layoutData>
 								<f:GridContainerItemLayoutData minRows="2"/>
 							</widgets:layoutData>
 						</widgets:Card>
-						<widgets:Card manifest="{personalizationGridModel>/listContent/mediumList}">
+						<widgets:Card manifest="{p13nGridModel>/listContent/mediumList}">
 							<widgets:layoutData>
 								<f:GridContainerItemLayoutData minRows="3"/>
 							</widgets:layoutData>

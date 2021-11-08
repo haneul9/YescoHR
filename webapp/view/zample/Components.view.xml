@@ -5,7 +5,7 @@
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:u="sap.ui.unified"
 	xmlns:custom="sap.ui.yesco.control">
-	<Page backgroundDesign="Standard" contentOnlyBusy="false" enableScrolling="true" floatingFooter="false" navButtonTooltip="" showFooter="true" showHeader="true" showNavButton="false" showSubHeader="true" title="Components" titleLevel="Auto">
+	<Page backgroundDesign="Standard" contentOnlyBusy="false" enableScrolling="true" floatingFooter="false" navButtonTooltip="" showFooter="true" showHeader="true" showNavButton="false" showSubHeader="true" title="Sample Components" titleLevel="Auto">
 		<content>
 			<VBox width="auto">
 				<items>

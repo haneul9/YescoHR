@@ -9,12 +9,12 @@ sap.ui.define(
 
       return {
         get(bTargetChangeButtonHide = false) {
-          const oSessionModel = this.getModel('session');
+          const oSessionData = this.getModel('sessionModel').getData();
           const oViewModel = this.getViewModel();
           const oViewModelData = this.getViewModel().getData();
 
           oViewModelData.TargetInfo = {
-            ...oSessionModel.getData(),
+            ...oSessionData,
             Hide: bTargetChangeButtonHide,
           };
           oViewModel.setData(oViewModelData);

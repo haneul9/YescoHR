@@ -40,7 +40,7 @@ sap.ui.define(
         this.setModel(models.createDeviceModel(), 'device');
 
         // set busy indicator value model.
-        this.setModel(new JSONModel({ busy: true, delay: 0 }), 'app');
+        this.setModel(new JSONModel({ isAppBusy: true, delay: 0 }), 'appModel');
 
         // S4HANA odata model preload.
         const aServiceNames = ServiceManager.getServiceNames();
@@ -67,12 +67,12 @@ sap.ui.define(
               sessionData.Logo = 'unknown';
             }
 
-            this.setModel(new JSONModel(sessionData), 'session');
+            this.setModel(new JSONModel(sessionData), 'sessionModel');
           },
           error: (oError) => {
             AppUtils.debug(`${sUrl} error.`, oError);
 
-            this.setModel(new JSONModel({ Logo: 'unknown' }), 'session');
+            this.setModel(new JSONModel({ Logo: 'unknown' }), 'sessionModel');
           },
         });
 

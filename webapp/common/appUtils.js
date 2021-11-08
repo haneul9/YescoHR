@@ -14,14 +14,14 @@ sap.ui.define([], () => {
 
     setAppBusy(state, oController) {
       setTimeout(() => {
-        oController.getModel('app').setProperty('/busy', state);
+        oController.getModel('appModel').setProperty('/isAppBusy', state);
       }, 0);
       return this;
     },
 
     setMenuBusy(state, oController) {
       setTimeout(() => {
-        oController.getModel('app').setProperty('/busyMenu', state);
+        oController.getModel('appModel').setProperty('/isMenuBusy', state);
       }, 0);
       return this;
     },

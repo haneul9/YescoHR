@@ -30,6 +30,8 @@ html, body {box-sizing:border-box; overflow:hidden}
 .sampleUi .ninebox .sapMHBox.ninebox-item {margin-right:.25rem !important}
 .sampleUi .ninebox-item {margin:.25rem !important; width:11.5rem; height:4.5rem}
 .sampleUi .ninebox-item img {vertical-align:middle}
+.sampleUi .sapSuiteIDCSmallLegendPadding .sapSuiteIDCLegendLabelValue {width:calc(100% - 4rem)}
+.sampleUi .sapSuiteIDCLegend > div {height:27px !important}
 
 /**
 *   Publishing
