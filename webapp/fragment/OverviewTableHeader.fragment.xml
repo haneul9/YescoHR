@@ -8,15 +8,20 @@
         <HBox>
             <HBox>
                 <core:Icon src="sap-icon://circle-task-2" color="#bdbdbd" />
-                <Label text="{i18n>LABEL_00128} {/listinfo/progressCount}"/>
+                <ObjectStatus text="{i18n>LABEL_00130} {/listinfo/progressCount}" state="None" />
+                <!-- <Label text="{i18n>LABEL_00128} {/listinfo/progressCount}"/> -->
                 <core:Icon src="sap-icon://circle-task-2" color="#ffc107" />
-                <Label text="{i18n>LABEL_00121} {/listinfo/applyCount}"/>
+                <ObjectStatus text="{i18n>LABEL_00121} {/listinfo/applyCount}" state="Indication03" />
+                <!-- <Label text="{i18n>LABEL_00121} {/listinfo/applyCount}"/> -->
                 <core:Icon src="sap-icon://circle-task-2" color="#28a745" />
-                <Label text="{i18n>LABEL_00123} {/listinfo/approveCount}"/>
+                <ObjectStatus text="{i18n>LABEL_00123} {/listinfo/approveCount}" state="Indication04" />
+                <!-- <Label text="{i18n>LABEL_00123} {/listinfo/approveCount}"/> -->
                 <core:Icon src="sap-icon://circle-task-2" color="#dc3545" />
-                <Label text="{i18n>LABEL_00124} {/listinfo/rejectCount}"/>
+                <ObjectStatus text="{i18n>LABEL_00124} {/listinfo/rejectCount}" state="Indication02" />
+                <!-- <Label text="{i18n>LABEL_00124} {/listinfo/rejectCount}"/> -->
                 <core:Icon src="sap-icon://circle-task-2" color="#1d85c8" />
-                <Label text="{i18n>LABEL_00117} {/listinfo/completeCount}"/>
+                <ObjectStatus text="{i18n>LABEL_00117} {/listinfo/completeCount}" state="Indication05" />
+                <!-- <Label text="{i18n>LABEL_00117} {/listinfo/completeCount}"/> -->
             </HBox>
             <Button icon="sap-icon://excel-attachment" text="Excel" press=".onExelDownload" busyIndicatorDelay="0" busy="{/busy}" />
         </HBox>

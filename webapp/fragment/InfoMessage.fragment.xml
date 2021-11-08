@@ -1,9 +1,9 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <HBox id='InfoMegBox' justifyContent="SpaceBetween" visible="true">
+    <HBox id="InfoMegBox" justifyContent="SpaceBetween" class="vCardBox">
         <HBox>
             <core:Icon src="sap-icon://travel-request"/>
-            <Text text="{= !${/InfoMessage} ? '안내를 위한 공간입니다.' : ${/InfoMessage} }"/>
+            <Text text="{= !${/InfoMessage} ? ${i18n>MSG_00036} : ${/InfoMessage} }"/>
         </HBox>
         <Button press=".formatter.onInfoMsgClose" type="Transparent" icon="sap-icon://decline" />
     </HBox>

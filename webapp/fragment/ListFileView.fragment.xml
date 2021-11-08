@@ -2,7 +2,7 @@
     xmlns:core="sap.ui.core"
     xmlns:table="sap.ui.table">
 
-    <Dialog id= "listFileDialog" title= '첨부파일' contentWidth= '500px' contentHeight= '200px'
+    <Dialog id= "listFileDialog" busyIndicatorDelay="0" busy="{/Data/busy}" title= '{i18n>LABEL_00248}' contentWidth= '500px' contentHeight= '120px'
 >
 <beginButton>
 <Button text="Close" press=".formatter.onCloseClick" />
@@ -12,10 +12,10 @@
         <table:columns>
             <table:Column width="5%">
                 <table:template>
-                    <Text text="{Seqnr}" wrapping="false" />
+                    <Text text="{Seqnr}" width="100%" textAlign="Center" />
                 </table:template>
             </table:Column>
-            <table:Column width="10%">
+            <table:Column width="10%" visible="{= !!${Gubun}}">
                 <table:template>
                     <Text text="{Gubun}" wrapping="false" />
                 </table:template>

@@ -3,16 +3,16 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:core="sap.ui.core"
     xmlns:u="sap.ui.unified">
-    <VBox id="ATTACHBOX">
+    <VBox id="ATTACHBOX" class="vCardBox">
         <HBox justifyContent="SpaceBetween">
             <HBox>
-                <Title level="H2" text="첨부파일" />
-                <Text text="증빙자료를 꼭 등록 해주세요."/>
+                <Title level="H2" text="{i18n>LABEL_00248}" />
+                <Text text="{i18n>MSG_00037}"/>
             </HBox>
             <HBox>
-                <u:FileUploader id="ATTACHFILE_BTN" visible="{/Settings/Editable}" maximumFileSize="{/Settings/maximumFileSize}" fileType="{/Settings/FileTypes}" change=".AttachFileAction.onFileChange" uploadComplete= ".uploadComplete" icon="sap-icon://add" buttonText= "추가" buttonOnly= "true"/>
+                <u:FileUploader id="ATTACHFILE_BTN" visible="{/Settings/Editable}" maximumFileSize="{/Settings/maximumFileSize}" fileType="{/Settings/FileTypes}" change=".AttachFileAction.onFileChange" uploadComplete= ".uploadComplete" icon="sap-icon://add" buttonText= "{i18n>LABEL_00107}" buttonOnly= "true"/>
                 <!-- <Button icon="sap-icon://add" text="추가" /> -->
-                <Button icon="sap-icon://less" visible="{/Settings/Editable}" text="삭제" press=".AttachFileAction.onDeleteAttachFile" />
+                <Button icon="sap-icon://less" visible="{/Settings/Editable}" text="{i18n>LABEL_00110}" press=".AttachFileAction.onDeleteAttachFile" />
             </HBox>
         </HBox>
         <table:Table id="attachTable" width="100%" selectionMode="MultiToggle" columnHeaderHeight="38" rowHeight="37" visibleRowCount="1" rows="{/Data}">
@@ -24,7 +24,7 @@
                     </table:template>
                 </table:Column>
                 <table:Column width="8%" visible="{/Settings/Gubun}">
-                    <Label text="유형"/>
+                    <Label text="{i18n>LABEL_00143}"/>
                     <table:template>
                         <Select selectedKey="{Gubun}" editable="{/Settings/EditGubun}">
                             <!-- <core:Item key="00" text="선택" />
@@ -34,7 +34,7 @@
                     </table:template>
                 </table:Column>
                 <table:Column>
-                    <Label text="첨부파일" width="100%" />
+                    <Label text="{i18n>LABEL_00248}" width="100%" />
                     <table:template>
                         <Link press=".AttachFileAction.onFileLink" text="{Zfilename}" width="100%" textAlign="Begin" />
                     </table:template>
