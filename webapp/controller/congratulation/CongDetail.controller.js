@@ -121,7 +121,7 @@ sap.ui.define(
                   oDetailModel.setProperty("/ApplyInfo", {
                     Appernr: oDetailModel.getProperty("/TargetInfo/Pernr"),
                     Apename: oDetailModel.getProperty("/TargetInfo/Ename"),
-                    Apjikgbtl: oDetailModel.getProperty("/TargetInfo/Zzjiktlt"),
+                    Apjikgbtl: oDetailModel.getProperty("/TargetInfo/Apjikgbtl"),
                     Appdt: new Date(),
                   });
                 }
