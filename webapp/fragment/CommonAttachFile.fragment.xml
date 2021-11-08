@@ -10,7 +10,7 @@
                 <Text text="증빙자료를 꼭 등록 해주세요."/>
             </HBox>
             <HBox>
-                <u:FileUploader id="ATTACHFILE_BTN" visible="{/Settings/Editable}" maximumFileSize="10" multiple="true" change=".AttachFileAction.onFileChange" uploadComplete= ".uploadComplete" icon="sap-icon://add" buttonText= "추가" buttonOnly= "true"/>
+                <u:FileUploader id="ATTACHFILE_BTN" visible="{/Settings/Editable}" maximumFileSize="{/Settings/maximumFileSize}" fileType="{/Settings/FileTypes}" change=".AttachFileAction.onFileChange" uploadComplete= ".uploadComplete" icon="sap-icon://add" buttonText= "추가" buttonOnly= "true"/>
                 <!-- <Button icon="sap-icon://add" text="추가" /> -->
                 <Button icon="sap-icon://less" visible="{/Settings/Editable}" text="삭제" press=".AttachFileAction.onDeleteAttachFile" />
             </HBox>
