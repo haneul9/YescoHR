@@ -83,7 +83,7 @@
 					<table:rowSettingsTemplate>
 						<table:RowSettings highlight="{
 							path: 'ZappStatAl',
-							formatter: '.rowHighlight'
+							formatter: '.formatter.rowHighlight'
 						}"/>
 					</table:rowSettingsTemplate>
 					<table:columns>
@@ -98,7 +98,7 @@
 							<table:template>
 								<ObjectStatus text="{ZappStxtAl}" state="{
 										path: 'ZappStatAl',
-										formatter: '.rowHighlight'
+										formatter: '.formatter.rowHighlight'
 									}" />
 								<!-- <Text text="{ZappStxtAl}" width="100%" textAlign="Center" wrapping="false"> -->
 								<!-- <customData> <core:CustomData key="status" value="{ZappStatAl}" writeToDom="true" />
@@ -181,7 +181,8 @@
 						<table:Column width="50px">
 							<Label text="증빙"/>
 							<table:template>
-								<Text text="{Docynt}" textAlign="Center" width="100%" wrapping="false" />
+								<Button icon="sap-icon://attachment" press=".formatter.onFileListDialog" visible="{= ${Docyn} === 'Y' }"/>
+								<!-- <Text text="{Docynt}" textAlign="Center" width="100%" wrapping="false" /> -->
 							</table:template>
 						</table:Column>
 						<table:Column width="auto">

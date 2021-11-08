@@ -28,6 +28,7 @@ sap.ui.define(
           super();
           this.formatter = formatter;
           this.AttachFileAction = AttachFileAction;
+          this.TypeCode = 'HR01'
         }
 
         onBeforeShow() {    
@@ -120,7 +121,7 @@ sap.ui.define(
                   oDetailModel.setProperty("/ApplyInfo", {
                     Appernr: oDetailModel.getProperty("/TargetInfo/Pernr"),
                     Apename: oDetailModel.getProperty("/TargetInfo/Ename"),
-                    Apjikgbtl: oDetailModel.getProperty("/TargetInfo/Zzjiktlt"),
+                    Apjikgbtl: oDetailModel.getProperty("/TargetInfo/Apjikgbtl"),
                     Appdt: new Date(),
                   });
                 }
@@ -491,8 +492,13 @@ sap.ui.define(
                     // FileUpload
                     AttachFileAction.uploadFile.call(oController, oDetailModel.getProperty("/FormData/Appno"), "HR01");
 
-                    MessageBox.alert("저장되었습니다.", { title: "안내"});
-                    oController.getRouter().navTo("congratulation");
+                    MessageBox.alert("저장되었습니다.", { 
+                      title: "안내", 
+                      onClose: function() {
+                        oController.getRouter().navTo("congratulation");
+                      }
+                    });
+                    // oController.getRouter().navTo("congratulation");
                   },
                   error: function (oRespnse) {
                     // Common.log(oResponse);
@@ -537,8 +543,12 @@ sap.ui.define(
                     // FileUpload
                     AttachFileAction.uploadFile.call(oController, oDetailModel.getProperty("/FormData/Appno"), "HR01");
 
-                    MessageBox.alert("신청되었습니다.", { title: "안내"});  
-                    oController.getRouter().navTo("congratulation");
+                    MessageBox.alert("신청되었습니다.", { 
+                      title: "안내", 
+                      onClose: function() {
+                        oController.getRouter().navTo("congratulation");
+                      }
+                    });  
                   },
                   error: function (oRespnse) {
                     // Common.log(oResponse);
@@ -572,8 +582,12 @@ sap.ui.define(
               oModel.create("/ConExpenseApplSet", oSendObject, {
                 async: false,
                 success: function () {
-                  MessageBox.alert("신청이 취소되었습니다.", { title: "안내"});
-                  oController.getRouter().navTo("congratulation");
+                  MessageBox.alert("신청이 취소되었습니다.", { 
+                    title: "안내",
+                    onClose: function() {
+                      oController.getRouter().navTo("congratulation");
+                    }
+                  });
                 },
                 error: function (oRespnse) {
                   // Common.log(oResponse);
@@ -605,8 +619,12 @@ sap.ui.define(
               oModel.remove(sPath, {
                 async: false,
                 success: function () {
-                  MessageBox.alert("삭제되었습니다.", { title: "안내"});
-                  oController.getRouter().navTo("congratulation");
+                  MessageBox.alert("삭제되었습니다.", { 
+                    title: "안내",
+                    onClose: function(oEvent) {
+                      oController.getRouter().navTo("congratulation");
+                    }
+                  });
                 },
                 error: function (oRespnse) {
                   // Common.log(oResponse);
@@ -628,10 +646,17 @@ sap.ui.define(
           const sStatus = oDetailModel.getProperty("/FormData/ZappStatAl");
           const sAppno = oDetailModel.getProperty("/FormData/Appno") || '';
 
-          oDetailModel.setProperty("/Settings/Editable", !sStatus || sStatus === '10');
-          oDetailModel.setProperty("/Settings/Gubun", false);
+          AttachFileAction.setAttachFile(oController, {
+            Editable: !sStatus || sStatus === '10',
+            Type: oController.TypeCode,
+            Appno: sAppno,
+            Max: 10,
+            FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
+          });
+          // oDetailModel.setProperty("/Settings/Editable", !sStatus || sStatus === '10');
+          // oDetailModel.setProperty("/Settings/Gubun", false);
 
-          AttachFileAction.refreshAttachFileList.call(this, sAppno, 'HR01');
+          // AttachFileAction.refreshAttachFileList.call(this, sAppno, 'HR01');
         }
       }
       

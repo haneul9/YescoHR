@@ -10,8 +10,10 @@
             <VBox>
                 <Text text="{/TargetInfo/Ename}"/>
                 <HBox>
-                    <Text text="{/TargetInfo/Zzjiktlt}"/>
-                    <Text text="{/TargetInfo/Zzjikcht}"/>
+                    <Text text="{
+                        path: '/TargetInfo/Zzjikgbt',
+                        formatter: '.formatter.getPosition'
+                    }"/>
                 </HBox>
                 <HBox>
                     <Text text="{/TargetInfo/Pbtxt}"/>

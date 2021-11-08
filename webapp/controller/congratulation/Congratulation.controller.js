@@ -5,6 +5,7 @@ sap.ui.define(
     'sap/ui/yesco/common/EmpInfo',
     '../BaseController',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/extension/moment',
   ],
   (
@@ -12,7 +13,8 @@ sap.ui.define(
     formatter,
     EmpInfo,
     BaseController,
-    ServiceNames
+    ServiceNames,
+    AttachFileAction
   ) => {
     'use strict';
 
@@ -20,6 +22,8 @@ sap.ui.define(
       constructor() {
         super();
         this.formatter = formatter;
+        this.AttachFileAction = AttachFileAction;
+        this.TypeCode = 'HR01'
       }
 
       onBeforeShow() {
@@ -40,27 +44,6 @@ sap.ui.define(
         this.onSearch();
         this.getTotalPay();
         super.onAfterShow();
-      }
-
-      rowHighlight(sValue) {
-        switch (sValue) {
-          case '10':
-          case '90':
-            return sap.ui.core.IndicationColor.Indication01;
-          case '20':
-          case '30':
-          case '50':
-            return sap.ui.core.IndicationColor.Indication03;
-          case '40':
-            return sap.ui.core.IndicationColor.Indication04;
-          case '45':
-          case '65':
-            return sap.ui.core.IndicationColor.Indication02;
-          case '60':
-            return sap.ui.core.IndicationColor.Indication05;
-          default:
-            return null;
-        }
       }
 
       onClick() {

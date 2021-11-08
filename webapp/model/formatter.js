@@ -1,4 +1,11 @@
-sap.ui.define([], () => {
+sap.ui.define(
+  [
+    'sap/ui/core/Fragment',
+    'sap/ui/yesco/common/AttachFileAction',
+  ], (
+    Fragment,
+    AttachFileAction,
+  ) => {
   'use strict';
 
   return {
@@ -15,6 +22,14 @@ sap.ui.define([], () => {
       }
 
       return parseFloat(sValue).toFixed(2);
+    },
+
+    getPosition() {
+      const oViewModel = this.getViewModel();
+
+      if(!oViewModel.getProperty("/TargetInfo/Zzjikgbt")) return; 
+
+      return `${oViewModel.getProperty("/TargetInfo/Zzjikgbt")}/${oViewModel.getProperty("/TargetInfo/Zzjiktlt")}`;
     },
 
     setAppdt(vAppdt) {
@@ -41,17 +56,48 @@ sap.ui.define([], () => {
     rowHighlight(sValue) {
       switch (sValue) {
         case '10':
+        case '90':
           return sap.ui.core.IndicationColor.Indication01;
         case '20':
+        case '30':
+        case '50':
           return sap.ui.core.IndicationColor.Indication03;
         case '40':
           return sap.ui.core.IndicationColor.Indication04;
         case '45':
+        case '65':
           return sap.ui.core.IndicationColor.Indication02;
         case '60':
           return sap.ui.core.IndicationColor.Indication05;
         default:
           return null;
+      }
+    },
+
+    onCloseClick() {
+      this.byId('listFileDialog').close();
+    },
+
+    onFileListDialog(oEvent) {
+      // load asynchronous XML fragment
+      const vPath = oEvent.getSource().getBindingContext().getPath();
+      const oRowData = this.getViewModel().getProperty(vPath);
+
+      if (!this.byId('listFileDialog')) {
+        Fragment.load({
+          id: this.getView().getId(),
+          name: 'sap.ui.yesco.fragment.ListFileView',
+          controller: this,
+        }).then((oDialog) => {
+          // connect dialog to the root view of this component (models, lifecycle)
+          this.getView().addDependent(oDialog);
+          oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
+          this.AttachFileAction.setTableFileList(this, oRowData);
+          oDialog.open();
+        });
+      } else {
+        this.AttachFileAction.setTableFileList(this, oRowData);
+        this.byId('listFileDialog').open();
       }
     },
   };
