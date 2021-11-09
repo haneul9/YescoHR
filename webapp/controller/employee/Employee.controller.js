@@ -8,7 +8,7 @@ sap.ui.define(
     'sap/ui/yesco/controller/BaseController',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/EmpInfo',
-    'sap/ui/yesco/common/TableUtils3',
+    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/extension/moment',
     'sap/ui/yesco/extension/lodash',
@@ -22,7 +22,7 @@ sap.ui.define(
     BaseController,
     ServiceNames,
     EmpInfo,
-    TableUtils3,
+    TableUtils,
     MessageBox
   ) => {
     'use strict';
@@ -30,7 +30,7 @@ sap.ui.define(
     class Employee extends BaseController {
       constructor() {
         super();
-        this.formatter = TableUtils3;
+        this.formatter = TableUtils;
       }
 
       onBeforeShow() {
