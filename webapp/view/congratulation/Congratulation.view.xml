@@ -81,7 +81,7 @@
 										}" />
 									<!-- <Text text="{
 										path: 'ZappStatAl',
-										formatter: '.TableUtils.StatusTxt'
+										formatter: '.Tableutil.StatusTxt'
 									}" width="100%" textAlign="Center"> -->
 									<!-- <customData>
 										<core:CustomData key="status" value="{ZappStatAl}" writeToDom="true" />
@@ -164,7 +164,7 @@
 							<table:Column width="90px">
 								<Label text="{i18n>LABEL_00133}"/>
 								<table:template>
-									<Button icon="sap-icon://attachment" class="w-100" press=".TableUtils.onFileListDialog" visible="{= ${Docyn} === 'Y' }"/>
+									<Button icon="sap-icon://attachment" class="w-100" press=".Tableutil.onFileListDialog" visible="{= ${Docyn} === 'Y' }"/>
 									<!-- <Text text="{Docynt}" textAlign="Center" width="100%" wrapping="false" /> -->
 								</table:template>
 							</table:Column>
