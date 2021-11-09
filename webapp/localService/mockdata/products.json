@@ -2595,6 +2595,76 @@
 			"DimUnit": "cm"
 		}
 	],
+	"hospitalCollection": [
+		{
+			"Idx": "1",
+			"Begda": "2021.10.12",
+			"Endda": "2021.10.12",
+			"Todo1": "장염",
+			"Todo2": "낫는다병원",
+			"Todo3": "병원",
+			"Todo4": "10,000",
+			"Todo5": "",
+			"Todo6": "100,000",
+			"Todo7": "",
+			"Todo8": "",
+			"Todo9": "",
+			"Todo10": "",
+			"Todo11": "",
+			"Todo12": ""
+		},
+		{
+			"Idx": "2",
+			"Begda": "2021.10.12",
+			"Endda": "2021.10.12",
+			"Todo1": "장염",
+			"Todo2": "낫는다병원",
+			"Todo3": "병원",
+			"Todo4": "10,000",
+			"Todo5": "",
+			"Todo6": "100,000",
+			"Todo7": "",
+			"Todo8": "",
+			"Todo9": "",
+			"Todo10": "",
+			"Todo11": "",
+			"Todo12": ""
+		},
+		{
+			"Idx": "3",
+			"Begda": "2021.10.12",
+			"Endda": "2021.10.12",
+			"Todo1": "장염",
+			"Todo2": "낫는다병원",
+			"Todo3": "병원",
+			"Todo4": "10,000",
+			"Todo5": "",
+			"Todo6": "100,000",
+			"Todo7": "",
+			"Todo8": "",
+			"Todo9": "",
+			"Todo10": "",
+			"Todo11": "",
+			"Todo12": ""
+		},
+		{
+			"Idx": "합계",
+			"Begda": "합계",
+			"Endda": "합계",
+			"Todo1": "합계",
+			"Todo2": "합계",
+			"Todo3": "합계",
+			"Todo4": "30,000",
+			"Todo5": "",
+			"Todo6": "300,000",
+			"Todo7": "",
+			"Todo8": "",
+			"Todo9": "",
+			"Todo10": "",
+			"Todo11": "",
+			"Todo12": ""
+		}
+	],
 	"ProductCollectionStats": {
 		"Counts": {
 			"Total": 123,

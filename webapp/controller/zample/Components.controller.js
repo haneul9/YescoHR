@@ -8,6 +8,7 @@ sap.ui.define(
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/controller/BaseController',
     'sap/ui/yesco/model/formatter',
+    'sap/ui/yesco/common/TableUtils',
   ],
   (
     // prettier 방지용 주석
@@ -17,7 +18,8 @@ sap.ui.define(
     FilterOperator,
     JSONModel,
     BaseController,
-    formatter
+    formatter,
+    TableUtils
   ) => {
     'use strict';
 
@@ -36,6 +38,39 @@ sap.ui.define(
         // The default limit of the model is set to 100. We want to show all the entries.
         oModel.setSizeLimit(100000);
         this.getView().setModel(oModel);
+
+        const oTable = this.byId('groupTable');
+
+        if (oTable) {
+          oTable.addEventDelegate(
+            {
+              onAfterRendering: function () {
+                TableUtils.adjustRowSpan({
+                  table: this,
+                  colIndices: [0, 1, 2, 3, 4, 5],
+                  theadOrTbody: 'header',
+                });
+
+                this.summaryColspan();
+              },
+            },
+            oTable
+          );
+        }
+      }
+
+      summaryColspan() {
+        const $firstTD = $('#container-ehr---sampleComponents--groupTable-rows-row3-col0');
+        const $firstCheckbox = $('#container-ehr---sampleComponents--groupTable-rowsel3');
+        const aHideTDs = [1, 2, 3, 4, 5];
+
+        $firstTD.attr('colspan', 6);
+        $firstCheckbox.hide();
+
+        aHideTDs.forEach((idx) => {
+          const $selectTD = $(`#container-ehr---sampleComponents--groupTable-rows-row3-col${idx}`);
+          $selectTD.hide();
+        });
       }
 
       /* =========================================================== */
