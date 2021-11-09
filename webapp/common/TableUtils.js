@@ -142,7 +142,7 @@ sap.ui.define(
           case STATE_IN_PROGRESS1:
           case STATE_IN_PROGRESS2:
             // 작성중
-            return sap.ui.core.IndicationColor.Indication01;
+            return sap.ui.core.IndicationColor.None;
           case STATE_APPLY1:
           case STATE_APPLY2:
           case STATE_APPLY3:

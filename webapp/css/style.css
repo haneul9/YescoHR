@@ -1086,7 +1086,7 @@ html.sap-desktop .sapMSwtCont:focus > .sapMSwt {
 }
 /* .data-algin-center .sapUiTableCtrl tbody .sapUiTableCellInner {text-align: center;} */
 
-.sapUiTableRowHighlight.sapUiTableRowHighlightIndication01 {
+.sapUiTableRowHighlight.sapUiTableRowHighlightNone {
   background-color: var(--BorderColorReadonly) !important;
 }
 .sapUiTableRowHighlight.sapUiTableRowHighlightIndication02 {
@@ -1238,6 +1238,7 @@ button .sapMBtnTransparent {
 } /* table Cell */
 .sapUiTableCtrlRowFixedBottom .sapUiTableContentRow .sapUiTableCell .sapUiTableCellInner {
   font-weight: 700;
+  text-align: center;
 }
 .sapUiTableRowFirstFixedBottom {
   background-color: #f3f3f3 !important;

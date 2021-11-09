@@ -109,12 +109,12 @@
           "target": "m/congratulation"
         },
         {
-          "pattern": "congratulation/congDetail/{oDataKey}",
+          "pattern": "congratulation/{oDataKey}",
           "name": "congratulation-detail",
           "target": "congDetail"
         },
         {
-          "pattern": "m/congratulation/congDetail/{oDataKey}",
+          "pattern": "m/congratulation/{oDataKey}",
           "name": "congDetailMobile",
           "target": "m/congDetail"
         },
