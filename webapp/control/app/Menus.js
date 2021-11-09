@@ -151,8 +151,8 @@ sap.ui.define(
         if (/^javascript:/.test(sMnurl)) {
           return sMnurl;
         }
-        // return 'javascript:;'; // Routing URL 노출을 막기위해 anchor의 href 속성에서 URL을 제거
-        return `${location.origin}${location.pathname}#/${(sMnurl || '').replace(/^\/+/, '')}`;
+        return 'javascript:;'; // Routing URL 노출을 막기위해 anchor의 href 속성에서 URL을 제거
+        // return `${location.origin}${location.pathname}#/${(sMnurl || '').replace(/^\/+/, '')}`;
       }
 
       /**
