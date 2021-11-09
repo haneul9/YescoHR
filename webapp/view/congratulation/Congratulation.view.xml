@@ -65,7 +65,7 @@
 						<table:rowSettingsTemplate>
 							<table:RowSettings highlight="{
 							path: 'ZappStatAl',
-							formatter: '.TableUtils.rowHighlight'
+							formatter: '.Tableutil.rowHighlight'
 						}"/>
 						</table:rowSettingsTemplate>
 						<table:columns>
@@ -74,10 +74,10 @@
 								<table:template>
 									<ObjectStatus text="{
 											path: 'ZappStatAl',
-											formatter: '.TableUtils.StatusTxt'
+											formatter: '.Tableutil.StatusTxt'
 										}" state="{
 											path: 'ZappStatAl',
-											formatter: '.TableUtils.rowHighlight'
+											formatter: '.Tableutil.rowHighlight'
 										}" />
 									<!-- <Text text="{
 										path: 'ZappStatAl',
@@ -158,7 +158,7 @@
 							<table:Column width="100px">
 								<Label text="{i18n>LABEL_02011}"/>
 								<table:template>
-									<Text text="{ZpayBetT}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+									<Text text="{ZpayBetT}" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
 								</table:template>
 							</table:Column>
 							<table:Column width="90px">

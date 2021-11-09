@@ -159,7 +159,7 @@ sap.ui.define(
             // 완료
             return sap.ui.core.IndicationColor.Indication05;
           default:
-            return null;
+            return '';
         }
       },
 
