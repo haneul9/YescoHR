@@ -65,7 +65,7 @@
 						<table:rowSettingsTemplate>
 							<table:RowSettings highlight="{
 							path: 'ZappStatAl',
-							formatter: '.TableUtils.rowHighlight'
+							formatter: '.TableUtils3.rowHighlight'
 						}"/>
 						</table:rowSettingsTemplate>
 						<table:columns>
@@ -74,14 +74,14 @@
 								<table:template>
 									<ObjectStatus text="{
 											path: 'ZappStatAl',
-											formatter: '.TableUtils.StatusTxt'
+											formatter: '.TableUtils3.StatusTxt'
 										}" state="{
 											path: 'ZappStatAl',
-											formatter: '.TableUtils.rowHighlight'
+											formatter: '.TableUtils3.rowHighlight'
 										}" />
 									<!-- <Text text="{
 										path: 'ZappStatAl',
-										formatter: '.TableUtils.StatusTxt'
+										formatter: '.TableUtils3.StatusTxt'
 									}" width="100%" textAlign="Center"> -->
 									<!-- <customData>
 										<core:CustomData key="status" value="{ZappStatAl}" writeToDom="true" />
@@ -164,7 +164,7 @@
 							<table:Column width="90px">
 								<Label text="{i18n>LABEL_00133}"/>
 								<table:template>
-									<Button icon="sap-icon://attachment" class="w-100" press=".TableUtils.onFileListDialog" visible="{= ${Docyn} === 'Y' }"/>
+									<Button icon="sap-icon://attachment" class="w-100" press=".TableUtils3.onFileListDialog" visible="{= ${Docyn} === 'Y' }"/>
 									<!-- <Text text="{Docynt}" textAlign="Center" width="100%" wrapping="false" /> -->
 								</table:template>
 							</table:Column>
