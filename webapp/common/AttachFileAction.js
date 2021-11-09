@@ -128,7 +128,7 @@ sap.ui.define(
 
                 if(!vFileInfo) return;
 
-                window.open(vFileInfo.Url, '_blank');
+                window.open(vFileInfo.Fileuri, '_blank');
             },
 
             /*
