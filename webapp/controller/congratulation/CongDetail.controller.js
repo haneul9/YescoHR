@@ -3,7 +3,7 @@ sap.ui.define(
     [
       'sap/ui/model/json/JSONModel',
       'sap/ui/core/Fragment',
-      'sap/m/MessageBox',
+      'sap/ui/yesco/control/MessageBox',
       '../../model/formatter',
       'sap/ui/yesco/common/EmpInfo',
       'sap/ui/yesco/controller/BaseController',
@@ -32,21 +32,26 @@ sap.ui.define(
         }
 
         onBeforeShow() {    
-          const oViewModel = new JSONModel({ FormData: {}, Settings: {} });
+          const oViewModel = new JSONModel({ 
+            FormData: {}, 
+            Settings: {},
+            busy: false
+          });
           this.setViewModel(oViewModel);
 
+          this.getViewModel().setProperty("/busy", true);
           EmpInfo.get.call(this);
           this.getRouter().getRoute("congDetail").attachPatternMatched(this.onObjectMatched, this);
-
-          setTimeout(() => {
-            this.settingsAttachTable(this);
-          }, 200);
         }
 
         onAfterShow() {
-          setTimeout(() => {
+          new Promise(resolve => {
+            this.settingsAttachTable(this);
             this.getBenefitType(this);
-          }, 0);
+            resolve();
+          }).then(() => {
+            this.getViewModel().setProperty("/busy", false);
+          });
 
           super.onAfterShow();
         }
@@ -87,7 +92,7 @@ sap.ui.define(
 
                 oDetailModel.setProperty("/FormData", oTargetData);
                 oDetailModel.setProperty("/ApplyInfo", oTargetData);
-                oDetailModel.setProperty("/PaymentDetails", oTargetData);
+                oDetailModel.setProperty("/ApprovalDetails", oTargetData);
               }
             },
             error: function (oRespnse) {
@@ -121,7 +126,7 @@ sap.ui.define(
                   oDetailModel.setProperty("/ApplyInfo", {
                     Appernr: oDetailModel.getProperty("/TargetInfo/Pernr"),
                     Apename: oDetailModel.getProperty("/TargetInfo/Ename"),
-                    Apjikgbtl: oDetailModel.getProperty("/TargetInfo/Apjikgbtl"),
+                    Apjikgbtl: `${oDetailModel.getProperty("/TargetInfo/Zzjikgbt")}/${oDetailModel.getProperty("/TargetInfo/Zzjiktlt")}`,
                     Appdt: new Date(),
                   });
                 }
@@ -132,7 +137,10 @@ sap.ui.define(
               }
             },
             error: function (oRespnse) {
-              // Common.log(oResponse);
+              console.log(oRespnse);
+              const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
+
+              MessageBox.alert(vErrorMSG);
             }
           });
         }
@@ -172,7 +180,10 @@ sap.ui.define(
               }
             },
             error: function (oRespnse) {
-              // Common.log(oResponse);
+              console.log(oRespnse);
+              const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
+
+              MessageBox.alert(vErrorMSG);
             }
           });
         }
@@ -209,22 +220,28 @@ sap.ui.define(
               if (oData) {
                 const oResult = oData.results;
                 const oRelationBtn = oController.byId("RelationBtn");
+                const oRelationTxt = oController.byId("RelationTxt");
 
                 oDetailModel.setProperty('/BenefitRelation', oResult);
 
                 if(!!oResult[0] && oResult[0].Zcode === "ME") {
                   oController.onTargetDialog.call(oController);
                   oRelationBtn.setEnabled(false);
+                  oRelationTxt.setEditable(false);
                 }else {
                   oDetailModel.setProperty("/FormData/Zbirthday", null);
                   oDetailModel.setProperty("/FormData/Kdsvh", "");
                   oDetailModel.setProperty("/FormData/Zname", "");
                   oRelationBtn.setEnabled(true);
+                  oRelationTxt.setEditable(true);
                 }
               }
             },
             error: function (oRespnse) {
-              // Common.log(oResponse);
+              console.log(oRespnse);
+              const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
+
+              MessageBox.alert(vErrorMSG);
             }
           });
         }
@@ -268,7 +285,10 @@ sap.ui.define(
               }
             },
             error: function (oRespnse) {
-              // Common.log(oResponse);
+              console.log(oRespnse);
+              const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
+
+              MessageBox.alert(vErrorMSG);
             }
           });
         }
@@ -327,7 +347,10 @@ sap.ui.define(
               }
             },
             error: function (oRespnse) {
-              // Common.log(oResponse);
+              console.log(oRespnse);
+              const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
+
+              MessageBox.alert(vErrorMSG);
             }
           });
         }
@@ -354,25 +377,21 @@ sap.ui.define(
     
           // 대상자 생년월일
           if(!oDetailModel.getProperty('/FormData/Zbirthday')) {
-            MessageBox.error("대상자 생년월일을 선택하세요.", { title: "안내"});
             return true;
           }
     
           // 경조일
           if(!oDetailModel.getProperty('/FormData/Conddate')) {
-            MessageBox.error("경조일을 선택하세요.", { title: "안내"});
             return true;
           }    
     
           // 대상자 성명
           if(!oDetailModel.getProperty('/FormData/Zname')) {
-            MessageBox.error("대상자 성명을 입력하세요.", { title: "안내"});
             return true;
           }
     
           // 행사장소
           if(!oDetailModel.getProperty('/FormData/Zeloc')) {
-            MessageBox.error("행사장소를 입력하세요.", { title: "안내"});
             return true;
           }
     
@@ -419,7 +438,10 @@ sap.ui.define(
               }
             },
             error: function (oRespnse) {
-              // Common.log(oResponse);
+              console.log(oRespnse);
+              const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
+
+              MessageBox.alert(vErrorMSG);
             }
           });
         }
@@ -493,7 +515,6 @@ sap.ui.define(
                     AttachFileAction.uploadFile.call(oController, oDetailModel.getProperty("/FormData/Appno"), "HR01");
 
                     MessageBox.alert("저장되었습니다.", { 
-                      title: "안내", 
                       onClose: function() {
                         oController.getRouter().navTo("congratulation");
                       }
@@ -501,7 +522,10 @@ sap.ui.define(
                     // oController.getRouter().navTo("congratulation");
                   },
                   error: function (oRespnse) {
-                    // Common.log(oResponse);
+                    console.log(oRespnse);
+                    const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
+
+                    MessageBox.alert(vErrorMSG);
                   }
                 })
               }, 500);
@@ -544,14 +568,16 @@ sap.ui.define(
                     AttachFileAction.uploadFile.call(oController, oDetailModel.getProperty("/FormData/Appno"), "HR01");
 
                     MessageBox.alert("신청되었습니다.", { 
-                      title: "안내", 
                       onClose: function() {
                         oController.getRouter().navTo("congratulation");
                       }
                     });  
                   },
                   error: function (oRespnse) {
-                    // Common.log(oResponse);
+                    console.log(oRespnse);
+                    const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
+
+                    MessageBox.alert(vErrorMSG);
                   }
                 })
               }, 500);
@@ -583,14 +609,16 @@ sap.ui.define(
                 async: false,
                 success: function () {
                   MessageBox.alert("신청이 취소되었습니다.", { 
-                    title: "안내",
                     onClose: function() {
                       oController.getRouter().navTo("congratulation");
                     }
                   });
                 },
                 error: function (oRespnse) {
-                  // Common.log(oResponse);
+                  console.log(oRespnse);
+                  const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
+
+                  MessageBox.alert(vErrorMSG);
                 }
               })
             }
@@ -620,14 +648,16 @@ sap.ui.define(
                 async: false,
                 success: function () {
                   MessageBox.alert("삭제되었습니다.", { 
-                    title: "안내",
                     onClose: function(oEvent) {
                       oController.getRouter().navTo("congratulation");
                     }
                   });
                 },
                 error: function (oRespnse) {
-                  // Common.log(oResponse);
+                  console.log(oRespnse);
+                  const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
+
+                  MessageBox.alert(vErrorMSG);
                 }
               })
             }

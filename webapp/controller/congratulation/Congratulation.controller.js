@@ -6,6 +6,7 @@ sap.ui.define(
     '../BaseController',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/AttachFileAction',
+    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/extension/moment',
   ],
   (
@@ -14,7 +15,8 @@ sap.ui.define(
     EmpInfo,
     BaseController,
     ServiceNames,
-    AttachFileAction
+    AttachFileAction,
+    TableUtils
   ) => {
     'use strict';
 
@@ -23,11 +25,24 @@ sap.ui.define(
         super();
         this.formatter = formatter;
         this.AttachFileAction = AttachFileAction;
+        this.TableUtils = TableUtils;
         this.TypeCode = 'HR01'
       }
 
       onBeforeShow() {
-        const oViewModel = new JSONModel({ Data: [] });
+        const oViewModel = new JSONModel({ 
+          busy: false, 
+          Data: [], 
+          listinfo: {
+            rowCount: 1,
+            totalCount: 0,
+            progressCount: 0,
+            applyCount: 0,
+            approveCount: 0,
+            rejectCount: 0,
+            completeCount: 0,
+          },
+        });
         this.setViewModel(oViewModel);
 
         EmpInfo.get.call(this, true);
@@ -48,6 +63,14 @@ sap.ui.define(
 
       onClick() {
         this.getRouter().navTo('congDetail', { oDataKey: 'N' });
+      }
+
+      onExelDownload() {
+        const oTable = this.byId('conguTable');
+        const mTableData = this.getViewModel().getProperty('/CongList');
+        const sFileName = '경조금신청_목록';
+        
+        TableUtils.export({ oTable, mTableData, sFileName });
       }
 
       formatNumber(vNum) {
@@ -87,6 +110,8 @@ sap.ui.define(
         const oListModel = this.getViewModel();
         const oController = this;
 
+        oListModel.setProperty("/busy", true);
+
         oModel.read('/ConExpenseApplSet', {
           filters: [
             new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'),
@@ -98,51 +123,22 @@ sap.ui.define(
             if (oData) {
               // Common.log(oData);
               const oList = oData.results;
-              let vNo = 0;
-              let vNum1 = 0;
-              let vNum2 = 0;
-              let vNum3 = 0;
-              let vNum4 = 0;
-              let vNum5 = 0;
+              // let vNo = 0;
 
-              oList.forEach((e) => {
-                vNo = vNo + 1;
-                e.No = vNo;
-              });
+              // oList.forEach((e) => {
+              //   vNo = vNo + 1;
+              //   e.No = vNo;
+              // });
 
-              oList.forEach((e) => {
-                switch (e.ZappStatAl) {
-                  case '10':
-                  case '90':
-                    return (vNum1 = vNum1 + 1);
-                  case '20':
-                  case '30':
-                  case '50':
-                    return (vNum2 = vNum2 + 1);
-                  case '40':
-                    return (vNum3 = vNum3 + 1);
-                  case '45':
-                  case '65':
-                    return (vNum4 = vNum4 + 1);
-                  case '60':
-                    return (vNum5 = vNum5 + 1);
-                  default:
-                    return null;
-                }
-              });
-
-              oListModel.setProperty('/Writing', `작성중 ${vNum1}`);
-              oListModel.setProperty('/Apply', `신청 ${vNum2}`);
-              oListModel.setProperty('/Approval', `승인 ${vNum3}`);
-              oListModel.setProperty('/Reject', `반려 ${vNum4}`);
-              oListModel.setProperty('/Complete', `완료 ${vNum5}`);
+              TableUtils.count.call(oController, oList);
               oListModel.setProperty('/CongList', oList);
-
               oController.byId('conguTable').setVisibleRowCount(oList.length);
+              oListModel.setProperty("/busy", false);
             }
           },
           error: function (oRespnse) {
             // Common.log(oResponse);
+            oListModel.setProperty("/busy", false);
           },
         });
       }

@@ -36,6 +36,9 @@ sap.ui.define(
       onAfterShow() {
         this.debug('BaseController.onAfterShow');
 
+        if(!!this.byId('InfoMegBox'))
+          this.byId('InfoMegBox').setVisible(true);
+          
         AppUtils.setAppBusy(false, this).setMenuBusy(false, this);
       }
 

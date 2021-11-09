@@ -2,12 +2,14 @@ sap.ui.define(
   [
     'sap/ui/export/library', //
     'sap/ui/export/Spreadsheet',
+    'sap/ui/core/Fragment',
     'sap/ui/yesco/extension/moment',
     'sap/ui/yesco/extension/lodash',
   ],
   (
     exportLibrary, //
-    Spreadsheet
+    Spreadsheet,
+    Fragment,
   ) => {
     'use strict';
 
@@ -84,7 +86,7 @@ sap.ui.define(
         const sToday = moment().format('YYYYMMDD');
         const mColumns = oTable.getColumns().map((col) => ({
           label: col.getLabel().getText(),
-          property: col.getTemplate().getBindingInfo('text').parts[0].path,
+          property: !!col.getTemplate().getBindingInfo('text') ? col.getTemplate().getBindingInfo('text').parts[0].path : col.getTemplate().getBindingInfo('visible').parts[0].path,
           type: exportLibrary.EdmType.String,
         }));
 
@@ -158,6 +160,57 @@ sap.ui.define(
             return sap.ui.core.IndicationColor.Indication05;
           default:
             return null;
+        }
+      },
+
+      StatusTxt(sValue) {
+        switch (parseInt(sValue, 10)) {
+          case STATE_IN_PROGRESS1:
+          case STATE_IN_PROGRESS2:
+            // 작성중
+            return "작성중";
+          case STATE_APPLY1:
+          case STATE_APPLY2:
+          case STATE_APPLY3:
+            // 신청
+            return "신청";
+          case STATE_APPROVE:
+            // 승인
+            return "승인";
+          case STATE_REJECT1:
+          case STATE_REJECT2:
+            // 반려
+            return "반려";
+          case STATE_COMPLETE:
+            // 완료
+            return "완료";
+          default:
+            return null;
+        }
+      },
+
+      onFileListDialog(oEvent) {
+        // load asynchronous XML fragment
+        const vPath = oEvent.getSource().getBindingContext().getPath();
+        const oRowData = this.getViewModel().getProperty(vPath);
+  
+        this.getViewModel().setProperty("/Data", {busy: true});
+        
+        if (!this.byId('listFileDialog')) {
+          Fragment.load({
+            id: this.getView().getId(),
+            name: 'sap.ui.yesco.fragment.ListFileView',
+            controller: this,
+          }).then((oDialog) => {
+            // connect dialog to the root view of this component (models, lifecycle)
+            this.getView().addDependent(oDialog);
+            oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
+            this.AttachFileAction.setTableFileList(this, oRowData);
+            oDialog.open();
+          });
+        } else {
+          this.AttachFileAction.setTableFileList(this, oRowData);
+          this.byId('listFileDialog').open();
         }
       },
     };

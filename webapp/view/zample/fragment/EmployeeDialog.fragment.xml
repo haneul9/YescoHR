@@ -1,0 +1,144 @@
+<core:FragmentDefinition xmlns="sap.m"
+	xmlns:table="sap.ui.table"
+	xmlns:core="sap.ui.core">
+	<Dialog id="employeeDialog" showHeader="false">
+		<buttons>
+			<Button type="Emphasized" text="저장"/>
+			<Button text="취소"/>
+			<Button text="닫기" press=".onEmployeeClose"/>
+		</buttons>
+		<Panel expanded="true" headerText="사원검색">
+			<content>
+				<HBox>
+					<VBox width="20%">
+						<Label text="사번/성명"/>
+						<Input placeholder="검색어를 입력하세요." />
+						<Label text="조직"/>
+						<MultiComboBox selectionChange="handleSelectionChange" selectionFinish="handleSelectionFinish" items="{
+									path: '/ProductCollection',
+									sorter: {
+										path: 'Name'
+									},
+									templateShareable: true
+								}">
+							<core:Item key="{ProductId}" text="{Name}" />
+						</MultiComboBox>
+						<Button text="검색" type="Emphasized" width="100%" />
+					</VBox>
+					<VBox width="80%">
+						<table:Table rows="{/ProductCollection}" selectionMode="MultiToggle" visibleRowCount="7" ariaLabelledBy="title" fixedColumnCount="2">
+							<table:columns>
+								<table:Column width="11rem" hAlign="Center" filterProperty="name" sortProperty="name">
+									<Label text="Product Name"/>
+									<table:template>
+										<Text text="{Name}" wrapping="false" />
+									</table:template>
+								</table:Column>
+								<table:Column width="11rem" hAlign="Center" filterProperty="ProductId" sortProperty="ProductId">
+									<Label text="Product Id"/>
+									<table:template>
+										<Input value="{ProductId}"/>
+									</table:template>
+								</table:Column>
+								<table:Column width="6rem" hAlign="Center" filterProperty="Quantity" sortProperty="Quantity">
+									<Label text="Quantity"/>
+									<table:template>
+										<Text text="{Quantity}"/>
+									</table:template>
+								</table:Column>
+								<table:Column width="9rem" hAlign="Center" filterProperty="Status" sortProperty="Status">
+									<Label text="Status"/>
+									<table:template>
+										<ObjectStatus text="{Status}" state="{
+												path: 'Available'
+											}" />
+									</table:template>
+								</table:Column>
+								<table:Column width="9rem" hAlign="End" filterProperty="Price" sortProperty="Price">
+									<Label text="Price" width="100%" textAlign="End" />
+									<table:template>
+										<Text text="{Price}"/>
+									</table:template>
+								</table:Column>
+								<table:Column width="12rem" hAlign="Center" filterProperty="Supplier" sortProperty="Supplier">
+									<Label text="Supplier"/>
+									<table:template>
+										<ComboBox value="{SupplierName}" items="{
+												path: '/Suppliers',
+												templateShareable: true
+											}">
+											<core:Item text="{Name}"/>
+										</ComboBox>
+									</table:template>
+								</table:Column>
+								<table:Column width="9rem" hAlign="Center">
+									<Label text="Image"/>
+									<table:template>
+										<Link text="Show Image" href="{ProductPicUrl}" target="_blank" />
+									</table:template>
+								</table:Column>
+								<table:Column width="9rem" hAlign="Center">
+									<Label text="Details"/>
+									<table:template>
+										<Button text="Show Details"/>
+									</table:template>
+								</table:Column>
+								<table:Column width="7rem" hAlign="Center">
+									<Label text="Heavy Weight"/>
+									<table:template>
+										<CheckBox selected="{
+											path: 'Heavy',
+											type: 'sap.ui.model.type.String'
+										}"/>
+									</table:template>
+								</table:Column>
+								<table:Column width="12rem" hAlign="Center" filterProperty="Category" sortProperty="Category">
+									<Label text="Main Category"/>
+									<table:template>
+										<Select selectedKey="{Category}" items="{
+												path: '/Categories',
+												templateShareable: true
+											}">
+											<core:Item text="{Name}" key="{Name}" />
+										</Select>
+									</table:template>
+								</table:Column>
+								<table:Column width="12rem" hAlign="Center" filterProperty="Category" sortProperty="Category">
+									<Label text="Additional Categories"/>
+									<table:template>
+										<Select selectedKey="{Category}" items="{
+												path: '/Categories',
+												templateShareable: true
+											}">
+											<core:Item text="{Name}" key="{Name}" />
+										</Select>
+									</table:template>
+								</table:Column>
+								<table:Column width="6rem" hAlign="Center">
+									<Label text="Status"/>
+									<table:template>
+										<core:Icon src="sap-icon://appear-offline"/>
+									</table:template>
+								</table:Column>
+								<table:Column width="11rem" hAlign="Center" filterProperty="DeliveryDate" sortProperty="DeliveryDate">
+									<Label text="Delivery Date"/>
+									<table:template>
+										<DatePicker value="{
+												path: 'DeliveryDate',
+												type: 'sap.ui.model.type.Date',
+												formatOptions: {
+													source: {
+														pattern: 'timestamp'
+													}
+												}
+											}" class="sapIcon_Date" />
+									</table:template>
+								</table:Column>
+							</table:columns>
+						</table:Table>
+					</VBox>
+				</HBox>
+			</content>
+		</Panel>
+	</Dialog>
+</core:FragmentDefinition>

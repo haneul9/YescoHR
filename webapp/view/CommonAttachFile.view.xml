@@ -4,7 +4,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:u="sap.ui.unified"
     xmlns:mvc="sap.ui.core.mvc">
-    <VBox>
+    <VBox class="vCardBox">
         <HBox justifyContent="SpaceBetween" alignContent="Center" alignItems="Center" fitContainer="true">
             <HBox alignContent="Center" alignItems="Center">
                 <Label text="첨부파일" required="{= !!Settings>/Required}" />

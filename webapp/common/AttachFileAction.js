@@ -1,14 +1,14 @@
 /* eslint-disable quote-props */
 sap.ui.define(
     [
-      'sap/m/MessageBox',
       'sap/ui/yesco/common/odata/ServiceManager',
       'sap/ui/yesco/common/odata/ServiceNames',
+      'sap/ui/yesco/control/MessageBox',
     ],
     (
-        MessageBox,
         ServiceManager,
         ServiceNames,
+        MessageBox,
     ) => {
         'use strict';
 
@@ -36,7 +36,7 @@ sap.ui.define(
 
                 oFileUploader.setValue("");
 
-                options.ListMode = options.Editable ? sap.m.ListMode.MultiSelect : sap.m.ListMode.None;
+                options.ListMode = options.Editable ? sap.ui.table.SelectionMode.MultiToggle : sap.ui.table.SelectionMode.None;
                 options.FileTypes = ["ppt", "pptx", "doc", "docx", "xls", "xlsx", "jpg", "bmp", "gif", "png", "txt", "pdf", "jpeg"];
 
                 oController.getViewModel().setProperty("/Settings", options);
@@ -52,7 +52,7 @@ sap.ui.define(
                 const sResponse = oEvent.getParameter("response");
                 // const oFileUploader = oController.byId([this.PAGEID, "ATTACHFILE_BTN"].join(this.SEQ || "_"));
 
-                sap.m.MessageBox.alert(sResponse, { title: "안내" });
+                MessageBox.alert(sResponse, { title: "안내" });
 
                 // oFileUploader.setValue("");
 
@@ -171,7 +171,7 @@ sap.ui.define(
                             data.results.forEach(function (elem) {
                                 elem.New = false;
                                 // elem.Type = elem.Zfilename.substring(elem.Zfilename.lastIndexOf(".") + 1);
-                                elem.Url = elem.Fileuri.replace(/retriveScpAttach/, "retriveAttach");
+                                // elem.Url = elem.Fileuri.replace(/retriveScpAttach/, "retriveAttach");
                                 // elem.Mresource_convert = "data:${mimetype};base64,${resource}".interpolate(elem.Mimetype, elem.Mresource);
 
                                 Datas.Data.push(elem);
@@ -219,19 +219,17 @@ sap.ui.define(
                         if (data && data.results.length) {
                             data.results.forEach(function (elem) {
                                 elem.New = false;
-                                // elem.Type = elem.Zfilename.substring(elem.Zfilename.lastIndexOf(".") + 1);
-                                elem.Url = elem.Fileuri.replace(/retriveScpAttach/, "retriveAttach");
-                                // elem.Mresource_convert = "data:${mimetype};base64,${resource}".interpolate(elem.Mimetype, elem.Mresource);
-
                                 Datas.Data.push(elem);
                             });
                         }
 
                         JSonModel.setProperty("/Data", Datas.Data);
+                        JSonModel.setProperty("/Data/busy", false);
                         oListFileTable.setVisibleRowCount(Datas.Data.length);
                     },
                     error: function (res) {
                         // common.Common.log(res);
+                        JSonModel.setProperty("/Data/busy", false);
                     }
                 })
             },
@@ -325,14 +323,14 @@ sap.ui.define(
                 const aContexts = oTable.getSelectedIndices();
 
                 if (!aContexts.length) {
-                    sap.m.MessageBox.alert("삭제할 파일을 선택하세요."); // 삭제할 파일을 선택하세요.
+                    MessageBox.alert("삭제할 파일을 선택하세요."); // 삭제할 파일을 선택하세요.
                     return;
                 }
 
                 // oTable.removeSelections(true);
 
                 var deleteProcess = function (fVal) {
-                    if(fVal === sap.m.MessageBox.Action.YES) {   
+                    if(fVal === MessageBox.Action.YES) {   
                         const aSelectFiles = [];
 
                         aContexts.forEach(e => {
@@ -359,9 +357,9 @@ sap.ui.define(
                     }
                 };
 
-                sap.m.MessageBox.show("선택한 파일을 삭제하시겠습니까?", {
+                MessageBox.show("선택한 파일을 삭제하시겠습니까?", {
                     title: "확인",
-                    actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
+                    actions: [MessageBox.Action.YES, MessageBox.Action.NO],
                     onClose: deleteProcess
                 });
             },

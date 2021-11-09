@@ -2,22 +2,26 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/m/MessageToast',
+    'sap/m/MessageBox',
     'sap/ui/core/Fragment',
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/controller/BaseController',
     'sap/ui/yesco/model/formatter',
+    'sap/ui/yesco/common/TableUtils',
   ],
   (
     // prettier 방지용 주석
     MessageToast,
+    MessageBox,
     Fragment,
     Filter,
     FilterOperator,
     JSONModel,
     BaseController,
-    formatter
+    formatter,
+    TableUtils
   ) => {
     'use strict';
 
@@ -36,11 +40,90 @@ sap.ui.define(
         // The default limit of the model is set to 100. We want to show all the entries.
         oModel.setSizeLimit(100000);
         this.getView().setModel(oModel);
+
+        const oTable = this.byId('groupTable');
+        const oController = this;
+
+        if (oTable) {
+          oTable.addEventDelegate(
+            {
+              onAfterRendering: function () {
+                TableUtils.adjustRowSpan({
+                  table: this,
+                  colIndices: [0, 1, 2, 3, 4, 5],
+                  theadOrTbody: 'header',
+                });
+
+                oController.summaryColspan();
+              },
+            },
+            oTable
+          );
+        }
+      }
+
+      summaryColspan() {
+        const $firstTD = $('#container-ehr---sampleComponents--groupTable-rows-row3-col0');
+        const $firstCheckbox = $('#container-ehr---sampleComponents--groupTable-rowsel3');
+        const aHideTDs = [1, 2, 3, 4, 5];
+
+        $firstTD.attr('colspan', 6);
+        $firstCheckbox.hide();
+
+        aHideTDs.forEach((idx) => {
+          const $selectTD = $(`#container-ehr---sampleComponents--groupTable-rows-row3-col${idx}`);
+          $selectTD.hide();
+        });
       }
 
       /* =========================================================== */
       /* event handlers                                              */
       /* =========================================================== */
+      onConfirmationMessageBoxPress() {
+        MessageBox.confirm('Approve purchase order 12345?');
+      }
+
+      onAlertMessageBoxPress() {
+        MessageBox.alert('The quantity you have reported exceeds the quantity planed.');
+      }
+
+      onErrorMessageBoxPress() {
+        MessageBox.error('Select a team in the "Development" area.\n"Marketing" isn\'t assigned to this area.');
+      }
+
+      onInfoMessageBoxPress() {
+        MessageBox.information('Your booking will be reserved for 24 hours.');
+      }
+
+      onWarningMessageBoxPress() {
+        MessageBox.warning('The project schedule was last updated over a year ago.');
+      }
+
+      onSuccessMessageBoxPress() {
+        MessageBox.success('Project 1234567 was created and assigned to team "ABC".');
+      }
+
+      openEmployeeDialog() {
+        var oView = this.getView();
+
+        if (!this._pEmployeeDialog) {
+          this._pEmployeeDialog = Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.view.zample.fragment.EmployeeDialog',
+            controller: this,
+          }).then(function (oDialog) {
+            oView.addDependent(oDialog);
+            return oDialog;
+          });
+        }
+        this._pEmployeeDialog.then(function (oDialog) {
+          oDialog.open();
+        });
+      }
+
+      onEmployeeClose() {
+        this.byId('employeeDialog').close();
+      }
 
       /**
        * Triggered by the table's 'updateFinished' event: after new table
