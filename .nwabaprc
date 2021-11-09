@@ -1,7 +1,7 @@
 {
     "base": "./dist",
     "conn_usestrictssl" : false,
-    "conn_server": "http://yeshrsapdev.lsyesco.co.kr:8000/",
+    "conn_server": "https://yeshrsapdev.yescoholdings.com:8443/",
     "conn_client" : "100",
     "conn_user": "HR11",
     "conn_password": "qwert!2345",
