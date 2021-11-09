@@ -30,11 +30,11 @@ sap.ui.define(
     class Portlets extends BaseController {
       onBeforeShow() {
         // const p13nGridModel = new JSONModel(sap.ui.require.toUrl('sap/ui/yesco/localService/p13nGridData.json'));
-        const oP13nGridModel = new JSONModel();
-        oP13nGridModel.loadData('localService/p13nGridData.json');
-        this.setViewModel(oP13nGridModel, 'p13nGridModel');
+        const portletsModel = new JSONModel();
+        portletsModel.loadData('localService/p13nGridData.json');
+        this.setViewModel(portletsModel, 'portletsModel');
 
-        const oGrid = this.byId('p13n-grid');
+        const oGrid = this.byId('portlets-grid');
         oGrid.addDragDropConfig(
           new DragInfo({
             sourceAggregation: 'items',

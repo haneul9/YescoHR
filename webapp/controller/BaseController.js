@@ -4,20 +4,14 @@ sap.ui.define(
     'sap/ui/core/UIComponent',
     'sap/ui/core/mvc/Controller',
     'sap/ui/core/routing/History',
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/odata/ServiceNames',
   ],
   (
     // prettier 방지용 주석
     UIComponent,
     Controller,
     History,
-    Filter,
-    FilterOperator,
-    AppUtils,
-    ServiceNames
+    AppUtils
   ) => {
     'use strict';
 
@@ -25,54 +19,7 @@ sap.ui.define(
       onInit() {
         this.debug('BaseController.onInit');
 
-        this.getRouter()
-          // .attachBeforeRouteMatched((oEvent) => {
-          //   // Router.navTo 로 들어오는 경우에만 event 발생
-          //   this.debug('beforeRouteMatched', oEvent.getParameters());
-          // })
-          .attachBypassed((oEvent) => {
-            this.debug('bypassed', oEvent);
-
-            // do something here, i.e. send logging data to the back end for analysis
-            // telling what resource the user tried to access...
-            var sHash = oEvent.getParameter('hash');
-            this.debug(`Sorry, but the hash '${sHash}' is invalid.`, 'The resource was not found.');
-          })
-          .attachRouteMatched((oEvent) => {
-            this.debug('routeMatched', oEvent);
-
-            const oView = oEvent.getParameter('view');
-            oView.setVisible(false);
-
-            // 메뉴 권한 체크
-            const sUrl = '/GetMenuidRoleSet';
-            this.getModel(ServiceNames.COMMON).read(sUrl, {
-              filters: [
-                // prettier 방지용 주석
-                new Filter('Menid', FilterOperator.EQ, '7000'), // TODO : Menid 찾기
-              ],
-              success: (oData, oResponse) => {
-                this.debug(`${sUrl} success.`, oData, oResponse);
-
-                oView.setVisible(true);
-              },
-              error: (oError) => {
-                this.debug(`${sUrl} error.`, oError);
-
-                this.getRouter().getTargets().display('notFound', { from: 'home' });
-              },
-            });
-
-            // do something, i.e. send usage statistics to back end
-            // in order to improve our app and the user experience (Build-Measure-Learn cycle)
-            var sRouteName = oEvent.getParameter('name');
-            this.debug(`User accessed route ${sRouteName}, timestamp = ${new Date().getTime()}`);
-          })
-          .attachRoutePatternMatched((oEvent) => {
-            this.debug('routePatternMatched', oEvent);
-          });
-
-        // Routing 체크를 강제하기 위해 각 업무 controller에서는 onInit overriding을 사용하지 않도록 함
+        // 각 업무 controller에서는 onInit overriding 대신 onBeforeShow, onAfterShow를 사용할 것
         this.getView().addEventDelegate(
           {
             onBeforeShow: this.onBeforeShow,
@@ -179,8 +126,8 @@ sap.ui.define(
        * Convenience method for logging.
        * @protected
        */
-      debug(...args) {
-        AppUtils.debug(...args);
+      debug(...aArgs) {
+        AppUtils.debug(...aArgs);
         return this;
       }
     }

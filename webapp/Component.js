@@ -3,23 +3,29 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/Device',
     'sap/ui/core/UIComponent',
+    'sap/ui/model/Filter',
+    'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/ServiceManager',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/controller/ErrorHandler',
-    'sap/ui/yesco/model/models',
+    'sap/ui/yesco/model/MenuModel',
+    'sap/ui/yesco/model/Models',
   ],
   (
     // prettier 방지용 주석
     Device,
     UIComponent,
+    Filter,
+    FilterOperator,
     JSONModel,
     AppUtils,
     ServiceManager,
     ServiceNames,
     ErrorHandler,
-    models
+    MenuModel,
+    Models
   ) => {
     'use strict';
 
@@ -35,54 +41,176 @@ sap.ui.define(
        * @public
        * @override
        */
-      init(...args) {
-        // set the device model.
-        this.setModel(models.createDeviceModel(), 'device');
+      init(...aArgs) {
+        // 디바이스 모델 생성
+        this.setDeviceModel();
 
-        // set busy indicator value model.
-        this.setModel(new JSONModel({ isAppBusy: true, delay: 0 }), 'appModel');
+        // Busy indicator 값 저장 모델 생성
+        this.setAppModel();
 
-        // S4HANA odata model preload.
+        // S4HANA OData 서비스 모델 생성
+        this.setServiceModel();
+
+        // Error handler 생성
+        this.setErrorHandler();
+
+        // 세션 모델 생성
+        this.setSessionModel();
+
+        // 메뉴 모델 생성
+        this.setMenuModel();
+
+        // call the base component's init function and create the App view
+        UIComponent.prototype.init.apply(this, aArgs);
+
+        // create the views based on the url/hash
+        const oRouter = this.getRouter();
+        oRouter.initialize();
+
+        // Router event handler 생성
+        this.attachRoutingEvents(oRouter);
+      },
+
+      setErrorHandler() {
+        this._oErrorHandler = new ErrorHandler(this);
+      },
+
+      setDeviceModel() {
+        setTimeout(() => {
+          this.setModel(Models.createDeviceModel(), 'device');
+        });
+      },
+
+      setAppModel() {
+        setTimeout(() => {
+          this.setModel(new JSONModel({ isAppBusy: true, delay: 0, isAtHome: true }), 'appModel');
+        });
+      },
+
+      setServiceModel() {
         const aServiceNames = ServiceManager.getServiceNames();
         aServiceNames.forEach((sServiceName) => {
           const oServiceModel = ServiceManager.getODataModel(sServiceName);
           this.setModel(oServiceModel, sServiceName);
         });
+      },
 
-        const sUrl = '/EmpLoginInfoSet';
-        this.getModel(ServiceNames.COMMON).read(sUrl, {
-          success: (oData, oResponse) => {
-            AppUtils.debug(`${sUrl} success.`, oData, oResponse);
+      setSessionModel() {
+        setTimeout(() => {
+          const sUrl = '/EmpLoginInfoSet';
+          this.getModel(ServiceNames.COMMON).read(sUrl, {
+            success: (oData, oResponse) => {
+              AppUtils.debug(`${sUrl} success.`, oData, oResponse);
 
-            const sessionData = (oData.results || [])[0] || {};
-            delete sessionData.__metadata;
+              const mSessionData = (oData.results || [])[0] || {};
+              delete mSessionData.__metadata;
 
-            if (sessionData.Werks === '1000') {
-              sessionData.Logo = 'yesco-holdings';
-            } else if (sessionData.Werks === '2000') {
-              sessionData.Logo = 'yesco';
-            } else if (sessionData.Werks === '3000') {
-              sessionData.Logo = 'hanseong';
-            } else {
-              sessionData.Logo = 'unknown';
+              let sTextCode;
+              if (mSessionData.Werks === '1000') {
+                sTextCode = 'LABEL_01002';
+              } else if (mSessionData.Werks === '2000') {
+                sTextCode = 'LABEL_01003';
+              } else if (mSessionData.Werks === '3000') {
+                sTextCode = 'LABEL_01004';
+              } else {
+                sTextCode = 'LABEL_01001';
+              }
+              mSessionData.CompanyName = this.getModel('i18n').getResourceBundle().getText(sTextCode);
+
+              this.setModel(new JSONModel(mSessionData), 'sessionModel');
+            },
+            error: (oError) => {
+              AppUtils.debug(`${sUrl} error.`, oError);
+
+              this.setModel(new JSONModel({ CompanyName: this.getModel('i18n').getResourceBundle().getText('LABEL_01001') }), 'sessionModel');
+            },
+          });
+        });
+      },
+
+      setMenuModel() {
+        this.setModel(new MenuModel(this), 'menuModel');
+      },
+
+      getMenuModel() {
+        return this.getModel('menuModel');
+      },
+
+      getMenuTree() {
+        return this.getModel('menuModel').getProperty('/tree');
+      },
+
+      attachRoutingEvents(oRouter) {
+        oRouter
+          // .attachBeforeRouteMatched((oEvent) => {
+          //   // Router.navTo 로 들어오는 경우에만 event 발생
+          //   AppUtils.debug('beforeRouteMatched', oEvent.getParameters());
+          // })
+          .attachBypassed((oEvent) => {
+            AppUtils.debug(`bypassed.`, oEvent);
+
+            // do something here, i.e. send logging data to the back end for analysis
+            // telling what resource the user tried to access...
+            const sHash = oEvent.getParameter('hash');
+            AppUtils.debug(`Sorry, but the hash '${sHash}' is invalid.`, 'The resource was not found.');
+          })
+          .attachRouteMatched((oEvent) => {
+            AppUtils.debug('routeMatched', oEvent.getParameters());
+
+            const oView = oEvent.getParameter('view');
+            oView.setVisible(false);
+
+            // do something, i.e. send usage statistics to back end
+            // in order to improve our app and the user experience (Build-Measure-Learn cycle)
+            const sRouteName = oEvent.getParameter('name');
+            AppUtils.debug(`User accessed route ${sRouteName}, timestamp = ${new Date().getTime()}`);
+
+            this.checkRouteName(sRouteName)
+              .then(() => {
+                oView.setVisible(true);
+              })
+              .catch(() => {
+                this.getRouter().getTargets().display('notFound', {
+                  from: 'home',
+                });
+              });
+          })
+          .attachRoutePatternMatched((oEvent) => {
+            AppUtils.debug('routePatternMatched', oEvent);
+          });
+      },
+
+      checkRouteName(sRouteName) {
+        const oMenuModel = this.getMenuModel();
+
+        return oMenuModel.getPromise().then(() => {
+          return new Promise((resolve, reject) => {
+            const sMenid = oMenuModel.getMenid(sRouteName);
+            if ((AppUtils.isLOCAL() || AppUtils.isDEV()) && /^X/.test(sMenid)) {
+              resolve();
+              return;
             }
 
-            this.setModel(new JSONModel(sessionData), 'sessionModel');
-          },
-          error: (oError) => {
-            AppUtils.debug(`${sUrl} error.`, oError);
+            // 메뉴 권한 체크
+            const sUrl = '/GetMenuidRoleSet';
+            this.getModel(ServiceNames.COMMON).read(sUrl, {
+              filters: [
+                // prettier 방지용 주석
+                new Filter('Menid', FilterOperator.EQ, sMenid),
+              ],
+              success: (oData, oResponse) => {
+                AppUtils.debug(`${sUrl} success.`, oData, oResponse);
 
-            this.setModel(new JSONModel({ Logo: 'unknown' }), 'sessionModel');
-          },
+                resolve();
+              },
+              error: (oError) => {
+                AppUtils.debug(`${sUrl} error.`, oError);
+
+                reject();
+              },
+            });
+          });
         });
-
-        this._oErrorHandler = new ErrorHandler(this);
-
-        // call the base component's init function and create the App view
-        UIComponent.prototype.init.apply(this, args);
-
-        // create the views based on the url/hash
-        this.getRouter().initialize();
       },
 
       /**
@@ -91,11 +219,11 @@ sap.ui.define(
        * @public
        * @override
        */
-      destroy(...args) {
+      destroy(...aArgs) {
         this._oErrorHandler.destroy();
 
         // call the base component's destroy function
-        UIComponent.prototype.destroy.apply(this, args);
+        UIComponent.prototype.destroy.apply(this, aArgs);
       },
 
       /**

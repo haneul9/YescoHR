@@ -27,9 +27,9 @@ sap.ui.define(
         // TODO : master 전환 후 callback 호출 필요(ex: localStorage, sessionStorage, global temporary variables/functions 등 제거 callback)
       }
 
-      getLogoPath(sLogo) {
-        this.byId('logoImage').addStyleClass(`logo-${sLogo}`);
-        return `image/logo-${sLogo}.png`;
+      getLogoPath(sCompanyName) {
+        this.byId('logoImage').addStyleClass(`logo-${sCompanyName}`);
+        return `image/logo-${sCompanyName}.png`;
       }
     }
 

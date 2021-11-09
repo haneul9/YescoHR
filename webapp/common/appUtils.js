@@ -26,6 +26,26 @@ sap.ui.define([], () => {
       return this;
     },
 
+    setAtHome(state, oController) {
+      setTimeout(() => {
+        oController.getModel('appModel').setProperty('/isAtHome', state);
+      }, 0);
+      return this;
+    },
+
+    isLOCAL() {
+      return /^localhost/.test(location.hostname);
+    },
+    isDEV() {
+      return /^yeshrsapdev/.test(location.hostname);
+    },
+    isQAS() {
+      return /^yeshrsapqas/.test(location.hostname);
+    },
+    isPRD() {
+      return /^yeshrsap/.test(location.hostname);
+    },
+
     parseError(oError) {
       if (!oError || !oError.response || !oError.response.body) {
         throw new Error('AppUtils.parseError : 에러 데이터 오류!');

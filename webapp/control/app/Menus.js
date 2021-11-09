@@ -20,363 +20,34 @@ sap.ui.define(
     'use strict';
 
     class Menus {
-      constructor(oAppController) {
-        this.oAppController = oAppController;
+      constructor(oController) {
+        this.oController = oController;
+        this.oMenuModel = oController.getOwnerComponent().getMenuModel();
         this.oMenuPopover = null;
-        this.mMenuUrl = null;
-        this.mMenuProperties = null;
-        this.aMenuFavorites = null;
 
-        this.retrieveMenu();
-      }
-
-      /**
-       * 메뉴 정보 조회 및 메뉴 생성
-       */
-      retrieveMenu() {
-        const sUrl = '/GetMenuLvSet';
-        this.oAppController.getModel(ServiceNames.COMMON).create(
-          sUrl,
-          {
-            Pernr: '50007',
-            Werks: '1000',
-            Rolid: '',
-            Langu: '',
-            Device: '',
-            GetMenuLv1Nav: [],
-            GetMenuLv2Nav: [],
-            GetMenuLv3Nav: [],
-            GetMenuLv4Nav: [],
-          },
-          {
-            success: (oData, oResponse) => {
-              this.debug(`${sUrl} success.`, oData, oResponse);
-
-              this.buildAppMenu(oData).then(() => {
-                AppUtils.setMenuBusy(false, this.oAppController);
-              });
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              this.buildAppMenu().then(() => {
-                AppUtils.setMenuBusy(false, this.oAppController);
-              });
-            },
-          }
-        );
+        this.oMenuModel.getPromise().then(() => {
+          this.buildAppMenu();
+        });
       }
 
       /**
        * 메뉴 생성
-       * @param {map} mMenuRawData OData 조회 메뉴 정보
-       * @returns {promise} 메뉴 생성 완료 대기 promise
        */
-      buildAppMenu(mMenuRawData = {}) {
-        return new Promise((resolve) => {
-          const aMenuTree = this.getMenuTree(mMenuRawData);
-          const oAppMenuToolbar = this.oAppController.byId('appMenuToolbar');
+      buildAppMenu() {
+        const aMenuTree = this.oMenuModel.getTree() || [];
+        const oAppMenuToolbar = this.oController.byId('appMenuToolbar');
 
-          if (!aMenuTree.length) {
-            oAppMenuToolbar.insertContent(new Label({ text: '{i18n>MSG_01001}' }), 2); // 조회된 메뉴가 없습니다.
-            resolve();
-            return;
-          }
-
-          // App menu 생성
-          aMenuTree.forEach((mMenu, i) => {
-            oAppMenuToolbar.insertContent(new MenuLevel1(mMenu, this), i + 2); // App logo, ToolbarSpacer 이후부터 menu 추가
-          });
-
-          resolve();
-        });
-      }
-
-      /**
-       * 메뉴 tree 정보 생성
-       * @param {map} GetMenuLv1Nav 1 level 메뉴 정보
-       * @param {map} GetMenuLv2Nav 2 level 메뉴 정보
-       * @param {map} GetMenuLv3Nav 3 level 메뉴 정보
-       * @param {map} GetMenuLv4Nav 메뉴 속성 정보
-       * @returns {array} 메뉴 tree 정보
-       */
-      getMenuTree({ GetMenuLv1Nav = {}, GetMenuLv2Nav = {}, GetMenuLv3Nav = {}, GetMenuLv4Nav = {} }) {
-        const { results: aMenuLevel1 = [] } = GetMenuLv1Nav;
-        const { results: aMenuLevel2 = [] } = GetMenuLv2Nav;
-        const { results: aMenuLevel3 = [] } = GetMenuLv3Nav;
-        const { results: aMenuLevel4 = [] } = GetMenuLv4Nav;
-
-        const mLevel1SubMenu = {};
-        const mLevel2SubMenu = {};
-        const bIsLocal = /^localhost/.test(location.hostname);
-        const bIsDev = /^yeshrsapdev/.test(location.hostname);
-
-        this.mMenuUrl = {};
-        this.mMenuProperties = {};
-        this.aMenuFavorites = [];
-
-        // 개발자 PC || 개발 서버 : 샘플 메뉴 정보 추가
-        if (bIsLocal || bIsDev) {
-          this.appendSampleMenu({ aMenuLevel1, aMenuLevel2, aMenuLevel3, aMenuLevel4 });
+        if (!aMenuTree.length) {
+          oAppMenuToolbar.insertContent(new Label({ text: '{i18n>MSG_01001}' }), 2); // 조회된 메뉴가 없습니다.
+          return;
         }
 
-        // 각 메뉴 속성 정리
-        aMenuLevel4.map(({ Mnurl, Menid, Phead }) => {
-          this.mMenuUrl[Mnurl] = Menid;
-          this.mMenuProperties[Menid] = { Menid, Mnurl, Phead };
+        // App menu 생성
+        aMenuTree.forEach((mMenu, i) => {
+          oAppMenuToolbar.insertContent(new MenuLevel1(mMenu, this), i + 2); // App logo, ToolbarSpacer 이후부터 menu 추가
         });
 
-        // 3rd level 메뉴 속성 정리
-        aMenuLevel3.map((m) => {
-          if (m.Hide === 'X') {
-            return;
-          }
-          if (m.Favor === 'X') {
-            this.aMenuFavorites.push(m.Menid);
-          }
-
-          const mMenuProperty = this.mMenuProperties[m.Menid] || {};
-          mMenuProperty.Mname = m.Mnnm3;
-          mMenuProperty.Mnid1 = m.Mnid1;
-          mMenuProperty.Mnid2 = m.Mnid2;
-          mMenuProperty.Mnid3 = m.Mnid3;
-          mMenuProperty.Mepop = m.Mepop === 'X';
-          mMenuProperty.Favor = m.Favor === 'X';
-          mMenuProperty.Pwchk = m.Pwchk === 'X';
-
-          const aLevel2SubMenu = mLevel2SubMenu[m.Mnid2];
-          if (aLevel2SubMenu) {
-            aLevel2SubMenu.push(mMenuProperty);
-          } else {
-            mLevel2SubMenu[m.Mnid2] = [mMenuProperty];
-          }
-        });
-
-        // 2nd level 메뉴 속성 정리
-        aMenuLevel2.map((m) => {
-          if (m.Hide === 'X') {
-            return;
-          }
-          if (m.Favor === 'X') {
-            this.aMenuFavorites.push(m.Menid);
-          }
-
-          const mMenuProperty = {
-            Menid: m.Menid,
-            Mnid2: m.Mnid2,
-            Mname: m.Mnnm2,
-            Mnurl: !m.Menid ? '' : (this.mMenuProperties[m.Menid] || {}).Mnurl || '',
-            Mepop: m.Mepop === 'X',
-            Favor: m.Favor === 'X',
-            Pwchk: m.Pwchk === 'X',
-            Children: mLevel2SubMenu[m.Mnid2] || [],
-          };
-          const aLevel1SubMenu = mLevel1SubMenu[m.Mnid1];
-          if (aLevel1SubMenu) {
-            aLevel1SubMenu.push(mMenuProperty);
-          } else {
-            mLevel1SubMenu[m.Mnid1] = [mMenuProperty];
-          }
-        });
-
-        // Top level 메뉴 속성 정리
-        return aMenuLevel1.map((m) => {
-          if (m.Hide === 'X') {
-            return;
-          }
-          if (m.Favor === 'X') {
-            this.aMenuFavorites.push(m.Menid);
-          }
-          return {
-            Menid: m.Menid,
-            Mnid1: m.Mnid1,
-            Mname: m.Mnnm1,
-            Mnurl: !m.Menid ? '' : (this.mMenuProperties[m.Menid] || {}).Mnurl || '',
-            Mepop: m.Mepop === 'X',
-            Favor: m.Favor === 'X',
-            Pwchk: m.Pwchk === 'X',
-            Children: mLevel1SubMenu[m.Mnid1] || [],
-            StyleClasses: m.Mnid1 === '70000' ? 'menu-mss' : m.Mnid1 === '80000' ? 'menu-hass' : '',
-          };
-        });
-      }
-
-      appendSampleMenu({ aMenuLevel1, aMenuLevel2, aMenuLevel3, aMenuLevel4 }) {
-        aMenuLevel4.splice(
-          ...[
-            aMenuLevel4.length,
-            0,
-            {
-              Pinfo: '',
-              Menid: 'X110',
-              Mnurl: 'sampleComponents',
-              Mentx: '퍼블용 컴포넌트',
-            },
-            {
-              Pinfo: '',
-              Menid: 'X120',
-              Mnurl: 'sampleTimeline',
-              Mentx: 'Timeline sample',
-            },
-            {
-              Pinfo: '',
-              Menid: 'X130',
-              Mnurl: 'sampleNinebox',
-              Mentx: '9 Box Model',
-            },
-            {
-              Pinfo: '',
-              Menid: 'X140',
-              Mnurl: 'sampleDonutChart',
-              Mentx: 'Donut Chart',
-            },
-            {
-              Pinfo: '',
-              Menid: 'X210',
-              Mnurl: 'https://www.google.co.kr',
-              Mentx: '구글',
-            },
-            {
-              Pinfo: '',
-              Menid: 'X220',
-              Mnurl: 'congratulation',
-              Mentx: '경조금',
-            },
-          ]
-        );
-
-        aMenuLevel3.splice(
-          ...[
-            aMenuLevel3.length,
-            0,
-            {
-              Mnid1: 'X0000',
-              Mnid2: 'X1000',
-              Mnid3: 'X110',
-              Mnnm3: '퍼블용 컴포넌트',
-              Mnsrt: '001',
-              Menid: 'X110',
-              Mepop: '',
-              Device: 'A',
-              Mnetc: '',
-              Pwchk: '',
-              Favor: 'X',
-            },
-            {
-              Mnid1: 'X0000',
-              Mnid2: 'X1000',
-              Mnid3: 'X120',
-              Mnnm3: 'Timeline',
-              Mnsrt: '002',
-              Menid: 'X120',
-              Mepop: '',
-              Device: 'A',
-              Mnetc: '',
-              Pwchk: '',
-              Favor: '',
-            },
-            {
-              Mnid1: 'X0000',
-              Mnid2: 'X1000',
-              Mnid3: 'X130',
-              Mnnm3: '9 Box Model',
-              Mnsrt: '003',
-              Menid: 'X130',
-              Mepop: '',
-              Device: 'A',
-              Mnetc: '',
-              Pwchk: '',
-              Favor: '',
-            },
-            {
-              Mnid1: 'X0000',
-              Mnid2: 'X1000',
-              Mnid3: 'X140',
-              Mnnm3: 'Donut Chart',
-              Mnsrt: '004',
-              Menid: 'X140',
-              Mepop: '',
-              Device: 'A',
-              Mnetc: '',
-              Pwchk: '',
-              Favor: '',
-            },
-            {
-              Mnid1: 'X0000',
-              Mnid2: 'X2000',
-              Mnid3: 'X210',
-              Mnnm3: '구글',
-              Mnsrt: '001',
-              Menid: 'X210',
-              Mepop: 'X',
-              Device: 'A',
-              Mnetc: '',
-              Pwchk: '',
-              Favor: '',
-            },
-            {
-              Mnid1: 'X0000',
-              Mnid2: 'X2000',
-              Mnid3: 'X220',
-              Mnnm3: '경조금',
-              Mnsrt: '002',
-              Menid: 'X220',
-              Mepop: '',
-              Device: 'A',
-              Mnetc: '',
-              Pwchk: '',
-              Favor: '',
-            },
-          ]
-        );
-
-        aMenuLevel2.splice(
-          ...[
-            aMenuLevel2.length,
-            0,
-            {
-              Mnid1: 'X0000',
-              Mnid2: 'X1000',
-              Mnnm2: '샘플 1',
-              Mnsrt: '001',
-              Menid: 'X100',
-              Mepop: '',
-              Device: 'A',
-              Mnetc: '',
-              Pwchk: '',
-              Favor: '',
-            },
-            {
-              Mnid1: 'X0000',
-              Mnid2: 'X2000',
-              Mnnm2: '샘플 2',
-              Mnsrt: '002',
-              Menid: 'X200',
-              Mepop: '',
-              Device: 'A',
-              Mnetc: '',
-              Pwchk: '',
-              Favor: '',
-            },
-          ]
-        );
-
-        aMenuLevel1.splice(
-          ...[
-            aMenuLevel1.length,
-            0,
-            {
-              Mnid1: 'X0000',
-              Mnnm1: 'Samples',
-              Mnsrt: '999',
-              Menid: 'X000',
-              Mepop: '',
-              Device: 'A',
-              Mnetc: '',
-              Pwchk: '',
-            },
-          ]
-        );
+        AppUtils.setMenuBusy(false, this.oController);
       }
 
       /**
@@ -439,7 +110,7 @@ sap.ui.define(
         const bFavor = oContext.getProperty('Favor');
         const sUrl = '/MenuFavoriteSet';
 
-        this.oAppController.getModel(ServiceNames.COMMON).create(
+        this.oController.getModel(ServiceNames.COMMON).create(
           sUrl,
           {
             Menid: oContext.getProperty('Menid'),
@@ -460,7 +131,7 @@ sap.ui.define(
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
 
-              MessageBox.error(this.oAppController.getText('MSG_00008', 'MSG_01002')); // {즐겨찾기 수정}중 오류가 발생하였습니다.
+              MessageBox.error(this.oController.getText('MSG_00008', 'MSG_01002')); // {즐겨찾기 수정}중 오류가 발생하였습니다.
             },
           }
         );
@@ -480,8 +151,8 @@ sap.ui.define(
         if (/^javascript:/.test(sMnurl)) {
           return sMnurl;
         }
-        return 'javascript:;'; // Routing URL 노출을 막기위해 anchor의 href 속성에서 URL을 제거
-        // return `${location.origin}${location.pathname}#/${(Mnurl || '').replace(/^\/+/, '')}`;
+        // return 'javascript:;'; // Routing URL 노출을 막기위해 anchor의 href 속성에서 URL을 제거
+        return `${location.origin}${location.pathname}#/${(sMnurl || '').replace(/^\/+/, '')}`;
       }
 
       /**
@@ -513,15 +184,16 @@ sap.ui.define(
           return;
         }
 
-        AppUtils.setAppBusy(true, this.oAppController).setMenuBusy(true, this.oAppController);
+        AppUtils.setAppBusy(true, this.oController).setMenuBusy(true, this.oController);
 
         const sMenid = oContext.getProperty('Menid');
         if (/^X/.test(sMenid)) {
-          this.moveToMenu(this.mMenuProperties[sMenid].Mnurl);
+          const sMnurl = (this.oMenuModel.getProperties(sMenid) || {}).Mnurl || '';
+          this.moveToMenu(sMnurl);
           return;
         }
 
-        const oCommonModel = this.oAppController.getModel(ServiceNames.COMMON);
+        const oCommonModel = this.oController.getModel(ServiceNames.COMMON);
         const sUrl = oCommonModel.createKey('/GetMenuUrlSet', {
           Menid: sMenid,
         });
@@ -546,29 +218,28 @@ sap.ui.define(
 
       failMenuLink() {
         MessageBox.error(
-          this.oAppController.getText('MSG_01003'), // 메뉴 오류입니다.
+          this.oController.getText('MSG_01003'), // 메뉴 오류입니다.
           {
             onClose: () => {
-              AppUtils.setAppBusy(false, this.oAppController).setMenuBusy(false, this.oAppController);
+              AppUtils.setAppBusy(false, this.oController).setMenuBusy(false, this.oController);
             },
           }
         );
       }
 
-      moveToMenu(sMenuUrl) {
-        this.oAppController;
-        this.oAppController.getRouter().navTo(sMenuUrl);
-        // this.oAppController
+      moveToMenu(sRouteName) {
+        this.oController.getRouter().navTo(sRouteName);
+        // this.oController
         //   .getRouter()
         //   .getTargets()
-        //   .display(sMenuUrl)
+        //   .display(sRouteName)
         //   .then(() => {
-        //     AppUtils.setAppBusy(false, this.oAppController).setMenuBusy(false, this.oAppController);
+        //     AppUtils.setAppBusy(false, this.oController).setMenuBusy(false, this.oController);
         //   });
       }
 
       debug(...args) {
-        this.oAppController.debug(...args);
+        this.oController.debug(...args);
       }
     }
 

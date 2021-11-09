@@ -25,16 +25,16 @@ sap.ui.define(
       }
 
       // override the parent's onNavBack (inherited from BaseController)
-      onNavBack(...args) {
+      onNavBack(...aArgs) {
         // in some cases we could display a certain target when the back button is pressed
-        if (this._oData && this._oData.fromTarget) {
-          this.getRouter().getTargets().display(this._oData.fromTarget);
-          delete this._oData.fromTarget;
+        if (this._oData && this._oData.from) {
+          this.getRouter().getTargets().display(this._oData.from);
+          delete this._oData.from;
           return;
         }
 
         // call the parent's onNavBack
-        super.onNavBack(...args);
+        super.onNavBack(...aArgs);
       }
     }
 

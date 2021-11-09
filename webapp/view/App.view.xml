@@ -2,7 +2,7 @@
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc" displayBlock="true">
 	<OverflowToolbar id="appMenuToolbar" asyncMode="true" busy="{appModel>/isMenuBusy}" busyIndicatorDelay="0" class="app-menu-toolbar">
-		<ImageContent id="logoImage" src="{ path: 'sessionModel>/Logo', formatter: '.getLogoPath' }" description="{sessionModel>/Logo} eHR Home" press=".navToHome">
+		<ImageContent id="logoImage" src="{ path: 'sessionModel>/CompanyName', formatter: '.getLogoPath' }" description="{sessionModel>/CompanyName} eHR Home" press=".navToHome">
 			<layoutData>
 				<OverflowToolbarLayoutData priority="NeverOverflow"/>
 			</layoutData>
