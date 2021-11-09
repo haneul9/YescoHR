@@ -43,7 +43,7 @@
 							</HBox>
 							<HBox>
 								<Text text="{i18n>MSG_02003}"/>
-								<ObjectStatus text="{/Total/Excon}" state="Indication05" />
+								<ObjectStatus text="{/Total/Excon}" state="Indication01" />
 								<Text text="{i18n>MSG_02004}"/>
 							</HBox>
 						</VBox>
@@ -55,13 +55,13 @@
 						</HBox>
 						<grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="8px">
 							<Label text="{i18n>LABEL_00266}" design="Bold" />
-							<DateRangeSelection class="sapIcon_Date" width="90%" id="SearchDate"/>
+							<DateRangeSelection class="sapIcon_DateRange" id="SearchDate"/>
 						</grid:CSSGrid>
 					</VBox>
 				</HBox>
 				<VBox class="vCardBox">
 					<core:Fragment fragmentName="sap.ui.yesco.fragment.OverviewTableHeader" type="XML" />
-					<table:Table id="conguTable" rows="{/CongList}" width="100%" selectionMode="None" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow" fixedColumnCount="7">
+					<table:Table id="conguTable" rows="{/CongList}" width="100%" selectionMode="None" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
 						<table:rowSettingsTemplate>
 							<table:RowSettings highlight="{
 							path: 'ZappStatAl',
@@ -154,10 +154,10 @@
 									<Text text="{ZpayBetT}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
 								</table:template>
 							</table:Column>
-							<table:Column width="50px">
+							<table:Column width="90px">
 								<Label text="{i18n>LABEL_00133}"/>
 								<table:template>
-									<Button icon="sap-icon://attachment" press=".TableUtils.onFileListDialog" visible="{= ${Docyn} === 'Y' }"/>
+									<Button icon="sap-icon://attachment" class="w-100" press=".TableUtils.onFileListDialog" visible="{= ${Docyn} === 'Y' }"/>
 									<!-- <Text text="{Docynt}" textAlign="Center" width="100%" wrapping="false" /> -->
 								</table:template>
 							</table:Column>
