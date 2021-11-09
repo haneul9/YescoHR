@@ -110,7 +110,7 @@
         },
         {
           "pattern": "congratulation/congDetail/{oDataKey}",
-          "name": "congDetail",
+          "name": "congratulation-detail",
           "target": "congDetail"
         },
         {

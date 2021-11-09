@@ -165,7 +165,7 @@ sap.ui.define(
             const sRouteName = oEvent.getParameter('name');
             AppUtils.debug(`User accessed route ${sRouteName}, timestamp = ${new Date().getTime()}`);
 
-            this.checkRouteName(sRouteName)
+            this.checkRouteName(sRouteName.split(/-/)[0])
               .then(() => {
                 oView.setVisible(true);
               })
@@ -176,7 +176,7 @@ sap.ui.define(
               });
           })
           .attachRoutePatternMatched((oEvent) => {
-            AppUtils.debug('routePatternMatched', oEvent);
+            AppUtils.debug('routePatternMatched', oEvent.getParameters());
           });
       },
 

@@ -9,15 +9,7 @@ sap.ui.define(
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/extension/moment',
   ],
-  (
-    JSONModel,
-    formatter,
-    EmpInfo,
-    BaseController,
-    ServiceNames,
-    AttachFileAction,
-    TableUtils
-  ) => {
+  (JSONModel, formatter, EmpInfo, BaseController, ServiceNames, AttachFileAction, TableUtils) => {
     'use strict';
 
     class Congratulation extends BaseController {
@@ -26,13 +18,13 @@ sap.ui.define(
         this.formatter = formatter;
         this.AttachFileAction = AttachFileAction;
         this.TableUtils = TableUtils;
-        this.TypeCode = 'HR01'
+        this.TypeCode = 'HR01';
       }
 
       onBeforeShow() {
-        const oViewModel = new JSONModel({ 
-          busy: false, 
-          Data: [], 
+        const oViewModel = new JSONModel({
+          busy: false,
+          Data: [],
           listinfo: {
             rowCount: 1,
             totalCount: 0,
@@ -49,7 +41,9 @@ sap.ui.define(
 
         const oSearchDate = this.byId('SearchDate');
         const dDate = moment(new Date()).hours(10).toDate();
-        const dDate2 = moment(new Date(dDate.getFullYear(), dDate.getMonth() - 1, dDate.getDate() + 1)).hours(10).toDate();
+        const dDate2 = moment(new Date(dDate.getFullYear(), dDate.getMonth() - 1, dDate.getDate() + 1))
+          .hours(10)
+          .toDate();
 
         oSearchDate.setDateValue(dDate2);
         oSearchDate.setSecondDateValue(dDate);
@@ -62,14 +56,14 @@ sap.ui.define(
       }
 
       onClick() {
-        this.getRouter().navTo('congDetail', { oDataKey: 'N' });
+        this.getRouter().navTo('congratulation-detail', { oDataKey: 'N' });
       }
 
       onExelDownload() {
         const oTable = this.byId('conguTable');
         const mTableData = this.getViewModel().getProperty('/CongList');
         const sFileName = '경조금신청_목록';
-        
+
         TableUtils.export({ oTable, mTableData, sFileName });
       }
 
@@ -110,7 +104,7 @@ sap.ui.define(
         const oListModel = this.getViewModel();
         const oController = this;
 
-        oListModel.setProperty("/busy", true);
+        oListModel.setProperty('/busy', true);
 
         oModel.read('/ConExpenseApplSet', {
           filters: [
@@ -133,12 +127,12 @@ sap.ui.define(
               TableUtils.count.call(oController, oList);
               oListModel.setProperty('/CongList', oList);
               oController.byId('conguTable').setVisibleRowCount(oList.length);
-              oListModel.setProperty("/busy", false);
+              oListModel.setProperty('/busy', false);
             }
           },
           error: function (oRespnse) {
             // Common.log(oResponse);
-            oListModel.setProperty("/busy", false);
+            oListModel.setProperty('/busy', false);
           },
         });
       }
@@ -147,7 +141,8 @@ sap.ui.define(
         const vPath = oEvent.getParameters().rowBindingContext.getPath();
         const oRowData = this.getViewModel().getProperty(vPath);
 
-        this.getRouter().navTo('congDetail', { oDataKey: oRowData.Appno });
+        this.getRouter().navTo('congratulation-detail', { oDataKey: oRowData.Appno });
+        // this.getRouter().getTargets().display('congDetail', { oDataKey: oRowData.Appno });
       }
     }
 

@@ -28,10 +28,6 @@ sap.ui.define(
           this.oUIComponent.getModel(ServiceNames.COMMON).create(
             sUrl,
             {
-              Pernr: '50007',
-              Werks: '1000',
-              Rolid: '',
-              Langu: '',
               Device: '',
               GetMenuLv1Nav: [],
               GetMenuLv2Nav: [],
