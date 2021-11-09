@@ -185,7 +185,7 @@ sap.ui.define(
             // 완료
             return "완료";
           default:
-            return "";
+            return null;
         }
       },
 
