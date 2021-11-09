@@ -9,7 +9,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/EmpInfo',
     'sap/ui/yesco/common/AttachFileAction',
-    'sap/ui/yesco/common/TableUtils3',
+    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/extension/moment',
     'sap/ui/yesco/extension/lodash',
@@ -24,7 +24,7 @@ sap.ui.define(
     ServiceNames,
     EmpInfo,
     AttachFileAction,
-    TableUtils3,
+    TableUtils,
     MessageBox
   ) => {
     'use strict';
@@ -73,7 +73,7 @@ sap.ui.define(
         oTable.addEventDelegate(
           {
             onAfterRendering: () => {
-              TableUtils3.adjustRowSpan({
+              TableUtils.adjustRowSpan({
                 table: oTable,
                 colIndices: [0, 7],
                 theadOrTbody: 'header',

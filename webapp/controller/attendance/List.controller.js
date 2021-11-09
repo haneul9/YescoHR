@@ -7,7 +7,7 @@ sap.ui.define(
     'sap/ui/yesco/controller/BaseController',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/EmpInfo',
-    'sap/ui/yesco/common/TableUtils3',
+    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/extension/moment',
     'sap/ui/yesco/extension/lodash',
   ],
@@ -19,14 +19,14 @@ sap.ui.define(
     BaseController,
     ServiceNames,
     EmpInfo,
-    TableUtils3
+    TableUtils
   ) => {
     'use strict';
 
     class List extends BaseController {
       constructor() {
         super();
-        this.formatter = TableUtils3;
+        this.formatter = TableUtils;
       }
 
       onBeforeShow() {
@@ -120,7 +120,7 @@ sap.ui.define(
           ],
           success: (oData) => {
             oViewModel.setProperty('/list', oData.results);
-            TableUtils3.count.call(this, oData.results);
+            TableUtils.count.call(this, oData.results);
 
             oViewModel.setProperty('/busy', false);
           },
@@ -137,7 +137,7 @@ sap.ui.define(
         const mTableData = this.getViewModel().getProperty('/list');
         const sFileName = '근태신청_목록';
 
-        TableUtils3.export({ oTable, mTableData, sFileName });
+        TableUtils.export({ oTable, mTableData, sFileName });
       }
 
       onPressNewApprBtn() {

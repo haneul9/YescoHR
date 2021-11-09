@@ -6,7 +6,7 @@ sap.ui.define(
     '../BaseController',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/AttachFileAction',
-    'sap/ui/yesco/common/TableUtils3',
+    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/extension/moment',
   ],
   (
@@ -16,7 +16,7 @@ sap.ui.define(
     BaseController,
     ServiceNames,
     AttachFileAction,
-    TableUtils3
+    TableUtils
   ) => {
     'use strict';
 
@@ -25,7 +25,7 @@ sap.ui.define(
         super();
         this.formatter = formatter;
         this.AttachFileAction = AttachFileAction;
-        this.TableUtils3 = TableUtils3;
+        this.TableUtils = TableUtils;
         this.TypeCode = 'HR01'
       }
 
@@ -70,7 +70,7 @@ sap.ui.define(
         const mTableData = this.getViewModel().getProperty('/CongList');
         const sFileName = '경조금신청_목록';
         
-        TableUtils3.export({ oTable, mTableData, sFileName });
+        TableUtils.export({ oTable, mTableData, sFileName });
       }
 
       formatNumber(vNum) {
@@ -130,7 +130,7 @@ sap.ui.define(
               //   e.No = vNo;
               // });
 
-              TableUtils3.count.call(oController, oList);
+              TableUtils.count.call(oController, oList);
               oListModel.setProperty('/CongList', oList);
               oController.byId('conguTable').setVisibleRowCount(oList.length);
               oListModel.setProperty("/busy", false);

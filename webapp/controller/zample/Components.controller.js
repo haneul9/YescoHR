@@ -9,7 +9,7 @@ sap.ui.define(
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/controller/BaseController',
     'sap/ui/yesco/model/formatter',
-    'sap/ui/yesco/common/TableUtils3',
+    'sap/ui/yesco/common/TableUtils',
   ],
   (
     // prettier 방지용 주석
@@ -21,7 +21,7 @@ sap.ui.define(
     JSONModel,
     BaseController,
     formatter,
-    TableUtils3
+    TableUtils
   ) => {
     'use strict';
 
@@ -48,7 +48,7 @@ sap.ui.define(
           oTable.addEventDelegate(
             {
               onAfterRendering: function () {
-                TableUtils3.adjustRowSpan({
+                TableUtils.adjustRowSpan({
                   table: this,
                   colIndices: [0, 1, 2, 3, 4, 5],
                   theadOrTbody: 'header',
