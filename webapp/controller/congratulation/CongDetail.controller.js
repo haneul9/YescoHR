@@ -60,7 +60,7 @@ sap.ui.define(
       }
 
       formatFlowerTxt(vFlower) {
-        return !vFlower && vFlower === undefined ? '' : vFlower === 'X' ? 'N' : 'Y';
+        return vFlower === undefined ? '' : vFlower === 'X' ? 'Y' : 'N';
       }
 
       // 상세조회
@@ -114,10 +114,9 @@ sap.ui.define(
                 oDetailModel.setProperty('/FormData/Appernr', oDetailModel.getProperty('/TargetInfo/Pernr'));
 
                 oDetailModel.setProperty('/ApplyInfo', {
-                  Appernr: oDetailModel.getProperty('/TargetInfo/Pernr'),
                   Apename: oDetailModel.getProperty('/TargetInfo/Ename'),
-                  Apjikgbtl: `${oDetailModel.getProperty('/TargetInfo/Zzjikgbt')}/${oDetailModel.getProperty('/TargetInfo/Zzjiktlt')}`,
-                  Appdt: new Date(),
+                  Orgtx: `${oDetailModel.getProperty('/TargetInfo/Btrtx')}/${oDetailModel.getProperty('/TargetInfo/Orgtx')}`,
+                  Apjikgbtl: `${oDetailModel.getProperty("/TargetInfo/Zzjikgbt")}/${oDetailModel.getProperty("/TargetInfo/Zzjiktlt")}`,
                 });
               }
 
@@ -214,13 +213,13 @@ sap.ui.define(
 
               if (!!oResult[0] && oResult[0].Zcode === 'ME') {
                 oController.onTargetDialog.call(oController);
-                oRelationBtn.setEnabled(false);
+                oRelationBtn.setVisible(false);
                 oRelationTxt.setEditable(false);
               } else {
                 oDetailModel.setProperty('/FormData/Zbirthday', null);
                 oDetailModel.setProperty('/FormData/Kdsvh', '');
                 oDetailModel.setProperty('/FormData/Zname', '');
-                oRelationBtn.setEnabled(true);
+                oRelationBtn.setVisible(true);
                 oRelationTxt.setEditable(true);
               }
             }
@@ -362,23 +361,27 @@ sap.ui.define(
       checkError(oController) {
         const oDetailModel = oController.getViewModel();
 
-        // 대상자 생년월일
-        if (!oDetailModel.getProperty('/FormData/Zbirthday')) {
+       // 대상자 생년월일
+       if(!oDetailModel.getProperty('/FormData/Zbirthday')) {
+          MessageBox.error("대상자 생년월일을 선택하세요.");
           return true;
         }
 
         // 경조일
-        if (!oDetailModel.getProperty('/FormData/Conddate')) {
+        if(!oDetailModel.getProperty('/FormData/Conddate')) {
+          MessageBox.error("경조일을 선택하세요.");
           return true;
-        }
+        }    
 
         // 대상자 성명
-        if (!oDetailModel.getProperty('/FormData/Zname')) {
+        if(!oDetailModel.getProperty('/FormData/Zname')) {
+          MessageBox.error("대상자 성명을 입력하세요.");
           return true;
         }
 
         // 행사장소
-        if (!oDetailModel.getProperty('/FormData/Zeloc')) {
+        if(!oDetailModel.getProperty('/FormData/Zeloc')) {
+          MessageBox.error("행사장소를 입력하세요.");
           return true;
         }
 
@@ -441,6 +444,7 @@ sap.ui.define(
       // oData호출 mapping
       sendDataFormat(oDatas) {
         let oSendObject = {
+          Appdt: oDatas.Appdt,
           Appno: oDatas.Appno,
           Apename: oDatas.Apename,
           Appernr: oDatas.Appernr,
@@ -486,6 +490,7 @@ sap.ui.define(
           if (fVal && fVal === '저장') {
             if (!vStatus || vStatus === '45') {
               oController.getAppno(oController);
+              oDetailModel.setProperty("/FormData/Appdt", new Date());
             }
 
             setTimeout(() => {
@@ -539,6 +544,7 @@ sap.ui.define(
           if (fVal && fVal === '신청') {
             if (!vStatus || vStatus === '45') {
               oController.getAppno(oController);
+              oDetailModel.setProperty("/FormData/Appdt", new Date());
             }
 
             setTimeout(() => {
