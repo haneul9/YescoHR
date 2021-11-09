@@ -72,14 +72,21 @@
 							<table:Column width="100px">
 								<Label text="상태"/>
 								<table:template>
-									<Text text="{
+									<ObjectStatus text="{
+											path: 'ZappStatAl',
+											formatter: '.TableUtils.StatusTxt'
+										}" state="{
+											path: 'ZappStatAl',
+											formatter: '.TableUtils.rowHighlight'
+										}" />
+									<!-- <Text text="{
 										path: 'ZappStatAl',
 										formatter: '.TableUtils.StatusTxt'
-									}" width="100%" textAlign="Center">
-										<customData>
-											<core:CustomData key="status" value="{= !${ZappStatAl} ? '000' : ${ZappStatAl}}" writeToDom="true" />
-										</customData>
-									</Text>
+									}" width="100%" textAlign="Center"> -->
+									<!-- <customData>
+										<core:CustomData key="status" value="{ZappStatAl}" writeToDom="true" />
+									</customData> -->
+									<!-- </Text> -->
 								</table:template>
 							</table:Column>
 							<table:Column width="100px">
