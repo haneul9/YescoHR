@@ -20,8 +20,8 @@
 						<Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
 						<Button text="{i18n>LABEL_00118}" press=".onCancelBtn" visible="{= ${/FormData/ZappStatAl} === '20' }" />
 						<Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= ${/FormData/ZappStatAl} === '10' || ${/FormData/ZappStatAl} === '45' }" />
-						<Button icon="sap-icon://action" type="Transparent" text="{i18n>LABEL_00131}" />
-						<Button icon="sap-icon://action" type="Transparent" text="{i18n>LABEL_00132}" />
+						<Button icon="sap-icon://print" type="Transparent" text="{i18n>LABEL_00131}" />
+						<Button icon="sap-icon://sys-help" type="Transparent" text="{i18n>LABEL_00132}" />
 					</HBox>
 				</HBox>
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.DetailTargetInfo" type="XML" />

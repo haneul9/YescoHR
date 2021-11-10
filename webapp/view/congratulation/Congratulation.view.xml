@@ -13,8 +13,8 @@
 					</Breadcrumbs>
 					<HBox>
 						<Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onClick" />
-						<Button icon="sap-icon://action" type="Transparent" text="{i18n>LABEL_00131}" />
-						<Button icon="sap-icon://action" type="Transparent" text="{i18n>LABEL_00132}" />
+						<Button icon="sap-icon://print" type="Transparent" text="{i18n>LABEL_00131}" />
+						<Button icon="sap-icon://sys-help" type="Transparent" text="{i18n>LABEL_00132}" />
 					</HBox>
 				</HBox>
 				<HBox justifyContent="SpaceAround">
@@ -72,21 +72,21 @@
 							<table:Column width="100px">
 								<Label text="상태"/>
 								<table:template>
-									<ObjectStatus text="{
+									<!-- <ObjectStatus text="{
 											path: 'ZappStatAl',
 											formatter: '.TableUtils.StatusTxt'
 										}" state="{
 											path: 'ZappStatAl',
 											formatter: '.TableUtils.rowHighlight'
-										}" />
-									<!-- <Text text="{
+										}" /> -->
+									<Text text="{
 										path: 'ZappStatAl',
 										formatter: '.TableUtils.StatusTxt'
-									}" width="100%" textAlign="Center"> -->
-									<!-- <customData>
-										<core:CustomData key="status" value="{ZappStatAl}" writeToDom="true" />
-									</customData> -->
-									<!-- </Text> -->
+									}" width="100%" textAlign="Center">
+										<customData>
+											<core:CustomData key="status" value="{ZappStatAl}" writeToDom="true" />
+										</customData>
+									</Text>
 								</table:template>
 							</table:Column>
 							<table:Column width="100px">
@@ -164,7 +164,7 @@
 							<table:Column width="90px">
 								<Label text="{i18n>LABEL_00133}"/>
 								<table:template>
-									<Button icon="sap-icon://attachment" class="w-100" press=".TableUtils.onFileListDialog" visible="{= ${Docyn} === 'Y' }"/>
+									<Button type="Transparent" icon="sap-icon://attachment" class="w-100" press=".TableUtils.onFileListDialog" visible="{= ${Docyn} === 'Y' }"/>
 									<!-- <Text text="{Docynt}" textAlign="Center" width="100%" wrapping="false" /> -->
 								</table:template>
 							</table:Column>
