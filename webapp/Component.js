@@ -227,12 +227,14 @@ sap.ui.define(
         return oMenuModel.getPromise().then(() => {
           return new Promise((resolve, reject) => {
             if (sRouteName === 'ehrHome') {
+              oMenuModel.setProperty('/Current', { RouteName: '', Menid: '' });
               resolve();
               return;
             }
 
             const sMenid = oMenuModel.getMenid(sRouteName);
             if ((AppUtils.isLOCAL() || AppUtils.isDEV()) && /^X/.test(sMenid)) {
+              oMenuModel.setProperty('/Current', { RouteName: '', Menid: '' });
               resolve();
               return;
             }
