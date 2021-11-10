@@ -310,6 +310,10 @@ sap.ui.define(
 
               if (oDetailModel.getProperty('/TargetList').length === 1 || oDetailModel.getProperty("/FormData/Kdsvh") === 'ME') return;
 
+              if(oDetailModel.getProperty('/TargetList').length === 0) {
+                return MessageBox.alert("해당하는 대상자 정보가 없습니다. \n 가족정보를 추가하시거나, 성명을 직접 입력하시기 바랍니다.");
+              }
+
               oDialog.open();
             });
           } else {
@@ -317,6 +321,10 @@ sap.ui.define(
 
             if (oDetailModel.getProperty('/TargetList').length === 1 || oDetailModel.getProperty("/FormData/Kdsvh") === 'ME') return;
 
+            if(oDetailModel.getProperty('/TargetList').length === 0) {
+              return MessageBox.alert("해당하는 대상자 정보가 없습니다. \n 가족정보를 추가하시거나, 성명을 직접 입력하시기 바랍니다.");
+            }
+            
             this.byId('targetSettingsDialog').open();
           }
         }, 150);
@@ -524,6 +532,7 @@ sap.ui.define(
               oSendObject = oSendData;
               oSendObject.Prcty = 'T';
               oSendObject.Actty = 'E';
+              oSendObject.Waers = 'KRW';
 
               oModel.create('/ConExpenseApplSet', oSendObject, {
                 success: function (oData) {
@@ -578,6 +587,7 @@ sap.ui.define(
               oSendObject = oSendData;
               oSendObject.Prcty = 'C';
               oSendObject.Actty = 'E';
+              oSendObject.Waers = 'KRW';
 
               oModel.create('/ConExpenseApplSet', oSendObject, {
                 success: function (oData) {
