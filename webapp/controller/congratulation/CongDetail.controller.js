@@ -19,7 +19,7 @@ sap.ui.define(
         super();
         this.formatter = formatter;
         this.AttachFileAction = AttachFileAction;
-        this.TypeCode = 'HR01';
+        this.TYPE_CODE = 'HR01';
       }
 
       onBeforeShow() {
@@ -156,6 +156,7 @@ sap.ui.define(
             new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/TargetInfo/Werks')),
             new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
             new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, sSelectKey),
+            new sap.ui.model.Filter('Upcod2', sap.ui.model.FilterOperator.EQ, 'E'),
           ],
           success: function (oData) {
             if (oData) {
@@ -210,6 +211,7 @@ sap.ui.define(
               const oRelationTxt = oController.byId('RelationTxt');
 
               oDetailModel.setProperty('/BenefitRelation', oResult);
+              oDetailModel.setProperty("/TargetList", []);
 
               if (!!oResult[0] && oResult[0].Zcode === 'ME') {
                 oController.onTargetDialog.call(oController);
@@ -217,7 +219,7 @@ sap.ui.define(
                 oRelationTxt.setEditable(false);
               } else {
                 oDetailModel.setProperty('/FormData/Zbirthday', null);
-                oDetailModel.setProperty('/FormData/Kdsvh', '');
+                oDetailModel.setProperty('/FormData/Kdsvh', oResult[0].Zcode);
                 oDetailModel.setProperty('/FormData/Zname', '');
                 oRelationBtn.setVisible(true);
                 oRelationTxt.setEditable(true);
@@ -284,10 +286,7 @@ sap.ui.define(
       onTargetDialog() {
         const oDetailModel = this.getViewModel();
 
-        this.getTargetList(this);
-
         setTimeout(() => {
-          if (oDetailModel.getProperty('/TargetList').length === 1) return;
           // load asynchronous XML fragment
           if (!this.byId('targetSettingsDialog')) {
             Fragment.load({
@@ -298,9 +297,17 @@ sap.ui.define(
               // connect dialog to the root view of this component (models, lifecycle)
               this.getView().addDependent(oDialog);
               oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
+              this.getTargetList(this);
+
+              if (oDetailModel.getProperty('/TargetList').length === 1 || oDetailModel.getProperty("/FormData/Kdsvh") === 'ME') return;
+
               oDialog.open();
             });
           } else {
+            this.getTargetList(this);
+
+            if (oDetailModel.getProperty('/TargetList').length === 1 || oDetailModel.getProperty("/FormData/Kdsvh") === 'ME') return;
+
             this.byId('targetSettingsDialog').open();
           }
         }, 150);
@@ -322,14 +329,22 @@ sap.ui.define(
           success: function (oData) {
             if (oData) {
               const oTargetList = oData.results;
-
-              oDetailModel.setProperty('/TargetList', oTargetList);
+              const oChildList = [];
 
               if (oTargetList.length === 1) {
                 oDetailModel.setProperty('/FormData/Zbirthday', oTargetList[0].Zbirthday);
                 oDetailModel.setProperty('/FormData/Kdsvh', oTargetList[0].Kdsvh);
                 oDetailModel.setProperty('/FormData/Zname', oTargetList[0].Zname);
-              } else oController.byId('targetTable').setVisibleRowCount(oTargetList.length);
+              } else {
+                oTargetList.forEach(e => {
+                  if(oDetailModel.getProperty("/FormData/Kdsvh") === e.Kdsvh) {
+                  oChildList.push(e);
+                  }
+                });
+
+                oDetailModel.setProperty('/TargetList', oChildList);
+                oController.byId('targetTable').setVisibleRowCount(oChildList.length);
+              }
             }
           },
           error: function (oRespnse) {
@@ -670,7 +685,7 @@ sap.ui.define(
 
         AttachFileAction.setAttachFile(oController, {
           Editable: !sStatus || sStatus === '10',
-          Type: oController.TypeCode,
+          Type: oController.TYPE_CODE,
           Appno: sAppno,
           Max: 10,
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
