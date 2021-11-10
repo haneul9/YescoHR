@@ -145,6 +145,7 @@ sap.ui.define(
           },
           employee: {
             width: '78%',
+            busy: true,
             header: {
               busy: true,
               profilepath: 'https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1',
@@ -179,6 +180,7 @@ sap.ui.define(
         const oViewModel = this.getView().getModel();
         const sPernr = oParameter.pernr || null;
 
+        oViewModel.setProperty('/employee/busy', true);
         oViewModel.setProperty('/pernr', sPernr);
 
         this.loadProfile({ oViewModel, sPernr });
@@ -239,14 +241,17 @@ sap.ui.define(
                   oViewModel.setData(oViewModelData);
 
                   this.makeProfileBody();
+                  oViewModel.setProperty('/employee/busy', false);
                 })
                 .catch((error) => {
                   this.debug(error);
+                  oViewModel.setProperty('/employee/busy', false);
                   MessageBox.error(this.getText('MSG_00008', '조회'));
                 });
             })
             .catch((error) => {
               this.debug(error);
+              oViewModel.setProperty('/employee/busy', false);
               MessageBox.error(this.getText('MSG_00008', '조회'));
             });
         });
@@ -301,7 +306,7 @@ sap.ui.define(
               oSubVBox.addItem(oTable);
               // Grid
             } else if (oMenu.type === '6') {
-              let oCSSGrid = new CSSGrid({ gridTemplateColumns: '1fr 3fr 1fr 3fr', gridGap: '8px' });
+              let oCSSGrid = new CSSGrid({ gridTemplateColumns: '1fr 3fr 1fr 3fr', gridGap: '2px' });
 
               oMenu.header.forEach((head, index) => {
                 oCSSGrid.addItem(new sap.m.Label({ text: head.Header }));
@@ -491,6 +496,8 @@ sap.ui.define(
           return;
         }
 
+        appUtils.setAppBusy(true, this);
+
         MessageBox.confirm(this.getText('MSG_00006', '삭제'), {
           actions: ['삭제', MessageBox.Action.CANCEL],
           onClose: async (sAction) => {
@@ -502,6 +509,7 @@ sap.ui.define(
             if (result === 'success') {
               MessageBox.success(this.getText('MSG_00007', '삭제'));
             } else {
+              appUtils.setAppBusy(false, this);
               MessageBox.error(this.getText('MSG_00008', '삭제'));
               return;
             }
@@ -509,6 +517,7 @@ sap.ui.define(
             this.refreshAddress({ oViewModel });
 
             oTable.clearSelection();
+            appUtils.setAppBusy(false, this);
           },
         });
       }

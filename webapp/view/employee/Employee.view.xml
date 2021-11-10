@@ -28,7 +28,7 @@
                         </items>
                     </IconTabBar>
                 </VBox>
-                <VBox id="profileBody" height="900px" width="{= ${/employee/width}}">
+                <VBox id="profileBody" height="900px" width="{= ${/employee/width}}" busyIndicatorDelay="0" busy="{/employee/busy}">
                     <core:Fragment fragmentName="sap.ui.yesco.view.employee.fragment.ProfileOverview" type="XML" />
                     <core:Fragment fragmentName="sap.ui.yesco.view.employee.fragment.ProfileTab" type="XML" />
                 </VBox>
