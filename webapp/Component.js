@@ -42,23 +42,12 @@ sap.ui.define(
        * @override
        */
       init(...aArgs) {
-        // 디바이스 모델 생성
-        this.setDeviceModel();
-
-        // Busy indicator 값 저장 모델 생성
-        this.setAppModel();
-
-        // S4HANA OData 서비스 모델 생성
-        this.setServiceModel();
-
-        // Error handler 생성
-        this.setErrorHandler();
-
-        // 세션 모델 생성
-        this.setSessionModel();
-
-        // 메뉴 모델 생성
-        this.setMenuModel();
+        this.setDeviceModel() // 디바이스 모델 생성
+          .setAppModel() // Busy indicator 값 저장 모델 생성
+          .setServiceModel() // S4HANA OData 서비스 모델 생성
+          .setErrorHandler() // Error handler 생성
+          .setSessionModel() // 세션 모델 생성
+          .setMenuModel(); // 메뉴 모델 생성
 
         // call the base component's init function and create the App view
         UIComponent.prototype.init.apply(this, aArgs);
@@ -71,30 +60,59 @@ sap.ui.define(
         this.attachRoutingEvents(oRouter);
       },
 
-      setErrorHandler() {
-        this._oErrorHandler = new ErrorHandler(this);
-      },
-
+      /**
+       * 디바이스 모델 생성
+       */
       setDeviceModel() {
         setTimeout(() => {
           this.setModel(Models.createDeviceModel(), 'device');
         });
+        return this;
       },
 
+      /**
+       * Busy indicator 값 저장 모델 생성
+       */
       setAppModel() {
         setTimeout(() => {
           this.setModel(new JSONModel({ isAppBusy: true, delay: 0, isAtHome: true }), 'appModel');
         });
+        return this;
       },
 
+      /**
+       * Busy indicator 값 저장 모델 반환
+       * @returns {object}
+       */
+      getAppModel() {
+        return this.getModel('appModel');
+      },
+
+      /**
+       * S4HANA OData 서비스 모델 생성
+       */
       setServiceModel() {
         const aServiceNames = ServiceManager.getServiceNames();
         aServiceNames.forEach((sServiceName) => {
           const oServiceModel = ServiceManager.getODataModel(sServiceName);
           this.setModel(oServiceModel, sServiceName);
         });
+        return this;
       },
 
+      /**
+       * Error handler 생성
+       */
+      setErrorHandler() {
+        setTimeout(() => {
+          this._oErrorHandler = new ErrorHandler(this);
+        });
+        return this;
+      },
+
+      /**
+       * 세션 모델 생성
+       */
       setSessionModel() {
         setTimeout(() => {
           const sUrl = '/EmpLoginInfoSet';
@@ -126,20 +144,37 @@ sap.ui.define(
             },
           });
         });
+        return this;
       },
 
+      /**
+       * 세션 모델 반환
+       * @returns {object}
+       */
+      getSessionModel() {
+        return this.getModel('sessionModel');
+      },
+
+      /**
+       * 메뉴 모델 생성
+       */
       setMenuModel() {
         this.setModel(new MenuModel(this), 'menuModel');
+        return this;
       },
 
+      /**
+       * 메뉴 모델 반환
+       * @returns {object}
+       */
       getMenuModel() {
         return this.getModel('menuModel');
       },
 
-      getMenuTree() {
-        return this.getModel('menuModel').getProperty('/tree');
-      },
-
+      /**
+       * Routing event handler 처리
+       * @param {object} oRouter
+       */
       attachRoutingEvents(oRouter) {
         oRouter
           // .attachBeforeRouteMatched((oEvent) => {
@@ -178,8 +213,14 @@ sap.ui.define(
           .attachRoutePatternMatched((oEvent) => {
             AppUtils.debug('routePatternMatched', oEvent.getParameters());
           });
+        return this;
       },
 
+      /**
+       * 메뉴 권한 체크
+       * @param {string} sRouteName
+       * @returns {promise}
+       */
       checkRouteName(sRouteName) {
         const oMenuModel = this.getMenuModel();
 
@@ -196,7 +237,6 @@ sap.ui.define(
               return;
             }
 
-            // 메뉴 권한 체크
             const sUrl = '/GetMenuidRoleSet';
             this.getModel(ServiceNames.COMMON).read(sUrl, {
               filters: [

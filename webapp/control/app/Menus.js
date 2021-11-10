@@ -22,8 +22,8 @@ sap.ui.define(
     class Menus {
       constructor(oController) {
         this.oController = oController;
-        this.oMenuModel = oController.getOwnerComponent().getMenuModel();
         this.oMenuPopover = null;
+        this.oMenuModel = this.oController.getOwnerComponent().getMenuModel();
 
         this.oMenuModel.getPromise().then(() => {
           this.buildAppMenu();
@@ -47,7 +47,7 @@ sap.ui.define(
           oAppMenuToolbar.insertContent(new MenuLevel1(mMenu, this), i + 2); // App logo, ToolbarSpacer 이후부터 menu 추가
         });
 
-        AppUtils.setMenuBusy(false, this.oController);
+        AppUtils.setMenuBusy(false);
       }
 
       /**
@@ -184,7 +184,7 @@ sap.ui.define(
           return;
         }
 
-        AppUtils.setAppBusy(true, this.oController).setMenuBusy(true, this.oController);
+        AppUtils.setAppBusy(true).setMenuBusy(true);
 
         const sMenid = oContext.getProperty('Menid');
         if (/^X/.test(sMenid)) {
@@ -221,7 +221,7 @@ sap.ui.define(
           this.oController.getText('MSG_01003'), // 메뉴 오류입니다.
           {
             onClose: () => {
-              AppUtils.setAppBusy(false, this.oController).setMenuBusy(false, this.oController);
+              AppUtils.setAppBusy(false).setMenuBusy(false);
             },
           }
         );
@@ -234,7 +234,7 @@ sap.ui.define(
         //   .getTargets()
         //   .display(sRouteName)
         //   .then(() => {
-        //     AppUtils.setAppBusy(false, this.oController).setMenuBusy(false, this.oController);
+        //     AppUtils.setAppBusy(false).setMenuBusy(false);
         //   });
       }
 

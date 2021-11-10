@@ -12,24 +12,32 @@ sap.ui.define([], () => {
         : '';
     },
 
-    setAppBusy(state, oController) {
+    getAppController() {
+      return sap.ui.getCore().byId('container-ehr---app').getController();
+    },
+
+    getAppComponent() {
+      return this.getAppController().getOwnerComponent();
+    },
+
+    setAppBusy(state) {
       setTimeout(() => {
-        oController.getModel('appModel').setProperty('/isAppBusy', state);
-      }, 0);
+        this.getAppComponent().getAppModel().setProperty('/isAppBusy', state);
+      });
       return this;
     },
 
-    setMenuBusy(state, oController) {
+    setMenuBusy(state) {
       setTimeout(() => {
-        oController.getModel('appModel').setProperty('/isMenuBusy', state);
-      }, 0);
+        this.getAppComponent().getAppModel().setProperty('/isMenuBusy', state);
+      });
       return this;
     },
 
-    setAtHome(state, oController) {
+    setAtHome(state) {
       setTimeout(() => {
-        oController.getModel('appModel').setProperty('/isAtHome', state);
-      }, 0);
+        this.getAppComponent().getAppModel().setProperty('/isAtHome', state);
+      });
       return this;
     },
 
