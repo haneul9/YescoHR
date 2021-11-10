@@ -131,7 +131,7 @@ sap.ui.define(
           },
           error: function (oRespnse) {
             console.log(oRespnse);
-            const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
+            const vErrorMSG = JSON.parse(oRespnse.responseText).error.message.value;
 
             MessageBox.alert(vErrorMSG);
           },
@@ -175,7 +175,7 @@ sap.ui.define(
           },
           error: function (oRespnse) {
             console.log(oRespnse);
-            const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
+            const vErrorMSG = JSON.parse(oRespnse.responseText).error.message.value;
 
             MessageBox.alert(vErrorMSG);
           },
@@ -218,26 +218,28 @@ sap.ui.define(
               oDetailModel.setProperty('/BenefitRelation', oResult);
               oDetailModel.setProperty("/TargetList", []);
 
-              if (!!oResult[0] && oResult[0].Zcode === 'ME') {
-                oController.onTargetDialog.call(oController);
-                oRelationBtn.setVisible(false);
-                oRelationTxt.setEditable(false);
-              } else {
-                const bInitStatus = oDetailModel.getProperty("/bInitStatus");
-                
-                if(!bInitStatus) {
-                  oDetailModel.setProperty('/FormData/Zbirthday', null);
-                  oDetailModel.setProperty('/FormData/Kdsvh', oResult[0].Zcode);
-                  oDetailModel.setProperty('/FormData/Zname', '');
+              if(!oDetailModel.getProperty("/FormData/ZappStatAl") || oDetailModel.getProperty("/FormData/ZappStatAl") === '10') {
+                if (!!oResult[0] && oResult[0].Zcode === 'ME') {
+                  oController.onTargetDialog.call(oController);
+                  oRelationBtn.setVisible(false);
+                  oRelationTxt.setEditable(false);
+                } else {
+                  const bInitStatus = oDetailModel.getProperty("/bInitStatus");
+                  
+                  if(!bInitStatus) {
+                    oDetailModel.setProperty('/FormData/Zbirthday', null);
+                    oDetailModel.setProperty('/FormData/Kdsvh', oResult[0].Zcode);
+                    oDetailModel.setProperty('/FormData/Zname', '');
+                  }
+                  oRelationBtn.setVisible(true);
+                  oRelationTxt.setEditable(true);
                 }
-                oRelationBtn.setVisible(true);
-                oRelationTxt.setEditable(true);
               }
             }
           },
           error: function (oRespnse) {
             console.log(oRespnse);
-            const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
+            const vErrorMSG = JSON.parse(oRespnse.responseText).error.message.value;
 
             MessageBox.alert(vErrorMSG);
           },
@@ -284,7 +286,7 @@ sap.ui.define(
           },
           error: function (oRespnse) {
             console.log(oRespnse);
-            const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
+            const vErrorMSG = JSON.parse(oRespnse.responseText).error.message.value;
 
             MessageBox.alert(vErrorMSG);
           },
@@ -295,19 +297,19 @@ sap.ui.define(
       onTargetDialog() {
         const oDetailModel = this.getViewModel();
 
-        setTimeout(() => {
-          // load asynchronous XML fragment
-          if (!this.byId('targetSettingsDialog')) {
-            Fragment.load({
-              id: this.getView().getId(),
-              name: 'sap.ui.yesco.view.congratulation.TargetDialog',
-              controller: this,
-            }).then((oDialog) => {
-              // connect dialog to the root view of this component (models, lifecycle)
-              this.getView().addDependent(oDialog);
-              oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
-              this.getTargetList(this);
+        // load asynchronous XML fragment
+        if (!this.byId('targetSettingsDialog')) {
+          Fragment.load({
+            id: this.getView().getId(),
+            name: 'sap.ui.yesco.view.congratulation.TargetDialog',
+            controller: this,
+          }).then((oDialog) => {
+            // connect dialog to the root view of this component (models, lifecycle)
+            this.getView().addDependent(oDialog);
+            oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
+            this.getTargetList(this);
 
+            setTimeout(() => {
               if (oDetailModel.getProperty('/TargetList').length === 1 || oDetailModel.getProperty("/FormData/Kdsvh") === 'ME') return;
 
               if(oDetailModel.getProperty('/TargetList').length === 0) {
@@ -315,10 +317,12 @@ sap.ui.define(
               }
 
               oDialog.open();
-            });
-          } else {
-            this.getTargetList(this);
+            }, 100);
+          });
+        } else {
+          this.getTargetList(this);
 
+          setTimeout(() => {
             if (oDetailModel.getProperty('/TargetList').length === 1 || oDetailModel.getProperty("/FormData/Kdsvh") === 'ME') return;
 
             if(oDetailModel.getProperty('/TargetList').length === 0) {
@@ -326,8 +330,8 @@ sap.ui.define(
             }
             
             this.byId('targetSettingsDialog').open();
-          }
-        }, 150);
+          }, 100);
+        }
       }
 
       // 대상자 리스트 조회
@@ -336,7 +340,7 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
 
         oModel.read('/ConExpenseSupportListSet', {
-          async: true,
+          async: false,
           filters: [
             new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/TargetInfo/Werks')),
             new sap.ui.model.Filter('Concode', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/FormData/Concode')),
@@ -366,7 +370,7 @@ sap.ui.define(
           },
           error: function (oRespnse) {
             console.log(oRespnse);
-            const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
+            const vErrorMSG = JSON.parse(oRespnse.responseText).error.message.value;
 
             MessageBox.alert(vErrorMSG);
           },
@@ -461,7 +465,7 @@ sap.ui.define(
           },
           error: function (oRespnse) {
             console.log(oRespnse);
-            const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
+            const vErrorMSG = JSON.parse(oRespnse.responseText).error.message.value;
 
             MessageBox.alert(vErrorMSG);
           },
@@ -548,7 +552,7 @@ sap.ui.define(
                 },
                 error: function (oRespnse) {
                   console.log(oRespnse);
-                  const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
+                  const vErrorMSG = JSON.parse(oRespnse.responseText).error.message.value;
 
                   MessageBox.alert(vErrorMSG);
                 },
@@ -602,7 +606,7 @@ sap.ui.define(
                 },
                 error: function (oRespnse) {
                   console.log(oRespnse);
-                  const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
+                  const vErrorMSG = JSON.parse(oRespnse.responseText).error.message.value;
 
                   MessageBox.alert(vErrorMSG);
                 },
@@ -643,7 +647,7 @@ sap.ui.define(
               },
               error: function (oRespnse) {
                 console.log(oRespnse);
-                const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
+                const vErrorMSG = JSON.parse(oRespnse.responseText).error.message.value;
 
                 MessageBox.alert(vErrorMSG);
               },
@@ -681,7 +685,7 @@ sap.ui.define(
               },
               error: function (oRespnse) {
                 console.log(oRespnse);
-                const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
+                const vErrorMSG = JSON.parse(oRespnse.responseText).error.message.value;
 
                 MessageBox.alert(vErrorMSG);
               },
