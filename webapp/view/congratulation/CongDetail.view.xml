@@ -20,7 +20,7 @@
 						<Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
 						<Button text="{i18n>LABEL_00118}" press=".onCancelBtn" visible="{= ${/FormData/ZappStatAl} === '20' }" />
 						<Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= ${/FormData/ZappStatAl} === '10' || ${/FormData/ZappStatAl} === '45' }" />
-						<Button icon="sap-icon://print" type="Transparent" text="{i18n>LABEL_00131}" />
+						<Button icon="sap-icon://print" press=".formatter.onPagePrint" type="Transparent" text="{i18n>LABEL_00131}" />
 						<Button icon="sap-icon://sys-help" type="Transparent" text="{i18n>LABEL_00132}" />
 					</HBox>
 				</HBox>
@@ -37,7 +37,7 @@
 							<core:Item text="{Ztext}" key="{Zcode}" />
 						</Select>
 						<Label text="{i18n>LABEL_02014}"/>
-						<DatePicker class="sapIcon_Date" valueState="Warning" dateValue="{/FormData/Zbirthday}" width="250px" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+						<DatePicker id='BirthDatePicker' class="sapIcon_Date" valueState="Warning" dateValue="{/FormData/Zbirthday}" width="250px" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
 						<Label text="{i18n>LABEL_02008}"/>
 						<Select id="BenefitCause" valueState="Warning" items="{/BenefitCause}" selectedKey="{/FormData/Conresn}" width="250px" change=".onCauseChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
 							<core:Item text="{Ztext}" key="{Zcode}" />
@@ -45,7 +45,7 @@
 						<Label text="{i18n>LABEL_02009}"/>
 						<DatePicker class="sapIcon_Date" valueState="Warning" dateValue="{/FormData/Conddate}" width="250px" change=".onBenefitChangeDate" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
 						<Label text="{i18n>LABEL_02015}"/>
-						<Select id="BenefitRelation" valueState="Warning" items="{/BenefitRelation}" selectedKey="{/FormData/Kdsvh}" width="250px" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+						<Select id="BenefitRelation" change=".onRelationChange" valueState="Warning" items="{/BenefitRelation}" selectedKey="{/FormData/Kdsvh}" width="250px" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
 							<core:Item text="{Ztext}" key="{Zcode}" />
 						</Select>
 						<Label text="{i18n>LABEL_02016}"/>

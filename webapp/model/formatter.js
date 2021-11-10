@@ -39,6 +39,10 @@ sap.ui.define(
       return "";
     },
 
+    onPagePrint() {
+      window.print();
+    },
+
     onInfoMsgClose() {
       this.byId('InfoMegBox').setVisible(false);
     },
