@@ -343,6 +343,9 @@ sap.ui.define(
       }
 
       getMenid(sUrl) {
+        if (!sUrl) {
+          return this.getProperty(`/Current/Menid`);
+        }
         return this.getProperty(`/urlToMenid/${sUrl}`);
       }
 

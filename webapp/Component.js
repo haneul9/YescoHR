@@ -246,6 +246,8 @@ sap.ui.define(
               success: (oData, oResponse) => {
                 AppUtils.debug(`${sUrl} success.`, oData, oResponse);
 
+                oMenuModel.setProperty('/Current', { RouteName: sRouteName, Menid: sMenid });
+
                 resolve();
               },
               error: (oError) => {
