@@ -15,10 +15,10 @@
             <HBox>
                 <VBox class="customBox" width="{= ${/sidenavigation/width}}">
                     <HBox justifyContent="SpaceBetween">
-                        <SearchField placeholder="사번 또는 성명" visible="{= ${/sidenavigation/isShow}}" />
+                        <SearchField width="320px" placeholder="사번 또는 성명" visible="{= ${/sidenavigation/isShow}}" />
                         <Switch state="true" customTextOn="닫기" customTextOff="열기" change=".onToggleNavigation"/>
                     </HBox>
-                    <IconTabBar selectedKey="list" visible="{= ${/sidenavigation/isShow}}">
+                    <IconTabBar selectedKey="list" expandable="false" visible="{= ${/sidenavigation/isShow}}">
                         <layoutData>
                             <FlexItemData growFactor="1"/>
                         </layoutData>
@@ -28,20 +28,9 @@
                         </items>
                     </IconTabBar>
                 </VBox>
-                <VBox height="900px" width="{= ${/employee/width}}">
+                <VBox id="profileBody" height="900px" width="{= ${/employee/width}}" busyIndicatorDelay="0" busy="{/employee/busy}">
                     <core:Fragment fragmentName="sap.ui.yesco.view.employee.fragment.ProfileOverview" type="XML" />
                     <core:Fragment fragmentName="sap.ui.yesco.view.employee.fragment.ProfileTab" type="XML" />
-                    <VBox visible="{/employee/base/isShow}">
-                        <core:Fragment fragmentName="sap.ui.yesco.view.employee.fragment.ProfileExtrainfo" type="XML" />
-                        <core:Fragment fragmentName="sap.ui.yesco.view.employee.fragment.ProfilePrivateinfo" type="XML" />
-                    </VBox>
-                    <VBox visible="{/employee/action/isShow}">
-                        <core:Fragment fragmentName="sap.ui.yesco.view.employee.fragment.ProfileActioninfo" type="XML" />
-                    </VBox>
-                    <VBox visible="{/employee/personal/isShow}">
-                        <core:Fragment fragmentName="sap.ui.yesco.view.employee.fragment.ProfileAddressinfo" type="XML" />
-                        <core:Fragment fragmentName="sap.ui.yesco.view.employee.fragment.ProfilePrivateinfo" type="XML" />
-                    </VBox>
                 </VBox>
             </HBox>
         </VBox>

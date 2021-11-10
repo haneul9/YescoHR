@@ -5,10 +5,14 @@ sap.ui.define(
     'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/core/Fragment',
+    'sap/ui/table/Table',
+    'sap/ui/layout/cssgrid/CSSGrid',
     'sap/ui/yesco/controller/BaseController',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/common/appUtils',
     'sap/ui/yesco/common/EmpInfo',
     'sap/ui/yesco/common/TableUtils',
+    'sap/ui/yesco/common/Validator',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/extension/moment',
     'sap/ui/yesco/extension/lodash',
@@ -19,10 +23,14 @@ sap.ui.define(
     FilterOperator,
     JSONModel,
     Fragment,
+    Table,
+    CSSGrid,
     BaseController,
     ServiceNames,
+    appUtils,
     EmpInfo,
     TableUtils,
+    Validator,
     MessageBox
   ) => {
     'use strict';
@@ -31,11 +39,13 @@ sap.ui.define(
       constructor() {
         super();
         this.formatter = TableUtils;
+        this.validator = Validator;
       }
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
           busy: false,
+          pernr: null,
           navigation: {
             current: '사원프로파일',
             links: [
@@ -44,7 +54,7 @@ sap.ui.define(
           },
           sidenavigation: {
             isShow: true,
-            width: '20%',
+            width: '22%',
             search: {
               results: [
                 { Ename: '김지현', Manager: true, Todo1: '부장', Todo2: '팀장', Todo3: '예스코 기술연구소 정보기술팀', Todo4: '6년 11개월 (2015.01.01 입사) 재직', Todo5: '인사(5년 6개월)' },
@@ -134,35 +144,12 @@ sap.ui.define(
             ],
           },
           employee: {
-            width: '80%',
+            width: '78%',
+            busy: true,
             header: {
-              baseinfo: [
-                { data: '홍길순 부장/팀장' },
-                { data: '회사' },
-                { data: '예스코홀딩스' },
-                { data: '그룹입사일' },
-                { data: '2020.01.01(1년 11개월)' },
-                { data: '010-1234-1234' },
-                { data: '부서' },
-                { data: '인사전략팀' },
-                { data: '회사입사일' },
-                { data: '2020.01.01(1년 11개월)' },
-                { data: 'abc@yescoholdings.com' },
-                { data: '사업장' },
-                { data: '서울본사' },
-                { data: '부서배치일' },
-                { data: '2020.01.01(1년 11개월)' },
-                { data: '1990.01.01 여(30세)' },
-                { data: '직군' },
-                { data: '일반직(연봉)' },
-                { data: '직급승진일' },
-                { data: '2020.01.01(1년 11개월)' },
-                { data: '재직자 / 12345' },
-                { data: '직무' },
-                { data: '인사(1년 11개월)' },
-                { data: '직책임용일' },
-                { data: '2020.01.01(1년 11개월)' },
-              ],
+              busy: true,
+              profilepath: 'https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1',
+              baseinfo: [],
               timeline: [
                 { label: '회사입사일', data: '2010.01.01' },
                 { label: '부서배치일', data: '2015.01.01' },
@@ -171,91 +158,220 @@ sap.ui.define(
                 { label: '10년장기근속일', data: '2019.12.31' },
               ],
             },
-            base: {
-              isShow: true,
-              extinfo1: [
-                { data: '성명(영어)' }, //
-                { data: 'GILSOON HONG' },
-                { data: '성명(한자)' },
-                { data: '洪吉順' },
-                { data: '노조가입여부' },
-                { data: '비조합원' },
-                { data: '노조직책' },
-                { data: '' },
-                { data: '최종학력' },
-                { data: '대학교 졸업' },
-                { data: '입사시학력' },
-                { data: '대학교 졸업' },
-                { data: '퇴직일' },
-                { data: '' },
-                { data: '퇴직사유' },
-                { data: '' },
-              ],
-              extinfo2: [
-                { data: '실제생일' }, //
-                { data: '1990.01.01' },
-                { data: '음력/양력' },
-                { data: '양력' },
-                { data: '결혼여부' },
-                { data: '기혼' },
-                { data: '결혼기념일' },
-                { data: '2020.01.01' },
-                { data: '취미' },
-                { data: '자전거' },
-                { data: '특기' },
-                { data: '골프' },
-              ],
+            tab: {
+              list: [],
             },
-            action: {
-              isShow: false,
-              rowcount: 3,
-              listheader: [
-                { width: '4%', label: 'No', property: 'idx' }, //
-                { width: '12%', label: '발령', property: 'Todo1' },
-                { width: '12%', label: '발령유형', property: 'Todo2' },
-                { width: '12%', label: '발령사유', property: 'Todo3' },
-                { width: '12%', label: '사업장', property: 'Todo4' },
-                { width: '12%', label: '부서', property: 'Todo5' },
-                { width: '12%', label: '직급', property: 'Todo6' },
-                { width: '12%', label: '직책', property: 'Todo7' },
-                { width: '12%', label: '사원유형', property: 'Todo8' },
-              ],
-              list: [
-                { idx: '1', Todo1: '2020.01.01', Todo2: '조직개편', Todo3: '조직명칭변경', Todo4: '서울본사', Todo5: '인사팀', Todo6: '사원', Todo7: '팀원', Todo8: '일반직(연봉)' }, //
-                { idx: '2', Todo1: '2020.01.01', Todo2: '조직개편', Todo3: '조직명칭변경', Todo4: '서울본사', Todo5: '인사팀', Todo6: '사원', Todo7: '팀원', Todo8: '일반직(연봉)' },
-                { idx: '3', Todo1: '2020.01.01', Todo2: '조직개편', Todo3: '조직명칭변경', Todo4: '서울본사', Todo5: '인사팀', Todo6: '사원', Todo7: '팀원', Todo8: '일반직(연봉)' },
-              ],
-            },
-            personal: {
-              isShow: false,
-              rowcount: 2,
-              listheader: [
-                { width: '10%', label: '유형', property: 'Todo1' }, //
-                { width: '10%', label: '우편번호', property: 'Todo2' },
-                { width: '80%', label: '주소', property: 'Todo3' },
-              ],
-              list: [
-                { Todo1: '본적지', Todo2: '12345', Todo3: '서울시 중구 무교로 15 805호' }, //
-                { Todo1: '본적지', Todo2: '12345', Todo3: '서울시 중구 무교로 15 805호' },
-              ],
-              address: {
-                typelist: [
-                  { key: '01', data: '본적지' }, //
-                  { key: '02', data: '주민등록지' },
-                ],
-                sidolist: [
-                  { key: '01', data: '서울특별시' }, //
-                  { key: '02', data: '부산광역시' },
-                  { key: '03', data: '경기도' },
-                  { key: '04', data: '강원도' },
-                ],
-                form: {},
-              },
+            sub: {},
+            address: {
+              typelist: [{ Zcode: 'ALL', Ztext: this.getText('LABEL_00268') }],
+              sidolist: [{ State: 'ALL', Bezei: this.getText('LABEL_00268') }],
+              form: { Subty: 'ALL', State: 'ALL' },
             },
           },
         });
-        // oViewModel.loadData('localService/attendancedata.json');
         this.setViewModel(oViewModel);
+
+        const oRouter = this.getRouter();
+        oRouter.getRoute('employee').attachPatternMatched(this.onObjectMatched, this);
+      }
+
+      onObjectMatched(oEvent) {
+        const oParameter = oEvent.getParameter('arguments');
+        const oViewModel = this.getView().getModel();
+        const sPernr = oParameter.pernr || null;
+
+        oViewModel.setProperty('/employee/busy', true);
+        oViewModel.setProperty('/pernr', sPernr);
+
+        this.loadProfile({ oViewModel, sPernr });
+        this.readTypeList();
+        this.readCityList();
+      }
+
+      loadProfile({ oViewModel, sPernr }) {
+        const oModel = this.getModel(ServiceNames.PA);
+        const aFilters = [];
+
+        if (sPernr) {
+          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
+        }
+
+        Promise.all([
+          this.readEmpProfileHeaderNew({ oModel, oViewModel, aFilters }), //
+          this.readEmpProfileMenu({ oModel, oViewModel, aFilters }),
+        ]).then((returnData) => {
+          const mTabMenu = returnData[1];
+          let aHeaderRequests = [];
+          let aContentRequests = [];
+
+          mTabMenu.map((data) => {
+            aHeaderRequests.push(this.readEmpProfileHeaderTab({ oModel, aFilters: [new Filter('Menuc', FilterOperator.EQ, data.Menuc1), ...aFilters] }));
+            aContentRequests.push(this.readEmpProfileContentsTab({ oModel, aFilters: [new Filter('Menuc', FilterOperator.EQ, data.Menuc1), ...aFilters] }));
+          });
+
+          Promise.all(aHeaderRequests)
+            .then((returnHeaderData) => {
+              Promise.all(aContentRequests)
+                .then((returnContentData) => {
+                  const oViewModelData = oViewModel.getData();
+
+                  returnHeaderData.forEach((headers, index) => {
+                    headers.forEach((o) => {
+                      oViewModelData.employee.sub[mTabMenu[index]?.Menuc1]?.contents[o.Menuc]?.header.push(o);
+                    });
+                  });
+
+                  returnContentData.forEach((content, index) => {
+                    content.forEach((o) => {
+                      let oSubMenu = oViewModelData.employee.sub[mTabMenu[index]?.Menuc1]?.contents[o.Menuc];
+
+                      if (oSubMenu.type === '6') {
+                        for (let i = 1; i <= oSubMenu.header.length; i++) {
+                          let sKey = `Value${_.padStart(i, 2, '0')}`;
+                          oSubMenu.data.push(o[sKey]);
+                        }
+                      } else if (oSubMenu.type === '5') {
+                        oSubMenu.data.push(o);
+                      }
+
+                      oSubMenu.rowcount = oSubMenu.data.length;
+                    });
+                  });
+
+                  oViewModel.setData(oViewModelData);
+
+                  this.makeProfileBody();
+                  oViewModel.setProperty('/employee/busy', false);
+                })
+                .catch((error) => {
+                  this.debug(error);
+                  oViewModel.setProperty('/employee/busy', false);
+                  MessageBox.error(this.getText('MSG_00008', '조회'));
+                });
+            })
+            .catch((error) => {
+              this.debug(error);
+              oViewModel.setProperty('/employee/busy', false);
+              MessageBox.error(this.getText('MSG_00008', '조회'));
+            });
+        });
+      }
+
+      makeProfileBody() {
+        const oView = this.getView().getModel();
+        const oParentBox = this.byId('profileBody');
+        const mSubMenu = oView.getProperty('/employee/sub');
+
+        Object.keys(mSubMenu).forEach((menukey) => {
+          let mSubMenuContents = mSubMenu[menukey].contents;
+          let oVBox = new sap.m.VBox({ id: `sub${menukey}`, visible: { path: `/employee/sub/${menukey}/isShow` } });
+
+          Object.keys(mSubMenuContents).forEach((key) => {
+            let oMenu = mSubMenuContents[key];
+            let oSubVBox = new sap.m.VBox().addStyleClass('customBox');
+            let oSubHBox = new sap.m.HBox({ justifyContent: 'SpaceBetween' });
+            this.debug('oMenu', oMenu);
+
+            oSubHBox.addItem(new sap.m.Title({ level: 'H2', text: oMenu.title }));
+            if (oMenu.title === '주소') {
+              let oSubButtonBox = new sap.m.HBox();
+
+              oSubButtonBox.addItem(new sap.m.Button({ type: 'Transparent', icon: 'sap-icon://edit', text: '수정', press: this.onPressModifyAddress.bind(this) }));
+              oSubButtonBox.addItem(new sap.m.Button({ type: 'Transparent', icon: 'sap-icon://add', text: '추가', press: this.onPressRegAddress.bind(this) }));
+              oSubButtonBox.addItem(new sap.m.Button({ type: 'Transparent', icon: 'sap-icon://less', text: '삭제', press: this.onPressDeleteAddress.bind(this) }));
+              oSubHBox.addItem(oSubButtonBox);
+            }
+
+            oSubVBox.addItem(oSubHBox);
+
+            // Table
+            if (oMenu.type === '5') {
+              let oTable = new Table({
+                width: '100%',
+                selectionMode: { path: `/employee/sub/${menukey}/contents/${key}/selectionMode` },
+                visibleRowCount: { path: `/employee/sub/${menukey}/contents/${key}/rowcount` },
+                noData: this.getText('MSG_00001'),
+              }).bindRows(`/employee/sub/${menukey}/contents/${key}/data`);
+
+              oMenu.header.forEach((head, index) => {
+                if (!head.Invisible) {
+                  let oColumn = new sap.ui.table.Column({ width: 'auto' });
+
+                  oColumn.setLabel(new sap.m.Label({ text: head.Header }));
+                  oColumn.setTemplate(new sap.m.Text({ width: '100%', textAlign: 'Center', text: { path: `Value${_.padStart(index + 1, 2, '0')}` } }));
+                  oTable.addColumn(oColumn);
+                }
+              });
+
+              oSubVBox.addItem(oTable);
+              // Grid
+            } else if (oMenu.type === '6') {
+              let oCSSGrid = new CSSGrid({ gridTemplateColumns: '1fr 3fr 1fr 3fr', gridGap: '2px' });
+
+              oMenu.header.forEach((head, index) => {
+                oCSSGrid.addItem(new sap.m.Label({ text: head.Header }));
+                oCSSGrid.addItem(new sap.m.Text({ text: oMenu.data[index] }));
+              });
+
+              oSubVBox.addItem(oCSSGrid);
+            }
+
+            oVBox.addItem(oSubVBox);
+          });
+
+          oParentBox.addItem(oVBox);
+        });
+      }
+
+      openAddressDialog() {
+        const oView = this.getView();
+
+        appUtils.setAppBusy(true, this);
+
+        setTimeout(() => {
+          if (!this._pAddressDialog) {
+            this._pAddressDialog = Fragment.load({
+              id: oView.getId(),
+              name: 'sap.ui.yesco.view.employee.fragment.AddressDialog',
+              controller: this,
+            }).then(function (oDialog) {
+              oView.addDependent(oDialog);
+              return oDialog;
+            });
+          }
+          this._pAddressDialog.then(function (oDialog) {
+            oDialog.open();
+          });
+        }, 100);
+      }
+
+      async refreshAddress({ oViewModel }) {
+        const oMenuInfo = _.find(oViewModel.getProperty('/employee/tab/menu'), { Menu2: '주소' });
+        const sAddressPath = `/employee/sub/${oMenuInfo.Menuc1}/contents/${oMenuInfo.Menuc2}`;
+        const mReturnContents = await this.readEmpProfileContentsTab({
+          oModel: this.getModel(ServiceNames.PA),
+          aFilters: [
+            new Filter('Pernr', FilterOperator.EQ, oMenuInfo.Pernr), //
+            new Filter('Menuc', FilterOperator.EQ, oMenuInfo.Menuc1),
+          ],
+        });
+        const mTableData = _.filter(mReturnContents, { Menuc: oMenuInfo.Menuc2 });
+
+        oViewModel.setProperty(`${sAddressPath}/data`, mTableData);
+        oViewModel.setProperty(`${sAddressPath}/rowcount`, mTableData.length);
+      }
+
+      getAddressTableRowdata({ oViewModel, oTable, aSelectedIndices }) {
+        const sRowPath = oTable.getRows()[aSelectedIndices[0]].getBindingContext().getPath();
+        const oRowData = oViewModel.getProperty(sRowPath);
+        const oMenu = _.find(oViewModel.getProperty('/employee/tab/menu'), { Menuc2: oRowData.Menuc });
+        const mHeaderData = oViewModel.getProperty(`/employee/sub/${oMenu.Menuc1}/contents/${oMenu.Menuc2}/header`);
+
+        return {
+          Pernr: oRowData.Pernr,
+          Subty: oRowData[`Value${_.padStart(_.findIndex(mHeaderData, { Fieldname: 'SUBTY' }) + 1, 2, '0')}`],
+          Begda: oRowData[`Value${_.padStart(_.findIndex(mHeaderData, { Fieldname: 'BEGDA' }) + 1, 2, '0')}`],
+        };
       }
 
       /* =========================================================== */
@@ -267,10 +383,10 @@ sap.ui.define(
         this.getView().getModel().setProperty('/sidenavigation/isShow', bState);
         this.getView()
           .getModel()
-          .setProperty('/sidenavigation/width', bState ? '20%' : '4%');
+          .setProperty('/sidenavigation/width', bState ? '22%' : '4%');
         this.getView()
           .getModel()
-          .setProperty('/employee/width', bState ? '80%' : '96%');
+          .setProperty('/employee/width', bState ? '78%' : '96%');
       }
 
       onClickEmployeeCard(oEvent) {
@@ -278,12 +394,11 @@ sap.ui.define(
         MessageToast.show(`${sPath} Card click!!`);
       }
 
-      onToggleProfile(oEvent) {
+      onToggleTab(oEvent) {
         const oClickedButton = oEvent.getSource();
-        const sId = oClickedButton.getId();
+        const sMenuCode = oClickedButton.getCustomData()[0].getValue();
         const bPressed = oClickedButton.getPressed();
         const oViewModel = this.getView().getModel();
-        const aLayoutId = ['base', 'action', 'personal'];
 
         if (!bPressed) return;
 
@@ -291,39 +406,120 @@ sap.ui.define(
           .getParent()
           .getItems()
           .forEach((control) => {
+            const sMenuc = control.getCustomData()[0].getValue();
+
             control.setPressed(false);
+            oViewModel.setProperty(`/employee/sub/${sMenuc}/isShow`, false);
           });
         oClickedButton.setPressed(true);
-
-        aLayoutId.forEach((key) => {
-          oViewModel.setProperty(`/employee/${key}/isShow`, sId.includes(key));
-        });
+        oViewModel.setProperty(`/employee/sub/${sMenuCode}/isShow`, true);
       }
 
-      openAddressDialog() {
-        var oView = this.getView();
+      onPressRegAddress() {
+        const oViewModel = this.getView().getModel();
 
-        if (!this._pAddressDialog) {
-          this._pAddressDialog = Fragment.load({
-            id: oView.getId(),
-            name: 'sap.ui.yesco.view.employee.fragment.AddressDialog',
-            controller: this,
-          }).then(function (oDialog) {
-            oView.addDependent(oDialog);
-            return oDialog;
-          });
+        oViewModel.setProperty('/employee/address/actionText', '추가');
+        oViewModel.setProperty('/employee/address/form', { Subty: 'ALL', State: 'ALL' });
+
+        this.openAddressDialog();
+      }
+
+      async onSaveAddress() {
+        const oViewModel = this.getView().getModel();
+        const oInputData = oViewModel.getProperty('/employee/address/form');
+        const sActionText = oViewModel.getProperty('/employee/address/actionText');
+        const mCheckFields = [
+          { field: 'Subty', label: '주소유형', type: Validator.SELECT1 }, //
+          { field: 'Begda', label: '적용시작일', type: Validator.INPUT1 },
+          { field: 'State', label: '시/도', type: Validator.SELECT2 },
+          { field: 'Pstlz', label: '우편번호', type: Validator.INPUT2 },
+          { field: 'Zzaddr2', label: '상세주소', type: Validator.INPUT2 },
+        ];
+
+        if (!this.validator.check.call(this, { oInputData, mCheckFields })) return;
+
+        const oSido = _.find(oViewModel.getProperty('/employee/address/sidolist'), { State: oInputData.State });
+        delete oSido.Land1;
+        delete oSido.__metadata;
+
+        const { result } = await this.createAddressInfo({ oInputData: { ...oSido, ...oInputData } });
+
+        if (result === 'success') {
+          MessageBox.success(this.getText('MSG_00007', sActionText));
+
+          this.refreshAddress({ oViewModel });
+        } else {
+          MessageBox.error(this.getText('MSG_00008', sActionText));
         }
-        this._pAddressDialog.then(function (oDialog) {
-          oDialog.open();
+
+        this.onAddressDialogClose();
+      }
+
+      async onPressModifyAddress(oEvent) {
+        const oViewModel = this.getView().getModel();
+        const oTable = oEvent.getSource().getParent().getParent().getParent().getItems()[1];
+        const aSelectedIndices = oTable.getSelectedIndices();
+
+        if (aSelectedIndices.length < 1) {
+          MessageBox.alert(this.getText('MSG_00010', '수정'));
+          return;
+        } else if (aSelectedIndices.length > 1) {
+          MessageBox.alert('수정할 데이터를 하나만 선택하세요.');
+          return;
+        }
+
+        const oPayload = this.getAddressTableRowdata({ oViewModel, oTable, aSelectedIndices });
+        const oAddressDetail = await this.readAddressInfo({ oPayload });
+
+        if (oAddressDetail.result === 'error') {
+          MessageBox.error(this.getText('MSG_00008', '상세조회'));
+          return;
+        }
+
+        oViewModel.setProperty('/employee/address/actionText', '수정');
+        oViewModel.setProperty('/employee/address/form', oAddressDetail.result);
+
+        this.openAddressDialog(oEvent);
+        oTable.clearSelection();
+      }
+
+      onPressDeleteAddress(oEvent) {
+        const oViewModel = this.getView().getModel();
+        const oTable = oEvent.getSource().getParent().getParent().getParent().getItems()[1];
+        const aSelectedIndices = oTable.getSelectedIndices();
+
+        if (aSelectedIndices.length < 1) {
+          MessageBox.alert(this.getText('MSG_00010', '삭제'));
+          return;
+        } else if (aSelectedIndices.length > 1) {
+          MessageBox.alert('삭제할 데이터를 하나만 선택하세요.');
+          return;
+        }
+
+        appUtils.setAppBusy(true, this);
+
+        MessageBox.confirm(this.getText('MSG_00006', '삭제'), {
+          actions: ['삭제', MessageBox.Action.CANCEL],
+          onClose: async (sAction) => {
+            if (sAction === MessageBox.Action.CANCEL) return;
+
+            const oPayload = this.getAddressTableRowdata({ oViewModel, oTable, aSelectedIndices });
+            const { result } = await this.deleteAddressInfo({ oPayload });
+
+            if (result === 'success') {
+              MessageBox.success(this.getText('MSG_00007', '삭제'));
+            } else {
+              appUtils.setAppBusy(false, this);
+              MessageBox.error(this.getText('MSG_00008', '삭제'));
+              return;
+            }
+
+            this.refreshAddress({ oViewModel });
+
+            oTable.clearSelection();
+            appUtils.setAppBusy(false, this);
+          },
         });
-      }
-
-      openModifyAddressDialog() {
-        MessageBox.warning('준비중입니다.');
-      }
-
-      onDeleteAddress() {
-        MessageBox.warning('준비중입니다.');
       }
 
       openSearchZipcodePopup() {
@@ -331,7 +527,233 @@ sap.ui.define(
       }
 
       onAddressDialogClose() {
+        appUtils.setAppBusy(false, this);
         this.byId('addressDialog').close();
+      }
+
+      /*****************************************************************
+       * Call oData
+       *****************************************************************/
+      readEmpProfileMenu({ oModel, oViewModel, aFilters }) {
+        return new Promise((resolve, reject) => {
+          const sUrl = '/EmpProfileMenuSet';
+
+          oModel.read(sUrl, {
+            filters: aFilters,
+            success: (oData) => {
+              this.debug(`${sUrl} success.`, oData);
+
+              const aToggleButtons = _.filter(oData.results, { Child: '1' }).map((obj, index) => ({ Pressed: index === 0, ...obj }));
+              oViewModel.setProperty('/employee/tab/list', aToggleButtons);
+              const aSubMenus = oData.results.filter((data) => data.Child !== '1');
+              oViewModel.setProperty('/employee/tab/menu', aSubMenus);
+
+              // Model 초기화
+              const oViewModelData = oViewModel.getData();
+              aToggleButtons.forEach((data) => {
+                oViewModelData.employee.sub[data.Menuc1] = { isShow: data.Pressed, contents: {} };
+              });
+              aSubMenus.forEach((data) => {
+                oViewModelData.employee.sub[data.Menuc1].contents[data.Menuc2] = {
+                  type: data.Child,
+                  rowcount: 1,
+                  selectionMode: data.Menu2 === '주소' ? 'MultiToggle' : 'None',
+                  title: data.Menu2,
+                  sort: data.Sorts,
+                  header: [],
+                  data: [],
+                };
+              });
+              oViewModel.setData(oViewModelData);
+
+              resolve(aToggleButtons);
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, oError);
+
+              reject();
+            },
+          });
+        });
+      }
+
+      readEmpProfileHeaderNew({ oModel, oViewModel, aFilters }) {
+        return new Promise((resolve, reject) => {
+          const sUrl = '/EmpProfileHeaderNewSet';
+
+          oModel.read(sUrl, {
+            filters: aFilters,
+            success: (oData) => {
+              this.debug(`${sUrl} success.`, oData);
+
+              const { Pturl, ...oReturnData } = oData.results[0];
+              delete oReturnData.Pernr;
+              delete oReturnData.Langu;
+              delete oReturnData.Prcty;
+              delete oReturnData.Actty;
+              delete oReturnData.__metadata;
+              const aConvertData = Object.keys(oReturnData).map((key) => ({ data: oReturnData[key] }));
+
+              oViewModel.setProperty('/employee/header/profilepath', Pturl);
+              oViewModel.setProperty('/employee/header/baseinfo', aConvertData);
+              oViewModel.setProperty('/employee/header/busy', false);
+
+              resolve();
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, oError);
+
+              reject();
+            },
+          });
+        });
+      }
+
+      readEmpProfileHeaderTab({ oModel, aFilters }) {
+        return new Promise((resolve, reject) => {
+          const sUrl = '/EmpProfileHeaderTabSet';
+
+          oModel.read(sUrl, {
+            filters: aFilters,
+            success: (oData) => {
+              this.debug(`${sUrl} success.`, oData);
+              resolve(oData.results);
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, oError);
+              reject();
+            },
+          });
+        });
+      }
+
+      readEmpProfileContentsTab({ oModel, aFilters }) {
+        return new Promise((resolve, reject) => {
+          const sUrl = '/EmpProfileContentsTabSet';
+
+          oModel.read(sUrl, {
+            filters: aFilters,
+            success: (oData) => {
+              this.debug(`${sUrl} success.`, oData);
+              resolve(oData.results);
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, oError);
+              reject();
+            },
+          });
+        });
+      }
+
+      readTypeList() {
+        const oModel = this.getModel(ServiceNames.PA);
+        const oViewModel = this.getViewModel();
+        const sUrl = '/PaCodeListSet';
+        const mTypeList = oViewModel.getProperty('/employee/address/typelist');
+
+        if (mTypeList.length > 1) return;
+
+        oModel.read(sUrl, {
+          filters: [
+            new Filter('Cdnum', FilterOperator.EQ, 'CM0002'), //
+            new Filter('Grcod', FilterOperator.EQ, '0006'),
+          ],
+          success: (oData) => {
+            this.debug(`${sUrl} success.`, oData);
+            oViewModel.setProperty('/employee/address/typelist', [...mTypeList, ...oData.results]);
+          },
+          error: (oError) => {
+            this.debug(`${sUrl} error.`, oError);
+          },
+        });
+      }
+
+      readCityList() {
+        const oModel = this.getModel(ServiceNames.PA);
+        const oViewModel = this.getViewModel();
+        const sUrl = '/CityListSet';
+        const sPernr = oViewModel.getProperty('/pernr');
+        const mSidoList = oViewModel.getProperty('/employee/address/sidolist');
+        let aFilters = [];
+
+        if (mSidoList.length > 1) return;
+
+        if (sPernr) {
+          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
+        }
+
+        oModel.read(sUrl, {
+          filters: aFilters,
+          success: (oData) => {
+            this.debug(`${sUrl} success.`, oData);
+            oViewModel.setProperty('/employee/address/sidolist', [...mSidoList, ...oData.results]);
+          },
+          error: (oError) => {
+            this.debug(`${sUrl} error.`, oError);
+          },
+        });
+      }
+
+      readAddressInfo({ oPayload }) {
+        return new Promise((resolve) => {
+          const oModel = this.getModel(ServiceNames.PA);
+          const sUrl = '/AddressInfoSet';
+
+          oPayload.Begda = moment(oPayload.Begda).hour(9).toDate();
+
+          oModel.read(sUrl, {
+            filters: Object.keys(oPayload).map((field) => {
+              return new Filter(field, FilterOperator.EQ, oPayload[field]);
+            }),
+            success: (oData) => {
+              this.debug(`${sUrl} success.`, oData);
+              resolve({ result: oData.results[0] });
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, oError);
+              resolve({ result: 'error' });
+            },
+          });
+        });
+      }
+
+      createAddressInfo({ oInputData }) {
+        return new Promise((resolve) => {
+          const oModel = this.getModel(ServiceNames.PA);
+          const sUrl = '/AddressInfoSet';
+
+          oInputData.Begda = moment(oInputData.Begda).hour(9).toDate();
+
+          oModel.create(sUrl, oInputData, {
+            success: () => {
+              resolve({ result: 'success' });
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, oError);
+              resolve({ result: 'error' });
+            },
+          });
+        });
+      }
+
+      deleteAddressInfo({ oPayload }) {
+        return new Promise((resolve) => {
+          const oModel = this.getModel(ServiceNames.PA);
+
+          oPayload.Begda = moment(oPayload.Begda).hour(9).toDate();
+
+          const sUrl = oModel.createKey('/AddressInfoSet', oPayload);
+
+          oModel.remove(sUrl, {
+            success: () => {
+              resolve({ result: 'success' });
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, oError);
+              resolve({ result: 'error' });
+            },
+          });
+        });
       }
     }
 
@@ -344,6 +766,6 @@ function fn_SetAddr(Zip, fullAddr) {
   const oView = sap.ui.getCore().byId('container-ehr---employee');
   const oViewModel = oView.getModel();
 
-  oViewModel.setProperty('/employee/personal/address/form/zip', Zip);
-  oViewModel.setProperty('/employee/personal/address/form/address1', fullAddr);
+  oViewModel.setProperty('/employee/address/form/Pstlz', Zip);
+  oViewModel.setProperty('/employee/address/form/Zzaddr1', fullAddr);
 }
