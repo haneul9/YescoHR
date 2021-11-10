@@ -250,6 +250,30 @@ sap.ui.define(
         });
       }
 
+      // 대상자 관계선택시
+      onRelationChange(oEvent) {
+        const oDetailModel = this.getViewModel();
+        const sSelectKey = oEvent.getSource().getSelectedKey();
+        const oRelationBtn = this.byId('RelationBtn');
+        const oRelationTxt = this.byId('RelationTxt');
+        const oBirthDatePicker = this.byId('BirthDatePicker');
+
+        oDetailModel.setProperty('/FormData/Kdsvh', sSelectKey);
+
+        if (!!sSelectKey && sSelectKey === 'ME') {
+          this.onTargetDialog.call(this);
+          oRelationBtn.setVisible(false);
+          oRelationTxt.setEditable(false);
+          oBirthDatePicker.setEditable(false);
+        } else {          
+          oDetailModel.setProperty('/FormData/Zbirthday', null);
+          oDetailModel.setProperty('/FormData/Zname', '');
+          oRelationBtn.setVisible(true);
+          oRelationTxt.setEditable(true);
+          oBirthDatePicker.setEditable(true);
+        }
+      }
+
       // 증빙상 경조일 선택시
       onBenefitChangeDate(oEvent) {
         this.getViewModel().setProperty('/FormData/Conrdate', oEvent.getSource().getDateValue());
@@ -356,20 +380,20 @@ sap.ui.define(
               const oTargetList = oData.results;
               const oChildList = [];
 
+              oTargetList.forEach(e => {
+                if(oTargetList.length !== 0 && oDetailModel.getProperty("/FormData/Kdsvh") === e.Kdsvh) {
+                  oChildList.push(e);
+                }
+              });
+
               if (oTargetList.length === 1) {
                 oDetailModel.setProperty('/FormData/Zbirthday', oTargetList[0].Zbirthday);
                 oDetailModel.setProperty('/FormData/Kdsvh', oTargetList[0].Kdsvh);
                 oDetailModel.setProperty('/FormData/Zname', oTargetList[0].Zname);
-              } else {
-                oTargetList.forEach(e => {
-                  if(oDetailModel.getProperty("/FormData/Kdsvh") === e.Kdsvh) {
-                  oChildList.push(e);
-                  }
-                });
-
-                oDetailModel.setProperty('/TargetList', oChildList);
-                oController.byId('targetTable').setVisibleRowCount(oChildList.length);
               }
+
+              oDetailModel.setProperty('/TargetList', oChildList);
+              oController.byId('targetTable').setVisibleRowCount(oChildList.length);
             }
           },
           error: function (oRespnse) {
