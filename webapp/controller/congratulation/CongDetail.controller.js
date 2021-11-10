@@ -40,9 +40,10 @@ sap.ui.define(
         new Promise((resolve) => {
           this.settingsAttachTable(this);
           this.getBenefitType(this);
+          
           setTimeout(() => {
             resolve();
-          }, 200);
+          }, 300);
         }).then(() => {
           this.getViewModel().setProperty('/busy', false);
           this.getViewModel().setProperty("/bInitStatus", false);
