@@ -27,6 +27,7 @@ sap.ui.define(
           FormData: {},
           Settings: {},
           busy: false,
+          bInitStatus: true,
         });
         this.setViewModel(oViewModel);
 
@@ -39,9 +40,12 @@ sap.ui.define(
         new Promise((resolve) => {
           this.settingsAttachTable(this);
           this.getBenefitType(this);
-          resolve();
+          setTimeout(() => {
+            resolve();
+          }, 200);
         }).then(() => {
           this.getViewModel().setProperty('/busy', false);
+          this.getViewModel().setProperty("/bInitStatus", false);
         });
 
         super.onAfterShow();
@@ -151,6 +155,7 @@ sap.ui.define(
         oDetailModel.setProperty('/FormData/Context', sSelectText);
 
         oModel.read('/BenefitCodeListSet', {
+          async: false,
           filters: [
             new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0002'),
             new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/TargetInfo/Werks')),
@@ -218,9 +223,13 @@ sap.ui.define(
                 oRelationBtn.setVisible(false);
                 oRelationTxt.setEditable(false);
               } else {
-                oDetailModel.setProperty('/FormData/Zbirthday', null);
-                oDetailModel.setProperty('/FormData/Kdsvh', oResult[0].Zcode);
-                oDetailModel.setProperty('/FormData/Zname', '');
+                const bInitStatus = oDetailModel.getProperty("/bInitStatus");
+                
+                if(!bInitStatus) {
+                  oDetailModel.setProperty('/FormData/Zbirthday', null);
+                  oDetailModel.setProperty('/FormData/Kdsvh', oResult[0].Zcode);
+                  oDetailModel.setProperty('/FormData/Zname', '');
+                }
                 oRelationBtn.setVisible(true);
                 oRelationTxt.setEditable(true);
               }

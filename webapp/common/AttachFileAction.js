@@ -213,7 +213,7 @@ sap.ui.define(
                     async: false,
                     filters: [
                         new sap.ui.model.Filter("Appno", sap.ui.model.FilterOperator.EQ, oTableRowData.Appno),
-                        new sap.ui.model.Filter("Zworktyp", sap.ui.model.FilterOperator.EQ, oController.TypeCode)
+                        new sap.ui.model.Filter("Zworktyp", sap.ui.model.FilterOperator.EQ, oController.TYPE_CODE)
                     ],
                     success: function (data) {
                         if (data && data.results.length) {
