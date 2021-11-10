@@ -28,6 +28,7 @@ sap.ui.define(
                             FileTypes: [],
                             Mode: 'S',	// S: single file, M: multi file
                             Max: 3,
+                            Message: '',
                             maximumFileSize: 10,
                         },
                         opt
