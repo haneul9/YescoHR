@@ -37,7 +37,7 @@
 							<core:Item text="{Ztext}" key="{Zcode}" />
 						</Select>
 						<Label text="{i18n>LABEL_02014}"/>
-						<DatePicker class="sapIcon_Date" valueState="Warning" dateValue="{/FormData/Zbirthday}" width="250px" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+						<DatePicker id='BirthDatePicker' class="sapIcon_Date" valueState="Warning" dateValue="{/FormData/Zbirthday}" width="250px" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
 						<Label text="{i18n>LABEL_02008}"/>
 						<Select id="BenefitCause" valueState="Warning" items="{/BenefitCause}" selectedKey="{/FormData/Conresn}" width="250px" change=".onCauseChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
 							<core:Item text="{Ztext}" key="{Zcode}" />

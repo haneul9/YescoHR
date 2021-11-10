@@ -43,7 +43,7 @@ sap.ui.define(
           
           setTimeout(() => {
             resolve();
-          }, 300);
+          }, 500);
         }).then(() => {
           this.getViewModel().setProperty('/busy', false);
           this.getViewModel().setProperty("/bInitStatus", false);
@@ -132,7 +132,7 @@ sap.ui.define(
           },
           error: function (oRespnse) {
             console.log(oRespnse);
-            const vErrorMSG = JSON.parse(oRespnse.responseText).error.message.value;
+            const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
 
             MessageBox.alert(vErrorMSG);
           },
@@ -176,7 +176,7 @@ sap.ui.define(
           },
           error: function (oRespnse) {
             console.log(oRespnse);
-            const vErrorMSG = JSON.parse(oRespnse.responseText).error.message.value;
+            const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
 
             MessageBox.alert(vErrorMSG);
           },
@@ -215,6 +215,7 @@ sap.ui.define(
               const oResult = oData.results;
               const oRelationBtn = oController.byId('RelationBtn');
               const oRelationTxt = oController.byId('RelationTxt');
+              const oBirthDatePicker = oController.byId('BirthDatePicker');
 
               oDetailModel.setProperty('/BenefitRelation', oResult);
               oDetailModel.setProperty("/TargetList", []);
@@ -224,6 +225,7 @@ sap.ui.define(
                   oController.onTargetDialog.call(oController);
                   oRelationBtn.setVisible(false);
                   oRelationTxt.setEditable(false);
+                  oBirthDatePicker.setEditable(false);
                 } else {
                   const bInitStatus = oDetailModel.getProperty("/bInitStatus");
                   
@@ -234,13 +236,14 @@ sap.ui.define(
                   }
                   oRelationBtn.setVisible(true);
                   oRelationTxt.setEditable(true);
+                  oBirthDatePicker.setEditable(true);
                 }
               }
             }
           },
           error: function (oRespnse) {
             console.log(oRespnse);
-            const vErrorMSG = JSON.parse(oRespnse.responseText).error.message.value;
+            const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
 
             MessageBox.alert(vErrorMSG);
           },
@@ -287,7 +290,7 @@ sap.ui.define(
           },
           error: function (oRespnse) {
             console.log(oRespnse);
-            const vErrorMSG = JSON.parse(oRespnse.responseText).error.message.value;
+            const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
 
             MessageBox.alert(vErrorMSG);
           },
@@ -318,7 +321,7 @@ sap.ui.define(
               }
 
               oDialog.open();
-            }, 100);
+            }, 500);
           });
         } else {
           this.getTargetList(this);
@@ -331,7 +334,7 @@ sap.ui.define(
             }
             
             this.byId('targetSettingsDialog').open();
-          }, 100);
+          }, 500);
         }
       }
 
@@ -371,7 +374,7 @@ sap.ui.define(
           },
           error: function (oRespnse) {
             console.log(oRespnse);
-            const vErrorMSG = JSON.parse(oRespnse.responseText).error.message.value;
+            const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
 
             MessageBox.alert(vErrorMSG);
           },
@@ -466,7 +469,7 @@ sap.ui.define(
           },
           error: function (oRespnse) {
             console.log(oRespnse);
-            const vErrorMSG = JSON.parse(oRespnse.responseText).error.message.value;
+            const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
 
             MessageBox.alert(vErrorMSG);
           },
@@ -553,7 +556,7 @@ sap.ui.define(
                 },
                 error: function (oRespnse) {
                   console.log(oRespnse);
-                  const vErrorMSG = JSON.parse(oRespnse.responseText).error.message.value;
+                  const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
 
                   MessageBox.alert(vErrorMSG);
                 },
@@ -607,7 +610,7 @@ sap.ui.define(
                 },
                 error: function (oRespnse) {
                   console.log(oRespnse);
-                  const vErrorMSG = JSON.parse(oRespnse.responseText).error.message.value;
+                  const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
 
                   MessageBox.alert(vErrorMSG);
                 },
@@ -648,7 +651,7 @@ sap.ui.define(
               },
               error: function (oRespnse) {
                 console.log(oRespnse);
-                const vErrorMSG = JSON.parse(oRespnse.responseText).error.message.value;
+                const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
 
                 MessageBox.alert(vErrorMSG);
               },
@@ -686,7 +689,7 @@ sap.ui.define(
               },
               error: function (oRespnse) {
                 console.log(oRespnse);
-                const vErrorMSG = JSON.parse(oRespnse.responseText).error.message.value;
+                const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
 
                 MessageBox.alert(vErrorMSG);
               },
