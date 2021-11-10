@@ -9,7 +9,7 @@
 			<Label text="{i18n>LABEL_00210}"/>
 			<Text text="{/ApplyInfo/Apename}"/>
 			<Label text="{i18n>LABEL_00226}"/>
-			<Text text="{/ApplyInfo/Appernr}"/>
+			<Text text="{/ApplyInfo/Orgtx}"/>
 			<Label text="{i18n>LABEL_00136}"/>
 			<Text text="{/ApplyInfo/Apjikgbtl}"/>
 			<Label text="{i18n>LABEL_00137}"/>
