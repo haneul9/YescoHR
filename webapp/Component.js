@@ -204,7 +204,9 @@ sap.ui.define(
               .then(() => {
                 oView.setVisible(true);
               })
-              .catch(() => {
+              .catch((...aArgs) => {
+                AppUtils.debug(...aArgs);
+
                 this.getRouter().getTargets().display('notFound', {
                   from: 'home',
                 });
@@ -218,6 +220,7 @@ sap.ui.define(
 
       /**
        * 메뉴 권한 체크
+       * @public
        * @param {string} sRouteName
        * @returns {promise}
        */
@@ -227,14 +230,14 @@ sap.ui.define(
         return oMenuModel.getPromise().then(() => {
           return new Promise((resolve, reject) => {
             if (sRouteName === 'ehrHome') {
-              oMenuModel.setProperty('/Current', { RouteName: '', Menid: '' });
+              oMenuModel.setCurrentMenuData({ RouteName: '', Menid: '' });
               resolve();
               return;
             }
 
             const sMenid = oMenuModel.getMenid(sRouteName);
             if ((AppUtils.isLOCAL() || AppUtils.isDEV()) && /^X/.test(sMenid)) {
-              oMenuModel.setProperty('/Current', { RouteName: '', Menid: '' });
+              oMenuModel.setCurrentMenuData({ RouteName: '', Menid: '' });
               resolve();
               return;
             }
@@ -248,7 +251,7 @@ sap.ui.define(
               success: (oData, oResponse) => {
                 AppUtils.debug(`${sUrl} success.`, oData, oResponse);
 
-                oMenuModel.setProperty('/Current', { RouteName: sRouteName, Menid: sMenid });
+                oMenuModel.setCurrentMenuData({ RouteName: sRouteName, Menid: sMenid });
 
                 resolve();
               },

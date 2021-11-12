@@ -343,14 +343,28 @@ sap.ui.define(
       }
 
       getMenid(sUrl) {
-        if (!sUrl) {
-          return this.getProperty(`/Current/Menid`);
-        }
         return this.getProperty(`/urlToMenid/${sUrl}`);
       }
 
       getFavoriteMenids() {
         return this.getProperty('/favoriteMenids');
+      }
+
+      /**
+       * 현재 메뉴 라우팅 정보 저장
+       * @param {string} RouteName
+       * @param {string} Menid
+       */
+      setCurrentMenuData({ RouteName, Menid }) {
+        this.setProperty('/Current', { RouteName, Menid });
+      }
+
+      getCurrentMenuRouteName() {
+        return this.getProperty('/Current/RouteName');
+      }
+
+      getCurrentMenuId() {
+        return this.getProperty('/Current/Menid');
       }
     }
 
