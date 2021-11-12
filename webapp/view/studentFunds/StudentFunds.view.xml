@@ -1,0 +1,204 @@
+<mvc:View controllerName="sap.ui.yesco.controller.congratulation.Congratulation"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:table="sap.ui.table"
+	xmlns:grid="sap.ui.layout.cssgrid"
+	xmlns:core="sap.ui.core">
+	<Page showHeader="false">
+		<content>
+			<VBox>
+				<HBox justifyContent="SpaceBetween">
+					<Breadcrumbs currentLocationText="{i18n>LABEL_02001}" separatorStyle="GreaterThan">
+						<Link text="복리후생"/>
+					</Breadcrumbs>
+					<HBox>
+						<Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onClick" />
+						<Button icon="sap-icon://print" press=".formatter.onPagePrint" type="Transparent" text="{i18n>LABEL_00131}" />
+						<Button icon="sap-icon://sys-help" type="Transparent" text="{i18n>LABEL_00132}" />
+					</HBox>
+				</HBox>
+				<HBox justifyContent="SpaceAround">
+					<VBox class="hCardBox" width="33%">
+						<core:Fragment fragmentName="sap.ui.yesco.fragment.TargetInfo" type="XML" />
+					</VBox>
+					<VBox class="hCardBox" width="33%" busyIndicatorDelay="0" busy="{/busy}">
+						<VBox>
+							<Title level="H2" text="{i18n>MSG_02001}" />
+							<Text text="{i18n>MSG_02002}"/>
+							<HBox>
+								<VBox>
+									<Label design="Bold" text="{i18n>LABEL_02003}" />
+									<ObjectStatus text="{
+											path: '/Total/Pycnt',
+											formatter: '.formatNumber'
+										}" state="Indication04" />
+								</VBox>
+								<VBox>
+									<Label design="Bold" text="{i18n>LABEL_02002}" />
+									<ObjectStatus text="{
+											path: '/Total/ZpayBetT',
+											formatter: '.formatPay'
+										}" state="Indication04" />
+								</VBox>
+							</HBox>
+							<HBox>
+								<Text text="{i18n>MSG_02003}"/>
+								<ObjectStatus text="{/Total/Excon}" state="Indication05" />
+								<Text text="{i18n>MSG_02004}"/>
+							</HBox>
+						</VBox>
+					</VBox>
+					<VBox class="hCardBox" width="33%">
+						<HBox justifyContent="SpaceBetween">
+							<Title text="{i18n>LABEL_00202}" level="H2" />
+							<Button type="Transparent" press=".onSearch" icon="sap-icon://search" />
+						</HBox>
+						<grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="8px">
+							<Label text="{i18n>LABEL_00266}" design="Bold" />
+							<DateRangeSelection class="sapIcon_DateRange" id="SearchDate"/>
+						</grid:CSSGrid>
+					</VBox>
+				</HBox>
+				<VBox class="vCardBox">
+					<core:Fragment fragmentName="sap.ui.yesco.fragment.OverviewTableHeader" type="XML" />
+					<table:Table id="conguTable" rows="{/CongList}" width="100%" selectionMode="None" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
+						<table:rowSettingsTemplate>
+							<table:RowSettings highlight="{
+							path: 'ZappStatAl',
+							formatter: '.TableUtils.rowHighlight'
+						}"/>
+						</table:rowSettingsTemplate>
+						<table:columns>
+							<table:Column width="100px">
+								<Label text="상태"/>
+								<table:template>
+									<!-- <ObjectStatus text="{
+											path: 'ZappStatAl',
+											formatter: '.TableUtils.StatusTxt'
+										}" state="{
+											path: 'ZappStatAl',
+											formatter: '.TableUtils.rowHighlight'
+										}" /> -->
+									<Text text="{
+										path: 'ZappStatAl',
+										formatter: '.TableUtils.StatusTxt'
+									}" width="100%" textAlign="Center">
+										<customData>
+											<core:CustomData key="status" value="{ZappStatAl}" writeToDom="true" />
+										</customData>
+									</Text>
+								</table:template>
+							</table:Column>
+							<table:Column width="100px">
+								<Label text="{i18n>LABEL_00209}"/>
+								<table:template>
+									<Text text="{Pernr}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="80px">
+								<Label text="{i18n>LABEL_00210}"/>
+								<table:template>
+									<Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="100px">
+								<Label text="{i18n>LABEL_02004}"/>
+								<table:template>
+									<Text text="{Zzjikgbt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="100px">
+								<Label text="{i18n>LABEL_00227}"/>
+								<table:template>
+									<Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="100px">
+								<Label text="{i18n>LABEL_02005}"/>
+								<table:template>
+									<Text text="{Zname}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="80px">
+								<Label text="{i18n>LABEL_02006}"/>
+								<table:template>
+									<Text text="{Famtx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="100px">
+								<Label text="{i18n>LABEL_02007}"/>
+								<table:template>
+									<Text text="{Context}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="150px">
+								<Label text="{i18n>LABEL_02008}"/>
+								<table:template>
+									<Text text="{Conretx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="100px">
+								<Label text="{i18n>LABEL_02009}"/>
+								<table:template>
+									<Text text="{
+										path: 'Conddate',
+										type: 'sap.ui.model.type.Date'
+									}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="100px">
+								<Label text="{i18n>LABEL_02010}"/>
+								<table:template>
+									<Text text="{
+										path: 'Conrdate',
+										type: 'sap.ui.model.type.Date'
+									}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="100px">
+								<Label text="{i18n>LABEL_02011}"/>
+								<table:template>
+									<Text text="{ZpayBetT}" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="90px">
+								<Label text="{i18n>LABEL_00133}"/>
+								<table:template>
+									<Button type="Transparent" icon="sap-icon://attachment" class="w-100" press=".TableUtils.onFileListDialog" visible="{= ${Docyn} === 'Y' }"/>
+									<!-- <Text text="{Docynt}" textAlign="Center" width="100%" wrapping="false" /> -->
+								</table:template>
+							</table:Column>
+							<table:Column width="auto">
+								<Label text="{i18n>LABEL_00266}"/>
+								<table:template>
+									<Text text="{
+										path: 'Appda',
+										type: 'sap.ui.model.type.Date'
+									}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="auto">
+								<Label text="{i18n>LABEL_00269}"/>
+								<table:template>
+									<Text text="{
+										path: 'Sgnda',
+										type: 'sap.ui.model.type.Date'
+									}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="auto">
+								<Label text="{i18n>LABEL_02012}"/>
+								<table:template>
+									<Text text="{
+										path: 'Paydt',
+										type: 'sap.ui.model.type.Date'
+									}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+								</table:template>
+							</table:Column>
+						</table:columns>
+					</table:Table>
+				</VBox>
+			</VBox>
+		</content>
+	</Page>
+</mvc:View>
