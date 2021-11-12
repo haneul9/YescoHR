@@ -38,7 +38,7 @@ sap.ui.define(
                 oFileUploader.setValue("");
 
                 options.ListMode = options.Editable ? sap.ui.table.SelectionMode.MultiToggle : sap.ui.table.SelectionMode.None;
-                options.FileTypes = ["ppt", "pptx", "doc", "docx", "xls", "xlsx", "jpg", "bmp", "gif", "png", "txt", "pdf", "jpeg"];
+                options.FileTypes = !!opt.FileTypes ? opt.FileTypes : ["ppt", "pptx", "doc", "docx", "xls", "xlsx", "jpg", "bmp", "gif", "png", "txt", "pdf", "jpeg"];
 
                 oController.getViewModel().setProperty("/Settings", options);
                 oController.getViewModel().setProperty("/DelelteDatas", []);
