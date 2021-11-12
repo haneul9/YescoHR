@@ -9,7 +9,7 @@
 			<VBox>
 				<HBox justifyContent="SpaceBetween">
 					<Breadcrumbs currentLocationText="{i18n>LABEL_02001}" separatorStyle="GreaterThan">
-						<Link text="복리후생"/>
+						<Link text="{i18n>LABEL_00145}"/>
 					</Breadcrumbs>
 					<HBox>
 						<Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onClick" />

@@ -10,7 +10,7 @@
 					<HBox>
 						<core:Icon src="sap-icon://nav-back" press=".onNavBack"/>
 						<Breadcrumbs currentLocationText="{i18n>LABEL_00134}" separatorStyle="GreaterThan">
-							<Link text="복리후생"/>
+							<Link text="{i18n>LABEL_00145}"/>
 							<Link text="{i18n>LABEL_02001}"/>
 						</Breadcrumbs>
 					</HBox>
