@@ -118,6 +118,16 @@
           "name": "congDetailMobile",
           "target": "m/congDetail"
         },
+        {
+          "pattern": "studentFunds",
+          "name": "studentFunds",
+          "target": "studentFunds"
+        },
+        {
+          "pattern": "studentFunds/{oDataKey}",
+          "name": "studentFunds-detail",
+          "target": "studentFundsDetail"
+        },
         { "pattern": "attendance", "name": "attendance", "target": "attendance" },
         { "pattern": "attendance/{type}/:appno:", "name": "attendanceDetail", "target": "attendanceDetail" },
         { "pattern": "employee/:pernr:", "name": "employee", "target": "employee" },
@@ -164,6 +174,18 @@
           "viewId": "congDetail",
           "viewPath": "sap.ui.yesco.view.congratulation",
           "viewName": "CongDetail",
+          "viewLevel": 2
+        },
+        "studentFunds": {
+          "viewId": "studentFunds",
+          "viewPath": "sap.ui.yesco.view.studentFunds",
+          "viewName": "StudentFunds",
+          "viewLevel": 2
+        },
+        "studentFundsDetail": {
+          "viewId": "studentFundsDetail",
+          "viewPath": "sap.ui.yesco.view.studentFunds",
+          "viewName": "StudentFundsDetail",
           "viewLevel": 2
         },
         "m/congratulation": {
