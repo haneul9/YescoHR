@@ -142,7 +142,10 @@
 								<table:template>
 									<Text text="{
 										path: 'Conddate',
-										type: 'sap.ui.model.type.Date'
+										type: 'sap.ui.model.type.Date',
+										formatOptions: {
+											pattern: 'yyyy.MM.dd'
+										}
 									}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
 								</table:template>
 							</table:Column>
@@ -151,7 +154,10 @@
 								<table:template>
 									<Text text="{
 										path: 'Conrdate',
-										type: 'sap.ui.model.type.Date'
+										type: 'sap.ui.model.type.Date',
+										formatOptions: {
+											pattern: 'yyyy.MM.dd'
+										}
 									}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
 								</table:template>
 							</table:Column>
@@ -173,7 +179,10 @@
 								<table:template>
 									<Text text="{
 										path: 'Appda',
-										type: 'sap.ui.model.type.Date'
+										type: 'sap.ui.model.type.Date',
+										formatOptions: {
+											pattern: 'yyyy.MM.dd'
+										}
 									}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
 								</table:template>
 							</table:Column>
@@ -182,7 +191,10 @@
 								<table:template>
 									<Text text="{
 										path: 'Sgnda',
-										type: 'sap.ui.model.type.Date'
+										type: 'sap.ui.model.type.Date',
+										formatOptions: {
+											pattern: 'yyyy.MM.dd'
+										}
 									}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
 								</table:template>
 							</table:Column>
@@ -191,7 +203,10 @@
 								<table:template>
 									<Text text="{
 										path: 'Paydt',
-										type: 'sap.ui.model.type.Date'
+										type: 'sap.ui.model.type.Date',
+										formatOptions: {
+											pattern: 'yyyy.MM.dd'
+										}
 									}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
 								</table:template>
 							</table:Column>

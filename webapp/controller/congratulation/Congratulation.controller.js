@@ -116,7 +116,12 @@ sap.ui.define(
           success: function (oData) {
             if (oData) {
               // Common.log(oData);
-              const oList = oData.results;
+              const oList = oData.results.map((o) => {
+                return {
+                  ...o,
+                  Pernr: parseInt(o.Pernr, 10),
+                };
+              });
               // let vNo = 0;
 
               // oList.forEach((e) => {
