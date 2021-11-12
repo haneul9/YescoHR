@@ -29,7 +29,7 @@
 				<VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
 					<HBox>
 						<Title level="H2" text="{i18n>LABEL_00129}" />
-						<Text text="{i18n>MSG_02005}"/>
+						<Text text="{i18n>MSG_02005}" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
 					</HBox>
 					<grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="8px">
 						<Label text="{i18n>LABEL_02013}"/>

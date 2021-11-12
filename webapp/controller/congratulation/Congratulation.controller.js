@@ -40,10 +40,8 @@ sap.ui.define(
         EmpInfo.get.call(this, true);
 
         const oSearchDate = this.byId('SearchDate');
-        const dDate = moment(new Date()).hours(10).toDate();
-        const dDate2 = moment(new Date(dDate.getFullYear(), dDate.getMonth() - 1, dDate.getDate() + 1))
-          .hours(10)
-          .toDate();
+        const dDate = new Date();
+        const dDate2 = new Date(dDate.getFullYear(), dDate.getMonth() - 1, dDate.getDate() + 1);
 
         oSearchDate.setDateValue(dDate2);
         oSearchDate.setSecondDateValue(dDate);
@@ -103,6 +101,8 @@ sap.ui.define(
         const oSearchDate = this.byId('SearchDate');
         const oListModel = this.getViewModel();
         const oController = this;
+        const dDate = moment(oSearchDate.getDateValue()).hours(10).toDate();
+        const dDate2 = moment(oSearchDate.getSecondDateValue()).hours(10).toDate();
 
         oListModel.setProperty('/busy', true);
 
@@ -110,8 +110,8 @@ sap.ui.define(
           filters: [
             new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'),
             new sap.ui.model.Filter('Actty', sap.ui.model.FilterOperator.EQ, 'E'),
-            new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, oSearchDate.getDateValue()),
-            new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, oSearchDate.getSecondDateValue()),
+            new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate),
+            new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2),
           ],
           success: function (oData) {
             if (oData) {

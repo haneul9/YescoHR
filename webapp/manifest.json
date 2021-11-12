@@ -167,7 +167,7 @@
         "congratulation": {
           "viewId": "congratulation",
           "viewPath": "sap.ui.yesco.view.congratulation",
-          "viewName": "congratulation",
+          "viewName": "Congratulation",
           "viewLevel": 2
         },
         "congDetail": {

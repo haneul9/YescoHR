@@ -1,0 +1,120 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:table="sap.ui.table"
+    xmlns:core="sap.ui.core">
+    <table:Table id="studentTable" rows="{/StudentList}" width="100%" selectionMode="None" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
+        <table:rowSettingsTemplate>
+            <table:RowSettings highlight="{
+        path: 'ZappStatAl',
+        formatter: '.TableUtils.rowHighlight'
+    }"/>
+        </table:rowSettingsTemplate>
+        <table:columns>
+            <table:Column width="100px">
+                <Label text="{i18n>LABEL_00144}"/>
+                <table:template>
+                    <Text text="{
+                    path: 'ZappStatAl',
+                    formatter: '.TableUtils.StatusTxt'
+                }" width="100%" textAlign="Center">
+                        <customData>
+                            <core:CustomData key="status" value="{ZappStatAl}" writeToDom="true" />
+                        </customData>
+                    </Text>
+                </table:template>
+            </table:Column>
+            <table:Column width="100px">
+                <Label text="{i18n>LABEL_03002}"/>
+                <table:template>
+                    <Text text="{
+                        path: 'Zpayym',
+                        type: 'sap.ui.model.type.Date'
+                    }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="80px">
+                <Label text="{i18n>LABEL_00210}"/>
+                <table:template>
+                    <Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="100px">
+                <Label text="{i18n>LABEL_02004}"/>
+                <table:template>
+                    <Text text="{Zzjikgbt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="100px">
+                <Label text="{i18n>LABEL_00227}"/>
+                <table:template>
+                    <Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="100px">
+                <Label text="{i18n>LABEL_02005}"/>
+                <table:template>
+                    <Text text="{Famtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="100px">
+                <Label text="{i18n>LABEL_03010}"/>
+                <table:template>
+                    <Text text="{Zname}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="150px">
+                <Label text="{i18n>LABEL_03011}"/>
+                <table:template>
+                    <Text text="{Sltxt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="100px">
+                <Label text="{i18n>LABEL_03006}"/>
+                <table:template>
+                    <Text text="{Grdtx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="100px">
+                <Label text="{i18n>LABEL_03007}"/>
+                <table:template>
+                    <Text text="{Divtx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="100px">
+                <Label text="{i18n>LABEL_03008}"/>
+                <table:template>
+                    <Text text="{ZbetTotl}" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="90px">
+                <Label text="{i18n>LABEL_03009}"/>
+                <table:template>
+                    <Text text="{Curcnt}" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="auto">
+                <Label text="{i18n>LABEL_00133}"/>
+                <table:template>
+                    <Button type="Transparent" icon="sap-icon://attachment" class="w-100" press=".TableUtils.onFileListDialog" visible="{= ${Docyn} === 'Y' }"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="auto">
+                <Label text="{i18n>LABEL_00266}"/>
+                <table:template>
+                    <Text text="{
+                    path: 'Appda',
+                    type: 'sap.ui.model.type.Date'
+                }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="auto">
+                <Label text="{i18n>LABEL_00269}"/>
+                <table:template>
+                    <Text text="{
+                    path: 'Sgnda',
+                    type: 'sap.ui.model.type.Date'
+                }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+        </table:columns>
+    </table:Table>
+</core:FragmentDefinition>

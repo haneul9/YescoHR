@@ -134,7 +134,7 @@ sap.ui.define(
             console.log(oRespnse);
             const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
 
-            MessageBox.alert(vErrorMSG);
+            MessageBox.error(vErrorMSG);
           },
         });
       }
@@ -178,7 +178,7 @@ sap.ui.define(
             console.log(oRespnse);
             const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
 
-            MessageBox.alert(vErrorMSG);
+            MessageBox.error(vErrorMSG);
           },
         });
       }
@@ -245,7 +245,7 @@ sap.ui.define(
             console.log(oRespnse);
             const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
 
-            MessageBox.alert(vErrorMSG);
+            MessageBox.error(vErrorMSG);
           },
         });
       }
@@ -316,7 +316,7 @@ sap.ui.define(
             console.log(oRespnse);
             const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
 
-            MessageBox.alert(vErrorMSG);
+            MessageBox.error(vErrorMSG);
           },
         });
       }
@@ -400,7 +400,7 @@ sap.ui.define(
             console.log(oRespnse);
             const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
 
-            MessageBox.alert(vErrorMSG);
+            MessageBox.error(vErrorMSG);
           },
         });
       }
@@ -427,25 +427,25 @@ sap.ui.define(
 
        // 대상자 생년월일
        if(!oDetailModel.getProperty('/FormData/Zbirthday')) {
-          MessageBox.error("대상자 생년월일을 선택하세요.");
+          MessageBox.alert("대상자 생년월일을 선택하세요.");
           return true;
         }
 
         // 경조일
         if(!oDetailModel.getProperty('/FormData/Conddate')) {
-          MessageBox.error("경조일을 선택하세요.");
+          MessageBox.alert("경조일을 선택하세요.");
           return true;
         }    
 
         // 대상자 성명
         if(!oDetailModel.getProperty('/FormData/Zname')) {
-          MessageBox.error("대상자 성명을 입력하세요.");
+          MessageBox.alert("대상자 성명을 입력하세요.");
           return true;
         }
 
         // 행사장소
         if(!oDetailModel.getProperty('/FormData/Zeloc')) {
-          MessageBox.error("행사장소를 입력하세요.");
+          MessageBox.alert("행사장소를 입력하세요.");
           return true;
         }
 
@@ -495,7 +495,7 @@ sap.ui.define(
             console.log(oRespnse);
             const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
 
-            MessageBox.alert(vErrorMSG);
+            MessageBox.error(vErrorMSG);
           },
         });
       }
@@ -582,7 +582,7 @@ sap.ui.define(
                   console.log(oRespnse);
                   const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
 
-                  MessageBox.alert(vErrorMSG);
+                  MessageBox.error(vErrorMSG);
                 },
               });
             }, 500);
@@ -636,7 +636,7 @@ sap.ui.define(
                   console.log(oRespnse);
                   const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
 
-                  MessageBox.alert(vErrorMSG);
+                  MessageBox.error(vErrorMSG);
                 },
               });
             }, 500);
@@ -677,7 +677,7 @@ sap.ui.define(
                 console.log(oRespnse);
                 const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
 
-                MessageBox.alert(vErrorMSG);
+                MessageBox.error(vErrorMSG);
               },
             });
           }
@@ -715,7 +715,7 @@ sap.ui.define(
                 console.log(oRespnse);
                 const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
 
-                MessageBox.alert(vErrorMSG);
+                MessageBox.error(vErrorMSG);
               },
             });
           }
