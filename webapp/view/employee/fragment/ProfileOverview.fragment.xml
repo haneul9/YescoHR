@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:grid="sap.ui.layout.cssgrid">
-    <VBox class="customBox" busyIndicatorDelay="0" busy="{/employee/header/busy}">
+    <VBox class="customBox" busyIndicatorDelay="0">
         <grid:CSSGrid gridTemplateColumns="1fr 6fr" gridGap="8px">
             <VBox justifyContent="Center" alignItems="Center">
                 <layoutData>

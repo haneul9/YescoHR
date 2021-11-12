@@ -1,11 +1,11 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
     <IconTabFilter text="사원리스트" key="list">
-        <SegmentedButton width="100%" selectedKey="10">
+        <SegmentedButton width="100%" selectedKey="{/sidenavigation/search/selectedState}" selectionChange=".onChangeStat">
             <items>
-                <SegmentedButtonItem text="전체" key="all" />
-                <SegmentedButtonItem text="재직자" key="10" />
-                <SegmentedButtonItem text="퇴직자" key="20" />
+                <SegmentedButtonItem text="전체" key="" />
+                <SegmentedButtonItem text="재직자" key="3" />
+                <SegmentedButtonItem text="퇴직자" key="0" />
             </items>
         </SegmentedButton>
         <ScrollContainer height="700px" horizontal="false" vertical="true">
@@ -13,16 +13,16 @@
                 <CustomListItem type="Active" press=".onClickEmployeeCard">
                     <HBox class="customBox">
                         <VBox width="20%" justifyContent="Center" alignItems="Center">
-                            <Image src="https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1" height="35px" width="35px" />
+                            <Image src="{Photo}" height="60px" width="60px" />
                         </VBox>
                         <VBox>
                             <HBox justifyContent="SpaceBetween">
-                                <Text text="{Ename} {Todo1}/{Todo2}" />
-                                <core:Icon visible="{= ${Manager}}" src="sap-icon://manager" />
+                                <Text text="{Ename} {Zzjikgbt}/{Zzjikcht}" />
+                                <core:Icon visible="{= !!${Manager}}" src="sap-icon://manager" />
                             </HBox>
                             <HBox>
                                 <Label text="소속" />
-                                <Label text="{Todo3}" />
+                                <Label text="{Pbtxt} {Fulln}" />
                             </HBox>
                             <HBox>
                                 <Label text="근속" />
