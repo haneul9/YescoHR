@@ -10,7 +10,6 @@ sap.ui.define(
     'sap/ui/yesco/controller/BaseController',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/appUtils',
-    'sap/ui/yesco/common/EmpInfo',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/Validator',
     'sap/ui/yesco/control/MessageBox',
@@ -28,7 +27,6 @@ sap.ui.define(
     BaseController,
     ServiceNames,
     appUtils,
-    EmpInfo,
     TableUtils,
     Validator,
     MessageBox
@@ -56,23 +54,31 @@ sap.ui.define(
             isShow: true,
             width: '22%',
             search: {
+              searchtext: '',
+              selectedState: '3',
               results: [
-                { Ename: '김지현', Manager: true, Todo1: '부장', Todo2: '팀장', Todo3: '예스코 기술연구소 정보기술팀', Todo4: '6년 11개월 (2015.01.01 입사) 재직', Todo5: '인사(5년 6개월)' },
-                { Ename: '김지현', Manager: false, Todo1: '부장', Todo2: '팀장', Todo3: '예스코 기술연구소 정보기술팀', Todo4: '6년 11개월 (2015.01.01 입사) 재직', Todo5: '인사(5년 6개월)' },
-                { Ename: '김지현', Manager: false, Todo1: '부장', Todo2: '팀장', Todo3: '예스코 기술연구소 정보기술팀', Todo4: '6년 11개월 (2015.01.01 입사) 재직', Todo5: '인사(5년 6개월)' },
-                { Ename: '김지현', Manager: false, Todo1: '부장', Todo2: '팀장', Todo3: '예스코 기술연구소 정보기술팀', Todo4: '6년 11개월 (2015.01.01 입사) 재직', Todo5: '인사(5년 6개월)' },
-                { Ename: '김지현', Manager: false, Todo1: '부장', Todo2: '팀장', Todo3: '예스코 기술연구소 정보기술팀', Todo4: '6년 11개월 (2015.01.01 입사) 재직', Todo5: '인사(5년 6개월)' },
-                { Ename: '김지현', Manager: false, Todo1: '부장', Todo2: '팀장', Todo3: '예스코 기술연구소 정보기술팀', Todo4: '6년 11개월 (2015.01.01 입사) 재직', Todo5: '인사(5년 6개월)' },
-                { Ename: '김지현', Manager: false, Todo1: '부장', Todo2: '팀장', Todo3: '예스코 기술연구소 정보기술팀', Todo4: '6년 11개월 (2015.01.01 입사) 재직', Todo5: '인사(5년 6개월)' },
-                { Ename: '김지현', Manager: false, Todo1: '부장', Todo2: '팀장', Todo3: '예스코 기술연구소 정보기술팀', Todo4: '6년 11개월 (2015.01.01 입사) 재직', Todo5: '인사(5년 6개월)' },
-                { Ename: '김지현', Manager: false, Todo1: '부장', Todo2: '팀장', Todo3: '예스코 기술연구소 정보기술팀', Todo4: '6년 11개월 (2015.01.01 입사) 재직', Todo5: '인사(5년 6개월)' },
-                { Ename: '김지현', Manager: false, Todo1: '부장', Todo2: '팀장', Todo3: '예스코 기술연구소 정보기술팀', Todo4: '6년 11개월 (2015.01.01 입사) 재직', Todo5: '인사(5년 6개월)' },
-                { Ename: '김지현', Manager: false, Todo1: '부장', Todo2: '팀장', Todo3: '예스코 기술연구소 정보기술팀', Todo4: '6년 11개월 (2015.01.01 입사) 재직', Todo5: '인사(5년 6개월)' },
-                { Ename: '김지현', Manager: false, Todo1: '부장', Todo2: '팀장', Todo3: '예스코 기술연구소 정보기술팀', Todo4: '6년 11개월 (2015.01.01 입사) 재직', Todo5: '인사(5년 6개월)' },
-                { Ename: '김지현', Manager: false, Todo1: '부장', Todo2: '팀장', Todo3: '예스코 기술연구소 정보기술팀', Todo4: '6년 11개월 (2015.01.01 입사) 재직', Todo5: '인사(5년 6개월)' },
-                { Ename: '김지현', Manager: false, Todo1: '부장', Todo2: '팀장', Todo3: '예스코 기술연구소 정보기술팀', Todo4: '6년 11개월 (2015.01.01 입사) 재직', Todo5: '인사(5년 6개월)' },
-                { Ename: '김지현', Manager: false, Todo1: '부장', Todo2: '팀장', Todo3: '예스코 기술연구소 정보기술팀', Todo4: '6년 11개월 (2015.01.01 입사) 재직', Todo5: '인사(5년 6개월)' },
-                { Ename: '김지현', Manager: false, Todo1: '부장', Todo2: '팀장', Todo3: '예스코 기술연구소 정보기술팀', Todo4: '6년 11개월 (2015.01.01 입사) 재직', Todo5: '인사(5년 6개월)' },
+                {
+                  Pernr: '50003',
+                  Ename: '김지현',
+                  Photo: 'https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1',
+                  Manager: true,
+                  Zzjikgbt: '부장',
+                  Zzjikcht: '팀장',
+                  Pbtxt: '예스코 기술연구소 정보기술팀',
+                  Todo4: '6년 11개월 (2015.01.01 입사) 재직',
+                  Todo5: '인사(5년 6개월)',
+                }, //
+                {
+                  Pernr: '50007',
+                  Ename: '김지현',
+                  Photo: 'https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1',
+                  Manager: false,
+                  Zzjikgbt: '부장',
+                  Zzjikcht: '팀장',
+                  Pbtxt: '예스코 기술연구소 정보기술팀',
+                  Todo4: '6년 11개월 (2015.01.01 입사) 재직',
+                  Todo5: '인사(5년 6개월)',
+                },
               ],
             },
             treeData: [
@@ -147,7 +153,6 @@ sap.ui.define(
             width: '78%',
             busy: true,
             header: {
-              busy: true,
               profilepath: 'https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1',
               baseinfo: [],
               timeline: [
@@ -183,78 +188,133 @@ sap.ui.define(
         oViewModel.setProperty('/employee/busy', true);
         oViewModel.setProperty('/pernr', sPernr);
 
+        this.initialList({ oViewModel, sPernr });
         this.loadProfile({ oViewModel, sPernr });
-        this.readTypeList();
-        this.readCityList();
       }
 
-      loadProfile({ oViewModel, sPernr }) {
+      async initialList({ oViewModel, sPernr }) {
+        const oSessionData = this.getModel('sessionModel').getData();
+        const oSearchParam = {
+          searchtext: sPernr || oSessionData.Pernr,
+          Stat2: oViewModel.getProperty('/sidenavigation/search/selectedState'),
+          ...oSessionData,
+        };
+
+        const oSearchResults = await this.readEmpSearchResult({ oSearchParam });
+
+        oViewModel.setProperty('/sidenavigation/search/results', [...oSearchResults]);
+      }
+
+      async loadProfile({ oViewModel, sPernr }) {
+        const oViewModelData = oViewModel.getData();
         const oModel = this.getModel(ServiceNames.PA);
-        const aFilters = [];
+        let aFilters = [];
+        let aHeaderRequests = [];
+        let aContentRequests = [];
 
         if (sPernr) {
           aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
         }
 
-        Promise.all([
-          this.readEmpProfileHeaderNew({ oModel, oViewModel, aFilters }), //
-          this.readEmpProfileMenu({ oModel, oViewModel, aFilters }),
-        ]).then((returnData) => {
-          const mTabMenu = returnData[1];
-          let aHeaderRequests = [];
-          let aContentRequests = [];
+        try {
+          // 1. 상단 프로필, 탭 메뉴, 주소유형, 시/도
+          const [oProfileReturnData, mMenuReturnData, mAddressTypeData, mAddressCityData] = await Promise.all([
+            this.readEmpProfileHeaderNew({ oModel, aFilters }), //
+            this.readEmpProfileMenu({ oModel, aFilters }),
+            this.readTypeList({ oModel }),
+            this.readCityList({ oModel, sPernr }),
+          ]);
 
-          mTabMenu.map((data) => {
+          // 주소유형 & 시/도
+          oViewModel.setProperty('/employee/address/typelist', mAddressTypeData);
+          oViewModel.setProperty('/employee/address/sidolist', mAddressCityData);
+          //End 주소유형 & 시/도
+
+          // 상단 프로필 Set
+          const { Pturl, ...oReturnData } = oProfileReturnData;
+          delete oReturnData.Pernr;
+          delete oReturnData.Langu;
+          delete oReturnData.Prcty;
+          delete oReturnData.Actty;
+          delete oReturnData.__metadata;
+          const aConvertData = Object.keys(oReturnData).map((key) => ({ data: oReturnData[key] }));
+
+          oViewModel.setProperty('/employee/header/profilepath', Pturl);
+          oViewModel.setProperty('/employee/header/baseinfo', aConvertData);
+          //End 상단 프로필 Set
+
+          // 탭 메뉴 Set
+          const aTabMenus = _.filter(mMenuReturnData, { Child: '1' }).map((obj, index) => ({ Pressed: index === 0, ...obj }));
+          const aSubMenus = mMenuReturnData.filter((data) => data.Child !== '1');
+
+          oViewModel.setProperty('/employee/tab/list', aTabMenus);
+          oViewModel.setProperty('/employee/tab/menu', aSubMenus);
+
+          aTabMenus.forEach((data) => {
+            this.debug(`Tab ${data.Menu1}`, data);
+            oViewModelData.employee.sub[data.Menuc1] = { isShow: data.Pressed, contents: {} };
+          });
+
+          aSubMenus.forEach((data) => {
+            oViewModelData.employee.sub[data.Menuc1].contents[data.Menuc2] = {
+              type: data.Child,
+              rowcount: 1,
+              selectionMode: data.Menu2 === '주소' ? 'MultiToggle' : 'None',
+              title: data.Menu2,
+              sort: data.Sorts,
+              header: [],
+              data: [],
+            };
+          });
+          //End 탭 메뉴 Set
+
+          aTabMenus.map((data) => {
             aHeaderRequests.push(this.readEmpProfileHeaderTab({ oModel, aFilters: [new Filter('Menuc', FilterOperator.EQ, data.Menuc1), ...aFilters] }));
             aContentRequests.push(this.readEmpProfileContentsTab({ oModel, aFilters: [new Filter('Menuc', FilterOperator.EQ, data.Menuc1), ...aFilters] }));
           });
 
-          Promise.all(aHeaderRequests)
-            .then((returnHeaderData) => {
-              Promise.all(aContentRequests)
-                .then((returnContentData) => {
-                  const oViewModelData = oViewModel.getData();
+          // 2. Sub 영역 조회[header, contents]
+          const aHeaderReturnData = await Promise.all(aHeaderRequests);
+          const aContentReturnData = await Promise.all(aContentRequests);
 
-                  returnHeaderData.forEach((headers, index) => {
-                    headers.forEach((o) => {
-                      oViewModelData.employee.sub[mTabMenu[index]?.Menuc1]?.contents[o.Menuc]?.header.push(o);
-                    });
-                  });
-
-                  returnContentData.forEach((content, index) => {
-                    content.forEach((o) => {
-                      let oSubMenu = oViewModelData.employee.sub[mTabMenu[index]?.Menuc1]?.contents[o.Menuc];
-
-                      if (oSubMenu.type === '6') {
-                        for (let i = 1; i <= oSubMenu.header.length; i++) {
-                          let sKey = `Value${_.padStart(i, 2, '0')}`;
-                          oSubMenu.data.push(o[sKey]);
-                        }
-                      } else if (oSubMenu.type === '5') {
-                        oSubMenu.data.push(o);
-                      }
-
-                      oSubMenu.rowcount = oSubMenu.data.length;
-                    });
-                  });
-
-                  oViewModel.setData(oViewModelData);
-
-                  this.makeProfileBody();
-                  oViewModel.setProperty('/employee/busy', false);
-                })
-                .catch((error) => {
-                  this.debug(error);
-                  oViewModel.setProperty('/employee/busy', false);
-                  MessageBox.error(this.getText('MSG_00008', '조회'));
-                });
-            })
-            .catch((error) => {
-              this.debug(error);
-              oViewModel.setProperty('/employee/busy', false);
-              MessageBox.error(this.getText('MSG_00008', '조회'));
+          // Header 영역 Set
+          aHeaderReturnData.forEach((headers, index) => {
+            headers.forEach((o) => {
+              oViewModelData.employee.sub[aTabMenus[index]?.Menuc1]?.contents[o.Menuc]?.header.push(o);
             });
-        });
+          });
+          //End Header 영역 Set
+
+          // Contents 영역 Set
+          aContentReturnData.forEach((content, index) => {
+            content.forEach((o) => {
+              let oSubMenu = oViewModelData.employee.sub[aTabMenus[index]?.Menuc1]?.contents[o.Menuc];
+
+              if (oSubMenu.type === '6') {
+                for (let i = 1; i <= oSubMenu.header.length; i++) {
+                  let sKey = `Value${_.padStart(i, 2, '0')}`;
+                  oSubMenu.data.push(o[sKey]);
+                }
+              } else if (oSubMenu.type === '5') {
+                oSubMenu.data.push(o);
+              }
+
+              oSubMenu.rowcount = oSubMenu.data.length;
+            });
+          });
+          //End Contents 영역 Set
+
+          oViewModel.setData(oViewModelData);
+
+          // Sub 영역 UI5 Control 생성
+          this.makeProfileBody();
+        } catch (oError) {
+          this.debug('Controller > Employee > loadProfile Error', oError);
+
+          MessageBox.error(this.getText('MSG_00008', '조회'));
+        } finally {
+          oViewModel.setProperty('/employee/busy', false);
+        }
       }
 
       makeProfileBody() {
@@ -264,27 +324,38 @@ sap.ui.define(
 
         Object.keys(mSubMenu).forEach((menukey) => {
           let mSubMenuContents = mSubMenu[menukey].contents;
-          let oVBox = new sap.m.VBox({ id: `sub${menukey}`, visible: { path: `/employee/sub/${menukey}/isShow` } });
+          let oVBox = sap.ui.getCore().byId(`sub${menukey}`);
 
+          if (oVBox) {
+            oVBox.destroyItems();
+            oParentBox.removeItem(oVBox);
+          } else {
+            oVBox = new sap.m.VBox({ id: `sub${menukey}`, visible: { path: `/employee/sub/${menukey}/isShow` } });
+          }
+
+          /**
+           * OMenu.type: '5'  Table
+           *      - 주소 테이블의 경우 CRUD가 추가된다.
+           * OMenu.type: '6'  Grid
+           */
           Object.keys(mSubMenuContents).forEach((key) => {
             let oMenu = mSubMenuContents[key];
             let oSubVBox = new sap.m.VBox().addStyleClass('customBox');
             let oSubHBox = new sap.m.HBox({ justifyContent: 'SpaceBetween' });
-            this.debug('oMenu', oMenu);
+            this.debug(`Sub ${oMenu.title}`, oMenu);
 
             oSubHBox.addItem(new sap.m.Title({ level: 'H2', text: oMenu.title }));
             if (oMenu.title === '주소') {
               let oSubButtonBox = new sap.m.HBox();
 
-              oSubButtonBox.addItem(new sap.m.Button({ type: 'Transparent', icon: 'sap-icon://edit', text: '수정', press: this.onPressModifyAddress.bind(this) }));
-              oSubButtonBox.addItem(new sap.m.Button({ type: 'Transparent', icon: 'sap-icon://add', text: '추가', press: this.onPressRegAddress.bind(this) }));
-              oSubButtonBox.addItem(new sap.m.Button({ type: 'Transparent', icon: 'sap-icon://less', text: '삭제', press: this.onPressDeleteAddress.bind(this) }));
+              oSubButtonBox.addItem(new sap.m.Button({ type: 'Transparent', width: '117px', icon: 'sap-icon://edit', text: '수정', press: this.onPressModifyAddress.bind(this) }));
+              oSubButtonBox.addItem(new sap.m.Button({ type: 'Transparent', width: '117px', icon: 'sap-icon://add', text: '추가', press: this.onPressRegAddress.bind(this) }));
+              oSubButtonBox.addItem(new sap.m.Button({ type: 'Transparent', width: '117px', icon: 'sap-icon://less', text: '삭제', press: this.onPressDeleteAddress.bind(this) }));
               oSubHBox.addItem(oSubButtonBox);
             }
 
             oSubVBox.addItem(oSubHBox);
 
-            // Table
             if (oMenu.type === '5') {
               let oTable = new Table({
                 width: '100%',
@@ -304,7 +375,6 @@ sap.ui.define(
               });
 
               oSubVBox.addItem(oTable);
-              // Grid
             } else if (oMenu.type === '6') {
               let oCSSGrid = new CSSGrid({ gridTemplateColumns: '1fr 3fr 1fr 3fr', gridGap: '2px' });
 
@@ -389,9 +459,70 @@ sap.ui.define(
           .setProperty('/employee/width', bState ? '78%' : '96%');
       }
 
+      async onChangeStat() {
+        const oViewModel = this.getView().getModel();
+        const oSessionData = this.getModel('sessionModel').getData();
+        const sSearchtext = oViewModel.getProperty('/sidenavigation/search/searchtext');
+        const oSearchParam = {
+          searchtext: sSearchtext,
+          Stat2: oViewModel.getProperty('/sidenavigation/search/selectedState'),
+          ...oSessionData,
+        };
+
+        if (!sSearchtext) {
+          // MessageBox.alert('검색어를 입력하세요.');
+          return;
+        } else if (sSearchtext.length < 2) {
+          // MessageBox.alert('검색어를 두 글자 이상 입력하세요.');
+          return;
+        }
+
+        const oSearchResults = await this.readEmpSearchResult({ oSearchParam });
+
+        oViewModel.setProperty('/sidenavigation/search/results', oSearchResults);
+      }
+
+      async onPressEmployeeSearch(oEvent) {
+        const oViewModel = this.getView().getModel();
+        const oControl = oEvent.getSource();
+        const sSearchtext = oControl.getValue();
+        const oSessionData = this.getModel('sessionModel').getData();
+        const oSearchParam = {
+          searchtext: sSearchtext,
+          Stat2: oViewModel.getProperty('/sidenavigation/search/selectedState'),
+          ...oSessionData,
+        };
+
+        if (!sSearchtext) {
+          MessageBox.alert('검색어를 입력하세요.');
+          return;
+        } else if (sSearchtext.length < 2) {
+          MessageBox.alert('검색어를 두 글자 이상 입력하세요.');
+          return;
+        }
+
+        const oSearchResults = await this.readEmpSearchResult({ oSearchParam });
+
+        oViewModel.setProperty('/sidenavigation/search/results', oSearchResults);
+      }
+
       onClickEmployeeCard(oEvent) {
-        const sPath = oEvent.getSource().getBindingContSext();
-        MessageToast.show(`${sPath} Card click!!`);
+        const sPath = oEvent.getSource().getBindingContext().getPath();
+        const oViewModel = this.getView().getModel();
+        const sPrevPernr = oViewModel.getProperty('/pernr');
+        const sPernr = oViewModel.getProperty(`${sPath}/Pernr`);
+
+        if (!sPernr) {
+          MessageBox.error('선택된 사번이 없습니다.');
+          return;
+        } else if (sPrevPernr === sPernr) {
+          return;
+        }
+
+        oViewModel.setProperty('/employee/busy', true);
+        oViewModel.setProperty('/pernr', sPernr);
+
+        this.loadProfile({ oViewModel, sPernr });
       }
 
       onToggleTab(oEvent) {
@@ -501,22 +632,20 @@ sap.ui.define(
         MessageBox.confirm(this.getText('MSG_00006', '삭제'), {
           actions: ['삭제', MessageBox.Action.CANCEL],
           onClose: async (sAction) => {
-            if (sAction === MessageBox.Action.CANCEL) return;
+            if (sAction !== MessageBox.Action.CANCEL) {
+              const oPayload = this.getAddressTableRowdata({ oViewModel, oTable, aSelectedIndices });
+              const { result } = await this.deleteAddressInfo({ oPayload });
 
-            const oPayload = this.getAddressTableRowdata({ oViewModel, oTable, aSelectedIndices });
-            const { result } = await this.deleteAddressInfo({ oPayload });
+              if (result === 'success') {
+                oTable.clearSelection();
+                this.refreshAddress({ oViewModel });
 
-            if (result === 'success') {
-              MessageBox.success(this.getText('MSG_00007', '삭제'));
-            } else {
-              appUtils.setAppBusy(false, this);
-              MessageBox.error(this.getText('MSG_00008', '삭제'));
-              return;
+                MessageBox.success(this.getText('MSG_00007', '삭제'));
+              } else {
+                MessageBox.error(this.getText('MSG_00008', '삭제'));
+              }
             }
 
-            this.refreshAddress({ oViewModel });
-
-            oTable.clearSelection();
             appUtils.setAppBusy(false, this);
           },
         });
@@ -534,7 +663,34 @@ sap.ui.define(
       /*****************************************************************
        * Call oData
        *****************************************************************/
-      readEmpProfileMenu({ oModel, oViewModel, aFilters }) {
+      readEmpSearchResult({ oSearchParam }) {
+        return new Promise((resolve, reject) => {
+          const oModel = this.getModel(ServiceNames.COMMON);
+          const sUrl = '/EmpSearchResultSet';
+          const oStatFilter = oSearchParam.Stat2 === '' ? [] : [new Filter('Stat2', FilterOperator.EQ, oSearchParam.Stat2)];
+
+          oModel.read(sUrl, {
+            filters: [
+              new Filter('Persa', FilterOperator.EQ, oSearchParam.Werks), //
+              new Filter('Actda', FilterOperator.EQ, moment().hour(9).toDate()),
+              new Filter('Ename', FilterOperator.EQ, oSearchParam.searchtext),
+              ...oStatFilter,
+            ],
+            success: (oData) => {
+              this.debug(`${sUrl} success.`, oData);
+
+              resolve(oData.results);
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, oError);
+
+              reject(oError);
+            },
+          });
+        });
+      }
+
+      readEmpProfileMenu({ oModel, aFilters }) {
         return new Promise((resolve, reject) => {
           const sUrl = '/EmpProfileMenuSet';
 
@@ -543,41 +699,18 @@ sap.ui.define(
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
 
-              const aToggleButtons = _.filter(oData.results, { Child: '1' }).map((obj, index) => ({ Pressed: index === 0, ...obj }));
-              oViewModel.setProperty('/employee/tab/list', aToggleButtons);
-              const aSubMenus = oData.results.filter((data) => data.Child !== '1');
-              oViewModel.setProperty('/employee/tab/menu', aSubMenus);
-
-              // Model 초기화
-              const oViewModelData = oViewModel.getData();
-              aToggleButtons.forEach((data) => {
-                oViewModelData.employee.sub[data.Menuc1] = { isShow: data.Pressed, contents: {} };
-              });
-              aSubMenus.forEach((data) => {
-                oViewModelData.employee.sub[data.Menuc1].contents[data.Menuc2] = {
-                  type: data.Child,
-                  rowcount: 1,
-                  selectionMode: data.Menu2 === '주소' ? 'MultiToggle' : 'None',
-                  title: data.Menu2,
-                  sort: data.Sorts,
-                  header: [],
-                  data: [],
-                };
-              });
-              oViewModel.setData(oViewModelData);
-
-              resolve(aToggleButtons);
+              resolve(oData.results);
             },
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
 
-              reject();
+              reject(oError);
             },
           });
         });
       }
 
-      readEmpProfileHeaderNew({ oModel, oViewModel, aFilters }) {
+      readEmpProfileHeaderNew({ oModel, aFilters }) {
         return new Promise((resolve, reject) => {
           const sUrl = '/EmpProfileHeaderNewSet';
 
@@ -586,24 +719,12 @@ sap.ui.define(
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
 
-              const { Pturl, ...oReturnData } = oData.results[0];
-              delete oReturnData.Pernr;
-              delete oReturnData.Langu;
-              delete oReturnData.Prcty;
-              delete oReturnData.Actty;
-              delete oReturnData.__metadata;
-              const aConvertData = Object.keys(oReturnData).map((key) => ({ data: oReturnData[key] }));
-
-              oViewModel.setProperty('/employee/header/profilepath', Pturl);
-              oViewModel.setProperty('/employee/header/baseinfo', aConvertData);
-              oViewModel.setProperty('/employee/header/busy', false);
-
-              resolve();
+              resolve(oData.results[0]);
             },
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
 
-              reject();
+              reject(oError);
             },
           });
         });
@@ -617,11 +738,13 @@ sap.ui.define(
             filters: aFilters,
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
+
               resolve(oData.results);
             },
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
-              reject();
+
+              reject(oError);
             },
           });
         });
@@ -635,62 +758,76 @@ sap.ui.define(
             filters: aFilters,
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
+
               resolve(oData.results);
             },
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
-              reject();
+
+              reject(oError);
             },
           });
         });
       }
 
-      readTypeList() {
-        const oModel = this.getModel(ServiceNames.PA);
-        const oViewModel = this.getViewModel();
-        const sUrl = '/PaCodeListSet';
-        const mTypeList = oViewModel.getProperty('/employee/address/typelist');
+      readTypeList({ oModel }) {
+        return new Promise((resolve, reject) => {
+          const oViewModel = this.getViewModel();
+          const mTypeList = oViewModel.getProperty('/employee/address/typelist');
+          const sUrl = '/PaCodeListSet';
 
-        if (mTypeList.length > 1) return;
+          if (mTypeList.length > 1) {
+            resolve(mTypeList);
+          }
 
-        oModel.read(sUrl, {
-          filters: [
-            new Filter('Cdnum', FilterOperator.EQ, 'CM0002'), //
-            new Filter('Grcod', FilterOperator.EQ, '0006'),
-          ],
-          success: (oData) => {
-            this.debug(`${sUrl} success.`, oData);
-            oViewModel.setProperty('/employee/address/typelist', [...mTypeList, ...oData.results]);
-          },
-          error: (oError) => {
-            this.debug(`${sUrl} error.`, oError);
-          },
+          oModel.read(sUrl, {
+            filters: [
+              new Filter('Cdnum', FilterOperator.EQ, 'CM0002'), //
+              new Filter('Grcod', FilterOperator.EQ, '0006'),
+            ],
+            success: (oData) => {
+              this.debug(`${sUrl} success.`, oData);
+
+              resolve([...mTypeList, ...oData.results]);
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, oError);
+
+              reject(oError);
+            },
+          });
         });
       }
 
-      readCityList() {
-        const oModel = this.getModel(ServiceNames.PA);
-        const oViewModel = this.getViewModel();
-        const sUrl = '/CityListSet';
-        const sPernr = oViewModel.getProperty('/pernr');
-        const mSidoList = oViewModel.getProperty('/employee/address/sidolist');
-        let aFilters = [];
+      readCityList({ oModel, sPernr }) {
+        return new Promise((resolve, reject) => {
+          const oViewModel = this.getViewModel();
+          const mSidoList = oViewModel.getProperty('/employee/address/sidolist');
+          const sUrl = '/CityListSet';
+          let aFilters = [];
 
-        if (mSidoList.length > 1) return;
+          if (mSidoList.length > 1) {
+            resolve(mSidoList);
+            return;
+          }
 
-        if (sPernr) {
-          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
-        }
+          if (sPernr) {
+            aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
+          }
 
-        oModel.read(sUrl, {
-          filters: aFilters,
-          success: (oData) => {
-            this.debug(`${sUrl} success.`, oData);
-            oViewModel.setProperty('/employee/address/sidolist', [...mSidoList, ...oData.results]);
-          },
-          error: (oError) => {
-            this.debug(`${sUrl} error.`, oError);
-          },
+          oModel.read(sUrl, {
+            filters: aFilters,
+            success: (oData) => {
+              this.debug(`${sUrl} success.`, oData);
+
+              resolve([...mSidoList, ...oData.results]);
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, oError);
+
+              reject(oError);
+            },
+          });
         });
       }
 

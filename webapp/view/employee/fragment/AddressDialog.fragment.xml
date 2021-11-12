@@ -21,7 +21,7 @@
                     </ComboBox>
                     <Label text="우편번호" />
                     <HBox width="100%">
-                        <Input width="250px" value="{/employee/address/form/Pstlz}" editable="false" />
+                        <Input width="185px" value="{/employee/address/form/Pstlz}" editable="false" />
                         <Button text="검색" press=".openSearchZipcodePopup"/>
                     </HBox>
                     <Label text="주소" />

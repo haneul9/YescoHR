@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
     <HBox class="customBox" items="{/employee/tab/list}">
-        <ToggleButton text="{Menu1}" pressed="{Pressed}" press=".onToggleTab">
+        <ToggleButton text="{Menu1}" class="toggle_edit" width="117px" pressed="{Pressed}" press=".onToggleTab">
             <customData>
                 <core:CustomData key="code" value="{Menuc1}" writeToDom="true" />
             </customData>
