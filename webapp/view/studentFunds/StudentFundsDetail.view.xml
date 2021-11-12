@@ -1,4 +1,4 @@
-<mvc:View controllerName="sap.ui.yesco.controller.congratulation.CongDetail"
+<mvc:View controllerName="sap.ui.yesco.controller.studentFunds.StudentFundsDetail"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:core="sap.ui.core"
@@ -8,7 +8,6 @@
 			<VBox>
 				<HBox justifyContent="SpaceBetween">
 					<HBox>
-						<core:Icon src="sap-icon://nav-back" press=".onNavBack"/>
 						<Breadcrumbs currentLocationText="{i18n>LABEL_00134}" separatorStyle="GreaterThan">
 							<Link text="복리후생"/>
 							<Link text="{i18n>LABEL_02001}"/>
@@ -20,6 +19,7 @@
 						<Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
 						<Button text="{i18n>LABEL_00118}" press=".onCancelBtn" visible="{= ${/FormData/ZappStatAl} === '20' }" />
 						<Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= ${/FormData/ZappStatAl} === '10' || ${/FormData/ZappStatAl} === '45' }" />
+						<Button text="{i18n>LABEL_00146}" press=".onNavBack" />
 						<Button icon="sap-icon://print" press=".formatter.onPagePrint" type="Transparent" text="{i18n>LABEL_00131}" />
 						<Button icon="sap-icon://sys-help" type="Transparent" text="{i18n>LABEL_00132}" />
 					</HBox>
