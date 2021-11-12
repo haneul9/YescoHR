@@ -71,20 +71,20 @@
 					<VBox>
 						<Title level="H3" text="Dialog" class="component-title" />
 						<HBox>
-							<Button text="사원검색" press=".openEmployeeDialog" />
+							<Button width='117px' text="사원검색" press=".openEmployeeDialog" />
 						</HBox>
 					</VBox>
 				</HBox>
 				<HBox class="sapUiResponsiveMargin" width="auto">
 					<VBox>
 						<Title level="H3" text="Label" class="component-title" />
-						<HBox>
+						<HBox class='label_wrap'>
 							<Label text="Label A (required)" labelFor="input-a" />
-							<Input id="input-a" required="true" />
+							<Input id="input-a" required="true" width='250px' placeholder="Default"/>
 							<Label text="Label B (bold)" labelFor="input-b" design="Bold" />
-							<Input id="input-b"/>
-							<Label text="Label C (normal)" labelFor="input-c" />
-							<Input id="input-c"/>
+							<Input id="input-b" width='250px' placeholder="Default"/>
+							<Label text="Label C (normal)" labelFor="input-c"/>
+							<Input id="input-c" width='250px' placeholder="Default"/>
 						</HBox>
 					</VBox>
 				</HBox>
@@ -99,19 +99,19 @@
 										minLength: 1,
 										maxLength: 10
 									}
-								}" />
-							<Input id="productInput" placeholder="Enter product" showSuggestion="true" showValueHelp="true" valueHelpRequest=".onValueHelpRequest" suggestionItems="{/ProductCollection}" class="sapIcon_Search">
+								}" width='250px'/>
+							<Input id="productInput" width='180px' placeholder="Enter product" showSuggestion="true" showValueHelp="true" valueHelpRequest=".onValueHelpRequest" suggestionItems="{/ProductCollection}" class="sapIcon_Search">
 								<core:Item text="{Name}"/>
 							</Input>
-							<Input value="10" description="명" />
+							<Input value="10" description="명" textAlign='right'/>
 						</HBox>
 						<HBox>
-							<Input id="InputNoEdit" value="No edit" type="Text" placeholder="Product" enabled="true" editable="false" />
-							<Input id="InputDisabled" value="Disabled" type="Text" placeholder="Product" enabled="false" />
-							<Input valueState="Success" value="Value state Success" />
-							<Input valueState="Warning" valueStateText="Warning message. Extra long text used as a warning message. Extra long text used as a warning message - 2. Extra long text used as a warning message - 3. Extra long text used as a warning message - 4. Extra long text used as a warning message - 5." value="Value state Warning." />
-							<Input valueState="Error" value="Value state Error" />
-							<Input valueState="Information" value="Value state Information" />
+							<Input id="InputNoEdit" width='180px' value="No edit" type="Text" placeholder="Product" enabled="true" editable="false" />
+							<Input id="InputDisabled" width='180px' value="Disabled" type="Text" placeholder="Product" enabled="false" />
+							<Input valueState="Success" width='200px' value="Value state Success" />
+							<Input valueState="Warning" width='200px' valueStateText="Warning message. Extra long text used as a warning message. Extra long text used as a warning message - 2. Extra long text used as a warning message - 3. Extra long text used as a warning message - 4. Extra long text used as a warning message - 5." value="Value state Warning." />
+							<Input valueState="Error" width='200px' value="Value state Error" />
+							<Input valueState="Information" width='200px' value="Value state Information" />
 						</HBox>
 					</VBox>
 				</HBox>
@@ -119,7 +119,7 @@
 					<VBox>
 						<Title level="H3" text="Search Input" class="component-title" />
 						<HBox>
-							<SearchField width="100%" placeholder="검색어를 입력하세요." />
+							<SearchField width='250px' placeholder="검색어를 입력하세요." />
 						</HBox>
 					</VBox>
 				</HBox>
@@ -127,7 +127,7 @@
 					<VBox>
 						<Title level="H3" text="TextArea" class="component-title" />
 						<HBox>
-							<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="500px" />
+							<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="393px" />
 						</HBox>
 					</VBox>
 				</HBox>
@@ -135,7 +135,7 @@
 					<VBox>
 						<Title level="H3" text="ComboBox and Select" class="component-title" />
 						<HBox>
-							<ComboBox class='sapIcon_Select_Arrow' items="{
+							<ComboBox width='250px' class='sapIcon_Select_Arrow' items="{
 								path: '/ProductCollection',
 								sorter: {
 									path: 'text'
@@ -144,7 +144,7 @@
 							}">
 								<core:Item key="{ProductId}" text="{Name}" />
 							</ComboBox>
-							<Select forceSelection="false" selectedKey="{/SelectedProduct}" items="{
+							<Select width='250px' forceSelection="false" selectedKey="{/SelectedProduct}" items="{
 									path: '/ProductCollection',
 									sorter: {
 										path: 'Name'
@@ -153,7 +153,7 @@
 								}">
 								<core:Item key="{ProductId}" text="{Name}" />
 							</Select>
-							<MultiComboBox class='sapIcon_Select_Arrow' selectionChange="handleSelectionChange" selectionFinish="handleSelectionFinish" width="350px" items="{
+							<MultiComboBox width='250px' class='sapIcon_Select_Arrow' selectionChange="handleSelectionChange" selectionFinish="handleSelectionFinish" items="{
 									path: '/ProductCollection',
 									sorter: {
 										path: 'Name'
@@ -204,9 +204,9 @@
 					<VBox>
 						<Title level="H3" text="Date and Time Picker" class="component-title" />
 						<HBox>
-							<DatePicker id="DP1" placeholder="Enter Date" class="sapUiSmallMarginBottom sapIcon_Date" />
-							<DateRangeSelection id="DRS2" class="sapIcon_Date" />
-							<TimePicker id="TP1" width="100%" placeholder="Enter Time" valueFormat="HH:mm" displayFormat="HH:mm" minutesStep="5" class="sapIcon_Time" />
+							<DatePicker width='180px' id="DP1" placeholder="Enter Date" class="sapUiSmallMarginBottom sapIcon_Date" />
+							<DateRangeSelection id="DRS2" width='180px' class="sapIcon_Date" />
+							<TimePicker id="TP1" width='180px' placeholder="Enter Time" valueFormat="HH:mm" displayFormat="HH:mm" minutesStep="5" class="sapIcon_Time" />
 						</HBox>
 					</VBox>
 				</HBox>
@@ -251,30 +251,52 @@
 					<VBox>
 						<Title level="H3" text="Button" class="component-title" />
 						<HBox>
-							<Button text="Default" ariaDescribedBy="defaultButtonDescription genericButtonDescription">
+							<Button width='117px' text="Default" ariaDescribedBy="defaultButtonDescription genericButtonDescription">
 								<layoutData>
 									<FlexItemData growFactor="1"/>
 								</layoutData>
 							</Button>
-							<Button type="Accept" text="Accept" ariaDescribedBy="acceptButtonDescription genericButtonDescription">
+							<Button width='117px' type="Accept" text="Accept" ariaDescribedBy="acceptButtonDescription genericButtonDescription">
 								<layoutData>
 									<FlexItemData growFactor="1"/>
 								</layoutData>
 							</Button>
-							<Button type="Reject" text="Reject" ariaDescribedBy="rejectButtonDescription genericButtonDescription">
+							<Button width='117px' type="Reject" text="Reject" ariaDescribedBy="rejectButtonDescription genericButtonDescription">
 								<layoutData>
 									<FlexItemData growFactor="1"/>
 								</layoutData>
 							</Button>
-							<Button text="Coming Soon" ariaDescribedBy="comingSoonButtonDescription genericButtonDescription" enabled="false">
+							<Button width='117px' text="Coming Soon" ariaDescribedBy="comingSoonButtonDescription genericButtonDescription" enabled="false">
 								<layoutData>
 									<FlexItemData growFactor="1"/>
 								</layoutData>
 							</Button>
-							<Button type="Emphasized" text="Emphasized" />
-							<Button text="Default"/>
-							<Button text="Transparent" type="Transparent" />
-							<Button icon="sap-icon://action" type="Transparent" text="With Icon" />
+							<Button width='117px' type="Emphasized" text="Emphasized" />
+							<Button width='117px' text="Default"/>
+							<Button width='117px' text="Transparent" type="Transparent" />
+							<Button width='117px' icon="sap-icon://action" type="Transparent" text="With Icon" />
+						</HBox>
+					</VBox>
+				</HBox>
+				<HBox class="sapUiResponsiveMargin" width="auto">
+					<VBox>
+						<Title level="H3" text="Toggle Button" class="component-title" />
+						<HBox>
+							<ToggleButton width='117px' class='toggle_edit' text="Pressed" enabled="true" pressed="true">
+								<layoutData>
+									<FlexItemData growFactor="1" />
+								</layoutData>
+							</ToggleButton>
+							<ToggleButton width='117px' class='toggle_edit' text="Disabled" enabled="false">
+								<layoutData>
+									<FlexItemData growFactor="1" />
+								</layoutData>
+							</ToggleButton>
+							<ToggleButton width='60px' class='toggle_edit' icon="sap-icon://action" enabled="true">
+								<layoutData>
+									<FlexItemData growFactor="1" />
+								</layoutData>
+							</ToggleButton>
 						</HBox>
 					</VBox>
 				</HBox>
@@ -296,12 +318,12 @@
 					<VBox>
 						<Title level="H3" text="Message Box" class="component-title" />
 						<HBox>
-							<Button text="Confirm" press=".onConfirmationMessageBoxPress" />
-							<Button text="Alert" press=".onAlertMessageBoxPress" />
-							<Button text="Error" press=".onErrorMessageBoxPress" />
-							<Button text="Info" press=".onInfoMessageBoxPress" />
-							<Button text="Warning" press=".onWarningMessageBoxPress" />
-							<Button text="Success" press=".onSuccessMessageBoxPress" />
+							<Button width='117px' text="Confirm" press=".onConfirmationMessageBoxPress" />
+							<Button width='117px' text="Alert" press=".onAlertMessageBoxPress" />
+							<Button width='117px' text="Error" press=".onErrorMessageBoxPress" />
+							<Button width='117px' text="Info" press=".onInfoMessageBoxPress" />
+							<Button width='117px' text="Warning" press=".onWarningMessageBoxPress" />
+							<Button width='117px' text="Success" press=".onSuccessMessageBoxPress" />
 						</HBox>
 					</VBox>
 				</HBox>
@@ -344,32 +366,32 @@
 				<HBox class="sapUiResponsiveMargin" width="auto">
 					<VBox>
 						<Title level="H3" text="Table" class="component-title" />
-						<table:Table width="90%" rows="{/ProductCollection}" selectionMode="MultiToggle" visibleRowCount="7" ariaLabelledBy="title">
+						<table:Table width="1555px" rows="{/ProductCollection}" selectionMode="MultiToggle" visibleRowCount="7" ariaLabelledBy="title">
 							<table:extension>
 								<OverflowToolbar style="Clear">
 									<Title id="title" text="Products" />
 								</OverflowToolbar>
 							</table:extension>
 							<table:columns>
-								<table:Column width="11rem" hAlign="Center" filterProperty="name" sortProperty="name">
+								<table:Column width="170px" hAlign="Start" filterProperty="name" sortProperty="name">
 									<Label text="Product Name"/>
-									<table:template>
-										<Text text="{Name}" wrapping="false" />
+									<table:template >
+										<Text text="{Name}" wrapping="false"/>
 									</table:template>
 								</table:Column>
-								<table:Column width="11rem" hAlign="Center" filterProperty="ProductId" sortProperty="ProductId">
+								<table:Column width="180px" hAlign="Center" filterProperty="ProductId" sortProperty="ProductId">
 									<Label text="Product Id"/>
 									<table:template>
 										<Input value="{ProductId}"/>
 									</table:template>
 								</table:Column>
-								<table:Column width="6rem" hAlign="Center" filterProperty="Quantity" sortProperty="Quantity">
+								<table:Column width="90.5px" hAlign="End" filterProperty="Quantity" sortProperty="Quantity">
 									<Label text="Quantity"/>
 									<table:template>
 										<Text text="{Quantity}"/>
 									</table:template>
 								</table:Column>
-								<table:Column width="9rem" hAlign="Center" filterProperty="Status" sortProperty="Status">
+								<table:Column width="158.7px" hAlign="Start" filterProperty="Status" sortProperty="Status">
 									<Label text="Status"/>
 									<table:template>
 										<ObjectStatus text="{Status}" state="{
@@ -377,16 +399,16 @@
 											}" />
 									</table:template>
 								</table:Column>
-								<table:Column width="9rem" hAlign="End" filterProperty="Price" sortProperty="Price">
-									<Label text="Price" width="100%" textAlign="End" />
+								<table:Column width="120.8px" hAlign="End" filterProperty="Price" sortProperty="Price">
+									<Label text="Price" width="100%" textAlign="Center" />
 									<table:template>
 										<Text text="{Price}"/>
 									</table:template>
 								</table:Column>
-								<table:Column width="12rem" hAlign="Center" filterProperty="Supplier" sortProperty="Supplier">
+								<table:Column width="191px" hAlign="Center" filterProperty="Supplier" sortProperty="Supplier">
 									<Label text="Supplier"/>
 									<table:template>
-										<ComboBox value="{SupplierName}" items="{
+										<ComboBox class='sapIcon_Select_Arrow' value="{SupplierName}" items="{
 												path: '/Suppliers',
 												templateShareable: true
 											}">
@@ -394,19 +416,19 @@
 										</ComboBox>
 									</table:template>
 								</table:Column>
-								<table:Column width="9rem" hAlign="Center">
+								<table:Column width="116.2px" hAlign="Start">
 									<Label text="Image"/>
 									<table:template>
 										<Link text="Show Image" href="{ProductPicUrl}" target="_blank" />
 									</table:template>
 								</table:Column>
-								<table:Column width="9rem" hAlign="Center">
+								<table:Column width="173.8px" hAlign="Center">
 									<Label text="Details"/>
 									<table:template>
 										<Button text="Show Details"/>
 									</table:template>
 								</table:Column>
-								<table:Column width="7rem" hAlign="Center">
+								<table:Column width="128.7px" hAlign="Center">
 									<Label text="Heavy Weight"/>
 									<table:template>
 										<CheckBox selected="{
@@ -415,35 +437,7 @@
 										}"/>
 									</table:template>
 								</table:Column>
-								<table:Column width="12rem" hAlign="Center" filterProperty="Category" sortProperty="Category">
-									<Label text="Main Category"/>
-									<table:template>
-										<Select selectedKey="{Category}" items="{
-												path: '/Categories',
-												templateShareable: true
-											}">
-											<core:Item text="{Name}" key="{Name}" />
-										</Select>
-									</table:template>
-								</table:Column>
-								<table:Column width="12rem" hAlign="Center" filterProperty="Category" sortProperty="Category">
-									<Label text="Additional Categories"/>
-									<table:template>
-										<Select selectedKey="{Category}" items="{
-												path: '/Categories',
-												templateShareable: true
-											}">
-											<core:Item text="{Name}" key="{Name}" />
-										</Select>
-									</table:template>
-								</table:Column>
-								<table:Column width="6rem" hAlign="Center">
-									<Label text="Status"/>
-									<table:template>
-										<core:Icon src="sap-icon://appear-offline"/>
-									</table:template>
-								</table:Column>
-								<table:Column width="11rem" hAlign="Center" filterProperty="DeliveryDate" sortProperty="DeliveryDate">
+								<table:Column width="174px" hAlign="Center" filterProperty="DeliveryDate" sortProperty="DeliveryDate">
 									<Label text="Delivery Date"/>
 									<table:template>
 										<DatePicker value="{
@@ -461,35 +455,35 @@
 						</table:Table>
 					</VBox>
 				</HBox>
-				<HBox class="sapUiResponsiveMargin" width="auto">
+				<HBox class="sapUiResponsiveMargin">
 					<VBox>
 						<Title level="H3" text="Table fixed column" class="component-title" />
-						<table:Table width="90%" rows="{/ProductCollection}" selectionMode="MultiToggle" visibleRowCount="7" ariaLabelledBy="title" fixedColumnCount="2">
+						<table:Table width="1555px" rows="{/ProductCollection}" selectionMode="MultiToggle" visibleRowCount="7" ariaLabelledBy="title" fixedColumnCount="2">
 							<table:extension>
 								<OverflowToolbar style="Clear">
 									<Title id="title2" text="Products" />
 								</OverflowToolbar>
 							</table:extension>
 							<table:columns>
-								<table:Column width="11rem" hAlign="Center" filterProperty="name" sortProperty="name">
+								<table:Column width="170px" hAlign="Start" filterProperty="name" sortProperty="name">
 									<Label text="Product Name"/>
 									<table:template>
 										<Text text="{Name}" wrapping="false" />
 									</table:template>
 								</table:Column>
-								<table:Column width="11rem" hAlign="Center" filterProperty="ProductId" sortProperty="ProductId">
+								<table:Column width="180px" hAlign="Center" filterProperty="ProductId" sortProperty="ProductId">
 									<Label text="Product Id"/>
 									<table:template>
 										<Input value="{ProductId}"/>
 									</table:template>
 								</table:Column>
-								<table:Column width="6rem" hAlign="Center" filterProperty="Quantity" sortProperty="Quantity">
+								<table:Column width="90.5px" hAlign="End" filterProperty="Quantity" sortProperty="Quantity">
 									<Label text="Quantity"/>
 									<table:template>
 										<Text text="{Quantity}"/>
 									</table:template>
 								</table:Column>
-								<table:Column width="9rem" hAlign="Center" filterProperty="Status" sortProperty="Status">
+								<table:Column width="158.7px" hAlign="Start" filterProperty="Status" sortProperty="Status">
 									<Label text="Status"/>
 									<table:template>
 										<ObjectStatus text="{Status}" state="{
@@ -497,16 +491,16 @@
 											}" />
 									</table:template>
 								</table:Column>
-								<table:Column width="9rem" hAlign="End" filterProperty="Price" sortProperty="Price">
-									<Label text="Price" width="100%" textAlign="End" />
+								<table:Column width="120.8px" hAlign="End" filterProperty="Price" sortProperty="Price">
+									<Label text="Price"/>
 									<table:template>
 										<Text text="{Price}"/>
 									</table:template>
 								</table:Column>
-								<table:Column width="12rem" hAlign="Center" filterProperty="Supplier" sortProperty="Supplier">
+								<table:Column width="191px" hAlign="Center" filterProperty="Supplier" sortProperty="Supplier">
 									<Label text="Supplier"/>
 									<table:template>
-										<ComboBox value="{SupplierName}" items="{
+										<ComboBox class='sapIcon_Select_Arrow' value="{SupplierName}" items="{
 												path: '/Suppliers',
 												templateShareable: true
 											}">
@@ -514,19 +508,19 @@
 										</ComboBox>
 									</table:template>
 								</table:Column>
-								<table:Column width="9rem" hAlign="Center">
+								<table:Column width="116.2px" hAlign="Start">
 									<Label text="Image"/>
 									<table:template>
 										<Link text="Show Image" href="{ProductPicUrl}" target="_blank" />
 									</table:template>
 								</table:Column>
-								<table:Column width="9rem" hAlign="Center">
+								<table:Column width="173.8px" hAlign="Center">
 									<Label text="Details"/>
 									<table:template>
 										<Button text="Show Details"/>
 									</table:template>
 								</table:Column>
-								<table:Column width="7rem" hAlign="Center">
+								<table:Column width="128.7px" hAlign="Center">
 									<Label text="Heavy Weight"/>
 									<table:template>
 										<CheckBox selected="{
@@ -535,35 +529,7 @@
 										}"/>
 									</table:template>
 								</table:Column>
-								<table:Column width="12rem" hAlign="Center" filterProperty="Category" sortProperty="Category">
-									<Label text="Main Category"/>
-									<table:template>
-										<Select selectedKey="{Category}" items="{
-												path: '/Categories',
-												templateShareable: true
-											}">
-											<core:Item text="{Name}" key="{Name}" />
-										</Select>
-									</table:template>
-								</table:Column>
-								<table:Column width="12rem" hAlign="Center" filterProperty="Category" sortProperty="Category">
-									<Label text="Additional Categories"/>
-									<table:template>
-										<Select selectedKey="{Category}" items="{
-												path: '/Categories',
-												templateShareable: true
-											}">
-											<core:Item text="{Name}" key="{Name}" />
-										</Select>
-									</table:template>
-								</table:Column>
-								<table:Column width="6rem" hAlign="Center">
-									<Label text="Status"/>
-									<table:template>
-										<core:Icon src="sap-icon://appear-offline"/>
-									</table:template>
-								</table:Column>
-								<table:Column width="11rem" hAlign="Center" filterProperty="DeliveryDate" sortProperty="DeliveryDate">
+								<table:Column width="174px" hAlign="Center" filterProperty="DeliveryDate" sortProperty="DeliveryDate">
 									<Label text="Delivery Date"/>
 									<table:template>
 										<DatePicker value="{
@@ -581,7 +547,7 @@
 						</table:Table>
 					</VBox>
 				</HBox>
-				<HBox class="sapUiResponsiveMargin" width="auto">
+				<HBox class="sapUiResponsiveMargin">
 					<VBox>
 						<Title level="H3" text="Table no data" class="component-title" />
 						<table:Table rows="{/ProductCollection2}" visibleRowCount="1" ariaLabelledBy="title">
@@ -655,12 +621,12 @@
 						</table:Table>
 					</VBox>
 				</HBox>
-				<HBox class="sapUiResponsiveMargin" width="auto">
+				<HBox class="sapUiResponsiveMargin" width="1551px">
 					<VBox>
 						<Title level="H3" text="Grid Head 2열" class="component-title" />
 						<table:Table id="groupTable" width="100%" rows="{/hospitalCollection}" visibleRowCount="4" fixedBottomRowCount="1" ariaLabelledBy="title">
 							<table:columns>
-								<table:Column width="6%" hAlign="Center" filterProperty="Idx" sortProperty="Idx">
+								<table:Column width="80px" hAlign="Center" filterProperty="Idx" sortProperty="Idx">
 									<table:multiLabels>
 										<Label text="No"/>
 										<Label text="No"/>
@@ -669,7 +635,7 @@
 										<Text text="{Idx}" wrapping="false" />
 									</table:template>
 								</table:Column>
-								<table:Column width="6%" hAlign="Center" filterProperty="Begda" sortProperty="Begda">
+								<table:Column width="110px" hAlign="Center" filterProperty="Begda" sortProperty="Begda">
 									<table:multiLabels>
 										<Label text="진료시작일"/>
 										<Label text="진료시작일"/>
@@ -678,7 +644,7 @@
 										<Text text="{Begda}" wrapping="false" />
 									</table:template>
 								</table:Column>
-								<table:Column width="6%" hAlign="Center" filterProperty="Endda" sortProperty="Endda">
+								<table:Column width="110px" hAlign="Center" filterProperty="Endda" sortProperty="Endda">
 									<table:multiLabels>
 										<Label text="진료종료일"/>
 										<Label text="진료종료일"/>
@@ -687,7 +653,7 @@
 										<Text text="{Endda}" wrapping="false" />
 									</table:template>
 								</table:Column>
-								<table:Column width="6%" hAlign="Center" filterProperty="Todo1" sortProperty="Todo1">
+								<table:Column width="110px" hAlign="Start" filterProperty="Todo1" sortProperty="Todo1">
 									<table:multiLabels>
 										<Label text="병명"/>
 										<Label text="병명"/>
@@ -696,7 +662,7 @@
 										<Text text="{Todo1}" wrapping="false" />
 									</table:template>
 								</table:Column>
-								<table:Column width="6%" hAlign="Center" filterProperty="Todo2" sortProperty="Todo2">
+								<table:Column width="110px" hAlign="Center" filterProperty="Todo2" sortProperty="Todo2">
 									<table:multiLabels>
 										<Label text="의료기관"/>
 										<Label text="의료기관"/>
@@ -705,7 +671,7 @@
 										<Text text="{Todo2}" wrapping="false" />
 									</table:template>
 								</table:Column>
-								<table:Column width="6%" hAlign="Center" filterProperty="Todo3" sortProperty="Todo3">
+								<table:Column width="100px" hAlign="Start" filterProperty="Todo3" sortProperty="Todo3">
 									<table:multiLabels>
 										<Label text="영수증구분"/>
 										<Label text="영수증구분"/>
@@ -714,7 +680,7 @@
 										<Text text="{Todo3}" wrapping="false" />
 									</table:template>
 								</table:Column>
-								<table:Column width="6%" hAlign="Center" headerSpan="2" filterProperty="Todo4" sortProperty="Todo4">
+								<table:Column width="100px" hAlign="Center" headerSpan="2" filterProperty="Todo4" sortProperty="Todo4">
 									<table:multiLabels>
 										<Label text="급여"/>
 										<Label text="본인부담금"/>
@@ -723,7 +689,7 @@
 										<Text text="{Todo4}" wrapping="false" width="100%" textAlign="End" />
 									</table:template>
 								</table:Column>
-								<table:Column width="6%" hAlign="Center" filterProperty="Todo5" sortProperty="Todo5">
+								<table:Column width="100px" hAlign="Center" filterProperty="Todo5" sortProperty="Todo5">
 									<table:multiLabels>
 										<Label text="급여"/>
 										<Label text="전액&#13;&#10;본인부담금" wrapping="true" textAlign="Center"/>
@@ -732,7 +698,7 @@
 										<Text text="{Todo5}" wrapping="false" width="100%" textAlign="End" />
 									</table:template>
 								</table:Column>
-								<table:Column width="6%" hAlign="Center" headerSpan="6" filterProperty="Todo6" sortProperty="Todo6">
+								<table:Column width="100px" hAlign="Center" headerSpan="6" filterProperty="Todo6" sortProperty="Todo6">
 									<table:multiLabels>
 										<Label text="비급여"/>
 										<Label text="입원료"/>
@@ -741,7 +707,7 @@
 										<Text text="{Todo6}" wrapping="false" width="100%" textAlign="End" />
 									</table:template>
 								</table:Column>
-								<table:Column width="6%" hAlign="Center" filterProperty="Todo7" sortProperty="Todo7">
+								<table:Column width="100px" hAlign="Center" filterProperty="Todo7" sortProperty="Todo7">
 									<table:multiLabels>
 										<Label text="비급여"/>
 										<Label text="투약 및&#13;&#10;조제료" wrapping="true" textAlign="Center"/>
@@ -750,7 +716,7 @@
 										<Text text="{Todo7}" wrapping="false" width="100%" textAlign="End" />
 									</table:template>
 								</table:Column>
-								<table:Column width="6%" hAlign="Center" filterProperty="Todo8" sortProperty="Todo8">
+								<table:Column width="100px" hAlign="Center" filterProperty="Todo8" sortProperty="Todo8">
 									<table:multiLabels>
 										<Label text="비급여"/>
 										<Label text="주사료"/>
@@ -759,7 +725,7 @@
 										<Text text="{Todo8}" wrapping="false" width="100%" textAlign="End" />
 									</table:template>
 								</table:Column>
-								<table:Column width="6%" hAlign="Center" filterProperty="Todo9" sortProperty="Todo9">
+								<table:Column width="100px" hAlign="Center" filterProperty="Todo9" sortProperty="Todo9">
 									<table:multiLabels>
 										<Label text="비급여"/>
 										<Label text="치료&#13;&#10;재료대" wrapping="true" textAlign="Center"/>
@@ -768,7 +734,7 @@
 										<Text text="{Todo9}" wrapping="false" width="100%" textAlign="End" />
 									</table:template>
 								</table:Column>
-								<table:Column width="6%" hAlign="Center" filterProperty="Todo10" sortProperty="Todo10">
+								<table:Column width="100px" hAlign="Center" filterProperty="Todo10" sortProperty="Todo10">
 									<table:multiLabels>
 										<Label text="비급여"/>
 										<Label text="전혈 및&#13;&#10;혈액성분료" wrapping="true" textAlign="Center"/>
@@ -777,7 +743,7 @@
 										<Text text="{Todo10}" wrapping="false" width="100%" textAlign="End" />
 									</table:template>
 								</table:Column>
-								<table:Column width="6%" hAlign="Center" filterProperty="Todo11" sortProperty="Todo11">
+								<table:Column width="100px" hAlign="Center" filterProperty="Todo11" sortProperty="Todo11">
 									<table:multiLabels>
 										<Label text="비급여"/>
 										<Label text="CT / MRI /&#13;&#10;초음파" wrapping="true" textAlign="Center"/>
@@ -786,7 +752,7 @@
 										<Text text="{Todo11}" wrapping="false" width="100%" textAlign="End" />
 									</table:template>
 								</table:Column>
-								<table:Column width="6%" hAlign="Center" filterProperty="Todo12" sortProperty="Todo12">
+								<table:Column width="91px" hAlign="Center" filterProperty="Todo12" sortProperty="Todo12">
 									<table:multiLabels>
 										<Label text="기타"/>
 										<Label text="회사지원"/>
