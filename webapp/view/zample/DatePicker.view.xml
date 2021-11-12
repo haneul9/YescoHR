@@ -1,0 +1,6 @@
+<mvc:View controllerName="sap.ui.yesco.controller.zample.DatePicker"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:custom="sap.ui.yesco.control" height="100%">
+	<custom:DatePicker showFooter="true" width="400px" />
+	<custom:DateRangeSelection showFooter="true" width="400px" />
+</mvc:View>

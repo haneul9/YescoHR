@@ -150,6 +150,11 @@
           "pattern": "sampleDonutChart",
           "name": "sampleDonutChart",
           "target": "sampleDonutChart"
+        },
+        {
+          "pattern": "sampleDatePicker",
+          "name": "sampleDatePicker",
+          "target": "sampleDatePicker"
         }
       ],
       "targets": {
@@ -230,6 +235,13 @@
           "viewName": "DonutChart",
           "viewLevel": 1,
           "title": "DonutChart"
+        },
+        "sampleDatePicker": {
+          "viewId": "sampleDatePicker",
+          "viewPath": "sap.ui.yesco.view.zample",
+          "viewName": "DatePicker",
+          "viewLevel": 1,
+          "title": "DatePicker"
         }
       }
     }
