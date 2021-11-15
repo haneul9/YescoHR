@@ -194,7 +194,7 @@ sap.ui.define(
           // Header 영역 Set
           aHeaderReturnData.forEach((headers, index) => {
             headers.forEach((o) => {
-              oViewModelData.employee.sub[aTabMenus[index]?.Menuc1]?.contents[o.Menuc]?.header.push(o);
+              oViewModelData.employee.sub[aTabMenus[index].Menuc1].contents[o.Menuc].header.push(o);
             });
           });
           //End Header 영역 Set
@@ -202,7 +202,7 @@ sap.ui.define(
           // Contents 영역 Set
           aContentReturnData.forEach((content, index) => {
             content.forEach((o) => {
-              let oSubMenu = oViewModelData.employee.sub[aTabMenus[index]?.Menuc1]?.contents[o.Menuc];
+              let oSubMenu = oViewModelData.employee.sub[aTabMenus[index].Menuc1].contents[o.Menuc];
 
               if (oSubMenu.type === '6') {
                 for (let i = 1; i <= oSubMenu.header.length; i++) {
