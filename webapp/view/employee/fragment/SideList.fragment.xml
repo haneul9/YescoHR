@@ -9,7 +9,7 @@
             </items>
         </SegmentedButton>
         <ScrollContainer height="700px" horizontal="false" vertical="true">
-            <List items="{path: '/sidenavigation/search/results'}">
+            <List id="sideEmployeeList" items="{path: '/sidenavigation/search/results'}">
                 <CustomListItem type="Active" press=".onClickEmployeeCard">
                     <HBox class="customBox">
                         <VBox width="20%" justifyContent="Center" alignItems="Center">
@@ -26,11 +26,11 @@
                             </HBox>
                             <HBox>
                                 <Label text="근속" />
-                                <Label text="{Todo4}" />
+                                <Label text="{Text1}" />
                             </HBox>
                             <HBox>
                                 <Label text="직무" />
-                                <Label text="{Todo5}" />
+                                <Label text="{Text2}" />
                             </HBox>
                         </VBox>
                     </HBox>

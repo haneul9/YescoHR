@@ -56,98 +56,10 @@ sap.ui.define(
             search: {
               searchtext: '',
               selectedState: '3',
-              results: [
-                {
-                  Pernr: '50003',
-                  Ename: '김지현',
-                  Photo: 'https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1',
-                  Manager: true,
-                  Zzjikgbt: '부장',
-                  Zzjikcht: '팀장',
-                  Pbtxt: '예스코 기술연구소 정보기술팀',
-                  Todo4: '6년 11개월 (2015.01.01 입사) 재직',
-                  Todo5: '인사(5년 6개월)',
-                }, //
-                {
-                  Pernr: '50007',
-                  Ename: '김지현',
-                  Photo: 'https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1',
-                  Manager: false,
-                  Zzjikgbt: '부장',
-                  Zzjikcht: '팀장',
-                  Pbtxt: '예스코 기술연구소 정보기술팀',
-                  Todo4: '6년 11개월 (2015.01.01 입사) 재직',
-                  Todo5: '인사(5년 6개월)',
-                },
-              ],
+              results: [],
             },
-            treeData: [
-              {
-                ref: 'sap-icon://org-chart',
-                title: '예스코홀딩스',
-                Otype: 'O',
-                Chief: '',
-                Objid: '00000001',
-                PupObjid: '00000000',
-                nodes: [
-                  {
-                    ref: 'sap-icon://org-chart',
-                    title: '인사팀',
-                    Otype: 'O',
-                    Chief: '',
-                    Objid: '00000011',
-                    PupObjid: '00000001',
-                    nodes: [
-                      {
-                        ref: 'sap-icon://org-chart',
-                        title: 'HRTF',
-                        Otype: 'O',
-                        Chief: '',
-                        Objid: '00000013',
-                        PupObjid: '00000011',
-                        nodes: [
-                          { ref: 'sap-icon://manager', title: '홍길동', Otype: 'P', Chief: 'X', Objid: '00000211', PupObjid: '00000013' },
-                          { ref: 'sap-icon://employee', title: '홍길동', Otype: 'P', Chief: '', Objid: '00000212', PupObjid: '00000013' },
-                          { ref: 'sap-icon://employee', title: '홍길동', Otype: 'P', Chief: '', Objid: '00000213', PupObjid: '00000013' },
-                          { ref: 'sap-icon://employee', title: '홍길동', Otype: 'P', Chief: '', Objid: '00000214', PupObjid: '00000013' },
-                          { ref: 'sap-icon://employee', title: '홍길동', Otype: 'P', Chief: '', Objid: '00000215', PupObjid: '00000013' },
-                          { ref: 'sap-icon://employee', title: '홍길동', Otype: 'P', Chief: '', Objid: '00000216', PupObjid: '00000013' },
-                          { ref: 'sap-icon://employee', title: '홍길동', Otype: 'P', Chief: '', Objid: '00000217', PupObjid: '00000013' },
-                          { ref: 'sap-icon://employee', title: '홍길동', Otype: 'P', Chief: '', Objid: '00000218', PupObjid: '00000013' },
-                          { ref: 'sap-icon://employee', title: '홍길동', Otype: 'P', Chief: '', Objid: '00000219', PupObjid: '00000013' },
-                          { ref: 'sap-icon://employee', title: '홍길동', Otype: 'P', Chief: '', Objid: '00000220', PupObjid: '00000013' },
-                          { ref: 'sap-icon://employee', title: '홍길동', Otype: 'P', Chief: '', Objid: '00000221', PupObjid: '00000013' },
-                        ],
-                      },
-                      { ref: 'sap-icon://manager', title: '홍길동', Otype: 'P', Chief: 'X', Objid: '00000111', PupObjid: '00000011' },
-                      { ref: 'sap-icon://employee', title: '홍길동', Otype: 'P', Chief: '', Objid: '00000112', PupObjid: '00000011' },
-                      { ref: 'sap-icon://employee', title: '홍길동', Otype: 'P', Chief: '', Objid: '00000113', PupObjid: '00000011' },
-                      { ref: 'sap-icon://employee', title: '홍길동', Otype: 'P', Chief: '', Objid: '00000114', PupObjid: '00000011' },
-                      { ref: 'sap-icon://employee', title: '홍길동', Otype: 'P', Chief: '', Objid: '00000115', PupObjid: '00000011' },
-                      { ref: 'sap-icon://employee', title: '홍길동', Otype: 'P', Chief: '', Objid: '00000116', PupObjid: '00000011' },
-                    ],
-                  },
-                  {
-                    ref: 'sap-icon://org-chart',
-                    title: '기획팀',
-                    Otype: 'O',
-                    Chief: '',
-                    Objid: '00000012',
-                    PupObjid: '00000001',
-                    nodes: [{ ref: 'sap-icon://manager', title: '홍길동', Otype: 'P', Chief: 'X', Objid: '00000222', PupObjid: '00000012' }],
-                  },
-                ],
-              }, //
-              {
-                ref: 'sap-icon://org-chart',
-                title: '예스코',
-                Otype: 'O',
-                Chief: '',
-                Objid: '00000002',
-                PupObjid: '00000000',
-                nodes: [{ ref: 'sap-icon://manager', title: '홍길동', Otype: 'P', Chief: 'X', Objid: '00000223', PupObjid: '00000002' }],
-              },
-            ],
+            treeLoaded: false,
+            treeData: [],
           },
           employee: {
             width: '78%',
@@ -183,7 +95,7 @@ sap.ui.define(
       onObjectMatched(oEvent) {
         const oParameter = oEvent.getParameter('arguments');
         const oViewModel = this.getView().getModel();
-        const sPernr = oParameter.pernr || null;
+        const sPernr = oParameter.pernr || this.getModel('sessionModel').getProperty('/Pernr');
 
         oViewModel.setProperty('/employee/busy', true);
         oViewModel.setProperty('/pernr', sPernr);
@@ -193,16 +105,18 @@ sap.ui.define(
       }
 
       async initialList({ oViewModel, sPernr }) {
+        const oSideList = this.byId('sideEmployeeList');
+        const oStatFilter = new Filter('Stat2', FilterOperator.EQ, '3');
         const oSessionData = this.getModel('sessionModel').getData();
         const oSearchParam = {
           searchtext: sPernr || oSessionData.Pernr,
-          Stat2: oViewModel.getProperty('/sidenavigation/search/selectedState'),
           ...oSessionData,
         };
 
         const oSearchResults = await this.readEmpSearchResult({ oSearchParam });
 
-        oViewModel.setProperty('/sidenavigation/search/results', [...oSearchResults]);
+        oViewModel.setProperty('/sidenavigation/search/results', oSearchResults);
+        oSideList.getBinding('items').filter([oStatFilter]);
       }
 
       async loadProfile({ oViewModel, sPernr }) {
@@ -444,6 +358,68 @@ sap.ui.define(
         };
       }
 
+      /**
+       * OData에서 받은 데이터를 Tree구조 데이터로 변환한다.
+       * 최상위 키는 "00000000"
+       * 현재 키(Objid)와 부모 키(PupObjid)를 비교하여 같으면 부모의 nodes에 추가한다.
+       * Otype이 "O"(부서)인 경우 nodes를 초기화하고 dummy 아이템을 추가한다.(expand event 발생시 해당 부서의 child nodes를 조회)
+       *
+       * @param {Array} mReturnTreeData - OData return list
+       * @param {number} rootId - "00000000" 또는 부서코드
+       * 							"00000000"인 경우 rootNodes를 반환(Model-/TreeData setData)
+       * 							부서코드인 경우 rootNodes[0].nodes를 반환(이미 생성된 부모.nodes에 append)
+       *
+       * @returns {Array<Object>} - Tree data object
+       */
+      transformTreeData({ mReturnTreeData, rootId }) {
+        let rootNodes = [];
+        let traverse = (nodes, item, index) => {
+          if (nodes instanceof Array) {
+            return nodes.some((node) => {
+              if (node.Objid === item.ObjidUp) {
+                node.nodes = node.nodes || [];
+
+                delete item.__metadata;
+                delete item.Datum;
+                mReturnTreeData.splice(index, 1);
+
+                let oAddItem = $.extend(true, item, {
+                  ref: item.Otype === 'O' ? 'sap-icon://org-chart' : item.Xchif === 'X' ? 'sap-icon://manager' : 'sap-icon://employee',
+                });
+
+                if (item.Otype === 'O') {
+                  oAddItem.nodes = [{ Stext: '-', dummy: true }];
+                }
+
+                return node.nodes.push(oAddItem);
+              }
+
+              return traverse(node.nodes, item, index);
+            });
+          }
+        };
+
+        while (mReturnTreeData.length > 0) {
+          mReturnTreeData.some((item, index) => {
+            if (item.ObjidUp === '00000000') {
+              delete item.__metadata;
+              delete item.Datum;
+              mReturnTreeData.splice(index, 1);
+
+              return rootNodes.push(
+                $.extend(true, item, {
+                  ref: item.Otype === 'O' ? 'sap-icon://org-chart' : item.Xchif === 'X' ? 'sap-icon://manager' : 'sap-icon://employee',
+                })
+              );
+            }
+
+            return traverse(rootNodes, item, index);
+          });
+        }
+
+        return rootId !== '00000000' ? rootNodes[0].nodes : rootNodes;
+      }
+
       /* =========================================================== */
       /* event handlers                                              */
       /* =========================================================== */
@@ -459,27 +435,29 @@ sap.ui.define(
           .setProperty('/employee/width', bState ? '78%' : '96%');
       }
 
-      async onChangeStat() {
+      async onSelectSideTab(oEvent) {
         const oViewModel = this.getView().getModel();
-        const oSessionData = this.getModel('sessionModel').getData();
-        const sSearchtext = oViewModel.getProperty('/sidenavigation/search/searchtext');
-        const oSearchParam = {
-          searchtext: sSearchtext,
-          Stat2: oViewModel.getProperty('/sidenavigation/search/selectedState'),
-          ...oSessionData,
-        };
+        const sSelectedKey = oEvent.getParameter('key');
+        const bTreeLoaded = oViewModel.getProperty('/sidenavigation/treeLoaded');
 
-        if (!sSearchtext) {
-          // MessageBox.alert('검색어를 입력하세요.');
-          return;
-        } else if (sSearchtext.length < 2) {
-          // MessageBox.alert('검색어를 두 글자 이상 입력하세요.');
-          return;
+        if (!bTreeLoaded && sSelectedKey === 'tree') {
+          const mReturnTreeData = await this.readAuthOrgTree();
+          const mConvertedTreeData = this.transformTreeData({ mReturnTreeData, rootId: '00000000' });
+
+          this.debug('mConvertedTreeData', mConvertedTreeData);
+          oViewModel.setProperty('/sidenavigation/treeData', mConvertedTreeData);
         }
 
-        const oSearchResults = await this.readEmpSearchResult({ oSearchParam });
+        oViewModel.setProperty('/sidenavigation/treeLoaded', true);
+      }
 
-        oViewModel.setProperty('/sidenavigation/search/results', oSearchResults);
+      async onChangeStat() {
+        const oViewModel = this.getView().getModel();
+        const oSideList = this.byId('sideEmployeeList');
+        const sStat = oViewModel.getProperty('/sidenavigation/search/selectedState');
+        const oStatFilter = new Filter('Stat2', FilterOperator.EQ, sStat);
+
+        oSideList.getBinding('items').filter(!sStat ? [] : [oStatFilter]);
       }
 
       async onPressEmployeeSearch(oEvent) {
@@ -489,7 +467,6 @@ sap.ui.define(
         const oSessionData = this.getModel('sessionModel').getData();
         const oSearchParam = {
           searchtext: sSearchtext,
-          Stat2: oViewModel.getProperty('/sidenavigation/search/selectedState'),
           ...oSessionData,
         };
 
@@ -523,6 +500,22 @@ sap.ui.define(
         oViewModel.setProperty('/pernr', sPernr);
 
         this.loadProfile({ oViewModel, sPernr });
+      }
+
+      onSelectTreeItem(oEvent) {
+        const oViewModel = this.getView().getModel();
+        const oSelectContext = oEvent.getParameter('listItem').getBindingContext();
+        const oSelectedItem = oSelectContext.getProperty();
+        const sPernr = oSelectedItem.Objid;
+
+        this.debug('oSelectedItem', oSelectedItem);
+
+        if (oSelectedItem.Otype === 'P') {
+          oViewModel.setProperty('/employee/busy', true);
+          oViewModel.setProperty('/pernr', sPernr);
+
+          this.loadProfile({ oViewModel, sPernr });
+        }
       }
 
       onToggleTab(oEvent) {
@@ -667,14 +660,37 @@ sap.ui.define(
         return new Promise((resolve, reject) => {
           const oModel = this.getModel(ServiceNames.COMMON);
           const sUrl = '/EmpSearchResultSet';
-          const oStatFilter = oSearchParam.Stat2 === '' ? [] : [new Filter('Stat2', FilterOperator.EQ, oSearchParam.Stat2)];
 
           oModel.read(sUrl, {
             filters: [
               new Filter('Persa', FilterOperator.EQ, oSearchParam.Werks), //
+              new Filter('Zflag', FilterOperator.EQ, 'X'),
               new Filter('Actda', FilterOperator.EQ, moment().hour(9).toDate()),
               new Filter('Ename', FilterOperator.EQ, oSearchParam.searchtext),
-              ...oStatFilter,
+            ],
+            success: (oData) => {
+              this.debug(`${sUrl} success.`, oData);
+
+              resolve(oData.results);
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, oError);
+
+              reject(oError);
+            },
+          });
+        });
+      }
+
+      readAuthOrgTree() {
+        return new Promise((resolve, reject) => {
+          const oModel = this.getModel(ServiceNames.PA);
+          const sUrl = '/AuthOrgTreeSet';
+
+          oModel.read(sUrl, {
+            filters: [
+              new Filter('Datum', FilterOperator.EQ, moment().hour(9).toDate()), //
+              new Filter('Xpern', FilterOperator.EQ, 'X'),
             ],
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
