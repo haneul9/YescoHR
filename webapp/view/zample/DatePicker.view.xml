@@ -1,6 +1,19 @@
 <mvc:View controllerName="sap.ui.yesco.controller.zample.DatePicker"
+	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:custom="sap.ui.yesco.control" height="100%">
-	<custom:DatePicker showFooter="true" width="400px" />
-	<custom:DateRangeSelection showFooter="true" width="400px" />
+	<HBox>
+		<VBox>
+			<Label text="sap.m.DatePicker" />
+			<DatePicker showFooter="true" placeholder="{sessionModel>/Dtfmt}" width="400px" />
+		</VBox>
+		<VBox>
+			<Label text="sap.ui.yesco.control.DatePicker" />
+			<custom:DatePicker showFooter="true" placeholder="{sessionModel>/Dtfmt}" width="400px" />
+		</VBox>
+		<VBox>
+			<Label text="sap.ui.yesco.control.DateRangeSelection" />
+			<custom:DateRangeSelection showFooter="true" placeholder="{sessionModel>/Dtfmt} ~ {sessionModel>/Dtfmt}" width="400px" />
+		</VBox>
+	</HBox>
 </mvc:View>
