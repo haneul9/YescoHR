@@ -63,7 +63,7 @@ sap.ui.define(
         this.setViewModel(oViewModel);
 
         const oRouter = this.getRouter();
-        oRouter.getRoute('attendanceDetail').attachPatternMatched(this.onObjectMatched, this);
+        oRouter.getRoute('attendance-detail').attachPatternMatched(this.onObjectMatched, this);
 
         // 대상자 정보
         EmpInfo.get.call(this);
