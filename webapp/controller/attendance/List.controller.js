@@ -54,7 +54,6 @@ sap.ui.define(
           },
           list: [],
         });
-        // oViewModel.loadData('localService/attendancedata.json');
         this.setViewModel(oViewModel);
 
         // 대상자 정보
@@ -141,15 +140,15 @@ sap.ui.define(
       }
 
       onPressNewApprBtn() {
-        this.getRouter().navTo('attendanceDetail', { type: 'n' });
+        this.getRouter().navTo('attendance-detail', { type: 'n' });
       }
 
       onPressModApprBtn() {
-        this.getRouter().navTo('attendanceDetail', { type: 'm' });
+        this.getRouter().navTo('attendance-detail', { type: 'm' });
       }
 
       onPressCancApprBtn() {
-        this.getRouter().navTo('attendanceDetail', { type: 'c' });
+        this.getRouter().navTo('attendance-detail', { type: 'c' });
       }
     }
 

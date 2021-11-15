@@ -129,7 +129,7 @@
           "target": "studentFundsDetail"
         },
         { "pattern": "attendance", "name": "attendance", "target": "attendance" },
-        { "pattern": "attendance/{type}/:appno:", "name": "attendanceDetail", "target": "attendanceDetail" },
+        { "pattern": "attendance/{type}/:appno:", "name": "attendance-detail", "target": "attendanceDetail" },
         { "pattern": "employee/:pernr:", "name": "employee", "target": "employee" },
         {
           "pattern": "sampleComponents",

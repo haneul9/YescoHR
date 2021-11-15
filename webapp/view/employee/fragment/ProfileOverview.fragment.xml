@@ -17,13 +17,16 @@
         <VBox>
             <HBox justifyContent="SpaceAround" items="{path: '/employee/header/timeline'}">
                 <VBox width="20%" alignItems="Center">
-                    <core:Icon src="sap-icon://circle-task-2" />
+                    <Text text="{label}" />
                 </VBox>
             </HBox>
             <HBox justifyContent="SpaceAround" items="{path: '/employee/header/timeline'}">
                 <VBox width="20%" alignItems="Center">
-                    <core:Icon src="sap-icon://employee" />
-                    <Text text="{label}" />
+                    <core:Icon src="sap-icon://employee" class="lineItem" />
+                </VBox>
+            </HBox>
+            <HBox justifyContent="SpaceAround" items="{path: '/employee/header/timeline'}">
+                <VBox width="20%" alignItems="Center">
                     <Text text="{data}" />
                 </VBox>
             </HBox>
