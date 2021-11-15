@@ -154,7 +154,7 @@ sap.ui.define(
             Favor: m.Favor === 'X',
             Pwchk: m.Pwchk === 'X',
             Children: mLevel1Sub[m.Mnid1] || [],
-            StyleClasses: m.Mnid1 === '70000' ? 'menu-mss' : m.Mnid1 === '80000' ? 'menu-hass' : '',
+            StyleClasses: this.getStyleClasses(m),
           };
         });
 
@@ -164,6 +164,10 @@ sap.ui.define(
           urlToMenid: mUrlToMenid,
           favoriteMenids: aFavoriteMenids,
         };
+      }
+
+      getStyleClasses(m) {
+        return m.Mnid1 === '70000' ? 'menu-mss' : m.Mnid1 === '80000' ? 'menu-hass' : m.Mnid1 === 'X0000' ? 'menu-sample' : '';
       }
 
       appendSampleMenu({ aLevel1, aLevel2, aLevel3, aLevel4 }) {
@@ -205,6 +209,12 @@ sap.ui.define(
               Menid: 'X150',
               Mnurl: 'sampleDatePicker',
               Mentx: 'DatePicker',
+            },
+            {
+              Pinfo: '',
+              Menid: 'X160',
+              Mnurl: 'sampleVacationIndicator',
+              Mentx: 'VacationIndicator',
             },
             {
               Pinfo: '',
@@ -278,6 +288,19 @@ sap.ui.define(
               Mnnm3: 'DatePicker',
               Mnsrt: '005',
               Menid: 'X150',
+              Mepop: '',
+              Device: 'A',
+              Mnetc: '',
+              Pwchk: '',
+              Favor: '',
+            },
+            {
+              Mnid1: 'X0000',
+              Mnid2: 'X1000',
+              Mnid3: 'X160',
+              Mnnm3: 'VacationIndicator',
+              Mnsrt: '006',
+              Menid: 'X160',
               Mepop: '',
               Device: 'A',
               Mnetc: '',

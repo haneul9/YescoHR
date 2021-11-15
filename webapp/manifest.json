@@ -155,6 +155,11 @@
           "pattern": "sampleDatePicker",
           "name": "sampleDatePicker",
           "target": "sampleDatePicker"
+        },
+        {
+          "pattern": "sampleVacationIndicator",
+          "name": "sampleVacationIndicator",
+          "target": "sampleVacationIndicator"
         }
       ],
       "targets": {
@@ -242,6 +247,13 @@
           "viewName": "DatePicker",
           "viewLevel": 1,
           "title": "DatePicker"
+        },
+        "sampleVacationIndicator": {
+          "viewId": "sampleVacationIndicator",
+          "viewPath": "sap.ui.yesco.view.zample",
+          "viewName": "VacationIndicator",
+          "viewLevel": 1,
+          "title": "VacationIndicator"
         }
       }
     }

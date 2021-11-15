@@ -1,0 +1,158 @@
+<mvc:View controllerName="sap.ui.yesco.controller.zample.VacationIndicator"
+	xmlns="sap.m"
+	xmlns:custom="sap.ui.yesco.control"
+	xmlns:grid="sap.ui.layout.cssgrid"
+	xmlns:mvc="sap.ui.core.mvc" height="100%">
+	<grid:CSSGrid gridTemplateColumns="1fr 1fr 1fr 1fr 1fr" gridGap="8px" class="sapUiMediumMargin">
+		<VBox>
+			<Label text="sap.ui.yesco.control.VacationIndicator" />
+			<HBox>
+				<Label text="Top" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="0" align="Top" />
+			</HBox>
+			<HBox>
+				<Label text="Middle" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="0" />
+			</HBox>
+			<HBox>
+				<Label text="Bottom" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="0" align="Bottom" />
+			</HBox>
+		</VBox>
+		<VBox>
+			<Label text="sap.ui.yesco.control.VacationIndicator" />
+			<HBox>
+				<Label text="Top" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="1" align="Top" />
+			</HBox>
+			<HBox>
+				<Label text="Middle" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="1" />
+			</HBox>
+			<HBox>
+				<Label text="Bottom" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="1" align="Bottom" />
+			</HBox>
+		</VBox>
+		<VBox>
+			<Label text="sap.ui.yesco.control.VacationIndicator" />
+			<HBox>
+				<Label text="Top" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="10.5" align="Top" />
+			</HBox>
+			<HBox>
+				<Label text="Middle" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="10.5" />
+			</HBox>
+			<HBox>
+				<Label text="Bottom" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="10.5" align="Bottom" />
+			</HBox>
+		</VBox>
+		<VBox>
+			<Label text="sap.ui.yesco.control.VacationIndicator" />
+			<HBox>
+				<Label text="Top" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="9.5" align="Top" />
+			</HBox>
+			<HBox>
+				<Label text="Middle" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="9.5" />
+			</HBox>
+			<HBox>
+				<Label text="Bottom" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="9.5" align="Bottom" />
+			</HBox>
+		</VBox>
+		<VBox>
+			<Label text="sap.ui.yesco.control.VacationIndicator" />
+			<HBox>
+				<Label text="Top" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="7" align="Top" />
+			</HBox>
+			<HBox>
+				<Label text="Middle" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="7" />
+			</HBox>
+			<HBox>
+				<Label text="Bottom" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="7" align="Bottom" />
+			</HBox>
+		</VBox>
+		<VBox>
+			<Label text="sap.ui.yesco.control.VacationIndicator" />
+			<HBox>
+				<Label text="Top" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="0" align="Top" hideTotal="true" />
+			</HBox>
+			<HBox>
+				<Label text="Middle" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="0" hideTotal="true" />
+			</HBox>
+			<HBox>
+				<Label text="Bottom" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="0" align="Bottom" hideTotal="true" />
+			</HBox>
+		</VBox>
+		<VBox>
+			<Label text="sap.ui.yesco.control.VacationIndicator" />
+			<HBox>
+				<Label text="Top" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="1" align="Top" hideTotal="true" />
+			</HBox>
+			<HBox>
+				<Label text="Middle" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="1" hideTotal="true" />
+			</HBox>
+			<HBox>
+				<Label text="Bottom" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="1" align="Bottom" hideTotal="true" />
+			</HBox>
+		</VBox>
+		<VBox>
+			<Label text="sap.ui.yesco.control.VacationIndicator" />
+			<HBox>
+				<Label text="Top" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="10.5" align="Top" hideTotal="true" />
+			</HBox>
+			<HBox>
+				<Label text="Middle" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="10.5" hideTotal="true" />
+			</HBox>
+			<HBox>
+				<Label text="Bottom" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="10.5" align="Bottom" hideTotal="true" />
+			</HBox>
+		</VBox>
+		<VBox>
+			<Label text="sap.ui.yesco.control.VacationIndicator" />
+			<HBox>
+				<Label text="Top" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="9.5" align="Top" hideTotal="true" />
+			</HBox>
+			<HBox>
+				<Label text="Middle" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="9.5" hideTotal="true" />
+			</HBox>
+			<HBox>
+				<Label text="Bottom" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="9.5" align="Bottom" hideTotal="true" />
+			</HBox>
+		</VBox>
+		<VBox>
+			<Label text="sap.ui.yesco.control.VacationIndicator" />
+			<HBox>
+				<Label text="Top" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="7" align="Top" hideTotal="true" />
+			</HBox>
+			<HBox>
+				<Label text="Middle" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="7" hideTotal="true" />
+			</HBox>
+			<HBox>
+				<Label text="Bottom" width="5rem" />
+				<custom:VacationIndicator width="10rem" total="21" used="7" align="Bottom" hideTotal="true" />
+			</HBox>
+		</VBox>
+	</grid:CSSGrid>
+</mvc:View>
