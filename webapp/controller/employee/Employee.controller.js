@@ -519,24 +519,17 @@ sap.ui.define(
       }
 
       onToggleTab(oEvent) {
-        const oClickedButton = oEvent.getSource();
-        const sMenuCode = oClickedButton.getCustomData()[0].getValue();
-        const bPressed = oClickedButton.getPressed();
         const oViewModel = this.getView().getModel();
+        const aSubTabs = oViewModel.getProperty('/employee/sub');
+        const sSelectedKey = oEvent.getParameter('key');
 
-        if (!bPressed) return;
-
-        oClickedButton
-          .getParent()
-          .getItems()
-          .forEach((control) => {
-            const sMenuc = control.getCustomData()[0].getValue();
-
-            control.setPressed(false);
-            oViewModel.setProperty(`/employee/sub/${sMenuc}/isShow`, false);
-          });
-        oClickedButton.setPressed(true);
-        oViewModel.setProperty(`/employee/sub/${sMenuCode}/isShow`, true);
+        Object.keys(aSubTabs).forEach((subId) => {
+          if (subId === sSelectedKey) {
+            oViewModel.setProperty(`/employee/sub/${subId}/isShow`, true);
+          } else {
+            oViewModel.setProperty(`/employee/sub/${subId}/isShow`, false);
+          }
+        });
       }
 
       onPressRegAddress() {

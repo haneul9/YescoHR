@@ -1,10 +1,13 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <HBox class="customBox" items="{/employee/tab/list}">
-        <ToggleButton text="{Menu1}" class="toggle_edit" width="117px" pressed="{Pressed}" press=".onToggleTab">
-            <customData>
-                <core:CustomData key="code" value="{Menuc1}" writeToDom="true" />
-            </customData>
-        </ToggleButton>
+    <HBox>
+        <IconTabBar selectedKey="{/employee/tab/selectedKey}" expandable="false" items="{/employee/tab/list}" select=".onToggleTab">
+            <layoutData>
+                <FlexItemData growFactor="1"/>
+            </layoutData>
+            <items>
+                <IconTabFilter text="{Menu1}" key="{Menuc1}"/>
+            </items>
+        </IconTabBar>
     </HBox>
 </core:FragmentDefinition>
