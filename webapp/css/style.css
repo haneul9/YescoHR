@@ -15,23 +15,33 @@ html, body {box-sizing:border-box; overflow:hidden}
 .menu-sample bdi {color:#ccc}
 .sapUiCal.px-0 .sapUiCalMonthView {padding-right:0 !important; padding-left:0 !important}
 
+/* sp.ui.yesco.control.VacationIndicator style */
 @keyframes vacation-indicator-gauge {
   from {width:0}
 }
 .vacation-indicator {box-sizing:border-box; overflow:hidden; position:relative; height:20px}
-.vacation-indicator.vacation-indicator-top, .vacation-indicator.vacation-indicator-bottom {height:40px}
-.vacation-indicator.vacation-indicator-top .vacation-indicator-gauge {top:0}
-.vacation-indicator.vacation-indicator-top .vacation-indicator-text {bottom:0}
-.vacation-indicator.vacation-indicator-top .vacation-indicator-text > div {padding-right:0; color:#000}
-.vacation-indicator.vacation-indicator-bottom .vacation-indicator-gauge {bottom:0}
+.vacation-indicator div {box-sizing:border-box; position:absolute; left:0; height:20px; border-radius:10px; line-height:20px; font-size:.875rem; font-weight:normal}
+.vacation-indicator.vacation-indicator-show-total .vacation-indicator-text > div {text-align:right}
+.vacation-indicator.vacation-indicator-top,
+.vacation-indicator.vacation-indicator-bottom {height:40px}
+.vacation-indicator.vacation-indicator-top .vacation-indicator-gauge,
 .vacation-indicator.vacation-indicator-bottom .vacation-indicator-text {top:0}
-.vacation-indicator.vacation-indicator-bottom .vacation-indicator-text > div {padding-right:0; color:#000}
-.vacation-indicator div {box-sizing:border-box; position:absolute; left:0; height:20px; border-radius:10px; padding-right:.5rem; line-height:20px; text-align:right; font-size:.875rem; font-weight:normal; color:#fff}
-.vacation-indicator-total {z-index:1; background-color:#2f88ff}
-.vacation-indicator-remain {z-index:2; background-color:#ffc02e}
-.vacation-indicator-used {z-index:3; background-color:#fd5f58}
-.vacation-indicator-text {z-index:4; background-color:transparent}
-.vacation-indicator-animation {animation-name:vacation-indicator-gauge; animation-duration:2s; animation-fill-mode:forwards}
+.vacation-indicator.vacation-indicator-top .vacation-indicator-text,
+.vacation-indicator.vacation-indicator-bottom .vacation-indicator-gauge {bottom:0}
+.vacation-indicator.vacation-indicator-middle .vacation-indicator-text > div {padding:0 .5rem; color:#fff}
+.vacation-indicator.vacation-indicator-top .vacation-indicator-text > div,
+.vacation-indicator.vacation-indicator-bottom .vacation-indicator-text > div {padding:0; color:#000}
+.vacation-indicator.vacation-indicator-middle .vacation-indicator-text .vacation-indicator-zero.vacation-indicator-remain {color:#ffc02e}
+.vacation-indicator.vacation-indicator-middle .vacation-indicator-text .vacation-indicator-zero.vacation-indicator-used {color:#fd5f58}
+.vacation-indicator .vacation-indicator-guage > div {text-align:right}
+.vacation-indicator .vacation-indicator-gauge .vacation-indicator-total {z-index:1; color:transparent; background-color:#2f88ff}
+.vacation-indicator .vacation-indicator-gauge .vacation-indicator-remain {z-index:2; color:transparent; background-color:#ffc02e}
+.vacation-indicator .vacation-indicator-gauge .vacation-indicator-used {z-index:3; color:transparent; background-color:#fd5f58}
+.vacation-indicator .vacation-indicator-gauge .vacation-indicator-used.vacation-indicator-zero {background-color:transparent}
+.vacation-indicator .vacation-indicator-text,
+.vacation-indicator .vacation-indicator-text div {z-index:4; background-color:transparent}
+.vacation-indicator .vacation-indicator-text .vacation-indicator-remain {text-align:right}
+.vacation-indicator .vacation-indicator-animation {animation-name:vacation-indicator-gauge; animation-duration:2s; animation-fill-mode:forwards}
 
 /* sampleUi 는 추후 삭제 예정, 사용금지 */
 .sampleUi .sapSuiteUiCommonsTimelineItemBarH {height:12px; background:linear-gradient(to right, blue 0%, red 100%)}

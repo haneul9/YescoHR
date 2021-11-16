@@ -28,7 +28,7 @@ sap.ui.define(
             type: 'float',
             defaultValue: 14,
           },
-          hideTotal: {
+          showTotal: {
             type: 'boolean',
             defaultValue: false,
           },
@@ -37,23 +37,38 @@ sap.ui.define(
 
       renderer: (oRM, oControl) => {
         const sAlign = oControl.getAlign();
-        const sAlignStyleClass = sAlign === 'Top' ? ' vacation-indicator-top' : sAlign === 'Bottom' ? ' vacation-indicator-bottom' : '';
         const sWidth = oControl.getWidth();
-        const bHideTotal = oControl.getHideTotal();
+        const bShowTotal = oControl.getShowTotal();
         const fTotal = parseFloat(oControl.getTotal());
         const fUsed = parseFloat(oControl.getUsed());
         const fRemain = fTotal - fUsed;
+        const fMinPercent = 18;
+        const fMaxPercent = 82;
 
-        oRM.write(`<div class="vacation-indicator${sAlignStyleClass}" style="width:${sWidth}">
+        let fUsedPercent = (fUsed / fTotal) * 100;
+        fUsedPercent = fUsedPercent < fMinPercent ? fMinPercent : fUsedPercent;
+        fUsedPercent = fUsedPercent < 100 && fUsedPercent > fMaxPercent ? fMaxPercent : fUsedPercent;
+
+        const sStyleClassAlign = sAlign === 'Top' ? 'vacation-indicator-top' : sAlign === 'Bottom' ? 'vacation-indicator-bottom' : 'vacation-indicator-middle';
+        const sStyleClassTotal = bShowTotal ? ' vacation-indicator-show-total' : '';
+        const sDivTotal = bShowTotal ? `<div class="vacation-indicator-total w-100">${fTotal}</div>` : '';
+        const sDivRemain = bShowTotal
+          ? `<div class="vacation-indicator-remain vacation-indicator-animation" style="width:66.6666667%">${fRemain}</div>`
+          : `<div class="vacation-indicator-remain${fRemain === 0 ? ' vacation-indicator-zero' : ''} w-100">${fRemain}</div>`;
+        const sDivUsed = bShowTotal
+          ? `<div class="vacation-indicator-used vacation-indicator-animation" style="width:33.3333333%">${fUsed}</div>`
+          : `<div class="vacation-indicator-used vacation-indicator-animation${fUsed === 0 ? ' vacation-indicator-zero' : ''}" style="width:${fUsedPercent}%">${fUsed}</div>`;
+
+        oRM.write(`<div class="vacation-indicator ${sStyleClassAlign}${sStyleClassTotal}" style="width:${sWidth}">
   <div class="w-100 vacation-indicator-gauge">
-    ${bHideTotal ? '' : '<div class="vacation-indicator-total w-100"></div>'}
-    <div class="vacation-indicator-remain vacation-indicator-animation" style="width:${bHideTotal ? 100 : (fRemain / fTotal) * 100}%"></div>
-    <div class="vacation-indicator-used vacation-indicator-animation" style="width:${bHideTotal ? (fUsed / fRemain) * 100 : (fUsed / fTotal) * 100}%"></div>
+    ${sDivTotal}
+    ${sDivRemain}
+    ${sDivUsed}
   </div>
   <div class="w-100 vacation-indicator-text">
-    ${bHideTotal ? '' : `<div class="w-100">${fTotal}</div>`}
-    <div class="vacation-indicator-animation" style="width:${bHideTotal ? 100 : (fRemain / fTotal) * 100}%">${fRemain}</div>
-    <div class="vacation-indicator-animation" style="width:${bHideTotal ? (fUsed / fRemain) * 100 : (fUsed / fTotal) * 100}%">${fUsed}</div>
+    ${sDivTotal}
+    ${sDivRemain}
+    ${sDivUsed}
   </div>
 </div>`);
       },

@@ -8,7 +8,7 @@
     "abap_bsp": "ZUI5_YESCOHR",
     "abap_bsp_text": "UI5 upload through VSCode App",
     "abap_package": "zhr1",
-    "abap_transport": "YHDK900012",
+    "abap_transport": "YHDK900071",
     "calcappindex": true,
     "preserve_unselected": true
 }
