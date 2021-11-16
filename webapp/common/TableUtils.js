@@ -9,7 +9,7 @@ sap.ui.define(
   (
     exportLibrary, //
     Spreadsheet,
-    Fragment,
+    Fragment
   ) => {
     'use strict';
 
@@ -69,7 +69,7 @@ sap.ui.define(
           [STATE_COMPLETE]: 0,
         });
 
-        oViewModel.setProperty('/listinfo', {
+        oViewModel.setProperty('/listInfo', {
           rowCount: aZappStatAls.length > 10 ? 10 : aZappStatAls.length || 1,
           totalCount: aZappStatAls.length,
           progressCount: oOccurCount[STATE_IN_PROGRESS1] + oOccurCount[STATE_IN_PROGRESS2],
@@ -168,22 +168,22 @@ sap.ui.define(
           case STATE_IN_PROGRESS1:
           case STATE_IN_PROGRESS2:
             // 작성중
-            return "작성중";
+            return '작성중';
           case STATE_APPLY1:
           case STATE_APPLY2:
           case STATE_APPLY3:
             // 신청
-            return "신청";
+            return '신청';
           case STATE_APPROVE:
             // 승인
-            return "승인";
+            return '승인';
           case STATE_REJECT1:
           case STATE_REJECT2:
             // 반려
-            return "반려";
+            return '반려';
           case STATE_COMPLETE:
             // 완료
-            return "완료";
+            return '완료';
           default:
             return null;
         }
@@ -193,9 +193,9 @@ sap.ui.define(
         // load asynchronous XML fragment
         const vPath = oEvent.getSource().getBindingContext().getPath();
         const oRowData = this.getViewModel().getProperty(vPath);
-  
-        this.getViewModel().setProperty("/Data", {busy: true});
-        
+
+        this.getViewModel().setProperty('/Data', { busy: true });
+
         if (!this.byId('listFileDialog')) {
           Fragment.load({
             id: this.getView().getId(),
