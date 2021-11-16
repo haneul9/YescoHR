@@ -254,7 +254,9 @@ sap.ui.define(
               
               const sCode = !vStatus ? oList[0].Zcode : oDetailModel.getProperty("/FormData/Slart");
 
-              oController.onShcoolList.call(oController, sCode);
+              setTimeout(() => {
+                oController.onShcoolList.call(oController, sCode);
+              }, 150);
             }
           },
           error: function (oRespnse) {

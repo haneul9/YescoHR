@@ -28,8 +28,6 @@
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.InfoMessage" type="XML" />
 				<core:Fragment fragmentName="sap.ui.yesco.view.studentFunds.fragment.DetailForm" type="XML" />
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
-				<!-- <mvc:XMLView viewName="sap.ui.yesco.view.CommonAttachFile"/> -->
-				<!-- <core:Fragment fragmentName="sap.ui.yesco.fragment.Applicant" type="XML" /> -->
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.ApplyInfo" type="XML" />
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.ApprovalDetails" type="XML" />
 			</VBox>
