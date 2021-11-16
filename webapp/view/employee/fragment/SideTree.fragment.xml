@@ -2,7 +2,7 @@
     xmlns:core="sap.ui.core">
     <IconTabFilter text="조직도" key="tree">
         <ScrollContainer width="100%" height="80vh" vertical="true">
-            <Tree id="OrganizationTree" mode="SingleSelectMaster" items="{path: '/sidenavigation/treeData'}" selectionChange=".onSelectTreeItem">
+            <Tree id="OrganizationTree" mode="SingleSelectMaster" items="{path: '/sideNavigation/treeData'}" selectionChange=".onSelectTreeItem">
                 <layoutData>
                     <FlexItemData growFactor="1" />
                 </layoutData>

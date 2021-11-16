@@ -10,19 +10,19 @@
             <content>
                 <grid:CSSGrid gridTemplateColumns="1fr 4fr" gridGap="8px">
                     <Label text="주소유형" />
-                    <ComboBox width="250px" selectedKey="{/employee/address/form/Subty}" items="{ path: '/employee/address/typelist' }">
+                    <ComboBox width="250px" selectedKey="{/employee/address/form/Subty}" items="{ path: '/employee/address/typeList' }">
                         <core:Item key="{Zcode}" text="{Ztext}" />
                     </ComboBox>
                     <Label text="적용시작일" />
                     <DatePicker width="250px" dateValue="{/employee/address/form/Begda}" class="sapIcon_Date" />
                     <Label text="시/도" />
-                    <ComboBox width="250px" selectedKey="{/employee/address/form/State}" items="{ path: '/employee/address/sidolist' }">
+                    <ComboBox width="250px" selectedKey="{/employee/address/form/State}" items="{ path: '/employee/address/sidoList' }">
                         <core:Item key="{State}" text="{Bezei}" />
                     </ComboBox>
                     <Label text="우편번호" />
                     <HBox width="100%">
                         <Input width="185px" value="{/employee/address/form/Pstlz}" editable="false" />
-                        <Button text="검색" press=".openSearchZipcodePopup"/>
+                        <Button text="검색" press=".openSearchZipCodePopup"/>
                     </HBox>
                     <Label text="주소" />
                     <Input width="500px" value="{/employee/address/form/Zzaddr1}" editable="false" />

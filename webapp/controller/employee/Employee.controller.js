@@ -50,11 +50,11 @@ sap.ui.define(
               { name: '인사' }, //
             ],
           },
-          sidenavigation: {
+          sideNavigation: {
             isShow: true,
             width: '22%',
             search: {
-              searchtext: '',
+              searchText: '',
               selectedState: '3',
               results: [],
             },
@@ -65,8 +65,8 @@ sap.ui.define(
             width: '78%',
             busy: true,
             header: {
-              profilepath: 'https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1',
-              baseinfo: [],
+              profilePath: 'https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1',
+              baseInfo: [],
               timeline: [
                 { label: '회사입사일', data: '2010.01.01' },
                 { label: '부서배치일', data: '2015.01.01' },
@@ -80,8 +80,8 @@ sap.ui.define(
             },
             sub: {},
             address: {
-              typelist: [{ Zcode: 'ALL', Ztext: this.getText('LABEL_00268') }],
-              sidolist: [{ State: 'ALL', Bezei: this.getText('LABEL_00268') }],
+              typeList: [{ Zcode: 'ALL', Ztext: this.getText('LABEL_00268') }],
+              sidoList: [{ State: 'ALL', Bezei: this.getText('LABEL_00268') }],
               form: { Subty: 'ALL', State: 'ALL' },
             },
           },
@@ -109,13 +109,13 @@ sap.ui.define(
         const oStatFilter = new Filter('Stat2', FilterOperator.EQ, '3');
         const oSessionData = this.getModel('sessionModel').getData();
         const oSearchParam = {
-          searchtext: sPernr || oSessionData.Pernr,
+          searchText: sPernr || oSessionData.Pernr,
           ...oSessionData,
         };
 
         const oSearchResults = await this.readEmpSearchResult({ oSearchParam });
 
-        oViewModel.setProperty('/sidenavigation/search/results', oSearchResults);
+        oViewModel.setProperty('/sideNavigation/search/results', oSearchResults);
         oSideList.getBinding('items').filter([oStatFilter]);
       }
 
@@ -140,8 +140,8 @@ sap.ui.define(
           ]);
 
           // 주소유형 & 시/도
-          oViewModel.setProperty('/employee/address/typelist', mAddressTypeData);
-          oViewModel.setProperty('/employee/address/sidolist', mAddressCityData);
+          oViewModel.setProperty('/employee/address/typeList', mAddressTypeData);
+          oViewModel.setProperty('/employee/address/sidoList', mAddressCityData);
           //End 주소유형 & 시/도
 
           // 상단 프로필 Set
@@ -153,8 +153,8 @@ sap.ui.define(
           delete oReturnData.__metadata;
           const aConvertData = Object.keys(oReturnData).map((key) => ({ data: oReturnData[key] }));
 
-          oViewModel.setProperty('/employee/header/profilepath', Pturl);
-          oViewModel.setProperty('/employee/header/baseinfo', aConvertData);
+          oViewModel.setProperty('/employee/header/profilePath', Pturl);
+          oViewModel.setProperty('/employee/header/baseInfo', aConvertData);
           //End 상단 프로필 Set
 
           // 탭 메뉴 Set
@@ -172,7 +172,7 @@ sap.ui.define(
           aSubMenus.forEach((data) => {
             oViewModelData.employee.sub[data.Menuc1].contents[data.Menuc2] = {
               type: data.Child,
-              rowcount: 1,
+              rowCount: 1,
               selectionMode: data.Menu2 === '주소' ? 'MultiToggle' : 'None',
               title: data.Menu2,
               sort: data.Sorts,
@@ -213,7 +213,7 @@ sap.ui.define(
                 oSubMenu.data.push(o);
               }
 
-              oSubMenu.rowcount = oSubMenu.data.length;
+              oSubMenu.rowCount = oSubMenu.data.length;
             });
           });
           //End Contents 영역 Set
@@ -236,15 +236,15 @@ sap.ui.define(
         const oParentBox = this.byId('profileBody');
         const mSubMenu = oView.getProperty('/employee/sub');
 
-        Object.keys(mSubMenu).forEach((menukey) => {
-          let mSubMenuContents = mSubMenu[menukey].contents;
-          let oVBox = sap.ui.getCore().byId(`sub${menukey}`);
+        Object.keys(mSubMenu).forEach((menuKey) => {
+          let mSubMenuContents = mSubMenu[menuKey].contents;
+          let oVBox = sap.ui.getCore().byId(`sub${menuKey}`);
 
           if (oVBox) {
             oVBox.destroyItems();
             oParentBox.removeItem(oVBox);
           } else {
-            oVBox = new sap.m.VBox({ id: `sub${menukey}`, visible: { path: `/employee/sub/${menukey}/isShow` } });
+            oVBox = new sap.m.VBox({ id: `sub${menuKey}`, visible: { path: `/employee/sub/${menuKey}/isShow` } });
           }
 
           /**
@@ -273,10 +273,10 @@ sap.ui.define(
             if (oMenu.type === '5') {
               let oTable = new Table({
                 width: '100%',
-                selectionMode: { path: `/employee/sub/${menukey}/contents/${key}/selectionMode` },
-                visibleRowCount: { path: `/employee/sub/${menukey}/contents/${key}/rowcount` },
+                selectionMode: { path: `/employee/sub/${menuKey}/contents/${key}/selectionMode` },
+                visibleRowCount: { path: `/employee/sub/${menuKey}/contents/${key}/rowCount` },
                 noData: this.getText('MSG_00001'),
-              }).bindRows(`/employee/sub/${menukey}/contents/${key}/data`);
+              }).bindRows(`/employee/sub/${menuKey}/contents/${key}/data`);
 
               oMenu.header.forEach((head, index) => {
                 if (!head.Invisible) {
@@ -342,10 +342,10 @@ sap.ui.define(
         const mTableData = _.filter(mReturnContents, { Menuc: oMenuInfo.Menuc2 });
 
         oViewModel.setProperty(`${sAddressPath}/data`, mTableData);
-        oViewModel.setProperty(`${sAddressPath}/rowcount`, mTableData.length);
+        oViewModel.setProperty(`${sAddressPath}/rowCount`, mTableData.length);
       }
 
-      getAddressTableRowdata({ oViewModel, oTable, aSelectedIndices }) {
+      getAddressTableRowData({ oViewModel, oTable, aSelectedIndices }) {
         const sRowPath = oTable.getRows()[aSelectedIndices[0]].getBindingContext().getPath();
         const oRowData = oViewModel.getProperty(sRowPath);
         const oMenu = _.find(oViewModel.getProperty('/employee/tab/menu'), { Menuc2: oRowData.Menuc });
@@ -426,10 +426,10 @@ sap.ui.define(
       onToggleNavigation(oEvent) {
         const bState = oEvent.getParameter('state');
 
-        this.getView().getModel().setProperty('/sidenavigation/isShow', bState);
+        this.getView().getModel().setProperty('/sideNavigation/isShow', bState);
         this.getView()
           .getModel()
-          .setProperty('/sidenavigation/width', bState ? '22%' : '4%');
+          .setProperty('/sideNavigation/width', bState ? '22%' : '4%');
         this.getView()
           .getModel()
           .setProperty('/employee/width', bState ? '78%' : '96%');
@@ -438,23 +438,23 @@ sap.ui.define(
       async onSelectSideTab(oEvent) {
         const oViewModel = this.getView().getModel();
         const sSelectedKey = oEvent.getParameter('key');
-        const bTreeLoaded = oViewModel.getProperty('/sidenavigation/treeLoaded');
+        const bTreeLoaded = oViewModel.getProperty('/sideNavigation/treeLoaded');
 
         if (!bTreeLoaded && sSelectedKey === 'tree') {
           const mReturnTreeData = await this.readAuthOrgTree();
           const mConvertedTreeData = this.transformTreeData({ mReturnTreeData, rootId: '00000000' });
 
           this.debug('mConvertedTreeData', mConvertedTreeData);
-          oViewModel.setProperty('/sidenavigation/treeData', mConvertedTreeData);
+          oViewModel.setProperty('/sideNavigation/treeData', mConvertedTreeData);
         }
 
-        oViewModel.setProperty('/sidenavigation/treeLoaded', true);
+        oViewModel.setProperty('/sideNavigation/treeLoaded', true);
       }
 
       async onChangeStat() {
         const oViewModel = this.getView().getModel();
         const oSideList = this.byId('sideEmployeeList');
-        const sStat = oViewModel.getProperty('/sidenavigation/search/selectedState');
+        const sStat = oViewModel.getProperty('/sideNavigation/search/selectedState');
         const oStatFilter = new Filter('Stat2', FilterOperator.EQ, sStat);
 
         oSideList.getBinding('items').filter(!sStat ? [] : [oStatFilter]);
@@ -463,24 +463,24 @@ sap.ui.define(
       async onPressEmployeeSearch(oEvent) {
         const oViewModel = this.getView().getModel();
         const oControl = oEvent.getSource();
-        const sSearchtext = oControl.getValue();
+        const sSearchText = oControl.getValue();
         const oSessionData = this.getModel('sessionModel').getData();
         const oSearchParam = {
-          searchtext: sSearchtext,
+          searchText: sSearchText,
           ...oSessionData,
         };
 
-        if (!sSearchtext) {
+        if (!sSearchText) {
           MessageBox.alert('검색어를 입력하세요.');
           return;
-        } else if (sSearchtext.length < 2) {
+        } else if (sSearchText.length < 2) {
           MessageBox.alert('검색어를 두 글자 이상 입력하세요.');
           return;
         }
 
         const oSearchResults = await this.readEmpSearchResult({ oSearchParam });
 
-        oViewModel.setProperty('/sidenavigation/search/results', oSearchResults);
+        oViewModel.setProperty('/sideNavigation/search/results', oSearchResults);
       }
 
       onClickEmployeeCard(oEvent) {
@@ -555,7 +555,7 @@ sap.ui.define(
 
         if (!this.validator.check.call(this, { oInputData, mCheckFields })) return;
 
-        const oSido = _.find(oViewModel.getProperty('/employee/address/sidolist'), { State: oInputData.State });
+        const oSido = _.find(oViewModel.getProperty('/employee/address/sidoList'), { State: oInputData.State });
         delete oSido.Land1;
         delete oSido.__metadata;
 
@@ -585,7 +585,7 @@ sap.ui.define(
           return;
         }
 
-        const oPayload = this.getAddressTableRowdata({ oViewModel, oTable, aSelectedIndices });
+        const oPayload = this.getAddressTableRowData({ oViewModel, oTable, aSelectedIndices });
         const oAddressDetail = await this.readAddressInfo({ oPayload });
 
         if (oAddressDetail.result === 'error') {
@@ -619,7 +619,7 @@ sap.ui.define(
           actions: ['삭제', MessageBox.Action.CANCEL],
           onClose: async (sAction) => {
             if (sAction !== MessageBox.Action.CANCEL) {
-              const oPayload = this.getAddressTableRowdata({ oViewModel, oTable, aSelectedIndices });
+              const oPayload = this.getAddressTableRowData({ oViewModel, oTable, aSelectedIndices });
               const { result } = await this.deleteAddressInfo({ oPayload });
 
               if (result === 'success') {
@@ -637,7 +637,7 @@ sap.ui.define(
         });
       }
 
-      openSearchZipcodePopup() {
+      openSearchZipCodePopup() {
         window.open('postcodeForBrowser.html?CBF=fn_SetAddr', 'pop', 'width=550,height=550, scrollbars=yes, resizable=yes');
       }
 
@@ -659,7 +659,7 @@ sap.ui.define(
               new Filter('Persa', FilterOperator.EQ, oSearchParam.Werks), //
               new Filter('Zflag', FilterOperator.EQ, 'X'),
               new Filter('Actda', FilterOperator.EQ, moment().hour(9).toDate()),
-              new Filter('Ename', FilterOperator.EQ, oSearchParam.searchtext),
+              new Filter('Ename', FilterOperator.EQ, oSearchParam.searchText),
             ],
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
@@ -782,7 +782,7 @@ sap.ui.define(
       readTypeList({ oModel }) {
         return new Promise((resolve, reject) => {
           const oViewModel = this.getViewModel();
-          const mTypeList = oViewModel.getProperty('/employee/address/typelist');
+          const mTypeList = oViewModel.getProperty('/employee/address/typeList');
           const sUrl = '/PaCodeListSet';
 
           if (mTypeList.length > 1) {
@@ -811,7 +811,7 @@ sap.ui.define(
       readCityList({ oModel, sPernr }) {
         return new Promise((resolve, reject) => {
           const oViewModel = this.getViewModel();
-          const mSidoList = oViewModel.getProperty('/employee/address/sidolist');
+          const mSidoList = oViewModel.getProperty('/employee/address/sidoList');
           const sUrl = '/CityListSet';
           let aFilters = [];
 

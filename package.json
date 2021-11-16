@@ -1,5 +1,5 @@
 {
-  "name": "ZUI5_YescoHR",
+  "name": "zui5_yescohr",
   "description": "",
   "scripts": {
     "build": "ui5 build --clean-dest",
@@ -20,6 +20,11 @@
   "ui5": {
     "dependencies": [
       "ui5-middleware-simpleproxy"
-    ]
+    ],
+    "ui5linter": {
+      "usage": {
+        "TagAttributeLinter": false
+      }
+    }
   }
 }
