@@ -10,8 +10,8 @@
         <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="8px">
             <!-- 신청대상 -->
             <Label text="{i18n>LABEL_03012}" />
-            <Select id="AppTarget" class='LongSelectBox' valueState="Warning" items="{/AppTarget}" selectedKey="{/FormData/Kdsvh}" change=".onTargetChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
-                <core:Item text="{Znametx}" key="{Kdsvh}" />
+            <Select id="AppTarget" class='LongSelectBox' valueState="Warning" items="{/AppTarget}" selectedKey="{/FormData/Zzobjps}" change=".onTargetChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+                <core:Item text="{Znametx}" key="{Zzobjps}" />
             </Select>
             <!-- 현지원횟수/총지원가능횟수 -->
             <Label text="{i18n>LABEL_03013}" />

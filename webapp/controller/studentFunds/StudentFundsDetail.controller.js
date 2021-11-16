@@ -222,6 +222,7 @@ sap.ui.define(
               if(!vStatus) {
                 oDetailModel.setProperty("/FormData/Znametx", oList[0].Znametx);
                 oDetailModel.setProperty("/FormData/Kdsvh", oList[0].Kdsvh);
+                oDetailModel.setProperty("/FormData/Zzobjps", oList[0].Zzobjps);
                 oMajorInput.setEditable(false);
               }
             }
@@ -324,8 +325,8 @@ sap.ui.define(
         const oDetailModel = oController.getViewModel();
 
         oDetailModel.getProperty("/AppTarget").forEach(e => {
-          if(e.Kdsvh === oDetailModel.getProperty("/FormData/Kdsvh")) {
-            oDetailModel.setProperty("/FormData/Zzobjps", e.Zzobjps);
+          if(e.Zzobjps === oDetailModel.getProperty("/FormData/Zzobjps")) {
+            oDetailModel.setProperty("/FormData/Kdsvh", e.Kdsvh);
             oDetailModel.setProperty("/FormData/Zname", e.Zname);
           }
         });
