@@ -79,7 +79,7 @@
                     <Text text="{Divtx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="100px">
+            <table:Column width="auto">
                 <Label text="{i18n>LABEL_03008}"/>
                 <table:template>
                     <Text text="{
@@ -94,7 +94,7 @@
                     <Text text="{Curcnt}" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="auto">
+            <table:Column width="90px">
                 <Label text="{i18n>LABEL_00133}"/>
                 <table:template>
                     <Button type="Transparent" icon="sap-icon://attachment" class="w-100" press=".TableUtils.onFileListDialog" visible="{= ${Docyn} === 'Y' }"/>

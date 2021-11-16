@@ -44,7 +44,7 @@
             </Select>
             <!-- 해외학교 -->
             <Label text="{i18n>LABEL_03018}"/>
-            <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Forsch} ? true : false }" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            <CheckBox id= "OverseasCheck" select=".onCheckBox" selected="{= !!${/FormData/Forsch} ? true : false }" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             <HBox ></HBox>
             <HBox ></HBox>
             <!-- 입학금 -->

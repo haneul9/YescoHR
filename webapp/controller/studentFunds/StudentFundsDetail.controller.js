@@ -106,29 +106,35 @@ sap.ui.define(
         const oModel = oController.getModel(ServiceNames.BENEFIT);
         const oDetailModel = oController.getViewModel();
 
-        oModel.read('/BenefitCodeListSet', {
-          async: false,
-          filters: [
-            new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0007'),
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/TargetInfo/Werks')),
-            new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/FormData/Slart')),
-            new sap.ui.model.Filter('Upcod2', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/FormData/Zyear')),
-          ],
-          success: function (oData) {
-            if (oData && !!oData.results.length) {
-              const oList = oData.results[0];
-              oList.Zbetrg = oList.Zbetrg.replace('.', '');
+        new Promise(resolve => {
+          oModel.read('/BenefitCodeListSet', {
+            async: false,
+            filters: [
+              new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0007'),
+              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/TargetInfo/Werks')),
+              new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/FormData/Slart')),
+              new sap.ui.model.Filter('Upcod2', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/FormData/Zyear')),
+            ],
+            success: function (oData) {
+              let oList = [];
 
+              if (oData && !!oData.results.length) {
+                oList = oData.results[0];
+                oList.Zbetrg = oList.Zbetrg.replace('.', '');
+              } 
+              
               oDetailModel.setProperty("/LimitAmount", oList);
-            }
-            oController.totalCost(oController);
-          },
-          error: function (oRespnse) {
-            console.log(oRespnse);
-            const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
-
-            MessageBox.error(vErrorMSG);
-          },
+              resolve();
+            },
+            error: function (oRespnse) {
+              console.log(oRespnse);
+              const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
+  
+              MessageBox.error(vErrorMSG);
+            },
+          });
+        }).then(() => {
+          oController.totalCost(oController); 
         });
       }
 
@@ -141,13 +147,22 @@ sap.ui.define(
         const vCostD = parseInt(oDetailModel.getProperty("/FormData/ZbetExer")) || 0;
         const vCostE = parseInt(oDetailModel.getProperty("/FormData/ZbetSuf")) || 0;
         const vCostF = parseInt(oDetailModel.getProperty("/FormData/ZbetEtc")) || 0;
-        const bForschCheck = oController.getViewModel().getProperty("/FormData/Forsch") || false;
+        const bForschCheck = oController.byId('OverseasCheck').getSelected() || false;
         let vCostG = parseInt(oDetailModel.getProperty("/FormData/ZbetTotl")) || 0;
 
         vCostG = vCostA + vCostB + vCostC + vCostD + vCostE + vCostF;
         oDetailModel.setProperty("/FormData/ZbetTotl", String(vCostG));
 
-        if(bForschCheck && !!oDetailModel.getProperty("/LimitAmount") && !!oDetailModel.getProperty("/LimitAmount").length && vCostG > parseInt(oDetailModel.getProperty("/LimitAmount/Zbetrg"))) {
+        if(
+          bForschCheck &&
+          !!oDetailModel.getProperty("/LimitAmount") &&
+          !!oDetailModel.getProperty("/LimitAmount/Zbetrg") &&
+          vCostG > parseInt(oDetailModel.getProperty("/LimitAmount/Zbetrg")) &&
+          (
+            oDetailModel.getProperty("/FormData/Slart") === '05' ||
+            oDetailModel.getProperty("/FormData/Slart") === '06'
+          )
+        ) {
           oDetailModel.setProperty("/FormData/ZpayAmt", oDetailModel.getProperty("/LimitAmount/Zbetrg"));
           oDetailModel.setProperty("/LimitAmountMSG", true);
         }else {
@@ -221,7 +236,7 @@ sap.ui.define(
         
         // 학력구분 조회
         oModel.read('/BenefitCodeListSet', {
-          async: true,
+          async: false,
           filters: [
             new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0006'),
             new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/TargetInfo/Werks')),
@@ -292,6 +307,7 @@ sap.ui.define(
         
         if(!vStatus) {
           oDetailModel.setProperty("/FormData/Zyear", aYearsList[0].Zcode);
+          this.getSupAmount(this);
         }
       }
 
@@ -336,10 +352,10 @@ sap.ui.define(
       // 학자금 발생년도 클릭
       onYearsSelect(oEvent) {
         this.getApplyNumber(this);
-        this.totalCost(this);
+        this.getSupAmount(this);
       }
 
-      // 학력 선택시
+      // 학력구분 선택시
       onShcoolList(oEvent) {
         const oMajorInput = this.byId('MajorInput');
         const oModel = this.getModel(ServiceNames.BENEFIT);
@@ -363,7 +379,6 @@ sap.ui.define(
         
         this.getApplyNumber(this);
         this.getSupAmount(this);
-        this.totalCost(this);
 
         oModel.read('/BenefitCodeListSet', {
           async: true,
@@ -393,7 +408,7 @@ sap.ui.define(
         });
       }
 
-      checkError(oController) {
+      checkError(oController, AppBtn) {
         const oDetailModel = oController.getViewModel();
 
        // 학교명
@@ -409,7 +424,7 @@ sap.ui.define(
         }
 
         // 첨부파일
-        if(!AttachFileAction.getFileLength.call(oController)) {
+        if(!AttachFileAction.getFileLength.call(oController) && AppBtn === 'O') {
           MessageBox.alert("신청시 첨부파일은 필수입니다. 업로드 후 신청하시기 바랍니다.");
           return true;
         }
@@ -541,7 +556,7 @@ sap.ui.define(
         const oController = this;
         const vStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
 
-        if (this.checkError(this)) return;
+        if (this.checkError(this, 'O')) return;
 
         const onPressApply = function (fVal) {
           if (fVal && fVal === '신청') {

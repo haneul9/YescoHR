@@ -18,7 +18,7 @@ sap.ui.define(
         this.formatter = formatter;
         this.AttachFileAction = AttachFileAction;
         this.TableUtils = TableUtils;
-        this.TYPE_CODE = 'HR01';
+        this.TYPE_CODE = 'HR02';
       }
 
       onBeforeShow() {
