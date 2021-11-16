@@ -1,17 +1,28 @@
-/* eslint-disable no-useless-call */
 sap.ui.define(
   [
-    'sap/ui/model/json/JSONModel',
+    // prettier 방지용 주석
     'sap/ui/core/Fragment',
-    'sap/ui/yesco/control/MessageBox',
-    '../../model/formatter',
+    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/EmpInfo',
-    'sap/ui/yesco/controller/BaseController',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/control/MessageBox',
+    'sap/ui/yesco/controller/BaseController',
     'sap/ui/yesco/extension/moment',
+    'sap/ui/yesco/model/formatter',
   ],
-  (JSONModel, Fragment, MessageBox, formatter, EmpInfo, BaseController, AttachFileAction, ServiceNames) => {
+  (
+    // prettier 방지용 주석
+    Fragment,
+    JSONModel,
+    EmpInfo,
+    AttachFileAction,
+    ServiceNames,
+    MessageBox,
+    BaseController,
+    moment,
+    formatter
+  ) => {
     'use strict';
 
     class CongDetail extends BaseController {
@@ -40,13 +51,13 @@ sap.ui.define(
         new Promise((resolve) => {
           this.settingsAttachTable(this);
           this.getBenefitType(this);
-          
+
           setTimeout(() => {
             resolve();
           }, 500);
         }).then(() => {
           this.getViewModel().setProperty('/busy', false);
-          this.getViewModel().setProperty("/bInitStatus", false);
+          this.getViewModel().setProperty('/bInitStatus', false);
         });
 
         super.onAfterShow();
@@ -75,11 +86,7 @@ sap.ui.define(
 
         oModel.read('/ConExpenseApplSet', {
           async: false,
-          filters: [
-            new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'),
-            new sap.ui.model.Filter('Actty', sap.ui.model.FilterOperator.EQ, 'E'),
-            new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sDataKey),
-          ],
+          filters: [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'), new sap.ui.model.Filter('Actty', sap.ui.model.FilterOperator.EQ, 'E'), new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sDataKey)],
           success: function (oData) {
             if (oData) {
               // Common.log(oData);
@@ -121,7 +128,7 @@ sap.ui.define(
                 oDetailModel.setProperty('/ApplyInfo', {
                   Apename: oDetailModel.getProperty('/TargetInfo/Ename'),
                   Orgtx: `${oDetailModel.getProperty('/TargetInfo/Btrtx')}/${oDetailModel.getProperty('/TargetInfo/Orgtx')}`,
-                  Apjikgbtl: `${oDetailModel.getProperty("/TargetInfo/Zzjikgbt")}/${oDetailModel.getProperty("/TargetInfo/Zzjiktlt")}`,
+                  Apjikgbtl: `${oDetailModel.getProperty('/TargetInfo/Zzjikgbt')}/${oDetailModel.getProperty('/TargetInfo/Zzjiktlt')}`,
                 });
               }
 
@@ -218,18 +225,18 @@ sap.ui.define(
               const oBirthDatePicker = oController.byId('BirthDatePicker');
 
               oDetailModel.setProperty('/BenefitRelation', oResult);
-              oDetailModel.setProperty("/TargetList", []);
+              oDetailModel.setProperty('/TargetList', []);
 
-              if(!oDetailModel.getProperty("/FormData/ZappStatAl") || oDetailModel.getProperty("/FormData/ZappStatAl") === '10') {
+              if (!oDetailModel.getProperty('/FormData/ZappStatAl') || oDetailModel.getProperty('/FormData/ZappStatAl') === '10') {
                 if (!!oResult[0] && oResult[0].Zcode === 'ME') {
                   oController.onTargetDialog.call(oController);
                   oRelationBtn.setVisible(false);
                   oRelationTxt.setEditable(false);
                   oBirthDatePicker.setEditable(false);
                 } else {
-                  const bInitStatus = oDetailModel.getProperty("/bInitStatus");
-                  
-                  if(!bInitStatus) {
+                  const bInitStatus = oDetailModel.getProperty('/bInitStatus');
+
+                  if (!bInitStatus) {
                     oDetailModel.setProperty('/FormData/Zbirthday', null);
                     oDetailModel.setProperty('/FormData/Kdsvh', oResult[0].Zcode);
                     oDetailModel.setProperty('/FormData/Zname', '');
@@ -265,7 +272,7 @@ sap.ui.define(
           oRelationBtn.setVisible(false);
           oRelationTxt.setEditable(false);
           oBirthDatePicker.setEditable(false);
-        } else {          
+        } else {
           oDetailModel.setProperty('/FormData/Zbirthday', null);
           oDetailModel.setProperty('/FormData/Zname', '');
           oRelationBtn.setVisible(true);
@@ -338,10 +345,10 @@ sap.ui.define(
             this.getTargetList(this);
 
             setTimeout(() => {
-              if (oDetailModel.getProperty('/TargetList').length === 1 || oDetailModel.getProperty("/FormData/Kdsvh") === 'ME') return;
+              if (oDetailModel.getProperty('/TargetList').length === 1 || oDetailModel.getProperty('/FormData/Kdsvh') === 'ME') return;
 
-              if(oDetailModel.getProperty('/TargetList').length === 0) {
-                return MessageBox.alert("해당하는 대상자 정보가 없습니다. \n 가족정보를 추가하시거나, 성명을 직접 입력하시기 바랍니다.");
+              if (oDetailModel.getProperty('/TargetList').length === 0) {
+                return MessageBox.alert('해당하는 대상자 정보가 없습니다. \n 가족정보를 추가하시거나, 성명을 직접 입력하시기 바랍니다.');
               }
 
               oDialog.open();
@@ -351,12 +358,12 @@ sap.ui.define(
           this.getTargetList(this);
 
           setTimeout(() => {
-            if (oDetailModel.getProperty('/TargetList').length === 1 || oDetailModel.getProperty("/FormData/Kdsvh") === 'ME') return;
+            if (oDetailModel.getProperty('/TargetList').length === 1 || oDetailModel.getProperty('/FormData/Kdsvh') === 'ME') return;
 
-            if(oDetailModel.getProperty('/TargetList').length === 0) {
-              return MessageBox.alert("해당하는 대상자 정보가 없습니다. \n 가족정보를 추가하시거나, 성명을 직접 입력하시기 바랍니다.");
+            if (oDetailModel.getProperty('/TargetList').length === 0) {
+              return MessageBox.alert('해당하는 대상자 정보가 없습니다. \n 가족정보를 추가하시거나, 성명을 직접 입력하시기 바랍니다.');
             }
-            
+
             this.byId('targetSettingsDialog').open();
           }, 500);
         }
@@ -380,8 +387,8 @@ sap.ui.define(
               const oTargetList = oData.results;
               const oChildList = [];
 
-              oTargetList.forEach(e => {
-                if(oTargetList.length !== 0 && oDetailModel.getProperty("/FormData/Kdsvh") === e.Kdsvh) {
+              oTargetList.forEach((e) => {
+                if (oTargetList.length !== 0 && oDetailModel.getProperty('/FormData/Kdsvh') === e.Kdsvh) {
                   oChildList.push(e);
                 }
               });
@@ -425,27 +432,27 @@ sap.ui.define(
       checkError(oController) {
         const oDetailModel = oController.getViewModel();
 
-       // 대상자 생년월일
-       if(!oDetailModel.getProperty('/FormData/Zbirthday')) {
-          MessageBox.alert("대상자 생년월일을 선택하세요.");
+        // 대상자 생년월일
+        if (!oDetailModel.getProperty('/FormData/Zbirthday')) {
+          MessageBox.alert('대상자 생년월일을 선택하세요.');
           return true;
         }
 
         // 경조일
-        if(!oDetailModel.getProperty('/FormData/Conddate')) {
-          MessageBox.alert("경조일을 선택하세요.");
+        if (!oDetailModel.getProperty('/FormData/Conddate')) {
+          MessageBox.alert('경조일을 선택하세요.');
           return true;
-        }    
+        }
 
         // 대상자 성명
-        if(!oDetailModel.getProperty('/FormData/Zname')) {
-          MessageBox.alert("대상자 성명을 입력하세요.");
+        if (!oDetailModel.getProperty('/FormData/Zname')) {
+          MessageBox.alert('대상자 성명을 입력하세요.');
           return true;
         }
 
         // 행사장소
-        if(!oDetailModel.getProperty('/FormData/Zeloc')) {
-          MessageBox.alert("행사장소를 입력하세요.");
+        if (!oDetailModel.getProperty('/FormData/Zeloc')) {
+          MessageBox.alert('행사장소를 입력하세요.');
           return true;
         }
 
@@ -554,7 +561,7 @@ sap.ui.define(
           if (fVal && fVal === '저장') {
             if (!vStatus || vStatus === '45') {
               oController.getAppno(oController);
-              oDetailModel.setProperty("/FormData/Appdt", new Date());
+              oDetailModel.setProperty('/FormData/Appdt', new Date());
             }
 
             setTimeout(() => {
@@ -609,7 +616,7 @@ sap.ui.define(
           if (fVal && fVal === '신청') {
             if (!vStatus || vStatus === '45') {
               oController.getAppno(oController);
-              oDetailModel.setProperty("/FormData/Appdt", new Date());
+              oDetailModel.setProperty('/FormData/Appdt', new Date());
             }
 
             setTimeout(() => {

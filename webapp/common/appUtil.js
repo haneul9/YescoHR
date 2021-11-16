@@ -2,6 +2,9 @@ sap.ui.define([], () => {
   'use strict';
 
   return {
+    /**
+     * @public
+     */
     getDevice() {
       return sap.ui.Device.system.desktop === true // prettier 방지용 주석
         ? sap.ui.Device.system.SYSTEMTYPE.DESKTOP
@@ -12,14 +15,23 @@ sap.ui.define([], () => {
         : '';
     },
 
+    /**
+     * @public
+     */
     getAppController() {
       return sap.ui.getCore().byId('container-ehr---app').getController();
     },
 
+    /**
+     * @public
+     */
     getAppComponent() {
       return this.getAppController().getOwnerComponent();
     },
 
+    /**
+     * @public
+     */
     setAppBusy(state) {
       setTimeout(() => {
         this.getAppComponent().getAppModel().setProperty('/isAppBusy', state);
@@ -27,6 +39,9 @@ sap.ui.define([], () => {
       return this;
     },
 
+    /**
+     * @public
+     */
     setMenuBusy(state) {
       setTimeout(() => {
         this.getAppComponent().getAppModel().setProperty('/isMenuBusy', state);
@@ -34,6 +49,9 @@ sap.ui.define([], () => {
       return this;
     },
 
+    /**
+     * @public
+     */
     setAtHome(state) {
       setTimeout(() => {
         this.getAppComponent().getAppModel().setProperty('/isAtHome', state);
@@ -41,19 +59,34 @@ sap.ui.define([], () => {
       return this;
     },
 
+    /**
+     * @public
+     */
     isLOCAL() {
       return /^localhost/.test(location.hostname);
     },
+    /**
+     * @public
+     */
     isDEV() {
       return /^yeshrsapdev/.test(location.hostname);
     },
+    /**
+     * @public
+     */
     isQAS() {
       return /^yeshrsapqas/.test(location.hostname);
     },
+    /**
+     * @public
+     */
     isPRD() {
       return /^yeshrsap/.test(location.hostname);
     },
 
+    /**
+     * @public
+     */
     parseError(oError) {
       if (!oError || !oError.response || !oError.response.body) {
         throw new Error('AppUtils.parseError : 에러 데이터 오류!');
@@ -88,6 +121,9 @@ sap.ui.define([], () => {
       }
     },
 
+    /**
+     * @public
+     */
     debug(...args) {
       setTimeout(() => console.log(...args));
       return this;
