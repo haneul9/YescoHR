@@ -23,7 +23,7 @@
                 <ObjectStatus text="{i18n>LABEL_00117} {/listInfo/completeCount}" state="Indication05" />
                 <!-- <Label text="{i18n>LABEL_00117} {/listInfo/completeCount}"/> -->
             </HBox>
-            <Button icon="sap-icon://excel-attachment" text="Excel" press=".onExelDownload" busyIndicatorDelay="0" busy="{/busy}" />
+            <Button icon="sap-icon://excel-attachment" width="117px" text="Excel" press=".onPressExcelDownload" busyIndicatorDelay="0" busy="{/busy}" />
         </HBox>
     </HBox>
 </core:FragmentDefinition>

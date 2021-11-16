@@ -1,15 +1,14 @@
 <mvc:View controllerName="sap.ui.yesco.controller.attendance.Detail"
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
-    xmlns:table="sap.ui.table"
     xmlns:mvc="sap.ui.core.mvc">
     <Page showHeader="false">
         <VBox>
             <HBox justifyContent="SpaceBetween">
                 <core:Fragment fragmentName="sap.ui.yesco.fragment.Navigation" type="XML" />
                 <HBox>
-                    <Button type="Emphasized" text="신청" enabled="{= ${/form/hasrow}}" busyIndicatorDelay="0" busy="{/busy}" />
-                    <Button text="이전" press=".onPressBackBtn" />
+                    <Button text="신청" width="117px" type="Emphasized" enabled="{= ${/form/hasRow}}" busyIndicatorDelay="0" busy="{/busy}" />
+                    <Button text="이전" width="117px" press=".onPressBackBtn" />
                 </HBox>
             </HBox>
             <core:Fragment fragmentName="sap.ui.yesco.fragment.DetailTargetInfo" type="XML" />
@@ -18,7 +17,7 @@
                     <Title level="H2" text="신청내역" />
                     <HBox>
                         <Button icon="sap-icon://add" text="추가" press=".onPressAddBtn" />
-                        <Button icon="sap-icon://less" text="삭제" press=".onPressDelBtn" enabled="{= ${/form/hasrow}}" />
+                        <Button icon="sap-icon://less" text="삭제" press=".onPressDelBtn" enabled="{= ${/form/hasRow}}" />
                     </HBox>
                 </HBox>
                 <HBox>
@@ -29,7 +28,7 @@
                 <HBox justifyContent="SpaceBetween">
                     <Title level="H2" text="신청내역" />
                     <HBox>
-                        <Button icon="sap-icon://edit" text="변경" press=".onPressChangeBtn" enabled="{= ${/form/hasrow}}" />
+                        <Button icon="sap-icon://edit" text="변경" press=".onPressChangeBtn" enabled="{= ${/form/hasRow}}" />
                     </HBox>
                 </HBox>
                 <HBox>

@@ -37,7 +37,6 @@ sap.ui.define(
       constructor() {
         super();
         this.formatter = TableUtils;
-        this.validator = Validator;
       }
 
       onBeforeShow() {
@@ -553,7 +552,7 @@ sap.ui.define(
           { field: 'Zzaddr2', label: '상세주소', type: Validator.INPUT2 },
         ];
 
-        if (!this.validator.check.call(this, { oInputData, mCheckFields })) return;
+        if (!Validator.check.call(this, { oInputData, mCheckFields })) return;
 
         const oSido = _.find(oViewModel.getProperty('/employee/address/sidoList'), { State: oInputData.State });
         delete oSido.Land1;

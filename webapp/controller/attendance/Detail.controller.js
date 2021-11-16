@@ -10,6 +10,7 @@ sap.ui.define(
     'sap/ui/yesco/common/EmpInfo',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/TableUtils',
+    'sap/ui/yesco/common/Validator',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/extension/moment',
     'sap/ui/yesco/extension/lodash',
@@ -25,6 +26,7 @@ sap.ui.define(
     EmpInfo,
     AttachFileAction,
     TableUtils,
+    Validator,
     MessageBox
   ) => {
     'use strict';
@@ -48,8 +50,8 @@ sap.ui.define(
             ],
           },
           form: {
-            hasrow: false,
-            rowcount: 1,
+            hasRow: false,
+            rowCount: 1,
             list: [],
             dialog: {
               calcCompleted: false,
@@ -67,40 +69,42 @@ sap.ui.define(
 
         // 대상자 정보
         EmpInfo.get.call(this);
-
-        // Multiple table generate
-        const oTable = this.byId('approveMultipleTable');
-        oTable.addEventDelegate(
-          {
-            onAfterRendering: () => {
-              TableUtils.adjustRowSpan({
-                table: oTable,
-                colIndices: [0, 7],
-                theadOrTbody: 'header',
-              });
-            },
-          },
-          oTable
-        );
       }
 
       onObjectMatched(oEvent) {
         const oParameter = oEvent.getParameter('arguments');
         const oViewModel = this.getView().getModel();
         const sAction = oParameter.appno ? '조회' : '';
-        const oNavimap = {
+        const oNavigationMap = {
           n: '신규신청',
           m: '변경신청',
           c: '취소신청',
         };
 
-        if (!oNavimap[oParameter.type]) {
+        if (!oNavigationMap[oParameter.type]) {
           this.getRouter().navTo('attendance');
+        }
+
+        if (oParameter.type === 'm') {
+          // Multiple table generate
+          const oTable = this.byId('approveMultipleTable');
+          oTable.addEventDelegate(
+            {
+              onAfterRendering: () => {
+                TableUtils.adjustRowSpan({
+                  table: oTable,
+                  colIndices: [0, 7],
+                  theadOrTbody: 'header',
+                });
+              },
+            },
+            oTable
+          );
         }
 
         oViewModel.setProperty('/type', oParameter.type);
         oViewModel.setProperty('/appno', oParameter.appno);
-        oViewModel.setProperty('/navigation/current', `${oNavimap[oParameter.type]} ${sAction}`);
+        oViewModel.setProperty('/navigation/current', `${oNavigationMap[oParameter.type]} ${sAction}`);
       }
 
       openFormDialog() {
@@ -124,11 +128,11 @@ sap.ui.define(
         });
       }
 
-      toggleHasrowProperty() {
+      toggleHasRowProperty() {
         const oViewModel = this.getViewModel();
         const mTableData = oViewModel.getProperty('/form/list');
 
-        oViewModel.setProperty('/form/hasrow', !!mTableData.length);
+        oViewModel.setProperty('/form/hasRow', !!mTableData.length);
       }
 
       /*****************************************************************
@@ -165,16 +169,16 @@ sap.ui.define(
         MessageBox.confirm(this.getText('MSG_00021'), {
           onClose: function (oAction) {
             if (MessageBox.Action.OK === oAction) {
-              const mUnSeletedData = mTableData.filter((elem, idx) => {
+              const mUnSelectedData = mTableData.filter((elem, idx) => {
                 return !aSelectedIndices.some(function (iIndex) {
                   return iIndex === idx;
                 });
               });
 
-              oViewModel.setProperty('/form/list', mUnSeletedData);
-              oViewModel.setProperty('/form/rowcount', mUnSeletedData.length);
+              oViewModel.setProperty('/form/list', mUnSelectedData);
+              oViewModel.setProperty('/form/rowCount', mUnSelectedData.length);
 
-              this.toggleHasrowProperty();
+              this.toggleHasRowProperty();
               oTable.clearSelection();
             }
           }.bind(this),
@@ -196,7 +200,7 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const oFormData = oViewModel.getProperty('/form/dialog/data');
 
-        this.readLeaveApplEmpList(oFormData);
+        this.readLeaveApplEmpList({ oViewModel, oFormData });
       }
 
       onPressFormDialogClose() {
@@ -208,17 +212,16 @@ sap.ui.define(
         const bCalcCompleted = oViewModel.getProperty('/form/dialog/calcCompleted');
         const oInputData = oViewModel.getProperty('/form/dialog/data');
         const mListData = oViewModel.getProperty('/form/list');
+        const mCheckFields = [
+          { field: 'Tmrsn', label: '근태사유', type: Validator.SELECT2 }, //
+        ];
 
         if (!bCalcCompleted) {
           MessageBox.error('계산이 수행되지 않아 저장이 불가합니다.');
           return;
         }
 
-        if (!oInputData.Tmrsn) {
-          // {근태사유}를 입력하세요.
-          MessageBox.error(this.getText('MSG_00003', '근태사유'));
-          return;
-        }
+        if (!Validator.check.call(this, { oInputData, mCheckFields })) return;
 
         mListData.push({
           ...oInputData,
@@ -226,9 +229,9 @@ sap.ui.define(
           EnddaTxt: moment(oInputData.Endda).hours(9).format('YYYY.MM.DD'),
         });
         oViewModel.setProperty('/form/list', mListData);
-        oViewModel.setProperty('/form/rowcount', mListData.length);
+        oViewModel.setProperty('/form/rowCount', mListData.length);
 
-        this.toggleHasrowProperty();
+        this.toggleHasRowProperty();
         this.byId('formDialog').close();
       }
 
@@ -253,17 +256,16 @@ sap.ui.define(
         });
       }
 
-      readLeaveApplEmpList({ Awart, Begda, Endda }) {
+      readLeaveApplEmpList({ oViewModel, oFormData }) {
         const oModel = this.getModel(ServiceNames.WORKTIME);
-        // const oViewModel = this.getViewModel();
         const sUrl = '/LeaveApplEmpListSet';
 
         oModel.read(sUrl, {
           filters: [
             new Filter('Prcty', FilterOperator.EQ, 'C'), //
-            new Filter('Awart', FilterOperator.EQ, Awart),
-            new Filter('Begda', FilterOperator.EQ, moment(Begda).hour(9).toDate()),
-            new Filter('Endda', FilterOperator.EQ, moment(Endda).hour(9).toDate()),
+            new Filter('Awart', FilterOperator.EQ, oFormData.Awart),
+            new Filter('Begda', FilterOperator.EQ, moment(oFormData.Begda).hour(9).toDate()),
+            new Filter('Endda', FilterOperator.EQ, moment(oFormData.Endda).hour(9).toDate()),
           ],
           success: (oData) => {
             this.debug(`${sUrl} success.`, oData);
