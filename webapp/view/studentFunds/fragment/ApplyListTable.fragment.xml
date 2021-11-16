@@ -82,7 +82,10 @@
             <table:Column width="100px">
                 <Label text="{i18n>LABEL_03008}"/>
                 <table:template>
-                    <Text text="{ZbetTotl}" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
+                    <Text text="{
+                        path: 'ZbetTotl',
+                        formatter: '.formatter.numberWithCommas'
+                    }" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
             <table:Column width="90px">

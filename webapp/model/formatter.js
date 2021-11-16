@@ -17,6 +17,22 @@ sap.ui.define([], () => {
       return parseFloat(sValue).toFixed(2);
     },
 
+    numberWithCommas: function (x) {
+      if (x === undefined || x === null) {
+        return "";
+      }
+       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+
+    liveChangeCost(oEvent) {
+      const inputValue = oEvent.getParameter('value').trim();
+      const convertValue = inputValue.replace(/[^\d]/g, '');
+      const vPath = oEvent.getSource().mBindingInfos.value.binding.getPath();
+
+      oEvent.getSource().setValue(this.formatter.numberWithCommas(convertValue));
+      this.getViewModel().setProperty(vPath, convertValue);
+    },
+
     getPosition() {
       const oViewModel = this.getViewModel();
 

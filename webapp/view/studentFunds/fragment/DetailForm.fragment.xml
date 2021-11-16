@@ -1,0 +1,109 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:core="sap.ui.core">
+    <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
+        <HBox>
+            <!-- 신청내역 -->
+            <Title level="H2" text="{i18n>LABEL_00129}" />
+            <Text text="{i18n>MSG_03001}" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+        </HBox>
+        <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="8px">
+            <!-- 신청대상 -->
+            <Label text="{i18n>LABEL_03012}" />
+            <Select id="AppTarget" class='LongSelectBox' valueState="Warning" items="{/AppTarget}" selectedKey="{/FormData/Kdsvh}" change=".onTargetChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+                <core:Item text="{Znametx}" key="{Kdsvh}" />
+            </Select>
+            <!-- 현지원횟수/총지원가능횟수 -->
+            <Label text="{i18n>LABEL_03013}" />
+            <Text text="{/FormData/Cnttx}"/>
+            <!-- 학력구분 -->
+            <Label text="{i18n>LABEL_03014}"/>
+            <Select id="AcademicSort" valueState="Warning" items="{/AcademicSort}" selectedKey="{/FormData/Slart}" change=".onShcoolList" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+                <core:Item text="{Ztext}" key="{Zcode}" />
+            </Select>
+            <!-- 학교명/학과 -->
+            <Label text="{i18n>LABEL_03015}"/>
+            <HBox class="mb-0 ">
+                <Input valueState="Warning" value="{/FormData/Schtx}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+                <Input id='MajorInput' value="{/FormData/Majnm}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            </HBox>
+            <!-- 학년/분기/학기 -->
+            <Label text="{i18n>LABEL_03016}"/>
+            <HBox class="mb-0 ">
+                <Select id="GradeList" valueState="Warning" items="{/GradeList}" selectedKey="{/FormData/Grdsp}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+                    <core:Item text="{Ztext}" key="{Zcode}" />
+                </Select>
+                <Select id="QuarterList" valueState="Warning" items="{/QuarterList}" selectedKey="{/FormData/Divcd}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+                    <core:Item text="{Ztext}" key="{Zcode}" />
+                </Select>
+            </HBox>
+            <!-- 학자금 발생년도 -->
+            <Label text="{i18n>LABEL_03017}"/>
+            <Select valueState="Warning" change=".onYearsSelect" items="{/FundsYears}" selectedKey="{/FormData/Zyear}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+                <core:Item text="{Ztext}" key="{Zcode}" />
+            </Select>
+            <!-- 해외학교 -->
+            <Label text="{i18n>LABEL_03018}"/>
+            <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Forsch} ? true : false }" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            <HBox ></HBox>
+            <HBox ></HBox>
+            <!-- 입학금 -->
+            <Label text="{i18n>LABEL_03019}"/>
+            <Input value="{
+                path: '/FormData/ZbetEntr',
+                formatter: '.formatter.numberWithCommas'
+            }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            <!-- 학교운영지원비 -->
+            <Label text="{i18n>LABEL_03020}"/>
+            <Input value="{
+                path: '/FormData/ZbetMgmt',
+                formatter: '.formatter.numberWithCommas'
+            }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            <!-- 수업료 -->
+            <Label text="{i18n>LABEL_03021}"/>
+            <Input value="{
+                path: '/FormData/ZbetClass',
+                formatter: '.formatter.numberWithCommas'
+            }" valueState="Warning" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            <!-- 실습비 -->
+            <Label text="{i18n>LABEL_03022}"/>
+            <Input value="{
+                path: '/FormData/ZbetExer',
+                formatter: '.formatter.numberWithCommas'
+            }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            <!-- 학생회비 -->
+            <Label text="{i18n>LABEL_03023}"/>
+            <Input value="{
+                path: '/FormData/ZbetSuf',
+                formatter: '.formatter.numberWithCommas'
+            }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            <!-- 기타비용 -->
+            <Label text="{i18n>LABEL_03026}"/>
+            <Input value="{
+                path: '/FormData/ZbetEtc',
+                formatter: '.formatter.numberWithCommas'
+            }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            <!-- 학자금 총액 -->
+            <Label text="{i18n>LABEL_03024}" width="190px" />
+            <Text text="{
+                path: '/FormData/ZbetTotl',
+                formatter: '.formatter.numberWithCommas'
+            }"/>
+            <!-- 장학금 -->
+            <Label text="{i18n>LABEL_03025}"/>
+            <Input value="{
+                path: '/FormData/ZbetShip',
+                formatter: '.formatter.numberWithCommas'
+            }" liveChange=".onSchoCost" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            <!-- 지원금액 -->
+            <Label text="{i18n>LABEL_03027}"/>
+            <HBox >
+                <Text text="{
+                    path: '/FormData/ZpayAmt',
+                    formatter: '.formatter.numberWithCommas'
+                }"/>
+                <ObjectStatus text="{i18n>MSG_03002}" state="Indication05" visible="{/LimitAmountMSG}" />
+            </HBox>
+        </grid:CSSGrid>
+    </VBox>
+</core:FragmentDefinition>
