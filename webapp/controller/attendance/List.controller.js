@@ -43,7 +43,7 @@ sap.ui.define(
             Apbeg: moment().subtract(1, 'month').add(1, 'day').hours(9).toDate(),
             Apend: moment().hours(9).toDate(),
           },
-          listinfo: {
+          listInfo: {
             rowCount: 1,
             totalCount: 0,
             progressCount: 0,

@@ -25,7 +25,7 @@ sap.ui.define(
         const oViewModel = new JSONModel({
           busy: false,
           Data: [],
-          listinfo: {
+          listInfo: {
             rowCount: 1,
             totalCount: 0,
             progressCount: 0,

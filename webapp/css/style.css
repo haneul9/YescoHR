@@ -477,16 +477,16 @@ button .sapMBtnTransparent {border-radius:20px}
 .sapMLabelRequired:before {content:""}
 .sapMLabelRequired:after {content:"*"; color:#ff0000; font-family:"72fallback","72","72full",Arial,Helvetica,sans-serif; font-size:15px; font-weight:bold; position:relative; vertical-align:middle; line-height:0; margin-left:3px}
 /*input*/
-.sapUiSizeCompact .sapMInputBase {height:40px !important}
-.sapUiSizeCompact .sapMBtn.InputinnerButton {width:50px !important; height:40px !important}
-.sapUiSizeCompact .sapMInputBase.SmallInput {width:185px !important; height:40px !important}
-.sapUiSizeCompact .sapMInputBase.LongInputBase {width:400px !important; height:40px !important}
-.sapMInput>div {height:100% !important}
-.sapMInput>div>input {font-size:15px; padding:11px 10px 11px 11px !important}
-.sapUiSizeCompact .sapMInputBase.sapMInputWithDescription {width:60px !important}
-.sapUiSizeCompact .sapMInputBase.sapMInputWithDescription>div {width:60px !important}
-.sapUiSizeCompact .sapMInputBase.sapMInputWithDescription>div input {text-align:right}
-input::placeholder {color:var(--FontColorNormal) !important}
+.sapUiSizeCompact .sapMInputBase{width: 250px !important; height:40px !important;}
+.sapUiSizeCompact .sapMBtn.InputinnerButton {width: 50px !important;height: 40px !important;}
+.sapUiSizeCompact .sapMInputBase.SmallInput {width: 185px !important;height: 40px !important;}
+.sapUiSizeCompact .sapMInputBase.LongInputBase {width: 400px !important;height: 40px !important;}
+.sapMInput>div{height: 100% !important;}
+.sapMInput>div>input{font-size:15px;padding:11px 10px 11px 11px !important;}
+.sapUiSizeCompact .sapMInputBase.sapMInputWithDescription{width:60px !important;}
+.sapUiSizeCompact .sapMInputBase.sapMInputWithDescription>div{width:60px !important;}
+.sapUiSizeCompact .sapMInputBase.sapMInputWithDescription>div input{text-align: right;}
+input::placeholder{color:var(--FontColorNormal) !important;}
 
 /*search*/
 .sapMSF {height:40px !important; padding:0 !important}

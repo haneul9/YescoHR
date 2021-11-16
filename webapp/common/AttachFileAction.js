@@ -236,6 +236,16 @@ sap.ui.define(
             },
 
             /*
+            * 첨부파일 길이
+            */
+            getFileLength: function () {
+                const Attachbox = this.byId("ATTACHBOX");
+                const vAttachDatas = Attachbox.getModel().getProperty("/Data");
+        
+                return !!vAttachDatas ? vAttachDatas.length : 0;
+            },
+
+            /*
             *   첨부파일 Upload
             */
             uploadFile(Appno, Type) {
