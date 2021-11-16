@@ -9,7 +9,7 @@ sap.ui.define(
     'sap/ui/layout/cssgrid/CSSGrid',
     'sap/ui/yesco/controller/BaseController',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/appUtils',
+    'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/Validator',
     'sap/ui/yesco/control/MessageBox',
@@ -26,7 +26,7 @@ sap.ui.define(
     CSSGrid,
     BaseController,
     ServiceNames,
-    appUtils,
+    AppUtils,
     TableUtils,
     Validator,
     MessageBox
@@ -309,7 +309,7 @@ sap.ui.define(
       openAddressDialog() {
         const oView = this.getView();
 
-        appUtils.setAppBusy(true, this);
+        AppUtils.setAppBusy(true, this);
 
         setTimeout(() => {
           if (!this._pAddressDialog) {
@@ -612,7 +612,7 @@ sap.ui.define(
           return;
         }
 
-        appUtils.setAppBusy(true, this);
+        AppUtils.setAppBusy(true, this);
 
         MessageBox.confirm(this.getText('MSG_00006', '삭제'), {
           actions: ['삭제', MessageBox.Action.CANCEL],
@@ -631,7 +631,7 @@ sap.ui.define(
               }
             }
 
-            appUtils.setAppBusy(false, this);
+            AppUtils.setAppBusy(false, this);
           },
         });
       }
@@ -641,7 +641,7 @@ sap.ui.define(
       }
 
       onAddressDialogClose() {
-        appUtils.setAppBusy(false, this);
+        AppUtils.setAppBusy(false, this);
         this.byId('addressDialog').close();
       }
 
