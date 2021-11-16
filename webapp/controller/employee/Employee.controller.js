@@ -13,8 +13,6 @@ sap.ui.define(
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/Validator',
     'sap/ui/yesco/control/MessageBox',
-    'sap/ui/yesco/extension/moment',
-    'sap/ui/yesco/extension/lodash',
   ],
   (
     // prettier 방지용 주석

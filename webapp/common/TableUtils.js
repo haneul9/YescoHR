@@ -3,8 +3,6 @@ sap.ui.define(
     'sap/ui/export/library', //
     'sap/ui/export/Spreadsheet',
     'sap/ui/core/Fragment',
-    'sap/ui/yesco/extension/moment',
-    'sap/ui/yesco/extension/lodash',
   ],
   (
     exportLibrary, //

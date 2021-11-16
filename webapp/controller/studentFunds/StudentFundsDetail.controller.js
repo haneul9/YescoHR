@@ -1,6 +1,7 @@
 /* eslint-disable no-useless-call */
 sap.ui.define(
   [
+    // prettier 방지용 주석
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     '../../model/formatter',
@@ -8,9 +9,17 @@ sap.ui.define(
     'sap/ui/yesco/controller/BaseController',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/extension/moment',
   ],
-  (JSONModel, MessageBox, formatter, EmpInfo, BaseController, AttachFileAction, ServiceNames) => {
+  (
+    // prettier 방지용 주석
+    JSONModel,
+    MessageBox,
+    formatter,
+    EmpInfo,
+    BaseController,
+    AttachFileAction,
+    ServiceNames
+  ) => {
     'use strict';
 
     class StudentFundsDetail extends BaseController {
@@ -39,14 +48,14 @@ sap.ui.define(
         new Promise((resolve) => {
           this.settingsAttachTable(this);
           this.getList(this);
-          
+
           setTimeout(() => {
             resolve();
           }, 500);
         }).then(() => {
           this.getViewModel().setProperty('/busy', false);
           super.onAfterShow();
-        });        
+        });
       }
 
       onNavBack() {
@@ -58,7 +67,7 @@ sap.ui.define(
 
         if (sDataKey !== 'N') {
           this.getTargetData.call(this, sDataKey);
-        }else {
+        } else {
           const oDetailModel = this.getViewModel();
 
           oDetailModel.setProperty('/FormData', oDetailModel.getProperty('/TargetInfo'));
@@ -68,7 +77,7 @@ sap.ui.define(
           oDetailModel.setProperty('/ApplyInfo', {
             Apename: oDetailModel.getProperty('/TargetInfo/Ename'),
             Orgtx: `${oDetailModel.getProperty('/TargetInfo/Btrtx')}/${oDetailModel.getProperty('/TargetInfo/Orgtx')}`,
-            Apjikgbtl: `${oDetailModel.getProperty("/TargetInfo/Zzjikgbt")}/${oDetailModel.getProperty("/TargetInfo/Zzjiktlt")}`,
+            Apjikgbtl: `${oDetailModel.getProperty('/TargetInfo/Zzjikgbt')}/${oDetailModel.getProperty('/TargetInfo/Zzjiktlt')}`,
           });
         }
       }
@@ -77,11 +86,11 @@ sap.ui.define(
       onCheckBox(oEvent) {
         const bSelected = oEvent.getSource().getSelected();
 
-        if(bSelected) {
-          this.getViewModel().setProperty("/FormData/Forsch", "X");
+        if (bSelected) {
+          this.getViewModel().setProperty('/FormData/Forsch', 'X');
           this.getSupAmount(this);
-        }else {
-          this.getViewModel().setProperty("/FormData/Forsch", "");
+        } else {
+          this.getViewModel().setProperty('/FormData/Forsch', '');
           this.totalCost(this);
         }
       }
@@ -95,7 +104,6 @@ sap.ui.define(
         }, 200);
       }
 
-
       // 장학금 입력시
       onSchoCost(oEvent) {
         this.formatter.liveChangeCost.call(this, oEvent);
@@ -106,7 +114,7 @@ sap.ui.define(
         const oModel = oController.getModel(ServiceNames.BENEFIT);
         const oDetailModel = oController.getViewModel();
 
-        new Promise(resolve => {
+        new Promise((resolve) => {
           oModel.read('/BenefitCodeListSet', {
             async: false,
             filters: [
@@ -121,53 +129,50 @@ sap.ui.define(
               if (oData && !!oData.results.length) {
                 oList = oData.results[0];
                 oList.Zbetrg = oList.Zbetrg.replace('.', '');
-              } 
-              
-              oDetailModel.setProperty("/LimitAmount", oList);
+              }
+
+              oDetailModel.setProperty('/LimitAmount', oList);
               resolve();
             },
             error: function (oRespnse) {
               console.log(oRespnse);
               const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
-  
+
               MessageBox.error(vErrorMSG);
             },
           });
         }).then(() => {
-          oController.totalCost(oController); 
+          oController.totalCost(oController);
         });
       }
 
       // 학자금 총액
       totalCost(oController) {
         const oDetailModel = oController.getViewModel();
-        const vCostA = parseInt(oDetailModel.getProperty("/FormData/ZbetEntr")) || 0;
-        const vCostB = parseInt(oDetailModel.getProperty("/FormData/ZbetMgmt")) || 0;
-        const vCostC = parseInt(oDetailModel.getProperty("/FormData/ZbetClass")) || 0;
-        const vCostD = parseInt(oDetailModel.getProperty("/FormData/ZbetExer")) || 0;
-        const vCostE = parseInt(oDetailModel.getProperty("/FormData/ZbetSuf")) || 0;
-        const vCostF = parseInt(oDetailModel.getProperty("/FormData/ZbetEtc")) || 0;
+        const vCostA = parseInt(oDetailModel.getProperty('/FormData/ZbetEntr')) || 0;
+        const vCostB = parseInt(oDetailModel.getProperty('/FormData/ZbetMgmt')) || 0;
+        const vCostC = parseInt(oDetailModel.getProperty('/FormData/ZbetClass')) || 0;
+        const vCostD = parseInt(oDetailModel.getProperty('/FormData/ZbetExer')) || 0;
+        const vCostE = parseInt(oDetailModel.getProperty('/FormData/ZbetSuf')) || 0;
+        const vCostF = parseInt(oDetailModel.getProperty('/FormData/ZbetEtc')) || 0;
         const bForschCheck = oController.byId('OverseasCheck').getSelected() || false;
-        let vCostG = parseInt(oDetailModel.getProperty("/FormData/ZbetTotl")) || 0;
+        let vCostG = parseInt(oDetailModel.getProperty('/FormData/ZbetTotl')) || 0;
 
         vCostG = vCostA + vCostB + vCostC + vCostD + vCostE + vCostF;
-        oDetailModel.setProperty("/FormData/ZbetTotl", String(vCostG));
+        oDetailModel.setProperty('/FormData/ZbetTotl', String(vCostG));
 
-        if(
+        if (
           bForschCheck &&
-          !!oDetailModel.getProperty("/LimitAmount") &&
-          !!oDetailModel.getProperty("/LimitAmount/Zbetrg") &&
-          vCostG > parseInt(oDetailModel.getProperty("/LimitAmount/Zbetrg")) &&
-          (
-            oDetailModel.getProperty("/FormData/Slart") === '05' ||
-            oDetailModel.getProperty("/FormData/Slart") === '06'
-          )
+          !!oDetailModel.getProperty('/LimitAmount') &&
+          !!oDetailModel.getProperty('/LimitAmount/Zbetrg') &&
+          vCostG > parseInt(oDetailModel.getProperty('/LimitAmount/Zbetrg')) &&
+          (oDetailModel.getProperty('/FormData/Slart') === '05' || oDetailModel.getProperty('/FormData/Slart') === '06')
         ) {
-          oDetailModel.setProperty("/FormData/ZpayAmt", oDetailModel.getProperty("/LimitAmount/Zbetrg"));
-          oDetailModel.setProperty("/LimitAmountMSG", true);
-        }else {
-          oDetailModel.setProperty("/FormData/ZpayAmt", String(vCostG));
-          oDetailModel.setProperty("/LimitAmountMSG", false);
+          oDetailModel.setProperty('/FormData/ZpayAmt', oDetailModel.getProperty('/LimitAmount/Zbetrg'));
+          oDetailModel.setProperty('/LimitAmountMSG', true);
+        } else {
+          oDetailModel.setProperty('/FormData/ZpayAmt', String(vCostG));
+          oDetailModel.setProperty('/LimitAmountMSG', false);
         }
       }
 
@@ -178,10 +183,7 @@ sap.ui.define(
 
         oModel.read('/SchExpenseApplSet', {
           async: false,
-          filters: [
-            new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'),
-            new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sDataKey),
-          ],
+          filters: [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'), new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sDataKey)],
           success: function (oData) {
             if (oData) {
               // Common.log(oData);
@@ -202,27 +204,25 @@ sap.ui.define(
       getList(oController) {
         const oModel = oController.getModel(ServiceNames.BENEFIT);
         const oDetailModel = oController.getViewModel();
-        const vStatus = oDetailModel.getProperty("/FormData/ZappStatAl");
+        const vStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
 
         // 신청대상 조회
         oModel.read('/SchExpenseSupportListSet', {
           async: false,
-          filters: [
-            new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-          ],
+          filters: [new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date())],
           success: function (oData) {
             if (oData) {
               const oList = oData.results;
 
-              oDetailModel.setProperty("/AppTarget", oList);
+              oDetailModel.setProperty('/AppTarget', oList);
 
               const oMajorInput = oController.byId('MajorInput');
               // const vGradeCode = oDetailModel.getProperty("/FormData/Znametx");
 
-              if(!vStatus) {
-                oDetailModel.setProperty("/FormData/Znametx", oList[0].Znametx);
-                oDetailModel.setProperty("/FormData/Kdsvh", oList[0].Kdsvh);
-                oDetailModel.setProperty("/FormData/Zzobjps", oList[0].Zzobjps);
+              if (!vStatus) {
+                oDetailModel.setProperty('/FormData/Znametx', oList[0].Znametx);
+                oDetailModel.setProperty('/FormData/Kdsvh', oList[0].Kdsvh);
+                oDetailModel.setProperty('/FormData/Zzobjps', oList[0].Zzobjps);
                 oMajorInput.setEditable(false);
               }
             }
@@ -234,7 +234,7 @@ sap.ui.define(
             MessageBox.error(vErrorMSG);
           },
         });
-        
+
         // 학력구분 조회
         oModel.read('/BenefitCodeListSet', {
           async: false,
@@ -247,13 +247,13 @@ sap.ui.define(
             if (oData) {
               const oList = oData.results;
 
-              oDetailModel.setProperty("/AcademicSort", oList);
+              oDetailModel.setProperty('/AcademicSort', oList);
 
-              if(!vStatus) {
-                oDetailModel.setProperty("/FormData/Slart", oList[0].Zcode);
+              if (!vStatus) {
+                oDetailModel.setProperty('/FormData/Slart', oList[0].Zcode);
               }
-              
-              const sCode = !vStatus ? oList[0].Zcode : oDetailModel.getProperty("/FormData/Slart");
+
+              const sCode = !vStatus ? oList[0].Zcode : oDetailModel.getProperty('/FormData/Slart');
 
               setTimeout(() => {
                 oController.onShcoolList.call(oController, sCode);
@@ -282,10 +282,10 @@ sap.ui.define(
             if (oData) {
               const oList = oData.results;
 
-              oDetailModel.setProperty("/GradeList", oList);
+              oDetailModel.setProperty('/GradeList', oList);
 
-              if(!vStatus) {
-                oDetailModel.setProperty("/FormData/Grdsp", oList[0].Zcode);
+              if (!vStatus) {
+                oDetailModel.setProperty('/FormData/Grdsp', oList[0].Zcode);
               }
             }
           },
@@ -300,16 +300,13 @@ sap.ui.define(
         // 학자금 발생년도 셋팅
         const iFullYears = new Date().getFullYear();
         const aYearsList = [];
-        
-        aYearsList.push(
-          {Zcode: String(iFullYears), Ztext: `${iFullYears}년`},
-          {Zcode: String(iFullYears - 1), Ztext: `${iFullYears - 1}년`}
-        );
 
-        oDetailModel.setProperty("/FundsYears", aYearsList);
-        
-        if(!vStatus) {
-          oDetailModel.setProperty("/FormData/Zyear", aYearsList[0].Zcode);
+        aYearsList.push({ Zcode: String(iFullYears), Ztext: `${iFullYears}년` }, { Zcode: String(iFullYears - 1), Ztext: `${iFullYears - 1}년` });
+
+        oDetailModel.setProperty('/FundsYears', aYearsList);
+
+        if (!vStatus) {
+          oDetailModel.setProperty('/FormData/Zyear', aYearsList[0].Zcode);
           this.getSupAmount(this);
         }
       }
@@ -324,23 +321,23 @@ sap.ui.define(
         const oModel = oController.getModel(ServiceNames.BENEFIT);
         const oDetailModel = oController.getViewModel();
 
-        oDetailModel.getProperty("/AppTarget").forEach(e => {
-          if(e.Zzobjps === oDetailModel.getProperty("/FormData/Zzobjps")) {
-            oDetailModel.setProperty("/FormData/Kdsvh", e.Kdsvh);
-            oDetailModel.setProperty("/FormData/Zname", e.Zname);
+        oDetailModel.getProperty('/AppTarget').forEach((e) => {
+          if (e.Zzobjps === oDetailModel.getProperty('/FormData/Zzobjps')) {
+            oDetailModel.setProperty('/FormData/Kdsvh', e.Kdsvh);
+            oDetailModel.setProperty('/FormData/Zname', e.Zname);
           }
         });
 
         oModel.read('/SchExpenseCntSet', {
           async: true,
           filters: [
-            new sap.ui.model.Filter('Zname', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty("/FormData/Zname")),
-            new sap.ui.model.Filter('Slart', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty("/FormData/Slart")),
-            new sap.ui.model.Filter('Zzobjps', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty("/FormData/Zzobjps")),
+            new sap.ui.model.Filter('Zname', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/FormData/Zname')),
+            new sap.ui.model.Filter('Slart', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/FormData/Slart')),
+            new sap.ui.model.Filter('Zzobjps', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/FormData/Zzobjps')),
           ],
           success: function (oData) {
             if (oData) {
-              oDetailModel.setProperty("/FormData/Cnttx", oData.results[0].Cnttx);
+              oDetailModel.setProperty('/FormData/Cnttx', oData.results[0].Cnttx);
             }
           },
           error: function (oRespnse) {
@@ -363,23 +360,23 @@ sap.ui.define(
         const oMajorInput = this.byId('MajorInput');
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
-        const bSelectType = typeof(oEvent) === 'string';
+        const bSelectType = typeof oEvent === 'string';
         const vSelected = bSelectType ? oEvent : oEvent.getSource().getSelectedKey();
-        const vStatus = oDetailModel.getProperty("/FormData/ZappStatAl");
+        const vStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
 
-        if(!vStatus || vStatus === '10') {
-          if(vSelected === '05' || vSelected === '06') {
+        if (!vStatus || vStatus === '10') {
+          if (vSelected === '05' || vSelected === '06') {
             oMajorInput.setEditable(true);
-          }else {
+          } else {
             oMajorInput.setEditable(false);
           }
-  
-          if(!bSelectType) {
+
+          if (!bSelectType) {
             oDetailModel.setProperty('/FormData/Schtx', '');
             oDetailModel.setProperty('/FormData/Majnm', '');
           }
         }
-        
+
         this.getApplyNumber(this);
         this.getSupAmount(this);
 
@@ -395,10 +392,10 @@ sap.ui.define(
             if (oData) {
               const oList = oData.results;
 
-              oDetailModel.setProperty("/QuarterList", oList);
+              oDetailModel.setProperty('/QuarterList', oList);
 
-              if(!vStatus) {
-                oDetailModel.setProperty("/FormData/Divcd", oList[0].Zcode);
+              if (!vStatus) {
+                oDetailModel.setProperty('/FormData/Divcd', oList[0].Zcode);
               }
             }
           },
@@ -414,21 +411,21 @@ sap.ui.define(
       checkError(oController, AppBtn) {
         const oDetailModel = oController.getViewModel();
 
-       // 학교명
-       if(!oDetailModel.getProperty('/FormData/Schtx')) {
-          MessageBox.alert("학교명을 입력하세요.");
+        // 학교명
+        if (!oDetailModel.getProperty('/FormData/Schtx')) {
+          MessageBox.alert('학교명을 입력하세요.');
           return true;
         }
 
         // 수업료
-        if(!oDetailModel.getProperty('/FormData/ZbetClass')) {
-          MessageBox.alert("수업료를 입력하세요.");
+        if (!oDetailModel.getProperty('/FormData/ZbetClass')) {
+          MessageBox.alert('수업료를 입력하세요.');
           return true;
         }
 
         // 첨부파일
-        if(!AttachFileAction.getFileLength.call(oController) && AppBtn === 'O') {
-          MessageBox.alert("신청시 첨부파일은 필수입니다. 업로드 후 신청하시기 바랍니다.");
+        if (!AttachFileAction.getFileLength.call(oController) && AppBtn === 'O') {
+          MessageBox.alert('신청시 첨부파일은 필수입니다. 업로드 후 신청하시기 바랍니다.');
           return true;
         }
 
@@ -511,7 +508,7 @@ sap.ui.define(
           if (fVal && fVal === '저장') {
             if (!vStatus || vStatus === '45') {
               oController.getAppno(oController);
-              oDetailModel.setProperty("/FormData/Appdt", new Date());
+              oDetailModel.setProperty('/FormData/Appdt', new Date());
             }
 
             setTimeout(() => {
@@ -565,7 +562,7 @@ sap.ui.define(
           if (fVal && fVal === '신청') {
             if (!vStatus || vStatus === '45') {
               oController.getAppno(oController);
-              oDetailModel.setProperty("/FormData/Appdt", new Date());
+              oDetailModel.setProperty('/FormData/Appdt', new Date());
             }
 
             setTimeout(() => {
@@ -694,7 +691,7 @@ sap.ui.define(
           Editable: !sStatus || sStatus === '10',
           Type: oController.TYPE_CODE,
           Appno: sAppno,
-          Message: "증빙자료를 꼭 등록하세요.",
+          Message: '증빙자료를 꼭 등록하세요.',
           Max: 10,
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
         });

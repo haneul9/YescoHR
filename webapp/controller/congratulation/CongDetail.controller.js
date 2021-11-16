@@ -8,7 +8,6 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/controller/BaseController',
-    'sap/ui/yesco/extension/moment',
     'sap/ui/yesco/model/formatter',
   ],
   (
@@ -20,7 +19,6 @@ sap.ui.define(
     ServiceNames,
     MessageBox,
     BaseController,
-    moment,
     formatter
   ) => {
     'use strict';

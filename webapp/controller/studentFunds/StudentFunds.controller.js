@@ -1,5 +1,6 @@
 sap.ui.define(
   [
+    // prettier 방지용 주석
     'sap/ui/model/json/JSONModel',
     '../../model/formatter',
     'sap/ui/yesco/common/EmpInfo',
@@ -7,9 +8,17 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/TableUtils',
-    'sap/ui/yesco/extension/moment',
   ],
-  (JSONModel, formatter, EmpInfo, BaseController, ServiceNames, AttachFileAction, TableUtils) => {
+  (
+    // prettier 방지용 주석
+    JSONModel,
+    formatter,
+    EmpInfo,
+    BaseController,
+    ServiceNames,
+    AttachFileAction,
+    TableUtils
+  ) => {
     'use strict';
 
     class StudentFunds extends BaseController {

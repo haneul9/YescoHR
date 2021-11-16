@@ -1,11 +1,11 @@
 sap.ui.define(
   [
-    'sap/ui/yesco/control/MessageBox', //
-    'sap/ui/yesco/extension/moment',
-    'sap/ui/yesco/extension/lodash',
+    // prettier 방지용 주석
+    'sap/ui/yesco/control/MessageBox',
   ],
   (
-    MessageBox //
+    // prettier 방지용 주석
+    MessageBox
   ) => {
     'use strict';
 
