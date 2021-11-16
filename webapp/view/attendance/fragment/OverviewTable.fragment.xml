@@ -10,7 +10,7 @@
         </table:rowSettingsTemplate>
         <table:columns>
             <table:Column width="8%" filterProperty="ZappStxtAl" sortProperty="ZappStxtAl">
-                <Label text="상태"/>
+                <Label text="{i18n>LABEL_00144}"/>
                 <table:template>
                     <Text text="{ZappStxtAl}" width="100%" textAlign="Center">
                         <customData>
@@ -20,7 +20,7 @@
                 </table:template>
             </table:Column>
             <table:Column width="8%" filterProperty="Dettx" sortProperty="Appty">
-                <Label text="구분"/>
+                <Label text="{i18n>LABEL_00147}"/>
                 <table:template>
                     <Text text="{Dettx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </table:template>
@@ -50,25 +50,25 @@
                 </table:template>
             </table:Column>
             <table:Column width="8%" filterProperty="Atext" sortProperty="Awart">
-                <Label text="근태"/>
+                <Label text="{i18n>LABEL_00151}"/>
                 <table:template>
                     <Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </table:template>
             </table:Column>
             <table:Column width="8%" filterProperty="Apbeg" sortProperty="Begda">
-                <Label text="시작일"/>
+                <Label text="{i18n>LABEL_00148}"/>
                 <table:template>
                     <Text text="{Apbeg}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </table:template>
             </table:Column>
             <table:Column width="8%" filterProperty="Apend" sortProperty="Endda">
-                <Label text="종료일"/>
+                <Label text="{i18n>LABEL_00149}"/>
                 <table:template>
                     <Text text="{Apend}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </table:template>
             </table:Column>
             <table:Column width="8%" filterProperty="Period" sortProperty="Range">
-                <Label text="기간"/>
+                <Label text="{i18n>LABEL_00150}"/>
                 <table:template>
                     <Text text="{Period}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </table:template>
@@ -80,7 +80,7 @@
                 </table:template>
             </table:Column>
             <table:Column width="8%" filterProperty="Sgndt" sortProperty="Endda">
-                <Label text="결재일"/>
+                <Label text="{i18n>LABEL_00269}"/>
                 <table:template>
                     <Text text="{Sgndt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </table:template>
