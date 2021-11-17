@@ -581,7 +581,7 @@ sap.ui.define(
           MessageBox.alert(this.getBundleText('MSG_00010', 'LABEL_00108')); // {수정}할 데이터를 선택하세요.
           return;
         } else if (aSelectedIndices.length > 1) {
-          MessageBox.alert(this.getBundleText('MSG_00038')); // 하나의 행만 선택하세요.
+          MessageBox.alert(this.getBundleText('MSG_00042')); // 하나의 행만 선택하세요.
           return;
         }
 
@@ -609,7 +609,7 @@ sap.ui.define(
           MessageBox.alert(this.getBundleText('MSG_00010', 'LABEL_00110')); // {삭제}할 데이터를 선택하세요.
           return;
         } else if (aSelectedIndices.length > 1) {
-          MessageBox.alert(this.getBundleText('MSG_00038')); // 하나의 행만 선택하세요.
+          MessageBox.alert(this.getBundleText('MSG_00042')); // 하나의 행만 선택하세요.
           return;
         }
 

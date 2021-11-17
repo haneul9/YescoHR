@@ -16,7 +16,7 @@
                     </ComboBox>
                     <Label text="{i18n>LABEL_04014}" />
                     <HBox>
-                        <custom:DateRangeSelection width="250px" class="sapIcon_Date" dateValue="{/form/dialog/data/Begda}" secondDateValue="{/form/dialog/data/Endda}" editable="{= ${/form/dialog/data/Awart} !== 'ALL'}" change=".onChangeLeaveDate" />
+                        <DateRangeSelection width="250px" class="sapIcon_Date" dateValue="{/form/dialog/data/Begda}" secondDateValue="{/form/dialog/data/Endda}" editable="{= ${/form/dialog/data/Awart} !== 'ALL'}" change=".onChangeLeaveDate" />
                         <Input width="50px" value="{/form/dialog/data/AbrtgTxt}" editable="false" />
                     </HBox>
                     <Label text="{i18n>LABEL_00154}" />
