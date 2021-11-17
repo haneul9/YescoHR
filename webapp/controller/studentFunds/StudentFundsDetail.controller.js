@@ -56,11 +56,6 @@ sap.ui.define(
         });
       }
 
-      // onNavBack() {
-      //   this.onNavBack();
-      //   // window.history.go(-1);
-      // }
-
       onObjectMatched(oEvent) {
         const sDataKey = oEvent.getParameter('arguments').oDataKey;
 
