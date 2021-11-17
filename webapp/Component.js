@@ -11,6 +11,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/controller/ErrorHandler',
     'sap/ui/yesco/model/MenuModel',
+    'sap/ui/yesco/model/SessionModel',
     'sap/ui/yesco/model/Models',
   ],
   (
@@ -25,6 +26,7 @@ sap.ui.define(
     ServiceNames,
     ErrorHandler,
     MenuModel,
+    SessionModel,
     Models
   ) => {
     'use strict';
@@ -114,36 +116,7 @@ sap.ui.define(
        * 세션 모델 생성
        */
       setSessionModel() {
-        setTimeout(() => {
-          const sUrl = '/EmpLoginInfoSet';
-          this.getModel(ServiceNames.COMMON).read(sUrl, {
-            success: (oData, oResponse) => {
-              AppUtils.debug(`${sUrl} success.`, oData, oResponse);
-
-              const mSessionData = (oData.results || [])[0] || {};
-              delete mSessionData.__metadata;
-
-              let sTextCode;
-              if (mSessionData.Werks === '1000') {
-                sTextCode = 'LABEL_01002';
-              } else if (mSessionData.Werks === '2000') {
-                sTextCode = 'LABEL_01003';
-              } else if (mSessionData.Werks === '3000') {
-                sTextCode = 'LABEL_01004';
-              } else {
-                sTextCode = 'LABEL_01001';
-              }
-              mSessionData.CompanyName = this.getModel('i18n').getResourceBundle().getText(sTextCode);
-
-              this.setModel(new JSONModel(mSessionData), 'sessionModel');
-            },
-            error: (oError) => {
-              AppUtils.debug(`${sUrl} error.`, oError);
-
-              this.setModel(new JSONModel({ CompanyName: this.getModel('i18n').getResourceBundle().getText('LABEL_01001') }), 'sessionModel');
-            },
-          });
-        });
+        this.setModel(new SessionModel(this), 'sessionModel');
         return this;
       },
 
