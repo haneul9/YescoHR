@@ -44,6 +44,7 @@ sap.ui.define(
       init(...aArgs) {
         this.setDeviceModel() // 디바이스 모델 생성
           .setAppModel() // Busy indicator 값 저장 모델 생성
+          .setMetadataModel() // 메뉴 모델 생성
           .setServiceModel() // S4HANA OData 서비스 모델 생성
           .setErrorHandler() // Error handler 생성
           .setSessionModel() // 세션 모델 생성
@@ -88,14 +89,28 @@ sap.ui.define(
         return this.getModel('appModel');
       },
 
+      setMetadataModel() {
+        this.setModel(new JSONModel({}), 'metadataModel');
+        return this;
+      },
+
+      getMetadataModel() {
+        return this.getModel('metadataModel');
+      },
+
       /**
        * S4HANA OData 서비스 모델 생성
        */
       setServiceModel() {
         const aServiceNames = ServiceManager.getServiceNames();
+        const oMetadataModel = this.getMetadataModel();
+
         aServiceNames.forEach((sServiceName) => {
           const oServiceModel = ServiceManager.getODataModel(sServiceName);
           this.setModel(oServiceModel, sServiceName);
+          oServiceModel.attachMetadataLoaded(null, () => {
+            oMetadataModel.setProperty(`/${sServiceName}`, ServiceManager.getMetadata(oServiceModel));
+          });
         });
         return this;
       },
