@@ -31,9 +31,14 @@ sap.ui.define(
       }
 
       onBeforeShow() {
+        const dDate = new Date();
         const oViewModel = new JSONModel({
           busy: false,
           Data: [],
+          searchDate: {
+            date: dDate,
+            secondDate: new Date(dDate.getFullYear(), dDate.getMonth() - 1, dDate.getDate() + 1),
+          },
           listInfo: {
             rowCount: 1,
             totalCount: 0,
@@ -47,13 +52,6 @@ sap.ui.define(
         this.setViewModel(oViewModel);
 
         EmpInfo.get.call(this, true);
-
-        const oSearchDate = this.byId('SearchDate');
-        const dDate = new Date();
-        const dDate2 = new Date(dDate.getFullYear(), dDate.getMonth() - 1, dDate.getDate() + 1);
-
-        oSearchDate.setDateValue(dDate2);
-        oSearchDate.setSecondDateValue(dDate);
       }
 
       onAfterShow() {
@@ -81,11 +79,10 @@ sap.ui.define(
 
       onSearch() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oSearchDate = this.byId('SearchDate');
         const oListModel = this.getViewModel();
-        const oController = this;
-        const dDate = moment(oSearchDate.getDateValue()).hours(10).toDate();
-        const dDate2 = moment(oSearchDate.getSecondDateValue()).hours(10).toDate();
+        const oSearchDate = oListModel.getProperty("/searchDate");
+        const dDate = moment(oSearchDate.secondDate).hours(10).toDate();
+        const dDate2 = moment(oSearchDate.date).hours(10).toDate();
 
         oListModel.setProperty('/busy', true);
 
@@ -96,18 +93,18 @@ sap.ui.define(
             new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate),
             new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2),
           ],
-          success: function (oData) {
+          success: (oData) => {
             if (oData) {
               // Common.log(oData);
               const oList = oData.results;
 
-              TableUtils.count.call(oController, oList);
+              TableUtils.count.call(this, oList);
               oListModel.setProperty('/StudentList', oList);
-              oController.byId('studentTable').setVisibleRowCount(oList.length);
+              this.byId('studentTable').setVisibleRowCount(oList.length);
               oListModel.setProperty('/busy', false);
             }
           },
-          error: function (oRespnse) {
+          error: (oRespnse) => {
             // Common.log(oResponse);
             oListModel.setProperty('/busy', false);
           },
@@ -119,6 +116,14 @@ sap.ui.define(
         const oRowData = this.getViewModel().getProperty(vPath);
 
         this.getRouter().navTo('studentFunds-detail', { oDataKey: oRowData.Appno });
+      }
+
+      onPressExcelDownload() {
+        const oTable = this.byId('studentTable');
+        const mTableData = this.getViewModel().getProperty('/StudentList');
+        const sFileName = this.getBundleText('LABEL_00282', '학자금 신청');
+
+        TableUtils.export({ oTable, mTableData, sFileName });
       }
     }
 
