@@ -1,33 +1,33 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/core/Fragment',
+    'sap/ui/layout/cssgrid/CSSGrid',
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
-    'sap/ui/core/Fragment',
     'sap/ui/table/Table',
-    'sap/ui/layout/cssgrid/CSSGrid',
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/controller/BaseController',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/Validator',
-    'sap/ui/yesco/control/MessageBox',
   ],
   (
     // prettier 방지용 주석
+    Fragment,
+    CSSGrid,
     Filter,
     FilterOperator,
     JSONModel,
-    Fragment,
     Table,
-    CSSGrid,
+    MessageBox,
     BaseController,
     ServiceNames,
     AppUtils,
     TableUtils,
-    Validator,
-    MessageBox
+    Validator
   ) => {
     'use strict';
 
@@ -77,8 +77,8 @@ sap.ui.define(
             },
             sub: {},
             address: {
-              typeList: [{ Zcode: 'ALL', Ztext: this.getText('LABEL_00268') }],
-              sidoList: [{ State: 'ALL', Bezei: this.getText('LABEL_00268') }],
+              typeList: [{ Zcode: 'ALL', Ztext: this.getBundleText('LABEL_00268') }], // - 선택 -
+              sidoList: [{ State: 'ALL', Bezei: this.getBundleText('LABEL_00268') }], // - 선택 -
               form: { Subty: 'ALL', State: 'ALL' },
             },
           },
@@ -92,7 +92,7 @@ sap.ui.define(
       onObjectMatched(oEvent) {
         const oParameter = oEvent.getParameter('arguments');
         const oViewModel = this.getView().getModel();
-        const sPernr = oParameter.pernr || this.getModel('sessionModel').getProperty('/Pernr');
+        const sPernr = oParameter.pernr || this.getOwnerComponent().getSessionModel().getProperty('/Pernr');
 
         oViewModel.setProperty('/employee/busy', true);
         oViewModel.setProperty('/pernr', sPernr);
@@ -104,7 +104,7 @@ sap.ui.define(
       async initialList({ oViewModel, sPernr }) {
         const oSideList = this.byId('sideEmployeeList');
         const oStatFilter = new Filter('Stat2', FilterOperator.EQ, '3');
-        const oSessionData = this.getModel('sessionModel').getData();
+        const oSessionData = this.getOwnerComponent().getSessionModel().getData();
         const oSearchParam = {
           searchText: sPernr || oSessionData.Pernr,
           ...oSessionData,
@@ -166,11 +166,12 @@ sap.ui.define(
             oViewModelData.employee.sub[data.Menuc1] = { isShow: data.Pressed, contents: {} };
           });
 
+          const sAddressTitle = this.getBundleText('LABEL_00152'); // 주소
           aSubMenus.forEach((data) => {
             oViewModelData.employee.sub[data.Menuc1].contents[data.Menuc2] = {
               type: data.Child,
               rowCount: 1,
-              selectionMode: data.Menu2 === '주소' ? 'MultiToggle' : 'None',
+              selectionMode: data.Menu2 === sAddressTitle ? 'MultiToggle' : 'None',
               title: data.Menu2,
               sort: data.Sorts,
               header: [],
@@ -220,9 +221,9 @@ sap.ui.define(
           // Sub 영역 UI5 Control 생성
           this.makeProfileBody();
         } catch (oError) {
-          this.debug('Controller > Employee > loadProfile Error', oError);
+          this.debug('Controller > Employee > loadProfile Error', AppUtils.parseError(oError));
 
-          MessageBox.error(this.getText('MSG_00008', '조회'));
+          MessageBox.error(this.getBundleText('MSG_00008', 'LABEL_00100')); // {조회}중 오류가 발생하였습니다.
         } finally {
           oViewModel.setProperty('/employee/busy', false);
         }
@@ -232,6 +233,7 @@ sap.ui.define(
         const oView = this.getView().getModel();
         const oParentBox = this.byId('profileBody');
         const mSubMenu = oView.getProperty('/employee/sub');
+        const sAddressTitle = this.getBundleText('LABEL_00152'); // 주소
 
         Object.keys(mSubMenu).forEach((menuKey) => {
           let mSubMenuContents = mSubMenu[menuKey].contents;
@@ -256,12 +258,12 @@ sap.ui.define(
             this.debug(`Sub ${oMenu.title}`, oMenu);
 
             oSubHBox.addItem(new sap.m.Title({ level: 'H2', text: oMenu.title }));
-            if (oMenu.title === '주소') {
+            if (oMenu.title === sAddressTitle) {
               let oSubButtonBox = new sap.m.HBox();
 
-              oSubButtonBox.addItem(new sap.m.Button({ type: 'Transparent', width: '117px', icon: 'sap-icon://edit', text: '수정', press: this.onPressModifyAddress.bind(this) }));
-              oSubButtonBox.addItem(new sap.m.Button({ type: 'Transparent', width: '117px', icon: 'sap-icon://add', text: '추가', press: this.onPressRegAddress.bind(this) }));
-              oSubButtonBox.addItem(new sap.m.Button({ type: 'Transparent', width: '117px', icon: 'sap-icon://less', text: '삭제', press: this.onPressDeleteAddress.bind(this) }));
+              oSubButtonBox.addItem(new sap.m.Button({ type: 'Transparent', width: '117px', icon: 'sap-icon://edit', text: this.getBundleText('LABEL_00108'), press: this.onPressModifyAddress.bind(this) })); // 수정
+              oSubButtonBox.addItem(new sap.m.Button({ type: 'Transparent', width: '117px', icon: 'sap-icon://add', text: this.getBundleText('LABEL_00107'), press: this.onPressRegAddress.bind(this) })); // 추가
+              oSubButtonBox.addItem(new sap.m.Button({ type: 'Transparent', width: '117px', icon: 'sap-icon://less', text: this.getBundleText('LABEL_00110'), press: this.onPressDeleteAddress.bind(this) })); // 삭제
               oSubHBox.addItem(oSubButtonBox);
             }
 
@@ -272,7 +274,7 @@ sap.ui.define(
                 width: '100%',
                 selectionMode: { path: `/employee/sub/${menuKey}/contents/${key}/selectionMode` },
                 visibleRowCount: { path: `/employee/sub/${menuKey}/contents/${key}/rowCount` },
-                noData: this.getText('MSG_00001'),
+                noData: this.getBundleText('MSG_00001'),
               }).bindRows(`/employee/sub/${menuKey}/contents/${key}/data`);
 
               oMenu.header.forEach((head, index) => {
@@ -327,7 +329,8 @@ sap.ui.define(
       }
 
       async refreshAddress({ oViewModel }) {
-        const oMenuInfo = _.find(oViewModel.getProperty('/employee/tab/menu'), { Menu2: '주소' });
+        const sAddressTitle = this.getBundleText('LABEL_00152'); // 주소
+        const oMenuInfo = _.find(oViewModel.getProperty('/employee/tab/menu'), { Menu2: sAddressTitle });
         const sAddressPath = `/employee/sub/${oMenuInfo.Menuc1}/contents/${oMenuInfo.Menuc2}`;
         const mReturnContents = await this.readEmpProfileContentsTab({
           oModel: this.getModel(ServiceNames.PA),
@@ -461,17 +464,17 @@ sap.ui.define(
         const oViewModel = this.getView().getModel();
         const oControl = oEvent.getSource();
         const sSearchText = oControl.getValue();
-        const oSessionData = this.getModel('sessionModel').getData();
+        const oSessionData = this.getOwnerComponent().getSessionModel().getData();
         const oSearchParam = {
           searchText: sSearchText,
           ...oSessionData,
         };
 
         if (!sSearchText) {
-          MessageBox.alert('검색어를 입력하세요.');
+          MessageBox.alert(this.getBundleText('MSG_00003', 'LABEL_00201')); // {검색어}를 입력하세요.
           return;
         } else if (sSearchText.length < 2) {
-          MessageBox.alert('검색어를 두 글자 이상 입력하세요.');
+          MessageBox.alert(this.getBundleText('MSG_00026')); // 성명은 2자 이상이어야 합니다.
           return;
         }
 
@@ -487,7 +490,7 @@ sap.ui.define(
         const sPernr = oViewModel.getProperty(`${sPath}/Pernr`);
 
         if (!sPernr) {
-          MessageBox.error('선택된 사번이 없습니다.');
+          MessageBox.error(this.getBundleText('MSG_00035')); // 대상자 사번이 없습니다.
           return;
         } else if (sPrevPernr === sPernr) {
           return;
@@ -532,7 +535,7 @@ sap.ui.define(
       onPressRegAddress() {
         const oViewModel = this.getView().getModel();
 
-        oViewModel.setProperty('/employee/address/actionText', '추가');
+        oViewModel.setProperty('/employee/address/actionText', this.getBundleText('LABEL_00107')); // 추가
         oViewModel.setProperty('/employee/address/form', { Subty: 'ALL', State: 'ALL' });
 
         this.openAddressDialog();
@@ -543,14 +546,14 @@ sap.ui.define(
         const oInputData = oViewModel.getProperty('/employee/address/form');
         const sActionText = oViewModel.getProperty('/employee/address/actionText');
         const mCheckFields = [
-          { field: 'Subty', label: '주소유형', type: Validator.SELECT1 }, //
-          { field: 'Begda', label: '적용시작일', type: Validator.INPUT1 },
-          { field: 'State', label: '시/도', type: Validator.SELECT2 },
-          { field: 'Pstlz', label: '우편번호', type: Validator.INPUT2 },
-          { field: 'Zzaddr2', label: '상세주소', type: Validator.INPUT2 },
+          { label: 'LABEL_00270', field: 'Subty', type: Validator.SELECT1 }, // 주소유형
+          { label: 'LABEL_00271', field: 'Begda', type: Validator.INPUT1 }, // 적용시작일
+          { label: 'LABEL_00272', field: 'State', type: Validator.SELECT2 }, // 시/도
+          { label: 'LABEL_00273', field: 'Pstlz', type: Validator.INPUT2 }, // 우편번호
+          { label: 'LABEL_00274', field: 'Zzaddr2', type: Validator.INPUT2 }, // 상세주소
         ];
 
-        if (!Validator.check.call(this, { oInputData, mCheckFields })) return;
+        if (!Validator.check({ oInputData, mCheckFields })) return;
 
         const oSido = _.find(oViewModel.getProperty('/employee/address/sidoList'), { State: oInputData.State });
         delete oSido.Land1;
@@ -559,11 +562,11 @@ sap.ui.define(
         const { result } = await this.createAddressInfo({ oInputData: { ...oSido, ...oInputData } });
 
         if (result === 'success') {
-          MessageBox.success(this.getText('MSG_00007', sActionText));
+          MessageBox.success(this.getBundleText('MSG_00007', sActionText)); // {추가|수정}되었습니다.
 
           this.refreshAddress({ oViewModel });
         } else {
-          MessageBox.error(this.getText('MSG_00008', sActionText));
+          MessageBox.error(this.getBundleText('MSG_00008', sActionText)); // {추가|수정}중 오류가 발생하였습니다.
         }
 
         this.onAddressDialogClose();
@@ -575,10 +578,10 @@ sap.ui.define(
         const aSelectedIndices = oTable.getSelectedIndices();
 
         if (aSelectedIndices.length < 1) {
-          MessageBox.alert(this.getText('MSG_00010', '수정'));
+          MessageBox.alert(this.getBundleText('MSG_00010', 'LABEL_00108')); // {수정}할 데이터를 선택하세요.
           return;
         } else if (aSelectedIndices.length > 1) {
-          MessageBox.alert('수정할 데이터를 하나만 선택하세요.');
+          MessageBox.alert(this.getBundleText('MSG_00038')); // 하나의 행만 선택하세요.
           return;
         }
 
@@ -586,11 +589,11 @@ sap.ui.define(
         const oAddressDetail = await this.readAddressInfo({ oPayload });
 
         if (oAddressDetail.result === 'error') {
-          MessageBox.error(this.getText('MSG_00008', '상세조회'));
+          MessageBox.error(this.getBundleText('MSG_00008', 'LABEL_00100')); // {조회}중 오류가 발생하였습니다.
           return;
         }
 
-        oViewModel.setProperty('/employee/address/actionText', '수정');
+        oViewModel.setProperty('/employee/address/actionText', this.getBundleText('LABEL_00108')); // 수정
         oViewModel.setProperty('/employee/address/form', oAddressDetail.result);
 
         this.openAddressDialog(oEvent);
@@ -603,16 +606,17 @@ sap.ui.define(
         const aSelectedIndices = oTable.getSelectedIndices();
 
         if (aSelectedIndices.length < 1) {
-          MessageBox.alert(this.getText('MSG_00010', '삭제'));
+          MessageBox.alert(this.getBundleText('MSG_00010', 'LABEL_00110')); // {삭제}할 데이터를 선택하세요.
           return;
         } else if (aSelectedIndices.length > 1) {
-          MessageBox.alert('삭제할 데이터를 하나만 선택하세요.');
+          MessageBox.alert(this.getBundleText('MSG_00038')); // 하나의 행만 선택하세요.
           return;
         }
 
         AppUtils.setAppBusy(true, this);
 
-        MessageBox.confirm(this.getText('MSG_00006', '삭제'), {
+        // {삭제}하시겠습니까?
+        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
           actions: ['삭제', MessageBox.Action.CANCEL],
           onClose: async (sAction) => {
             if (sAction !== MessageBox.Action.CANCEL) {
@@ -623,9 +627,9 @@ sap.ui.define(
                 oTable.clearSelection();
                 this.refreshAddress({ oViewModel });
 
-                MessageBox.success(this.getText('MSG_00007', '삭제'));
+                MessageBox.success(this.getBundleText('MSG_00007', 'LABEL_00110')); // {삭제}되었습니다.
               } else {
-                MessageBox.error(this.getText('MSG_00008', '삭제'));
+                MessageBox.error(this.getBundleText('MSG_00008', 'LABEL_00110')); // {삭제}중 오류가 발생하였습니다.
               }
             }
 

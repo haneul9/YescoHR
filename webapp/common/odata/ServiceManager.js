@@ -54,6 +54,21 @@ sap.ui.define(
       getServiceNames() {
         return Object.values(ServiceNames);
       },
+
+      getMetadata(oServiceModel) {
+        const oSchema = oServiceModel.getServiceMetadata().dataServices.schema[0];
+        let mEntityType = {};
+
+        oSchema.entityType.forEach((o) => {
+          mEntityType[o.name] = {};
+
+          o.property.forEach((p) => {
+            mEntityType[o.name][p.name] = { ...p, label: _.find(p.extensions, { name: 'label' }).value };
+          });
+        });
+
+        return mEntityType;
+      },
     };
 
     return ServiceManager;

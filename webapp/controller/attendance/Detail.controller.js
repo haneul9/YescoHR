@@ -1,31 +1,31 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/core/Fragment',
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
-    'sap/ui/core/Fragment',
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/controller/BaseController',
-    'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/EmpInfo',
     'sap/ui/yesco/common/AttachFileAction',
+    'sap/ui/yesco/common/EmpInfo',
+    'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/Validator',
-    'sap/ui/yesco/control/MessageBox',
   ],
   (
     // prettier 방지용 주석
+    Fragment,
     Filter,
     FilterOperator,
     JSONModel,
-    Fragment,
+    MessageBox,
     BaseController,
-    ServiceNames,
-    EmpInfo,
     AttachFileAction,
+    EmpInfo,
+    ServiceNames,
     TableUtils,
-    Validator,
-    MessageBox
+    Validator
   ) => {
     'use strict';
 
@@ -53,7 +53,7 @@ sap.ui.define(
             list: [],
             dialog: {
               calcCompleted: false,
-              awartCodeList: [{ Awart: 'ALL', Atext: this.getText('LABEL_00268'), Alldf: true }],
+              awartCodeList: [{ Awart: 'ALL', Atext: this.getBundleText('LABEL_00268'), Alldf: true }],
               data: {
                 Awart: 'ALL',
               },
@@ -72,11 +72,11 @@ sap.ui.define(
       onObjectMatched(oEvent) {
         const oParameter = oEvent.getParameter('arguments');
         const oViewModel = this.getView().getModel();
-        const sAction = oParameter.appno ? '조회' : '';
+        const sAction = oParameter.appno ? this.getBundleText('LABEL_00100') : ''; // 조회
         const oNavigationMap = {
-          n: '신규신청',
-          m: '변경신청',
-          c: '취소신청',
+          n: this.getBundleText('LABEL_04002'), // 신규신청
+          m: this.getBundleText('LABEL_04003'), // 변경신청
+          c: this.getBundleText('LABEL_04004'), // 취소신청
         };
 
         if (!oNavigationMap[oParameter.type]) {
@@ -105,11 +105,17 @@ sap.ui.define(
         oViewModel.setProperty('/navigation/current', `${oNavigationMap[oParameter.type]} ${sAction}`);
       }
 
-      openFormDialog() {
-        var oView = this.getView();
+      async openFormDialog() {
+        const oView = this.getView();
+        const oViewModel = this.getViewModel();
 
         // 근태유형
-        this.readAwartCodeList();
+        try {
+          const mAwartCode = await this.readAwartCodeList();
+          oViewModel.setProperty('/form/dialog/awartCodeList', mAwartCode);
+        } catch (oError) {
+          this.debug('Controller > Attendance Detail > readAwartCodeList Error', AppUtils.parseError(oError));
+        }
 
         if (!this.pFormDialog) {
           this.pFormDialog = Fragment.load({
@@ -136,10 +142,6 @@ sap.ui.define(
       /*****************************************************************
        * Event handler
        *****************************************************************/
-      onPressBackBtn() {
-        this.getRouter().navTo('attendance');
-      }
-
       onPressAddBtn() {
         const oViewModel = this.getViewModel();
 
@@ -158,13 +160,12 @@ sap.ui.define(
         const mTableData = oViewModel.getProperty('/form/list');
 
         if (aSelectedIndices.length < 1) {
-          // 삭제할 행을 선택하세요.
-          MessageBox.alert(this.getText('MSG_00020'));
+          MessageBox.alert(this.getBundleText('MSG_00020')); // 삭제할 행을 선택하세요.
           return;
         }
 
         // 선택된 행을 삭제하시겠습니까?
-        MessageBox.confirm(this.getText('MSG_00021'), {
+        MessageBox.confirm(this.getBundleText('MSG_00021'), {
           onClose: function (oAction) {
             if (MessageBox.Action.OK === oAction) {
               const mUnSelectedData = mTableData.filter((elem, idx) => {
@@ -194,11 +195,17 @@ sap.ui.define(
         oViewModel.setProperty('/form/dialog/data/Abrtg', null);
       }
 
-      onChangeLeaveDate() {
+      async onChangeLeaveDate() {
         const oViewModel = this.getViewModel();
         const oFormData = oViewModel.getProperty('/form/dialog/data');
 
-        this.readLeaveApplEmpList({ oViewModel, oFormData });
+        try {
+          const oResult = await this.readLeaveApplEmpList(oFormData);
+
+          this.debug(oResult);
+        } catch (error) {
+          this.debug('Controller > Attendance Detail > onChangeLeaveDate Error', AppUtils.parseError(oError));
+        }
       }
 
       onPressFormDialogClose() {
@@ -211,11 +218,11 @@ sap.ui.define(
         const oInputData = oViewModel.getProperty('/form/dialog/data');
         const mListData = oViewModel.getProperty('/form/list');
         const mCheckFields = [
-          { field: 'Tmrsn', label: '근태사유', type: Validator.SELECT2 }, //
+          { field: 'Tmrsn', label: this.getBundleText('LABEL_04009'), type: Validator.SELECT2 }, // 근태사유
         ];
 
         if (!bCalcCompleted) {
-          MessageBox.error('계산이 수행되지 않아 저장이 불가합니다.');
+          MessageBox.error(this.getBundleText('MSG_04001')); // 계산이 수행되지 않아 저장이 불가합니다.
           return;
         }
 
@@ -237,40 +244,54 @@ sap.ui.define(
        * Call oData
        *****************************************************************/
       readAwartCodeList() {
-        const oModel = this.getModel(ServiceNames.WORKTIME);
-        const oViewModel = this.getViewModel();
-        const sUrl = '/AwartCodeListSet';
-        const mAwartCodeList = oViewModel.getProperty('/form/dialog/awartCodeList');
+        return new Promise((resolve, reject) => {
+          const oModel = this.getModel(ServiceNames.WORKTIME);
+          const oViewModel = this.getViewModel();
+          const sUrl = '/AwartCodeListSet';
+          const mAwartCodeList = oViewModel.getProperty('/form/dialog/awartCodeList');
 
-        if (mAwartCodeList.length > 1) return;
+          if (mAwartCodeList.length > 1) {
+            resolve(mAwartCodeList);
+          }
 
-        oModel.read(sUrl, {
-          success: (oData) => {
-            oViewModel.setProperty('/form/dialog/awartCodeList', [...mAwartCodeList, ...oData.results]);
-          },
-          error: (oError) => {
-            this.debug(`${sUrl} error.`, oError);
-          },
+          oModel.read(sUrl, {
+            success: (oData) => {
+              this.debug(`${sUrl} success.`, oData);
+
+              resolve([...mAwartCodeList, ...oData.results]);
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, oError);
+
+              reject(oError);
+            },
+          });
         });
       }
 
-      readLeaveApplEmpList({ oViewModel, oFormData }) {
-        const oModel = this.getModel(ServiceNames.WORKTIME);
-        const sUrl = '/LeaveApplEmpListSet';
+      readLeaveApplEmpList({ Awart, Begda, Endda }) {
+        return new Promise((resolve, reject) => {
+          const oModel = this.getModel(ServiceNames.WORKTIME);
+          const sUrl = '/LeaveApplEmpListSet';
 
-        oModel.read(sUrl, {
-          filters: [
-            new Filter('Prcty', FilterOperator.EQ, 'C'), //
-            new Filter('Awart', FilterOperator.EQ, oFormData.Awart),
-            new Filter('Begda', FilterOperator.EQ, moment(oFormData.Begda).hour(9).toDate()),
-            new Filter('Endda', FilterOperator.EQ, moment(oFormData.Endda).hour(9).toDate()),
-          ],
-          success: (oData) => {
-            this.debug(`${sUrl} success.`, oData);
-          },
-          error: (oError) => {
-            this.debug(`${sUrl} error.`, oError);
-          },
+          oModel.read(sUrl, {
+            filters: [
+              new Filter('Prcty', FilterOperator.EQ, 'C'), //
+              new Filter('Awart', FilterOperator.EQ, Awart),
+              new Filter('Begda', FilterOperator.EQ, moment(Begda).hour(9).toDate()),
+              new Filter('Endda', FilterOperator.EQ, moment(Endda).hour(9).toDate()),
+            ],
+            success: (oData) => {
+              this.debug(`${sUrl} success.`, oData);
+
+              resolve(oData.results[0]);
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, oError);
+
+              reject(oError);
+            },
+          });
         });
       }
     }

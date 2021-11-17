@@ -5,8 +5,8 @@
         <table:columns>
             <table:Column width="12%">
                 <table:multiLabels>
-                    <Label text="근태유형" />
-                    <Label text="근태유형" />
+                    <Label text="{i18n>LABEL_04010}" />
+                    <Label text="{i18n>LABEL_04010}" />
                 </table:multiLabels>
                 <table:template>
                     <Text text="{Atext}" width="100%" textAlign="Center" />
@@ -14,8 +14,8 @@
             </table:Column>
             <table:Column width="12%" headerSpan="3">
                 <table:multiLabels>
-                    <Label text="변경 전" />
-                    <Label text="시작일" />
+                    <Label text="{i18n>LABEL_04011}" />
+                    <Label text="{i18n>LABEL_00148}" />
                 </table:multiLabels>
                 <table:template>
                     <Text text="{BegdaTxt}" width="100%" textAlign="Center" />
@@ -23,8 +23,8 @@
             </table:Column>
             <table:Column width="12%">
                 <table:multiLabels>
-                    <Label text="변경 전" />
-                    <Label text="종료일" />
+                    <Label text="{i18n>LABEL_04011}" />
+                    <Label text="{i18n>LABEL_00149}" />
                 </table:multiLabels>
                 <table:template>
                     <Text text="{EnddaTxt}" width="100%" textAlign="Center" />
@@ -32,8 +32,8 @@
             </table:Column>
             <table:Column width="8%">
                 <table:multiLabels>
-                    <Label text="변경 전" />
-                    <Label text="일수" />
+                    <Label text="{i18n>LABEL_04011}" />
+                    <Label text="{i18n>LABEL_00155}" />
                 </table:multiLabels>
                 <table:template>
                     <Text text="{Abrtg}" width="100%" textAlign="Center" />
@@ -41,8 +41,8 @@
             </table:Column>
             <table:Column width="12%" headerSpan="3">
                 <table:multiLabels>
-                    <Label text="변경 후" />
-                    <Label text="시작일" />
+                    <Label text="{i18n>LABEL_04012}" />
+                    <Label text="{i18n>LABEL_00148}" />
                 </table:multiLabels>
                 <table:template>
                     <Text text="{BegdaTxt}" width="100%" textAlign="Center" />
@@ -50,8 +50,8 @@
             </table:Column>
             <table:Column width="12%">
                 <table:multiLabels>
-                    <Label text="변경 후" />
-                    <Label text="종료일" />
+                    <Label text="{i18n>LABEL_04012}" />
+                    <Label text="{i18n>LABEL_00149}" />
                 </table:multiLabels>
                 <table:template>
                     <Text text="{EnddaTxt}" width="100%" textAlign="Center" />
@@ -59,8 +59,8 @@
             </table:Column>
             <table:Column width="8%">
                 <table:multiLabels>
-                    <Label text="변경 후" />
-                    <Label text="일수" />
+                    <Label text="{i18n>LABEL_04012}" />
+                    <Label text="{i18n>LABEL_00155}" />
                 </table:multiLabels>
                 <table:template>
                     <Text text="{Abrtg}" width="100%" textAlign="Center" />
@@ -68,8 +68,8 @@
             </table:Column>
             <table:Column width="24%">
                 <table:multiLabels>
-                    <Label text="변경사유" />
-                    <Label text="변경사유" />
+                    <Label text="{i18n>LABEL_04013}" />
+                    <Label text="{i18n>LABEL_04013}" />
                 </table:multiLabels>
                 <table:template>
                     <Text text="{Tmrsn}" width="100%" textAlign="Center" />

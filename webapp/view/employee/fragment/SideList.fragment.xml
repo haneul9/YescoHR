@@ -1,11 +1,11 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <IconTabFilter text="사원리스트" key="list">
+    <IconTabFilter text="{i18n>LABEL_00279}" key="list">
         <SegmentedButton width="100%" selectedKey="{/sideNavigation/search/selectedState}" selectionChange=".onChangeStat">
             <items>
-                <SegmentedButtonItem text="전체" key="" />
-                <SegmentedButtonItem text="재직자" key="3" />
-                <SegmentedButtonItem text="퇴직자" key="0" />
+                <SegmentedButtonItem text="{i18n>LABEL_00245}" key="" />
+                <SegmentedButtonItem text="{i18n>LABEL_00277}" key="3" />
+                <SegmentedButtonItem text="{i18n>LABEL_00278}" key="0" />
             </items>
         </SegmentedButton>
         <ScrollContainer height="700px" horizontal="false" vertical="true">
@@ -21,15 +21,15 @@
                                 <core:Icon visible="{= !!${Manager}}" src="sap-icon://manager" />
                             </HBox>
                             <HBox>
-                                <Label text="소속" />
+                                <Label text="{i18n>LABEL_00226}" />
                                 <Label text="{Pbtxt} {Fulln}" />
                             </HBox>
                             <HBox>
-                                <Label text="근속" />
+                                <Label text="{i18n>LABEL_00280}" />
                                 <Label text="{Text1}" />
                             </HBox>
                             <HBox>
-                                <Label text="직무" />
+                                <Label text="{i18n>LABEL_00222}" />
                                 <Label text="{Text2}" />
                             </HBox>
                         </VBox>

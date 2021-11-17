@@ -7,16 +7,16 @@
             <HBox justifyContent="SpaceBetween">
                 <core:Fragment fragmentName="sap.ui.yesco.fragment.Navigation" type="XML" />
                 <HBox>
-                    <Button type="Transparent" icon="sap-icon://crm-service-manager" text="인사기록부 출력" />
-                    <Button type="Transparent" icon="sap-icon://print" text="프린트" />
-                    <Button type="Transparent" icon="sap-icon://sys-help" text="도움말" />
+                    <Button type="Transparent" icon="sap-icon://crm-service-manager" text="{i18n>LABEL_00275}" />
+                    <Button type="Transparent" icon="sap-icon://print" text="{i18n>LABEL_00131}" />
+                    <Button type="Transparent" icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" />
                 </HBox>
             </HBox>
             <HBox>
                 <VBox class="customBox" width="{= ${/sideNavigation/width}}">
                     <HBox justifyContent="SpaceBetween">
-                        <SearchField width="320px" value="{/sideNavigation/search/searchText}" placeholder="사번 또는 성명" visible="{= ${/sideNavigation/isShow}}" search=".onPressEmployeeSearch" />
-                        <Switch state="true" customTextOn="닫기" customTextOff="열기" change=".onToggleNavigation"/>
+                        <SearchField width="320px" value="{/sideNavigation/search/searchText}" placeholder="{i18n>LABEL_00276}" visible="{= ${/sideNavigation/isShow}}" search=".onPressEmployeeSearch" />
+                        <Switch state="true" customTextOn="{i18n>LABEL_00115}" customTextOff="{i18n>LABEL_00153}" change=".onToggleNavigation"/>
                     </HBox>
                     <IconTabBar selectedKey="list" expandable="false" visible="{= ${/sideNavigation/isShow}}" select=".onSelectSideTab">
                         <layoutData>

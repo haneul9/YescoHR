@@ -3,22 +3,22 @@
     xmlns:grid="sap.ui.layout.cssgrid">
     <Dialog id="formDialog" showHeader="false" contentWidth="600px">
         <buttons>
-            <Button type="Emphasized" text="저장" press=".onPressFormDialogSave"/>
-            <Button text="닫기" press=".onPressFormDialogClose"/>
+            <Button type="Emphasized" text="{i18n>LABEL_00103}" press=".onPressFormDialogSave"/>
+            <Button text="{i18n>LABEL_00115}" press=".onPressFormDialogClose"/>
         </buttons>
-        <Panel expanded="true" headerText="신청사항">
+        <Panel expanded="true" headerText="{i18n>LABEL_00156}">
             <content>
                 <grid:CSSGrid gridTemplateColumns="1fr 4fr" gridGap="8px">
-                    <Label text="근태유형" />
+                    <Label text="{i18n>LABEL_04010}" />
                     <ComboBox width="250px" selectedKey="{/form/dialog/data/Awart}" items="{ path: '/form/dialog/awartCodeList' }" change=".onChangeAwartCombo">
                         <core:Item key="{Awart}" text="{Atext}" />
                     </ComboBox>
-                    <Label text="근태일자" />
+                    <Label text="{i18n>LABEL_04014}" />
                     <HBox>
                         <DateRangeSelection width="250px" class="sapIcon_Date" dateValue="{/form/dialog/data/Begda}" secondDateValue="{/form/dialog/data/Endda}" editable="{= ${/form/dialog/data/Awart} !== 'ALL'}" change=".onChangeLeaveDate" />
                         <Input width="50px" value="{/form/dialog/data/Abrtg}" editable="false" />
                     </HBox>
-                    <Label text="사유" />
+                    <Label text="{i18n>LABEL_00154}" />
                     <Input width="400px" value="{/form/dialog/data/Tmrsn}" editable="{= ${/form/dialog/data/Awart} !== 'ALL'}" />
                 </grid:CSSGrid>
             </content>
