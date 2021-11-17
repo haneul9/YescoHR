@@ -172,6 +172,23 @@ sap.ui.define(
       },
 
       /**
+       * Convenience method for getting the resource bundle text.
+       * @public
+       * @param {...string} aArgs keys of resource bundle text.
+       * @returns {string} The value belonging to the key, if found; otherwise the key itself.
+       */
+      getBundleText(...aArgs) {
+        const sKey = aArgs.shift();
+        const oResourceBundle = this.getModel('i18n').getResourceBundle();
+        if (aArgs.length) {
+          aArgs = aArgs.map((sArg) => {
+            return oResourceBundle.getText(sArg);
+          });
+        }
+        return oResourceBundle.getText(sKey, aArgs);
+      },
+
+      /**
        * Routing event handler 처리
        * @param {object} oRouter
        */

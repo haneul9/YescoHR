@@ -14,25 +14,25 @@ sap.ui.define(
     return {
       ...SapMMessageBox,
       alert(vMessage, mOptions = {}) {
-        SapMMessageBox.alert(vMessage, { ...mOptions, title: AppUtils.getAppController().getText('LABEL_ALERT') }); // 안내
+        SapMMessageBox.alert(vMessage, { ...mOptions, title: AppUtils.getBundleText('LABEL_ALERT') }); // 안내
       },
       confirm(vMessage, mOptions = {}) {
-        SapMMessageBox.confirm(vMessage, { ...mOptions, title: AppUtils.getAppController().getText('LABEL_CONFIRM') }); // 확인
+        SapMMessageBox.confirm(vMessage, { ...mOptions, title: AppUtils.getBundleText('LABEL_CONFIRM') }); // 확인
       },
       error(vMessage, mOptions = {}) {
-        SapMMessageBox.error(vMessage, { ...mOptions, title: AppUtils.getAppController().getText('LABEL_ERROR') }); // 오류
+        SapMMessageBox.error(vMessage, { ...mOptions, title: AppUtils.getBundleText('LABEL_ERROR') }); // 오류
       },
       information(vMessage, mOptions = {}) {
-        SapMMessageBox.information(vMessage, { ...mOptions, title: AppUtils.getAppController().getText('LABEL_INFORMATION') }); // 정보
+        SapMMessageBox.information(vMessage, { ...mOptions, title: AppUtils.getBundleText('LABEL_INFORMATION') }); // 정보
       },
       show(vMessage, mOptions = {}) {
-        SapMMessageBox.show(vMessage, { ...mOptions, title: AppUtils.getAppController().getText('LABEL_SHOW') }); // 보기
+        SapMMessageBox.show(vMessage, { ...mOptions, title: AppUtils.getBundleText('LABEL_SHOW') }); // 보기
       },
       success(vMessage, mOptions = {}) {
-        SapMMessageBox.success(vMessage, { ...mOptions, title: AppUtils.getAppController().getText('LABEL_SUCCESS') }); // 성공
+        SapMMessageBox.success(vMessage, { ...mOptions, title: AppUtils.getBundleText('LABEL_SUCCESS') }); // 성공
       },
       warning(vMessage, mOptions = {}) {
-        SapMMessageBox.warning(vMessage, { ...mOptions, title: AppUtils.getAppController().getText('LABEL_WARNING') }); // 경고
+        SapMMessageBox.warning(vMessage, { ...mOptions, title: AppUtils.getBundleText('LABEL_WARNING') }); // 경고
       },
     };
   }

@@ -88,29 +88,13 @@ sap.ui.define(
       }
 
       /**
-       * Convenience method for getting the resource bundle.
-       * @public
-       * @returns {sap.ui.model.resource.ResourceModel} the resourceModel of the component
-       */
-      getResourceBundle() {
-        return this.getOwnerComponent().getModel('i18n').getResourceBundle();
-      }
-
-      /**
        * Convenience method for getting the resource bundle text.
        * @public
-       * @param {string[]} aArgs a key of resource bundle text.
+       * @param {...string} aArgs a key of resource bundle text.
        * @returns {string} The value belonging to the key, if found; otherwise the key itself.
        */
-      getText(...aArgs) {
-        const sKey = aArgs.shift();
-        const oResourceBundle = this.getResourceBundle();
-        if (aArgs.length) {
-          aArgs = aArgs.map((sArg) => {
-            return oResourceBundle.getText(sArg);
-          });
-        }
-        return oResourceBundle.getText(sKey, aArgs);
+      getBundleText(...aArgs) {
+        return this.getOwnerComponent().getBundleText(...aArgs);
       }
 
       /**
