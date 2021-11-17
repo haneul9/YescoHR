@@ -158,6 +158,14 @@ sap.ui.define(
         this.getRouter().navTo('congratulation-detail', { oDataKey: oRowData.Appno });
         // this.getRouter().getTargets().display('congDetail', { oDataKey: oRowData.Appno });
       }
+
+      onPressExcelDownload() {
+        const oTable = this.byId('conguTable');
+        const mTableData = this.getViewModel().getProperty('/CongList');
+        const sFileName = this.getBundleText('LABEL_00282', '경조금 신청');
+
+        TableUtils.export({ oTable, mTableData, sFileName });
+      }
     }
 
     return Congratulation;

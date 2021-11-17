@@ -256,22 +256,13 @@ sap.ui.define(
                 const Attachbox = this.byId("ATTACHBOX");
                 const vAttachDatas = Attachbox.getModel().getProperty("/Data") || [];
                 const aDeleteFiles = Attachbox.getModel().getProperty("/DelelteDatas") || [];
+                const oAttachTable = this.byId("attachTable");
         
-                try {
-                    const _handleSuccess = function (data) {                        
-                        console.log("파일 업로드를 완료하였습니다." + ", " + data);
-                    };
-                    const _handleError = function (data) {
-                        const errorMsg = "파일 업로드에 실패하였습니다.";
-        
-                        console.log("Error: " + data);
-                        sap.m.MessageToast.show(errorMsg, { my: "center center", at: "center center"});
-                    };
-        
+                return new Promise((resolve, reject) => {        
                     // 파일 삭제
                     if(!!aDeleteFiles.length) {
                         let bDeleteFlag = true;
-
+    
                         Promise.all([
                             aDeleteFiles.forEach(e => {
                                 bDeleteFlag= new Promise(resolve => {
@@ -289,9 +280,9 @@ sap.ui.define(
                     }
         
                     // 신규 등록된 파일만 업로드
-                    if (vAttachDatas.every(e => !e.New)) return;
+                    if (vAttachDatas.every(e => !e.New)) return resolve();
         
-                    vAttachDatas.forEach(function (elem) {
+                    vAttachDatas.forEach((elem) => {
                         if(elem.New === true) {
                             oModel.refreshSecurityToken();
                             const oRequest = oModel._createRequest();
@@ -311,15 +302,23 @@ sap.ui.define(
                                 contentType: elem.type,
                                 processData: false,
                                 data: elem,
-                                success: _handleSuccess.bind(this),
-                                error: _handleError.bind(this)
+                                success: (data) => {
+                                    this.debug("파일 업로드를 완료하였습니다." + ", " + data);
+                                    resolve();
+                                },
+                                error: (data) => {
+                                    const errorMsg = "파일 업로드에 실패하였습니다.";
+
+                                    this.debug("Error: " + data);
+                                    reject(errorMsg);
+                                },
+                                complete: () => {
+                                    oAttachTable.clearSelection();
+                                }
                             });
                         }
-                    }.bind(this));
-                    this.byId("attachTable").clearSelection();
-                } catch (oException) {
-                    jQuery.sap.log.error("File upload failed:\n" + oException.message);
-                }
+                    });
+                });
             },
 
             /*
