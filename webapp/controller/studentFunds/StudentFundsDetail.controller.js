@@ -725,7 +725,7 @@ sap.ui.define(
           Editable: !sStatus || sStatus === '10',
           Type: this.TYPE_CODE,
           Appno: sAppno,
-          Message: this.getBundleText('MSG_00039'),
+          Message: this.getBundleText('MSG_00040'),
           Max: 10,
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
         });

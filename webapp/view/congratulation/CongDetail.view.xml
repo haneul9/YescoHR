@@ -50,8 +50,6 @@
 						</Select>
 						<Label text="{i18n>LABEL_02016}"/>
 						<Input valueState="Warning" value="{/FormData/Zeloc}" class="LongInputBase" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
-						<!-- <Label text="실재 경조일"/>
-						<DatePicker dateValue="{/FormData/Conrdate}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" /> -->
 						<Label text="{i18n>LABEL_02017}"/>
 						<HBox class="mb-0 ">
 							<Input id="RelationTxt" valueState="Warning" class="SmallInput" value="{/FormData/Zname}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
@@ -73,8 +71,6 @@
 					</grid:CSSGrid>
 				</VBox>
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
-				<!-- <mvc:XMLView viewName="sap.ui.yesco.view.CommonAttachFile"/> -->
-				<!-- <core:Fragment fragmentName="sap.ui.yesco.fragment.Applicant" type="XML" /> -->
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.ApplyInfo" type="XML" />
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.ApprovalDetails" type="XML" />
 			</VBox>

@@ -31,9 +31,14 @@ sap.ui.define(
       }
 
       onBeforeShow() {
+        const dDate = new Date();
         const oViewModel = new JSONModel({
           busy: false,
           Data: [],
+          searchDate: {
+            date: dDate,
+            secondDate: new Date(dDate.getFullYear(), dDate.getMonth() - 1, dDate.getDate() + 1),
+          },
           listInfo: {
             rowCount: 1,
             totalCount: 0,
@@ -47,13 +52,6 @@ sap.ui.define(
         this.setViewModel(oViewModel);
 
         EmpInfo.get.call(this, true);
-
-        const oSearchDate = this.byId('SearchDate');
-        const dDate = new Date();
-        const dDate2 = new Date(dDate.getFullYear(), dDate.getMonth() - 1, dDate.getDate() + 1);
-
-        oSearchDate.setDateValue(dDate2);
-        oSearchDate.setSecondDateValue(dDate);
       }
 
       onAfterShow() {
@@ -66,14 +64,6 @@ sap.ui.define(
         this.getRouter().navTo('congratulation-detail', { oDataKey: 'N' });
       }
 
-      onExelDownload() {
-        const oTable = this.byId('conguTable');
-        const mTableData = this.getViewModel().getProperty('/CongList');
-        const sFileName = '경조금신청_목록';
-
-        TableUtils.export({ oTable, mTableData, sFileName });
-      }
-
       formatNumber(vNum) {
         if (!vNum || vNum === '') return '0';
 
@@ -83,35 +73,35 @@ sap.ui.define(
       formatPay(vPay) {
         if (!vPay || vPay === '0') return '0';
 
-        return `${vPay}만원`;
+        return `${vPay}${this.getBundleText('LABEL_00157')}`;
       }
 
       getTotalPay() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oTotalModel = this.getViewModel();
+        const sUrl = '/ConExpenseMyconSet';
 
-        oModel.read('/ConExpenseMyconSet', {
-          success: function (oData) {
+        oModel.read(sUrl, {
+          success: (oData) => {
             if (oData) {
-              // Common.log(oData);
+              this.debug(`${sUrl} success.`, oData);
               const oTotal = oData.results[0];
 
               oTotalModel.setProperty('/Total', oTotal);
             }
           },
-          error: function (oRespnse) {
-            // Common.log(oResponse);
+          error: (oRespnse) => {
+            this.debug(`${sUrl} error.`, oRespnse);
           },
         });
       }
 
       onSearch() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oSearchDate = this.byId('SearchDate');
         const oListModel = this.getViewModel();
-        const oController = this;
-        const dDate = moment(oSearchDate.getDateValue()).hours(10).toDate();
-        const dDate2 = moment(oSearchDate.getSecondDateValue()).hours(10).toDate();
+        const oSearchDate = oListModel.getProperty("/searchDate");
+        const dDate = moment(oSearchDate.secondDate).hours(10).toDate();
+        const dDate2 = moment(oSearchDate.date).hours(10).toDate();
 
         oListModel.setProperty('/busy', true);
 
@@ -122,30 +112,22 @@ sap.ui.define(
             new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate),
             new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2),
           ],
-          success: function (oData) {
+          success: (oData) => {
             if (oData) {
-              // Common.log(oData);
               const oList = oData.results.map((o) => {
                 return {
                   ...o,
                   Pernr: parseInt(o.Pernr, 10),
                 };
               });
-              // let vNo = 0;
 
-              // oList.forEach((e) => {
-              //   vNo = vNo + 1;
-              //   e.No = vNo;
-              // });
-
-              TableUtils.count.call(oController, oList);
+              TableUtils.count.call(this, oList);
               oListModel.setProperty('/CongList', oList);
-              oController.byId('conguTable').setVisibleRowCount(oList.length);
+              this.byId('conguTable').setVisibleRowCount(oList.length);
               oListModel.setProperty('/busy', false);
             }
           },
-          error: function (oRespnse) {
-            // Common.log(oResponse);
+          error: (oRespnse) => {
             oListModel.setProperty('/busy', false);
           },
         });
@@ -156,13 +138,12 @@ sap.ui.define(
         const oRowData = this.getViewModel().getProperty(vPath);
 
         this.getRouter().navTo('congratulation-detail', { oDataKey: oRowData.Appno });
-        // this.getRouter().getTargets().display('congDetail', { oDataKey: oRowData.Appno });
       }
 
       onPressExcelDownload() {
         const oTable = this.byId('conguTable');
         const mTableData = this.getViewModel().getProperty('/CongList');
-        const sFileName = this.getBundleText('LABEL_00282', '경조금 신청');
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_02022');
 
         TableUtils.export({ oTable, mTableData, sFileName });
       }

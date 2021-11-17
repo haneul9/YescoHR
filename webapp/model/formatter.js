@@ -33,14 +33,6 @@ sap.ui.define([], () => {
       this.getViewModel().setProperty(vPath, convertValue);
     },
 
-    getPosition() {
-      const oViewModel = this.getViewModel();
-
-      if (!oViewModel.getProperty('/TargetInfo/Zzjikgbt')) return;
-
-      return `${oViewModel.getProperty('/TargetInfo/Zzjikgbt')}/${oViewModel.getProperty('/TargetInfo/Zzjiktlt')}`;
-    },
-
     setAppdt(vAppdt) {
       if (typeof vAppdt === 'string') {
         return `${vAppdt.slice(0, 4)}.${vAppdt.slice(4, 6)}.${vAppdt.slice(6, 8)}, ${vAppdt.slice(9, 11)}:${vAppdt.slice(11, 13)}`;

@@ -3,7 +3,8 @@
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:table="sap.ui.table"
 	xmlns:grid="sap.ui.layout.cssgrid"
-	xmlns:core="sap.ui.core">
+	xmlns:core="sap.ui.core"
+	xmlns:custom="sap.ui.yesco.control">
 	<Page showHeader="false">
 		<content>
 			<HBox justifyContent="SpaceBetween">
@@ -54,7 +55,7 @@
 					</HBox>
 					<grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="8px">
 						<Label text="{i18n>LABEL_00266}" design="Bold" />
-						<DateRangeSelection class="sapIcon_DateRange" id="SearchDate"/>
+						<custom:DateRangeSelection dateValue="{/searchDate/secondDate}" secondDateValue="{/searchDate/date}" class="sapIcon_DateRange" />
 					</grid:CSSGrid>
 				</VBox>
 			</HBox>
@@ -69,15 +70,8 @@
 					</table:rowSettingsTemplate>
 					<table:columns>
 						<table:Column width="100px">
-							<Label text="상태"/>
+							<Label text="{i18n>LABEL_00144}"/>
 							<table:template>
-								<!-- <ObjectStatus text="{
-											path: 'ZappStatAl',
-											formatter: '.TableUtils.StatusTxt'
-										}" state="{
-											path: 'ZappStatAl',
-											formatter: '.TableUtils.rowHighlight'
-										}" /> -->
 								<Text text="{
 										path: 'ZappStatAl',
 										formatter: '.TableUtils.StatusTxt'

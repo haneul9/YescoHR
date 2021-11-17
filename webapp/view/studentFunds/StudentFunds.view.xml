@@ -1,8 +1,6 @@
 <mvc:View controllerName="sap.ui.yesco.controller.studentFunds.StudentFunds"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:table="sap.ui.table"
-	xmlns:grid="sap.ui.layout.cssgrid"
 	xmlns:core="sap.ui.core">
 	<Page showHeader="false">
 		<content>

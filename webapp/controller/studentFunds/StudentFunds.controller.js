@@ -87,7 +87,6 @@ sap.ui.define(
           ],
           success: (oData) => {
             if (oData) {
-              // Common.log(oData);
               const oList = oData.results;
 
               TableUtils.count.call(this, oList);
@@ -97,7 +96,6 @@ sap.ui.define(
             }
           },
           error: (oRespnse) => {
-            // Common.log(oResponse);
             oListModel.setProperty('/busy', false);
           },
         });

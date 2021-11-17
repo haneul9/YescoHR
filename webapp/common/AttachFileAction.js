@@ -234,7 +234,7 @@ sap.ui.define(
                             })
                         ]).then(bFileSucces => {
                             if(!bFileSucces) {
-                                MessageBox.alert(this.getBundleText('MSG_00040'));
+                                MessageBox.alert(this.getBundleText('MSG_00041'));
                                 return;
                             }
                         });
@@ -266,7 +266,7 @@ sap.ui.define(
                                     resolve();
                                 },
                                 error: (data) => {
-                                    const errorMsg = this.getBundleText('MSG_00040');
+                                    const errorMsg = this.getBundleText('MSG_00041');
 
                                     this.debug(`Error: ${data}`);
                                     resolve(errorMsg);
@@ -327,7 +327,7 @@ sap.ui.define(
                             oJSonModel.setProperty("/DelelteDatas", aDeleteList);
                             oTable.setVisibleRowCount(aResult.length);
                             this.byId("attachTable").clearSelection()
-                            MessageBox.alert(this.getBundleText('MSG_00041')); // 파일 삭제가 완료되었습니다.
+                            MessageBox.alert(this.getBundleText('MSG_00042')); // 파일 삭제가 완료되었습니다.
                         }
                     }
                 });
