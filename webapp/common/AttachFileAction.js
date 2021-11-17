@@ -7,8 +7,8 @@ sap.ui.define(
     ],
     (
         ServiceManager,
-        ServiceNames,
-        MessageBox,
+	ServiceNames,
+	MessageBox,
     ) => {
         'use strict';
 
@@ -17,7 +17,7 @@ sap.ui.define(
             * 파일첨부 panel 및 FileUploader Control의 표시여부 등을 설정
             * 문서상태 및 첨부파일 여부에 따라 Control의 표시여부를 결정한다.
             */
-            setAttachFile: function (oController, opt) {
+            setAttachFile(oController, opt) {
                 const options = $.extend(
                         true,
                         { 
@@ -51,13 +51,8 @@ sap.ui.define(
             */
             uploadComplete(oEvent) {
                 const sResponse = oEvent.getParameter("response");
-                // const oFileUploader = oController.byId([this.PAGEID, "ATTACHFILE_BTN"].join(this.SEQ || "_"));
 
-                MessageBox.alert(sResponse, { title: "안내" });
-
-                // oFileUploader.setValue("");
-
-                // common.AttachFileAction.refreshAttachFileList(this);
+                MessageBox.alert(sResponse);
             },
 
             /*
@@ -66,7 +61,6 @@ sap.ui.define(
             onFileChange(oEvent) {
                 const oAttachbox = this.byId("ATTACHBOX");
                 const oFileUploader = this.byId("ATTACHFILE_BTN");
-                // const f1 = document.getElementById("ATTACHFILE_BTN-fu_input-inner");
                 const JSonModel = oAttachbox.getModel();
                 const aFileList = [];
                 const vMode = JSonModel.getProperty("/Settings/Mode");
@@ -81,16 +75,15 @@ sap.ui.define(
                 }
 
                 if (!!files) {
-                    vFileData.forEach(function(elem) {
+                    vFileData.forEach((elem) => {
                         aFileList.push(elem);
                     });
 
                     if(vMode === "M" && (vFileData.length + files.length) > vMax) {
                         oFileUploader.clear();
                         oFileUploader.setValue("");
-                        // if (f1) f1.setAttribute("value", "");
 
-                        sap.m.MessageToast.show(this.getBundleText("MSG_00036").interpolate(vMax), { my: "center center", at: "center center"});
+                        MessageBox.alert(this.getBundleText("MSG_00014", vMax));
 
                         return;
                     }
@@ -116,9 +109,6 @@ sap.ui.define(
 
                 oFileUploader.clear();
                 oFileUploader.setValue("");
-                // if (f1) f1.setAttribute("value", "");
-
-                // if(typeof AttachFileAction.fnChange === "function") AttachFileAction.fnChange.call(this);
             },
 
             /*
@@ -136,7 +126,6 @@ sap.ui.define(
             * 첨부파일 리스트를 Binding한다.
             */
             refreshAttachFileList(oController) {
-                // const f1 = document.getElementById("ATTACHFILE_BTN-fu_input-inner");
                 const oAttachbox = oController.byId("ATTACHBOX");
                 const oAttachFileList = oController.byId("attachTable");
                 const oFileUploader = oController.byId("ATTACHFILE_BTN");
@@ -145,58 +134,32 @@ sap.ui.define(
                 const vAttachFileDatas = JSonModel.getProperty("/Settings");
                 const Datas = { Data: [] };
 
-                // JSonModel.setProperty("/Settings/Length", 0);
                 JSonModel.setProperty("/Data", []);
-
-                // if(!vAppnm) {
-                //     if(typeof common.AttachFileAction.fnRetrieveCallback === "function") common.AttachFileAction.fnRetrieveCallback.call(this);
-                //     return;
-                // }
-
                 oAttachbox.setBusyIndicatorDelay(0).setBusy(true);
-
-                // if (f1) f1.setAttribute("value", "");
-
                 oFileUploader.clear();
                 oFileUploader.setValue("");
-                // oAttachFileList.removeSelections(true);
 
                 oModel.read("/FileListSet", {
-                    async: false,
                     filters: [
                         new sap.ui.model.Filter("Appno", sap.ui.model.FilterOperator.EQ, vAttachFileDatas.Appno),
                         new sap.ui.model.Filter("Zworktyp", sap.ui.model.FilterOperator.EQ, vAttachFileDatas.Type)
                     ],
-                    success: function (data) {
+                    success: (data) => {
                         if (data && data.results.length) {
-                            data.results.forEach(function (elem) {
+                            data.results.forEach((elem) => {
                                 elem.New = false;
-                                // elem.Type = elem.Zfilename.substring(elem.Zfilename.lastIndexOf(".") + 1);
-                                // elem.Url = elem.Fileuri.replace(/retriveScpAttach/, "retriveAttach");
-                                // elem.Mresource_convert = "data:${mimetype};base64,${resource}".interpolate(elem.Mimetype, elem.Mresource);
-
                                 Datas.Data.push(elem);
                             });
                         }
 
-                        // DB저장 전 올린 File List 를 배열에 담는다. ( 이후에 DB에 저장 된 File List 와 결합하여 보여줌 )
-                        // if (vExistDataFlag == "X" && vAttachFileDatas) {
-                        //     vAttachFileDatas.forEach(function (elem) {
-                        //         if(elem.New === true) Datas.Data.push(elem);
-                        //     });
-                        // }
-
                         JSonModel.setProperty("/Settings/Length", Datas.Data.length);
                         JSonModel.setProperty("/Data", Datas.Data);
                         oAttachFileList.setVisibleRowCount(Datas.Data.length);
-
                         oAttachbox.setBusy(false);
-                        // if(typeof common.AttachFileAction.fnRetrieveCallback === "function") common.AttachFileAction.fnRetrieveCallback.call(this);
                     },
-                    error: function (res) {
-                        // common.Common.log(res);
+                    error: (res) => {
+                        this.debug(`${sUrl} error.`, res);
                         oAttachbox.setBusy(false);
-                        // if(typeof common.AttachFileAction.fnRetrieveCallback === "function") common.AttachFileAction.fnRetrieveCallback.call(this);
                     }
                 })
             },
@@ -216,9 +179,9 @@ sap.ui.define(
                         new sap.ui.model.Filter("Appno", sap.ui.model.FilterOperator.EQ, oTableRowData.Appno),
                         new sap.ui.model.Filter("Zworktyp", sap.ui.model.FilterOperator.EQ, oController.TYPE_CODE)
                     ],
-                    success: function (data) {
+                    success: (data) => {
                         if (data && data.results.length) {
-                            data.results.forEach(function (elem) {
+                            data.results.forEach((elem) => {
                                 elem.New = false;
                                 Datas.Data.push(elem);
                             });
@@ -228,8 +191,8 @@ sap.ui.define(
                         JSonModel.setProperty("/Data/busy", false);
                         oListFileTable.setVisibleRowCount(Datas.Data.length);
                     },
-                    error: function (res) {
-                        // common.Common.log(res);
+                    error: (res) => {
+                        this.debug(`${sUrl} error.`, res);
                         JSonModel.setProperty("/Data/busy", false);
                     }
                 })
@@ -238,7 +201,7 @@ sap.ui.define(
             /*
             * 첨부파일 길이
             */
-            getFileLength: function () {
+            getFileLength() {
                 const Attachbox = this.byId("ATTACHBOX");
                 const vAttachDatas = Attachbox.getModel().getProperty("/Data");
         
@@ -249,8 +212,6 @@ sap.ui.define(
             *   첨부파일 Upload
             */
             uploadFile(Appno, Type) {
-                // const oModel = this.getModel(ServiceNames.COMMON);
-                const oController = this;
                 const sServiceUrl = ServiceManager.getServiceUrl('ZHR_COMMON_SRV', this.getOwnerComponent());
                 const oModel = new sap.ui.model.odata.ODataModel(sServiceUrl, true, undefined, undefined, undefined, undefined, undefined, false);
                 const Attachbox = this.byId("ATTACHBOX");
@@ -258,7 +219,7 @@ sap.ui.define(
                 const aDeleteFiles = Attachbox.getModel().getProperty("/DelelteDatas") || [];
                 const oAttachTable = this.byId("attachTable");
         
-                return new Promise((resolve, reject) => {        
+                return new Promise((resolve) => {        
                     // 파일 삭제
                     if(!!aDeleteFiles.length) {
                         let bDeleteFlag = true;
@@ -266,14 +227,14 @@ sap.ui.define(
                         Promise.all([
                             aDeleteFiles.forEach(e => {
                                 bDeleteFlag= new Promise(resolve => {
-                                    oController.AttachFileAction.callDeleteFileService(oController, e);
-                                    oController.byId("attachTable").clearSelection();
+                                    this.AttachFileAction.callDeleteFileService(this, e);
+                                    this.byId("attachTable").clearSelection();
                                     resolve(bDeleteFlag);
                                 });
                             })
                         ]).then(bFileSucces => {
                             if(!bFileSucces) {
-                                sap.m.MessageToast.show("파일 업로드에 실패하였습니다.", { my: "center center", at: "center center"});
+                                MessageBox.alert(this.getBundleText('MSG_00040'));
                                 return;
                             }
                         });
@@ -290,9 +251,7 @@ sap.ui.define(
                                 "x-csrf-token": oRequest.headers["x-csrf-token"],
                                 "slug": [Appno, Type, encodeURI(elem.Zfilename)].join("|")
                             };
-            
-                            // common.Common.log(oHeaders.slug);
-                            
+                                        
                             jQuery.ajax({
                                 type: "POST",
                                 async: false,
@@ -303,14 +262,14 @@ sap.ui.define(
                                 processData: false,
                                 data: elem,
                                 success: (data) => {
-                                    this.debug("파일 업로드를 완료하였습니다." + ", " + data);
+                                    this.debug(`${this.getBundleText('MSG_00016')}, ${data}`);
                                     resolve();
                                 },
                                 error: (data) => {
-                                    const errorMsg = "파일 업로드에 실패하였습니다.";
+                                    const errorMsg = this.getBundleText('MSG_00040');
 
-                                    this.debug("Error: " + data);
-                                    reject(errorMsg);
+                                    this.debug(`Error: ${data}`);
+                                    resolve(errorMsg);
                                 },
                                 complete: () => {
                                     oAttachTable.clearSelection();
@@ -324,8 +283,7 @@ sap.ui.define(
             /*
             * 첨부된 파일을 삭제처리
             */
-            onDeleteAttachFile: function () {
-                const oController = this;
+            onDeleteAttachFile() {
                 const oAttachbox = this.byId("ATTACHBOX");
                 const oJSonModel = oAttachbox.getModel();
                 const oTable = this.byId("attachTable");
@@ -333,51 +291,52 @@ sap.ui.define(
                 const aContexts = oTable.getSelectedIndices();
 
                 if (!aContexts.length) {
-                    MessageBox.alert("삭제할 파일을 선택하세요."); // 삭제할 파일을 선택하세요.
+                    MessageBox.alert(this.getBundleText('MSG_00018')); // 삭제할 파일을 선택하세요.
                     return;
                 }
 
-                // oTable.removeSelections(true);
-
-                var deleteProcess = function (fVal) {
-                    if(fVal === MessageBox.Action.YES) {   
-                        const aSelectFiles = [];
-
-                        aContexts.forEach(e => {
-                            aSelectFiles.push(aFileDatas[e]);
-                        });
-
-                        const aResult = aFileDatas.filter(e => {
-                            return !aSelectFiles.includes(e);
-                        });
-
-                        const iFileLeng = aResult.length;
-
-                        for (let i = 0; i < iFileLeng; i++) {
-                            if(!!aResult.length) {
-                                aResult[i].Seqnr = i + 1;
-                            }    
-                        }
-
-                        oJSonModel.setProperty("/Data", aResult);
-                        oJSonModel.setProperty("/DelelteDatas", aSelectFiles);
-                        oTable.setVisibleRowCount(aResult.length);
-                        oController.byId("attachTable").clearSelection()
-                        sap.m.MessageToast.show("파일 삭제가 완료되었습니다.", { my: "center center", at: "center center"}); // 파일 삭제가 완료되었습니다.
-                    }
-                };
-
-                MessageBox.show("선택한 파일을 삭제하시겠습니까?", {
-                    title: "확인",
+                MessageBox.confirm(this.getBundleText('MSG_00019'), {
                     actions: [MessageBox.Action.YES, MessageBox.Action.NO],
-                    onClose: deleteProcess
+                    onClose: (fVal) => {
+                        if(fVal === MessageBox.Action.YES) {   
+                            const aSelectFiles = [];
+                            const aDeleteList = [];
+    
+                            aContexts.forEach(e => {
+                                const oFileData = aFileDatas[e];
+
+                                if(!!oFileData.Appno) {
+                                    aDeleteList.push(oFileData);
+                                }
+                                aSelectFiles.push(oFileData);
+                            });
+    
+                            const aResult = aFileDatas.filter(e => {
+                                return !aSelectFiles.includes(e);
+                            });
+    
+                            const iFileLeng = aResult.length;
+    
+                            for (let i = 0; i < iFileLeng; i++) {
+                                if(!!aResult.length) {
+                                    aResult[i].Seqnr = i + 1;
+                                }    
+                            }
+    
+                            oJSonModel.setProperty("/Data", aResult);
+                            oJSonModel.setProperty("/DelelteDatas", aDeleteList);
+                            oTable.setVisibleRowCount(aResult.length);
+                            this.byId("attachTable").clearSelection()
+                            MessageBox.alert(this.getBundleText('MSG_00041')); // 파일 삭제가 완료되었습니다.
+                        }
+                    }
                 });
             },
 
             /*
             * 첨부파일 삭제 oData
             */
-            callDeleteFileService: function(oController, fileInfo) {
+            callDeleteFileService(oController, fileInfo) {
                 const oModel = oController.getModel(ServiceNames.COMMON);
                 const sPath = oModel.createKey("/FileListSet", {
                     Appno: fileInfo.Appno,
@@ -386,65 +345,14 @@ sap.ui.define(
                 });
         
                 oModel.remove(sPath, {
-                    success: function () {
+                    success: () => {
                         return true;
                     },
-                    error: function () {
+                    error: () => {
                         return false;
                     }
                 });
             },
-
-            // 임시저장
-            // uploadTemporaryFile(vBinkey, Type) {
-            //     const sServiceUrl = ServiceManager.getServiceUrl('ZHR_COMMON_SRV', this.getOwnerComponent());
-            //     const oModel = new sap.ui.model.odata.ODataModel(sServiceUrl, true, undefined, undefined, undefined, undefined, undefined, false);
-            //     const Attachbox = this.byId("ATTACHBOX");
-            //     const vAttachDatas = Attachbox.getModel().getProperty("/Data") || [];
-        
-            //     try {
-            //         const _handleSuccess = function (data) {                        
-            //             // common.Common.log("파일 업로드를 완료하였습니다." + ", " + data);
-            //         };
-            //         const _handleError = function (data) {
-            //             const errorMsg = "파일 업로드에 실패하였습니다.";
-        
-            //             // common.Common.log("Error: " + data);
-            //             sap.m.MessageToast.show(errorMsg, { my: "center center", at: "center center"});
-            //         };
-        
-            //         // 신규 등록된 파일만 업로드
-            //         if (!vAttachDatas) return;
-        
-            //         vAttachDatas.forEach(function (elem) {
-            //             if(elem.New === true) {
-            //                 oModel.refreshSecurityToken();
-            //                 const oRequest = oModel._createRequest();
-            //                 const oHeaders = {
-            //                     "x-csrf-token": oRequest.headers["x-csrf-token"],
-            //                     "slug": [vBinkey, Type, encodeURI(elem.Zfilename)].join("|")
-            //                 };
-            
-            //                 // common.Common.log(oHeaders.slug);
-                            
-            //                 jQuery.ajax({
-            //                     type: "POST",
-            //                     async: false,
-            //                     url: "/proxy/sap/opu/odata/sap/ZHR_BENEFIT_SRV/BinaryFileTabSet/",
-            //                     headers: oHeaders,
-            //                     cache: false,
-            //                     contentType: elem.type,
-            //                     processData: false,
-            //                     data: elem,
-            //                     success: _handleSuccess.bind(this),
-            //                     error: _handleError.bind(this)
-            //                 });
-            //             }
-            //         }.bind(this));
-            //     } catch (oException) {
-            //         jQuery.sap.log.error("File upload failed:\n" + oException.message);
-            //     }
-            // }
         }
     }
 );

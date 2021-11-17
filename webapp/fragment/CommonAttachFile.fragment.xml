@@ -7,7 +7,7 @@
         <HBox justifyContent="SpaceBetween">
             <HBox>
                 <Title level="H2" text="{i18n>LABEL_00248}" />
-                <Text text="{/Settings/Message}" visible="{= !!${/Settings/Message} ? true : false}" />
+                <Text text="{/Settings/Message}" visible="{= ${/Settings/Editable} &amp;&amp; !!${/Settings/Message}}" />
             </HBox>
             <HBox>
                 <u:FileUploader id="ATTACHFILE_BTN" visible="{/Settings/Editable}" maximumFileSize="{/Settings/maximumFileSize}" fileType="{/Settings/FileTypes}" change=".AttachFileAction.onFileChange" uploadComplete= ".uploadComplete" icon="sap-icon://add" buttonText= "{i18n>LABEL_00107}" buttonOnly= "true"/>

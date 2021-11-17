@@ -63,14 +63,6 @@ sap.ui.define(
         this.getRouter().navTo('studentFunds-detail', { oDataKey: 'N' });
       }
 
-      onExelDownload() {
-        const oTable = this.byId('studentTable');
-        const mTableData = this.getViewModel().getProperty('/StudentList');
-        const sFileName = '학자금신청_목록';
-
-        TableUtils.export({ oTable, mTableData, sFileName });
-      }
-
       formatNumber(vNum) {
         if (!vNum || vNum === '') return '0';
 
@@ -121,7 +113,7 @@ sap.ui.define(
       onPressExcelDownload() {
         const oTable = this.byId('studentTable');
         const mTableData = this.getViewModel().getProperty('/StudentList');
-        const sFileName = this.getBundleText('LABEL_00282', '학자금 신청');
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_03028');
 
         TableUtils.export({ oTable, mTableData, sFileName });
       }

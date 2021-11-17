@@ -56,10 +56,10 @@ sap.ui.define(
         });
       }
 
-      onNavBack() {
-        this.onNavBack();
-        // window.history.go(-1);
-      }
+      // onNavBack() {
+      //   this.onNavBack();
+      //   // window.history.go(-1);
+      // }
 
       onObjectMatched(oEvent) {
         const sDataKey = oEvent.getParameter('arguments').oDataKey;
@@ -257,15 +257,24 @@ sap.ui.define(
                 if (oData) {
                   this.debug(`${sBenefitUrl} success.`, oData);
 
-                  const oList = oData.results;
+                  const aList1 = oData.results;
+                  let aList2 = [];
 
-                  oDetailModel.setProperty('/AcademicSort', oList);
-
-                  if (!vStatus) {
-                    oDetailModel.setProperty('/FormData/Slart', oList[0].Zcode);
+                  if(oDetailModel.getProperty("/FormData/Kdsvh") === 'ME') {
+                    aList1.forEach(e => {
+                      if(e.Zcode === '06') {
+                        aList2.push(e);
+                      }
+                    });
+                  }else {
+                    aList2 = aList1;
                   }
+                  
+                  oDetailModel.setProperty("/FormData/Slart", aList2[0].Zcode)
+                  oDetailModel.setProperty('/AcademicSortHide', aList1);
+                  oDetailModel.setProperty('/AcademicSort', aList2);
 
-                  const sCode = !vStatus ? oList[0].Zcode : oDetailModel.getProperty('/FormData/Slart');
+                  const sCode = !vStatus ? aList2[0].Zcode : oDetailModel.getProperty('/FormData/Slart');
 
                   resolve(sCode);
                 }
@@ -335,7 +344,36 @@ sap.ui.define(
       }
 
       // 신청대상 선택시
-      onTargetChange() {
+      onTargetChange(oEvent) {
+        const sSelectedKey = oEvent.getSource().getSelectedKey();
+        const oDetailModel = this.getViewModel();
+        const aAcademiList = oDetailModel.getProperty("/AcademicSortHide");
+        let aList = [];
+
+        if(sSelectedKey === '') {
+          aAcademiList.forEach(e => {
+            if(e.Zcode === '06') {
+              aList.push(e);
+            }
+          });
+          oDetailModel.setProperty("/FormData/Slart", aList[0].Zcode);
+        }else {
+          aList = aAcademiList;
+        }
+
+        const sSlartKey = oDetailModel.getProperty("/FormData/Slart");
+
+        if (sSlartKey === '05' || sSlartKey === '06') {
+          oDetailModel.setProperty("/MajorInput", true);
+        } else {
+          oDetailModel.setProperty("/MajorInput", false);
+        }
+        
+        oDetailModel.setProperty('/FormData/Schtx', '');
+        oDetailModel.setProperty('/FormData/Majnm', '');
+        oDetailModel.setProperty("/AcademicSort", aList);
+        
+        this.getSupAmount();
         this.getApplyNumber();
       }
 
@@ -443,19 +481,19 @@ sap.ui.define(
 
         // 학교명
         if (!oFormData.Schtx) {
-          MessageBox.alert('학교명을 입력하세요.');
+          MessageBox.alert(this.getBundleText('MSG_03003'));
           return true;
         }
 
         // 수업료
         if (!oFormData.ZbetClass) {
-          MessageBox.alert('수업료를 입력하세요.');
+          MessageBox.alert(this.getBundleText('MSG_03004'));
           return true;
         }
 
         // 첨부파일
         if (!AttachFileAction.getFileLength.call(this) && AppBtn === 'O') {
-          MessageBox.alert('신청시 첨부파일은 필수입니다. 업로드 후 신청하시기 바랍니다.');
+          MessageBox.alert(this.getBundleText('MSG_03005'));
           return true;
         }
 
@@ -512,11 +550,11 @@ sap.ui.define(
 
         if (this.checkError()) return;
 
-        MessageBox.confirm('저장 하시겠습니까?', {
-          title: '학자금 신청',
-          actions: ['저장', '취소'],
+        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00103'), {
+          title: this.getBundleText('LABEL_03028'),
+          actions: [this.getBundleText('LABEL_00103'), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
-            if (vPress && vPress === '저장') {
+            if (vPress && vPress === this.getBundleText('LABEL_00103')) {
               if (!vStatus || vStatus === '45') {
                 const vAppno = await Appno.get.call(this);
     
@@ -532,30 +570,26 @@ sap.ui.define(
               oSendObject.Actty = 'E';
               oSendObject.Waers = 'KRW';
     
-              Promise.all([
-                  // FileUpload
-                AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE),
+              // FileUpload
+              const v1 = await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
 
-                new Promise((resolve, reject) => {
-                  oModel.create('/SchExpenseApplSet', oSendObject, {
-                    success: () => {
-                      resolve();
-                    },
-                    error: (oRespnse) => {
-                      const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
+              if(!!v1) {
+                MessageBox.error(v1);
+              }else {
+                oModel.create('/SchExpenseApplSet', oSendObject, {
+                  success: () => {
+                    MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
+                  },
+                  error: (oRespnse) => {
+                    const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
 
-                      reject(vErrorMSG);
-                    },
-                  });
-                }),
-              ]).then(() => {
-                MessageBox.alert('저장되었습니다.');
-              }).catch((vErr) => {
-                MessageBox.error(vErr);
-              });
+                    MessageBox.error(vErrorMSG);
+                  },
+                });
+              }
             }
           }
-        });
+        })
       }
 
       // 신청
@@ -567,11 +601,11 @@ sap.ui.define(
 
         if (this.checkError('O')) return;
 
-        MessageBox.confirm('신청 하시겠습니까?', {
-          title: '학자금 신청',
-          actions: ['신청', '취소'],
+        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
+          title: this.getBundleText('LABEL_03028'),
+          actions: [this.getBundleText('LABEL_00121'), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
-            if (vPress && vPress === '신청') {
+            if (vPress && vPress === this.getBundleText('LABEL_00121')) {
               if (!vStatus || vStatus === '45') {
                 const vAppno = await Appno.get.call(this);
   
@@ -587,31 +621,27 @@ sap.ui.define(
               oSendObject.Actty = 'E';
               oSendObject.Waers = 'KRW';
 
-              Promise.all([
                 // FileUpload
-                AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE),
+                const v1 = await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
 
-                new Promise((resolve, reject) => {
+                if(!!v1) {
+                  MessageBox.error(v1);
+                }else {
                   oModel.create('/SchExpenseApplSet', oSendObject, {
                     success: () => {
-                      resolve();
+                      MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
+                        onClose: () => {
+                          this.getRouter().navTo('studentFunds');
+                        },
+                      });
                     },
                     error: (oRespnse) => {
                       const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
     
-                      reject(vErrorMSG);
+                      MessageBox.error(vErrorMSG);
                     },
                   });
-                })
-              ]).then(() => {
-                MessageBox.alert('신청되었습니다.', {
-                  onClose: () => {
-                    this.getRouter().navTo('studentFunds');
-                  },
-                });
-              }).catch(vErr => {
-                MessageBox.error(vErr);
-              });
+                }
             }
           },
         });
@@ -622,11 +652,11 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
 
-        MessageBox.confirm('취소 하시겠습니까?', {
-          title: '학자금 신청',
-          actions: ['확인', '취소'],
+        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00118'), {
+          title: this.getBundleText('LABEL_03028'),
+          actions: [this.getBundleText('LABEL_00114'), this.getBundleText('LABEL_00118')],
           onClose: (vPress) => {
-            if (vPress && vPress === '확인') {
+            if (vPress && vPress === this.getBundleText('LABEL_00114')) {
               let oSendObject = {};
   
               oSendObject = oDetailModel.getProperty('/FormData');
@@ -635,7 +665,7 @@ sap.ui.define(
   
               oModel.create('/SchExpenseApplSet', oSendObject, {
                 success: () => {
-                  MessageBox.alert('신청이 취소되었습니다.', {
+                  MessageBox.alert(this.getBundleText('MSG_00038', 'LABEL_00121'), {
                     onClose: () => {
                       this.getRouter().navTo('studentFunds');
                     },
@@ -657,18 +687,18 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
 
-        MessageBox.confirm('삭제 하시겠습니까?', {
-          title: '학자금 신청',
-          actions: ['삭제', '취소'],
+        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
+          title: this.getBundleText('LABEL_03028'),
+          actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
           onClose: (vPress) => {
-            if (vPress && vPress === '삭제') {
+            if (vPress && vPress === this.getBundleText('LABEL_00110')) {
               const sPath = oModel.createKey('/SchExpenseApplSet', {
                 Appno: oDetailModel.getProperty('/FormData/Appno'),
               });
   
               oModel.remove(sPath, {
                 success: () => {
-                  MessageBox.alert('삭제되었습니다.', {
+                  MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
                     onClose: () => {
                       this.getRouter().navTo('studentFunds');
                     },
@@ -695,7 +725,7 @@ sap.ui.define(
           Editable: !sStatus || sStatus === '10',
           Type: this.TYPE_CODE,
           Appno: sAppno,
-          Message: '증빙자료를 꼭 등록하세요.',
+          Message: this.getBundleText('MSG_00039'),
           Max: 10,
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
         });
