@@ -80,7 +80,19 @@ sap.ui.define(
             this.readLeaveApplContent({ oModel, oSearchConditions }),
           ]);
 
-          oViewModel.setProperty('/list', mResultListData);
+          oViewModel.setProperty(
+            '/list',
+            mResultListData.map((o) => {
+              return {
+                ...o,
+                Pernr: parseInt(o.Pernr, 10),
+                BegdaTxt: o.Begda ? moment(new Date(o.Begda)).hours(9).format('YYYY.MM.DD') : '',
+                EnddaTxt: o.Endda ? moment(new Date(o.Endda)).hours(9).format('YYYY.MM.DD') : '',
+                AppdtTxt: o.Appdt ? moment(new Date(o.Appdt)).hours(9).format('YYYY.MM.DD') : '',
+                SgndtTxt: o.Sgndt ? moment(new Date(o.Sgndt)).hours(9).format('YYYY.MM.DD') : '',
+              };
+            })
+          );
           TableUtils.count.call(this, mResultListData);
 
           oViewModel.setProperty(
@@ -148,6 +160,35 @@ sap.ui.define(
 
       onPressCancApprovalBtn() {
         this.getRouter().navTo('attendance-detail', { type: 'c' });
+      }
+
+      onSuggest(oEvent) {
+        const oModel = this.getModel(ServiceNames.COMMON);
+        const oControl = oEvent.getSource();
+        const sValue = oEvent.getParameter('suggestValue');
+
+        oControl.destroySuggestionItems();
+
+        oModel.read('/EmpSearchResultSet', {
+          filters: [
+            new Filter('Persa', FilterOperator.EQ, '1000'), //
+            new Filter('Short', FilterOperator.EQ, 'X'),
+            new Filter('Ename', FilterOperator.EQ, sValue),
+          ],
+          success: (oData) => {
+            oData.results.forEach((o) => {
+              oControl.addSuggestionItem(new sap.ui.core.ListItem({ text: o.Ename, additionalText: o.Fulln, key: o.Pernr }));
+            });
+          },
+          error: (oError) => {
+            this.debug(oError);
+          },
+        });
+      }
+
+      onSelectSuggest(oEvent) {
+        const oControl = oEvent.getSource();
+        this.debug(oControl);
       }
 
       /*****************************************************************

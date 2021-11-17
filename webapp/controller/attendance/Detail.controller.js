@@ -7,6 +7,8 @@ sap.ui.define(
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/controller/BaseController',
+    'sap/ui/yesco/common/Appno',
+    'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/EmpInfo',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -21,6 +23,8 @@ sap.ui.define(
     JSONModel,
     MessageBox,
     BaseController,
+    Appno,
+    AppUtils,
     AttachFileAction,
     EmpInfo,
     ServiceNames,
@@ -32,6 +36,8 @@ sap.ui.define(
     class Detail extends BaseController {
       constructor() {
         super();
+
+        this.TYPE_CODE = 'HR04';
         this.AttachFileAction = AttachFileAction;
       }
 
@@ -39,7 +45,8 @@ sap.ui.define(
         const oViewModel = new JSONModel({
           busy: false,
           type: 'n',
-          appno: null,
+          Appno: null,
+          ZappStatAl: null,
           navigation: {
             current: '신규신청',
             links: [
@@ -47,6 +54,7 @@ sap.ui.define(
               { name: '근태신청' },
             ],
           },
+          ApplyInfo: {},
           form: {
             hasRow: false,
             rowCount: 1,
@@ -101,13 +109,44 @@ sap.ui.define(
         }
 
         oViewModel.setProperty('/type', oParameter.type);
-        oViewModel.setProperty('/appno', oParameter.appno);
+        oViewModel.setProperty('/Appno', oParameter.appno);
         oViewModel.setProperty('/navigation/current', `${oNavigationMap[oParameter.type]} ${sAction}`);
+
+        this.initializeApplyInfoBox();
+        this.initializeAttachBox();
+      }
+
+      initializeApplyInfoBox() {
+        const oViewModel = this.getViewModel();
+        const oSessionData = this.getOwnerComponent().getSessionModel().getData();
+
+        oViewModel.setProperty('/ApplyInfo', {
+          Apename: oSessionData.Ename,
+          Orgtx: `${oSessionData.Btrtx}/${oSessionData.Orgtx}`,
+          Apjikgbtl: `${oSessionData.Zzjikgbt}/${oSessionData.Zzjiktlt}`,
+        });
+      }
+
+      initializeAttachBox() {
+        const oViewModel = this.getViewModel();
+        const sStatus = oViewModel.getProperty('/ZappStatAl');
+        const sAppno = oViewModel.getProperty('/Appno') || '';
+
+        AttachFileAction.setAttachFile(this, {
+          Editable: !sStatus || sStatus === '10',
+          Type: this.TYPE_CODE,
+          Appno: sAppno,
+          Message: this.getBundleText('MSG_00037'), // 증빙자료를 꼭 등록 해주세요.
+          Max: 10,
+          FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
+        });
       }
 
       async openFormDialog() {
         const oView = this.getView();
         const oViewModel = this.getViewModel();
+
+        AppUtils.setAppBusy(true, this);
 
         // 근태유형
         try {
@@ -117,19 +156,21 @@ sap.ui.define(
           this.debug('Controller > Attendance Detail > readAwartCodeList Error', AppUtils.parseError(oError));
         }
 
-        if (!this.pFormDialog) {
-          this.pFormDialog = Fragment.load({
-            id: oView.getId(),
-            name: 'sap.ui.yesco.view.attendance.fragment.FormDialog',
-            controller: this,
-          }).then(function (oDialog) {
-            oView.addDependent(oDialog);
-            return oDialog;
+        setTimeout(() => {
+          if (!this.pFormDialog) {
+            this.pFormDialog = Fragment.load({
+              id: oView.getId(),
+              name: 'sap.ui.yesco.view.attendance.fragment.FormDialog',
+              controller: this,
+            }).then(function (oDialog) {
+              oView.addDependent(oDialog);
+              return oDialog;
+            });
+          }
+          this.pFormDialog.then(function (oDialog) {
+            oDialog.open();
           });
-        }
-        this.pFormDialog.then(function (oDialog) {
-          oDialog.open();
-        });
+        }, 100);
       }
 
       toggleHasRowProperty() {
@@ -192,7 +233,9 @@ sap.ui.define(
         oViewModel.setProperty('/form/dialog/calcCompleted', false);
         oViewModel.setProperty('/form/dialog/data/Begda', null);
         oViewModel.setProperty('/form/dialog/data/Endda', null);
+        oViewModel.setProperty('/form/dialog/data/Abrst', null);
         oViewModel.setProperty('/form/dialog/data/Abrtg', null);
+        oViewModel.setProperty('/form/dialog/data/AbrtgTxt', null);
       }
 
       async onChangeLeaveDate() {
@@ -202,13 +245,19 @@ sap.ui.define(
         try {
           const oResult = await this.readLeaveApplEmpList(oFormData);
 
-          this.debug(oResult);
-        } catch (error) {
+          if (!_.isEmpty(oResult)) {
+            oViewModel.setProperty('/form/dialog/data/Abrst', oResult.Abrst);
+            oViewModel.setProperty('/form/dialog/data/Abrtg', oResult.Abrtg);
+            oViewModel.setProperty('/form/dialog/data/AbrtgTxt', `${parseInt(oResult.Abrtg, 10)}일`);
+            oViewModel.setProperty('/form/dialog/calcCompleted', true);
+          }
+        } catch (oError) {
           this.debug('Controller > Attendance Detail > onChangeLeaveDate Error', AppUtils.parseError(oError));
         }
       }
 
       onPressFormDialogClose() {
+        AppUtils.setAppBusy(false, this);
         this.byId('formDialog').close();
       }
 
@@ -230,6 +279,8 @@ sap.ui.define(
 
         mListData.push({
           ...oInputData,
+          Begda: moment(oInputData.Begda).hours(9).toDate(),
+          Endda: moment(oInputData.Endda).hours(9).toDate(),
           BegdaTxt: moment(oInputData.Begda).hours(9).format('YYYY.MM.DD'),
           EnddaTxt: moment(oInputData.Endda).hours(9).format('YYYY.MM.DD'),
         });
@@ -237,7 +288,26 @@ sap.ui.define(
         oViewModel.setProperty('/form/rowCount', mListData.length);
 
         this.toggleHasRowProperty();
+
+        AppUtils.setAppBusy(false, this);
         this.byId('formDialog').close();
+      }
+
+      onPressApproval() {
+        AppUtils.setAppBusy(true, this);
+
+        // {신청}하시겠습니까?
+        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
+          actions: [this.getBundleText('LABEL_00121'), MessageBox.Action.CANCEL],
+          onClose: (sAction) => {
+            if (sAction === MessageBox.Action.CANCEL) {
+              AppUtils.setAppBusy(false, this);
+              return;
+            }
+
+            this.createLeaveApplContent();
+          },
+        });
       }
 
       /*****************************************************************
@@ -292,6 +362,63 @@ sap.ui.define(
               reject(oError);
             },
           });
+        });
+      }
+
+      async createLeaveApplContent() {
+        const oModel = this.getModel(ServiceNames.WORKTIME);
+        const oViewModel = this.getViewModel();
+        const mTableData = oViewModel.getProperty('/form/list');
+        const sStatus = oViewModel.getProperty('/ZappStatAl');
+        const iAttachLength = AttachFileAction.getFileLength.call(this);
+        const sUrl = '/LeaveApplContentSet';
+        const oTargetInfo = oViewModel.getProperty('/TargetInfo');
+        let sAppno = oViewModel.getProperty('/Appno');
+
+        if (!sStatus || sStatus === '45') {
+          sAppno = await Appno.get.call(this);
+          oViewModel.setProperty('/Appno', sAppno);
+        }
+
+        if (iAttachLength > 0) {
+          await AttachFileAction.uploadFile.call(this, sAppno, this.TYPE_CODE);
+        }
+
+        /* @TODO: 공통변경********/
+        mTableData.forEach((o) => {
+          delete o.BegdaTxt;
+          delete o.EnddaTxt;
+          delete o.AbrtgTxt;
+          o.Pernr = oTargetInfo.Pernr;
+        });
+        /************************/
+
+        const oPayload = {
+          Pernr: oTargetInfo.Pernr,
+          Orgeh: oTargetInfo.Orgeh,
+          Appno: sAppno,
+          Prcty: 'T',
+          Appty: 'A', // A:신규, B:변경, C:취소
+          LeaveApplNav1: mTableData,
+        };
+
+        oModel.create(sUrl, oPayload, {
+          success: (oData) => {
+            this.debug(`${sUrl} success.`, oData);
+
+            // {신청}되었습니다.
+            MessageBox.success(this.getBundleText('MSG_00007', 'LABEL_00121'), {
+              onClose: () => {
+                AppUtils.setAppBusy(false, this);
+                this.getRouter().navTo('attendance');
+              },
+            });
+          },
+          error: (oError) => {
+            this.debug(`${sUrl} error.`, AppUtils.parseError(oError));
+
+            AppUtils.setAppBusy(false, this);
+          },
         });
       }
     }

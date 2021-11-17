@@ -1,6 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core"
-    xmlns:grid="sap.ui.layout.cssgrid">
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:custom="sap.ui.yesco.control">
     <Dialog id="addressDialog" showHeader="false" contentWidth="700px">
         <buttons>
             <Button type="Emphasized" text="{/employee/address/actionText}" press=".onSaveAddress"/>
@@ -14,7 +15,7 @@
                         <core:Item key="{Zcode}" text="{Ztext}" />
                     </ComboBox>
                     <Label text="{i18n>LABEL_00271}" />
-                    <DatePicker width="250px" dateValue="{/employee/address/form/Begda}" class="sapIcon_Date" />
+                    <custom:DatePicker width="250px" dateValue="{/employee/address/form/Begda}" class="sapIcon_Date" />
                     <Label text="{i18n>LABEL_00272}" />
                     <ComboBox width="250px" selectedKey="{/employee/address/form/State}" items="{ path: '/employee/address/sidoList' }">
                         <core:Item key="{State}" text="{Bezei}" />

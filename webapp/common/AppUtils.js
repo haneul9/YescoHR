@@ -97,12 +97,12 @@ sap.ui.define([], () => {
      * @public
      */
     parseError(oError) {
-      if (!oError || !oError.response || !oError.response.body) {
+      if (!oError || !oError.responseText) {
         throw new Error('AppUtils.parseError : 에러 데이터 오류!');
       }
 
       try {
-        if (oError.response.statusCode && oError.response.statusCode === 503) {
+        if (oError.statusCode && oError.statusCode === 503) {
           return {
             code: 'E',
             message: 'Session expired.\nPlease refresh and try again.',
@@ -112,7 +112,7 @@ sap.ui.define([], () => {
         const mErrorData = {
           code: 'E',
         };
-        const errorJSON = JSON.parse(oError.response.body);
+        const errorJSON = JSON.parse(oError.responseText);
 
         if (errorJSON.error.innererror.errordetails && errorJSON.error.innererror.errordetails.length) {
           mErrorData.message = errorJSON.error.innererror.errordetails[0].message;

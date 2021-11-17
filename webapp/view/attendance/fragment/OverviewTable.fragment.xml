@@ -22,31 +22,31 @@
             <table:Column width="8%" filterProperty="Dettx" sortProperty="Appty">
                 <Label text="{i18n>LABEL_00147}"/>
                 <table:template>
-                    <Text text="{Dettx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    <Text text="{Apptxt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </table:template>
             </table:Column>
             <table:Column width="8%" filterProperty="Appernr" sortProperty="Pernr">
                 <Label text="{i18n>LABEL_00209}"/>
                 <table:template>
-                    <Text text="{Appernr}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    <Text text="{Pernr}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </table:template>
             </table:Column>
             <table:Column width="8%" filterProperty="Apename" sortProperty="Ename">
                 <Label text="{i18n>LABEL_00210}"/>
                 <table:template>
-                    <Text text="{Apename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    <Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </table:template>
             </table:Column>
             <table:Column width="8%" filterProperty="Aporgtx" sortProperty="Orgtx">
                 <Label text="{i18n>LABEL_00224}"/>
                 <table:template>
-                    <Text text="{Aporgtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    <Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </table:template>
             </table:Column>
             <table:Column width="8%" filterProperty="Apzzjikgbtx" sortProperty="Zzjikgbt">
                 <Label text="{i18n>LABEL_00215}"/>
                 <table:template>
-                    <Text text="{Apzzjikgbtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    <Text text="{Zzjikgbt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </table:template>
             </table:Column>
             <table:Column width="8%" filterProperty="Atext" sortProperty="Awart">
@@ -58,13 +58,13 @@
             <table:Column width="8%" filterProperty="Apbeg" sortProperty="Begda">
                 <Label text="{i18n>LABEL_00148}"/>
                 <table:template>
-                    <Text text="{Apbeg}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    <Text text="{BegdaTxt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </table:template>
             </table:Column>
             <table:Column width="8%" filterProperty="Apend" sortProperty="Endda">
                 <Label text="{i18n>LABEL_00149}"/>
                 <table:template>
-                    <Text text="{Apend}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    <Text text="{EnddaTxt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </table:template>
             </table:Column>
             <table:Column width="8%" filterProperty="Period" sortProperty="Range">
@@ -76,13 +76,13 @@
             <table:Column width="8%" filterProperty="Appdt" sortProperty="Endda">
                 <Label text="{i18n>LABEL_00266}"/>
                 <table:template>
-                    <Text text="{Appdt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    <Text text="{AppdtTxt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </table:template>
             </table:Column>
             <table:Column width="8%" filterProperty="Sgndt" sortProperty="Endda">
                 <Label text="{i18n>LABEL_00269}"/>
                 <table:template>
-                    <Text text="{Sgndt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    <Text text="{SgndtTxt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </table:template>
             </table:Column>
         </table:columns>

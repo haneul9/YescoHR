@@ -617,7 +617,7 @@ sap.ui.define(
 
         // {삭제}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
-          actions: ['삭제', MessageBox.Action.CANCEL],
+          actions: [this.getBundleText('LABEL_00110'), MessageBox.Action.CANCEL], // 삭제
           onClose: async (sAction) => {
             if (sAction !== MessageBox.Action.CANCEL) {
               const oPayload = this.getAddressTableRowData({ oViewModel, oTable, aSelectedIndices });

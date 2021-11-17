@@ -24,11 +24,11 @@
             <table:Column width="15%">
                 <Label text="{i18n>LABEL_00150}" />
                 <table:template>
-                    <Text text="{Abrtg}" width="100%" textAlign="Center" />
+                    <Text text="{AbrtgTxt}" width="100%" textAlign="Center" />
                 </table:template>
             </table:Column>
             <table:Column width="40%">
-                <Label text="{i18n>LABEL_00154}}" />
+                <Label text="{i18n>LABEL_00154}" />
                 <table:template>
                     <Text text="{Tmrsn}" width="100%" textAlign="Center" />
                 </table:template>
