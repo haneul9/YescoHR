@@ -99,11 +99,18 @@ sap.ui.define(
       /**
        * Convenience method for getting the resource bundle text.
        * @public
+       * @param {string[]} aArgs a key of resource bundle text.
        * @returns {string} The value belonging to the key, if found; otherwise the key itself.
        */
       getText(...aArgs) {
         const sKey = aArgs.shift();
-        return this.getResourceBundle().getText(sKey, aArgs);
+        const oResourceBundle = this.getResourceBundle();
+        if (aArgs.length) {
+          aArgs = aArgs.map((sArg) => {
+            return oResourceBundle.getText(sArg);
+          });
+        }
+        return oResourceBundle.getText(sKey, aArgs);
       }
 
       /**
