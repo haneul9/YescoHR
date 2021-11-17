@@ -4,10 +4,11 @@ sap.ui.define(
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/controller/BaseController',
+    'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/EmpInfo',
-    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/TableUtils',
   ],
   (
@@ -15,10 +16,11 @@ sap.ui.define(
     Filter,
     FilterOperator,
     JSONModel,
+    MessageBox,
     BaseController,
+    AppUtils,
     ServiceNames,
     EmpInfo,
-    MessageBox,
     TableUtils
   ) => {
     'use strict';
@@ -66,8 +68,8 @@ sap.ui.define(
       async initialRetrieve() {
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const oViewModel = this.getViewModel();
-        // const sPernr = oViewModel.getProperty('/TargetInfo/Pernr');
-        const sPernr = '50013';
+        const sPernr = this.getOwnerComponent().getSessionModel().getProperty('/Pernr');
+        // const sPernr = '50013';
         const oSearchConditions = oViewModel.getProperty('/search');
 
         try {
@@ -98,7 +100,9 @@ sap.ui.define(
             )
           );
         } catch (oError) {
-          MessageBox.error(this.getText('MSG_00008', '조회'));
+          this.debug('Controller > Attendance List > initialRetrieve Error', AppUtils.parseError(oError));
+
+          MessageBox.error(this.getBundleText('MSG_00008', 'LABEL_00100')); // {조회}중 오류가 발생하였습니다.
         } finally {
           oViewModel.setProperty('/busy', false);
         }
@@ -120,7 +124,7 @@ sap.ui.define(
           oViewModel.setProperty('/list', mResultData);
           TableUtils.count.call(this, mResultData);
         } catch (error) {
-          MessageBox.error(this.getText('MSG_00008', '조회'));
+          MessageBox.error(this.getBundleText('MSG_00008', 'LABEL_00100')); // {조회}중 오류가 발생하였습니다.
         } finally {
           oViewModel.setProperty('/busy', false);
         }
@@ -129,7 +133,7 @@ sap.ui.define(
       onPressExcelDownload() {
         const oTable = this.byId('attendanceTable');
         const mTableData = this.getViewModel().getProperty('/list');
-        const sFileName = '근태신청_목록';
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_04001'); // {근태신청}_목록
 
         TableUtils.export({ oTable, mTableData, sFileName });
       }

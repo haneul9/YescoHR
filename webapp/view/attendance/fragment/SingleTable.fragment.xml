@@ -4,31 +4,31 @@
     <table:Table id="approveSingleTable" width="100%" rows="{/form/list}" visibleRowCount="{/form/rowCount}" noData="{i18n>MSG_00001}">
         <table:columns>
             <table:Column width="15%">
-                <Label text="근태유형" />
+                <Label text="{i18n>LABEL_04010}" />
                 <table:template>
                     <Text text="{Atext}" width="100%" textAlign="Center" />
                 </table:template>
             </table:Column>
             <table:Column width="15%">
-                <Label text="시작일" />
+                <Label text="{i18n>LABEL_00148}" />
                 <table:template>
                     <Text text="{BegdaTxt}" width="100%" textAlign="Center" />
                 </table:template>
             </table:Column>
             <table:Column width="15%">
-                <Label text="종료일" />
+                <Label text="{i18n>LABEL_00149}" />
                 <table:template>
                     <Text text="{EnddaTxt}" width="100%" textAlign="Center" />
                 </table:template>
             </table:Column>
             <table:Column width="15%">
-                <Label text="기간" />
+                <Label text="{i18n>LABEL_00150}" />
                 <table:template>
                     <Text text="{Abrtg}" width="100%" textAlign="Center" />
                 </table:template>
             </table:Column>
             <table:Column width="40%">
-                <Label text="사유" />
+                <Label text="{i18n>LABEL_00154}}" />
                 <table:template>
                     <Text text="{Tmrsn}" width="100%" textAlign="Center" />
                 </table:template>

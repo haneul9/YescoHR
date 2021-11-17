@@ -1,11 +1,11 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
     <HBox justifyContent="SpaceBetween">
-        <Title level="H2" text="나의 휴가현황" />
+        <Title level="H2" text="{i18n>LABEL_04005}" />
         <Button type="Transparent" icon="sap-icon://detail-view" />
     </HBox>
     <HBox visible="{= !!${/quota/10}}">
-        <Label text="연차휴가" design="Bold" />
+        <Label text="{i18n>LABEL_04006}" design="Bold" />
         <VBox width="80%">
             <ProgressIndicator class="sapUiSmallMarginBottom" percentValue="{/quota/10/Rate}" displayValue="{/quota/10/Usecnt}" showValue="true" state="Information" width="100%" />
             <HBox justifyContent="SpaceBetween">
@@ -15,7 +15,7 @@
         </VBox>
     </HBox>
     <HBox visible="{= !!${/quota/20}}">
-        <Label text="하계휴가" design="Bold" />
+        <Label text="{i18n>LABEL_04007}" design="Bold" />
         <VBox width="80%">
             <ProgressIndicator class="sapUiSmallMarginBottom" percentValue="{/quota/20/Rate}" displayValue="{/quota/20/Usecnt}" showValue="true" state="Error" width="100%" />
             <HBox justifyContent="SpaceBetween">
@@ -25,7 +25,7 @@
         </VBox>
     </HBox>
     <HBox visible="{= !!${/quota/30}}">
-        <Label text="보건휴가" design="Bold" />
+        <Label text="{i18n>LABEL_04008}" design="Bold" />
         <VBox width="80%">
             <ProgressIndicator class="sapUiSmallMarginBottom" percentValue="{/quota/30/Rate}" displayValue="{/quota/30/Usecnt}" showValue="true" state="Success" width="100%" />
             <HBox justifyContent="SpaceBetween">

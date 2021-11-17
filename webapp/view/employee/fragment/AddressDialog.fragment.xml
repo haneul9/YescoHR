@@ -4,29 +4,29 @@
     <Dialog id="addressDialog" showHeader="false" contentWidth="700px">
         <buttons>
             <Button type="Emphasized" text="{/employee/address/actionText}" press=".onSaveAddress"/>
-            <Button text="닫기" press=".onAddressDialogClose"/>
+            <Button text="{i18n>LABEL_00115}" press=".onAddressDialogClose"/>
         </buttons>
-        <Panel expanded="true" headerText="주소정보">
+        <Panel expanded="true" headerText="{i18n>LABEL_00283}">
             <content>
                 <grid:CSSGrid gridTemplateColumns="1fr 4fr" gridGap="8px">
-                    <Label text="주소유형" />
+                    <Label text="{i18n>LABEL_00270}" />
                     <ComboBox width="250px" selectedKey="{/employee/address/form/Subty}" items="{ path: '/employee/address/typeList' }">
                         <core:Item key="{Zcode}" text="{Ztext}" />
                     </ComboBox>
-                    <Label text="적용시작일" />
+                    <Label text="{i18n>LABEL_00271}" />
                     <DatePicker width="250px" dateValue="{/employee/address/form/Begda}" class="sapIcon_Date" />
-                    <Label text="시/도" />
+                    <Label text="{i18n>LABEL_00272}" />
                     <ComboBox width="250px" selectedKey="{/employee/address/form/State}" items="{ path: '/employee/address/sidoList' }">
                         <core:Item key="{State}" text="{Bezei}" />
                     </ComboBox>
-                    <Label text="우편번호" />
+                    <Label text="{i18n>LABEL_00273}" />
                     <HBox width="100%">
                         <Input width="185px" value="{/employee/address/form/Pstlz}" editable="false" />
-                        <Button text="검색" press=".openSearchZipCodePopup"/>
+                        <Button text="{i18n>LABEL_00101}" press=".openSearchZipCodePopup"/>
                     </HBox>
-                    <Label text="주소" />
+                    <Label text="{i18n>LABEL_00152}" />
                     <Input width="500px" value="{/employee/address/form/Zzaddr1}" editable="false" />
-                    <Label text="상세주소" />
+                    <Label text="{i18n>LABEL_00274}" />
                     <Input width="500px" value="{/employee/address/form/Zzaddr2}" />
                 </grid:CSSGrid>
             </content>

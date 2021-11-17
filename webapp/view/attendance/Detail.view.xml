@@ -7,17 +7,17 @@
             <HBox justifyContent="SpaceBetween">
                 <core:Fragment fragmentName="sap.ui.yesco.fragment.Navigation" type="XML" />
                 <HBox>
-                    <Button text="신청" width="117px" type="Emphasized" enabled="{= ${/form/hasRow}}" busyIndicatorDelay="0" busy="{/busy}" />
-                    <Button text="이전" width="117px" press=".onPressBackBtn" />
+                    <Button text="{i18n>LABEL_00121}" width="117px" type="Emphasized" enabled="{= ${/form/hasRow}}" busyIndicatorDelay="0" busy="{/busy}" />
+                    <Button text="{i18n>LABEL_00146}" width="117px" press=".onNavBack" />
                 </HBox>
             </HBox>
             <core:Fragment fragmentName="sap.ui.yesco.fragment.DetailTargetInfo" type="XML" />
             <VBox class="vCardBox" visible="{= ${/type} !== 'm'}">
                 <HBox justifyContent="SpaceBetween">
-                    <Title level="H2" text="신청내역" />
+                    <Title level="H2" text="{i18n>LABEL_00129}" />
                     <HBox>
-                        <Button icon="sap-icon://add" text="추가" press=".onPressAddBtn" />
-                        <Button icon="sap-icon://less" text="삭제" press=".onPressDelBtn" enabled="{= ${/form/hasRow}}" />
+                        <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" press=".onPressAddBtn" />
+                        <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onPressDelBtn" enabled="{= ${/form/hasRow}}" />
                     </HBox>
                 </HBox>
                 <HBox>
@@ -26,9 +26,9 @@
             </VBox>
             <VBox class="vCardBox" visible="{= ${/type} === 'm'}">
                 <HBox justifyContent="SpaceBetween">
-                    <Title level="H2" text="신청내역" />
+                    <Title level="H2" text="{i18n>LABEL_00129}" />
                     <HBox>
-                        <Button icon="sap-icon://edit" text="변경" press=".onPressChangeBtn" enabled="{= ${/form/hasRow}}" />
+                        <Button icon="sap-icon://edit" text="{i18n>LABEL_00109}" press=".onPressChangeBtn" enabled="{= ${/form/hasRow}}" />
                     </HBox>
                 </HBox>
                 <HBox>
