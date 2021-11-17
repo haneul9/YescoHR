@@ -26,6 +26,19 @@ sap.ui.define(
           })
         );
       }
+
+      onClick() {
+        const iTotal = 15;
+        this._grid.getModel().setData({
+          total: iTotal,
+          used1: 0, // 사용 일수 0
+          used2: 1.5, // 사용 일수 << 남은 일수
+          used3: 5, // 사용 일수 1/3, 남은 일수 2/3
+          used4: iTotal / 2, // 사용 일수 = 남은 일수
+          used5: iTotal - 1.5, // 사용 일수 >> 남은 일수
+          used6: iTotal, // 남은 일수 0
+        });
+      }
     }
 
     return VacationIndicator;

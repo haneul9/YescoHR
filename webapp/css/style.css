@@ -99,7 +99,6 @@ html.sap-desktop:not(.sapUiNativeScrollbars) ::-webkit-scrollbar-thumb {border-r
 .sapMTextArea textarea {padding:0.25rem 0.3125rem !important}
 
 /* 공통 Font Opction */
-html *:not(.sapUiIcon):not(.sapMMsgStripCloseButton):not(i) { font-family:Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif}
 .sapMInput input::placeholder {font-style:normal}
 .sapMInputBase input::placeholder {font-style:normal}
 .sapMTextArea textarea::placeholder {font-style:normal}

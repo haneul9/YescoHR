@@ -30,6 +30,16 @@ sap.ui.define([], () => {
     },
 
     /**
+     * Convenience method for getting the resource bundle text.
+     * @public
+     * @returns {string} The value belonging to the key, if found; otherwise the key itself.
+     */
+    getBundleText(...aArgs) {
+      const sKey = aArgs.shift();
+      return this.getAppComponent().getModel('i18n').getResourceBundle().getText(sKey, aArgs);
+    },
+
+    /**
      * @public
      */
     setAppBusy(state) {

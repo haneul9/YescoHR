@@ -3,6 +3,7 @@
 	xmlns:custom="sap.ui.yesco.control"
 	xmlns:grid="sap.ui.layout.cssgrid"
 	xmlns:mvc="sap.ui.core.mvc" height="100%">
+	<Button text="데이터 변경" type="Emphasized" width="" press=".onClick" />
 	<grid:CSSGrid gridTemplateColumns="1fr 2fr 2fr 2fr 2fr 2fr 2fr" gridGap="8px" id="grid">
 		<VBox class="sapUiMediumMargin">
 			<HBox height="40px" alignItems="Start">
