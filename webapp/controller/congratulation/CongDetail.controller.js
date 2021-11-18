@@ -241,18 +241,19 @@ sap.ui.define(
                   oRelationTxt.setEditable(false);
                   oBirthDatePicker.setEditable(false);
                 } else {
-                  const bInitStatus = oDetailModel.getProperty('/bInitStatus');
-
-                  if (!bInitStatus) {
-                    oDetailModel.setProperty('/FormData/Zbirthday', null);
-                    oDetailModel.setProperty('/FormData/Kdsvh', oResult[0].Zcode);
-                    oDetailModel.setProperty('/FormData/Zname', '');
-                  }
-                  this.getViewModel().setProperty('/bInitStatus', false);
                   oRelationBtn.setVisible(true);
                   oRelationTxt.setEditable(true);
                   oBirthDatePicker.setEditable(true);
                 }
+                
+                const bInitStatus = oDetailModel.getProperty('/bInitStatus');
+
+                if (!bInitStatus) {
+                  oDetailModel.setProperty('/FormData/Zbirthday', null);
+                  oDetailModel.setProperty('/FormData/Kdsvh', oResult[0].Zcode);
+                  oDetailModel.setProperty('/FormData/Zname', '');
+                }
+                this.getViewModel().setProperty('/bInitStatus', false);
               }
             }
           },
