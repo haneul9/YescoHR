@@ -75,25 +75,12 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/busy', true);
 
-          const [mQuotaResultData, mResultListData] = await Promise.all([
+          const [mQuotaResultData, mRowData] = await Promise.all([
             this.readAbsQuotaList({ oModel, sPernr }), //
             this.readLeaveApplContent({ oModel, oSearchConditions }),
           ]);
 
-          oViewModel.setProperty(
-            '/list',
-            mResultListData.map((o) => {
-              return {
-                ...o,
-                Pernr: parseInt(o.Pernr, 10),
-                BegdaTxt: o.Begda ? moment(new Date(o.Begda)).hours(9).format('YYYY.MM.DD') : '',
-                EnddaTxt: o.Endda ? moment(new Date(o.Endda)).hours(9).format('YYYY.MM.DD') : '',
-                AppdtTxt: o.Appdt ? moment(new Date(o.Appdt)).hours(9).format('YYYY.MM.DD') : '',
-                SgndtTxt: o.Sgndt ? moment(new Date(o.Sgndt)).hours(9).format('YYYY.MM.DD') : '',
-              };
-            })
-          );
-          TableUtils.count.call(this, mResultListData);
+          this.setTableData({ oViewModel, mRowData });
 
           oViewModel.setProperty(
             '/quota',
@@ -120,6 +107,25 @@ sap.ui.define(
         }
       }
 
+      setTableData({ oViewModel, mRowData }) {
+        const oTable = this.byId('attendanceTable');
+
+        oViewModel.setProperty(
+          '/list',
+          mRowData.map((o) => {
+            return {
+              ...o,
+              Pernr: parseInt(o.Pernr, 10),
+              BegdaTxt: o.Begda ? moment(new Date(o.Begda)).hours(9).format('YYYY.MM.DD') : '',
+              EnddaTxt: o.Endda ? moment(new Date(o.Endda)).hours(9).format('YYYY.MM.DD') : '',
+              AppdtTxt: o.Appdt ? moment(new Date(o.Appdt)).hours(9).format('YYYY.MM.DD') : '',
+              SgndtTxt: o.Sgndt ? moment(new Date(o.Sgndt)).hours(9).format('YYYY.MM.DD') : '',
+            };
+          })
+        );
+        oViewModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData }));
+      }
+
       /*****************************************************************
        * Event handler
        *****************************************************************/
@@ -131,10 +137,9 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/busy', true);
 
-          const mResultData = await this.readLeaveApplContent({ oModel, oSearchConditions });
+          const mRowData = await this.readLeaveApplContent({ oModel, oSearchConditions });
 
-          oViewModel.setProperty('/list', mResultData);
-          TableUtils.count.call(this, mResultData);
+          this.setTableData({ oViewModel, mRowData });
         } catch (error) {
           MessageBox.error(this.getBundleText('MSG_00008', 'LABEL_00100')); // {조회}중 오류가 발생하였습니다.
         } finally {

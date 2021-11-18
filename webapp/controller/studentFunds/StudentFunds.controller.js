@@ -13,13 +13,13 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-	EmpInfo,
-	BaseController,
-	ServiceNames,
-	AttachFileAction,
-	TableUtils,
-	TextUtils,
-	FragmentEvent
+    EmpInfo,
+    BaseController,
+    ServiceNames,
+    AttachFileAction,
+    TableUtils,
+    TextUtils,
+    FragmentEvent
   ) => {
     'use strict';
 
@@ -75,7 +75,8 @@ sap.ui.define(
       onSearch() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oListModel = this.getViewModel();
-        const oSearchDate = oListModel.getProperty("/searchDate");
+        const oTable = this.byId('studentTable');
+        const oSearchDate = oListModel.getProperty('/searchDate');
         const dDate = moment(oSearchDate.secondDate).hours(10).toDate();
         const dDate2 = moment(oSearchDate.date).hours(10).toDate();
 
@@ -92,7 +93,7 @@ sap.ui.define(
             if (oData) {
               const oList = oData.results;
 
-              TableUtils.count.call(this, oList);
+              oListModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData: oList }));
               oListModel.setProperty('/StudentList', oList);
               this.byId('studentTable').setVisibleRowCount(oList.length);
               oListModel.setProperty('/busy', false);

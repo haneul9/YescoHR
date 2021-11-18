@@ -255,6 +255,7 @@ sap.ui.define(
             let oMenu = mSubMenuContents[key];
             let oSubVBox = new sap.m.VBox().addStyleClass('customBox');
             let oSubHBox = new sap.m.HBox({ justifyContent: 'SpaceBetween' });
+
             this.debug(`Sub ${oMenu.title}`, oMenu);
 
             oSubHBox.addItem(new sap.m.Title({ level: 'H2', text: oMenu.title }));
@@ -270,12 +271,15 @@ sap.ui.define(
             oSubVBox.addItem(oSubHBox);
 
             if (oMenu.type === '5') {
+              const sTableDataPath = `/employee/sub/${menuKey}/contents/${key}`;
               let oTable = new Table({
                 width: '100%',
-                selectionMode: { path: `/employee/sub/${menuKey}/contents/${key}/selectionMode` },
-                visibleRowCount: { path: `/employee/sub/${menuKey}/contents/${key}/rowCount` },
+                columnHeaderHeight: 50,
+                rowHeight: 50,
+                selectionMode: { path: `${sTableDataPath}/selectionMode` },
+                visibleRowCount: { path: `${sTableDataPath}/rowCount` },
                 noData: this.getBundleText('MSG_00001'),
-              }).bindRows(`/employee/sub/${menuKey}/contents/${key}/data`);
+              }).bindRows(`${sTableDataPath}/data`);
 
               oMenu.header.forEach((head, index) => {
                 if (!head.Invisible) {
