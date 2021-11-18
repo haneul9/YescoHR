@@ -57,6 +57,10 @@ sap.ui.define(
           list: [],
         });
         this.setViewModel(oViewModel);
+      }
+
+      onAfterShow() {
+        super.onAfterShow();
 
         // 대상자 정보
         const bTargetChangeButtonHide = true;
@@ -80,7 +84,9 @@ sap.ui.define(
             this.readLeaveApplContent({ oModel, oSearchConditions }),
           ]);
 
-          this.setTableData({ oViewModel, mRowData });
+          setTimeout(() => {
+            this.setTableData({ oViewModel, mRowData });
+          }, 100);
 
           oViewModel.setProperty(
             '/quota',
@@ -155,16 +161,23 @@ sap.ui.define(
         TableUtils.export({ oTable, mTableData, sFileName });
       }
 
+      onSelectRow(oEvent) {
+        const sPath = oEvent.getParameters().rowBindingContext.getPath();
+        const oRowData = this.getViewModel().getProperty(sPath);
+
+        this.getRouter().navTo('attendance-detail', { type: oRowData.Appty, appno: oRowData.Appno });
+      }
+
       onPressNewApprovalBtn() {
-        this.getRouter().navTo('attendance-detail', { type: 'n' });
+        this.getRouter().navTo('attendance-detail', { type: 'A' });
       }
 
       onPressModApprovalBtn() {
-        this.getRouter().navTo('attendance-detail', { type: 'm' });
+        this.getRouter().navTo('attendance-detail', { type: 'B' });
       }
 
       onPressCancApprovalBtn() {
-        this.getRouter().navTo('attendance-detail', { type: 'c' });
+        this.getRouter().navTo('attendance-detail', { type: 'C' });
       }
 
       onSuggest(oEvent) {

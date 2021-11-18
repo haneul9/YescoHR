@@ -38,6 +38,11 @@ sap.ui.define(
         super();
 
         this.TYPE_CODE = 'HR04';
+        this.ACTION = {
+          T: 'LABEL_00104', // 임시저장
+          C: 'LABEL_00121', // 신청
+        };
+
         this.AttachFileAction = AttachFileAction;
       }
 
@@ -72,9 +77,23 @@ sap.ui.define(
 
         const oRouter = this.getRouter();
         oRouter.getRoute('attendance-detail').attachPatternMatched(this.onObjectMatched, this);
+      }
+
+      async onAfterShow() {
+        const oViewModel = this.getView().getModel();
+        const sAppno = oViewModel.getProperty('/Appno');
 
         // 대상자 정보
         EmpInfo.get.call(this);
+
+        if (sAppno) {
+          const mApprovalData = await this.readLeaveApplContent(sAppno);
+        }
+
+        this.initializeApplyInfoBox();
+        this.initializeAttachBox();
+
+        super.onAfterShow();
       }
 
       onObjectMatched(oEvent) {
@@ -82,16 +101,16 @@ sap.ui.define(
         const oViewModel = this.getView().getModel();
         const sAction = oParameter.appno ? this.getBundleText('LABEL_00100') : ''; // 조회
         const oNavigationMap = {
-          n: this.getBundleText('LABEL_04002'), // 신규신청
-          m: this.getBundleText('LABEL_04003'), // 변경신청
-          c: this.getBundleText('LABEL_04004'), // 취소신청
+          A: this.getBundleText('LABEL_04002'), // 신규신청
+          B: this.getBundleText('LABEL_04003'), // 변경신청
+          C: this.getBundleText('LABEL_04004'), // 취소신청
         };
 
         if (!oNavigationMap[oParameter.type]) {
           this.getRouter().navTo('attendance');
         }
 
-        if (oParameter.type === 'm') {
+        if (oParameter.type === 'B') {
           // Multiple table generate
           const oTable = this.byId('approveMultipleTable');
           oTable.addEventDelegate(
@@ -111,9 +130,6 @@ sap.ui.define(
         oViewModel.setProperty('/type', oParameter.type);
         oViewModel.setProperty('/Appno', oParameter.appno);
         oViewModel.setProperty('/navigation/current', `${oNavigationMap[oParameter.type]} ${sAction}`);
-
-        this.initializeApplyInfoBox();
-        this.initializeAttachBox();
       }
 
       initializeApplyInfoBox() {
@@ -293,8 +309,18 @@ sap.ui.define(
         this.byId('formDialog').close();
       }
 
+      onPressSave() {
+        AppUtils.setAppBusy(true, this);
+
+        const sPrcty = 'T';
+
+        this.createProcess({ sPrcty });
+      }
+
       onPressApproval() {
         AppUtils.setAppBusy(true, this);
+
+        const sPrcty = 'C';
 
         // {신청}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
@@ -305,7 +331,7 @@ sap.ui.define(
               return;
             }
 
-            this.createLeaveApplContent();
+            this.createProcess({ sPrcty });
           },
         });
       }
@@ -365,52 +391,96 @@ sap.ui.define(
         });
       }
 
-      async createLeaveApplContent() {
-        const oModel = this.getModel(ServiceNames.WORKTIME);
+      readLeaveApplContent(sAppno) {
+        return new Promise((resolve, reject) => {
+          const oModel = this.getModel(ServiceNames.WORKTIME);
+          const sUrl = '/LeaveApplContentSet';
+
+          oModel.read(sUrl, {
+            filters: [
+              new Filter('Appno', FilterOperator.EQ, sAppno), //
+            ],
+            success: (oData) => {
+              this.debug(`${sUrl} success.`, oData);
+
+              resolve(oData.results);
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, oError);
+
+              reject(oError);
+            },
+          });
+        });
+      }
+
+      createLeaveApplContent(sPrcty) {
+        return new Promise((resolve, reject) => {
+          const oModel = this.getModel(ServiceNames.WORKTIME);
+          const oViewModel = this.getViewModel();
+          const oTargetInfo = oViewModel.getProperty('/TargetInfo');
+          const mTableData = oViewModel.getProperty('/form/list');
+          const sAppty = oViewModel.getProperty('/type');
+          const sAppno = oViewModel.getProperty('/Appno');
+          const sUrl = '/LeaveApplContentSet';
+
+          const oPayload = {
+            Pernr: oTargetInfo.Pernr,
+            Orgeh: oTargetInfo.Orgeh,
+            Appno: sAppno,
+            Prcty: sPrcty, // T:임시저장, C:신청
+            Appty: sAppty, // A:신규, B:변경, C:취소
+            LeaveApplNav1: mTableData.map((o) => ({ ...o, Pernr: oTargetInfo.Pernr })),
+          };
+
+          oModel.create(sUrl, oPayload, {
+            success: (oData) => {
+              this.debug(`${sUrl} success.`, oData);
+
+              resolve(oData.results);
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, AppUtils.parseError(oError));
+
+              // {임시저장|신청}중 오류가 발생하였습니다.
+              reject({ code: 'E', message: this.getBundleText('MSG_00008', this.ACTION[sPrcty]) });
+            },
+          });
+        });
+      }
+
+      async createProcess({ sPrcty = 'T' }) {
         const oViewModel = this.getViewModel();
-        const mTableData = oViewModel.getProperty('/form/list');
-        const sStatus = oViewModel.getProperty('/ZappStatAl');
         const iAttachLength = AttachFileAction.getFileLength.call(this);
-        const sUrl = '/LeaveApplContentSet';
-        const oTargetInfo = oViewModel.getProperty('/TargetInfo');
         let sAppno = oViewModel.getProperty('/Appno');
 
-        if (!sStatus || sStatus === '45') {
-          sAppno = await Appno.get.call(this);
-          oViewModel.setProperty('/Appno', sAppno);
+        try {
+          if (!sAppno) {
+            sAppno = await Appno.get();
+            oViewModel.setProperty('/Appno', sAppno);
+          }
+
+          if (iAttachLength > 0) {
+            await AttachFileAction.uploadFile.call(this, sAppno, this.TYPE_CODE);
+          }
+
+          const mReturnData = await this.createLeaveApplContent(sPrcty);
+
+          // {임시저장|신청}되었습니다.
+          MessageBox.success(this.getBundleText('MSG_00007', this.ACTION[sPrcty]));
+
+          if (sPrcty !== 'T') {
+            this.getRouter().navTo('attendance');
+          } else {
+            this.debug('mReturnData', mReturnData);
+          }
+        } catch (error) {
+          if (_.has(error, 'code') && error.code === 'E') {
+            MessageBox.error(error.message);
+          }
+        } finally {
+          AppUtils.setAppBusy(false, this);
         }
-
-        if (iAttachLength > 0) {
-          await AttachFileAction.uploadFile.call(this, sAppno, this.TYPE_CODE);
-        }
-
-        const oPayload = {
-          Pernr: oTargetInfo.Pernr,
-          Orgeh: oTargetInfo.Orgeh,
-          Appno: sAppno,
-          Prcty: 'T',
-          Appty: 'A', // A:신규, B:변경, C:취소
-          LeaveApplNav1: mTableData.map((o) => ({ ...o, Pernr: oTargetInfo.Pernr })),
-        };
-
-        oModel.create(sUrl, oPayload, {
-          success: (oData) => {
-            this.debug(`${sUrl} success.`, oData);
-
-            // {신청}되었습니다.
-            MessageBox.success(this.getBundleText('MSG_00007', 'LABEL_00121'), {
-              onClose: () => {
-                AppUtils.setAppBusy(false, this);
-                this.getRouter().navTo('attendance');
-              },
-            });
-          },
-          error: (oError) => {
-            this.debug(`${sUrl} error.`, AppUtils.parseError(oError));
-
-            AppUtils.setAppBusy(false, this);
-          },
-        });
       }
     }
 
