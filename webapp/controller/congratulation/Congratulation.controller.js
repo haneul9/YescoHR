@@ -24,7 +24,6 @@ sap.ui.define(
     class Congratulation extends BaseController {
       constructor() {
         super();
-        this.formatter = formatter;
         this.AttachFileAction = AttachFileAction;
         this.TableUtils = TableUtils;
         this.FragmentEvent = FragmentEvent;

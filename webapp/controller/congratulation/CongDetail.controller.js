@@ -28,7 +28,6 @@ sap.ui.define(
     class CongDetail extends BaseController {
       constructor() {
         super();
-        this.formatter = formatter;
         this.AttachFileAction = AttachFileAction;
         this.FragmentEvent = FragmentEvent;
         this.TYPE_CODE = 'HR01';

@@ -4,9 +4,9 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
-    '../../model/formatter',
     'sap/ui/yesco/common/EmpInfo',
     'sap/ui/yesco/common/Appno',
+    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/controller/BaseController',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -15,9 +15,9 @@ sap.ui.define(
     // prettier 방지용 주석
     JSONModel,
 	MessageBox,
-	formatter,
 	EmpInfo,
 	Appno,
+	TextUtils,
 	BaseController,
 	AttachFileAction,
 	ServiceNames
@@ -27,8 +27,8 @@ sap.ui.define(
     class StudentFundsDetail extends BaseController {
       constructor() {
         super();
-        this.formatter = formatter;
         this.AttachFileAction = AttachFileAction;
+        this.TextUtils = TextUtils;
         this.TYPE_CODE = 'HR02';
       }
 
