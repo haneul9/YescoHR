@@ -18,8 +18,8 @@ sap.ui.define(
      * ResponsivePopover Footer의 '확인' 버튼을 감추고 '취소' 버튼을 '오늘' 버튼으로 오버라이딩
      */
     class DateRangeSelection extends sapMDateRangeSelection {
-      constructor() {
-        super();
+      constructor(...aArgs) {
+        super(...aArgs);
 
         this.setShowFooter(true);
         this.setPlaceholder('yyyy.MM.dd - yyyy.MM.dd');

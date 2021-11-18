@@ -11,30 +11,27 @@ sap.ui.define(
         /**************************
          *
          *************************/
-        numberWithCommas(x = 0) {
+        toCurrency(x = 0) {
           // return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           return new Intl.NumberFormat('ko-KR').format(x);
         },
 
-        liveChangeCost(oEvent) {
-          const inputValue = oEvent.getParameter('value').trim();
-          const convertValue = inputValue.replace(/[^\d]/g, '');
-          const vPath = oEvent.getSource().mBindingInfos.value.binding.getPath();
+        liveChangeCurrency(oEvent) {
+          const oEventSource = oEvent.getSource();
+          const sPath = oEventSource.getBinding('value').getPath();
+          const sValue = oEvent.getParameter('value').trim().replace(/[^\d]/g, '');
 
-          oEvent.getSource().setValue(this.textUtils.numberWithCommas(convertValue));
-          this.getViewModel().setProperty(vPath, convertValue);
+          oEventSource.setValue(this.toCurrency(sValue));
+          oEventSource.getModel().setProperty(sPath, sValue);
         },
 
         setAppdt(vAppdt) {
+          const sPattern = 'YYYY.MM.DD HH:mm';
           if (typeof vAppdt === 'string') {
-            return `${vAppdt.slice(0, 4)}.${vAppdt.slice(4, 6)}.${vAppdt.slice(6, 8)}, ${vAppdt.slice(9, 11)}:${vAppdt.slice(11, 13)}`;
-          } else if (typeof vAppdt === 'object') {
-            const vDate = vAppdt.toLocaleString();
-            const vTime = vAppdt.toTimeString();
-
-            return `${vDate.slice(0, 5)}${vDate.slice(6, 9)}${vDate.slice(10, 11)}, ${vTime.slice(0, 2)}:${vTime.slice(3, 5)}`;
+            return moment(vAppdt, 'YYYYMMDD HHmm').format(sPattern);
+          } else if (vAppdt instanceof Date) {
+            return moment(vAppdt).format(sPattern);
           }
-
           return '';
         },
 

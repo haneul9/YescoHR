@@ -3,7 +3,6 @@
 	xmlns:table="sap.ui.table"
 	xmlns:core="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:u="sap.ui.unified"
 	xmlns:custom="sap.ui.yesco.control">
 	<Page navButtonTooltip="" title="Components">
 		<content>
@@ -103,7 +102,7 @@
 							<Input id="productInput" width='180px' placeholder="Enter product" showSuggestion="true" showValueHelp="true" valueHelpRequest=".onValueHelpRequest" suggestionItems="{/ProductCollection}" class="sapIcon_Search">
 								<core:Item text="{Name}"/>
 							</Input>
-							<Input value="10" description="명" textAlign='right'/>
+							<Input value="10" description="명" textAlign="Right"/>
 						</HBox>
 						<HBox>
 							<Input id="InputNoEdit" width='180px' value="No edit" type="Text" placeholder="Product" enabled="true" editable="false" />
@@ -204,8 +203,8 @@
 					<VBox>
 						<Title level="H3" text="Date and Time Picker" class="component-title" />
 						<HBox>
-							<DatePicker width='180px' id="DP1" placeholder="Enter Date" class="sapUiSmallMarginBottom sapIcon_Date" />
-							<DateRangeSelection id="DRS2" width='180px' class="sapIcon_Date" />
+							<custom:DatePicker width="130px" id="DP1" class="sapUiSmallMarginBottom sapIcon_Date" dateValue="{ path: '/today', formatter: '.DateUtils.parseDate' }" />
+							<custom:DateRangeSelection id="DRS2" width="210px" class="sapIcon_Date" dateValue="{ path: '/today', formatter: '.DateUtils.parseDate' }" secondDateValue="{ path: '/tomorrow', formatter: '.DateUtils.parseDate' }" />
 							<TimePicker id="TP1" width='180px' placeholder="Enter Time" valueFormat="HH:mm" displayFormat="HH:mm" minutesStep="5" class="sapIcon_Time" />
 						</HBox>
 					</VBox>
@@ -373,7 +372,7 @@
 								</OverflowToolbar>
 							</table:extension>
 							<table:columns>
-								<table:Column width="170px" hAlign="Start" filterProperty="name" sortProperty="name">
+								<table:Column width="170px" hAlign="Begin" filterProperty="name" sortProperty="name">
 									<Label text="Product Name"/>
 									<table:template >
 										<Text text="{Name}" wrapping="false"/>
@@ -391,7 +390,7 @@
 										<Text text="{Quantity}"/>
 									</table:template>
 								</table:Column>
-								<table:Column width="158.7px" hAlign="Start" filterProperty="Status" sortProperty="Status">
+								<table:Column width="158.7px" hAlign="Begin" filterProperty="Status" sortProperty="Status">
 									<Label text="Status"/>
 									<table:template>
 										<ObjectStatus text="{Status}" state="{
@@ -416,7 +415,7 @@
 										</ComboBox>
 									</table:template>
 								</table:Column>
-								<table:Column width="116.2px" hAlign="Start">
+								<table:Column width="116.2px" hAlign="Begin">
 									<Label text="Image"/>
 									<table:template>
 										<Link text="Show Image" href="{ProductPicUrl}" target="_blank" />
@@ -440,7 +439,7 @@
 								<table:Column width="174px" hAlign="Center" filterProperty="DeliveryDate" sortProperty="DeliveryDate">
 									<Label text="Delivery Date"/>
 									<table:template>
-										<DatePicker value="{
+										<custom:DatePicker value="{
 												path: 'DeliveryDate',
 												type: 'sap.ui.model.type.Date',
 												formatOptions: {
@@ -465,7 +464,7 @@
 								</OverflowToolbar>
 							</table:extension>
 							<table:columns>
-								<table:Column width="170px" hAlign="Start" filterProperty="name" sortProperty="name">
+								<table:Column width="170px" hAlign="Begin" filterProperty="name" sortProperty="name">
 									<Label text="Product Name"/>
 									<table:template>
 										<Text text="{Name}" wrapping="false" />
@@ -483,7 +482,7 @@
 										<Text text="{Quantity}"/>
 									</table:template>
 								</table:Column>
-								<table:Column width="158.7px" hAlign="Start" filterProperty="Status" sortProperty="Status">
+								<table:Column width="158.7px" hAlign="Begin" filterProperty="Status" sortProperty="Status">
 									<Label text="Status"/>
 									<table:template>
 										<ObjectStatus text="{Status}" state="{
@@ -508,7 +507,7 @@
 										</ComboBox>
 									</table:template>
 								</table:Column>
-								<table:Column width="116.2px" hAlign="Start">
+								<table:Column width="116.2px" hAlign="Begin">
 									<Label text="Image"/>
 									<table:template>
 										<Link text="Show Image" href="{ProductPicUrl}" target="_blank" />
@@ -532,7 +531,7 @@
 								<table:Column width="174px" hAlign="Center" filterProperty="DeliveryDate" sortProperty="DeliveryDate">
 									<Label text="Delivery Date"/>
 									<table:template>
-										<DatePicker value="{
+										<custom:DatePicker value="{
 												path: 'DeliveryDate',
 												type: 'sap.ui.model.type.Date',
 												formatOptions: {
@@ -653,7 +652,7 @@
 										<Text text="{Endda}" wrapping="false" />
 									</table:template>
 								</table:Column>
-								<table:Column width="110px" hAlign="Start" filterProperty="Todo1" sortProperty="Todo1">
+								<table:Column width="110px" hAlign="Begin" filterProperty="Todo1" sortProperty="Todo1">
 									<table:multiLabels>
 										<Label text="병명"/>
 										<Label text="병명"/>
@@ -671,7 +670,7 @@
 										<Text text="{Todo2}" wrapping="false" />
 									</table:template>
 								</table:Column>
-								<table:Column width="100px" hAlign="Start" filterProperty="Todo3" sortProperty="Todo3">
+								<table:Column width="100px" hAlign="Begin" filterProperty="Todo3" sortProperty="Todo3">
 									<table:multiLabels>
 										<Label text="영수증구분"/>
 										<Label text="영수증구분"/>

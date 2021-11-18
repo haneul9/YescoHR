@@ -3,6 +3,7 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/m/MessageToast',
     'sap/m/MessageBox',
+    'sap/suite/ui/commons/util/DateUtils',
     'sap/ui/core/Fragment',
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
@@ -15,6 +16,7 @@ sap.ui.define(
     // prettier 방지용 주석
     MessageToast,
     MessageBox,
+    uDateUtils,
     Fragment,
     Filter,
     FilterOperator,
@@ -29,6 +31,7 @@ sap.ui.define(
       constructor() {
         super();
         this.formatter = formatter;
+        this.DateUtils = uDateUtils;
       }
 
       /* =========================================================== */
