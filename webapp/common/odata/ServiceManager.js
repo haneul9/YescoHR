@@ -1,7 +1,8 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/odata/v2/ODataModel',
+    // 'sap/ui/model/odata/v2/ODataModel',
+    'sap/ui/yesco/control/ODataModel',
     'sap/ui/yesco/common/odata/ServiceNames',
   ],
   (
@@ -65,7 +66,19 @@ sap.ui.define(
           o.property.forEach((p) => {
             mEntityType[o.name][p.name] = { ...p, label: _.find(p.extensions, { name: 'label' }).value };
           });
+
+          if (Array.isArray(o.navigationProperty)) {
+            o.navigationProperty.forEach((np) => {
+              mEntityType[o.name][np.name] = np.relationship.split('.').slice(-1)[0];
+            });
+          }
         });
+
+        if (Array.isArray(oSchema.association)) {
+          oSchema.association.forEach((p) => {
+            mEntityType[p.name] = _.find(p.end, { multiplicity: '*' }).type.split('.').slice(-1)[0];
+          });
+        }
 
         return mEntityType;
       },

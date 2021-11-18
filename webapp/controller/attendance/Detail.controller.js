@@ -384,22 +384,13 @@ sap.ui.define(
           await AttachFileAction.uploadFile.call(this, sAppno, this.TYPE_CODE);
         }
 
-        /* @TODO: 공통변경********/
-        mTableData.forEach((o) => {
-          delete o.BegdaTxt;
-          delete o.EnddaTxt;
-          delete o.AbrtgTxt;
-          o.Pernr = oTargetInfo.Pernr;
-        });
-        /************************/
-
         const oPayload = {
           Pernr: oTargetInfo.Pernr,
           Orgeh: oTargetInfo.Orgeh,
           Appno: sAppno,
           Prcty: 'T',
           Appty: 'A', // A:신규, B:변경, C:취소
-          LeaveApplNav1: mTableData,
+          LeaveApplNav1: mTableData.map((o) => ({ ...o, Pernr: oTargetInfo.Pernr })),
         };
 
         oModel.create(sUrl, oPayload, {
