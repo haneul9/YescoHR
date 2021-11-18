@@ -22,15 +22,6 @@
                     </Text>
                 </table:template>
             </table:Column>
-            <table:Column width="200px" sortProperty='Zpayym' filterProperty='Zpayym'>
-                <Label text="{i18n>LABEL_03002}"/>
-                <table:template>
-                    <Text text="{
-                        path: 'Zpayym',
-                        type: 'sap.ui.model.type.Date'
-                    }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-                </table:template>
-            </table:Column>
             <table:Column width="100px" sortProperty='Famtx' filterProperty='Famtx'>
                 <Label text="{i18n>LABEL_02005}"/>
                 <table:template>
@@ -44,7 +35,7 @@
                 </table:template>
             </table:Column>
             <table:Column width="auto" sortProperty='Sltxt' filterProperty='Sltxt'>
-                <Label text="{i18n>LABEL_03011}"/>
+                <Label text="{i18n>LABEL_03014}"/>
                 <table:template>
                     <Text text="{Sltxt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
@@ -98,6 +89,15 @@
                     path: 'Sgnda',
                     type: 'sap.ui.model.type.Date'
                 }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="200px" sortProperty='Zpayym' filterProperty='Zpayym'>
+                <Label text="{i18n>LABEL_03002}"/>
+                <table:template>
+                    <Text text="{
+                        path: 'Zpayym',
+                        type: 'sap.ui.model.type.Date'
+                    }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
         </table:columns>
