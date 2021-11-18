@@ -3,25 +3,25 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
     'sap/ui/model/json/JSONModel',
-    'sap/ui/yesco/common/EmpInfo',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AttachFileAction',
+    'sap/ui/yesco/common/EmpInfo',
+    'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/controller/BaseController',
-    'sap/ui/yesco/model/formatter',
   ],
   (
     // prettier 방지용 주석
     Fragment,
 	JSONModel,
-	EmpInfo,
 	Appno,
 	AttachFileAction,
+	EmpInfo,
+	FragmentEvent,
 	ServiceNames,
 	MessageBox,
-	BaseController,
-	formatter
+	BaseController
   ) => {
     'use strict';
 
@@ -30,6 +30,7 @@ sap.ui.define(
         super();
         this.formatter = formatter;
         this.AttachFileAction = AttachFileAction;
+        this.FragmentEvent = FragmentEvent;
         this.TYPE_CODE = 'HR01';
       }
 

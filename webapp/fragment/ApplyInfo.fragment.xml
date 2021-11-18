@@ -15,7 +15,7 @@
 			<Label text="{i18n>LABEL_00137}"/>
 			<Text text="{
 				path: '/ApplyInfo/Appdt',
-				formatter: '.formatter.setAppdt'
+				formatter: '.TextUtils.setAppdt'
 			}"/>
 		</grid:CSSGrid>
 	</VBox>

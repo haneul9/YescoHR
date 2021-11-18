@@ -8,16 +8,18 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/TableUtils',
+    'sap/ui/yesco/common/TextUtils',
   ],
   (
     // prettier 방지용 주석
     JSONModel,
-    formatter,
-    EmpInfo,
-    BaseController,
-    ServiceNames,
-    AttachFileAction,
-    TableUtils
+	formatter,
+	EmpInfo,
+	BaseController,
+	ServiceNames,
+	AttachFileAction,
+	TableUtils,
+	TextUtils
   ) => {
     'use strict';
 
@@ -27,6 +29,7 @@ sap.ui.define(
         this.formatter = formatter;
         this.AttachFileAction = AttachFileAction;
         this.TableUtils = TableUtils;
+        this.TextUtils = TextUtils;
         this.TYPE_CODE = 'HR02';
       }
 

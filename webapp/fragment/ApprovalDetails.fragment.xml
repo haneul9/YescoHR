@@ -9,7 +9,7 @@
 			<Label text="{i18n>LABEL_00138}"/>
 			<Text text="{
 				path: '/ApprovalDetails/Docno',
-				formatter: '.formatter.getDocnoTxt'
+				formatter: '.TextUtils.getDocnoTxt'
 			}"/>
 			<Label text="{i18n>LABEL_00140}"/>
 			<Text text="{/ApprovalDetails/ZappStxtAl}"/>

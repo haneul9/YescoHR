@@ -42,48 +42,48 @@
             <Label text="{i18n>LABEL_03019}"/>
             <Input value="{
                 path: '/FormData/ZbetEntr',
-                formatter: '.formatter.numberWithCommas'
+                formatter: '.TextUtils.numberWithCommas'
             }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             <Label text="{i18n>LABEL_03020}"/>
             <Input value="{
                 path: '/FormData/ZbetMgmt',
-                formatter: '.formatter.numberWithCommas'
+                formatter: '.TextUtils.numberWithCommas'
             }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             <Label text="{i18n>LABEL_03021}"/>
             <Input value="{
                 path: '/FormData/ZbetClass',
-                formatter: '.formatter.numberWithCommas'
+                formatter: '.TextUtils.numberWithCommas'
             }" valueState="Warning" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             <Label text="{i18n>LABEL_03022}"/>
             <Input value="{
                 path: '/FormData/ZbetExer',
-                formatter: '.formatter.numberWithCommas'
+                formatter: '.TextUtils.numberWithCommas'
             }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             <Label text="{i18n>LABEL_03023}"/>
             <Input value="{
                 path: '/FormData/ZbetSuf',
-                formatter: '.formatter.numberWithCommas'
+                formatter: '.TextUtils.numberWithCommas'
             }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             <Label text="{i18n>LABEL_03026}"/>
             <Input value="{
                 path: '/FormData/ZbetEtc',
-                formatter: '.formatter.numberWithCommas'
+                formatter: '.TextUtils.numberWithCommas'
             }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             <Label text="{i18n>LABEL_03024}" width="190px" />
             <Text text="{
                 path: '/FormData/ZbetTotl',
-                formatter: '.formatter.numberWithCommas'
+                formatter: '.TextUtils.numberWithCommas'
             }"/>
             <Label text="{i18n>LABEL_03025}"/>
             <Input value="{
                 path: '/FormData/ZbetShip',
-                formatter: '.formatter.numberWithCommas'
+                formatter: '.TextUtils.numberWithCommas'
             }" liveChange=".onSchoCost" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             <Label text="{i18n>LABEL_03027}"/>
             <HBox >
                 <Text text="{
                     path: '/FormData/ZpayAmt',
-                    formatter: '.formatter.numberWithCommas'
+                    formatter: '.TextUtils.numberWithCommas'
                 }"/>
                 <ObjectStatus text="{i18n>MSG_03002}" state="Indication05" visible="{/LimitAmountMSG}" />
             </HBox>

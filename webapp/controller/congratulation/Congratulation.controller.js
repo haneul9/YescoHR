@@ -2,22 +2,22 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/model/json/JSONModel',
-    '../../model/formatter',
     'sap/ui/yesco/common/EmpInfo',
-    '../BaseController',
+    'sap/ui/yesco/controller/BaseController',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/TableUtils',
+    'sap/ui/yesco/common/FragmentEvent',
   ],
   (
     // prettier 방지용 주석
     JSONModel,
-    formatter,
-    EmpInfo,
-    BaseController,
-    ServiceNames,
-    AttachFileAction,
-    TableUtils
+	EmpInfo,
+	BaseController,
+	ServiceNames,
+	AttachFileAction,
+	TableUtils,
+	FragmentEvent
   ) => {
     'use strict';
 
@@ -27,6 +27,7 @@ sap.ui.define(
         this.formatter = formatter;
         this.AttachFileAction = AttachFileAction;
         this.TableUtils = TableUtils;
+        this.FragmentEvent = FragmentEvent;
         this.TYPE_CODE = 'HR01';
       }
 

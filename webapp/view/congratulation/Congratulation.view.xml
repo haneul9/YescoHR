@@ -13,7 +13,7 @@
 				</Breadcrumbs>
 				<HBox>
 					<Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onClick" />
-					<Button icon="sap-icon://print" press=".formatter.onPagePrint" type="Transparent" text="{i18n>LABEL_00131}" />
+					<Button icon="sap-icon://print" press=".FragmentEvent.onPagePrint" type="Transparent" text="{i18n>LABEL_00131}" />
 					<Button icon="sap-icon://sys-help" type="Transparent" text="{i18n>LABEL_00132}" />
 				</HBox>
 			</HBox>

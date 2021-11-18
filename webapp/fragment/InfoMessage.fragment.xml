@@ -5,6 +5,6 @@
             <core:Icon src="sap-icon://travel-request"/>
             <Text text="{/InfoMessage}"/>
         </HBox>
-        <Button press=".formatter.onInfoMsgClose" type="Transparent" icon="sap-icon://decline" />
+        <Button press=".FragmentEvent.onInfoMsgClose" type="Transparent" icon="sap-icon://decline" />
     </HBox>
 </core:FragmentDefinition>

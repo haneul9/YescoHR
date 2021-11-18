@@ -66,7 +66,7 @@
                 <table:template>
                     <Text text="{
                         path: 'ZbetTotl',
-                        formatter: '.formatter.numberWithCommas'
+                        formatter: '.TextUtils.numberWithCommas'
                     }" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>

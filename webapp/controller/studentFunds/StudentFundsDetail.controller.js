@@ -92,13 +92,13 @@ sap.ui.define(
 
       // 학자금 총액에 들어가는 금액입력
       costCalculation(oEvent) {
-        this.formatter.liveChangeCost.call(this, oEvent);
+        this.TextUtils.liveChangeCost.call(this, oEvent);
         this.totalCost();
       }
 
       // 장학금 입력시
       onSchoCost(oEvent) {
-        this.formatter.liveChangeCost.call(this, oEvent);
+        this.TextUtils.liveChangeCost.call(this, oEvent);
       }
 
       // 지원금액 호출
