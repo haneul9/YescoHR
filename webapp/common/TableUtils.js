@@ -52,9 +52,9 @@ sap.ui.define(
       /**************************
        * Functions
        *************************/
-      count(mTableData) {
-        const oViewModel = this.getViewModel();
-        const aZappStatAls = _.map(mTableData, 'ZappStatAl');
+      count({ oTable, mRowData }) {
+        const aZappStatAls = _.map(mRowData, 'ZappStatAl');
+        const iVisibleRowcountLimit = Math.floor(($(document).height() - oTable.$().find('.sapUiTableCCnt').offset().top - 50) / 50);
         const oOccurCount = _.defaults(_.countBy(aZappStatAls), {
           [STATE_IN_PROGRESS1]: 0,
           [STATE_IN_PROGRESS2]: 0,
@@ -67,15 +67,15 @@ sap.ui.define(
           [STATE_COMPLETE]: 0,
         });
 
-        oViewModel.setProperty('/listInfo', {
-          rowCount: aZappStatAls.length > 10 ? 10 : aZappStatAls.length || 1,
+        return {
+          rowCount: iVisibleRowcountLimit,
           totalCount: aZappStatAls.length,
           progressCount: oOccurCount[STATE_IN_PROGRESS1] + oOccurCount[STATE_IN_PROGRESS2],
           applyCount: oOccurCount[STATE_APPLY1] + oOccurCount[STATE_APPLY2] + oOccurCount[STATE_APPLY3],
           approveCount: oOccurCount[STATE_APPROVE],
           rejectCount: oOccurCount[STATE_REJECT1] + oOccurCount[STATE_REJECT2],
           completeCount: oOccurCount[STATE_COMPLETE],
-        });
+        };
       },
 
       export({ oTable, mTableData, sFileName }) {
