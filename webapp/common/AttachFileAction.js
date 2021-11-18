@@ -248,11 +248,11 @@ sap.ui.define(['sap/ui/yesco/common/odata/ServiceManager', 'sap/ui/yesco/common/
                 this.debug(`${this.getBundleText('MSG_00016')}, ${data}`);
                 resolve();
               },
-              error: (data) => {
-                const errorMsg = this.getBundleText('MSG_00041');
+              error: (oError) => {
+                this.debug(`Error: ${oError}`);
 
-                this.debug(`Error: ${data}`);
-                reject(errorMsg);
+                // 파일 업로드에 실패하였습니다.
+                reject({ code: 'E', message: this.getBundleText('MSG_00041') });
               },
               complete: () => {
                 oAttachTable.clearSelection();
