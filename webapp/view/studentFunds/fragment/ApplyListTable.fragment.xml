@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:table="sap.ui.table"
     xmlns:core="sap.ui.core">
-    <table:Table id="studentTable" rows="{/StudentList}" width="100%" selectionMode="None" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
+    <table:Table id="studentTable" rows="{/StudentList}" visibleRowCount="{/listInfo/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="50px" rowHeight="50px" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
         <table:rowSettingsTemplate>
             <table:RowSettings highlight="{
         path: 'ZappStatAl',
@@ -17,7 +17,7 @@
                     formatter: '.TableUtils.StatusTxt'
                 }" width="100%" textAlign="Center">
                         <customData>
-                            <core:CustomData key="status" value="{ZappStatAl}" writeToDom="true" />
+                            <core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
                         </customData>
                     </Text>
                 </table:template>
@@ -57,7 +57,7 @@
                 <table:template>
                     <Text text="{
                         path: 'ZbetTotl',
-                        formatter: '.TextUtils.numberWithCommas'
+                        formatter: '.TextUtils.toCurrency'
                     }" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>

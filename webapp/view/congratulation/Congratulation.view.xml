@@ -77,7 +77,7 @@
 										formatter: '.TableUtils.StatusTxt'
 									}" width="100%" textAlign="Center">
 									<customData>
-										<core:CustomData key="status" value="{ZappStatAl}" writeToDom="true" />
+										<core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
 									</customData>
 								</Text>
 							</table:template>

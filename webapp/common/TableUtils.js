@@ -161,7 +161,7 @@ sap.ui.define(
         }
       },
 
-      StatusTxt(sValue) {
+      StatusTxt(sValue = 0) {
         switch (parseInt(sValue, 10)) {
           case STATE_IN_PROGRESS1:
           case STATE_IN_PROGRESS2:
@@ -183,7 +183,7 @@ sap.ui.define(
             // 완료
             return '완료';
           default:
-            return null;
+            return '';
         }
       },
 
