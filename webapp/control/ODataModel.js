@@ -22,14 +22,14 @@ sap.ui.define(
           const mEntityMetadata = mModelMetadata[sEntityKey];
 
           Object.keys(oData).forEach((key) => {
-            if (!mEntityMetadata[key] && !Array.isArray(oData[key])) {
+            if (!_.has(mEntityMetadata, key) && !Array.isArray(oData[key])) {
               delete oData[key];
             } else if (Array.isArray(oData[key])) {
               const mAssociationMetadata = mModelMetadata[mModelMetadata[mEntityMetadata[key]]];
 
               oData[key].forEach((ass) => {
                 Object.keys(ass).forEach((assKey) => {
-                  if (!mAssociationMetadata[assKey]) {
+                  if (!_.has(mAssociationMetadata, assKey)) {
                     delete ass[assKey];
                   }
                 });
