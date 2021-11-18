@@ -3,6 +3,7 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/m/Label',
     'sap/ui/core/Fragment',
+    'sap/ui/core/routing/HashChanger',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/control/app/MenuLevel1',
     'sap/ui/yesco/common/AppUtils',
@@ -12,6 +13,7 @@ sap.ui.define(
     // prettier 방지용 주석
     Label,
     Fragment,
+    HashChanger,
     MessageBox,
     MenuLevel1,
     AppUtils,
@@ -228,6 +230,11 @@ sap.ui.define(
       }
 
       moveToMenu(sRouteName) {
+        if (HashChanger.getInstance().getHash() === sRouteName) {
+          AppUtils.setAppBusy(false).setMenuBusy(false);
+          return;
+        }
+
         this.oController.getRouter().navTo(sRouteName);
         // this.oController
         //   .getRouter()

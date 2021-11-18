@@ -36,13 +36,11 @@ sap.ui.define(
       onAfterShow() {
         this.debug('BaseController.onAfterShow');
 
-        if (!!this.byId('InfoMegBox')) {
-          if (!!this.getViewModel().getProperty('/InfoMessage')) {
-            this.byId('InfoMegBox').setVisible(true);
-          } else {
-            this.byId('InfoMegBox').setVisible(false);
-          }
+        const oInfoMegBox = this.byId('InfoMegBox');
+        if (oInfoMegBox) {
+          oInfoMegBox.setVisible(!!this.getViewModel().getProperty('/InfoMessage'));
         }
+
         AppUtils.setAppBusy(false).setMenuBusy(false);
       }
 
