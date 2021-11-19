@@ -27,10 +27,16 @@
                     <Text text="{AbrtgTxt}" width="100%" textAlign="Center" />
                 </table:template>
             </table:Column>
-            <table:Column width="40%">
+            <table:Column width="40%" visible="{= ${/type} !== 'C'}">
                 <Label text="{i18n>LABEL_00154}" />
                 <table:template>
                     <Text text="{Tmrsn}" width="100%" textAlign="Center" />
+                </table:template>
+            </table:Column>
+            <table:Column width="40%" visible="{= ${/type} === 'C'}">
+                <Label text="{i18n>LABEL_00154}" />
+                <table:template>
+                    <Input type="text" value="{Tmrsn}" width="100%" />
                 </table:template>
             </table:Column>
         </table:columns>

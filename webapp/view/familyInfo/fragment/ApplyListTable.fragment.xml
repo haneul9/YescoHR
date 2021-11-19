@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:table="sap.ui.table"
     xmlns:core="sap.ui.core">
-    <table:Table id="studentTable" rows="{/StudentList}" visibleRowCount="{/listInfo/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="50px" rowHeight="50px" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
+    <table:Table id="familyTable" rows="{/FamilyList}" visibleRowCount="{/listInfo/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="50px" rowHeight="50px" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
         <table:rowSettingsTemplate>
             <table:RowSettings highlight="{
         path: 'ZappStatAl',
@@ -22,80 +22,50 @@
                     </Text>
                 </table:template>
             </table:Column>
-            <table:Column width="100px" sortProperty='Famtx' filterProperty='Famtx'>
-                <Label text="{i18n>LABEL_02005}"/>
+            <table:Column width="150px" sortProperty='Atext' filterProperty='Atext'>
+                <Label text="{i18n>LABEL_02006}"/>
                 <table:template>
-                    <Text text="{Famtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+                    <Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="auto" sortProperty='Zname' filterProperty='Zname'>
-                <Label text="{i18n>LABEL_03010}"/>
-                <table:template>
-                    <Text text="{Zname}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
-                </table:template>
-            </table:Column>
-            <table:Column width="auto" sortProperty='Sltxt' filterProperty='Sltxt'>
-                <Label text="{i18n>LABEL_03014}"/>
-                <table:template>
-                    <Text text="{Sltxt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-                </table:template>
-            </table:Column>
-            <table:Column width="100px" sortProperty='Grdtx' filterProperty='Grdtx'>
-                <Label text="{i18n>LABEL_03006}"/>
-                <table:template>
-                    <Text text="{Grdtx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-                </table:template>
-            </table:Column>
-            <table:Column width="100px" sortProperty='Divtx' filterProperty='Divtx'>
-                <Label text="{i18n>LABEL_03007}"/>
-                <table:template>
-                    <Text text="{Divtx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-                </table:template>
-            </table:Column>
-            <table:Column width="auto" sortProperty='ZbetTotl' filterProperty='ZbetTotl'>
-                <Label text="{i18n>LABEL_03008}"/>
+            <table:Column width="auto" sortProperty='Begda' filterProperty='Begda'>
+                <Label text="{i18n>LABEL_00148}"/>
                 <table:template>
                     <Text text="{
-                        path: 'ZbetTotl',
-                        formatter: '.TextUtils.toCurrency'
-                    }" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
+                        path: 'Begda',
+                        type: 'sap.ui.model.type.Date'
+                    }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="90px" sortProperty='Curcnt' filterProperty='Curcnt'>
-                <Label text="{i18n>LABEL_03009}"/>
+            <table:Column width="auto" sortProperty='Endda' filterProperty='Endda'>
+                <Label text="{i18n>LABEL_00149}"/>
                 <table:template>
-                    <Text text="{Curcnt}" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
+                    <Text text="{
+                        path: 'Endda',
+                        type: 'sap.ui.model.type.Date'
+                    }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="90px">
-                <Label text="{i18n>LABEL_00133}"/>
+            <table:Column width="200px" sortProperty='Famnm' filterProperty='Famnm'>
+                <Label text="{i18n>LABEL_00210}"/>
                 <table:template>
-                    <Button type="Transparent" icon="sap-icon://attachment" class="w-100" press=".TableUtils.onFileListDialog" visible="{= ${Docyn} === 'Y' }"/>
+                    <Text text="{Famnm}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="200px" sortProperty='Appda' filterProperty='Appda'>
+            <table:Column width="auto" sortProperty='ZreqDate' filterProperty='ZreqDate'>
                 <Label text="{i18n>LABEL_00266}"/>
                 <table:template>
                     <Text text="{
-                    path: 'Appda',
-                    type: 'sap.ui.model.type.Date'
-                }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                        path: 'ZreqDate',
+                        type: 'sap.ui.model.type.Date'
+                    }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="200px" sortProperty='Sgnda' filterProperty='Sgnda'>
-                <Label text="{i18n>LABEL_00269}"/>
+            <table:Column width="auto" sortProperty='ZappDate' filterProperty='ZappDate'>
+                <Label text="{i18n>LABEL_05003}"/>
                 <table:template>
                     <Text text="{
-                    path: 'Sgnda',
-                    type: 'sap.ui.model.type.Date'
-                }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-                </table:template>
-            </table:Column>
-            <table:Column width="200px" sortProperty='Zpayym' filterProperty='Zpayym'>
-                <Label text="{i18n>LABEL_03002}"/>
-                <table:template>
-                    <Text text="{
-                        path: 'Zpayym',
+                        path: 'ZappDate',
                         type: 'sap.ui.model.type.Date'
                     }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>

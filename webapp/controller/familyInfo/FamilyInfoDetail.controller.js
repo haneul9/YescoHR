@@ -35,17 +35,15 @@ sap.ui.define(
       onBeforeShow() {
         const oViewModel = new JSONModel({
           ViewKey: '',
-          FormData: {
-            Forsch: false,
-          },
-          AppTarget: [],
-          AcademicSort: [],
-          GradeList: [],
-          QuarterList: [{ Zcode: 'ALL', Ztext: this.getBundleText('LABEL_00268') }],
+          FormData: {},
+          Relations: [],
+          Gender: [],
+          Disability: [],
+          Support: [],
           Settings: {},
           busy: false,
-          LimitAmountMSG: false,
-          MajorInput: false,
+          DisabCheck: 'None',
+          SupCheck: 'None',
         });
         this.setViewModel(oViewModel);
 
@@ -55,7 +53,7 @@ sap.ui.define(
       }
 
       onAfterShow() {
-        this.getList()
+        this.getCodeList()
         .then(() => {
           this.getTargetData();
           this.getViewModel().setProperty('/busy', false);
@@ -69,102 +67,106 @@ sap.ui.define(
         this.getViewModel().setProperty('/ViewKey', sDataKey);
       }
 
-      // 해외학교 체크시
+      // 화면관련 List호출
+      getCodeList() {
+        const oModel = this.getModel(ServiceNames.PA);
+        const oDetailModel = this.getViewModel();
+        const sWerks = oDetailModel.getProperty('/TargetInfo/Werks');
+        const sKdsvhtUrl = '/KdsvhCodeListSet';
+        const sDptypUrl = '/DptypCodeListSet';
+
+        return Promise.all([
+          new Promise(resolve => {
+            // 가족관계
+            oModel.read(sKdsvhtUrl, {
+              filters: [],
+              success: (oData) => {
+                if (oData) {
+                  this.debug(`${sKdsvhtUrl} success.`, oData);
+
+                  const aList = oData.results;
+                  const oAll = { Auspr: 'ALL', Atext: this.getBundleText('LABEL_00268') };
+
+                  oDetailModel.setProperty('/Relations', [oAll, ...aList]);
+
+                  resolve();
+                }
+              },
+              error: (oRespnse) => {
+                this.debug(`${sKdsvhtUrl} error.`, vErrorMSG);
+
+                const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
+
+                MessageBox.error(vErrorMSG);
+              },
+            });
+          }),
+          new Promise(resolve => {
+            // 부양가족유형
+            oModel.read(sDptypUrl, {
+              filters: [
+                new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
+              ],
+              success: (oData) => {
+                if (oData) {
+                  this.debug(`${sDptypUrl} success.`, oData);
+
+                  const aList1 = oData.results;
+                  const oAll = { Dptyp: 'ALL', Dptyx: this.getBundleText('LABEL_00268') };
+                  
+                  oDetailModel.setProperty('/AcademicSort', [oAll, ...aList1]);
+                  resolve();
+                }
+              },
+              error: (oRespnse) => {
+                this.debug(`${sDptypUrl} error.`, vErrorMSG);
+
+                const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
+
+                MessageBox.error(vErrorMSG);
+              },
+            });
+          }),
+        ]);
+      }
+
+      // 부양가족여부, 장애여부, 동거, 건강보험피부양자, 가족수당 체크
       onCheckBox(oEvent) {
-        const bSelected = oEvent.getSource().getSelected();
+        const oEventSource = oEvent.getSource();
+        const sPath = oEventSource.getBinding('selected').aBindings[0].getPath();
+        const iValueIndex = sPath.lastIndexOf('/') + 1;
+        const oDetailModel = this.getViewModel();
+        const bSelected = oEventSource.getSelected();
+
+        switch(sPath.slice(iValueIndex)) {
+          // 부양가족
+          case 'Dptid': 
+            break;
+          // 장애여부
+          case 'Hndid': 
+            break;
+          // 동거
+          case 'Livid': 
+            break;
+          // 건강보험피부양자
+          case 'Helid': 
+            break;
+          // 가족수당
+          case 'Famid': 
+            break;
+          default: break;
+        }
 
         if (bSelected) {
-          this.getViewModel().setProperty('/FormData/Forsch', 'X');
-          this.getSupAmount();
+          oDetailModel.setProperty(sPath, 'X');
         } else {
-          this.getViewModel().setProperty('/FormData/Forsch', '');
-          this.totalCost();
-        }
-      }
-
-      // 학자금 총액에 들어가는 금액입력
-      costCalculation(oEvent) {
-        this.TextUtils.liveChangeCurrency(oEvent);
-        this.totalCost();
-      }
-
-      // 장학금 입력시
-      onSchoCost(oEvent) {
-        this.TextUtils.liveChangeCurrency(oEvent);
-      }
-
-      // 지원금액 호출
-      getSupAmount() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const oFormData = oDetailModel.getProperty('/FormData');
-        const sUrl = '/SchExpenseLimitAmtSet';
-
-        new Promise((resolve) => {
-          oModel.read(sUrl, {
-            filters: [
-              new sap.ui.model.Filter('Slart', sap.ui.model.FilterOperator.EQ, oFormData.Slart),
-              new sap.ui.model.Filter('Zname', sap.ui.model.FilterOperator.EQ, oFormData.Zname),
-              new sap.ui.model.Filter('Zzobjps', sap.ui.model.FilterOperator.EQ, oFormData.Zzobjps),
-              new sap.ui.model.Filter('Grdsp', sap.ui.model.FilterOperator.EQ, oFormData.Grdsp),
-              new sap.ui.model.Filter('Zyear', sap.ui.model.FilterOperator.EQ, oFormData.Zyear),
-            ],
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-              let oList = [];
-
-              if (oData && !!oData.results.length) {
-                oList = oData.results[0];
-              }
-
-              oDetailModel.setProperty('/LimitAmount', oList);
-              resolve();
-            },
-            error: (oRespnse) => {
-              const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
-              
-              this.debug(`${sUrl} error.`, vErrorMSG);
-              MessageBox.error(vErrorMSG);
-            },
-          });
-        }).then(() => {
-          this.totalCost();
-        });
-      }
-
-      // 학자금 총액
-      totalCost() {
-        const oDetailModel = this.getViewModel();
-        const oFormData = oDetailModel.getProperty("/FormData");
-        const oLimitData = oDetailModel.getProperty("/LimitAmount");
-        const iCostA = parseInt(oFormData.ZbetEntr) || 0;
-        const iCostB = parseInt(oFormData.ZbetMgmt) || 0;
-        const iCostC = parseInt(oFormData.ZbetClass) || 0;
-        const iCostD = parseInt(oFormData.ZbetExer) || 0;
-        const iCostE = parseInt(oFormData.ZbetSuf) || 0;
-        const iCostF = parseInt(oFormData.ZbetEtc) || 0;
-        let iCostG = parseInt(oFormData.ZbetTotl) || 0;
-
-        iCostG = iCostA + iCostB + iCostC + iCostD + iCostE + iCostF;
-        oDetailModel.setProperty("/FormData/ZbetTotl", String(iCostG));
-
-        if (
-          !!oLimitData &&
-          !!oLimitData.Zbetrg &&
-          oLimitData.Zbetrg !== '0' &&
-          iCostG > parseInt(oLimitData.Zbetrg)
-        ) {
-          oDetailModel.setProperty('/FormData/ZpayAmt', oLimitData.Zbetrg);
-          oDetailModel.setProperty('/LimitAmountMSG', true);
-        } else {
-          oDetailModel.setProperty('/FormData/ZpayAmt', String(iCostG));
-          oDetailModel.setProperty('/LimitAmountMSG', false);
+          oDetailModel.setProperty(sPath, '');
         }
       }
 
       // 상세조회
       getTargetData() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
+        const oModel = this.getModel(ServiceNames.PA);
         const oDetailModel = this.getViewModel();
         const sUrl = '/SchExpenseApplSet';
         const sViewKey = oDetailModel.getProperty('/ViewKey');
@@ -220,105 +222,8 @@ sap.ui.define(
         }
       }
 
-      // 화면관련 List호출
-      async getList() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const sWerks = oDetailModel.getProperty('/TargetInfo/Werks');
-        const sSchExpenseUrl = '/SchExpenseSupportListSet';
-        const sBenefitUrl = '/BenefitCodeListSet';
-
-        return Promise.all([
-          await new Promise(resolve => {
-            // 신청대상 조회
-            oModel.read(sSchExpenseUrl, {
-              filters: [new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date())],
-              success: (oData) => {
-                if (oData) {
-                  this.debug(`${sSchExpenseUrl} success.`, oData);
-
-                  const oList = oData.results;
-                  const oTarget = { Zzobjps: 'ALL', Znametx: this.getBundleText('LABEL_00268') };
-
-                  oDetailModel.setProperty('/AppTarget', [oTarget, ...oList]);
-
-                  resolve();
-                }
-              },
-              error: (oRespnse) => {
-                this.debug(`${sSchExpenseUrl} error.`, vErrorMSG);
-
-                const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
-
-                MessageBox.error(vErrorMSG);
-              },
-            });
-          }),
-          new Promise(resolve => {
-            // 학력구분 조회
-            oModel.read(sBenefitUrl, {
-              filters: [
-                new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0006'),
-                new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
-                new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-              ],
-              success: (oData) => {
-                if (oData) {
-                  this.debug(`${sBenefitUrl} success.`, oData);
-
-                  const aList1 = oData.results;
-                  const oSort = { Zcode: 'ALL', Ztext: this.getBundleText('LABEL_00268') };
-                  
-                  oDetailModel.setProperty('/AcademicSortHide', aList1);
-                  oDetailModel.setProperty('/AcademicSort', [oSort, ...aList1]);
-                  resolve();
-                }
-              },
-              error: (oRespnse) => {
-                this.debug(`${sBenefitUrl} error.`, vErrorMSG);
-
-                const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
-
-                MessageBox.error(vErrorMSG);
-              },
-            });
-          }),
-          new Promise(resolve => {
-            // 학년 조회
-            oModel.read(sBenefitUrl, {
-              filters: [
-                new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0004'),
-                new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000002'),
-                new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'GRADE'),
-                new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
-                new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-              ],
-              success: (oData) => {
-                if (oData) {
-                  this.debug(`${sBenefitUrl} success.`, oData);
-
-                  const oList = oData.results;
-                  const oGrade = { Zcode: 'ALL', Ztext: this.getBundleText('LABEL_00268') };
-
-                  oDetailModel.setProperty('/GradeList', [oGrade, ...oList]);
-                  
-                  resolve();
-                }
-              },
-              error: (oRespnse) => {
-                this.debug(`${sBenefitUrl} error.`, vErrorMSG);
-
-                const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
-
-                MessageBox.error(vErrorMSG);
-              },
-            });
-          }),
-        ]);
-      }
-
-      setYearsList() {
-        // 학자금 발생년도 셋팅
+      setGenderList() {
+        // 성별
         const oDetailModel = this.getViewModel();
         const iFullYears = new Date().getFullYear();
         const aYearsList = [];
@@ -331,161 +236,6 @@ sap.ui.define(
           oDetailModel.setProperty('/FormData/Zyear', aYearsList[0].Zcode);
           this.getSupAmount();
         }
-      }
-
-      // 신청대상 선택시
-      onTargetChange(oEvent) {
-        const sSelectedKey = oEvent.getSource().getSelectedKey();
-        const oDetailModel = this.getViewModel();
-
-        if(sSelectedKey === 'ALL') return;
-
-        this.reflashList(sSelectedKey);
-
-        const sSlartKey = oDetailModel.getProperty("/FormData/Slart");
-
-        if (sSlartKey === '05' || sSlartKey === '06') {
-          oDetailModel.setProperty("/MajorInput", true);
-        } else {
-          oDetailModel.setProperty("/MajorInput", false);
-        }
-        
-        oDetailModel.setProperty('/FormData/Schtx', '');
-        oDetailModel.setProperty('/FormData/Majnm', '');
-        
-        this.getSupAmount();
-        this.getApplyNumber();
-      }
-
-      // 학력구분List 다시셋팅
-      reflashList(sKey) {
-        const oDetailModel = this.getViewModel();
-        const aList1 = oDetailModel.getProperty('/AcademicSortHide');
-        let aList2 = [];
-
-        if(sKey === '00') {
-          aList1.forEach(e => {
-            if(e.Zcode === '06') {
-              aList2.push(e);
-            }
-          });
-
-          if(!oDetailModel.getProperty('/FormData/ZappStatAl')) {
-            oDetailModel.setProperty('/FormData/Slart', aList2[0].Zcode);
-          }
-          
-          aList2 = aList2;
-        }else {
-          aList2 = aList1;
-        }
-
-        const oSort = { Zcode: 'ALL', Ztext: this.getBundleText('LABEL_00268') };
-        
-        oDetailModel.setProperty('/AcademicSort', [oSort, ...aList2]);
-      }
-
-      // 지원횟수 조회
-      getApplyNumber() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const oFormData = oDetailModel.getProperty("/FormData");
-        const sUrl = '/SchExpenseCntSet';
-
-        oDetailModel.getProperty('/AppTarget').forEach((e) => {
-          if (e.Zzobjps === oFormData.Zzobjps) {
-            oDetailModel.setProperty('/FormData/Kdsvh', e.Kdsvh);
-            oDetailModel.setProperty('/FormData/Zname', e.Zname);
-          }
-        });
-
-        oModel.read(sUrl, {
-          filters: [
-            new sap.ui.model.Filter('Zname', sap.ui.model.FilterOperator.EQ, oFormData.Zname),
-            new sap.ui.model.Filter('Slart', sap.ui.model.FilterOperator.EQ, oFormData.Slart),
-            new sap.ui.model.Filter('Zzobjps', sap.ui.model.FilterOperator.EQ, oFormData.Zzobjps),
-          ],
-          success: (oData) => {
-            if (oData) {
-              this.debug(`${sUrl} success.`, oData);
-
-              oDetailModel.setProperty('/FormData/Cnttx', oData.results[0].Cnttx);
-            }
-          },
-          error: (oRespnse) => {
-            this.debug(`${sUrl} error.`, vErrorMSG);
-            
-            const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
-
-            MessageBox.error(vErrorMSG);
-          },
-        });
-      }
-
-      // 학자금 발생년도 클릭
-      onYearsSelect() {
-        this.getApplyNumber();
-        this.getSupAmount();
-      }
-
-      onGrade() {
-        this.getSupAmount();
-      }
-
-      // 학력구분 선택시
-      onShcoolList(oEvent) {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const vSelected = !oEvent ? oDetailModel.getProperty('/FormData/Slart') : oEvent.getSource().getSelectedKey();
-        const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
-        const sUrl = '/BenefitCodeListSet';
-
-        if(vSelected === 'ALL') return;
-
-        if (!sStatus || sStatus === '10') {
-          if (vSelected === '05' || vSelected === '06') {
-            oDetailModel.setProperty("/MajorInput", true);
-          } else {
-            oDetailModel.setProperty("/MajorInput", false);
-          }
-
-          if (!!oEvent) {
-            oDetailModel.setProperty('/FormData/Schtx', '');
-            oDetailModel.setProperty('/FormData/Majnm', '');
-          }
-        }
-
-        this.getApplyNumber();
-        this.getSupAmount();
-
-        oModel.read(sUrl, {
-          filters: [
-            new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0005'),
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/TargetInfo/Werks')),
-            new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-            new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, vSelected),
-          ],
-          success: (oData) => {
-            if (oData) {
-              this.debug(`${sUrl} success.`, oData);
-
-              const oList = oData.results;
-              const oQuarter = { Zcode: 'ALL', Ztext: this.getBundleText('LABEL_00268') };
-
-              oDetailModel.setProperty('/QuarterList', [oQuarter, ...oList]);
-
-              if (!!oEvent) {
-                oDetailModel.setProperty('/FormData/Divcd', 'ALL');
-              }
-            }
-          },
-          error: (oRespnse) => {
-            this.debug(`${sUrl} error.`, vErrorMSG);
-
-            const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
-
-            MessageBox.error(vErrorMSG);
-          },
-        });
       }
 
       checkError(AppBtn) {
@@ -537,11 +287,6 @@ sap.ui.define(
         return false;
       }
 
-      // 재작성
-      onRewriteBtn() {
-        this.getViewModel().setProperty('/FormData/ZappStatAl', '');
-      }
-
       // oData호출 mapping
       sendDataFormat(oDatas) {
         let oSendObject = {
@@ -578,60 +323,9 @@ sap.ui.define(
         return oSendObject;
       }
 
-      // 임시저장
-      onSaveBtn() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
-        const oFormData = oDetailModel.getProperty('/FormData');
-
-        if (this.checkError()) return;
-
-        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00103'), {
-          title: this.getBundleText('LABEL_03028'),
-          actions: [this.getBundleText('LABEL_00103'), this.getBundleText('LABEL_00118')],
-          onClose: async (vPress) => {
-            if (vPress && vPress === this.getBundleText('LABEL_00103')) {
-              if (!sStatus || sStatus === '45') {
-                const vAppno = await Appno.get.call(this);
-    
-                oDetailModel.setProperty("/FormData/Appno", vAppno);
-                oDetailModel.setProperty('/FormData/Appdt', new Date());
-              }
-    
-              let oSendObject = {};
-              const oSendData = this.sendDataFormat(oFormData);
-    
-              oSendObject = oSendData;
-              oSendObject.Prcty = 'T';
-              oSendObject.Actty = 'E';
-              oSendObject.Waers = 'KRW';
-    
-              // FileUpload
-              const v1 = await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
-
-              if(!!v1) {
-                MessageBox.error(v1);
-              }else {
-                oModel.create('/SchExpenseApplSet', oSendObject, {
-                  success: () => {
-                    MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
-                  },
-                  error: (oRespnse) => {
-                    const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
-
-                    MessageBox.error(vErrorMSG);
-                  },
-                });
-              }
-            }
-          }
-        })
-      }
-
       // 신청
       onApplyBtn() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
+        const oModel = this.getModel(ServiceNames.PA);
         const oDetailModel = this.getViewModel();
         const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
         const oFormData = oDetailModel.getProperty('/FormData');
@@ -643,7 +337,7 @@ sap.ui.define(
           actions: [this.getBundleText('LABEL_00121'), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00121')) {
-              if (!sStatus || sStatus === '45') {
+              if (!sStatus) {
                 const vAppno = await Appno.get.call(this);
   
                 oDetailModel.setProperty("/FormData/Appno", vAppno);
@@ -686,7 +380,7 @@ sap.ui.define(
 
       // 취소
       onCancelBtn() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
+        const oModel = this.getModel(ServiceNames.PA);
         const oDetailModel = this.getViewModel();
 
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00118'), {
@@ -721,7 +415,7 @@ sap.ui.define(
 
       // 삭제
       onDeleteBtn() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
+        const oModel = this.getModel(ServiceNames.PA);
         const oDetailModel = this.getViewModel();
 
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
@@ -762,9 +456,7 @@ sap.ui.define(
           Editable: !sStatus || sStatus === '10',
           Type: this.TYPE_CODE,
           Appno: sAppno,
-          Message: this.getBundleText('MSG_00040'),
           Max: 10,
-          FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
         });
       }
     }

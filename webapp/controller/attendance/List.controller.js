@@ -34,6 +34,7 @@ sap.ui.define(
       onBeforeShow() {
         const oViewModel = new JSONModel({
           busy: false,
+          isVisibleActionButton: false,
           navigation: {
             current: '근태신청',
             links: [
@@ -55,6 +56,10 @@ sap.ui.define(
             completeCount: 0,
           },
           list: [],
+          parameter: {
+            selectedIndices: [],
+            rowData: [],
+          },
         });
         this.setViewModel(oViewModel);
       }
@@ -162,10 +167,51 @@ sap.ui.define(
       }
 
       onSelectRow(oEvent) {
+        const oViewModel = this.getViewModel();
         const sPath = oEvent.getParameters().rowBindingContext.getPath();
         const oRowData = this.getViewModel().getProperty(sPath);
 
+        oViewModel.setProperty('/parameter/rowData', [oRowData]);
         this.getRouter().navTo('attendance-detail', { type: oRowData.Appty, appno: oRowData.Appno });
+      }
+
+      onChangeRowSelection(oEvent) {
+        const oTable = oEvent.getSource();
+        const oViewModel = this.getViewModel();
+        const aSelectedIndices = oTable.getSelectedIndices();
+
+        oViewModel.setProperty('/parameter/rowData', []);
+        oViewModel.setProperty('/parameter/selectedIndices', aSelectedIndices);
+
+        if (!aSelectedIndices.length) {
+          oViewModel.setProperty('/isVisibleActionButton', false);
+        } else {
+          oViewModel.setProperty(
+            '/isVisibleActionButton',
+            !aSelectedIndices.some((idx) => {
+              const sRowPath = oTable.getRows()[idx].getBindingContext().getPath();
+              const oRowData = oViewModel.getProperty(sRowPath);
+
+              return oRowData.ZappStatAl !== '10';
+            })
+          );
+        }
+      }
+
+      setRowActionParameters() {
+        const oViewModel = this.getViewModel();
+        const oTable = this.byId('attendanceTable');
+        const aSelectedIndices = oViewModel.getProperty('/parameter/selectedIndices');
+
+        oViewModel.setProperty(
+          '/parameter/rowData',
+          aSelectedIndices.map((idx) => {
+            const sRowPath = oTable.getRows()[idx].getBindingContext().getPath();
+            const oRowData = oViewModel.getProperty(sRowPath);
+
+            return oRowData;
+          })
+        );
       }
 
       onPressNewApprovalBtn() {
@@ -173,10 +219,12 @@ sap.ui.define(
       }
 
       onPressModApprovalBtn() {
+        this.setRowActionParameters();
         this.getRouter().navTo('attendance-detail', { type: 'B' });
       }
 
       onPressCancApprovalBtn() {
+        this.setRowActionParameters();
         this.getRouter().navTo('attendance-detail', { type: 'C' });
       }
 

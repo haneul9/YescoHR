@@ -1,3 +1,4 @@
+/* eslint-disable no-else-return */
 sap.ui.define(
   [
     // prettier 방지용 주석
@@ -37,7 +38,9 @@ sap.ui.define(
       constructor() {
         super();
 
+        this.LIST_PAGE_ID = 'container-ehr---attendanceList';
         this.TYPE_CODE = 'HR04';
+        this.PAGE_TYPE = { NEW: 'A', CHANGE: 'B', CANCEL: 'C' };
         this.ACTION = {
           T: 'LABEL_00104', // 임시저장
           C: 'LABEL_00121', // 신청
@@ -49,7 +52,7 @@ sap.ui.define(
       onBeforeShow() {
         const oViewModel = new JSONModel({
           busy: false,
-          type: 'n',
+          type: this.PAGE_TYPE.NEW,
           Appno: null,
           ZappStatAl: null,
           navigation: {
@@ -80,20 +83,76 @@ sap.ui.define(
       }
 
       async onAfterShow() {
-        const oViewModel = this.getView().getModel();
+        const oView = this.getView();
+        const oViewModel = oView.getModel();
         const sAppno = oViewModel.getProperty('/Appno');
+        const sType = oViewModel.getProperty('/type');
 
         // 대상자 정보
         EmpInfo.get.call(this);
 
-        if (sAppno) {
-          const mApprovalData = await this.readLeaveApplContent(sAppno);
-        }
-
         this.initializeApplyInfoBox();
         this.initializeAttachBox();
 
+        try {
+          const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+          const mListSelectedData = oListView.getModel().getProperty('/parameter/rowData');
+
+          if (sAppno) {
+            const mRowData = await this.readLeaveApplEmpList({ Prcty: 'R', Appno: sAppno });
+
+            this.setTableData({ oViewModel, mRowData });
+            oViewModel.setProperty('/ZappStatAl', mListSelectedData[0].ZappStatAl);
+          } else if (sType === this.PAGE_TYPE.CHANGE || sType === this.PAGE_TYPE.CANCEL) {
+            // 변경|취소 신청의 경우 List페이지에서 선택된 데이터를 가져온다.
+            this.setTableData({ sType, oViewModel, mRowData: mListSelectedData });
+          }
+        } catch (error) {
+          // {조회}중 오류가 발생하였습니다.
+          MessageBox.error(this.getBundleText('MSG_00008', 'LABEL_00100'), {
+            onClose: () => this.getRouter().navTo('attendance'),
+          });
+        }
+
         super.onAfterShow();
+      }
+
+      setTableData({ sType, oViewModel, mRowData }) {
+        oViewModel.setProperty('/form/rowCount', mRowData.length);
+        oViewModel.setProperty(
+          '/form/list',
+          mRowData.map((o) => {
+            if (sType === this.PAGE_TYPE.CHANGE) {
+              return {
+                ...o,
+                Abrtg2: o.Abrtg,
+                AbrtgTxt2: Number(o.Abrtg),
+                Abrtg: null,
+                Abrst2: o.Abrst,
+                Abrst: null,
+                Begda2: moment(o.Begda).hours(9).toDate(),
+                Endda2: moment(o.Endda).hours(9).toDate(),
+                BegdaTxt2: moment(o.Begda).hours(9).format('YYYY.MM.DD'),
+                EnddaTxt2: moment(o.Endda).hours(9).format('YYYY.MM.DD'),
+                Begda: null,
+                Endda: null,
+                BegdaTxt: null,
+                EnddaTxt: null,
+              };
+            } else {
+              return {
+                ...o,
+                AbrtgTxt: `${parseInt(o.Abrtg, 10)}일`,
+                Begda: moment(o.Begda).hours(9).toDate(),
+                Endda: moment(o.Endda).hours(9).toDate(),
+                BegdaTxt: moment(o.Begda).hours(9).format('YYYY.MM.DD'),
+                EnddaTxt: moment(o.Endda).hours(9).format('YYYY.MM.DD'),
+              };
+            }
+          })
+        );
+
+        this.toggleHasRowProperty();
       }
 
       onObjectMatched(oEvent) {
@@ -110,7 +169,7 @@ sap.ui.define(
           this.getRouter().navTo('attendance');
         }
 
-        if (oParameter.type === 'B') {
+        if (oParameter.type === this.PAGE_TYPE.CHANGE) {
           // Multiple table generate
           const oTable = this.byId('approveMultipleTable');
           oTable.addEventDelegate(
@@ -259,12 +318,13 @@ sap.ui.define(
         const oFormData = oViewModel.getProperty('/form/dialog/data');
 
         try {
-          const oResult = await this.readLeaveApplEmpList(oFormData);
+          const mResult = await this.readLeaveApplEmpList({ Prcty: 'C', ...oFormData });
+          const oResultData = mResult[0];
 
-          if (!_.isEmpty(oResult)) {
-            oViewModel.setProperty('/form/dialog/data/Abrst', oResult.Abrst);
-            oViewModel.setProperty('/form/dialog/data/Abrtg', oResult.Abrtg);
-            oViewModel.setProperty('/form/dialog/data/AbrtgTxt', `${parseInt(oResult.Abrtg, 10)}일`);
+          if (!_.isEmpty(oResultData)) {
+            oViewModel.setProperty('/form/dialog/data/Abrst', oResultData.Abrst);
+            oViewModel.setProperty('/form/dialog/data/Abrtg', oResultData.Abrtg);
+            oViewModel.setProperty('/form/dialog/data/AbrtgTxt', `${parseInt(oResultData.Abrtg, 10)}일`);
             oViewModel.setProperty('/form/dialog/calcCompleted', true);
           }
         } catch (oError) {
@@ -365,41 +425,33 @@ sap.ui.define(
         });
       }
 
-      readLeaveApplEmpList({ Awart, Begda, Endda }) {
+      /**
+       *
+       * @param {String} Prcty - R: 상세조회, C: 계산
+       * @returns
+       */
+      readLeaveApplEmpList({ Awart, Begda, Endda, Prcty, Appno }) {
         return new Promise((resolve, reject) => {
           const oModel = this.getModel(ServiceNames.WORKTIME);
           const sUrl = '/LeaveApplEmpListSet';
+          let aFilters = [new Filter('Prcty', FilterOperator.EQ, Prcty)];
 
-          oModel.read(sUrl, {
-            filters: [
-              new Filter('Prcty', FilterOperator.EQ, 'C'), //
+          if (Prcty === 'C') {
+            aFilters = [
+              ...aFilters, //
               new Filter('Awart', FilterOperator.EQ, Awart),
               new Filter('Begda', FilterOperator.EQ, moment(Begda).hour(9).toDate()),
               new Filter('Endda', FilterOperator.EQ, moment(Endda).hour(9).toDate()),
-            ],
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results[0]);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(oError);
-            },
-          });
-        });
-      }
-
-      readLeaveApplContent(sAppno) {
-        return new Promise((resolve, reject) => {
-          const oModel = this.getModel(ServiceNames.WORKTIME);
-          const sUrl = '/LeaveApplContentSet';
+            ];
+          } else if (Prcty === 'R') {
+            aFilters = [
+              ...aFilters, //
+              new Filter('Appno', FilterOperator.EQ, Appno),
+            ];
+          }
 
           oModel.read(sUrl, {
-            filters: [
-              new Filter('Appno', FilterOperator.EQ, sAppno), //
-            ],
+            filters: aFilters,
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
 
@@ -408,12 +460,22 @@ sap.ui.define(
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
 
-              reject(oError);
+              if (Prcty === 'R') {
+                // {조회}중 오류가 발생하였습니다.
+                reject({ code: 'E', message: this.getBundleText('MSG_00008', 'LABEL_00100') });
+              } else {
+                reject(oError);
+              }
             },
           });
         });
       }
 
+      /**
+       *
+       * @param {String} sPrcty -  T:임시저장, C:신청
+       * @returns
+       */
       createLeaveApplContent(sPrcty) {
         return new Promise((resolve, reject) => {
           const oModel = this.getModel(ServiceNames.WORKTIME);
@@ -428,7 +490,7 @@ sap.ui.define(
             Pernr: oTargetInfo.Pernr,
             Orgeh: oTargetInfo.Orgeh,
             Appno: sAppno,
-            Prcty: sPrcty, // T:임시저장, C:신청
+            Prcty: sPrcty,
             Appty: sAppty, // A:신규, B:변경, C:취소
             LeaveApplNav1: mTableData.map((o) => ({ ...o, Pernr: oTargetInfo.Pernr })),
           };
@@ -464,7 +526,7 @@ sap.ui.define(
             await AttachFileAction.uploadFile.call(this, sAppno, this.TYPE_CODE);
           }
 
-          const mReturnData = await this.createLeaveApplContent(sPrcty);
+          await this.createLeaveApplContent(sPrcty);
 
           // {임시저장|신청}되었습니다.
           MessageBox.success(this.getBundleText('MSG_00007', this.ACTION[sPrcty]));
@@ -472,7 +534,7 @@ sap.ui.define(
           if (sPrcty !== 'T') {
             this.getRouter().navTo('attendance');
           } else {
-            this.debug('mReturnData', mReturnData);
+            oViewModel.setProperty('ZappStatAl', 10);
           }
         } catch (error) {
           if (_.has(error, 'code') && error.code === 'E') {
