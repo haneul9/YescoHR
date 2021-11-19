@@ -6,6 +6,7 @@ sap.ui.define(
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/EmpInfo',
+    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
@@ -18,6 +19,7 @@ sap.ui.define(
 	Appno,
 	AttachFileAction,
 	EmpInfo,
+	TextUtils,
 	FragmentEvent,
 	ServiceNames,
 	MessageBox,
@@ -30,6 +32,7 @@ sap.ui.define(
         super();
         this.AttachFileAction = AttachFileAction;
         this.FragmentEvent = FragmentEvent;
+        this.TextUtils = TextUtils;
         this.TYPE_CODE = 'HR01';
       }
 
