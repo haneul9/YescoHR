@@ -2,7 +2,6 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/model/json/JSONModel',
-    '../../model/formatter',
     'sap/ui/yesco/common/EmpInfo',
     '../BaseController',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -12,7 +11,6 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-    formatter,
     EmpInfo,
     BaseController,
     ServiceNames,
@@ -24,7 +22,6 @@ sap.ui.define(
     class Congratulation extends BaseController {
       constructor() {
         super();
-        this.formatter = formatter;
         this.AttachFileAction = AttachFileAction;
         this.TableUtils = TableUtils;
         this.TYPE_CODE = 'HR01';

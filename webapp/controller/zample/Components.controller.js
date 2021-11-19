@@ -9,7 +9,6 @@ sap.ui.define(
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/controller/BaseController',
-    'sap/ui/yesco/model/formatter',
   ],
   (
     // prettier 방지용 주석
@@ -20,18 +19,14 @@ sap.ui.define(
     JSONModel,
     TableUtils,
     MessageBox,
-    BaseController,
-    formatter
+    BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.controller.zample.Components', {
-      formatter,
-
       /* =========================================================== */
       /* lifecycle methods                                           */
       /* =========================================================== */
-
       onBeforeShow() {
         var oModel = new JSONModel(sap.ui.require.toUrl('sap/ui/yesco/localService/mockdata/products.json'));
         // The default limit of the model is set to 100. We want to show all the entries.

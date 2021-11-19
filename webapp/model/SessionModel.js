@@ -49,6 +49,7 @@ sap.ui.define(
                 sTextCode = 'LABEL_01001';
               }
               mSessionData.CompanyName = this.oUIComponent.getBundleText(sTextCode);
+              mSessionData.Dtfmt = DATE_FORMAT;
 
               this.setData(mSessionData, true);
 
