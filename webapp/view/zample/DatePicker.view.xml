@@ -1,19 +1,19 @@
 <mvc:View controllerName="sap.ui.yesco.controller.zample.DatePicker"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:custom="sap.ui.yesco.control" height="100%">
-	<HBox>
+	xmlns:custom="sap.ui.yesco.control">
+	<HBox class="sapUiSmallMargin">
 		<VBox>
-			<Label text="sap.m.DatePicker" />
+			<Title text="sap.m.DatePicker" class="component-title" />
 			<DatePicker showFooter="true" width="400px" />
 		</VBox>
 		<VBox>
-			<Label text="sap.ui.yesco.control.DatePicker" />
-			<custom:DatePicker width="400px" />
+			<Title text="sap.ui.yesco.control.DatePicker" class="component-title" />
+			<custom:DatePicker width="140px" />
 		</VBox>
 		<VBox>
-			<Label text="sap.ui.yesco.control.DateRangeSelection" />
-			<custom:DateRangeSelection width="400px" />
+			<Title text="sap.ui.yesco.control.DateRangeSelection" class="component-title" />
+			<custom:DateRangeSelection width="230px" />
 		</VBox>
 	</HBox>
 </mvc:View>

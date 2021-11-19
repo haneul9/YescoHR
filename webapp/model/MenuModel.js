@@ -13,14 +13,14 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    class MenuModel extends JSONModel {
-      constructor(oUIComponent) {
-        super();
+    return JSONModel.extend('sap.ui.yesco.model.MenuModel', {
+      constructor: function (oUIComponent) {
+        JSONModel.apply(this);
 
         this.oUIComponent = oUIComponent;
 
         this.promise = this.retrieve();
-      }
+      },
 
       retrieve() {
         return new Promise((resolve) => {
@@ -52,7 +52,7 @@ sap.ui.define(
             }
           );
         });
-      }
+      },
 
       /**
        * 메뉴 tree 정보 생성
@@ -164,11 +164,11 @@ sap.ui.define(
           urlToMenid: mUrlToMenid,
           favoriteMenids: aFavoriteMenids,
         };
-      }
+      },
 
       getStyleClasses(m) {
         return m.Mnid1 === '70000' ? 'menu-mss' : m.Mnid1 === '80000' ? 'menu-hass' : m.Mnid1 === 'X0000' ? 'menu-sample' : '';
-      }
+      },
 
       appendSampleMenu({ aLevel1, aLevel2, aLevel3, aLevel4 }) {
         // 샘플 메뉴 정보 추가
@@ -370,27 +370,27 @@ sap.ui.define(
             },
           ]
         );
-      }
+      },
 
       getPromise() {
         return this.promise;
-      }
+      },
 
       getTree() {
         return this.getProperty('/tree');
-      }
+      },
 
       getProperties(sMenid) {
         return this.getProperty(`/menidToProperties/${sMenid}`);
-      }
+      },
 
       getMenid(sUrl) {
         return this.getProperty(`/urlToMenid/${sUrl}`);
-      }
+      },
 
       getFavoriteMenids() {
         return this.getProperty('/favoriteMenids');
-      }
+      },
 
       /**
        * 현재 메뉴 라우팅 정보 저장
@@ -399,17 +399,15 @@ sap.ui.define(
        */
       setCurrentMenuData({ RouteName, Menid }) {
         this.setProperty('/Current', { RouteName, Menid });
-      }
+      },
 
       getCurrentMenuRouteName() {
         return this.getProperty('/Current/RouteName');
-      }
+      },
 
       getCurrentMenuId() {
         return this.getProperty('/Current/Menid');
-      }
-    }
-
-    return MenuModel;
+      },
+    });
   }
 );

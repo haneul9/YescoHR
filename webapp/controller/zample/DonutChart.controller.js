@@ -11,13 +11,11 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    class DonutChart extends BaseController {
+    return BaseController.extend('sap.ui.yesco.controller.zample.DonutChart', {
       onSelectionChanged(oEvent) {
         var oSegment = oEvent.getParameter('segment');
         MessageToast.show('The selection changed: ' + oSegment.getLabel() + ' ' + (oSegment.getSelected() ? 'selected' : 'not selected'));
-      }
-    }
-
-    return DonutChart;
+      },
+    });
   }
 );

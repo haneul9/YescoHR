@@ -1,19 +1,24 @@
 sap.ui.define(
   [
-    'sap/ui/core/Control', //
+    // prettier 방지용 주석
+    'sap/ui/core/Control',
   ],
-  function (Control) {
+  (
+    // prettier 방지용 주석
+    Control
+  ) => {
     'use strict';
+
     return Control.extend('sap.ui.yesco.control.Placeholder', {
       metadata: {
         properties: {
           width: { type: 'sap.ui.core.CSSSize', defaultValue: '200px' },
           line: { type: 'int', defaultValue: 5 },
         },
-        aggregations: {
-          //   _rating: { type: 'sap.m.RatingIndicator', multiple: false, visibility: 'hidden' },
-        },
-        events: {},
+        // aggregations: {
+        //   _rating: { type: 'sap.m.RatingIndicator', multiple: false, visibility: 'hidden' },
+        // },
+        // events: {},
       },
 
       renderer: function (oRM, oControl) {

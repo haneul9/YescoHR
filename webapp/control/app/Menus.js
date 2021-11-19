@@ -4,6 +4,7 @@ sap.ui.define(
     'sap/m/Label',
     'sap/ui/core/Fragment',
     'sap/ui/core/routing/HashChanger',
+    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/control/app/MenuLevel1',
     'sap/ui/yesco/common/AppUtils',
@@ -14,6 +15,7 @@ sap.ui.define(
     Label,
     Fragment,
     HashChanger,
+    JSONModel,
     MessageBox,
     MenuLevel1,
     AppUtils,
@@ -46,7 +48,16 @@ sap.ui.define(
 
         // App menu 생성
         aMenuTree.forEach((mMenu, i) => {
-          oAppMenuToolbar.insertContent(new MenuLevel1(mMenu, this), i + 2); // App logo, ToolbarSpacer 이후부터 menu 추가
+          oAppMenuToolbar.insertContent(
+            new MenuLevel1({
+              text: mMenu.Mname,
+              tooltip: `${mMenu.Mname} (${mMenu.Mnid1}:${mMenu.Menid})`,
+            })
+              .addStyleClass(mMenu.StyleClasses)
+              .setAppMenu(this)
+              .setModel(new JSONModel(mMenu)),
+            i + 2 // App logo, ToolbarSpacer 이후부터 menu 추가
+          );
         });
 
         AppUtils.setMenuBusy(false);

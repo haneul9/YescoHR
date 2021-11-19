@@ -27,7 +27,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    class Portlets extends BaseController {
+    return BaseController.extend('sap.ui.yesco.controller.home.Portlets', {
       onBeforeShow() {
         // const p13nGridModel = new JSONModel(sap.ui.require.toUrl('sap/ui/yesco/localService/p13nGridData.json'));
         const portletsModel = new JSONModel();
@@ -81,15 +81,15 @@ sap.ui.define(
             oGrid.addStyleClass('sapUiSmallMargin');
           }
         });
-      }
+      },
 
-      // onRevealGrid() {
-      //   RevealGrid.toggle('p13n-grid', this.getView());
-      // }
+      onRevealGrid() {
+        RevealGrid.toggle('p13n-grid', this.getView());
+      },
 
-      // onExit() {
-      //   RevealGrid.destroy('p13n-grid', this.getView());
-      // }
+      onExit() {
+        RevealGrid.destroy('p13n-grid', this.getView());
+      },
 
       handleShowSpecialDays(oEvent) {
         const oTeamCalendar = this.byId('team-calendar');
@@ -157,9 +157,7 @@ sap.ui.define(
           oTeamCalendar.destroySpecialDates();
           oTeamCalendarLegend.destroyItems();
         }
-      }
-    }
-
-    return Portlets;
+      },
+    });
   }
 );

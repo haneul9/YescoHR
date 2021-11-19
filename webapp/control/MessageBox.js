@@ -6,33 +6,33 @@ sap.ui.define(
   ],
   function (
     // prettier 방지용 주석
-    SapMMessageBox,
+    MessageBox,
     AppUtils
   ) {
     'use strict';
 
     return {
-      ...SapMMessageBox,
+      ...MessageBox,
       alert(vMessage, mOptions = {}) {
-        SapMMessageBox.alert(vMessage, { ...mOptions, title: AppUtils.getBundleText('LABEL_ALERT') }); // 안내
+        MessageBox.alert(vMessage, { ...mOptions, title: AppUtils.getBundleText('LABEL_ALERT') }); // 안내
       },
       confirm(vMessage, mOptions = {}) {
-        SapMMessageBox.confirm(vMessage, { ...mOptions, title: AppUtils.getBundleText('LABEL_CONFIRM') }); // 확인
+        MessageBox.confirm(vMessage, { ...mOptions, title: AppUtils.getBundleText('LABEL_CONFIRM') }); // 확인
       },
       error(vMessage, mOptions = {}) {
-        SapMMessageBox.error(vMessage, { ...mOptions, title: AppUtils.getBundleText('LABEL_ERROR') }); // 오류
+        MessageBox.error(vMessage, { ...mOptions, title: AppUtils.getBundleText('LABEL_ERROR') }); // 오류
       },
       information(vMessage, mOptions = {}) {
-        SapMMessageBox.information(vMessage, { ...mOptions, title: AppUtils.getBundleText('LABEL_INFORMATION') }); // 정보
+        MessageBox.information(vMessage, { ...mOptions, title: AppUtils.getBundleText('LABEL_INFORMATION') }); // 정보
       },
       show(vMessage, mOptions = {}) {
-        SapMMessageBox.show(vMessage, { ...mOptions, title: AppUtils.getBundleText('LABEL_SHOW') }); // 보기
+        MessageBox.show(vMessage, { ...mOptions, title: AppUtils.getBundleText('LABEL_SHOW') }); // 보기
       },
       success(vMessage, mOptions = {}) {
-        SapMMessageBox.success(vMessage, { ...mOptions, title: AppUtils.getBundleText('LABEL_SUCCESS') }); // 성공
+        MessageBox.success(vMessage, { ...mOptions, title: AppUtils.getBundleText('LABEL_SUCCESS') }); // 성공
       },
       warning(vMessage, mOptions = {}) {
-        SapMMessageBox.warning(vMessage, { ...mOptions, title: AppUtils.getBundleText('LABEL_WARNING') }); // 경고
+        MessageBox.warning(vMessage, { ...mOptions, title: AppUtils.getBundleText('LABEL_WARNING') }); // 경고
       },
     };
   }

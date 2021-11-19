@@ -11,7 +11,7 @@ sap.ui.define(
   ) {
     'use strict';
 
-    class VacationIndicator extends BaseController {
+    return BaseController.extend('sap.ui.yesco.controller.zample.VacationIndicator', {
       onBeforeShow() {
         const iTotal = 25;
         this._grid = this.byId('grid').setModel(
@@ -27,7 +27,7 @@ sap.ui.define(
             used6: iTotal, // 남은 일수 0
           })
         );
-      }
+      },
 
       onClick1() {
         const iTotal = 15;
@@ -42,7 +42,7 @@ sap.ui.define(
           used5: iTotal - 3, // 사용 일수 >> 남은 일수
           used6: iTotal, // 남은 일수 0
         });
-      }
+      },
 
       onClick2() {
         const iTotal = 25;
@@ -57,9 +57,7 @@ sap.ui.define(
           used5: iTotal - 1.5, // 사용 일수 >> 남은 일수
           used6: iTotal, // 남은 일수 0
         });
-      }
-    }
-
-    return VacationIndicator;
+      },
+    });
   }
 );

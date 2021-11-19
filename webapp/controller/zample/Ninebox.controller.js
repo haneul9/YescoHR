@@ -11,7 +11,7 @@ sap.ui.define(
   ) {
     'use strict';
 
-    class Ninebox extends BaseController {
+    return BaseController.extend('sap.ui.yesco.controller.zample.Ninebox', {
       onBeforeShow() {
         const map = {};
         const oModel = new JSONModel(sap.ui.require.toUrl('sap/ui/yesco/localService/9box.json'));
@@ -31,15 +31,13 @@ sap.ui.define(
           this.debug('9box', map);
           this.byId('nineboxGrid').setModel(new JSONModel(map));
         });
-      }
+      },
       onPress1() {
         alert('icon 1');
-      }
+      },
       onPress2() {
         alert('icon 2');
-      }
-    }
-
-    return Ninebox;
+      },
+    });
   }
 );

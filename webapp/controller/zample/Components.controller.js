@@ -2,37 +2,31 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/m/MessageToast',
-    'sap/m/MessageBox',
-    'sap/suite/ui/commons/util/DateUtils',
     'sap/ui/core/Fragment',
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
+    'sap/ui/yesco/common/TableUtils',
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/controller/BaseController',
     'sap/ui/yesco/model/formatter',
-    'sap/ui/yesco/common/TableUtils',
   ],
   (
     // prettier 방지용 주석
     MessageToast,
-    MessageBox,
-    uDateUtils,
     Fragment,
     Filter,
     FilterOperator,
     JSONModel,
+    TableUtils,
+    MessageBox,
     BaseController,
-    formatter,
-    TableUtils
+    formatter
   ) => {
     'use strict';
 
-    class Components extends BaseController {
-      constructor() {
-        super();
-        this.formatter = formatter;
-        this.DateUtils = uDateUtils;
-      }
+    return BaseController.extend('sap.ui.yesco.controller.zample.Components', {
+      formatter,
 
       /* =========================================================== */
       /* lifecycle methods                                           */
@@ -63,7 +57,7 @@ sap.ui.define(
             oTable
           );
         }
-      }
+      },
 
       summaryColspan() {
         const $firstTD = $('#container-ehr---sampleComponents--groupTable-rows-row3-col0');
@@ -77,34 +71,34 @@ sap.ui.define(
           const $selectTD = $(`#container-ehr---sampleComponents--groupTable-rows-row3-col${idx}`);
           $selectTD.hide();
         });
-      }
+      },
 
       /* =========================================================== */
       /* event handlers                                              */
       /* =========================================================== */
       onConfirmationMessageBoxPress() {
         MessageBox.confirm('Approve purchase order 12345?');
-      }
+      },
 
       onAlertMessageBoxPress() {
         MessageBox.alert('The quantity you have reported exceeds the quantity planed.');
-      }
+      },
 
       onErrorMessageBoxPress() {
         MessageBox.error('Select a team in the "Development" area.\n"Marketing" isn\'t assigned to this area.');
-      }
+      },
 
       onInfoMessageBoxPress() {
         MessageBox.information('Your booking will be reserved for 24 hours.');
-      }
+      },
 
       onWarningMessageBoxPress() {
         MessageBox.warning('The project schedule was last updated over a year ago.');
-      }
+      },
 
       onSuccessMessageBoxPress() {
         MessageBox.success('Project 1234567 was created and assigned to team "ABC".');
-      }
+      },
 
       openEmployeeDialog() {
         var oView = this.getView();
@@ -122,11 +116,11 @@ sap.ui.define(
         this._pEmployeeDialog.then(function (oDialog) {
           oDialog.open();
         });
-      }
+      },
 
       onEmployeeClose() {
         this.byId('employeeDialog').close();
-      }
+      },
 
       /**
        * Triggered by the table's 'updateFinished' event: after new table
@@ -150,7 +144,7 @@ sap.ui.define(
           sTitle = this.getResourceBundle().getText('worklistTableTitle');
         }
         this.getModel('worklistView').setProperty('/worklistTableTitle', sTitle);
-      }
+      },
 
       /**
        * Event handler when a table item gets pressed
@@ -160,17 +154,7 @@ sap.ui.define(
       onPress(oEvent) {
         // The source is the list item that got pressed
         this._showObject(oEvent.getSource());
-      }
-
-      /**
-       * Event handler for navigating back.
-       * We navigate back in the browser history
-       * @public
-       */
-      onNavBack() {
-        // eslint-disable-next-line sap-no-history-manipulation
-        window.history.go(-1);
-      }
+      },
 
       onSearch(oEvent) {
         if (oEvent.getParameters().refreshButtonPressed) {
@@ -188,7 +172,7 @@ sap.ui.define(
           }
           this._applySearch(aTableSearchState);
         }
-      }
+      },
 
       /**
        * Event handler for refresh event. Keeps filter, sort
@@ -198,7 +182,7 @@ sap.ui.define(
       onRefresh() {
         var oTable = this.byId('table');
         oTable.getBinding('items').refresh();
-      }
+      },
 
       /* =========================================================== */
       /* internal methods                                            */
@@ -214,7 +198,7 @@ sap.ui.define(
         this.getRouter().navTo('object', {
           objectId: oItem.getBindingContext().getProperty('ProductID'),
         });
-      }
+      },
 
       /**
        * Internal helper method to apply both filter and search state together on the list binding
@@ -229,7 +213,7 @@ sap.ui.define(
         if (aTableSearchState.length !== 0) {
           oViewModel.setProperty('/tableNoDataText', this.getResourceBundle().getText('worklistNoDataWithSearchText'));
         }
-      }
+      },
 
       onValueHelpRequest(oEvent) {
         var sInputValue = oEvent.getSource().getValue(),
@@ -251,14 +235,14 @@ sap.ui.define(
           // Open ValueHelpDialog filtered by the input's value
           oDialog.open(sInputValue);
         });
-      }
+      },
 
       onValueHelpSearch(oEvent) {
         var sValue = oEvent.getParameter('value');
         var oFilter = new Filter('Name', FilterOperator.Contains, sValue);
 
         oEvent.getSource().getBinding('items').filter([oFilter]);
-      }
+      },
 
       onValueHelpClose(oEvent) {
         var oSelectedItem = oEvent.getParameter('selectedItem');
@@ -269,7 +253,7 @@ sap.ui.define(
         }
 
         this.byId('productInput').setValue(oSelectedItem.getTitle());
-      }
+      },
 
       handleSelectionChange(oEvent) {
         var changedItems = oEvent.getParameter('changedItems') || [oEvent.getParameter('changedItem')];
@@ -288,7 +272,7 @@ sap.ui.define(
         };
 
         MessageToast.show(fnLogChangedItems());
-      }
+      },
 
       handleSelectionFinish(oEvent) {
         var selectedItems = oEvent.getParameter('selectedItems');
@@ -296,7 +280,7 @@ sap.ui.define(
 
         for (var i = 0; i < selectedItems.length; i++) {
           messageText += "'" + selectedItems[i].getText() + "'";
-          if (i != selectedItems.length - 1) {
+          if (i !== selectedItems.length - 1) {
             messageText += ',';
           }
         }
@@ -306,9 +290,7 @@ sap.ui.define(
         MessageToast.show(messageText, {
           width: 'auto',
         });
-      }
-    }
-
-    return Components;
+      },
+    });
   }
 );

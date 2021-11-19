@@ -13,20 +13,26 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    class SessionModel extends JSONModel {
-      constructor(oUIComponent) {
-        super();
+    const DATE_FORMAT = 'yyyy.MM.dd';
+
+    return JSONModel.extend('sap.ui.yesco.model.SessionModel', {
+      constructor: function (oUIComponent) {
+        JSONModel.apply(this, {
+          Dtfmt: DATE_FORMAT,
+          CompanyName: oUIComponent.getBundleText('LABEL_01001'),
+        });
 
         this.oUIComponent = oUIComponent;
 
         this.promise = this.retrieve();
-      }
+      },
 
       retrieve() {
         return new Promise((resolve) => {
           const sUrl = '/EmpLoginInfoSet';
           this.oUIComponent.getModel(ServiceNames.COMMON).read(sUrl, {
             success: (oData, oResponse) => {
+              /** WrongParametersLinter */
               AppUtils.debug(`${sUrl} success.`, oData, oResponse);
 
               const mSessionData = (oData.results || [])[0] || {};
@@ -44,26 +50,22 @@ sap.ui.define(
               }
               mSessionData.CompanyName = this.oUIComponent.getBundleText(sTextCode);
 
-              this.setData(mSessionData);
+              this.setData(mSessionData, true);
 
               resolve();
             },
             error: (oError) => {
               AppUtils.debug(`${sUrl} error.`, oError);
 
-              this.setData({ CompanyName: this.oUIComponent.getBundleText('LABEL_01001') });
-
               resolve();
             },
           });
         });
-      }
+      },
 
       getPromise() {
         return this.promise;
-      }
-    }
-
-    return SessionModel;
+      },
+    });
   }
 );

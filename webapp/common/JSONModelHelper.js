@@ -1,13 +1,15 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/yesco/common/JSONModelRequest',
     'sap/ui/model/json/JSONModel',
+    'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/JSONModelRequest',
   ],
   (
     // prettier 방지용 주석
-    JSONModelRequest,
-    JSONModel
+    JSONModel,
+    AppUtils,
+    JSONModelRequest
   ) => {
     'use strict';
 
@@ -29,9 +31,9 @@ sap.ui.define(
       };
     };
 
-    class JSONModelHelper extends JSONModel {
-      constructor(...args) {
-        super(...args);
+    return JSONModel.extend('sap.ui.yesco.common.JSONModelHelper', {
+      constructor: function (...aArgs) {
+        JSONModel.apply(this, aArgs);
 
         this.oController = null; // i18n, view 등의 참조를 제공할 controller
         this.oPromise = null; // loadData function이 반환하는 promise 저장 변수, 아래 promise function을 호출하여 사용
@@ -40,22 +42,16 @@ sap.ui.define(
         this.aResults = null; // loadData 후 getData 호출로 얻을 수 있는 data의 d.results 를 저장해놓는 변수, 아래 getResults function을 호출하여 사용
         this.mResultsMap = null; // Multiple requests의 경우 비동기로 호출되므로 결과 results의 orderby를 유지할 수 있도록 호출한 순서를 map의 key값으로 저장해둠
         this.mLoadDataArguments = _getDefaultLoadDataArguments(); // loadData 호출시 넘겨주는 parameter들을 임시로 저장하는 변수
-      }
-
-      debug(...args) {
-        if (this.oController && typeof this.oController.debug === 'function') {
-          this.oController.debug(...args);
-        }
-      }
+      },
 
       setController(oController) {
         this.oController = oController;
         return this;
-      }
+      },
 
       getController() {
         return this.oController;
-      }
+      },
 
       _getRequests(oRequest) {
         const mArgs = oRequest.mLoadDataArguments;
@@ -66,7 +62,7 @@ sap.ui.define(
           mArgs.aRequests = [new JSONModelRequest()];
         }
         return mArgs.aRequests;
-      }
+      },
 
       setParameter(sKey, vValue) {
         const aRequests = this._getRequests(this);
@@ -75,12 +71,12 @@ sap.ui.define(
         });
 
         return this;
-      }
+      },
 
       getParameter(sKey) {
         const aRequests = this._getRequests(this);
         return aRequests[0].getParameter(sKey);
-      }
+      },
 
       setUrl(sURL) {
         const aRequests = this._getRequests(this);
@@ -89,58 +85,58 @@ sap.ui.define(
         });
 
         return this;
-      }
+      },
 
       setRequests(aRequests) {
         this.mLoadDataArguments.aRequests = Array.isArray(aRequests) ? aRequests : [aRequests];
         return this;
-      }
+      },
 
       setAsync(bAsync) {
         this.mLoadDataArguments.bAsync = bAsync;
         return this;
-      }
+      },
 
       setMerge(bMerge) {
         this.mLoadDataArguments.bMerge = bMerge;
         return this;
-      }
+      },
 
       setCache(bCache) {
         this.mLoadDataArguments.bCache = bCache;
         return this;
-      }
+      },
 
       setHeaders(mHeaders) {
         Object.assign(this.mLoadDataArguments.mHeaders, mHeaders);
         return this;
-      }
+      },
 
       setGet() {
         this.mLoadDataArguments.sType = 'GET';
         this.mLoadDataArguments.mHeaders.Accept = 'application/json';
         return this;
-      }
+      },
 
       setPost() {
         this.mLoadDataArguments.sType = 'POST';
         this.mLoadDataArguments.mHeaders.Accept = 'application/json';
         return this;
-      }
+      },
 
       setDelete() {
         this.mLoadDataArguments.sType = 'DELETE';
         this.mLoadDataArguments.mHeaders.Accept = 'text/plain';
         return this;
-      }
+      },
 
       setTop(vValue) {
         return this.setParameter('top', vValue);
-      }
+      },
 
       setSkip(vValue) {
         return this.setParameter('skip', vValue);
-      }
+      },
 
       setSelect(vValue) {
         const aRequests = this._getRequests(this);
@@ -149,7 +145,7 @@ sap.ui.define(
         });
 
         return this;
-      }
+      },
 
       setFilter(vValue) {
         const aRequests = this._getRequests(this);
@@ -158,7 +154,7 @@ sap.ui.define(
         });
 
         return this;
-      }
+      },
 
       setExpand(vValue) {
         const aRequests = this._getRequests(this);
@@ -167,7 +163,7 @@ sap.ui.define(
         });
 
         return this;
-      }
+      },
 
       setOrderby(vValue) {
         const aRequests = this._getRequests(this);
@@ -176,7 +172,7 @@ sap.ui.define(
         });
 
         return this;
-      }
+      },
 
       setInlinecount(bValue) {
         const aRequests = this._getRequests(this);
@@ -185,7 +181,7 @@ sap.ui.define(
         });
 
         return this;
-      }
+      },
 
       getInlinecount() {
         if (this.iCount) {
@@ -198,11 +194,11 @@ sap.ui.define(
         }
 
         return this.iCount;
-      }
+      },
 
       getLoadDataArgumentsObject() {
         return this.mLoadDataArguments;
-      }
+      },
 
       getLoadDataArguments() {
         const mArgs = this.mLoadDataArguments;
@@ -212,15 +208,15 @@ sap.ui.define(
             [aRequests[0].getURL(), aRequests[0].getParameterMap(), mArgs.bAsync, mArgs.sType, mArgs.bMerge, mArgs.bCache, mArgs.mHeaders]
           : // multiple requests
             aRequests.map((oRequest) => [oRequest.getURL(), oRequest.getParameterMap(), mArgs.bAsync, mArgs.sType, mArgs.bMerge, mArgs.bCache, mArgs.mHeaders]);
-      }
+      },
 
       getEncodedURL() {
         return this.mLoadDataArguments.aRequests.map((oRequest) => oRequest.getEncodedURL(oRequest.getParameterMap()));
-      }
+      },
 
       getDecodedURL() {
         return this.mLoadDataArguments.aRequests.map((oRequest) => oRequest.getDecodedURL(oRequest.getParameterMap()));
-      }
+      },
 
       load() {
         try {
@@ -235,17 +231,17 @@ sap.ui.define(
                 new JSONModelHelper()
                   .setController(this.oController)
                   .attachRequestCompleted(function (...args) {
-                    this.debug('success - child', i, mArg, args);
+                    AppUtils.debug('success - child', i, mArg, args);
 
                     const mData = this.getData().d || {};
                     oModel.mResultsMap[i] = mData.results || [];
 
                     if (mData.__next) {
-                      this.debug('Request success but it has more data to retrieve.', i, mData.__next, mArg);
+                      AppUtils.debug('Request success but it has more data to retrieve.', i, mData.__next, mArg);
                     }
                   })
                   .attachRequestFailed(function (...args) {
-                    this.debug('failure - child', i, args);
+                    AppUtils.debug('failure - child', i, args);
                   });
 
                 return this.loadData(...mArg);
@@ -253,7 +249,7 @@ sap.ui.define(
             )
               .then(() => this.loadData('localService/empty.json', null, true, 'GET', true, true, mArgs.mHeaders))
               .catch((...args) => {
-                this.debug('loadDatas error', args);
+                AppUtils.debug('loadDatas error', args);
               });
           }
           // single request
@@ -261,21 +257,21 @@ sap.ui.define(
             this.oPromise = this.loadData(...mArgs);
             if (mArgs[2] === true) {
               this.oPromise.catch((...args) => {
-                this.debug('loadData error', args);
+                AppUtils.debug('loadData error', args);
               });
             }
           }
         } catch (e) {
-          console.log('loadData throws', e);
+          AppUtils.debug('loadData throws', e);
           throw e;
         }
 
         return this;
-      }
+      },
 
       getPromise() {
         return this.oPromise;
-      }
+      },
 
       getResult() {
         if (this.mResult) {
@@ -285,7 +281,7 @@ sap.ui.define(
         // single request 이어야만 results 변수가 없음
         this.mResult = this.getData().d || {};
         return this.mResult;
-      }
+      },
 
       getResults() {
         if (this.aResults) {
@@ -304,9 +300,7 @@ sap.ui.define(
           this.aResults = (this.getData().d || {}).results || [];
         }
         return this.aResults;
-      }
-    }
-
-    return JSONModelHelper;
+      },
+    });
   }
 );

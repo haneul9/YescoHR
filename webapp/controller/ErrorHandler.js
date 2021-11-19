@@ -13,7 +13,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    class ErrorHandler extends BaseObject {
+    return BaseObject.extend('sap.ui.yesco.controller.ErrorHandler', {
       /**
        * Handles application errors by automatically attaching to the model events and displaying errors when needed.
        * @class
@@ -21,8 +21,8 @@ sap.ui.define(
        * @public
        * @alias sap.ui.yesco.controller.ErrorHandler
        */
-      constructor(oComponent) {
-        super(oComponent);
+      constructor: function (oComponent) {
+        BaseObject.apply(this, [oComponent]);
 
         this._oResourceBundle = oComponent.getModel('i18n').getResourceBundle();
         this._oComponent = oComponent;
@@ -44,7 +44,7 @@ sap.ui.define(
             this._showServiceError(oParams.response);
           }
         }, this);
-      }
+      },
 
       /**
        * Shows a {@link sap.m.MessageBox} when a service call has failed.
@@ -67,9 +67,7 @@ sap.ui.define(
             this._bMessageOpen = false;
           },
         });
-      }
-    }
-
-    return ErrorHandler;
+      },
+    });
   }
 );

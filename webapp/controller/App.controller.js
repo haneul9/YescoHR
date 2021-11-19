@@ -11,7 +11,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    class App extends BaseController {
+    return BaseController.extend('sap.ui.yesco.controller.App', {
       onInit() {
         this.debug('App.onInit');
 
@@ -19,20 +19,18 @@ sap.ui.define(
         this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
 
         new Menus(this);
-      }
+      },
 
       navToHome() {
         this.getRouter().navTo('ehrHome');
 
         // TODO : master 전환 후 callback 호출 필요(ex: localStorage, sessionStorage, global temporary variables/functions 등 제거 callback)
-      }
+      },
 
-      getLogoPath(sCompanyName) {
-        this.byId('logoImage').addStyleClass(`logo-${sCompanyName}`);
+      getLogoPath(sCompanyName = 'init') {
+        this.byId('logoImage').toggleStyleClass(`logo-${sCompanyName}`, true);
         return `image/logo-${sCompanyName}.png`;
-      }
-    }
-
-    return App;
+      },
+    });
   }
 );
