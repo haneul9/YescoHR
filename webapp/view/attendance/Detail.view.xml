@@ -7,8 +7,7 @@
             <HBox justifyContent="SpaceBetween">
                 <core:Fragment fragmentName="sap.ui.yesco.fragment.Navigation" type="XML" />
                 <HBox>
-                    <Button text="{i18n>LABEL_00104}" width="117px" type="Emphasized" enabled="{= ${/form/hasRow}}" busyIndicatorDelay="0" busy="{/busy}" press=".onPressSave" />
-                    <Button text="{i18n>LABEL_00121}" width="117px" type="Emphasized" enabled="{= ${/form/hasRow}}" busyIndicatorDelay="0" busy="{/busy}" press=".onPressApproval" />
+                    <Button text="{i18n>LABEL_00121}" width="117px" type="Emphasized" visible="{= !${/ZappStatAl} }" enabled="{= ${/form/hasRow}}" busyIndicatorDelay="0" busy="{/busy}" press=".onPressApproval" />
                     <Button text="{i18n>LABEL_00146}" width="117px" press=".onNavBack" />
                 </HBox>
             </HBox>

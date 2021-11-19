@@ -18,7 +18,7 @@
                     <Label text="{i18n>LABEL_00148}" />
                 </table:multiLabels>
                 <table:template>
-                    <Text text="{BegdaTxt}" width="100%" textAlign="Center" />
+                    <Text text="{BegdaTxt2}" width="100%" textAlign="Center" />
                 </table:template>
             </table:Column>
             <table:Column width="12%">
@@ -27,7 +27,7 @@
                     <Label text="{i18n>LABEL_00149}" />
                 </table:multiLabels>
                 <table:template>
-                    <Text text="{EnddaTxt}" width="100%" textAlign="Center" />
+                    <Text text="{EnddaTxt2}" width="100%" textAlign="Center" />
                 </table:template>
             </table:Column>
             <table:Column width="8%">
@@ -36,7 +36,7 @@
                     <Label text="{i18n>LABEL_00155}" />
                 </table:multiLabels>
                 <table:template>
-                    <Text text="{Abrtg}" width="100%" textAlign="Center" />
+                    <Text text="{AbrtgTxt2}" width="100%" textAlign="Center" />
                 </table:template>
             </table:Column>
             <table:Column width="12%" headerSpan="3">
@@ -63,7 +63,7 @@
                     <Label text="{i18n>LABEL_00155}" />
                 </table:multiLabels>
                 <table:template>
-                    <Text text="{Abrtg}" width="100%" textAlign="Center" />
+                    <Text text="{AbrtgTxt}" width="100%" textAlign="Center" />
                 </table:template>
             </table:Column>
             <table:Column width="24%">
