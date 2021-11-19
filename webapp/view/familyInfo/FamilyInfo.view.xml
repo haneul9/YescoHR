@@ -1,4 +1,4 @@
-<mvc:View controllerName="sap.ui.yesco.controller.studentFunds.StudentFunds"
+<mvc:View controllerName="sap.ui.yesco.controller.familyInfo.FamilyInfo"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:core="sap.ui.core">

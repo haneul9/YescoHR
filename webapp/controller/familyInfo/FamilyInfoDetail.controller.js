@@ -24,12 +24,12 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    class StudentFundsDetail extends BaseController {
+    class FamilyInfoDetail extends BaseController {
       constructor() {
         super();
         this.AttachFileAction = AttachFileAction;
         this.TextUtils = TextUtils;
-        this.TYPE_CODE = 'HR02';
+        this.TYPE_CODE = 'HR03';
       }
 
       onBeforeShow() {
@@ -769,6 +769,6 @@ sap.ui.define(
       }
     }
 
-    return StudentFundsDetail;
+    return FamilyInfoDetail;
   }
 );

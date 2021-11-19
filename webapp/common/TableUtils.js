@@ -84,7 +84,9 @@ sap.ui.define(
         const sToday = moment().format('YYYYMMDD');
         const mColumns = oTable.getColumns().map((col) => ({
           label: col.getLabel().getText(),
-          property: !!col.getTemplate().getBindingInfo('text') ? col.getTemplate().getBindingInfo('text').parts[0].path : col.getTemplate().getBindingInfo('visible').parts[0].path,
+          property: !!col.getTemplate().getBindingInfo('text') ? 
+            (col.getTemplate().getBindingInfo('text').parts[0].path === 'ZappStatAl' ? 'ZappStxtAl' : col.getTemplate().getBindingInfo('text').parts[0].path) :
+            col.getTemplate().getBindingInfo('visible').parts[0].path,
           type: exportLibrary.EdmType.String,
         }));
 
@@ -161,7 +163,7 @@ sap.ui.define(
         }
       },
 
-      StatusTxt(sValue) {
+      StatusTxt(sValue = 0) {
         switch (parseInt(sValue, 10)) {
           case STATE_IN_PROGRESS1:
           case STATE_IN_PROGRESS2:
@@ -183,7 +185,7 @@ sap.ui.define(
             // 완료
             return '완료';
           default:
-            return null;
+            return '';
         }
       },
 

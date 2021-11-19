@@ -26,11 +26,9 @@ sap.ui.define(
         },
 
         setAppdt(vAppdt) {
-          const sPattern = 'YYYY.MM.DD HH:mm';
+          const sPattern = 'YYYY.MM.DD, HH:mm';
           if (typeof vAppdt === 'string') {
             return moment(vAppdt, 'YYYYMMDD HHmm').format(sPattern);
-          } else if (vAppdt instanceof Date) {
-            return moment(vAppdt).format(sPattern);
           }
           return '';
         },
