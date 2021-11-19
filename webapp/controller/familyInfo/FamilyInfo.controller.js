@@ -64,15 +64,15 @@ sap.ui.define(
       }
 
       onClick() {
-        this.getRouter().navTo('studentFunds-detail', { oDataKey: 'N' });
+        this.getRouter().navTo('familyInfo-detail', { oDataKey: 'N' });
       }
 
       formatNumber(vNum = '0') {
-        return vNum;
+        return `${vNum}${this.getBundleText('LABEL_00159')}`;
       }
 
       formatPay(vPay = '0') {
-        return vPay === '0' ? parseInt(vPay) : `${parseInt(vPay)}${this.getBundleText('LABEL_00157')}`;
+        return `${vPay}${this.getBundleText('LABEL_00158')}`;
       }
 
       thisYear(sYear = String(moment().format('YYYY'))) {
@@ -80,29 +80,28 @@ sap.ui.define(
       }
 
       onSearch() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
+        const oModel = this.getModel(ServiceNames.PA);
         const oListModel = this.getViewModel();
-        const oTable = this.byId('studentTable');
+        const oTable = this.byId('familyTable');
         const oSearchDate = oListModel.getProperty('/searchDate');
         const dDate = moment(oSearchDate.secondDate).hours(10).toDate();
         const dDate2 = moment(oSearchDate.date).hours(10).toDate();
 
         oListModel.setProperty('/busy', true);
 
-        oModel.read('/SchExpenseApplSet', {
+        oModel.read('/FamilyInfoApplSet', {
           filters: [
-            new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'),
-            new sap.ui.model.Filter('Actty', sap.ui.model.FilterOperator.EQ, 'E'),
-            new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate),
-            new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2),
+            new sap.ui.model.Filter('Begda', sap.ui.model.FilterOperator.EQ, dDate),
+            new sap.ui.model.Filter('Endda', sap.ui.model.FilterOperator.EQ, dDate2),
           ],
           success: (oData) => {
             if (oData) {
               const oList = oData.results;
 
               oListModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData: oList }));
-              oListModel.setProperty('/StudentList', oList);
-              this.byId('studentTable').setVisibleRowCount(oList.length);
+              oListModel.setProperty('/listInfo/infoMessage', this.getBundleText('MSG_05005'));
+              oListModel.setProperty('/FamilyList', oList);
+              this.byId('familyTable').setVisibleRowCount(oList.length);
               oListModel.setProperty('/busy', false);
             }
           },
@@ -114,18 +113,14 @@ sap.ui.define(
       }
 
       totalCount() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
+        const oModel = this.getModel(ServiceNames.PA);
         const oListModel = this.getViewModel();
 
-        oModel.read('/SchExpenseMyschSet', {
+        oModel.read('/FamInfoSummarySet', {
           filters: [],
           success: (oData) => {
             if (oData) {
               const oList = oData.results[0];
-              const sYear = oList.Zyear;
-
-              oList.Zbetrg = oList.Zbetrg.replace(/\./g, '');
-              oList.Zyear = sYear === '0000' ? moment().format('YYYY') : sYear;
 
               oListModel.setProperty('/Total', oList);
             }
@@ -140,12 +135,12 @@ sap.ui.define(
         const vPath = oEvent.getParameters().rowBindingContext.getPath();
         const oRowData = this.getViewModel().getProperty(vPath);
 
-        this.getRouter().navTo('studentFunds-detail', { oDataKey: oRowData.Appno });
+        this.getRouter().navTo('familyInfo-detail', { oDataKey: oRowData.Appno });
       }
 
       onPressExcelDownload() {
-        const oTable = this.byId('studentTable');
-        const mTableData = this.getViewModel().getProperty('/StudentList');
+        const oTable = this.byId('familyTable');
+        const mTableData = this.getViewModel().getProperty('/FamilyList');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_03028');
 
         TableUtils.export({ oTable, mTableData, sFileName });

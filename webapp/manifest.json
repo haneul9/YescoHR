@@ -100,6 +100,9 @@
         { "pattern": "congratulation/{oDataKey}", "name": "congratulation-detail", "target": "congDetail" },
         { "pattern": "m/congratulation/{oDataKey}", "name": "congratulation-detail-mobile", "target": "m/congDetail" },
 
+        { "pattern": "familyInfo", "name": "familyInfo", "target": "familyInfo" },
+        { "pattern": "familyInfo/{oDataKey}", "name": "familyInfo-detail", "target": "familyInfoDetail" },
+
         { "pattern": "studentFunds", "name": "studentFunds", "target": "studentFunds" },
         { "pattern": "studentFunds/{oDataKey}", "name": "studentFunds-detail", "target": "studentFundsDetail" },
 
@@ -125,6 +128,9 @@
         "m/congratulation": { "viewId": "congratulationMobile", "viewPath": "sap.ui.yesco.view.congratulation.m", "viewName": "Congratulation" },
         "congDetail": { "viewId": "congDetail", "viewPath": "sap.ui.yesco.view.congratulation", "viewName": "CongDetail" },
         "m/congDetail": { "viewId": "congDetailMobile", "viewPath": "sap.ui.yesco.view.congratulation.m", "viewName": "CongDetail" },
+
+        "familyInfo": { "viewId": "familyInfo", "viewPath": "sap.ui.yesco.view.familyInfo", "viewName": "FamilyInfo" },
+        "familyInfoDetail": { "viewId": "familyInfoDetail", "viewPath": "sap.ui.yesco.view.familyInfo", "viewName": "FamilyInfoDetail" },
 
         "studentFunds": { "viewId": "studentFunds", "viewPath": "sap.ui.yesco.view.studentFunds", "viewName": "StudentFunds" },
         "studentFundsDetail": { "viewId": "studentFundsDetail", "viewPath": "sap.ui.yesco.view.studentFunds", "viewName": "StudentFundsDetail" },
