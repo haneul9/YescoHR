@@ -18,9 +18,7 @@
 				</HBox>
 			</HBox>
 			<HBox justifyContent="SpaceAround">
-				<VBox class="hCardBox" width="33%">
-					<core:Fragment fragmentName="sap.ui.yesco.fragment.TargetInfo" type="XML" />
-				</VBox>
+				<core:Fragment fragmentName="sap.ui.yesco.fragment.TargetInfo" type="XML" />
 				<VBox class="hCardBox" width="33%" busyIndicatorDelay="0" busy="{/busy}">
 					<VBox>
 						<Title level="H2" text="{i18n>MSG_02001}" />

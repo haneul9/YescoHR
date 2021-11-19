@@ -15,14 +15,10 @@
 						<Button icon="sap-icon://sys-help" type="Transparent" text="{i18n>LABEL_00132}" />
 					</HBox>
 				</HBox>
-				<HBox justifyContent="SpaceAround">
-					<VBox class="hCardBox" width="33%">
-						<core:Fragment fragmentName="sap.ui.yesco.fragment.TargetInfo" type="XML" />
-					</VBox>
-					<VBox width="33%"/>
-					<VBox class="hCardBox" width="33%">
-						<core:Fragment fragmentName="sap.ui.yesco.view.studentFunds.fragment.SearchCondition" type="XML" />
-					</VBox>
+				<HBox justifyContent="SpaceAround">					
+					<core:Fragment fragmentName="sap.ui.yesco.fragment.TargetInfo" type="XML" />
+					<core:Fragment fragmentName="sap.ui.yesco.view.studentFunds.fragment.ThisYearFunds" type="XML" />
+					<core:Fragment fragmentName="sap.ui.yesco.view.studentFunds.fragment.SearchCondition" type="XML" />
 				</HBox>
 				<VBox class="vCardBox">
 					<core:Fragment fragmentName="sap.ui.yesco.fragment.OverviewTableHeader" type="XML" />

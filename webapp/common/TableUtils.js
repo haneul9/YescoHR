@@ -84,7 +84,9 @@ sap.ui.define(
         const sToday = moment().format('YYYYMMDD');
         const mColumns = oTable.getColumns().map((col) => ({
           label: col.getLabel().getText(),
-          property: !!col.getTemplate().getBindingInfo('text') ? col.getTemplate().getBindingInfo('text').parts[0].path : col.getTemplate().getBindingInfo('visible').parts[0].path,
+          property: !!col.getTemplate().getBindingInfo('text') ? 
+            (col.getTemplate().getBindingInfo('text').parts[0].path === 'ZappStatAl' ? 'ZappStxtAl' : col.getTemplate().getBindingInfo('text').parts[0].path) :
+            col.getTemplate().getBindingInfo('visible').parts[0].path,
           type: exportLibrary.EdmType.String,
         }));
 

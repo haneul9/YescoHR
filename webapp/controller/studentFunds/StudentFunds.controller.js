@@ -59,6 +59,7 @@ sap.ui.define(
 
       onAfterShow() {
         this.onSearch();
+        this.totalCount();
         super.onAfterShow();
       }
 
@@ -66,10 +67,16 @@ sap.ui.define(
         this.getRouter().navTo('studentFunds-detail', { oDataKey: 'N' });
       }
 
-      formatNumber(vNum) {
-        if (!vNum || vNum === '') return '0';
-
+      formatNumber(vNum = '0') {
         return vNum;
+      }
+
+      formatPay(vPay = '0') {
+        return vPay === '0' ? parseInt(vPay) : `${parseInt(vPay)}${this.getBundleText('LABEL_00157')}`;
+      }
+
+      thisYear(sYear = String(moment().format('YYYY'))) {
+        return this.getBundleText('MSG_03012', sYear);
       }
 
       onSearch() {
@@ -99,8 +106,32 @@ sap.ui.define(
               oListModel.setProperty('/busy', false);
             }
           },
-          error: (oRespnse) => {
+          error: (oError) => {
+            this.debug(oError);
             oListModel.setProperty('/busy', false);
+          },
+        });
+      }
+
+      totalCount() {
+        const oModel = this.getModel(ServiceNames.BENEFIT);
+        const oListModel = this.getViewModel();
+
+        oModel.read('/SchExpenseMyschSet', {
+          filters: [],
+          success: (oData) => {
+            if (oData) {
+              const oList = oData.results[0];
+              const sYear = oList.Zyear;
+
+              oList.Zbetrg = oList.Zbetrg.replace(/\./g, '');
+              oList.Zyear = sYear === '0000' ? moment().format('YYYY') : sYear;
+
+              oListModel.setProperty('/Total', oList);
+            }
+          },
+          error: (oError) => {
+            this.debug(oError);
           },
         });
       }

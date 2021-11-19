@@ -58,7 +58,6 @@ sap.ui.define(
         this.getList()
         .then(() => {
           this.getTargetData();
-          this.settingsAttachTable();
           this.getViewModel().setProperty('/busy', false);
           super.onAfterShow();
         });
@@ -191,6 +190,7 @@ sap.ui.define(
           });
 
           this.setYearsList();
+          this.settingsAttachTable();
         }else {
           oModel.read(sUrl, {
             filters: [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'), new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sViewKey)],
@@ -206,6 +206,8 @@ sap.ui.define(
                 
                 this.onShcoolList();
                 this.setYearsList();
+                this.reflashList(oTargetData.Zzobjps);
+                this.settingsAttachTable();
               }
             },
             error: (oRespnse) => {
@@ -265,23 +267,10 @@ sap.ui.define(
                   this.debug(`${sBenefitUrl} success.`, oData);
 
                   const aList1 = oData.results;
-                  let aList2 = [];
-
-                  if(oDetailModel.getProperty("/FormData/Zzobjps") === '00') {
-                    aList1.forEach(e => {
-                      if(e.Zcode === '06') {
-                        aList2.push(e);
-                      }
-                    });
-                  }else {
-                    aList2 = aList1;
-                  }
-
                   const oSort = { Zcode: 'ALL', Ztext: this.getBundleText('LABEL_00268') };
                   
-                  oDetailModel.setProperty('/AcademicSortHide', [oSort, ...aList1]);
-                  oDetailModel.setProperty('/AcademicSort', [oSort, ...aList2]);
-
+                  oDetailModel.setProperty('/AcademicSortHide', aList1);
+                  oDetailModel.setProperty('/AcademicSort', [oSort, ...aList1]);
                   resolve();
                 }
               },
@@ -348,24 +337,10 @@ sap.ui.define(
       onTargetChange(oEvent) {
         const sSelectedKey = oEvent.getSource().getSelectedKey();
         const oDetailModel = this.getViewModel();
-        const aAcademiList = oDetailModel.getProperty("/AcademicSortHide");
-        let aList = [];
 
         if(sSelectedKey === 'ALL') return;
 
-        if(sSelectedKey === '') {
-          aAcademiList.forEach(e => {
-            if(e.Zcode === '06') {
-              aList.push(e);
-            }
-          });
-          const oSort = { Zcode: 'ALL', Ztext: this.getBundleText('LABEL_00268') };
-
-          oDetailModel.setProperty('/FormData/Slart', aList[0].Zcode);
-          aList = [oSort, ...aList];
-        }else {
-          aList = aAcademiList;
-        }
+        this.reflashList(sSelectedKey);
 
         const sSlartKey = oDetailModel.getProperty("/FormData/Slart");
 
@@ -377,10 +352,36 @@ sap.ui.define(
         
         oDetailModel.setProperty('/FormData/Schtx', '');
         oDetailModel.setProperty('/FormData/Majnm', '');
-        oDetailModel.setProperty("/AcademicSort", aList);
         
         this.getSupAmount();
         this.getApplyNumber();
+      }
+
+      // 학력구분List 다시셋팅
+      reflashList(sKey) {
+        const oDetailModel = this.getViewModel();
+        const aList1 = oDetailModel.getProperty('/AcademicSortHide');
+        let aList2 = [];
+
+        if(sKey === '00') {
+          aList1.forEach(e => {
+            if(e.Zcode === '06') {
+              aList2.push(e);
+            }
+          });
+
+          if(!oDetailModel.getProperty('/FormData/ZappStatAl')) {
+            oDetailModel.setProperty('/FormData/Slart', aList2[0].Zcode);
+          }
+          
+          aList2 = aList2;
+        }else {
+          aList2 = aList1;
+        }
+
+        const oSort = { Zcode: 'ALL', Ztext: this.getBundleText('LABEL_00268') };
+        
+        oDetailModel.setProperty('/AcademicSort', [oSort, ...aList2]);
       }
 
       // 지원횟수 조회
