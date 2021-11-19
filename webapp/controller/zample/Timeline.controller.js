@@ -1,13 +1,13 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/suite/ui/commons/util/DateUtils',
+    'sap/ui/core/format/DateFormat',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/controller/BaseController',
   ],
   function (
     // prettier 방지용 주석
-    DateUtils,
+    DateFormat,
     JSONModel,
     BaseController
   ) {
@@ -20,16 +20,21 @@ sap.ui.define(
 
       const oModel = oEvent.getSource();
       const oData = oModel.getData();
+      const oDateParser = DateFormat.getDateInstance({
+        source: {
+          pattern: 'yyyy.MM.dd',
+        },
+      });
 
       oData.Employees.forEach(function (oEmployee) {
-        oEmployee.HireDateTime = DateUtils.parseDate(oEmployee.HireDateTime);
+        oEmployee.HireDateTime = oDateParser.parse(oEmployee.HireDateTime);
         oEmployee.Photo = sap.ui.require.toUrl(`sap/ui/yesco/image/${oEmployee.Photo}`);
       });
 
       oModel.updateBindings(true);
     }
 
-    class Timeline extends BaseController {
+    return BaseController.extend('sap.ui.yesco.controller.zample.Timeline', {
       onBeforeShow() {
         const oModel = new JSONModel(sap.ui.require.toUrl('sap/ui/yesco/localService/timeline.json'));
         oModel.attachRequestCompleted(convertData);
@@ -42,19 +47,23 @@ sap.ui.define(
           // sctretch:true on container prevents scrolling by default
           $('section').css('overflow', 'auto');
         });
-      }
+      },
+
       enableScrollSelected(oEvent) {
         const bSelected = oEvent.getParameter('selected');
         this._timeline.setEnableScroll(bSelected);
-      }
+      },
+
       textHeightChanged(oEvent) {
         const sKey = oEvent.getParameter('selectedItem').getProperty('key');
         this._timeline.setTextHeight(sKey);
-      }
+      },
+
       groupByChanged(oEvent) {
         const sKey = oEvent.getParameter('selectedItem').getProperty('key');
         this._timeline.setGroupByType(sKey);
-      }
+      },
+
       alignmentChanged(oEvent) {
         const sKey = oEvent.getParameter('selectedItem').getProperty('key');
         if (sKey === 'DoubleSided') {
@@ -63,7 +72,8 @@ sap.ui.define(
           this._timeline.setEnableDoubleSided(false);
           this._timeline.setAlignment(sKey);
         }
-      }
+      },
+
       orientationChanged(oEvent) {
         const sKey = oEvent.getParameter('selectedItem').getProperty('key');
         const itemA = sKey === 'Horizontal' ? 'Top' : 'Left';
@@ -78,9 +88,7 @@ sap.ui.define(
         oSecondItem.setKey(itemB);
 
         this._timeline.setAxisOrientation(sKey);
-      }
-    }
-
-    return Timeline;
+      },
+    });
   }
 );

@@ -8,14 +8,12 @@
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.Navigation" type="XML" />
 				<HBox>
 					<Button type="Emphasized" width="117px" text="{i18n>LABEL_04002}" press=".onPressNewApprovalBtn" busyIndicatorDelay="0" busy="{/busy}" />
-					<Button type="Emphasized" width="117px" text="{i18n>LABEL_04003}" press=".onPressModApprovalBtn" busyIndicatorDelay="0" busy="{/busy}" />
-					<Button type="Emphasized" width="117px" text="{i18n>LABEL_04004}" press=".onPressCancApprovalBtn" busyIndicatorDelay="0" busy="{/busy}" />
+					<Button type="Emphasized" width="117px" text="{i18n>LABEL_04003}" press=".onPressModApprovalBtn" enabled="{= ${/isVisibleActionButton}}" busyIndicatorDelay="0" busy="{/busy}" />
+					<Button type="Emphasized" width="117px" text="{i18n>LABEL_04004}" press=".onPressCancApprovalBtn" enabled="{= ${/isVisibleActionButton}}" busyIndicatorDelay="0" busy="{/busy}" />
 				</HBox>
 			</HBox>
 			<HBox justifyContent="SpaceAround">
-				<VBox class="hCardBox" width="33%">
-					<core:Fragment fragmentName="sap.ui.yesco.fragment.TargetInfo" type="XML" />
-				</VBox>
+				<core:Fragment fragmentName="sap.ui.yesco.fragment.TargetInfo" type="XML" />
 				<VBox class="hCardBox" width="33%">
 					<core:Fragment fragmentName="sap.ui.yesco.view.attendance.fragment.VacationOverview" type="XML" />
 				</VBox>

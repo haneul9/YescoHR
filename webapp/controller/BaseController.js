@@ -15,7 +15,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    class BaseController extends Controller {
+    return Controller.extend('sap.ui.yesco.controller.BaseController', {
       onInit() {
         this.debug('BaseController.onInit');
 
@@ -27,11 +27,11 @@ sap.ui.define(
           },
           this
         );
-      }
+      },
 
       onBeforeShow() {
         this.debug('BaseController.onBeforeShow');
-      }
+      },
 
       onAfterShow() {
         this.debug('BaseController.onAfterShow');
@@ -42,7 +42,7 @@ sap.ui.define(
         }
 
         AppUtils.setAppBusy(false).setMenuBusy(false);
-      }
+      },
 
       /**
        * Convenience method for accessing the router in every controller of the application.
@@ -52,7 +52,7 @@ sap.ui.define(
       getRouter() {
         // return this.getOwnerComponent().getRouter();
         return UIComponent.getRouterFor(this);
-      }
+      },
 
       /**
        * Convenience method for setting the view model in every controller of the application.
@@ -63,7 +63,7 @@ sap.ui.define(
        */
       setViewModel(oModel, sName) {
         return this.getView().setModel(oModel, sName);
-      }
+      },
 
       /**
        * Convenience method for getting the view model by name in every controller of the application.
@@ -73,7 +73,7 @@ sap.ui.define(
        */
       getViewModel(sName) {
         return this.getView().getModel(sName);
-      }
+      },
 
       /**
        * Convenience method for getting the component model by name in every controller of the application.
@@ -83,7 +83,7 @@ sap.ui.define(
        */
       getModel(sName) {
         return this.getOwnerComponent().getModel(sName);
-      }
+      },
 
       /**
        * Convenience method for getting the resource bundle text.
@@ -93,7 +93,7 @@ sap.ui.define(
        */
       getBundleText(...aArgs) {
         return this.getOwnerComponent().getBundleText(...aArgs);
-      }
+      },
 
       /**
        * Event handler for navigating back.
@@ -109,14 +109,14 @@ sap.ui.define(
         } else {
           this.getRouter().navTo('ehrHome', {}, true /* no history */);
         }
-      }
+      },
 
       navToNotFound() {
         // display the "notFound" target without changing the hash
         this.getRouter().getTargets().display('notFound', {
           from: 'home',
         });
-      }
+      },
 
       /**
        * Convenience method for logging.
@@ -125,9 +125,7 @@ sap.ui.define(
       debug(...aArgs) {
         AppUtils.debug(...aArgs);
         return this;
-      }
-    }
-
-    return BaseController;
+      },
+    });
   }
 );

@@ -5,29 +5,31 @@ sap.ui.define(
     'sap/m/ButtonType',
     'sap/ui/yesco/common/AppUtils',
   ],
-  function (
+  (
     // prettier 방지용 주석
-    sapMDatePicker,
+    DatePicker,
     ButtonType,
     AppUtils
-  ) {
-    ('use strict');
+  ) => {
+    'use strict';
 
     /**
      * '오늘' 버튼 기능을 구현한 DatePicker
      * ResponsivePopover Footer의 '확인' 버튼을 감추고 '취소' 버튼을 '오늘' 버튼으로 오버라이딩
      */
-    class DatePicker extends sapMDatePicker {
-      constructor(...aArgs) {
-        super(...aArgs);
+    return DatePicker.extend('sap.ui.yesco.control.DatePicker', {
+      renderer: {},
+
+      constructor: function (...aArgs) {
+        DatePicker.apply(this, aArgs);
 
         this.setShowFooter(true);
         this.setPlaceholder('yyyy.MM.dd');
         this.setDisplayFormat('yyyy.MM.dd');
-      }
+      },
 
       _createPopup() {
-        super._createPopup();
+        DatePicker.prototype._createPopup.apply(this);
 
         this._oPopup.getBeginButton().setVisible(false);
 
@@ -44,17 +46,15 @@ sap.ui.define(
             })
           );
         }
-      }
+      },
 
       _handleCancelButton() {
         this._oCalendar.focusDate(new Date());
-      }
+      },
 
       _handleCalendarSelect() {
         this._selectDate();
-      }
-    }
-
-    return DatePicker;
+      },
+    });
   }
 );

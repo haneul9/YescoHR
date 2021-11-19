@@ -131,6 +131,7 @@ sap.ui.define([], () => {
     },
 
     /**
+     * @param {any[]}
      * @public
      */
     debug(...args) {

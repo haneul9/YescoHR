@@ -22,7 +22,8 @@
       "Width": 30,
       "Depth": 18,
       "Height": 3,
-      "DimUnit": "cm"
+      "DimUnit": "cm",
+      "DeliveryDate": "2021.12.25"
     },
     {
       "ProductId": "HT-1001",
@@ -44,7 +45,8 @@
       "Width": 29,
       "Depth": 17,
       "Height": 3.1,
-      "DimUnit": "cm"
+      "DimUnit": "cm",
+      "DeliveryDate": "2021.12.26"
     },
     {
       "ProductId": "HT-1002",
@@ -66,7 +68,8 @@
       "Width": 28,
       "Depth": 19,
       "Height": 2.5,
-      "DimUnit": "cm"
+      "DimUnit": "cm",
+      "DeliveryDate": "2021.12.25"
     },
     {
       "ProductId": "HT-1003",
@@ -88,7 +91,8 @@
       "Width": 32,
       "Depth": 21,
       "Height": 4,
-      "DimUnit": "cm"
+      "DimUnit": "cm",
+      "DeliveryDate": "2021.12.27"
     },
     {
       "ProductId": "HT-1007",

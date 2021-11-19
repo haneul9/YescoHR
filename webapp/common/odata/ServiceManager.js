@@ -58,7 +58,7 @@ sap.ui.define(
 
       getMetadata(oServiceModel) {
         const oSchema = oServiceModel.getServiceMetadata().dataServices.schema[0];
-        let mEntityType = {};
+        const mEntityType = {};
 
         oSchema.entityType.forEach((o) => {
           mEntityType[o.name] = {};

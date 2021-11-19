@@ -9,8 +9,6 @@ sap.ui.define(
   ) {
     'use strict';
 
-    class DatePicker extends BaseController {}
-
-    return DatePicker;
+    return BaseController.extend('sap.ui.yesco.controller.zample.DatePicker', {});
   }
 );
