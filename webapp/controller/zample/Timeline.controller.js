@@ -5,12 +5,12 @@ sap.ui.define(
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/controller/BaseController',
   ],
-  function (
+  (
     // prettier 방지용 주석
     DateFormat,
     JSONModel,
     BaseController
-  ) {
+  ) => {
     'use strict';
 
     function convertData(oEvent) {

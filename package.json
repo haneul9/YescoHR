@@ -23,7 +23,8 @@
     ],
     "ui5linter": {
       "usage": {
-        "TagAttributeLinter": false
+        "TagAttributeLinter": false,
+        "WrongParametersLinter": false
       }
     }
   }

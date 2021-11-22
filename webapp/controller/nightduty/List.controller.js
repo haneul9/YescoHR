@@ -3,29 +3,28 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/EmpInfo',
-    '../BaseController',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/TableUtils',
+    'sap/ui/yesco/controller/BaseController',
   ],
   (
     // prettier 방지용 주석
     JSONModel,
     EmpInfo,
-    BaseController,
     ServiceNames,
     AttachFileAction,
-    TableUtils
+    TableUtils,
+    BaseController
   ) => {
     'use strict';
 
-    class Congratulation extends BaseController {
-      constructor() {
-        super();
+    return BaseController.extend('sap.ui.yesco.controller.nightduty.List', {
+      constructor: function () {
         this.AttachFileAction = AttachFileAction;
         this.TableUtils = TableUtils;
         this.TYPE_CODE = 'HR01';
-      }
+      },
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
@@ -51,17 +50,17 @@ sap.ui.define(
 
         oSearchDate.setDateValue(dDate2);
         oSearchDate.setSecondDateValue(dDate);
-      }
+      },
 
       onAfterShow() {
         this.onSearch();
         this.getTotalPay();
         super.onAfterShow();
-      }
+      },
 
       onClick() {
         this.getRouter().navTo('congratulation-detail', { oDataKey: 'N' });
-      }
+      },
 
       onExelDownload() {
         const oTable = this.byId('conguTable');
@@ -69,19 +68,19 @@ sap.ui.define(
         const sFileName = '경조금신청_목록';
 
         TableUtils.export({ oTable, mTableData, sFileName });
-      }
+      },
 
       formatNumber(vNum) {
         if (!vNum || vNum === '') return '0';
 
         return vNum;
-      }
+      },
 
       formatPay(vPay) {
         if (!vPay || vPay === '0') return '0';
 
         return `${vPay}만원`;
-      }
+      },
 
       getTotalPay() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
@@ -100,7 +99,7 @@ sap.ui.define(
             // Common.log(oResponse);
           },
         });
-      }
+      },
 
       onSearch() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
@@ -146,7 +145,7 @@ sap.ui.define(
             oListModel.setProperty('/busy', false);
           },
         });
-      }
+      },
 
       onSelectRow(oEvent) {
         const vPath = oEvent.getParameters().rowBindingContext.getPath();
@@ -154,9 +153,7 @@ sap.ui.define(
 
         this.getRouter().navTo('congratulation-detail', { oDataKey: oRowData.Appno });
         // this.getRouter().getTargets().display('congDetail', { oDataKey: oRowData.Appno });
-      }
-    }
-
-    return Congratulation;
+      },
+    });
   }
 );

@@ -4,11 +4,11 @@ sap.ui.define(
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/controller/BaseController',
   ],
-  function (
+  (
     // prettier 방지용 주석
     JSONModel,
     BaseController
-  ) {
+  ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.controller.zample.VacationIndicator', {
