@@ -554,7 +554,7 @@ sap.ui.define(
           { label: 'LABEL_00274', field: 'Zzaddr2', type: Validator.INPUT2 }, // 상세주소
         ];
 
-        if (!Validator.check({ oInputData, mCheckFields })) return;
+        if (!Validator.check({ mFieldValue: oInputData, aFieldProperties: mCheckFields })) return;
 
         const oSido = _.find(oViewModel.getProperty('/employee/address/sidoList'), { State: oInputData.State });
         delete oSido.Land1;
@@ -620,7 +620,7 @@ sap.ui.define(
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
           actions: [this.getBundleText('LABEL_00110'), MessageBox.Action.CANCEL], // 삭제
           onClose: async (sAction) => {
-            if (sAction !== MessageBox.Action.CANCEL) {
+            if (!sAction || sAction !== MessageBox.Action.CANCEL) {
               const oPayload = this.getAddressTableRowData({ oViewModel, oTable, aSelectedIndices });
               const { result } = await this.deleteAddressInfo({ oPayload });
 

@@ -11,7 +11,6 @@ sap.ui.define(
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
-    'sap/ui/yesco/common/EmpInfo',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/Validator',
@@ -27,7 +26,6 @@ sap.ui.define(
     Appno,
     AppUtils,
     AttachFileAction,
-    EmpInfo,
     ServiceNames,
     TableUtils,
     Validator
@@ -58,19 +56,22 @@ sap.ui.define(
               { name: '근태신청' },
             ],
           },
-          ApplyInfo: {},
           form: {
             hasRow: false,
             rowCount: 1,
+            listMode: 'MultiToggle',
             list: [],
             dialog: {
               calcCompleted: false,
+              selectedRowPath: null,
               awartCodeList: [{ Awart: 'ALL', Atext: this.getBundleText('LABEL_00268'), Alldf: true }],
               data: {
                 Awart: 'ALL',
               },
             },
           },
+          ApplyInfo: {},
+          ApprovalDetails: {},
         });
         this.setViewModel(oViewModel);
 
@@ -84,12 +85,6 @@ sap.ui.define(
         const sAppno = oViewModel.getProperty('/Appno');
         const sType = oViewModel.getProperty('/type');
 
-        // 대상자 정보
-        EmpInfo.get.call(this);
-
-        this.initializeApplyInfoBox();
-        this.initializeAttachBox();
-
         try {
           const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
           const mListSelectedData = oListView.getModel().getProperty('/parameter/rowData');
@@ -99,9 +94,15 @@ sap.ui.define(
 
             this.setTableData({ oViewModel, mRowData });
             oViewModel.setProperty('/ZappStatAl', mListSelectedData[0].ZappStatAl);
+            oViewModel.setProperty('/form/listMode', !mListSelectedData[0].ZappStatAl ? 'MultiToggle' : 'None');
+            oViewModel.setProperty('/ApprovalDetails', { ...mListSelectedData[0] });
           } else if (sType === this.PAGE_TYPE.CHANGE || sType === this.PAGE_TYPE.CANCEL) {
             // 변경|취소 신청의 경우 List페이지에서 선택된 데이터를 가져온다.
             this.setTableData({ sType, oViewModel, mRowData: mListSelectedData });
+
+            if (sType === this.PAGE_TYPE.CANCEL) {
+              oViewModel.setProperty('/form/listMode', 'None');
+            }
           }
         } catch (error) {
           // {조회}중 오류가 발생하였습니다.
@@ -110,7 +111,11 @@ sap.ui.define(
           });
         }
 
-        super.onAfterShow();
+        this.initializeApplyInfoBox();
+        this.initializeAttachBox();
+
+        // ! 필수 호출 - BaseController.onPageLoaded
+        this.onPageLoaded();
       },
 
       setTableData({ sType, oViewModel, mRowData }) {
@@ -121,6 +126,7 @@ sap.ui.define(
             if (sType === this.PAGE_TYPE.CHANGE) {
               return {
                 ...o,
+                isChanged: false,
                 Abrtg2: o.Abrtg,
                 AbrtgTxt: Number(o.Abrtg),
                 AbrtgTxt2: Number(o.Abrtg),
@@ -197,13 +203,15 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const sStatus = oViewModel.getProperty('/ZappStatAl');
         const sAppno = oViewModel.getProperty('/Appno') || '';
+        const sType = oViewModel.getProperty('/type') || '';
 
         AttachFileAction.setAttachFile(this, {
-          Editable: !sStatus || sStatus === '10',
+          Editable: !sStatus,
           Type: this.TYPE_CODE,
           Appno: sAppno,
           Message: this.getBundleText('MSG_00037'), // 증빙자료를 꼭 등록 해주세요.
           Max: 10,
+          Visible: !(sType === this.PAGE_TYPE.CANCEL),
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
         });
       },
@@ -241,9 +249,17 @@ sap.ui.define(
 
       toggleHasRowProperty() {
         const oViewModel = this.getViewModel();
+        const sType = oViewModel.getProperty('/type');
         const mTableData = oViewModel.getProperty('/form/list');
 
-        oViewModel.setProperty('/form/hasRow', !!mTableData.length);
+        if (sType === this.PAGE_TYPE.CHANGE) {
+          oViewModel.setProperty(
+            '/form/hasRow',
+            mTableData.some((cur) => cur.isChanged)
+          );
+        } else {
+          oViewModel.setProperty('/form/hasRow', !!mTableData.length);
+        }
       },
 
       /*****************************************************************
@@ -258,7 +274,30 @@ sap.ui.define(
         this.openFormDialog();
       },
 
-      onPressChangeBtn() {},
+      onPressChangeBtn() {
+        const oViewModel = this.getViewModel();
+        const oTable = this.byId('approveMultipleTable');
+        const aSelectedIndices = oTable.getSelectedIndices();
+        let sRowPath = null;
+        let oRowData = {};
+
+        if (aSelectedIndices.length < 1) {
+          MessageBox.alert(this.getBundleText('MSG_00020', 'LABEL_00109')); // {변경}할 행을 선택하세요.
+          return;
+        } else if (aSelectedIndices.length > 1) {
+          MessageBox.alert(this.getBundleText('MSG_00038')); // 하나의 행만 선택하세요.
+          return;
+        }
+
+        sRowPath = oTable.getRows()[aSelectedIndices[0]].getBindingContext().getPath();
+        oRowData = oViewModel.getProperty(sRowPath);
+
+        oViewModel.setProperty('/form/dialog/calcCompleted', false);
+        oViewModel.setProperty('/form/dialog/selectedRowPath', sRowPath);
+        oViewModel.setProperty('/form/dialog/data', { ...oRowData, AbrtgTxt: `${oRowData.AbrtgTxt}일` });
+
+        this.openFormDialog();
+      },
 
       onPressDelBtn() {
         const oViewModel = this.getViewModel();
@@ -267,7 +306,7 @@ sap.ui.define(
         const mTableData = oViewModel.getProperty('/form/list');
 
         if (aSelectedIndices.length < 1) {
-          MessageBox.alert(this.getBundleText('MSG_00020')); // 삭제할 행을 선택하세요.
+          MessageBox.alert(this.getBundleText('MSG_00020', 'LABEL_00110')); // {삭제}할 행을 선택하세요.
           return;
         }
 
@@ -309,7 +348,7 @@ sap.ui.define(
         const oFormData = oViewModel.getProperty('/form/dialog/data');
 
         try {
-          const mResult = await this.readLeaveApplEmpList({ Prcty: 'C', ...oFormData });
+          const mResult = await this.readLeaveApplEmpList({ ...oFormData, Prcty: 'C' });
           const oResultData = mResult[0];
 
           if (!_.isEmpty(oResultData)) {
@@ -330,9 +369,9 @@ sap.ui.define(
 
       onPressFormDialogSave() {
         const oViewModel = this.getViewModel();
+        const sType = oViewModel.getProperty('/type');
         const bCalcCompleted = oViewModel.getProperty('/form/dialog/calcCompleted');
         const oInputData = oViewModel.getProperty('/form/dialog/data');
-        const mListData = oViewModel.getProperty('/form/list');
         const mCheckFields = [
           { field: 'Tmrsn', label: this.getBundleText('LABEL_04009'), type: Validator.SELECT2 }, // 근태사유
         ];
@@ -342,30 +381,48 @@ sap.ui.define(
           return;
         }
 
-        if (!Validator.check.call(this, { oInputData, mCheckFields })) return;
+        if (!Validator.check({ mFieldValue: oInputData, aFieldProperties: mCheckFields })) return;
 
-        mListData.push({
-          ...oInputData,
-          Begda: moment(oInputData.Begda).hours(9).toDate(),
-          Endda: moment(oInputData.Endda).hours(9).toDate(),
-          BegdaTxt: moment(oInputData.Begda).hours(9).format('YYYY.MM.DD'),
-          EnddaTxt: moment(oInputData.Endda).hours(9).format('YYYY.MM.DD'),
-        });
-        oViewModel.setProperty('/form/list', mListData);
-        oViewModel.setProperty('/form/rowCount', mListData.length);
+        if (sType === this.PAGE_TYPE.CHANGE) {
+          const sRowPath = oViewModel.getProperty('/form/dialog/selectedRowPath');
+          const oRowData = oViewModel.getProperty(sRowPath);
+          const oChangedData = {
+            ...oRowData,
+            ...oInputData,
+            isChanged: true,
+            AbrtgTxt: Number(oInputData.Abrtg),
+            Begda: moment(oInputData.Begda).hours(9).toDate(),
+            Endda: moment(oInputData.Endda).hours(9).toDate(),
+            BegdaTxt: moment(oInputData.Begda).hours(9).format('YYYY.MM.DD'),
+            EnddaTxt: moment(oInputData.Endda).hours(9).format('YYYY.MM.DD'),
+            Tmrsn: oInputData.Tmrsn,
+          };
+
+          if (oRowData.BegdaTxt2 === oChangedData.BegdaTxt && oRowData.EnddaTxt2 === oChangedData.EnddaTxt) {
+            MessageBox.error(this.getBundleText('MSG_04002')); // 변경된 데이터가 없습니다.
+            return;
+          }
+
+          oViewModel.setProperty(sRowPath, oChangedData);
+        } else {
+          const mListData = oViewModel.getProperty('/form/list');
+
+          mListData.push({
+            ...oInputData,
+            Begda: moment(oInputData.Begda).hours(9).toDate(),
+            Endda: moment(oInputData.Endda).hours(9).toDate(),
+            BegdaTxt: moment(oInputData.Begda).hours(9).format('YYYY.MM.DD'),
+            EnddaTxt: moment(oInputData.Endda).hours(9).format('YYYY.MM.DD'),
+          });
+
+          oViewModel.setProperty('/form/list', mListData);
+          oViewModel.setProperty('/form/rowCount', mListData.length);
+        }
 
         this.toggleHasRowProperty();
 
         AppUtils.setAppBusy(false, this);
         this.byId('formDialog').close();
-      },
-
-      onPressSave() {
-        AppUtils.setAppBusy(true, this);
-
-        const sPrcty = 'T';
-
-        this.createProcess({ sPrcty });
       },
 
       onPressApproval() {
@@ -377,7 +434,7 @@ sap.ui.define(
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
           actions: [this.getBundleText('LABEL_00121'), MessageBox.Action.CANCEL],
           onClose: (sAction) => {
-            if (sAction === MessageBox.Action.CANCEL) {
+            if (!sAction || sAction === MessageBox.Action.CANCEL) {
               AppUtils.setAppBusy(false, this);
               return;
             }
@@ -471,11 +528,16 @@ sap.ui.define(
         return new Promise((resolve, reject) => {
           const oModel = this.getModel(ServiceNames.WORKTIME);
           const oViewModel = this.getViewModel();
-          const oTargetInfo = oViewModel.getProperty('/TargetInfo');
+          const oTargetInfo = this.getOwnerComponent().getTargetModel().getData();
           const mTableData = oViewModel.getProperty('/form/list');
           const sAppty = oViewModel.getProperty('/type');
           const sAppno = oViewModel.getProperty('/Appno');
           const sUrl = '/LeaveApplContentSet';
+          let aLeaveApplNav1 = [...mTableData];
+
+          if (sAppty === this.PAGE_TYPE.CHANGE) {
+            aLeaveApplNav1 = aLeaveApplNav1.filter((o) => o.isChanged === true);
+          }
 
           const oPayload = {
             Pernr: oTargetInfo.Pernr,
@@ -483,7 +545,7 @@ sap.ui.define(
             Appno: sAppno,
             Prcty: sPrcty,
             Appty: sAppty, // A:신규, B:변경, C:취소
-            LeaveApplNav1: mTableData.map((o) => ({ ...o, Pernr: oTargetInfo.Pernr })),
+            LeaveApplNav1: aLeaveApplNav1.map((o) => ({ ...o, Pernr: oTargetInfo.Pernr })),
           };
 
           oModel.create(sUrl, oPayload, {
@@ -502,7 +564,7 @@ sap.ui.define(
         });
       },
 
-      async createProcess({ sPrcty = 'T' }) {
+      async createProcess({ sPrcty = 'C' }) {
         const oViewModel = this.getViewModel();
         const iAttachLength = AttachFileAction.getFileLength.call(this);
         let sAppno = oViewModel.getProperty('/Appno');
@@ -520,13 +582,11 @@ sap.ui.define(
           await this.createLeaveApplContent(sPrcty);
 
           // {임시저장|신청}되었습니다.
-          MessageBox.success(this.getBundleText('MSG_00007', this.ACTION_MESSAGE[sPrcty]));
-
-          if (sPrcty !== 'T') {
-            this.getRouter().navTo('attendance');
-          } else {
-            oViewModel.setProperty('ZappStatAl', 10);
-          }
+          MessageBox.success(this.getBundleText('MSG_00007', this.ACTION_MESSAGE[sPrcty]), {
+            onClose: () => {
+              this.getRouter().navTo('attendance');
+            },
+          });
         } catch (error) {
           if (_.has(error, 'code') && error.code === 'E') {
             MessageBox.error(error.message);

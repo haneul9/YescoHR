@@ -8,7 +8,6 @@ sap.ui.define(
     'sap/ui/yesco/controller/BaseController',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/EmpInfo',
     'sap/ui/yesco/common/TableUtils',
   ],
   (
@@ -20,7 +19,6 @@ sap.ui.define(
     BaseController,
     AppUtils,
     ServiceNames,
-    EmpInfo,
     TableUtils
   ) => {
     'use strict';
@@ -64,10 +62,6 @@ sap.ui.define(
       onAfterShow() {
         // ! 필수 호출 - BaseController.onPageLoaded
         this.onPageLoaded();
-
-        // 대상자 정보
-        const bTargetChangeButtonHide = true;
-        EmpInfo.get.call(this, { bTargetChangeButtonHide });
 
         this.initialRetrieve();
       },
