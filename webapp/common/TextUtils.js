@@ -9,13 +9,17 @@ sap.ui.define(
 
       return {
         /**************************
-         *
+         * 금액 format ex) 1234567 => 1,234,567
          *************************/
         toCurrency(x = 0) {
           // return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           return new Intl.NumberFormat('ko-KR').format(x);
         },
 
+        /**************************
+         * InputBox에서 금액 입력시 보이는 Ui는 금액format이 되고
+         * 실질적인 Property에는 그냥 셋팅됨
+         *************************/
         liveChangeCurrency(oEvent) {
           const oEventSource = oEvent.getSource();
           const sPath = oEventSource.getBinding('value').getPath();
@@ -25,6 +29,9 @@ sap.ui.define(
           oEventSource.getModel().setProperty(sPath, sValue);
         },
 
+        /**************************
+         * 신청자에있는 신청일시 oDataFormat
+         *************************/
         setAppdt(vAppdt) {
           const sPattern = 'YYYY.MM.DD, HH:mm';
           if (typeof vAppdt === 'string') {
@@ -33,6 +40,9 @@ sap.ui.define(
           return '';
         },
 
+        /**************************
+         * 결재상태 fragment 신청번호 앞에 0없앰
+         *************************/
         getDocnoTxt(sDocno = '') {
           return sDocno.replace(/^0+/, '');
         },

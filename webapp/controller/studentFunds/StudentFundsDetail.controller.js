@@ -59,7 +59,7 @@ sap.ui.define(
         .then(() => {
           this.getTargetData();
           this.getViewModel().setProperty('/busy', false);
-          super.onAfterShow();
+          this.onPageLoaded();
         });
       }
 

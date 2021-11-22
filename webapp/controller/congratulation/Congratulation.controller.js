@@ -57,7 +57,7 @@ sap.ui.define(
       onAfterShow() {
         this.onSearch();
         this.getTotalPay();
-        super.onAfterShow();
+        this.onPageLoaded();
       }
 
       onClick() {

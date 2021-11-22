@@ -60,7 +60,7 @@ sap.ui.define(
       onAfterShow() {
         this.onSearch();
         this.totalCount();
-        super.onAfterShow();
+        this.onPageLoaded();
       }
 
       onClick() {
@@ -135,7 +135,7 @@ sap.ui.define(
         const vPath = oEvent.getParameters().rowBindingContext.getPath();
         const oRowData = this.getViewModel().getProperty(vPath);
 
-        this.getRouter().navTo('familyInfo-detail', { oDataKey: oRowData.Appno });
+        this.getRouter().navTo('familyInfo-detail', { oDataKey: oRowData });
       }
 
       onPressExcelDownload() {

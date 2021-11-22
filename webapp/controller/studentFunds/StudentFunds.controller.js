@@ -60,7 +60,7 @@ sap.ui.define(
       onAfterShow() {
         this.onSearch();
         this.totalCount();
-        super.onAfterShow();
+        this.onPageLoaded();
       }
 
       onClick() {

@@ -54,7 +54,7 @@ sap.ui.define(
         await this.getBenefitType(this);
         this.settingsAttachTable(this);
         this.getViewModel().setProperty('/busy', false);
-        super.onAfterShow();
+        this.onPageLoaded();
       }
 
       onObjectMatched(oEvent) {
