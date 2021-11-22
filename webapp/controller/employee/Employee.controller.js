@@ -31,11 +31,8 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    class Employee extends BaseController {
-      constructor() {
-        super();
-        this.formatter = TableUtils;
-      }
+    return BaseController.extend('sap.ui.yesco.controller.employee.Employee', {
+      formatter: TableUtils,
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
@@ -87,7 +84,7 @@ sap.ui.define(
 
         const oRouter = this.getRouter();
         oRouter.getRoute('employee').attachPatternMatched(this.onObjectMatched, this);
-      }
+      },
 
       onObjectMatched(oEvent) {
         const oParameter = oEvent.getParameter('arguments');
@@ -99,7 +96,7 @@ sap.ui.define(
 
         this.initialList({ oViewModel, sPernr });
         this.loadProfile({ oViewModel, sPernr });
-      }
+      },
 
       async initialList({ oViewModel, sPernr }) {
         const oSideList = this.byId('sideEmployeeList');
@@ -114,7 +111,7 @@ sap.ui.define(
 
         oViewModel.setProperty('/sideNavigation/search/results', oSearchResults);
         oSideList.getBinding('items').filter([oStatFilter]);
-      }
+      },
 
       async loadProfile({ oViewModel, sPernr }) {
         const oViewModelData = oViewModel.getData();
@@ -227,7 +224,7 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/employee/busy', false);
         }
-      }
+      },
 
       makeProfileBody() {
         const oView = this.getView().getModel();
@@ -308,7 +305,7 @@ sap.ui.define(
 
           oParentBox.addItem(oVBox);
         });
-      }
+      },
 
       openAddressDialog() {
         const oView = this.getView();
@@ -330,7 +327,7 @@ sap.ui.define(
             oDialog.open();
           });
         }, 100);
-      }
+      },
 
       async refreshAddress({ oViewModel }) {
         const sAddressTitle = this.getBundleText('LABEL_00152'); // 주소
@@ -347,7 +344,7 @@ sap.ui.define(
 
         oViewModel.setProperty(`${sAddressPath}/data`, mTableData);
         oViewModel.setProperty(`${sAddressPath}/rowCount`, mTableData.length);
-      }
+      },
 
       getAddressTableRowData({ oViewModel, oTable, aSelectedIndices }) {
         const sRowPath = oTable.getRows()[aSelectedIndices[0]].getBindingContext().getPath();
@@ -360,7 +357,7 @@ sap.ui.define(
           Subty: oRowData[`Value${_.padStart(_.findIndex(mHeaderData, { Fieldname: 'SUBTY' }) + 1, 2, '0')}`],
           Begda: oRowData[`Value${_.padStart(_.findIndex(mHeaderData, { Fieldname: 'BEGDA' }) + 1, 2, '0')}`],
         };
-      }
+      },
 
       /**
        * OData에서 받은 데이터를 Tree구조 데이터로 변환한다.
@@ -422,7 +419,7 @@ sap.ui.define(
         }
 
         return rootId !== '00000000' ? rootNodes[0].nodes : rootNodes;
-      }
+      },
 
       /* =========================================================== */
       /* event handlers                                              */
@@ -437,7 +434,7 @@ sap.ui.define(
         this.getView()
           .getModel()
           .setProperty('/employee/width', bState ? '78%' : '96%');
-      }
+      },
 
       async onSelectSideTab(oEvent) {
         const oViewModel = this.getView().getModel();
@@ -453,7 +450,7 @@ sap.ui.define(
         }
 
         oViewModel.setProperty('/sideNavigation/treeLoaded', true);
-      }
+      },
 
       async onChangeStat() {
         const oViewModel = this.getView().getModel();
@@ -462,7 +459,7 @@ sap.ui.define(
         const oStatFilter = new Filter('Stat2', FilterOperator.EQ, sStat);
 
         oSideList.getBinding('items').filter(!sStat ? [] : [oStatFilter]);
-      }
+      },
 
       async onPressEmployeeSearch(oEvent) {
         const oViewModel = this.getView().getModel();
@@ -485,7 +482,7 @@ sap.ui.define(
         const oSearchResults = await this.readEmpSearchResult({ oSearchParam });
 
         oViewModel.setProperty('/sideNavigation/search/results', oSearchResults);
-      }
+      },
 
       onClickEmployeeCard(oEvent) {
         const sPath = oEvent.getSource().getBindingContext().getPath();
@@ -504,7 +501,7 @@ sap.ui.define(
         oViewModel.setProperty('/pernr', sPernr);
 
         this.loadProfile({ oViewModel, sPernr });
-      }
+      },
 
       onSelectTreeItem(oEvent) {
         const oViewModel = this.getView().getModel();
@@ -520,7 +517,7 @@ sap.ui.define(
 
           this.loadProfile({ oViewModel, sPernr });
         }
-      }
+      },
 
       onToggleTab(oEvent) {
         const oViewModel = this.getView().getModel();
@@ -534,7 +531,7 @@ sap.ui.define(
             oViewModel.setProperty(`/employee/sub/${subId}/isShow`, false);
           }
         });
-      }
+      },
 
       onPressRegAddress() {
         const oViewModel = this.getView().getModel();
@@ -543,7 +540,7 @@ sap.ui.define(
         oViewModel.setProperty('/employee/address/form', { Subty: 'ALL', State: 'ALL' });
 
         this.openAddressDialog();
-      }
+      },
 
       async onSaveAddress() {
         const oViewModel = this.getView().getModel();
@@ -574,7 +571,7 @@ sap.ui.define(
         }
 
         this.onAddressDialogClose();
-      }
+      },
 
       async onPressModifyAddress(oEvent) {
         const oViewModel = this.getView().getModel();
@@ -602,7 +599,7 @@ sap.ui.define(
 
         this.openAddressDialog(oEvent);
         oTable.clearSelection();
-      }
+      },
 
       onPressDeleteAddress(oEvent) {
         const oViewModel = this.getView().getModel();
@@ -640,16 +637,16 @@ sap.ui.define(
             AppUtils.setAppBusy(false, this);
           },
         });
-      }
+      },
 
       openSearchZipCodePopup() {
         window.open('postcodeForBrowser.html?CBF=fn_SetAddr', 'pop', 'width=550,height=550, scrollbars=yes, resizable=yes');
-      }
+      },
 
       onAddressDialogClose() {
         AppUtils.setAppBusy(false, this);
         this.byId('addressDialog').close();
-      }
+      },
 
       /*****************************************************************
        * Call oData
@@ -678,7 +675,7 @@ sap.ui.define(
             },
           });
         });
-      }
+      },
 
       readAuthOrgTree() {
         return new Promise((resolve, reject) => {
@@ -702,7 +699,7 @@ sap.ui.define(
             },
           });
         });
-      }
+      },
 
       readEmpProfileMenu({ oModel, aFilters }) {
         return new Promise((resolve, reject) => {
@@ -722,7 +719,7 @@ sap.ui.define(
             },
           });
         });
-      }
+      },
 
       readEmpProfileHeaderNew({ oModel, aFilters }) {
         return new Promise((resolve, reject) => {
@@ -742,7 +739,7 @@ sap.ui.define(
             },
           });
         });
-      }
+      },
 
       readEmpProfileHeaderTab({ oModel, aFilters }) {
         return new Promise((resolve, reject) => {
@@ -762,7 +759,7 @@ sap.ui.define(
             },
           });
         });
-      }
+      },
 
       readEmpProfileContentsTab({ oModel, aFilters }) {
         return new Promise((resolve, reject) => {
@@ -782,7 +779,7 @@ sap.ui.define(
             },
           });
         });
-      }
+      },
 
       readTypeList({ oModel }) {
         return new Promise((resolve, reject) => {
@@ -811,7 +808,7 @@ sap.ui.define(
             },
           });
         });
-      }
+      },
 
       readCityList({ oModel, sPernr }) {
         return new Promise((resolve, reject) => {
@@ -843,7 +840,7 @@ sap.ui.define(
             },
           });
         });
-      }
+      },
 
       readAddressInfo({ oPayload }) {
         return new Promise((resolve) => {
@@ -866,7 +863,7 @@ sap.ui.define(
             },
           });
         });
-      }
+      },
 
       createAddressInfo({ oInputData }) {
         return new Promise((resolve) => {
@@ -885,7 +882,7 @@ sap.ui.define(
             },
           });
         });
-      }
+      },
 
       deleteAddressInfo({ oPayload }) {
         return new Promise((resolve) => {
@@ -905,10 +902,8 @@ sap.ui.define(
             },
           });
         });
-      }
-    }
-
-    return Employee;
+      },
+    });
   }
 );
 

@@ -25,11 +25,8 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    class List extends BaseController {
-      constructor() {
-        super();
-        this.formatter = TableUtils;
-      }
+    return BaseController.extend('sap.ui.yesco.controller.attendance.List', {
+      formatter: TableUtils,
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
@@ -62,17 +59,18 @@ sap.ui.define(
           },
         });
         this.setViewModel(oViewModel);
-      }
+      },
 
       onAfterShow() {
-        super.onAfterShow();
+        // ! 필수 호출 - BaseController.onPageLoaded
+        this.onPageLoaded();
 
         // 대상자 정보
         const bTargetChangeButtonHide = true;
         EmpInfo.get.call(this, { bTargetChangeButtonHide });
 
         this.initialRetrieve();
-      }
+      },
 
       async initialRetrieve() {
         const oModel = this.getModel(ServiceNames.WORKTIME);
@@ -116,7 +114,7 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/busy', false);
         }
-      }
+      },
 
       setTableData({ oViewModel, mRowData }) {
         const oTable = this.byId('attendanceTable');
@@ -135,7 +133,7 @@ sap.ui.define(
           })
         );
         oViewModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData }));
-      }
+      },
 
       /*****************************************************************
        * Event handler
@@ -156,7 +154,7 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/busy', false);
         }
-      }
+      },
 
       onPressExcelDownload() {
         const oTable = this.byId('attendanceTable');
@@ -164,7 +162,7 @@ sap.ui.define(
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_04001'); // {근태신청}_목록
 
         TableUtils.export({ oTable, mTableData, sFileName });
-      }
+      },
 
       onSelectRow(oEvent) {
         const oViewModel = this.getViewModel();
@@ -173,7 +171,7 @@ sap.ui.define(
 
         oViewModel.setProperty('/parameter/rowData', [oRowData]);
         this.getRouter().navTo('attendance-detail', { type: oRowData.Appty, appno: oRowData.Appno });
-      }
+      },
 
       onChangeRowSelection(oEvent) {
         const oTable = oEvent.getSource();
@@ -196,7 +194,7 @@ sap.ui.define(
             })
           );
         }
-      }
+      },
 
       setRowActionParameters() {
         const oViewModel = this.getViewModel();
@@ -212,21 +210,21 @@ sap.ui.define(
             return oRowData;
           })
         );
-      }
+      },
 
       onPressNewApprovalBtn() {
         this.getRouter().navTo('attendance-detail', { type: 'A' });
-      }
+      },
 
       onPressModApprovalBtn() {
         this.setRowActionParameters();
         this.getRouter().navTo('attendance-detail', { type: 'B' });
-      }
+      },
 
       onPressCancApprovalBtn() {
         this.setRowActionParameters();
         this.getRouter().navTo('attendance-detail', { type: 'C' });
-      }
+      },
 
       onSuggest(oEvent) {
         const oModel = this.getModel(ServiceNames.COMMON);
@@ -250,16 +248,20 @@ sap.ui.define(
             this.debug(oError);
           },
         });
-      }
+      },
 
       onSelectSuggest(oEvent) {
         const oControl = oEvent.getSource();
         this.debug(oControl);
-      }
+      },
 
       /*****************************************************************
        * Call oData
        *****************************************************************/
+      /**
+       * @param  {JSONModel} oModel
+       * @param  {String} sPernr
+       */
       readAbsQuotaList({ oModel, sPernr }) {
         return new Promise((resolve, reject) => {
           const sUrl = '/AbsQuotaListSet';
@@ -278,8 +280,12 @@ sap.ui.define(
             },
           });
         });
-      }
+      },
 
+      /**
+       * @param  {JSONModel} oModel
+       * @param  {Object} oSearchConditions
+       */
       readLeaveApplContent({ oModel, oSearchConditions }) {
         return new Promise((resolve, reject) => {
           const sUrl = '/LeaveApplContentSet';
@@ -299,9 +305,7 @@ sap.ui.define(
             },
           });
         });
-      }
-    }
-
-    return List;
+      },
+    });
   }
 );
