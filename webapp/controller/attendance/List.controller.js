@@ -283,10 +283,12 @@ sap.ui.define(
       readLeaveApplContent({ oModel, oSearchConditions }) {
         return new Promise((resolve, reject) => {
           const sUrl = '/LeaveApplContentSet';
+          const sMenid = this.getOwnerComponent().getMenuModel().getCurrentMenuId();
 
           oModel.read(sUrl, {
             filters: [
-              new Filter('Apbeg', FilterOperator.EQ, moment(oSearchConditions.Apbeg).hours(9).toDate()), //
+              new Filter('Menid', FilterOperator.EQ, sMenid), //
+              new Filter('Apbeg', FilterOperator.EQ, moment(oSearchConditions.Apbeg).hours(9).toDate()),
               new Filter('Apend', FilterOperator.EQ, moment(oSearchConditions.Apend).hours(9).toDate()),
             ],
             success: (oData) => {

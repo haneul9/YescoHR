@@ -532,6 +532,7 @@ sap.ui.define(
           const mTableData = oViewModel.getProperty('/form/list');
           const sAppty = oViewModel.getProperty('/type');
           const sAppno = oViewModel.getProperty('/Appno');
+          const sMenid = this.getOwnerComponent().getMenuModel().getCurrentMenuId();
           const sUrl = '/LeaveApplContentSet';
           let aLeaveApplNav1 = [...mTableData];
 
@@ -540,6 +541,7 @@ sap.ui.define(
           }
 
           const oPayload = {
+            Menid: sMenid,
             Pernr: oTargetInfo.Pernr,
             Orgeh: oTargetInfo.Orgeh,
             Appno: sAppno,
