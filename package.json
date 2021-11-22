@@ -23,7 +23,9 @@
     ],
     "ui5linter": {
       "usage": {
-        "TagAttributeLinter": false,
+        "TagAttributeLinter": true,
+        "PublicMemberLinter": false,
+        "UnusedMemberLinter": false,
         "WrongParametersLinter": false
       }
     }

@@ -34,20 +34,16 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    class Detail extends BaseController {
-      constructor() {
-        super();
+    return BaseController.extend('sap.ui.yesco.controller.attendance.Detail', {
+      LIST_PAGE_ID: 'container-ehr---attendanceList',
+      TYPE_CODE: 'HR04',
+      PAGE_TYPE: { NEW: 'A', CHANGE: 'B', CANCEL: 'C' },
+      ACTION_MESSAGE: {
+        T: 'LABEL_00104', // 임시저장
+        C: 'LABEL_00121', // 신청
+      },
 
-        this.LIST_PAGE_ID = 'container-ehr---attendanceList';
-        this.TYPE_CODE = 'HR04';
-        this.PAGE_TYPE = { NEW: 'A', CHANGE: 'B', CANCEL: 'C' };
-        this.ACTION = {
-          T: 'LABEL_00104', // 임시저장
-          C: 'LABEL_00121', // 신청
-        };
-
-        this.AttachFileAction = AttachFileAction;
-      }
+      AttachFileAction: AttachFileAction,
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
@@ -80,7 +76,7 @@ sap.ui.define(
 
         const oRouter = this.getRouter();
         oRouter.getRoute('attendance-detail').attachPatternMatched(this.onObjectMatched, this);
-      }
+      },
 
       async onAfterShow() {
         const oView = this.getView();
@@ -115,7 +111,7 @@ sap.ui.define(
         }
 
         super.onAfterShow();
-      }
+      },
 
       setTableData({ sType, oViewModel, mRowData }) {
         oViewModel.setProperty('/form/rowCount', mRowData.length);
@@ -126,23 +122,18 @@ sap.ui.define(
               return {
                 ...o,
                 Abrtg2: o.Abrtg,
+                AbrtgTxt: Number(o.Abrtg),
                 AbrtgTxt2: Number(o.Abrtg),
-                Abrtg: null,
                 Abrst2: o.Abrst,
-                Abrst: null,
                 Begda2: moment(o.Begda).hours(9).toDate(),
                 Endda2: moment(o.Endda).hours(9).toDate(),
                 BegdaTxt2: moment(o.Begda).hours(9).format('YYYY.MM.DD'),
                 EnddaTxt2: moment(o.Endda).hours(9).format('YYYY.MM.DD'),
-                Begda: null,
-                Endda: null,
-                BegdaTxt: null,
-                EnddaTxt: null,
               };
             } else {
               return {
                 ...o,
-                AbrtgTxt: `${parseInt(o.Abrtg, 10)}일`,
+                AbrtgTxt: `${Number(o.Abrtg)}일`,
                 Begda: moment(o.Begda).hours(9).toDate(),
                 Endda: moment(o.Endda).hours(9).toDate(),
                 BegdaTxt: moment(o.Begda).hours(9).format('YYYY.MM.DD'),
@@ -153,7 +144,7 @@ sap.ui.define(
         );
 
         this.toggleHasRowProperty();
-      }
+      },
 
       onObjectMatched(oEvent) {
         const oParameter = oEvent.getParameter('arguments');
@@ -189,7 +180,7 @@ sap.ui.define(
         oViewModel.setProperty('/type', oParameter.type);
         oViewModel.setProperty('/Appno', oParameter.appno);
         oViewModel.setProperty('/navigation/current', `${oNavigationMap[oParameter.type]} ${sAction}`);
-      }
+      },
 
       initializeApplyInfoBox() {
         const oViewModel = this.getViewModel();
@@ -200,7 +191,7 @@ sap.ui.define(
           Orgtx: `${oSessionData.Btrtx}/${oSessionData.Orgtx}`,
           Apjikgbtl: `${oSessionData.Zzjikgbt}/${oSessionData.Zzjiktlt}`,
         });
-      }
+      },
 
       initializeAttachBox() {
         const oViewModel = this.getViewModel();
@@ -215,7 +206,7 @@ sap.ui.define(
           Max: 10,
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
         });
-      }
+      },
 
       async openFormDialog() {
         const oView = this.getView();
@@ -246,14 +237,14 @@ sap.ui.define(
             oDialog.open();
           });
         }, 100);
-      }
+      },
 
       toggleHasRowProperty() {
         const oViewModel = this.getViewModel();
         const mTableData = oViewModel.getProperty('/form/list');
 
         oViewModel.setProperty('/form/hasRow', !!mTableData.length);
-      }
+      },
 
       /*****************************************************************
        * Event handler
@@ -265,9 +256,9 @@ sap.ui.define(
         oViewModel.setProperty('/form/dialog/data', { Awart: 'ALL' });
 
         this.openFormDialog();
-      }
+      },
 
-      onPressChangeBtn() {}
+      onPressChangeBtn() {},
 
       onPressDelBtn() {
         const oViewModel = this.getViewModel();
@@ -298,7 +289,7 @@ sap.ui.define(
             }
           }.bind(this),
         });
-      }
+      },
 
       onChangeAwartCombo(oEvent) {
         const oViewModel = this.getViewModel();
@@ -311,7 +302,7 @@ sap.ui.define(
         oViewModel.setProperty('/form/dialog/data/Abrst', null);
         oViewModel.setProperty('/form/dialog/data/Abrtg', null);
         oViewModel.setProperty('/form/dialog/data/AbrtgTxt', null);
-      }
+      },
 
       async onChangeLeaveDate() {
         const oViewModel = this.getViewModel();
@@ -330,12 +321,12 @@ sap.ui.define(
         } catch (oError) {
           this.debug('Controller > Attendance Detail > onChangeLeaveDate Error', AppUtils.parseError(oError));
         }
-      }
+      },
 
       onPressFormDialogClose() {
         AppUtils.setAppBusy(false, this);
         this.byId('formDialog').close();
-      }
+      },
 
       onPressFormDialogSave() {
         const oViewModel = this.getViewModel();
@@ -367,7 +358,7 @@ sap.ui.define(
 
         AppUtils.setAppBusy(false, this);
         this.byId('formDialog').close();
-      }
+      },
 
       onPressSave() {
         AppUtils.setAppBusy(true, this);
@@ -375,7 +366,7 @@ sap.ui.define(
         const sPrcty = 'T';
 
         this.createProcess({ sPrcty });
-      }
+      },
 
       onPressApproval() {
         AppUtils.setAppBusy(true, this);
@@ -394,7 +385,7 @@ sap.ui.define(
             this.createProcess({ sPrcty });
           },
         });
-      }
+      },
 
       /*****************************************************************
        * Call oData
@@ -423,7 +414,7 @@ sap.ui.define(
             },
           });
         });
-      }
+      },
 
       /**
        *
@@ -469,7 +460,7 @@ sap.ui.define(
             },
           });
         });
-      }
+      },
 
       /**
        *
@@ -505,11 +496,11 @@ sap.ui.define(
               this.debug(`${sUrl} error.`, AppUtils.parseError(oError));
 
               // {임시저장|신청}중 오류가 발생하였습니다.
-              reject({ code: 'E', message: this.getBundleText('MSG_00008', this.ACTION[sPrcty]) });
+              reject({ code: 'E', message: this.getBundleText('MSG_00008', this.ACTION_MESSAGE[sPrcty]) });
             },
           });
         });
-      }
+      },
 
       async createProcess({ sPrcty = 'T' }) {
         const oViewModel = this.getViewModel();
@@ -529,7 +520,7 @@ sap.ui.define(
           await this.createLeaveApplContent(sPrcty);
 
           // {임시저장|신청}되었습니다.
-          MessageBox.success(this.getBundleText('MSG_00007', this.ACTION[sPrcty]));
+          MessageBox.success(this.getBundleText('MSG_00007', this.ACTION_MESSAGE[sPrcty]));
 
           if (sPrcty !== 'T') {
             this.getRouter().navTo('attendance');
@@ -543,9 +534,7 @@ sap.ui.define(
         } finally {
           AppUtils.setAppBusy(false, this);
         }
-      }
-    }
-
-    return Detail;
+      },
+    });
   }
 );

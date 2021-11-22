@@ -50,6 +50,7 @@ sap.ui.define(
           .setServiceModel() // S4HANA OData 서비스 모델 생성
           .setErrorHandler() // Error handler 생성
           .setSessionModel() // 세션 모델 생성
+          .setTargetModel() // 세션 모델 생성
           .setMenuModel(); // 메뉴 모델 생성
 
         // call the base component's init function and create the App view
@@ -132,6 +133,18 @@ sap.ui.define(
        */
       setSessionModel() {
         this.setModel(new SessionModel(this), 'sessionModel');
+        return this;
+      },
+
+      setTargetModel() {
+        const oSessionModel = this.getSessionModel();
+
+        oSessionModel.getPromise().then(() => {
+          const oSessionData = oSessionModel.getData();
+          oSessionData.isChangeButtonShow = false;
+
+          this.setModel(new JSONModel({ ...oSessionData }), 'targetModel');
+        });
         return this;
       },
 
