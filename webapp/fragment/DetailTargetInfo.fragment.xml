@@ -1,11 +1,11 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
     <HBox class="vCardBox">
-        <Image src="{/TargetInfo/Photo}" height="50px" width="50px" />
-        <Text text="{/TargetInfo/Ename}"/>
-        <Text text="{/TargetInfo/Zzjikgbt} / {/TargetInfo/Zzjiktlt}"/>
-        <Text text="{/TargetInfo/Pbtxt}"/>
-        <Text text="{/TargetInfo/Btrtx}"/>
-        <Text text="{/TargetInfo/Orgtx}"/>
+        <Image src="{targetModel>/Photo}" height="50px" width="50px" />
+        <Text text="{targetModel>/Ename}"/>
+        <Text text="{targetModel>/Zzjikgbt} / {targetModel>/Zzjiktlt}"/>
+        <Text text="{targetModel>/Pbtxt}"/>
+        <Text text="{targetModel>/Btrtx}"/>
+        <Text text="{targetModel>/Orgtx}"/>
     </HBox>
 </core:FragmentDefinition>

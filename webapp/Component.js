@@ -136,6 +136,14 @@ sap.ui.define(
         return this;
       },
 
+      /**
+       * 세션 모델 반환
+       * @returns {object}
+       */
+      getSessionModel() {
+        return this.getModel('sessionModel');
+      },
+
       setTargetModel() {
         const oSessionModel = this.getSessionModel();
 
@@ -148,12 +156,8 @@ sap.ui.define(
         return this;
       },
 
-      /**
-       * 세션 모델 반환
-       * @returns {object}
-       */
-      getSessionModel() {
-        return this.getModel('sessionModel');
+      getTargetModel() {
+        return this.getModel('targetModel');
       },
 
       /**
