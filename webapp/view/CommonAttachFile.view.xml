@@ -6,11 +6,11 @@
         <HBox justifyContent="SpaceBetween" alignContent="Center" alignItems="Center" fitContainer="true">
             <HBox alignContent="Center" alignItems="Center">
                 <Label text="{i18n>LABEL_00248}" required="{= !!Settings>/Required}" />
-                <MessageStrip text="{= !!Settings>/InfoMessage}" enableFormattedText="true" showIcon="true" showCloseButton="false" visible="{= !!Settings>/InfoMessage}" />
+                <MessageStrip text="{= !!Settings>/InfoMessage}" enableFormattedText="true" showIcon="true" visible="{= !!Settings>/InfoMessage}" />
             </HBox>
             <HBox visible="{= !!Settings>/Editable}">
                 <Button press=".onPressHelpBtn" text="{i18n>LABEL_00132}" visible="{= !!Settings>/HelpButton}" />
-                <custom:ODataFileUploader id="ATTACHFILE_BTN" name= "UploadFile" modelName="ZHR_COMMON_SRV" slug="" maximumFileSize= "10" multiple= "true" uploadOnChange= "false" mimeType= "[]," fileType="{Settings>FileTypes}" buttonText= "업로드" buttonOnly= "true" uploadComplete= ".uploadComplete" uploadAborted= ".uploadAborted" fileSizeExceed= ".fileSizeExceed" typeMissmatch= ".typeMissmatch" change= ".onFileChange" />
+                <custom:ODataFileUploader id="ATTACHFILE_BTN" name= "UploadFile" modelName="ZHR_COMMON_SRV" slug="" maximumFileSize= "10" multiple= "true" mimeType= "[]," fileType="{Settings>FileTypes}" buttonText= "업로드" buttonOnly= "true" uploadComplete= ".uploadComplete" uploadAborted= ".uploadAborted" fileSizeExceed= ".fileSizeExceed" typeMissmatch= ".typeMissmatch" change= ".onFileChange" />
             </HBox>
         </HBox>
     </VBox>
