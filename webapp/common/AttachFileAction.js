@@ -19,6 +19,7 @@ sap.ui.define(['sap/ui/yesco/common/odata/ServiceManager', 'sap/ui/yesco/common/
           Mode: 'S', // S: single file, M: multi file
           Max: 3,
           Message: '',
+          Visible: true,
           maximumFileSize: 10,
         },
         opt
