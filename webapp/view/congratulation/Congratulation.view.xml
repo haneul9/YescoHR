@@ -53,13 +53,13 @@
 					</HBox>
 					<grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="8px">
 						<Label text="{i18n>LABEL_00266}" design="Bold" />
-						<DateRangeSelection dateValue="{/searchDate/secondDate}" secondDateValue="{/searchDate/date}" class="sapIcon_DateRange" />
+						<custom:DateRangeSelection dateValue="{/searchDate/secondDate}" secondDateValue="{/searchDate/date}" class="sapIcon_DateRange" />
 					</grid:CSSGrid>
 				</VBox>
 			</HBox>
 			<VBox class="vCardBox">
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.OverviewTableHeader" type="XML" />
-				<table:Table id="conguTable" rows="{/CongList}" width="100%" selectionMode="None" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
+				<table:Table id="conguTable" rows="{/CongList}" width="100%" visibleRowCount="{/listInfo/rowCount}" selectionMode="None" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
 					<table:rowSettingsTemplate>
 						<table:RowSettings highlight="{
 							path: 'ZappStatAl',

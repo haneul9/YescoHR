@@ -9,6 +9,11 @@ sap.ui.define(
     'sap/ui/table/Table',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/controller/BaseController',
+    'sap/ui/yesco/common/ComboEntry',
+    'sap/ui/yesco/common/exceptions/ODataCreateError',
+    'sap/ui/yesco/common/exceptions/ODataDeleteError',
+    'sap/ui/yesco/common/exceptions/ODataReadError',
+    'sap/ui/yesco/common/exceptions/ODataUpdateError',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/TableUtils',
@@ -24,6 +29,11 @@ sap.ui.define(
     Table,
     MessageBox,
     BaseController,
+    ComboEntry,
+    ODataCreateError,
+    ODataDeleteError,
+    ODataReadError,
+    ODataUpdateError,
     ServiceNames,
     AppUtils,
     TableUtils,
@@ -33,6 +43,14 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.controller.employee.Employee', {
       formatter: TableUtils,
+      SUB_TYPE: {
+        TABLE: '5',
+        GRID: '6',
+      },
+      CRUD_TABLES: {
+        ADDRESS: { key: '0006', path: 'address', url: '/AddressInfoSet', pk: ['Subty', 'Begda'] },
+        EDUCATION: { key: '0022', path: 'education', url: '/EducationChangeSet', pk: ['Begda', 'Endda'] },
+      },
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
@@ -73,10 +91,19 @@ sap.ui.define(
               list: [],
             },
             sub: {},
-            address: {
-              typeList: [{ Zcode: 'ALL', Ztext: this.getBundleText('LABEL_00268') }], // - 선택 -
-              sidoList: [{ State: 'ALL', Bezei: this.getBundleText('LABEL_00268') }], // - 선택 -
-              form: { Subty: 'ALL', State: 'ALL' },
+            dialog: {
+              subKey: null,
+              action: null,
+              actionText: null,
+              typeList: new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext' }),
+              sidoList: new ComboEntry({ codeKey: 'State', valueKey: 'Bezei' }),
+              schoolTypeList: new ComboEntry({ codeKey: 'Slart', valueKey: 'Stext' }),
+              countryList: new ComboEntry({ codeKey: 'Sland', valueKey: 'Landx50' }),
+              degreeList: new ComboEntry({ codeKey: 'Slabs', valueKey: 'Stext' }),
+              schoolList: [],
+              majorList: [],
+              busy: { Slabs: false },
+              form: {},
             },
           },
         });
@@ -117,29 +144,35 @@ sap.ui.define(
         const oViewModelData = oViewModel.getData();
         const oModel = this.getModel(ServiceNames.PA);
         let aFilters = [];
+        let mFilters = {};
         let aHeaderRequests = [];
         let aContentRequests = [];
 
         if (sPernr) {
+          mFilters.Pernr = sPernr;
           aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
         }
 
         try {
           // 1. 상단 프로필, 탭 메뉴, 주소유형, 시/도
-          const [oProfileReturnData, mMenuReturnData, mAddressTypeData, mAddressCityData] = await Promise.all([
-            this.readEmpProfileHeaderNew({ oModel, aFilters }), //
-            this.readEmpProfileMenu({ oModel, aFilters }),
-            this.readTypeList({ oModel }),
-            this.readCityList({ oModel, sPernr }),
+          const [oProfileReturnData, mMenuReturnData, mAddressTypeData, mAddressCityData, mSchoolTypeList] = await Promise.all([
+            this.readOdata({ sUrl: '/EmpProfileHeaderNewSet', mFilters }),
+            this.readOdata({ sUrl: '/EmpProfileMenuSet', mFilters }),
+            this.readComboEntry({ oModel, sUrl: '/PaCodeListSet', sPath: 'typeList', mFilters: { Cdnum: 'CM0002', Grcod: '0006' } }),
+            this.readComboEntry({ oModel, sUrl: '/CityListSet', sPath: 'sidoList', sPernr, oEntryInfo: { codeKey: 'State', valueKey: 'Bezei' } }),
+            this.readComboEntry({ oModel, sUrl: '/SchoolTypeCodeSet', sPath: 'schoolTypeList', oEntryInfo: { codeKey: 'Slart', valueKey: 'Stext' } }),
+            // this.readComboEntry({ oModel, sUrl: '/CountryCodeSet', sPath: 'countryList', oEntryInfo: { codeKey: 'Sland', valueKey: 'Landx50' } }),
           ]);
 
-          // 주소유형 & 시/도
-          oViewModel.setProperty('/employee/address/typeList', mAddressTypeData);
-          oViewModel.setProperty('/employee/address/sidoList', mAddressCityData);
-          //End 주소유형 & 시/도
+          // Dialog Combo entry set
+          oViewModel.setProperty('/employee/dialog/typeList', mAddressTypeData);
+          oViewModel.setProperty('/employee/dialog/sidoList', mAddressCityData);
+          oViewModel.setProperty('/employee/dialog/schoolTypeList', mSchoolTypeList);
+          // oViewModel.setProperty('/employee/dialog/countryList', mCountryList);
+          //End Dialog Combo entry set
 
           // 상단 프로필 Set
-          const { Pturl, ...oReturnData } = oProfileReturnData;
+          const { Pturl, ...oReturnData } = oProfileReturnData[0];
           delete oReturnData.Pernr;
           delete oReturnData.Langu;
           delete oReturnData.Prcty;
@@ -163,13 +196,13 @@ sap.ui.define(
             oViewModelData.employee.sub[data.Menuc1] = { isShow: data.Pressed, contents: {} };
           });
 
-          const sAddressTitle = this.getBundleText('LABEL_00152'); // 주소
           aSubMenus.forEach((data) => {
             oViewModelData.employee.sub[data.Menuc1].contents[data.Menuc2] = {
               type: data.Child,
               rowCount: 1,
-              selectionMode: data.Menu2 === sAddressTitle ? 'MultiToggle' : 'None',
+              selectionMode: _.some(this.CRUD_TABLES, (o) => o.key === data.Menuc2) ? 'MultiToggle' : 'None',
               title: data.Menu2,
+              code: data.Menuc2,
               sort: data.Sorts,
               header: [],
               data: [],
@@ -178,8 +211,9 @@ sap.ui.define(
           //End 탭 메뉴 Set
 
           aTabMenus.map((data) => {
-            aHeaderRequests.push(this.readEmpProfileHeaderTab({ oModel, aFilters: [new Filter('Menuc', FilterOperator.EQ, data.Menuc1), ...aFilters] }));
-            aContentRequests.push(this.readEmpProfileContentsTab({ oModel, aFilters: [new Filter('Menuc', FilterOperator.EQ, data.Menuc1), ...aFilters] }));
+            aHeaderRequests.push(this.readOdata({ sUrl: '/EmpProfileHeaderTabSet', mFilters: { Menuc: data.Menuc1, ...mFilters } }));
+            // aContentRequests.push(this.readEmpProfileContentsTab({ oModel, aFilters: [new Filter('Menuc', FilterOperator.EQ, data.Menuc1), ...aFilters] }));
+            aContentRequests.push(this.readOdata({ sUrl: '/EmpProfileContentsTabSet', mFilters: { Menuc: data.Menuc1, ...mFilters } }));
           });
 
           // 2. Sub 영역 조회[header, contents]
@@ -199,12 +233,12 @@ sap.ui.define(
             content.forEach((o) => {
               let oSubMenu = oViewModelData.employee.sub[aTabMenus[index].Menuc1].contents[o.Menuc];
 
-              if (oSubMenu.type === '6') {
+              if (oSubMenu.type === this.SUB_TYPE.GRID) {
                 for (let i = 1; i <= oSubMenu.header.length; i++) {
                   let sKey = `Value${_.padStart(i, 2, '0')}`;
                   oSubMenu.data.push(o[sKey]);
                 }
-              } else if (oSubMenu.type === '5') {
+              } else if (oSubMenu.type === this.SUB_TYPE.TABLE) {
                 oSubMenu.data.push(o);
               }
 
@@ -218,9 +252,9 @@ sap.ui.define(
           // Sub 영역 UI5 Control 생성
           this.makeProfileBody();
         } catch (oError) {
-          this.debug('Controller > Employee > loadProfile Error', AppUtils.parseError(oError));
+          this.debug('Controller > Employee > loadProfile Error', oError);
 
-          MessageBox.error(this.getBundleText('MSG_00008', 'LABEL_00100')); // {조회}중 오류가 발생하였습니다.
+          MessageBox.error(new ODataReadError().getMessage()); // {조회}중 오류가 발생하였습니다.
         } finally {
           oViewModel.setProperty('/employee/busy', false);
         }
@@ -230,7 +264,6 @@ sap.ui.define(
         const oView = this.getView().getModel();
         const oParentBox = this.byId('profileBody');
         const mSubMenu = oView.getProperty('/employee/sub');
-        const sAddressTitle = this.getBundleText('LABEL_00152'); // 주소
 
         Object.keys(mSubMenu).forEach((menuKey) => {
           let mSubMenuContents = mSubMenu[menuKey].contents;
@@ -256,18 +289,45 @@ sap.ui.define(
             this.debug(`Sub ${oMenu.title}`, oMenu);
 
             oSubHBox.addItem(new sap.m.Title({ level: 'H2', text: oMenu.title }));
-            if (oMenu.title === sAddressTitle) {
+            if (_.some(this.CRUD_TABLES, (o) => o.key === oMenu.code)) {
               let oSubButtonBox = new sap.m.HBox();
 
-              oSubButtonBox.addItem(new sap.m.Button({ type: 'Transparent', width: '117px', icon: 'sap-icon://edit', text: this.getBundleText('LABEL_00108'), press: this.onPressModifyAddress.bind(this) })); // 수정
-              oSubButtonBox.addItem(new sap.m.Button({ type: 'Transparent', width: '117px', icon: 'sap-icon://add', text: this.getBundleText('LABEL_00107'), press: this.onPressRegAddress.bind(this) })); // 추가
-              oSubButtonBox.addItem(new sap.m.Button({ type: 'Transparent', width: '117px', icon: 'sap-icon://less', text: this.getBundleText('LABEL_00110'), press: this.onPressDeleteAddress.bind(this) })); // 삭제
+              oSubButtonBox.addItem(
+                new sap.m.Button({
+                  type: 'Transparent',
+                  width: '117px',
+                  icon: 'sap-icon://add',
+                  text: this.getBundleText('LABEL_00106'), // 등록
+                  customData: [new sap.ui.core.CustomData({ key: 'code', value: oMenu.code })],
+                  press: this.onPressRegTable.bind(this),
+                })
+              );
+              oSubButtonBox.addItem(
+                new sap.m.Button({
+                  type: 'Transparent',
+                  width: '117px',
+                  icon: 'sap-icon://edit',
+                  text: this.getBundleText('LABEL_00108'), // 수정
+                  customData: [new sap.ui.core.CustomData({ key: 'code', value: oMenu.code })],
+                  press: this.onPressModifyTable.bind(this),
+                })
+              );
+              oSubButtonBox.addItem(
+                new sap.m.Button({
+                  type: 'Transparent',
+                  width: '117px',
+                  icon: 'sap-icon://less',
+                  text: this.getBundleText('LABEL_00110'), // 삭제
+                  customData: [new sap.ui.core.CustomData({ key: 'code', value: oMenu.code })],
+                  press: this.onPressDeleteTable.bind(this),
+                })
+              );
               oSubHBox.addItem(oSubButtonBox);
             }
 
             oSubVBox.addItem(oSubHBox);
 
-            if (oMenu.type === '5') {
+            if (oMenu.type === this.SUB_TYPE.TABLE) {
               const sTableDataPath = `/employee/sub/${menuKey}/contents/${key}`;
               let oTable = new Table({
                 width: '100%',
@@ -289,7 +349,7 @@ sap.ui.define(
               });
 
               oSubVBox.addItem(oTable);
-            } else if (oMenu.type === '6') {
+            } else if (oMenu.type === this.SUB_TYPE.GRID) {
               let oCSSGrid = new CSSGrid({ gridTemplateColumns: '1fr 3fr 1fr 3fr', gridGap: '2px' });
 
               oMenu.header.forEach((head, index) => {
@@ -307,55 +367,61 @@ sap.ui.define(
         });
       },
 
-      openAddressDialog() {
+      openInputFormDialog() {
         const oView = this.getView();
 
         AppUtils.setAppBusy(true, this);
 
         setTimeout(() => {
-          if (!this._pAddressDialog) {
-            this._pAddressDialog = Fragment.load({
+          if (!this._pInputFormDialog) {
+            this._pInputFormDialog = Fragment.load({
               id: oView.getId(),
-              name: 'sap.ui.yesco.view.employee.fragment.AddressDialog',
+              name: 'sap.ui.yesco.view.employee.fragment.InputFormDialog',
               controller: this,
             }).then(function (oDialog) {
               oView.addDependent(oDialog);
               return oDialog;
             });
           }
-          this._pAddressDialog.then(function (oDialog) {
+          this._pInputFormDialog.then(function (oDialog) {
+            AppUtils.setAppBusy(false, this);
             oDialog.open();
           });
         }, 100);
       },
 
-      async refreshAddress({ oViewModel }) {
-        const sAddressTitle = this.getBundleText('LABEL_00152'); // 주소
-        const oMenuInfo = _.find(oViewModel.getProperty('/employee/tab/menu'), { Menu2: sAddressTitle });
-        const sAddressPath = `/employee/sub/${oMenuInfo.Menuc1}/contents/${oMenuInfo.Menuc2}`;
-        const mReturnContents = await this.readEmpProfileContentsTab({
-          oModel: this.getModel(ServiceNames.PA),
-          aFilters: [
-            new Filter('Pernr', FilterOperator.EQ, oMenuInfo.Pernr), //
-            new Filter('Menuc', FilterOperator.EQ, oMenuInfo.Menuc1),
-          ],
-        });
-        const mTableData = _.filter(mReturnContents, { Menuc: oMenuInfo.Menuc2 });
+      async refreshTableContents({ oViewModel, sMenuKey }) {
+        try {
+          const oMenuInfo = _.find(oViewModel.getProperty('/employee/tab/menu'), { Menuc2: sMenuKey });
+          const sSubTablePath = `/employee/sub/${oMenuInfo.Menuc1}/contents/${oMenuInfo.Menuc2}`;
+          const mFilters = { Pernr: oMenuInfo.Pernr, Menuc: oMenuInfo.Menuc1 };
+          const mReturnContents = await this.readOdata({ sUrl: '/EmpProfileContentsTabSet', mFilters });
+          const mTableData = _.filter(mReturnContents, { Menuc: oMenuInfo.Menuc2 });
 
-        oViewModel.setProperty(`${sAddressPath}/data`, mTableData);
-        oViewModel.setProperty(`${sAddressPath}/rowCount`, mTableData.length);
+          oViewModel.setProperty(`${sSubTablePath}/data`, mTableData);
+          oViewModel.setProperty(`${sSubTablePath}/rowCount`, mTableData.length);
+        } catch (oError) {
+          this.debug('Controller > Employee > refreshTableContents Error', oError);
+
+          if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+            oError.showErrorMessage();
+          }
+        }
       },
 
-      getAddressTableRowData({ oViewModel, oTable, aSelectedIndices }) {
+      getTableRowData({ oViewModel, oTable, aSelectedIndices, aFields }) {
         const sRowPath = oTable.getRows()[aSelectedIndices[0]].getBindingContext().getPath();
         const oRowData = oViewModel.getProperty(sRowPath);
         const oMenu = _.find(oViewModel.getProperty('/employee/tab/menu'), { Menuc2: oRowData.Menuc });
         const mHeaderData = oViewModel.getProperty(`/employee/sub/${oMenu.Menuc1}/contents/${oMenu.Menuc2}/header`);
+        const oFieldSet = aFields.reduce((acc, cur) => {
+          acc[cur] = oRowData[`Value${_.padStart(_.findIndex(mHeaderData, { Fieldname: _.upperCase(cur) }) + 1, 2, '0')}`];
+          return acc;
+        }, {});
 
         return {
           Pernr: oRowData.Pernr,
-          Subty: oRowData[`Value${_.padStart(_.findIndex(mHeaderData, { Fieldname: 'SUBTY' }) + 1, 2, '0')}`],
-          Begda: oRowData[`Value${_.padStart(_.findIndex(mHeaderData, { Fieldname: 'BEGDA' }) + 1, 2, '0')}`],
+          ...oFieldSet,
         };
       },
 
@@ -442,7 +508,7 @@ sap.ui.define(
         const bTreeLoaded = oViewModel.getProperty('/sideNavigation/treeLoaded');
 
         if (!bTreeLoaded && sSelectedKey === 'tree') {
-          const mReturnTreeData = await this.readAuthOrgTree();
+          const mReturnTreeData = await this.readOdata({ sUrl: '/AuthOrgTreeSet', mFilters: { Datum: moment().hour(9).toDate(), Xpern: 'X' } });
           const mConvertedTreeData = this.transformTreeData({ mReturnTreeData, rootId: '00000000' });
 
           this.debug('mConvertedTreeData', mConvertedTreeData);
@@ -533,19 +599,34 @@ sap.ui.define(
         });
       },
 
-      onPressRegAddress() {
+      onPressRegTable(oEvent) {
         const oViewModel = this.getView().getModel();
+        const sSelectedMenuCode = oEvent.getSource().getCustomData()[0].getValue();
+        const sMenuKey = _.lowerCase(_.findKey(this.CRUD_TABLES, { key: sSelectedMenuCode }));
 
-        oViewModel.setProperty('/employee/address/actionText', this.getBundleText('LABEL_00107')); // 추가
-        oViewModel.setProperty('/employee/address/form', { Subty: 'ALL', State: 'ALL' });
+        oViewModel.setProperty('/employee/dialog/subKey', sSelectedMenuCode);
+        oViewModel.setProperty('/employee/dialog/action', 'A');
+        oViewModel.setProperty('/employee/dialog/actionText', this.getBundleText('LABEL_00106')); // 등록
 
-        this.openAddressDialog();
+        switch (sMenuKey) {
+          case this.CRUD_TABLES.ADDRESS.path:
+            oViewModel.setProperty('/employee/dialog/form', { Subty: 'ALL', State: 'ALL' });
+
+            break;
+          case this.CRUD_TABLES.EDUCATION.path:
+            oViewModel.setProperty('/employee/dialog/form', { Slart: 'ALL', Sland: 'ALL', Slabs: 'ALL' });
+            break;
+          default:
+            break;
+        }
+
+        this.openInputFormDialog();
       },
 
       async onSaveAddress() {
         const oViewModel = this.getView().getModel();
-        const oInputData = oViewModel.getProperty('/employee/address/form');
-        const sActionText = oViewModel.getProperty('/employee/address/actionText');
+        const oInputData = oViewModel.getProperty('/employee/dialog/form');
+        const sActionText = oViewModel.getProperty('/employee/dialog/actionText');
         const mCheckFields = [
           { label: 'LABEL_00270', field: 'Subty', type: Validator.SELECT1 }, // 주소유형
           { label: 'LABEL_00271', field: 'Begda', type: Validator.INPUT1 }, // 적용시작일
@@ -554,29 +635,40 @@ sap.ui.define(
           { label: 'LABEL_00274', field: 'Zzaddr2', type: Validator.INPUT2 }, // 상세주소
         ];
 
-        if (!Validator.check({ oInputData, mCheckFields })) return;
+        if (!Validator.check({ mFieldValue: oInputData, aFieldProperties: mCheckFields })) return;
 
-        const oSido = _.find(oViewModel.getProperty('/employee/address/sidoList'), { State: oInputData.State });
+        const oSido = _.find(oViewModel.getProperty('/employee/dialog/sidoList'), { State: oInputData.State });
         delete oSido.Land1;
         delete oSido.__metadata;
 
-        const { result } = await this.createAddressInfo({ oInputData: { ...oSido, ...oInputData } });
+        try {
+          await this.createAddressInfo({ oViewModel, oInputData: { ...oSido, ...oInputData } });
 
-        if (result === 'success') {
-          MessageBox.success(this.getBundleText('MSG_00007', sActionText)); // {추가|수정}되었습니다.
+          // {추가|수정}되었습니다.
+          MessageBox.success(this.getBundleText('MSG_00007', sActionText), {
+            onClose: () => {
+              this.refreshTableContents({ oViewModel, sMenuKey: this.CRUD_TABLES.ADDRESS.key });
+              this.onInputFormDialogClose();
+            },
+          });
+        } catch (oError) {
+          this.debug('Controller > Employee > onSaveAddress Error', oError);
 
-          this.refreshAddress({ oViewModel });
-        } else {
-          MessageBox.error(this.getBundleText('MSG_00008', sActionText)); // {추가|수정}중 오류가 발생하였습니다.
+          if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+            oError.showErrorMessage({
+              onClose: () => this.onInputFormDialogClose(),
+            });
+          }
         }
-
-        this.onAddressDialogClose();
       },
 
-      async onPressModifyAddress(oEvent) {
+      async onPressModifyTable(oEvent) {
         const oViewModel = this.getView().getModel();
-        const oTable = oEvent.getSource().getParent().getParent().getParent().getItems()[1];
+        const oControl = oEvent.getSource();
+        const oTable = oControl.getParent().getParent().getParent().getItems()[1];
         const aSelectedIndices = oTable.getSelectedIndices();
+        const sSelectedMenuCode = oControl.getCustomData()[0].getValue();
+        const sMenuKey = _.lowerCase(_.findKey(this.CRUD_TABLES, { key: sSelectedMenuCode }));
 
         if (aSelectedIndices.length < 1) {
           MessageBox.alert(this.getBundleText('MSG_00010', 'LABEL_00108')); // {수정}할 데이터를 선택하세요.
@@ -586,25 +678,53 @@ sap.ui.define(
           return;
         }
 
-        const oPayload = this.getAddressTableRowData({ oViewModel, oTable, aSelectedIndices });
-        const oAddressDetail = await this.readAddressInfo({ oPayload });
+        try {
+          const oTableInfo = this.CRUD_TABLES[_.upperCase(sMenuKey)];
+          const aFields = oTableInfo.pk;
+          const sUrl = oTableInfo.url;
+          const mFilters = this.getTableRowData({ oViewModel, oTable, aSelectedIndices, aFields });
 
-        if (oAddressDetail.result === 'error') {
-          MessageBox.error(this.getBundleText('MSG_00008', 'LABEL_00100')); // {조회}중 오류가 발생하였습니다.
-          return;
+          oViewModel.setProperty('/employee/dialog/subKey', sSelectedMenuCode);
+          oViewModel.setProperty('/employee/dialog/action', 'U');
+          oViewModel.setProperty('/employee/dialog/actionText', this.getBundleText('LABEL_00108')); // 수정
+
+          switch (sMenuKey) {
+            case this.CRUD_TABLES.ADDRESS.path:
+              mFilters.Begda = moment(mFilters.Begda).hour(9).toDate();
+
+              break;
+            case this.CRUD_TABLES.EDUCATION.path:
+              mFilters.Begda = moment(mFilters.Begda).hour(9).toDate();
+              mFilters.Endda = moment(mFilters.Endda).hour(9).toDate();
+
+              debugger;
+              MessageBox.alert('test');
+              break;
+            default:
+              break;
+          }
+
+          const oAddressDetail = await this.readOdata({ sUrl, mFilters });
+          oViewModel.setProperty('/employee/dialog/form', oAddressDetail[0]);
+
+          this.openInputFormDialog(oEvent);
+          oTable.clearSelection();
+        } catch (oError) {
+          this.debug('Controller > Employee > onPressModifyTable Error', oError);
+
+          if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+            oError.showErrorMessage();
+          }
         }
-
-        oViewModel.setProperty('/employee/address/actionText', this.getBundleText('LABEL_00108')); // 수정
-        oViewModel.setProperty('/employee/address/form', oAddressDetail.result);
-
-        this.openAddressDialog(oEvent);
-        oTable.clearSelection();
       },
 
-      onPressDeleteAddress(oEvent) {
+      onPressDeleteTable(oEvent) {
         const oViewModel = this.getView().getModel();
-        const oTable = oEvent.getSource().getParent().getParent().getParent().getItems()[1];
+        const oControl = oEvent.getSource();
+        const oTable = oControl.getParent().getParent().getParent().getItems()[1];
         const aSelectedIndices = oTable.getSelectedIndices();
+        const sSelectedMenuCode = oControl.getCustomData()[0].getValue();
+        const sMenuKey = _.lowerCase(_.findKey(this.CRUD_TABLES, { key: sSelectedMenuCode }));
 
         if (aSelectedIndices.length < 1) {
           MessageBox.alert(this.getBundleText('MSG_00010', 'LABEL_00110')); // {삭제}할 데이터를 선택하세요.
@@ -620,17 +740,39 @@ sap.ui.define(
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
           actions: [this.getBundleText('LABEL_00110'), MessageBox.Action.CANCEL], // 삭제
           onClose: async (sAction) => {
-            if (sAction !== MessageBox.Action.CANCEL) {
-              const oPayload = this.getAddressTableRowData({ oViewModel, oTable, aSelectedIndices });
-              const { result } = await this.deleteAddressInfo({ oPayload });
+            if (!sAction || sAction !== MessageBox.Action.CANCEL) {
+              const oTableInfo = this.CRUD_TABLES[_.upperCase(sMenuKey)];
+              const aFields = oTableInfo.pk;
+              const sUrl = oTableInfo.url;
+              const oPayload = this.getTableRowData({ oViewModel, oTable, aSelectedIndices, aFields });
 
-              if (result === 'success') {
+              try {
+                switch (sMenuKey) {
+                  case this.CRUD_TABLES.ADDRESS.path:
+                    oPayload.Begda = moment(oPayload.Begda).hour(9).toDate();
+
+                    break;
+                  case this.CRUD_TABLES.EDUCATION.path:
+                    oPayload.Begda = moment(oPayload.Begda).hour(9).toDate();
+                    oPayload.Endda = moment(oPayload.Endda).hour(9).toDate();
+
+                    break;
+                  default:
+                    break;
+                }
+
+                await this.deleteTableRow({ sUrl, oPayload });
+
                 oTable.clearSelection();
-                this.refreshAddress({ oViewModel });
+                this.refreshTableContents({ oViewModel, sMenuKey: sSelectedMenuCode });
 
                 MessageBox.success(this.getBundleText('MSG_00007', 'LABEL_00110')); // {삭제}되었습니다.
-              } else {
-                MessageBox.error(this.getBundleText('MSG_00008', 'LABEL_00110')); // {삭제}중 오류가 발생하였습니다.
+              } catch (oError) {
+                this.debug('Controller > Employee > onPressDeleteTable Error', oError);
+
+                if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+                  oError.showErrorMessage();
+                }
               }
             }
 
@@ -639,13 +781,111 @@ sap.ui.define(
         });
       },
 
+      async onChangeSchoolType() {
+        const oModel = this.getModel(ServiceNames.PA);
+        const oViewModel = this.getViewModel();
+        const sSlart = oViewModel.getProperty('/employee/dialog/form/Slart');
+
+        try {
+          oViewModel.setProperty('/employee/dialog/busy/Slabs', true);
+
+          const mDegreeList = await this.readComboEntry({ oModel, sUrl: '/DegreeCodeSet', mFilters: { Slart: sSlart }, oEntryInfo: { codeKey: 'Slabs', valueKey: 'Stext' } });
+
+          oViewModel.setProperty('/employee/dialog/form/Slabs', 'ALL');
+          oViewModel.setProperty('/employee/dialog/degreeList', mDegreeList);
+        } catch (oError) {
+          this.debug('Controller > Employee > onChangeSchoolType Error', oError);
+
+          MessageBox.error(new ODataReadError().getMessage()); // {조회}중 오류가 발생하였습니다.
+        } finally {
+          oViewModel.setProperty('/employee/dialog/busy/Slabs', false);
+        }
+      },
+
+      onPressHelpSchool() {
+        const oView = this.getView();
+
+        AppUtils.setAppBusy(true, this);
+
+        if (!this._pSchoolHelpDialog) {
+          this._pSchoolHelpDialog = Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.view.employee.fragment.form.SchoolDialog',
+            controller: this,
+          }).then(function (oDialog) {
+            oView.addDependent(oDialog);
+            return oDialog;
+          });
+        }
+        this._pSchoolHelpDialog.then(async (oDialog) => {
+          try {
+            const oViewModel = this.getViewModel();
+            const mFilters = { Slart: oViewModel.getProperty('/employee/dialog/form/Slart') };
+            const mSchoolList = await this.readOdata({ sUrl: '/SchoolCodeSet', mFilters });
+
+            oViewModel.setProperty('/employee/dialog/schoolList', mSchoolList);
+
+            oDialog.open();
+          } catch (oError) {
+            this.debug('Controller > Employee > onPressHelpSchool Error', oError);
+
+            if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+              oError.showErrorMessage();
+            }
+          } finally {
+            AppUtils.setAppBusy(false, this);
+          }
+        });
+      },
+
+      onSearchSchoolHelp() {},
+      onCloseSchoolHelp() {},
+
+      onPressHelpMajor() {
+        const oView = this.getView();
+
+        AppUtils.setAppBusy(true, this);
+
+        if (!this._pMajorHelpDialog) {
+          this._pMajorHelpDialog = Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.view.employee.fragment.form.MajorDialog',
+            controller: this,
+          }).then(function (oDialog) {
+            oView.addDependent(oDialog);
+            return oDialog;
+          });
+        }
+        this._pMajorHelpDialog.then(async (oDialog) => {
+          try {
+            const oViewModel = this.getViewModel();
+            const mMajorList = await this.readOdata({ sUrl: '/MajorCodeSet' });
+
+            oViewModel.setProperty('/employee/dialog/majorList', mMajorList);
+
+            oDialog.open();
+          } catch (oError) {
+            this.debug('Controller > Employee > onPressHelpMajor Error', oError);
+
+            if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+              oError.showErrorMessage();
+            }
+          } finally {
+            AppUtils.setAppBusy(false, this);
+          }
+        });
+      },
+
+      onSearchMajorHelp() {},
+      onCloseMajorHelp() {},
+
       openSearchZipCodePopup() {
         window.open('postcodeForBrowser.html?CBF=fn_SetAddr', 'pop', 'width=550,height=550, scrollbars=yes, resizable=yes');
       },
 
-      onAddressDialogClose() {
+      onInputFormDialogClose() {
         AppUtils.setAppBusy(false, this);
-        this.byId('addressDialog').close();
+        this.byId('inputFormDialog').close();
       },
 
       /*****************************************************************
@@ -677,228 +917,88 @@ sap.ui.define(
         });
       },
 
-      readAuthOrgTree() {
-        return new Promise((resolve, reject) => {
-          const oModel = this.getModel(ServiceNames.PA);
-          const sUrl = '/AuthOrgTreeSet';
-
-          oModel.read(sUrl, {
-            filters: [
-              new Filter('Datum', FilterOperator.EQ, moment().hour(9).toDate()), //
-              new Filter('Xpern', FilterOperator.EQ, 'X'),
-            ],
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(oError);
-            },
-          });
-        });
-      },
-
-      readEmpProfileMenu({ oModel, aFilters }) {
-        return new Promise((resolve, reject) => {
-          const sUrl = '/EmpProfileMenuSet';
-
-          oModel.read(sUrl, {
-            filters: aFilters,
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(oError);
-            },
-          });
-        });
-      },
-
-      readEmpProfileHeaderNew({ oModel, aFilters }) {
-        return new Promise((resolve, reject) => {
-          const sUrl = '/EmpProfileHeaderNewSet';
-
-          oModel.read(sUrl, {
-            filters: aFilters,
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results[0]);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(oError);
-            },
-          });
-        });
-      },
-
-      readEmpProfileHeaderTab({ oModel, aFilters }) {
-        return new Promise((resolve, reject) => {
-          const sUrl = '/EmpProfileHeaderTabSet';
-
-          oModel.read(sUrl, {
-            filters: aFilters,
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(oError);
-            },
-          });
-        });
-      },
-
-      readEmpProfileContentsTab({ oModel, aFilters }) {
-        return new Promise((resolve, reject) => {
-          const sUrl = '/EmpProfileContentsTabSet';
-
-          oModel.read(sUrl, {
-            filters: aFilters,
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(oError);
-            },
-          });
-        });
-      },
-
-      readTypeList({ oModel }) {
+      readComboEntry({ oModel, sUrl, sPath, sPernr, mFilters = {}, oEntryInfo = { codeKey: 'Zcode', valueKey: 'Ztext' } }) {
         return new Promise((resolve, reject) => {
           const oViewModel = this.getViewModel();
-          const mTypeList = oViewModel.getProperty('/employee/address/typeList');
-          const sUrl = '/PaCodeListSet';
+          const mEntries = oViewModel.getProperty(`/employee/dialog/${sPath}`);
 
-          if (mTypeList.length > 1) {
-            resolve(mTypeList);
-          }
+          if (sPath && mEntries.length > 1) resolve(mEntries);
+          if (sPernr) mFilters.Pernr = sPernr;
 
           oModel.read(sUrl, {
-            filters: [
-              new Filter('Cdnum', FilterOperator.EQ, 'CM0002'), //
-              new Filter('Grcod', FilterOperator.EQ, '0006'),
-            ],
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve([...mTypeList, ...oData.results]);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(oError);
-            },
-          });
-        });
-      },
-
-      readCityList({ oModel, sPernr }) {
-        return new Promise((resolve, reject) => {
-          const oViewModel = this.getViewModel();
-          const mSidoList = oViewModel.getProperty('/employee/address/sidoList');
-          const sUrl = '/CityListSet';
-          let aFilters = [];
-
-          if (mSidoList.length > 1) {
-            resolve(mSidoList);
-            return;
-          }
-
-          if (sPernr) {
-            aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
-          }
-
-          oModel.read(sUrl, {
-            filters: aFilters,
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve([...mSidoList, ...oData.results]);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(oError);
-            },
-          });
-        });
-      },
-
-      readAddressInfo({ oPayload }) {
-        return new Promise((resolve) => {
-          const oModel = this.getModel(ServiceNames.PA);
-          const sUrl = '/AddressInfoSet';
-
-          oPayload.Begda = moment(oPayload.Begda).hour(9).toDate();
-
-          oModel.read(sUrl, {
-            filters: Object.keys(oPayload).map((field) => {
-              return new Filter(field, FilterOperator.EQ, oPayload[field]);
+            filters: Object.keys(mFilters).map((field) => {
+              return new Filter(field, FilterOperator.EQ, mFilters[field]);
             }),
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
-              resolve({ result: oData.results[0] });
+
+              resolve(new ComboEntry({ ...oEntryInfo, mEntries: oData.results }));
             },
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
-              resolve({ result: 'error' });
+
+              reject(oError);
             },
           });
         });
       },
 
-      createAddressInfo({ oInputData }) {
+      readOdata({ sUrl, mFilters = {} }) {
+        return new Promise((resolve, reject) => {
+          const oModel = this.getModel(ServiceNames.PA);
+
+          oModel.read(sUrl, {
+            filters: Object.keys(mFilters).map((field) => {
+              return new Filter(field, FilterOperator.EQ, mFilters[field]);
+            }),
+            success: (oData) => {
+              this.debug(`${sUrl} success.`, oData);
+
+              resolve(oData.results);
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, oError);
+
+              reject(new ODataReadError()); // {조회}중 오류가 발생하였습니다.
+            },
+          });
+        });
+      },
+
+      createAddressInfo({ oViewModel, oInputData }) {
         return new Promise((resolve) => {
           const oModel = this.getModel(ServiceNames.PA);
+          const sAction = oViewModel.getProperty('/employee/dialog/action');
           const sUrl = '/AddressInfoSet';
 
           oInputData.Begda = moment(oInputData.Begda).hour(9).toDate();
 
           oModel.create(sUrl, oInputData, {
             success: () => {
-              resolve({ result: 'success' });
+              resolve();
             },
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
-              resolve({ result: 'error' });
+
+              resolve(sAction === 'U' ? new ODataUpdateError() : new ODataCreateError('A'));
             },
           });
         });
       },
 
-      deleteAddressInfo({ oPayload }) {
-        return new Promise((resolve) => {
+      deleteTableRow({ sUrl, oPayload }) {
+        return new Promise((resolve, reject) => {
           const oModel = this.getModel(ServiceNames.PA);
+          const sUrlByKey = oModel.createKey(sUrl, oPayload);
 
-          oPayload.Begda = moment(oPayload.Begda).hour(9).toDate();
-
-          const sUrl = oModel.createKey('/AddressInfoSet', oPayload);
-
-          oModel.remove(sUrl, {
+          oModel.remove(sUrlByKey, {
             success: () => {
-              resolve({ result: 'success' });
+              resolve();
             },
             error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-              resolve({ result: 'error' });
+              this.debug(`${sUrlByKey} error.`, oError);
+
+              reject(new ODataDeleteError()); // {삭제}중 오류가 발생하였습니다.
             },
           });
         });
@@ -912,6 +1012,6 @@ function fn_SetAddr(Zip, fullAddr) {
   const oView = sap.ui.getCore().byId('container-ehr---employee');
   const oViewModel = oView.getModel();
 
-  oViewModel.setProperty('/employee/address/form/Pstlz', Zip);
-  oViewModel.setProperty('/employee/address/form/Zzaddr1', fullAddr);
+  oViewModel.setProperty('/employee/dialog/form/Pstlz', Zip);
+  oViewModel.setProperty('/employee/dialog/form/Zzaddr1', fullAddr);
 }

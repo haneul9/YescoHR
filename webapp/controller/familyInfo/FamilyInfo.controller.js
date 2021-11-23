@@ -23,15 +23,13 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    class FamilyInfo extends BaseController {
-      constructor() {
-        super();
-        this.AttachFileAction = AttachFileAction;
-        this.TableUtils = TableUtils;
-        this.TextUtils = TextUtils;
-        this.FragmentEvent = FragmentEvent;
-        this.TYPE_CODE = 'HR03';
-      }
+    return BaseController.extend('sap.ui.yesco.controller.familyInfo.FamilyInfo', {
+      TYPE_CODE: 'HR03',
+
+      AttachFileAction: AttachFileAction,
+      TableUtils: TableUtils,
+      TextUtils: TextUtils,
+      FragmentEvent: FragmentEvent,
 
       onBeforeShow() {
         const dDate = new Date();
@@ -55,29 +53,29 @@ sap.ui.define(
         this.setViewModel(oViewModel);
 
         EmpInfo.get.call(this, true);
-      }
+      },
 
       onAfterShow() {
         this.onSearch();
         this.totalCount();
-        super.onAfterShow();
-      }
+        this.onPageLoaded();
+      },
 
       onClick() {
         this.getRouter().navTo('familyInfo-detail', { oDataKey: 'N' });
-      }
+      },
 
       formatNumber(vNum = '0') {
         return `${vNum}${this.getBundleText('LABEL_00159')}`;
-      }
+      },
 
       formatPay(vPay = '0') {
         return `${vPay}${this.getBundleText('LABEL_00158')}`;
-      }
+      },
 
       thisYear(sYear = String(moment().format('YYYY'))) {
         return this.getBundleText('MSG_03012', sYear);
-      }
+      },
 
       onSearch() {
         const oModel = this.getModel(ServiceNames.PA);
@@ -101,7 +99,6 @@ sap.ui.define(
               oListModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData: oList }));
               oListModel.setProperty('/listInfo/infoMessage', this.getBundleText('MSG_05005'));
               oListModel.setProperty('/FamilyList', oList);
-              this.byId('familyTable').setVisibleRowCount(oList.length);
               oListModel.setProperty('/busy', false);
             }
           },
@@ -110,7 +107,7 @@ sap.ui.define(
             oListModel.setProperty('/busy', false);
           },
         });
-      }
+      },
 
       totalCount() {
         const oModel = this.getModel(ServiceNames.PA);
@@ -129,14 +126,16 @@ sap.ui.define(
             this.debug(oError);
           },
         });
-      }
+      },
 
       onSelectRow(oEvent) {
         const vPath = oEvent.getParameters().rowBindingContext.getPath();
-        const oRowData = this.getViewModel().getProperty(vPath);
+        const oDetailModel = this.getViewModel();
+        const oRowData = oDetailModel.getProperty(vPath);
 
+        oDetailModel.setProperty('/parameter', oRowData);
         this.getRouter().navTo('familyInfo-detail', { oDataKey: oRowData.Appno });
-      }
+      },
 
       onPressExcelDownload() {
         const oTable = this.byId('familyTable');
@@ -144,9 +143,7 @@ sap.ui.define(
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_03028');
 
         TableUtils.export({ oTable, mTableData, sFileName });
-      }
-    }
-
-    return FamilyInfo;
+      },
+    });
   }
 );

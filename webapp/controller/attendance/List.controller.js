@@ -6,9 +6,8 @@ sap.ui.define(
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/controller/BaseController',
-    'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/EmpInfo',
     'sap/ui/yesco/common/TableUtils',
   ],
   (
@@ -18,9 +17,8 @@ sap.ui.define(
     JSONModel,
     MessageBox,
     BaseController,
-    AppUtils,
+    ODataReadError,
     ServiceNames,
-    EmpInfo,
     TableUtils
   ) => {
     'use strict';
@@ -65,10 +63,6 @@ sap.ui.define(
         // ! 필수 호출 - BaseController.onPageLoaded
         this.onPageLoaded();
 
-        // 대상자 정보
-        const bTargetChangeButtonHide = true;
-        EmpInfo.get.call(this, { bTargetChangeButtonHide });
-
         this.initialRetrieve();
       },
 
@@ -108,9 +102,11 @@ sap.ui.define(
             )
           );
         } catch (oError) {
-          this.debug('Controller > Attendance List > initialRetrieve Error', AppUtils.parseError(oError));
+          this.debug('Controller > Attendance List > initialRetrieve Error', oError);
 
-          MessageBox.error(this.getBundleText('MSG_00008', 'LABEL_00100')); // {조회}중 오류가 발생하였습니다.
+          if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+            oError.showErrorMessage();
+          }
         } finally {
           oViewModel.setProperty('/busy', false);
         }
@@ -150,7 +146,11 @@ sap.ui.define(
 
           this.setTableData({ oViewModel, mRowData });
         } catch (error) {
-          MessageBox.error(this.getBundleText('MSG_00008', 'LABEL_00100')); // {조회}중 오류가 발생하였습니다.
+          this.debug('Controller > Attendance List > onPressSearch Error', oError);
+
+          if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+            oError.showErrorMessage();
+          }
         } finally {
           oViewModel.setProperty('/busy', false);
         }
@@ -272,11 +272,13 @@ sap.ui.define(
             ],
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
+
               resolve(oData.results);
             },
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
-              reject(oError);
+
+              reject(new ODataReadError());
             },
           });
         });
@@ -289,19 +291,23 @@ sap.ui.define(
       readLeaveApplContent({ oModel, oSearchConditions }) {
         return new Promise((resolve, reject) => {
           const sUrl = '/LeaveApplContentSet';
+          const sMenid = this.getOwnerComponent().getMenuModel().getCurrentMenuId();
 
           oModel.read(sUrl, {
             filters: [
-              new Filter('Apbeg', FilterOperator.EQ, moment(oSearchConditions.Apbeg).hours(9).toDate()), //
+              new Filter('Menid', FilterOperator.EQ, sMenid), //
+              new Filter('Apbeg', FilterOperator.EQ, moment(oSearchConditions.Apbeg).hours(9).toDate()),
               new Filter('Apend', FilterOperator.EQ, moment(oSearchConditions.Apend).hours(9).toDate()),
             ],
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
+
               resolve(oData.results);
             },
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
-              reject(oError);
+
+              reject(new ODataReadError());
             },
           });
         });

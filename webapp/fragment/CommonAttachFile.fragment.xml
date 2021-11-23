@@ -3,7 +3,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:core="sap.ui.core"
     xmlns:u="sap.ui.unified">
-    <VBox id="ATTACHBOX" class="vCardBox">
+    <VBox id="ATTACHBOX" class="vCardBox" visible="{/Settings/Visible}">
         <HBox justifyContent="SpaceBetween">
             <HBox>
                 <Title level="H2" text="{i18n>LABEL_00248}" />
@@ -15,7 +15,7 @@
                 <Button icon="sap-icon://less" visible="{/Settings/Editable}" text="{i18n>LABEL_00110}" press=".AttachFileAction.onDeleteAttachFile" />
             </HBox>
         </HBox>
-        <table:Table id="attachTable" width="100%" selectionMode="{/Settings/ListMode}" columnHeaderHeight="38" rowHeight="37" visibleRowCount="1" rows="{/Data}">
+        <table:Table id="attachTable" width="100%" selectionMode="{/Settings/ListMode}" columnHeaderHeight="50" rowHeight="50" visibleRowCount="1" rows="{/Data}">
             <table:columns>
                 <table:Column width="4%">
                     <Label text="No"/>

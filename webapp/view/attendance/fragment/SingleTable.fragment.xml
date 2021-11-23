@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:table="sap.ui.table"
     xmlns:core="sap.ui.core">
-    <table:Table id="approveSingleTable" width="100%" columnHeaderHeight="50px" rowHeight="50px" rows="{/form/list}" visibleRowCount="{/form/rowCount}" noData="{i18n>MSG_00001}">
+    <table:Table id="approveSingleTable" selectionMode="{/form/listMode}" width="100%" columnHeaderHeight="50" rowHeight="50" rows="{/form/list}" visibleRowCount="{/form/rowCount}" noData="{i18n>MSG_00001}">
         <table:columns>
             <table:Column width="15%">
                 <Label text="{i18n>LABEL_04010}" />
@@ -27,16 +27,10 @@
                     <Text text="{AbrtgTxt}" width="100%" textAlign="Center" />
                 </table:template>
             </table:Column>
-            <table:Column width="40%" visible="{= ${/type} !== 'C'}">
+            <table:Column width="40%">
                 <Label text="{i18n>LABEL_00154}" />
                 <table:template>
                     <Text text="{Tmrsn}" width="100%" textAlign="Center" />
-                </table:template>
-            </table:Column>
-            <table:Column width="40%" visible="{= ${/type} === 'C'}">
-                <Label text="{i18n>LABEL_00154}" />
-                <table:template>
-                    <Input type="text" value="{Tmrsn}" width="100%" />
                 </table:template>
             </table:Column>
         </table:columns>
