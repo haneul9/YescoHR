@@ -99,7 +99,6 @@ sap.ui.define(
               oListModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData: oList }));
               oListModel.setProperty('/listInfo/infoMessage', this.getBundleText('MSG_05005'));
               oListModel.setProperty('/FamilyList', oList);
-              this.byId('familyTable').setVisibleRowCount(oList.length);
               oListModel.setProperty('/busy', false);
             }
           },

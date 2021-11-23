@@ -33,6 +33,34 @@ sap.ui.define(
     return BaseController.extend('sap.ui.yesco.controller.familyInfo.FamilyInfoDetail', {
       TYPE_CODE: 'HR03',
       LIST_PAGE_ID: 'container-ehr---familyInfo',
+      GENDER: {
+        CODE: {
+          A: 'ALL',
+          O: '1',
+          T: '2',
+        },
+        TEXT: {
+          N: this.getBundleText('LABEL_00268'),
+          M: this.getBundleText('LABEL_00161'),
+          W: this.getBundleText('LABEL_00162'),
+        },
+      },
+      DISABIL: {
+        CODE: {
+          CODE: {
+            A: 'ALL',
+            O: '1',
+            TW: '2',
+            TH: '3',
+          },
+        },
+        TEXT: {
+          A: this.getBundleText('LABEL_00268'),
+          O: this.getBundleText('MSG_05006'),
+          TW: this.getBundleText('MSG_05007'),
+          TH: this.getBundleText('MSG_05008'),
+        },
+      },
       
       AttachFileAction: AttachFileAction,
       TextUtils: TextUtils,
@@ -43,8 +71,17 @@ sap.ui.define(
           FormStatus: '',
           FormData: {},
           Relations: [],
-          Gender: [],
-          Disability: [],
+          Gender: [
+            { Zcode: this.GENDER.CODE.A, Ztext: this.GENDER.TEXT.N }, 
+            { Zcode: this.GENDER.CODE.O, Ztext: this.GENDER.TEXT.M }, 
+            { Zcode: this.GENDER.CODE.T, Ztext: this.GENDER.TEXT.W }
+          ],
+          Disability: [
+            { Zcode: this.DISABIL.CODE.A, Ztext: this.DISABIL.TEXT.A }, 
+            { Zcode: this.DISABIL.CODE.O, Ztext: this.DISABIL.TEXT.O }, 
+            { Zcode: this.DISABIL.CODE.TW, Ztext: this.DISABIL.TEXT.TW },
+            { Zcode: this.DISABIL.CODE.TH, Ztext: this.DISABIL.TEXT.TH },
+          ],
           Support: [],
           Settings: {},
           busy: false,
@@ -61,7 +98,6 @@ sap.ui.define(
       },
 
       async onAfterShow() {
-        this.setGenderList();
         this.setDisabilityList();
         await this.getCodeList();
         await this.setFormData();
@@ -239,20 +275,6 @@ sap.ui.define(
         } else {
           oDetailModel.setProperty(sPath, '');
         }
-      },
-
-      setGenderList() {
-        // 성별
-        const oDetailModel = this.getViewModel();
-        const aGenderList = [];
-
-        aGenderList.push(
-          { Zcode: 'ALL', Ztext: this.getBundleText('LABEL_00268') }, 
-          { Zcode: '1', Ztext: '남' }, 
-          { Zcode: '2', Ztext: '여' }
-        );
-
-        oDetailModel.setProperty('/Gender', aGenderList);
       },
 
       setDisabilityList() {
@@ -438,6 +460,8 @@ sap.ui.define(
           actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
           onClose: (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00110')) {
+              AppUtils.setAppBusy(true, this);
+              
               const sPath = oModel.createKey('/FamilyInfoApplSet', {
                 Appno: oDetailModel.getProperty('/FormData/Appno'),
               });
@@ -446,6 +470,7 @@ sap.ui.define(
                 success: () => {
                   MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
                     onClose: () => {
+                      AppUtils.setAppBusy(false, this);
                       this.getRouter().navTo('familyInfo');
                     },
                   });
@@ -453,6 +478,7 @@ sap.ui.define(
                 error: (oError) => {
                   const vErrorMSG = AppUtils.parseError(oError);
                 
+                  AppUtils.setAppBusy(false, this);
                   MessageBox.error(vErrorMSG);
                 },
               });

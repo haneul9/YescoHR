@@ -1,6 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:grid="sap.ui.layout.cssgrid"
-    xmlns:core="sap.ui.core">
+    xmlns:core="sap.ui.core"
+    xmlns:custom="sap.ui.yesco.control">
     <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
         <HBox>
             <Title level="H2" text="{i18n>LABEL_00129}" />
@@ -46,9 +47,9 @@
             <Label text="{i18n>LABEL_05014}"/>
             <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Famid} ? true : false }" editable="{= !${/FormData/ZappStatAl} }" />
             <Label text="{i18n>LABEL_05015}"/>
-            <DatePicker class="sapIcon_Date" valueState="Warning" dateValue="{/FormData/Begda}" width="250px" editable="{= !${/FormData/ZappStatAl} }" />
+            <custom:DatePicker class="sapIcon_Date" valueState="Warning" dateValue="{/FormData/Begda}" width="250px" editable="{= !${/FormData/ZappStatAl} }" />
             <Label text="{i18n>LABEL_05016}"/>
-            <DatePicker class="sapIcon_Date" valueState="Warning" dateValue="{/FormData/Endda}" width="250px" editable="{= !${/FormData/ZappStatAl} }" />
+            <custom:DatePicker class="sapIcon_Date" valueState="Warning" dateValue="{/FormData/Endda}" width="250px" editable="{= !${/FormData/ZappStatAl} }" />
         </grid:CSSGrid>
     </VBox>
 </core:FragmentDefinition>

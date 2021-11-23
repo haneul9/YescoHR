@@ -122,7 +122,6 @@ sap.ui.define(
 
               oListModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData: oList }));
               oListModel.setProperty('/CongList', oList);
-              this.byId('conguTable').setVisibleRowCount(oList.length);
               oListModel.setProperty('/busy', false);
             }
           },
