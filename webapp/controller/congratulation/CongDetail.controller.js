@@ -252,8 +252,18 @@ sap.ui.define(
                 oDetailModel.setProperty('/BenefitRelation', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext' }));
                 oDetailModel.setProperty('/FormData/Conresn', 'ALL');
                 oDetailModel.setProperty('/FormData/Kdsvh', 'ALL');
-                oDetailModel.setProperty('/FormData/Zname', '');
               }
+              
+              const oRelationBtn = this.byId('RelationBtn');
+              const oRelationTxt = this.byId('RelationTxt');
+              const oBirthDatePicker = this.byId('BirthDatePicker');
+              
+              oRelationBtn.setVisible(true);
+              oRelationTxt.setEditable(true);
+              oBirthDatePicker.setEditable(true);
+              oDetailModel.setProperty('/TargetList', []);
+              oDetailModel.setProperty('/FormData/Zname', '');
+              oDetailModel.setProperty('/FormData/Zbirthday', null);
 
               resolve();
             },
@@ -297,6 +307,7 @@ sap.ui.define(
 
               oDetailModel.setProperty('/TargetList', []);
               oDetailModel.setProperty('/FormData/Zname', '');
+              oDetailModel.setProperty('/FormData/Zbirthday', null);
 
               if (!oDetailModel.getProperty('/FormData/ZappStatAl') || oDetailModel.getProperty('/FormData/ZappStatAl') === '10') {
                 if (!!oResult[0] && oResult[0].Zcode === 'ME') {
