@@ -9,8 +9,10 @@ sap.ui.define(
     'sap/ui/table/Table',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/controller/BaseController',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
+    'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/common/exceptions/ODataDeleteError',
+    'sap/ui/yesco/common/exceptions/ODataReadError',
+    'sap/ui/yesco/common/exceptions/ODataUpdateError',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/TableUtils',
@@ -26,7 +28,10 @@ sap.ui.define(
     Table,
     MessageBox,
     BaseController,
+    ODataCreateError,
+    ODataDeleteError,
     ODataReadError,
+    ODataUpdateError,
     ServiceNames,
     AppUtils,
     TableUtils,
@@ -36,6 +41,10 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.controller.employee.Employee', {
       formatter: TableUtils,
+      SUB_TYPE: {
+        TABLE: '5',
+        GRID: '6',
+      },
       CRUD_TABLES: {
         ADDRESS: { key: '0006', path: 'address' },
         EDUCATION: { key: '0022', path: 'education' },
@@ -206,12 +215,12 @@ sap.ui.define(
             content.forEach((o) => {
               let oSubMenu = oViewModelData.employee.sub[aTabMenus[index].Menuc1].contents[o.Menuc];
 
-              if (oSubMenu.type === '6') {
+              if (oSubMenu.type === this.SUB_TYPE.GRID) {
                 for (let i = 1; i <= oSubMenu.header.length; i++) {
                   let sKey = `Value${_.padStart(i, 2, '0')}`;
                   oSubMenu.data.push(o[sKey]);
                 }
-              } else if (oSubMenu.type === '5') {
+              } else if (oSubMenu.type === this.SUB_TYPE.TABLE) {
                 oSubMenu.data.push(o);
               }
 
@@ -270,7 +279,7 @@ sap.ui.define(
                   type: 'Transparent',
                   width: '117px',
                   icon: 'sap-icon://edit',
-                  text: this.getBundleText('LABEL_00108'),
+                  text: this.getBundleText('LABEL_00108'), // 수정
                   customData: [new sap.ui.core.CustomData({ key: 'code', value: oMenu.code })],
                   press: this.onPressModifyTable.bind(this),
                 })
@@ -280,7 +289,7 @@ sap.ui.define(
                   type: 'Transparent',
                   width: '117px',
                   icon: 'sap-icon://add',
-                  text: this.getBundleText('LABEL_00107'),
+                  text: this.getBundleText('LABEL_00107'), // 추가
                   customData: [new sap.ui.core.CustomData({ key: 'code', value: oMenu.code })],
                   press: this.onPressRegTable.bind(this),
                 })
@@ -290,7 +299,7 @@ sap.ui.define(
                   type: 'Transparent',
                   width: '117px',
                   icon: 'sap-icon://less',
-                  text: this.getBundleText('LABEL_00110'),
+                  text: this.getBundleText('LABEL_00110'), // 삭제
                   customData: [new sap.ui.core.CustomData({ key: 'code', value: oMenu.code })],
                   press: this.onPressDeleteTable.bind(this),
                 })
@@ -300,7 +309,7 @@ sap.ui.define(
 
             oSubVBox.addItem(oSubHBox);
 
-            if (oMenu.type === '5') {
+            if (oMenu.type === this.SUB_TYPE.TABLE) {
               const sTableDataPath = `/employee/sub/${menuKey}/contents/${key}`;
               let oTable = new Table({
                 width: '100%',
@@ -322,7 +331,7 @@ sap.ui.define(
               });
 
               oSubVBox.addItem(oTable);
-            } else if (oMenu.type === '6') {
+            } else if (oMenu.type === this.SUB_TYPE.GRID) {
               let oCSSGrid = new CSSGrid({ gridTemplateColumns: '1fr 3fr 1fr 3fr', gridGap: '2px' });
 
               oMenu.header.forEach((head, index) => {
@@ -573,6 +582,7 @@ sap.ui.define(
 
         switch (sMenuKey) {
           case this.CRUD_TABLES.ADDRESS.path:
+            oViewModel.setProperty('/employee/address/action', 'A');
             oViewModel.setProperty('/employee/address/actionText', this.getBundleText('LABEL_00107')); // 추가
             oViewModel.setProperty('/employee/address/form', { Subty: 'ALL', State: 'ALL' });
 
@@ -604,17 +614,23 @@ sap.ui.define(
         delete oSido.Land1;
         delete oSido.__metadata;
 
-        const { result } = await this.createAddressInfo({ oInputData: { ...oSido, ...oInputData } });
+        try {
+          await this.createAddressInfo({ oInputData: { ...oSido, ...oInputData } });
 
-        if (result === 'success') {
-          MessageBox.success(this.getBundleText('MSG_00007', sActionText)); // {추가|수정}되었습니다.
-
-          this.refreshAddress({ oViewModel });
-        } else {
-          MessageBox.error(this.getBundleText('MSG_00008', sActionText)); // {추가|수정}중 오류가 발생하였습니다.
+          // {추가|수정}되었습니다.
+          MessageBox.success(this.getBundleText('MSG_00007', sActionText), {
+            onClose: () => {
+              this.refreshAddress({ oViewModel });
+              this.onAddressDialogClose();
+            },
+          });
+        } catch (oError) {
+          if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+            oError.showErrorMessage({
+              onClose: () => this.onAddressDialogClose(),
+            });
+          }
         }
-
-        this.onAddressDialogClose();
       },
 
       async onPressModifyTable(oEvent) {
@@ -640,13 +656,14 @@ sap.ui.define(
             try {
               const oAddressDetail = await this.readAddressInfo({ oPayload });
 
+              oViewModel.setProperty('/employee/address/action', 'U');
               oViewModel.setProperty('/employee/address/actionText', this.getBundleText('LABEL_00108')); // 수정
               oViewModel.setProperty('/employee/address/form', oAddressDetail.result);
 
               this.openAddressDialog(oEvent);
             } catch (oError) {
-              if (_.has(oError, 'code') && oError.code === 'E') {
-                MessageBox.error(oError.message);
+              if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+                oError.showErrorMessage();
               }
             }
             break;
@@ -704,8 +721,8 @@ sap.ui.define(
 
                 MessageBox.success(this.getBundleText('MSG_00007', 'LABEL_00110')); // {삭제}되었습니다.
               } catch (oError) {
-                if (_.has(oError, 'code') && oError.code === 'E') {
-                  MessageBox.error(oError.message);
+                if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+                  oError.showErrorMessage();
                 }
               }
             }
@@ -946,17 +963,19 @@ sap.ui.define(
       createAddressInfo({ oInputData }) {
         return new Promise((resolve) => {
           const oModel = this.getModel(ServiceNames.PA);
+          const sAction = oViewModel.getProperty('/employee/address/action');
           const sUrl = '/AddressInfoSet';
 
           oInputData.Begda = moment(oInputData.Begda).hour(9).toDate();
 
           oModel.create(sUrl, oInputData, {
             success: () => {
-              resolve({ result: 'success' });
+              resolve();
             },
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
-              resolve({ result: 'error' });
+
+              resolve(sAction === 'U' ? new ODataUpdateError() : new ODataCreateError('A'));
             },
           });
         });

@@ -109,12 +109,16 @@ sap.ui.define(
             }
           }
         } catch (oError) {
-          this.debug('Controller > Attendance Detail > onAfterShow Error', AppUtils.parseError(oError));
+          this.debug('Controller > Attendance Detail > onAfterShow Error', oError);
 
-          if (_.has(oError, 'code') && oError.code === 'E') {
-            MessageBox.error(oError.message, {
+          if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+            oError.showErrorMessage({
               onClose: () => this.getRouter().navTo('attendance'),
             });
+          } else if (oError instanceof Error) {
+            MessageBox.error(this.getBundleText('MSG_00043'), {
+              onClose: () => this.getRouter().navTo('attendance'),
+            }); // 잘못된 접근입니다.
           }
         }
 
@@ -234,7 +238,7 @@ sap.ui.define(
           const mAwartCode = await this.readAwartCodeList();
           oViewModel.setProperty('/form/dialog/awartCodeList', mAwartCode);
         } catch (oError) {
-          this.debug('Controller > Attendance Detail > readAwartCodeList Error', AppUtils.parseError(oError));
+          this.debug('Controller > Attendance Detail > readAwartCodeList Error', oError);
         }
 
         setTimeout(() => {
@@ -365,7 +369,7 @@ sap.ui.define(
             oViewModel.setProperty('/form/dialog/calcCompleted', true);
           }
         } catch (oError) {
-          this.debug('Controller > Attendance Detail > onChangeLeaveDate Error', AppUtils.parseError(oError));
+          this.debug('Controller > Attendance Detail > onChangeLeaveDate Error', oError);
         }
       },
 
@@ -595,8 +599,8 @@ sap.ui.define(
             },
           });
         } catch (oError) {
-          if (_.has(oError, 'code') && oError.code === 'E') {
-            MessageBox.error(oError.message);
+          if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+            oError.showErrorMessage();
           }
         } finally {
           AppUtils.setAppBusy(false, this);

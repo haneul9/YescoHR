@@ -7,7 +7,6 @@ sap.ui.define(
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/controller/BaseController',
     'sap/ui/yesco/common/exceptions/ODataReadError',
-    'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
   ],
@@ -19,7 +18,6 @@ sap.ui.define(
     MessageBox,
     BaseController,
     ODataReadError,
-    AppUtils,
     ServiceNames,
     TableUtils
   ) => {
@@ -104,10 +102,10 @@ sap.ui.define(
             )
           );
         } catch (oError) {
-          this.debug('Controller > Attendance List > initialRetrieve Error', AppUtils.parseError(oError));
+          this.debug('Controller > Attendance List > initialRetrieve Error', oError);
 
-          if (_.has(oError, 'code') && oError.code === 'E') {
-            MessageBox.error(oError.message);
+          if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+            oError.showErrorMessage();
           }
         } finally {
           oViewModel.setProperty('/busy', false);
@@ -148,8 +146,8 @@ sap.ui.define(
 
           this.setTableData({ oViewModel, mRowData });
         } catch (error) {
-          if (_.has(oError, 'code') && oError.code === 'E') {
-            MessageBox.error(oError.message);
+          if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+            oError.showErrorMessage();
           }
         } finally {
           oViewModel.setProperty('/busy', false);
