@@ -8,6 +8,7 @@ sap.ui.define(
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/controller/BaseController',
+    'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/common/Appno',
@@ -25,6 +26,7 @@ sap.ui.define(
     JSONModel,
     MessageBox,
     BaseController,
+    ComboEntry,
     ODataReadError,
     ODataCreateError,
     Appno,
@@ -68,7 +70,7 @@ sap.ui.define(
             dialog: {
               calcCompleted: false,
               selectedRowPath: null,
-              awartCodeList: [{ Awart: 'ALL', Atext: this.getBundleText('LABEL_00268'), Alldf: true }],
+              awartCodeList: new ComboEntry({ codeKey: 'Awart', valueKey: 'Atext' }),
               data: {
                 Awart: 'ALL',
               },
@@ -473,7 +475,7 @@ sap.ui.define(
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
 
-              resolve([...mAwartCodeList, ...oData.results]);
+              resolve(new ComboEntry({ codeKey: 'Awart', valueKey: 'Atext', mEntries: oData.results }));
             },
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);

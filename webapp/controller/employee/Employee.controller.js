@@ -9,6 +9,7 @@ sap.ui.define(
     'sap/ui/table/Table',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/controller/BaseController',
+    'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/common/exceptions/ODataDeleteError',
     'sap/ui/yesco/common/exceptions/ODataReadError',
@@ -28,6 +29,7 @@ sap.ui.define(
     Table,
     MessageBox,
     BaseController,
+    ComboEntry,
     ODataCreateError,
     ODataDeleteError,
     ODataReadError,
@@ -90,8 +92,8 @@ sap.ui.define(
             },
             sub: {},
             address: {
-              typeList: [{ Zcode: 'ALL', Ztext: this.getBundleText('LABEL_00268') }], // - 선택 -
-              sidoList: [{ State: 'ALL', Bezei: this.getBundleText('LABEL_00268') }], // - 선택 -
+              typeList: new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext' }),
+              sidoList: new ComboEntry({ codeKey: 'State', valueKey: 'Bezei' }),
               form: { Subty: 'ALL', State: 'ALL' },
             },
           },
@@ -892,7 +894,7 @@ sap.ui.define(
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
 
-              resolve([...mTypeList, ...oData.results]);
+              resolve(new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: oData.results }));
             },
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
@@ -925,6 +927,7 @@ sap.ui.define(
               this.debug(`${sUrl} success.`, oData);
 
               resolve([...mSidoList, ...oData.results]);
+              resolve(new ComboEntry({ codeKey: 'State', valueKey: 'Bezei', mEntries: oData.results }));
             },
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
