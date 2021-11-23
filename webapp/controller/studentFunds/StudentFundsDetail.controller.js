@@ -24,13 +24,11 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    class StudentFundsDetail extends BaseController {
-      constructor() {
-        super();
-        this.AttachFileAction = AttachFileAction;
-        this.TextUtils = TextUtils;
-        this.TYPE_CODE = 'HR02';
-      }
+    return BaseController.extend('sap.ui.yesco.controller.studentFunds.StudentFundsDetail', {
+      TYPE_CODE: 'HR02',
+
+      AttachFileAction: AttachFileAction,
+      TextUtils: TextUtils,
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
@@ -52,7 +50,7 @@ sap.ui.define(
         this.getViewModel().setProperty('/busy', true);
         EmpInfo.get.call(this);
         this.getRouter().getRoute('studentFunds-detail').attachPatternMatched(this.onObjectMatched, this);
-      }
+      },
 
       onAfterShow() {
         this.getList()
@@ -67,7 +65,7 @@ sap.ui.define(
         const sDataKey = oEvent.getParameter('arguments').oDataKey;
         
         this.getViewModel().setProperty('/ViewKey', sDataKey);
-      }
+      },
 
       // 해외학교 체크시
       onCheckBox(oEvent) {
@@ -80,18 +78,18 @@ sap.ui.define(
           this.getViewModel().setProperty('/FormData/Forsch', '');
           this.totalCost();
         }
-      }
+      },
 
       // 학자금 총액에 들어가는 금액입력
       costCalculation(oEvent) {
         this.TextUtils.liveChangeCurrency(oEvent);
         this.totalCost();
-      }
+      },
 
       // 장학금 입력시
       onSchoCost(oEvent) {
         this.TextUtils.liveChangeCurrency(oEvent);
-      }
+      },
 
       // 지원금액 호출
       getSupAmount() {
@@ -130,7 +128,7 @@ sap.ui.define(
         }).then(() => {
           this.totalCost();
         });
-      }
+      },
 
       // 학자금 총액
       totalCost() {
@@ -160,7 +158,7 @@ sap.ui.define(
           oDetailModel.setProperty('/FormData/ZpayAmt', String(iCostG));
           oDetailModel.setProperty('/LimitAmountMSG', false);
         }
-      }
+      },
 
       // 상세조회
       getTargetData() {
@@ -218,7 +216,7 @@ sap.ui.define(
             },
           });
         }
-      }
+      },
 
       // 화면관련 List호출
       async getList() {
@@ -315,7 +313,7 @@ sap.ui.define(
             });
           }),
         ]);
-      }
+      },
 
       setYearsList() {
         // 학자금 발생년도 셋팅
@@ -331,7 +329,7 @@ sap.ui.define(
           oDetailModel.setProperty('/FormData/Zyear', aYearsList[0].Zcode);
           this.getSupAmount();
         }
-      }
+      },
 
       // 신청대상 선택시
       onTargetChange(oEvent) {
@@ -355,7 +353,7 @@ sap.ui.define(
         
         this.getSupAmount();
         this.getApplyNumber();
-      }
+      },
 
       // 학력구분List 다시셋팅
       reflashList(sKey) {
@@ -382,7 +380,7 @@ sap.ui.define(
         const oSort = { Zcode: 'ALL', Ztext: this.getBundleText('LABEL_00268') };
         
         oDetailModel.setProperty('/AcademicSort', [oSort, ...aList2]);
-      }
+      },
 
       // 지원횟수 조회
       getApplyNumber() {
@@ -419,17 +417,17 @@ sap.ui.define(
             MessageBox.error(vErrorMSG);
           },
         });
-      }
+      },
 
       // 학자금 발생년도 클릭
       onYearsSelect() {
         this.getApplyNumber();
         this.getSupAmount();
-      }
+      },
 
       onGrade() {
         this.getSupAmount();
-      }
+      },
 
       // 학력구분 선택시
       onShcoolList(oEvent) {
@@ -486,7 +484,7 @@ sap.ui.define(
             MessageBox.error(vErrorMSG);
           },
         });
-      }
+      },
 
       checkError(AppBtn) {
         const oDetailModel = this.getViewModel();
@@ -535,12 +533,12 @@ sap.ui.define(
         }
 
         return false;
-      }
+      },
 
       // 재작성
       onRewriteBtn() {
         this.getViewModel().setProperty('/FormData/ZappStatAl', '');
-      }
+      },
 
       // oData호출 mapping
       sendDataFormat(oDatas) {
@@ -576,7 +574,7 @@ sap.ui.define(
         };
 
         return oSendObject;
-      }
+      },
 
       // 임시저장
       onSaveBtn() {
@@ -627,7 +625,7 @@ sap.ui.define(
             }
           }
         })
-      }
+      },
 
       // 신청
       onApplyBtn() {
@@ -682,7 +680,7 @@ sap.ui.define(
             }
           },
         });
-      }
+      },
 
       // 취소
       onCancelBtn() {
@@ -717,7 +715,7 @@ sap.ui.define(
             }
           },
         });
-      }
+      },
 
       // 삭제
       onDeleteBtn() {
@@ -750,7 +748,7 @@ sap.ui.define(
             }
           },
         });
-      }
+      },
 
       // AttachFileTable Settings
       settingsAttachTable() {
@@ -766,9 +764,7 @@ sap.ui.define(
           Max: 10,
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
         });
-      }
-    }
-
-    return StudentFundsDetail;
+      },
+    });
   }
 );

@@ -68,6 +68,19 @@ sap.ui.define(
         this.onPageLoaded();
       },
 
+      setResident(s = '') {
+        const iLength = s.length;
+        let sValue = '';
+
+        if(iLength > 6) {
+          sValue = `${s.slice(0, 6)}-${s.slice(6)}`;
+        }else {
+          sValue = s;
+        }
+
+        return sValue;
+      },
+
       setFormData() {
         const oDetailModel = this.getViewModel();
         const sKey = oDetailModel.getProperty('/FormStatus');
@@ -84,19 +97,12 @@ sap.ui.define(
             Hndcd: 'ALL',
             Dptyp: 'ALL',
           });
-
-          oDetailModel.setProperty('/ApplyInfo', {
-            Apename: oTargetInfo.Ename,
-            Orgtx: `${oTargetInfo.Btrtx}/${oTargetInfo.Orgtx}`,
-            Apjikgbtl: `${oTargetInfo.Zzjikgbt}/${oTargetInfo.Zzjiktlt}`,
-          });
         }else {
           const oView = this.getView();
           const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
           const mListData = oListView.getModel().getProperty('/parameter');
 
           oDetailModel.setProperty('/FormData', mListData);
-          oDetailModel.setProperty('/ApplyInfo', mListData);
         }
         
         this.settingsAttachTable();

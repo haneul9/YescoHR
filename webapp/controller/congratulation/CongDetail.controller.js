@@ -27,14 +27,12 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    class CongDetail extends BaseController {
-      constructor() {
-        super();
-        this.AttachFileAction = AttachFileAction;
-        this.FragmentEvent = FragmentEvent;
-        this.TextUtils = TextUtils;
-        this.TYPE_CODE = 'HR01';
-      }
+    return BaseController.extend('sap.ui.yesco.controller.congratulation.CongDetail', {
+      TYPE_CODE: 'HR01',
+      
+      AttachFileAction: AttachFileAction,
+      FragmentEvent: FragmentEvent,
+      TextUtils: TextUtils,
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
@@ -48,14 +46,14 @@ sap.ui.define(
         this.getViewModel().setProperty('/busy', true);
         EmpInfo.get.call(this);
         this.getRouter().getRoute('congratulation-detail').attachPatternMatched(this.onObjectMatched, this);
-      }
+      },
 
       async onAfterShow() {
         await this.getBenefitType(this);
         this.settingsAttachTable(this);
         this.getViewModel().setProperty('/busy', false);
         this.onPageLoaded();
-      }
+      },
 
       onObjectMatched(oEvent) {
         const sDataKey = oEvent.getParameter('arguments').oDataKey;
@@ -63,11 +61,11 @@ sap.ui.define(
         if (sDataKey !== 'N') {
           this.getTargetData(sDataKey);
         }
-      }
+      },
 
       formatFlowerTxt(vFlower) {
         return vFlower === undefined ? '' : vFlower === 'X' ? 'Y' : 'N';
-      }
+      },
 
       // 상세조회
       getTargetData(sDataKey) {
@@ -93,7 +91,7 @@ sap.ui.define(
             this.debug(`${sUrl} error.`, vErrorMSG);
           },
         });
-      }
+      },
 
       // 경조유형
       getBenefitType() {
@@ -143,7 +141,7 @@ sap.ui.define(
         }).then(() => {
           this.onTypeChange();
         });
-      }
+      },
 
       // 경조유형 선택시
       onTypeChange(oEvent) {
@@ -193,7 +191,7 @@ sap.ui.define(
           this.onCauseChange();
           this.getNomalPay();
         });
-      }
+      },
 
       // 경조사유 선택시
       onCauseChange(oEvent) {
@@ -267,7 +265,7 @@ sap.ui.define(
             MessageBox.error(vErrorMSG);
           },
         });
-      }
+      },
 
       // 대상자 관계선택시
       onRelationChange(oEvent) {
@@ -291,13 +289,13 @@ sap.ui.define(
           oRelationTxt.setEditable(true);
           oBirthDatePicker.setEditable(true);
         }
-      }
+      },
 
       // 증빙상 경조일 선택시
       onBenefitChangeDate(oEvent) {
         this.getViewModel().setProperty('/FormData/Conrdate', oEvent.getSource().getDateValue());
         this.getNomalPay(this);
-      }
+      },
 
       // 기본급, 지급율 등 받아옴
       getNomalPay() {
@@ -336,7 +334,7 @@ sap.ui.define(
             MessageBox.error(vErrorMSG);
           },
         });
-      }
+      },
 
       // 대상자 성명 선택시
       async onTargetDialog() {
@@ -377,7 +375,7 @@ sap.ui.define(
 
           this.byId('targetSettingsDialog').open();
         }
-      }
+      },
 
       // 대상자 리스트 조회
       getTargetList() {
@@ -423,7 +421,7 @@ sap.ui.define(
             },
           });
         });
-      }
+      },
 
       // Dialog 대상자 클릭
       TargetClick(oEvent) {
@@ -435,12 +433,12 @@ sap.ui.define(
         oDetailModel.setProperty('/FormData/Kdsvh', oRowData.Kdsvh);
         oDetailModel.setProperty('/FormData/Zname', oRowData.Zname);
         this.byId('targetSettingsDialog').close();
-      }
+      },
 
       //  대상자 성명 Dialog 닫기클릭
       onClick() {
         this.byId('targetSettingsDialog').close();
-      }
+      },
 
       checkError() {
         const oDetailModel = this.getViewModel();
@@ -471,12 +469,12 @@ sap.ui.define(
         }
 
         return false;
-      }
+      },
 
       // 재작성
       onRewriteBtn() {
         this.getViewModel().setProperty('/FormData/ZappStatAl', '10');
-      }
+      },
 
       // oData호출 mapping
       sendDataFormat(oDatas) {
@@ -512,7 +510,7 @@ sap.ui.define(
         };
 
         return oSendObject;
-      }
+      },
 
       // 임시저장
       onSaveBtn() {
@@ -563,7 +561,7 @@ sap.ui.define(
             }
           },
         });
-      }
+      },
 
       // 신청
       onApplyBtn() {
@@ -618,7 +616,7 @@ sap.ui.define(
             }
           },
         });
-      }
+      },
 
       // 취소
       onCancelBtn() {
@@ -653,7 +651,7 @@ sap.ui.define(
             }
           },
         });
-      }
+      },
 
       // 삭제
       onDeleteBtn() {
@@ -687,7 +685,7 @@ sap.ui.define(
             }
           },
         });
-      }
+      },
 
       // AttachFileTable Settings
       settingsAttachTable() {
@@ -702,9 +700,7 @@ sap.ui.define(
           Max: 10,
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
         });
-      }
-    }
-
-    return CongDetail;
+      },
+    });
   }
 );
