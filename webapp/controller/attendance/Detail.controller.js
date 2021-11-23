@@ -8,6 +8,8 @@ sap.ui.define(
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/controller/BaseController',
+    'sap/ui/yesco/common/exceptions/ODataReadError',
+    'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
@@ -23,6 +25,8 @@ sap.ui.define(
     JSONModel,
     MessageBox,
     BaseController,
+    ODataReadError,
+    ODataCreateError,
     Appno,
     AppUtils,
     AttachFileAction,
@@ -104,11 +108,14 @@ sap.ui.define(
               oViewModel.setProperty('/form/listMode', 'None');
             }
           }
-        } catch (error) {
-          // {조회}중 오류가 발생하였습니다.
-          MessageBox.error(this.getBundleText('MSG_00008', 'LABEL_00100'), {
-            onClose: () => this.getRouter().navTo('attendance'),
-          });
+        } catch (oError) {
+          this.debug('Controller > Attendance Detail > onAfterShow Error', AppUtils.parseError(oError));
+
+          if (_.has(oError, 'code') && oError.code === 'E') {
+            MessageBox.error(oError.message, {
+              onClose: () => this.getRouter().navTo('attendance'),
+            });
+          }
         }
 
         this.initializeApplyInfoBox();
@@ -509,8 +516,7 @@ sap.ui.define(
               this.debug(`${sUrl} error.`, oError);
 
               if (Prcty === 'R') {
-                // {조회}중 오류가 발생하였습니다.
-                reject({ code: 'E', message: this.getBundleText('MSG_00008', 'LABEL_00100') });
+                reject(new ODataReadError()); // {조회}중 오류가 발생하였습니다.
               } else {
                 reject(oError);
               }
@@ -559,8 +565,7 @@ sap.ui.define(
             error: (oError) => {
               this.debug(`${sUrl} error.`, AppUtils.parseError(oError));
 
-              // {임시저장|신청}중 오류가 발생하였습니다.
-              reject({ code: 'E', message: this.getBundleText('MSG_00008', this.ACTION_MESSAGE[sPrcty]) });
+              reject(new ODataCreateError()); // {신청}중 오류가 발생하였습니다.
             },
           });
         });
@@ -589,9 +594,9 @@ sap.ui.define(
               this.getRouter().navTo('attendance');
             },
           });
-        } catch (error) {
-          if (_.has(error, 'code') && error.code === 'E') {
-            MessageBox.error(error.message);
+        } catch (oError) {
+          if (_.has(oError, 'code') && oError.code === 'E') {
+            MessageBox.error(oError.message);
           }
         } finally {
           AppUtils.setAppBusy(false, this);

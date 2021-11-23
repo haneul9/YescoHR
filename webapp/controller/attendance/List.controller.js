@@ -6,6 +6,7 @@ sap.ui.define(
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/controller/BaseController',
+    'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
@@ -17,6 +18,7 @@ sap.ui.define(
     JSONModel,
     MessageBox,
     BaseController,
+    ODataReadError,
     AppUtils,
     ServiceNames,
     TableUtils
@@ -104,7 +106,9 @@ sap.ui.define(
         } catch (oError) {
           this.debug('Controller > Attendance List > initialRetrieve Error', AppUtils.parseError(oError));
 
-          MessageBox.error(this.getBundleText('MSG_00008', 'LABEL_00100')); // {조회}중 오류가 발생하였습니다.
+          if (_.has(oError, 'code') && oError.code === 'E') {
+            MessageBox.error(oError.message);
+          }
         } finally {
           oViewModel.setProperty('/busy', false);
         }
@@ -144,7 +148,9 @@ sap.ui.define(
 
           this.setTableData({ oViewModel, mRowData });
         } catch (error) {
-          MessageBox.error(this.getBundleText('MSG_00008', 'LABEL_00100')); // {조회}중 오류가 발생하였습니다.
+          if (_.has(oError, 'code') && oError.code === 'E') {
+            MessageBox.error(oError.message);
+          }
         } finally {
           oViewModel.setProperty('/busy', false);
         }
@@ -266,11 +272,13 @@ sap.ui.define(
             ],
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
+
               resolve(oData.results);
             },
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
-              reject(oError);
+
+              reject(new ODataReadError());
             },
           });
         });
@@ -293,11 +301,13 @@ sap.ui.define(
             ],
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
+
               resolve(oData.results);
             },
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
-              reject(oError);
+
+              reject(new ODataReadError());
             },
           });
         });

@@ -9,6 +9,8 @@ sap.ui.define(
     'sap/ui/table/Table',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/controller/BaseController',
+    'sap/ui/yesco/common/exceptions/ODataReadError',
+    'sap/ui/yesco/common/exceptions/ODataDeleteError',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/TableUtils',
@@ -24,6 +26,7 @@ sap.ui.define(
     Table,
     MessageBox,
     BaseController,
+    ODataReadError,
     ServiceNames,
     AppUtils,
     TableUtils,
@@ -33,6 +36,10 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.controller.employee.Employee', {
       formatter: TableUtils,
+      CRUD_TABLES: {
+        ADDRESS: { key: '0006', path: 'address' },
+        EDUCATION: { key: '0022', path: 'education' },
+      },
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
@@ -163,13 +170,13 @@ sap.ui.define(
             oViewModelData.employee.sub[data.Menuc1] = { isShow: data.Pressed, contents: {} };
           });
 
-          const sAddressTitle = this.getBundleText('LABEL_00152'); // 주소
           aSubMenus.forEach((data) => {
             oViewModelData.employee.sub[data.Menuc1].contents[data.Menuc2] = {
               type: data.Child,
               rowCount: 1,
-              selectionMode: data.Menu2 === sAddressTitle ? 'MultiToggle' : 'None',
+              selectionMode: _.some(this.CRUD_TABLES, (o) => o.key === data.Menuc2) ? 'MultiToggle' : 'None',
               title: data.Menu2,
+              code: data.Menuc2,
               sort: data.Sorts,
               header: [],
               data: [],
@@ -220,7 +227,7 @@ sap.ui.define(
         } catch (oError) {
           this.debug('Controller > Employee > loadProfile Error', AppUtils.parseError(oError));
 
-          MessageBox.error(this.getBundleText('MSG_00008', 'LABEL_00100')); // {조회}중 오류가 발생하였습니다.
+          MessageBox.error(new ODataReadError().getMessage()); // {조회}중 오류가 발생하였습니다.
         } finally {
           oViewModel.setProperty('/employee/busy', false);
         }
@@ -230,7 +237,6 @@ sap.ui.define(
         const oView = this.getView().getModel();
         const oParentBox = this.byId('profileBody');
         const mSubMenu = oView.getProperty('/employee/sub');
-        const sAddressTitle = this.getBundleText('LABEL_00152'); // 주소
 
         Object.keys(mSubMenu).forEach((menuKey) => {
           let mSubMenuContents = mSubMenu[menuKey].contents;
@@ -256,12 +262,39 @@ sap.ui.define(
             this.debug(`Sub ${oMenu.title}`, oMenu);
 
             oSubHBox.addItem(new sap.m.Title({ level: 'H2', text: oMenu.title }));
-            if (oMenu.title === sAddressTitle) {
+            if (_.some(this.CRUD_TABLES, (o) => o.key === oMenu.code)) {
               let oSubButtonBox = new sap.m.HBox();
 
-              oSubButtonBox.addItem(new sap.m.Button({ type: 'Transparent', width: '117px', icon: 'sap-icon://edit', text: this.getBundleText('LABEL_00108'), press: this.onPressModifyAddress.bind(this) })); // 수정
-              oSubButtonBox.addItem(new sap.m.Button({ type: 'Transparent', width: '117px', icon: 'sap-icon://add', text: this.getBundleText('LABEL_00107'), press: this.onPressRegAddress.bind(this) })); // 추가
-              oSubButtonBox.addItem(new sap.m.Button({ type: 'Transparent', width: '117px', icon: 'sap-icon://less', text: this.getBundleText('LABEL_00110'), press: this.onPressDeleteAddress.bind(this) })); // 삭제
+              oSubButtonBox.addItem(
+                new sap.m.Button({
+                  type: 'Transparent',
+                  width: '117px',
+                  icon: 'sap-icon://edit',
+                  text: this.getBundleText('LABEL_00108'),
+                  customData: [new sap.ui.core.CustomData({ key: 'code', value: oMenu.code })],
+                  press: this.onPressModifyTable.bind(this),
+                })
+              ); // 수정
+              oSubButtonBox.addItem(
+                new sap.m.Button({
+                  type: 'Transparent',
+                  width: '117px',
+                  icon: 'sap-icon://add',
+                  text: this.getBundleText('LABEL_00107'),
+                  customData: [new sap.ui.core.CustomData({ key: 'code', value: oMenu.code })],
+                  press: this.onPressRegTable.bind(this),
+                })
+              ); // 추가
+              oSubButtonBox.addItem(
+                new sap.m.Button({
+                  type: 'Transparent',
+                  width: '117px',
+                  icon: 'sap-icon://less',
+                  text: this.getBundleText('LABEL_00110'),
+                  customData: [new sap.ui.core.CustomData({ key: 'code', value: oMenu.code })],
+                  press: this.onPressDeleteTable.bind(this),
+                })
+              ); // 삭제
               oSubHBox.addItem(oSubButtonBox);
             }
 
@@ -330,8 +363,8 @@ sap.ui.define(
       },
 
       async refreshAddress({ oViewModel }) {
-        const sAddressTitle = this.getBundleText('LABEL_00152'); // 주소
-        const oMenuInfo = _.find(oViewModel.getProperty('/employee/tab/menu'), { Menu2: sAddressTitle });
+        const sAddressCode = this.CRUD_TABLES.ADDRESS.key;
+        const oMenuInfo = _.find(oViewModel.getProperty('/employee/tab/menu'), { Menuc2: sAddressCode });
         const sAddressPath = `/employee/sub/${oMenuInfo.Menuc1}/contents/${oMenuInfo.Menuc2}`;
         const mReturnContents = await this.readEmpProfileContentsTab({
           oModel: this.getModel(ServiceNames.PA),
@@ -533,13 +566,24 @@ sap.ui.define(
         });
       },
 
-      onPressRegAddress() {
+      onPressRegTable(oEvent) {
         const oViewModel = this.getView().getModel();
+        const sSelectedMenuCode = oEvent.getSource().getCustomData()[0].getValue();
+        const sMenuKey = _.lowerCase(_.findKey(this.CRUD_TABLES, { key: sSelectedMenuCode }));
 
-        oViewModel.setProperty('/employee/address/actionText', this.getBundleText('LABEL_00107')); // 추가
-        oViewModel.setProperty('/employee/address/form', { Subty: 'ALL', State: 'ALL' });
+        switch (sMenuKey) {
+          case this.CRUD_TABLES.ADDRESS.path:
+            oViewModel.setProperty('/employee/address/actionText', this.getBundleText('LABEL_00107')); // 추가
+            oViewModel.setProperty('/employee/address/form', { Subty: 'ALL', State: 'ALL' });
 
-        this.openAddressDialog();
+            this.openAddressDialog();
+            break;
+          case this.CRUD_TABLES.EDUCATION.path:
+            MessageBox.alert('test');
+            break;
+          default:
+            break;
+        }
       },
 
       async onSaveAddress() {
@@ -573,10 +617,13 @@ sap.ui.define(
         this.onAddressDialogClose();
       },
 
-      async onPressModifyAddress(oEvent) {
+      async onPressModifyTable(oEvent) {
         const oViewModel = this.getView().getModel();
-        const oTable = oEvent.getSource().getParent().getParent().getParent().getItems()[1];
+        const oControl = oEvent.getSource();
+        const oTable = oControl.getParent().getParent().getParent().getItems()[1];
         const aSelectedIndices = oTable.getSelectedIndices();
+        const sSelectedMenuCode = oControl.getCustomData()[0].getValue();
+        const sMenuKey = _.lowerCase(_.findKey(this.CRUD_TABLES, { key: sSelectedMenuCode }));
 
         if (aSelectedIndices.length < 1) {
           MessageBox.alert(this.getBundleText('MSG_00010', 'LABEL_00108')); // {수정}할 데이터를 선택하세요.
@@ -587,24 +634,40 @@ sap.ui.define(
         }
 
         const oPayload = this.getAddressTableRowData({ oViewModel, oTable, aSelectedIndices });
-        const oAddressDetail = await this.readAddressInfo({ oPayload });
 
-        if (oAddressDetail.result === 'error') {
-          MessageBox.error(this.getBundleText('MSG_00008', 'LABEL_00100')); // {조회}중 오류가 발생하였습니다.
-          return;
+        switch (sMenuKey) {
+          case this.CRUD_TABLES.ADDRESS.path:
+            try {
+              const oAddressDetail = await this.readAddressInfo({ oPayload });
+
+              oViewModel.setProperty('/employee/address/actionText', this.getBundleText('LABEL_00108')); // 수정
+              oViewModel.setProperty('/employee/address/form', oAddressDetail.result);
+
+              this.openAddressDialog(oEvent);
+            } catch (oError) {
+              if (_.has(oError, 'code') && oError.code === 'E') {
+                MessageBox.error(oError.message);
+              }
+            }
+            break;
+          case this.CRUD_TABLES.EDUCATION.path:
+            debugger;
+            MessageBox.alert('test');
+            break;
+          default:
+            break;
         }
 
-        oViewModel.setProperty('/employee/address/actionText', this.getBundleText('LABEL_00108')); // 수정
-        oViewModel.setProperty('/employee/address/form', oAddressDetail.result);
-
-        this.openAddressDialog(oEvent);
         oTable.clearSelection();
       },
 
-      onPressDeleteAddress(oEvent) {
+      onPressDeleteTable(oEvent) {
         const oViewModel = this.getView().getModel();
-        const oTable = oEvent.getSource().getParent().getParent().getParent().getItems()[1];
+        const oControl = oEvent.getSource();
+        const oTable = oControl.getParent().getParent().getParent().getItems()[1];
         const aSelectedIndices = oTable.getSelectedIndices();
+        const sSelectedMenuCode = oControl.getCustomData()[0].getValue();
+        const sMenuKey = _.lowerCase(_.findKey(this.CRUD_TABLES, { key: sSelectedMenuCode }));
 
         if (aSelectedIndices.length < 1) {
           MessageBox.alert(this.getBundleText('MSG_00010', 'LABEL_00110')); // {삭제}할 데이터를 선택하세요.
@@ -622,15 +685,28 @@ sap.ui.define(
           onClose: async (sAction) => {
             if (!sAction || sAction !== MessageBox.Action.CANCEL) {
               const oPayload = this.getAddressTableRowData({ oViewModel, oTable, aSelectedIndices });
-              const { result } = await this.deleteAddressInfo({ oPayload });
 
-              if (result === 'success') {
-                oTable.clearSelection();
-                this.refreshAddress({ oViewModel });
+              try {
+                switch (sMenuKey) {
+                  case this.CRUD_TABLES.ADDRESS.path:
+                    await this.deleteAddressInfo({ oPayload });
+
+                    oTable.clearSelection();
+                    this.refreshAddress({ oViewModel });
+
+                    break;
+                  case this.CRUD_TABLES.EDUCATION.path:
+                    MessageBox.alert('test');
+                    break;
+                  default:
+                    break;
+                }
 
                 MessageBox.success(this.getBundleText('MSG_00007', 'LABEL_00110')); // {삭제}되었습니다.
-              } else {
-                MessageBox.error(this.getBundleText('MSG_00008', 'LABEL_00110')); // {삭제}중 오류가 발생하였습니다.
+              } catch (oError) {
+                if (_.has(oError, 'code') && oError.code === 'E') {
+                  MessageBox.error(oError.message);
+                }
               }
             }
 
@@ -843,7 +919,7 @@ sap.ui.define(
       },
 
       readAddressInfo({ oPayload }) {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
           const oModel = this.getModel(ServiceNames.PA);
           const sUrl = '/AddressInfoSet';
 
@@ -855,11 +931,13 @@ sap.ui.define(
             }),
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
+
               resolve({ result: oData.results[0] });
             },
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
-              resolve({ result: 'error' });
+
+              reject(new ODataReadError()); // {조회}중 오류가 발생하였습니다.
             },
           });
         });
@@ -885,7 +963,7 @@ sap.ui.define(
       },
 
       deleteAddressInfo({ oPayload }) {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
           const oModel = this.getModel(ServiceNames.PA);
 
           oPayload.Begda = moment(oPayload.Begda).hour(9).toDate();
@@ -898,7 +976,8 @@ sap.ui.define(
             },
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
-              resolve({ result: 'error' });
+
+              reject(new ODataDeleteError()); // {삭제}중 오류가 발생하였습니다.
             },
           });
         });
