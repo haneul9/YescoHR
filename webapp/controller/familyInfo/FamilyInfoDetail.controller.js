@@ -7,6 +7,7 @@ sap.ui.define(
     'sap/ui/yesco/common/EmpInfo',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/controller/BaseController',
@@ -20,6 +21,7 @@ sap.ui.define(
 	EmpInfo,
 	Appno,
 	AppUtils,
+	ComboEntry,
 	TextUtils,
 	FragmentEvent,
 	BaseController,
@@ -132,9 +134,8 @@ sap.ui.define(
                   this.debug(`${sKdsvhtUrl} success.`, oData);
 
                   const aList = oData.results;
-                  const oAll = { Auspr: 'ALL', Atext: this.getBundleText('LABEL_00268') };
 
-                  oDetailModel.setProperty('/Relations', [oAll, ...aList]);
+                  oDetailModel.setProperty('/Relations', new ComboEntry({ Zcode: 'Zcode', Ztext: 'Ztext', mEntries: aList }));
 
                   resolve();
                 }
@@ -156,10 +157,9 @@ sap.ui.define(
                 if (oData) {
                   this.debug(`${sDptypUrl} success.`, oData);
 
-                  const aList1 = oData.results;
-                  const oAll = { Dptyp: 'ALL', Dptyx: this.getBundleText('LABEL_00268') };
+                  const aList = oData.results;
                   
-                  oDetailModel.setProperty('/Support', [oAll, ...aList1]);
+                  oDetailModel.setProperty('/Support', new ComboEntry({ Dptyp: 'Zcode', Dptyx: 'Ztext', mEntries: aList }));
                   resolve();
                 }
               },

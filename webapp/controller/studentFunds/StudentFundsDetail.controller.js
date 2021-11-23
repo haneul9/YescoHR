@@ -6,6 +6,7 @@ sap.ui.define(
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/EmpInfo',
     'sap/ui/yesco/common/Appno',
+    'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/controller/BaseController',
     'sap/ui/yesco/common/AttachFileAction',
@@ -17,6 +18,7 @@ sap.ui.define(
 	MessageBox,
 	EmpInfo,
 	Appno,
+	ComboEntry,
 	TextUtils,
 	BaseController,
 	AttachFileAction,
@@ -235,10 +237,9 @@ sap.ui.define(
                 if (oData) {
                   this.debug(`${sSchExpenseUrl} success.`, oData);
 
-                  const oList = oData.results;
-                  const oTarget = { Zzobjps: 'ALL', Znametx: this.getBundleText('LABEL_00268') };
+                  const aList = oData.results;
 
-                  oDetailModel.setProperty('/AppTarget', [oTarget, ...oList]);
+                  oDetailModel.setProperty('/AppTarget', new ComboEntry({ Zzobjps: 'Zcode', Znametx: 'Ztext', mEntries: aList }));
 
                   resolve();
                 }
@@ -265,10 +266,9 @@ sap.ui.define(
                   this.debug(`${sBenefitUrl} success.`, oData);
 
                   const aList1 = oData.results;
-                  const oSort = { Zcode: 'ALL', Ztext: this.getBundleText('LABEL_00268') };
                   
                   oDetailModel.setProperty('/AcademicSortHide', aList1);
-                  oDetailModel.setProperty('/AcademicSort', [oSort, ...aList1]);
+                  oDetailModel.setProperty('/AcademicSort', new ComboEntry({ Zcode: 'Zcode', Ztext: 'Ztext', mEntries: aList1 }));
                   resolve();
                 }
               },
@@ -295,10 +295,9 @@ sap.ui.define(
                 if (oData) {
                   this.debug(`${sBenefitUrl} success.`, oData);
 
-                  const oList = oData.results;
-                  const oGrade = { Zcode: 'ALL', Ztext: this.getBundleText('LABEL_00268') };
+                  const aList = oData.results;
 
-                  oDetailModel.setProperty('/GradeList', [oGrade, ...oList]);
+                  oDetailModel.setProperty('/GradeList', new ComboEntry({ Zcode: 'Zcode', Ztext: 'Ztext', mEntries: aList }));
                   
                   resolve();
                 }
@@ -376,10 +375,8 @@ sap.ui.define(
         }else {
           aList2 = aList1;
         }
-
-        const oSort = { Zcode: 'ALL', Ztext: this.getBundleText('LABEL_00268') };
         
-        oDetailModel.setProperty('/AcademicSort', [oSort, ...aList2]);
+        oDetailModel.setProperty('/AcademicSort', new ComboEntry({ Zcode: 'Zcode', Ztext: 'Ztext', mEntries: aList2 }));
       },
 
       // 지원횟수 조회
@@ -466,10 +463,9 @@ sap.ui.define(
             if (oData) {
               this.debug(`${sUrl} success.`, oData);
 
-              const oList = oData.results;
-              const oQuarter = { Zcode: 'ALL', Ztext: this.getBundleText('LABEL_00268') };
+              const aList = oData.results;
 
-              oDetailModel.setProperty('/QuarterList', [oQuarter, ...oList]);
+              oDetailModel.setProperty('/QuarterList', new ComboEntry({ Zcode: 'Zcode', Ztext: 'Ztext', mEntries: aList }));
 
               if (!!oEvent) {
                 oDetailModel.setProperty('/FormData/Divcd', 'ALL');
