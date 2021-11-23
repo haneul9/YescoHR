@@ -6,7 +6,9 @@ sap.ui.define(
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/EmpInfo',
     'sap/ui/yesco/common/Appno',
+    'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/TextUtils',
+    'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/controller/BaseController',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -17,21 +19,23 @@ sap.ui.define(
 	MessageBox,
 	EmpInfo,
 	Appno,
+	AppUtils,
 	TextUtils,
+	FragmentEvent,
 	BaseController,
 	AttachFileAction,
 	ServiceNames
   ) => {
     'use strict';
 
-    class FamilyInfoDetail extends BaseController {
-      constructor() {
-        super();
-        this.AttachFileAction = AttachFileAction;
-        this.TextUtils = TextUtils;
-        this.TYPE_CODE = 'HR03';
-      }
-
+    return BaseController.extend('sap.ui.yesco.controller.familyInfo.FamilyInfoDetail', {
+      TYPE_CODE: 'HR03',
+      LIST_PAGE_ID: 'container-ehr---familyInfo',
+      
+      AttachFileAction: AttachFileAction,
+      TextUtils: TextUtils,
+      FragmentEvent: FragmentEvent,
+      
       onBeforeShow() {
         const oViewModel = new JSONModel({
           FormStatus: '',
@@ -52,37 +56,23 @@ sap.ui.define(
         this.getViewModel().setProperty('/busy', true);
         EmpInfo.get.call(this, true);
         this.getRouter().getRoute('familyInfo-detail').attachPatternMatched(this.onObjectMatched, this);
-      }
+      },
 
-      onAfterShow() {
+      async onAfterShow() {
         this.setGenderList();
         this.setDisabilityList();
-        this.getCodeList()
-        .then(() => {
-          this.setFormData();
-          this.getViewModel().setProperty('/busy', false);
-          this.onPageLoaded();
-        });
-      }
+        await this.getCodeList();
+        await this.setFormData();
 
-      setResident(s = '') {
-        const iLength = s.length;
-        let sValue = '';
-
-        if(iLength > 6) {
-          sValue = `${s.slice(0, 6)}-${s.slice(6)}`;
-        }else {
-          sValue = s;
-        }
-
-        return sValue;
-      }
+        this.getViewModel().setProperty('/busy', false);
+        this.onPageLoaded();
+      },
 
       setFormData() {
         const oDetailModel = this.getViewModel();
-        const oRowData = oDetailModel.getProperty('/FormStatus');
+        const sKey = oDetailModel.getProperty('/FormStatus');
 
-        if(!oRowData) {
+        if(!sKey || sKey === 'N') {
           const oTargetInfo = oDetailModel.getProperty('/TargetInfo');
 
           oDetailModel.setProperty('/FormData', oTargetInfo);
@@ -101,18 +91,23 @@ sap.ui.define(
             Apjikgbtl: `${oTargetInfo.Zzjikgbt}/${oTargetInfo.Zzjiktlt}`,
           });
         }else {
-          oDetailModel.setProperty('/oRowData', oRowData);
+          const oView = this.getView();
+          const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+          const mListData = oListView.getModel().getProperty('/parameter');
+
+          oDetailModel.setProperty('/FormData', mListData);
+          oDetailModel.setProperty('/ApplyInfo', mListData);
         }
         
         this.settingsAttachTable();
-      }
+      },
 
       // setData
       onObjectMatched(oEvent) {
-        const oRowData = oEvent.getParameter('arguments').oRowData;
+        const sDataKey = oEvent.getParameter('arguments').oDataKey;
 
-        this.getViewModel().setProperty('/FormStatus', oRowData);
-      }
+        this.getViewModel().setProperty('/FormStatus', sDataKey);
+      },
 
       // 화면관련 List호출
       getCodeList() {
@@ -138,9 +133,10 @@ sap.ui.define(
                   resolve();
                 }
               },
-              error: (vErr) => {
-                this.debug(`${sKdsvhtUrl} error.`, vErr);
-                MessageBox.error(vErr);
+              error: (oError) => {
+                const vErrorMSG = AppUtils.parseError(oError);
+
+                MessageBox.error(vErrorMSG);
               },
             });
           }),
@@ -161,14 +157,15 @@ sap.ui.define(
                   resolve();
                 }
               },
-              error: (vErr) => {
-                this.debug(`${sDptypUrl} error.`, vErr);
-                MessageBox.error(vErr);
+              error: (oError) => {
+                const vErrorMSG = AppUtils.parseError(oError);
+                
+                MessageBox.error(vErrorMSG);
               },
             });
           }),
         ]);
-      }
+      },
 
       // 주민번호입력시
       ResidentNumber(oEvent) {
@@ -186,7 +183,7 @@ sap.ui.define(
         
         oEventSource.setValue(sPropValue);
         oEventSource.getModel().setProperty(sPath, sValue);
-      }
+      },
 
       // 부양가족여부, 장애여부, 동거, 건강보험피부양자, 가족수당 체크
       onCheckBox(oEvent) {
@@ -236,7 +233,7 @@ sap.ui.define(
         } else {
           oDetailModel.setProperty(sPath, '');
         }
-      }
+      },
 
       setGenderList() {
         // 성별
@@ -250,7 +247,7 @@ sap.ui.define(
         );
 
         oDetailModel.setProperty('/Gender', aGenderList);
-      }
+      },
 
       setDisabilityList() {
         // 장애인
@@ -265,92 +262,101 @@ sap.ui.define(
         );
 
         oDetailModel.setProperty('/Disability', aDisabList);
-      }
+      },
 
-      checkError(AppBtn) {
+      checkError() {
         const oDetailModel = this.getViewModel();
         const oFormData = oDetailModel.getProperty("/FormData");
 
-        // 신청대상
-        if (oFormData.Zzobjps === 'ALL' || !oFormData.Zzobjps) {
-          MessageBox.alert(this.getBundleText('MSG_03007'));
+        // 성명
+        if (!oFormData.Lnmhg || !oFormData.Fnmhg) {
+          MessageBox.alert(this.getBundleText('MSG_05009'));
           return true;
         }
 
-        // 학력구분
-        if (oFormData.Slart === 'ALL' || !oFormData.Slart) {
-          MessageBox.alert(this.getBundleText('MSG_03008'));
+        // 주민등록번호
+        if (!oFormData.Regno) {
+          MessageBox.alert(this.getBundleText('MSG_05010'));
           return true;
         }
 
-        // 학년
-        if (oFormData.Grdsp === 'ALL' || !oFormData.Grdsp) {
-          MessageBox.alert(this.getBundleText('MSG_03009'));
+        // 가족관계
+        if (oFormData.Kdsvh === 'ALL' || !oFormData.Kdsvh) {
+          MessageBox.alert(this.getBundleText('MSG_05011'));
           return true;
         }
 
-        // 분기/학기
-        if (oFormData.Divcd === 'ALL' || !oFormData.Divcd) {
-          MessageBox.alert(this.getBundleText('MSG_03010'));
+        // 성별
+        if (oFormData.Fasex === 'ALL' || !oFormData.Fasex) {
+          MessageBox.alert(this.getBundleText('MSG_05012'));
           return true;
         }
 
-        // 학교명
-        if (!oFormData.Schtx) {
-          MessageBox.alert(this.getBundleText('MSG_03003'));
+        // 장애여부
+        if (!!oFormData.Hndid && (oFormData.Hndcd === 'ALL' || !oFormData.Hndcd)) {
+          MessageBox.alert(this.getBundleText('MSG_05013'));
           return true;
         }
 
-        // 수업료
-        if (!oFormData.ZbetClass) {
-          MessageBox.alert(this.getBundleText('MSG_03004'));
+        // 부양가족유형
+        if (!!oFormData.Dptid && (oFormData.Dptyp === 'ALL' || !oFormData.Dptyp)) {
+          MessageBox.alert(this.getBundleText('MSG_05014'));
+          return true;
+        }
+
+        // 적용시작일
+        if (!oFormData.Begda) {
+          MessageBox.alert(this.getBundleText('MSG_05015'));
+          return true;
+        }
+
+        // 적용종료일
+        if (!oFormData.Endda) {
+          MessageBox.alert(this.getBundleText('MSG_05016'));
           return true;
         }
 
         // 첨부파일
-        if (!AttachFileAction.getFileLength.call(this) && AppBtn === 'O') {
+        if (!AttachFileAction.getFileLength.call(this)) {
           MessageBox.alert(this.getBundleText('MSG_03005'));
           return true;
         }
 
         return false;
-      }
+      },
 
       // oData호출 mapping
       sendDataFormat(oDatas) {
         let oSendObject = {
-          Appdt: oDatas.Appdt,
+          Actty: oDatas.Actty,
           Appno: oDatas.Appno,
-          Apename: oDatas.Apename,
-          Appernr: oDatas.Appernr,
-          Cnttx: oDatas.Cnttx,
-          Divcd: oDatas.Divcd,
-          Forsch: oDatas.Forsch,
-          Grdsp: oDatas.Grdsp,
-          Majnm: oDatas.Majnm,
-          Schtx: oDatas.Schtx,
-          Slart: oDatas.Slart,
-          Kdsvh: oDatas.Kdsvh,
-          ZbetClass: oDatas.ZbetClass,
-          ZbetEntr: oDatas.ZbetEntr,
-          ZbetEtc: oDatas.ZbetEtc,
-          ZbetExer: oDatas.ZbetExer,
-          ZbetMgmt: oDatas.ZbetMgmt,
-          ZbetShip: oDatas.ZbetShip,
-          ZbetSuf: oDatas.ZbetSuf,
-          ZbetTotl: oDatas.ZbetTotl,
-          Znametx: oDatas.Znametx,
-          Zname: oDatas.Zname,
-          ZpayAmt: oDatas.ZpayAmt,
-          Zyear: oDatas.Zyear,
-          Zzjikcht: oDatas.Zzjikcht,
-          Zzjikgbt: oDatas.Zzjikgbt,
-          Zzjiktlt: oDatas.Zzjiktlt,
-          Zzobjps: oDatas.Zzobjps,
+          Atext: oDatas.Atext,
+          Begda: moment(oDatas.Begda).hours(10).toDate(),
+          Dptid: oDatas.Dptid,
+          Dptyp: oDatas.Dptyp === 'ALL' ? '' : oDatas.Dptyp,
+          Ename: oDatas.Ename,
+          Endda: moment(oDatas.Endda).hours(10).toDate(),
+          Famid: oDatas.Famid,
+          Famnm: oDatas.Famnm,
+          Fasex: oDatas.Fasex === 'ALL' ? '' : oDatas.Fasex,
+          Fnmhg: oDatas.Fnmhg,
+          Helid: oDatas.Helid,
+          Hndcd: oDatas.Hndcd === 'ALL' ? '' : oDatas.Hndcd,
+          Hndid: oDatas.Hndid,
+          Kdsvh: oDatas.Kdsvh === 'ALL' ? '' : oDatas.Kdsvh,
+          Livid: oDatas.Livid,
+          Lnmhg: oDatas.Lnmhg,
+          Regno: oDatas.Regno,
+          ZappDate: oDatas.ZappDate,
+          ZappResn: oDatas.ZappResn,
+          ZappStatAl: oDatas.ZappStatAl,
+          ZappStxtAl: oDatas.ZappStxtAl,
+          ZreqDate: oDatas.ZreqDate,
+          Zzjikgbtx: oDatas.Zzjikgbtx,
         };
 
         return oSendObject;
-      }
+      },
 
       // 신청
       onApplyBtn() {
@@ -359,88 +365,62 @@ sap.ui.define(
         const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
         const oFormData = oDetailModel.getProperty('/FormData');
 
-        if (this.checkError('O')) return;
+        if (this.checkError()) return;
 
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
           title: this.getBundleText('LABEL_03028'),
           actions: [this.getBundleText('LABEL_00121'), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00121')) {
-              if (!sStatus) {
-                const vAppno = await Appno.get.call(this);
-  
-                oDetailModel.setProperty("/FormData/Appno", vAppno);
-                oDetailModel.setProperty('/FormData/Appdt', new Date());
-              }
-  
-              let oSendObject = {};
-              const oSendData = this.sendDataFormat(oFormData);
-
-              oSendObject = oSendData;
-              oSendObject.Prcty = 'C';
-              oSendObject.Actty = 'E';
-              oSendObject.Waers = 'KRW';
-
-                // FileUpload
-                const v1 = await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
-
-                if(!!v1) {
-                  MessageBox.error(v1);
-                }else {
-                  oModel.create('/SchExpenseApplSet', oSendObject, {
-                    success: () => {
-                      MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
-                        onClose: () => {
-                          this.getRouter().navTo('studentFunds');
-                        },
-                      });
-                    },
-                    error: (oRespnse) => {
-                      const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
+              try {
+                AppUtils.setAppBusy(true, this);
+                
+                if (!sStatus) {
+                  const vAppno = await Appno.get.call(this);
     
-                      MessageBox.error(vErrorMSG);
-                    },
-                  });
+                  oDetailModel.setProperty("/FormData/Appno", vAppno);
+                  oDetailModel.setProperty('/FormData/Appdt', new Date());
                 }
-            }
-          },
-        });
-      }
-
-      // 취소
-      onCancelBtn() {
-        const oModel = this.getModel(ServiceNames.PA);
-        const oDetailModel = this.getViewModel();
-
-        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00118'), {
-          title: this.getBundleText('LABEL_03028'),
-          actions: [this.getBundleText('LABEL_00114'), this.getBundleText('LABEL_00118')],
-          onClose: (vPress) => {
-            if (vPress && vPress === this.getBundleText('LABEL_00114')) {
-              let oSendObject = {};
+    
+                let oSendObject = {};
+                const oSendData = this.sendDataFormat(oFormData);
   
-              oSendObject = oDetailModel.getProperty('/FormData');
-              oSendObject.Prcty = 'W';
-              oSendObject.Actty = 'E';
+                oSendObject = oSendData;
+                oSendObject.Prcty = 'C';
+                oSendObject.Actty = 'E';
   
-              oModel.create('/SchExpenseApplSet', oSendObject, {
-                success: () => {
-                  MessageBox.alert(this.getBundleText('MSG_00038', 'LABEL_00121'), {
-                    onClose: () => {
-                      this.getRouter().navTo('studentFunds');
+                // FileUpload
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
+
+                await new Promise((resolve, reject) => {
+                  oModel.create('/FamilyInfoApplSet', oSendObject, {
+                    success: () => {
+                      resolve();
+                    },
+                    error: (oError) => {
+                      const vErrorMSG = AppUtils.parseError(oError);
+                      
+                      reject(vErrorMSG);
                     },
                   });
-                },
-                error: (oRespnse) => {
-                  const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
-  
-                  MessageBox.error(vErrorMSG);
-                },
-              });
+                }); 
+
+                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
+                  onClose: () => {
+                    this.getRouter().navTo('familyInfo');
+                  },
+                });
+              }catch(error) {
+                if (_.has(error, 'code') && error.code === 'E') {
+                  MessageBox.error(error.message);
+                }
+              }finally {
+                AppUtils.setAppBusy(false, this);
+              }
             }
           },
         });
-      }
+      },
 
       // 삭제
       onDeleteBtn() {
@@ -452,7 +432,7 @@ sap.ui.define(
           actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
           onClose: (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00110')) {
-              const sPath = oModel.createKey('/SchExpenseApplSet', {
+              const sPath = oModel.createKey('/FamilyInfoApplSet', {
                 Appno: oDetailModel.getProperty('/FormData/Appno'),
               });
   
@@ -460,20 +440,20 @@ sap.ui.define(
                 success: () => {
                   MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
                     onClose: () => {
-                      this.getRouter().navTo('studentFunds');
+                      this.getRouter().navTo('familyInfo');
                     },
                   });
                 },
-                error: (oRespnse) => {
-                  const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
-  
+                error: (oError) => {
+                  const vErrorMSG = AppUtils.parseError(oError);
+                
                   MessageBox.error(vErrorMSG);
                 },
               });
             }
           },
         });
-      }
+      },
 
       // AttachFileTable Settings
       settingsAttachTable() {
@@ -487,9 +467,7 @@ sap.ui.define(
           Appno: sAppno,
           Max: 10,
         });
-      }
-    }
-
-    return FamilyInfoDetail;
+      },
+    });
   }
 );
