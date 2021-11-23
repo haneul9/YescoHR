@@ -611,37 +611,46 @@ sap.ui.define(
           actions: [this.getBundleText('LABEL_00103'), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00103')) {
-              if (!vStatus || vStatus === '45') {
-                const vAppno = await Appno.get.call(this);
+              try{
+                AppUtils.setAppBusy(true, this);
+  
+                if (!vStatus || vStatus === '45') {
+                  const vAppno = await Appno.get.call(this);
+  
+                  oDetailModel.setProperty('/FormData/Appno', vAppno);
+                  oDetailModel.setProperty('/FormData/Appdt', new Date());
+                }
+  
+                let oSendObject = {};
+                const oSendData = this.sendDataFormat(oFormData);
+  
+                oSendObject = oSendData;
+                oSendObject.Prcty = 'T';
+                oSendObject.Actty = 'E';
+                oSendObject.Waers = 'KRW';
+  
+                // FileUpload
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
+  
+                await new Promise((resolve, reject) => {
+                  oModel.create('/ConExpenseApplSet', oSendObject, {
+                    success: () => {
+                      resolve();
+                    },
+                    error: (oError) => {
+                      const vErrorMSG = AppUtils.parseError(oError);
 
-                oDetailModel.setProperty('/FormData/Appno', vAppno);
-                oDetailModel.setProperty('/FormData/Appdt', new Date());
-              }
-
-              let oSendObject = {};
-              const oSendData = this.sendDataFormat(oFormData);
-
-              oSendObject = oSendData;
-              oSendObject.Prcty = 'T';
-              oSendObject.Actty = 'E';
-              oSendObject.Waers = 'KRW';
-
-              // FileUpload
-              const v1 = await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
-
-              if (!!v1) {
-                MessageBox.error(v1);
-              } else {
-                oModel.create('/ConExpenseApplSet', oSendObject, {
-                  success: () => {
-                    MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
-                  },
-                  error: (oError) => {
-                    const vErrorMSG = AppUtils.parseError(oError);
-
-                    MessageBox.error(vErrorMSG);
-                  },
+                      reject(vErrorMSG);
+                    },
+                  });
                 });
+                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
+              }catch(error) {
+                if (_.has(error, 'code') && error.code === 'E') {
+                  MessageBox.error(error.message);
+                }
+              }finally{
+                AppUtils.setAppBusy(false, this);
               }
             }
           },
@@ -662,41 +671,50 @@ sap.ui.define(
           actions: [this.getBundleText('LABEL_00121'), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00121')) {
-              if (!vStatus || vStatus === '45') {
-                const vAppno = await Appno.get.call(this);
+              try{
+                AppUtils.setAppBusy(true, this);
+  
+                if (!vStatus || vStatus === '45') {
+                  const vAppno = await Appno.get.call(this);
+  
+                  oDetailModel.setProperty('/FormData/Appno', vAppno);
+                  oDetailModel.setProperty('/FormData/Appdt', new Date());
+                }
+  
+                let oSendObject = {};
+                const oSendData = this.sendDataFormat(oFormData);
+  
+                oSendObject = oSendData;
+                oSendObject.Prcty = 'C';
+                oSendObject.Actty = 'E';
+                oSendObject.Waers = 'KRW';
+  
+                // FileUpload
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
+                await new Promise((resolve, reject) => {
+                  oModel.create('/ConExpenseApplSet', oSendObject, {
+                    success: () => {
+                      resolve();
+                    },
+                    error: (oError) => {
+                      const vErrorMSG = AppUtils.parseError(oError);
+  
+                      reject(vErrorMSG);
+                    },
+                  });
+                });
 
-                oDetailModel.setProperty('/FormData/Appno', vAppno);
-                oDetailModel.setProperty('/FormData/Appdt', new Date());
-              }
-
-              let oSendObject = {};
-              const oSendData = this.sendDataFormat(oFormData);
-
-              oSendObject = oSendData;
-              oSendObject.Prcty = 'C';
-              oSendObject.Actty = 'E';
-              oSendObject.Waers = 'KRW';
-
-              // FileUpload
-              const v1 = await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
-
-              if (!!v1) {
-                MessageBox.error(v1);
-              } else {
-                oModel.create('/ConExpenseApplSet', oSendObject, {
-                  success: () => {
-                    MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
-                      onClose: () => {
-                        this.getRouter().navTo('congratulation');
-                      },
-                    });
-                  },
-                  error: (oError) => {
-                    const vErrorMSG = AppUtils.parseError(oError);
-
-                    MessageBox.error(vErrorMSG);
+                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
+                  onClose: () => {
+                    this.getRouter().navTo('congratulation');
                   },
                 });
+              }catch(error) {
+                if (_.has(error, 'code') && error.code === 'E') {
+                  MessageBox.error(error.message);
+                }
+              }finally{
+                AppUtils.setAppBusy(false, this);
               }
             }
           },
@@ -713,6 +731,8 @@ sap.ui.define(
           actions: [this.getBundleText('LABEL_00114'), this.getBundleText('LABEL_00118')],
           onClose: (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00114')) {
+              AppUtils.setAppBusy(true, this);
+
               let oSendObject = {};
 
               oSendObject = oDetailModel.getProperty('/FormData');
@@ -721,6 +741,7 @@ sap.ui.define(
 
               oModel.create('/ConExpenseApplSet', oSendObject, {
                 success: () => {
+                  AppUtils.setAppBusy(false, this);
                   MessageBox.alert(this.getBundleText('MSG_00038', 'LABEL_00121'), {
                     onClose: () => {
                       this.getRouter().navTo('congratulation');
@@ -730,6 +751,7 @@ sap.ui.define(
                 error: (oError) => {
                   const vErrorMSG = AppUtils.parseError(oError);
 
+                  AppUtils.setAppBusy(false, this);
                   MessageBox.error(vErrorMSG);
                 },
               });
@@ -748,12 +770,15 @@ sap.ui.define(
           actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
           onClose: (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00110')) {
+              AppUtils.setAppBusy(true, this);
+
               const sPath = oModel.createKey('/ConExpenseApplSet', {
                 Appno: oDetailModel.getProperty('/FormData/Appno'),
               });
 
               oModel.remove(sPath, {
                 success: () => {
+                  AppUtils.setAppBusy(false, this);
                   MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
                     onClose: () => {
                       this.getRouter().navTo('congratulation');
@@ -763,6 +788,7 @@ sap.ui.define(
                 error: (oError) => {
                   const vErrorMSG = AppUtils.parseError(oError);
 
+                  AppUtils.setAppBusy(false, this);
                   MessageBox.error(vErrorMSG);
                 },
               });
