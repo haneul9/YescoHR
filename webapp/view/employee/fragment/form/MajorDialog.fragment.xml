@@ -1,0 +1,6 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <SelectDialog id="majorSelectDialog" contentHeight="50%" title="{i18n>LABEL_00302}" items="{/employee/dialog/majorList}" search=".onSearchMajorHelp" confirm=".onCloseMajorHelp">
+        <StandardListItem type="Active" selected="{selected}" title="{Zzmajo1} {Zzmajo1tx}" />
+    </SelectDialog>
+</core:FragmentDefinition>

@@ -10,7 +10,7 @@ sap.ui.define(
       MESSAGE: {
         T: 'LABEL_00104', // 임시저장
         C: 'LABEL_00121', // 신청
-        A: 'LABEL_00107', // 추가
+        A: 'LABEL_00106', // 등록
       },
 
       /**
