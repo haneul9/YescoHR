@@ -2,7 +2,8 @@
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:core="sap.ui.core"
-	xmlns:grid="sap.ui.layout.cssgrid">
+	xmlns:grid="sap.ui.layout.cssgrid"
+	xmlns:custom="sap.ui.yesco.control">
 	<Page showHeader="false">
 		<content>
 			<VBox>
@@ -37,13 +38,13 @@
 							<core:Item text="{Ztext}" key="{Zcode}" />
 						</ComboBox>
 						<Label text="{i18n>LABEL_02014}"/>
-						<DatePicker id='BirthDatePicker' class="sapIcon_Date" valueState="Warning" dateValue="{/FormData/Zbirthday}" width="250px" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+						<custom:DatePicker id='BirthDatePicker' class="sapIcon_Date" valueState="Warning" dateValue="{/FormData/Zbirthday}" width="250px" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
 						<Label text="{i18n>LABEL_02008}"/>
 						<ComboBox id="BenefitCause" valueState="Warning" items="{/BenefitCause}" selectedKey="{/FormData/Conresn}" width="250px" change=".onCauseChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
 							<core:Item text="{Ztext}" key="{Zcode}" />
 						</ComboBox>
 						<Label text="{i18n>LABEL_02009}"/>
-						<DatePicker class="sapIcon_Date" valueState="Warning" dateValue="{/FormData/Conddate}" width="250px" change=".onBenefitChangeDate" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+						<custom:DatePicker class="sapIcon_Date" valueState="Warning" dateValue="{/FormData/Conddate}" width="250px" change=".onBenefitChangeDate" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
 						<Label text="{i18n>LABEL_02015}"/>
 						<ComboBox id="BenefitRelation" change=".onRelationChange" valueState="Warning" items="{/BenefitRelation}" selectedKey="{/FormData/Kdsvh}" width="250px" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
 							<core:Item text="{Ztext}" key="{Zcode}" />

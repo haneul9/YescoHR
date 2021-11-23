@@ -61,7 +61,7 @@ sap.ui.define(
           this.getViewModel().setProperty('/busy', false);
           this.onPageLoaded();
         });
-      }
+      },
 
       onObjectMatched(oEvent) {
         const sDataKey = oEvent.getParameter('arguments').oDataKey;

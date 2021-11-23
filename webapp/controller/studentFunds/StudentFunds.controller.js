@@ -100,7 +100,6 @@ sap.ui.define(
 
               oListModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData: oList }));
               oListModel.setProperty('/StudentList', oList);
-              this.byId('studentTable').setVisibleRowCount(oList.length);
               oListModel.setProperty('/busy', false);
             }
           },
