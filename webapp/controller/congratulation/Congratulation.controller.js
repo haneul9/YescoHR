@@ -21,14 +21,12 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    class Congratulation extends BaseController {
-      constructor() {
-        super();
-        this.AttachFileAction = AttachFileAction;
-        this.TableUtils = TableUtils;
-        this.FragmentEvent = FragmentEvent;
-        this.TYPE_CODE = 'HR01';
-      }
+    return BaseController.extend('sap.ui.yesco.controller.congratulation.Congratulation', {
+      TYPE_CODE: 'HR01',
+
+      AttachFileAction: AttachFileAction,
+      TableUtils: TableUtils,
+      FragmentEvent: FragmentEvent,
 
       onBeforeShow() {
         const dDate = new Date();
@@ -52,29 +50,29 @@ sap.ui.define(
         this.setViewModel(oViewModel);
 
         EmpInfo.get.call(this, true);
-      }
+      },
 
       onAfterShow() {
         this.onSearch();
         this.getTotalPay();
         this.onPageLoaded();
-      }
+      },
 
       onClick() {
         this.getRouter().navTo('congratulation-detail', { oDataKey: 'N' });
-      }
+      },
 
       formatNumber(vNum) {
         if (!vNum || vNum === '') return '0';
 
         return vNum;
-      }
+      },
 
       formatPay(vPay) {
         if (!vPay || vPay === '0') return '0';
 
         return `${vPay}${this.getBundleText('LABEL_00157')}`;
-      }
+      },
 
       getTotalPay() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
@@ -94,7 +92,7 @@ sap.ui.define(
             this.debug(`${sUrl} error.`, oRespnse);
           },
         });
-      }
+      },
 
       onSearch() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
@@ -132,14 +130,14 @@ sap.ui.define(
             oListModel.setProperty('/busy', false);
           },
         });
-      }
+      },
 
       onSelectRow(oEvent) {
         const vPath = oEvent.getParameters().rowBindingContext.getPath();
         const oRowData = this.getViewModel().getProperty(vPath);
 
         this.getRouter().navTo('congratulation-detail', { oDataKey: oRowData.Appno });
-      }
+      },
 
       onPressExcelDownload() {
         const oTable = this.byId('conguTable');
@@ -147,9 +145,7 @@ sap.ui.define(
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_02022');
 
         TableUtils.export({ oTable, mTableData, sFileName });
-      }
-    }
-
-    return Congratulation;
+      },
+    });
   }
 );

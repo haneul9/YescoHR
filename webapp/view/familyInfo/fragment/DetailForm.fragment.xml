@@ -14,7 +14,10 @@
                 <Input value="{/FormData/Fnmhg}" valueState="Warning" editable="{= !${/FormData/ZappStatAl} }" />
             </HBox>
             <Label text="{i18n>LABEL_05006}" />
-                <Input value="{/FormData/Regno}" liveChange=".ResidentNumber" valueState="Warning" editable="{= !${/FormData/ZappStatAl} }" />
+                <Input value="{
+                    path: '/FormData/Regno',
+                    formatter: '.setResident'
+                }" liveChange=".ResidentNumber" valueState="Warning" editable="{= !${/FormData/ZappStatAl} }" />
             <Label text="{i18n>LABEL_05007}"/>
             <ComboBox valueState="Warning" items="{/Relations}" selectedKey="{/FormData/Kdsvh}" change=".onShcoolList" editable="{= !${/FormData/ZappStatAl} }">
                 <core:Item text="{Atext}" key="{Auspr}" />
