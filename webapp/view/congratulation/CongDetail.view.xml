@@ -33,21 +33,21 @@
 					</HBox>
 					<grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="8px">
 						<Label text="{i18n>LABEL_02013}"/>
-						<Select id="BenefitType" valueState="Warning" items="{/BenefitType}" selectedKey="{/FormData/Concode}" width="250px" change="onTypeChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+						<ComboBox id="BenefitType" valueState="Warning" items="{/BenefitType}" selectedKey="{/FormData/Concode}" width="250px" change="onTypeChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
 							<core:Item text="{Ztext}" key="{Zcode}" />
-						</Select>
+						</ComboBox>
 						<Label text="{i18n>LABEL_02014}"/>
 						<DatePicker id='BirthDatePicker' class="sapIcon_Date" valueState="Warning" dateValue="{/FormData/Zbirthday}" width="250px" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
 						<Label text="{i18n>LABEL_02008}"/>
-						<Select id="BenefitCause" valueState="Warning" items="{/BenefitCause}" selectedKey="{/FormData/Conresn}" width="250px" change=".onCauseChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+						<ComboBox id="BenefitCause" valueState="Warning" items="{/BenefitCause}" selectedKey="{/FormData/Conresn}" width="250px" change=".onCauseChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
 							<core:Item text="{Ztext}" key="{Zcode}" />
-						</Select>
+						</ComboBox>
 						<Label text="{i18n>LABEL_02009}"/>
 						<DatePicker class="sapIcon_Date" valueState="Warning" dateValue="{/FormData/Conddate}" width="250px" change=".onBenefitChangeDate" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
 						<Label text="{i18n>LABEL_02015}"/>
-						<Select id="BenefitRelation" change=".onRelationChange" valueState="Warning" items="{/BenefitRelation}" selectedKey="{/FormData/Kdsvh}" width="250px" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+						<ComboBox id="BenefitRelation" change=".onRelationChange" valueState="Warning" items="{/BenefitRelation}" selectedKey="{/FormData/Kdsvh}" width="250px" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
 							<core:Item text="{Ztext}" key="{Zcode}" />
-						</Select>
+						</ComboBox>
 						<Label text="{i18n>LABEL_02016}"/>
 						<Input valueState="Warning" value="{/FormData/Zeloc}" class="LongInputBase" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
 						<Label text="{i18n>LABEL_02017}"/>
