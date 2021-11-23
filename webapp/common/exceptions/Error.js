@@ -1,8 +1,9 @@
 sap.ui.define(
   [
     'sap/ui/base/Object', //
+    'sap/ui/yesco/control/MessageBox',
   ],
-  function (BaseObject) {
+  function (BaseObject, MessageBox) {
     'use strict';
 
     return BaseObject.extend('sap.ui.yesco.common.exceptions.Error', {
@@ -21,6 +22,24 @@ sap.ui.define(
 
       getMessage: function () {
         return this.message;
+      },
+
+      showErrorMessage: function (mOptions = {}) {
+        if (this.getCode() === 'E') {
+          MessageBox.error(this.getMessage(), { ...mOptions });
+        }
+      },
+
+      showWarningMessage: function (mOptions = {}) {
+        if (this.getCode() === 'W') {
+          MessageBox.warning(this.getMessage(), { ...mOptions });
+        }
+      },
+
+      showInformationMessage: function (mOptions = {}) {
+        if (this.getCode() === 'I') {
+          MessageBox.information(this.getMessage(), { ...mOptions });
+        }
       },
     });
   }

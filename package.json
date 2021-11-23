@@ -25,7 +25,8 @@
       "usage": {
         "TagAttributeLinter": true,
         "PublicMemberLinter": false,
-        "UnusedMemberLinter": false
+        "UnusedMemberLinter": false,
+        "2WrongParametersLinter": false
       }
     }
   }

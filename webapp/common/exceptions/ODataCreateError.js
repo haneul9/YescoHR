@@ -10,6 +10,7 @@ sap.ui.define(
       MESSAGE: {
         T: 'LABEL_00104', // 임시저장
         C: 'LABEL_00121', // 신청
+        A: 'LABEL_00107', // 추가
       },
 
       /**
@@ -18,7 +19,7 @@ sap.ui.define(
        * @returns {sap.ui.base.Object}
        */
       constructor: function (type = 'C') {
-        // {임시저장|신청}중 오류가 발생하였습니다.
+        // {임시저장|신청|추가}중 오류가 발생하였습니다.
         Error.prototype.constructor.call(this, { code: 'E', message: AppUtils.getBundleText('MSG_00008', this.MESSAGE[type]) });
       },
     });
