@@ -19,7 +19,8 @@ sap.ui.define(
       constructor: function (oUIComponent) {
         JSONModel.apply(this, {
           Dtfmt: DATE_FORMAT,
-          CompanyName: oUIComponent.getBundleText('LABEL_01001'),
+          DTFMT: DATE_FORMAT.toUpperCase(),
+          Werks: 'init',
         });
 
         this.oUIComponent = oUIComponent;
@@ -38,18 +39,14 @@ sap.ui.define(
               const mSessionData = (oData.results || [])[0] || {};
               delete mSessionData.__metadata;
 
-              let sTextCode;
-              if (mSessionData.Werks === '1000') {
-                sTextCode = 'LABEL_01002';
-              } else if (mSessionData.Werks === '2000') {
-                sTextCode = 'LABEL_01003';
-              } else if (mSessionData.Werks === '3000') {
-                sTextCode = 'LABEL_01004';
+              const Dtfmt = mSessionData.Dtfmt;
+              if (Dtfmt && Dtfmt.length >= 8) {
+                mSessionData.Dtfmt = Dtfmt.replace(/y/gi, 'y').replace(/m/gi, 'M').replace(/d/gi, 'd');
+                mSessionData.DTFMT = Dtfmt.toUpperCase();
               } else {
-                sTextCode = 'LABEL_01001';
+                mSessionData.Dtfmt = DATE_FORMAT;
+                mSessionData.DTFMT = DATE_FORMAT.toUpperCase();
               }
-              mSessionData.CompanyName = this.oUIComponent.getBundleText(sTextCode);
-              mSessionData.Dtfmt = DATE_FORMAT;
 
               this.setData(mSessionData, true);
 

@@ -167,7 +167,7 @@ sap.ui.define(
       },
 
       getStyleClasses(m) {
-        return m.Mnid1 === '70000' ? 'menu-mss' : m.Mnid1 === '80000' ? 'menu-hass' : m.Mnid1 === 'X0000' ? 'menu-sample' : '';
+        return m.Mnid1 === '70000' ? 'menu-70000' : m.Mnid1 === '80000' ? 'menu-80000' : m.Mnid1 === 'X0000' ? 'menu-sample' : '';
       },
 
       appendSampleMenu({ aLevel1, aLevel2, aLevel3, aLevel4 }) {
