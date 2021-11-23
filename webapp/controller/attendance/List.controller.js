@@ -146,6 +146,8 @@ sap.ui.define(
 
           this.setTableData({ oViewModel, mRowData });
         } catch (error) {
+          this.debug('Controller > Attendance List > onPressSearch Error', oError);
+
           if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
             oError.showErrorMessage();
           }

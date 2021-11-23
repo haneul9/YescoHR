@@ -601,6 +601,8 @@ sap.ui.define(
             },
           });
         } catch (oError) {
+          this.debug('Controller > Attendance Detail > createProcess Error', oError);
+
           if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
             oError.showErrorMessage();
           }
