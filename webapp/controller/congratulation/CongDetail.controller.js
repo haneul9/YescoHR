@@ -5,6 +5,7 @@ sap.ui.define(
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AttachFileAction',
+    'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/EmpInfo',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/FragmentEvent',
@@ -18,6 +19,7 @@ sap.ui.define(
     JSONModel,
     Appno,
     AttachFileAction,
+    ComboEntry,
     EmpInfo,
     TextUtils,
     FragmentEvent,
@@ -29,7 +31,7 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.controller.congratulation.CongDetail', {
       TYPE_CODE: 'HR01',
-      
+
       AttachFileAction: AttachFileAction,
       FragmentEvent: FragmentEvent,
       TextUtils: TextUtils,
@@ -111,7 +113,7 @@ sap.ui.define(
             success: (oData) => {
               if (oData) {
                 const oList = oData.results;
-                oDetailModel.setProperty('/BenefitType', oList);
+                oDetailModel.setProperty('/BenefitType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: oList }));
 
                 if (oFormData !== null && typeof oFormData === 'object' && !Object.keys(oFormData).length) {
                   oDetailModel.setProperty('/FormData', oTargetData);
@@ -170,7 +172,7 @@ sap.ui.define(
             ],
             success: (oData) => {
               if (oData) {
-                oDetailModel.setProperty('/BenefitCause', oData.results);
+                oDetailModel.setProperty('/BenefitCause', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: oData.results }));
                 oDetailModel.setProperty('/BenefitRelation', []);
 
                 if (!vStatus) {
@@ -232,7 +234,7 @@ sap.ui.define(
               const oRelationTxt = this.byId('RelationTxt');
               const oBirthDatePicker = this.byId('BirthDatePicker');
 
-              oDetailModel.setProperty('/BenefitRelation', oResult);
+              oDetailModel.setProperty('/BenefitRelation', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: oResult }));
               oDetailModel.setProperty('/TargetList', []);
 
               if (!oDetailModel.getProperty('/FormData/ZappStatAl') || oDetailModel.getProperty('/FormData/ZappStatAl') === '10') {
