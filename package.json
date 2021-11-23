@@ -26,7 +26,7 @@
         "TagAttributeLinter": true,
         "PublicMemberLinter": false,
         "UnusedMemberLinter": false,
-        "2WrongParametersLinter": false
+        "WrongParametersLinter": false
       }
     }
   }
