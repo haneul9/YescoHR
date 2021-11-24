@@ -80,9 +80,6 @@ sap.ui.define(
           ApprovalDetails: {},
         });
         this.setViewModel(oViewModel);
-
-        const oRouter = this.getRouter();
-        oRouter.getRoute('attendance-detail').attachPatternMatched(this.onObjectMatched, this);
       },
 
       async onAfterShow() {
@@ -166,8 +163,7 @@ sap.ui.define(
         this.toggleHasRowProperty();
       },
 
-      onObjectMatched(oEvent) {
-        const oParameter = oEvent.getParameter('arguments');
+      onObjectMatched(oParameter) {
         const oViewModel = this.getView().getModel();
         const sAction = oParameter.appno ? this.getBundleText('LABEL_00100') : ''; // 조회
         const oNavigationMap = {

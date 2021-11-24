@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <SelectDialog id="countrySelectDialog" contentHeight="50%" title="{i18n>LABEL_00304}" items="{ path: '/employee/dialog/countryList', sorter: {path: 'Landx50', descending: false}}" liveChange=".onSearchCountryHelp" search=".onSearchCountryHelp" confirm=".onCloseCountryHelp">
+    <SelectDialog id="countrySelectDialog" contentHeight="50%" title="{i18n>LABEL_00304}" items="{ path: '/employee/dialog/countryList', sorter: {path: 'Landx50', descending: false}}" liveChange=".onSearchDialogHelp" search=".onSearchDialogHelp" confirm=".onCloseDialogHelp">
         <StandardListItem type="Active" selected="{selected}" title="{Landx50}" description="{Sland}" />
     </SelectDialog>
 </core:FragmentDefinition>

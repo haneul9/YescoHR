@@ -51,6 +51,11 @@ sap.ui.define(
         ADDRESS: { key: '0006', label: 'LABEL_00283', path: 'address', url: '/AddressInfoSet', pk: ['Subty', 'Begda'] },
         EDUCATION: { key: '0022', label: 'LABEL_00303', path: 'education', url: '/EducationChangeSet', pk: ['Begda', 'Endda'] },
       },
+      SELECT_DIALOG: {
+        COUNTRY: { path: 'countryList', codeKey: 'Sland', valueKey: 'Landx50', fragmentName: 'CountryDialog' },
+        SCHOOL: { path: 'schoolList', codeKey: 'Zzschcd', valueKey: 'Zzschtx', fragmentName: 'SchoolDialog' },
+        MAJOR: { path: 'majorList', codeKey: 'Zzmajo1', valueKey: 'Zzmajo1tx', fragmentName: 'MajorDialog' },
+      },
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
@@ -123,17 +128,14 @@ sap.ui.define(
               majorList: [],
               busy: { Slabs: false },
               form: {},
+              selectedHelpDialog: {},
             },
           },
         });
         this.setViewModel(oViewModel);
-
-        const oRouter = this.getRouter();
-        oRouter.getRoute('employee').attachPatternMatched(this.onObjectMatched, this);
       },
 
-      onObjectMatched(oEvent) {
-        const oParameter = oEvent.getParameter('arguments');
+      onObjectMatched(oParameter) {
         const oViewModel = this.getView().getModel();
         const sPernr = oParameter.pernr || this.getOwnerComponent().getSessionModel().getProperty('/Pernr');
 
@@ -233,7 +235,6 @@ sap.ui.define(
 
           aTabMenus.map((data) => {
             aHeaderRequests.push(this.readOdata({ sUrl: '/EmpProfileHeaderTabSet', mFilters: { Menuc: data.Menuc1, ...mFilters } }));
-            // aContentRequests.push(this.readEmpProfileContentsTab({ oModel, aFilters: [new Filter('Menuc', FilterOperator.EQ, data.Menuc1), ...aFilters] }));
             aContentRequests.push(this.readOdata({ sUrl: '/EmpProfileContentsTabSet', mFilters: { Menuc: data.Menuc1, ...mFilters } }));
           });
 
@@ -413,6 +414,43 @@ sap.ui.define(
             oDialog.open();
           });
         }, 100);
+      },
+
+      openSelectDialog({ path, codeKey, valueKey, fragmentName }) {
+        const oView = this.getView();
+        const oViewModel = this.getViewModel();
+        const mItems = oViewModel.getProperty(`/employee/dialog/${path}`);
+        const sInputCode = oViewModel.getProperty(`/employee/dialog/form/${codeKey}`);
+
+        AppUtils.setAppBusy(true, this);
+
+        if (!this[`_p${fragmentName}`]) {
+          this[`_p${fragmentName}`] = Fragment.load({
+            id: oView.getId(),
+            name: `sap.ui.yesco.view.employee.fragment.form.${fragmentName}`,
+            controller: this,
+          }).then(function (oDialog) {
+            oView.addDependent(oDialog);
+            return oDialog;
+          });
+        }
+        this[`_p${fragmentName}`].then(async (oDialog) => {
+          if (sInputCode) {
+            oDialog.getBinding('items').filter(new Filter(codeKey, FilterOperator.EQ, sInputCode));
+          }
+
+          oViewModel.setProperty(
+            `/employee/dialog/${path}`,
+            mItems.map((o) => ({
+              ...o,
+              selected: o[codeKey] === sInputCode,
+            }))
+          );
+
+          oViewModel.setProperty('/employee/dialog/selectedHelpDialog', { codeKey, valueKey });
+          AppUtils.setAppBusy(false, this);
+          oDialog.open();
+        });
       },
 
       async refreshTableContents({ oViewModel, sMenuKey }) {
@@ -859,153 +897,32 @@ sap.ui.define(
       },
 
       onPressHelpCountry() {
-        const oView = this.getView();
-        const oViewModel = this.getViewModel();
-        const mCountryList = oViewModel.getProperty('/employee/dialog/countryList');
-        const sInputCode = oViewModel.getProperty('/employee/dialog/form/Sland');
-
-        AppUtils.setAppBusy(true, this);
-
-        if (!this._pCountryHelpDialog) {
-          this._pCountryHelpDialog = Fragment.load({
-            id: oView.getId(),
-            name: 'sap.ui.yesco.view.employee.fragment.form.CountryDialog',
-            controller: this,
-          }).then(function (oDialog) {
-            oView.addDependent(oDialog);
-            return oDialog;
-          });
-        }
-        this._pCountryHelpDialog.then(async (oDialog) => {
-          if (sInputCode) {
-            oDialog.getBinding('items').filter(new Filter('Sland', FilterOperator.EQ, sInputCode));
-          }
-
-          oViewModel.setProperty(
-            '/employee/dialog/countryList',
-            mCountryList.map((o) => ({
-              ...o,
-              selected: o.Sland === sInputCode,
-            }))
-          );
-
-          AppUtils.setAppBusy(false, this);
-          oDialog.open();
-        });
-      },
-
-      onSearchCountryHelp(oEvent) {
-        oEvent.getParameter('itemsBinding').filter([
-          new Filter('Landx50', FilterOperator.Contains, oEvent.getParameter('value')), //
-        ]);
-      },
-
-      onCloseCountryHelp(oEvent) {
-        const oViewModel = this.getViewModel();
-        const oSelectedItem = oEvent.getParameter('selectedItem');
-
-        oViewModel.setProperty('/employee/dialog/form/Sland', oSelectedItem.getDescription());
-        oViewModel.setProperty('/employee/dialog/form/Landx50', oSelectedItem.getTitle());
+        this.openSelectDialog(this.SELECT_DIALOG.COUNTRY);
       },
 
       onPressHelpSchool() {
-        const oView = this.getView();
-        const oViewModel = this.getViewModel();
-        const mSchoolList = oViewModel.getProperty('/employee/dialog/schoolList');
-        const sInputCode = oViewModel.getProperty('/employee/dialog/form/Zzschcd');
-
-        AppUtils.setAppBusy(true, this);
-
-        if (!this._pSchoolHelpDialog) {
-          this._pSchoolHelpDialog = Fragment.load({
-            id: oView.getId(),
-            name: 'sap.ui.yesco.view.employee.fragment.form.SchoolDialog',
-            controller: this,
-          }).then(function (oDialog) {
-            oView.addDependent(oDialog);
-            return oDialog;
-          });
-        }
-        this._pSchoolHelpDialog.then(async (oDialog) => {
-          if (sInputCode) {
-            oDialog.getBinding('items').filter(new Filter('Zzschcd', FilterOperator.EQ, sInputCode));
-          }
-
-          oViewModel.setProperty(
-            '/employee/dialog/schoolList',
-            mSchoolList.map((o) => ({
-              ...o,
-              selected: o.Zzschcd === sInputCode,
-            }))
-          );
-
-          AppUtils.setAppBusy(false, this);
-          oDialog.open();
-        });
-      },
-
-      async onSearchSchoolHelp(oEvent) {
-        oEvent.getParameter('itemsBinding').filter([
-          new Filter('Zzschtx', FilterOperator.Contains, oEvent.getParameter('value')), //
-        ]);
-      },
-
-      onCloseSchoolHelp(oEvent) {
-        const oViewModel = this.getViewModel();
-        const oSelectedItem = oEvent.getParameter('selectedItem');
-
-        oViewModel.setProperty('/employee/dialog/form/Zzschcd', oSelectedItem.getDescription());
-        oViewModel.setProperty('/employee/dialog/form/Zzschtx', oSelectedItem.getTitle());
+        this.openSelectDialog(this.SELECT_DIALOG.SCHOOL);
       },
 
       onPressHelpMajor() {
-        const oView = this.getView();
-        const oViewModel = this.getViewModel();
-        const mMajorList = oViewModel.getProperty('/employee/dialog/majorList');
-        const sInputCode = oViewModel.getProperty('/employee/dialog/form/Zzmajo1');
-
-        AppUtils.setAppBusy(true, this);
-
-        if (!this._pMajorHelpDialog) {
-          this._pMajorHelpDialog = Fragment.load({
-            id: oView.getId(),
-            name: 'sap.ui.yesco.view.employee.fragment.form.MajorDialog',
-            controller: this,
-          }).then(function (oDialog) {
-            oView.addDependent(oDialog);
-            return oDialog;
-          });
-        }
-        this._pMajorHelpDialog.then(async (oDialog) => {
-          if (sInputCode) {
-            oDialog.getBinding('items').filter(new Filter('Zzmajo1', FilterOperator.EQ, sInputCode));
-          }
-
-          oViewModel.setProperty(
-            '/employee/dialog/majorList',
-            mMajorList.map((o) => ({
-              ...o,
-              selected: o.Zzmajo1 === sInputCode,
-            }))
-          );
-
-          AppUtils.setAppBusy(false, this);
-          oDialog.open();
-        });
+        this.openSelectDialog(this.SELECT_DIALOG.MAJOR);
       },
 
-      async onSearchMajorHelp(oEvent) {
+      onSearchDialogHelp(oEvent) {
+        const oHelpDialogInfo = this.getViewModel().getProperty('/employee/dialog/selectedHelpDialog');
+
         oEvent.getParameter('itemsBinding').filter([
-          new Filter('Zzmajo1tx', FilterOperator.Contains, oEvent.getParameter('value')), //
+          new Filter(oHelpDialogInfo.valueKey, FilterOperator.Contains, oEvent.getParameter('value')), //
         ]);
       },
 
-      onCloseMajorHelp(oEvent) {
+      onCloseDialogHelp(oEvent) {
         const oViewModel = this.getViewModel();
+        const oHelpDialogInfo = oViewModel.getProperty('/employee/dialog/selectedHelpDialog');
         const oSelectedItem = oEvent.getParameter('selectedItem');
 
-        oViewModel.setProperty('/employee/dialog/form/Zzmajo1', oSelectedItem.getDescription());
-        oViewModel.setProperty('/employee/dialog/form/Zzmajo1tx', oSelectedItem.getTitle());
+        oViewModel.setProperty(`/employee/dialog/form/${oHelpDialogInfo.codeKey}`, oSelectedItem.getDescription());
+        oViewModel.setProperty(`/employee/dialog/form/${oHelpDialogInfo.valueKey}`, oSelectedItem.getTitle());
       },
 
       openSearchZipCodePopup() {
