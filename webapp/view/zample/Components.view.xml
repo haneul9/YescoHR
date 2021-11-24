@@ -206,23 +206,35 @@
 							<TimePicker id="TP1" width="110px" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" minutesStep="5" class="sapIcon_Time" />
 						</HBox>
 						<HBox>
-							<custom:DatePicker id="DP1-1" width="140px" class="sapUiSmallMarginBottom sapIcon_Date" value="{ path: '/today', formatter: '.DateUtils.format' }" />
-							<DatePicker id="DP1-2" width="140px" class="sapUiSmallMarginBottom sapIcon_Date" value="{ path: '/today', formatter: '.DateUtils.format' }" valueFormat="{sessionModel&gt;/Dtfmt}" displayFormat="{sessionModel&gt;/Dtfmt}" placeholder="{sessionModel&gt;/Dtfmt}" />
-							<Label text="/Date(1640358000000)/" labelFor="DP1-2" />
+							<!-- standard DatePicker 대신 custom:DatePicker 사용 -->
+							<DatePicker id="DP1-1" width="140px" class="sapUiSmallMarginBottom sapIcon_Date" value="{ path: '/today', formatter: '.DateUtils.format' }" valueFormat="{sessionModel&gt;/Dtfmt}" displayFormat="{sessionModel&gt;/Dtfmt}" placeholder="{sessionModel&gt;/Dtfmt}" />
+							<Label text="standard DatePicker /Date(1640358000000)/ formatter" labelFor="DP1-1" />
 						</HBox>
 						<HBox>
-							<custom:DatePicker id="DP2-1" width="140px" class="sapUiSmallMarginBottom sapIcon_Date" value="{ path: '/today', type: '.type.ODataDate' }" />
-							<DatePicker id="DP2-2" width="140px" class="sapUiSmallMarginBottom sapIcon_Date" value="{ path: '/today', type: '.type.ODataDate' }" valueFormat="{sessionModel&gt;/Dtfmt}" displayFormat="{sessionModel&gt;/Dtfmt}" placeholder="{sessionModel&gt;/Dtfmt}" />
-							<Label text="/Date(1640358000000)/" labelFor="DP2-2" />
+							<!-- value에 formatter 적용 : model에 값이 적용되지 않으므로 비추 -->
+							<custom:DatePicker id="DP1-2" width="140px" class="sapUiSmallMarginBottom sapIcon_Date" value="{ path: '/today', formatter: '.DateUtils.format' }" />
+							<Label text="custom DatePicker /Date(1640358000000)/ formatter" labelFor="DP1-2" />
+						</HBox>
+						<HBox>
+							<!-- standard DatePicker 대신 custom:DatePicker 사용 -->
+							<DatePicker id="DP2-1" width="140px" class="sapUiSmallMarginBottom sapIcon_Date" value="{ path: '/today', type: '.type.ODataDate' }" valueFormat="{sessionModel&gt;/Dtfmt}" displayFormat="{sessionModel&gt;/Dtfmt}" placeholder="{sessionModel&gt;/Dtfmt}" />
+							<Label text="standard DatePicker /Date(1640358000000)/ sap.ui.yesco.model.ODataDate" labelFor="DP2-1" />
+						</HBox>
+						<HBox>
+							<!-- value에 custom type 적용 : model에 값이 적용되므로 강추! -->
+							<custom:DatePicker id="DP2-2" width="140px" class="sapUiSmallMarginBottom sapIcon_Date" value="{ path: '/today', type: '.type.ODataDate' }" />
+							<Label text="custom DatePicker /Date(1640358000000)/ sap.ui.yesco.model.ODataDate" labelFor="DP2-2" />
 						</HBox>
 						<HBox>
 							<custom:DatePicker id="DP3-1" width="140px" class="sapUiSmallMarginBottom sapIcon_Date" value="{/today1}" />
 							<DatePicker id="DP3-2" width="140px" class="sapUiSmallMarginBottom sapIcon_Date" value="{/today1}" valueFormat="{sessionModel&gt;/Dtfmt}" displayFormat="{sessionModel&gt;/Dtfmt}" placeholder="{sessionModel&gt;/Dtfmt}" />
-							<Label text="2021.12.25" labelFor="DP2-2" />
+							<Label text="2021.12.25" labelFor="DP3-2" />
 						</HBox>
 						<HBox>
+							<!-- dateValue/secondDateValue에 custom type 적용 : model에 값이 적용되므로 강추! -->
 							<custom:DateRangeSelection id="DRS1" width="230px" class="sapIcon_Date" dateValue="{ path: '/today', type: '.type.ODataDate' }" secondDateValue="{ path: '/tomorrow', type: '.type.ODataDate' }" />
 							<custom:DateRangeSelection id="DRS2" width="230px" class="sapIcon_Date" dateValue="{ path: '/today1', type: '.type.ODataDate' }" secondDateValue="{ path: '/tomorrow1', type: '.type.ODataDate' }" />
+							<!-- standard DateRangeSelection 대신 custom:DateRangeSelection 사용 -->
 							<DateRangeSelection id="DRS3" width="230px" class="sapIcon_Date" dateValue="{
 									path: '/today1', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'yyyy.MM.dd', source: { pattern: 'yyyy.MM.dd' } }
 								}" secondDateValue="{
