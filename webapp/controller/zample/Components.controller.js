@@ -10,6 +10,7 @@ sap.ui.define(
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/controller/BaseController',
+    'sap/ui/yesco/model/ODataDate',
   ],
   (
     // prettier 방지용 주석
@@ -21,11 +22,15 @@ sap.ui.define(
     DateUtils,
     TableUtils,
     MessageBox,
-    BaseController
+    BaseController,
+    ODataDate
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.controller.zample.Components', {
+      type: {
+        ODataDate: new ODataDate(),
+      },
       DateUtils,
 
       /* =========================================================== */
@@ -33,8 +38,19 @@ sap.ui.define(
       /* =========================================================== */
       onBeforeShow() {
         var oModel = new JSONModel(sap.ui.require.toUrl('sap/ui/yesco/localService/mockdata/products.json'));
-        // The default limit of the model is set to 100. We want to show all the entries.
-        oModel.setSizeLimit(100000);
+        oModel.attachRequestCompleted((oEvent) => {
+          // if (!oEvent.getParameters().success) {
+          //   return;
+          // }
+          // const oData = oModel.getData();
+          // oData.today = DateUtils.parse(oData.today);
+          // oData.tomorrow = DateUtils.parse(oData.tomorrow);
+          // oData.ProductCollection.forEach((oProduct) => {
+          //   oProduct.DeliveryDate = DateUtils.parse(oProduct.DeliveryDate);
+          // });
+          // oModel.updateBindings(true);
+        });
+        oModel.setSizeLimit(100000); // The default limit of the model is set to 100. We want to show all the entries.
         this.getView().setModel(oModel);
 
         const oTable = this.byId('groupTable');
