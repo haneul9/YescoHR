@@ -18,9 +18,10 @@ sap.ui.define(
        * @param {any} Unknown
        * @returns {sap.ui.base.Object}
        */
-      constructor: function (type = 'C') {
-        // {임시저장|신청|추가}중 오류가 발생하였습니다.
-        Error.prototype.constructor.call(this, { code: 'E', message: AppUtils.getBundleText('MSG_00008', this.MESSAGE[type]) });
+      constructor: function (type = 'C', oError) {
+        const { code, message } = oError ? AppUtils.parseError(oError) : { code: 'E', message: AppUtils.getBundleText('MSG_00008', this.MESSAGE[type]) };
+
+        Error.prototype.constructor.call(this, { code, message });
       },
     });
   }

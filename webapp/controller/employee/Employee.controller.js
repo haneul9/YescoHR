@@ -254,7 +254,11 @@ sap.ui.define(
         } catch (oError) {
           this.debug('Controller > Employee > loadProfile Error', oError);
 
-          MessageBox.error(new ODataReadError().getMessage()); // {조회}중 오류가 발생하였습니다.
+          if (oError instanceof Error) {
+            MessageBox.error(oError.message);
+          } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+            oError.showErrorMessage();
+          }
         } finally {
           oViewModel.setProperty('/employee/busy', false);
         }
@@ -403,7 +407,9 @@ sap.ui.define(
         } catch (oError) {
           this.debug('Controller > Employee > refreshTableContents Error', oError);
 
-          if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+          if (oError instanceof Error) {
+            MessageBox.error(oError.message);
+          } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
             oError.showErrorMessage();
           }
         }
@@ -654,7 +660,11 @@ sap.ui.define(
         } catch (oError) {
           this.debug('Controller > Employee > onSaveAddress Error', oError);
 
-          if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+          if (oError instanceof Error) {
+            MessageBox.error(oError.message, {
+              onClose: () => this.onInputFormDialogClose(),
+            });
+          } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
             oError.showErrorMessage({
               onClose: () => this.onInputFormDialogClose(),
             });
@@ -712,7 +722,9 @@ sap.ui.define(
         } catch (oError) {
           this.debug('Controller > Employee > onPressModifyTable Error', oError);
 
-          if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+          if (oError instanceof Error) {
+            MessageBox.error(oError.message);
+          } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
             oError.showErrorMessage();
           }
         }
@@ -770,7 +782,9 @@ sap.ui.define(
               } catch (oError) {
                 this.debug('Controller > Employee > onPressDeleteTable Error', oError);
 
-                if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+                if (oError instanceof Error) {
+                  MessageBox.error(oError.message);
+                } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
                   oError.showErrorMessage();
                 }
               }
@@ -796,7 +810,11 @@ sap.ui.define(
         } catch (oError) {
           this.debug('Controller > Employee > onChangeSchoolType Error', oError);
 
-          MessageBox.error(new ODataReadError().getMessage()); // {조회}중 오류가 발생하였습니다.
+          if (oError instanceof Error) {
+            MessageBox.error(oError.message);
+          } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+            oError.showErrorMessage();
+          }
         } finally {
           oViewModel.setProperty('/employee/dialog/busy/Slabs', false);
         }
@@ -829,7 +847,9 @@ sap.ui.define(
           } catch (oError) {
             this.debug('Controller > Employee > onPressHelpSchool Error', oError);
 
-            if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+            if (oError instanceof Error) {
+              MessageBox.error(oError.message);
+            } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
               oError.showErrorMessage();
             }
           } finally {
@@ -867,7 +887,9 @@ sap.ui.define(
           } catch (oError) {
             this.debug('Controller > Employee > onPressHelpMajor Error', oError);
 
-            if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+            if (oError instanceof Error) {
+              MessageBox.error(oError.message);
+            } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
               oError.showErrorMessage();
             }
           } finally {
@@ -911,7 +933,7 @@ sap.ui.define(
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
 
-              reject(oError);
+              reject(new ODataReadError(oError));
             },
           });
         });
@@ -937,7 +959,7 @@ sap.ui.define(
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
 
-              reject(oError);
+              reject(new ODataReadError(oError));
             },
           });
         });
@@ -959,7 +981,7 @@ sap.ui.define(
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
 
-              reject(new ODataReadError()); // {조회}중 오류가 발생하였습니다.
+              reject(new ODataReadError(oError)); // {조회}중 오류가 발생하였습니다.
             },
           });
         });
@@ -980,7 +1002,7 @@ sap.ui.define(
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
 
-              resolve(sAction === 'U' ? new ODataUpdateError() : new ODataCreateError('A'));
+              resolve(sAction === 'U' ? new ODataUpdateError(oError) : new ODataCreateError('A', oError));
             },
           });
         });
@@ -998,7 +1020,7 @@ sap.ui.define(
             error: (oError) => {
               this.debug(`${sUrlByKey} error.`, oError);
 
-              reject(new ODataDeleteError()); // {삭제}중 오류가 발생하였습니다.
+              reject(new ODataDeleteError(oError)); // {삭제}중 오류가 발생하였습니다.
             },
           });
         });

@@ -113,14 +113,15 @@ sap.ui.define(
         } catch (oError) {
           this.debug('Controller > Attendance Detail > onAfterShow Error', oError);
 
-          if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+          if (oError instanceof Error) {
+            // 잘못된 접근입니다.
+            MessageBox.error(this.getBundleText('MSG_00043'), {
+              onClose: () => this.getRouter().navTo('attendance'),
+            });
+          } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
             oError.showErrorMessage({
               onClose: () => this.getRouter().navTo('attendance'),
             });
-          } else if (oError instanceof Error) {
-            MessageBox.error(this.getBundleText('MSG_00043'), {
-              onClose: () => this.getRouter().navTo('attendance'),
-            }); // 잘못된 접근입니다.
           }
         }
 
@@ -275,8 +276,44 @@ sap.ui.define(
         }
       },
 
+      async createProcess({ sPrcty = 'C' }) {
+        const oViewModel = this.getViewModel();
+        const iAttachLength = AttachFileAction.getFileLength.call(this);
+        let sAppno = oViewModel.getProperty('/Appno');
+
+        try {
+          if (!sAppno) {
+            sAppno = await Appno.get();
+            oViewModel.setProperty('/Appno', sAppno);
+          }
+
+          if (iAttachLength > 0) {
+            await AttachFileAction.uploadFile.call(this, sAppno, this.TYPE_CODE);
+          }
+
+          await this.createLeaveApplContent(sPrcty);
+
+          // {임시저장|신청}되었습니다.
+          MessageBox.success(this.getBundleText('MSG_00007', this.ACTION_MESSAGE[sPrcty]), {
+            onClose: () => {
+              this.getRouter().navTo('attendance');
+            },
+          });
+        } catch (oError) {
+          this.debug('Controller > Attendance Detail > createProcess Error', oError);
+
+          if (oError instanceof Error) {
+            MessageBox.error(oError.message);
+          } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+            oError.showErrorMessage();
+          }
+        } finally {
+          AppUtils.setAppBusy(false, this);
+        }
+      },
+
       /*****************************************************************
-       * Event handler
+       * ! Event handler
        *****************************************************************/
       onPressAddBtn() {
         const oViewModel = this.getViewModel();
@@ -458,7 +495,7 @@ sap.ui.define(
       },
 
       /*****************************************************************
-       * Call oData
+       * ! Call OData
        *****************************************************************/
       readAwartCodeList() {
         return new Promise((resolve, reject) => {
@@ -480,7 +517,7 @@ sap.ui.define(
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
 
-              reject(oError);
+              reject(new ODataReadError(oError));
             },
           });
         });
@@ -521,11 +558,7 @@ sap.ui.define(
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
 
-              if (Prcty === 'R') {
-                reject(new ODataReadError()); // {조회}중 오류가 발생하였습니다.
-              } else {
-                reject(oError);
-              }
+              reject(new ODataReadError(oError));
             },
           });
         });
@@ -571,44 +604,10 @@ sap.ui.define(
             error: (oError) => {
               this.debug(`${sUrl} error.`, AppUtils.parseError(oError));
 
-              reject(new ODataCreateError()); // {신청}중 오류가 발생하였습니다.
+              reject(new ODataCreateError(oError)); // {신청}중 오류가 발생하였습니다.
             },
           });
         });
-      },
-
-      async createProcess({ sPrcty = 'C' }) {
-        const oViewModel = this.getViewModel();
-        const iAttachLength = AttachFileAction.getFileLength.call(this);
-        let sAppno = oViewModel.getProperty('/Appno');
-
-        try {
-          if (!sAppno) {
-            sAppno = await Appno.get();
-            oViewModel.setProperty('/Appno', sAppno);
-          }
-
-          if (iAttachLength > 0) {
-            await AttachFileAction.uploadFile.call(this, sAppno, this.TYPE_CODE);
-          }
-
-          await this.createLeaveApplContent(sPrcty);
-
-          // {임시저장|신청}되었습니다.
-          MessageBox.success(this.getBundleText('MSG_00007', this.ACTION_MESSAGE[sPrcty]), {
-            onClose: () => {
-              this.getRouter().navTo('attendance');
-            },
-          });
-        } catch (oError) {
-          this.debug('Controller > Attendance Detail > createProcess Error', oError);
-
-          if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
-            oError.showErrorMessage();
-          }
-        } finally {
-          AppUtils.setAppBusy(false, this);
-        }
       },
     });
   }

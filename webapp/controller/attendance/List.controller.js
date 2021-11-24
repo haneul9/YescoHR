@@ -70,7 +70,6 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const oViewModel = this.getViewModel();
         const sPernr = this.getOwnerComponent().getSessionModel().getProperty('/Pernr');
-        // const sPernr = '50013';
         const oSearchConditions = oViewModel.getProperty('/search');
 
         try {
@@ -104,7 +103,9 @@ sap.ui.define(
         } catch (oError) {
           this.debug('Controller > Attendance List > initialRetrieve Error', oError);
 
-          if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+          if (oError instanceof Error) {
+            MessageBox.error(oError.message);
+          } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
             oError.showErrorMessage();
           }
         } finally {
@@ -148,7 +149,9 @@ sap.ui.define(
         } catch (error) {
           this.debug('Controller > Attendance List > onPressSearch Error', oError);
 
-          if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+          if (oError instanceof Error) {
+            MessageBox.error(oError.message);
+          } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
             oError.showErrorMessage();
           }
         } finally {
@@ -278,7 +281,7 @@ sap.ui.define(
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
 
-              reject(new ODataReadError());
+              reject(new ODataReadError(oError));
             },
           });
         });
@@ -307,7 +310,7 @@ sap.ui.define(
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
 
-              reject(new ODataReadError());
+              reject(new ODataReadError(oError));
             },
           });
         });
