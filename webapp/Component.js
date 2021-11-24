@@ -238,6 +238,13 @@ sap.ui.define(
           })
           .attachRoutePatternMatched((oEvent) => {
             AppUtils.debug('routePatternMatched', oEvent.getParameters());
+
+            const oView = oEvent.getParameter('view');
+            const oController = oView.getController();
+
+            if (oController['onObjectMatched'] instanceof Function) {
+              oController['onObjectMatched'](oEvent.getParameter('arguments'));
+            }
           });
         return this;
       },
