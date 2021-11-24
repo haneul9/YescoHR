@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:table="sap.ui.table"
     xmlns:core="sap.ui.core">
-    <table:Table id="familyTable" rows="{/FamilyList}" visibleRowCount="{/listInfo/rowCount}" width="100%" columnHeaderHeight="50px" rowHeight="50px" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
+    <table:Table id="familyTable" rows="{/FamilyList}" selectionMode="None" visibleRowCount="{/listInfo/rowCount}" width="100%" columnHeaderHeight="50px" rowHeight="50px" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
         <table:rowSettingsTemplate>
             <table:RowSettings highlight="{
         path: 'ZappStatAl',
@@ -9,7 +9,7 @@
     }"/>
         </table:rowSettingsTemplate>
         <table:columns>
-            <table:Column width="100px" sortProperty='ZappStatAl' filterProperty='ZappStatAl' >
+            <table:Column width="100px" sortProperty="ZappStatAl" filterProperty="ZappStatAl">
                 <Label text="{i18n>LABEL_00144}"/>
                 <table:template>
                     <Text text="{
@@ -22,13 +22,13 @@
                     </Text>
                 </table:template>
             </table:Column>
-            <table:Column width="150px" sortProperty='Atext' filterProperty='Atext'>
+            <table:Column width="150px" sortProperty="Atext" filterProperty="Atext">
                 <Label text="{i18n>LABEL_02006}"/>
                 <table:template>
                     <Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="auto" sortProperty='Begda' filterProperty='Begda'>
+            <table:Column width="auto" sortProperty="Begda" filterProperty="Begda">
                 <Label text="{i18n>LABEL_00148}"/>
                 <table:template>
                     <Text text="{
@@ -37,7 +37,7 @@
                     }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="auto" sortProperty='Endda' filterProperty='Endda'>
+            <table:Column width="auto" sortProperty="Endda" filterProperty="Endda">
                 <Label text="{i18n>LABEL_00149}"/>
                 <table:template>
                     <Text text="{
@@ -46,13 +46,13 @@
                     }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="200px" sortProperty='Famnm' filterProperty='Famnm'>
+            <table:Column width="200px" sortProperty="Famnm" filterProperty="Famnm">
                 <Label text="{i18n>LABEL_00210}"/>
                 <table:template>
                     <Text text="{Famnm}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="auto" sortProperty='ZreqDate' filterProperty='ZreqDate'>
+            <table:Column width="auto" sortProperty="ZreqDate" filterProperty="ZreqDate">
                 <Label text="{i18n>LABEL_00266}"/>
                 <table:template>
                     <Text text="{
@@ -61,7 +61,7 @@
                     }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="auto" sortProperty='ZappDate' filterProperty='ZappDate'>
+            <table:Column width="auto" sortProperty="ZappDate" filterProperty="ZappDate">
                 <Label text="{i18n>LABEL_05003}"/>
                 <table:template>
                     <Text text="{

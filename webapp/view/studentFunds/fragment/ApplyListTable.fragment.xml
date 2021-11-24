@@ -9,7 +9,7 @@
     }"/>
         </table:rowSettingsTemplate>
         <table:columns>
-            <table:Column width="100px" sortProperty='ZappStatAl' filterProperty='ZappStatAl' >
+            <table:Column width="100px" sortProperty="ZappStatAl" filterProperty="ZappStatAl">
                 <Label text="{i18n>LABEL_00144}"/>
                 <table:template>
                     <Text text="{
@@ -22,37 +22,37 @@
                     </Text>
                 </table:template>
             </table:Column>
-            <table:Column width="100px" sortProperty='Famtx' filterProperty='Famtx'>
+            <table:Column width="100px" sortProperty="Famtx" filterProperty="Famtx">
                 <Label text="{i18n>LABEL_02005}"/>
                 <table:template>
                     <Text text="{Famtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="auto" sortProperty='Zname' filterProperty='Zname'>
+            <table:Column width="auto" sortProperty="Zname" filterProperty="Zname">
                 <Label text="{i18n>LABEL_03010}"/>
                 <table:template>
                     <Text text="{Zname}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="auto" sortProperty='Sltxt' filterProperty='Sltxt'>
+            <table:Column width="auto" sortProperty="Sltxt" filterProperty="Sltxt">
                 <Label text="{i18n>LABEL_03014}"/>
                 <table:template>
                     <Text text="{Sltxt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="100px" sortProperty='Grdtx' filterProperty='Grdtx'>
+            <table:Column width="100px" sortProperty="Grdtx" filterProperty="Grdtx">
                 <Label text="{i18n>LABEL_03006}"/>
                 <table:template>
                     <Text text="{Grdtx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="100px" sortProperty='Divtx' filterProperty='Divtx'>
+            <table:Column width="100px" sortProperty="Divtx" filterProperty="Divtx">
                 <Label text="{i18n>LABEL_03007}"/>
                 <table:template>
                     <Text text="{Divtx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="auto" sortProperty='ZbetTotl' filterProperty='ZbetTotl'>
+            <table:Column width="auto" sortProperty="ZbetTotl" filterProperty="ZbetTotl">
                 <Label text="{i18n>LABEL_03008}"/>
                 <table:template>
                     <Text text="{
@@ -61,7 +61,7 @@
                     }" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="90px" sortProperty='Curcnt' filterProperty='Curcnt'>
+            <table:Column width="90px" sortProperty="Curcnt" filterProperty="Curcnt">
                 <Label text="{i18n>LABEL_03009}"/>
                 <table:template>
                     <Text text="{Curcnt}" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
@@ -73,7 +73,7 @@
                     <Button type="Transparent" icon="sap-icon://attachment" class="w-100" press=".TableUtils.onFileListDialog" visible="{= ${Docyn} === 'Y' }"/>
                 </table:template>
             </table:Column>
-            <table:Column width="200px" sortProperty='Appda' filterProperty='Appda'>
+            <table:Column width="200px" sortProperty="Appda" filterProperty="Appda">
                 <Label text="{i18n>LABEL_00266}"/>
                 <table:template>
                     <Text text="{
@@ -82,7 +82,7 @@
                 }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="200px" sortProperty='Sgnda' filterProperty='Sgnda'>
+            <table:Column width="200px" sortProperty="Sgnda" filterProperty="Sgnda">
                 <Label text="{i18n>LABEL_00269}"/>
                 <table:template>
                     <Text text="{
@@ -91,7 +91,7 @@
                 }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="200px" sortProperty='Zpayym' filterProperty='Zpayym'>
+            <table:Column width="200px" sortProperty="Zpayym" filterProperty="Zpayym">
                 <Label text="{i18n>LABEL_03002}"/>
                 <table:template>
                     <Text text="{
