@@ -2,6 +2,7 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/model/json/JSONModel',
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/EmpInfo',
     '../BaseController',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -13,13 +14,14 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-    EmpInfo,
-    BaseController,
-    ServiceNames,
-    AttachFileAction,
-    TableUtils,
-    TextUtils,
-    FragmentEvent
+	MessageBox,
+	EmpInfo,
+	BaseController,
+	ServiceNames,
+	AttachFileAction,
+	TableUtils,
+	TextUtils,
+	FragmentEvent
   ) => {
     'use strict';
 
@@ -62,6 +64,25 @@ sap.ui.define(
       },
 
       onClick() {
+        const oTable = this.byId('familyTable');
+        const aSelectedIndex = oTable.getSelectedIndices();
+        const iLength = aSelectedIndex.length;
+
+        if(iLength > 1) {
+          return MessageBox.alert(this.getBundleText('MSG_00038'));
+        }
+        
+        if(iLength === 1) {
+          const oListModel = this.getViewModel();
+          const oRowData = oListModel.getProperty(`/FamilyList/${aSelectedIndex[0]}`);
+
+          if(oRowData.ZappStatAl === '60') {
+            oListModel.setProperty('/parameter', oRowData);
+          }else {
+            return MessageBox.alert(this.getBundleText('MSG_05017'));
+          }
+        }
+
         this.getRouter().navTo('familyInfo-detail', { oDataKey: 'N' });
       },
 
@@ -130,17 +151,17 @@ sap.ui.define(
 
       onSelectRow(oEvent) {
         const vPath = oEvent.getParameters().rowBindingContext.getPath();
-        const oDetailModel = this.getViewModel();
-        const oRowData = oDetailModel.getProperty(vPath);
+        const oListModel = this.getViewModel();
+        const oRowData = oListModel.getProperty(vPath);
 
-        oDetailModel.setProperty('/parameter', oRowData);
+        oListModel.setProperty('/parameter', oRowData);
         this.getRouter().navTo('familyInfo-detail', { oDataKey: oRowData.Appno });
       },
 
       onPressExcelDownload() {
         const oTable = this.byId('familyTable');
         const mTableData = this.getViewModel().getProperty('/FamilyList');
-        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_03028');
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_05001');
 
         TableUtils.export({ oTable, mTableData, sFileName });
       },

@@ -40,25 +40,23 @@ sap.ui.define(
           T: '2',
         },
         TEXT: {
-          N: this.getBundleText('LABEL_00268'),
-          M: this.getBundleText('LABEL_00161'),
-          W: this.getBundleText('LABEL_00162'),
+          N: '- 선택 -',
+          M: '남',
+          W: '여',
         },
       },
       DISABIL: {
         CODE: {
-          CODE: {
-            A: 'ALL',
-            O: '1',
-            TW: '2',
-            TH: '3',
-          },
+          A: 'ALL',
+          O: '1',
+          TW: '2',
+          TH: '3',
         },
         TEXT: {
-          A: this.getBundleText('LABEL_00268'),
-          O: this.getBundleText('MSG_05006'),
-          TW: this.getBundleText('MSG_05007'),
-          TH: this.getBundleText('MSG_05008'),
+          A: '- 선택 -',
+          O: '장애인 복지법 기준',
+          TW: '국가 유공자 복지법 기준',
+          TH: '그 밖에 항시 치료를 요하는 중증환자',
         },
       },
       
@@ -80,7 +78,7 @@ sap.ui.define(
             { Zcode: this.DISABIL.CODE.A, Ztext: this.DISABIL.TEXT.A }, 
             { Zcode: this.DISABIL.CODE.O, Ztext: this.DISABIL.TEXT.O }, 
             { Zcode: this.DISABIL.CODE.TW, Ztext: this.DISABIL.TEXT.TW },
-            { Zcode: this.DISABIL.CODE.TH, Ztext: this.DISABIL.TEXT.TH },
+            { Zcode: this.DISABIL.CODE.TH, Ztext: this.DISABIL.TEXT.TH }
           ],
           Support: [],
           Settings: {},
@@ -98,7 +96,6 @@ sap.ui.define(
       },
 
       async onAfterShow() {
-        this.setDisabilityList();
         await this.getCodeList();
         await this.setFormData();
 
@@ -120,26 +117,30 @@ sap.ui.define(
       },
 
       setFormData() {
+        const oView = this.getView();
         const oDetailModel = this.getViewModel();
         const sKey = oDetailModel.getProperty('/FormStatus');
+        const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+        const mListData = oListView.getModel().getProperty('/parameter');
 
         if(!sKey || sKey === 'N') {
-          const oTargetInfo = oDetailModel.getProperty('/TargetInfo');
-
-          oDetailModel.setProperty('/FormData', oTargetInfo);
-          oDetailModel.setProperty('/FormData', {
-            Apename: oTargetInfo.Ename,
-            Appernr: oTargetInfo.Pernr,
-            Kdsvh: 'ALL',
-            Fasex: 'ALL',
-            Hndcd: 'ALL',
-            Dptyp: 'ALL',
-          });
+          if(!mListData) {
+            const oTargetInfo = oDetailModel.getProperty('/TargetInfo');
+  
+            oDetailModel.setProperty('/FormData', oTargetInfo);
+            oDetailModel.setProperty('/FormData', {
+              Apename: oTargetInfo.Ename,
+              Appernr: oTargetInfo.Pernr,
+              Kdsvh: 'ALL',
+              Fasex: 'ALL',
+              Hndcd: 'ALL',
+              Dptyp: 'ALL',
+            });
+          }else {
+            oDetailModel.setProperty('/FormData', mListData);
+            oDetailModel.setProperty('/FormData/ZappStatAl', '');
+          }
         }else {
-          const oView = this.getView();
-          const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-          const mListData = oListView.getModel().getProperty('/parameter');
-
           oDetailModel.setProperty('/FormData', mListData);
         }
         
@@ -171,7 +172,7 @@ sap.ui.define(
 
                   const aList = oData.results;
 
-                  oDetailModel.setProperty('/Relations', new ComboEntry({ Zcode: 'Zcode', Ztext: 'Ztext', mEntries: aList }));
+                  oDetailModel.setProperty('/Relations', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: aList }));
 
                   resolve();
                 }
@@ -195,7 +196,7 @@ sap.ui.define(
 
                   const aList = oData.results;
                   
-                  oDetailModel.setProperty('/Support', new ComboEntry({ Dptyp: 'Zcode', Dptyx: 'Ztext', mEntries: aList }));
+                  oDetailModel.setProperty('/Support', new ComboEntry({ codeKey: 'Dptyp', valueKey: 'Dptyx', mEntries: aList }));
                   resolve();
                 }
               },
@@ -275,21 +276,6 @@ sap.ui.define(
         } else {
           oDetailModel.setProperty(sPath, '');
         }
-      },
-
-      setDisabilityList() {
-        // 장애인
-        const oDetailModel = this.getViewModel();
-        const aDisabList = [];
-
-        aDisabList.push(
-          { Zcode: 'ALL', Ztext: this.getBundleText('LABEL_00268') }, 
-          { Zcode: '1', Ztext: this.getBundleText('MSG_05006') }, 
-          { Zcode: '2', Ztext: this.getBundleText('MSG_05007') },
-          { Zcode: '3', Ztext: this.getBundleText('MSG_05008') },
-        );
-
-        oDetailModel.setProperty('/Disability', aDisabList);
       },
 
       checkError() {

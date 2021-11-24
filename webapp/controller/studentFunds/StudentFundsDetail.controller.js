@@ -239,7 +239,7 @@ sap.ui.define(
 
                   const aList = oData.results;
 
-                  oDetailModel.setProperty('/AppTarget', new ComboEntry({ Zzobjps: 'Zcode', Znametx: 'Ztext', mEntries: aList }));
+                  oDetailModel.setProperty('/AppTarget', new ComboEntry({ codeKey: 'Zzobjps', valueKey: 'Znametx', mEntries: aList }));
 
                   resolve();
                 }
@@ -268,7 +268,7 @@ sap.ui.define(
                   const aList1 = oData.results;
                   
                   oDetailModel.setProperty('/AcademicSortHide', aList1);
-                  oDetailModel.setProperty('/AcademicSort', new ComboEntry({ Zcode: 'Zcode', Ztext: 'Ztext', mEntries: aList1 }));
+                  oDetailModel.setProperty('/AcademicSort', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: aList1 }));
                   resolve();
                 }
               },
@@ -297,7 +297,7 @@ sap.ui.define(
 
                   const aList = oData.results;
 
-                  oDetailModel.setProperty('/GradeList', new ComboEntry({ Zcode: 'Zcode', Ztext: 'Ztext', mEntries: aList }));
+                  oDetailModel.setProperty('/GradeList', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: aList }));
                   
                   resolve();
                 }
@@ -376,7 +376,7 @@ sap.ui.define(
           aList2 = aList1;
         }
         
-        oDetailModel.setProperty('/AcademicSort', new ComboEntry({ Zcode: 'Zcode', Ztext: 'Ztext', mEntries: aList2 }));
+        oDetailModel.setProperty('/AcademicSort', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: aList2 }));
       },
 
       // 지원횟수 조회
@@ -465,7 +465,7 @@ sap.ui.define(
 
               const aList = oData.results;
 
-              oDetailModel.setProperty('/QuarterList', new ComboEntry({ Zcode: 'Zcode', Ztext: 'Ztext', mEntries: aList }));
+              oDetailModel.setProperty('/QuarterList', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: aList }));
 
               if (!!oEvent) {
                 oDetailModel.setProperty('/FormData/Divcd', 'ALL');
