@@ -2,7 +2,7 @@
     xmlns:core="sap.ui.core">
     <Dialog id="inputFormDialog" showHeader="false" contentWidth="500px">
         <buttons>
-            <Button type="Emphasized" text="{/employee/dialog/actionText}" press=".onSaveAddress"/>
+            <Button type="Emphasized" text="{/employee/dialog/actionText}" press=".onSaveInputForm"/>
             <Button text="{i18n>LABEL_00115}" press=".onInputFormDialogClose"/>
         </buttons>
         <Panel expanded="true" headerText="{/employee/dialog/subLabel}">

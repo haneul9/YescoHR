@@ -161,10 +161,7 @@ sap.ui.define(['sap/ui/yesco/common/odata/ServiceManager', 'sap/ui/yesco/common/
       const Datas = { Data: [] };
 
       oModel.read('/FileListSet', {
-        filters: [
-          new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, oTableRowData.Appno),
-          new sap.ui.model.Filter('Zworktyp', sap.ui.model.FilterOperator.EQ, oController.TYPE_CODE)
-        ],
+        filters: [new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, oTableRowData.Appno), new sap.ui.model.Filter('Zworktyp', sap.ui.model.FilterOperator.EQ, oController.TYPE_CODE)],
         success: (data) => {
           if (data && data.results.length) {
             data.results.forEach((elem) => {
@@ -263,6 +260,48 @@ sap.ui.define(['sap/ui/yesco/common/odata/ServiceManager', 'sap/ui/yesco/common/
             });
           }
         });
+      });
+    },
+    /**
+     * @param  {} Appno
+     * @param  {} Type
+     */
+    upload(sAppno, sType, aFiles) {
+      const sServiceUrl = ServiceManager.getServiceUrl('ZHR_COMMON_SRV', this.getOwnerComponent());
+      const oModel = new sap.ui.model.odata.ODataModel(sServiceUrl, true, undefined, undefined, undefined, undefined, undefined, false);
+
+      return new Promise((resolve) => {
+        for (let i = 0; i < aFiles.length; i++) {
+          oModel.refreshSecurityToken();
+
+          const oFile = aFiles[i];
+          const oRequest = oModel._createRequest();
+          const oHeaders = {
+            'x-csrf-token': oRequest.headers['x-csrf-token'],
+            slug: [sAppno, sType, encodeURI(oFile.name)].join('|'),
+          };
+
+          jQuery.ajax({
+            type: 'POST',
+            async: false,
+            url: sServiceUrl + '/FileUploadSet/',
+            headers: oHeaders,
+            cache: false,
+            contentType: oFile.type,
+            processData: false,
+            data: oFile,
+            success: (data) => {
+              this.debug(`${this.getBundleText('MSG_00016')}, ${data}`);
+              resolve();
+            },
+            error: (oError) => {
+              this.debug(`Error: ${oError}`);
+
+              // 파일 업로드에 실패하였습니다.
+              reject({ code: 'E', message: this.getBundleText('MSG_00041') });
+            },
+          });
+        }
       });
     },
 

@@ -1,6 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:u="sap.ui.unified"
     xmlns:custom="sap.ui.yesco.control">
     <grid:CSSGrid gridTemplateColumns="3fr 7fr" gridGap="8px">
         <grid:layoutData>
@@ -42,6 +43,10 @@
             <core:Item key="{code}" text="{text}" />
         </ComboBox>
         <Label text="{i18n>LABEL_00300}" />
-        <Button text="Upload" />
+        <u:FileUploader buttonText= "{i18n>LABEL_00243}" maximumFileSize="{/employee/dialog/file/settings/maximumFileSize}" fileType="{/employee/dialog/file/settings/fileType}" change=".onInputFormFileChange">
+            <u:customData>
+                <core:CustomData key="code" value="0022" />
+            </u:customData>
+        </u:FileUploader>
     </grid:CSSGrid>
 </core:FragmentDefinition>
