@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <SelectDialog id="schoolSelectDialog" contentHeight="50%" title="{i18n>LABEL_00301}" items="{/employee/dialog/schoolList}" search=".onSearchSchoolHelp" confirm=".onCloseSchoolHelp">
-        <StandardListItem type="Active" selected="{selected}" title="{Zzschcd} {Zzschtx}" />
+    <SelectDialog id="schoolSelectDialog" contentHeight="50%" title="{i18n>LABEL_00301}" items="{ path: '/employee/dialog/schoolList', sorter: {path: 'Zzschtx', descending: false}}" liveChange=".onSearchSchoolHelp" search=".onSearchSchoolHelp" confirm=".onCloseSchoolHelp">
+        <StandardListItem type="Active" selected="{selected}" title="{Zzschtx}" description="{Zzschcd}" />
     </SelectDialog>
 </core:FragmentDefinition>

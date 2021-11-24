@@ -1,11 +1,11 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <Dialog id="inputFormDialog" showHeader="false" contentWidth="700px">
+    <Dialog id="inputFormDialog" showHeader="false" contentWidth="500px">
         <buttons>
             <Button type="Emphasized" text="{/employee/dialog/actionText}" press=".onSaveAddress"/>
             <Button text="{i18n>LABEL_00115}" press=".onInputFormDialogClose"/>
         </buttons>
-        <Panel expanded="true" headerText="{i18n>LABEL_00283}">
+        <Panel expanded="true" headerText="{/employee/dialog/subLabel}">
             <content>
                 <VBox>
                     <HBox visible="{= ${/employee/dialog/subKey} === '0006'}">

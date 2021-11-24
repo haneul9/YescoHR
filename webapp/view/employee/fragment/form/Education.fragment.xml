@@ -4,24 +4,22 @@
     xmlns:custom="sap.ui.yesco.control">
     <grid:CSSGrid gridTemplateColumns="1fr 4fr" gridGap="8px">
         <Label text="{i18n>LABEL_00284}" />
-        <ComboBox width="250px" selectedKey="{/employee/dialog/form/Slart}" items="{ path: '/employee/dialog/schoolTypeList' }" change=".onChangeSchoolType">
+        <ComboBox width="100%" selectedKey="{/employee/dialog/form/Slart}" items="{ path: '/employee/dialog/schoolTypeList' }" change=".onChangeSchoolType">
             <core:Item key="{Slart}" text="{Stext}" />
         </ComboBox>
         <Label text="{i18n>LABEL_00285}/{i18n>LABEL_00286}" />
-        <HBox>
-            <custom:DatePicker width="120px" dateValue="{/employee/dialog/form/Begda}" class="sapIcon_Date" />
-            <custom:DatePicker width="120px" dateValue="{/employee/dialog/form/Endda}" class="sapIcon_Date" />
+        <HBox width="100%">
+            <custom:DatePicker width="100%" dateValue="{/employee/dialog/form/Begda}" class="sapIcon_Date" />
+            <custom:DatePicker width="100%" dateValue="{/employee/dialog/form/Endda}" class="sapIcon_Date" />
         </HBox>
         <Label text="{i18n>LABEL_00287}" />
-        <ComboBox width="250px" selectedKey="{/employee/dialog/form/Sland}" items="{ path: '/employee/dialog/countryList' }">
-            <core:Item key="{Sland}" text="{Landx50}" />
-        </ComboBox>
+        <Input width="100%" value="{/employee/dialog/form/Landx50}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpCountry" />
         <Label text="{i18n>LABEL_00288}" />
-        <Input width="250px" value="{/employee/dialog/form/Zzschcd}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpSchool" />
+        <Input width="100%" value="{/employee/dialog/form/Zzschtx}" editable="{= !!${/employee/dialog/form/Slart} &amp;&amp; ${/employee/dialog/form/Slart} !== 'ALL' }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpSchool" />
         <Label text="{i18n>LABEL_00289}" />
-        <Input width="250px" value="{/employee/dialog/form/Zzmajo1}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpMajor" />
+        <Input width="100%" value="{/employee/dialog/form/Zzmajo1tx}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpMajor" />
         <Label text="{i18n>LABEL_00290}" />
-        <ComboBox width="250px" selectedKey="{/employee/dialog/form/Slabs}" busyIndicatorDelay="0" busy="{/employee/dialog/busy/Slabs}" items="{ path: '/employee/dialog/degreeList' }">
+        <ComboBox width="100%" selectedKey="{/employee/dialog/form/Slabs}" busyIndicatorDelay="0" busy="{/employee/dialog/busy/Slabs}" items="{ path: '/employee/dialog/degreeList' }">
             <core:Item key="{Slabs}" text="{Stext}" />
         </ComboBox>
         <Label text="{i18n>LABEL_00291}" />
@@ -29,25 +27,16 @@
         <Label text="{i18n>LABEL_00292}" />
         <CheckBox selected="{/employee/dialog/form/Zzrecab}" />
         <Label text="{i18n>LABEL_00293}" />
-        <ComboBox width="250px" selectedKey="{/employee/dialog/form/Zzentba}">
-            <items>
-                <core:Item key="A" text="{i18n>LABEL_00294}" />
-                <core:Item key="B" text="{i18n>LABEL_00295}" />
-            </items>
+        <ComboBox width="100%" selectedKey="{/employee/dialog/form/Zzentba}" items="{ path: '/employee/dialog/school1Entry' }">
+            <core:Item key="{code}" text="{text}" />
         </ComboBox>
         <Label text="{i18n>LABEL_00296}/{i18n>LABEL_00297}" />
-        <ComboBox width="250px" selectedKey="{/employee/dialog/form/Zznwtns}">
-            <items>
-                <core:Item key="A" text="{i18n>LABEL_00296}" />
-                <core:Item key="B" text="{i18n>LABEL_00297}" />
-            </items>
+        <ComboBox width="100%" selectedKey="{/employee/dialog/form/Zznwtns}" items="{ path: '/employee/dialog/school2Entry' }">
+            <core:Item key="{code}" text="{text}" />
         </ComboBox>
         <Label text="{i18n>LABEL_00298}/{i18n>LABEL_00299}" />
-        <ComboBox width="250px" selectedKey="{/employee/dialog/form/Zzdyngt}">
-            <items>
-                <core:Item key="A" text="{i18n>LABEL_00298}" />
-                <core:Item key="B" text="{i18n>LABEL_00299}" />
-            </items>
+        <ComboBox width="100%" selectedKey="{/employee/dialog/form/Zzdyngt}" items="{ path: '/employee/dialog/school3Entry' }">
+            <core:Item key="{code}" text="{text}" />
         </ComboBox>
         <Label text="{i18n>LABEL_00300}" />
         <Button text="Upload" />

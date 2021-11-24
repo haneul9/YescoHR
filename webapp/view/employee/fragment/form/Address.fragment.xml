@@ -4,23 +4,23 @@
     xmlns:custom="sap.ui.yesco.control">
     <grid:CSSGrid gridTemplateColumns="1fr 4fr" gridGap="8px">
         <Label text="{i18n>LABEL_00270}" />
-        <ComboBox width="250px" selectedKey="{/employee/dialog/form/Subty}" items="{ path: '/employee/dialog/typeList' }">
+        <ComboBox width="100%" selectedKey="{/employee/dialog/form/Subty}" items="{ path: '/employee/dialog/typeList' }">
             <core:Item key="{Zcode}" text="{Ztext}" />
         </ComboBox>
         <Label text="{i18n>LABEL_00271}" />
-        <custom:DatePicker width="250px" dateValue="{/employee/dialog/form/Begda}" class="sapIcon_Date" />
+        <custom:DatePicker width="100%" dateValue="{/employee/dialog/form/Begda}" class="sapIcon_Date" />
         <Label text="{i18n>LABEL_00272}" />
-        <ComboBox width="250px" selectedKey="{/employee/dialog/form/State}" items="{ path: '/employee/dialog/sidoList' }">
+        <ComboBox width="100%" selectedKey="{/employee/dialog/form/State}" items="{ path: '/employee/dialog/sidoList' }">
             <core:Item key="{State}" text="{Bezei}" />
         </ComboBox>
         <Label text="{i18n>LABEL_00273}" />
         <HBox width="100%">
-            <Input width="185px" value="{/employee/dialog/form/Pstlz}" editable="false" />
+            <Input width="80%" value="{/employee/dialog/form/Pstlz}" editable="false" />
             <Button text="{i18n>LABEL_00101}" press=".openSearchZipCodePopup"/>
         </HBox>
         <Label text="{i18n>LABEL_00152}" />
-        <Input width="500px" value="{/employee/dialog/form/Zzaddr1}" editable="false" />
+        <Input width="100%" value="{/employee/dialog/form/Zzaddr1}" editable="false" />
         <Label text="{i18n>LABEL_00274}" />
-        <Input width="500px" value="{/employee/dialog/form/Zzaddr2}" />
+        <Input width="100%" value="{/employee/dialog/form/Zzaddr2}" />
     </grid:CSSGrid>
 </core:FragmentDefinition>

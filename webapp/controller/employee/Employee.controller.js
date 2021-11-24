@@ -48,8 +48,8 @@ sap.ui.define(
         GRID: '6',
       },
       CRUD_TABLES: {
-        ADDRESS: { key: '0006', path: 'address', url: '/AddressInfoSet', pk: ['Subty', 'Begda'] },
-        EDUCATION: { key: '0022', path: 'education', url: '/EducationChangeSet', pk: ['Begda', 'Endda'] },
+        ADDRESS: { key: '0006', label: 'LABEL_00283', path: 'address', url: '/AddressInfoSet', pk: ['Subty', 'Begda'] },
+        EDUCATION: { key: '0022', label: 'LABEL_00303', path: 'education', url: '/EducationChangeSet', pk: ['Begda', 'Endda'] },
       },
 
       onBeforeShow() {
@@ -93,13 +93,32 @@ sap.ui.define(
             sub: {},
             dialog: {
               subKey: null,
+              subLabel: null,
               action: null,
               actionText: null,
               typeList: new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext' }),
               sidoList: new ComboEntry({ codeKey: 'State', valueKey: 'Bezei' }),
               schoolTypeList: new ComboEntry({ codeKey: 'Slart', valueKey: 'Stext' }),
-              countryList: new ComboEntry({ codeKey: 'Sland', valueKey: 'Landx50' }),
               degreeList: new ComboEntry({ codeKey: 'Slabs', valueKey: 'Stext' }),
+              school1Entry: new ComboEntry({
+                mEntries: [
+                  { code: 'A', text: this.getBundleText('LABEL_00294') }, // 입사후
+                  { code: 'B', text: this.getBundleText('LABEL_00295') }, // 입사전
+                ],
+              }),
+              school2Entry: new ComboEntry({
+                mEntries: [
+                  { code: 'A', text: this.getBundleText('LABEL_00296') }, // 신입
+                  { code: 'B', text: this.getBundleText('LABEL_00297') }, // 편입
+                ],
+              }),
+              school3Entry: new ComboEntry({
+                mEntries: [
+                  { code: 'A', text: this.getBundleText('LABEL_00298') }, // 주간
+                  { code: 'B', text: this.getBundleText('LABEL_00299') }, // 야간
+                ],
+              }),
+              countryList: [],
               schoolList: [],
               majorList: [],
               busy: { Slabs: false },
@@ -155,20 +174,22 @@ sap.ui.define(
 
         try {
           // 1. 상단 프로필, 탭 메뉴, 주소유형, 시/도
-          const [oProfileReturnData, mMenuReturnData, mAddressTypeData, mAddressCityData, mSchoolTypeList] = await Promise.all([
+          const [oProfileReturnData, mMenuReturnData, mCountryList, mMajorList, mAddressTypeData, mAddressCityData, mSchoolTypeList] = await Promise.all([
             this.readOdata({ sUrl: '/EmpProfileHeaderNewSet', mFilters }),
             this.readOdata({ sUrl: '/EmpProfileMenuSet', mFilters }),
+            this.readOdata({ sUrl: '/CountryCodeSet' }),
+            this.readOdata({ sUrl: '/MajorCodeSet' }),
             this.readComboEntry({ oModel, sUrl: '/PaCodeListSet', sPath: 'typeList', mFilters: { Cdnum: 'CM0002', Grcod: '0006' } }),
             this.readComboEntry({ oModel, sUrl: '/CityListSet', sPath: 'sidoList', sPernr, oEntryInfo: { codeKey: 'State', valueKey: 'Bezei' } }),
             this.readComboEntry({ oModel, sUrl: '/SchoolTypeCodeSet', sPath: 'schoolTypeList', oEntryInfo: { codeKey: 'Slart', valueKey: 'Stext' } }),
-            // this.readComboEntry({ oModel, sUrl: '/CountryCodeSet', sPath: 'countryList', oEntryInfo: { codeKey: 'Sland', valueKey: 'Landx50' } }),
           ]);
 
           // Dialog Combo entry set
+          oViewModel.setProperty('/employee/dialog/countryList', mCountryList);
+          oViewModel.setProperty('/employee/dialog/majorList', mMajorList);
           oViewModel.setProperty('/employee/dialog/typeList', mAddressTypeData);
           oViewModel.setProperty('/employee/dialog/sidoList', mAddressCityData);
           oViewModel.setProperty('/employee/dialog/schoolTypeList', mSchoolTypeList);
-          // oViewModel.setProperty('/employee/dialog/countryList', mCountryList);
           //End Dialog Combo entry set
 
           // 상단 프로필 Set
@@ -609,8 +630,10 @@ sap.ui.define(
         const oViewModel = this.getView().getModel();
         const sSelectedMenuCode = oEvent.getSource().getCustomData()[0].getValue();
         const sMenuKey = _.lowerCase(_.findKey(this.CRUD_TABLES, { key: sSelectedMenuCode }));
+        const sLabel = this.getBundleText(this.CRUD_TABLES[_.upperCase(sMenuKey)].label);
 
         oViewModel.setProperty('/employee/dialog/subKey', sSelectedMenuCode);
+        oViewModel.setProperty('/employee/dialog/subLabel', sLabel);
         oViewModel.setProperty('/employee/dialog/action', 'A');
         oViewModel.setProperty('/employee/dialog/actionText', this.getBundleText('LABEL_00106')); // 등록
 
@@ -620,7 +643,7 @@ sap.ui.define(
 
             break;
           case this.CRUD_TABLES.EDUCATION.path:
-            oViewModel.setProperty('/employee/dialog/form', { Slart: 'ALL', Sland: 'ALL', Slabs: 'ALL' });
+            oViewModel.setProperty('/employee/dialog/form', { Slart: 'ALL', Sland: 'KR', Landx50: '대한민국', Slabs: 'ALL', Zzentba: 'ALL', Zznwtns: 'ALL', Zzdyngt: 'ALL' });
             break;
           default:
             break;
@@ -692,9 +715,11 @@ sap.ui.define(
           const oTableInfo = this.CRUD_TABLES[_.upperCase(sMenuKey)];
           const aFields = oTableInfo.pk;
           const sUrl = oTableInfo.url;
+          const sLabel = this.getBundleText(oTableInfo.label);
           const mFilters = this.getTableRowData({ oViewModel, oTable, aSelectedIndices, aFields });
 
           oViewModel.setProperty('/employee/dialog/subKey', sSelectedMenuCode);
+          oViewModel.setProperty('/employee/dialog/subLabel', sLabel);
           oViewModel.setProperty('/employee/dialog/action', 'U');
           oViewModel.setProperty('/employee/dialog/actionText', this.getBundleText('LABEL_00108')); // 수정
 
@@ -800,13 +825,26 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const sSlart = oViewModel.getProperty('/employee/dialog/form/Slart');
 
+        if (sSlart === 'ALL') {
+          oViewModel.setProperty('/employee/dialog/form/Slabs', 'ALL');
+          oViewModel.setProperty('/employee/dialog/degreeList', new ComboEntry({ codeKey: 'Slabs', valueKey: 'Stext' }));
+          oViewModel.setProperty('/employee/dialog/schoolList', []);
+
+          return;
+        }
+
         try {
           oViewModel.setProperty('/employee/dialog/busy/Slabs', true);
 
-          const mDegreeList = await this.readComboEntry({ oModel, sUrl: '/DegreeCodeSet', mFilters: { Slart: sSlart }, oEntryInfo: { codeKey: 'Slabs', valueKey: 'Stext' } });
+          const mFilters = { Slart: sSlart };
+          const [mSchoolList, mDegreeList] = await Promise.all([
+            this.readOdata({ sUrl: '/SchoolCodeSet', mFilters }),
+            this.readComboEntry({ oModel, sUrl: '/DegreeCodeSet', mFilters, oEntryInfo: { codeKey: 'Slabs', valueKey: 'Stext' } }), //
+          ]);
 
           oViewModel.setProperty('/employee/dialog/form/Slabs', 'ALL');
           oViewModel.setProperty('/employee/dialog/degreeList', mDegreeList);
+          oViewModel.setProperty('/employee/dialog/schoolList', mSchoolList);
         } catch (oError) {
           this.debug('Controller > Employee > onChangeSchoolType Error', oError);
 
@@ -820,8 +858,61 @@ sap.ui.define(
         }
       },
 
+      onPressHelpCountry() {
+        const oView = this.getView();
+        const oViewModel = this.getViewModel();
+        const mCountryList = oViewModel.getProperty('/employee/dialog/countryList');
+        const sInputCode = oViewModel.getProperty('/employee/dialog/form/Sland');
+
+        AppUtils.setAppBusy(true, this);
+
+        if (!this._pCountryHelpDialog) {
+          this._pCountryHelpDialog = Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.view.employee.fragment.form.CountryDialog',
+            controller: this,
+          }).then(function (oDialog) {
+            oView.addDependent(oDialog);
+            return oDialog;
+          });
+        }
+        this._pCountryHelpDialog.then(async (oDialog) => {
+          if (sInputCode) {
+            oDialog.getBinding('items').filter(new Filter('Sland', FilterOperator.EQ, sInputCode));
+          }
+
+          oViewModel.setProperty(
+            '/employee/dialog/countryList',
+            mCountryList.map((o) => ({
+              ...o,
+              selected: o.Sland === sInputCode,
+            }))
+          );
+
+          AppUtils.setAppBusy(false, this);
+          oDialog.open();
+        });
+      },
+
+      onSearchCountryHelp(oEvent) {
+        oEvent.getParameter('itemsBinding').filter([
+          new Filter('Landx50', FilterOperator.Contains, oEvent.getParameter('value')), //
+        ]);
+      },
+
+      onCloseCountryHelp(oEvent) {
+        const oViewModel = this.getViewModel();
+        const oSelectedItem = oEvent.getParameter('selectedItem');
+
+        oViewModel.setProperty('/employee/dialog/form/Sland', oSelectedItem.getDescription());
+        oViewModel.setProperty('/employee/dialog/form/Landx50', oSelectedItem.getTitle());
+      },
+
       onPressHelpSchool() {
         const oView = this.getView();
+        const oViewModel = this.getViewModel();
+        const mSchoolList = oViewModel.getProperty('/employee/dialog/schoolList');
+        const sInputCode = oViewModel.getProperty('/employee/dialog/form/Zzschcd');
 
         AppUtils.setAppBusy(true, this);
 
@@ -836,33 +927,42 @@ sap.ui.define(
           });
         }
         this._pSchoolHelpDialog.then(async (oDialog) => {
-          try {
-            const oViewModel = this.getViewModel();
-            const mFilters = { Slart: oViewModel.getProperty('/employee/dialog/form/Slart') };
-            const mSchoolList = await this.readOdata({ sUrl: '/SchoolCodeSet', mFilters });
-
-            oViewModel.setProperty('/employee/dialog/schoolList', mSchoolList);
-
-            oDialog.open();
-          } catch (oError) {
-            this.debug('Controller > Employee > onPressHelpSchool Error', oError);
-
-            if (oError instanceof Error) {
-              MessageBox.error(oError.message);
-            } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
-              oError.showErrorMessage();
-            }
-          } finally {
-            AppUtils.setAppBusy(false, this);
+          if (sInputCode) {
+            oDialog.getBinding('items').filter(new Filter('Zzschcd', FilterOperator.EQ, sInputCode));
           }
+
+          oViewModel.setProperty(
+            '/employee/dialog/schoolList',
+            mSchoolList.map((o) => ({
+              ...o,
+              selected: o.Zzschcd === sInputCode,
+            }))
+          );
+
+          AppUtils.setAppBusy(false, this);
+          oDialog.open();
         });
       },
 
-      onSearchSchoolHelp() {},
-      onCloseSchoolHelp() {},
+      async onSearchSchoolHelp(oEvent) {
+        oEvent.getParameter('itemsBinding').filter([
+          new Filter('Zzschtx', FilterOperator.Contains, oEvent.getParameter('value')), //
+        ]);
+      },
+
+      onCloseSchoolHelp(oEvent) {
+        const oViewModel = this.getViewModel();
+        const oSelectedItem = oEvent.getParameter('selectedItem');
+
+        oViewModel.setProperty('/employee/dialog/form/Zzschcd', oSelectedItem.getDescription());
+        oViewModel.setProperty('/employee/dialog/form/Zzschtx', oSelectedItem.getTitle());
+      },
 
       onPressHelpMajor() {
         const oView = this.getView();
+        const oViewModel = this.getViewModel();
+        const mMajorList = oViewModel.getProperty('/employee/dialog/majorList');
+        const sInputCode = oViewModel.getProperty('/employee/dialog/form/Zzmajo1');
 
         AppUtils.setAppBusy(true, this);
 
@@ -877,29 +977,36 @@ sap.ui.define(
           });
         }
         this._pMajorHelpDialog.then(async (oDialog) => {
-          try {
-            const oViewModel = this.getViewModel();
-            const mMajorList = await this.readOdata({ sUrl: '/MajorCodeSet' });
-
-            oViewModel.setProperty('/employee/dialog/majorList', mMajorList);
-
-            oDialog.open();
-          } catch (oError) {
-            this.debug('Controller > Employee > onPressHelpMajor Error', oError);
-
-            if (oError instanceof Error) {
-              MessageBox.error(oError.message);
-            } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
-              oError.showErrorMessage();
-            }
-          } finally {
-            AppUtils.setAppBusy(false, this);
+          if (sInputCode) {
+            oDialog.getBinding('items').filter(new Filter('Zzmajo1', FilterOperator.EQ, sInputCode));
           }
+
+          oViewModel.setProperty(
+            '/employee/dialog/majorList',
+            mMajorList.map((o) => ({
+              ...o,
+              selected: o.Zzmajo1 === sInputCode,
+            }))
+          );
+
+          AppUtils.setAppBusy(false, this);
+          oDialog.open();
         });
       },
 
-      onSearchMajorHelp() {},
-      onCloseMajorHelp() {},
+      async onSearchMajorHelp(oEvent) {
+        oEvent.getParameter('itemsBinding').filter([
+          new Filter('Zzmajo1tx', FilterOperator.Contains, oEvent.getParameter('value')), //
+        ]);
+      },
+
+      onCloseMajorHelp(oEvent) {
+        const oViewModel = this.getViewModel();
+        const oSelectedItem = oEvent.getParameter('selectedItem');
+
+        oViewModel.setProperty('/employee/dialog/form/Zzmajo1', oSelectedItem.getDescription());
+        oViewModel.setProperty('/employee/dialog/form/Zzmajo1tx', oSelectedItem.getTitle());
+      },
 
       openSearchZipCodePopup() {
         window.open('postcodeForBrowser.html?CBF=fn_SetAddr', 'pop', 'width=550,height=550, scrollbars=yes, resizable=yes');
