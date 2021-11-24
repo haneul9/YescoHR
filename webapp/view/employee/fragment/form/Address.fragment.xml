@@ -2,7 +2,10 @@
     xmlns:core="sap.ui.core"
     xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:custom="sap.ui.yesco.control">
-    <grid:CSSGrid gridTemplateColumns="1fr 4fr" gridGap="8px">
+    <grid:CSSGrid gridTemplateColumns="3fr 7fr" gridGap="8px">
+        <grid:layoutData>
+            <FlexItemData growFactor="1"/>
+        </grid:layoutData>
         <Label text="{i18n>LABEL_00270}" />
         <ComboBox width="100%" selectedKey="{/employee/dialog/form/Subty}" items="{ path: '/employee/dialog/typeList' }">
             <core:Item key="{Zcode}" text="{Ztext}" />

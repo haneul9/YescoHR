@@ -1,17 +1,17 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <VBox class="hCardBox" width="33%" busyIndicatorDelay="0" busy="{/busy}">
+    <VBox class="hCardBox sapUiMediumMarginEnd expenses-info-wrap" width="33%" busyIndicatorDelay="0" busy="{/busy}">
         <VBox>
             <Title level="H2" text="{i18n>LABEL_05002}" />
-            <HBox>
-                <Text text="{i18n>MSG_05001}"/>
+            <HBox class="desc">
+                <Text text="{i18n>MSG_05001}" class="sapUiSmallMarginBottom" />
                 <ObjectStatus text="{
                     path: '/Total/Famcnt',
                     formatter: '.formatNumber'
-                }" state="Indication05" />
-                <Text text="{i18n>MSG_05002}"/>
+                }" state="Indication05" class="sapUiSmallMarginBottom" />
+                <Text text="{i18n>MSG_05002}" class="sapUiSmallMarginBottom" />
             </HBox>
-            <HBox>
+            <HBox class="desc">
                 <Text text="{i18n>MSG_05003}"/>
                 <ObjectStatus text="{
                     path: '/Total/Famamt',
@@ -19,7 +19,7 @@
                 }" state="Indication04" />
                 <Text text="{i18n>MSG_05002}"/>
             </HBox>
-            <Text text="{i18n>MSG_05004}"/>
+            <Text text="{i18n>MSG_05004}" class="sapUiSmallMarginBottom" />
         </VBox>
     </VBox>
 </core:FragmentDefinition>

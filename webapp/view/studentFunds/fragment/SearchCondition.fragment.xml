@@ -5,11 +5,11 @@
     <VBox class="hCardBox" width="33%">
         <HBox justifyContent="SpaceBetween">
             <Title text="{i18n>LABEL_00202}" level="H2" />
-            <Button type="Transparent" press=".onSearch" icon="sap-icon://search" />
+            <Button type="Transparent" press=".onSearch" icon="sap-icon://search" class="icon-button" />
         </HBox>
         <grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="8px">
             <Label text="{i18n>LABEL_00266}" design="Bold" />
-            <custom:DateRangeSelection dateValue="{/searchDate/secondDate}" secondDateValue="{/searchDate/date}" class="sapIcon_DateRange" />
+            <custom:DateRangeSelection dateValue="{/searchDate/secondDate}" secondDateValue="{/searchDate/date}" class="sapIcon_Date" />
         </grid:CSSGrid>
     </VBox>
 </core:FragmentDefinition>

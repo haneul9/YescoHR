@@ -124,22 +124,17 @@ sap.ui.define(
         const mListData = oListView.getModel().getProperty('/parameter');
 
         if(!sKey || sKey === 'N') {
-          if(!mListData) {
-            const oTargetInfo = oDetailModel.getProperty('/TargetInfo');
-  
-            oDetailModel.setProperty('/FormData', oTargetInfo);
-            oDetailModel.setProperty('/FormData', {
-              Apename: oTargetInfo.Ename,
-              Appernr: oTargetInfo.Pernr,
-              Kdsvh: 'ALL',
-              Fasex: 'ALL',
-              Hndcd: 'ALL',
-              Dptyp: 'ALL',
-            });
-          }else {
-            oDetailModel.setProperty('/FormData', mListData);
-            oDetailModel.setProperty('/FormData/ZappStatAl', '');
-          }
+          const oTargetInfo = oDetailModel.getProperty('/TargetInfo');
+
+          oDetailModel.setProperty('/FormData', oTargetInfo);
+          oDetailModel.setProperty('/FormData', {
+            Apename: oTargetInfo.Ename,
+            Appernr: oTargetInfo.Pernr,
+            Kdsvh: 'ALL',
+            Fasex: 'ALL',
+            Hndcd: 'ALL',
+            Dptyp: 'ALL',
+          });
         }else {
           oDetailModel.setProperty('/FormData', mListData);
         }

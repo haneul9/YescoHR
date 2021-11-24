@@ -64,25 +64,6 @@ sap.ui.define(
       },
 
       onClick() {
-        const oTable = this.byId('familyTable');
-        const aSelectedIndex = oTable.getSelectedIndices();
-        const iLength = aSelectedIndex.length;
-
-        if(iLength > 1) {
-          return MessageBox.alert(this.getBundleText('MSG_00038'));
-        }
-        
-        if(iLength === 1) {
-          const oListModel = this.getViewModel();
-          const oRowData = oListModel.getProperty(`/FamilyList/${aSelectedIndex[0]}`);
-
-          if(oRowData.ZappStatAl === '60') {
-            oListModel.setProperty('/parameter', oRowData);
-          }else {
-            return MessageBox.alert(this.getBundleText('MSG_05017'));
-          }
-        }
-
         this.getRouter().navTo('familyInfo-detail', { oDataKey: 'N' });
       },
 
