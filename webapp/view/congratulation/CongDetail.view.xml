@@ -56,8 +56,8 @@
 							<Input id="RelationTxt" valueState="Warning" class="SmallInput" value="{/FormData/Zname}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
 							<Button id="RelationBtn" class="InputinnerButton" text="{i18n>LABEL_00112}" press=".onTargetDialog" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
 						</HBox>
-						<HBox ></HBox>
-						<HBox ></HBox>
+						<HBox></HBox>
+						<HBox></HBox>
 						<Label text="{i18n>LABEL_02018}"/>
 						<Text text="{/FormData/ZbacBetT}"/>
 						<Label text="{i18n>LABEL_02019}"/>
