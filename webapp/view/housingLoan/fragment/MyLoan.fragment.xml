@@ -1,0 +1,25 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <VBox class="hCardBox" width="33%" busyIndicatorDelay="0" busy="{/busy}">
+        <VBox>
+            <Title level="H2" text="{i18n>MSG_07001}" />
+            <Text text="{i18n>MSG_07002}"/>
+            <HBox>
+                <VBox>
+                    <Label design="Bold" text="{i18n>LABEL_02003}" />
+                    <ObjectStatus text="{
+                        path: '/Total/Count',
+                        formatter: '.formatNumber'
+                    }" state="Indication05" />
+                </VBox>
+                <VBox>
+                    <Label design="Bold" text="{i18n>LABEL_07016}" />
+                    <ObjectStatus text="{
+                        path: '/Total/RpamtBal',
+                        formatter: '.formatPay'
+                    }" state="Indication05" />
+                </VBox>
+            </HBox>
+        </VBox>
+    </VBox>
+</core:FragmentDefinition>
