@@ -17,7 +17,7 @@ sap.ui.define(
 
     return SimpleType.extend('sap.ui.yesco.model.ODataDate', {
       formatValue(oValue, sTargetType) {
-        AppUtils.debug(`sap.ui.yesco.model.ODataDate.formatValue(${oValue}, ${sTargetType})`);
+        // AppUtils.debug(`sap.ui.yesco.model.ODataDate.formatValue(${oValue}, ${sTargetType})`);
 
         switch (this.getPrimitiveType(sTargetType)) {
           case 'string':
@@ -31,7 +31,7 @@ sap.ui.define(
       },
 
       parseValue(oValue, sTargetType) {
-        AppUtils.debug(`sap.ui.yesco.model.ODataDate.parseValue(${oValue}, ${sTargetType})`);
+        // AppUtils.debug(`sap.ui.yesco.model.ODataDate.parseValue(${oValue}, ${sTargetType})`);
 
         switch (this.getPrimitiveType(sTargetType)) {
           case 'string':
@@ -76,14 +76,17 @@ sap.ui.define(
         if (!oValue) {
           return null;
         }
+
         if (oValue instanceof Date) {
           return oValue;
         }
+
         if (typeof oValue === 'string' || oValue instanceof String) {
           if (/^\/Date/.test(oValue)) {
             const iTime = parseInt(oValue.replace(/\/Date\((-?\d+)\)\//, '$1'), 10);
             return new Date(iTime);
           }
+
           const sDateString = oValue.replace(/[^\d]/g, '');
           return moment(sDateString, 'YYYYMMDD').toDate();
         }
