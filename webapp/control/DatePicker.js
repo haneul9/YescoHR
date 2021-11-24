@@ -23,9 +23,9 @@ sap.ui.define(
       constructor: function (...aArgs) {
         DatePicker.apply(this, aArgs);
 
-        this.setShowFooter(true);
-        this.setPlaceholder('yyyy.MM.dd');
-        this.setDisplayFormat('yyyy.MM.dd');
+        const Dtfmt = AppUtils.getAppComponent().getSessionModel().getProperty('/Dtfmt');
+
+        this.setShowFooter(true).setValueFormat(Dtfmt).setDisplayFormat(Dtfmt).setPlaceholder(Dtfmt);
       },
 
       _createPopup() {
@@ -33,7 +33,7 @@ sap.ui.define(
 
         this._oPopup.getBeginButton().setVisible(false);
 
-        const sTodayText = AppUtils.getBundleText('LABEL_01005'); // 오늘
+        const sTodayText = AppUtils.getBundleText('LABEL_01001'); // 오늘
         const oEndButton = this._oPopup.getEndButton();
         if (oEndButton) {
           oEndButton.setType(ButtonType.Emphasized).setText(sTodayText);

@@ -6,6 +6,7 @@ sap.ui.define(
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
+    'sap/ui/yesco/common/DateUtils',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/controller/BaseController',
@@ -17,6 +18,7 @@ sap.ui.define(
     Filter,
     FilterOperator,
     JSONModel,
+    DateUtils,
     TableUtils,
     MessageBox,
     BaseController
@@ -24,6 +26,8 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.controller.zample.Components', {
+      DateUtils,
+
       /* =========================================================== */
       /* lifecycle methods                                           */
       /* =========================================================== */
@@ -39,7 +43,7 @@ sap.ui.define(
         if (oTable) {
           oTable.addEventDelegate(
             {
-              onAfterRendering: function () {
+              onAfterRendering() {
                 TableUtils.adjustRowSpan({
                   table: this,
                   colIndices: [0, 1, 2, 3, 4, 5],

@@ -5,13 +5,13 @@ html, body {box-sizing:border-box; overflow:hidden}
 
 .app-body {height:calc(100% - 3rem) !important}
 .logo {margin:auto 0 !important}
-.sapMImageContent.logo-yesco, .sapMImageContent.logo-hanseong, .sapMImageContent.logo-unknown, .sapMImageContent.logo-init {width:145px; height:43px}
-.sapMImageContent.logo-yesco-holdings {width:182px; height:30px}
+.sapMImageContent.logo-2000, .sapMImageContent.logo-3000, .sapMImageContent.logo-init {width:145px; height:43px}
+.sapMImageContent.logo-1000 {width:182px; height:30px}
 .font-1b-rem .sapMBtnInner {font-size:1.125rem}
 .app-menu-level1 {margin:0 !important; border-bottom:solid 0.25rem transparent; padding:0.425rem 1rem; cursor:default}
 .app-menu-level1-hover {border-bottom-color:#f00}
-.menu-mss bdi {color:#2972c8}
-.menu-hass bdi {color:#27c83f}
+.menu-70000 bdi {color:#2972c8}
+.menu-80000 bdi {color:#27c83f}
 .menu-sample bdi {color:#ccc}
 .sapUiCal.px-0 .sapUiCalMonthView {padding-right:0 !important; padding-left:0 !important}
 

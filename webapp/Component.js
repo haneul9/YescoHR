@@ -46,7 +46,7 @@ sap.ui.define(
       init(...aArgs) {
         this.setDeviceModel() // 디바이스 모델 생성
           .setAppModel() // Busy indicator 값 저장 모델 생성
-          .setMetadataModel() // 메뉴 모델 생성
+          .setMetadataModel()
           .setServiceModel() // S4HANA OData 서비스 모델 생성
           .setErrorHandler() // Error handler 생성
           .setSessionModel() // 세션 모델 생성
@@ -111,7 +111,7 @@ sap.ui.define(
         aServiceNames.forEach((sServiceName) => {
           const oServiceModel = ServiceManager.getODataModel(sServiceName);
           this.setModel(oServiceModel, sServiceName);
-          oServiceModel.attachMetadataLoaded(null, () => {
+          oServiceModel.attachMetadataLoaded(() => {
             oMetadataModel.setProperty(`/${sServiceName}`, ServiceManager.getMetadata(oServiceModel));
           });
         });
@@ -146,12 +146,14 @@ sap.ui.define(
 
       setTargetModel() {
         const oSessionModel = this.getSessionModel();
+        let oSessionData = oSessionModel.getData();
+
+        this.setModel(new JSONModel({ ...oSessionData, isChangeButtonShow: false }), 'targetModel');
 
         oSessionModel.getPromise().then(() => {
-          const oSessionData = oSessionModel.getData();
-          oSessionData.isChangeButtonShow = false;
+          oSessionData = oSessionModel.getData();
 
-          this.setModel(new JSONModel({ ...oSessionData }), 'targetModel');
+          this.getModel('targetModel').setData({ ...oSessionData }, true);
         });
         return this;
       },

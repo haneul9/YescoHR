@@ -1,6 +1,8 @@
 {
-  "today": "Date(1637161200000)",
-  "tomorrow": "Date(1637247600000)",
+  "today": "/Date(1640358000000)/",
+  "tomorrow": "/Date(1640444400000)/",
+  "today1": "2021.12.25",
+  "tomorrow1": "2021.12.26",
   "ProductCollection": [
     {
       "ProductId": "HT-1000",
@@ -23,7 +25,8 @@
       "Depth": 18,
       "Height": 3,
       "DimUnit": "cm",
-      "DeliveryDate": "2021.12.25"
+      "DeliveryDate": "/Date(1640358000000)/",
+      "DeliveryDate1": "2021.12.25"
     },
     {
       "ProductId": "HT-1001",
@@ -46,7 +49,8 @@
       "Depth": 17,
       "Height": 3.1,
       "DimUnit": "cm",
-      "DeliveryDate": "2021.12.26"
+      "DeliveryDate": "/Date(1640444400000)/",
+      "DeliveryDate1": "2021.12.26"
     },
     {
       "ProductId": "HT-1002",
@@ -69,7 +73,8 @@
       "Depth": 19,
       "Height": 2.5,
       "DimUnit": "cm",
-      "DeliveryDate": "2021.12.25"
+      "DeliveryDate": "/Date(1640358000000)/",
+      "DeliveryDate1": "2021.12.25"
     },
     {
       "ProductId": "HT-1003",
@@ -92,7 +97,8 @@
       "Depth": 21,
       "Height": 4,
       "DimUnit": "cm",
-      "DeliveryDate": "2021.12.27"
+      "DeliveryDate": "/Date(1640530800000)/",
+      "DeliveryDate1": "2021.12.27"
     },
     {
       "ProductId": "HT-1007",

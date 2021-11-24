@@ -203,15 +203,34 @@
 					<VBox>
 						<Title level="H3" text="Date and Time Picker" class="component-title" />
 						<HBox>
-							<custom:DatePicker width="140px" id="DP1" class="sapUiSmallMarginBottom sapIcon_Date" dateValue="{
-									path: '/today', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'sessionModel>/Dtfmt', source: { pattern: 'sessionModel>/Dtfmt' } }
+							<TimePicker id="TP1" width="110px" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" minutesStep="5" class="sapIcon_Time" />
+						</HBox>
+						<HBox>
+							<custom:DatePicker id="DP1-1" width="140px" class="sapUiSmallMarginBottom sapIcon_Date" value="{ path: '/today', formatter: '.DateUtils.format' }" />
+							<DatePicker id="DP1-2" width="140px" class="sapUiSmallMarginBottom sapIcon_Date" value="{ path: '/today', formatter: '.DateUtils.format' }" valueFormat="{sessionModel&gt;/Dtfmt}" displayFormat="{sessionModel&gt;/Dtfmt}" placeholder="{sessionModel&gt;/Dtfmt}" />
+							<Label text="/Date(1640358000000)/" labelFor="DP1-2" />
+						</HBox>
+						<HBox>
+							<custom:DatePicker id="DP2-1" width="140px" class="sapUiSmallMarginBottom sapIcon_Date" value="{/today1}" />
+							<DatePicker id="DP2-2" width="140px" class="sapUiSmallMarginBottom sapIcon_Date" value="{/today1}" valueFormat="{sessionModel&gt;/Dtfmt}" displayFormat="{sessionModel&gt;/Dtfmt}" placeholder="{sessionModel&gt;/Dtfmt}" />
+							<Label text="2021.12.25" labelFor="DP2-2" />
+						</HBox>
+						<HBox>
+							<custom:DateRangeSelection id="DRS1" width="230px" class="sapIcon_Date" dateValue="{
+									path: '/today', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'yyyy.MM.dd', source: { pattern: 'yyyy.MM.dd' } }
+								}" secondDateValue="{
+									path: '/tomorrow', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'yyyy.MM.dd', source: { pattern: 'yyyy.MM.dd' } }
 								}" />
 							<custom:DateRangeSelection id="DRS2" width="230px" class="sapIcon_Date" dateValue="{
-									path: '/today', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'sessionModel>/Dtfmt', source: { pattern: 'sessionModel>/Dtfmt' } }
+									path: '/today1', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'yyyy.MM.dd', source: { pattern: 'yyyy.MM.dd' } }
 								}" secondDateValue="{
-									path: '/tomorrow', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'sessionModel>/Dtfmt', source: { pattern: 'sessionModel>/Dtfmt' } }
+									path: '/tomorrow1', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'yyyy.MM.dd', source: { pattern: 'yyyy.MM.dd' } }
 								}" />
-							<TimePicker id="TP1" width='180px' placeholder="Enter Time" valueFormat="HH:mm" displayFormat="HH:mm" minutesStep="5" class="sapIcon_Time" />
+							<DateRangeSelection id="DRS3" width="230px" class="sapIcon_Date" dateValue="{
+									path: '/today1', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'yyyy.MM.dd', source: { pattern: 'yyyy.MM.dd' } }
+								}" secondDateValue="{
+									path: '/tomorrow1', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'yyyy.MM.dd', source: { pattern: 'yyyy.MM.dd' } }
+								}" placeholder="{sessionModel&gt;/Dtfmt} - {sessionModel&gt;/Dtfmt}" />
 						</HBox>
 					</VBox>
 				</HBox>
@@ -445,11 +464,7 @@
 								<table:Column width="155px" hAlign="Center" filterProperty="DeliveryDate" sortProperty="DeliveryDate">
 									<Label text="Delivery Date"/>
 									<table:template>
-										<custom:DatePicker value="{
-												path: 'DeliveryDate',
-												type: 'sap.ui.model.type.Date',
-												formatOptions: { pattern: 'sessionModel>/Dtfmt', source: { pattern: 'sessionModel>/Dtfmt' } }
-											}" class="sapIcon_Date" />
+										<custom:DatePicker value="{ path: 'DeliveryDate', formatter: '.DateUtils.format' }" class="sapIcon_Date" />
 									</table:template>
 								</table:Column>
 							</table:columns>
@@ -530,13 +545,13 @@
 										}"/>
 									</table:template>
 								</table:Column>
-								<table:Column width="155px" hAlign="Center" filterProperty="DeliveryDate" sortProperty="DeliveryDate">
+								<table:Column width="155px" hAlign="Center" filterProperty="DeliveryDate1" sortProperty="DeliveryDate1">
 									<Label text="Delivery Date"/>
 									<table:template>
 										<custom:DatePicker value="{
-												path: 'DeliveryDate',
+												path: 'DeliveryDate1',
 												type: 'sap.ui.model.type.Date',
-												formatOptions: { pattern: 'sessionModel>/Dtfmt', source: { pattern: 'sessionModel>/Dtfmt' } }
+												formatOptions: { pattern: 'yyyy.MM.dd', source: { pattern: 'yyyy.MM.dd' } }
 											}" class="sapIcon_Date" />
 									</table:template>
 								</table:Column>

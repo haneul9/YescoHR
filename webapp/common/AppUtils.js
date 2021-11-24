@@ -19,14 +19,15 @@ sap.ui.define([], () => {
      * @public
      */
     getAppController() {
-      return sap.ui.getCore().byId('container-ehr---app').getController();
+      // <div data-sap-ui-component data-name="sap.ui.yesco" data-id="container" data-settings='{ "id": "ehr" }'></div>
+      return sap.ui.getCore().getComponent('container-ehr').byId('app').getController();
     },
 
     /**
      * @public
      */
     getAppComponent() {
-      return this.getAppController().getOwnerComponent();
+      return sap.ui.getCore().getComponent('container-ehr');
     },
 
     /**
