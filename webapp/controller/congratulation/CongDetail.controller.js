@@ -4,6 +4,7 @@ sap.ui.define(
     'sap/ui/core/Fragment',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/Appno',
+    'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/EmpInfo',
@@ -18,6 +19,7 @@ sap.ui.define(
     Fragment,
 	JSONModel,
 	Appno,
+	AppUtils,
 	AttachFileAction,
 	ComboEntry,
 	EmpInfo,
@@ -618,6 +620,7 @@ sap.ui.define(
                   const vAppno = await Appno.get.call(this);
   
                   oDetailModel.setProperty('/FormData/Appno', vAppno);
+                  oDetailModel.setProperty('/FormData/ZappStatAl', '10');
                   oDetailModel.setProperty('/FormData/Appdt', new Date());
                 }
   
