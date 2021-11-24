@@ -161,8 +161,10 @@ sap.ui.define(['sap/ui/yesco/common/odata/ServiceManager', 'sap/ui/yesco/common/
       const Datas = { Data: [] };
 
       oModel.read('/FileListSet', {
-        async: false,
-        filters: [new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, oTableRowData.Appno), new sap.ui.model.Filter('Zworktyp', sap.ui.model.FilterOperator.EQ, oController.TYPE_CODE)],
+        filters: [
+          new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, oTableRowData.Appno),
+          new sap.ui.model.Filter('Zworktyp', sap.ui.model.FilterOperator.EQ, oController.TYPE_CODE)
+        ],
         success: (data) => {
           if (data && data.results.length) {
             data.results.forEach((elem) => {
