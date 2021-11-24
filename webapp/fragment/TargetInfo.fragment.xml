@@ -1,15 +1,17 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <VBox class="hCardBox" width="33%">
+    <VBox class="hCardBox sapUiMediumMarginEnd" width="33%">
         <VBox>
             <HBox justifyContent="SpaceBetween">
                 <Title text="{i18n>LABEL_00128}" level="H2" />
-                <Button type="Transparent" icon="sap-icon://employee-approvals" visible="{= ${targetModel>/isChangeButtonShow}}" />
+                <Button type="Transparent" icon="sap-icon://employee-approvals" visible="{= ${targetModel>/isChangeButtonShow}}" class="icon-button" />
             </HBox>
-            <HBox>
-                <Image src="{targetModel>/Photo}" height="100px" width="100px" />
-                <VBox>
-                    <Text text="{targetModel>/Ename}"/>
+            <HBox class="my-info">
+                <VBox width="30%" alignItems="Start" class="member-picture">
+                    <Image src="{targetModel>/Photo}" />
+                </VBox>
+                <VBox class="my-info-detail">
+                    <Text text="{targetModel>/Ename}" class="name" />
                     <HBox>
                         <Text text="{targetModel>/Zzjikgbt} / {targetModel>/Zzjiktlt}"/>
                     </HBox>

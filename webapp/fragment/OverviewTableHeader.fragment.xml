@@ -1,28 +1,18 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <HBox justifyContent="SpaceBetween">
-        <HBox>
-            <Title level="H3" text="{i18n>LABEL_00129}" />
-            <Text text="total {/listInfo/totalCount}"/>
-            <Text text="{/listInfo/infoMessage}" visible="{= !!${/listInfo/infoMessage} }"/>
+    <HBox justifyContent="SpaceBetween" class="header-wrap">
+        <HBox class="header">
+            <Title level="H3" text="{i18n>LABEL_00129}" class="sapUiSmallMarginEnd" />
+            <Text text="total {/listInfo/totalCount}" class="sapUiMediumMarginEnd" />
+            <Text text="{/listInfo/infoMessage}" visible="{= !!${/listInfo/infoMessage} }" class="sapUiMediumMarginEnd component-title" />
         </HBox>
         <HBox>
-            <HBox>
-                <core:Icon src="sap-icon://circle-task-2" color="#bdbdbd" />
-                <ObjectStatus text="{i18n>LABEL_00130} {/listInfo/progressCount}" state="Indication01" />
-                <!-- <Label text="{i18n>LABEL_00128} {/listInfo/progressCount}"/> -->
-                <core:Icon src="sap-icon://circle-task-2" color="#ffc107" />
-                <ObjectStatus text="{i18n>LABEL_00121} {/listInfo/applyCount}" state="Indication02" />
-                <!-- <Label text="{i18n>LABEL_00121} {/listInfo/applyCount}"/> -->
-                <core:Icon src="sap-icon://circle-task-2" color="#28a745" />
-                <ObjectStatus text="{i18n>LABEL_00123} {/listInfo/approveCount}" state="Indication03" />
-                <!-- <Label text="{i18n>LABEL_00123} {/listInfo/approveCount}"/> -->
-                <core:Icon src="sap-icon://circle-task-2" color="#dc3545" />
-                <ObjectStatus text="{i18n>LABEL_00124} {/listInfo/rejectCount}" state="Indication04" />
-                <!-- <Label text="{i18n>LABEL_00124} {/listInfo/rejectCount}"/> -->
-                <core:Icon src="sap-icon://circle-task-2" color="#1d85c8" />
-                <ObjectStatus text="{i18n>LABEL_00117} {/listInfo/completeCount}" state="Indication05" />
-                <!-- <Label text="{i18n>LABEL_00117} {/listInfo/completeCount}"/> -->
+            <HBox class="status-wrap">
+                <ObjectStatus text="{i18n>LABEL_00130} {/listInfo/progressCount}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="None" />
+                <ObjectStatus text="{i18n>LABEL_00121} {/listInfo/applyCount}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication02" />
+                <ObjectStatus text="{i18n>LABEL_00123} {/listInfo/approveCount}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication03" />
+                <ObjectStatus text="{i18n>LABEL_00124} {/listInfo/rejectCount}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication04" />
+                <ObjectStatus text="{i18n>LABEL_00117} {/listInfo/completeCount}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication05" />
             </HBox>
             <Button icon="sap-icon://excel-attachment" width="117px" text="Excel" press=".onPressExcelDownload" busyIndicatorDelay="0" busy="{/busy}" />
         </HBox>
