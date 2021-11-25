@@ -14,6 +14,12 @@
                     <HBox visible="{= ${/employee/dialog/subKey} === '0022'}">
                         <core:Fragment fragmentName="sap.ui.yesco.view.employee.fragment.form.Education" type="XML" />
                     </HBox>
+                    <HBox visible="{= ${/employee/dialog/subKey} === '9002'}">
+                        <core:Fragment fragmentName="sap.ui.yesco.view.employee.fragment.form.Language" type="XML" />
+                    </HBox>
+                    <HBox visible="{= ${/employee/dialog/subKey} === '9006'}">
+                        <core:Fragment fragmentName="sap.ui.yesco.view.employee.fragment.form.Certificate" type="XML" />
+                    </HBox>
                 </VBox>
             </content>
         </Panel>

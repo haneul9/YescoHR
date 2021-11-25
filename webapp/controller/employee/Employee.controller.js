@@ -20,6 +20,7 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/Validator',
+    'sap/ui/yesco/model/ODataDate',
   ],
   (
     // prettier 방지용 주석
@@ -41,11 +42,15 @@ sap.ui.define(
     ServiceNames,
     AppUtils,
     TableUtils,
-    Validator
+    Validator,
+    ODataDate
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.controller.employee.Employee', {
+      type: {
+        ODataDate: new ODataDate(),
+      },
       formatter: TableUtils,
       SUB_TYPE: {
         TABLE: '5',
@@ -83,11 +88,44 @@ sap.ui.define(
             { label: 'LABEL_00248', field: 'Appno', type: Validator.FILE }, // 첨부파일
           ],
         },
+        LANGUAGE: {
+          key: '9002',
+          label: 'LABEL_00305',
+          path: 'language',
+          url: '/LanguageTestChangeSet',
+          pk: ['Seqnr', 'Begda', 'Endda'],
+          valid: [
+            { label: 'LABEL_00306', field: 'Quali', type: Validator.SELECT1 }, // 외국어구분
+            { label: 'LABEL_00307', field: 'Exmty', type: Validator.SELECT1 }, // 시험구분
+            { label: 'LABEL_00308', field: 'Appor', type: Validator.INPUT1 }, // 평가기관
+            { label: 'LABEL_00309', field: 'Eamgr', type: Validator.SELECT1 }, // 등급
+            { label: 'LABEL_00310', field: 'Eamdt', type: Validator.INPUT1 }, // 평가일
+            { label: 'LABEL_00311', field: 'Tpont', type: Validator.INPUT2 }, // 종합점수
+            { label: 'LABEL_00248', field: 'Appno', type: Validator.FILE }, // 첨부파일
+          ],
+        },
+        CERTIFICATE: {
+          key: '9006',
+          label: 'LABEL_00317',
+          path: 'certificate',
+          url: '/CertificateChangeSet',
+          pk: ['Seqnr', 'Begda', 'Endda'],
+          valid: [
+            { label: 'LABEL_00318', field: 'Cttyp', type: Validator.INPUT1 }, // 자격증
+            { label: 'LABEL_00309', field: 'Ctgrd', type: Validator.INPUT1 }, // 등급
+            { label: 'LABEL_00319', field: 'Ctnum', type: Validator.INPUT2 }, // 자격증번호
+            { label: 'LABEL_00320', field: 'Isaut', type: Validator.INPUT1 }, // 발급기관
+            { label: 'LABEL_00321', field: 'Regdt', type: Validator.INPUT1 }, // 등록일
+            { label: 'LABEL_00248', field: 'Appno', type: Validator.FILE }, // 첨부파일
+          ],
+        },
       },
       SELECT_DIALOG: {
         COUNTRY: { path: 'countryList', codeKey: 'Sland', valueKey: 'Landx50', fragmentName: 'CountryDialog' },
         SCHOOL: { path: 'schoolList', codeKey: 'Zzschcd', valueKey: 'Zzschtx', fragmentName: 'SchoolDialog' },
         MAJOR: { path: 'majorList', codeKey: 'Zzmajo1', valueKey: 'Zzmajo1tx', fragmentName: 'MajorDialog' },
+        CERTIFICATE: { path: 'certificateList', codeKey: 'Cttyp', valueKey: 'Cttyptx', fragmentName: 'CertificateDialog' },
+        CERTIFICATE_GRADE: { path: 'certificateGradeList', codeKey: 'Ctgrd', valueKey: 'Ctgrdtx', fragmentName: 'CertificateGradeDialog' },
       },
 
       onBeforeShow() {
@@ -138,6 +176,9 @@ sap.ui.define(
               sidoList: new ComboEntry({ codeKey: 'State', valueKey: 'Bezei' }),
               schoolTypeList: new ComboEntry({ codeKey: 'Slart', valueKey: 'Stext' }),
               degreeList: new ComboEntry({ codeKey: 'Slabs', valueKey: 'Stext' }),
+              languageTypeList: new ComboEntry({ codeKey: 'Quali', valueKey: 'Qualitx' }),
+              examTypeList: new ComboEntry({ codeKey: 'Exmty', valueKey: 'Exmtytx' }),
+              gradeList: new ComboEntry({ codeKey: 'Eamgr', valueKey: 'Eamgrtx' }),
               school1Entry: new ComboEntry({
                 mEntries: [
                   { code: 'A', text: this.getBundleText('LABEL_00294') }, // 입사후
@@ -159,7 +200,9 @@ sap.ui.define(
               countryList: [],
               schoolList: [],
               majorList: [],
-              busy: { Slabs: false },
+              certificateList: [],
+              certificateGradeList: [],
+              busy: { Slabs: false, Exmty: false },
               file: {
                 originFile: [],
                 newFile: [],
@@ -217,14 +260,18 @@ sap.ui.define(
 
         try {
           // 1. 상단 프로필, 탭 메뉴, 주소유형, 시/도
-          const [oProfileReturnData, mMenuReturnData, mCountryList, mMajorList, mAddressTypeData, mAddressCityData, mSchoolTypeList] = await Promise.all([
+          const [oProfileReturnData, mMenuReturnData, mCountryList, mMajorList, mCertList, mCertGradeList, mAddressTypeData, mAddressCityData, mSchoolTypeList, mLanguageTypeList, mTestGradeList] = await Promise.all([
             this.readOdata({ sUrl: '/EmpProfileHeaderNewSet', mFilters }),
             this.readOdata({ sUrl: '/EmpProfileMenuSet', mFilters }),
             this.readOdata({ sUrl: '/CountryCodeSet' }),
             this.readOdata({ sUrl: '/MajorCodeSet' }),
+            this.readOdata({ sUrl: '/CertificateCodeSet' }),
+            this.readOdata({ sUrl: '/CertificateGradeCodeSet' }),
             this.readComboEntry({ oModel, sUrl: '/PaCodeListSet', sPath: 'typeList', mFilters: { Cdnum: 'CM0002', Grcod: '0006' } }),
             this.readComboEntry({ oModel, sUrl: '/CityListSet', sPath: 'sidoList', sPernr, oEntryInfo: { codeKey: 'State', valueKey: 'Bezei' } }),
             this.readComboEntry({ oModel, sUrl: '/SchoolTypeCodeSet', sPath: 'schoolTypeList', oEntryInfo: { codeKey: 'Slart', valueKey: 'Stext' } }),
+            this.readComboEntry({ oModel, sUrl: '/LanguageTypeCodeSet', sPath: 'languageTypeList', oEntryInfo: { codeKey: 'Quali', valueKey: 'Qualitx' } }),
+            this.readComboEntry({ oModel, sUrl: '/TestGradeCodeSet', sPath: 'gradeList', oEntryInfo: { codeKey: 'Eamgr', valueKey: 'Eamgrtx' } }),
           ]);
 
           // Dialog Combo entry set
@@ -233,6 +280,10 @@ sap.ui.define(
           oViewModel.setProperty('/employee/dialog/typeList', mAddressTypeData);
           oViewModel.setProperty('/employee/dialog/sidoList', mAddressCityData);
           oViewModel.setProperty('/employee/dialog/schoolTypeList', mSchoolTypeList);
+          oViewModel.setProperty('/employee/dialog/languageTypeList', mLanguageTypeList);
+          oViewModel.setProperty('/employee/dialog/gradeList', mTestGradeList);
+          oViewModel.setProperty('/employee/dialog/certificateList', mCertList);
+          oViewModel.setProperty('/employee/dialog/certificateGradeList', mCertGradeList);
           //End Dialog Combo entry set
 
           // 상단 프로필 Set
@@ -600,7 +651,7 @@ sap.ui.define(
         try {
           if (!sAppno) sAppno = await Appno.get();
 
-          if (!_.isEmpty(oOriginFiles)) await AttachFileAction.deleteFile(sAppno, sMenuKey, _.trim(oOriginFiles[0].Seqnr));
+          if (!_.isEmpty(oOriginFiles)) await AttachFileAction.deleteFile(sAppno, sMenuKey, oOriginFiles[0].Seqnr);
 
           await AttachFileAction.upload.call(this, sAppno, sMenuKey, oFiles);
         } catch (oError) {
@@ -670,9 +721,19 @@ sap.ui.define(
           return;
         }
 
-        const oSearchResults = await this.readEmpSearchResult({ oSearchParam });
+        try {
+          const oSearchResults = await this.readEmpSearchResult({ oSearchParam });
 
-        oViewModel.setProperty('/sideNavigation/search/results', oSearchResults);
+          oViewModel.setProperty('/sideNavigation/search/results', oSearchResults);
+        } catch (oError) {
+          this.debug('Controller > Employee > onPressEmployeeSearch Error', oError);
+
+          if (oError instanceof Error) {
+            MessageBox.error(oError.message);
+          } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+            oError.showErrorMessage();
+          }
+        }
       },
 
       onClickEmployeeCard(oEvent) {
@@ -745,6 +806,12 @@ sap.ui.define(
           case this.CRUD_TABLES.EDUCATION.path:
             oViewModel.setProperty('/employee/dialog/form', { Slart: 'ALL', Sland: 'KR', Landx50: '대한민국', Slabs: 'ALL', Zzentba: 'ALL', Zznwtns: 'ALL', Zzdyngt: 'ALL' });
             break;
+          case this.CRUD_TABLES.LANGUAGE.path:
+            oViewModel.setProperty('/employee/dialog/form', { Quali: 'ALL', Exmty: 'ALL', Eamgr: 'ALL' });
+            break;
+          case this.CRUD_TABLES.CERTIFICATE.path:
+            oViewModel.setProperty('/employee/dialog/form', {});
+            break;
           default:
             break;
         }
@@ -768,7 +835,7 @@ sap.ui.define(
 
           switch (sMenuKey) {
             case this.CRUD_TABLES.ADDRESS.key:
-              sUrl = '/AddressInfoSet';
+              sUrl = this.CRUD_TABLES.ADDRESS.url;
               aFieldProperties = this.CRUD_TABLES.ADDRESS.valid;
 
               const oSido = _.find(oViewModel.getProperty('/employee/dialog/sidoList'), { State: mFieldValue.State });
@@ -776,7 +843,7 @@ sap.ui.define(
 
               break;
             case this.CRUD_TABLES.EDUCATION.key:
-              sUrl = '/EducationChangeSet';
+              sUrl = this.CRUD_TABLES.EDUCATION.url;
               aFieldProperties = this.CRUD_TABLES.EDUCATION.valid;
               sAppno = await this.uploadInputFormFiles(this.CRUD_TABLES.EDUCATION.key);
 
@@ -786,8 +853,38 @@ sap.ui.define(
                 Appno: sAppno,
                 Zzfinyn: mFieldValue.Zzfinyn ? 'X' : '',
                 Zzrecab: mFieldValue.Zzrecab ? 'X' : '',
-                Begda: moment(mFieldValue.Begda).hour(9).toDate(),
-                Endda: moment(mFieldValue.Endda).hour(9).toDate(),
+                Begda: mFieldValue.Begda ? moment(mFieldValue.Begda).hour(9).toDate() : mFieldValue.Begda,
+                Endda: mFieldValue.Endda ? moment(mFieldValue.Endda).hour(9).toDate() : mFieldValue.Endda,
+              };
+
+              break;
+            case this.CRUD_TABLES.LANGUAGE.key:
+              sUrl = this.CRUD_TABLES.LANGUAGE.url;
+              aFieldProperties = this.CRUD_TABLES.LANGUAGE.valid;
+              sAppno = await this.uploadInputFormFiles(this.CRUD_TABLES.LANGUAGE.key);
+
+              oInputData = {
+                ...mFieldValue,
+                Prcty: sAction === 'A' ? 'C' : 'U',
+                Appno: sAppno,
+                Begda: mFieldValue.Eamdt ? moment(mFieldValue.Eamdt).hour(9).toDate() : mFieldValue.Begda,
+                Endda: mFieldValue.Eamdt ? moment(mFieldValue.Eamdt).hour(9).toDate() : mFieldValue.Endda,
+                Eamdt: mFieldValue.Eamdt ? moment(mFieldValue.Eamdt).hour(9).toDate() : mFieldValue.Eamdt,
+              };
+
+              break;
+            case this.CRUD_TABLES.CERTIFICATE.key:
+              sUrl = this.CRUD_TABLES.CERTIFICATE.url;
+              aFieldProperties = this.CRUD_TABLES.CERTIFICATE.valid;
+              sAppno = await this.uploadInputFormFiles(this.CRUD_TABLES.CERTIFICATE.key);
+
+              oInputData = {
+                ...mFieldValue,
+                Prcty: sAction === 'A' ? 'C' : 'U',
+                Appno: sAppno,
+                Begda: mFieldValue.Regdt ? moment(mFieldValue.Regdt).hour(9).toDate() : mFieldValue.Begda,
+                Endda: mFieldValue.Regdt ? moment(mFieldValue.Regdt).hour(9).toDate() : mFieldValue.Endda,
+                Regdt: mFieldValue.Regdt ? moment(mFieldValue.Regdt).hour(9).toDate() : mFieldValue.Regdt,
               };
 
               break;
@@ -820,6 +917,7 @@ sap.ui.define(
       },
 
       async onPressModifyTable(oEvent) {
+        const oModel = this.getModel(ServiceNames.PA);
         const oViewModel = this.getView().getModel();
         const oControl = oEvent.getSource();
         const oTable = oControl.getParent().getParent().getParent().getItems()[1];
@@ -855,6 +953,8 @@ sap.ui.define(
 
               break;
             case this.CRUD_TABLES.EDUCATION.path:
+            case this.CRUD_TABLES.LANGUAGE.path:
+            case this.CRUD_TABLES.CERTIFICATE.path:
               mFilters.Begda = moment(mFilters.Begda).hour(9).toDate();
               mFilters.Endda = moment(mFilters.Endda).hour(9).toDate();
 
@@ -869,6 +969,7 @@ sap.ui.define(
 
           const oTableRowDetail = mTableRowDetail[0];
 
+          // 체크박스 value <-> Boolean 변환
           if (_.has(oTableRowDetail, 'Zzfinyn')) oTableRowDetail.Zzfinyn = oTableRowDetail.Zzfinyn === 'X';
           if (_.has(oTableRowDetail, 'Zzrecab')) oTableRowDetail.Zzrecab = oTableRowDetail.Zzrecab === 'X';
 
@@ -876,7 +977,6 @@ sap.ui.define(
 
           // 국가,학위 엔트리 조회
           if (_.has(oTableRowDetail, 'Slart')) {
-            const oModel = this.getModel(ServiceNames.PA);
             const mFilters = { Slart: oTableRowDetail.Slart };
             const [mSchoolList, mDegreeList] = await Promise.all([
               this.readOdata({ sUrl: '/SchoolCodeSet', mFilters }), //
@@ -885,6 +985,12 @@ sap.ui.define(
 
             oViewModel.setProperty('/employee/dialog/degreeList', mDegreeList);
             oViewModel.setProperty('/employee/dialog/schoolList', mSchoolList);
+          } else if (_.has(oTableRowDetail, 'Quali')) {
+            // 시험구분 엔트리 조회
+            const mFilters = { Quali: oTableRowDetail.Quali };
+            const mExamList = await this.readComboEntry({ oModel, sUrl: '/TestTypeCodeSet', mFilters, oEntryInfo: { codeKey: 'Exmty', valueKey: 'Exmtytx' } });
+
+            oViewModel.setProperty('/employee/dialog/examTypeList', mExamList);
           }
 
           // 파일 조회
@@ -945,6 +1051,8 @@ sap.ui.define(
 
                     break;
                   case this.CRUD_TABLES.EDUCATION.path:
+                  case this.CRUD_TABLES.LANGUAGE.path:
+                  case this.CRUD_TABLES.CERTIFICATE.path:
                     oPayload.Begda = moment(oPayload.Begda).hour(9).toDate();
                     oPayload.Endda = moment(oPayload.Endda).hour(9).toDate();
 
@@ -1013,6 +1121,50 @@ sap.ui.define(
         }
       },
 
+      async onChangeLanguageType() {
+        const oModel = this.getModel(ServiceNames.PA);
+        const oViewModel = this.getViewModel();
+        const sQuali = oViewModel.getProperty('/employee/dialog/form/Quali');
+
+        if (sQuali === 'ALL') {
+          oViewModel.setProperty('/employee/dialog/form/Exmty', 'ALL');
+          oViewModel.setProperty('/employee/dialog/examTypeList', new ComboEntry({ codeKey: 'Exmty', valueKey: 'Exmtytx' }));
+
+          return;
+        }
+
+        try {
+          oViewModel.setProperty('/employee/dialog/busy/Exmty', true);
+
+          const mFilters = { Quali: sQuali };
+          const mExamList = await this.readComboEntry({ oModel, sUrl: '/TestTypeCodeSet', mFilters, oEntryInfo: { codeKey: 'Exmty', valueKey: 'Exmtytx' } });
+
+          oViewModel.setProperty('/employee/dialog/form/Exmty', 'ALL');
+          oViewModel.setProperty('/employee/dialog/examTypeList', mExamList);
+        } catch (oError) {
+          this.debug('Controller > Employee > onChangeLanguageType Error', oError);
+
+          if (oError instanceof Error) {
+            MessageBox.error(oError.message);
+          } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
+            oError.showErrorMessage();
+          }
+        } finally {
+          oViewModel.setProperty('/employee/dialog/busy/Exmty', false);
+        }
+      },
+
+      onChangeLanguagePoint(oEvent) {
+        const oViewModel = this.getViewModel();
+        const oControl = oEvent.getSource();
+        const sPath = oControl.getBinding('value').getPath();
+        const oFormData = oViewModel.getProperty('/employee/dialog/form');
+        const aPointFields = ['Spont', 'Hpont', 'Rpont', 'Wpont'];
+
+        oViewModel.setProperty(sPath, String(Number(oControl.getValue())));
+        oViewModel.setProperty('/employee/dialog/form/Tpont', String(aPointFields.reduce((acc, cur) => acc + _.defaultTo(Number(oFormData[cur]), 0), 0)));
+      },
+
       onPressHelpCountry() {
         this.openSelectDialog(this.SELECT_DIALOG.COUNTRY);
       },
@@ -1023,6 +1175,14 @@ sap.ui.define(
 
       onPressHelpMajor() {
         this.openSelectDialog(this.SELECT_DIALOG.MAJOR);
+      },
+
+      onPressHelpCertificate() {
+        this.openSelectDialog(this.SELECT_DIALOG.CERTIFICATE);
+      },
+
+      onPressHelpCertificateGrade() {
+        this.openSelectDialog(this.SELECT_DIALOG.CERTIFICATE_GRADE);
       },
 
       onSearchDialogHelp(oEvent) {

@@ -1,0 +1,34 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:u="sap.ui.unified"
+    xmlns:custom="sap.ui.yesco.control">
+    <grid:CSSGrid gridTemplateColumns="3fr 7fr" gridGap="8px">
+        <grid:layoutData>
+            <FlexItemData growFactor="1"/>
+        </grid:layoutData>
+        <Label text="{i18n>LABEL_00318}" />
+        <Input width="100%" value="{/employee/dialog/form/Cttyptx}" editable="{= ${/employee/dialog/action} === 'A'}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpCertificate" />
+        <Label text="{i18n>LABEL_00309}" />
+        <Input width="100%" value="{/employee/dialog/form/Ctgrdtx}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpCertificateGrade" />
+        <Label text="{i18n>LABEL_00319}" />
+        <Input width="100%" value="{/employee/dialog/form/Ctnum}" />
+        <Label text="{i18n>LABEL_00320}" />
+        <Input width="100%" value="{/employee/dialog/form/Isaut}" />
+        <Label text="{i18n>LABEL_00321}" />
+        <custom:DatePicker width="50%" value="{ path: '/employee/dialog/form/Regdt', type: '.type.ODataDate' }" editable="{= ${/employee/dialog/action} === 'A'}" class="sapIcon_Date" />
+        <Label text="{i18n>LABEL_00322}" />
+        <Input width="100%" value="{/employee/dialog/form/Lawrt}" />
+        <Label text="{i18n>LABEL_00323}" />
+        <Input width="100%" value="{/employee/dialog/form/Zbigo}" />
+        <Label text="{i18n>LABEL_00324}" />
+        <HBox>
+            <Link text="{/employee/dialog/form/Zfilename}" width="80%" textAlign="Begin" visible="{= !!${/employee/dialog/form/Zfilename}}" press=".onPressFileLink">
+                <layoutData>
+                    <FlexItemData growFactor="1" />
+                </layoutData>
+            </Link>
+            <u:FileUploader buttonOnly="true" buttonText="{i18n>LABEL_00243}" maximumFileSize="{/employee/dialog/file/settings/maximumFileSize}" fileType="{/employee/dialog/file/settings/fileType}" change=".onInputFormFileChange" />
+        </HBox>
+    </grid:CSSGrid>
+</core:FragmentDefinition>
