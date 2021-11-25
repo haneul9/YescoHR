@@ -39,7 +39,7 @@ sap.ui.define(
         options.FileTypes = !!opt.FileTypes ? opt.FileTypes : ['ppt', 'pptx', 'doc', 'docx', 'xls', 'xlsx', 'jpg', 'bmp', 'gif', 'png', 'txt', 'pdf', 'jpeg'];
 
         oController.getViewModel().setProperty('/Settings', options);
-        oController.getViewModel().setProperty('/DelelteDatas', []);
+        oController.getViewModel().setProperty('/DeleteDatas', []);
 
         oController.AttachFileAction.refreshAttachFileList(oController);
       },
@@ -86,7 +86,7 @@ sap.ui.define(
             return;
           }
 
-          const iFileLeng = aFileList.length + files.length;
+          const iFileLength = aFileList.length + files.length;
 
           for (let i = 0; i < files.length; i++) {
             files[i].New = true;
@@ -98,11 +98,11 @@ sap.ui.define(
             aFileList.push(files[i]);
           }
 
-          JSonModel.setProperty('/Settings/Length', iFileLeng);
+          JSonModel.setProperty('/Settings/Length', iFileLength);
           JSonModel.setProperty('/Data', aFileList);
 
           this.byId('attachTable').clearSelection();
-          this.byId('attachTable').setVisibleRowCount(iFileLeng);
+          this.byId('attachTable').setVisibleRowCount(iFileLength);
         }
 
         oFileUploader.clear();
@@ -236,7 +236,7 @@ sap.ui.define(
         const oModel = new sap.ui.model.odata.ODataModel(sServiceUrl, true, undefined, undefined, undefined, undefined, undefined, false);
         const Attachbox = this.byId('ATTACHBOX');
         const vAttachDatas = Attachbox.getModel().getProperty('/Data') || [];
-        const aDeleteFiles = Attachbox.getModel().getProperty('/DelelteDatas') || [];
+        const aDeleteFiles = Attachbox.getModel().getProperty('/DeleteDatas') || [];
         const oAttachTable = this.byId('attachTable');
 
         return new Promise((resolve) => {
@@ -252,8 +252,8 @@ sap.ui.define(
                   resolve(bDeleteFlag);
                 });
               }),
-            ]).then((bFileSucces) => {
-              if (!bFileSucces) {
+            ]).then((bFileSuccess) => {
+              if (!bFileSuccess) {
                 MessageBox.alert(this.getBundleText('MSG_00042'));
                 return;
               }
@@ -386,7 +386,7 @@ sap.ui.define(
               }
 
               oJSonModel.setProperty('/Data', aResult);
-              oJSonModel.setProperty('/DelelteDatas', aDeleteList);
+              oJSonModel.setProperty('/DeleteDatas', aDeleteList);
               oTable.setVisibleRowCount(aResult.length);
               this.byId('attachTable').clearSelection();
               MessageBox.alert(this.getBundleText('MSG_00042')); // 파일 삭제가 완료되었습니다.
