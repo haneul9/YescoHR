@@ -43,10 +43,13 @@
             <core:Item key="{code}" text="{text}" />
         </ComboBox>
         <Label text="{i18n>LABEL_00300}" />
-        <u:FileUploader buttonText= "{i18n>LABEL_00243}" maximumFileSize="{/employee/dialog/file/settings/maximumFileSize}" fileType="{/employee/dialog/file/settings/fileType}" change=".onInputFormFileChange">
-            <u:customData>
-                <core:CustomData key="code" value="0022" />
-            </u:customData>
-        </u:FileUploader>
+        <HBox>
+            <Link text="{/employee/dialog/form/Zfilename}" width="80%" textAlign="Begin" visible="{= !!${/employee/dialog/form/Zfilename}}" press=".onPressFileLink">
+                <layoutData>
+                    <FlexItemData growFactor="1" />
+                </layoutData>
+            </Link>
+            <u:FileUploader buttonOnly="true" buttonText="{i18n>LABEL_00243}" maximumFileSize="{/employee/dialog/file/settings/maximumFileSize}" fileType="{/employee/dialog/file/settings/fileType}" change=".onInputFormFileChange" />
+        </HBox>
     </grid:CSSGrid>
 </core:FragmentDefinition>

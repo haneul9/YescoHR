@@ -39,23 +39,24 @@ sap.ui.define(
 
       showErrorMessage: function (mOptions = {}) {
         const sCode = this.getCode();
+        const sMessage = this.getMessage();
 
-        if (_.includes(this.messageLevel, this.getCode())) {
+        if (_.includes(this.messageLevel, sCode)) {
           switch (sCode) {
             case this.LEVEL.INFORMATION:
-              MessageBox.information(this.getMessage(), { ...mOptions });
+              MessageBox.information(sMessage, { ...mOptions });
               break;
             case this.LEVEL.WARNING:
-              MessageBox.warning(this.getMessage(), { ...mOptions });
+              MessageBox.warning(sMessage, { ...mOptions });
               break;
             case this.LEVEL.ERROR:
-              MessageBox.error(this.getMessage(), { ...mOptions });
+              MessageBox.error(sMessage, { ...mOptions });
               break;
             default:
               break;
           }
         } else {
-          AppUtils.debug(this.getCode(), this.getMessage());
+          AppUtils.debug(sCode, sMessage);
         }
       },
     });

@@ -71,7 +71,7 @@ sap.ui.define(
           label: 'LABEL_00303',
           path: 'education',
           url: '/EducationChangeSet',
-          pk: ['Begda', 'Endda'],
+          pk: ['Seqnr', 'Begda', 'Endda', 'Subty'],
           valid: [
             { label: 'LABEL_00284', field: 'Slart', type: Validator.SELECT1 }, // 학교구분
             { label: 'LABEL_00285', field: 'Begda', type: Validator.INPUT1 }, // 입학일
@@ -161,7 +161,8 @@ sap.ui.define(
               majorList: [],
               busy: { Slabs: false },
               file: {
-                list: [],
+                originFile: [],
+                newFile: [],
                 settings: {
                   maximumFileSize: 10,
                   fileType: ['ppt', 'pptx', 'doc', 'docx', 'xls', 'xlsx', 'jpg', 'bmp', 'gif', 'png', 'txt', 'pdf', 'jpeg'],
@@ -506,11 +507,7 @@ sap.ui.define(
         } catch (oError) {
           this.debug('Controller > Employee > refreshTableContents Error', oError);
 
-          if (oError instanceof Error) {
-            MessageBox.error(oError.message);
-          } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
-            oError.showErrorMessage();
-          }
+          throw oError;
         }
       },
 
@@ -594,14 +591,17 @@ sap.ui.define(
 
       async uploadInputFormFiles(sMenuKey) {
         const oViewModel = this.getViewModel();
-        const oFiles = oViewModel.getProperty('/employee/dialog/file/list');
+        const oOriginFiles = oViewModel.getProperty('/employee/dialog/file/originFile');
+        const oFiles = oViewModel.getProperty('/employee/dialog/file/newFile');
         let sAppno = oViewModel.getProperty('/employee/dialog/form/Appno');
 
         if (!oFiles.length) return sAppno;
 
-        if (!sAppno) sAppno = await Appno.get();
-
         try {
+          if (!sAppno) sAppno = await Appno.get();
+
+          if (!_.isEmpty(oOriginFiles)) await AttachFileAction.deleteFile(sAppno, sMenuKey, _.trim(oOriginFiles[0].Seqnr));
+
           await AttachFileAction.upload.call(this, sAppno, sMenuKey, oFiles);
         } catch (oError) {
           this.debug('Controller > Employee > uploadInputFormFiles Error', oError);
@@ -734,6 +734,8 @@ sap.ui.define(
         oViewModel.setProperty('/employee/dialog/subLabel', sLabel);
         oViewModel.setProperty('/employee/dialog/action', 'A');
         oViewModel.setProperty('/employee/dialog/actionText', this.getBundleText('LABEL_00106')); // 등록
+        oViewModel.setProperty('/employee/dialog/file/originFile', []);
+        oViewModel.setProperty('/employee/dialog/file/newFile', []);
 
         switch (sMenuKey) {
           case this.CRUD_TABLES.ADDRESS.path:
@@ -762,6 +764,8 @@ sap.ui.define(
         let sAppno = '';
 
         try {
+          AppUtils.setAppBusy(true, this);
+
           switch (sMenuKey) {
             case this.CRUD_TABLES.ADDRESS.key:
               sUrl = '/AddressInfoSet';
@@ -792,17 +796,7 @@ sap.ui.define(
           }
 
           if (!Validator.check({ mFieldValue: oInputData, aFieldProperties })) return;
-        } catch (oError) {
-          this.debug('Controller > Employee > onSaveInputForm Error', oError);
 
-          if (oError instanceof Error) {
-            MessageBox.error(oError.message);
-          } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
-            oError.showErrorMessage();
-          }
-        }
-
-        try {
           await this.createInputForm({ oViewModel, sUrl, oInputData });
 
           // {추가|수정}되었습니다.
@@ -816,14 +810,12 @@ sap.ui.define(
           this.debug('Controller > Employee > onSaveInputForm Error', oError);
 
           if (oError instanceof Error) {
-            MessageBox.error(oError.message, {
-              onClose: () => this.onInputFormDialogClose(),
-            });
+            MessageBox.error(oError.message);
           } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
-            oError.showErrorMessage({
-              onClose: () => this.onInputFormDialogClose(),
-            });
+            oError.showErrorMessage();
           }
+        } finally {
+          AppUtils.setAppBusy(false, this);
         }
       },
 
@@ -839,7 +831,7 @@ sap.ui.define(
           MessageBox.alert(this.getBundleText('MSG_00010', 'LABEL_00108')); // {수정}할 데이터를 선택하세요.
           return;
         } else if (aSelectedIndices.length > 1) {
-          MessageBox.alert(this.getBundleText('MSG_00042')); // 하나의 행만 선택하세요.
+          MessageBox.alert(this.getBundleText('MSG_00038')); // 하나의 행만 선택하세요.
           return;
         }
 
@@ -853,7 +845,9 @@ sap.ui.define(
           oViewModel.setProperty('/employee/dialog/subKey', sSelectedMenuCode);
           oViewModel.setProperty('/employee/dialog/subLabel', sLabel);
           oViewModel.setProperty('/employee/dialog/action', 'U');
-          oViewModel.setProperty('/employee/dialog/actionText', this.getBundleText('LABEL_00108')); // 수정
+          oViewModel.setProperty('/employee/dialog/actionText', this.getBundleText('LABEL_00108'));
+          oViewModel.setProperty('/employee/dialog/file/originFile', []);
+          oViewModel.setProperty('/employee/dialog/file/newFile', []);
 
           switch (sMenuKey) {
             case this.CRUD_TABLES.ADDRESS.path:
@@ -864,15 +858,44 @@ sap.ui.define(
               mFilters.Begda = moment(mFilters.Begda).hour(9).toDate();
               mFilters.Endda = moment(mFilters.Endda).hour(9).toDate();
 
-              debugger;
-              MessageBox.alert('test');
               break;
             default:
               break;
           }
 
-          const oAddressDetail = await this.readOdata({ sUrl, mFilters });
-          oViewModel.setProperty('/employee/dialog/form', oAddressDetail[0]);
+          const mTableRowDetail = await this.readOdata({ sUrl, mFilters });
+
+          if (_.isEmpty(mTableRowDetail)) throw Error(this.getBundleText('MSG_00034')); // 조회할 수 없습니다.
+
+          const oTableRowDetail = mTableRowDetail[0];
+
+          if (_.has(oTableRowDetail, 'Zzfinyn')) oTableRowDetail.Zzfinyn = oTableRowDetail.Zzfinyn === 'X';
+          if (_.has(oTableRowDetail, 'Zzrecab')) oTableRowDetail.Zzrecab = oTableRowDetail.Zzrecab === 'X';
+
+          oViewModel.setProperty('/employee/dialog/form', oTableRowDetail);
+
+          // 국가,학위 엔트리 조회
+          if (_.has(oTableRowDetail, 'Slart')) {
+            const oModel = this.getModel(ServiceNames.PA);
+            const mFilters = { Slart: oTableRowDetail.Slart };
+            const [mSchoolList, mDegreeList] = await Promise.all([
+              this.readOdata({ sUrl: '/SchoolCodeSet', mFilters }), //
+              this.readComboEntry({ oModel, sUrl: '/DegreeCodeSet', mFilters, oEntryInfo: { codeKey: 'Slabs', valueKey: 'Stext' } }),
+            ]);
+
+            oViewModel.setProperty('/employee/dialog/degreeList', mDegreeList);
+            oViewModel.setProperty('/employee/dialog/schoolList', mSchoolList);
+          }
+
+          // 파일 조회
+          if (_.has(oTableRowDetail, 'Appno')) {
+            const mFileList = await AttachFileAction.readFileList(oTableRowDetail.Appno, sSelectedMenuCode);
+
+            if (!_.isEmpty(mFileList)) {
+              oViewModel.setProperty('/employee/dialog/file/originFile', mFileList);
+              oViewModel.setProperty('/employee/dialog/form', { ...mFileList[0], ...oTableRowDetail });
+            }
+          }
 
           this.openInputFormDialog(oEvent);
           oTable.clearSelection();
@@ -899,7 +922,7 @@ sap.ui.define(
           MessageBox.alert(this.getBundleText('MSG_00010', 'LABEL_00110')); // {삭제}할 데이터를 선택하세요.
           return;
         } else if (aSelectedIndices.length > 1) {
-          MessageBox.alert(this.getBundleText('MSG_00042')); // 하나의 행만 선택하세요.
+          MessageBox.alert(this.getBundleText('MSG_00038')); // 하나의 행만 선택하세요.
           return;
         }
 
@@ -1030,9 +1053,22 @@ sap.ui.define(
 
       onInputFormFileChange(oEvent) {
         const oViewModel = this.getViewModel();
+        const oFileUploader = oEvent.getSource();
         const oFiles = oEvent.getParameter('files');
+        const oFormData = oViewModel.getProperty('/employee/dialog/form');
 
-        oViewModel.setProperty('/employee/dialog/file/list', oFiles);
+        oViewModel.setProperty('/employee/dialog/file/newFile', [...oFiles]);
+        oViewModel.setProperty('/employee/dialog/form', { ...oFormData, Zfilename: oFiles[0].name });
+
+        oFileUploader.clear();
+        oFileUploader.setValue('');
+      },
+
+      onPressFileLink() {
+        const oViewModel = this.getViewModel();
+        const sUrl = oViewModel.getProperty('/employee/dialog/form/Fileuri');
+
+        AttachFileAction.openFileLink(sUrl);
       },
 
       /*****************************************************************
