@@ -98,11 +98,11 @@ sap.ui.define([], () => {
      * @public
      */
     parseError(oError) {
-      if (!oError || !oError.responseText) {
-        throw new Error('AppUtils.parseError : 에러 데이터 오류!');
-      }
-
       try {
+        if (!oError || !oError.responseText) {
+          throw new Error('AppUtils.parseError : 에러 데이터 오류!');
+        }
+
         if (oError.statusCode && oError.statusCode === 503) {
           return {
             code: 'E',
