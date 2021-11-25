@@ -146,7 +146,7 @@ sap.ui.define(
           const mRowData = await this.readLeaveApplContent({ oModel, oSearchConditions });
 
           this.setTableData({ oViewModel, mRowData });
-        } catch (error) {
+        } catch (oError) {
           this.debug('Controller > Attendance List > onPressSearch Error', oError);
 
           if (oError instanceof Error) {
