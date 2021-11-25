@@ -18,7 +18,6 @@ sap.ui.define(
     'sap/ui/yesco/common/exceptions/ODataUpdateError',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/Validator',
     'sap/ui/yesco/model/ODataDate',
   ],
@@ -41,7 +40,6 @@ sap.ui.define(
     ODataUpdateError,
     ServiceNames,
     AppUtils,
-    TableUtils,
     Validator,
     ODataDate
   ) => {
@@ -51,7 +49,6 @@ sap.ui.define(
       type: {
         ODataDate: new ODataDate(),
       },
-      formatter: TableUtils,
       SUB_TYPE: {
         TABLE: '5',
         GRID: '6',
@@ -664,7 +661,7 @@ sap.ui.define(
       },
 
       /* =========================================================== */
-      /* event handlers                                              */
+      /* ! event handlers                                              */
       /* =========================================================== */
       onToggleNavigation(oEvent) {
         const bState = oEvent.getParameter('state');
@@ -1232,7 +1229,7 @@ sap.ui.define(
       },
 
       /*****************************************************************
-       * Call oData
+       * ! Call oData
        *****************************************************************/
       readEmpSearchResult({ oSearchParam }) {
         return new Promise((resolve, reject) => {

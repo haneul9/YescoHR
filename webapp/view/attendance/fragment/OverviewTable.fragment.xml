@@ -2,11 +2,11 @@
     xmlns:table="sap.ui.table"
     xmlns:core="sap.ui.core">
     <HBox>
-        <table:Table id="attendanceTable" width="100%" columnHeaderHeight="50px" rowHeight="50px" rows="{/list}" visibleRowCount="{/listInfo/rowCount}" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow" rowSelectionChange=".onChangeRowSelection">
+        <table:Table id="attendanceTable" width="100%" columnHeaderHeight="50" rowHeight="50" rows="{/list}" visibleRowCount="{/listInfo/rowCount}" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow" rowSelectionChange=".onChangeRowSelection">
             <table:rowSettingsTemplate>
                 <table:RowSettings highlight="{
 							path: 'ZappStatAl',
-							formatter: '.formatter.rowHighlight'
+							formatter: '.TableUtils.rowHighlight'
 						}"/>
             </table:rowSettingsTemplate>
             <table:columns>
