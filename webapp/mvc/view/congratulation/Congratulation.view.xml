@@ -51,7 +51,7 @@
 				<VBox class="hCardBox" width="33%">
 					<HBox justifyContent="SpaceBetween" class="title">
 						<Title text="{i18n>LABEL_00202}" level="H2" />
-						<Button type="Transparent" press=".onSearch" icon="sap-icon://search" class="icon-button search" />
+						<Button type="Transparent" press=".onSearch" class="icon-button search" />
 					</HBox>
 					<grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="8px">
 						<Label text="{i18n>LABEL_00266}" design="Bold" />
