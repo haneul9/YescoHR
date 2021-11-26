@@ -17,6 +17,7 @@ sap.ui.define(
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/Validator',
     'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/model/ODataDate',
   ],
   (
     // prettier 방지용 주석
@@ -34,7 +35,8 @@ sap.ui.define(
     ServiceNames,
     TableUtils,
     Validator,
-    BaseController
+    BaseController,
+    ODataDate
   ) => {
     'use strict';
 
@@ -48,6 +50,9 @@ sap.ui.define(
       },
 
       AttachFileAction: AttachFileAction,
+      type: {
+        ODataDate: new ODataDate(),
+      },
 
       onBeforeShow() {
         const oViewModel = new JSONModel({

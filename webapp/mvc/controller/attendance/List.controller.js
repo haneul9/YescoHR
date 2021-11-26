@@ -9,6 +9,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/model/ODataDate',
   ],
   (
     // prettier 방지용 주석
@@ -19,12 +20,16 @@ sap.ui.define(
     ODataReadError,
     ServiceNames,
     TableUtils,
-    BaseController
+    BaseController,
+    ODataDate
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.attendance.List', {
       TableUtils: TableUtils,
+      type: {
+        ODataDate: new ODataDate(),
+      },
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
