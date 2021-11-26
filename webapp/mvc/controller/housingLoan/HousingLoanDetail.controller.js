@@ -9,6 +9,7 @@ sap.ui.define(
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/TextUtils',
+    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
@@ -21,6 +22,7 @@ sap.ui.define(
 	AttachFileAction,
 	ComboEntry,
 	TextUtils,
+	TableUtils,
 	ServiceNames,
 	BaseController
   ) => {
@@ -67,6 +69,15 @@ sap.ui.define(
         const sDataKey = oParameter.oDataKey;
         
         this.getViewModel().setProperty('/ViewKey', sDataKey);
+      },
+
+      // 상환이력 Excel
+      onPressExcelDownload() {
+        const oTable = this.byId('repayHisTable');
+        const mTableData = this.getViewModel().getProperty('/RepayHisList');
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_07033');
+
+        TableUtils.export({ oTable, mTableData, sFileName });
       },
 
       // 융자금액 입력시
@@ -480,6 +491,11 @@ sap.ui.define(
         }
 
         return false;
+      },
+
+      // 상환신청
+      onRepayApp() {
+        
       },
 
       // 재작성
