@@ -52,7 +52,6 @@ sap.ui.define(
 
         this.getViewModel().setProperty('/busy', true);
         EmpInfo.get.call(this);
-        this.getRouter().getRoute('congratulation-detail').attachPatternMatched(this.onObjectMatched, this);
       },
 
       async onAfterShow() {
@@ -62,8 +61,8 @@ sap.ui.define(
         this.onPageLoaded();
       },
 
-      onObjectMatched(oEvent) {
-        const sDataKey = oEvent.getParameter('arguments').oDataKey;
+      onObjectMatched(oParameter) {
+        const sDataKey = oParameter.oDataKey;
 
         this.getViewModel().setProperty('/FormStatus', sDataKey);
       },

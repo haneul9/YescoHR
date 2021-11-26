@@ -10,21 +10,21 @@
             <Label text="{i18n>LABEL_00210}" />
             <HBox class="mb-0 ">
                 <Text text="{i18n>LABEL_05004}"/>
-                <Input value="{/FormData/Lnmhg}" valueState="Warning" editable="{= !${/FormData/ZappStatAl} }" />
+                <Input value="{/FormData/Lnmhg}" editable="{= !${/FormData/ZappStatAl} }" />
                 <Text text="{i18n>LABEL_05005}"/>
-                <Input value="{/FormData/Fnmhg}" valueState="Warning" editable="{= !${/FormData/ZappStatAl} }" />
+                <Input value="{/FormData/Fnmhg}" editable="{= !${/FormData/ZappStatAl} }" />
             </HBox>
             <Label text="{i18n>LABEL_05006}" />
-                <Input value="{
+            <Input value="{
                     path: '/FormData/Regno',
                     formatter: '.setResident'
-                }" liveChange=".ResidentNumber" valueState="Warning" editable="{= !${/FormData/ZappStatAl} }" />
+                }" liveChange=".ResidentNumber" editable="{= !${/FormData/ZappStatAl} }" />
             <Label text="{i18n>LABEL_05007}"/>
-            <ComboBox valueState="Warning" items="{/Relations}" selectedKey="{/FormData/Kdsvh}" change=".onShcoolList" editable="{= !${/FormData/ZappStatAl} }">
+            <ComboBox items="{/Relations}" selectedKey="{/FormData/Kdsvh}" change=".onShcoolList" editable="{= !${/FormData/ZappStatAl} }">
                 <core:Item text="{Atext}" key="{Auspr}" />
             </ComboBox>
             <Label text="{i18n>LABEL_05008}"/>
-            <ComboBox valueState="Warning" items="{/Gender}" selectedKey="{/FormData/Fasex}" editable="{= !${/FormData/ZappStatAl} }">
+            <ComboBox items="{/Gender}" selectedKey="{/FormData/Fasex}" editable="{= !${/FormData/ZappStatAl} }">
                 <core:Item text="{Ztext}" key="{Zcode}" />
             </ComboBox>
             <Label text="{i18n>LABEL_05009}"/>
@@ -32,7 +32,7 @@
             <Label text="{i18n>LABEL_05010}"/>
             <HBox >
                 <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Hndid} ? true : false }" editable="{= !${/FormData/ZappStatAl} }" />
-                <ComboBox change=".onYearsSelect" valueState="{/DisabCheck}" items="{/Disability}" selectedKey="{/FormData/Hndcd}" editable="{= !${/FormData/ZappStatAl} &amp;&amp; ${/DisabEditable} }">
+                <ComboBox change=".onYearsSelect" items="{/Disability}" selectedKey="{/FormData/Hndcd}" editable="{= !${/FormData/ZappStatAl} &amp;&amp; ${/DisabEditable} }">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
             </HBox>
@@ -41,15 +41,15 @@
             <Label text="{i18n>LABEL_05012}"/>
             <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Helid} ? true : false }" editable="{= !${/FormData/ZappStatAl} }" />
             <Label text="{i18n>LABEL_05013}"/>
-            <ComboBox change=".onYearsSelect" valueState="{/SupCheck}" items="{/Support}" selectedKey="{/FormData/Dptyp}" editable="{= !${/FormData/ZappStatAl} &amp;&amp; ${/SupEditable} }">
+            <ComboBox change=".onYearsSelect" items="{/Support}" selectedKey="{/FormData/Dptyp}" editable="{= !${/FormData/ZappStatAl} &amp;&amp; ${/SupEditable} }">
                 <core:Item text="{Dptyx}" key="{Dptyp}" />
             </ComboBox>
             <Label text="{i18n>LABEL_05014}"/>
             <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Famid} ? true : false }" editable="{= !${/FormData/ZappStatAl} }" />
             <Label text="{i18n>LABEL_05015}"/>
-            <custom:DatePicker class="sapIcon_Date" valueState="Warning" dateValue="{/FormData/Begda}" width="250px" editable="{= !${/FormData/ZappStatAl} }" />
+            <custom:DatePicker class="sapIcon_Date" dateValue="{/FormData/Begda}" width="250px" editable="{= !${/FormData/ZappStatAl} }" />
             <Label text="{i18n>LABEL_05016}"/>
-            <custom:DatePicker class="sapIcon_Date" valueState="Warning" dateValue="{/FormData/Endda}" width="250px" editable="{= !${/FormData/ZappStatAl} }" />
+            <custom:DatePicker class="sapIcon_Date" dateValue="{/FormData/Endda}" width="250px" editable="{= !${/FormData/ZappStatAl} }" />
         </grid:CSSGrid>
     </VBox>
 </core:FragmentDefinition>

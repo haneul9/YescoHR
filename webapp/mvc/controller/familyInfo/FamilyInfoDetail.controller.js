@@ -92,7 +92,6 @@ sap.ui.define(
 
         this.getViewModel().setProperty('/busy', true);
         EmpInfo.get.call(this, true);
-        this.getRouter().getRoute('familyInfo-detail').attachPatternMatched(this.onObjectMatched, this);
       },
 
       async onAfterShow() {
@@ -143,8 +142,8 @@ sap.ui.define(
       },
 
       // setData
-      onObjectMatched(oEvent) {
-        const sDataKey = oEvent.getParameter('arguments').oDataKey;
+      onObjectMatched(oParameter) {
+        const sDataKey = oParameter.oDataKey;
 
         this.getViewModel().setProperty('/FormStatus', sDataKey);
       },

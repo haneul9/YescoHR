@@ -95,10 +95,13 @@ sap.ui.define(
             if (oData) {
               const oList = oData.results;
 
-              oListModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData: oList }));
-              oListModel.setProperty('/listInfo/infoMessage', this.getBundleText('MSG_05005'));
               oListModel.setProperty('/FamilyList', oList);
-              oListModel.setProperty('/busy', false);
+              
+              setTimeout(() => {
+                oListModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData: oList }));
+                oListModel.setProperty('/listInfo/infoMessage', this.getBundleText('MSG_05005'));
+                oListModel.setProperty('/busy', false);
+              }, 100);
             }
           },
           error: (oError) => {

@@ -98,9 +98,12 @@ sap.ui.define(
             if (oData) {
               const oList = oData.results;
 
-              oListModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData: oList }));
               oListModel.setProperty('/StudentList', oList);
-              oListModel.setProperty('/busy', false);
+
+              setTimeout(() => {
+                oListModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData: oList }));
+                oListModel.setProperty('/busy', false);
+              }, 100);
             }
           },
           error: (oError) => {
