@@ -446,13 +446,12 @@ button .sapMBtnTransparent {border-radius:20px}
 .sapUiTableRowFirstFixedBottom {background-color:#eff3f8 !important}
 .sapUiTableRowFirstFixedBottom>div {display:block !important; opacity:0}
 .sapUiTableCell {border-right:1px solid #f3f3f3 !important; border-bottom:1px solid #f3f3f3 !important}
-.sapUiTableCell.sapUiTableHeaderCell{border-bottom: 0px solid #ddd !important;border-top: 0px solid #ddd !important;border-right: 1px solid #ddd !important; height: 48px !important; padding: 0;}
+.sapUiTableCell.sapUiTableHeaderCell{border-bottom: 0px solid #ddd !important;border-top: 0px solid #ddd !important;border-right: 1px solid #ddd !important; padding: 0;}
 .sapUiTableCtrlScroll tbody tr:nth-child(2) {border-bottom:none; height:50px !important}
 .sapUiTableCtrlEmpty {font-size:15px; font-weight:300; color:#b4babf}
 .sapUiTableRowSelectors:not(.sapUiTableRowHighlights) .sapUiTableRowSelectionHeaderCell {height:100%}
 .sapUiTableCellInner .sapMText {font-size:15px; font-weight:500; font-stretch:normal; font-style:normal; line-height:normal; letter-spacing:normal; text-align:left; color:#343a40}
 .sapUiTableCtrlRowFixedBottom .sapUiTableCellInner .sapMText {font-weight:bold}
-.sapUiTableTr {height:50px !important}
 /* .sapUiTable {border-left:solid 1px #f3f3f3; border-right:solid 1px #f3f3f3} */
 .sapUiTableCellInner .sapMBtn {width:100% !important}
 /*message box*/
