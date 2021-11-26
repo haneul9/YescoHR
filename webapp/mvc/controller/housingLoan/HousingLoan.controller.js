@@ -13,13 +13,13 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-    AttachFileAction,
-    ComboEntry,
-    FragmentEvent,
-    TableUtils,
-    TextUtils,
-    ServiceNames,
-    BaseController
+	AttachFileAction,
+	ComboEntry,
+	FragmentEvent,
+	TableUtils,
+	TextUtils,
+	ServiceNames,
+	BaseController
   ) => {
     'use strict';
 
@@ -100,7 +100,7 @@ sap.ui.define(
                 oListModel.setProperty('/List', oList);
 
                 setTimeout(() => {
-                  oListModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData: oList }));
+                  oListModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData: oList }, 'Lnsta'));
                   oListModel.setProperty('/busy', false);
                 }, 100);
               }
@@ -183,7 +183,7 @@ sap.ui.define(
         const mTableData = this.getViewModel().getProperty('/List');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_07001');
 
-        TableUtils.export({ oTable, mTableData, sFileName });
+        TableUtils.export({ oTable, mTableData, sFileName }, 'Lnsta', 'Lnstatx');
       },
     });
   }

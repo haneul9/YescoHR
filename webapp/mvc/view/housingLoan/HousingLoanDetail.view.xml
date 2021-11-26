@@ -26,10 +26,10 @@
 				</HBox>
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.DetailTargetInfo" type="XML" />
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.InfoMessage" type="XML" />
-				<core:Fragment fragmentName="sap.ui.yesco.view.housingLoan.fragment.DetailForm" type="XML" />
+				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.housingLoan.fragment.DetailForm" type="XML" />
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.ApplyInfo" type="XML" />
-				<core:Fragment fragmentName="sap.ui.yesco.view.housingLoan.fragment.RepaymentList" type="XML" />
+				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.housingLoan.fragment.RepaymentList" type="XML" />
 				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.housingLoan.fragment.RepaymentHistory" type="XML" />
 			</VBox>
 		</content>

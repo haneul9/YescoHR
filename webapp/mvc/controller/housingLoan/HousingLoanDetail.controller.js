@@ -6,8 +6,8 @@ sap.ui.define(
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/EmpInfo',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -18,11 +18,11 @@ sap.ui.define(
 	MessageBox,
 	Appno,
 	AppUtils,
+	AttachFileAction,
 	ComboEntry,
 	TextUtils,
-	BaseController,
-	AttachFileAction,
-	ServiceNames
+	ServiceNames,
+	BaseController
   ) => {
     'use strict';
 
@@ -158,11 +158,11 @@ sap.ui.define(
                 oDetailModel.setProperty('/ApplyInfo', oTargetData);
                 oDetailModel.setProperty('/ApplyInfo/Appdt', oTargetData.Appda);
 
-                if(oTargetData.Lnsta === '40' || oTargetData.Lnsta === '50') {
-                  const iHistoryLength = oData.LoanAmtRecordSet.length;
+                if(oTargetData.Lnsta === '40' || oTargetData.Lnsta === '60') {
+                  const iHistoryLength = oData.LoanAmtRecordSet.results.length;
 
-                  oDetailModel.setProperty('/RepayList', [oTargetData]);
-                  oDetailModel.setProperty('/RepayHisList', [oTargetData]);
+                  oDetailModel.setProperty('/RepayList', oData.LoanAmtHistorySet.results);
+                  oDetailModel.setProperty('/RepayHisList', oData.LoanAmtRecordSet.results);
                   oDetailModel.setProperty('/RepayHisLength', iHistoryLength > 10 ? 10 : iHistoryLength);
                 }
 

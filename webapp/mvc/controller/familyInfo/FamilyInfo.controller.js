@@ -14,14 +14,14 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-    AttachFileAction,
-    EmpInfo,
-    FragmentEvent,
-    TableUtils,
-    TextUtils,
-    ServiceNames,
-    MessageBox,
-    BaseController
+	AttachFileAction,
+	EmpInfo,
+	FragmentEvent,
+	TableUtils,
+	TextUtils,
+	ServiceNames,
+	MessageBox,
+	BaseController
   ) => {
     'use strict';
 
