@@ -404,7 +404,6 @@ sap.ui.define(
               oSubButtonBox.addItem(
                 new sap.m.Button({
                   type: 'Transparent',
-                  width: '117px',
                   icon: 'sap-icon://add',
                   text: this.getBundleText('LABEL_00106'), // 등록
                   customData: [new sap.ui.core.CustomData({ key: 'code', value: oMenu.code })],
@@ -414,7 +413,6 @@ sap.ui.define(
               oSubButtonBox.addItem(
                 new sap.m.Button({
                   type: 'Transparent',
-                  width: '117px',
                   icon: 'sap-icon://edit',
                   text: this.getBundleText('LABEL_00108'), // 수정
                   customData: [new sap.ui.core.CustomData({ key: 'code', value: oMenu.code })],
@@ -424,7 +422,6 @@ sap.ui.define(
               oSubButtonBox.addItem(
                 new sap.m.Button({
                   type: 'Transparent',
-                  width: '117px',
                   icon: 'sap-icon://less',
                   text: this.getBundleText('LABEL_00110'), // 삭제
                   customData: [new sap.ui.core.CustomData({ key: 'code', value: oMenu.code })],
