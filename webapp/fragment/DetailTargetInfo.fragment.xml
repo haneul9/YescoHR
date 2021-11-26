@@ -1,8 +1,8 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <HBox class="vCardBox">
+    <HBox class="vCardBox my-info-v sapUiMediumMarginBottom">
         <Image src="{targetModel>/Photo}" height="50px" width="50px" />
-        <Text text="{targetModel>/Ename}"/>
+        <Text text="{targetModel>/Ename}" class="name"/>
         <Text text="{targetModel>/Zzjikgbt} / {targetModel>/Zzjiktlt}"/>
         <Text text="{targetModel>/Pbtxt}"/>
         <Text text="{targetModel>/Btrtx}"/>
