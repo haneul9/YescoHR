@@ -13,13 +13,13 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-    AttachFileAction,
-    ComboEntry,
-    FragmentEvent,
-    TableUtils,
-    TextUtils,
-    ServiceNames,
-    BaseController
+	AttachFileAction,
+	ComboEntry,
+	FragmentEvent,
+	TableUtils,
+	TextUtils,
+	ServiceNames,
+	BaseController
   ) => {
     'use strict';
 
@@ -96,10 +96,13 @@ sap.ui.define(
             success: (oData) => {
               if (oData) {
                 const oList = oData.results;
-
-                oListModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData: oList }));
+  
                 oListModel.setProperty('/List', oList);
-                oListModel.setProperty('/busy', false);
+
+                setTimeout(() => {
+                  oListModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData: oList, sStatCode: 'Lnsta' }));
+                  oListModel.setProperty('/busy', false);
+                }, 100);
               }
 
               resolve();
@@ -168,8 +171,10 @@ sap.ui.define(
 
       onSelectRow(oEvent) {
         const vPath = oEvent.getParameters().rowBindingContext.getPath();
-        const oRowData = this.getViewModel().getProperty(vPath);
+        const oListModel = this.getViewModel();
+        const oRowData = oListModel.getProperty(vPath);
 
+        oListModel.setProperty('/parameters', oRowData);
         this.getRouter().navTo('housingLoan-detail', { oDataKey: oRowData.Appno });
       },
 
@@ -178,7 +183,7 @@ sap.ui.define(
         const mTableData = this.getViewModel().getProperty('/List');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_07001');
 
-        TableUtils.export({ oTable, mTableData, sFileName });
+        TableUtils.export({ oTable, mTableData, sFileName, sStatCode: 'Lnsta', sStatTxt: 'Lnstatx' });
       },
     });
   }

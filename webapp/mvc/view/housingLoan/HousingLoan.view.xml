@@ -5,17 +5,17 @@
 	<Page showHeader="false">
 		<content>
 			<VBox>
-				<HBox justifyContent="SpaceBetween">
+				<HBox justifyContent="SpaceBetween" class="breadcrumbs">
 					<Breadcrumbs currentLocationText="{i18n>LABEL_07017}" separatorStyle="GreaterThan">
 						<Link text="{i18n>LABEL_00145}"/>
 					</Breadcrumbs>
 					<HBox>
-						<Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onClick" />
-						<Button icon="sap-icon://print" press=".FragmentEvent.onPagePrint" type="Transparent" text="{i18n>LABEL_00131}" />
-						<Button icon="sap-icon://sys-help" type="Transparent" text="{i18n>LABEL_00132}" />
+						<Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onClick" class="sapUiTinyMarginEnd" />
+						<Button icon="sap-icon://print" press=".FragmentEvent.onPagePrint" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" />
+						<Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" />
 					</HBox>
 				</HBox>
-				<HBox justifyContent="SpaceAround">
+				<HBox justifyContent="SpaceAround" class="sapUiMediumMarginBottom">
 					<core:Fragment fragmentName="sap.ui.yesco.fragment.TargetInfo" type="XML" />
 					<core:Fragment fragmentName="sap.ui.yesco.mvc.view.housingLoan.fragment.MyLoan" type="XML" />
 					<core:Fragment fragmentName="sap.ui.yesco.mvc.view.housingLoan.fragment.SearchCondition" type="XML" />

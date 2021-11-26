@@ -100,7 +100,7 @@ sap.ui.define(
           if (sAppno) {
             const mRowData = await this.readLeaveApplEmpList({ Prcty: 'R', Appno: sAppno });
 
-            this.setTableData({ oViewModel, mRowData });
+            this.setTableData({ sType, oViewModel, mRowData });
             oViewModel.setProperty('/ZappStatAl', mListSelectedData[0].ZappStatAl);
             oViewModel.setProperty('/form/listMode', !mListSelectedData[0].ZappStatAl ? 'MultiToggle' : 'None');
             oViewModel.setProperty('/ApprovalDetails', { ...mListSelectedData[0] });
@@ -143,21 +143,21 @@ sap.ui.define(
               return {
                 ...o,
                 isChanged: false,
-                Abrtg2: o.Abrtg,
+                Abrtg2: o.Abrtg2 ? o.Abrtg2 : o.Abrtg,
                 AbrtgTxt: Number(o.Abrtg),
-                AbrtgTxt2: Number(o.Abrtg),
-                Abrst2: o.Abrst,
-                Begda2: moment(o.Begda).hours(9).toDate(),
-                Endda2: moment(o.Endda).hours(9).toDate(),
-                BegdaTxt2: moment(o.Begda).hours(9).format('YYYY.MM.DD'),
-                EnddaTxt2: moment(o.Endda).hours(9).format('YYYY.MM.DD'),
+                AbrtgTxt2: o.Abrtg2 ? Number(o.Abrtg2) : Number(o.Abrtg),
+                Abrst2: o.Abrst2 ? o.Abrst2 : o.Abrst,
+                Begda2: o.Begda2 ? o.Begda2 : o.Begda,
+                Endda2: o.Endda2 ? o.Endda2 : o.Endda,
+                BegdaTxt: o.Begda ? moment(o.Begda).hours(9).format('YYYY.MM.DD') : '',
+                EnddaTxt: o.Endda ? moment(o.Endda).hours(9).format('YYYY.MM.DD') : '',
+                BegdaTxt2: o.Begda2 ? moment(o.Begda2).hours(9).format('YYYY.MM.DD') : moment(o.Begda).hours(9).format('YYYY.MM.DD'),
+                EnddaTxt2: o.Endda2 ? moment(o.Endda2).hours(9).format('YYYY.MM.DD') : moment(o.Endda).hours(9).format('YYYY.MM.DD'),
               };
             } else {
               return {
                 ...o,
                 AbrtgTxt: `${Number(o.Abrtg)}일`,
-                Begda: moment(o.Begda).hours(9).toDate(),
-                Endda: moment(o.Endda).hours(9).toDate(),
                 BegdaTxt: moment(o.Begda).hours(9).format('YYYY.MM.DD'),
                 EnddaTxt: moment(o.Endda).hours(9).format('YYYY.MM.DD'),
               };

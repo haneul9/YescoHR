@@ -8,7 +8,7 @@
         </HBox>
         <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="8px">
             <Label text="{i18n>LABEL_03012}" />
-            <ComboBox id="AppTarget" class='LongSelectBox' valueState="Warning" items="{/AppTarget}" selectedKey="{/FormData/Zzobjps}" change=".onTargetChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+            <ComboBox id="AppTarget" class="LongSelectBox" valueState="Warning" items="{/AppTarget}" selectedKey="{/FormData/Zzobjps}" change=".onTargetChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
                 <core:Item text="{Znametx}" key="{Zzobjps}" />
             </ComboBox>
             <Label text="{i18n>LABEL_03013}" />

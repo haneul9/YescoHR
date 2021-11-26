@@ -53,7 +53,6 @@ sap.ui.define(
 
         this.getViewModel().setProperty('/busy', true);
         EmpInfo.get.call(this);
-        this.getRouter().getRoute('studentFunds-detail').attachPatternMatched(this.onObjectMatched, this);
       },
 
       onAfterShow() {
@@ -64,9 +63,9 @@ sap.ui.define(
         });
       },
 
-      onObjectMatched(oEvent) {
-        const sDataKey = oEvent.getParameter('arguments').oDataKey;
-
+      onObjectMatched(oParameter) {
+        const sDataKey = oParameter.oDataKey;
+        
         this.getViewModel().setProperty('/ViewKey', sDataKey);
       },
 

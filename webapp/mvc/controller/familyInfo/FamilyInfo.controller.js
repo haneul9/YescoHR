@@ -14,14 +14,14 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-    AttachFileAction,
-    EmpInfo,
-    FragmentEvent,
-    TableUtils,
-    TextUtils,
-    ServiceNames,
-    MessageBox,
-    BaseController
+	AttachFileAction,
+	EmpInfo,
+	FragmentEvent,
+	TableUtils,
+	TextUtils,
+	ServiceNames,
+	MessageBox,
+	BaseController
   ) => {
     'use strict';
 
@@ -95,10 +95,13 @@ sap.ui.define(
             if (oData) {
               const oList = oData.results;
 
-              oListModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData: oList }));
-              oListModel.setProperty('/listInfo/infoMessage', this.getBundleText('MSG_05005'));
               oListModel.setProperty('/FamilyList', oList);
-              oListModel.setProperty('/busy', false);
+              
+              setTimeout(() => {
+                oListModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData: oList }));
+                oListModel.setProperty('/listInfo/infoMessage', this.getBundleText('MSG_05005'));
+                oListModel.setProperty('/busy', false);
+              }, 100);
             }
           },
           error: (oError) => {

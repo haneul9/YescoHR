@@ -52,7 +52,6 @@ sap.ui.define(
 
         this.getViewModel().setProperty('/busy', true);
         EmpInfo.get.call(this);
-        this.getRouter().getRoute('congratulation-detail').attachPatternMatched(this.onObjectMatched, this);
       },
 
       async onAfterShow() {
