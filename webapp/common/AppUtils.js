@@ -98,11 +98,11 @@ sap.ui.define([], () => {
      * @public
      */
     parseError(oError) {
-      if (!oError || !oError.responseText) {
-        throw new Error('AppUtils.parseError : 에러 데이터 오류!');
-      }
-
       try {
+        if (!oError || !oError.responseText) {
+          throw new Error('AppUtils.parseError : 에러 데이터 오류!');
+        }
+
         if (oError.statusCode && oError.statusCode === 503) {
           return {
             code: 'E',
@@ -116,8 +116,10 @@ sap.ui.define([], () => {
         const errorJSON = JSON.parse(oError.responseText);
 
         if (errorJSON.error.innererror.errordetails && errorJSON.error.innererror.errordetails.length) {
+          // mErrorData.code = errorJSON.error.code;
           mErrorData.message = errorJSON.error.innererror.errordetails[0].message;
         } else if (errorJSON.error.message) {
+          mErrorData.code = 'I';
           mErrorData.message = errorJSON.error.message.value;
         } else {
           mErrorData.message = 'Unkown error.';

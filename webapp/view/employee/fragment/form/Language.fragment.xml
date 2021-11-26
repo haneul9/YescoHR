@@ -1,0 +1,46 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:u="sap.ui.unified"
+    xmlns:custom="sap.ui.yesco.control">
+    <grid:CSSGrid gridTemplateColumns="3fr 7fr" gridGap="8px">
+        <grid:layoutData>
+            <FlexItemData growFactor="1"/>
+        </grid:layoutData>
+        <Label text="{i18n>LABEL_00306}" />
+        <ComboBox width="100%" selectedKey="{/employee/dialog/form/Quali}" editable="{= ${/employee/dialog/action} === 'A'}" items="{ path: '/employee/dialog/languageTypeList' }" change=".onChangeLanguageType">
+            <core:Item key="{Quali}" text="{Qualitx}" />
+        </ComboBox>
+        <Label text="{i18n>LABEL_00307}" />
+        <ComboBox width="100%" selectedKey="{/employee/dialog/form/Exmty}" editable="{= ${/employee/dialog/action} === 'A'}" items="{ path: '/employee/dialog/examTypeList' }" busyIndicatorDelay="0" busy="{/employee/dialog/busy/Exmty}">
+            <core:Item key="{Exmty}" text="{Exmtytx}" />
+        </ComboBox>
+        <Label text="{i18n>LABEL_00308}" />
+        <Input width="100%" value="{/employee/dialog/form/Appor}" />
+        <Label text="{i18n>LABEL_00309}" />
+        <ComboBox width="100%" selectedKey="{/employee/dialog/form/Eamgr}" items="{ path: '/employee/dialog/gradeList' }">
+            <core:Item key="{Eamgr}" text="{Eamgrtx}" />
+        </ComboBox>
+        <Label text="{i18n>LABEL_00310}" />
+        <custom:DatePicker width="50%" value="{ path: '/employee/dialog/form/Eamdt', type: '.type.ODataDate' }" editable="{= ${/employee/dialog/action} === 'A'}" class="sapIcon_Date" />
+        <Label text="{i18n>LABEL_00312}" />
+        <Input type="Number" width="50%" value="{/employee/dialog/form/Spont}" liveChange=".onChangeLanguagePoint" />
+        <Label text="{i18n>LABEL_00313}" />
+        <Input type="Number" width="50%" value="{/employee/dialog/form/Hpont}" liveChange=".onChangeLanguagePoint" />
+        <Label text="{i18n>LABEL_00314}" />
+        <Input type="Number" width="50%" value="{/employee/dialog/form/Rpont}" liveChange=".onChangeLanguagePoint" />
+        <Label text="{i18n>LABEL_00315}" />
+        <Input type="Number" width="50%" value="{/employee/dialog/form/Wpont}" liveChange=".onChangeLanguagePoint" />
+        <Label text="{i18n>LABEL_00311}" />
+        <Input type="Number" width="50%" value="{/employee/dialog/form/Tpont}" editable="false" />
+        <Label text="{i18n>LABEL_00316}" />
+        <HBox>
+            <Link text="{/employee/dialog/form/Zfilename}" width="80%" textAlign="Begin" visible="{= !!${/employee/dialog/form/Zfilename}}" press=".onPressFileLink">
+                <layoutData>
+                    <FlexItemData growFactor="1" />
+                </layoutData>
+            </Link>
+            <u:FileUploader buttonOnly="true" buttonText="{i18n>LABEL_00243}" maximumFileSize="{/employee/dialog/file/settings/maximumFileSize}" fileType="{/employee/dialog/file/settings/fileType}" change=".onInputFormFileChange" />
+        </HBox>
+    </grid:CSSGrid>
+</core:FragmentDefinition>

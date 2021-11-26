@@ -1,19 +1,20 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:u="sap.ui.unified"
     xmlns:custom="sap.ui.yesco.control">
     <grid:CSSGrid gridTemplateColumns="3fr 7fr" gridGap="8px">
         <grid:layoutData>
             <FlexItemData growFactor="1"/>
         </grid:layoutData>
         <Label text="{i18n>LABEL_00284}" />
-        <ComboBox width="100%" selectedKey="{/employee/dialog/form/Slart}" items="{ path: '/employee/dialog/schoolTypeList' }" change=".onChangeSchoolType">
+        <ComboBox width="100%" selectedKey="{/employee/dialog/form/Slart}" editable="{= ${/employee/dialog/action} === 'A'}" items="{ path: '/employee/dialog/schoolTypeList' }" change=".onChangeSchoolType">
             <core:Item key="{Slart}" text="{Stext}" />
         </ComboBox>
         <Label text="{i18n>LABEL_00285}/{i18n>LABEL_00286}" />
         <HBox width="100%">
-            <custom:DatePicker width="100%" dateValue="{/employee/dialog/form/Begda}" class="sapIcon_Date" />
-            <custom:DatePicker width="100%" dateValue="{/employee/dialog/form/Endda}" class="sapIcon_Date" />
+            <custom:DatePicker width="100%" value="{ path: '/employee/dialog/form/Begda', type: '.type.ODataDate' }" editable="{= ${/employee/dialog/action} === 'A'}" class="sapIcon_Date" />
+            <custom:DatePicker width="100%" value="{ path: '/employee/dialog/form/Endda', type: '.type.ODataDate' }" editable="{= ${/employee/dialog/action} === 'A'}" class="sapIcon_Date" />
         </HBox>
         <Label text="{i18n>LABEL_00287}" />
         <Input width="100%" value="{/employee/dialog/form/Landx50}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpCountry" />
@@ -42,6 +43,13 @@
             <core:Item key="{code}" text="{text}" />
         </ComboBox>
         <Label text="{i18n>LABEL_00300}" />
-        <Button text="Upload" />
+        <HBox>
+            <Link text="{/employee/dialog/form/Zfilename}" width="80%" textAlign="Begin" visible="{= !!${/employee/dialog/form/Zfilename}}" press=".onPressFileLink">
+                <layoutData>
+                    <FlexItemData growFactor="1" />
+                </layoutData>
+            </Link>
+            <u:FileUploader buttonOnly="true" buttonText="{i18n>LABEL_00243}" maximumFileSize="{/employee/dialog/file/settings/maximumFileSize}" fileType="{/employee/dialog/file/settings/fileType}" change=".onInputFormFileChange" />
+        </HBox>
     </grid:CSSGrid>
 </core:FragmentDefinition>

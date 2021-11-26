@@ -189,7 +189,7 @@ sap.ui.define(
         const oResourceBundle = this.getModel('i18n').getResourceBundle();
         if (aArgs.length) {
           aArgs = aArgs.map((sArg) => {
-            return oResourceBundle.getText(sArg);
+            return /(^LABEL_)|(^MSG_)/.test(sArg) ? oResourceBundle.getText(sArg) : sArg;
           });
         }
         return oResourceBundle.getText(sKey, aArgs);

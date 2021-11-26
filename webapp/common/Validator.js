@@ -16,6 +16,7 @@ sap.ui.define(
       INPUT2: 'MSG_00003', // {0}를 입력하세요.
       SELECT1: 'MSG_00004', // {0}을 선택하세요.
       SELECT2: 'MSG_00005', // {0}를 선택하세요.
+      FILE: 'MSG_00044', // {0}을 등록하세요.
     };
 
     return {
@@ -23,6 +24,7 @@ sap.ui.define(
       INPUT2: 'INPUT2',
       SELECT1: 'SELECT1',
       SELECT2: 'SELECT2',
+      FILE: 'FILE',
 
       /**************************
        * Functions
