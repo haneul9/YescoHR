@@ -5,7 +5,7 @@
     <Page showHeader="false">
         <VBox>
             <HBox justifyContent="SpaceBetween">
-                <core:Fragment fragmentName="sap.ui.yesco.fragment.Navigation" type="XML" />
+                <core:Fragment fragmentName="sap.ui.yesco.fragment.app.Breadcrumbs" type="XML" />
                 <HBox>
                     <Button text="{i18n>LABEL_00121}" width="117px" type="Emphasized" visible="{= !${/ZappStatAl} }" enabled="{= ${/form/hasRow}}" busyIndicatorDelay="0" busy="{/busy}" press=".onPressApproval" />
                     <Button text="{i18n>LABEL_00146}" width="117px" press=".onNavBack" />

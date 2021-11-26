@@ -102,6 +102,7 @@ sap.ui.define(
           mMenuProperties.Mepop = m.Mepop === 'X';
           mMenuProperties.Favor = m.Favor === 'X';
           mMenuProperties.Pwchk = m.Pwchk === 'X';
+          mMenidToProperties[m.Mnid3] = { ...mMenidToProperties[m.Menid], ...mMenuProperties };
 
           const aLevel2SubMenu = mLevel2Sub[m.Mnid2];
           if (aLevel2SubMenu) {
