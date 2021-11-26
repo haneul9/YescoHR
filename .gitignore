@@ -7,7 +7,3 @@ node_modules
 .package-lock.json
 
 OdataTest.http
-
-!common/.keep
-!control/.keep
-!fragment/.keep

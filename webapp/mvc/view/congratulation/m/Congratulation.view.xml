@@ -1,0 +1,251 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.congratulation.m.Congratulation"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:table="sap.ui.table"
+	xmlns:core="sap.ui.core">
+	<Page showHeader="false">
+		<content>
+			<VBox>
+				<items>
+					<HBox justifyContent="SpaceBetween">
+						<items>
+							<HBox>
+								<items>
+									<Text text="복리후생 > 경조금"/>
+								</items>
+							</HBox>
+							<HBox>
+								<items>
+									<Button text="신청" type="Emphasized" press=".onClick" />
+									<Button icon="sap-icon://action" type="Transparent" text="프린트" />
+									<Button icon="sap-icon://action" type="Transparent" text="도움말" />
+								</items>
+							</HBox>
+						</items>
+					</HBox>
+					<HBox justifyContent="SpaceBetween">
+						<items>
+							<HBox width="33%">
+								<items>
+									<Title level="H2" text="대상자 정보" />
+								</items>
+							</HBox>
+							<HBox width="33%">
+								<items>
+									<VBox>
+										<items>
+											<Title level="H2" text="나의 경조금은" />
+											<Text text="입사 이후 지원받은 경조금 내역입니다."/>
+											<HBox>
+												<items>
+													<VBox>
+														<items>
+															<Label design="Bold" text="건수" />
+															<ObjectStatus text="{
+																	path: '/Total/Pycnt',
+																	formatter: '.formatNumber'
+																}" state="Indication02" />
+														</items>
+													</VBox>
+													<VBox>
+														<items>
+															<Label design="Bold" text="금액" />
+															<ObjectStatus text="{
+																	path: '/Total/ZpayBetT',
+																	formatter: '.getPayComma'
+																}" state="Indication02" />
+														</items>
+													</VBox>
+												</items>
+											</HBox>
+											<HBox>
+												<items>
+													<Text text="향후 예상되는 경조사는"/>
+													<ObjectStatus text="{/Total/Excon}" state="Indication05" />
+													<Text text="입니다."/>
+												</items>
+											</HBox>
+										</items>
+									</VBox>
+								</items>
+							</HBox>
+							<VBox width="auto">
+								<items>
+									<HBox justifyContent="SpaceBetween">
+										<items>
+											<Title text="조회조건" level="H2" />
+											<Button type="Transparent" press=".onSearch" icon="sap-icon://search" />
+										</items>
+									</HBox>
+									<HBox>
+										<items>
+											<Label text="신청일" design="Bold" />
+											<DateRangeSelection id="SearchDate"/>
+										</items>
+									</HBox>
+								</items>
+							</VBox>
+						</items>
+					</HBox>
+					<HBox justifyContent="SpaceBetween">
+						<items>
+							<HBox>
+								<items>
+									<Title level="H3" text="신청내역" />
+									<Text text="total 12"/>
+								</items>
+							</HBox>
+							<HBox>
+								<items>
+									<HBox>
+										<items>
+											<core:Icon src="sap-icon://circle-task-2" color="#bdbdbd" />
+											<Label text="작성중"/>
+											<core:Icon src="sap-icon://circle-task-2" color="#ffc107" />
+											<Label text="신청"/>
+											<core:Icon src="sap-icon://circle-task-2" color="#28a745" />
+											<Label text="승인"/>
+											<core:Icon src="sap-icon://circle-task-2" color="#dc3545" />
+											<Label text="반려"/>
+											<core:Icon src="sap-icon://circle-task-2" color="#17a2b8" />
+											<Label text="완료"/>
+										</items>
+									</HBox>
+									<Button icon="sap-icon://excel-attachment" text="Excel" />
+								</items>
+							</HBox>
+						</items>
+					</HBox>
+					<Table id="conguTable" width="100%" rows="{/CongList}" selectionMode="None" rowHeight="37" columnHeaderHeight="38" cellClick=".onSelectRow">
+						<table:columns>
+							<table:Column width="50px">
+								<Label text="No."/>
+								<table:template>
+									<Text text="{No}" textAlign="Center" width="100%" wrapping="false" />
+								</table:template>
+							</table:Column>
+							<table:Column width="100px">
+								<Label text="상태"/>
+								<table:template>
+									<ObjectStatus text="{ZappStxtAl}" state="{
+											path: 'ZappStatAl',
+											formatter: '.rowHighlight'
+										}" />
+									<!-- <Text text="{ZappStxtAl}" width="100%" textAlign="Center" wrapping="false"> -->
+									<!-- <customData> <core:CustomData key="status" value="{ZappStatAl}" writeToDom="true" />
+										</customData> -->
+									<!-- </Text> -->
+								</table:template>
+							</table:Column>
+							<table:Column width="100px">
+								<Label text="사번"/>
+								<table:template>
+									<Text text="{Pernr}" textAlign="Center" width="100%" wrapping="false" />
+								</table:template>
+							</table:Column>
+							<table:Column width="80px">
+								<Label text="성명"/>
+								<table:template>
+									<Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" />
+								</table:template>
+							</table:Column>
+							<table:Column width="100px">
+								<Label text="직급명칭"/>
+								<table:template>
+									<Text text="{Zzjikgbt}" textAlign="Center" width="100%" wrapping="false" />
+								</table:template>
+							</table:Column>
+							<table:Column width="100px">
+								<Label text="소속부서"/>
+								<table:template>
+									<Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" />
+								</table:template>
+							</table:Column>
+							<table:Column width="100px">
+								<Label text="지원대상"/>
+								<table:template>
+									<Text text="{Zname}" width="100%" textAlign="Center" wrapping="false" />
+								</table:template>
+							</table:Column>
+							<table:Column width="80px">
+								<Label text="관계"/>
+								<table:template>
+									<Text text="{Famtx}" textAlign="Center" width="100%" wrapping="false" />
+								</table:template>
+							</table:Column>
+							<table:Column width="100px">
+								<Label text="경조구분"/>
+								<table:template>
+									<Text text="{Context}" textAlign="Center" wrapping="false" width="100%" />
+								</table:template>
+							</table:Column>
+							<table:Column width="150px">
+								<Label text="경조사유"/>
+								<table:template>
+									<Text text="{Conretx}" textAlign="Center" width="100%" wrapping="false" />
+								</table:template>
+							</table:Column>
+							<table:Column width="100px">
+								<Label text="경조일"/>
+								<table:template>
+									<Text text="{
+											path: 'Conddate',
+											type: 'sap.ui.model.type.Date'
+										}" textAlign="Center" width="100%" wrapping="false" />
+								</table:template>
+							</table:Column>
+							<table:Column width="100px">
+								<Label text="실제경조일"/>
+								<table:template>
+									<Text text="{
+											path: 'Conrdate',
+											type: 'sap.ui.model.type.Date'
+										}" textAlign="Center" width="100%" wrapping="false" />
+								</table:template>
+							</table:Column>
+							<table:Column width="100px">
+								<Label text="지급금액"/>
+								<table:template>
+									<Text text="{ZpayBetT}" textAlign="Center" width="100%" wrapping="false" />
+								</table:template>
+							</table:Column>
+							<table:Column width="50px">
+								<Label text="증빙"/>
+								<table:template>
+									<Text text="{Docynt}" textAlign="Center" width="100%" wrapping="false" />
+								</table:template>
+							</table:Column>
+							<table:Column width="auto">
+								<Label text="신청일"/>
+								<table:template>
+									<Text text="{
+											path: 'Appda',
+											type: 'sap.ui.model.type.Date'
+										}" textAlign="Center" width="100%" wrapping="false" />
+								</table:template>
+							</table:Column>
+							<table:Column width="auto">
+								<Label text="결재일"/>
+								<table:template>
+									<Text text="{
+											path: 'Sgnda',
+											type: 'sap.ui.model.type.Date'
+										}" textAlign="Center" width="100%" wrapping="false" />
+								</table:template>
+							</table:Column>
+							<table:Column width="auto">
+								<Label text="지급일"/>
+								<table:template>
+									<Text text="{
+											path: 'Paydt',
+											type: 'sap.ui.model.type.Date'
+										}" textAlign="Center" width="100%" wrapping="false" />
+								</table:template>
+							</table:Column>
+						</table:columns>
+					</Table>
+				</items>
+			</VBox>
+		</content>
+	</Page>
+</mvc:View>

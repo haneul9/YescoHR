@@ -3,7 +3,7 @@
     "config": {
       "routerClass": "sap.m.routing.Router",
       "viewType": "XML",
-      "viewPath": "sap.ui.yesco.view",
+      "viewPath": "sap.ui.yesco.mvc.view",
       "controlId": "app",
       "controlAggregation": "pages",
       "bypassed": {
@@ -62,25 +62,25 @@
       },
       "congratulation": {
         "viewId": "congratulation",
-        "viewPath": "sap.ui.yesco.view.congratulation",
+        "viewPath": "sap.ui.yesco.mvc.view.congratulation",
         "viewName": "Congratulation",
         "viewLevel": 2
       },
       "congDetail": {
         "viewId": "congDetail",
-        "viewPath": "sap.ui.yesco.view.congratulation",
+        "viewPath": "sap.ui.yesco.mvc.view.congratulation",
         "viewName": "CongDetail",
         "viewLevel": 2
       },
       "m/congratulation": {
         "viewId": "congratulationMobile",
-        "viewPath": "sap.ui.yesco.view.congratulation.m",
+        "viewPath": "sap.ui.yesco.mvc.view.congratulation.m",
         "viewName": "Congratulation",
         "viewLevel": 2
       },
       "m/congDetail": {
         "viewId": "congDetailMobile",
-        "viewPath": "sap.ui.yesco.view.congratulation.m",
+        "viewPath": "sap.ui.yesco.mvc.view.congratulation.m",
         "viewName": "CongDetail",
         "viewLevel": 2
       }

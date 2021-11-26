@@ -39,7 +39,7 @@
   "sap.ui5": {
     "rootView": {
       "id": "app",
-      "viewName": "sap.ui.yesco.view.App",
+      "viewName": "sap.ui.yesco.mvc.view.App",
       "type": "XML",
       "async": true
     },
@@ -67,16 +67,16 @@
     },
     "resources": {
       "css": [
-        { "uri": "css/webfonts/pretendard-subset.css" },
-        { "uri": "css/style.css" },
-        { "uri": "css/placeholder.css" },
-        { "uri": "css/util/font-size.css" },
-        { "uri": "css/util/font-weight.css" },
-        { "uri": "css/util/line-height.css" },
-        { "uri": "css/util/margin.css" },
-        { "uri": "css/util/padding.css" },
-        { "uri": "css/util/border.css" },
-        { "uri": "css/util/width-height.css" },
+        { "uri": "asset/css/webfonts/pretendard-subset.css" },
+        { "uri": "asset/css/style.css" },
+        { "uri": "asset/css/placeholder.css" },
+        { "uri": "asset/css/util/font-size.css" },
+        { "uri": "asset/css/util/font-weight.css" },
+        { "uri": "asset/css/util/line-height.css" },
+        { "uri": "asset/css/util/margin.css" },
+        { "uri": "asset/css/util/padding.css" },
+        { "uri": "asset/css/util/border.css" },
+        { "uri": "asset/css/util/width-height.css" },
         { "uri": "localService/RevealGrid.css" }
       ]
     },
@@ -84,7 +84,7 @@
       "config": {
         "routerClass": "sap.m.routing.Router",
         "viewType": "XML",
-        "viewPath": "sap.ui.yesco.view",
+        "viewPath": "sap.ui.yesco.mvc.view",
         "controlId": "app",
         "controlAggregation": "pages",
         "bypassed": {
@@ -97,8 +97,8 @@
 
         { "pattern": "congratulation", "name": "congratulation", "target": "congratulation" },
         { "pattern": "m/congratulation", "name": "congratulation-mobile", "target": "m/congratulation" },
-        { "pattern": "congratulation/{oDataKey}", "name": "congratulation-detail", "target": "congDetail" },
-        { "pattern": "m/congratulation/{oDataKey}", "name": "congratulation-detail-mobile", "target": "m/congDetail" },
+        { "pattern": "congratulation/:oDataKey:", "name": "congratulation-detail", "target": "congDetail" },
+        { "pattern": "m/congratulation/:oDataKey:", "name": "congratulation-detail-mobile", "target": "m/congDetail" },
 
         { "pattern": "familyInfo", "name": "familyInfo", "target": "familyInfo" },
         { "pattern": "familyInfo/{oDataKey}", "name": "familyInfo-detail", "target": "familyInfoDetail" },
@@ -114,7 +114,7 @@
         { "pattern": "employee/:pernr:", "name": "employee", "target": "employee" },
 
         { "pattern": "nightduty", "name": "nightduty", "target": "nightduty" },
-        { "pattern": "nightduty/{oDataKey}", "name": "nightduty-detail", "target": "nightdutyDetail" },
+        { "pattern": "nightduty/:key:", "name": "nightduty-detail", "target": "nightdutyDetail" },
 
         { "pattern": "sampleComponents", "name": "sampleComponents", "target": "sampleComponents" },
         { "pattern": "sampleTimeline", "name": "sampleTimeline", "target": "sampleTimeline" },
@@ -124,36 +124,36 @@
         { "pattern": "sampleVacationIndicator", "name": "sampleVacationIndicator", "target": "sampleVacationIndicator" }
       ],
       "targets": {
-        "home": { "viewId": "home", "viewPath": "sap.ui.yesco.view.home", "viewName": "Portlets" },
-        "notFound": { "viewId": "notFound", "viewName": "NotFound", "transition": "show" },
+        "home": { "viewId": "home", "viewPath": "sap.ui.yesco.mvc.view.home", "viewName": "Portlets" },
+        "notFound": { "viewId": "notFound", "viewName": "sapui.yesco.mvc.view.NotFound", "transition": "show" },
 
-        "congratulation": { "viewId": "congratulation", "viewPath": "sap.ui.yesco.view.congratulation", "viewName": "Congratulation" },
-        "m/congratulation": { "viewId": "congratulationMobile", "viewPath": "sap.ui.yesco.view.congratulation.m", "viewName": "Congratulation" },
-        "congDetail": { "viewId": "congDetail", "viewPath": "sap.ui.yesco.view.congratulation", "viewName": "CongDetail" },
-        "m/congDetail": { "viewId": "congDetailMobile", "viewPath": "sap.ui.yesco.view.congratulation.m", "viewName": "CongDetail" },
+        "congratulation": { "viewId": "congratulation", "viewPath": "sap.ui.yesco.mvc.view.congratulation", "viewName": "Congratulation" },
+        "m/congratulation": { "viewId": "congratulationMobile", "viewPath": "sap.ui.yesco.mvc.view.congratulation.m", "viewName": "Congratulation" },
+        "congDetail": { "viewId": "congDetail", "viewPath": "sap.ui.yesco.mvc.view.congratulation", "viewName": "CongDetail" },
+        "m/congDetail": { "viewId": "congDetailMobile", "viewPath": "sap.ui.yesco.mvc.view.congratulation.m", "viewName": "CongDetail" },
 
-        "familyInfo": { "viewId": "familyInfo", "viewPath": "sap.ui.yesco.view.familyInfo", "viewName": "FamilyInfo" },
-        "familyInfoDetail": { "viewId": "familyInfoDetail", "viewPath": "sap.ui.yesco.view.familyInfo", "viewName": "FamilyInfoDetail" },
+        "familyInfo": { "viewId": "familyInfo", "viewPath": "sap.ui.yesco.mvc.view.familyInfo", "viewName": "FamilyInfo" },
+        "familyInfoDetail": { "viewId": "familyInfoDetail", "viewPath": "sap.ui.yesco.mvc.view.familyInfo", "viewName": "FamilyInfoDetail" },
 
-        "housingLoan": { "viewId": "housingLoan", "viewPath": "sap.ui.yesco.view.housingLoan", "viewName": "HousingLoan" },
-        "housingLoanDetail": { "viewId": "housingLoanDetail", "viewPath": "sap.ui.yesco.view.housingLoan", "viewName": "HousingLoanDetail" },
+        "housingLoan": { "viewId": "housingLoan", "viewPath": "sap.ui.yesco.mvc.view.housingLoan", "viewName": "HousingLoan" },
+        "housingLoanDetail": { "viewId": "housingLoanDetail", "viewPath": "sap.ui.yesco.mvc.view.housingLoan", "viewName": "HousingLoanDetail" },
 
-        "studentFunds": { "viewId": "studentFunds", "viewPath": "sap.ui.yesco.view.studentFunds", "viewName": "StudentFunds" },
-        "studentFundsDetail": { "viewId": "studentFundsDetail", "viewPath": "sap.ui.yesco.view.studentFunds", "viewName": "StudentFundsDetail" },
+        "studentFunds": { "viewId": "studentFunds", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFunds" },
+        "studentFundsDetail": { "viewId": "studentFundsDetail", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFundsDetail" },
 
-        "attendance": { "viewId": "attendanceList", "viewPath": "sap.ui.yesco.view.attendance", "viewName": "List" },
-        "attendanceDetail": { "viewId": "attendanceDetail", "viewPath": "sap.ui.yesco.view.attendance", "viewName": "Detail" },
-        "employee": { "viewId": "employee", "viewPath": "sap.ui.yesco.view.employee", "viewName": "Employee" },
+        "attendance": { "viewId": "attendanceList", "viewPath": "sap.ui.yesco.mvc.view.attendance", "viewName": "List" },
+        "attendanceDetail": { "viewId": "attendanceDetail", "viewPath": "sap.ui.yesco.mvc.view.attendance", "viewName": "Detail" },
+        "employee": { "viewId": "employee", "viewPath": "sap.ui.yesco.mvc.view.employee", "viewName": "Employee" },
 
-        "nightduty": { "viewId": "nightduty", "viewPath": "sap.ui.yesco.view.nightduty", "viewName": "List" },
-        "nightdutyDetail": { "viewId": "nightdutyDetail", "viewPath": "sap.ui.yesco.view.nightduty", "viewName": "Detail" },
+        "nightduty": { "viewId": "nightduty", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "List" },
+        "nightdutyDetail": { "viewId": "nightdutyDetail", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "Detail" },
 
-        "sampleComponents": { "viewId": "sampleComponents", "viewPath": "sap.ui.yesco.view.zample", "viewName": "Components", "title": "Components" },
-        "sampleTimeline": { "viewId": "sampleTimeline", "viewPath": "sap.ui.yesco.view.zample", "viewName": "Timeline", "title": "Timeline" },
-        "sampleNinebox": { "viewId": "sampleNinebox", "viewPath": "sap.ui.yesco.view.zample", "viewName": "Ninebox", "title": "Ninebox" },
-        "sampleDonutChart": { "viewId": "sampleDonutChart", "viewPath": "sap.ui.yesco.view.zample", "viewName": "DonutChart", "title": "DonutChart" },
-        "sampleDatePicker": { "viewId": "sampleDatePicker", "viewPath": "sap.ui.yesco.view.zample", "viewName": "DatePicker", "title": "DatePicker" },
-        "sampleVacationIndicator": { "viewId": "sampleVacationIndicator", "viewPath": "sap.ui.yesco.view.zample", "viewName": "VacationIndicator", "title": "VacationIndicator" }
+        "sampleComponents": { "viewId": "sampleComponents", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Components", "title": "Components" },
+        "sampleTimeline": { "viewId": "sampleTimeline", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Timeline", "title": "Timeline" },
+        "sampleNinebox": { "viewId": "sampleNinebox", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Ninebox", "title": "Ninebox" },
+        "sampleDonutChart": { "viewId": "sampleDonutChart", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "DonutChart", "title": "DonutChart" },
+        "sampleDatePicker": { "viewId": "sampleDatePicker", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "DatePicker", "title": "DatePicker" },
+        "sampleVacationIndicator": { "viewId": "sampleVacationIndicator", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "VacationIndicator", "title": "VacationIndicator" }
       }
     }
   }

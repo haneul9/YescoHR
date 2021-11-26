@@ -9,10 +9,10 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/ServiceManager',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/controller/ErrorHandler',
-    'sap/ui/yesco/model/MenuModel',
-    'sap/ui/yesco/model/SessionModel',
-    'sap/ui/yesco/model/Models',
+    'sap/ui/yesco/mvc/controller/ErrorHandler',
+    'sap/ui/yesco/mvc/model/MenuModel',
+    'sap/ui/yesco/mvc/model/SessionModel',
+    'sap/ui/yesco/mvc/model/Models',
   ],
   (
     // prettier 방지용 주석

@@ -5,10 +5,10 @@ sap.ui.define(
     'sap/ui/core/Fragment',
     'sap/ui/core/routing/HashChanger',
     'sap/ui/model/json/JSONModel',
-    'sap/ui/yesco/control/MessageBox',
-    'sap/ui/yesco/control/app/MenuLevel1',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/control/MessageBox',
+    'sap/ui/yesco/control/app/MenuLevel1',
   ],
   (
     // prettier 방지용 주석
@@ -16,10 +16,10 @@ sap.ui.define(
     Fragment,
     HashChanger,
     JSONModel,
-    MessageBox,
-    MenuLevel1,
     AppUtils,
-    ServiceNames
+    ServiceNames,
+    MessageBox,
+    MenuLevel1
   ) => {
     'use strict';
 

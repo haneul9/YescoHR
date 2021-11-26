@@ -1,0 +1,184 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.zample.VacationIndicator"
+	xmlns="sap.m"
+	xmlns:custom="sap.ui.yesco.control"
+	xmlns:grid="sap.ui.layout.cssgrid"
+	xmlns:mvc="sap.ui.core.mvc" height="100%">
+	<Button text="데이터 변경 1" type="Emphasized" press=".onClick1" />
+	<Button text="데이터 변경 2" type="Emphasized" press=".onClick2" />
+	<grid:CSSGrid gridTemplateColumns="1fr 2fr 2fr 2fr 2fr 2fr 2fr" gridGap="8px" id="grid">
+		<VBox class="sapUiMediumMargin">
+			<HBox height="40px" alignItems="Start">
+			</HBox>
+			<HBox height="60px" alignItems="Start">
+				<Label text="Top" class="component-title" />
+			</HBox>
+			<HBox height="60px" alignItems="Center">
+				<Label text="Middle" class="component-title" />
+			</HBox>
+			<HBox height="60px" alignItems="End">
+				<Label text="Bottom" class="component-title" />
+			</HBox>
+		</VBox>
+		<VBox class="sapUiMediumMargin">
+			<HBox height="40px" alignItems="Start">
+				<Title level="H3" text="사용 일수 0" class="component-title" />
+			</HBox>
+			<HBox height="60px" alignItems="Start">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used1}" showTotal="{/show1}" align="Top" />
+			</HBox>
+			<HBox height="60px" alignItems="Center">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used1}" showTotal="{/show1}" />
+			</HBox>
+			<HBox height="60px" alignItems="End">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used1}" showTotal="{/show1}" align="Bottom" />
+			</HBox>
+		</VBox>
+		<VBox class="sapUiMediumMargin">
+			<HBox height="40px" alignItems="Start">
+				<Title level="H3" text="사용 일수 &lt;&lt; 남은 일수" class="component-title" />
+			</HBox>
+			<HBox height="60px" alignItems="Start">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used2}" showTotal="{/show1}" align="Top" />
+			</HBox>
+			<HBox height="60px" alignItems="Center">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used2}" showTotal="{/show1}" />
+			</HBox>
+			<HBox height="60px" alignItems="End">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used2}" showTotal="{/show1}" align="Bottom" />
+			</HBox>
+		</VBox>
+		<VBox class="sapUiMediumMargin">
+			<HBox height="40px" alignItems="Start">
+				<Title level="H3" text="사용 일수 1/3, 남은 일수 2/3" class="component-title" />
+			</HBox>
+			<HBox height="60px" alignItems="Start">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used3}" showTotal="{/show1}" align="Top" />
+			</HBox>
+			<HBox height="60px" alignItems="Center">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used3}" showTotal="{/show1}" />
+			</HBox>
+			<HBox height="60px" alignItems="End">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used3}" showTotal="{/show1}" align="Bottom" />
+			</HBox>
+		</VBox>
+		<VBox class="sapUiMediumMargin">
+			<HBox height="40px" alignItems="Start">
+				<Title level="H3" text="사용 일수 = 남은 일수" class="component-title" />
+			</HBox>
+			<HBox height="60px" alignItems="Start">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used4}" showTotal="{/show1}" align="Top" />
+			</HBox>
+			<HBox height="60px" alignItems="Center">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used4}" showTotal="{/show1}" />
+			</HBox>
+			<HBox height="60px" alignItems="End">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used4}" showTotal="{/show1}" align="Bottom" />
+			</HBox>
+		</VBox>
+		<VBox class="sapUiMediumMargin">
+			<HBox height="40px" alignItems="Start">
+				<Title level="H3" text="사용 일수 &gt;&gt; 남은 일수" class="component-title" />
+			</HBox>
+			<HBox height="60px" alignItems="Start">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used5}" showTotal="{/show1}" align="Top" />
+			</HBox>
+			<HBox height="60px" alignItems="Center">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used5}" showTotal="{/show1}" />
+			</HBox>
+			<HBox height="60px" alignItems="End">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used5}" showTotal="{/show1}" align="Bottom" />
+			</HBox>
+		</VBox>
+		<VBox class="sapUiMediumMargin">
+			<HBox height="40px" alignItems="Start">
+				<Title level="H3" text="남은 일수 0" class="component-title" />
+			</HBox>
+			<HBox height="60px" alignItems="Start">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used6}" showTotal="{/show1}" align="Top" />
+			</HBox>
+			<HBox height="60px" alignItems="Center">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used6}" showTotal="{/show1}" />
+			</HBox>
+			<HBox height="60px" alignItems="End">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used6}" showTotal="{/show1}" align="Bottom" />
+			</HBox>
+		</VBox>
+		<VBox class="sapUiMediumMargin">
+			<HBox height="60px" alignItems="Start">
+				<Label text="Top" class="component-title" />
+			</HBox>
+			<HBox height="60px" alignItems="Center">
+				<Label text="Middle" class="component-title" />
+			</HBox>
+			<HBox height="60px" alignItems="End">
+				<Label text="Bottom" class="component-title" />
+			</HBox>
+		</VBox>
+		<VBox class="sapUiMediumMargin">
+			<HBox height="60px" alignItems="Start">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used1}" showTotal="{/show2}" align="Top" />
+			</HBox>
+			<HBox height="60px" alignItems="Center">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used1}" showTotal="{/show2}" />
+			</HBox>
+			<HBox height="60px" alignItems="End">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used1}" showTotal="{/show2}" align="Bottom" />
+			</HBox>
+		</VBox>
+		<VBox class="sapUiMediumMargin">
+			<HBox height="60px" alignItems="Start">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used2}" showTotal="{/show2}" align="Top" />
+			</HBox>
+			<HBox height="60px" alignItems="Center">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used2}" showTotal="{/show2}" />
+			</HBox>
+			<HBox height="60px" alignItems="End">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used2}" showTotal="{/show2}" align="Bottom" />
+			</HBox>
+		</VBox>
+		<VBox class="sapUiMediumMargin">
+			<HBox height="60px" alignItems="Start">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used3}" showTotal="{/show2}" align="Top" />
+			</HBox>
+			<HBox height="60px" alignItems="Center">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used3}" showTotal="{/show2}" />
+			</HBox>
+			<HBox height="60px" alignItems="End">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used3}" showTotal="{/show2}" align="Bottom" />
+			</HBox>
+		</VBox>
+		<VBox class="sapUiMediumMargin">
+			<HBox height="60px" alignItems="Start">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used4}" showTotal="{/show2}" align="Top" />
+			</HBox>
+			<HBox height="60px" alignItems="Center">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used4}" showTotal="{/show2}" />
+			</HBox>
+			<HBox height="60px" alignItems="End">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used4}" showTotal="{/show2}" align="Bottom" />
+			</HBox>
+		</VBox>
+		<VBox class="sapUiMediumMargin">
+			<HBox height="60px" alignItems="Start">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used5}" showTotal="{/show2}" align="Top" />
+			</HBox>
+			<HBox height="60px" alignItems="Center">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used5}" showTotal="{/show2}" />
+			</HBox>
+			<HBox height="60px" alignItems="End">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used5}" showTotal="{/show2}" align="Bottom" />
+			</HBox>
+		</VBox>
+		<VBox class="sapUiMediumMargin">
+			<HBox height="60px" alignItems="Start">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used6}" showTotal="{/show2}" align="Top" />
+			</HBox>
+			<HBox height="60px" alignItems="Center">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used6}" showTotal="{/show2}" />
+			</HBox>
+			<HBox height="60px" alignItems="End">
+				<custom:VacationIndicator width="10rem" total="{/total}" used="{/used6}" showTotal="{/show2}" align="Bottom" />
+			</HBox>
+		</VBox>
+	</grid:CSSGrid>
+</mvc:View>

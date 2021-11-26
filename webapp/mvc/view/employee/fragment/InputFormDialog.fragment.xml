@@ -1,0 +1,27 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Dialog id="inputFormDialog" showHeader="false" contentWidth="500px">
+        <buttons>
+            <Button type="Emphasized" text="{/employee/dialog/actionText}" press=".onSaveInputForm"/>
+            <Button text="{i18n>LABEL_00115}" press=".onInputFormDialogClose"/>
+        </buttons>
+        <Panel expanded="true" headerText="{/employee/dialog/subLabel}">
+            <content>
+                <VBox>
+                    <HBox visible="{= ${/employee/dialog/subKey} === '0006'}">
+                        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.form.Address" type="XML" />
+                    </HBox>
+                    <HBox visible="{= ${/employee/dialog/subKey} === '0022'}">
+                        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.form.Education" type="XML" />
+                    </HBox>
+                    <HBox visible="{= ${/employee/dialog/subKey} === '9002'}">
+                        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.form.Language" type="XML" />
+                    </HBox>
+                    <HBox visible="{= ${/employee/dialog/subKey} === '9006'}">
+                        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.form.Certificate" type="XML" />
+                    </HBox>
+                </VBox>
+            </content>
+        </Panel>
+    </Dialog>
+</core:FragmentDefinition>

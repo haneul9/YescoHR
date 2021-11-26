@@ -1,0 +1,30 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.attendance.List"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc">
+	<Page showHeader="false">
+		<VBox>
+			<HBox justifyContent="SpaceBetween">
+				<core:Fragment fragmentName="sap.ui.yesco.fragment.Navigation" type="XML" />
+				<HBox>
+					<Button type="Emphasized" width="117px" text="{i18n>LABEL_04002}" press=".onPressNewApprovalBtn" busyIndicatorDelay="0" busy="{/busy}" />
+					<Button type="Emphasized" width="117px" text="{i18n>LABEL_04003}" press=".onPressModApprovalBtn" enabled="{= ${/isVisibleActionButton}}" busyIndicatorDelay="0" busy="{/busy}" />
+					<Button type="Emphasized" width="117px" text="{i18n>LABEL_04004}" press=".onPressCancApprovalBtn" enabled="{= ${/isVisibleActionButton}}" busyIndicatorDelay="0" busy="{/busy}" />
+				</HBox>
+			</HBox>
+			<HBox justifyContent="SpaceAround">
+				<core:Fragment fragmentName="sap.ui.yesco.fragment.TargetInfo" type="XML" />
+				<VBox class="hCardBox" width="33%">
+					<core:Fragment fragmentName="sap.ui.yesco.mvc.view.attendance.fragment.VacationOverview" type="XML" />
+				</VBox>
+				<VBox class="hCardBox" width="33%" busyIndicatorDelay="0" busy="{/busy}">
+					<core:Fragment fragmentName="sap.ui.yesco.mvc.view.attendance.fragment.OverviewSearchCondition" type="XML" />
+				</VBox>
+			</HBox>
+			<VBox class="vCardBox">
+				<core:Fragment fragmentName="sap.ui.yesco.fragment.OverviewTableHeader" type="XML" />
+				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.attendance.fragment.OverviewTable" type="XML" />
+			</VBox>
+		</VBox>
+	</Page>
+</mvc:View>
