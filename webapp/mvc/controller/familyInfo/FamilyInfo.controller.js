@@ -64,7 +64,7 @@ sap.ui.define(
       },
 
       onClick() {
-        this.getRouter().navTo('familyInfo-detail');
+        this.getRouter().navTo('familyInfo-detail', { oDataKey: 'N' });
       },
 
       formatNumber(vNum = '0') {
