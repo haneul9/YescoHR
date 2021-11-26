@@ -143,15 +143,19 @@ sap.ui.define(
             this.setTableData({ sType, oViewModel, mRowData });
             this.initializeApplyInfoBox(mRowData[0]);
             this.initializeApprovalBox(mRowData[0]);
-          } else if (sType === this.PAGE_TYPE.CHANGE || sType === this.PAGE_TYPE.CANCEL) {
-            const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-            const mListSelectedData = oListView.getModel().getProperty('/parameter/rowData');
+          } else {
+            if (sType === this.PAGE_TYPE.CHANGE || sType === this.PAGE_TYPE.CANCEL) {
+              const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+              const mListSelectedData = oListView.getModel().getProperty('/parameter/rowData');
 
-            if (sType === this.PAGE_TYPE.CANCEL) {
-              oViewModel.setProperty('/form/listMode', 'None');
+              if (sType === this.PAGE_TYPE.CANCEL) {
+                oViewModel.setProperty('/form/listMode', 'None');
+              }
+
+              // 변경|취소 신청의 경우 List페이지에서 선택된 데이터를 가져온다.
+              this.setTableData({ sType, oViewModel, mRowData: mListSelectedData });
             }
-            // 변경|취소 신청의 경우 List페이지에서 선택된 데이터를 가져온다.
-            this.setTableData({ sType, oViewModel, mRowData: mListSelectedData });
+
             this.initializeApplyInfoBox();
           }
 
