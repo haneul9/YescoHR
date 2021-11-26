@@ -124,7 +124,7 @@ sap.ui.define(
         const sUrl = '/LoanAmtApplSet';
         const sViewKey = oDetailModel.getProperty('/ViewKey');
 
-        if(sViewKey === 'N' || !sViewKey) {
+        if(!sViewKey) {
           const oTargetInfo = this.getOwnerComponent().getSessionModel().getData();
           
           // oDetailModel.setProperty('/FormData', oTargetInfo);
@@ -167,7 +167,7 @@ sap.ui.define(
   
                 oDetailModel.setProperty('/FormData', oTargetData);
                 oDetailModel.setProperty('/ApplyInfo', oTargetData);
-                oDetailModel.setProperty('/ApplyInfo/Appdt', oTargetData.Appda);
+                // oDetailModel.setProperty('/ApplyInfo/Appdt', oTargetData.Appda);
 
                 if(oTargetData.Lnsta === '40' || oTargetData.Lnsta === '60') {
                   const iHistoryLength = oData.LoanAmtRecordSet.results.length;
@@ -495,7 +495,7 @@ sap.ui.define(
 
       // 상환신청
       onRepayApp() {
-        
+
       },
 
       // 재작성

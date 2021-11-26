@@ -59,7 +59,7 @@ sap.ui.define(
       },
 
       onClick() {
-        this.getRouter().navTo('congratulation-detail', { oDataKey: 'N' });
+        this.getRouter().navTo('congratulation-detail');
       },
 
       formatNumber(vNum) {

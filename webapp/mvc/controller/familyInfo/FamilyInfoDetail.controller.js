@@ -122,7 +122,7 @@ sap.ui.define(
         const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
         const mListData = oListView.getModel().getProperty('/parameter');
 
-        if (!sKey || sKey === 'N') {
+        if (!sKey) {
           const oTargetInfo = oDetailModel.getProperty('/TargetInfo');
 
           oDetailModel.setProperty('/FormData', oTargetInfo);

@@ -101,13 +101,13 @@
         { "pattern": "m/congratulation/:oDataKey:", "name": "congratulation-detail-mobile", "target": "m/congDetail" },
 
         { "pattern": "familyInfo", "name": "familyInfo", "target": "familyInfo" },
-        { "pattern": "familyInfo/{oDataKey}", "name": "familyInfo-detail", "target": "familyInfoDetail" },
+        { "pattern": "familyInfo/:oDataKey", "name": "familyInfo-detail", "target": "familyInfoDetail" },
 
         { "pattern": "housingLoan", "name": "housingLoan", "target": "housingLoan" },
-        { "pattern": "housingLoan/{oDataKey}", "name": "housingLoan-detail", "target": "housingLoanDetail" },
+        { "pattern": "housingLoan/:oDataKey", "name": "housingLoan-detail", "target": "housingLoanDetail" },
 
         { "pattern": "studentFunds", "name": "studentFunds", "target": "studentFunds" },
-        { "pattern": "studentFunds/{oDataKey}", "name": "studentFunds-detail", "target": "studentFundsDetail" },
+        { "pattern": "studentFunds/:oDataKey", "name": "studentFunds-detail", "target": "studentFundsDetail" },
 
         { "pattern": "attendance", "name": "attendance", "target": "attendance" },
         { "pattern": "attendance/{type}/:appno:", "name": "attendance-detail", "target": "attendanceDetail" },

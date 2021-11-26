@@ -62,7 +62,7 @@ sap.ui.define(
       },
 
       onClick() {
-        this.getRouter().navTo('housingLoan-detail', { oDataKey: 'N' });
+        this.getRouter().navTo('housingLoan-detail');
       },
 
       formatNumber(vNum = '0') {
