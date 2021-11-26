@@ -5,7 +5,7 @@
     "conn_client" : "100",
     "conn_user": "HR11",
     "conn_password": "qwert!2345",
-    "abap_bsp": "ZUI5_YESCOHR",
+    "abap_bsp": "zui5_yescohr",
     "abap_bsp_text": "UI5 upload through VSCode App",
     "abap_package": "zhr1",
     "abap_transport": "YHDK900108",

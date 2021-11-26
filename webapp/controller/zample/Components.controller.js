@@ -10,7 +10,7 @@ sap.ui.define(
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/controller/BaseController',
-    'sap/ui/yesco/model/ODataDate',
+    'sap/ui/yesco/model/ODataDate', // DatePicker 에러 방지 : Loading of data failed: Error: Date must be a JavaScript date object
   ],
   (
     // prettier 방지용 주석
@@ -22,15 +22,11 @@ sap.ui.define(
     DateUtils,
     TableUtils,
     MessageBox,
-    BaseController,
-    ODataDate
+    BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.controller.zample.Components', {
-      type: {
-        ODataDate: new ODataDate(),
-      },
       DateUtils,
 
       /* =========================================================== */

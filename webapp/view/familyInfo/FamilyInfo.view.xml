@@ -6,9 +6,7 @@
 		<content>
 			<VBox>
 				<HBox justifyContent="SpaceBetween" class="breadcrumbs">
-					<Breadcrumbs currentLocationText="{i18n>LABEL_05001}" separatorStyle="GreaterThan">
-						<Link text="{i18n>LABEL_00160}"/>
-					</Breadcrumbs>
+					<core:Fragment fragmentName="sap.ui.yesco.fragment.app.Breadcrumbs" type="XML" />
 					<HBox>
 						<Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onClick" class="sapUiTinyMarginEnd" />
 						<Button icon="sap-icon://print" press=".FragmentEvent.onPagePrint" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" />

@@ -45,7 +45,7 @@ sap.ui.define(
               error: (oError) => {
                 AppUtils.debug(`${sUrl} error.`, oError);
 
-                this.setData(this.transform(oData));
+                this.setData(this.transform({}));
 
                 resolve();
               },
@@ -94,6 +94,7 @@ sap.ui.define(
           }
 
           const mMenuProperties = mMenidToProperties[m.Menid] || {};
+          mMenuProperties.Level = 3;
           mMenuProperties.Mnid1 = m.Mnid1;
           mMenuProperties.Mnid2 = m.Mnid2;
           mMenuProperties.Mnid3 = m.Mnid3;
@@ -120,6 +121,7 @@ sap.ui.define(
           }
 
           const mMenuProperties = {
+            Level: 2,
             Menid: m.Menid,
             Mnid2: m.Mnid2,
             Mname: m.Mnnm2,
@@ -129,6 +131,8 @@ sap.ui.define(
             Pwchk: m.Pwchk === 'X',
             Children: mLevel2Sub[m.Mnid2] || [],
           };
+          mMenidToProperties[m.Mnid2] = { ...mMenidToProperties[m.Menid], ...mMenuProperties };
+
           const aLevel1SubMenu = mLevel1Sub[m.Mnid1];
           if (aLevel1SubMenu) {
             aLevel1SubMenu.push(mMenuProperties);
@@ -145,7 +149,9 @@ sap.ui.define(
           if (m.Favor === 'X') {
             aFavoriteMenids.push(m.Menid);
           }
-          return {
+
+          const mMenuProperties = {
+            Level: 1,
             Menid: m.Menid,
             Mnid1: m.Mnid1,
             Mname: m.Mnnm1,
@@ -156,6 +162,9 @@ sap.ui.define(
             Children: mLevel1Sub[m.Mnid1] || [],
             StyleClasses: this.getStyleClasses(m),
           };
+          mMenidToProperties[m.Mnid1] = { ...mMenidToProperties[m.Menid], ...mMenuProperties };
+
+          return mMenuProperties;
         });
 
         return {
@@ -163,6 +172,8 @@ sap.ui.define(
           menidToProperties: mMenidToProperties,
           urlToMenid: mUrlToMenid,
           favoriteMenids: aFavoriteMenids,
+          current: {},
+          breadcrumbs: {},
         };
       },
 
@@ -381,7 +392,10 @@ sap.ui.define(
       },
 
       getProperties(sMenid) {
-        return this.getProperty(`/menidToProperties/${sMenid}`);
+        if (sMenid) {
+          return this.getProperty(`/menidToProperties/${sMenid}`);
+        }
+        return this.getProperty(`/menidToProperties`);
       },
 
       getMenid(sUrl) {
@@ -394,19 +408,54 @@ sap.ui.define(
 
       /**
        * 현재 메뉴 라우팅 정보 저장
-       * @param {string} RouteName
-       * @param {string} Menid
+       * @param {string} routeName
+       * @param {string} menuId
+       * @param {boolean} isSubRoute
        */
-      setCurrentMenuData({ RouteName, Menid }) {
-        this.setProperty('/Current', { RouteName, Menid });
+      setCurrentMenuData({ routeName, menuId, isSubRoute = false }) {
+        this.setProperty('/current', { routeName, menuId, isSubRoute });
+        this.setProperty('/breadcrumbs', {
+          currentLocationText: '',
+          name1: '',
+          name2: '',
+          name3: '',
+          show1: false,
+          show2: false,
+          show3: false,
+        });
+
+        const mCurrentMenuProperties = this.getProperties(menuId);
+        const iLevel = isSubRoute ? 4 : mCurrentMenuProperties.Level;
+        let mMenuProperties;
+
+        switch (iLevel) {
+          case 4:
+            mMenuProperties = this.getProperties(mCurrentMenuProperties.Mnid3);
+            this.setProperty('/breadcrumbs/name3', mMenuProperties.Mname);
+            this.setProperty('/breadcrumbs/show3', true);
+          case 3:
+            mMenuProperties = this.getProperties(mCurrentMenuProperties.Mnid2);
+            this.setProperty('/breadcrumbs/name2', mMenuProperties.Mname);
+            this.setProperty('/breadcrumbs/show2', true);
+          case 2:
+            mMenuProperties = this.getProperties(mCurrentMenuProperties.Mnid1);
+            this.setProperty('/breadcrumbs/name1', mMenuProperties.Mname);
+            this.setProperty('/breadcrumbs/show1', true);
+          case 1:
+          /* Nothing to do */
+          default:
+        }
+
+        // TODO : route parameter 받아서 신규? 상세? 구분
+        this.setProperty('/breadcrumbs/currentLocationText', isSubRoute ? '신규' : mCurrentMenuProperties.Mname);
       },
 
       getCurrentMenuRouteName() {
-        return this.getProperty('/Current/RouteName');
+        return this.getProperty('/current/RouteName');
       },
 
       getCurrentMenuId() {
-        return this.getProperty('/Current/Menid');
+        return this.getProperty('/current/Menid');
       },
     });
   }

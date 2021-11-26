@@ -8,12 +8,7 @@
 		<content>
 			<VBox>
 				<HBox justifyContent="SpaceBetween">
-					<HBox>
-						<Breadcrumbs currentLocationText="{i18n>LABEL_00134}" separatorStyle="GreaterThan">
-							<Link text="{i18n>LABEL_00145}"/>
-							<Link text="{i18n>LABEL_02001}"/>
-						</Breadcrumbs>
-					</HBox>
+					<core:Fragment fragmentName="sap.ui.yesco.fragment.app.Breadcrumbs" type="XML" />
 					<HBox>
 						<Button text="{i18n>LABEL_00120}" type="Emphasized" press=".onRewriteBtn" visible="{= ${/FormData/ZappStatAl} === '45' }" />
 						<Button text="{i18n>LABEL_00104}" type="Emphasized" press=".onSaveBtn" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />

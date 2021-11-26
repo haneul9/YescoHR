@@ -224,7 +224,7 @@ sap.ui.define(
             const sRouteName = oEvent.getParameter('name');
             AppUtils.debug(`User accessed route ${sRouteName}, timestamp = ${new Date().getTime()}`);
 
-            this.checkRouteName(sRouteName.split(/-/)[0])
+            this.checkRouteName(sRouteName.split(/-/))
               .then(() => {
                 oView.setVisible(true);
               })
@@ -239,11 +239,10 @@ sap.ui.define(
           .attachRoutePatternMatched((oEvent) => {
             AppUtils.debug('routePatternMatched', oEvent.getParameters());
 
-            const oView = oEvent.getParameter('view');
-            const oController = oView.getController();
+            const oController = oEvent.getParameter('view').getController();
 
-            if (oController['onObjectMatched'] instanceof Function) {
-              oController['onObjectMatched'](oEvent.getParameter('arguments'));
+            if (oController.onObjectMatched && oController.onObjectMatched instanceof Function) {
+              oController.onObjectMatched(oEvent.getParameter('arguments'));
             }
           });
         return this;
@@ -252,23 +251,24 @@ sap.ui.define(
       /**
        * 메뉴 권한 체크
        * @public
-       * @param {string} sRouteName
+       * @param {string} sRouteNameMain
+       * @param {string} sRouteNameSub
        * @returns {promise}
        */
-      checkRouteName(sRouteName) {
+      checkRouteName([sRouteNameMain, sRouteNameSub]) {
         const oMenuModel = this.getMenuModel();
 
         return oMenuModel.getPromise().then(() => {
           return new Promise((resolve, reject) => {
-            if (sRouteName === 'ehrHome') {
-              oMenuModel.setCurrentMenuData({ RouteName: '', Menid: '' });
+            if (sRouteNameMain === 'ehrHome') {
+              oMenuModel.setCurrentMenuData({ routeName: '', menuId: '', isSubRoute: false });
               resolve();
               return;
             }
 
-            const sMenid = oMenuModel.getMenid(sRouteName);
+            const sMenid = oMenuModel.getMenid(sRouteNameMain);
             if ((AppUtils.isLOCAL() || AppUtils.isDEV()) && /^X/.test(sMenid)) {
-              oMenuModel.setCurrentMenuData({ RouteName: '', Menid: '' });
+              oMenuModel.setCurrentMenuData({ routeName: '', menuId: '', isSubRoute: false });
               resolve();
               return;
             }
@@ -282,7 +282,7 @@ sap.ui.define(
               success: (oData, oResponse) => {
                 AppUtils.debug(`${sUrl} success.`, oData, oResponse);
 
-                oMenuModel.setCurrentMenuData({ RouteName: sRouteName, Menid: sMenid });
+                oMenuModel.setCurrentMenuData({ routeName: sRouteNameMain, menuId: sMenid, isSubRoute: !!sRouteNameSub });
 
                 resolve();
               },
