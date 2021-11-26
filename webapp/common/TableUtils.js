@@ -68,7 +68,7 @@ sap.ui.define(
         });
 
         return {
-          rowCount: iVisibleRowcountLimit,
+          rowCount: iVisibleRowcountLimit > aZappStatAls.length ? aZappStatAls.length : iVisibleRowcountLimit,
           totalCount: aZappStatAls.length,
           progressCount: oOccurCount[STATE_IN_PROGRESS1] + oOccurCount[STATE_IN_PROGRESS2],
           applyCount: oOccurCount[STATE_APPLY1] + oOccurCount[STATE_APPLY2] + oOccurCount[STATE_APPLY3],
