@@ -1,3 +1,162 @@
-<c:FragmentDefinition xmlns="sap.m"
-    xmlns:c="sap.ui.core">
-</c:FragmentDefinition>
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:table="sap.ui.table"
+    xmlns:core="sap.ui.core">
+    <table:Table id="repaymentTable" rows="{/List}" visibleRowCount="{/listInfo/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="50px" rowHeight="50px" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
+        <table:rowSettingsTemplate>
+            <table:RowSettings highlight="{
+                path: 'Lnsta',
+                formatter: '.TableUtils.rowHighlight'
+            }"/>
+        </table:rowSettingsTemplate>
+        <table:columns>
+            <table:Column width="100px" sortProperty="Lnsta" filterProperty="Lnsta">
+                <Label text="{i18n>LABEL_00144}"/>
+                <table:template>
+                    <Text text="{
+                    path: 'Lnsta',
+                    formatter: '.TableUtils.StatusTxt'
+                }" width="100%" textAlign="Center">
+                        <customData>
+                            <core:CustomData key="status" value="Z{Lnsta}" writeToDom="true" />
+                        </customData>
+                    </Text>
+                </table:template>
+            </table:Column>
+            <table:Column width="220px" sortProperty="Lntyptx" filterProperty="Lntyptx">
+                <Label text="{i18n>LABEL_07002}"/>
+                <table:template>
+                    <Text text="{Lntyptx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="60px" sortProperty="Count" filterProperty="Count">
+                <Label text="{i18n>LABEL_07003}"/>
+                <table:template>
+                    <Text text="{Count}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" sortProperty="Appda" filterProperty="Appda">
+                <Label text="{i18n>LABEL_00266}"/>
+                <table:template>
+                    <Text text="{
+                        path: 'Appda',
+                        type: 'sap.ui.model.type.Date'
+                    }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" sortProperty="Begda" filterProperty="Begda">
+                <Label text="{i18n>LABEL_02012}"/>
+                <table:template>
+                    <Text text="{
+                        path: 'Begda',
+                        type: 'sap.ui.model.type.Date'
+                    }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" sortProperty="Endda" filterProperty="Endda">
+                <Label text="{i18n>LABEL_07004}"/>
+                <table:template>
+                    <Text text="{
+                        path: 'Endda',
+                        type: 'sap.ui.model.type.Date'
+                    }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" sortProperty="Lstdt" filterProperty="Lstdt">
+                <Label text="{i18n>LABEL_07005}"/>
+                <table:template>
+                    <Text text="{
+                        path: 'Lstdt',
+                        type: 'sap.ui.model.type.Date'
+                    }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" sortProperty="Rpdat1" filterProperty="Rpdat1">
+                <Label text="{i18n>LABEL_07006}"/>
+                <table:template>
+                    <Text text="{
+                        path: 'Rpdat1',
+                        type: 'sap.ui.model.type.Date'
+                    }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" sortProperty="Rpdat2" filterProperty="Rpdat2">
+                <Label text="{i18n>LABEL_07007}"/>
+                <table:template>
+                    <Text text="{
+                        path: 'Rpdat2',
+                        type: 'sap.ui.model.type.Date'
+                    }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" sortProperty="RpdatMid" filterProperty="RpdatMid">
+                <Label text="{i18n>LABEL_07008}"/>
+                <table:template>
+                    <Text text="{
+                    path: 'RpdatMid',
+                    type: 'sap.ui.model.type.Date'
+                }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" sortProperty="Lnamt" filterProperty="Lnamt">
+                <Label text="{i18n>LABEL_07009}"/>
+                <table:template>
+                    <Text text="{
+                        path: 'Lnamt',
+                        formatter: '.TextUtils.toCurrency'
+                    }" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" sortProperty="Recount" filterProperty="Recount">
+                <Label text="{i18n>LABEL_07010}"/>
+                <table:template>
+                    <Text text="{Recount}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" sortProperty="RpamtRep" filterProperty="RpamtRep">
+                <Label text="{i18n>LABEL_07011}"/>
+                <table:template>
+                    <Text text="{
+                        path: 'RpamtRep',
+                        formatter: '.TextUtils.toCurrency'
+                    }" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" sortProperty="Rpamt1" filterProperty="Rpamt1">
+                <Label text="{i18n>LABEL_07012}"/>
+                <table:template>
+                    <Text text="{
+                        path: 'Rpamt1',
+                        formatter: '.TextUtils.toCurrency'
+                    }" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" sortProperty="Rpamt2" filterProperty="Rpamt2">
+                <Label text="{i18n>LABEL_07013}"/>
+                <table:template>
+                    <Text text="{
+                        path: 'Rpamt2',
+                        formatter: '.TextUtils.toCurrency'
+                    }" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" sortProperty="RpamtMpr" filterProperty="RpamtMpr">
+                <Label text="{i18n>LABEL_07014}"/>
+                <table:template>
+                    <Text text="{
+                        path: 'RpamtMpr',
+                        formatter: '.TextUtils.toCurrency'
+                    }" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" sortProperty="RpamtBal" filterProperty="RpamtBal">
+                <Label text="{i18n>LABEL_07015}"/>
+                <table:template>
+                    <Text text="{
+                        path: 'RpamtBal',
+                        formatter: '.TextUtils.toCurrency'
+                    }" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+        </table:columns>
+    </table:Table>
+</core:FragmentDefinition>

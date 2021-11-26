@@ -15,10 +15,9 @@
                     </HBox>
                 </HBox>
                 <core:Fragment fragmentName="sap.ui.yesco.fragment.DetailTargetInfo" type="XML" />
+                <core:Fragment fragmentName="sap.ui.yesco.fragment.InfoMessage" type="XML" />
                 <core:Fragment fragmentName="sap.ui.yesco.mvc.view.housingLoan.fragment.RepayTargetHistory" type="XML" />
                 <core:Fragment fragmentName="sap.ui.yesco.mvc.view.housingLoan.fragment.RepayApplyHistory" type="XML" />
-                <VBox class="vCardBox">
-                </VBox>
             </VBox>
         </content>
     </Page>
