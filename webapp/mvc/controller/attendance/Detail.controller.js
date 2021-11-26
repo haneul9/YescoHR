@@ -15,6 +15,7 @@ sap.ui.define(
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
+    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/Validator',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/ODataDate',
@@ -34,6 +35,7 @@ sap.ui.define(
     AttachFileAction,
     ServiceNames,
     TableUtils,
+    TextUtils,
     Validator,
     BaseController,
     ODataDate
@@ -50,6 +52,7 @@ sap.ui.define(
       },
 
       AttachFileAction: AttachFileAction,
+      TextUtils: TextUtils,
       type: {
         ODataDate: new ODataDate(),
       },
@@ -87,31 +90,72 @@ sap.ui.define(
         this.setViewModel(oViewModel);
       },
 
-      async onAfterShow() {
+      onObjectMatched(oParameter) {
+        const oViewModel = this.getView().getModel();
+        const sAction = oParameter.appno ? this.getBundleText('LABEL_00100') : ''; // 조회
+        const oNavigationMap = {
+          A: this.getBundleText('LABEL_04002'), // 신규신청
+          B: this.getBundleText('LABEL_04003'), // 변경신청
+          C: this.getBundleText('LABEL_04004'), // 취소신청
+        };
+
+        if (!oNavigationMap[oParameter.type]) {
+          this.getRouter().navTo('attendance');
+        }
+
+        if (oParameter.type === this.PAGE_TYPE.CHANGE) {
+          // Multiple table generate
+          const oTable = this.byId('approveMultipleTable');
+          oTable.addEventDelegate(
+            {
+              onAfterRendering: () => {
+                TableUtils.adjustRowSpan({
+                  table: oTable,
+                  colIndices: [0, 7],
+                  theadOrTbody: 'header',
+                });
+              },
+            },
+            oTable
+          );
+        }
+
+        oViewModel.setProperty('/type', oParameter.type);
+        oViewModel.setProperty('/Appno', oParameter.appno);
+        oViewModel.setProperty('/navigation/current', `${oNavigationMap[oParameter.type]} ${sAction}`);
+
+        this.loadPage();
+      },
+
+      async loadPage() {
         const oView = this.getView();
         const oViewModel = oView.getModel();
         const sAppno = oViewModel.getProperty('/Appno');
         const sType = oViewModel.getProperty('/type');
 
         try {
-          const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-          const mListSelectedData = oListView.getModel().getProperty('/parameter/rowData');
-
           if (sAppno) {
             const mRowData = await this.readLeaveApplEmpList({ Prcty: 'R', Appno: sAppno });
 
+            oViewModel.setProperty('/ZappStatAl', mRowData[0].ZappStatAl);
+            oViewModel.setProperty('/form/listMode', 'None');
+
             this.setTableData({ sType, oViewModel, mRowData });
-            oViewModel.setProperty('/ZappStatAl', mListSelectedData[0].ZappStatAl);
-            oViewModel.setProperty('/form/listMode', !mListSelectedData[0].ZappStatAl ? 'MultiToggle' : 'None');
-            oViewModel.setProperty('/ApprovalDetails', { ...mListSelectedData[0] });
+            this.initializeApplyInfoBox(mRowData[0]);
+            this.initializeApprovalBox(mRowData[0]);
           } else if (sType === this.PAGE_TYPE.CHANGE || sType === this.PAGE_TYPE.CANCEL) {
-            // 변경|취소 신청의 경우 List페이지에서 선택된 데이터를 가져온다.
-            this.setTableData({ sType, oViewModel, mRowData: mListSelectedData });
+            const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+            const mListSelectedData = oListView.getModel().getProperty('/parameter/rowData');
 
             if (sType === this.PAGE_TYPE.CANCEL) {
               oViewModel.setProperty('/form/listMode', 'None');
             }
+            // 변경|취소 신청의 경우 List페이지에서 선택된 데이터를 가져온다.
+            this.setTableData({ sType, oViewModel, mRowData: mListSelectedData });
+            this.initializeApplyInfoBox();
           }
+
+          this.initializeAttachBox();
         } catch (oError) {
           this.debug('Controller > Attendance Detail > onAfterShow Error', oError);
 
@@ -126,12 +170,6 @@ sap.ui.define(
             });
           }
         }
-
-        this.initializeApplyInfoBox();
-        this.initializeAttachBox();
-
-        // ! 필수 호출 - BaseController.onPageLoaded
-        this.onPageLoaded();
       },
 
       setTableData({ sType, oViewModel, mRowData }) {
@@ -168,50 +206,26 @@ sap.ui.define(
         this.toggleHasRowProperty();
       },
 
-      onObjectMatched(oParameter) {
-        const oViewModel = this.getView().getModel();
-        const sAction = oParameter.appno ? this.getBundleText('LABEL_00100') : ''; // 조회
-        const oNavigationMap = {
-          A: this.getBundleText('LABEL_04002'), // 신규신청
-          B: this.getBundleText('LABEL_04003'), // 변경신청
-          C: this.getBundleText('LABEL_04004'), // 취소신청
-        };
+      initializeApplyInfoBox(detailData) {
+        const oViewModel = this.getViewModel();
 
-        if (!oNavigationMap[oParameter.type]) {
-          this.getRouter().navTo('attendance');
+        if (_.isEmpty(detailData)) {
+          const oSessionData = this.getOwnerComponent().getSessionModel().getData();
+
+          oViewModel.setProperty('/ApplyInfo', {
+            Apename: oSessionData.Ename,
+            Aporgtx: `${oSessionData.Btrtx}/${oSessionData.Orgtx}`,
+            Apjikgbtl: `${oSessionData.Zzjikgbt}/${oSessionData.Zzjiktlt}`,
+          });
+        } else {
+          oViewModel.setProperty('/ApplyInfo', { ...detailData });
         }
-
-        if (oParameter.type === this.PAGE_TYPE.CHANGE) {
-          // Multiple table generate
-          const oTable = this.byId('approveMultipleTable');
-          oTable.addEventDelegate(
-            {
-              onAfterRendering: () => {
-                TableUtils.adjustRowSpan({
-                  table: oTable,
-                  colIndices: [0, 7],
-                  theadOrTbody: 'header',
-                });
-              },
-            },
-            oTable
-          );
-        }
-
-        oViewModel.setProperty('/type', oParameter.type);
-        oViewModel.setProperty('/Appno', oParameter.appno);
-        oViewModel.setProperty('/navigation/current', `${oNavigationMap[oParameter.type]} ${sAction}`);
       },
 
-      initializeApplyInfoBox() {
+      initializeApprovalBox(detailData) {
         const oViewModel = this.getViewModel();
-        const oSessionData = this.getOwnerComponent().getSessionModel().getData();
 
-        oViewModel.setProperty('/ApplyInfo', {
-          Apename: oSessionData.Ename,
-          Orgtx: `${oSessionData.Btrtx}/${oSessionData.Orgtx}`,
-          Apjikgbtl: `${oSessionData.Zzjikgbt}/${oSessionData.Zzjiktlt}`,
-        });
+        oViewModel.setProperty('/ApprovalDetails', { ...detailData });
       },
 
       initializeAttachBox() {

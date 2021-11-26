@@ -91,7 +91,7 @@ sap.ui.define(
 
             oDetailModel.setProperty('/ApplyInfo', {
               Apename: oTargetInfo.Ename,
-              Orgtx: `${oTargetInfo.Btrtx}/${oTargetInfo.Orgtx}`,
+              Aporgtx: `${oTargetInfo.Btrtx}/${oTargetInfo.Orgtx}`,
               Apjikgbtl: `${oTargetInfo.Zzjikgbt}/${oTargetInfo.Zzjiktlt}`,
             });
 
