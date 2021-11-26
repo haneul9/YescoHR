@@ -52,7 +52,7 @@ sap.ui.define(
       /**************************
        * Functions
        *************************/
-      count({ oTable, mRowData }, sStatCode = 'ZappStatAl') {
+      count({ oTable, mRowData, sStatCode = 'ZappStatAl' }) {
         const aZappStatAls = _.map(mRowData, sStatCode);
         const iVisibleRowcountLimit = Math.floor(($(document).height() - oTable.$().find('.sapUiTableCCnt').offset().top - 50) / 50);
         const oOccurCount = _.defaults(_.countBy(aZappStatAls), {
@@ -78,7 +78,7 @@ sap.ui.define(
         };
       },
 
-      export({ oTable, mTableData, sFileName }, sStatCode = 'ZappStatAl', sStatTxt = 'ZappStxtAl') {
+      export({ oTable, mTableData, sFileName, sStatCode = 'ZappStatAl', sStatTxt = 'ZappStxtAl' }) {
         if (!mTableData.length) return;
 
         const sToday = moment().format('YYYYMMDD');

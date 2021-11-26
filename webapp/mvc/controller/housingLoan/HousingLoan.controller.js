@@ -100,7 +100,7 @@ sap.ui.define(
                 oListModel.setProperty('/List', oList);
 
                 setTimeout(() => {
-                  oListModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData: oList }, 'Lnsta'));
+                  oListModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData: oList, sStatCode: 'Lnsta' }));
                   oListModel.setProperty('/busy', false);
                 }, 100);
               }
@@ -183,7 +183,7 @@ sap.ui.define(
         const mTableData = this.getViewModel().getProperty('/List');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_07001');
 
-        TableUtils.export({ oTable, mTableData, sFileName }, 'Lnsta', 'Lnstatx');
+        TableUtils.export({ oTable, mTableData, sFileName, sStatCode: 'Lnsta', sStatTxt: 'Lnstatx' });
       },
     });
   }
