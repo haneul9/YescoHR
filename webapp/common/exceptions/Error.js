@@ -39,7 +39,7 @@ sap.ui.define(
 
       showErrorMessage: function (mOptions = {}) {
         const sCode = this.getCode();
-        const sMessage = this.getMessage();
+        const sMessage = this.getMessage().replace(/\\n/, '\n');
 
         if (_.includes(this.messageLevel, sCode)) {
           switch (sCode) {
