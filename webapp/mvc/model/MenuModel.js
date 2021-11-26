@@ -417,31 +417,24 @@ sap.ui.define(
         this.setProperty('/current', { routeName, menuId, isSubRoute });
         this.setProperty('/breadcrumbs', {
           currentLocationText: '',
-          name1: '',
-          name2: '',
-          name3: '',
-          show1: false,
-          show2: false,
-          show3: false,
+          links: null,
         });
 
         const mCurrentMenuProperties = this.getProperties(menuId);
         const iLevel = isSubRoute ? 4 : mCurrentMenuProperties.Level;
+        const aLinks = [];
         let mMenuProperties;
 
         switch (iLevel) {
           case 4:
             mMenuProperties = this.getProperties(mCurrentMenuProperties.Mnid3);
-            this.setProperty('/breadcrumbs/name3', mMenuProperties.Mname);
-            this.setProperty('/breadcrumbs/show3', true);
+            aLinks.unshift({ name: mMenuProperties.Mname });
           case 3:
             mMenuProperties = this.getProperties(mCurrentMenuProperties.Mnid2);
-            this.setProperty('/breadcrumbs/name2', mMenuProperties.Mname);
-            this.setProperty('/breadcrumbs/show2', true);
+            aLinks.unshift({ name: mMenuProperties.Mname });
           case 2:
             mMenuProperties = this.getProperties(mCurrentMenuProperties.Mnid1);
-            this.setProperty('/breadcrumbs/name1', mMenuProperties.Mname);
-            this.setProperty('/breadcrumbs/show1', true);
+            aLinks.unshift({ name: mMenuProperties.Mname });
           case 1:
           /* Nothing to do */
           default:
@@ -449,6 +442,7 @@ sap.ui.define(
 
         // TODO : route parameter 받아서 신규? 상세? 구분
         this.setProperty('/breadcrumbs/currentLocationText', isSubRoute ? '신규' : mCurrentMenuProperties.Mname);
+        this.setProperty('/breadcrumbs/links', aLinks);
       },
 
       getCurrentMenuRouteName() {

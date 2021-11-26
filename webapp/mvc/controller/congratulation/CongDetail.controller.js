@@ -62,10 +62,8 @@ sap.ui.define(
         this.onPageLoaded();
       },
 
-      onObjectMatched(oEvent) {
-        const sDataKey = oEvent.getParameter('arguments').oDataKey;
-
-        this.getViewModel().setProperty('/FormStatus', sDataKey);
+      onObjectMatched(mArgs) {
+        this.getViewModel().setProperty('/FormStatus', mArgs.oDataKey);
       },
 
       formatFlowerTxt(vFlower) {

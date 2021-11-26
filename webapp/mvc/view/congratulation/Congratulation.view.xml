@@ -8,7 +8,8 @@
 	<Page showHeader="false">
 		<content>
 			<HBox justifyContent="SpaceBetween" class="breadcrumbs">
-				<core:Fragment fragmentName="sap.ui.yesco.fragment.app.Breadcrumbs" type="XML" />
+				<!-- <core:Fragment fragmentName="sap.ui.yesco.fragment.app.Breadcrumbs" type="XML" /> -->
+				<custom:app.Breadcrumbs />
 				<HBox>
 					<Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onClick" class="sapUiTinyMarginEnd" />
 					<Button icon="sap-icon://print" press=".FragmentEvent.onPagePrint" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" />

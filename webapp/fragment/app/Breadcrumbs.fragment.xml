@@ -1,8 +1,8 @@
-<core:FragmentDefinition xmlns="sap.m"
-	xmlns:core="sap.ui.core">
-	<Breadcrumbs currentLocationText="{menuModel>/breadcrumbs/currentLocationText}" separatorStyle="GreaterThan">
-		<Link enabled="false" subtle="true" text="{menuModel>/breadcrumbs/name1}" visible="{= !!${menuModel>/breadcrumbs/show1} }" />
-		<Link enabled="false" subtle="true" text="{menuModel>/breadcrumbs/name2}" visible="{= !!${menuModel>/breadcrumbs/show2} }" />
-		<Link enabled="false" subtle="true" text="{menuModel>/breadcrumbs/name3}" visible="{= !!${menuModel>/breadcrumbs/show3} }" />
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+	xmlns="sap.m">
+	<Breadcrumbs currentLocationText="{menuModel>/breadcrumbs/currentLocationText}" separatorStyle="GreaterThan" links="{menuModel>/breadcrumbs/links}">
+		<links>
+			<Link enabled="false" subtle="true" text="{name}" />
+		</links>
 	</Breadcrumbs>
 </core:FragmentDefinition>
