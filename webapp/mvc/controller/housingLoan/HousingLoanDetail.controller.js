@@ -8,6 +8,7 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
+    'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -21,6 +22,7 @@ sap.ui.define(
 	AppUtils,
 	AttachFileAction,
 	ComboEntry,
+	FragmentEvent,
 	TextUtils,
 	TableUtils,
 	ServiceNames,
@@ -34,6 +36,7 @@ sap.ui.define(
 
       AttachFileAction: AttachFileAction,
       TextUtils: TextUtils,
+      FragmentEvent: FragmentEvent,
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
@@ -495,7 +498,9 @@ sap.ui.define(
 
       // 상환신청
       onRepayApp() {
+        const sAppno = this.getViewModel().getProperty('/FormData/Appno');
 
+        this.getRouter().navTo('housingLoan-repay', { oDataKey: sAppno });
       },
 
       // 재작성
