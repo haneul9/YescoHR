@@ -5,7 +5,7 @@
     <Page showHeader="false">
         <VBox>
             <HBox justifyContent="SpaceBetween">
-                <core:Fragment fragmentName="sap.ui.yesco.fragment.Navigation" type="XML" />
+                <core:Fragment fragmentName="sap.ui.yesco.fragment.app.Breadcrumbs" type="XML" />
                 <HBox>
                     <Button type="Transparent" icon="sap-icon://crm-service-manager" text="{i18n>LABEL_00275}" />
                     <Button type="Transparent" icon="sap-icon://print" text="{i18n>LABEL_00131}" />

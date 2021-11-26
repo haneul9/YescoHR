@@ -63,13 +63,6 @@ sap.ui.define(
           type: this.PAGE_TYPE.NEW,
           Appno: null,
           ZappStatAl: null,
-          navigation: {
-            current: '신규신청',
-            links: [
-              { name: '근태' }, //
-              { name: '근태신청' },
-            ],
-          },
           form: {
             hasRow: false,
             rowCount: 1,
@@ -150,6 +143,8 @@ sap.ui.define(
 
               if (sType === this.PAGE_TYPE.CANCEL) {
                 oViewModel.setProperty('/form/listMode', 'None');
+              } else {
+                mListSelectedData.forEach((o) => (o.Tmrsn = ''));
               }
 
               // 변경|취소 신청의 경우 List페이지에서 선택된 데이터를 가져온다.
@@ -444,6 +439,7 @@ sap.ui.define(
         const mCheckFields = [
           { field: 'Tmrsn', label: this.getBundleText('LABEL_04009'), type: Validator.SELECT2 }, // 근태사유
         ];
+        let oTable;
 
         if (!bCalcCompleted) {
           MessageBox.error(this.getBundleText('MSG_04001')); // 계산이 수행되지 않아 저장이 불가합니다.
@@ -466,6 +462,7 @@ sap.ui.define(
             EnddaTxt: moment(oInputData.Endda).hours(9).format('YYYY.MM.DD'),
             Tmrsn: oInputData.Tmrsn,
           };
+          oTable = this.byId('approveMultipleTable');
 
           if (oRowData.BegdaTxt2 === oChangedData.BegdaTxt && oRowData.EnddaTxt2 === oChangedData.EnddaTxt) {
             MessageBox.error(this.getBundleText('MSG_04002')); // 변경된 데이터가 없습니다.
@@ -475,6 +472,7 @@ sap.ui.define(
           oViewModel.setProperty(sRowPath, oChangedData);
         } else {
           const mListData = oViewModel.getProperty('/form/list');
+          oTable = this.byId('approveSingleTable');
 
           mListData.push({
             ...oInputData,
@@ -488,6 +486,7 @@ sap.ui.define(
           oViewModel.setProperty('/form/rowCount', mListData.length);
         }
 
+        oTable.clearSelection();
         this.toggleHasRowProperty();
 
         AppUtils.setAppBusy(false, this);
@@ -623,7 +622,7 @@ sap.ui.define(
             error: (oError) => {
               this.debug(`${sUrl} error.`, AppUtils.parseError(oError));
 
-              reject(new ODataCreateError(oError)); // {신청}중 오류가 발생하였습니다.
+              reject(new ODataCreateError({ oError })); // {신청}중 오류가 발생하였습니다.
             },
           });
         });

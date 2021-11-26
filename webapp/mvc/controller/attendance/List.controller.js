@@ -31,16 +31,12 @@ sap.ui.define(
         ODataDate: new ODataDate(),
       },
 
+      PAGE_TYPE: { NEW: 'A', CHANGE: 'B', CANCEL: 'C' },
+
       onBeforeShow() {
         const oViewModel = new JSONModel({
           busy: false,
           isVisibleActionButton: false,
-          navigation: {
-            current: '근태신청',
-            links: [
-              { name: '근태' }, //
-            ],
-          },
           quota: {},
           search: {
             Apbeg: moment().subtract(1, 'month').add(1, 'day').hours(9).toDate(),
@@ -197,7 +193,7 @@ sap.ui.define(
             !aSelectedIndices.some((idx) => {
               const oRowData = oViewModel.getProperty(`/list/${idx}`);
 
-              return oRowData.ZappStatAl !== '10';
+              return oRowData.Appty !== this.PAGE_TYPE.NEW || oRowData.ZappStatAl !== '20';
             })
           );
         }
@@ -218,17 +214,17 @@ sap.ui.define(
       },
 
       onPressNewApprovalBtn() {
-        this.getRouter().navTo('attendance-detail', { type: 'A' });
+        this.getRouter().navTo('attendance-detail', { type: this.PAGE_TYPE.NEW });
       },
 
       onPressModApprovalBtn() {
         this.setRowActionParameters();
-        this.getRouter().navTo('attendance-detail', { type: 'B' });
+        this.getRouter().navTo('attendance-detail', { type: this.PAGE_TYPE.CHANGE });
       },
 
       onPressCancApprovalBtn() {
         this.setRowActionParameters();
-        this.getRouter().navTo('attendance-detail', { type: 'C' });
+        this.getRouter().navTo('attendance-detail', { type: this.PAGE_TYPE.CANCEL });
       },
 
       onSuggest(oEvent) {

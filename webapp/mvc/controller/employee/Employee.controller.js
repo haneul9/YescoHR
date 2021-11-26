@@ -129,12 +129,6 @@ sap.ui.define(
         const oViewModel = new JSONModel({
           busy: false,
           pernr: null,
-          navigation: {
-            current: '사원프로파일',
-            links: [
-              { name: '인사' }, //
-            ],
-          },
           sideNavigation: {
             isShow: true,
             width: '22%',
