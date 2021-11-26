@@ -9,14 +9,11 @@
 			<Label text="{i18n>LABEL_00210}"/>
 			<Text text="{/ApplyInfo/Apename}"/>
 			<Label text="{i18n>LABEL_00226}"/>
-			<Text text="{/ApplyInfo/Orgtx}"/>
+			<Text text="{/ApplyInfo/Aporgtx}"/>
 			<Label text="{i18n>LABEL_00136}"/>
 			<Text text="{/ApplyInfo/Apjikgbtl}"/>
 			<Label text="{i18n>LABEL_00137}"/>
-			<Text text="{
-				path: '/ApplyInfo/Appdt',
-				formatter: '.TextUtils.setAppdt'
-			}"/>
+			<Text text="{/ApplyInfo/Appdt}"/>
 		</grid:CSSGrid>
 	</VBox>
 </core:FragmentDefinition>

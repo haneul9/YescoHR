@@ -14,7 +14,7 @@
 			<Label text="{i18n>LABEL_00140}"/>
 			<Text text="{/ApprovalDetails/ZappStxtAl}"/>
 			<Label text="{i18n>LABEL_00141}"/>
-			<Text text="{/ApprovalDetails/Sgnda}"/>
+			<Text text="{/ApprovalDetails/Sgndt}"/>
 			<Label visible="{= ${/ApprovalDetails/ZappStatAl} === '45' || ${/ApprovalDetails/ZappStatAl} === '65' || !!${/ApprovalDetails/ZappResn}}" text="{i18n>LABEL_00142}" />
 			<Text visible="{= ${/ApprovalDetails/ZappStatAl} === '45' || ${/ApprovalDetails/ZappStatAl} === '65' || !!${/ApprovalDetails/ZappResn}}" text="{/ApprovalDetails/ZappResn}" />
 		</grid:CSSGrid>
