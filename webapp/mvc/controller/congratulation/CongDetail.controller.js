@@ -77,7 +77,7 @@ sap.ui.define(
         const sDataKey = oDetailModel.getProperty('/FormStatus');
 
         return new Promise((resolve) => {
-          if (!sDataKey) {
+          if (!sDataKey || sDataKey === 'N') {
             const oTargetInfo = oDetailModel.getProperty('/TargetInfo');
 
             oDetailModel.setProperty('/FormData', oTargetInfo);

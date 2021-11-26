@@ -124,7 +124,7 @@ sap.ui.define(
         const sUrl = '/LoanAmtApplSet';
         const sViewKey = oDetailModel.getProperty('/ViewKey');
 
-        if(!sViewKey) {
+        if(sViewKey === 'N' || !sViewKey) {
           const oTargetInfo = this.getOwnerComponent().getSessionModel().getData();
           
           // oDetailModel.setProperty('/FormData', oTargetInfo);

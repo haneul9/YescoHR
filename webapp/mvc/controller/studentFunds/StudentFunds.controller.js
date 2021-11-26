@@ -62,7 +62,7 @@ sap.ui.define(
       },
 
       onClick() {
-        this.getRouter().navTo('studentFunds-detail');
+        this.getRouter().navTo('studentFunds-detail', { oDataKey: 'N' });
       },
 
       formatNumber(vNum = '0') {

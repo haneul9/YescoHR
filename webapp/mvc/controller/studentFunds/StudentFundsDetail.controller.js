@@ -164,7 +164,7 @@ sap.ui.define(
         const sUrl = '/SchExpenseApplSet';
         const sViewKey = oDetailModel.getProperty('/ViewKey');
 
-        if (!sViewKey) {
+        if (sViewKey === 'N' || !sViewKey) {
           const oTargetInfo = oDetailModel.getProperty('/TargetInfo');
 
           oDetailModel.setProperty('/FormData', oTargetInfo);
