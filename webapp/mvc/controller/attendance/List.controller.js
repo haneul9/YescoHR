@@ -195,8 +195,7 @@ sap.ui.define(
           oViewModel.setProperty(
             '/isVisibleActionButton',
             !aSelectedIndices.some((idx) => {
-              const sRowPath = oTable.getRows()[idx].getBindingContext().getPath();
-              const oRowData = oViewModel.getProperty(sRowPath);
+              const oRowData = oViewModel.getProperty(`/list/${idx}`);
 
               return oRowData.ZappStatAl !== '10';
             })
@@ -206,14 +205,12 @@ sap.ui.define(
 
       setRowActionParameters() {
         const oViewModel = this.getViewModel();
-        const oTable = this.byId('attendanceTable');
         const aSelectedIndices = oViewModel.getProperty('/parameter/selectedIndices');
 
         oViewModel.setProperty(
           '/parameter/rowData',
           aSelectedIndices.map((idx) => {
-            const sRowPath = oTable.getRows()[idx].getBindingContext().getPath();
-            const oRowData = oViewModel.getProperty(sRowPath);
+            const oRowData = oViewModel.getProperty(`/list/${idx}`);
 
             return oRowData;
           })
