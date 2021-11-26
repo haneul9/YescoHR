@@ -18,7 +18,7 @@ sap.ui.define(
        * @param {any} Unknown
        * @returns {sap.ui.base.Object}
        */
-      constructor: function (type = 'C', oError) {
+      constructor: function ({ type = 'C', oError }) {
         const { code, message } = oError ? AppUtils.parseError(oError) : { code: 'E', message: AppUtils.getBundleText('MSG_00008', this.MESSAGE[type]) };
 
         Error.prototype.constructor.call(this, { code, message });

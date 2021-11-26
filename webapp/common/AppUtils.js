@@ -116,12 +116,13 @@ sap.ui.define([], () => {
         const errorJSON = JSON.parse(oError.responseText);
 
         if (errorJSON.error.innererror.errordetails && errorJSON.error.innererror.errordetails.length) {
-          // mErrorData.code = errorJSON.error.code;
+          mErrorData.code = errorJSON.error.code;
           mErrorData.message = errorJSON.error.innererror.errordetails[0].message;
         } else if (errorJSON.error.message) {
           mErrorData.code = 'I';
           mErrorData.message = errorJSON.error.message.value;
         } else {
+          mErrorData.code = 'I';
           mErrorData.message = 'Unkown error.';
         }
         return mErrorData;
