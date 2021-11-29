@@ -57,11 +57,9 @@ sap.ui.define(
         EmpInfo.get.call(this, true);
       },
 
-      onAfterShow() {
+      onObjectMatched() {
         this.onSearch();
         this.totalCount();
-
-        BaseController.prototype.onAfterShow.call(this);
       },
 
       onClick() {
@@ -97,11 +95,8 @@ sap.ui.define(
               const oList = oData.results;
 
               oListModel.setProperty('/FamilyList', oList);
-
-              setTimeout(() => {
-                oListModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData: oList }));
-                oListModel.setProperty('/busy', false);
-              }, 100);
+              oListModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData: oList }));
+              oListModel.setProperty('/busy', false);
             }
           },
           error: (oError) => {

@@ -70,10 +70,8 @@ sap.ui.define(
             this.readLeaveApplContent({ oModel, oSearchConditions }),
           ]);
 
-          setTimeout(() => {
-            this.setTableData({ oViewModel, mRowData });
-          }, 100);
-          // throw new Error('Oops!!');
+          this.setTableData({ oViewModel, mRowData });
+
           oViewModel.setProperty(
             '/quota',
             _.reduce(
