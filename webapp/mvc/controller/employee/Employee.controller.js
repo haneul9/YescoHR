@@ -7,15 +7,15 @@ sap.ui.define(
     'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/table/Table',
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/Appno',
+    'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/common/exceptions/ODataDeleteError',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/exceptions/ODataUpdateError',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/Validator',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -29,15 +29,15 @@ sap.ui.define(
     FilterOperator,
     JSONModel,
     Table,
-    AttachFileAction,
     Appno,
+    AppUtils,
+    AttachFileAction,
     ComboEntry,
     ODataCreateError,
     ODataDeleteError,
     ODataReadError,
     ODataUpdateError,
     ServiceNames,
-    AppUtils,
     Validator,
     MessageBox,
     BaseController,
@@ -359,11 +359,7 @@ sap.ui.define(
         } catch (oError) {
           this.debug('Controller > Employee > loadProfile Error', oError);
 
-          if (oError instanceof Error) {
-            MessageBox.error(oError.message);
-          } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
-            oError.showErrorMessage();
-          }
+          AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/employee/busy', false);
         }
@@ -716,11 +712,7 @@ sap.ui.define(
         } catch (oError) {
           this.debug('Controller > Employee > onPressEmployeeSearch Error', oError);
 
-          if (oError instanceof Error) {
-            MessageBox.error(oError.message);
-          } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
-            oError.showErrorMessage();
-          }
+          AppUtils.handleError(oError);
         }
       },
 
@@ -908,11 +900,7 @@ sap.ui.define(
         } catch (oError) {
           this.debug('Controller > Employee > onSaveInputForm Error', oError);
 
-          if (oError instanceof Error) {
-            MessageBox.error(oError.message);
-          } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
-            oError.showErrorMessage();
-          }
+          AppUtils.handleError(oError);
         } finally {
           AppUtils.setAppBusy(false, this);
         }
@@ -1010,11 +998,7 @@ sap.ui.define(
         } catch (oError) {
           this.debug('Controller > Employee > onPressModifyTable Error', oError);
 
-          if (oError instanceof Error) {
-            MessageBox.error(oError.message);
-          } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
-            oError.showErrorMessage();
-          }
+          AppUtils.handleError(oError);
         }
       },
 
@@ -1072,11 +1056,7 @@ sap.ui.define(
               } catch (oError) {
                 this.debug('Controller > Employee > onPressDeleteTable Error', oError);
 
-                if (oError instanceof Error) {
-                  MessageBox.error(oError.message);
-                } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
-                  oError.showErrorMessage();
-                }
+                AppUtils.handleError(oError);
               }
             }
 
@@ -1113,11 +1093,7 @@ sap.ui.define(
         } catch (oError) {
           this.debug('Controller > Employee > onChangeSchoolType Error', oError);
 
-          if (oError instanceof Error) {
-            MessageBox.error(oError.message);
-          } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
-            oError.showErrorMessage();
-          }
+          AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/employee/dialog/busy/Slabs', false);
         }
@@ -1146,11 +1122,7 @@ sap.ui.define(
         } catch (oError) {
           this.debug('Controller > Employee > onChangeLanguageType Error', oError);
 
-          if (oError instanceof Error) {
-            MessageBox.error(oError.message);
-          } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
-            oError.showErrorMessage();
-          }
+          AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/employee/dialog/busy/Exmty', false);
         }

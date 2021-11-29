@@ -4,7 +4,7 @@ sap.ui.define(
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
-    'sap/ui/yesco/control/MessageBox',
+    'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
@@ -16,7 +16,7 @@ sap.ui.define(
     Filter,
     FilterOperator,
     JSONModel,
-    MessageBox,
+    AppUtils,
     ODataReadError,
     ServiceNames,
     TableUtils,
@@ -60,14 +60,7 @@ sap.ui.define(
         this.setViewModel(oViewModel);
       },
 
-      onAfterShow() {
-        // ! 필수 호출 - BaseController.onAfterShow
-        BaseController.prototype.onAfterShow.call(this);
-
-        this.initialRetrieve();
-      },
-
-      async initialRetrieve() {
+      async onObjectMatched() {
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const oViewModel = this.getViewModel();
         const sPernr = this.getOwnerComponent().getSessionModel().getProperty('/Pernr');
@@ -84,7 +77,7 @@ sap.ui.define(
           setTimeout(() => {
             this.setTableData({ oViewModel, mRowData });
           }, 100);
-
+          // throw new Error('Oops!!');
           oViewModel.setProperty(
             '/quota',
             _.reduce(
@@ -104,11 +97,7 @@ sap.ui.define(
         } catch (oError) {
           this.debug('Controller > Attendance List > initialRetrieve Error', oError);
 
-          if (oError instanceof Error) {
-            MessageBox.error(oError.message);
-          } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
-            oError.showErrorMessage();
-          }
+          AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/busy', false);
         }
@@ -145,16 +134,12 @@ sap.ui.define(
           oViewModel.setProperty('/busy', true);
 
           const mRowData = await this.readLeaveApplContent({ oModel, oSearchConditions });
-
+          throw new Error('Oops!!');
           this.setTableData({ oViewModel, mRowData });
         } catch (oError) {
           this.debug('Controller > Attendance List > onPressSearch Error', oError);
 
-          if (oError instanceof Error) {
-            MessageBox.error(oError.message);
-          } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
-            oError.showErrorMessage();
-          }
+          AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/busy', false);
         }
@@ -296,7 +281,7 @@ sap.ui.define(
 
           oModel.read(sUrl, {
             filters: [
-              new Filter('Menid', FilterOperator.EQ, sMenid), //
+              // new Filter('Menid', FilterOperator.EQ, sMenid), //
               new Filter('Apbeg', FilterOperator.EQ, moment(oSearchConditions.Apbeg).hours(9).toDate()),
               new Filter('Apend', FilterOperator.EQ, moment(oSearchConditions.Apend).hours(9).toDate()),
             ],
