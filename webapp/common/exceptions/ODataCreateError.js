@@ -1,12 +1,12 @@
 sap.ui.define(
   [
-    'sap/ui/yesco/common/exceptions/Error', //
+    'sap/ui/yesco/common/exceptions/UI5Error', //
     'sap/ui/yesco/common/AppUtils',
   ],
-  function (Error, AppUtils) {
+  function (UI5Error, AppUtils) {
     'use strict';
 
-    return Error.extend('sap.ui.yesco.common.exceptions.ODataCreateError', {
+    return UI5Error.extend('sap.ui.yesco.common.exceptions.ODataCreateError', {
       MESSAGE: {
         T: 'LABEL_00104', // 임시저장
         C: 'LABEL_00121', // 신청
@@ -18,10 +18,10 @@ sap.ui.define(
        * @param {any} Unknown
        * @returns {sap.ui.base.Object}
        */
-      constructor: function (type = 'C', oError) {
+      constructor: function ({ type = 'C', oError }) {
         const { code, message } = oError ? AppUtils.parseError(oError) : { code: 'E', message: AppUtils.getBundleText('MSG_00008', this.MESSAGE[type]) };
 
-        Error.prototype.constructor.call(this, { code, message });
+        UI5Error.prototype.constructor.call(this, { code, message });
       },
     });
   }

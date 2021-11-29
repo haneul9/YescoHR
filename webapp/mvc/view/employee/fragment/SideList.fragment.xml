@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <IconTabFilter text="{i18n>LABEL_00279}" key="list">
+    <IconTabFilter text="{i18n>LABEL_00279}" key="list" class="tablist type-a">
         <SegmentedButton width="100%" selectedKey="{/sideNavigation/search/selectedState}" selectionChange=".onChangeStat">
             <items>
                 <SegmentedButtonItem text="{i18n>LABEL_00245}" key="" />
@@ -9,9 +9,9 @@
             </items>
         </SegmentedButton>
         <ScrollContainer height="700px" horizontal="false" vertical="true">
-            <List id="sideEmployeeList" items="{path: '/sideNavigation/search/results'}">
+            <List id="sideEmployeeList" items="{path: '/sideNavigation/search/results'}" class="employee-card-list">
                 <CustomListItem type="Active" press=".onClickEmployeeCard">
-                    <HBox class="customBox">
+                    <HBox>
                         <VBox width="20%" justifyContent="Center" alignItems="Center">
                             <Image src="{Photo}" height="60px" width="60px" />
                         </VBox>

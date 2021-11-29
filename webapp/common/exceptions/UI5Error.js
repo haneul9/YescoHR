@@ -1,13 +1,13 @@
 sap.ui.define(
   [
     'sap/ui/base/Object', //
-    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/control/MessageBox',
   ],
-  function (BaseObject, MessageBox, AppUtils) {
+  function (BaseObject, AppUtils, MessageBox) {
     'use strict';
 
-    return BaseObject.extend('sap.ui.yesco.common.exceptions.Error', {
+    return BaseObject.extend('sap.ui.yesco.common.exceptions.UI5Error', {
       LEVEL: {
         INFORMATION: 'I',
         WARNING: 'W',
@@ -17,7 +17,7 @@ sap.ui.define(
        * @override
        * @returns {sap.ui.base.Object}
        */
-      constructor: function ({ code, message }) {
+      constructor: function ({ code = this.LEVEL.ERROR, message }) {
         this.MESSAGE_LEVEL = {
           INFORMATION: [this.LEVEL.INFORMATION, this.LEVEL.WARNING, this.LEVEL.ERROR],
           WARNING: [this.LEVEL.WARNING, this.LEVEL.ERROR],
@@ -39,7 +39,7 @@ sap.ui.define(
 
       showErrorMessage: function (mOptions = {}) {
         const sCode = this.getCode();
-        const sMessage = this.getMessage();
+        const sMessage = this.getMessage().replace(/\\n/, '\n');
 
         if (_.includes(this.messageLevel, sCode)) {
           switch (sCode) {

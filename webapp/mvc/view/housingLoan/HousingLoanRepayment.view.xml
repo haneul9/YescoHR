@@ -1,0 +1,24 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.housingLoan.HousingLoanRepayment"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core">
+    <Page showHeader="false">
+        <content>
+            <VBox>
+                <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+                    <Breadcrumbs currentLocationText="{i18n>LABEL_07017}" separatorStyle="GreaterThan">
+                        <Link text="{i18n>LABEL_00145}"/>
+                    </Breadcrumbs>
+                    <HBox>
+                        <Button icon="sap-icon://print" press=".FragmentEvent.onPagePrint" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" />
+                        <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" />
+                    </HBox>
+                </HBox>
+                <core:Fragment fragmentName="sap.ui.yesco.fragment.DetailTargetInfo" type="XML" />
+                <core:Fragment fragmentName="sap.ui.yesco.fragment.InfoMessage" type="XML" />
+                <core:Fragment fragmentName="sap.ui.yesco.mvc.view.housingLoan.fragment.RepayTargetHistory" type="XML" />
+                <core:Fragment fragmentName="sap.ui.yesco.mvc.view.housingLoan.fragment.RepayApplyHistory" type="XML" />
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

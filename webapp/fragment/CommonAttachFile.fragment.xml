@@ -3,14 +3,14 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:core="sap.ui.core"
     xmlns:u="sap.ui.unified">
-    <VBox id="ATTACHBOX" class="vCardBox" visible="{/Settings/Visible}">
+    <VBox id="ATTACHBOX" class="vCardBox sapUiMediumMarginBottom" visible="{/Settings/Visible}">
         <HBox justifyContent="SpaceBetween">
-            <HBox>
+            <HBox alignItems="Center" class="title">
                 <Title level="H2" text="{i18n>LABEL_00248}" />
-                <Text text="{/Settings/Message}" visible="{= ${/Settings/Editable} &amp;&amp; !!${/Settings/Message}}" />
+                <Text text="{/Settings/Message}" visible="{= ${/Settings/Editable} &amp;&amp; !!${/Settings/Message}}" class="desc-txt" />
             </HBox>
             <HBox>
-                <u:FileUploader id="ATTACHFILE_BTN" visible="{/Settings/Editable}" maximumFileSize="{/Settings/maximumFileSize}" fileType="{/Settings/FileTypes}" change=".AttachFileAction.onFileChange" uploadComplete= ".uploadComplete" icon="sap-icon://add" buttonText= "{i18n>LABEL_00107}" buttonOnly= "true"/>
+                <u:FileUploader id="ATTACHFILE_BTN" visible="{/Settings/Editable}" maximumFileSize="{/Settings/maximumFileSize}" fileType="{/Settings/FileTypes}" change=".AttachFileAction.onFileChange" uploadComplete= ".uploadComplete" icon="sap-icon://add" buttonText= "{i18n>LABEL_00107}" buttonOnly= "true" class="sapUiTinyMarginEnd" />
                 <!-- <Button icon="sap-icon://add" text="추가" /> -->
                 <Button icon="sap-icon://less" visible="{/Settings/Editable}" text="{i18n>LABEL_00110}" press=".AttachFileAction.onDeleteAttachFile" />
             </HBox>

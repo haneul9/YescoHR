@@ -15,6 +15,7 @@ sap.ui.define(
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
+    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/Validator',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/ODataDate', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
@@ -34,6 +35,7 @@ sap.ui.define(
     AttachFileAction,
     ServiceNames,
     TableUtils,
+    TextUtils,
     Validator,
     BaseController
   ) => {
@@ -49,6 +51,7 @@ sap.ui.define(
       },
 
       AttachFileAction: AttachFileAction,
+      TextUtils: TextUtils,
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
@@ -56,13 +59,6 @@ sap.ui.define(
           type: this.PAGE_TYPE.NEW,
           Appno: null,
           ZappStatAl: null,
-          navigation: {
-            current: '신규신청',
-            links: [
-              { name: '근태' }, //
-              { name: '근태신청' },
-            ],
-          },
           form: {
             hasRow: false,
             rowCount: 1,
@@ -83,31 +79,81 @@ sap.ui.define(
         this.setViewModel(oViewModel);
       },
 
-      async onAfterShow() {
+      onObjectMatched(oParameter) {
+        if (!'A,B,C'.split(',').includes(oParameter.type)) {
+          this.getRouter().navTo('attendance');
+          return;
+        }
+
+        if (oParameter.type === this.PAGE_TYPE.CHANGE) {
+          // Multiple table generate
+          const oTable = this.byId('approveMultipleTable');
+          oTable.addEventDelegate(
+            {
+              onAfterRendering: () => {
+                TableUtils.adjustRowSpan({
+                  table: oTable,
+                  colIndices: [0, 7],
+                  theadOrTbody: 'header',
+                });
+              },
+            },
+            oTable
+          );
+        }
+
+        const oViewModel = this.getView().getModel();
+        oViewModel.setProperty('/type', oParameter.type);
+        oViewModel.setProperty('/Appno', oParameter.appno);
+
+        this.loadPage();
+      },
+
+      getCurrentLocationText(oArguments) {
+        const sAction = oArguments.appno ? this.getBundleText('LABEL_00100') : ''; // 조회
+        const oNavigationMap = {
+          A: this.getBundleText('LABEL_04002'), // 신규신청
+          B: this.getBundleText('LABEL_04003'), // 변경신청
+          C: this.getBundleText('LABEL_04004'), // 취소신청
+        };
+        return `${oNavigationMap[oArguments.type]} ${sAction}`;
+      },
+
+      async loadPage() {
         const oView = this.getView();
         const oViewModel = oView.getModel();
         const sAppno = oViewModel.getProperty('/Appno');
         const sType = oViewModel.getProperty('/type');
 
         try {
-          const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-          const mListSelectedData = oListView.getModel().getProperty('/parameter/rowData');
-
           if (sAppno) {
             const mRowData = await this.readLeaveApplEmpList({ Prcty: 'R', Appno: sAppno });
 
-            this.setTableData({ sType, oViewModel, mRowData });
-            oViewModel.setProperty('/ZappStatAl', mListSelectedData[0].ZappStatAl);
-            oViewModel.setProperty('/form/listMode', !mListSelectedData[0].ZappStatAl ? 'MultiToggle' : 'None');
-            oViewModel.setProperty('/ApprovalDetails', { ...mListSelectedData[0] });
-          } else if (sType === this.PAGE_TYPE.CHANGE || sType === this.PAGE_TYPE.CANCEL) {
-            // 변경|취소 신청의 경우 List페이지에서 선택된 데이터를 가져온다.
-            this.setTableData({ sType, oViewModel, mRowData: mListSelectedData });
+            oViewModel.setProperty('/ZappStatAl', mRowData[0].ZappStatAl);
+            oViewModel.setProperty('/form/listMode', 'None');
 
-            if (sType === this.PAGE_TYPE.CANCEL) {
-              oViewModel.setProperty('/form/listMode', 'None');
+            this.setTableData({ sType, oViewModel, mRowData });
+            this.initializeApplyInfoBox(mRowData[0]);
+            this.initializeApprovalBox(mRowData[0]);
+          } else {
+            if (sType === this.PAGE_TYPE.CHANGE || sType === this.PAGE_TYPE.CANCEL) {
+              const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+              const mListSelectedData = oListView.getModel().getProperty('/parameter/rowData');
+
+              if (sType === this.PAGE_TYPE.CANCEL) {
+                oViewModel.setProperty('/form/listMode', 'None');
+              } else {
+                mListSelectedData.forEach((o) => (o.Tmrsn = ''));
+              }
+
+              // 변경|취소 신청의 경우 List페이지에서 선택된 데이터를 가져온다.
+              this.setTableData({ sType, oViewModel, mRowData: mListSelectedData });
             }
+
+            this.initializeApplyInfoBox();
           }
+
+          this.initializeAttachBox();
         } catch (oError) {
           this.debug('Controller > Attendance Detail > onAfterShow Error', oError);
 
@@ -122,12 +168,6 @@ sap.ui.define(
             });
           }
         }
-
-        this.initializeApplyInfoBox();
-        this.initializeAttachBox();
-
-        // ! 필수 호출 - BaseController.onPageLoaded
-        this.onPageLoaded();
       },
 
       setTableData({ sType, oViewModel, mRowData }) {
@@ -164,53 +204,26 @@ sap.ui.define(
         this.toggleHasRowProperty();
       },
 
-      onObjectMatched(oParameter) {
-        if (!['A', 'B', 'C'].includes(oParameter.type)) {
-          this.getRouter().navTo('attendance');
-          return;
-        }
-
-        if (oParameter.type === this.PAGE_TYPE.CHANGE) {
-          // Multiple table generate
-          const oTable = this.byId('approveMultipleTable');
-          oTable.addEventDelegate(
-            {
-              onAfterRendering: () => {
-                TableUtils.adjustRowSpan({
-                  table: oTable,
-                  colIndices: [0, 7],
-                  theadOrTbody: 'header',
-                });
-              },
-            },
-            oTable
-          );
-        }
-
-        const oViewModel = this.getView().getModel();
-        oViewModel.setProperty('/type', oParameter.type);
-        oViewModel.setProperty('/Appno', oParameter.appno);
-      },
-
-      getCurrentLocationText(oArguments) {
-        const sAction = oArguments.appno ? this.getBundleText('LABEL_00100') : ''; // 조회
-        const oNavigationMap = {
-          A: this.getBundleText('LABEL_04002'), // 신규신청
-          B: this.getBundleText('LABEL_04003'), // 변경신청
-          C: this.getBundleText('LABEL_04004'), // 취소신청
-        };
-        return `${oNavigationMap[oArguments.type]} ${sAction}`;
-      },
-
-      initializeApplyInfoBox() {
+      initializeApplyInfoBox(detailData) {
         const oViewModel = this.getViewModel();
-        const oSessionData = this.getOwnerComponent().getSessionModel().getData();
 
-        oViewModel.setProperty('/ApplyInfo', {
-          Apename: oSessionData.Ename,
-          Orgtx: `${oSessionData.Btrtx}/${oSessionData.Orgtx}`,
-          Apjikgbtl: `${oSessionData.Zzjikgbt}/${oSessionData.Zzjiktlt}`,
-        });
+        if (_.isEmpty(detailData)) {
+          const oSessionData = this.getOwnerComponent().getSessionModel().getData();
+
+          oViewModel.setProperty('/ApplyInfo', {
+            Apename: oSessionData.Ename,
+            Aporgtx: `${oSessionData.Btrtx}/${oSessionData.Orgtx}`,
+            Apjikgbtl: `${oSessionData.Zzjikgbt}/${oSessionData.Zzjiktlt}`,
+          });
+        } else {
+          oViewModel.setProperty('/ApplyInfo', { ...detailData });
+        }
+      },
+
+      initializeApprovalBox(detailData) {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/ApprovalDetails', { ...detailData });
       },
 
       initializeAttachBox() {
@@ -425,6 +438,7 @@ sap.ui.define(
         const mCheckFields = [
           { field: 'Tmrsn', label: this.getBundleText('LABEL_04009'), type: Validator.SELECT2 }, // 근태사유
         ];
+        let oTable;
 
         if (!bCalcCompleted) {
           MessageBox.error(this.getBundleText('MSG_04001')); // 계산이 수행되지 않아 저장이 불가합니다.
@@ -447,6 +461,7 @@ sap.ui.define(
             EnddaTxt: moment(oInputData.Endda).hours(9).format('YYYY.MM.DD'),
             Tmrsn: oInputData.Tmrsn,
           };
+          oTable = this.byId('approveMultipleTable');
 
           if (oRowData.BegdaTxt2 === oChangedData.BegdaTxt && oRowData.EnddaTxt2 === oChangedData.EnddaTxt) {
             MessageBox.error(this.getBundleText('MSG_04002')); // 변경된 데이터가 없습니다.
@@ -456,6 +471,7 @@ sap.ui.define(
           oViewModel.setProperty(sRowPath, oChangedData);
         } else {
           const mListData = oViewModel.getProperty('/form/list');
+          oTable = this.byId('approveSingleTable');
 
           mListData.push({
             ...oInputData,
@@ -469,6 +485,7 @@ sap.ui.define(
           oViewModel.setProperty('/form/rowCount', mListData.length);
         }
 
+        oTable.clearSelection();
         this.toggleHasRowProperty();
 
         AppUtils.setAppBusy(false, this);
@@ -604,7 +621,7 @@ sap.ui.define(
             error: (oError) => {
               this.debug(`${sUrl} error.`, AppUtils.parseError(oError));
 
-              reject(new ODataCreateError(oError)); // {신청}중 오류가 발생하였습니다.
+              reject(new ODataCreateError({ oError })); // {신청}중 오류가 발생하였습니다.
             },
           });
         });

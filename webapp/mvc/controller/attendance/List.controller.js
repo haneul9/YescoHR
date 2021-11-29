@@ -4,7 +4,7 @@ sap.ui.define(
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
-    'sap/ui/yesco/control/MessageBox',
+    'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
@@ -16,7 +16,7 @@ sap.ui.define(
     Filter,
     FilterOperator,
     JSONModel,
-    MessageBox,
+    AppUtils,
     ODataReadError,
     ServiceNames,
     TableUtils,
@@ -27,16 +27,12 @@ sap.ui.define(
     return BaseController.extend('sap.ui.yesco.mvc.controller.attendance.List', {
       TableUtils: TableUtils,
 
+      PAGE_TYPE: { NEW: 'A', CHANGE: 'B', CANCEL: 'C' },
+
       onBeforeShow() {
         const oViewModel = new JSONModel({
           busy: false,
           isVisibleActionButton: false,
-          navigation: {
-            current: '근태신청',
-            links: [
-              { name: '근태' }, //
-            ],
-          },
           quota: {},
           search: {
             Apbeg: moment().subtract(1, 'month').add(1, 'day').hours(9).toDate(),
@@ -60,14 +56,7 @@ sap.ui.define(
         this.setViewModel(oViewModel);
       },
 
-      onAfterShow() {
-        // ! 필수 호출 - BaseController.onPageLoaded
-        this.onPageLoaded();
-
-        this.initialRetrieve();
-      },
-
-      async initialRetrieve() {
+      async onObjectMatched() {
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const oViewModel = this.getViewModel();
         const sPernr = this.getOwnerComponent().getSessionModel().getProperty('/Pernr');
@@ -84,7 +73,7 @@ sap.ui.define(
           setTimeout(() => {
             this.setTableData({ oViewModel, mRowData });
           }, 100);
-
+          // throw new Error('Oops!!');
           oViewModel.setProperty(
             '/quota',
             _.reduce(
@@ -104,11 +93,7 @@ sap.ui.define(
         } catch (oError) {
           this.debug('Controller > Attendance List > initialRetrieve Error', oError);
 
-          if (oError instanceof Error) {
-            MessageBox.error(oError.message);
-          } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
-            oError.showErrorMessage();
-          }
+          AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/busy', false);
         }
@@ -145,16 +130,12 @@ sap.ui.define(
           oViewModel.setProperty('/busy', true);
 
           const mRowData = await this.readLeaveApplContent({ oModel, oSearchConditions });
-
+          throw new Error('Oops!!');
           this.setTableData({ oViewModel, mRowData });
         } catch (oError) {
           this.debug('Controller > Attendance List > onPressSearch Error', oError);
 
-          if (oError instanceof Error) {
-            MessageBox.error(oError.message);
-          } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
-            oError.showErrorMessage();
-          }
+          AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/busy', false);
         }
@@ -193,7 +174,7 @@ sap.ui.define(
             !aSelectedIndices.some((idx) => {
               const oRowData = oViewModel.getProperty(`/list/${idx}`);
 
-              return oRowData.ZappStatAl !== '10';
+              return oRowData.Appty !== this.PAGE_TYPE.NEW || oRowData.ZappStatAl !== '20';
             })
           );
         }
@@ -214,17 +195,17 @@ sap.ui.define(
       },
 
       onPressNewApprovalBtn() {
-        this.getRouter().navTo('attendance-detail', { type: 'A' });
+        this.getRouter().navTo('attendance-detail', { type: this.PAGE_TYPE.NEW });
       },
 
       onPressModApprovalBtn() {
         this.setRowActionParameters();
-        this.getRouter().navTo('attendance-detail', { type: 'B' });
+        this.getRouter().navTo('attendance-detail', { type: this.PAGE_TYPE.CHANGE });
       },
 
       onPressCancApprovalBtn() {
         this.setRowActionParameters();
-        this.getRouter().navTo('attendance-detail', { type: 'C' });
+        this.getRouter().navTo('attendance-detail', { type: this.PAGE_TYPE.CANCEL });
       },
 
       onSuggest(oEvent) {
@@ -296,7 +277,7 @@ sap.ui.define(
 
           oModel.read(sUrl, {
             filters: [
-              new Filter('Menid', FilterOperator.EQ, sMenid), //
+              // new Filter('Menid', FilterOperator.EQ, sMenid), //
               new Filter('Apbeg', FilterOperator.EQ, moment(oSearchConditions.Apbeg).hours(9).toDate()),
               new Filter('Apend', FilterOperator.EQ, moment(oSearchConditions.Apend).hours(9).toDate()),
             ],

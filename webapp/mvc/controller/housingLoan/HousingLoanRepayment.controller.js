@@ -30,7 +30,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.housingLoan.HousingLoanDetail', {
+    return BaseController.extend('sap.ui.yesco.mvc.controller.housingLoan.HousingLoanRepayment', {
       TYPE_CODE: 'HR07',
       LIST_PAGE_ID: 'container-ehr---housingLoan',
 
@@ -744,21 +744,6 @@ sap.ui.define(
               });
             }
           },
-        });
-      },
-
-      // AttachFileTable Settings
-      settingsAttachTable() {
-        const oDetailModel = this.getViewModel();
-        const sStatus = oDetailModel.getProperty('/FormData/Lnsta');
-        const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
-
-        AttachFileAction.setAttachFile(this, {
-          Editable: !sStatus || sStatus === '10',
-          Type: this.TYPE_CODE,
-          Appno: sAppno,
-          Max: 10,
-          FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
         });
       },
     });

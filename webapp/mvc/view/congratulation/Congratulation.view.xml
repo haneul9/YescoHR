@@ -6,7 +6,7 @@
 	xmlns:core="sap.ui.core"
 	xmlns:custom="sap.ui.yesco.control">
 	<Page showHeader="false">
-		<content>
+		<VBox class="contents-header">
 			<HBox justifyContent="SpaceBetween" class="breadcrumbs">
 				<custom:Breadcrumbs />
 				<HBox>
@@ -15,11 +15,15 @@
 					<Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" />
 				</HBox>
 			</HBox>
+		</VBox>
+		<VBox class="contents">
 			<HBox justifyContent="SpaceAround" class="sapUiMediumMarginBottom">
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.TargetInfo" type="XML" />
 				<VBox class="hCardBox sapUiMediumMarginEnd expenses-info-wrap" width="33%" busyIndicatorDelay="0" busy="{/busy}">
 					<VBox>
-						<Title level="H2" text="{i18n>MSG_02001}" />
+						<HBox justifyContent="SpaceBetween" class="title">
+							<Title level="H2" text="{i18n>MSG_02001}" />
+						</HBox>
 						<Text text="{i18n>MSG_02002}" class="sapUiSmallMarginBottom" />
 						<HBox>
 							<VBox width="30%" class="expenses-info">
@@ -45,9 +49,9 @@
 					</VBox>
 				</VBox>
 				<VBox class="hCardBox" width="33%">
-					<HBox justifyContent="SpaceBetween">
+					<HBox justifyContent="SpaceBetween" class="title">
 						<Title text="{i18n>LABEL_00202}" level="H2" />
-						<Button type="Transparent" press=".onSearch" icon="sap-icon://search" class="icon-button" />
+						<Button type="Transparent" press=".onSearch" class="icon-button search" />
 					</HBox>
 					<grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="8px">
 						<Label text="{i18n>LABEL_00266}" design="Bold" />
@@ -57,7 +61,7 @@
 			</HBox>
 			<VBox class="vCardBox">
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.OverviewTableHeader" type="XML" />
-				<table:Table id="conguTable" rows="{/CongList}" width="100%" visibleRowCount="{/listInfo/rowCount}" selectionMode="None" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
+				<table:Table id="conguTable" rows="{/CongList}" width="100%" visibleRowCount="{/listInfo/rowCount}" selectionMode="None" columnHeaderHeight="50" rowHeight="50" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
 					<table:rowSettingsTemplate>
 						<table:RowSettings highlight="{
 							path: 'ZappStatAl',
@@ -202,6 +206,6 @@
 					</table:columns>
 				</table:Table>
 			</VBox>
-		</content>
+		</VBox>
 	</Page>
 </mvc:View>

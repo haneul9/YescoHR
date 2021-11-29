@@ -59,13 +59,14 @@ sap.ui.define(
         this.getList().then(() => {
           this.getTargetData();
           this.getViewModel().setProperty('/busy', false);
-          this.onPageLoaded();
+
+          BaseController.prototype.onAfterShow.call(this);
         });
       },
 
       onObjectMatched(oParameter) {
         const sDataKey = oParameter.oDataKey;
-        
+
         this.getViewModel().setProperty('/ViewKey', sDataKey);
       },
 
