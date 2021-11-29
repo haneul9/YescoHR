@@ -691,6 +691,7 @@ html.sap-desktop .sapContrast.sapMIBar.sapMFooter-CTX { height: 4.5rem;}
 .sapUiLayoutCSSGrid.form-grid > * {border-bottom:1px solid #F5F5F5;height:100%;align-self: center;}
 .sapUiLayoutCSSGrid.form-grid .sapMFlexBox .sapMFlexItem {display:flex;padding-bottom:4px;min-height: 40px!important;}
 .sapUiLayoutCSSGrid.form-grid .sapMFlexBox .sapMFlexItem .sapMText {display:flex;}
+.listFileDialog {min-height: 85px !important; max-height: 230px !important;}
 
 
 /* employee list */
