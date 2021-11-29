@@ -7,7 +7,7 @@ sap.ui.define(
   function (BaseObject, MessageBox, AppUtils) {
     'use strict';
 
-    return BaseObject.extend('sap.ui.yesco.common.exceptions.Error', {
+    return BaseObject.extend('sap.ui.yesco.common.exceptions.UI5Error', {
       LEVEL: {
         INFORMATION: 'I',
         WARNING: 'W',

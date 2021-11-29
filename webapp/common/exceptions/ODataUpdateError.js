@@ -1,12 +1,12 @@
 sap.ui.define(
   [
-    'sap/ui/yesco/common/exceptions/Error', //
+    'sap/ui/yesco/common/exceptions/UI5Error', //
     'sap/ui/yesco/common/AppUtils',
   ],
-  function (Error, AppUtils) {
+  function (UI5Error, AppUtils) {
     'use strict';
 
-    return Error.extend('sap.ui.yesco.common.exceptions.ODataUpdateError', {
+    return UI5Error.extend('sap.ui.yesco.common.exceptions.ODataUpdateError', {
       /**
        * @override
        * @param {any} Unknown
@@ -15,7 +15,7 @@ sap.ui.define(
       constructor: function (oError) {
         const { code, message } = oError ? AppUtils.parseError(oError) : { code: 'E', message: AppUtils.getBundleText('MSG_00008', 'LABEL_00108') };
 
-        Error.prototype.constructor.call(this, { code, message });
+        UI5Error.prototype.constructor.call(this, { code, message });
       },
     });
   }
