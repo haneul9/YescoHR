@@ -1,10 +1,16 @@
 sap.ui.define(
   [
-    'sap/ui/base/Object', //
+    // prettier 방지용 주석
+    'sap/ui/base/Object',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/control/MessageBox',
   ],
-  function (BaseObject, AppUtils, MessageBox) {
+  (
+    // prettier 방지용 주석
+    BaseObject,
+    AppUtils,
+    MessageBox
+  ) => {
     'use strict';
 
     return BaseObject.extend('sap.ui.yesco.common.exceptions.UI5Error', {
@@ -13,6 +19,7 @@ sap.ui.define(
         WARNING: 'W',
         ERROR: 'E',
       },
+
       /**
        * @override
        * @returns {sap.ui.base.Object}
