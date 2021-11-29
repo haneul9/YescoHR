@@ -61,7 +61,7 @@
 			</HBox>
 			<VBox class="vCardBox">
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.OverviewTableHeader" type="XML" />
-				<table:Table id="conguTable" rows="{/CongList}" width="100%" visibleRowCount="{/listInfo/rowCount}" selectionMode="None" columnHeaderHeight="50" rowHeight="50" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
+				<table:Table id="conguTable" class="row-link" rows="{/CongList}" width="100%" visibleRowCount="{/listInfo/rowCount}" selectionMode="None" columnHeaderHeight="50" rowHeight="50" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
 					<table:rowSettingsTemplate>
 						<table:RowSettings highlight="{
 							path: 'ZappStatAl',
