@@ -448,7 +448,7 @@ sap.ui.define(
       },
 
       getCurrentMenuId() {
-        return this.getProperty('/current/Menid');
+        return this.getProperty('/current/menuId');
       },
     });
   }
