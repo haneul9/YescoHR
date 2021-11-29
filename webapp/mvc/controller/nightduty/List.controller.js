@@ -29,7 +29,12 @@ sap.ui.define(
       onBeforeShow() {
         const oViewModel = new JSONModel({
           busy: false,
-          Data: [],
+          isVisibleActionButton: false,
+          quota: {},
+          search: {
+            Apbeg: moment().subtract(1, 'month').add(1, 'day').hours(9).toDate(),
+            Apend: moment().hours(9).toDate(),
+          },
           listInfo: {
             rowCount: 1,
             totalCount: 0,
@@ -39,23 +44,75 @@ sap.ui.define(
             rejectCount: 0,
             completeCount: 0,
           },
+          list: [],
+          parameter: {
+            selectedIndices: [],
+            rowData: [],
+          },
         });
         this.setViewModel(oViewModel);
-
-        EmpInfo.get.call(this, true);
-
-        const oSearchDate = this.byId('SearchDate');
-        const dDate = new Date();
-        const dDate2 = new Date(dDate.getFullYear(), dDate.getMonth() - 1, dDate.getDate() + 1);
-
-        oSearchDate.setDateValue(dDate2);
-        oSearchDate.setSecondDateValue(dDate);
       },
 
-      onAfterShow() {
-        this.onSearch();
-        this.getTotalPay();
-        super.onAfterShow();
+      async onObjectMatched() {
+        const oModel = this.getModel(ServiceNames.WORKTIME);
+        const oViewModel = this.getViewModel();
+        const sPernr = this.getOwnerComponent().getSessionModel().getProperty('/Pernr');
+        const oSearchConditions = oViewModel.getProperty('/search');
+
+        try {
+          oViewModel.setProperty('/busy', true);
+
+          const [mQuotaResultData, mRowData] = await Promise.all([
+            this.readAbsQuotaList({ oModel, sPernr }), //
+            this.readLeaveApplContent({ oModel, oSearchConditions }),
+          ]);
+
+          setTimeout(() => {
+            this.setTableData({ oViewModel, mRowData });
+          }, 100);
+          // throw new Error('Oops!!');
+          oViewModel.setProperty(
+            '/quota',
+            _.reduce(
+              mQuotaResultData,
+              (acc, { Ktart, Kotxt, Crecnt, Usecnt }) => ({
+                ...acc,
+                [Ktart]: {
+                  Kotxt,
+                  Crecnt: parseInt(Crecnt, 10),
+                  Usecnt: parseInt(Usecnt, 10),
+                  Rate: (parseInt(Usecnt, 10) / parseInt(Crecnt, 10)) * 100,
+                },
+              }),
+              {}
+            )
+          );
+        } catch (oError) {
+          this.debug('Controller > Attendance List > initialRetrieve Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
+      },
+
+      setTableData({ oViewModel, mRowData }) {
+        const oTable = this.byId('attendanceTable');
+
+        oViewModel.setProperty(
+          '/list',
+          mRowData.map((o) => {
+            return {
+              ...o,
+              Pernr: parseInt(o.Pernr, 10),
+              BegdaTxt: o.Begda ? moment(new Date(o.Begda)).hours(9).format('YYYY.MM.DD') : '',
+              EnddaTxt: o.Endda ? moment(new Date(o.Endda)).hours(9).format('YYYY.MM.DD') : '',
+              AppdtTxt: o.Appdt ? moment(new Date(o.Appdt)).hours(9).format('YYYY.MM.DD') : '',
+              SgndtTxt: o.Sgndt ? moment(new Date(o.Sgndt)).hours(9).format('YYYY.MM.DD') : '',
+            };
+          })
+        );
+        oViewModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData }));
       },
 
       onClick() {

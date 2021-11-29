@@ -130,6 +130,7 @@ sap.ui.define(
             width: '27%',
             height: '900px',
             scrollHeight: '700px',
+            treeHeight: '500px',
             search: {
               searchText: '',
               selectedState: '3',
@@ -229,8 +230,8 @@ sap.ui.define(
           ...oSessionData,
         };
         const oSearchResults = await this.readEmpSearchResult({ oSearchParam });
-        const iSideViewHeight = Math.floor($(document).height() - oSideBody.getParent().$().offset().top - 50);
-        const iScrollViewHeight = Math.floor($(document).height() - oSideList.getParent().$().offset().top - 66);
+        const iSideViewHeight = Math.floor($(document).height() - oSideBody.getParent().$().offset().top - 20);
+        const iScrollViewHeight = Math.floor($(document).height() - oSideList.getParent().$().offset().top - 36);
 
         oViewModel.setProperty('/sideNavigation/search/results', oSearchResults);
         oViewModel.setProperty('/sideNavigation/height', `${iSideViewHeight}px`);
@@ -286,7 +287,8 @@ sap.ui.define(
           delete oReturnData.Prcty;
           delete oReturnData.Actty;
           delete oReturnData.__metadata;
-          const aConvertData = Object.keys(oReturnData).map((key) => ({ data: oReturnData[key] }));
+          const aTextFields = ['Dat03', 'Dat08', 'Dat13', 'Dat18', 'Dat23'];
+          const aConvertData = Object.keys(oReturnData).map((key) => ({ data: oReturnData[key], isText: _.includes(aTextFields, key) }));
 
           oViewModel.setProperty('/employee/header/profilePath', Pturl);
           oViewModel.setProperty('/employee/header/baseInfo', aConvertData);
@@ -675,6 +677,10 @@ sap.ui.define(
 
           this.debug('mConvertedTreeData', mConvertedTreeData);
           oViewModel.setProperty('/sideNavigation/treeData', mConvertedTreeData);
+
+          const oSideTree = this.byId('OrganizationTree');
+          const iTreeViewHeight = Math.floor($(document).height() - oSideTree.$().offset().top - 35);
+          oViewModel.setProperty('/sideNavigation/treeHeight', `${iTreeViewHeight}px`);
         }
 
         oViewModel.setProperty('/sideNavigation/treeLoaded', true);
@@ -1225,16 +1231,7 @@ sap.ui.define(
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
 
-              resolve([
-                ...oData.results, //
-                ...oData.results,
-                ...oData.results,
-                ...oData.results,
-                ...oData.results,
-                ...oData.results,
-                ...oData.results,
-                ...oData.results,
-              ]);
+              resolve(oData.results);
             },
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);

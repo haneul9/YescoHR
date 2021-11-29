@@ -8,11 +8,11 @@
         </HBox>
         <HBox>
             <HBox class="status-wrap">
-                <ObjectStatus text="{i18n>LABEL_00130} {/listInfo/progressCount}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="None" />
-                <ObjectStatus text="{i18n>LABEL_00121} {/listInfo/applyCount}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication02" />
-                <ObjectStatus text="{i18n>LABEL_00123} {/listInfo/approveCount}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication03" />
-                <ObjectStatus text="{i18n>LABEL_00124} {/listInfo/rejectCount}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication04" />
-                <ObjectStatus text="{i18n>LABEL_00117} {/listInfo/completeCount}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication05" />
+                <ObjectStatus text="{i18n>LABEL_00130} {/listInfo/progressCount}" visible="{/listInfo/isShowProgress}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="None" />
+                <ObjectStatus text="{i18n>LABEL_00121} {/listInfo/applyCount}" visible="{/listInfo/isShowApply}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication02" />
+                <ObjectStatus text="{i18n>LABEL_00123} {/listInfo/approveCount}" visible="{/listInfo/isShowApprove}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication03" />
+                <ObjectStatus text="{i18n>LABEL_00124} {/listInfo/rejectCount}" visible="{/listInfo/isShowReject}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication04" />
+                <ObjectStatus text="{i18n>LABEL_00117} {/listInfo/completeCount}" visible="{/listInfo/isShowComplete}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication05" />
             </HBox>
             <Button icon="sap-icon://excel-attachment" width="117px" text="Excel" press=".onPressExcelDownload" busyIndicatorDelay="0" busy="{/busy}" />
         </HBox>

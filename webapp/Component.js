@@ -56,12 +56,7 @@ sap.ui.define(
         // call the base component's init function and create the App view
         UIComponent.prototype.init.apply(this, aArgs);
 
-        // create the views based on the url/hash
-        const oRouter = this.getRouter();
-        oRouter.initialize();
-
-        // Router event handler 생성
-        this.attachRoutingEvents(oRouter);
+        this.initRouter();
       },
 
       /**
@@ -197,10 +192,37 @@ sap.ui.define(
       },
 
       /**
-       * Routing event handler 처리
-       * @param {object} oRouter
+       * This method can be called to determine whether the sapUiSizeCompact or sapUiSizeCozy
+       * design mode class should be set, which influences the size appearance of some controls.
+       * @public
+       * @return {string} css class, either 'sapUiSizeCompact' or 'sapUiSizeCozy' - or an empty string if no css class should be set
        */
-      attachRoutingEvents(oRouter) {
+      getContentDensityClass() {
+        if (!Object.prototype.hasOwnProperty.call(this, '_sContentDensityClass')) {
+          // check whether FLP has already set the content density class; do nothing in this case
+          if (document.body.classList.contains('sapUiSizeCozy') || document.body.classList.contains('sapUiSizeCompact')) {
+            this._sContentDensityClass = '';
+          } else if (!Device.support.touch) {
+            // apply "compact" mode if touch is not supported
+            this._sContentDensityClass = 'sapUiSizeCompact';
+          } else {
+            // "cozy" in case of touch support; default for most sap.m controls, but needed for desktop-first controls like sap.ui.table.Table
+            this._sContentDensityClass = 'sapUiSizeCozy';
+            this._sContentDensityClass = 'sapUiSizeCompact';
+          }
+        }
+        return this._sContentDensityClass;
+      },
+
+      /**
+       * Router 초기화 및 Routing event handler 처리
+       */
+      initRouter() {
+        // create the views based on the url/hash
+        const oRouter = this.getRouter();
+        oRouter.initialize();
+
+        // Router event handler 생성
         oRouter
           // .attachBeforeRouteMatched((oEvent) => {
           //   // Router.navTo 로 들어오는 경우에만 event 발생
@@ -217,16 +239,28 @@ sap.ui.define(
           .attachRouteMatched((oEvent) => {
             AppUtils.debug('routeMatched', oEvent.getParameters());
 
-            this._saveBreadcrumbsData(oEvent);
-            this._checkRouteName(oEvent);
+            const mArguments = oEvent.getParameter('arguments');
+            const oView = oEvent.getParameter('view');
+            const sRouteName = oEvent.getParameter('name');
+            const oController = oView.getController();
+            const oMenuModelPromise = this.getMenuModel().getPromise();
+
+            oController.baseModelReady = Promise.all([
+              oMenuModelPromise, //
+              this._saveBreadcrumbsData({ mArguments, oView, sRouteName }),
+              this._checkRouteName({ oView, sRouteName }),
+            ]);
           })
           .attachRoutePatternMatched((oEvent) => {
             AppUtils.debug('routePatternMatched', oEvent.getParameters());
 
+            const oArguments = oEvent.getParameter('arguments');
             const oController = oEvent.getParameter('view').getController();
 
-            if (oController.onObjectMatched && oController.onObjectMatched instanceof Function) {
-              oController.onObjectMatched(oEvent.getParameter('arguments'));
+            if (oController && oController.onObjectMatched && typeof oController.onObjectMatched === 'function') {
+              oController.baseModelReady.then(() => {
+                oController.onObjectMatched(oArguments);
+              });
             }
           });
         return this;
@@ -235,90 +269,103 @@ sap.ui.define(
       /**
        * Breadcrumbs 정보 저장
        * @private
-       * @param {sap.ui.base.Event} oEvent
+       * @param {object} mArguments
+       * @param {object} oView
+       * @param {string} sRouteName
        */
-      _saveBreadcrumbsData(oEvent) {
-        const oEventParameterArguments = oEvent.getParameter('arguments');
-        const sRouteName = oEvent.getParameter('name');
-        const oView = oEvent.getParameter('view');
-        const oMenuModel = this.getMenuModel();
+      _saveBreadcrumbsData({ mArguments, oView, sRouteName }) {
+        return new Promise((resolve) => {
+          this.getMenuModel()
+            .getPromise()
+            .then(() => {
+              const oMenuModel = this.getMenuModel();
 
-        oMenuModel.getPromise().then(() => {
-          const [sRouteNameMain, sRouteNameSub] = sRouteName.split(/-/);
-          if (sRouteNameMain === 'ehrHome') {
-            oMenuModel.setCurrentMenuData({ routeName: '', menuId: '', currentLocationText: '', isSubRoute: false });
-            return;
-          }
+              const [sRouteNameMain, sRouteNameSub] = sRouteName.split(/-/);
+              if (sRouteNameMain === 'ehrHome') {
+                oMenuModel.setCurrentMenuData({ routeName: '', menuId: '', currentLocationText: '', isSubRoute: false });
+                return;
+              }
 
-          const sMenid = oMenuModel.getMenid(sRouteNameMain);
-          if ((AppUtils.isLOCAL() || AppUtils.isDEV()) && /^X/.test(sMenid)) {
-            oMenuModel.setCurrentMenuData({ routeName: '', menuId: '', currentLocationText: '', isSubRoute: false });
-            return;
-          }
+              const sMenid = oMenuModel.getMenid(sRouteNameMain);
+              if ((AppUtils.isLOCAL() || AppUtils.isDEV()) && /^X/.test(sMenid)) {
+                oMenuModel.setCurrentMenuData({ routeName: '', menuId: '', currentLocationText: '', isSubRoute: false });
+                return;
+              }
 
-          let sCurrentLocationText;
-          const oController = oView.getController();
-          if (oController && typeof oController.getCurrentLocationText === 'function') {
-            sCurrentLocationText = oController.getCurrentLocationText(oEventParameterArguments);
-          }
+              let sCurrentLocationText;
+              const oController = oView.getController();
+              if (oController && typeof oController.getCurrentLocationText === 'function') {
+                sCurrentLocationText = oController.getCurrentLocationText(mArguments);
+              }
 
-          oMenuModel.setCurrentMenuData({
-            routeName: sRouteNameMain,
-            menuId: sMenid,
-            currentLocationText: sCurrentLocationText || '',
-            isSubRoute: !!sRouteNameSub,
-          });
+              oMenuModel.setCurrentMenuData({
+                routeName: sRouteNameMain,
+                menuId: sMenid,
+                currentLocationText: sCurrentLocationText || '',
+                isSubRoute: !!sRouteNameSub,
+              });
+
+              resolve();
+            });
         });
       },
 
       /**
        * 메뉴 권한 체크
        * @private
-       * @param {sap.ui.base.Event} oEvent
+       * @param {object} oView
+       * @param {string} sRouteName
        */
-      _checkRouteName(oEvent) {
-        const oView = oEvent.getParameter('view');
-        oView.setVisible(false);
+      _checkRouteName({ oView, sRouteName }) {
+        return new Promise((resolve) => {
+          this.getMenuModel()
+            .getPromise()
+            .then(() => {
+              oView.setVisible(false);
 
-        // do something, i.e. send usage statistics to back end
-        // in order to improve our app and the user experience (Build-Measure-Learn cycle)
-        const sRouteName = oEvent.getParameter('name');
-        AppUtils.debug(`User accessed route ${sRouteName}, timestamp = ${new Date().getTime()}`);
+              // do something, i.e. send usage statistics to back end
+              // in order to improve our app and the user experience (Build-Measure-Learn cycle)
+              AppUtils.debug(`User accessed route ${sRouteName}, timestamp = ${new Date().getTime()}`);
 
-        const oMenuModel = this.getMenuModel();
+              const sRouteNameMain = sRouteName.split(/-/)[0];
+              if (sRouteNameMain === 'ehrHome') {
+                oView.setVisible(true);
+                resolve();
+                return;
+              }
 
-        oMenuModel.getPromise().then(() => {
-          const sRouteNameMain = sRouteName.split(/-/)[0];
-          if (sRouteNameMain === 'ehrHome') {
-            oView.setVisible(true);
-            return;
-          }
+              const oMenuModel = this.getMenuModel();
+              const sMenid = oMenuModel.getMenid(sRouteNameMain);
+              if ((AppUtils.isLOCAL() || AppUtils.isDEV()) && /^X/.test(sMenid)) {
+                oView.setVisible(true);
+                resolve();
+                return;
+              }
 
-          const sMenid = oMenuModel.getMenid(sRouteNameMain);
-          if ((AppUtils.isLOCAL() || AppUtils.isDEV()) && /^X/.test(sMenid)) {
-            oView.setVisible(true);
-            return;
-          }
+              const sUrl = '/GetMenuidRoleSet';
+              this.getModel(ServiceNames.COMMON).read(sUrl, {
+                filters: [
+                  // prettier 방지용 주석
+                  new Filter('Menid', FilterOperator.EQ, sMenid),
+                ],
+                success: (oData, oResponse) => {
+                  AppUtils.debug(`${sUrl} success.`, oData, oResponse);
 
-          const sUrl = '/GetMenuidRoleSet';
-          this.getModel(ServiceNames.COMMON).read(sUrl, {
-            filters: [
-              // prettier 방지용 주석
-              new Filter('Menid', FilterOperator.EQ, sMenid),
-            ],
-            success: (oData, oResponse) => {
-              AppUtils.debug(`${sUrl} success.`, oData, oResponse);
+                  oView.setVisible(true);
 
-              oView.setVisible(true);
-            },
-            error: (oError) => {
-              AppUtils.debug(`${sUrl} error.`, oError);
+                  resolve();
+                },
+                error: (oError) => {
+                  AppUtils.debug(`${sUrl} error.`, oError);
 
-              this.getRouter().getTargets().display('notFound', {
-                from: 'home',
+                  this.getRouter().getTargets().display('notFound', {
+                    from: 'home',
+                  });
+
+                  resolve();
+                },
               });
-            },
-          });
+            });
         });
       },
 
@@ -333,29 +380,6 @@ sap.ui.define(
 
         // call the base component's destroy function
         UIComponent.prototype.destroy.apply(this, aArgs);
-      },
-
-      /**
-       * This method can be called to determine whether the sapUiSizeCompact or sapUiSizeCozy
-       * design mode class should be set, which influences the size appearance of some controls.
-       * @public
-       * @return {string} css class, either 'sapUiSizeCompact' or 'sapUiSizeCozy' - or an empty string if no css class should be set
-       */
-      getContentDensityClass() {
-        if (!Object.prototype.hasOwnProperty.call(this, '_sContentDensityClass')) {
-          // check whether FLP has already set the content density class; do nothing in this case
-          if (document.body.classList.contains('sapUiSizeCozy') || document.body.classList.contains('sapUiSizeCompact')) {
-            this._sContentDensityClass = '';
-          } else if (!Device.support.touch) {
-            // apply "compact" mode if touch is not supported
-            this._sContentDensityClass = 'sapUiSizeCompact';
-          } else {
-            // "cozy" in case of touch support; default for most sap.m controls, but needed for desktop-first controls like sap.ui.table.Table
-            // this._sContentDensityClass = 'sapUiSizeCozy';
-            this._sContentDensityClass = 'sapUiSizeCompact';
-          }
-        }
-        return this._sContentDensityClass;
       },
     });
   }

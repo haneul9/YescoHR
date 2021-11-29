@@ -41,10 +41,15 @@ sap.ui.define(
           listInfo: {
             rowCount: 1,
             totalCount: 0,
+            isShowProgress: false,
             progressCount: 0,
+            isShowApply: true,
             applyCount: 0,
+            isShowApprove: true,
             approveCount: 0,
+            isShowReject: true,
             rejectCount: 0,
+            isShowComplete: true,
             completeCount: 0,
           },
           list: [],
@@ -70,9 +75,7 @@ sap.ui.define(
             this.readLeaveApplContent({ oModel, oSearchConditions }),
           ]);
 
-          setTimeout(() => {
-            this.setTableData({ oViewModel, mRowData });
-          }, 100);
+          this.setTableData({ oViewModel, mRowData });
 
           oViewModel.setProperty(
             '/quota',
@@ -101,6 +104,7 @@ sap.ui.define(
 
       setTableData({ oViewModel, mRowData }) {
         const oTable = this.byId('attendanceTable');
+        const oListInfo = oViewModel.getProperty('/listInfo');
 
         oViewModel.setProperty(
           '/list',
@@ -115,7 +119,7 @@ sap.ui.define(
             };
           })
         );
-        oViewModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData }));
+        oViewModel.setProperty('/listInfo', { ...oListInfo, ...TableUtils.count({ oTable, mRowData }) });
       },
 
       /*****************************************************************
