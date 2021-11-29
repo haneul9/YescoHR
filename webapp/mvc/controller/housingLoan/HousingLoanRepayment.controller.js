@@ -38,6 +38,7 @@ sap.ui.define(
 
       AttachFileAction: AttachFileAction,
       TextUtils: TextUtils,
+      TableUtils: TableUtils,
       FragmentEvent: FragmentEvent,
 
       onBeforeShow() {
@@ -74,11 +75,11 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
 
         oEventSource.setValue(sValue);
-        oDetailModel.setProperty('/FormData/RpamtMpr', sValue);
-        oDetailModel.setProperty('/FormData/RpamtTot', sValue);
+        oDetailModel.setProperty('/DialogData/RpamtMpr', sValue);
+        oDetailModel.setProperty('/DialogData/RpamtTot', sValue);
       },
 
-      // FormData setting
+      // DialogData setting
       setDialogData(oRowData) {
         const oView = this.getView();
         const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
@@ -95,10 +96,10 @@ sap.ui.define(
           oDetailModel.setProperty('/DialogData/Paydt', new Date());
           oDetailModel.setProperty('/DialogData/Lnrte', oDetailModel.getProperty('/TargetLoanHis/Lnrte'));
           oDetailModel.setProperty('/DialogData/RpamtMpr', oDetailModel.getProperty('/TargetLoanHis/RpamtBal'));
+          oDetailModel.setProperty('/DialogData/RpamtTot', oDetailModel.getProperty('/TargetLoanHis/RpamtBal'));
           oDetailModel.setProperty('/DialogData/Account', oDetailModel.getProperty('/AccountTxt'));
+          oDetailModel.setProperty('/DateEditable', true);
         }
-
-        // this.settingsAttachTable();
       },
 
       // 상환신청내역 Excel
@@ -112,7 +113,7 @@ sap.ui.define(
 
       // Dialog 닫기
       onClose() {
-        this.getViewModel().byId('RepayApplyDialog').close();
+        this.byId('RepayApplyDialog').close();
       },
 
       // 상환신청내역 클릭
@@ -147,7 +148,6 @@ sap.ui.define(
 
                   oDetailModel.setProperty('/AccountTxt', sText);
                   oDetailModel.setProperty('/InfoMessage', this.getBundleText('MSG_07014', sText));
-                  // oDetailModel.setProperty('/LaonType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: aList2 }));
 
                   resolve();
                 }
@@ -243,31 +243,63 @@ sap.ui.define(
 
       // 상환유형선택
       onLaonType(oEvent) {
+        const sKey = oEvent.getSource().getSelectedKey();
+
+        if (sKey === 'ALL') return;
+
+       this.setLoanType('Type', sKey);
+      },
+
+      // 상환일 선택
+      onPayDateChange(oEvent) {
+        const sDateValue = oEvent.getSource().getDateValue();
+
+        if (this.getViewModel().getProperty('/DialogData/Rptyp') === 'ALL') return;
+
+        this.setLoanType('Date', sDateValue);
+      },
+
+      // 상환에따른 데이터셋팅
+      setLoanType(sType, sKey) {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
-        const sKey = oEvent.getSource().getSelectedKey();
-        const mFormData = oDetailModel.getProperty('/FormData');
+        const mDialogData = oDetailModel.getProperty('/DialogData');
         const aFiltList = [];
+        let sKey1 = '';
+        let sDate = '';
+
+        if(sType === 'Type') {
+          sKey1 = sKey;
+          sDate = mDialogData.Paydt;
+        } else {
+          sKey1 = mDialogData.Rptyp;
+          sDate = sKey;
+        }
 
         aFiltList.push(
-          new sap.ui.model.Filter('Lonid', sap.ui.model.FilterOperator.EQ, mFormData.Lonid),
-          new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mFormData.Lntyp),
-          new sap.ui.model.Filter('Rptyp', sap.ui.model.FilterOperator.EQ, sKey),
+          new sap.ui.model.Filter('Lonid', sap.ui.model.FilterOperator.EQ, mDialogData.Lonid),
+          new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mDialogData.Lntyp),
+          new sap.ui.model.Filter('Rptyp', sap.ui.model.FilterOperator.EQ, sKey1),
         );
-        if (sKey === 'FULL') {
+        if (sKey1 === 'FULL') {
           aFiltList.push(
-            new sap.ui.model.Filter('Paydt', sap.ui.model.FilterOperator.EQ, mFormData.Paydt),
-            new sap.ui.model.Filter('RpamtBal', sap.ui.model.FilterOperator.EQ, mFormData.RpamtBal),
+            new sap.ui.model.Filter('Paydt', sap.ui.model.FilterOperator.EQ, sDate),
+            new sap.ui.model.Filter('RpamtMpr', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/TargetLoanHis/RpamtBal')),
           );
+          oDetailModel.setProperty('/DateEditable', true);
+        } else {
+          oDetailModel.setProperty('/DateEditable', false);
         }
 
         oModel.read('/LoanRepayCheckSet', {
           filters: aFiltList,
           success: (oData) => {
             if (oData) {
-              const sText = oData.results;
+              const oAmount = oData.results[0];
 
-              // oDetailModel.setProperty('/LaonType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: aList2 }));
+              oDetailModel.setProperty('/DialogData/RpamtMpr', oAmount.RpamtMpr);
+              oDetailModel.setProperty('/DialogData/RpamtMin', oAmount.RpamtMin);
+              oDetailModel.setProperty('/DialogData/RpamtTot', oAmount.RpamtTot);
             }
           },
           error: (oError) => {
@@ -292,10 +324,12 @@ sap.ui.define(
             // connect dialog to the root view of this component (models, lifecycle)
             this.getView().addDependent(oDialog);
             oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
-
+            this.settingsAttachTable();
+            
             oDialog.open();
           });
         } else {
+          this.settingsAttachTable();
           this.byId('RepayApplyDialog').open();
         }
       },
@@ -609,7 +643,7 @@ sap.ui.define(
           Editable: !sStatus || sStatus === '10',
           Type: this.TYPE_CODE,
           Appno: sAppno,
-          Max: 10,
+          Max: 1,
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
         });
       },

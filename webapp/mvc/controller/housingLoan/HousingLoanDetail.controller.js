@@ -36,6 +36,7 @@ sap.ui.define(
 
       AttachFileAction: AttachFileAction,
       TextUtils: TextUtils,
+      TableUtils: TableUtils,
       FragmentEvent: FragmentEvent,
 
       onBeforeShow() {
