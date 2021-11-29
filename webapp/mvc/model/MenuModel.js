@@ -444,11 +444,11 @@ sap.ui.define(
       },
 
       getCurrentMenuRouteName() {
-        return this.getProperty('/current/RouteName');
+        return this.getProperty('/current/routeName');
       },
 
       getCurrentMenuId() {
-        return this.getProperty('/current/Menid');
+        return this.getProperty('/current/menuId');
       },
     });
   }
