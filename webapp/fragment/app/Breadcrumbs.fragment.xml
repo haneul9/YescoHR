@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m"
 	xmlns:core="sap.ui.core">
-	<HBox class="breadcrumbs">
+	<HBox justifyContent="Start">
 		<Breadcrumbs currentLocationText="{menuModel>/breadcrumbs/currentLocationText}" separatorStyle="GreaterThan">
 			<Link enabled="false" subtle="true" text="{menuModel>/breadcrumbs/name1}" visible="{= !!${menuModel>/breadcrumbs/show1} }" />
 			<Link enabled="false" subtle="true" text="{menuModel>/breadcrumbs/name2}" visible="{= !!${menuModel>/breadcrumbs/show2} }" />
