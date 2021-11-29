@@ -61,8 +61,8 @@ sap.ui.define(
       },
 
       onAfterShow() {
-        // ! 필수 호출 - BaseController.onPageLoaded
-        this.onPageLoaded();
+        // ! 필수 호출 - BaseController.onAfterShow
+        BaseController.prototype.onAfterShow.call(this);
 
         this.initialRetrieve();
       },

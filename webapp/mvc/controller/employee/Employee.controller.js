@@ -778,6 +778,7 @@ sap.ui.define(
         const sSelectedMenuCode = oEvent.getSource().getCustomData()[0].getValue();
         const sMenuKey = _.lowerCase(_.findKey(this.CRUD_TABLES, { key: sSelectedMenuCode }));
         const sLabel = this.getBundleText(this.CRUD_TABLES[_.upperCase(sMenuKey)].label);
+        const sDefaultSelectedKey = 'ALL';
 
         oViewModel.setProperty('/employee/dialog/subKey', sSelectedMenuCode);
         oViewModel.setProperty('/employee/dialog/subLabel', sLabel);
@@ -788,14 +789,26 @@ sap.ui.define(
 
         switch (sMenuKey) {
           case this.CRUD_TABLES.ADDRESS.path:
-            oViewModel.setProperty('/employee/dialog/form', { Subty: 'ALL', State: 'ALL' });
+            oViewModel.setProperty('/employee/dialog/form', { Subty: sDefaultSelectedKey, State: sDefaultSelectedKey });
 
             break;
           case this.CRUD_TABLES.EDUCATION.path:
-            oViewModel.setProperty('/employee/dialog/form', { Slart: 'ALL', Sland: 'KR', Landx50: '대한민국', Slabs: 'ALL', Zzentba: 'ALL', Zznwtns: 'ALL', Zzdyngt: 'ALL' });
+            const mCountryList = oViewModel.getProperty('/employee/dialog/countryList');
+            const oKoreaObject = _.find(mCountryList, { Sland: 'KR' });
+
+            oViewModel.setProperty('/employee/dialog/form', {
+              Slart: sDefaultSelectedKey,
+              Sland: oKoreaObject.Sland,
+              Landx50: oKoreaObject.Landx50,
+              Slabs: sDefaultSelectedKey,
+              Zzentba: sDefaultSelectedKey,
+              Zznwtns: sDefaultSelectedKey,
+              Zzdyngt: sDefaultSelectedKey,
+            });
+
             break;
           case this.CRUD_TABLES.LANGUAGE.path:
-            oViewModel.setProperty('/employee/dialog/form', { Quali: 'ALL', Exmty: 'ALL', Eamgr: 'ALL' });
+            oViewModel.setProperty('/employee/dialog/form', { Quali: sDefaultSelectedKey, Exmty: sDefaultSelectedKey, Eamgr: sDefaultSelectedKey });
             break;
           case this.CRUD_TABLES.CERTIFICATE.path:
             oViewModel.setProperty('/employee/dialog/form', {});
@@ -813,6 +826,7 @@ sap.ui.define(
         const sAction = oViewModel.getProperty('/employee/dialog/action');
         const sActionText = oViewModel.getProperty('/employee/dialog/actionText');
         const sMenuKey = oViewModel.getProperty('/employee/dialog/subKey');
+        const sPrcty = sAction === 'A' ? 'C' : 'U';
         let oInputData = {};
         let aFieldProperties = [];
         let sUrl = '';
@@ -837,7 +851,7 @@ sap.ui.define(
 
               oInputData = {
                 ...mFieldValue,
-                Prcty: sAction === 'A' ? 'C' : 'U',
+                Prcty: sPrcty,
                 Appno: sAppno,
                 Zzfinyn: mFieldValue.Zzfinyn ? 'X' : '',
                 Zzrecab: mFieldValue.Zzrecab ? 'X' : '',
@@ -853,7 +867,7 @@ sap.ui.define(
 
               oInputData = {
                 ...mFieldValue,
-                Prcty: sAction === 'A' ? 'C' : 'U',
+                Prcty: sPrcty,
                 Appno: sAppno,
                 Begda: mFieldValue.Eamdt ? moment(mFieldValue.Eamdt).hour(9).toDate() : mFieldValue.Begda,
                 Endda: mFieldValue.Eamdt ? moment(mFieldValue.Eamdt).hour(9).toDate() : mFieldValue.Endda,
@@ -868,7 +882,7 @@ sap.ui.define(
 
               oInputData = {
                 ...mFieldValue,
-                Prcty: sAction === 'A' ? 'C' : 'U',
+                Prcty: sPrcty,
                 Appno: sAppno,
                 Begda: mFieldValue.Regdt ? moment(mFieldValue.Regdt).hour(9).toDate() : mFieldValue.Begda,
                 Endda: mFieldValue.Regdt ? moment(mFieldValue.Regdt).hour(9).toDate() : mFieldValue.Endda,

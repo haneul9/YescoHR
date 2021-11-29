@@ -13,13 +13,13 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-	AttachFileAction,
-	ComboEntry,
-	FragmentEvent,
-	TableUtils,
-	TextUtils,
-	ServiceNames,
-	BaseController
+    AttachFileAction,
+    ComboEntry,
+    FragmentEvent,
+    TableUtils,
+    TextUtils,
+    ServiceNames,
+    BaseController
   ) => {
     'use strict';
 
@@ -58,7 +58,8 @@ sap.ui.define(
         this.totalCount();
         await this.getTypeCode();
         await this.onSearch();
-        this.onPageLoaded();
+
+        BaseController.prototype.onAfterShow.call(this);
       },
 
       onClick() {
@@ -96,7 +97,7 @@ sap.ui.define(
             success: (oData) => {
               if (oData) {
                 const oList = oData.results;
-  
+
                 oListModel.setProperty('/List', oList);
 
                 setTimeout(() => {

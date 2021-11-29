@@ -58,7 +58,8 @@ sap.ui.define(
       onAfterShow() {
         this.onSearch();
         this.totalCount();
-        this.onPageLoaded();
+
+        BaseController.prototype.onAfterShow.call(this);
       },
 
       onClick() {

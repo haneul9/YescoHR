@@ -99,7 +99,8 @@ sap.ui.define(
         await this.setFormData();
 
         this.getViewModel().setProperty('/busy', false);
-        this.onPageLoaded();
+
+        BaseController.prototype.onAfterShow.call(this);
       },
 
       setResident(s = '') {

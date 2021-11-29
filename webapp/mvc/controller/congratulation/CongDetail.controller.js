@@ -58,7 +58,8 @@ sap.ui.define(
         await this.getBenefitType(this);
         await this.getTargetData();
         this.getViewModel().setProperty('/busy', false);
-        this.onPageLoaded();
+
+        BaseController.prototype.onAfterShow.call(this);
       },
 
       onObjectMatched(oParameter) {

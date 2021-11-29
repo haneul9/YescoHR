@@ -55,7 +55,8 @@ sap.ui.define(
       onAfterShow() {
         this.onSearch();
         this.getTotalPay();
-        this.onPageLoaded();
+
+        BaseController.prototype.onAfterShow.call(this);
       },
 
       onClick() {
