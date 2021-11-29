@@ -8,7 +8,7 @@
                 <SegmentedButtonItem text="{i18n>LABEL_00278}" key="0" />
             </items>
         </SegmentedButton>
-        <ScrollContainer height="700px" horizontal="false" vertical="true">
+        <ScrollContainer height="{/sideNavigation/scrollHeight}" horizontal="false" vertical="true">
             <List id="sideEmployeeList" items="{path: '/sideNavigation/search/results'}" class="employee-card-list">
                 <CustomListItem type="Active" press=".onClickEmployeeCard">
                     <HBox>

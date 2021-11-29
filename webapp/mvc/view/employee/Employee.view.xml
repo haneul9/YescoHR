@@ -16,7 +16,7 @@
         </VBox>
         <VBox class="contents">
             <HBox>
-                <VBox class="vCardBox sapUiTinyMarginEnd" width="{= ${/sideNavigation/width}}">
+                <VBox id="sideBody" class="vCardBox sapUiTinyMarginEnd" height="{/sideNavigation/height}" width="{/sideNavigation/width}">
                     <HBox justifyContent="SpaceBetween">
                         <SearchField value="{/sideNavigation/search/searchText}" placeholder="{i18n>LABEL_00276}" visible="{= ${/sideNavigation/isShow}}" search=".onPressEmployeeSearch" />
                         <Switch state="true" customTextOn="{i18n>LABEL_00115}" customTextOff="{i18n>LABEL_00153}" change=".onToggleNavigation"/>
@@ -31,7 +31,7 @@
                         </items>
                     </IconTabBar>
                 </VBox>
-                <VBox id="profileBody" height="900px" width="{= ${/employee/width}}" busyIndicatorDelay="0" busy="{/employee/busy}">
+                <VBox id="profileBody" width="{/employee/width}" busyIndicatorDelay="0" busy="{/employee/busy}">
                     <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.ProfileOverview" type="XML" />
                     <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.ProfileTab" type="XML" />
                 </VBox>
