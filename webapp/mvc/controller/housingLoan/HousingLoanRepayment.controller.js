@@ -2,6 +2,7 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/core/Fragment',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
@@ -16,23 +17,24 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
-    MessageBox,
-    Appno,
-    AppUtils,
-    AttachFileAction,
-    ComboEntry,
-    FragmentEvent,
-    TextUtils,
-    TableUtils,
-    ServiceNames,
-    BaseController
+    Fragment,
+	JSONModel,
+	MessageBox,
+	Appno,
+	AppUtils,
+	AttachFileAction,
+	ComboEntry,
+	FragmentEvent,
+	TextUtils,
+	TableUtils,
+	ServiceNames,
+	BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.housingLoan.HousingLoanRepayment', {
-      TYPE_CODE: 'HR07',
-      LIST_PAGE_ID: 'container-ehr---housingLoan',
+      TYPE_CODE: 'HR08',
+      LIST_PAGE_ID: 'container-ehr---housingLoanDetail',
 
       AttachFileAction: AttachFileAction,
       TextUtils: TextUtils,
@@ -41,29 +43,20 @@ sap.ui.define(
       onBeforeShow() {
         const oViewModel = new JSONModel({
           ViewKey: '',
+          AccountTxt: '',
+          DialogData: {},
           FormData: {},
-          baseArea: {},
-          loanAmount: {},
-          LaonType: [],
-          AssuranceType: [],
-          HouseType: [],
           Settings: {},
-          RepayList: [],
-          RepayHisList: [],
-          RepayHisLength: 1,
-          hisBusy: false,
-          busy: false,
+          TargetLoanHis: {},
+          LoanAppList: [],
+          maxDate: new Date(),
+          DateEditable: true,
         });
         this.setViewModel(oViewModel);
-
-        this.getViewModel().setProperty('/busy', true);
       },
 
       onAfterShow() {
         this.getList().then(() => {
-          this.setFormData();
-          this.getViewModel().setProperty('/busy', false);
-
           BaseController.prototype.onAfterShow.call(this);
         });
       },
@@ -74,127 +67,57 @@ sap.ui.define(
         this.getViewModel().setProperty('/ViewKey', sDataKey);
       },
 
-      // 상환이력 Excel
+      // 원금상환액
+      repayCost(oEvent) {
+        const oEventSource = oEvent.getSource();
+        const sValue = oEvent.getParameter('value').trim().replace(/[^\d]/g, '');
+        const oDetailModel = this.getViewModel();
+
+        oEventSource.setValue(sValue);
+        oDetailModel.setProperty('/FormData/RpamtMpr', sValue);
+        oDetailModel.setProperty('/FormData/RpamtTot', sValue);
+      },
+
+      // FormData setting
+      setDialogData(oRowData) {
+        const oView = this.getView();
+        const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+        const mDetailData = oListView.getModel().getProperty('/FormData');
+        const oDetailModel = this.getViewModel();
+
+        oDetailModel.setProperty('/DialogData', mDetailData);
+        oDetailModel.setProperty('/DialogData/Appda', new Date());
+
+        if(!oRowData) {
+          oDetailModel.setProperty('/DialogData/Lnsta', '');
+          oDetailModel.setProperty('/DialogData/Lnstatx', '');
+          oDetailModel.setProperty('/DialogData/Rptyp', 'ALL');
+          oDetailModel.setProperty('/DialogData/Paydt', new Date());
+          oDetailModel.setProperty('/DialogData/Lnrte', oDetailModel.getProperty('/TargetLoanHis/Lnrte'));
+          oDetailModel.setProperty('/DialogData/RpamtMpr', oDetailModel.getProperty('/TargetLoanHis/RpamtBal'));
+          oDetailModel.setProperty('/DialogData/Account', oDetailModel.getProperty('/AccountTxt'));
+        }
+
+        // this.settingsAttachTable();
+      },
+
+      // 상환신청내역 Excel
       onPressExcelDownload() {
-        const oTable = this.byId('repayHisTable');
-        const mTableData = this.getViewModel().getProperty('/RepayHisList');
-        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_07033');
+        const oTable = this.byId('repaymentTable');
+        const mTableData = this.getViewModel().getProperty('/List');
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_07036');
 
         TableUtils.export({ oTable, mTableData, sFileName });
       },
 
-      // 융자금액 입력시
-      loanCost(oEvent) {
-        const oEventSource = oEvent.getSource();
-        const sValue = oEvent.getParameter('value').trim().replace(/[^\d]/g, '');
-        const oDetailModel = this.getViewModel();
-        const sAmountCode = this.getViewModel().getProperty('/loanAmount/Code');
-        const mFormData = oDetailModel.getProperty('/FormData');
-
-        if (sValue > parseFloat(sAmountCode) && !!mFormData.Lntyp) {
-          const sAmountFormat = new Intl.NumberFormat('ko-KR').format(sAmountCode);
-          const sFormAmount = new Intl.NumberFormat('ko-KR').format(mFormData.Lnamt);
-
-          MessageBox.alert(this.getBundleText('MSG_07006', mFormData.Lntyptx, sAmountFormat));
-          oEventSource.setValue(sFormAmount);
-          return oDetailModel.setProperty('/FormData/Lnamt', mFormData.Lnamt);
-        }
-
-        oEventSource.setValue(sValue);
-        oDetailModel.setProperty('/FormData/Lnamt', sValue);
-        this.getMonthlyRepayment(sValue);
+      // Dialog 닫기
+      onClose() {
+        this.getViewModel().byId('RepayApplyDialog').close();
       },
 
-      // 건평 입력시
-      areaSize(oEvent) {
-        const oEventSource = oEvent.getSource();
-        const sValue = oEvent
-          .getParameter('value')
-          .trim()
-          .replace(/[^\d'.']/g, '');
-        const oDetailModel = this.getViewModel();
-        const sBaseCode = oDetailModel.getProperty('/baseArea/Code');
+      // 상환신청내역 클릭
+      onSelectRow() {
 
-        if (sValue > parseFloat(sBaseCode)) {
-          MessageBox.alert(this.getBundleText('MSG_07005', sBaseCode));
-          return oEventSource.setValue(oDetailModel.getProperty('/FormData/Zsize'));
-        }
-
-        oEventSource.setValue(sValue);
-      },
-
-      // 상세조회
-      setFormData() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const sUrl = '/LoanAmtApplSet';
-        const sViewKey = oDetailModel.getProperty('/ViewKey');
-
-        if (sViewKey === 'N' || !sViewKey) {
-          const oTargetInfo = this.getOwnerComponent().getSessionModel().getData();
-
-          // oDetailModel.setProperty('/FormData', oTargetInfo);
-          oDetailModel.setProperty('/FormData/Appernr', oTargetInfo.Pernr);
-          oDetailModel.setProperty('/FormData/Lntyp', 'ALL');
-          oDetailModel.setProperty('/FormData/Asmtd', 'ALL');
-          oDetailModel.setProperty('/FormData/Htype', 'ALL');
-
-          oDetailModel.setProperty('/ApplyInfo', {
-            Apename: oTargetInfo.Ename,
-            Orgtx: `${oTargetInfo.Btrtx}/${oTargetInfo.Orgtx}`,
-            Apjikgbtl: `${oTargetInfo.Zzjikgbt}/${oTargetInfo.Zzjiktlt}`,
-          });
-
-          this.settingsAttachTable();
-        } else {
-          const oView = this.getView();
-          const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-          const mListData = oListView.getModel().getProperty('/parameters');
-          let oSendObject = {};
-
-          oSendObject.Prcty = 'D';
-          oSendObject.Appno = sViewKey;
-          oSendObject.Begda = mListData.Begda;
-          oSendObject.Endda = mListData.Endda;
-          oSendObject.Lntyp = mListData.Lntyp;
-          oSendObject.Seqnr = mListData.Seqnr;
-          oSendObject.Pernr = mListData.Pernr;
-          oSendObject.LoanAmtHistorySet = [];
-          oSendObject.LoanAmtRecordSet = [];
-
-          oDetailModel.setProperty('/hisBusy', true);
-
-          oModel.create(sUrl, oSendObject, {
-            success: (oData) => {
-              if (oData) {
-                this.debug(`${sUrl} success.`, oData);
-
-                const oTargetData = oData;
-
-                oDetailModel.setProperty('/FormData', oTargetData);
-                oDetailModel.setProperty('/ApplyInfo', oTargetData);
-                // oDetailModel.setProperty('/ApplyInfo/Appdt', oTargetData.Appda);
-
-                if (oTargetData.Lnsta === '40' || oTargetData.Lnsta === '60') {
-                  const iHistoryLength = oData.LoanAmtRecordSet.results.length;
-
-                  oDetailModel.setProperty('/RepayList', oData.LoanAmtHistorySet.results);
-                  oDetailModel.setProperty('/RepayHisList', oData.LoanAmtRecordSet.results);
-                  oDetailModel.setProperty('/RepayHisLength', iHistoryLength > 10 ? 10 : iHistoryLength);
-                }
-
-                this.settingsAttachTable();
-                oDetailModel.setProperty('/hisBusy', false);
-              }
-            },
-            error: (oError) => {
-              const vErrorMSG = AppUtils.parseError(oError);
-
-              MessageBox.error(vErrorMSG);
-              oDetailModel.setProperty('/hisBusy', false);
-            },
-          });
-        }
       },
 
       // 화면관련 List호출
@@ -202,83 +125,29 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
         const oTargetInfo = this.getOwnerComponent().getSessionModel().getData();
-        const sBenefitUrl = '/BenefitCodeListSet';
+        const oView = this.getView();
+        const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+        const mDetailData = oListView.getModel().getProperty('/FormData');
 
         return Promise.all([
           new Promise((resolve) => {
-            // 융자구분
-            oModel.read(sBenefitUrl, {
+            // 입금계좌
+            oModel.read('/BenefitCodeListSet', {
               filters: [
-                new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0008'),
-                new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oTargetInfo.Werks),
-                new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-                new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000004'),
-                new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'GRADE'),
-              ],
-              success: (oData) => {
-                if (oData) {
-                  this.debug(`${sBenefitUrl} success.`, oData);
-
-                  const aList = oData.results;
-                  const aList2 = [];
-
-                  aList.forEach((e) => {
-                    if (!e.Zchar1) {
-                      aList2.push(e);
-                    }
-                  });
-
-                  oDetailModel.setProperty('/LaonType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: aList2 }));
-
-                  resolve();
-                }
-              },
-              error: (oError) => {
-                const vErrorMSG = AppUtils.parseError(oError);
-
-                MessageBox.error(vErrorMSG);
-              },
-            });
-          }),
-          new Promise((resolve) => {
-            // 담보종류
-            oModel.read(sBenefitUrl, {
-              filters: [new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0009')],
-              success: (oData) => {
-                if (oData) {
-                  this.debug(`${sBenefitUrl} success.`, oData);
-
-                  const aList1 = oData.results;
-
-                  oDetailModel.setProperty('/AssuranceType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: aList1 }));
-
-                  resolve();
-                }
-              },
-              error: (oError) => {
-                const vErrorMSG = AppUtils.parseError(oError);
-
-                MessageBox.error(vErrorMSG);
-              },
-            });
-          }),
-          new Promise((resolve) => {
-            // 주택종류
-            oModel.read(sBenefitUrl, {
-              filters: [
-                new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0010'),
+                new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0015'),
                 new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oTargetInfo.Werks),
                 new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
                 new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000003'),
-                new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'HTYPE'),
+                new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'IN'),
+                new sap.ui.model.Filter('Comcd', sap.ui.model.FilterOperator.EQ, 'BANK'),
               ],
               success: (oData) => {
                 if (oData) {
-                  this.debug(`${sBenefitUrl} success.`, oData);
+                  const sText = oData.results[0].Ztext;
 
-                  const aList = oData.results;
-
-                  oDetailModel.setProperty('/HouseType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: aList }));
+                  oDetailModel.setProperty('/AccountTxt', sText);
+                  oDetailModel.setProperty('/InfoMessage', this.getBundleText('MSG_07014', sText));
+                  // oDetailModel.setProperty('/LaonType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: aList2 }));
 
                   resolve();
                 }
@@ -291,24 +160,46 @@ sap.ui.define(
             });
           }),
           new Promise((resolve) => {
-            // 건평
-            oModel.read(sBenefitUrl, {
+            // 융자내역
+            oModel.read('/LoanRepayHistorySet', {
               filters: [
-                new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0011'),
-                new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oTargetInfo.Werks),
-                new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-                new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000003'),
-                new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'OUT'),
-                new sap.ui.model.Filter('Comcd', sap.ui.model.FilterOperator.EQ, 'PY'),
+                new sap.ui.model.Filter('Lonid', sap.ui.model.FilterOperator.EQ, mDetailData.Lonid),
+                new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mDetailData.Lntyp),
               ],
               success: (oData) => {
                 if (oData) {
-                  this.debug(`${sBenefitUrl} success.`, oData);
+                  const oHis = oData.results[0];
 
-                  const mArea = oData.results[0];
+                  oDetailModel.setProperty('/TargetLoanHis', oHis);
 
-                  oDetailModel.setProperty('/baseArea/Text', mArea.Zbigo);
-                  oDetailModel.setProperty('/baseArea/Code', mArea.Zchar1);
+                  resolve();
+                }
+              },
+              error: (oError) => {
+                const vErrorMSG = AppUtils.parseError(oError);
+
+                MessageBox.error(vErrorMSG);
+              },
+            });
+          }),
+          new Promise((resolve) => {
+            // 신청내역
+            oModel.read('/LoanRepayApplSet', {
+              filters: [
+                new sap.ui.model.Filter('Lonid', sap.ui.model.FilterOperator.EQ, mDetailData.Lonid),
+                new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mDetailData.Lntyp),
+                new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'),
+              ],
+              success: (oData) => {
+                if (oData) {
+                  const oTable = this.byId('repaymentTable');
+                  const aList = oData.results;
+
+                  oDetailModel.setProperty('/LoanAppList', aList);
+
+                  setTimeout(() => {
+                    oDetailModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData: aList, sStatCode: 'Lnsta' }));
+                  }, 100);
 
                   resolve();
                 }
@@ -323,87 +214,23 @@ sap.ui.define(
         ]);
       },
 
-      // 신청서 출력
-      onAppPDF() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const sBenefitUrl = '/LoanAmtPrintSet';
-        const mFormData = oDetailModel.getProperty('/FormData');
-
-        oModel.read(sBenefitUrl, {
-          filters: [
-            new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, mFormData.Pernr),
-            new sap.ui.model.Filter('Begda', sap.ui.model.FilterOperator.EQ, mFormData.Begda),
-            new sap.ui.model.Filter('Endda', sap.ui.model.FilterOperator.EQ, mFormData.Endda),
-            new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mFormData.Lntyp),
-          ],
-          success: (oData) => {
-            if (oData) {
-              const oList = oData.results[0];
-              const oViewer = new sap.m.PDFViewer({
-                source: oList.Url,
-                sourceValidationFailed: function (oEvent) {
-                  oEvent.preventDefault();
-                },
-              });
-
-              oViewer.open();
-            }
-          },
-          error: (oError) => {
-            const vErrorMSG = AppUtils.parseError(oError);
-
-            MessageBox.error(vErrorMSG);
-          },
-        });
-      },
-      // 융자구분 선택시 금액받아옴
-      onLaonType(oEvent) {
+      // 상환유형 Code호출
+      getRepayType() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
         const oTargetInfo = this.getOwnerComponent().getSessionModel().getData();
-        const sKey = oEvent.getSource().getSelectedKey();
-        const sBenefitUrl = '/BenefitCodeListSet';
 
-        if (sKey === 'ALL' || !sKey) return;
-
-        oDetailModel.getProperty('/LaonType').forEach((e) => {
-          if (e.Zcode === sKey) {
-            oDetailModel.setProperty('/FormData/Lntyptx', e.Ztext);
-          }
-        });
-
-        oModel.read(sBenefitUrl, {
+        oModel.read('/BenefitCodeListSet', {
           filters: [
-            new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0012'),
+            new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0016'),
             new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oTargetInfo.Werks),
             new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-            new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, sKey),
           ],
           success: (oData) => {
             if (oData) {
-              this.debug(`${sBenefitUrl} success.`, oData);
+              const aList = oData.results;
 
-              const oList = oData.results[0];
-
-              oDetailModel.setProperty('/loanAmount/Code', oList.Zbetrg);
-              oDetailModel.setProperty('/loanAmount/Text', oList.Zbigo);
-              oDetailModel.setProperty('/FormData/Hdprd', oList.Zchar2);
-              oDetailModel.setProperty('/FormData/Lnprd', oList.Zchar1);
-              oDetailModel.setProperty('/FormData/Lnrte', oList.Zchar5);
-
-              const mFormData = oDetailModel.getProperty('/FormData');
-              let sAmount = mFormData.Lnamt;
-
-              if (!!mFormData.Lnamt) {
-                if (parseFloat(mFormData.Lnamt) > parseFloat(oList.Zbetrg)) {
-                  MessageBox.alert(this.getBundleText('MSG_07006', mFormData.Lntyptx, new Intl.NumberFormat('ko-KR').format(oList.Zbetrg)));
-                  oDetailModel.setProperty('/FormData/Lnamt', oList.Zbetrg);
-                  sAmount = oList.Zbetrg;
-                }
-
-                this.getMonthlyRepayment(sAmount);
-              }
+              oDetailModel.setProperty('/LaonType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: aList }));
             }
           },
           error: (oError) => {
@@ -414,30 +241,33 @@ sap.ui.define(
         });
       },
 
-      // 융자금액 입력시 월 상환액
-      getMonthlyRepayment(sAmount) {
+      // 상환유형선택
+      onLaonType(oEvent) {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
-        const sBenefitUrl = '/LoanAmtCheckSet';
+        const sKey = oEvent.getSource().getSelectedKey();
         const mFormData = oDetailModel.getProperty('/FormData');
+        const aFiltList = [];
 
-        if (mFormData.Lntyp === 'ALL' || !mFormData.Lntyp) return;
+        aFiltList.push(
+          new sap.ui.model.Filter('Lonid', sap.ui.model.FilterOperator.EQ, mFormData.Lonid),
+          new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mFormData.Lntyp),
+          new sap.ui.model.Filter('Rptyp', sap.ui.model.FilterOperator.EQ, sKey),
+        );
+        if (sKey === 'FULL') {
+          aFiltList.push(
+            new sap.ui.model.Filter('Paydt', sap.ui.model.FilterOperator.EQ, mFormData.Paydt),
+            new sap.ui.model.Filter('RpamtBal', sap.ui.model.FilterOperator.EQ, mFormData.RpamtBal),
+          );
+        }
 
-        oModel.read(sBenefitUrl, {
-          filters: [
-            new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mFormData.Lntyp),
-            new sap.ui.model.Filter('Lnprd', sap.ui.model.FilterOperator.EQ, mFormData.Lnprd),
-            new sap.ui.model.Filter('Lnrte', sap.ui.model.FilterOperator.EQ, mFormData.Lnrte),
-            new sap.ui.model.Filter('LnamtT', sap.ui.model.FilterOperator.EQ, sAmount),
-            // new sap.ui.model.Filter('Waers', sap.ui.model.FilterOperator.EQ, 'KRW'),
-          ],
+        oModel.read('/LoanRepayCheckSet', {
+          filters: aFiltList,
           success: (oData) => {
             if (oData) {
-              this.debug(`${sBenefitUrl} success.`, oData);
+              const sText = oData.results;
 
-              const oList = oData.results[0];
-
-              oDetailModel.setProperty('/FormData/RpamtMon', oList.RpamtMon);
+              // oDetailModel.setProperty('/LaonType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: aList2 }));
             }
           },
           error: (oError) => {
@@ -446,6 +276,28 @@ sap.ui.define(
             MessageBox.error(vErrorMSG);
           },
         });
+      },
+      
+      // 상환신청
+      onRepayDetailApp() {
+        this.setDialogData();
+        this.getRepayType();
+
+        if (!this.byId('RepayApplyDialog')) {
+          Fragment.load({
+            id: this.getView().getId(),
+            name: 'sap.ui.yesco.mvc.view.housingLoan.fragment.RepayApplyDialog',
+            controller: this,
+          }).then(async (oDialog) => {
+            // connect dialog to the root view of this component (models, lifecycle)
+            this.getView().addDependent(oDialog);
+            oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
+
+            oDialog.open();
+          });
+        } else {
+          this.byId('RepayApplyDialog').open();
+        }
       },
 
       checkError() {
@@ -744,6 +596,21 @@ sap.ui.define(
               });
             }
           },
+        });
+      },
+
+      // AttachFileTable Settings
+      settingsAttachTable() {
+        const oDetailModel = this.getViewModel();
+        const sStatus = oDetailModel.getProperty('/FormData/Lnsta');
+        const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
+
+        AttachFileAction.setAttachFile(this, {
+          Editable: !sStatus || sStatus === '10',
+          Type: this.TYPE_CODE,
+          Appno: sAppno,
+          Max: 10,
+          FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
         });
       },
     });
