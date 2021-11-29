@@ -4,20 +4,24 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:custom="sap.ui.yesco.control">
     <Page showHeader="false">
-        <VBox>
+        <VBox class="contents-header">
             <HBox justifyContent="SpaceBetween" class="breadcrumbs">
                 <custom:Breadcrumbs />
                 <HBox>
-                    <Button text="{i18n>LABEL_00121}" width="117px" type="Emphasized" visible="{= !${/ZappStatAl} }" enabled="{= ${/form/hasRow}}" busyIndicatorDelay="0" busy="{/busy}" press=".onPressApproval" />
-                    <Button text="{i18n>LABEL_00146}" width="117px" press=".onNavBack" />
+                    <Button text="{i18n>LABEL_00121}" class="sapUiTinyMarginEnd" type="Emphasized" visible="{= !${/ZappStatAl} }" enabled="{= ${/form/hasRow}}" busyIndicatorDelay="0" busy="{/busy}" press=".onPressApproval" />
+                    <Button text="{i18n>LABEL_00146}" class="sapUiTinyMarginEnd" press=".onNavBack" />
+                    <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" />
+                    <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" />
                 </HBox>
             </HBox>
+        </VBox>
+        <VBox class="contents">
             <core:Fragment fragmentName="sap.ui.yesco.fragment.DetailTargetInfo" type="XML" />
-            <VBox class="vCardBox" visible="{= ${/type} !== 'B'}">
+            <VBox class="vCardBox sapUiMediumMarginBottom" visible="{= ${/type} !== 'B'}">
                 <HBox justifyContent="SpaceBetween">
                     <Title level="H2" text="{i18n>LABEL_00129}" />
                     <HBox>
-                        <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" press=".onPressAddBtn" visible="{= !${/ZappStatAl} &amp;&amp; ${/type} !== 'C' }" />
+                        <Button icon="sap-icon://add" class="sapUiTinyMarginEnd" text="{i18n>LABEL_00107}" press=".onPressAddBtn" visible="{= !${/ZappStatAl} &amp;&amp; ${/type} !== 'C' }" />
                         <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onPressDelBtn" visible="{= !${/ZappStatAl} &amp;&amp; ${/type} !== 'C' }" enabled="{= ${/form/hasRow}}" />
                     </HBox>
                 </HBox>
@@ -25,7 +29,7 @@
                     <core:Fragment fragmentName="sap.ui.yesco.mvc.view.attendance.fragment.SingleTable" type="XML" />
                 </HBox>
             </VBox>
-            <VBox class="vCardBox" visible="{= ${/type} === 'B'}">
+            <VBox class="vCardBox sapUiMediumMarginBottom" visible="{= ${/type} === 'B'}">
                 <HBox justifyContent="SpaceBetween">
                     <Title level="H2" text="{i18n>LABEL_00129}" />
                     <HBox>

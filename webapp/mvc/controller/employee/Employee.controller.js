@@ -127,7 +127,10 @@ sap.ui.define(
           pernr: null,
           sideNavigation: {
             isShow: true,
-            width: '22%',
+            width: '27%',
+            height: '900px',
+            scrollHeight: '700px',
+            treeHeight: '500px',
             search: {
               searchText: '',
               selectedState: '3',
@@ -137,7 +140,7 @@ sap.ui.define(
             treeData: [],
           },
           employee: {
-            width: '78%',
+            width: '73%',
             busy: true,
             header: {
               profilePath: 'https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1',
@@ -218,6 +221,7 @@ sap.ui.define(
       },
 
       async initialList({ oViewModel, sPernr }) {
+        const oSideBody = this.byId('sideBody');
         const oSideList = this.byId('sideEmployeeList');
         const oStatFilter = new Filter('Stat2', FilterOperator.EQ, '3');
         const oSessionData = this.getOwnerComponent().getSessionModel().getData();
@@ -225,10 +229,13 @@ sap.ui.define(
           searchText: sPernr || oSessionData.Pernr,
           ...oSessionData,
         };
-
         const oSearchResults = await this.readEmpSearchResult({ oSearchParam });
+        const iSideViewHeight = Math.floor($(document).height() - oSideBody.getParent().$().offset().top - 20);
+        const iScrollViewHeight = Math.floor($(document).height() - oSideList.getParent().$().offset().top - 36);
 
         oViewModel.setProperty('/sideNavigation/search/results', oSearchResults);
+        oViewModel.setProperty('/sideNavigation/height', `${iSideViewHeight}px`);
+        oViewModel.setProperty('/sideNavigation/scrollHeight', `${iScrollViewHeight}px`);
         oSideList.getBinding('items').filter([oStatFilter]);
       },
 
@@ -280,7 +287,8 @@ sap.ui.define(
           delete oReturnData.Prcty;
           delete oReturnData.Actty;
           delete oReturnData.__metadata;
-          const aConvertData = Object.keys(oReturnData).map((key) => ({ data: oReturnData[key] }));
+          const aTextFields = ['Dat03', 'Dat08', 'Dat13', 'Dat18', 'Dat23'];
+          const aConvertData = Object.keys(oReturnData).map((key) => ({ data: oReturnData[key], isText: _.includes(aTextFields, key) }));
 
           oViewModel.setProperty('/employee/header/profilePath', Pturl);
           oViewModel.setProperty('/employee/header/baseInfo', aConvertData);
@@ -362,9 +370,9 @@ sap.ui.define(
       },
 
       makeProfileBody() {
-        const oView = this.getView().getModel();
+        const oViewModel = this.getViewModel();
         const oParentBox = this.byId('profileBody');
-        const mSubMenu = oView.getProperty('/employee/sub');
+        const mSubMenu = oViewModel.getProperty('/employee/sub');
 
         Object.keys(mSubMenu).forEach((menuKey) => {
           let mSubMenuContents = mSubMenu[menuKey].contents;
@@ -384,7 +392,7 @@ sap.ui.define(
            */
           Object.keys(mSubMenuContents).forEach((key) => {
             let oMenu = mSubMenuContents[key];
-            let oSubVBox = new sap.m.VBox().addStyleClass('customBox');
+            let oSubVBox = new sap.m.VBox().addStyleClass('customBox sapUiMediumMarginBottom');
             let oSubHBox = new sap.m.HBox({ justifyContent: 'SpaceBetween' });
 
             this.debug(`Sub ${oMenu.title}`, oMenu);
@@ -400,7 +408,7 @@ sap.ui.define(
                   text: this.getBundleText('LABEL_00106'), // 등록
                   customData: [new sap.ui.core.CustomData({ key: 'code', value: oMenu.code })],
                   press: this.onPressRegTable.bind(this),
-                })
+                }).addStyleClass('sapUiTinyMarginEnd')
               );
               oSubButtonBox.addItem(
                 new sap.m.Button({
@@ -409,7 +417,7 @@ sap.ui.define(
                   text: this.getBundleText('LABEL_00108'), // 수정
                   customData: [new sap.ui.core.CustomData({ key: 'code', value: oMenu.code })],
                   press: this.onPressModifyTable.bind(this),
-                })
+                }).addStyleClass('sapUiTinyMarginEnd')
               );
               oSubButtonBox.addItem(
                 new sap.m.Button({
@@ -652,10 +660,10 @@ sap.ui.define(
         this.getView().getModel().setProperty('/sideNavigation/isShow', bState);
         this.getView()
           .getModel()
-          .setProperty('/sideNavigation/width', bState ? '22%' : '4%');
+          .setProperty('/sideNavigation/width', bState ? '27%' : '0%');
         this.getView()
           .getModel()
-          .setProperty('/employee/width', bState ? '78%' : '96%');
+          .setProperty('/employee/width', bState ? '73%' : '100%');
       },
 
       async onSelectSideTab(oEvent) {
@@ -669,6 +677,10 @@ sap.ui.define(
 
           this.debug('mConvertedTreeData', mConvertedTreeData);
           oViewModel.setProperty('/sideNavigation/treeData', mConvertedTreeData);
+
+          const oSideTree = this.byId('OrganizationTree');
+          const iTreeViewHeight = Math.floor($(document).height() - oSideTree.$().offset().top - 35);
+          oViewModel.setProperty('/sideNavigation/treeHeight', `${iTreeViewHeight}px`);
         }
 
         oViewModel.setProperty('/sideNavigation/treeLoaded', true);

@@ -41,10 +41,15 @@ sap.ui.define(
           listInfo: {
             rowCount: 1,
             totalCount: 0,
+            isShowProgress: false,
             progressCount: 0,
+            isShowApply: true,
             applyCount: 0,
+            isShowApprove: true,
             approveCount: 0,
+            isShowReject: true,
             rejectCount: 0,
+            isShowComplete: true,
             completeCount: 0,
           },
           list: [],
@@ -99,6 +104,7 @@ sap.ui.define(
 
       setTableData({ oViewModel, mRowData }) {
         const oTable = this.byId('attendanceTable');
+        const oListInfo = oViewModel.getProperty('/listInfo');
 
         oViewModel.setProperty(
           '/list',
@@ -113,7 +119,7 @@ sap.ui.define(
             };
           })
         );
-        oViewModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData }));
+        oViewModel.setProperty('/listInfo', { ...oListInfo, ...TableUtils.count({ oTable, mRowData }) });
       },
 
       /*****************************************************************
@@ -128,7 +134,7 @@ sap.ui.define(
           oViewModel.setProperty('/busy', true);
 
           const mRowData = await this.readLeaveApplContent({ oModel, oSearchConditions });
-          throw new Error('Oops!!');
+
           this.setTableData({ oViewModel, mRowData });
         } catch (oError) {
           this.debug('Controller > Attendance List > onPressSearch Error', oError);
@@ -268,14 +274,14 @@ sap.ui.define(
        * @param  {JSONModel} oModel
        * @param  {Object} oSearchConditions
        */
-      readLeaveApplContent({ oModel, oSearchConditions }) {
-        return new Promise((resolve, reject) => {
-          const sUrl = '/LeaveApplContentSet';
-          const sMenid = this.getOwnerComponent().getMenuModel().getCurrentMenuId();
+      async readLeaveApplContent({ oModel, oSearchConditions }) {
+        const sUrl = '/LeaveApplContentSet';
+        const sMenid = await this.getCurrentMenuId();
 
+        return new Promise((resolve, reject) => {
           oModel.read(sUrl, {
             filters: [
-              // new Filter('Menid', FilterOperator.EQ, sMenid), //
+              new Filter('Menid', FilterOperator.EQ, sMenid), //
               new Filter('Apbeg', FilterOperator.EQ, moment(oSearchConditions.Apbeg).hours(9).toDate()),
               new Filter('Apend', FilterOperator.EQ, moment(oSearchConditions.Apend).hours(9).toDate()),
             ],

@@ -5,38 +5,38 @@
         <HBox class="header-wrap">
             <Title level="H3" text="{i18n>LABEL_07035}" class="sapUiSmallMarginEnd" />
         </HBox>
-        <grid:CSSGrid gridTemplateColumns="3fr 7fr" gridGap="8px">
+        <grid:CSSGrid gridTemplateColumns="1fr 1fr 1fr 1fr 1fr" gridGap="8px">
             <grid:layoutData>
                 <FlexItemData growFactor="1"/>
             </grid:layoutData>
-            <VBox>
+            <VBox alignItems="Center">
                 <Label text="{i18n>LABEL_07002}"/>
-                <Text text="{Lntyptx}" width="100%" textAlign="Center" wrapping="false"/>
+                <Text text="{/TargetLoanHis/Lntyptx}" width="100%" textAlign="Center" wrapping="false"/>
             </VBox>
-            <VBox>
+            <VBox alignItems="Center">
                 <Label text="{i18n>LABEL_02012}"/>
                 <Text text="{
-                    path: 'Begda',
+                    path: '/TargetLoanHis/Begda',
                     type: 'sap.ui.model.type.Date'
                 }" width="100%" textAlign="Center" wrapping="false"/>
             </VBox>
-            <VBox>
+            <VBox alignItems="Center">
                 <Label text="{i18n>LABEL_07037}"/>
                 <Text text="{
-                    path: 'Dat01',
+                    path: '/TargetLoanHis/Dat01',
                     type: 'sap.ui.model.type.Date'
                 }" width="100%" textAlign="Center" wrapping="false"/>
             </VBox>
-            <VBox>
+            <VBox alignItems="Center">
                 <Label text="{i18n>LABEL_07038}"/>
                 <Text text="{
-                    path: 'RpamtBal',
+                    path: '/TargetLoanHis/RpamtBal',
                     formatter: '.TextUtils.toCurrency'
                 }" width="100%" textAlign="Center" wrapping="false"/>
             </VBox>
-            <VBox>
+            <VBox alignItems="Center">
                 <Label text="{i18n>LABEL_07039}"/>
-                <Text text="{Lnrte}" width="100%" textAlign="Center" wrapping="false"/>
+                <Text text="{/TargetLoanHis/Lnrte}" width="100%" textAlign="Center" wrapping="false"/>
             </VBox>
         </grid:CSSGrid>
     </VBox>

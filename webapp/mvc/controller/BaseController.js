@@ -105,6 +105,14 @@ sap.ui.define(
         return this.getOwnerComponent().getBundleText(...aArgs);
       },
 
+      async getCurrentMenuId() {
+        const oMenuModel = this.getOwnerComponent().getMenuModel();
+
+        await oMenuModel.getPromise();
+
+        return oMenuModel.getCurrentMenuId();
+      },
+
       /**
        * Event handler for navigating back.
        * It there is a history entry we go one step back in the browser history

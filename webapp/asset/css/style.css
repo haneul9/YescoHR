@@ -385,6 +385,8 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt {outline-style:none !important}
 .sapMLnk {color:#007bff !important}
 
 .sapUiTableRowHvr {background-color:#f8fcff !important}
+.row-link .sapUiTableCCnt .sapUiTableCtrl>tbody>tr,
+.row-link .sapUiTableCCnt .sapUiTableCtrl>tbody>tr .sapUiTableCellInner>span { cursor:pointer; }
 
 /* Icon 변경 */
 .sapUiIconf::before{display:inline-block;width:100%;height:100%;clear:both;vertical-align:top;background-repeat:no-repeat;background-position:center center;}/* 아이콘 공통 before */

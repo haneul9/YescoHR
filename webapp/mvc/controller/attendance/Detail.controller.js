@@ -586,18 +586,18 @@ sap.ui.define(
        * @param {String} sPrcty -  T:임시저장, C:신청
        * @returns
        */
-      createLeaveApplContent(sPrcty) {
-        return new Promise((resolve, reject) => {
-          const oModel = this.getModel(ServiceNames.WORKTIME);
-          const oViewModel = this.getViewModel();
-          const oTargetInfo = this.getOwnerComponent().getTargetModel().getData();
-          const mTableData = oViewModel.getProperty('/form/list');
-          const sAppty = oViewModel.getProperty('/type');
-          const sAppno = oViewModel.getProperty('/Appno');
-          const sMenid = this.getOwnerComponent().getMenuModel().getCurrentMenuId();
-          const sUrl = '/LeaveApplContentSet';
-          let aLeaveApplNav1 = [...mTableData];
+      async createLeaveApplContent(sPrcty) {
+        const oModel = this.getModel(ServiceNames.WORKTIME);
+        const oViewModel = this.getViewModel();
+        const oTargetInfo = this.getOwnerComponent().getTargetModel().getData();
+        const mTableData = oViewModel.getProperty('/form/list');
+        const sAppty = oViewModel.getProperty('/type');
+        const sAppno = oViewModel.getProperty('/Appno');
+        const sMenid = await this.getCurrentMenuId();
+        const sUrl = '/LeaveApplContentSet';
+        let aLeaveApplNav1 = [...mTableData];
 
+        return new Promise((resolve, reject) => {
           if (sAppty === this.PAGE_TYPE.CHANGE) {
             aLeaveApplNav1 = aLeaveApplNav1.filter((o) => o.isChanged === true);
           }
