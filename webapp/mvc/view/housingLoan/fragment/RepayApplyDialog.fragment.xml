@@ -20,7 +20,7 @@
                 <Label text="{i18n>LABEL_07045}" />
                 <Text text="{/DialogData/Lnrte}"/>
                 <Label text="{i18n>LABEL_07044}"/>
-                <custom:DatePicker class="sapIcon_Date" change=".onPayDateChange" maxDate="{/maxDate}" dateValue="{/DialogData/Paydt}" width="250px" editable="{= ${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta} &amp;&amp; !!${/DateEditable} }" />
+                <custom:DatePicker class="sapIcon_Date" change=".onPayDateChange" maxDate="{/maxDate}" dateValue="{ path: '/DialogData/Paydt', type: 'sap.ui.yesco.mvc.model.ODataDate' }" width="250px" editable="{= ${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta} &amp;&amp; !!${/DateEditable} }" />
                 <Label text="{i18n>LABEL_07041}"/>
                 <Input value="{
                     path: '/DialogData/RpamtMpr',

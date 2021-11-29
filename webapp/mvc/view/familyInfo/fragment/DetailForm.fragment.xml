@@ -47,9 +47,9 @@
             <Label text="{i18n>LABEL_05014}"/>
             <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Famid} ? true : false }" editable="{= !${/FormData/ZappStatAl} }" />
             <Label text="{i18n>LABEL_05015}"/>
-            <custom:DatePicker class="sapIcon_Date" dateValue="{/FormData/Begda}" width="250px" editable="{= !${/FormData/ZappStatAl} }" />
+            <custom:DatePicker class="sapIcon_Date" dateValue="{ path: '/FormData/Begda', type: 'sap.ui.yesco.mvc.model.ODataDate' }" width="250px" editable="{= !${/FormData/ZappStatAl} }" />
             <Label text="{i18n>LABEL_05016}"/>
-            <custom:DatePicker class="sapIcon_Date" dateValue="{/FormData/Endda}" width="250px" editable="{= !${/FormData/ZappStatAl} }" />
+            <custom:DatePicker class="sapIcon_Date" dateValue="{ path: '/FormData/Endda', type: 'sap.ui.yesco.mvc.model.ODataDate' }" width="250px" editable="{= !${/FormData/ZappStatAl} }" />
         </grid:CSSGrid>
     </VBox>
 </core:FragmentDefinition>
