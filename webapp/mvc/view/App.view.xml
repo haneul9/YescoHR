@@ -14,9 +14,9 @@
 
 		<ToolbarSpacer />
 
-		<Button icon="sap-icon://bell" type="Transparent" />
+		<Button type="Transparent" class="icon-button notice" />
 
-		<Button icon="sap-icon://action-settings" type="Transparent" visible="{appModel>/isAtHome}">
+		<Button type="Transparent" visible="{appModel>/isAtHome}" class="icon-button setting">
 			<layoutData>
 				<OverflowToolbarLayoutData priority="NeverOverflow" />
 			</layoutData>
