@@ -68,7 +68,7 @@ sap.ui.define(
         });
 
         return {
-          rowCount: iVisibleRowcountLimit,
+          rowCount: iVisibleRowcountLimit > aZappStatAls.length ? aZappStatAls.length : iVisibleRowcountLimit,
           totalCount: aZappStatAls.length,
           progressCount: oOccurCount[STATE_IN_PROGRESS1] + oOccurCount[STATE_IN_PROGRESS2],
           applyCount: oOccurCount[STATE_APPLY1] + oOccurCount[STATE_APPLY2] + oOccurCount[STATE_APPLY3],
@@ -84,9 +84,11 @@ sap.ui.define(
         const sToday = moment().format('YYYYMMDD');
         const mColumns = oTable.getColumns().map((col) => ({
           label: col.getLabel().getText(),
-          property: !!col.getTemplate().getBindingInfo('text') ? 
-            (col.getTemplate().getBindingInfo('text').parts[0].path === sStatCode ? sStatTxt : col.getTemplate().getBindingInfo('text').parts[0].path) :
-            col.getTemplate().getBindingInfo('visible').parts[0].path,
+          property: !!col.getTemplate().getBindingInfo('text')
+            ? col.getTemplate().getBindingInfo('text').parts[0].path === sStatCode
+              ? sStatTxt
+              : col.getTemplate().getBindingInfo('text').parts[0].path
+            : col.getTemplate().getBindingInfo('visible').parts[0].path,
           type: exportLibrary.EdmType.String,
         }));
 

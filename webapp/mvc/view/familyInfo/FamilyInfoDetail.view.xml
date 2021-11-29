@@ -1,15 +1,14 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.familyInfo.FamilyInfoDetail"
 	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:grid="sap.ui.layout.cssgrid"
-	xmlns:core="sap.ui.core">
+	xmlns:custom="sap.ui.yesco.control">
 	<Page showHeader="false">
 		<content>
 			<VBox>
-				<HBox justifyContent="SpaceBetween">
-					<HBox>
-						<core:Fragment fragmentName="sap.ui.yesco.fragment.app.Breadcrumbs" type="XML" />
-					</HBox>
+				<HBox justifyContent="SpaceBetween" class="breadcrumbs">
+					<custom:Breadcrumbs />
 					<HBox>
 						<Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= !${/FormData/ZappStatAl} }" />
 						<Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= !!${/FormData/ZappStatAl} }" />

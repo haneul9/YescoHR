@@ -42,11 +42,21 @@ sap.ui.define(
       onPageLoaded() {
         const oInfoMegBox = this.byId('InfoMegBox');
         if (oInfoMegBox) {
-          oInfoMegBox.setVisible(!!this.getViewModel().getProperty('/InfoMessage'));
+          const bIsInfoMessage = !!this.getViewModel().getProperty('/InfoMessage');
+          oInfoMegBox.setVisible(bIsInfoMessage);
         }
 
         AppUtils.setAppBusy(false).setMenuBusy(false);
       },
+
+      /**
+       * Breadcrumbs 마지막 부분의 현재 메뉴 화면 title 제공 function.
+       * 업무 controller에서 로직으로 title을 변경해야할 경우 구현하여 사용할 것.
+       * Component.js에서 호출하여 반환받은 string을 Breadcrumbs에 넣어줌.
+       * @param {object} oArguments Router의 routeMatched event의 getParameter('arguments') 값
+       * @returns {string}
+       */
+      getCurrentLocationText: null,
 
       /**
        * Convenience method for accessing the router in every controller of the application.

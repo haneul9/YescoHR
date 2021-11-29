@@ -1,15 +1,14 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.nightduty.List"
 	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:table="sap.ui.table"
 	xmlns:grid="sap.ui.layout.cssgrid"
-	xmlns:core="sap.ui.core">
+	xmlns:table="sap.ui.table"
+	xmlns:custom="sap.ui.yesco.control">
 	<Page showHeader="false">
 		<content>
-			<HBox justifyContent="SpaceBetween">
-				<Breadcrumbs currentLocationText="{i18n>LABEL_02001}" separatorStyle="GreaterThan">
-					<Link text="{i18n>LABEL_00145}"/>
-				</Breadcrumbs>
+			<HBox justifyContent="SpaceBetween" class="breadcrumbs">
+				<custom:Breadcrumbs />
 				<HBox>
 					<Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onClick" />
 					<Button icon="sap-icon://print" press=".formatter.onPagePrint" type="Transparent" text="{i18n>LABEL_00131}" />

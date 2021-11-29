@@ -17,7 +17,7 @@ sap.ui.define(
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/Validator',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/ODataDate',
+    'sap/ui/yesco/mvc/model/ODataDate', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
   ],
   (
     // prettier 방지용 주석
@@ -35,8 +35,7 @@ sap.ui.define(
     ServiceNames,
     TableUtils,
     Validator,
-    BaseController,
-    ODataDate
+    BaseController
   ) => {
     'use strict';
 
@@ -50,9 +49,6 @@ sap.ui.define(
       },
 
       AttachFileAction: AttachFileAction,
-      type: {
-        ODataDate: new ODataDate(),
-      },
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
@@ -169,16 +165,9 @@ sap.ui.define(
       },
 
       onObjectMatched(oParameter) {
-        const oViewModel = this.getView().getModel();
-        const sAction = oParameter.appno ? this.getBundleText('LABEL_00100') : ''; // 조회
-        const oNavigationMap = {
-          A: this.getBundleText('LABEL_04002'), // 신규신청
-          B: this.getBundleText('LABEL_04003'), // 변경신청
-          C: this.getBundleText('LABEL_04004'), // 취소신청
-        };
-
-        if (!oNavigationMap[oParameter.type]) {
+        if (!['A', 'B', 'C'].includes(oParameter.type)) {
           this.getRouter().navTo('attendance');
+          return;
         }
 
         if (oParameter.type === this.PAGE_TYPE.CHANGE) {
@@ -198,9 +187,19 @@ sap.ui.define(
           );
         }
 
+        const oViewModel = this.getView().getModel();
         oViewModel.setProperty('/type', oParameter.type);
         oViewModel.setProperty('/Appno', oParameter.appno);
-        oViewModel.setProperty('/navigation/current', `${oNavigationMap[oParameter.type]} ${sAction}`);
+      },
+
+      getCurrentLocationText(oArguments) {
+        const sAction = oArguments.appno ? this.getBundleText('LABEL_00100') : ''; // 조회
+        const oNavigationMap = {
+          A: this.getBundleText('LABEL_04002'), // 신규신청
+          B: this.getBundleText('LABEL_04003'), // 변경신청
+          C: this.getBundleText('LABEL_04004'), // 취소신청
+        };
+        return `${oNavigationMap[oArguments.type]} ${sAction}`;
       },
 
       initializeApplyInfoBox() {

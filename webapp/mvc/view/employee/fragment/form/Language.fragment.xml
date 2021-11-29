@@ -22,7 +22,7 @@
             <core:Item key="{Eamgr}" text="{Eamgrtx}" />
         </ComboBox>
         <Label text="{i18n>LABEL_00310}" />
-        <custom:DatePicker width="50%" value="{ path: '/employee/dialog/form/Eamdt', type: '.type.ODataDate' }" editable="{= ${/employee/dialog/action} === 'A'}" class="sapIcon_Date" />
+        <custom:DatePicker width="50%" value="{ path: '/employee/dialog/form/Eamdt', type: 'sap.ui.yesco.mvc.model.ODataDate' }" editable="{= ${/employee/dialog/action} === 'A'}" class="sapIcon_Date" />
         <Label text="{i18n>LABEL_00312}" />
         <Input type="Number" width="50%" value="{/employee/dialog/form/Spont}" liveChange=".onChangeLanguagePoint" />
         <Label text="{i18n>LABEL_00313}" />

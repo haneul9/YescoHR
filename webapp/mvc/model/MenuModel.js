@@ -411,10 +411,9 @@ sap.ui.define(
        * 현재 메뉴 라우팅 정보 저장
        * @param {string} routeName
        * @param {string} menuId
-       * @param {boolean} isSubRoute
+       * @param {string} currentLocationText
        */
-      setCurrentMenuData({ routeName, menuId, isSubRoute = false }) {
-        this.setProperty('/current', { routeName, menuId, isSubRoute });
+      setCurrentMenuData({ routeName, menuId, currentLocationText = '', isSubRoute = false }) {
         this.setProperty('/breadcrumbs', {
           currentLocationText: '',
           links: null,
@@ -436,13 +435,12 @@ sap.ui.define(
             mMenuProperties = this.getProperties(mCurrentMenuProperties.Mnid1);
             aLinks.unshift({ name: mMenuProperties.Mname });
           case 1:
-          /* Nothing to do */
           default:
         }
 
-        // TODO : route parameter 받아서 신규? 상세? 구분
-        this.setProperty('/breadcrumbs/currentLocationText', isSubRoute ? '신규' : mCurrentMenuProperties.Mname);
+        this.setProperty('/breadcrumbs/currentLocationText', currentLocationText || mCurrentMenuProperties.Mname);
         this.setProperty('/breadcrumbs/links', aLinks);
+        this.setProperty('/current', { routeName, menuId, currentLocationText: currentLocationText || mCurrentMenuProperties.Mname });
       },
 
       getCurrentMenuRouteName() {

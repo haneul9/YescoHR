@@ -1,14 +1,13 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.studentFunds.StudentFunds"
 	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:core="sap.ui.core">
+	xmlns:custom="sap.ui.yesco.control">
 	<Page showHeader="false">
 		<content>
 			<VBox>
 				<HBox justifyContent="SpaceBetween" class="breadcrumbs">
-					<Breadcrumbs currentLocationText="{i18n>LABEL_03001}" separatorStyle="GreaterThan">
-						<Link text="{i18n>LABEL_00145}"/>
-					</Breadcrumbs>
+					<custom:Breadcrumbs />
 					<HBox>
 						<Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onClick" class="sapUiTinyMarginEnd" />
 						<Button icon="sap-icon://print" press=".FragmentEvent.onPagePrint" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" />

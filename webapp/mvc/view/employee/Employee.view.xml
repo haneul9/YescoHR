@@ -1,11 +1,12 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.employee.Employee"
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
-    xmlns:mvc="sap.ui.core.mvc">
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:custom="sap.ui.yesco.control">
     <Page showHeader="false">
         <VBox>
-            <HBox justifyContent="SpaceBetween">
-                <core:Fragment fragmentName="sap.ui.yesco.fragment.Navigation" type="XML" />
+            <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+                <custom:Breadcrumbs />
                 <HBox>
                     <Button type="Transparent" icon="sap-icon://crm-service-manager" text="{i18n>LABEL_00275}" />
                     <Button type="Transparent" icon="sap-icon://print" text="{i18n>LABEL_00131}" />

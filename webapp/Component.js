@@ -172,6 +172,7 @@ sap.ui.define(
 
       /**
        * 메뉴 모델 반환
+       * @public
        * @returns {object}
        */
       getMenuModel() {
@@ -216,25 +217,8 @@ sap.ui.define(
           .attachRouteMatched((oEvent) => {
             AppUtils.debug('routeMatched', oEvent.getParameters());
 
-            const oView = oEvent.getParameter('view');
-            oView.setVisible(false);
-
-            // do something, i.e. send usage statistics to back end
-            // in order to improve our app and the user experience (Build-Measure-Learn cycle)
-            const sRouteName = oEvent.getParameter('name');
-            AppUtils.debug(`User accessed route ${sRouteName}, timestamp = ${new Date().getTime()}`);
-
-            this.checkRouteName(sRouteName.split(/-/))
-              .then(() => {
-                oView.setVisible(true);
-              })
-              .catch((...aArgs) => {
-                AppUtils.debug(...aArgs);
-
-                this.getRouter().getTargets().display('notFound', {
-                  from: 'home',
-                });
-              });
+            this._saveBreadcrumbsData(oEvent);
+            this._checkRouteName(oEvent);
           })
           .attachRoutePatternMatched((oEvent) => {
             AppUtils.debug('routePatternMatched', oEvent.getParameters());
@@ -249,49 +233,91 @@ sap.ui.define(
       },
 
       /**
-       * 메뉴 권한 체크
-       * @public
-       * @param {string} sRouteNameMain
-       * @param {string} sRouteNameSub
-       * @returns {promise}
+       * Breadcrumbs 정보 저장
+       * @private
+       * @param {sap.ui.base.Event} oEvent
        */
-      checkRouteName([sRouteNameMain, sRouteNameSub]) {
+      _saveBreadcrumbsData(oEvent) {
+        const oEventParameterArguments = oEvent.getParameter('arguments');
+        const sRouteName = oEvent.getParameter('name');
+        const oView = oEvent.getParameter('view');
         const oMenuModel = this.getMenuModel();
 
-        return oMenuModel.getPromise().then(() => {
-          return new Promise((resolve, reject) => {
-            if (sRouteNameMain === 'ehrHome') {
-              oMenuModel.setCurrentMenuData({ routeName: '', menuId: '', isSubRoute: false });
-              resolve();
-              return;
-            }
+        oMenuModel.getPromise().then(() => {
+          const [sRouteNameMain, sRouteNameSub] = sRouteName.split(/-/);
+          if (sRouteNameMain === 'ehrHome') {
+            oMenuModel.setCurrentMenuData({ routeName: '', menuId: '', currentLocationText: '', isSubRoute: false });
+            return;
+          }
 
-            const sMenid = oMenuModel.getMenid(sRouteNameMain);
-            if ((AppUtils.isLOCAL() || AppUtils.isDEV()) && /^X/.test(sMenid)) {
-              oMenuModel.setCurrentMenuData({ routeName: '', menuId: '', isSubRoute: false });
-              resolve();
-              return;
-            }
+          const sMenid = oMenuModel.getMenid(sRouteNameMain);
+          if ((AppUtils.isLOCAL() || AppUtils.isDEV()) && /^X/.test(sMenid)) {
+            oMenuModel.setCurrentMenuData({ routeName: '', menuId: '', currentLocationText: '', isSubRoute: false });
+            return;
+          }
 
-            const sUrl = '/GetMenuidRoleSet';
-            this.getModel(ServiceNames.COMMON).read(sUrl, {
-              filters: [
-                // prettier 방지용 주석
-                new Filter('Menid', FilterOperator.EQ, sMenid),
-              ],
-              success: (oData, oResponse) => {
-                AppUtils.debug(`${sUrl} success.`, oData, oResponse);
+          let sCurrentLocationText;
+          const oController = oView.getController();
+          if (oController && typeof oController.getCurrentLocationText === 'function') {
+            sCurrentLocationText = oController.getCurrentLocationText(oEventParameterArguments);
+          }
 
-                oMenuModel.setCurrentMenuData({ routeName: sRouteNameMain, menuId: sMenid, isSubRoute: !!sRouteNameSub });
+          oMenuModel.setCurrentMenuData({
+            routeName: sRouteNameMain,
+            menuId: sMenid,
+            currentLocationText: sCurrentLocationText || '',
+            isSubRoute: !!sRouteNameSub,
+          });
+        });
+      },
 
-                resolve();
-              },
-              error: (oError) => {
-                AppUtils.debug(`${sUrl} error.`, oError);
+      /**
+       * 메뉴 권한 체크
+       * @private
+       * @param {sap.ui.base.Event} oEvent
+       */
+      _checkRouteName(oEvent) {
+        const oView = oEvent.getParameter('view');
+        oView.setVisible(false);
 
-                reject();
-              },
-            });
+        // do something, i.e. send usage statistics to back end
+        // in order to improve our app and the user experience (Build-Measure-Learn cycle)
+        const sRouteName = oEvent.getParameter('name');
+        AppUtils.debug(`User accessed route ${sRouteName}, timestamp = ${new Date().getTime()}`);
+
+        const oMenuModel = this.getMenuModel();
+
+        oMenuModel.getPromise().then(() => {
+          const sRouteNameMain = sRouteName.split(/-/)[0];
+          if (sRouteNameMain === 'ehrHome') {
+            oView.setVisible(true);
+            return;
+          }
+
+          const sMenid = oMenuModel.getMenid(sRouteNameMain);
+          if ((AppUtils.isLOCAL() || AppUtils.isDEV()) && /^X/.test(sMenid)) {
+            oView.setVisible(true);
+            return;
+          }
+
+          const sUrl = '/GetMenuidRoleSet';
+          this.getModel(ServiceNames.COMMON).read(sUrl, {
+            filters: [
+              // prettier 방지용 주석
+              new Filter('Menid', FilterOperator.EQ, sMenid),
+            ],
+            success: (oData, oResponse) => {
+              AppUtils.debug(`${sUrl} success.`, oData, oResponse);
+
+              oView.setVisible(true);
+            },
+            error: (oError) => {
+              AppUtils.debug(`${sUrl} error.`, oError);
+
+              this.getRouter().getTargets().display('notFound', {
+                from: 'home',
+              });
+            },
           });
         });
       },

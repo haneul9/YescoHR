@@ -96,8 +96,8 @@
         { "pattern": "", "name": "ehrHome", "target": "home" },
 
         { "pattern": "congratulation", "name": "congratulation", "target": "congratulation" },
-        { "pattern": "m/congratulation", "name": "congratulation-mobile", "target": "m/congratulation" },
         { "pattern": "congratulation/:oDataKey:", "name": "congratulation-detail", "target": "congDetail" },
+        { "pattern": "m/congratulation", "name": "congratulation-mobile", "target": "m/congratulation" },
         { "pattern": "m/congratulation/:oDataKey:", "name": "congratulation-detail-mobile", "target": "m/congDetail" },
 
         { "pattern": "familyInfo", "name": "familyInfo", "target": "familyInfo" },
@@ -128,8 +128,8 @@
         "notFound": { "viewId": "notFound", "viewName": "sapui.yesco.mvc.view.NotFound", "transition": "show" },
 
         "congratulation": { "viewId": "congratulation", "viewPath": "sap.ui.yesco.mvc.view.congratulation", "viewName": "Congratulation" },
-        "m/congratulation": { "viewId": "congratulationMobile", "viewPath": "sap.ui.yesco.mvc.view.congratulation.m", "viewName": "Congratulation" },
         "congDetail": { "viewId": "congDetail", "viewPath": "sap.ui.yesco.mvc.view.congratulation", "viewName": "CongDetail" },
+        "m/congratulation": { "viewId": "congratulationMobile", "viewPath": "sap.ui.yesco.mvc.view.congratulation.m", "viewName": "Congratulation" },
         "m/congDetail": { "viewId": "congDetailMobile", "viewPath": "sap.ui.yesco.mvc.view.congratulation.m", "viewName": "CongDetail" },
 
         "familyInfo": { "viewId": "familyInfo", "viewPath": "sap.ui.yesco.mvc.view.familyInfo", "viewName": "FamilyInfo" },

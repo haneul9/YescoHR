@@ -1,17 +1,13 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.housingLoan.HousingLoanDetail"
 	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:core="sap.ui.core">
+	xmlns:custom="sap.ui.yesco.control">
 	<Page showHeader="false">
 		<content>
 			<VBox>
-				<HBox justifyContent="SpaceBetween">
-					<HBox>
-						<Breadcrumbs currentLocationText="{i18n>LABEL_00134}" separatorStyle="GreaterThan">
-							<Link text="{i18n>LABEL_00145}"/>
-							<Link text="{i18n>LABEL_07017}"/>
-						</Breadcrumbs>
-					</HBox>
+				<HBox justifyContent="SpaceBetween" class="breadcrumbs">
+					<custom:Breadcrumbs />
 					<HBox>
 						<Button text="{i18n>LABEL_00120}" type="Emphasized" press=".onRewriteBtn" visible="{= ${/FormData/Lnsta} === '45' }" />
 						<Button text="{i18n>LABEL_00104}" type="Emphasized" press=".onSaveBtn" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
