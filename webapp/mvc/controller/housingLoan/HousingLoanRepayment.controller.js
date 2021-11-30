@@ -91,6 +91,7 @@ sap.ui.define(
         oDetailModel.setProperty('/DialogData/Appda', new Date());
 
         if(!oRowData) {
+          oDetailModel.setProperty('/DialogData/Appno', '');
           oDetailModel.setProperty('/DialogData/Lnsta', '');
           oDetailModel.setProperty('/DialogData/Lnstatx', '');
           oDetailModel.setProperty('/DialogData/Rptyp', 'ALL');
@@ -118,8 +119,31 @@ sap.ui.define(
       },
 
       // 상환신청내역 클릭
-      onSelectRow() {
+      onSelectRow(oEvent) {
+        const vPath = oEvent.getParameters().rowBindingContext.getPath();
+        const oDetailModel = this.getViewModel();
+        const oRowData = oDetailModel.getProperty(vPath);
 
+        this.getRepayType();
+
+        if (!this.byId('RepayApplyDialog')) {
+          Fragment.load({
+            id: this.getView().getId(),
+            name: 'sap.ui.yesco.mvc.view.housingLoan.fragment.RepayApplyDialog',
+            controller: this,
+          }).then(async (oDialog) => {
+            // connect dialog to the root view of this component (models, lifecycle)
+            this.getView().addDependent(oDialog);
+            oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
+            oDetailModel.setProperty('/DialogData', oRowData);
+            this.settingsAttachTable();
+            oDialog.open();
+          });
+        } else {
+          oDetailModel.setProperty('/DialogData', oRowData);
+          this.settingsAttachTable();
+          this.byId('RepayApplyDialog').open();
+        }
       },
 
       // 화면관련 List호출
@@ -382,29 +406,27 @@ sap.ui.define(
       sendDataFormat(oDatas) {
         let oSendObject = {
           Appno: oDatas.Appno,
-          Appda: oDatas.Appda,
-          Appernr: oDatas.Appernr,
-          Lnsta: oDatas.Lnsta,
-          Lnstatx: oDatas.Lnstatx,
-          Htype: oDatas.Htype,
-          Htypetx: oDatas.Htypetx,
-          Addre: oDatas.Addre,
-          RpamtMon: oDatas.RpamtMon,
-          Lnrte: oDatas.Lnrte,
           Lntyp: oDatas.Lntyp,
           Lntyptx: oDatas.Lntyptx,
-          Asmtd: oDatas.Asmtd,
-          Asmtdtx: oDatas.Asmtdtx,
-          Zsize: oDatas.Zsize,
-          Hdprd: oDatas.Hdprd,
-          Lnamt: oDatas.Lnamt,
-          Lnprd: oDatas.Lnprd,
-          Zbigo: oDatas.Zbigo,
           Lonid: oDatas.Lonid,
-          Begda: oDatas.Begda,
-          Endda: oDatas.Endda,
-          Lntyp: oDatas.Lntyp,
+          Seqnr: oDatas.Seqnr,
           Pernr: oDatas.Pernr,
+          Rptyp: oDatas.Rptyp,
+          Rptyptx: oDatas.Rptyptx,
+          Lnrte: oDatas.Lnrte,
+          Appda: oDatas.Appda,
+          Paydt: oDatas.Paydt,
+          RpamtMpr: oDatas.RpamtMpr,
+          RpamtMin: oDatas.RpamtMin,
+          RpamtTot: oDatas.RpamtTot,
+          Waers: oDatas.Waers,
+          Appno: oDatas.Appno,
+          Zfilekey: oDatas.Zfilekey,
+          Lnsta: oDatas.Lnsta,
+          Lnstatx: oDatas.Lnstatx,
+          ZappResn: oDatas.ZappResn,
+          Account: oDatas.Account,
+          Prcty: oDatas.Prcty,
         };
 
         return oSendObject;
@@ -439,7 +461,6 @@ sap.ui.define(
 
                 oSendObject = oSendData;
                 oSendObject.Prcty = 'T';
-                oSendObject.Actty = 'E';
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
@@ -448,7 +469,7 @@ sap.ui.define(
                 }
 
                 await new Promise((resolve, reject) => {
-                  oModel.create('/LoanAmtApplSet', oSendObject, {
+                  oModel.create('/LoanRepayApplSet', oSendObject, {
                     success: () => {
                       resolve();
                     },
@@ -466,6 +487,7 @@ sap.ui.define(
                   MessageBox.error(error.message);
                 }
               } finally {
+                this.getList();
                 AppUtils.setAppBusy(false, this);
               }
             }
@@ -502,7 +524,6 @@ sap.ui.define(
 
                 oSendObject = oSendData;
                 oSendObject.Prcty = 'C';
-                oSendObject.Actty = 'E';
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
@@ -511,7 +532,7 @@ sap.ui.define(
                 }
 
                 await new Promise((resolve, reject) => {
-                  oModel.create('/LoanAmtApplSet', oSendObject, {
+                  oModel.create('/LoanRepayApplSet', oSendObject, {
                     success: () => {
                       resolve();
                     },
@@ -525,7 +546,7 @@ sap.ui.define(
 
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
                   onClose: () => {
-                    this.getRouter().navTo('housingLoan');
+                    this.byId('RepayApplyDialog').close();
                   },
                 });
               } catch (error) {
@@ -533,6 +554,7 @@ sap.ui.define(
                   MessageBox.error(error.message);
                 }
               } finally {
+                this.getList();
                 AppUtils.setAppBusy(false, this);
               }
             }
@@ -556,14 +578,14 @@ sap.ui.define(
 
               oSendObject = oDetailModel.getProperty('/DialogData');
               oSendObject.Prcty = 'W';
-              oSendObject.Actty = 'E';
 
-              oModel.create('/LoanAmtApplSet', oSendObject, {
+              oModel.create('/LoanRepayApplSet', oSendObject, {
                 success: () => {
                   AppUtils.setAppBusy(false, this);
                   MessageBox.alert(this.getBundleText('MSG_00039', 'LABEL_00121'), {
                     onClose: () => {
-                      this.getRouter().navTo('housingLoan');
+                      this.getList();
+                      this.byId('RepayApplyDialog').close();
                     },
                   });
                 },
@@ -591,8 +613,9 @@ sap.ui.define(
             if (vPress && vPress === this.getBundleText('LABEL_00110')) {
               AppUtils.setAppBusy(true, this);
 
-              const sPath = oModel.createKey('/LoanAmtApplSet', {
-                Appno: oDetailModel.getProperty('/DialogData/Appno'),
+              const sPath = oModel.createKey('/LoanRepayApplSet', {
+                Lonid: oDetailModel.getProperty('/DialogData/Lonid'),
+                Seqnr: oDetailModel.getProperty('/DialogData/Seqnr'),
               });
 
               oModel.remove(sPath, {
@@ -600,7 +623,8 @@ sap.ui.define(
                   AppUtils.setAppBusy(false, this);
                   MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
                     onClose: () => {
-                      this.getRouter().navTo('housingLoan');
+                      this.getList();
+                      this.byId('RepayApplyDialog').close();
                     },
                   });
                 },
