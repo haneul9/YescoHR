@@ -80,11 +80,11 @@ sap.ui.define(
         this.makeCalendarControl();
       },
 
-      onMouseOverDayBox(oEvent) {
-        console.log(oEvent.srcControl.getCustomData()[0].getValue());
+      onMouseOverDayBox(oDayBox) {
+        console.log(oDayBox.getCustomData()[0].getValue());
       },
-      onMouseOutDayBox(oEvent) {
-        console.log(oEvent.srcControl.getCustomData()[0].getValue());
+      onMouseOutDayBox(oDayBox) {
+        console.log(oDayBox.getCustomData()[0].getValue());
       },
 
       makeCalendarControl() {

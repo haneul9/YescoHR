@@ -15,19 +15,19 @@ sap.ui.define(
 
       renderer: {},
 
-      onmouseover(oEvent) {
+      onmouseover() {
         const fnMouseover = this.getMouseover();
 
         if (fnMouseover instanceof Function) {
-          return fnMouseover(oEvent);
+          return fnMouseover(this);
         }
       },
 
-      onmouseout(oEvent) {
+      onmouseout() {
         const fnMouseout = this.getMouseout();
 
         if (fnMouseout instanceof Function) {
-          return fnMouseout(oEvent);
+          return fnMouseout(this);
         }
       },
     });
