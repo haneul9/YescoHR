@@ -57,16 +57,16 @@ sap.ui.define(
         this.setViewModel(oViewModel);
       },
 
-      onAfterShow() {
-        this.getList().then(() => {
-          BaseController.prototype.onAfterShow.call(this);
-        });
-      },
-
       onObjectMatched(oParameter) {
         const sDataKey = oParameter.oDataKey;
 
         this.getViewModel().setProperty('/ViewKey', sDataKey);
+
+        this.getList();
+      },
+
+      getCurrentLocationText(oArguments) {
+        return this.getBundleText('LABEL_07034');
       },
 
       // 원금상환액
@@ -313,8 +313,8 @@ sap.ui.define(
       
       // 상환신청
       onRepayDetailApp() {
-        this.setDialogData();
         this.getRepayType();
+        this.setDialogData();
 
         if (!this.byId('RepayApplyDialog')) {
           Fragment.load({
@@ -335,55 +335,6 @@ sap.ui.define(
         }
       },
 
-      checkError() {
-        const oDetailModel = this.getViewModel();
-        const oFormData = oDetailModel.getProperty('/FormData');
-
-        // 융자구분
-        if (oFormData.Lntyp === 'ALL' || !oFormData.Lntyp) {
-          MessageBox.alert(this.getBundleText('MSG_07007'));
-          return true;
-        }
-
-        // 담보종류
-        if (oFormData.Asmtd === 'ALL' || !oFormData.Asmtd) {
-          MessageBox.alert(this.getBundleText('MSG_07008'));
-          return true;
-        }
-
-        // 주택종류
-        if (oFormData.Htype === 'ALL' || !oFormData.Htype) {
-          MessageBox.alert(this.getBundleText('MSG_07009'));
-          return true;
-        }
-
-        // 건평
-        if (!oFormData.Zsize) {
-          MessageBox.alert(this.getBundleText('MSG_07010'));
-          return true;
-        }
-
-        // 주소
-        if (!oFormData.Addre) {
-          MessageBox.alert(this.getBundleText('MSG_07011'));
-          return true;
-        }
-
-        // 융자금액
-        if (!oFormData.Lnamt) {
-          MessageBox.alert(this.getBundleText('MSG_07012'));
-          return true;
-        }
-
-        // 비고
-        if (!oFormData.Zbigo) {
-          MessageBox.alert(this.getBundleText('MSG_07013'));
-          return true;
-        }
-
-        return false;
-      },
-
       // 상환신청
       onRepayApp() {
         const sAppno = this.getViewModel().getProperty('/FormData/Appno');
@@ -391,9 +342,40 @@ sap.ui.define(
         this.getRouter().navTo('housingLoan-repay', { oDataKey: sAppno });
       },
 
+      checkError() {
+        const oDetailModel = this.getViewModel();
+        const mDialogData = oDetailModel.getProperty('/DialogData');
+
+        // 상환유형
+        if (mDialogData.Rptyp === 'ALL' || !mDialogData.Rptyp) {
+          MessageBox.alert(this.getBundleText('MSG_07015'));
+          return true;
+        }
+
+        // 상환일
+        if (!mDialogData.Paydt) {
+          MessageBox.alert(this.getBundleText('MSG_07016'));
+          return true;
+        }
+
+        // 원금상환액
+        if (!mDialogData.RpamtMpr) {
+          MessageBox.alert(this.getBundleText('MSG_07017'));
+          return true;
+        }
+
+        // 첨부파일
+        if (!AttachFileAction.getFileLength.call(this)) {
+          MessageBox.alert(this.getBundleText('MSG_03005'));
+          return true;
+        }
+
+        return false;
+      },
+
       // 재작성
       onRewriteBtn() {
-        this.getViewModel().setProperty('/FormData/Lnsta', '');
+        this.getViewModel().setProperty('/DialogData/Lnsta', '');
       },
 
       // oData호출 mapping
@@ -432,8 +414,8 @@ sap.ui.define(
       onSaveBtn() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
-        const sStatus = oDetailModel.getProperty('/FormData/Lnsta');
-        const oFormData = oDetailModel.getProperty('/FormData');
+        const sStatus = oDetailModel.getProperty('/DialogData/Lnsta');
+        const oDialogData = oDetailModel.getProperty('/DialogData');
 
         if (this.checkError()) return;
 
@@ -448,12 +430,12 @@ sap.ui.define(
                 if (!sStatus) {
                   const vAppno = await Appno.get.call(this);
 
-                  oDetailModel.setProperty('/FormData/Appno', vAppno);
-                  oDetailModel.setProperty('/FormData/Appda', new Date());
+                  oDetailModel.setProperty('/DialogData/Appno', vAppno);
+                  oDetailModel.setProperty('/DialogData/Appda', new Date());
                 }
 
                 let oSendObject = {};
-                const oSendData = this.sendDataFormat(oFormData);
+                const oSendData = this.sendDataFormat(oDialogData);
 
                 oSendObject = oSendData;
                 oSendObject.Prcty = 'T';
@@ -462,7 +444,7 @@ sap.ui.define(
 
                 // FileUpload
                 if (!!AttachFileAction.getFileLength.call(this)) {
-                  await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
+                  await AttachFileAction.uploadFile.call(this, oDialogData.Appno, this.TYPE_CODE);
                 }
 
                 await new Promise((resolve, reject) => {
@@ -495,8 +477,8 @@ sap.ui.define(
       onApplyBtn() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
-        const sStatus = oDetailModel.getProperty('/FormData/Lnsta');
-        const oFormData = oDetailModel.getProperty('/FormData');
+        const sStatus = oDetailModel.getProperty('/DialogData/Lnsta');
+        const oDialogData = oDetailModel.getProperty('/DialogData');
 
         if (this.checkError()) return;
 
@@ -511,12 +493,12 @@ sap.ui.define(
                 if (!sStatus) {
                   const vAppno = await Appno.get.call(this);
 
-                  oDetailModel.setProperty('/FormData/Appno', vAppno);
-                  oDetailModel.setProperty('/FormData/Appda', new Date());
+                  oDetailModel.setProperty('/DialogData/Appno', vAppno);
+                  oDetailModel.setProperty('/DialogData/Appda', new Date());
                 }
 
                 let oSendObject = {};
-                const oSendData = this.sendDataFormat(oFormData);
+                const oSendData = this.sendDataFormat(oDialogData);
 
                 oSendObject = oSendData;
                 oSendObject.Prcty = 'C';
@@ -525,7 +507,7 @@ sap.ui.define(
 
                 // FileUpload
                 if (!!AttachFileAction.getFileLength.call(this)) {
-                  await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
+                  await AttachFileAction.uploadFile.call(this, oDialogData.Appno, this.TYPE_CODE);
                 }
 
                 await new Promise((resolve, reject) => {
@@ -572,7 +554,7 @@ sap.ui.define(
 
               let oSendObject = {};
 
-              oSendObject = oDetailModel.getProperty('/FormData');
+              oSendObject = oDetailModel.getProperty('/DialogData');
               oSendObject.Prcty = 'W';
               oSendObject.Actty = 'E';
 
@@ -610,7 +592,7 @@ sap.ui.define(
               AppUtils.setAppBusy(true, this);
 
               const sPath = oModel.createKey('/LoanAmtApplSet', {
-                Appno: oDetailModel.getProperty('/FormData/Appno'),
+                Appno: oDetailModel.getProperty('/DialogData/Appno'),
               });
 
               oModel.remove(sPath, {
@@ -637,8 +619,8 @@ sap.ui.define(
       // AttachFileTable Settings
       settingsAttachTable() {
         const oDetailModel = this.getViewModel();
-        const sStatus = oDetailModel.getProperty('/FormData/Lnsta');
-        const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
+        const sStatus = oDetailModel.getProperty('/DialogData/Lnsta');
+        const sAppno = oDetailModel.getProperty('/DialogData/Appno') || '';
 
         AttachFileAction.setAttachFile(this, {
           Editable: !sStatus || sStatus === '10',

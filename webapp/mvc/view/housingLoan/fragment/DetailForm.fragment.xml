@@ -2,29 +2,41 @@
     xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:core="sap.ui.core">
     <VBox class="vCardBox sapUiMediumMarginBottom" busyIndicatorDelay="0" busy="{/busy}">
-        <Title level="H2" text="{i18n>LABEL_00129}" />
-        <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="8px">
+        <HBox alignItems="Center" class="title">
+            <Title level="H2" text="{i18n>LABEL_00129}" />
+        </HBox>
+        <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="4px 0" class="form-grid">
             <Label text="{i18n>LABEL_07002}" />
-            <ComboBox items="{/LaonType}" selectedKey="{/FormData/Lntyp}" change=".onLaonType" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }">
-                <core:Item text="{Ztext}" key="{Zcode}" />
-            </ComboBox>
+            <VBox>
+                <ComboBox items="{/LaonType}" selectedKey="{/FormData/Lntyp}" change=".onLaonType" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }">
+                    <core:Item text="{Ztext}" key="{Zcode}" />
+                </ComboBox>
+            </VBox>
             <Label text="{i18n>LABEL_00261}" />
-            <Text text="{/FormData/Lnstatx}"/>
+            <VBox>
+                <Text text="{/FormData/Lnstatx}"/>
+            </VBox>
             <Label text="{i18n>LABEL_07019}"/>
-            <ComboBox items="{/AssuranceType}" selectedKey="{/FormData/Asmtd}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }">
-                <core:Item text="{Ztext}" key="{Zcode}" />
-            </ComboBox>
+            <VBox>
+                <ComboBox items="{/AssuranceType}" selectedKey="{/FormData/Asmtd}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }">
+                    <core:Item text="{Ztext}" key="{Zcode}" />
+                </ComboBox>
+            </VBox>
             <Label text="{i18n>LABEL_07020}"/>
-            <ComboBox items="{/HouseType}" selectedKey="{/FormData/Htype}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }">
-                <core:Item text="{Ztext}" key="{Zcode}" />
-            </ComboBox>
+            <VBox>
+                <ComboBox items="{/HouseType}" selectedKey="{/FormData/Htype}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }">
+                    <core:Item text="{Ztext}" key="{Zcode}" />
+                </ComboBox>
+            </VBox>
             <Label text="{i18n>LABEL_07021}"/>
             <HBox>
                 <Input value="{/FormData/Zsize}" liveChange=".areaSize" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
                 <Text text="{/baseArea/Text}"/>
             </HBox>
             <Label text="{i18n>LABEL_00152}"/>
-            <Input value="{/FormData/Addre}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
+            <VBox>
+                <Input value="{/FormData/Addre}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
+            </VBox>
             <Label text="{i18n>LABEL_07022}"/>
             <HBox>
                 <Input value="{
@@ -34,39 +46,56 @@
                 <Text text="{/loanAmount/Text}"/>
             </HBox>
             <Label text="{i18n>LABEL_00266}" visible="{= !!${/FormData/Lnsta} }"/>
-            <HBox >
+            <HBox visible="{= !!${/FormData/Lnsta} }">
                 <Text text="{
                     path: '/FormData/Appda',
                     type: 'sap.ui.model.type.Date'
-                }" visible="{= !!${/FormData/Lnsta} }"/>
+                }"/>
             </HBox>
             <HBox visible="{= !${/FormData/Lnsta} }"></HBox>
+            <HBox visible="{= !${/FormData/Lnsta} }"></HBox>
             <Label text="{i18n>LABEL_07023}"/>
-            <Text text="{/FormData/Hdprd}"/>
+            <VBox>
+                <Text text="{/FormData/Hdprd}"/>
+            </VBox>
             <Label text="{i18n>LABEL_02012}" visible="{= !!${/FormData/Lnsta} }"/>
-            <Text text="{
+            <VBox visible="{= !!${/FormData/Lnsta} }">
+                <Text text="{
                 path: '/FormData/Begda',
                 type: 'sap.ui.model.type.Date'
-            }" visible="{= !!${/FormData/Lnsta} }"/>
+            }" />
+            </VBox>
             <Label text="{i18n>LABEL_07024}"/>
-            <Text text="{
-                path: '/FormData/RpamtMon',
-                formatter: '.TextUtils.toCurrency'
-            }"/>
+            <VBox>
+                <Text text="{
+                    path: '/FormData/RpamtMon',
+                    formatter: '.TextUtils.toCurrency'
+                }"/>
+            </VBox>
             <Label text="{i18n>LABEL_07004}" visible="{= !!${/FormData/Lnsta} }"/>
-            <Text text="{
-                path: '/FormData/Endda',
-                type: 'sap.ui.model.type.Date'
-            }" visible="{= !!${/FormData/Lnsta} }"/>
+            <VBox visible="{= !!${/FormData/Lnsta} }">
+                <Text text="{
+                    path: '/FormData/Endda',
+                    type: 'sap.ui.model.type.Date'
+                }" />
+            </VBox>
             <Label text="{i18n>LABEL_07025}"/>
-            <Text text="{/FormData/Lnprd}"/>
+            <VBox>
+                <Text text="{/FormData/Lnprd}"/>
+            </VBox>
             <Label text="{i18n>LABEL_07026}"/>
-            <Text text="{/FormData/Lnrte}"/>
+            <VBox>
+                <Text text="{/FormData/Lnrte}"/>
+            </VBox>
             <Label text="{i18n>LABEL_00163}"/>
-            <Input value="{/FormData/Zbigo}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
+            <VBox>
+                <Input value="{/FormData/Zbigo}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
+            </VBox>
             <HBox ></HBox>
             <Label text="{i18n>LABEL_00142}" visible="{= ${/FormData/Lnsta} === '45' }" />
-            <Text text="{/FormData/Zbigo}" visible="{= ${/FormData/Lnsta} === '45' }" />
+            <VBox>
+                <Text text="{/FormData/Zbigo}" visible="{= ${/FormData/Lnsta} === '45' }" />
+            </VBox>
         </grid:CSSGrid>
     </VBox>
 </core:FragmentDefinition>

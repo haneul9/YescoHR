@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:table="sap.ui.table"
     xmlns:core="sap.ui.core">
-    <VBox class="vCardBox" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
+    <VBox class="vCardBox sapUiMediumMarginBottom" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
         <HBox justifyContent="SpaceBetween" class="header-wrap">
             <Title level="H3" text="{i18n>LABEL_07032}" class="sapUiSmallMarginEnd" />
             <Button width="117px" text="{i18n>LABEL_07034}" press=".onRepayApp" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }"/>

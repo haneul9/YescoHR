@@ -41,6 +41,7 @@ sap.ui.define(
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
+          menid: '',
           ViewKey: '',
           FormData: {},
           baseArea: {},
@@ -60,14 +61,17 @@ sap.ui.define(
         this.getViewModel().setProperty('/busy', true);
       },
 
-      onObjectMatched(oParameter) {
+      async onObjectMatched(oParameter) {
         const sDataKey = oParameter.oDataKey;
+        const sMenid = await this.getCurrentMenuId();
+        const oDetailModel = this.getViewModel();
 
-        this.getViewModel().setProperty('/ViewKey', sDataKey);
+        oDetailModel.setProperty('/menid', sMenid);
+        oDetailModel.setProperty('/ViewKey', sDataKey);
 
         this.getList().then(() => {
           this.setFormData();
-          this.getViewModel().setProperty('/busy', false);
+          oDetailModel.setProperty('/busy', false);
         });
       },
 
@@ -573,7 +577,7 @@ sap.ui.define(
 
                 oSendObject = oSendData;
                 oSendObject.Prcty = 'T';
-                oSendObject.Actty = 'E';
+                oSendObject.Menid = oDetailModel.getProperty('/menid');
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
@@ -636,7 +640,7 @@ sap.ui.define(
 
                 oSendObject = oSendData;
                 oSendObject.Prcty = 'C';
-                oSendObject.Actty = 'E';
+                oSendObject.Menid = oDetailModel.getProperty('/menid');
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
@@ -690,7 +694,7 @@ sap.ui.define(
 
               oSendObject = oDetailModel.getProperty('/FormData');
               oSendObject.Prcty = 'W';
-              oSendObject.Actty = 'E';
+              oSendObject.Menid = oDetailModel.getProperty('/menid');
 
               oModel.create('/LoanAmtApplSet', oSendObject, {
                 success: () => {
