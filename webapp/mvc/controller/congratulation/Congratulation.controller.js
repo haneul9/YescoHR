@@ -2,8 +2,8 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/model/json/JSONModel',
-    'sap/ui/yesco/common/EmpInfo',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/FragmentEvent',
@@ -12,12 +12,12 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-    EmpInfo,
-    ServiceNames,
-    AttachFileAction,
-    TableUtils,
-    FragmentEvent,
-    BaseController
+	ServiceNames,
+	AppUtils,
+	AttachFileAction,
+	TableUtils,
+	FragmentEvent,
+	BaseController
   ) => {
     'use strict';
 
@@ -27,6 +27,7 @@ sap.ui.define(
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
       FragmentEvent: FragmentEvent,
+      AppUtils: AppUtils,
 
       onBeforeShow() {
         const dDate = new Date();
@@ -48,8 +49,6 @@ sap.ui.define(
           },
         });
         this.setViewModel(oViewModel);
-
-        EmpInfo.get.call(this, true);
       },
 
       onObjectMatched() {
@@ -93,20 +92,21 @@ sap.ui.define(
         });
       },
 
-      onSearch() {
+      async onSearch() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oListModel = this.getViewModel();
         const oTable = this.byId('conguTable');
         const oSearchDate = oListModel.getProperty('/searchDate');
         const dDate = moment(oSearchDate.secondDate).hours(10).toDate();
         const dDate2 = moment(oSearchDate.date).hours(10).toDate();
+        const sMenid = await this.getCurrentMenuId();
 
         oListModel.setProperty('/busy', true);
 
         oModel.read('/ConExpenseApplSet', {
           filters: [
             new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'),
-            new sap.ui.model.Filter('Actty', sap.ui.model.FilterOperator.EQ, 'E'),
+            new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid),
             new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate),
             new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2),
           ],

@@ -2,7 +2,9 @@
     xmlns:core="sap.ui.core">
     <VBox class="hCardBox sapUiMediumMarginEnd summary-box" width="33%" busyIndicatorDelay="0" busy="{/busy}">
         <VBox>
-            <Title level="H2" text="{i18n>MSG_03011}" />
+            <HBox justifyContent="SpaceBetween" class="title">
+                <Title level="H2" text="{i18n>MSG_03011}" />
+            </HBox>
             <Text text="{
                 path: '/Total/Zyear',
                 formatter: '.thisYear'

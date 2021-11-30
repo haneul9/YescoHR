@@ -3,25 +3,21 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AttachFileAction',
-    'sap/ui/yesco/common/EmpInfo',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
   (
     // prettier 방지용 주석
     JSONModel,
-    AttachFileAction,
-    EmpInfo,
-    FragmentEvent,
-    TableUtils,
-    TextUtils,
-    ServiceNames,
-    MessageBox,
-    BaseController
+	AttachFileAction,
+	FragmentEvent,
+	TableUtils,
+	TextUtils,
+	ServiceNames,
+	BaseController
   ) => {
     'use strict';
 
@@ -53,8 +49,6 @@ sap.ui.define(
           },
         });
         this.setViewModel(oViewModel);
-
-        EmpInfo.get.call(this, true);
       },
 
       onObjectMatched() {

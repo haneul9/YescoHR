@@ -1,0 +1,91 @@
+sap.ui.define(
+  [
+    // prettier 방지용 주석
+    'sap/ui/core/Control',
+    'sap/m/FlexAlignItems',
+    'sap/m/FlexJustifyContent',
+  ],
+  function (
+    // prettier 방지용 주석
+    Control,
+    FlexAlignItems,
+    FlexJustifyContent
+  ) {
+    'use strict';
+
+    return Control.extend('sap.ui.yesco.control.D3OrgChart', {
+      metadata: {
+        properties: {
+          title: { type: 'String', group: 'Misc', defaultValue: '화상조직도' },
+        },
+        aggregations: {
+          items: { type: 'sap.ui.yesco.control.D3OrgChartItem', multiple: true, singularName: 'item' },
+        },
+        defaultAggregation: 'items',
+        event: {
+          onPress: {},
+          onChange: {},
+        },
+      },
+
+      createChart: function () {
+        const oChartLayout = new sap.m.VBox({ alignItems: FlexAlignItems.Center, justifyContent: FlexJustifyContent.Center });
+        const oChartFlexBox = new sap.m.FlexBox({ width: `${$(document).width()}px`, alignItems: FlexAlignItems.Center });
+
+        this.sParentId = oChartFlexBox.getIdForLabel();
+        oChartLayout.addItem(oChartFlexBox);
+
+        return oChartLayout;
+      },
+
+      renderer: function (oRm, oControl) {
+        const layout = oControl.createChart();
+
+        oRm.write('<div');
+        oRm.writeControlData(layout);
+        oRm.writeClasses();
+        oRm.write('>');
+        oRm.renderControl(layout);
+        oRm.addClass('verticalAlignment');
+        oRm.write('</div>');
+      },
+
+      onAfterRendering: function () {
+        const mItems = this.getItems();
+        let aChartData = [];
+
+        mItems.forEach((item) => {
+          aChartData.push({ ...item.mProperties });
+        });
+
+        new d3.OrgChart()
+          .container('#' + this.sParentId)
+          .svgHeight(window.innerHeight - 10)
+          .data(aChartData)
+          // .compact(false)
+          .nodeWidth(() => 250)
+          .initialZoom(0.7)
+          .nodeHeight(() => 175)
+          .childrenMargin(() => 40)
+          .compactMarginBetween(() => 15)
+          .compactMarginPair(() => 80)
+          .nodeContent(function (o) {
+            return `
+            <div style="padding-top:30px;background-color:none;margin-left:1px;height:${o.height}px;border-radius:2px;overflow:visible">
+                <div style="height:${o.height - 32}px;padding-top:0px;background-color:white;border:1px solid lightgray;">
+                    <img src=" ${o.data.Photo}" style="margin-top:-30px;margin-left:${o.width / 2 - 30}px;border-radius:100px;width:60px;height:60px;" />
+                    <div style="margin-right:10px;margin-top:15px;float:right">${o.data.Pernr}</div>
+                    <div style="margin-top:-30px;background-color:#3AB6E3;height:10px;width:${o.width - 2}px;border-radius:1px"></div>
+                    <div style="padding:20px; padding-top:35px;text-align:center">
+                        <div style="color:#111672;font-size:16px;font-weight:bold"> ${o.data.Ename} </div>
+                        <div style="color:#404040;font-size:16px;margin-top:4px"> ${o.data.Botxt} </div>
+                    </div> 
+                </div>     
+            </div>
+            `;
+          })
+          .render();
+      },
+    });
+  }
+);

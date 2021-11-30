@@ -1,84 +1,110 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:core="sap.ui.core">
-    <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
-        <HBox>
+    <VBox class="vCardBox sapUiMediumMarginBottom" busyIndicatorDelay="0" busy="{/busy}">
+        <HBox alignItems="Center" class="title">
             <Title level="H2" text="{i18n>LABEL_00129}" />
-            <Text text="{i18n>MSG_03001}" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            <Text text="{i18n>MSG_03001}" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="desc-txt"/>
         </HBox>
-        <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="8px">
+        <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="4px 0" class="form-grid">
             <Label text="{i18n>LABEL_03012}" />
-            <ComboBox id="AppTarget" class="LongSelectBox" valueState="Warning" items="{/AppTarget}" selectedKey="{/FormData/Zzobjps}" change=".onTargetChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
-                <core:Item text="{Znametx}" key="{Zzobjps}" />
-            </ComboBox>
+            <VBox>
+                <ComboBox id="AppTarget" class="LongSelectBox" items="{/AppTarget}" selectedKey="{/FormData/Zzobjps}" change=".onTargetChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+                    <core:Item text="{Znametx}" key="{Zzobjps}" />
+                </ComboBox>
+            </VBox>
             <Label text="{i18n>LABEL_03013}" />
-            <Text text="{/FormData/Cnttx}"/>
+            <VBox>
+                <Text text="{/FormData/Cnttx}"/>
+            </VBox>
             <Label text="{i18n>LABEL_03014}"/>
-            <ComboBox id="AcademicSort" valueState="Warning" items="{/AcademicSort}" selectedKey="{/FormData/Slart}" change=".onShcoolList" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
-                <core:Item text="{Ztext}" key="{Zcode}" />
-            </ComboBox>
+            <VBox>
+                <ComboBox id="AcademicSort" items="{/AcademicSort}" selectedKey="{/FormData/Slart}" change=".onShcoolList" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+                    <core:Item text="{Ztext}" key="{Zcode}" />
+                </ComboBox>
+            </VBox>
             <Label text="{i18n>LABEL_03015}"/>
             <HBox class="mb-0 ">
-                <Input valueState="Warning" value="{/FormData/Schtx}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+                <Input value="{/FormData/Schtx}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
                 <Input value="{/FormData/Majnm}" editable="{= (${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl}) &amp;&amp; !!${/MajorInput} }" />
             </HBox>
             <Label text="{i18n>LABEL_03016}"/>
             <HBox class="mb-0 ">
-                <ComboBox id="GradeList" valueState="Warning" change=".onGrade" items="{/GradeList}" selectedKey="{/FormData/Grdsp}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+                <ComboBox id="GradeList" change=".onGrade" items="{/GradeList}" selectedKey="{/FormData/Grdsp}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
-                <ComboBox id="QuarterList" valueState="Warning" items="{/QuarterList}" selectedKey="{/FormData/Divcd}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+                <ComboBox id="QuarterList" items="{/QuarterList}" selectedKey="{/FormData/Divcd}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
             </HBox>
             <Label text="{i18n>LABEL_03017}"/>
-            <ComboBox valueState="Warning" change=".onYearsSelect" items="{/FundsYears}" selectedKey="{/FormData/Zyear}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
-                <core:Item text="{Ztext}" key="{Zcode}" />
-            </ComboBox>
+            <VBox>
+                <ComboBox change=".onYearsSelect" items="{/FundsYears}" selectedKey="{/FormData/Zyear}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+                    <core:Item text="{Ztext}" key="{Zcode}" />
+                </ComboBox>
+            </VBox>
             <Label text="{i18n>LABEL_03018}"/>
-            <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Forsch} ? true : false }" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            <VBox>
+                <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Forsch} ? true : false }" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            </VBox>
             <HBox ></HBox>
             <HBox ></HBox>
             <Label text="{i18n>LABEL_03019}"/>
-            <Input value="{
+            <VBox>
+                <Input value="{
                 path: '/FormData/ZbetEntr',
                 formatter: '.TextUtils.toCurrency'
             }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            </VBox>
             <Label text="{i18n>LABEL_03020}"/>
-            <Input value="{
+            <VBox>
+                <Input value="{
                 path: '/FormData/ZbetMgmt',
                 formatter: '.TextUtils.toCurrency'
             }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            </VBox>
             <Label text="{i18n>LABEL_03021}"/>
-            <Input value="{
+            <VBox>
+                <Input value="{
                 path: '/FormData/ZbetClass',
                 formatter: '.TextUtils.toCurrency'
-            }" valueState="Warning" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            </VBox>
             <Label text="{i18n>LABEL_03022}"/>
-            <Input value="{
+            <VBox>
+                <Input value="{
                 path: '/FormData/ZbetExer',
                 formatter: '.TextUtils.toCurrency'
             }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            </VBox>
             <Label text="{i18n>LABEL_03023}"/>
-            <Input value="{
+            <VBox>
+                <Input value="{
                 path: '/FormData/ZbetSuf',
                 formatter: '.TextUtils.toCurrency'
             }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            </VBox>
             <Label text="{i18n>LABEL_03026}"/>
-            <Input value="{
+            <VBox>
+                <Input value="{
                 path: '/FormData/ZbetEtc',
                 formatter: '.TextUtils.toCurrency'
             }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            </VBox>
             <Label text="{i18n>LABEL_03024}" width="190px" />
-            <Text text="{
+            <VBox>
+                <Text text="{
                 path: '/FormData/ZbetTotl',
                 formatter: '.TextUtils.toCurrency'
             }"/>
+            </VBox>
             <Label text="{i18n>LABEL_03025}"/>
-            <Input value="{
+            <VBox>
+                <Input value="{
                 path: '/FormData/ZbetShip',
                 formatter: '.TextUtils.toCurrency'
             }" liveChange=".onSchoCost" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            </VBox>
             <Label text="{i18n>LABEL_03027}"/>
             <HBox >
                 <Text text="{

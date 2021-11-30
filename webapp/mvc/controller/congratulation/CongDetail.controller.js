@@ -7,27 +7,26 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/EmpInfo',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/model/ODataDate', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
   ],
   (
     // prettier 방지용 주석
     Fragment,
-    JSONModel,
-    Appno,
-    AppUtils,
-    AttachFileAction,
-    ComboEntry,
-    EmpInfo,
-    TextUtils,
-    FragmentEvent,
-    ServiceNames,
-    MessageBox,
-    BaseController
+	JSONModel,
+	Appno,
+	AppUtils,
+	AttachFileAction,
+	ComboEntry,
+	TextUtils,
+	FragmentEvent,
+	ServiceNames,
+	MessageBox,
+	BaseController,
   ) => {
     'use strict';
 
@@ -40,6 +39,7 @@ sap.ui.define(
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
+          menuId: '',
           FormStatus: '',
           FormData: {},
           Settings: {},
@@ -51,19 +51,19 @@ sap.ui.define(
         this.setViewModel(oViewModel);
 
         this.getViewModel().setProperty('/busy', true);
-        EmpInfo.get.call(this);
       },
 
-      async onAfterShow() {
+      getCurrentLocationText(oArguments) {
+        const sAction = oArguments.oDataKey === 'N' ? this.getBundleText('LABEL_04002') : this.getBundleText('LABEL_00165');
+
+        return sAction;
+      },
+
+      async onObjectMatched(mArgs) {
+        this.getViewModel().setProperty('/FormStatus', mArgs.oDataKey);
         await this.getBenefitType(this);
         await this.getTargetData();
         this.getViewModel().setProperty('/busy', false);
-
-        BaseController.prototype.onAfterShow.call(this);
-      },
-
-      onObjectMatched(mArgs) {
-        this.getViewModel().setProperty('/FormStatus', mArgs.oDataKey);
       },
 
       formatFlowerTxt(vFlower) {
@@ -71,9 +71,13 @@ sap.ui.define(
       },
 
       // 상세조회
-      getTargetData() {
+      async getTargetData() {
         const oDetailModel = this.getViewModel();
         const sDataKey = oDetailModel.getProperty('/FormStatus');
+        const sMenid = await this.getCurrentMenuId();
+
+        oDetailModel.setProperty('/menuId', sMenid);
+        oDetailModel.setProperty('/TargetInfo', this.getOwnerComponent().getTargetModel().getData());
 
         return new Promise((resolve) => {
           if (!sDataKey || sDataKey === 'N') {
@@ -102,7 +106,7 @@ sap.ui.define(
             oModel.read(sUrl, {
               filters: [
                 new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'),
-                new sap.ui.model.Filter('Actty', sap.ui.model.FilterOperator.EQ, 'E'),
+                new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid),
                 new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sDataKey),
               ],
               success: (oData) => {
@@ -134,7 +138,7 @@ sap.ui.define(
       getBenefitType() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
-        const oTargetData = oDetailModel.getProperty('/TargetInfo');
+        const oTargetData = this.getOwnerComponent().getTargetModel().getData();
 
         return new Promise((resolve) => {
           oModel.read('/BenefitCodeListSet', {
@@ -631,7 +635,7 @@ sap.ui.define(
 
                 oSendObject = oSendData;
                 oSendObject.Prcty = 'T';
-                oSendObject.Actty = 'E';
+                oSendObject.Menid = oDetailModel.getProperty('/menuId');
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
@@ -691,7 +695,7 @@ sap.ui.define(
 
                 oSendObject = oSendData;
                 oSendObject.Prcty = 'C';
-                oSendObject.Actty = 'E';
+                oSendObject.Menid = oDetailModel.getProperty('/menuId');
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
@@ -742,7 +746,7 @@ sap.ui.define(
 
               oSendObject = oDetailModel.getProperty('/FormData');
               oSendObject.Prcty = 'W';
-              oSendObject.Actty = 'E';
+              oSendObject.Menid = oDetailModel.getProperty('/menuId');
 
               oModel.create('/ConExpenseApplSet', oSendObject, {
                 success: () => {

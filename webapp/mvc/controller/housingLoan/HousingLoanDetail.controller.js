@@ -36,10 +36,12 @@ sap.ui.define(
 
       AttachFileAction: AttachFileAction,
       TextUtils: TextUtils,
+      TableUtils: TableUtils,
       FragmentEvent: FragmentEvent,
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
+          menid: '',
           ViewKey: '',
           FormData: {},
           baseArea: {},
@@ -59,19 +61,24 @@ sap.ui.define(
         this.getViewModel().setProperty('/busy', true);
       },
 
-      onAfterShow() {
+      async onObjectMatched(oParameter) {
+        const sDataKey = oParameter.oDataKey;
+        const sMenid = await this.getCurrentMenuId();
+        const oDetailModel = this.getViewModel();
+
+        oDetailModel.setProperty('/menid', sMenid);
+        oDetailModel.setProperty('/ViewKey', sDataKey);
+
         this.getList().then(() => {
           this.setFormData();
-          this.getViewModel().setProperty('/busy', false);
-
-          BaseController.prototype.onAfterShow.call(this);
+          oDetailModel.setProperty('/busy', false);
         });
       },
 
-      onObjectMatched(oParameter) {
-        const sDataKey = oParameter.oDataKey;
+      getCurrentLocationText(oArguments) {
+        const sAction = oArguments.oDataKey === 'N' ? this.getBundleText('LABEL_04002') : this.getBundleText('LABEL_00165');
 
-        this.getViewModel().setProperty('/ViewKey', sDataKey);
+        return sAction;
       },
 
       // 상환이력 Excel
@@ -570,7 +577,7 @@ sap.ui.define(
 
                 oSendObject = oSendData;
                 oSendObject.Prcty = 'T';
-                oSendObject.Actty = 'E';
+                oSendObject.Menid = oDetailModel.getProperty('/menid');
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
@@ -633,7 +640,7 @@ sap.ui.define(
 
                 oSendObject = oSendData;
                 oSendObject.Prcty = 'C';
-                oSendObject.Actty = 'E';
+                oSendObject.Menid = oDetailModel.getProperty('/menid');
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
@@ -687,7 +694,7 @@ sap.ui.define(
 
               oSendObject = oDetailModel.getProperty('/FormData');
               oSendObject.Prcty = 'W';
-              oSendObject.Actty = 'E';
+              oSendObject.Menid = oDetailModel.getProperty('/menid');
 
               oModel.create('/LoanAmtApplSet', oSendObject, {
                 success: () => {

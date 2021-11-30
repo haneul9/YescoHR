@@ -7,26 +7,25 @@ sap.ui.define(
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/EmpInfo',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/model/ODataDate', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
   ],
   (
     // prettier 방지용 주석
     JSONModel,
-    AttachFileAction,
-    Appno,
-    AppUtils,
-    ComboEntry,
-    EmpInfo,
-    FragmentEvent,
-    TextUtils,
-    ServiceNames,
-    MessageBox,
-    BaseController
+	AttachFileAction,
+	Appno,
+	AppUtils,
+	ComboEntry,
+	FragmentEvent,
+	TextUtils,
+	ServiceNames,
+	MessageBox,
+	BaseController,
   ) => {
     'use strict';
 
@@ -91,16 +90,23 @@ sap.ui.define(
         this.setViewModel(oViewModel);
 
         this.getViewModel().setProperty('/busy', true);
-        EmpInfo.get.call(this, true);
       },
 
-      async onAfterShow() {
+      // setData
+      async onObjectMatched(oParameter) {
+        const sDataKey = oParameter.oDataKey;
+
+        this.getViewModel().setProperty('/FormStatus', sDataKey);
         await this.getCodeList();
         await this.setFormData();
 
         this.getViewModel().setProperty('/busy', false);
+      },
 
-        BaseController.prototype.onAfterShow.call(this);
+      getCurrentLocationText(oArguments) {
+        const sAction = oArguments.oDataKey === 'N' ? this.getBundleText('LABEL_04002') : this.getBundleText('LABEL_00165');
+
+        return sAction;
       },
 
       setResident(s = '') {
@@ -123,6 +129,8 @@ sap.ui.define(
         const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
         const mListData = oListView.getModel().getProperty('/parameter');
 
+        oDetailModel.setProperty('/TargetInfo', this.getOwnerComponent().getTargetModel().getData());
+
         if (!sKey || sKey === 'N') {
           const oTargetInfo = oDetailModel.getProperty('/TargetInfo');
 
@@ -140,13 +148,6 @@ sap.ui.define(
         }
 
         this.settingsAttachTable();
-      },
-
-      // setData
-      onObjectMatched(oParameter) {
-        const sDataKey = oParameter.oDataKey;
-
-        this.getViewModel().setProperty('/FormStatus', sDataKey);
       },
 
       // 화면관련 List호출
@@ -336,7 +337,7 @@ sap.ui.define(
       // oData호출 mapping
       sendDataFormat(oDatas) {
         let oSendObject = {
-          Actty: oDatas.Actty,
+          Menid: oDatas.Menid,
           Appno: oDatas.Appno,
           Atext: oDatas.Atext,
           Begda: moment(oDatas.Begda).hours(10).toDate(),
@@ -367,11 +368,12 @@ sap.ui.define(
       },
 
       // 신청
-      onApplyBtn() {
+      async onApplyBtn() {
         const oModel = this.getModel(ServiceNames.PA);
         const oDetailModel = this.getViewModel();
         const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
         const oFormData = oDetailModel.getProperty('/FormData');
+        const sMenid = await this.getCurrentMenuId();
 
         if (this.checkError()) return;
 
@@ -395,7 +397,7 @@ sap.ui.define(
 
                 oSendObject = oSendData;
                 oSendObject.Prcty = 'C';
-                oSendObject.Actty = 'E';
+                oSendObject.Menid = sMenid;
 
                 // FileUpload
                 await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);

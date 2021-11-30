@@ -2,14 +2,16 @@
     xmlns:core="sap.ui.core">
     <VBox class="hCardBox sapUiMediumMarginEnd summary-box" width="33%" busyIndicatorDelay="0" busy="{/busy}">
         <VBox>
-            <Title level="H2" text="{i18n>LABEL_05002}" />
+            <HBox justifyContent="SpaceBetween" class="title">
+                <Title level="H2" text="{i18n>LABEL_05002}" />
+            </HBox>
             <HBox class="desc">
-                <Text text="{i18n>MSG_05001}" class="sapUiSmallMarginBottom" />
+                <Text text="{i18n>MSG_05001}" />
                 <ObjectStatus text="{
                     path: '/Total/Famcnt',
                     formatter: '.formatNumber'
                 }" state="Indication05" class="sapUiSmallMarginBottom" />
-                <Text text="{i18n>MSG_05002}" class="sapUiSmallMarginBottom" />
+                <Text text="{i18n>MSG_05002}" />
             </HBox>
             <HBox class="desc">
                 <Text text="{i18n>MSG_05003}"/>

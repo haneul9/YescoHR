@@ -6,33 +6,39 @@
 	xmlns:custom="sap.ui.yesco.control">
 	<Page showHeader="false">
 		<content>
-			<VBox>
+			<VBox class="contents-header">
 				<HBox justifyContent="SpaceBetween" class="breadcrumbs">
 					<custom:Breadcrumbs />
 					<HBox>
 						<Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= !${/FormData/ZappStatAl} }" />
 						<Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= !!${/FormData/ZappStatAl} }" />
-						<Button text="{i18n>LABEL_00146}" press=".onNavBack" />
-						<Button icon="sap-icon://print" press=".FragmentEvent.onPagePrint" type="Transparent" text="{i18n>LABEL_00131}" />
+						<Button text="{i18n>LABEL_00146}" press=".onNavBack" class="sapUiTinyMarginEnd" />
+						<Button icon="sap-icon://print" press=".FragmentEvent.onPagePrint" type="Transparent" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd"/>
 						<Button icon="sap-icon://sys-help" type="Transparent" text="{i18n>LABEL_00132}" />
 					</HBox>
 				</HBox>
+			</VBox>
+			<VBox class="contents">
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.DetailTargetInfo" type="XML" />
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.InfoMessage" type="XML" />
 				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.familyInfo.fragment.DetailForm" type="XML" />
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
 				<VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}" visible="{= !!${/FormData/ZappStatAl} }">
-					<grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="8px">
+					<grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="4px 0" class="form-grid">
 						<Label text="{i18n>LABEL_00266}" />
-						<Text text="{
+						<VBox>
+							<Text text="{
 							path: '/FormData/ZreqDate',
 							type: 'sap.ui.model.type.Date'
 						}" />
+						</VBox>
 						<Label text="{i18n>LABEL_05003}" />
-						<Text text="{
+						<VBox>
+							<Text text="{
 							path: '/FormData/ZappDate',
 							type: 'sap.ui.model.type.Date'
 						}" />
+						</VBox>
 					</grid:CSSGrid>
 				</VBox>
 			</VBox>
