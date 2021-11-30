@@ -51,8 +51,6 @@ sap.ui.define(
           },
         });
         this.setViewModel(oViewModel);
-
-        EmpInfo.get.call(this, true);
       },
 
       onAfterShow() {
@@ -78,20 +76,21 @@ sap.ui.define(
         return this.getBundleText('MSG_03012', sYear);
       },
 
-      onSearch() {
+      async onSearch() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oListModel = this.getViewModel();
         const oTable = this.byId('studentTable');
         const oSearchDate = oListModel.getProperty('/searchDate');
         const dDate = moment(oSearchDate.secondDate).hours(10).toDate();
         const dDate2 = moment(oSearchDate.date).hours(10).toDate();
+        const sMenid = await this.getCurrentMenuId();
 
         oListModel.setProperty('/busy', true);
 
         oModel.read('/SchExpenseApplSet', {
           filters: [
             new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'),
-            new sap.ui.model.Filter('Actty', sap.ui.model.FilterOperator.EQ, 'E'),
+            new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid),
             new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate),
             new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2),
           ],

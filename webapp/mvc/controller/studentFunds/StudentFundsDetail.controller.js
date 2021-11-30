@@ -3,7 +3,6 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/model/json/JSONModel',
-    'sap/ui/yesco/common/EmpInfo',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
@@ -17,15 +16,14 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-    EmpInfo,
-    Appno,
-    AppUtils,
-    ComboEntry,
-    TextUtils,
-    AttachFileAction,
-    ServiceNames,
-    MessageBox,
-    BaseController
+	Appno,
+	AppUtils,
+	ComboEntry,
+	TextUtils,
+	AttachFileAction,
+	ServiceNames,
+	MessageBox,
+	BaseController,
   ) => {
     'use strict';
 
@@ -38,6 +36,7 @@ sap.ui.define(
       onBeforeShow() {
         const oViewModel = new JSONModel({
           ViewKey: '',
+          menId: '',
           FormData: {
             Forsch: false,
           },
@@ -53,22 +52,27 @@ sap.ui.define(
         this.setViewModel(oViewModel);
 
         this.getViewModel().setProperty('/busy', true);
-        EmpInfo.get.call(this);
       },
 
-      onAfterShow() {
+      getCurrentLocationText(oArguments) {
+        const sAction = oArguments.oDataKey === 'N' ? this.getBundleText('LABEL_04002') : this.getBundleText('LABEL_00165');
+
+        return sAction;
+      },
+
+      async onObjectMatched(oParameter) {
+        const sDataKey = oParameter.oDataKey;
+        const oDetailModel = this.getViewModel();
+        const sMenid = await this.getCurrentMenuId();
+
+        oDetailModel.setProperty('/ViewKey', sDataKey);
+        oDetailModel.setProperty('/TargetInfo', this.getOwnerComponent().getTargetModel().getData());
+        oDetailModel.setProperty('/Menid', sMenid);
+
         this.getList().then(() => {
           this.getTargetData();
-          this.getViewModel().setProperty('/busy', false);
-
-          BaseController.prototype.onAfterShow.call(this);
+          oDetailModel.setProperty('/busy', false);
         });
-      },
-
-      onObjectMatched(oParameter) {
-        const sDataKey = oParameter.oDataKey;
-
-        this.getViewModel().setProperty('/ViewKey', sDataKey);
       },
 
       // 해외학교 체크시
@@ -598,7 +602,7 @@ sap.ui.define(
 
                 oSendObject = oSendData;
                 oSendObject.Prcty = 'T';
-                oSendObject.Actty = 'E';
+                oSendObject.Menid = oDetailModel.getProperty('/Menid');
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
@@ -659,7 +663,7 @@ sap.ui.define(
 
                 oSendObject = oSendData;
                 oSendObject.Prcty = 'C';
-                oSendObject.Actty = 'E';
+                oSendObject.Menid = oDetailModel.getProperty('/Menid');
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
@@ -711,7 +715,7 @@ sap.ui.define(
 
               oSendObject = oDetailModel.getProperty('/FormData');
               oSendObject.Prcty = 'W';
-              oSendObject.Actty = 'E';
+              oSendObject.Menid = oDetailModel.getProperty('/Menid');
 
               oModel.create('/SchExpenseApplSet', oSendObject, {
                 success: () => {
