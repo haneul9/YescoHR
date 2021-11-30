@@ -24,7 +24,7 @@
 			<VBox class="contents">
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.DetailTargetInfo" type="XML" />
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.InfoMessage" type="XML" />
-				<VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
+				<VBox class="vCardBox sapUiMediumMarginBottom" busyIndicatorDelay="0" busy="{/busy}">
 					<HBox alignItems="Center" class="title">
 						<Title level="H2" text="{i18n>LABEL_00129}" />
 						<Text text="{i18n>MSG_02005}" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="desc-txt"/>

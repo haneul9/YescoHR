@@ -160,7 +160,7 @@
             <table:Column width="60px">
                 <Label text="{i18n>LABEL_00133}"/>
                 <table:template>
-                    <Button type="Transparent" icon="sap-icon://attachment" class="w-100" press=".TableUtils.onFileListDialog" visible="{= ${Docyn} === 'Y' }"/>
+                    <Button type="Transparent" icon="sap-icon://attachment" class="mnw-0" press=".TableUtils.onFileListDialog" visible="{= ${Docyn} === 'Y' }"/>
                 </table:template>
             </table:Column>
         </table:columns>

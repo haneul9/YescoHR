@@ -60,19 +60,21 @@ sap.ui.define(
         this.getViewModel().setProperty('/busy', true);
       },
 
-      onAfterShow() {
-        this.getList().then(() => {
-          this.setFormData();
-          this.getViewModel().setProperty('/busy', false);
-
-          BaseController.prototype.onAfterShow.call(this);
-        });
-      },
-
       onObjectMatched(oParameter) {
         const sDataKey = oParameter.oDataKey;
 
         this.getViewModel().setProperty('/ViewKey', sDataKey);
+
+        this.getList().then(() => {
+          this.setFormData();
+          this.getViewModel().setProperty('/busy', false);
+        });
+      },
+
+      getCurrentLocationText(oArguments) {
+        const sAction = oArguments.oDataKey === 'N' ? this.getBundleText('LABEL_04002') : this.getBundleText('LABEL_00165');
+
+        return sAction;
       },
 
       // 상환이력 Excel

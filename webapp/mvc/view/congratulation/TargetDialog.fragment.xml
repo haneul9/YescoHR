@@ -3,7 +3,7 @@
     xmlns:table="sap.ui.table">
     <Dialog id= "targetSettingsDialog" title="{i18n>LABEL_02023}" contentWidth="500px" contentHeight="300px">
         <beginButton>
-            <Button text="Close" press=".onClick" class="cancel" />
+            <Button text="{i18n>LABEL_00115}" press=".onClick" class="cancel" />
         </beginButton>
         <content>
             <table:Table id="targetTable" width="100%" rows="{/TargetList}" visibleRowCount="1" selectionMode="None" rowHeight="37" columnHeaderHeight="38" columnHeaderVisible="false" cellClick=".TargetClick">
