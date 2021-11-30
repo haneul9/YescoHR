@@ -127,14 +127,14 @@ sap.ui.define(
 
         try {
           if (sAppno) {
-            const mRowData = await this.readLeaveApplEmpList({ Prcty: 'R', Appno: sAppno });
+            const aRowData = await this.readLeaveApplEmpList({ Prcty: 'R', Appno: sAppno });
 
-            oViewModel.setProperty('/ZappStatAl', mRowData[0].ZappStatAl);
+            oViewModel.setProperty('/ZappStatAl', aRowData[0].ZappStatAl);
             oViewModel.setProperty('/form/listMode', 'None');
 
-            this.setTableData({ sType, oViewModel, mRowData });
-            this.initializeApplyInfoBox(mRowData[0]);
-            this.initializeApprovalBox(mRowData[0]);
+            this.setTableData({ sType, oViewModel, aRowData });
+            this.initializeApplyInfoBox(aRowData[0]);
+            this.initializeApprovalBox(aRowData[0]);
           } else {
             if (sType === this.PAGE_TYPE.CHANGE || sType === this.PAGE_TYPE.CANCEL) {
               const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
@@ -147,7 +147,7 @@ sap.ui.define(
               }
 
               // 변경|취소 신청의 경우 List페이지에서 선택된 데이터를 가져온다.
-              this.setTableData({ sType, oViewModel, mRowData: mListSelectedData });
+              this.setTableData({ sType, oViewModel, aRowData: mListSelectedData });
             }
 
             this.initializeApplyInfoBox();
@@ -170,11 +170,11 @@ sap.ui.define(
         }
       },
 
-      setTableData({ sType, oViewModel, mRowData }) {
-        oViewModel.setProperty('/form/rowCount', mRowData.length);
+      setTableData({ sType, oViewModel, aRowData }) {
+        oViewModel.setProperty('/form/rowCount', aRowData.length);
         oViewModel.setProperty(
           '/form/list',
-          mRowData.map((o) => {
+          aRowData.map((o) => {
             if (sType === this.PAGE_TYPE.CHANGE) {
               return {
                 ...o,
