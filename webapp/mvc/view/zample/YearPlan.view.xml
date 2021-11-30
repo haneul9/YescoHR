@@ -2,6 +2,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:core="sap.ui.core"
     xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:custom="sap.ui.yesco.control"
     xmlns="sap.m">
     <Page showHeader="false">
         <content>
@@ -12,21 +13,22 @@
                     <Button icon="sap-icon://navigation-right-arrow" press=".onPressNextYear" />
                 </HBox>
                 <grid:CSSGrid id="yearPlanGrid" gridTemplateColumns="70px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr" gridGap="1px" items="{path: '/plans'}">
-                    <FlexBox width="100%">
-                        <customData>
+                    <custom:DayBox width="100%" mouseover=".onMouseOverDayBox" mouseout=".onMouseOutDayBox">
+                        <custom:customData>
                             <core:CustomData key="day" value="{day}" />
                             <core:CustomData key="style" value="{classNames}" writeToDom="true" />
                             <core:CustomData key="border" value="{borderNames}" writeToDom="true" />
-                        </customData>
+                        </custom:customData>
                         <Text width="100%" textAlign="Center" text="{label}">
                             <layoutData>
                                 <FlexItemData growFactor="1" />
                             </layoutData>
                             <customData>
+                                <core:CustomData key="day" value="{day}" />
                                 <core:CustomData key="stripes" value="{stripes}" writeToDom="true" />
                             </customData>
                         </Text>
-                    </FlexBox>
+                    </custom:DayBox>
                 </grid:CSSGrid>
             </VBox>
         </content>

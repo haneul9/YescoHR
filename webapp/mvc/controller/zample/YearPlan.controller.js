@@ -33,6 +33,7 @@ sap.ui.define(
             20210728: { type: 'Type03', inProgress: 'OK' },
             20210915: { type: 'Type04', inProgress: 'None' },
             20211125: { type: 'Type05', inProgress: 'None' },
+            20211130: { type: 'Type05', inProgress: 'OK' },
             20200219: { type: 'Type01', inProgress: 'None' },
             20200402: { type: 'Type02', inProgress: 'None' },
             20200831: { type: 'Type03', inProgress: 'OK' },
@@ -79,12 +80,16 @@ sap.ui.define(
         this.makeCalendarControl();
       },
 
+      onMouseOverDayBox(oEvent) {
+        console.log(oEvent.srcControl.getCustomData()[0].getValue());
+      },
+      onMouseOutDayBox(oEvent) {
+        console.log(oEvent.srcControl.getCustomData()[0].getValue());
+      },
+
       makeCalendarControl() {
         const oViewModel = this.getViewModel();
-        const mBody = new Array(12)
-          .join()
-          .split(',')
-          .map((d, i) => this.getWeekBody(i));
+        const mBody = Array.from(Array(12).keys()).map((d, i) => this.getWeekBody(i));
 
         oViewModel.setProperty('/plans', [...this.getWeekHeader(), ...mBody.reduce((a, b) => [...a, ...b], [])]);
       },
@@ -117,28 +122,13 @@ sap.ui.define(
         const iFirstDay = dFirstDayOfYear.day();
         const iLeadingNoneCount = iFirstDay === 0 ? 6 : iFirstDay - 1;
         const iTrailingNoneCount = 37 - iLeadingNoneCount - iDaysInMonth;
-        const aLeadingNoneBox =
-          iLeadingNoneCount > 0
-            ? new Array(iLeadingNoneCount)
-                .join()
-                .split(',')
-                .map(() => this.getBoxObject({ classNames: 'None' }))
-            : [];
-        const aTrailingNoneBox =
-          iTrailingNoneCount > 0
-            ? new Array(iTrailingNoneCount)
-                .join()
-                .split(',')
-                .map(() => this.getBoxObject({ classNames: 'None' }))
-            : [];
+        const aLeadingNoneBox = Array.from(Array(iLeadingNoneCount).keys()).map(() => this.getBoxObject({ classNames: 'None' })) ?? [];
+        const aTrailingNoneBox = Array.from(Array(iTrailingNoneCount).keys()).map(() => this.getBoxObject({ classNames: 'None' })) ?? [];
 
         return [
           this.getBoxObject({ label: _.toUpper(dFirstDayOfYear.format('MMM')), classNames: 'Header' }),
           ...aLeadingNoneBox,
-          ...new Array(iDaysInMonth)
-            .join()
-            .split(',')
-            .map((d, i) => this.getActivationDayBody(month, i + 1)),
+          ...Array.from(Array(iDaysInMonth).keys()).map((d, i) => this.getActivationDayBody(month, i + 1)),
           ...aTrailingNoneBox,
         ];
       },
