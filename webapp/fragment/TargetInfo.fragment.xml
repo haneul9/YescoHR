@@ -7,7 +7,7 @@
         </HBox>
         <HBox class="my-info">
             <VBox class="member-picture" width="38%">
-                <Image src="{targetModel>/Photo}" mode="Background" backgroundPosition="center center" backgroundSize="contain" width="9.13rem" height="9.13rem" />
+                <Image src="{targetModel>/Photo}" mode="Background" backgroundPosition="center center" width="9.13rem" height="9.13rem" />
             </VBox>
             <VBox justifyContent="Center" class="my-info-detail" height="100%">
                 <Text text="{targetModel>/Ename}" class="name" />
