@@ -1,7 +1,7 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.App"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc" displayBlock="true">
-	<OverflowToolbar id="appMenuToolbar" asyncMode="true" busy="{appModel>/isMenuBusy}" busyIndicatorDelay="0" class="app-menu-toolbar">
+	<OverflowToolbar id="appMenuToolbar" asyncMode="true" busy="{appModel>/isMenuBusy}" busyIndicatorDelay="0" class="app-menu-toolbar" height="60px">
 		<ImageContent id="logoImage" src="{ path: 'sessionModel>/Werks', formatter: '.getLogoPath' }" description="{sessionModel>/Pbtxt} eHR Home" press=".navToHome">
 			<layoutData>
 				<OverflowToolbarLayoutData priority="NeverOverflow"/>

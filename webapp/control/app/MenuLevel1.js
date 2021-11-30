@@ -38,10 +38,8 @@ sap.ui.define(
       /**
        * Top 메뉴 mouseover 이벤트 처리 : 메뉴 popover가 열려있지 않으면 열어줌
        */
-      onmouseover(oEvent) {
-        if (oEvent.target.id === oEvent.toElement.id && oEvent.toElement.tagName === 'SPAN') {
-          this.getAppMenu().openMenuPopoverBy(this);
-        }
+      onmouseover() {
+        this.getAppMenu().openMenuPopoverBy(this);
       },
 
       /**
