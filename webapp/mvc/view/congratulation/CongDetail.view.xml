@@ -38,7 +38,7 @@
 						</VBox>
 						<Label text="{i18n>LABEL_02014}"/>
 						<VBox>
-							<custom:DatePicker id='BirthDatePicker' class="sapIcon_Date" dateValue="{ path: '/FormData/Zbirthday', type: 'sap.ui.yesco.mvc.model.ODataDate' }" width="250px" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+							<custom:DatePicker id='BirthDatePicker' class="sapIcon_Date" dateValue="{ path: '/FormData/Zbirthday', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
 						</VBox>
 						<Label text="{i18n>LABEL_02008}"/>
 						<ComboBox id="BenefitCause" items="{/BenefitCause}" selectedKey="{/FormData/Conresn}" width="250px" change=".onCauseChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
@@ -46,7 +46,7 @@
 						</ComboBox>
 						<Label text="{i18n>LABEL_02009}"/>
 						<VBox>
-							<custom:DatePicker class="sapIcon_Date" dateValue="{ path: '/FormData/Conddate', type: 'sap.ui.yesco.mvc.model.ODataDate' }" width="250px" change=".onBenefitChangeDate" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+							<custom:DatePicker class="sapIcon_Date" dateValue="{ path: '/FormData/Conddate', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" change=".onBenefitChangeDate" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
 						</VBox>
 						<Label text="{i18n>LABEL_02015}"/>
 						<VBox>
