@@ -1,4 +1,5 @@
 {
+  "prettier.disableLanguages": ["css"],
   "useTabs": false,
   "tabWidth": 2,
   "printWidth": 240,
