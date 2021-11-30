@@ -5,7 +5,7 @@
 	xmlns:custom="sap.ui.yesco.control">
 	<Page showHeader="false">
 		<content>
-			<VBox>
+			<VBox class="contents-header">
 				<HBox justifyContent="SpaceBetween" class="breadcrumbs">
 					<custom:Breadcrumbs />
 					<HBox>
@@ -14,12 +14,14 @@
 						<Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
 						<Button text="{i18n>LABEL_00118}" press=".onCancelBtn" visible="{= ${/FormData/Lnsta} === '20' }" />
 						<Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= ${/FormData/Lnsta} === '10' || ${/FormData/Lnsta} === '45' }" />
-						<Button text="{i18n>LABEL_00146}" press=".onNavBack" />
+						<Button text="{i18n>LABEL_00146}" press=".onNavBack" class="sapUiTinyMarginEnd" />
 						<Button text="{i18n>LABEL_07018}" type="Transparent" press=".onAppPDF" visible="{= ${/FormData/Lnsta} === '10' || ${/FormData/Lnsta} === '20' || ${/FormData/Lnsta} === '30' }" />
-						<Button text="{i18n>LABEL_00131}" icon="sap-icon://print" press=".FragmentEvent.onPagePrint" type="Transparent" />
+						<Button text="{i18n>LABEL_00131}" icon="sap-icon://print" press=".FragmentEvent.onPagePrint" type="Transparent" class="sapUiTinyMarginEnd" />
 						<Button text="{i18n>LABEL_00132}" icon="sap-icon://sys-help" type="Transparent" />
 					</HBox>
 				</HBox>
+			</VBox>
+			<VBox class="contents">
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.DetailTargetInfo" type="XML" />
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.InfoMessage" type="XML" />
 				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.housingLoan.fragment.DetailForm" type="XML" />

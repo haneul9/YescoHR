@@ -77,22 +77,23 @@ sap.ui.define(
         return `${vPay}${this.getBundleText('LABEL_00158')}`;
       },
 
-      onSearch() {
+      async onSearch() {
+        const oModel = this.getModel(ServiceNames.BENEFIT);
+        const oListModel = this.getViewModel();
+        const oTable = this.byId('loanTable');
+        const oSearch = oListModel.getProperty('/search');
+        const dDate = moment(oSearch.secondDate).hours(10).toDate();
+        const dDate2 = moment(oSearch.date).hours(10).toDate();
+        const vLoanType = !oSearch.Lntyp || oSearch.Lntyp === 'ALL' ? '' : oSearch.Lntyp;
+        const sMenid = await this.getCurrentMenuId();
+        
         return new Promise((resolve) => {
-          const oModel = this.getModel(ServiceNames.BENEFIT);
-          const oListModel = this.getViewModel();
-          const oTable = this.byId('loanTable');
-          const oSearch = oListModel.getProperty('/search');
-          const dDate = moment(oSearch.secondDate).hours(10).toDate();
-          const dDate2 = moment(oSearch.date).hours(10).toDate();
-          const vLoanType = !oSearch.Lntyp || oSearch.Lntyp === 'ALL' ? '' : oSearch.Lntyp;
-
           oListModel.setProperty('/busy', true);
 
           oModel.read('/LoanAmtApplSet', {
             filters: [
               new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'),
-              new sap.ui.model.Filter('Actty', sap.ui.model.FilterOperator.EQ, 'E'),
+              new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid),
               new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate),
               new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2),
               new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, vLoanType),

@@ -22,19 +22,19 @@
                     </Text>
                 </table:template>
             </table:Column>
-            <table:Column width="220px" sortProperty="Lntyptx" filterProperty="Lntyptx">
+            <table:Column width="200px" sortProperty="Lntyptx" filterProperty="Lntyptx">
                 <Label text="{i18n>LABEL_07002}"/>
                 <table:template>
                     <Text text="{Lntyptx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="60px" sortProperty="Count" filterProperty="Count">
+            <table:Column width="50px" sortProperty="Count" filterProperty="Count">
                 <Label text="{i18n>LABEL_07003}"/>
                 <table:template>
                     <Text text="{Count}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="auto" sortProperty="Appda" filterProperty="Appda">
+            <table:Column width="100px" sortProperty="Appda" filterProperty="Appda">
                 <Label text="{i18n>LABEL_00266}"/>
                 <table:template>
                     <Text text="{
@@ -43,7 +43,7 @@
                     }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="auto" sortProperty="Begda" filterProperty="Begda">
+            <table:Column width="100px" sortProperty="Begda" filterProperty="Begda">
                 <Label text="{i18n>LABEL_02012}"/>
                 <table:template>
                     <Text text="{
@@ -52,7 +52,7 @@
                     }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="auto" sortProperty="Endda" filterProperty="Endda">
+            <table:Column width="100px" sortProperty="Endda" filterProperty="Endda">
                 <Label text="{i18n>LABEL_07004}"/>
                 <table:template>
                     <Text text="{
@@ -61,7 +61,7 @@
                     }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="auto" sortProperty="Lstdt" filterProperty="Lstdt">
+            <table:Column width="100px" sortProperty="Lstdt" filterProperty="Lstdt">
                 <Label text="{i18n>LABEL_07005}"/>
                 <table:template>
                     <Text text="{
@@ -70,7 +70,7 @@
                     }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="auto" sortProperty="Rpdat1" filterProperty="Rpdat1">
+            <table:Column width="100px" sortProperty="Rpdat1" filterProperty="Rpdat1">
                 <Label text="{i18n>LABEL_07006}"/>
                 <table:template>
                     <Text text="{
@@ -79,7 +79,7 @@
                     }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="auto" sortProperty="Rpdat2" filterProperty="Rpdat2">
+            <table:Column width="100px" sortProperty="Rpdat2" filterProperty="Rpdat2">
                 <Label text="{i18n>LABEL_07007}"/>
                 <table:template>
                     <Text text="{
@@ -88,7 +88,7 @@
                     }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="auto" sortProperty="RpdatMid" filterProperty="RpdatMid">
+            <table:Column width="100px" sortProperty="RpdatMid" filterProperty="RpdatMid">
                 <Label text="{i18n>LABEL_07008}"/>
                 <table:template>
                     <Text text="{
@@ -97,7 +97,7 @@
                 }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="auto" sortProperty="Lnamt" filterProperty="Lnamt">
+            <table:Column width="110px" sortProperty="Lnamt" filterProperty="Lnamt">
                 <Label text="{i18n>LABEL_07009}"/>
                 <table:template>
                     <Text text="{
@@ -106,13 +106,13 @@
                     }" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="auto" sortProperty="Recount" filterProperty="Recount">
+            <table:Column width="80px" sortProperty="Recount" filterProperty="Recount">
                 <Label text="{i18n>LABEL_07010}"/>
                 <table:template>
                     <Text text="{Recount}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="auto" sortProperty="RpamtRep" filterProperty="RpamtRep">
+            <table:Column width="110px" sortProperty="RpamtRep" filterProperty="RpamtRep">
                 <Label text="{i18n>LABEL_07011}"/>
                 <table:template>
                     <Text text="{
@@ -121,7 +121,7 @@
                     }" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="auto" sortProperty="Rpamt1" filterProperty="Rpamt1">
+            <table:Column width="110px" sortProperty="Rpamt1" filterProperty="Rpamt1">
                 <Label text="{i18n>LABEL_07012}"/>
                 <table:template>
                     <Text text="{
@@ -130,7 +130,7 @@
                     }" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="auto" sortProperty="Rpamt2" filterProperty="Rpamt2">
+            <table:Column width="110px" sortProperty="Rpamt2" filterProperty="Rpamt2">
                 <Label text="{i18n>LABEL_07013}"/>
                 <table:template>
                     <Text text="{
@@ -139,7 +139,7 @@
                     }" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="auto" sortProperty="RpamtMpr" filterProperty="RpamtMpr">
+            <table:Column width="110px" sortProperty="RpamtMpr" filterProperty="RpamtMpr">
                 <Label text="{i18n>LABEL_07014}"/>
                 <table:template>
                     <Text text="{
@@ -148,7 +148,7 @@
                     }" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="auto" sortProperty="RpamtBal" filterProperty="RpamtBal">
+            <table:Column width="110px" sortProperty="RpamtBal" filterProperty="RpamtBal">
                 <Label text="{i18n>LABEL_07015}"/>
                 <table:template>
                     <Text text="{
