@@ -27,6 +27,8 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.zample.OrgChart', {
       async onBeforeShow() {
+        AppUtils.setAppBusy(true, this);
+
         try {
           const oRootNode = { Objid: '00000001', Upobjid: '', Ename: 'Yesco', Pernr: '', Botxt: '', Photo: 'https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1' };
           const mReturnData = (await this.readEmployeeOrgTree()) ?? [oRootNode];
@@ -63,11 +65,14 @@ sap.ui.define(
             },
           });
 
+          oChartHolder.removeAllItems();
           oChartHolder.addItem(oChart);
         } catch (oError) {
           this.debug('Controller > OrgChart > onObjectMatched Error', oError);
 
           AppUtils.handleError(oError);
+        } finally {
+          AppUtils.setAppBusy(false, this);
         }
       },
 
