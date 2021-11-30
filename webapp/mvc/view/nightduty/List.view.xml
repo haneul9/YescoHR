@@ -1,177 +1,25 @@
-<mvc:View controllerName="sap.ui.yesco.mvc.controller.congratulation.Congratulation"
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.nightduty.List"
 	xmlns="sap.m"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:table="sap.ui.table"
-	xmlns:grid="sap.ui.layout.cssgrid"
 	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:custom="sap.ui.yesco.control">
 	<Page showHeader="false">
 		<VBox class="contents-header">
 			<HBox justifyContent="SpaceBetween" class="breadcrumbs">
 				<custom:Breadcrumbs />
 				<HBox>
-					<Button text="{i18n>LABEL_00121}" press=".onClick" type="Emphasized" class="sapUiTinyMarginEnd" />
-					<Button text="{i18n>LABEL_00131}" icon="sap-icon://print" press=".FragmentEvent.onPagePrint" class="sapUiTinyMarginEnd" />
-					<Button text="{i18n>LABEL_00132}" icon="sap-icon://sys-help" />
+					<Button text="{i18n>LABEL_00121}" press=".onClick" type="Emphasized" />
 				</HBox>
 			</HBox>
 		</VBox>
 		<VBox class="contents">
 			<HBox justifyContent="SpaceAround" class="sapUiMediumMarginBottom">
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.TargetInfo" type="XML" />
-				<VBox class="hCardBox sapUiMediumMarginEnd expenses-info-wrap" width="33%" busyIndicatorDelay="0" busy="{/busy}">
-					<core:Fragment fragmentName="sap.ui.yesco.mvc.view.nightduty.fragment.Overview" type="XML" />
-				</VBox>
-				<VBox class="hCardBox" width="33%">
-					<core:Fragment fragmentName="sap.ui.yesco.mvc.view.nightduty.fragment.SearchCondition" type="XML" />
-				</VBox>
+				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.nightduty.fragment.Summary" type="XML" />
+				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.nightduty.fragment.SearchCondition" type="XML" />
 			</HBox>
 			<VBox class="vCardBox">
-				<core:Fragment fragmentName="sap.ui.yesco.fragment.OverviewTableHeader" type="XML" />
-				<table:Table id="conguTable" rows="{/CongList}" width="100%" visibleRowCount="{/listInfo/rowCount}" selectionMode="None" columnHeaderHeight="50" rowHeight="50" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
-					<table:rowSettingsTemplate>
-						<table:RowSettings highlight="{
-							path: 'ZappStatAl',
-							formatter: '.TableUtils.rowHighlight'
-						}"/>
-					</table:rowSettingsTemplate>
-					<table:columns>
-						<table:Column width="100px" sortProperty="ZappStatAl" filterProperty="ZappStatAl">
-							<Label text="{i18n>LABEL_00144}"/>
-							<table:template>
-								<Text text="{
-										path: 'ZappStatAl',
-										formatter: '.TableUtils.StatusTxt'
-									}" width="100%" textAlign="Center">
-									<customData>
-										<core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
-									</customData>
-								</Text>
-							</table:template>
-						</table:Column>
-						<table:Column width="100px" sortProperty="Pernr" filterProperty="Pernr">
-							<Label text="{i18n>LABEL_00209}"/>
-							<table:template>
-								<Text text="{Pernr}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-							</table:template>
-						</table:Column>
-						<table:Column width="80px" sortProperty="Ename" filterProperty="Ename">
-							<Label text="{i18n>LABEL_00210}"/>
-							<table:template>
-								<Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
-							</table:template>
-						</table:Column>
-						<table:Column width="100px" sortProperty="Zzjikgbt" filterProperty="Zzjikgbt">
-							<Label text="{i18n>LABEL_02004}"/>
-							<table:template>
-								<Text text="{Zzjikgbt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-							</table:template>
-						</table:Column>
-						<table:Column width="100px" sortProperty="Orgtx" filterProperty="Orgtx">
-							<Label text="{i18n>LABEL_00227}"/>
-							<table:template>
-								<Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
-							</table:template>
-						</table:Column>
-						<table:Column width="100px" sortProperty="Zname" filterProperty="Zname">
-							<Label text="{i18n>LABEL_02005}"/>
-							<table:template>
-								<Text text="{Zname}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
-							</table:template>
-						</table:Column>
-						<table:Column width="80px" sortProperty="Famtx" filterProperty="Famtx">
-							<Label text="{i18n>LABEL_02006}"/>
-							<table:template>
-								<Text text="{Famtx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-							</table:template>
-						</table:Column>
-						<table:Column width="100px" sortProperty="Context" filterProperty="Context">
-							<Label text="{i18n>LABEL_02007}"/>
-							<table:template>
-								<Text text="{Context}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
-							</table:template>
-						</table:Column>
-						<table:Column width="150px" sortProperty="Conretx" filterProperty="Conretx">
-							<Label text="{i18n>LABEL_02008}"/>
-							<table:template>
-								<Text text="{Conretx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-							</table:template>
-						</table:Column>
-						<table:Column width="100px" sortProperty="Conddate" filterProperty="Conddate">
-							<Label text="{i18n>LABEL_02009}"/>
-							<table:template>
-								<Text text="{
-										path: 'Conddate',
-										type: 'sap.ui.model.type.Date',
-										formatOptions: {
-											pattern: 'yyyy.MM.dd'
-										}
-									}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-							</table:template>
-						</table:Column>
-						<table:Column width="100px" sortProperty="Conrdate" filterProperty="Conrdate">
-							<Label text="{i18n>LABEL_02010}"/>
-							<table:template>
-								<Text text="{
-										path: 'Conrdate',
-										type: 'sap.ui.model.type.Date',
-										formatOptions: {
-											pattern: 'yyyy.MM.dd'
-										}
-									}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-							</table:template>
-						</table:Column>
-						<table:Column width="100px" sortProperty="ZpayBetT" filterProperty="ZpayBetT">
-							<Label text="{i18n>LABEL_02011}"/>
-							<table:template>
-								<Text text="{ZpayBetT}" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
-							</table:template>
-						</table:Column>
-						<table:Column width="90px">
-							<Label text="{i18n>LABEL_00133}"/>
-							<table:template>
-								<Button type="Transparent" icon="sap-icon://attachment" class="w-100" press=".TableUtils.onFileListDialog" visible="{= ${Docyn} === 'Y' }"/>
-								<!-- <Text text="{Docynt}" textAlign="Center" width="100%" wrapping="false" /> -->
-							</table:template>
-						</table:Column>
-						<table:Column width="auto" sortProperty="Appda" filterProperty="Appda">
-							<Label text="{i18n>LABEL_00266}"/>
-							<table:template>
-								<Text text="{
-										path: 'Appda',
-										type: 'sap.ui.model.type.Date',
-										formatOptions: {
-											pattern: 'yyyy.MM.dd'
-										}
-									}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-							</table:template>
-						</table:Column>
-						<table:Column width="auto" sortProperty="Sgnda" filterProperty="Sgnda">
-							<Label text="{i18n>LABEL_00269}"/>
-							<table:template>
-								<Text text="{
-										path: 'Sgnda',
-										type: 'sap.ui.model.type.Date',
-										formatOptions: {
-											pattern: 'yyyy.MM.dd'
-										}
-									}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-							</table:template>
-						</table:Column>
-						<table:Column width="auto" sortProperty="Paydt" filterProperty="Paydt">
-							<Label text="{i18n>LABEL_02012}"/>
-							<table:template>
-								<Text text="{
-										path: 'Paydt',
-										type: 'sap.ui.model.type.Date',
-										formatOptions: {
-											pattern: 'yyyy.MM.dd'
-										}
-									}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-							</table:template>
-						</table:Column>
-					</table:columns>
-				</table:Table>
+				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.nightduty.fragment.OverviewTable" type="XML" />
 			</VBox>
 		</VBox>
 	</Page>

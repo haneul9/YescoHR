@@ -11,7 +11,7 @@
             <core:Item key="{Zcode}" text="{Ztext}" />
         </ComboBox>
         <Label text="{i18n>LABEL_00271}" />
-        <custom:DatePicker width="100%" value="{ path: '/employee/dialog/form/Begda', type: 'sap.ui.yesco.mvc.model.ODataDate' }" class="sapIcon_Date" />
+        <custom:DatePicker width="100%" value="{ path: '/employee/dialog/form/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" />
         <Label text="{i18n>LABEL_00272}" />
         <ComboBox width="100%" selectedKey="{/employee/dialog/form/State}" items="{ path: '/employee/dialog/sidoList' }">
             <core:Item key="{State}" text="{Bezei}" />

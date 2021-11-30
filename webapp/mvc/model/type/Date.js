@@ -15,9 +15,9 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return SimpleType.extend('sap.ui.yesco.mvc.model.ODataDate', {
+    return SimpleType.extend('sap.ui.yesco.mvc.model.type.Date', {
       formatValue(oValue, sTargetType) {
-        // AppUtils.debug(`sap.ui.yesco.mvc.model.ODataDate.formatValue(${oValue}, ${sTargetType})`);
+        // AppUtils.debug(`sap/ui/yesco/mvc/model/type/Date.formatValue(${oValue}, ${sTargetType})`);
 
         switch (this.getPrimitiveType(sTargetType)) {
           case 'string':
@@ -31,7 +31,7 @@ sap.ui.define(
       },
 
       parseValue(oValue, sTargetType) {
-        // AppUtils.debug(`sap.ui.yesco.mvc.model.ODataDate.parseValue(${oValue}, ${sTargetType})`);
+        // AppUtils.debug(`sap/ui/yesco/mvc/model/type/Date.parseValue(${oValue}, ${sTargetType})`);
 
         switch (this.getPrimitiveType(sTargetType)) {
           case 'string':

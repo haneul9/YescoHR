@@ -17,7 +17,7 @@ sap.ui.define(
      * 주의 : formatter 사용시 format으로 변환된 값은 해당 control에만 적용되며
      *        model이 TwoWay binding mode라도 model에는 저장되지 않음
      *        model에도 저장이 되도록 하려면 SimpleType을 확장하여 커스텀 type을 만들어 사용해야함
-     *        예) sap.ui.yesco.mvc.model.ODataDate
+     *        예) sap.ui.yesco.mvc.model.type.Date
      */
     const DateUtils = {
       format(vValue) {
