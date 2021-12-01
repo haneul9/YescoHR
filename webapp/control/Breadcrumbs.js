@@ -3,6 +3,7 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/m/Breadcrumbs',
     'sap/m/BreadcrumbsSeparatorStyle',
+    'sap/m/FlexItemData',
     'sap/m/Link',
     'sap/ui/yesco/common/AppUtils',
   ],
@@ -10,6 +11,7 @@ sap.ui.define(
     // prettier 방지용 주석
     Breadcrumbs,
     SeparatorStyle,
+    FlexItemData,
     Link,
     AppUtils
   ) => {
@@ -22,7 +24,8 @@ sap.ui.define(
         Breadcrumbs.apply(this, aArgs);
 
         const oMenuModel = AppUtils.getAppComponent().getMenuModel();
-        this.setModel(oMenuModel)
+        this.setLayoutData(new FlexItemData({ growFactor: 1 }))
+          .setModel(oMenuModel)
           .setSeparatorStyle(SeparatorStyle.GreaterThan)
           .bindProperty('currentLocationText', '/breadcrumbs/currentLocationText')
           .bindAggregation('links', {
