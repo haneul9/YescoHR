@@ -586,14 +586,14 @@ sap.ui.define(
        * @param {String} sPrcty -  T:임시저장, C:신청
        * @returns
        */
-      async createLeaveApplContent(sPrcty) {
+      createLeaveApplContent(sPrcty) {
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const oViewModel = this.getViewModel();
         const oTargetInfo = this.getOwnerComponent().getTargetModel().getData();
         const mTableData = oViewModel.getProperty('/form/list');
         const sAppty = oViewModel.getProperty('/type');
         const sAppno = oViewModel.getProperty('/Appno');
-        const sMenid = await this.getCurrentMenuId();
+        const sMenid = this.getCurrentMenuId();
         const sUrl = '/LeaveApplContentSet';
         let aLeaveApplNav1 = [...mTableData];
 
