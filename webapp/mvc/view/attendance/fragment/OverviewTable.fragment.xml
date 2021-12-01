@@ -29,7 +29,7 @@
                 <table:Column width="8%" filterProperty="Appernr" sortProperty="Pernr">
                     <Label text="{i18n>LABEL_00209}"/>
                     <table:template>
-                        <Text text="{Pernr}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                        <Text text="{ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                     </table:template>
                 </table:Column>
                 <table:Column width="8%" filterProperty="Apename" sortProperty="Ename">
