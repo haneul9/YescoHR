@@ -55,12 +55,10 @@ sap.ui.define(
         this.setViewModel(oViewModel);
       },
 
-      async onAfterShow() {
+      async onObjectMatched() {
         this.totalCount();
         await this.getTypeCode();
         await this.onSearch();
-
-        BaseController.prototype.onAfterShow.call(this);
       },
 
       onClick() {

@@ -53,11 +53,9 @@ sap.ui.define(
         this.setViewModel(oViewModel);
       },
 
-      onAfterShow() {
+      onObjectMatched(oParameter) {
         this.onSearch();
         this.totalCount();
-
-        BaseController.prototype.onAfterShow.call(this);
       },
 
       onClick() {
