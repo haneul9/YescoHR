@@ -64,7 +64,7 @@ sap.ui.define(
       async onObjectMatched() {
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const oViewModel = this.getViewModel();
-        const sPernr = this.getSessionData().Pernr;
+        const sPernr = this.getSessionProperty('Pernr');
         const oSearchConditions = oViewModel.getProperty('/search');
 
         try {

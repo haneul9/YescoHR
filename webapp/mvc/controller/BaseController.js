@@ -114,7 +114,7 @@ sap.ui.define(
       },
 
       getSessionProperty(sPath) {
-        return this.getOwnerComponent().getSessionModel().getProperty(sPath);
+        return this.getOwnerComponent().getSessionModel().getProperty(`/${sPath}`);
       },
 
       /**
