@@ -61,9 +61,9 @@ sap.ui.define(
         this.getViewModel().setProperty('/busy', true);
       },
 
-      async onObjectMatched(oParameter) {
+      onObjectMatched(oParameter) {
         const sDataKey = oParameter.oDataKey;
-        const sMenid = await this.getCurrentMenuId();
+        const sMenid = this.getCurrentMenuId();
         const oDetailModel = this.getViewModel();
 
         oDetailModel.setProperty('/menid', sMenid);
@@ -139,7 +139,8 @@ sap.ui.define(
 
         const sRedText = `<a href='#' style='color:blue;'>${this.getBundleText('LABEL_00132')}</a>`;
 
-        oDetailModel.setProperty('/InfoMessage', 
+        oDetailModel.setProperty(
+          '/InfoMessage',
           `<p>${this.getBundleText('MSG_07021')}</p>
           <p>${this.getBundleText('MSG_07022', sRedText)}</p>`
         );

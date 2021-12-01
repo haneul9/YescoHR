@@ -71,10 +71,10 @@ sap.ui.define(
       },
 
       // 상세조회
-      async getTargetData() {
+      getTargetData() {
         const oDetailModel = this.getViewModel();
         const sDataKey = oDetailModel.getProperty('/FormStatus');
-        const sMenid = await this.getCurrentMenuId();
+        const sMenid = this.getCurrentMenuId();
 
         oDetailModel.setProperty('/menuId', sMenid);
         oDetailModel.setProperty('/TargetInfo', this.getOwnerComponent().getTargetModel().getData());

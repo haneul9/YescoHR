@@ -77,7 +77,7 @@ sap.ui.define(
         return `${vPay}${this.getBundleText('LABEL_00158')}`;
       },
 
-      async onSearch() {
+      onSearch() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oListModel = this.getViewModel();
         const oTable = this.byId('loanTable');
@@ -85,7 +85,7 @@ sap.ui.define(
         const dDate = moment(oSearch.secondDate).hours(10).toDate();
         const dDate2 = moment(oSearch.date).hours(10).toDate();
         const vLoanType = !oSearch.Lntyp || oSearch.Lntyp === 'ALL' ? '' : oSearch.Lntyp;
-        const sMenid = await this.getCurrentMenuId();
+        const sMenid = this.getCurrentMenuId();
 
         return new Promise((resolve) => {
           oListModel.setProperty('/busy', true);

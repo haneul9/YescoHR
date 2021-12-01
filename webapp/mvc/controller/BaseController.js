@@ -105,12 +105,12 @@ sap.ui.define(
         return this.getOwnerComponent().getBundleText(...aArgs);
       },
 
-      async getCurrentMenuId() {
-        const oMenuModel = this.getOwnerComponent().getMenuModel();
+      getCurrentMenuId() {
+        return this.getOwnerComponent().getMenuModel().getCurrentMenuId();
+      },
 
-        await oMenuModel.getPromise();
-
-        return oMenuModel.getCurrentMenuId();
+      getSessionData() {
+        return this.getOwnerComponent().getSessionModel().getData();
       },
 
       /**
