@@ -437,8 +437,8 @@ sap.ui.define(
               const sTableDataPath = `/employee/sub/${menuKey}/contents/${key}`;
               let oTable = new Table({
                 width: '100%',
-                columnHeaderHeight: 50,
-                rowHeight: 50,
+                columnHeaderHeight: 45,
+                rowHeight: 45,
                 selectionMode: { path: `${sTableDataPath}/selectionMode` },
                 visibleRowCount: { path: `${sTableDataPath}/rowCount` },
                 noData: this.getBundleText('MSG_00001'),

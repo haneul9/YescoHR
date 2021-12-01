@@ -1,37 +1,15 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core">
-    <HBox justifyContent="SpaceBetween">
+    xmlns:core="sap.ui.core"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:custom="sap.ui.yesco.control">
+    <HBox alignItems="End">
         <Title level="H2" text="{i18n>LABEL_04005}" />
-        <Button type="Transparent" icon="sap-icon://detail-view" />
+        <Text text="현재일 기준, 사용/잔여/발생" />
     </HBox>
-    <HBox visible="{= !!${/quota/10}}">
-        <Label text="{i18n>LABEL_04006}" design="Bold" />
-        <VBox width="80%">
-            <ProgressIndicator class="sapUiSmallMarginBottom" percentValue="{/quota/10/Rate}" displayValue="{/quota/10/Usecnt}" showValue="true" state="Information" width="100%" />
-            <HBox justifyContent="SpaceBetween">
-                <Text text="0" />
-                <Text text="{/quota/10/Crecnt}" />
-            </HBox>
+    <grid:CSSGrid gridTemplateColumns="1fr 1fr 1fr" gridGap="8px" items="{ path: '/quota' }">
+        <VBox alignItems="Start">
+            <Label text="{Kotxt}" />
+            <custom:VacationIndicator width="8rem" total="{Crecnt}" used="{Usecnt}" showTotal="true" />
         </VBox>
-    </HBox>
-    <HBox visible="{= !!${/quota/20}}">
-        <Label text="{i18n>LABEL_04007}" design="Bold" />
-        <VBox width="80%">
-            <ProgressIndicator class="sapUiSmallMarginBottom" percentValue="{/quota/20/Rate}" displayValue="{/quota/20/Usecnt}" showValue="true" state="Error" width="100%" />
-            <HBox justifyContent="SpaceBetween">
-                <Text text="0" />
-                <Text text="{/quota/20/Crecnt}" />
-            </HBox>
-        </VBox>
-    </HBox>
-    <HBox visible="{= !!${/quota/30}}">
-        <Label text="{i18n>LABEL_04008}" design="Bold" />
-        <VBox width="80%">
-            <ProgressIndicator class="sapUiSmallMarginBottom" percentValue="{/quota/30/Rate}" displayValue="{/quota/30/Usecnt}" showValue="true" state="Success" width="100%" />
-            <HBox justifyContent="SpaceBetween">
-                <Text text="0" />
-                <Text text="{/quota/30/Crecnt}" />
-            </HBox>
-        </VBox>
-    </HBox>
+    </grid:CSSGrid>
 </core:FragmentDefinition>

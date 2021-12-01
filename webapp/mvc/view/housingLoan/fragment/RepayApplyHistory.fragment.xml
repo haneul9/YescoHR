@@ -6,7 +6,7 @@
             <Title level="H3" text="{i18n>LABEL_07036}" class="sapUiSmallMarginEnd" />
             <Button width="117px" text="{i18n>LABEL_07034}" press=".onRepayDetailApp" />
         </HBox>
-        <table:Table id="repaymentTable" rows="{/LoanAppList}" visibleRowCount="{/listInfo/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="50px" rowHeight="50px" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
+        <table:Table id="repaymentTable" rows="{/LoanAppList}" visibleRowCount="{/listInfo/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="45" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
             <table:rowSettingsTemplate>
                 <table:RowSettings highlight="{
                     path: 'Lnsta',

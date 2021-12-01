@@ -18,7 +18,6 @@
             <HBox>
                 <VBox id="sideBody" class="vCardBox sapUiTinyMarginEnd" height="{/sideNavigation/height}" width="{/sideNavigation/width}">
                     <HBox justifyContent="SpaceBetween">
-                        <SearchField value="{/sideNavigation/search/searchText}" placeholder="{i18n>LABEL_00276}" visible="{= ${/sideNavigation/isShow}}" search=".onPressEmployeeSearch" />
                         <Switch state="true" customTextOn="{i18n>LABEL_00115}" customTextOff="{i18n>LABEL_00153}" change=".onToggleNavigation"/>
                     </HBox>
                     <IconTabBar selectedKey="list" expandable="false" visible="{= ${/sideNavigation/isShow}}" select=".onSelectSideTab">

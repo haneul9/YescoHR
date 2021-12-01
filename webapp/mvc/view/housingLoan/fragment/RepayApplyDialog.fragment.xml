@@ -15,32 +15,48 @@
             <VBox class="vCardBox sapUiMediumMarginBottom">
                 <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="20px">
                     <Label text="{i18n>LABEL_07040}" />
-                    <ComboBox items="{/LaonType}" selectedKey="{/DialogData/Rptyp}" change=".onLaonType" editable="{= ${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta} }">
-                        <core:Item text="{Ztext}" key="{Zcode}" />
-                    </ComboBox>
+                    <VBox>
+                        <ComboBox items="{/LaonType}" selectedKey="{/DialogData/Rptyp}" change=".onLaonType" editable="{= ${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta} }">
+                            <core:Item text="{Ztext}" key="{Zcode}" />
+                        </ComboBox>
+                    </VBox>
                     <Label text="{i18n>LABEL_07045}" />
-                    <Text text="{/DialogData/Lnrte}"/>
+                    <VBox>
+                        <Text text="{/DialogData/Lnrte}"/>
+                    </VBox>
                     <Label text="{i18n>LABEL_07044}"/>
-                    <custom:DatePicker class="sapIcon_Date" change=".onPayDateChange" maxDate="{/maxDate}" dateValue="{ path: '/DialogData/Paydt', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= ${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta} &amp;&amp; !!${/DateEditable} }" />
+                    <VBox>
+                        <custom:DatePicker class="sapIcon_Date" change=".onPayDateChange" maxDate="{/maxDate}" dateValue="{ path: '/DialogData/Paydt', type: 'sap.ui.yesco.mvc.model.ODataDate' }" width="250px" editable="{= (${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta}) &amp;&amp; !!${/DateEditable} }" />
+                    </VBox>
                     <Label text="{i18n>LABEL_07041}"/>
-                    <Input value="{
-                    path: '/DialogData/RpamtMpr',
-                    formatter: '.TextUtils.toCurrency'
-                }" liveChange=".repayCost" editable="{= ${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta} &amp;&amp; !${/DateEditable}}" />
+                    <VBox>
+                        <Input value="{
+                        path: '/DialogData/RpamtMpr',
+                        formatter: '.TextUtils.toCurrency'
+                    }" liveChange=".repayCost" editable="{= (${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta}) &amp;&amp; !${/DateEditable} }" />
+                    </VBox>
                     <Label text="{i18n>LABEL_00266}"/>
-                    <Text text="{
-                    path: '/DialogData/Appda',
-                    type: 'sap.ui.model.type.Date'
-                }"/>
+                    <VBox>
+                        <Text text="{
+                        path: '/DialogData/Appda',
+                        type: 'sap.ui.model.type.Date'
+                    }"/>
+                    </VBox>
                     <Label text="{i18n>LABEL_07042}"/>
-                    <Text text="{= !${/DialogData/RpamtMin} ? '0' : ${/DialogData/RpamtMin} }"/>
+                    <VBox>
+                        <Text text="{= !${/DialogData/RpamtMin} ? '0' : ${/DialogData/RpamtMin} }"/>
+                    </VBox>
                     <Label text="{i18n>LABEL_00261}"/>
-                    <Text text="{/DialogData/Lnstatx}"/>
+                    <VBox>
+                        <Text text="{/DialogData/Lnstatx}"/>
+                    </VBox>
                     <Label text="{i18n>LABEL_07046}"/>
-                    <Text text="{
-                    path: '/DialogData/RpamtTot',
-                    formatter: '.TextUtils.toCurrency'
-                }"/>
+                    <VBox>
+                        <Text text="{
+                        path: '/DialogData/RpamtTot',
+                        formatter: '.TextUtils.toCurrency'
+                    }"/>
+                    </VBox>
                     <HBox>
                         <Label text="{i18n>LABEL_00142}" visible="{= ${/DialogData/Lnsta} === '45' }"/>
                     </HBox>
@@ -48,7 +64,9 @@
                         <Text text="{/DialogData/ZappResn}" visible="{= ${/DialogData/Lnsta} === '45' }"/>
                     </HBox>
                     <Label text="{i18n>LABEL_07047}"/>
-                    <Text text="{/DialogData/Account}"/>
+                    <VBox>
+                        <Text text="{/DialogData/Account}"/>
+                    </VBox>
                 </grid:CSSGrid>
             </VBox>
             <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />

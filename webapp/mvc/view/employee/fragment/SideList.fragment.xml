@@ -1,14 +1,15 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
     <IconTabFilter text="{i18n>LABEL_00279}" key="list" class="tablist type-a">
-        <SegmentedButton width="100%" selectedKey="{/sideNavigation/search/selectedState}" selectionChange=".onChangeStat">
+        <SearchField value="{/sideNavigation/search/searchText}" placeholder="{i18n>LABEL_00276}" visible="{= ${/sideNavigation/isShow}}" search=".onPressEmployeeSearch" />
+        <SegmentedButton width="100%" selectedKey="{/sideNavigation/search/selectedState}" selectionChange=".onChangeStat" class="sapUiSmallMarginTop">
             <items>
                 <SegmentedButtonItem text="{i18n>LABEL_00245}" key="" />
                 <SegmentedButtonItem text="{i18n>LABEL_00277}" key="3" />
                 <SegmentedButtonItem text="{i18n>LABEL_00278}" key="0" />
             </items>
         </SegmentedButton>
-        <ScrollContainer height="{/sideNavigation/scrollHeight}" horizontal="false" vertical="true">
+        <ScrollContainer height="{/sideNavigation/scrollHeight}" horizontal="false" vertical="true" class="sapUiSmallMarginTop">
             <List id="sideEmployeeList" items="{path: '/sideNavigation/search/results'}" class="employee-card-list">
                 <CustomListItem type="Active" press=".onClickEmployeeCard">
                     <HBox>

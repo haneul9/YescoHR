@@ -54,7 +54,8 @@ sap.ui.define(
        *************************/
       count({ oTable, aRowData, sStatCode = 'ZappStatAl' }) {
         const aZappStatAls = _.map(aRowData, sStatCode);
-        const iVisibleRowcountLimit = Math.floor(($(document).height() - oTable.$().find('.sapUiTableCCnt').offset().top - 50) / 50);
+        const iRowHeight = oTable.getRowHeight();
+        const iVisibleRowcountLimit = Math.floor(($(document).height() - oTable.$().find('.sapUiTableCCnt').offset().top - iRowHeight) / iRowHeight);
         const oOccurCount = _.defaults(_.countBy(aZappStatAls), {
           [STATE_IN_PROGRESS1]: 0,
           [STATE_IN_PROGRESS2]: 0,
