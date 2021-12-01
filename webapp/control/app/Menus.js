@@ -96,7 +96,10 @@ sap.ui.define(
               .openBy(oMenuButton);
           });
         } else {
-          this.oMenuPopover.setModel(oMenuButton.getModel()).openBy(oMenuButton);
+          this.oMenuPopover.setModel(oMenuButton.getModel());
+          if (!this.oMenuPopover.isOpen()) {
+            this.oMenuPopover.openBy(oMenuButton);
+          }
         }
       }
 

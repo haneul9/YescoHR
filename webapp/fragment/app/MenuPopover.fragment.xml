@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
 	xmlns:core="sap.ui.core"
 	xmlns:custom="sap.ui.yesco.control.app">
-	<custom:MenuPopover contentWidth="100%" contentMinWidth="300px" contentHeight="300px" offsetY="0" showHeader="false" showArrow="false" bounce="false" enableScrolling="false" horizontalScrolling="false" placement="Bottom">
+	<custom:MenuPopover contentWidth="100%" contentMinWidth="300px" contentHeight="300px" showHeader="false" showArrow="false" horizontalScrolling="false" placement="Bottom">
 		<HBox items="{/Children}" width="100%" justifyContent="Center" wrap="Wrap">
 			<List items="{ path: 'Children', templateShareable: false }" width="10rem" rememberSelections="false" showSeparators="None" showNoData="false">
 				<headerToolbar>
