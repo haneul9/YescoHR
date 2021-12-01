@@ -29,10 +29,14 @@
             </VBox>
             <VBox alignItems="Center">
                 <Label text="{i18n>LABEL_07038}"/>
-                <Text text="{
+                <ObjectStatus text="{
+                        path: '/TargetLoanHis/RpamtBal',
+                        formatter: '.TextUtils.toCurrency'
+                    }" state="Indication04"/>
+                <!-- <Text text="{
                     path: '/TargetLoanHis/RpamtBal',
                     formatter: '.TextUtils.toCurrency'
-                }" width="100%" textAlign="Center" wrapping="false"/>
+                }" width="100%" textAlign="Center" wrapping="false"/> -->
             </VBox>
             <VBox alignItems="Center">
                 <Label text="{i18n>LABEL_07039}"/>
