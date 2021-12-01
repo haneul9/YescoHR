@@ -74,10 +74,20 @@ sap.ui.define(
         const oEventSource = oEvent.getSource();
         const sValue = oEvent.getParameter('value').trim().replace(/[^\d]/g, '');
         const oDetailModel = this.getViewModel();
+        const iPayIntrest = parseInt(oDetailModel.getProperty('/DialogData/RpamtMin'));
+        const iRepay = parseInt(sValue);
 
-        oEventSource.setValue(sValue);
-        oDetailModel.setProperty('/DialogData/RpamtMpr', sValue);
-        oDetailModel.setProperty('/DialogData/RpamtTot', sValue);
+        if (iRepay > parseInt(oDetailModel.getProperty('/TargetLoanHis/RpamtBal'))) {
+          const sBeforeRepay = oDetailModel.getProperty('/DialogData/RpamtMpr');
+
+          oEventSource.setValue(this.TextUtils.toCurrency(sBeforeRepay));
+          oDetailModel.setProperty('/DialogData/RpamtMpr', sBeforeRepay);
+          MessageBox.alert(this.getBundleText('MSG_07023'));
+        } else {
+          oEventSource.setValue(sValue);
+          oDetailModel.setProperty('/DialogData/RpamtMpr', sValue);
+          oDetailModel.setProperty('/DialogData/RpamtTot', String(iRepay + iPayIntrest));
+        }
       },
 
       // DialogData setting
@@ -222,11 +232,7 @@ sap.ui.define(
                   const aList = oData.results;
 
                   oDetailModel.setProperty('/LoanAppList', aList);
-
-                  setTimeout(() => {
-                    oDetailModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData: aList, sStatCode: 'Lnsta' }));
-                  }, 100);
-
+                  oDetailModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aList, sStatCode: 'Lnsta' }));
                   resolve();
                 }
               },
@@ -271,7 +277,11 @@ sap.ui.define(
       onLaonType(oEvent) {
         const sKey = oEvent.getSource().getSelectedKey();
 
-        if (sKey === 'ALL') return;
+        if (sKey === 'ALL') {
+          return;
+        } else if(sKey === 'FULL') {
+          this.getViewModel().setProperty('/DialogData/Paydt', new Date());
+        }
 
         this.setLoanType('Type', sKey);
       },
@@ -319,6 +329,10 @@ sap.ui.define(
           success: (oData) => {
             if (oData) {
               const oAmount = oData.results[0];
+
+              if (sType === 'Type' && sKey !== 'FULL') {
+                oDetailModel.setProperty('/DialogData/Paydt', oAmount.Paydt);
+              }
 
               oDetailModel.setProperty('/DialogData/RpamtMpr', oAmount.RpamtMpr);
               oDetailModel.setProperty('/DialogData/RpamtMin', oAmount.RpamtMin);
@@ -388,7 +402,7 @@ sap.ui.define(
 
         // 첨부파일
         if (!AttachFileAction.getFileLength.call(this)) {
-          MessageBox.alert(this.getBundleText('MSG_03005'));
+          MessageBox.alert(this.getBundleText('MSG_00045'));
           return true;
         }
 

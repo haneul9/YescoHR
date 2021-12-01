@@ -89,7 +89,7 @@ sap.ui.define(
               const oList = oData.results;
 
               oListModel.setProperty('/FamilyList', oList);
-              oListModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData: oList }));
+              oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: oList }));
               oListModel.setProperty('/busy', false);
             }
           },

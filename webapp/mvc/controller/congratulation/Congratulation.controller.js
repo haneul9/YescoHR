@@ -112,12 +112,7 @@ sap.ui.define(
           ],
           success: (oData) => {
             if (oData) {
-              const oList = oData.results.map((o) => {
-                return {
-                  ...o,
-                  Pernr: parseInt(o.Pernr, 10),
-                };
-              });
+              const oList = oData.results;
 
               oListModel.setProperty('/CongList', oList);
               oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: oList }));

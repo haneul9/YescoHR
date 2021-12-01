@@ -82,49 +82,25 @@
 								</Text>
 							</table:template>
 						</table:Column>
-						<table:Column width="100px" sortProperty="Pernr" filterProperty="Pernr">
-							<Label text="{i18n>LABEL_00209}"/>
-							<table:template>
-								<Text text="{Pernr}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-							</table:template>
-						</table:Column>
-						<table:Column width="80px" sortProperty="Ename" filterProperty="Ename">
-							<Label text="{i18n>LABEL_00210}"/>
-							<table:template>
-								<Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
-							</table:template>
-						</table:Column>
-						<table:Column width="100px" sortProperty="Zzjikgbt" filterProperty="Zzjikgbt">
-							<Label text="{i18n>LABEL_02004}"/>
-							<table:template>
-								<Text text="{Zzjikgbt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-							</table:template>
-						</table:Column>
-						<table:Column width="100px" sortProperty="Orgtx" filterProperty="Orgtx">
-							<Label text="{i18n>LABEL_00227}"/>
-							<table:template>
-								<Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
-							</table:template>
-						</table:Column>
 						<table:Column width="100px" sortProperty="Zname" filterProperty="Zname">
 							<Label text="{i18n>LABEL_02005}"/>
 							<table:template>
 								<Text text="{Zname}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
 							</table:template>
 						</table:Column>
-						<table:Column width="80px" sortProperty="Famtx" filterProperty="Famtx">
+						<table:Column width="auto" sortProperty="Famtx" filterProperty="Famtx">
 							<Label text="{i18n>LABEL_02006}"/>
 							<table:template>
 								<Text text="{Famtx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
 							</table:template>
 						</table:Column>
-						<table:Column width="100px" sortProperty="Context" filterProperty="Context">
+						<table:Column width="auto" sortProperty="Context" filterProperty="Context">
 							<Label text="{i18n>LABEL_02007}"/>
 							<table:template>
 								<Text text="{Context}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
 							</table:template>
 						</table:Column>
-						<table:Column width="150px" sortProperty="Conretx" filterProperty="Conretx">
+						<table:Column width="auto" sortProperty="Conretx" filterProperty="Conretx">
 							<Label text="{i18n>LABEL_02008}"/>
 							<table:template>
 								<Text text="{Conretx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
