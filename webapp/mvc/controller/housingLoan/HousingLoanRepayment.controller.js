@@ -65,7 +65,7 @@ sap.ui.define(
         this.getList();
       },
 
-      getCurrentLocationText(oArguments) {
+      getCurrentLocationText() {
         return this.getBundleText('LABEL_07034');
       },
 
@@ -81,7 +81,7 @@ sap.ui.define(
       },
 
       // DialogData setting
-      setDialogData(oRowData) {
+      setInitDialogData() {
         const oView = this.getView();
         const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
         const mDetailData = oListView.getModel().getProperty('/FormData');
@@ -89,19 +89,16 @@ sap.ui.define(
 
         oDetailModel.setProperty('/DialogData', mDetailData);
         oDetailModel.setProperty('/DialogData/Appda', new Date());
-
-        if(!oRowData) {
-          oDetailModel.setProperty('/DialogData/Appno', '');
-          oDetailModel.setProperty('/DialogData/Lnsta', '');
-          oDetailModel.setProperty('/DialogData/Lnstatx', '');
-          oDetailModel.setProperty('/DialogData/Rptyp', 'ALL');
-          oDetailModel.setProperty('/DialogData/Paydt', new Date());
-          oDetailModel.setProperty('/DialogData/Lnrte', oDetailModel.getProperty('/TargetLoanHis/Lnrte'));
-          oDetailModel.setProperty('/DialogData/RpamtMpr', oDetailModel.getProperty('/TargetLoanHis/RpamtBal'));
-          oDetailModel.setProperty('/DialogData/RpamtTot', oDetailModel.getProperty('/TargetLoanHis/RpamtBal'));
-          oDetailModel.setProperty('/DialogData/Account', oDetailModel.getProperty('/AccountTxt'));
-          oDetailModel.setProperty('/DateEditable', true);
-        }
+        oDetailModel.setProperty('/DialogData/Appno', '');
+        oDetailModel.setProperty('/DialogData/Lnsta', '');
+        oDetailModel.setProperty('/DialogData/Lnstatx', '');
+        oDetailModel.setProperty('/DialogData/Rptyp', 'ALL');
+        oDetailModel.setProperty('/DialogData/Paydt', new Date());
+        oDetailModel.setProperty('/DialogData/Lnrte', oDetailModel.getProperty('/TargetLoanHis/Lnrte'));
+        oDetailModel.setProperty('/DialogData/RpamtMpr', oDetailModel.getProperty('/TargetLoanHis/RpamtBal'));
+        oDetailModel.setProperty('/DialogData/RpamtTot', oDetailModel.getProperty('/TargetLoanHis/RpamtBal'));
+        oDetailModel.setProperty('/DialogData/Account', oDetailModel.getProperty('/AccountTxt'));
+        oDetailModel.setProperty('/DateEditable', true);
       },
 
       // 상환신청내역 Excel
@@ -122,7 +119,7 @@ sap.ui.define(
       onSelectRow(oEvent) {
         const vPath = oEvent.getParameters().rowBindingContext.getPath();
         const oDetailModel = this.getViewModel();
-        const oRowData = oDetailModel.getProperty(vPath);
+        const oRowData = $.extend(true, {}, oDetailModel.getProperty(vPath));
 
         this.getRepayType();
 
@@ -136,11 +133,13 @@ sap.ui.define(
             this.getView().addDependent(oDialog);
             oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
             oDetailModel.setProperty('/DialogData', oRowData);
+            oDetailModel.setProperty('/DateEditable', oRowData.Rptyp === 'FULL');
             this.settingsAttachTable();
             oDialog.open();
           });
         } else {
           oDetailModel.setProperty('/DialogData', oRowData);
+          oDetailModel.setProperty('/DateEditable', oRowData.Rptyp === 'FULL');
           this.settingsAttachTable();
           this.byId('RepayApplyDialog').open();
         }
@@ -170,9 +169,14 @@ sap.ui.define(
               success: (oData) => {
                 if (oData) {
                   const sText = oData.results[0].Ztext;
+                  const sRedText = `<span style='color:red;'>${this.getBundleText('MSG_07020')}</span>`;
 
                   oDetailModel.setProperty('/AccountTxt', sText);
-                  oDetailModel.setProperty('/InfoMessage', this.getBundleText('MSG_07014', sText));
+                  oDetailModel.setProperty('/InfoMessage', 
+                    `<p>${this.getBundleText('MSG_07014')}</p>
+                    <p>${this.getBundleText('MSG_07018', sText)}</p>
+                    <p>${this.getBundleText('MSG_07019', sRedText)}</p>`
+                  );
 
                   resolve();
                 }
@@ -338,7 +342,7 @@ sap.ui.define(
       // 상환신청
       onRepayDetailApp() {
         this.getRepayType();
-        this.setDialogData();
+        this.setInitDialogData();
 
         if (!this.byId('RepayApplyDialog')) {
           Fragment.load({
@@ -438,6 +442,7 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const sStatus = oDetailModel.getProperty('/DialogData/Lnsta');
         const oDialogData = oDetailModel.getProperty('/DialogData');
+        const oRepayDialog = this.byId('RepayApplyDialog');
 
         if (this.checkError()) return;
 
@@ -447,7 +452,7 @@ sap.ui.define(
           onClose: async (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00103')) {
               try {
-                AppUtils.setAppBusy(true, this);
+                oRepayDialog.setBusy(true);
 
                 if (!sStatus) {
                   const vAppno = await Appno.get.call(this);
@@ -488,7 +493,7 @@ sap.ui.define(
                 }
               } finally {
                 this.getList();
-                AppUtils.setAppBusy(false, this);
+                oRepayDialog.setBusy(false);
               }
             }
           },
@@ -501,6 +506,7 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const sStatus = oDetailModel.getProperty('/DialogData/Lnsta');
         const oDialogData = oDetailModel.getProperty('/DialogData');
+        const oRepayDialog = this.byId('RepayApplyDialog');
 
         if (this.checkError()) return;
 
@@ -510,7 +516,7 @@ sap.ui.define(
           onClose: async (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00121')) {
               try {
-                AppUtils.setAppBusy(true, this);
+                oRepayDialog.setBusy(true);
 
                 if (!sStatus) {
                   const vAppno = await Appno.get.call(this);
@@ -555,7 +561,7 @@ sap.ui.define(
                 }
               } finally {
                 this.getList();
-                AppUtils.setAppBusy(false, this);
+                oRepayDialog.setBusy(false);
               }
             }
           },
@@ -566,13 +572,14 @@ sap.ui.define(
       onCancelBtn() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
+        const oRepayDialog = this.byId('RepayApplyDialog');
 
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00118'), {
           title: this.getBundleText('LABEL_07001'),
           actions: [this.getBundleText('LABEL_00114'), this.getBundleText('LABEL_00118')],
           onClose: (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00114')) {
-              AppUtils.setAppBusy(true, this);
+              oRepayDialog.setBusy(true);
 
               let oSendObject = {};
 
@@ -581,7 +588,7 @@ sap.ui.define(
 
               oModel.create('/LoanRepayApplSet', oSendObject, {
                 success: () => {
-                  AppUtils.setAppBusy(false, this);
+                  oRepayDialog.setBusy(false);
                   MessageBox.alert(this.getBundleText('MSG_00039', 'LABEL_00121'), {
                     onClose: () => {
                       this.getList();
@@ -592,7 +599,7 @@ sap.ui.define(
                 error: (oRespnse) => {
                   const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
 
-                  AppUtils.setAppBusy(false, this);
+                  oRepayDialog.setBusy(false);
                   MessageBox.error(vErrorMSG);
                 },
               });
@@ -605,13 +612,14 @@ sap.ui.define(
       onDeleteBtn() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
+        const oRepayDialog = this.byId('RepayApplyDialog');
 
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
           title: this.getBundleText('LABEL_07001'),
           actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
           onClose: (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00110')) {
-              AppUtils.setAppBusy(true, this);
+              oRepayDialog.setBusy(true);
 
               const sPath = oModel.createKey('/LoanRepayApplSet', {
                 Lonid: oDetailModel.getProperty('/DialogData/Lonid'),
@@ -620,7 +628,7 @@ sap.ui.define(
 
               oModel.remove(sPath, {
                 success: () => {
-                  AppUtils.setAppBusy(false, this);
+                  oRepayDialog.setBusy(false);
                   MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
                     onClose: () => {
                       this.getList();
@@ -631,7 +639,7 @@ sap.ui.define(
                 error: (oRespnse) => {
                   const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
 
-                  AppUtils.setAppBusy(false, this);
+                  oRepayDialog.setBusy(false);
                   MessageBox.error(vErrorMSG);
                 },
               });
