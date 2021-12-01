@@ -31,17 +31,16 @@ sap.ui.define(
         this._sErrorText = this._oResourceBundle.getText('errorText');
 
         this._oModel.attachMetadataFailed((oEvent) => {
-          const oParams = oEvent.getParameters();
-          this._showServiceError(oParams.response);
+          this._showServiceError(oEvent.getParameter('response'));
         }, this);
 
         this._oModel.attachRequestFailed((oEvent) => {
-          const oParams = oEvent.getParameters();
+          const mResponse = oEvent.getParameter('response');
           // An entity that was not found in the service is also throwing a 404 error in oData.
           // We already cover this case with a notFound target so we skip it here.
           // A request that cannot be sent to the server is a technical error that we have to handle though
-          if (oParams.response.statusCode !== '404' || (oParams.response.statusCode === 404 && oParams.response.responseText.indexOf('Cannot POST') === 0)) {
-            this._showServiceError(oParams.response);
+          if (mResponse.statusCode !== '404' || (mResponse.statusCode === 404 && mResponse.responseText.indexOf('Cannot POST') === 0)) {
+            this._showServiceError(mResponse);
           }
         }, this);
       },

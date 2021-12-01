@@ -11,8 +11,9 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/ErrorHandler',
     'sap/ui/yesco/mvc/model/MenuModel',
-    'sap/ui/yesco/mvc/model/SessionModel',
     'sap/ui/yesco/mvc/model/Models',
+    'sap/ui/yesco/mvc/model/SessionModel',
+    'sap/ui/yesco/mvc/model/TargetModel',
   ],
   (
     // prettier 방지용 주석
@@ -26,8 +27,9 @@ sap.ui.define(
     ServiceNames,
     ErrorHandler,
     MenuModel,
+    Models,
     SessionModel,
-    Models
+    TargetModel
   ) => {
     'use strict';
 
@@ -48,10 +50,10 @@ sap.ui.define(
           .setAppModel() // Busy indicator 값 저장 모델 생성
           .setMetadataModel()
           .setServiceModel() // S4HANA OData 서비스 모델 생성
-          .setErrorHandler() // Error handler 생성
-          .setSessionModel() // 세션 모델 생성
-          .setTargetModel() // 세션 모델 생성
-          .setMenuModel(); // 메뉴 모델 생성
+          .setErrorHandler() // S4HANA ZHR_COMMON_SRV OData 서비스 Error handler 생성
+          .setSessionModel() // 세션 정보 모델 생성
+          .setTargetModel() // 대상자 정보 모델 생성
+          .setMenuModel(); // 메뉴 정보 모델 생성
 
         // call the base component's init function and create the App view
         UIComponent.prototype.init.apply(this, aArgs);
@@ -114,7 +116,7 @@ sap.ui.define(
       },
 
       /**
-       * Error handler 생성
+       * S4HANA ZHR_COMMON_SRV OData 서비스 Error handler 생성
        */
       setErrorHandler() {
         setTimeout(() => {
@@ -124,7 +126,7 @@ sap.ui.define(
       },
 
       /**
-       * 세션 모델 생성
+       * 세션 정보 모델 생성
        */
       setSessionModel() {
         this.setModel(new SessionModel(this), 'sessionModel');
@@ -132,27 +134,25 @@ sap.ui.define(
       },
 
       /**
-       * 세션 모델 반환
+       * 세션 정보 모델 반환
        * @returns {object}
        */
       getSessionModel() {
         return this.getModel('sessionModel');
       },
 
+      /**
+       * 대상자 정보 모델 생성
+       */
       setTargetModel() {
-        const oSessionModel = this.getSessionModel();
-        let oSessionData = oSessionModel.getData();
-
-        this.setModel(new JSONModel({ ...oSessionData, isChangeButtonShow: false }), 'targetModel');
-
-        oSessionModel.getPromise().then(() => {
-          oSessionData = oSessionModel.getData();
-
-          this.getModel('targetModel').setData({ ...oSessionData }, true);
-        });
+        this.setModel(new TargetModel(this), 'targetModel');
         return this;
       },
 
+      /**
+       * 대상자 정보 모델 반환
+       * @returns {object}
+       */
       getTargetModel() {
         return this.getModel('targetModel');
       },
@@ -247,6 +247,8 @@ sap.ui.define(
 
             oController.baseModelReady = Promise.all([
               oMenuModelPromise, //
+              this.getSessionModel().getPromise(),
+              this.getTargetModel().getPromise(),
               this._saveBreadcrumbsData({ mArguments, oView, sRouteName }),
               this._checkRouteName({ oView, sRouteName }),
             ]);

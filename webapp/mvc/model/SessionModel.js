@@ -1,12 +1,16 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/model/Filter',
+    'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
   ],
   (
     // prettier 방지용 주석
+    Filter,
+    FilterOperator,
     JSONModel,
     AppUtils,
     ServiceNames
@@ -17,23 +21,37 @@ sap.ui.define(
 
     return JSONModel.extend('sap.ui.yesco.mvc.model.SessionModel', {
       constructor: function (oUIComponent) {
-        JSONModel.apply(this, {
+        JSONModel.apply(this, this.getInitialData());
+
+        this.setUIComponent(oUIComponent);
+
+        this.oPromise = this.retrieve();
+      },
+
+      getInitialData() {
+        return {
           Dtfmt: DATE_FORMAT,
           DTFMT: DATE_FORMAT.toUpperCase(),
           Werks: 'init',
-        });
-
-        this.oUIComponent = oUIComponent;
-
-        this.promise = this.retrieve();
+        };
       },
 
-      retrieve() {
+      setUIComponent(oUIComponent) {
+        this._oUIComponent = oUIComponent;
+      },
+
+      getUIComponent() {
+        return this._oUIComponent;
+      },
+
+      retrieve(sPernr) {
         return new Promise((resolve) => {
           const sUrl = '/EmpLoginInfoSet';
-          this.oUIComponent.getModel(ServiceNames.COMMON).read(sUrl, {
+          const filters = sPernr ? [new Filter('Pernr', FilterOperator.EQ, sPernr)] : []; // TargetModel용
+
+          this._oUIComponent.getModel(ServiceNames.COMMON).read(sUrl, {
+            filters: filters,
             success: (oData, oResponse) => {
-              /** WrongParametersLinter */
               AppUtils.debug(`${sUrl} success.`, oData, oResponse);
 
               const mSessionData = (oData.results || [])[0] || {};
@@ -62,7 +80,7 @@ sap.ui.define(
       },
 
       getPromise() {
-        return this.promise;
+        return this.oPromise;
       },
     });
   }
