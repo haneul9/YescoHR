@@ -140,16 +140,16 @@ sap.ui.define(
           }
         },
 
-        handleError(oError) {
+        handleError(oError, mOptions = {}) {
           sap.ui.require(['sap/ui/yesco/common/exceptions/UI5Error'], (UI5Error) => {
             if (oError instanceof Error) {
               if (oError.responseText) {
-                new UI5Error(this.parseError(oError)).showErrorMessage();
+                new UI5Error(this.parseError(oError)).showErrorMessage(mOptions);
               } else {
-                new UI5Error({ message: oError.message }).showErrorMessage();
+                new UI5Error({ message: oError.message }).showErrorMessage(mOptions);
               }
             } else if (oError instanceof UI5Error) {
-              oError.showErrorMessage();
+              oError.showErrorMessage(mOptions);
             }
           });
         },
