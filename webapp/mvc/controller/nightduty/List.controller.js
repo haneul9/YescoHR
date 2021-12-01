@@ -1,39 +1,50 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/model/Filter',
+    'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AttachFileAction',
-    'sap/ui/yesco/common/EmpInfo',
+    'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/TableUtils',
+    'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/model/type/Currency',
+    'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
+    'sap/ui/yesco/mvc/model/type/Pernr',
   ],
   (
     // prettier 방지용 주석
+    Filter,
+    FilterOperator,
     JSONModel,
     AttachFileAction,
-    EmpInfo,
+    AppUtils,
     TableUtils,
+    ODataReadError,
     ServiceNames,
     BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.nightduty.List', {
-      constructor: function () {
-        this.AttachFileAction = AttachFileAction;
-        this.TableUtils = TableUtils;
-        this.TYPE_CODE = 'HR01';
-      },
+      AttachFileAction: AttachFileAction,
+      TableUtils: TableUtils,
+      TYPE_CODE: 'HR01',
 
       onBeforeShow() {
+        const today = moment();
         const oViewModel = new JSONModel({
-          busy: false,
+          busy: true,
           isVisibleActionButton: false,
-          quota: {},
+          summary: {
+            Year: today.format('YYYY'),
+            YearMonth: this.getBundleText('MSG_06002', today.format('YYYY'), today.format('M')),
+          },
           search: {
-            Apbeg: moment().subtract(1, 'month').add(1, 'day').hours(9).toDate(),
-            Apend: moment().hours(9).toDate(),
+            Apend: today.hours(9).toDate(),
+            Apbeg: today.subtract(1, 'month').add(1, 'day').hours(9).toDate(),
           },
           listInfo: {
             rowCount: 1,
@@ -53,42 +64,46 @@ sap.ui.define(
         this.setViewModel(oViewModel);
       },
 
+      /**
+       * @override
+       */
+      onAfterShow() {
+        const oTable = this.byId('nightdutyTable');
+        oTable.addEventDelegate(
+          {
+            onAfterRendering() {
+              TableUtils.adjustRowSpan({
+                table: oTable,
+                colIndices: [0, 1, 2, 3, 4, 5, 14, 15],
+                theadOrTbody: 'thead',
+              });
+            },
+          },
+          oTable
+        );
+
+        BaseController.prototype.onAfterShow.call(this);
+      },
+
       async onObjectMatched() {
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const oViewModel = this.getViewModel();
+        const mSearchConditions = oViewModel.getProperty('/search');
         const sPernr = this.getOwnerComponent().getSessionModel().getProperty('/Pernr');
-        const oSearchConditions = oViewModel.getProperty('/search');
 
         try {
-          oViewModel.setProperty('/busy', true);
-
-          const [mQuotaResultData, mRowData] = await Promise.all([
-            this.readAbsQuotaList({ oModel, sPernr }), //
-            this.readLeaveApplContent({ oModel, oSearchConditions }),
+          const [
+            mSummaryData, // prettier 방지용 주석
+            aRowData,
+          ] = await Promise.all([
+            this.readSummary({ oModel, sPernr }), // prettier 방지용 주석
+            this.readList({ oModel, mSearchConditions }),
           ]);
 
-          setTimeout(() => {
-            this.setTableData({ oViewModel, mRowData });
-          }, 100);
-          // throw new Error('Oops!!');
-          oViewModel.setProperty(
-            '/quota',
-            _.reduce(
-              mQuotaResultData,
-              (acc, { Ktart, Kotxt, Crecnt, Usecnt }) => ({
-                ...acc,
-                [Ktart]: {
-                  Kotxt,
-                  Crecnt: parseInt(Crecnt, 10),
-                  Usecnt: parseInt(Usecnt, 10),
-                  Rate: (parseInt(Usecnt, 10) / parseInt(Crecnt, 10)) * 100,
-                },
-              }),
-              {}
-            )
-          );
+          this.setSummaryData({ oViewModel, mSummaryData });
+          this.setTableData({ oViewModel, aRowData });
         } catch (oError) {
-          this.debug('Controller > Attendance List > initialRetrieve Error', oError);
+          this.debug('Controller > Nightduty List > onObjectMatched Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
@@ -96,23 +111,95 @@ sap.ui.define(
         }
       },
 
-      setTableData({ oViewModel, mRowData }) {
-        const oTable = this.byId('attendanceTable');
+      /**
+       * @param  {object} oModel Service ODataModel
+       * @param  {string} sPernr
+       */
+      readSummary({ oModel, sPernr }) {
+        return new Promise((resolve, reject) => {
+          const sUrl = '/OnCallSummarySet';
 
-        oViewModel.setProperty(
-          '/list',
-          mRowData.map((o) => {
-            return {
-              ...o,
-              Pernr: parseInt(o.Pernr, 10),
-              BegdaTxt: o.Begda ? moment(new Date(o.Begda)).hours(9).format('YYYY.MM.DD') : '',
-              EnddaTxt: o.Endda ? moment(new Date(o.Endda)).hours(9).format('YYYY.MM.DD') : '',
-              AppdtTxt: o.Appdt ? moment(new Date(o.Appdt)).hours(9).format('YYYY.MM.DD') : '',
-              SgndtTxt: o.Sgndt ? moment(new Date(o.Sgndt)).hours(9).format('YYYY.MM.DD') : '',
-            };
-          })
-        );
-        oViewModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData }));
+          oModel.read(sUrl, {
+            filters: [
+              new Filter('Pernr', FilterOperator.EQ, sPernr), //
+            ],
+            success: (mData) => {
+              this.debug(`${sUrl} success.`, mData);
+
+              resolve(mData.results);
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, oError);
+
+              reject(new ODataReadError(oError));
+            },
+          });
+        });
+      },
+
+      /**
+       * @param  {object} oModel Service ODataModel
+       * @param  {object} mSummaryData
+       */
+      setSummaryData({ oViewModel, mSummaryData }) {
+        const mLegacySummaryData = oViewModel.getProperty('/summary');
+        oViewModel.setProperty('/summary', { ...mLegacySummaryData, mSummaryData });
+      },
+
+      /**
+       * @param  {object} oModel Service ODataModel
+       * @param  {object} mSearchConditions
+       */
+      readList({ oModel, mSearchConditions }) {
+        const sUrl = '/OnCallChangeAppSet';
+        const sMenid = this.getCurrentMenuId();
+
+        return new Promise((resolve, reject) => {
+          oModel.read(sUrl, {
+            filters: [
+              new Filter('Menid', FilterOperator.EQ, sMenid), //
+              new Filter('Apbeg', FilterOperator.EQ, moment(mSearchConditions.Apbeg).hours(9).toDate()),
+              new Filter('Apend', FilterOperator.EQ, moment(mSearchConditions.Apend).hours(9).toDate()),
+            ],
+            success: (mData) => {
+              this.debug(`${sUrl} success.`, mData);
+
+              resolve(mData.results);
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, oError);
+
+              reject(new ODataReadError(oError));
+            },
+          });
+        });
+      },
+
+      setTableData({ oViewModel, aRowData }) {
+        const oTable = this.byId('nightdutyTable');
+
+        oViewModel.setProperty('/list', aRowData);
+        oViewModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData }));
+      },
+
+      async onPressSearch() {
+        const oModel = this.getModel(ServiceNames.WORKTIME);
+        const oViewModel = this.getViewModel();
+        const oSearchConditions = oViewModel.getProperty('/search');
+
+        try {
+          oViewModel.setProperty('/busy', true);
+
+          const mRowData = await this.readLeaveApplContent({ oModel, oSearchConditions });
+
+          this.setTableData({ oViewModel, mRowData });
+        } catch (oError) {
+          this.debug('Controller > Attendance List > onPressSearch Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       onClick() {

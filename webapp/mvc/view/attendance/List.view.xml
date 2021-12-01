@@ -22,7 +22,7 @@
 				<VBox class="hCardBox sapUiMediumMarginEnd" width="33%">
 					<core:Fragment fragmentName="sap.ui.yesco.mvc.view.attendance.fragment.VacationOverview" type="XML" />
 				</VBox>
-				<VBox class="hCardBox" width="33%" busyIndicatorDelay="0" busy="{/busy}">
+				<VBox class="hCardBox search-condition-box" width="33%" busyIndicatorDelay="0" busy="{/busy}">
 					<core:Fragment fragmentName="sap.ui.yesco.mvc.view.attendance.fragment.OverviewSearchCondition" type="XML" />
 				</VBox>
 			</HBox>

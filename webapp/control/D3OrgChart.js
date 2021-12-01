@@ -58,7 +58,8 @@ sap.ui.define(
           aChartData.push({ ...item.mProperties });
         });
 
-        new d3.OrgChart()
+        this.oD3Chart = null;
+        this.oD3Chart = new d3.OrgChart()
           .container('#' + this.sParentId)
           .svgHeight(window.innerHeight - 10)
           .data(aChartData)

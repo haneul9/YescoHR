@@ -9,7 +9,7 @@
         </HBox>
         <grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="8px">
             <Label text="{i18n>LABEL_00266}" design="Bold" />
-            <custom:DateRangeSelection dateValue="{ path: '/search/secondDate', type: 'sap.ui.yesco.mvc.model.ODataDate' }" secondDateValue="{ path: '/search/date', type: 'sap.ui.yesco.mvc.model.ODataDate' }" class="sapIcon_Date" />
+            <custom:DateRangeSelection dateValue="{ path: '/search/secondDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/search/date', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" />
             <Label text="{i18n>LABEL_07002}" design="Bold" />
             <ComboBox items="{/LoanType}" selectedKey="{/search/Lntyp}">
                 <core:Item text="{Ztext}" key="{Zcode}" />

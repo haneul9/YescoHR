@@ -14,22 +14,22 @@ sap.ui.define(
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/ODataDate', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
+    'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
   ],
   (
     // prettier 방지용 주석
     Fragment,
-	JSONModel,
-	MessageBox,
-	Appno,
-	AppUtils,
-	AttachFileAction,
-	ComboEntry,
-	FragmentEvent,
-	TextUtils,
-	TableUtils,
-	ServiceNames,
-	BaseController
+    JSONModel,
+    MessageBox,
+    Appno,
+    AppUtils,
+    AttachFileAction,
+    ComboEntry,
+    FragmentEvent,
+    TextUtils,
+    TableUtils,
+    ServiceNames,
+    BaseController
   ) => {
     'use strict';
 
@@ -191,10 +191,7 @@ sap.ui.define(
           new Promise((resolve) => {
             // 융자내역
             oModel.read('/LoanRepayHistorySet', {
-              filters: [
-                new sap.ui.model.Filter('Lonid', sap.ui.model.FilterOperator.EQ, mDetailData.Lonid),
-                new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mDetailData.Lntyp),
-              ],
+              filters: [new sap.ui.model.Filter('Lonid', sap.ui.model.FilterOperator.EQ, mDetailData.Lonid), new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mDetailData.Lntyp)],
               success: (oData) => {
                 if (oData) {
                   const oHis = oData.results[0];
@@ -276,7 +273,7 @@ sap.ui.define(
 
         if (sKey === 'ALL') return;
 
-       this.setLoanType('Type', sKey);
+        this.setLoanType('Type', sKey);
       },
 
       // 상환일 선택
@@ -297,7 +294,7 @@ sap.ui.define(
         let sKey1 = '';
         let sDate = '';
 
-        if(sType === 'Type') {
+        if (sType === 'Type') {
           sKey1 = sKey;
           sDate = mDialogData.Paydt;
         } else {
@@ -308,13 +305,10 @@ sap.ui.define(
         aFiltList.push(
           new sap.ui.model.Filter('Lonid', sap.ui.model.FilterOperator.EQ, mDialogData.Lonid),
           new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mDialogData.Lntyp),
-          new sap.ui.model.Filter('Rptyp', sap.ui.model.FilterOperator.EQ, sKey1),
+          new sap.ui.model.Filter('Rptyp', sap.ui.model.FilterOperator.EQ, sKey1)
         );
         if (sKey1 === 'FULL') {
-          aFiltList.push(
-            new sap.ui.model.Filter('Paydt', sap.ui.model.FilterOperator.EQ, sDate),
-            new sap.ui.model.Filter('RpamtMpr', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/TargetLoanHis/RpamtBal')),
-          );
+          aFiltList.push(new sap.ui.model.Filter('Paydt', sap.ui.model.FilterOperator.EQ, sDate), new sap.ui.model.Filter('RpamtMpr', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/TargetLoanHis/RpamtBal')));
           oDetailModel.setProperty('/DateEditable', true);
         } else {
           oDetailModel.setProperty('/DateEditable', false);
@@ -338,7 +332,7 @@ sap.ui.define(
           },
         });
       },
-      
+
       // 상환신청
       onRepayDetailApp() {
         this.getRepayType();
@@ -354,7 +348,7 @@ sap.ui.define(
             this.getView().addDependent(oDialog);
             oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
             this.settingsAttachTable();
-            
+
             oDialog.open();
           });
         } else {

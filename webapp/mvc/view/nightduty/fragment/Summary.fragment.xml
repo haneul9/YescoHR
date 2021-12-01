@@ -1,0 +1,39 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core">
+  <VBox class="hCardBox sapUiMediumMarginEnd summary-box" width="33%">
+    <HBox justifyContent="SpaceBetween" class="title">
+      <Title level="H2" text="{i18n>LABEL_06002}" />
+      <Button type="Transparent" icon="sap-icon://detail-view" class="icon-button" />
+    </HBox>
+    <Text text="{/summary/Year}{i18n>MSG_06001}" class="sapUiSmallMarginBottom" />
+    <HBox>
+      <VBox class="summary-info" width="33%">
+        <Label design="Bold" text="{i18n>LABEL_06003}" />
+        <ObjectStatus text="{ path: '/summary/Cnt11', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication04" />
+      </VBox>
+      <VBox class="summary-info" width="33%">
+        <Label design="Bold" text="{i18n>LABEL_06004}" />
+        <ObjectStatus text="{ path: '/summary/Cnt12', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication04" />
+      </VBox>
+      <VBox class="summary-info" width="33%">
+        <Label design="Bold" text="{i18n>LABEL_06005}" />
+        <ObjectStatus text="{ path: '/summary/Cnt13', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication04" />
+      </VBox>
+    </HBox>
+    <Text text="{/summary/YearMonth} {i18n>MSG_06003}" class="sapUiSmallMarginBottom" />
+    <HBox>
+      <VBox class="summary-info" width="33%">
+        <Label design="Bold" text="{i18n>LABEL_06003}" />
+        <ObjectStatus text="{ path: '/summary/Cnt21', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication04" />
+      </VBox>
+      <VBox class="summary-info" width="33%">
+        <Label design="Bold" text="{i18n>LABEL_06004}" />
+        <ObjectStatus text="{ path: '/summary/Cnt22', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication04" />
+      </VBox>
+      <VBox class="summary-info" width="33%">
+        <Label design="Bold" text="{i18n>LABEL_06005}" />
+        <ObjectStatus text="{ path: '/summary/Cnt23', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication04" />
+      </VBox>
+    </HBox>
+  </VBox>
+</core:FragmentDefinition>

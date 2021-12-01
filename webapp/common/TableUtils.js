@@ -52,8 +52,8 @@ sap.ui.define(
       /**************************
        * Functions
        *************************/
-      count({ oTable, mRowData, sStatCode = 'ZappStatAl' }) {
-        const aZappStatAls = _.map(mRowData, sStatCode);
+      count({ oTable, aRowData, sStatCode = 'ZappStatAl' }) {
+        const aZappStatAls = _.map(aRowData, sStatCode);
         const iVisibleRowcountLimit = Math.floor(($(document).height() - oTable.$().find('.sapUiTableCCnt').offset().top - 50) / 50);
         const oOccurCount = _.defaults(_.countBy(aZappStatAls), {
           [STATE_IN_PROGRESS1]: 0,
@@ -109,28 +109,29 @@ sap.ui.define(
       },
 
       /**
-       * @param {Object} o = {
+       * @param {object} o = {
        * 		table: sap.ui.table.Table instance
-       * 		colIndices: rowspan을 적용할 column index array
-       * 		theadOrTbody: "header" or "table"
+       * 		colIndices: rowspan을 적용할 zero-base column index array, 행선택용 checkbox 컬럼 미포함
+       * 		theadOrTbody: 'thead' or 'tbody'
        * 	}
        */
       adjustRowSpan(o) {
         if (!o.colIndices.length) return;
 
+        const target = o.theadOrTbody === 'thead' ? 'header' : 'table';
         o.colIndices.forEach((colIndex) => {
-          const sId = `#${o.table.getId()}-${o.theadOrTbody} tbody>tr td:nth-child(${colIndex + 1}):visible`;
-          const $Tds = $(sId).get();
-          const $PrevTD = $Tds.shift();
+          const sId = `#${o.table.getId()}-${target} tbody>tr td:nth-child(${colIndex + 1}):visible`;
+          const aTDs = $(sId).get();
+          let oPrevTD = aTDs.shift();
 
-          $Tds.forEach((td) => {
-            const p = $($PrevTD);
-            const c = $(td);
-            if (c.text() === p.text()) {
-              p.attr('rowspan', Number(p.attr('rowspan') || 1) + 1);
-              c.hide();
+          aTDs.forEach((oTD) => {
+            const $p = $(oPrevTD);
+            const $c = $(oTD);
+            if ($c.text() === $p.text()) {
+              $p.attr('rowspan', Number($p.attr('rowspan') || 1) + 1);
+              $c.hide();
             } else {
-              $PrevTD = td;
+              oPrevTD = oTD;
             }
           });
         });

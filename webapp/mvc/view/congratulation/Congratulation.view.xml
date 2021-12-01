@@ -19,21 +19,21 @@
 		<VBox class="contents">
 			<HBox justifyContent="SpaceAround" class="sapUiMediumMarginBottom">
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.TargetInfo" type="XML" />
-				<VBox class="hCardBox sapUiMediumMarginEnd expenses-info-wrap" width="33%" busyIndicatorDelay="0" busy="{/busy}">
+				<VBox class="hCardBox sapUiMediumMarginEnd summary-box" width="33%" busyIndicatorDelay="0" busy="{/busy}">
 					<VBox>
 						<HBox justifyContent="SpaceBetween" class="title">
 							<Title level="H2" text="{i18n>MSG_02001}" />
 						</HBox>
 						<Text text="{i18n>MSG_02002}" class="sapUiSmallMarginBottom" />
 						<HBox>
-							<VBox width="30%" class="expenses-info">
+							<VBox width="30%" class="summary-info">
 								<Label design="Bold" text="{i18n>LABEL_02003}" />
 								<ObjectStatus text="{
 									path: '/Total/Pycnt',
 									formatter: '.formatNumber'
 								}" state="Indication04" />
 							</VBox>
-							<VBox class="expenses-info">
+							<VBox class="summary-info">
 								<Label design="Bold" text="{i18n>LABEL_02002}" />
 								<ObjectStatus text="{
 									path: '/Total/ZpayBetT',
@@ -48,14 +48,14 @@
 						</HBox>
 					</VBox>
 				</VBox>
-				<VBox class="hCardBox" width="33%">
+				<VBox class="hCardBox search-condition-box" width="33%">
 					<HBox justifyContent="SpaceBetween" class="title">
 						<Title text="{i18n>LABEL_00202}" level="H2" />
 						<Button type="Transparent" press=".onSearch" class="icon-button search" />
 					</HBox>
 					<grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="8px">
 						<Label text="{i18n>LABEL_00266}" design="Bold" />
-						<custom:DateRangeSelection dateValue="{ path: '/searchDate/secondDate', type: 'sap.ui.yesco.mvc.model.ODataDate' }" secondDateValue="{ path: '/searchDate/date', type: 'sap.ui.yesco.mvc.model.ODataDate' }" class="sapIcon_Date" />
+						<custom:DateRangeSelection dateValue="{ path: '/searchDate/secondDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/searchDate/date', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" />
 					</grid:CSSGrid>
 				</VBox>
 			</HBox>

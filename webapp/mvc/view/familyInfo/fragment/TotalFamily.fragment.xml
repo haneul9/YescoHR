@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <VBox class="hCardBox sapUiMediumMarginEnd expenses-info-wrap" width="33%" busyIndicatorDelay="0" busy="{/busy}">
+    <VBox class="hCardBox sapUiMediumMarginEnd summary-box" width="33%" busyIndicatorDelay="0" busy="{/busy}">
         <VBox>
             <HBox justifyContent="SpaceBetween" class="title">
                 <Title level="H2" text="{i18n>LABEL_05002}" />

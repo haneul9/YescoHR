@@ -13,8 +13,8 @@
         </ComboBox>
         <Label text="{i18n>LABEL_00285}/{i18n>LABEL_00286}" />
         <HBox width="100%">
-            <custom:DatePicker width="100%" value="{ path: '/employee/dialog/form/Begda', type: 'sap.ui.yesco.mvc.model.ODataDate' }" editable="{= ${/employee/dialog/action} === 'A'}" class="sapIcon_Date" />
-            <custom:DatePicker width="100%" value="{ path: '/employee/dialog/form/Endda', type: 'sap.ui.yesco.mvc.model.ODataDate' }" editable="{= ${/employee/dialog/action} === 'A'}" class="sapIcon_Date" />
+            <custom:DatePicker width="100%" value="{ path: '/employee/dialog/form/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{= ${/employee/dialog/action} === 'A'}" class="sapIcon_Date" />
+            <custom:DatePicker width="100%" value="{ path: '/employee/dialog/form/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{= ${/employee/dialog/action} === 'A'}" class="sapIcon_Date" />
         </HBox>
         <Label text="{i18n>LABEL_00287}" />
         <Input width="100%" value="{/employee/dialog/form/Landx50}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpCountry" />

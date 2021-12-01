@@ -12,12 +12,12 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-	ServiceNames,
-	AppUtils,
-	AttachFileAction,
-	TableUtils,
-	FragmentEvent,
-	BaseController
+    ServiceNames,
+    AppUtils,
+    AttachFileAction,
+    TableUtils,
+    FragmentEvent,
+    BaseController
   ) => {
     'use strict';
 
@@ -120,7 +120,7 @@ sap.ui.define(
               });
 
               oListModel.setProperty('/CongList', oList);
-              oListModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData: oList }));
+              oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: oList }));
               oListModel.setProperty('/busy', false);
             }
           },

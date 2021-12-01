@@ -9,7 +9,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/ODataDate', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
+    'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
   ],
   (
     // prettier 방지용 주석
@@ -70,12 +70,12 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/busy', true);
 
-          const [mQuotaResultData, mRowData] = await Promise.all([
+          const [mQuotaResultData, aRowData] = await Promise.all([
             this.readAbsQuotaList({ oModel, sPernr }), //
             this.readLeaveApplContent({ oModel, oSearchConditions }),
           ]);
 
-          this.setTableData({ oViewModel, mRowData });
+          this.setTableData({ oViewModel, aRowData });
 
           oViewModel.setProperty(
             '/quota',
@@ -102,13 +102,13 @@ sap.ui.define(
         }
       },
 
-      setTableData({ oViewModel, mRowData }) {
+      setTableData({ oViewModel, aRowData }) {
         const oTable = this.byId('attendanceTable');
         const oListInfo = oViewModel.getProperty('/listInfo');
 
         oViewModel.setProperty(
           '/list',
-          mRowData.map((o) => {
+          aRowData.map((o) => {
             return {
               ...o,
               Pernr: parseInt(o.Pernr, 10),
@@ -119,7 +119,7 @@ sap.ui.define(
             };
           })
         );
-        oViewModel.setProperty('/listInfo', { ...oListInfo, ...TableUtils.count({ oTable, mRowData }) });
+        oViewModel.setProperty('/listInfo', { ...oListInfo, ...TableUtils.count({ oTable, aRowData }) });
       },
 
       /*****************************************************************
@@ -133,9 +133,9 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/busy', true);
 
-          const mRowData = await this.readLeaveApplContent({ oModel, oSearchConditions });
+          const aRowData = await this.readLeaveApplContent({ oModel, oSearchConditions });
 
-          this.setTableData({ oViewModel, mRowData });
+          this.setTableData({ oViewModel, aRowData });
         } catch (oError) {
           this.debug('Controller > Attendance List > onPressSearch Error', oError);
 

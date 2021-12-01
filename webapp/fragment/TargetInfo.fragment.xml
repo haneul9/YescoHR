@@ -1,27 +1,20 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <VBox class="hCardBox sapUiMediumMarginEnd" width="33%">
-        <VBox>
-            <HBox justifyContent="SpaceBetween" class="title">
-                <Title text="{i18n>LABEL_00128}" level="H2" />
-                <Button type="Transparent" icon="sap-icon://employee-approvals" visible="{= ${targetModel>/isChangeButtonShow}}" class="icon-button me" />
-            </HBox>
-            <HBox class="my-info">
-                <VBox width="38%" alignItems="Start" class="member-picture">
-                    <Image src="{targetModel>/Photo}" />
-                </VBox>
-                <VBox class="my-info-detail">
-                    <Text text="{targetModel>/Ename}" class="name" />
-                    <HBox>
-                        <Text text="{targetModel>/Zzjikgbt} / {targetModel>/Zzjiktlt}"/>
-                    </HBox>
-                    <HBox>
-                        <Text text="{targetModel>/Pbtxt}"/>
-                        <Text text="{targetModel>/Btrtx}"/>
-                    </HBox>
-                    <Text text="{targetModel>/Orgtx}"/>
-                </VBox>
-            </HBox>
-        </VBox>
+    <VBox class="hCardBox sapUiMediumMarginEnd target-info-box" width="33%">
+        <HBox justifyContent="SpaceBetween" class="title">
+            <Title text="{i18n>LABEL_00128}" level="H2" />
+            <Button type="Transparent" icon="sap-icon://employee-approvals" visible="{= ${targetModel>/isChangeButtonShow}}" class="icon-button me" />
+        </HBox>
+        <HBox class="my-info">
+            <VBox class="member-picture" width="38%">
+                <Image src="{targetModel>/Photo}" mode="Background" backgroundPosition="center center" width="9.13rem" height="9.13rem" />
+            </VBox>
+            <VBox justifyContent="Center" class="my-info-detail" height="100%">
+                <Text text="{targetModel>/Ename}" class="name" />
+                <Text text="{targetModel>/Zzjikgbt} / {targetModel>/Zzjiktlt}" />
+                <Text text="{targetModel>/Pbtxt} {targetModel>/Btrtx}" />
+                <Text text="{targetModel>/Orgtx}" />
+            </VBox>
+        </HBox>
     </VBox>
 </core:FragmentDefinition>

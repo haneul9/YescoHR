@@ -9,7 +9,7 @@ sap.ui.define(
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/ODataDate', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
+    'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
   ],
   (
     // prettier 방지용 주석
@@ -73,7 +73,7 @@ sap.ui.define(
 
       formatPay(vPay = '0') {
         vPay = this.TextUtils.toCurrency(vPay);
-        
+
         return `${vPay}${this.getBundleText('LABEL_00158')}`;
       },
 
@@ -86,7 +86,7 @@ sap.ui.define(
         const dDate2 = moment(oSearch.date).hours(10).toDate();
         const vLoanType = !oSearch.Lntyp || oSearch.Lntyp === 'ALL' ? '' : oSearch.Lntyp;
         const sMenid = await this.getCurrentMenuId();
-        
+
         return new Promise((resolve) => {
           oListModel.setProperty('/busy', true);
 
