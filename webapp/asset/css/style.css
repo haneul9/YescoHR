@@ -86,13 +86,13 @@ html, body {box-sizing:border-box; overflow:hidden}
 
 /* LAYOUT */
 .component-title {background:linear-gradient(transparent 60%, #ccecdd 60%) no-repeat}
-.desc-txt {background:linear-gradient(transparent 60%, #A8FFBE 60%) no-repeat; margin-left:0.7rem;}
+.desc-txt {background:linear-gradient(transparent 60%, #A8FFBE 60%) no-repeat; margin-left:10px;}
 /* .sapMHBox > div {margin-right: 1rem !important;} */
 .worklist .sapMHBox > div {margin-right: 1rem !important;}
 
 :root {
 /* Font Color */
---FontColorNormal:#343a40;
+--FontColorNormal:#222222;
 --FontColorDisabled:#9ca5aa;
 /* Border Color */
 --BorderColorNormal:#c0c0c0;
@@ -138,7 +138,7 @@ html.sap-desktop:not(.sapUiNativeScrollbars) ::-webkit-scrollbar-thumb {border-r
 html.sap-desktop .sapMCb:not(.sapMCbBgDis):not(.sapMCbHasLabel):focus>.sapMCbBg {outline-style:none !important}
 
 /* 공통 Etc Style */
-.sapMLabel{line-height:1rem; justify-content: space-between; display: flex; align-items: center;font-size: 15px; font-weight: 700;color: #343A40;}
+.sapMLabel{line-height:1rem; justify-content: space-between; display: flex; align-items: center;font-size: 15px; font-weight: 700;color: #222222;}
 .sapMInputBaseDisabled {opacity:1}
 .sapMComboBox > div:hover .sapUiIcon {background:var(--BackgroundColorHover)}
 .sapMComboBox > div:hover .sapUiIcon::before {color:unset !important}
@@ -405,7 +405,7 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt {outline-style:none !important}
 .sapUiTableCCnt {border-bottom:0 !important}
 .sapUiTableHeaderRow {background:#fbfcfd !important} /* table header */
 .sapUiTableHeaderDataCell>.sapUiTableCellInner>div:first-child{display:block !important;text-align:center !important;line-height: 1;margin-top: 4px;}
-.sapUiTableHeaderDataCell>.sapUiTableCellInner>div:first-child>*{color:#343a40 !important;font-weight:500;font-size: 15px;display: initial;}
+.sapUiTableHeaderDataCell>.sapUiTableCellInner>div:first-child>*{color:#222222 !important;font-weight:500;font-size: 15px;display: initial;}
 .sapUiTableSelectAllCheckBox::after {bottom:calc(( 2rem - 0.7rem ) / 2) !important} /* table header checkd style */
 .sapMLnk {color:#007bff !important}
 
@@ -416,14 +416,15 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt {outline-style:none !important}
 /* Icon 변경 */
 .sapUiIconf::before{display:inline-block;width:100%;height:100%;clear:both;vertical-align:top;background-repeat:no-repeat;background-position:center center;}/* 아이콘 공통 before */
 .sapIcon_Search .sapUiIcon::before {content:'검색'; font-size:0; background-size:auto 60%; background-image:url(./images/icon_search.png)}
-.sapIcon_Date .sapUiIcon::before{content:'달력';font-size:0;background-size:auto;background-image:url(./images/icon_date.png);display: inline-block;width: 100%;height: 100%;clear: both;vertical-align: top;background-repeat: no-repeat;background-position: center center;}
+.sapIcon_Date .sapUiIcon::before{content:'달력';font-size:0;background-size:auto;background-image:url(./images/icon_date.png);display: inline-block;width: 100%;height: 100%;clear: both;vertical-align: top;background-repeat: no-repeat;background-position: 4px center;}
 .sapIcon_Time .sapUiIcon::before {content:'시간'; font-size:0; background-size:auto; background-image:url(./images/icon_time.png)}
 .sapIcon_Datetime .sapUiIcon::before {content:'달력, 시간'; font-size:0; background-size:auto; background-image:url(./images/icon_datetime.png)}
 .sapIcon_Select_Arrow .sapMInputBaseIconContainer .sapUiIcon::before {content:'화살표'; font-size:0; background-size:auto; background-image:url(./images/icon_arrow.png)}
 
 /* DEVELOPER Temporary style */
 .hCardBox {border: 1px solid whitesmoke; border-radius: 10px; padding: 1.7rem 1.9rem; padding: 23px 30px;background-color: #fff; box-shadow: 1px 2px 3px rgb(0 0 0 / 20%)}
-.vCardBox, .customBox {margin: 0; border: 1px solid whitesmoke; border-radius: 10px; padding: 1.6rem;background-color: #fff; box-shadow: 1px 2px 3px rgb(0 0 0 / 15%);}
+.vCardBox, .customBox {margin: 0; border: 1px solid whitesmoke; border-radius: 10px; padding:24px 30px;background-color: #fff; box-shadow: 1px 2px 3px rgb(0 0 0 / 15%);}
+.vCardBox.sapUiMediumMarginBottom {margin-bottom: 20px!important;} 
 
 .sapUiTableRowHighlight.sapUiTableRowHighlightNone {background-color:var(--BorderColorReadonly) !important}
 .sapUiTableRowHighlight.sapUiTableRowHighlightIndication01 {background-color:var(--BorderColorReadonly) !important}
@@ -484,10 +485,11 @@ button .sapMBtnTransparent {border-radius:20px}
 .sapUiSizeCompact .sapMBtn{padding: 0;font-weight: bold;height: auto;min-width: 94px;}
 .sapUiSizeCompact .sapMBtnInner.sapMBtnText{padding-left: 0.6rem;padding-right: 0.6rem;border-radius: 20px; width: 100%;height: 40px;display: inline-flex; justify-content: center; align-items: center;}
 .sapUiSizeCompact .sapMBtnContent {line-height:40px}
-.sapUiSizeCompact .sapMBtnInner{height: auto;font-size: 1.06rem;}
+.sapUiSizeCompact .sapMBtnInner{height: auto;font-size: 15px;}
 span.sapMBtnInner.sapMBtnEmphasized {text-shadow: none;}
 .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem {min-height: 40px;padding-left: 1.4rem;}
 .search-condition-box .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem {padding-left: 0}
+.sapMBtn.sapUiTinyMarginEnd {margin-right: 5px!important;}
 
 .sapMBtnText>.sapMBtnIcon {position: static; top: 0; left: 0;}
 
@@ -507,14 +509,14 @@ span.sapMBtnInner.sapMBtnEmphasized {text-shadow: none;}
 .sapUiTableCtrlScroll tbody tr:nth-child(2) {border-bottom:none}
 .sapUiTableCtrlEmpty {font-size:15px; font-weight:300; color:#b4babf}
 .sapUiTableRowSelectors:not(.sapUiTableRowHighlights) .sapUiTableRowSelectionHeaderCell {height:100%}
-.sapUiTableCellInner .sapMText {font-size:15px; font-weight:500; font-stretch:normal; font-style:normal; line-height:normal; letter-spacing:normal; text-align:left; color:#343a40}
+.sapUiTableCellInner .sapMText {font-size:15px; font-weight:500; font-stretch:normal; font-style:normal; line-height:normal; letter-spacing:normal; text-align:left; color:#222222}
 .sapUiTableCtrlRowFixedBottom .sapUiTableCellInner .sapMText {font-weight:bold}
 
 /* .sapUiTable {border-left:solid 1px #f3f3f3; border-right:solid 1px #f3f3f3} */
 .sapUiTableCellInner .sapMBtn {width:100% !important}
 
 /*message box*/
-.sapMText{color:var(--FontColorNormal);font-size: 0.95rem;font-weight: 500;line-height: 1.45; align-self: center;}
+.sapMText{color:var(--FontColorNormal);font-size: 14px;font-weight: 500;line-height: 1.45; align-self: center;}
 .sapMMsgStripInformation {border-radius:3px; border:solid 1px#b8daff; background-color:#cce5ff; height:29px; padding:6px 13px 8px 20px; min-height:auto; line-height:1}
 .sapMMsgStripError {border-radius:3px; border:solid 1px #f5c6cb; background-color:#f8d7da; height:29px; padding:6px 13px 8px 20px; min-height:auto; line-height:1}
 .sapMMsgStripError .sapMText {color:#721c24}
@@ -534,7 +536,7 @@ span.sapMBtnInner.sapMBtnEmphasized {text-shadow: none;}
 여기서 부터 PX변경
 */
 /* .sapMFlexBox {margin-bottom:10px} */
-.label_wrap label {font-size:15px; font-weight:bold; font-stretch:normal; font-style:normal; line-height:40px; letter-spacing:normal; text-align:left; color:#343a40}
+.label_wrap label {font-size:15px; font-weight:bold; font-stretch:normal; font-style:normal; line-height:40px; letter-spacing:normal; text-align:left; color:#222222}
 .sapMLabelRequired:before {content:""}
 .sapMLabelRequired:after {content:"*"; color:#ff0000; font-family:"72fallback","72","72full",Arial,Helvetica,sans-serif; font-size:15px; font-weight:bold; position:relative; vertical-align:middle; line-height:0; margin-left:3px}
 /*input*/
@@ -560,27 +562,27 @@ input::placeholder{color:var(--FontColorNormal) !important;}
 /*textarea*/
 .sapMInputBase.sapMInputBaseHeightMargin.sapMTextArea {height:117px !important; padding:0 !important}
 .sapMInputBase.sapMInputBaseHeightMargin.sapMTextArea .sapMInputBaseContentWrapper {padding:7px 3px 8px 10px}
-.sapMInputBase.sapMInputBaseHeightMargin.sapMTextArea .sapMInputBaseContentWrapper textarea {padding:0 16px 0 0 !important; line-height:normal; font-family:Pretendard; font-size:13px; font-weight:500; color:#343a40}
+.sapMInputBase.sapMInputBaseHeightMargin.sapMTextArea .sapMInputBaseContentWrapper textarea {padding:0 16px 0 0 !important; line-height:normal; font-family:Pretendard; font-size:13px; font-weight:500; color:#222222}
 
 /*combobox select*/
 .sapMInputBaseHasEndIcons .sapMInputBaseContentWrapper, .sapMInputBaseHasBeginIcons .sapMInputBaseContentWrapper {height:100% !important}
-.sapMInputBaseHasEndIcons .sapMInputBaseContentWrapper input, .sapMInputBaseHasBeginIcons .sapMInputBaseContentWrapper input {padding:11px 0 11px 11px !important; font-size:15px; font-weight:500; color:#343a40}
+.sapMInputBaseHasEndIcons .sapMInputBaseContentWrapper input, .sapMInputBaseHasBeginIcons .sapMInputBaseContentWrapper input {padding:11px 0 11px 11px !important; font-size:15px; font-weight:500; color:#222222}
 .sapUiSizeCompact .sapMSlt{height:40px;margin:0;xwidth: 250px !important;}
 .sapUiSizeCompact .sapMInputBaseHeightMargin {margin:0}
 .sapUiSizeCompact .sapMSlt>.sapMSltArrow{line-height: 40px;width: 2.5rem;}
-.sapUiSizeCompact .sapMSlt>.sapMSltLabel {padding:11px 0 11px 11px !important; line-height:1; color:#343a40; font-size:15px; font-weight:500}
+.sapUiSizeCompact .sapMSlt>.sapMSltLabel {padding:11px 0 11px 11px !important; line-height:1; color:#222222; font-size:15px; font-weight:500}
 .sapUiSizeCompact .sapMSlt>.sapMSltLabel .sapMSelectListItemText {line-height:normal}
-.sapUiSizeCompact .sapMTokenizer .sapMToken {height:30px; margin:0 5px 0 0; padding:6px 10px 6px 6px; border-radius:3px; border:solid 1px #dddfe2; background-color:#e7e8ea; font-size:11px; font-weight:500; font-stretch:normal; font-style:normal; line-height:1.45; letter-spacing:normal; text-align:left; color:#343a40}
-.sapUiSizeCompact .sapMTokenText, .sapUiSizeCompact .sapMTokenIcon {font-size:11px; font-weight:500; font-stretch:normal; font-style:normal; line-height:1.45; letter-spacing:normal; text-align:left; color:#343a40}
+.sapUiSizeCompact .sapMTokenizer .sapMToken {height:30px; margin:0 5px 0 0; padding:6px 10px 6px 6px; border-radius:3px; border:solid 1px #dddfe2; background-color:#e7e8ea; font-size:11px; font-weight:500; font-stretch:normal; font-style:normal; line-height:1.45; letter-spacing:normal; text-align:left; color:#222222}
+.sapUiSizeCompact .sapMTokenText, .sapUiSizeCompact .sapMTokenIcon {font-size:11px; font-weight:500; font-stretch:normal; font-style:normal; line-height:1.45; letter-spacing:normal; text-align:left; color:#222222}
 .sapUiSizeCompact .sapMTokenIcon.sapUiIcon::before {content:'\e03e'}
 .sapMTokenizerIndicator {padding-left:11px}
 .sapMSltArrow::before {font-family: "SAP-icons"; speak: none; content: "\e1ef"; font-weight: 100; color: #999; font-size: 18px; line-height: 2;}
 
 /*radio*/
 .sapUiSizeCompact .sapMRbG .sapMRbBLabel {padding-left:29px}
-.sapUiSizeCompact .sapMRbBLabel {line-height:32px; height:32px; font-size:15px; font-weight:500; font-stretch:normal; font-style:normal; letter-spacing:normal; text-align:left; color:#343a40}
+.sapUiSizeCompact .sapMRbBLabel {line-height:32px; height:32px; font-size:15px; font-weight:500; font-stretch:normal; font-style:normal; letter-spacing:normal; text-align:left; color:#222222}
 .sapUiSizeCompact .sapMCbBg {width:14px; height:14px}
-.sapMCb label {font-size:15px; font-weight:500; font-stretch:normal; font-style:normal; line-height:32px; letter-spacing:normal; text-align:left; color:#343a40}
+.sapMCb label {font-size:15px; font-weight:500; font-stretch:normal; font-style:normal; line-height:32px; letter-spacing:normal; text-align:left; color:#222222}
 .sapMCbBg.sapMCbMarkChecked:before {color:#427cac; font-size:12px; line-height:16px}
 .sapUiSizeCompact .sapMRb>.sapMLabel {max-width:fit-content}
 .sapMCbBg.sapMCbMarkChecked.sapMCbMarkPartiallyChecked:before {content:""; width:8px; height:8px; background-color:currentColor; border:1px solid transparent; box-sizing:border-box; background-clip:padding-box; margin-top:3px}
@@ -608,9 +610,16 @@ input::placeholder{color:var(--FontColorNormal) !important;}
 .sapMITBSelected>.sapMITBContentArrow {border-bottom:3px solid; border-bottom-color:#217aef; height:15px !important}
 .sapMITBTextOnly .sapMITBText {font-size:20px !important; font-weight:bold}
 .sapMITBHead {display: flex;justify-content: space-evenly;width:100%;margin:0; padding:0; border-bottom:1px solid #000}
-.sapMITBContent {padding: 1rem 0rem;position: relative;background-color: transparent;}
+.sapMITBContent {padding: 1rem 0rem;position: relative;border-bottom: 0rem solid #d1e0ee;background-color: transparent;}
 .sapMITBTextOnly .sapMITBFilterDefault.sapMITBSelected>.sapMITBText {color: #217aef; text-shadow: 0 0 0.0rem #ffffff;}
 .tablist.type-b .sapMITBHead{display: flex;justify-content: start;width:100%;margin:0; padding:0; border-bottom:1px solid #000}
+
+.type-b .sapMITBHead {display: flex;justify-content: flex-start;width:100%;margin:0; padding:0; border-bottom:1px solid #000}
+.type-b .sapMITBInLine.sapMITBTextOnly>.sapMITBVertical {height: 50px;min-width: 100px;margin-right:4px;padding: 0 20px !important; border: 1px solid #ccc;border-bottom:0px solid #fff;border-radius:4px 4px 0 0;}
+.type-b .sapMITBTextOnly .sapMITBFilterDefault.sapMITBSelected {position:relative;border: 1px solid #217aef;border-bottom:0px solid #fff;background-color: #fff;}
+.type-b .sapMITBTextOnly .sapMITBFilterDefault.sapMITBSelected:after {content: "";position: absolute;left:0;right:0;bottom:-1px;width:100%;height:1px;background-color: #fff;}
+.type-b .sapMITBVertical.sapMITBFilter>.sapMITBText + .sapMITBContentArrow {display: none;;}
+
 
 /**/
 .sapMPI {background:#e9ecef; border-radius:8px}
@@ -622,7 +631,7 @@ input::placeholder{color:var(--FontColorNormal) !important;}
 
 .sapMBreadcrumbs .sapMBreadcrumbsSeparator {color: transparent;    font-size: 0;}
 /* .sapMBreadcrumbs .sapMBreadcrumbsSeparator:after {content: "";display: inline-block; width: 0.8rem; height: 0.8rem; align-self: center; background-color: violet; background-image: url(../css/images/icon_arrow.png); background-repeat: no-repeat;background-position: center;} */
-.sapMBreadcrumbs .sapMBreadcrumbsSeparator:after {font-family: "SAP-icons"; speak: none; content: "\e161";color:#888; font-size: 14px;font-weight: 300;padding:0 0.2rem;}
+.sapMBreadcrumbs .sapMBreadcrumbsSeparator:after {font-family: "SAP-icons"; speak: none; content: "\e161";color:#888; font-size: 14px;font-weight: 300;padding:0 0.15rem;}
 
 /*icon button style*/
 .sapMBtn.icon-button {display: inline-flex;justify-content: center;align-items: center;min-width: auto;}
@@ -677,8 +686,8 @@ input::placeholder{color:var(--FontColorNormal) !important;}
 .breadcrumbs { align-items: center;padding: 1rem 0;background-color: #fff;height: 80px;width: 1600px; max-width: 1600px; margin: 0 auto;}
 .breadcrumbs .contents {     width: 1600px; display: flex; justify-content: space-between;}
 
-h2.sapMTitle {font-size: 1.56rem; font-weight: 700; margin-bottom: 0rem;}
-h3.sapMTitle {font-size: 1.56rem; font-weight: 700; margin-bottom: 0.4rem;}
+h2.sapMTitle {font-size: 24px; font-weight: 700; margin-bottom: 0rem;color:#222222;}
+h3.sapMTitle {font-size: 24px; font-weight: 700; margin-bottom: 0.4rem;color:#222222;}
 
 .member-picture > div {height:9.13rem}
 .member-picture .sapMImg {width: 9.13rem; height:9.13rem; border-radius: 50%;}
@@ -686,11 +695,11 @@ h3.sapMTitle {font-size: 1.56rem; font-weight: 700; margin-bottom: 0.4rem;}
 .my-info-detail {align-self:flex-end}
 .my-info-detail > div + div {margin-top: 0.5rem}
 .my-info .sapMText {font-size: 0.94rem; color: #111; font-weight: 700; line-height: 0.94rem}
-.my-info .name {font-size: 1.87rem; font-weight: 700; margin-bottom: 1.2rem; color: #343A40; line-height: 1.87rem}
+.my-info .name {font-size: 1.87rem; font-weight: 700; margin-bottom: 1.2rem; color: #222222; line-height: 1.87rem}
 
 .sapMBreadcrumbs {white-space: nowrap;outline: none; margin: 0;}
-.sapMBreadcrumbs .sapMLnk {color: #343A40 !important;font-size: 17px;font-weight:500;}
-.sapMBreadcrumbs .sapMBreadcrumbsCurrentLocation {font-size: 17px;font-weight:700;}
+.sapMBreadcrumbs .sapMLnk {color: #555555 !important;font-size: 14px;font-weight:500;}
+.sapMBreadcrumbs .sapMBreadcrumbsCurrentLocation {font-size: 14px;font-weight:700;}
 
 .summary-info {margin-bottom: 0.9rem; margin-top: 10px; }
 .summary-info .sapMFlexItem {margin-bottom: 0.35rem;}
@@ -707,22 +716,22 @@ h3.sapMTitle {font-size: 1.56rem; font-weight: 700; margin-bottom: 0.4rem;}
 .status-wrap .sapMFlexItemAlignAuto {align-self: center;}
 
 .my-info-v {display: flex; justify-content: flex-start; align-content: center;padding: 1rem 1.6rem;}
-.my-info-v .sapMFlexItem {flex: 1 auto; padding-right: 3.0rem; align-self: center;color: #343A40;font-weight: 700;}
+.my-info-v .sapMFlexItem {flex: 1 auto; padding-right: 3.0rem; align-self: center;color: #222222;font-weight: 700;}
 .my-info-v .sapMFlexItem:first-child {padding-right: 1.8rem; }
 .my-info-v .sapMFlexItem:nth-child(2) {padding-right: 1.4rem; }
-.my-info-v .sapMFlexItem .sapMText {color: #343A40;font-weight:700;}
+.my-info-v .sapMFlexItem .sapMText {color: #222222;font-weight:700;}
 .my-info-v .sapMImg {width:63px;height:63px;border-radius: 50%;}
-.my-info-v .name {font-size: 1.87rem;font-weight: 700;color: #343A40;}
+.my-info-v .name {font-size: 24px;font-weight: 700;color: #222222;}
 
 .info-area {background: #F7F0D5 0% 0% no-repeat padding-box;}
 .info-area .sapMFlexItemAlignAuto {-webkit-align-self: center;align-self: center;}
 .info-area .sapMFlexItem .sapMText {padding-left:4.5rem; margin-top: 5px;font-size: 1.25rem;font-weight:500;background-image: url(../css/images/icon_help.png);background-position: 0 center;background-repeat: no-repeat;}
 
-.sapMFlexBox .title {margin-bottom:1rem;}
+.sapMFlexBox .title {margin-bottom:18px;}
 .sapMFlexBox .title .sapMFlexItemAlignAuto {-webkit-align-self: center;align-self: center;}
-.sapMFlexBox .title + .sapMFlexItem {margin-top:-0.45rem;}
+/* .sapMFlexBox .title + .sapMFlexItem {margin-top:-0.45rem;} */
 
-.contents-header {align-items: center; box-shadow: 0 3px 3px rgb(0 0 0 / 10%); margin-bottom: 1.9rem; padding: 0; background-color: #fff; height: 80px;}
+.contents-header {align-items: center; box-shadow: 0 3px 3px rgb(0 0 0 / 10%); margin-bottom: 20px; padding: 0; background-color: #fff; height: 80px;}
 .contents {margin: 0 auto;max-width: 1600px;min-width: 1600px;}
 
 /*Layer popup style*/
@@ -741,8 +750,9 @@ h3.sapMTitle {font-size: 1.56rem; font-weight: 700; margin-bottom: 0.4rem;}
 .sapMDialog>header.sapMDialogTitle .sapMTitle {color: #262C2F; margin: 0; vertical-align: middle; font-size: 25px;}
 html.sap-desktop .sapContrast.sapMIBar.sapMFooter-CTX { height: 4.5rem;}
 
-.sapUiLayoutCSSGrid.form-grid > * {border-bottom:1px solid #F5F5F5;height:100%;align-self: center;}
-.sapUiLayoutCSSGrid.form-grid .sapMFlexBox .sapMFlexItem {display:flex;padding-bottom:4px;min-height: 40px!important;}
+.sapUiLayoutCSSGrid.form-grid {border-top: 1px solid #F5F5F5; border-bottom: 1px solid #F5F5F5; padding-top: 0px;background-color: #F5F5F5!important;}
+.sapUiLayoutCSSGrid.form-grid > * {height:100%;min-height: 50px;align-self: center;background: #fff;}
+.sapUiLayoutCSSGrid.form-grid .sapMFlexBox .sapMFlexItem {display:flex;padding-top:5px;min-height: 40px!important;}
 .sapUiLayoutCSSGrid.form-grid .sapMFlexBox .sapMFlexItem .sapMText {display:flex;}
 .listFileDialog {min-height: 85px !important; max-height: 230px !important;}
 
