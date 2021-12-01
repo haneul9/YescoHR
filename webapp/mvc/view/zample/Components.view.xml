@@ -6,7 +6,7 @@
 	xmlns:custom="sap.ui.yesco.control">
 	<Page navButtonTooltip="" title="Components">
 		<content>
-			<VBox width="auto">
+			<VBox width="auto" class="worklist">
 				<HBox class="sapUiResponsiveMargin" width="auto">
 					<VBox>
 						<Title level="H3" text="Navigation" class="component-title" />
@@ -111,6 +111,7 @@
 							<Input valueState="Warning" width='200px' valueStateText="Warning message. Extra long text used as a warning message. Extra long text used as a warning message - 2. Extra long text used as a warning message - 3. Extra long text used as a warning message - 4. Extra long text used as a warning message - 5." value="Value state Warning." />
 							<Input valueState="Error" width='200px' value="Value state Error" />
 							<Input valueState="Information" width='200px' value="Value state Information" />
+							<Input width='200px' valueStateText="" value="필수일때 class required"  class="required"/>
 						</HBox>
 					</VBox>
 				</HBox>

@@ -3,7 +3,12 @@
 html *:not(.sapUiIcon):not(.sapMMsgStripCloseButton):not(i) {font-family:Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif}
 html, body {box-sizing:border-box; overflow:hidden}
 
+
 .app-menu-toolbar {max-width:1600px;margin: 0 auto;background-color: #fff;box-shadow: 0 1px 1px rgb(0 0 0 / 10%);z-index: 2;}
+
+.sapUiBodyBackground, .sapUiBody {background-color: #F9FAFA;}
+
+.app-menu-toolbar {height:60px!important;max-width:1600px;margin: 0 auto;background-color: #fff;box-shadow: 0 1px 1px rgb(0 0 0 / 10%);z-index: 2;}
 .app-menu-toolbar:before {content:"";height:59px!important;width:100%; background-color: #ffffff; position: fixed; top:0; left: 0; right: 0; z-index: -1;}
 .app-menu-toolbar:after {content:"";height:0px!important;width:100%; background-color: #ffffff;border-bottom: 1px solid #ccc; position: fixed; top: 59px; left: 0; right: 0;box-shadow: 0 3px 3px rgb(0 0 0 / 10%); z-index: 3;}
 
@@ -14,11 +19,13 @@ html, body {box-sizing:border-box; overflow:hidden}
 .sapMImageContent.logo-2000, .sapMImageContent.logo-3000, .sapMImageContent.logo-init {width:145px; height:43px}
 .sapMImageContent.logo-1000 {width:182px; height:30px}
 .font-1b-rem .sapMBtnInner {font-size:1.125rem}
+
 .sapMLabel.app-menu-level1 {box-sizing:border-box; padding:0; line-height:60px; font-size:20px; font-weight:800 !important; cursor:default}
 .sapMLabel.app-menu-level1 bdi {box-sizing:border-box; border-top:solid 4px transparent; border-bottom:solid 4px transparent; padding:0 1.8rem; line-height:52px}
 .sapMLabel.app-menu-level1:hover bdi {border-bottom-color:#007bff}
 .sapMIBar.sapMTB .sapMBarChild {margin:0}
 .sapMIBar.sapMTB .sapMBarChild + .sapMBarChild:not(.app-menu-level1) {margin-left:1.6rem}
+
 .menu-70000 bdi {color:#2972c8}
 .menu-80000 bdi {color:#27c83f}
 .menu-sample bdi {color:#ccc}
@@ -607,7 +614,7 @@ input::placeholder{color:var(--FontColorNormal) !important;}
 
 /**/
 .sapMPI {background:#e9ecef; border-radius:8px}
-.sapUiSizeCompact .sapMPI:not(.sapMPIDisplayOnly) {width:400px !important; height:16px}
+.sapUiSizeCompact .sapMPI:not(.sapMPIDisplayOnly) {width:400px; height:16px} /*width:400px !important;*/
 .sapMPIValueNormal .sapMPIBar {background:#007bff}
 .sapMPIBarRemaining {border:0}
 .sapMPIText {font-size:0}
@@ -766,3 +773,13 @@ html.sap-desktop .sapContrast.sapMIBar.sapMFooter-CTX { height: 4.5rem;}
 .lineItem-wrap:after {content:"";display:inline-block;height:5px;position: absolute;left:10%;right:10%;top:50%;background: linear-gradient(to right, #f9e78d, 50%,  rgb(51, 155, 106));z-index: 1;}
 .lineItem {z-index: 2;align-self: center;display: flex;justify-content: center;align-content: center;}
 .lineItem::before { margin-top: 6px;}
+
+/* MAIN */
+.sapMTileCntContent>.sapMTcInnerMarker {
+  display: flex;
+  vertical-align: bottom;
+  line-height: normal;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
