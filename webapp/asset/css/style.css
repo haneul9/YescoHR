@@ -14,10 +14,11 @@ html, body {box-sizing:border-box; overflow:hidden}
 .sapMImageContent.logo-2000, .sapMImageContent.logo-3000, .sapMImageContent.logo-init {width:145px; height:43px}
 .sapMImageContent.logo-1000 {width:182px; height:30px}
 .font-1b-rem .sapMBtnInner {font-size:1.125rem}
-.sapMLabel.app-menu-level1 {padding:0; line-height:60px; font-size:20px; font-weight:800 !important; cursor:default}
-.sapMLabel.app-menu-level1-hover {border-bottom-color:#f00}
-.sapMLabel.app-menu-level1 bdi {padding:0 1rem}
-.sapMIBar.sapMTB .sapMBarChild { margin-left: 0rem;margin-right: 1.6rem}
+.sapMLabel.app-menu-level1 {box-sizing:border-box; padding:0; line-height:60px; font-size:20px; font-weight:800 !important; cursor:default}
+.sapMLabel.app-menu-level1 bdi {box-sizing:border-box; border-top:solid 4px transparent; border-bottom:solid 4px transparent; padding:0 1.8rem; line-height:52px}
+.sapMLabel.app-menu-level1:hover bdi {border-bottom-color:#007bff}
+.sapMIBar.sapMTB .sapMBarChild {margin:0}
+.sapMIBar.sapMTB .sapMBarChild + .sapMBarChild:not(.app-menu-level1) {margin-left:1.6rem}
 .menu-70000 bdi {color:#2972c8}
 .menu-80000 bdi {color:#27c83f}
 .menu-sample bdi {color:#ccc}
