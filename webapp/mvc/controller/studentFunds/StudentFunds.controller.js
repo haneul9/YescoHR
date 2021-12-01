@@ -53,11 +53,9 @@ sap.ui.define(
         this.setViewModel(oViewModel);
       },
 
-      onAfterShow() {
+      onObjectMatched(oParameter) {
         this.onSearch();
         this.totalCount();
-
-        BaseController.prototype.onAfterShow.call(this);
       },
 
       onClick() {
@@ -76,14 +74,14 @@ sap.ui.define(
         return this.getBundleText('MSG_03012', sYear);
       },
 
-      async onSearch() {
+      onSearch() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oListModel = this.getViewModel();
         const oTable = this.byId('studentTable');
         const oSearchDate = oListModel.getProperty('/searchDate');
         const dDate = moment(oSearchDate.secondDate).hours(10).toDate();
         const dDate2 = moment(oSearchDate.date).hours(10).toDate();
-        const sMenid = await this.getCurrentMenuId();
+        const sMenid = this.getCurrentMenuId();
 
         oListModel.setProperty('/busy', true);
 
@@ -99,11 +97,8 @@ sap.ui.define(
               const oList = oData.results;
 
               oListModel.setProperty('/StudentList', oList);
-
-              setTimeout(() => {
-                oListModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData: oList }));
-                oListModel.setProperty('/busy', false);
-              }, 100);
+              oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: oList }));
+              oListModel.setProperty('/busy', false);
             }
           },
           error: (oError) => {

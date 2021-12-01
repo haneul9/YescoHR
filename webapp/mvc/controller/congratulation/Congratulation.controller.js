@@ -5,6 +5,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
+    'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -12,12 +13,13 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-    ServiceNames,
-    AppUtils,
-    AttachFileAction,
-    TableUtils,
-    FragmentEvent,
-    BaseController
+	ServiceNames,
+	AppUtils,
+	AttachFileAction,
+	ODataReadError,
+	TableUtils,
+	FragmentEvent,
+	BaseController
   ) => {
     'use strict';
 
@@ -86,20 +88,20 @@ sap.ui.define(
               oTotalModel.setProperty('/Total', oTotal);
             }
           },
-          error: (oRespnse) => {
-            this.debug(`${sUrl} error.`, oRespnse);
+          error: (oError) => {
+            AppUtils.handleError(new ODataReadError(oError));
           },
         });
       },
 
-      async onSearch() {
+      onSearch() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oListModel = this.getViewModel();
         const oTable = this.byId('conguTable');
         const oSearchDate = oListModel.getProperty('/searchDate');
         const dDate = moment(oSearchDate.secondDate).hours(10).toDate();
         const dDate2 = moment(oSearchDate.date).hours(10).toDate();
-        const sMenid = await this.getCurrentMenuId();
+        const sMenid = this.getCurrentMenuId();
 
         oListModel.setProperty('/busy', true);
 
@@ -112,19 +114,16 @@ sap.ui.define(
           ],
           success: (oData) => {
             if (oData) {
-              const oList = oData.results.map((o) => {
-                return {
-                  ...o,
-                  Pernr: parseInt(o.Pernr, 10),
-                };
-              });
+              const oList = oData.results;
 
               oListModel.setProperty('/CongList', oList);
               oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: oList }));
               oListModel.setProperty('/busy', false);
             }
           },
-          error: (oRespnse) => {
+          error: (oError) => {
+            AppUtils.handleError(new ODataReadError(oError));
+            
             oListModel.setProperty('/busy', false);
           },
         });

@@ -55,12 +55,10 @@ sap.ui.define(
         this.setViewModel(oViewModel);
       },
 
-      async onAfterShow() {
+      async onObjectMatched() {
         this.totalCount();
         await this.getTypeCode();
         await this.onSearch();
-
-        BaseController.prototype.onAfterShow.call(this);
       },
 
       onClick() {
@@ -77,7 +75,7 @@ sap.ui.define(
         return `${vPay}${this.getBundleText('LABEL_00158')}`;
       },
 
-      async onSearch() {
+      onSearch() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oListModel = this.getViewModel();
         const oTable = this.byId('loanTable');
@@ -85,7 +83,7 @@ sap.ui.define(
         const dDate = moment(oSearch.secondDate).hours(10).toDate();
         const dDate2 = moment(oSearch.date).hours(10).toDate();
         const vLoanType = !oSearch.Lntyp || oSearch.Lntyp === 'ALL' ? '' : oSearch.Lntyp;
-        const sMenid = await this.getCurrentMenuId();
+        const sMenid = this.getCurrentMenuId();
 
         return new Promise((resolve) => {
           oListModel.setProperty('/busy', true);
@@ -103,11 +101,8 @@ sap.ui.define(
                 const oList = oData.results;
 
                 oListModel.setProperty('/List', oList);
-
-                setTimeout(() => {
-                  oListModel.setProperty('/listInfo', TableUtils.count({ oTable, mRowData: oList, sStatCode: 'Lnsta' }));
-                  oListModel.setProperty('/busy', false);
-                }, 100);
+                oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: oList, sStatCode: 'Lnsta' }));
+                oListModel.setProperty('/busy', false);
               }
 
               resolve();

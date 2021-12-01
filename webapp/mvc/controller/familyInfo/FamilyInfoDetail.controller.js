@@ -373,7 +373,7 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
         const oFormData = oDetailModel.getProperty('/FormData');
-        const sMenid = await this.getCurrentMenuId();
+        const sMenid = this.getCurrentMenuId();
 
         if (this.checkError()) return;
 

@@ -64,7 +64,7 @@ sap.ui.define(
       async onObjectMatched() {
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const oViewModel = this.getViewModel();
-        const sPernr = this.getOwnerComponent().getSessionModel().getProperty('/Pernr');
+        const sPernr = this.getSessionProperty('Pernr');
         const oSearchConditions = oViewModel.getProperty('/search');
 
         try {
@@ -283,9 +283,9 @@ sap.ui.define(
        * @param  {JSONModel} oModel
        * @param  {Object} oSearchConditions
        */
-      async readLeaveApplContent({ oModel, oSearchConditions }) {
+      readLeaveApplContent({ oModel, oSearchConditions }) {
         const sUrl = '/LeaveApplContentSet';
-        const sMenid = await this.getCurrentMenuId();
+        const sMenid = this.getCurrentMenuId();
 
         return new Promise((resolve, reject) => {
           oModel.read(sUrl, {

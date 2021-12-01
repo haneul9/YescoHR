@@ -60,10 +60,10 @@ sap.ui.define(
         return sAction;
       },
 
-      async onObjectMatched(oParameter) {
+      onObjectMatched(oParameter) {
         const sDataKey = oParameter.oDataKey;
         const oDetailModel = this.getViewModel();
-        const sMenid = await this.getCurrentMenuId();
+        const sMenid = this.getCurrentMenuId();
 
         oDetailModel.setProperty('/ViewKey', sDataKey);
         oDetailModel.setProperty('/TargetInfo', this.getOwnerComponent().getTargetModel().getData());

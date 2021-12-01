@@ -211,7 +211,7 @@ sap.ui.define(
 
       onObjectMatched(oParameter) {
         const oViewModel = this.getView().getModel();
-        const sPernr = oParameter.pernr || this.getOwnerComponent().getSessionModel().getProperty('/Pernr');
+        const sPernr = oParameter.pernr || this.getSessionData().Pernr;
 
         oViewModel.setProperty('/employee/busy', true);
         oViewModel.setProperty('/pernr', sPernr);
@@ -224,7 +224,7 @@ sap.ui.define(
         const oSideBody = this.byId('sideBody');
         const oSideList = this.byId('sideEmployeeList');
         const oStatFilter = new Filter('Stat2', FilterOperator.EQ, '3');
-        const oSessionData = this.getOwnerComponent().getSessionModel().getData();
+        const oSessionData = this.getSessionData();
         const oSearchParam = {
           searchText: sPernr || oSessionData.Pernr,
           ...oSessionData,
@@ -699,7 +699,7 @@ sap.ui.define(
         const oViewModel = this.getView().getModel();
         const oControl = oEvent.getSource();
         const sSearchText = oControl.getValue();
-        const oSessionData = this.getOwnerComponent().getSessionModel().getData();
+        const oSessionData = this.getSessionData();
         const oSearchParam = {
           searchText: sSearchText,
           ...oSessionData,

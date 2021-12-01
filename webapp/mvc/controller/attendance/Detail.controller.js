@@ -8,6 +8,7 @@ sap.ui.define(
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/ComboEntry',
+    'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/common/Appno',
@@ -28,6 +29,7 @@ sap.ui.define(
     JSONModel,
     MessageBox,
     ComboEntry,
+    UI5Error,
     ODataReadError,
     ODataCreateError,
     Appno,
@@ -157,16 +159,11 @@ sap.ui.define(
         } catch (oError) {
           this.debug('Controller > Attendance Detail > onAfterShow Error', oError);
 
-          if (oError instanceof Error) {
-            // 잘못된 접근입니다.
-            MessageBox.error(this.getBundleText('MSG_00043'), {
-              onClose: () => this.getRouter().navTo('attendance'),
-            });
-          } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
-            oError.showErrorMessage({
-              onClose: () => this.getRouter().navTo('attendance'),
-            });
-          }
+          if (oError instanceof Error) oError = new UI5Error({ message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
+
+          AppUtils.handleError(oError, {
+            onClose: () => this.getRouter().navTo('attendance'),
+          });
         }
       },
 
@@ -208,7 +205,7 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         if (_.isEmpty(detailData)) {
-          const oSessionData = this.getOwnerComponent().getSessionModel().getData();
+          const oSessionData = this.getSessionData();
 
           oViewModel.setProperty('/ApplyInfo', {
             Apename: oSessionData.Ename,
@@ -315,11 +312,7 @@ sap.ui.define(
         } catch (oError) {
           this.debug('Controller > Attendance Detail > createProcess Error', oError);
 
-          if (oError instanceof Error) {
-            MessageBox.error(oError.message);
-          } else if (oError instanceof sap.ui.yesco.common.exceptions.Error) {
-            oError.showErrorMessage();
-          }
+          AppUtils.handleError(oError);
         } finally {
           AppUtils.setAppBusy(false, this);
         }
@@ -586,14 +579,14 @@ sap.ui.define(
        * @param {String} sPrcty -  T:임시저장, C:신청
        * @returns
        */
-      async createLeaveApplContent(sPrcty) {
+      createLeaveApplContent(sPrcty) {
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const oViewModel = this.getViewModel();
         const oTargetInfo = this.getOwnerComponent().getTargetModel().getData();
         const mTableData = oViewModel.getProperty('/form/list');
         const sAppty = oViewModel.getProperty('/type');
         const sAppno = oViewModel.getProperty('/Appno');
-        const sMenid = await this.getCurrentMenuId();
+        const sMenid = this.getCurrentMenuId();
         const sUrl = '/LeaveApplContentSet';
         let aLeaveApplNav1 = [...mTableData];
 

@@ -7,6 +7,8 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
+    'sap/ui/yesco/common/exceptions/ODataReadError',
+    'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -17,16 +19,17 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     Fragment,
-    JSONModel,
-    Appno,
-    AppUtils,
-    AttachFileAction,
-    ComboEntry,
-    TextUtils,
-    FragmentEvent,
-    ServiceNames,
-    MessageBox,
-    BaseController
+	JSONModel,
+	Appno,
+	AppUtils,
+	AttachFileAction,
+	ComboEntry,
+	ODataReadError,
+	TextUtils,
+	FragmentEvent,
+	ServiceNames,
+	MessageBox,
+	BaseController,
   ) => {
     'use strict';
 
@@ -71,10 +74,10 @@ sap.ui.define(
       },
 
       // 상세조회
-      async getTargetData() {
+      getTargetData() {
         const oDetailModel = this.getViewModel();
         const sDataKey = oDetailModel.getProperty('/FormStatus');
-        const sMenid = await this.getCurrentMenuId();
+        const sMenid = this.getCurrentMenuId();
 
         oDetailModel.setProperty('/menuId', sMenid);
         oDetailModel.setProperty('/TargetInfo', this.getOwnerComponent().getTargetModel().getData());
@@ -123,9 +126,7 @@ sap.ui.define(
                 resolve();
               },
               error: (oError) => {
-                const vErrorMSG = AppUtils.parseError(oError);
-
-                MessageBox.error(vErrorMSG);
+                AppUtils.handleError(new ODataReadError(oError));
               },
             });
           }
@@ -158,9 +159,7 @@ sap.ui.define(
               resolve();
             },
             error: (oError) => {
-              const vErrorMSG = AppUtils.parseError(oError);
-
-              MessageBox.error(vErrorMSG);
+              AppUtils.handleError(new ODataReadError(oError));
             },
           });
         });
@@ -188,9 +187,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            const vErrorMSG = AppUtils.parseError(oError);
-
-            MessageBox.error(vErrorMSG);
+            AppUtils.handleError(new ODataReadError(oError));
           },
         });
 
@@ -227,9 +224,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            const vErrorMSG = AppUtils.parseError(oError);
-
-            MessageBox.error(vErrorMSG);
+            AppUtils.handleError(new ODataReadError(oError));
           },
         });
       },
@@ -276,9 +271,7 @@ sap.ui.define(
               resolve();
             },
             error: (oError) => {
-              const vErrorMSG = AppUtils.parseError(oError);
-
-              MessageBox.error(vErrorMSG);
+              AppUtils.handleError(new ODataReadError(oError));
             },
           });
         }).then(() => {
@@ -335,9 +328,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            const vErrorMSG = AppUtils.parseError(oError);
-
-            MessageBox.error(vErrorMSG);
+            AppUtils.handleError(new ODataReadError(oError));
           },
         });
       },
@@ -404,9 +395,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            const vErrorMSG = AppUtils.parseError(oError);
-
-            MessageBox.error(vErrorMSG);
+            AppUtils.handleError(new ODataReadError(oError));
           },
         });
       },
@@ -490,9 +479,7 @@ sap.ui.define(
               resolve();
             },
             error: (oError) => {
-              const vErrorMSG = AppUtils.parseError(oError);
-
-              MessageBox.error(vErrorMSG);
+              AppUtils.handleError(new ODataReadError(oError));
             },
           });
         });
@@ -647,9 +634,7 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      const vErrorMSG = AppUtils.parseError(oError);
-
-                      reject(vErrorMSG);
+                      reject(oError);
                     },
                   });
                 });
