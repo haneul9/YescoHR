@@ -10,6 +10,7 @@ sap.ui.define(
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
+    'sap/ui/yesco/mvc/model/type/Pernr',
   ],
   (
     // prettier 방지용 주석
@@ -120,7 +121,6 @@ sap.ui.define(
           aRowData.map((o) => {
             return {
               ...o,
-              Pernr: parseInt(o.Pernr, 10),
               BegdaTxt: o.Begda ? moment(new Date(o.Begda)).hours(9).format('YYYY.MM.DD') : '',
               EnddaTxt: o.Endda ? moment(new Date(o.Endda)).hours(9).format('YYYY.MM.DD') : '',
               AppdtTxt: o.Appdt ? moment(new Date(o.Appdt)).hours(9).format('YYYY.MM.DD') : '',
