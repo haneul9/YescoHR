@@ -6,7 +6,7 @@
             <Button text="{i18n>LABEL_00115}" press=".onClick" class="cancel" />
         </beginButton>
         <content>
-            <table:Table id="targetTable" width="100%" rows="{/TargetList}" visibleRowCount="1" selectionMode="None" rowHeight="37" columnHeaderHeight="38" columnHeaderVisible="false" cellClick=".TargetClick">
+            <table:Table id="targetTable" width="100%" rows="{/TargetList}" visibleRowCount="1" selectionMode="None" rowHeight="45" columnHeaderHeight="45" columnHeaderVisible="false" cellClick=".TargetClick">
                 <table:columns>
                     <table:Column width="20%">
                         <table:template>

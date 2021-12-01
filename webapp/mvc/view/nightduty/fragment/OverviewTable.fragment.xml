@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.ui.table"
     xmlns:m="sap.m"
     xmlns:core="sap.ui.core">
-    <Table id="nightdutyTable" class="row-link" width="100%" columnHeaderHeight="50" rowHeight="50" rows="{/list}" visibleRowCount="{/listInfo/rowCount}" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow" rowSelectionChange=".onChangeRowSelection">
+    <Table id="nightdutyTable" class="row-link" width="100%" columnHeaderHeight="45" rowHeight="45" rows="{/list}" visibleRowCount="{/listInfo/rowCount}" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow" rowSelectionChange=".onChangeRowSelection">
         <rowSettingsTemplate>
             <RowSettings highlight="{ path: 'ZappStatAl', formatter: '.TableUtils.rowHighlight' }"/>
         </rowSettingsTemplate>

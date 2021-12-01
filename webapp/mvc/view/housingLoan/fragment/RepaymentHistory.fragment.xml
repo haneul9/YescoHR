@@ -6,7 +6,7 @@
             <Title level="H3" text="{i18n>LABEL_07033}" class="sapUiSmallMarginEnd" />
             <Button icon="sap-icon://excel-attachment" width="117px" text="Excel" press=".onPressExcelDownload" busyIndicatorDelay="0" busy="{/busy}" />
         </HBox>
-        <table:Table id="repayHisTable" rows="{/RepayHisList}" visibleRowCount="{/RepayHisLength}" width="100%" busyIndicatorDelay="0" busy="{/hisBusy}" selectionMode="None" columnHeaderHeight="50px" rowHeight="50px" noData="{i18n>MSG_00001}">
+        <table:Table id="repayHisTable" rows="{/RepayHisList}" visibleRowCount="{/RepayHisLength}" width="100%" busyIndicatorDelay="0" busy="{/hisBusy}" selectionMode="None" columnHeaderHeight="45" rowHeight="45" noData="{i18n>MSG_00001}">
             <table:columns>
                 <table:Column width="50px" sortProperty="Number" filterProperty="Number">
                     <Label text="{i18n>LABEL_00164}"/>

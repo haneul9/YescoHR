@@ -70,7 +70,7 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/busy', true);
 
-          const [mQuotaResultData, aRowData] = await Promise.all([
+          const [aQuotaResultData, aRowData] = await Promise.all([
             this.readAbsQuotaList({ oModel, sPernr }), //
             this.readLeaveApplContent({ oModel, oSearchConditions }),
           ]);
@@ -80,19 +80,28 @@ sap.ui.define(
           oViewModel.setProperty(
             '/quota',
             _.reduce(
-              mQuotaResultData,
+              aQuotaResultData,
               (acc, { Ktart, Kotxt, Crecnt, Usecnt }) => ({
                 ...acc,
                 [Ktart]: {
                   Kotxt,
-                  Crecnt: parseInt(Crecnt, 10),
-                  Usecnt: parseInt(Usecnt, 10),
-                  Rate: (parseInt(Usecnt, 10) / parseInt(Crecnt, 10)) * 100,
+                  Crecnt: parseInt(Crecnt, 10) ?? 0,
+                  Usecnt: parseInt(Usecnt, 10) ?? 0,
+                  Balcnt: parseInt(Balcnt, 10) ?? 0,
                 },
               }),
               {}
             )
           );
+
+          oViewModel.setProperty('/quota', {
+            10: { Kotxt: '연차', Crecnt: 25, Usecnt: 5 },
+            20: { Kotxt: '1년미만연차', Crecnt: 25, Usecnt: 5 },
+            30: { Kotxt: '장기근속휴가', Crecnt: 25, Usecnt: 5 },
+            40: { Kotxt: '장기근속휴가', Crecnt: 25, Usecnt: 5 },
+            50: { Kotxt: '보건휴가', Crecnt: 25, Usecnt: 5 },
+            60: { Kotxt: '가족돌봄휴가', Crecnt: 25, Usecnt: 5 },
+          });
         } catch (oError) {
           this.debug('Controller > Attendance List > initialRetrieve Error', oError);
 
