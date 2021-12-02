@@ -61,7 +61,7 @@ sap.ui.define(
         const oFileUploader = this.byId('ATTACHFILE_BTN');
         const JSonModel = oAttachbox.getModel();
         const aFileList = [];
-        const vMode = JSonModel.getProperty('/Settings/Mode');
+        // const vMode = JSonModel.getProperty('/Settings/Mode');
         const vMax = JSonModel.getProperty('/Settings/Max');
         const files = oEvent.getParameters().files;
         let vFileData = JSonModel.getProperty('/Data');
@@ -77,7 +77,7 @@ sap.ui.define(
             aFileList.push(elem);
           });
 
-          if (vMode === 'M' && vFileData.length + files.length > vMax) {
+          if (vFileData.length + files.length > vMax) {
             oFileUploader.clear();
             oFileUploader.setValue('');
 
