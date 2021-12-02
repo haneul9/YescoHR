@@ -29,6 +29,8 @@ sap.ui.define(
       async onBeforeShow() {
         AppUtils.setAppBusy(true, this);
 
+        this.byId('ChartHolder').removeAllItems();
+
         try {
           const mReturnData = (await this.readEmployeeOrgTree()) ?? [];
 
