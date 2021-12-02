@@ -2,7 +2,7 @@
     xmlns:core="sap.ui.core">
     <HBox justifyContent="SpaceBetween" class="header-wrap">
         <HBox class="header">
-            <Title level="H3" text="{i18n>LABEL_00129}" class="sapUiSmallMarginEnd" />
+            <Title level="H3" text="{= !!${/listInfo/Title} ? ${/listInfo/Title} : ${i18n>LABEL_00129} }" class="sapUiSmallMarginEnd" />
             <Text text="total {/listInfo/totalCount}" class="sapUiMediumMarginEnd" />
             <Text text="{/listInfo/infoMessage}" visible="{= !!${/listInfo/infoMessage} }" class="sapUiMediumMarginEnd component-title" />
         </HBox>
