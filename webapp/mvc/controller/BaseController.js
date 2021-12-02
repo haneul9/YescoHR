@@ -3,6 +3,7 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/core/UIComponent',
     'sap/ui/core/mvc/Controller',
+    'sap/ui/core/routing/HashChanger',
     'sap/ui/core/routing/History',
     'sap/ui/yesco/common/AppUtils',
   ],
@@ -10,6 +11,7 @@ sap.ui.define(
     // prettier 방지용 주석
     UIComponent,
     Controller,
+    HashChanger,
     History,
     AppUtils
   ) => {
@@ -62,6 +64,10 @@ sap.ui.define(
       getRouter() {
         // return this.getOwnerComponent().getRouter();
         return UIComponent.getRouterFor(this);
+      },
+
+      isHass() {
+        return /^h\//.test(HashChanger.getInstance().getHash());
       },
 
       /**

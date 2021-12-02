@@ -8,17 +8,14 @@
 	<Page navButtonTooltip="" title="Components">
 		<content>
 			<VBox width="auto" class="worklist">
-				<HBox class="sapUiResponsiveMargin" width="auto">
-					<VBox>
-						<Title level="H3" text="Navigation" class="component-title" />
-						<HBox>
-							<Breadcrumbs currentLocationText="신규신청" separatorStyle="GreaterThan">
-								<Link text="복리후생"/>
-								<Link text="경조금 신청"/>
-							</Breadcrumbs>
-						</HBox>
-					</VBox>
-				</HBox>
+				<VBox class="sapUiResponsiveMargin">
+					<Title level="H3" text="Navigation" class="component-title" />
+					<!-- Breadcrumbs의 width가 좁은 상태에서 각 link의 텍스트가 길어지면 최초 link가 ...으로 변경됨, 따라서 width를 충분히 확보할 것 -->
+					<Breadcrumbs currentLocationText="신규신청" separatorStyle="GreaterThan" width="100%">
+						<Link text="복리후생"/>
+						<Link text="경조금 신청"/>
+					</Breadcrumbs>
+				</VBox>
 				<HBox class="sapUiResponsiveMargin" width="auto">
 					<VBox width="100%">
 						<Title level="H3" text="Tab container type-a" class="component-title" />

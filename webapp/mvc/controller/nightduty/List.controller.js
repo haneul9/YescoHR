@@ -76,8 +76,8 @@ sap.ui.define(
             mSummaryData, // prettier 방지용 주석
             aTableData,
           ] = await Promise.all([
-            this.readSummaryData(oModel), // prettier 방지용 주석
-            this.readTableData(oModel),
+            this.readSummaryData(), // prettier 방지용 주석
+            this.readTableData(),
           ]);
 
           this.setSummaryData(mSummaryData);
@@ -87,7 +87,7 @@ sap.ui.define(
 
           AppUtils.handleError(oError);
         } finally {
-          oViewModel.setProperty('/busy', false);
+          this.getViewModel().setProperty('/busy', false);
         }
       },
 

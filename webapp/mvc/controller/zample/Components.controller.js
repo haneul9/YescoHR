@@ -50,8 +50,6 @@ sap.ui.define(
         this.getView().setModel(oModel);
 
         const oTable = this.byId('groupTable');
-        const oController = this;
-
         if (oTable) {
           TableUtils.adjustRowSpan({
             table: oTable,
@@ -61,9 +59,7 @@ sap.ui.define(
 
           oTable.addEventDelegate(
             {
-              onAfterRendering() {
-                oController.summaryColspan();
-              },
+              onAfterRendering: () => this.summaryColspan(),
             },
             oTable
           );
