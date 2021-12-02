@@ -60,7 +60,7 @@ sap.ui.define(
       onObjectMatched(oParameter) {
         const sDataKey = oParameter.oDataKey;
 
-        if(!sDataKey) {
+        if (!sDataKey) {
           MessageBox.alert(this.getBundleText('MSG_00043'), {
             onClose: () => {
               this.getRouter().navTo('housingLoan');
@@ -167,7 +167,7 @@ sap.ui.define(
       async getList() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
-        const oTargetInfo = this.getOwnerComponent().getSessionModel().getData();
+        const oAppointeeData = this.getAppointeeData();
         const oView = this.getView();
         const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
         const mDetailData = oListView.getModel().getProperty('/FormData');
@@ -178,7 +178,7 @@ sap.ui.define(
             oModel.read('/BenefitCodeListSet', {
               filters: [
                 new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0015'),
-                new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oTargetInfo.Werks),
+                new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks),
                 new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
                 new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000003'),
                 new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'IN'),
@@ -190,7 +190,8 @@ sap.ui.define(
                   const sRedText = `<span style='color:red;'>${this.getBundleText('MSG_07020')}</span>`;
 
                   oDetailModel.setProperty('/AccountTxt', sText);
-                  oDetailModel.setProperty('/InfoMessage', 
+                  oDetailModel.setProperty(
+                    '/InfoMessage',
                     `<p>${this.getBundleText('MSG_07014')}</p>
                     <p>${this.getBundleText('MSG_07018', sText)}</p>
                     <p>${this.getBundleText('MSG_07019', sRedText)}</p>`
@@ -258,12 +259,12 @@ sap.ui.define(
       getRepayType() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
-        const oTargetInfo = this.getOwnerComponent().getSessionModel().getData();
+        const oAppointeeData = this.getAppointeeData();
 
         oModel.read('/BenefitCodeListSet', {
           filters: [
             new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0016'),
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oTargetInfo.Werks),
+            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks),
             new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
           ],
           success: (oData) => {
@@ -287,7 +288,7 @@ sap.ui.define(
 
         if (sKey === 'ALL') {
           return;
-        } else if(sKey === 'FULL') {
+        } else if (sKey === 'FULL') {
           this.getViewModel().setProperty('/DialogData/Paydt', new Date());
         }
 

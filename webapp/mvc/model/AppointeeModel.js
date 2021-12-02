@@ -11,11 +11,11 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return SessionModel.extend('sap.ui.yesco.mvc.model.TargetModel', {
+    return SessionModel.extend('sap.ui.yesco.mvc.model.AppointeeModel', {
       constructor: function (oUIComponent) {
         JSONModel.apply(this, this.getInitialData());
 
-        this.setProperty('/isChangeButtonShow', false);
+        this.setProperty('/showChangeButton', false);
 
         this.setUIComponent(oUIComponent);
 

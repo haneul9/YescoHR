@@ -62,12 +62,7 @@ sap.ui.define(
           },
         });
         this.setViewModel(oViewModel);
-      },
 
-      /**
-       * @override
-       */
-      onAfterShow() {
         const oTable = this.byId('nightdutyTable');
         oTable.addEventDelegate(
           {
@@ -81,22 +76,19 @@ sap.ui.define(
           },
           oTable
         );
-
-        BaseController.prototype.onAfterShow.call(this);
       },
 
       async onObjectMatched() {
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const oViewModel = this.getViewModel();
         const mSearchConditions = oViewModel.getProperty('/search');
-        const sPernr = this.getOwnerComponent().getSessionModel().getProperty('/Pernr');
 
         try {
           const [
             mSummaryData, // prettier 방지용 주석
             aRowData,
           ] = await Promise.all([
-            this.readSummary({ oModel, sPernr }), // prettier 방지용 주석
+            this.readSummary({ oModel }), // prettier 방지용 주석
             this.readList({ oModel, mSearchConditions }),
           ]);
 
@@ -113,11 +105,11 @@ sap.ui.define(
 
       /**
        * @param  {object} oModel Service ODataModel
-       * @param  {string} sPernr
        */
-      readSummary({ oModel, sPernr }) {
+      readSummary({ oModel }) {
         return new Promise((resolve, reject) => {
           const sUrl = '/OnCallSummarySet';
+          const sPernr = this.getAppointeeProperty('Pernr');
 
           oModel.read(sUrl, {
             filters: [

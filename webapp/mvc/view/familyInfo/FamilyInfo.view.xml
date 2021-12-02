@@ -16,7 +16,7 @@
 		</VBox>
 		<VBox class="contents">
 			<HBox justifyContent="SpaceAround" class="sapUiMediumMarginBottom">
-				<core:Fragment fragmentName="sap.ui.yesco.fragment.TargetInfo" type="XML" />
+				<core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBox" type="XML" />
 				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.familyInfo.fragment.TotalFamily" type="XML" />
 				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.familyInfo.fragment.SearchCondition" type="XML" />
 			</HBox>

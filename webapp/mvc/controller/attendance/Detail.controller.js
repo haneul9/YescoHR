@@ -580,7 +580,7 @@ sap.ui.define(
       createLeaveApplContent(sPrcty) {
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const oViewModel = this.getViewModel();
-        const oTargetInfo = this.getOwnerComponent().getTargetModel().getData();
+        const oAppointeeData = this.getOwnerComponent().getAppointeeModel().getData();
         const mTableData = oViewModel.getProperty('/form/list');
         const sAppty = oViewModel.getProperty('/type');
         const sAppno = oViewModel.getProperty('/Appno');
@@ -595,12 +595,12 @@ sap.ui.define(
 
           const oPayload = {
             Menid: sMenid,
-            Pernr: oTargetInfo.Pernr,
-            Orgeh: oTargetInfo.Orgeh,
+            Pernr: oAppointeeData.Pernr,
+            Orgeh: oAppointeeData.Orgeh,
             Appno: sAppno,
             Prcty: sPrcty,
             Appty: sAppty, // A:신규, B:변경, C:취소
-            LeaveApplNav1: aLeaveApplNav1.map((o) => ({ ...o, Pernr: oTargetInfo.Pernr })),
+            LeaveApplNav1: aLeaveApplNav1.map((o) => ({ ...o, Pernr: oAppointeeData.Pernr })),
           };
 
           oModel.create(sUrl, oPayload, {

@@ -117,6 +117,14 @@ sap.ui.define(
         return this.getOwnerComponent().getSessionModel().getProperty(`/${sPath}`);
       },
 
+      getAppointeeData() {
+        return this.getOwnerComponent().getAppointeeModel().getData();
+      },
+
+      getAppointeeProperty(sPath) {
+        return this.getOwnerComponent().getAppointeeModel().getProperty(`/${sPath}`);
+      },
+
       /**
        * Event handler for navigating back.
        * It there is a history entry we go one step back in the browser history
