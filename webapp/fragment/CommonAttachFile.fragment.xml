@@ -9,7 +9,7 @@
                 <Title level="H2" text="{i18n>LABEL_00248}" />
                 <Text text="{/Settings/Message}" visible="{= ${/Settings/Editable} &amp;&amp; !!${/Settings/Message}}" class="desc-txt" />
             </HBox>
-            <HBox>
+            <HBox class="table-top">
                 <u:FileUploader id="ATTACHFILE_BTN" visible="{/Settings/Editable}" maximumFileSize="{/Settings/maximumFileSize}" fileType="{/Settings/FileTypes}" change=".AttachFileAction.onFileChange" uploadComplete= ".uploadComplete" icon="sap-icon://add" buttonText= "{i18n>LABEL_00107}" buttonOnly= "true" class="sapUiTinyMarginEnd" />
                 <!-- <Button icon="sap-icon://add" text="추가" /> -->
                 <Button icon="sap-icon://less" visible="{/Settings/Editable}" text="{i18n>LABEL_00110}" press=".AttachFileAction.onDeleteAttachFile" />
