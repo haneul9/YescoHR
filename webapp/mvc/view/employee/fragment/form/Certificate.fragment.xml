@@ -8,15 +8,15 @@
             <FlexItemData growFactor="1"/>
         </grid:layoutData>
         <Label text="{i18n>LABEL_00318}" />
-        <Input width="100%" value="{/employee/dialog/form/Cttyptx}" editable="{= ${/employee/dialog/action} === 'A'}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpCertificate" />
+        <Input width="100%" class="required" value="{/employee/dialog/form/Cttyptx}" editable="{= ${/employee/dialog/action} === 'A'}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpCertificate" />
         <Label text="{i18n>LABEL_00309}" />
-        <Input width="100%" value="{/employee/dialog/form/Ctgrdtx}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpCertificateGrade" />
+        <Input width="100%" class="required" value="{/employee/dialog/form/Ctgrdtx}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpCertificateGrade" />
         <Label text="{i18n>LABEL_00319}" />
-        <Input width="100%" value="{/employee/dialog/form/Ctnum}" />
+        <Input width="100%" class="required" value="{/employee/dialog/form/Ctnum}" />
         <Label text="{i18n>LABEL_00320}" />
-        <Input width="100%" value="{/employee/dialog/form/Isaut}" />
+        <Input width="100%" class="required" value="{/employee/dialog/form/Isaut}" />
         <Label text="{i18n>LABEL_00321}" />
-        <custom:DatePicker width="50%" value="{ path: '/employee/dialog/form/Regdt', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{= ${/employee/dialog/action} === 'A'}" class="sapIcon_Date" />
+        <custom:DatePicker width="50%" class="required sapIcon_Date" value="{ path: '/employee/dialog/form/Regdt', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{= ${/employee/dialog/action} === 'A'}" />
         <Label text="{i18n>LABEL_00322}" />
         <Input width="100%" value="{/employee/dialog/form/Lawrt}" />
         <Label text="{i18n>LABEL_00323}" />

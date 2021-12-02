@@ -8,22 +8,22 @@
             <FlexItemData growFactor="1"/>
         </grid:layoutData>
         <Label text="{i18n>LABEL_00284}" />
-        <ComboBox width="100%" selectedKey="{/employee/dialog/form/Slart}" editable="{= ${/employee/dialog/action} === 'A'}" items="{ path: '/employee/dialog/schoolTypeList' }" change=".onChangeSchoolType">
+        <ComboBox width="100%" class="required" selectedKey="{/employee/dialog/form/Slart}" editable="{= ${/employee/dialog/action} === 'A'}" items="{ path: '/employee/dialog/schoolTypeList' }" change=".onChangeSchoolType">
             <core:Item key="{Slart}" text="{Stext}" />
         </ComboBox>
         <Label text="{i18n>LABEL_00285}/{i18n>LABEL_00286}" />
         <HBox width="100%">
-            <custom:DatePicker width="100%" value="{ path: '/employee/dialog/form/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{= ${/employee/dialog/action} === 'A'}" class="sapIcon_Date" />
-            <custom:DatePicker width="100%" value="{ path: '/employee/dialog/form/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{= ${/employee/dialog/action} === 'A'}" class="sapIcon_Date" />
+            <custom:DatePicker width="100%" class="required sapIcon_Date" value="{ path: '/employee/dialog/form/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{= ${/employee/dialog/action} === 'A'}" />
+            <custom:DatePicker width="100%" class="required sapIcon_Date" value="{ path: '/employee/dialog/form/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{= ${/employee/dialog/action} === 'A'}" />
         </HBox>
         <Label text="{i18n>LABEL_00287}" />
-        <Input width="100%" value="{/employee/dialog/form/Landx50}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpCountry" />
+        <Input width="100%" class="required" value="{/employee/dialog/form/Landx50}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpCountry" />
         <Label text="{i18n>LABEL_00288}" />
-        <Input width="100%" value="{/employee/dialog/form/Zzschtx}" editable="{= !!${/employee/dialog/form/Slart} &amp;&amp; ${/employee/dialog/form/Slart} !== 'ALL' }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpSchool" />
+        <Input width="100%" class="required" value="{/employee/dialog/form/Zzschtx}" editable="{= !!${/employee/dialog/form/Slart} &amp;&amp; ${/employee/dialog/form/Slart} !== 'ALL' }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpSchool" />
         <Label text="{i18n>LABEL_00289}" />
-        <Input width="100%" value="{/employee/dialog/form/Zzmajo1tx}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpMajor" />
+        <Input width="100%" class="required" value="{/employee/dialog/form/Zzmajo1tx}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpMajor" />
         <Label text="{i18n>LABEL_00290}" />
-        <ComboBox width="100%" selectedKey="{/employee/dialog/form/Slabs}" busyIndicatorDelay="0" busy="{/employee/dialog/busy/Slabs}" items="{ path: '/employee/dialog/degreeList' }">
+        <ComboBox width="100%" class="required" selectedKey="{/employee/dialog/form/Slabs}" busyIndicatorDelay="0" busy="{/employee/dialog/busy/Slabs}" items="{ path: '/employee/dialog/degreeList' }">
             <core:Item key="{Slabs}" text="{Stext}" />
         </ComboBox>
         <Label text="{i18n>LABEL_00291}" />
