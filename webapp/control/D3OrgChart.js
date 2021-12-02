@@ -78,6 +78,7 @@ sap.ui.define(
                     <div style="margin-right:10px;margin-top:15px;float:right">${o.data.Pernr}</div>
                     <div style="margin-top:-30px;background-color:#3AB6E3;height:10px;width:${o.width - 2}px;border-radius:1px"></div>
                     <div style="padding:20px; padding-top:35px;text-align:center">
+                        <div style="color:#111672;font-size:16px;font-weight:bold"> ${o.data.Stext} </div>
                         <div style="color:#111672;font-size:16px;font-weight:bold"> ${o.data.Ename} </div>
                         <div style="color:#404040;font-size:16px;margin-top:4px"> ${o.data.Botxt} </div>
                     </div> 
