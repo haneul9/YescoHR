@@ -20,7 +20,7 @@
                     <HBox justifyContent="SpaceBetween">
                         <Switch state="true" customTextOn="{i18n>LABEL_00115}" customTextOff="{i18n>LABEL_00153}" change=".onToggleNavigation"/>
                     </HBox>
-                    <IconTabBar selectedKey="list" expandable="false" visible="{= ${/sideNavigation/isShow}}" select=".onSelectSideTab">
+                    <IconTabBar selectedKey="{/sideNavigation/selectedKey}" expandable="false" visible="{= ${/sideNavigation/isShow}}" select=".onSelectSideTab">
                         <layoutData>
                             <FlexItemData growFactor="1"/>
                         </layoutData>

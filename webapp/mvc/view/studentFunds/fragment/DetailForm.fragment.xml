@@ -53,63 +53,63 @@
             <VBox>
                 <Input value="{
                 path: '/FormData/ZbetEntr',
-                formatter: '.TextUtils.toCurrency'
+                type: 'sap.ui.yesco.mvc.model.type.Currency'
             }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             </VBox>
             <Label text="{i18n>LABEL_03020}"/>
             <VBox>
                 <Input value="{
                 path: '/FormData/ZbetMgmt',
-                formatter: '.TextUtils.toCurrency'
+                type: 'sap.ui.yesco.mvc.model.type.Currency'
             }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             </VBox>
             <Label text="{i18n>LABEL_03021}"/>
             <VBox>
                 <Input value="{
                 path: '/FormData/ZbetClass',
-                formatter: '.TextUtils.toCurrency'
+                type: 'sap.ui.yesco.mvc.model.type.Currency'
             }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             </VBox>
             <Label text="{i18n>LABEL_03022}"/>
             <VBox>
                 <Input value="{
                 path: '/FormData/ZbetExer',
-                formatter: '.TextUtils.toCurrency'
+                type: 'sap.ui.yesco.mvc.model.type.Currency'
             }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             </VBox>
             <Label text="{i18n>LABEL_03023}"/>
             <VBox>
                 <Input value="{
                 path: '/FormData/ZbetSuf',
-                formatter: '.TextUtils.toCurrency'
+                type: 'sap.ui.yesco.mvc.model.type.Currency'
             }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             </VBox>
             <Label text="{i18n>LABEL_03026}"/>
             <VBox>
                 <Input value="{
                 path: '/FormData/ZbetEtc',
-                formatter: '.TextUtils.toCurrency'
+                type: 'sap.ui.yesco.mvc.model.type.Currency'
             }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             </VBox>
             <Label text="{i18n>LABEL_03024}" width="190px" />
             <VBox>
                 <Text text="{
                 path: '/FormData/ZbetTotl',
-                formatter: '.TextUtils.toCurrency'
+                type: 'sap.ui.yesco.mvc.model.type.Currency'
             }"/>
             </VBox>
             <Label text="{i18n>LABEL_03025}"/>
             <VBox>
                 <Input value="{
                 path: '/FormData/ZbetShip',
-                formatter: '.TextUtils.toCurrency'
+                type: 'sap.ui.yesco.mvc.model.type.Currency'
             }" liveChange=".onSchoCost" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             </VBox>
             <Label text="{i18n>LABEL_03027}"/>
             <HBox >
                 <Text text="{
                     path: '/FormData/ZpayAmt',
-                    formatter: '.TextUtils.toCurrency'
+                    type: 'sap.ui.yesco.mvc.model.type.Currency'
                 }"/>
                 <ObjectStatus text="{i18n>MSG_03002}" state="Indication05" visible="{/LimitAmountMSG}" />
             </HBox>

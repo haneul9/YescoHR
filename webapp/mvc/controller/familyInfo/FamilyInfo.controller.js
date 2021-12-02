@@ -94,7 +94,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            this.debug(oError);
+            AppUtils.handleError(oError);
             oListModel.setProperty('/busy', false);
           },
         });
@@ -114,7 +114,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            this.debug(oError);
+            AppUtils.handleError(oError);
           },
         });
       },

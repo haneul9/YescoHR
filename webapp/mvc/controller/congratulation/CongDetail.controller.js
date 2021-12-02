@@ -7,8 +7,6 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
-    'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -24,7 +22,6 @@ sap.ui.define(
 	AppUtils,
 	AttachFileAction,
 	ComboEntry,
-	ODataReadError,
 	TextUtils,
 	FragmentEvent,
 	ServiceNames,
@@ -63,10 +60,32 @@ sap.ui.define(
       },
 
       async onObjectMatched(mArgs) {
-        this.getViewModel().setProperty('/FormStatus', mArgs.oDataKey);
-        await this.getBenefitType(this);
-        await this.getTargetData();
-        this.getViewModel().setProperty('/busy', false);
+        const oDetailModel = this.getViewModel();
+
+        try {
+          oDetailModel.setProperty('/FormStatus', mArgs.oDataKey);
+
+          const aTypeCode = await this.getBenefitType();
+
+          oDetailModel.setProperty('/BenefitType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: aTypeCode }));
+          oDetailModel.setProperty('/BenefitCause', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext' }));
+          oDetailModel.setProperty('/BenefitRelation', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext' }));
+
+          const oRowData = await this.getTargetData();
+
+          if(!!oRowData) {
+            oDetailModel.setProperty('/FormData', oRowData);
+            oDetailModel.setProperty('/ApplyInfo', oRowData);
+            oDetailModel.setProperty('/ApprovalDetails', oRowData);
+            this.getBenefitData();
+          }
+
+          this.settingsAttachTable();
+        } catch(oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oDetailModel.setProperty('/busy', false);
+        }
       },
 
       formatFlowerTxt(vFlower) {
@@ -78,27 +97,25 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const sDataKey = oDetailModel.getProperty('/FormStatus');
         const sMenid = this.getCurrentMenuId();
+        const oSessionData = this.getSessionData();
 
-        oDetailModel.setProperty('/menuId', sMenid);
-        oDetailModel.setProperty('/TargetInfo', this.getOwnerComponent().getTargetModel().getData());
-
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
+          oDetailModel.setProperty('/menuId', sMenid);
+          
           if (!sDataKey || sDataKey === 'N') {
-            const oTargetInfo = oDetailModel.getProperty('/TargetInfo');
-
-            oDetailModel.setProperty('/FormData', oTargetInfo);
+            oDetailModel.setProperty('/FormData', oSessionData);
             oDetailModel.setProperty('/FormData', {
-              Apename: oTargetInfo.Ename,
-              Appernr: oTargetInfo.Pernr,
+              Apename: oSessionData.Ename,
+              Appernr: oSessionData.Pernr,
               Concode: 'ALL',
               Conresn: 'ALL',
               Kdsvh: 'ALL',
             });
 
             oDetailModel.setProperty('/ApplyInfo', {
-              Apename: oTargetInfo.Ename,
-              Aporgtx: `${oTargetInfo.Btrtx}/${oTargetInfo.Orgtx}`,
-              Apjikgbtl: `${oTargetInfo.Zzjikgbt}/${oTargetInfo.Zzjiktlt}`,
+              Apename: oSessionData.Ename,
+              Aporgtx: `${oSessionData.Btrtx}/${oSessionData.Orgtx}`,
+              Apjikgbtl: `${oSessionData.Zzjikgbt}/${oSessionData.Zzjiktlt}`,
             });
 
             resolve();
@@ -113,53 +130,33 @@ sap.ui.define(
                 new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sDataKey),
               ],
               success: (oData) => {
-                if (oData) {
-                  this.debug(`${sUrl} success.`, oData);
-                  const oTargetData = oData.results[0];
-
-                  oDetailModel.setProperty('/FormData', oTargetData);
-                  oDetailModel.setProperty('/ApplyInfo', oTargetData);
-                  oDetailModel.setProperty('/ApprovalDetails', oTargetData);
-                }
-
-                this.getBenefitData();
-                resolve();
+                resolve(oData.results[0]);
               },
               error: (oError) => {
-                AppUtils.handleError(new ODataReadError(oError));
+                reject(oError);
               },
             });
           }
-        }).then(() => {
-          this.settingsAttachTable(this);
         });
       },
 
       // 경조유형
       getBenefitType() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const oTargetData = this.getOwnerComponent().getTargetModel().getData();
+        const sWerks = this.getSessionProperty('Werks');
 
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
           oModel.read('/BenefitCodeListSet', {
             filters: [
               new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0001'),
-              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oTargetData.Werks),
+              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
               new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
             ],
             success: (oData) => {
-              if (oData) {
-                const aList = oData.results;
-
-                oDetailModel.setProperty('/BenefitType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: aList }));
-                oDetailModel.setProperty('/BenefitCause', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext' }));
-                oDetailModel.setProperty('/BenefitRelation', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext' }));
-              }
-              resolve();
+              resolve(oData.results);
             },
             error: (oError) => {
-              AppUtils.handleError(new ODataReadError(oError));
+              reject(oError);
             },
           });
         });
@@ -170,11 +167,12 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
         const oFormData = oDetailModel.getProperty('/FormData');
+        const sWerks = this.getSessionProperty('Werks');
 
         oModel.read('/BenefitCodeListSet', {
           filters: [
             new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0002'),
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/TargetInfo/Werks')),
+            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
             new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
             new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, oFormData.Concode),
             new sap.ui.model.Filter('Upcod2', sap.ui.model.FilterOperator.EQ, 'E'),
@@ -187,14 +185,14 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            AppUtils.handleError(new ODataReadError(oError));
+            AppUtils.handleError(oError);
           },
         });
 
         oModel.read('/BenefitCodeListSet', {
           filters: [
             new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0003'),
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/TargetInfo/Werks')),
+            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
             new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
             new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, oFormData.Concode),
             new sap.ui.model.Filter('Upcod2', sap.ui.model.FilterOperator.EQ, oFormData.Conresn),
@@ -209,7 +207,7 @@ sap.ui.define(
               oDetailModel.setProperty('/BenefitRelation', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: oResult }));
               oDetailModel.setProperty('/TargetList', []);
 
-              if (!oDetailModel.getProperty('/FormData/ZappStatAl') || oDetailModel.getProperty('/FormData/ZappStatAl') === '10') {
+              if (!oFormData.ZappStatAl || oFormData.ZappStatAl === '10') {
                 if (!!oResult[0] && oResult[0].Zcode === 'ME') {
                   this.onTargetDialog();
                   oRelationBtn.setVisible(false);
@@ -224,7 +222,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            AppUtils.handleError(new ODataReadError(oError));
+            AppUtils.handleError(oError);
           },
         });
       },
@@ -234,6 +232,7 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
         const sSelectKey = oEvent.getSource().getSelectedKey();
+        const sWerks = this.getSessionProperty('Werks');
         let sSelectText = oEvent.getSource().getSelectedItem().getText();
 
         oDetailModel.setProperty('/FormData/Context', sSelectText);
@@ -242,7 +241,7 @@ sap.ui.define(
           oModel.read('/BenefitCodeListSet', {
             filters: [
               new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0002'),
-              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/TargetInfo/Werks')),
+              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
               new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
               new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, sSelectKey),
               new sap.ui.model.Filter('Upcod2', sap.ui.model.FilterOperator.EQ, 'E'),
@@ -271,7 +270,7 @@ sap.ui.define(
               resolve();
             },
             error: (oError) => {
-              AppUtils.handleError(new ODataReadError(oError));
+              AppUtils.handleError(oError);
             },
           });
         }).then(() => {
@@ -286,6 +285,7 @@ sap.ui.define(
         const oFormData = oDetailModel.getProperty('/FormData');
         const sSelectKey = oEvent.getSource().getSelectedKey();
         const sSelectText = oEvent.getSource().getSelectedItem().getText();
+        const sWerks = this.getSessionProperty('Werks');
 
         oDetailModel.setProperty('/FormData/Conretx', sSelectText);
 
@@ -294,7 +294,7 @@ sap.ui.define(
         oModel.read('/BenefitCodeListSet', {
           filters: [
             new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0003'),
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/TargetInfo/Werks')),
+            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
             new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
             new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, oFormData.Concode),
             new sap.ui.model.Filter('Upcod2', sap.ui.model.FilterOperator.EQ, sSelectKey),
@@ -328,7 +328,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            AppUtils.handleError(new ODataReadError(oError));
+            AppUtils.handleError(oError);
           },
         });
       },
@@ -370,12 +370,13 @@ sap.ui.define(
         const vConcode = oDetailModel.getProperty('/FormData/Concode');
         const vConresn = oDetailModel.getProperty('/FormData/Conresn');
         const vConddate = oDetailModel.getProperty('/FormData/Conddate');
+        const sWerks = this.getSessionProperty('Werks');
 
         if (!vConcode || !vConresn || !vConddate) return;
 
         oModel.read('/ConExpenseCheckListSet', {
           filters: [
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/TargetInfo/Werks')),
+            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
             new sap.ui.model.Filter('Concode', sap.ui.model.FilterOperator.EQ, vConcode),
             new sap.ui.model.Filter('Conresn', sap.ui.model.FilterOperator.EQ, vConresn),
             new sap.ui.model.Filter('Conddate', sap.ui.model.FilterOperator.EQ, vConddate),
@@ -395,7 +396,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            AppUtils.handleError(new ODataReadError(oError));
+            AppUtils.handleError(oError);
           },
         });
       },
@@ -446,11 +447,12 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
         const oFormData = oDetailModel.getProperty('/FormData');
+        const sWerks = this.getSessionProperty('Werks');
 
         return new Promise((resolve) => {
           oModel.read('/ConExpenseSupportListSet', {
             filters: [
-              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/TargetInfo/Werks')),
+              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
               new sap.ui.model.Filter('Concode', sap.ui.model.FilterOperator.EQ, oFormData.Concode),
               new sap.ui.model.Filter('Conresn', sap.ui.model.FilterOperator.EQ, oFormData.Conresn),
               new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
@@ -479,7 +481,7 @@ sap.ui.define(
               resolve();
             },
             error: (oError) => {
-              AppUtils.handleError(new ODataReadError(oError));
+              AppUtils.handleError(oError);
             },
           });
         });
@@ -639,10 +641,8 @@ sap.ui.define(
                   });
                 });
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
-              } catch (error) {
-                if (_.has(error, 'code') && error.code === 'E') {
-                  MessageBox.error(error.message);
-                }
+              } catch (oError) {
+                AppUtils.handleError(oError);
               } finally {
                 AppUtils.setAppBusy(false, this);
               }
@@ -691,9 +691,7 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      const vErrorMSG = AppUtils.parseError(oError);
-
-                      reject(vErrorMSG);
+                      reject(oError);
                     },
                   });
                 });
@@ -704,9 +702,7 @@ sap.ui.define(
                   },
                 });
               } catch (error) {
-                if (_.has(error, 'code') && error.code === 'E') {
-                  MessageBox.error(error.message);
-                }
+                AppUtils.handleError(oError);
               } finally {
                 AppUtils.setAppBusy(false, this);
               }
@@ -743,10 +739,8 @@ sap.ui.define(
                   });
                 },
                 error: (oError) => {
-                  const vErrorMSG = AppUtils.parseError(oError);
-
                   AppUtils.setAppBusy(false, this);
-                  MessageBox.error(vErrorMSG);
+                  AppUtils.handleError(oError);
                 },
               });
             }
@@ -772,7 +766,6 @@ sap.ui.define(
 
               oModel.remove(sPath, {
                 success: () => {
-                  AppUtils.setAppBusy(false, this);
                   MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
                     onClose: () => {
                       this.getRouter().navTo('congratulation');
@@ -780,10 +773,8 @@ sap.ui.define(
                   });
                 },
                 error: (oError) => {
-                  const vErrorMSG = AppUtils.parseError(oError);
-
                   AppUtils.setAppBusy(false, this);
-                  MessageBox.error(vErrorMSG);
+                  AppUtils.handleError(oError);
                 },
               });
             }

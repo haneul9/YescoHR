@@ -89,7 +89,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            AppUtils.handleError(new ODataReadError(oError));
+            AppUtils.handleError(oError);
           },
         });
       },
@@ -122,7 +122,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            AppUtils.handleError(new ODataReadError(oError));
+            AppUtils.handleError(oError);
             
             oListModel.setProperty('/busy', false);
           },

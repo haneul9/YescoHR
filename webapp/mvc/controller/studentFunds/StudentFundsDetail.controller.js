@@ -11,7 +11,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
+    'sap/ui/yesco/mvc/model/type/Currency',
   ],
   (
     // prettier 방지용 주석
@@ -66,12 +66,13 @@ sap.ui.define(
         const sMenid = this.getCurrentMenuId();
 
         oDetailModel.setProperty('/ViewKey', sDataKey);
-        oDetailModel.setProperty('/TargetInfo', this.getOwnerComponent().getTargetModel().getData());
         oDetailModel.setProperty('/Menid', sMenid);
 
         this.getList().then(() => {
           this.getTargetData();
           oDetailModel.setProperty('/busy', false);
+        }).catch((oError) => {
+          AppUtils.handleError(oError);
         });
       },
 
@@ -126,11 +127,8 @@ sap.ui.define(
               oDetailModel.setProperty('/LimitAmount', oList);
               resolve();
             },
-            error: (oRespnse) => {
-              const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
-
-              this.debug(`${sUrl} error.`, vErrorMSG);
-              MessageBox.error(vErrorMSG);
+            error: (oError) => {
+              AppUtils.handleError(oError);
             },
           });
         }).then(() => {
@@ -169,14 +167,13 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const sUrl = '/SchExpenseApplSet';
         const sViewKey = oDetailModel.getProperty('/ViewKey');
+        const oSessionData = this.getSessionData();
 
         if (sViewKey === 'N' || !sViewKey) {
-          const oTargetInfo = oDetailModel.getProperty('/TargetInfo');
-
-          oDetailModel.setProperty('/FormData', oTargetInfo);
+          oDetailModel.setProperty('/FormData', oSessionData);
           oDetailModel.setProperty('/FormData', {
-            Apename: oTargetInfo.Ename,
-            Appernr: oTargetInfo.Pernr,
+            Apename: oSessionData.Ename,
+            Appernr: oSessionData.Pernr,
             Zzobjps: 'ALL',
             Slart: 'ALL',
             Grdsp: 'ALL',
@@ -185,9 +182,9 @@ sap.ui.define(
           });
 
           oDetailModel.setProperty('/ApplyInfo', {
-            Apename: oTargetInfo.Ename,
-            Orgtx: `${oTargetInfo.Btrtx}/${oTargetInfo.Orgtx}`,
-            Apjikgbtl: `${oTargetInfo.Zzjikgbt}/${oTargetInfo.Zzjiktlt}`,
+            Apename: oSessionData.Ename,
+            Orgtx: `${oSessionData.Btrtx}/${oSessionData.Orgtx}`,
+            Apjikgbtl: `${oSessionData.Zzjikgbt}/${oSessionData.Zzjiktlt}`,
           });
 
           this.setYearsList();
@@ -211,11 +208,8 @@ sap.ui.define(
                 this.settingsAttachTable();
               }
             },
-            error: (oRespnse) => {
-              const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
-
-              this.debug(`${sUrl} error.`, vErrorMSG);
-              MessageBox.error(vErrorMSG);
+            error: (oError) => {
+              AppUtils.handleError(oError);
             },
           });
         }
@@ -225,12 +219,12 @@ sap.ui.define(
       async getList() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
-        const sWerks = oDetailModel.getProperty('/TargetInfo/Werks');
+        const sWerks = this.getSessionProperty('Werks');
         const sSchExpenseUrl = '/SchExpenseSupportListSet';
         const sBenefitUrl = '/BenefitCodeListSet';
 
         return Promise.all([
-          await new Promise((resolve) => {
+          await new Promise((resolve, reject) => {
             // 신청대상 조회
             oModel.read(sSchExpenseUrl, {
               filters: [new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date())],
@@ -245,16 +239,12 @@ sap.ui.define(
                   resolve();
                 }
               },
-              error: (oRespnse) => {
-                this.debug(`${sSchExpenseUrl} error.`, vErrorMSG);
-
-                const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
-
-                MessageBox.error(vErrorMSG);
+              error: (oError) => {
+                reject(oError);
               },
             });
           }),
-          new Promise((resolve) => {
+          new Promise((resolve, reject) => {
             // 학력구분 조회
             oModel.read(sBenefitUrl, {
               filters: [
@@ -273,16 +263,12 @@ sap.ui.define(
                   resolve();
                 }
               },
-              error: (oRespnse) => {
-                this.debug(`${sBenefitUrl} error.`, vErrorMSG);
-
-                const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
-
-                MessageBox.error(vErrorMSG);
+              error: (oError) => {
+                reject(oError);
               },
             });
           }),
-          new Promise((resolve) => {
+          new Promise((resolve, reject) => {
             // 학년 조회
             oModel.read(sBenefitUrl, {
               filters: [
@@ -303,12 +289,8 @@ sap.ui.define(
                   resolve();
                 }
               },
-              error: (oRespnse) => {
-                this.debug(`${sBenefitUrl} error.`, vErrorMSG);
-
-                const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
-
-                MessageBox.error(vErrorMSG);
+              error: (oError) => {
+                reject(oError);
               },
             });
           }),
@@ -321,7 +303,10 @@ sap.ui.define(
         const iFullYears = new Date().getFullYear();
         const aYearsList = [];
 
-        aYearsList.push({ Zcode: String(iFullYears), Ztext: `${iFullYears}년` }, { Zcode: String(iFullYears - 1), Ztext: `${iFullYears - 1}년` });
+        aYearsList.push(
+          { Zcode: String(iFullYears), Ztext: `${iFullYears}년` }, 
+          { Zcode: String(iFullYears - 1), Ztext: `${iFullYears - 1}년` }
+        );
 
         oDetailModel.setProperty('/FundsYears', aYearsList);
 
@@ -407,12 +392,8 @@ sap.ui.define(
               oDetailModel.setProperty('/FormData/Cnttx', oData.results[0].Cnttx);
             }
           },
-          error: (oRespnse) => {
-            this.debug(`${sUrl} error.`, vErrorMSG);
-
-            const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
-
-            MessageBox.error(vErrorMSG);
+          error: (oError) => {
+            AppUtils.handleError(oError);
           },
         });
       },
@@ -434,6 +415,7 @@ sap.ui.define(
         const vSelected = !oEvent ? oDetailModel.getProperty('/FormData/Slart') : oEvent.getSource().getSelectedKey();
         const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
         const sUrl = '/BenefitCodeListSet';
+        const sWerks = this.getSessionProperty('Werks');
 
         if (vSelected === 'ALL') return;
 
@@ -456,7 +438,7 @@ sap.ui.define(
         oModel.read(sUrl, {
           filters: [
             new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0005'),
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/TargetInfo/Werks')),
+            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
             new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
             new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, vSelected),
           ],
@@ -473,12 +455,8 @@ sap.ui.define(
               }
             }
           },
-          error: (oRespnse) => {
-            this.debug(`${sUrl} error.`, vErrorMSG);
-
-            const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
-
-            MessageBox.error(vErrorMSG);
+          error: (oError) => {
+            AppUtils.handleError(oError);
           },
         });
       },
@@ -614,18 +592,14 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      const vErrorMSG = AppUtils.parseError(oError);
-
-                      reject(vErrorMSG);
+                      reject(oError);
                     },
                   });
                 });
 
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
-              } catch (error) {
-                if (_.has(error, 'code') && error.code === 'E') {
-                  MessageBox.error(error.message);
-                }
+              } catch (oError) {
+                AppUtils.handleError(oError);
               } finally {
                 AppUtils.setAppBusy(false, this);
               }
@@ -675,9 +649,7 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      const vErrorMSG = AppUtils.parseError(oError);
-
-                      reject(vErrorMSG);
+                      reject(oError);
                     },
                   });
                 });
@@ -688,9 +660,7 @@ sap.ui.define(
                   },
                 });
               } catch (error) {
-                if (_.has(error, 'code') && error.code === 'E') {
-                  MessageBox.error(error.message);
-                }
+                AppUtils.handleError(oError);
               } finally {
                 AppUtils.setAppBusy(false, this);
               }
@@ -726,11 +696,9 @@ sap.ui.define(
                     },
                   });
                 },
-                error: (oRespnse) => {
-                  const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
-
+                error: (oError) => {
+                  AppUtils.handleError(oError);
                   AppUtils.setAppBusy(false, this);
-                  MessageBox.error(vErrorMSG);
                 },
               });
             }
@@ -763,11 +731,9 @@ sap.ui.define(
                     },
                   });
                 },
-                error: (oRespnse) => {
-                  const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
-
+                error: (oError) => {
+                  AppUtils.handleError(oError);
                   AppUtils.setAppBusy(false, this);
-                  MessageBox.error(vErrorMSG);
                 },
               });
             }

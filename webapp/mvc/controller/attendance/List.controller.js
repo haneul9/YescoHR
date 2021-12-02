@@ -34,7 +34,14 @@ sap.ui.define(
         const oViewModel = new JSONModel({
           busy: false,
           isVisibleActionButton: false,
-          quota: {},
+          quota: {
+            10: { Kotxt: this.getBundleText('LABEL_04015'), Crecnt: 0, Usecnt: 0 }, // 연차
+            20: { Kotxt: this.getBundleText('LABEL_04016'), Crecnt: 0, Usecnt: 0 }, // 1년미만연차
+            30: { Kotxt: this.getBundleText('LABEL_04017'), Crecnt: 0, Usecnt: 0 }, // 장기근속휴가
+            40: { Kotxt: this.getBundleText('LABEL_04017'), Crecnt: 0, Usecnt: 0 }, // 장기근속휴가
+            50: { Kotxt: this.getBundleText('LABEL_04008'), Crecnt: 0, Usecnt: 0 }, // 보건휴가
+            60: { Kotxt: this.getBundleText('LABEL_04018'), Crecnt: 0, Usecnt: 0 }, // 가족돌봄휴가
+          },
           search: {
             Apbeg: moment().subtract(1, 'month').add(1, 'day').hours(9).toDate(),
             Apend: moment().hours(9).toDate(),
@@ -67,6 +74,7 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const sPernr = this.getSessionProperty('Pernr');
         const oSearchConditions = oViewModel.getProperty('/search');
+        const mQuota = oViewModel.getProperty('/quota');
 
         try {
           oViewModel.setProperty('/busy', true);
@@ -78,31 +86,21 @@ sap.ui.define(
 
           this.setTableData({ oViewModel, aRowData });
 
-          oViewModel.setProperty(
-            '/quota',
-            _.reduce(
-              aQuotaResultData,
-              (acc, { Ktart, Kotxt, Crecnt, Usecnt }) => ({
-                ...acc,
-                [Ktart]: {
-                  Kotxt,
-                  Crecnt: parseInt(Crecnt, 10) ?? 0,
-                  Usecnt: parseInt(Usecnt, 10) ?? 0,
-                  Balcnt: parseInt(Balcnt, 10) ?? 0,
-                },
-              }),
-              {}
-            )
+          const mQuotaResult = _.reduce(
+            aQuotaResultData,
+            (acc, { Ktart, Kotxt, Crecnt, Usecnt }) => ({
+              ...acc,
+              [Ktart]: {
+                Kotxt,
+                Crecnt: parseInt(Crecnt, 10) ?? 0,
+                Usecnt: parseInt(Usecnt, 10) ?? 0,
+                Balcnt: parseInt(Balcnt, 10) ?? 0,
+              },
+            }),
+            {}
           );
 
-          oViewModel.setProperty('/quota', {
-            10: { Kotxt: '연차', Crecnt: 25, Usecnt: 5 },
-            20: { Kotxt: '1년미만연차', Crecnt: 25, Usecnt: 5 },
-            30: { Kotxt: '장기근속휴가', Crecnt: 25, Usecnt: 5 },
-            40: { Kotxt: '장기근속휴가', Crecnt: 25, Usecnt: 5 },
-            50: { Kotxt: '보건휴가', Crecnt: 25, Usecnt: 5 },
-            60: { Kotxt: '가족돌봄휴가', Crecnt: 25, Usecnt: 5 },
-          });
+          oViewModel.setProperty('/quota', { ...mQuota, ...mQuotaResult });
         } catch (oError) {
           this.debug('Controller > Attendance List > initialRetrieve Error', oError);
 
@@ -268,7 +266,7 @@ sap.ui.define(
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
 
-              resolve(oData.results);
+              resolve(oData.results ?? []);
             },
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
@@ -297,7 +295,7 @@ sap.ui.define(
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
 
-              resolve(oData.results);
+              resolve(oData.results ?? []);
             },
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);

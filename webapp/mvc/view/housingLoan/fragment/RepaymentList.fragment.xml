@@ -13,7 +13,10 @@
                     <table:template>
                         <Text text="{
                             path: 'Dat01',
-                            type: 'sap.ui.model.type.Date'
+                            type: 'sap.ui.model.type.Date',
+                            formatOptions: {
+                                pattern: 'yyyy.MM.dd'
+                            }
                         }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
@@ -22,7 +25,10 @@
                     <table:template>
                         <Text text="{
                             path: 'Rpdat1',
-                            type: 'sap.ui.model.type.Date'
+                            type: 'sap.ui.model.type.Date',
+                            formatOptions: {
+                                pattern: 'yyyy.MM.dd'
+                            }
                         }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
@@ -31,7 +37,10 @@
                     <table:template>
                         <Text text="{
                             path: 'Rpdat2',
-                            type: 'sap.ui.model.type.Date'
+                            type: 'sap.ui.model.type.Date',
+                            formatOptions: {
+                                pattern: 'yyyy.MM.dd'
+                            }
                         }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
@@ -40,7 +49,10 @@
                     <table:template>
                         <Text text="{
                             path: 'RpdatMid',
-                            type: 'sap.ui.model.type.Date'
+                            type: 'sap.ui.model.type.Date',
+                            formatOptions: {
+                                pattern: 'yyyy.MM.dd'
+                            }
                         }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
@@ -49,7 +61,7 @@
                     <table:template>
                         <Text text="{
                             path: 'Lnamt',
-                            formatter: '.TextUtils.toCurrency'
+                            type: 'sap.ui.yesco.mvc.model.type.Currency'
                         }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
@@ -64,7 +76,7 @@
                     <table:template>
                         <Text text="{
                             path: 'RpamtRep',
-                            formatter: '.TextUtils.toCurrency'
+                            type: 'sap.ui.yesco.mvc.model.type.Currency'
                         }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
@@ -73,7 +85,7 @@
                     <table:template>
                         <Text text="{
                             path: 'Rpamt1',
-                            formatter: '.TextUtils.toCurrency'
+                            type: 'sap.ui.yesco.mvc.model.type.Currency'
                         }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
@@ -82,7 +94,7 @@
                     <table:template>
                         <Text text="{
                             path: 'Rpamt2',
-                            formatter: '.TextUtils.toCurrency'
+                            type: 'sap.ui.yesco.mvc.model.type.Currency'
                         }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
@@ -91,7 +103,7 @@
                     <table:template>
                         <Text text="{
                             path: 'RpamtMpr',
-                            formatter: '.TextUtils.toCurrency'
+                            type: 'sap.ui.yesco.mvc.model.type.Currency'
                         }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
@@ -106,7 +118,7 @@
                     <table:template>
                         <Text text="{
                             path: 'RpamtBal',
-                            formatter: '.TextUtils.toCurrency'
+                            type: 'sap.ui.yesco.mvc.model.type.Currency'
                         }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>

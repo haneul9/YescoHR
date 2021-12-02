@@ -129,27 +129,27 @@ sap.ui.define(
 
         try {
           if (sAppno) {
-            const aRowData = await this.readLeaveApplEmpList({ Prcty: 'R', Appno: sAppno });
+            const oResultData = await this.readLeaveApplEmpList({ Prcty: 'R', Appno: sAppno });
 
-            oViewModel.setProperty('/ZappStatAl', aRowData[0].ZappStatAl);
+            oViewModel.setProperty('/ZappStatAl', oResultData.ZappStatAl);
             oViewModel.setProperty('/form/listMode', 'None');
 
-            this.setTableData({ sType, oViewModel, aRowData });
-            this.initializeApplyInfoBox(aRowData[0]);
-            this.initializeApprovalBox(aRowData[0]);
+            this.setTableData({ sType, oViewModel, aRowData: [oResultData] });
+            this.initializeApplyInfoBox(oResultData);
+            this.initializeApprovalBox(oResultData);
           } else {
             if (sType === this.PAGE_TYPE.CHANGE || sType === this.PAGE_TYPE.CANCEL) {
               const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-              const mListSelectedData = oListView.getModel().getProperty('/parameter/rowData');
+              const aRowData = oListView.getModel().getProperty('/parameter/rowData');
 
               if (sType === this.PAGE_TYPE.CANCEL) {
                 oViewModel.setProperty('/form/listMode', 'None');
               } else {
-                mListSelectedData.forEach((o) => (o.Tmrsn = ''));
+                aRowData.forEach((o) => (o.Tmrsn = ''));
               }
 
               // 변경|취소 신청의 경우 List페이지에서 선택된 데이터를 가져온다.
-              this.setTableData({ sType, oViewModel, aRowData: mListSelectedData });
+              this.setTableData({ sType, oViewModel, aRowData });
             }
 
             this.initializeApplyInfoBox();
@@ -233,7 +233,6 @@ sap.ui.define(
           Editable: !sStatus,
           Type: this.TYPE_CODE,
           Appno: sAppno,
-          Message: this.getBundleText('MSG_00037'), // 증빙자료를 꼭 등록 해주세요.
           Max: 10,
           Visible: !(sType === this.PAGE_TYPE.CANCEL),
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
@@ -404,8 +403,7 @@ sap.ui.define(
         const oFormData = oViewModel.getProperty('/form/dialog/data');
 
         try {
-          const mResult = await this.readLeaveApplEmpList({ ...oFormData, Prcty: 'C' });
-          const oResultData = mResult[0];
+          const oResultData = await this.readLeaveApplEmpList({ ...oFormData, Prcty: 'C' });
 
           if (!_.isEmpty(oResultData)) {
             oViewModel.setProperty('/form/dialog/data/Abrst', oResultData.Abrst);
@@ -429,7 +427,7 @@ sap.ui.define(
         const bCalcCompleted = oViewModel.getProperty('/form/dialog/calcCompleted');
         const oInputData = oViewModel.getProperty('/form/dialog/data');
         const mCheckFields = [
-          { field: 'Tmrsn', label: this.getBundleText('LABEL_04009'), type: Validator.SELECT2 }, // 근태사유
+          { field: 'Tmrsn', label: this.getBundleText('LABEL_04009'), type: Validator.INPUT2 }, // 근태사유
         ];
         let oTable;
 
@@ -563,7 +561,7 @@ sap.ui.define(
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
 
-              resolve(oData.results);
+              resolve(oData.results[0] ?? {});
             },
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
@@ -609,7 +607,7 @@ sap.ui.define(
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
 
-              resolve(oData.results);
+              resolve(oData.results ?? []);
             },
             error: (oError) => {
               this.debug(`${sUrl} error.`, AppUtils.parseError(oError));
