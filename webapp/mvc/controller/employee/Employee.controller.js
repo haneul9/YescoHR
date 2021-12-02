@@ -463,11 +463,11 @@ sap.ui.define(
 
               oSubVBox.addItem(oTable);
             } else if (oMenu.type === this.SUB_TYPE.GRID) {
-              const oCSSGrid = new CSSGrid({ gridTemplateColumns: '1fr 3fr 1fr 3fr', gridGap: '2px' });
+              const oCSSGrid = new CSSGrid({ gridTemplateColumns: '1fr 3fr 1fr 3fr', gridGap: '1px 0px' }).addStyleClass('form-grid');
 
               oMenu.header.forEach((head, index) => {
                 oCSSGrid.addItem(new sap.m.Label({ text: head.Header }));
-                oCSSGrid.addItem(new sap.m.Text({ text: oMenu.data[index] }));
+                oCSSGrid.addItem(new sap.m.Input({ value: oMenu.data[index], editable: false }));
               });
 
               oSubVBox.addItem(oCSSGrid);
