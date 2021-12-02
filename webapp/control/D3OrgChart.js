@@ -4,12 +4,14 @@ sap.ui.define(
     'sap/ui/core/Control',
     'sap/m/FlexAlignItems',
     'sap/m/FlexJustifyContent',
+    'sap/ui/yesco/common/AppUtils',
   ],
   function (
     // prettier 방지용 주석
     Control,
     FlexAlignItems,
-    FlexJustifyContent
+    FlexJustifyContent,
+    AppUtils
   ) {
     'use strict';
 
@@ -22,10 +24,6 @@ sap.ui.define(
           items: { type: 'sap.ui.yesco.control.D3OrgChartItem', multiple: true, singularName: 'item' },
         },
         defaultAggregation: 'items',
-        event: {
-          onPress: {},
-          onChange: {},
-        },
       },
 
       createChart: function () {
@@ -85,6 +83,13 @@ sap.ui.define(
                 </div>     
             </div>
             `;
+          })
+          .onNodeClick(function (sNodeId) {
+            const sPernr = _.find(this.data, { nodeId: sNodeId }).Pernr;
+
+            if (!sPernr) return;
+
+            AppUtils.getAppComponent().getRouter().navTo('employee', { pernr: sPernr });
           })
           .render();
       },
