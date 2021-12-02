@@ -95,6 +95,7 @@ sap.ui.define(
             )
           );
 
+          // ! 나의 휴가현황 TEST DATA
           oViewModel.setProperty('/quota', {
             10: { Kotxt: '연차', Crecnt: 25, Usecnt: 5 },
             20: { Kotxt: '1년미만연차', Crecnt: 25, Usecnt: 5 },
@@ -268,7 +269,7 @@ sap.ui.define(
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
 
-              resolve(oData.results);
+              resolve(oData.results ?? []);
             },
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
@@ -297,7 +298,7 @@ sap.ui.define(
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
 
-              resolve(oData.results);
+              resolve(oData.results ?? []);
             },
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
