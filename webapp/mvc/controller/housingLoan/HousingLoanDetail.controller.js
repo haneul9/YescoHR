@@ -155,7 +155,7 @@ sap.ui.define(
 
           oDetailModel.setProperty('/ApplyInfo', {
             Apename: oAppointeeData.Ename,
-            Orgtx: `${oAppointeeData.Btrtx}/${oAppointeeData.Orgtx}`,
+            Aporgtx: `${oAppointeeData.Btrtx}/${oAppointeeData.Orgtx}`,
             Apjikgbtl: `${oAppointeeData.Zzjikgbt}/${oAppointeeData.Zzjiktlt}`,
           });
 
@@ -198,6 +198,7 @@ sap.ui.define(
                 }
 
                 this.settingsAttachTable();
+                this.getLoanCost(oTargetData.Lntyp);
                 oDetailModel.setProperty('/hisBusy', false);
               }
             },
@@ -337,55 +338,12 @@ sap.ui.define(
         ]);
       },
 
-      // 신청서 출력
-      onAppPDF() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const sBenefitUrl = '/LoanAmtPrintSet';
-        const mFormData = oDetailModel.getProperty('/FormData');
-
-        oModel.read(sBenefitUrl, {
-          filters: [
-            new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, mFormData.Pernr),
-            new sap.ui.model.Filter('Begda', sap.ui.model.FilterOperator.EQ, mFormData.Begda),
-            new sap.ui.model.Filter('Endda', sap.ui.model.FilterOperator.EQ, mFormData.Endda),
-            new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mFormData.Lntyp),
-          ],
-          success: (oData) => {
-            if (oData) {
-              const oList = oData.results[0];
-              const oViewer = new sap.m.PDFViewer({
-                source: oList.Url,
-                sourceValidationFailed: function (oEvent) {
-                  oEvent.preventDefault();
-                },
-              });
-
-              oViewer.open();
-            }
-          },
-          error: (oError) => {
-            const vErrorMSG = AppUtils.parseError(oError);
-
-            MessageBox.error(vErrorMSG);
-          },
-        });
-      },
-      // 융자구분 선택시 금액받아옴
-      onLaonType(oEvent) {
+      // 융자금액입력시 금액호출
+      getLoanCost(sKey) {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
         const oAppointeeData = this.getAppointeeData();
-        const sKey = oEvent.getSource().getSelectedKey();
         const sBenefitUrl = '/BenefitCodeListSet';
-
-        if (sKey === 'ALL' || !sKey) return;
-
-        oDetailModel.getProperty('/LaonType').forEach((e) => {
-          if (e.Zcode === sKey) {
-            oDetailModel.setProperty('/FormData/Lntyptx', e.Ztext);
-          }
-        });
 
         oModel.read(sBenefitUrl, {
           filters: [
@@ -426,6 +384,56 @@ sap.ui.define(
             MessageBox.error(vErrorMSG);
           },
         });
+      },
+
+      // 신청서 출력
+      onAppPDF() {
+        const oModel = this.getModel(ServiceNames.BENEFIT);
+        const oDetailModel = this.getViewModel();
+        const sBenefitUrl = '/LoanAmtPrintSet';
+        const mFormData = oDetailModel.getProperty('/FormData');
+
+        oModel.read(sBenefitUrl, {
+          filters: [
+            new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, mFormData.Pernr),
+            new sap.ui.model.Filter('Begda', sap.ui.model.FilterOperator.EQ, mFormData.Begda),
+            new sap.ui.model.Filter('Endda', sap.ui.model.FilterOperator.EQ, mFormData.Endda),
+            new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mFormData.Lntyp),
+          ],
+          success: (oData) => {
+            if (oData) {
+              const oList = oData.results[0];
+              const oViewer = new sap.m.PDFViewer({
+                source: oList.Url,
+                sourceValidationFailed: function (oEvent) {
+                  oEvent.preventDefault();
+                },
+              });
+
+              oViewer.open();
+            }
+          },
+          error: (oError) => {
+            const vErrorMSG = AppUtils.parseError(oError);
+
+            MessageBox.error(vErrorMSG);
+          },
+        });
+      },
+      // 융자구분 선택시
+      onLaonType(oEvent) {
+        const oDetailModel = this.getViewModel();
+        const sKey = oEvent.getSource().getSelectedKey();
+
+        if (sKey === 'ALL' || !sKey) return;
+
+        oDetailModel.getProperty('/LaonType').forEach((e) => {
+          if (e.Zcode === sKey) {
+            oDetailModel.setProperty('/FormData/Lntyptx', e.Ztext);
+          }
+        });
+
+        this.getLoanCost(sKey);
       },
 
       // 융자금액 입력시 월 상환액

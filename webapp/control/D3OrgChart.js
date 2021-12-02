@@ -4,12 +4,14 @@ sap.ui.define(
     'sap/ui/core/Control',
     'sap/m/FlexAlignItems',
     'sap/m/FlexJustifyContent',
+    'sap/ui/yesco/common/AppUtils',
   ],
   function (
     // prettier 방지용 주석
     Control,
     FlexAlignItems,
-    FlexJustifyContent
+    FlexJustifyContent,
+    AppUtils
   ) {
     'use strict';
 
@@ -22,10 +24,6 @@ sap.ui.define(
           items: { type: 'sap.ui.yesco.control.D3OrgChartItem', multiple: true, singularName: 'item' },
         },
         defaultAggregation: 'items',
-        event: {
-          onPress: {},
-          onChange: {},
-        },
       },
 
       createChart: function () {
@@ -78,12 +76,20 @@ sap.ui.define(
                     <div style="margin-right:10px;margin-top:15px;float:right">${o.data.Pernr}</div>
                     <div style="margin-top:-30px;background-color:#3AB6E3;height:10px;width:${o.width - 2}px;border-radius:1px"></div>
                     <div style="padding:20px; padding-top:35px;text-align:center">
+                        <div style="color:#111672;font-size:16px;font-weight:bold"> ${o.data.Stext} </div>
                         <div style="color:#111672;font-size:16px;font-weight:bold"> ${o.data.Ename} </div>
                         <div style="color:#404040;font-size:16px;margin-top:4px"> ${o.data.Botxt} </div>
                     </div> 
                 </div>     
             </div>
             `;
+          })
+          .onNodeClick(function (sNodeId) {
+            const sPernr = _.find(this.data, { nodeId: sNodeId }).Pernr;
+
+            if (!sPernr) return;
+
+            AppUtils.getAppComponent().getRouter().navTo('employee', { pernr: sPernr });
           })
           .render();
       },

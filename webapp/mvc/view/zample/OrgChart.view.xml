@@ -1,5 +1,5 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.zample.OrgChart"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc" height="100%">
-	<FlexBox id="ChartHolder" width="100%" alignItems="Start" justifyContent="Center" />
+	<FlexBox id="ChartHolder" width="100%" height="100%" alignItems="Start" justifyContent="Center" busyIndicatorDelay="0" />
 </mvc:View>
