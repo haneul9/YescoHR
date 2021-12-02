@@ -53,15 +53,15 @@ sap.ui.define(
         const oController = this;
 
         if (oTable) {
+          TableUtils.adjustRowSpan({
+            table: oTable,
+            colIndices: [0, 1, 2, 3, 4, 5],
+            theadOrTbody: 'thead',
+          });
+
           oTable.addEventDelegate(
             {
               onAfterRendering() {
-                TableUtils.adjustRowSpan({
-                  table: this,
-                  colIndices: [0, 1, 2, 3, 4, 5],
-                  theadOrTbody: 'thead',
-                });
-
                 oController.summaryColspan();
               },
             },

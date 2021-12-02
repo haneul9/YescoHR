@@ -89,19 +89,11 @@ sap.ui.define(
 
         if (oParameter.type === this.PAGE_TYPE.CHANGE) {
           // Multiple table generate
-          const oTable = this.byId('approveMultipleTable');
-          oTable.addEventDelegate(
-            {
-              onAfterRendering: () => {
-                TableUtils.adjustRowSpan({
-                  table: oTable,
-                  colIndices: [0, 7],
-                  theadOrTbody: 'thead',
-                });
-              },
-            },
-            oTable
-          );
+          TableUtils.adjustRowSpan({
+            table: this.byId('approveMultipleTable'),
+            colIndices: [0, 7],
+            theadOrTbody: 'thead',
+          });
         }
 
         const oViewModel = this.getView().getModel();

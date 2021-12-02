@@ -63,37 +63,25 @@ sap.ui.define(
         });
         this.setViewModel(oViewModel);
 
-        const oTable = this.byId('nightdutyTable');
-        oTable.addEventDelegate(
-          {
-            onAfterRendering() {
-              TableUtils.adjustRowSpan({
-                table: oTable,
-                colIndices: [0, 1, 2, 3, 4, 5, 14, 15],
-                theadOrTbody: 'thead',
-              });
-            },
-          },
-          oTable
-        );
+        TableUtils.adjustRowSpan({
+          table: this.byId('nightdutyTable'),
+          colIndices: [0, 1, 2, 3, 4, 5, 14, 15],
+          theadOrTbody: 'thead',
+        });
       },
 
       async onObjectMatched() {
-        const oModel = this.getModel(ServiceNames.WORKTIME);
-        const oViewModel = this.getViewModel();
-        const mSearchConditions = oViewModel.getProperty('/search');
-
         try {
           const [
             mSummaryData, // prettier 방지용 주석
-            aRowData,
+            aTableData,
           ] = await Promise.all([
-            this.readSummary({ oModel }), // prettier 방지용 주석
-            this.readList({ oModel, mSearchConditions }),
+            this.readSummaryData(oModel), // prettier 방지용 주석
+            this.readTableData(oModel),
           ]);
 
-          this.setSummaryData({ oViewModel, mSummaryData });
-          this.setTableData({ oViewModel, aRowData });
+          this.setSummaryData(mSummaryData);
+          this.setTableData(aTableData);
         } catch (oError) {
           this.debug('Controller > Nightduty List > onObjectMatched Error', oError);
 
@@ -103,15 +91,12 @@ sap.ui.define(
         }
       },
 
-      /**
-       * @param  {object} oModel Service ODataModel
-       */
-      readSummary({ oModel }) {
+      async readSummaryData() {
         return new Promise((resolve, reject) => {
           const sUrl = '/OnCallSummarySet';
           const sPernr = this.getAppointeeProperty('Pernr');
 
-          oModel.read(sUrl, {
+          this.getModel(ServiceNames.WORKTIME).read(sUrl, {
             filters: [
               new Filter('Pernr', FilterOperator.EQ, sPernr), //
             ],
@@ -130,24 +115,22 @@ sap.ui.define(
       },
 
       /**
-       * @param  {object} oModel Service ODataModel
        * @param  {object} mSummaryData
        */
-      setSummaryData({ oViewModel, mSummaryData }) {
+      setSummaryData(mSummaryData) {
+        const oViewModel = this.getViewModel();
         const mLegacySummaryData = oViewModel.getProperty('/summary');
+
         oViewModel.setProperty('/summary', { ...mLegacySummaryData, mSummaryData });
       },
 
-      /**
-       * @param  {object} oModel Service ODataModel
-       * @param  {object} mSearchConditions
-       */
-      readList({ oModel, mSearchConditions }) {
-        const sUrl = '/OnCallChangeAppSet';
-        const sMenid = this.getCurrentMenuId();
-
+      async readTableData() {
         return new Promise((resolve, reject) => {
-          oModel.read(sUrl, {
+          const sUrl = '/OnCallChangeAppSet';
+          const sMenid = this.getCurrentMenuId();
+          const mSearchConditions = this.getViewModel().getProperty('/search');
+
+          this.getModel(ServiceNames.WORKTIME).read(sUrl, {
             filters: [
               new Filter('Menid', FilterOperator.EQ, sMenid), //
               new Filter('Apbeg', FilterOperator.EQ, moment(mSearchConditions.Apbeg).hours(9).toDate()),
@@ -167,7 +150,8 @@ sap.ui.define(
         });
       },
 
-      setTableData({ oViewModel, aRowData }) {
+      setTableData(aRowData) {
+        const oViewModel = this.getViewModel();
         const oTable = this.byId('nightdutyTable');
 
         oViewModel.setProperty('/list', aRowData);

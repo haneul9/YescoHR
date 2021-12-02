@@ -240,6 +240,7 @@ sap.ui.define(
       }
 
       moveToMenu(sRouteName) {
+        // 같은 메뉴 클릭시
         if (HashChanger.getInstance().getHash() === sRouteName) {
           AppUtils.setAppBusy(false).setMenuBusy(false);
           return;
