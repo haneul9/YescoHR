@@ -15,7 +15,7 @@ sap.ui.define(
       constructor: function (oUIComponent) {
         JSONModel.apply(this, this.getInitialData());
 
-        this.setProperty('/isChangeButtonShow', false);
+        this.setProperty('/showChangeButton', false);
 
         this.setUIComponent(oUIComponent);
 
