@@ -7,7 +7,7 @@
             <Text text="{/listInfo/infoMessage}" visible="{= !!${/listInfo/infoMessage} }" class="sapUiMediumMarginEnd component-title" />
         </HBox>
         <HBox>
-            <HBox class="status-wrap">
+            <HBox class="status-wrap" visible="{= ${/listInfo/visibleStatus} !== 'X'}">
                 <ObjectStatus text="{i18n>LABEL_00130} {/listInfo/progressCount}" visible="{/listInfo/isShowProgress}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="None" />
                 <ObjectStatus text="{i18n>LABEL_00121} {/listInfo/applyCount}" visible="{/listInfo/isShowApply}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication02" />
                 <ObjectStatus text="{i18n>LABEL_00123} {/listInfo/approveCount}" visible="{/listInfo/isShowApprove}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication03" />

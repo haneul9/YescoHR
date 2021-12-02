@@ -1,0 +1,38 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:table="sap.ui.table"
+    xmlns:core="sap.ui.core">
+    <table:Table id="noticeTable" class="row-link" rows="{/NoticeList}" visibleRowCount="{/listInfo/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="45" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
+        <table:columns>
+            <table:Column width="auto" sortProperty="Title" filterProperty="Title">
+                <Label text="{i18n>LABEL_08002}"/>
+                <table:template>
+                    <Text text="{Title}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="120px" sortProperty="Sdate" filterProperty="Sdate">
+                <Label text="{i18n>LABEL_00321}"/>
+                <table:template>
+                    <Text text="{
+                        path: 'Sdate',
+                        type: 'sap.ui.model.type.Date',
+                        formatOptions: {
+                            pattern: 'yyyy.MM.dd'
+                        }
+                    }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="200px" sortProperty="Sltxt" filterProperty="Sltxt">
+                <Label text="{i18n>LABEL_08003}"/>
+                <table:template>
+                    <Text text="{Sltxt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="150px" sortProperty="Grdtx" filterProperty="Grdtx">
+                <Label text="{i18n>LABEL_08004}"/>
+                <table:template>
+                    <Text text="{Grdtx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+        </table:columns>
+    </table:Table>
+</core:FragmentDefinition>
