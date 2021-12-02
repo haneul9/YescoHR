@@ -60,6 +60,14 @@ sap.ui.define(
       onObjectMatched(oParameter) {
         const sDataKey = oParameter.oDataKey;
 
+        if(!sDataKey) {
+          MessageBox.alert(this.getBundleText('MSG_00043'), {
+            onClose: () => {
+              this.getRouter().navTo('housingLoan');
+            },
+          });
+        }
+
         this.getViewModel().setProperty('/ViewKey', sDataKey);
 
         this.getList();

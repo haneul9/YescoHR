@@ -38,12 +38,12 @@
                     <Label text="{i18n>LABEL_00266}"/>
                     <VBox>
                         <Text text="{
-                        path: '/DialogData/Appda',
-                        type: 'sap.ui.model.type.Date',
-                        formatOptions: {
-                            pattern: 'yyyy.MM.dd'
-                        }
-                    }"/>
+                            path: '/DialogData/Appda',
+                            type: 'sap.ui.model.type.Date',
+                            formatOptions: {
+                                pattern: 'yyyy.MM.dd'
+                            }
+                        }"/>
                     </VBox>
                     <Label text="{i18n>LABEL_07042}"/>
                     <VBox>
@@ -55,10 +55,14 @@
                     </VBox>
                     <Label text="{i18n>LABEL_07046}"/>
                     <VBox>
-                        <Text text="{
-                        path: '/DialogData/RpamtTot',
-                        type: 'sap.ui.yesco.mvc.model.type.Currency'
-                    }"/>
+                        <ObjectStatus text="{
+                            path: '/DialogData/RpamtTot',
+                            type: 'sap.ui.yesco.mvc.model.type.Currency'
+                        }" state="Indication05"/>
+                        <!-- <Text text="{
+                            path: '/DialogData/RpamtTot',
+                            type: 'sap.ui.yesco.mvc.model.type.Currency'
+                        }"/> -->
                     </VBox>
                     <HBox>
                         <Label text="{i18n>LABEL_00142}" visible="{= ${/DialogData/Lnsta} === '45' }"/>
