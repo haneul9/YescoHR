@@ -2,7 +2,7 @@
     xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:core="sap.ui.core"
     xmlns:custom="sap.ui.yesco.control">
-    <VBox class="hCardBox" width="33%">
+    <VBox class="hCardBox search-condition-box" width="33%">
         <HBox justifyContent="SpaceBetween" class="title">
             <Title text="{i18n>LABEL_00202}" level="H2" />
             <Button type="Transparent" press=".onSearch" class="icon-button search" />

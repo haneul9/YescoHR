@@ -3,23 +3,22 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AttachFileAction',
-    'sap/ui/yesco/common/EmpInfo',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/model/type/Currency',
   ],
   (
     // prettier 방지용 주석
     JSONModel,
-    AttachFileAction,
-    EmpInfo,
-    FragmentEvent,
-    TableUtils,
-    TextUtils,
-    ServiceNames,
-    BaseController
+	AttachFileAction,
+	FragmentEvent,
+	TableUtils,
+	TextUtils,
+	ServiceNames,
+	BaseController
   ) => {
     'use strict';
 
@@ -53,7 +52,7 @@ sap.ui.define(
         this.setViewModel(oViewModel);
       },
 
-      onObjectMatched(oParameter) {
+      onObjectMatched() {
         this.onSearch();
         this.totalCount();
       },
@@ -102,7 +101,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            this.debug(oError);
+            AppUtils.handleError(oError);
             oListModel.setProperty('/busy', false);
           },
         });
@@ -126,7 +125,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            this.debug(oError);
+            AppUtils.handleError(oError);
           },
         });
       },

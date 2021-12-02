@@ -32,14 +32,17 @@
                     <VBox>
                         <Input value="{
                         path: '/DialogData/RpamtMpr',
-                        formatter: '.TextUtils.toCurrency'
+                        type: 'sap.ui.yesco.mvc.model.type.Currency'
                     }" liveChange=".repayCost" editable="{= (${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta}) &amp;&amp; !${/DateEditable} }" />
                     </VBox>
                     <Label text="{i18n>LABEL_00266}"/>
                     <VBox>
                         <Text text="{
                         path: '/DialogData/Appda',
-                        type: 'sap.ui.model.type.Date'
+                        type: 'sap.ui.model.type.Date',
+                        formatOptions: {
+                            pattern: 'yyyy.MM.dd'
+                        }
                     }"/>
                     </VBox>
                     <Label text="{i18n>LABEL_07042}"/>
@@ -54,7 +57,7 @@
                     <VBox>
                         <Text text="{
                         path: '/DialogData/RpamtTot',
-                        formatter: '.TextUtils.toCurrency'
+                        type: 'sap.ui.yesco.mvc.model.type.Currency'
                     }"/>
                     </VBox>
                     <HBox>

@@ -57,7 +57,7 @@
                 <table:template>
                     <Text text="{
                         path: 'ZbetTotl',
-                        formatter: '.TextUtils.toCurrency'
+                        type: 'sap.ui.yesco.mvc.model.type.Currency'
                     }" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
@@ -77,18 +77,24 @@
                 <Label text="{i18n>LABEL_00266}"/>
                 <table:template>
                     <Text text="{
-                    path: 'Appda',
-                    type: 'sap.ui.model.type.Date'
-                }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                        path: 'Appda',
+                        type: 'sap.ui.model.type.Date',
+                        formatOptions: {
+                            pattern: 'yyyy.MM.dd'
+                        }
+                    }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
             <table:Column width="200px" sortProperty="Sgnda" filterProperty="Sgnda">
                 <Label text="{i18n>LABEL_00269}"/>
                 <table:template>
                     <Text text="{
-                    path: 'Sgnda',
-                    type: 'sap.ui.model.type.Date'
-                }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                        path: 'Sgnda',
+                        type: 'sap.ui.model.type.Date',
+                        formatOptions: {
+                            pattern: 'yyyy.MM.dd'
+                        }
+                    }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
             <table:Column width="200px" sortProperty="Zpayym" filterProperty="Zpayym">
@@ -96,7 +102,10 @@
                 <table:template>
                     <Text text="{
                         path: 'Zpayym',
-                        type: 'sap.ui.model.type.Date'
+                        type: 'sap.ui.model.type.Date',
+                        formatOptions: {
+                            pattern: 'yyyy.MM.dd'
+                        }
                     }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>

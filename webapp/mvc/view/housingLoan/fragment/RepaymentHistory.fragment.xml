@@ -19,7 +19,10 @@
                     <table:template>
                         <Text text="{
                             path: 'Datum',
-                            type: 'sap.ui.model.type.Date'
+                            type: 'sap.ui.model.type.Date',
+                            formatOptions: {
+                                pattern: 'yyyy.MM.dd'
+                            }
                         }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
@@ -28,7 +31,7 @@
                     <table:template>
                         <Text text="{
                             path: 'PniT',
-                            formatter: '.TextUtils.toCurrency'
+                            type: 'sap.ui.yesco.mvc.model.type.Currency'
                         }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
@@ -37,7 +40,7 @@
                     <table:template>
                         <Text text="{
                             path: 'IntT',
-                            formatter: '.TextUtils.toCurrency'
+                            type: 'sap.ui.yesco.mvc.model.type.Currency'
                         }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
