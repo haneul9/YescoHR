@@ -22,7 +22,7 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.notice.Notice', {
-      TYPE_CODE: 'HR02',
+      TYPE_CODE: '10',
 
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
@@ -84,7 +84,7 @@ sap.ui.define(
         oSendObject.Notice1Nav = [];
         oSendObject.Notice2Nav = [];
 
-        oModel.create(sUrl, oSendObject, {
+        oModel.create('/NoticeManageSet', oSendObject, {
           success: (oData) => {
             if (oData) {
               const oList = oData.results;
@@ -98,7 +98,7 @@ sap.ui.define(
           },
           error: (oError) => {
             AppUtils.handleError(oError);
-          oListModel.setProperty('/busy', false);
+            oListModel.setProperty('/busy', false);
           },
         });
       },
@@ -111,9 +111,9 @@ sap.ui.define(
       },
 
       onPressExcelDownload() {
-        const oTable = this.byId('studentTable');
-        const mTableData = this.getViewModel().getProperty('/StudentList');
-        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_03028');
+        const oTable = this.byId('noticeTable');
+        const mTableData = this.getViewModel().getProperty('/NoticeList');
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_08001');
 
         TableUtils.export({ oTable, mTableData, sFileName });
       },

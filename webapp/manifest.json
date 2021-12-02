@@ -109,8 +109,8 @@
 
         { "pattern": "notice", "name": "notice", "target": "notice" },
         { "pattern": "notice/{oDataKey}", "name": "notice-detail", "target": "noticeDetail" },
-        { "pattern": "noticeHass", "name": "notice", "target": "notice" },
-        { "pattern": "noticeHass/{oDataKey}", "name": "notice-detail", "target": "noticeDetail" },
+        { "pattern": "h/notice", "name": "notice", "target": "notice" },
+        { "pattern": "h/notice/{oDataKey}", "name": "notice-detail", "target": "noticeDetail" },
 
         { "pattern": "studentFunds", "name": "studentFunds", "target": "studentFunds" },
         { "pattern": "studentFunds/{oDataKey}", "name": "studentFunds-detail", "target": "studentFundsDetail" },

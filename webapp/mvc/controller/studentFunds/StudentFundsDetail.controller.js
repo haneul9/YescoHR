@@ -68,14 +68,12 @@ sap.ui.define(
         oDetailModel.setProperty('/ViewKey', sDataKey);
         oDetailModel.setProperty('/Menid', sMenid);
 
-        this.getList()
-          .then(() => {
-            this.getTargetData();
-            oDetailModel.setProperty('/busy', false);
-          })
-          .catch((oError) => {
-            AppUtils.handleError(oError);
-          });
+        this.getList().then(() => {
+          this.getTargetData();
+          oDetailModel.setProperty('/busy', false);
+        }).catch((oError) => {
+          AppUtils.handleError(oError);
+        });
       },
 
       // 해외학교 체크시
@@ -169,12 +167,13 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const sUrl = '/SchExpenseApplSet';
         const sViewKey = oDetailModel.getProperty('/ViewKey');
-        const oAppointeeData = this.getAppointeeData();
+        const oSessionData = this.getSessionData();
 
         if (sViewKey === 'N' || !sViewKey) {
+          oDetailModel.setProperty('/FormData', oSessionData);
           oDetailModel.setProperty('/FormData', {
-            Apename: oAppointeeData.Ename,
-            Appernr: oAppointeeData.Pernr,
+            Apename: oSessionData.Ename,
+            Appernr: oSessionData.Pernr,
             Zzobjps: 'ALL',
             Slart: 'ALL',
             Grdsp: 'ALL',
@@ -183,9 +182,9 @@ sap.ui.define(
           });
 
           oDetailModel.setProperty('/ApplyInfo', {
-            Apename: oAppointeeData.Ename,
-            Orgtx: `${oAppointeeData.Btrtx}/${oAppointeeData.Orgtx}`,
-            Apjikgbtl: `${oAppointeeData.Zzjikgbt}/${oAppointeeData.Zzjiktlt}`,
+            Apename: oSessionData.Ename,
+            Aporgtx: `${oSessionData.Btrtx}/${oSessionData.Orgtx}`,
+            Apjikgbtl: `${oSessionData.Zzjikgbt}/${oSessionData.Zzjiktlt}`,
           });
 
           this.setYearsList();
@@ -304,7 +303,10 @@ sap.ui.define(
         const iFullYears = new Date().getFullYear();
         const aYearsList = [];
 
-        aYearsList.push({ Zcode: String(iFullYears), Ztext: `${iFullYears}년` }, { Zcode: String(iFullYears - 1), Ztext: `${iFullYears - 1}년` });
+        aYearsList.push(
+          { Zcode: String(iFullYears), Ztext: `${iFullYears}년` }, 
+          { Zcode: String(iFullYears - 1), Ztext: `${iFullYears - 1}년` }
+        );
 
         oDetailModel.setProperty('/FundsYears', aYearsList);
 
