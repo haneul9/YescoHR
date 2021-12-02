@@ -5,7 +5,7 @@
 		<HBox alignItems="Center" class="title">
 			<Title text="{i18n>LABEL_00139}" level="H2" />
 		</HBox>
-		<grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="4px 0" class="form-grid">
+		<grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
 			<Label text="{i18n>LABEL_00138}"/>
 			<VBox>
 				<Text text="{
@@ -21,9 +21,9 @@
 			<VBox>
 				<Text text="{/ApprovalDetails/Sgndt}"/>
 			</VBox>
-			<Label visible="{= ${/ApprovalDetails/ZappStatAl} === '45' || ${/ApprovalDetails/ZappStatAl} === '65' || !!${/ApprovalDetails/ZappResn}}" text="{i18n>LABEL_00142}" />
+			<Label text="{= ${/ApprovalDetails/ZappStatAl} === '45' || ${/ApprovalDetails/ZappStatAl} === '65' || !!${/ApprovalDetails/ZappResn} ? ${i18n>LABEL_00142} : ''}" />
 			<VBox>
-				<Text visible="{= ${/ApprovalDetails/ZappStatAl} === '45' || ${/ApprovalDetails/ZappStatAl} === '65' || !!${/ApprovalDetails/ZappResn}}" text="{/ApprovalDetails/ZappResn}" />
+				<Text text="{= ${/ApprovalDetails/ZappStatAl} === '45' || ${/ApprovalDetails/ZappStatAl} === '65' || !!${/ApprovalDetails/ZappResn} ? ${/ApprovalDetails/ZappResn} : '' }" />
 			</VBox>
 		</grid:CSSGrid>
 	</VBox>
