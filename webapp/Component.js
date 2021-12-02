@@ -13,7 +13,7 @@ sap.ui.define(
     'sap/ui/yesco/mvc/model/MenuModel',
     'sap/ui/yesco/mvc/model/Models',
     'sap/ui/yesco/mvc/model/SessionModel',
-    'sap/ui/yesco/mvc/model/TargetModel',
+    'sap/ui/yesco/mvc/model/AppointeeModel',
   ],
   (
     // prettier 방지용 주석
@@ -29,7 +29,7 @@ sap.ui.define(
     MenuModel,
     Models,
     SessionModel,
-    TargetModel
+    AppointeeModel
   ) => {
     'use strict';
 
@@ -52,7 +52,7 @@ sap.ui.define(
           .setServiceModel() // S4HANA OData 서비스 모델 생성
           .setErrorHandler() // S4HANA ZHR_COMMON_SRV OData 서비스 Error handler 생성
           .setSessionModel() // 세션 정보 모델 생성
-          .setTargetModel() // 대상자 정보 모델 생성
+          .setAppointeeModel() // 대상자 정보 모델 생성
           .setMenuModel(); // 메뉴 정보 모델 생성
 
         // call the base component's init function and create the App view
@@ -144,8 +144,8 @@ sap.ui.define(
       /**
        * 대상자 정보 모델 생성
        */
-      setTargetModel() {
-        this.setModel(new TargetModel(this), 'targetModel');
+      setAppointeeModel() {
+        this.setModel(new AppointeeModel(this), 'appointeeModel');
         return this;
       },
 
@@ -153,8 +153,8 @@ sap.ui.define(
        * 대상자 정보 모델 반환
        * @returns {object}
        */
-      getTargetModel() {
-        return this.getModel('targetModel');
+      getAppointeeModel() {
+        return this.getModel('appointeeModel');
       },
 
       /**
@@ -248,7 +248,7 @@ sap.ui.define(
             oController.baseModelReady = Promise.all([
               oMenuModelPromise, //
               this.getSessionModel().getPromise(),
-              this.getTargetModel().getPromise(),
+              this.getAppointeeModel().getPromise(),
               this._saveBreadcrumbsData({ mArguments, oView, sRouteName }),
               this._checkRouteName({ oView, sRouteName }),
             ]);
