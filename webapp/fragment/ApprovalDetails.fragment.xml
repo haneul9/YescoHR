@@ -21,7 +21,9 @@
 			<VBox>
 				<Text text="{/ApprovalDetails/Sgndt}"/>
 			</VBox>
-			<Label visible="{= ${/ApprovalDetails/ZappStatAl} === '45' || ${/ApprovalDetails/ZappStatAl} === '65' || !!${/ApprovalDetails/ZappResn}}" text="{i18n>LABEL_00142}" />
+			<VBox>
+				<Label visible="{= ${/ApprovalDetails/ZappStatAl} === '45' || ${/ApprovalDetails/ZappStatAl} === '65' || !!${/ApprovalDetails/ZappResn}}" text="{i18n>LABEL_00142}" />
+			</VBox>
 			<VBox>
 				<Text visible="{= ${/ApprovalDetails/ZappStatAl} === '45' || ${/ApprovalDetails/ZappStatAl} === '65' || !!${/ApprovalDetails/ZappResn}}" text="{/ApprovalDetails/ZappResn}" />
 			</VBox>
