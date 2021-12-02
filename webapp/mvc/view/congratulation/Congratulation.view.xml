@@ -18,7 +18,7 @@
 		</VBox>
 		<VBox class="contents">
 			<HBox justifyContent="SpaceAround" class="sapUiMediumMarginBottom">
-				<core:Fragment fragmentName="sap.ui.yesco.fragment.TargetInfo" type="XML" />
+				<core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBox" type="XML" />
 				<VBox class="hCardBox sapUiMediumMarginEnd summary-box" width="33%" busyIndicatorDelay="0" busy="{/busy}">
 					<VBox>
 						<HBox justifyContent="SpaceBetween" class="title">

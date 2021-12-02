@@ -16,7 +16,7 @@
 		</VBox>
 		<VBox class="contents">
 			<HBox justifyContent="SpaceAround" class="sapUiMediumMarginBottom">
-				<core:Fragment fragmentName="sap.ui.yesco.fragment.TargetInfo" type="XML" />
+				<core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBox" type="XML" />
 				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.studentFunds.fragment.ThisYearFunds" type="XML" />
 				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.studentFunds.fragment.SearchCondition" type="XML" />
 			</HBox>

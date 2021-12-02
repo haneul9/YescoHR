@@ -22,7 +22,7 @@
 				</HBox>
 			</VBox>
 			<VBox class="contents">
-				<core:Fragment fragmentName="sap.ui.yesco.fragment.DetailTargetInfo" type="XML" />
+				<core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.InfoMessage" type="XML" />
 				<VBox class="vCardBox sapUiMediumMarginBottom" busyIndicatorDelay="0" busy="{/busy}">
 					<HBox alignItems="Center" class="title">

@@ -146,18 +146,17 @@ sap.ui.define(
         );
 
         if (sViewKey === 'N' || !sViewKey) {
-          const oTargetInfo = this.getOwnerComponent().getSessionModel().getData();
+          const oAppointeeData = this.getAppointeeData();
 
-          // oDetailModel.setProperty('/FormData', oTargetInfo);
-          oDetailModel.setProperty('/FormData/Appernr', oTargetInfo.Pernr);
+          oDetailModel.setProperty('/FormData/Appernr', oAppointeeData.Pernr);
           oDetailModel.setProperty('/FormData/Lntyp', 'ALL');
           oDetailModel.setProperty('/FormData/Asmtd', 'ALL');
           oDetailModel.setProperty('/FormData/Htype', 'ALL');
 
           oDetailModel.setProperty('/ApplyInfo', {
-            Apename: oTargetInfo.Ename,
-            Orgtx: `${oTargetInfo.Btrtx}/${oTargetInfo.Orgtx}`,
-            Apjikgbtl: `${oTargetInfo.Zzjikgbt}/${oTargetInfo.Zzjiktlt}`,
+            Apename: oAppointeeData.Ename,
+            Orgtx: `${oAppointeeData.Btrtx}/${oAppointeeData.Orgtx}`,
+            Apjikgbtl: `${oAppointeeData.Zzjikgbt}/${oAppointeeData.Zzjiktlt}`,
           });
 
           this.settingsAttachTable();
@@ -216,7 +215,7 @@ sap.ui.define(
       async getList() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
-        const oTargetInfo = this.getOwnerComponent().getSessionModel().getData();
+        const oAppointeeData = this.getAppointeeData();
         const sBenefitUrl = '/BenefitCodeListSet';
 
         return Promise.all([
@@ -225,7 +224,7 @@ sap.ui.define(
             oModel.read(sBenefitUrl, {
               filters: [
                 new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0008'),
-                new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oTargetInfo.Werks),
+                new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks),
                 new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
                 new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000004'),
                 new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'GRADE'),
@@ -282,7 +281,7 @@ sap.ui.define(
             oModel.read(sBenefitUrl, {
               filters: [
                 new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0010'),
-                new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oTargetInfo.Werks),
+                new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks),
                 new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
                 new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000003'),
                 new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'HTYPE'),
@@ -310,7 +309,7 @@ sap.ui.define(
             oModel.read(sBenefitUrl, {
               filters: [
                 new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0011'),
-                new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oTargetInfo.Werks),
+                new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks),
                 new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
                 new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000003'),
                 new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'OUT'),
@@ -376,7 +375,7 @@ sap.ui.define(
       onLaonType(oEvent) {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
-        const oTargetInfo = this.getOwnerComponent().getSessionModel().getData();
+        const oAppointeeData = this.getAppointeeData();
         const sKey = oEvent.getSource().getSelectedKey();
         const sBenefitUrl = '/BenefitCodeListSet';
 
@@ -391,7 +390,7 @@ sap.ui.define(
         oModel.read(sBenefitUrl, {
           filters: [
             new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0012'),
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oTargetInfo.Werks),
+            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks),
             new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
             new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, sKey),
           ],

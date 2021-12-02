@@ -47,7 +47,7 @@ sap.ui.define(
       retrieve(sPernr) {
         return new Promise((resolve) => {
           const sUrl = '/EmpLoginInfoSet';
-          const filters = sPernr ? [new Filter('Pernr', FilterOperator.EQ, sPernr)] : []; // TargetModel용
+          const filters = sPernr ? [new Filter('Pernr', FilterOperator.EQ, sPernr)] : []; // AppointeeModel용
 
           this._oUIComponent.getModel(ServiceNames.COMMON).read(sUrl, {
             filters: filters,

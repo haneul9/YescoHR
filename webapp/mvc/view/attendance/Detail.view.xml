@@ -16,7 +16,7 @@
             </HBox>
         </VBox>
         <VBox class="contents">
-            <core:Fragment fragmentName="sap.ui.yesco.fragment.DetailTargetInfo" type="XML" />
+            <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
             <VBox class="vCardBox sapUiMediumMarginBottom" visible="{= ${/type} !== 'B'}">
                 <HBox justifyContent="SpaceBetween">
                     <Title level="H2" text="{i18n>LABEL_00129}" />

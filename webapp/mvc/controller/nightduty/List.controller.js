@@ -109,7 +109,7 @@ sap.ui.define(
       readSummary({ oModel }) {
         return new Promise((resolve, reject) => {
           const sUrl = '/OnCallSummarySet';
-          const sPernr = this.getTargetProperty('Pernr');
+          const sPernr = this.getAppointeeProperty('Pernr');
 
           oModel.read(sUrl, {
             filters: [

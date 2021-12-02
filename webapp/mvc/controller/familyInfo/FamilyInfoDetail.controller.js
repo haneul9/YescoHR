@@ -129,15 +129,12 @@ sap.ui.define(
         const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
         const mListData = oListView.getModel().getProperty('/parameter');
 
-        oDetailModel.setProperty('/TargetInfo', this.getOwnerComponent().getTargetModel().getData());
-
         if (!sKey || sKey === 'N') {
-          const oTargetInfo = oDetailModel.getProperty('/TargetInfo');
+          const oAppointeeData = this.getAppointeeData();
 
-          oDetailModel.setProperty('/FormData', oTargetInfo);
           oDetailModel.setProperty('/FormData', {
-            Apename: oTargetInfo.Ename,
-            Appernr: oTargetInfo.Pernr,
+            Apename: oAppointeeData.Ename,
+            Appernr: oAppointeeData.Pernr,
             Kdsvh: 'ALL',
             Fasex: 'ALL',
             Hndcd: 'ALL',

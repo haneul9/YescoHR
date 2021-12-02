@@ -11,7 +11,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return SessionModel.extend('sap.ui.yesco.mvc.model.TargetModel', {
+    return SessionModel.extend('sap.ui.yesco.mvc.model.AppointeeModel', {
       constructor: function (oUIComponent) {
         JSONModel.apply(this, this.getInitialData());
 

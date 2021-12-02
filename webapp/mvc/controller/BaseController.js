@@ -118,11 +118,11 @@ sap.ui.define(
       },
 
       getAppointeeData() {
-        return this.getOwnerComponent().getSessionModel().getData();
+        return this.getOwnerComponent().getAppointeeModel().getData();
       },
 
-      getSessionProperty(sPath) {
-        return this.getOwnerComponent().getSessionModel().getProperty(`/${sPath}`);
+      getAppointeeProperty(sPath) {
+        return this.getOwnerComponent().getAppointeeModel().getProperty(`/${sPath}`);
       },
 
       /**
