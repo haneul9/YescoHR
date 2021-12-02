@@ -27,9 +27,10 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.zample.OrgChart', {
       async onBeforeShow() {
-        AppUtils.setAppBusy(true, this);
+        const oChartHolder = this.byId('ChartHolder');
 
-        this.byId('ChartHolder').removeAllItems();
+        oChartHolder.setBusy(true);
+        oChartHolder.removeAllItems();
 
         try {
           const mReturnData = (await this.readEmployeeOrgTree()) ?? [];
@@ -72,7 +73,7 @@ sap.ui.define(
 
           AppUtils.handleError(oError);
         } finally {
-          AppUtils.setAppBusy(false, this);
+          oChartHolder.setBusy(false);
         }
       },
 
