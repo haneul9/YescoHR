@@ -80,7 +80,7 @@ sap.ui.define(
 
         // 각 메뉴 속성 정리
         aLevel4.map(({ Mnurl, Menid, Phead }) => {
-          mUrlToMenid[Mnurl] = Menid;
+          mUrlToMenid[Mnurl.replace(/\//g, '_')] = Menid;
           mMenidToProperties[Menid] = { Menid, Mnurl, Phead };
         });
 
@@ -438,7 +438,7 @@ sap.ui.define(
       },
 
       getMenid(sUrl) {
-        return this.getProperty(`/urlToMenid/${sUrl}`);
+        return this.getProperty(`/urlToMenid/${sUrl.replace(/\//g, '_')}`);
       },
 
       getFavoriteMenids() {
