@@ -1,8 +1,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    "sap/ui/richtexteditor/RichTextEditor",
-    "sap/ui/richtexteditor/EditorType",
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/FragmentEvent',
@@ -13,9 +11,7 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    RichTextEditor,
-	EditorType,
-	JSONModel,
+    JSONModel,
 	AttachFileAction,
 	FragmentEvent,
 	TableUtils,
