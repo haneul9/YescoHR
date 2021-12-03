@@ -13,6 +13,7 @@ sap.ui.define(
     'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/DateUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
@@ -34,6 +35,7 @@ sap.ui.define(
     ODataCreateError,
     Appno,
     AppUtils,
+    DateUtils,
     AttachFileAction,
     ServiceNames,
     TableUtils,
@@ -174,17 +176,17 @@ sap.ui.define(
                 Abrst2: o.Abrst2 ? o.Abrst2 : o.Abrst,
                 Begda2: o.Begda2 ? o.Begda2 : o.Begda,
                 Endda2: o.Endda2 ? o.Endda2 : o.Endda,
-                BegdaTxt: o.Begda ? moment(o.Begda).hours(9).format('YYYY.MM.DD') : '',
-                EnddaTxt: o.Endda ? moment(o.Endda).hours(9).format('YYYY.MM.DD') : '',
-                BegdaTxt2: o.Begda2 ? moment(o.Begda2).hours(9).format('YYYY.MM.DD') : moment(o.Begda).hours(9).format('YYYY.MM.DD'),
-                EnddaTxt2: o.Endda2 ? moment(o.Endda2).hours(9).format('YYYY.MM.DD') : moment(o.Endda).hours(9).format('YYYY.MM.DD'),
+                BegdaTxt: o.Begda ? DateUtils.format(o.Begda) : '',
+                EnddaTxt: o.Endda ? DateUtils.format(o.Endda) : '',
+                BegdaTxt2: o.Begda2 ? DateUtils.format(o.Begda2) : DateUtils.format(o.Begda),
+                EnddaTxt2: o.Endda2 ? DateUtils.format(o.Endda2) : DateUtils.format(o.Endda),
               };
             } else {
               return {
                 ...o,
                 AbrtgTxt: `${Number(o.Abrtg)}일`,
-                BegdaTxt: moment(o.Begda).hours(9).format('YYYY.MM.DD'),
-                EnddaTxt: moment(o.Endda).hours(9).format('YYYY.MM.DD'),
+                BegdaTxt: DateUtils.format(o.Begda),
+                EnddaTxt: DateUtils.format(o.Endda),
               };
             }
           })
@@ -242,7 +244,7 @@ sap.ui.define(
           const mAwartCode = await this.readAwartCodeList();
           oViewModel.setProperty('/form/dialog/awartCodeList', mAwartCode);
         } catch (oError) {
-          this.debug('Controller > Attendance Detail > readAwartCodeList Error', oError);
+          this.debug('Controller > Attendance Detail > openFormDialog Error', oError);
         }
 
         setTimeout(() => {
@@ -443,10 +445,10 @@ sap.ui.define(
             ...oInputData,
             isChanged: true,
             AbrtgTxt: Number(oInputData.Abrtg),
-            Begda: moment(oInputData.Begda).hours(9).toDate(),
-            Endda: moment(oInputData.Endda).hours(9).toDate(),
-            BegdaTxt: moment(oInputData.Begda).hours(9).format('YYYY.MM.DD'),
-            EnddaTxt: moment(oInputData.Endda).hours(9).format('YYYY.MM.DD'),
+            Begda: DateUtils.parse(oInputData.Begda),
+            Endda: DateUtils.parse(oInputData.Endda),
+            BegdaTxt: DateUtils.format(oInputData.Begda),
+            EnddaTxt: DateUtils.format(oInputData.Endda),
             Tmrsn: oInputData.Tmrsn,
           };
           oTable = this.byId('approveMultipleTable');
@@ -463,10 +465,10 @@ sap.ui.define(
 
           mListData.push({
             ...oInputData,
-            Begda: moment(oInputData.Begda).hours(9).toDate(),
-            Endda: moment(oInputData.Endda).hours(9).toDate(),
-            BegdaTxt: moment(oInputData.Begda).hours(9).format('YYYY.MM.DD'),
-            EnddaTxt: moment(oInputData.Endda).hours(9).format('YYYY.MM.DD'),
+            Begda: DateUtils.parse(oInputData.Begda),
+            Endda: DateUtils.parse(oInputData.Endda),
+            BegdaTxt: DateUtils.format(oInputData.Begda),
+            EnddaTxt: DateUtils.format(oInputData.Endda),
           });
 
           oViewModel.setProperty('/form/list', mListData);
@@ -543,8 +545,8 @@ sap.ui.define(
             aFilters = [
               ...aFilters, //
               new Filter('Awart', FilterOperator.EQ, Awart),
-              new Filter('Begda', FilterOperator.EQ, moment(Begda).hour(9).toDate()),
-              new Filter('Endda', FilterOperator.EQ, moment(Endda).hour(9).toDate()),
+              new Filter('Begda', FilterOperator.EQ, DateUtils.parse(Begda)),
+              new Filter('Endda', FilterOperator.EQ, DateUtils.parse(Endda)),
             ];
           } else if (Prcty === 'R') {
             aFilters = [
