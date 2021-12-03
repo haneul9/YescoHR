@@ -1161,24 +1161,10 @@ sap.ui.define(
         oViewModel.setProperty('/employee/dialog/form/Tpont', String(iTotalPoint));
       },
 
-      onPressHelpCountry() {
-        this.openSelectDialog(this.SELECT_DIALOG.COUNTRY);
-      },
+      onPressHelpRequest(oEvent) {
+        const sHelpName = oEvent.getSource().getCustomData()[0].getValue();
 
-      onPressHelpSchool() {
-        this.openSelectDialog(this.SELECT_DIALOG.SCHOOL);
-      },
-
-      onPressHelpMajor() {
-        this.openSelectDialog(this.SELECT_DIALOG.MAJOR);
-      },
-
-      onPressHelpCertificate() {
-        this.openSelectDialog(this.SELECT_DIALOG.CERTIFICATE);
-      },
-
-      onPressHelpCertificateGrade() {
-        this.openSelectDialog(this.SELECT_DIALOG.CERTIFICATE_GRADE);
+        this.openSelectDialog(this.SELECT_DIALOG[sHelpName]);
       },
 
       onSearchDialogHelp(oEvent) {
