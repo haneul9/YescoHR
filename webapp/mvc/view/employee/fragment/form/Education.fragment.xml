@@ -17,11 +17,23 @@
             <custom:DatePicker width="100%" class="required sapIcon_Date" value="{ path: '/employee/dialog/form/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{= ${/employee/dialog/action} === 'A'}" />
         </HBox>
         <Label text="{i18n>LABEL_00287}" />
-        <Input width="100%" class="required" value="{/employee/dialog/form/Landx50}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpCountry" />
+        <Input width="100%" class="required" value="{/employee/dialog/form/Landx50}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpRequest">
+            <customData>
+                <core:CustomData key="helpName" value="COUNTRY" />
+            </customData>
+        </Input>
         <Label text="{i18n>LABEL_00288}" />
-        <Input width="100%" class="required" value="{/employee/dialog/form/Zzschtx}" editable="{= !!${/employee/dialog/form/Slart} &amp;&amp; ${/employee/dialog/form/Slart} !== 'ALL' }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpSchool" />
+        <Input width="100%" class="required" value="{/employee/dialog/form/Zzschtx}" editable="{= !!${/employee/dialog/form/Slart} &amp;&amp; ${/employee/dialog/form/Slart} !== 'ALL' }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpRequest">
+            <customData>
+                <core:CustomData key="helpName" value="SCHOOL" />
+            </customData>
+        </Input>
         <Label text="{i18n>LABEL_00289}" />
-        <Input width="100%" class="required" value="{/employee/dialog/form/Zzmajo1tx}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpMajor" />
+        <Input width="100%" class="required" value="{/employee/dialog/form/Zzmajo1tx}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpRequest">
+            <customData>
+                <core:CustomData key="helpName" value="MAJOR" />
+            </customData>
+        </Input>
         <Label text="{i18n>LABEL_00290}" />
         <ComboBox width="100%" class="required" selectedKey="{/employee/dialog/form/Slabs}" busyIndicatorDelay="0" busy="{/employee/dialog/busy/Slabs}" items="{ path: '/employee/dialog/degreeList' }">
             <core:Item key="{Slabs}" text="{Stext}" />

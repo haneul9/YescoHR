@@ -44,7 +44,7 @@ sap.ui.define(
           return null;
         }
         if (vValue instanceof Date) {
-          return vValue;
+          return moment(vValue).hour(9).toDate();
         }
         if (vValue instanceof String || typeof vValue === 'string') {
           if (/^\/Date/.test(vValue)) {
@@ -52,7 +52,7 @@ sap.ui.define(
             return new Date(iTime);
           }
           const sDateString = vValue.replace(/[^\d]/g, '');
-          return moment(sDateString, 'YYYYMMDD').toDate();
+          return moment(sDateString, 'YYYYMMDD').hour(9).toDate();
         }
         throw new ParseException(`Don't know how to parse Date from ${vValue}`);
       },

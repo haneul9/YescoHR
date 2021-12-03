@@ -5,6 +5,7 @@ sap.ui.define(
     'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/DateUtils',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
@@ -18,6 +19,7 @@ sap.ui.define(
     FilterOperator,
     JSONModel,
     AppUtils,
+    DateUtils,
     ODataReadError,
     ServiceNames,
     TableUtils,
@@ -119,10 +121,10 @@ sap.ui.define(
           aRowData.map((o) => {
             return {
               ...o,
-              BegdaTxt: o.Begda ? moment(new Date(o.Begda)).hours(9).format('YYYY.MM.DD') : '',
-              EnddaTxt: o.Endda ? moment(new Date(o.Endda)).hours(9).format('YYYY.MM.DD') : '',
-              AppdtTxt: o.Appdt ? moment(new Date(o.Appdt)).hours(9).format('YYYY.MM.DD') : '',
-              SgndtTxt: o.Sgndt ? moment(new Date(o.Sgndt)).hours(9).format('YYYY.MM.DD') : '',
+              BegdaTxt: o.Begda ? DateUtils.format(o.Begda) : '',
+              EnddaTxt: o.Endda ? DateUtils.format(o.Endda) : '',
+              AppdtTxt: o.Appdt ? DateUtils.format(o.Appdt) : '',
+              SgndtTxt: o.Sgndt ? DateUtils.format(o.Sgndt) : '',
             };
           })
         );
@@ -219,35 +221,6 @@ sap.ui.define(
         this.getRouter().navTo('attendance-detail', { type: this.PAGE_TYPE.CANCEL });
       },
 
-      onSuggest(oEvent) {
-        const oModel = this.getModel(ServiceNames.COMMON);
-        const oControl = oEvent.getSource();
-        const sValue = oEvent.getParameter('suggestValue');
-
-        oControl.destroySuggestionItems();
-
-        oModel.read('/EmpSearchResultSet', {
-          filters: [
-            new Filter('Persa', FilterOperator.EQ, '1000'), //
-            new Filter('Short', FilterOperator.EQ, 'X'),
-            new Filter('Ename', FilterOperator.EQ, sValue),
-          ],
-          success: (oData) => {
-            oData.results.forEach((o) => {
-              oControl.addSuggestionItem(new sap.ui.core.ListItem({ text: o.Ename, additionalText: o.Fulln, key: o.Pernr }));
-            });
-          },
-          error: (oError) => {
-            this.debug(oError);
-          },
-        });
-      },
-
-      onSelectSuggest(oEvent) {
-        const oControl = oEvent.getSource();
-        this.debug(oControl);
-      },
-
       /*****************************************************************
        * ! Call oData
        *****************************************************************/
@@ -289,8 +262,8 @@ sap.ui.define(
           oModel.read(sUrl, {
             filters: [
               new Filter('Menid', FilterOperator.EQ, sMenid), //
-              new Filter('Apbeg', FilterOperator.EQ, moment(oSearchConditions.Apbeg).hours(9).toDate()),
-              new Filter('Apend', FilterOperator.EQ, moment(oSearchConditions.Apend).hours(9).toDate()),
+              new Filter('Apbeg', FilterOperator.EQ, DateUtils.parse(oSearchConditions.Apbeg)),
+              new Filter('Apend', FilterOperator.EQ, DateUtils.parse(oSearchConditions.Apend)),
             ],
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);

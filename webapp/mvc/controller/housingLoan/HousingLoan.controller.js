@@ -133,7 +133,7 @@ sap.ui.define(
               if (oData) {
                 const aList = oData.results;
 
-                oListModel.setProperty('/LoanType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: aList }));
+                oListModel.setProperty('/LoanType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
                 oListModel.setProperty('/search/Lntyp', 'ALL');
               }
 

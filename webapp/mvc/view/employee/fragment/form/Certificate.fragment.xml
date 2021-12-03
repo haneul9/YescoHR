@@ -8,9 +8,17 @@
             <FlexItemData growFactor="1"/>
         </grid:layoutData>
         <Label text="{i18n>LABEL_00318}" />
-        <Input width="100%" class="required" value="{/employee/dialog/form/Cttyptx}" editable="{= ${/employee/dialog/action} === 'A'}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpCertificate" />
+        <Input width="100%" class="required" value="{/employee/dialog/form/Cttyptx}" editable="{= ${/employee/dialog/action} === 'A'}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpRequest">
+            <customData>
+                <core:CustomData key="helpName" value="CERTIFICATE" />
+            </customData>
+        </Input>
         <Label text="{i18n>LABEL_00309}" />
-        <Input width="100%" class="required" value="{/employee/dialog/form/Ctgrdtx}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpCertificateGrade" />
+        <Input width="100%" class="required" value="{/employee/dialog/form/Ctgrdtx}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpRequest">
+            <customData>
+                <core:CustomData key="helpName" value="CERTIFICATE_GRADE" />
+            </customData>
+        </Input>
         <Label text="{i18n>LABEL_00319}" />
         <Input width="100%" class="required" value="{/employee/dialog/form/Ctnum}" />
         <Label text="{i18n>LABEL_00320}" />
