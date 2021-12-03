@@ -122,10 +122,10 @@ sap.ui.define(
       // 상환신청내역 Excel
       onPressExcelDownload() {
         const oTable = this.byId('repaymentTable');
-        const mTableData = this.getViewModel().getProperty('/List');
+        const aTableData = this.getViewModel().getProperty('/List');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_07036');
 
-        TableUtils.export({ oTable, mTableData, sFileName });
+        TableUtils.export({ oTable, aTableData, sFileName });
       },
 
       // Dialog 닫기
