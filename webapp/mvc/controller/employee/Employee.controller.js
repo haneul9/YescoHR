@@ -9,6 +9,7 @@ sap.ui.define(
     'sap/ui/table/Table',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/DateUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/exceptions/ODataCreateError',
@@ -31,6 +32,7 @@ sap.ui.define(
     Table,
     Appno,
     AppUtils,
+    DateUtils,
     AttachFileAction,
     ComboEntry,
     ODataCreateError,
@@ -171,19 +173,19 @@ sap.ui.define(
               examTypeList: new ComboEntry({ codeKey: 'Exmty', valueKey: 'Exmtytx' }),
               gradeList: new ComboEntry({ codeKey: 'Eamgr', valueKey: 'Eamgrtx' }),
               school1Entry: new ComboEntry({
-                mEntries: [
+                aEntries: [
                   { code: 'A', text: this.getBundleText('LABEL_00294') }, // 입사후
                   { code: 'B', text: this.getBundleText('LABEL_00295') }, // 입사전
                 ],
               }),
               school2Entry: new ComboEntry({
-                mEntries: [
+                aEntries: [
                   { code: 'A', text: this.getBundleText('LABEL_00296') }, // 신입
                   { code: 'B', text: this.getBundleText('LABEL_00297') }, // 편입
                 ],
               }),
               school3Entry: new ComboEntry({
-                mEntries: [
+                aEntries: [
                   { code: 'A', text: this.getBundleText('LABEL_00298') }, // 주간
                   { code: 'B', text: this.getBundleText('LABEL_00299') }, // 야간
                 ],
@@ -224,14 +226,14 @@ sap.ui.define(
       async initialList({ oViewModel, sPernr }) {
         const oSideBody = this.byId('sideBody');
         const oSideList = this.byId('sideEmployeeList');
-        const oSessionData = this.getSessionData();
-        const oSearchResults = await this.readEmpSearchResult({ searchText: sPernr || oSessionData.Pernr, Werks: oSessionData.Werks });
+        const mSessionData = this.getSessionData();
+        const aSearchResults = await this.readEmpSearchResult({ searchText: sPernr || mSessionData.Pernr, Werks: mSessionData.Werks });
         const iSideViewHeight = Math.floor($(document).height() - oSideBody.getParent().$().offset().top - 20);
         const iScrollViewHeight = Math.floor($(document).height() - oSideList.getParent().$().offset().top - 36);
 
         oSideList.getBinding('items').filter([new Filter('Stat2', FilterOperator.EQ, '3')]);
 
-        oViewModel.setProperty('/sideNavigation/search/results', oSearchResults);
+        oViewModel.setProperty('/sideNavigation/search/results', aSearchResults);
         oViewModel.setProperty('/sideNavigation/height', `${iSideViewHeight}px`);
         oViewModel.setProperty('/sideNavigation/scrollHeight', `${iScrollViewHeight}px`);
       },
@@ -248,7 +250,7 @@ sap.ui.define(
         try {
           // 1. 상단 프로필, 탭 메뉴, 주소유형, 시/도
           const [
-            oProfileReturnData, //
+            aProfileReturnData, //
             aMenuReturnData,
             aCountryList,
             aMajorList,
@@ -267,10 +269,10 @@ sap.ui.define(
             this.readOdata({ sUrl: '/CertificateCodeSet' }),
             this.readOdata({ sUrl: '/CertificateGradeCodeSet' }),
             this.readComboEntry({ oModel, sUrl: '/PaCodeListSet', sPath: 'typeList', mFilters: { Cdnum: 'CM0002', Grcod: '0006' } }),
-            this.readComboEntry({ oModel, sUrl: '/CityListSet', sPath: 'sidoList', sPernr, oEntryInfo: { codeKey: 'State', valueKey: 'Bezei' } }),
-            this.readComboEntry({ oModel, sUrl: '/SchoolTypeCodeSet', sPath: 'schoolTypeList', oEntryInfo: { codeKey: 'Slart', valueKey: 'Stext' } }),
-            this.readComboEntry({ oModel, sUrl: '/LanguageTypeCodeSet', sPath: 'languageTypeList', oEntryInfo: { codeKey: 'Quali', valueKey: 'Qualitx' } }),
-            this.readComboEntry({ oModel, sUrl: '/TestGradeCodeSet', sPath: 'gradeList', oEntryInfo: { codeKey: 'Eamgr', valueKey: 'Eamgrtx' } }),
+            this.readComboEntry({ oModel, sUrl: '/CityListSet', sPath: 'sidoList', sPernr, mEntryInfo: { codeKey: 'State', valueKey: 'Bezei' } }),
+            this.readComboEntry({ oModel, sUrl: '/SchoolTypeCodeSet', sPath: 'schoolTypeList', mEntryInfo: { codeKey: 'Slart', valueKey: 'Stext' } }),
+            this.readComboEntry({ oModel, sUrl: '/LanguageTypeCodeSet', sPath: 'languageTypeList', mEntryInfo: { codeKey: 'Quali', valueKey: 'Qualitx' } }),
+            this.readComboEntry({ oModel, sUrl: '/TestGradeCodeSet', sPath: 'gradeList', mEntryInfo: { codeKey: 'Eamgr', valueKey: 'Eamgrtx' } }),
           ]);
 
           // Dialog Combo entry set
@@ -286,7 +288,7 @@ sap.ui.define(
           //End Dialog Combo entry set
 
           // 상단 프로필 Set
-          const { Pturl, ...oReturnData } = oProfileReturnData[0];
+          const { Pturl, ...oReturnData } = aProfileReturnData[0];
           delete oReturnData.Pernr;
           delete oReturnData.Langu;
           delete oReturnData.Prcty;
@@ -344,18 +346,18 @@ sap.ui.define(
           // Contents 영역 Set
           aContentReturnData.forEach((content, index) => {
             content.forEach((o) => {
-              let oSubMenu = oViewModelData.employee.sub[aTabMenus[index].Menuc1].contents[o.Menuc];
+              let mSubMenu = oViewModelData.employee.sub[aTabMenus[index].Menuc1].contents[o.Menuc];
 
-              if (oSubMenu.type === this.SUB_TYPE.GRID) {
-                for (let i = 1; i <= oSubMenu.header.length; i++) {
+              if (mSubMenu.type === this.SUB_TYPE.GRID) {
+                for (let i = 1; i <= mSubMenu.header.length; i++) {
                   let sKey = `Value${_.padStart(i, 2, '0')}`;
-                  oSubMenu.data.push(o[sKey]);
+                  mSubMenu.data.push(o[sKey]);
                 }
-              } else if (oSubMenu.type === this.SUB_TYPE.TABLE) {
-                oSubMenu.data.push(o);
+              } else if (mSubMenu.type === this.SUB_TYPE.TABLE) {
+                mSubMenu.data.push(o);
               }
 
-              oSubMenu.rowCount = oSubMenu.data.length;
+              mSubMenu.rowCount = mSubMenu.data.length;
             });
           });
           //End Contents 영역 Set
@@ -395,38 +397,38 @@ sap.ui.define(
            * OMenu.type: '6'  Grid
            */
           Object.keys(aSubMenuContents).forEach((key) => {
-            const oMenu = aSubMenuContents[key];
+            const mMenu = aSubMenuContents[key];
             const oSubVBox = new sap.m.VBox().addStyleClass('customBox sapUiMediumMarginBottom');
             const oSubHBox = new sap.m.HBox({ justifyContent: 'SpaceBetween' });
 
-            this.debug(`Sub ${oMenu.title}`, oMenu);
+            this.debug(`Sub ${mMenu.title}`, mMenu);
 
             // Title
-            oSubHBox.addItem(new sap.m.Title({ level: 'H2', text: oMenu.title }));
+            oSubHBox.addItem(new sap.m.Title({ level: 'H2', text: mMenu.title }));
 
             // CRUD Buttons
-            if (_.some(this.CRUD_TABLES, (o) => o.key === oMenu.code)) {
+            if (_.some(this.CRUD_TABLES, (o) => o.key === mMenu.code)) {
               const oSubButtonBox = new sap.m.HBox({
                 items: [
                   new sap.m.Button({
                     type: 'Transparent',
                     icon: 'sap-icon://add',
                     text: this.getBundleText('LABEL_00106'), // 등록
-                    customData: [new sap.ui.core.CustomData({ key: 'code', value: oMenu.code })],
+                    customData: [new sap.ui.core.CustomData({ key: 'code', value: mMenu.code })],
                     press: this.onPressRegTable.bind(this),
                   }).addStyleClass('sapUiTinyMarginEnd'),
                   new sap.m.Button({
                     type: 'Transparent',
                     icon: 'sap-icon://edit',
                     text: this.getBundleText('LABEL_00108'), // 수정
-                    customData: [new sap.ui.core.CustomData({ key: 'code', value: oMenu.code })],
+                    customData: [new sap.ui.core.CustomData({ key: 'code', value: mMenu.code })],
                     press: this.onPressModifyTable.bind(this),
                   }).addStyleClass('sapUiTinyMarginEnd'),
                   new sap.m.Button({
                     type: 'Transparent',
                     icon: 'sap-icon://less',
                     text: this.getBundleText('LABEL_00110'), // 삭제
-                    customData: [new sap.ui.core.CustomData({ key: 'code', value: oMenu.code })],
+                    customData: [new sap.ui.core.CustomData({ key: 'code', value: mMenu.code })],
                     press: this.onPressDeleteTable.bind(this),
                   }),
                 ],
@@ -438,9 +440,9 @@ sap.ui.define(
             oSubVBox.addItem(oSubHBox);
 
             // Content (Table|Grid)
-            if (oMenu.type === this.SUB_TYPE.TABLE) {
+            if (mMenu.type === this.SUB_TYPE.TABLE) {
               const sTableDataPath = `/employee/sub/${menuKey}/contents/${key}`;
-              const aVisibleHeaders = _.filter(oMenu.header, { Invisible: false });
+              const aVisibleHeaders = _.filter(mMenu.header, { Invisible: false });
               const bFixedColumns = aVisibleHeaders.length > 10;
               const oTable = new Table({
                 width: '100%',
@@ -462,12 +464,12 @@ sap.ui.define(
               });
 
               oSubVBox.addItem(oTable);
-            } else if (oMenu.type === this.SUB_TYPE.GRID) {
+            } else if (mMenu.type === this.SUB_TYPE.GRID) {
               const oCSSGrid = new CSSGrid({ gridTemplateColumns: '1fr 3fr 1fr 3fr', gridGap: '1px 0px' }).addStyleClass('form-grid');
 
-              oMenu.header.forEach((head, index) => {
+              mMenu.header.forEach((head, index) => {
                 oCSSGrid.addItem(new sap.m.Label({ text: head.Header }));
-                oCSSGrid.addItem(new sap.m.Input({ value: oMenu.data[index], editable: false }));
+                oCSSGrid.addItem(new sap.m.Input({ value: mMenu.data[index], editable: false }));
               });
 
               oSubVBox.addItem(oCSSGrid);
@@ -542,11 +544,11 @@ sap.ui.define(
 
       async refreshTableContents({ oViewModel, sMenuKey }) {
         try {
-          const oMenuInfo = _.find(oViewModel.getProperty('/employee/tab/menu'), { Menuc2: sMenuKey });
-          const sSubTablePath = `/employee/sub/${oMenuInfo.Menuc1}/contents/${oMenuInfo.Menuc2}`;
-          const mFilters = { Pernr: oMenuInfo.Pernr, Menuc: oMenuInfo.Menuc1 };
+          const mMenuInfo = _.find(oViewModel.getProperty('/employee/tab/menu'), { Menuc2: sMenuKey });
+          const sSubTablePath = `/employee/sub/${mMenuInfo.Menuc1}/contents/${mMenuInfo.Menuc2}`;
+          const mFilters = { Pernr: mMenuInfo.Pernr, Menuc: mMenuInfo.Menuc1 };
           const aReturnContents = await this.readOdata({ sUrl: '/EmpProfileContentsTabSet', mFilters });
-          const aTableData = _.filter(aReturnContents, { Menuc: oMenuInfo.Menuc2 });
+          const aTableData = _.filter(aReturnContents, { Menuc: mMenuInfo.Menuc2 });
 
           oViewModel.setProperty(`${sSubTablePath}/data`, aTableData);
           oViewModel.setProperty(`${sSubTablePath}/rowCount`, aTableData.length);
@@ -560,16 +562,16 @@ sap.ui.define(
       getTableRowData({ oViewModel, oTable, aSelectedIndices, aFields }) {
         const sRowPath = oTable.getRows()[aSelectedIndices[0]].getBindingContext().getPath();
         const oRowData = oViewModel.getProperty(sRowPath);
-        const oMenu = _.find(oViewModel.getProperty('/employee/tab/menu'), { Menuc2: oRowData.Menuc });
-        const aHeaderData = oViewModel.getProperty(`/employee/sub/${oMenu.Menuc1}/contents/${oMenu.Menuc2}/header`);
-        const oFieldSet = aFields.reduce((acc, cur) => {
+        const mMenu = _.find(oViewModel.getProperty('/employee/tab/menu'), { Menuc2: oRowData.Menuc });
+        const aHeaderData = oViewModel.getProperty(`/employee/sub/${mMenu.Menuc1}/contents/${mMenu.Menuc2}/header`);
+        const mFieldSet = aFields.reduce((acc, cur) => {
           acc[cur] = oRowData[`Value${_.padStart(_.findIndex(aHeaderData, { Fieldname: _.upperCase(cur) }) + 1, 2, '0')}`];
           return acc;
         }, {});
 
         return {
           Pernr: oRowData.Pernr,
-          ...oFieldSet,
+          ...mFieldSet,
         };
       },
 
@@ -587,7 +589,7 @@ sap.ui.define(
        * @returns {Array<Object>} - Tree data object
        */
       transformTreeData({ aReturnTreeData, rootId }) {
-        const rootNodes = [];
+        const aRootNodes = [];
         const traverse = (nodes, item, index) => {
           if (nodes instanceof Array) {
             return nodes.some((node) => {
@@ -621,18 +623,18 @@ sap.ui.define(
               delete item.Datum;
               aReturnTreeData.splice(index, 1);
 
-              return rootNodes.push(
+              return aRootNodes.push(
                 $.extend(true, item, {
                   ref: item.Otype === 'O' ? 'sap-icon://org-chart' : item.Xchif === 'X' ? 'sap-icon://manager' : 'sap-icon://employee',
                 })
               );
             }
 
-            return traverse(rootNodes, item, index);
+            return traverse(aRootNodes, item, index);
           });
         }
 
-        return rootId !== '00000000' ? rootNodes[0].nodes : rootNodes;
+        return rootId !== '00000000' ? aRootNodes[0].nodes : aRootNodes;
       },
 
       async uploadInputFormFiles(sMenuKey) {
@@ -679,14 +681,14 @@ sap.ui.define(
         const bTreeLoaded = oViewModel.getProperty('/sideNavigation/treeLoaded');
 
         if (!bTreeLoaded && sSelectedKey === 'tree') {
+          const oSideTree = this.byId('OrganizationTree');
           const aReturnTreeData = await this.readOdata({ sUrl: '/AuthOrgTreeSet', mFilters: { Datum: moment().hour(9).toDate(), Xpern: 'X' } });
           const mConvertedTreeData = this.transformTreeData({ aReturnTreeData, rootId: '00000000' });
+          const iTreeViewHeight = Math.floor($(document).height() - oSideTree.$().offset().top - 35);
 
           this.debug('mConvertedTreeData', mConvertedTreeData);
-          oViewModel.setProperty('/sideNavigation/treeData', mConvertedTreeData);
 
-          const oSideTree = this.byId('OrganizationTree');
-          const iTreeViewHeight = Math.floor($(document).height() - oSideTree.$().offset().top - 35);
+          oViewModel.setProperty('/sideNavigation/treeData', mConvertedTreeData);
           oViewModel.setProperty('/sideNavigation/treeHeight', `${iTreeViewHeight}px`);
         }
 
@@ -717,9 +719,9 @@ sap.ui.define(
         }
 
         try {
-          const oSearchResults = await this.readEmpSearchResult({ searchText: sSearchText, Werks: sWerks });
+          const aSearchResults = await this.readEmpSearchResult({ searchText: sSearchText, Werks: sWerks });
 
-          oViewModel.setProperty('/sideNavigation/search/results', oSearchResults);
+          oViewModel.setProperty('/sideNavigation/search/results', aSearchResults);
         } catch (oError) {
           this.debug('Controller > Employee > onPressEmployeeSearch Error', oError);
 
@@ -751,13 +753,13 @@ sap.ui.define(
       onSelectTreeItem(oEvent) {
         const oViewModel = this.getView().getModel();
         const oSelectContext = oEvent.getParameter('listItem').getBindingContext();
-        const oSelectedItem = oSelectContext.getProperty();
-        const sPernr = oSelectedItem.Objid;
+        const mSelectedItem = oSelectContext.getProperty();
+        const sPernr = mSelectedItem.Objid;
         const sLeadTabKey = oViewModel.getProperty('/employee/tab/list/0/Menuc1');
 
-        this.debug('oSelectedItem', oSelectedItem);
+        this.debug('mSelectedItem', mSelectedItem);
 
-        if (oSelectedItem.Otype === 'P') {
+        if (mSelectedItem.Otype === 'P') {
           oViewModel.setProperty('/employee/busy', true);
           oViewModel.setProperty('/pernr', sPernr);
           oViewModel.setProperty('/employee/tab/selectedKey', sLeadTabKey);
@@ -801,12 +803,12 @@ sap.ui.define(
             break;
           case this.CRUD_TABLES.EDUCATION.path:
             const mCountryList = oViewModel.getProperty('/employee/dialog/countryList');
-            const oKoreaObject = _.find(mCountryList, { Sland: 'KR' });
+            const mKoreaObject = _.find(mCountryList, { Sland: 'KR' });
 
             oViewModel.setProperty('/employee/dialog/form', {
               Slart: sDefaultSelectedKey,
-              Sland: oKoreaObject.Sland,
-              Landx50: oKoreaObject.Landx50,
+              Sland: mKoreaObject.Sland,
+              Landx50: mKoreaObject.Landx50,
               Slabs: sDefaultSelectedKey,
               Zzentba: sDefaultSelectedKey,
               Zznwtns: sDefaultSelectedKey,
@@ -834,7 +836,7 @@ sap.ui.define(
         const sActionText = oViewModel.getProperty('/employee/dialog/actionText');
         const sMenuKey = oViewModel.getProperty('/employee/dialog/subKey');
         const sPrcty = sAction === 'A' ? 'C' : 'U';
-        let oInputData = {};
+        let mInputData = {};
         let aFieldProperties = [];
         let sUrl = '';
         let sAppno = '';
@@ -848,10 +850,10 @@ sap.ui.define(
               aFieldProperties = this.CRUD_TABLES.ADDRESS.valid;
 
               const oSido = _.find(oViewModel.getProperty('/employee/dialog/sidoList'), { State: mFieldValue.State });
-              oInputData = {
+              mInputData = {
                 ...oSido,
                 ...mFieldValue,
-                Begda: mFieldValue.Begda ? moment(mFieldValue.Begda).hour(9).toDate() : mFieldValue.Begda,
+                Begda: mFieldValue.Begda ? DateUtils.parse(mFieldValue.Begda) : mFieldValue.Begda,
               };
 
               break;
@@ -860,14 +862,14 @@ sap.ui.define(
               aFieldProperties = this.CRUD_TABLES.EDUCATION.valid;
               sAppno = await this.uploadInputFormFiles(this.CRUD_TABLES.EDUCATION.key);
 
-              oInputData = {
+              mInputData = {
                 ...mFieldValue,
                 Prcty: sPrcty,
                 Appno: sAppno,
                 Zzfinyn: mFieldValue.Zzfinyn ? 'X' : '',
                 Zzrecab: mFieldValue.Zzrecab ? 'X' : '',
-                Begda: mFieldValue.Begda ? moment(mFieldValue.Begda).hour(9).toDate() : mFieldValue.Begda,
-                Endda: mFieldValue.Endda ? moment(mFieldValue.Endda).hour(9).toDate() : mFieldValue.Endda,
+                Begda: mFieldValue.Begda ? DateUtils.parse(mFieldValue.Begda) : mFieldValue.Begda,
+                Endda: mFieldValue.Endda ? DateUtils.parse(mFieldValue.Endda) : mFieldValue.Endda,
               };
 
               break;
@@ -876,13 +878,13 @@ sap.ui.define(
               aFieldProperties = this.CRUD_TABLES.LANGUAGE.valid;
               sAppno = await this.uploadInputFormFiles(this.CRUD_TABLES.LANGUAGE.key);
 
-              oInputData = {
+              mInputData = {
                 ...mFieldValue,
                 Prcty: sPrcty,
                 Appno: sAppno,
-                Begda: mFieldValue.Eamdt ? moment(mFieldValue.Eamdt).hour(9).toDate() : mFieldValue.Begda,
-                Endda: mFieldValue.Eamdt ? moment(mFieldValue.Eamdt).hour(9).toDate() : mFieldValue.Endda,
-                Eamdt: mFieldValue.Eamdt ? moment(mFieldValue.Eamdt).hour(9).toDate() : mFieldValue.Eamdt,
+                Begda: mFieldValue.Eamdt ? DateUtils.parse(mFieldValue.Eamdt) : mFieldValue.Begda,
+                Endda: mFieldValue.Eamdt ? DateUtils.parse(mFieldValue.Eamdt) : mFieldValue.Endda,
+                Eamdt: mFieldValue.Eamdt ? DateUtils.parse(mFieldValue.Eamdt) : mFieldValue.Eamdt,
               };
 
               break;
@@ -891,13 +893,13 @@ sap.ui.define(
               aFieldProperties = this.CRUD_TABLES.CERTIFICATE.valid;
               sAppno = await this.uploadInputFormFiles(this.CRUD_TABLES.CERTIFICATE.key);
 
-              oInputData = {
+              mInputData = {
                 ...mFieldValue,
                 Prcty: sPrcty,
                 Appno: sAppno,
-                Begda: mFieldValue.Regdt ? moment(mFieldValue.Regdt).hour(9).toDate() : mFieldValue.Begda,
-                Endda: mFieldValue.Regdt ? moment(mFieldValue.Regdt).hour(9).toDate() : mFieldValue.Endda,
-                Regdt: mFieldValue.Regdt ? moment(mFieldValue.Regdt).hour(9).toDate() : mFieldValue.Regdt,
+                Begda: mFieldValue.Regdt ? DateUtils.parse(mFieldValue.Regdt) : mFieldValue.Begda,
+                Endda: mFieldValue.Regdt ? DateUtils.parse(mFieldValue.Regdt) : mFieldValue.Endda,
+                Regdt: mFieldValue.Regdt ? DateUtils.parse(mFieldValue.Regdt) : mFieldValue.Regdt,
               };
 
               break;
@@ -905,9 +907,9 @@ sap.ui.define(
               break;
           }
 
-          if (!Validator.check({ mFieldValue: oInputData, aFieldProperties })) return;
+          if (!Validator.check({ mFieldValue: mInputData, aFieldProperties })) return;
 
-          await this.createInputForm({ oViewModel, sUrl, oInputData });
+          await this.createInputForm({ oViewModel, sUrl, mInputData });
 
           // {추가|수정}되었습니다.
           MessageBox.success(this.getBundleText('MSG_00007', sActionText), {
@@ -943,10 +945,10 @@ sap.ui.define(
         }
 
         try {
-          const oTableInfo = this.CRUD_TABLES[_.upperCase(sMenuKey)];
-          const aFields = oTableInfo.pk;
-          const sUrl = oTableInfo.url;
-          const sLabel = this.getBundleText(oTableInfo.label);
+          const mTableInfo = this.CRUD_TABLES[_.upperCase(sMenuKey)];
+          const aFields = mTableInfo.pk;
+          const sUrl = mTableInfo.url;
+          const sLabel = this.getBundleText(mTableInfo.label);
           const mFilters = this.getTableRowData({ oViewModel, oTable, aSelectedIndices, aFields });
 
           oViewModel.setProperty('/employee/dialog/subKey', sSelectedMenuCode);
@@ -958,57 +960,57 @@ sap.ui.define(
 
           switch (sMenuKey) {
             case this.CRUD_TABLES.ADDRESS.path:
-              mFilters.Begda = moment(mFilters.Begda).hour(9).toDate();
+              mFilters.Begda = DateUtils.parse(mFilters.Begda);
 
               break;
             case this.CRUD_TABLES.EDUCATION.path:
             case this.CRUD_TABLES.LANGUAGE.path:
             case this.CRUD_TABLES.CERTIFICATE.path:
-              mFilters.Begda = moment(mFilters.Begda).hour(9).toDate();
-              mFilters.Endda = moment(mFilters.Endda).hour(9).toDate();
+              mFilters.Begda = DateUtils.parse(mFilters.Begda);
+              mFilters.Endda = DateUtils.parse(mFilters.Endda);
 
               break;
             default:
               break;
           }
 
-          const mTableRowDetail = await this.readOdata({ sUrl, mFilters });
+          const aTableRowDetail = await this.readOdata({ sUrl, mFilters });
 
-          if (_.isEmpty(mTableRowDetail)) throw Error(this.getBundleText('MSG_00034')); // 조회할 수 없습니다.
+          if (_.isEmpty(aTableRowDetail)) throw Error(this.getBundleText('MSG_00034')); // 조회할 수 없습니다.
 
-          const oTableRowDetail = mTableRowDetail[0];
+          const mTableRowDetail = aTableRowDetail[0];
 
           // 체크박스 value <-> Boolean 변환
-          if (_.has(oTableRowDetail, 'Zzfinyn')) oTableRowDetail.Zzfinyn = oTableRowDetail.Zzfinyn === 'X';
-          if (_.has(oTableRowDetail, 'Zzrecab')) oTableRowDetail.Zzrecab = oTableRowDetail.Zzrecab === 'X';
+          if (_.has(mTableRowDetail, 'Zzfinyn')) mTableRowDetail.Zzfinyn = mTableRowDetail.Zzfinyn === 'X';
+          if (_.has(mTableRowDetail, 'Zzrecab')) mTableRowDetail.Zzrecab = mTableRowDetail.Zzrecab === 'X';
 
-          oViewModel.setProperty('/employee/dialog/form', oTableRowDetail);
+          oViewModel.setProperty('/employee/dialog/form', mTableRowDetail);
 
           // 국가,학위 엔트리 조회
-          if (_.has(oTableRowDetail, 'Slart')) {
-            const mFilters = { Slart: oTableRowDetail.Slart };
-            const [mSchoolList, mDegreeList] = await Promise.all([
+          if (_.has(mTableRowDetail, 'Slart')) {
+            const mFilters = { Slart: mTableRowDetail.Slart };
+            const [aSchoolList, aDegreeList] = await Promise.all([
               this.readOdata({ sUrl: '/SchoolCodeSet', mFilters }), //
-              this.readComboEntry({ oModel, sUrl: '/DegreeCodeSet', mFilters, oEntryInfo: { codeKey: 'Slabs', valueKey: 'Stext' } }),
+              this.readComboEntry({ oModel, sUrl: '/DegreeCodeSet', mFilters, mEntryInfo: { codeKey: 'Slabs', valueKey: 'Stext' } }),
             ]);
 
-            oViewModel.setProperty('/employee/dialog/degreeList', mDegreeList);
-            oViewModel.setProperty('/employee/dialog/schoolList', mSchoolList);
-          } else if (_.has(oTableRowDetail, 'Quali')) {
+            oViewModel.setProperty('/employee/dialog/degreeList', aDegreeList);
+            oViewModel.setProperty('/employee/dialog/schoolList', aSchoolList);
+          } else if (_.has(mTableRowDetail, 'Quali')) {
             // 시험구분 엔트리 조회
-            const mFilters = { Quali: oTableRowDetail.Quali };
-            const mExamList = await this.readComboEntry({ oModel, sUrl: '/TestTypeCodeSet', mFilters, oEntryInfo: { codeKey: 'Exmty', valueKey: 'Exmtytx' } });
+            const mFilters = { Quali: mTableRowDetail.Quali };
+            const aExamList = await this.readComboEntry({ oModel, sUrl: '/TestTypeCodeSet', mFilters, mEntryInfo: { codeKey: 'Exmty', valueKey: 'Exmtytx' } });
 
-            oViewModel.setProperty('/employee/dialog/examTypeList', mExamList);
+            oViewModel.setProperty('/employee/dialog/examTypeList', aExamList);
           }
 
           // 파일 조회
-          if (_.has(oTableRowDetail, 'Appno')) {
-            const mFileList = await AttachFileAction.readFileList(oTableRowDetail.Appno, sSelectedMenuCode);
+          if (_.has(mTableRowDetail, 'Appno')) {
+            const aFileList = await AttachFileAction.readFileList(mTableRowDetail.Appno, sSelectedMenuCode);
 
-            if (!_.isEmpty(mFileList)) {
-              oViewModel.setProperty('/employee/dialog/file/originFile', mFileList);
-              oViewModel.setProperty('/employee/dialog/form', { ...mFileList[0], ...oTableRowDetail });
+            if (!_.isEmpty(aFileList)) {
+              oViewModel.setProperty('/employee/dialog/file/originFile', aFileList);
+              oViewModel.setProperty('/employee/dialog/form', { ...aFileList[0], ...mTableRowDetail });
             }
           }
 
@@ -1044,29 +1046,29 @@ sap.ui.define(
           actions: [this.getBundleText('LABEL_00110'), MessageBox.Action.CANCEL], // 삭제
           onClose: async (sAction) => {
             if (!sAction || sAction !== MessageBox.Action.CANCEL) {
-              const oTableInfo = this.CRUD_TABLES[_.upperCase(sMenuKey)];
-              const aFields = oTableInfo.pk;
-              const sUrl = oTableInfo.url;
-              const oPayload = this.getTableRowData({ oViewModel, oTable, aSelectedIndices, aFields });
+              const mTableInfo = this.CRUD_TABLES[_.upperCase(sMenuKey)];
+              const aFields = mTableInfo.pk;
+              const sUrl = mTableInfo.url;
+              const mPayload = this.getTableRowData({ oViewModel, oTable, aSelectedIndices, aFields });
 
               try {
                 switch (sMenuKey) {
                   case this.CRUD_TABLES.ADDRESS.path:
-                    oPayload.Begda = moment(oPayload.Begda).hour(9).toDate();
+                    mPayload.Begda = DateUtils.parse(mPayload.Begda);
 
                     break;
                   case this.CRUD_TABLES.EDUCATION.path:
                   case this.CRUD_TABLES.LANGUAGE.path:
                   case this.CRUD_TABLES.CERTIFICATE.path:
-                    oPayload.Begda = moment(oPayload.Begda).hour(9).toDate();
-                    oPayload.Endda = moment(oPayload.Endda).hour(9).toDate();
+                    mPayload.Begda = DateUtils.parse(mPayload.Begda);
+                    mPayload.Endda = DateUtils.parse(mPayload.Endda);
 
                     break;
                   default:
                     break;
                 }
 
-                await this.deleteTableRow({ sUrl, oPayload });
+                await this.deleteTableRow({ sUrl, mPayload });
 
                 oTable.clearSelection();
                 this.refreshTableContents({ oViewModel, sMenuKey: sSelectedMenuCode });
@@ -1101,14 +1103,14 @@ sap.ui.define(
           oViewModel.setProperty('/employee/dialog/busy/Slabs', true);
 
           const mFilters = { Slart: sSlart };
-          const [mSchoolList, mDegreeList] = await Promise.all([
+          const [aSchoolList, aDegreeList] = await Promise.all([
             this.readOdata({ sUrl: '/SchoolCodeSet', mFilters }),
-            this.readComboEntry({ oModel, sUrl: '/DegreeCodeSet', mFilters, oEntryInfo: { codeKey: 'Slabs', valueKey: 'Stext' } }), //
+            this.readComboEntry({ oModel, sUrl: '/DegreeCodeSet', mFilters, mEntryInfo: { codeKey: 'Slabs', valueKey: 'Stext' } }), //
           ]);
 
           oViewModel.setProperty('/employee/dialog/form/Slabs', 'ALL');
-          oViewModel.setProperty('/employee/dialog/degreeList', mDegreeList);
-          oViewModel.setProperty('/employee/dialog/schoolList', mSchoolList);
+          oViewModel.setProperty('/employee/dialog/degreeList', aDegreeList);
+          oViewModel.setProperty('/employee/dialog/schoolList', aSchoolList);
         } catch (oError) {
           this.debug('Controller > Employee > onChangeSchoolType Error', oError);
 
@@ -1134,10 +1136,10 @@ sap.ui.define(
           oViewModel.setProperty('/employee/dialog/busy/Exmty', true);
 
           const mFilters = { Quali: sQuali };
-          const mExamList = await this.readComboEntry({ oModel, sUrl: '/TestTypeCodeSet', mFilters, oEntryInfo: { codeKey: 'Exmty', valueKey: 'Exmtytx' } });
+          const aExamList = await this.readComboEntry({ oModel, sUrl: '/TestTypeCodeSet', mFilters, mEntryInfo: { codeKey: 'Exmty', valueKey: 'Exmtytx' } });
 
           oViewModel.setProperty('/employee/dialog/form/Exmty', 'ALL');
-          oViewModel.setProperty('/employee/dialog/examTypeList', mExamList);
+          oViewModel.setProperty('/employee/dialog/examTypeList', aExamList);
         } catch (oError) {
           this.debug('Controller > Employee > onChangeLanguageType Error', oError);
 
@@ -1151,48 +1153,35 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const oControl = oEvent.getSource();
         const sPath = oControl.getBinding('value').getPath();
-        const oFormData = oViewModel.getProperty('/employee/dialog/form');
+        const mFormData = oViewModel.getProperty('/employee/dialog/form');
         const aPointFields = ['Spont', 'Hpont', 'Rpont', 'Wpont'];
+        const iTotalPoint = aPointFields.reduce((acc, cur) => acc + _.defaultTo(Number(mFormData[cur]), 0), 0);
 
         oViewModel.setProperty(sPath, String(Number(oControl.getValue())));
-        oViewModel.setProperty('/employee/dialog/form/Tpont', String(aPointFields.reduce((acc, cur) => acc + _.defaultTo(Number(oFormData[cur]), 0), 0)));
+        oViewModel.setProperty('/employee/dialog/form/Tpont', String(iTotalPoint));
       },
 
-      onPressHelpCountry() {
-        this.openSelectDialog(this.SELECT_DIALOG.COUNTRY);
-      },
+      onPressHelpRequest(oEvent) {
+        const sHelpName = oEvent.getSource().getCustomData()[0].getValue();
 
-      onPressHelpSchool() {
-        this.openSelectDialog(this.SELECT_DIALOG.SCHOOL);
-      },
-
-      onPressHelpMajor() {
-        this.openSelectDialog(this.SELECT_DIALOG.MAJOR);
-      },
-
-      onPressHelpCertificate() {
-        this.openSelectDialog(this.SELECT_DIALOG.CERTIFICATE);
-      },
-
-      onPressHelpCertificateGrade() {
-        this.openSelectDialog(this.SELECT_DIALOG.CERTIFICATE_GRADE);
+        this.openSelectDialog(this.SELECT_DIALOG[sHelpName]);
       },
 
       onSearchDialogHelp(oEvent) {
-        const oHelpDialogInfo = this.getViewModel().getProperty('/employee/dialog/selectedHelpDialog');
+        const mHelpDialogInfo = this.getViewModel().getProperty('/employee/dialog/selectedHelpDialog');
 
         oEvent.getParameter('itemsBinding').filter([
-          new Filter(oHelpDialogInfo.valueKey, FilterOperator.Contains, oEvent.getParameter('value')), //
+          new Filter(mHelpDialogInfo.valueKey, FilterOperator.Contains, oEvent.getParameter('value')), //
         ]);
       },
 
       onCloseDialogHelp(oEvent) {
         const oViewModel = this.getViewModel();
-        const oHelpDialogInfo = oViewModel.getProperty('/employee/dialog/selectedHelpDialog');
         const oSelectedItem = oEvent.getParameter('selectedItem');
+        const mHelpDialogInfo = oViewModel.getProperty('/employee/dialog/selectedHelpDialog');
 
-        oViewModel.setProperty(`/employee/dialog/form/${oHelpDialogInfo.codeKey}`, oSelectedItem.getDescription());
-        oViewModel.setProperty(`/employee/dialog/form/${oHelpDialogInfo.valueKey}`, oSelectedItem.getTitle());
+        oViewModel.setProperty(`/employee/dialog/form/${mHelpDialogInfo.codeKey}`, oSelectedItem.getDescription());
+        oViewModel.setProperty(`/employee/dialog/form/${mHelpDialogInfo.valueKey}`, oSelectedItem.getTitle());
       },
 
       openSearchZipCodePopup() {
@@ -1208,10 +1197,10 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const oFileUploader = oEvent.getSource();
         const oFiles = oEvent.getParameter('files');
-        const oFormData = oViewModel.getProperty('/employee/dialog/form');
+        const mFormData = oViewModel.getProperty('/employee/dialog/form');
 
         oViewModel.setProperty('/employee/dialog/file/newFile', [...oFiles]);
-        oViewModel.setProperty('/employee/dialog/form', { ...oFormData, Zfilename: oFiles[0].name });
+        oViewModel.setProperty('/employee/dialog/form', { ...mFormData, Zfilename: oFiles[0].name });
 
         oFileUploader.clear();
         oFileUploader.setValue('');
@@ -1253,7 +1242,7 @@ sap.ui.define(
         });
       },
 
-      readComboEntry({ oModel, sUrl, sPath, sPernr, mFilters = {}, oEntryInfo = { codeKey: 'Zcode', valueKey: 'Ztext' } }) {
+      readComboEntry({ oModel, sUrl, sPath, sPernr, mFilters = {}, mEntryInfo = { codeKey: 'Zcode', valueKey: 'Ztext' } }) {
         return new Promise((resolve, reject) => {
           const oViewModel = this.getViewModel();
           const mEntries = oViewModel.getProperty(`/employee/dialog/${sPath}`);
@@ -1268,7 +1257,7 @@ sap.ui.define(
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
 
-              resolve(new ComboEntry({ ...oEntryInfo, mEntries: oData.results }));
+              resolve(new ComboEntry({ ...mEntryInfo, aEntries: oData.results }));
             },
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
@@ -1301,12 +1290,12 @@ sap.ui.define(
         });
       },
 
-      createInputForm({ oViewModel, sUrl, oInputData }) {
+      createInputForm({ oViewModel, sUrl, mInputData }) {
         return new Promise((resolve, reject) => {
           const oModel = this.getModel(ServiceNames.PA);
           const sAction = oViewModel.getProperty('/employee/dialog/action');
 
-          oModel.create(sUrl, oInputData, {
+          oModel.create(sUrl, mInputData, {
             success: () => {
               resolve();
             },
@@ -1319,10 +1308,10 @@ sap.ui.define(
         });
       },
 
-      deleteTableRow({ sUrl, oPayload }) {
+      deleteTableRow({ sUrl, mPayload }) {
         return new Promise((resolve, reject) => {
           const oModel = this.getModel(ServiceNames.PA);
-          const sUrlByKey = oModel.createKey(sUrl, oPayload);
+          const sUrlByKey = oModel.createKey(sUrl, mPayload);
 
           oModel.remove(sUrlByKey, {
             success: () => {
@@ -1341,10 +1330,10 @@ sap.ui.define(
 );
 
 // eslint-disable-next-line no-unused-vars
-function fn_SetAddr(Zip, fullAddr) {
+function fn_SetAddr(sZip, sFullAddr) {
   const oView = sap.ui.getCore().byId('container-ehr---employee');
   const oViewModel = oView.getModel();
 
-  oViewModel.setProperty('/employee/dialog/form/Pstlz', Zip);
-  oViewModel.setProperty('/employee/dialog/form/Zzaddr1', fullAddr);
+  oViewModel.setProperty('/employee/dialog/form/Pstlz', sZip);
+  oViewModel.setProperty('/employee/dialog/form/Zzaddr1', sFullAddr);
 }

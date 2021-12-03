@@ -243,7 +243,7 @@ sap.ui.define(
                     }
                   });
 
-                  oDetailModel.setProperty('/LaonType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: aList2 }));
+                  oDetailModel.setProperty('/LaonType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList2 }));
 
                   resolve();
                 }
@@ -265,7 +265,7 @@ sap.ui.define(
 
                   const aList1 = oData.results;
 
-                  oDetailModel.setProperty('/AssuranceType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: aList1 }));
+                  oDetailModel.setProperty('/AssuranceType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList1 }));
 
                   resolve();
                 }
@@ -293,7 +293,7 @@ sap.ui.define(
 
                   const aList = oData.results;
 
-                  oDetailModel.setProperty('/HouseType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: aList }));
+                  oDetailModel.setProperty('/HouseType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
 
                   resolve();
                 }
@@ -531,38 +531,6 @@ sap.ui.define(
         this.getViewModel().setProperty('/FormData/Lnsta', '');
       },
 
-      // oData호출 mapping
-      sendDataFormat(oDatas) {
-        let oSendObject = {
-          Appno: oDatas.Appno,
-          Appda: oDatas.Appda,
-          Appernr: oDatas.Appernr,
-          Lnsta: oDatas.Lnsta,
-          Lnstatx: oDatas.Lnstatx,
-          Htype: oDatas.Htype,
-          Htypetx: oDatas.Htypetx,
-          Addre: oDatas.Addre,
-          RpamtMon: oDatas.RpamtMon,
-          Lnrte: oDatas.Lnrte,
-          Lntyp: oDatas.Lntyp,
-          Lntyptx: oDatas.Lntyptx,
-          Asmtd: oDatas.Asmtd,
-          Asmtdtx: oDatas.Asmtdtx,
-          Zsize: oDatas.Zsize,
-          Hdprd: oDatas.Hdprd,
-          Lnamt: oDatas.Lnamt,
-          Lnprd: oDatas.Lnprd,
-          Zbigo: oDatas.Zbigo,
-          Lonid: oDatas.Lonid,
-          Begda: oDatas.Begda,
-          Endda: oDatas.Endda,
-          Lntyp: oDatas.Lntyp,
-          Pernr: oDatas.Pernr,
-        };
-
-        return oSendObject;
-      },
-
       // 임시저장
       onSaveBtn() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
@@ -588,9 +556,8 @@ sap.ui.define(
                 }
 
                 let oSendObject = {};
-                const oSendData = this.sendDataFormat(oFormData);
 
-                oSendObject = oSendData;
+                oSendObject = oFormData;
                 oSendObject.Prcty = 'T';
                 oSendObject.Menid = oDetailModel.getProperty('/menid');
                 oSendObject.Waers = 'KRW';
@@ -651,9 +618,8 @@ sap.ui.define(
                 }
 
                 let oSendObject = {};
-                const oSendData = this.sendDataFormat(oFormData);
 
-                oSendObject = oSendData;
+                oSendObject = oFormData;
                 oSendObject.Prcty = 'C';
                 oSendObject.Menid = oDetailModel.getProperty('/menid');
                 oSendObject.Waers = 'KRW';

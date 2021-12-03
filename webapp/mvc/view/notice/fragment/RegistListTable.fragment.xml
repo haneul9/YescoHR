@@ -9,7 +9,13 @@
                     <Text text="{Title}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="120px" sortProperty="Sdate" filterProperty="Sdate">
+            <table:Column width="100px" visible="{/Hass}">
+                <Label text="{i18n>LABEL_08006}"/>
+                <table:template>
+                    <CheckBox selected="{= !!${Hide} }" width="100%" textAlign="Center" editable="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="120px" sortProperty="Sdate" filterProperty="Sdate" visible="{/Hass}">
                 <Label text="{i18n>LABEL_00321}"/>
                 <table:template>
                     <Text text="{
@@ -21,16 +27,22 @@
                     }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="200px" sortProperty="Sltxt" filterProperty="Sltxt">
+            <table:Column width="250px" sortProperty="Chntm" filterProperty="Chntm">
                 <Label text="{i18n>LABEL_08003}"/>
                 <table:template>
-                    <Text text="{Sltxt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                    <Text text="{Chntm}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="150px" sortProperty="Grdtx" filterProperty="Grdtx">
+            <table:Column width="180px" sortProperty="ApernTxt" filterProperty="ApernTxt">
                 <Label text="{i18n>LABEL_08004}"/>
                 <table:template>
-                    <Text text="{Grdtx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                    <Text text="{ApernTxt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="100px" visible="{/Hass}">
+                <Label text="{i18n>LABEL_08007}"/>
+                <table:template>
+                    <CheckBox selected="{= !!${Impor} }" width="100%" textAlign="Center" editable="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
         </table:columns>

@@ -109,7 +109,7 @@
 
         { "pattern": "notice", "name": "notice", "target": "notice" },
         { "pattern": "notice/{oDataKey}", "name": "notice-detail", "target": "noticeDetail" },
-        { "pattern": "h/notice", "name": "h/notice", "target": "notice" },
+        { "pattern": "h/notice", "name": "h/notice", "target": "h/notice" },
         { "pattern": "h/notice/{oDataKey}", "name": "h/notice-detail", "target": "noticeDetail" },
 
         { "pattern": "studentFunds", "name": "studentFunds", "target": "studentFunds" },
@@ -147,7 +147,8 @@
         "housingLoanDetail": { "viewId": "housingLoanDetail", "viewPath": "sap.ui.yesco.mvc.view.housingLoan", "viewName": "HousingLoanDetail" },
         "housingLoanRepay": { "viewId": "housingLoanRepay", "viewPath": "sap.ui.yesco.mvc.view.housingLoan", "viewName": "HousingLoanRepayment" },
 
-        "notice": { "viewId": "notice", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "Notice" },
+        "notice": { "viewId": "notice", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "Ess" },
+        "h/notice": { "viewId": "h_notice", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "Hass" },
         "noticeDetail": { "viewId": "noticeDetail", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "NoticeDetail" },
 
         "studentFunds": { "viewId": "studentFunds", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFunds" },

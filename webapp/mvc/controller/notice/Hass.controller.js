@@ -12,16 +12,16 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-    AttachFileAction,
-    FragmentEvent,
-    TableUtils,
-    TextUtils,
-    ServiceNames,
-    BaseController
+	AttachFileAction,
+	FragmentEvent,
+	TableUtils,
+	TextUtils,
+	ServiceNames,
+	BaseController
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.notice.Notice', {
+    return BaseController.extend('sap.ui.yesco.mvc.controller.notice.Hass', {
       TYPE_CODE: '10',
 
       AttachFileAction: AttachFileAction,
@@ -30,13 +30,13 @@ sap.ui.define(
       FragmentEvent: FragmentEvent,
 
       onBeforeShow() {
-        console.log('onBefore');
         const dDate = new Date();
         const oViewModel = new JSONModel({
           busy: false,
+          Hass: true,
           Data: [],
           search: {
-            date: new Date(dDate.getFullYear(), dDate.getMonth(), 0),
+            date: new Date(dDate.getFullYear(), dDate.getMonth() + 1, 0),
             secondDate: new Date(dDate.getFullYear(), dDate.getMonth() - 1, 1),
             title: '',
           },
@@ -59,7 +59,7 @@ sap.ui.define(
       },
 
       onClick() {
-        this.getRouter().navTo('notice-detail', { oDataKey: 'N' });
+        this.getRouter().navTo('h/notice-detail', { oDataKey: 'N' });
       },
 
       onSearch() {
@@ -67,8 +67,8 @@ sap.ui.define(
         const oListModel = this.getViewModel();
         const oTable = this.byId('noticeTable');
         const oSearch = oListModel.getProperty('/search');
-        const dDate = moment(oSearch.secondDate).hours(10).toDate();
-        const dDate2 = moment(oSearch.date).hours(10).toDate();
+        const dDate = moment(oSearch.secondDate).hours(9).toDate();
+        const dDate2 = moment(oSearch.date).hours(9).toDate();
         const sMenid = this.getCurrentMenuId();
         const sWerks = this.getSessionProperty('Werks');
 
@@ -88,7 +88,7 @@ sap.ui.define(
         oModel.create('/NoticeManageSet', oSendObject, {
           success: (oData) => {
             if (oData) {
-              const oList = oData.results;
+              const oList = oData.Notice1Nav.results;
 
               oListModel.setProperty('/NoticeList', oList);
               oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: oList }));
@@ -105,10 +105,11 @@ sap.ui.define(
       },
 
       onSelectRow(oEvent) {
-        const vPath = oEvent.getParameters().rowBindingContext.getPath();
+        const vPath = oEvent.getParameter('rowBindingContext').getPath();
         const oRowData = this.getViewModel().getProperty(vPath);
 
-        this.getRouter().navTo('notice-detail', { oDataKey: oRowData.Appno });
+        this.getViewModel().setProperty('/parameter', oRowData);
+        this.getRouter().navTo('h/notice-detail', { oDataKey: oRowData.Appno });
       },
 
       onPressExcelDownload() {

@@ -11,8 +11,8 @@ sap.ui.define(
        * @override
        * @returns {sap.ui.base.Object}
        */
-      constructor: function ({ codeKey = 'code', valueKey = 'text', mEntries = [] }) {
-        return [{ [codeKey]: 'ALL', [valueKey]: AppUtils.getBundleText('LABEL_00268') }, ...mEntries];
+      constructor: function ({ codeKey = 'code', valueKey = 'text', aEntries = [] }) {
+        return [{ [codeKey]: 'ALL', [valueKey]: AppUtils.getBundleText('LABEL_00268') }, ...aEntries];
       },
     });
   }
