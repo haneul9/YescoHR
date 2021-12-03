@@ -13,13 +13,13 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-	ServiceNames,
-	AppUtils,
-	AttachFileAction,
-	ODataReadError,
-	TableUtils,
-	FragmentEvent,
-	BaseController
+    ServiceNames,
+    AppUtils,
+    AttachFileAction,
+    ODataReadError,
+    TableUtils,
+    FragmentEvent,
+    BaseController
   ) => {
     'use strict';
 
@@ -123,7 +123,7 @@ sap.ui.define(
           },
           error: (oError) => {
             AppUtils.handleError(oError);
-            
+
             oListModel.setProperty('/busy', false);
           },
         });
@@ -138,10 +138,10 @@ sap.ui.define(
 
       onPressExcelDownload() {
         const oTable = this.byId('conguTable');
-        const mTableData = this.getViewModel().getProperty('/CongList');
+        const aTableData = this.getViewModel().getProperty('/CongList');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_02022');
 
-        TableUtils.export({ oTable, mTableData, sFileName });
+        TableUtils.export({ oTable, aTableData, sFileName });
       },
     });
   }

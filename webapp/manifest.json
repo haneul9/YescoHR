@@ -120,7 +120,7 @@
         { "pattern": "employee/:pernr:", "name": "employee", "target": "employee" },
 
         { "pattern": "nightduty", "name": "nightduty", "target": "nightduty" },
-        { "pattern": "nightduty/:key:", "name": "nightduty-detail", "target": "nightdutyDetail" },
+        { "pattern": "nightduty/:appno:", "name": "nightduty-detail", "target": "nightdutyDetail" },
 
         { "pattern": "sampleComponents", "name": "sampleComponents", "target": "sampleComponents" },
         { "pattern": "sampleTimeline", "name": "sampleTimeline", "target": "sampleTimeline" },

@@ -12,12 +12,12 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-	AttachFileAction,
-	FragmentEvent,
-	TableUtils,
-	TextUtils,
-	ServiceNames,
-	BaseController
+    AttachFileAction,
+    FragmentEvent,
+    TableUtils,
+    TextUtils,
+    ServiceNames,
+    BaseController
   ) => {
     'use strict';
 
@@ -30,6 +30,7 @@ sap.ui.define(
       FragmentEvent: FragmentEvent,
 
       onBeforeShow() {
+        console.log('onBefore');
         const dDate = new Date();
         const oViewModel = new JSONModel({
           busy: false,
@@ -112,10 +113,10 @@ sap.ui.define(
 
       onPressExcelDownload() {
         const oTable = this.byId('noticeTable');
-        const mTableData = this.getViewModel().getProperty('/NoticeList');
+        const aTableData = this.getViewModel().getProperty('/NoticeList');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_08001');
 
-        TableUtils.export({ oTable, mTableData, sFileName });
+        TableUtils.export({ oTable, aTableData, sFileName });
       },
     });
   }

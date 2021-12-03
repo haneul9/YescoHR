@@ -180,10 +180,10 @@ sap.ui.define(
 
       onPressExcelDownload() {
         const oTable = this.byId('loanTable');
-        const mTableData = this.getViewModel().getProperty('/List');
+        const aTableData = this.getViewModel().getProperty('/List');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_07001');
 
-        TableUtils.export({ oTable, mTableData, sFileName, sStatCode: 'Lnsta', sStatTxt: 'Lnstatx' });
+        TableUtils.export({ oTable, aTableData, sFileName, sStatCode: 'Lnsta', sStatTxt: 'Lnstatx' });
       },
     });
   }

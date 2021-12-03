@@ -3,7 +3,7 @@
     <VBox class="hCardBox sapUiMediumMarginEnd appointee-info-box" width="33%">
         <HBox justifyContent="SpaceBetween" class="title">
             <Title text="{i18n>LABEL_00128}" level="H2" />
-            <Button type="Transparent" icon="sap-icon://employee-approvals" visible="{appointeeModel>/showChangeButton}" class="icon-button me" />
+            <Button type="Transparent" icon="asset/css/images/icon_me.png" visible="{appointeeModel>/showChangeButton}" class="icon-button" />
         </HBox>
         <HBox class="my-info">
             <VBox class="member-picture" width="38%">
