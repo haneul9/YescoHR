@@ -271,7 +271,7 @@ sap.ui.define(
             if (oData) {
               const aList = oData.results;
 
-              oDetailModel.setProperty('/LaonType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: aList }));
+              oDetailModel.setProperty('/LaonType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
             }
           },
           error: (oError) => {

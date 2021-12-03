@@ -173,19 +173,19 @@ sap.ui.define(
               examTypeList: new ComboEntry({ codeKey: 'Exmty', valueKey: 'Exmtytx' }),
               gradeList: new ComboEntry({ codeKey: 'Eamgr', valueKey: 'Eamgrtx' }),
               school1Entry: new ComboEntry({
-                mEntries: [
+                aEntries: [
                   { code: 'A', text: this.getBundleText('LABEL_00294') }, // 입사후
                   { code: 'B', text: this.getBundleText('LABEL_00295') }, // 입사전
                 ],
               }),
               school2Entry: new ComboEntry({
-                mEntries: [
+                aEntries: [
                   { code: 'A', text: this.getBundleText('LABEL_00296') }, // 신입
                   { code: 'B', text: this.getBundleText('LABEL_00297') }, // 편입
                 ],
               }),
               school3Entry: new ComboEntry({
-                mEntries: [
+                aEntries: [
                   { code: 'A', text: this.getBundleText('LABEL_00298') }, // 주간
                   { code: 'B', text: this.getBundleText('LABEL_00299') }, // 야간
                 ],
@@ -226,8 +226,8 @@ sap.ui.define(
       async initialList({ oViewModel, sPernr }) {
         const oSideBody = this.byId('sideBody');
         const oSideList = this.byId('sideEmployeeList');
-        const oSessionData = this.getSessionData();
-        const aSearchResults = await this.readEmpSearchResult({ searchText: sPernr || oSessionData.Pernr, Werks: oSessionData.Werks });
+        const mSessionData = this.getSessionData();
+        const aSearchResults = await this.readEmpSearchResult({ searchText: sPernr || mSessionData.Pernr, Werks: mSessionData.Werks });
         const iSideViewHeight = Math.floor($(document).height() - oSideBody.getParent().$().offset().top - 20);
         const iScrollViewHeight = Math.floor($(document).height() - oSideList.getParent().$().offset().top - 36);
 
@@ -1271,7 +1271,7 @@ sap.ui.define(
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
 
-              resolve(new ComboEntry({ ...mEntryInfo, mEntries: oData.results }));
+              resolve(new ComboEntry({ ...mEntryInfo, aEntries: oData.results }));
             },
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);

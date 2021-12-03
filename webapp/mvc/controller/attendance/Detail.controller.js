@@ -107,12 +107,12 @@ sap.ui.define(
 
       getCurrentLocationText(oArguments) {
         const sAction = oArguments.appno ? this.getBundleText('LABEL_00100') : ''; // 조회
-        const oNavigationMap = {
+        const mNavigationMap = {
           A: this.getBundleText('LABEL_04002'), // 신규신청
           B: this.getBundleText('LABEL_04003'), // 변경신청
           C: this.getBundleText('LABEL_04004'), // 취소신청
         };
-        return `${oNavigationMap[oArguments.type]} ${sAction}`;
+        return `${mNavigationMap[oArguments.type]} ${sAction}`;
       },
 
       async loadPage() {
@@ -123,14 +123,14 @@ sap.ui.define(
 
         try {
           if (sAppno) {
-            const oResultData = await this.readLeaveApplEmpList({ Prcty: 'R', Appno: sAppno });
+            const mResultData = await this.readLeaveApplEmpList({ Prcty: 'R', Appno: sAppno });
 
-            oViewModel.setProperty('/ZappStatAl', oResultData.ZappStatAl);
+            oViewModel.setProperty('/ZappStatAl', mResultData.ZappStatAl);
             oViewModel.setProperty('/form/listMode', 'None');
 
-            this.setTableData({ sType, oViewModel, aRowData: [oResultData] });
-            this.initializeApplyInfoBox(oResultData);
-            this.initializeApprovalBox(oResultData);
+            this.setTableData({ sType, oViewModel, aRowData: [mResultData] });
+            this.initializeApplyInfoBox(mResultData);
+            this.initializeApprovalBox(mResultData);
           } else {
             if (sType === this.PAGE_TYPE.CHANGE || sType === this.PAGE_TYPE.CANCEL) {
               const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
@@ -199,12 +199,12 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         if (_.isEmpty(detailData)) {
-          const oSessionData = this.getSessionData();
+          const mSessionData = this.getSessionData();
 
           oViewModel.setProperty('/ApplyInfo', {
-            Apename: oSessionData.Ename,
-            Aporgtx: `${oSessionData.Btrtx}/${oSessionData.Orgtx}`,
-            Apjikgbtl: `${oSessionData.Zzjikgbt}/${oSessionData.Zzjiktlt}`,
+            Apename: mSessionData.Ename,
+            Aporgtx: `${mSessionData.Btrtx}/${mSessionData.Orgtx}`,
+            Apjikgbtl: `${mSessionData.Zzjikgbt}/${mSessionData.Zzjiktlt}`,
           });
         } else {
           oViewModel.setProperty('/ApplyInfo', { ...detailData });
@@ -241,8 +241,8 @@ sap.ui.define(
 
         // 근태유형
         try {
-          const mAwartCode = await this.readAwartCodeList();
-          oViewModel.setProperty('/form/dialog/awartCodeList', mAwartCode);
+          const aAwartCode = await this.readAwartCodeList();
+          oViewModel.setProperty('/form/dialog/awartCodeList', aAwartCode);
         } catch (oError) {
           this.debug('Controller > Attendance Detail > openFormDialog Error', oError);
         }
@@ -267,15 +267,15 @@ sap.ui.define(
       toggleHasRowProperty() {
         const oViewModel = this.getViewModel();
         const sType = oViewModel.getProperty('/type');
-        const mTableData = oViewModel.getProperty('/form/list');
+        const aTableData = oViewModel.getProperty('/form/list');
 
         if (sType === this.PAGE_TYPE.CHANGE) {
           oViewModel.setProperty(
             '/form/hasRow',
-            mTableData.some((cur) => cur.isChanged)
+            aTableData.some((cur) => cur.isChanged)
           );
         } else {
-          oViewModel.setProperty('/form/hasRow', !!mTableData.length);
+          oViewModel.setProperty('/form/hasRow', !!aTableData.length);
         }
       },
 
@@ -327,8 +327,6 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const oTable = this.byId('approveMultipleTable');
         const aSelectedIndices = oTable.getSelectedIndices();
-        let sRowPath = null;
-        let oRowData = {};
 
         if (aSelectedIndices.length < 1) {
           MessageBox.alert(this.getBundleText('MSG_00020', 'LABEL_00109')); // {변경}할 행을 선택하세요.
@@ -338,12 +336,12 @@ sap.ui.define(
           return;
         }
 
-        sRowPath = oTable.getRows()[aSelectedIndices[0]].getBindingContext().getPath();
-        oRowData = oViewModel.getProperty(sRowPath);
+        const sRowPath = oTable.getRows()[aSelectedIndices[0]].getBindingContext().getPath();
+        const mRowData = oViewModel.getProperty(sRowPath);
 
         oViewModel.setProperty('/form/dialog/calcCompleted', false);
         oViewModel.setProperty('/form/dialog/selectedRowPath', sRowPath);
-        oViewModel.setProperty('/form/dialog/data', { ...oRowData, AbrtgTxt: `${oRowData.AbrtgTxt}일` });
+        oViewModel.setProperty('/form/dialog/data', { ...mRowData, AbrtgTxt: `${mRowData.AbrtgTxt}일` });
 
         this.openFormDialog();
       },
@@ -352,7 +350,7 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const oTable = this.byId('approveSingleTable');
         const aSelectedIndices = oTable.getSelectedIndices();
-        const mTableData = oViewModel.getProperty('/form/list');
+        const aTableData = oViewModel.getProperty('/form/list');
 
         if (aSelectedIndices.length < 1) {
           MessageBox.alert(this.getBundleText('MSG_00020', 'LABEL_00110')); // {삭제}할 행을 선택하세요.
@@ -363,14 +361,14 @@ sap.ui.define(
         MessageBox.confirm(this.getBundleText('MSG_00021'), {
           onClose: function (oAction) {
             if (MessageBox.Action.OK === oAction) {
-              const mUnSelectedData = mTableData.filter((elem, idx) => {
+              const aUnSelectedData = aTableData.filter((elem, idx) => {
                 return !aSelectedIndices.some(function (iIndex) {
                   return iIndex === idx;
                 });
               });
 
-              oViewModel.setProperty('/form/list', mUnSelectedData);
-              oViewModel.setProperty('/form/rowCount', mUnSelectedData.length);
+              oViewModel.setProperty('/form/list', aUnSelectedData);
+              oViewModel.setProperty('/form/rowCount', aUnSelectedData.length);
 
               this.toggleHasRowProperty();
               oTable.clearSelection();
@@ -381,9 +379,9 @@ sap.ui.define(
 
       onChangeAwartCombo(oEvent) {
         const oViewModel = this.getViewModel();
-        const oSelectedValue = oEvent.getSource().getSelectedItem().getText();
+        const sSelectedValue = oEvent.getSource().getSelectedItem().getText();
 
-        oViewModel.setProperty('/form/dialog/data/Atext', oSelectedValue);
+        oViewModel.setProperty('/form/dialog/data/Atext', sSelectedValue);
         oViewModel.setProperty('/form/dialog/calcCompleted', false);
         oViewModel.setProperty('/form/dialog/data/Begda', null);
         oViewModel.setProperty('/form/dialog/data/Endda', null);
@@ -394,15 +392,15 @@ sap.ui.define(
 
       async onChangeLeaveDate() {
         const oViewModel = this.getViewModel();
-        const oFormData = oViewModel.getProperty('/form/dialog/data');
+        const mFormData = oViewModel.getProperty('/form/dialog/data');
 
         try {
-          const oResultData = await this.readLeaveApplEmpList({ ...oFormData, Prcty: 'C' });
+          const mResultData = await this.readLeaveApplEmpList({ ...mFormData, Prcty: 'C' });
 
-          if (!_.isEmpty(oResultData)) {
-            oViewModel.setProperty('/form/dialog/data/Abrst', oResultData.Abrst);
-            oViewModel.setProperty('/form/dialog/data/Abrtg', oResultData.Abrtg);
-            oViewModel.setProperty('/form/dialog/data/AbrtgTxt', `${parseInt(oResultData.Abrtg, 10)}일`);
+          if (!_.isEmpty(mResultData)) {
+            oViewModel.setProperty('/form/dialog/data/Abrst', mResultData.Abrst);
+            oViewModel.setProperty('/form/dialog/data/Abrtg', mResultData.Abrtg);
+            oViewModel.setProperty('/form/dialog/data/AbrtgTxt', `${parseInt(mResultData.Abrtg, 10)}일`);
             oViewModel.setProperty('/form/dialog/calcCompleted', true);
           }
         } catch (oError) {
@@ -424,7 +422,7 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const sType = oViewModel.getProperty('/type');
         const bCalcCompleted = oViewModel.getProperty('/form/dialog/calcCompleted');
-        const oInputData = oViewModel.getProperty('/form/dialog/data');
+        const mInputData = oViewModel.getProperty('/form/dialog/data');
         const mCheckFields = [
           { field: 'Tmrsn', label: this.getBundleText('LABEL_04009'), type: Validator.INPUT2 }, // 근태사유
         ];
@@ -435,44 +433,44 @@ sap.ui.define(
           return;
         }
 
-        if (!Validator.check({ mFieldValue: oInputData, aFieldProperties: mCheckFields })) return;
+        if (!Validator.check({ mFieldValue: mInputData, aFieldProperties: mCheckFields })) return;
 
         if (sType === this.PAGE_TYPE.CHANGE) {
           const sRowPath = oViewModel.getProperty('/form/dialog/selectedRowPath');
-          const oRowData = oViewModel.getProperty(sRowPath);
-          const oChangedData = {
-            ...oRowData,
-            ...oInputData,
+          const mRowData = oViewModel.getProperty(sRowPath);
+          const mChangedData = {
+            ...mRowData,
+            ...mInputData,
             isChanged: true,
-            AbrtgTxt: Number(oInputData.Abrtg),
-            Begda: DateUtils.parse(oInputData.Begda),
-            Endda: DateUtils.parse(oInputData.Endda),
-            BegdaTxt: DateUtils.format(oInputData.Begda),
-            EnddaTxt: DateUtils.format(oInputData.Endda),
-            Tmrsn: oInputData.Tmrsn,
+            AbrtgTxt: Number(mInputData.Abrtg),
+            Begda: DateUtils.parse(mInputData.Begda),
+            Endda: DateUtils.parse(mInputData.Endda),
+            BegdaTxt: DateUtils.format(mInputData.Begda),
+            EnddaTxt: DateUtils.format(mInputData.Endda),
+            Tmrsn: mInputData.Tmrsn,
           };
           oTable = this.byId('approveMultipleTable');
 
-          if (oRowData.BegdaTxt2 === oChangedData.BegdaTxt && oRowData.EnddaTxt2 === oChangedData.EnddaTxt) {
+          if (mRowData.BegdaTxt2 === mChangedData.BegdaTxt && mRowData.EnddaTxt2 === mChangedData.EnddaTxt) {
             MessageBox.error(this.getBundleText('MSG_04002')); // 변경된 데이터가 없습니다.
             return;
           }
 
-          oViewModel.setProperty(sRowPath, oChangedData);
+          oViewModel.setProperty(sRowPath, mChangedData);
         } else {
-          const mListData = oViewModel.getProperty('/form/list');
+          const aListData = oViewModel.getProperty('/form/list');
           oTable = this.byId('approveSingleTable');
 
-          mListData.push({
-            ...oInputData,
-            Begda: DateUtils.parse(oInputData.Begda),
-            Endda: DateUtils.parse(oInputData.Endda),
-            BegdaTxt: DateUtils.format(oInputData.Begda),
-            EnddaTxt: DateUtils.format(oInputData.Endda),
+          aListData.push({
+            ...mInputData,
+            Begda: DateUtils.parse(mInputData.Begda),
+            Endda: DateUtils.parse(mInputData.Endda),
+            BegdaTxt: DateUtils.format(mInputData.Begda),
+            EnddaTxt: DateUtils.format(mInputData.Endda),
           });
 
-          oViewModel.setProperty('/form/list', mListData);
-          oViewModel.setProperty('/form/rowCount', mListData.length);
+          oViewModel.setProperty('/form/list', aListData);
+          oViewModel.setProperty('/form/rowCount', aListData.length);
         }
 
         oTable.clearSelection();
@@ -509,17 +507,17 @@ sap.ui.define(
           const oModel = this.getModel(ServiceNames.WORKTIME);
           const oViewModel = this.getViewModel();
           const sUrl = '/AwartCodeListSet';
-          const mAwartCodeList = oViewModel.getProperty('/form/dialog/awartCodeList');
+          const aAwartCodeList = oViewModel.getProperty('/form/dialog/awartCodeList');
 
-          if (mAwartCodeList.length > 1) {
-            resolve(mAwartCodeList);
+          if (aAwartCodeList.length > 1) {
+            resolve(aAwartCodeList);
           }
 
           oModel.read(sUrl, {
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
 
-              resolve(new ComboEntry({ codeKey: 'Awart', valueKey: 'Atext', mEntries: oData.results }));
+              resolve(new ComboEntry({ codeKey: 'Awart', valueKey: 'Atext', aEntries: oData.results }));
             },
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
@@ -579,13 +577,13 @@ sap.ui.define(
       createLeaveApplContent(sPrcty) {
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const oViewModel = this.getViewModel();
-        const oAppointeeData = this.getAppointeeData();
-        const mTableData = oViewModel.getProperty('/form/list');
+        const mAppointeeData = this.getAppointeeData();
+        const aTableData = oViewModel.getProperty('/form/list');
         const sAppty = oViewModel.getProperty('/type');
         const sAppno = oViewModel.getProperty('/Appno');
         const sMenid = this.getCurrentMenuId();
         const sUrl = '/LeaveApplContentSet';
-        let aLeaveApplNav1 = [...mTableData];
+        let aLeaveApplNav1 = [...aTableData];
 
         return new Promise((resolve, reject) => {
           if (sAppty === this.PAGE_TYPE.CHANGE) {
@@ -594,12 +592,12 @@ sap.ui.define(
 
           const oPayload = {
             Menid: sMenid,
-            Pernr: oAppointeeData.Pernr,
-            Orgeh: oAppointeeData.Orgeh,
+            Pernr: mAppointeeData.Pernr,
+            Orgeh: mAppointeeData.Orgeh,
             Appno: sAppno,
             Prcty: sPrcty,
             Appty: sAppty, // A:신규, B:변경, C:취소
-            LeaveApplNav1: aLeaveApplNav1.map((o) => ({ ...o, Pernr: oAppointeeData.Pernr })),
+            LeaveApplNav1: aLeaveApplNav1.map((o) => ({ ...o, Pernr: mAppointeeData.Pernr })),
           };
 
           oModel.create(sUrl, oPayload, {

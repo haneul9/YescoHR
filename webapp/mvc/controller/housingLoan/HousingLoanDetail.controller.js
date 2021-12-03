@@ -243,7 +243,7 @@ sap.ui.define(
                     }
                   });
 
-                  oDetailModel.setProperty('/LaonType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: aList2 }));
+                  oDetailModel.setProperty('/LaonType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList2 }));
 
                   resolve();
                 }
@@ -265,7 +265,7 @@ sap.ui.define(
 
                   const aList1 = oData.results;
 
-                  oDetailModel.setProperty('/AssuranceType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: aList1 }));
+                  oDetailModel.setProperty('/AssuranceType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList1 }));
 
                   resolve();
                 }
@@ -293,7 +293,7 @@ sap.ui.define(
 
                   const aList = oData.results;
 
-                  oDetailModel.setProperty('/HouseType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: aList }));
+                  oDetailModel.setProperty('/HouseType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
 
                   resolve();
                 }

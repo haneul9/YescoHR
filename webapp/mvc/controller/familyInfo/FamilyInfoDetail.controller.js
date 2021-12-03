@@ -165,7 +165,7 @@ sap.ui.define(
 
                   const aList = oData.results;
 
-                  oDetailModel.setProperty('/Relations', new ComboEntry({ codeKey: 'Auspr', valueKey: 'Atext', mEntries: aList }));
+                  oDetailModel.setProperty('/Relations', new ComboEntry({ codeKey: 'Auspr', valueKey: 'Atext', aEntries: aList }));
 
                   resolve();
                 }
@@ -187,7 +187,7 @@ sap.ui.define(
 
                   const aList = oData.results;
 
-                  oDetailModel.setProperty('/Support', new ComboEntry({ codeKey: 'Dptyp', valueKey: 'Dptyx', mEntries: aList }));
+                  oDetailModel.setProperty('/Support', new ComboEntry({ codeKey: 'Dptyp', valueKey: 'Dptyx', aEntries: aList }));
                   resolve();
                 }
               },

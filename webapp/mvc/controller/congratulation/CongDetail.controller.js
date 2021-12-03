@@ -17,16 +17,16 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     Fragment,
-	JSONModel,
-	Appno,
-	AppUtils,
-	AttachFileAction,
-	ComboEntry,
-	TextUtils,
-	FragmentEvent,
-	ServiceNames,
-	MessageBox,
-	BaseController,
+    JSONModel,
+    Appno,
+    AppUtils,
+    AttachFileAction,
+    ComboEntry,
+    TextUtils,
+    FragmentEvent,
+    ServiceNames,
+    MessageBox,
+    BaseController
   ) => {
     'use strict';
 
@@ -67,13 +67,13 @@ sap.ui.define(
 
           const aTypeCode = await this.getBenefitType();
 
-          oDetailModel.setProperty('/BenefitType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: aTypeCode }));
+          oDetailModel.setProperty('/BenefitType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aTypeCode }));
           oDetailModel.setProperty('/BenefitCause', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext' }));
           oDetailModel.setProperty('/BenefitRelation', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext' }));
 
           const oRowData = await this.getTargetData();
 
-          if(!!oRowData) {
+          if (!!oRowData) {
             oDetailModel.setProperty('/FormData', oRowData);
             oDetailModel.setProperty('/ApplyInfo', oRowData);
             oDetailModel.setProperty('/ApprovalDetails', oRowData);
@@ -81,7 +81,7 @@ sap.ui.define(
           }
 
           this.settingsAttachTable();
-        } catch(oError) {
+        } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
           oDetailModel.setProperty('/busy', false);
@@ -101,7 +101,7 @@ sap.ui.define(
 
         return new Promise((resolve, reject) => {
           oDetailModel.setProperty('/menuId', sMenid);
-          
+
           if (!sDataKey || sDataKey === 'N') {
             oDetailModel.setProperty('/FormData', oSessionData);
             oDetailModel.setProperty('/FormData', {
@@ -181,7 +181,7 @@ sap.ui.define(
             if (oData) {
               const aList = oData.results;
 
-              oDetailModel.setProperty('/BenefitCause', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: aList }));
+              oDetailModel.setProperty('/BenefitCause', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
             }
           },
           error: (oError) => {
@@ -204,7 +204,7 @@ sap.ui.define(
               const oRelationTxt = this.byId('RelationTxt');
               const oBirthDatePicker = this.byId('BirthDatePicker');
 
-              oDetailModel.setProperty('/BenefitRelation', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: oResult }));
+              oDetailModel.setProperty('/BenefitRelation', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: oResult }));
               oDetailModel.setProperty('/TargetList', []);
 
               if (!oFormData.ZappStatAl || oFormData.ZappStatAl === '10') {
@@ -250,7 +250,7 @@ sap.ui.define(
               if (oData) {
                 const aList = oData.results;
 
-                oDetailModel.setProperty('/BenefitCause', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: aList }));
+                oDetailModel.setProperty('/BenefitCause', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
                 oDetailModel.setProperty('/BenefitRelation', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext' }));
                 oDetailModel.setProperty('/FormData/Conresn', 'ALL');
                 oDetailModel.setProperty('/FormData/Kdsvh', 'ALL');
@@ -318,7 +318,7 @@ sap.ui.define(
                   oRelationTxt.setEditable(false);
                   oBirthDatePicker.setEditable(false);
                 } else {
-                  oDetailModel.setProperty('/BenefitRelation', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', mEntries: oResult }));
+                  oDetailModel.setProperty('/BenefitRelation', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: oResult }));
                   oDetailModel.setProperty('/FormData/Kdsvh', 'ALL');
                   oRelationBtn.setVisible(true);
                   oRelationTxt.setEditable(true);
