@@ -149,7 +149,7 @@ sap.ui.define(
 
           this.initializeAttachBox();
         } catch (oError) {
-          this.debug('Controller > Attendance Detail > onAfterShow Error', oError);
+          this.debug('Controller > Attendance Detail > loadPage Error', oError);
 
           if (oError instanceof Error) oError = new UI5Error({ message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
 
@@ -405,6 +405,11 @@ sap.ui.define(
           }
         } catch (oError) {
           this.debug('Controller > Attendance Detail > onChangeLeaveDate Error', oError);
+
+          oViewModel.setProperty('/form/dialog/data/Abrst', null);
+          oViewModel.setProperty('/form/dialog/data/Abrtg', null);
+          oViewModel.setProperty('/form/dialog/data/AbrtgTxt', '');
+          oViewModel.setProperty('/form/dialog/calcCompleted', false);
         }
       },
 
@@ -572,7 +577,7 @@ sap.ui.define(
       createLeaveApplContent(sPrcty) {
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const oViewModel = this.getViewModel();
-        const oAppointeeData = this.getOwnerComponent().getAppointeeModel().getData();
+        const oAppointeeData = this.getAppointeeData();
         const mTableData = oViewModel.getProperty('/form/list');
         const sAppty = oViewModel.getProperty('/type');
         const sAppno = oViewModel.getProperty('/Appno');
@@ -602,7 +607,7 @@ sap.ui.define(
               resolve(oData.results ?? []);
             },
             error: (oError) => {
-              this.debug(`${sUrl} error.`, AppUtils.parseError(oError));
+              this.debug(`${sUrl} error.`, oError);
 
               reject(new ODataCreateError({ oError })); // {신청}중 오류가 발생하였습니다.
             },
