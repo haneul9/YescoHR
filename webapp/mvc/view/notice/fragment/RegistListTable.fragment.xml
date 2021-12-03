@@ -9,6 +9,12 @@
                     <Text text="{Title}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
+            <table:Column width="100px" visible="{/Hass}">
+                <Label text="{i18n>LABEL_08006}"/>
+                <table:template>
+                    <CheckBox selected="{= !!${Hide} }" editable="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
             <table:Column width="120px" sortProperty="Sdate" filterProperty="Sdate">
                 <Label text="{i18n>LABEL_00321}"/>
                 <table:template>
@@ -21,16 +27,22 @@
                     }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="200px" sortProperty="Sltxt" filterProperty="Sltxt">
+            <table:Column width="250px" sortProperty="Sltxt" filterProperty="Sltxt">
                 <Label text="{i18n>LABEL_08003}"/>
                 <table:template>
                     <Text text="{Sltxt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
-            <table:Column width="150px" sortProperty="Grdtx" filterProperty="Grdtx">
+            <table:Column width="180px" sortProperty="Grdtx" filterProperty="Grdtx">
                 <Label text="{i18n>LABEL_08004}"/>
                 <table:template>
                     <Text text="{Grdtx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+            </table:Column>
+            <table:Column width="100px" visible="{/Hass}">
+                <Label text="{i18n>LABEL_08007}"/>
+                <table:template>
+                    <CheckBox selected="{= !!${Impor} }" editable="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
         </table:columns>

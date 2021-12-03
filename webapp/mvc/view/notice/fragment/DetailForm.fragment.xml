@@ -1,0 +1,37 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:core="sap.ui.core">
+    <VBox class="vCardBox sapUiMediumMarginBottom" busyIndicatorDelay="0" busy="{/busy}">
+        <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px" class="form-grid">
+            <Label text="{i18n>LABEL_08002}" />
+            <VBox>
+                <Input value="{/FormData/Title}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            </VBox>
+            <Label text="{i18n>LABEL_08007}" />
+            <VBox>
+                <CheckBox selected="{= !!${/FormData/Impor} }" select=".onSelected" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }"/>
+            </VBox>
+            <Label text="{i18n>LABEL_08004}"/>
+            <VBox>
+                <Text text="{/FormData/Apern}"/>
+            </VBox>
+            <Label text="{i18n>LABEL_08006}"/>
+            <HBox>
+                <CheckBox selected="{= !!${/FormData/Hide} }" select=".onSelected" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }"/>
+            </HBox>
+            <Label text="{i18n>LABEL_00321}"/>
+            <HBox>
+                <Text text="{/FormData/Sdate}"/>
+            </HBox>
+            <Label text="{i18n>LABEL_08003}"/>
+            <VBox>
+                <Text text="{/FormData/Aedtm}"/>
+            </VBox>
+            <Label text="{i18n>LABEL_08008}"/>
+            <VBox id="EditorBox">
+            </VBox>
+            <HBox ></HBox>
+            <HBox ></HBox>
+        </grid:CSSGrid>
+    </VBox>
+</core:FragmentDefinition>

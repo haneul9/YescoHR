@@ -1,6 +1,8 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    "sap/ui/richtexteditor/RichTextEditor",
+    "sap/ui/richtexteditor/EditorType",
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/FragmentEvent',
@@ -11,7 +13,9 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
+    RichTextEditor,
+	EditorType,
+	JSONModel,
 	AttachFileAction,
 	FragmentEvent,
 	TableUtils,
@@ -33,6 +37,7 @@ sap.ui.define(
         const dDate = new Date();
         const oViewModel = new JSONModel({
           busy: false,
+          Hass: this.isHass(),
           Data: [],
           search: {
             date: new Date(dDate.getFullYear(), dDate.getMonth(), 0),
@@ -87,7 +92,7 @@ sap.ui.define(
         oModel.create('/NoticeManageSet', oSendObject, {
           success: (oData) => {
             if (oData) {
-              const oList = oData.results;
+              const oList = oData.Notice1Nav.results;
 
               oListModel.setProperty('/NoticeList', oList);
               oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: oList }));

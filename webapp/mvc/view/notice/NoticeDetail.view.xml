@@ -21,12 +21,8 @@
 				</HBox>
 			</VBox>
 			<VBox class="contents">
-				<core:Fragment fragmentName="sap.ui.yesco.fragment.DetailTargetInfo" type="XML" />
-				<core:Fragment fragmentName="sap.ui.yesco.fragment.InfoMessage" type="XML" />
-				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.studentFunds.fragment.DetailForm" type="XML" />
+				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.notice.fragment.DetailForm" type="XML" />
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
-				<core:Fragment fragmentName="sap.ui.yesco.fragment.ApplyInfo" type="XML" />
-				<core:Fragment fragmentName="sap.ui.yesco.fragment.ApprovalDetails" type="XML" />
 			</VBox>
 		</content>
 	</Page>
