@@ -79,8 +79,8 @@ sap.ui.define(
         };
       },
 
-      export({ oTable, mTableData, sFileName, sStatCode = 'ZappStatAl', sStatTxt = 'ZappStxtAl' }) {
-        if (!mTableData.length) return;
+      export({ oTable, aTableData, sFileName, sStatCode = 'ZappStatAl', sStatTxt = 'ZappStxtAl' }) {
+        if (!aTableData.length) return;
 
         const sToday = moment().format('YYYYMMDD');
         const mColumns = oTable.getColumns().map((col) => ({
@@ -98,7 +98,7 @@ sap.ui.define(
             columns: mColumns,
             hierarchyLevel: 'Level',
           },
-          dataSource: mTableData,
+          dataSource: aTableData,
           fileName: `${sFileName}_${sToday}.xlsx`,
           worker: false,
         };

@@ -84,10 +84,10 @@ sap.ui.define(
       // 상환이력 Excel
       onPressExcelDownload() {
         const oTable = this.byId('repayHisTable');
-        const mTableData = this.getViewModel().getProperty('/RepayHisList');
+        const aTableData = this.getViewModel().getProperty('/RepayHisList');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_07033');
 
-        TableUtils.export({ oTable, mTableData, sFileName });
+        TableUtils.export({ oTable, aTableData, sFileName });
       },
 
       // 융자금액 입력시

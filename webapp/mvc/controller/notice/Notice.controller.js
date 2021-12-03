@@ -1,8 +1,8 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    "sap/ui/richtexteditor/RichTextEditor",
-    "sap/ui/richtexteditor/EditorType",
+    'sap/ui/richtexteditor/RichTextEditor',
+    'sap/ui/richtexteditor/EditorType',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/FragmentEvent',
@@ -14,14 +14,14 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     RichTextEditor,
-	EditorType,
-	JSONModel,
-	AttachFileAction,
-	FragmentEvent,
-	TableUtils,
-	TextUtils,
-	ServiceNames,
-	BaseController
+    EditorType,
+    JSONModel,
+    AttachFileAction,
+    FragmentEvent,
+    TableUtils,
+    TextUtils,
+    ServiceNames,
+    BaseController
   ) => {
     'use strict';
 
@@ -117,10 +117,10 @@ sap.ui.define(
 
       onPressExcelDownload() {
         const oTable = this.byId('noticeTable');
-        const mTableData = this.getViewModel().getProperty('/NoticeList');
+        const aTableData = this.getViewModel().getProperty('/NoticeList');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_08001');
 
-        TableUtils.export({ oTable, mTableData, sFileName });
+        TableUtils.export({ oTable, aTableData, sFileName });
       },
     });
   }

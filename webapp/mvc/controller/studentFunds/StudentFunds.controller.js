@@ -13,12 +13,12 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-	AttachFileAction,
-	FragmentEvent,
-	TableUtils,
-	TextUtils,
-	ServiceNames,
-	BaseController
+    AttachFileAction,
+    FragmentEvent,
+    TableUtils,
+    TextUtils,
+    ServiceNames,
+    BaseController
   ) => {
     'use strict';
 
@@ -139,10 +139,10 @@ sap.ui.define(
 
       onPressExcelDownload() {
         const oTable = this.byId('studentTable');
-        const mTableData = this.getViewModel().getProperty('/StudentList');
+        const aTableData = this.getViewModel().getProperty('/StudentList');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_03028');
 
-        TableUtils.export({ oTable, mTableData, sFileName });
+        TableUtils.export({ oTable, aTableData, sFileName });
       },
     });
   }

@@ -154,10 +154,10 @@ sap.ui.define(
 
       onPressExcelDownload() {
         const oTable = this.byId('attendanceTable');
-        const mTableData = this.getViewModel().getProperty('/list');
+        const aTableData = this.getViewModel().getProperty('/list');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_04001'); // {근태신청}_목록
 
-        TableUtils.export({ oTable, mTableData, sFileName });
+        TableUtils.export({ oTable, aTableData, sFileName });
       },
 
       onSelectRow(oEvent) {

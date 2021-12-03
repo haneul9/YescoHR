@@ -184,10 +184,10 @@ sap.ui.define(
 
       onExelDownload() {
         const oTable = this.byId('conguTable');
-        const mTableData = this.getViewModel().getProperty('/CongList');
+        const aTableData = this.getViewModel().getProperty('/CongList');
         const sFileName = '경조금신청_목록';
 
-        TableUtils.export({ oTable, mTableData, sFileName });
+        TableUtils.export({ oTable, aTableData, sFileName });
       },
 
       formatNumber(vNum) {
