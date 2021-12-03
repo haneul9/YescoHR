@@ -500,6 +500,7 @@ span.sapMBtnInner.sapMBtnEmphasized {text-shadow: none;}
 .sapMBtn.sapUiTinyMarginEnd {margin-right: 5px!important;}
 
 .sapMBtnText>.sapMBtnIcon {position: static; top: 0; left: 0;}
+.sapMBtnInner .sapMBtnIcon.sapMImg {height: auto; max-width: auto; width: auto; padding: 0 5px;}
 
 .sapMSegB .sapMSegBBtn .sapMSegBBtnInner {background-color:#f8f8f8; border-radius:0px; border:0; color:var(--FontColorNormal); height:40px; line-height:40px; font-size:15px; font-weight:bold}
 .sapMSegB .sapMSegBBtn.sapMSegBBtnSel .sapMSegBBtnInner {background-color:#99caff; border:0; color:#003876; border-radius:4px}
@@ -517,7 +518,7 @@ span.sapMBtnInner.sapMBtnEmphasized {text-shadow: none;}
 .sapUiTableCell.sapUiTableHeaderCell{cborder-bottom: 0px solid #E7EAED !important; border-bottom: 0!important; padding:15px 0;border: 1px solid #E7EAED;xborder-top: 0; xborder-left: 0;    border-right: 0!important; border-collapse: collapse;}
 /*.sapUiTableCell.sapUiTableHeaderCell:last-child, .sapUiTableHeaderRow  {border-right: 1px solid #E7EAED !important;}*/
 .sapUiTableCtrlScroll tbody tr:nth-child(2) {border-bottom:none}
-.sapUiTableCtrlEmpty {font-size:15px; font-weight:300; color:#b4babf}
+.sapUiTableCtrlEmpty {font-size:14px; font-weight:300; color:#b4babf;border: 1px solid #f5f5f5;}
 .sapUiTableRowSelectors:not(.sapUiTableRowHighlights) .sapUiTableRowSelectionHeaderCell {height:100%}
 .sapUiTableCellInner .sapMText {font-size:15px; font-weight:500; font-stretch:normal; font-style:normal; line-height:normal; letter-spacing:normal; text-align:left; color:#222222}
 .sapUiTableCtrlRowFixedBottom .sapUiTableCellInner .sapMText {font-weight:bold}
@@ -560,7 +561,9 @@ span.sapMBtnInner.sapMBtnEmphasized {text-shadow: none;}
 여기서 부터 PX변경
 */
 /* .sapMFlexBox {margin-bottom:10px} */
-.label_wrap label {font-size:15px; font-weight:bold; font-stretch:normal; font-style:normal; line-height:40px; letter-spacing:normal; text-align:left; color:#222222}
+.label_wrap label {font-size:14px; font-weight:bold; font-stretch:normal; font-style:normal; line-height:40px; letter-spacing:normal; text-align:left; color:#222222}
+.label_wrap label {margin-left:20px;}
+.label_wrap .sapMFlexItem:first-child label {margin-left:0px;}
 .sapMLabelRequired:before {content:""}
 .sapMLabelRequired:after {content:"*"; color:#ff0000; font-family:"72fallback","72","72full",Arial,Helvetica,sans-serif; font-size:15px; font-weight:bold; position:relative; vertical-align:middle; line-height:0; margin-left:3px}
 /*input*/
@@ -639,7 +642,7 @@ input::placeholder{color:var(--FontColorNormal) !important;}
 .tablist.type-b .sapMITBHead{display: flex;justify-content: start;width:100%;margin:0; padding:0; border-bottom:1px solid #000}
 
 .type-b .sapMITBHead {display: flex;justify-content: flex-start;width:100%;margin:0; padding:0; border-bottom:1px solid #000}
-.type-b .sapMITBInLine.sapMITBTextOnly>.sapMITBVertical {height: 50px;min-width: 100px;margin-right:4px;padding: 0 20px !important; border: 1px solid #ccc;border-bottom:0px solid #fff;border-radius:4px 4px 0 0;}
+.type-b .sapMITBInLine.sapMITBTextOnly>.sapMITBVertical {height: 50px;min-width: auto;margin-right:3px;padding: 0 30px !important; border: 1px solid #ccc;border-bottom:0px solid #fff;border-radius:4px 4px 0 0;}
 .type-b .sapMITBTextOnly .sapMITBFilterDefault.sapMITBSelected {position:relative;border: 1px solid #217aef;border-bottom:0px solid #fff;background-color: #fff;}
 .type-b .sapMITBTextOnly .sapMITBFilterDefault.sapMITBSelected:after {content: "";position: absolute;left:0;right:0;bottom:-1px;width:100%;height:1px;background-color: #fff;}
 .type-b .sapMITBVertical.sapMITBFilter>.sapMITBText + .sapMITBContentArrow {display: none;;}
@@ -781,7 +784,7 @@ html.sap-desktop .sapContrast.sapMIBar.sapMFooter-CTX { height: 4.5rem;}
 .sapUiLayoutCSSGrid.form-grid .sapMFlexBox .sapMFlexItem .sapMText {display:flex;}
 .listFileDialog {min-height: 85px !important; max-height: 230px !important;}
 
-.sapUiLayoutCSSGrid.form-grid.type-b {border-top: 0px solid #F5F5F5; border-bottom: 0px solid #F5F5F5; padding-top: 0px;background-color: transparent!important;}
+.sapUiLayoutCSSGrid.form-grid.type-b {border-top: 0px solid #F5F5F5; border-bottom: 0px solid #F5F5F5; padding-top: 0px; padding-left: 0;background-color: transparent!important;}
 .sapUiLayoutCSSGrid.form-grid.type-b > * {height:100%;min-height: 50px;align-self: center;background: #f2f2f2;justify-content: center;}
 .sapUiLayoutCSSGrid.form-grid.type-b .sapMFlexBox .sapMFlexItem {display:flex;padding-top:0px;min-height: 40px!important;height: 100%;}
 .sapUiLayoutCSSGrid.form-grid.type-b .sapMFlexBox .sapMFlexItem .sapMText {display:flex;}
