@@ -30,7 +30,7 @@
             <table:Column width="250px" sortProperty="Sltxt" filterProperty="Sltxt">
                 <Label text="{i18n>LABEL_08003}"/>
                 <table:template>
-                    <Text text="{Sltxt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                    <Text text="{Chntm}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
             <table:Column width="180px" sortProperty="Grdtx" filterProperty="Grdtx">

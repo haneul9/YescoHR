@@ -36,7 +36,7 @@ sap.ui.define(
           Hass: this.isHass(),
           Data: [],
           search: {
-            date: new Date(dDate.getFullYear(), dDate.getMonth(), 0),
+            date: new Date(dDate.getFullYear(), dDate.getMonth() + 1, 0),
             secondDate: new Date(dDate.getFullYear(), dDate.getMonth() - 1, 1),
             title: '',
           },
@@ -59,7 +59,7 @@ sap.ui.define(
       },
 
       onClick() {
-        this.getRouter().navTo('notice-detail', { oDataKey: 'N' });
+        this.getRouter().navTo(this.isHass() ? 'h/notice-detail' : 'notice-detail', { oDataKey: 'N' });
       },
 
       onSearch() {
@@ -108,7 +108,8 @@ sap.ui.define(
         const vPath = oEvent.getParameters().rowBindingContext.getPath();
         const oRowData = this.getViewModel().getProperty(vPath);
 
-        this.getRouter().navTo('notice-detail', { oDataKey: oRowData.Appno });
+        this.getViewModel().setProperty('/parameter', oRowData);
+        this.getRouter().navTo(this.isHass() ? 'h/notice-detail' : 'notice-detail', { oDataKey: oRowData.Appno });
       },
 
       onPressExcelDownload() {

@@ -5,26 +5,26 @@
         <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px" class="form-grid">
             <Label text="{i18n>LABEL_08002}" />
             <VBox>
-                <Input value="{/FormData/Title}" editable="{= !!${/Hass} &amp;&amp; ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+                <Input value="{/FormData/Title}" editable="{= ${/Hass} &amp;&amp; ${/MySelf} }" />
             </VBox>
             <Label text="{i18n>LABEL_08007}" />
             <VBox>
-                <CheckBox selected="{= !!${/FormData/Impor} }" select=".onSelected" editable="{= !!${/Hass} &amp;&amp; ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }"/>
+                <CheckBox selected="{= !!${/FormData/Impor} }" select=".onSelected" editable="{= ${/Hass} &amp;&amp; ${/MySelf} }"/>
             </VBox>
             <Label text="{i18n>LABEL_08004}"/>
             <VBox>
-                <Text text="{/FormData/Apern}"/>
+                <Text text="{/FormData/ApernTxt}"/>
             </VBox>
             <Label text="{i18n>LABEL_08006}"/>
             <HBox>
-                <CheckBox selected="{= !!${/FormData/Hide} }" select=".onSelected" editable="{= !!${/Hass} &amp;&amp; ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }"/>
+                <CheckBox selected="{= !!${/FormData/Hide} }" select=".onSelected" editable="{= ${/Hass} &amp;&amp; ${/MySelf} }"/>
             </HBox>
-            <Label text="{i18n>LABEL_00321}" visible="{= !${/FormData/ZappStatAl} }"/>
-            <HBox visible="{= !${/FormData/ZappStatAl} }">
+            <Label text="{i18n>LABEL_00321}" visible="{= !!${/FormData/Appno} }"/>
+            <HBox visible="{= !!${/FormData/Appno} }">
                 <Text text="{/FormData/Sdate}" />
             </HBox>
-            <Label text="{i18n>LABEL_08003}" visible="{= !${/FormData/ZappStatAl} }"/>
-            <VBox visible="{= !${/FormData/ZappStatAl} }">
+            <Label text="{i18n>LABEL_08003}" visible="{= !!${/FormData/Appno} }"/>
+            <VBox visible="{= !!${/FormData/Appno} }">
                 <Text text="{/FormData/Aedtm}"/>
             </VBox>
             <Label text="{i18n>LABEL_08008}"/>

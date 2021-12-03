@@ -26,6 +26,7 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.notice.NoticeDetail', {
       TYPE_CODE: 'HR02',
+      LIST_PAGE_ID: 'container-ehr---notice',
 
       AttachFileAction: AttachFileAction,
 
@@ -33,6 +34,7 @@ sap.ui.define(
         const oViewModel = new JSONModel({
           ViewKey: '',
           MenId: '',
+          MySelf: false,
           Hass: this.isHass(),
           FormData: {},
           Settings: {},
@@ -76,29 +78,31 @@ sap.ui.define(
 
       // 상세조회
       getTargetData() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
+        const oModel = this.getModel(ServiceNames.COMMON);
         const oDetailModel = this.getViewModel();
         const sViewKey = oDetailModel.getProperty('/ViewKey');
         const oSessionData = this.getSessionData();
 
-        if (sViewKey === 'N' || !sViewKey) {
+        if (sViewKey === 'N') {
+          oDetailModel.setProperty('/MySelf', true);
           oDetailModel.setProperty('/FormData', oSessionData);
           oDetailModel.setProperty('/FormData', {
-            Apename: oSessionData.Ename,
-            Appernr: oSessionData.Pernr,
-            Zyear: String(new Date().getFullYear()),
+            ApernTxt: `${oSessionData.Orgtx} ${oSessionData.Ename}`,
+            Apern: oSessionData.Pernr,
           });
 
           this.settingsAttachTable();
         } else {
+          const oView = this.getView();
+          const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+          const mListData = oListView.getModel().getProperty('/parameter');
+          const sWerks = this.getSessionProperty('Werks');
           let oSendObject = {};
 
           oSendObject.Prcty = '1';
-          oSendObject.Menid = sMenid;
-          oSendObject.Begda = dDate;
-          oSendObject.Endda = dDate2;
+          oSendObject.Sdate = mListData.Sdate;
+          oSendObject.Seqnr = mListData.Seqnr;
           oSendObject.Werks = sWerks;
-          oSendObject.Title = oSearch.title || '';
           oSendObject.Notice1Nav = [];
           oSendObject.Notice2Nav = [];
 
@@ -107,6 +111,10 @@ sap.ui.define(
               if (oData) {
                 const oTargetData = oData.Notice1Nav.results[0];
                 const oDetailData = oData.Notice2Nav.results;
+
+                if(this.getSessionProperty('Pernr') === oTargetData.Apern) {
+                  oDetailModel.setProperty('/MySelf', true);
+                }
 
                 oTargetData.Detail = "";
 						
@@ -130,39 +138,15 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const oFormData = oDetailModel.getProperty('/FormData');
 
-        // 등록대상
-        if (oFormData.Zzobjps === 'ALL' || !oFormData.Zzobjps) {
-          MessageBox.alert(this.getBundleText('MSG_03007'));
+        // 제목
+        if (!oFormData.Title) {
+          MessageBox.alert(this.getBundleText('MSG_08001'));
           return true;
         }
 
-        // 학력구분
-        if (oFormData.Slart === 'ALL' || !oFormData.Slart) {
-          MessageBox.alert(this.getBundleText('MSG_03008'));
-          return true;
-        }
-
-        // 학년
-        if (oFormData.Grdsp === 'ALL' || !oFormData.Grdsp) {
-          MessageBox.alert(this.getBundleText('MSG_03009'));
-          return true;
-        }
-
-        // 분기/학기
-        if (oFormData.Divcd === 'ALL' || !oFormData.Divcd) {
-          MessageBox.alert(this.getBundleText('MSG_03010'));
-          return true;
-        }
-
-        // 학교명
-        if (!oFormData.Schtx) {
-          MessageBox.alert(this.getBundleText('MSG_03003'));
-          return true;
-        }
-
-        // 수업료
-        if (!oFormData.ZbetClass) {
-          MessageBox.alert(this.getBundleText('MSG_03004'));
+        // 내용
+        if (!oFormData.Detail) {
+          MessageBox.alert(this.getBundleText('MSG_08002'));
           return true;
         }
 
@@ -172,34 +156,18 @@ sap.ui.define(
       // oData호출 mapping
       sendDataFormat(oDatas) {
         let oSendObject = {
-          Appdt: oDatas.Appdt,
+          Sdate: oDatas.Sdate,
+          Seqnr: oDatas.Seqnr,
+          Title: oDatas.Title,
+          Detail: oDatas.Detail,
+          Apern: oDatas.Apern,
+          ApernTxt: oDatas.ApernTxt,
+          Impor: oDatas.Impor,
+          Hide: oDatas.Hide,
+          Aedtm: oDatas.Aedtm,
+          Aetim: oDatas.Aetim,
           Appno: oDatas.Appno,
-          Apename: oDatas.Apename,
-          Appernr: oDatas.Appernr,
-          Cnttx: oDatas.Cnttx,
-          Divcd: oDatas.Divcd,
-          Forsch: oDatas.Forsch,
-          Grdsp: oDatas.Grdsp,
-          Majnm: oDatas.Majnm,
-          Schtx: oDatas.Schtx,
-          Slart: oDatas.Slart,
-          Kdsvh: oDatas.Kdsvh,
-          ZbetClass: oDatas.ZbetClass,
-          ZbetEntr: oDatas.ZbetEntr,
-          ZbetEtc: oDatas.ZbetEtc,
-          ZbetExer: oDatas.ZbetExer,
-          ZbetMgmt: oDatas.ZbetMgmt,
-          ZbetShip: oDatas.ZbetShip,
-          ZbetSuf: oDatas.ZbetSuf,
-          ZbetTotl: oDatas.ZbetTotl,
-          Znametx: oDatas.Znametx,
-          Zname: oDatas.Zname,
-          ZpayAmt: oDatas.ZpayAmt,
-          Zyear: oDatas.Zyear,
-          Zzjikcht: oDatas.Zzjikcht,
-          Zzjikgbt: oDatas.Zzjikgbt,
-          Zzjiktlt: oDatas.Zzjiktlt,
-          Zzobjps: oDatas.Zzobjps,
+          Newitem: oDatas.Newitem,
         };
 
         return oSendObject;
@@ -207,10 +175,11 @@ sap.ui.define(
 
       // 임시저장
       onSaveBtn() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
+        const oModel = this.getModel(ServiceNames.COMMON);
         const oDetailModel = this.getViewModel();
-        const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
+        const sAppno = oDetailModel.getProperty('/FormData/Appno');
         const oFormData = oDetailModel.getProperty('/FormData');
+        const sWerks = this.getSessionProperty('Werks');
 
         if (this.checkError()) return;
 
@@ -222,37 +191,39 @@ sap.ui.define(
               try {
                 AppUtils.setAppBusy(true, this);
 
-                if (!sStatus || sStatus === '45') {
+                if (!sAppno) {
                   const vAppno = await Appno.get.call(this);
 
                   oDetailModel.setProperty('/FormData/Appno', vAppno);
-                  oDetailModel.setProperty('/FormData/Appdt', new Date());
+                  oDetailModel.setProperty('/FormData/Sdate', new Date());
                 }
 
                 let oSendObject = {};
                 const oSendData = this.sendDataFormat(oFormData);
                 const aDetail = [];
+                const aList = oSendData.Detail.match(new RegExp('.{1,' + 4000 + '}', 'g'));
                 
-                oSendData.Detail.forEach(function(e) {
+                aList.forEach(function(e) {
                   const mDetailObj = {};
+
                   mDetailObj.Detail = e;
                   aDetail.push(mDetailObj);
                 });
 
+                oSendData.Detail = '';
                 oSendObject.Prcty = '2';
-                oSendObject.Menid = oDetailModel.getProperty('/Menid');
+                oSendObject.Werks = sWerks;
                 oSendObject.Notice1Nav = [oSendData];
                 oSendObject.Notice2Nav = aDetail;
 
-
                  // 첨부파일
-                if (!AttachFileAction.getFileLength.call(this)) {
+                if (!!AttachFileAction.getFileLength.call(this)) {
                   // FileUpload
                   await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
                 }
 
                 await new Promise((resolve, reject) => {
-                  oModel.create('/SchExpenseApplSet', oSendObject, {
+                  oModel.create('/NoticeManageSet', oSendObject, {
                     success: () => {
                       resolve();
                     },
@@ -275,12 +246,13 @@ sap.ui.define(
 
       // 등록
       onRegistBtn() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
+        const oModel = this.getModel(ServiceNames.COMMON);
         const oDetailModel = this.getViewModel();
-        const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
+        const sAppno = oDetailModel.getProperty('/FormData/Appno');
         const oFormData = oDetailModel.getProperty('/FormData');
+        const sWerks = this.getSessionProperty('Werks');
 
-        if (this.checkError('O')) return;
+        if (this.checkError()) return;
 
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00106'), {
           title: this.getBundleText('LABEL_08009'),
@@ -290,26 +262,39 @@ sap.ui.define(
               try {
                 AppUtils.setAppBusy(true, this);
 
-                if (!sStatus || sStatus === '45') {
+                if (!sAppno) {
                   const vAppno = await Appno.get.call(this);
 
                   oDetailModel.setProperty('/FormData/Appno', vAppno);
-                  oDetailModel.setProperty('/FormData/Appdt', new Date());
+                  oDetailModel.setProperty('/FormData/Sdate', new Date());
                 }
 
                 let oSendObject = {};
                 const oSendData = this.sendDataFormat(oFormData);
+                const aDetail = [];
+                const aList = oSendData.Detail.match(new RegExp('.{1,' + 4000 + '}', 'g'));
+                
+                aList.forEach(function(e) {
+                  const mDetailObj = {};
 
-                oSendObject = oSendData;
-                oSendObject.Prcty = 'C';
-                oSendObject.Menid = oDetailModel.getProperty('/Menid');
-                oSendObject.Waers = 'KRW';
+                  mDetailObj.Detail = e;
+                  aDetail.push(mDetailObj);
+                });
+                
+                oSendData.Detail = '';
+                oSendObject.Prcty = '2';
+                oSendObject.Werks = sWerks;
+                oSendObject.Notice1Nav = [oSendData];
+                oSendObject.Notice2Nav = aDetail;
 
-                // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
+                // 첨부파일
+                if (!!AttachFileAction.getFileLength.call(this)) {
+                  // FileUpload
+                  await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
+                }
 
                 await new Promise((resolve, reject) => {
-                  oModel.create('/SchExpenseApplSet', oSendObject, {
+                  oModel.create('/NoticeManageSet', oSendObject, {
                     success: () => {
                       resolve();
                     },
@@ -321,7 +306,15 @@ sap.ui.define(
 
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00106'), {
                   onClose: () => {
-                    this.getRouter().navTo('notice');
+                    let sPageName = '';
+
+                    if (this.Hass()) {
+                      sPageName = 'noticeHass';
+                    } else {
+                      sPageName = 'notice';
+                    }
+
+                    this.getRouter().navTo(sPageName);
                   },
                 });
               } catch (error) {
@@ -336,8 +329,7 @@ sap.ui.define(
 
       // 삭제
       onDeleteBtn() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
+        const oModel = this.getModel(ServiceNames.COMMON);
 
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
           title: this.getBundleText('LABEL_08009'),
@@ -346,22 +338,39 @@ sap.ui.define(
             if (vPress && vPress === this.getBundleText('LABEL_00110')) {
               AppUtils.setAppBusy(true, this);
 
-              const sPath = oModel.createKey('/SchExpenseApplSet', {
-                Appno: oDetailModel.getProperty('/FormData/Appno'),
+              let oSendObject = {};
+              const oSendData = this.sendDataFormat(oFormData);
+              const aDetail = [];
+              
+              oSendData.Detail.forEach(function(e) {
+                const mDetailObj = {};
+
+                mDetailObj.Detail = e;
+                aDetail.push(mDetailObj);
               });
 
-              oModel.remove(sPath, {
+              oSendObject.Prcty = '3';
+              oSendObject.Notice1Nav = [oSendData];
+              oSendObject.Notice2Nav = aDetail;
+
+              oModel.create('/NoticeManageSet', oSendObject, {
                 success: () => {
-                  AppUtils.setAppBusy(false, this);
                   MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
                     onClose: () => {
-                      this.getRouter().navTo('notice');
+                      let sPageName = '';
+  
+                      if (this.Hass()) {
+                        sPageName = 'noticeHass';
+                      } else {
+                        sPageName = 'notice';
+                      }
+  
+                      this.getRouter().navTo(sPageName);
                     },
                   });
                 },
                 error: (oError) => {
                   AppUtils.handleError(oError);
-                  AppUtils.setAppBusy(false, this);
                 },
               });
             }
@@ -370,7 +379,7 @@ sap.ui.define(
       },
 
       setTextEditor() {
-        if(this.byId("myRTE")) {
+        if(!!this.byId("myRTE")) {
           this.byId("myRTE").destroy();
         }
   
@@ -386,9 +395,9 @@ sap.ui.define(
           sanitizeValue: false,
           value: "{/FormData/Detail}",
           editable: {
-            path: "/FormData/ZappStatAl",
-            formatter: (v1) => {
-              return !v1 || v1 === '10';
+            parts: [{path: "/FormData/Appno"}, {path: '/Hass'}],
+            formatter: (v1, v2) => {
+              return !v1 && !!v2;
             }
           },
           ready: function () {
