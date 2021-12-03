@@ -423,36 +423,6 @@ sap.ui.define(
         this.getViewModel().setProperty('/DialogData/Lnsta', '');
       },
 
-      // oData호출 mapping
-      sendDataFormat(oDatas) {
-        let oSendObject = {
-          Appno: oDatas.Appno,
-          Lntyp: oDatas.Lntyp,
-          Lntyptx: oDatas.Lntyptx,
-          Lonid: oDatas.Lonid,
-          Seqnr: oDatas.Seqnr,
-          Pernr: oDatas.Pernr,
-          Rptyp: oDatas.Rptyp,
-          Rptyptx: oDatas.Rptyptx,
-          Lnrte: oDatas.Lnrte,
-          Appda: oDatas.Appda,
-          Paydt: oDatas.Paydt,
-          RpamtMpr: oDatas.RpamtMpr,
-          RpamtMin: oDatas.RpamtMin,
-          RpamtTot: oDatas.RpamtTot,
-          Waers: oDatas.Waers,
-          Appno: oDatas.Appno,
-          Zfilekey: oDatas.Zfilekey,
-          Lnsta: oDatas.Lnsta,
-          Lnstatx: oDatas.Lnstatx,
-          ZappResn: oDatas.ZappResn,
-          Account: oDatas.Account,
-          Prcty: oDatas.Prcty,
-        };
-
-        return oSendObject;
-      },
-
       // 임시저장
       onSaveBtn() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
@@ -479,9 +449,8 @@ sap.ui.define(
                 }
 
                 let oSendObject = {};
-                const oSendData = this.sendDataFormat(oDialogData);
 
-                oSendObject = oSendData;
+                oSendObject = oDialogData;
                 oSendObject.Prcty = 'T';
                 oSendObject.Waers = 'KRW';
 
@@ -543,9 +512,8 @@ sap.ui.define(
                 }
 
                 let oSendObject = {};
-                const oSendData = this.sendDataFormat(oDialogData);
 
-                oSendObject = oSendData;
+                oSendObject = oDialogData;
                 oSendObject.Prcty = 'C';
                 oSendObject.Waers = 'KRW';
 

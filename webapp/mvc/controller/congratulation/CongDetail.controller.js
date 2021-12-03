@@ -558,42 +558,6 @@ sap.ui.define(
         this.getViewModel().setProperty('/FormData/ZappStatAl', '10');
       },
 
-      // oData호출 mapping
-      sendDataFormat(oDatas) {
-        let oSendObject = {
-          Appdt: oDatas.Appdt,
-          Appno: oDatas.Appno,
-          Apename: oDatas.Apename,
-          Appernr: oDatas.Appernr,
-          Concode: oDatas.Concode,
-          Conddate: moment(oDatas.Conddate).hours(10).toDate(),
-          Conrdate: moment(oDatas.Conrdate).hours(10).toDate(),
-          Conresn: oDatas.Conresn,
-          Conretx: oDatas.Conretx,
-          Context: oDatas.Context,
-          Ename: oDatas.Ename,
-          Kdsvh: oDatas.Kdsvh,
-          Orgtx: oDatas.Orgtx,
-          Payrt: oDatas.Payrt,
-          PayrtT: oDatas.PayrtT,
-          Pernr: oDatas.Pernr,
-          ZbacBet: oDatas.ZbacBet,
-          ZbacBetT: oDatas.ZbacBetT,
-          Zbirthday: moment(oDatas.Zbirthday).hours(10).toDate(),
-          Zeloc: oDatas.Zeloc,
-          Zemp: oDatas.Zemp,
-          Zflower: oDatas.Zflower,
-          Zname: oDatas.Zname,
-          ZpayBet: oDatas.ZpayBet,
-          ZpayBetT: oDatas.ZpayBetT,
-          Zzjikcht: oDatas.Zzjikcht,
-          Zzjikgbt: oDatas.Zzjikgbt,
-          Zzjiktlt: oDatas.Zzjiktlt,
-        };
-
-        return oSendObject;
-      },
-
       // 임시저장
       onSaveBtn() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
@@ -620,9 +584,8 @@ sap.ui.define(
                 }
 
                 let oSendObject = {};
-                const oSendData = this.sendDataFormat(oFormData);
 
-                oSendObject = oSendData;
+                oSendObject = oFormData;
                 oSendObject.Prcty = 'T';
                 oSendObject.Menid = oDetailModel.getProperty('/menuId');
                 oSendObject.Waers = 'KRW';
@@ -676,9 +639,8 @@ sap.ui.define(
                 }
 
                 let oSendObject = {};
-                const oSendData = this.sendDataFormat(oFormData);
 
-                oSendObject = oSendData;
+                oSendObject = oFormData;
                 oSendObject.Prcty = 'C';
                 oSendObject.Menid = oDetailModel.getProperty('/menuId');
                 oSendObject.Waers = 'KRW';
@@ -701,7 +663,7 @@ sap.ui.define(
                     this.getRouter().navTo('congratulation');
                   },
                 });
-              } catch (error) {
+              } catch (oError) {
                 AppUtils.handleError(oError);
               } finally {
                 AppUtils.setAppBusy(false, this);

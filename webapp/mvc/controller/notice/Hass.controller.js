@@ -21,7 +21,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.notice.Notice', {
+    return BaseController.extend('sap.ui.yesco.mvc.controller.notice.Hass', {
       TYPE_CODE: '10',
 
       AttachFileAction: AttachFileAction,
@@ -33,7 +33,7 @@ sap.ui.define(
         const dDate = new Date();
         const oViewModel = new JSONModel({
           busy: false,
-          Hass: this.isHass(),
+          Hass: true,
           Data: [],
           search: {
             date: new Date(dDate.getFullYear(), dDate.getMonth() + 1, 0),
@@ -59,7 +59,7 @@ sap.ui.define(
       },
 
       onClick() {
-        this.getRouter().navTo(this.isHass() ? 'h/notice-detail' : 'notice-detail', { oDataKey: 'N' });
+        this.getRouter().navTo('h/notice-detail', { oDataKey: 'N' });
       },
 
       onSearch() {
@@ -67,8 +67,8 @@ sap.ui.define(
         const oListModel = this.getViewModel();
         const oTable = this.byId('noticeTable');
         const oSearch = oListModel.getProperty('/search');
-        const dDate = moment(oSearch.secondDate).hours(10).toDate();
-        const dDate2 = moment(oSearch.date).hours(10).toDate();
+        const dDate = moment(oSearch.secondDate).hours(9).toDate();
+        const dDate2 = moment(oSearch.date).hours(9).toDate();
         const sMenid = this.getCurrentMenuId();
         const sWerks = this.getSessionProperty('Werks');
 
@@ -105,11 +105,11 @@ sap.ui.define(
       },
 
       onSelectRow(oEvent) {
-        const vPath = oEvent.getParameters().rowBindingContext.getPath();
+        const vPath = oEvent.getParameter('rowBindingContext').getPath();
         const oRowData = this.getViewModel().getProperty(vPath);
 
         this.getViewModel().setProperty('/parameter', oRowData);
-        this.getRouter().navTo(this.isHass() ? 'h/notice-detail' : 'notice-detail', { oDataKey: oRowData.Appno });
+        this.getRouter().navTo('h/notice-detail', { oDataKey: oRowData.Appno });
       },
 
       onPressExcelDownload() {

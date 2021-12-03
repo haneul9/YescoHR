@@ -515,42 +515,6 @@ sap.ui.define(
         this.getViewModel().setProperty('/FormData/ZappStatAl', '');
       },
 
-      // oData호출 mapping
-      sendDataFormat(oDatas) {
-        let oSendObject = {
-          Appdt: oDatas.Appdt,
-          Appno: oDatas.Appno,
-          Apename: oDatas.Apename,
-          Appernr: oDatas.Appernr,
-          Cnttx: oDatas.Cnttx,
-          Divcd: oDatas.Divcd,
-          Forsch: oDatas.Forsch,
-          Grdsp: oDatas.Grdsp,
-          Majnm: oDatas.Majnm,
-          Schtx: oDatas.Schtx,
-          Slart: oDatas.Slart,
-          Kdsvh: oDatas.Kdsvh,
-          ZbetClass: oDatas.ZbetClass,
-          ZbetEntr: oDatas.ZbetEntr,
-          ZbetEtc: oDatas.ZbetEtc,
-          ZbetExer: oDatas.ZbetExer,
-          ZbetMgmt: oDatas.ZbetMgmt,
-          ZbetShip: oDatas.ZbetShip,
-          ZbetSuf: oDatas.ZbetSuf,
-          ZbetTotl: oDatas.ZbetTotl,
-          Znametx: oDatas.Znametx,
-          Zname: oDatas.Zname,
-          ZpayAmt: oDatas.ZpayAmt,
-          Zyear: oDatas.Zyear,
-          Zzjikcht: oDatas.Zzjikcht,
-          Zzjikgbt: oDatas.Zzjikgbt,
-          Zzjiktlt: oDatas.Zzjiktlt,
-          Zzobjps: oDatas.Zzobjps,
-        };
-
-        return oSendObject;
-      },
-
       // 임시저장
       onSaveBtn() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
@@ -576,9 +540,8 @@ sap.ui.define(
                 }
 
                 let oSendObject = {};
-                const oSendData = this.sendDataFormat(oFormData);
 
-                oSendObject = oSendData;
+                oSendObject = oFormData;
                 oSendObject.Prcty = 'T';
                 oSendObject.Menid = oDetailModel.getProperty('/Menid');
                 oSendObject.Waers = 'KRW';
@@ -633,9 +596,8 @@ sap.ui.define(
                 }
 
                 let oSendObject = {};
-                const oSendData = this.sendDataFormat(oFormData);
 
-                oSendObject = oSendData;
+                oSendObject = oFormData;
                 oSendObject.Prcty = 'C';
                 oSendObject.Menid = oDetailModel.getProperty('/Menid');
                 oSendObject.Waers = 'KRW';

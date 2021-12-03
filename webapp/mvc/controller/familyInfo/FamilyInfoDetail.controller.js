@@ -331,39 +331,6 @@ sap.ui.define(
         return false;
       },
 
-      // oData호출 mapping
-      sendDataFormat(oDatas) {
-        let oSendObject = {
-          Menid: oDatas.Menid,
-          Appno: oDatas.Appno,
-          Atext: oDatas.Atext,
-          Begda: moment(oDatas.Begda).hours(10).toDate(),
-          Dptid: oDatas.Dptid,
-          Dptyp: oDatas.Dptyp === 'ALL' ? '' : oDatas.Dptyp,
-          Ename: oDatas.Ename,
-          Endda: moment(oDatas.Endda).hours(10).toDate(),
-          Famid: oDatas.Famid,
-          Famnm: oDatas.Famnm,
-          Fasex: oDatas.Fasex === 'ALL' ? '' : oDatas.Fasex,
-          Fnmhg: oDatas.Fnmhg,
-          Helid: oDatas.Helid,
-          Hndcd: oDatas.Hndcd === 'ALL' ? '' : oDatas.Hndcd,
-          Hndid: oDatas.Hndid,
-          Kdsvh: oDatas.Kdsvh === 'ALL' ? '' : oDatas.Kdsvh,
-          Livid: oDatas.Livid,
-          Lnmhg: oDatas.Lnmhg,
-          Regno: oDatas.Regno,
-          ZappDate: oDatas.ZappDate,
-          ZappResn: oDatas.ZappResn,
-          ZappStatAl: oDatas.ZappStatAl,
-          ZappStxtAl: oDatas.ZappStxtAl,
-          ZreqDate: oDatas.ZreqDate,
-          Zzjikgbtx: oDatas.Zzjikgbtx,
-        };
-
-        return oSendObject;
-      },
-
       // 신청
       async onApplyBtn() {
         const oModel = this.getModel(ServiceNames.PA);
@@ -390,9 +357,8 @@ sap.ui.define(
                 }
 
                 let oSendObject = {};
-                const oSendData = this.sendDataFormat(oFormData);
-
-                oSendObject = oSendData;
+                
+                oSendObject = oFormData;
                 oSendObject.Prcty = 'C';
                 oSendObject.Menid = sMenid;
 

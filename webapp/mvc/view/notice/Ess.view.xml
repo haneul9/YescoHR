@@ -1,4 +1,4 @@
-<mvc:View controllerName="sap.ui.yesco.mvc.controller.notice.Notice"
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.notice.Ess"
 	xmlns="sap.m"
 	xmlns:core="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc"
@@ -8,7 +8,6 @@
 			<HBox justifyContent="SpaceBetween" class="breadcrumbs">
 				<custom:Breadcrumbs />
 				<HBox>
-					<Button text="{i18n>LABEL_00121}" visible="{= ${/Hass} }" type="Emphasized" press=".onClick" class="sapUiTinyMarginEnd" />
 					<Button icon="sap-icon://print" press=".FragmentEvent.onPagePrint" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" />
 					<Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" />
 				</HBox>

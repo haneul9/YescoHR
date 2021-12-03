@@ -25,8 +25,11 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.notice.NoticeDetail', {
-      TYPE_CODE: 'HR02',
-      LIST_PAGE_ID: 'container-ehr---notice',
+      TYPE_CODE: '10',
+      LIST_PAGE_ID: {
+        E: 'container-ehr---notice',
+        H: 'container-ehr---h_notice'
+      },
 
       AttachFileAction: AttachFileAction,
 
@@ -94,7 +97,7 @@ sap.ui.define(
           this.settingsAttachTable();
         } else {
           const oView = this.getView();
-          const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+          const oListView = oView.getParent().getPage(this.isHass() ? this.LIST_PAGE_ID.H : this.LIST_PAGE_ID.E);
           const mListData = oListView.getModel().getProperty('/parameter');
           const sWerks = this.getSessionProperty('Werks');
           let oSendObject = {};
@@ -153,26 +156,6 @@ sap.ui.define(
         return false;
       },
 
-      // oData호출 mapping
-      sendDataFormat(oDatas) {
-        let oSendObject = {
-          Sdate: oDatas.Sdate,
-          Seqnr: oDatas.Seqnr,
-          Title: oDatas.Title,
-          Detail: oDatas.Detail,
-          Apern: oDatas.Apern,
-          ApernTxt: oDatas.ApernTxt,
-          Impor: oDatas.Impor,
-          Hide: oDatas.Hide,
-          Aedtm: oDatas.Aedtm,
-          Aetim: oDatas.Aetim,
-          Appno: oDatas.Appno,
-          Newitem: oDatas.Newitem,
-        };
-
-        return oSendObject;
-      },
-
       // 임시저장
       onSaveBtn() {
         const oModel = this.getModel(ServiceNames.COMMON);
@@ -198,10 +181,8 @@ sap.ui.define(
                   oDetailModel.setProperty('/FormData/Sdate', new Date());
                 }
 
-                let oSendObject = {};
-                const oSendData = this.sendDataFormat(oFormData);
                 const aDetail = [];
-                const aList = oSendData.Detail.match(new RegExp('.{1,' + 4000 + '}', 'g'));
+                const aList = oFormData.Detail.match(new RegExp('.{1,' + 4000 + '}', 'g'));
                 
                 aList.forEach(function(e) {
                   const mDetailObj = {};
@@ -210,11 +191,13 @@ sap.ui.define(
                   aDetail.push(mDetailObj);
                 });
 
-                oSendData.Detail = '';
-                oSendObject.Prcty = '2';
-                oSendObject.Werks = sWerks;
-                oSendObject.Notice1Nav = [oSendData];
-                oSendObject.Notice2Nav = aDetail;
+                oFormData.Detail = '';
+                let oSendObject = {
+                  Prcty: '2',
+                  Werks: sWerks,
+                  Notice1Nav: [oFormData],
+                  Notice2Nav: aDetail,
+                };  
 
                  // 첨부파일
                 if (!!AttachFileAction.getFileLength.call(this)) {
@@ -269,10 +252,8 @@ sap.ui.define(
                   oDetailModel.setProperty('/FormData/Sdate', new Date());
                 }
 
-                let oSendObject = {};
-                const oSendData = this.sendDataFormat(oFormData);
                 const aDetail = [];
-                const aList = oSendData.Detail.match(new RegExp('.{1,' + 4000 + '}', 'g'));
+                const aList = oFormData.Detail.match(new RegExp('.{1,' + 4000 + '}', 'g'));
                 
                 aList.forEach(function(e) {
                   const mDetailObj = {};
@@ -281,11 +262,13 @@ sap.ui.define(
                   aDetail.push(mDetailObj);
                 });
                 
-                oSendData.Detail = '';
-                oSendObject.Prcty = '2';
-                oSendObject.Werks = sWerks;
-                oSendObject.Notice1Nav = [oSendData];
-                oSendObject.Notice2Nav = aDetail;
+                oFormData.Detail = '';
+                let oSendObject = {
+                  Prcty: '2',
+                  Werks: sWerks,
+                  Notice1Nav: [oFormData],
+                  Notice2Nav: aDetail,
+                };
 
                 // 첨부파일
                 if (!!AttachFileAction.getFileLength.call(this)) {
@@ -308,7 +291,7 @@ sap.ui.define(
                   onClose: () => {
                     let sPageName = '';
 
-                    if (this.Hass()) {
+                    if (this.isHass()) {
                       sPageName = 'noticeHass';
                     } else {
                       sPageName = 'notice';
@@ -359,7 +342,7 @@ sap.ui.define(
                     onClose: () => {
                       let sPageName = '';
   
-                      if (this.Hass()) {
+                      if (this.isHass()) {
                         sPageName = 'noticeHass';
                       } else {
                         sPageName = 'notice';
@@ -379,15 +362,14 @@ sap.ui.define(
       },
 
       setTextEditor() {
-        if(!!this.byId("myRTE")) {
-          this.byId("myRTE").destroy();
+        if(!!this.byId("EditorBox").getItems()[0]) {
+          this.byId("EditorBox").destroyItems()
         }
   
-        var that = this;
-        that.oRichTextEditor = new RTE("myRTE", {
+        const oRichTextEditor = new RTE("myRTE", {
           editorType: 'TinyMCE4',
           layoutData: new sap.m.FlexItemData({ growFactor: 1 }),
-          // width: "100%",
+          width: "99.8%",
           height: "500px",
           customToolbar: true,
           showGroupFont: true,
@@ -395,9 +377,9 @@ sap.ui.define(
           sanitizeValue: false,
           value: "{/FormData/Detail}",
           editable: {
-            parts: [{path: "/FormData/Appno"}, {path: '/Hass'}],
+            parts: [{path: "/MySelf"}, {path: '/Hass'}],
             formatter: (v1, v2) => {
-              return !v1 && !!v2;
+              return !!v1 && !!v2;
             }
           },
           ready: function () {
@@ -405,17 +387,18 @@ sap.ui.define(
           }
         });
   
-        this.byId("EditorBox").addItem(that.oRichTextEditor);
+        this.byId("EditorBox").addItem(oRichTextEditor);
       },
 
       // AttachFileTable Settings
       settingsAttachTable() {
         const oDetailModel = this.getViewModel();
-        const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
+        const bHass = oDetailModel.getProperty('/Hass');
+        const bMySelf = oDetailModel.getProperty('/MySelf');
         const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
 
         AttachFileAction.setAttachFile(this, {
-          Editable: !sStatus || sStatus === '10',
+          Editable: !!bHass && !!bMySelf,
           Type: this.TYPE_CODE,
           Appno: sAppno,
           Message: this.getBundleText('MSG_00040'),
