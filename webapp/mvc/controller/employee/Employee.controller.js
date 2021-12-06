@@ -409,30 +409,28 @@ sap.ui.define(
             // CRUD Buttons
             if (_.some(this.CRUD_TABLES, (o) => o.key === mMenu.code)) {
               const oSubButtonBox = new sap.m.HBox({
+                
                 items: [
                   new sap.m.Button({
-                    type: 'Transparent',
                     icon: 'sap-icon://add',
                     text: this.getBundleText('LABEL_00106'), // 등록
                     customData: [new sap.ui.core.CustomData({ key: 'code', value: mMenu.code })],
                     press: this.onPressRegTable.bind(this),
-                  }).addStyleClass('sapUiTinyMarginEnd'),
+                  }).addStyleClass('sapUiTinyMarginEnd icon-button'),
                   new sap.m.Button({
-                    type: 'Transparent',
                     icon: 'sap-icon://edit',
                     text: this.getBundleText('LABEL_00108'), // 수정
                     customData: [new sap.ui.core.CustomData({ key: 'code', value: mMenu.code })],
                     press: this.onPressModifyTable.bind(this),
-                  }).addStyleClass('sapUiTinyMarginEnd'),
+                  }).addStyleClass('sapUiTinyMarginEnd icon-button'),
                   new sap.m.Button({
-                    type: 'Transparent',
                     icon: 'sap-icon://less',
                     text: this.getBundleText('LABEL_00110'), // 삭제
                     customData: [new sap.ui.core.CustomData({ key: 'code', value: mMenu.code })],
                     press: this.onPressDeleteTable.bind(this),
-                  }),
+                  }).addStyleClass('icon-button'),
                 ],
-              });
+              }).addStyleClass('table-top');
 
               oSubHBox.addItem(oSubButtonBox);
             }

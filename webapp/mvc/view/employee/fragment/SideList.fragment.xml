@@ -16,9 +16,9 @@
                         <VBox width="20%" justifyContent="Center" alignItems="Center">
                             <Image src="{Photo}" height="60px" width="60px" />
                         </VBox>
-                        <VBox>
+                        <VBox class="employee-card-list-d">
                             <HBox justifyContent="SpaceBetween">
-                                <Text text="{Ename} {Zzjikgbt}/{Zzjikcht}" />
+                                <Text text="{Ename} {Zzjikgbt} / {Zzjikcht}" class="name" />
                                 <core:Icon visible="{= !!${Manager}}" src="sap-icon://manager" />
                             </HBox>
                             <HBox>
