@@ -294,8 +294,8 @@ sap.ui.define(
           delete oReturnData.Prcty;
           delete oReturnData.Actty;
           delete oReturnData.__metadata;
-          const aTextFields = ['Dat03', 'Dat08', 'Dat13', 'Dat18', 'Dat23'];
-          const aConvertData = Object.keys(oReturnData).map((key) => ({ data: oReturnData[key], isText: _.includes(aTextFields, key) }));
+          const aTextFields = ['Dat03', 'Dat05', 'Dat08', 'Dat10', 'Dat13', 'Dat15', 'Dat18', 'Dat20', 'Dat23', 'Dat25'];
+          const aConvertData = Object.keys(oReturnData).map((key) => ({ data: oReturnData[key], labelOrText: _.includes(aTextFields, key) ? 'text' : 'label' }));
 
           oViewModel.setProperty('/employee/header/profilePath', Pturl);
           oViewModel.setProperty('/employee/header/baseInfo', aConvertData);
@@ -411,28 +411,25 @@ sap.ui.define(
               const oSubButtonBox = new sap.m.HBox({
                 items: [
                   new sap.m.Button({
-                    type: 'Transparent',
                     icon: 'sap-icon://add',
                     text: this.getBundleText('LABEL_00106'), // 등록
                     customData: [new sap.ui.core.CustomData({ key: 'code', value: mMenu.code })],
                     press: this.onPressRegTable.bind(this),
-                  }).addStyleClass('sapUiTinyMarginEnd'),
+                  }).addStyleClass('sapUiTinyMarginEnd icon-button'),
                   new sap.m.Button({
-                    type: 'Transparent',
                     icon: 'sap-icon://edit',
                     text: this.getBundleText('LABEL_00108'), // 수정
                     customData: [new sap.ui.core.CustomData({ key: 'code', value: mMenu.code })],
                     press: this.onPressModifyTable.bind(this),
-                  }).addStyleClass('sapUiTinyMarginEnd'),
+                  }).addStyleClass('sapUiTinyMarginEnd icon-button'),
                   new sap.m.Button({
-                    type: 'Transparent',
                     icon: 'sap-icon://less',
                     text: this.getBundleText('LABEL_00110'), // 삭제
                     customData: [new sap.ui.core.CustomData({ key: 'code', value: mMenu.code })],
                     press: this.onPressDeleteTable.bind(this),
-                  }),
+                  }).addStyleClass('icon-button'),
                 ],
-              });
+              }).addStyleClass('table-top');
 
               oSubHBox.addItem(oSubButtonBox);
             }
@@ -664,15 +661,23 @@ sap.ui.define(
       /* ! event handlers                                              */
       /* =========================================================== */
       onToggleNavigation(oEvent) {
-        const bState = oEvent.getParameter('state');
+        const oViewModel = this.getViewModel();
+        const oSideBody = this.byId('sideBody');
+        const oProfileBody = this.byId('profileBody');
+        const bPressed = oEvent.getParameter('pressed');
 
-        this.getView().getModel().setProperty('/sideNavigation/isShow', bState);
-        this.getView()
-          .getModel()
-          .setProperty('/sideNavigation/width', bState ? '27%' : '0%');
-        this.getView()
-          .getModel()
-          .setProperty('/employee/width', bState ? '73%' : '100%');
+        if (bPressed) {
+          oSideBody.removeStyleClass('expanded');
+          oProfileBody.addStyleClass('expanded');
+
+          setTimeout(() => {
+            oViewModel.setProperty('/sideNavigation/isShow', false);
+          }, 100);
+        } else {
+          oSideBody.addStyleClass('expanded');
+          oProfileBody.removeStyleClass('expanded');
+          oViewModel.setProperty('/sideNavigation/isShow', true);
+        }
       },
 
       async onSelectSideTab(oEvent) {

@@ -44,6 +44,7 @@ sap.ui.define(
           busy: false,
         });
         this.setViewModel(oViewModel);
+        // this.setTextEditor();
 
         this.getViewModel().setProperty('/busy', true);
       },
@@ -62,7 +63,6 @@ sap.ui.define(
         oDetailModel.setProperty('/ViewKey', sDataKey);
         oDetailModel.setProperty('/Menid', sMenid);
 
-        this.setTextEditor();
         this.getTargetData();
         oDetailModel.setProperty('/busy', false);
       },
@@ -192,6 +192,8 @@ sap.ui.define(
                 });
 
                 oFormData.Detail = '';
+                oFormData.Hide = 'X';
+                
                 let oSendObject = {
                   Prcty: '2',
                   Werks: sWerks,
@@ -292,9 +294,9 @@ sap.ui.define(
                     let sPageName = '';
 
                     if (this.isHass()) {
-                      sPageName = 'noticeHass';
+                      sPageName = 'Hass';
                     } else {
-                      sPageName = 'notice';
+                      sPageName = 'Ess';
                     }
 
                     this.getRouter().navTo(sPageName);
@@ -343,9 +345,9 @@ sap.ui.define(
                       let sPageName = '';
   
                       if (this.isHass()) {
-                        sPageName = 'noticeHass';
+                        sPageName = 'Hass';
                       } else {
-                        sPageName = 'notice';
+                        sPageName = 'Ess';
                       }
   
                       this.getRouter().navTo(sPageName);
@@ -359,6 +361,10 @@ sap.ui.define(
             }
           },
         });
+      },
+
+      editorReady(oEvent) {
+        oEvent.getSource().addButtonGroup("styleselect").addButtonGroup("table");
       },
 
       setTextEditor() {

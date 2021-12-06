@@ -411,7 +411,7 @@ sap.ui.define(
 
         // 첨부파일
         if (!AttachFileAction.getFileLength.call(this)) {
-          MessageBox.alert(this.getBundleText('MSG_00045'));
+          MessageBox.alert(this.getBundleText('MSG_00046'));
           return true;
         }
 

@@ -3,6 +3,8 @@
 	xmlns:table="sap.ui.table"
 	xmlns:core="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:grid="sap.ui.layout.cssgrid"
+	xmlns:form="sap.ui.layout.form"
 	xmlns:custom="sap.ui.yesco.control">
 	<Page navButtonTooltip="" title="Components">
 		<content>
@@ -54,13 +56,177 @@
 								</layoutData>
 								<items>
 									<IconTabFilter text="Info" key="Info">
-										<Text text="Info content goes here ..."/>
+										<grid:CSSGrid gridTemplateColumns="1fr 3fr 3fr 3fr" gridGap="6px" class="form-grid type-b">
+											<Label text="구분"/>
+											<Label text="평가대상자"/>
+											<Label text="1차평가"/>
+											<Label text="상시관리"/>
+											<Label text="목표수립"/>
+											<VBox>
+												<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
+											</VBox>
+											<VBox>
+												<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
+											</VBox>
+											<VBox class="demoBox">
+												<layoutData>
+														<grid:GridItemLayoutData  gridRow="span 3" />
+												</layoutData>
+												<TextArea value="222222222222222Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" wrapping="true" class="required" />
+											</VBox>
+											<Label text="중간점검"/>
+											<VBox>
+												<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
+											</VBox>
+											<VBox>
+												<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
+											</VBox>
+											<Label text="성과평가"/>
+											<VBox>
+												<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
+											</VBox>
+											<VBox>
+												<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
+											</VBox>
+										</grid:CSSGrid>
 									</IconTabFilter>
 									<IconTabFilter text="Attachments" key="Attachments">
-										<Text text="Attachments go here ..."/>
+										<form:SimpleForm editable="true"
+											layout="ResponsiveGridLayout"
+											labelSpanXL="4"
+											labelSpanL="3"
+											labelSpanM="4"
+											labelSpanS="12"
+											adjustLabelSpan="false"
+											emptySpanXL="0"
+											emptySpanL="4"
+											emptySpanM="0"
+											emptySpanS="0"
+											columnsXL="2"
+											columnsL="1"
+											columnsM="1"
+											singleContainerFullSize="false">
+											<Label  labelFor="gg" text="gridGap" />
+											<Input id="gg" width="120px" value="1rem 0.5rem" change="onInputChanged"/>
+											<Label  labelFor="grg" text="gridRowGap" />
+											<Input id="grg" width="60px" change="onInputChanged"/>
+											<Label  labelFor="gcg" text="gridColumnGap" />
+											<Input id="gcg" width="60px" change="onInputChanged"/>
+										</form:SimpleForm>
 									</IconTabFilter>
 									<IconTabFilter text="Notes" key="Notes">
-										<Text text="Notes go here ..."/>
+										<Panel expandable="true" width="auto">
+											<layoutData>
+												<FlexItemData growFactor="1"/>
+											</layoutData>
+											<headerToolbar>
+												<OverflowToolbar height="3rem" style="Clear">
+													<Title text="Custom Toolbar with a header text"/>
+													<ToolbarSpacer/>
+													<Button icon="sap-icon://accept" class="icon-button" text="목표삭제" />
+												</OverflowToolbar>
+											</headerToolbar>
+											<content>
+												<grid:CSSGrid gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr" gridGap="8px" class="form-grid type-c">
+													
+													
+													<VBox class="demoBox">
+														<layoutData>
+																<grid:GridItemLayoutData  gridColumn="span 3" />
+														</layoutData>
+														<Label  labelFor="gcg1" text="목표항목" />
+														<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
+													</VBox>
+													<VBox class="demoBox">
+														<layoutData>
+																<grid:GridItemLayoutData  gridColumn="span 3" />
+														</layoutData>
+														<Label  labelFor="gcg2" text="연간상위목표" />
+														<TextArea value="222222222222222Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" wrapping="true" class="required" />
+													</VBox>
+													<VBox>
+														<Label  labelFor="gcg22" text="목표항목구분" />
+														<Input id="gcg22" width="" change="onInputChanged"/>
+													</VBox>
+													<VBox>
+														<Label  labelFor="gcg33" text="가중치" />
+														<Input id="gcg33" width="" change="onInputChanged"/>
+													</VBox>
+													<VBox>
+														<Label  labelFor="gcg44" text="목표수행 시작일" />
+														<Input id="gcg44" width="" change="onInputChanged"/>
+													</VBox>													
+													<VBox>
+														<Label  labelFor="gcg222" text="목표항목구분" />
+														<Input id="gcg222" width="" change="onInputChanged"/>
+													</VBox>
+													<VBox>
+														<Label  labelFor="gcg333" text="가중치" />
+														<Input id="gcg333" width="" change="onInputChanged"/>
+													</VBox>
+													<VBox>
+														<Label  labelFor="gcg444" text="목표수행 시작일" />
+														<Input id="gcg444" width="" change="onInputChanged"/>
+													</VBox>
+													<VBox class="demoBox">
+														<layoutData>
+																<grid:GridItemLayoutData  gridColumn="span 3" />
+														</layoutData>
+														<Label  labelFor="gcg1" text="핵심결과" />
+														<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
+													</VBox>
+													<VBox class="demoBox">
+														<layoutData>
+																<grid:GridItemLayoutData  gridrow="span 3"  gridColumn="span 3" gridRow="span 2" />
+														</layoutData>
+														<Label labelFor="gcg10" text="등급별 등급점수" />
+														<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
+													</VBox>													
+													<VBox class="demoBox">
+														<layoutData>
+																<grid:GridItemLayoutData  gridColumn="span 3" />
+														</layoutData>
+														<Label  labelFor="gcg1" text="수행실적" />
+														<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
+													</VBox>
+													<VBox>
+														<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
+													</VBox>
+													<VBox>
+														<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
+													</VBox>
+													
+													<VBox>
+														<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
+													</VBox>
+													
+													<VBox>
+														<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
+													</VBox>
+													
+													<VBox>
+														<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
+													</VBox>
+													
+													<VBox>
+														<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
+													</VBox>
+													
+													<VBox>
+														<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
+													</VBox>
+													
+													<VBox>
+														<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
+													</VBox>
+													
+													<VBox>
+														<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
+													</VBox>
+												</grid:CSSGrid>
+											</content>
+										</Panel>
+										
 									</IconTabFilter>
 									<IconTabFilter text="People" key="People">
 										<Text text="People content goes here ..."/>
@@ -68,6 +234,30 @@
 								</items>
 							</IconTabBar>
 						</HBox>
+					</VBox>
+				</HBox>
+				<HBox class="sapUiResponsiveMargin" width="auto">
+					<VBox width="100%">
+						<Title level="H3" text="조회" class="component-title" />
+						<VBox class="vCardBox">
+							<HBox class="label_wrap">
+								<Label text="Label" labelFor="input-aa" />
+								<Input id="input-aa" required="true" width='250px' placeholder="Default" />
+								<Label text="Label" labelFor="input-bb" design="Bold" />
+								<Select width='250px' forceSelection="false" selectedKey="{/SelectedProduct}" items="{
+										path: '/ProductCollection',
+										sorter: {
+											path: 'Name'
+										},
+										templateShareable: true
+									}">
+									<core:Item key="{ProductId}" text="{Name}" />
+								</Select>
+								<Label text="Label" labelFor="input-cc"/>
+								<Input id="input-cc" width='250px' placeholder="Default"/>
+								<Button icon="asset/image/icon_search02.png" class="icon-button" text="조회" />
+							</HBox>
+						</VBox>
 					</VBox>
 				</HBox>
 				<HBox class="sapUiResponsiveMargin" width="auto">
@@ -347,6 +537,7 @@
 								</layoutData>
 							</Button>
 							<Button width='117px' type="Emphasized" text="Emphasized" />
+							<Button width='117px' type="Emphasized" text="Emphasized disabled" enabled="false" disabled="disabled"/>
 							<Button width='117px' text="Default"/>
 							<Button width='117px' text="Transparent" type="Transparent" />
 							<Button width='117px' icon="sap-icon://action" type="Transparent" text="With Icon" />

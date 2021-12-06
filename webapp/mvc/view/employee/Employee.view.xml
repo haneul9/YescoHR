@@ -16,10 +16,9 @@
         </VBox>
         <VBox class="contents">
             <HBox>
-                <VBox id="sideBody" class="vCardBox sapUiTinyMarginEnd" height="{/sideNavigation/height}" width="{/sideNavigation/width}">
-                    <HBox justifyContent="SpaceBetween">
-                        <Switch state="true" customTextOn="{i18n>LABEL_00115}" customTextOff="{i18n>LABEL_00153}" change=".onToggleNavigation"/>
-                    </HBox>
+                <VBox id="sideBody" class="vCardBox side-navigation expanded sapUiSmallMarginEnd" height="{/sideNavigation/height}">
+                    <ToggleButton icon="sap-icon://navigation-left-arrow" press=".onToggleNavigation" class="icon-button toggle-navi" />
+                    <!-- 펼침버튼 디자인 변경-->
                     <IconTabBar selectedKey="{/sideNavigation/selectedKey}" expandable="false" visible="{= ${/sideNavigation/isShow}}" select=".onSelectSideTab">
                         <layoutData>
                             <FlexItemData growFactor="1"/>
@@ -30,7 +29,7 @@
                         </items>
                     </IconTabBar>
                 </VBox>
-                <VBox id="profileBody" width="{/employee/width}" busyIndicatorDelay="0" busy="{/employee/busy}">
+                <VBox id="profileBody" class="main-profile" busyIndicatorDelay="0" busy="{/employee/busy}">
                     <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.ProfileOverview" type="XML" />
                     <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.ProfileTab" type="XML" />
                 </VBox>
