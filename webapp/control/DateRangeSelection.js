@@ -23,9 +23,18 @@ sap.ui.define(
       constructor: function (...aArgs) {
         DateRangeSelection.apply(this, aArgs);
 
-        const Dtfmt = AppUtils.getAppComponent().getSessionModel().getProperty('/Dtfmt');
+        let Dtfmt;
+        const oBindingValueType = (this.getBindingInfo('value') || {}).type;
+        if (oBindingValueType) {
+          if (['CustomDate', 'CustomMonth', 'CustomYear'].includes(oBindingValueType.getName())) {
+            Dtfmt = oBindingValueType.oFormatOptions.pattern;
+          }
+        }
+        if (!Dtfmt) {
+          Dtfmt = AppUtils.getAppComponent().getSessionModel().getProperty('/Dtfmt');
+        }
 
-        this.setShowFooter(true).setValueFormat(Dtfmt).setDisplayFormat(Dtfmt).setPlaceholder(`${Dtfmt} - ${Dtfmt}`);
+        this.setShowFooter(true).setValueFormat(Dtfmt).setDisplayFormat(Dtfmt).setPlaceholder(`${Dtfmt} - ${Dtfmt}`).addStyleClass('sapIcon_Date');
       },
 
       _createPopup() {

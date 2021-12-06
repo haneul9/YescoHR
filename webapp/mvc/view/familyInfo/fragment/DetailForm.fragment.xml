@@ -64,11 +64,11 @@
             </VBox>
             <Label text="{i18n>LABEL_05015}"/>
             <VBox>
-                <custom:DatePicker class="sapIcon_Date" dateValue="{ path: '/FormData/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= !${/FormData/ZappStatAl} }" />
+                <custom:DatePicker dateValue="{ path: '/FormData/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= !${/FormData/ZappStatAl} }" />
             </VBox>
             <Label text="{i18n>LABEL_05016}"/>
             <VBox>
-                <custom:DatePicker class="sapIcon_Date" dateValue="{ path: '/FormData/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= !${/FormData/ZappStatAl} }" />
+                <custom:DatePicker dateValue="{ path: '/FormData/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= !${/FormData/ZappStatAl} }" />
             </VBox>
         </grid:CSSGrid>
     </VBox>

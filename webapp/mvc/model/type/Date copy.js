@@ -16,13 +16,8 @@ sap.ui.define(
     'use strict';
 
     return SimpleType.extend('sap.ui.yesco.mvc.model.type.Date', {
-      constructor: function (...args) {
-        SimpleType.apply(this, args);
-
-        const oFormatOptions = {
-          pattern: AppUtils.getAppComponent().getSessionModel().getProperty('/Dtfmt'),
-        };
-        this.setFormatOptions(oFormatOptions);
+      constructor: function () {
+        SimpleType.apply(this, arguments);
         this.sName = 'CustomDate';
       },
 

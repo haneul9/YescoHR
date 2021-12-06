@@ -70,6 +70,7 @@
         { "uri": "asset/css/webfonts/pretendard-subset.css" },
         { "uri": "asset/css/style.css" },
         { "uri": "asset/css/placeholder.css" },
+        { "uri": "asset/css/zample/zample.css" },
         { "uri": "asset/css/util/font-size.css" },
         { "uri": "asset/css/util/font-weight.css" },
         { "uri": "asset/css/util/line-height.css" },
