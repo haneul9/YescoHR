@@ -676,7 +676,9 @@ sap.ui.define(
         } else {
           oSideBody.addStyleClass('expanded');
           oProfileBody.removeStyleClass('expanded');
-          oViewModel.setProperty('/sideNavigation/isShow', true);
+          setTimeout(() => {
+            oViewModel.setProperty('/sideNavigation/isShow', true);
+          }, 200);
         }
       },
 
