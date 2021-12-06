@@ -17,10 +17,8 @@
         <VBox class="contents">
             <HBox>
                 <VBox id="sideBody" class="vCardBox sapUiSmallMarginEnd" height="{/sideNavigation/height}" width="{/sideNavigation/width}">
-                    <ToggleButton icon="sap-icon://navigation-left-arrow" press=".onToggleNavigation" class="icon-button toggle-navi" /><!-- 펼침버튼 디자인 변경-->
-                    <HBox justifyContent="SpaceBetween">
-                        <Switch state="true" customTextOn="{i18n>LABEL_00115}" customTextOff="{i18n>LABEL_00153}" change=".onToggleNavigation"/>
-                    </HBox>
+                    <ToggleButton icon="sap-icon://navigation-left-arrow" press=".onToggleNavigation" class="icon-button toggle-navi" />
+                    <!-- 펼침버튼 디자인 변경-->
                     <IconTabBar selectedKey="{/sideNavigation/selectedKey}" expandable="false" visible="{= ${/sideNavigation/isShow}}" select=".onSelectSideTab">
                         <layoutData>
                             <FlexItemData growFactor="1"/>

@@ -409,7 +409,6 @@ sap.ui.define(
             // CRUD Buttons
             if (_.some(this.CRUD_TABLES, (o) => o.key === mMenu.code)) {
               const oSubButtonBox = new sap.m.HBox({
-                
                 items: [
                   new sap.m.Button({
                     icon: 'sap-icon://add',
@@ -662,15 +661,15 @@ sap.ui.define(
       /* ! event handlers                                              */
       /* =========================================================== */
       onToggleNavigation(oEvent) {
-        const bState = oEvent.getParameter('state');
+        const bPressed = oEvent.getParameter('pressed');
 
-        this.getView().getModel().setProperty('/sideNavigation/isShow', bState);
+        this.getView().getModel().setProperty('/sideNavigation/isShow', !bPressed);
         this.getView()
           .getModel()
-          .setProperty('/sideNavigation/width', bState ? '27%' : '0%');
+          .setProperty('/sideNavigation/width', bPressed ? '0%' : '27%');
         this.getView()
           .getModel()
-          .setProperty('/employee/width', bState ? '73%' : '100%');
+          .setProperty('/employee/width', bPressed ? '100%' : '73%');
       },
 
       async onSelectSideTab(oEvent) {
