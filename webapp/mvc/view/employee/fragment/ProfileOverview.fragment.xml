@@ -18,7 +18,7 @@
                 </Label>
             </grid:CSSGrid>
         </grid:CSSGrid>
-        <Panel expandable="true" width="auto" class="timeline-wrap">
+        <Panel expandable="true" expanded="true" width="auto" class="timeline-wrap">
             <content>
                 <VBox class="timeline">
                     <HBox justifyContent="SpaceAround" items="{path: '/employee/header/timeline'}">
