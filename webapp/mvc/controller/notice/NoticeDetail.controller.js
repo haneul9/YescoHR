@@ -44,7 +44,7 @@ sap.ui.define(
           busy: false,
         });
         this.setViewModel(oViewModel);
-        this.setTextEditor();
+        // this.setTextEditor();
 
         this.getViewModel().setProperty('/busy', true);
       },
@@ -359,6 +359,10 @@ sap.ui.define(
             }
           },
         });
+      },
+
+      editorReady(oEvent) {
+        oEvent.getSource().addButtonGroup("styleselect").addButtonGroup("table");
       },
 
       setTextEditor() {

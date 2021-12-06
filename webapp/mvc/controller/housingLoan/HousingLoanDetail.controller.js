@@ -457,9 +457,14 @@ sap.ui.define(
             if (oData) {
               this.debug(`${sBenefitUrl} success.`, oData);
 
-              const oList = oData.results[0];
+              const oRepayObj = oData.results[0];
 
-              oDetailModel.setProperty('/FormData/RpamtMon', oList.RpamtMon);
+              if(!!oRepayObj.Message) {
+                MessageBox.alert(oRepayObj.Message);
+                oDetailModel.setProperty('/FormData/Lnamt', oRepayObj.Mxamt);
+              }
+
+              oDetailModel.setProperty('/FormData/RpamtMon', oRepayObj.RpamtMon);
             }
           },
           error: (oError) => {
