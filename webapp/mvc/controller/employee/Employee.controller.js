@@ -661,15 +661,23 @@ sap.ui.define(
       /* ! event handlers                                              */
       /* =========================================================== */
       onToggleNavigation(oEvent) {
+        const oViewModel = this.getViewModel();
+        const oSideBody = this.byId('sideBody');
+        const oProfileBody = this.byId('profileBody');
         const bPressed = oEvent.getParameter('pressed');
 
-        this.getView().getModel().setProperty('/sideNavigation/isShow', !bPressed);
-        this.getView()
-          .getModel()
-          .setProperty('/sideNavigation/width', bPressed ? '0%' : '27%');
-        this.getView()
-          .getModel()
-          .setProperty('/employee/width', bPressed ? '100%' : '73%');
+        if (bPressed) {
+          oSideBody.removeStyleClass('expanded');
+          oProfileBody.addStyleClass('expanded');
+
+          setTimeout(() => {
+            oViewModel.setProperty('/sideNavigation/isShow', false);
+          }, 100);
+        } else {
+          oSideBody.addStyleClass('expanded');
+          oProfileBody.removeStyleClass('expanded');
+          oViewModel.setProperty('/sideNavigation/isShow', true);
+        }
       },
 
       async onSelectSideTab(oEvent) {
