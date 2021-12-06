@@ -294,8 +294,8 @@ sap.ui.define(
           delete oReturnData.Prcty;
           delete oReturnData.Actty;
           delete oReturnData.__metadata;
-          const aTextFields = ['Dat03', 'Dat08', 'Dat13', 'Dat18', 'Dat23'];
-          const aConvertData = Object.keys(oReturnData).map((key) => ({ data: oReturnData[key], isText: _.includes(aTextFields, key) }));
+          const aTextFields = ['Dat03', 'Dat05', 'Dat08', 'Dat10', 'Dat13', 'Dat15', 'Dat18', 'Dat20', 'Dat23', 'Dat25'];
+          const aConvertData = Object.keys(oReturnData).map((key) => ({ data: oReturnData[key], labelOrText: _.includes(aTextFields, key) ? 'text' : 'label' }));
 
           oViewModel.setProperty('/employee/header/profilePath', Pturl);
           oViewModel.setProperty('/employee/header/baseInfo', aConvertData);
