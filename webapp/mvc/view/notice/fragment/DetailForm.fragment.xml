@@ -16,9 +16,9 @@
             <VBox>
                 <Text text="{/FormData/ApernTxt}"/>
             </VBox>
-            <Label text="{i18n>LABEL_08006}"/>
+            <Label text="{= ${/Hass} ? ${i18n>LABEL_08006} : '' }"/>
             <HBox>
-                <CheckBox selected="{= !!${/FormData/Hide} }" editable="false"/>
+                <CheckBox visible="{/Hass}" selected="{= !!${/FormData/Hide} }" editable="false"/>
             </HBox>
             <Label text="{i18n>LABEL_00321}"/>
             <HBox>
