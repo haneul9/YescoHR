@@ -666,20 +666,15 @@ sap.ui.define(
         const oProfileBody = this.byId('profileBody');
         const bPressed = oEvent.getParameter('pressed');
 
-        if (bPressed) {
-          oSideBody.removeStyleClass('expanded');
-          oProfileBody.addStyleClass('expanded');
+        oSideBody.toggleStyleClass('expanded', !bPressed);
+        oProfileBody.toggleStyleClass('expanded', bPressed);
 
-          setTimeout(() => {
-            oViewModel.setProperty('/sideNavigation/isShow', false);
-          }, 100);
-        } else {
-          oSideBody.addStyleClass('expanded');
-          oProfileBody.removeStyleClass('expanded');
-          setTimeout(() => {
-            oViewModel.setProperty('/sideNavigation/isShow', true);
-          }, 200);
-        }
+        setTimeout(
+          () => {
+            oViewModel.setProperty('/sideNavigation/isShow', !bPressed);
+          },
+          bPressed ? 100 : 200
+        );
       },
 
       async onSelectSideTab(oEvent) {
