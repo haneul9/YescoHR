@@ -860,7 +860,8 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .employee-detail .sapMImg {width:130px; height:130px;border-radius: 50%;}
 .employee-detail .sapMImg.sapMNoImg {display:inline-block; background-image: url(../../asset/image/photo2.png);}
 .employee-detail .sapUiLayoutCSSGridItem {font-size: 14px;font-weight: 400;}
-.employee-detail .sapUiLayoutCSSGridItem .sapMLabel {font-weight: 600;}
+.employee-detail .sapUiLayoutCSSGridItem .sapMLabel[data-type=label] {font-weight: 600;}
+.employee-detail .sapUiLayoutCSSGridItem .sapMLabel[data-type=text] {font-weight: 400;}
 
 .sapMPanel.timeline-wrap {border-top:1px solid #B9E2C1;}
 .sapMPanel.timeline-wrap .sapMPanelHdr {height: 2rem; line-height: 2rem;text-indent: -999999px;}
