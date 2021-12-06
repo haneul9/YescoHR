@@ -112,6 +112,9 @@
         { "pattern": "h/notice", "name": "h/notice", "target": "h/notice" },
         { "pattern": "h/notice/{oDataKey}", "name": "h/notice-detail", "target": "noticeDetail" },
 
+        { "pattern": "medical", "name": "medical", "target": "medical" },
+        { "pattern": "medical/{oDataKey}", "name": "medical-detail", "target": "medicalDetail" },
+        
         { "pattern": "studentFunds", "name": "studentFunds", "target": "studentFunds" },
         { "pattern": "studentFunds/{oDataKey}", "name": "studentFunds-detail", "target": "studentFundsDetail" },
 
@@ -150,6 +153,9 @@
         "notice": { "viewId": "notice", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "Ess" },
         "h/notice": { "viewId": "h_notice", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "Hass" },
         "noticeDetail": { "viewId": "noticeDetail", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "NoticeDetail" },
+
+        "medical": { "viewId": "medical", "viewPath": "sap.ui.yesco.mvc.view.medical", "viewName": "Medical" },
+        "medicalDetail": { "viewId": "medicalDetail", "viewPath": "sap.ui.yesco.mvc.view.medical", "viewName": "MedicalDetail" },
 
         "studentFunds": { "viewId": "studentFunds", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFunds" },
         "studentFundsDetail": { "viewId": "studentFundsDetail", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFundsDetail" },
