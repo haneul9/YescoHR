@@ -365,16 +365,16 @@ sap.ui.define(
               oDetailModel.setProperty('/FormData/Lnrte', oList.Zchar5);
 
               const mFormData = oDetailModel.getProperty('/FormData');
-              let sAmount = mFormData.Lnamt;
+              // let sAmount = mFormData.Lnamt;
 
               if (!!mFormData.Lnamt) {
                 if (parseFloat(mFormData.Lnamt) > parseFloat(oList.Zbetrg)) {
                   MessageBox.alert(this.getBundleText('MSG_07006', mFormData.Lntyptx, new Intl.NumberFormat('ko-KR').format(oList.Zbetrg)));
-                  oDetailModel.setProperty('/FormData/Lnamt', oList.Zbetrg);
-                  sAmount = oList.Zbetrg;
+                  // oDetailModel.setProperty('/FormData/Lnamt', oList.Zbetrg);
+                  // sAmount = oList.Zbetrg;
                 }
 
-                this.getMonthlyRepayment(sAmount);
+                // this.getMonthlyRepayment(sAmount);
               }
             }
           },

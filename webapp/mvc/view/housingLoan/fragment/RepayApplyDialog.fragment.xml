@@ -49,9 +49,9 @@
                     <VBox>
                         <Text text="{= !${/DialogData/RpamtMin} ? '0' : ${/DialogData/RpamtMin} }"/>
                     </VBox>
-                    <Label text="{i18n>LABEL_00261}"/>
+                    <Label text="{= !!${/DialogData/Lnstatx} ? ${i18n>LABEL_00261} : '' }"/>
                     <VBox>
-                        <Text text="{/DialogData/Lnstatx}"/>
+                        <Text text="{= !!${/DialogData/Lnstatx} ? ${/DialogData/Lnstatx} : ''}"/>
                     </VBox>
                     <Label text="{i18n>LABEL_07046}"/>
                     <VBox>

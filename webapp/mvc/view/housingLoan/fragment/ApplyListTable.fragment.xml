@@ -31,7 +31,7 @@
             <table:Column width="50px" sortProperty="Count" filterProperty="Count">
                 <Label text="{i18n>LABEL_07003}"/>
                 <table:template>
-                    <Text text="{Count}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+                    <Text text="{= !${Count} || ${Count} === '0' ? '' : ${Count} }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
             <table:Column width="100px" sortProperty="Appda" filterProperty="Appda">

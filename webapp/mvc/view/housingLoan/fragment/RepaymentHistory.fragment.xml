@@ -26,20 +26,20 @@
                         }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
-                <table:Column width="auto" sortProperty="PniT" filterProperty="PniT">
+                <table:Column width="auto" sortProperty="Pni" filterProperty="Pni">
                     <Label text="{i18n>LABEL_07029}"/>
                     <table:template>
                         <Text text="{
-                            path: 'PniT',
+                            path: 'Pni',
                             type: 'sap.ui.yesco.mvc.model.type.Currency'
                         }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
-                <table:Column width="auto" sortProperty="IntT" filterProperty="IntT">
+                <table:Column width="auto" sortProperty="Int" filterProperty="Int">
                     <Label text="{i18n>LABEL_07030}"/>
                     <table:template>
                         <Text text="{
-                            path: 'IntT',
+                            path: 'Int',
                             type: 'sap.ui.yesco.mvc.model.type.Currency'
                         }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                     </table:template>
