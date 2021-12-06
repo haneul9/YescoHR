@@ -192,6 +192,8 @@ sap.ui.define(
                 });
 
                 oFormData.Detail = '';
+                oFormData.Hide = 'X';
+                
                 let oSendObject = {
                   Prcty: '2',
                   Werks: sWerks,
