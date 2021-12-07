@@ -17,7 +17,7 @@
                     </VBox>
                     <Label text="{i18n>LABEL_09016}"/>
                     <VBox>
-                        <Input value="{/DialogData/Bet01}" liveChange=".liveCompar"/>
+                        <Input value="{ path: '/DialogData/Bet01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveCompar"/>
                     </VBox>
                     <Label text="{i18n>LABEL_09020}"/>
                     <VBox>
@@ -25,7 +25,7 @@
                     </VBox>
                     <Label text="{i18n>LABEL_09017}"/>
                     <VBox>
-                        <Input value="{/DialogData/Bet02}" liveChange=".liveCompar" />
+                        <Input value="{ path: '/DialogData/Bet02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveCompar" />
                     </VBox>
                     <Label text="{i18n>LABEL_09014}"/>
                     <VBox>
@@ -33,7 +33,7 @@
                     </VBox>
                     <Label text="{i18n>LABEL_09018}"/>
                     <VBox>
-                        <Text text="{/DialogData/Bett0t}"/>
+                        <Text text="{ path: '/DialogData/Bett0t', type: 'sap.ui.yesco.mvc.model.type.Currency' }"/>
                     </VBox>
                     <Label text="{i18n>LABEL_09015}"/>
                     <VBox>

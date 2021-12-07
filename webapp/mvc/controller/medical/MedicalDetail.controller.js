@@ -577,16 +577,28 @@ sap.ui.define(
         const mReciptDetails = oDetailModel.getProperty('/ReciptDetails');
         const mTargetDetails = oDetailModel.getProperty('/TargetDetails');
         const iValue = parseInt(sValue);
+        const iActCost = iValue * parseFloat(mTargetDetails.Prate);
+        let sAmount = sValue;
 
-        // // 급여인경우
-        // if (sPath === '/DialogData/Bet01') {
-        //   mReciptDetails.Bet01 
-        // } else {
+        // 급여인경우
+        if (sPath === '/DialogData/Bet01') {
+          const iBet01 = parseInt(mReciptDetails.Bet01);
 
-        // }
+          if (iBet01 < iActCost) {
+            MessageBox.alert(this.getBundleText('MSG_09017', '500만원', this.TextUtils.toCurrency(iBet01 / parseFloat(mTargetDetails.Prate))));
+            sAmount = oDetailModel.getProperty('/DialogData/Bet01');
+          } 
+        } else {
+          const iBet02 = parseInt(mReciptDetails.Bet02);
 
-        oEventSource.setValue(this.toCurrency(sValue));
-        oEventSource.getModel().setProperty(sPath, sValue);
+          if (iBet02 < iActCost) {
+            MessageBox.alert(this.getBundleText('MSG_09017'));
+          } 
+        }
+
+        oEventSource.setValue(this.TextUtils.toCurrency(sAmount));
+        oDetailModel.setProperty(sPath, sAmount);
+        oDetailModel.setProperty('/DialogData/Bett0t', sAmount);
       },
 
       // 영수증 구분선택시 데이터 셋팅
@@ -617,7 +629,11 @@ sap.ui.define(
         oDetailModel.setProperty('/DialogData/MaxDate', new Date().getFullYear());
 
         if(!sViewKey || sViewKey === 'N') {
-          oDetailModel.setProperty('/DialogData', {Recpgb: 'ALL'});
+          oDetailModel.setProperty('/DialogData', {
+            Recpgb: 'ALL',
+            Prate: '0',
+            Pybet: '0',
+          });
         } else {
           oDetailModel.setProperty('/DialogData/Recpgb', 'ALL');
         }
