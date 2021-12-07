@@ -19,6 +19,7 @@ sap.ui.define(
           true,
           {
             Appno: '',
+            AttachFileID: '',
             Type: '',
             Editable: false,
             Gubun: false,

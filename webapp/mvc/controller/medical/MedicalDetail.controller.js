@@ -2,6 +2,7 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/core/Fragment',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
@@ -13,20 +14,22 @@ sap.ui.define(
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/model/type/Date',
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
-    MessageBox,
-    Appno,
-    AppUtils,
-    AttachFileAction,
-    ComboEntry,
-    FragmentEvent,
-    TextUtils,
-    TableUtils,
-    ServiceNames,
-    BaseController
+    Fragment,
+	JSONModel,
+	MessageBox,
+	Appno,
+	AppUtils,
+	AttachFileAction,
+	ComboEntry,
+	FragmentEvent,
+	TextUtils,
+	TableUtils,
+	ServiceNames,
+	BaseController
   ) => {
     'use strict';
 
@@ -45,25 +48,8 @@ sap.ui.define(
           Hass: this.isHass(),
           ViewKey: '',
           FormData: {},
-          HisList: [
-            {
-              MaxDate: new Date().MaxDate(new Date().getFullYear())
-            },
-            {
-              Seqnr: '',
-              ZappStat: '',
-              Begda: '',
-              Endda: '',
-              Apcnt: '',
-              Apbet: '',
-              Pvcnt: '',
-              Recpgb: '',
-              Bet02: '',
-              Bett0t: '',
-              Prate: '',
-              Pybet: '',
-            },
-          ],
+          DialogData: {},
+          HisList: [],
           TargetList: [],
           ReceiptType: [],
           Settings: {},
@@ -93,16 +79,13 @@ sap.ui.define(
           const oDetailModel = this.getViewModel();
           const aAppList = await this.getTargetList();
   
-          oDetailModel.setProperty('/TargetList', new ComboEntry({ codeKey: 'Znametx', valueKey: 'Seqnr', aEntries: aAppList }));
+          oDetailModel.setProperty('/TargetList', new ComboEntry({ codeKey: 'Seqnr', valueKey: 'Znametx', aEntries: aAppList }));
           
-          const aReceipt = await this.getReceiptList();
-          
-          oDetailModel.setProperty('/ReceiptType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aReceipt }));
-
           this.setFormData();
           this.settingsAttachTable();
-        } catch {
-          // MessageBox.error(AppUtils.parseError(oError));
+        } catch (oError) {
+          this.debug(oError);
+          AppUtils.handleError(oError);
         } finally {
           oDetailModel.setProperty('/busy', false);
         }
@@ -156,7 +139,6 @@ sap.ui.define(
 
           // oDetailModel.setProperty('/FormData/Appernr', oAppointeeData.Pernr);
           oDetailModel.setProperty('/FormData/Seqnr', 'ALL');
-          oDetailModel.setProperty('/FormData/Recpgb', 'ALL');
 
           oDetailModel.setProperty('/ApplyInfo', {
             Apename: oAppointeeData.Ename,
@@ -178,7 +160,7 @@ sap.ui.define(
           oSendObject.Pernr = mListData.Pernr;
           oSendObject.MedExpenseItemSet = [];
 
-          oDetailModel.setProperty('/hisBusy', true);
+          oDetailModel.setProperty('/busy', true);
 
           oModel.create('/MedExpenseApplSet', oSendObject, {
             success: (oData) => {
@@ -200,33 +182,40 @@ sap.ui.define(
                   oDetailModel.setProperty('/RepayHisLength', iHistoryLength > 10 ? 10 : iHistoryLength);
                 }
 
-                this.getLoanCost(oTargetData.Lntyp);
-                oDetailModel.setProperty('/hisBusy', false);
+                oDetailModel.setProperty('/busy', false);
               }
             },
             error: (oError) => {
               const vErrorMSG = AppUtils.parseError(oError);
 
               MessageBox.error(vErrorMSG);
-              oDetailModel.setProperty('/hisBusy', false);
+              oDetailModel.setProperty('/busy', false);
             },
           });
         }
       },
 
       async getReceiptList() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const sWerks = this.getSessionProperty('Werks');
-
         return new Promise((resolve, reject) => {
+          const oModel = this.getModel(ServiceNames.BENEFIT);
+          const sWerks = this.getSessionProperty('Werks');
+          const sViewKey = this.getViewModel().getProperty('/ViewKey');
+          let sAppno = '';
+
+          if (!sViewKey && sViewKey === 'N') {
+            const oView = this.getView();
+            const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+            const mListData = oListView.getModel().getProperty('/parameters');
+
+            sAppno = mListData.Appno;
+          }
+
           // 영수증구분
-          oModel.read('/BenefitCodeListSet', {
+          oModel.read('/MedExpenseReceiptListSet', {
             filters: [
               new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
-              new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0017'),
-              new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000010'),
-              new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'RCTYP'),
-              new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
+              new sap.ui.model.Filter('Pyyea', sap.ui.model.FilterOperator.EQ, new Date()),
+              new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sAppno),
             ],
             success: (oData) => {
               if (oData) {
@@ -235,18 +224,15 @@ sap.ui.define(
             },
             error: (oError) => {
               reject(oError);
-              const vErrorMSG = AppUtils.parseError(oError);
-
-              MessageBox.error(vErrorMSG);
             },
           });
         })
       },
 
       async getTargetList() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-
         return new Promise((resolve, reject) => {
+          const oModel = this.getModel(ServiceNames.BENEFIT);
+
           // 신청대상
           oModel.read('/MedExpenseSupportListSet', {
             filters: [new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date())],
@@ -265,6 +251,18 @@ sap.ui.define(
         })
       },
 
+      // 신청대상 선택시
+      onTargetList(oEvent) {
+        const sKey = oEvent.getSource().getSelectedKey();
+        const oDetailModel = this.getViewModel();
+
+        oDetailModel.getProperty('/TargetList').forEach((e) => {
+          if (sKey === e.Seqnr) {
+            oDetailModel.setProperty('/TargetDetails', e);
+          }
+        });
+      },
+      
       checkError() {
         const oDetailModel = this.getViewModel();
         const oFormData = oDetailModel.getProperty('/FormData');
@@ -522,6 +520,34 @@ sap.ui.define(
         });
       },
 
+      // 상세내역 추가
+      onAddDetails() {
+        this.setDialogData();
+
+        if (!this.byId('DetailHisDialog')) {
+          Fragment.load({
+            id: this.getView().getId(),
+            name: 'sap.ui.yesco.mvc.view.medical.fragment.DetailHisDialog',
+            controller: this,
+          }).then((oDialog) => {
+            // connect dialog to the root view of this component (models, lifecycle)
+            this.getView().addDependent(oDialog);
+            oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
+            this.settingsAttachDialog();
+
+            oDialog.open();
+          });
+        } else {
+          this.settingsAttachDialog();
+          this.byId('DetailHisDialog').open();
+        }
+      },
+
+      // 상세내역 삭제
+      onDelDetails() {
+
+      },
+
       // AttachFileTable Settings
       settingsAttachTable() {
         const oDetailModel = this.getViewModel();
@@ -533,6 +559,80 @@ sap.ui.define(
           Type: this.TYPE_CODE,
           Appno: sAppno,
           Max: 10,
+          FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
+        });
+      },
+      
+      /*
+      *******************************************************************************************
+      *****************************DialogEvent***************************************************
+      */
+
+      // 급여 , 비급여 한도 비교
+      liveCompar(oEvent) {
+        const oEventSource = oEvent.getSource();
+        const sPath = oEventSource.getBinding('value').getPath();
+        const sValue = oEvent.getParameter('value').trim().replace(/[^\d]/g, '');
+        const oDetailModel = this.getViewModel();
+        const mReciptDetails = oDetailModel.getProperty('/ReciptDetails');
+        const mTargetDetails = oDetailModel.getProperty('/TargetDetails');
+        const iValue = parseInt(sValue);
+
+        // // 급여인경우
+        // if (sPath === '/DialogData/Bet01') {
+        //   mReciptDetails.Bet01 
+        // } else {
+
+        // }
+
+        oEventSource.setValue(this.toCurrency(sValue));
+        oEventSource.getModel().setProperty(sPath, sValue);
+      },
+
+      // 영수증 구분선택시 데이터 셋팅
+      onRecipt(oEvent) {
+        const sKey = oEvent.getSource().getSelectedKey();
+        const oDetailModel = this.getViewModel();
+
+        oDetailModel.getProperty('/ReceiptType').forEach((e) => {
+          if (sKey === e.Zcode) {
+            oDetailModel.setProperty('/ReciptDetails', e);
+          }
+        });
+      },
+     
+      // Dialog Close
+      onDialogClose(oEvent) {
+       this.byId('DetailHisDialog').close();
+      },
+
+      // Dialog SettingData
+      async setDialogData() {
+        const aReceipt = await this.getReceiptList();
+        const oDetailModel = this.getViewModel();
+        const sViewKey = oDetailModel.getProperty('/ViewKey');
+          
+        oDetailModel.setProperty('/ReceiptType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aReceipt }));
+
+        oDetailModel.setProperty('/DialogData/MaxDate', new Date().getFullYear());
+
+        if(!sViewKey || sViewKey === 'N') {
+          oDetailModel.setProperty('/DialogData', {Recpgb: 'ALL'});
+        } else {
+          oDetailModel.setProperty('/DialogData/Recpgb', 'ALL');
+        }
+      },
+
+      // Dialog AttachFileTable Settings
+      settingsAttachDialog() {
+        const oDetailModel = this.getViewModel();
+        const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
+ 
+        AttachFileAction.setAttachFile(this, {
+          AttachFileID: '1',
+          Type: this.TYPE_CODE,
+          // Appno: sAppno,
+          Max: 1,
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
         });
       },

@@ -1,0 +1,57 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:core="sap.ui.core"
+    xmlns:custom="sap.ui.yesco.control">
+    <Dialog id="DetailHisDialog" title="{i18n>LABEL_09022}" contentWidth="1100px" contentHeight="auto">
+        <buttons>
+            <Button text="{i18n>LABEL_00106}" type="Emphasized" press=".onHisRegBtn" visible="{= !${/DialogData/Status} }" />
+            <Button text="{i18n>LABEL_00108}" type="Emphasized" press=".onHisUpBtn" visible="{= !!${/DialogData/Status} }" />
+            <Button text="{i18n>LABEL_00115}" press=".onDialogClose" />
+        </buttons>
+        <content>
+            <VBox class="vCardBox sapUiMediumMarginBottom">
+                <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0">
+                    <Label text="{i18n>LABEL_09021}"/>
+                    <VBox>
+                        <custom:DateRangeSelection maxDate="{/DialogData/maxDate}" dateValue="{ path: '/DialogData/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/DialogData/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" />
+                    </VBox>
+                    <Label text="{i18n>LABEL_09016}"/>
+                    <VBox>
+                        <Input value="{/DialogData/Bet01}" liveChange=".liveCompar"/>
+                    </VBox>
+                    <Label text="{i18n>LABEL_09020}"/>
+                    <VBox>
+                        <Input value="{/DialogData/Disenm}"/>
+                    </VBox>
+                    <Label text="{i18n>LABEL_09017}"/>
+                    <VBox>
+                        <Input value="{/DialogData/Bet02}" liveChange=".liveCompar" />
+                    </VBox>
+                    <Label text="{i18n>LABEL_09014}"/>
+                    <VBox>
+                        <Input value="{/DialogData/Medorg}"/>
+                    </VBox>
+                    <Label text="{i18n>LABEL_09018}"/>
+                    <VBox>
+                        <Text text="{/DialogData/Bett0t}"/>
+                    </VBox>
+                    <Label text="{i18n>LABEL_09015}"/>
+                    <VBox>
+                        <ComboBox items="{/ReceiptType}" selectedKey="{/DialogData/Recpgb}" change=".onRecipt">
+                            <core:Item text="{Ztext}" key="{Zcode}" />
+                        </ComboBox>
+                    </VBox>
+                    <Label text="{i18n>LABEL_09019}"/>
+                    <VBox>
+                        <Text text="{/DialogData/Prate}"/>
+                    </VBox>
+                    <Label text="{i18n>LABEL_09009}"/>
+                    <VBox>
+                        <Text text="{ path: '/DialogData/Pybet', type: 'sap.ui.yesco.mvc.model.type.Currency' }"/>
+                    </VBox>
+                </grid:CSSGrid>
+            </VBox>
+            <!-- <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" /> -->
+        </content>
+    </Dialog>
+</core:FragmentDefinition>
