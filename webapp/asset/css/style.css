@@ -139,19 +139,17 @@ html.sap-desktop .sapMCb:not(.sapMCbBgDis):not(.sapMCbHasLabel):focus>.sapMCbBg 
 .sapMPopoverScroll .sapMSelectListItemBaseSelected {background:#dbf8ff}
 
 /* 공통 Border Radius */
-.sapMInputBaseContentWrapper {border-radius:3px}
+.sapMInputBaseContentWrapper {border-width:1px !important; border-color:var(--BorderColorNormal); border-radius:3px} /* Input, TextArea 공통 */
 .sapMSlt {border-radius:3px}
 .sapMCb .sapMCbBg {border-radius:3px}
 div.sapUiTableSelectAllCheckBox::after, div.sapUiTableRowSelectionCell::after {border-radius:3px}
 
 /* 공통 Border Opction */
 .sapMSltState {border-width: 1px;}
-.sapMInputBaseContentWrapper {border-width:1px !important}
 .sapMCbBg {border-width:1px} /* CheckBox */
 div.sapUiTableSelectAllCheckBox::after, div.sapUiTableRowSelectionCell::after {border-width:1px} /* Table CheckBox */
 
 /* 공통 Font, Border Color - Normal */
-.sapMInputBaseContentWrapper {border-color:var(--BorderColorNormal)} /* Input, TextArea 공통 */
 .sapMComboBox > div {border-color:var(--BorderColorNormal)} /* ComboBox */
 .sapMSlt {border-color:var(--BorderColorNormal)} /* Select */
 .sapMRb .sapMRbB .sapMRbBOut {stroke:var(--BorderColorNormal)} /* Radio */

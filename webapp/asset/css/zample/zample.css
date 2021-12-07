@@ -1,6 +1,9 @@
 .menu-sample bdi {color:#ccc}
 
 .component-title {background:linear-gradient(transparent 60%, #a8ffbe 60%) no-repeat}
+.gradient-type1 input {background:linear-gradient(transparent 50%, #a8ffbe) no-repeat}
+.gradient-type1.sapMInputBase input,
+.gradient-type1.sapMInputBase input + .sapMInputBaseIconContainer {background:linear-gradient(transparent 50%, #a8ffbe) no-repeat}
 .use-this {background-color:#d3f9d8}
 
 .sampleUi .sapSuiteUiCommonsTimelineItemBarH {height:12px; background:linear-gradient(to right, blue 0%, red 100%)}
