@@ -240,7 +240,7 @@
 									<core:Item key="{ProductId}" text="{Name}" />
 								</Select>
 								<Label text="Label" labelFor="input-cc"/>
-								<Input id="input-cc" width="250px" placeholder="Default"/>
+								<Input id="input-cc" width="250px" placeholder="Default" class="gradient-type1" />
 								<Button icon="asset/image/icon_search02.png" class="icon-button" text="조회" />
 							</HBox>
 						</VBox>
@@ -415,12 +415,12 @@
 						</HBox>
 						<HBox alignItems="Center" class="sapUiContentPadding">
 							<!-- standard DatePicker 대신 custom:DatePicker 사용 -->
-							<DatePicker id="DP1-1" width="140px" class="sapIcon_Date" value="{ path: '/today', formatter: '.DateUtils.format' }" valueFormat="{sessionModel&gt;/Dtfmt}" displayFormat="{sessionModel&gt;/Dtfmt}" placeholder="{sessionModel&gt;/Dtfmt}" />
+							<DatePicker id="DP1-1" width="140px" class="sapIcon_Date gradient-type1" value="{ path: '/today', formatter: '.DateUtils.format' }" valueFormat="{sessionModel&gt;/Dtfmt}" displayFormat="{sessionModel&gt;/Dtfmt}" placeholder="{sessionModel&gt;/Dtfmt}" />
 							<Label text="standard DatePicker /Date(1640358000000)/ formatter" labelFor="DP1-1" />
 						</HBox>
 						<HBox alignItems="Center" class="sapUiContentPadding">
 							<!-- value에 formatter 적용 : model에 값이 적용되지 않으므로 비추 -->
-							<custom:DatePicker id="DP1-2" width="140px" value="{ path: '/today', formatter: '.DateUtils.format' }" />
+							<custom:DatePicker id="DP1-2" width="140px" value="{ path: '/today', formatter: '.DateUtils.format' }" class="gradient-type1" />
 							<Label text="custom DatePicker /Date(1640358000000)/ formatter" labelFor="DP1-2" />
 						</HBox>
 						<HBox alignItems="Center" class="sapUiContentPadding">
@@ -432,16 +432,6 @@
 							<!-- value에 custom type 적용 : model에 값이 적용되므로 강추! -->
 							<custom:DatePicker id="DP2-2" width="140px" value="{ path: '/today', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
 							<Label text="custom DatePicker /Date(1640358000000)/ sap.ui.yesco.mvc.model.type.Date" labelFor="DP2-2" />
-						</HBox>
-						<HBox alignItems="Center" class="sapUiContentPadding use-this">
-							<!-- value에 custom type 적용 : model에 값이 적용되므로 강추! -->
-							<custom:DatePicker id="DP2-3" width="140px" value="{ path: '/today', type: 'sap.ui.yesco.mvc.model.type.Month' }" />
-							<Label text="custom DatePicker /Date(1640358000000)/ sap.ui.yesco.mvc.model.type.Month" labelFor="DP2-3" />
-						</HBox>
-						<HBox alignItems="Center" class="sapUiContentPadding use-this">
-							<!-- value에 custom type 적용 : model에 값이 적용되므로 강추! -->
-							<custom:DatePicker id="DP2-4" width="140px" value="{ path: '/today', type: 'sap.ui.yesco.mvc.model.type.Year' }" />
-							<Label text="custom DatePicker /Date(1640358000000)/ sap.ui.yesco.mvc.model.type.Year" labelFor="DP2-4" />
 						</HBox>
 						<HBox alignItems="Center" class="sapUiContentPadding">
 							<custom:DatePicker id="DP3-1" width="140px" value="{/today1}" />
