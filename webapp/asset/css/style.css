@@ -405,8 +405,10 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt {outline-style:none !important}
 .vCardBox, .customBox {position:relative;margin: 0; border: 1px solid whitesmoke; border-radius: 10px; padding:24px 30px;background-color: #fff; box-shadow: 0px 2px 4px rgb(0 0 0 / 16%);}
 .vCardBox.sapUiMediumMarginBottom, .customBox.sapUiMediumMarginBottom {margin-bottom: 20px!important;}
 
-.vCardBox h2.sapMTitle, .customBox h2.sapMTitle {font-size: 24px; font-weight: 700;color:#222222; margin-bottom: 19px; display: inline-block;}
+.vCardBox h2.sapMTitle, .hCardBox h2.sapMTitle, .customBox h2.sapMTitle {font-size: 24px; font-weight: 700;color:#222222; margin-bottom: 19px; display: inline-block;}
 h3.sapMTitle {font-size: 24px; font-weight: 700; margin-bottom: 0.4rem;color:#222222;}
+.hCardBox.search-condition-box > .sapMFlexBox h2.sapMTitle, .hCardBox.search-condition-box > .sapMFlexBox h2.sapMTitle, .hCardBox.appointee-info-box > .sapMFlexBox h2.sapMTitle {display: flex;margin-bottom: 0px;}
+.hCardBox.search-condition-box > .sapMFlexBox, .hCardBox.search-condition-box > .sapMFlexBox, .hCardBox.appointee-info-box > .sapMFlexBox {margin-bottom:16px;}
 
 .sapMFlexBox .title {}
 .sapMFlexBox .title .sapMFlexItemAlignAuto {-webkit-align-self: center;align-self: center;}
