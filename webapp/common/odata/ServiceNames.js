@@ -8,6 +8,7 @@ sap.ui.define(
       BENEFIT: 'ZHR_BENEFIT_SRV',
       WORKTIME: 'ZHR_WORKTIME_SRV',
       PA: 'ZHR_PA_SRV',
+      APPRAISAL: 'ZHR_APPRAISAL_SRV',
     };
   },
   /* bExport= */ true

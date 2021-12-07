@@ -1,0 +1,129 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:table="sap.ui.table"
+    xmlns:core="sap.ui.core"
+    xmlns:custom="sap.ui.yesco.control">
+    <VBox class="vCardBox sapUiMediumMarginBottom" busyIndicatorDelay="0" busy="{/busy}">
+        <HBox justifyContent="SpaceBetween">
+            <HBox alignItems="Center" class="title">
+                <Title level="H2" text="{i18n>LABEL_00168}" />
+            </HBox>
+            <HBox class="table-top">
+                <Button icon="sap-icon://add" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" text="{i18n>LABEL_00107}" press="" />
+                <Button icon="sap-icon://less" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" text="{i18n>LABEL_00110}" press="" />
+            </HBox>
+        </HBox>
+        <table:Table id="medHisTable" class="row-link" rows="{/HisList}" visibleRowCount="{/listInfo/rowCount}" width="100%" columnHeaderHeight="45" rowHeight="45" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}">
+            <table:rowSettingsTemplate>
+                <table:RowSettings highlight="{
+                path: 'ZappStat',
+                formatter: '.TableUtils.rowHighlight'
+            }"/>
+            </table:rowSettingsTemplate>
+            <table:columns>
+                <table:Column width="auto">
+                    <Label text="{i18n>LABEL_00164}"/>
+                    <table:template>
+                        <Text text="{Seqnr}" width="50px" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+                    </table:template>
+                </table:Column>
+                <table:Column width="100px">
+                    <Label text="{i18n>LABEL_00144}"/>
+                    <table:template>
+                        <Text text="{
+                        path: 'ZappStat',
+                        formatter: '.TableUtils.StatusTxt'
+                    }" width="100%" textAlign="Center">
+                            <customData>
+                                <core:CustomData key="status" value="Z{ZappStat}" writeToDom="true" />
+                            </customData>
+                        </Text>
+                    </table:template>
+                </table:Column>
+                <table:Column width="auto">
+                    <Label text="{i18n>LABEL_09012}"/>
+                    <table:template>
+                        <custom:DatePicker value="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" />
+                        <Text text="{
+                        path: 'Begda',
+                        type: 'sap.ui.model.type.Date',
+                        formatOptions: {
+                            pattern: 'yyyy.MM.dd'
+                        }
+                    }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+                    </table:template>
+                </table:Column>
+                <table:Column width="auto">
+                    <Label text="{i18n>LABEL_09013}"/>
+                    <table:template>
+                        <Text text="{
+                        path: 'Endda',
+                        type: 'sap.ui.model.type.Date',
+                        formatOptions: {
+                            pattern: 'yyyy.MM.dd'
+                        }
+                    }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+                    </table:template>
+                </table:Column>
+                <table:Column width="100px">
+                    <Label text="{i18n>LABEL_09020}"/>
+                    <table:template>
+                        <Input value="{Disenm}" textAlign="Center" width="100%" class="tableRow_Text"/>
+                    </table:template>
+                </table:Column>
+                <table:Column width="200px">
+                    <Label text="{i18n>LABEL_09014}"/>
+                    <table:template>
+                        <Input value="{Medorg}" textAlign="Center" width="100%" class="tableRow_Text"/>
+                    </table:template>
+                </table:Column>
+                <table:Column width="100px">
+                    <Label text="{i18n>LABEL_09015}"/>
+                    <table:template>
+                        <ComboBox items="{/ReceiptType}" selectedKey="{/FormData/Recpgb}" change="" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }">
+                            <core:Item text="{Ztext}" key="{Zcode}" />
+                        </ComboBox>
+                    </table:template>
+                </table:Column>
+                <table:Column width="200px">
+                    <Label text="{i18n>LABEL_09016}"/>
+                    <table:template>
+                        <Input value="{Bet01}" textAlign="Center" width="100%" class="tableRow_Text"/>
+                    </table:template>
+                </table:Column>
+                <table:Column width="100px">
+                    <Label text="{i18n>LABEL_09017}"/>
+                    <table:template>
+                        <Input value="{Bet02}" textAlign="Center" width="100%" class="tableRow_Text"/>
+                    </table:template>
+                </table:Column>
+                <table:Column width="auto">
+                    <Label text="{i18n>LABEL_09018}"/>
+                    <table:template>
+                        <Text text="{Bett0t}" width="50px" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+                    </table:template>
+                </table:Column>
+                <table:Column width="auto">
+                    <Label text="{i18n>LABEL_09019}"/>
+                    <table:template>
+                        <Text text="{Prate}" width="50px" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+                    </table:template>
+                </table:Column>
+                <table:Column width="auto">
+                    <Label text="{i18n>LABEL_09009}"/>
+                    <table:template>
+                        <Text text="{
+                        path: 'Pybet',
+                        type: 'sap.ui.yesco.mvc.model.type.Currency'
+                    }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                    </table:template>
+                </table:Column>
+                <table:Column width="60px">
+                    <Label text="{i18n>LABEL_00133}"/>
+                    <table:template>
+                        <Button type="Transparent" icon="sap-icon://attachment" class="mnw-0" press=".TableUtils.onFileListDialog" visible="{= ${Docyn} === 'Y' }"/>
+                    </table:template>
+                </table:Column>
+            </table:columns>
+        </table:Table>
+    </VBox>
+</core:FragmentDefinition>

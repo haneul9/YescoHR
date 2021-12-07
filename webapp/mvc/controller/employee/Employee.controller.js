@@ -453,7 +453,7 @@ sap.ui.define(
               if (bFixedColumns) oTable.setFixedColumnCount(3);
 
               aVisibleHeaders.forEach((head, index) => {
-                const oColumn = new sap.ui.table.Column({ width: bFixedColumns ? '8rem' : 'auto' });
+                const oColumn = new sap.ui.table.Column({ width: bFixedColumns ? '6.8rem' : 'auto' });
 
                 oColumn.setLabel(new sap.m.Label({ text: head.Header }));
                 oColumn.setTemplate(new sap.m.Text({ width: '100%', textAlign: 'Center', text: { path: `Value${_.padStart(index + 1, 2, '0')}` } }));

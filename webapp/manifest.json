@@ -126,7 +126,9 @@
 
         { "pattern": "nightduty", "name": "nightduty", "target": "nightduty" },
         { "pattern": "nightduty/:appno:", "name": "nightduty-detail", "target": "nightdutyDetail" },
-
+        
+        { "pattern": "performance", "name": "performance", "target": "performance" },
+        
         { "pattern": "sampleComponents", "name": "sampleComponents", "target": "sampleComponents" },
         { "pattern": "sampleTimeline", "name": "sampleTimeline", "target": "sampleTimeline" },
         { "pattern": "sampleNinebox", "name": "sampleNinebox", "target": "sampleNinebox" },
@@ -168,6 +170,8 @@
 
         "nightduty": { "viewId": "nightduty", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "List" },
         "nightdutyDetail": { "viewId": "nightdutyDetail", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "Detail" },
+        
+        "performance": { "viewId": "performance", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "List" },
 
         "sampleComponents": { "viewId": "sampleComponents", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Components", "title": "Components" },
         "sampleTimeline": { "viewId": "sampleTimeline", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Timeline", "title": "Timeline" },
