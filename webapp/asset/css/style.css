@@ -882,8 +882,8 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 
 .side-navigation { width: 0%; transition: width 0.5s; }
 .side-navigation.expanded { width: 27%; }
-.main-profile { width: 73%; transition: width 0.5s; }
-.main-profile.expanded { width: 100%; }
+.main-profile { width: 73%; max-width: 1100px; transition: width 0.5s; }
+.main-profile.expanded { width: 100%; max-width: 1500px; }
 
 .lineItem-wrap:after {content:"";display:inline-block;height:5px;position: absolute;left:10%;right:10%;top:50%;background: linear-gradient(to right, #F5EC95, 50%, #70CF8D);z-index: 1;}
 .lineItem {z-index: 2;align-self: center;display: flex;justify-content: center;align-content: center;}
