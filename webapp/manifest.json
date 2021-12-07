@@ -47,6 +47,7 @@
       "minUI5Version": "1.71.28",
       "libs": {
         "sap.ui.core": {},
+        "sap.ui.unified": {},
         "sap.m": {},
         "sap.f": {}
       }
@@ -125,7 +126,10 @@
 
         { "pattern": "nightduty", "name": "nightduty", "target": "nightduty" },
         { "pattern": "nightduty/:appno:", "name": "nightduty-detail", "target": "nightdutyDetail" },
-
+        
+        { "pattern": "performance", "name": "performance", "target": "performance" },
+        { "pattern": "performance/{pid}", "name": "performance-detail", "target": "performanceDetail" },
+        
         { "pattern": "sampleComponents", "name": "sampleComponents", "target": "sampleComponents" },
         { "pattern": "sampleTimeline", "name": "sampleTimeline", "target": "sampleTimeline" },
         { "pattern": "sampleNinebox", "name": "sampleNinebox", "target": "sampleNinebox" },
@@ -167,6 +171,9 @@
 
         "nightduty": { "viewId": "nightduty", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "List" },
         "nightdutyDetail": { "viewId": "nightdutyDetail", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "Detail" },
+        
+        "performance": { "viewId": "performance", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "List" },
+        "performanceDetail": { "viewId": "performanceDetail", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "Detail" },
 
         "sampleComponents": { "viewId": "sampleComponents", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Components", "title": "Components" },
         "sampleTimeline": { "viewId": "sampleTimeline", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Timeline", "title": "Timeline" },

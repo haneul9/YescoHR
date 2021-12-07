@@ -1,0 +1,227 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.performance.Detail"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:grid="sap.ui.layout.cssgrid"
+	xmlns:custom="sap.ui.yesco.control">
+	<Page showHeader="false">
+		<VBox class="contents-header">
+			<HBox justifyContent="SpaceBetween" class="breadcrumbs">
+				<custom:Breadcrumbs />
+				<HBox>
+					<Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" />
+					<Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" />
+				</HBox>
+			</HBox>
+		</VBox>
+		<VBox class="contents">
+			<core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
+			<VBox class="vCardBox">
+				<HBox>
+					<HBox alignItems="Center" class="title">
+						<Title level="H2" text="{/year} {i18n>LABEL_10006}" />
+					</HBox>
+				</HBox>
+				<HBox>
+					<Panel expandable="true" expanded="true">
+						<layoutData>
+							<FlexItemData growFactor="1" />
+						</layoutData>
+						<headerToolbar>
+							<Toolbar width="100%">
+								<HBox width="100%" justifyContent="SpaceAround">
+									<Title level="H4" text="준비중">
+										<layoutData>
+											<FlexItemData growFactor="1" />
+										</layoutData>
+									</Title>
+									<Title level="H4" text="목표수립">
+										<layoutData>
+											<FlexItemData growFactor="1" />
+										</layoutData>
+									</Title>
+									<Title level="H4" text="중간점검">
+										<layoutData>
+											<FlexItemData growFactor="1" />
+										</layoutData>
+									</Title>
+									<Title level="H4" text="성과평가">
+										<layoutData>
+											<FlexItemData growFactor="1" />
+										</layoutData>
+									</Title>
+									<Title level="H4" text="평가완료">
+										<layoutData>
+											<FlexItemData growFactor="1" />
+										</layoutData>
+									</Title>
+								</HBox>
+							</Toolbar>
+						</headerToolbar>
+						<content>
+							<HBox width="100%" justifyContent="SpaceAround">
+								<core:Icon src="sap-icon://accelerated" />
+								<core:Icon src="sap-icon://accelerated" />
+								<core:Icon src="sap-icon://accelerated" />
+								<core:Icon src="sap-icon://accelerated" />
+								<core:Icon src="sap-icon://accelerated" />
+							</HBox>
+							<HBox width="100%" justifyContent="SpaceAround">
+								<VBox>
+									<HBox>
+										<Text text="" />
+									</HBox>
+								</VBox>
+								<VBox>
+									<HBox>
+										<core:Icon src="sap-icon://arrow-down" />
+										<Text text="목표수립필요" />
+									</HBox>
+									<HBox>
+										<core:Icon src="sap-icon://arrow-down" />
+										<Text text="평가자합의중" />
+									</HBox>
+									<HBox>
+										<core:Icon src="sap-icon://arrow-down" />
+										<Text text="목표수립완료" />
+									</HBox>
+								</VBox>
+								<VBox>
+									<HBox>
+										<core:Icon src="sap-icon://arrow-down" />
+										<Text text="중간점검필요" />
+									</HBox>
+									<HBox>
+										<core:Icon src="sap-icon://arrow-down" />
+										<Text text="평가자점검중" />
+									</HBox>
+									<HBox>
+										<core:Icon src="sap-icon://arrow-down" />
+										<Text text="중간점검완료" />
+									</HBox>
+								</VBox>
+								<VBox>
+									<HBox>
+										<core:Icon src="sap-icon://arrow-down" />
+										<Text text="자기평가필요" />
+									</HBox>
+									<HBox>
+										<core:Icon src="sap-icon://arrow-down" />
+										<Text text="직무순환설문중" />
+									</HBox>
+									<HBox>
+										<core:Icon src="sap-icon://arrow-down" />
+										<Text text="1차평가중" />
+									</HBox>
+									<HBox>
+										<core:Icon src="sap-icon://arrow-down" />
+										<Text text="2차평가중" />
+									</HBox>
+									<HBox>
+										<core:Icon src="sap-icon://arrow-down" />
+										<Text text="전사 Session 중" />
+									</HBox>
+								</VBox>
+								<VBox>
+									<HBox>
+										<core:Icon src="sap-icon://arrow-down" />
+										<Text text="평가결과확인필요" />
+									</HBox>
+									<HBox>
+										<core:Icon src="sap-icon://arrow-down" />
+										<Text text="이의신청중" />
+									</HBox>
+									<HBox>
+										<core:Icon src="sap-icon://arrow-down" />
+										<Text text="평가완료" />
+									</HBox>
+								</VBox>
+							</HBox>
+						</content>
+					</Panel>
+				</HBox>
+			</VBox>
+			<HBox>
+				<IconTabBar class="type-b" selectedKey="{/tab/selectedKey}">
+					<layoutData>
+						<FlexItemData growFactor="1"/>
+					</layoutData>
+					<items>
+						<IconTabFilter text="{i18n>LABEL_10009}" key="T01">
+							<VBox class="vCardBox">
+								<HBox>
+									<HBox alignItems="Center" class="title">
+										<Title level="H2" text="{i18n>LABEL_10007}" />
+									</HBox>
+								</HBox>
+								<VBox id="strategyGroup">
+									<VBox id="strategy01">
+										<HBox>
+											<Text text="1. empty-string" />
+										</HBox>
+									</VBox>
+									<VBox id="strategy02">
+										<HBox>
+											<Text text="2. empty-string" />
+										</HBox>
+									</VBox>
+								</VBox>
+							</VBox>
+							<VBox class="vCardBox sapUiSmallMarginTop">
+								<HBox>
+									<HBox alignItems="Center" class="title">
+										<Title level="H2" text="{i18n>LABEL_10008}" />
+									</HBox>
+								</HBox>
+								<VBox id="dutyGroup">
+									<VBox id="duty01">
+										<HBox>
+											<Text text="1. empty-string" />
+										</HBox>
+									</VBox>
+									<VBox id="duty02">
+										<HBox>
+											<Text text="2. empty-string" />
+										</HBox>
+									</VBox>
+								</VBox>
+							</VBox>
+							<VBox class="vCardBox sapUiSmallMarginTop">
+								<HBox>
+									<Text text="empty-string" />
+								</HBox>
+							</VBox>
+						</IconTabFilter>
+						<IconTabFilter text="{i18n>LABEL_10010}" key="T02">
+							<VBox class="vCardBox">
+								<grid:CSSGrid gridGap="2px" gridTemplateColumns="1fr 2fr 2fr">
+									<Label text="구분" width="100%" textAlign="Center" />
+									<Label text="평가 대상자" width="100%" textAlign="Center" />
+									<Label text="1차 평가자" width="100%" textAlign="Center" />
+									<Label text="목표 수립" width="100%" textAlign="Center" />
+									<TextArea rows="5" growing="true" />
+									<TextArea rows="5" growing="true" />
+									<Label text="중간 점검" width="100%" textAlign="Center" />
+									<TextArea rows="5" growing="true" />
+									<TextArea rows="5" growing="true" />
+									<Label text="성과 평가" width="100%" textAlign="Center" />
+									<TextArea rows="5" growing="true" />
+									<TextArea rows="5" growing="true" />
+								</grid:CSSGrid>
+							</VBox>
+							<VBox class="vCardBox">
+								<HBox alignItems="Center" class="title">
+									<layoutData>
+										<FlexItemData growFactor="1"/>
+									</layoutData>
+									<Title level="H2" text="{i18n>LABEL_10010}" />
+								</HBox>
+								<TextArea width="100%" growing="true" growingMaxLines="20" />
+							</VBox>
+						</IconTabFilter>
+					</items>
+				</IconTabBar>
+			</HBox>
+		</VBox>
+	</Page>
+</mvc:View>

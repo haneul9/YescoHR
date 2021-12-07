@@ -4,18 +4,12 @@ sap.ui.define(
     'sap/m/DatePicker',
     'sap/m/ButtonType',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/unified/calendar/CalendarDate',
-    'sap/ui/unified/calendar/CustomYearPicker',
-    'sap/ui/unified/calendar/CustomMonthPicker',
   ],
   (
     // prettier 방지용 주석
     DatePicker,
     ButtonType,
-    AppUtils,
-    CalendarDate,
-    CustomYearPicker,
-    CustomMonthPicker
+    AppUtils
   ) => {
     'use strict';
 
@@ -64,18 +58,7 @@ sap.ui.define(
       },
 
       _handleCancelButton() {
-        console.log(this._oCalendar);
-        console.log(this._oCalendar instanceof CustomYearPicker);
-        console.log(this._oCalendar instanceof CustomMonthPicker);
-        if (this._oCalendar instanceof CustomYearPicker) {
-          this._oCalendar._focusDate(new CalendarDate(), true, true);
-          // this._oCalendar.focusDate(new Date());
-        } else if (this._oCalendar instanceof CustomMonthPicker) {
-          this._oCalendar._focusDate(new CalendarDate(), true, true);
-          // this._oCalendar.focusDate(new Date());
-        } else {
-          this._oCalendar.focusDate(new Date());
-        }
+        this._oCalendar.focusDate(new Date());
       },
 
       _handleCalendarSelect() {
