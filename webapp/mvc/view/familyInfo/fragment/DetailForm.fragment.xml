@@ -2,7 +2,7 @@
     xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:core="sap.ui.core"
     xmlns:custom="sap.ui.yesco.control">
-    <VBox class="vCardBox sapUiMediumMarginBottom" busyIndicatorDelay="0" busy="{/busy}">
+    <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
         <HBox alignItems="Center" class="title">
             <Title level="H2" text="{i18n>LABEL_00129}" />
         </HBox>
@@ -64,11 +64,11 @@
             </VBox>
             <Label text="{i18n>LABEL_05015}"/>
             <VBox>
-                <custom:DatePicker class="sapIcon_Date" dateValue="{ path: '/FormData/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= !${/FormData/ZappStatAl} }" />
+                <custom:DatePicker dateValue="{ path: '/FormData/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= !${/FormData/ZappStatAl} }" />
             </VBox>
             <Label text="{i18n>LABEL_05016}"/>
             <VBox>
-                <custom:DatePicker class="sapIcon_Date" dateValue="{ path: '/FormData/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= !${/FormData/ZappStatAl} }" />
+                <custom:DatePicker dateValue="{ path: '/FormData/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= !${/FormData/ZappStatAl} }" />
             </VBox>
         </grid:CSSGrid>
     </VBox>

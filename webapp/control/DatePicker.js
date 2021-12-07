@@ -4,12 +4,18 @@ sap.ui.define(
     'sap/m/DatePicker',
     'sap/m/ButtonType',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/unified/calendar/CalendarDate',
+    'sap/ui/unified/calendar/CustomYearPicker',
+    'sap/ui/unified/calendar/CustomMonthPicker',
   ],
   (
     // prettier 방지용 주석
     DatePicker,
     ButtonType,
-    AppUtils
+    AppUtils,
+    CalendarDate,
+    CustomYearPicker,
+    CustomMonthPicker
   ) => {
     'use strict';
 
@@ -23,9 +29,18 @@ sap.ui.define(
       constructor: function (...aArgs) {
         DatePicker.apply(this, aArgs);
 
-        const Dtfmt = AppUtils.getAppComponent().getSessionModel().getProperty('/Dtfmt');
+        let Dtfmt;
+        const oBindingValueType = (this.getBindingInfo('value') || {}).type;
+        if (oBindingValueType) {
+          if (['CustomDate', 'CustomMonth', 'CustomYear'].includes(oBindingValueType.getName())) {
+            Dtfmt = oBindingValueType.oFormatOptions.pattern;
+          }
+        }
+        if (!Dtfmt) {
+          Dtfmt = AppUtils.getAppComponent().getSessionModel().getProperty('/Dtfmt');
+        }
 
-        this.setShowFooter(true).setValueFormat(Dtfmt).setDisplayFormat(Dtfmt).setPlaceholder(Dtfmt);
+        this.setShowFooter(true).setValueFormat(Dtfmt).setDisplayFormat(Dtfmt).setPlaceholder(Dtfmt).addStyleClass('sapIcon_Date');
       },
 
       _createPopup() {
@@ -49,7 +64,18 @@ sap.ui.define(
       },
 
       _handleCancelButton() {
-        this._oCalendar.focusDate(new Date());
+        console.log(this._oCalendar);
+        console.log(this._oCalendar instanceof CustomYearPicker);
+        console.log(this._oCalendar instanceof CustomMonthPicker);
+        if (this._oCalendar instanceof CustomYearPicker) {
+          this._oCalendar._focusDate(new CalendarDate(), true, true);
+          // this._oCalendar.focusDate(new Date());
+        } else if (this._oCalendar instanceof CustomMonthPicker) {
+          this._oCalendar._focusDate(new CalendarDate(), true, true);
+          // this._oCalendar.focusDate(new Date());
+        } else {
+          this._oCalendar.focusDate(new Date());
+        }
       },
 
       _handleCalendarSelect() {

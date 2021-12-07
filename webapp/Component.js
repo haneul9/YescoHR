@@ -245,6 +245,8 @@ sap.ui.define(
             const oController = oView.getController();
             const oMenuModelPromise = this.getMenuModel().getPromise();
 
+            oView.setVisible(false);
+
             oController.baseModelReady = Promise.all([
               oMenuModelPromise, //
               this.getSessionModel().getPromise(),
@@ -277,38 +279,35 @@ sap.ui.define(
        */
       _saveBreadcrumbsData({ mArguments, oView, sRouteName }) {
         return new Promise((resolve) => {
-          this.getMenuModel()
-            .getPromise()
-            .then(() => {
-              const oMenuModel = this.getMenuModel();
+          const oMenuModel = this.getMenuModel();
+          oMenuModel.getPromise().then(() => {
+            const [sRouteNameMain, sRouteNameSub] = sRouteName.split(/-/);
+            if (sRouteNameMain === 'ehrHome') {
+              oMenuModel.setCurrentMenuData({ routeName: '', menuId: '', currentLocationText: '', isSubRoute: false });
+              return;
+            }
 
-              const [sRouteNameMain, sRouteNameSub] = sRouteName.split(/-/);
-              if (sRouteNameMain === 'ehrHome') {
-                oMenuModel.setCurrentMenuData({ routeName: '', menuId: '', currentLocationText: '', isSubRoute: false });
-                return;
-              }
+            const sMenid = oMenuModel.getMenid(sRouteNameMain);
+            if ((AppUtils.isLOCAL() || AppUtils.isDEV()) && /^X/.test(sMenid)) {
+              oMenuModel.setCurrentMenuData({ routeName: '', menuId: '', currentLocationText: '', isSubRoute: false });
+              return;
+            }
 
-              const sMenid = oMenuModel.getMenid(sRouteNameMain);
-              if ((AppUtils.isLOCAL() || AppUtils.isDEV()) && /^X/.test(sMenid)) {
-                oMenuModel.setCurrentMenuData({ routeName: '', menuId: '', currentLocationText: '', isSubRoute: false });
-                return;
-              }
+            let sCurrentLocationText;
+            const oController = oView.getController();
+            if (oController && typeof oController.getCurrentLocationText === 'function') {
+              sCurrentLocationText = oController.getCurrentLocationText(mArguments);
+            }
 
-              let sCurrentLocationText;
-              const oController = oView.getController();
-              if (oController && typeof oController.getCurrentLocationText === 'function') {
-                sCurrentLocationText = oController.getCurrentLocationText(mArguments);
-              }
-
-              oMenuModel.setCurrentMenuData({
-                routeName: sRouteNameMain,
-                menuId: sMenid,
-                currentLocationText: sCurrentLocationText || '',
-                isSubRoute: !!sRouteNameSub,
-              });
-
-              resolve();
+            oMenuModel.setCurrentMenuData({
+              routeName: sRouteNameMain,
+              menuId: sMenid,
+              currentLocationText: sCurrentLocationText || '',
+              isSubRoute: !!sRouteNameSub,
             });
+
+            resolve();
+          });
         });
       },
 
@@ -320,54 +319,50 @@ sap.ui.define(
        */
       _checkRouteName({ oView, sRouteName }) {
         return new Promise((resolve) => {
-          this.getMenuModel()
-            .getPromise()
-            .then(() => {
-              oView.setVisible(false);
+          const oMenuModel = this.getMenuModel();
+          oMenuModel.getPromise().then(() => {
+            // do something, i.e. send usage statistics to back end
+            // in order to improve our app and the user experience (Build-Measure-Learn cycle)
+            AppUtils.debug(`User accessed route ${sRouteName}, timestamp = ${new Date().getTime()}`);
 
-              // do something, i.e. send usage statistics to back end
-              // in order to improve our app and the user experience (Build-Measure-Learn cycle)
-              AppUtils.debug(`User accessed route ${sRouteName}, timestamp = ${new Date().getTime()}`);
+            const sRouteNameMain = sRouteName.split(/-/)[0];
+            if (sRouteNameMain === 'ehrHome') {
+              oView.setVisible(true);
+              resolve();
+              return;
+            }
 
-              const sRouteNameMain = sRouteName.split(/-/)[0];
-              if (sRouteNameMain === 'ehrHome') {
+            const sMenid = oMenuModel.getMenid(sRouteNameMain);
+            if ((AppUtils.isLOCAL() || AppUtils.isDEV()) && /^X/.test(sMenid)) {
+              oView.setVisible(true);
+              resolve();
+              return;
+            }
+
+            const sUrl = '/GetMenuidRoleSet';
+            this.getModel(ServiceNames.COMMON).read(sUrl, {
+              filters: [
+                // prettier 방지용 주석
+                new Filter('Menid', FilterOperator.EQ, sMenid),
+              ],
+              success: (oData, oResponse) => {
+                AppUtils.debug(`${sUrl} success.`, oData, oResponse);
+
                 oView.setVisible(true);
+
                 resolve();
-                return;
-              }
+              },
+              error: (oError) => {
+                AppUtils.debug(`${sUrl} error.`, oError);
 
-              const oMenuModel = this.getMenuModel();
-              const sMenid = oMenuModel.getMenid(sRouteNameMain);
-              if ((AppUtils.isLOCAL() || AppUtils.isDEV()) && /^X/.test(sMenid)) {
-                oView.setVisible(true);
+                this.getRouter().getTargets().display('notFound', {
+                  from: 'home',
+                });
+
                 resolve();
-                return;
-              }
-
-              const sUrl = '/GetMenuidRoleSet';
-              this.getModel(ServiceNames.COMMON).read(sUrl, {
-                filters: [
-                  // prettier 방지용 주석
-                  new Filter('Menid', FilterOperator.EQ, sMenid),
-                ],
-                success: (oData, oResponse) => {
-                  AppUtils.debug(`${sUrl} success.`, oData, oResponse);
-
-                  oView.setVisible(true);
-
-                  resolve();
-                },
-                error: (oError) => {
-                  AppUtils.debug(`${sUrl} error.`, oError);
-
-                  this.getRouter().getTargets().display('notFound', {
-                    from: 'home',
-                  });
-
-                  resolve();
-                },
-              });
+              },
             });
+          });
         });
       },
 

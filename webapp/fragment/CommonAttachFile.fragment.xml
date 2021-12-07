@@ -3,7 +3,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:core="sap.ui.core"
     xmlns:u="sap.ui.unified">
-    <VBox id="ATTACHBOX" class="vCardBox sapUiMediumMarginBottom" visible="{/Settings/Visible}">
+    <VBox id="ATTACHBOX" class="vCardBox" visible="{/Settings/Visible}">
         <HBox justifyContent="SpaceBetween">
             <HBox alignItems="Center" class="title">
                 <Title level="H2" text="{i18n>LABEL_00248}" />

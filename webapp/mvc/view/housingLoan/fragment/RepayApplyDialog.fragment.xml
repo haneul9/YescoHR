@@ -26,7 +26,7 @@
                     </VBox>
                     <Label text="{i18n>LABEL_07044}"/>
                     <VBox>
-                        <custom:DatePicker class="sapIcon_Date" change=".onPayDateChange" maxDate="{/maxDate}" dateValue="{ path: '/DialogData/Paydt', type: 'sap.ui.yesco.mvc.model.ODataDate' }" width="250px" editable="{= (${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta}) &amp;&amp; !!${/DateEditable} }" />
+                        <custom:DatePicker change=".onPayDateChange" maxDate="{/maxDate}" dateValue="{ path: '/DialogData/Paydt', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= (${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta}) &amp;&amp; !!${/DateEditable} }" />
                     </VBox>
                     <Label text="{i18n>LABEL_07041}"/>
                     <VBox>

@@ -8,12 +8,12 @@
 			<HBox justifyContent="SpaceBetween" class="breadcrumbs">
 				<custom:Breadcrumbs />
 				<HBox>
-					<Button text="{i18n>LABEL_00121}" press=".onClick" type="Emphasized" />
+					<Button type="Emphasized" text="{i18n>LABEL_00121}" press=".onPressNew" />
 				</HBox>
 			</HBox>
 		</VBox>
 		<VBox class="contents">
-			<HBox justifyContent="SpaceAround" class="sapUiMediumMarginBottom">
+			<HBox justifyContent="SpaceAround">
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBox" type="XML" />
 				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.nightduty.fragment.Summary" type="XML" />
 				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.nightduty.fragment.SearchCondition" type="XML" />

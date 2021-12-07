@@ -1,7 +1,7 @@
 <c:FragmentDefinition xmlns="sap.m"
     xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:c="sap.ui.core">
-    <VBox class="vCardBox sapUiMediumMarginBottom">
+    <VBox class="vCardBox">
         <HBox class="header-wrap">
             <Title level="H3" text="{i18n>LABEL_07035}" class="sapUiSmallMarginEnd" />
         </HBox>

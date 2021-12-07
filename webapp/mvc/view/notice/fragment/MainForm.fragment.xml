@@ -13,9 +13,7 @@
             </HBox>
         </VBox>
         <VBox class="contents">
-            <HBox class="sapUiMediumMarginBottom">
-                <core:Fragment fragmentName="sap.ui.yesco.mvc.view.notice.fragment.SearchCondition" type="XML" />
-            </HBox>
+            <core:Fragment fragmentName="sap.ui.yesco.mvc.view.notice.fragment.SearchCondition" type="XML" />
             <VBox class="vCardBox">
                 <core:Fragment fragmentName="sap.ui.yesco.fragment.OverviewTableHeader" type="XML" />
                 <core:Fragment fragmentName="sap.ui.yesco.mvc.view.notice.fragment.RegistListTable" type="XML" />

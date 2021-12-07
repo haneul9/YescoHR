@@ -70,6 +70,7 @@
         { "uri": "asset/css/webfonts/pretendard-subset.css" },
         { "uri": "asset/css/style.css" },
         { "uri": "asset/css/placeholder.css" },
+        { "uri": "asset/css/zample/zample.css" },
         { "uri": "asset/css/util/font-size.css" },
         { "uri": "asset/css/util/font-weight.css" },
         { "uri": "asset/css/util/line-height.css" },
@@ -123,7 +124,7 @@
         { "pattern": "employee/:pernr:", "name": "employee", "target": "employee" },
 
         { "pattern": "nightduty", "name": "nightduty", "target": "nightduty" },
-        { "pattern": "nightduty/:key:", "name": "nightduty-detail", "target": "nightdutyDetail" },
+        { "pattern": "nightduty/:appno:", "name": "nightduty-detail", "target": "nightdutyDetail" },
 
         { "pattern": "sampleComponents", "name": "sampleComponents", "target": "sampleComponents" },
         { "pattern": "sampleTimeline", "name": "sampleTimeline", "target": "sampleTimeline" },

@@ -24,7 +24,7 @@
 			<VBox class="contents">
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.InfoMessage" type="XML" />
-				<VBox class="vCardBox sapUiMediumMarginBottom" busyIndicatorDelay="0" busy="{/busy}">
+				<VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
 					<HBox alignItems="Center" class="title">
 						<Title level="H2" text="{i18n>LABEL_00129}" />
 						<Text text="{i18n>MSG_02005}" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="desc-txt"/>
@@ -38,7 +38,7 @@
 						</VBox>
 						<Label text="{i18n>LABEL_02014}"/>
 						<VBox>
-							<custom:DatePicker id='BirthDatePicker' class="sapIcon_Date" dateValue="{ path: '/FormData/Zbirthday', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+							<custom:DatePicker id="BirthDatePicker" dateValue="{ path: '/FormData/Zbirthday', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
 						</VBox>
 						<Label text="{i18n>LABEL_02008}"/>
 						<VBox>
@@ -48,7 +48,7 @@
 						</VBox>
 						<Label text="{i18n>LABEL_02009}"/>
 						<VBox>
-							<custom:DatePicker class="sapIcon_Date" dateValue="{ path: '/FormData/Conddate', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" change=".onBenefitChangeDate" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+							<custom:DatePicker dateValue="{ path: '/FormData/Conddate', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" change=".onBenefitChangeDate" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
 						</VBox>
 						<Label text="{i18n>LABEL_02015}"/>
 						<VBox>

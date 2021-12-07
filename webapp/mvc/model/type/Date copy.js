@@ -16,13 +16,8 @@ sap.ui.define(
     'use strict';
 
     return SimpleType.extend('sap.ui.yesco.mvc.model.type.Date', {
-      constructor: function (...args) {
-        SimpleType.apply(this, args);
-
-        const oFormatOptions = {
-          pattern: AppUtils.getAppComponent().getSessionModel().getProperty('/Dtfmt'),
-        };
-        this.setFormatOptions(oFormatOptions);
+      constructor: function () {
+        SimpleType.apply(this, arguments);
         this.sName = 'CustomDate';
       },
 
@@ -103,11 +98,11 @@ sap.ui.define(
       getMoment(oValue) {
         if (/^\/Date/.test(oValue)) {
           const iTime = parseInt(oValue.replace(/\/Date\((-?\d+)\)\//, '$1'), 10);
-          return moment(iTime).hour(9);
+          return moment(iTime);
         }
 
         const sDateString = oValue.replace(/[^\d]/g, '');
-        return moment(sDateString, this.getParsePatternForMoment()).hour(9);
+        return moment(sDateString, this.getParsePatternForMoment());
       },
     });
   }

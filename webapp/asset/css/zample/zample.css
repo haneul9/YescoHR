@@ -1,0 +1,25 @@
+.menu-sample bdi {color:#ccc}
+
+.component-title {background:linear-gradient(transparent 60%, #a8ffbe 60%) no-repeat}
+.use-this {background-color:#d3f9d8}
+
+.sampleUi .sapSuiteUiCommonsTimelineItemBarH {height:12px; background:linear-gradient(to right, blue 0%, red 100%)}
+.sampleUi .sapSuiteUiCommonsTimelineItemHeader {display:flex; flex-direction:column}
+.sampleUi .sapSuiteUiCommonsTimelineItemShellDateTime {display:none !important}
+.sampleUi .ninebox-11 {background-color:#d3f9d8}
+.sampleUi .ninebox-12 {background-color:#fff9db}
+.sampleUi .ninebox-13 {background-color:#ffe3e3}
+.sampleUi .ninebox-21 {background-color:#d0ebff}
+.sampleUi .ninebox-22 {background-color:#d3f9d8}
+.sampleUi .ninebox-23 {background-color:#fff9db}
+.sampleUi .ninebox-31 {background-color:#f1f3f5}
+.sampleUi .ninebox-32 {background-color:#d0ebff}
+.sampleUi .ninebox-33 {background-color:#d3f9d8}
+.sampleUi .ninebox .sapMHBox > div {margin-right:0 !important}
+.sampleUi .ninebox .sapMHBox.ninebox-item {margin-right:.25rem !important}
+.sampleUi .ninebox-item {margin:.25rem !important; width:11.5rem; height:4.5rem}
+.sampleUi .ninebox-item img {vertical-align:middle}
+.sampleUi .sapSuiteIDCSmallLegendPadding .sapSuiteIDCLegendLabelValue {width:calc(100% - 4rem)}
+.sampleUi .sapSuiteIDCLegend > div {height:27px !important}
+
+.sapUiCal.px-0 .sapUiCalMonthView {padding-right:0 !important; padding-left:0 !important}
