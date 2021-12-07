@@ -17,9 +17,9 @@
 			</HBox>
 		</VBox>
 		<VBox class="contents">
-			<HBox justifyContent="SpaceAround" class="sapUiMediumMarginBottom">
+			<HBox justifyContent="SpaceAround">
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBox" type="XML" />
-				<VBox class="hCardBox sapUiMediumMarginEnd summary-box" width="33%" busyIndicatorDelay="0" busy="{/busy}">
+				<VBox class="hCardBox summary-box" busyIndicatorDelay="0" busy="{/busy}">
 					<VBox>
 						<HBox justifyContent="SpaceBetween" class="title">
 							<Title level="H2" text="{i18n>MSG_02001}" />
@@ -48,7 +48,7 @@
 						</HBox>
 					</VBox>
 				</VBox>
-				<VBox class="hCardBox search-condition-box" width="33%">
+				<VBox class="hCardBox search-condition-box">
 					<HBox justifyContent="SpaceBetween" class="title">
 						<Title text="{i18n>LABEL_00202}" level="H2" />
 						<Button type="Transparent" press=".onSearch" class="icon-button search" />

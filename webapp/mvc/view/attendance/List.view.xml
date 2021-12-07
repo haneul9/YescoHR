@@ -17,14 +17,10 @@
 			</HBox>
 		</VBox>
 		<VBox class="contents">
-			<HBox justifyContent="SpaceAround" class="sapUiMediumMarginBottom">
+			<HBox justifyContent="SpaceAround">
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBox" type="XML" />
-				<VBox class="hCardBox sapUiMediumMarginEnd" width="33%">
-					<core:Fragment fragmentName="sap.ui.yesco.mvc.view.attendance.fragment.VacationOverview" type="XML" />
-				</VBox>
-				<VBox class="hCardBox search-condition-box" width="33%" busyIndicatorDelay="0" busy="{/busy}">
-					<core:Fragment fragmentName="sap.ui.yesco.mvc.view.attendance.fragment.OverviewSearchCondition" type="XML" />
-				</VBox>
+				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.attendance.fragment.VacationOverview" type="XML" />
+				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.attendance.fragment.OverviewSearchCondition" type="XML" />
 			</HBox>
 			<VBox class="vCardBox">
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.OverviewTableHeader" type="XML" />

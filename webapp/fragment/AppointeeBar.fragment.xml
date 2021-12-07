@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <HBox class="vCardBox my-info-v sapUiMediumMarginBottom">
+    <HBox class="vCardBox my-info-v">
         <Image src="{appointeeModel>/Photo}" mode="Background" backgroundPosition="center center" height="50px" width="50px" />
         <Text text="{appointeeModel>/Ename}" class="name"/>
         <Text text="{appointeeModel>/Zzjikgbt} / {appointeeModel>/Zzjiktlt}"/>

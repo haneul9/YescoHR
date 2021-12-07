@@ -17,7 +17,7 @@
         </VBox>
         <VBox class="contents">
             <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
-            <VBox class="vCardBox sapUiMediumMarginBottom" visible="{= ${/type} !== 'B'}">
+            <VBox class="vCardBox" visible="{= ${/type} !== 'B'}">
                 <HBox justifyContent="SpaceBetween">
                     <HBox alignItems="Center" class="title">
                         <Title level="H2" text="{i18n>LABEL_00129}" />
@@ -31,7 +31,7 @@
                     <core:Fragment fragmentName="sap.ui.yesco.mvc.view.attendance.fragment.SingleTable" type="XML" />
                 </HBox>
             </VBox>
-            <VBox class="vCardBox sapUiMediumMarginBottom" visible="{= ${/type} === 'B'}">
+            <VBox class="vCardBox" visible="{= ${/type} === 'B'}">
                 <HBox justifyContent="SpaceBetween">
                     <HBox alignItems="Center" class="title">
                         <Title level="H2" text="{i18n>LABEL_00129}" />

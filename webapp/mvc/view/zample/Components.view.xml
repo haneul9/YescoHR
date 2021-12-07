@@ -70,9 +70,9 @@
 											</VBox>
 											<VBox class="demoBox">
 												<layoutData>
-														<grid:GridItemLayoutData  gridRow="span 3" />
+													<grid:GridItemLayoutData gridRow="span 3" />
 												</layoutData>
-												<TextArea value="222222222222222Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" wrapping="true" class="required" />
+												<TextArea value="222222222222222Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" wrapping="Soft" class="required" />
 											</VBox>
 											<Label text="중간점검"/>
 											<VBox>
@@ -91,27 +91,13 @@
 										</grid:CSSGrid>
 									</IconTabFilter>
 									<IconTabFilter text="Attachments" key="Attachments">
-										<form:SimpleForm editable="true"
-											layout="ResponsiveGridLayout"
-											labelSpanXL="4"
-											labelSpanL="3"
-											labelSpanM="4"
-											labelSpanS="12"
-											adjustLabelSpan="false"
-											emptySpanXL="0"
-											emptySpanL="4"
-											emptySpanM="0"
-											emptySpanS="0"
-											columnsXL="2"
-											columnsL="1"
-											columnsM="1"
-											singleContainerFullSize="false">
-											<Label  labelFor="gg" text="gridGap" />
-											<Input id="gg" width="120px" value="1rem 0.5rem" change="onInputChanged"/>
-											<Label  labelFor="grg" text="gridRowGap" />
-											<Input id="grg" width="60px" change="onInputChanged"/>
-											<Label  labelFor="gcg" text="gridColumnGap" />
-											<Input id="gcg" width="60px" change="onInputChanged"/>
+										<form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1" singleContainerFullSize="false">
+											<Label labelFor="gg" text="gridGap" />
+											<Input id="gg" width="120px" value="1rem 0.5rem" />
+											<Label labelFor="grg" text="gridRowGap" />
+											<Input id="grg" width="60px" />
+											<Label labelFor="gcg" text="gridColumnGap" />
+											<Input id="gcg" width="60px" />
 										</form:SimpleForm>
 									</IconTabFilter>
 									<IconTabFilter text="Notes" key="Notes">
@@ -128,65 +114,65 @@
 											</headerToolbar>
 											<content>
 												<grid:CSSGrid gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr" gridGap="8px" class="form-grid type-c">
-													
-													
+
+
 													<VBox class="demoBox">
 														<layoutData>
-																<grid:GridItemLayoutData  gridColumn="span 3" />
+															<grid:GridItemLayoutData gridColumn="span 3" />
 														</layoutData>
-														<Label  labelFor="gcg1" text="목표항목" />
+														<Label labelFor="gcg1" text="목표항목" />
 														<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
 													</VBox>
 													<VBox class="demoBox">
 														<layoutData>
-																<grid:GridItemLayoutData  gridColumn="span 3" />
+															<grid:GridItemLayoutData gridColumn="span 3" />
 														</layoutData>
-														<Label  labelFor="gcg2" text="연간상위목표" />
-														<TextArea value="222222222222222Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" wrapping="true" class="required" />
+														<Label labelFor="gcg2" text="연간상위목표" />
+														<TextArea value="222222222222222Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" wrapping="Soft" class="required" />
 													</VBox>
 													<VBox>
-														<Label  labelFor="gcg22" text="목표항목구분" />
-														<Input id="gcg22" width="" change="onInputChanged"/>
+														<Label labelFor="gcg22" text="목표항목구분" />
+														<Input id="gcg22" />
 													</VBox>
 													<VBox>
-														<Label  labelFor="gcg33" text="가중치" />
-														<Input id="gcg33" width="" change="onInputChanged"/>
+														<Label labelFor="gcg33" text="가중치" />
+														<Input id="gcg33" />
 													</VBox>
 													<VBox>
-														<Label  labelFor="gcg44" text="목표수행 시작일" />
-														<Input id="gcg44" width="" change="onInputChanged"/>
-													</VBox>													
-													<VBox>
-														<Label  labelFor="gcg222" text="목표항목구분" />
-														<Input id="gcg222" width="" change="onInputChanged"/>
+														<Label labelFor="gcg44" text="목표수행 시작일" />
+														<Input id="gcg44" />
 													</VBox>
 													<VBox>
-														<Label  labelFor="gcg333" text="가중치" />
-														<Input id="gcg333" width="" change="onInputChanged"/>
+														<Label labelFor="gcg222" text="목표항목구분" />
+														<Input id="gcg222" />
 													</VBox>
 													<VBox>
-														<Label  labelFor="gcg444" text="목표수행 시작일" />
-														<Input id="gcg444" width="" change="onInputChanged"/>
+														<Label labelFor="gcg333" text="가중치" />
+														<Input id="gcg333" />
+													</VBox>
+													<VBox>
+														<Label labelFor="gcg444" text="목표수행 시작일" />
+														<Input id="gcg444" />
 													</VBox>
 													<VBox class="demoBox">
 														<layoutData>
-																<grid:GridItemLayoutData  gridColumn="span 3" />
+															<grid:GridItemLayoutData gridColumn="span 3" />
 														</layoutData>
-														<Label  labelFor="gcg1" text="핵심결과" />
+														<Label labelFor="gcg1" text="핵심결과" />
 														<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
 													</VBox>
 													<VBox class="demoBox">
 														<layoutData>
-																<grid:GridItemLayoutData  gridrow="span 3"  gridColumn="span 3" gridRow="span 2" />
+															<grid:GridItemLayoutData gridColumn="span 3" gridRow="span 2" />
 														</layoutData>
 														<Label labelFor="gcg10" text="등급별 등급점수" />
 														<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
-													</VBox>													
+													</VBox>
 													<VBox class="demoBox">
 														<layoutData>
-																<grid:GridItemLayoutData  gridColumn="span 3" />
+															<grid:GridItemLayoutData gridColumn="span 3" />
 														</layoutData>
-														<Label  labelFor="gcg1" text="수행실적" />
+														<Label labelFor="gcg1" text="수행실적" />
 														<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
 													</VBox>
 													<VBox>
@@ -195,38 +181,38 @@
 													<VBox>
 														<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
 													</VBox>
-													
+
 													<VBox>
 														<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
 													</VBox>
-													
+
 													<VBox>
 														<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
 													</VBox>
-													
+
 													<VBox>
 														<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
 													</VBox>
-													
+
 													<VBox>
 														<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
 													</VBox>
-													
+
 													<VBox>
 														<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
 													</VBox>
-													
+
 													<VBox>
 														<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
 													</VBox>
-													
+
 													<VBox>
 														<TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" rows="5" width="100%" class="required" />
 													</VBox>
 												</grid:CSSGrid>
 											</content>
 										</Panel>
-										
+
 									</IconTabFilter>
 									<IconTabFilter text="People" key="People">
 										<Text text="People content goes here ..."/>
@@ -242,9 +228,9 @@
 						<VBox class="vCardBox">
 							<HBox class="label_wrap">
 								<Label text="Label" labelFor="input-aa" />
-								<Input id="input-aa" required="true" width='250px' placeholder="Default" />
+								<Input id="input-aa" required="true" width="250px" placeholder="Default" />
 								<Label text="Label" labelFor="input-bb" design="Bold" />
-								<Select width='250px' forceSelection="false" selectedKey="{/SelectedProduct}" items="{
+								<Select width="250px" forceSelection="false" selectedKey="{/SelectedProduct}" items="{
 										path: '/ProductCollection',
 										sorter: {
 											path: 'Name'
@@ -254,7 +240,7 @@
 									<core:Item key="{ProductId}" text="{Name}" />
 								</Select>
 								<Label text="Label" labelFor="input-cc"/>
-								<Input id="input-cc" width='250px' placeholder="Default"/>
+								<Input id="input-cc" width="250px" placeholder="Default"/>
 								<Button icon="asset/image/icon_search02.png" class="icon-button" text="조회" />
 							</HBox>
 						</VBox>
@@ -291,20 +277,20 @@
 					<VBox>
 						<Title level="H3" text="Dialog" class="component-title" />
 						<HBox>
-							<Button width='117px' text="사원검색" press=".openEmployeeDialog" />
+							<Button width="117px" text="사원검색" press=".openEmployeeDialog" />
 						</HBox>
 					</VBox>
 				</HBox>
 				<HBox class="sapUiResponsiveMargin" width="auto">
 					<VBox>
 						<Title level="H3" text="Label" class="component-title" />
-						<HBox class='label_wrap'>
+						<HBox class="label_wrap">
 							<Label text="Label A (required)" labelFor="input-a" />
-							<Input id="input-a" required="true" width='250px' placeholder="Default"/>
+							<Input id="input-a" required="true" width="250px" placeholder="Default"/>
 							<Label text="Label B (bold)" labelFor="input-b" design="Bold" />
-							<Input id="input-b" width='250px' placeholder="Default"/>
+							<Input id="input-b" width="250px" placeholder="Default"/>
 							<Label text="Label C (normal)" labelFor="input-c"/>
-							<Input id="input-c" width='250px' placeholder="Default"/>
+							<Input id="input-c" width="250px" placeholder="Default"/>
 						</HBox>
 					</VBox>
 				</HBox>
@@ -319,20 +305,20 @@
 										minLength: 1,
 										maxLength: 10
 									}
-								}" width='250px'/>
-							<Input id="productInput" width='180px' placeholder="Enter product" showSuggestion="true" showValueHelp="true" valueHelpRequest=".onValueHelpRequest" suggestionItems="{/ProductCollection}" class="sapIcon_Search">
+								}" width="250px"/>
+							<Input id="productInput" width="180px" placeholder="Enter product" showSuggestion="true" showValueHelp="true" valueHelpRequest=".onValueHelpRequest" suggestionItems="{/ProductCollection}" class="sapIcon_Search">
 								<core:Item text="{Name}"/>
 							</Input>
 							<Input value="10" description="명" textAlign="Right"/>
 						</HBox>
 						<HBox>
-							<Input id="InputNoEdit" width='180px' value="No edit" type="Text" placeholder="Product" enabled="true" editable="false" />
-							<Input id="InputDisabled" width='180px' value="Disabled" type="Text" placeholder="Product" enabled="false" />
-							<Input valueState="Success" width='200px' value="Value state Success" />
-							<Input valueState="Warning" width='200px' valueStateText="Warning message. Extra long text used as a warning message. Extra long text used as a warning message - 2. Extra long text used as a warning message - 3. Extra long text used as a warning message - 4. Extra long text used as a warning message - 5." value="Value state Warning." />
-							<Input valueState="Error" width='200px' value="Value state Error" />
-							<Input valueState="Information" width='200px' value="Value state Information" />
-							<Input width='200px' valueStateText="" value="필수일때 class required" class="required"/>
+							<Input id="InputNoEdit" width="180px" value="No edit" type="Text" placeholder="Product" enabled="true" editable="false" />
+							<Input id="InputDisabled" width="180px" value="Disabled" type="Text" placeholder="Product" enabled="false" />
+							<Input valueState="Success" width="200px" value="Value state Success" />
+							<Input valueState="Warning" width="200px" valueStateText="Warning message. Extra long text used as a warning message. Extra long text used as a warning message - 2. Extra long text used as a warning message - 3. Extra long text used as a warning message - 4. Extra long text used as a warning message - 5." value="Value state Warning." />
+							<Input valueState="Error" width="200px" value="Value state Error" />
+							<Input valueState="Information" width="200px" value="Value state Information" />
+							<Input width="200px" valueStateText="" value="필수일때 class required" class="required"/>
 						</HBox>
 					</VBox>
 				</HBox>
@@ -340,7 +326,7 @@
 					<VBox>
 						<Title level="H3" text="Search Input" class="component-title" />
 						<HBox>
-							<SearchField width='250px' placeholder="검색어를 입력하세요." />
+							<SearchField width="250px" placeholder="검색어를 입력하세요." />
 						</HBox>
 					</VBox>
 				</HBox>
@@ -356,7 +342,7 @@
 					<VBox>
 						<Title level="H3" text="ComboBox and Select" class="component-title" />
 						<HBox>
-							<ComboBox width='250px' class='sapIcon_Select_Arrow' items="{
+							<ComboBox width="250px" class="sapIcon_Select_Arrow" items="{
 								path: '/ProductCollection',
 								sorter: {
 									path: 'text'
@@ -365,7 +351,7 @@
 							}">
 								<core:Item key="{ProductId}" text="{Name}" />
 							</ComboBox>
-							<Select width='250px' forceSelection="false" selectedKey="{/SelectedProduct}" items="{
+							<Select width="250px" forceSelection="false" selectedKey="{/SelectedProduct}" items="{
 									path: '/ProductCollection',
 									sorter: {
 										path: 'Name'
@@ -374,7 +360,7 @@
 								}">
 								<core:Item key="{ProductId}" text="{Name}" />
 							</Select>
-							<MultiComboBox width='250px' class='sapIcon_Select_Arrow' selectionChange="handleSelectionChange" selectionFinish="handleSelectionFinish" items="{
+							<MultiComboBox width="250px" class="sapIcon_Select_Arrow" selectionChange="handleSelectionChange" selectionFinish="handleSelectionFinish" items="{
 									path: '/ProductCollection',
 									sorter: {
 										path: 'Name'
@@ -516,31 +502,31 @@
 					<VBox>
 						<Title level="H3" text="Button" class="component-title" />
 						<!-- <HBox>
-							<Button width='117px' text="Default" ariaDescribedBy="defaultButtonDescription genericButtonDescription">
+							<Button width="117px" text="Default" ariaDescribedBy="defaultButtonDescription genericButtonDescription">
 								<layoutData>
 									<FlexItemData growFactor="1"/>
 								</layoutData>
 							</Button>
-							<Button width='117px' type="Accept" text="Accept" ariaDescribedBy="acceptButtonDescription genericButtonDescription">
+							<Button width="117px" type="Accept" text="Accept" ariaDescribedBy="acceptButtonDescription genericButtonDescription">
 								<layoutData>
 									<FlexItemData growFactor="1"/>
 								</layoutData>
 							</Button>
-							<Button width='117px' type="Reject" text="Reject" ariaDescribedBy="rejectButtonDescription genericButtonDescription">
+							<Button width="117px" type="Reject" text="Reject" ariaDescribedBy="rejectButtonDescription genericButtonDescription">
 								<layoutData>
 									<FlexItemData growFactor="1"/>
 								</layoutData>
 							</Button>
-							<Button width='117px' text="Coming Soon" ariaDescribedBy="comingSoonButtonDescription genericButtonDescription" enabled="false">
+							<Button width="117px" text="Coming Soon" ariaDescribedBy="comingSoonButtonDescription genericButtonDescription" enabled="false">
 								<layoutData>
 									<FlexItemData growFactor="1"/>
 								</layoutData>
 							</Button>
-							<Button width='117px' type="Emphasized" text="Emphasized" />
-							<Button width='117px' type="Emphasized" text="Emphasized disabled" enabled="false" disabled="disabled"/>
-							<Button width='117px' text="Default"/>
-							<Button width='117px' text="Transparent" type="Transparent" />
-							<Button width='117px' icon="sap-icon://action" type="Transparent" text="With Icon" />
+							<Button width="117px" type="Emphasized" text="Emphasized" />
+							<Button width="117px" type="Emphasized" text="Emphasized disabled" enabled="false" disabled="disabled"/>
+							<Button width="117px" text="Default"/>
+							<Button width="117px" text="Transparent" type="Transparent" />
+							<Button width="117px" icon="sap-icon://action" type="Transparent" text="With Icon" />
 						</HBox> -->
 						<HBox class="sapUiSmallMarginTop">
 							<Text text="Enable" />
@@ -578,17 +564,17 @@
 					<VBox>
 						<Title level="H3" text="Toggle Button" class="component-title" />
 						<HBox>
-							<ToggleButton width='117px' class='toggle_edit' text="Pressed" enabled="true" pressed="true">
+							<ToggleButton width="117px" class="toggle_edit" text="Pressed" enabled="true" pressed="true">
 								<layoutData>
 									<FlexItemData growFactor="1" />
 								</layoutData>
 							</ToggleButton>
-							<ToggleButton width='117px' class='toggle_edit' text="Disabled" enabled="false">
+							<ToggleButton width="117px" class="toggle_edit" text="Disabled" enabled="false">
 								<layoutData>
 									<FlexItemData growFactor="1" />
 								</layoutData>
 							</ToggleButton>
-							<ToggleButton width='60px' class='toggle_edit' icon="sap-icon://action" enabled="true">
+							<ToggleButton width="60px" class="toggle_edit" icon="sap-icon://action" enabled="true">
 								<layoutData>
 									<FlexItemData growFactor="1" />
 								</layoutData>
@@ -614,12 +600,12 @@
 					<VBox>
 						<Title level="H3" text="Message Box" class="component-title" />
 						<HBox>
-							<Button width='117px' text="Confirm" press=".onConfirmationMessageBoxPress" />
-							<Button width='117px' text="Alert" press=".onAlertMessageBoxPress" />
-							<Button width='117px' text="Error" press=".onErrorMessageBoxPress" />
-							<Button width='117px' text="Info" press=".onInfoMessageBoxPress" />
-							<Button width='117px' text="Warning" press=".onWarningMessageBoxPress" />
-							<Button width='117px' text="Success" press=".onSuccessMessageBoxPress" />
+							<Button width="117px" text="Confirm" press=".onConfirmationMessageBoxPress" />
+							<Button width="117px" text="Alert" press=".onAlertMessageBoxPress" />
+							<Button width="117px" text="Error" press=".onErrorMessageBoxPress" />
+							<Button width="117px" text="Info" press=".onInfoMessageBoxPress" />
+							<Button width="117px" text="Warning" press=".onWarningMessageBoxPress" />
+							<Button width="117px" text="Success" press=".onSuccessMessageBoxPress" />
 						</HBox>
 					</VBox>
 				</HBox>
@@ -704,7 +690,7 @@
 								<table:Column width="191px" hAlign="Center" filterProperty="Supplier" sortProperty="Supplier">
 									<Label text="Supplier"/>
 									<table:template>
-										<ComboBox class='sapIcon_Select_Arrow' value="{SupplierName}" items="{
+										<ComboBox class="sapIcon_Select_Arrow" value="{SupplierName}" items="{
 												path: '/Suppliers',
 												templateShareable: true
 											}">
@@ -788,7 +774,7 @@
 								<table:Column width="191px" hAlign="Center" filterProperty="Supplier" sortProperty="Supplier">
 									<Label text="Supplier"/>
 									<table:template>
-										<ComboBox class='sapIcon_Select_Arrow' value="{SupplierName}" items="{
+										<ComboBox class="sapIcon_Select_Arrow" value="{SupplierName}" items="{
 												path: '/Suppliers',
 												templateShareable: true
 											}">

@@ -103,11 +103,11 @@ sap.ui.define(
       getMoment(oValue) {
         if (/^\/Date/.test(oValue)) {
           const iTime = parseInt(oValue.replace(/\/Date\((-?\d+)\)\//, '$1'), 10);
-          return moment(iTime);
+          return moment(iTime).hour(9);
         }
 
         const sDateString = oValue.replace(/[^\d]/g, '');
-        return moment(sDateString, this.getParsePatternForMoment());
+        return moment(sDateString, this.getParsePatternForMoment()).hour(9);
       },
     });
   }

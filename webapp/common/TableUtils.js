@@ -53,9 +53,12 @@ sap.ui.define(
        * Functions
        *************************/
       count({ oTable, aRowData, sStatCode = 'ZappStatAl' }) {
+        const iBodyHeight = $('body').height(); // 화면 높이
+        const iOffsetTopOfTbody = oTable.$().find('.sapUiTableCCnt').offset().top; // Table 데이터 시작행의 화면 최상단까지의 거리
+        const iParentFlexBoxPaddingBottom = parseInt(oTable.$().parents('.sapMFlexBox').css('padding-bottom'), 10); // Table을 감싸고 있는 FlexBox의 아래 padding
+        const iRowHeight = oTable.getRowHeight(); // Table에 세팅된 행높이
+        const iVisibleRowCountLimit = Math.floor((iBodyHeight - iOffsetTopOfTbody - iParentFlexBoxPaddingBottom) / iRowHeight);
         const aZappStatAls = _.map(aRowData, sStatCode);
-        const iRowHeight = oTable.getRowHeight();
-        const iVisibleRowcountLimit = Math.floor(($(document).height() - oTable.$().find('.sapUiTableCCnt').offset().top - iRowHeight) / iRowHeight);
         const oOccurCount = _.defaults(_.countBy(aZappStatAls), {
           [STATE_IN_PROGRESS1]: 0,
           [STATE_IN_PROGRESS2]: 0,
@@ -69,7 +72,7 @@ sap.ui.define(
         });
 
         return {
-          rowCount: iVisibleRowcountLimit > aZappStatAls.length ? aZappStatAls.length : iVisibleRowcountLimit,
+          rowCount: iVisibleRowCountLimit > aZappStatAls.length ? aZappStatAls.length : iVisibleRowCountLimit,
           totalCount: aZappStatAls.length,
           progressCount: oOccurCount[STATE_IN_PROGRESS1] + oOccurCount[STATE_IN_PROGRESS2],
           applyCount: oOccurCount[STATE_APPLY1] + oOccurCount[STATE_APPLY2] + oOccurCount[STATE_APPLY3],
