@@ -23,101 +23,109 @@
 					</HBox>
 				</HBox>
 				<HBox>
-					<Panel expandable="true" expanded="true">
+					<Panel expandable="true" expanded="false">
 						<layoutData>
 							<FlexItemData growFactor="1" />
 						</layoutData>
 						<headerToolbar>
-							<Toolbar width="100%">
-								<HBox width="100%" justifyContent="SpaceAround">
-									<Title level="H4" text="준비중">
-										<layoutData>
-											<FlexItemData growFactor="1" />
-										</layoutData>
-									</Title>
-									<Title level="H4" text="목표수립">
-										<layoutData>
-											<FlexItemData growFactor="1" />
-										</layoutData>
-									</Title>
-									<Title level="H4" text="중간점검">
-										<layoutData>
-											<FlexItemData growFactor="1" />
-										</layoutData>
-									</Title>
-									<Title level="H4" text="성과평가">
-										<layoutData>
-											<FlexItemData growFactor="1" />
-										</layoutData>
-									</Title>
-									<Title level="H4" text="평가완료">
-										<layoutData>
-											<FlexItemData growFactor="1" />
-										</layoutData>
-									</Title>
+							<Toolbar width="100%" height="60px">
+								<HBox width="100%">
+									<VBox width="15%">
+										<Title level="H4" text="준비중">
+											<customData>
+												<core:CustomData key="color" value="blue" writeToDom="true" />
+											</customData>
+										</Title>
+										<core:Icon src="sap-icon://accelerated" size="2rem" width="18%" color="blue" />
+									</VBox>
+									<VBox width="21%">
+										<Title level="H4" text="목표수립">
+											<customData>
+												<core:CustomData key="color" value="blue" writeToDom="true" />
+											</customData>
+										</Title>
+										<core:Icon src="sap-icon://accelerated" size="2rem" width="18%" color="blue" />
+									</VBox>
+									<VBox width="21%">
+										<Title level="H4" text="중간점검">
+											<customData>
+												<core:CustomData key="color" value="none" writeToDom="true" />
+											</customData>
+										</Title>
+										<core:Icon src="sap-icon://accelerated" size="2rem" width="17%" />
+									</VBox>
+									<VBox width="21%">
+										<Title level="H4" text="성과평가">
+											<customData>
+												<core:CustomData key="color" value="none" writeToDom="true" />
+											</customData>
+										</Title>
+										<core:Icon src="sap-icon://accelerated" size="2rem" width="18%" />
+									</VBox>
+									<VBox width="20%">
+										<Title level="H4" text="평가완료">
+											<customData>
+												<core:CustomData key="color" value="none" writeToDom="true" />
+											</customData>
+										</Title>
+										<core:Icon src="sap-icon://accelerated" size="2rem" width="18%" />
+									</VBox>
 								</HBox>
 							</Toolbar>
 						</headerToolbar>
 						<content>
-							<HBox width="100%" justifyContent="SpaceAround">
-								<core:Icon src="sap-icon://accelerated" />
-								<core:Icon src="sap-icon://accelerated" />
-								<core:Icon src="sap-icon://accelerated" />
-								<core:Icon src="sap-icon://accelerated" />
-								<core:Icon src="sap-icon://accelerated" />
-							</HBox>
-							<HBox width="100%" justifyContent="SpaceAround">
-								<VBox>
+							<HBox width="100%">
+								<VBox width="18.9%" />
+								<VBox width="21.3%">
 									<HBox>
-										<Text text="" />
+										<core:Icon src="sap-icon://arrow-down" color="blue" />
+										<Text text="목표수립필요">
+											<customData>
+												<core:CustomData key="color" value="blue" writeToDom="true" />
+											</customData>
+										</Text>
 									</HBox>
-								</VBox>
-								<VBox>
-									<HBox>
-										<core:Icon src="sap-icon://arrow-down" />
-										<Text text="목표수립필요" />
-									</HBox>
-									<HBox>
+									<HBox class="sapUiSmallMarginTop">
 										<core:Icon src="sap-icon://arrow-down" />
 										<Text text="평가자합의중" />
 									</HBox>
-									<HBox>
+									<HBox class="sapUiSmallMarginTop">
 										<core:Icon src="sap-icon://arrow-down" />
 										<Text text="목표수립완료" />
 									</HBox>
 								</VBox>
-								<VBox>
+								<VBox width="21.5%">
 									<HBox>
 										<core:Icon src="sap-icon://arrow-down" />
 										<Text text="중간점검필요" />
 									</HBox>
-									<HBox>
+									<HBox class="sapUiSmallMarginTop">
 										<core:Icon src="sap-icon://arrow-down" />
 										<Text text="평가자점검중" />
 									</HBox>
-									<HBox>
+									<HBox class="sapUiSmallMarginTop">
 										<core:Icon src="sap-icon://arrow-down" />
 										<Text text="중간점검완료" />
 									</HBox>
 								</VBox>
-								<VBox>
+								<VBox width="21.4%">
 									<HBox>
 										<core:Icon src="sap-icon://arrow-down" />
 										<Text text="자기평가필요" />
 									</HBox>
-									<HBox>
+									<HBox class="sapUiSmallMarginTop">
 										<core:Icon src="sap-icon://arrow-down" />
 										<Text text="직무순환설문중" />
 									</HBox>
-									<HBox>
+									<HBox class="sapUiSmallMarginTop">
 										<core:Icon src="sap-icon://arrow-down" />
 										<Text text="1차평가중" />
 									</HBox>
-									<HBox>
+									<HBox class="sapUiSmallMarginTop">
 										<core:Icon src="sap-icon://arrow-down" />
 										<Text text="2차평가중" />
 									</HBox>
-									<HBox>
+									<HBox class="sapUiSmallMarginTop">
 										<core:Icon src="sap-icon://arrow-down" />
 										<Text text="전사 Session 중" />
 									</HBox>
@@ -127,11 +135,11 @@
 										<core:Icon src="sap-icon://arrow-down" />
 										<Text text="평가결과확인필요" />
 									</HBox>
-									<HBox>
+									<HBox class="sapUiSmallMarginTop">
 										<core:Icon src="sap-icon://arrow-down" />
 										<Text text="이의신청중" />
 									</HBox>
-									<HBox>
+									<HBox class="sapUiSmallMarginTop">
 										<core:Icon src="sap-icon://arrow-down" />
 										<Text text="평가완료" />
 									</HBox>
@@ -142,7 +150,7 @@
 				</HBox>
 			</VBox>
 			<HBox>
-				<IconTabBar class="type-b" selectedKey="{/tab/selectedKey}">
+				<IconTabBar class="type-b" selectedKey="{/tab/selectedKey}" expandable="false">
 					<layoutData>
 						<FlexItemData growFactor="1"/>
 					</layoutData>
@@ -152,18 +160,375 @@
 								<HBox>
 									<HBox alignItems="Center" class="title">
 										<Title level="H2" text="{i18n>LABEL_10007}" />
+										<Button icon="sap-icon://sys-add" text="목표추가" />
 									</HBox>
 								</HBox>
 								<VBox id="strategyGroup">
 									<VBox id="strategy01">
-										<HBox>
-											<Text text="1. empty-string" />
-										</HBox>
+										<Panel expandable="true" expanded="false">
+											<headerToolbar>
+												<Toolbar height="45px" width="100%">
+													<HBox justifyContent="Center" width="8%">
+														<Label width="100%" text="1" textAlign="Center" />
+													</HBox>
+													<Input width="78%" />
+													<Button icon="sap-icon://sys-minus" text="목표삭제" />
+												</Toolbar>
+											</headerToolbar>
+											<content>
+												<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr">
+													<VBox>
+														<Label width="100%" text="가중치(%)" />
+													</VBox>
+													<Input width="100%" class="required" />
+													<VBox>
+														<Label width="100%" text="자기평가" />
+													</VBox>
+													<Input width="100%" class="required" />
+													<VBox>
+														<Label width="100%" text="1차평가" />
+													</VBox>
+													<Input width="100%" class="required" />
+													<HBox width="100%" />
+													<HBox width="100%" />
+													<VBox>
+														<Label width="100%" text="연관 상위 목표"/>
+													</VBox>
+													<Input width="100%" class="required">
+														<layoutData>
+															<grid:GridItemLayoutData gridColumn="2 / 8" />
+														</layoutData>
+													</Input>
+													<HBox width="100%" />
+													<VBox>
+														<Label width="100%" text="목표수행 시작일"/>
+													</VBox>
+													<Input width="100%" class="required"/>
+													<VBox>
+														<Label width="100%" text="목표수행 종료일"/>
+													</VBox>
+													<Input width="100%" class="required"/>
+													<VBox>
+														<Label width="100%" text="진척도(%)"/>
+													</VBox>
+													<Input width="100%" class="required"/>
+													<VBox>
+														<Label width="100%" text="진행상태"/>
+													</VBox>
+													<Input width="100%" class="required"/>
+													<VBox>
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="4 / 6" />
+														</layoutData>
+														<Label width="100%" text="핵심결과" vAlign="Top"/>
+													</VBox>
+													<TextArea growing="true" growingMaxLines="7" class="required">
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="4 / 6" gridColumn="2 / 5" />
+														</layoutData>
+													</TextArea>
+													<VBox>
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="4 / 6" />
+														</layoutData>
+														<Label width="100%" text="실적" vAlign="Top"/>
+													</VBox>
+													<TextArea growing="true" growingMaxLines="7" class="required">
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="4 / 6" gridColumn="6 / 9" />
+														</layoutData>
+													</TextArea>
+													<VBox>
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="6 / 11" />
+														</layoutData>
+														<Label width="100%" text="달성 방안" vAlign="Top"/>
+													</VBox>
+													<HBox width="100%">
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="6" gridColumn="2 / 9" />
+														</layoutData>
+														<Label width="18px" text="L5" textAlign="Center">
+															<layoutData>
+																<FlexItemData growFactor="1" />
+															</layoutData>
+														</Label>
+														<Input width="100%" class="required">
+															<layoutData>
+																<FlexItemData growFactor="20" />
+															</layoutData>
+														</Input>
+													</HBox>
+													<HBox width="100%">
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="7" gridColumn="2 / 9" />
+														</layoutData>
+														<Label width="18px" text="L4">
+															<layoutData>
+																<FlexItemData growFactor="1" />
+															</layoutData>
+														</Label>
+														<Input width="100%" class="required">
+															<layoutData>
+																<FlexItemData growFactor="20" />
+															</layoutData>
+														</Input>
+													</HBox>
+													<HBox width="100%">
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="8" gridColumn="2 / 9" />
+														</layoutData>
+														<Label width="18px" text="L3">
+															<layoutData>
+																<FlexItemData growFactor="1" />
+															</layoutData>
+														</Label>
+														<Input width="100%" class="required">
+															<layoutData>
+																<FlexItemData growFactor="20" />
+															</layoutData>
+														</Input>
+													</HBox>
+													<HBox width="100%">
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="9" gridColumn="2 / 9" />
+														</layoutData>
+														<Label width="18px" text="L2">
+															<layoutData>
+																<FlexItemData growFactor="1" />
+															</layoutData>
+														</Label>
+														<Input width="100%" class="required">
+															<layoutData>
+																<FlexItemData growFactor="20" />
+															</layoutData>
+														</Input>
+													</HBox>
+													<HBox width="100%">
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="10" gridColumn="2 / 9" />
+														</layoutData>
+														<Label width="18px" text="L1">
+															<layoutData>
+																<FlexItemData growFactor="1" />
+															</layoutData>
+														</Label>
+														<Input width="100%" class="required">
+															<layoutData>
+																<FlexItemData growFactor="20" />
+															</layoutData>
+														</Input>
+													</HBox>
+													<VBox>
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="11 / 13" />
+														</layoutData>
+														<Label width="100%" text="목표항목별 의견"/>
+														<Label width="100%" text="(피평가자)"/>
+													</VBox>
+													<TextArea growing="true" growingMaxLines="7" class="required">
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="11 / 13" gridColumn="2 / 5" />
+														</layoutData>
+													</TextArea>
+													<VBox>
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="11 / 13" />
+														</layoutData>
+														<Label width="100%" text="목표항목별 의견"/>
+														<Label width="100%" text="(평가자)"/>
+													</VBox>
+													<TextArea growing="true" growingMaxLines="7" class="required">
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="11 / 13" gridColumn="6 / 9" />
+														</layoutData>
+													</TextArea>
+												</grid:CSSGrid>
+											</content>
+										</Panel>
 									</VBox>
 									<VBox id="strategy02">
-										<HBox>
-											<Text text="2. empty-string" />
-										</HBox>
+										<Panel expandable="true" expanded="false">
+											<headerToolbar>
+												<Toolbar height="45px" width="100%">
+													<HBox justifyContent="Center" width="8%">
+														<Label width="100%" text="2" textAlign="Center" />
+													</HBox>
+													<Input width="78%" />
+													<Button icon="sap-icon://sys-minus" text="목표삭제" />
+												</Toolbar>
+											</headerToolbar>
+											<content>
+												<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr">
+													<VBox>
+														<Label width="100%" text="가중치(%)" />
+													</VBox>
+													<Input width="100%" class="required" />
+													<VBox>
+														<Label width="100%" text="자기평가" />
+													</VBox>
+													<Input width="100%" class="required" />
+													<VBox>
+														<Label width="100%" text="1차평가" />
+													</VBox>
+													<Input width="100%" class="required" />
+													<HBox width="100%" />
+													<HBox width="100%" />
+													<VBox>
+														<Label width="100%" text="연관 상위 목표"/>
+													</VBox>
+													<Input width="100%" class="required">
+														<layoutData>
+															<grid:GridItemLayoutData gridColumn="2 / 8" />
+														</layoutData>
+													</Input>
+													<HBox width="100%" />
+													<VBox>
+														<Label width="100%" text="목표수행 시작일"/>
+													</VBox>
+													<Input width="100%" class="required"/>
+													<VBox>
+														<Label width="100%" text="목표수행 종료일"/>
+													</VBox>
+													<Input width="100%" class="required"/>
+													<VBox>
+														<Label width="100%" text="진척도(%)"/>
+													</VBox>
+													<Input width="100%" class="required"/>
+													<VBox>
+														<Label width="100%" text="진행상태"/>
+													</VBox>
+													<Input width="100%" class="required"/>
+													<VBox>
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="4 / 6" />
+														</layoutData>
+														<Label width="100%" text="핵심결과" vAlign="Top"/>
+													</VBox>
+													<TextArea growing="true" growingMaxLines="7" class="required">
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="4 / 6" gridColumn="2 / 5" />
+														</layoutData>
+													</TextArea>
+													<VBox>
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="4 / 6" />
+														</layoutData>
+														<Label width="100%" text="실적" vAlign="Top"/>
+													</VBox>
+													<TextArea growing="true" growingMaxLines="7" class="required">
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="4 / 6" gridColumn="6 / 9" />
+														</layoutData>
+													</TextArea>
+													<VBox>
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="6 / 11" />
+														</layoutData>
+														<Label width="100%" text="달성 방안" vAlign="Top"/>
+													</VBox>
+													<HBox width="100%">
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="6" gridColumn="2 / 9" />
+														</layoutData>
+														<Label width="18px" text="L5" textAlign="Center">
+															<layoutData>
+																<FlexItemData growFactor="1" />
+															</layoutData>
+														</Label>
+														<Input width="100%" class="required">
+															<layoutData>
+																<FlexItemData growFactor="20" />
+															</layoutData>
+														</Input>
+													</HBox>
+													<HBox width="100%">
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="7" gridColumn="2 / 9" />
+														</layoutData>
+														<Label width="18px" text="L4">
+															<layoutData>
+																<FlexItemData growFactor="1" />
+															</layoutData>
+														</Label>
+														<Input width="100%" class="required">
+															<layoutData>
+																<FlexItemData growFactor="20" />
+															</layoutData>
+														</Input>
+													</HBox>
+													<HBox width="100%">
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="8" gridColumn="2 / 9" />
+														</layoutData>
+														<Label width="18px" text="L3">
+															<layoutData>
+																<FlexItemData growFactor="1" />
+															</layoutData>
+														</Label>
+														<Input width="100%" class="required">
+															<layoutData>
+																<FlexItemData growFactor="20" />
+															</layoutData>
+														</Input>
+													</HBox>
+													<HBox width="100%">
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="9" gridColumn="2 / 9" />
+														</layoutData>
+														<Label width="18px" text="L2">
+															<layoutData>
+																<FlexItemData growFactor="1" />
+															</layoutData>
+														</Label>
+														<Input width="100%" class="required">
+															<layoutData>
+																<FlexItemData growFactor="20" />
+															</layoutData>
+														</Input>
+													</HBox>
+													<HBox width="100%">
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="10" gridColumn="2 / 9" />
+														</layoutData>
+														<Label width="18px" text="L1">
+															<layoutData>
+																<FlexItemData growFactor="1" />
+															</layoutData>
+														</Label>
+														<Input width="100%" class="required">
+															<layoutData>
+																<FlexItemData growFactor="20" />
+															</layoutData>
+														</Input>
+													</HBox>
+													<VBox>
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="11 / 13" />
+														</layoutData>
+														<Label width="100%" text="목표항목별 의견"/>
+														<Label width="100%" text="(피평가자)"/>
+													</VBox>
+													<TextArea growing="true" growingMaxLines="7" class="required">
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="11 / 13" gridColumn="2 / 5" />
+														</layoutData>
+													</TextArea>
+													<VBox>
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="11 / 13" />
+														</layoutData>
+														<Label width="100%" text="목표항목별 의견"/>
+														<Label width="100%" text="(평가자)"/>
+													</VBox>
+													<TextArea growing="true" growingMaxLines="7" class="required">
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="11 / 13" gridColumn="6 / 9" />
+														</layoutData>
+													</TextArea>
+												</grid:CSSGrid>
+											</content>
+										</Panel>
 									</VBox>
 								</VBox>
 							</VBox>
@@ -171,30 +536,209 @@
 								<HBox>
 									<HBox alignItems="Center" class="title">
 										<Title level="H2" text="{i18n>LABEL_10008}" />
+										<Button icon="sap-icon://sys-add" text="목표추가" />
 									</HBox>
 								</HBox>
 								<VBox id="dutyGroup">
 									<VBox id="duty01">
-										<HBox>
-											<Text text="1. empty-string" />
-										</HBox>
-									</VBox>
-									<VBox id="duty02">
-										<HBox>
-											<Text text="2. empty-string" />
-										</HBox>
+										<Panel expandable="true" expanded="false">
+											<headerToolbar>
+												<Toolbar height="45px" width="100%">
+													<HBox justifyContent="Center" width="8%">
+														<Label width="100%" text="1" textAlign="Center" />
+													</HBox>
+													<Input width="78%" />
+													<Button icon="sap-icon://sys-minus" text="목표삭제" />
+												</Toolbar>
+											</headerToolbar>
+											<content>
+												<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr">
+													<VBox>
+														<Label width="100%" text="가중치(%)" />
+													</VBox>
+													<Input width="100%" class="required" />
+													<VBox>
+														<Label width="100%" text="자기평가" />
+													</VBox>
+													<Input width="100%" class="required" />
+													<VBox>
+														<Label width="100%" text="1차평가" />
+													</VBox>
+													<Input width="100%" class="required" />
+													<HBox width="100%" />
+													<HBox width="100%" />
+													<VBox>
+														<Label width="100%" text="연관 상위 목표"/>
+													</VBox>
+													<Input width="100%" class="required">
+														<layoutData>
+															<grid:GridItemLayoutData gridColumn="2 / 8" />
+														</layoutData>
+													</Input>
+													<HBox width="100%" />
+													<VBox>
+														<Label width="100%" text="목표수행 시작일"/>
+													</VBox>
+													<Input width="100%" class="required"/>
+													<VBox>
+														<Label width="100%" text="목표수행 종료일"/>
+													</VBox>
+													<Input width="100%" class="required"/>
+													<VBox>
+														<Label width="100%" text="진척도(%)"/>
+													</VBox>
+													<Input width="100%" class="required"/>
+													<VBox>
+														<Label width="100%" text="진행상태"/>
+													</VBox>
+													<Input width="100%" class="required"/>
+													<VBox>
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="4 / 6" />
+														</layoutData>
+														<Label width="100%" text="핵심결과" vAlign="Top"/>
+													</VBox>
+													<TextArea growing="true" growingMaxLines="7" class="required">
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="4 / 6" gridColumn="2 / 5" />
+														</layoutData>
+													</TextArea>
+													<VBox>
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="4 / 6" />
+														</layoutData>
+														<Label width="100%" text="실적" vAlign="Top"/>
+													</VBox>
+													<TextArea growing="true" growingMaxLines="7" class="required">
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="4 / 6" gridColumn="6 / 9" />
+														</layoutData>
+													</TextArea>
+													<VBox>
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="6 / 11" />
+														</layoutData>
+														<Label width="100%" text="달성 방안" vAlign="Top"/>
+													</VBox>
+													<HBox width="100%">
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="6" gridColumn="2 / 9" />
+														</layoutData>
+														<Label width="18px" text="L5" textAlign="Center">
+															<layoutData>
+																<FlexItemData growFactor="1" />
+															</layoutData>
+														</Label>
+														<Input width="100%" class="required">
+															<layoutData>
+																<FlexItemData growFactor="20" />
+															</layoutData>
+														</Input>
+													</HBox>
+													<HBox width="100%">
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="7" gridColumn="2 / 9" />
+														</layoutData>
+														<Label width="18px" text="L4">
+															<layoutData>
+																<FlexItemData growFactor="1" />
+															</layoutData>
+														</Label>
+														<Input width="100%" class="required">
+															<layoutData>
+																<FlexItemData growFactor="20" />
+															</layoutData>
+														</Input>
+													</HBox>
+													<HBox width="100%">
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="8" gridColumn="2 / 9" />
+														</layoutData>
+														<Label width="18px" text="L3">
+															<layoutData>
+																<FlexItemData growFactor="1" />
+															</layoutData>
+														</Label>
+														<Input width="100%" class="required">
+															<layoutData>
+																<FlexItemData growFactor="20" />
+															</layoutData>
+														</Input>
+													</HBox>
+													<HBox width="100%">
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="9" gridColumn="2 / 9" />
+														</layoutData>
+														<Label width="18px" text="L2">
+															<layoutData>
+																<FlexItemData growFactor="1" />
+															</layoutData>
+														</Label>
+														<Input width="100%" class="required">
+															<layoutData>
+																<FlexItemData growFactor="20" />
+															</layoutData>
+														</Input>
+													</HBox>
+													<HBox width="100%">
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="10" gridColumn="2 / 9" />
+														</layoutData>
+														<Label width="18px" text="L1">
+															<layoutData>
+																<FlexItemData growFactor="1" />
+															</layoutData>
+														</Label>
+														<Input width="100%" class="required">
+															<layoutData>
+																<FlexItemData growFactor="20" />
+															</layoutData>
+														</Input>
+													</HBox>
+													<VBox>
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="11 / 13" />
+														</layoutData>
+														<Label width="100%" text="목표항목별 의견"/>
+														<Label width="100%" text="(피평가자)"/>
+													</VBox>
+													<TextArea growing="true" growingMaxLines="7" class="required">
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="11 / 13" gridColumn="2 / 5" />
+														</layoutData>
+													</TextArea>
+													<VBox>
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="11 / 13" />
+														</layoutData>
+														<Label width="100%" text="목표항목별 의견"/>
+														<Label width="100%" text="(평가자)"/>
+													</VBox>
+													<TextArea growing="true" growingMaxLines="7" class="required">
+														<layoutData>
+															<grid:GridItemLayoutData gridRow="11 / 13" gridColumn="6 / 9" />
+														</layoutData>
+													</TextArea>
+												</grid:CSSGrid>
+											</content>
+										</Panel>
 									</VBox>
 								</VBox>
 							</VBox>
-							<VBox class="vCardBox sapUiSmallMarginTop">
-								<HBox>
-									<Text text="empty-string" />
-								</HBox>
-							</VBox>
+							<HBox class="vCardBox sapUiSmallMarginTop">
+								<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr">
+									<Label width="100%" text="자기 평가점수" />
+									<Input width="100%" class="required" />
+									<Label width="100%" text="1차 평가점수" />
+									<Input width="100%" class="required" />
+									<Label width="100%" text="최종 평가등급" />
+									<Input width="100%" class="required" />
+								</grid:CSSGrid>
+							</HBox>
 						</IconTabFilter>
 						<IconTabFilter text="{i18n>LABEL_10010}" key="T02">
 							<VBox class="vCardBox">
-								<grid:CSSGrid gridGap="2px" gridTemplateColumns="1fr 2fr 2fr">
+								<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="1fr 2fr 2fr">
 									<Label text="구분" width="100%" textAlign="Center" />
 									<Label text="평가 대상자" width="100%" textAlign="Center" />
 									<Label text="1차 평가자" width="100%" textAlign="Center" />
@@ -209,14 +753,14 @@
 									<TextArea rows="5" growing="true" />
 								</grid:CSSGrid>
 							</VBox>
-							<VBox class="vCardBox">
+							<VBox class="vCardBox sapUiSmallMarginTop">
 								<HBox alignItems="Center" class="title">
 									<layoutData>
 										<FlexItemData growFactor="1"/>
 									</layoutData>
 									<Title level="H2" text="{i18n>LABEL_10010}" />
 								</HBox>
-								<TextArea width="100%" growing="true" growingMaxLines="20" />
+								<TextArea width="100%" growing="true" growingMaxLines="10" />
 							</VBox>
 						</IconTabFilter>
 					</items>
