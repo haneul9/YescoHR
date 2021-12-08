@@ -15,6 +15,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date',
+    'sap/ui/yesco/mvc/model/type/Currency',
   ],
   (
     // prettier 방지용 주석
@@ -52,7 +53,9 @@ sap.ui.define(
           HisList: [],
           TargetList: [],
           ReceiptType: [],
+          HisDeleteDatas: [],
           Settings: {},
+          DialogLimit: false,
           listInfo: {
             rowCount: 1,
             totalCount: 0,
@@ -138,7 +141,14 @@ sap.ui.define(
           const oAppointeeData = this.getAppointeeData();
 
           // oDetailModel.setProperty('/FormData/Appernr', oAppointeeData.Pernr);
-          oDetailModel.setProperty('/FormData/Seqnr', 'ALL');
+          oDetailModel.setProperty('/FormData', 
+            {
+              Seqnr: 'ALL',
+              Apcnt: '0',
+              Pvcnt: '0',
+              Rjcnt: '0',
+            },
+          );
 
           oDetailModel.setProperty('/ApplyInfo', {
             Apename: oAppointeeData.Ename,
@@ -170,63 +180,56 @@ sap.ui.define(
                 const oHisList = oData.results.MedExpenseItemSet;
 
                 oDetailModel.setProperty('/FormData', oTargetData);
-                oDetailModel.setProperty('/ApplyInfo', oTargetData);
                 oDetailModel.setProperty('/HisList', oHisList);
-                oDetailModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: oHisList, sStatCode: 'Lnsta' }));
+                oDetailModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: oHisList, sStatCode: 'ZappStat' }));
 
-                if (oTargetData.Lnsta === '40' || oTargetData.Lnsta === '60') {
-                  const iHistoryLength = oData.LoanAmtRecordSet.results.length;
-
-                  oDetailModel.setProperty('/RepayList', oData.LoanAmtHistorySet.results);
-                  oDetailModel.setProperty('/RepayHisList', oData.LoanAmtRecordSet.results);
-                  oDetailModel.setProperty('/RepayHisLength', iHistoryLength > 10 ? 10 : iHistoryLength);
-                }
-
+                this.getReceiptList(oTargetData.Famgb, oTargetData.Adult);
                 oDetailModel.setProperty('/busy', false);
               }
             },
             error: (oError) => {
-              const vErrorMSG = AppUtils.parseError(oError);
-
-              MessageBox.error(vErrorMSG);
+              AppUtils.handleError(oError);
               oDetailModel.setProperty('/busy', false);
             },
           });
         }
       },
 
-      async getReceiptList() {
-        return new Promise((resolve, reject) => {
-          const oModel = this.getModel(ServiceNames.BENEFIT);
-          const sWerks = this.getSessionProperty('Werks');
-          const sViewKey = this.getViewModel().getProperty('/ViewKey');
-          let sAppno = '';
+      getReceiptList(sKey, sAdult) {
+        const oModel = this.getModel(ServiceNames.BENEFIT);
+        const oDetailModel = this.getViewModel();
+        const sWerks = this.getSessionProperty('Werks');
+        const sViewKey = this.getViewModel().getProperty('/ViewKey');
+        let sAppno = '';
 
-          if (!sViewKey && sViewKey === 'N') {
-            const oView = this.getView();
-            const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-            const mListData = oListView.getModel().getProperty('/parameters');
+        if (!!sViewKey && sViewKey !== 'N') {
+          const oView = this.getView();
+          const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+          const mListData = oListView.getModel().getProperty('/parameters');
 
-            sAppno = mListData.Appno;
-          }
+          sAppno = mListData.Appno;
+          sKey = mListData.Famgb;
+          sAdult = mListData.Adult;
+        }
 
-          // 영수증구분
-          oModel.read('/MedExpenseReceiptListSet', {
-            filters: [
-              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
-              new sap.ui.model.Filter('Pyyea', sap.ui.model.FilterOperator.EQ, new Date()),
-              new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sAppno),
-            ],
-            success: (oData) => {
-              if (oData) {
-                resolve(oData.results);
-              }
-            },
-            error: (oError) => {
-              reject(oError);
-            },
-          });
-        })
+        // 영수증구분
+        oModel.read('/MedExpenseReceiptListSet', {
+          filters: [
+            new sap.ui.model.Filter('Adult', sap.ui.model.FilterOperator.EQ, sAdult),
+            new sap.ui.model.Filter('Famgb', sap.ui.model.FilterOperator.EQ, sKey),
+            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
+            new sap.ui.model.Filter('Pyyea', sap.ui.model.FilterOperator.EQ, new Date()),
+            new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sAppno),
+          ],
+          success: (oData) => {
+            if (oData) {
+              oDetailModel.setProperty('/ReceiptType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: oData.results }));
+            }
+          },
+          error: (oError) => {
+            AppUtils.handleError(oError);
+          },
+        });
       },
 
       async getTargetList() {
@@ -243,16 +246,13 @@ sap.ui.define(
             },
             error: (oError) => {
               reject(oError);
-              const vErrorMSG = AppUtils.parseError(oError);
-
-              MessageBox.error(vErrorMSG);
             },
           });
         })
       },
 
       // 신청대상 선택시
-      onTargetList(oEvent) {
+      async onTargetList(oEvent) {
         const sKey = oEvent.getSource().getSelectedKey();
         const oDetailModel = this.getViewModel();
 
@@ -261,51 +261,63 @@ sap.ui.define(
             oDetailModel.setProperty('/TargetDetails', e);
           }
         });
+
+        if(sKey === 'ALL') return;
+
+        oDetailModel.setProperty('/HisList', []);
+        this.getReceiptList(sKey, oDetailModel.getProperty('/TargetDetails/Adult'));
+      },
+
+      // 신청액 & 신청건수
+      setAppAmount() {
+        const oDetailModel = this.getViewModel();
+        const aSumAmount = oDetailModel.getProperty('/HisList').map(a => a.Bett0t);
+
+        const iAmount = aSumAmount.reduce((acc, cur) => {
+          return parseInt(acc) + parseInt(cur);
+        });
+        
+        oDetailModel.setProperty('/FormData/Apbet', String(iAmount));
+        oDetailModel.setProperty('/FormData/Apcnt', String(aSumAmount.length));
+      },
+
+      // 상세내역 No
+      addSeqnrNum() {
+        const oDetailModel = this.getViewModel();
+        const aHisList = oDetailModel.getProperty('/HisList');
+        let iSeqnr = 0;
+
+        aHisList.forEach((e) => {
+          iSeqnr += 1;
+          e.Seqnr = String(iSeqnr);
+        });
       },
       
       checkError() {
         const oDetailModel = this.getViewModel();
-        const oFormData = oDetailModel.getProperty('/FormData');
+        const mFormData = oDetailModel.getProperty('/FormData');
 
-        // 융자구분
-        if (oFormData.Lntyp === 'ALL' || !oFormData.Lntyp) {
-          MessageBox.alert(this.getBundleText('MSG_07007'));
-          return true;
-        }
-
-        // 담보종류
-        if (oFormData.Asmtd === 'ALL' || !oFormData.Asmtd) {
-          MessageBox.alert(this.getBundleText('MSG_07008'));
-          return true;
-        }
-
-        // 주택종류
-        if (oFormData.Htype === 'ALL' || !oFormData.Htype) {
-          MessageBox.alert(this.getBundleText('MSG_07009'));
-          return true;
-        }
-
-        // 건평
-        if (!oFormData.Zsize) {
-          MessageBox.alert(this.getBundleText('MSG_07010'));
-          return true;
-        }
-
-        // 주소
-        if (!oFormData.Addre) {
-          MessageBox.alert(this.getBundleText('MSG_07011'));
-          return true;
-        }
-
-        // 융자금액
-        if (!oFormData.Lnamt) {
-          MessageBox.alert(this.getBundleText('MSG_07012'));
+        // 신청대상
+        if (mFormData.Seqnr === 'ALL' || !mFormData.Seqnr) {
+          MessageBox.alert(this.getBundleText('MSG_09025'));
           return true;
         }
 
         // 비고
-        if (!oFormData.Zbigo) {
-          MessageBox.alert(this.getBundleText('MSG_07013'));
+        if (!mFormData.Zbigo) {
+          MessageBox.alert(this.getBundleText('MSG_09026'));
+          return true;
+        }
+
+        // 상세내역
+        if (!oDetailModel.getProperty('/HisList').length) {
+          MessageBox.alert(this.getBundleText('MSG_09027'));
+          return true;
+        }
+
+        // 첨부파일
+        if (!AttachFileAction.getFileLength.call(this)) {
+          MessageBox.alert(this.getBundleText('MSG_00046'));
           return true;
         }
 
@@ -321,12 +333,12 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
         const sStatus = oDetailModel.getProperty('/FormData/Lnsta');
-        const oFormData = oDetailModel.getProperty('/FormData');
+        const mFormData = oDetailModel.getProperty('/FormData');
 
         if (this.checkError()) return;
 
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00103'), {
-          title: this.getBundleText('LABEL_07001'),
+          title: this.getBundleText('LABEL_09010'),
           actions: [this.getBundleText('LABEL_00103'), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00103')) {
@@ -342,34 +354,31 @@ sap.ui.define(
 
                 let oSendObject = {};
 
-                oSendObject = oFormData;
+                oSendObject = mFormData;
                 oSendObject.Prcty = 'T';
                 oSendObject.Menid = oDetailModel.getProperty('/menid');
                 oSendObject.Waers = 'KRW';
+                oSendObject.MedExpenseItemSet = oDetailModel.getProperty('/HisList');
 
                 // FileUpload
                 if (!!AttachFileAction.getFileLength.call(this)) {
-                  await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
+                  await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.TYPE_CODE);
                 }
 
                 await new Promise((resolve, reject) => {
-                  oModel.create('/LoanAmtApplSet', oSendObject, {
+                  oModel.create('/MedExpenseApplSet', oSendObject, {
                     success: () => {
                       resolve();
                     },
                     error: (oError) => {
-                      const vErrorMSG = AppUtils.parseError(oError);
-
-                      reject(vErrorMSG);
+                      reject(oError);
                     },
                   });
                 });
 
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
-              } catch (error) {
-                if (_.has(error, 'code') && error.code === 'E') {
-                  MessageBox.error(error.message);
-                }
+              } catch (oError) {
+                AppUtils.handleError(oError);
               } finally {
                 AppUtils.setAppBusy(false, this);
               }
@@ -383,12 +392,12 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
         const sStatus = oDetailModel.getProperty('/FormData/Lnsta');
-        const oFormData = oDetailModel.getProperty('/FormData');
+        const mFormData = oDetailModel.getProperty('/FormData');
 
         if (this.checkError()) return;
 
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
-          title: this.getBundleText('LABEL_07001'),
+          title: this.getBundleText('LABEL_09010'),
           actions: [this.getBundleText('LABEL_00121'), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00121')) {
@@ -404,25 +413,23 @@ sap.ui.define(
 
                 let oSendObject = {};
 
-                oSendObject = oFormData;
+                oSendObject = mFormData;
                 oSendObject.Prcty = 'C';
                 oSendObject.Menid = oDetailModel.getProperty('/menid');
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
                 if (!!AttachFileAction.getFileLength.call(this)) {
-                  await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
+                  await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.TYPE_CODE);
                 }
 
                 await new Promise((resolve, reject) => {
-                  oModel.create('/LoanAmtApplSet', oSendObject, {
+                  oModel.create('/MedExpenseApplSet', oSendObject, {
                     success: () => {
                       resolve();
                     },
                     error: (oError) => {
-                      const vErrorMSG = AppUtils.parseError(oError);
-
-                      reject(vErrorMSG);
+                      reject(oError);
                     },
                   });
                 });
@@ -432,10 +439,8 @@ sap.ui.define(
                     this.getRouter().navTo('housingLoan');
                   },
                 });
-              } catch (error) {
-                if (_.has(error, 'code') && error.code === 'E') {
-                  MessageBox.error(error.message);
-                }
+              } catch (oError) {
+                AppUtils.handleError(oError);
               } finally {
                 AppUtils.setAppBusy(false, this);
               }
@@ -450,7 +455,7 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
 
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00118'), {
-          title: this.getBundleText('LABEL_07001'),
+          title: this.getBundleText('LABEL_09010'),
           actions: [this.getBundleText('LABEL_00114'), this.getBundleText('LABEL_00118')],
           onClose: (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00114')) {
@@ -462,7 +467,7 @@ sap.ui.define(
               oSendObject.Prcty = 'W';
               oSendObject.Menid = oDetailModel.getProperty('/menid');
 
-              oModel.create('/LoanAmtApplSet', oSendObject, {
+              oModel.create('/MedExpenseApplSet', oSendObject, {
                 success: () => {
                   AppUtils.setAppBusy(false, this);
                   MessageBox.alert(this.getBundleText('MSG_00039', 'LABEL_00121'), {
@@ -471,11 +476,9 @@ sap.ui.define(
                     },
                   });
                 },
-                error: (oRespnse) => {
-                  const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
-
+                error: (oError) => {
+                  AppUtils.handleError(oError);
                   AppUtils.setAppBusy(false, this);
-                  MessageBox.error(vErrorMSG);
                 },
               });
             }
@@ -489,13 +492,13 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
 
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
-          title: this.getBundleText('LABEL_07001'),
+          title: this.getBundleText('LABEL_09010'),
           actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
           onClose: (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00110')) {
               AppUtils.setAppBusy(true, this);
 
-              const sPath = oModel.createKey('/LoanAmtApplSet', {
+              const sPath = oModel.createKey('/MedExpenseApplSet', {
                 Appno: oDetailModel.getProperty('/FormData/Appno'),
               });
 
@@ -508,11 +511,9 @@ sap.ui.define(
                     },
                   });
                 },
-                error: (oRespnse) => {
-                  const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
-
+                error: (oError) => {
+                  AppUtils.handleError(oError);
                   AppUtils.setAppBusy(false, this);
-                  MessageBox.error(vErrorMSG);
                 },
               });
             }
@@ -522,6 +523,16 @@ sap.ui.define(
 
       // 상세내역 추가
       onAddDetails() {
+        const oDetailModel = this.getViewModel();
+        const sAppTarget = oDetailModel.getProperty('/FormData/Seqnr');
+
+        
+        if (!sAppTarget || sAppTarget === 'ALL') {
+          return MessageBox.alert(this.getBundleText('MSG_09023'));
+        }
+        
+        oDetailModel.setProperty('/DialogData', []);
+
         this.setDialogData();
 
         if (!this.byId('DetailHisDialog')) {
@@ -545,7 +556,22 @@ sap.ui.define(
 
       // 상세내역 삭제
       onDelDetails() {
+        const oDetailModel = this.getViewModel();
+        const aDeleteDatas = oDetailModel.getProperty('/HisDeleteDatas');
 
+        if (!aDeleteDatas) {
+            return MessageBox.alert(this.getBundleText('MSG_00020', 'LABEL_00110'));
+        }
+
+        const aHisList = oDetailModel.getProperty('/HisList');
+        const aNoInclued = aHisList.filter((e) => !aDeleteDatas.includes(e));
+        const oHisTable = this.byId('medHisTable');
+
+        oDetailModel.setProperty('/HisList', aNoInclued);
+        oDetailModel.setProperty('/listInfo/rowCount', aNoInclued.length);
+        oHisTable.clearSelection();
+        this.setAppAmount();
+        this.addSeqnrNum();
       },
 
       // AttachFileTable Settings
@@ -568,6 +594,91 @@ sap.ui.define(
       *****************************DialogEvent***************************************************
       */
 
+      // 진료내역 check
+      checkClinicDetail() {
+        const oDetailModel = this.getViewModel();
+        const mDialogData = oDetailModel.getProperty('/DialogData');
+
+        // 진료기간
+        if (!mDialogData.Begda) {
+          MessageBox.alert(this.getBundleText('MSG_09018'));
+          return true;
+        }
+
+        // 병명/진료과목
+        if (!mDialogData.Disenm) {
+          MessageBox.alert(this.getBundleText('MSG_09019'));
+          return true;
+        }
+
+        // 의료기관명
+        if (!mDialogData.Medorg) {
+          MessageBox.alert(this.getBundleText('MSG_09020'));
+          return true;
+        }
+
+        // 영수증 구분
+        if (!mDialogData.Recpgb) {
+          MessageBox.alert(this.getBundleText('MSG_09021'));
+          return true;
+        }
+
+        // 금여 or 비급여
+        if (!mDialogData.Bet01 && !mDialogData.Bet02) {
+          MessageBox.alert(this.getBundleText('MSG_09022'));
+          return true;
+        }
+
+        // 금여 or 비급여 한도체크
+        if (oDetailModel.getProperty('/DialogLimit')) {
+          MessageBox.alert(this.getBundleText('MSG_09024'));
+          return true;
+        }
+
+        return false;
+      },
+
+      // Dialog 등록
+      onHisRegBtn() {
+        const oDetailModel = this.getViewModel();
+        const mDialogData = oDetailModel.getProperty('/DialogData');
+        const oTable = this.byId('medHisTable');
+        
+        if (this.checkClinicDetail()) return;
+        
+        const aHisList = [mDialogData, ...oDetailModel.getProperty('/HisList')];
+
+        oDetailModel.setProperty('/HisList', aHisList);
+        oDetailModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aHisList, sStatCode: 'ZappStat' }));
+        this.setAppAmount();
+        this.addSeqnrNum();
+        this.byId('DetailHisDialog').close();
+      },
+
+      // Dialog 수정
+      onHisUpBtn() {
+        const oDetailModel = this.getViewModel();
+        const mDialogData = oDetailModel.getProperty('/DialogData');
+        const aHisList = oDetailModel.getProperty('/HisList');
+        
+        if (this.checkClinicDetail()) return;
+        
+        aHisList.forEach((e, i) => {
+          if (mDialogData.Seqnr === e.Seqnr) {
+            oDetailModel.setProperty(`/HisList/${i}`, mDialogData);
+          }
+        });
+
+        this.setAppAmount();
+        this.byId('DetailHisDialog').close();
+      },
+
+      // Dialog Close
+      onDialogClose(oEvent) {
+        this.byId('DetailHisDialog').close();
+      },
+ 
+
       // 급여 , 비급여 한도 비교
       liveCompar(oEvent) {
         const oEventSource = oEvent.getSource();
@@ -580,25 +691,92 @@ sap.ui.define(
         const iActCost = iValue * parseFloat(mTargetDetails.Prate);
         let sAmount = sValue;
 
-        // 급여인경우
-        if (sPath === '/DialogData/Bet01') {
-          const iBet01 = parseInt(mReciptDetails.Bet01);
+        oDetailModel.setProperty('/DialogLimit', false);
 
-          if (iBet01 < iActCost) {
-            MessageBox.alert(this.getBundleText('MSG_09017', '500만원', this.TextUtils.toCurrency(iBet01 / parseFloat(mTargetDetails.Prate))));
-            sAmount = oDetailModel.getProperty('/DialogData/Bet01');
-          } 
-        } else {
-          const iBet02 = parseInt(mReciptDetails.Bet02);
+        if (!!mReciptDetails) {
+          // 급여인경우
+          if (sPath === '/DialogData/Bet01') {
+            const iBet01 = parseInt(mReciptDetails.Bet01);
+  
+            if (iBet01 < iActCost) {
+              MessageBox.alert(this.getBundleText('MSG_09017', this.TextUtils.toCurrency('5000000'), this.TextUtils.toCurrency(parseInt(iBet01 / parseFloat(mTargetDetails.Prate)))));
+              oDetailModel.setProperty('/DialogLimit', true);
+            } 
+          } else {
+            const iBet02 = parseInt(mReciptDetails.Bet02);
+            const sAddBet02 = mReciptDetails.Bet02Add;
+  
+            if ((sAddBet02 === '0' || !sAddBet02) && !mReciptDetails.Bet02AddChk) {
+              if (iBet02 < iActCost) { // 비급여 추가한도를 초과했을경우
+                MessageBox.alert(this.getBundleText('MSG_09017', this.TextUtils.toCurrency('5000000'), this.TextUtils.toCurrency(parseInt(iBet02 / parseFloat(mTargetDetails.Prate)))));
+                oDetailModel.setProperty('/DialogLimit', true);
+              } 
+            } else {
+              const iAddBet02 = parseInt(sAddBet02);
 
-          if (iBet02 < iActCost) {
-            MessageBox.alert(this.getBundleText('MSG_09017'));
-          } 
+              if (iAddBet02 < iActCost) { // 비급여 한도를 초과했을경우
+                MessageBox.alert(this.getBundleText('MSG_09017', this.TextUtils.toCurrency('200000'), this.TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
+                oDetailModel.setProperty('/DialogLimit', true);
+              } 
+            }
+          }
         }
 
         oEventSource.setValue(this.TextUtils.toCurrency(sAmount));
         oDetailModel.setProperty(sPath, sAmount);
-        oDetailModel.setProperty('/DialogData/Bett0t', sAmount);
+        
+        setTimeout(() => {
+          const mDialogData = oDetailModel.getProperty('/DialogData');
+          const iBet01 = parseInt(mDialogData.Bet01) || 0;
+          const iBet02 = parseInt(mDialogData.Bet02) || 0;
+
+          oDetailModel.setProperty('/DialogData/Bett0t', String(iBet01 + iBet02));
+        }, 100);
+      },
+
+      // 상세내역 Click
+      onDetailsRow(oEvent) {
+        const vPath = oEvent.getParameter('rowBindingContext').getPath();
+        const oDetailModel = this.getViewModel();
+        const oRowData = oDetailModel.getProperty(vPath);
+
+        this.setDialogData(oRowData);
+
+        if (!this.byId('DetailHisDialog')) {
+          Fragment.load({
+            id: this.getView().getId(),
+            name: 'sap.ui.yesco.mvc.view.medical.fragment.DetailHisDialog',
+            controller: this,
+          }).then((oDialog) => {
+            // connect dialog to the root view of this component (models, lifecycle)
+            this.getView().addDependent(oDialog);
+            oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
+            this.settingsAttachDialog();
+
+            oDialog.open();
+          });
+        } else {
+          this.settingsAttachDialog();
+          this.byId('DetailHisDialog').open();
+        }
+      },
+
+      // 상세내역Table checkbox
+      onRowSelection(oEvent) {
+        const aSelected = oEvent.getSource().getSelectedIndices();
+        const oDetailModel = this.getViewModel();
+
+        if (!aSelected) return;
+        
+        const aDeleteDatas = [];
+        
+        oDetailModel.setProperty('/HisDeleteDatas', []);
+
+        aSelected.forEach((e) => {
+          aDeleteDatas.push(oDetailModel.getProperty(`/HisList/${e}`));
+        });
+
+        oDetailModel.setProperty('/HisDeleteDatas', aDeleteDatas);
       },
 
       // 영수증 구분선택시 데이터 셋팅
@@ -609,34 +787,28 @@ sap.ui.define(
         oDetailModel.getProperty('/ReceiptType').forEach((e) => {
           if (sKey === e.Zcode) {
             oDetailModel.setProperty('/ReciptDetails', e);
+            oDetailModel.setProperty('/DialogData/Recpgbtx', e.Ztext);
           }
         });
       },
      
-      // Dialog Close
-      onDialogClose(oEvent) {
-       this.byId('DetailHisDialog').close();
-      },
-
       // Dialog SettingData
-      async setDialogData() {
-        const aReceipt = await this.getReceiptList();
+      async setDialogData(mRowData) {
         const oDetailModel = this.getViewModel();
-        const sViewKey = oDetailModel.getProperty('/ViewKey');
-          
-        oDetailModel.setProperty('/ReceiptType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aReceipt }));
-
-        oDetailModel.setProperty('/DialogData/MaxDate', new Date().getFullYear());
-
-        if(!sViewKey || sViewKey === 'N') {
+      
+        if(!mRowData) {
           oDetailModel.setProperty('/DialogData', {
             Recpgb: 'ALL',
             Prate: '0',
             Pybet: '0',
+            isNew: true,
           });
         } else {
-          oDetailModel.setProperty('/DialogData/Recpgb', 'ALL');
+          oDetailModel.setProperty('/DialogData', mRowData);
+          oDetailModel.setProperty('/DialogData/isNew', false);
         }
+
+        oDetailModel.setProperty('/DialogData/maxDate', new Date(new Date().getFullYear(), 12, 0));
       },
 
       // Dialog AttachFileTable Settings
@@ -644,13 +816,13 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
  
-        AttachFileAction.setAttachFile(this, {
-          AttachFileID: '1',
-          Type: this.TYPE_CODE,
-          // Appno: sAppno,
-          Max: 1,
-          FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
-        });
+        // AttachFileAction.setAttachFile(this, {
+        //   AttachFileID: '1',
+        //   Type: this.TYPE_CODE,
+        //   // Appno: sAppno,
+        //   Max: 1,
+        //   FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
+        // });
       },
     });
   }

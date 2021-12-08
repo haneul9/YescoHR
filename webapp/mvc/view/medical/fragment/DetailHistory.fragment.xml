@@ -11,7 +11,7 @@
                 <Button icon="sap-icon://less" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" text="{i18n>LABEL_00110}" press=".onDelDetails" />
             </HBox>
         </HBox>
-        <table:Table id="medHisTable" class="row-link" rows="{/HisList}" visibleRowCount="{/listInfo/rowCount}" width="100%" columnHeaderHeight="45" rowHeight="45" noData="{i18n>MSG_00001}">
+        <table:Table id="medHisTable" cellClick=".onDetailsRow" rowSelectionChange=".onRowSelection" class="row-link" rows="{/HisList}" visibleRowCount="{/listInfo/rowCount}" width="100%" columnHeaderHeight="45" rowHeight="45" noData="{i18n>MSG_00001}">
             <table:rowSettingsTemplate>
                 <table:RowSettings highlight="{
                     path: 'ZappStat',
@@ -77,31 +77,31 @@
                 <table:Column width="250px">
                     <Label text="{i18n>LABEL_09015}"/>
                     <table:template>
-                        <Text text="{Recpgb}" textAlign="Center" width="100%" class="tableRow_Text"/>
+                        <Text text="{Recpgbtx}" textAlign="Center" width="100%" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
                 <table:Column width="150px">
                     <Label text="{i18n>LABEL_09016}"/>
                     <table:template>
-                        <Text text="{Bet01}" textAlign="Center" width="100%" class="tableRow_Text"/>
+                        <Text text="{ path: 'Bet01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
                 <table:Column width="150px">
                     <Label text="{i18n>LABEL_09017}"/>
                     <table:template>
-                        <Text text="{Bet02}" textAlign="Center" width="100%" class="tableRow_Text"/>
+                        <Text text="{ path: 'Bet02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
                 <table:Column width="150px">
                     <Label text="{i18n>LABEL_09018}"/>
                     <table:template>
-                        <Text text="{Bett0t}" width="50px" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+                        <Text text="{ path: 'Bett0t', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
                 <table:Column width="100px">
                     <Label text="{i18n>LABEL_09019}"/>
                     <table:template>
-                        <Text text="{Prate}" width="50px" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+                        <Text text="{Prate}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
                 <table:Column width="150px">
@@ -113,7 +113,7 @@
                         }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
-                <table:Column width="60px">
+                <table:Column width="100px">
                     <Label text="{i18n>LABEL_00169}"/>
                     <table:template>
                         <Button type="Transparent" icon="sap-icon://attachment" class="mnw-0" press=".TableUtils.onFileListDialog" visible="{= ${Docyn} === 'Y' }"/>
