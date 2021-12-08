@@ -155,6 +155,10 @@ sap.ui.define(
         // }
       },
 
+      getCurrentLocationText(oArguments) {
+        return '목표수립필요';
+      },
+
       addGoalItem({ sRootPath }) {
         const oViewModel = this.getViewModel();
         const aItems = oViewModel.getProperty(`/${sRootPath}`);
