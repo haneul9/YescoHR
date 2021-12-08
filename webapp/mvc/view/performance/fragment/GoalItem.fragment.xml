@@ -25,18 +25,18 @@
                     </VBox>
                     <Input width="100%" class="required" value="{Todo2}" />
                     <VBox>
-                        <Label width="100%" text="자기평가" visible="{isTodo3Show}" />
+                        <Label width="100%" text="자기평가" visible="{/fieldControl/isTodo3Show}" />
                     </VBox>
                     <HBox>
-                        <ComboBox width="100%" class="required" selectedKey="{Todo3}" items="{ path: '/entry/levels', templateShareable: true }" visible="{isTodo3Show}">
+                        <ComboBox width="100%" class="required" selectedKey="{Todo3}" items="{ path: '/entry/levels', templateShareable: true }" visible="{/fieldControl/isTodo3Show}">
                             <core:Item key="{code}" text="{value}" />
                         </ComboBox>
                     </HBox>
                     <VBox>
-                        <Label width="100%" text="1차평가" visible="{isTodo4Show}" />
+                        <Label width="100%" text="1차평가" visible="{/fieldControl/isTodo4Show}" />
                     </VBox>
                     <HBox>
-                        <ComboBox width="100%" class="required" selectedKey="{Todo4}" items="{ path: '/entry/levels', templateShareable: true }" visible="{isTodo4Show}">
+                        <ComboBox width="100%" class="required" selectedKey="{Todo4}" items="{ path: '/entry/levels', templateShareable: true }" visible="{/fieldControl/isTodo4Show}">
                             <core:Item key="{code}" text="{value}" />
                         </ComboBox>
                     </HBox>
