@@ -46,7 +46,6 @@ sap.ui.define(
 
           this.setViewModel(oViewModel);
 
-          const oChartHolder = this.byId('ChartHolder');
           const oChart = new D3OrgChart({
             items: {
               path: '/orgList',

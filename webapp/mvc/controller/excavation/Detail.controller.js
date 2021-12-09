@@ -48,7 +48,7 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.excavation.Detail', {
       LIST_PAGE_ID: 'container-ehr---excavationList',
-      TYPE_CODE: 'HR04',
+      TYPE_CODE: 'HR06',
 
       AttachFileAction: AttachFileAction,
       TextUtils: TextUtils,
@@ -273,10 +273,10 @@ sap.ui.define(
             await AttachFileAction.uploadFile.call(this, sAppno, this.TYPE_CODE);
           }
 
-          await this.createLeaveApplContent(sPrcty);
+          await this.createDrillChangeApp(sPrcty);
 
-          // {임시저장|신청}되었습니다.
-          MessageBox.success(this.getBundleText('MSG_00007', this.ACTION_MESSAGE[sPrcty]), {
+          // {신청}되었습니다.
+          MessageBox.success(this.getBundleText('MSG_00007', this.getBundleText('LABEL_00121')), {
             onClose: () => {
               this.getRouter().navTo('excavation');
             },
@@ -422,9 +422,22 @@ sap.ui.define(
       },
 
       onPressApproval() {
-        AppUtils.setAppBusy(true, this);
-
+        const oViewModel = this.getViewModel();
         const sPrcty = 'C';
+        const aList = oViewModel.getProperty('/form/list');
+        const sChgrsn = oViewModel.getProperty('/form/Chgrsn');
+
+        if (!sChgrsn) {
+          MessageBox.alert(this.getBundleText('MSG_00003', 'LABEL_04013')); // {변경사유}를 입력하세요.
+          return;
+        }
+
+        if (!_.some(aList, 'PernrA')) {
+          MessageBox.alert(this.getBundleText('MSG_00005', 'LABEL_11006')); // {근무자}를 선택하세요.
+          return;
+        }
+
+        AppUtils.setAppBusy(true, this);
 
         // {신청}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
@@ -500,33 +513,23 @@ sap.ui.define(
        * @param {String} sPrcty -  T:임시저장, C:신청
        * @returns
        */
-      createLeaveApplContent(sPrcty) {
+      createDrillChangeApp(sPrcty) {
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const oViewModel = this.getViewModel();
-        const mAppointeeData = this.getAppointeeData();
         const aTableData = oViewModel.getProperty('/form/list');
-        const sAppty = oViewModel.getProperty('/type');
         const sAppno = oViewModel.getProperty('/Appno');
         const sMenid = this.getCurrentMenuId();
-        const sUrl = '/LeaveApplContentSet';
-        let aLeaveApplNav1 = [...aTableData];
+        const sUrl = '/DrillChangeAppSet';
 
         return new Promise((resolve, reject) => {
-          if (sAppty === this.PAGE_TYPE.CHANGE) {
-            aLeaveApplNav1 = aLeaveApplNav1.filter((o) => o.isChanged === true);
-          }
-
-          const oPayload = {
+          const mPayload = {
             Menid: sMenid,
-            Pernr: mAppointeeData.Pernr,
-            Orgeh: mAppointeeData.Orgeh,
             Appno: sAppno,
             Prcty: sPrcty,
-            Appty: sAppty, // A:신규, B:변경, C:취소
-            LeaveApplNav1: aLeaveApplNav1.map((o) => ({ ...o, Pernr: mAppointeeData.Pernr })),
+            DrillChangeNav: [...aTableData],
           };
 
-          oModel.create(sUrl, oPayload, {
+          oModel.create(sUrl, mPayload, {
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
 
