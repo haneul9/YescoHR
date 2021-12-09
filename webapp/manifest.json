@@ -116,7 +116,7 @@
 
         { "pattern": "medical", "name": "medical", "target": "medical" },
         { "pattern": "medical/{oDataKey}", "name": "medical-detail", "target": "medicalDetail" },
-        
+
         { "pattern": "studentFunds", "name": "studentFunds", "target": "studentFunds" },
         { "pattern": "studentFunds/{oDataKey}", "name": "studentFunds-detail", "target": "studentFundsDetail" },
 
@@ -124,12 +124,12 @@
         { "pattern": "attendance/{type}/:appno:", "name": "attendance-detail", "target": "attendanceDetail" },
         { "pattern": "employee/:pernr:", "name": "employee", "target": "employee" },
 
-        { "pattern": "nightduty", "name": "nightduty", "target": "nightduty" },
-        { "pattern": "nightduty/:appno:", "name": "nightduty-detail", "target": "nightdutyDetail" },
-        
+        { "pattern": "nightduty", "name": "nightduty", "target": "nightshift" },
+        { "pattern": "nightshift/:appno:", "name": "nightshift-detail", "target": "nightshiftDetail" },
+
         { "pattern": "performance", "name": "performance", "target": "performance" },
         { "pattern": "performance/{pid}", "name": "performance-detail", "target": "performanceDetail" },
-        
+
         { "pattern": "sampleComponents", "name": "sampleComponents", "target": "sampleComponents" },
         { "pattern": "sampleTimeline", "name": "sampleTimeline", "target": "sampleTimeline" },
         { "pattern": "sampleNinebox", "name": "sampleNinebox", "target": "sampleNinebox" },
@@ -141,7 +141,7 @@
       ],
       "targets": {
         "home": { "viewId": "home", "viewPath": "sap.ui.yesco.mvc.view.home", "viewName": "Portlets" },
-        "notFound": { "viewId": "notFound", "viewName": "sapui.yesco.mvc.view.NotFound", "transition": "show" },
+        "notFound": { "viewId": "notFound", "viewName": "NotFound", "transition": "show" },
 
         "congratulation": { "viewId": "congratulation", "viewPath": "sap.ui.yesco.mvc.view.congratulation", "viewName": "Congratulation" },
         "congDetail": { "viewId": "congDetail", "viewPath": "sap.ui.yesco.mvc.view.congratulation", "viewName": "CongDetail" },
@@ -169,9 +169,9 @@
         "attendanceDetail": { "viewId": "attendanceDetail", "viewPath": "sap.ui.yesco.mvc.view.attendance", "viewName": "Detail" },
         "employee": { "viewId": "employee", "viewPath": "sap.ui.yesco.mvc.view.employee", "viewName": "Employee" },
 
-        "nightduty": { "viewId": "nightduty", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "List" },
-        "nightdutyDetail": { "viewId": "nightdutyDetail", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "Detail" },
-        
+        "nightshift": { "viewId": "nightshift", "viewPath": "sap.ui.yesco.mvc.view.nightshift", "viewName": "List" },
+        "nightshiftDetail": { "viewId": "nightshiftDetail", "viewPath": "sap.ui.yesco.mvc.view.nightshift", "viewName": "Detail" },
+
         "performance": { "viewId": "performance", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "List" },
         "performanceDetail": { "viewId": "performanceDetail", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "Detail" },
 

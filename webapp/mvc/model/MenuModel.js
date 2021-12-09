@@ -4,53 +4,56 @@ sap.ui.define(
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/mvc/model/base/PromiseJSONModel',
   ],
   (
     // prettier 방지용 주석
     JSONModel,
     AppUtils,
-    ServiceNames
+    ServiceNames,
+    PromiseJSONModel
   ) => {
     'use strict';
 
-    return JSONModel.extend('sap.ui.yesco.mvc.model.MenuModel', {
+    return PromiseJSONModel.extend('sap.ui.yesco.mvc.model.MenuModel', {
       constructor: function (oUIComponent) {
         JSONModel.apply(this);
 
-        this.oUIComponent = oUIComponent;
-
-        this.promise = this.retrieve();
+        this.setUIComponent(oUIComponent);
+        this.setPromise(this.retrieve());
       },
 
       retrieve() {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
           const sUrl = '/GetMenuLvSet';
-          this.oUIComponent.getModel(ServiceNames.COMMON).create(
-            sUrl,
-            {
-              Device: '',
-              GetMenuLv1Nav: [],
-              GetMenuLv2Nav: [],
-              GetMenuLv3Nav: [],
-              GetMenuLv4Nav: [],
-            },
-            {
-              success: (oData, oResponse) => {
-                AppUtils.debug(`${sUrl} success.`, oData, oResponse);
-
-                this.setData(this.transform(oData));
-
-                resolve();
+          this.getUIComponent()
+            .getModel(ServiceNames.COMMON)
+            .create(
+              sUrl,
+              {
+                Device: '',
+                GetMenuLv1Nav: [],
+                GetMenuLv2Nav: [],
+                GetMenuLv3Nav: [],
+                GetMenuLv4Nav: [],
               },
-              error: (oError) => {
-                AppUtils.debug(`${sUrl} error.`, oError);
+              {
+                success: (oData, oResponse) => {
+                  AppUtils.debug(`${sUrl} success.`, oData, oResponse);
 
-                this.setData(this.transform({}));
+                  this.setData(this.transform(oData));
 
-                resolve();
-              },
-            }
-          );
+                  resolve();
+                },
+                error: (oError) => {
+                  AppUtils.debug(`${sUrl} error.`, oError);
+
+                  this.setData(this.transform({}));
+
+                  reject(oError);
+                },
+              }
+            );
         });
       },
 
@@ -420,10 +423,6 @@ sap.ui.define(
             },
           ]
         );
-      },
-
-      getPromise() {
-        return this.promise;
       },
 
       getTree() {

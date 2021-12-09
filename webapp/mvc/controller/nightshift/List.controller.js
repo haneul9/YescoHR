@@ -3,13 +3,13 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/controller/nightshift/Helper',
     'sap/ui/yesco/mvc/model/type/Currency',
     'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
     'sap/ui/yesco/mvc/model/type/Pernr',
@@ -18,77 +18,45 @@ sap.ui.define(
     // prettier 방지용 주석
     Filter,
     FilterOperator,
-    JSONModel,
     AttachFileAction,
     AppUtils,
     TableUtils,
     ODataReadError,
     ServiceNames,
-    BaseController
+    BaseController,
+    Helper
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.nightduty.List', {
-      AttachFileAction: AttachFileAction,
-      TableUtils: TableUtils,
-      TABLE_ID: 'nightdutyTable',
-      TYPE_CODE: 'HR01',
+    return BaseController.extend('sap.ui.yesco.mvc.controller.nightshift.List', {
+      oHelper: null,
+      oSearchConditionPromise: null,
+      oAttachFileAction: AttachFileAction,
+      oTableUtils: TableUtils,
+      sTABLE_ID: 'overviewTable',
+      sTYPE_CODE: 'HR01',
 
       onBeforeShow() {
-        const today = moment();
-        const oViewModel = new JSONModel({
-          busy: true,
-          isVisibleActionButton: false,
-          summary: {
-            Year: today.format('YYYY'),
-            YearMonth: this.getBundleText('MSG_06002', today.format('YYYY'), today.format('M')),
-          },
-          search: {
-            Apend: today.hours(9).toDate(),
-            Apbeg: today.subtract(1, 'month').add(1, 'day').hours(9).toDate(),
-          },
-          listInfo: {
-            rowCount: 1,
-            totalCount: 0,
-            progressCount: 0,
-            applyCount: 0,
-            approveCount: 0,
-            rejectCount: 0,
-            completeCount: 0,
-          },
-          list: [],
-          parameter: {
-            selectedIndices: [],
-            rowData: [],
-          },
-        });
-        this.setViewModel(oViewModel);
+        this.oHelper = Helper(this).setDefaultViewModel().retrieveSearchConditionSet();
 
-        TableUtils.adjustRowSpan({
-          table: this.byId(this.TABLE_ID),
+        this.oTableUtils.adjustRowSpan({
+          table: this.byId(this.sTABLE_ID),
           colIndices: [0, 1, 2, 3, 4, 5, 14, 15],
           theadOrTbody: 'thead',
         });
       },
 
-      setPageBusy(bIsBusy) {
-        this.getViewModel().setProperty('/busy', bIsBusy);
-      },
-
       async onObjectMatched() {
         try {
-          const [
-            mSummaryData, // prettier 방지용 주석
-            aTableData,
-          ] = await Promise.all([
-            this.readSummaryData(), // prettier 방지용 주석
+          const [mSummaryData, aTableData] = await Promise.all([
+            this.readSummaryData(), //
             this.readTableData(),
           ]);
 
           this.setSummaryData(mSummaryData);
           this.setTableData(aTableData);
         } catch (oError) {
-          this.debug('Controller > Nightduty List > onObjectMatched Error', oError);
+          this.debug('Controller > Nightshift List > onObjectMatched Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
@@ -157,7 +125,7 @@ sap.ui.define(
 
       setTableData(aRowData) {
         const oViewModel = this.getViewModel();
-        const oTable = this.byId(this.TABLE_ID);
+        const oTable = this.byId(this.sTABLE_ID);
 
         oViewModel.setProperty('/list', aRowData);
         oViewModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData }));
@@ -167,11 +135,11 @@ sap.ui.define(
         try {
           this.setPageBusy(true);
 
-          const aTableData = await this.readTableData();
+          const aTableData = this.readTableData();
 
-          this.setTableData(aTableData);
+          this.setTableData(await aTableData);
         } catch (oError) {
-          this.debug('Controller > Nightduty List > onPressSearch Error', oError);
+          this.debug('Controller > Nightshift List > onPressSearch Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
@@ -180,11 +148,11 @@ sap.ui.define(
       },
 
       onPressNew() {
-        this.getRouter().navTo('nightduty-detail');
+        this.getRouter().navTo('nightshift-detail');
       },
 
       onPressExelDownload() {
-        const oTable = this.byId(this.TABLE_ID);
+        const oTable = this.byId(this.sTABLE_ID);
         const aTableData = this.getViewModel().getProperty('/list');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_06001'); // {당직변경신청}_목록
 
@@ -195,8 +163,12 @@ sap.ui.define(
         const sPath = oEvent.getParameter('rowBindingContext').getPath();
         const sAppno = this.getViewModel().getProperty(`${sPath}/Appno`);
 
-        this.getRouter().navTo('nightduty-detail', { appno: sAppno });
-        // this.getRouter().getTargets().display('congDetail', { oDataKey: oRowData.Appno });
+        this.getRouter().navTo('nightshift-detail', { appno: sAppno });
+        // this.getRouter().getTargets().display('nightshiftDetail', { appno: sAppno });
+      },
+
+      setPageBusy(bIsBusy) {
+        this.getViewModel().setProperty('/busy', bIsBusy);
       },
     });
   }

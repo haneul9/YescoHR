@@ -22,6 +22,10 @@ sap.ui.define(
         // this.getModel('appModel').setProperty('/layout', 'OneColumn');
 
         AppUtils.setAppBusy(false);
+
+        if (this._oData.error) {
+          AppUtils.handleError(this._oData.error);
+        }
       },
 
       // override the parent's onNavBack (inherited from BaseController)

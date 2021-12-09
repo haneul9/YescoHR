@@ -6,6 +6,7 @@ sap.ui.define(
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/mvc/model/base/PromiseJSONModel',
   ],
   (
     // prettier 방지용 주석
@@ -13,19 +14,19 @@ sap.ui.define(
     FilterOperator,
     JSONModel,
     AppUtils,
-    ServiceNames
+    ServiceNames,
+    PromiseJSONModel
   ) => {
     'use strict';
 
     const DATE_FORMAT = 'yyyy.MM.dd';
 
-    return JSONModel.extend('sap.ui.yesco.mvc.model.SessionModel', {
+    return PromiseJSONModel.extend('sap.ui.yesco.mvc.model.SessionModel', {
       constructor: function (oUIComponent) {
         JSONModel.apply(this, this.getInitialData());
 
         this.setUIComponent(oUIComponent);
-
-        this.oPromise = this.retrieve();
+        this.setPromise(this.retrieve());
       },
 
       getInitialData() {
@@ -36,51 +37,41 @@ sap.ui.define(
         };
       },
 
-      setUIComponent(oUIComponent) {
-        this._oUIComponent = oUIComponent;
-      },
-
-      getUIComponent() {
-        return this._oUIComponent;
-      },
-
-      retrieve(sPernr) {
-        return new Promise((resolve) => {
+      async retrieve(sPernr) {
+        return new Promise((resolve, reject) => {
           const sUrl = '/EmpLoginInfoSet';
           const filters = sPernr ? [new Filter('Pernr', FilterOperator.EQ, sPernr)] : []; // AppointeeModel용
 
-          this._oUIComponent.getModel(ServiceNames.COMMON).read(sUrl, {
-            filters: filters,
-            success: (oData, oResponse) => {
-              AppUtils.debug(`${sUrl} success.`, oData, oResponse);
+          this.getUIComponent()
+            .getModel(ServiceNames.COMMON)
+            .read(sUrl, {
+              filters: filters,
+              success: (oData, oResponse) => {
+                AppUtils.debug(`${sUrl} success.`, oData, oResponse);
 
-              const mSessionData = (oData.results || [])[0] || {};
-              delete mSessionData.__metadata;
+                const mSessionData = (oData.results || [])[0] || {};
+                delete mSessionData.__metadata;
 
-              const Dtfmt = mSessionData.Dtfmt;
-              if (Dtfmt && Dtfmt.length >= 8) {
-                mSessionData.Dtfmt = Dtfmt.replace(/y/gi, 'y').replace(/m/gi, 'M').replace(/d/gi, 'd');
-                mSessionData.DTFMT = Dtfmt.toUpperCase();
-              } else {
-                mSessionData.Dtfmt = DATE_FORMAT;
-                mSessionData.DTFMT = DATE_FORMAT.toUpperCase();
-              }
+                const Dtfmt = mSessionData.Dtfmt;
+                if (Dtfmt && Dtfmt.length >= 8) {
+                  mSessionData.Dtfmt = Dtfmt.replace(/y/gi, 'y').replace(/m/gi, 'M').replace(/d/gi, 'd');
+                  mSessionData.DTFMT = Dtfmt.toUpperCase();
+                } else {
+                  mSessionData.Dtfmt = DATE_FORMAT;
+                  mSessionData.DTFMT = DATE_FORMAT.toUpperCase();
+                }
 
-              this.setData(mSessionData, true);
+                this.setData(mSessionData, true);
 
-              resolve();
-            },
-            error: (oError) => {
-              AppUtils.debug(`${sUrl} error.`, oError);
+                resolve();
+              },
+              error: (oError) => {
+                AppUtils.debug(`${sUrl} error.`, oError);
 
-              resolve();
-            },
-          });
+                reject(oError);
+              },
+            });
         });
-      },
-
-      getPromise() {
-        return this.oPromise;
       },
     });
   }

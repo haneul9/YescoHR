@@ -159,7 +159,8 @@ sap.ui.define(
          * @public
          */
         debug(...args) {
-          setTimeout(() => console.log(...args));
+          // setTimeout(() => console.log(...args));
+          console.log(...args);
           return this;
         },
       };

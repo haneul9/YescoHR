@@ -18,21 +18,16 @@ sap.ui.define(
         this.setProperty('/showChangeButton', false);
 
         this.setUIComponent(oUIComponent);
-
-        this.oPromise = this.cloneSessionData();
+        this.setPromise(this.cloneSessionData());
       },
 
-      cloneSessionData() {
-        return new Promise((resolve) => {
-          const oSessionModel = this.getUIComponent().getSessionModel();
-          return oSessionModel.getPromise().then(() => {
-            const oSessionData = oSessionModel.getData();
+      async cloneSessionData() {
+        const oSessionModel = this.getUIComponent().getSessionModel();
 
-            this.setData({ ...oSessionData }, true);
+        await oSessionModel.getPromise();
 
-            resolve();
-          });
-        });
+        const oSessionData = oSessionModel.getData();
+        this.setData({ ...oSessionData }, true);
       },
     });
   }

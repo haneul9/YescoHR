@@ -29,15 +29,15 @@ sap.ui.define(
         this.oMenuPopover = null;
         this.oMenuModel = this.oController.getOwnerComponent().getMenuModel();
 
-        this.oMenuModel.getPromise().then(() => {
-          this.buildAppMenu();
-        });
+        this.buildAppMenu();
       }
 
       /**
        * 메뉴 생성
        */
-      buildAppMenu() {
+      async buildAppMenu() {
+        await this.oMenuModel.getPromise();
+
         const aMenuTree = this.oMenuModel.getTree() || [];
         const oAppMenuToolbar = this.oController.byId('appMenuToolbar');
 

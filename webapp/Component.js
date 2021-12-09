@@ -239,129 +239,127 @@ sap.ui.define(
           .attachRouteMatched((oEvent) => {
             AppUtils.debug('routeMatched', oEvent.getParameters());
 
+            const sRouteName = oEvent.getParameter('name');
             const mArguments = oEvent.getParameter('arguments');
             const oView = oEvent.getParameter('view');
-            const sRouteName = oEvent.getParameter('name');
             const oController = oView.getController();
-            const oMenuModelPromise = this.getMenuModel().getPromise();
 
             oView.setVisible(false);
 
-            oController.baseModelReady = Promise.all([
-              oMenuModelPromise, //
-              this.getSessionModel().getPromise(),
-              this.getAppointeeModel().getPromise(),
-              this._saveBreadcrumbsData({ mArguments, oView, sRouteName }),
-              this._checkRouteName({ oView, sRouteName }),
-            ]);
+            // 화면에서 사용될 Model들이 모두 초기화된 후 동작될 수 있도록 Promise 처리하여 변수로 저장
+            this._oAllBaseModelReadyPromise = Promise.all([
+              this.onSessionModelReady(), // prettier 방지용 주석
+              this.onMenuModelReady({ mArguments, oController, sRouteName }),
+            ]).catch((oError) => {
+              this.getRouter().getTargets().display('notFound', {
+                from: 'home',
+                error: oError,
+              });
+            });
           })
-          .attachRoutePatternMatched((oEvent) => {
+          .attachRoutePatternMatched(async (oEvent) => {
             AppUtils.debug('routePatternMatched', oEvent.getParameters());
 
             const oArguments = oEvent.getParameter('arguments');
-            const oController = oEvent.getParameter('view').getController();
+            const oView = oEvent.getParameter('view');
+            const oController = oView.getController();
+
+            await this._oAllBaseModelReadyPromise;
+
+            oView.setVisible(true); // 반드시 onObjectMatched 이전에 실행되야함
 
             if (oController && oController.onObjectMatched && typeof oController.onObjectMatched === 'function') {
-              oController.baseModelReady.then(() => {
-                oController.onObjectMatched(oArguments);
-              });
+              oController.onObjectMatched(oArguments);
             }
           });
         return this;
       },
 
+      async onSessionModelReady() {
+        return this.getAppointeeModel().getPromise();
+      },
+
+      async onMenuModelReady({ mArguments, oController, sRouteName }) {
+        await this.getMenuModel().getPromise();
+
+        return Promise.all([
+          this._saveBreadcrumbsData({ mArguments, oController, sRouteName }), //
+          this._checkRouteName(sRouteName),
+        ]);
+      },
+
       /**
        * Breadcrumbs 정보 저장
-       * @private
        * @param {object} mArguments
-       * @param {object} oView
+       * @param {object} oController
        * @param {string} sRouteName
+       * @private
        */
-      _saveBreadcrumbsData({ mArguments, oView, sRouteName }) {
-        return new Promise((resolve) => {
-          const oMenuModel = this.getMenuModel();
-          oMenuModel.getPromise().then(() => {
-            const [sRouteNameMain, sRouteNameSub] = sRouteName.split(/-/);
-            if (sRouteNameMain === 'ehrHome') {
-              oMenuModel.setCurrentMenuData({ routeName: '', menuId: '', currentLocationText: '', isSubRoute: false });
-              return;
-            }
+      async _saveBreadcrumbsData({ mArguments, oController, sRouteName }) {
+        const oMenuModel = this.getMenuModel();
 
-            const sMenid = oMenuModel.getMenid(sRouteNameMain);
-            if ((AppUtils.isLOCAL() || AppUtils.isDEV()) && /^X/.test(sMenid)) {
-              oMenuModel.setCurrentMenuData({ routeName: '', menuId: '', currentLocationText: '', isSubRoute: false });
-              return;
-            }
+        const [sRouteNameMain, sRouteNameSub] = sRouteName.split(/-/);
+        if (sRouteNameMain === 'ehrHome') {
+          oMenuModel.setCurrentMenuData({ routeName: '', menuId: '', currentLocationText: '', isSubRoute: false });
+          return;
+        }
 
-            let sCurrentLocationText;
-            const oController = oView.getController();
-            if (oController && typeof oController.getCurrentLocationText === 'function') {
-              sCurrentLocationText = oController.getCurrentLocationText(mArguments);
-            }
+        const sMenid = oMenuModel.getMenid(sRouteNameMain);
+        if ((AppUtils.isLOCAL() || AppUtils.isDEV()) && /^X/.test(sMenid)) {
+          oMenuModel.setCurrentMenuData({ routeName: '', menuId: '', currentLocationText: '', isSubRoute: false });
+          return;
+        }
 
-            oMenuModel.setCurrentMenuData({
-              routeName: sRouteNameMain,
-              menuId: sMenid,
-              currentLocationText: sCurrentLocationText || '',
-              isSubRoute: !!sRouteNameSub,
-            });
+        let sCurrentLocationText;
+        if (oController && typeof oController.getCurrentLocationText === 'function') {
+          sCurrentLocationText = oController.getCurrentLocationText(mArguments);
+        }
 
-            resolve();
-          });
+        oMenuModel.setCurrentMenuData({
+          routeName: sRouteNameMain,
+          menuId: sMenid,
+          currentLocationText: sCurrentLocationText || '',
+          isSubRoute: !!sRouteNameSub,
         });
       },
 
       /**
        * 메뉴 권한 체크
        * @private
-       * @param {object} oView
        * @param {string} sRouteName
        */
-      _checkRouteName({ oView, sRouteName }) {
-        return new Promise((resolve) => {
-          const oMenuModel = this.getMenuModel();
-          oMenuModel.getPromise().then(() => {
-            // do something, i.e. send usage statistics to back end
-            // in order to improve our app and the user experience (Build-Measure-Learn cycle)
-            AppUtils.debug(`User accessed route ${sRouteName}, timestamp = ${new Date().getTime()}`);
+      async _checkRouteName(sRouteName) {
+        // do something, i.e. send usage statistics to back end
+        // in order to improve our app and the user experience (Build-Measure-Learn cycle)
+        // AppUtils.debug(`User accessed route ${sRouteName}, timestamp = ${new Date().getTime()}`);
 
-            const sRouteNameMain = sRouteName.split(/-/)[0];
-            if (sRouteNameMain === 'ehrHome') {
-              oView.setVisible(true);
-              resolve();
-              return;
-            }
+        const sRouteNameMain = sRouteName.split(/-/)[0];
+        if (sRouteNameMain === 'ehrHome') {
+          return;
+        }
 
-            const sMenid = oMenuModel.getMenid(sRouteNameMain);
-            if ((AppUtils.isLOCAL() || AppUtils.isDEV()) && /^X/.test(sMenid)) {
-              oView.setVisible(true);
-              resolve();
-              return;
-            }
+        const sMenid = this.getMenuModel().getMenid(sRouteNameMain);
+        if ((AppUtils.isLOCAL() || AppUtils.isDEV()) && /^X/.test(sMenid)) {
+          return;
+        }
 
-            const sUrl = '/GetMenuidRoleSet';
-            this.getModel(ServiceNames.COMMON).read(sUrl, {
-              filters: [
-                // prettier 방지용 주석
-                new Filter('Menid', FilterOperator.EQ, sMenid),
-              ],
-              success: (oData, oResponse) => {
-                AppUtils.debug(`${sUrl} success.`, oData, oResponse);
+        return new Promise((resolve, reject) => {
+          const sUrl = '/GetMenuidRoleSet';
+          this.getModel(ServiceNames.COMMON).read(sUrl, {
+            filters: [
+              // prettier 방지용 주석
+              new Filter('Menid', FilterOperator.EQ, sMenid),
+            ],
+            success: (oData, oResponse) => {
+              AppUtils.debug(`${sUrl} success.`, oData, oResponse);
 
-                oView.setVisible(true);
+              resolve(); // TODO : Code 구분해서 reject
+            },
+            error: (oError) => {
+              AppUtils.debug(`${sUrl} error.`, oError);
 
-                resolve();
-              },
-              error: (oError) => {
-                AppUtils.debug(`${sUrl} error.`, oError);
-
-                this.getRouter().getTargets().display('notFound', {
-                  from: 'home',
-                });
-
-                resolve();
-              },
-            });
+              reject(oError);
+            },
           });
         });
       },
