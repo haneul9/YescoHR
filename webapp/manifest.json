@@ -127,6 +127,9 @@
         { "pattern": "nightduty", "name": "nightduty", "target": "nightduty" },
         { "pattern": "nightduty/:appno:", "name": "nightduty-detail", "target": "nightdutyDetail" },
         
+        { "pattern": "excavation", "name": "excavation", "target": "excavation" },
+        { "pattern": "excavation/{appno}", "name": "excavation-detail", "target": "excavationDetail" },
+        
         { "pattern": "performance", "name": "performance", "target": "performance" },
         { "pattern": "performance/{pid}", "name": "performance-detail", "target": "performanceDetail" },
         
@@ -171,6 +174,9 @@
 
         "nightduty": { "viewId": "nightduty", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "List" },
         "nightdutyDetail": { "viewId": "nightdutyDetail", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "Detail" },
+        
+        "excavation": { "viewId": "excavation", "viewPath": "sap.ui.yesco.mvc.view.excavation", "viewName": "List" },
+        "excavationDetail": { "viewId": "excavationDetail", "viewPath": "sap.ui.yesco.mvc.view.excavation", "viewName": "Detail" },
         
         "performance": { "viewId": "performance", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "List" },
         "performanceDetail": { "viewId": "performanceDetail", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "Detail" },

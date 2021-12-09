@@ -40,7 +40,7 @@
 										<Button icon="sap-icon://sys-add" text="목표추가" press=".onPressAddStrategy" />
 									</HBox>
 								</HBox>
-								<VBox id="strategyGroup" items="{/strategy}">
+								<VBox items="{/strategy}">
 									<core:Fragment fragmentName="sap.ui.yesco.mvc.view.performance.fragment.GoalItem" type="XML" />
 								</VBox>
 							</VBox>
@@ -51,7 +51,7 @@
 										<Button icon="sap-icon://sys-add" text="목표추가" press=".onPressAddDuty" />
 									</HBox>
 								</HBox>
-								<VBox id="dutyGroup" items="{/duty}">
+								<VBox items="{/duty}">
 									<core:Fragment fragmentName="sap.ui.yesco.mvc.view.performance.fragment.GoalItem" type="XML" />
 								</VBox>
 							</VBox>
