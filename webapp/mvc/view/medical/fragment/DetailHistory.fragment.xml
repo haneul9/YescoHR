@@ -22,7 +22,7 @@
                 <table:Column width="auto">
                     <Label text="{i18n>LABEL_00164}"/>
                     <table:template>
-                        <Text text="{Seqnr}" width="100px" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+                        <Text text="{Seqnr}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
                 <table:Column width="100px">
@@ -95,7 +95,7 @@
                 <table:Column width="150px">
                     <Label text="{i18n>LABEL_09018}"/>
                     <table:template>
-                        <Text text="{ path: 'Bett0t', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+                        <Text text="{ path: 'Bettot', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
                 <table:Column width="100px">

@@ -50,6 +50,7 @@ sap.ui.define(
           ViewKey: '',
           FormData: {},
           DialogData: {},
+          TargetDetails: {},
           HisList: [],
           TargetList: [],
           ReceiptType: [],
@@ -82,10 +83,9 @@ sap.ui.define(
           const oDetailModel = this.getViewModel();
           const aAppList = await this.getTargetList();
   
-          oDetailModel.setProperty('/TargetList', new ComboEntry({ codeKey: 'Seqnr', valueKey: 'Znametx', aEntries: aAppList }));
+          oDetailModel.setProperty('/TargetList', new ComboEntry({ codeKey: 'Kdsvh', valueKey: 'Znametx', aEntries: aAppList }));
           
           this.setFormData();
-          this.settingsAttachTable();
         } catch (oError) {
           this.debug(oError);
           AppUtils.handleError(oError);
@@ -137,16 +137,21 @@ sap.ui.define(
           ${sMsg}`
         );
 
+        const oView = this.getView();
+        const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+        const mListData = oListView.getModel().getProperty('/parameters');
+
         if (sViewKey === 'N' || !sViewKey) {
           const oAppointeeData = this.getAppointeeData();
 
           // oDetailModel.setProperty('/FormData/Appernr', oAppointeeData.Pernr);
           oDetailModel.setProperty('/FormData', 
             {
-              Seqnr: 'ALL',
+              Kdsvh: 'ALL',
               Apcnt: '0',
               Pvcnt: '0',
               Rjcnt: '0',
+              Pyyea: mListData.Pyyea
             },
           );
 
@@ -155,19 +160,13 @@ sap.ui.define(
             Aporgtx: `${oAppointeeData.Btrtx}/${oAppointeeData.Orgtx}`,
             Apjikgbtl: `${oAppointeeData.Zzjikgbt}/${oAppointeeData.Zzjiktlt}`,
           });
+
+          this.settingsAttachTable();
         } else {
-          const oView = this.getView();
-          const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-          const mListData = oListView.getModel().getProperty('/parameters');
           let oSendObject = {};
 
           oSendObject.Prcty = 'D';
           oSendObject.Appno = sViewKey;
-          oSendObject.Begda = mListData.Begda;
-          oSendObject.Endda = mListData.Endda;
-          oSendObject.Lntyp = mListData.Lntyp;
-          oSendObject.Seqnr = mListData.Seqnr;
-          oSendObject.Pernr = mListData.Pernr;
           oSendObject.MedExpenseItemSet = [];
 
           oDetailModel.setProperty('/busy', true);
@@ -176,16 +175,24 @@ sap.ui.define(
             success: (oData) => {
               if (oData) {
                 const oTargetData = oData;
-                const oTable = this.byId('medHisTable');
-                const oHisList = oData.results.MedExpenseItemSet;
+                const aHisList = oData.MedExpenseItemSet.results;
 
                 oDetailModel.setProperty('/FormData', oTargetData);
-                oDetailModel.setProperty('/HisList', oHisList);
-                oDetailModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: oHisList, sStatCode: 'ZappStat' }));
+                oDetailModel.setProperty('/ApplyInfo', oTargetData);
+                oDetailModel.setProperty('/TargetDetails', oTargetData);
+                
+                oDetailModel.setProperty('/HisList', aHisList);
+
+                const iHisLength = aHisList.length;
+
+                oDetailModel.setProperty('/listInfo', {
+                  rowCount: iHisLength > 10 ? 10 : iHisLength,
+                });
 
                 this.getReceiptList(oTargetData.Famgb, oTargetData.Adult);
                 oDetailModel.setProperty('/busy', false);
               }
+              this.settingsAttachTable();
             },
             error: (oError) => {
               AppUtils.handleError(oError);
@@ -253,25 +260,31 @@ sap.ui.define(
 
       // 신청대상 선택시
       async onTargetList(oEvent) {
-        const sKey = oEvent.getSource().getSelectedKey();
         const oDetailModel = this.getViewModel();
+        const sTargetPath = oEvent.getSource().getSelectedItem().getBindingContext().getPath();
+        const mSelectedDetail = oDetailModel.getProperty(sTargetPath);
 
-        oDetailModel.getProperty('/TargetList').forEach((e) => {
-          if (sKey === e.Seqnr) {
-            oDetailModel.setProperty('/TargetDetails', e);
-          }
-        });
+        oDetailModel.setProperty('/TargetDetails', mSelectedDetail);
+        oDetailModel.setProperty('/FormData/Adult', mSelectedDetail.Adult);
+        oDetailModel.setProperty('/FormData/Zname', mSelectedDetail.Zname);
+        oDetailModel.setProperty('/FormData/Znametx', mSelectedDetail.Znametx);
+        oDetailModel.setProperty('/FormData/Famsa', mSelectedDetail.Famsa);
+        oDetailModel.setProperty('/FormData/Objps', mSelectedDetail.Objps);
+        oDetailModel.setProperty('/FormData/Kdsvh', mSelectedDetail.Kdsvh);
+        oDetailModel.setProperty('/FormData/Famgb', mSelectedDetail.Famgb);
+        oDetailModel.setProperty('/FormData/Pratetx', mSelectedDetail.Pratetx);
 
-        if(sKey === 'ALL') return;
+        if(oEvent.getSource().getSelectedItem().getBindingContext().getPath().substr(-1) === '0') return;
 
         oDetailModel.setProperty('/HisList', []);
-        this.getReceiptList(sKey, oDetailModel.getProperty('/TargetDetails/Adult'));
+        oDetailModel.setProperty('/listInfo/rowCount', 0);
+        this.getReceiptList(mSelectedDetail.Famgb, mSelectedDetail.Adult);
       },
 
       // 신청액 & 신청건수
       setAppAmount() {
         const oDetailModel = this.getViewModel();
-        const aSumAmount = oDetailModel.getProperty('/HisList').map(a => a.Bett0t);
+        const aSumAmount = oDetailModel.getProperty('/HisList').map(a => a.Bettot);
 
         const iAmount = aSumAmount.reduce((acc, cur) => {
           return parseInt(acc) + parseInt(cur);
@@ -291,6 +304,8 @@ sap.ui.define(
           iSeqnr += 1;
           e.Seqnr = String(iSeqnr);
         });
+
+        oDetailModel.setProperty('/HisList', aHisList);
       },
       
       checkError() {
@@ -298,7 +313,7 @@ sap.ui.define(
         const mFormData = oDetailModel.getProperty('/FormData');
 
         // 신청대상
-        if (mFormData.Seqnr === 'ALL' || !mFormData.Seqnr) {
+        if ((mFormData.Kdsvh === 'ALL' || !mFormData.Kdsvh)) {
           MessageBox.alert(this.getBundleText('MSG_09025'));
           return true;
         }
@@ -436,7 +451,7 @@ sap.ui.define(
 
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
                   onClose: () => {
-                    this.getRouter().navTo('housingLoan');
+                    this.getRouter().navTo('medical');
                   },
                 });
               } catch (oError) {
@@ -472,7 +487,7 @@ sap.ui.define(
                   AppUtils.setAppBusy(false, this);
                   MessageBox.alert(this.getBundleText('MSG_00039', 'LABEL_00121'), {
                     onClose: () => {
-                      this.getRouter().navTo('housingLoan');
+                      this.getRouter().navTo('medical');
                     },
                   });
                 },
@@ -507,7 +522,7 @@ sap.ui.define(
                   AppUtils.setAppBusy(false, this);
                   MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
                     onClose: () => {
-                      this.getRouter().navTo('housingLoan');
+                      this.getRouter().navTo('medical');
                     },
                   });
                 },
@@ -524,7 +539,7 @@ sap.ui.define(
       // 상세내역 추가
       onAddDetails() {
         const oDetailModel = this.getViewModel();
-        const sAppTarget = oDetailModel.getProperty('/FormData/Seqnr');
+        const sAppTarget = oDetailModel.getProperty('/FormData/Kdsvh');
 
         
         if (!sAppTarget || sAppTarget === 'ALL') {
@@ -559,7 +574,7 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const aDeleteDatas = oDetailModel.getProperty('/HisDeleteDatas');
 
-        if (!aDeleteDatas) {
+        if (!aDeleteDatas.length) {
             return MessageBox.alert(this.getBundleText('MSG_00020', 'LABEL_00110'));
         }
 
@@ -646,6 +661,8 @@ sap.ui.define(
         
         if (this.checkClinicDetail()) return;
         
+        mDialogData.Waers = 'KRW';
+        
         const aHisList = [mDialogData, ...oDetailModel.getProperty('/HisList')];
 
         oDetailModel.setProperty('/HisList', aHisList);
@@ -699,7 +716,7 @@ sap.ui.define(
             const iBet01 = parseInt(mReciptDetails.Bet01);
   
             if (iBet01 < iActCost) {
-              MessageBox.alert(this.getBundleText('MSG_09017', this.TextUtils.toCurrency('5000000'), this.TextUtils.toCurrency(parseInt(iBet01 / parseFloat(mTargetDetails.Prate)))));
+              MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet01Basic, this.TextUtils.toCurrency(parseInt(iBet01 / parseFloat(mTargetDetails.Prate)))));
               oDetailModel.setProperty('/DialogLimit', true);
             } 
           } else {
@@ -708,14 +725,14 @@ sap.ui.define(
   
             if ((sAddBet02 === '0' || !sAddBet02) && !mReciptDetails.Bet02AddChk) {
               if (iBet02 < iActCost) { // 비급여 추가한도를 초과했을경우
-                MessageBox.alert(this.getBundleText('MSG_09017', this.TextUtils.toCurrency('5000000'), this.TextUtils.toCurrency(parseInt(iBet02 / parseFloat(mTargetDetails.Prate)))));
+                MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet02Basic, this.TextUtils.toCurrency(parseInt(iBet02 / parseFloat(mTargetDetails.Prate)))));
                 oDetailModel.setProperty('/DialogLimit', true);
               } 
             } else {
               const iAddBet02 = parseInt(sAddBet02);
 
               if (iAddBet02 < iActCost) { // 비급여 한도를 초과했을경우
-                MessageBox.alert(this.getBundleText('MSG_09017', this.TextUtils.toCurrency('200000'), this.TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
+                MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet02AddBasic, this.TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
                 oDetailModel.setProperty('/DialogLimit', true);
               } 
             }
@@ -730,7 +747,7 @@ sap.ui.define(
           const iBet01 = parseInt(mDialogData.Bet01) || 0;
           const iBet02 = parseInt(mDialogData.Bet02) || 0;
 
-          oDetailModel.setProperty('/DialogData/Bett0t', String(iBet01 + iBet02));
+          oDetailModel.setProperty('/DialogData/Bettot', String(iBet01 + iBet02));
         }, 100);
       },
 

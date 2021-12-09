@@ -13,9 +13,9 @@
                 <Label text="{i18n>LABEL_00144}"/>
                 <table:template>
                     <Text text="{
-                        path: 'Lnsta',
-                        formatter: '.TableUtils.StatusTxt'
-                    }" width="100%" textAlign="Center">
+                            path: 'Lnsta',
+                            formatter: '.TableUtils.StatusTxt'
+                        }" width="100%" textAlign="Center">
                         <customData>
                             <core:CustomData key="status" value="Z{Lnsta}" writeToDom="true" />
                         </customData>
@@ -79,13 +79,7 @@
             <table:Column width="auto" sortProperty="Paymm" filterProperty="Paymm">
                 <Label text="{i18n>LABEL_03002}"/>
                 <table:template>
-                    <Text text="{
-                        path: 'Paymm',
-                        type: 'sap.ui.model.type.Date',
-                        formatOptions: {
-                            pattern: 'yyyy.MM.dd'
-                        }
-                    }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                    <Text text="{= !${Paymm} || ${Paymm} === '0000000' ? '' : ${Paymm} }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
             <table:Column width="60px">

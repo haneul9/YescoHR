@@ -33,7 +33,7 @@
                     </VBox>
                     <Label text="{i18n>LABEL_09018}"/>
                     <VBox>
-                        <Text text="{ path: '/DialogData/Bett0t', type: 'sap.ui.yesco.mvc.model.type.Currency' }"/>
+                        <Text text="{ path: '/DialogData/Bettot', type: 'sap.ui.yesco.mvc.model.type.Currency' }"/>
                     </VBox>
                     <Label text="{i18n>LABEL_09015}"/>
                     <VBox>

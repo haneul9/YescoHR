@@ -10,6 +10,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Currency',
+    'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
   ],
   (
     // prettier 방지용 주석
@@ -39,6 +40,7 @@ sap.ui.define(
           Data: [],
           LoanType: [],
           TargetCode: {},
+          parameters: {},
           search: {
             date: new Date(dDate.getFullYear(), 12, 0),
             secondDate: new Date(),
@@ -57,12 +59,28 @@ sap.ui.define(
       },
 
       async onObjectMatched() {
-        await this.getFamilyCode();
-        await this.onSearch();
-        this.totalCount();
+        const oListModel = this.getViewModel();
+        
+        try {
+          oListModel.setProperty('/busy', true);
+          const aList = await this.getFamilyCode();
+          
+          oListModel.setProperty('/FamilyCode', new ComboEntry({ codeKey: 'Seqnr', valueKey: 'Znametx', aEntries: aList }));
+          oListModel.setProperty('/search/Seqnr', 'ALL');
+
+          this.onSearch();
+          this.totalCount();
+        } catch (oError) {
+
+        } finally {
+          oListModel.setProperty('/busy', false);
+        }
       },
 
       onClick() {
+        const oListModel = this.getViewModel();
+        
+        oListModel.setProperty('/parameters/Pyyea', oListModel.getProperty('/Total/Zyear'));
         this.getRouter().navTo('medical-detail', { oDataKey: 'N' });
       },
 
@@ -83,79 +101,65 @@ sap.ui.define(
       onSearch() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oListModel = this.getViewModel();
-        const oTable = this.byId('medTable');
         const oSearch = oListModel.getProperty('/search');
         const dDate = moment(oSearch.secondDate).hours(9).toDate();
         const dDate2 = moment(oSearch.date).hours(9).toDate();
         const sMenid = this.getCurrentMenuId();
+        let sFamgb = '';
+        let sFamsa = '';
+        let sObjps = '';
+        let sKdsvh = '';
 
-        return new Promise((resolve) => {
-          oListModel.setProperty('/busy', true);
+        oListModel.setProperty('/busy', true);
 
-          let sFamgb = '';
-          let sFamsa = '';
-          let sObjps = '';
-          let sKdsvh = '';
+        if(!!oSearch.Seqnr && oSearch.Seqnr !== 'ALL') {
+          sFamgb = oListModel.getProperty('/TargetCode/Famgb');
+          sFamsa = oListModel.getProperty('/TargetCode/Famsa');
+          sObjps = oListModel.getProperty('/TargetCode/Objps');
+          sKdsvh = oListModel.getProperty('/TargetCode/Kdsvh');
+        }
 
-          if(!!oSearch.Seqnr && oSearch.Seqnr !== 'ALL') {
-            sFamgb = oListModel.getProperty('/TargetCode/Famgb');
-            sFamsa = oListModel.getProperty('/TargetCode/Famsa');
-            sObjps = oListModel.getProperty('/TargetCode/Objps');
-            sKdsvh = oListModel.getProperty('/TargetCode/Kdsvh');
-          }
-
-          oModel.read('/MedExpenseApplSet', {
-            filters: [
-              new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'),
-              new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid),
-              new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate),
-              new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2),
-              new sap.ui.model.Filter('Famgb', sap.ui.model.FilterOperator.EQ, sFamgb),
-              new sap.ui.model.Filter('Famsa', sap.ui.model.FilterOperator.EQ, sFamsa),
-              new sap.ui.model.Filter('Objps', sap.ui.model.FilterOperator.EQ, sObjps),
-              new sap.ui.model.Filter('Kdsvh', sap.ui.model.FilterOperator.EQ, sKdsvh),
-            ],
-            success: (oData) => {
-              if (oData) {
-                const oMyMed = oData.results;
-
-                oListModel.setProperty('/List', oMyMed);
-                oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: oMyMed, sStatCode: 'Lnsta' }));
-                
-                oListModel.setProperty('/busy', false);
-              }
-
-              resolve();
-            },
-            error: (oError) => {
-              this.debug(oError);
-              oListModel.setProperty('/busy', false);
-            },
-          });
+        oModel.read('/MedExpenseApplSet', {
+          filters: [
+            new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'),
+            new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid),
+            new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate),
+            new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2),
+            new sap.ui.model.Filter('Famgb', sap.ui.model.FilterOperator.EQ, sFamgb),
+            new sap.ui.model.Filter('Famsa', sap.ui.model.FilterOperator.EQ, sFamsa),
+            new sap.ui.model.Filter('Objps', sap.ui.model.FilterOperator.EQ, sObjps),
+            new sap.ui.model.Filter('Kdsvh', sap.ui.model.FilterOperator.EQ, sKdsvh),
+          ],
+          success: (oData) => {
+            if (oData) {
+              const aMedList = oData.results;
+              const oTable = this.byId('medTable');
+        
+              oListModel.setProperty('/List', aMedList);
+              oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aMedList, sStatCode: 'Lnsta' }));
+            }
+            oListModel.setProperty('/busy', false);
+          },
+          error: (oError) => {
+            this.debug(oError);
+            oListModel.setProperty('/busy', false);
+          },
         });
       },
 
       getFamilyCode() {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
           const oModel = this.getModel(ServiceNames.BENEFIT);
-          const oListModel = this.getViewModel();
 
           oModel.read('/MedExpenseSupportListSet', {
             filters: [new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date())],
             success: (oData) => {
               if (oData) {
-                const aList = oData.results;
-
-                oListModel.setProperty('/FamilyCode', new ComboEntry({ codeKey: 'Seqnr', valueKey: 'Znametx', aEntries: aList }));
-                oListModel.setProperty('/search/Seqnr', 'ALL');
+                resolve(oData.results);
               }
-
-              resolve();
             },
             error: (oError) => {
-              this.debug(oError);
-
-              oListModel.setProperty('/busy', false);
+              reject(oError);
             },
           });
         });
