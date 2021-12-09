@@ -310,6 +310,10 @@ sap.ui.define(
 
       onSelectSuggest(oEvent) {
         const oViewModel = this.getViewModel();
+        const oSelectedItem = oEvent.getParameter('selectedItem');
+
+        if (_.isEmpty(oSelectedItem)) return;
+
         const sRowPath = oEvent.getSource().getParent().getBindingContext().getPath();
         const sSelectedPernr = oEvent.getParameter('selectedItem')?.getKey() ?? 'None';
         const aEmployees = oViewModel.getProperty('/form/employees');
@@ -317,7 +321,7 @@ sap.ui.define(
 
         oViewModel.setProperty(sRowPath, {
           ...oViewModel.getProperty(sRowPath),
-          PernrA: mEmployee.Pernr.replace(/^0+/, ''),
+          PernrA: mEmployee.Pernr,
           EnameA: mEmployee.Ename,
           OrgtxA: mEmployee.Fulln,
           ZzjikgbtA: mEmployee.Zzjikgbt,
