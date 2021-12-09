@@ -4,7 +4,7 @@
   <VBox class="hCardBox summary-box" busy="{/busy}">
     <HBox justifyContent="SpaceBetween" class="title">
       <Title level="H2" text="{i18n>LABEL_06002}" />
-      <Button type="Transparent" icon="sap-icon://detail-view" class="icon-button" />
+      <Button type="Transparent" icon="sap-icon://detail-view" class="icon-button" press=".onPressDoneListDialogOpen" />
     </HBox>
     <grid:CSSGrid gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr" gridGap="8px">
       <Text text="{/summary/Year}{i18n>MSG_06001}" class="sapUiSmallMarginBottom">

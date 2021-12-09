@@ -25,16 +25,15 @@ sap.ui.define(
 
         let Dtfmt;
         const oBindingValueType = (this.getBindingInfo('value') || {}).type;
-        if (oBindingValueType) {
-          if (['CustomDate', 'CustomMonth', 'CustomYear'].includes(oBindingValueType.getName())) {
-            Dtfmt = oBindingValueType.oFormatOptions.pattern;
-          }
+        if (oBindingValueType && ['CustomMonth', 'CustomYear'].includes(oBindingValueType.getName())) {
+          Dtfmt = oBindingValueType.oFormatOptions.pattern;
         }
         if (!Dtfmt) {
           Dtfmt = AppUtils.getAppComponent().getSessionModel().getProperty('/Dtfmt');
+          this.setShowFooter(true);
         }
 
-        this.setShowFooter(true).setValueFormat(Dtfmt).setDisplayFormat(Dtfmt).setPlaceholder(Dtfmt).addStyleClass('sapIcon_Date');
+        this.setValueFormat(Dtfmt).setDisplayFormat(Dtfmt).setPlaceholder(Dtfmt).addStyleClass('sapIcon_Date');
       },
 
       _createPopup() {

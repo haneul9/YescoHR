@@ -785,8 +785,8 @@ html.sap-desktop .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnSel:hover .sapMSeg
 .contents {margin: 0 auto;max-width: 1600px;min-width: 1600px;}
 .contents > .sapMFlexBox + .sapMFlexBox {margin-top:20px}
 .appointee-info-box, .summary-box, .search-condition-box {width:33%}
-.sapMFlexBox + .summary-box {margin-left:20px}
-.sapMFlexBox + .search-condition-box {margin-left:20px}
+.sapMFlexBox + .summary-box, .sapUiBlockLayerTabbable + .summary-box {margin-left:20px}
+.sapMFlexBox + .search-condition-box, .sapUiBlockLayerTabbable + .search-condition-box {margin-left:20px}
 
 /*Layer popup style*/
 .sapUiSizeCompact.sapMDialog, .sapUiSizeCompact .sapMDialog { min-height: 6rem;padding: 4.5rem 1.35rem;background-color: #fff;}

@@ -1,66 +1,66 @@
 <core:FragmentDefinition xmlns="sap.ui.table"
     xmlns:m="sap.m"
     xmlns:core="sap.ui.core"
-    xmlns:calendar="sap.ui.unified.calendar">
-    <m:Dialog title="{i18n>MSG_06004}" contentWidth="600px">
+    xmlns:custom="sap.ui.yesco.control">
+    <m:Dialog title="{i18n>MSG_06004}" contentWidth="1280px">
         <m:HBox>
             <m:Label text="{i18n>MSG_06005}" />
-            <calendar:MonthPicker month="{/dialog/search/month}" />
+            <custom:DatePicker value="{ path: '/dialog/search/month', type: 'sap.ui.yesco.mvc.model.type.Month' }" />
             <m:Label text="{i18n>MSG_06006}" />
             <m:Select />
-            <m:Button type="Transparent" icon="sap-icon://search" class="icon-button" press=".onPressSearch" />
+            <m:Button type="Transparent" icon="sap-icon://search" class="icon-button" press=".onPressDoneListSearch" />
         </m:HBox>
-        <Table id="dialogTable" class="row-link" width="100%" columnHeaderHeight="45" rowHeight="45" rows="{/list}" visibleRowCount="{/listInfo/rowCount}" busyIndicatorDelay="0" busy="{/dialog/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow" rowSelectionChange=".onChangeRowSelection">
+        <Table id="doneListTable" class="row-link" width="100%" columnHeaderHeight="45" rowHeight="45" rows="{/list}" visibleRowCount="{/listInfo/rowCount}" busyIndicatorDelay="0" busy="{/dialog/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow" rowSelectionChange=".onChangeRowSelection">
             <columns>
-                <Column width="8%" filterProperty="Datum" sortProperty="Datum">
+                <Column filterProperty="Datum" sortProperty="Datum">
                     <m:Label text="{i18n>LABEL_06101}"/>
                     <template>
                         <m:Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                     </template>
                 </Column>
-                <Column width="8%" filterProperty="Kurzt" sortProperty="Kurzt">
+                <Column filterProperty="Kurzt" sortProperty="Kurzt">
                     <m:Label text="{i18n>LABEL_06102}"/>
                     <template>
                         <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                     </template>
                 </Column>
-                <Column width="8%" filterProperty="Tagty" sortProperty="Tagty">
+                <Column filterProperty="Tagty" sortProperty="Tagty">
                     <m:Label text="{i18n>LABEL_06103}"/>
                     <template>
                         <m:Text text="{Tagty}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                     </template>
                 </Column>
-                <Column width="8%" filterProperty="Awart" sortProperty="Atext">
+                <Column filterProperty="Awart" sortProperty="Atext">
                     <m:Label text="{i18n>LABEL_06104}"/>
                     <template>
                         <m:Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                     </template>
                 </Column>
-                <Column width="8%" filterProperty="Ocshf" sortProperty="Ocshf">
+                <Column filterProperty="Ocshf" sortProperty="Ocshf">
                     <m:Label text="{i18n>MSG_06006}"/>
                     <template>
                         <m:Text text="{Ocshf}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                     </template>
                 </Column>
-                <Column width="8%" filterProperty="PernrB" sortProperty="PernrB" headerSpan="4">
+                <Column filterProperty="PernrB" sortProperty="PernrB" headerSpan="4">
                     <m:Label text="{i18n>LABEL_00209}"/>
                     <template>
                         <m:Text text="{ path: 'PernrB', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                     </template>
                 </Column>
-                <Column width="8%" filterProperty="EnameB" sortProperty="EnameB">
+                <Column filterProperty="EnameB" sortProperty="EnameB">
                     <m:Label text="{i18n>LABEL_00210}"/>
                     <template>
                         <m:Text text="{EnameB}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                     </template>
                 </Column>
-                <Column width="8%" filterProperty="OrgtxB" sortProperty="OrgtxB">
+                <Column filterProperty="OrgtxB" sortProperty="OrgtxB">
                     <m:Label text="{i18n>LABEL_00224}"/>
                     <template>
                         <m:Text text="{OrgtxB}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                     </template>
                 </Column>
-                <Column width="8%" filterProperty="ZzjikgbtB" sortProperty="ZzjikgbtB">
+                <Column filterProperty="ZzjikgbtB" sortProperty="ZzjikgbtB">
                     <m:Label text="{i18n>LABEL_00215}"/>
                     <template>
                         <m:Text text="{ZzjikgbtB}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
@@ -69,7 +69,7 @@
             </columns>
         </Table>
         <m:endButton>
-            <m:Button text="{i18n>LABEL_00115}" press=".onPressDialogClose"/>
+            <m:Button text="{i18n>LABEL_00115}" press=".onPressDoneListDialogClose"/>
         </m:endButton>
     </m:Dialog>
 </core:FragmentDefinition>

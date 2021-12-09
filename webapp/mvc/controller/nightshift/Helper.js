@@ -49,7 +49,7 @@ sap.ui.define(
             },
             dialog: {
               search: {
-                month: oTodayDate,
+                month: oTodayDate.getMonth(),
               },
             },
           });

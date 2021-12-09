@@ -15,11 +15,11 @@
 		<VBox class="contents">
 			<HBox justifyContent="SpaceAround">
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBox" type="XML" />
-				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.nightshift.fragment.Summary" type="XML" />
-				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.nightshift.fragment.SearchCondition" type="XML" />
+				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.nightshift.fragment.SummaryBox" type="XML" />
+				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.nightshift.fragment.SearchConditionBox" type="XML" />
 			</HBox>
 			<VBox class="vCardBox">
-				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.nightshift.fragment.OverviewTable" type="XML" />
+				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.nightshift.fragment.ListTable" type="XML" />
 			</VBox>
 		</VBox>
 	</Page>
