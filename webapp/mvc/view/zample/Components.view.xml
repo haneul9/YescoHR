@@ -89,7 +89,7 @@
 										</grid:CSSGrid>
 									</IconTabFilter>
 									<IconTabFilter text="Attachments" key="Attachments">
-										<Label text="3333" />
+										<Text text="Attachments go here ..."/>
 									</IconTabFilter>
 									<IconTabFilter text="목표수립" key="Notes">
 										<Panel expandable="true" width="auto" class="type-b">
@@ -123,27 +123,59 @@
 													</VBox>
 													<VBox>
 														<Label  labelFor="gcg22" text="목표항목구분" />
-														<Input id="gcg22" width="" change="onInputChanged"/>
+														<Select width="100%" forceSelection="false" selectedKey="{/SelectedProduct}" items="{
+																path: '/ProductCollection',
+																sorter: {
+																	path: 'Name'
+																},
+																templateShareable: true
+															}">
+															<core:Item key="{ProductId}" text="{Name}" />
+														</Select>
 													</VBox>
 													<VBox>
 														<Label  labelFor="gcg33" text="가중치" />
-														<Input id="gcg33" width="" change="onInputChanged"/>
+														<Select width="100%" forceSelection="false" selectedKey="{/SelectedProduct}" items="{
+																path: '/ProductCollection',
+																sorter: {
+																	path: 'Name'
+																},
+																templateShareable: true
+															}">
+															<core:Item key="{ProductId}" text="{Name}" />
+														</Select>
 													</VBox>
 													<VBox>
 														<Label  labelFor="gcg44" text="목표수행 시작일" />
-														<Input id="gcg44" width="" change="onInputChanged"/>
+														<DatePicker id="DP1-21" width="100%" class="sapIcon_Date" value="{ path: '/today', formatter: '.DateUtils.format' }" valueFormat="{sessionModel&gt;/Dtfmt}" displayFormat="{sessionModel&gt;/Dtfmt}" placeholder="{sessionModel&gt;/Dtfmt}" />
 													</VBox>													
 													<VBox>
-														<Label  labelFor="gcg222" text="목표항목구분" />
-														<Input id="gcg222" width="" change="onInputChanged"/>
+														<Label  labelFor="gcg222" text="목표수행 종료일" />
+														<DatePicker id="DP1-22" width="100%" class="sapIcon_Date" value="{ path: '/today', formatter: '.DateUtils.format' }" valueFormat="{sessionModel&gt;/Dtfmt}" displayFormat="{sessionModel&gt;/Dtfmt}" placeholder="{sessionModel&gt;/Dtfmt}" />
 													</VBox>
 													<VBox>
-														<Label  labelFor="gcg333" text="가중치" />
-														<Input id="gcg333" width="" change="onInputChanged"/>
+														<Label  labelFor="gcg333" text="진척도" />
+														<Select width="100%" forceSelection="false" selectedKey="{/SelectedProduct}" items="{
+																path: '/ProductCollection',
+																sorter: {
+																	path: 'Name'
+																},
+																templateShareable: true
+															}">
+															<core:Item key="{ProductId}" text="{Name}" />
+														</Select>
 													</VBox>
 													<VBox>
-														<Label  labelFor="gcg444" text="목표수행 시작일" />
-														<Input id="gcg444" width="" change="onInputChanged"/>
+														<Label  labelFor="gcg444" text="진행상태" />
+														<Select width="100%" forceSelection="false" selectedKey="{/SelectedProduct}" items="{
+																path: '/ProductCollection',
+																sorter: {
+																	path: 'Name'
+																},
+																templateShareable: true
+															}">
+															<core:Item key="{ProductId}" text="{Name}" />
+														</Select>
 													</VBox>
 													<VBox>
 														<layoutData>
@@ -229,11 +261,27 @@
 														<HBox justifyContent="SpaceBetween" >
 															<VBox width="100%">
 																<Label  labelFor="gcg2224" text="자기평가 점수" />
-																<Input id="gcg2224" width="" change="onInputChanged"/>
+																<Select width="100%" forceSelection="false" selectedKey="{/SelectedProduct}" items="{
+																		path: '/ProductCollection',
+																		sorter: {
+																			path: 'Name'
+																		},
+																		templateShareable: true
+																	}">
+																	<core:Item key="{ProductId}" text="{Name}" />
+																</Select>
 															</VBox>
 															<VBox width="100%">
 																<Label  labelFor="gcg2223" text="1차평가점수" />
-																<Input id="gcg2223" width="" change="onInputChanged"/>
+																<Select width="100%" forceSelection="false" selectedKey="{/SelectedProduct}" items="{
+																		path: '/ProductCollection',
+																		sorter: {
+																			path: 'Name'
+																		},
+																		templateShareable: true
+																	}">
+																	<core:Item key="{ProductId}" text="{Name}" />
+																</Select>
 															</VBox>
 														</HBox>
 													</VBox>	
@@ -244,7 +292,7 @@
 									</IconTabFilter>
 									<IconTabFilter text="People" key="People">
 										
-										<Label text="444" />
+										<Text text="People go here ..."/>
 									</IconTabFilter>
 								</items>
 							</IconTabBar>
