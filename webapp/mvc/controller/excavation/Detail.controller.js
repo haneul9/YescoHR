@@ -7,18 +7,15 @@ sap.ui.define(
     'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
-    'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/DateUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
-    'sap/ui/yesco/common/Validator',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date',
     'sap/ui/yesco/mvc/model/type/Pernr',
@@ -30,18 +27,15 @@ sap.ui.define(
     FilterOperator,
     JSONModel,
     MessageBox,
-    ComboEntry,
     UI5Error,
     ODataReadError,
     ODataCreateError,
     Appno,
     AppUtils,
-    DateUtils,
     AttachFileAction,
     ServiceNames,
     TableUtils,
     TextUtils,
-    Validator,
     BaseController
   ) => {
     'use strict';
@@ -92,19 +86,9 @@ sap.ui.define(
       async onObjectMatched(oParameter) {
         const oViewModel = this.getView().getModel();
 
-        if (oParameter.appno === 'n') {
-          const aEmployees = await this.readEmpSearchResult();
+        oViewModel.setProperty('/Appno', oParameter.appno === 'n' ? null : oParameter.appno);
 
-          oViewModel.setProperty('/Appno', null);
-          oViewModel.setProperty(
-            '/form/employees',
-            aEmployees.map((o) => ({ ...o, Pernr: o.Pernr.replace(/^0+/, '') }))
-          );
-        } else {
-          oViewModel.setProperty('/Appno', oParameter.appno);
-        }
-
-        // this.loadPage();
+        this.loadPage();
       },
 
       getCurrentLocationText(oArguments) {
@@ -117,32 +101,27 @@ sap.ui.define(
         const oView = this.getView();
         const oViewModel = oView.getModel();
         const sAppno = oViewModel.getProperty('/Appno');
-        const sType = oViewModel.getProperty('/type');
 
         try {
           if (sAppno) {
-            const mResultData = await this.readLeaveApplEmpList({ Prcty: 'R', Appno: sAppno });
+            const oModel = this.getModel(ServiceNames.WORKTIME);
+            const aDetailData = await this.readDrillChangeAppSet({ oModel, sAppno });
+            const mDetail = aDetailData[0] ?? {};
 
-            oViewModel.setProperty('/ZappStatAl', mResultData.ZappStatAl);
+            oViewModel.setProperty('/ZappStatAl', mDetail.ZappStatAl);
+            oViewModel.setProperty('/form/Chgrsn', mDetail.Chgrsn);
             oViewModel.setProperty('/form/listMode', 'None');
 
-            this.setTableData({ sType, oViewModel, aRowData: [mResultData] });
-            this.initializeApplyInfoBox(mResultData);
-            this.initializeApprovalBox(mResultData);
+            this.setTableData({ oViewModel, aRowData: [...aDetailData] });
+            this.initializeApplyInfoBox(mDetail);
+            this.initializeApprovalBox(mDetail);
           } else {
-            if (sType === this.PAGE_TYPE.CHANGE || sType === this.PAGE_TYPE.CANCEL) {
-              const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-              const aRowData = oListView.getModel().getProperty('/parameter/rowData');
+            const aEmployees = await this.readEmpSearchResult();
 
-              if (sType === this.PAGE_TYPE.CANCEL) {
-                oViewModel.setProperty('/form/listMode', 'None');
-              } else {
-                aRowData.forEach((o) => (o.Tmrsn = ''));
-              }
-
-              // 변경|취소 신청의 경우 List페이지에서 선택된 데이터를 가져온다.
-              this.setTableData({ sType, oViewModel, aRowData });
-            }
+            oViewModel.setProperty(
+              '/form/employees',
+              aEmployees.map((o) => ({ ...o, Pernr: o.Pernr.replace(/^0+/, '') }))
+            );
 
             this.initializeApplyInfoBox();
           }
@@ -159,36 +138,9 @@ sap.ui.define(
         }
       },
 
-      setTableData({ sType, oViewModel, aRowData }) {
+      setTableData({ oViewModel, aRowData }) {
         oViewModel.setProperty('/form/rowCount', aRowData.length);
-        oViewModel.setProperty(
-          '/form/list',
-          aRowData.map((o) => {
-            if (sType === this.PAGE_TYPE.CHANGE) {
-              return {
-                ...o,
-                isChanged: false,
-                Abrtg2: o.Abrtg2 ? o.Abrtg2 : o.Abrtg,
-                AbrtgTxt: Number(o.Abrtg),
-                AbrtgTxt2: o.Abrtg2 ? Number(o.Abrtg2) : Number(o.Abrtg),
-                Abrst2: o.Abrst2 ? o.Abrst2 : o.Abrst,
-                Begda2: o.Begda2 ? o.Begda2 : o.Begda,
-                Endda2: o.Endda2 ? o.Endda2 : o.Endda,
-                BegdaTxt: o.Begda ? DateUtils.format(o.Begda) : '',
-                EnddaTxt: o.Endda ? DateUtils.format(o.Endda) : '',
-                BegdaTxt2: o.Begda2 ? DateUtils.format(o.Begda2) : DateUtils.format(o.Begda),
-                EnddaTxt2: o.Endda2 ? DateUtils.format(o.Endda2) : DateUtils.format(o.Endda),
-              };
-            } else {
-              return {
-                ...o,
-                AbrtgTxt: `${Number(o.Abrtg)}일`,
-                BegdaTxt: DateUtils.format(o.Begda),
-                EnddaTxt: DateUtils.format(o.Endda),
-              };
-            }
-          })
-        );
+        oViewModel.setProperty('/form/list', aRowData);
 
         this.toggleHasRowProperty();
       },
@@ -197,12 +149,12 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         if (_.isEmpty(detailData)) {
-          const mSessionData = this.getSessionData();
+          const mAppointeeData = this.getAppointeeData();
 
           oViewModel.setProperty('/ApplyInfo', {
-            Apename: mSessionData.Ename,
-            Aporgtx: `${mSessionData.Btrtx}/${mSessionData.Orgtx}`,
-            Apjikgbtl: `${mSessionData.Zzjikgbt}/${mSessionData.Zzjiktlt}`,
+            Apename: mAppointeeData.Ename,
+            Aporgtx: `${mAppointeeData.Btrtx}/${mAppointeeData.Orgtx}`,
+            Apjikgbtl: `${mAppointeeData.Zzjikgbt}/${mAppointeeData.Zzjiktlt}`,
           });
         } else {
           oViewModel.setProperty('/ApplyInfo', { ...detailData });
@@ -219,14 +171,12 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const sStatus = oViewModel.getProperty('/ZappStatAl');
         const sAppno = oViewModel.getProperty('/Appno') || '';
-        const sType = oViewModel.getProperty('/type') || '';
 
         AttachFileAction.setAttachFile(this, {
           Editable: !sStatus,
           Type: this.TYPE_CODE,
           Appno: sAppno,
           Max: 10,
-          Visible: !(sType === this.PAGE_TYPE.CANCEL),
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
         });
       },
@@ -508,6 +458,28 @@ sap.ui.define(
         });
       },
 
+      readDrillChangeAppSet({ oModel, sAppno }) {
+        return new Promise((resolve, reject) => {
+          const sUrl = '/DrillChangeAppSet';
+
+          oModel.read(sUrl, {
+            filters: [
+              new Filter('Appno', FilterOperator.EQ, sAppno), //
+            ],
+            success: (oData) => {
+              this.debug(`${sUrl} success.`, oData);
+
+              resolve(oData.results ?? []);
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, oError);
+
+              reject(new ODataReadError(oError));
+            },
+          });
+        });
+      },
+
       /**
        *
        * @param {String} sPrcty -  T:임시저장, C:신청
@@ -517,6 +489,7 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const oViewModel = this.getViewModel();
         const aTableData = oViewModel.getProperty('/form/list');
+        const sChgrsn = oViewModel.getProperty('/form/Chgrsn');
         const sAppno = oViewModel.getProperty('/Appno');
         const sMenid = this.getCurrentMenuId();
         const sUrl = '/DrillChangeAppSet';
@@ -526,6 +499,7 @@ sap.ui.define(
             Menid: sMenid,
             Appno: sAppno,
             Prcty: sPrcty,
+            Chgrsn: sChgrsn,
             DrillChangeNav: [...aTableData],
           };
 
