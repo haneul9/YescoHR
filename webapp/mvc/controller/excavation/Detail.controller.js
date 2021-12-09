@@ -504,7 +504,7 @@ sap.ui.define(
             Appno: sAppno,
             Prcty: sPrcty,
             Chgrsn: sChgrsn,
-            DrillChangeNav: [...aTableData],
+            DrillChangeNav: [...aTableData.map((o) => ({ ...o, Chgrsn: sChgrsn }))],
           };
 
           oModel.create(sUrl, mPayload, {
