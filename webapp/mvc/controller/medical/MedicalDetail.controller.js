@@ -374,7 +374,6 @@ sap.ui.define(
                 oSendObject.Menid = oDetailModel.getProperty('/menid');
                 oSendObject.Waers = 'KRW';
                 oSendObject.MedExpenseItemSet = oDetailModel.getProperty('/HisList');
-
                 // FileUpload
                 if (!!AttachFileAction.getFileLength.call(this)) {
                   await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.TYPE_CODE);
@@ -432,6 +431,7 @@ sap.ui.define(
                 oSendObject.Prcty = 'C';
                 oSendObject.Menid = oDetailModel.getProperty('/menid');
                 oSendObject.Waers = 'KRW';
+                oSendObject.MedExpenseItemSet = oDetailModel.getProperty('/HisList');
 
                 // FileUpload
                 if (!!AttachFileAction.getFileLength.call(this)) {
@@ -833,13 +833,13 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
  
-        // AttachFileAction.setAttachFile(this, {
-        //   AttachFileID: '1',
-        //   Type: this.TYPE_CODE,
-        //   // Appno: sAppno,
-        //   Max: 1,
-        //   FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
-        // });
+        AttachFileAction.setAttachFile(this, {
+          Id: '',
+          Type: this.TYPE_CODE,
+          // Appno: sAppno,
+          Max: 1,
+          FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
+        });
       },
     });
   }

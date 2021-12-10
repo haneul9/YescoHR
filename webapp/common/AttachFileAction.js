@@ -18,6 +18,7 @@ sap.ui.define(
         const options = $.extend(
           true,
           {
+            Id: '',
             Appno: '',
             AttachFileID: '',
             Type: '',
@@ -32,9 +33,6 @@ sap.ui.define(
           },
           opt
         );
-        const oFileUploader = oController.byId('ATTACHFILE_BTN');
-
-        oFileUploader.setValue('');
 
         options.ListMode = options.Editable ? sap.ui.table.SelectionMode.MultiToggle : sap.ui.table.SelectionMode.None;
         options.FileTypes = !!opt.FileTypes ? opt.FileTypes : ['ppt', 'pptx', 'doc', 'docx', 'xls', 'xlsx', 'jpg', 'bmp', 'gif', 'png', 'txt', 'pdf', 'jpeg'];
@@ -42,8 +40,9 @@ sap.ui.define(
         oController.getViewModel().setProperty('/Settings', options);
         oController.getViewModel().setProperty('/DeleteDatas', []);
 
-        oController.AttachFileAction.refreshAttachFileList(oController);
+        oController.AttachFileAction.refreshAttachFileList(oController, options.Id);
       },
+
       /*
        * 첨부파일의 Upload가 완료되었을때 처리 내역
        * refreshAttachFileList Function을 호출한다.
@@ -58,8 +57,8 @@ sap.ui.define(
        * Upload할 첨부파일을 선택했을 경우 처리 내역
        */
       onFileChange(oEvent) {
-        const oAttachbox = this.byId('ATTACHBOX');
-        const oFileUploader = this.byId('ATTACHFILE_BTN');
+        const oAttachbox = oEvent.getSource().getParent().getParent().getParent();
+        const oFileUploader = oEvent.getSource();
         const JSonModel = oAttachbox.getModel();
         const aFileList = [];
         // const vMode = JSonModel.getProperty('/Settings/Mode');
@@ -102,8 +101,10 @@ sap.ui.define(
           JSonModel.setProperty('/Settings/Length', iFileLength);
           JSonModel.setProperty('/Data', aFileList);
 
-          this.byId('attachTable').clearSelection();
-          this.byId('attachTable').setVisibleRowCount(iFileLength);
+          const oAttachTable = oEvent.getSource().getParent().getParent().getParent().getItems()[1];
+
+          oAttachTable.clearSelection();
+          oAttachTable.setVisibleRowCount(iFileLength);
         }
 
         oFileUploader.clear();
@@ -129,10 +130,11 @@ sap.ui.define(
       /*
        * 첨부파일 리스트를 Binding한다.
        */
-      refreshAttachFileList(oController) {
-        const oAttachbox = oController.byId('ATTACHBOX');
-        const oAttachFileList = oController.byId('attachTable');
-        const oFileUploader = oController.byId('ATTACHFILE_BTN');
+      refreshAttachFileList(oController, sId) {
+        const sIdPath = !!sId ? `${sId}--` : '';
+        const oAttachbox = oController.byId(`${sIdPath}ATTACHBOX`);
+        const oAttachFileList = oController.byId(`${sIdPath}attachTable`);
+        const oFileUploader = oController.byId(`${sIdPath}ATTACHFILE_BTN`);
         const oModel = oController.getModel(ServiceNames.COMMON);
         const JSonModel = oController.getViewModel();
         const vAttachFileDatas = JSonModel.getProperty('/Settings');
@@ -222,8 +224,9 @@ sap.ui.define(
       /*
        * 첨부파일 길이
        */
-      getFileLength() {
-        const Attachbox = this.byId('ATTACHBOX');
+      getFileLength(sId) {
+        const sIdPath = !!sId ? `${sId}--` : '';
+        const Attachbox = this.byId(`${sIdPath}ATTACHBOX`);
         const vAttachDatas = Attachbox.getModel().getProperty('/Data');
 
         return !!vAttachDatas ? vAttachDatas.length : 0;
@@ -232,13 +235,14 @@ sap.ui.define(
       /*
        *   첨부파일 Upload
        */
-      uploadFile(Appno, Type) {
+      uploadFile(Appno, Type, sId) {
+        const sIdPath = !!sId ? `${sId}--` : '';
         const sServiceUrl = ServiceManager.getServiceUrl('ZHR_COMMON_SRV', this.getOwnerComponent());
         const oModel = new sap.ui.model.odata.ODataModel(sServiceUrl, true, undefined, undefined, undefined, undefined, undefined, false);
-        const Attachbox = this.byId('ATTACHBOX');
+        const Attachbox = this.byId(`${sIdPath}ATTACHBOX`);
         const vAttachDatas = Attachbox.getModel().getProperty('/Data') || [];
         const aDeleteFiles = Attachbox.getModel().getProperty('/DeleteDatas') || [];
-        const oAttachTable = this.byId('attachTable');
+        const oAttachTable = this.byId(`${sIdPath}attachTable`);
 
         return new Promise((resolve) => {
           // 파일 삭제
@@ -249,7 +253,7 @@ sap.ui.define(
               aDeleteFiles.forEach((e) => {
                 bDeleteFlag = new Promise((resolve) => {
                   this.AttachFileAction.callDeleteFileService(this, e);
-                  this.byId('attachTable').clearSelection();
+                  oAttachTable.clearSelection();
                   resolve(bDeleteFlag);
                 });
               }),
@@ -276,7 +280,7 @@ sap.ui.define(
               jQuery.ajax({
                 type: 'POST',
                 async: false,
-                url: sServiceUrl + '/FileUploadSet/',
+                url: `${sServiceUrl}/FileUploadSet/`,
                 headers: oHeaders,
                 cache: false,
                 contentType: elem.type,
@@ -322,7 +326,7 @@ sap.ui.define(
             jQuery.ajax({
               type: 'POST',
               async: false,
-              url: sServiceUrl + '/FileUploadSet/',
+              url: `${sServiceUrl}/FileUploadSet/`,
               headers: oHeaders,
               cache: false,
               contentType: oFile.type,
@@ -346,10 +350,10 @@ sap.ui.define(
       /*
        * 첨부된 파일을 삭제처리
        */
-      onDeleteAttachFile() {
-        const oAttachbox = this.byId('ATTACHBOX');
+      onDeleteAttachFile(oEvent) {
+        const oAttachbox = oEvent.getSource().getParent().getParent().getParent();
         const oJSonModel = oAttachbox.getModel();
-        const oTable = this.byId('attachTable');
+        const oTable = oEvent.getSource().getParent().getParent().getParent().getItems()[1];
         const aFileDatas = oJSonModel.getProperty('/Data');
         const aContexts = oTable.getSelectedIndices();
 
@@ -389,7 +393,7 @@ sap.ui.define(
               oJSonModel.setProperty('/Data', aResult);
               oJSonModel.setProperty('/DeleteDatas', aDeleteList);
               oTable.setVisibleRowCount(aResult.length);
-              this.byId('attachTable').clearSelection();
+              oTable('attachTable').clearSelection();
               MessageBox.alert(this.getBundleText('MSG_00042')); // 파일 삭제가 완료되었습니다.
             }
           },

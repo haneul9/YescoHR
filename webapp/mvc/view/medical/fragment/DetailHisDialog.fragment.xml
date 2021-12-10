@@ -17,7 +17,7 @@
                     </VBox>
                     <Label text="{i18n>LABEL_09016}"/>
                     <VBox>
-                        <Input value="{ path: '/DialogData/Bet01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveCompar"/>
+                        <Input value="{ path: '/DialogData/Bet01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="End" liveChange=".liveCompar"/>
                     </VBox>
                     <Label text="{i18n>LABEL_09020}"/>
                     <VBox>
@@ -25,15 +25,15 @@
                     </VBox>
                     <Label text="{i18n>LABEL_09017}"/>
                     <VBox>
-                        <Input value="{ path: '/DialogData/Bet02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveCompar" />
+                        <Input value="{ path: '/DialogData/Bet02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="End" liveChange=".liveCompar" />
                     </VBox>
                     <Label text="{i18n>LABEL_09014}"/>
                     <VBox>
-                        <Input value="{/DialogData/Medorg}"/>
+                        <Input value="{/DialogData/Medorg}" />
                     </VBox>
                     <Label text="{i18n>LABEL_09018}"/>
                     <VBox>
-                        <Text text="{ path: '/DialogData/Bettot', type: 'sap.ui.yesco.mvc.model.type.Currency' }"/>
+                        <Text text="{ path: '/DialogData/Bettot', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="End" />
                     </VBox>
                     <Label text="{i18n>LABEL_09015}"/>
                     <VBox>
@@ -43,13 +43,13 @@
                     </VBox>
                     <Label text="{i18n>LABEL_09019}"/>
                     <VBox>
-                        <Text text="{/DialogData/Prate}"/>
+                        <Text text="{/DialogData/Prate}" textAlign="End" />
                     </VBox>
                     <HBox></HBox>
                     <HBox></HBox>
                     <Label text="{i18n>LABEL_09009}"/>
                     <VBox>
-                        <Text text="{ path: '/DialogData/Pybet', type: 'sap.ui.yesco.mvc.model.type.Currency' }"/>
+                        <Text text="{ path: '/DialogData/Pybet', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="End" />
                     </VBox>
                 </grid:CSSGrid>
             </VBox>

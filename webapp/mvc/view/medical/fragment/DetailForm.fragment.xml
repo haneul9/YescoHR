@@ -50,7 +50,7 @@
                 <Text text="{
                     path: '/FormData/PybetTot',
                     type: 'sap.ui.yesco.mvc.model.type.Currency'
-                } {= !${/FormData/Prate} || ${/FormData/Prate} === '0.00' ? '' : (${/FormData/Prate}) }"/>
+                } {= (!${/FormData/Prate} || ${/FormData/Prate} === '0.00') || ${/FormData/PybetTot} === '0' ? '' : (${/FormData/Pratetx}) }"/>
             </VBox>
             <Label text="{i18n>LABEL_03002}"/>
             <VBox>

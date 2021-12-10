@@ -64,7 +64,6 @@ sap.ui.define(
         oDetailModel.setProperty('/Menid', sMenid);
 
         this.getTargetData();
-        oDetailModel.setProperty('/busy', false);
       },
 
       // 중요항목 & 임시저장 Check
@@ -95,6 +94,7 @@ sap.ui.define(
           });
 
           this.settingsAttachTable();
+          oDetailModel.setProperty('/busy', false);
         } else {
           const oView = this.getView();
           const oListView = oView.getParent().getPage(this.isHass() ? this.LIST_PAGE_ID.H : this.LIST_PAGE_ID.E);
@@ -121,17 +121,19 @@ sap.ui.define(
 
                 oTargetData.Detail = "";
 						
-                oDetailData.forEach(function(e) {
+                oDetailData.forEach((e) => {
                   oTargetData.Detail += e.Detail;
                 });
 
                 oDetailModel.setProperty('/FormData', oTargetData);
 
                 this.settingsAttachTable();
+                oDetailModel.setProperty('/busy', false);
               }
             },
             error: (oError) => {
               AppUtils.handleError(oError);
+              oDetailModel.setProperty('/busy', false);
             },
           });
         }
@@ -184,7 +186,7 @@ sap.ui.define(
                 const aDetail = [];
                 const aList = oFormData.Detail.match(new RegExp('.{1,' + 4000 + '}', 'g'));
                 
-                aList.forEach(function(e) {
+                aList.forEach((e) => {
                   const mDetailObj = {};
 
                   mDetailObj.Detail = e;
@@ -257,7 +259,7 @@ sap.ui.define(
                 const aDetail = [];
                 const aList = oFormData.Detail.match(new RegExp('.{1,' + 4000 + '}', 'g'));
                 
-                aList.forEach(function(e) {
+                aList.forEach((e) => {
                   const mDetailObj = {};
 
                   mDetailObj.Detail = e;
@@ -294,9 +296,9 @@ sap.ui.define(
                     let sPageName = '';
 
                     if (this.isHass()) {
-                      sPageName = 'Hass';
+                      sPageName = 'h/notice';
                     } else {
-                      sPageName = 'Ess';
+                      sPageName = 'notice';
                     }
 
                     this.getRouter().navTo(sPageName);
@@ -323,11 +325,11 @@ sap.ui.define(
             if (vPress && vPress === this.getBundleText('LABEL_00110')) {
               AppUtils.setAppBusy(true, this);
 
-              let oSendObject = {};
-              const oSendData = this.sendDataFormat(oFormData);
+              const oFormData = this.getViewModel().getProperty('/FormData');
               const aDetail = [];
+              let oSendObject = {};
               
-              oSendData.Detail.forEach(function(e) {
+              oFormData.Detail.forEach((e) => {
                 const mDetailObj = {};
 
                 mDetailObj.Detail = e;
@@ -335,7 +337,7 @@ sap.ui.define(
               });
 
               oSendObject.Prcty = '3';
-              oSendObject.Notice1Nav = [oSendData];
+              oSendObject.Notice1Nav = [oFormData];
               oSendObject.Notice2Nav = aDetail;
 
               oModel.create('/NoticeManageSet', oSendObject, {
@@ -345,9 +347,9 @@ sap.ui.define(
                       let sPageName = '';
   
                       if (this.isHass()) {
-                        sPageName = 'Hass';
+                        sPageName = 'h/notice';
                       } else {
-                        sPageName = 'Ess';
+                        sPageName = 'notice';
                       }
   
                       this.getRouter().navTo(sPageName);
