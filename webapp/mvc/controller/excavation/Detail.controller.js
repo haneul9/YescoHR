@@ -311,21 +311,25 @@ sap.ui.define(
       onSelectSuggest(oEvent) {
         const oViewModel = this.getViewModel();
         const oSelectedItem = oEvent.getParameter('selectedItem');
+        const sRowPath = oEvent.getSource()?.getParent()?.getBindingContext()?.getPath();
+        let mEmployee = { Pernr: '', Ename: '', Fulln: '', Zzjikgbt: '' };
 
-        if (_.isEmpty(oSelectedItem)) return;
+        if (!_.isEmpty(oSelectedItem)) {
+          const sSelectedPernr = oEvent.getParameter('selectedItem')?.getKey() ?? 'None';
+          const aEmployees = oViewModel.getProperty('/form/employees');
 
-        const sRowPath = oEvent.getSource().getParent().getBindingContext().getPath();
-        const sSelectedPernr = oEvent.getParameter('selectedItem')?.getKey() ?? 'None';
-        const aEmployees = oViewModel.getProperty('/form/employees');
-        const mEmployee = _.find(aEmployees, { Pernr: sSelectedPernr }) ?? { Pernr: '', Ename: '', Fulln: '', Zzjikgbt: '' };
+          mEmployee = _.find(aEmployees, { Pernr: sSelectedPernr }) ?? { Pernr: '', Ename: '', Fulln: '', Zzjikgbt: '' };
+        }
 
-        oViewModel.setProperty(sRowPath, {
-          ...oViewModel.getProperty(sRowPath),
-          PernrA: mEmployee.Pernr,
-          EnameA: mEmployee.Ename,
-          OrgtxA: mEmployee.Fulln,
-          ZzjikgbtA: mEmployee.Zzjikgbt,
-        });
+        if (sRowPath) {
+          oViewModel.setProperty(sRowPath, {
+            ...oViewModel.getProperty(sRowPath),
+            PernrA: mEmployee.Pernr,
+            EnameA: mEmployee.Ename,
+            OrgtxA: mEmployee.Fulln,
+            ZzjikgbtA: mEmployee.Zzjikgbt,
+          });
+        }
       },
 
       async onChangeDialogSearch() {

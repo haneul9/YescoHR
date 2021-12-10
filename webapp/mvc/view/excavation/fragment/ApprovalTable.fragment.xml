@@ -72,7 +72,7 @@
                     <m:Label text="{i18n>LABEL_00209}"/>
                 </multiLabels>
                 <template>
-                    <m:Input value="{ path: 'PernrA', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" maxSuggestionWidth="300px" showSuggestion="true" suggestionItems="{ path:'/form/employees', templateShareable: true}" class="tableRow_Text" editable="{= !${ZappStatAl} }" suggestionItemSelected=".onSelectSuggest">
+                    <m:Input value="{ path: 'PernrA', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" textAlign="{= ${ZappStatAl} ? 'Center' : 'Begin'}" width="100%" maxSuggestionWidth="300px" showSuggestion="true" suggestionItems="{ path:'/form/employees', templateShareable: true}" class="tableRow_Text" editable="{= !${ZappStatAl} }" suggestionItemSelected=".onSelectSuggest">
                         <m:suggestionItems>
                             <core:Item key="{Pernr}" text="{Fulln} {Ename} {Zzjikgbt} {Pernr}" />
                         </m:suggestionItems>
