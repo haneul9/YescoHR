@@ -5,12 +5,12 @@
     <VBox class="hCardBox summary-box">
         <HBox alignItems="End">
             <Title level="H2" text="{i18n>LABEL_04005}" />
-            <Text text="현재일 기준, 사용/잔여/발생" class="sapUiSmallMarginBegin" />
+            <Text text="현재일 기준, 사용/잔여" class="sapUiSmallMarginBegin" />
         </HBox>
         <grid:CSSGrid gridTemplateColumns="1fr 1fr 1fr" gridRowGap="19px" gridColumnGap="8px" items="{ path: '/quota' }" class="sapUiMediumMarginTop">
             <VBox alignItems="Start">
                 <Label text="{Kotxt}" />
-                <custom:VacationIndicator width="8rem" total="{Crecnt}" used="{Usecnt}" showTotal="true" class="sapUiSmallMarginTop" />
+                <custom:VacationIndicator width="8rem" total="{Crecnt}" used="{Usecnt}" class="sapUiSmallMarginTop" />
             </VBox>
         </grid:CSSGrid>
     </VBox>

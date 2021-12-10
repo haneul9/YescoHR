@@ -9,8 +9,8 @@ sap.ui.define(
   ) {
     'use strict';
 
-    const getBundleText = () => {
-      return sap.ui.getCore().getComponent('container-ehr').getModel('i18n').getResourceBundle().getText('LABEL_ALERT');
+    const getBundleText = (sCode) => {
+      return sap.ui.getCore().getComponent('container-ehr').getModel('i18n').getResourceBundle().getText(sCode);
     };
 
     return {

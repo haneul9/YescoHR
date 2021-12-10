@@ -42,7 +42,8 @@ html, body {box-sizing:border-box; overflow:hidden}
 .vacation-indicator.vacation-indicator-bottom .vacation-indicator-text > div {padding:0; color:#000}
 .vacation-indicator.vacation-indicator-middle .vacation-indicator-text .vacation-indicator-zero.vacation-indicator-remain {color:#ffc02e}
 .vacation-indicator.vacation-indicator-middle .vacation-indicator-text .vacation-indicator-zero.vacation-indicator-used {color:#fd5f58}
-.vacation-indicator .vacation-indicator-guage > div {text-align:right}
+.vacation-indicator .vacation-indicator-gauge {overflow:hidden}
+.vacation-indicator .vacation-indicator-gauge > div {text-align:right}
 .vacation-indicator .vacation-indicator-gauge .vacation-indicator-total {z-index:1; color:transparent; background-color:#2f88ff}
 .vacation-indicator .vacation-indicator-gauge .vacation-indicator-remain {z-index:2; color:transparent; background-color:#ffc02e}
 .vacation-indicator .vacation-indicator-gauge .vacation-indicator-used {z-index:3; color:transparent; background-color:#fd5f58}
