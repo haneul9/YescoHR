@@ -524,7 +524,6 @@ sap.ui.define(
         if (this.checkError()) return;
 
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00103'), {
-          title: this.getBundleText('LABEL_03028'),
           actions: [this.getBundleText('LABEL_00103'), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00103')) {
@@ -580,7 +579,6 @@ sap.ui.define(
         if (this.checkError('O')) return;
 
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
-          title: this.getBundleText('LABEL_03028'),
           actions: [this.getBundleText('LABEL_00121'), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00121')) {
@@ -636,7 +634,6 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
 
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00118'), {
-          title: this.getBundleText('LABEL_03028'),
           actions: [this.getBundleText('LABEL_00114'), this.getBundleText('LABEL_00118')],
           onClose: (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00114')) {
@@ -673,7 +670,6 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
 
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
-          title: this.getBundleText('LABEL_03028'),
           actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
           onClose: (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00110')) {

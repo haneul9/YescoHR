@@ -169,7 +169,6 @@ sap.ui.define(
         if (this.checkError()) return;
 
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00103'), {
-          title: this.getBundleText('LABEL_08009'),
           actions: [this.getBundleText('LABEL_00103'), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00103')) {
@@ -242,7 +241,6 @@ sap.ui.define(
         if (this.checkError()) return;
 
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00106'), {
-          title: this.getBundleText('LABEL_08009'),
           actions: [this.getBundleText('LABEL_00106'), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00106')) {
@@ -317,28 +315,33 @@ sap.ui.define(
       // 삭제
       onDeleteBtn() {
         const oModel = this.getModel(ServiceNames.COMMON);
+        const sWerks = this.getSessionProperty('Werks');
 
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
-          title: this.getBundleText('LABEL_08009'),
           actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
           onClose: (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00110')) {
               AppUtils.setAppBusy(true, this);
 
               const oFormData = this.getViewModel().getProperty('/FormData');
+              const aList = oFormData.Detail.match(new RegExp('.{1,' + 4000 + '}', 'g'));
               const aDetail = [];
-              let oSendObject = {};
               
-              oFormData.Detail.forEach((e) => {
+              aList.forEach((e) => {
                 const mDetailObj = {};
 
                 mDetailObj.Detail = e;
                 aDetail.push(mDetailObj);
               });
 
-              oSendObject.Prcty = '3';
-              oSendObject.Notice1Nav = [oFormData];
-              oSendObject.Notice2Nav = aDetail;
+              oFormData.Detail = '';
+
+              let oSendObject = {
+                Prcty: '3',
+                Werks: sWerks,
+                Notice1Nav: [oFormData],
+                Notice2Nav: aDetail,
+              };
 
               oModel.create('/NoticeManageSet', oSendObject, {
                 success: () => {
@@ -355,9 +358,11 @@ sap.ui.define(
                       this.getRouter().navTo(sPageName);
                     },
                   });
+                  AppUtils.setAppBusy(false, this);
                 },
                 error: (oError) => {
                   AppUtils.handleError(oError);
+                  AppUtils.setAppBusy(false, this);
                 },
               });
             }
@@ -366,36 +371,36 @@ sap.ui.define(
       },
 
       editorReady(oEvent) {
-        oEvent.getSource().addButtonGroup("styleselect").addButtonGroup("table");
+        oEvent.getSource().addButtonGroup('styleselect').addButtonGroup('table');
       },
 
       setTextEditor() {
-        if(!!this.byId("EditorBox").getItems()[0]) {
-          this.byId("EditorBox").destroyItems()
+        if(!!this.byId('EditorBox').getItems()[0]) {
+          this.byId('EditorBox').destroyItems()
         }
   
-        const oRichTextEditor = new RTE("myRTE", {
+        const oRichTextEditor = new RTE('myRTE', {
           editorType: 'TinyMCE4',
           layoutData: new sap.m.FlexItemData({ growFactor: 1 }),
-          width: "99.8%",
-          height: "500px",
+          width: '99.8%',
+          height: '500px',
           customToolbar: true,
           showGroupFont: true,
           showGroupInsert: true,
           sanitizeValue: false,
-          value: "{/FormData/Detail}",
+          value: '{/FormData/Detail}',
           editable: {
-            parts: [{path: "/MySelf"}, {path: '/Hass'}],
+            parts: [{path: '/MySelf'}, {path: '/Hass'}],
             formatter: (v1, v2) => {
               return !!v1 && !!v2;
             }
           },
           ready: function () {
-            this.addButtonGroup("styleselect").addButtonGroup("table");
+            this.addButtonGroup('styleselect').addButtonGroup('table');
           }
         });
   
-        this.byId("EditorBox").addItem(oRichTextEditor);
+        this.byId('EditorBox').addItem(oRichTextEditor);
       },
 
       // AttachFileTable Settings
@@ -409,7 +414,6 @@ sap.ui.define(
           Editable: !!bHass && !!bMySelf,
           Type: this.TYPE_CODE,
           Appno: sAppno,
-          Message: this.getBundleText('MSG_00040'),
           Max: 10,
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
         });

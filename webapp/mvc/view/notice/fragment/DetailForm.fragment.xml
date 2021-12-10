@@ -18,7 +18,7 @@
             </VBox>
             <Label text="{= ${/Hass} ? ${i18n>LABEL_08006} : '' }"/>
             <HBox>
-                <CheckBox visible="{/Hass}" selected="{= !!${/FormData/Hide} }" editable="false"/>
+                <CheckBox visible="{= ${/Hass} &amp;&amp; !!${/FormData/Appno} }" selected="{= !!${/FormData/Hide} }" editable="false"/>
             </HBox>
             <Label text="{i18n>LABEL_00321}"/>
             <HBox>

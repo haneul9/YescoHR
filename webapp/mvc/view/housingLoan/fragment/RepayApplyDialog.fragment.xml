@@ -47,7 +47,10 @@
                     </VBox>
                     <Label text="{i18n>LABEL_07042}"/>
                     <VBox>
-                        <Text text="{= !${/DialogData/RpamtMin} ? '0' : ${/DialogData/RpamtMin} }"/>
+                        <Text text="{= !${/DialogData/RpamtMin} ? '0' : ${
+                            path: '/DialogData/RpamtMin',
+                            type: 'sap.ui.yesco.mvc.model.type.Currency'
+                        } }"/>
                     </VBox>
                     <Label text="{= !!${/DialogData/Lnstatx} ? ${i18n>LABEL_00261} : '' }"/>
                     <VBox>

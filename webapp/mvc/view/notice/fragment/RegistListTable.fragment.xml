@@ -4,9 +4,9 @@
     <table:Table id="noticeTable" class="row-link" rows="{/NoticeList}" visibleRowCount="{/listInfo/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="45" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
         <table:columns>
             <table:Column width="auto" sortProperty="Title" filterProperty="Title">
-                <Label text="{i18n>LABEL_08002}"/>
+                <Label text="{i18n>LABEL_08002}" width="100%"/>
                 <table:template>
-                    <Text text="{Title}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+                    <Text text="{Title}" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
             <table:Column width="100px" visible="{/Hass}">
