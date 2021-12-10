@@ -10,7 +10,8 @@ sap.ui.define(
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/controller/nightshift/Helper',
+    'sap/ui/yesco/mvc/controller/nightduty/Helper',
+    'sap/ui/yesco/mvc/controller/nightduty/SummaryBoxHandler',
     'sap/ui/yesco/mvc/model/type/Currency',
     'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
     'sap/ui/yesco/mvc/model/type/Month',
@@ -27,21 +28,24 @@ sap.ui.define(
     ODataReadError,
     ServiceNames,
     BaseController,
-    Helper
+    Helper,
+    SummaryBoxHandler
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.nightshift.List', {
+    return BaseController.extend('sap.ui.yesco.mvc.controller.nightduty.List', {
       oHelper: null,
+      oSummaryBoxHandler: null,
       oSearchConditionPromise: null,
+      oDoneListDialog: null,
       oAttachFileAction: AttachFileAction,
       oTableUtils: TableUtils,
       sLIST_TABLE_ID: 'listTable',
-      sDONE_LIST_TABLE_ID: 'doneListTable',
       sTYPE_CODE: 'HR01',
 
       onBeforeShow() {
         this.oHelper = Helper(this).setDefaultViewModel().retrieveSearchConditionSet();
+        this.oSummaryBoxHandler = new SummaryBoxHandler(this);
 
         TableUtils.adjustRowSpan({
           table: this.byId(this.sLIST_TABLE_ID),
@@ -52,6 +56,8 @@ sap.ui.define(
 
       async onObjectMatched() {
         try {
+          this.oSummaryBox = new SummaryBox(this);
+
           const [mSummaryData, aListTableData] = await Promise.all([
             this.readSummaryData(), //
             this.readListTableData(),
@@ -60,45 +66,12 @@ sap.ui.define(
           this.setSummaryData(mSummaryData);
           this.setListTableData(aListTableData);
         } catch (oError) {
-          this.debug('Controller > Nightshift List > onObjectMatched Error', oError);
+          this.debug('Controller > Nightduty List > onObjectMatched Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
           this.setPageBusy(false);
         }
-      },
-
-      async readSummaryData() {
-        return new Promise((resolve, reject) => {
-          const sUrl = '/OnCallSummarySet';
-          const sPernr = this.getAppointeeProperty('Pernr');
-
-          this.getModel(ServiceNames.WORKTIME).read(sUrl, {
-            filters: [
-              new Filter('Pernr', FilterOperator.EQ, sPernr), //
-            ],
-            success: (mData) => {
-              this.debug(`${sUrl} success.`, mData);
-
-              resolve(mData.results);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
-
-      /**
-       * @param  {object} mSummaryData
-       */
-      setSummaryData(mSummaryData) {
-        const oViewModel = this.getViewModel();
-        const mLegacySummaryData = oViewModel.getProperty('/summary');
-
-        oViewModel.setProperty('/summary', { ...mLegacySummaryData, mSummaryData });
       },
 
       async readListTableData() {
@@ -135,48 +108,6 @@ sap.ui.define(
         oViewModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData }));
       },
 
-      onPressDoneListDialogOpen() {
-        this.setPageBusy(true);
-
-        if (!this._oDialog) {
-          Fragment.load({
-            name: 'sap.ui.yesco.mvc.view.nightshift.fragment.DoneListDialog',
-            controller: this,
-          }).then((oDialog) => {
-            this.getView().addDependent(oDialog);
-            this._oDialog = oDialog;
-
-            this._oDialog.open();
-
-            this.setPageBusy(false);
-          });
-        } else {
-          this._oDialog.open();
-
-          this.setPageBusy(false);
-        }
-      },
-
-      onPressDoneListDialogClose() {
-        this._oDialog.close();
-      },
-
-      async onPressDoneListSearch() {
-        try {
-          this.byId(sDONE_LIST_TABLE_ID).setBusy(true);
-
-          const aListTableData = this.readListTableData();
-
-          this.setListTableData(await aListTableData);
-        } catch (oError) {
-          this.debug('Controller > Nightshift List > onPressSearch Error', oError);
-
-          AppUtils.handleError(oError);
-        } finally {
-          this.byId(sDONE_LIST_TABLE_ID).setBusy(false);
-        }
-      },
-
       async onPressSearch() {
         try {
           this.setPageBusy(true);
@@ -185,7 +116,7 @@ sap.ui.define(
 
           this.setListTableData(await aListTableData);
         } catch (oError) {
-          this.debug('Controller > Nightshift List > onPressSearch Error', oError);
+          this.debug('Controller > Nightduty List > onPressSearch Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
@@ -194,7 +125,7 @@ sap.ui.define(
       },
 
       onPressNew() {
-        this.getRouter().navTo('nightshift-detail');
+        this.getRouter().navTo('nightduty-detail');
       },
 
       onPressExelDownload() {
@@ -209,8 +140,8 @@ sap.ui.define(
         const sPath = oEvent.getParameter('rowBindingContext').getPath();
         const sAppno = this.getViewModel().getProperty(`${sPath}/Appno`);
 
-        this.getRouter().navTo('nightshift-detail', { appno: sAppno });
-        // this.getRouter().getTargets().display('nightshiftDetail', { appno: sAppno });
+        this.getRouter().navTo('nightduty-detail', { appno: sAppno });
+        // this.getRouter().getTargets().display('nightdutyDetail', { appno: sAppno });
       },
 
       setPageBusy(bIsBusy) {

@@ -15,21 +15,17 @@ sap.ui.define(
       constructor: function (...args) {
         TypeDate.apply(this, args);
 
+        const formatPattern = AppUtils.getAppComponent().getSessionModel().getProperty('/DtfmtYYYY');
         const oFormatOptions = {
-          pattern: AppUtils.getAppComponent()
-            .getSessionModel()
-            .getProperty('/Dtfmt')
-            .replace(/([a-zA-Z]{4}).*/, '$1'),
+          pattern: formatPattern,
         };
         this.setFormatOptions(oFormatOptions);
         this.sName = 'CustomYear';
+        this.FORMAT_PATTERN = formatPattern;
       },
 
       getFormatPatternForMoment() {
-        return AppUtils.getAppComponent()
-          .getSessionModel()
-          .getProperty('/DTFMT')
-          .replace(/([a-zA-Z]{4}).*/, '$1');
+        return AppUtils.getAppComponent().getSessionModel().getProperty('/DTFMTYYYY');
       },
 
       getParsePatternForMoment() {

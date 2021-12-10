@@ -19,11 +19,13 @@ sap.ui.define(
       constructor: function (...args) {
         SimpleType.apply(this, args);
 
+        const formatPattern = AppUtils.getAppComponent().getSessionModel().getProperty('/Dtfmt');
         const oFormatOptions = {
-          pattern: AppUtils.getAppComponent().getSessionModel().getProperty('/Dtfmt'),
+          pattern: formatPattern,
         };
         this.setFormatOptions(oFormatOptions);
         this.sName = 'CustomDate';
+        this.FORMAT_PATTERN = formatPattern;
       },
 
       formatValue(oValue, sTargetType) {
