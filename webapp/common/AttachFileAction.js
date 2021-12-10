@@ -393,7 +393,7 @@ sap.ui.define(
               oJSonModel.setProperty('/Data', aResult);
               oJSonModel.setProperty('/DeleteDatas', aDeleteList);
               oTable.setVisibleRowCount(aResult.length);
-              oTable('attachTable').clearSelection();
+              oTable.clearSelection();
               MessageBox.alert(this.getBundleText('MSG_00042')); // 파일 삭제가 완료되었습니다.
             }
           },
