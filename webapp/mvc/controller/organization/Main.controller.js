@@ -25,13 +25,15 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.zample.OrgChart', {
+    return BaseController.extend('sap.ui.yesco.mvc.controller.organization.Main', {
       async onBeforeShow() {
-        const oChartHolder = this.byId('ChartHolder');
+        this.chartHolder = this.byId('ChartHolder');
 
-        oChartHolder.setBusy(true);
-        oChartHolder.removeAllItems();
+        this.chartHolder.setBusy(true);
+        this.chartHolder.removeAllItems();
+      },
 
+      async onObjectMatched() {
         try {
           const [aReturnData, aOrgLevel] = await Promise.all([
             this.readEmployeeOrgTree(), //
@@ -72,16 +74,23 @@ sap.ui.define(
             },
           });
 
-          oChartHolder.addItem(oChart);
+          this.chartHolder.addItem(oChart);
         } catch (oError) {
-          this.debug('Controller > OrgChart > onObjectMatched Error', oError);
+          this.debug('Controller > organization Main > onObjectMatched Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
-          oChartHolder.setBusy(false);
+          this.chartHolder.setBusy(false);
         }
       },
 
+      /*****************************************************************
+       * ! Event handler
+       *****************************************************************/
+
+      /*****************************************************************
+       * ! Call oData
+       *****************************************************************/
       readEmployeeOrgTree() {
         const oModel = this.getModel(ServiceNames.PA);
         const sMenid = this.getCurrentMenuId();
@@ -92,7 +101,7 @@ sap.ui.define(
           oModel.read(sUrl, {
             filters: [
               new Filter('Menid', FilterOperator.EQ, sMenid), //
-              // new Filter('Objid', FilterOperator.EQ, sOrgeh),
+              new Filter('Objid', FilterOperator.EQ, sOrgeh),
               new Filter('Stdat', FilterOperator.EQ, moment().hour(9).toDate()),
             ],
             success: (oData) => {

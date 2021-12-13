@@ -201,9 +201,7 @@ sap.ui.define(
                 }
               },
               error: (oError) => {
-                const vErrorMSG = AppUtils.parseError(oError);
-
-                MessageBox.error(vErrorMSG);
+                AppUtils.handleError(oError);
               },
             });
           }),
@@ -221,9 +219,7 @@ sap.ui.define(
                 }
               },
               error: (oError) => {
-                const vErrorMSG = AppUtils.parseError(oError);
-
-                MessageBox.error(vErrorMSG);
+                AppUtils.handleError(oError);
               },
             });
           }),
@@ -246,9 +242,7 @@ sap.ui.define(
                 }
               },
               error: (oError) => {
-                const vErrorMSG = AppUtils.parseError(oError);
-
-                MessageBox.error(vErrorMSG);
+                AppUtils.handleError(oError);
               },
             });
           }),
@@ -275,9 +269,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            const vErrorMSG = AppUtils.parseError(oError);
-
-            MessageBox.error(vErrorMSG);
+            AppUtils.handleError(oError);
           },
         });
       },
@@ -349,9 +341,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            const vErrorMSG = AppUtils.parseError(oError);
-
-            MessageBox.error(vErrorMSG);
+            AppUtils.handleError(oError);
           },
         });
       },
@@ -454,9 +444,7 @@ sap.ui.define(
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
-                if (!!AttachFileAction.getFileLength.call(this)) {
-                  await AttachFileAction.uploadFile.call(this, oDialogData.Appno, this.TYPE_CODE);
-                }
+                await AttachFileAction.uploadFile.call(this, oDialogData.Appno, this.TYPE_CODE);
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/LoanRepayApplSet', oSendObject, {
@@ -472,10 +460,8 @@ sap.ui.define(
                 });
 
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
-              } catch (error) {
-                if (_.has(error, 'code') && error.code === 'E') {
-                  MessageBox.error(error.message);
-                }
+              } catch (oError) {
+                AppUtils.handleError(oError);
               } finally {
                 this.getList();
                 oRepayDialog.setBusy(false);
@@ -516,9 +502,7 @@ sap.ui.define(
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
-                if (!!AttachFileAction.getFileLength.call(this)) {
-                  await AttachFileAction.uploadFile.call(this, oDialogData.Appno, this.TYPE_CODE);
-                }
+                await AttachFileAction.uploadFile.call(this, oDialogData.Appno, this.TYPE_CODE);
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/LoanRepayApplSet', oSendObject, {
@@ -538,10 +522,8 @@ sap.ui.define(
                     this.byId('RepayApplyDialog').close();
                   },
                 });
-              } catch (error) {
-                if (_.has(error, 'code') && error.code === 'E') {
-                  MessageBox.error(error.message);
-                }
+              } catch (oError) {
+                AppUtils.handleError(oError);
               } finally {
                 this.getList();
                 oRepayDialog.setBusy(false);
@@ -578,11 +560,9 @@ sap.ui.define(
                     },
                   });
                 },
-                error: (oRespnse) => {
-                  const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
-
+                error: (oError) => {
+                  AppUtils.handleError(oError);
                   oRepayDialog.setBusy(false);
-                  MessageBox.error(vErrorMSG);
                 },
               });
             }
@@ -617,11 +597,9 @@ sap.ui.define(
                     },
                   });
                 },
-                error: (oRespnse) => {
-                  const vErrorMSG = JSON.parse(oRespnse.responseText).error.innererror.errordetails[0].message;
-
+                error: (oError) => {
+                  AppUtils.handleError(oError);
                   oRepayDialog.setBusy(false);
-                  MessageBox.error(vErrorMSG);
                 },
               });
             }

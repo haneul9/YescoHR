@@ -133,6 +133,11 @@
 
         { "pattern": "performance", "name": "performance", "target": "performance" },
         { "pattern": "performance/{pid}", "name": "performance-detail", "target": "performanceDetail" },
+        
+        { "pattern": "m/organization", "name": "m/organization", "target": "m/organization" },
+        
+        { "pattern": "paystub", "name": "paystub", "target": "paystub" },
+        { "pattern": "paystub/{pid}", "name": "paystub-detail", "target": "paystubDetail" },
 
         { "pattern": "sampleComponents", "name": "sampleComponents", "target": "sampleComponents" },
         { "pattern": "sampleTimeline", "name": "sampleTimeline", "target": "sampleTimeline" },
@@ -181,6 +186,11 @@
 
         "performance": { "viewId": "performance", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "List" },
         "performanceDetail": { "viewId": "performanceDetail", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "Detail" },
+        
+        "m/organization": { "viewId": "m_organization", "viewPath": "sap.ui.yesco.mvc.view.organization", "viewName": "Main" },
+        
+        "paystub": { "viewId": "paystub", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "List" },
+        "paystubDetail": { "viewId": "paystubDetail", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "Detail" },
 
         "sampleComponents": { "viewId": "sampleComponents", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Components", "title": "Components" },
         "sampleTimeline": { "viewId": "sampleTimeline", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Timeline", "title": "Timeline" },

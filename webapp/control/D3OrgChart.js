@@ -64,27 +64,38 @@ sap.ui.define(
           .layout('left')
           .compact(false)
           // .nodeWidth(() => 250)
-          .nodeWidth(() => 270)
-          .initialZoom(0.9)
+          .nodeWidth(() => 350)
+          .initialZoom(0.8)
           // .nodeHeight(() => 175)
-          .nodeHeight(() => 125)
+          .nodeHeight(() => 170)
           .childrenMargin(() => 40)
           .compactMarginBetween(() => 15)
           .compactMarginPair(() => 80)
+          .linkUpdate(function (d) {
+            d3.select(this)
+              .attr('stroke', (d) => (d.data._upToTheRootHighlighted ? '#14760D' : '#002a79'))
+              .attr('stroke-width', (d) => (d.data._upToTheRootHighlighted ? 15 : 1));
+
+            if (d.data._upToTheRootHighlighted) {
+              d3.select(this).raise();
+            }
+          })
           .nodeContent(function (o) {
+            // const sPernr = o.data.Pernr.replace(/^0+/, '');
+
             return `
-            <div style="background-color:none;margin-left:1px;height:${o.height}px;border-radius:2px;overflow:visible;">
-              <div style="height: ${o.height}px;padding-top:0px;background-color:white;border:1px solid lightgray;">
-                <img src="${o.data.Photo}" loading="lazy" style="margin-top:10px;margin-left:10px;width:80px;height:80px;float: left;">
-                <div style="margin-top: 10px;margin-left: 100px;">
-                  <div style="color:#111672;font-size:14px;font-weight:bold"> ${o.data.Stext} </div>
-                  <div style="color:#111672;font-size:16px;font-weight:bold"> ${o.data.Ename} </div>
-                  <div style="color:#404040;font-size:14px;margin-top:4px"> ${o.data.Botxt} </div>
-                </div>
-                <div style="margin-top:30px;margin-left:190px;">
-                  <div>${o.data.Pernr}</div>
-                </div>
+            <div class="org-container" style="height: ${o.height}px;">
+              <div class="title level${o.data.ZorgLevl}">${o.data.Stext}</div>
+              <div class="image" style="grid-row: 2 / 6;margin-left: 10px;margin-top: 10px;">
+                  <img src="${o.data.Photo}" loading="lazy" />
               </div>
+              <div class="name">${o.data.Ename}</div>
+              <div class="label">직급</div>
+              <div class="content">${o.data.Jikgbtl}</div>
+              <div class="label">입사일</div>
+              <div class="content">${o.data.Ipdat}</div>
+              <div class="label">현부서재임기간</div>
+              <div class="content">${o.data.Tenure}</div>
             </div>
             `;
           })

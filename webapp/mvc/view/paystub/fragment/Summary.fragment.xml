@@ -1,0 +1,24 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:core="sap.ui.core">
+  <VBox class="hCardBox summary-box">
+    <HBox justifyContent="SpaceBetween" class="title">
+      <Title level="H2" text="{i18n>LABEL_13001}" />
+    </HBox>
+    <grid:CSSGrid gridTemplateColumns="2fr 1fr 1fr" gridGap="8px">
+      <FlexBox width="100%" height="100%">
+        <layoutData>
+          <grid:GridItemLayoutData gridRow="1 / 5" />
+        </layoutData>
+      </FlexBox>
+      <Label text="{i18n>LABEL_13002}" />
+      <Text text="{/summary/Todo1}" />
+      <Label text="{i18n>LABEL_13003}" />
+      <Text text="{/summary/Todo2}" />
+      <Label text="{i18n>LABEL_13004}" />
+      <Text text="{/summary/Todo3}" />
+      <Label text="{i18n>LABEL_13005}" />
+      <Text text="{/summary/Todo4}" />
+    </grid:CSSGrid>
+  </VBox>
+</core:FragmentDefinition>
