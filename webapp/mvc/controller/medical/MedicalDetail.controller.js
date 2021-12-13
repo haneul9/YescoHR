@@ -37,6 +37,7 @@ sap.ui.define(
     return BaseController.extend('sap.ui.yesco.mvc.controller.medical.MedicalDetail', {
       TYPE_CODE: 'HR09',
       LIST_PAGE_ID: 'container-ehr---medical',
+      DIALOG_FILE_ID: 'DialogAttFile',
 
       AttachFileAction: AttachFileAction,
       TextUtils: TextUtils,
@@ -831,12 +832,13 @@ sap.ui.define(
       // Dialog AttachFileTable Settings
       settingsAttachDialog() {
         const oDetailModel = this.getViewModel();
-        const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
+        const sAppno = oDetailModel.getProperty('/DialogData/Appno2') || '';
  
         AttachFileAction.setAttachFile(this, {
-          Id: '',
+          Id: this.DIALOG_FILE_ID,
           Type: this.TYPE_CODE,
-          // Appno: sAppno,
+          Editable: true,
+          Appno: sAppno,
           Max: 1,
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
         });

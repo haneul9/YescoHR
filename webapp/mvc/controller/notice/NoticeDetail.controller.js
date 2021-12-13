@@ -202,11 +202,8 @@ sap.ui.define(
                   Notice2Nav: aDetail,
                 };  
 
-                 // 첨부파일
-                if (!!AttachFileAction.getFileLength.call(this)) {
-                  // FileUpload
-                  await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
-                }
+                // FileUpload
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/NoticeManageSet', oSendObject, {
@@ -272,11 +269,8 @@ sap.ui.define(
                   Notice2Nav: aDetail,
                 };
 
-                // 첨부파일
-                if (!!AttachFileAction.getFileLength.call(this)) {
-                  // FileUpload
-                  await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
-                }
+                // FileUpload
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/NoticeManageSet', oSendObject, {

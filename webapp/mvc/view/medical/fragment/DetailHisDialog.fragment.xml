@@ -53,7 +53,7 @@
                     </VBox>
                 </grid:CSSGrid>
             </VBox>
-            <!-- <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" /> -->
+            <core:Fragment id="DialogAttFile" fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
         </content>
     </Dialog>
 </core:FragmentDefinition>
