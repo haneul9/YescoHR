@@ -33,20 +33,21 @@ sap.ui.define(
         oChartHolder.removeAllItems();
 
         try {
-          const mReturnData = (await this.readEmployeeOrgTree()) ?? [];
+          const [aReturnData, aOrgLevel] = await Promise.all([
+            this.readEmployeeOrgTree(), //
+            this.readOrglevel(),
+          ]);
 
           const oViewModel = new JSONModel({
             orgList: [
-              ...mReturnData.map((o) => {
+              ...aReturnData.map((o) => {
                 if (!o.Photo) o.Photo = 'https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1';
-                if (o.Ipdat) {
-                  o.Ipdat = moment(o.Ipdat).format('YYYY.MM.DD');
-                } else {
-                  o.Ipdat = '';
-                }
+                o.Ipdat = o.Ipdat ? moment(o.Ipdat).format('YYYY.MM.DD') : '';
+
                 return o;
               }),
             ],
+            orgLevel: aOrgLevel ?? [],
           });
 
           this.setViewModel(oViewModel);
@@ -71,7 +72,6 @@ sap.ui.define(
             },
           });
 
-          oChartHolder.removeAllItems();
           oChartHolder.addItem(oChart);
         } catch (oError) {
           this.debug('Controller > OrgChart > onObjectMatched Error', oError);
@@ -84,15 +84,37 @@ sap.ui.define(
 
       readEmployeeOrgTree() {
         const oModel = this.getModel(ServiceNames.PA);
-        // const sOrgeh = this.getOwnerComponent().getSessionModel().getProperty('/Orgeh');
+        const sMenid = this.getCurrentMenuId();
+        const sOrgeh = this.getSessionProperty('/Orgeh');
         const sUrl = '/EmployeeOrgTreeSet';
 
         return new Promise((resolve, reject) => {
           oModel.read(sUrl, {
             filters: [
-              new Filter('Stdat', FilterOperator.EQ, moment().hour(9).toDate()), //
+              new Filter('Menid', FilterOperator.EQ, sMenid), //
               // new Filter('Objid', FilterOperator.EQ, sOrgeh),
+              new Filter('Stdat', FilterOperator.EQ, moment().hour(9).toDate()),
             ],
+            success: (oData) => {
+              this.debug(`${sUrl} success.`, oData);
+
+              resolve(oData.results);
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, oError);
+
+              reject(new ODataReadError(oError));
+            },
+          });
+        });
+      },
+
+      readOrglevel() {
+        const oModel = this.getModel(ServiceNames.PA);
+        const sUrl = '/OrglevelSet';
+
+        return new Promise((resolve, reject) => {
+          oModel.read(sUrl, {
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
 

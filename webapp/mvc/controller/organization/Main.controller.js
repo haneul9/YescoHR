@@ -27,25 +27,29 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.organization.Main', {
       async onBeforeShow() {
-        const oChartHolder = this.byId('ChartHolder');
+        this.chartHolder = this.byId('ChartHolder');
 
-        oChartHolder.setBusy(true);
-        oChartHolder.removeAllItems();
+        this.chartHolder.setBusy(true);
+        this.chartHolder.removeAllItems();
       },
 
       async onObjectMatched() {
-        const oChartHolder = this.byId('ChartHolder');
-
         try {
-          const mReturnData = (await this.readEmployeeOrgTree()) ?? [];
+          const [aReturnData, aOrgLevel] = await Promise.all([
+            this.readEmployeeOrgTree(), //
+            this.readOrglevel(),
+          ]);
 
           const oViewModel = new JSONModel({
             orgList: [
-              ...mReturnData.map((o) => {
+              ...aReturnData.map((o) => {
                 if (!o.Photo) o.Photo = 'https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1';
+                o.Ipdat = o.Ipdat ? moment(o.Ipdat).format('YYYY.MM.DD') : '';
+
                 return o;
               }),
             ],
+            orgLevel: aOrgLevel ?? [],
           });
 
           this.setViewModel(oViewModel);
@@ -65,17 +69,18 @@ sap.ui.define(
                 Botxt: '{Botxt}',
                 Jikgbtl: '{Jikgbtl}',
                 ZorgLevl: '{ZorgLevl}',
+                Tenure: '{Tenure}',
               }),
             },
           });
 
-          oChartHolder.addItem(oChart);
+          this.chartHolder.addItem(oChart);
         } catch (oError) {
-          this.debug('Controller > OrgChart > onObjectMatched Error', oError);
+          this.debug('Controller > organization Main > onObjectMatched Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
-          oChartHolder.setBusy(false);
+          this.chartHolder.setBusy(false);
         }
       },
 
@@ -88,15 +93,37 @@ sap.ui.define(
        *****************************************************************/
       readEmployeeOrgTree() {
         const oModel = this.getModel(ServiceNames.PA);
-        // const sOrgeh = this.getOwnerComponent().getSessionModel().getProperty('/Orgeh');
+        const sMenid = this.getCurrentMenuId();
+        const sOrgeh = this.getSessionProperty('/Orgeh');
         const sUrl = '/EmployeeOrgTreeSet';
 
         return new Promise((resolve, reject) => {
           oModel.read(sUrl, {
             filters: [
-              new Filter('Stdat', FilterOperator.EQ, moment().hour(9).toDate()), //
-              // new Filter('Objid', FilterOperator.EQ, sOrgeh),
+              new Filter('Menid', FilterOperator.EQ, sMenid), //
+              new Filter('Objid', FilterOperator.EQ, sOrgeh),
+              new Filter('Stdat', FilterOperator.EQ, moment().hour(9).toDate()),
             ],
+            success: (oData) => {
+              this.debug(`${sUrl} success.`, oData);
+
+              resolve(oData.results);
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, oError);
+
+              reject(new ODataReadError(oError));
+            },
+          });
+        });
+      },
+
+      readOrglevel() {
+        const oModel = this.getModel(ServiceNames.PA);
+        const sUrl = '/OrglevelSet';
+
+        return new Promise((resolve, reject) => {
+          oModel.read(sUrl, {
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
 

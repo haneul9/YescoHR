@@ -71,6 +71,15 @@ sap.ui.define(
           .childrenMargin(() => 40)
           .compactMarginBetween(() => 15)
           .compactMarginPair(() => 80)
+          .linkUpdate(function (d) {
+            d3.select(this)
+              .attr('stroke', (d) => (d.data._upToTheRootHighlighted ? '#14760D' : '#002a79'))
+              .attr('stroke-width', (d) => (d.data._upToTheRootHighlighted ? 15 : 1));
+
+            if (d.data._upToTheRootHighlighted) {
+              d3.select(this).raise();
+            }
+          })
           .nodeContent(function (o) {
             // const sPernr = o.data.Pernr.replace(/^0+/, '');
 
