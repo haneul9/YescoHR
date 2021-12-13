@@ -65,7 +65,7 @@ sap.ui.define(
           .compact(false)
           // .nodeWidth(() => 250)
           .nodeWidth(() => 350)
-          .initialZoom(0.9)
+          .initialZoom(0.8)
           // .nodeHeight(() => 175)
           .nodeHeight(() => 170)
           .childrenMargin(() => 40)

@@ -461,7 +461,7 @@ h3.sapMTitle {font-size: 24px; font-weight: 700; margin-bottom: 0.4rem;color:#22
 
 .organization-info {position: absolute; margin-top: 10px; margin-left: 10px;}
 .organization-info .sapMText {font-size: 16px;}
-.organization-legend {position: absolute; right: 100px; top: 10px;}
+.organization-legend {position: absolute; right: 100px; top: 110px;}
 .organization-legend .sapMFlexItem {margin-top: 10px;}
 .organization-legend .sapMFlexItem>span>bdi {margin-left: 30px;}
 .organization-legend .sapMLabel[data-level="10"]::before {content: "";width: 20px;height: 20px;background-color: #68a9f0;position: absolute;}
