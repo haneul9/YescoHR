@@ -2,10 +2,12 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/base/Object',
+    'sap/ui/model/json/JSONModel',
   ],
   (
     // prettier 방지용 주석
-    BaseObject
+    BaseObject,
+    JSONModel
   ) => {
     'use strict';
 
@@ -13,40 +15,44 @@ sap.ui.define(
       /**
        * @override
        */
-      constructor: function ({ oController, oViewModel }) {
-        this.oController = oController;
-        this.oViewModel = oViewModel;
+      constructor: function (controller, requestListTableId) {
+        this.oController = controller;
+        this.oBoxModel = new JSONModel();
 
-        this.init();
+        this.init(requestListTableId);
       },
 
+      /**
+       * @abstract
+       */
       init() {},
 
-      setController(oController) {
-        this.oController = oController;
+      /**
+       * @abstract
+       */
+      onPressIcon() {},
+
+      setController(controller) {
+        this.oController = controller;
       },
 
       getController() {
         return this.oController;
       },
 
-      setViewModel(oViewModel) {
-        this.oViewModel = oViewModel;
+      setBoxModel(boxModel) {
+        this.oBoxModel = boxModel;
       },
 
-      getViewModel() {
-        return this.oViewModel;
+      getBoxModel() {
+        return this.oBoxModel;
       },
 
-      setBusy(sPath = '/busy', bBusy) {
+      setBusy(path = '/busy', busy = true) {
         setTimeout(() => {
-          if (this.oViewModel) {
-            this.oViewModel.setProperty(sPath, bBusy);
-          }
+          this.oBoxModel.setProperty(path, busy);
         });
       },
-
-      onPressIcon() {},
     });
   }
 );

@@ -4,10 +4,10 @@ sap.ui.define(
     'sap/ui/core/Fragment',
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
+    'sap/ui/table/SelectionMode',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/BoxHandler',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/odata/ServiceNames',
   ],
@@ -16,10 +16,10 @@ sap.ui.define(
     Fragment,
     Filter,
     FilterOperator,
+    SelectionMode,
     AppUtils,
     BoxHandler,
     ComboEntry,
-    TableUtils,
     ODataReadError,
     ServiceNames
   ) => {
@@ -30,8 +30,8 @@ sap.ui.define(
        * @override
        */
       init() {
-        this.oDoneListDialog = null;
-        this.sDoneListTableId = 'doneListTable';
+        this.oCurrentListDialog = null;
+        this.sCurrentListTableId = 'currentListTable';
         this.YYYY = this.oController.getSessionProperty('DTFMTYYYY');
         this.YYYYMM = this.oController.getSessionProperty('DTFMTYYYYMM');
 
@@ -39,7 +39,7 @@ sap.ui.define(
         this.sThisYear = oTodayMoment.format(this.YYYY);
         this.sThisMonth = oTodayMoment.format(this.YYYYMM);
 
-        this.oViewModel.setData({
+        this.oBoxModel.setData({
           summary: {
             busy: true,
             year: this.sThisYear,
@@ -55,9 +55,12 @@ sap.ui.define(
                 { code: 'B', text: 'B' },
               ],
             }),
-            doneList: null,
+            currentList: null,
+            currentListRowCount: 1,
+            currentListMode: SelectionMode.None,
           },
         });
+        this.oController.byId('summaryBox').setModel(this.oBoxModel).bindElement('/summary');
 
         this.showSummaryData();
       },
@@ -69,11 +72,16 @@ sap.ui.define(
         try {
           this.setBusy('/summary/busy', true);
 
-          const mSummaryData = this.readSummaryData();
+          const aResultsData = await this.readSummaryData();
 
-          this.setSummaryData(await mSummaryData);
+          const mSummaryData = aResultsData[0] || {};
+          if (mSummaryData.__metadata) {
+            delete mSummaryData.__metadata;
+          }
+
+          this.setSummaryData(mSummaryData);
         } catch (oError) {
-          AppUtils.debug('Controller > Nightduty Summary > showSummaryData Error', oError);
+          AppUtils.debug('Controller > Nightduty List > SummaryBoxHandler.showSummaryData Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
@@ -111,8 +119,8 @@ sap.ui.define(
       /**
        * @param {object} mSummaryData
        */
-      setSummaryData(mSummaryData) {
-        this.oViewModel.setData({ summary: mSummaryData }, true);
+      setSummaryData(summaryData = {}) {
+        this.oBoxModel.setData({ summary: summaryData }, true);
       },
 
       /**
@@ -121,26 +129,26 @@ sap.ui.define(
       async onPressIcon() {
         this.setBusy('/summary/busy', true);
 
-        if (!this.oDoneListDialog) {
-          this.oDoneListDialog = await Fragment.load({
-            name: 'sap.ui.yesco.mvc.view.nightduty.fragment.DoneListDialog',
-            controller: this.oController,
+        if (!this.oCurrentListDialog) {
+          this.oCurrentListDialog = await Fragment.load({
+            name: 'sap.ui.yesco.mvc.view.nightduty.fragment.CurrentListDialog',
+            controller: this,
           });
 
-          this.oController.getView().addDependent(this.oDoneListDialog);
-          this.oDoneListDialog
+          this.oController.getView().addDependent(this.oCurrentListDialog);
+          this.oCurrentListDialog
+            .setModel(this.oBoxModel)
+            .bindElement('/dialog')
             .attachBeforeOpen(() => {
-              this.setBusy('/dialog/busy', true);
-
-              this.initDoneListSearchConditions();
-              this.onPressDoneListSearch();
+              this.initCurrentListSearchConditions();
+              this.onPressCurrentListSearch();
             })
             .attachAfterClose(() => {
               this.clearDialog();
             });
         }
 
-        this.oDoneListDialog.open();
+        this.oCurrentListDialog.open();
 
         this.setBusy('/summary/busy', false);
       },
@@ -148,52 +156,55 @@ sap.ui.define(
       /**
        *
        */
-      onPressDoneListDialogClose() {
-        this.oDoneListDialog.close();
+      onPressDialogClose() {
+        this.oCurrentListDialog.close();
       },
 
       /**
        *
        */
-      async initDoneListSearchConditions() {
-        try {
-          this.oViewModel.setProperty('/dialog/yearMonth', this.sThisMonth);
-          this.oViewModel.setProperty('/dialog/selectedDutyGroup', 'ALL');
-        } catch (oError) {
-          AppUtils.debug('Controller > Nightduty Summary > Dialog > initDoneListSearchConditions Error', oError);
-
-          AppUtils.handleError(oError);
-        }
+      initCurrentListSearchConditions() {
+        this.oBoxModel.setProperty('/dialog/yearMonth', this.sThisMonth);
+        this.oBoxModel.setProperty('/dialog/selectedDutyGroup', 'ALL');
       },
 
       /**
-       * 나의 당직근무 - 당직근무현황 조회 아이콘 press event hamdler
+       * 나의 당직근무 - 당직근무현황 조회 아이콘 press event handler
        */
-      async onPressDoneListSearch() {
+      async onPressCurrentListSearch() {
         try {
-          this.oDoneListDialog.setBusy(true);
+          this.oBoxModel.setProperty('/dialog/busy', true);
 
-          const aDoneListTableData = this.readDoneListTableData();
+          const aCurrentListTableData = await this.readCurrentListTableData();
 
-          this.setDoneListTableData(await aDoneListTableData);
+          this.setCurrentListTableData(aCurrentListTableData);
         } catch (oError) {
-          AppUtils.debug('Controller > Nightduty Summary > Dialog > onPressDoneListSearch Error', oError);
+          AppUtils.debug('Controller > Nightduty Summary > Dialog > onPressCurrentListSearch Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
-          this.oDoneListDialog.setBusy(false);
+          this.oBoxModel.setProperty('/dialog/busy', false);
         }
       },
 
-      async readDoneListTableData() {
+      async readCurrentListTableData() {
         return new Promise((resolve, reject) => {
-          const sUrl = '/OnCallSummarySet';
           const sPernr = this.oController.getAppointeeProperty('Pernr');
+          const sYearMonth = this.oBoxModel.getProperty('/dialog/yearMonth').replace(/\D/g, '');
+          const aFilters = [
+            new Filter('Pernr', FilterOperator.EQ, sPernr), //
+            new Filter('Begmm', FilterOperator.EQ, sYearMonth),
+            new Filter('Endmm', FilterOperator.EQ, sYearMonth),
+          ];
 
+          const sSelectedDutyGroup = this.oBoxModel.getProperty('/dialog/selectedDutyGroup').replace(/ALL/g, '');
+          if (sSelectedDutyGroup) {
+            aFilters.push(new Filter('Ocshf', FilterOperator.EQ, sSelectedDutyGroup));
+          }
+
+          const sUrl = '/OnCallListSet';
           this.oController.getModel(ServiceNames.WORKTIME).read(sUrl, {
-            filters: [
-              new Filter('Pernr', FilterOperator.EQ, sPernr), //
-            ],
+            filters: aFilters,
             success: (mData) => {
               AppUtils.debug(`${sUrl} success.`, mData);
 
@@ -208,11 +219,16 @@ sap.ui.define(
         });
       },
 
-      setDoneListTableData(aRowData = []) {
-        this.oViewModel.setProperty('/dialog/list', aRowData);
+      setCurrentListTableData(currentListData = []) {
+        this.oBoxModel.setProperty('/dialog/currentList', currentListData);
+        this.oBoxModel.setProperty('/dialog/currentListRowCount', currentListData.length || 1);
       },
 
       onChangeRowSelection() {},
+
+      clearDialog() {
+        this.oBoxModel.setProperty('/dialog/currentList', []);
+      },
     });
   }
 );
