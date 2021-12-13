@@ -5,7 +5,6 @@ html, body {box-sizing:border-box; overflow:hidden}
 .sapUiBodyBackground, .sapUiBody {background-color: #F9FAFA;}
 
 .app-menu-toolbar {max-width:1600px;margin: 0 auto;background-color: #fff;box-shadow: 0 1px 1px rgb(0 0 0 / 10%);z-index: 2;}
-.app-menu-toolbar {height:60px!important;max-width:1600px;margin: 0 auto;background-color: #fff;box-shadow: 0 1px 1px rgb(0 0 0 / 10%);z-index: 2;}
 .app-menu-toolbar:before {content:"";height:59px!important;width:100%; background-color: #fff; position: fixed; top:0; left: 0; right: 0; z-index: -1;}
 .app-menu-toolbar:after {content:"";height:0px!important;width:100%; background-color: #fff;border-bottom: 1px solid #ccc; position: fixed; top: 59px; left: 0; right: 0;box-shadow: 0 3px 3px rgb(0 0 0 / 10%); z-index: 3;}
 .logo {margin:auto 0 !important}
@@ -21,7 +20,7 @@ html, body {box-sizing:border-box; overflow:hidden}
 .menu-70000 bdi {color:#2972c8}
 .menu-80000 bdi {color:#27c83f}
 
-.app-body {height:calc(100% - 3rem) !important}
+.app-body {height:calc(100% - 60px) !important}
 .my-avatar .sapMImg {width: 30px; height: 30px; border-radius: 50%;}
 
 /* sp.ui.yesco.control.VacationIndicator style */
@@ -406,8 +405,8 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt {outline-style:none !important}
 
 .vCardBox h2.sapMTitle, .hCardBox h2.sapMTitle, .customBox h2.sapMTitle {font-size: 24px; font-weight: 700;color:#222222; margin-bottom: 19px; display: inline-block;}
 h3.sapMTitle {font-size: 24px; font-weight: 700; margin-bottom: 0.4rem;color:#222222;}
-.hCardBox.search-condition-box > .sapMFlexBox h2.sapMTitle, .hCardBox.search-condition-box > .sapMFlexBox h2.sapMTitle, .hCardBox.appointee-info-box > .sapMFlexBox h2.sapMTitle {display: flex;margin-bottom: 0px;}
-.hCardBox.search-condition-box > .sapMFlexBox, .hCardBox.search-condition-box > .sapMFlexBox, .hCardBox.appointee-info-box > .sapMFlexBox {margin-bottom:16px;}
+.hCardBox.search-box > .sapMFlexBox h2.sapMTitle, .hCardBox.search-box > .sapMFlexBox h2.sapMTitle, .hCardBox.appointee-info-box > .sapMFlexBox h2.sapMTitle {display: flex;margin-bottom: 0px;}
+.hCardBox.search-box > .sapMFlexBox, .hCardBox.search-box > .sapMFlexBox, .hCardBox.appointee-info-box > .sapMFlexBox {margin-bottom:16px;}
 
 .sapMFlexBox .title {}
 .sapMFlexBox .title .desc-txt {position: relative; top: -6px;}
@@ -481,7 +480,7 @@ button .sapMBtnTransparent {border-radius:20px}
 .sapUiSizeCompact .sapMBtnInner{height: auto;font-size: 15px;}
 span.sapMBtnInner.sapMBtnEmphasized {text-shadow: none;}
 .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem {min-height: 40px;padding-left: 20px;}
-.search-condition-box .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem {padding-left: 0}
+.search-box .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem {padding-left: 0}
 .sapMBtn.sapUiTinyMarginEnd {margin-right: 5px!important;}
 
 .sapMBtnText>.sapMBtnIcon {position: static; top: 0; left: 0;}
@@ -782,12 +781,14 @@ html.sap-desktop .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnSel:hover .sapMSeg
 .info-area .sapMFlexItemAlignAuto {-webkit-align-self: center;align-self: center;}
 .info-area .sapMFlexItem .sapMText {padding-left:4.5rem; margin-top: 5px;font-size: 1.25rem;font-weight:500;background-image: url(../css/images/icon_help.png);background-position: 0 center;background-repeat: no-repeat;}
 
-.contents-header {align-items: center; box-shadow: 0 3px 3px rgb(0 0 0 / 10%); margin-bottom: 20px; padding: 0; background-color: #fff; height: 80px;}
-.contents {margin: 0 auto;max-width: 1600px;min-width: 1600px;}
+.contents-header {align-items:center; box-shadow:0 3px 3px rgb(0 0 0 / 10%); padding:0; background-color:#fff; height:80px}
+.contents-header + .contents {margin-top:20px}
+.contents {margin:0 auto; max-width:1600px; min-width:1600px; padding-bottom:20px}
 .contents > .sapMFlexBox + .sapMFlexBox {margin-top:20px}
-.appointee-info-box, .summary-box, .search-condition-box {width:33%}
+.contents > .sapUiHiddenPlaceholder + .sapMFlexBox {margin-top:20px}
+.appointee-info-box, .summary-box, .search-box {width:33%}
 .sapMFlexBox + .summary-box, .sapUiBlockLayerTabbable + .summary-box {margin-left:20px}
-.sapMFlexBox + .search-condition-box, .sapUiBlockLayerTabbable + .search-condition-box {margin-left:20px}
+.sapMFlexBox + .search-box, .sapUiBlockLayerTabbable + .search-box {margin-left:20px}
 
 /*Layer popup style*/
 .sapUiSizeCompact.sapMDialog, .sapUiSizeCompact .sapMDialog { min-height: 6rem;padding: 4.5rem 1.35rem;background-color: #fff;}

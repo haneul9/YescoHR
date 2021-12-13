@@ -48,6 +48,7 @@
       "libs": {
         "sap.ui.core": {},
         "sap.ui.unified": {},
+        "sap.ui.table": {},
         "sap.m": {},
         "sap.f": {}
       }
@@ -125,11 +126,11 @@
         { "pattern": "employee/:pernr:", "name": "employee", "target": "employee" },
 
         { "pattern": "nightduty", "name": "nightduty", "target": "nightduty" },
-        { "pattern": "nightduty/:appno:", "name": "nightduty-detail", "target": "nightdutyDetail" },
-        
+        { "pattern": "nightduty/{appno}", "name": "nightduty-detail", "target": "nightdutyDetail" },
+
         { "pattern": "excavation", "name": "excavation", "target": "excavation" },
         { "pattern": "excavation/{appno}", "name": "excavation-detail", "target": "excavationDetail" },
-        
+
         { "pattern": "performance", "name": "performance", "target": "performance" },
         { "pattern": "performance/{pid}", "name": "performance-detail", "target": "performanceDetail" },
 
@@ -172,12 +173,12 @@
         "attendanceDetail": { "viewId": "attendanceDetail", "viewPath": "sap.ui.yesco.mvc.view.attendance", "viewName": "Detail" },
         "employee": { "viewId": "employee", "viewPath": "sap.ui.yesco.mvc.view.employee", "viewName": "Employee" },
 
-        "nightduty": { "viewId": "nightduty", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "List" },
-        "nightdutyDetail": { "viewId": "nightdutyDetail", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "Detail" },
-        
+        "nightduty": { "viewId": "nightduty", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "RequestList" },
+        "nightdutyDetail": { "viewId": "nightdutyDetail", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "RequestDetail" },
+
         "excavation": { "viewId": "excavation", "viewPath": "sap.ui.yesco.mvc.view.excavation", "viewName": "List" },
         "excavationDetail": { "viewId": "excavationDetail", "viewPath": "sap.ui.yesco.mvc.view.excavation", "viewName": "Detail" },
-        
+
         "performance": { "viewId": "performance", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "List" },
         "performanceDetail": { "viewId": "performanceDetail", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "Detail" },
 
