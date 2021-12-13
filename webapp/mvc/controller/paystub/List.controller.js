@@ -100,7 +100,7 @@ sap.ui.define(
        * ! Event handler
        *****************************************************************/
       async onPressSearch() {
-        const oModel = this.getModel(ServiceNames.WORKTIME);
+        const oModel = this.getModel(ServiceNames.PAY);
         const oViewModel = this.getViewModel();
         const oSearchConditions = oViewModel.getProperty('/search');
 
@@ -131,11 +131,7 @@ sap.ui.define(
         const sPath = oEvent.getParameters().rowBindingContext.getPath();
         const oRowData = this.getViewModel().getProperty(sPath);
 
-        this.getRouter().navTo('paystub-detail', { appno: oRowData.Appno });
-      },
-
-      onPressNewApprovalBtn() {
-        this.getRouter().navTo('paystub-detail', { appno: 'n' });
+        this.getRouter().navTo('paystub-detail', { seqnr: oRowData.Seqnr.replace(/^0+/, '') });
       },
 
       /*****************************************************************

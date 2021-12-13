@@ -136,7 +136,7 @@
         { "pattern": "m/organization", "name": "m/organization", "target": "m/organization" },
         
         { "pattern": "paystub", "name": "paystub", "target": "paystub" },
-        { "pattern": "paystub/{pid}", "name": "paystub-detail", "target": "paystubDetail" },
+        { "pattern": "paystub/{seqnr}", "name": "paystub-detail", "target": "paystubDetail" },
 
         { "pattern": "sampleComponents", "name": "sampleComponents", "target": "sampleComponents" },
         { "pattern": "sampleTimeline", "name": "sampleTimeline", "target": "sampleTimeline" },

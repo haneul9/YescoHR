@@ -1,0 +1,48 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.paystub.Detail"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:custom="sap.ui.yesco.control">
+    <Page showHeader="false">
+        <VBox class="contents-header">
+            <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+                <custom:Breadcrumbs />
+                <HBox>
+                    <Button text="{i18n>LABEL_00171}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" press=".onPressPDFPrint" />
+                    <Button text="{i18n>LABEL_00146}" class="sapUiTinyMarginEnd" press=".onNavBack" />
+                    <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" />
+                    <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" />
+                </HBox>
+            </HBox>
+        </VBox>
+        <VBox class="contents">
+            <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
+            <HBox>
+                <VBox class="vCardBox">
+                    <HBox alignItems="Center" class="title">
+                        <Title level="H2" text="{i18n>LABEL_13015}" />
+                    </HBox>
+                    <HBox>
+                        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.paystub.fragment.PayTable" type="XML" />
+                    </HBox>
+                </VBox>
+                <VBox class="vCardBox">
+                    <HBox alignItems="Center" class="title">
+                        <Title level="H2" text="{i18n>LABEL_13016}" />
+                    </HBox>
+                    <HBox>
+                        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.paystub.fragment.DeductionTable" type="XML" />
+                    </HBox>
+                </VBox>
+                <VBox class="vCardBox">
+                    <HBox alignItems="Center" class="title">
+                        <Title level="H2" text="{i18n>LABEL_13017}" />
+                    </HBox>
+                    <HBox>
+                        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.paystub.fragment.TaxTable" type="XML" />
+                    </HBox>
+                </VBox>
+            </HBox>
+        </VBox>
+    </Page>
+</mvc:View>
