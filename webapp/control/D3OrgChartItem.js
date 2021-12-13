@@ -23,6 +23,7 @@ sap.ui.define(
           Botxt: { type: 'String', defaultValue: null },
           Jikgbtl: { type: 'String', defaultValue: null },
           ZorgLevl: { type: 'String', defaultValue: null },
+          Tenure: { type: 'String', defaultValue: null },
         },
       },
     });
