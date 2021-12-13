@@ -72,17 +72,19 @@ sap.ui.define(
           .compactMarginBetween(() => 15)
           .compactMarginPair(() => 80)
           .nodeContent(function (o) {
+            const sPernr = o.data.Pernr.replace(/^0+/, '');
+
             return `
             <div style="background-color:none;margin-left:1px;height:${o.height}px;border-radius:2px;overflow:visible;">
               <div style="height: ${o.height}px;padding-top:0px;background-color:white;border:1px solid lightgray;">
-                <img src="${o.data.Photo}" loading="lazy" style="margin-top:10px;margin-left:10px;width:80px;height:80px;float: left;">
+                <img src="${o.data.Photo}" loading="lazy" style="margin-top:10px;margin-left:10px;width:80px;float: left;">
                 <div style="margin-top: 10px;margin-left: 100px;">
                   <div style="color:#111672;font-size:14px;font-weight:bold"> ${o.data.Stext} </div>
                   <div style="color:#111672;font-size:16px;font-weight:bold"> ${o.data.Ename} </div>
                   <div style="color:#404040;font-size:14px;margin-top:4px"> ${o.data.Botxt} </div>
                 </div>
                 <div style="margin-top:30px;margin-left:190px;">
-                  <div>${o.data.Pernr}</div>
+                  <div style="text-align:end;margin-right:10px;">${sPernr}</div>
                 </div>
               </div>
             </div>
