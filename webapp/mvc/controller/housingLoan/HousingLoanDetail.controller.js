@@ -680,7 +680,10 @@ sap.ui.define(
               AppUtils.setAppBusy(true, this);
 
               const sPath = oModel.createKey('/LoanAmtApplSet', {
-                Appno: oDetailModel.getProperty('/FormData/Appno'),
+                Pernr: oDetailModel.getProperty('/FormData/Pernr'),
+                Endda: oDetailModel.getProperty('/FormData/Endda'),
+                Begda: oDetailModel.getProperty('/FormData/Begda'),
+                Lntyp: oDetailModel.getProperty('/FormData/Lntyp'),
               });
 
               oModel.remove(sPath, {

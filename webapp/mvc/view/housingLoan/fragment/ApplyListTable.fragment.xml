@@ -22,7 +22,7 @@
                     </Text>
                 </table:template>
             </table:Column>
-            <table:Column width="200px" sortProperty="Lntyptx" filterProperty="Lntyptx">
+            <table:Column width="130px" sortProperty="Lntyptx" filterProperty="Lntyptx">
                 <Label text="{i18n>LABEL_07002}"/>
                 <table:template>
                     <Text text="{Lntyptx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
