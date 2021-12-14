@@ -163,26 +163,19 @@ sap.ui.define(
           (acc, cur) => {
             for (var prop in cur) {
               const iCalcPropValue = _.defaultTo(Number(cur[prop]), 0);
+              const sDefaultPropValue = sSumProp === prop ? sSumLabel : null;
 
               if (rCalcProp instanceof RegExp) {
                 if (acc.hasOwnProperty(prop) && rCalcProp.test(prop)) {
                   acc[prop] += iCalcPropValue;
                 } else {
-                  if (rCalcProp.test(prop)) {
-                    acc[prop] = iCalcPropValue;
-                  } else {
-                    acc[prop] = sSumProp === prop ? sSumLabel : null;
-                  }
+                  acc[prop] = rCalcProp.test(prop) ? iCalcPropValue : sDefaultPropValue;
                 }
               } else {
                 if (acc.hasOwnProperty(prop) && _.includes(aCalcProps, prop)) {
                   acc[prop] += iCalcPropValue;
                 } else {
-                  if (_.includes(aCalcProps, prop)) {
-                    acc[prop] = iCalcPropValue;
-                  } else {
-                    acc[prop] = sSumProp === prop ? sSumLabel : null;
-                  }
+                  acc[prop] = _.includes(aCalcProps, prop) ? iCalcPropValue : sDefaultPropValue;
                 }
               }
             }
