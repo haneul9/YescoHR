@@ -1,28 +1,23 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/core/Fragment',
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/DateUtils',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
-    'sap/ui/yesco/mvc/model/type/Pernr',
+    'sap/ui/yesco/mvc/model/type/Date',
     'sap/ui/yesco/mvc/model/type/Currency',
   ],
   (
     // prettier 방지용 주석
-    Fragment,
     Filter,
     FilterOperator,
     JSONModel,
     AppUtils,
-    DateUtils,
     ODataReadError,
     ServiceNames,
     TableUtils,
@@ -66,6 +61,8 @@ sap.ui.define(
           list: [],
         });
         this.setViewModel(oViewModel);
+
+        TableUtils.summaryColspan({ oTable: this.byId(this.TABLE_ID), aHideIndex: [1, 2] });
       },
 
       async onObjectMatched() {
@@ -91,9 +88,19 @@ sap.ui.define(
       setTableData({ oViewModel, aRowData }) {
         const oTable = this.byId(this.TABLE_ID);
         const oListInfo = oViewModel.getProperty('/listInfo');
+        const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
+        const mSumRow = TableUtils.generateSumRow({
+          aTableData: aRowData,
+          sSumLabel,
+          rCalcProp: /^Bet0/,
+        });
 
-        oViewModel.setProperty('/list', [...aRowData.map((o, i) => ({ ...o, Idx: ++i }))]);
-        oViewModel.setProperty('/listInfo', { ...oListInfo, ...TableUtils.count({ oTable, aRowData }) });
+        oViewModel.setProperty('/list', [...aRowData.map((o, i) => ({ ...o, Idx: ++i })), { Idx: sSumLabel, ...mSumRow }]);
+        oViewModel.setProperty('/listInfo', { ...oListInfo, ...TableUtils.count({ oTable, aRowData, bHasSumRow: true }) });
+
+        setTimeout(() => {
+          TableUtils.setColorColumn({ oTable, bHasSumRow: true, mColorMap: { 6: 'bgType01', 8: 'bgType02', 10: 'bgType03' } });
+        }, 100);
       },
 
       /*****************************************************************
@@ -130,6 +137,8 @@ sap.ui.define(
       onSelectRow(oEvent) {
         const sPath = oEvent.getParameters().rowBindingContext.getPath();
         const oRowData = this.getViewModel().getProperty(sPath);
+
+        if (isNaN(oRowData.Seqnr)) return;
 
         this.getRouter().navTo('paystub-detail', { seqnr: oRowData.Seqnr.replace(/^0+/, '') });
       },

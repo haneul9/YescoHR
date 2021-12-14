@@ -2,518 +2,231 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/core/Fragment',
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
-    'sap/ui/yesco/control/MessageBox',
-    'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/exceptions/ODataReadError',
-    'sap/ui/yesco/common/exceptions/ODataCreateError',
-    'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
-    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date',
-    'sap/ui/yesco/mvc/model/type/Pernr',
+    'sap/ui/yesco/mvc/model/type/Currency',
   ],
   (
     // prettier 방지용 주석
-    Fragment,
-    Filter,
-    FilterOperator,
     JSONModel,
-    MessageBox,
-    UI5Error,
     ODataReadError,
-    ODataCreateError,
-    Appno,
     AppUtils,
-    AttachFileAction,
     ServiceNames,
     TableUtils,
-    TextUtils,
     BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.paystub.Detail', {
-      LIST_PAGE_ID: 'container-ehr---paystubList',
-      TYPE_CODE: 'HR06',
-
-      AttachFileAction: AttachFileAction,
-      TextUtils: TextUtils,
-
       onBeforeShow() {
         const oViewModel = new JSONModel({
           busy: false,
-          Appno: null,
-          ZappStatAl: null,
-          form: {
-            hasRow: false,
+          Seqnr: null,
+          summary: {
             rowCount: 1,
-            listMode: 'MultiToggle',
-            Chgrsn: '',
             list: [],
-            employees: [],
           },
-          dialog: {
-            busy: false,
-            isActiveApproval: false,
+          pay: {
+            rowCount: 2,
+            list: [],
+          },
+          deduction: {
+            rowCount: 2,
+            list: [],
+          },
+          tax: {
+            rowCount: 2,
+            list: [],
+          },
+          work: {
             rowCount: 1,
-            mode: 'C',
-            listMode: 'MultiToggle',
-            yearMonth: '',
             list: [],
-            selectedData: [],
           },
-          ApplyInfo: {},
-          ApprovalDetails: {},
+          base: {
+            rowCount: 1,
+            list: [],
+          },
         });
         this.setViewModel(oViewModel);
+
+        TableUtils.summaryColspan({ oTable: this.byId('payTable'), aHideIndex: [1, 2] });
       },
 
       async onObjectMatched(oParameter) {
-        const oViewModel = this.getView().getModel();
+        const oViewModel = this.getViewModel();
 
-        // oViewModel.setProperty('/Appno', oParameter.appno === 'n' ? null : oParameter.appno);
+        oViewModel.setProperty('/Seqnr', oParameter.seqnr);
 
-        // this.loadPage();
+        this.loadPage();
       },
 
-      getCurrentLocationText(oArguments) {
-        const sAction = oArguments.appno === 'n' ? this.getBundleText('LABEL_00121') : this.getBundleText('LABEL_00100'); // 신청,조회
-
-        return sAction;
+      getCurrentLocationText() {
+        return this.getBundleText('LABEL_00168'); // 상세내역
       },
 
       async loadPage() {
-        const oView = this.getView();
-        const oViewModel = oView.getModel();
-        const sAppno = oViewModel.getProperty('/Appno');
+        const oModel = this.getModel(ServiceNames.PAY);
+        const oViewModel = this.getViewModel();
+        const sSeqnr = oViewModel.getProperty('/Seqnr');
+
+        if (!sSeqnr) return;
+
+        oViewModel.setProperty('/busy', true);
 
         try {
-          if (sAppno) {
-            const oModel = this.getModel(ServiceNames.WORKTIME);
-            const aDetailData = await this.readDrillChangeAppSet({ oModel, sAppno });
-            const mDetail = aDetailData[0] ?? {};
+          const mDetail = await this.readDeepPayslipList({ oModel, sSeqnr });
 
-            oViewModel.setProperty('/ZappStatAl', mDetail.ZappStatAl);
-            oViewModel.setProperty('/form/Chgrsn', mDetail.Chgrsn);
-            oViewModel.setProperty('/form/listMode', 'None');
+          // Paylist
+          const aPayList = this.transformTreeData({ oTreeData: mDetail.Payslip1Nav.results });
+          // Deductlist
+          const aDeductlist = this.transformTreeData({ oTreeData: mDetail.Payslip2Nav.results });
+          // TaxIncomeList
+          const aTaxIncomeList = this.transformTreeData({ oTreeData: mDetail.Payslip3Nav.results });
+          // TimeList
+          const aTimeList = mDetail.Payslip4Nav.results;
+          // BaseList
+          const aBaseList = _.filter(mDetail.Payslip1Nav.results, { Uppno: '' });
 
-            this.setTableData({ oViewModel, aRowData: [...aDetailData] });
-            this.initializeApplyInfoBox(mDetail);
-            this.initializeApprovalBox(mDetail);
-          } else {
-            const aEmployees = await this.readEmpSearchResult();
+          oViewModel.setProperty('/summary/list', [mDetail]);
+          oViewModel.setProperty('/pay/list', aPayList);
+          oViewModel.setProperty('/pay/rowCount', aPayList.length || 2);
+          oViewModel.setProperty('/deduction/list', aDeductlist);
+          oViewModel.setProperty('/deduction/rowCount', aDeductlist.length || 2);
+          oViewModel.setProperty('/tax/list', aTaxIncomeList);
+          oViewModel.setProperty('/tax/rowCount', aTaxIncomeList.length || 2);
+          oViewModel.setProperty('/work/list', aTimeList);
+          oViewModel.setProperty('/work/rowCount', aTimeList.length || 1);
+          oViewModel.setProperty('/base/list', aBaseList);
+          oViewModel.setProperty('/base/rowCount', aBaseList.length || 1);
 
-            oViewModel.setProperty(
-              '/form/employees',
-              aEmployees.map((o) => ({ ...o, Pernr: o.Pernr.replace(/^0+/, '') }))
-            );
-
-            this.initializeApplyInfoBox();
-          }
-
-          this.initializeAttachBox();
+          setTimeout(() => {
+            TableUtils.setColorColumn({ oTable: this.byId('summaryTable'), mColorMap: { 5: 'bgType01', 7: 'bgType02', 9: 'bgType03' } });
+            TableUtils.setColorColumn({ oTable: this.byId('workTable'), mColorMap: { 0: 'bgType01', 1: 'bgType01' } });
+          }, 100);
         } catch (oError) {
           this.debug('Controller > paystub Detail > loadPage Error', oError);
 
-          if (oError instanceof Error) oError = new UI5Error({ message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
-
-          AppUtils.handleError(oError, {
-            onClose: () => this.getRouter().navTo('paystub'),
-          });
-        }
-      },
-
-      setTableData({ oViewModel, aRowData }) {
-        oViewModel.setProperty('/form/rowCount', aRowData.length);
-        oViewModel.setProperty('/form/list', aRowData);
-
-        this.toggleHasRowProperty();
-      },
-
-      initializeApplyInfoBox(detailData) {
-        const oViewModel = this.getViewModel();
-
-        if (_.isEmpty(detailData)) {
-          const mAppointeeData = this.getAppointeeData();
-
-          oViewModel.setProperty('/ApplyInfo', {
-            Apename: mAppointeeData.Ename,
-            Aporgtx: `${mAppointeeData.Btrtx}/${mAppointeeData.Orgtx}`,
-            Apjikgbtl: `${mAppointeeData.Zzjikgbt}/${mAppointeeData.Zzjiktlt}`,
-          });
-        } else {
-          oViewModel.setProperty('/ApplyInfo', { ...detailData });
-        }
-      },
-
-      initializeApprovalBox(detailData) {
-        const oViewModel = this.getViewModel();
-
-        oViewModel.setProperty('/ApprovalDetails', { ...detailData });
-      },
-
-      initializeAttachBox() {
-        const oViewModel = this.getViewModel();
-        const sStatus = oViewModel.getProperty('/ZappStatAl');
-        const sAppno = oViewModel.getProperty('/Appno') || '';
-
-        AttachFileAction.setAttachFile(this, {
-          Editable: !sStatus,
-          Type: this.TYPE_CODE,
-          Appno: sAppno,
-          Max: 10,
-          FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
-        });
-      },
-
-      async openFormDialog() {
-        const oView = this.getView();
-
-        AppUtils.setAppBusy(true, this);
-
-        if (!this.pDrillDialog) {
-          this.pDrillDialog = Fragment.load({
-            id: oView.getId(),
-            name: 'sap.ui.yesco.mvc.view.paystub.fragment.DialogTable',
-            controller: this,
-          }).then(function (oDialog) {
-            oView.addDependent(oDialog);
-            return oDialog;
-          });
-        }
-        this.pDrillDialog.then(function (oDialog) {
-          oDialog.open();
-        });
-      },
-
-      toggleHasRowProperty() {
-        const oViewModel = this.getViewModel();
-        const aTableData = oViewModel.getProperty('/form/list');
-
-        oViewModel.setProperty('/form/hasRow', !!aTableData.length);
-      },
-
-      async createProcess({ sPrcty = 'C' }) {
-        const oViewModel = this.getViewModel();
-        const iAttachLength = AttachFileAction.getFileLength.call(this);
-        let sAppno = oViewModel.getProperty('/Appno');
-
-        try {
-          if (!sAppno) {
-            sAppno = await Appno.get();
-            oViewModel.setProperty('/Appno', sAppno);
-          }
-
-          if (iAttachLength > 0) {
-            await AttachFileAction.uploadFile.call(this, sAppno, this.TYPE_CODE);
-          }
-
-          await this.createDrillChangeApp(sPrcty);
-
-          // {신청}되었습니다.
-          MessageBox.success(this.getBundleText('MSG_00007', this.getBundleText('LABEL_00121')), {
-            onClose: () => {
-              this.getRouter().navTo('paystub');
-            },
-          });
-        } catch (oError) {
-          this.debug('Controller > paystub Detail > createProcess Error', oError);
-
           AppUtils.handleError(oError);
         } finally {
-          AppUtils.setAppBusy(false, this);
+          oViewModel.setProperty('/busy', false);
         }
       },
 
-      async retrieveCurrentDuty() {
-        const oModel = this.getModel(ServiceNames.WORKTIME);
-        const oViewModel = this.getViewModel();
-        const aList = oViewModel.getProperty('/form/list');
-        const sMode = oViewModel.getProperty('/dialog/mode');
-        const sYearMonth = oViewModel.getProperty('/dialog/yearMonth');
+      transformTreeData({ oTreeData }) {
+        const aRoot = _.filter(oTreeData, { Uppno: '' });
+        const mSumRow = TableUtils.generateSumRow({
+          aTableData: aRoot,
+          sSumLabel: this.getBundleText('LABEL_00172'),
+          aCalcProps: ['Betrg'],
+        });
 
-        try {
-          oViewModel.setProperty('/dialog/busy', true);
+        if (_.isEmpty(mSumRow)) return [];
 
-          let aSummaryList = await this.readDrillList({ oModel, sMode, sYearMonth });
+        oTreeData.forEach((o) => {
+          const mRootNode = _.find(aRoot, { Itmno: o.Uppno });
 
-          aSummaryList = _.differenceWith(aSummaryList, aList, (a, b) => moment(a.Datum).format('YYYYMMDD') === moment(b.Datum).format('YYYYMMDD'));
+          if (!_.isEmpty(mRootNode)) {
+            if (_.isEmpty(mRootNode.nodes)) mRootNode.nodes = [];
+            mRootNode.nodes = [...mRootNode.nodes, o];
+          }
+        });
 
-          oViewModel.setProperty('/dialog/list', [...aSummaryList]);
-          oViewModel.setProperty('/dialog/rowCount', aSummaryList.length || 1);
-        } catch (oError) {
-          this.debug('Controller > paystub Detail > retrieveCurrentDuty Error', oError);
-
-          AppUtils.handleError(oError);
-        } finally {
-          oViewModel.setProperty('/dialog/busy', false);
-        }
+        return [...aRoot, mSumRow];
       },
 
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
-      async onPressAddBtn() {
+      async onPressPDFPrint() {
+        const oModel = this.getModel(ServiceNames.PAY);
         const oViewModel = this.getViewModel();
+        const sSeqnr = oViewModel.getProperty('/Seqnr');
 
-        oViewModel.setProperty('/dialog/yearMonth', moment().format('YYYYMM'));
-        this.retrieveCurrentDuty();
+        try {
+          const mResult = await this.readOnePayslipList({ oModel, sSeqnr });
 
-        this.openFormDialog();
-      },
+          if (mResult.Url) window.open(mResult.Url);
+        } catch (oError) {
+          this.debug('Controller > paystub Detail > onPressPDFPrint Error', oError);
 
-      onPressDelBtn() {
-        const oViewModel = this.getViewModel();
-        const oTable = this.byId('approvalTable');
-        const aSelectedIndices = oTable.getSelectedIndices();
-        const aTableData = oViewModel.getProperty('/form/list');
-
-        if (aSelectedIndices.length < 1) {
-          MessageBox.alert(this.getBundleText('MSG_00020', 'LABEL_00110')); // {삭제}할 행을 선택하세요.
-          return;
-        }
-
-        // 선택된 행을 삭제하시겠습니까?
-        MessageBox.confirm(this.getBundleText('MSG_00021'), {
-          onClose: function (oAction) {
-            if (MessageBox.Action.OK === oAction) {
-              const aUnSelectedData = aTableData.filter((elem, idx) => {
-                return !aSelectedIndices.some(function (iIndex) {
-                  return iIndex === idx;
-                });
-              });
-
-              oViewModel.setProperty('/form/list', aUnSelectedData);
-              oViewModel.setProperty('/form/rowCount', aUnSelectedData.length);
-
-              this.toggleHasRowProperty();
-              oTable.clearSelection();
-            }
-          }.bind(this),
-        });
-      },
-
-      onSelectSuggest(oEvent) {
-        const oViewModel = this.getViewModel();
-        const oSelectedItem = oEvent.getParameter('selectedItem');
-        const sRowPath = oEvent.getSource()?.getParent()?.getBindingContext()?.getPath();
-        let mEmployee = { Pernr: '', Ename: '', Fulln: '', Zzjikgbt: '' };
-
-        if (!_.isEmpty(oSelectedItem)) {
-          const sSelectedPernr = oEvent.getParameter('selectedItem')?.getKey() ?? 'None';
-          const aEmployees = oViewModel.getProperty('/form/employees');
-
-          mEmployee = _.find(aEmployees, { Pernr: sSelectedPernr }) ?? { Pernr: '', Ename: '', Fulln: '', Zzjikgbt: '' };
-        }
-
-        if (sRowPath) {
-          oViewModel.setProperty(sRowPath, {
-            ...oViewModel.getProperty(sRowPath),
-            PernrA: mEmployee.Pernr,
-            EnameA: mEmployee.Ename,
-            OrgtxA: mEmployee.Fulln,
-            ZzjikgbtA: mEmployee.Zzjikgbt,
-          });
+          AppUtils.handleError(oError);
         }
       },
 
-      async onChangeDialogSearch() {
-        this.retrieveCurrentDuty();
-      },
-
-      onChangeRowSelection(oEvent) {
-        const oTable = oEvent.getSource();
+      onToggleTreeState(oEvent) {
         const oViewModel = this.getViewModel();
-        const aSelectedIndices = oTable.getSelectedIndices();
+        const mParameters = oEvent.getParameters();
+        const bExpanded = mParameters.expanded;
+        const sRowPath = mParameters.rowContext.getPath();
+        const sTableRootPath = sRowPath.split('/list/')[0];
+        const iTableVisibleRowCount = oViewModel.getProperty(`${sTableRootPath}/rowCount`);
+        const iChildNodesLength = oViewModel.getProperty(sRowPath).nodes.length;
 
-        oViewModel.setProperty('/dialog/isActiveApproval', !!aSelectedIndices.length);
-        oViewModel.setProperty(
-          '/dialog/selectedData',
-          aSelectedIndices.map((idx) => oViewModel.getProperty(`/dialog/list/${idx}`))
-        );
-      },
-
-      onPressAddData(oEvent) {
-        const oViewModel = this.getViewModel();
-        const aSelectedData = oViewModel.getProperty('/dialog/selectedData');
-        const aList = [
-          ...oViewModel.getProperty('/form/list'),
-          ...aSelectedData.map((o) => ({
-            Datum: o.Datum,
-            Kurzt: o.Kurzt,
-            Tagty: o.Tagty,
-            PernrB: o.Pernr,
-            EnameB: o.Ename,
-            OrgtxB: o.Orgtx,
-            ZzjikgbtB: o.Zzjikgbt,
-          })),
-        ];
-
-        oViewModel.setProperty('/form/rowCount', aList.length);
-        oViewModel.setProperty('/form/list', aList);
-        oViewModel.setProperty('/dialog/selectedData', []);
-
-        this.toggleHasRowProperty();
-        this.onPressSummaryDialogClose(oEvent);
-      },
-
-      onPressSummaryDialogClose(oEvent) {
-        AppUtils.setAppBusy(false, this);
-
-        oEvent.getSource().getParent().getContent()[1].clearSelection();
-        this.byId('summaryDialog').close();
-      },
-
-      onPressApproval() {
-        const oViewModel = this.getViewModel();
-        const sPrcty = 'C';
-        const aList = oViewModel.getProperty('/form/list');
-        const sChgrsn = oViewModel.getProperty('/form/Chgrsn');
-
-        if (!sChgrsn) {
-          MessageBox.alert(this.getBundleText('MSG_00003', 'LABEL_04013')); // {변경사유}를 입력하세요.
-          return;
-        }
-
-        if (!_.some(aList, 'PernrA')) {
-          MessageBox.alert(this.getBundleText('MSG_00005', 'LABEL_11006')); // {근무자}를 선택하세요.
-          return;
-        }
-
-        AppUtils.setAppBusy(true, this);
-
-        // {신청}하시겠습니까?
-        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
-          actions: [this.getBundleText('LABEL_00121'), MessageBox.Action.CANCEL],
-          onClose: (sAction) => {
-            if (!sAction || sAction === MessageBox.Action.CANCEL) {
-              AppUtils.setAppBusy(false, this);
-              return;
-            }
-
-            this.createProcess({ sPrcty });
-          },
-        });
+        oViewModel.setProperty(`${sTableRootPath}/rowCount`, bExpanded ? iTableVisibleRowCount + iChildNodesLength : iTableVisibleRowCount - iChildNodesLength);
       },
 
       /*****************************************************************
        * ! Call OData
        *****************************************************************/
-      readEmpSearchResult() {
-        return new Promise((resolve, reject) => {
-          const oModel = this.getModel(ServiceNames.COMMON);
-          const sMenid = this.getCurrentMenuId();
-          const sPersa = this.getAppointeeProperty('Werks');
-          const sUrl = '/EmpSearchResultSet';
-
-          oModel.read(sUrl, {
-            filters: [
-              new Filter('Menid', FilterOperator.EQ, sMenid), //
-              new Filter('Persa', FilterOperator.EQ, sPersa),
-              new Filter('Stat2', FilterOperator.EQ, '3'),
-              new Filter('Zflag', FilterOperator.EQ, 'X'),
-              new Filter('Actda', FilterOperator.EQ, moment().hour(9).toDate()),
-            ],
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results ?? []);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
-
-      readDrillList({ oModel, sMode, sYearMonth }) {
-        return new Promise((resolve, reject) => {
-          const sUrl = '/DrillListSet';
-
-          oModel.read(sUrl, {
-            filters: [
-              new Filter('Prcty', FilterOperator.EQ, sMode), //
-              new Filter('Zyymm', FilterOperator.EQ, sYearMonth),
-            ],
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results ?? []);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
-
-      readDrillChangeAppSet({ oModel, sAppno }) {
-        return new Promise((resolve, reject) => {
-          const sUrl = '/DrillChangeAppSet';
-
-          oModel.read(sUrl, {
-            filters: [
-              new Filter('Appno', FilterOperator.EQ, sAppno), //
-            ],
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results ?? []);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
-
       /**
-       *
-       * @param {String} sPrcty -  T:임시저장, C:신청
-       * @returns
+       * @param  {object} oModel
+       * @param  {string} sSeqnr
        */
-      createDrillChangeApp(sPrcty) {
-        const oModel = this.getModel(ServiceNames.WORKTIME);
-        const oViewModel = this.getViewModel();
-        const aTableData = oViewModel.getProperty('/form/list');
-        const sChgrsn = oViewModel.getProperty('/form/Chgrsn');
-        const sAppno = oViewModel.getProperty('/Appno');
-        const sMenid = this.getCurrentMenuId();
-        const sUrl = '/DrillChangeAppSet';
+      readDeepPayslipList({ oModel, sSeqnr }) {
+        return new Promise((resolve, reject) => {
+          const sMenid = this.getCurrentMenuId();
+          const sUrl = '/PayslipListSet';
+
+          oModel.create(
+            sUrl,
+            {
+              Menid: sMenid,
+              Seqnr: sSeqnr,
+              Payslip1Nav: [],
+              Payslip2Nav: [],
+              Payslip3Nav: [],
+              Payslip4Nav: [],
+            },
+            {
+              success: (oData) => {
+                this.debug(`${sUrl} success.`, oData);
+
+                resolve(oData ?? {});
+              },
+              error: (oError) => {
+                this.debug(`${sUrl} error.`, oError);
+
+                reject(new ODataReadError(oError));
+              },
+            }
+          );
+        });
+      },
+
+      readOnePayslipList({ oModel, sSeqnr }) {
+        const sUrl = '/PayslipListSet';
+        const sUrlByKey = oModel.createKey(sUrl, {
+          Menid: this.getCurrentMenuId(),
+          Pernr: this.getAppointeeProperty('Pernr'),
+          Seqnr: sSeqnr,
+        });
 
         return new Promise((resolve, reject) => {
-          const mPayload = {
-            Menid: sMenid,
-            Appno: sAppno,
-            Prcty: sPrcty,
-            Chgrsn: sChgrsn,
-            DrillChangeNav: [...aTableData.map((o) => ({ ...o, Chgrsn: sChgrsn }))],
-          };
-
-          oModel.create(sUrl, mPayload, {
+          oModel.read(sUrlByKey, {
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
 
-              resolve(oData.results ?? []);
+              resolve(oData ?? {});
             },
             error: (oError) => {
               this.debug(`${sUrl} error.`, oError);
 
-              reject(new ODataCreateError({ oError })); // {신청}중 오류가 발생하였습니다.
+              reject(new ODataReadError(oError));
             },
           });
         });

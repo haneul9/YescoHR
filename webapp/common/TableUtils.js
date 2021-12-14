@@ -52,12 +52,13 @@ sap.ui.define(
       /**************************
        * Functions
        *************************/
-      count({ oTable, aRowData, sStatCode = 'ZappStatAl' }) {
+      count({ oTable, aRowData, sStatCode = 'ZappStatAl', bHasSumRow = false }) {
         const iBodyHeight = $('body').height(); // 화면 높이
         const iOffsetTopOfTbody = oTable.$().find('.sapUiTableCCnt').offset().top; // Table 데이터 시작행의 화면 최상단까지의 거리
         const iParentFlexBoxPaddingBottom = parseInt(oTable.$().parents('.sapMFlexBox').css('padding-bottom'), 10); // Table을 감싸고 있는 FlexBox의 아래 padding
         const iRowHeight = oTable.getRowHeight(); // Table에 세팅된 행높이
         const iVisibleRowCountLimit = Math.floor((iBodyHeight - iOffsetTopOfTbody - iParentFlexBoxPaddingBottom) / iRowHeight);
+        const iDataLength = bHasSumRow ? aRowData.length + 1 : aRowData.length;
         const aZappStatAls = _.map(aRowData, sStatCode);
         const oOccurCount = _.defaults(_.countBy(aZappStatAls), {
           [STATE_IN_PROGRESS1]: 0,
@@ -72,7 +73,7 @@ sap.ui.define(
         });
 
         return {
-          rowCount: iVisibleRowCountLimit > aZappStatAls.length ? aZappStatAls.length : iVisibleRowCountLimit,
+          rowCount: iVisibleRowCountLimit > iDataLength ? iDataLength : iVisibleRowCountLimit,
           totalCount: aZappStatAls.length,
           progressCount: oOccurCount[STATE_IN_PROGRESS1] + oOccurCount[STATE_IN_PROGRESS2],
           applyCount: oOccurCount[STATE_APPLY1] + oOccurCount[STATE_APPLY2] + oOccurCount[STATE_APPLY3],
@@ -146,6 +147,66 @@ sap.ui.define(
           },
           o.table
         );
+      },
+
+      generateSumRow({ aTableData, sSumLabel, aCalcProps = [], rCalcProp }) {
+        if (aTableData.length < 1) return;
+
+        return aTableData.reduce(
+          (acc, cur) => {
+            for (var prop in cur) {
+              const iCalcPropValue = _.defaultTo(Number(cur[prop]), 0);
+
+              if (rCalcProp instanceof RegExp) {
+                if (acc.hasOwnProperty(prop) && rCalcProp.test(prop)) {
+                  acc[prop] += iCalcPropValue;
+                } else {
+                  if (rCalcProp.test(prop)) {
+                    acc[prop] = iCalcPropValue;
+                  } else {
+                    acc[prop] = sSumLabel;
+                  }
+                }
+              } else {
+                if (acc.hasOwnProperty(prop) && _.includes(aCalcProps, prop)) {
+                  acc[prop] += iCalcPropValue;
+                } else {
+                  if (_.includes(aCalcProps, prop)) {
+                    acc[prop] = iCalcPropValue;
+                  } else {
+                    acc[prop] = sSumLabel;
+                  }
+                }
+              }
+            }
+            return acc;
+          },
+          { Sumrow: true }
+        );
+      },
+
+      summaryColspan({ oTable, sStartIndex = '0', aHideIndex = [] }) {
+        oTable.addEventDelegate({
+          onAfterRendering() {
+            const sBottomRowId = _.last(oTable.getRows()).getId();
+            const $firstTD = $(`#${sBottomRowId}-col${sStartIndex}`);
+
+            $firstTD.attr('colspan', aHideIndex.length + 1);
+            aHideIndex.forEach((idx) => $(`#${sBottomRowId}-col${idx}`).hide());
+          },
+        });
+      },
+
+      setColorColumn({ oTable, mColorMap = {}, bHasSumRow = false }) {
+        const aRows = [...oTable.getRows()];
+
+        if (bHasSumRow) aRows.pop(); // delete last
+
+        aRows.forEach((row) => {
+          const sRowId = row.getId();
+
+          _.forOwn(mColorMap, (value, key) => $(`#${sRowId}-col${key}`).addClass(value));
+        });
       },
 
       /**************************

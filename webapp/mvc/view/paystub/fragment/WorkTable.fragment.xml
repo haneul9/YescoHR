@@ -1,0 +1,74 @@
+<core:FragmentDefinition xmlns="sap.ui.table"
+    xmlns:m="sap.m"
+    xmlns:core="sap.ui.core">
+    <Table id="workTable" selectionMode="None" width="100%" columnHeaderHeight="45" rowHeight="45" rows="{/work/list}" visibleRowCount="{/work/rowCount}" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}">
+        <columns>
+            <Column>
+                <m:Label text="{i18n>LABEL_13020}"/>
+                <template>
+                    <m:Text text="{ path:'Tim501', type:'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+            <Column>
+                <m:Label text="{i18n>LABEL_13021}"/>
+                <template>
+                    <m:Text text="{ path:'Tim502', type:'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+            <Column>
+                <m:Label text="{i18n>LABEL_13022}"/>
+                <template>
+                    <m:Text text="{ path:'Tim503', type:'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+            <Column>
+                <m:Label text="{i18n>LABEL_13023}"/>
+                <template>
+                    <m:Text text="{ path:'Tim504', type:'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+            <Column>
+                <m:Label text="{i18n>LABEL_13024}"/>
+                <template>
+                    <m:Text text="{ path:'Tim505', type:'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+            <Column>
+                <m:Label text="{i18n>LABEL_13025}" wrapping="true"/>
+                <template>
+                    <m:Text text="{ path:'Tim506', type:'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+            <Column>
+                <m:Label text="{i18n>LABEL_13026}"/>
+                <template>
+                    <m:Text text="{ path:'Tim507', type:'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+            <Column>
+                <m:Label text="{i18n>LABEL_13027}" wrapping="true"/>
+                <template>
+                    <m:Text text="{ path:'Tim508', type:'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+            <Column>
+                <m:Label text="{i18n>LABEL_13028}"/>
+                <template>
+                    <m:Text text="{ path:'Tim509', type:'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+            <Column>
+                <m:Label text="{i18n>LABEL_13029}" wrapping="true"/>
+                <template>
+                    <m:Text text="{ path:'Tim510', type:'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+            <Column>
+                <m:Label text="{i18n>LABEL_13030}" wrapping="true"/>
+                <template>
+                    <m:Text text="{ path:'Tim511', type:'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+        </columns>
+    </Table>
+</core:FragmentDefinition>

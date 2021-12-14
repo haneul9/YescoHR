@@ -481,6 +481,10 @@ h3.sapMTitle {font-size: 24px; font-weight: 700; margin-bottom: 0.4rem;color:#22
 .org-container .image>img {width: 90px;max-height: 105px;}
 .org-container .name {grid-column: 2 / 4;font-size:15px; font-weight:bold;line-height: 45px;}
 .org-container .label, .org-container .content {font-size:14px;line-height: 20px;}
+
+.bgType01 { background-color: #e9f7ae;}
+.bgType02 { background-color: #aad2fc;}
+.bgType03 { background-color: #f6abfd;}
 /* -- DEVELOPER Temporary style */
 
  
