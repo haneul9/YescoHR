@@ -30,7 +30,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.housingLoan.HousingLoanDetail', {
+    return BaseController.extend('sap.ui.yesco.mvc.controller.clubJoin.ClubJoinDetail', {
       TYPE_CODE: 'HR07',
       LIST_PAGE_ID: 'container-ehr---housingLoan',
 

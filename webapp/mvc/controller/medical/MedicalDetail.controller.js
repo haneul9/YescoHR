@@ -758,6 +758,8 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const oRowData = oDetailModel.getProperty(vPath);
 
+        if (!oRowData.Lnsta || oRowData.Lnsta !== '10') return;
+
         this.setDialogData(oRowData);
 
         if (!this.byId('DetailHisDialog')) {
@@ -834,14 +836,14 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const sAppno = oDetailModel.getProperty('/DialogData/Appno2') || '';
  
-        AttachFileAction.setAttachFile(this, {
-          Id: this.DIALOG_FILE_ID,
-          Type: this.TYPE_CODE,
-          Editable: true,
-          Appno: sAppno,
-          Max: 1,
-          FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
-        });
+        // AttachFileAction.setAttachFile(this, {
+        //   Id: this.DIALOG_FILE_ID,
+        //   Type: this.TYPE_CODE,
+        //   Editable: true,
+        //   Appno: sAppno,
+        //   Max: 1,
+        //   FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
+        // });
       },
     });
   }

@@ -835,7 +835,7 @@ html.sap-desktop .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnSel:hover .sapMSeg
 .sapMDialog>header.sapMDialogTitle .sapMTitle {color: #343A40; margin: 0; vertical-align: middle; font-size: 24px;font-weight: 600;}
 html.sap-desktop .sapContrast.sapMIBar.sapMFooter-CTX, html.sap-desktop .sapMIBar.sapMFooter-CTX { height: 4.5rem;}
 html.sap-tablet .sapMDialog, html.sap-desktop .sapMDialog {min-width: 20rem; background: #fff;padding-bottom: 4.5rem;}
-.sapMPanel>.sapMPanelHdr, .sapMPanelWrappingDiv, .sapMPanelWrappingDivTb { border-bottom: 0px solid #cccccc;}
+.sapMPanel>.sapMPanelHdr, .sapMPanelWrappingDiv, .sapMPanelWrappingDivTb { border-bottom: 0px solid #cccccc;background-color: #fff;}
 .sapMPanelHdr, .sapMDialog>header.sapMDialogTitle {font-size: 24px;font-weight: 600;height: 70px;line-height: 70px;padding: 0 1rem;}
 .sapMDialog>footer .sapMFooter-CTX {margin:0 20px;}
 .sapMPanelContent:not(.sapMPanelBGTransparent), .sapMMessageDialog .sapMDialogScrollCont {border-bottom: 0px solid #cccccc;background: #fff; padding: 0.625rem 20px 1.375rem 20px;}
@@ -848,7 +848,20 @@ html.sap-tablet .sapMDialog, html.sap-desktop .sapMDialog {min-width: 20rem; bac
 .sapUiLayoutCSSGrid.form-grid .sapMFlexBox .sapMFlexItem {display:flex;padding-top:5px;min-height: 40px!important;}
 .sapUiLayoutCSSGrid.form-grid .sapMFlexBox .sapMFlexItem .sapMText {display:flex;}
 .listFileDialog {min-height: 85px !important; max-height: 230px !important;}
-
+.sapUiLayoutCSSGrid.form-grid .sapMTextArea {padding:4px 0!important;}
+.sapUiLayoutCSSGrid.form-grid .label_wrap {padding: 2px 0;}
+.sapUiLayoutCSSGrid.form-grid .sapMFlexBox.label_wrap .sapMFlexItem {display: flex;padding: 0px 0;}
+.sapUiLayoutCSSGrid.form-grid .sapMFlexBox.label_wrap > .sapMHBox {padding:4px 0;}
+.sapUiLayoutCSSGrid.form-grid .sapMFlexBox.label_wrap .sapMHBox .sapMFlexItem:first-child {flex-grow: inherit!important;}
+.sapUiLayoutCSSGrid.form-grid .sapMFlexBox.label_wrap .sapMFlexItem .sapMLabel{width: 40px!important;margin-right: 4px;background-color: #FFE89A;border-radius:4px;text-align: center;justify-content: center;}
+.sapUiLayoutCSSGrid.form-grid .sapMFlexBox.label_wrap .sapMHBox:nth-child(1) .sapMFlexItem .sapMLabel {background-color: #FFE89A;}
+.sapUiLayoutCSSGrid.form-grid .sapMFlexBox.label_wrap .sapMHBox:nth-child(2) .sapMFlexItem .sapMLabel {background-color: #FFEDAF;}
+.sapUiLayoutCSSGrid.form-grid .sapMFlexBox.label_wrap .sapMHBox:nth-child(3) .sapMFlexItem .sapMLabel {background-color: #FFF1BF;}
+.sapUiLayoutCSSGrid.form-grid .sapMFlexBox.label_wrap .sapMHBox:nth-child(4) .sapMFlexItem .sapMLabel {background-color: #FFF5D3;}
+.sapUiLayoutCSSGrid.form-grid .sapMFlexBox.label_wrap .sapMHBox:nth-child(5) .sapMFlexItem .sapMLabel {background-color: #FFFBEB;}
+.sapUiLayoutCSSGrid.form-grid input[readonly=readonly] {padding-left:0!important;}
+.sapUiLayoutCSSGrid.form-grid .sapMLabel {padding-left:20px;}
+.sapUiLayoutCSSGrid.form-grid .sapMObjStatus {align-self: center;}
 
 .sapUiLayoutCSSGrid.form-grid.type-b {border-top: 0px solid #F5F5F5; border-bottom: 0px solid #F5F5F5; padding-top: 0px; padding-left: 0;background-color: transparent!important;}
 .sapUiLayoutCSSGrid.form-grid.type-b > * {height:100%;min-height: 50px;padding-left: 0;align-self: center;background: #f2f2f2;justify-content: center;}
@@ -862,6 +875,10 @@ html.sap-tablet .sapMDialog, html.sap-desktop .sapMDialog {min-width: 20rem; bac
 .sapUiLayoutCSSGrid.form-grid.type-c .sapMFlexBox .sapMFlexItem label {margin-bottom: 8px;}
 .sapUiLayoutCSSGrid.form-grid.type-c .sapMFlexBox .sapMFlexItem .sapMText {display:flex;}
 .sapUiLayoutCSSGrid.form-grid.type-c .sapMInputBase.sapMInputBaseHeightMargin.sapMTextArea {margin:0;height:100%!important;}
+
+.per-panel .sapMIBar {display: flex;justify-content: space-between;}
+.per-panel .sapMPanelContent {padding-left: 67px;padding-top: 2px;}
+.sapMPanel.per-panel .sapMPanelWrappingDiv .sapMPanelHdr, .sapMPanel .sapMPanelWrappingDivTb .sapMIBar.sapMTB {margin-left:0;padding-left:65px;}
 
 /* employee list */
 .employee-card-list {}
@@ -941,4 +958,27 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 
 
 
-.sapMPanelExpandableIcon {background: #ddd;border-radius: 50%;}
+.sapMPanelExpandableIcon {background: #E8E8E8;border-radius: 50%;width: 40px;height: 40px;display: flex;justify-content: center;align-items: center;}
+
+
+
+/* 평가 */
+.per-status {position: relative;display:flex; justify-content: space-between; margin-left: 30px!important;z-index: 2;}
+.per-status .sapMFlexItem {position: relative;flex: 1;z-index: 2;}
+.per-status .sapMVBox .sapMFlexItem + .sapMFlexItem:after {content: "";display: inline-block;height: 2px;position: absolute;left: 0%;right: 0%;top:calc(50% - 1px);background: #CCCCCC;z-index: -1;}
+.per-status .sapMVBox.on .sapMFlexItem + .sapMFlexItem:after {background: #66B0F0;}
+.per-status .sapMVBox:last-child .sapMFlexItem + .sapMFlexItem:after {display: none;}
+.per-status .sapMTitle {margin-bottom:7px;font-size:20px;font-weight: 700;transform: translate(-25%, 0em);}
+.per-status .sapUiIcon {display: flex; justify-content: center;align-items: center;width: 35px!important; height: 35px;background-color: #A6A6A6;border-radius: 50%;}
+.per-status .on .sapUiIcon {background-color: #66B0F0;}
+.per-status .sapMFlexBox .sapUiIcon:before {display: none;}
+.per-status .sapMFlexBox .sapUiIcon:after {content: "";display:inline-block;width:20px;height:20px;background-repeat: no-repeat;background-position: center;}
+.per-status .sapMFlexBox:nth-child(1) .sapUiIcon:after {background-image:url(../image/icon_per_status_01.png);}
+.per-status .sapMFlexBox:nth-child(2) .sapUiIcon:after {background-image:url(../image/icon_per_status_02.png);}
+.per-status .sapMFlexBox:nth-child(3) .sapUiIcon:after {background-image:url(../image/icon_per_status_03.png);}
+.per-status .sapMFlexBox:nth-child(4) .sapUiIcon:after {background-image:url(../image/icon_per_status_04.png);}
+.per-status .sapMFlexBox:nth-child(5) .sapUiIcon:after {background-image:url(../image/icon_per_status_05.png);}
+.per-status-d {display:flex; justify-content: space-between;padding-left: 65px;}
+.per-status-d .sapMVBox {margin-bottom:10px;margin-left: 1.6rem;flex: 1}
+.per-status-d .sapMVBox .sapMFlexItem {margin-bottom:6px;}
+.per-status-d .sapUiIcon {margin-right:10px;margin-top:2px;}
