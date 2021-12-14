@@ -95,7 +95,7 @@ sap.ui.define(
           rCalcProp: /^Bet0/,
         });
 
-        oViewModel.setProperty('/list', [...aRowData.map((o, i) => ({ ...o, Idx: ++i })), { Idx: sSumLabel, ...mSumRow }]);
+        oViewModel.setProperty('/list', _.isEmpty(mSumRow) ? [] : [...aRowData.map((o, i) => ({ ...o, Idx: ++i })), { Idx: sSumLabel, ...mSumRow }]);
         oViewModel.setProperty('/listInfo', { ...oListInfo, ...TableUtils.count({ oTable, aRowData, bHasSumRow: true }) });
 
         setTimeout(() => {
@@ -114,7 +114,7 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/busy', true);
 
-          const aRowData = await this.readPayslipList({ oModel, oSearchConditions });
+          const aRowData = await this.readPayslipList({ oModel, ...oSearchConditions });
 
           this.setTableData({ oViewModel, aRowData });
         } catch (oError) {
