@@ -83,12 +83,19 @@ sap.ui.define(
         };
       },
 
-      export({ oTable, aTableData, sFileName, sStatCode = 'ZappStatAl', sStatTxt = 'ZappStxtAl', aDateProps = [] }) {
+      export({ oTable, aTableData, sFileName, sStatCode = 'ZappStatAl', sStatTxt = 'ZappStxtAl', bHasMultiLabel = false, aDateProps = [] }) {
         if (!aTableData.length) return;
 
         const sToday = moment().format('YYYYMMDD');
         const mColumns = oTable.getColumns().map((col) => ({
-          label: col.getLabel().getText(),
+          label: bHasMultiLabel
+            ? [
+                ...col.getMultiLabels().reduce((acc, cur) => {
+                  acc.add(cur.getText());
+                  return acc;
+                }, new Set()),
+              ].join('-')
+            : col.getLabel().getText(),
           property: !!col.getTemplate().getBindingInfo('text')
             ? col.getTemplate().getBindingInfo('text').parts[0].path === sStatCode
               ? sStatTxt

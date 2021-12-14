@@ -59,13 +59,13 @@
                 <table:Column width="8%" filterProperty="Apbeg" sortProperty="Begda">
                     <Label text="{i18n>LABEL_00148}"/>
                     <table:template>
-                        <Text text="{BegdaTxt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                        <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                     </table:template>
                 </table:Column>
                 <table:Column width="8%" filterProperty="Apend" sortProperty="Endda">
                     <Label text="{i18n>LABEL_00149}"/>
                     <table:template>
-                        <Text text="{EnddaTxt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                        <Text text="{ path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                     </table:template>
                 </table:Column>
                 <table:Column width="8%" filterProperty="Period" sortProperty="Range">
@@ -77,13 +77,13 @@
                 <table:Column width="8%" filterProperty="Appdt" sortProperty="Endda">
                     <Label text="{i18n>LABEL_00266}"/>
                     <table:template>
-                        <Text text="{AppdtTxt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                        <Text text="{ path: 'Appdt', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                     </table:template>
                 </table:Column>
                 <table:Column width="8%" filterProperty="Sgndt" sortProperty="Endda">
                     <Label text="{i18n>LABEL_00269}"/>
                     <table:template>
-                        <Text text="{SgndtTxt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                        <Text text="{ path: 'Sgndt', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                     </table:template>
                 </table:Column>
             </table:columns>
