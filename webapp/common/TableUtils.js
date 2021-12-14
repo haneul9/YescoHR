@@ -58,7 +58,7 @@ sap.ui.define(
         const iParentFlexBoxPaddingBottom = parseInt(oTable.$().parents('.sapMFlexBox').css('padding-bottom'), 10); // Table을 감싸고 있는 FlexBox의 아래 padding
         const iRowHeight = oTable.getRowHeight(); // Table에 세팅된 행높이
         const iVisibleRowCountLimit = Math.floor((iBodyHeight - iOffsetTopOfTbody - iParentFlexBoxPaddingBottom) / iRowHeight);
-        const iDataLength = bHasSumRow ? aRowData.length + 1 : aRowData.length;
+        const iDataLength = bHasSumRow ? (aRowData.length || 1) + 1 : aRowData.length;
         const aZappStatAls = _.map(aRowData, sStatCode);
         const oOccurCount = _.defaults(_.countBy(aZappStatAls), {
           [STATE_IN_PROGRESS1]: 0,

@@ -60,7 +60,7 @@ sap.ui.define(
         const oTable = this.byId('performanceTable');
 
         oViewModel.setProperty('/list', [...aTableData]);
-        oViewModel.setProperty('/listInfo/rowCount', TableUtils.count({ oTable, aTableData }).rowCount);
+        oViewModel.setProperty('/listInfo/rowCount', TableUtils.count({ oTable, aRowData: aTableData }).rowCount);
       },
 
       /*****************************************************************
@@ -82,12 +82,14 @@ sap.ui.define(
        */
       readAppraisalPeeList({ oModel }) {
         const mAppointee = this.getAppointeeData();
+        const sMenid = this.getCurrentMenuId();
         const sUrl = '/AppraisalPeeListSet';
 
         return new Promise((resolve, reject) => {
           oModel.read(sUrl, {
             filters: [
-              new Filter('Werks', FilterOperator.EQ, mAppointee.Werks), //
+              new Filter('Menid', FilterOperator.EQ, sMenid), //
+              new Filter('Werks', FilterOperator.EQ, mAppointee.Werks),
               new Filter('Zzappee', FilterOperator.EQ, mAppointee.Pernr),
             ],
             success: (oData) => {

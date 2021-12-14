@@ -44,7 +44,7 @@ sap.ui.define(
             Todo4: '42,500,000',
           },
           listInfo: {
-            rowCount: 1,
+            rowCount: 2,
             totalCount: 0,
             infoMessage: this.getBundleText('MSG_13001'), // 현재 데이터를 수정하고자 할 경우에는 확정 상태의 데이터를 선택한 다음 신청 버튼을 클릭하시기 바랍니다.
             isShowProgress: false,
