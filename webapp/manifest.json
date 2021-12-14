@@ -126,7 +126,7 @@
         { "pattern": "employee/:pernr:", "name": "employee", "target": "employee" },
 
         { "pattern": "nightduty", "name": "nightduty", "target": "nightduty" },
-        { "pattern": "nightduty/{appno}", "name": "nightduty-detail", "target": "nightdutyDetail" },
+        { "pattern": "nightduty/{sAppno}", "name": "nightduty-detail", "target": "nightdutyDetail" },
 
         { "pattern": "excavation", "name": "excavation", "target": "excavation" },
         { "pattern": "excavation/{appno}", "name": "excavation-detail", "target": "excavationDetail" },

@@ -17,16 +17,17 @@ sap.ui.define(
           const oModel = AppUtils.getAppComponent().getModel(ServiceNames.COMMON);
 
           oModel.read('/CreateAppnoSet', {
-            success: function (oData) {
+            success: (oData) => {
               if (oData && oData.results.length) {
                 resolve(oData.results[0].Appno);
+              } else {
+                reject({ code: 'E', message: AppUtils.getBundleText('MSG_00047') }); // 결재문서번호 생성중 오류가 발생하였습니다.\n잠시 후 다시 시도해주세요.
               }
             },
-            error: function (oError) {
+            error: (oError) => {
               AppUtils.debug(oError);
 
-              // {결재문서번호}중 오류가 발생하였습니다.
-              reject({ code: 'E', message: AppUtils.getBundleText('MSG_00008', 'LABEL_00138') });
+              reject({ code: 'E', message: AppUtils.getBundleText('MSG_00047') }); // 결재문서번호 생성중 오류가 발생하였습니다.\n잠시 후 다시 시도해주세요.
             },
           });
         });

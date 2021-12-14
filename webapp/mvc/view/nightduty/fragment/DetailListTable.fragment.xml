@@ -1,111 +1,111 @@
 <core:FragmentDefinition xmlns="sap.ui.table"
-    xmlns:m="sap.m"
-    xmlns:core="sap.ui.core">
-    <Table id="detailListTable" selectionMode="{/detail/listMode}" width="100%" columnHeaderHeight="45" rowHeight="45" rows="{/detail/list}" visibleRowCount="{/detail/rowCount}" noData="{i18n>MSG_00001}">
-        <columns>
-            <Column width="9%">
-                <multiLabels>
-                    <m:Label text="{i18n>LABEL_06101}" />
-                    <m:Label text="{i18n>LABEL_06101}" />
-                </multiLabels>
-                <template>
-                    <m:Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                </template>
-            </Column>
-            <Column width="9%">
-                <multiLabels>
-                    <m:Label text="{i18n>LABEL_06102}" />
-                    <m:Label text="{i18n>LABEL_06102}" />
-                </multiLabels>
-                <template>
-                    <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                </template>
-            </Column>
-            <Column width="9%">
-                <multiLabels>
-                    <m:Label text="{i18n>LABEL_06103}" />
-                    <m:Label text="{i18n>LABEL_06103}" />
-                </multiLabels>
-                <template>
-                    <m:Text text="{Tagty}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                </template>
-            </Column>
-            <Column width="9%" headerSpan="4">
-                <multiLabels>
-                    <m:Label text="{i18n>LABEL_06106}" />
-                    <m:Label text="{i18n>LABEL_00209}" />
-                </multiLabels>
-                <template>
-                    <m:Text text="{ path: 'PernrB', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                </template>
-            </Column>
-            <Column width="9%">
-                <multiLabels>
-                    <m:Label text="{i18n>LABEL_06106}" />
-                    <m:Label text="{i18n>LABEL_00210}" />
-                </multiLabels>
-                <template>
-                    <m:Text text="{EnameB}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                </template>
-            </Column>
-            <Column>
-                <multiLabels>
-                    <m:Label text="{i18n>LABEL_06106}" />
-                    <m:Label text="{i18n>LABEL_00224}" />
-                </multiLabels>
-                <template>
-                    <m:Text text="{OrgtxB}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                </template>
-            </Column>
-            <Column width="9%">
-                <multiLabels>
-                    <m:Label text="{i18n>LABEL_06106}" />
-                    <m:Label text="{i18n>LABEL_00215}" />
-                </multiLabels>
-                <template>
-                    <m:Text text="{ZzjikgbtB}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                </template>
-            </Column>
-            <Column width="9%" headerSpan="4">
-                <multiLabels>
-                    <m:Label text="{i18n>LABEL_06107}" />
-                    <m:Label text="{i18n>LABEL_00209}" />
-                </multiLabels>
-                <template>
-                    <m:Input value="{ path: 'PernrA', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" textAlign="{= ${ZappStatAl} ? 'Center' : 'Begin'}" width="100%" maxSuggestionWidth="300px" showSuggestion="true" suggestionItems="{ path:'/form/employees', templateShareable: true}" class="tableRow_Text" editable="{= !${ZappStatAl} }" suggestionItemSelected=".onSelectSuggest">
-                        <m:suggestionItems>
-                            <core:Item key="{Pernr}" text="{Fulln} {Ename} {Zzjikgbt} {Pernr}" />
-                        </m:suggestionItems>
-                    </m:Input>
-                </template>
-            </Column>
-            <Column width="9%">
-                <multiLabels>
-                    <m:Label text="{i18n>LABEL_06107}" />
-                    <m:Label text="{i18n>LABEL_00210}" />
-                </multiLabels>
-                <template>
-                    <m:Text text="{EnameA}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                </template>
-            </Column>
-            <Column>
-                <multiLabels>
-                    <m:Label text="{i18n>LABEL_06107}" />
-                    <m:Label text="{i18n>LABEL_00224}" />
-                </multiLabels>
-                <template>
-                    <m:Text text="{OrgtxA}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                </template>
-            </Column>
-            <Column width="9%">
-                <multiLabels>
-                    <m:Label text="{i18n>LABEL_06107}" />
-                    <m:Label text="{i18n>LABEL_00215}" />
-                </multiLabels>
-                <template>
-                    <m:Text text="{ZzjikgbtA}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                </template>
-            </Column>
-        </columns>
-    </Table>
+  xmlns:m="sap.m"
+  xmlns:core="sap.ui.core">
+  <Table id="detailListTable" selectionMode="{/detail/listMode}" width="100%" columnHeaderHeight="45" rowHeight="45" rows="{/detail/list}" visibleRowCount="{/detail/rowCount}" noData="{i18n>MSG_00001}">
+    <columns>
+      <Column width="9%">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_06101}" />
+          <m:Label text="{i18n>LABEL_06101}" />
+        </multiLabels>
+        <template>
+          <m:Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+      <Column width="9%">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_06102}" />
+          <m:Label text="{i18n>LABEL_06102}" />
+        </multiLabels>
+        <template>
+          <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+      <Column width="9%">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_06103}" />
+          <m:Label text="{i18n>LABEL_06103}" />
+        </multiLabels>
+        <template>
+          <m:Text text="{Tagty}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+      <Column width="9%" headerSpan="4">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_06106}" />
+          <m:Label text="{i18n>LABEL_00209}" />
+        </multiLabels>
+        <template>
+          <m:Text text="{ path: 'PernrB', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+      <Column width="9%">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_06106}" />
+          <m:Label text="{i18n>LABEL_00210}" />
+        </multiLabels>
+        <template>
+          <m:Text text="{EnameB}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+      <Column>
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_06106}" />
+          <m:Label text="{i18n>LABEL_00224}" />
+        </multiLabels>
+        <template>
+          <m:Text text="{OrgtxB}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+      <Column width="9%">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_06106}" />
+          <m:Label text="{i18n>LABEL_00215}" />
+        </multiLabels>
+        <template>
+          <m:Text text="{ZzjikgbtB}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+      <Column width="9%" headerSpan="4">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_06107}" />
+          <m:Label text="{i18n>LABEL_00209}" />
+        </multiLabels>
+        <template>
+          <m:Input value="{ path: 'PernrA', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" textAlign="{= !${/detail/editable} ? 'Center' : 'Begin' }" width="100%" maxSuggestionWidth="300px" showSuggestion="true" suggestionItems="{ path:'/detail/employees', templateShareable: true }" class="tableRow_Text" editable="{/detail/editable}" suggestionItemSelected=".onSelectSuggestion">
+            <m:suggestionItems>
+              <core:Item key="{Pernr}" text="{Fulln} {Ename} {Zzjikgbt} {Pernr}" />
+            </m:suggestionItems>
+          </m:Input>
+        </template>
+      </Column>
+      <Column width="9%">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_06107}" />
+          <m:Label text="{i18n>LABEL_00210}" />
+        </multiLabels>
+        <template>
+          <m:Text text="{EnameA}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+      <Column>
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_06107}" />
+          <m:Label text="{i18n>LABEL_00224}" />
+        </multiLabels>
+        <template>
+          <m:Text text="{OrgtxA}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+      <Column width="9%">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_06107}" />
+          <m:Label text="{i18n>LABEL_00215}" />
+        </multiLabels>
+        <template>
+          <m:Text text="{ZzjikgbtA}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+    </columns>
+  </Table>
 </core:FragmentDefinition>

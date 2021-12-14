@@ -34,6 +34,7 @@ sap.ui.define(
 
       setController(controller) {
         this.oController = controller;
+        return this;
       },
 
       getController() {
@@ -42,6 +43,7 @@ sap.ui.define(
 
       setBoxModel(boxModel) {
         this.oBoxModel = boxModel;
+        return this;
       },
 
       getBoxModel() {
@@ -52,6 +54,7 @@ sap.ui.define(
         setTimeout(() => {
           this.oBoxModel.setProperty(path, busy);
         });
+        return this;
       },
     });
   }

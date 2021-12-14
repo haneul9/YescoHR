@@ -1,10 +1,8 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/core/Fragment',
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
-    'sap/ui/table/SelectionMode',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/BoxHandler',
     'sap/ui/yesco/common/ComboEntry',
@@ -14,10 +12,8 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    Fragment,
     Filter,
     FilterOperator,
-    SelectionMode,
     AppUtils,
     BoxHandler,
     ComboEntry,

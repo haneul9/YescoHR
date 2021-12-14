@@ -177,6 +177,10 @@ sap.ui.define(
         }
       },
 
+      getStatusValues() {
+        return [STATE_IN_PROGRESS1, STATE_IN_PROGRESS2, STATE_APPLY1, STATE_APPLY2, STATE_APPLY3, STATE_APPROVE, STATE_REJECT1, STATE_REJECT2, STATE_COMPLETE];
+      },
+
       StatusTxt(sValue = 0) {
         switch (parseInt(sValue, 10)) {
           case STATE_IN_PROGRESS1:

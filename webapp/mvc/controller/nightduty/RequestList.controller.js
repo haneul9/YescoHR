@@ -57,7 +57,7 @@ sap.ui.define(
       },
 
       onPressNewRequest() {
-        this.getRouter().navTo('nightduty-detail', { appno: 0 });
+        this.getRouter().navTo('nightduty-detail', { sAppno: false });
       },
 
       onPressExelDownload() {
@@ -72,7 +72,7 @@ sap.ui.define(
         const sPath = oEvent.getParameter('rowBindingContext').getPath();
         const sAppno = this.getViewModel().getProperty(`${sPath}/Appno`);
 
-        this.getRouter().navTo('nightduty-detail', { appno: sAppno });
+        this.getRouter().navTo('nightduty-detail', { sAppno });
         // this.getRouter().getTargets().display('nightdutyDetail', { appno: sAppno });
       },
     });
