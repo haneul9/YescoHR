@@ -196,9 +196,8 @@ sap.ui.define(
         oTable.addEventDelegate({
           onAfterRendering() {
             const sBottomRowId = _.last(oTable.getRows()).getId();
-            const $firstTD = $(`#${sBottomRowId}-col${sStartIndex}`);
 
-            $firstTD.attr('colspan', aHideIndex.length + 1);
+            $(`#${sBottomRowId}-col${sStartIndex}`).attr('colspan', aHideIndex.length + 1);
             aHideIndex.forEach((idx) => $(`#${sBottomRowId}-col${idx}`).hide());
           },
         });
@@ -209,11 +208,7 @@ sap.ui.define(
 
         if (bHasSumRow) aRows.pop(); // delete last
 
-        aRows.forEach((row) => {
-          const sRowId = row.getId();
-
-          _.forOwn(mColorMap, (value, key) => $(`#${sRowId}-col${key}`).addClass(value));
-        });
+        aRows.forEach((row) => _.forOwn(mColorMap, (value, key) => $(`#${row.getId()}-col${key}`).addClass(value)));
       },
 
       /**************************
