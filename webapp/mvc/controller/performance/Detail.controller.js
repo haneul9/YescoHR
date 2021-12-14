@@ -33,15 +33,15 @@ sap.ui.define(
           tab: { selectedKey: 'T01' },
           stage: {
             headers: [
-              { width: '15%', label: '준비중', icon: 'sap-icon://accelerated', completed: 'blue' }, //
-              { width: '21%', label: '목표수립', icon: 'sap-icon://accelerated', completed: 'blue' },
-              { width: '21%', label: '중간점검', icon: 'sap-icon://accelerated', completed: 'none' },
-              { width: '21%', label: '성과평가', icon: 'sap-icon://accelerated', completed: 'none' },
-              { width: '20%', label: '평가완료', icon: 'sap-icon://accelerated', completed: 'none' },
+              { label: '준비중', icon: 'asset/image/icon_per_status_01.png', completed: '#66B0F0' }, //
+              { label: '목표수립', icon: 'sap-icon://accelerated', completed: '#66B0F0' },
+              { label: '중간점검', icon: 'sap-icon://accelerated', completed: 'none' },
+              { label: '성과평가', icon: 'sap-icon://accelerated', completed: 'none' },
+              { label: '평가완료', icon: 'sap-icon://accelerated', completed: 'none' },
             ],
             rows: {
               10: [
-                { label: '목표수립필요', completed: 'blue' }, //
+                { label: '목표수립필요', completed: '#66B0F0' }, //
                 { label: '평가자합의중', completed: 'none' },
                 { label: '목표수립완료', completed: 'none' },
               ],

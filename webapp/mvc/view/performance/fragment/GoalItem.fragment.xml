@@ -3,38 +3,38 @@
     xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:custom="sap.ui.yesco.control">
     <VBox>
-        <Panel expandable="true" expanded="{expanded}">
+        <Panel expandable="true" expanded="{expanded}" class="per-panel">
             <headerToolbar>
                 <Toolbar height="45px" width="100%">
-                    <HBox justifyContent="Center" width="8%">
-                        <Label width="100%" text="{ItemNo}" textAlign="Center" />
-                    </HBox>
-                    <Input width="78%" value="{Todo1}" />
-                    <Button icon="sap-icon://sys-minus" text="목표삭제" press=".onPressDeleteGoal">
-                        <customData>
-                            <core:CustomData key="root" value="{rootPath}" />
-                            <core:CustomData key="itemKey" value="{OrderNo}" />
-                        </customData>
-                    </Button>
+
+                    <grid:CSSGrid gridTemplateColumns="1fr 9fr 1fr" gridGap="0px 11px">
+                        <Label text="{ItemNo}" textAlign="Left" />
+                            <VBox>
+                                <Input value="{Todo1}" />
+                            </VBox>
+                            <Button icon="sap-icon://sys-minus" text="목표삭제" press=".onPressDeleteGoal">
+                                    
+                                <customData>
+                                    <core:CustomData key="root" value="{rootPath}" />
+                                    <core:CustomData key="itemKey" value="{OrderNo}" />
+                                </customData>
+                            </Button>														
+                    </grid:CSSGrid>
                 </Toolbar>
             </headerToolbar>
             <content>
-                <grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr">
+                <grid:CSSGrid gridTemplateColumns="2fr 3fr 2fr 3fr 2fr 3fr 2fr 3fr" gridGap="1px 0px" class="form-grid">
+                    <Label text="가중치(%)" />
                     <VBox>
-                        <Label width="100%" text="가중치(%)" />
+                        <Input class="required" value="{Todo2}" />
                     </VBox>
-                    <Input width="100%" class="required" value="{Todo2}" />
-                    <VBox>
-                        <Label width="100%" text="자기평가" visible="{/fieldControl/isTodo3Show}" />
-                    </VBox>
+                    <Label text="자기평가" visible="{/fieldControl/isTodo3Show}" />
                     <HBox>
                         <ComboBox width="100%" class="required" selectedKey="{Todo3}" items="{ path: '/entry/levels', templateShareable: true }" visible="{/fieldControl/isTodo3Show}">
                             <core:Item key="{code}" text="{value}" />
                         </ComboBox>
                     </HBox>
-                    <VBox>
-                        <Label width="100%" text="1차평가" visible="{/fieldControl/isTodo4Show}" />
-                    </VBox>
+                    <Label text="1차평가" visible="{/fieldControl/isTodo4Show}" />
                     <HBox>
                         <ComboBox width="100%" class="required" selectedKey="{Todo4}" items="{ path: '/entry/levels', templateShareable: true }" visible="{/fieldControl/isTodo4Show}">
                             <core:Item key="{code}" text="{value}" />
@@ -42,34 +42,37 @@
                     </HBox>
                     <HBox width="100%" />
                     <HBox width="100%" />
+                    <Label text="연관 상위 목표"/>
+                    
                     <VBox>
-                        <Label width="100%" text="연관 상위 목표"/>
-                    </VBox>
-                    <ComboBox width="100%" class="required" selectedKey="{Todo5}" items="{/entry/topGoals}">
                         <layoutData>
                             <grid:GridItemLayoutData gridColumn="2 / 8" />
                         </layoutData>
-                        <core:Item key="{code}" text="{value}" />
-                    </ComboBox>
+                        <ComboBox width="100%" class="required" selectedKey="{Todo5}" items="{/entry/topGoals}">
+                            <core:Item key="{code}" text="{value}" />
+                        </ComboBox>
+                    </VBox>
                     <HBox width="100%" />
+
+                    <Label width="100%" text="목표수행 시작일"/>
                     <VBox>
-                        <Label width="100%" text="목표수행 시작일"/>
+                        <custom:DatePicker width="100%" class="required" dateValue="{ path: 'Todo6', type: 'sap.ui.yesco.mvc.model.type.Date' }"/>
                     </VBox>
-                    <custom:DatePicker width="100%" class="required" dateValue="{ path: 'Todo6', type: 'sap.ui.yesco.mvc.model.type.Date' }"/>
+                    <Label width="100%" text="목표수행 종료일"/>
                     <VBox>
-                        <Label width="100%" text="목표수행 종료일"/>
-                    </VBox>
                     <custom:DatePicker width="100%" class="required" dateValue="{ path: 'Todo7', type: 'sap.ui.yesco.mvc.model.type.Date' }"/>
-                    <VBox>
-                        <Label width="100%" text="진척도(%)"/>
                     </VBox>
+                    <Label width="100%" text="진척도(%)"/>
+                    <VBox>
                     <Input width="100%" class="required" value="{Todo8}"/>
-                    <VBox>
-                        <Label width="100%" text="진행상태"/>
                     </VBox>
+                    <Label width="100%" text="진행상태"/>
+                    <VBox>
                     <ComboBox width="100%" class="required" selectedKey="{Todo9}" items="{ path: '/entry/levels', templateShareable: true }">
                         <core:Item key="{code}" text="{value}" />
                     </ComboBox>
+                    </VBox>
+
                     <VBox>
                         <layoutData>
                             <grid:GridItemLayoutData gridRow="4 / 6" />
@@ -94,109 +97,115 @@
                     </TextArea>
                     <VBox>
                         <layoutData>
-                            <grid:GridItemLayoutData gridRow="6 / 11" />
+                            <grid:GridItemLayoutData gridRow="7 / 6" />
                         </layoutData>
                         <Label width="100%" text="달성 방안" vAlign="Top"/>
                     </VBox>
-                    <HBox width="100%">
+                    <VBox class="label_wrap">
                         <layoutData>
                             <grid:GridItemLayoutData gridRow="6" gridColumn="2 / 9" />
                         </layoutData>
-                        <Label width="18px" text="L5" textAlign="Center">
+                        <HBox>
                             <layoutData>
-                                <FlexItemData growFactor="1" />
+                                <grid:GridItemLayoutData gridRow="6" gridColumn="2 / 9" />
                             </layoutData>
-                        </Label>
-                        <Input width="100%" class="required" value="{Todo12}">
+                            <Label width="18px" text="L5" textAlign="Center">
+                                <layoutData>
+                                    <FlexItemData growFactor="1" />
+                                </layoutData>
+                            </Label>
+                            <Input class="required" value="{Todo12}">
+                                <layoutData>
+                                    <FlexItemData growFactor="20" />
+                                </layoutData>
+                            </Input>
+                        </HBox>
+                        <HBox >
                             <layoutData>
-                                <FlexItemData growFactor="20" />
+                                <grid:GridItemLayoutData gridRow="7" gridColumn="2 / 9" />
                             </layoutData>
-                        </Input>
-                    </HBox>
-                    <HBox width="100%">
-                        <layoutData>
-                            <grid:GridItemLayoutData gridRow="7" gridColumn="2 / 9" />
-                        </layoutData>
-                        <Label width="18px" text="L4">
+                            <Label width="18px" text="L4">
+                                <layoutData>
+                                    <FlexItemData growFactor="1" />
+                                </layoutData>
+                            </Label>
+                            <Input class="required" value="{Todo13}">
+                                <layoutData>
+                                    <FlexItemData growFactor="20" />
+                                </layoutData>
+                            </Input>
+                        </HBox>
+                        <HBox>
                             <layoutData>
-                                <FlexItemData growFactor="1" />
+                                <grid:GridItemLayoutData gridRow="8" gridColumn="2 / 9" />
                             </layoutData>
-                        </Label>
-                        <Input width="100%" class="required" value="{Todo13}">
+                            <Label width="18px" text="L3">
+                                <layoutData>
+                                    <FlexItemData growFactor="1" />
+                                </layoutData>
+                            </Label>
+                            <Input class="required" value="{Todo14}">
+                                <layoutData>
+                                    <FlexItemData growFactor="20" />
+                                </layoutData>
+                            </Input>
+                        </HBox>
+                        <HBox>
                             <layoutData>
-                                <FlexItemData growFactor="20" />
+                                <grid:GridItemLayoutData gridRow="9" gridColumn="2 / 9" />
                             </layoutData>
-                        </Input>
-                    </HBox>
-                    <HBox width="100%">
-                        <layoutData>
-                            <grid:GridItemLayoutData gridRow="8" gridColumn="2 / 9" />
-                        </layoutData>
-                        <Label width="18px" text="L3">
+                            <Label width="18px" text="L2">
+                                <layoutData>
+                                    <FlexItemData growFactor="1" />
+                                </layoutData>
+                            </Label>
+                            <Input class="required" value="{Todo15}">
+                                <layoutData>
+                                    <FlexItemData growFactor="20" />
+                                </layoutData>
+                            </Input>
+                        </HBox>
+                        <HBox>
                             <layoutData>
-                                <FlexItemData growFactor="1" />
+                                <grid:GridItemLayoutData gridRow="10" gridColumn="2 / 9" />
                             </layoutData>
-                        </Label>
-                        <Input width="100%" class="required" value="{Todo14}">
-                            <layoutData>
-                                <FlexItemData growFactor="20" />
-                            </layoutData>
-                        </Input>
-                    </HBox>
-                    <HBox width="100%">
-                        <layoutData>
-                            <grid:GridItemLayoutData gridRow="9" gridColumn="2 / 9" />
-                        </layoutData>
-                        <Label width="18px" text="L2">
-                            <layoutData>
-                                <FlexItemData growFactor="1" />
-                            </layoutData>
-                        </Label>
-                        <Input width="100%" class="required" value="{Todo15}">
-                            <layoutData>
-                                <FlexItemData growFactor="20" />
-                            </layoutData>
-                        </Input>
-                    </HBox>
-                    <HBox width="100%">
-                        <layoutData>
-                            <grid:GridItemLayoutData gridRow="10" gridColumn="2 / 9" />
-                        </layoutData>
-                        <Label width="18px" text="L1">
-                            <layoutData>
-                                <FlexItemData growFactor="1" />
-                            </layoutData>
-                        </Label>
-                        <Input width="100%" class="required" value="{Todo16}">
-                            <layoutData>
-                                <FlexItemData growFactor="20" />
-                            </layoutData>
-                        </Input>
-                    </HBox>
+                            <Label width="18px" text="L1">
+                                <layoutData>
+                                    <FlexItemData growFactor="1" />
+                                </layoutData>
+                            </Label>
+                            <Input class="required" value="{Todo16}">
+                                <layoutData>
+                                    <FlexItemData growFactor="20" />
+                                </layoutData>
+                            </Input>
+                        </HBox>
+                    </VBox>
+
+
+
+
+
+                    <VBox>
+                        <Label width="100%" text="목표항목별 의견 (피평가자)"/>
+                    </VBox>
                     <VBox>
                         <layoutData>
-                            <grid:GridItemLayoutData gridRow="11 / 13" />
+                            <grid:GridItemLayoutData gridColumn="span 3" />
                         </layoutData>
-                        <Label width="100%" text="목표항목별 의견"/>
-                        <Label width="100%" text="(피평가자)"/>
+                        <TextArea width="100%" growing="true" growingMaxLines="7" class="required">															
+                        </TextArea>
                     </VBox>
-                    <TextArea growing="true" growingMaxLines="7" class="required" value="{Todo17}">
-                        <layoutData>
-                            <grid:GridItemLayoutData gridRow="11 / 13" gridColumn="2 / 5" />
-                        </layoutData>
-                    </TextArea>
+                    <VBox>
+                        <Label width="100%" text="목표항목별 의견 (평가자)"/>
+                    </VBox>
                     <VBox>
                         <layoutData>
-                            <grid:GridItemLayoutData gridRow="11 / 13" />
+                            <grid:GridItemLayoutData gridColumn="span 3" />
                         </layoutData>
-                        <Label width="100%" text="목표항목별 의견"/>
-                        <Label width="100%" text="(평가자)"/>
+                        <TextArea width="100%" growing="true" growingMaxLines="7" class="required">
+                        </TextArea>
                     </VBox>
-                    <TextArea growing="true" growingMaxLines="7" class="required" value="{Todo18}">
-                        <layoutData>
-                            <grid:GridItemLayoutData gridRow="11 / 13" gridColumn="6 / 9" />
-                        </layoutData>
-                    </TextArea>
                 </grid:CSSGrid>
             </content>
         </Panel>

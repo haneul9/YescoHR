@@ -36,7 +36,7 @@
 							<VBox class="vCardBox">
 								<HBox>
 									<HBox alignItems="Center" class="title">
-										<Title level="H2" text="{i18n>LABEL_10007}" />
+										<Title level="H2" text="{i18n>LABEL_10007}"  class="sapUiMediumMarginEnd"/>
 										<Button icon="sap-icon://sys-add" text="목표추가" press=".onPressAddStrategy" />
 									</HBox>
 								</HBox>
@@ -70,19 +70,31 @@
 						</IconTabFilter>
 						<IconTabFilter text="{i18n>LABEL_10010}" key="T02">
 							<VBox class="vCardBox">
-								<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="1fr 2fr 2fr">
+								<grid:CSSGrid gridGap="6px" class="form-grid type-b" gridTemplateColumns="1fr 2fr 2fr">
 									<Label text="구분" width="100%" textAlign="Center" />
 									<Label text="평가 대상자" width="100%" textAlign="Center" />
 									<Label text="1차 평가자" width="100%" textAlign="Center" />
 									<Label text="목표 수립" width="100%" textAlign="Center" />
-									<TextArea rows="5" growing="true" value="{/manage/Todo1}" />
-									<TextArea rows="5" growing="true" value="{/manage/Todo2}" />
+									<VBox>
+										<TextArea rows="5" growing="true" value="{/manage/Todo1}" width="100%" />
+									</VBox>
+									<VBox>
+										<TextArea rows="5" growing="true" value="{/manage/Todo2}" width="100%" />
+									</VBox>
 									<Label text="중간 점검" width="100%" textAlign="Center" />
-									<TextArea rows="5" growing="true" value="{/manage/Todo3}" />
-									<TextArea rows="5" growing="true" value="{/manage/Todo4}" />
+									<VBox>
+										<TextArea rows="5" growing="true" value="{/manage/Todo3}" width="100%" />
+									</VBox>
+									<VBox>
+										<TextArea rows="5" growing="true" value="{/manage/Todo4}" width="100%" />
+									</VBox>
 									<Label text="성과 평가" width="100%" textAlign="Center" />
-									<TextArea rows="5" growing="true" value="{/manage/Todo5}" />
-									<TextArea rows="5" growing="true" value="{/manage/Todo6}" />
+									<VBox>
+										<TextArea rows="5" growing="true" value="{/manage/Todo5}" width="100%" />
+									</VBox>
+									<VBox>
+										<TextArea rows="5" growing="true" value="{/manage/Todo6}" width="100%" />
+									</VBox>
 								</grid:CSSGrid>
 							</VBox>
 							<VBox class="vCardBox sapUiSmallMarginTop">
