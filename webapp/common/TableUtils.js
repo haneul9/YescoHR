@@ -83,7 +83,7 @@ sap.ui.define(
         };
       },
 
-      export({ oTable, aTableData, sFileName, sStatCode = 'ZappStatAl', sStatTxt = 'ZappStxtAl' }) {
+      export({ oTable, aTableData, sFileName, sStatCode = 'ZappStatAl', sStatTxt = 'ZappStxtAl', aDateProps = [] }) {
         if (!aTableData.length) return;
 
         const sToday = moment().format('YYYYMMDD');
@@ -96,6 +96,13 @@ sap.ui.define(
             : col.getTemplate().getBindingInfo('visible').parts[0].path,
           type: exportLibrary.EdmType.String,
         }));
+
+        aDateProps.forEach((prop) => {
+          const mDateColumn = _.find(mColumns, { property: prop });
+
+          mDateColumn.type = exportLibrary.EdmType.Date;
+          mDateColumn.format = 'yyyy.mm.dd';
+        });
 
         const oSettings = {
           workbook: {
@@ -149,7 +156,7 @@ sap.ui.define(
         );
       },
 
-      generateSumRow({ aTableData, sSumLabel, aCalcProps = [], rCalcProp }) {
+      generateSumRow({ aTableData, sSumProp, sSumLabel, aCalcProps = [], rCalcProp }) {
         if (aTableData.length < 1) return;
 
         return aTableData.reduce(
@@ -164,7 +171,7 @@ sap.ui.define(
                   if (rCalcProp.test(prop)) {
                     acc[prop] = iCalcPropValue;
                   } else {
-                    acc[prop] = sSumLabel;
+                    acc[prop] = sSumProp === prop ? sSumLabel : null;
                   }
                 }
               } else {
@@ -174,14 +181,14 @@ sap.ui.define(
                   if (_.includes(aCalcProps, prop)) {
                     acc[prop] = iCalcPropValue;
                   } else {
-                    acc[prop] = sSumLabel;
+                    acc[prop] = sSumProp === prop ? sSumLabel : null;
                   }
                 }
               }
             }
             return acc;
           },
-          { Sumrow: true }
+          { Sumrow: true, [sSumProp]: sSumLabel }
         );
       },
 

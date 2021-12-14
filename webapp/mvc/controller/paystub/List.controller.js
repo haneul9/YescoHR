@@ -91,6 +91,7 @@ sap.ui.define(
         const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
         const mSumRow = TableUtils.generateSumRow({
           aTableData: aRowData,
+          sSumProp: 'Idx',
           sSumLabel,
           rCalcProp: /^Bet0/,
         });
@@ -131,7 +132,7 @@ sap.ui.define(
         const aTableData = this.getViewModel().getProperty('/list');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_13036'); // {급여명세서}_목록
 
-        TableUtils.export({ oTable, aTableData, sFileName });
+        TableUtils.export({ oTable, aTableData, sFileName, aDateProps: ['Paydt'] });
       },
 
       onSelectRow(oEvent) {

@@ -121,6 +121,7 @@ sap.ui.define(
         const aRoot = _.filter(oTreeData, { Uppno: '' });
         const mSumRow = TableUtils.generateSumRow({
           aTableData: aRoot,
+          sSumProp: 'Pyitx',
           sSumLabel: this.getBundleText('LABEL_00172'),
           aCalcProps: ['Betrg'],
         });
