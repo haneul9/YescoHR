@@ -12,7 +12,7 @@
             <Column width="25%">
                 <m:Label text="{i18n>LABEL_13034}"/>
                 <template>
-                    <m:Text text="{ path: 'Betpe', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    <m:Text text="{ path: 'Betpe', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="End" wrapping="false" class="tableRow_Text" />
                 </template>
             </Column>
             <Column width="25%">
