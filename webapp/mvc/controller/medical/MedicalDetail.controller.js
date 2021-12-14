@@ -758,6 +758,8 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const oRowData = oDetailModel.getProperty(vPath);
 
+        if (!oRowData.Lnsta || oRowData.Lnsta !== '10') return;
+
         this.setDialogData(oRowData);
 
         if (!this.byId('DetailHisDialog')) {
