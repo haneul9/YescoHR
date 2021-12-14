@@ -103,6 +103,9 @@
         { "pattern": "m/congratulation", "name": "m/congratulation", "target": "m/congratulation" },
         { "pattern": "m/congratulation/:oDataKey:", "name": "m/congratulation-detail", "target": "m/congDetail" },
 
+        { "pattern": "clubJoin", "name": "clubJoin", "target": "clubJoin" },
+        { "pattern": "clubJoin/{oDataKey}", "name": "clubJoin-detail", "target": "clubJoinDetail" },
+
         { "pattern": "familyInfo", "name": "familyInfo", "target": "familyInfo" },
         { "pattern": "familyInfo/{oDataKey}", "name": "familyInfo-detail", "target": "familyInfoDetail" },
 
@@ -156,6 +159,9 @@
         "congDetail": { "viewId": "congDetail", "viewPath": "sap.ui.yesco.mvc.view.congratulation", "viewName": "CongDetail" },
         "m/congratulation": { "viewId": "congratulationMobile", "viewPath": "sap.ui.yesco.mvc.view.congratulation.m", "viewName": "Congratulation" },
         "m/congDetail": { "viewId": "congDetailMobile", "viewPath": "sap.ui.yesco.mvc.view.congratulation.m", "viewName": "CongDetail" },
+
+        "clubJoin": { "viewId": "clubJoin", "viewPath": "sap.ui.yesco.mvc.view.clubJoin", "viewName": "ClubJoin" },
+        "clubJoinDetail": { "viewId": "clubJoinDetail", "viewPath": "sap.ui.yesco.mvc.view.clubJoin", "viewName": "ClubJoinDetail" },
 
         "familyInfo": { "viewId": "familyInfo", "viewPath": "sap.ui.yesco.mvc.view.familyInfo", "viewName": "FamilyInfo" },
         "familyInfoDetail": { "viewId": "familyInfoDetail", "viewPath": "sap.ui.yesco.mvc.view.familyInfo", "viewName": "FamilyInfoDetail" },
