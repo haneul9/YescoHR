@@ -52,12 +52,13 @@ sap.ui.define(
       /**************************
        * Functions
        *************************/
-      count({ oTable, aRowData, sStatCode = 'ZappStatAl' }) {
+      count({ oTable, aRowData, sStatCode = 'ZappStatAl', bHasSumRow = false }) {
         const iBodyHeight = $('body').height(); // 화면 높이
         const iOffsetTopOfTbody = oTable.$().find('.sapUiTableCCnt').offset().top; // Table 데이터 시작행의 화면 최상단까지의 거리
         const iParentFlexBoxPaddingBottom = parseInt(oTable.$().parents('.sapMFlexBox').css('padding-bottom'), 10); // Table을 감싸고 있는 FlexBox의 아래 padding
         const iRowHeight = oTable.getRowHeight(); // Table에 세팅된 행높이
         const iVisibleRowCountLimit = Math.floor((iBodyHeight - iOffsetTopOfTbody - iParentFlexBoxPaddingBottom) / iRowHeight);
+        const iDataLength = bHasSumRow ? (aRowData.length || 1) + 1 : aRowData.length;
         const aZappStatAls = _.map(aRowData, sStatCode);
         const oOccurCount = _.defaults(_.countBy(aZappStatAls), {
           [STATE_IN_PROGRESS1]: 0,
@@ -72,7 +73,7 @@ sap.ui.define(
         });
 
         return {
-          rowCount: iVisibleRowCountLimit > aZappStatAls.length ? aZappStatAls.length : iVisibleRowCountLimit,
+          rowCount: iVisibleRowCountLimit > iDataLength ? iDataLength : iVisibleRowCountLimit,
           totalCount: aZappStatAls.length,
           progressCount: oOccurCount[STATE_IN_PROGRESS1] + oOccurCount[STATE_IN_PROGRESS2],
           applyCount: oOccurCount[STATE_APPLY1] + oOccurCount[STATE_APPLY2] + oOccurCount[STATE_APPLY3],
@@ -82,12 +83,19 @@ sap.ui.define(
         };
       },
 
-      export({ oTable, aTableData, sFileName, sStatCode = 'ZappStatAl', sStatTxt = 'ZappStxtAl' }) {
+      export({ oTable, aTableData, sFileName, sStatCode = 'ZappStatAl', sStatTxt = 'ZappStxtAl', bHasMultiLabel = false, aDateProps = [] }) {
         if (!aTableData.length) return;
 
         const sToday = moment().format('YYYYMMDD');
         const mColumns = oTable.getColumns().map((col) => ({
-          label: col.getLabel().getText(),
+          label: bHasMultiLabel
+            ? [
+                ...col.getMultiLabels().reduce((acc, cur) => {
+                  acc.add(cur.getText());
+                  return acc;
+                }, new Set()),
+              ].join('-')
+            : col.getLabel().getText(),
           property: !!col.getTemplate().getBindingInfo('text')
             ? col.getTemplate().getBindingInfo('text').parts[0].path === sStatCode
               ? sStatTxt
@@ -95,6 +103,13 @@ sap.ui.define(
             : col.getTemplate().getBindingInfo('visible').parts[0].path,
           type: exportLibrary.EdmType.String,
         }));
+
+        aDateProps.forEach((prop) => {
+          const mDateColumn = _.find(mColumns, { property: prop });
+
+          mDateColumn.type = exportLibrary.EdmType.Date;
+          mDateColumn.format = 'yyyy.mm.dd';
+        });
 
         const oSettings = {
           workbook: {
@@ -146,6 +161,54 @@ sap.ui.define(
           },
           o.table
         );
+      },
+
+      generateSumRow({ aTableData, sSumProp, sSumLabel, aCalcProps = [], rCalcProp }) {
+        if (aTableData.length < 1) return;
+
+        return aTableData.reduce(
+          (acc, cur) => {
+            for (var prop in cur) {
+              const iCalcPropValue = _.defaultTo(Number(cur[prop]), 0);
+              const sDefaultPropValue = sSumProp === prop ? sSumLabel : null;
+
+              if (rCalcProp instanceof RegExp) {
+                if (acc.hasOwnProperty(prop) && rCalcProp.test(prop)) {
+                  acc[prop] += iCalcPropValue;
+                } else {
+                  acc[prop] = rCalcProp.test(prop) ? iCalcPropValue : sDefaultPropValue;
+                }
+              } else {
+                if (acc.hasOwnProperty(prop) && _.includes(aCalcProps, prop)) {
+                  acc[prop] += iCalcPropValue;
+                } else {
+                  acc[prop] = _.includes(aCalcProps, prop) ? iCalcPropValue : sDefaultPropValue;
+                }
+              }
+            }
+            return acc;
+          },
+          { Sumrow: true, [sSumProp]: sSumLabel }
+        );
+      },
+
+      summaryColspan({ oTable, sStartIndex = '0', aHideIndex = [] }) {
+        oTable.addEventDelegate({
+          onAfterRendering() {
+            const sBottomRowId = _.last(oTable.getRows()).getId();
+
+            $(`#${sBottomRowId}-col${sStartIndex}`).attr('colspan', aHideIndex.length + 1);
+            aHideIndex.forEach((idx) => $(`#${sBottomRowId}-col${idx}`).hide());
+          },
+        });
+      },
+
+      setColorColumn({ oTable, mColorMap = {}, bHasSumRow = false }) {
+        const aRows = [...oTable.getRows()];
+
+        if (bHasSumRow) aRows.pop(); // delete last
+
+        aRows.forEach((row) => _.forOwn(mColorMap, (value, key) => $(`#${row.getId()}-col${key}`).addClass(value)));
       },
 
       /**************************

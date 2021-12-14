@@ -1,0 +1,237 @@
+/* eslint-disable no-else-return */
+sap.ui.define(
+  [
+    // prettier 방지용 주석
+    'sap/ui/model/json/JSONModel',
+    'sap/ui/yesco/common/exceptions/ODataReadError',
+    'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/common/TableUtils',
+    'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/model/type/Date',
+    'sap/ui/yesco/mvc/model/type/Currency',
+  ],
+  (
+    // prettier 방지용 주석
+    JSONModel,
+    ODataReadError,
+    AppUtils,
+    ServiceNames,
+    TableUtils,
+    BaseController
+  ) => {
+    'use strict';
+
+    return BaseController.extend('sap.ui.yesco.mvc.controller.paystub.Detail', {
+      onBeforeShow() {
+        const oViewModel = new JSONModel({
+          busy: false,
+          Seqnr: null,
+          summary: {
+            rowCount: 1,
+            list: [],
+          },
+          pay: {
+            rowCount: 2,
+            list: [],
+          },
+          deduction: {
+            rowCount: 2,
+            list: [],
+          },
+          tax: {
+            rowCount: 2,
+            list: [],
+          },
+          work: {
+            rowCount: 1,
+            list: [],
+          },
+          base: {
+            rowCount: 1,
+            list: [],
+          },
+        });
+        this.setViewModel(oViewModel);
+
+        TableUtils.summaryColspan({ oTable: this.byId('payTable'), aHideIndex: [1, 2] });
+      },
+
+      async onObjectMatched(oParameter) {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/Seqnr', oParameter.seqnr);
+
+        this.loadPage();
+      },
+
+      getCurrentLocationText() {
+        return this.getBundleText('LABEL_00168'); // 상세내역
+      },
+
+      async loadPage() {
+        const oModel = this.getModel(ServiceNames.PAY);
+        const oViewModel = this.getViewModel();
+        const sSeqnr = oViewModel.getProperty('/Seqnr');
+
+        if (!sSeqnr) return;
+
+        oViewModel.setProperty('/busy', true);
+
+        try {
+          const mDetail = await this.readDeepPayslipList({ oModel, sSeqnr });
+
+          // Paylist
+          const aPayList = this.transformTreeData({ oTreeData: mDetail.Payslip1Nav.results });
+          // Deductlist
+          const aDeductlist = this.transformTreeData({ oTreeData: mDetail.Payslip2Nav.results });
+          // TaxIncomeList
+          const aTaxIncomeList = this.transformTreeData({ oTreeData: mDetail.Payslip3Nav.results });
+          // TimeList
+          const aTimeList = mDetail.Payslip4Nav.results;
+          // BaseList
+          const aBaseList = _.filter(mDetail.Payslip1Nav.results, { Uppno: '' });
+
+          oViewModel.setProperty('/summary/list', [mDetail]);
+          oViewModel.setProperty('/pay/list', aPayList);
+          oViewModel.setProperty('/pay/rowCount', aPayList.length || 2);
+          oViewModel.setProperty('/deduction/list', aDeductlist);
+          oViewModel.setProperty('/deduction/rowCount', aDeductlist.length || 2);
+          oViewModel.setProperty('/tax/list', aTaxIncomeList);
+          oViewModel.setProperty('/tax/rowCount', aTaxIncomeList.length || 2);
+          oViewModel.setProperty('/work/list', aTimeList);
+          oViewModel.setProperty('/work/rowCount', aTimeList.length || 1);
+          oViewModel.setProperty('/base/list', aBaseList);
+          oViewModel.setProperty('/base/rowCount', aBaseList.length || 1);
+
+          setTimeout(() => {
+            TableUtils.setColorColumn({ oTable: this.byId('summaryTable'), mColorMap: { 5: 'bgType01', 7: 'bgType02', 9: 'bgType03' } });
+            TableUtils.setColorColumn({ oTable: this.byId('workTable'), mColorMap: { 0: 'bgType01', 1: 'bgType01' } });
+          }, 100);
+        } catch (oError) {
+          this.debug('Controller > paystub Detail > loadPage Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
+      },
+
+      transformTreeData({ oTreeData }) {
+        const aRoot = _.filter(oTreeData, { Uppno: '' });
+        const mSumRow = TableUtils.generateSumRow({
+          aTableData: aRoot,
+          sSumProp: 'Pyitx',
+          sSumLabel: this.getBundleText('LABEL_00172'),
+          aCalcProps: ['Betrg'],
+        });
+
+        if (_.isEmpty(mSumRow)) return [];
+
+        oTreeData.forEach((o) => {
+          const mRootNode = _.find(aRoot, { Itmno: o.Uppno });
+
+          if (!_.isEmpty(mRootNode)) {
+            if (_.isEmpty(mRootNode.nodes)) mRootNode.nodes = [];
+            mRootNode.nodes = [...mRootNode.nodes, o];
+          }
+        });
+
+        return [...aRoot, mSumRow];
+      },
+
+      /*****************************************************************
+       * ! Event handler
+       *****************************************************************/
+      async onPressPDFPrint() {
+        const oModel = this.getModel(ServiceNames.PAY);
+        const oViewModel = this.getViewModel();
+        const sSeqnr = oViewModel.getProperty('/Seqnr');
+
+        try {
+          const mResult = await this.readOnePayslipList({ oModel, sSeqnr });
+
+          if (mResult.Url) window.open(mResult.Url);
+        } catch (oError) {
+          this.debug('Controller > paystub Detail > onPressPDFPrint Error', oError);
+
+          AppUtils.handleError(oError);
+        }
+      },
+
+      onToggleTreeState(oEvent) {
+        const oViewModel = this.getViewModel();
+        const mParameters = oEvent.getParameters();
+        const bExpanded = mParameters.expanded;
+        const sRowPath = mParameters.rowContext.getPath();
+        const sTableRootPath = sRowPath.split('/list/')[0];
+        const iTableVisibleRowCount = oViewModel.getProperty(`${sTableRootPath}/rowCount`);
+        const iChildNodesLength = oViewModel.getProperty(sRowPath).nodes.length;
+
+        oViewModel.setProperty(`${sTableRootPath}/rowCount`, bExpanded ? iTableVisibleRowCount + iChildNodesLength : iTableVisibleRowCount - iChildNodesLength);
+      },
+
+      /*****************************************************************
+       * ! Call OData
+       *****************************************************************/
+      /**
+       * @param  {object} oModel
+       * @param  {string} sSeqnr
+       */
+      readDeepPayslipList({ oModel, sSeqnr }) {
+        return new Promise((resolve, reject) => {
+          const sMenid = this.getCurrentMenuId();
+          const sUrl = '/PayslipListSet';
+
+          oModel.create(
+            sUrl,
+            {
+              Menid: sMenid,
+              Seqnr: sSeqnr,
+              Payslip1Nav: [],
+              Payslip2Nav: [],
+              Payslip3Nav: [],
+              Payslip4Nav: [],
+            },
+            {
+              success: (oData) => {
+                this.debug(`${sUrl} success.`, oData);
+
+                resolve(oData ?? {});
+              },
+              error: (oError) => {
+                this.debug(`${sUrl} error.`, oError);
+
+                reject(new ODataReadError(oError));
+              },
+            }
+          );
+        });
+      },
+
+      readOnePayslipList({ oModel, sSeqnr }) {
+        const sUrl = '/PayslipListSet';
+        const sUrlByKey = oModel.createKey(sUrl, {
+          Menid: this.getCurrentMenuId(),
+          Pernr: this.getAppointeeProperty('Pernr'),
+          Seqnr: sSeqnr,
+        });
+
+        return new Promise((resolve, reject) => {
+          oModel.read(sUrlByKey, {
+            success: (oData) => {
+              this.debug(`${sUrl} success.`, oData);
+
+              resolve(oData ?? {});
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, oError);
+
+              reject(new ODataReadError(oError));
+            },
+          });
+        });
+      },
+    });
+  }
+);

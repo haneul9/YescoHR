@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.ui.table"
     xmlns:m="sap.m"
     xmlns:core="sap.ui.core">
-    <m:Dialog id="summaryDialog" title="{i18n>MSG_06004}" contentWidth="1000px" contentHeight="400px">
+    <m:Dialog id="summaryDialog" title="{i18n>LABEL_11005}" contentWidth="1000px" contentHeight="400px">
         <m:content>
             <m:HBox>
                 <m:Label text="{i18n>MSG_06005}" />

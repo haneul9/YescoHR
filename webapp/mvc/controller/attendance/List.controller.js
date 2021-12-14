@@ -116,18 +116,7 @@ sap.ui.define(
         const oTable = this.byId('attendanceTable');
         const oListInfo = oViewModel.getProperty('/listInfo');
 
-        oViewModel.setProperty(
-          '/list',
-          aRowData.map((o) => {
-            return {
-              ...o,
-              BegdaTxt: o.Begda ? DateUtils.format(o.Begda) : '',
-              EnddaTxt: o.Endda ? DateUtils.format(o.Endda) : '',
-              AppdtTxt: o.Appdt ? DateUtils.format(o.Appdt) : '',
-              SgndtTxt: o.Sgndt ? DateUtils.format(o.Sgndt) : '',
-            };
-          })
-        );
+        oViewModel.setProperty('/list', aRowData);
         oViewModel.setProperty('/listInfo', { ...oListInfo, ...TableUtils.count({ oTable, aRowData }) });
       },
 
@@ -158,8 +147,9 @@ sap.ui.define(
         const oTable = this.byId('attendanceTable');
         const aTableData = this.getViewModel().getProperty('/list');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_04001'); // {근태신청}_목록
+        const aDateProps = ['Begda', 'Endda', 'Appdt', 'Sgndt'];
 
-        TableUtils.export({ oTable, aTableData, sFileName });
+        TableUtils.export({ oTable, aTableData, sFileName, aDateProps });
       },
 
       onSelectRow(oEvent) {

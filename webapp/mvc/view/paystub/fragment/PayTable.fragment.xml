@@ -1,0 +1,32 @@
+<core:FragmentDefinition xmlns="sap.ui.table"
+    xmlns:m="sap.m"
+    xmlns:core="sap.ui.core">
+    <TreeTable id="payTable" selectionMode="None" width="100%" fixedBottomRowCount="1" columnHeaderHeight="45" rowHeight="45" rows="{ path:'/pay/list', parameters: {arrayNames:['nodes']}}" visibleRowCount="{/pay/rowCount}" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" toggleOpenState=".onToggleTreeState">
+        <columns>
+            <Column>
+                <m:Label text="{i18n>LABEL_13033}"/>
+                <template>
+                    <m:Text text="{Pyitx}" width="100%" textAlign="{= ${Sumrow} ? 'Center' : 'Begin' }" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+            <Column width="25%">
+                <m:Label text="{i18n>LABEL_13034}"/>
+                <template>
+                    <m:Text text="{ path: 'Betpe', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="End" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+            <Column width="25%">
+                <m:Label text="{i18n>LABEL_13035}"/>
+                <template>
+                    <m:Text text="{Anzhl}" width="100%" textAlign="End" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+            <Column width="25%">
+                <m:Label text="{i18n>LABEL_00174}"/>
+                <template>
+                    <m:Text text="{ path: 'Betrg', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="End" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+        </columns>
+    </TreeTable>
+</core:FragmentDefinition>
