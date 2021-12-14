@@ -102,7 +102,8 @@ sap.ui.define(
           const sAmountFormat = new Intl.NumberFormat('ko-KR').format(sAmountCode);
           const sFormAmount = new Intl.NumberFormat('ko-KR').format(mFormData.Lnamt);
 
-          MessageBox.alert(this.getBundleText('MSG_07006', mFormData.Lntyptx, sAmountFormat));
+          // MessageBox.alert(this.getBundleText('MSG_07006', mFormData.Lntyptx, sAmountFormat));
+          this.getMonthlyRepayment(sValue);
           oEventSource.setValue(sFormAmount);
           return oDetailModel.setProperty('/FormData/Lnamt', mFormData.Lnamt);
         }
@@ -447,7 +448,7 @@ sap.ui.define(
 
               if(!!oRepayObj.Message) {
                 MessageBox.alert(oRepayObj.Message);
-                oDetailModel.setProperty('/FormData/Lnamt', oRepayObj.Mxamt);
+                // oDetailModel.setProperty('/FormData/Lnamt', oRepayObj.Mxamt);
               }
 
               oDetailModel.setProperty('/FormData/RpamtMon', oRepayObj.RpamtMon);
