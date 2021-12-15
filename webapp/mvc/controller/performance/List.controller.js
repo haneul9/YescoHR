@@ -67,11 +67,11 @@ sap.ui.define(
        * ! Event handler
        *****************************************************************/
       onSelectRow(oEvent) {
-        // const oViewModel = this.getViewModel();
-        // const sPath = oEvent.getParameters().rowBindingContext.getPath();
-        // const oRowData = this.getViewModel().getProperty(sPath);
-        // oViewModel.setProperty('/parameter/rowData', [oRowData]);
-        // this.getRouter().navTo('performance-detail', { type: oRowData.Appty, appno: oRowData.Appno });
+        const oViewModel = this.getViewModel();
+        const sPath = oEvent.getParameters().rowBindingContext.getPath();
+        const oRowData = oViewModel.getProperty(sPath);
+
+        this.getRouter().navTo('performance-detail', { pid: oRowData.Zzappid, docid: oRowData.Zdocid, partid: oRowData.Partid });
       },
 
       /*****************************************************************
@@ -89,6 +89,7 @@ sap.ui.define(
           oModel.read(sUrl, {
             filters: [
               new Filter('Menid', FilterOperator.EQ, sMenid), //
+              new Filter('Prcty', FilterOperator.EQ, 'L'),
               new Filter('Werks', FilterOperator.EQ, mAppointee.Werks),
               new Filter('Zzappgb', FilterOperator.EQ, 'ME'),
               new Filter('Zzappee', FilterOperator.EQ, mAppointee.Pernr),

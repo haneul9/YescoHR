@@ -6,6 +6,7 @@ sap.ui.define(
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -19,6 +20,7 @@ sap.ui.define(
     JSONModel,
     MessageBox,
     AppUtils,
+    UI5Error,
     ODataReadError,
     ServiceNames,
     BaseController
@@ -29,6 +31,11 @@ sap.ui.define(
       onBeforeShow() {
         const oViewModel = new JSONModel({
           busy: false,
+          param: {
+            Zdocid: '',
+            Zzappid: '',
+            Partid: '',
+          },
           year: moment().format('YYYY'),
           tab: { selectedKey: 'T01' },
           stage: {
@@ -174,22 +181,33 @@ sap.ui.define(
         });
       },
 
-      async onObjectMatched() {
-        // const oModel = this.getModel(ServiceNames.APPRAISAL);
-        // const oViewModel = this.getViewModel();
-        // try {
-        //   oViewModel.setProperty('/busy', true);
-        //   const aTableData = await this.readAppraisalPeeList({ oModel });
-        //   this.setTableData({ oViewModel, aTableData });
-        // } catch (oError) {
-        //   this.debug('Controller > Performance List > onObjectMatched Error', oError);
-        //   AppUtils.handleError(oError);
-        // } finally {
-        //   oViewModel.setProperty('/busy', false);
-        // }
+      async onObjectMatched(oParameter) {
+        const oModel = this.getModel(ServiceNames.APPRAISAL);
+        const oViewModel = this.getViewModel();
+
+        try {
+          if (!_.every(['pid', 'docid', 'partid'], _.partial(_.has, oParameter))) throw new UI5Error({ code: 'E', message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
+
+          oViewModel.setProperty('/busy', true);
+          oViewModel.setProperty('/param', { Zdocid: oParameter.docid, Zzappid: oParameter.pid, Partid: oParameter.partid });
+
+          const mDetailData = await this.readDeepAppraisalDoc({ oModel, mKeys: oViewModel.getProperty('/param') });
+
+          console.log(mDetailData);
+          // this.setTableData({ oViewModel, aTableData });
+        } catch (oError) {
+          this.debug('Controller > Performance Detail > onObjectMatched Error', oError);
+
+          AppUtils.handleError(oError, {
+            onClose: () => this.getRouter().navTo('performance'),
+          });
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       getCurrentLocationText(oArguments) {
+        console.log(oArguments);
         return '목표수립필요';
       },
 
@@ -271,30 +289,29 @@ sap.ui.define(
       /*****************************************************************
        * ! Call oData
        *****************************************************************/
-      /**
-       * @param  {JSONModel} oModel
-       */
-      readAppraisalPeeList({ oModel }) {
-        const mAppointee = this.getAppointeeData();
-        const sUrl = '/AppraisalPeeListSet';
-
+      readDeepAppraisalDoc({ oModel, mKeys }) {
         return new Promise((resolve, reject) => {
-          oModel.read(sUrl, {
-            filters: [
-              new Filter('Werks', FilterOperator.EQ, mAppointee.Werks), //
-              new Filter('Zzappee', FilterOperator.EQ, mAppointee.Pernr),
-            ],
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
+          const sUrl = '/AppraisalDocSet';
 
-              resolve(oData.results ?? []);
+          oModel.create(
+            sUrl,
+            {
+              ...mKeys,
+              AppraisalDocDetailSet: [],
             },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
+            {
+              success: (oData) => {
+                this.debug(`${sUrl} success.`, oData);
 
-              reject(new ODataReadError(oError));
-            },
-          });
+                resolve(oData ?? {});
+              },
+              error: (oError) => {
+                this.debug(`${sUrl} error.`, oError);
+
+                reject(new ODataReadError(oError));
+              },
+            }
+          );
         });
       },
     });
