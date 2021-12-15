@@ -487,7 +487,7 @@ sap.ui.define(
         });
       },
 
-      deleteFile(Appno, Zworktyp, Zfileseq) {
+      deleteFile(Appno, Zworktyp, Zfileseq = '999') {
         return new Promise((resolve, reject) => {
           const oModel = AppUtils.getAppController().getModel(ServiceNames.COMMON);
           const sPath = oModel.createKey('/FileListSet', { Appno, Zworktyp, Zfileseq });

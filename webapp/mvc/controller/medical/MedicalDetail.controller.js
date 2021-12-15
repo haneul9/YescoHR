@@ -52,6 +52,7 @@ sap.ui.define(
           FormData: {},
           DialogData: {},
           TargetDetails: {},
+          RemoveFiles: [],
           HisList: [],
           TargetList: [],
           ReceiptType: [],
@@ -287,6 +288,8 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const aSumAmount = oDetailModel.getProperty('/HisList').map(a => a.Bettot);
 
+        if (!aSumAmount.length) return;
+
         const iAmount = aSumAmount.reduce((acc, cur) => {
           return parseInt(acc) + parseInt(cur);
         });
@@ -380,6 +383,14 @@ sap.ui.define(
                   await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.TYPE_CODE);
                 }
 
+                const aDeleteDatas = oDetailModel.getProperty('/RemoveFiles');
+
+                if (!!aDeleteDatas.length) {
+                  await aDeleteDatas.forEach((e) => {
+                    AttachFileAction.deleteFile(e.Appno2, this.TYPE_CODE);
+                  });
+                }
+
                 await new Promise((resolve, reject) => {
                   oModel.create('/MedExpenseApplSet', oSendObject, {
                     success: () => {
@@ -437,6 +448,14 @@ sap.ui.define(
                 // FileUpload
                 if (!!AttachFileAction.getFileLength.call(this)) {
                   await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.TYPE_CODE);
+                }
+
+                const aDeleteDatas = oDetailModel.getProperty('/RemoveFiles');
+
+                if (!!aDeleteDatas.length) {
+                  await aDeleteDatas.forEach((e) => {
+                    AttachFileAction.deleteFile(e.Appno2, this.TYPE_CODE);
+                  });
                 }
 
                 await new Promise((resolve, reject) => {
@@ -578,7 +597,8 @@ sap.ui.define(
         if (!aDeleteDatas.length) {
             return MessageBox.alert(this.getBundleText('MSG_00020', 'LABEL_00110'));
         }
-
+  
+        oDetailModel.setProperty('/RemoveFiles', aDeleteDatas);
         const aHisList = oDetailModel.getProperty('/HisList');
         const aNoInclued = aHisList.filter((e) => !aDeleteDatas.includes(e));
         const oHisTable = this.byId('medHisTable');
