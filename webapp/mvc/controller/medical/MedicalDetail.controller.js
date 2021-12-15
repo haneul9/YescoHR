@@ -655,40 +655,75 @@ sap.ui.define(
       },
 
       // Dialog 등록
-      onHisRegBtn() {
+      async onHisRegBtn() {
         const oDetailModel = this.getViewModel();
         const mDialogData = oDetailModel.getProperty('/DialogData');
         const oTable = this.byId('medHisTable');
         
         if (this.checkClinicDetail()) return;
         
-        mDialogData.Waers = 'KRW';
-        
-        const aHisList = [mDialogData, ...oDetailModel.getProperty('/HisList')];
+        try {
+          AppUtils.setAppBusy(true, this);
 
-        oDetailModel.setProperty('/HisList', aHisList);
-        oDetailModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aHisList, sStatCode: 'ZappStat' }));
-        this.setAppAmount();
-        this.addSeqnrNum();
-        this.byId('DetailHisDialog').close();
+          if (!mDialogData.Appno2 || mDialogData.Appno2 === '00000000000000') {
+            const vAppno = await Appno.get.call(this);
+            
+            oDetailModel.setProperty('/DialogData/Appno2', vAppno);
+          }
+          
+          mDialogData.Waers = 'KRW';
+          
+          const aHisList = [mDialogData, ...oDetailModel.getProperty('/HisList')];
+  
+          oDetailModel.setProperty('/HisList', aHisList);
+          oDetailModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aHisList, sStatCode: 'ZappStat' }));
+
+          this.setAppAmount();
+          this.addSeqnrNum();
+
+          await AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.TYPE_CODE, this.DIALOG_FILE_ID);
+          
+          this.byId('DetailHisDialog').close();
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          AppUtils.setAppBusy(false, this);
+        }
       },
 
       // Dialog 수정
-      onHisUpBtn() {
+      async onHisUpBtn() {
         const oDetailModel = this.getViewModel();
         const mDialogData = oDetailModel.getProperty('/DialogData');
         const aHisList = oDetailModel.getProperty('/HisList');
         
         if (this.checkClinicDetail()) return;
         
-        aHisList.forEach((e, i) => {
-          if (mDialogData.Seqnr === e.Seqnr) {
-            oDetailModel.setProperty(`/HisList/${i}`, mDialogData);
-          }
-        });
+        try {
+          AppUtils.setAppBusy(true, this);
 
-        this.setAppAmount();
-        this.byId('DetailHisDialog').close();
+          if (!mDialogData.Appno2 || mDialogData.Appno2 === '00000000000000') {
+            const vAppno = await Appno.get.call(this);
+            
+            oDetailModel.setProperty('/DialogData/Appno2', vAppno);
+          }
+
+          aHisList.forEach((e, i) => {
+            if (mDialogData.Seqnr === e.Seqnr) {
+              oDetailModel.setProperty(`/HisList/${i}`, mDialogData);
+            }
+          });
+
+          this.setAppAmount();
+  
+          await AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.TYPE_CODE, this.DIALOG_FILE_ID);
+          
+          this.byId('DetailHisDialog').close();
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          AppUtils.setAppBusy(false, this);
+        }
       },
 
       // Dialog Close
@@ -758,7 +793,7 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const oRowData = oDetailModel.getProperty(vPath);
 
-        if (!oRowData.Lnsta || oRowData.Lnsta !== '10') return;
+        if (!!oRowData.Lnsta && oRowData.Lnsta !== '10') return;
 
         this.setDialogData(oRowData);
 
@@ -836,14 +871,14 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const sAppno = oDetailModel.getProperty('/DialogData/Appno2') || '';
  
-        // AttachFileAction.setAttachFile(this, {
-        //   Id: this.DIALOG_FILE_ID,
-        //   Type: this.TYPE_CODE,
-        //   Editable: true,
-        //   Appno: sAppno,
-        //   Max: 1,
-        //   FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
-        // });
+        AttachFileAction.setAttachFile(this, {
+          Id: this.DIALOG_FILE_ID,
+          Type: this.TYPE_CODE,
+          Editable: true,
+          Appno: sAppno,
+          Max: 1,
+          FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
+        });
       },
     });
   }

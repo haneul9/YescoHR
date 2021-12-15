@@ -40,7 +40,7 @@ sap.ui.define(
           LoanType: [],
           search: {
             date: new Date(dDate.getFullYear(), 12, 0),
-            secondDate: new Date(dDate.getFullYear() - 11, 1, 1),
+            secondDate: new Date(dDate.getFullYear(), 0, 1),
           },
           listInfo: {
             rowCount: 1,
@@ -55,14 +55,17 @@ sap.ui.define(
         this.setViewModel(oViewModel);
       },
 
-      async onObjectMatched() {
+      onObjectMatched() {
         this.totalCount();
-        await this.getTypeCode();
-        await this.onSearch();
+        this.onSearch();
       },
 
       onClick() {
-        this.getRouter().navTo('housingLoan-detail', { oDataKey: 'N' });
+        this.getRouter().navTo('clubJoin-detail', { oDataKey: 'N' });
+      },
+
+      thisYear(sYear = String(moment().format('YYYY'))) {
+        return this.getBundleText('MSG_14001', sYear);
       },
 
       formatNumber(vNum = '0') {
@@ -78,73 +81,35 @@ sap.ui.define(
       onSearch() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oListModel = this.getViewModel();
-        const oTable = this.byId('loanTable');
+        const oTable = this.byId('clubTable');
         const oSearch = oListModel.getProperty('/search');
         const dDate = moment(oSearch.secondDate).hours(10).toDate();
         const dDate2 = moment(oSearch.date).hours(10).toDate();
-        const vLoanType = !oSearch.Lntyp || oSearch.Lntyp === 'ALL' ? '' : oSearch.Lntyp;
         const sMenid = this.getCurrentMenuId();
 
-        return new Promise((resolve) => {
-          oListModel.setProperty('/busy', true);
+        oListModel.setProperty('/busy', true);
 
-          oModel.read('/LoanAmtApplSet', {
-            filters: [
-              new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'),
-              new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid),
-              new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate),
-              new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2),
-              new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, vLoanType),
-            ],
-            success: (oData) => {
-              if (oData) {
-                const oList = oData.results;
+        oModel.read('/ClubJoinApplSet', {
+          filters: [
+            new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'),
+            new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid),
+            new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate),
+            new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2),
+          ],
+          success: (oData) => {
+            if (oData) {
+              const oList = oData.results;
 
-                oListModel.setProperty('/List', oList);
-                oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: oList, sStatCode: 'Lnsta' }));
-                oListModel.setProperty('/busy', false);
-              }
-
-              resolve();
-            },
-            error: (oError) => {
-              this.debug(oError);
+              oListModel.setProperty('/List', oList);
+              oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: oList, sStatCode: 'Lnsta' }));
+              oListModel.setProperty('/listInfo/Title', this.getBundleText('LABEL_14006'));
               oListModel.setProperty('/busy', false);
-            },
-          });
-        });
-      },
-
-      getTypeCode() {
-        return new Promise((resolve) => {
-          const oModel = this.getModel(ServiceNames.BENEFIT);
-          const oListModel = this.getViewModel();
-          const oSessionData = this.getOwnerComponent().getSessionModel().getData();
-
-          oModel.read('/BenefitCodeListSet', {
-            filters: [
-              new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0008'),
-              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oSessionData.Werks),
-              new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-              new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000004'),
-              new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'GRADE'),
-            ],
-            success: (oData) => {
-              if (oData) {
-                const aList = oData.results;
-
-                oListModel.setProperty('/LoanType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
-                oListModel.setProperty('/search/Lntyp', 'ALL');
-              }
-
-              resolve();
-            },
-            error: (oError) => {
-              this.debug(oError);
-
-              oListModel.setProperty('/busy', false);
-            },
-          });
+            }
+          },
+          error: (oError) => {
+            this.debug(oError);
+            oListModel.setProperty('/busy', false);
+          },
         });
       },
 
@@ -152,7 +117,7 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oListModel = this.getViewModel();
 
-        oModel.read('/LoanAmtMyloanSet', {
+        oModel.read('/ClubJoinMyclubSet', {
           filters: [],
           success: (oData) => {
             if (oData) {
@@ -175,13 +140,13 @@ sap.ui.define(
         const oRowData = oListModel.getProperty(vPath);
 
         oListModel.setProperty('/parameters', oRowData);
-        this.getRouter().navTo('housingLoan-detail', { oDataKey: oRowData.Appno });
+        this.getRouter().navTo('clubJoin-detail', { oDataKey: oRowData.Appno });
       },
 
       onPressExcelDownload() {
-        const oTable = this.byId('loanTable');
+        const oTable = this.byId('clubTable');
         const aTableData = this.getViewModel().getProperty('/List');
-        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_07001');
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_14014');
 
         TableUtils.export({ oTable, aTableData, sFileName, sStatCode: 'Lnsta', sStatTxt: 'Lnstatx' });
       },

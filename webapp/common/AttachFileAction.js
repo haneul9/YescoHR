@@ -2,25 +2,30 @@
 sap.ui.define(
   [
     'sap/ui/yesco/common/AppUtils', //
+    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/odata/ServiceManager',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
   ],
-  (AppUtils, ServiceManager, ServiceNames, MessageBox) => {
+  (AppUtils,
+	JSONModel,
+	ServiceManager,
+	ServiceNames,
+	MessageBox) => {
     'use strict';
 
     return {
+      AttachId: '',
       /*
        * 파일첨부 panel 및 FileUploader Control의 표시여부 등을 설정
        * 문서상태 및 첨부파일 여부에 따라 Control의 표시여부를 결정한다.
        */
-      setAttachFile(oController, opt) {
+      async setAttachFile(oController, opt) {
         const options = $.extend(
           true,
           {
             Id: '',
             Appno: '',
-            AttachFileID: '',
             Type: '',
             Editable: false,
             Gubun: false,
@@ -37,10 +42,46 @@ sap.ui.define(
         options.ListMode = options.Editable ? sap.ui.table.SelectionMode.MultiToggle : sap.ui.table.SelectionMode.None;
         options.FileTypes = !!opt.FileTypes ? opt.FileTypes : ['ppt', 'pptx', 'doc', 'docx', 'xls', 'xlsx', 'jpg', 'bmp', 'gif', 'png', 'txt', 'pdf', 'jpeg'];
 
-        oController.getViewModel().setProperty('/Settings', options);
-        oController.getViewModel().setProperty('/DeleteDatas', []);
+        const oAttController = oController.AttachFileAction;
+        const sId = options.Id;
+        const sIdPath = !!sId ? `${sId}--` : '';
+        const oAttachbox = oController.byId(`${sIdPath}ATTACHBOX`);
+        
+        if (!!sId) {
+          oController.setViewModel(new JSONModel(), sId)
+          oAttController.AttachId = sId;
+        } else {
+          oAttController.AttachId = '';
+        }
 
-        oController.AttachFileAction.refreshAttachFileList(oController, options.Id);
+        const oJsonModel = !!sId ? oController.getViewModel(sId) : oController.getViewModel();
+        
+        oJsonModel.setProperty('/Settings', options);
+        oJsonModel.setProperty('/DeleteDatas', []);
+        try {
+          const aFileList = await oAttController.refreshAttachFileList(oController, sId);
+
+          oJsonModel.setProperty('/Data', aFileList);
+          oController.AttachFileAction.attachSettings(oController, sId, aFileList);
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oAttachbox.setBusy(false);
+        }
+      },
+
+      /*
+       * SetAttachFileContainer
+       */
+      attachSettings(oController, sId, aFileList = []) {
+        const oJsonModel = !!sId ? oController.getViewModel(sId) : oController.getViewModel();
+        const sIdPath = !!sId ? `${sId}--` : '';
+        const oAttachTable = oController.byId(`${sIdPath}attachTable`);
+        const sPath = '/Data';
+        
+        oAttachTable.setModel(oJsonModel);
+        oAttachTable.bindRows(sPath);
+        oAttachTable.setVisibleRowCount(aFileList.length);
       },
 
       /*
@@ -57,19 +98,34 @@ sap.ui.define(
        * Upload할 첨부파일을 선택했을 경우 처리 내역
        */
       onFileChange(oEvent) {
-        const oAttachbox = oEvent.getSource().getParent().getParent().getParent();
-        const oFileUploader = oEvent.getSource();
-        const JSonModel = oAttachbox.getModel();
+        const oEventSource = oEvent.getSource();
+        const oFileUploader = oEventSource;
         const aFileList = [];
         // const vMode = JSonModel.getProperty('/Settings/Mode');
-        const vMax = JSonModel.getProperty('/Settings/Max');
-        const files = oEvent.getParameters().files;
-        let vFileData = JSonModel.getProperty('/Data');
+        const files = oEvent.getParameter('files');
+        const sBtnId = oEventSource.getId();
+        const sPageId = this.getView().getId();
+        const sPrefixId = sBtnId.replace(`${sPageId}--`, '');
+        const sSuffix = sPrefixId.replace('--ATTACHFILE_BTN', '');
+        let sId = '';
+
+        if (sSuffix === this.AttachFileAction.AttachId) {
+          sId = this.AttachFileAction.AttachId;
+        } else {
+          this.AttachFileAction.AttachId = ''
+        }
+        
+        const JSonModel = !!sId ? oEventSource.getModel(sId) : oEventSource.getModel();
+        const sPath = '/Data';
+        const sSettingPath = '/Settings/';
+
+        const vMax = JSonModel.getProperty(`${sSettingPath}Max`);
+        let vFileData = JSonModel.getProperty(sPath);
 
         // File 데이터 초기화
-        if (!vFileData) {
-          JSonModel.setProperty('/Data', []);
-          vFileData = JSonModel.getProperty('/Data');
+        if (!vFileData.length) {
+          JSonModel.setProperty(sPath, []);
+          vFileData = JSonModel.getProperty(sPath);
         }
 
         if (!!files) {
@@ -98,8 +154,8 @@ sap.ui.define(
             aFileList.push(files[i]);
           }
 
-          JSonModel.setProperty('/Settings/Length', iFileLength);
-          JSonModel.setProperty('/Data', aFileList);
+          JSonModel.setProperty(`${sSettingPath}Length`, iFileLength);
+          JSonModel.setProperty(sPath, aFileList);
 
           const oAttachTable = oEvent.getSource().getParent().getParent().getParent().getItems()[1];
 
@@ -133,37 +189,39 @@ sap.ui.define(
       refreshAttachFileList(oController, sId) {
         const sIdPath = !!sId ? `${sId}--` : '';
         const oAttachbox = oController.byId(`${sIdPath}ATTACHBOX`);
-        const oAttachFileList = oController.byId(`${sIdPath}attachTable`);
         const oFileUploader = oController.byId(`${sIdPath}ATTACHFILE_BTN`);
         const oModel = oController.getModel(ServiceNames.COMMON);
-        const JSonModel = oController.getViewModel();
-        const vAttachFileDatas = JSonModel.getProperty('/Settings');
+        const JSonModel = !!sId ? oController.getViewModel(sId) : oController.getViewModel();
+        const sPath = '/Data';
+        const sSettingPath = '/Settings/';
+        const vAttachFileDatas = JSonModel.getProperty(sSettingPath);
         const Datas = { Data: [] };
 
-        JSonModel.setProperty('/Data', []);
+        JSonModel.setProperty(sPath, []);
         oAttachbox.setBusyIndicatorDelay(0).setBusy(true);
         oFileUploader.clear();
         oFileUploader.setValue('');
 
-        oModel.read('/FileListSet', {
-          filters: [new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, vAttachFileDatas.Appno), new sap.ui.model.Filter('Zworktyp', sap.ui.model.FilterOperator.EQ, vAttachFileDatas.Type)],
-          success: (data) => {
-            if (data && data.results.length) {
-              data.results.forEach((elem) => {
-                elem.New = false;
-                Datas.Data.push(elem);
-              });
-            }
-
-            JSonModel.setProperty('/Settings/Length', Datas.Data.length);
-            JSonModel.setProperty('/Data', Datas.Data);
-            oAttachFileList.setVisibleRowCount(Datas.Data.length);
-            oAttachbox.setBusy(false);
-          },
-          error: (res) => {
-            this.debug(`${sUrl} error.`, res);
-            oAttachbox.setBusy(false);
-          },
+        return new Promise((resolve, reject) => {
+          oModel.read('/FileListSet', {
+            filters: [
+              new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, vAttachFileDatas.Appno), 
+              new sap.ui.model.Filter('Zworktyp', sap.ui.model.FilterOperator.EQ, vAttachFileDatas.Type)
+            ],
+            success: (data) => {
+              if (data && data.results.length) {
+                data.results.forEach((elem) => {
+                  elem.New = false;
+                  Datas.Data.push(elem);
+                });
+              }
+  
+              resolve(Datas.Data);
+            },
+            error: (res) => {
+              reject(res);
+            },
+          });
         });
       },
 
@@ -173,7 +231,7 @@ sap.ui.define(
 
           oModel.read('/FileListSet', {
             filters: [
-              new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sAppno), //
+              new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sAppno),
               new sap.ui.model.Filter('Zworktyp', sap.ui.model.FilterOperator.EQ, sWorkType),
             ],
             success: (oData) => {
@@ -227,7 +285,10 @@ sap.ui.define(
       getFileLength(sId) {
         const sIdPath = !!sId ? `${sId}--` : '';
         const Attachbox = this.byId(`${sIdPath}ATTACHBOX`);
-        const vAttachDatas = Attachbox.getModel().getProperty('/Data');
+        const JSonModel = !!sId ? Attachbox.getModel(sId) : Attachbox.getModel();
+        const sPath = '/Data';
+
+        const vAttachDatas = JSonModel.getProperty(sPath);
 
         return !!vAttachDatas ? vAttachDatas.length : 0;
       },
@@ -240,8 +301,11 @@ sap.ui.define(
         const sServiceUrl = ServiceManager.getServiceUrl('ZHR_COMMON_SRV', this.getOwnerComponent());
         const oModel = new sap.ui.model.odata.ODataModel(sServiceUrl, true, undefined, undefined, undefined, undefined, undefined, false);
         const Attachbox = this.byId(`${sIdPath}ATTACHBOX`);
-        const vAttachDatas = Attachbox.getModel().getProperty('/Data') || [];
-        const aDeleteFiles = Attachbox.getModel().getProperty('/DeleteDatas') || [];
+        const JSonModel = !!sId ? Attachbox.getModel(sId) : Attachbox.getModel();
+        const sPath = '/Data';
+
+        const vAttachDatas = JSonModel.getProperty(sPath) || [];
+        const aDeleteFiles = JSonModel.getProperty('/DeleteDatas') || [];
         const oAttachTable = this.byId(`${sIdPath}attachTable`);
 
         return new Promise((resolve) => {
@@ -350,11 +414,13 @@ sap.ui.define(
       /*
        * 첨부된 파일을 삭제처리
        */
-      onDeleteAttachFile(oEvent) {
-        const oAttachbox = oEvent.getSource().getParent().getParent().getParent();
-        const oJSonModel = oAttachbox.getModel();
-        const oTable = oEvent.getSource().getParent().getParent().getParent().getItems()[1];
-        const aFileDatas = oJSonModel.getProperty('/Data');
+      onDeleteAttachFile() {
+        const sId = this.AttachFileAction.AttachId || '';
+        const oJSonModel = !!sId ? this.getViewModel(sId) : this.getViewModel();
+        const sIdPath = !!sId ? `${sId}--` : '';
+        const oTable = this.byId(`${sIdPath}attachTable`);
+        const sPath = '/Data';
+        const aFileDatas = oJSonModel.getProperty(sPath);
         const aContexts = oTable.getSelectedIndices();
 
         if (!aContexts.length) {
@@ -390,11 +456,11 @@ sap.ui.define(
                 }
               }
 
-              oJSonModel.setProperty('/Data', aResult);
+              oJSonModel.setProperty(sPath, aResult);
               oJSonModel.setProperty('/DeleteDatas', aDeleteList);
               oTable.setVisibleRowCount(aResult.length);
               oTable.clearSelection();
-              MessageBox.alert(this.getBundleText('MSG_00042')); // 파일 삭제가 완료되었습니다.
+              // MessageBox.alert(this.getBundleText('MSG_00042')); // 파일 삭제가 완료되었습니다.
             }
           },
         });
