@@ -164,11 +164,10 @@ sap.ui.define(
       },
       /**
        * @param  {Array} aTableData - 대상목록
-       * @param  {String} sSumProp - 합계 라벨 속성키
-       * @param  {String} sSumLabel - 합계 라벨 텍스트
+       * @param  {Object} mSumField - 합계 라벨 필드정보 ex) { Field01: '합계' }
        * @param  {Array||RegExp} vCalcProps - 계산 대상 속성키(배열 또는 정규식)
        */
-      generateSumRow({ aTableData, sSumProp, sSumLabel, vCalcProps }) {
+      generateSumRow({ aTableData, mSumField, vCalcProps }) {
         if (aTableData.length < 1) return;
 
         const mSumProps = _.chain(aTableData[0])
@@ -182,7 +181,7 @@ sap.ui.define(
           .reduce((a, c) => ({ ...a, ...c }), {})
           .value();
 
-        return { Sumrow: true, [sSumProp]: sSumLabel, ...mSumProps };
+        return { Sumrow: true, ...mSumField, ...mSumProps };
       },
 
       summaryColspan({ oTable, sStartIndex = '0', aHideIndex = [] }) {

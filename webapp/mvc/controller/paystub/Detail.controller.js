@@ -122,8 +122,7 @@ sap.ui.define(
         const mCatsById = _.keyBy(aTreeData, 'Itmno');
         const mSumRow = TableUtils.generateSumRow({
           aTableData: mGroupedByParents[''] ?? [],
-          sSumProp: 'Pyitx',
-          sSumLabel: this.getBundleText('LABEL_00172'), // 합계
+          mSumField: { Pyitx: this.getBundleText('LABEL_00172') }, // 합계
           vCalcProps: ['Betrg'],
         });
 

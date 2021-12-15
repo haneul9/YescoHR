@@ -91,8 +91,7 @@ sap.ui.define(
         const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
         const mSumRow = TableUtils.generateSumRow({
           aTableData: aRowData,
-          sSumProp: 'Idx',
-          sSumLabel,
+          mSumField: { Idx: sSumLabel },
           vCalcProps: /^Bet0/,
         });
 
