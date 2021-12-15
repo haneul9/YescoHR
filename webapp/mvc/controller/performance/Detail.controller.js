@@ -41,10 +41,10 @@ sap.ui.define(
           stage: {
             headers: [
               { label: '준비중', icon: 'asset/image/icon_per_status_01.png', completed: true }, //
-              { label: '목표수립', icon: 'sap-icon://accelerated', completed: true },
-              { label: '중간점검', icon: 'sap-icon://accelerated', completed: false },
-              { label: '성과평가', icon: 'sap-icon://accelerated', completed: false },
-              { label: '평가완료', icon: 'sap-icon://accelerated', completed: false },
+              { label: '목표수립', icon: 'asset/image/icon_per_status_02.png', completed: true },
+              { label: '중간점검', icon: 'asset/image/icon_per_status_03.png', completed: false },
+              { label: '성과평가', icon: 'asset/image/icon_per_status_04.png', completed: false },
+              { label: '평가완료', icon: 'asset/image/icon_per_status_05.png', completed: false },
             ],
             rows: [
               { child: [] }, //
@@ -218,7 +218,7 @@ sap.ui.define(
         let iCurrentItemsLength = oViewModel.getProperty('/currentItemsLength') ?? 0;
 
         if (iCurrentItemsLength === 7) {
-          MessageBox.alert('더 이상 추가 할 수 없습니다.');
+          MessageBox.alert(this.getBundleText('MSG_10002')); // 더 이상 추가 할 수 없습니다.
           return;
         }
 

@@ -6,13 +6,12 @@
         <Panel expandable="true" expanded="{expanded}" class="per-panel">
             <headerToolbar>
                 <Toolbar height="45px" width="100%">
-
                     <grid:CSSGrid gridTemplateColumns="1fr 9fr 1fr" gridGap="0px 11px">
                         <Label text="{ItemNo}" textAlign="Left" />
                         <VBox>
                             <Input value="{Todo1}" />
                         </VBox>
-                        <Button icon="sap-icon://sys-minus" text="목표삭제" press=".onPressDeleteGoal">
+                        <Button icon="sap-icon://sys-minus" text="{i18n>LABEL_10020}" press=".onPressDeleteGoal">
 
                             <customData>
                                 <core:CustomData key="root" value="{rootPath}" />
@@ -24,17 +23,17 @@
             </headerToolbar>
             <content>
                 <grid:CSSGrid gridTemplateColumns="2fr 3fr 2fr 3fr 2fr 3fr 2fr 3fr" gridGap="1px 0px" class="form-grid">
-                    <Label text="가중치(%)" />
+                    <Label text="{i18n>LABEL_10021}" />
                     <VBox>
                         <Input class="required" value="{Todo2}" />
                     </VBox>
-                    <Label text="자기평가" visible="{/fieldControl/isTodo3Show}" />
+                    <Label text="{i18n>LABEL_10003}" visible="{/fieldControl/isTodo3Show}" />
                     <HBox>
                         <ComboBox width="100%" class="required" selectedKey="{Todo3}" items="{ path: '/entry/levels', templateShareable: true }" visible="{/fieldControl/isTodo3Show}">
                             <core:Item key="{code}" text="{value}" />
                         </ComboBox>
                     </HBox>
-                    <Label text="1차평가" visible="{/fieldControl/isTodo4Show}" />
+                    <Label text="{i18n>LABEL_10022}" visible="{/fieldControl/isTodo4Show}" />
                     <HBox>
                         <ComboBox width="100%" class="required" selectedKey="{Todo4}" items="{ path: '/entry/levels', templateShareable: true }" visible="{/fieldControl/isTodo4Show}">
                             <core:Item key="{code}" text="{value}" />
@@ -42,8 +41,7 @@
                     </HBox>
                     <HBox width="100%" />
                     <HBox width="100%" />
-                    <Label text="연관 상위 목표"/>
-
+                    <Label text="{i18n>LABEL_10023}"/>
                     <VBox>
                         <layoutData>
                             <grid:GridItemLayoutData gridColumn="2 / 8" />
@@ -54,30 +52,29 @@
                     </VBox>
                     <HBox width="100%" />
 
-                    <Label width="100%" text="목표수행 시작일"/>
+                    <Label width="100%" text="{i18n>LABEL_10024}"/>
                     <VBox>
                         <custom:DatePicker width="100%" class="required" dateValue="{ path: 'Todo6', type: 'sap.ui.yesco.mvc.model.type.Date' }"/>
                     </VBox>
-                    <Label width="100%" text="목표수행 종료일"/>
+                    <Label width="100%" text="{i18n>LABEL_10025}"/>
                     <VBox>
                         <custom:DatePicker width="100%" class="required" dateValue="{ path: 'Todo7', type: 'sap.ui.yesco.mvc.model.type.Date' }"/>
                     </VBox>
-                    <Label width="100%" text="진척도(%)"/>
+                    <Label width="100%" text="{i18n>LABEL_10026}"/>
                     <VBox>
                         <Input width="100%" class="required" value="{Todo8}"/>
                     </VBox>
-                    <Label width="100%" text="진행상태"/>
+                    <Label width="100%" text="{i18n>LABEL_00261}"/>
                     <VBox>
                         <ComboBox width="100%" class="required" selectedKey="{Todo9}" items="{ path: '/entry/levels', templateShareable: true }">
                             <core:Item key="{code}" text="{value}" />
                         </ComboBox>
                     </VBox>
-
                     <VBox>
                         <layoutData>
                             <grid:GridItemLayoutData gridRow="4 / 6" />
                         </layoutData>
-                        <Label width="100%" text="핵심결과" vAlign="Top"/>
+                        <Label width="100%" text="{i18n>LABEL_10027}" vAlign="Top"/>
                     </VBox>
                     <TextArea growing="true" growingMaxLines="7" class="required" value="{Todo10}">
                         <layoutData>
@@ -88,7 +85,7 @@
                         <layoutData>
                             <grid:GridItemLayoutData gridRow="4 / 6" />
                         </layoutData>
-                        <Label width="100%" text="실적" vAlign="Top"/>
+                        <Label width="100%" text="{i18n>LABEL_10028}" vAlign="Top"/>
                     </VBox>
                     <TextArea growing="true" growingMaxLines="7" class="required" value="{Todo11}">
                         <layoutData>
@@ -99,7 +96,7 @@
                         <layoutData>
                             <grid:GridItemLayoutData gridRow="7 / 6" />
                         </layoutData>
-                        <Label width="100%" text="달성 방안" vAlign="Top"/>
+                        <Label width="100%" text="{i18n>LABEL_10029}" vAlign="Top"/>
                     </VBox>
                     <VBox class="label_wrap">
                         <layoutData>
@@ -181,13 +178,8 @@
                             </Input>
                         </HBox>
                     </VBox>
-
-
-
-
-
                     <VBox>
-                        <Label width="100%" text="목표항목별 의견 (피평가자)"/>
+                        <Label width="100%" text="{i18n>LABEL_10030}"/>
                     </VBox>
                     <VBox>
                         <layoutData>
@@ -197,7 +189,7 @@
                         </TextArea>
                     </VBox>
                     <VBox>
-                        <Label width="100%" text="목표항목별 의견 (평가자)"/>
+                        <Label width="100%" text="{i18n>LABEL_10031}"/>
                     </VBox>
                     <VBox>
                         <layoutData>

@@ -38,7 +38,7 @@
 								<HBox>
 									<HBox alignItems="Center" class="title">
 										<Title level="H2" text="{i18n>LABEL_10007}" class="sapUiMediumMarginEnd"/>
-										<Button icon="sap-icon://sys-add" text="목표추가" press=".onPressAddStrategy" />
+										<Button icon="sap-icon://sys-add" text="{i18n>LABEL_10011}" press=".onPressAddStrategy" />
 									</HBox>
 								</HBox>
 								<VBox items="{/strategy}">
@@ -49,7 +49,7 @@
 								<HBox>
 									<HBox alignItems="Center" class="title">
 										<Title level="H3" text="{i18n>LABEL_10008}" />
-										<Button icon="sap-icon://sys-add" text="목표추가" press=".onPressAddDuty" />
+										<Button icon="sap-icon://sys-add" text="{i18n>LABEL_10011}" press=".onPressAddDuty" />
 									</HBox>
 								</HBox>
 								<VBox items="{/duty}">
@@ -58,15 +58,15 @@
 							</VBox>
 							<HBox class="vCardBox sapUiSmallMarginTop">
 								<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr">
-									<Label text="자기 평가점수" />
+									<Label text="{i18n>LABEL_10012}" />
 									<VBox>
 										<Input class="required" value="{/summary/Todo1}" />
 									</VBox>
-									<Label text="1차 평가점수" />
+									<Label text="{i18n>LABEL_10013}" />
 									<VBox>
 										<Input class="required" value="{/summary/Todo2}" />
 									</VBox>
-									<Label text="최종 평가등급" />
+									<Label text="{i18n>LABEL_10014}" />
 									<VBox>
 										<Input class="required" value="{/summary/Todo3}" />
 									</VBox>
@@ -78,24 +78,24 @@
 						<IconTabFilter text="{i18n>LABEL_10010}" key="T02">
 							<VBox class="vCardBox">
 								<grid:CSSGrid gridGap="6px" class="form-grid type-b" gridTemplateColumns="1fr 2fr 2fr">
-									<Label text="구분" width="100%" textAlign="Center" />
-									<Label text="평가 대상자" width="100%" textAlign="Center" />
-									<Label text="1차 평가자" width="100%" textAlign="Center" />
-									<Label text="목표 수립" width="100%" textAlign="Center" />
+									<Label text="{i18n>LABEL_00147}" width="100%" textAlign="Center" />
+									<Label text="{i18n>LABEL_10015}" width="100%" textAlign="Center" />
+									<Label text="{i18n>LABEL_10016}" width="100%" textAlign="Center" />
+									<Label text="{i18n>LABEL_10017}" width="100%" textAlign="Center" />
 									<VBox>
 										<TextArea rows="5" growing="true" value="{/manage/Todo1}" width="100%" />
 									</VBox>
 									<VBox>
 										<TextArea rows="5" growing="true" value="{/manage/Todo2}" width="100%" />
 									</VBox>
-									<Label text="중간 점검" width="100%" textAlign="Center" />
+									<Label text="{i18n>LABEL_10018}" width="100%" textAlign="Center" />
 									<VBox>
 										<TextArea rows="5" growing="true" value="{/manage/Todo3}" width="100%" />
 									</VBox>
 									<VBox>
 										<TextArea rows="5" growing="true" value="{/manage/Todo4}" width="100%" />
 									</VBox>
-									<Label text="성과 평가" width="100%" textAlign="Center" />
+									<Label text="{i18n>LABEL_10019}" width="100%" textAlign="Center" />
 									<VBox>
 										<TextArea rows="5" growing="true" value="{/manage/Todo5}" width="100%" />
 									</VBox>
