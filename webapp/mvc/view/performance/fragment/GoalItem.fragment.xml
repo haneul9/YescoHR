@@ -9,16 +9,16 @@
 
                     <grid:CSSGrid gridTemplateColumns="1fr 9fr 1fr" gridGap="0px 11px">
                         <Label text="{ItemNo}" textAlign="Left" />
-                            <VBox>
-                                <Input value="{Todo1}" />
-                            </VBox>
-                            <Button icon="sap-icon://sys-minus" text="목표삭제" press=".onPressDeleteGoal">
-                                    
-                                <customData>
-                                    <core:CustomData key="root" value="{rootPath}" />
-                                    <core:CustomData key="itemKey" value="{OrderNo}" />
-                                </customData>
-                            </Button>														
+                        <VBox>
+                            <Input value="{Todo1}" />
+                        </VBox>
+                        <Button icon="sap-icon://sys-minus" text="목표삭제" press=".onPressDeleteGoal">
+
+                            <customData>
+                                <core:CustomData key="root" value="{rootPath}" />
+                                <core:CustomData key="itemKey" value="{OrderNo}" />
+                            </customData>
+                        </Button>
                     </grid:CSSGrid>
                 </Toolbar>
             </headerToolbar>
@@ -43,7 +43,7 @@
                     <HBox width="100%" />
                     <HBox width="100%" />
                     <Label text="연관 상위 목표"/>
-                    
+
                     <VBox>
                         <layoutData>
                             <grid:GridItemLayoutData gridColumn="2 / 8" />
@@ -60,17 +60,17 @@
                     </VBox>
                     <Label width="100%" text="목표수행 종료일"/>
                     <VBox>
-                    <custom:DatePicker width="100%" class="required" dateValue="{ path: 'Todo7', type: 'sap.ui.yesco.mvc.model.type.Date' }"/>
+                        <custom:DatePicker width="100%" class="required" dateValue="{ path: 'Todo7', type: 'sap.ui.yesco.mvc.model.type.Date' }"/>
                     </VBox>
                     <Label width="100%" text="진척도(%)"/>
                     <VBox>
-                    <Input width="100%" class="required" value="{Todo8}"/>
+                        <Input width="100%" class="required" value="{Todo8}"/>
                     </VBox>
                     <Label width="100%" text="진행상태"/>
                     <VBox>
-                    <ComboBox width="100%" class="required" selectedKey="{Todo9}" items="{ path: '/entry/levels', templateShareable: true }">
-                        <core:Item key="{code}" text="{value}" />
-                    </ComboBox>
+                        <ComboBox width="100%" class="required" selectedKey="{Todo9}" items="{ path: '/entry/levels', templateShareable: true }">
+                            <core:Item key="{code}" text="{value}" />
+                        </ComboBox>
                     </VBox>
 
                     <VBox>
@@ -193,7 +193,7 @@
                         <layoutData>
                             <grid:GridItemLayoutData gridColumn="span 3" />
                         </layoutData>
-                        <TextArea width="100%" growing="true" growingMaxLines="7" class="required">															
+                        <TextArea width="100%" value="{Todo17}" growing="true" growingMaxLines="7" class="required">
                         </TextArea>
                     </VBox>
                     <VBox>
@@ -203,7 +203,7 @@
                         <layoutData>
                             <grid:GridItemLayoutData gridColumn="span 3" />
                         </layoutData>
-                        <TextArea width="100%" growing="true" growingMaxLines="7" class="required">
+                        <TextArea width="100%" value="{Todo18}" growing="true" growingMaxLines="7" class="required">
                         </TextArea>
                     </VBox>
                 </grid:CSSGrid>

@@ -6,59 +6,20 @@
         </layoutData>
         <headerToolbar>
             <Toolbar width="100%" height="auto">
-                <HBox width="100%" items="{/stage/headers}" class="per-status">
-                    <VBox width="{width}" class="on"><!-- completed 일때 on -->
-                        <Title level="H4" text="{label}">
-                            <customData>
-                                <core:CustomData key="color" value="{completed}" writeToDom="true" />
-                            </customData>
-                        </Title>
-                        <core:Icon src="{icon}" size="2rem" width="18%" color="{completed}" />
+                <HBox id="stageHeader" width="100%" items="{/stage/headers}" class="per-status">
+                    <VBox width="{width}">                        <!-- completed 일때 on -->
+                        <Title level="H4" text="{label}" />
+                        <core:Icon src="{icon}" size="2rem" width="18%" />
                     </VBox>
                 </HBox>
             </Toolbar>
         </headerToolbar>
         <content>
-            <HBox width="100%" class="per-status-d">
-                <VBox />
-                <VBox items="{/stage/rows/10}">
+            <HBox id="stageBody" width="100%" items="{/stage/rows}" class="per-status-d">
+                <VBox items="{child}">
                     <HBox>
-                        <core:Icon src="sap-icon://arrow-down" color="{completed}" />
-                        <Text text="{label}">
-                            <customData>
-                                <core:CustomData key="color" value="{completed}" writeToDom="true" />
-                            </customData>
-                        </Text>
-                    </HBox>
-                </VBox>
-                <VBox items="{/stage/rows/20}">
-                    <HBox>
-                        <core:Icon src="sap-icon://arrow-down" color="{completed}" />
-                        <Text text="{label}">
-                            <customData>
-                                <core:CustomData key="color" value="{completed}" writeToDom="true" />
-                            </customData>
-                        </Text>
-                    </HBox>
-                </VBox>
-                <VBox items="{/stage/rows/30}">
-                    <HBox>
-                        <core:Icon src="sap-icon://arrow-down" color="{completed}" />
-                        <Text text="{label}">
-                            <customData>
-                                <core:CustomData key="color" value="{completed}" writeToDom="true" />
-                            </customData>
-                        </Text>
-                    </HBox>
-                </VBox>
-                <VBox items="{/stage/rows/40}">
-                    <HBox>
-                        <core:Icon src="sap-icon://arrow-down" color="{completed}" />
-                        <Text text="{label}">
-                            <customData>
-                                <core:CustomData key="color" value="{completed}" writeToDom="true" />
-                            </customData>
-                        </Text>
+                        <core:Icon src="sap-icon://arrow-down" />
+                        <Text text="{label}" />
                     </HBox>
                 </VBox>
             </HBox>

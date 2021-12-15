@@ -29,40 +29,49 @@ sap.ui.define(
       onBeforeShow() {
         const oViewModel = new JSONModel({
           busy: false,
-          year: 2021,
+          year: moment().format('YYYY'),
           tab: { selectedKey: 'T01' },
           stage: {
             headers: [
-              { label: '준비중', icon: 'asset/image/icon_per_status_01.png', completed: '#66B0F0' }, //
-              { label: '목표수립', icon: 'sap-icon://accelerated', completed: '#66B0F0' },
-              { label: '중간점검', icon: 'sap-icon://accelerated', completed: 'none' },
-              { label: '성과평가', icon: 'sap-icon://accelerated', completed: 'none' },
-              { label: '평가완료', icon: 'sap-icon://accelerated', completed: 'none' },
+              { label: '준비중', icon: 'asset/image/icon_per_status_01.png', completed: true }, //
+              { label: '목표수립', icon: 'sap-icon://accelerated', completed: true },
+              { label: '중간점검', icon: 'sap-icon://accelerated', completed: false },
+              { label: '성과평가', icon: 'sap-icon://accelerated', completed: false },
+              { label: '평가완료', icon: 'sap-icon://accelerated', completed: false },
             ],
-            rows: {
-              10: [
-                { label: '목표수립필요', completed: '#66B0F0' }, //
-                { label: '평가자합의중', completed: 'none' },
-                { label: '목표수립완료', completed: 'none' },
-              ],
-              20: [
-                { label: '중간점검필요', completed: 'none' }, //
-                { label: '평가자점검중', completed: 'none' },
-                { label: '중간점검완료', completed: 'none' },
-              ],
-              30: [
-                { label: '자기평가필요', completed: 'none' }, //
-                { label: '직무순환설문중', completed: 'none' },
-                { label: '1차평가중', completed: 'none' },
-                { label: '2차평가중', completed: 'none' },
-                { label: '전사 Session 중', completed: 'none' },
-              ],
-              40: [
-                { label: '평가결과확인필요', completed: 'none' }, //
-                { label: '이의신청중', completed: 'none' },
-                { label: '평가완료', completed: 'none' },
-              ],
-            },
+            rows: [
+              { child: [] }, //
+              {
+                child: [
+                  { label: '목표수립필요', completed: true }, //
+                  { label: '평가자합의중', completed: false },
+                  { label: '목표수립완료', completed: false },
+                ],
+              },
+              {
+                child: [
+                  { label: '중간점검필요', completed: false }, //
+                  { label: '평가자점검중', completed: false },
+                  { label: '중간점검완료', completed: false },
+                ],
+              },
+              {
+                child: [
+                  { label: '자기평가필요', completed: false }, //
+                  { label: '직무순환설문중', completed: false },
+                  { label: '1차평가중', completed: false },
+                  { label: '2차평가중', completed: false },
+                  { label: '전사 Session 중', completed: false },
+                ],
+              },
+              {
+                child: [
+                  { label: '평가결과확인필요', completed: false }, //
+                  { label: '이의신청중', completed: false },
+                  { label: '평가완료', completed: false },
+                ],
+              },
+            ],
           },
           entry: {
             levels: [
@@ -138,6 +147,31 @@ sap.ui.define(
           ],
         });
         this.setViewModel(oViewModel);
+
+        const oStageHeader = this.byId('stageHeader');
+        oStageHeader.addEventDelegate({
+          onAfterRendering() {
+            const aHeaders = oViewModel.getProperty('/stage/headers');
+            const aHeaderItems = oStageHeader.getItems();
+
+            aHeaderItems.forEach((o, i) => {
+              if (aHeaders[i].completed) o.addStyleClass('on');
+            });
+          },
+        });
+
+        const oStageBody = this.byId('stageBody');
+        oStageBody.addEventDelegate({
+          onAfterRendering() {
+            const aRows = oViewModel.getProperty('/stage/rows');
+
+            oStageBody.getItems().forEach((row, rowidx) => {
+              row.getItems().forEach((o, childidx) => {
+                if (aRows[rowidx].child[childidx].completed) o.addStyleClass('on');
+              });
+            });
+          },
+        });
       },
 
       async onObjectMatched() {

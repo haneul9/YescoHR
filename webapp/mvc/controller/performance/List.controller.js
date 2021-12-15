@@ -90,6 +90,7 @@ sap.ui.define(
             filters: [
               new Filter('Menid', FilterOperator.EQ, sMenid), //
               new Filter('Werks', FilterOperator.EQ, mAppointee.Werks),
+              new Filter('Zzappgb', FilterOperator.EQ, 'ME'),
               new Filter('Zzappee', FilterOperator.EQ, mAppointee.Pernr),
             ],
             success: (oData) => {
