@@ -47,7 +47,7 @@
 							<VBox class="vCardBox sapUiSmallMarginTop">
 								<HBox>
 									<HBox alignItems="Center" class="title">
-										<Title level="H2" text="{i18n>LABEL_10008}" />
+										<Title level="H3" text="{i18n>LABEL_10008}" />
 										<Button icon="sap-icon://sys-add" text="목표추가" press=".onPressAddDuty" />
 									</HBox>
 								</HBox>
@@ -57,14 +57,20 @@
 							</VBox>
 							<HBox class="vCardBox sapUiSmallMarginTop">
 								<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr">
-									<Label width="100%" text="자기 평가점수" />
-									<Input width="100%" class="required" value="{/summary/Todo1}" />
-									<Label width="100%" text="1차 평가점수" />
-									<Input width="100%" class="required" value="{/summary/Todo2}" />
-									<Label width="100%" text="최종 평가등급" />
-									<Input width="100%" class="required" value="{/summary/Todo3}" />
-									<HBox width="100%" />
-									<HBox width="100%" />
+									<Label text="자기 평가점수" />
+									<VBox>
+										<Input class="required" value="{/summary/Todo1}" />
+									</VBox>
+									<Label text="1차 평가점수" />
+									<VBox>
+										<Input class="required" value="{/summary/Todo2}" />
+									</VBox>
+									<Label text="최종 평가등급" />
+									<VBox>
+										<Input class="required" value="{/summary/Todo3}" />
+									</VBox>
+									<HBox />
+									<HBox />
 								</grid:CSSGrid>
 							</HBox>
 						</IconTabFilter>
