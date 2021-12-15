@@ -869,6 +869,7 @@ html.sap-tablet .sapMDialog, html.sap-desktop .sapMDialog {min-width: 20rem; bac
 .sapUiLayoutCSSGrid.form-grid .sapMLabel {padding-left:0px;text-indent: 0px;white-space: normal;}
 .sapUiLayoutCSSGrid.form-grid .sapMLabel > bdi {padding-left:20px;padding-right: 20px;}
 .sapUiLayoutCSSGrid.form-grid .sapMObjStatus {align-self: center;}
+.sapUiLayoutCSSGrid.form-grid .sapMInputDescriptionWrapper {width:auto!important;}
 
 .sapUiLayoutCSSGrid.form-grid.type-b {border-top: 0px solid #F5F5F5; border-bottom: 0px solid #F5F5F5; padding-top: 0px; padding-left: 0;background-color: transparent!important;}
 .sapUiLayoutCSSGrid.form-grid.type-b > * {height:100%;min-height: 50px;padding-left: 0;align-self: center;background: #F9FAFA;justify-content: center;}
