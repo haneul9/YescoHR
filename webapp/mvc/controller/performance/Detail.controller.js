@@ -199,7 +199,7 @@ sap.ui.define(
           this.debug('Controller > Performance Detail > onObjectMatched Error', oError);
 
           AppUtils.handleError(oError, {
-            onClose: () => this.getRouter().navTo('performance'),
+            // onClose: () => this.getRouter().navTo('performance'),
           });
         } finally {
           oViewModel.setProperty('/busy', false);
