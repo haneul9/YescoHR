@@ -162,7 +162,7 @@ sap.ui.define(
             const aHeaderItems = oStageHeader.getItems();
 
             aHeaderItems.forEach((o, i) => {
-              if (aHeaders[i].completed) o.addStyleClass('on');
+              o.toggleStyleClass('on', aHeaders[i].completed);
             });
           },
         });
@@ -174,7 +174,7 @@ sap.ui.define(
 
             oStageBody.getItems().forEach((row, rowidx) => {
               row.getItems().forEach((o, childidx) => {
-                if (aRows[rowidx].child[childidx].completed) o.addStyleClass('on');
+                o.toggleStyleClass('on', aRows[rowidx].child[childidx].completed);
               });
             });
           },
