@@ -93,7 +93,7 @@ sap.ui.define(
           aTableData: aRowData,
           sSumProp: 'Idx',
           sSumLabel,
-          rCalcProp: /^Bet0/,
+          vCalcProps: /^Bet0/,
         });
 
         oViewModel.setProperty('/list', _.isEmpty(mSumRow) ? [] : [...aRowData.map((o, i) => ({ ...o, Idx: ++i })), { Idx: sSumLabel, ...mSumRow }]);

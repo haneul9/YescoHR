@@ -82,15 +82,15 @@ sap.ui.define(
           const mDetail = await this.readDeepPayslipList({ oModel, sSeqnr });
 
           // Paylist
-          const aPayList = this.transformTreeData({ oTreeData: mDetail.Payslip1Nav.results });
+          const aPayList = this.transformTreeData({ aTreeData: mDetail.Payslip1Nav.results });
           // Deductlist
-          const aDeductlist = this.transformTreeData({ oTreeData: mDetail.Payslip2Nav.results });
+          const aDeductlist = this.transformTreeData({ aTreeData: mDetail.Payslip2Nav.results });
           // TaxIncomeList
-          const aTaxIncomeList = this.transformTreeData({ oTreeData: mDetail.Payslip3Nav.results });
+          const aTaxIncomeList = this.transformTreeData({ aTreeData: mDetail.Payslip3Nav.results });
           // TimeList
           const aTimeList = mDetail.Payslip4Nav.results;
           // BaseList
-          const aBaseList = _.filter(mDetail.Payslip1Nav.results, { Uppno: '' });
+          const aBaseList = _.groupBy(mDetail.Payslip1Nav.results, 'Uppno')[''] ?? [];
 
           oViewModel.setProperty('/summary/list', [mDetail]);
           oViewModel.setProperty('/pay/list', aPayList);
@@ -117,27 +117,21 @@ sap.ui.define(
         }
       },
 
-      transformTreeData({ oTreeData }) {
-        const aRoot = _.filter(oTreeData, { Uppno: '' });
+      transformTreeData({ aTreeData }) {
+        const mGroupedByParents = _.groupBy(aTreeData, 'Uppno');
+        const mCatsById = _.keyBy(aTreeData, 'Itmno');
         const mSumRow = TableUtils.generateSumRow({
-          aTableData: aRoot,
+          aTableData: mGroupedByParents[''] ?? [],
           sSumProp: 'Pyitx',
-          sSumLabel: this.getBundleText('LABEL_00172'),
-          aCalcProps: ['Betrg'],
+          sSumLabel: this.getBundleText('LABEL_00172'), // 합계
+          vCalcProps: ['Betrg'],
         });
 
         if (_.isEmpty(mSumRow)) return [];
 
-        oTreeData.forEach((o) => {
-          const mRootNode = _.find(aRoot, { Itmno: o.Uppno });
+        _.each(_.omit(mGroupedByParents, ''), (children, parentId) => (mCatsById[parentId].nodes = children));
 
-          if (!_.isEmpty(mRootNode)) {
-            if (_.isEmpty(mRootNode.nodes)) mRootNode.nodes = [];
-            mRootNode.nodes = [...mRootNode.nodes, o];
-          }
-        });
-
-        return [...aRoot, mSumRow];
+        return [...mGroupedByParents[''], mSumRow];
       },
 
       /*****************************************************************

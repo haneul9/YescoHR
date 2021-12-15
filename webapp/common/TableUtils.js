@@ -162,34 +162,27 @@ sap.ui.define(
           o.table
         );
       },
-
-      generateSumRow({ aTableData, sSumProp, sSumLabel, aCalcProps = [], rCalcProp }) {
+      /**
+       * @param  {Array} aTableData - 대상목록
+       * @param  {String} sSumProp - 합계 라벨 속성키
+       * @param  {String} sSumLabel - 합계 라벨 텍스트
+       * @param  {Array||RegExp} vCalcProps - 계산 대상 속성키(배열 또는 정규식)
+       */
+      generateSumRow({ aTableData, sSumProp, sSumLabel, vCalcProps }) {
         if (aTableData.length < 1) return;
 
-        return aTableData.reduce(
-          (acc, cur) => {
-            for (var prop in cur) {
-              const iCalcPropValue = _.defaultTo(Number(cur[prop]), 0);
-              const sDefaultPropValue = sSumProp === prop ? sSumLabel : null;
-
-              if (rCalcProp instanceof RegExp) {
-                if (acc.hasOwnProperty(prop) && rCalcProp.test(prop)) {
-                  acc[prop] += iCalcPropValue;
-                } else {
-                  acc[prop] = rCalcProp.test(prop) ? iCalcPropValue : sDefaultPropValue;
-                }
-              } else {
-                if (acc.hasOwnProperty(prop) && _.includes(aCalcProps, prop)) {
-                  acc[prop] += iCalcPropValue;
-                } else {
-                  acc[prop] = _.includes(aCalcProps, prop) ? iCalcPropValue : sDefaultPropValue;
-                }
-              }
+        const mSumProps = _.chain(aTableData[0])
+          .keys()
+          .map((k) => {
+            if ((vCalcProps instanceof RegExp && vCalcProps.test(k)) || (vCalcProps instanceof Array && _.includes(vCalcProps, k))) {
+              return { [k]: _.sumBy(aTableData, (o) => Number(o[k])) };
             }
-            return acc;
-          },
-          { Sumrow: true, [sSumProp]: sSumLabel }
-        );
+          })
+          .compact()
+          .reduce((a, c) => ({ ...a, ...c }), {})
+          .value();
+
+        return { Sumrow: true, [sSumProp]: sSumLabel, ...mSumProps };
       },
 
       summaryColspan({ oTable, sStartIndex = '0', aHideIndex = [] }) {
