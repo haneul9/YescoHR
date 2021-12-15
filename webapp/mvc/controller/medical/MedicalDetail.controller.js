@@ -328,15 +328,23 @@ sap.ui.define(
           return true;
         }
 
+        const aHisList = oDetailModel.getProperty('/HisList');
+
         // 상세내역
-        if (!oDetailModel.getProperty('/HisList').length) {
+        if (!aHisList.length) {
           MessageBox.alert(this.getBundleText('MSG_09027'));
           return true;
         }
 
         // 첨부파일
-        if (!AttachFileAction.getFileLength.call(this)) {
-          MessageBox.alert(this.getBundleText('MSG_00046'));
+        const bResult = aHisList.every((e) => e.Attyn === 'X');
+
+        if (
+          bResult ||
+          (!AttachFileAction.getFileLength.call(this) &&
+          !bResult)
+        ) {
+          MessageBox.alert(this.getBundleText('MSG_09028'));
           return true;
         }
 
@@ -382,6 +390,14 @@ sap.ui.define(
                 if (!!AttachFileAction.getFileLength.call(this)) {
                   await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.TYPE_CODE);
                 }
+                
+                const aHislist = oDetailModel.getProperty('/HisList');
+
+                if (!!aHislist.length) {
+                  await aHislist.forEach((e) => {
+                    AttachFileAction.uploadFile.call(this, e.Appno2, this.TYPE_CODE, this.DIALOG_FILE_ID);
+                  });
+                }
 
                 const aDeleteDatas = oDetailModel.getProperty('/RemoveFiles');
 
@@ -390,6 +406,7 @@ sap.ui.define(
                     AttachFileAction.deleteFile(e.Appno2, this.TYPE_CODE);
                   });
                 }
+
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/MedExpenseApplSet', oSendObject, {

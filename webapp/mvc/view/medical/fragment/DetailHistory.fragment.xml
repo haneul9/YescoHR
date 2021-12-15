@@ -116,7 +116,8 @@
                 <table:Column width="100px">
                     <Label text="{i18n>LABEL_00169}"/>
                     <table:template>
-                        <Button type="Transparent" icon="sap-icon://attachment" class="mnw-0" press=".TableUtils.onFileListDialog" visible="{= ${Docyn} === 'Y' }"/>
+                        <core:Icon src="sap-icon://attachment" width="100%" visible="{= ${Attyn} === 'X' }"/>
+                        <!-- <Button type="Transparent" icon="sap-icon://attachment" class="mnw-0" press=".TableUtils.onFileListDialog" visible="{= ${Attyn} === 'X' }"/> -->
                     </table:template>
                 </table:Column>
             </table:columns>
