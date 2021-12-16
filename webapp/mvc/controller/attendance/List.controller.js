@@ -189,11 +189,7 @@ sap.ui.define(
 
         oViewModel.setProperty(
           '/parameter/rowData',
-          aSelectedIndices.map((idx) => {
-            const oRowData = oViewModel.getProperty(`/list/${idx}`);
-
-            return oRowData;
-          })
+          aSelectedIndices.map((idx) => oViewModel.getProperty(`/list/${idx}`))
         );
       },
 

@@ -18,7 +18,7 @@
                     <Label text="{i18n>LABEL_00148}" />
                 </table:multiLabels>
                 <table:template>
-                    <Text text="{BegdaTxt2}" width="100%" textAlign="Center" />
+                    <Text text="{ path: 'Begda2', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
                 </table:template>
             </table:Column>
             <table:Column width="12%">
@@ -27,7 +27,7 @@
                     <Label text="{i18n>LABEL_00149}" />
                 </table:multiLabels>
                 <table:template>
-                    <Text text="{EnddaTxt2}" width="100%" textAlign="Center" />
+                    <Text text="{ path: 'Endda2', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
                 </table:template>
             </table:Column>
             <table:Column width="8%">
@@ -45,7 +45,7 @@
                     <Label text="{i18n>LABEL_00148}" />
                 </table:multiLabels>
                 <table:template>
-                    <Text text="{BegdaTxt}" width="100%" textAlign="Center" />
+                    <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
                 </table:template>
             </table:Column>
             <table:Column width="12%">
@@ -54,7 +54,7 @@
                     <Label text="{i18n>LABEL_00149}" />
                 </table:multiLabels>
                 <table:template>
-                    <Text text="{EnddaTxt}" width="100%" textAlign="Center" />
+                    <Text text="{ path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
                 </table:template>
             </table:Column>
             <table:Column width="8%">
