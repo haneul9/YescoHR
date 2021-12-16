@@ -112,6 +112,9 @@
                     type: 'sap.ui.yesco.mvc.model.type.Currency'
                 }"/>
                 <ObjectStatus text="{i18n>MSG_03002}" state="Indication05" visible="{/LimitAmountMSG}" />
+                <layoutData>
+                    <grid:GridItemLayoutData gridColumn="2 / 5"/>
+                </layoutData>
             </HBox>
         </grid:CSSGrid>
     </VBox>

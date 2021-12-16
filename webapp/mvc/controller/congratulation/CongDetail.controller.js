@@ -10,6 +10,7 @@ sap.ui.define(
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
@@ -17,16 +18,17 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     Fragment,
-    JSONModel,
-    Appno,
-    AppUtils,
-    AttachFileAction,
-    ComboEntry,
-    TextUtils,
-    FragmentEvent,
-    ServiceNames,
-    MessageBox,
-    BaseController
+	JSONModel,
+	Appno,
+	AppUtils,
+	AttachFileAction,
+	ComboEntry,
+	TextUtils,
+	FragmentEvent,
+	ServiceNames,
+	ODataCreateError,
+	MessageBox,
+	BaseController,
   ) => {
     'use strict';
 
@@ -598,10 +600,11 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      reject(oError);
+                      reject(new ODataCreateError({ type: 'T', oError }));
                     },
                   });
                 });
+                
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
               } catch (oError) {
                 AppUtils.handleError(oError);
@@ -651,7 +654,7 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      reject(oError);
+                      reject(new ODataCreateError({ oError }));
                     },
                   });
                 });
