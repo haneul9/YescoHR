@@ -407,8 +407,8 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt {outline-style:none !important}
 .vCardBox, .customBox {position:relative; margin:0; border:1px solid whitesmoke; border-radius:10px; padding:25px 30px; background-color:#fff; box-shadow:0px 2px 4px rgb(0 0 0 / 16%)}
 .vCardBox.sapUiMediumMarginBottom, .customBox.sapUiMediumMarginBottom {margin-bottom:20px !important}
 
-.vCardBox h2.sapMTitle, .hCardBox h2.sapMTitle, .customBox h2.sapMTitle {font-size:24px; font-weight:700; color:#222222; display:inline-block}
-h3.sapMTitle {font-size:24px; font-weight:700; margin-bottom:0.4rem; color:#222222}
+.vCardBox h2.sapMTitle, .hCardBox h2.sapMTitle, .customBox h2.sapMTitle {font-size:24px; font-weight:800; color:#222; display:inline-block}
+h3.sapMTitle {font-size:24px; font-weight:800; margin-bottom:0.4rem; color:#222}
 .hCardBox.appointee-info-box,
 .hCardBox.summary-box,
 .hCardBox.search-box {box-sizing:border-box; height:240px; overflow:hidden}
@@ -782,26 +782,23 @@ html.sap-desktop .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnSel:hover .sapMSeg
 .breadcrumbs {align-items:center; background-color:#fff; height:60px; width:1600px; max-width:1600px; margin:0 auto}
 .breadcrumbs .contents {width:1600px; display:flex; justify-content:space-between}
 
-
-.member-picture > div {height:9.13rem}
-.member-picture .sapMImg {width: 9.13rem; height:9.13rem; border-radius: 50%;}
-
+.member-picture .sapMImg {width:146px; height:146px; border-radius:50%}
+.member-picture + .my-info-detail {margin-left:30px}
 .my-info-detail {align-self:flex-end}
-.my-info-detail > div + div {margin-top: 0.5rem}
-.my-info .sapMText {font-size: 0.94rem; color: #111; font-weight: 700; line-height: 0.94rem}
-.my-info .name {font-size: 1.87rem; font-weight: 700; margin-bottom: 1.2rem; color: #222222; line-height: 1.87rem}
+.my-info .sapMText {margin-top:7px; line-height:14px; font-size:14px; font-weight:700; color:#111}
+.my-info .name {line-height:30px; font-size:30px; margin-top:0; margin-bottom:13px; color:#222}
 
 .sapMBreadcrumbs {white-space: nowrap;outline: none; margin: 0;}
 .sapMBreadcrumbs .sapMLnk {color: #555555 !important;font-size: 14px;font-weight:500;}
 .sapMBreadcrumbs .sapMBreadcrumbsCurrentLocation {font-size: 14px;font-weight:700;}
 
-.summary-info {margin-bottom: 0.9rem; margin-top: 10px; }
-.summary-info .sapMFlexItem {margin-bottom: 0.35rem;}
-.summary-info .sapMObjStatus {font-size: 1.87rem; }
-.summary-box .desc { justify-content:flex-start ; display: flex;  align-items: baseline;}
-.summary-box .desc .sapMText, .summary-box .desc .sapMObjStatus {font-size: 1rem;font-weight: 600;}
-.summary-box .desc .sapMObjStatus {padding: 0 0.4rem;font-size: 1.25rem;}
-.summary-box .desc .sapMFlexItem {font-weight: 600;}
+.summary-info {margin-bottom:0.9rem; margin-top:10px}
+.summary-info .sapMFlexItem {margin-bottom:0.35rem}
+.summary-info .sapMObjStatus {font-size:1.87rem}
+.summary-box .desc {justify-content:flex-start; display:flex; align-items:baseline}
+.summary-box .desc .sapMText, .summary-box .desc .sapMObjStatus {font-size:1rem; font-weight:600}
+.summary-box .desc .sapMObjStatus {padding:0 0.4rem; font-size:1.25rem}
+.summary-box .desc .sapMFlexItem {font-weight:600}
 
 .header-wrap {margin-bottom: 1rem;}
 .vCardBox .header { display: flex; justify-content: baseline; align-items: center; margin-bottom: 0rem;}
@@ -831,8 +828,8 @@ html.sap-desktop .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnSel:hover .sapMSeg
 .contents > .sapUiHiddenPlaceholder + .sapMFlexBox {margin-top:20px}
 .contents > .sapUiBlockLayerTabbable + .sapMFlexBox {margin-top:20px}
 .appointee-info-box, .summary-box, .search-box {width:33%}
-.sapMFlexBox + .summary-box, .sapUiBlockLayerTabbable + .summary-box {margin-left:20px}
-.sapMFlexBox + .search-box, .sapUiBlockLayerTabbable + .search-box {margin-left:20px}
+.sapMFlexBox + .summary-box, .sapUiBlockLayerTabbable + .summary-box {margin-left:30px}
+.sapMFlexBox + .search-box, .sapUiBlockLayerTabbable + .search-box {margin-left:30px}
 
 /*Layer popup style*/
 .sapUiSizeCompact.sapMDialog, .sapUiSizeCompact .sapMDialog { min-height: 6rem;padding: 75px 30px 80px;background-color: #fff;}
