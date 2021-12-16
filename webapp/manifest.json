@@ -100,11 +100,15 @@
 
         { "pattern": "congratulation", "name": "congratulation", "target": "congratulation" },
         { "pattern": "congratulation/:oDataKey:", "name": "congratulation-detail", "target": "congDetail" },
+        { "pattern": "h/congratulation", "name": "h/congratulation", "target": "h/congratulation" },
+        { "pattern": "h/congratulation/:oDataKey:", "name": "h/congratulation-detail", "target": "congDetail" },
         { "pattern": "m/congratulation", "name": "m/congratulation", "target": "m/congratulation" },
         { "pattern": "m/congratulation/:oDataKey:", "name": "m/congratulation-detail", "target": "m/congDetail" },
 
         { "pattern": "clubJoin", "name": "clubJoin", "target": "clubJoin" },
         { "pattern": "clubJoin/{oDataKey}", "name": "clubJoin-detail", "target": "clubJoinDetail" },
+        { "pattern": "h/clubJoin", "name": "h/clubJoin", "target": "h/clubJoin" },
+        { "pattern": "h/clubJoin/{oDataKey}", "name": "h/clubJoin-detail", "target": "clubJoinDetail" },
 
         { "pattern": "familyInfo", "name": "familyInfo", "target": "familyInfo" },
         { "pattern": "familyInfo/{oDataKey}", "name": "familyInfo-detail", "target": "familyInfoDetail" },
@@ -120,9 +124,13 @@
 
         { "pattern": "medical", "name": "medical", "target": "medical" },
         { "pattern": "medical/{oDataKey}", "name": "medical-detail", "target": "medicalDetail" },
+        { "pattern": "h/medical", "name": "h/medical", "target": "h/medical" },
+        { "pattern": "h/medical/{oDataKey}", "name": "h/medical-detail", "target": "medicalDetail" },
 
         { "pattern": "studentFunds", "name": "studentFunds", "target": "studentFunds" },
         { "pattern": "studentFunds/{oDataKey}", "name": "studentFunds-detail", "target": "studentFundsDetail" },
+        { "pattern": "h/studentFunds", "name": "h/studentFunds", "target": "h/studentFunds" },
+        { "pattern": "h/studentFunds/{oDataKey}", "name": "h/studentFunds-detail", "target": "studentFundsDetail" },
 
         { "pattern": "attendance", "name": "attendance", "target": "attendance" },
         { "pattern": "attendance/{type}/:appno:", "name": "attendance-detail", "target": "attendanceDetail" },
@@ -156,11 +164,13 @@
         "notFound": { "viewId": "notFound", "viewName": "NotFound", "transition": "show" },
 
         "congratulation": { "viewId": "congratulation", "viewPath": "sap.ui.yesco.mvc.view.congratulation", "viewName": "Congratulation" },
+        "h/congratulation": { "viewId": "h_congratulation", "viewPath": "sap.ui.yesco.mvc.view.congratulation", "viewName": "CongratulationHass" },
         "congDetail": { "viewId": "congDetail", "viewPath": "sap.ui.yesco.mvc.view.congratulation", "viewName": "CongDetail" },
         "m/congratulation": { "viewId": "congratulationMobile", "viewPath": "sap.ui.yesco.mvc.view.congratulation.m", "viewName": "Congratulation" },
         "m/congDetail": { "viewId": "congDetailMobile", "viewPath": "sap.ui.yesco.mvc.view.congratulation.m", "viewName": "CongDetail" },
 
         "clubJoin": { "viewId": "clubJoin", "viewPath": "sap.ui.yesco.mvc.view.clubJoin", "viewName": "ClubJoin" },
+        "h/clubJoin": { "viewId": "h_clubJoin", "viewPath": "sap.ui.yesco.mvc.view.clubJoin", "viewName": "ClubJoinHass" },
         "clubJoinDetail": { "viewId": "clubJoinDetail", "viewPath": "sap.ui.yesco.mvc.view.clubJoin", "viewName": "ClubJoinDetail" },
 
         "familyInfo": { "viewId": "familyInfo", "viewPath": "sap.ui.yesco.mvc.view.familyInfo", "viewName": "FamilyInfo" },
@@ -175,9 +185,11 @@
         "noticeDetail": { "viewId": "noticeDetail", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "NoticeDetail" },
 
         "medical": { "viewId": "medical", "viewPath": "sap.ui.yesco.mvc.view.medical", "viewName": "Medical" },
+        "h/medical": { "viewId": "h_medical", "viewPath": "sap.ui.yesco.mvc.view.medical", "viewName": "MedicalHass" },
         "medicalDetail": { "viewId": "medicalDetail", "viewPath": "sap.ui.yesco.mvc.view.medical", "viewName": "MedicalDetail" },
 
         "studentFunds": { "viewId": "studentFunds", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFunds" },
+        "h/studentFunds": { "viewId": "h_studentFunds", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFundsHass" },
         "studentFundsDetail": { "viewId": "studentFundsDetail", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFundsDetail" },
 
         "attendance": { "viewId": "attendanceList", "viewPath": "sap.ui.yesco.mvc.view.attendance", "viewName": "List" },

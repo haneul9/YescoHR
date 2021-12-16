@@ -56,6 +56,7 @@ sap.ui.define(
       onObjectMatched() {
         this.onSearch();
         this.getTotalPay();
+        this.getViewModel('appointeeModel').setProperty('/showChangeButton', this.isHass());
       },
 
       onClick() {

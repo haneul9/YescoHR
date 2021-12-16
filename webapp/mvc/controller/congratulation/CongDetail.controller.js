@@ -409,7 +409,7 @@ sap.ui.define(
         if (!this.byId('targetSettingsDialog')) {
           Fragment.load({
             id: this.getView().getId(),
-            name: 'sap.ui.yesco.mvc.view.congratulation.TargetDialog',
+            name: 'sap.ui.yesco.mvc.view.congratulation.fragment.TargetDialog',
             controller: this,
           }).then(async (oDialog) => {
             // connect dialog to the root view of this component (models, lifecycle)

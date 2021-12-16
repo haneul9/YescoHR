@@ -82,7 +82,6 @@ sap.ui.define(
         oDetailModel.setProperty('/ViewKey', sDataKey);
 
         try {
-          const oDetailModel = this.getViewModel();
           const aAppList = await this.getTargetList();
   
           oDetailModel.setProperty('/TargetList', new ComboEntry({ codeKey: 'Kdsvh', valueKey: 'Znametx', aEntries: aAppList }));
