@@ -316,14 +316,14 @@ sap.ui.define(
           aTabMenus.forEach((data) => {
             this.debug(`Tab ${data.Menu1}`, data);
 
-            oViewModelData.employee.sub[data.Menuc1] = { isShow: data.Pressed, contents: {} };
+            _.set(oViewModelData, ['employee', 'sub', data.Menuc1], { isShow: data.Pressed, contents: {} });
 
             aHeaderRequests.push(this.readOdata({ sUrl: '/EmpProfileHeaderTabSet', mFilters: { Menuc: data.Menuc1, ...mFilters } }));
             aContentRequests.push(this.readOdata({ sUrl: '/EmpProfileContentsTabSet', mFilters: { Menuc: data.Menuc1, ...mFilters } }));
           });
 
           aSubMenus.forEach((data) => {
-            oViewModelData.employee.sub[data.Menuc1].contents[data.Menuc2] = {
+            _.set(oViewModelData, ['employee', 'sub', data.Menuc1, 'contents', data.Menuc2], {
               type: data.Child,
               rowCount: 1,
               selectionMode: _.some(this.CRUD_TABLES, (o) => o.key === data.Menuc2) ? 'MultiToggle' : 'None',
@@ -332,7 +332,7 @@ sap.ui.define(
               sort: data.Sorts,
               header: [],
               data: [],
-            };
+            });
           });
           //End 탭 메뉴 Set
 
@@ -342,16 +342,14 @@ sap.ui.define(
 
           // Header 영역 Set
           aHeaderReturnData.forEach((headers, index) => {
-            headers.forEach((o) => {
-              oViewModelData.employee.sub[aTabMenus[index].Menuc1].contents[o.Menuc].header.push(o);
-            });
+            headers.forEach((o, i) => _.set(oViewModelData, ['employee', 'sub', aTabMenus[index].Menuc1, 'contents', o.Menuc, 'header', i], o));
           });
           //End Header 영역 Set
 
           // Contents 영역 Set
           aContentReturnData.forEach((content, index) => {
             content.forEach((o) => {
-              let mSubMenu = oViewModelData.employee.sub[aTabMenus[index].Menuc1].contents[o.Menuc];
+              let mSubMenu = _.get(oViewModelData, ['employee', 'sub', aTabMenus[index].Menuc1, 'contents', o.Menuc]);
 
               if (mSubMenu.type === this.SUB_TYPE.GRID) {
                 for (let i = 1; i <= mSubMenu.header.length; i++) {
@@ -386,7 +384,7 @@ sap.ui.define(
         const aSubMenu = oViewModel.getProperty('/employee/sub');
 
         Object.keys(aSubMenu).forEach((menuKey) => {
-          const aSubMenuContents = aSubMenu[menuKey].contents;
+          const aSubMenuContents = _.get(aSubMenu, [menuKey, 'contents']);
           let oWrapperVBox = sap.ui.getCore().byId(`sub${menuKey}`);
 
           if (oWrapperVBox) {
@@ -402,7 +400,7 @@ sap.ui.define(
            * OMenu.type: '6'  Grid
            */
           Object.keys(aSubMenuContents).forEach((key) => {
-            const mMenu = aSubMenuContents[key];
+            const mMenu = _.get(aSubMenuContents, key);
             const oSubVBox = new sap.m.VBox().addStyleClass('customBox sapUiMediumMarginBottom');
             const oSubHBox = new sap.m.HBox({ justifyContent: 'SpaceBetween' });
 
