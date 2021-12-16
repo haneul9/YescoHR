@@ -5,6 +5,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
+    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/FragmentEvent',
@@ -13,13 +14,14 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-    ServiceNames,
-    AppUtils,
-    AttachFileAction,
-    ODataReadError,
-    TableUtils,
-    FragmentEvent,
-    BaseController
+	ServiceNames,
+	AppUtils,
+	AttachFileAction,
+	EmployeeSearch,
+	ODataReadError,
+	TableUtils,
+	FragmentEvent,
+	BaseController
   ) => {
     'use strict';
 
@@ -27,6 +29,7 @@ sap.ui.define(
       TYPE_CODE: 'HR01',
 
       AttachFileAction: AttachFileAction,
+      EmployeeSearch: EmployeeSearch,
       TableUtils: TableUtils,
       FragmentEvent: FragmentEvent,
       AppUtils: AppUtils,
