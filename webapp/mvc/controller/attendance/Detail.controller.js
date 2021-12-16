@@ -176,17 +176,11 @@ sap.ui.define(
                 Abrst2: o.Abrst2 ? o.Abrst2 : o.Abrst,
                 Begda2: o.Begda2 ? o.Begda2 : o.Begda,
                 Endda2: o.Endda2 ? o.Endda2 : o.Endda,
-                BegdaTxt: o.Begda ? DateUtils.format(o.Begda) : '',
-                EnddaTxt: o.Endda ? DateUtils.format(o.Endda) : '',
-                BegdaTxt2: o.Begda2 ? DateUtils.format(o.Begda2) : DateUtils.format(o.Begda),
-                EnddaTxt2: o.Endda2 ? DateUtils.format(o.Endda2) : DateUtils.format(o.Endda),
               };
             } else {
               return {
                 ...o,
                 AbrtgTxt: `${Number(o.Abrtg)}일`,
-                BegdaTxt: DateUtils.format(o.Begda),
-                EnddaTxt: DateUtils.format(o.Endda),
               };
             }
           })
@@ -406,6 +400,8 @@ sap.ui.define(
         } catch (oError) {
           this.debug('Controller > Attendance Detail > onChangeLeaveDate Error', oError);
 
+          AppUtils.handleError(oError);
+
           oViewModel.setProperty('/form/dialog/data/Abrst', null);
           oViewModel.setProperty('/form/dialog/data/Abrtg', null);
           oViewModel.setProperty('/form/dialog/data/AbrtgTxt', '');
@@ -443,15 +439,13 @@ sap.ui.define(
             ...mInputData,
             isChanged: true,
             AbrtgTxt: Number(mInputData.Abrtg),
+            Tmrsn: mInputData.Tmrsn,
             Begda: DateUtils.parse(mInputData.Begda),
             Endda: DateUtils.parse(mInputData.Endda),
-            BegdaTxt: DateUtils.format(mInputData.Begda),
-            EnddaTxt: DateUtils.format(mInputData.Endda),
-            Tmrsn: mInputData.Tmrsn,
           };
           oTable = this.byId('approveMultipleTable');
 
-          if (mRowData.BegdaTxt2 === mChangedData.BegdaTxt && mRowData.EnddaTxt2 === mChangedData.EnddaTxt) {
+          if (DateUtils.format(mRowData.Begda2) === DateUtils.format(mChangedData.Begda) && DateUtils.format(mRowData.Endda2) === DateUtils.format(mChangedData.Endda)) {
             MessageBox.error(this.getBundleText('MSG_04002')); // 변경된 데이터가 없습니다.
             return;
           }
@@ -465,8 +459,6 @@ sap.ui.define(
             ...mInputData,
             Begda: DateUtils.parse(mInputData.Begda),
             Endda: DateUtils.parse(mInputData.Endda),
-            BegdaTxt: DateUtils.format(mInputData.Begda),
-            EnddaTxt: DateUtils.format(mInputData.Endda),
           });
 
           oViewModel.setProperty('/form/list', aListData);
