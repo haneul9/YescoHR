@@ -91,9 +91,9 @@ html.sap-desktop:not(.sapUiNativeScrollbars) ::-webkit-scrollbar-thumb {border-r
 .sapMTextArea textarea {padding:0.25rem 0.3125rem !important}
 
 /* 공통 Font Option */
-.sapMInput input::placeholder {font-style:normal}
-.sapMInputBase input::placeholder {font-style:normal}
-.sapMTextArea textarea::placeholder {font-style:normal}
+.sapMInputBaseInner::-webkit-input-placeholder {font-style:normal; color:#b4babf}
+.sapMInputBaseInner:-ms-input-placeholder {font-style:normal; color:#b4babf}
+.sapMInputBaseInner::placeholder {font-style:normal; color:#b4babf}
 .sapMInput input {font-size:0.813rem; line-height:0.813rem; font-weight:500; color:var(--FontColorNormal)}
 .sapMTextArea textarea {font-size:0.813rem; line-height:0.813rem; font-weight:500; color:var(--FontColorNormal)}
 .sapMRbBLabel {font-size:0.813rem; line-height:0.813rem; font-weight:500; color:var(--FontColorNormal)}
@@ -378,9 +378,11 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt {outline-style:none !important}
 .sapUiTableSelAll,.sapUiTableSelAllVisible {height:100% !important}
 .sapUiTableSelectAllCheckBox::after {top:14px !important}
 .sapUiTableCnt{border:0.0625rem solid #dddddd!important;} /* table top */
-.sapUiTableColHdrCnt{border-right:1px solid #e7eaed; border-bottom:1px solid #e7eaed; border-left:1px solid #e7eaed; background:#fbfcfd !important;} /* table header */
-.sapUiTableCCnt {border-bottom:0.0625rem solid #f5f5f5; border-left:0.0625rem solid #f5f5f5}
+.sapUiTableColHdrCnt{border-right:1px solid #e7eaed; border-bottom:none; border-left:1px solid #e7eaed; background:#fbfcfd !important;} /* table header */
+.sapUiTableCCnt {box-sizing:border-box; min-height:45px !important; border-bottom:none; border-left:0.0625rem solid #f5f5f5}
+.sapUiTableCCnt:after {content:" "; position:absolute; z-index:1; bottom:0; height:1px; width:100%; background-color:#f5f5f5; display:block}
 .sapUiTableRowHighlights .sapUiTableCCnt, .sapUiTableEmpty .sapUiTableCCnt {border-left:0}
+.sapUiTableEmpty .sapUiTableCCnt {border-bottom:0}
 .sapUiTableHeaderRow {background:#fbfcfd !important} /* table header */
 .sapUiTableHeaderRow + .sapUiTableHeaderRow .sapUiTableCell {border-top:1px solid #e7eaed}
 .sapUiTableHeaderDataCell>.sapUiTableCellInner>div:first-child{display:block !important;text-align:center !important;line-height: 1;margin-top: 4px;}
@@ -533,7 +535,7 @@ span.sapMBtnInner.sapMBtnEmphasized {text-shadow: none;}
 .sapUiTableRowHighlights .sapUiTableRowSelectionHeaderCell {border-right-color:transparent}
 /*.sapUiTableCell.sapUiTableHeaderCell:last-child, .sapUiTableHeaderRow  {border-right: 1px solid #E7EAED !important;}*/
 .sapUiTableCtrlScroll tbody tr:nth-child(2) {border-bottom:none}
-.sapUiTableCtrlEmpty {font-size:14px; font-weight:300; color:#b4babf;border: 1px solid #e7eaed; }
+.sapUiTableCtrlEmpty {font-size:14px; font-weight:300; color:#b4babf; border-right:1px solid #e7eaed; border-bottom:1px solid #e7eaed; border-left:1px solid #e7eaed}
 .sapUiTableRowSelectors:not(.sapUiTableRowHighlights) .sapUiTableRowSelectionHeaderCell {height:100%}
 .sapUiTableRowHighlights:not(.sapUiTableRowSelectors) .sapUiTableRowSelectionHeaderCell {width:5px; border-right-color:#fff; background-color:#e7eaed}
 .sapUiTableRowHighlights:not(.sapUiTableRowSelectors) .sapUiTableCtrlScr, .sapUiTableRowHighlights:not(.sapUiTableRowSelectors) .sapUiTableCtrlScrFixed {margin-left:5px}
@@ -545,7 +547,8 @@ span.sapMBtnInner.sapMBtnEmphasized {text-shadow: none;}
 .sapUiTableCtrl, .sapUiTableSelAll, .sapUiTableSelectAllCheckBox {xborder-bottom: 1px solid #888 !important;}
 /* .sapUiTableColHdrCnt .sapUiTableCell.sapUiTableHeaderCell { border-bottom: 0!important;} */
 .sapUiTableCtrlCnt { position:relative; border-right:1px solid #f5f5f5; border-bottom:0px solid #e7eaed; border-left:1px solid transparent}
-.sapUiTableCHdr .sapUiTableColHdrCnt:after {content:" ";position: absolute;top:0;height:1px; width:100%;background-color:#E7EAED;display:block;}
+.sapUiTableCHdr .sapUiTableColHdrCnt:before {content:" "; position:absolute; z-index:1; top:0; height:1px; width:100%; background-color:#e7eaed; display:block}
+.sapUiTableCHdr .sapUiTableColHdrCnt:after {content:" "; position:absolute; z-index:1; bottom:0; height:1px; width:100%; background-color:#e7eaed; display:block}
 .sapUiTableCellDummy { background-color: #f9f9f9; border-right: 1px solid #e7eaed; border-top: 0.0rem solid #e7eaed; border-left: 1px solid #e7eaed;}
 .sapUiTableVSb {border-right: 1px solid #e7eaed;border-top: 1px solid #f5f5f5;border-bottom: 1px solid #f5f5f5;}
 .sapUiTableCtrlScr {border-right:0!important;}
@@ -592,7 +595,6 @@ span.sapMBtnInner.sapMBtnEmphasized {text-shadow: none;}
 /* .sapUiSizeCompact .sapMInputBase.sapMInputWithDescription{width:60px !important;}
 .sapUiSizeCompact .sapMInputBase.sapMInputWithDescription>div{width:60px !important;} */
 .sapUiSizeCompact .sapMInputBase.sapMInputWithDescription>div input{text-align: right;}
-input::placeholder{color:var(--FontColorNormal) !important;}
 
 /*search*/
 .sapMSF {height:40px !important; padding:0 !important}
