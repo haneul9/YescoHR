@@ -1,9 +1,9 @@
 <core:FragmentDefinition xmlns="sap.ui.table"
   xmlns:m="sap.m"
   xmlns:core="sap.ui.core">
-  <Table id="requestListTable" class="row-link" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{requestList}" visibleRowCount="{requestListInfo/rowCount}" busy="{busy}" busyIndicatorDelay="0" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
+  <Table id="requestListTable" selectionMode="None" class="row-link" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{requestList}" visibleRowCount="{requestListInfo/rowCount}" busy="{busy}" busyIndicatorDelay="0" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
     <rowSettingsTemplate>
-      <RowSettings highlight="{ path: 'ZappStatAl', formatter: '.oTableUtils.rowHighlight' }" />
+      <RowSettings highlight="{ path: 'ZappStatAl', formatter: '.TableUtils.rowHighlight' }" />
     </rowSettingsTemplate>
     <columns>
       <Column width="8%" filterProperty="ZappStxtAl" sortProperty="ZappStxtAl">

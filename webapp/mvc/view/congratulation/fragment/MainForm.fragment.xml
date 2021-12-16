@@ -18,33 +18,31 @@
       <HBox justifyContent="SpaceAround">
         <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBox" type="XML" />
         <VBox class="hCardBox summary-box" busyIndicatorDelay="0" busy="{/busy}">
-          <VBox>
-            <HBox justifyContent="SpaceBetween" class="title">
-              <Title level="H2" text="{i18n>MSG_02001}" />
-            </HBox>
-            <Text text="{i18n>MSG_02002}" class="sapUiSmallMarginBottom" />
-            <HBox>
-              <VBox width="30%" class="summary-info">
-                <Label design="Bold" text="{i18n>LABEL_02003}" />
-                <ObjectStatus text="{
+          <HBox justifyContent="SpaceBetween" class="title">
+            <Title level="H2" text="{i18n>MSG_02001}" />
+          </HBox>
+          <Text text="{i18n>MSG_02002}" class="sapUiSmallMarginBottom" />
+          <HBox>
+            <VBox width="30%" class="summary-info">
+              <Label design="Bold" text="{i18n>LABEL_02003}" />
+              <ObjectStatus text="{
 									path: '/Total/Pycnt',
 									formatter: '.formatNumber'
 								}" state="Indication04" />
-              </VBox>
-              <VBox class="summary-info">
-                <Label design="Bold" text="{i18n>LABEL_02002}" />
-                <ObjectStatus text="{
+            </VBox>
+            <VBox class="summary-info">
+              <Label design="Bold" text="{i18n>LABEL_02002}" />
+              <ObjectStatus text="{
 									path: '/Total/ZpayBetT',
 									formatter: '.formatPay'
 								}" state="Indication04" />
-              </VBox>
-            </HBox>
-            <HBox class="desc">
-              <Text text="{i18n>MSG_02003}"/>
-              <ObjectStatus text="{/Total/Excon}" state="Indication05" />
-              <Text text="{i18n>MSG_02004}"/>
-            </HBox>
-          </VBox>
+            </VBox>
+          </HBox>
+          <HBox class="desc">
+            <Text text="{i18n>MSG_02003}"/>
+            <ObjectStatus text="{/Total/Excon}" state="Indication05" />
+            <Text text="{i18n>MSG_02004}"/>
+          </HBox>
         </VBox>
         <VBox class="hCardBox search-box">
           <HBox justifyContent="SpaceBetween" class="title">

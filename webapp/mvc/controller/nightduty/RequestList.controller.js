@@ -22,8 +22,9 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.nightduty.RequestList', {
+      TableUtils: TableUtils,
+
       sRequestListTableId: 'requestListTable',
-      oTableUtils: TableUtils,
       oSummaryBoxHandler: null,
       oSearchBoxHandler: null,
 

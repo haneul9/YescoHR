@@ -403,20 +403,24 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt {outline-style:none !important}
 .sapIcon_Select_Arrow .sapMInputBaseIconContainer .sapUiIcon::before {content:'화살표'; font-size:0; background-size:auto; background-image:url(./images/icon_arrow.png)}
 
 /* DEVELOPER Temporary style */
-.hCardBox {position:relative;border: 1px solid whitesmoke; border-radius: 10px; padding:24px 30px;background-color: #fff; box-shadow: 0px 2px 4px rgb(0 0 0 / 16%)}
-.vCardBox, .customBox {position:relative;margin: 0; border: 1px solid whitesmoke; border-radius: 10px; padding:24px 30px;background-color: #fff; box-shadow: 0px 2px 4px rgb(0 0 0 / 16%);}
-.vCardBox.sapUiMediumMarginBottom, .customBox.sapUiMediumMarginBottom {margin-bottom: 20px!important;}
+.hCardBox {position:relative; border:1px solid whitesmoke; border-radius:10px; padding:25px 30px; background-color:#fff; box-shadow:0px 2px 4px rgb(0 0 0 / 16%)}
+.vCardBox, .customBox {position:relative; margin:0; border:1px solid whitesmoke; border-radius:10px; padding:25px 30px; background-color:#fff; box-shadow:0px 2px 4px rgb(0 0 0 / 16%)}
+.vCardBox.sapUiMediumMarginBottom, .customBox.sapUiMediumMarginBottom {margin-bottom:20px !important}
 
-.vCardBox h2.sapMTitle, .hCardBox h2.sapMTitle, .customBox h2.sapMTitle {font-size: 24px; font-weight: 700;color:#222222; margin-bottom: 19px; display: inline-block;}
-h3.sapMTitle {font-size: 24px; font-weight: 700; margin-bottom: 0.4rem;color:#222222;}
-.hCardBox.search-box > .sapMFlexBox h2.sapMTitle, .hCardBox.search-box > .sapMFlexBox h2.sapMTitle, .hCardBox.appointee-info-box > .sapMFlexBox h2.sapMTitle {display: flex;margin-bottom: 0px;}
-.hCardBox.search-box > .sapMFlexBox, .hCardBox.search-box > .sapMFlexBox, .hCardBox.appointee-info-box > .sapMFlexBox {margin-bottom:16px;}
+.vCardBox h2.sapMTitle, .hCardBox h2.sapMTitle, .customBox h2.sapMTitle {font-size:24px; font-weight:700; color:#222222; display:inline-block}
+h3.sapMTitle {font-size:24px; font-weight:700; margin-bottom:0.4rem; color:#222222}
+.hCardBox.appointee-info-box,
+.hCardBox.summary-box,
+.hCardBox.search-box {box-sizing:border-box; height:240px; overflow:hidden}
+.hCardBox.appointee-info-box .title,
+.hCardBox.summary-box .title,
+.hCardBox.search-box .title {margin-bottom:20px}
 
-.sapMFlexBox .title {}
-.sapMFlexBox .title .desc-txt {position: relative; top: -6px;}
-.sapMFlexBox .title .sapMFlexItemAlignAuto {-webkit-align-self: center;align-self: center;}
-.sapMFlexBox .title + .table-top, .table-top {margin-top:-6px;}
-.sapMFlexBox .title + .table-top .sapMBtn, .table-top .sapMBtn {min-width: auto;}
+.sapMFlexBox .title {height:24px}
+.sapMFlexBox .title .desc-txt {position: relative; top:-6px}
+.sapMFlexBox .title .sapMFlexItemAlignAuto {-webkit-align-self:center; align-self:center}
+.sapMFlexBox .title + .table-top, .table-top {margin-top:-6px}
+.sapMFlexBox .title + .table-top .sapMBtn, .table-top .sapMBtn {min-width:auto}
 
 
 .sapUiTableRowHighlight.sapUiTableRowHighlightNone {background-color:var(--BorderColorReadonly) !important}
@@ -775,8 +779,8 @@ html.sap-desktop .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnSel:hover .sapMSeg
 .sapMBtn.icon-button.search .sapMBtnInner .sapMBtnIcon {color:#484C50;font-size: 22px;font-weight: 200;}
 .sapMBtn.icon-button.search .sapMBtnInner:after {content: "";display: inline-block;width: 27px;height: 23px;background-image: url(../css/images/icon_search01.png);background-repeat: no-repeat;background-position: center;}
 
-.breadcrumbs { align-items: center;padding: 1rem 0;background-color: #fff;height: 80px;width: 1600px; max-width: 1600px; margin: 0 auto;}
-.breadcrumbs .contents {     width: 1600px; display: flex; justify-content: space-between;}
+.breadcrumbs {align-items:center; background-color:#fff; height:60px; width:1600px; max-width:1600px; margin:0 auto}
+.breadcrumbs .contents {width:1600px; display:flex; justify-content:space-between}
 
 
 .member-picture > div {height:9.13rem}
@@ -820,7 +824,7 @@ html.sap-desktop .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnSel:hover .sapMSeg
 .info-area .sapMFlexItem .sapMFT p {padding:0;margin-block-start: 0;margin-block-end: 4px;}
 .info-area .sapMFlexItem .sapMFT p:last-child {padding:0;margin-block-start: 0;margin-block-end: 0;}
 
-.contents-header {align-items:center; box-shadow:0 3px 3px rgb(0 0 0 / 10%); padding:0; background-color:#fff; height:80px}
+.contents-header {align-items:center; box-shadow:0 3px 3px rgb(0 0 0 / 10%); padding:0; background-color:#fff; height:60px}
 .contents-header + .contents {margin-top:20px}
 .contents {margin:0 auto; max-width:1600px; min-width:1600px; padding-bottom:20px}
 .contents > .sapMFlexBox + .sapMFlexBox {margin-top:20px}
