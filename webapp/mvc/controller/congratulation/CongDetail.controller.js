@@ -557,7 +557,7 @@ sap.ui.define(
 
       // 재작성
       onRewriteBtn() {
-        this.getViewModel().setProperty('/FormData/ZappStatAl', '10');
+        this.getViewModel().setProperty('/FormData/ZappStatAl', '');
       },
 
       // 임시저장
@@ -604,7 +604,7 @@ sap.ui.define(
                     },
                   });
                 });
-                
+
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
               } catch (oError) {
                 AppUtils.handleError(oError);
@@ -694,7 +694,7 @@ sap.ui.define(
               oModel.create('/ConExpenseApplSet', oSendObject, {
                 success: () => {
                   AppUtils.setAppBusy(false, this);
-                  MessageBox.alert(this.getBundleText('MSG_00038', 'LABEL_00121'), {
+                  MessageBox.alert(this.getBundleText('MSG_00039', 'LABEL_00121'), {
                     onClose: () => {
                       this.getRouter().navTo('congratulation');
                     },
