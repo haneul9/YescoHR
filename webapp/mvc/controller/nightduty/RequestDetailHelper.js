@@ -29,8 +29,9 @@ sap.ui.define(
 
     return BaseObject.extend('sap.ui.yesco.mvc.controller.nightduty.RequestDetailHelper', {
       sDetailListTableId: 'detailListTable',
+      oApprovalRequestHelper: null,
 
-      constructor: function (oController) {
+      constructor: function (oController, oApprovalRequestHelper) {
         const oModel = new JSONModel({
           detail: {
             editable: false,
@@ -44,6 +45,7 @@ sap.ui.define(
         });
 
         this.oController = oController;
+        this.oApprovalRequestHelper = oApprovalRequestHelper;
         this.oDetailListModel = oModel;
         this.oCurrentListDialogHandler = new CurrentListDialogHandler({ oController: this.oController, sSelectionMode: SelectionMode.MultiToggle, fnCallback: this.appendDetailListTableRows.bind(this) });
 
@@ -52,9 +54,9 @@ sap.ui.define(
         oController.byId('nightduty-request-detail-reason').setModel(oModel);
 
         TableUtils.adjustRowSpan({
-          table: this.oController.byId(this.sDetailListTableId),
-          colIndices: [0, 1, 2],
-          theadOrTbody: 'thead',
+          oTable: this.oController.byId(this.sDetailListTableId),
+          aColIndices: [0, 1, 2],
+          sTheadOrTbody: 'thead',
         });
       },
 
@@ -95,6 +97,8 @@ sap.ui.define(
         this.oDetailListModel.setProperty('/detail/listMode', SelectionMode.None);
 
         this.setDetailListData(aDetailListData);
+
+        return this;
       },
 
       setDetailListData(aDetailListData) {
@@ -103,10 +107,14 @@ sap.ui.define(
         this.oDetailListModel.setProperty('/detail/list', aDetailListData);
         this.oDetailListModel.setProperty('/detail/rowCount', iRowCount);
         this.oDetailListModel.setProperty('/detail/enabled', iRowCount > 0);
+
+        return this;
       },
 
       openCurrentListDialog() {
         this.oCurrentListDialogHandler.openDialog();
+
+        return this;
       },
 
       appendDetailListTableRows(aSelectedListData) {
@@ -126,6 +134,8 @@ sap.ui.define(
         );
 
         this.setDetailListData(aDetailListData);
+
+        return this;
       },
 
       removeDetailListTableRows() {

@@ -407,7 +407,7 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt {outline-style:none !important}
 .vCardBox, .customBox {position:relative; margin:0; border:1px solid whitesmoke; border-radius:10px; padding:25px 30px; background-color:#fff; box-shadow:0px 2px 4px rgb(0 0 0 / 16%)}
 .vCardBox.sapUiMediumMarginBottom, .customBox.sapUiMediumMarginBottom {margin-bottom:20px !important}
 
-.vCardBox h2.sapMTitle, .hCardBox h2.sapMTitle, .customBox h2.sapMTitle {font-size:24px; font-weight:800; color:#222; display:inline-block}
+.vCardBox h2.sapMTitle, .hCardBox h2.sapMTitle, .customBox h2.sapMTitle {line-height:24px; font-size:24px; font-weight:800; color:#222; display:inline-block}
 h3.sapMTitle {font-size:24px; font-weight:800; margin-bottom:0.4rem; color:#222}
 .hCardBox.appointee-info-box,
 .hCardBox.summary-box,
@@ -416,11 +416,15 @@ h3.sapMTitle {font-size:24px; font-weight:800; margin-bottom:0.4rem; color:#222}
 .hCardBox.summary-box .title,
 .hCardBox.search-box .title {margin-bottom:20px}
 
+.vCardBox .table-toolbar {justify-content:space-between; align-items:center; margin-top:-25px; height:75px}
+.vCardBox .table-toolbar .title {align-items:center}
+.vCardBox .table-toolbar .title > div {height:24px}
+.vCardBox .table-toolbar .table-actions {align-items:center}
 .sapMFlexBox .title {height:24px}
 .sapMFlexBox .title .desc-txt {position: relative; top:-6px}
-.sapMFlexBox .title .sapMFlexItemAlignAuto {-webkit-align-self:center; align-self:center}
-.sapMFlexBox .title + .table-top, .table-top {margin-top:-6px}
-.sapMFlexBox .title + .table-top .sapMBtn, .table-top .sapMBtn {min-width:auto}
+/* .sapMFlexBox .title .sapMFlexItemAlignAuto {-webkit-align-self:center; align-self:center} */
+/* .sapMFlexBox .title + .table-actions, .table-actions {margin-top:-6px} */
+.vCardBox .table-toolbar .title + .table-actions .sapMBtn, .table-actions .sapMBtn {min-width:auto}
 
 
 .sapUiTableRowHighlight.sapUiTableRowHighlightNone {background-color:var(--BorderColorReadonly) !important}
@@ -542,9 +546,9 @@ span.sapMBtnInner.sapMBtnEmphasized {text-shadow: none;}
 .sapUiTableCtrlEmpty {font-size:14px; font-weight:300; color:#b4babf; border-right:1px solid #e7eaed; border-bottom:1px solid #e7eaed; border-left:1px solid #e7eaed}
 .sapUiTableRowSelectors:not(.sapUiTableRowHighlights) .sapUiTableRowSelectionHeaderCell {height:100%}
 .sapUiTableRowHighlights:not(.sapUiTableRowSelectors) .sapUiTableRowSelectionHeaderCell {width:5px; border-right-color:#fff; background-color:#e7eaed}
-.sapUiTableRowHighlights:not(.sapUiTableRowSelectors) .sapUiTableCtrlScr, .sapUiTableRowHighlights:not(.sapUiTableRowSelectors) .sapUiTableCtrlScrFixed {margin-left:5px}
-.sapUiTableRowHighlight {width:5px}
-.sapUiTableCellInner .sapMText {font-size:15px; font-weight:500; font-stretch:normal; font-style:normal; line-height:normal; letter-spacing:normal; text-align:left; color:#222222}
+.sapUiTableRowHighlights:not(.sapUiTableRowSelectors) .sapUiTableCtrlScr, .sapUiTableRowHighlights:not(.sapUiTableRowSelectors) .sapUiTableCtrlScrFixed {margin-left:4px}
+.sapUiTableRowHighlight {width:4px}
+.sapUiTableCellInner .sapMText {font-size:15px; font-weight:500; font-stretch:normal; font-style:normal; line-height:normal; letter-spacing:normal; text-align:left; color:#222}
 .sapUiTableCtrlRowFixedBottom .sapUiTableCellInner .sapMText {font-weight:bold}
 .sapUiTableCnt {border: 0.0rem solid #dddddd!important; }
 /* .sapUiTableCell.sapUiTableHeaderCell {cborder-bottom: 0px solid #888 !important;} */

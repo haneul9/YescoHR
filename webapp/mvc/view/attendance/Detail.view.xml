@@ -22,7 +22,7 @@
                     <HBox alignItems="Center" class="title">
                         <Title level="H2" text="{i18n>LABEL_00129}" />
                     </HBox>
-                    <HBox class="table-top">
+                    <HBox class="table-actions">
                         <Button icon="sap-icon://add" class="sapUiTinyMarginEnd" text="{i18n>LABEL_00107}" press=".onPressAddBtn" visible="{= !${/ZappStatAl} &amp;&amp; ${/type} !== 'C' }" />
                         <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onPressDelBtn" visible="{= !${/ZappStatAl} &amp;&amp; ${/type} !== 'C' }" enabled="{= ${/form/hasRow}}" />
                     </HBox>
@@ -36,7 +36,7 @@
                     <HBox alignItems="Center" class="title">
                         <Title level="H2" text="{i18n>LABEL_00129}" />
                     </HBox>
-                    <HBox class="table-top">
+                    <HBox class="table-actions">
                         <Button icon="sap-icon://edit" text="{i18n>LABEL_00109}" press=".onPressChangeBtn" visible="{= !${/ZappStatAl} }" />
                     </HBox>
                 </HBox>

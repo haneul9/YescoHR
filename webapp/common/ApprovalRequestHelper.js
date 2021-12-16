@@ -26,6 +26,7 @@ sap.ui.define(
        */
       constructor: function (oController) {
         const oModel = new JSONModel({
+          ZappStatAl: null,
           Appno: null,
           ApplyInfo: null,
           ApprovalDetails: null,

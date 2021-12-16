@@ -36,13 +36,23 @@ sap.ui.define(
       sDetailListTableId: 'detailListTable',
       sTYPE_CODE: 'HR05',
 
-      AttachFileAction: AttachFileAction,
       TextUtils: TextUtils,
+      AttachFileAction: AttachFileAction,
 
+      /**
+       * Component.js에서 호출
+       * @param {object} mArguments
+       * @returns
+       */
       getCurrentLocationText(mArguments) {
-        return mArguments.sAppno ? this.getBundleText('LABEL_00100') : this.getBundleText('LABEL_00121'); // 조회 : 신청
+        const sAppno = ((mArguments || {}).sAppno || '').replace(/^0$/, '');
+        return sAppno ? this.getBundleText('LABEL_00100') : this.getBundleText('LABEL_00121'); // 조회 : 신청
       },
 
+      /**
+       * ApprovalRequestHelper에서 호출
+       * @returns
+       */
       getApprovalDocTypeCode() {
         return this.sTYPE_CODE;
       },
@@ -52,8 +62,8 @@ sap.ui.define(
         this.oApprovalRequestHelper = new ApprovalRequestHelper(this);
       },
 
-      async onObjectMatched(mParameters) {
-        const sAppno = (mParameters || {}).sAppno;
+      async onObjectMatched(mArguments) {
+        const sAppno = ((mArguments || {}).sAppno || '').replace(/^0$/, '');
         this.oApprovalRequestHelper.setAppno(sAppno);
 
         this.readData();
@@ -69,7 +79,7 @@ sap.ui.define(
             this.oRequestDetailHelper.setData(aDetailListData, this.oApprovalRequestHelper.isFormEditable());
             this.oApprovalRequestHelper.setData(mDetailData, true); // 첨부파일, 신청자, 결재정보 세팅
           } else {
-            this.oRequestDetailHelper.prepareSuggestionData();
+            this.oRequestDetailHelper.setData([], this.oApprovalRequestHelper.isFormEditable()).prepareSuggestionData();
             this.oApprovalRequestHelper.setApplyInfoBoxData();
           }
         } catch (oError) {

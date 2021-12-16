@@ -260,7 +260,7 @@ sap.ui.define(
           .attachRoutePatternMatched(async (oEvent) => {
             AppUtils.debug('routePatternMatched', oEvent.getParameters());
 
-            const oArguments = oEvent.getParameter('arguments');
+            const mArguments = oEvent.getParameter('arguments');
             const oView = oEvent.getParameter('view');
             const oController = oView.getController();
 
@@ -269,7 +269,7 @@ sap.ui.define(
             oView.setVisible(true); // 반드시 onObjectMatched 이전에 실행되야함
 
             if (oController && oController.onObjectMatched && typeof oController.onObjectMatched === 'function') {
-              oController.onObjectMatched(oArguments);
+              oController.onObjectMatched(mArguments);
             }
           });
         return this;
