@@ -1,20 +1,20 @@
 <core:FragmentDefinition xmlns="sap.ui.table"
-    xmlns:m="sap.m"
-    xmlns:core="sap.ui.core">
-    <Table id="baseTable" selectionMode="None" width="100%" columnHeaderHeight="45" rowHeight="45" rows="{/base/list}" visibleRowCount="{/base/rowCount}" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}">
-        <columns>
-            <Column width="20%">
-                <m:Label text="{i18n>LABEL_13031}"/>
-                <template>
-                    <m:Text text="{Pyitx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                </template>
-            </Column>
-            <Column>
-                <m:Label text="{i18n>LABEL_13032}"/>
-                <template>
-                    <m:Text text="{Caltx}" width="100%" wrapping="false" class="tableRow_Text" />
-                </template>
-            </Column>
-        </columns>
-    </Table>
+  xmlns:m="sap.m"
+  xmlns:core="sap.ui.core">
+  <Table id="baseTable" selectionMode="None" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/base/list}" visibleRowCount="{/base/rowCount}" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}">
+    <columns>
+      <Column width="20%">
+        <m:Label text="{i18n>LABEL_13031}"/>
+        <template>
+          <m:Text text="{Pyitx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+      <Column>
+        <m:Label text="{i18n>LABEL_13032}"/>
+        <template>
+          <m:Text text="{Caltx}" width="100%" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+    </columns>
+  </Table>
 </core:FragmentDefinition>

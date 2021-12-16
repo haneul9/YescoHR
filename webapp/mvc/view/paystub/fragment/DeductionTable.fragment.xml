@@ -1,20 +1,20 @@
 <core:FragmentDefinition xmlns="sap.ui.table"
-    xmlns:m="sap.m"
-    xmlns:core="sap.ui.core">
-    <TreeTable id="deductionTable" selectionMode="None" width="100%" fixedBottomRowCount="1" columnHeaderHeight="45" rowHeight="45" rows="{path:'/deduction/list', parameters: {arrayNames:['nodes']}}" visibleRowCount="{/deduction/rowCount}" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" toggleOpenState=".onToggleTreeState">
-        <columns>
-            <Column>
-                <m:Label text="{i18n>LABEL_13033}"/>
-                <template>
-                    <m:Text text="{Pyitx}" width="100%" textAlign="{= ${Sumrow} ? 'Center' : 'Begin' }" wrapping="false" class="tableRow_Text" />
-                </template>
-            </Column>
-            <Column width="40%">
-                <m:Label text="{i18n>LABEL_00174}"/>
-                <template>
-                    <m:Text text="{ path: 'Betrg', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="End" wrapping="false" class="tableRow_Text" />
-                </template>
-            </Column>
-        </columns>
-    </TreeTable>
+  xmlns:m="sap.m"
+  xmlns:core="sap.ui.core">
+  <TreeTable id="deductionTable" selectionMode="None" width="100%" fixedBottomRowCount="1" columnHeaderHeight="45" rowHeight="44" rows="{path:'/deduction/list', parameters: {arrayNames:['nodes']}}" visibleRowCount="{/deduction/rowCount}" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" toggleOpenState=".onToggleTreeState">
+    <columns>
+      <Column>
+        <m:Label text="{i18n>LABEL_13033}"/>
+        <template>
+          <m:Text text="{Pyitx}" width="100%" textAlign="{= ${Sumrow} ? 'Center' : 'Begin' }" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+      <Column width="40%">
+        <m:Label text="{i18n>LABEL_00174}"/>
+        <template>
+          <m:Text text="{ path: 'Betrg', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="End" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+    </columns>
+  </TreeTable>
 </core:FragmentDefinition>

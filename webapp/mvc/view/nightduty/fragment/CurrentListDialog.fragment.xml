@@ -14,7 +14,7 @@
       </m:HBox>
       <m:Button type="Transparent" icon="sap-icon://search" class="icon-button" press=".onPressCurrentListSearch" />
     </m:HBox>
-    <Table id="currentListTable" class="row-link" width="100%" columnHeaderHeight="45" rowHeight="45" selectionMode="{currentListMode}" rows="{currentList}" visibleRowCount="{currentListRowCount}" busy="{busy}" busyIndicatorDelay="0" noData="{i18n>MSG_00001}" rowSelectionChange=".onChangeRowSelection">
+    <Table id="currentListTable" class="row-link" width="100%" columnHeaderHeight="45" rowHeight="44" selectionMode="{currentListMode}" rows="{currentList}" visibleRowCount="{currentListRowCount}" busy="{busy}" busyIndicatorDelay="0" noData="{i18n>MSG_00001}" rowSelectionChange=".onChangeRowSelection">
       <columns>
         <Column width="10%" filterProperty="Datum" sortProperty="Datum">
           <m:Label text="{i18n>LABEL_06101}" />

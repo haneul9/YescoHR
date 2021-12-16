@@ -14,7 +14,7 @@
         <Button icon="sap-icon://less" visible="{/Settings/Editable}" text="{i18n>LABEL_00110}" press=".AttachFileAction.onDeleteAttachFile" />
       </HBox>
     </HBox>
-    <table:Table id="attachTable" width="100%" selectionMode="{/Settings/ListMode}" columnHeaderHeight="45" rowHeight="45" visibleRowCount="1" rows="{/Data}" noData="{i18n>MSG_00001}">
+    <table:Table id="attachTable" width="100%" selectionMode="{/Settings/ListMode}" columnHeaderHeight="45" rowHeight="44" visibleRowCount="1" rows="{/Data}" noData="{i18n>MSG_00001}">
       <table:columns>
         <table:Column width="4%">
           <Label text="No"/>

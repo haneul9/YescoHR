@@ -1,38 +1,38 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:table="sap.ui.table"
-    xmlns:core="sap.ui.core">
-    <table:Table id="approveSingleTable" selectionMode="{/form/listMode}" width="100%" columnHeaderHeight="45" rowHeight="45" rows="{/form/list}" visibleRowCount="{/form/rowCount}" noData="{i18n>MSG_00001}">
-        <table:columns>
-            <table:Column width="15%">
-                <Label text="{i18n>LABEL_04010}" />
-                <table:template>
-                    <Text text="{Atext}" width="100%" textAlign="Center" />
-                </table:template>
-            </table:Column>
-            <table:Column width="15%">
-                <Label text="{i18n>LABEL_00148}" />
-                <table:template>
-                    <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
-                </table:template>
-            </table:Column>
-            <table:Column width="15%">
-                <Label text="{i18n>LABEL_00149}" />
-                <table:template>
-                    <Text text="{ path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
-                </table:template>
-            </table:Column>
-            <table:Column width="15%">
-                <Label text="{i18n>LABEL_00150}" />
-                <table:template>
-                    <Text text="{AbrtgTxt}" width="100%" textAlign="Center" />
-                </table:template>
-            </table:Column>
-            <table:Column width="40%">
-                <Label text="{i18n>LABEL_00154}" />
-                <table:template>
-                    <Text text="{Tmrsn}" width="100%" textAlign="Center" />
-                </table:template>
-            </table:Column>
-        </table:columns>
-    </table:Table>
+  xmlns:table="sap.ui.table"
+  xmlns:core="sap.ui.core">
+  <table:Table id="approveSingleTable" selectionMode="{/form/listMode}" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/form/list}" visibleRowCount="{/form/rowCount}" noData="{i18n>MSG_00001}">
+    <table:columns>
+      <table:Column width="15%">
+        <Label text="{i18n>LABEL_04010}" />
+        <table:template>
+          <Text text="{Atext}" width="100%" textAlign="Center" />
+        </table:template>
+      </table:Column>
+      <table:Column width="15%">
+        <Label text="{i18n>LABEL_00148}" />
+        <table:template>
+          <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
+        </table:template>
+      </table:Column>
+      <table:Column width="15%">
+        <Label text="{i18n>LABEL_00149}" />
+        <table:template>
+          <Text text="{ path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
+        </table:template>
+      </table:Column>
+      <table:Column width="15%">
+        <Label text="{i18n>LABEL_00150}" />
+        <table:template>
+          <Text text="{AbrtgTxt}" width="100%" textAlign="Center" />
+        </table:template>
+      </table:Column>
+      <table:Column width="40%">
+        <Label text="{i18n>LABEL_00154}" />
+        <table:template>
+          <Text text="{Tmrsn}" width="100%" textAlign="Center" />
+        </table:template>
+      </table:Column>
+    </table:columns>
+  </table:Table>
 </core:FragmentDefinition>

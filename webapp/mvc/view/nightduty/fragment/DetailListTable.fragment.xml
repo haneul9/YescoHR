@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.ui.table"
   xmlns:m="sap.m"
   xmlns:core="sap.ui.core">
-  <Table id="detailListTable" selectionMode="{/detail/listMode}" width="100%" columnHeaderHeight="45" rowHeight="45" rows="{/detail/list}" visibleRowCount="{/detail/rowCount}" noData="{i18n>MSG_00001}">
+  <Table id="detailListTable" selectionMode="{/detail/listMode}" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/detail/list}" visibleRowCount="{/detail/rowCount}" noData="{i18n>MSG_00001}">
     <columns>
       <Column width="9%">
         <multiLabels>

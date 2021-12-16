@@ -1,92 +1,92 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:table="sap.ui.table"
-    xmlns:core="sap.ui.core">
-    <HBox>
-        <table:Table id="attendanceTable" class="row-link" width="100%" columnHeaderHeight="45" rowHeight="45" rows="{/list}" visibleRowCount="{/listInfo/rowCount}" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow" rowSelectionChange=".onChangeRowSelection">
-            <table:rowSettingsTemplate>
-                <table:RowSettings highlight="{
+  xmlns:table="sap.ui.table"
+  xmlns:core="sap.ui.core">
+  <HBox>
+    <table:Table id="attendanceTable" class="row-link" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/list}" visibleRowCount="{/listInfo/rowCount}" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow" rowSelectionChange=".onChangeRowSelection">
+      <table:rowSettingsTemplate>
+        <table:RowSettings highlight="{
 							path: 'ZappStatAl',
 							formatter: '.TableUtils.rowHighlight'
 						}"/>
-            </table:rowSettingsTemplate>
-            <table:columns>
-                <table:Column width="8%" filterProperty="ZappStxtAl" sortProperty="ZappStxtAl">
-                    <Label text="{i18n>LABEL_00144}"/>
-                    <table:template>
-                        <Text text="{ZappStxtAl}" width="100%" textAlign="Center">
-                            <customData>
-                                <core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
-                            </customData>
-                        </Text>
-                    </table:template>
-                </table:Column>
-                <table:Column width="8%" filterProperty="Dettx" sortProperty="Appty">
-                    <Label text="{i18n>LABEL_00147}"/>
-                    <table:template>
-                        <Text text="{Apptxt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                    </table:template>
-                </table:Column>
-                <table:Column width="8%" filterProperty="Appernr" sortProperty="Pernr">
-                    <Label text="{i18n>LABEL_00209}"/>
-                    <table:template>
-                        <Text text="{ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                    </table:template>
-                </table:Column>
-                <table:Column width="8%" filterProperty="Apename" sortProperty="Ename">
-                    <Label text="{i18n>LABEL_00210}"/>
-                    <table:template>
-                        <Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                    </table:template>
-                </table:Column>
-                <table:Column width="8%" filterProperty="Aporgtx" sortProperty="Orgtx">
-                    <Label text="{i18n>LABEL_00224}"/>
-                    <table:template>
-                        <Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                    </table:template>
-                </table:Column>
-                <table:Column width="8%" filterProperty="Apzzjikgbtx" sortProperty="Zzjikgbt">
-                    <Label text="{i18n>LABEL_00215}"/>
-                    <table:template>
-                        <Text text="{Zzjikgbt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                    </table:template>
-                </table:Column>
-                <table:Column width="8%" filterProperty="Atext" sortProperty="Awart">
-                    <Label text="{i18n>LABEL_00151}"/>
-                    <table:template>
-                        <Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                    </table:template>
-                </table:Column>
-                <table:Column width="8%" filterProperty="Apbeg" sortProperty="Begda">
-                    <Label text="{i18n>LABEL_00148}"/>
-                    <table:template>
-                        <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                    </table:template>
-                </table:Column>
-                <table:Column width="8%" filterProperty="Apend" sortProperty="Endda">
-                    <Label text="{i18n>LABEL_00149}"/>
-                    <table:template>
-                        <Text text="{ path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                    </table:template>
-                </table:Column>
-                <table:Column width="8%" filterProperty="Period" sortProperty="Range">
-                    <Label text="{i18n>LABEL_00150}"/>
-                    <table:template>
-                        <Text text="{Period}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                    </table:template>
-                </table:Column>
-                <table:Column width="8%" filterProperty="Appdt" sortProperty="Endda">
-                    <Label text="{i18n>LABEL_00266}"/>
-                    <table:template>
-                        <Text text="{ path: 'Appdt', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                    </table:template>
-                </table:Column>
-                <table:Column width="8%" filterProperty="Sgndt" sortProperty="Endda">
-                    <Label text="{i18n>LABEL_00269}"/>
-                    <table:template>
-                        <Text text="{ path: 'Sgndt', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                    </table:template>
-                </table:Column>
-            </table:columns>
-        </table:Table>
-    </HBox>
+      </table:rowSettingsTemplate>
+      <table:columns>
+        <table:Column width="8%" filterProperty="ZappStxtAl" sortProperty="ZappStxtAl">
+          <Label text="{i18n>LABEL_00144}"/>
+          <table:template>
+            <Text text="{ZappStxtAl}" width="100%" textAlign="Center">
+              <customData>
+                <core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
+              </customData>
+            </Text>
+          </table:template>
+        </table:Column>
+        <table:Column width="8%" filterProperty="Dettx" sortProperty="Appty">
+          <Label text="{i18n>LABEL_00147}"/>
+          <table:template>
+            <Text text="{Apptxt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          </table:template>
+        </table:Column>
+        <table:Column width="8%" filterProperty="Appernr" sortProperty="Pernr">
+          <Label text="{i18n>LABEL_00209}"/>
+          <table:template>
+            <Text text="{ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          </table:template>
+        </table:Column>
+        <table:Column width="8%" filterProperty="Apename" sortProperty="Ename">
+          <Label text="{i18n>LABEL_00210}"/>
+          <table:template>
+            <Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          </table:template>
+        </table:Column>
+        <table:Column width="8%" filterProperty="Aporgtx" sortProperty="Orgtx">
+          <Label text="{i18n>LABEL_00224}"/>
+          <table:template>
+            <Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          </table:template>
+        </table:Column>
+        <table:Column width="8%" filterProperty="Apzzjikgbtx" sortProperty="Zzjikgbt">
+          <Label text="{i18n>LABEL_00215}"/>
+          <table:template>
+            <Text text="{Zzjikgbt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          </table:template>
+        </table:Column>
+        <table:Column width="8%" filterProperty="Atext" sortProperty="Awart">
+          <Label text="{i18n>LABEL_00151}"/>
+          <table:template>
+            <Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          </table:template>
+        </table:Column>
+        <table:Column width="8%" filterProperty="Apbeg" sortProperty="Begda">
+          <Label text="{i18n>LABEL_00148}"/>
+          <table:template>
+            <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          </table:template>
+        </table:Column>
+        <table:Column width="8%" filterProperty="Apend" sortProperty="Endda">
+          <Label text="{i18n>LABEL_00149}"/>
+          <table:template>
+            <Text text="{ path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          </table:template>
+        </table:Column>
+        <table:Column width="8%" filterProperty="Period" sortProperty="Range">
+          <Label text="{i18n>LABEL_00150}"/>
+          <table:template>
+            <Text text="{Period}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          </table:template>
+        </table:Column>
+        <table:Column width="8%" filterProperty="Appdt" sortProperty="Endda">
+          <Label text="{i18n>LABEL_00266}"/>
+          <table:template>
+            <Text text="{ path: 'Appdt', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          </table:template>
+        </table:Column>
+        <table:Column width="8%" filterProperty="Sgndt" sortProperty="Endda">
+          <Label text="{i18n>LABEL_00269}"/>
+          <table:template>
+            <Text text="{ path: 'Sgndt', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          </table:template>
+        </table:Column>
+      </table:columns>
+    </table:Table>
+  </HBox>
 </core:FragmentDefinition>

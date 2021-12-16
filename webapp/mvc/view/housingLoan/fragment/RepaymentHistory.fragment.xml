@@ -1,56 +1,56 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:table="sap.ui.table"
-    xmlns:core="sap.ui.core">
-    <VBox class="vCardBox" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
-        <HBox justifyContent="SpaceBetween" class="header-wrap">
-            <Title level="H3" text="{i18n>LABEL_07033}" class="sapUiSmallMarginEnd" />
-            <Button icon="sap-icon://excel-attachment" width="117px" text="Excel" press=".onPressExcelDownload" busyIndicatorDelay="0" busy="{/busy}" />
-        </HBox>
-        <table:Table id="repayHisTable" rows="{/RepayHisList}" visibleRowCount="{/RepayHisLength}" width="100%" busyIndicatorDelay="0" busy="{/hisBusy}" selectionMode="None" columnHeaderHeight="45" rowHeight="45" noData="{i18n>MSG_00001}">
-            <table:columns>
-                <table:Column width="50px" sortProperty="Number" filterProperty="Number">
-                    <Label text="{i18n>LABEL_00164}"/>
-                    <table:template>
-                        <Text text="{Number}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
-                    </table:template>
-                </table:Column>
-                <table:Column width="auto" sortProperty="Datum" filterProperty="Datum">
-                    <Label text="{i18n>LABEL_07028}"/>
-                    <table:template>
-                        <Text text="{
+  xmlns:table="sap.ui.table"
+  xmlns:core="sap.ui.core">
+  <VBox class="vCardBox" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
+    <HBox justifyContent="SpaceBetween" class="header-wrap">
+      <Title level="H3" text="{i18n>LABEL_07033}" class="sapUiSmallMarginEnd" />
+      <Button icon="sap-icon://excel-attachment" width="117px" text="Excel" press=".onPressExcelDownload" busyIndicatorDelay="0" busy="{/busy}" />
+    </HBox>
+    <table:Table id="repayHisTable" rows="{/RepayHisList}" visibleRowCount="{/RepayHisLength}" width="100%" busyIndicatorDelay="0" busy="{/hisBusy}" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
+      <table:columns>
+        <table:Column width="50px" sortProperty="Number" filterProperty="Number">
+          <Label text="{i18n>LABEL_00164}"/>
+          <table:template>
+            <Text text="{Number}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+        <table:Column width="auto" sortProperty="Datum" filterProperty="Datum">
+          <Label text="{i18n>LABEL_07028}"/>
+          <table:template>
+            <Text text="{
                             path: 'Datum',
                             type: 'sap.ui.model.type.Date',
                             formatOptions: {
                                 pattern: 'yyyy.MM.dd'
                             }
                         }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
-                    </table:template>
-                </table:Column>
-                <table:Column width="auto" sortProperty="Pni" filterProperty="Pni">
-                    <Label text="{i18n>LABEL_07029}"/>
-                    <table:template>
-                        <Text text="{
+          </table:template>
+        </table:Column>
+        <table:Column width="auto" sortProperty="Pni" filterProperty="Pni">
+          <Label text="{i18n>LABEL_07029}"/>
+          <table:template>
+            <Text text="{
                             path: 'Pni',
                             type: 'sap.ui.yesco.mvc.model.type.Currency'
                         }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-                    </table:template>
-                </table:Column>
-                <table:Column width="auto" sortProperty="Int" filterProperty="Int">
-                    <Label text="{i18n>LABEL_07030}"/>
-                    <table:template>
-                        <Text text="{
+          </table:template>
+        </table:Column>
+        <table:Column width="auto" sortProperty="Int" filterProperty="Int">
+          <Label text="{i18n>LABEL_07030}"/>
+          <table:template>
+            <Text text="{
                             path: 'Int',
                             type: 'sap.ui.yesco.mvc.model.type.Currency'
                         }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-                    </table:template>
-                </table:Column>
-                <table:Column width="auto" sortProperty="Pyway" filterProperty="Pyway">
-                    <Label text="{i18n>LABEL_07031}"/>
-                    <table:template>
-                        <Text text="{Pyway}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-                    </table:template>
-                </table:Column>
-            </table:columns>
-        </table:Table>
-    </VBox>
+          </table:template>
+        </table:Column>
+        <table:Column width="auto" sortProperty="Pyway" filterProperty="Pyway">
+          <Label text="{i18n>LABEL_07031}"/>
+          <table:template>
+            <Text text="{Pyway}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+      </table:columns>
+    </table:Table>
+  </VBox>
 </core:FragmentDefinition>

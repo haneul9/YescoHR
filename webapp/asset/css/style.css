@@ -385,7 +385,7 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt {outline-style:none !important}
 .sapUiTableEmpty .sapUiTableCCnt {border-bottom:0}
 .sapUiTableHeaderRow {background:#fbfcfd !important} /* table header */
 .sapUiTableHeaderRow + .sapUiTableHeaderRow .sapUiTableCell {border-top:1px solid #e7eaed}
-.sapUiTableHeaderDataCell>.sapUiTableCellInner>div:first-child{display:block !important;text-align:center !important;line-height: 1;margin-top: 4px;}
+.sapUiTableHeaderDataCell>.sapUiTableCellInner>div:first-child{display:block !important;text-align:center !important;line-height:1}
 .sapUiTableHeaderDataCell>.sapUiTableCellInner>div:first-child>*{color:#222222 !important;font-weight:500;font-size: 15px;display: initial;}
 .sapUiTableSelectAllCheckBox::after {bottom:calc(( 2rem - 0.7rem ) / 2) !important} /* table header checkd style */
 .sapMLnk {color:#007bff !important}
