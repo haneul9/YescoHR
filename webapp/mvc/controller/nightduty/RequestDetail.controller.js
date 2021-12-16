@@ -34,7 +34,7 @@ sap.ui.define(
       oRequestDetailHelper: null, // 업무 정보 관련
       oCurrentListDialogHandler: null,
       sDetailListTableId: 'detailListTable',
-      sTYPE_CODE: 'HR06',
+      sTYPE_CODE: 'HR05',
 
       AttachFileAction: AttachFileAction,
       TextUtils: TextUtils,
@@ -43,7 +43,7 @@ sap.ui.define(
         return mArguments.sAppno ? this.getBundleText('LABEL_00100') : this.getBundleText('LABEL_00121'); // 조회 : 신청
       },
 
-      getDocumentType() {
+      getApprovalDocTypeCode() {
         return this.sTYPE_CODE;
       },
 
@@ -53,8 +53,8 @@ sap.ui.define(
       },
 
       async onObjectMatched(mParameters) {
-        const sAppno = (mParameters || {}).sAppno || '';
-        await this.oApprovalRequestHelper.setAppno(sAppno === '0' ? '' : sAppno);
+        const sAppno = (mParameters || {}).sAppno;
+        this.oApprovalRequestHelper.setAppno(sAppno);
 
         this.readData();
       },
