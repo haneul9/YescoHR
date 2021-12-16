@@ -99,11 +99,13 @@
             <Label text="{i18n>LABEL_00163}"/>
             <VBox>
                 <Input value="{/FormData/Zbigo}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
+                <layoutData>
+                    <grid:GridItemLayoutData gridColumn="2 / 5"/>
+                </layoutData>
             </VBox>
-            <HBox ></HBox>
             <Label text="{i18n>LABEL_00142}" visible="{= ${/FormData/Lnsta} === '45' }" />
-            <VBox>
-                <Text text="{/FormData/Zbigo}" visible="{= ${/FormData/Lnsta} === '45' }" />
+            <VBox visible="{= ${/FormData/Lnsta} === '45' }">
+                <Text text="{/FormData/Zbigo}" />
             </VBox>
         </grid:CSSGrid>
     </VBox>
