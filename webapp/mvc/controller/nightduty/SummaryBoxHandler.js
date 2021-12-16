@@ -3,7 +3,6 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
-    'sap/ui/table/SelectionMode',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/BoxHandler',
     'sap/ui/yesco/common/exceptions/ODataReadError',
@@ -14,7 +13,6 @@ sap.ui.define(
     // prettier 방지용 주석
     Filter,
     FilterOperator,
-    SelectionMode,
     AppUtils,
     BoxHandler,
     ODataReadError,
@@ -28,7 +26,7 @@ sap.ui.define(
        * @override
        */
       init() {
-        this.oCurrentListDialogHandler = new CurrentListDialogHandler(this.oController, SelectionMode.None);
+        this.oCurrentListDialogHandler = new CurrentListDialogHandler({ oController: this.oController });
         this.YYYY = this.oController.getSessionProperty('DTFMTYYYY');
 
         const oTodayMoment = moment().hours(9);
@@ -100,8 +98,8 @@ sap.ui.define(
       /**
        * @param {object} mSummaryData
        */
-      setSummaryData(mSummaryData = {}) {
-        this.oBoxModel.setData({ summary: mSummaryData }, true);
+      setSummaryData(mSummaryData) {
+        this.oBoxModel.setData({ summary: mSummaryData || {} }, true);
       },
 
       /**

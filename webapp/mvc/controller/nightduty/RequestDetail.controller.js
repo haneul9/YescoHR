@@ -1,7 +1,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/table/SelectionMode',
     'sap/ui/yesco/common/ApprovalRequestHelper',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
@@ -17,7 +16,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    SelectionMode,
     ApprovalRequestHelper,
     AppUtils,
     AttachFileAction,
@@ -32,8 +30,8 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.nightduty.RequestDetail', {
-      oApprovalRequestHelper: null,
-      oRequestDetailHelper: null,
+      oApprovalRequestHelper: null, // 결재 관련
+      oRequestDetailHelper: null, // 업무 정보 관련
       oCurrentListDialogHandler: null,
       sDetailListTableId: 'detailListTable',
       sTYPE_CODE: 'HR06',
@@ -50,21 +48,20 @@ sap.ui.define(
       },
 
       onBeforeShow() {
-        this.oApprovalRequestHelper = new ApprovalRequestHelper(this);
         this.oRequestDetailHelper = new RequestDetailHelper(this);
+        this.oApprovalRequestHelper = new ApprovalRequestHelper(this);
       },
 
-      async onObjectMatched(mParameters = {}) {
-        this.oApprovalRequestHelper.setAppno(mParameters.sAppno);
+      async onObjectMatched(mParameters) {
+        const sAppno = (mParameters || {}).sAppno || '';
+        await this.oApprovalRequestHelper.setAppno(sAppno === '0' ? '' : sAppno);
 
         this.readData();
       },
 
       async readData() {
-        const oViewModel = this.getViewModel();
-        const sAppno = this.oApprovalRequestHelper.getAppno();
-
         try {
+          const sAppno = this.oApprovalRequestHelper.getAppno();
           if (sAppno) {
             const aDetailListData = await this.oRequestDetailHelper.readRequestDetailData(sAppno);
             const mDetailData = aDetailListData[0] || {};
@@ -72,17 +69,11 @@ sap.ui.define(
             this.oRequestDetailHelper.setData(aDetailListData, this.oApprovalRequestHelper.isFormEditable());
             this.oApprovalRequestHelper.setData(mDetailData, true); // 첨부파일, 신청자, 결재정보 세팅
           } else {
-            const aEmployees = await this.readEmpSearchResult();
-
-            oViewModel.setProperty(
-              '/detail/employees',
-              aEmployees.map((o) => ({ ...o, Pernr: o.Pernr.replace(/^0+/, '') }))
-            );
-
+            this.oRequestDetailHelper.prepareSuggestionData();
             this.oApprovalRequestHelper.setApplyInfoBoxData();
           }
         } catch (oError) {
-          this.debug('Controller > Nightduty Detail > readData Error', oError);
+          this.debug('Controller > Nightduty RequestDetail > readData Error', oError);
 
           if (oError instanceof Error) {
             oError = new UI5Error({ message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
@@ -102,31 +93,6 @@ sap.ui.define(
         this.oRequestDetailHelper.removeDetailListTableRows();
       },
 
-      async retrieveCurrentDuty() {
-        const oModel = this.getModel(ServiceNames.WORKTIME);
-        const oViewModel = this.getViewModel();
-        const aDetailListData = oViewModel.getProperty('/detail/list');
-        const sMode = oViewModel.getProperty('/dialog/mode');
-        const sYearMonth = oViewModel.getProperty('/dialog/yearMonth');
-
-        try {
-          oViewModel.setProperty('/dialog/busy', true);
-
-          let aSummaryList = await this.readDrillList({ oModel, sMode, sYearMonth });
-
-          aSummaryList = _.differenceWith(aSummaryList, aDetailListData, (a, b) => moment(a.Datum).format('YYYYMMDD') === moment(b.Datum).format('YYYYMMDD'));
-
-          oViewModel.setProperty('/dialog/list', aSummaryList);
-          oViewModel.setProperty('/dialog/rowCount', aSummaryList.length || 1);
-        } catch (oError) {
-          this.debug('Controller > excavation Detail > retrieveCurrentDuty Error', oError);
-
-          AppUtils.handleError(oError);
-        } finally {
-          oViewModel.setProperty('/dialog/busy', false);
-        }
-      },
-
       onSelectSuggestion(oEvent) {
         this.oRequestDetailHelper.onSelectSuggestion(oEvent);
       },
@@ -139,8 +105,8 @@ sap.ui.define(
       },
 
       /**
-       * 신청 data 유효성 검사
-       * @returns {boolean} 신청 data 유효 여부
+       * 신청 정보 유효성 검사
+       * @returns {boolean} 신청 정보 유효 여부
        */
       validateRequestData() {
         const oViewModel = this.getViewModel();

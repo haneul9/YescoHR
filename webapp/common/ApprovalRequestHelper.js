@@ -118,10 +118,10 @@ sap.ui.define(
           return;
         }
 
-        const message = this.oController.getBundleText('MSG_00006', 'LABEL_00121'); // {신청}하시겠습니까?
+        const sMessage = this.oController.getBundleText('MSG_00006', 'LABEL_00121'); // {신청}하시겠습니까?
         const sActionYes = this.oController.getBundleText('LABEL_00121'); // 신청
 
-        MessageBox.confirm(message, {
+        MessageBox.confirm(sMessage, {
           actions: [sActionYes, MessageBox.Action.CANCEL],
           onClose: (sAction) => {
             if (!sAction || sAction === MessageBox.Action.CANCEL) {
@@ -140,8 +140,8 @@ sap.ui.define(
 
           await this.oController.requestApproval(oData);
 
-          const message = this.oController.getBundleText('MSG_00007', 'LABEL_00121'); // {신청}되었습니다.
-          MessageBox.success(message, {
+          const sMessage = this.oController.getBundleText('MSG_00007', 'LABEL_00121'); // {신청}되었습니다.
+          MessageBox.success(sMessage, {
             onClose: () => {
               this.oController.onAfterRequestApproval();
             },

@@ -57,7 +57,7 @@ sap.ui.define(
       },
 
       onPressNewRequest() {
-        this.getRouter().navTo('nightduty-detail', { sAppno: false });
+        this.getRouter().navTo('nightduty-detail', { sAppno: 0 });
       },
 
       onPressExelDownload() {

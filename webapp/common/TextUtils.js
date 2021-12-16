@@ -11,9 +11,9 @@ sap.ui.define(
         /**************************
          * 금액 format ex) 1234567 => 1,234,567
          *************************/
-        toCurrency(x = 0) {
+        toCurrency(x) {
           // return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-          return new Intl.NumberFormat('ko-KR').format(x);
+          return new Intl.NumberFormat('ko-KR').format(x || 0);
         },
 
         /**************************
@@ -40,15 +40,15 @@ sap.ui.define(
           } else if (vAppdt instanceof Date) {
             return moment(vAppdt).format(sPattern);
           }
-          
+
           return '';
         },
 
         /**************************
          * 결재상태 fragment 신청번호 앞에 0없앰
          *************************/
-        getDocnoTxt(sDocno = '') {
-          return sDocno.replace(/^0+/, '');
+        getDocnoTxt(sDocno) {
+          return (sDocno || '').replace(/^0+/, '');
         },
       };
     }

@@ -1,80 +1,80 @@
 <core:FragmentDefinition xmlns="sap.ui.table"
-    xmlns:m="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:custom="sap.ui.yesco.control">
-    <m:Dialog title="{i18n>MSG_06004}" busy="{busy}" busyIndicatorDelay="0" contentWidth="1000px" contentHeight="400px" draggable="true">
-        <m:HBox justifyContent="SpaceBetween">
-            <m:HBox>
-                <m:Label text="{i18n>MSG_06005}" />
-                <custom:DatePicker value="{ path: 'yearMonth', type: 'sap.ui.yesco.mvc.model.type.Month' }" />
-                <m:Label text="{i18n>MSG_06006}" />
-                <m:ComboBox id="dutyGroup" items="{dutyGroups}" selectedKey="{selectedDutyGroup}">
-                    <core:Item key="{code}" text="{text}" />
-                </m:ComboBox>
-            </m:HBox>
-            <m:Button type="Transparent" icon="sap-icon://search" class="icon-button" press=".onPressCurrentListSearch" />
-        </m:HBox>
-        <Table id="currentListTable" class="row-link" width="100%" columnHeaderHeight="45" rowHeight="45" selectionMode="{currentListMode}" rows="{currentList}" visibleRowCount="{currentListRowCount}" busyIndicatorDelay="0" busy="{busy}" noData="{i18n>MSG_00001}" rowSelectionChange=".onChangeRowSelection">
-            <columns>
-                <Column width="10%" filterProperty="Datum" sortProperty="Datum">
-                    <m:Label text="{i18n>LABEL_06101}" />
-                    <template>
-                        <m:Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                    </template>
-                </Column>
-                <Column width="10%" filterProperty="Kurzt" sortProperty="Kurzt">
-                    <m:Label text="{i18n>LABEL_06102}" />
-                    <template>
-                        <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                    </template>
-                </Column>
-                <Column width="10%" filterProperty="Tagty" sortProperty="Tagty">
-                    <m:Label text="{i18n>LABEL_06103}" />
-                    <template>
-                        <m:Text text="{Tagty}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                    </template>
-                </Column>
-                <Column filterProperty="Awart" sortProperty="Atext">
-                    <m:Label text="{i18n>LABEL_06104}" />
-                    <template>
-                        <m:Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                    </template>
-                </Column>
-                <Column width="10%" filterProperty="Ocshf" sortProperty="Ocshf">
-                    <m:Label text="{i18n>MSG_06006}" />
-                    <template>
-                        <m:Text text="{Ocshf}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                    </template>
-                </Column>
-                <Column width="10%" filterProperty="PernrB" sortProperty="PernrB">
-                    <m:Label text="{i18n>LABEL_00209}" />
-                    <template>
-                        <m:Text text="{ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                    </template>
-                </Column>
-                <Column width="10%" filterProperty="EnameB" sortProperty="EnameB">
-                    <m:Label text="{i18n>LABEL_00210}" />
-                    <template>
-                        <m:Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                    </template>
-                </Column>
-                <Column width="10%" filterProperty="OrgtxB" sortProperty="OrgtxB">
-                    <m:Label text="{i18n>LABEL_00224}" />
-                    <template>
-                        <m:Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                    </template>
-                </Column>
-                <Column width="10%" filterProperty="ZzjikgbtB" sortProperty="ZzjikgbtB">
-                    <m:Label text="{i18n>LABEL_00215}" />
-                    <template>
-                        <m:Text text="{Zzjikgbt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                    </template>
-                </Column>
-            </columns>
-        </Table>
-        <m:buttons>
-            <!-- <m:Button type="Emphasized" text="{i18n>LABEL_00121}" visible="{= ${/dialog/mode} === 'C' }" enabled="{/dialog/isActiveApproval}" press=".onPressAddData"/> -->
-            <m:Button text="{i18n>LABEL_00115}" press=".onPressDialogClose"/>
-        </m:buttons>
-    </m:Dialog>
+  xmlns:m="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <m:Dialog title="{i18n>MSG_06004}" busy="{busy}" busyIndicatorDelay="0" contentWidth="1000px" contentHeight="400px" draggable="true">
+    <m:HBox justifyContent="SpaceBetween">
+      <m:HBox>
+        <m:Label text="{i18n>MSG_06005}" />
+        <custom:DatePicker value="{ path: 'yearMonth', type: 'sap.ui.yesco.mvc.model.type.Month' }" />
+        <m:Label text="{i18n>MSG_06006}" />
+        <m:ComboBox id="dutyGroup" items="{dutyGroups}" selectedKey="{selectedDutyGroup}">
+          <core:Item key="{code}" text="{text}" />
+        </m:ComboBox>
+      </m:HBox>
+      <m:Button type="Transparent" icon="sap-icon://search" class="icon-button" press=".onPressCurrentListSearch" />
+    </m:HBox>
+    <Table id="currentListTable" class="row-link" width="100%" columnHeaderHeight="45" rowHeight="45" selectionMode="{currentListMode}" rows="{currentList}" visibleRowCount="{currentListRowCount}" busy="{busy}" busyIndicatorDelay="0" noData="{i18n>MSG_00001}" rowSelectionChange=".onChangeRowSelection">
+      <columns>
+        <Column width="10%" filterProperty="Datum" sortProperty="Datum">
+          <m:Label text="{i18n>LABEL_06101}" />
+          <template>
+            <m:Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          </template>
+        </Column>
+        <Column width="10%" filterProperty="Kurzt" sortProperty="Kurzt">
+          <m:Label text="{i18n>LABEL_06102}" />
+          <template>
+            <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          </template>
+        </Column>
+        <Column width="10%" filterProperty="Tagty" sortProperty="Tagty">
+          <m:Label text="{i18n>LABEL_06103}" />
+          <template>
+            <m:Text text="{Tagty}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          </template>
+        </Column>
+        <Column filterProperty="Awart" sortProperty="Atext">
+          <m:Label text="{i18n>LABEL_06104}" />
+          <template>
+            <m:Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          </template>
+        </Column>
+        <Column width="10%" filterProperty="Ocshf" sortProperty="Ocshf">
+          <m:Label text="{i18n>MSG_06006}" />
+          <template>
+            <m:Text text="{Ocshf}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          </template>
+        </Column>
+        <Column width="10%" filterProperty="PernrB" sortProperty="PernrB">
+          <m:Label text="{i18n>LABEL_00209}" />
+          <template>
+            <m:Text text="{ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          </template>
+        </Column>
+        <Column width="10%" filterProperty="EnameB" sortProperty="EnameB">
+          <m:Label text="{i18n>LABEL_00210}" />
+          <template>
+            <m:Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          </template>
+        </Column>
+        <Column width="10%" filterProperty="OrgtxB" sortProperty="OrgtxB">
+          <m:Label text="{i18n>LABEL_00224}" />
+          <template>
+            <m:Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          </template>
+        </Column>
+        <Column width="10%" filterProperty="ZzjikgbtB" sortProperty="ZzjikgbtB">
+          <m:Label text="{i18n>LABEL_00215}" />
+          <template>
+            <m:Text text="{Zzjikgbt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          </template>
+        </Column>
+      </columns>
+    </Table>
+    <m:buttons>
+      <m:Button type="Emphasized" text="{i18n>LABEL_00112}" visible="{= ${mode} === 'S' }" enabled="{enabled}" press=".onPressSelectionDone" />
+      <m:Button text="{i18n>LABEL_00115}" press=".onPressDialogClose"/>
+    </m:buttons>
+  </m:Dialog>
 </core:FragmentDefinition>

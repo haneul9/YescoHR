@@ -5,6 +5,7 @@ sap.ui.define(
     'sap/ui/core/Fragment',
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
+    'sap/ui/model/json/JSONModel',
     'sap/ui/table/SelectionMode',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
@@ -17,6 +18,7 @@ sap.ui.define(
     Fragment,
     Filter,
     FilterOperator,
+    JSONModel,
     SelectionMode,
     AppUtils,
     ComboEntry,
@@ -26,18 +28,21 @@ sap.ui.define(
     'use strict';
 
     return BaseObject.extend('sap.ui.yesco.mvc.controller.nightduty.CurrentListDialogHandler', {
-      constructor: function (oController, sSelectionMode) {
+      constructor: function ({ oController, sMode = 'R', fnCallback = () => {} }) {
+        this.oController = oController;
+        this.sMode = sMode;
+        this.fnCallback = fnCallback;
         this.oCurrentListDialog = null;
         this.sCurrentListTableId = 'currentListTable';
-        this.YYYYMM = oController.getSessionProperty('DTFMTYYYYMM');
+        this.sThisMonth = moment().hours(9).format(oController.getSessionProperty('DTFMTYYYYMM'));
+        this.oDialogModel = new JSONModel(this.getInitialData(sMode));
+      },
 
-        const oTodayMoment = moment().hours(9);
-        this.sThisMonth = oTodayMoment.format(this.YYYYMM);
-
-        const oModel = new JSONModel({
+      getInitialData() {
+        return {
           dialog: {
             busy: true,
-            isActiveApproval: false,
+            enabled: false,
             yearMonth: this.sThisMonth,
             selectedDutyGroup: 'ALL',
             dutyGroups: new ComboEntry({
@@ -48,13 +53,10 @@ sap.ui.define(
             }),
             currentList: null,
             currentListRowCount: 1,
-            currentListMode: sSelectionMode,
-            selectedData: [],
+            currentListMode: this.sMode === 'S' ? SelectionMode.MultiToggle : SelectionMode.None,
+            selectedList: [],
           },
-        });
-
-        this.oController = oController;
-        this.oDialogModel = oModel;
+        };
       },
 
       async openDialog() {
@@ -69,11 +71,11 @@ sap.ui.define(
             .setModel(this.oDialogModel)
             .bindElement('/dialog')
             .attachBeforeOpen(() => {
-              this.initCurrentListSearchConditions();
+              this.initDialogData();
               this.onPressCurrentListSearch();
             })
             .attachAfterClose(() => {
-              this.clearDialog();
+              this.initDialogData();
             });
         }
 
@@ -83,16 +85,9 @@ sap.ui.define(
       /**
        *
        */
-      onPressDialogClose() {
-        this.oCurrentListDialog.close();
-      },
-
-      /**
-       *
-       */
-      initCurrentListSearchConditions() {
-        this.oDialogModel.setProperty('/dialog/yearMonth', this.sThisMonth);
-        this.oDialogModel.setProperty('/dialog/selectedDutyGroup', 'ALL');
+      initDialogData() {
+        sap.ui.getCore().byId(this.sCurrentListTableId).clearSelection();
+        this.oDialogModel.setData(this.getInitialData());
       },
 
       /**
@@ -146,15 +141,40 @@ sap.ui.define(
         });
       },
 
-      setCurrentListTableData(aCurrentListData = []) {
+      setCurrentListTableData(aCurrentListData) {
         this.oDialogModel.setProperty('/dialog/currentList', aCurrentListData);
-        this.oDialogModel.setProperty('/dialog/currentListRowCount', aCurrentListData.length || 1);
+        this.oDialogModel.setProperty('/dialog/currentListRowCount', (aCurrentListData || []).length || 1);
+        if (this.sMode === 'S') {
+          this.oDialogModel.setProperty('/dialog/selectedList', []);
+          this.oDialogModel.setProperty('/dialog/enabled', false);
+        }
       },
 
-      onChangeRowSelection() {},
+      onChangeRowSelection(oEvent) {
+        if (this.sMode !== 'S') {
+          return;
+        }
 
-      clearDialog() {
-        this.oDialogModel.setProperty('/dialog/currentList', []);
+        const oTable = oEvent.getSource();
+        const aSelectedIndices = oTable.getSelectedIndices();
+
+        this.oDialogModel.setProperty('/dialog/enabled', aSelectedIndices.length > 0);
+        this.oDialogModel.setProperty(
+          '/dialog/selectedList',
+          aSelectedIndices.map((i) => this.oDialogModel.getProperty(`/dialog/list/${i}`))
+        );
+      },
+
+      onPressSelectionDone() {
+        const aSelectedListData = this.oDialogModel.getProperty('/dialog/selectedList');
+
+        this.fnCallback(aSelectedListData);
+
+        this.onPressDialogClose();
+      },
+
+      onPressDialogClose() {
+        this.oCurrentListDialog.close();
       },
     });
   }

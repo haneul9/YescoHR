@@ -4,6 +4,7 @@ sap.ui.define(
     'sap/ui/base/Object',
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
+    'sap/ui/model/json/JSONModel',
     'sap/ui/table/SelectionMode',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/TableUtils',
@@ -16,6 +17,7 @@ sap.ui.define(
     BaseObject,
     Filter,
     FilterOperator,
+    JSONModel,
     SelectionMode,
     AppUtils,
     TableUtils,
@@ -43,12 +45,14 @@ sap.ui.define(
 
         this.oController = oController;
         this.oDetailListModel = oModel;
-        this.oCurrentListDialogHandler = new CurrentListDialogHandler(this.oController, SelectionMode.MultiToggle);
+        this.oCurrentListDialogHandler = new CurrentListDialogHandler({ oController: this.oController, sSelectionMode: SelectionMode.MultiToggle, fnCallback: this.appendDetailListTableRows.bind(this) });
 
-        oController.byId('nightduty-request-detail').setModel(oModel);
+        oController.byId('nightduty-request-detail-toolbar').setModel(oModel);
+        oController.byId('nightduty-request-detail-list').setModel(oModel);
+        oController.byId('nightduty-request-detail-reason').setModel(oModel);
 
         TableUtils.adjustRowSpan({
-          table: this.byId(this.sDetailListTableId),
+          table: this.oController.byId(this.sDetailListTableId),
           colIndices: [0, 1, 2],
           theadOrTbody: 'thead',
         });
@@ -84,7 +88,7 @@ sap.ui.define(
       },
 
       setData(aDetailListData, bFormEditable) {
-        const mDetailData = aDetailListData[0] || {};
+        const mDetailData = (aDetailListData || [])[0] || {};
 
         this.oDetailListModel.setProperty('/detail/editable', bFormEditable);
         this.oDetailListModel.setProperty('/detail/chgrsn', mDetailData.Chgrsn);
@@ -93,20 +97,39 @@ sap.ui.define(
         this.setDetailListData(aDetailListData);
       },
 
-      setDetailListData(aDetailListData = []) {
-        const iRowCount = aDetailListData.length;
+      setDetailListData(aDetailListData) {
+        const iRowCount = (aDetailListData || []).length;
 
-        oViewModel.setProperty('/detail/list', aDetailListData);
-        oViewModel.setProperty('/detail/rowCount', iRowCount);
-        oViewModel.setProperty('/detail/enabled', iRowCount > 0);
+        this.oDetailListModel.setProperty('/detail/list', aDetailListData);
+        this.oDetailListModel.setProperty('/detail/rowCount', iRowCount);
+        this.oDetailListModel.setProperty('/detail/enabled', iRowCount > 0);
       },
 
       openCurrentListDialog() {
         this.oCurrentListDialogHandler.openDialog();
       },
 
+      appendDetailListTableRows(aSelectedListData) {
+        const aDetailListData = this.oDetailListModel.getProperty('/detail/list') || [];
+        aDetailListData.splice(
+          aDetailListData.length,
+          0,
+          ...(aSelectedListData || []).map((o) => ({
+            Datum: o.Datum,
+            Kurzt: o.Kurzt,
+            Tagty: o.Tagty,
+            PernrB: o.Pernr,
+            EnameB: o.Ename,
+            OrgtxB: o.Orgtx,
+            ZzjikgbtB: o.Zzjikgbt,
+          }))
+        );
+
+        this.setDetailListData(aDetailListData);
+      },
+
       removeDetailListTableRows() {
-        const aDetailListData = this.oDetailListModel.getProperty('/detail/list');
+        const aDetailListData = this.oDetailListModel.getProperty('/detail/list') || [];
         const oDetailListTable = this.oController.byId(this.sDetailListTableId);
         const aSelectedIndices = oDetailListTable.getSelectedIndices();
 
@@ -131,14 +154,22 @@ sap.ui.define(
         });
       },
 
+      async prepareSuggestionData() {
+        const aEmployees = await this.readSuggestionData();
+        aEmployees.forEach((o) => {
+          o.Pernr = o.Pernr.replace(/^0+/, '');
+        });
+
+        this.oDetailListModel.setProperty('/detail/employees', aEmployees);
+      },
+
       readSuggestionData() {
         return new Promise((resolve, reject) => {
-          const oModel = this.getModel(ServiceNames.COMMON);
-          const sMenid = this.getCurrentMenuId();
-          const sPersa = this.getAppointeeProperty('Werks');
+          const sMenid = this.oController.getCurrentMenuId();
+          const sPersa = this.oController.getAppointeeProperty('Werks');
           const sUrl = '/EmpSearchResultSet';
 
-          oModel.read(sUrl, {
+          this.oController.getModel(ServiceNames.COMMON).read(sUrl, {
             filters: [
               new Filter('Menid', FilterOperator.EQ, sMenid), //
               new Filter('Persa', FilterOperator.EQ, sPersa),
@@ -147,12 +178,12 @@ sap.ui.define(
               new Filter('Actda', FilterOperator.EQ, moment().hour(9).toDate()),
             ],
             success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
+              AppUtils.debug(`${sUrl} success.`, oData);
 
-              resolve(oData.results ?? []);
+              resolve(oData.results);
             },
             error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
+              AppUtils.debug(`${sUrl} error.`, oError);
 
               reject(new ODataReadError(oError));
             },
@@ -161,72 +192,28 @@ sap.ui.define(
       },
 
       onSelectSuggestion(oEvent) {
-        const oViewModel = this.getViewModel();
+        let mEmployee;
+
         const oSelectedItem = oEvent.getParameter('selectedItem');
-        const sRowPath = oEvent.getSource()?.getParent()?.getBindingContext()?.getPath();
-        let mEmployee = { Pernr: '', Ename: '', Fulln: '', Zzjikgbt: '' };
+        if (oSelectedItem) {
+          const sSelectedPernr = oSelectedItem.getKey() || 'None';
+          const aEmployees = this.oDetailListModel.getProperty('/detail/employees') || [];
 
-        if (!_.isEmpty(oSelectedItem)) {
-          const sSelectedPernr = oEvent.getParameter('selectedItem')?.getKey() ?? 'None';
-          const aEmployees = oViewModel.getProperty('/detail/employees');
-
-          mEmployee = _.find(aEmployees, { Pernr: sSelectedPernr }) ?? { Pernr: '', Ename: '', Fulln: '', Zzjikgbt: '' };
+          mEmployee = _.find(aEmployees, { Pernr: sSelectedPernr });
         }
 
+        mEmployee ||= { Pernr: '', Ename: '', Fulln: '', Zzjikgbt: '' };
+
+        const sRowPath = oEvent.getSource()?.getParent()?.getBindingContext()?.getPath();
         if (sRowPath) {
-          oViewModel.setProperty(sRowPath, {
-            ...oViewModel.getProperty(sRowPath),
+          this.oDetailListModel.setProperty(sRowPath, {
+            ...this.oDetailListModel.getProperty(sRowPath),
             PernrA: mEmployee.Pernr,
             EnameA: mEmployee.Ename,
             OrgtxA: mEmployee.Fulln,
             ZzjikgbtA: mEmployee.Zzjikgbt,
           });
         }
-      },
-
-      async onChangeDialogSearch() {
-        this.retrieveCurrentDuty();
-      },
-
-      onChangeRowSelection(oEvent) {
-        const oTable = oEvent.getSource();
-        const oViewModel = this.getViewModel();
-        const aSelectedIndices = oTable.getSelectedIndices();
-
-        oViewModel.setProperty('/dialog/isActiveApproval', !!aSelectedIndices.length);
-        oViewModel.setProperty(
-          '/dialog/selectedData',
-          aSelectedIndices.map((idx) => oViewModel.getProperty(`/dialog/list/${idx}`))
-        );
-      },
-
-      onPressAddData(oEvent) {
-        const oViewModel = this.getViewModel();
-        const aSelectedData = oViewModel.getProperty('/dialog/selectedData');
-        const aDetailListData = [
-          ...oViewModel.getProperty('/detail/list'),
-          ...aSelectedData.map((o) => ({
-            Datum: o.Datum,
-            Kurzt: o.Kurzt,
-            Tagty: o.Tagty,
-            PernrB: o.Pernr,
-            EnameB: o.Ename,
-            OrgtxB: o.Orgtx,
-            ZzjikgbtB: o.Zzjikgbt,
-          })),
-        ];
-
-        this.setDetailListData(aDetailListData);
-        oViewModel.setProperty('/dialog/selectedData', []);
-
-        this.onPressSummaryDialogClose(oEvent);
-      },
-
-      onPressSummaryDialogClose(oEvent) {
-        AppUtils.setAppBusy(false, this);
-
-        oEvent.getSource().getParent().getContent()[1].clearSelection();
-        this.byId('summaryDialog').close();
       },
     });
   }

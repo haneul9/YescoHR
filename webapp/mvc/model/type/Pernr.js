@@ -10,7 +10,7 @@ sap.ui.define(
     'use strict';
 
     return SimpleType.extend('sap.ui.yesco.mvc.model.type.Pernr', {
-      formatValue(oValue = '') {
+      formatValue(oValue) {
         return (oValue || '').replace(/^0+/, '');
       },
 

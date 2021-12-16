@@ -53,11 +53,7 @@ sap.ui.define(
        * Functions
        *************************/
       count({ oTable, aRowData, sStatCode = 'ZappStatAl', bHasSumRow = false }) {
-        const iBodyHeight = $('body').height(); // 화면 높이
-        const iOffsetTopOfTbody = oTable.$().find('.sapUiTableCCnt').offset().top; // Table 데이터 시작행의 화면 최상단까지의 거리
-        const iParentFlexBoxPaddingBottom = parseInt(oTable.$().parents('.sapMFlexBox').css('padding-bottom'), 10); // Table을 감싸고 있는 FlexBox의 아래 padding
-        const iRowHeight = oTable.getRowHeight(); // Table에 세팅된 행높이
-        const iVisibleRowCountLimit = Math.floor((iBodyHeight - iOffsetTopOfTbody - iParentFlexBoxPaddingBottom) / iRowHeight);
+        const iVisibleRowCountLimit = this.calculateVisibleRowCount(oTable);
         const iDataLength = bHasSumRow ? (aRowData.length || 1) + 1 : aRowData.length;
         const aZappStatAls = _.map(aRowData, sStatCode);
         const oOccurCount = _.defaults(_.countBy(aZappStatAls), {
@@ -81,6 +77,18 @@ sap.ui.define(
           rejectCount: oOccurCount[STATE_REJECT1] + oOccurCount[STATE_REJECT2],
           completeCount: oOccurCount[STATE_COMPLETE],
         };
+      },
+
+      calculateVisibleRowCount(oTable) {
+        const iBodyHeight = Math.floor($('body').height()); // body 높이
+        const iOffsetTopOfTbody = Math.ceil(oTable.$().find('.sapUiTableCCnt').offset().top); // Table 데이터 시작행의 border-top으로부터 body 최상단까지의 거리
+        const $parentBox = oTable.$().parents('.sapMFlexBox'); // Table을 감싸고 있는 FlexBox
+        const iParentBoxPaddingBottom = parseInt($parentBox.css('padding-bottom'), 10);
+        const iParentBoxBorderBottomWidth = parseInt($parentBox.css('border-bottom-width'), 10);
+        const iRowHeight = oTable.getRowHeight() + 1; // Table에 세팅된 행높이 + 실제 렌더링될 때 더해지는 1픽셀
+        const iVisibleRowCount = Math.floor((iBodyHeight - iOffsetTopOfTbody - iParentBoxPaddingBottom - iParentBoxBorderBottomWidth) / iRowHeight);
+        // console.log('calculateVisibleRowCount', { iBodyHeight, iOffsetTopOfTbody, iParentBoxPaddingBottom, iParentBoxBorderBottomWidth, iRowHeight, iVisibleRowCount });
+        return iVisibleRowCount;
       },
 
       export({ oTable, aTableData, sFileName, sStatCode = 'ZappStatAl', sStatTxt = 'ZappStxtAl', bHasMultiLabel = false, aDateProps = [] }) {
