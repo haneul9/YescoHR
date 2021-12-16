@@ -92,9 +92,9 @@ sap.ui.define(
         if (oParameter.type === this.PAGE_TYPE.CHANGE) {
           // Multiple table generate
           TableUtils.adjustRowSpan({
-            table: this.byId('approveMultipleTable'),
-            colIndices: [0, 7],
-            theadOrTbody: 'thead',
+            oTable: this.byId('approveMultipleTable'),
+            aColIndices: [0, 7],
+            sTheadOrTbody: 'thead',
           });
         }
 

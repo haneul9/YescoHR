@@ -82,9 +82,9 @@ sap.ui.define(
         this.setViewModel(oViewModel);
 
         TableUtils.adjustRowSpan({
-          table: this.byId(this.TABLE_ID),
-          colIndices: [0, 1, 2, 3, 12, 13],
-          theadOrTbody: 'thead',
+          oTable: this.byId(this.TABLE_ID),
+          aColIndices: [0, 1, 2, 3, 12, 13],
+          sTheadOrTbody: 'thead',
         });
       },
 

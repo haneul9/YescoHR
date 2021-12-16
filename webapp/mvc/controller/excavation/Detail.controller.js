@@ -77,9 +77,9 @@ sap.ui.define(
         this.setViewModel(oViewModel);
 
         TableUtils.adjustRowSpan({
-          table: this.byId('approvalTable'),
-          colIndices: [0, 1, 2],
-          theadOrTbody: 'thead',
+          oTable: this.byId('approvalTable'),
+          aColIndices: [0, 1, 2],
+          sTheadOrTbody: 'thead',
         });
       },
 

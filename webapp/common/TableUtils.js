@@ -134,33 +134,32 @@ sap.ui.define(
        * 		theadOrTbody: 'thead' or 'tbody'
        * 	}
        */
-      adjustRowSpan(o) {
-        if (!o.colIndices.length) return;
+      adjustRowSpan({ oTable, aColIndices, sTheadOrTbody }) {
+        if (!aColIndices.length) return;
 
-        o.table.addEventDelegate(
-          {
-            onAfterRendering() {
-              const target = o.theadOrTbody === 'thead' ? 'header' : 'table';
-              o.colIndices.forEach((colIndex) => {
-                const sId = `#${o.table.getId()}-${target} tbody>tr td:nth-child(${colIndex + 1}):visible`;
-                const aTDs = $(sId).get();
-                let oPrevTD = aTDs.shift();
+        oTable.addEventDelegate({
+          onAfterRendering() {
+            const sTarget = sTheadOrTbody === 'thead' ? 'header' : 'table';
 
-                aTDs.forEach((oTD) => {
-                  const $p = $(oPrevTD);
-                  const $c = $(oTD);
-                  if ($c.text() === $p.text()) {
-                    $p.attr('rowspan', Number($p.attr('rowspan') || 1) + 1);
-                    $c.hide();
-                  } else {
-                    oPrevTD = oTD;
-                  }
-                });
+            aColIndices.forEach((colIndex) => {
+              const sId = `#${oTable.getId()}-${sTarget} tbody>tr td:nth-child(${colIndex + 1}):visible`;
+              const aTDs = $(sId).get();
+              let oPrevTD = aTDs.shift();
+
+              aTDs.forEach((oTD) => {
+                const $p = $(oPrevTD);
+                const $c = $(oTD);
+
+                if ($c.text() === $p.text()) {
+                  $p.attr('rowspan', Number($p.attr('rowspan') || 1) + 1);
+                  $c.hide();
+                } else {
+                  oPrevTD = oTD;
+                }
               });
-            },
+            });
           },
-          o.table
-        );
+        });
       },
       /**
        * @param  {Array} aTableData - 대상목록

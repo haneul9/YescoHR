@@ -48,9 +48,9 @@ sap.ui.define(
         oController.byId('nightduty-request-detail').setModel(oModel);
 
         TableUtils.adjustRowSpan({
-          table: this.byId(this.sDetailListTableId),
-          colIndices: [0, 1, 2],
-          theadOrTbody: 'thead',
+          oTable: this.byId(this.sDetailListTableId),
+          aColIndices: [0, 1, 2],
+          sTheadOrTbody: 'thead',
         });
       },
 

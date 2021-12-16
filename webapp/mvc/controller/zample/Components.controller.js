@@ -52,9 +52,9 @@ sap.ui.define(
         const oTable = this.byId('groupTable');
         if (oTable) {
           TableUtils.adjustRowSpan({
-            table: oTable,
-            colIndices: [0, 1, 2, 3, 4, 5],
-            theadOrTbody: 'thead',
+            oTable,
+            aColIndices: [0, 1, 2, 3, 4, 5],
+            sTheadOrTbody: 'thead',
           });
 
           oTable.addEventDelegate(
