@@ -1,0 +1,61 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:core="sap.ui.core">
+    <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
+        <HBox alignItems="Center" class="title">
+            <Title level="H2" text="{i18n>LABEL_00129}" />
+        </HBox>
+        <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px" class="form-grid">
+            <Label text="{i18n>LABEL_14001}" />
+            <VBox>
+                <ComboBox items="{/ClubType}" change=".onClubType" selectedKey="{/FormData/Zclub}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }">
+                    <core:Item text="{Zclubtx}" key="{Zclub}" />
+                </ComboBox>
+            </VBox>
+            <Label text="{i18n>LABEL_14015}" />
+            <VBox>
+                <Text text="{ path: '/FormData/Betrg', type: 'sap.ui.yesco.mvc.model.type.Currency' }"/>
+            </VBox>
+            <Label text="{i18n>LABEL_14012}"/>
+            <VBox>
+                <Text text="{/FormData/Period}"/>
+            </VBox>
+            <Label text="{i18n>LABEL_14008}"/>
+            <VBox>
+                <Text text="{/FormData/Mcnt}"/>
+            </VBox>
+            <Label text="{i18n>LABEL_14011}"/>
+            <HBox>
+                <Text text="{/FormData/Memberyn}"/>
+            </HBox>
+            <Label text="{i18n>LABEL_14009}"/>
+            <VBox>
+                <Text text="{/FormData/Headnm}"/>
+            </VBox>
+            <Label text="{i18n>LABEL_14013}"/>
+            <HBox>
+                <CheckBox selected="{= !!${/FormData/Coaid} }" select=".onSelected" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
+                <Text text="{i18n>MSG_14005}"/>
+            </HBox>
+            <Label text="{i18n>LABEL_14010}"/>
+            <HBox>
+                <Text text="{/FormData/Leadnm}"/>
+            </HBox>
+            <Label text="{i18n>LABEL_00163}"/>
+            <VBox>
+                <Input value="{/FormData/Zbigo}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
+                <layoutData>
+                    <grid:GridItemLayoutData gridColumn="2 / 5"/>
+                </layoutData>
+            </VBox>
+            <Label text="{= !!${/FormData/ZappResn} ? ${i18n>LABEL_00142} : '' }" visible="{= !!${/FormData/Lnsta} }"/>
+            <VBox visible="{= !!${/FormData/Lnsta} }">
+                <Text text="{= !!${/FormData/ZappResn} ? ${/FormData/ZappResn} : '' }" />
+            </VBox>
+            <Label text="{i18n>LABEL_00261}" visible="{= !!${/FormData/Lnsta} }"/>
+            <VBox visible="{= !!${/FormData/Lnsta} }">
+                <Text text="{/FormData/Lnstatx}"/>
+            </VBox>
+        </grid:CSSGrid>
+    </VBox>
+</core:FragmentDefinition>

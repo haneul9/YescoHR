@@ -2,7 +2,7 @@
     xmlns:core="sap.ui.core">
     <HBox id="InfoMegBox" justifyContent="SpaceBetween" class="vCardBox info-area" visible="{= !!${/InfoMessage} }">
         <HBox>
-            <core:Icon src="sap-icon://travel-request"/>
+            <!-- <core:Icon src="sap-icon://travel-request"/> -->
             <FormattedText htmlText="{/InfoMessage}"/>
         </HBox>
         <Button press=".FragmentEvent.onInfoMsgClose" type="Transparent" class="icon-button close"/>

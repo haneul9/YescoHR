@@ -77,9 +77,9 @@ sap.ui.define(
         this.setViewModel(oViewModel);
 
         TableUtils.adjustRowSpan({
-          table: this.byId('approvalTable'),
-          colIndices: [0, 1, 2],
-          theadOrTbody: 'thead',
+          oTable: this.byId('approvalTable'),
+          aColIndices: [0, 1, 2],
+          sTheadOrTbody: 'thead',
         });
       },
 
@@ -120,7 +120,7 @@ sap.ui.define(
 
             oViewModel.setProperty(
               '/form/employees',
-              aEmployees.map((o) => ({ ...o, Pernr: o.Pernr.replace(/^0+/, '') }))
+              aEmployees.map((o) => ({ ...o, Pernr: _.trimStart(o.Pernr, '0') }))
             );
 
             this.initializeApplyInfoBox();

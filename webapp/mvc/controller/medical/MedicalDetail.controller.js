@@ -52,6 +52,7 @@ sap.ui.define(
           FormData: {},
           DialogData: {},
           TargetDetails: {},
+          RemoveFiles: [],
           HisList: [],
           TargetList: [],
           ReceiptType: [],
@@ -81,7 +82,6 @@ sap.ui.define(
         oDetailModel.setProperty('/ViewKey', sDataKey);
 
         try {
-          const oDetailModel = this.getViewModel();
           const aAppList = await this.getTargetList();
   
           oDetailModel.setProperty('/TargetList', new ComboEntry({ codeKey: 'Kdsvh', valueKey: 'Znametx', aEntries: aAppList }));
@@ -287,6 +287,8 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const aSumAmount = oDetailModel.getProperty('/HisList').map(a => a.Bettot);
 
+        if (!aSumAmount.length) return;
+
         const iAmount = aSumAmount.reduce((acc, cur) => {
           return parseInt(acc) + parseInt(cur);
         });
@@ -325,15 +327,23 @@ sap.ui.define(
           return true;
         }
 
+        const aHisList = oDetailModel.getProperty('/HisList');
+
         // 상세내역
-        if (!oDetailModel.getProperty('/HisList').length) {
+        if (!aHisList.length) {
           MessageBox.alert(this.getBundleText('MSG_09027'));
           return true;
         }
 
         // 첨부파일
-        if (!AttachFileAction.getFileLength.call(this)) {
-          MessageBox.alert(this.getBundleText('MSG_00046'));
+        const bResult = aHisList.every((e) => e.Attyn === 'X');
+
+        if (
+          bResult ||
+          (!AttachFileAction.getFileLength.call(this) &&
+          !bResult)
+        ) {
+          MessageBox.alert(this.getBundleText('MSG_09028'));
           return true;
         }
 
@@ -379,6 +389,23 @@ sap.ui.define(
                 if (!!AttachFileAction.getFileLength.call(this)) {
                   await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.TYPE_CODE);
                 }
+                
+                const aHislist = oDetailModel.getProperty('/HisList');
+
+                if (!!aHislist.length) {
+                  await aHislist.forEach((e) => {
+                    AttachFileAction.uploadFile.call(this, e.Appno2, this.TYPE_CODE, this.DIALOG_FILE_ID);
+                  });
+                }
+
+                const aDeleteDatas = oDetailModel.getProperty('/RemoveFiles');
+
+                if (!!aDeleteDatas.length) {
+                  await aDeleteDatas.forEach((e) => {
+                    AttachFileAction.deleteFile(e.Appno2, this.TYPE_CODE);
+                  });
+                }
+
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/MedExpenseApplSet', oSendObject, {
@@ -437,6 +464,14 @@ sap.ui.define(
                 // FileUpload
                 if (!!AttachFileAction.getFileLength.call(this)) {
                   await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.TYPE_CODE);
+                }
+
+                const aDeleteDatas = oDetailModel.getProperty('/RemoveFiles');
+
+                if (!!aDeleteDatas.length) {
+                  await aDeleteDatas.forEach((e) => {
+                    AttachFileAction.deleteFile(e.Appno2, this.TYPE_CODE);
+                  });
                 }
 
                 await new Promise((resolve, reject) => {
@@ -578,7 +613,8 @@ sap.ui.define(
         if (!aDeleteDatas.length) {
             return MessageBox.alert(this.getBundleText('MSG_00020', 'LABEL_00110'));
         }
-
+  
+        oDetailModel.setProperty('/RemoveFiles', aDeleteDatas);
         const aHisList = oDetailModel.getProperty('/HisList');
         const aNoInclued = aHisList.filter((e) => !aDeleteDatas.includes(e));
         const oHisTable = this.byId('medHisTable');
@@ -655,40 +691,75 @@ sap.ui.define(
       },
 
       // Dialog 등록
-      onHisRegBtn() {
+      async onHisRegBtn() {
         const oDetailModel = this.getViewModel();
         const mDialogData = oDetailModel.getProperty('/DialogData');
         const oTable = this.byId('medHisTable');
         
         if (this.checkClinicDetail()) return;
         
-        mDialogData.Waers = 'KRW';
-        
-        const aHisList = [mDialogData, ...oDetailModel.getProperty('/HisList')];
+        try {
+          AppUtils.setAppBusy(true, this);
 
-        oDetailModel.setProperty('/HisList', aHisList);
-        oDetailModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aHisList, sStatCode: 'ZappStat' }));
-        this.setAppAmount();
-        this.addSeqnrNum();
-        this.byId('DetailHisDialog').close();
+          if (!mDialogData.Appno2 || mDialogData.Appno2 === '00000000000000') {
+            const vAppno = await Appno.get.call(this);
+            
+            oDetailModel.setProperty('/DialogData/Appno2', vAppno);
+          }
+          
+          mDialogData.Waers = 'KRW';
+          
+          const aHisList = [mDialogData, ...oDetailModel.getProperty('/HisList')];
+  
+          oDetailModel.setProperty('/HisList', aHisList);
+          oDetailModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aHisList, sStatCode: 'ZappStat' }));
+
+          this.setAppAmount();
+          this.addSeqnrNum();
+
+          await AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.TYPE_CODE, this.DIALOG_FILE_ID);
+          
+          this.byId('DetailHisDialog').close();
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          AppUtils.setAppBusy(false, this);
+        }
       },
 
       // Dialog 수정
-      onHisUpBtn() {
+      async onHisUpBtn() {
         const oDetailModel = this.getViewModel();
         const mDialogData = oDetailModel.getProperty('/DialogData');
         const aHisList = oDetailModel.getProperty('/HisList');
         
         if (this.checkClinicDetail()) return;
         
-        aHisList.forEach((e, i) => {
-          if (mDialogData.Seqnr === e.Seqnr) {
-            oDetailModel.setProperty(`/HisList/${i}`, mDialogData);
-          }
-        });
+        try {
+          AppUtils.setAppBusy(true, this);
 
-        this.setAppAmount();
-        this.byId('DetailHisDialog').close();
+          if (!mDialogData.Appno2 || mDialogData.Appno2 === '00000000000000') {
+            const vAppno = await Appno.get.call(this);
+            
+            oDetailModel.setProperty('/DialogData/Appno2', vAppno);
+          }
+
+          aHisList.forEach((e, i) => {
+            if (mDialogData.Seqnr === e.Seqnr) {
+              oDetailModel.setProperty(`/HisList/${i}`, mDialogData);
+            }
+          });
+
+          this.setAppAmount();
+  
+          await AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.TYPE_CODE, this.DIALOG_FILE_ID);
+          
+          this.byId('DetailHisDialog').close();
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          AppUtils.setAppBusy(false, this);
+        }
       },
 
       // Dialog Close
@@ -758,7 +829,7 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const oRowData = oDetailModel.getProperty(vPath);
 
-        if (!oRowData.Lnsta || oRowData.Lnsta !== '10') return;
+        if (!!oRowData.Lnsta && oRowData.Lnsta !== '10') return;
 
         this.setDialogData(oRowData);
 
@@ -836,14 +907,14 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const sAppno = oDetailModel.getProperty('/DialogData/Appno2') || '';
  
-        // AttachFileAction.setAttachFile(this, {
-        //   Id: this.DIALOG_FILE_ID,
-        //   Type: this.TYPE_CODE,
-        //   Editable: true,
-        //   Appno: sAppno,
-        //   Max: 1,
-        //   FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
-        // });
+        AttachFileAction.setAttachFile(this, {
+          Id: this.DIALOG_FILE_ID,
+          Type: this.TYPE_CODE,
+          Editable: true,
+          Appno: sAppno,
+          Max: 1,
+          FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
+        });
       },
     });
   }

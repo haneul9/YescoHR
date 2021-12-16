@@ -29,9 +29,9 @@ sap.ui.define(
 
       onBeforeShow() {
         TableUtils.adjustRowSpan({
-          table: this.byId(this.sRequestListTableId),
-          colIndices: [0, 1, 2, 3, 4, 5, 14, 15],
-          theadOrTbody: 'thead',
+          oTable: this.byId(this.sRequestListTableId),
+          aColIndices: [0, 1, 2, 3, 4, 5, 14, 15],
+          sTheadOrTbody: 'thead',
         });
       },
 

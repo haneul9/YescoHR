@@ -142,62 +142,53 @@ sap.ui.define(
        * 		theadOrTbody: 'thead' or 'tbody'
        * 	}
        */
-      adjustRowSpan(o) {
-        if (!o.colIndices.length) return;
+      adjustRowSpan({ oTable, aColIndices, sTheadOrTbody }) {
+        if (!aColIndices.length) return;
 
-        o.table.addEventDelegate(
-          {
-            onAfterRendering() {
-              const target = o.theadOrTbody === 'thead' ? 'header' : 'table';
-              o.colIndices.forEach((colIndex) => {
-                const sId = `#${o.table.getId()}-${target} tbody>tr td:nth-child(${colIndex + 1}):visible`;
-                const aTDs = $(sId).get();
-                let oPrevTD = aTDs.shift();
+        oTable.addEventDelegate({
+          onAfterRendering() {
+            const sTarget = sTheadOrTbody === 'thead' ? 'header' : 'table';
 
-                aTDs.forEach((oTD) => {
-                  const $p = $(oPrevTD);
-                  const $c = $(oTD);
-                  if ($c.text() === $p.text()) {
-                    $p.attr('rowspan', Number($p.attr('rowspan') || 1) + 1);
-                    $c.hide();
-                  } else {
-                    oPrevTD = oTD;
-                  }
-                });
+            aColIndices.forEach((colIndex) => {
+              const sId = `#${oTable.getId()}-${sTarget} tbody>tr td:nth-child(${colIndex + 1}):visible`;
+              const aTDs = $(sId).get();
+              let oPrevTD = aTDs.shift();
+
+              aTDs.forEach((oTD) => {
+                const $p = $(oPrevTD);
+                const $c = $(oTD);
+
+                if ($c.text() === $p.text()) {
+                  $p.attr('rowspan', Number($p.attr('rowspan') || 1) + 1);
+                  $c.hide();
+                } else {
+                  oPrevTD = oTD;
+                }
               });
-            },
+            });
           },
-          o.table
-        );
+        });
       },
-
-      generateSumRow({ aTableData, sSumProp, sSumLabel, aCalcProps = [], rCalcProp }) {
+      /**
+       * @param  {Array} aTableData - 대상목록
+       * @param  {Object} mSumField - 합계 라벨 필드정보 ex) { Field01: '합계' }
+       * @param  {Array||RegExp} vCalcProps - 계산 대상 속성키(배열 또는 정규식)
+       */
+      generateSumRow({ aTableData, mSumField, vCalcProps }) {
         if (aTableData.length < 1) return;
 
-        return aTableData.reduce(
-          (acc, cur) => {
-            for (var prop in cur) {
-              const iCalcPropValue = _.defaultTo(Number(cur[prop]), 0);
-              const sDefaultPropValue = sSumProp === prop ? sSumLabel : null;
-
-              if (rCalcProp instanceof RegExp) {
-                if (acc.hasOwnProperty(prop) && rCalcProp.test(prop)) {
-                  acc[prop] += iCalcPropValue;
-                } else {
-                  acc[prop] = rCalcProp.test(prop) ? iCalcPropValue : sDefaultPropValue;
-                }
-              } else {
-                if (acc.hasOwnProperty(prop) && _.includes(aCalcProps, prop)) {
-                  acc[prop] += iCalcPropValue;
-                } else {
-                  acc[prop] = _.includes(aCalcProps, prop) ? iCalcPropValue : sDefaultPropValue;
-                }
-              }
+        const mSumProps = _.chain(aTableData[0])
+          .keys()
+          .map((k) => {
+            if ((vCalcProps instanceof RegExp && vCalcProps.test(k)) || (vCalcProps instanceof Array && _.includes(vCalcProps, k))) {
+              return { [k]: _.sumBy(aTableData, (o) => Number(o[k])) };
             }
-            return acc;
-          },
-          { Sumrow: true, [sSumProp]: sSumLabel }
-        );
+          })
+          .compact()
+          .reduce((a, c) => ({ ...a, ...c }), {})
+          .value();
+
+        return { Sumrow: true, ...mSumField, ...mSumProps };
       },
 
       summaryColspan({ oTable, sStartIndex = '0', aHideIndex = [] }) {

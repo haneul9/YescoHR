@@ -295,15 +295,20 @@ sap.ui.define(
           delete oReturnData.Actty;
           delete oReturnData.__metadata;
           const aTextFields = ['Dat03', 'Dat05', 'Dat08', 'Dat10', 'Dat13', 'Dat15', 'Dat18', 'Dat20', 'Dat23', 'Dat25'];
-          const aConvertData = Object.keys(oReturnData).map((key) => ({ data: oReturnData[key], labelOrText: _.includes(aTextFields, key) ? 'text' : 'label' }));
+          const aConvertData = _.chain(oReturnData)
+            .map((v, k) => ({ data: v, labelOrText: _.includes(aTextFields, k) ? 'text' : 'label' }))
+            .value();
 
           oViewModel.setProperty('/employee/header/profilePath', Pturl);
           oViewModel.setProperty('/employee/header/baseInfo', aConvertData);
           //End 상단 프로필 Set
 
           // 탭 메뉴 Set
-          const aTabMenus = _.filter(aMenuReturnData, { Child: '1' }).map((obj, index) => ({ Pressed: index === 0, ...obj }));
-          const aSubMenus = aMenuReturnData.filter((data) => data.Child !== '1');
+          const aTabMenus = _.chain(aMenuReturnData)
+            .filter({ Child: '1' })
+            .map((obj, index) => _.extend({ Pressed: index === 0 }, obj))
+            .value();
+          const aSubMenus = _.filter(aMenuReturnData, (o) => o.Child !== '1');
 
           oViewModel.setProperty('/employee/tab/list', aTabMenus);
           oViewModel.setProperty('/employee/tab/menu', aSubMenus);
@@ -311,14 +316,14 @@ sap.ui.define(
           aTabMenus.forEach((data) => {
             this.debug(`Tab ${data.Menu1}`, data);
 
-            oViewModelData.employee.sub[data.Menuc1] = { isShow: data.Pressed, contents: {} };
+            _.set(oViewModelData, ['employee', 'sub', data.Menuc1], { isShow: data.Pressed, contents: {} });
 
             aHeaderRequests.push(this.readOdata({ sUrl: '/EmpProfileHeaderTabSet', mFilters: { Menuc: data.Menuc1, ...mFilters } }));
             aContentRequests.push(this.readOdata({ sUrl: '/EmpProfileContentsTabSet', mFilters: { Menuc: data.Menuc1, ...mFilters } }));
           });
 
           aSubMenus.forEach((data) => {
-            oViewModelData.employee.sub[data.Menuc1].contents[data.Menuc2] = {
+            _.set(oViewModelData, ['employee', 'sub', data.Menuc1, 'contents', data.Menuc2], {
               type: data.Child,
               rowCount: 1,
               selectionMode: _.some(this.CRUD_TABLES, (o) => o.key === data.Menuc2) ? 'MultiToggle' : 'None',
@@ -327,7 +332,7 @@ sap.ui.define(
               sort: data.Sorts,
               header: [],
               data: [],
-            };
+            });
           });
           //End 탭 메뉴 Set
 
@@ -337,16 +342,14 @@ sap.ui.define(
 
           // Header 영역 Set
           aHeaderReturnData.forEach((headers, index) => {
-            headers.forEach((o) => {
-              oViewModelData.employee.sub[aTabMenus[index].Menuc1].contents[o.Menuc].header.push(o);
-            });
+            headers.forEach((o, i) => _.set(oViewModelData, ['employee', 'sub', aTabMenus[index].Menuc1, 'contents', o.Menuc, 'header', i], o));
           });
           //End Header 영역 Set
 
           // Contents 영역 Set
           aContentReturnData.forEach((content, index) => {
             content.forEach((o) => {
-              let mSubMenu = oViewModelData.employee.sub[aTabMenus[index].Menuc1].contents[o.Menuc];
+              let mSubMenu = _.get(oViewModelData, ['employee', 'sub', aTabMenus[index].Menuc1, 'contents', o.Menuc]);
 
               if (mSubMenu.type === this.SUB_TYPE.GRID) {
                 for (let i = 1; i <= mSubMenu.header.length; i++) {
@@ -381,7 +384,7 @@ sap.ui.define(
         const aSubMenu = oViewModel.getProperty('/employee/sub');
 
         Object.keys(aSubMenu).forEach((menuKey) => {
-          const aSubMenuContents = aSubMenu[menuKey].contents;
+          const aSubMenuContents = _.get(aSubMenu, [menuKey, 'contents']);
           let oWrapperVBox = sap.ui.getCore().byId(`sub${menuKey}`);
 
           if (oWrapperVBox) {
@@ -397,7 +400,7 @@ sap.ui.define(
            * OMenu.type: '6'  Grid
            */
           Object.keys(aSubMenuContents).forEach((key) => {
-            const mMenu = aSubMenuContents[key];
+            const mMenu = _.get(aSubMenuContents, key);
             const oSubVBox = new sap.m.VBox().addStyleClass('customBox sapUiMediumMarginBottom');
             const oSubHBox = new sap.m.HBox({ justifyContent: 'SpaceBetween' });
 
@@ -572,66 +575,19 @@ sap.ui.define(
         };
       },
 
-      /**
-       * OData에서 받은 데이터를 Tree구조 데이터로 변환한다.
-       * 최상위 키는 "00000000"
-       * 현재 키(Objid)와 부모 키(PupObjid)를 비교하여 같으면 부모의 nodes에 추가한다.
-       * Otype이 "O"(부서)인 경우 nodes를 초기화하고 dummy 아이템을 추가한다.(expand event 발생시 해당 부서의 child nodes를 조회)
-       *
-       * @param {Array} aReturnTreeData - OData return list
-       * @param {number} rootId - "00000000" 또는 부서코드
-       * 							"00000000"인 경우 rootNodes를 반환(Model-/TreeData setData)
-       * 							부서코드인 경우 rootNodes[0].nodes를 반환(이미 생성된 부모.nodes에 append)
-       *
-       * @returns {Array<Object>} - Tree data object
-       */
-      transformTreeData({ aReturnTreeData, rootId }) {
-        const aRootNodes = [];
-        const traverse = (nodes, item, index) => {
-          if (nodes instanceof Array) {
-            return nodes.some((node) => {
-              if (node.Objid === item.ObjidUp) {
-                node.nodes = node.nodes || [];
+      transformTreeData({ aTreeData, sRootId }) {
+        const mGroupedByParents = _.groupBy(aTreeData, 'ObjidUp');
+        const mCatsById = _.keyBy(aTreeData, 'Objid');
 
-                delete item.__metadata;
-                delete item.Datum;
-                aReturnTreeData.splice(index, 1);
+        _.each(_.omit(mGroupedByParents, sRootId), (children, parentId) => (mCatsById[parentId].nodes = children));
+        _.each(mCatsById, (cat) => {
+          delete cat.__metadata;
+          delete cat.Datum;
+          cat.ref = cat.Otype === 'O' ? 'sap-icon://org-chart' : cat.Xchif === 'X' ? 'sap-icon://manager' : 'sap-icon://employee';
+          cat.isParent = !_.isEmpty(cat.nodes);
+        });
 
-                let oAddItem = $.extend(true, item, {
-                  ref: item.Otype === 'O' ? 'sap-icon://org-chart' : item.Xchif === 'X' ? 'sap-icon://manager' : 'sap-icon://employee',
-                });
-
-                if (item.Otype === 'O') {
-                  oAddItem.nodes = [{ Stext: '-', dummy: true }];
-                }
-
-                return node.nodes.push(oAddItem);
-              }
-
-              return traverse(node.nodes, item, index);
-            });
-          }
-        };
-
-        while (aReturnTreeData.length > 0) {
-          aReturnTreeData.some((item, index) => {
-            if (item.ObjidUp === '00000000') {
-              delete item.__metadata;
-              delete item.Datum;
-              aReturnTreeData.splice(index, 1);
-
-              return aRootNodes.push(
-                $.extend(true, item, {
-                  ref: item.Otype === 'O' ? 'sap-icon://org-chart' : item.Xchif === 'X' ? 'sap-icon://manager' : 'sap-icon://employee',
-                })
-              );
-            }
-
-            return traverse(aRootNodes, item, index);
-          });
-        }
-
-        return rootId !== '00000000' ? aRootNodes[0].nodes : aRootNodes;
+        return mGroupedByParents[sRootId];
       },
 
       async uploadInputFormFiles(sMenuKey) {
@@ -685,7 +641,7 @@ sap.ui.define(
         if (!bTreeLoaded && sSelectedKey === 'tree') {
           const oSideTree = this.byId('OrganizationTree');
           const aReturnTreeData = await this.readOdata({ sUrl: '/AuthOrgTreeSet', mFilters: { Datum: moment().hour(9).toDate(), Xpern: 'X' } });
-          const mConvertedTreeData = this.transformTreeData({ aReturnTreeData, rootId: '00000000' });
+          const mConvertedTreeData = this.transformTreeData({ aTreeData: aReturnTreeData, sRootId: '00000000' });
           const iTreeViewHeight = Math.floor($(document).height() - oSideTree.$().offset().top - 35);
 
           this.debug('mConvertedTreeData', mConvertedTreeData);

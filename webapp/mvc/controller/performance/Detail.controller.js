@@ -6,6 +6,7 @@ sap.ui.define(
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -19,6 +20,7 @@ sap.ui.define(
     JSONModel,
     MessageBox,
     AppUtils,
+    UI5Error,
     ODataReadError,
     ServiceNames,
     BaseController
@@ -29,40 +31,54 @@ sap.ui.define(
       onBeforeShow() {
         const oViewModel = new JSONModel({
           busy: false,
-          year: 2021,
+          param: {
+            Zdocid: '',
+            Zzappid: '',
+            Partid: '',
+          },
+          year: moment().format('YYYY'),
           tab: { selectedKey: 'T01' },
           stage: {
             headers: [
-              { width: '15%', label: '준비중', icon: 'sap-icon://accelerated', completed: 'blue' }, //
-              { width: '21%', label: '목표수립', icon: 'sap-icon://accelerated', completed: 'blue' },
-              { width: '21%', label: '중간점검', icon: 'sap-icon://accelerated', completed: 'none' },
-              { width: '21%', label: '성과평가', icon: 'sap-icon://accelerated', completed: 'none' },
-              { width: '20%', label: '평가완료', icon: 'sap-icon://accelerated', completed: 'none' },
+              { label: '준비중', icon: 'asset/image/icon_per_status_01.png', completed: true }, //
+              { label: '목표수립', icon: 'asset/image/icon_per_status_02.png', completed: true },
+              { label: '중간점검', icon: 'asset/image/icon_per_status_03.png', completed: false },
+              { label: '성과평가', icon: 'asset/image/icon_per_status_04.png', completed: false },
+              { label: '평가완료', icon: 'asset/image/icon_per_status_05.png', completed: false },
             ],
-            rows: {
-              10: [
-                { label: '목표수립필요', completed: 'blue' }, //
-                { label: '평가자합의중', completed: 'none' },
-                { label: '목표수립완료', completed: 'none' },
-              ],
-              20: [
-                { label: '중간점검필요', completed: 'none' }, //
-                { label: '평가자점검중', completed: 'none' },
-                { label: '중간점검완료', completed: 'none' },
-              ],
-              30: [
-                { label: '자기평가필요', completed: 'none' }, //
-                { label: '직무순환설문중', completed: 'none' },
-                { label: '1차평가중', completed: 'none' },
-                { label: '2차평가중', completed: 'none' },
-                { label: '전사 Session 중', completed: 'none' },
-              ],
-              40: [
-                { label: '평가결과확인필요', completed: 'none' }, //
-                { label: '이의신청중', completed: 'none' },
-                { label: '평가완료', completed: 'none' },
-              ],
-            },
+            rows: [
+              { child: [] }, //
+              {
+                child: [
+                  { label: '목표수립필요', completed: true }, //
+                  { label: '평가자합의중', completed: false },
+                  { label: '목표수립완료', completed: false },
+                ],
+              },
+              {
+                child: [
+                  { label: '중간점검필요', completed: false }, //
+                  { label: '평가자점검중', completed: false },
+                  { label: '중간점검완료', completed: false },
+                ],
+              },
+              {
+                child: [
+                  { label: '자기평가필요', completed: false }, //
+                  { label: '직무순환설문중', completed: false },
+                  { label: '1차평가중', completed: false },
+                  { label: '2차평가중', completed: false },
+                  { label: '전사 Session 중', completed: false },
+                ],
+              },
+              {
+                child: [
+                  { label: '평가결과확인필요', completed: false }, //
+                  { label: '이의신청중', completed: false },
+                  { label: '평가완료', completed: false },
+                ],
+              },
+            ],
           },
           entry: {
             levels: [
@@ -138,24 +154,60 @@ sap.ui.define(
           ],
         });
         this.setViewModel(oViewModel);
+
+        const oStageHeader = this.byId('stageHeader');
+        oStageHeader.addEventDelegate({
+          onAfterRendering() {
+            const aHeaders = oViewModel.getProperty('/stage/headers');
+            const aHeaderItems = oStageHeader.getItems();
+
+            aHeaderItems.forEach((o, i) => {
+              o.toggleStyleClass('on', aHeaders[i].completed);
+            });
+          },
+        });
+
+        const oStageBody = this.byId('stageBody');
+        oStageBody.addEventDelegate({
+          onAfterRendering() {
+            const aRows = oViewModel.getProperty('/stage/rows');
+
+            oStageBody.getItems().forEach((row, rowidx) => {
+              row.getItems().forEach((o, childidx) => {
+                o.toggleStyleClass('on', aRows[rowidx].child[childidx].completed);
+              });
+            });
+          },
+        });
       },
 
-      async onObjectMatched() {
-        // const oModel = this.getModel(ServiceNames.APPRAISAL);
-        // const oViewModel = this.getViewModel();
-        // try {
-        //   oViewModel.setProperty('/busy', true);
-        //   const aTableData = await this.readAppraisalPeeList({ oModel });
-        //   this.setTableData({ oViewModel, aTableData });
-        // } catch (oError) {
-        //   this.debug('Controller > Performance List > onObjectMatched Error', oError);
-        //   AppUtils.handleError(oError);
-        // } finally {
-        //   oViewModel.setProperty('/busy', false);
-        // }
+      async onObjectMatched(oParameter) {
+        const oModel = this.getModel(ServiceNames.APPRAISAL);
+        const oViewModel = this.getViewModel();
+
+        try {
+          if (!_.every(['pid', 'docid', 'partid'], _.partial(_.has, oParameter))) throw new UI5Error({ code: 'E', message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
+
+          oViewModel.setProperty('/busy', true);
+          oViewModel.setProperty('/param', { Zdocid: oParameter.docid, Zzappid: oParameter.pid, Partid: oParameter.partid });
+
+          const mDetailData = await this.readDeepAppraisalDoc({ oModel, mKeys: oViewModel.getProperty('/param') });
+
+          console.log(mDetailData);
+          // this.setTableData({ oViewModel, aTableData });
+        } catch (oError) {
+          this.debug('Controller > Performance Detail > onObjectMatched Error', oError);
+
+          AppUtils.handleError(oError, {
+            // onClose: () => this.getRouter().navTo('performance'),
+          });
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       getCurrentLocationText(oArguments) {
+        console.log(oArguments);
         return '목표수립필요';
       },
 
@@ -166,7 +218,7 @@ sap.ui.define(
         let iCurrentItemsLength = oViewModel.getProperty('/currentItemsLength') ?? 0;
 
         if (iCurrentItemsLength === 7) {
-          MessageBox.alert('더 이상 추가 할 수 없습니다.');
+          MessageBox.alert(this.getBundleText('MSG_10002')); // 더 이상 추가 할 수 없습니다.
           return;
         }
 
@@ -237,30 +289,29 @@ sap.ui.define(
       /*****************************************************************
        * ! Call oData
        *****************************************************************/
-      /**
-       * @param  {JSONModel} oModel
-       */
-      readAppraisalPeeList({ oModel }) {
-        const mAppointee = this.getAppointeeData();
-        const sUrl = '/AppraisalPeeListSet';
-
+      readDeepAppraisalDoc({ oModel, mKeys }) {
         return new Promise((resolve, reject) => {
-          oModel.read(sUrl, {
-            filters: [
-              new Filter('Werks', FilterOperator.EQ, mAppointee.Werks), //
-              new Filter('Zzappee', FilterOperator.EQ, mAppointee.Pernr),
-            ],
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
+          const sUrl = '/AppraisalDocSet';
 
-              resolve(oData.results ?? []);
+          oModel.create(
+            sUrl,
+            {
+              ...mKeys,
+              AppraisalDocDetailSet: [],
             },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
+            {
+              success: (oData) => {
+                this.debug(`${sUrl} success.`, oData);
 
-              reject(new ODataReadError(oError));
-            },
-          });
+                resolve(oData ?? {});
+              },
+              error: (oError) => {
+                this.debug(`${sUrl} error.`, oError);
+
+                reject(new ODataReadError(oError));
+              },
+            }
+          );
         });
       },
     });

@@ -6,35 +6,32 @@ sap.ui.define(
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/model/type/Currency',
   ],
   (
     // prettier 방지용 주석
     JSONModel,
-    MessageBox,
-    Appno,
-    AppUtils,
-    AttachFileAction,
-    ComboEntry,
-    FragmentEvent,
-    TextUtils,
-    TableUtils,
-    ServiceNames,
-    BaseController
+	MessageBox,
+	Appno,
+	AppUtils,
+	ComboEntry,
+	FragmentEvent,
+	TextUtils,
+	TableUtils,
+	ServiceNames,
+	BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.clubJoin.ClubJoinDetail', {
-      TYPE_CODE: 'HR07',
-      LIST_PAGE_ID: 'container-ehr---housingLoan',
+      LIST_PAGE_ID: 'container-ehr---clubJoin',
 
-      AttachFileAction: AttachFileAction,
       TextUtils: TextUtils,
       TableUtils: TableUtils,
       FragmentEvent: FragmentEvent,
@@ -61,7 +58,7 @@ sap.ui.define(
         this.getViewModel().setProperty('/busy', true);
       },
 
-      onObjectMatched(oParameter) {
+      async onObjectMatched(oParameter) {
         const sDataKey = oParameter.oDataKey;
         const sMenid = this.getCurrentMenuId();
         const oDetailModel = this.getViewModel();
@@ -69,10 +66,16 @@ sap.ui.define(
         oDetailModel.setProperty('/menid', sMenid);
         oDetailModel.setProperty('/ViewKey', sDataKey);
 
-        this.getList().then(() => {
-          this.setFormData();
+        try {
+          const aList = await this.getList();
+
+          oDetailModel.setProperty('/ClubType', new ComboEntry({ codeKey: 'Zclub', valueKey: 'Zclubtx', aEntries: aList }));
+          this.setFormData();          
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
           oDetailModel.setProperty('/busy', false);
-        });
+        }
       },
 
       getCurrentLocationText(oArguments) {
@@ -81,433 +84,150 @@ sap.ui.define(
         return sAction;
       },
 
-      // 상환이력 Excel
-      onPressExcelDownload() {
-        const oTable = this.byId('repayHisTable');
-        const aTableData = this.getViewModel().getProperty('/RepayHisList');
-        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_07033');
-
-        TableUtils.export({ oTable, aTableData, sFileName });
-      },
-
-      // 융자금액 입력시
-      loanCost(oEvent) {
-        const oEventSource = oEvent.getSource();
-        const sValue = oEvent.getParameter('value').trim().replace(/[^\d]/g, '');
-        const oDetailModel = this.getViewModel();
-        const sAmountCode = this.getViewModel().getProperty('/loanAmount/Code');
-        const mFormData = oDetailModel.getProperty('/FormData');
-
-        if (sValue > parseFloat(sAmountCode) && !!mFormData.Lntyp) {
-          const sAmountFormat = new Intl.NumberFormat('ko-KR').format(sAmountCode);
-          const sFormAmount = new Intl.NumberFormat('ko-KR').format(mFormData.Lnamt);
-
-          // MessageBox.alert(this.getBundleText('MSG_07006', mFormData.Lntyptx, sAmountFormat));
-          this.getMonthlyRepayment(sValue);
-          oEventSource.setValue(sFormAmount);
-          return oDetailModel.setProperty('/FormData/Lnamt', mFormData.Lnamt);
-        }
-
-        oEventSource.setValue(sValue);
-        oDetailModel.setProperty('/FormData/Lnamt', sValue);
-        this.getMonthlyRepayment(sValue);
-      },
-
-      // 건평 입력시
-      areaSize(oEvent) {
-        const oEventSource = oEvent.getSource();
-        const sValue = oEvent
-          .getParameter('value')
-          .trim()
-          .replace(/[^\d'.']/g, '');
-        const oDetailModel = this.getViewModel();
-        const sBaseCode = oDetailModel.getProperty('/baseArea/Code');
-
-        if (sValue > parseFloat(sBaseCode)) {
-          MessageBox.alert(this.getBundleText('MSG_07005', sBaseCode));
-          return oEventSource.setValue(oDetailModel.getProperty('/FormData/Zsize'));
-        }
-
-        oEventSource.setValue(sValue);
-      },
-
       // 상세조회
       setFormData() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
+        const oView = this.getView();
         const oDetailModel = this.getViewModel();
-        const sUrl = '/LoanAmtApplSet';
+        const oModel = this.getModel(ServiceNames.BENEFIT);
         const sViewKey = oDetailModel.getProperty('/ViewKey');
-
-        const sRedText = `<a href='#' style='color:blue;'>${this.getBundleText('LABEL_00132')}</a>`;
+        const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+        const mListData = oListView.getModel().getProperty('/parameters');
 
         oDetailModel.setProperty(
           '/InfoMessage',
-          `<p>${this.getBundleText('MSG_07021')}</p>
-          <p>${this.getBundleText('MSG_07022', sRedText)}</p>`
+          `<p>${this.getBundleText('MSG_14002')}</p>
+          <p>${this.getBundleText('MSG_14003')}</p>`
         );
 
-        if (sViewKey === 'N' || !sViewKey) {
+        if (sViewKey === 'N' || (!sViewKey && !mListData)) {
           const oAppointeeData = this.getAppointeeData();
 
-          oDetailModel.setProperty('/FormData/Appernr', oAppointeeData.Pernr);
-          oDetailModel.setProperty('/FormData/Lntyp', 'ALL');
-          oDetailModel.setProperty('/FormData/Asmtd', 'ALL');
-          oDetailModel.setProperty('/FormData/Htype', 'ALL');
+          oDetailModel.setProperty('/FormData/Coaid', '');
+          oDetailModel.setProperty('/FormData/Zclub', 'ALL');
 
           oDetailModel.setProperty('/ApplyInfo', {
             Apename: oAppointeeData.Ename,
             Aporgtx: `${oAppointeeData.Btrtx}/${oAppointeeData.Orgtx}`,
             Apjikgbtl: `${oAppointeeData.Zzjikgbt}/${oAppointeeData.Zzjiktlt}`,
           });
-
-          this.settingsAttachTable();
         } else {
-          const oView = this.getView();
-          const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-          const mListData = oListView.getModel().getProperty('/parameters');
-          let oSendObject = {};
+          const aFilter = [];
 
-          oSendObject.Prcty = 'D';
-          oSendObject.Appno = sViewKey;
-          oSendObject.Begda = mListData.Begda;
-          oSendObject.Endda = mListData.Endda;
-          oSendObject.Lntyp = mListData.Lntyp;
-          oSendObject.Seqnr = mListData.Seqnr;
-          oSendObject.Pernr = mListData.Pernr;
-          oSendObject.LoanAmtHistorySet = [];
-          oSendObject.LoanAmtRecordSet = [];
+          if (sViewKey === '00000000000000') {
+            aFilter.push(
+              new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'),
+              new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, mListData.Pernr),
+              new sap.ui.model.Filter('Begda', sap.ui.model.FilterOperator.EQ, mListData.Begda),
+              new sap.ui.model.Filter('Endda', sap.ui.model.FilterOperator.EQ, mListData.Endda),
+              new sap.ui.model.Filter('Zclub', sap.ui.model.FilterOperator.EQ, mListData.Zclub),
+            );
+          } else {            
+            aFilter.push(
+              new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'),
+              new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sViewKey),
+            );
+          }
 
-          oDetailModel.setProperty('/hisBusy', true);
-
-          oModel.create(sUrl, oSendObject, {
+          oModel.read('/ClubJoinApplSet', {
+            filters: aFilter,
             success: (oData) => {
               if (oData) {
-                this.debug(`${sUrl} success.`, oData);
-
-                const oTargetData = oData;
+                const oTargetData = oData.results[0];
 
                 oDetailModel.setProperty('/FormData', oTargetData);
                 oDetailModel.setProperty('/ApplyInfo', oTargetData);
-                // oDetailModel.setProperty('/ApplyInfo/Appdt', oTargetData.Appda);
-
-                if (oTargetData.Lnsta === '40' || oTargetData.Lnsta === '60') {
-                  const iHistoryLength = oData.LoanAmtRecordSet.results.length;
-
-                  oDetailModel.setProperty('/RepayList', oData.LoanAmtHistorySet.results);
-                  oDetailModel.setProperty('/RepayHisList', oData.LoanAmtRecordSet.results);
-                  oDetailModel.setProperty('/RepayHisLength', iHistoryLength > 10 ? 10 : iHistoryLength);
-                }
-
-                this.settingsAttachTable();
-                this.getLoanCost(oTargetData.Lntyp);
-                oDetailModel.setProperty('/hisBusy', false);
               }
             },
             error: (oError) => {
               AppUtils.handleError(oError);
-              oDetailModel.setProperty('/hisBusy', false);
             },
           });
         }
       },
 
       // 화면관련 List호출
-      async getList() {
+      getList() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const oAppointeeData = this.getAppointeeData();
-        const sBenefitUrl = '/BenefitCodeListSet';
 
-        return Promise.all([
-          new Promise((resolve) => {
-            // 융자구분
-            oModel.read(sBenefitUrl, {
-              filters: [
-                new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0008'),
-                new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks),
-                new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-                new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000004'),
-                new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'GRADE'),
-              ],
-              success: (oData) => {
-                if (oData) {
-                  this.debug(`${sBenefitUrl} success.`, oData);
-
-                  const aList = oData.results;
-                  const aList2 = [];
-
-                  aList.forEach((e) => {
-                    if (!e.Zchar1) {
-                      aList2.push(e);
-                    }
-                  });
-
-                  oDetailModel.setProperty('/LaonType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList2 }));
-
-                  resolve();
-                }
-              },
-              error: (oError) => {
-                AppUtils.handleError(oError);
-              },
-            });
-          }),
-          new Promise((resolve) => {
-            // 담보종류
-            oModel.read(sBenefitUrl, {
-              filters: [new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0009')],
-              success: (oData) => {
-                if (oData) {
-                  this.debug(`${sBenefitUrl} success.`, oData);
-
-                  const aList1 = oData.results;
-
-                  oDetailModel.setProperty('/AssuranceType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList1 }));
-
-                  resolve();
-                }
-              },
-              error: (oError) => {
-                AppUtils.handleError(oError);
-              },
-            });
-          }),
-          new Promise((resolve) => {
-            // 주택종류
-            oModel.read(sBenefitUrl, {
-              filters: [
-                new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0010'),
-                new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks),
-                new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-                new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000003'),
-                new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'HTYPE'),
-              ],
-              success: (oData) => {
-                if (oData) {
-                  this.debug(`${sBenefitUrl} success.`, oData);
-
-                  const aList = oData.results;
-
-                  oDetailModel.setProperty('/HouseType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
-
-                  resolve();
-                }
-              },
-              error: (oError) => {
-                AppUtils.handleError(oError);
-              },
-            });
-          }),
-          new Promise((resolve) => {
-            // 건평
-            oModel.read(sBenefitUrl, {
-              filters: [
-                new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0011'),
-                new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks),
-                new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-                new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000003'),
-                new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'OUT'),
-                new sap.ui.model.Filter('Comcd', sap.ui.model.FilterOperator.EQ, 'PY'),
-              ],
-              success: (oData) => {
-                if (oData) {
-                  this.debug(`${sBenefitUrl} success.`, oData);
-
-                  const mArea = oData.results[0];
-
-                  oDetailModel.setProperty('/baseArea/Text', mArea.Zbigo);
-                  oDetailModel.setProperty('/baseArea/Code', mArea.Zchar1);
-
-                  resolve();
-                }
-              },
-              error: (oError) => {
-                AppUtils.handleError(oError);
-              },
-            });
-          }),
-        ]);
-      },
-
-      // 융자금액입력시 금액호출
-      getLoanCost(sKey) {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const oAppointeeData = this.getAppointeeData();
-        const sBenefitUrl = '/BenefitCodeListSet';
-
-        oModel.read(sBenefitUrl, {
-          filters: [
-            new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0012'),
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks),
-            new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-            new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, sKey),
-          ],
-          success: (oData) => {
-            if (oData) {
-              this.debug(`${sBenefitUrl} success.`, oData);
-
-              const oList = oData.results[0];
-
-              oDetailModel.setProperty('/loanAmount/Code', oList.Zbetrg);
-              oDetailModel.setProperty('/loanAmount/Text', oList.Zbigo);
-              oDetailModel.setProperty('/FormData/Hdprd', oList.Zchar2);
-              oDetailModel.setProperty('/FormData/Lnprd', oList.Zchar1);
-              oDetailModel.setProperty('/FormData/Lnrte', oList.Zchar5);
-
-              const mFormData = oDetailModel.getProperty('/FormData');
-              // let sAmount = mFormData.Lnamt;
-
-              if (!!mFormData.Lnamt) {
-                if (parseFloat(mFormData.Lnamt) > parseFloat(oList.Zbetrg)) {
-                  MessageBox.alert(this.getBundleText('MSG_07006', mFormData.Lntyptx, new Intl.NumberFormat('ko-KR').format(oList.Zbetrg)));
-                  // oDetailModel.setProperty('/FormData/Lnamt', oList.Zbetrg);
-                  // sAmount = oList.Zbetrg;
-                }
-
-                // this.getMonthlyRepayment(sAmount);
+        return new Promise((resolve, reject) => {
+          // 동호회
+          oModel.read('/ClubJoinClublistSet', {
+            filters: [
+              new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
+            ],
+            success: (oData) => {
+              if (oData) {
+                resolve(oData.results);
               }
-            }
-          },
-          error: (oError) => {
-            AppUtils.handleError(oError);
-          },
-        });
+            },
+            error: (oError) => {
+              reject(oError);
+            },
+          });
+        })
       },
 
-      // 신청서 출력
-      onAppPDF() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const sBenefitUrl = '/LoanAmtPrintSet';
-        const mFormData = oDetailModel.getProperty('/FormData');
-
-        oModel.read(sBenefitUrl, {
-          filters: [
-            new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, mFormData.Pernr),
-            new sap.ui.model.Filter('Begda', sap.ui.model.FilterOperator.EQ, mFormData.Begda),
-            new sap.ui.model.Filter('Endda', sap.ui.model.FilterOperator.EQ, mFormData.Endda),
-            new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mFormData.Lntyp),
-          ],
-          success: (oData) => {
-            if (oData) {
-              const oList = oData.results[0];
-              const oViewer = new sap.m.PDFViewer({
-                source: oList.Url,
-                sourceValidationFailed: function (oEvent) {
-                  oEvent.preventDefault();
-                },
-              });
-
-              oViewer.open();
-            }
-          },
-          error: (oError) => {
-            AppUtils.handleError(oError);
-          },
-        });
-      },
-      // 융자구분 선택시
-      onLaonType(oEvent) {
+        // 동호회 선택시
+      onClubType(oEvent) {
         const oDetailModel = this.getViewModel();
         const sKey = oEvent.getSource().getSelectedKey();
 
         if (sKey === 'ALL' || !sKey) return;
 
-        oDetailModel.getProperty('/LaonType').forEach((e) => {
-          if (e.Zcode === sKey) {
-            oDetailModel.setProperty('/FormData/Lntyptx', e.Ztext);
+        oDetailModel.getProperty('/ClubType').forEach((e) => {
+          if (e.Zclub === sKey) {
+            // oDetailModel.setProperty('/FormData', e);
+            oDetailModel.setProperty('/FormData/Zclubtx', e.Zclubtx);
+            oDetailModel.setProperty('/FormData/Begda', e.Begda);
+            oDetailModel.setProperty('/FormData/Endda', e.Endda);
+            oDetailModel.setProperty('/FormData/Period', e.Period);
+            oDetailModel.setProperty('/FormData/Mcnt', e.Mcnt);
+            oDetailModel.setProperty('/FormData/PerHead', e.PerHead);
+            oDetailModel.setProperty('/FormData/Headnm', e.Headnm);
+            oDetailModel.setProperty('/FormData/PerLead', e.PerLead);
+            oDetailModel.setProperty('/FormData/Leadnm', e.Leadnm);
+            oDetailModel.setProperty('/FormData/Betrg', e.Betrg);
+            oDetailModel.setProperty('/FormData/Zinfo', e.Zinfo);
+            oDetailModel.setProperty('/FormData/Memberyn', e.Memberyn);
           }
         });
-
-        this.getLoanCost(sKey);
       },
 
-      // 융자금액 입력시 월 상환액
-      getMonthlyRepayment(sAmount) {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
+      onSelected(oEvent) {
         const oDetailModel = this.getViewModel();
-        const sBenefitUrl = '/LoanAmtCheckSet';
-        const mFormData = oDetailModel.getProperty('/FormData');
+        const bSelected = oEvent.getSource().getSelected();
 
-        if (mFormData.Lntyp === 'ALL' || !mFormData.Lntyp) return;
+        if (bSelected) {
+          const oModel = this.getModel(ServiceNames.BENEFIT);
 
-        oModel.read(sBenefitUrl, {
-          filters: [
-            new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mFormData.Lntyp),
-            new sap.ui.model.Filter('Lnprd', sap.ui.model.FilterOperator.EQ, mFormData.Lnprd),
-            new sap.ui.model.Filter('Lnrte', sap.ui.model.FilterOperator.EQ, mFormData.Lnrte),
-            new sap.ui.model.Filter('LnamtT', sap.ui.model.FilterOperator.EQ, sAmount),
-            // new sap.ui.model.Filter('Waers', sap.ui.model.FilterOperator.EQ, 'KRW'),
-          ],
-          success: (oData) => {
-            if (oData) {
-              this.debug(`${sBenefitUrl} success.`, oData);
-
-              const oRepayObj = oData.results[0];
-
-              if(!!oRepayObj.Message) {
-                MessageBox.alert(oRepayObj.Message);
-                // oDetailModel.setProperty('/FormData/Lnamt', oRepayObj.Mxamt);
-              }
-
-              oDetailModel.setProperty('/FormData/RpamtMon', oRepayObj.RpamtMon);
-            }
-          },
-          error: (oError) => {
-            AppUtils.handleError(oError);
-          },
-        });
+          oModel.read('/ClubJoinApplSet', {
+            filters: [
+              new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, '1'),
+            ],
+            success: () => {
+              oDetailModel.setProperty('/FormData/Coaid', 'X');
+            },
+            error: (oError) => {
+              AppUtils.handleError(oError);
+              oDetailModel.setProperty('/FormData/Coaid', '');
+            },
+          });
+        } else {
+          oDetailModel.setProperty('/FormData/Coaid', '');
+        }
       },
 
       checkError() {
         const oDetailModel = this.getViewModel();
         const oFormData = oDetailModel.getProperty('/FormData');
 
-        // 융자구분
-        if (oFormData.Lntyp === 'ALL' || !oFormData.Lntyp) {
-          MessageBox.alert(this.getBundleText('MSG_07007'));
-          return true;
-        }
-
-        // 담보종류
-        if (oFormData.Asmtd === 'ALL' || !oFormData.Asmtd) {
-          MessageBox.alert(this.getBundleText('MSG_07008'));
-          return true;
-        }
-
-        // 주택종류
-        if (oFormData.Htype === 'ALL' || !oFormData.Htype) {
-          MessageBox.alert(this.getBundleText('MSG_07009'));
-          return true;
-        }
-
-        // 건평
-        if (!oFormData.Zsize) {
-          MessageBox.alert(this.getBundleText('MSG_07010'));
-          return true;
-        }
-
-        // 주소
-        if (!oFormData.Addre) {
-          MessageBox.alert(this.getBundleText('MSG_07011'));
-          return true;
-        }
-
-        // 융자금액
-        if (!oFormData.Lnamt) {
-          MessageBox.alert(this.getBundleText('MSG_07012'));
+        // 동호회
+        if (oFormData.Zclub === 'ALL' || !oFormData.Zclub) {
+          MessageBox.alert(this.getBundleText('MSG_14004'));
           return true;
         }
 
         return false;
-      },
-
-      // 상환신청
-      onRepayApp() {
-        const sAppno = this.getViewModel().getProperty('/FormData/Appno');
-
-        this.getRouter().navTo('housingLoan-repay', { oDataKey: sAppno });
       },
 
       // 재작성
@@ -545,11 +265,8 @@ sap.ui.define(
                 oSendObject.Menid = oDetailModel.getProperty('/menid');
                 oSendObject.Waers = 'KRW';
 
-                // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
-
                 await new Promise((resolve, reject) => {
-                  oModel.create('/LoanAmtApplSet', oSendObject, {
+                  oModel.create('/ClubJoinApplSet', oSendObject, {
                     success: () => {
                       resolve();
                     },
@@ -602,11 +319,8 @@ sap.ui.define(
                 oSendObject.Menid = oDetailModel.getProperty('/menid');
                 oSendObject.Waers = 'KRW';
 
-                // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
-
                 await new Promise((resolve, reject) => {
-                  oModel.create('/LoanAmtApplSet', oSendObject, {
+                  oModel.create('/ClubJoinApplSet', oSendObject, {
                     success: () => {
                       resolve();
                     },
@@ -620,7 +334,7 @@ sap.ui.define(
 
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
                   onClose: () => {
-                    this.getRouter().navTo('housingLoan');
+                    this.getRouter().navTo('clubJoin');
                   },
                 });
               } catch (oError) {
@@ -646,16 +360,17 @@ sap.ui.define(
 
               let oSendObject = {};
 
-              oSendObject = oDetailModel.getProperty('/FormData');
+              // oSendObject = oDetailModel.getProperty('/FormData');
               oSendObject.Prcty = 'W';
+              oSendObject.Appno = oDetailModel.getProperty('/FormData/Appno');
               oSendObject.Menid = oDetailModel.getProperty('/menid');
 
-              oModel.create('/LoanAmtApplSet', oSendObject, {
+              oModel.create('/ClubJoinApplSet', oSendObject, {
                 success: () => {
                   AppUtils.setAppBusy(false, this);
                   MessageBox.alert(this.getBundleText('MSG_00039', 'LABEL_00121'), {
                     onClose: () => {
-                      this.getRouter().navTo('housingLoan');
+                      this.getRouter().navTo('clubJoin');
                     },
                   });
                 },
@@ -680,11 +395,8 @@ sap.ui.define(
             if (vPress && vPress === this.getBundleText('LABEL_00110')) {
               AppUtils.setAppBusy(true, this);
 
-              const sPath = oModel.createKey('/LoanAmtApplSet', {
-                Pernr: oDetailModel.getProperty('/FormData/Pernr'),
-                Endda: oDetailModel.getProperty('/FormData/Endda'),
-                Begda: oDetailModel.getProperty('/FormData/Begda'),
-                Lntyp: oDetailModel.getProperty('/FormData/Lntyp'),
+              const sPath = oModel.createKey('/ClubJoinApplSet', {
+                Appno: oDetailModel.getProperty('/FormData/Appno'),
               });
 
               oModel.remove(sPath, {
@@ -692,7 +404,7 @@ sap.ui.define(
                   AppUtils.setAppBusy(false, this);
                   MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
                     onClose: () => {
-                      this.getRouter().navTo('housingLoan');
+                      this.getRouter().navTo('clubJoin');
                     },
                   });
                 },
@@ -703,21 +415,6 @@ sap.ui.define(
               });
             }
           },
-        });
-      },
-
-      // AttachFileTable Settings
-      settingsAttachTable() {
-        const oDetailModel = this.getViewModel();
-        const sStatus = oDetailModel.getProperty('/FormData/Lnsta');
-        const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
-
-        AttachFileAction.setAttachFile(this, {
-          Editable: !sStatus || sStatus === '10',
-          Type: this.TYPE_CODE,
-          Appno: sAppno,
-          Max: 10,
-          FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
         });
       },
     });

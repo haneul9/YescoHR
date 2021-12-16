@@ -91,9 +91,8 @@ sap.ui.define(
         const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
         const mSumRow = TableUtils.generateSumRow({
           aTableData: aRowData,
-          sSumProp: 'Idx',
-          sSumLabel,
-          rCalcProp: /^Bet0/,
+          mSumField: { Idx: sSumLabel },
+          vCalcProps: /^Bet0/,
         });
 
         oViewModel.setProperty('/list', _.isEmpty(mSumRow) ? [] : [...aRowData.map((o, i) => ({ ...o, Idx: ++i })), { Idx: sSumLabel, ...mSumRow }]);
@@ -141,7 +140,7 @@ sap.ui.define(
 
         if (isNaN(oRowData.Seqnr)) return;
 
-        this.getRouter().navTo('paystub-detail', { seqnr: oRowData.Seqnr.replace(/^0+/, '') });
+        this.getRouter().navTo('paystub-detail', { seqnr: _.trimStart(oRowData.Seqnr, '0') });
       },
 
       /*****************************************************************

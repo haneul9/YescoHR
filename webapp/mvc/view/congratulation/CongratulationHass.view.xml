@@ -1,0 +1,6 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.congratulation.Congratulation"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core" visible="false">
+    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.congratulation.fragment.MainForm" type="XML" />
+</mvc:View>
