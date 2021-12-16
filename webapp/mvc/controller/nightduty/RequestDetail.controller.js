@@ -76,7 +76,7 @@ sap.ui.define(
 
             oViewModel.setProperty(
               '/detail/employees',
-              aEmployees.map((o) => ({ ...o, Pernr: o.Pernr.replace(/^0+/, '') }))
+              aEmployees.map((o) => ({ ...o, Pernr: _.trimStart(o.Pernr, '0') }))
             );
 
             this.oApprovalRequestHelper.setApplyInfoBoxData();

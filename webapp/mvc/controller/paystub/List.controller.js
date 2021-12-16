@@ -140,7 +140,7 @@ sap.ui.define(
 
         if (isNaN(oRowData.Seqnr)) return;
 
-        this.getRouter().navTo('paystub-detail', { seqnr: oRowData.Seqnr.replace(/^0+/, '') });
+        this.getRouter().navTo('paystub-detail', { seqnr: _.trimStart(oRowData.Seqnr, '0') });
       },
 
       /*****************************************************************
