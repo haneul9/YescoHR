@@ -7,7 +7,7 @@
                 <Title level="H2" text="{i18n>LABEL_00168}" />
             </HBox>
             <HBox class="table-top">
-                <Button icon="sap-icon://add" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" text="{i18n>LABEL_00107}" press=".onAddDetails" />
+                <Button icon="sap-icon://add" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" text="{i18n>LABEL_00107}" press=".onAddDetails" class="sapUiTinyMarginEnd" />
                 <Button icon="sap-icon://less" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" text="{i18n>LABEL_00110}" press=".onDelDetails" />
             </HBox>
         </HBox>
