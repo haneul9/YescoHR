@@ -718,8 +718,18 @@ sap.ui.define(
           this.addSeqnrNum();
 
           await AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.TYPE_CODE, this.DIALOG_FILE_ID);
-          
-          this.byId('DetailHisDialog').close();
+
+          setTimeout(async () => {
+            const aFileList = await AttachFileAction.refreshAttachFileList(this, this.DIALOG_FILE_ID);
+            let bFile = '';
+  
+            if (!!aFileList.length) {
+              bFile = 'X'
+            } 
+            
+            oDetailModel.setProperty('/DialogData/Attyn', bFile);
+            this.byId('DetailHisDialog').close();
+          }, 100);
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -749,12 +759,20 @@ sap.ui.define(
               oDetailModel.setProperty(`/HisList/${i}`, mDialogData);
             }
           });
-
-          this.setAppAmount();
-  
           await AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.TYPE_CODE, this.DIALOG_FILE_ID);
           
-          this.byId('DetailHisDialog').close();
+          setTimeout(async () => {
+            const aFileList = await AttachFileAction.refreshAttachFileList(this, this.DIALOG_FILE_ID);
+            let bFile = '';
+
+            if (!!aFileList.length) {
+              bFile = 'X'
+            } 
+
+            oDetailModel.setProperty('/DialogData/Attyn', bFile);
+            this.setAppAmount();
+            this.byId('DetailHisDialog').close();
+          }, 100);
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {

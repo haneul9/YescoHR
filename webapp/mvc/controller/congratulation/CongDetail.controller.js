@@ -108,6 +108,7 @@ sap.ui.define(
             oDetailModel.setProperty('/FormData', oSessionData);
             oDetailModel.setProperty('/FormData', {
               Apename: oSessionData.Ename,
+              Ename: oSessionData.Ename,
               Appernr: oSessionData.Pernr,
               Concode: 'ALL',
               Conresn: 'ALL',
