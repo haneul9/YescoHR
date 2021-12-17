@@ -68,13 +68,13 @@
 										<Label text="{i18n>LABEL_10012}" visible="{= ${/fieldControl/display/Zmepoint} !== 'H' }"/>
 									</VBox>
 									<VBox>
-										<Input class="required" value="{ path: '/summary/Zmepoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" editable="{= ${/fieldControl/display/Zmepoint} === 'X' }" visible="{= ${/fieldControl/display/Zmepoint} !== 'H' }"/>
+										<Input class="required" type="Number" value="{ path: '/summary/Zmepoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" editable="{= ${/fieldControl/display/Zmepoint} === 'X' }" visible="{= ${/fieldControl/display/Zmepoint} !== 'H' }"/>
 									</VBox>
 									<VBox>
 										<Label text="{i18n>LABEL_10013}" visible="{= ${/fieldControl/display/Zmapoint} !== 'H' }"/>
 									</VBox>
 									<VBox>
-										<Input class="required" value="{ path: '/summary/Zmapoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" editable="{= ${/fieldControl/display/Zmapoint} === 'X' }" visible="{= ${/fieldControl/display/Zmapoint} !== 'H' }"/>
+										<Input class="required" type="Number" value="{ path: '/summary/Zmapoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" editable="{= ${/fieldControl/display/Zmapoint} === 'X' }" visible="{= ${/fieldControl/display/Zmapoint} !== 'H' }"/>
 									</VBox>
 									<VBox>
 										<Label text="{i18n>LABEL_10014}" visible="{= ${/fieldControl/display/Zmbgrade} !== 'H' }"/>
