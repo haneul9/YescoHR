@@ -10,7 +10,7 @@
             <Button text="{i18n>LABEL_00115}" icon="sap-icon://decline" press=".EmployeeSearch.onCloseClick" class="cancel" />
         </endButton>
         <content>
-            <table:Table id="groupTable" width="100%" rows="{EmployeeModel>/empList}" visibleRowCount="1" rowHeight="45" columnHeaderHeight="45" columnHeaderVisible="false">
+            <table:Table id="groupTable" width="100%" rows="{EmployeeModel>/empList}" visibleRowCount="1" rowHeight="44" columnHeaderHeight="45" columnHeaderVisible="false">
                 <table:extension>
                     <HBox>
                         <Label text="{i18n>LABEL_00259}" />

@@ -1,7 +1,8 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core"
+    xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:table="sap.ui.table">
-    <Dialog id= "EmployeeSearch" title="{i18n>LABEL_00205}" contentWidth="1500px" contentHeight="600px">
+    <Dialog id= "EmployeeSearch" title="{i18n>LABEL_00205}" contentWidth="1500px" contentHeight="650px" busyIndicatorDelay="0" busy="{employeeModel>/busy}">
         <beginButton>
             <Button text="{i18n>LABEL_00112}" icon="sap-icon://accept" press=".EmployeeSearch.onSelectClick" class="cancel" />
         </beginButton>
@@ -10,50 +11,50 @@
         </endButton>
         <content>
             <HBox width="100%">
-                <VBox width="auto">
+                <VBox>
                     <HBox justifyContent="SpaceBetween">
                         <HBox>
                             <core:Icon src="sap-icon://filter" />
                             <Label text="{i18n>LABEL_00203}" />
                         </HBox>
-                        <Button icon="sap-icon://search" text="{i18n>LABEL_00101}" />
+                        <Button icon="sap-icon://search" text="{i18n>LABEL_00101}" press=".EmployeeSearch.onEmpSearch" />
                     </HBox>
-                    <VBox>
+                    <grid:CSSGrid gridTemplateRows="1fr 2fr" gridGap="1px 0" class="form-grid">
                         <Label text="{i18n>LABEL_00237}" />
                         <VBox>
-                            <ComboBox items="{EmployeeModel>/PersArea}" selectedKey="{EmployeeModel>/Search/Conresn}" change="">
-                                <core:Item text="{Ztext}" key="{Zcode}" />
+                            <ComboBox items="{employeeModel>/PersArea}" selectedKey="{employeeModel>/Search/Persa}">
+                                <core:Item text="{Pbtxt}" key="{Werks}" />
                             </ComboBox>
                         </VBox>
                         <Label text="{i18n>LABEL_00211}" />
                         <VBox>
-                            <Input value="{EmployeeModel>/Search}"/>
+                            <Input value="{employeeModel>/Search/Ename}"/>
                         </VBox>
                         <Label text="{i18n>LABEL_00226}" />
                         <VBox>
-                            <Input value="{EmployeeModel>/Search}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".EmployeeSearch.onGroupDetail" />
+                            <Input value="{employeeModel>/Search/orgeh}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".EmployeeSearch.onGroupDetail" />
                         </VBox>
                         <Label text="{i18n>LABEL_00240}" />
                         <VBox>
-                            <ComboBox items="{/EmployeeModel>/Search}" selectedKey="{EmployeeModel>/Search/Conresn}" change="">
+                            <ComboBox items="{employeeModel>/WorkType}" selectedKey="{employeeModel>/Search/Stat2}">
                                 <core:Item text="{Ztext}" key="{Zcode}" />
                             </ComboBox>
                         </VBox>
                         <Label text="{i18n>LABEL_00238}" />
                         <VBox>
-                            <ComboBox items="{EmployeeModel>/Search}" selectedKey="{EmployeeModel>/Search/Conresn}" change="">
+                            <ComboBox items="{employeeModel>/EmpGroup}" selectedKey="{employeeModel>/Search/Persg}" change=".EmployeeSearch.onSubEmpCode">
                                 <core:Item text="{Ztext}" key="{Zcode}" />
                             </ComboBox>
                         </VBox>
                         <Label text="{i18n>LABEL_00327}" />
                         <VBox>
-                            <ComboBox items="{EmployeeModel>/Search}" selectedKey="{EmployeeModel>/Search/Conresn}" change="">
+                            <ComboBox items="{employeeModel>/SubEmpGroup}" selectedKey="{employeeModel>/Search/Persk}">
                                 <core:Item text="{Ztext}" key="{Zcode}" />
                             </ComboBox>
                         </VBox>
-                    </VBox>
+                    </grid:CSSGrid>
                 </VBox>
-                <table:Table id="empTable" width="75%" rows="{EmployeeModel>/empList}" visibleRowCount="1" rowHeight="45" columnHeaderHeight="45" columnHeaderVisible="false">
+                <table:Table id="empTable" rows="{employeeModel>/empList}" rowSelectionChange=".EmployeeSearch.onRowSelection" visibleRowCount="{employeeModel>/empList/length}" rowHeight="44" columnHeaderHeight="45" columnHeaderVisible="false">
                     <table:extension>
                         <OverflowToolbar>
                             <core:Icon src="sap-icon://table-chart" />
@@ -61,16 +62,16 @@
                         </OverflowToolbar>
                     </table:extension>
                     <table:columns>
-                        <table:Column width="100px" sortProperty="Zname" filterProperty="Zname">
+                        <table:Column width="100px" sortProperty="Pernr" filterProperty="Pernr">
                             <Label text="{i18n>LABEL_00209}"/>
                             <table:template>
-                                <Text text="{Zname}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+                                <Text text="{Pernr}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
                             </table:template>
                         </table:Column>
-                        <table:Column width="auto" sortProperty="Famtx" filterProperty="Famtx">
+                        <table:Column width="auto" sortProperty="Ename" filterProperty="Ename">
                             <Label text="{i18n>LABEL_00210}"/>
                             <table:template>
-                                <Text text="{Famtx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                                <Text text="{Ename}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                             </table:template>
                         </table:Column>
                         <table:Column width="auto" sortProperty="Context" filterProperty="Context">
@@ -79,47 +80,47 @@
                                 <Text text="{Context}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
                             </table:template>
                         </table:Column>
-                        <table:Column width="auto" sortProperty="Conretx" filterProperty="Conretx">
+                        <table:Column width="auto" sortProperty="Stetx" filterProperty="Stetx">
                             <Label text="{i18n>LABEL_00219}"/>
                             <table:template>
-                                <Text text="{Conretx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                                <Text text="{Stetx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                             </table:template>
                         </table:Column>
-                        <table:Column width="100px" sortProperty="Conddate" filterProperty="Conddate">
+                        <table:Column width="100px" sortProperty="Zzjikgbt" filterProperty="Zzjikgbt">
                             <Label text="{i18n>LABEL_00215}"/>
                             <table:template>
-                                <Text text="{Conddate}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                                <Text text="{Zzjikgbt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                             </table:template>
                         </table:Column>
-                        <table:Column width="100px" sortProperty="Conrdate" filterProperty="Conrdate">
+                        <table:Column width="100px" sortProperty="Postx" filterProperty="Postx">
                             <Label text="{i18n>LABEL_00213}"/>
                             <table:template>
-                                <Text text="{Conrdate}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                                <Text text="{Postx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                             </table:template>
                         </table:Column>
-                        <table:Column width="100px" sortProperty="ZpayBetT" filterProperty="ZpayBetT">
+                        <table:Column width="100px" sortProperty="Zzjikcht" filterProperty="Zzjikcht">
                             <Label text="{i18n>LABEL_00217}"/>
                             <table:template>
-                                <Text text="{ZpayBetT}" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
+                                <Text text="{Zzjikcht}" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
                             </table:template>
                         </table:Column>
-                        <table:Column width="90px">
+                        <table:Column width="90px" sortProperty="Text1" filterProperty="Text1">
                             <Label text="{i18n>LABEL_00234}"/>
                             <table:template>
-                                <Text text="{Appda}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                                <Text text="{Text1}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                             </table:template>
                         </table:Column>
-                        <table:Column width="100px" sortProperty="Appda" filterProperty="Appda">
+                        <table:Column width="100px" sortProperty="Stat2tx" filterProperty="Stat2tx">
                             <Label text="{i18n>LABEL_00240}"/>
                             <table:template>
-                                <Text text="{Appda}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                                <Text text="{Stat2tx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                             </table:template>
                         </table:Column>
-                        <table:Column width="100px" sortProperty="Sgnda" filterProperty="Sgnda">
+                        <table:Column width="100px" sortProperty="Entda" filterProperty="Entda">
                             <Label text="{i18n>LABEL_00235}"/>
                             <table:template>
                                 <Text text="{
-                                path: 'Sgnda',
+                                path: 'Entda',
                                 type: 'sap.ui.model.type.Date',
                                 formatOptions: {
                                     pattern: 'yyyy.MM.dd'
@@ -127,11 +128,11 @@
                             }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                             </table:template>
                         </table:Column>
-                        <table:Column width="100px" sortProperty="Paydt" filterProperty="Paydt">
+                        <table:Column width="100px" sortProperty="Retdt" filterProperty="Retdt">
                             <Label text="{i18n>LABEL_00236}"/>
                             <table:template>
                                 <Text text="{
-                                path: 'Paydt',
+                                path: 'Retdt',
                                 type: 'sap.ui.model.type.Date',
                                 formatOptions: {
                                     pattern: 'yyyy.MM.dd'
