@@ -30,7 +30,7 @@ sap.ui.define(
     return BaseController.extend('sap.ui.yesco.mvc.controller.performance.Detail', {
       LIST_PAGE_ID: 'container-ehr---performance',
       SUMMARY_PROPERTIES: ['Zmepoint', 'Zmapoint', 'Zmbgrade'],
-      MANAGE_PROPERTIES: ['Z131', 'Z132', 'Z136', 'Z137', 'Z140'],
+      MANAGE_PROPERTIES: ['Z131', 'Z132', 'Z136', 'Z137', 'Z140', 'Papp1', 'Papp2'],
       GOAL_PROPERTIES: ['Obj0', 'Fwgt', 'Z101', 'Z103', 'Z109', 'Z111', 'Zapgme', 'Zapgma', 'Ztbegda', 'Ztendda', 'Zmarslt', 'Zrslt', 'Z1175', 'Z1174', 'Z1173', 'Z1172', 'Z1171', 'Z125Ee', 'Z125Er'],
 
       initializeFieldsControl(acc, cur) {
@@ -48,13 +48,7 @@ sap.ui.define(
             rows: [],
           },
           entry: {
-            levels: [
-              { code: '10', value: '1' }, //
-              { code: '20', value: '2' },
-              { code: '30', value: '3' },
-              { code: '40', value: '4' },
-              { code: '50', value: '5' },
-            ],
+            levels: [],
             topGoals: [],
             grades: [],
             status: [],
@@ -63,7 +57,10 @@ sap.ui.define(
           summary: {},
           buttons: [],
           currentItemsLength: 2,
-          fieldControl: _.assignIn(_.reduce(this.GOAL_PROPERTIES, this.initializeFieldsControl, {}), _.reduce(this.SUMMARY_PROPERTIES, this.initializeFieldsControl, {}), _.reduce(this.MANAGE_PROPERTIES, this.initializeFieldsControl, {})),
+          fieldControl: {
+            display: _.assignIn(_.reduce(this.GOAL_PROPERTIES, this.initializeFieldsControl, {}), _.reduce(this.SUMMARY_PROPERTIES, this.initializeFieldsControl, {}), _.reduce(this.MANAGE_PROPERTIES, this.initializeFieldsControl, {})),
+            limit: _.assignIn(this.getEntityLimit(ServiceNames.APPRAISAL, 'AppraisalDoc'), this.getEntityLimit(ServiceNames.APPRAISAL, 'AppraisalDocDetail')),
+          },
           goals: {
             strategy: [],
             duty: [],
@@ -81,19 +78,21 @@ sap.ui.define(
         const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
 
         try {
-          if (!_.every(['pid', 'docid', 'partid'], _.partial(_.has, oParameter)) || _.isEmpty(oListView) || _.isEmpty(oListView.getModel().getProperty('/parameter/rowData'))) {
+          if (_.isEmpty(oListView) || _.isEmpty(oListView.getModel().getProperty('/parameter/rowData'))) {
             throw new UI5Error({ code: 'E', message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
           }
 
           const mParameter = oListView.getModel().getProperty('/parameter/rowData');
 
           oViewModel.setProperty('/busy', true);
+          oViewModel.setProperty('/year', oParameter.year);
           oViewModel.setProperty('/param', { ..._.omit(mParameter, '__metadata') });
 
-          const [aStepList, aTopGoals, aStatus, mDetailData] = await Promise.all([
+          const [aStepList, aTopGoals, aStatus, aGrades, mDetailData] = await Promise.all([
             this.readAppStatusStepList({ oModel, sPid: mParameter.Zzappid }), //
-            this.readRelaUpTarget({ oModel, sAppee: mParameter.Zzappee }), //
-            this.readAppValueList({ oModel }), //
+            this.readRelaUpTarget({ oModel, sAppee: mParameter.Zzappee }),
+            this.readAppValueList({ oModel }),
+            this.readAppGradeList({ oModel }),
             this.readDeepAppraisalDoc({ oModel, mKeys: oViewModel.getProperty('/param') }),
           ]);
 
@@ -103,7 +102,7 @@ sap.ui.define(
           // 평가 프로세스 목록 - 헤더
           let bCompleted = true;
           const mGroupStageByApStatusSub = _.groupBy(aStepList, 'ApStatusSub');
-          const aGroupStageByApStatusSub = _.chain(mGroupStageByApStatusSub)
+          const aStageHeader = _.chain(mGroupStageByApStatusSub)
             .pick('')
             .values()
             .head()
@@ -133,15 +132,16 @@ sap.ui.define(
             )
             .value();
 
+          oViewModel.setProperty('/entry/levels', aGrades ?? []);
           oViewModel.setProperty('/entry/topGoals', aTopGoals ?? []);
           oViewModel.setProperty('/entry/status', aStatus ?? []);
           oViewModel.setProperty('/summary', { ..._.pick(mDetailData, this.SUMMARY_PROPERTIES) });
           oViewModel.setProperty('/manage', { ..._.pick(mDetailData, this.MANAGE_PROPERTIES) });
           oViewModel.setProperty('/buttons', mDetailData.AppraisalBottnsSet.results ?? []);
           oViewModel.setProperty('/currentItemsLength', _.toLength(mDetailData.AppraisalDocDetailSet.results));
-          oViewModel.setProperty('/goals/strategy', _.map(mGroupDetailByZ101['10'], (o, i) => ({ rootPath: 'strategy', expanded: false, OrderNo: String(i), ItemNo: String(i + 1), ...o })) ?? []);
-          oViewModel.setProperty('/goals/duty', _.map(mGroupDetailByZ101['20'], (o, i) => ({ rootPath: 'duty', expanded: false, OrderNo: String(i), ItemNo: String(i + 1), ...o })) ?? []);
-          oViewModel.setProperty('/stage/headers', aGroupStageByApStatusSub);
+          oViewModel.setProperty('/goals/strategy', _.map(mGroupDetailByZ101['1'], (o, i) => ({ rootPath: 'strategy', expanded: false, OrderNo: String(i), ItemNo: String(i + 1), ...o })) ?? []);
+          oViewModel.setProperty('/goals/duty', _.map(mGroupDetailByZ101['2'], (o, i) => ({ rootPath: 'duty', expanded: false, OrderNo: String(i), ItemNo: String(i + 1), ...o })) ?? []);
+          oViewModel.setProperty('/stage/headers', aStageHeader);
           oViewModel.setProperty(
             '/stage/rows',
             _.chain(mGroupStageByApStatusSub[''])
@@ -149,8 +149,8 @@ sap.ui.define(
               .value()
           );
           oViewModel.setProperty(
-            '/fieldControl',
-            _.reduce(mDetailData.AppraisalScreenSet.results, (acc, cur) => ({ ...acc, [cur.ColumnId]: cur.Zdipopt }), oViewModel.getProperty('/fieldControl'))
+            '/fieldControl/display',
+            _.reduce(mDetailData.AppraisalScreenSet.results, (acc, cur) => ({ ...acc, [cur.ColumnId]: cur.Zdipopt }), oViewModel.getProperty('/fieldControl/display'))
           );
         } catch (oError) {
           this.debug('Controller > Performance Detail > onObjectMatched Error', oError);
@@ -163,8 +163,8 @@ sap.ui.define(
         }
       },
 
-      getCurrentLocationText() {
-        return this.getViewModel().getProperty('/param/ZzapstsSubnm');
+      getCurrentLocationText(oArguments) {
+        return oArguments.year;
       },
 
       renderStageClass() {
@@ -217,7 +217,13 @@ sap.ui.define(
        * ! Event handler
        *****************************************************************/
       onPressAddStrategy() {
+        const oViewModel = this.getViewModel();
         const sRootPath = 'strategy';
+
+        if (_.isEmpty(oViewModel.getProperty('/entry/topGoals'))) {
+          MessageBox.alert(this.getBundleText('MSG_10003')); // 연관 상위 목표가 존재하지 않는 경우 전략목표를 생성할 수 없습니다.
+          return;
+        }
 
         this.addGoalItem({ sRootPath });
       },
@@ -231,19 +237,26 @@ sap.ui.define(
       onPressDeleteGoal(oEvent) {
         const oViewModel = this.getViewModel();
         const oSource = oEvent.getSource();
-        const sRootPath = oSource.getCustomData()[0].getValue();
-        const sDeleteTargetNum = oSource.getCustomData()[1].getValue();
-        const aItems = oViewModel.getProperty(`/goals/${sRootPath}`);
-        let iCurrentItemsLength = oViewModel.getProperty('/currentItemsLength') ?? 0;
 
-        oViewModel.setProperty('/currentItemsLength', --iCurrentItemsLength);
-        oViewModel.setProperty(
-          `/goals/${sRootPath}`,
-          _.chain(aItems)
-            .tap((array) => _.remove(array, { OrderNo: sDeleteTargetNum }))
-            .map((o, i) => ({ ...o, OrderNo: String(i), ItemNo: String(i + 1) }))
-            .value()
-        );
+        // 삭제하시겠습니까?
+        MessageBox.confirm(this.getBundleText('MSG_00049'), {
+          onClose: (oAction) => {
+            if (MessageBox.Action.OK === oAction) {
+              const { root: sRootPath, itemKey: sDeleteTargetNum } = oSource.data();
+              const aItems = oViewModel.getProperty(`/goals/${sRootPath}`);
+              let iCurrentItemsLength = oViewModel.getProperty('/currentItemsLength') ?? 0;
+
+              oViewModel.setProperty('/currentItemsLength', --iCurrentItemsLength);
+              oViewModel.setProperty(
+                `/goals/${sRootPath}`,
+                _.chain(aItems)
+                  .tap((array) => _.remove(array, { OrderNo: sDeleteTargetNum }))
+                  .map((o, i) => ({ ...o, OrderNo: String(i), ItemNo: String(i + 1) }))
+                  .value()
+              );
+            }
+          },
+        });
       },
 
       /*****************************************************************
@@ -326,6 +339,25 @@ sap.ui.define(
 
       readAppValueList({ oModel }) {
         const sUrl = '/AppValueListSet';
+
+        return new Promise((resolve, reject) => {
+          oModel.read(sUrl, {
+            success: (oData) => {
+              this.debug(`${sUrl} success.`, oData);
+
+              resolve(oData.results ?? []);
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, oError);
+
+              reject(new ODataReadError(oError));
+            },
+          });
+        });
+      },
+
+      readAppGradeList({ oModel }) {
+        const sUrl = '/AppGradeListSet';
 
         return new Promise((resolve, reject) => {
           oModel.read(sUrl, {

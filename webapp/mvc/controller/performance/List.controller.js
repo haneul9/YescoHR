@@ -75,7 +75,7 @@ sap.ui.define(
         const oRowData = oViewModel.getProperty(sPath);
 
         oViewModel.setProperty('/parameter/rowData', { ...oRowData });
-        this.getRouter().navTo('performance-detail', { pid: oRowData.Zzappid, docid: oRowData.Zdocid, partid: oRowData.Partid });
+        this.getRouter().navTo('performance-detail', { year: _.chain(oRowData.Zperiod).split('.', 1).head().value() });
       },
 
       /*****************************************************************

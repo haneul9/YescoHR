@@ -16,7 +16,7 @@
         </headerToolbar>
         <content>
             <HBox id="stageBody" width="100%" items="{/stage/rows}" class="per-status-d">
-                <VBox items="{child}">
+                <VBox items="{ path: 'child', templateShareable: true }">
                     <HBox>
                         <core:Icon src="sap-icon://arrow-down" />
                         <Text text="{ApStatusSubName}" />

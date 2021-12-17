@@ -131,6 +131,17 @@ sap.ui.define(
         return this.getOwnerComponent().getAppointeeModel().getProperty(`/${sPath}`);
       },
 
+      getEntityLimit(sServiceName, sEntityType) {
+        return (
+          _.chain(this.getOwnerComponent().getMetadataModel().getData())
+            .get([sServiceName, sEntityType])
+            .reduce((acc, cur) => ({ ...acc, [cur.name]: _.toInteger(cur.maxLength) }), {})
+            .omit(_.isUndefined)
+            .omit(_.isNull)
+            .value() ?? {}
+        );
+      },
+
       /**
        * Event handler for navigating back.
        * It there is a history entry we go one step back in the browser history

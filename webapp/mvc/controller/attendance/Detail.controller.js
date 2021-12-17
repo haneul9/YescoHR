@@ -353,7 +353,7 @@ sap.ui.define(
 
         // 선택된 행을 삭제하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00021'), {
-          onClose: function (oAction) {
+          onClose: (oAction) => {
             if (MessageBox.Action.OK === oAction) {
               const aUnSelectedData = aTableData.filter((elem, idx) => {
                 return !aSelectedIndices.some(function (iIndex) {
@@ -367,7 +367,7 @@ sap.ui.define(
               this.toggleHasRowProperty();
               oTable.clearSelection();
             }
-          }.bind(this),
+          },
         });
       },
 
