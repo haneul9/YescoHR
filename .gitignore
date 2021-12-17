@@ -4,6 +4,6 @@ node_modules
 .vscode
 .vscode/settings.json
 .nwabaprc
-.package-lock.json
+package-lock.json
 
 OdataTest.http

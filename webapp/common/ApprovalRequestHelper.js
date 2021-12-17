@@ -26,6 +26,7 @@ sap.ui.define(
        */
       constructor: function (oController) {
         const oModel = new JSONModel({
+          ZappStatAl: null,
           Appno: null,
           ApplyInfo: null,
           ApprovalDetails: null,
@@ -38,8 +39,9 @@ sap.ui.define(
         oController.byId(this.sApprovalDetailsId).setModel(oModel);
       },
 
-      setAppno(sAppno) {
-        this.oApprovalRequestModel.setProperty('/Appno', sAppno);
+      setAppno(vAppno) {
+        const sAppno = vAppno || '';
+        this.oApprovalRequestModel.setProperty('/Appno', sAppno === '0' ? '' : sAppno);
         return this;
       },
 
@@ -65,7 +67,7 @@ sap.ui.define(
       setAttachBoxData() {
         const sAppno = this.getAppno();
         const bEditable = this.isFormEditable();
-        const sType = this.oController.getDocumentType();
+        const sType = this.oController.getApprovalDocTypeCode(); // HR01과 같은 코드반환 function을 controller에 선언할 것
 
         AttachFileAction.setAttachFile(this.oController, {
           Editable: bEditable,

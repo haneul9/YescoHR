@@ -18,11 +18,11 @@
     <VBox class="contents">
       <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
       <VBox class="vCardBox" id="nightduty-request-detail-list">
-        <HBox justifyContent="SpaceBetween">
-          <HBox alignItems="Center" class="title">
+        <HBox class="table-toolbar">
+          <HBox class="title">
             <Title level="H2" text="{i18n>LABEL_00129}" />
           </HBox>
-          <HBox class="table-top">
+          <HBox class="table-actions">
             <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" press=".onPressAddRowButton" visible="{/detail/editable}" class="sapUiTinyMarginEnd" />
             <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onPressRemoveRowButton" visible="{/detail/editable}" enabled="{/detail/enabled}" />
           </HBox>
@@ -30,8 +30,10 @@
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.nightduty.fragment.DetailListTable" type="XML" />
       </VBox>
       <VBox class="vCardBox" id="nightduty-request-detail-reason">
-        <HBox alignItems="Center" class="title">
-          <Title text="{i18n>LABEL_04013}" level="H2" />
+        <HBox class="table-toolbar">
+          <HBox class="title">
+            <Title level="H2" text="{i18n>LABEL_04013}" />
+          </HBox>
         </HBox>
         <TextArea width="100%" class="required" value="{/detail/chgrsn}" editable="{/detail/editable}" />
       </VBox>

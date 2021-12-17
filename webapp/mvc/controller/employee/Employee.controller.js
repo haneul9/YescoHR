@@ -432,7 +432,7 @@ sap.ui.define(
                     press: this.onPressDeleteTable.bind(this),
                   }).addStyleClass('icon-button'),
                 ],
-              }).addStyleClass('table-top');
+              }).addStyleClass('table-actions');
 
               oSubHBox.addItem(oSubButtonBox);
             }
