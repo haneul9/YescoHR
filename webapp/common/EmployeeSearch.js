@@ -24,7 +24,7 @@ sap.ui.define([
         *  검색조건 Code
         */
        async setEmpConditionCode(oController) {
-        const oEmpModel = oController.getViewModel('employeeModel');
+        const oEmpModel = oController.getOwnerComponent().getModel('employeeModel');
 
         oEmpModel.setProperty('/busy', true);
         try {
@@ -145,7 +145,7 @@ sap.ui.define([
         */
        onSubEmpCode(oEvent) {
         const oModel = this.getModel(ServiceNames.COMMON);
-        const oEmpModel = this.getViewModel('employeeModel');
+        const oEmpModel = this.getOwnerComponent().getModel('employeeModel');
         const sKey = oEvent.getSource().getSelectedKey();
         const sUrl = '/EmpCodeListSet';
 
@@ -176,7 +176,7 @@ sap.ui.define([
         */
       onEmpSearch() {
         const oModel = this.getModel(ServiceNames.COMMON);
-        const oEmpModel = this.getViewModel('employeeModel');
+        const oEmpModel = this.getOwnerComponent().getModel('employeeModel');
         const sMenid = this.getCurrentMenuId();
         const sUrl = '/EmpSearchResultSet';
         const mSearchData = oEmpModel.getProperty('/Search');
@@ -226,7 +226,7 @@ sap.ui.define([
        */
       onSelectClick(oEvent) {
         const oAppModel = this.getViewModel('appointeeModel');
-        const oEmpModel = this.getViewModel('employeeModel');
+        const oEmpModel = this.getOwnerComponent().getModel('employeeModel');
         
         oAppModel.setProperty('/appointeeModel', oEmpModel.getProperty('/SelectedEmp/0'));
         oEvent.getSource().getParent().close();
@@ -245,7 +245,7 @@ sap.ui.define([
       onRowSelection(oEvent) {
         const oEventSource = oEvent.getSource();
         const aSelected = oEventSource.getSelectedIndices();
-        const oEmpModel = this.getViewModel('employeeModel');
+        const oEmpModel = this.getOwnerComponent().getModel('employeeModel');
 
         if (!aSelected) return;
 
@@ -271,7 +271,7 @@ sap.ui.define([
       async onSearchDialog() {
         const oView = this.getView();
         
-        this.setViewModel(new JSONModel({
+        this.getOwnerComponent().setModel(new JSONModel({
           Search: {},
           SelectedEmp: [],
           empList: [],
