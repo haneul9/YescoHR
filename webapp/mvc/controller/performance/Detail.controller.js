@@ -28,57 +28,24 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.performance.Detail', {
+      LIST_PAGE_ID: 'container-ehr---performance',
+      SUMMARY_PROPERTIES: ['Zmepoint', 'Zmapoint', 'Zmbgrade'],
+      MANAGE_PROPERTIES: ['Z131', 'Z132', 'Z136', 'Z137', 'Z140'],
+      GOAL_PROPERTIES: ['Obj0', 'Fwgt', 'Z101', 'Z103', 'Z109', 'Z111', 'Zapgme', 'Zapgma', 'Ztbegda', 'Ztendda', 'Zmarslt', 'Zrslt', 'Z1175', 'Z1174', 'Z1173', 'Z1172', 'Z1171', 'Z125Ee', 'Z125Er'],
+
+      initializeFieldsControl(acc, cur) {
+        return { ...acc, [cur]: 'X' };
+      },
+
       onBeforeShow() {
         const oViewModel = new JSONModel({
           busy: false,
-          param: {
-            Zdocid: '',
-            Zzappid: '',
-            Partid: '',
-          },
+          param: {},
           year: moment().format('YYYY'),
           tab: { selectedKey: 'T01' },
           stage: {
-            headers: [
-              { label: '준비중', icon: 'asset/image/icon_per_status_01.png', completed: true }, //
-              { label: '목표수립', icon: 'asset/image/icon_per_status_02.png', completed: true },
-              { label: '중간점검', icon: 'asset/image/icon_per_status_03.png', completed: false },
-              { label: '성과평가', icon: 'asset/image/icon_per_status_04.png', completed: false },
-              { label: '평가완료', icon: 'asset/image/icon_per_status_05.png', completed: false },
-            ],
-            rows: [
-              { child: [] }, //
-              {
-                child: [
-                  { label: '목표수립필요', completed: true }, //
-                  { label: '평가자합의중', completed: false },
-                  { label: '목표수립완료', completed: false },
-                ],
-              },
-              {
-                child: [
-                  { label: '중간점검필요', completed: false }, //
-                  { label: '평가자점검중', completed: false },
-                  { label: '중간점검완료', completed: false },
-                ],
-              },
-              {
-                child: [
-                  { label: '자기평가필요', completed: false }, //
-                  { label: '직무순환설문중', completed: false },
-                  { label: '1차평가중', completed: false },
-                  { label: '2차평가중', completed: false },
-                  { label: '전사 Session 중', completed: false },
-                ],
-              },
-              {
-                child: [
-                  { label: '평가결과확인필요', completed: false }, //
-                  { label: '이의신청중', completed: false },
-                  { label: '평가완료', completed: false },
-                ],
-              },
-            ],
+            headers: [],
+            rows: [],
           },
           entry: {
             levels: [
@@ -88,113 +55,103 @@ sap.ui.define(
               { code: '40', value: '4' },
               { code: '50', value: '5' },
             ],
-            topGoals: [
-              { code: '10', value: '전사 퇴직율 관리' }, //
-              { code: '20', value: '테스트' },
-            ],
+            topGoals: [],
+            grades: [],
+            status: [],
           },
-          manage: { Todo1: 'Todo1', Todo2: 'Todo2', Todo3: 'Todo3', Todo4: 'Todo4', Todo5: 'Todo5', Todo6: 'Todo6', Todo7: 'Todo7' },
-          summary: { Todo1: '100', Todo2: '100', Todo3: '100' },
+          manage: {},
+          summary: {},
+          buttons: [],
           currentItemsLength: 2,
-          fieldControl: {
-            isTodo3Show: true,
-            isTodo4Show: true,
+          fieldControl: _.assignIn(_.reduce(this.GOAL_PROPERTIES, this.initializeFieldsControl, {}), _.reduce(this.SUMMARY_PROPERTIES, this.initializeFieldsControl, {}), _.reduce(this.MANAGE_PROPERTIES, this.initializeFieldsControl, {})),
+          goals: {
+            strategy: [],
+            duty: [],
           },
-          strategy: [
-            {
-              rootPath: 'strategy',
-              expanded: false,
-              OrderNo: '0',
-              ItemNo: '1',
-              Todo1: 'Todo1',
-              Todo2: 'Todo2',
-              Todo3: '10',
-              Todo4: '10',
-              Todo5: '10',
-              Todo6: new Date(),
-              Todo7: new Date(),
-              Todo8: 'Todo8',
-              Todo9: '10',
-              Todo10: 'Todo10',
-              Todo11: 'Todo11',
-              Todo12: 'Todo12',
-              Todo13: 'Todo13',
-              Todo14: 'Todo14',
-              Todo15: 'Todo15',
-              Todo16: 'Todo16',
-              Todo17: 'Todo17',
-              Todo18: 'Todo18',
-            }, //
-          ],
-          duty: [
-            {
-              rootPath: 'duty',
-              expanded: false,
-              OrderNo: '0',
-              ItemNo: '1',
-              Todo1: 'Todo1',
-              Todo2: 'Todo2',
-              Todo3: '10',
-              Todo4: '10',
-              Todo5: '10',
-              Todo6: new Date(),
-              Todo7: new Date(),
-              Todo8: 'Todo8',
-              Todo9: '10',
-              Todo10: 'Todo10',
-              Todo11: 'Todo11',
-              Todo12: 'Todo12',
-              Todo13: 'Todo13',
-              Todo14: 'Todo14',
-              Todo15: 'Todo15',
-              Todo16: 'Todo16',
-              Todo17: 'Todo17',
-              Todo18: 'Todo18',
-            }, //
-          ],
         });
         this.setViewModel(oViewModel);
 
-        const oStageHeader = this.byId('stageHeader');
-        oStageHeader.addEventDelegate({
-          onAfterRendering() {
-            const aHeaders = oViewModel.getProperty('/stage/headers');
-            const aHeaderItems = oStageHeader.getItems();
-
-            aHeaderItems.forEach((o, i) => {
-              o.toggleStyleClass('on', aHeaders[i].completed);
-            });
-          },
-        });
-
-        const oStageBody = this.byId('stageBody');
-        oStageBody.addEventDelegate({
-          onAfterRendering() {
-            const aRows = oViewModel.getProperty('/stage/rows');
-
-            oStageBody.getItems().forEach((row, rowidx) => {
-              row.getItems().forEach((o, childidx) => {
-                o.toggleStyleClass('on', aRows[rowidx].child[childidx].completed);
-              });
-            });
-          },
-        });
+        this.renderStageClass();
       },
 
       async onObjectMatched(oParameter) {
-        const oModel = this.getModel(ServiceNames.APPRAISAL);
+        const oView = this.getView();
         const oViewModel = this.getViewModel();
+        const oModel = this.getModel(ServiceNames.APPRAISAL);
+        const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
 
         try {
-          if (!_.every(['pid', 'docid', 'partid'], _.partial(_.has, oParameter))) throw new UI5Error({ code: 'E', message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
+          if (!_.every(['pid', 'docid', 'partid'], _.partial(_.has, oParameter)) || _.isEmpty(oListView) || _.isEmpty(oListView.getModel().getProperty('/parameter/rowData'))) {
+            throw new UI5Error({ code: 'E', message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
+          }
+
+          const mParameter = oListView.getModel().getProperty('/parameter/rowData');
 
           oViewModel.setProperty('/busy', true);
-          oViewModel.setProperty('/param', { Zdocid: oParameter.docid, Zzappid: oParameter.pid, Partid: oParameter.partid });
+          oViewModel.setProperty('/param', { ..._.omit(mParameter, '__metadata') });
 
-          const mDetailData = await this.readDeepAppraisalDoc({ oModel, mKeys: oViewModel.getProperty('/param') });
+          const [aStepList, aTopGoals, aStatus, mDetailData] = await Promise.all([
+            this.readAppStatusStepList({ oModel, sPid: mParameter.Zzappid }), //
+            this.readRelaUpTarget({ oModel, sAppee: mParameter.Zzappee }), //
+            this.readAppValueList({ oModel }), //
+            this.readDeepAppraisalDoc({ oModel, mKeys: oViewModel.getProperty('/param') }),
+          ]);
 
-          console.log(mDetailData);
-          // this.setTableData({ oViewModel, aTableData });
+          // 전략목표, 직무목표
+          const mGroupDetailByZ101 = _.groupBy(mDetailData.AppraisalDocDetailSet.results, 'Z101');
+
+          // 평가 프로세스 목록 - 헤더
+          let bCompleted = true;
+          const mGroupStageByApStatusSub = _.groupBy(aStepList, 'ApStatusSub');
+          const aGroupStageByApStatusSub = _.chain(mGroupStageByApStatusSub)
+            .pick('')
+            .values()
+            .head()
+            .map((o) => {
+              const mReturn = { ...o, completed: bCompleted };
+              if (mParameter.ZzapstsSub === 'X') {
+                bCompleted = true;
+              } else if (o.ApStatus === mParameter.Zzapsts) {
+                bCompleted = false;
+              }
+              return mReturn;
+            })
+            .value();
+
+          // 평가 프로세스 목록 - 하위
+          bCompleted = true;
+          const aGroupStageByApStatusName = _.chain(aStepList)
+            .filter((o) => o.ApStatusSub !== '')
+            .groupBy('ApStatusName')
+            .reduce((acc, cur) => [...acc, [...cur]], [])
+            .map((item) =>
+              item.map((o) => {
+                const mReturn = { ...o, completed: bCompleted };
+                if (o.ApStatus === mParameter.Zzapsts && o.ApStatusSub === mParameter.ZzapstsSub) bCompleted = false;
+                return mReturn;
+              })
+            )
+            .value();
+
+          oViewModel.setProperty('/entry/topGoals', aTopGoals ?? []);
+          oViewModel.setProperty('/entry/status', aStatus ?? []);
+          oViewModel.setProperty('/summary', { ..._.pick(mDetailData, this.SUMMARY_PROPERTIES) });
+          oViewModel.setProperty('/manage', { ..._.pick(mDetailData, this.MANAGE_PROPERTIES) });
+          oViewModel.setProperty('/buttons', mDetailData.AppraisalBottnsSet.results ?? []);
+          oViewModel.setProperty('/currentItemsLength', _.toLength(mDetailData.AppraisalDocDetailSet.results));
+          oViewModel.setProperty('/goals/strategy', _.map(mGroupDetailByZ101['10'], (o, i) => ({ rootPath: 'strategy', expanded: false, OrderNo: String(i), ItemNo: String(i + 1), ...o })) ?? []);
+          oViewModel.setProperty('/goals/duty', _.map(mGroupDetailByZ101['20'], (o, i) => ({ rootPath: 'duty', expanded: false, OrderNo: String(i), ItemNo: String(i + 1), ...o })) ?? []);
+          oViewModel.setProperty('/stage/headers', aGroupStageByApStatusSub);
+          oViewModel.setProperty(
+            '/stage/rows',
+            _.chain(mGroupStageByApStatusSub[''])
+              .map((o, i) => ({ child: aGroupStageByApStatusName[i] }))
+              .value()
+          );
+          oViewModel.setProperty(
+            '/fieldControl',
+            _.reduce(mDetailData.AppraisalScreenSet.results, (acc, cur) => ({ ...acc, [cur.ColumnId]: cur.Zdipopt }), oViewModel.getProperty('/fieldControl'))
+          );
         } catch (oError) {
           this.debug('Controller > Performance Detail > onObjectMatched Error', oError);
 
@@ -206,14 +163,35 @@ sap.ui.define(
         }
       },
 
-      getCurrentLocationText(oArguments) {
-        console.log(oArguments);
-        return '목표수립필요';
+      getCurrentLocationText() {
+        return this.getViewModel().getProperty('/param/ZzapstsSubnm');
+      },
+
+      renderStageClass() {
+        const oStageHeader = this.byId('stageHeader');
+        oStageHeader.addEventDelegate({
+          onAfterRendering: () => {
+            const aHeaders = this.getViewModel().getProperty('/stage/headers');
+
+            oStageHeader.getItems().forEach((o, i) => o.toggleStyleClass('on', aHeaders[i].completed ?? false));
+          },
+        });
+
+        const oStageBody = this.byId('stageBody');
+        oStageBody.addEventDelegate({
+          onAfterRendering: () => {
+            const aRows = this.getViewModel().getProperty('/stage/rows');
+
+            oStageBody.getItems().forEach((row, rowidx) => {
+              row.getItems().forEach((o, childidx) => o.toggleStyleClass('on', _.get(aRows, [rowidx, 'child', childidx, 'completed']) ?? false));
+            });
+          },
+        });
       },
 
       addGoalItem({ sRootPath }) {
         const oViewModel = this.getViewModel();
-        const aItems = oViewModel.getProperty(`/${sRootPath}`);
+        const aItems = oViewModel.getProperty(`/goals/${sRootPath}`);
         const iItemsLength = aItems.length;
         let iCurrentItemsLength = oViewModel.getProperty('/currentItemsLength') ?? 0;
 
@@ -223,31 +201,14 @@ sap.ui.define(
         }
 
         oViewModel.setProperty('/currentItemsLength', ++iCurrentItemsLength);
-        oViewModel.setProperty(`/${sRootPath}`, [
+        oViewModel.setProperty(`/goals/${sRootPath}`, [
           ...aItems,
           {
             rootPath: sRootPath,
             expanded: true,
             OrderNo: String(iItemsLength),
             ItemNo: String(iItemsLength + 1),
-            Todo1: 'Todo1',
-            Todo2: 'Todo2',
-            Todo3: '10',
-            Todo4: '10',
-            Todo5: '10',
-            Todo6: new Date(),
-            Todo7: new Date(),
-            Todo8: 'Todo8',
-            Todo9: '10',
-            Todo10: 'Todo10',
-            Todo11: 'Todo11',
-            Todo12: 'Todo12',
-            Todo13: 'Todo13',
-            Todo14: 'Todo14',
-            Todo15: 'Todo15',
-            Todo16: 'Todo16',
-            Todo17: 'Todo17',
-            Todo18: 'Todo18',
+            ..._.reduce(this.GOAL_PROPERTIES, (acc, cur) => ({ ...acc, [cur]: null }), {}),
           },
         ]);
       },
@@ -272,17 +233,16 @@ sap.ui.define(
         const oSource = oEvent.getSource();
         const sRootPath = oSource.getCustomData()[0].getValue();
         const sDeleteTargetNum = oSource.getCustomData()[1].getValue();
-        const aItems = oViewModel.getProperty(`/${sRootPath}`);
+        const aItems = oViewModel.getProperty(`/goals/${sRootPath}`);
         let iCurrentItemsLength = oViewModel.getProperty('/currentItemsLength') ?? 0;
-
-        _.remove(aItems, { OrderNo: sDeleteTargetNum });
 
         oViewModel.setProperty('/currentItemsLength', --iCurrentItemsLength);
         oViewModel.setProperty(
-          `/${sRootPath}`,
-          _.map(aItems, (o, i) => {
-            return { ...o, OrderNo: String(i), ItemNo: String(i + 1) };
-          })
+          `/goals/${sRootPath}`,
+          _.chain(aItems)
+            .tap((array) => _.remove(array, { OrderNo: sDeleteTargetNum }))
+            .map((o, i) => ({ ...o, OrderNo: String(i), ItemNo: String(i + 1) }))
+            .value()
         );
       },
 
@@ -297,7 +257,12 @@ sap.ui.define(
             sUrl,
             {
               ...mKeys,
+              Menid: this.getCurrentMenuId(),
+              Prcty: 'D',
+              Zzappgb: 'ME',
               AppraisalDocDetailSet: [],
+              AppraisalBottnsSet: [],
+              AppraisalScreenSet: [],
             },
             {
               success: (oData) => {
@@ -312,6 +277,69 @@ sap.ui.define(
               },
             }
           );
+        });
+      },
+
+      readAppStatusStepList({ oModel, sPid }) {
+        const sUrl = '/AppStatusStepListSet';
+
+        return new Promise((resolve, reject) => {
+          oModel.read(sUrl, {
+            filters: [
+              new Filter('Zzappid', FilterOperator.EQ, sPid), //
+            ],
+            success: (oData) => {
+              this.debug(`${sUrl} success.`, oData);
+
+              resolve(oData.results ?? []);
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, oError);
+
+              reject(new ODataReadError(oError));
+            },
+          });
+        });
+      },
+
+      readRelaUpTarget({ oModel, sAppee }) {
+        const sUrl = '/RelaUpTargetSet';
+
+        return new Promise((resolve, reject) => {
+          oModel.read(sUrl, {
+            filters: [
+              new Filter('Zzappee', FilterOperator.EQ, sAppee), //
+            ],
+            success: (oData) => {
+              this.debug(`${sUrl} success.`, oData);
+
+              resolve(oData.results ?? []);
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, oError);
+
+              reject(new ODataReadError(oError));
+            },
+          });
+        });
+      },
+
+      readAppValueList({ oModel }) {
+        const sUrl = '/AppValueListSet';
+
+        return new Promise((resolve, reject) => {
+          oModel.read(sUrl, {
+            success: (oData) => {
+              this.debug(`${sUrl} success.`, oData);
+
+              resolve(oData.results ?? []);
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, oError);
+
+              reject(new ODataReadError(oError));
+            },
+          });
         });
       },
     });

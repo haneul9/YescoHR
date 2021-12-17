@@ -9,10 +9,9 @@
                     <grid:CSSGrid gridTemplateColumns="1fr 9fr 1fr" gridGap="0px 11px">
                         <Label text="{ItemNo}" textAlign="Left" />
                         <VBox>
-                            <Input value="{Todo1}" />
+                            <Input value="{Obj0}" editable="{= ${/fieldControl/Obj0} === 'X' }" visible="{= ${/fieldControl/Obj0} !== 'H' }" />
                         </VBox>
                         <Button icon="sap-icon://sys-minus" text="{i18n>LABEL_10020}" press=".onPressDeleteGoal">
-
                             <customData>
                                 <core:CustomData key="root" value="{rootPath}" />
                                 <core:CustomData key="itemKey" value="{OrderNo}" />
@@ -23,86 +22,104 @@
             </headerToolbar>
             <content>
                 <grid:CSSGrid gridTemplateColumns="2fr 3fr 2fr 3fr 2fr 3fr 2fr 3fr" gridGap="1px 0px" class="form-grid">
-                    <Label text="{i18n>LABEL_10021}" />
                     <VBox>
-                        <Input class="required" value="{Todo2}" />
+                        <Label text="{i18n>LABEL_10021}" visible="{= ${/fieldControl/Fwgt} !== 'H' }" />
                     </VBox>
-                    <Label text="{i18n>LABEL_10003}" visible="{/fieldControl/isTodo3Show}" />
+                    <VBox>
+                        <Input class="required" value="{ path: 'Fwgt', type: 'sap.ui.model.type.Integer' }" editable="{= ${/fieldControl/Fwgt} === 'X' }" visible="{= ${/fieldControl/Fwgt} !== 'H' }" />
+                    </VBox>
+                    <VBox>
+                        <Label text="{i18n>LABEL_10003}" visible="{= ${/fieldControl/Zapgme} !== 'H' }" />
+                    </VBox>
                     <HBox>
-                        <ComboBox width="100%" class="required" selectedKey="{Todo3}" items="{ path: '/entry/levels', templateShareable: true }" visible="{/fieldControl/isTodo3Show}">
+                        <ComboBox width="100%" class="required" selectedKey="{Zapgme}" items="{ path: '/entry/levels', templateShareable: true }" editable="{= ${/fieldControl/Zapgme} === 'X' }" visible="{= ${/fieldControl/Zapgme} !== 'H' }">
                             <core:Item key="{code}" text="{value}" />
                         </ComboBox>
                     </HBox>
-                    <Label text="{i18n>LABEL_10022}" visible="{/fieldControl/isTodo4Show}" />
+                    <VBox>
+                        <Label text="{i18n>LABEL_10022}" visible="{= ${/fieldControl/Zapgma} !== 'H' }" />
+                    </VBox>
                     <HBox>
-                        <ComboBox width="100%" class="required" selectedKey="{Todo4}" items="{ path: '/entry/levels', templateShareable: true }" visible="{/fieldControl/isTodo4Show}">
+                        <ComboBox width="100%" class="required" selectedKey="{Zapgma}" items="{ path: '/entry/levels', templateShareable: true }" editable="{= ${/fieldControl/Zapgma} === 'X' }" visible="{= ${/fieldControl/Zapgma} !== 'H' }">
                             <core:Item key="{code}" text="{value}" />
                         </ComboBox>
                     </HBox>
                     <HBox width="100%" />
                     <HBox width="100%" />
-                    <Label text="{i18n>LABEL_10023}"/>
+                    <VBox>
+                        <Label text="{i18n>LABEL_10023}" visible="{= ${/fieldControl/Z103} !== 'H' }"/>
+                    </VBox>
                     <VBox>
                         <layoutData>
                             <grid:GridItemLayoutData gridColumn="2 / 8" />
                         </layoutData>
-                        <ComboBox width="100%" class="required" selectedKey="{Todo5}" items="{/entry/topGoals}">
-                            <core:Item key="{code}" text="{value}" />
+                        <ComboBox width="100%" class="required" selectedKey="{Z103}" items="{/entry/topGoals}" editable="{= ${/fieldControl/Z103} === 'X' }" visible="{= ${/fieldControl/Z103} !== 'H' }">
+                            <core:Item key="{Objid}" text="{Stext}" />
                         </ComboBox>
                     </VBox>
                     <HBox width="100%" />
-
-                    <Label width="100%" text="{i18n>LABEL_10024}"/>
                     <VBox>
-                        <custom:DatePicker width="100%" class="required" dateValue="{ path: 'Todo6', type: 'sap.ui.yesco.mvc.model.type.Date' }"/>
+                        <Label width="100%" text="{i18n>LABEL_10024}" visible="{= ${/fieldControl/Ztbegda} !== 'H' }"/>
                     </VBox>
-                    <Label width="100%" text="{i18n>LABEL_10025}"/>
                     <VBox>
-                        <custom:DatePicker width="100%" class="required" dateValue="{ path: 'Todo7', type: 'sap.ui.yesco.mvc.model.type.Date' }"/>
+                        <custom:DatePicker width="100%" class="required" dateValue="{ path: 'Ztbegda', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{= ${/fieldControl/Ztbegda} === 'X' }" visible="{= ${/fieldControl/Ztbegda} !== 'H' }"/>
                     </VBox>
-                    <Label width="100%" text="{i18n>LABEL_10026}"/>
                     <VBox>
-                        <Input width="100%" class="required" value="{Todo8}"/>
+                        <Label width="100%" text="{i18n>LABEL_10025}" visible="{= ${/fieldControl/Ztendda} !== 'H' }"/>
                     </VBox>
-                    <Label width="100%" text="{i18n>LABEL_00261}"/>
                     <VBox>
-                        <ComboBox width="100%" class="required" selectedKey="{Todo9}" items="{ path: '/entry/levels', templateShareable: true }">
-                            <core:Item key="{code}" text="{value}" />
+                        <custom:DatePicker width="100%" class="required" dateValue="{ path: 'Ztendda', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{= ${/fieldControl/Ztendda} === 'X' }" visible="{= ${/fieldControl/Ztendda} !== 'H' }"/>
+                    </VBox>
+                    <VBox>
+                        <Label width="100%" text="{i18n>LABEL_10026}" visible="{= ${/fieldControl/Z109} !== 'H' }"/>
+                    </VBox>
+                    <VBox>
+                        <Input width="100%" class="required" value="{ path: 'Z109', type: 'sap.ui.model.type.Integer' }" editable="{= ${/fieldControl/Z109} === 'X' }" visible="{= ${/fieldControl/Z109} !== 'H' }" />
+                    </VBox>
+                    <VBox>
+                        <Label width="100%" text="{i18n>LABEL_00261}" visible="{= ${/fieldControl/Z111} !== 'H' }"/>
+                    </VBox>
+                    <VBox>
+                        <ComboBox width="100%" class="required" selectedKey="{Z111}" items="{ path: '/entry/status', templateShareable: true }" editable="{= ${/fieldControl/Z111} === 'X' }" visible="{= ${/fieldControl/Z111} !== 'H' }">
+                            <core:Item key="{ValueEid}" text="{ValueText}" />
                         </ComboBox>
                     </VBox>
                     <VBox>
                         <layoutData>
                             <grid:GridItemLayoutData gridRow="4 / 6" />
                         </layoutData>
-                        <Label width="100%" text="{i18n>LABEL_10027}" vAlign="Top"/>
+                        <Label width="100%" text="{i18n>LABEL_10027}" vAlign="Top" visible="{= ${/fieldControl/Zmarslt} !== 'H' }"/>
                     </VBox>
-                    <TextArea growing="true" growingMaxLines="7" class="required" value="{Todo10}">
+                    <VBox>
                         <layoutData>
                             <grid:GridItemLayoutData gridRow="4 / 6" gridColumn="2 / 5" />
                         </layoutData>
-                    </TextArea>
+                        <TextArea width="100%" class="required" value="{Zmarslt}" editable="{= ${/fieldControl/Zmarslt} === 'X' }" visible="{= ${/fieldControl/Zmarslt} !== 'H' }">
+                        </TextArea>
+                    </VBox>
                     <VBox>
                         <layoutData>
                             <grid:GridItemLayoutData gridRow="4 / 6" />
                         </layoutData>
-                        <Label width="100%" text="{i18n>LABEL_10028}" vAlign="Top"/>
+                        <Label width="100%" text="{i18n>LABEL_10028}" vAlign="Top" visible="{= ${/fieldControl/Zrslt} !== 'H' }"/>
                     </VBox>
-                    <TextArea growing="true" growingMaxLines="7" class="required" value="{Todo11}">
+                    <VBox>
                         <layoutData>
                             <grid:GridItemLayoutData gridRow="4 / 6" gridColumn="6 / 9" />
                         </layoutData>
-                    </TextArea>
+                        <TextArea width="100%" class="required" value="{Zrslt}" editable="{= ${/fieldControl/Zrslt} === 'X' }" visible="{= ${/fieldControl/Zrslt} !== 'H' }"/>
+                    </VBox>
                     <VBox>
                         <layoutData>
                             <grid:GridItemLayoutData gridRow="7 / 6" />
                         </layoutData>
-                        <Label width="100%" text="{i18n>LABEL_10029}" vAlign="Top"/>
+                        <Label width="100%" text="{i18n>LABEL_10029}" vAlign="Top" visible="{= ${/fieldControl/Z1175} !== 'H' || ${/fieldControl/Z1174} !== 'H' || ${/fieldControl/Z1173} !== 'H' || ${/fieldControl/Z1172} !== 'H' || ${/fieldControl/Z1171} !== 'H' }"/>
                     </VBox>
                     <VBox class="label_wrap">
                         <layoutData>
                             <grid:GridItemLayoutData gridRow="6" gridColumn="2 / 9" />
                         </layoutData>
-                        <HBox>
+                        <HBox visible="{= ${/fieldControl/Z1175} !== 'H' }">
                             <layoutData>
                                 <grid:GridItemLayoutData gridRow="6" gridColumn="2 / 9" />
                             </layoutData>
@@ -111,13 +128,13 @@
                                     <FlexItemData growFactor="1" />
                                 </layoutData>
                             </Label>
-                            <Input class="required" value="{Todo12}">
+                            <Input class="required" value="{Z1175}" editable="{= ${/fieldControl/Z1175} === 'X' }">
                                 <layoutData>
                                     <FlexItemData growFactor="20" />
                                 </layoutData>
                             </Input>
                         </HBox>
-                        <HBox >
+                        <HBox visible="{= ${/fieldControl/Z1174} !== 'H' }">
                             <layoutData>
                                 <grid:GridItemLayoutData gridRow="7" gridColumn="2 / 9" />
                             </layoutData>
@@ -126,13 +143,13 @@
                                     <FlexItemData growFactor="1" />
                                 </layoutData>
                             </Label>
-                            <Input class="required" value="{Todo13}">
+                            <Input class="required" value="{Z1174}" editable="{= ${/fieldControl/Z1174} === 'X' }">
                                 <layoutData>
                                     <FlexItemData growFactor="20" />
                                 </layoutData>
                             </Input>
                         </HBox>
-                        <HBox>
+                        <HBox visible="{= ${/fieldControl/Z1173} !== 'H' }">
                             <layoutData>
                                 <grid:GridItemLayoutData gridRow="8" gridColumn="2 / 9" />
                             </layoutData>
@@ -141,13 +158,13 @@
                                     <FlexItemData growFactor="1" />
                                 </layoutData>
                             </Label>
-                            <Input class="required" value="{Todo14}">
+                            <Input class="required" value="{Z1173}" editable="{= ${/fieldControl/Z1173} === 'X' }">
                                 <layoutData>
                                     <FlexItemData growFactor="20" />
                                 </layoutData>
                             </Input>
                         </HBox>
-                        <HBox>
+                        <HBox visible="{= ${/fieldControl/Z1172} !== 'H' }">
                             <layoutData>
                                 <grid:GridItemLayoutData gridRow="9" gridColumn="2 / 9" />
                             </layoutData>
@@ -156,13 +173,13 @@
                                     <FlexItemData growFactor="1" />
                                 </layoutData>
                             </Label>
-                            <Input class="required" value="{Todo15}">
+                            <Input class="required" value="{Z1172}" editable="{= ${/fieldControl/Z1172} === 'X' }">
                                 <layoutData>
                                     <FlexItemData growFactor="20" />
                                 </layoutData>
                             </Input>
                         </HBox>
-                        <HBox>
+                        <HBox visible="{= ${/fieldControl/Z1171} !== 'H' }">
                             <layoutData>
                                 <grid:GridItemLayoutData gridRow="10" gridColumn="2 / 9" />
                             </layoutData>
@@ -171,7 +188,7 @@
                                     <FlexItemData growFactor="1" />
                                 </layoutData>
                             </Label>
-                            <Input class="required" value="{Todo16}">
+                            <Input class="required" value="{Z1171}" editable="{= ${/fieldControl/Z1171} === 'X' }">
                                 <layoutData>
                                     <FlexItemData growFactor="20" />
                                 </layoutData>
@@ -179,23 +196,23 @@
                         </HBox>
                     </VBox>
                     <VBox>
-                        <Label width="100%" text="{i18n>LABEL_10030}"/>
+                        <Label width="100%" text="{i18n>LABEL_10030}" visible="{= ${/fieldControl/Z125Ee} !== 'H' }"/>
                     </VBox>
                     <VBox>
                         <layoutData>
                             <grid:GridItemLayoutData gridColumn="span 3" />
                         </layoutData>
-                        <TextArea width="100%" value="{Todo17}" growing="true" growingMaxLines="7" class="required">
+                        <TextArea width="100%" value="{Z125Ee}" growing="true" growingMaxLines="7" class="required" editable="{= ${/fieldControl/Z125Ee} === 'X' }" visible="{= ${/fieldControl/Z125Ee} !== 'H' }">
                         </TextArea>
                     </VBox>
                     <VBox>
-                        <Label width="100%" text="{i18n>LABEL_10031}"/>
+                        <Label width="100%" text="{i18n>LABEL_10031}" visible="{= ${/fieldControl/Z125Er} !== 'H' }"/>
                     </VBox>
                     <VBox>
                         <layoutData>
                             <grid:GridItemLayoutData gridColumn="span 3" />
                         </layoutData>
-                        <TextArea width="100%" value="{Todo18}" growing="true" growingMaxLines="7" class="required">
+                        <TextArea width="100%" value="{Z125Er}" growing="true" growingMaxLines="7" class="required" editable="{= ${/fieldControl/Z125Er} === 'X' }" visible="{= ${/fieldControl/Z125Er} !== 'H' }">
                         </TextArea>
                     </VBox>
                 </grid:CSSGrid>

@@ -8,7 +8,7 @@
             <Toolbar width="100%" height="auto">
                 <HBox id="stageHeader" width="100%" items="{/stage/headers}" class="per-status">
                     <VBox width="{width}">                        <!-- completed 일때 on -->
-                        <Title level="H4" text="{label}" />
+                        <Title level="H4" text="{ApStatusName}" />
                         <core:Icon src="{icon}" size="2rem" width="18%" />
                     </VBox>
                 </HBox>
@@ -19,7 +19,7 @@
                 <VBox items="{child}">
                     <HBox>
                         <core:Icon src="sap-icon://arrow-down" />
-                        <Text text="{label}" />
+                        <Text text="{ApStatusSubName}" />
                     </HBox>
                 </VBox>
             </HBox>

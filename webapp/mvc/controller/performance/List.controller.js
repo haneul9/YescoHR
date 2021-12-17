@@ -33,6 +33,9 @@ sap.ui.define(
             rowCount: 1,
           },
           list: [],
+          parameter: {
+            rowData: {},
+          },
         });
         this.setViewModel(oViewModel);
       },
@@ -71,6 +74,7 @@ sap.ui.define(
         const sPath = oEvent.getParameters().rowBindingContext.getPath();
         const oRowData = oViewModel.getProperty(sPath);
 
+        oViewModel.setProperty('/parameter/rowData', { ...oRowData });
         this.getRouter().navTo('performance-detail', { pid: oRowData.Zzappid, docid: oRowData.Zdocid, partid: oRowData.Partid });
       },
 
