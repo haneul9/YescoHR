@@ -44,7 +44,7 @@
 								<HBox>
 									<HBox alignItems="Center" class="title">
 										<Title level="H2" text="{i18n>LABEL_10007}" class="sapUiMediumMarginEnd"/>
-										<Button icon="sap-icon://sys-add" text="{i18n>LABEL_10011}" press=".onPressAddStrategy" />
+										<Button icon="sap-icon://sys-add" text="{i18n>LABEL_10011}" enabled="{= ${/currentItemsLength} &lt; 7 }" press=".onPressAddStrategy" />
 									</HBox>
 								</HBox>
 								<VBox items="{/goals/strategy}">
@@ -55,7 +55,7 @@
 								<HBox>
 									<HBox alignItems="Center" class="title">
 										<Title level="H3" text="{i18n>LABEL_10008}" class="sapUiMediumMarginEnd"/>
-										<Button icon="sap-icon://sys-add" text="{i18n>LABEL_10011}" press=".onPressAddDuty" />
+										<Button icon="sap-icon://sys-add" text="{i18n>LABEL_10011}" enabled="{= ${/currentItemsLength} &lt; 7 }" press=".onPressAddDuty" />
 									</HBox>
 								</HBox>
 								<VBox items="{/goals/duty}">

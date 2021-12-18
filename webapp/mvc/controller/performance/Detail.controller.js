@@ -56,7 +56,7 @@ sap.ui.define(
           manage: {},
           summary: {},
           buttons: [],
-          currentItemsLength: 2,
+          currentItemsLength: 0,
           fieldControl: {
             display: _.assignIn(_.reduce(this.GOAL_PROPERTIES, this.initializeFieldsControl, {}), _.reduce(this.SUMMARY_PROPERTIES, this.initializeFieldsControl, {}), _.reduce(this.MANAGE_PROPERTIES, this.initializeFieldsControl, {})),
             limit: _.assignIn(this.getEntityLimit(ServiceNames.APPRAISAL, 'AppraisalDoc'), this.getEntityLimit(ServiceNames.APPRAISAL, 'AppraisalDocDetail')),
