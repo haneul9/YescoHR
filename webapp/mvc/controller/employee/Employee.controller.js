@@ -306,7 +306,7 @@ sap.ui.define(
           // 탭 메뉴 Set
           const aTabMenus = _.chain(aMenuReturnData)
             .filter({ Child: '1' })
-            .map((obj, index) => _.extend({ Pressed: index === 0 }, obj))
+            .map((obj, index) => _.assignIn({ Pressed: index === 0 }, obj))
             .value();
           const aSubMenus = _.filter(aMenuReturnData, (o) => o.Child !== '1');
 
@@ -1209,9 +1209,7 @@ sap.ui.define(
           if (sPernr) mFilters.Pernr = sPernr;
 
           oModel.read(sUrl, {
-            filters: Object.keys(mFilters).map((field) => {
-              return new Filter(field, FilterOperator.EQ, mFilters[field]);
-            }),
+            filters: _.map(mFilters, (v, p) => new Filter(p, FilterOperator.EQ, v)),
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
 
@@ -1231,9 +1229,7 @@ sap.ui.define(
           const oModel = this.getModel(ServiceNames.PA);
 
           oModel.read(sUrl, {
-            filters: Object.keys(mFilters).map((field) => {
-              return new Filter(field, FilterOperator.EQ, mFilters[field]);
-            }),
+            filters: _.map(mFilters, (v, p) => new Filter(p, FilterOperator.EQ, v)),
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
 

@@ -5,6 +5,7 @@ sap.ui.define(
     'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
@@ -18,6 +19,7 @@ sap.ui.define(
     FilterOperator,
     JSONModel,
     AppUtils,
+    Client,
     ODataReadError,
     ServiceNames,
     TableUtils,
@@ -47,7 +49,11 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/busy', true);
 
-          const aTableData = await this.readAppraisalPeeList({ oModel });
+          const aTableData = await Client.getEntitySet({
+            oModel,
+            sUrl: 'AppraisalPeeList',
+            mFilters: { Menid: this.getCurrentMenuId(), Prcty: 'L', Werks: this.getAppointeeProperty('Werks'), Zzappgb: 'ME', Zzappee: this.getAppointeeProperty('Pernr') },
+          });
 
           this.setTableData({ oViewModel, aTableData });
         } catch (oError) {
