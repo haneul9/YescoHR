@@ -2,10 +2,10 @@
     xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:core="sap.ui.core">
     <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
-        <HBox alignItems="Center" class="title">
+        <HBox alignItems="Center" class="table-toolbar">
             <Title level="H2" text="{i18n>LABEL_00129}" />
         </HBox>
-        <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px" class="form-grid">
+        <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" gridAutoRows="50px" class="form-grid">
             <Label text="{i18n>LABEL_14001}" />
             <VBox>
                 <ComboBox items="{/ClubType}" change=".onClubType" selectedKey="{/FormData/Zclub}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }">

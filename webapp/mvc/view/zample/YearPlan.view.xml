@@ -6,13 +6,13 @@
     xmlns="sap.m">
     <Page showHeader="false">
         <content>
-            <VBox width="100%">
-                <HBox justifyContent="Center">
-                    <Button icon="sap-icon://navigation-left-arrow" press=".onPressPrevYear" />
-                    <Title level="H1" text="{/year}" />
-                    <Button icon="sap-icon://navigation-right-arrow" press=".onPressNextYear" />
+            <VBox width="100%" class="vCardBox">
+                <HBox justifyContent="Center" class="year-plan-head">
+                    <Button icon="sap-icon://navigation-left-arrow" press=".onPressPrevYear" class="icon-button" />
+                    <Title level="H2" text="{/year}" />
+                    <Button icon="sap-icon://navigation-right-arrow" press=".onPressNextYear" class="icon-button" />
                 </HBox>
-                <grid:CSSGrid id="yearPlanGrid" gridTemplateColumns="70px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr" gridGap="1px" items="{path: '/plans'}">
+                <grid:CSSGrid id="yearPlanGrid" class="year-plan-grid" gridTemplateColumns="70px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr" gridGap="1px" items="{path: '/plans'}">
                     <custom:DayBox width="100%" mouseover=".onMouseOverDayBox" mouseout=".onMouseOutDayBox">
                         <custom:customData>
                             <core:CustomData key="day" value="{day}" />
@@ -30,7 +30,24 @@
                         </Text>
                     </custom:DayBox>
                 </grid:CSSGrid>
+                <HBox class="status-wrap year-plan">
+                    <ObjectStatus text="연차" icon="sap-icon://circle-task-2" state="None" />
+                    <ObjectStatus text="하계휴가" icon="sap-icon://circle-task-2" state="Indication02" />
+                    <ObjectStatus text="유급휴가" icon="sap-icon://circle-task-2" state="Indication03" />
+                    <ObjectStatus text="무급휴가" icon="sap-icon://circle-task-2" state="Indication04" />
+                    <ObjectStatus text="병가" icon="sap-icon://circle-task-2" state="Indication05" />
+                    <ObjectStatus text="출산휴가" icon="sap-icon://circle-task-2" state="None" />
+                    <ObjectStatus text="모성보호" icon="sap-icon://circle-task-2" state="Indication02" />
+                    <ObjectStatus text="휴직" icon="sap-icon://circle-task-2" state="Indication03" />
+                    <ObjectStatus text="휴무" icon="sap-icon://circle-task-2" state="Indication04" />
+                    <ObjectStatus text="징계" icon="sap-icon://circle-task-2" state="Indication05" />
+                    <ObjectStatus text="공휴일" icon="sap-icon://circle-task-2" state="Indication01" />
+                </HBox>
             </VBox>
+
+            
+
+
         </content>
     </Page>
 </mvc:View>

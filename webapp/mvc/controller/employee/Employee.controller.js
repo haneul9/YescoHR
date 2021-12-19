@@ -402,7 +402,7 @@ sap.ui.define(
           Object.keys(aSubMenuContents).forEach((key) => {
             const mMenu = _.get(aSubMenuContents, key);
             const oSubVBox = new sap.m.VBox().addStyleClass('customBox sapUiMediumMarginBottom');
-            const oSubHBox = new sap.m.HBox({ justifyContent: 'SpaceBetween' });
+            const oSubHBox = new sap.m.HBox({ justifyContent: 'SpaceBetween' }).addStyleClass('table-toolbar');
 
             this.debug(`Sub ${mMenu.title}`, mMenu);
 

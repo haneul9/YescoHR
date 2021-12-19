@@ -14,7 +14,7 @@
                 <CustomListItem type="Active" press=".onClickEmployeeCard">
                     <HBox>
                         <VBox width="20%" justifyContent="Center" alignItems="Center">
-                            <Image src="{Photo}" height="60px" width="60px" />
+                            <Image src="{Photo}" height="76px" width="60px" />
                         </VBox>
                         <VBox class="employee-card-list-d">
                             <HBox justifyContent="SpaceBetween">

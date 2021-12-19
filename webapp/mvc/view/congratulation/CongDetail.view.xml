@@ -25,9 +25,11 @@
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.InfoMessage" type="XML" />
 				<VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
-					<HBox alignItems="Center" class="title">
-						<Title level="H2" text="{i18n>LABEL_00129}" />
-						<Text text="{i18n>MSG_02005}" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="desc-txt"/>
+					<HBox alignItems="Center" class="table-toolbar">
+						<HBox class="title">
+							<Title level="H2" text="{i18n>LABEL_00129}" />
+							<Text text="{i18n>MSG_02005}" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="desc-txt"/>
+						</HBox>
 					</HBox>
 					<grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
 						<Label text="{i18n>LABEL_02013}"/>

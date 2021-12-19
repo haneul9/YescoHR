@@ -53,8 +53,8 @@
 							</VBox>
 							<VBox class="vCardBox sapUiSmallMarginTop">
 								<HBox>
-									<HBox alignItems="Center" class="title">
-										<Title level="H3" text="{i18n>LABEL_10008}" class="sapUiMediumMarginEnd"/>
+									<HBox alignItems="Center" class="header-wrap">
+										<Title level="H3" text="{i18n>LABEL_10008}" class="sapUiMediumMarginEnd" />
 										<Button icon="sap-icon://sys-add" text="{i18n>LABEL_10011}" enabled="{= ${/currentItemsLength} &lt; 7 }" press=".onPressAddDuty" />
 									</HBox>
 								</HBox>

@@ -24,7 +24,7 @@
                 <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
                 <core:Fragment fragmentName="sap.ui.yesco.fragment.InfoMessage" type="XML" />
                 <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
-                    <HBox alignItems="Center" class="title">
+                    <HBox alignItems="Center" class="table-toolbar">
                         <Title level="H2" text="{i18n>LABEL_00129}" />
                         <Text text="{i18n>MSG_02005}" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="desc-txt"/>
                     </HBox>

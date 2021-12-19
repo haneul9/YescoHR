@@ -2,7 +2,7 @@
     xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:core="sap.ui.core">
     <VBox class="vCardBox sapUiMediumMarginBottom" busyIndicatorDelay="0" busy="{/busy}">
-        <HBox alignItems="Center" class="title">
+        <HBox alignItems="Center" class="table-toolbar">
             <Title level="H2" text="{i18n>LABEL_00129}" />
         </HBox>
         <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">

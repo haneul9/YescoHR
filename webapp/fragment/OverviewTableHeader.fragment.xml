@@ -3,8 +3,8 @@
     <HBox justifyContent="SpaceBetween" class="header-wrap">
         <HBox class="header">
             <Title level="H3" text="{= !!${/listInfo/Title} ? ${/listInfo/Title} : ${i18n>LABEL_00129} }" class="sapUiSmallMarginEnd" />
-            <Text text="total {/listInfo/totalCount}" class="sapUiMediumMarginEnd" />
-            <Text text="{/listInfo/infoMessage}" visible="{= !!${/listInfo/infoMessage} }" class="sapUiMediumMarginEnd desc-txt" />
+            <Text text="total {/listInfo/totalCount}" />
+            <Text text="{/listInfo/infoMessage}" visible="{= !!${/listInfo/infoMessage} }" class="desc-txt" />
         </HBox>
         <HBox>
             <HBox class="status-wrap" visible="{= ${/listInfo/visibleStatus} !== 'X'}">
