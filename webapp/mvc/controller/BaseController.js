@@ -143,7 +143,7 @@ sap.ui.define(
       },
 
       getPropertyLimit(sServiceName, sEntityType, sProperty) {
-        return _.chain(this.getOwnerComponent().getMetadataModel().getData()).get([sServiceName, sEntityType, sProperty, 'maxLength']).value();
+        return _.chain(this.getOwnerComponent().getMetadataModel().getData()).get([sServiceName, sEntityType, sProperty, 'maxLength']).toInteger().value();
       },
 
       /**
