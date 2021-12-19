@@ -1,13 +1,11 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/exceptions/UI5Error',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
@@ -15,13 +13,11 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    Filter,
-    FilterOperator,
     JSONModel,
     MessageBox,
     AppUtils,
+    Client,
     UI5Error,
-    ODataReadError,
     ServiceNames,
     BaseController
   ) => {
@@ -88,12 +84,13 @@ sap.ui.define(
           oViewModel.setProperty('/year', oParameter.year);
           oViewModel.setProperty('/param', { ..._.omit(mParameter, '__metadata') });
 
+          const fCurriedGetEntitySet = Client.getEntitySet(oModel);
           const [aStepList, aTopGoals, aStatus, aGrades, mDetailData] = await Promise.all([
-            this.readAppStatusStepList({ oModel, sPid: mParameter.Zzappid }), //
-            this.readRelaUpTarget({ oModel, sAppee: mParameter.Zzappee }),
-            this.readAppValueList({ oModel }),
-            this.readAppGradeList({ oModel }),
-            this.readDeepAppraisalDoc({ oModel, mKeys: oViewModel.getProperty('/param') }),
+            fCurriedGetEntitySet('AppStatusStepList', { Zzappid: mParameter.Zzappid }),
+            fCurriedGetEntitySet('RelaUpTarget', { Zzappee: mParameter.Zzappee }),
+            fCurriedGetEntitySet('AppValueList'),
+            fCurriedGetEntitySet('AppGradeList'),
+            Client.deep(oModel, 'AppraisalDoc', { ...mParameter, Menid: this.getCurrentMenuId(), Prcty: 'D', Zzappgb: 'ME', AppraisalDocDetailSet: [], AppraisalBottnsSet: [], AppraisalScreenSet: [] }),
           ]);
 
           // 전략목표, 직무목표
@@ -262,118 +259,6 @@ sap.ui.define(
       /*****************************************************************
        * ! Call oData
        *****************************************************************/
-      readDeepAppraisalDoc({ oModel, mKeys }) {
-        return new Promise((resolve, reject) => {
-          const sUrl = '/AppraisalDocSet';
-
-          oModel.create(
-            sUrl,
-            {
-              ...mKeys,
-              Menid: this.getCurrentMenuId(),
-              Prcty: 'D',
-              Zzappgb: 'ME',
-              AppraisalDocDetailSet: [],
-              AppraisalBottnsSet: [],
-              AppraisalScreenSet: [],
-            },
-            {
-              success: (oData) => {
-                this.debug(`${sUrl} success.`, oData);
-
-                resolve(oData ?? {});
-              },
-              error: (oError) => {
-                this.debug(`${sUrl} error.`, oError);
-
-                reject(new ODataReadError(oError));
-              },
-            }
-          );
-        });
-      },
-
-      readAppStatusStepList({ oModel, sPid }) {
-        const sUrl = '/AppStatusStepListSet';
-
-        return new Promise((resolve, reject) => {
-          oModel.read(sUrl, {
-            filters: [
-              new Filter('Zzappid', FilterOperator.EQ, sPid), //
-            ],
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results ?? []);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
-
-      readRelaUpTarget({ oModel, sAppee }) {
-        const sUrl = '/RelaUpTargetSet';
-
-        return new Promise((resolve, reject) => {
-          oModel.read(sUrl, {
-            filters: [
-              new Filter('Zzappee', FilterOperator.EQ, sAppee), //
-            ],
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results ?? []);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
-
-      readAppValueList({ oModel }) {
-        const sUrl = '/AppValueListSet';
-
-        return new Promise((resolve, reject) => {
-          oModel.read(sUrl, {
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results ?? []);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
-
-      readAppGradeList({ oModel }) {
-        const sUrl = '/AppGradeListSet';
-
-        return new Promise((resolve, reject) => {
-          oModel.read(sUrl, {
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results ?? []);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
     });
   }
 );

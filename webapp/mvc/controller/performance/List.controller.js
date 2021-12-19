@@ -1,12 +1,9 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -15,12 +12,9 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    Filter,
-    FilterOperator,
     JSONModel,
     AppUtils,
     Client,
-    ODataReadError,
     ServiceNames,
     TableUtils,
     BaseController
@@ -49,11 +43,7 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/busy', true);
 
-          const aTableData = await Client.getEntitySet({
-            oModel,
-            sUrl: 'AppraisalPeeList',
-            mFilters: { Menid: this.getCurrentMenuId(), Prcty: 'L', Werks: this.getAppointeeProperty('Werks'), Zzappgb: 'ME', Zzappee: this.getAppointeeProperty('Pernr') },
-          });
+          const aTableData = await Client.getEntitySet(oModel, 'AppraisalPeeList', { Menid: this.getCurrentMenuId(), Prcty: 'L', Werks: this.getAppointeeProperty('Werks'), Zzappgb: 'ME', Zzappee: this.getAppointeeProperty('Pernr') });
 
           this.setTableData({ oViewModel, aTableData });
         } catch (oError) {
@@ -87,36 +77,6 @@ sap.ui.define(
       /*****************************************************************
        * ! Call oData
        *****************************************************************/
-      /**
-       * @param  {JSONModel} oModel
-       */
-      readAppraisalPeeList({ oModel }) {
-        const mAppointee = this.getAppointeeData();
-        const sMenid = this.getCurrentMenuId();
-        const sUrl = '/AppraisalPeeListSet';
-
-        return new Promise((resolve, reject) => {
-          oModel.read(sUrl, {
-            filters: [
-              new Filter('Menid', FilterOperator.EQ, sMenid), //
-              new Filter('Prcty', FilterOperator.EQ, 'L'),
-              new Filter('Werks', FilterOperator.EQ, mAppointee.Werks),
-              new Filter('Zzappgb', FilterOperator.EQ, 'ME'),
-              new Filter('Zzappee', FilterOperator.EQ, mAppointee.Pernr),
-            ],
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results ?? []);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
     });
   }
 );

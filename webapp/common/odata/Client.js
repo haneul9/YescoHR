@@ -14,7 +14,7 @@ sap.ui.define(
     'use strict';
 
     return {
-      getEntitySet({ oModel, sUrl, mFilters = {} }) {
+      getEntitySet: _.curry((oModel, sUrl, mFilters = {}) => {
         return new Promise((resolve, reject) => {
           oModel.read(`/${sUrl}Set`, {
             filters: _.map(mFilters, (v, p) => new Filter(p, FilterOperator.EQ, v)),
@@ -30,9 +30,9 @@ sap.ui.define(
             },
           });
         });
-      },
+      }),
 
-      get({ oModel, sUrl, mKeyMap = {} }) {
+      get: _.curry((oModel, sUrl, mKeyMap = {}) => {
         return new Promise((resolve, reject) => {
           oModel.read(oModel.createKey(`/${sUrl}Set`, mKeyMap), {
             success: (oData) => {
@@ -47,7 +47,24 @@ sap.ui.define(
             },
           });
         });
-      },
+      }),
+
+      deep: _.curry((oModel, sUrl, mPayload) => {
+        return new Promise((resolve, reject) => {
+          oModel.create(`/${sUrl}Set`, mPayload, {
+            success: (oData) => {
+              AppUtils.debug(`${sUrl} success.`, oData);
+
+              resolve(oData ?? {});
+            },
+            error: (oError) => {
+              AppUtils.debug(`${sUrl} error.`, oError);
+
+              reject(new ODataReadError(oError));
+            },
+          });
+        });
+      }),
     };
   }
 );
