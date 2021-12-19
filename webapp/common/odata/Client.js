@@ -49,6 +49,23 @@ sap.ui.define(
         });
       }),
 
+      create: _.curry((oModel, sUrl, mPayload) => {
+        return new Promise((resolve, reject) => {
+          oModel.create(`/${sUrl}Set`, mPayload, {
+            success: (oData) => {
+              AppUtils.debug(`${sUrl} success.`, oData);
+
+              resolve(oData ?? {});
+            },
+            error: (oError) => {
+              AppUtils.debug(`${sUrl} error.`, oError);
+
+              reject(new ODataReadError(oError));
+            },
+          });
+        });
+      }),
+
       deep: _.curry((oModel, sUrl, mPayload) => {
         return new Promise((resolve, reject) => {
           oModel.create(`/${sUrl}Set`, mPayload, {

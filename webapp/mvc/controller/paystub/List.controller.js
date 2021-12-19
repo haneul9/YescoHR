@@ -1,11 +1,9 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -14,11 +12,9 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    Filter,
-    FilterOperator,
     JSONModel,
     AppUtils,
-    ODataReadError,
+    Client,
     ServiceNames,
     TableUtils,
     BaseController
@@ -68,12 +64,16 @@ sap.ui.define(
       async onObjectMatched() {
         const oModel = this.getModel(ServiceNames.PAY);
         const oViewModel = this.getViewModel();
-        const oSearchConditions = oViewModel.getProperty('/search');
+        const sYear = oViewModel.getProperty('/search/year');
 
         try {
           oViewModel.setProperty('/busy', true);
 
-          const aRowData = await this.readPayslipList({ oModel, ...oSearchConditions });
+          const aRowData = await Client.getEntitySet(oModel, 'PayslipList', {
+            Menid: this.getCurrentMenuId(),
+            Begym: moment(sYear).month(0).format('YYYYMM'),
+            Endym: moment(sYear).month(11).format('YYYYMM'),
+          });
 
           this.setTableData({ oViewModel, aRowData });
         } catch (oError) {
@@ -109,12 +109,16 @@ sap.ui.define(
       async onPressSearch() {
         const oModel = this.getModel(ServiceNames.PAY);
         const oViewModel = this.getViewModel();
-        const oSearchConditions = oViewModel.getProperty('/search');
+        const sYear = oViewModel.getProperty('/search/year');
 
         try {
           oViewModel.setProperty('/busy', true);
 
-          const aRowData = await this.readPayslipList({ oModel, ...oSearchConditions });
+          const aRowData = await Client.getEntitySet(oModel, 'PayslipList', {
+            Menid: this.getCurrentMenuId(),
+            Begym: moment(sYear).month(0).format('YYYYMM'),
+            Endym: moment(sYear).month(11).format('YYYYMM'),
+          });
 
           this.setTableData({ oViewModel, aRowData });
         } catch (oError) {
@@ -146,35 +150,6 @@ sap.ui.define(
       /*****************************************************************
        * ! Call oData
        *****************************************************************/
-      /**
-       * @param  {JSONModel} oModel
-       * @param  {String} year
-       */
-      readPayslipList({ oModel, year }) {
-        return new Promise((resolve, reject) => {
-          const sMenid = this.getCurrentMenuId();
-          const dSelectYear = moment(year);
-          const sUrl = '/PayslipListSet';
-
-          oModel.read(sUrl, {
-            filters: [
-              new Filter('Menid', FilterOperator.EQ, sMenid), //
-              new Filter('Begym', FilterOperator.EQ, dSelectYear.month(0).format('YYYYMM')),
-              new Filter('Endym', FilterOperator.EQ, dSelectYear.month(11).format('YYYYMM')),
-            ],
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results ?? []);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
     });
   }
 );

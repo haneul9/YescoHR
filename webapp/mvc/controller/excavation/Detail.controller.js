@@ -3,13 +3,10 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/exceptions/UI5Error',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
-    'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
@@ -23,13 +20,10 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     Fragment,
-    Filter,
-    FilterOperator,
     JSONModel,
     MessageBox,
+    Client,
     UI5Error,
-    ODataReadError,
-    ODataCreateError,
     Appno,
     AppUtils,
     AttachFileAction,
@@ -105,7 +99,7 @@ sap.ui.define(
         try {
           if (sAppno) {
             const oModel = this.getModel(ServiceNames.WORKTIME);
-            const aDetailData = await this.readDrillChangeAppSet({ oModel, sAppno });
+            const aDetailData = await Client.getEntitySet(oModel, 'DrillChangeApp', { Appno: sAppno });
             const mDetail = aDetailData[0] ?? {};
 
             oViewModel.setProperty('/ZappStatAl', mDetail.ZappStatAl);
@@ -116,7 +110,14 @@ sap.ui.define(
             this.initializeApplyInfoBox(mDetail);
             this.initializeApprovalBox(mDetail);
           } else {
-            const aEmployees = await this.readEmpSearchResult();
+            const oModel = this.getModel(ServiceNames.COMMON);
+            const aEmployees = await Client.getEntitySet(oModel, 'EmpSearchResult', {
+              Menid: this.getCurrentMenuId(),
+              Persa: this.getAppointeeProperty('Werks'),
+              Stat2: '3',
+              Zflag: 'X',
+              Actda: moment().hour(9).toDate(),
+            });
 
             oViewModel.setProperty(
               '/form/employees',
@@ -223,7 +224,17 @@ sap.ui.define(
             await AttachFileAction.uploadFile.call(this, sAppno, this.TYPE_CODE);
           }
 
-          await this.createDrillChangeApp(sPrcty);
+          const oModel = this.getModel(ServiceNames.WORKTIME);
+          const aTableData = oViewModel.getProperty('/form/list');
+          const sChgrsn = oViewModel.getProperty('/form/Chgrsn');
+
+          await Client.create(oModel, 'DrillChangeApp', {
+            Menid: this.getCurrentMenuId(),
+            Appno: sAppno,
+            Prcty: sPrcty,
+            Chgrsn: sChgrsn,
+            DrillChangeNav: [...aTableData.map((o) => ({ ...o, Chgrsn: sChgrsn }))],
+          });
 
           // {신청}되었습니다.
           MessageBox.success(this.getBundleText('MSG_00007', this.getBundleText('LABEL_00121')), {
@@ -250,7 +261,7 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/dialog/busy', true);
 
-          let aSummaryList = await this.readDrillList({ oModel, sMode, sYearMonth });
+          let aSummaryList = await Client.getEntitySet(oModel, 'DrillList', { Prcty: sMode, Zyymm: sYearMonth });
 
           aSummaryList = _.differenceWith(aSummaryList, aList, (a, b) => moment(a.Datum).format('YYYYMMDD') === moment(b.Datum).format('YYYYMMDD'));
 
@@ -414,117 +425,6 @@ sap.ui.define(
       /*****************************************************************
        * ! Call OData
        *****************************************************************/
-      readEmpSearchResult() {
-        return new Promise((resolve, reject) => {
-          const oModel = this.getModel(ServiceNames.COMMON);
-          const sMenid = this.getCurrentMenuId();
-          const sPersa = this.getAppointeeProperty('Werks');
-          const sUrl = '/EmpSearchResultSet';
-
-          oModel.read(sUrl, {
-            filters: [
-              new Filter('Menid', FilterOperator.EQ, sMenid), //
-              new Filter('Persa', FilterOperator.EQ, sPersa),
-              new Filter('Stat2', FilterOperator.EQ, '3'),
-              new Filter('Zflag', FilterOperator.EQ, 'X'),
-              new Filter('Actda', FilterOperator.EQ, moment().hour(9).toDate()),
-            ],
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results ?? []);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
-
-      readDrillList({ oModel, sMode, sYearMonth }) {
-        return new Promise((resolve, reject) => {
-          const sUrl = '/DrillListSet';
-
-          oModel.read(sUrl, {
-            filters: [
-              new Filter('Prcty', FilterOperator.EQ, sMode), //
-              new Filter('Zyymm', FilterOperator.EQ, sYearMonth),
-            ],
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results ?? []);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
-
-      readDrillChangeAppSet({ oModel, sAppno }) {
-        return new Promise((resolve, reject) => {
-          const sUrl = '/DrillChangeAppSet';
-
-          oModel.read(sUrl, {
-            filters: [
-              new Filter('Appno', FilterOperator.EQ, sAppno), //
-            ],
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results ?? []);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
-
-      /**
-       *
-       * @param {String} sPrcty -  T:임시저장, C:신청
-       * @returns
-       */
-      createDrillChangeApp(sPrcty) {
-        const oModel = this.getModel(ServiceNames.WORKTIME);
-        const oViewModel = this.getViewModel();
-        const aTableData = oViewModel.getProperty('/form/list');
-        const sChgrsn = oViewModel.getProperty('/form/Chgrsn');
-        const sAppno = oViewModel.getProperty('/Appno');
-        const sMenid = this.getCurrentMenuId();
-        const sUrl = '/DrillChangeAppSet';
-
-        return new Promise((resolve, reject) => {
-          const mPayload = {
-            Menid: sMenid,
-            Appno: sAppno,
-            Prcty: sPrcty,
-            Chgrsn: sChgrsn,
-            DrillChangeNav: [...aTableData.map((o) => ({ ...o, Chgrsn: sChgrsn }))],
-          };
-
-          oModel.create(sUrl, mPayload, {
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results ?? []);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataCreateError({ oError })); // {신청}중 오류가 발생하였습니다.
-            },
-          });
-        });
-      },
     });
   }
 );
