@@ -142,6 +142,10 @@ sap.ui.define(
         );
       },
 
+      getPropertyLimit(sServiceName, sEntityType, sProperty) {
+        return _.chain(this.getOwnerComponent().getMetadataModel().getData()).get([sServiceName, sEntityType, sProperty, 'maxLength']).value();
+      },
+
       /**
        * Event handler for navigating back.
        * It there is a history entry we go one step back in the browser history
