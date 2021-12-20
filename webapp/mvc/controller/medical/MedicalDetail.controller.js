@@ -343,7 +343,7 @@ sap.ui.define(
         const bResult = aHisList.every((e) => e.Attyn === 'X');
 
         if (
-          bResult ||
+          !bResult ||
           (!AttachFileAction.getFileLength.call(this) &&
           !bResult)
         ) {
@@ -396,7 +396,7 @@ sap.ui.define(
                 
                 const aHislist = oDetailModel.getProperty('/HisList');
 
-                if (!!aHislist.length) {
+                if (!!aHislist.length && !!this.byId('DetailHisDialog')) {
                   await aHislist.forEach((e) => {
                     AttachFileAction.uploadFile.call(this, e.Appno2, this.TYPE_CODE, this.DIALOG_FILE_ID);
                   });
@@ -468,6 +468,14 @@ sap.ui.define(
                 // FileUpload
                 if (!!AttachFileAction.getFileLength.call(this)) {
                   await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.TYPE_CODE);
+                }
+
+                const aHislist = oDetailModel.getProperty('/HisList');
+
+                if (!!aHislist.length && !!this.byId('DetailHisDialog')) {
+                  await aHislist.forEach((e) => {
+                    AttachFileAction.uploadFile.call(this, e.Appno2, this.TYPE_CODE, this.DIALOG_FILE_ID);
+                  });
                 }
 
                 const aDeleteDatas = oDetailModel.getProperty('/RemoveFiles');
@@ -705,7 +713,7 @@ sap.ui.define(
               return true;
             } 
           }
-          
+
           if (!!mDialogData.Bet02) {
             const iBet02 = parseInt(mReciptDetails.Bet02);
             const sAddBet02 = mReciptDetails.Bet02Add;
