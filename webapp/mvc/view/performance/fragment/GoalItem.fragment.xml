@@ -47,13 +47,13 @@
                     <HBox width="100%" />
                     <HBox width="100%" />
                     <VBox visible="{= ${rootPath} === 'strategy' }">
-                        <Label text="{i18n>LABEL_10023}" visible="{= ${/fieldControl/display/Z103} !== 'H' }"/>
+                        <Label text="{i18n>LABEL_10023}" visible="{= ${/fieldControl/display/Z103s} !== 'H' }"/>
                     </VBox>
                     <VBox visible="{= ${rootPath} === 'strategy' }">
                         <layoutData>
                             <grid:GridItemLayoutData gridColumn="2 / 8" />
                         </layoutData>
-                        <ComboBox width="100%" class="required" selectedKey="{Z103}" items="{ path: '/entry/topGoals', templateShareable: true }" editable="{= ${/fieldControl/display/Z103} === 'X' }" visible="{= ${/fieldControl/display/Z103} !== 'H' }">
+                        <ComboBox width="100%" class="required" selectedKey="{Z103s}" items="{ path: '/entry/topGoals', templateShareable: true }" editable="{= ${/fieldControl/display/Z103s} === 'X' }" visible="{= ${/fieldControl/display/Z103s} !== 'H' }">
                             <core:Item key="{Objid}" text="{Stext}" />
                         </ComboBox>
                     </VBox>

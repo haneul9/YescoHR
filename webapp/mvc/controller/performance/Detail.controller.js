@@ -27,17 +27,32 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.performance.Detail', {
       LIST_PAGE_ID: 'container-ehr---performance',
+
       SUMMARY_PROPERTIES: ['Zmepoint', 'Zmapoint', 'Zmbgrade'],
       MANAGE_PROPERTIES: ['Z131', 'Z132', 'Z136', 'Z137', 'Z140', 'Papp1', 'Papp2'],
-      GOAL_PROPERTIES: ['Obj0', 'Fwgt', 'Z101', 'Z103', 'Z109', 'Z111', 'Zapgme', 'Zapgma', 'Ztbegda', 'Ztendda', 'Zmarslt', 'Zrslt', 'Z1175', 'Z1174', 'Z1173', 'Z1172', 'Z1171', 'Z125Ee', 'Z125Er'],
-      COMBO_PROPERTIES: ['Zapgme', 'Zapgma', 'Z103', 'Z111', 'Zmbgrade'],
+      GOAL_PROPERTIES: ['Obj0', 'Fwgt', 'Z101', 'Z103', 'Z103s', 'Z109', 'Z111', 'Zapgme', 'Zapgma', 'Ztbegda', 'Ztendda', 'Zmarslt', 'Zrslt', 'Z1175', 'Z1174', 'Z1173', 'Z1172', 'Z1171', 'Z125Ee', 'Z125Er'],
+      COMBO_PROPERTIES: ['Zapgme', 'Zapgma', 'Z103s', 'Z111', 'Zmbgrade'],
+
+      DISPLAY_TYPE: { EDIT: 'X', DISPLAY_ONLY: 'D', HIDE: 'H', HIDDEN_VALUE: 'V' },
+      GOAL_TYPE: { STRATEGY: { code: '1', name: 'strategy' }, DUTY: { code: '2', name: 'duty' } },
+      APPRAISER_TYPE: { ME: 'ME', MA: 'MA', MB: 'MB' },
 
       getPreviousRouteName() {
         return 'performance';
       },
 
       initializeFieldsControl(acc, cur) {
-        return { ...acc, [cur]: 'X' };
+        return { ...acc, [cur]: this.DISPLAY_TYPE.EDIT };
+      },
+
+      initializeGoalItem(obj, index) {
+        return {
+          rootPath: _.chain(this.GOAL_TYPE).findKey({ code: obj.Z101 }).toLower().value(),
+          expanded: false,
+          OrderNo: String(index),
+          ItemNo: String(index + 1),
+          ...obj,
+        };
       },
 
       onBeforeShow() {
@@ -61,8 +76,12 @@ sap.ui.define(
           buttons: [],
           currentItemsLength: 0,
           fieldControl: {
-            display: _.assignIn(_.reduce(this.GOAL_PROPERTIES, this.initializeFieldsControl, {}), _.reduce(this.SUMMARY_PROPERTIES, this.initializeFieldsControl, {}), _.reduce(this.MANAGE_PROPERTIES, this.initializeFieldsControl, {})),
-            limit: _.assignIn(this.getEntityLimit(ServiceNames.APPRAISAL, 'AppraisalDoc'), this.getEntityLimit(ServiceNames.APPRAISAL, 'AppraisalDocDetail')),
+            display: _.assignIn(
+              _.reduce(this.GOAL_PROPERTIES, this.initializeFieldsControl.bind(this), {}),
+              _.reduce(this.SUMMARY_PROPERTIES, this.initializeFieldsControl.bind(this), {}),
+              _.reduce(this.MANAGE_PROPERTIES, this.initializeFieldsControl.bind(this), {})
+            ),
+            limit: {},
           },
           goals: {
             strategy: [],
@@ -85,11 +104,11 @@ sap.ui.define(
             throw new UI5Error({ code: 'E', message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
           }
 
-          const mParameter = oListView.getModel().getProperty('/parameter/rowData');
+          const mParameter = _.omit(oListView.getModel().getProperty('/parameter/rowData'), '__metadata');
 
           oViewModel.setProperty('/busy', true);
           oViewModel.setProperty('/year', oParameter.year);
-          oViewModel.setProperty('/param', { ..._.omit(mParameter, '__metadata') });
+          oViewModel.setProperty('/param', { ...mParameter });
 
           const fCurriedGetEntitySet = Client.getEntitySet(oModel);
           const [aStepList, aTopGoals, aStatus, aGrades, mDetailData] = await Promise.all([
@@ -97,7 +116,15 @@ sap.ui.define(
             fCurriedGetEntitySet('RelaUpTarget', { Zzappee: mParameter.Zzappee }),
             fCurriedGetEntitySet('AppValueList'),
             fCurriedGetEntitySet('AppGradeList'),
-            Client.deep(oModel, 'AppraisalDoc', { ...mParameter, Menid: this.getCurrentMenuId(), Prcty: 'D', Zzappgb: 'ME', AppraisalDocDetailSet: [], AppraisalBottnsSet: [], AppraisalScreenSet: [] }),
+            Client.deep(oModel, 'AppraisalDoc', {
+              ...mParameter,
+              Menid: this.getCurrentMenuId(),
+              Prcty: 'D',
+              Zzappgb: this.APPRAISER_TYPE.ME,
+              AppraisalDocDetailSet: [],
+              AppraisalBottnsSet: [],
+              AppraisalScreenSet: [],
+            }),
           ]);
 
           // 전략목표, 직무목표
@@ -112,11 +139,9 @@ sap.ui.define(
             .head()
             .map((o) => {
               const mReturn = { ...o, completed: bCompleted };
-              if (mParameter.ZzapstsSub === 'X') {
-                bCompleted = true;
-              } else if (o.ApStatus === mParameter.Zzapsts) {
-                bCompleted = false;
-              }
+
+              if (mParameter.ZzapstsSub !== 'X' && o.ApStatus === mParameter.Zzapsts) bCompleted = false;
+
               return mReturn;
             })
             .value();
@@ -136,19 +161,22 @@ sap.ui.define(
             )
             .value();
 
-          oViewModel.setProperty('/entry/levels', new ComboEntry({ codeKey: 'ValueEid', valueKey: 'ValueText', aEntries: aGrades }) ?? []);
+          // 콤보박스 Entry
           oViewModel.setProperty('/entry/topGoals', new ComboEntry({ codeKey: 'Objid', valueKey: 'Stext', aEntries: aTopGoals }) ?? []);
+          oViewModel.setProperty('/entry/levels', new ComboEntry({ codeKey: 'ValueEid', valueKey: 'ValueText', aEntries: aGrades }) ?? []);
           oViewModel.setProperty('/entry/status', new ComboEntry({ codeKey: 'ValueEid', valueKey: 'ValueText', aEntries: aStatus }) ?? []);
+
+          // 합계점수
           oViewModel.setProperty('/summary', {
             ..._.chain({ ...mDetailData, Zmbgrade: _.isEmpty(mDetailData.Zmbgrade) ? 'ALL' : mDetailData.Zmbgrade })
               .pick(this.SUMMARY_PROPERTIES)
               .value(),
           });
+
+          // 상시관리
           oViewModel.setProperty('/manage', { ..._.pick(mDetailData, this.MANAGE_PROPERTIES) });
-          oViewModel.setProperty('/buttons', mDetailData.AppraisalBottnsSet.results ?? []);
-          oViewModel.setProperty('/currentItemsLength', _.toLength(mDetailData.AppraisalDocDetailSet.results));
-          oViewModel.setProperty('/goals/strategy', _.map(mGroupDetailByZ101['1'], (o, i) => ({ rootPath: 'strategy', expanded: false, OrderNo: String(i), ItemNo: String(i + 1), ...o })) ?? []);
-          oViewModel.setProperty('/goals/duty', _.map(mGroupDetailByZ101['2'], (o, i) => ({ rootPath: 'duty', expanded: false, OrderNo: String(i), ItemNo: String(i + 1), ...o })) ?? []);
+
+          // 평가 단계
           oViewModel.setProperty('/stage/headers', aStageHeader);
           oViewModel.setProperty(
             '/stage/rows',
@@ -156,6 +184,17 @@ sap.ui.define(
               .map((o, i) => ({ child: aGroupStageByApStatusName[i] }))
               .value()
           );
+
+          // 목표(전략/직무)
+          oViewModel.setProperty('/currentItemsLength', _.toLength(mDetailData.AppraisalDocDetailSet.results));
+          oViewModel.setProperty('/goals/strategy', _.map(mGroupDetailByZ101[this.GOAL_TYPE.STRATEGY.code], this.initializeGoalItem.bind(this)) ?? []);
+          oViewModel.setProperty('/goals/duty', _.map(mGroupDetailByZ101[this.GOAL_TYPE.DUTY.code], this.initializeGoalItem.bind(this)) ?? []);
+
+          // 기능버튼
+          oViewModel.setProperty('/buttons', mDetailData.AppraisalBottnsSet.results ?? []);
+
+          // 필드속성
+          oViewModel.setProperty('/fieldControl/limit', _.assignIn(this.getEntityLimit(ServiceNames.APPRAISAL, 'AppraisalDoc'), this.getEntityLimit(ServiceNames.APPRAISAL, 'AppraisalDocDetail')));
           oViewModel.setProperty(
             '/fieldControl/display',
             _.reduce(mDetailData.AppraisalScreenSet.results, (acc, cur) => ({ ...acc, [cur.ColumnId]: cur.Zdipopt }), oViewModel.getProperty('/fieldControl/display'))
@@ -216,7 +255,7 @@ sap.ui.define(
             expanded: true,
             OrderNo: String(iItemsLength),
             ItemNo: String(iItemsLength + 1),
-            ..._.reduce(this.GOAL_PROPERTIES, (acc, cur) => ({ ...acc, [cur]: _.includes(this.COMBO_PROPERTIES, cur) ? 'ALL' : null }), {}),
+            ..._.reduce(this.GOAL_PROPERTIES, (acc, cur) => ({ ...acc, [cur]: _.includes(this.COMBO_PROPERTIES, cur) ? 'ALL' : _.noop() }), {}),
           },
         ]);
       },
@@ -232,11 +271,11 @@ sap.ui.define(
           return;
         }
 
-        this.addGoalItem('strategy');
+        this.addGoalItem(this.GOAL_TYPE.STRATEGY.name);
       },
 
       onPressAddDuty() {
-        this.addGoalItem('duty');
+        this.addGoalItem(this.GOAL_TYPE.DUTY.name);
       },
 
       onPressDeleteGoal(oEvent) {
