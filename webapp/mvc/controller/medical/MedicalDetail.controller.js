@@ -342,11 +342,7 @@ sap.ui.define(
         // 첨부파일
         const bResult = aHisList.every((e) => e.Attyn === 'X');
 
-        if (
-          !bResult ||
-          (!AttachFileAction.getFileLength.call(this) &&
-          !bResult)
-        ) {
+        if (!bResult && !AttachFileAction.getFileLength.call(this)) {
           MessageBox.alert(this.getBundleText('MSG_09028'));
           return true;
         }

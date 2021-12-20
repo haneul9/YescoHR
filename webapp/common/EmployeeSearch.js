@@ -381,7 +381,6 @@ sap.ui.define([
             });
           }
           
-          
         this.dSearchDialog.then(function (oDialog) {
           oDialog.open();
         });
@@ -392,7 +391,7 @@ sap.ui.define([
       
       /*
       *  조직검색 Dialog호출
-        */
+      */
       onGroupDetail() {
         const oView = this.getView();
            
