@@ -1,6 +1,7 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/core/Fragment',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
@@ -9,11 +10,11 @@ sap.ui.define(
     'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
-    'sap/ui/yesco/mvc/model/type/Pernr',
+    'sap/ui/yesco/mvc/model/type/Date',
   ],
   (
     // prettier 방지용 주석
+    Fragment,
     JSONModel,
     MessageBox,
     AppUtils,
@@ -28,7 +29,7 @@ sap.ui.define(
     return BaseController.extend('sap.ui.yesco.mvc.controller.performance.Detail', {
       LIST_PAGE_ID: 'container-ehr---performance',
 
-      SUMMARY_PROPERTIES: ['Zmepoint', 'Zmapoint', 'Zmbgrade'],
+      SUMMARY_PROPERTIES: ['Zmepoint', 'Zmapoint', 'Zmbgrade', 'Rjctr', 'Rjctrin'],
       MANAGE_PROPERTIES: ['Z131', 'Z132', 'Z136', 'Z137', 'Z140', 'Papp1', 'Papp2'],
       GOAL_PROPERTIES: ['Obj0', 'Fwgt', 'Z101', 'Z103', 'Z103s', 'Z109', 'Z111', 'Zapgme', 'Zapgma', 'Ztbegda', 'Ztendda', 'Zmarslt', 'Zrslt', 'Z1175', 'Z1174', 'Z1173', 'Z1172', 'Z1171', 'Z125Ee', 'Z125Er'],
       COMBO_PROPERTIES: ['Zapgme', 'Zapgma', 'Z103s', 'Z111', 'Zmbgrade'],
@@ -73,7 +74,12 @@ sap.ui.define(
           },
           manage: {},
           summary: {},
-          buttons: [],
+          buttons: {
+            submit: {},
+            Rjctr: '',
+            Rjctrin: '',
+            isRejectProcess: false,
+          },
           currentItemsLength: 0,
           fieldControl: {
             display: _.assignIn(
@@ -139,9 +145,7 @@ sap.ui.define(
             .head()
             .map((o) => {
               const mReturn = { ...o, completed: bCompleted };
-
               if (mParameter.ZzapstsSub !== 'X' && o.ApStatus === mParameter.Zzapsts) bCompleted = false;
-
               return mReturn;
             })
             .value();
@@ -191,7 +195,8 @@ sap.ui.define(
           oViewModel.setProperty('/goals/duty', _.map(mGroupDetailByZ101[this.GOAL_TYPE.DUTY.code], this.initializeGoalItem.bind(this)) ?? []);
 
           // 기능버튼
-          oViewModel.setProperty('/buttons', mDetailData.AppraisalBottnsSet.results ?? []);
+          oViewModel.setProperty('/buttons/Rjctr', mDetailData.Rjctr);
+          oViewModel.setProperty('/buttons/submit', _.groupBy(mDetailData.AppraisalBottnsSet.results, 'ButtonId') ?? {});
 
           // 필드속성
           oViewModel.setProperty('/fieldControl/limit', _.assignIn(this.getEntityLimit(ServiceNames.APPRAISAL, 'AppraisalDoc'), this.getEntityLimit(ServiceNames.APPRAISAL, 'AppraisalDocDetail')));
@@ -260,6 +265,24 @@ sap.ui.define(
         ]);
       },
 
+      openRejectDialog() {
+        const oView = this.getView();
+
+        if (!this.pRejectDialog) {
+          this.pRejectDialog = Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.mvc.view.performance.fragment.RejectDialog',
+            controller: this,
+          }).then(function (oDialog) {
+            oView.addDependent(oDialog);
+            return oDialog;
+          });
+        }
+        this.pRejectDialog.then(function (oDialog) {
+          oDialog.open();
+        });
+      },
+
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
@@ -284,8 +307,8 @@ sap.ui.define(
 
         // 삭제하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00049'), {
-          onClose: (oAction) => {
-            if (MessageBox.Action.OK === oAction) {
+          onClose: (sAction) => {
+            if (MessageBox.Action.OK === sAction) {
               const { root: sRootPath, itemKey: sDeleteTargetNum } = oSource.data();
               const aItems = oViewModel.getProperty(`/goals/${sRootPath}`);
               let iCurrentItemsLength = oViewModel.getProperty('/currentItemsLength') ?? 0;
@@ -301,6 +324,28 @@ sap.ui.define(
             }
           },
         });
+      },
+
+      onPressRejectViewButton() {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/buttons/isRejectProcess', false);
+        this.openRejectDialog();
+      },
+
+      onPressRejectDialogClose() {
+        this.byId('rejectDialog').close();
+      },
+
+      onPressRejectButton() {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/buttons/isRejectProcess', true);
+        this.openRejectDialog();
+      },
+
+      onPressRejectDialogSave() {
+        this.onPressRejectDialogClose();
       },
 
       /*****************************************************************

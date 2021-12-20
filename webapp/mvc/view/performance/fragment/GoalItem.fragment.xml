@@ -86,42 +86,42 @@
                     </VBox>
                     <VBox>
                         <layoutData>
-                            <grid:GridItemLayoutData gridRow="4 / 6" />
+                            <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '4 / 6' : '3 / 5' }" />
                         </layoutData>
                         <Label width="100%" text="{i18n>LABEL_10027}" vAlign="Top" visible="{= ${/fieldControl/display/Zmarslt} !== 'H' }"/>
                     </VBox>
                     <VBox>
                         <layoutData>
-                            <grid:GridItemLayoutData gridRow="4 / 6" gridColumn="2 / 5" />
+                            <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '4 / 6' : '3 / 5' }" gridColumn="2 / 5" />
                         </layoutData>
-                        <TextArea width="100%" class="required" value="{Zmarslt}" maxLength="{/fieldControl/limit/Zmarslt}" editable="{= ${/fieldControl/display/Zmarslt} === 'X' }" visible="{= ${/fieldControl/display/Zmarslt} !== 'H' }">
+                        <TextArea width="100%" class="required" rows="5" value="{Zmarslt}" maxLength="{/fieldControl/limit/Zmarslt}" editable="{= ${/fieldControl/display/Zmarslt} === 'X' }" visible="{= ${/fieldControl/display/Zmarslt} !== 'H' }">
                         </TextArea>
                     </VBox>
                     <VBox>
                         <layoutData>
-                            <grid:GridItemLayoutData gridRow="4 / 6" />
+                            <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '4 / 6' : '3 / 5' }" />
                         </layoutData>
                         <Label width="100%" text="{i18n>LABEL_10028}" vAlign="Top" visible="{= ${/fieldControl/display/Zrslt} !== 'H' }"/>
                     </VBox>
                     <VBox>
                         <layoutData>
-                            <grid:GridItemLayoutData gridRow="4 / 6" gridColumn="6 / 9" />
+                            <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '4 / 6' : '3 / 5' }" gridColumn="6 / 9" />
                         </layoutData>
-                        <TextArea width="100%" class="required" value="{Zrslt}" maxLength="{/fieldControl/limit/Zrslt}" editable="{= ${/fieldControl/display/Zrslt} === 'X' }" visible="{= ${/fieldControl/display/Zrslt} !== 'H' }"/>
+                        <TextArea width="100%" class="required" rows="5" value="{Zrslt}" maxLength="{/fieldControl/limit/Zrslt}" editable="{= ${/fieldControl/display/Zrslt} === 'X' }" visible="{= ${/fieldControl/display/Zrslt} !== 'H' }"/>
                     </VBox>
                     <VBox>
                         <layoutData>
-                            <grid:GridItemLayoutData gridRow="7 / 6" />
+                            <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '6 / 11' : '5 / 10' }" />
                         </layoutData>
                         <Label width="100%" text="{i18n>LABEL_10029}" vAlign="Top" visible="{= ${/fieldControl/display/Z1175} !== 'H' || ${/fieldControl/display/Z1174} !== 'H' || ${/fieldControl/display/Z1173} !== 'H' || ${/fieldControl/display/Z1172} !== 'H' || ${/fieldControl/display/Z1171} !== 'H' }"/>
                     </VBox>
                     <VBox class="label_wrap">
                         <layoutData>
-                            <grid:GridItemLayoutData gridRow="6" gridColumn="2 / 9" />
+                            <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '6 / 11' : '5 / 10' }" gridColumn="2 / 9" />
                         </layoutData>
                         <HBox visible="{= ${/fieldControl/display/Z1175} !== 'H' }">
                             <layoutData>
-                                <grid:GridItemLayoutData gridRow="6" gridColumn="2 / 9" />
+                                <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '6' : '5' }" gridColumn="2 / 9" />
                             </layoutData>
                             <Label width="18px" text="L5" textAlign="Center">
                                 <layoutData>
@@ -136,7 +136,7 @@
                         </HBox>
                         <HBox visible="{= ${/fieldControl/display/Z1174} !== 'H' }">
                             <layoutData>
-                                <grid:GridItemLayoutData gridRow="7" gridColumn="2 / 9" />
+                                <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '7' : '6' }" gridColumn="2 / 9" />
                             </layoutData>
                             <Label width="18px" text="L4">
                                 <layoutData>
@@ -151,7 +151,7 @@
                         </HBox>
                         <HBox visible="{= ${/fieldControl/display/Z1173} !== 'H' }">
                             <layoutData>
-                                <grid:GridItemLayoutData gridRow="8" gridColumn="2 / 9" />
+                                <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '8' : '7' }" gridColumn="2 / 9" />
                             </layoutData>
                             <Label width="18px" text="L3">
                                 <layoutData>
@@ -166,7 +166,7 @@
                         </HBox>
                         <HBox visible="{= ${/fieldControl/display/Z1172} !== 'H' }">
                             <layoutData>
-                                <grid:GridItemLayoutData gridRow="9" gridColumn="2 / 9" />
+                                <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '9' : '8' }" gridColumn="2 / 9" />
                             </layoutData>
                             <Label width="18px" text="L2">
                                 <layoutData>
@@ -181,7 +181,7 @@
                         </HBox>
                         <HBox visible="{= ${/fieldControl/display/Z1171} !== 'H' }">
                             <layoutData>
-                                <grid:GridItemLayoutData gridRow="10" gridColumn="2 / 9" />
+                                <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '10' : '9' }" gridColumn="2 / 9" />
                             </layoutData>
                             <Label width="18px" text="L1">
                                 <layoutData>
@@ -196,23 +196,29 @@
                         </HBox>
                     </VBox>
                     <VBox>
+                        <layoutData>
+                            <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '11 / 13' : '10 / 12' }" />
+                        </layoutData>
                         <Label width="100%" text="{i18n>LABEL_10030}" visible="{= ${/fieldControl/display/Z125Ee} !== 'H' }"/>
                     </VBox>
                     <VBox>
                         <layoutData>
-                            <grid:GridItemLayoutData gridColumn="span 3" />
+                            <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '11 / 13' : '10 / 12' }" gridColumn="span 3" />
                         </layoutData>
-                        <TextArea width="100%" value="{Z125Ee}" class="required" maxLength="{/fieldControl/limit/Z125Ee}" editable="{= ${/fieldControl/display/Z125Ee} === 'X' }" visible="{= ${/fieldControl/display/Z125Ee} !== 'H' }">
+                        <TextArea width="100%" value="{Z125Ee}" class="required" rows="5" maxLength="{/fieldControl/limit/Z125Ee}" editable="{= ${/fieldControl/display/Z125Ee} === 'X' }" visible="{= ${/fieldControl/display/Z125Ee} !== 'H' }">
                         </TextArea>
                     </VBox>
                     <VBox>
+                        <layoutData>
+                            <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '11 / 13' : '10 / 12' }" />
+                        </layoutData>
                         <Label width="100%" text="{i18n>LABEL_10031}" visible="{= ${/fieldControl/display/Z125Er} !== 'H' }"/>
                     </VBox>
                     <VBox>
                         <layoutData>
-                            <grid:GridItemLayoutData gridColumn="span 3" />
+                            <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '11 / 13' : '10 / 12' }" gridColumn="span 3" />
                         </layoutData>
-                        <TextArea width="100%" value="{Z125Er}" class="required" maxLength="{/fieldControl/limit/Z125Er}" editable="{= ${/fieldControl/display/Z125Er} === 'X' }" visible="{= ${/fieldControl/display/Z125Er} !== 'H' }">
+                        <TextArea width="100%" value="{Z125Er}" class="required" rows="5" maxLength="{/fieldControl/limit/Z125Er}" editable="{= ${/fieldControl/display/Z125Er} === 'X' }" visible="{= ${/fieldControl/display/Z125Er} !== 'H' }">
                         </TextArea>
                     </VBox>
                 </grid:CSSGrid>
