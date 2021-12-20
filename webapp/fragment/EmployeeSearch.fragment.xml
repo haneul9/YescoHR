@@ -2,7 +2,7 @@
     xmlns:core="sap.ui.core"
     xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:table="sap.ui.table">
-    <Dialog id= "EmployeeSearch" title="{i18n>LABEL_00205}" contentWidth="1500px" contentHeight="650px" busyIndicatorDelay="0" busy="{employeeModel>/busy}">
+    <Dialog id= "EmployeeSearch" title="{i18n>LABEL_00205}" contentWidth="1500px" contentHeight="650px" busyIndicatorDelay="0" busy="{/employeeModel/busy}">
         <beginButton>
             <Button text="{i18n>LABEL_00112}" icon="sap-icon://accept" press=".EmployeeSearch.onSelectClick" class="cancel" />
         </beginButton>
@@ -22,39 +22,39 @@
                     <grid:CSSGrid gridTemplateRows="1fr 2fr" gridGap="1px 0" class="form-grid">
                         <Label text="{i18n>LABEL_00237}" />
                         <VBox>
-                            <ComboBox items="{employeeModel>/PersArea}" selectedKey="{employeeModel>/Search/Persa}">
+                            <ComboBox items="{/employeeModel/PersArea}" selectedKey="{/employeeModel/Search/Persa}">
                                 <core:Item text="{Pbtxt}" key="{Werks}" />
                             </ComboBox>
                         </VBox>
                         <Label text="{i18n>LABEL_00211}" />
                         <VBox>
-                            <Input value="{employeeModel>/Search/Ename}"/>
+                            <Input value="{/employeeModel/Search/Ename}"/>
                         </VBox>
                         <Label text="{i18n>LABEL_00226}" />
                         <VBox>
-                            <Input value="{employeeModel>/Search/orgeh}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".EmployeeSearch.onGroupDetail" />
+                            <Input value="{/employeeModel/Search/Orgeh}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".EmployeeSearch.onGroupDetail" />
                         </VBox>
                         <Label text="{i18n>LABEL_00240}" />
                         <VBox>
-                            <ComboBox items="{employeeModel>/WorkType}" selectedKey="{employeeModel>/Search/Stat2}">
+                            <ComboBox items="{/employeeModel/WorkType}" selectedKey="{/employeeModel/Search/Stat2}">
                                 <core:Item text="{Ztext}" key="{Zcode}" />
                             </ComboBox>
                         </VBox>
                         <Label text="{i18n>LABEL_00238}" />
                         <VBox>
-                            <ComboBox items="{employeeModel>/EmpGroup}" selectedKey="{employeeModel>/Search/Persg}" change=".EmployeeSearch.onSubEmpCode">
+                            <ComboBox items="{/employeeModel/EmpGroup}" selectedKey="{/employeeModel/Search/Persg}" change=".EmployeeSearch.onSubEmpCode">
                                 <core:Item text="{Ztext}" key="{Zcode}" />
                             </ComboBox>
                         </VBox>
                         <Label text="{i18n>LABEL_00327}" />
                         <VBox>
-                            <ComboBox items="{employeeModel>/SubEmpGroup}" selectedKey="{employeeModel>/Search/Persk}">
+                            <ComboBox items="{/employeeModel/SubEmpGroup}" selectedKey="{/employeeModel/Search/Persk}">
                                 <core:Item text="{Ztext}" key="{Zcode}" />
                             </ComboBox>
                         </VBox>
                     </grid:CSSGrid>
                 </VBox>
-                <table:Table id="empTable" rows="{employeeModel>/empList}" rowSelectionChange=".EmployeeSearch.onRowSelection" visibleRowCount="{employeeModel>/empList/length}" rowHeight="44" columnHeaderHeight="45" columnHeaderVisible="false">
+                <table:Table id="empTable" rows="{/employeeModel/empList}" rowSelectionChange=".EmployeeSearch.onRowSelection" visibleRowCount="{/employeeModel/empList/length}" rowHeight="44" columnHeaderHeight="45" columnHeaderVisible="false">
                     <table:extension>
                         <OverflowToolbar>
                             <core:Icon src="sap-icon://table-chart" />

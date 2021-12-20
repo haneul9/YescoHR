@@ -24,26 +24,27 @@ sap.ui.define([
         *  검색조건 Code
         */
        async setEmpConditionCode(oController) {
-        const oEmpModel = oController.getOwnerComponent().getModel('employeeModel');
+        const oEmpModel = oController.getViewModel();
+        // const oEmpModel = oController.getOwnerComponent().getModel('employeeModel');
 
-        oEmpModel.setProperty('/busy', true);
+        oEmpModel.setProperty('/employeeModel/busy', true);
         try {
           const aAreaList = await this.setPersAreaCode(oController);
           
-          oEmpModel.setProperty('/PersArea', aAreaList);
+          oEmpModel.setProperty('/employeeModel/PersArea', aAreaList);
   
           const aWorkList = await this.setWorkCode(oController);
           
-          oEmpModel.setProperty('/WorkType', aWorkList);
+          oEmpModel.setProperty('/employeeModel/WorkType', aWorkList);
   
           const aEmpList = await this.setEmpCode(oController);
           
-          oEmpModel.setProperty('/EmpGroup', aEmpList);  
-          oEmpModel.setProperty('/SubEmpGroup', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext'}));
-          oEmpModel.setProperty('/Search', {
+          oEmpModel.setProperty('/employeeModel/EmpGroup', aEmpList);  
+          oEmpModel.setProperty('/employeeModel/SubEmpGroup', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext'}));
+          oEmpModel.setProperty('/employeeModel/Search', {
             Persa: 'ALL',
             Ename: '',
-            orgeh: '',
+            Orgeh: '',
             Stat2: 'ALL',
             Persg: 'ALL',
             Persk: 'ALL',
@@ -51,7 +52,7 @@ sap.ui.define([
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
-          oEmpModel.setProperty('/busy', false);
+          oEmpModel.setProperty('/employeeModel/busy', false);
         }
        },
 
@@ -145,11 +146,11 @@ sap.ui.define([
         */
        onSubEmpCode(oEvent) {
         const oModel = this.getModel(ServiceNames.COMMON);
-        const oEmpModel = this.getOwnerComponent().getModel('employeeModel');
+        const oEmpModel = this.getViewModel();
         const sKey = oEvent.getSource().getSelectedKey();
         const sUrl = '/EmpCodeListSet';
 
-        oEmpModel.setProperty('/Search/Persk', 'ALL');
+        oEmpModel.setProperty('/employeeModel/Search/Persk', 'ALL');
         // 사원하위
         oModel.read(sUrl, {
           filters: [
@@ -176,12 +177,12 @@ sap.ui.define([
         */
       onEmpSearch() {
         const oModel = this.getModel(ServiceNames.COMMON);
-        const oEmpModel = this.getOwnerComponent().getModel('employeeModel');
+        const oEmpModel = this.getViewModel();
         const sMenid = this.getCurrentMenuId();
         const sUrl = '/EmpSearchResultSet';
-        const mSearchData = oEmpModel.getProperty('/Search');
+        const mSearchData = oEmpModel.getProperty('/employeeModel/Search');
         const vEname = !mSearchData.Ename ? '' : new sap.ui.model.Filter('Ename', sap.ui.model.FilterOperator.EQ, mSearchData.Ename);
-        const vOrgeh = !mSearchData.orgeh ? '' : new sap.ui.model.Filter('Orgeh', sap.ui.model.FilterOperator.EQ, mSearchData.orgeh);
+        const vOrgeh = !mSearchData.Orgeh ? '' : new sap.ui.model.Filter('Orgeh', sap.ui.model.FilterOperator.EQ, mSearchData.Orgeh);
         const vPersa = mSearchData.Persa === 'ALL' || !mSearchData.Persa ? '' : new sap.ui.model.Filter('Persa', sap.ui.model.FilterOperator.EQ, mSearchData.Persa);
         const vStat2 = mSearchData.Stat2 === 'ALL' || !mSearchData.Stat2 ? '' : new sap.ui.model.Filter('Stat2', sap.ui.model.FilterOperator.EQ, mSearchData.Stat2);
         const vPersg = mSearchData.Persg === 'ALL' || !mSearchData.Persg ? '' : new sap.ui.model.Filter('Persg', sap.ui.model.FilterOperator.EQ, mSearchData.Persg);
@@ -271,15 +272,26 @@ sap.ui.define([
       async onSearchDialog() {
         const oView = this.getView();
         
-        this.getOwnerComponent().setModel(new JSONModel({
-          Search: {},
-          SelectedEmp: [],
-          empList: [],
-          PersArea: [],
-          WorkType: [],
-          EmpGroup: [],
-          SubEmpGroup: [],
-        }), 'employeeModel');
+        // this.getOwnerComponent().setModel(new JSONModel({
+        //   Search: {},
+        //   SelectedEmp: [],
+        //   empList: [],
+        //   PersArea: [],
+        //   WorkType: [],
+        //   EmpGroup: [],
+        //   SubEmpGroup: [],
+        // }), 'employeeModel');
+        this.setViewModel(new JSONModel({ 
+          employeeModel: {
+            Search: {},
+            SelectedEmp: [],
+            empList: [],
+            PersArea: [],
+            WorkType: [],
+            EmpGroup: [],
+            SubEmpGroup: [],
+          }
+        }));
            
         if (!this.dSearchDialog) {
             this.dSearchDialog = Fragment.load({
