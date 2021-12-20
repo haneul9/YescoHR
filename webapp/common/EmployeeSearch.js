@@ -185,8 +185,10 @@ sap.ui.define([
           const sUrl = '/OrgListSet';
           const vDate = !mSearchData.Date ? '' : new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, mSearchData.Date);
           const vStext = !mSearchData.Stext ? '' : new sap.ui.model.Filter('Stext', sap.ui.model.FilterOperator.EQ, mSearchData.Stext);
+          const oOrgTable = AppUtils.getAppComponent().byId(`${this.getView().getId()}GroupDetail--orgTable`);
           const aFilters = [];
         
+          oOrgTable.clearSelection();
           oEmpModel.setProperty('/employeeModel/org/busy', true);
 
           if (!!vDate) {aFilters.push(vDate);}
@@ -341,7 +343,8 @@ sap.ui.define([
       onOrgClick(oEvent) {
         const oEmpModel = this.getViewModel();
         
-        oEmpModel.setProperty('/employeeModel/Search/Orgeh', oEmpModel.getProperty('/employeeModel/org/Selectedorg/0/Pbtxt'));
+        oEmpModel.setProperty('/employeeModel/Search/Pbtxt', oEmpModel.getProperty('/employeeModel/org/SelectedOrg/0/Stext'));
+        oEmpModel.setProperty('/employeeModel/Search/Orgeh', oEmpModel.getProperty('/employeeModel/org/SelectedOrg/0/Orgeh'));
         oEvent.getSource().getParent().close();
       },
 
@@ -416,9 +419,7 @@ sap.ui.define([
 
         this.dGroupDialog.then(function (oDialog) {
           oDialog.open();
-        });
-        
-        this.byId('orgTable').clearSelection();
+        });        
       },
 	};
 });

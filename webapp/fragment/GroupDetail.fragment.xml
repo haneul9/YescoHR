@@ -10,7 +10,7 @@
             <Button text="{i18n>LABEL_00115}" icon="sap-icon://decline" press=".EmployeeSearch.onCloseClick" class="cancel" />
         </endButton>
         <content>
-            <table:Table id="orgTable" width="100%" rows="{/employeeModel/org/orgList}" rowSelectionChange=".EmployeeSearch.onOrgListRowSelection" visibleRowCount="{/employeeModel/org/orgList/length}" rowHeight="44" columnHeaderHeight="45" columnHeaderVisible="false">
+            <table:Table id="orgTable" rows="{/employeeModel/org/orgList}" rowSelectionChange=".EmployeeSearch.onOrgListRowSelection" visibleRowCount="{/employeeModel/org/orgList/length}" rowHeight="44" columnHeaderHeight="45" columnHeaderVisible="false">
                 <table:extension>
                     <HBox>
                         <Label text="{i18n>LABEL_00259}" />

@@ -32,7 +32,7 @@
                         </VBox>
                         <Label text="{i18n>LABEL_00226}" />
                         <VBox>
-                            <Input value="{/employeeModel/Search/Orgeh}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".EmployeeSearch.onGroupDetail" />
+                            <Input value="{/employeeModel/Search/Pbtxt}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".EmployeeSearch.onGroupDetail" />
                         </VBox>
                         <Label text="{i18n>LABEL_00240}" />
                         <VBox>
