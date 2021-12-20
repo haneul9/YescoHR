@@ -14,6 +14,8 @@ sap.ui.define(
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/exceptions/ODataReadError',
+    'sap/ui/yesco/common/exceptions/ODataCreateError',
+    'sap/ui/yesco/common/exceptions/ODataDeleteError',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date',
     'sap/ui/yesco/mvc/model/type/Currency',
@@ -32,6 +34,8 @@ sap.ui.define(
 	TableUtils,
 	ServiceNames,
 	ODataReadError,
+	ODataCreateError,
+  ODataDeleteError
 	BaseController,
   ) => {
     'use strict';
@@ -413,7 +417,7 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      reject(oError);
+                      reject(new ODataCreateError(oError));
                     },
                   });
                 });
@@ -488,7 +492,7 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      reject(oError);
+                      reject(new ODataCreateError(oError));
                     },
                   });
                 });
@@ -536,7 +540,7 @@ sap.ui.define(
                   });
                 },
                 error: (oError) => {
-                  AppUtils.handleError(oError);
+                  AppUtils.handleError(new ODataCreateError(oError));
                   AppUtils.setAppBusy(false, this);
                 },
               });
@@ -571,7 +575,7 @@ sap.ui.define(
                   });
                 },
                 error: (oError) => {
-                  AppUtils.handleError(oError);
+                  AppUtils.handleError(new ODataDeleteError(oError));
                   AppUtils.setAppBusy(false, this);
                 },
               });
