@@ -13,6 +13,7 @@ sap.ui.define(
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date',
     'sap/ui/yesco/mvc/model/type/Currency',
@@ -30,7 +31,8 @@ sap.ui.define(
 	TextUtils,
 	TableUtils,
 	ServiceNames,
-	BaseController
+	ODataReadError,
+	BaseController,
   ) => {
     'use strict';
 
@@ -196,7 +198,7 @@ sap.ui.define(
               this.settingsAttachTable();
             },
             error: (oError) => {
-              AppUtils.handleError(oError);
+              AppUtils.handleError(new ODataReadError(oError));
               oDetailModel.setProperty('/busy', false);
             },
           });
@@ -237,7 +239,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            AppUtils.handleError(oError);
+            AppUtils.handleError(new ODataReadError(oError));
           },
         });
       },
@@ -255,7 +257,7 @@ sap.ui.define(
               }
             },
             error: (oError) => {
-              reject(oError);
+              reject(new ODataReadError(oError));
             },
           });
         })
@@ -688,6 +690,42 @@ sap.ui.define(
           MessageBox.alert(this.getBundleText('MSG_09024'));
           return true;
         }
+        
+        const mReciptDetails = oDetailModel.getProperty('/ReciptDetails');
+        const mTargetDetails = oDetailModel.getProperty('/TargetDetails');        
+
+        if (!!mReciptDetails) {
+          // 급여인경우
+          if (!!mDialogData.Bet01) {
+            const iBet01 = parseInt(mReciptDetails.Bet01);
+            const iActCost = parseInt(mDialogData.Bet01) * parseFloat(mTargetDetails.Prate);
+  
+            if (iBet01 < iActCost) {
+              MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet01Basic, this.TextUtils.toCurrency(iBet01)));
+              return true;
+            } 
+          }
+          
+          if (!!mDialogData.Bet02) {
+            const iBet02 = parseInt(mReciptDetails.Bet02);
+            const sAddBet02 = mReciptDetails.Bet02Add;
+            const iActCost = parseInt(mDialogData.Bet02) * parseFloat(mTargetDetails.Prate);
+  
+            if ((sAddBet02 === '0' || !sAddBet02) && !mReciptDetails.Bet02AddChk) {
+              if (iBet02 < iActCost) { // 비급여 추가한도를 초과했을경우
+                MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet02Basic, this.TextUtils.toCurrency(iBet02)));
+                return true;
+              } 
+            } else {
+              const iAddBet02 = parseInt(sAddBet02);
+
+              if (iAddBet02 < iActCost) { // 비급여 한도를 초과했을경우
+                MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet02AddBasic, this.TextUtils.toCurrency(iAddBet02)));
+                return true;
+              } 
+            }
+          }
+        }
 
         return false;
       },
@@ -731,7 +769,7 @@ sap.ui.define(
             
             oDetailModel.setProperty('/DialogData/Attyn', bFile);
             this.byId('DetailHisDialog').close();
-          }, 100);
+          }, 200);
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -774,7 +812,7 @@ sap.ui.define(
             oDetailModel.setProperty('/DialogData/Attyn', bFile);
             this.setAppAmount();
             this.byId('DetailHisDialog').close();
-          }, 100);
+          }, 200);
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -808,7 +846,7 @@ sap.ui.define(
             const iBet01 = parseInt(mReciptDetails.Bet01);
   
             if (iBet01 < iActCost) {
-              MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet01Basic, this.TextUtils.toCurrency(parseInt(iBet01 / parseFloat(mTargetDetails.Prate)))));
+              MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet01Basic, this.TextUtils.toCurrency(iBet01)));
               oDetailModel.setProperty('/DialogLimit', true);
             } 
           } else {
@@ -817,14 +855,14 @@ sap.ui.define(
   
             if ((sAddBet02 === '0' || !sAddBet02) && !mReciptDetails.Bet02AddChk) {
               if (iBet02 < iActCost) { // 비급여 추가한도를 초과했을경우
-                MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet02Basic, this.TextUtils.toCurrency(parseInt(iBet02 / parseFloat(mTargetDetails.Prate)))));
+                MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet02Basic, this.TextUtils.toCurrency(iBet02)));
                 oDetailModel.setProperty('/DialogLimit', true);
               } 
             } else {
               const iAddBet02 = parseInt(sAddBet02);
 
               if (iAddBet02 < iActCost) { // 비급여 한도를 초과했을경우
-                MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet02AddBasic, this.TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
+                MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet02AddBasic, this.TextUtils.toCurrency(iAddBet02)));
                 oDetailModel.setProperty('/DialogLimit', true);
               } 
             }
