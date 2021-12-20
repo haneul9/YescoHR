@@ -209,6 +209,7 @@ sap.ui.define(
         const sWerks = this.getSessionProperty('Werks');
         const sViewKey = this.getViewModel().getProperty('/ViewKey');
         let sAppno = '';
+        let sPyyea = '';
 
         if (!!sViewKey && sViewKey !== 'N') {
           const oView = this.getView();
@@ -218,6 +219,7 @@ sap.ui.define(
           sAppno = mListData.Appno;
           sKey = mListData.Famgb;
           sAdult = mListData.Adult;
+          sPyyea = mListData.Pyyea;
         }
 
         // 영수증구분
@@ -226,7 +228,7 @@ sap.ui.define(
             new sap.ui.model.Filter('Adult', sap.ui.model.FilterOperator.EQ, sAdult),
             new sap.ui.model.Filter('Famgb', sap.ui.model.FilterOperator.EQ, sKey),
             new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
-            new sap.ui.model.Filter('Pyyea', sap.ui.model.FilterOperator.EQ, new Date()),
+            new sap.ui.model.Filter('Pyyea', sap.ui.model.FilterOperator.EQ, sPyyea || String(new Date().getFullYear())),
             new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sAppno),
           ],
           success: (oData) => {
