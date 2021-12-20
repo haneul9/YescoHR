@@ -11,21 +11,27 @@ sap.ui.define(
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
+    'sap/ui/yesco/common/exceptions/ODataReadError',
+    'sap/ui/yesco/common/exceptions/ODataCreateError',
+    'sap/ui/yesco/common/exceptions/ODataDeleteError',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
   ],
   (
     // prettier 방지용 주석
     JSONModel,
-    AttachFileAction,
-    Appno,
-    AppUtils,
-    ComboEntry,
-    FragmentEvent,
-    TextUtils,
-    ServiceNames,
-    MessageBox,
-    BaseController
+	AttachFileAction,
+	Appno,
+	AppUtils,
+	ComboEntry,
+	FragmentEvent,
+	TextUtils,
+	ServiceNames,
+	MessageBox,
+	ODataReadError,
+	ODataCreateError,
+	ODataDeleteError,
+	BaseController,
   ) => {
     'use strict';
 
@@ -171,9 +177,7 @@ sap.ui.define(
                 }
               },
               error: (oError) => {
-                const vErrorMSG = AppUtils.parseError(oError);
-
-                MessageBox.error(vErrorMSG);
+                AppUtils.handleError(new ODataReadError(oError));
               },
             });
           }),
@@ -192,9 +196,7 @@ sap.ui.define(
                 }
               },
               error: (oError) => {
-                const vErrorMSG = AppUtils.parseError(oError);
-
-                MessageBox.error(vErrorMSG);
+                AppUtils.handleError(new ODataReadError(oError));
               },
             });
           }),
@@ -370,9 +372,7 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      const vErrorMSG = AppUtils.parseError(oError);
-
-                      reject(vErrorMSG);
+                      reject(new ODataCreateError({oError}));
                     },
                   });
                 });
@@ -382,10 +382,8 @@ sap.ui.define(
                     this.getRouter().navTo('familyInfo');
                   },
                 });
-              } catch (error) {
-                if (_.has(error, 'code') && error.code === 'E') {
-                  MessageBox.error(error.message);
-                }
+              } catch (oError) {
+                AppUtils.handleError(oError);
               } finally {
                 AppUtils.setAppBusy(false, this);
               }
@@ -419,10 +417,8 @@ sap.ui.define(
                   });
                 },
                 error: (oError) => {
-                  const vErrorMSG = AppUtils.parseError(oError);
-
+                  AppUtils.handleError(new ODataDeleteError(oError));
                   AppUtils.setAppBusy(false, this);
-                  MessageBox.error(vErrorMSG);
                 },
               });
             }

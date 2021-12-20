@@ -2,21 +2,25 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/model/json/JSONModel',
+    'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
   (
     // prettier 방지용 주석
     JSONModel,
+	AppUtils,
 	AttachFileAction,
 	FragmentEvent,
 	TableUtils,
 	TextUtils,
 	ServiceNames,
+	ODataReadError,
 	BaseController
   ) => {
     'use strict';
@@ -98,7 +102,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            AppUtils.handleError(oError);
+            AppUtils.handleError(new ODataReadError(oError));
             oListModel.setProperty('/busy', false);
           },
         });

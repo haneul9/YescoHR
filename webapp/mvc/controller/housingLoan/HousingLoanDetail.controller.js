@@ -11,22 +11,28 @@ sap.ui.define(
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/TableUtils',
+    'sap/ui/yesco/common/exceptions/ODataReadError',
+    'sap/ui/yesco/common/exceptions/ODataCreateError',
+    'sap/ui/yesco/common/exceptions/ODataDeleteError',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
   (
     // prettier 방지용 주석
     JSONModel,
-    MessageBox,
-    Appno,
-    AppUtils,
-    AttachFileAction,
-    ComboEntry,
-    FragmentEvent,
-    TextUtils,
-    TableUtils,
-    ServiceNames,
-    BaseController
+	MessageBox,
+	Appno,
+	AppUtils,
+	AttachFileAction,
+	ComboEntry,
+	FragmentEvent,
+	TextUtils,
+	TableUtils,
+	ODataReadError,
+	ODataCreateError,
+	ODataDeleteError,
+	ServiceNames,
+	BaseController
   ) => {
     'use strict';
 
@@ -204,7 +210,7 @@ sap.ui.define(
               }
             },
             error: (oError) => {
-              AppUtils.handleError(oError);
+              AppUtils.handleError(new ODataReadError(oError));
               oDetailModel.setProperty('/hisBusy', false);
             },
           });
@@ -248,7 +254,7 @@ sap.ui.define(
                 }
               },
               error: (oError) => {
-                AppUtils.handleError(oError);
+                AppUtils.handleError(new ODataReadError(oError));
               },
             });
           }),
@@ -268,7 +274,7 @@ sap.ui.define(
                 }
               },
               error: (oError) => {
-                AppUtils.handleError(oError);
+                AppUtils.handleError(new ODataReadError(oError));
               },
             });
           }),
@@ -294,7 +300,7 @@ sap.ui.define(
                 }
               },
               error: (oError) => {
-                AppUtils.handleError(oError);
+                AppUtils.handleError(new ODataReadError(oError));
               },
             });
           }),
@@ -322,7 +328,7 @@ sap.ui.define(
                 }
               },
               error: (oError) => {
-                AppUtils.handleError(oError);
+                AppUtils.handleError(new ODataReadError(oError));
               },
             });
           }),
@@ -370,7 +376,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            AppUtils.handleError(oError);
+            AppUtils.handleError(new ODataReadError(oError));
           },
         });
       },
@@ -403,7 +409,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            AppUtils.handleError(oError);
+            AppUtils.handleError(new ODataReadError(oError));
           },
         });
       },
@@ -455,7 +461,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            AppUtils.handleError(oError);
+            AppUtils.handleError(new ODataReadError(oError));
           },
         });
       },
@@ -554,9 +560,7 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      const vErrorMSG = AppUtils.parseError(oError);
-
-                      reject(vErrorMSG);
+                      reject(new ODataCreateError({oError}));
                     },
                   });
                 });
@@ -611,9 +615,7 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      const vErrorMSG = AppUtils.parseError(oError);
-
-                      reject(vErrorMSG);
+                      reject(new ODataCreateError({oError}));
                     },
                   });
                 });
@@ -660,7 +662,7 @@ sap.ui.define(
                   });
                 },
                 error: (oError) => {
-                  AppUtils.handleError(oError);
+                  AppUtils.handleError(new ODataCreateError({oError}));
                   AppUtils.setAppBusy(false, this);
                 },
               });
@@ -697,7 +699,7 @@ sap.ui.define(
                   });
                 },
                 error: (oError) => {
-                  AppUtils.handleError(oError);
+                  AppUtils.handleError(new ODataDeleteError({oError}));
                   AppUtils.setAppBusy(false, this);
                 },
               });

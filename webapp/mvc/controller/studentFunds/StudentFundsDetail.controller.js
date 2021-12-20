@@ -10,20 +10,26 @@ sap.ui.define(
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
+    'sap/ui/yesco/common/exceptions/ODataReadError',
+    'sap/ui/yesco/common/exceptions/ODataCreateError',
+    'sap/ui/yesco/common/exceptions/ODataDeleteError',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Currency',
   ],
   (
     // prettier 방지용 주석
     JSONModel,
-    Appno,
-    AppUtils,
-    ComboEntry,
-    TextUtils,
-    AttachFileAction,
-    ServiceNames,
-    MessageBox,
-    BaseController
+	Appno,
+	AppUtils,
+	ComboEntry,
+	TextUtils,
+	AttachFileAction,
+	ServiceNames,
+	MessageBox,
+	ODataReadError,
+	ODataCreateError,
+	ODataDeleteError,
+	BaseController,
   ) => {
     'use strict';
 
@@ -74,7 +80,7 @@ sap.ui.define(
             oDetailModel.setProperty('/busy', false);
           })
           .catch((oError) => {
-            AppUtils.handleError(oError);
+            AppUtils.handleError(new ODataReadError(oError));
           });
       },
 
@@ -130,7 +136,7 @@ sap.ui.define(
               resolve();
             },
             error: (oError) => {
-              AppUtils.handleError(oError);
+              AppUtils.handleError(new ODataReadError(oError));
             },
           });
         }).then(() => {
@@ -211,7 +217,7 @@ sap.ui.define(
               }
             },
             error: (oError) => {
-              AppUtils.handleError(oError);
+              AppUtils.handleError(new ODataReadError(oError));
             },
           });
         }
@@ -242,7 +248,7 @@ sap.ui.define(
                 }
               },
               error: (oError) => {
-                reject(oError);
+                AppUtils.handleError(new ODataReadError(oError));
               },
             });
           }),
@@ -266,7 +272,7 @@ sap.ui.define(
                 }
               },
               error: (oError) => {
-                reject(oError);
+                AppUtils.handleError(new ODataReadError(oError));
               },
             });
           }),
@@ -292,7 +298,7 @@ sap.ui.define(
                 }
               },
               error: (oError) => {
-                reject(oError);
+                AppUtils.handleError(new ODataReadError(oError));
               },
             });
           }),
@@ -392,7 +398,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            AppUtils.handleError(oError);
+            AppUtils.handleError(new ODataReadError(oError));
           },
         });
       },
@@ -455,7 +461,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            AppUtils.handleError(oError);
+            AppUtils.handleError(new ODataReadError(oError));
           },
         });
       },
@@ -553,7 +559,7 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      reject(oError);
+                      reject(new ODataCreateError(oError));
                     },
                   });
                 });
@@ -608,7 +614,7 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      reject(oError);
+                      reject(new ODataCreateError(oError));
                     },
                   });
                 });
@@ -655,7 +661,7 @@ sap.ui.define(
                   });
                 },
                 error: (oError) => {
-                  AppUtils.handleError(oError);
+                  AppUtils.handleError(new ODataCreateError(oError));
                   AppUtils.setAppBusy(false, this);
                 },
               });
@@ -689,7 +695,7 @@ sap.ui.define(
                   });
                 },
                 error: (oError) => {
-                  AppUtils.handleError(oError);
+                  AppUtils.handleError(new ODataDeleteError(oError));
                   AppUtils.setAppBusy(false, this);
                 },
               });
