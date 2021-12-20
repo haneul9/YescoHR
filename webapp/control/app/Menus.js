@@ -89,14 +89,15 @@ sap.ui.define(
                   $MenuButton.siblings().toggleClass('app-menu-level1-hover', false);
                 }, 0);
               })
-              .attachAfterClose(function () {
-                this.setModel(null);
-              })
+              // .attachAfterClose(function () {
+              //   this.setModel(null);
+              // })
               .setModel(oMenuButton.getModel())
               .openBy(oMenuButton);
           });
         } else {
-          this.oMenuPopover.setModel(oMenuButton.getModel());
+          // this.oMenuPopover.setModel(oMenuButton.getModel());
+          this.oMenuPopover.getModel().setData(oMenuButton.getModel().getData());
           if (!this.oMenuPopover.isOpen()) {
             this.oMenuPopover.openBy(oMenuButton);
           }
