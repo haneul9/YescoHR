@@ -49,6 +49,10 @@ sap.ui.define(
         return sAppno ? this.getBundleText('LABEL_00100') : this.getBundleText('LABEL_00121'); // 조회 : 신청
       },
 
+      getPreviousRouteName() {
+        return 'nightduty';
+      },
+
       /**
        * ApprovalRequestHelper에서 호출
        * @returns
