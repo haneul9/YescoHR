@@ -8,6 +8,9 @@ sap.ui.define(
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
+    'sap/ui/yesco/common/exceptions/ODataReadError',
+    'sap/ui/yesco/common/exceptions/ODataCreateError',
+    'sap/ui/yesco/common/exceptions/ODataDeleteError',
     'sap/ui/yesco/mvc/controller/BaseController',
     "sap/ui/richtexteditor/RichTextEditor",
   ],
@@ -19,6 +22,9 @@ sap.ui.define(
 	AttachFileAction,
 	ServiceNames,
 	MessageBox,
+	ODataReadError,
+	ODataCreateError,
+	ODataDeleteError,
 	BaseController,
 	RTE,
   ) => {
@@ -132,7 +138,7 @@ sap.ui.define(
               }
             },
             error: (oError) => {
-              AppUtils.handleError(oError);
+              AppUtils.handleError(new ODataReadError(oError));
               oDetailModel.setProperty('/busy', false);
             },
           });
@@ -211,7 +217,7 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      reject(oError);
+                      reject(new ODataCreateError(oError));
                     },
                   });
                 });
@@ -278,7 +284,7 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      reject(oError);
+                      reject(new ODataCreateError(oError));
                     },
                   });
                 });
@@ -355,7 +361,7 @@ sap.ui.define(
                   AppUtils.setAppBusy(false, this);
                 },
                 error: (oError) => {
-                  AppUtils.handleError(oError);
+                  AppUtils.handleError(new ODataDeleteError(oError));
                   AppUtils.setAppBusy(false, this);
                 },
               });

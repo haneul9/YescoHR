@@ -13,6 +13,9 @@ sap.ui.define(
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/common/exceptions/ODataReadError',
+    'sap/ui/yesco/common/exceptions/ODataCreateError',
+    'sap/ui/yesco/common/exceptions/ODataDeleteError',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date',
     'sap/ui/yesco/mvc/model/type/Currency',
@@ -30,7 +33,10 @@ sap.ui.define(
 	TextUtils,
 	TableUtils,
 	ServiceNames,
-	BaseController
+	ODataReadError,
+	ODataCreateError,
+  ODataDeleteError,
+	BaseController,
   ) => {
     'use strict';
 
@@ -196,7 +202,7 @@ sap.ui.define(
               this.settingsAttachTable();
             },
             error: (oError) => {
-              AppUtils.handleError(oError);
+              AppUtils.handleError(new ODataReadError(oError));
               oDetailModel.setProperty('/busy', false);
             },
           });
@@ -209,6 +215,7 @@ sap.ui.define(
         const sWerks = this.getSessionProperty('Werks');
         const sViewKey = this.getViewModel().getProperty('/ViewKey');
         let sAppno = '';
+        let sPyyea = '';
 
         if (!!sViewKey && sViewKey !== 'N') {
           const oView = this.getView();
@@ -218,6 +225,7 @@ sap.ui.define(
           sAppno = mListData.Appno;
           sKey = mListData.Famgb;
           sAdult = mListData.Adult;
+          sPyyea = mListData.Pyyea;
         }
 
         // 영수증구분
@@ -226,7 +234,7 @@ sap.ui.define(
             new sap.ui.model.Filter('Adult', sap.ui.model.FilterOperator.EQ, sAdult),
             new sap.ui.model.Filter('Famgb', sap.ui.model.FilterOperator.EQ, sKey),
             new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
-            new sap.ui.model.Filter('Pyyea', sap.ui.model.FilterOperator.EQ, new Date()),
+            new sap.ui.model.Filter('Pyyea', sap.ui.model.FilterOperator.EQ, sPyyea || String(new Date().getFullYear())),
             new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sAppno),
           ],
           success: (oData) => {
@@ -235,7 +243,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            AppUtils.handleError(oError);
+            AppUtils.handleError(new ODataReadError(oError));
           },
         });
       },
@@ -253,7 +261,7 @@ sap.ui.define(
               }
             },
             error: (oError) => {
-              reject(oError);
+              reject(new ODataReadError(oError));
             },
           });
         })
@@ -338,11 +346,7 @@ sap.ui.define(
         // 첨부파일
         const bResult = aHisList.every((e) => e.Attyn === 'X');
 
-        if (
-          bResult ||
-          (!AttachFileAction.getFileLength.call(this) &&
-          !bResult)
-        ) {
+        if (!bResult && !AttachFileAction.getFileLength.call(this)) {
           MessageBox.alert(this.getBundleText('MSG_09028'));
           return true;
         }
@@ -392,7 +396,7 @@ sap.ui.define(
                 
                 const aHislist = oDetailModel.getProperty('/HisList');
 
-                if (!!aHislist.length) {
+                if (!!aHislist.length && !!this.byId('DetailHisDialog')) {
                   await aHislist.forEach((e) => {
                     AttachFileAction.uploadFile.call(this, e.Appno2, this.TYPE_CODE, this.DIALOG_FILE_ID);
                   });
@@ -413,7 +417,7 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      reject(oError);
+                      reject(new ODataCreateError({ oError }));
                     },
                   });
                 });
@@ -466,6 +470,14 @@ sap.ui.define(
                   await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.TYPE_CODE);
                 }
 
+                const aHislist = oDetailModel.getProperty('/HisList');
+
+                if (!!aHislist.length && !!this.byId('DetailHisDialog')) {
+                  await aHislist.forEach((e) => {
+                    AttachFileAction.uploadFile.call(this, e.Appno2, this.TYPE_CODE, this.DIALOG_FILE_ID);
+                  });
+                }
+
                 const aDeleteDatas = oDetailModel.getProperty('/RemoveFiles');
 
                 if (!!aDeleteDatas.length) {
@@ -480,7 +492,7 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      reject(oError);
+                      reject(new ODataCreateError({ oError }));
                     },
                   });
                 });
@@ -528,7 +540,7 @@ sap.ui.define(
                   });
                 },
                 error: (oError) => {
-                  AppUtils.handleError(oError);
+                  AppUtils.handleError(new ODataCreateError({ oError }));
                   AppUtils.setAppBusy(false, this);
                 },
               });
@@ -563,7 +575,7 @@ sap.ui.define(
                   });
                 },
                 error: (oError) => {
-                  AppUtils.handleError(oError);
+                  AppUtils.handleError(new ODataDeleteError(oError));
                   AppUtils.setAppBusy(false, this);
                 },
               });
@@ -686,6 +698,42 @@ sap.ui.define(
           MessageBox.alert(this.getBundleText('MSG_09024'));
           return true;
         }
+        
+        const mReciptDetails = oDetailModel.getProperty('/ReciptDetails');
+        const mTargetDetails = oDetailModel.getProperty('/TargetDetails');        
+
+        if (!!mReciptDetails) {
+          // 급여인경우
+          if (!!mDialogData.Bet01) {
+            const iBet01 = parseInt(mReciptDetails.Bet01);
+            const iActCost = parseInt(mDialogData.Bet01) * parseFloat(mTargetDetails.Prate);
+  
+            if (iBet01 < iActCost) {
+              MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet01Basic, this.TextUtils.toCurrency(parseInt(iBet01 / parseFloat(mTargetDetails.Prate)))));
+              return true;
+            } 
+          }
+
+          if (!!mDialogData.Bet02) {
+            const iBet02 = parseInt(mReciptDetails.Bet02);
+            const sAddBet02 = mReciptDetails.Bet02Add;
+            const iActCost = parseInt(mDialogData.Bet02) * parseFloat(mTargetDetails.Prate);
+  
+            if ((sAddBet02 === '0' || !sAddBet02) && !mReciptDetails.Bet02AddChk) {
+              if (iBet02 < iActCost) { // 비급여 추가한도를 초과했을경우
+                MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet02Basic, this.TextUtils.toCurrency(parseInt(iBet02 / parseFloat(mTargetDetails.Prate)))));
+                return true;
+              } 
+            } else {
+              const iAddBet02 = parseInt(sAddBet02);
+
+              if (iAddBet02 < iActCost) { // 비급여 한도를 초과했을경우
+                MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet02AddBasic, this.TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
+                return true;
+              } 
+            }
+          }
+        }
 
         return false;
       },
@@ -729,7 +777,7 @@ sap.ui.define(
             
             oDetailModel.setProperty('/DialogData/Attyn', bFile);
             this.byId('DetailHisDialog').close();
-          }, 100);
+          }, 200);
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -772,7 +820,7 @@ sap.ui.define(
             oDetailModel.setProperty('/DialogData/Attyn', bFile);
             this.setAppAmount();
             this.byId('DetailHisDialog').close();
-          }, 100);
+          }, 200);
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {

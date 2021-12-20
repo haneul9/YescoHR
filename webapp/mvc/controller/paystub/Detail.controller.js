@@ -23,6 +23,10 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.paystub.Detail', {
+      getPreviousRouteName() {
+        return 'paystub';
+      },
+
       onBeforeShow() {
         const oViewModel = new JSONModel({
           busy: false,
@@ -61,7 +65,14 @@ sap.ui.define(
         oViewModel.setProperty('/busy', true);
 
         try {
-          const mDetail = await Client.deep(oModel, 'PayslipList', { Menid: this.getCurrentMenuId(), Seqnr: sSeqnr, Payslip1Nav: [], Payslip2Nav: [], Payslip3Nav: [], Payslip4Nav: [] });
+          const mDetail = await Client.deep(oModel, 'PayslipList', {
+            Menid: this.getCurrentMenuId(),
+            Seqnr: sSeqnr,
+            Payslip1Nav: [],
+            Payslip2Nav: [],
+            Payslip3Nav: [],
+            Payslip4Nav: [],
+          });
 
           // Paylist
           const aPayList = this.transformTreeData({ aTreeData: mDetail.Payslip1Nav.results });
@@ -70,11 +81,11 @@ sap.ui.define(
           // TaxIncomeList
           const aTaxIncomeList = this.transformTreeData({ aTreeData: mDetail.Payslip3Nav.results });
           // TimeList
-          const aTimeList = mDetail.Payslip4Nav.results;
+          const aTimeList = [...mDetail.Payslip4Nav.results];
           // BaseList
           const aBaseList = _.groupBy(mDetail.Payslip1Nav.results, 'Uppno')[''] ?? [];
 
-          oViewModel.setProperty('/summary/list', [mDetail]);
+          oViewModel.setProperty('/summary/list', [{ ...mDetail }]);
           oViewModel.setProperty('/pay/list', aPayList);
           oViewModel.setProperty('/pay/rowCount', aPayList.length || 2);
           oViewModel.setProperty('/deduction/list', aDeductlist);

@@ -18,8 +18,10 @@
         <VBox class="contents">
             <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
             <VBox class="vCardBox">
-                <HBox alignItems="Center" class="title">
-                    <Title level="H2" text="{i18n>LABEL_00173}" />
+                <HBox alignItems="Center" class="table-toolbar">
+                    <HBox class="title">
+                        <Title level="H2" text="{i18n>LABEL_00173}" />
+                    </HBox>
                 </HBox>
                 <HBox>
                     <core:Fragment fragmentName="sap.ui.yesco.mvc.view.paystub.fragment.SummaryTable" type="XML" />
@@ -27,24 +29,30 @@
             </VBox>
             <HBox>
                 <VBox class="vCardBox" width="46%">
-                    <HBox alignItems="Center" class="title">
-                        <Title level="H2" text="{i18n>LABEL_13015}" />
+                    <HBox alignItems="Center" class="table-toolbar">
+                        <HBox class="title">
+                            <Title level="H2" text="{i18n>LABEL_13015}" />
+                        </HBox>
                     </HBox>
                     <HBox>
                         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.paystub.fragment.PayTable" type="XML" />
                     </HBox>
                 </VBox>
                 <VBox class="vCardBox" width="27%">
-                    <HBox alignItems="Center" class="title">
-                        <Title level="H2" text="{i18n>LABEL_13016}" />
+                    <HBox alignItems="Center" class="table-toolbar">
+                        <HBox class="title">
+                            <Title level="H2" text="{i18n>LABEL_13016}" />
+                        </HBox>
                     </HBox>
                     <HBox>
                         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.paystub.fragment.DeductionTable" type="XML" />
                     </HBox>
                 </VBox>
                 <VBox class="vCardBox" width="27%">
-                    <HBox alignItems="Center" class="title">
-                        <Title level="H2" text="{i18n>LABEL_13017}" />
+                    <HBox alignItems="Center" class="table-toolbar">
+                        <HBox class="title">
+                            <Title level="H2" text="{i18n>LABEL_13017}" />
+                        </HBox>
                     </HBox>
                     <HBox>
                         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.paystub.fragment.TaxTable" type="XML" />
@@ -52,16 +60,20 @@
                 </VBox>
             </HBox>
             <VBox class="vCardBox">
-                <HBox alignItems="Center" class="title">
-                    <Title level="H2" text="{i18n>LABEL_13018}" />
+                <HBox alignItems="Center" class="table-toolbar">
+                    <HBox class="title">
+                        <Title level="H2" text="{i18n>LABEL_13018}" />
+                    </HBox>
                 </HBox>
                 <HBox>
                     <core:Fragment fragmentName="sap.ui.yesco.mvc.view.paystub.fragment.WorkTable" type="XML" />
                 </HBox>
             </VBox>
             <VBox class="vCardBox">
-                <HBox alignItems="Center" class="title">
-                    <Title level="H2" text="{i18n>LABEL_13019}" />
+                <HBox alignItems="Center" class="table-toolbar">
+                    <HBox class="title">
+                        <Title level="H2" text="{i18n>LABEL_13019}" />
+                    </HBox>
                 </HBox>
                 <HBox>
                     <core:Fragment fragmentName="sap.ui.yesco.mvc.view.paystub.fragment.BaseTable" type="XML" />

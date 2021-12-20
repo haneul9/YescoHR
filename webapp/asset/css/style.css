@@ -382,8 +382,8 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt {outline-style:none !important}
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
-  border-left:1px solid #E7EAED;
-  border-right:1px solid #E7EAED;
+  border-left:0px solid #E7EAED;
+  border-right:0px solid #E7EAED;
   border-top:1px solid #E7EAED;
   background-color: #ffffff;
 }
@@ -397,7 +397,7 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt {outline-style:none !important}
 .sapUiTableHeaderDataCell>.sapUiTableCellInner>div:first-child{display:block !important;text-align:center !important;line-height:1}
 
 .sapUiTableColHdrCnt + .sapUiTableCtrlBefore + .sapUiTableCCnt, .sapUiTableColHdrCnt + .sapUiTableCCnt {margin-top:-1px;}
-.sapUiTableCCnt {border-bottom: 1px solid #e7eaed;}
+.sapUiTableCCnt {border-bottom: 1px solid #f5f5f5; border-left: 1px solid #f5f5f5; border-right: 1px solid #f5f5f5;}
 .sapUiTableHeaderRow { background-color: #FBFCFD;}
 .sapUiTableHeaderCell:not(.sapUiTableRowActionHeaderCell):hover {background-color: #F5F9FD;color: #222;}
 .sapUiTable:not(.sapUiTableDragDrop) .sapUiTableHeaderCellActive:active {background-color: #E2EBF4;color: #222;}
@@ -412,10 +412,19 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt {outline-style:none !important}
 .sapUiSizeCompact .sapUiTableCell .sapMLabel, .sapUiSizeCondensed .sapUiTableCell .sapMLabel { font-weight: 700; font-size: 14px;}
 .sapUiTableDataCell {border-right: 0.0625rem solid #F5F5F5;border-bottom: 0.0625rem solid #F5F5F5;}
 
-.sapUiTableColHdrCnt { background-color: #fbfcfd;border-bottom: 1px solid #fbfcfd;}
-.sapUiTableVSb {max-height:none !important;background: #f6f6f6;border-bottom: 1px solid #e5e5e5; border-top: 1px solid #e7eaed; margin-top: -1px;}
+.sapUiTableColHdrCnt { background-color: #fbfcfd;border-bottom: 1px solid #fbfcfd;border-left: 1px solid #e7eaed; border-right: 1px solid #e7eaed;}
+.sapUiTableVSb {max-height:none !important;background: #f6f6f6;border-bottom: 1px solid #e5e5e5; border-top: 1px solid #e7eaed;border-right: 1px solid #e7eaed; margin-top: -1px;}
 .sapUiTableVScr .sapUiTableCtrlScr {border-right: 1px solid #e7eaed;}
 .sapUiTableCell.sapUiTableCellLastFixed {border-right-color: #bec6c6;}
+.sapUiTableHSb {
+  position: relative;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: auto;
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #f5f5f5;
+  border-right: 1px solid #f5f5f5;
+}
 
 
 /* GNB */
@@ -602,7 +611,7 @@ span.sapMBtnInner.sapMBtnEmphasized {text-shadow: none;}
 .sapMLabelRequired:before {content:""}
 .sapMLabelRequired:after {content:"*"; color:#ff0000; font-family:"72fallback","72","72full",Arial,Helvetica,sans-serif; font-size:15px; font-weight:bold; position:relative; vertical-align:middle; line-height:0; margin-left:3px}
 /*input*/
-.sapUiSizeCompact .sapMInputBase{height:40px !important;}
+.sapUiSizeCompact .sapMInputBase:not(.sapMTextArea){height:40px !important;}
 .sapUiSizeCompact .sapMBtn.InputinnerButton {width: 50px !important;height: 40px !important;}
 .sapUiSizeCompact .sapMInputBase.SmallInput {width: 185px !important;height: 40px !important;}
 .sapUiSizeCompact .sapMInputBase.LongInputBase {width: 400px !important;height: 40px !important;}
@@ -623,7 +632,7 @@ span.sapMBtnInner.sapMBtnEmphasized {text-shadow: none;}
 .sapMSFS:before {content: "";display:inline-block; width:100%;height: 40px;background-image: url(../image/icon_search01.png);background-repeat: no-repeat;background-position: 3px center;background-size: 19px;}
 
 /*textarea*/
-.sapMInputBase.sapMInputBaseHeightMargin.sapMTextArea {height:117px !important; padding:0 !important;margin: 0;}
+.sapMInputBase.sapMInputBaseHeightMargin.sapMTextArea { padding:0 !important;margin: 0;}
 .sapMInputBase.sapMInputBaseHeightMargin.sapMTextArea .sapMInputBaseContentWrapper {padding:7px 3px 8px 10px}
 .sapMInputBase.sapMInputBaseHeightMargin.sapMTextArea .sapMInputBaseContentWrapper textarea {padding:10px 16px 0 0 !important; line-height:normal; font-family:Pretendard; font-size:13px; font-weight:500; color:#222222}
 

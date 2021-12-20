@@ -423,12 +423,14 @@ sap.ui.define(
                     icon: 'sap-icon://edit',
                     text: this.getBundleText('LABEL_00108'), // 수정
                     customData: [new sap.ui.core.CustomData({ key: 'code', value: mMenu.code })],
+                    enabled: '{= !!${/employee/sub/' + menuKey + '/contents/' + mMenu.code + '/data}.length }',
                     press: this.onPressModifyTable.bind(this),
                   }).addStyleClass('sapUiTinyMarginEnd icon-button'),
                   new sap.m.Button({
                     icon: 'sap-icon://less',
                     text: this.getBundleText('LABEL_00110'), // 삭제
                     customData: [new sap.ui.core.CustomData({ key: 'code', value: mMenu.code })],
+                    enabled: '{= !!${/employee/sub/' + menuKey + '/contents/' + mMenu.code + '/data}.length }',
                     press: this.onPressDeleteTable.bind(this),
                   }).addStyleClass('icon-button'),
                 ],
@@ -742,7 +744,7 @@ sap.ui.define(
 
       onPressRegTable(oEvent) {
         const oViewModel = this.getView().getModel();
-        const sSelectedMenuCode = oEvent.getSource().getCustomData()[0].getValue();
+        const sSelectedMenuCode = oEvent.getSource().data('code');
         const sMenuKey = _.lowerCase(_.findKey(this.CRUD_TABLES, { key: sSelectedMenuCode }));
         const sLabel = this.getBundleText(this.CRUD_TABLES[_.upperCase(sMenuKey)].label);
         const sDefaultSelectedKey = 'ALL';
@@ -891,7 +893,7 @@ sap.ui.define(
         const oControl = oEvent.getSource();
         const oTable = oControl.getParent().getParent().getParent().getItems()[1];
         const aSelectedIndices = oTable.getSelectedIndices();
-        const sSelectedMenuCode = oControl.getCustomData()[0].getValue();
+        const sSelectedMenuCode = oControl.data('code');
         const sMenuKey = _.lowerCase(_.findKey(this.CRUD_TABLES, { key: sSelectedMenuCode }));
 
         if (aSelectedIndices.length < 1) {
@@ -986,7 +988,7 @@ sap.ui.define(
         const oControl = oEvent.getSource();
         const oTable = oControl.getParent().getParent().getParent().getItems()[1];
         const aSelectedIndices = oTable.getSelectedIndices();
-        const sSelectedMenuCode = oControl.getCustomData()[0].getValue();
+        const sSelectedMenuCode = oControl.data('code');
         const sMenuKey = _.lowerCase(_.findKey(this.CRUD_TABLES, { key: sSelectedMenuCode }));
 
         if (aSelectedIndices.length < 1) {
@@ -1120,7 +1122,7 @@ sap.ui.define(
       },
 
       onPressHelpRequest(oEvent) {
-        const sHelpName = oEvent.getSource().getCustomData()[0].getValue();
+        const sHelpName = oEvent.getSource().data('helpName');
 
         this.openSelectDialog(this.SELECT_DIALOG[sHelpName]);
       },

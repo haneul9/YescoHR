@@ -10,7 +10,9 @@ sap.ui.define(
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/exceptions/ODataCreateError',
+    'sap/ui/yesco/common/exceptions/ODataDeleteError',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
@@ -26,7 +28,9 @@ sap.ui.define(
 	TextUtils,
 	FragmentEvent,
 	ServiceNames,
+  ODataReadError,
 	ODataCreateError,
+	ODataDeleteError,
 	MessageBox,
 	BaseController,
   ) => {
@@ -100,6 +104,7 @@ sap.ui.define(
         const sDataKey = oDetailModel.getProperty('/FormStatus');
         const sMenid = this.getCurrentMenuId();
         const oSessionData = this.getSessionData();
+        const oAppointeeData = this.getViewModel('appointeeModel').getData();
 
         return new Promise((resolve, reject) => {
           oDetailModel.setProperty('/menuId', sMenid);
@@ -108,8 +113,9 @@ sap.ui.define(
             oDetailModel.setProperty('/FormData', oSessionData);
             oDetailModel.setProperty('/FormData', {
               Apename: oSessionData.Ename,
-              Ename: oSessionData.Ename,
               Appernr: oSessionData.Pernr,
+              Ename: oAppointeeData.Ename,
+              Pernr: oAppointeeData.Pernr,
               Concode: 'ALL',
               Conresn: 'ALL',
               Kdsvh: 'ALL',
@@ -131,12 +137,13 @@ sap.ui.define(
                 new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'),
                 new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid),
                 new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sDataKey),
+                new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, oAppointeeData.Pernr),
               ],
               success: (oData) => {
                 resolve(oData.results[0]);
               },
               error: (oError) => {
-                reject(oError);
+                reject(new ODataReadError(oError));
               },
             });
           }
@@ -146,20 +153,20 @@ sap.ui.define(
       // 경조유형
       getBenefitType() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
-        const sWerks = this.getSessionProperty('Werks');
+        const oAppointeeData = this.getViewModel('appointeeModel').getData();
 
         return new Promise((resolve, reject) => {
           oModel.read('/BenefitCodeListSet', {
             filters: [
               new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0001'),
-              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
+              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa),
               new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
             ],
             success: (oData) => {
               resolve(oData.results);
             },
             error: (oError) => {
-              reject(oError);
+              reject(new ODataReadError(oError));
             },
           });
         });
@@ -170,12 +177,12 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
         const oFormData = oDetailModel.getProperty('/FormData');
-        const sWerks = this.getSessionProperty('Werks');
+        const oAppointeeData = this.getViewModel('appointeeModel').getData();
 
         oModel.read('/BenefitCodeListSet', {
           filters: [
             new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0002'),
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
+            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa),
             new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
             new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, oFormData.Concode),
             new sap.ui.model.Filter('Upcod2', sap.ui.model.FilterOperator.EQ, 'E'),
@@ -188,14 +195,14 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            AppUtils.handleError(oError);
+            AppUtils.handleError(new ODataReadError(oError));
           },
         });
 
         oModel.read('/BenefitCodeListSet', {
           filters: [
             new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0003'),
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
+            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa),
             new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
             new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, oFormData.Concode),
             new sap.ui.model.Filter('Upcod2', sap.ui.model.FilterOperator.EQ, oFormData.Conresn),
@@ -225,7 +232,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            AppUtils.handleError(oError);
+            AppUtils.handleError(new ODataReadError(oError));
           },
         });
       },
@@ -235,7 +242,7 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
         const sSelectKey = oEvent.getSource().getSelectedKey();
-        const sWerks = this.getSessionProperty('Werks');
+        const oAppointeeData = this.getViewModel('appointeeModel').getData();
         let sSelectText = oEvent.getSource().getSelectedItem().getText();
 
         oDetailModel.setProperty('/FormData/Context', sSelectText);
@@ -244,7 +251,7 @@ sap.ui.define(
           oModel.read('/BenefitCodeListSet', {
             filters: [
               new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0002'),
-              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
+              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa),
               new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
               new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, sSelectKey),
               new sap.ui.model.Filter('Upcod2', sap.ui.model.FilterOperator.EQ, 'E'),
@@ -273,7 +280,7 @@ sap.ui.define(
               resolve();
             },
             error: (oError) => {
-              AppUtils.handleError(oError);
+              AppUtils.handleError(new ODataReadError(oError));
             },
           });
         }).then(() => {
@@ -288,7 +295,7 @@ sap.ui.define(
         const oFormData = oDetailModel.getProperty('/FormData');
         const sSelectKey = oEvent.getSource().getSelectedKey();
         const sSelectText = oEvent.getSource().getSelectedItem().getText();
-        const sWerks = this.getSessionProperty('Werks');
+        const oAppointeeData = this.getViewModel('appointeeModel').getData();
 
         oDetailModel.setProperty('/FormData/Conretx', sSelectText);
 
@@ -297,7 +304,7 @@ sap.ui.define(
         oModel.read('/BenefitCodeListSet', {
           filters: [
             new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0003'),
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
+            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa),
             new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
             new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, oFormData.Concode),
             new sap.ui.model.Filter('Upcod2', sap.ui.model.FilterOperator.EQ, sSelectKey),
@@ -331,7 +338,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            AppUtils.handleError(oError);
+            AppUtils.handleError(new ODataReadError(oError));
           },
         });
       },
@@ -373,13 +380,13 @@ sap.ui.define(
         const vConcode = oDetailModel.getProperty('/FormData/Concode');
         const vConresn = oDetailModel.getProperty('/FormData/Conresn');
         const vConddate = oDetailModel.getProperty('/FormData/Conddate');
-        const sWerks = this.getSessionProperty('Werks');
+        const oAppointeeData = this.getViewModel('appointeeModel').getData();
 
         if (!vConcode || !vConresn || !vConddate) return;
 
         oModel.read('/ConExpenseCheckListSet', {
           filters: [
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
+            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa),
             new sap.ui.model.Filter('Concode', sap.ui.model.FilterOperator.EQ, vConcode),
             new sap.ui.model.Filter('Conresn', sap.ui.model.FilterOperator.EQ, vConresn),
             new sap.ui.model.Filter('Conddate', sap.ui.model.FilterOperator.EQ, vConddate),
@@ -399,7 +406,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            AppUtils.handleError(oError);
+            AppUtils.handleError(new ODataReadError(oError));
           },
         });
       },
@@ -450,15 +457,16 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
         const oFormData = oDetailModel.getProperty('/FormData');
-        const sWerks = this.getSessionProperty('Werks');
+        const oAppointeeData = this.getViewModel('appointeeModel').getData();
 
         return new Promise((resolve) => {
           oModel.read('/ConExpenseSupportListSet', {
             filters: [
-              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
+              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa),
               new sap.ui.model.Filter('Concode', sap.ui.model.FilterOperator.EQ, oFormData.Concode),
               new sap.ui.model.Filter('Conresn', sap.ui.model.FilterOperator.EQ, oFormData.Conresn),
               new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
+              new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, oAppointeeData.Pernr),
             ],
             success: (oData) => {
               if (oData) {
@@ -484,7 +492,7 @@ sap.ui.define(
               resolve();
             },
             error: (oError) => {
-              AppUtils.handleError(oError);
+              AppUtils.handleError(new ODataReadError(oError));
             },
           });
         });
@@ -601,7 +609,7 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      reject(new ODataCreateError({ type: 'T', oError }));
+                      reject(new ODataCreateError({ oError }));
                     },
                   });
                 });
@@ -703,7 +711,7 @@ sap.ui.define(
                 },
                 error: (oError) => {
                   AppUtils.setAppBusy(false, this);
-                  AppUtils.handleError(oError);
+                  AppUtils.handleError(new ODataCreateError({ oError }));
                 },
               });
             }
@@ -736,7 +744,7 @@ sap.ui.define(
                 },
                 error: (oError) => {
                   AppUtils.setAppBusy(false, this);
-                  AppUtils.handleError(oError);
+                  AppUtils.handleError(new ODataDeleteError(oError));
                 },
               });
             }

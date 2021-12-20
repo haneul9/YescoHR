@@ -24,26 +24,27 @@ sap.ui.define([
         *  검색조건 Code
         */
        async setEmpConditionCode(oController) {
-        const oEmpModel = oController.getOwnerComponent().getModel('employeeModel');
+        const oEmpModel = oController.getViewModel();
+        // const oEmpModel = oController.getOwnerComponent().getModel('employeeModel');
 
-        oEmpModel.setProperty('/busy', true);
+        oEmpModel.setProperty('/employeeModel/busy', true);
         try {
           const aAreaList = await this.setPersAreaCode(oController);
           
-          oEmpModel.setProperty('/PersArea', aAreaList);
+          oEmpModel.setProperty('/employeeModel/PersArea', aAreaList);
   
           const aWorkList = await this.setWorkCode(oController);
           
-          oEmpModel.setProperty('/WorkType', aWorkList);
+          oEmpModel.setProperty('/employeeModel/WorkType', aWorkList);
   
           const aEmpList = await this.setEmpCode(oController);
           
-          oEmpModel.setProperty('/EmpGroup', aEmpList);  
-          oEmpModel.setProperty('/SubEmpGroup', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext'}));
-          oEmpModel.setProperty('/Search', {
+          oEmpModel.setProperty('/employeeModel/EmpGroup', aEmpList);  
+          oEmpModel.setProperty('/employeeModel/SubEmpGroup', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext'}));
+          oEmpModel.setProperty('/employeeModel/Search', {
             Persa: 'ALL',
             Ename: '',
-            orgeh: '',
+            Orgeh: '',
             Stat2: 'ALL',
             Persg: 'ALL',
             Persk: 'ALL',
@@ -51,7 +52,7 @@ sap.ui.define([
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
-          oEmpModel.setProperty('/busy', false);
+          oEmpModel.setProperty('/employeeModel/busy', false);
         }
        },
 
@@ -145,11 +146,14 @@ sap.ui.define([
         */
        onSubEmpCode(oEvent) {
         const oModel = this.getModel(ServiceNames.COMMON);
-        const oEmpModel = this.getOwnerComponent().getModel('employeeModel');
+        const oEmpModel = this.getViewModel();
         const sKey = oEvent.getSource().getSelectedKey();
         const sUrl = '/EmpCodeListSet';
 
-        oEmpModel.setProperty('/Search/Persk', 'ALL');
+        oEmpModel.setProperty('/employeeModel/Search/Persk', 'ALL');
+
+        if (!sKey || sKey === 'ALL') return;
+
         // 사원하위
         oModel.read(sUrl, {
           filters: [
@@ -161,7 +165,7 @@ sap.ui.define([
               const aList = oData.results;
 
               this.debug(`${sUrl} success.`, oData);
-              oEmpModel.setProperty('/SubEmpGroup', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
+              oEmpModel.setProperty('/employeeModel/SubEmpGroup', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
             }
           },
           error: (oError) => {
@@ -171,17 +175,59 @@ sap.ui.define([
         });
        },
 
+        /*
+        *  조직검색
+        */
+        onOrgList() {
+          const oModel = this.getModel(ServiceNames.COMMON);
+          const oEmpModel = this.getViewModel();
+          const mSearchData = oEmpModel.getProperty('/employeeModel/org');
+          const sUrl = '/OrgListSet';
+          const vDate = !mSearchData.Date ? '' : new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, mSearchData.Date);
+          const vStext = !mSearchData.Stext ? '' : new sap.ui.model.Filter('Stext', sap.ui.model.FilterOperator.EQ, mSearchData.Stext);
+          const oOrgTable = AppUtils.getAppComponent().byId(`${this.getView().getId()}GroupDetail--orgTable`);
+          const aFilters = [];
+        
+          oOrgTable.clearSelection();
+          oEmpModel.setProperty('/employeeModel/org/busy', true);
+
+          if (!!vDate) {aFilters.push(vDate);}
+          if (!!vStext) {aFilters.push(vStext);}
+  
+          // 사원그룹
+          oModel.read(sUrl, {
+            filters: aFilters,
+            success: (oData) => {
+              if (oData) {
+                const aList = oData.results;
+                const iLength = aList.length;
+  
+                this.debug(`${sUrl} success.`, oData);
+                oEmpModel.setProperty('/employeeModel/org/orgList', aList);
+                oEmpModel.setProperty('/employeeModel/org/orgList/length', iLength > 10 ? 10 : iLength);
+              }
+              oEmpModel.setProperty('/employeeModel/org/busy', false);
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, oError);
+
+              oEmpModel.setProperty('/employeeModel/org/busy', false);
+              AppUtils.handleError(new ODataReadError(oError));
+            },
+          });
+        },
+
        /*
         *  검색버튼
         */
       onEmpSearch() {
         const oModel = this.getModel(ServiceNames.COMMON);
-        const oEmpModel = this.getOwnerComponent().getModel('employeeModel');
+        const oEmpModel = this.getViewModel();
         const sMenid = this.getCurrentMenuId();
         const sUrl = '/EmpSearchResultSet';
-        const mSearchData = oEmpModel.getProperty('/Search');
+        const mSearchData = oEmpModel.getProperty('/employeeModel/Search');
         const vEname = !mSearchData.Ename ? '' : new sap.ui.model.Filter('Ename', sap.ui.model.FilterOperator.EQ, mSearchData.Ename);
-        const vOrgeh = !mSearchData.orgeh ? '' : new sap.ui.model.Filter('Orgeh', sap.ui.model.FilterOperator.EQ, mSearchData.orgeh);
+        const vOrgeh = !mSearchData.Orgeh ? '' : new sap.ui.model.Filter('Orgeh', sap.ui.model.FilterOperator.EQ, mSearchData.Orgeh);
         const vPersa = mSearchData.Persa === 'ALL' || !mSearchData.Persa ? '' : new sap.ui.model.Filter('Persa', sap.ui.model.FilterOperator.EQ, mSearchData.Persa);
         const vStat2 = mSearchData.Stat2 === 'ALL' || !mSearchData.Stat2 ? '' : new sap.ui.model.Filter('Stat2', sap.ui.model.FilterOperator.EQ, mSearchData.Stat2);
         const vPersg = mSearchData.Persg === 'ALL' || !mSearchData.Persg ? '' : new sap.ui.model.Filter('Persg', sap.ui.model.FilterOperator.EQ, mSearchData.Persg);
@@ -195,9 +241,9 @@ sap.ui.define([
         if (!!vPersg) {aFilters.push(vPersg);}
         if (!!vPersk) {aFilters.push(vPersk);}
 
-        oEmpModel.setProperty('/empList', []);
-        oEmpModel.setProperty('/empList/length', 1);
-        oEmpModel.setProperty('/busy', true);
+        oEmpModel.setProperty('/employeeModel/empList', []);
+        oEmpModel.setProperty('/employeeModel/empList/length', 1);
+        oEmpModel.setProperty('/employeeModel/busy', true);
 
         // 사원검색
         oModel.read(sUrl, {
@@ -208,15 +254,15 @@ sap.ui.define([
               const iLength = aList.length;
 
               this.debug(`${sUrl} success.`, oData);
-              oEmpModel.setProperty('/empList', aList);
-              oEmpModel.setProperty('/empList/length', iLength > 13 ? 13 : iLength);
+              oEmpModel.setProperty('/employeeModel/empList', aList);
+              oEmpModel.setProperty('/employeeModel/empList/length', iLength > 13 ? 13 : iLength);
             }
-            oEmpModel.setProperty('/busy', false);
+            oEmpModel.setProperty('/employeeModel/busy', false);
           },
           error: (oError) => {
             this.debug(`${sUrl} error.`, oError);
             AppUtils.handleError(new ODataReadError(oError));
-            oEmpModel.setProperty('/busy', false);
+            oEmpModel.setProperty('/employeeModel/busy', false);
           },
         });
       },
@@ -226,9 +272,9 @@ sap.ui.define([
        */
       onSelectClick(oEvent) {
         const oAppModel = this.getViewModel('appointeeModel');
-        const oEmpModel = this.getOwnerComponent().getModel('employeeModel');
+        const oEmpModel = this.getViewModel();
         
-        oAppModel.setProperty('/appointeeModel', oEmpModel.getProperty('/SelectedEmp/0'));
+        oAppModel.setProperty('/', oEmpModel.getProperty('/employeeModel/SelectedEmp/0'));
         oEvent.getSource().getParent().close();
       },
 
@@ -245,7 +291,7 @@ sap.ui.define([
       onRowSelection(oEvent) {
         const oEventSource = oEvent.getSource();
         const aSelected = oEventSource.getSelectedIndices();
-        const oEmpModel = this.getOwnerComponent().getModel('employeeModel');
+        const oEmpModel = this.getViewModel();
 
         if (!aSelected) return;
 
@@ -254,15 +300,52 @@ sap.ui.define([
           return MessageBox.alert(this.getBundleText('MSG_00029'));
         }
         
-        const aDeleteDatas = [];
+        const aSelectionDatas = [];
         
-        oEmpModel.setProperty('/SelectedEmp', []);
+        oEmpModel.setProperty('/employeeModel/SelectedEmp', []);
 
         aSelected.forEach((e) => {
-          aDeleteDatas.push(oEmpModel.getProperty(`/empList/${e}`));
+          aSelectionDatas.push(oEmpModel.getProperty(`/employeeModel/empList/${e}`));
         });
 
-        oEmpModel.setProperty('/SelectedEmp', aDeleteDatas);
+        oEmpModel.setProperty('/employeeModel/SelectedEmp', aSelectionDatas);
+      },
+      
+      /*
+       *  조직검색 Table checkBox선택
+       */
+      onOrgListRowSelection(oEvent) {
+        const oEventSource = oEvent.getSource();
+        const aSelected = oEventSource.getSelectedIndices();
+        const oEmpModel = this.getViewModel();
+
+        if (!aSelected) return;
+
+        if (aSelected.length > 1) {
+          oEventSource.clearSelection();
+          return MessageBox.alert(this.getBundleText('MSG_00029'));
+        }
+        
+        const aSelectionDatas = [];
+        
+        oEmpModel.setProperty('/employeeModel/org/SelectedOrg', []);
+
+        aSelected.forEach((e) => {
+          aSelectionDatas.push(oEmpModel.getProperty(`/employeeModel/org/orgList/${e}`));
+        });
+
+        oEmpModel.setProperty('/employeeModel/org/SelectedOrg', aSelectionDatas);
+      },
+
+      /*
+       *  조직선택버튼
+       */
+      onOrgClick(oEvent) {
+        const oEmpModel = this.getViewModel();
+        
+        oEmpModel.setProperty('/employeeModel/Search/Pbtxt', oEmpModel.getProperty('/employeeModel/org/SelectedOrg/0/Stext'));
+        oEmpModel.setProperty('/employeeModel/Search/Orgeh', oEmpModel.getProperty('/employeeModel/org/SelectedOrg/0/Orgeh'));
+        oEvent.getSource().getParent().close();
       },
 
        /*
@@ -271,7 +354,16 @@ sap.ui.define([
       async onSearchDialog() {
         const oView = this.getView();
         
-        this.getOwnerComponent().setModel(new JSONModel({
+        // this.getOwnerComponent().setModel(new JSONModel({
+        //   Search: {},
+        //   SelectedEmp: [],
+        //   empList: [],
+        //   PersArea: [],
+        //   WorkType: [],
+        //   EmpGroup: [],
+        //   SubEmpGroup: [],
+        // }), 'employeeModel');
+        this.getViewModel().setProperty('/employeeModel', {
           Search: {},
           SelectedEmp: [],
           empList: [],
@@ -279,46 +371,55 @@ sap.ui.define([
           WorkType: [],
           EmpGroup: [],
           SubEmpGroup: [],
-        }), 'employeeModel');
-           
+        });
+        
         if (!this.dSearchDialog) {
-            this.dSearchDialog = Fragment.load({
-              id: oView.getId(),
-              name: 'sap.ui.yesco.fragment.EmployeeSearch',
-              controller: this,
-            }).then(function (oDialog) {
-              oView.addDependent(oDialog);
+          this.dSearchDialog = Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.fragment.EmployeeSearch',
+            controller: this,
+          }).then(function (oDialog) {
+            oView.addDependent(oDialog);
               return oDialog;
             });
           }
-
           
         this.dSearchDialog.then(function (oDialog) {
           oDialog.open();
         });
+
+        this.byId('empTable').clearSelection();
         this.EmployeeSearch.setEmpConditionCode(this);
       },
-
-       /*
-        *  조직검색 Dialog호출
-        */
+      
+      /*
+      *  조직검색 Dialog호출
+      */
       onGroupDetail() {
-           const oView = this.getView();
+        const oView = this.getView();
+           
+        this.getViewModel().setProperty('/employeeModel/org', {
+          Date: '',
+          Word: '',
+          orgList: [],
+          SelectedOrg: [],
+          busy: false,
+        });
 
         if (!this.dGroupDialog) {
-            this.dGroupDialog = Fragment.load({
-              id: `${oView.getId()}GroupDetail`,
-              name: 'sap.ui.yesco.fragment.GroupDetail',
-              controller: this,
-            }).then(function (oDialog) {
-              oView.addDependent(oDialog);
-              return oDialog;
-            });
-          }
-
-          this.dGroupDialog.then(function (oDialog) {
-            oDialog.open();
+          this.dGroupDialog = Fragment.load({
+            id: `${oView.getId()}GroupDetail`,
+            name: 'sap.ui.yesco.fragment.GroupDetail',
+            controller: this,
+          }).then(function (oDialog) {
+            oView.addDependent(oDialog);
+            return oDialog;
           });
+        }
+
+        this.dGroupDialog.then(function (oDialog) {
+          oDialog.open();
+        });        
       },
 	};
 });

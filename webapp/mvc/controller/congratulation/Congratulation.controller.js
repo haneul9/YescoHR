@@ -82,8 +82,16 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oTotalModel = this.getViewModel();
         const sUrl = '/ConExpenseMyconSet';
+        const aFilters = [];
+
+        if (this.isHass()) {
+          const sPernr = this.getViewModel('appointeeModel').getProperty('/Pernr');
+          
+          aFilters.push(new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, sPernr));
+        }
 
         oModel.read(sUrl, {
+          filters: aFilters,
           success: (oData) => {
             if (oData) {
               this.debug(`${sUrl} success.`, oData);
@@ -93,7 +101,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            AppUtils.handleError(oError);
+            AppUtils.handleError(new ODataReadError(oError));
           },
         });
       },
@@ -106,16 +114,24 @@ sap.ui.define(
         const dDate = moment(oSearchDate.secondDate).hours(9).toDate();
         const dDate2 = moment(oSearchDate.date).hours(9).toDate();
         const sMenid = this.getCurrentMenuId();
+        const aFilters = [
+          new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'),
+          new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid),
+          new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate),
+          new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2),
+        ];
 
         oListModel.setProperty('/busy', true);
 
+        if (this.isHass()) {
+          const sPernr = this.getViewModel('appointeeModel').getProperty('/Pernr');
+
+          aFilters.push(new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, sPernr));
+          this.getTotalPay();
+        }
+
         oModel.read('/ConExpenseApplSet', {
-          filters: [
-            new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'),
-            new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid),
-            new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate),
-            new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2),
-          ],
+          filters: aFilters,
           success: (oData) => {
             if (oData) {
               const oList = oData.results;
@@ -126,7 +142,7 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            AppUtils.handleError(oError);
+            AppUtils.handleError(new ODataReadError(oError));
 
             oListModel.setProperty('/busy', false);
           },
