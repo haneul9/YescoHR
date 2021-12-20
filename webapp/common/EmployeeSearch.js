@@ -1,6 +1,5 @@
 sap.ui.define([
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/core/Fragment',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
@@ -9,7 +8,6 @@ sap.ui.define([
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
 ], function(
-	JSONModel,
 	Fragment,
 	AppUtils,
 	ComboEntry,
@@ -244,6 +242,7 @@ sap.ui.define([
         oEmpModel.setProperty('/employeeModel/empList', []);
         oEmpModel.setProperty('/employeeModel/empList/length', 1);
         oEmpModel.setProperty('/employeeModel/busy', true);
+        this.byId('empTable').clearSelection();
 
         // 사원검색
         oModel.read(sUrl, {
@@ -273,8 +272,13 @@ sap.ui.define([
       onSelectClick(oEvent) {
         const oAppModel = this.getViewModel('appointeeModel');
         const oEmpModel = this.getViewModel();
+        const aSelectedEmp = oEmpModel.getProperty('/employeeModel/SelectedEmp');
+
+        if (!aSelectedEmp.length) {
+          return MessageBox.alert(this.getBundleText('MSG_00050'));
+        }
         
-        oAppModel.setProperty('/', oEmpModel.getProperty('/employeeModel/SelectedEmp/0'));
+        oAppModel.setProperty('/', aSelectedEmp[0]);
         oEvent.getSource().getParent().close();
       },
 

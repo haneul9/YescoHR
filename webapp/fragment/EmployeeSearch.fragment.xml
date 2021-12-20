@@ -54,7 +54,7 @@
                         </VBox>
                     </grid:CSSGrid>
                 </VBox>
-                <table:Table id="empTable" rows="{/employeeModel/empList}" rowSelectionChange=".EmployeeSearch.onRowSelection" visibleRowCount="{/employeeModel/empList/length}" rowHeight="44" columnHeaderHeight="45" columnHeaderVisible="false">
+                <table:Table id="empTable" rows="{/employeeModel/empList}" rowSelectionChange=".EmployeeSearch.onRowSelection" visibleRowCount="{/employeeModel/empList/length}" rowHeight="44" columnHeaderHeight="45">
                     <table:extension>
                         <OverflowToolbar>
                             <core:Icon src="sap-icon://table-chart" />

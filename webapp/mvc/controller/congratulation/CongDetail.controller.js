@@ -159,7 +159,7 @@ sap.ui.define(
           oModel.read('/BenefitCodeListSet', {
             filters: [
               new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0001'),
-              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa),
+              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa || oAppointeeData.Werks),
               new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
             ],
             success: (oData) => {
@@ -182,7 +182,7 @@ sap.ui.define(
         oModel.read('/BenefitCodeListSet', {
           filters: [
             new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0002'),
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa),
+            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa || oAppointeeData.Werks),
             new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
             new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, oFormData.Concode),
             new sap.ui.model.Filter('Upcod2', sap.ui.model.FilterOperator.EQ, 'E'),
@@ -202,7 +202,7 @@ sap.ui.define(
         oModel.read('/BenefitCodeListSet', {
           filters: [
             new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0003'),
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa),
+            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa || oAppointeeData.Werks),
             new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
             new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, oFormData.Concode),
             new sap.ui.model.Filter('Upcod2', sap.ui.model.FilterOperator.EQ, oFormData.Conresn),
@@ -251,7 +251,7 @@ sap.ui.define(
           oModel.read('/BenefitCodeListSet', {
             filters: [
               new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0002'),
-              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa),
+              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa || oAppointeeData.Werks),
               new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
               new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, sSelectKey),
               new sap.ui.model.Filter('Upcod2', sap.ui.model.FilterOperator.EQ, 'E'),
@@ -304,7 +304,7 @@ sap.ui.define(
         oModel.read('/BenefitCodeListSet', {
           filters: [
             new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0003'),
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa),
+            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa || oAppointeeData.Werks),
             new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
             new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, oFormData.Concode),
             new sap.ui.model.Filter('Upcod2', sap.ui.model.FilterOperator.EQ, sSelectKey),
@@ -386,7 +386,7 @@ sap.ui.define(
 
         oModel.read('/ConExpenseCheckListSet', {
           filters: [
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa),
+            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa || oAppointeeData.Werks),
             new sap.ui.model.Filter('Concode', sap.ui.model.FilterOperator.EQ, vConcode),
             new sap.ui.model.Filter('Conresn', sap.ui.model.FilterOperator.EQ, vConresn),
             new sap.ui.model.Filter('Conddate', sap.ui.model.FilterOperator.EQ, vConddate),
@@ -462,7 +462,7 @@ sap.ui.define(
         return new Promise((resolve) => {
           oModel.read('/ConExpenseSupportListSet', {
             filters: [
-              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa),
+              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa || oAppointeeData.Werks),
               new sap.ui.model.Filter('Concode', sap.ui.model.FilterOperator.EQ, oFormData.Concode),
               new sap.ui.model.Filter('Conresn', sap.ui.model.FilterOperator.EQ, oFormData.Conresn),
               new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
@@ -582,28 +582,28 @@ sap.ui.define(
           actions: [this.getBundleText('LABEL_00103'), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00103')) {
-              try {
-                AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true, this);
 
-                if (!vStatus || vStatus === '45') {
-                  const vAppno = await Appno.get.call(this);
+              if (!vStatus || vStatus === '45') {
+                const vAppno = await Appno.get.call(this);
 
-                  oDetailModel.setProperty('/FormData/Appno', vAppno);
-                  oDetailModel.setProperty('/FormData/ZappStatAl', '10');
-                  oDetailModel.setProperty('/FormData/Appdt', new Date());
-                }
+                oDetailModel.setProperty('/FormData/Appno', vAppno);
+                oDetailModel.setProperty('/FormData/ZappStatAl', '10');
+                oDetailModel.setProperty('/FormData/Appdt', new Date());
+              }
 
-                let oSendObject = {};
+              let oSendObject = {};
 
-                oSendObject = oFormData;
-                oSendObject.Prcty = 'T';
-                oSendObject.Menid = oDetailModel.getProperty('/menuId');
-                oSendObject.Waers = 'KRW';
+              oSendObject = oFormData;
+              oSendObject.Prcty = 'T';
+              oSendObject.Menid = oDetailModel.getProperty('/menuId');
+              oSendObject.Waers = 'KRW';
 
+              Promise.all([
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
+                AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE),
 
-                await new Promise((resolve, reject) => {
+                new Promise((resolve, reject) => {
                   oModel.create('/ConExpenseApplSet', oSendObject, {
                     success: () => {
                       resolve();
@@ -612,14 +612,14 @@ sap.ui.define(
                       reject(new ODataCreateError({ oError }));
                     },
                   });
-                });
-
-                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
-              } catch (oError) {
+                })
+              ]).catch((oError) => {
                 AppUtils.handleError(oError);
-              } finally {
+              }).then(() => {
+                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
+              }).finally(() => {
                 AppUtils.setAppBusy(false, this);
-              }
+              });
             }
           },
         });
@@ -638,25 +638,25 @@ sap.ui.define(
           actions: [this.getBundleText('LABEL_00121'), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00121')) {
-              try {
-                AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true, this);
 
-                if (!vStatus || vStatus === '45') {
-                  const vAppno = await Appno.get.call(this);
+              if (!vStatus || vStatus === '45') {
+                const vAppno = await Appno.get.call(this);
 
-                  oDetailModel.setProperty('/FormData/Appno', vAppno);
-                  oDetailModel.setProperty('/FormData/Appdt', new Date());
-                }
+                oDetailModel.setProperty('/FormData/Appno', vAppno);
+                oDetailModel.setProperty('/FormData/Appdt', new Date());
+              }
 
-                let oSendObject = {};
+              let oSendObject = {};
 
-                oSendObject = oFormData;
-                oSendObject.Prcty = 'C';
-                oSendObject.Menid = oDetailModel.getProperty('/menuId');
-                oSendObject.Waers = 'KRW';
+              oSendObject = oFormData;
+              oSendObject.Prcty = 'C';
+              oSendObject.Menid = oDetailModel.getProperty('/menuId');
+              oSendObject.Waers = 'KRW';
 
+              Promise.all([
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE),
                 await new Promise((resolve, reject) => {
                   oModel.create('/ConExpenseApplSet', oSendObject, {
                     success: () => {
@@ -666,18 +666,26 @@ sap.ui.define(
                       reject(new ODataCreateError({ oError }));
                     },
                   });
-                });
-
+                })
+              ]).catch((oError) => {
+                AppUtils.handleError(oError);
+              }).then(() => {
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
                   onClose: () => {
-                    this.getRouter().navTo('congratulation');
+                    let sRoute = '';
+
+                    if (this.isHass()) {
+                      sRoute = 'h/congratulation';
+                    } else {
+                      sRoute = 'congratulation';
+                    }
+
+                    this.getRouter().navTo(sRoute);
                   },
                 });
-              } catch (oError) {
-                AppUtils.handleError(oError);
-              } finally {
+              }).finally(() => {
                 AppUtils.setAppBusy(false, this);
-              }
+              });
             }
           },
         });
@@ -705,7 +713,15 @@ sap.ui.define(
                   AppUtils.setAppBusy(false, this);
                   MessageBox.alert(this.getBundleText('MSG_00039', 'LABEL_00121'), {
                     onClose: () => {
-                      this.getRouter().navTo('congratulation');
+                      let sRoute = '';
+
+                      if (this.isHass()) {
+                        sRoute = 'h/congratulation';
+                      } else {
+                        sRoute = 'congratulation';
+                      }
+
+                      this.getRouter().navTo(sRoute);
                     },
                   });
                 },
@@ -738,7 +754,15 @@ sap.ui.define(
                 success: () => {
                   MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
                     onClose: () => {
-                      this.getRouter().navTo('congratulation');
+                      let sRoute = '';
+
+                      if (this.isHass()) {
+                        sRoute = 'h/congratulation';
+                      } else {
+                        sRoute = 'congratulation';
+                      }
+
+                      this.getRouter().navTo(sRoute);
                     },
                   });
                 },
