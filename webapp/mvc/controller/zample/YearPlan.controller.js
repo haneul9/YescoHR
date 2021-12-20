@@ -81,15 +81,15 @@ sap.ui.define(
       },
 
       onMouseOverDayBox(oDayBox) {
-        console.log(oDayBox.getCustomData()[0].getValue());
+        console.log(oDayBox.data('day'));
       },
       onMouseOutDayBox(oDayBox) {
-        console.log(oDayBox.getCustomData()[0].getValue());
+        console.log(oDayBox.data('day'));
       },
 
       makeCalendarControl() {
         const oViewModel = this.getViewModel();
-        const mBody = Array.from(Array(12).keys()).map((d, i) => this.getWeekBody(i));
+        const mBody = _.times(12, this.getWeekBody.bind(this));
 
         oViewModel.setProperty('/plans', [...this.getWeekHeader(), ...mBody.reduce((a, b) => [...a, ...b], [])]);
       },
@@ -122,13 +122,13 @@ sap.ui.define(
         const iFirstDay = dFirstDayOfYear.day();
         const iLeadingNoneCount = iFirstDay === 0 ? 6 : iFirstDay - 1;
         const iTrailingNoneCount = 37 - iLeadingNoneCount - iDaysInMonth;
-        const aLeadingNoneBox = Array.from(Array(iLeadingNoneCount).keys()).map(() => this.getBoxObject({ classNames: 'None' })) ?? [];
-        const aTrailingNoneBox = Array.from(Array(iTrailingNoneCount).keys()).map(() => this.getBoxObject({ classNames: 'None' })) ?? [];
+        const aLeadingNoneBox = _.times(iLeadingNoneCount).map(() => this.getBoxObject({ classNames: 'None' })) ?? [];
+        const aTrailingNoneBox = _.times(iTrailingNoneCount).map(() => this.getBoxObject({ classNames: 'None' })) ?? [];
 
         return [
-          this.getBoxObject({ label: _.toUpper(dFirstDayOfYear.format('MMM')), classNames: 'Header' }),
+          this.getBoxObject({ label: _.toUpper(dFirstDayOfYear.format('MMM')), classNames: 'Header' }), //
           ...aLeadingNoneBox,
-          ...Array.from(Array(iDaysInMonth).keys()).map((d, i) => this.getActivationDayBody(month, i + 1)),
+          ..._.times(iDaysInMonth).map((d, i) => this.getActivationDayBody(month, i + 1)),
           ...aTrailingNoneBox,
         ];
       },

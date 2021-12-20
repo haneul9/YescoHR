@@ -3,8 +3,8 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/model/json/JSONModel',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -14,8 +14,8 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-    ODataReadError,
     AppUtils,
+    Client,
     ServiceNames,
     TableUtils,
     BaseController
@@ -27,30 +27,12 @@ sap.ui.define(
         const oViewModel = new JSONModel({
           busy: false,
           Seqnr: null,
-          summary: {
-            rowCount: 1,
-            list: [],
-          },
-          pay: {
-            rowCount: 2,
-            list: [],
-          },
-          deduction: {
-            rowCount: 2,
-            list: [],
-          },
-          tax: {
-            rowCount: 2,
-            list: [],
-          },
-          work: {
-            rowCount: 1,
-            list: [],
-          },
-          base: {
-            rowCount: 1,
-            list: [],
-          },
+          summary: { rowCount: 1, list: [] },
+          pay: { rowCount: 2, list: [] },
+          deduction: { rowCount: 2, list: [] },
+          tax: { rowCount: 2, list: [] },
+          work: { rowCount: 1, list: [] },
+          base: { rowCount: 1, list: [] },
         });
         this.setViewModel(oViewModel);
 
@@ -79,7 +61,7 @@ sap.ui.define(
         oViewModel.setProperty('/busy', true);
 
         try {
-          const mDetail = await this.readDeepPayslipList({ oModel, sSeqnr });
+          const mDetail = await Client.deep(oModel, 'PayslipList', { Menid: this.getCurrentMenuId(), Seqnr: sSeqnr, Payslip1Nav: [], Payslip2Nav: [], Payslip3Nav: [], Payslip4Nav: [] });
 
           // Paylist
           const aPayList = this.transformTreeData({ aTreeData: mDetail.Payslip1Nav.results });
@@ -142,7 +124,11 @@ sap.ui.define(
         const sSeqnr = oViewModel.getProperty('/Seqnr');
 
         try {
-          const mResult = await this.readOnePayslipList({ oModel, sSeqnr });
+          const mResult = await Client.get(oModel, 'PayslipList', {
+            Menid: this.getCurrentMenuId(),
+            Pernr: this.getAppointeeProperty('Pernr'),
+            Seqnr: sSeqnr,
+          });
 
           if (mResult.Url) window.open(mResult.Url);
         } catch (oError) {
@@ -167,64 +153,6 @@ sap.ui.define(
       /*****************************************************************
        * ! Call OData
        *****************************************************************/
-      /**
-       * @param  {object} oModel
-       * @param  {string} sSeqnr
-       */
-      readDeepPayslipList({ oModel, sSeqnr }) {
-        return new Promise((resolve, reject) => {
-          const sMenid = this.getCurrentMenuId();
-          const sUrl = '/PayslipListSet';
-
-          oModel.create(
-            sUrl,
-            {
-              Menid: sMenid,
-              Seqnr: sSeqnr,
-              Payslip1Nav: [],
-              Payslip2Nav: [],
-              Payslip3Nav: [],
-              Payslip4Nav: [],
-            },
-            {
-              success: (oData) => {
-                this.debug(`${sUrl} success.`, oData);
-
-                resolve(oData ?? {});
-              },
-              error: (oError) => {
-                this.debug(`${sUrl} error.`, oError);
-
-                reject(new ODataReadError(oError));
-              },
-            }
-          );
-        });
-      },
-
-      readOnePayslipList({ oModel, sSeqnr }) {
-        const sUrl = '/PayslipListSet';
-        const sUrlByKey = oModel.createKey(sUrl, {
-          Menid: this.getCurrentMenuId(),
-          Pernr: this.getAppointeeProperty('Pernr'),
-          Seqnr: sSeqnr,
-        });
-
-        return new Promise((resolve, reject) => {
-          oModel.read(sUrlByKey, {
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData ?? {});
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
     });
   }
 );

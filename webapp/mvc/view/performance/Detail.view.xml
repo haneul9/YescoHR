@@ -9,9 +9,15 @@
 			<HBox justifyContent="SpaceBetween" class="breadcrumbs">
 				<custom:Breadcrumbs />
 				<HBox>
+					<Button text="{i18n>LABEL_00142}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" />
+					<Button text="{i18n>LABEL_10032}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" />
+					<Button text="{i18n>LABEL_00175}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" />
+					<Button text="{i18n>LABEL_00123}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" />
+					<Button text="{i18n>LABEL_00124}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" />
+					<Button text="{i18n>LABEL_00118}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" />
+					<Button text="{i18n>LABEL_00103}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" />
 					<Button text="{i18n>LABEL_00146}" class="sapUiTinyMarginEnd" press=".onNavBack" />
 					<Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" />
-					<Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" />
 				</HBox>
 			</HBox>
 		</VBox>
@@ -38,7 +44,7 @@
 								<HBox>
 									<HBox alignItems="Center" class="title">
 										<Title level="H2" text="{i18n>LABEL_10007}" class="sapUiMediumMarginEnd"/>
-										<Button icon="sap-icon://sys-add" text="{i18n>LABEL_10011}" press=".onPressAddStrategy" />
+										<Button icon="sap-icon://sys-add" text="{i18n>LABEL_10011}" enabled="{= ${/currentItemsLength} &lt; 7 }" press=".onPressAddStrategy" />
 									</HBox>
 								</HBox>
 								<VBox items="{/goals/strategy}">
@@ -47,9 +53,9 @@
 							</VBox>
 							<VBox class="vCardBox sapUiSmallMarginTop">
 								<HBox>
-									<HBox alignItems="Center" class="title">
-										<Title level="H3" text="{i18n>LABEL_10008}" />
-										<Button icon="sap-icon://sys-add" text="{i18n>LABEL_10011}" press=".onPressAddDuty" />
+									<HBox alignItems="Center" class="header-wrap">
+										<Title level="H3" text="{i18n>LABEL_10008}" class="sapUiMediumMarginEnd" />
+										<Button icon="sap-icon://sys-add" text="{i18n>LABEL_10011}" enabled="{= ${/currentItemsLength} &lt; 7 }" press=".onPressAddDuty" />
 									</HBox>
 								</HBox>
 								<VBox items="{/goals/duty}">
@@ -59,23 +65,23 @@
 							<HBox class="vCardBox sapUiSmallMarginTop">
 								<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr">
 									<VBox>
-										<Label text="{i18n>LABEL_10012}" visible="{= ${/fieldControl/Zmepoint} !== 'H' }"/>
+										<Label text="{i18n>LABEL_10012}" visible="{= ${/fieldControl/display/Zmepoint} !== 'H' }"/>
 									</VBox>
 									<VBox>
-										<Input class="required" value="{ path: '/summary/Zmepoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" editable="{= ${/fieldControl/Zmepoint} === 'X' }" visible="{= ${/fieldControl/Zmepoint} !== 'H' }"/>
+										<Input class="required" type="Number" value="{ path: '/summary/Zmepoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" editable="{= ${/fieldControl/display/Zmepoint} === 'X' }" visible="{= ${/fieldControl/display/Zmepoint} !== 'H' }"/>
 									</VBox>
 									<VBox>
-										<Label text="{i18n>LABEL_10013}" visible="{= ${/fieldControl/Zmapoint} !== 'H' }"/>
+										<Label text="{i18n>LABEL_10013}" visible="{= ${/fieldControl/display/Zmapoint} !== 'H' }"/>
 									</VBox>
 									<VBox>
-										<Input class="required" value="{ path: '/summary/Zmapoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" editable="{= ${/fieldControl/Zmapoint} === 'X' }" visible="{= ${/fieldControl/Zmapoint} !== 'H' }"/>
+										<Input class="required" type="Number" value="{ path: '/summary/Zmapoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" editable="{= ${/fieldControl/display/Zmapoint} === 'X' }" visible="{= ${/fieldControl/display/Zmapoint} !== 'H' }"/>
 									</VBox>
 									<VBox>
-										<Label text="{i18n>LABEL_10014}" visible="{= ${/fieldControl/Zmbgrade} !== 'H' }"/>
+										<Label text="{i18n>LABEL_10014}" visible="{= ${/fieldControl/display/Zmbgrade} !== 'H' }"/>
 									</VBox>
 									<VBox>
-										<ComboBox class="required" selectedKey="{/summary/Zmbgrade}" items="{ path: '/entry/grades', templateShareable: true }" editable="{= ${/fieldControl/Zmbgrade} === 'X' }" visible="{= ${/fieldControl/Zmbgrade} !== 'H' }">
-											<core:Item key="{code}" text="{value}" />
+										<ComboBox class="required" selectedKey="{/summary/Zmbgrade}" items="{ path: '/entry/levels', templateShareable: true }" editable="{= ${/fieldControl/display/Zmbgrade} === 'X' }" visible="{= ${/fieldControl/display/Zmbgrade} !== 'H' }">
+											<core:Item key="{ValueEid}" text="{ValueText}" />
 										</ComboBox>
 									</VBox>
 									<HBox />
@@ -89,37 +95,37 @@
 									<Label text="{i18n>LABEL_00147}" width="100%" textAlign="Center" />
 									<Label text="{i18n>LABEL_10015}" width="100%" textAlign="Center" />
 									<Label text="{i18n>LABEL_10016}" width="100%" textAlign="Center" />
-									<Label text="{i18n>LABEL_10017}" width="100%" textAlign="Center" visible="{= ${/fieldControl/Z131} !== 'H' || ${/fieldControl/Z132} !== 'H' }" />
+									<Label text="{i18n>LABEL_10017}" width="100%" textAlign="Center" visible="{= ${/fieldControl/display/Z131} !== 'H' || ${/fieldControl/display/Z132} !== 'H' }" />
 									<VBox>
-										<TextArea rows="5" growing="true" value="{/manage/Z131}" width="100%" editable="{= ${/fieldControl/Z131} === 'X' }" visible="{= ${/fieldControl/Z131} !== 'H' }" />
+										<TextArea rows="5" value="{/manage/Z131}" width="100%" maxLength="{/fieldControl/limit/Z131}" editable="{= ${/fieldControl/display/Z131} === 'X' }" visible="{= ${/fieldControl/display/Z131} !== 'H' }" />
 									</VBox>
 									<VBox>
-										<TextArea rows="5" growing="true" value="{/manage/Z132}" width="100%" editable="{= ${/fieldControl/Z132} === 'X' }" visible="{= ${/fieldControl/Z132} !== 'H' }" />
+										<TextArea rows="5" value="{/manage/Z132}" width="100%" maxLength="{/fieldControl/limit/Z132}" editable="{= ${/fieldControl/display/Z132} === 'X' }" visible="{= ${/fieldControl/display/Z132} !== 'H' }" />
 									</VBox>
-									<Label text="{i18n>LABEL_10018}" width="100%" textAlign="Center" visible="{= ${/fieldControl/Z136} !== 'H' || ${/fieldControl/Z137} !== 'H' }" />
+									<Label text="{i18n>LABEL_10018}" width="100%" textAlign="Center" visible="{= ${/fieldControl/display/Z136} !== 'H' || ${/fieldControl/display/Z137} !== 'H' }" />
 									<VBox>
-										<TextArea rows="5" growing="true" value="{/manage/Z136}" width="100%" editable="{= ${/fieldControl/Z136} === 'X' }" visible="{= ${/fieldControl/Z136} !== 'H' }" />
-									</VBox>
-									<VBox>
-										<TextArea rows="5" growing="true" value="{/manage/Z137}" width="100%" editable="{= ${/fieldControl/Z137} === 'X' }" visible="{= ${/fieldControl/Z137} !== 'H' }" />
-									</VBox>
-									<Label text="{i18n>LABEL_10019}" width="100%" textAlign="Center" />
-									<VBox>
-										<TextArea rows="5" growing="true" value="{/manage/Todo5}" width="100%" />
+										<TextArea rows="5" value="{/manage/Z136}" width="100%" maxLength="{/fieldControl/limit/Z136}" editable="{= ${/fieldControl/display/Z136} === 'X' }" visible="{= ${/fieldControl/display/Z136} !== 'H' }" />
 									</VBox>
 									<VBox>
-										<TextArea rows="5" growing="true" value="{/manage/Todo6}" width="100%" />
+										<TextArea rows="5" value="{/manage/Z137}" width="100%" maxLength="{/fieldControl/limit/Z137}" editable="{= ${/fieldControl/display/Z137} === 'X' }" visible="{= ${/fieldControl/display/Z137} !== 'H' }" />
+									</VBox>
+									<Label text="{i18n>LABEL_10019}" width="100%" textAlign="Center" visible="{= ${/fieldControl/display/Papp1} !== 'H' || ${/fieldControl/display/Papp2} !== 'H' }" />
+									<VBox>
+										<TextArea rows="5" value="{/manage/Papp1}" width="100%" maxLength="{/fieldControl/limit/Papp1}" editable="{= ${/fieldControl/display/Papp1} === 'X' }" visible="{= ${/fieldControl/display/Papp1} !== 'H' }" />
+									</VBox>
+									<VBox>
+										<TextArea rows="5" value="{/manage/Papp2}" width="100%" maxLength="{/fieldControl/limit/Papp2}" editable="{= ${/fieldControl/display/Papp2} === 'X' }" visible="{= ${/fieldControl/display/Papp2} !== 'H' }" />
 									</VBox>
 								</grid:CSSGrid>
 							</VBox>
-							<VBox class="vCardBox sapUiSmallMarginTop" visible="{= ${/fieldControl/Z140} !== 'H' }">
+							<VBox class="vCardBox sapUiSmallMarginTop" visible="{= ${/fieldControl/display/Z140} !== 'H' }">
 								<HBox alignItems="Center" class="title">
 									<layoutData>
 										<FlexItemData growFactor="1"/>
 									</layoutData>
 									<Title level="H2" text="{i18n>LABEL_10010}" />
 								</HBox>
-								<TextArea width="100%" growing="true" growingMaxLines="10" value="{/manage/Z140}" editable="{= ${/fieldControl/Z140} === 'X' }" />
+								<TextArea width="100%" value="{/manage/Z140}" maxLength="{/fieldControl/limit/Z140}" editable="{= ${/fieldControl/display/Z140} === 'X' }" />
 							</VBox>
 						</IconTabFilter>
 					</items>

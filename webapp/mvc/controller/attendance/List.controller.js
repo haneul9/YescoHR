@@ -1,12 +1,10 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/DateUtils',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -15,12 +13,10 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    Filter,
-    FilterOperator,
     JSONModel,
     AppUtils,
     DateUtils,
-    ODataReadError,
+    Client,
     ServiceNames,
     TableUtils,
     BaseController
@@ -81,9 +77,10 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/busy', true);
 
+          const fCurriedGetEntitySet = Client.getEntitySet(oModel);
           const [aQuotaResultData, aRowData] = await Promise.all([
-            this.readAbsQuotaList({ oModel, sPernr }), //
-            this.readLeaveApplContent({ oModel, oSearchConditions }),
+            fCurriedGetEntitySet('AbsQuotaList', { Pernr: sPernr }), //
+            fCurriedGetEntitySet('LeaveApplContent', { Menid: this.getCurrentMenuId(), Apbeg: DateUtils.parse(oSearchConditions.Apbeg), Apend: DateUtils.parse(oSearchConditions.Apend) }),
           ]);
 
           this.setTableData({ oViewModel, aRowData });
@@ -131,7 +128,7 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/busy', true);
 
-          const aRowData = await this.readLeaveApplContent({ oModel, oSearchConditions });
+          const aRowData = await Client.getEntitySet(oModel, 'LeaveApplContent', { Menid: this.getCurrentMenuId(), Apbeg: DateUtils.parse(oSearchConditions.Apbeg), Apend: DateUtils.parse(oSearchConditions.Apend) });
 
           this.setTableData({ oViewModel, aRowData });
         } catch (oError) {
@@ -210,60 +207,6 @@ sap.ui.define(
       /*****************************************************************
        * ! Call oData
        *****************************************************************/
-      /**
-       * @param  {JSONModel} oModel
-       * @param  {String} sPernr
-       */
-      readAbsQuotaList({ oModel, sPernr }) {
-        return new Promise((resolve, reject) => {
-          const sUrl = '/AbsQuotaListSet';
-
-          oModel.read(sUrl, {
-            filters: [
-              new Filter('Pernr', FilterOperator.EQ, sPernr), //
-            ],
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results ?? []);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
-
-      /**
-       * @param  {JSONModel} oModel
-       * @param  {Object} oSearchConditions
-       */
-      readLeaveApplContent({ oModel, oSearchConditions }) {
-        const sUrl = '/LeaveApplContentSet';
-        const sMenid = this.getCurrentMenuId();
-
-        return new Promise((resolve, reject) => {
-          oModel.read(sUrl, {
-            filters: [
-              new Filter('Menid', FilterOperator.EQ, sMenid), //
-              new Filter('Apbeg', FilterOperator.EQ, DateUtils.parse(oSearchConditions.Apbeg)),
-              new Filter('Apend', FilterOperator.EQ, DateUtils.parse(oSearchConditions.Apend)),
-            ],
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results ?? []);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
     });
   }
 );

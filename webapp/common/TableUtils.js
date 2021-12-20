@@ -180,7 +180,7 @@ sap.ui.define(
         const mSumProps = _.chain(aTableData[0])
           .keys()
           .map((k) => {
-            if ((vCalcProps instanceof RegExp && vCalcProps.test(k)) || (vCalcProps instanceof Array && _.includes(vCalcProps, k))) {
+            if ((_.isRegExp(vCalcProps) && vCalcProps.test(k)) || (_.isArray(vCalcProps) && _.includes(vCalcProps, k))) {
               return { [k]: _.sumBy(aTableData, (o) => Number(o[k])) };
             }
           })

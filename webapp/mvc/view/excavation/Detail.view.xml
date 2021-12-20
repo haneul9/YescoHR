@@ -18,7 +18,7 @@
     <VBox class="contents">
       <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
       <VBox class="vCardBox">
-        <HBox justifyContent="SpaceBetween">
+        <HBox justifyContent="SpaceBetween" class="table-toolbar">
           <HBox alignItems="Center" class="title">
             <Title level="H2" text="{i18n>LABEL_00129}" />
           </HBox>
@@ -32,7 +32,7 @@
         </HBox>
       </VBox>
       <VBox class="vCardBox">
-        <HBox alignItems="Center" class="title">
+        <HBox alignItems="Center" class="table-toolbar">
           <Title text="{i18n>LABEL_04013}" level="H2" />
         </HBox>
         <TextArea width="100%" class="required" value="{/form/Chgrsn}" editable="{= !${/ZappStatAl} }" />

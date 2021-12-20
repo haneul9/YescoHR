@@ -2,7 +2,7 @@
   xmlns:table="sap.ui.table"
   xmlns:core="sap.ui.core">
   <VBox class="vCardBox sapUiMediumMarginBottom" busyIndicatorDelay="0" busy="{/busy}">
-    <HBox justifyContent="SpaceBetween">
+    <HBox justifyContent="SpaceBetween" class="table-toolbar">
       <HBox alignItems="Center" class="title">
         <Title level="H2" text="{i18n>LABEL_00168}" />
       </HBox>
