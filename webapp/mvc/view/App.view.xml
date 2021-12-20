@@ -15,7 +15,7 @@
 		<!-- App Menu Position -->
 
 		<ToolbarSpacer />
-		<HBox alignItems="Center" class="user-info">			
+		<HBox alignItems="Center" class="my-info">			
 			<Text text="유지민" class="name" />
 			<Text text="과장 / 인재개발팀" />
 			<f:Avatar

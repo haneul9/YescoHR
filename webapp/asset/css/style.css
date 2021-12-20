@@ -435,9 +435,9 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt {outline-style:none !important}
 .sapMPopover {color:#222;border-radius:0;box-shadow: 0 3px 5px 0 rgb(0 0 0 / 10%), 0 0 0 1px rgb(0 0 0 / 5%);}
 
 
-.user-info .sapFAvatar {margin-left:10px;margin-right: 6px;}
-.user-info .sapFAvatarXS {height:26px;width:26px;}
-.user-info .name {margin-right:5px;color:#59a7f4;font-weight:700;}
+.my-info .sapFAvatar {margin-left:10px;margin-right: 6px;}
+.my-info .sapFAvatarXS {height:26px;width:26px;}
+.my-info .name {margin-right:5px;color:#59a7f4;font-weight:700;}
 
 /* Icon 변경 */
 .sapUiIconf::before{display:inline-block;width:100%;height:100%;clear:both;vertical-align:top;background-repeat:no-repeat;background-position:center center;}/* 아이콘 공통 before */
@@ -799,11 +799,11 @@ html.sap-desktop .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnSel:hover .sapMSeg
 .breadcrumbs .sapMBtn {margin-right: 5px!important;}
 .breadcrumbs .contents {width:1600px; display:flex; justify-content:space-between}
 
-.member-picture .sapMImg {width:146px; height:146px; border-radius:50%}
-.member-picture + .my-info-detail {margin-left:30px}
-.my-info-detail {align-self:flex-end}
-.my-info .sapMText {margin-top:6px; line-height:14px; font-size:14px; font-weight:700; color:#222;letter-spacing: -0.2px;}
-.my-info .name {line-height:30px; font-size:30px; margin-top:0; margin-bottom:20px; color:#343A40}
+.appointee-picture .sapMImg {width:146px; height:146px; border-radius:50%}
+.appointee-picture + .appointee-detail {margin-left:30px}
+.appointee-detail {align-self:flex-end}
+.appointee-box .sapMText {margin-top:6px; line-height:14px; font-size:14px; font-weight:700; color:#222;letter-spacing: -0.2px;}
+.appointee-box .name {line-height:30px; font-size:30px; margin-top:0; margin-bottom:20px; color:#343A40}
 
 .sapMBreadcrumbs {white-space: nowrap;outline: none; margin: 0;}
 .sapMBreadcrumbs .sapMLnk {color: #555555 !important;font-size: 14px;font-weight:500;}
@@ -828,13 +828,13 @@ html.sap-desktop .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnSel:hover .sapMSeg
 .status-wrap .sapMFlexItem { justify-content: flex-start; display: flex; align-items: center; font-weight: 500;}
 .status-wrap .sapMFlexItemAlignAuto {align-self: center;}
 
-.my-info-v {display: flex; justify-content: flex-start; align-content: center;padding: 1rem 1.6rem;height: 100px;}
-.my-info-v .sapMFlexItem {flex: 1 auto; padding-right: 54px; align-self: center;color: #222222;font-weight: 700;}
-.my-info-v .sapMFlexItem:first-child {padding-right: 30px; }
-.my-info-v .sapMFlexItem:nth-child(2) {padding-right: 24px; }
-.my-info-v .sapMFlexItem .sapMText {color: #222222;font-weight:700;}
-.my-info-v .sapMImg {width:63px;height:63px;border-radius: 50%;}
-.my-info-v .name {font-size: 30px;font-weight: 700;color: #222222;}
+.appointee-bar {display: flex; justify-content: flex-start; align-content: center;padding: 1rem 1.6rem;height: 100px;}
+.appointee-bar .sapMFlexItem {flex: 1 auto; padding-right: 54px; align-self: center;color: #222222;font-weight: 700;}
+.appointee-bar .sapMFlexItem:first-child {padding-right: 30px; }
+.appointee-bar .sapMFlexItem:nth-child(2) {padding-right: 24px; }
+.appointee-bar .sapMFlexItem .sapMText {color: #222222;font-weight:700;}
+.appointee-bar .sapMImg {width:63px;height:63px;border-radius: 50%;}
+.appointee-bar .name {font-size: 30px;font-weight: 700;color: #222222;}
 
 .info-area {background: #F7F0D5 0% 0% no-repeat padding-box;}
 .info-area .sapMFlexItemAlignAuto {-webkit-align-self: flex-start;align-self: flex-start;}
