@@ -63,7 +63,7 @@ sap.ui.define(
       },
 
       onClick() {
-        this.getRouter().navTo('congratulation-detail', { oDataKey: 'N' });
+        this.getRouter().navTo(this.isHass() ? 'h/congratulation-detail' : 'congratulation-detail', { oDataKey: 'N' });
       },
 
       formatNumber(vNum) {
@@ -153,7 +153,7 @@ sap.ui.define(
         const vPath = oEvent.getParameters().rowBindingContext.getPath();
         const oRowData = this.getViewModel().getProperty(vPath);
 
-        this.getRouter().navTo('congratulation-detail', { oDataKey: oRowData.Appno });
+        this.getRouter().navTo(this.isHass() ? 'h/congratulation-detail' : 'congratulation-detail', { oDataKey: oRowData.Appno });
       },
 
       onPressExcelDownload() {
