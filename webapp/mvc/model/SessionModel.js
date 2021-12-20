@@ -34,6 +34,7 @@ sap.ui.define(
           Dtfmt: DATE_FORMAT,
           DTFMT: DATE_FORMAT.toUpperCase(),
           Werks: 'init',
+          Photo: 'asset/image/employee.png',
         };
       },
 
@@ -64,6 +65,7 @@ sap.ui.define(
                 mSessionData.DtfmtYYYY = mSessionData.Dtfmt.replace(/([a-zA-Z]{4}).*/, '$1');
                 mSessionData.DTFMTYYYYMM = mSessionData.DTFMT.replace(/([a-zA-Z]{4})([^a-zA-Z]?)([a-zA-Z]{2}).*/, '$1$2$3');
                 mSessionData.DTFMTYYYY = mSessionData.DTFMT.replace(/([a-zA-Z]{4}).*/, '$1');
+                mSessionData.Photo ||= 'asset/image/avatar-unknown.svg';
 
                 this.setData(mSessionData, true);
 

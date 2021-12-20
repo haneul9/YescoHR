@@ -156,22 +156,16 @@ sap.ui.define(
         const sPreviousHash = History.getInstance().getPreviousHash();
 
         if (sPreviousHash) {
-          console.log('onNavBack sPreviousHash', sPreviousHash, this.getOwnerComponent().byId('nightdutyDetail'));
-          // this.getView().exit();
-          // this.getView().destroy(true);
-          // this.getView().removeAllContent();
-          this.getView().removeContent(this.getOwnerComponent().byId('nightdutyDetail'));
           window.history.go(-1);
         } else {
-          let sPreviousRouteName;
-          if (typeof this.getPreviousRouteName === 'function') {
-            sPreviousRouteName = this.getPreviousRouteName();
-          } else {
-            sPreviousRouteName = 'ehrHome';
-          }
-          console.log('onNavBack sPreviousRouteName', sPreviousRouteName);
-          this.getRouter().navTo(sPreviousRouteName, {}, true /* no history */);
+          const sPreviousRouteName = this.getPreviousRouteName();
+
+          this.getRouter().navTo(sPreviousRouteName || 'ehrHome', {}, true /* no history */);
         }
+      },
+
+      getPreviousRouteName() {
+        return null;
       },
 
       navToNotFound() {

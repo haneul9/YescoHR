@@ -1,36 +1,33 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.App"
-	xmlns="sap.m"
-	xmlns:f="sap.f"
-	xmlns:l="sap.ui.layout"
-	xmlns:mvc="sap.ui.core.mvc" displayBlock="true">
-	<OverflowToolbar id="appMenuToolbar" asyncMode="true" busy="{appModel>/isMenuBusy}" busyIndicatorDelay="0" class="app-menu-toolbar" height="60px">
-		<ImageContent id="logoImage" src="{ path: 'sessionModel>/Werks', formatter: '.getLogoPath' }" description="{sessionModel>/Pbtxt} eHR Home" press=".navToHome">
-			<layoutData>
-				<OverflowToolbarLayoutData priority="NeverOverflow"/>
-			</layoutData>
-		</ImageContent>
+  xmlns="sap.m"
+  xmlns:mvc="sap.ui.core.mvc" displayBlock="true">
+  <OverflowToolbar id="appMenuToolbar" asyncMode="true" busy="{appModel>/isMenuBusy}" busyIndicatorDelay="0" class="app-menu-toolbar" height="60px">
+    <ImageContent id="logoImage" src="{ path: 'sessionModel>/Werks', formatter: '.getLogoPath' }" description="{sessionModel>/Pbtxt} eHR Home" press=".navToHome">
+      <layoutData>
+        <OverflowToolbarLayoutData priority="NeverOverflow"/>
+      </layoutData>
+    </ImageContent>
 
-		<ToolbarSpacer />
+    <ToolbarSpacer />
 
-		<!-- App Menu Position -->
+    <!-- App Menu Position -->
 
-		<ToolbarSpacer />
-		<HBox alignItems="Center" class="user-info">			
-			<Text text="유지민" class="name" />
-			<Text text="과장 / 인재개발팀" />
-			<f:Avatar
-					src="asset/image/photo2.png"
-					displaySize="XS"
-					displayShape=""/>
-		</HBox>
-		<Button type="Transparent" class="icon-button notice" />
+    <ToolbarSpacer />
 
-		<Button type="Transparent" visible="{appModel>/isAtHome}" class="icon-button setting">
-			<layoutData>
-				<OverflowToolbarLayoutData priority="NeverOverflow" />
-			</layoutData>
-		</Button>
-	</OverflowToolbar>
+    <HBox alignItems="Center" class="my-info">
+      <Text text="{sessionModel>/Ename}" class="name" />
+      <Text text="{sessionModel>/Zzjikgbt} / {sessionModel>/Zzjiktlt}" />
+      <Image src="{sessionModel>/Photo}" mode="Background" backgroundPosition="center center" width="26px" />
+    </HBox>
 
-	<App id="app" class="app-body" autoFocus="false" busy="{appModel>/isAppBusy}" busyIndicatorDelay="0" />
+    <Button type="Transparent" class="icon-button notice" />
+
+    <Button type="Transparent" visible="{appModel>/isAtHome}" class="icon-button setting">
+      <layoutData>
+        <OverflowToolbarLayoutData priority="NeverOverflow" />
+      </layoutData>
+    </Button>
+  </OverflowToolbar>
+
+  <App id="app" class="app-body" autoFocus="false" busy="{appModel>/isAppBusy}" busyIndicatorDelay="0" />
 </mvc:View>

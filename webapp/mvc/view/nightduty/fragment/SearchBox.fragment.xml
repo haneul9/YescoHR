@@ -3,7 +3,7 @@
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control">
   <VBox class="hCardBox search-box" busy="{busy}" busyIndicatorDelay="0" id="searchBox">
-    <HBox justifyContent="SpaceBetween">
+    <HBox justifyContent="SpaceBetween" class="title">
       <Title text="{i18n>LABEL_00202}" level="H2" />
       <Button type="Transparent" class="icon-button search" press=".onPressSearchBoxIcon" />
     </HBox>

@@ -2,6 +2,7 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/m/Label',
+    'sap/ui/base/Object',
     'sap/ui/core/Fragment',
     'sap/ui/core/routing/HashChanger',
     'sap/ui/model/json/JSONModel',
@@ -13,6 +14,7 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     Label,
+    BaseObject,
     Fragment,
     HashChanger,
     JSONModel,
@@ -23,14 +25,15 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    class Menus {
-      constructor(oController) {
+    return BaseObject.extend('sap.ui.yesco.control.app.Menus', {
+      constructor: function (oController) {
         this.oController = oController;
-        this.oMenuPopover = null;
+        this.oMenuButton = null;
+        this.oMenuLayer = null;
         this.oMenuModel = this.oController.getOwnerComponent().getMenuModel();
 
         this.buildAppMenu();
-      }
+      },
 
       /**
        * 메뉴 생성
@@ -61,56 +64,58 @@ sap.ui.define(
         });
 
         AppUtils.setMenuBusy(false);
-      }
+      },
 
       /**
        * Top 메뉴 mouseover에 의한 popover 열기
        * @param {object} oMenuButton
        */
-      openMenuPopoverBy(oMenuButton) {
-        // 메뉴에 mouseover evet 발생시 mouseover 스타일 적용, 다른 메뉴의 mouseover 스타일 제거
-        setTimeout(() => {
-          const $MenuButton = oMenuButton.$();
-          $MenuButton.toggleClass('app-menu-level1-hover', true);
-          $MenuButton.siblings().toggleClass('app-menu-level1-hover', false);
-        }, 0);
+      async openMenuLayer(oMenuButton) {
+        this.oMenuButton = oMenuButton;
 
-        if (!this.oMenuPopover) {
-          Fragment.load({
-            name: 'sap.ui.yesco.fragment.app.MenuPopover',
+        this.toggleSelectedMenuStyle(true);
+
+        if (!this.oMenuLayer) {
+          this.oMenuLayer = await Fragment.load({
+            name: 'sap.ui.yesco.fragment.app.MegadropMenu',
             controller: this,
-          }).then((oPopover) => {
-            this.oMenuPopover = oPopover;
-            this.oMenuPopover
-              .attachBeforeClose((oEvent) => {
-                const $MenuButton = oEvent.getParameter('openBy').$();
-                setTimeout(() => {
-                  $MenuButton.toggleClass('app-menu-level1-hover', false);
-                  $MenuButton.siblings().toggleClass('app-menu-level1-hover', false);
-                }, 0);
-              })
-              .attachAfterClose(function () {
-                this.setModel(null);
-              })
-              .setModel(oMenuButton.getModel())
-              .openBy(oMenuButton);
           });
-        } else {
-          this.oMenuPopover.setModel(oMenuButton.getModel());
-          if (!this.oMenuPopover.isOpen()) {
-            this.oMenuPopover.openBy(oMenuButton);
-          }
+
+          this.oMenuLayer.setAppMenu(this);
+          this.oMenuLayer.placeAt('sap-ui-static');
         }
-      }
+
+        this.oMenuLayer.setModel(new JSONModel({ ...oMenuButton.getModel().getData() }));
+
+        if (!this.oMenuLayer.getVisible()) {
+          this.oMenuLayer.setVisible(true);
+        }
+      },
+
+      toggleSelectedMenuStyle(bOnHoverStyle) {
+        // 메뉴에 mouseover event 발생시 mouseover 스타일 적용, 다른 메뉴의 mouseover 스타일 제거
+        setTimeout(() => {
+          if (this.oMenuButton) {
+            const $MenuButton = this.oMenuButton.$();
+            $MenuButton.toggleClass('app-menu-level1-hover', bOnHoverStyle);
+            $MenuButton.siblings().toggleClass('app-menu-level1-hover', false);
+          }
+        });
+      },
 
       /**
        * 메뉴 popover 닫기
        */
-      closeMenuPopover() {
-        if (this.oMenuPopover && this.oMenuPopover.isOpen()) {
-          this.oMenuPopover.close();
-        }
-      }
+      closeMenuLayer(bByMenuClick = false) {
+        setTimeout(() => {
+          if (!bByMenuClick) {
+            this.toggleSelectedMenuStyle(false);
+          }
+          if (this.oMenuLayer && this.oMenuLayer.getVisible()) {
+            this.oMenuLayer.setVisible(false);
+          }
+        }, 0);
+      },
 
       /**
        * 메뉴의 즐겨찾기 클릭 이벤트 처리
@@ -133,7 +138,7 @@ sap.ui.define(
           },
           {
             success: (oData, oResponse) => {
-              this.debug(`${sUrl} success.`, oData, oResponse);
+              AppUtils.debug(`${sUrl} success.`, oData, oResponse);
 
               oContext.getModel().setProperty(`${oContext.getPath()}/Favor`, bFavor ? '' : 'X');
               oEventSource.setSrc(bFavor ? 'sap-icon://unfavorite' : 'sap-icon://favorite');
@@ -141,13 +146,13 @@ sap.ui.define(
               // TODO : 즐겨찾기 portlet 갱신
             },
             error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
+              AppUtils.debug(`${sUrl} error.`, oError);
 
-              MessageBox.error(this.oController.getText('MSG_00008', 'MSG_01002')); // {즐겨찾기 수정}중 오류가 발생하였습니다.
+              MessageBox.error(AppUtils.getBundleText('MSG_00008', 'MSG_01002')); // {즐겨찾기 수정}중 오류가 발생하였습니다.
             },
           }
         );
-      }
+      },
 
       /**
        *
@@ -165,7 +170,7 @@ sap.ui.define(
         }
         return 'javascript:;'; // Routing URL 노출을 막기위해 anchor의 href 속성에서 URL을 제거
         // return `${location.origin}${location.pathname}#/${(sMnurl || '').replace(/^\/+/, '')}`;
-      }
+      },
 
       /**
        *
@@ -179,7 +184,7 @@ sap.ui.define(
           return '_blank';
         }
         return '_self';
-      }
+      },
 
       /**
        * 메뉴 link click event 처리
@@ -189,7 +194,9 @@ sap.ui.define(
       handleMenuLink(oEvent) {
         oEvent.preventDefault();
 
-        this.closeMenuPopover();
+        setTimeout(() => {
+          this.closeMenuLayer(true);
+        });
 
         const oContext = oEvent.getSource().getBindingContext();
         if (oContext.getProperty('Mepop')) {
@@ -212,7 +219,7 @@ sap.ui.define(
 
         oCommonModel.read(sUrl, {
           success: (oData, oResponse) => {
-            this.debug(`${sUrl} success.`, oData, oResponse);
+            AppUtils.debug(`${sUrl} success.`, oData, oResponse);
 
             if (oData.Mnurl) {
               this.moveToMenu(oData.Mnurl);
@@ -221,23 +228,23 @@ sap.ui.define(
             }
           },
           error: (oError) => {
-            this.debug(`${sUrl} error.`, oError);
+            AppUtils.debug(`${sUrl} error.`, oError);
 
             this.failMenuLink();
           },
         });
-      }
+      },
 
       failMenuLink() {
         MessageBox.error(
-          this.oController.getText('MSG_01003'), // 메뉴 오류입니다.
+          AppUtils.getBundleText('MSG_01003'), // 메뉴 오류입니다.
           {
             onClose: () => {
               AppUtils.setAppBusy(false).setMenuBusy(false);
             },
           }
         );
-      }
+      },
 
       moveToMenu(sRouteName) {
         // 같은 메뉴 클릭시
@@ -254,13 +261,7 @@ sap.ui.define(
         //   .then(() => {
         //     AppUtils.setAppBusy(false).setMenuBusy(false);
         //   });
-      }
-
-      debug(...args) {
-        this.oController.debug(...args);
-      }
-    }
-
-    return Menus;
+      },
+    });
   }
 );

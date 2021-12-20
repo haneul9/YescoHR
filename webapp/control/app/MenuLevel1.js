@@ -19,7 +19,7 @@ sap.ui.define(
       metadata: {
         properties: {
           appMenu: {
-            type: 'any',
+            type: 'sap.ui.yesco.control.app.Menus',
           },
         },
       },
@@ -36,26 +36,26 @@ sap.ui.define(
       },
 
       /**
-       * Top 메뉴 mouseover 이벤트 처리 : 메뉴 popover가 열려있지 않으면 열어줌
+       * Top 메뉴 mouseover 이벤트 처리 : 메뉴 layer를 열어줌
        */
       onmouseover() {
-        this.getAppMenu().openMenuPopoverBy(this);
+        this.getAppMenu().openMenuLayer(this);
       },
 
       /**
-       * Top 메뉴 mouseout 이벤트 처리 : 메뉴 popover가 열려있으면 닫아줌
+       * Top 메뉴 mouseout 이벤트 처리 : 메뉴 layer를 닫아줌
        */
       onmouseout(oEvent) {
         // 브라우저 밖으로 마우스 이동시
         if (!oEvent.toElement) {
-          this.getAppMenu().closeMenuPopover();
+          this.getAppMenu().closeMenuLayer();
           return;
         }
 
-        // OverflowToolbar로 마우스 이동시 || Overflow 영역으로 숨겨진 메뉴 버튼에서 밖으로 이동시
+        // OverflowToolbar로 마우스 이동시
         const classList = oEvent.toElement.classList;
-        if (classList.contains('app-menu-toolbar') || classList.contains('sapMPopoverScroll')) {
-          this.getAppMenu().closeMenuPopover();
+        if (classList.contains('app-menu-toolbar')) {
+          this.getAppMenu().closeMenuLayer();
         }
       },
     });
