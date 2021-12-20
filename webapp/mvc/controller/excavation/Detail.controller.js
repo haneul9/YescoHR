@@ -41,6 +41,10 @@ sap.ui.define(
       AttachFileAction: AttachFileAction,
       TextUtils: TextUtils,
 
+      getPreviousRouteName() {
+        return 'excavation';
+      },
+
       onBeforeShow() {
         const oViewModel = new JSONModel({
           busy: false,

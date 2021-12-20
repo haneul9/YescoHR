@@ -4,6 +4,7 @@ sap.ui.define(
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -16,6 +17,7 @@ sap.ui.define(
     JSONModel,
     MessageBox,
     AppUtils,
+    ComboEntry,
     Client,
     UI5Error,
     ServiceNames,
@@ -28,6 +30,11 @@ sap.ui.define(
       SUMMARY_PROPERTIES: ['Zmepoint', 'Zmapoint', 'Zmbgrade'],
       MANAGE_PROPERTIES: ['Z131', 'Z132', 'Z136', 'Z137', 'Z140', 'Papp1', 'Papp2'],
       GOAL_PROPERTIES: ['Obj0', 'Fwgt', 'Z101', 'Z103', 'Z109', 'Z111', 'Zapgme', 'Zapgma', 'Ztbegda', 'Ztendda', 'Zmarslt', 'Zrslt', 'Z1175', 'Z1174', 'Z1173', 'Z1172', 'Z1171', 'Z125Ee', 'Z125Er'],
+      COMBO_PROPERTIES: ['Zapgme', 'Zapgma', 'Z103', 'Z111', 'Zmbgrade'],
+
+      getPreviousRouteName() {
+        return 'performance';
+      },
 
       initializeFieldsControl(acc, cur) {
         return { ...acc, [cur]: 'X' };
@@ -129,10 +136,14 @@ sap.ui.define(
             )
             .value();
 
-          oViewModel.setProperty('/entry/levels', aGrades ?? []);
-          oViewModel.setProperty('/entry/topGoals', aTopGoals ?? []);
-          oViewModel.setProperty('/entry/status', aStatus ?? []);
-          oViewModel.setProperty('/summary', { ..._.pick(mDetailData, this.SUMMARY_PROPERTIES) });
+          oViewModel.setProperty('/entry/levels', new ComboEntry({ codeKey: 'ValueEid', valueKey: 'ValueText', aEntries: aGrades }) ?? []);
+          oViewModel.setProperty('/entry/topGoals', new ComboEntry({ codeKey: 'Objid', valueKey: 'Stext', aEntries: aTopGoals }) ?? []);
+          oViewModel.setProperty('/entry/status', new ComboEntry({ codeKey: 'ValueEid', valueKey: 'ValueText', aEntries: aStatus }) ?? []);
+          oViewModel.setProperty('/summary', {
+            ..._.chain({ ...mDetailData, Zmbgrade: _.isEmpty(mDetailData.Zmbgrade) ? 'ALL' : mDetailData.Zmbgrade })
+              .pick(this.SUMMARY_PROPERTIES)
+              .value(),
+          });
           oViewModel.setProperty('/manage', { ..._.pick(mDetailData, this.MANAGE_PROPERTIES) });
           oViewModel.setProperty('/buttons', mDetailData.AppraisalBottnsSet.results ?? []);
           oViewModel.setProperty('/currentItemsLength', _.toLength(mDetailData.AppraisalDocDetailSet.results));
@@ -167,26 +178,26 @@ sap.ui.define(
       renderStageClass() {
         const oStageHeader = this.byId('stageHeader');
         oStageHeader.addEventDelegate({
-          onAfterRendering: () => {
+          onAfterRendering: _.throttle(() => {
             const aHeaders = this.getViewModel().getProperty('/stage/headers');
 
             oStageHeader.getItems().forEach((o, i) => o.toggleStyleClass('on', aHeaders[i].completed ?? false));
-          },
+          }),
         });
 
         const oStageBody = this.byId('stageBody');
         oStageBody.addEventDelegate({
-          onAfterRendering: () => {
+          onAfterRendering: _.throttle(() => {
             const aRows = this.getViewModel().getProperty('/stage/rows');
 
             oStageBody.getItems().forEach((row, rowidx) => {
               row.getItems().forEach((o, childidx) => o.toggleStyleClass('on', _.get(aRows, [rowidx, 'child', childidx, 'completed']) ?? false));
             });
-          },
+          }),
         });
       },
 
-      addGoalItem({ sRootPath }) {
+      addGoalItem(sRootPath) {
         const oViewModel = this.getViewModel();
         const aItems = oViewModel.getProperty(`/goals/${sRootPath}`);
         const iItemsLength = aItems.length;
@@ -205,7 +216,7 @@ sap.ui.define(
             expanded: true,
             OrderNo: String(iItemsLength),
             ItemNo: String(iItemsLength + 1),
-            ..._.reduce(this.GOAL_PROPERTIES, (acc, cur) => ({ ...acc, [cur]: null }), {}),
+            ..._.reduce(this.GOAL_PROPERTIES, (acc, cur) => ({ ...acc, [cur]: _.includes(this.COMBO_PROPERTIES, cur) ? 'ALL' : null }), {}),
           },
         ]);
       },
@@ -215,20 +226,17 @@ sap.ui.define(
        *****************************************************************/
       onPressAddStrategy() {
         const oViewModel = this.getViewModel();
-        const sRootPath = 'strategy';
 
         if (_.isEmpty(oViewModel.getProperty('/entry/topGoals'))) {
           MessageBox.alert(this.getBundleText('MSG_10003')); // 연관 상위 목표가 존재하지 않는 경우 전략목표를 생성할 수 없습니다.
           return;
         }
 
-        this.addGoalItem({ sRootPath });
+        this.addGoalItem('strategy');
       },
 
       onPressAddDuty() {
-        const sRootPath = 'duty';
-
-        this.addGoalItem({ sRootPath });
+        this.addGoalItem('duty');
       },
 
       onPressDeleteGoal(oEvent) {

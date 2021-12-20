@@ -23,6 +23,10 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.paystub.Detail', {
+      getPreviousRouteName() {
+        return 'paystub';
+      },
+
       onBeforeShow() {
         const oViewModel = new JSONModel({
           busy: false,

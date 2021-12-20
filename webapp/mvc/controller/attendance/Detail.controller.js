@@ -57,6 +57,10 @@ sap.ui.define(
       AttachFileAction: AttachFileAction,
       TextUtils: TextUtils,
 
+      getPreviousRouteName() {
+        return 'attendance';
+      },
+
       onBeforeShow() {
         const oViewModel = new JSONModel({
           busy: false,
