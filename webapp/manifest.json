@@ -122,6 +122,8 @@
         { "pattern": "h/notice", "name": "h/notice", "target": "h/notice" },
         { "pattern": "h/notice/{oDataKey}", "name": "h/notice-detail", "target": "noticeDetail" },
 
+        { "pattern": "m/EvalKpi", "name": "m/EvalKpi", "target": "m/EvalKpi" },
+
         { "pattern": "medical", "name": "medical", "target": "medical" },
         { "pattern": "medical/{oDataKey}", "name": "medical-detail", "target": "medicalDetail" },
         { "pattern": "h/medical", "name": "h/medical", "target": "h/medical" },
@@ -183,6 +185,8 @@
         "notice": { "viewId": "notice", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "Ess" },
         "h/notice": { "viewId": "h_notice", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "Hass" },
         "noticeDetail": { "viewId": "noticeDetail", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "NoticeDetail" },
+
+        "m/EvalKpi": { "viewId": "m_EvalKpi", "viewPath": "sap.ui.yesco.mvc.view.mssEvalKpi", "viewName": "Kpi" },
 
         "medical": { "viewId": "medical", "viewPath": "sap.ui.yesco.mvc.view.medical", "viewName": "Medical" },
         "h/medical": { "viewId": "h_medical", "viewPath": "sap.ui.yesco.mvc.view.medical", "viewName": "MedicalHass" },

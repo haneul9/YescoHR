@@ -1,0 +1,10 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.mssEvalKpi.Kpi"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc">
+    <VBox class="contents">
+        <VBox id="profileBody" class="main-profile" busyIndicatorDelay="0" busy="{/busy}">
+            <core:Fragment fragmentName="sap.ui.yesco.mvc.view.mssEvalKpi.fragment.CascadingTab" type="XML" />
+        </VBox>
+    </VBox>
+</mvc:View>
