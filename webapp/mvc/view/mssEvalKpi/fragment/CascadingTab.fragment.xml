@@ -1,13 +1,22 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
     <HBox>
-        <IconTabBar class="type-b" selectedKey="{/employee/tab/selectedKey}" expandable="false" items="{/employee/tab/list}" select=".onToggleTab">
+        <IconTabBar class="type-b" expandable="false" select="{/tab/selectedKey}">
             <layoutData>
                 <FlexItemData growFactor="1"/>
             </layoutData>
             <items>
-                <IconTabFilter text="{Menu1}" key="{Menuc1}"/>
+                <IconTabFilter text="{i18n>LABEL_15001}" key="category">
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.mssEvalKpi.fragment.form.Category" type="XML" />
+                </IconTabFilter>
+                <IconTabFilter text="{i18n>LABEL_15002}" key="team">
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.mssEvalKpi.fragment.form.Team" type="XML" />
+                </IconTabFilter>
+                <IconTabFilter text="{i18n>LABEL_15003}" key="status">
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.mssEvalKpi.fragment.form.Status" type="XML" />
+                </IconTabFilter>
             </items>
         </IconTabBar>
+        <Button text="2222" />
     </HBox>
 </core:FragmentDefinition>
