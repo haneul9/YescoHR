@@ -24,6 +24,9 @@ html, body {box-sizing:border-box; overflow:hidden}
 .menu-70000 bdi {color:#2972c8}
 .menu-80000 bdi {color:#27c83f}
 
+/* Home portlets drag and drop 영역이 메뉴 영역을 가리지 않도록 스타일 수정 */
+#sap-ui-static .sapUiDnDIndicatorWrapper {top:60px}
+
 .app-body {height:calc(100% - 60px) !important}
 
 /* sp.ui.yesco.control.VacationIndicator style */
