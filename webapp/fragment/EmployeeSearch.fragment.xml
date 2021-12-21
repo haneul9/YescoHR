@@ -55,7 +55,7 @@
                     </grid:CSSGrid>
                 </VBox>
                 <VBox width="80%">
-                    <table:Table id="empTable" rows="{/employeeModel/empList}" rowSelectionChange=".EmployeeSearch.onRowSelection" visibleRowCount="{/employeeModel/empList/length}" rowHeight="44" columnHeaderHeight="45" columnHeaderVisible="false">
+                    <table:Table id="empTable" rows="{/employeeModel/empList}" rowSelectionChange=".EmployeeSearch.onRowSelection" visibleRowCount="{/employeeModel/empListLength}" rowHeight="44" columnHeaderHeight="45">
                         <table:extension>
                             <OverflowToolbar>
                                 <!-- <core:Icon src="sap-icon://table-chart" /> -->
@@ -102,7 +102,7 @@
                             <table:Column width="100px" sortProperty="Zzjikcht" filterProperty="Zzjikcht">
                                 <Label text="{i18n>LABEL_00217}"/>
                                 <table:template>
-                                    <Text text="{Zzjikcht}" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
+                                    <Text text="{Zzjikcht}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                                 </table:template>
                             </table:Column>
                             <table:Column width="90px" sortProperty="Text1" filterProperty="Text1">

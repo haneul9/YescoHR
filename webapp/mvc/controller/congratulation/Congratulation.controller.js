@@ -62,6 +62,13 @@ sap.ui.define(
         this.getViewModel('appointeeModel').setProperty('/showChangeButton', this.isHass());
       },
 
+      // 대상자 정보 사원선택시 화면 Refresh
+      onRefresh() {
+        this.onSearch();
+        this.getTotalPay();
+        this.getViewModel('appointeeModel').setProperty('/showChangeButton', this.isHass());
+      },
+
       onClick() {
         this.getRouter().navTo(this.isHass() ? 'h/congratulation-detail' : 'congratulation-detail', { oDataKey: 'N' });
       },
