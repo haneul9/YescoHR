@@ -190,8 +190,8 @@ sap.ui.define([
 
 			oGrid.addDragDropConfig(new GridDropInfo({
 				targetAggregation: "items",
-				dropPosition: DropPosition.Between,
-				dropLayout: DropLayout.Horizontal,
+				// dropPosition: DropPosition.Between,
+				// dropLayout: DropLayout.Horizontal,
 				// dropIndicatorSize: this.onDropIndicatorSize.bind(this),
 				drop: this.onDrop.bind(this)
 			}));
@@ -200,10 +200,10 @@ sap.ui.define([
         onDrop(oInfo) {
 			const oViewModel = this.getViewModel();
 			const oDragged = oInfo.getParameter("draggedControl");
-			// const oDropped = oInfo.getParameter("droppedControl");
+			const oDropped = oInfo.getParameter("droppedControl");
 			const sInsertPosition = oInfo.getParameter("dropPosition");
-			// const oDragContainer = oDragged.getParent();
-			// const oDropContainer = oInfo.getSource().getParent();
+			const oDragContainer = oDragged.getParent();
+			const oDropContainer = oInfo.getSource().getParent();
 			const oModelData = oViewModel.getData();
             const oDraggPath = oDragged.getBindingContext().getPath();
 			const mDraggData = oViewModel.getProperty(oDraggPath);
@@ -212,8 +212,8 @@ sap.ui.define([
 
             // 부문 중복체크
             if (aGridList.some((e) => {return e === mDraggData})) {
-                oViewModel.refresh();
-                return MessageBox.alert(this.getBundleText('MSG_15001'));
+                return oViewModel.refresh();
+                // return MessageBox.alert(this.getBundleText('MSG_15001'));
             }
 
             oViewModel.setProperty('/PartList', [mDraggData, ...aGridList]);

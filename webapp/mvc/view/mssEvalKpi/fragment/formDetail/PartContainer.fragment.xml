@@ -1,6 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:f="sap.f"
-    xmlns:w="sap.ui.integration.widgets"
     xmlns:core="sap.ui.core">
     <HBox justifyContent="SpaceBetween">
         <HBox>
@@ -19,29 +18,23 @@
         </HBox>
     </HBox>
     <ScrollContainer height="200PX" width="100%" vertical="true" class="vCardBox">
-        <HBox>
-            <Label text="{/search/Orgtx}" textAlign="Center" wrapping="true" />
-            <f:GridContainer id="grid1" height="100%" width="100%" class="sapUiSmallMargin" snapToRow="true" items="{ path: '/PartList' }">
+        <HBox width="100%" height="100%">
+            <layoutData>
+                <FlexItemData growFactor="1"/>
+            </layoutData>
+            <Label text="{/search/Orgtx}" width="150px" textAlign="Center" wrapping="true" />
+            <f:GridContainer id="grid1" width="auto" class="sapUiSmallMargin" snapToRow="true" items="{ path: '/PartList' }">
                 <f:layout>
-                    <f:GridContainerSettings rowSize="50px" columnSize="50px" gap="8px" />
+                    <f:GridContainerSettings gap="10px" />
                 </f:layout>
-                <f:layoutXS>
-                    <f:GridContainerSettings rowSize="20px" columnSize="20px" gap="8px" />
-                </f:layoutXS>
-
                 <GenericTile header="{Stext}" subheader="{Ztext}" visible="{= !!${Stext} }">
                     <layoutData>
-                        <f:GridContainerItemLayoutData minRows="1" columns="1" />
+                        <f:GridContainerItemLayoutData minRows="3" columns="2" />
                     </layoutData>
                     <TileContent>
                         <ImageContent src="sap-icon://home-share" />
+                        <ImageContent src="sap-icon://home-share" />
                     </TileContent>
-                </GenericTile>
-
-                <GenericTile header="{i18n>MSG_15002}">
-                    <layoutData>
-                        <f:GridContainerItemLayoutData minRows="1" columns="1" />
-                    </layoutData>
                 </GenericTile>
             </f:GridContainer>
         </HBox>
