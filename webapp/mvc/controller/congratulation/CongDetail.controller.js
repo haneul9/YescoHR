@@ -616,6 +616,7 @@ sap.ui.define(
 
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
               } catch (oError) {
+                oDetailModel.setProperty('/FormData/Appno', '');
                 AppUtils.handleError(oError);
               } finally {
                 AppUtils.setAppBusy(false, this);
@@ -638,23 +639,22 @@ sap.ui.define(
           actions: [this.getBundleText('LABEL_00121'), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00121')) {
-              AppUtils.setAppBusy(true, this);
+              try {
+                AppUtils.setAppBusy(true, this);
 
-              if (!vStatus || vStatus === '45') {
-                const vAppno = await Appno.get.call(this);
+                if (!vStatus || vStatus === '45') {
+                  const vAppno = await Appno.get.call(this);
 
-                oDetailModel.setProperty('/FormData/Appno', vAppno);
-                oDetailModel.setProperty('/FormData/Appdt', new Date());
-              }
-
-              let oSendObject = {};
-
-              oSendObject = oFormData;
-              oSendObject.Prcty = 'C';
-              oSendObject.Menid = oDetailModel.getProperty('/menuId');
-              oSendObject.Waers = 'KRW';
-
-              Promise.all([
+                  oDetailModel.setProperty('/FormData/Appno', vAppno);
+                  oDetailModel.setProperty('/FormData/Appdt', new Date());
+                }
+              
+                let oSendObject = {};
+  
+                oSendObject = oFormData;
+                oSendObject.Prcty = 'C';
+                oSendObject.Menid = oDetailModel.getProperty('/menuId');
+                oSendObject.Waers = 'KRW';
                 // FileUpload
                 await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE),
                 await new Promise((resolve, reject) => {
@@ -667,9 +667,7 @@ sap.ui.define(
                     },
                   });
                 })
-              ]).catch((oError) => {
-                AppUtils.handleError(oError);
-              }).then(() => {
+
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
                   onClose: () => {
                     let sRoute = '';
@@ -683,9 +681,12 @@ sap.ui.define(
                     this.getRouter().navTo(sRoute);
                   },
                 });
-              }).finally(() => {
+              } catch (oError) {
+                oDetailModel.setProperty('/FormData/Appno', '');
+                AppUtils.handleError(oError);
+              } finally {
                 AppUtils.setAppBusy(false, this);
-              });
+              }
             }
           },
         });

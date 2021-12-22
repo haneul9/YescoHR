@@ -27,15 +27,26 @@
                 <f:layout>
                     <f:GridContainerSettings gap="10px" />
                 </f:layout>
-                <GenericTile header="{Stext}" subheader="{Ztext}" visible="{= !!${Stext} }">
-                    <layoutData>
-                        <f:GridContainerItemLayoutData minRows="3" columns="2" />
-                    </layoutData>
-                    <TileContent>
-                        <ImageContent src="sap-icon://home-share" />
-                        <ImageContent src="sap-icon://home-share" />
-                    </TileContent>
-                </GenericTile>
+                <HBox >
+                    <GenericTile header="{Stext}" subheader="{Ztext}" visible="{= !!${Stext} }">
+                        <layoutData>
+                            <f:GridContainerItemLayoutData minRows="3" columns="2" />
+                        </layoutData>
+                        <TileContent>
+                            <ImageContent src="sap-icon://home-share" />
+                            <ImageContent src="sap-icon://home-share" />
+                        </TileContent>
+                    </GenericTile>
+                    <GenericTile header="{asdasd}">
+                        <layoutData>
+                            <f:GridContainerItemLayoutData minRows="3" columns="2" />
+                        </layoutData>
+                        <TileContent>
+                            <ImageContent src="sap-icon://home-share" />
+                            <ImageContent src="sap-icon://home-share" />
+                        </TileContent>
+                    </GenericTile>
+                </HBox>
             </f:GridContainer>
         </HBox>
     </ScrollContainer>

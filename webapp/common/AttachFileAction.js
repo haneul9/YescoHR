@@ -312,12 +312,9 @@ sap.ui.define(
           // 파일 삭제
           if (!!aDeleteFiles.length) {
             try {
-              aDeleteFiles.forEach(async(e) => {
-                await this.AttachFileAction.callDeleteFileService(this, e);
-              });
-            } catch (e) {
-              MessageBox.alert(this.getBundleText('MSG_00048'));
-              return;
+                Promise.all(_.map(aDeleteFiles, (e) => {this.AttachFileAction.callDeleteFileService(this, e)}));
+            } catch (oError) {
+              reject(oError);
             }
           }
 
@@ -474,8 +471,8 @@ sap.ui.define(
             success: () => {
               resolve();
             },
-            error: () => {
-              reject(false);
+            error: (oError) => {
+              reject(new ODataDeleteError(oError));
             },
           });
         });
