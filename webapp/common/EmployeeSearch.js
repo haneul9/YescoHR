@@ -240,7 +240,7 @@ sap.ui.define([
         if (!!vPersk) {aFilters.push(vPersk);}
 
         oEmpModel.setProperty('/employeeModel/empList', []);
-        oEmpModel.setProperty('/employeeModel/empList/length', 1);
+        oEmpModel.setProperty('/employeeModel/empListLength', 1);
         oEmpModel.setProperty('/employeeModel/busy', true);
         this.byId('empTable').clearSelection();
 
@@ -254,7 +254,7 @@ sap.ui.define([
 
               this.debug(`${sUrl} success.`, oData);
               oEmpModel.setProperty('/employeeModel/empList', aList);
-              oEmpModel.setProperty('/employeeModel/empList/length', iLength > 13 ? 13 : iLength);
+              oEmpModel.setProperty('/employeeModel/empListLength', iLength > 13 ? 13 : iLength);
             }
             oEmpModel.setProperty('/employeeModel/busy', false);
           },
@@ -280,6 +280,7 @@ sap.ui.define([
         
         oAppModel.setProperty('/', aSelectedEmp[0]);
         oEvent.getSource().getParent().close();
+        this.onRefresh();
       },
 
       /*
@@ -346,9 +347,14 @@ sap.ui.define([
        */
       onOrgClick(oEvent) {
         const oEmpModel = this.getViewModel();
+        const aSelectedOrg = oEmpModel.getProperty('/employeeModel/org/SelectedOrg');
+
+        if (!aSelectedOrg.length) {
+          return MessageBox.alert(this.getBundleText('MSG_00004', 'LABEL_00228'));
+        }
         
-        oEmpModel.setProperty('/employeeModel/Search/Pbtxt', oEmpModel.getProperty('/employeeModel/org/SelectedOrg/0/Stext'));
-        oEmpModel.setProperty('/employeeModel/Search/Orgeh', oEmpModel.getProperty('/employeeModel/org/SelectedOrg/0/Orgeh'));
+        oEmpModel.setProperty('/employeeModel/Search/Pbtxt', aSelectedOrg[0].Stext);
+        oEmpModel.setProperty('/employeeModel/Search/Orgeh', aSelectedOrg[0].Orgeh);
         oEvent.getSource().getParent().close();
       },
 

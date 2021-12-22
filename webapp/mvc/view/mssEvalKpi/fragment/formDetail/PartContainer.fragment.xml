@@ -1,0 +1,42 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:core="sap.ui.core">
+    <HBox justifyContent="SpaceBetween">
+        <HBox>
+            <ObjectStatus text="{i18n>LABEL_15004}" state="Indication04" />
+            <Title level="H4" text="{i18n>LABEL_15018}" />
+        </HBox>
+        <HBox>
+            <core:Icon src="sap-icon://favorite" />
+            <Text text="{i18n>LABEL_15014}" textAlign="Center" width="100%"/>
+            <core:Icon src="sap-icon://favorite" />
+            <Text text="{i18n>LABEL_15015}" textAlign="Center" width="100%"/>
+            <core:Icon src="sap-icon://favorite" />
+            <Text text="{i18n>LABEL_15016}" textAlign="Center" width="100%"/>
+            <core:Icon src="sap-icon://favorite" />
+            <Text text="{i18n>LABEL_15017}" textAlign="Center" width="100%"/>
+        </HBox>
+    </HBox>
+    <ScrollContainer height="200PX" width="100%" vertical="true" class="vCardBox">
+        <HBox width="100%" height="100%">
+            <layoutData>
+                <FlexItemData growFactor="1"/>
+            </layoutData>
+            <Label text="{/search/Orgtx}" width="150px" textAlign="Center" wrapping="true" />
+            <f:GridContainer id="grid1" width="auto" class="sapUiSmallMargin" snapToRow="true" items="{ path: '/PartList' }">
+                <f:layout>
+                    <f:GridContainerSettings gap="10px" />
+                </f:layout>
+                <GenericTile header="{Stext}" subheader="{Ztext}" visible="{= !!${Stext} }">
+                    <layoutData>
+                        <f:GridContainerItemLayoutData minRows="3" columns="2" />
+                    </layoutData>
+                    <TileContent>
+                        <ImageContent src="sap-icon://home-share" />
+                        <ImageContent src="sap-icon://home-share" />
+                    </TileContent>
+                </GenericTile>
+            </f:GridContainer>
+        </HBox>
+    </ScrollContainer>
+</core:FragmentDefinition>

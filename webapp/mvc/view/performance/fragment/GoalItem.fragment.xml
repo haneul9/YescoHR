@@ -9,7 +9,7 @@
                     <grid:CSSGrid gridTemplateColumns="1fr 9fr 1fr" gridGap="0px 11px">
                         <Label text="{ItemNo}" textAlign="Left" />
                         <VBox>
-                            <Input value="{Obj0}" maxLength="{/fieldControl/limit/Obj0}" editable="{= ${/fieldControl/display/Obj0} === 'X' }" visible="{= ${/fieldControl/display/Obj0} !== 'H' }" />
+                            <Input value="{Obj0}" maxLength="{/fieldControl/limit/Obj0}" enabled="{= ${/fieldControl/display/Obj0} === 'X' }" visible="{= ${/fieldControl/display/Obj0} !== 'H' }" />
                         </VBox>
                         <Button icon="sap-icon://sys-minus" text="{i18n>LABEL_10020}" press=".onPressDeleteGoal">
                             <customData>
@@ -26,13 +26,13 @@
                         <Label text="{i18n>LABEL_10021}" visible="{= ${/fieldControl/display/Fwgt} !== 'H' }" />
                     </VBox>
                     <VBox>
-                        <Input class="required" type="Number" value="{ path: 'Fwgt', type: 'sap.ui.model.type.Integer' }" editable="{= ${/fieldControl/display/Fwgt} === 'X' }" visible="{= ${/fieldControl/display/Fwgt} !== 'H' }" />
+                        <Input class="required" type="Number" value="{ path: 'Fwgt', type: 'sap.ui.model.type.Integer' }" enabled="{= ${/fieldControl/display/Fwgt} === 'X' }" visible="{= ${/fieldControl/display/Fwgt} !== 'H' }" />
                     </VBox>
                     <VBox>
                         <Label text="{i18n>LABEL_10003}" visible="{= ${/fieldControl/display/Zapgme} !== 'H' }" />
                     </VBox>
                     <HBox>
-                        <ComboBox width="100%" class="required" selectedKey="{Zapgme}" items="{ path: '/entry/levels', templateShareable: true }" editable="{= ${/fieldControl/display/Zapgme} === 'X' }" visible="{= ${/fieldControl/display/Zapgme} !== 'H' }">
+                        <ComboBox width="100%" class="required" selectedKey="{Zapgme}" items="{ path: '/entry/levels', templateShareable: true }" enabled="{= ${/fieldControl/display/Zapgme} === 'X' }" visible="{= ${/fieldControl/display/Zapgme} !== 'H' }">
                             <core:Item key="{ValueEid}" text="{ValueText}" />
                         </ComboBox>
                     </HBox>
@@ -40,7 +40,7 @@
                         <Label text="{i18n>LABEL_10022}" visible="{= ${/fieldControl/display/Zapgma} !== 'H' }" />
                     </VBox>
                     <HBox>
-                        <ComboBox width="100%" class="required" selectedKey="{Zapgma}" items="{ path: '/entry/levels', templateShareable: true }" editable="{= ${/fieldControl/display/Zapgma} === 'X' }" visible="{= ${/fieldControl/display/Zapgma} !== 'H' }">
+                        <ComboBox width="100%" class="required" selectedKey="{Zapgma}" items="{ path: '/entry/levels', templateShareable: true }" enabled="{= ${/fieldControl/display/Zapgma} === 'X' }" visible="{= ${/fieldControl/display/Zapgma} !== 'H' }">
                             <core:Item key="{ValueEid}" text="{ValueText}" />
                         </ComboBox>
                     </HBox>
@@ -53,7 +53,7 @@
                         <layoutData>
                             <grid:GridItemLayoutData gridColumn="2 / 8" />
                         </layoutData>
-                        <ComboBox width="100%" class="required" selectedKey="{Z103s}" items="{ path: '/entry/topGoals', templateShareable: true }" editable="{= ${/fieldControl/display/Z103s} === 'X' }" visible="{= ${/fieldControl/display/Z103s} !== 'H' }">
+                        <ComboBox width="100%" class="required" selectedKey="{Z103s}" items="{ path: '/entry/topGoals', templateShareable: true }" enabled="{= ${/fieldControl/display/Z103s} === 'X' }" visible="{= ${/fieldControl/display/Z103s} !== 'H' }">
                             <core:Item key="{Objid}" text="{Stext}" />
                         </ComboBox>
                     </VBox>
@@ -62,25 +62,25 @@
                         <Label width="100%" text="{i18n>LABEL_10024}" visible="{= ${/fieldControl/display/Ztbegda} !== 'H' }"/>
                     </VBox>
                     <VBox>
-                        <custom:DatePicker width="100%" class="required" dateValue="{ path: 'Ztbegda', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{= ${/fieldControl/display/Ztbegda} === 'X' }" visible="{= ${/fieldControl/display/Ztbegda} !== 'H' }"/>
+                        <custom:DatePicker width="100%" class="required" dateValue="{ path: 'Ztbegda', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{= ${/fieldControl/display/Ztbegda} === 'X' }" visible="{= ${/fieldControl/display/Ztbegda} !== 'H' }"/>
                     </VBox>
                     <VBox>
                         <Label width="100%" text="{i18n>LABEL_10025}" visible="{= ${/fieldControl/display/Ztendda} !== 'H' }"/>
                     </VBox>
                     <VBox>
-                        <custom:DatePicker width="100%" class="required" dateValue="{ path: 'Ztendda', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{= ${/fieldControl/display/Ztendda} === 'X' }" visible="{= ${/fieldControl/display/Ztendda} !== 'H' }"/>
+                        <custom:DatePicker width="100%" class="required" dateValue="{ path: 'Ztendda', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{= ${/fieldControl/display/Ztendda} === 'X' }" visible="{= ${/fieldControl/display/Ztendda} !== 'H' }"/>
                     </VBox>
                     <VBox>
                         <Label width="100%" text="{i18n>LABEL_10026}" visible="{= ${/fieldControl/display/Z109} !== 'H' }"/>
                     </VBox>
                     <VBox>
-                        <Input width="100%" class="required" type="Number" value="{ path: 'Z109', type: 'sap.ui.model.type.Integer' }" editable="{= ${/fieldControl/display/Z109} === 'X' }" visible="{= ${/fieldControl/display/Z109} !== 'H' }" />
+                        <Input width="100%" class="required" type="Number" value="{Z109}" enabled="{= ${/fieldControl/display/Z109} === 'X' }" visible="{= ${/fieldControl/display/Z109} !== 'H' }" />
                     </VBox>
                     <VBox>
                         <Label width="100%" text="{i18n>LABEL_00261}" visible="{= ${/fieldControl/display/Z111} !== 'H' }"/>
                     </VBox>
                     <VBox>
-                        <ComboBox width="100%" class="required" selectedKey="{Z111}" items="{ path: '/entry/status', templateShareable: true }" editable="{= ${/fieldControl/display/Z111} === 'X' }" visible="{= ${/fieldControl/display/Z111} !== 'H' }">
+                        <ComboBox width="100%" class="required" selectedKey="{Z111}" items="{ path: '/entry/status', templateShareable: true }" enabled="{= ${/fieldControl/display/Z111} === 'X' }" visible="{= ${/fieldControl/display/Z111} !== 'H' }">
                             <core:Item key="{ValueEid}" text="{ValueText}" />
                         </ComboBox>
                     </VBox>
@@ -94,7 +94,7 @@
                         <layoutData>
                             <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '4 / 6' : '3 / 5' }" gridColumn="2 / 5" />
                         </layoutData>
-                        <TextArea width="100%" class="required" rows="5" value="{Zmarslt}" maxLength="{/fieldControl/limit/Zmarslt}" editable="{= ${/fieldControl/display/Zmarslt} === 'X' }" visible="{= ${/fieldControl/display/Zmarslt} !== 'H' }">
+                        <TextArea width="100%" class="required" rows="5" value="{Zmarslt}" maxLength="{/fieldControl/limit/Zmarslt}" enabled="{= ${/fieldControl/display/Zmarslt} === 'X' }" visible="{= ${/fieldControl/display/Zmarslt} !== 'H' }">
                         </TextArea>
                     </VBox>
                     <VBox>
@@ -107,13 +107,13 @@
                         <layoutData>
                             <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '4 / 6' : '3 / 5' }" gridColumn="6 / 9" />
                         </layoutData>
-                        <TextArea width="100%" class="required" rows="5" value="{Zrslt}" maxLength="{/fieldControl/limit/Zrslt}" editable="{= ${/fieldControl/display/Zrslt} === 'X' }" visible="{= ${/fieldControl/display/Zrslt} !== 'H' }"/>
+                        <TextArea width="100%" class="required" rows="5" value="{Zrslt}" maxLength="{/fieldControl/limit/Zrslt}" enabled="{= ${/fieldControl/display/Zrslt} === 'X' }" visible="{= ${/fieldControl/display/Zrslt} !== 'H' }"/>
                     </VBox>
                     <VBox>
                         <layoutData>
                             <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '6 / 11' : '5 / 10' }" />
                         </layoutData>
-                        <Label width="100%" text="{i18n>LABEL_10029}" vAlign="Top" visible="{= ${/fieldControl/display/Z1175} !== 'H' || ${/fieldControl/display/Z1174} !== 'H' || ${/fieldControl/display/Z1173} !== 'H' || ${/fieldControl/display/Z1172} !== 'H' || ${/fieldControl/display/Z1171} !== 'H' }"/>
+                        <Label width="100%" text="{i18n>LABEL_10029}" vAlign="Top" visible="{= ${/fieldControl/display/Z117} !== 'H' }"/>
                     </VBox>
                     <VBox class="label_wrap">
                         <layoutData>
@@ -128,7 +128,7 @@
                                     <FlexItemData growFactor="1" />
                                 </layoutData>
                             </Label>
-                            <Input class="required" value="{Z1175}" maxLength="{/fieldControl/limit/Z1175}" editable="{= ${/fieldControl/display/Z1175} === 'X' }">
+                            <Input class="required" value="{Z1175}" maxLength="{/fieldControl/limit/Z1175}" enabled="{= ${/fieldControl/display/Z1175} === 'X' }">
                                 <layoutData>
                                     <FlexItemData growFactor="20" />
                                 </layoutData>
@@ -143,7 +143,7 @@
                                     <FlexItemData growFactor="1" />
                                 </layoutData>
                             </Label>
-                            <Input class="required" value="{Z1174}" maxLength="{/fieldControl/limit/Z1174}" editable="{= ${/fieldControl/display/Z1174} === 'X' }">
+                            <Input class="required" value="{Z1174}" maxLength="{/fieldControl/limit/Z1174}" enabled="{= ${/fieldControl/display/Z1174} === 'X' }">
                                 <layoutData>
                                     <FlexItemData growFactor="20" />
                                 </layoutData>
@@ -158,7 +158,7 @@
                                     <FlexItemData growFactor="1" />
                                 </layoutData>
                             </Label>
-                            <Input class="required" value="{Z1173}" maxLength="{/fieldControl/limit/Z1173}" editable="{= ${/fieldControl/display/Z1173} === 'X' }">
+                            <Input class="required" value="{Z1173}" maxLength="{/fieldControl/limit/Z1173}" enabled="{= ${/fieldControl/display/Z1173} === 'X' }">
                                 <layoutData>
                                     <FlexItemData growFactor="20" />
                                 </layoutData>
@@ -173,7 +173,7 @@
                                     <FlexItemData growFactor="1" />
                                 </layoutData>
                             </Label>
-                            <Input class="required" value="{Z1172}" maxLength="{/fieldControl/limit/Z1172}" editable="{= ${/fieldControl/display/Z1172} === 'X' }">
+                            <Input class="required" value="{Z1172}" maxLength="{/fieldControl/limit/Z1172}" enabled="{= ${/fieldControl/display/Z1172} === 'X' }">
                                 <layoutData>
                                     <FlexItemData growFactor="20" />
                                 </layoutData>
@@ -188,7 +188,7 @@
                                     <FlexItemData growFactor="1" />
                                 </layoutData>
                             </Label>
-                            <Input class="required" value="{Z1171}" maxLength="{/fieldControl/limit/Z1171}" editable="{= ${/fieldControl/display/Z1171} === 'X' }">
+                            <Input class="required" value="{Z1171}" maxLength="{/fieldControl/limit/Z1171}" enabled="{= ${/fieldControl/display/Z1171} === 'X' }">
                                 <layoutData>
                                     <FlexItemData growFactor="20" />
                                 </layoutData>
@@ -205,7 +205,7 @@
                         <layoutData>
                             <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '11 / 13' : '10 / 12' }" gridColumn="span 3" />
                         </layoutData>
-                        <TextArea width="100%" value="{Z125Ee}" class="required" rows="5" maxLength="{/fieldControl/limit/Z125Ee}" editable="{= ${/fieldControl/display/Z125Ee} === 'X' }" visible="{= ${/fieldControl/display/Z125Ee} !== 'H' }">
+                        <TextArea width="100%" value="{Z125Ee}" rows="5" maxLength="{/fieldControl/limit/Z125Ee}" enabled="{= ${/fieldControl/display/Z125Ee} === 'X' }" visible="{= ${/fieldControl/display/Z125Ee} !== 'H' }">
                         </TextArea>
                     </VBox>
                     <VBox>
@@ -218,7 +218,7 @@
                         <layoutData>
                             <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '11 / 13' : '10 / 12' }" gridColumn="span 3" />
                         </layoutData>
-                        <TextArea width="100%" value="{Z125Er}" class="required" rows="5" maxLength="{/fieldControl/limit/Z125Er}" editable="{= ${/fieldControl/display/Z125Er} === 'X' }" visible="{= ${/fieldControl/display/Z125Er} !== 'H' }">
+                        <TextArea width="100%" value="{Z125Er}" rows="5" maxLength="{/fieldControl/limit/Z125Er}" enabled="{= ${/fieldControl/display/Z125Er} === 'X' }" visible="{= ${/fieldControl/display/Z125Er} !== 'H' }">
                         </TextArea>
                     </VBox>
                 </grid:CSSGrid>

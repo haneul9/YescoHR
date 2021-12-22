@@ -10,13 +10,11 @@
             <Button text="{i18n>LABEL_00115}" press=".EmployeeSearch.onCloseClick" />
         </endButton>
         <content>
-            <HBox width="100%">
-                <VBox width="20%" class="sapUiMediumMarginEnd">
-                    <HBox justifyContent="SpaceBetween" alignItems="Center" class="search-head">
-                        <HBox>
-                            <!-- <core:Icon src="sap-icon://filter" /> -->
-                            <Label text="{i18n>LABEL_00203}" />
-                        </HBox>
+            <HBox width="100%" class="dialog-content">
+                <VBox width="20%" class="hCardBox sapUiSmallMarginEnd">
+                    <HBox justifyContent="SpaceBetween" alignItems="Center" class="header-wrap search-head">
+                        <!-- <core:Icon src="sap-icon://filter" /> -->
+                        <Label text="{i18n>LABEL_00203}" />
                         <Button press=".EmployeeSearch.onEmpSearch" class="icon-button search" />
                     </HBox>
                     <grid:CSSGrid gridTemplateRows="1fr 2fr" gridGap="6px 0px" class="form-grid type-d">
@@ -54,10 +52,10 @@
                         </VBox>
                     </grid:CSSGrid>
                 </VBox>
-                <VBox width="80%">
-                    <table:Table id="empTable" rows="{/employeeModel/empList}" rowSelectionChange=".EmployeeSearch.onRowSelection" visibleRowCount="{/employeeModel/empList/length}" rowHeight="44" columnHeaderHeight="45" columnHeaderVisible="false">
+                <VBox width="80%" class="hCardBox">
+                    <table:Table id="empTable" rows="{/employeeModel/empList}" rowSelectionChange=".EmployeeSearch.onRowSelection" visibleRowCount="{/employeeModel/empListLength}" rowHeight="44" columnHeaderHeight="45">
                         <table:extension>
-                            <OverflowToolbar>
+                            <OverflowToolbar justifyContent="SpaceBetween" alignItems="Center" class="header-wrap search-head">
                                 <!-- <core:Icon src="sap-icon://table-chart" /> -->
                                 <Label text="{i18n>LABEL_00204}" />
                             </OverflowToolbar>
@@ -102,7 +100,7 @@
                             <table:Column width="100px" sortProperty="Zzjikcht" filterProperty="Zzjikcht">
                                 <Label text="{i18n>LABEL_00217}"/>
                                 <table:template>
-                                    <Text text="{Zzjikcht}" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
+                                    <Text text="{Zzjikcht}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                                 </table:template>
                             </table:Column>
                             <table:Column width="90px" sortProperty="Text1" filterProperty="Text1">

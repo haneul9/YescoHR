@@ -8,7 +8,7 @@
             <FlexItemData growFactor="1"/>
         </grid:layoutData>
         <Label text="{i18n>LABEL_00318}" />
-        <Input width="100%" class="required" value="{/employee/dialog/form/Cttyptx}" editable="{= ${/employee/dialog/action} === 'A'}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpRequest">
+        <Input width="100%" class="required" value="{/employee/dialog/form/Cttyptx}" enabled="{= ${/employee/dialog/action} === 'A'}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpRequest">
             <customData>
                 <core:CustomData key="helpName" value="CERTIFICATE" />
             </customData>
@@ -24,7 +24,7 @@
         <Label text="{i18n>LABEL_00320}" />
         <Input width="100%" class="required" value="{/employee/dialog/form/Isaut}" />
         <Label text="{i18n>LABEL_00321}" />
-        <custom:DatePicker width="50%" class="required" value="{ path: '/employee/dialog/form/Regdt', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{= ${/employee/dialog/action} === 'A'}" />
+        <custom:DatePicker width="50%" class="required" value="{ path: '/employee/dialog/form/Regdt', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{= ${/employee/dialog/action} === 'A'}" />
         <Label text="{i18n>LABEL_00322}" />
         <Input width="100%" value="{/employee/dialog/form/Lawrt}" />
         <Label text="{i18n>LABEL_00323}" />

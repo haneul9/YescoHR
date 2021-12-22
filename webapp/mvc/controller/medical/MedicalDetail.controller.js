@@ -738,6 +738,34 @@ sap.ui.define(
         return false;
       },
 
+      checkedDialogData() {
+        const oModel = this.getModel(ServiceNames.BENEFIT);
+        const oDetailModel = this.getViewModel();
+        const mFormData = oDetailModel.getProperty('/FormData');
+        const aDeep = [oDetailModel.getProperty('/DialogData'), ...oDetailModel.getProperty('/HisList')];
+
+        let oSendObject = {};
+
+        aDeep.forEach((e) => {
+          e.Waers = 'KRW';
+        });
+
+        oSendObject = mFormData;
+        oSendObject.Prcty = '1';
+        oSendObject.MedExpenseItemSet = aDeep;
+
+        return new Promise((resolve, reject) => {
+          oModel.create('/MedExpenseApplSet', oSendObject, {
+            success: () => {
+              resolve(true);
+            },
+            error: (oError) => {
+              reject(new ODataCreateError({ oError }));
+            },
+          });
+        });
+      },
+
       // Dialog 등록
       async onHisRegBtn() {
         const oDetailModel = this.getViewModel();
@@ -748,6 +776,10 @@ sap.ui.define(
         
         try {
           AppUtils.setAppBusy(true, this);
+
+          const bSuccess = await this.checkedDialogData();
+
+          if (!bSuccess) return;
 
           if (!mDialogData.Appno2 || mDialogData.Appno2 === '00000000000000') {
             const vAppno = await Appno.get.call(this);
@@ -795,6 +827,10 @@ sap.ui.define(
         
         try {
           AppUtils.setAppBusy(true, this);
+
+          const bSuccess = await this.checkedDialogData();
+
+          if (!bSuccess) return;
 
           if (!mDialogData.Appno2 || mDialogData.Appno2 === '00000000000000') {
             const vAppno = await Appno.get.call(this);
@@ -878,7 +914,7 @@ sap.ui.define(
         }
 
         oEventSource.setValue(this.TextUtils.toCurrency(sAmount));
-        oDetailModel.setProperty(sPath, sAmount);
+        oDetailModel.setProperty(sPath, !sAmount ? '0' : sAmount);
         
         setTimeout(() => {
           const mDialogData = oDetailModel.getProperty('/DialogData');

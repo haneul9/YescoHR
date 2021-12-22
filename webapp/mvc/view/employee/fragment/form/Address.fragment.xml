@@ -18,7 +18,7 @@
         </ComboBox>
         <Label text="{i18n>LABEL_00273}" />
         <HBox width="100%">
-            <Input width="80%" class="required" value="{/employee/dialog/form/Pstlz}" editable="false" />
+            <Input width="80%" class="required" value="{/employee/dialog/form/Pstlz}" enabled="false" />
             <Button text="{i18n>LABEL_00101}" press=".openSearchZipCodePopup"/>
         </HBox>
         <Label text="{i18n>LABEL_00152}" />

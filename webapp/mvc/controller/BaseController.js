@@ -172,6 +172,10 @@ sap.ui.define(
         return null;
       },
 
+      onRefresh() {
+        this.debug('BaseController.onRefresh');
+      },
+
       navToNotFound() {
         // display the "notFound" target without changing the hash
         this.getRouter().getTargets().display('notFound', {

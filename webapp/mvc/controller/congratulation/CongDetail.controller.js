@@ -582,28 +582,28 @@ sap.ui.define(
           actions: [this.getBundleText('LABEL_00103'), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00103')) {
-              AppUtils.setAppBusy(true, this);
+              try {
+                AppUtils.setAppBusy(true, this);
+  
+                if (!vStatus || vStatus === '45') {
+                  const vAppno = await Appno.get.call(this);
+  
+                  oDetailModel.setProperty('/FormData/Appno', vAppno);
+                  oDetailModel.setProperty('/FormData/ZappStatAl', '10');
+                  oDetailModel.setProperty('/FormData/Appdt', new Date());
+                }
+  
+                let oSendObject = {};
+  
+                oSendObject = oFormData;
+                oSendObject.Prcty = 'T';
+                oSendObject.Menid = oDetailModel.getProperty('/menuId');
+                oSendObject.Waers = 'KRW';
 
-              if (!vStatus || vStatus === '45') {
-                const vAppno = await Appno.get.call(this);
-
-                oDetailModel.setProperty('/FormData/Appno', vAppno);
-                oDetailModel.setProperty('/FormData/ZappStatAl', '10');
-                oDetailModel.setProperty('/FormData/Appdt', new Date());
-              }
-
-              let oSendObject = {};
-
-              oSendObject = oFormData;
-              oSendObject.Prcty = 'T';
-              oSendObject.Menid = oDetailModel.getProperty('/menuId');
-              oSendObject.Waers = 'KRW';
-
-              Promise.all([
                 // FileUpload
-                AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE),
-
-                new Promise((resolve, reject) => {
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE),
+  
+                await new Promise((resolve, reject) => {
                   oModel.create('/ConExpenseApplSet', oSendObject, {
                     success: () => {
                       resolve();
@@ -613,13 +613,13 @@ sap.ui.define(
                     },
                   });
                 })
-              ]).catch((oError) => {
-                AppUtils.handleError(oError);
-              }).then(() => {
+
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
-              }).finally(() => {
+              } catch (oError) {
+                AppUtils.handleError(oError);
+              } finally {
                 AppUtils.setAppBusy(false, this);
-              });
+              }
             }
           },
         });

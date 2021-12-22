@@ -308,25 +308,17 @@ sap.ui.define(
         const aDeleteFiles = JSonModel.getProperty('/DeleteDatas') || [];
         const oAttachTable = this.byId(`${sIdPath}attachTable`);
 
-        return new Promise((resolve) => {
+        return new Promise(async(resolve, reject) => {
           // 파일 삭제
           if (!!aDeleteFiles.length) {
-            let bDeleteFlag = true;
-
-            Promise.all([
-              aDeleteFiles.forEach((e) => {
-                bDeleteFlag = new Promise((resolve) => {
-                  this.AttachFileAction.callDeleteFileService(this, e);
-                  oAttachTable.clearSelection();
-                  resolve(bDeleteFlag);
-                });
-              }),
-            ]).then((bFileSuccess) => {
-              if (!bFileSuccess) {
-                MessageBox.alert(this.getBundleText('MSG_00042'));
-                return;
-              }
-            });
+            try {
+              aDeleteFiles.forEach(async(e) => {
+                await this.AttachFileAction.callDeleteFileService(this, e);
+              });
+            } catch (e) {
+              MessageBox.alert(this.getBundleText('MSG_00048'));
+              return;
+            }
           }
 
           // 신규 등록된 파일만 업로드
@@ -477,13 +469,15 @@ sap.ui.define(
           Zfileseq: fileInfo.Zfileseq,
         });
 
-        oModel.remove(sPath, {
-          success: () => {
-            return true;
-          },
-          error: () => {
-            return false;
-          },
+        return new Promise((resolve, reject) => {
+          oModel.remove(sPath, {
+            success: () => {
+              resolve();
+            },
+            error: () => {
+              reject(false);
+            },
+          });
         });
       },
 
