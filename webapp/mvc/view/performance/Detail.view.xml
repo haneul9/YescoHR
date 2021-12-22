@@ -24,7 +24,7 @@
 		<VBox class="contents">
 			<core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
 			<VBox class="vCardBox">
-				<HBox>
+				<HBox class="table-toolbar">
 					<HBox alignItems="Center" class="title">
 						<Title level="H2" text="{/year} {i18n>LABEL_10006}" />
 					</HBox>
@@ -42,7 +42,7 @@
 						<IconTabFilter text="{i18n>LABEL_10009}" key="T01">
 							<VBox class="vCardBox">
 								<HBox>
-									<HBox alignItems="Center" class="title">
+									<HBox alignItems="Center" class="table-toolbar">
 										<Title level="H2" text="{i18n>LABEL_10007}" class="sapUiMediumMarginEnd"/>
 										<Button icon="sap-icon://sys-add" text="{i18n>LABEL_10011}" enabled="{= ${/currentItemsLength} &lt; 7 }" press=".onPressAddStrategy" />
 									</HBox>
@@ -53,7 +53,7 @@
 							</VBox>
 							<VBox class="vCardBox sapUiSmallMarginTop">
 								<HBox>
-									<HBox alignItems="Center" class="header-wrap">
+									<HBox alignItems="Center" class="table-toolbar">
 										<Title level="H3" text="{i18n>LABEL_10008}" class="sapUiMediumMarginEnd" />
 										<Button icon="sap-icon://sys-add" text="{i18n>LABEL_10011}" enabled="{= ${/currentItemsLength} &lt; 7 }" press=".onPressAddDuty" />
 									</HBox>

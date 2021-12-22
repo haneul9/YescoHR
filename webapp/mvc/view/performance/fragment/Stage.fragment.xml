@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <Panel expandable="true" expanded="true">
+    <Panel expandable="true" expanded="true" class="type-b">
         <layoutData>
             <FlexItemData growFactor="1" />
         </layoutData>
