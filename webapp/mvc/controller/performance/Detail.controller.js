@@ -98,6 +98,9 @@ sap.ui.define(
           OrderNo: String(index),
           ItemNo: String(index + 1),
           ...obj,
+          ..._.chain(this.COMBO_PROPERTIES)
+            .reduce((acc, cur) => ({ ...acc, [cur]: _.isEmpty(obj[cur]) ? 'ALL' : obj[cur] }), {})
+            .value(),
         };
       },
 
@@ -523,6 +526,11 @@ sap.ui.define(
         // validation
         if (_.some(aStrategyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties }))) return;
         if (_.some(aDutyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: _.filter(aFieldProperties, (obj) => obj.field !== 'Z103s') }))) return;
+
+        if (_.sumBy([...aStrategyGoals, ...aDutyGoals], (o) => _.toNumber(o.Fwgt)) !== 100) {
+          MessageBox.alert(this.getBundleText('MSG_10005')); // 가중치의 총합은 100이어야 합니다.
+          return;
+        }
 
         MessageBox.confirm(this.getBundleText('MSG_00006', this.getButtonText(sPrcty)), {
           // {전송}하시겠습니까?
