@@ -62,7 +62,7 @@
 									<core:Fragment fragmentName="sap.ui.yesco.mvc.view.performance.fragment.GoalItem" type="XML" />
 								</VBox>
 							</VBox>
-							<HBox class="vCardBox sapUiSmallMarginTop">
+							<HBox class="vCardBox sapUiSmallMarginTop" visible="{= ${/fieldControl/display/Zmepoint} !== 'H' &amp;&amp; ${/fieldControl/display/Zmapoint} !== 'H' &amp;&amp; ${/fieldControl/display/Zmbgrade} !== 'H' }">
 								<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr">
 									<VBox>
 										<Label text="{i18n>LABEL_10012}" visible="{= ${/fieldControl/display/Zmepoint} !== 'H' }"/>

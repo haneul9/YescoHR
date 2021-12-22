@@ -74,7 +74,7 @@
                         <Label width="100%" text="{i18n>LABEL_10026}" visible="{= ${/fieldControl/display/Z109} !== 'H' }"/>
                     </VBox>
                     <VBox>
-                        <Input width="100%" class="required" type="Number" value="{ path: 'Z109', type: 'sap.ui.model.type.Integer' }" editable="{= ${/fieldControl/display/Z109} === 'X' }" visible="{= ${/fieldControl/display/Z109} !== 'H' }" />
+                        <Input width="100%" class="required" type="Number" value="{Z109}" editable="{= ${/fieldControl/display/Z109} === 'X' }" visible="{= ${/fieldControl/display/Z109} !== 'H' }" />
                     </VBox>
                     <VBox>
                         <Label width="100%" text="{i18n>LABEL_00261}" visible="{= ${/fieldControl/display/Z111} !== 'H' }"/>

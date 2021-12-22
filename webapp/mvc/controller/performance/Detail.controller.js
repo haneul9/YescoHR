@@ -49,6 +49,15 @@ sap.ui.define(
         },
       },
 
+      FIELD_STATUS_MAP: {
+        2: {
+          A: { Zmepoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmapoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmbgrade: { ME: 'H', MA: 'H', MB: 'H' }, Zrslt: { ME: 'H', MA: 'H', MB: 'H' } },
+          B: { Zmepoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmapoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmbgrade: { ME: 'H', MA: 'H', MB: 'H' }, Zrslt: { ME: 'H', MA: 'H', MB: 'H' }, Z125Ee: { ME: 'X', MA: 'V', MB: 'V' }, Z125Er: { ME: 'D', MA: 'D', MB: 'D' }, Z131: { MA: 'V', MB: 'V' } },
+          C: { Zmepoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmapoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmbgrade: { ME: 'H', MA: 'H', MB: 'H' }, Zrslt: { ME: 'H', MA: 'H', MB: 'H' }, Z125Ee: { ME: 'D', MA: 'D', MB: 'D' }, Z125Er: { ME: 'V', MA: 'X', MB: 'V' }, Z132: { ME: 'V', MB: 'V' } },
+          D: { Zmepoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmapoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmbgrade: { ME: 'H', MA: 'H', MB: 'H' }, Zrslt: { ME: 'H', MA: 'H', MB: 'H' } },
+        },
+      },
+
       VALIDATION_PROPERTIES: [
         { field: 'Obj0', label: 'LABEL_10033', type: Validator.INPUT2 }, // 목표
         { field: 'Fwgt', label: 'LABEL_10033', type: Validator.INPUT2 }, // 가중치
@@ -127,14 +136,11 @@ sap.ui.define(
           },
           currentItemsLength: 0,
           fieldControl: {
-            display: _.assignIn(
-              _.reduce(this.GOAL_PROPERTIES, this.initializeFieldsControl.bind(this), {}),
-              _.reduce(this.SUMMARY_PROPERTIES, this.initializeFieldsControl.bind(this), {}),
-              _.reduce(this.MANAGE_PROPERTIES, this.initializeFieldsControl.bind(this), {})
-            ),
+            display: _.assignIn(_.reduce(this.GOAL_PROPERTIES, this.initializeFieldsControl.bind(this), {}), _.reduce(this.SUMMARY_PROPERTIES, this.initializeFieldsControl.bind(this), {}), _.reduce(this.MANAGE_PROPERTIES, this.initializeFieldsControl.bind(this), {})),
             limit: {},
           },
           goals: {
+            valid: [],
             strategy: [],
             duty: [],
           },
@@ -231,45 +237,25 @@ sap.ui.define(
                   _.chain(object).set('Z1175', value).set('Z1174', value).set('Z1173', value).set('Z1172', value).set('Z1171', value).commit();
                   break;
                 case 'Z113': // 핵심결과/실적
-                  if (sZzapstsSub === 'A') {
-                    _.chain(object).set('Zmarslt', value).set('Zrslt', value).commit();
-                  } else {
-                    _.chain(object).set('Zmarslt', value).set('Zrslt', this.DISPLAY_TYPE.HIDE).commit();
-                  }
+                  _.chain(object)
+                    .set('Zmarslt', value)
+                    .set('Zrslt', _.get(this.FIELD_STATUS_MAP, [sZzapsts, sZzapstsSub, 'Zrslt', sType], value))
+                    .commit();
                   break;
                 case 'Z125': // 목표항목별 의견
-                  if (sZzapstsSub === 'A' || sZzapstsSub === 'D') {
-                    _.chain(object).set('Z125Ee', value).set('Z125Er', value).commit();
-                  } else if (sZzapstsSub === 'B') {
-                    if (sType === this.APPRAISER_TYPE.ME) {
-                      _.chain(object).set('Z125Ee', value).set('Z125Er', this.DISPLAY_TYPE.DISPLAY_ONLY).commit();
-                    } else {
-                      _.chain(object).set('Z125Ee', this.DISPLAY_TYPE.HIDDEN_VALUE).set('Z125Er', value).commit();
-                    }
-                  } else {
-                    if (sType === this.APPRAISER_TYPE.ME) {
-                      _.chain(object).set('Z125Ee', this.DISPLAY_TYPE.DISPLAY_ONLY).set('Z125Er', value).commit();
-                    } else {
-                      _.chain(object).set('Z125Ee', value).set('Z125Er', this.DISPLAY_TYPE.HIDDEN_VALUE).commit();
-                    }
-                  }
+                  _.chain(object)
+                    .set('Z125Ee', _.get(this.FIELD_STATUS_MAP, [sZzapsts, sZzapstsSub, 'Z125Ee', sType], value))
+                    .set('Z125Er', _.get(this.FIELD_STATUS_MAP, [sZzapsts, sZzapstsSub, 'Z125Er', sType], value))
+                    .commit();
                   break;
                 case 'Z131': // 목표수립 평가대상자
-                  if (sType !== this.APPRAISER_TYPE.ME && sZzapstsSub === 'B') {
-                    _.set(object, 'Z131', this.DISPLAY_TYPE.HIDDEN_VALUE);
-                  }
-                  break;
                 case 'Z132': // 목표수립 1차평가자
-                  if (sType !== this.APPRAISER_TYPE.ME && sZzapstsSub === 'C') {
-                    _.set(object, 'Z132', this.DISPLAY_TYPE.HIDDEN_VALUE);
-                  }
-                  break;
-                case 'Zmepoint':
-                case 'Zmapoint':
-                case 'Zmbgrade':
-                  if (sZzapsts === '2') {
-                    _.chain(object).set('Zmepoint', this.DISPLAY_TYPE.HIDDEN_VALUE).set('Zmapoint', this.DISPLAY_TYPE.HIDDEN_VALUE).set('Zmbgrade', this.DISPLAY_TYPE.HIDDEN_VALUE).commit();
-                  }
+                case 'Zmepoint': // 자기 평가점수
+                case 'Zmapoint': // 1차 평가점수
+                case 'Zmbgrade': // 최종 평가등급
+                  _.chain(object)
+                    .set(key, _.get(this.FIELD_STATUS_MAP, [sZzapsts, sZzapstsSub, key, sType], value))
+                    .commit();
                   break;
                 default:
                   break;
@@ -283,12 +269,6 @@ sap.ui.define(
               _.set(mDetailData, key, _.noop());
             }
           });
-
-          // Validation Property set
-          _.chain(this.VALIDATION_PROPERTIES)
-            .map((o) => ({ ...o, label: this.getBundleText(o.label) }))
-            .remove((o) => mConvertScreen[o.field] !== 'X')
-            .commit();
 
           // 콤보박스 Entry
           oViewModel.setProperty('/entry/topGoals', new ComboEntry({ codeKey: 'Objid', valueKey: 'Stext', aEntries: aTopGoals }) ?? []);
@@ -318,6 +298,13 @@ sap.ui.define(
           // 목표(전략/직무)
           oViewModel.setProperty('/currentItemsLength', _.toLength(mDetailData.AppraisalDocDetailSet.results));
           _.forEach(this.GOAL_TYPE, (v) => oViewModel.setProperty(`/goals/${v.name}`, _.map(mGroupDetailByZ101[v.code], this.initializeGoalItem.bind(this)) ?? []));
+          oViewModel.setProperty(
+            '/goals/valid',
+            _.chain(this.VALIDATION_PROPERTIES)
+              .map((o) => ({ ...o, label: this.getBundleText(o.label) }))
+              .filter((o) => mConvertScreen[o.field] === 'X')
+              .value()
+          );
 
           // 기능버튼
           _.forEach(mDetailData.AppraisalBottnsSet.results, (obj) => oViewModel.setProperty(`/buttons/submit/${obj.ButtonId}`, _.omit(obj, '__metadata')));
@@ -530,13 +517,12 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const aStrategyGoals = oViewModel.getProperty('/goals/strategy');
         const aDutyGoals = oViewModel.getProperty('/goals/duty');
-        const aFieldProperties = _.cloneDeep(this.VALIDATION_PROPERTIES);
+        const aFieldProperties = oViewModel.getProperty('/goals/valid');
         const sPrcty = 'C';
 
         // validation
-        debugger;
-        if (!_.some(aStrategyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties }))) return;
-        if (!_.some(aDutyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: _.filter(aFieldProperties, (obj) => obj.field !== 'Z103s') }))) return;
+        if (_.some(aStrategyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties }))) return;
+        if (_.some(aDutyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: _.filter(aFieldProperties, (obj) => obj.field !== 'Z103s') }))) return;
 
         MessageBox.confirm(this.getBundleText('MSG_00006', this.getButtonText(sPrcty)), {
           // {전송}하시겠습니까?

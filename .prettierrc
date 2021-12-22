@@ -2,7 +2,7 @@
   "prettier.disableLanguages": ["css"],
   "useTabs": false,
   "tabWidth": 2,
-  "printWidth": 240,
+  "printWidth": 500,
   "quoteProps": "as-needed",
   "singleQuote": true,
   "jsxSingleQuote": false,
