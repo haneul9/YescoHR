@@ -8,11 +8,11 @@
             <FlexItemData growFactor="1"/>
         </grid:layoutData>
         <Label text="{i18n>LABEL_00306}" />
-        <ComboBox width="100%" class="required" selectedKey="{/employee/dialog/form/Quali}" editable="{= ${/employee/dialog/action} === 'A'}" items="{ path: '/employee/dialog/languageTypeList' }" change=".onChangeLanguageType">
+        <ComboBox width="100%" class="required" selectedKey="{/employee/dialog/form/Quali}" enabled="{= ${/employee/dialog/action} === 'A'}" items="{ path: '/employee/dialog/languageTypeList' }" change=".onChangeLanguageType">
             <core:Item key="{Quali}" text="{Qualitx}" />
         </ComboBox>
         <Label text="{i18n>LABEL_00307}" />
-        <ComboBox width="100%" class="required" selectedKey="{/employee/dialog/form/Exmty}" editable="{= ${/employee/dialog/action} === 'A'}" items="{ path: '/employee/dialog/examTypeList' }" busyIndicatorDelay="0" busy="{/employee/dialog/busy/Exmty}">
+        <ComboBox width="100%" class="required" selectedKey="{/employee/dialog/form/Exmty}" enabled="{= ${/employee/dialog/action} === 'A'}" items="{ path: '/employee/dialog/examTypeList' }" busyIndicatorDelay="0" busy="{/employee/dialog/busy/Exmty}">
             <core:Item key="{Exmty}" text="{Exmtytx}" />
         </ComboBox>
         <Label text="{i18n>LABEL_00308}" />
@@ -22,7 +22,7 @@
             <core:Item key="{Eamgr}" text="{Eamgrtx}" />
         </ComboBox>
         <Label text="{i18n>LABEL_00310}" />
-        <custom:DatePicker width="50%" class="required" value="{ path: '/employee/dialog/form/Eamdt', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{= ${/employee/dialog/action} === 'A'}" />
+        <custom:DatePicker width="50%" class="required" value="{ path: '/employee/dialog/form/Eamdt', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{= ${/employee/dialog/action} === 'A'}" />
         <Label text="{i18n>LABEL_00312}" />
         <Input type="Number" width="50%" value="{/employee/dialog/form/Spont}" liveChange=".onChangeLanguagePoint" />
         <Label text="{i18n>LABEL_00313}" />
@@ -32,7 +32,7 @@
         <Label text="{i18n>LABEL_00315}" />
         <Input type="Number" width="50%" value="{/employee/dialog/form/Wpont}" liveChange=".onChangeLanguagePoint" />
         <Label text="{i18n>LABEL_00311}" />
-        <Input type="Number" width="50%" class="required" value="{/employee/dialog/form/Tpont}" editable="false" />
+        <Input type="Number" width="50%" class="required" value="{/employee/dialog/form/Tpont}" enabled="false" />
         <Label text="{i18n>LABEL_00316}" />
         <HBox>
             <Link text="{/employee/dialog/form/Zfilename}" width="80%" textAlign="Begin" visible="{= !!${/employee/dialog/form/Zfilename}}" press=".onPressFileLink">

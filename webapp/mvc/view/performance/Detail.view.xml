@@ -68,19 +68,19 @@
 										<Label text="{i18n>LABEL_10012}" visible="{= ${/fieldControl/display/Zmepoint} !== 'H' }"/>
 									</VBox>
 									<VBox>
-										<Input class="required" type="Number" value="{ path: '/summary/Zmepoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" editable="{= ${/fieldControl/display/Zmepoint} === 'X' }" visible="{= ${/fieldControl/display/Zmepoint} !== 'H' }"/>
+										<Input class="required" type="Number" value="{ path: '/summary/Zmepoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" enabled="{= ${/fieldControl/display/Zmepoint} === 'X' }" visible="{= ${/fieldControl/display/Zmepoint} !== 'H' }"/>
 									</VBox>
 									<VBox>
 										<Label text="{i18n>LABEL_10013}" visible="{= ${/fieldControl/display/Zmapoint} !== 'H' }"/>
 									</VBox>
 									<VBox>
-										<Input class="required" type="Number" value="{ path: '/summary/Zmapoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" editable="{= ${/fieldControl/display/Zmapoint} === 'X' }" visible="{= ${/fieldControl/display/Zmapoint} !== 'H' }"/>
+										<Input class="required" type="Number" value="{ path: '/summary/Zmapoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" enabled="{= ${/fieldControl/display/Zmapoint} === 'X' }" visible="{= ${/fieldControl/display/Zmapoint} !== 'H' }"/>
 									</VBox>
 									<VBox>
 										<Label text="{i18n>LABEL_10014}" visible="{= ${/fieldControl/display/Zmbgrade} !== 'H' }"/>
 									</VBox>
 									<VBox>
-										<ComboBox class="required" selectedKey="{/summary/Zmbgrade}" items="{ path: '/entry/levels', templateShareable: true }" editable="{= ${/fieldControl/display/Zmbgrade} === 'X' }" visible="{= ${/fieldControl/display/Zmbgrade} !== 'H' }">
+										<ComboBox class="required" selectedKey="{/summary/Zmbgrade}" items="{ path: '/entry/levels', templateShareable: true }" enabled="{= ${/fieldControl/display/Zmbgrade} === 'X' }" visible="{= ${/fieldControl/display/Zmbgrade} !== 'H' }">
 											<core:Item key="{ValueEid}" text="{ValueText}" />
 										</ComboBox>
 									</VBox>
@@ -97,24 +97,24 @@
 									<Label text="{i18n>LABEL_10016}" width="100%" textAlign="Center" />
 									<Label text="{i18n>LABEL_10017}" width="100%" textAlign="Center" visible="{= ${/fieldControl/display/Z131} !== 'H' || ${/fieldControl/display/Z132} !== 'H' }" />
 									<VBox visible="{= ${/fieldControl/display/Z131} !== 'H' }">
-										<TextArea rows="5" value="{/manage/Z131}" width="100%" maxLength="{/fieldControl/limit/Z131}" editable="{= ${/fieldControl/display/Z131} === 'X' }" />
+										<TextArea rows="5" value="{/manage/Z131}" width="100%" maxLength="{/fieldControl/limit/Z131}" enabled="{= ${/fieldControl/display/Z131} === 'X' }" />
 									</VBox>
 									<VBox visible="{= ${/fieldControl/display/Z132} !== 'H' }">
-										<TextArea rows="5" value="{/manage/Z132}" width="100%" maxLength="{/fieldControl/limit/Z132}" editable="{= ${/fieldControl/display/Z132} === 'X' }" />
+										<TextArea rows="5" value="{/manage/Z132}" width="100%" maxLength="{/fieldControl/limit/Z132}" enabled="{= ${/fieldControl/display/Z132} === 'X' }" />
 									</VBox>
 									<Label text="{i18n>LABEL_10018}" width="100%" textAlign="Center" visible="{= ${/fieldControl/display/Z136} !== 'H' || ${/fieldControl/display/Z137} !== 'H' }" />
 									<VBox visible="{= ${/fieldControl/display/Z136} !== 'H' }">
-										<TextArea rows="5" value="{/manage/Z136}" width="100%" maxLength="{/fieldControl/limit/Z136}" editable="{= ${/fieldControl/display/Z136} === 'X' }" />
+										<TextArea rows="5" value="{/manage/Z136}" width="100%" maxLength="{/fieldControl/limit/Z136}" enabled="{= ${/fieldControl/display/Z136} === 'X' }" />
 									</VBox>
 									<VBox visible="{= ${/fieldControl/display/Z137} !== 'H' }">
-										<TextArea rows="5" value="{/manage/Z137}" width="100%" maxLength="{/fieldControl/limit/Z137}" editable="{= ${/fieldControl/display/Z137} === 'X' }" />
+										<TextArea rows="5" value="{/manage/Z137}" width="100%" maxLength="{/fieldControl/limit/Z137}" enabled="{= ${/fieldControl/display/Z137} === 'X' }" />
 									</VBox>
 									<Label text="{i18n>LABEL_10019}" width="100%" textAlign="Center" visible="{= ${/fieldControl/display/Papp1} !== 'H' || ${/fieldControl/display/Papp2} !== 'H' }" />
 									<VBox visible="{= ${/fieldControl/display/Papp1} !== 'H' }">
-										<TextArea rows="5" value="{/manage/Papp1}" width="100%" maxLength="{/fieldControl/limit/Papp1}" editable="{= ${/fieldControl/display/Papp1} === 'X' }" />
+										<TextArea rows="5" value="{/manage/Papp1}" width="100%" maxLength="{/fieldControl/limit/Papp1}" enabled="{= ${/fieldControl/display/Papp1} === 'X' }" />
 									</VBox>
 									<VBox visible="{= ${/fieldControl/display/Papp2} !== 'H' }">
-										<TextArea rows="5" value="{/manage/Papp2}" width="100%" maxLength="{/fieldControl/limit/Papp2}" editable="{= ${/fieldControl/display/Papp2} === 'X' }" />
+										<TextArea rows="5" value="{/manage/Papp2}" width="100%" maxLength="{/fieldControl/limit/Papp2}" enabled="{= ${/fieldControl/display/Papp2} === 'X' }" />
 									</VBox>
 								</grid:CSSGrid>
 							</VBox>
@@ -125,7 +125,7 @@
 									</layoutData>
 									<Title level="H2" text="{i18n>LABEL_10010}" />
 								</HBox>
-								<TextArea width="100%" rows="5" value="{/manage/Z140}" maxLength="{/fieldControl/limit/Z140}" editable="{= ${/fieldControl/display/Z140} === 'X' }" />
+								<TextArea width="100%" rows="5" value="{/manage/Z140}" maxLength="{/fieldControl/limit/Z140}" enabled="{= ${/fieldControl/display/Z140} === 'X' }" />
 							</VBox>
 						</IconTabFilter>
 					</items>

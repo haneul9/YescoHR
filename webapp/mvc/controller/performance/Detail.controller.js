@@ -75,8 +75,6 @@ sap.ui.define(
         { field: 'Z1173', label: 'LABEL_10029', type: Validator.INPUT1 }, // 달성방안
         { field: 'Z1172', label: 'LABEL_10029', type: Validator.INPUT1 }, // 달성방안
         { field: 'Z1171', label: 'LABEL_10029', type: Validator.INPUT1 }, // 달성방안
-        { field: 'Z125Ee', label: 'LABEL_10030', type: Validator.INPUT1 }, // 목표항목별 의견 (피평가자)
-        { field: 'Z125Er', label: 'LABEL_10031', type: Validator.INPUT1 }, // 목표항목별 의견 (평가자)
         { field: 'Zmepoint', label: 'LABEL_10012', type: Validator.INPUT2 }, // 자기 평가점수
         { field: 'Zmapoint', label: 'LABEL_10013', type: Validator.INPUT2 }, // 1차 평가점수
         { field: 'Zmbgrade', label: 'LABEL_10014', type: Validator.SELECT1 }, // 최종 평가등급
