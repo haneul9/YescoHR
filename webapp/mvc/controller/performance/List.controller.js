@@ -22,9 +22,12 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.performance.List', {
+      APPRAISER_TYPE: { performance: 'ME', performanceEvalPry: 'MA', performanceEvalSry: 'MB' },
+
       onBeforeShow() {
         const oViewModel = new JSONModel({
           busy: false,
+          type: '',
           listInfo: {
             rowCount: 1,
           },
@@ -42,6 +45,7 @@ sap.ui.define(
 
         try {
           oViewModel.setProperty('/busy', true);
+          oViewModel.setProperty('/type', this.APPRAISER_TYPE[this.getRouter().getHashChanger().getHash()]);
 
           const aTableData = await Client.getEntitySet(oModel, 'AppraisalPeeList', { Menid: this.getCurrentMenuId(), Prcty: 'L', Werks: this.getAppointeeProperty('Werks'), Zzappgb: 'ME', Zzappee: this.getAppointeeProperty('Pernr') });
 
@@ -69,9 +73,20 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const sPath = oEvent.getParameters().rowBindingContext.getPath();
         const oRowData = oViewModel.getProperty(sPath);
+        const sType = oViewModel.getProperty('/type');
+
+        if (oRowData.Zzapsts === '2') {
+          if (oRowData.ZzapstsSub === 'A') {
+            return;
+          } else if (oRowData.ZzapstsSub === 'B') {
+            if (sType !== this.APPRAISER_TYPE.performance) return;
+          } else if (oRowData.ZzapstsSub === 'C') {
+            if (sType === this.APPRAISER_TYPE.performanceEvalSry) return;
+          }
+        }
 
         oViewModel.setProperty('/parameter/rowData', { ...oRowData });
-        this.getRouter().navTo('performance-detail', { year: _.chain(oRowData.Zperiod).split('.', 1).head().value() });
+        this.getRouter().navTo('performance-detail', { type: sType, year: _.chain(oRowData.Zperiod).split('.', 1).head().value() });
       },
 
       /*****************************************************************

@@ -9,13 +9,13 @@
 			<HBox justifyContent="SpaceBetween" class="breadcrumbs">
 				<custom:Breadcrumbs />
 				<HBox>
-					<Button text="{i18n>LABEL_00142}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= !!${/buttons/Rjctr} }" press=".onPressRejectViewButton" />
-					<Button text="{i18n>LABEL_10032}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" />
-					<Button text="{i18n>LABEL_00175}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" />
-					<Button text="{i18n>LABEL_00123}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" />
-					<Button text="{i18n>LABEL_00124}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" press=".onPressRejectButton" />
-					<Button text="{i18n>LABEL_00118}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" />
-					<Button text="{i18n>LABEL_00103}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" />
+					<Button text="{i18n>LABEL_00142}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/REJECT_REASON/Availability} === 'X' }" press=".onPressRejectViewButton" />
+					<Button text="{i18n>LABEL_10032}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/TOP_GOAL/Availability} === 'X' }" />
+					<Button text="{i18n>LABEL_00175}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/Z_SUBMIT/Availability} === 'X' }" press=".onPressSubmitButton" />
+					<Button text="{i18n>LABEL_00123}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/APPROVE/Availability} === 'X' }" />
+					<Button text="{i18n>LABEL_00124}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/REJECT/Availability} === 'X' }" press=".onPressRejectButton" />
+					<Button text="{i18n>LABEL_00118}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/Z_CANCEL/Availability} === 'X' }" />
+					<Button text="{i18n>LABEL_00103}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/SAVE/Availability} === 'X' }" press=".onPressSaveButton" />
 					<Button text="{i18n>LABEL_00146}" class="sapUiTinyMarginEnd" press=".onNavBack" />
 					<Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" />
 				</HBox>
@@ -96,25 +96,25 @@
 									<Label text="{i18n>LABEL_10015}" width="100%" textAlign="Center" />
 									<Label text="{i18n>LABEL_10016}" width="100%" textAlign="Center" />
 									<Label text="{i18n>LABEL_10017}" width="100%" textAlign="Center" visible="{= ${/fieldControl/display/Z131} !== 'H' || ${/fieldControl/display/Z132} !== 'H' }" />
-									<VBox>
-										<TextArea rows="5" value="{/manage/Z131}" width="100%" maxLength="{/fieldControl/limit/Z131}" editable="{= ${/fieldControl/display/Z131} === 'X' }" visible="{= ${/fieldControl/display/Z131} !== 'H' }" />
+									<VBox visible="{= ${/fieldControl/display/Z131} !== 'H' }">
+										<TextArea rows="5" value="{/manage/Z131}" width="100%" maxLength="{/fieldControl/limit/Z131}" editable="{= ${/fieldControl/display/Z131} === 'X' }" />
 									</VBox>
-									<VBox>
-										<TextArea rows="5" value="{/manage/Z132}" width="100%" maxLength="{/fieldControl/limit/Z132}" editable="{= ${/fieldControl/display/Z132} === 'X' }" visible="{= ${/fieldControl/display/Z132} !== 'H' }" />
+									<VBox visible="{= ${/fieldControl/display/Z132} !== 'H' }">
+										<TextArea rows="5" value="{/manage/Z132}" width="100%" maxLength="{/fieldControl/limit/Z132}" editable="{= ${/fieldControl/display/Z132} === 'X' }" />
 									</VBox>
 									<Label text="{i18n>LABEL_10018}" width="100%" textAlign="Center" visible="{= ${/fieldControl/display/Z136} !== 'H' || ${/fieldControl/display/Z137} !== 'H' }" />
-									<VBox>
-										<TextArea rows="5" value="{/manage/Z136}" width="100%" maxLength="{/fieldControl/limit/Z136}" editable="{= ${/fieldControl/display/Z136} === 'X' }" visible="{= ${/fieldControl/display/Z136} !== 'H' }" />
+									<VBox visible="{= ${/fieldControl/display/Z136} !== 'H' }">
+										<TextArea rows="5" value="{/manage/Z136}" width="100%" maxLength="{/fieldControl/limit/Z136}" editable="{= ${/fieldControl/display/Z136} === 'X' }" />
 									</VBox>
-									<VBox>
-										<TextArea rows="5" value="{/manage/Z137}" width="100%" maxLength="{/fieldControl/limit/Z137}" editable="{= ${/fieldControl/display/Z137} === 'X' }" visible="{= ${/fieldControl/display/Z137} !== 'H' }" />
+									<VBox visible="{= ${/fieldControl/display/Z137} !== 'H' }">
+										<TextArea rows="5" value="{/manage/Z137}" width="100%" maxLength="{/fieldControl/limit/Z137}" editable="{= ${/fieldControl/display/Z137} === 'X' }" />
 									</VBox>
 									<Label text="{i18n>LABEL_10019}" width="100%" textAlign="Center" visible="{= ${/fieldControl/display/Papp1} !== 'H' || ${/fieldControl/display/Papp2} !== 'H' }" />
-									<VBox>
-										<TextArea rows="5" value="{/manage/Papp1}" width="100%" maxLength="{/fieldControl/limit/Papp1}" editable="{= ${/fieldControl/display/Papp1} === 'X' }" visible="{= ${/fieldControl/display/Papp1} !== 'H' }" />
+									<VBox visible="{= ${/fieldControl/display/Papp1} !== 'H' }">
+										<TextArea rows="5" value="{/manage/Papp1}" width="100%" maxLength="{/fieldControl/limit/Papp1}" editable="{= ${/fieldControl/display/Papp1} === 'X' }" />
 									</VBox>
-									<VBox>
-										<TextArea rows="5" value="{/manage/Papp2}" width="100%" maxLength="{/fieldControl/limit/Papp2}" editable="{= ${/fieldControl/display/Papp2} === 'X' }" visible="{= ${/fieldControl/display/Papp2} !== 'H' }" />
+									<VBox visible="{= ${/fieldControl/display/Papp2} !== 'H' }">
+										<TextArea rows="5" value="{/manage/Papp2}" width="100%" maxLength="{/fieldControl/limit/Papp2}" editable="{= ${/fieldControl/display/Papp2} === 'X' }" />
 									</VBox>
 								</grid:CSSGrid>
 							</VBox>
