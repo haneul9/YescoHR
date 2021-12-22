@@ -113,7 +113,7 @@
                         <layoutData>
                             <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '6 / 11' : '5 / 10' }" />
                         </layoutData>
-                        <Label width="100%" text="{i18n>LABEL_10029}" vAlign="Top" visible="{= ${/fieldControl/display/Z1175} !== 'H' || ${/fieldControl/display/Z1174} !== 'H' || ${/fieldControl/display/Z1173} !== 'H' || ${/fieldControl/display/Z1172} !== 'H' || ${/fieldControl/display/Z1171} !== 'H' }"/>
+                        <Label width="100%" text="{i18n>LABEL_10029}" vAlign="Top" visible="{= ${/fieldControl/display/Z117} !== 'H' }"/>
                     </VBox>
                     <VBox class="label_wrap">
                         <layoutData>

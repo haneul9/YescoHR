@@ -145,7 +145,7 @@
         { "pattern": "excavation/{appno}", "name": "excavation-detail", "target": "excavationDetail" },
 
         { "pattern": "performance", "name": "performance", "target": "performance" },
-        { "pattern": "performance/{year}", "name": "performance-detail", "target": "performanceDetail" },
+        { "pattern": "performance/{type}/{year}", "name": "performance-detail", "target": "performanceDetail" },
         
         { "pattern": "m/organization", "name": "m/organization", "target": "m/organization" },
         
