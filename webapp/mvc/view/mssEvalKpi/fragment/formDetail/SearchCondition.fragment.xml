@@ -7,7 +7,7 @@
             <core:Item text="{Pbtxt}" key="{Werks}" />
         </ComboBox>
         <Label text="{i18n>LABEL_15004}" />
-        <ComboBox items="{/PartCode}" selectedKey="{/search/Orgeh}">
+        <ComboBox items="{/PartCode}" selectedKey="{/search/Orgeh}" change=".onPartSelect">
             <core:Item text="{Orgtx}" key="{Orgeh}" />
         </ComboBox>
         <Label text="{i18n>LABEL_15005}" />

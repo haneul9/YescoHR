@@ -746,6 +746,10 @@ sap.ui.define(
 
         let oSendObject = {};
 
+        aDeep.forEach((e) => {
+          e.Waers = 'KRW';
+        });
+
         oSendObject = mFormData;
         oSendObject.Prcty = '1';
         oSendObject.MedExpenseItemSet = aDeep;

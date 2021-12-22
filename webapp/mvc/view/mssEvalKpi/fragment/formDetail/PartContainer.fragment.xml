@@ -1,3 +1,49 @@
 <core:FragmentDefinition xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:w="sap.ui.integration.widgets"
     xmlns:core="sap.ui.core">
+    <HBox justifyContent="SpaceBetween">
+        <HBox>
+            <ObjectStatus text="{i18n>LABEL_15004}" state="Indication04" />
+            <Title level="H4" text="{i18n>LABEL_15018}" />
+        </HBox>
+        <HBox>
+            <core:Icon src="sap-icon://favorite" />
+            <Text text="{i18n>LABEL_15014}" textAlign="Center" width="100%"/>
+            <core:Icon src="sap-icon://favorite" />
+            <Text text="{i18n>LABEL_15015}" textAlign="Center" width="100%"/>
+            <core:Icon src="sap-icon://favorite" />
+            <Text text="{i18n>LABEL_15016}" textAlign="Center" width="100%"/>
+            <core:Icon src="sap-icon://favorite" />
+            <Text text="{i18n>LABEL_15017}" textAlign="Center" width="100%"/>
+        </HBox>
+    </HBox>
+    <ScrollContainer height="200PX" width="100%" vertical="true" class="vCardBox">
+        <HBox>
+            <Label text="{/search/Orgtx}" textAlign="Center" wrapping="true" />
+            <f:GridContainer id="grid1" height="100%" width="100%" class="sapUiSmallMargin" snapToRow="true" items="{ path: '/PartList' }">
+                <f:layout>
+                    <f:GridContainerSettings rowSize="50px" columnSize="50px" gap="8px" />
+                </f:layout>
+                <f:layoutXS>
+                    <f:GridContainerSettings rowSize="20px" columnSize="20px" gap="8px" />
+                </f:layoutXS>
+
+                <GenericTile header="{Stext}" subheader="{Ztext}" visible="{= !!${Stext} }">
+                    <layoutData>
+                        <f:GridContainerItemLayoutData minRows="1" columns="1" />
+                    </layoutData>
+                    <TileContent>
+                        <ImageContent src="sap-icon://home-share" />
+                    </TileContent>
+                </GenericTile>
+
+                <GenericTile header="{i18n>MSG_15002}">
+                    <layoutData>
+                        <f:GridContainerItemLayoutData minRows="1" columns="1" />
+                    </layoutData>
+                </GenericTile>
+            </f:GridContainer>
+        </HBox>
+    </ScrollContainer>
 </core:FragmentDefinition>

@@ -1,3 +1,5 @@
-<c:FragmentDefinition xmlns="sap.m"
-    xmlns:c="sap.ui.core">
-</c:FragmentDefinition>
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <VBox class="contents">
+    </VBox>
+</core:FragmentDefinition>

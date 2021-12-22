@@ -2,48 +2,49 @@
     xmlns:core="sap.ui.core"
     xmlns:dnd="sap.ui.core.dnd"
     xmlns:table="sap.ui.table">
-    <table:Table id="gridTable" rows="{/List}" visibleRowCount="{/listInfo/rowCount}" width="100%" busyIndicatorDelay="0" busy="{/busy}" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
+    <table:Table id="gridTable" rows="{/List}" visibleRowCount="{/listRowCount}" width="100%" busyIndicatorDelay="0" busy="{/busy}" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
         <table:extension>
             <HBox>
-                <ObjectStatus text="{i18n>LABEL_15006}" state="Indication05" />
-                <Title level="H3" text="{i18n>LABEL_15008}" />
+                <ObjectStatus text="{i18n>LABEL_15006}" state="Indication04" />
+                <Title level="H4" text="{i18n>LABEL_15008}" />
             </HBox>
         </table:extension>
-        <!-- <table:dragDropConfig>
-            <dnd:DragDropInfo groupName="moveToTable2" sourceAggregation="rows" dragStart=".onDragStart" />
-            <dnd:DragDropInfo groupName="moveToTable1" drop=".onDropTable"/>
-        </table:dragDropConfig> -->
+        <table:dragDropConfig>
+            <dnd:DragDropInfo sourceAggregation="rows" dragStart=".onDragStart" />
+            <dnd:DragDropInfo drop=".onDropTable"/>
+        </table:dragDropConfig>
         <table:columns>
             <table:Column width="150px">
                 <Label text="{i18n>LABEL_15009}"/>
                 <table:template>
-                    <Text text="{Orgtx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                    <Text text="{Otext}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
             <table:Column width="300px">
                 <Label text="{i18n>LABEL_15010}"/>
                 <table:template>
-                    <Text text="{Stext}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                    <!-- <Text text="{Stext}" textAlign="Begin" width="100%" wrapping="false" class="tableRow_Text"/> -->
+                    <Link href="{Url}" text="{Stext}"/>
                 </table:template>
             </table:Column>
             <table:Column width="auto">
                 <Label text="{i18n>LABEL_15011}"/>
                 <table:template>
-                    <Text text="{Ztext}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                    <Text text="{Ztext}" textAlign="Begin" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
             <table:Column width="100px">
                 <Label text="{i18n>LABEL_15012}"/>
                 <table:template>
-                    <Text text="{Tmcnt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                    <Text text="{Tmcnt}" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
             <table:Column width="100px">
                 <Label text="{i18n>LABEL_15013}"/>
                 <table:template>
-                    <Text text="{Prozt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                    <Text text="{Prozt}" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
             </table:Column>
         </table:columns>
     </table:Table>
-</core:FragmentDefinitionn>
+</core:FragmentDefinition>
