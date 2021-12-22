@@ -115,6 +115,10 @@ sap.ui.define(
         return this.getOwnerComponent().getMenuModel().getCurrentMenuId();
       },
 
+      getCurrentMenuRouteName() {
+        return this.getOwnerComponent().getMenuModel().getCurrentMenuRouteName();
+      },
+
       getSessionData() {
         return this.getOwnerComponent().getSessionModel().getData();
       },

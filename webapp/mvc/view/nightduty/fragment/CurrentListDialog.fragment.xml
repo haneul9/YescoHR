@@ -8,11 +8,11 @@
         <m:Label text="{i18n>MSG_06005}" />
         <custom:DatePicker value="{ path: 'yearMonth', type: 'sap.ui.yesco.mvc.model.type.Month' }" />
         <m:Label text="{i18n>MSG_06006}" />
-        <m:ComboBox id="dutyGroup" items="{dutyGroups}" selectedKey="{selectedDutyGroup}">
+        <m:ComboBox items="{dutyGroups}" selectedKey="{selectedDutyGroup}">
           <core:Item key="{code}" text="{text}" />
         </m:ComboBox>
       </m:HBox>
-      <m:Button type="Transparent" icon="sap-icon://search" class="icon-button" press=".onPressCurrentListSearch" />
+      <m:Button type="Transparent" class="icon-button search" press=".onPressCurrentListSearch" />
     </m:HBox>
     <Table id="currentListTable" class="row-link" width="100%" columnHeaderHeight="45" rowHeight="44" selectionMode="{currentListMode}" rows="{currentList}" visibleRowCount="{currentListRowCount}" busy="{busy}" busyIndicatorDelay="0" noData="{i18n>MSG_00001}" rowSelectionChange=".onChangeRowSelection">
       <columns>

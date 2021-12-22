@@ -38,8 +38,8 @@ sap.ui.define(
 
       async onObjectMatched() {
         try {
-          this.oSummaryBoxHandler = new SummaryBoxHandler(this);
-          this.oSearchBoxHandler = new SearchBoxHandler(this, this.sRequestListTableId);
+          this.oSummaryBoxHandler ||= new SummaryBoxHandler(this);
+          this.oSearchBoxHandler ||= new SearchBoxHandler(this, this.sRequestListTableId);
 
           this.onPressSearchBoxIcon();
         } catch (oError) {

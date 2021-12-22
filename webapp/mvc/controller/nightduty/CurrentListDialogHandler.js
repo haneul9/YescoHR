@@ -28,14 +28,14 @@ sap.ui.define(
     'use strict';
 
     return BaseObject.extend('sap.ui.yesco.mvc.controller.nightduty.CurrentListDialogHandler', {
-      constructor: function ({ oController, sMode = 'R', fnCallback = () => {} }) {
+      constructor: function ({ oController, sSelectionMode = SelectionMode.None, fnCallback = () => {} }) {
         this.oController = oController;
-        this.sMode = sMode;
+        this.sSelectionMode = sSelectionMode;
         this.fnCallback = fnCallback;
         this.oCurrentListDialog = null;
         this.sCurrentListTableId = 'currentListTable';
         this.sThisMonth = moment().hours(9).format(oController.getSessionProperty('DTFMTYYYYMM'));
-        this.oDialogModel = new JSONModel(this.getInitialData(sMode));
+        this.oDialogModel = new JSONModel(this.getInitialData());
       },
 
       getInitialData() {
@@ -53,7 +53,7 @@ sap.ui.define(
             }),
             currentList: null,
             currentListRowCount: 1,
-            currentListMode: this.sMode === 'S' ? SelectionMode.MultiToggle : SelectionMode.None,
+            currentListMode: this.sSelectionMode,
             selectedList: [],
           },
         };
@@ -61,12 +61,15 @@ sap.ui.define(
 
       async openDialog() {
         if (!this.oCurrentListDialog) {
+          const oView = this.oController.getView();
           this.oCurrentListDialog = await Fragment.load({
+            id: oView.createId(this.sSelectionMode.toLowerCase()),
             name: 'sap.ui.yesco.mvc.view.nightduty.fragment.CurrentListDialog',
             controller: this,
           });
 
-          this.oController.getView().addDependent(this.oCurrentListDialog);
+          oView.addDependent(this.oCurrentListDialog);
+
           this.oCurrentListDialog
             .setModel(this.oDialogModel)
             .bindElement('/dialog')
@@ -86,7 +89,9 @@ sap.ui.define(
        *
        */
       initDialogData() {
-        sap.ui.getCore().byId(this.sCurrentListTableId).clearSelection();
+        if (this.sSelectionMode === SelectionMode.MultiToggle) {
+          this.oController.getView().byId(`${this.sSelectionMode.toLowerCase()}--${this.sCurrentListTableId}`).clearSelection();
+        }
         this.oDialogModel.setData(this.getInitialData());
       },
 
@@ -144,14 +149,14 @@ sap.ui.define(
       setCurrentListTableData(aCurrentListData) {
         this.oDialogModel.setProperty('/dialog/currentList', aCurrentListData);
         this.oDialogModel.setProperty('/dialog/currentListRowCount', (aCurrentListData || []).length || 1);
-        if (this.sMode === 'S') {
+        if (this.sSelectionMode === SelectionMode.MultiToggle) {
           this.oDialogModel.setProperty('/dialog/selectedList', []);
           this.oDialogModel.setProperty('/dialog/enabled', false);
         }
       },
 
       onChangeRowSelection(oEvent) {
-        if (this.sMode !== 'S') {
+        if (this.sSelectionMode !== SelectionMode.MultiToggle) {
           return;
         }
 

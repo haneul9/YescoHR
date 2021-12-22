@@ -62,8 +62,8 @@ sap.ui.define(
       },
 
       onBeforeShow() {
-        this.oRequestDetailHelper = new RequestDetailHelper(this);
-        this.oApprovalRequestHelper = new ApprovalRequestHelper(this);
+        this.oRequestDetailHelper ||= new RequestDetailHelper(this);
+        this.oApprovalRequestHelper ||= new ApprovalRequestHelper(this);
       },
 
       async onObjectMatched(mArguments) {
