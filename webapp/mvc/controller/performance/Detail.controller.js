@@ -306,8 +306,8 @@ sap.ui.define(
             .tap((o) => _.set(o, 'Rjctr', _.get(mDetailData, 'Rjctr', _.noop())))
             .tap((o) =>
               _.chain(o.goal)
-                .set(['ADD', 'Availability'], _.isEqual(sType, this.APPRAISER_TYPE.ME) && _.isEqual([sZzapsts, sZzapstsSub], ['2', 'B']))
-                .set(['DELETE', 'Availability'], _.isEqual(sType, this.APPRAISER_TYPE.ME) && _.isEqual([sZzapsts, sZzapstsSub], ['2', 'B']))
+                .set(['ADD', 'Availability'], _.isEqual(_.get(mConvertScreen, ['Obj0']), this.DISPLAY_TYPE.EDIT))
+                .set(['DELETE', 'Availability'], _.isEqual(_.get(mConvertScreen, ['Obj0']), this.DISPLAY_TYPE.EDIT))
                 .commit()
             )
             .tap((o) => _.forEach(mDetailData.AppraisalBottnsSet.results, (obj) => _.set(o.submit, obj.ButtonId, _.omit(obj, '__metadata'))))
@@ -413,7 +413,7 @@ sap.ui.define(
         return sPrcty === 'C' ? _.get(mSubmitButtons, ['Z_SUBMIT', 'ButtonText']) : _.get(mSubmitButtons, ['SAVE', 'ButtonText']);
       },
 
-      createProcess(sPrcty) {
+      async createProcess(sPrcty) {
         const oModel = this.getModel(ServiceNames.APPRAISAL);
         const oViewModel = this.getViewModel();
         const mParameter = _.cloneDeep(oViewModel.getProperty('/param'));
@@ -423,11 +423,13 @@ sap.ui.define(
         const aDuty = _.cloneDeep(oViewModel.getProperty('/goals/duty'));
 
         try {
+          oViewModel.setProperty('/busy', true);
+
           if (sPrcty === 'C') {
             _.chain(mParameter).set('OldStatus', mParameter.Zzapsts).set('OldStatusSub', mParameter.ZzapstsSub).set('OldStatusPart', mParameter.ZzapstsPSub).commit();
           }
 
-          Client.deep(oModel, 'AppraisalDoc', {
+          await Client.deep(oModel, 'AppraisalDoc', {
             ...mParameter,
             ...mManage,
             ...mSummary,
@@ -446,6 +448,8 @@ sap.ui.define(
           this.debug('Controller > Performance Detail > createProcess Error', oError);
 
           AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
         }
       },
 
