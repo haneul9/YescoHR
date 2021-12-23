@@ -357,20 +357,20 @@ sap.ui.define(
 
         // 선택된 행을 삭제하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00021'), {
-          onClose: (oAction) => {
-            if (MessageBox.Action.OK === oAction) {
-              const aUnSelectedData = aTableData.filter((elem, idx) => {
-                return !aSelectedIndices.some(function (iIndex) {
-                  return iIndex === idx;
-                });
+          onClose: (sAction) => {
+            if (MessageBox.Action.CANCEL === sAction) return;
+
+            const aUnSelectedData = aTableData.filter((elem, idx) => {
+              return !aSelectedIndices.some(function (iIndex) {
+                return iIndex === idx;
               });
+            });
 
-              oViewModel.setProperty('/form/list', aUnSelectedData);
-              oViewModel.setProperty('/form/rowCount', aUnSelectedData.length);
+            oViewModel.setProperty('/form/list', aUnSelectedData);
+            oViewModel.setProperty('/form/rowCount', aUnSelectedData.length);
 
-              this.toggleHasRowProperty();
-              oTable.clearSelection();
-            }
+            this.toggleHasRowProperty();
+            oTable.clearSelection();
           },
         });
       },
