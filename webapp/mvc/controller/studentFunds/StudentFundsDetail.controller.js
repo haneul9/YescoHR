@@ -346,7 +346,7 @@ sap.ui.define(
       },
 
       // 학력구분List 다시셋팅
-      reflashList(sKey) {
+      async reflashList(sKey) {
         const oDetailModel = this.getViewModel();
         const aList1 = oDetailModel.getProperty('/AcademicSortHide');
         let aList2 = [];
@@ -360,6 +360,9 @@ sap.ui.define(
 
           if (!oDetailModel.getProperty('/FormData/ZappStatAl')) {
             oDetailModel.setProperty('/FormData/Slart', aList2[0].Zcode);
+            const aList = await this.getQuarterList(aList2[0].Zcode);
+  
+            oDetailModel.setProperty('/QuarterList', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
           }
 
           aList2 = aList2;
@@ -414,13 +417,10 @@ sap.ui.define(
       },
 
       // 학력구분 선택시
-      onShcoolList(oEvent) {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
+      async onShcoolList(oEvent) {
         const oDetailModel = this.getViewModel();
         const vSelected = !oEvent ? oDetailModel.getProperty('/FormData/Slart') : oEvent.getSource().getSelectedKey();
         const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
-        const sUrl = '/BenefitCodeListSet';
-        const sWerks = this.getSessionProperty('Werks');
 
         if (vSelected === 'ALL') return;
 
@@ -440,29 +440,43 @@ sap.ui.define(
         this.getApplyNumber();
         this.getSupAmount();
 
-        oModel.read(sUrl, {
-          filters: [
-            new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0005'),
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
-            new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-            new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, vSelected),
-          ],
-          success: (oData) => {
-            if (oData) {
-              this.debug(`${sUrl} success.`, oData);
+        try {
+          const aList = await this.getQuarterList(vSelected);
+  
+          oDetailModel.setProperty('/QuarterList', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
+    
+          if (!!oEvent) {
+            oDetailModel.setProperty('/FormData/Divcd', 'ALL');
+          }
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        }
+      },
 
-              const aList = oData.results;
+      // 분기/학기
+      getQuarterList(sUpcod) {
+        const oModel = this.getModel(ServiceNames.BENEFIT);
+        const sUrl = '/BenefitCodeListSet';
+        const sWerks = this.getSessionProperty('Werks');
 
-              oDetailModel.setProperty('/QuarterList', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
-
-              if (!!oEvent) {
-                oDetailModel.setProperty('/FormData/Divcd', 'ALL');
+        return new Promise((resolve, reject) => {
+          oModel.read(sUrl, {
+            filters: [
+              new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0005'),
+              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
+              new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
+              new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, sUpcod),
+            ],
+            success: (oData) => {
+              if (oData) {
+                this.debug(`${sUrl} success.`, oData);
+                resolve(oData.results);
               }
-            }
-          },
-          error: (oError) => {
-            AppUtils.handleError(new ODataReadError(oError));
-          },
+            },
+            error: (oError) => {
+              reject(new ODataReadError(oError));
+            },
+          });
         });
       },
 
