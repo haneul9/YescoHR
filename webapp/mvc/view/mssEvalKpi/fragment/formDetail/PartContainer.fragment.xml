@@ -30,16 +30,16 @@
                 <HBox >
                     <GenericTile header="{Stext}" subheader="{Ztext}" visible="{= !!${Stext} }">
                         <layoutData>
-                            <f:GridContainerItemLayoutData minRows="3" columns="2" />
+                            <f:GridContainerItemLayoutData minRows="2" columns="3" />
                         </layoutData>
                         <TileContent>
                             <ImageContent src="sap-icon://home-share" />
                             <ImageContent src="sap-icon://home-share" />
                         </TileContent>
                     </GenericTile>
-                    <GenericTile header="{asdasd}">
+                    <GenericTile header="{i18n>MSG_15002}">
                         <layoutData>
-                            <f:GridContainerItemLayoutData minRows="3" columns="2" />
+                            <f:GridContainerItemLayoutData minRows="2" columns="3" />
                         </layoutData>
                         <TileContent>
                             <ImageContent src="sap-icon://home-share" />

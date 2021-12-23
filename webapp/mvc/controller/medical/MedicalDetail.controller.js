@@ -682,7 +682,7 @@ sap.ui.define(
         }
 
         // 영수증 구분
-        if (!mDialogData.Recpgb) {
+        if (!mDialogData.Recpgb || mDialogData.Recpgb === 'ALL') {
           MessageBox.alert(this.getBundleText('MSG_09021'));
           return true;
         }
