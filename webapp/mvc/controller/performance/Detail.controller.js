@@ -82,8 +82,11 @@ sap.ui.define(
       ],
 
       getPreviousRouteName() {
-        const sType = this.getViewModel().getProperty('/type');
-        return sType === this.APPRAISER_TYPE.ME ? 'performance' : sType === this.APPRAISER_TYPE.MA ? 'm/performancePry' : 'm/performanceSry';
+        return _.chain(this.getRouter().getHashChanger().getHash()).split('/').dropRight(2).join('/').value();
+      },
+
+      getCurrentLocationText(oArguments) {
+        return oArguments.year;
       },
 
       initializeFieldsControl(acc, cur) {
@@ -147,13 +150,14 @@ sap.ui.define(
       },
 
       async onObjectMatched(oParameter) {
-        const oView = this.getView();
         const oViewModel = this.getViewModel();
-        const oModel = this.getModel(ServiceNames.APPRAISAL);
-        const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-        const { type: sType, year: sYear } = oParameter;
 
         try {
+          const oView = this.getView();
+          const oModel = this.getModel(ServiceNames.APPRAISAL);
+          const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+          const { type: sType, year: sYear } = oParameter;
+
           if (_.isEmpty(oListView) || _.isEmpty(oListView.getModel().getProperty('/parameter/rowData'))) {
             throw new UI5Error({ code: 'E', message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
           }
@@ -221,10 +225,10 @@ sap.ui.define(
             .forOwn((value, key, object) => {
               switch (key) {
                 case 'Papp': // 부분 평가
-                  _.set(object, 'Zapgme', value);
+                  _.chain(object).set('Zapgme', value).set('Papp1', value).commit();
                   break;
                 case 'Fapp': // 최종 평가
-                  _.set(object, 'Zapgma', value);
+                  _.chain(object).set('Zapgma', value).set('Papp2', value).commit();
                   break;
                 case 'Z105': // 목표수행 기간
                   _.chain(object).set('Ztbegda', value).set('Ztendda', value).commit();
@@ -336,10 +340,6 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/busy', false);
         }
-      },
-
-      getCurrentLocationText(oArguments) {
-        return oArguments.year;
       },
 
       renderStageClass() {
@@ -478,23 +478,23 @@ sap.ui.define(
         // 삭제하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00049'), {
           onClose: (sAction) => {
-            if (MessageBox.Action.OK === sAction) {
-              const { root: sRootPath, itemKey: sDeleteTargetNum } = oSource.data();
-              const aItems = oViewModel.getProperty(`/goals/${sRootPath}`);
-              const bIsSaved = _.chain(aItems).find({ OrderNo: sDeleteTargetNum }).get('isSaved').value();
-              let iCurrentItemsLength = oViewModel.getProperty('/currentItemsLength') ?? 0;
+            if (MessageBox.Action.CANCEL === sAction) return;
 
-              oViewModel.setProperty('/currentItemsLength', --iCurrentItemsLength);
-              oViewModel.setProperty(
-                `/goals/${sRootPath}`,
-                _.chain(aItems)
-                  .tap((array) => _.remove(array, { OrderNo: sDeleteTargetNum }))
-                  .map((o, i) => ({ ...o, OrderNo: String(i), ItemNo: String(i + 1) }))
-                  .value()
-              );
+            const { root: sRootPath, itemKey: sDeleteTargetNum } = oSource.data();
+            const aItems = oViewModel.getProperty(`/goals/${sRootPath}`);
+            const bIsSaved = _.chain(aItems).find({ OrderNo: sDeleteTargetNum }).get('isSaved').value();
+            let iCurrentItemsLength = oViewModel.getProperty('/currentItemsLength') ?? 0;
 
-              if (bIsSaved) MessageBox.success(this.getBundleText('MSG_10004')); // 저장 버튼을 클릭하여 삭제를 완료하시기 바랍니다.
-            }
+            oViewModel.setProperty('/currentItemsLength', --iCurrentItemsLength);
+            oViewModel.setProperty(
+              `/goals/${sRootPath}`,
+              _.chain(aItems)
+                .tap((array) => _.remove(array, { OrderNo: sDeleteTargetNum }))
+                .map((o, i) => ({ ...o, OrderNo: String(i), ItemNo: String(i + 1) }))
+                .value()
+            );
+
+            if (bIsSaved) MessageBox.success(this.getBundleText('MSG_10004')); // 저장 버튼을 클릭하여 삭제를 완료하시기 바랍니다.
           },
         });
       },
@@ -544,7 +544,9 @@ sap.ui.define(
         MessageBox.confirm(this.getBundleText('MSG_00006', this.getButtonText(sPrcty)), {
           // {전송}하시겠습니까?
           onClose: (sAction) => {
-            if (MessageBox.Action.OK === sAction) this.createProcess(sPrcty);
+            if (MessageBox.Action.CANCEL === sAction) return;
+
+            this.createProcess(sPrcty);
           },
         });
       },
