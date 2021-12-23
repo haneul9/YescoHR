@@ -35,17 +35,18 @@ sap.ui.define(
       DISPLAY_TYPE: { EDIT: 'X', DISPLAY_ONLY: 'D', HIDE: 'H', HIDDEN_VALUE: 'V' },
       GOAL_TYPE: { STRATEGY: { code: '1', name: 'strategy' }, DUTY: { code: '2', name: 'duty' } },
 
-      SUMMARY_PROPERTIES: ['Zmepoint', 'Zmapoint', 'Zmbgrade', 'Rjctr', 'Rjctrin'],
+      REJECT_PROPERTIES: ['Rjctr', 'Rjctrin'],
+      SUMMARY_PROPERTIES: ['Zmepoint', 'Zmapoint', 'Zmbgrade'],
       MANAGE_PROPERTIES: ['Z131', 'Z132', 'Z136', 'Z137', 'Z140', 'Papp1', 'Papp2'],
-      GOAL_PROPERTIES: ['Obj0', 'Fwgt', 'Z103', 'Z103s', 'Z109', 'Z111', 'Zapgme', 'Zapgma', 'Ztbegda', 'Ztendda', 'Zmarslt', 'Zrslt', 'Z1175', 'Z1174', 'Z1173', 'Z1172', 'Z1171', 'Z125Ee', 'Z125Er'],
+      GOAL_PROPERTIES: ['Obj0', 'Fwgt', 'Z101', 'Z103', 'Z103s', 'Z109', 'Z111', 'Zapgme', 'Zapgma', 'Ztbegda', 'Ztendda', 'Zmarslt', 'Zrslt', 'Z1175', 'Z1174', 'Z1173', 'Z1172', 'Z1171', 'Z125Ee', 'Z125Er'],
       COMBO_PROPERTIES: ['Zapgme', 'Zapgma', 'Z103s', 'Z111', 'Zmbgrade'],
 
       BUTTON_STATUS_MAP: {
         2: {
-          A: { REJECT_REASON: { ME: '', MA: '', MB: '' }, TOP_GOAL: { ME: '', MA: '', MB: '' }, SAVE: { ME: '', MA: '', MB: '' } },
-          B: { REJECT_REASON: { ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { ME: 'X', MA: '', MB: '' }, SAVE: { ME: 'X', MA: 'X', MB: '' } },
-          C: { REJECT_REASON: { ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { ME: 'X', MA: '', MB: '' }, SAVE: { ME: '', MA: 'X', MB: '' } },
-          D: { REJECT_REASON: { ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { ME: 'X', MA: '', MB: '' }, SAVE: { ME: '', MA: 'X', MB: '' } },
+          A: { REJECT_REASON: { label: 'LABEL_00142', ME: '', MA: '', MB: '' }, TOP_GOAL: { label: 'LABEL_10032', ME: '', MA: '', MB: '' }, SAVE: { label: 'LABEL_00103', ME: '', MA: '', MB: '' } },
+          B: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, SAVE: { label: 'LABEL_00103', ME: 'X', MA: 'X', MB: '' } },
+          C: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, SAVE: { label: 'LABEL_00103', ME: '', MA: 'X', MB: '' } },
+          D: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, SAVE: { label: 'LABEL_00103', ME: '', MA: 'X', MB: '' } },
         },
       },
 
@@ -95,7 +96,7 @@ sap.ui.define(
           isSaved: true,
           OrderNo: String(index),
           ItemNo: String(index + 1),
-          ...obj,
+          ..._.chain(obj).omit('AppraisalDoc').omit('__metadata').value(),
           ..._.chain(this.COMBO_PROPERTIES)
             .reduce((acc, cur) => ({ ...acc, [cur]: _.isEmpty(obj[cur]) ? 'ALL' : obj[cur] }), {})
             .value(),
@@ -122,22 +123,15 @@ sap.ui.define(
           manage: {},
           summary: {},
           buttons: {
-            submit: {
-              TOP_GOAL: { Availability: '' },
-              REJECT_REASON: { Availability: '' },
-              SAVE: { Availability: '', ButtonText: this.getBundleText('LABEL_00103') }, // 저장
-              Z_SUBMIT: { Availability: '' },
-              APPROVE: { Availability: '' },
-              REJECT: { Availability: '' },
-              Z_CANCEL: { Availability: '' },
-            },
+            submit: {},
+            goal: { ADD: { Availability: false }, DELETE: { Availability: false } },
             Rjctr: '',
             Rjctrin: '',
             isRejectProcess: false,
           },
           currentItemsLength: 0,
           fieldControl: {
-            display: _.assignIn(_.reduce(this.GOAL_PROPERTIES, this.initializeFieldsControl.bind(this), {}), _.reduce(this.SUMMARY_PROPERTIES, this.initializeFieldsControl.bind(this), {}), _.reduce(this.MANAGE_PROPERTIES, this.initializeFieldsControl.bind(this), {})),
+            display: _.reduce([...this.GOAL_PROPERTIES, ...this.SUMMARY_PROPERTIES, ...this.MANAGE_PROPERTIES, ...this.REJECT_PROPERTIES], this.initializeFieldsControl.bind(this), {}),
             limit: {},
           },
           goals: {
@@ -199,7 +193,7 @@ sap.ui.define(
             .values()
             .head()
             .map((o) => {
-              const mReturn = { ...o, completed: bCompleted };
+              const mReturn = { ..._.omit(o, '__metadata'), completed: bCompleted };
               if (sZzapstsSub !== 'X' && o.ApStatus === sZzapsts) bCompleted = false;
               return mReturn;
             })
@@ -213,7 +207,7 @@ sap.ui.define(
             .reduce((acc, cur) => [...acc, [...cur]], [])
             .map((item) =>
               item.map((o) => {
-                const mReturn = { ...o, completed: bCompleted };
+                const mReturn = { ..._.omit(o, '__metadata'), completed: bCompleted };
                 if (o.ApStatus === sZzapsts && o.ApStatusSub === sZzapstsSub) bCompleted = false;
                 return mReturn;
               })
@@ -254,9 +248,7 @@ sap.ui.define(
                 case 'Zmepoint': // 자기 평가점수
                 case 'Zmapoint': // 1차 평가점수
                 case 'Zmbgrade': // 최종 평가등급
-                  _.chain(object)
-                    .set(key, _.get(this.FIELD_STATUS_MAP, [sZzapsts, sZzapstsSub, key, sType], value))
-                    .commit();
+                  _.set(object, key, _.get(this.FIELD_STATUS_MAP, [sZzapsts, sZzapstsSub, key, sType], value));
                   break;
                 default:
                   break;
@@ -297,8 +289,8 @@ sap.ui.define(
           );
 
           // 목표(전략/직무)
-          oViewModel.setProperty('/currentItemsLength', _.toLength(mDetailData.AppraisalDocDetailSet.results));
           _.forEach(this.GOAL_TYPE, (v) => oViewModel.setProperty(`/goals/${v.name}`, _.map(mGroupDetailByZ101[v.code], this.initializeGoalItem.bind(this)) ?? []));
+          oViewModel.setProperty('/currentItemsLength', _.toLength(mDetailData.AppraisalDocDetailSet.results));
           oViewModel.setProperty(
             '/goals/valid',
             _.chain(this.VALIDATION_PROPERTIES)
@@ -308,12 +300,23 @@ sap.ui.define(
           );
 
           // 기능버튼
-          _.forEach(mDetailData.AppraisalBottnsSet.results, (obj) => oViewModel.setProperty(`/buttons/submit/${obj.ButtonId}`, _.omit(obj, '__metadata')));
-          _.chain(this.BUTTON_STATUS_MAP)
-            .get([sZzapsts, sZzapstsSub])
-            .forOwn((v, k) => oViewModel.setProperty(`/buttons/submit/${k}/Availability`, _.get(v, sType)))
+          const mButtons = oViewModel.getProperty('/buttons');
+          _.chain(mButtons)
+            .tap((o) => _.set(o, 'Rjctr', _.get(mDetailData, 'Rjctr', _.noop())))
+            .tap((o) => _.chain(o.goal).set(['ADD', 'Availability'], true).set(['DELETE', 'Availability'], true).commit())
+            .tap((o) => _.forEach(mDetailData.AppraisalBottnsSet.results, (obj) => _.set(o.submit, obj.ButtonId, _.omit(obj, '__metadata'))))
+            .tap((o) => {
+              _.chain(this.BUTTON_STATUS_MAP)
+                .get([sZzapsts, sZzapstsSub])
+                .forOwn((v, k) =>
+                  _.chain(o.submit)
+                    .set([k, 'Availability'], _.get(v, sType))
+                    .set([k, 'ButtonText'], this.getBundleText(_.get(v, 'label')))
+                    .commit()
+                )
+                .commit();
+            })
             .commit();
-          oViewModel.setProperty('/buttons/Rjctr', mDetailData.Rjctr);
 
           // 필드속성
           oViewModel.setProperty('/fieldControl/display', mConvertScreen);
@@ -338,8 +341,7 @@ sap.ui.define(
         oStageHeader.addEventDelegate({
           onAfterRendering: _.throttle(() => {
             const aHeaders = this.getViewModel().getProperty('/stage/headers');
-
-            oStageHeader.getItems().forEach((o, i) => o.toggleStyleClass('on', aHeaders[i].completed ?? false));
+            _.forEach(oStageHeader.getItems(), (o, i) => o.toggleStyleClass('on', _.get(aHeaders, [i, 'completed'], false)));
           }),
         });
 
@@ -347,9 +349,8 @@ sap.ui.define(
         oStageBody.addEventDelegate({
           onAfterRendering: _.throttle(() => {
             const aRows = this.getViewModel().getProperty('/stage/rows');
-
-            oStageBody.getItems().forEach((row, rowidx) => {
-              row.getItems().forEach((o, childidx) => o.toggleStyleClass('on', _.get(aRows, [rowidx, 'child', childidx, 'completed']) ?? false));
+            _.forEach(oStageBody.getItems(), (row, rowidx) => {
+              _.forEach(row.getItems(), (o, childidx) => o.toggleStyleClass('on', _.get(aRows, [rowidx, 'child', childidx, 'completed'], false)));
             });
           }),
         });
@@ -370,13 +371,13 @@ sap.ui.define(
         oViewModel.setProperty(`/goals/${name}`, [
           ...aItems,
           {
+            ..._.reduce(this.GOAL_PROPERTIES, (acc, cur) => ({ ...acc, [cur]: _.includes(this.COMBO_PROPERTIES, cur) ? 'ALL' : _.noop() }), {}),
+            Z101: code,
             rootPath: name,
             expanded: true,
             isSaved: false,
             OrderNo: String(iItemsLength),
             ItemNo: String(iItemsLength + 1),
-            Z101: code,
-            ..._.reduce(this.GOAL_PROPERTIES, (acc, cur) => ({ ...acc, [cur]: _.includes(this.COMBO_PROPERTIES, cur) ? 'ALL' : _.noop() }), {}),
           },
         ]);
       },

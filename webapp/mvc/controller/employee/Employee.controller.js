@@ -565,9 +565,7 @@ sap.ui.define(
         const sRowPath = oTable.getRows()[aSelectedIndices[0]].getBindingContext().getPath();
         const oRowData = oViewModel.getProperty(sRowPath);
         const mMenu = _.find(oViewModel.getProperty('/employee/tab/menu'), { Menuc2: oRowData.Menuc });
-        const aHeaderData = _.chain(oViewModel.getProperty(`/employee/sub/${mMenu.Menuc1}/contents/${mMenu.Menuc2}/header`))
-          .filter(_.size)
-          .value();
+        const aHeaderData = _.filter(oViewModel.getProperty(`/employee/sub/${mMenu.Menuc1}/contents/${mMenu.Menuc2}/header`), _.size);
         const mFieldSet = aFields.reduce((acc, cur) => {
           acc[cur] = oRowData[`Value${_.padStart(_.findIndex(aHeaderData, { Fieldname: _.upperCase(cur) }) + 1, 2, '0')}`];
           return acc;
