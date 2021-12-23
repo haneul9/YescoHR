@@ -1,5 +1,8 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
     <VBox class="contents">
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.mssEvalKpi.fragment.formDetail.SearchCondition" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.mssEvalKpi.fragment.formDetail.AllEmpTable" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.mssEvalKpi.fragment.formDetail.PartContainer" type="XML" />
     </VBox>
 </core:FragmentDefinition>

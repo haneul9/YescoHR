@@ -1,8 +1,9 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:dnd="sap.ui.core.dnd"
+    xmlns:dnd-grid="sap.f.dnd"
     xmlns:table="sap.ui.table">
-    <table:Table id="gridTable" rows="{/List}" visibleRowCount="{/listRowCount}" width="100%" busyIndicatorDelay="0" busy="{/busy}" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
+    <table:Table rows="{/List}" visibleRowCount="{/listRowCount}" width="100%" busyIndicatorDelay="0" busy="{/busy}" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
         <table:extension>
             <HBox>
                 <ObjectStatus text="{i18n>LABEL_15006}" state="Indication04" />
@@ -10,9 +11,8 @@
             </HBox>
         </table:extension>
         <table:dragDropConfig>
-            <dnd:DragDropInfo sourceAggregation="rows" dragStart=".onDragStart" />
-            <dnd:DragDropInfo drop=".onDropTable"/>
-            <dnd:DragDropInfo sourceAggregation="rows" targetAggregation="rows" dropPosition="Between" dragStart=".onDragStart" drop=".onDropTable" />
+            <dnd:DragInfo groupName="moveToTable2" sourceAggregation="rows" dragStart=".onDragStart" />
+            <dnd-grid:GridDropInfo dropPosition="Between" dropLayout="Default" drop=".onDropTable" />
         </table:dragDropConfig>
         <table:columns>
             <table:Column width="150px">
@@ -37,7 +37,7 @@
             <table:Column width="100px">
                 <Label text="{i18n>LABEL_15012}"/>
                 <table:template>
-                    <Text text="{Tmcnt}" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
+                    <Link text="{Tmcnt}" press=".onPressTeam" textAlign="End" width="100%" class="tableRow_Text" />
                 </table:template>
             </table:Column>
             <table:Column width="100px">
