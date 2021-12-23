@@ -82,7 +82,8 @@ sap.ui.define(
       ],
 
       getPreviousRouteName() {
-        return 'performance';
+        const sType = this.getViewModel().getProperty('/type');
+        return sType === this.APPRAISER_TYPE.ME ? 'performance' : sType === this.APPRAISER_TYPE.MA ? 'm/performancePry' : 'm/performanceSry';
       },
 
       initializeFieldsControl(acc, cur) {
@@ -92,13 +93,13 @@ sap.ui.define(
       initializeGoalItem(obj, index) {
         return {
           rootPath: _.chain(this.GOAL_TYPE).findKey({ code: obj.Z101 }).toLower().value(),
-          expanded: false,
-          isSaved: true,
+          expanded: _.stubFalse(),
+          isSaved: !_.stubFalse(),
           OrderNo: String(index),
           ItemNo: String(index + 1),
           ..._.chain(obj).omit('AppraisalDoc').omit('__metadata').value(),
           ..._.chain(this.COMBO_PROPERTIES)
-            .reduce((acc, cur) => ({ ...acc, [cur]: _.isEmpty(obj[cur]) ? 'ALL' : obj[cur] }), {})
+            .reduce((acc, cur) => ({ ...acc, [cur]: _.isEmpty(obj[cur]) ? 'ALL' : obj[cur] }), _.stubObject())
             .value(),
         };
       },
@@ -204,7 +205,7 @@ sap.ui.define(
           const aGroupStageByApStatusName = _.chain(aStepList)
             .filter((o) => o.ApStatusSub !== '')
             .groupBy('ApStatusName')
-            .reduce((acc, cur) => [...acc, [...cur]], [])
+            .reduce((acc, cur) => [...acc, [...cur]], _.stubArray())
             .map((item) =>
               item.map((o) => {
                 const mReturn = { ..._.omit(o, '__metadata'), completed: bCompleted };
@@ -303,7 +304,12 @@ sap.ui.define(
           const mButtons = oViewModel.getProperty('/buttons');
           _.chain(mButtons)
             .tap((o) => _.set(o, 'Rjctr', _.get(mDetailData, 'Rjctr', _.noop())))
-            .tap((o) => _.chain(o.goal).set(['ADD', 'Availability'], true).set(['DELETE', 'Availability'], true).commit())
+            .tap((o) =>
+              _.chain(o.goal)
+                .set(['ADD', 'Availability'], _.isEqual(sType, this.APPRAISER_TYPE.ME) && _.isEqual([sZzapsts, sZzapstsSub], ['2', 'B']))
+                .set(['DELETE', 'Availability'], _.isEqual(sType, this.APPRAISER_TYPE.ME) && _.isEqual([sZzapsts, sZzapstsSub], ['2', 'B']))
+                .commit()
+            )
             .tap((o) => _.forEach(mDetailData.AppraisalBottnsSet.results, (obj) => _.set(o.submit, obj.ButtonId, _.omit(obj, '__metadata'))))
             .tap((o) => {
               _.chain(this.BUTTON_STATUS_MAP)

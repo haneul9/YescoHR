@@ -2,6 +2,7 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/model/json/JSONModel',
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -13,6 +14,7 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
+    MessageBox,
     AppUtils,
     Client,
     ServiceNames,
@@ -22,7 +24,7 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.performance.List', {
-      APPRAISER_TYPE: { performance: 'ME', performanceEvalPry: 'MA', performanceEvalSry: 'MB' },
+      APPRAISER_TYPE: { performance: 'ME', ['m/performancePry']: 'MA', ['m/performanceSry']: 'MB' },
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
@@ -42,12 +44,20 @@ sap.ui.define(
       async onObjectMatched() {
         const oModel = this.getModel(ServiceNames.APPRAISAL);
         const oViewModel = this.getViewModel();
+        const sType = this.APPRAISER_TYPE[this.getRouter().getHashChanger().getHash()];
+        const sEmpField = sType === 'ME' ? 'Zzappee' : 'Zzapper';
 
         try {
           oViewModel.setProperty('/busy', true);
-          oViewModel.setProperty('/type', this.APPRAISER_TYPE[this.getRouter().getHashChanger().getHash()]);
+          oViewModel.setProperty('/type', sType);
 
-          const aTableData = await Client.getEntitySet(oModel, 'AppraisalPeeList', { Menid: this.getCurrentMenuId(), Prcty: 'L', Werks: this.getAppointeeProperty('Werks'), Zzappgb: 'ME', Zzappee: this.getAppointeeProperty('Pernr') });
+          const aTableData = await Client.getEntitySet(oModel, 'AppraisalPeeList', {
+            Prcty: 'L',
+            Zzappgb: sType,
+            Menid: this.getCurrentMenuId(),
+            Werks: this.getAppointeeProperty('Werks'),
+            [sEmpField]: this.getAppointeeProperty('Pernr'),
+          });
 
           this.setTableData({ oViewModel, aTableData });
         } catch (oError) {
@@ -75,14 +85,9 @@ sap.ui.define(
         const oRowData = oViewModel.getProperty(sPath);
         const sType = oViewModel.getProperty('/type');
 
-        if (oRowData.Zzapsts === '2') {
-          if (oRowData.ZzapstsSub === 'A') {
-            return;
-          } else if (oRowData.ZzapstsSub === 'B') {
-            if (sType !== this.APPRAISER_TYPE.performance) return;
-          } else if (oRowData.ZzapstsSub === 'C') {
-            if (sType === this.APPRAISER_TYPE.performanceEvalSry) return;
-          }
+        if (!_.isEqual(oRowData.Zonlydsp, '')) {
+          MessageBox.alert(this.getBundleText('MSG_10006')); // 현재 평가상태에서는 상세내역을 조회하실 수 없습니다.
+          return;
         }
 
         oViewModel.setProperty('/parameter/rowData', { ...oRowData });

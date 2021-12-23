@@ -146,6 +146,10 @@
 
         { "pattern": "performance", "name": "performance", "target": "performance" },
         { "pattern": "performance/{type}/{year}", "name": "performance-detail", "target": "performanceDetail" },
+        { "pattern": "m/performancePry", "name": "m/performancePry", "target": "performance" },
+        { "pattern": "m/performancePry/{type}/{year}", "name": "m/performancePry-detail", "target": "performanceDetail" },
+        { "pattern": "m/performanceSry", "name": "m/performanceSry", "target": "performance" },
+        { "pattern": "m/performanceSry/{type}/{year}", "name": "m/performanceSry-detail", "target": "performanceDetail" },
         
         { "pattern": "m/organization", "name": "m/organization", "target": "m/organization" },
         
