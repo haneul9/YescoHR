@@ -182,19 +182,19 @@ sap.ui.define([
         },
 
         attachDragAndDrop() {
-			const oGrid = this.byId("grid1");
+			// const oGrid = this.byId("grid1");
 
-			oGrid.addDragDropConfig(new DragInfo({
-				sourceAggregation: "items"
-			}));
+			// oGrid.addDragDropConfig(new DragInfo({
+			// 	sourceAggregation: "items"
+			// }));
 
-			oGrid.addDragDropConfig(new GridDropInfo({
-				targetAggregation: "items",
-				// dropPosition: DropPosition.Between,
-				// dropLayout: DropLayout.Horizontal,
-				// dropIndicatorSize: this.onDropIndicatorSize.bind(this),
-				drop: this.onDrop.bind(this)
-			}));
+			// oGrid.addDragDropConfig(new GridDropInfo({
+			// 	targetAggregation: "items",
+			// 	// dropPosition: DropPosition.Between,
+			// 	// dropLayout: DropLayout.Horizontal,
+			// 	// dropIndicatorSize: this.onDropIndicatorSize.bind(this),
+			// 	drop: this.onDrop.bind(this)
+			// }));
 		},
 
         onDrop(oInfo) {
@@ -202,7 +202,6 @@ sap.ui.define([
 			const oDragged = oInfo.getParameter("draggedControl");
 			const oDropped = oInfo.getParameter("droppedControl");
 			const sInsertPosition = oInfo.getParameter("dropPosition");
-			const oDragContainer = oDragged.getParent();
 			const oDropContainer = oInfo.getSource().getParent();
 			const oModelData = oViewModel.getData();
             const oDraggPath = oDragged.getBindingContext().getPath();
@@ -212,7 +211,8 @@ sap.ui.define([
 
             // 부문 중복체크
             if (aGridList.some((e) => {return e === mDraggData})) {
-                return oViewModel.refresh();
+                return;
+                // return oViewModel.refresh();
                 // return MessageBox.alert(this.getBundleText('MSG_15001'));
             }
 
@@ -222,9 +222,9 @@ sap.ui.define([
 			// 	iDropPosition--;
 			// }
 
-			if (sInsertPosition === "After") {
-				iDropPosition++;
-			}
+			// if (sInsertPosition === "After") {
+			// 	iDropPosition++;
+			// }
 
 			// insert the control in target aggregation
 			// oModelData.splice(iDropPosition, 0, mDraggData);
@@ -241,7 +241,6 @@ sap.ui.define([
         onDragStart(oEvent) {
             const oDraggedRow = oEvent.getParameter("target");
 			const oDragSession = oEvent.getParameter("dragSession");
-            const sPath = oDraggedRow.getBindingContext().getPath();
 
 			// keep the dragged row context for the drop action
 			oDragSession.setComplexData("draggedRowContext", oDraggedRow.getBindingContext());

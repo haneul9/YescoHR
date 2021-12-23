@@ -12,6 +12,7 @@
         <table:dragDropConfig>
             <dnd:DragDropInfo sourceAggregation="rows" dragStart=".onDragStart" />
             <dnd:DragDropInfo drop=".onDropTable"/>
+            <dnd:DragDropInfo sourceAggregation="rows" targetAggregation="rows" dropPosition="Between" dragStart=".onDragStart" drop=".onDropTable" />
         </table:dragDropConfig>
         <table:columns>
             <table:Column width="150px">
