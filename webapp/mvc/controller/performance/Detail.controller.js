@@ -82,8 +82,7 @@ sap.ui.define(
       ],
 
       getPreviousRouteName() {
-        const sType = this.getViewModel().getProperty('/type');
-        return sType === this.APPRAISER_TYPE.ME ? 'performance' : sType === this.APPRAISER_TYPE.MA ? 'm/performancePry' : 'm/performanceSry';
+        return _.chain(this.getRouter().getHashChanger().getHash()).split('/').dropRight(2).join('/').value();
       },
 
       initializeFieldsControl(acc, cur) {
@@ -221,10 +220,10 @@ sap.ui.define(
             .forOwn((value, key, object) => {
               switch (key) {
                 case 'Papp': // 부분 평가
-                  _.set(object, 'Zapgme', value);
+                  _.chain(object).set('Zapgme', value).set('Papp1', value).commit();
                   break;
                 case 'Fapp': // 최종 평가
-                  _.set(object, 'Zapgma', value);
+                  _.chain(object).set('Zapgma', value).set('Papp2', value).commit();
                   break;
                 case 'Z105': // 목표수행 기간
                   _.chain(object).set('Ztbegda', value).set('Ztendda', value).commit();
