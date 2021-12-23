@@ -15,18 +15,18 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-	AttachFileAction,
-	ComboEntry,
-	FragmentEvent,
-	TableUtils,
-	TextUtils,
-	ServiceNames,
-	BaseController,
+    AttachFileAction,
+    ComboEntry,
+    FragmentEvent,
+    TableUtils,
+    TextUtils,
+    ServiceNames,
+    BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.medical.Medical', {
-      TYPE_CODE: 'HR09',
+      APPTP: 'HR09',
 
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
@@ -60,18 +60,17 @@ sap.ui.define(
 
       async onObjectMatched() {
         const oListModel = this.getViewModel();
-        
+
         try {
           oListModel.setProperty('/busy', true);
           const aList = await this.getFamilyCode();
-          
+
           oListModel.setProperty('/FamilyCode', new ComboEntry({ codeKey: 'Seqnr', valueKey: 'Znametx', aEntries: aList }));
           oListModel.setProperty('/search/Seqnr', 'ALL');
 
           this.onSearch();
           this.totalCount();
         } catch (oError) {
-
         } finally {
           oListModel.setProperty('/busy', false);
         }
@@ -79,7 +78,7 @@ sap.ui.define(
 
       onClick() {
         const oListModel = this.getViewModel();
-        
+
         oListModel.setProperty('/parameters/Pyyea', oListModel.getProperty('/Total/Zyear'));
         this.getRouter().navTo('medical-detail', { oDataKey: 'N' });
       },
@@ -112,7 +111,7 @@ sap.ui.define(
 
         oListModel.setProperty('/busy', true);
 
-        if(!!oSearch.Seqnr && oSearch.Seqnr !== 'ALL') {
+        if (!!oSearch.Seqnr && oSearch.Seqnr !== 'ALL') {
           sFamgb = oListModel.getProperty('/TargetCode/Famgb');
           sFamsa = oListModel.getProperty('/TargetCode/Famsa');
           sObjps = oListModel.getProperty('/TargetCode/Objps');
@@ -134,7 +133,7 @@ sap.ui.define(
             if (oData) {
               const aMedList = oData.results;
               const oTable = this.byId('medTable');
-        
+
               oListModel.setProperty('/List', aMedList);
               oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aMedList, sStatCode: 'Lnsta' }));
             }
@@ -177,7 +176,7 @@ sap.ui.define(
 
               oListModel.setProperty('/Total', oList);
 
-              if(!!oList.Note) {
+              if (!!oList.Note) {
                 oListModel.setProperty('/listInfo/infoMessage', oList.Note);
               }
             }
@@ -195,9 +194,9 @@ sap.ui.define(
         const sKey = oEvent.getSource().getSelectedKey();
         const oViewModel = this.getViewModel();
         const oFCode = oViewModel.getProperty('/FamilyCode');
-        
+
         oFCode.forEach((e) => {
-          if(e.Seqnr === sKey) {
+          if (e.Seqnr === sKey) {
             oViewModel.setProperty('/TargetCode', e);
           }
         });

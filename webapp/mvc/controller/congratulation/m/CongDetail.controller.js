@@ -31,7 +31,7 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.congratulation.m.CongDetail', {
-      TYPE_CODE: 'HR01',
+      APPTP: 'HR01',
 
       AttachFileAction: AttachFileAction,
       FragmentEvent: FragmentEvent,
@@ -124,11 +124,7 @@ sap.ui.define(
             const sUrl = '/ConExpenseApplSet';
 
             oModel.read(sUrl, {
-              filters: [
-                new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'),
-                new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid),
-                new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sDataKey),
-              ],
+              filters: [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'), new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid), new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sDataKey)],
               success: (oData) => {
                 resolve(oData.results[0]);
               },
@@ -147,11 +143,7 @@ sap.ui.define(
 
         return new Promise((resolve, reject) => {
           oModel.read('/BenefitCodeListSet', {
-            filters: [
-              new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0001'),
-              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
-              new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-            ],
+            filters: [new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0001'), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks), new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date())],
             success: (oData) => {
               resolve(oData.results);
             },
@@ -170,13 +162,7 @@ sap.ui.define(
         const sWerks = this.getSessionProperty('Werks');
 
         oModel.read('/BenefitCodeListSet', {
-          filters: [
-            new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0002'),
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
-            new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-            new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, oFormData.Concode),
-            new sap.ui.model.Filter('Upcod2', sap.ui.model.FilterOperator.EQ, 'E'),
-          ],
+          filters: [new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0002'), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks), new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()), new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, oFormData.Concode), new sap.ui.model.Filter('Upcod2', sap.ui.model.FilterOperator.EQ, 'E')],
           success: (oData) => {
             if (oData) {
               const aList = oData.results;
@@ -190,13 +176,7 @@ sap.ui.define(
         });
 
         oModel.read('/BenefitCodeListSet', {
-          filters: [
-            new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0003'),
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
-            new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-            new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, oFormData.Concode),
-            new sap.ui.model.Filter('Upcod2', sap.ui.model.FilterOperator.EQ, oFormData.Conresn),
-          ],
+          filters: [new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0003'), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks), new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()), new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, oFormData.Concode), new sap.ui.model.Filter('Upcod2', sap.ui.model.FilterOperator.EQ, oFormData.Conresn)],
           success: (oData) => {
             if (oData) {
               const oResult = oData.results;
@@ -239,13 +219,7 @@ sap.ui.define(
 
         new Promise((resolve) => {
           oModel.read('/BenefitCodeListSet', {
-            filters: [
-              new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0002'),
-              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
-              new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-              new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, sSelectKey),
-              new sap.ui.model.Filter('Upcod2', sap.ui.model.FilterOperator.EQ, 'E'),
-            ],
+            filters: [new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0002'), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks), new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()), new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, sSelectKey), new sap.ui.model.Filter('Upcod2', sap.ui.model.FilterOperator.EQ, 'E')],
             success: (oData) => {
               if (oData) {
                 const aList = oData.results;
@@ -292,13 +266,7 @@ sap.ui.define(
         this.getNomalPay(this);
 
         oModel.read('/BenefitCodeListSet', {
-          filters: [
-            new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0003'),
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
-            new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-            new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, oFormData.Concode),
-            new sap.ui.model.Filter('Upcod2', sap.ui.model.FilterOperator.EQ, sSelectKey),
-          ],
+          filters: [new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0003'), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks), new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()), new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, oFormData.Concode), new sap.ui.model.Filter('Upcod2', sap.ui.model.FilterOperator.EQ, sSelectKey)],
           success: (oData) => {
             if (oData) {
               const oResult = oData.results;
@@ -375,12 +343,7 @@ sap.ui.define(
         if (!vConcode || !vConresn || !vConddate) return;
 
         oModel.read('/ConExpenseCheckListSet', {
-          filters: [
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
-            new sap.ui.model.Filter('Concode', sap.ui.model.FilterOperator.EQ, vConcode),
-            new sap.ui.model.Filter('Conresn', sap.ui.model.FilterOperator.EQ, vConresn),
-            new sap.ui.model.Filter('Conddate', sap.ui.model.FilterOperator.EQ, vConddate),
-          ],
+          filters: [new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks), new sap.ui.model.Filter('Concode', sap.ui.model.FilterOperator.EQ, vConcode), new sap.ui.model.Filter('Conresn', sap.ui.model.FilterOperator.EQ, vConresn), new sap.ui.model.Filter('Conddate', sap.ui.model.FilterOperator.EQ, vConddate)],
           success: (oData) => {
             if (oData) {
               const oPay = oData.results[0];
@@ -451,12 +414,7 @@ sap.ui.define(
 
         return new Promise((resolve) => {
           oModel.read('/ConExpenseSupportListSet', {
-            filters: [
-              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
-              new sap.ui.model.Filter('Concode', sap.ui.model.FilterOperator.EQ, oFormData.Concode),
-              new sap.ui.model.Filter('Conresn', sap.ui.model.FilterOperator.EQ, oFormData.Conresn),
-              new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-            ],
+            filters: [new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks), new sap.ui.model.Filter('Concode', sap.ui.model.FilterOperator.EQ, oFormData.Concode), new sap.ui.model.Filter('Conresn', sap.ui.model.FilterOperator.EQ, oFormData.Conresn), new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date())],
             success: (oData) => {
               if (oData) {
                 const oTargetList = oData.results;
@@ -590,7 +548,7 @@ sap.ui.define(
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.APPTP);
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/ConExpenseApplSet', oSendObject, {
@@ -644,7 +602,7 @@ sap.ui.define(
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.APPTP);
                 await new Promise((resolve, reject) => {
                   oModel.create('/ConExpenseApplSet', oSendObject, {
                     success: () => {
@@ -748,7 +706,7 @@ sap.ui.define(
 
         AttachFileAction.setAttachFile(this, {
           Editable: !sStatus || sStatus === '10',
-          Type: this.TYPE_CODE,
+          Type: this.APPTP,
           Appno: sAppno,
           Max: 10,
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],

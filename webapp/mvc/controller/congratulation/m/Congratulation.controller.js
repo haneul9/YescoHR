@@ -11,16 +11,16 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-	ServiceNames,
-	AppUtils,
-	TableUtils,
-	FragmentEvent,
-	BaseController
+    ServiceNames,
+    AppUtils,
+    TableUtils,
+    FragmentEvent,
+    BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.congratulation.m.Congratulation', {
-      TYPE_CODE: 'HR01',
+      APPTP: 'HR01',
 
       TableUtils: TableUtils,
       FragmentEvent: FragmentEvent,
@@ -50,10 +50,7 @@ sap.ui.define(
         oListModel.setProperty('/busy', true);
 
         oModel.read('/ConExpenseApplSet', {
-          filters: [
-            new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'),
-            new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid),
-          ],
+          filters: [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'), new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid)],
           success: (oData) => {
             if (oData) {
               const oList = oData.results;

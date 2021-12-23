@@ -104,11 +104,7 @@ sap.ui.define(
                 }, new Set()),
               ].join('-')
             : col.getLabel().getText(),
-          property: !!col.getTemplate().getBindingInfo('text')
-            ? col.getTemplate().getBindingInfo('text').parts[0].path === sStatCode
-              ? sStatTxt
-              : col.getTemplate().getBindingInfo('text').parts[0].path
-            : col.getTemplate().getBindingInfo('visible').parts[0].path,
+          property: !!col.getTemplate().getBindingInfo('text') ? (col.getTemplate().getBindingInfo('text').parts[0].path === sStatCode ? sStatTxt : col.getTemplate().getBindingInfo('text').parts[0].path) : col.getTemplate().getBindingInfo('visible').parts[0].path,
           type: exportLibrary.EdmType.String,
         }));
 

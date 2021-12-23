@@ -16,20 +16,20 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-	AppUtils,
-	AttachFileAction,
-	ComboEntry,
-	FragmentEvent,
-	TableUtils,
-	TextUtils,
-	ServiceNames,
-	ODataReadError,
-	BaseController,
+    AppUtils,
+    AttachFileAction,
+    ComboEntry,
+    FragmentEvent,
+    TableUtils,
+    TextUtils,
+    ServiceNames,
+    ODataReadError,
+    BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.housingLoan.HousingLoan', {
-      TYPE_CODE: 'HR07',
+      APPTP: 'HR07',
 
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
@@ -93,13 +93,7 @@ sap.ui.define(
           oListModel.setProperty('/busy', true);
 
           oModel.read('/LoanAmtApplSet', {
-            filters: [
-              new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'),
-              new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid),
-              new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate),
-              new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2),
-              new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, vLoanType),
-            ],
+            filters: [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'), new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid), new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate), new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2), new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, vLoanType)],
             success: (oData) => {
               if (oData) {
                 const oList = oData.results;
@@ -126,13 +120,7 @@ sap.ui.define(
           const oSessionData = this.getOwnerComponent().getSessionModel().getData();
 
           oModel.read('/BenefitCodeListSet', {
-            filters: [
-              new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0008'),
-              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oSessionData.Werks),
-              new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-              new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000004'),
-              new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'GRADE'),
-            ],
+            filters: [new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0008'), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oSessionData.Werks), new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()), new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000004'), new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'GRADE')],
             success: (oData) => {
               if (oData) {
                 const aList = oData.results;

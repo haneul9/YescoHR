@@ -869,7 +869,7 @@ html.sap-desktop .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnSel:hover .sapMSeg
 .sapMFlexBox + .search-box, .sapUiBlockLayerTabbable + .search-box {margin-left:30px}
 
 /*Layer popup style*/
-.sapUiSizeCompact.sapMDialog, .sapUiSizeCompact .sapMDialog, .sapMDialog { min-height: 6rem;padding: 75px 0px 80px;background-color: #fff;}
+.sapUiSizeCompact.sapMDialog, .sapUiSizeCompact .sapMDialog, .sapMDialog { min-height: 45px;padding: 75px 0px 80px;background-color: #fff;}
 .sapMDialogSection, .sapMDialogSubHeader {padding: 0px 30px;}
 .sapMDialogSection .sapMPanelContent:not(.sapMPanelBGTransparent), .sapMDialogSection .sapMPanelHdr {padding:0px;} 
 .sapUiSizeCompact.sapMDialog>.sapMDialogTitle, .sapUiSizeCompact .sapMDialog>.sapMDialogTitle {height: 75px;}
@@ -899,6 +899,7 @@ html.sap-desktop .sapMPopoverFooter .sapContrast.sapMIBar.sapMFooter-CTX, html.s
 .sapMIBar.sapMTB .sapMBarChild:last-child {margin-right: 10px;}
 .cdialog-content {padding:20px; background-color: #F9FAFA;}
 .sapUiSizeCompact.sapMDialog>.sapMDialogSection, .sapUiSizeCompact .sapMDialog>.sapMDialogSection {min-height: 2.5rem;padding-bottom: 20px;}
+.sapUiSizeCompact.sapMDialog.file-list-dialog>.sapMDialogSection, .sapUiSizeCompact .sapMDialog.file-list-dialog>.sapMDialogSection {padding-bottom:0}
 .sapMDialog>footer {height:80px}
 .sapMDialog>footer .sapContrast span.sapMBtnInner {font-size:15px;font-weight:700;}
 .sapMDialog>footer .sapContrast span.sapMBtnInner.sapMBtnEmphasized {

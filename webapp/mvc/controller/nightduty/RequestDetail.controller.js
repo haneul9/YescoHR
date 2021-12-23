@@ -34,8 +34,8 @@ sap.ui.define(
       oRequestDetailHelper: null, // 업무 정보 관련
       oCurrentListDialogHandler: null,
       sDetailListTableId: 'detailListTable',
-      sTYPE_CODE: 'HR05',
 
+      APPTP: 'HR05',
       TextUtils: TextUtils,
       AttachFileAction: AttachFileAction,
 
@@ -51,14 +51,6 @@ sap.ui.define(
 
       getPreviousRouteName() {
         return 'nightduty';
-      },
-
-      /**
-       * ApprovalRequestHelper에서 호출
-       * @returns
-       */
-      getApprovalDocTypeCode() {
-        return this.sTYPE_CODE;
       },
 
       onBeforeShow() {

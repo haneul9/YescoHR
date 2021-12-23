@@ -12,29 +12,29 @@ sap.ui.define(
     'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/common/exceptions/ODataDeleteError',
     'sap/ui/yesco/mvc/controller/BaseController',
-    "sap/ui/richtexteditor/RichTextEditor",
+    'sap/ui/richtexteditor/RichTextEditor',
   ],
   (
     // prettier 방지용 주석
     JSONModel,
-	Appno,
-	AppUtils,
-	AttachFileAction,
-	ServiceNames,
-	MessageBox,
-	ODataReadError,
-	ODataCreateError,
-	ODataDeleteError,
-	BaseController,
-	RTE,
+    Appno,
+    AppUtils,
+    AttachFileAction,
+    ServiceNames,
+    MessageBox,
+    ODataReadError,
+    ODataCreateError,
+    ODataDeleteError,
+    BaseController,
+    RTE
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.notice.NoticeDetail', {
-      TYPE_CODE: '10',
+      APPTP: '10',
       LIST_PAGE_ID: {
         E: 'container-ehr---notice',
-        H: 'container-ehr---h_notice'
+        H: 'container-ehr---h_notice',
       },
 
       AttachFileAction: AttachFileAction,
@@ -121,12 +121,12 @@ sap.ui.define(
                 const oTargetData = oData.Notice1Nav.results[0];
                 const oDetailData = oData.Notice2Nav.results;
 
-                if(this.getSessionProperty('Pernr') === oTargetData.Apern) {
+                if (this.getSessionProperty('Pernr') === oTargetData.Apern) {
                   oDetailModel.setProperty('/MySelf', true);
                 }
 
-                oTargetData.Detail = "";
-						
+                oTargetData.Detail = '';
+
                 oDetailData.forEach((e) => {
                   oTargetData.Detail += e.Detail;
                 });
@@ -190,7 +190,7 @@ sap.ui.define(
 
                 const aDetail = [];
                 const aList = oFormData.Detail.match(new RegExp('.{1,' + 4000 + '}', 'g'));
-                
+
                 aList.forEach((e) => {
                   const mDetailObj = {};
 
@@ -200,16 +200,16 @@ sap.ui.define(
 
                 oFormData.Detail = '';
                 oFormData.Hide = 'X';
-                
+
                 let oSendObject = {
                   Prcty: '2',
                   Werks: sWerks,
                   Notice1Nav: [oFormData],
                   Notice2Nav: aDetail,
-                };  
+                };
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.APPTP);
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/NoticeManageSet', oSendObject, {
@@ -259,14 +259,14 @@ sap.ui.define(
 
                 const aDetail = [];
                 const aList = oFormData.Detail.match(new RegExp('.{1,' + 4000 + '}', 'g'));
-                
+
                 aList.forEach((e) => {
                   const mDetailObj = {};
 
                   mDetailObj.Detail = e;
                   aDetail.push(mDetailObj);
                 });
-                
+
                 oFormData.Detail = '';
                 let oSendObject = {
                   Prcty: '2',
@@ -276,7 +276,7 @@ sap.ui.define(
                 };
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.APPTP);
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/NoticeManageSet', oSendObject, {
@@ -326,7 +326,7 @@ sap.ui.define(
               const oFormData = this.getViewModel().getProperty('/FormData');
               const aList = oFormData.Detail.match(new RegExp('.{1,' + 4000 + '}', 'g'));
               const aDetail = [];
-              
+
               aList.forEach((e) => {
                 const mDetailObj = {};
 
@@ -348,13 +348,13 @@ sap.ui.define(
                   MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
                     onClose: () => {
                       let sPageName = '';
-  
+
                       if (this.isHass()) {
                         sPageName = 'h/notice';
                       } else {
                         sPageName = 'notice';
                       }
-  
+
                       this.getRouter().navTo(sPageName);
                     },
                   });
@@ -375,10 +375,10 @@ sap.ui.define(
       },
 
       setTextEditor() {
-        if(!!this.byId('EditorBox').getItems()[0]) {
-          this.byId('EditorBox').destroyItems()
+        if (!!this.byId('EditorBox').getItems()[0]) {
+          this.byId('EditorBox').destroyItems();
         }
-  
+
         const oRichTextEditor = new RTE('myRTE', {
           editorType: 'TinyMCE4',
           layoutData: new sap.m.FlexItemData({ growFactor: 1 }),
@@ -390,16 +390,16 @@ sap.ui.define(
           sanitizeValue: false,
           value: '{/FormData/Detail}',
           editable: {
-            parts: [{path: '/MySelf'}, {path: '/Hass'}],
+            parts: [{ path: '/MySelf' }, { path: '/Hass' }],
             formatter: (v1, v2) => {
               return !!v1 && !!v2;
-            }
+            },
           },
           ready: function () {
             this.addButtonGroup('styleselect').addButtonGroup('table');
-          }
+          },
         });
-  
+
         this.byId('EditorBox').addItem(oRichTextEditor);
       },
 
@@ -412,7 +412,7 @@ sap.ui.define(
 
         AttachFileAction.setAttachFile(this, {
           Editable: !!bHass && !!bMySelf,
-          Type: this.TYPE_CODE,
+          Type: this.APPTP,
           Appno: sAppno,
           Max: 10,
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],

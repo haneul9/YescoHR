@@ -2,39 +2,38 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/model/json/JSONModel',
-    'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/EmployeeSearch',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
+    'sap/ui/yesco/common/FileListDialogHandler',
     'sap/ui/yesco/common/TableUtils',
-    'sap/ui/yesco/common/FragmentEvent',
+    'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
   (
     // prettier 방지용 주석
     JSONModel,
-	ServiceNames,
-	AppUtils,
-	AttachFileAction,
-	EmployeeSearch,
-	ODataReadError,
-	TableUtils,
-	FragmentEvent,
-	BaseController
+    AppUtils,
+    EmployeeSearch,
+    FileListDialogHandler,
+    TableUtils,
+    ServiceNames,
+    ODataReadError,
+    BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.congratulation.Congratulation', {
-      TYPE_CODE: 'HR01',
+      APPTP: 'HR01',
 
-      AttachFileAction: AttachFileAction,
+      FileListDialogHandler: null,
       EmployeeSearch: EmployeeSearch,
       TableUtils: TableUtils,
-      FragmentEvent: FragmentEvent,
       AppUtils: AppUtils,
 
       onBeforeShow() {
+        this.FileListDialogHandler = new FileListDialogHandler(this);
+
         const dDate = new Date();
         const oViewModel = new JSONModel({
           busy: false,
@@ -93,7 +92,7 @@ sap.ui.define(
 
         if (this.isHass()) {
           const sPernr = this.getViewModel('appointeeModel').getProperty('/Pernr');
-          
+
           aFilters.push(new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, sPernr));
         }
 
@@ -121,12 +120,7 @@ sap.ui.define(
         const dDate = moment(oSearchDate.secondDate).hours(9).toDate();
         const dDate2 = moment(oSearchDate.date).hours(9).toDate();
         const sMenid = this.getCurrentMenuId();
-        const aFilters = [
-          new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'),
-          new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid),
-          new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate),
-          new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2),
-        ];
+        const aFilters = [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'), new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid), new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate), new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2)];
 
         oListModel.setProperty('/busy', true);
 
@@ -169,6 +163,10 @@ sap.ui.define(
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_02022');
 
         TableUtils.export({ oTable, aTableData, sFileName });
+      },
+
+      onPressFileListDialogOpen(oEvent) {
+        this.FileListDialogHandler.openDialog(oEvent);
       },
     });
   }

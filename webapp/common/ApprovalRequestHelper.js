@@ -67,7 +67,7 @@ sap.ui.define(
       setAttachBoxData() {
         const sAppno = this.getAppno();
         const bEditable = this.isFormEditable();
-        const sType = this.oController.getApprovalDocTypeCode(); // HR01과 같은 코드반환 function을 controller에 선언할 것
+        const sType = this.oController.getApprovalType(); // HR01과 같은 코드반환 function을 controller에 선언할 것
 
         AttachFileAction.setAttachFile(this.oController, {
           Editable: bEditable,
@@ -170,9 +170,9 @@ sap.ui.define(
         }
 
         if (bAttachFiles) {
-          const iAttachLength = AttachFileAction.getFileLength.call(this);
+          const iAttachLength = AttachFileAction.getFileCount.call(this);
           if (iAttachLength > 0) {
-            await AttachFileAction.uploadFile.call(this, sAppno, this.oController.getDocumentType());
+            await AttachFileAction.uploadFile.call(this, sAppno, this.oController.getApprovalType());
           }
         }
       },

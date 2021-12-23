@@ -36,7 +36,7 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.excavation.Detail', {
       LIST_PAGE_ID: 'container-ehr---excavationList',
-      TYPE_CODE: 'HR06',
+      APPTP: 'HR06',
 
       AttachFileAction: AttachFileAction,
       TextUtils: TextUtils,
@@ -179,7 +179,7 @@ sap.ui.define(
 
         AttachFileAction.setAttachFile(this, {
           Editable: !sStatus,
-          Type: this.TYPE_CODE,
+          Type: this.APPTP,
           Appno: sAppno,
           Max: 10,
           FileTypes: 'jpg,jpeg,pdf,doc,docx,ppt,pptx,xls,xlsx,bmp,png'.split(','),
@@ -215,7 +215,7 @@ sap.ui.define(
 
       async createProcess({ sPrcty = 'C' }) {
         const oViewModel = this.getViewModel();
-        const iAttachLength = AttachFileAction.getFileLength.call(this);
+        const iAttachLength = AttachFileAction.getFileCount.call(this);
         let sAppno = oViewModel.getProperty('/Appno');
 
         try {
@@ -225,7 +225,7 @@ sap.ui.define(
           }
 
           if (iAttachLength > 0) {
-            await AttachFileAction.uploadFile.call(this, sAppno, this.TYPE_CODE);
+            await AttachFileAction.uploadFile.call(this, sAppno, this.APPTP);
           }
 
           const oModel = this.getModel(ServiceNames.WORKTIME);

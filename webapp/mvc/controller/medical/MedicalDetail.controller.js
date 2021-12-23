@@ -23,25 +23,25 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     Fragment,
-	JSONModel,
-	MessageBox,
-	Appno,
-	AppUtils,
-	AttachFileAction,
-	ComboEntry,
-	FragmentEvent,
-	TextUtils,
-	TableUtils,
-	ServiceNames,
-	ODataReadError,
-	ODataCreateError,
-  ODataDeleteError,
-	BaseController,
+    JSONModel,
+    MessageBox,
+    Appno,
+    AppUtils,
+    AttachFileAction,
+    ComboEntry,
+    FragmentEvent,
+    TextUtils,
+    TableUtils,
+    ServiceNames,
+    ODataReadError,
+    ODataCreateError,
+    ODataDeleteError,
+    BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.medical.MedicalDetail', {
-      TYPE_CODE: 'HR09',
+      APPTP: 'HR09',
       LIST_PAGE_ID: 'container-ehr---medical',
       DIALOG_FILE_ID: 'DialogAttFile',
 
@@ -89,9 +89,9 @@ sap.ui.define(
 
         try {
           const aAppList = await this.getTargetList();
-  
+
           oDetailModel.setProperty('/TargetList', new ComboEntry({ codeKey: 'Kdsvh', valueKey: 'Znametx', aEntries: aAppList }));
-          
+
           this.setFormData();
         } catch (oError) {
           this.debug(oError);
@@ -152,15 +152,13 @@ sap.ui.define(
           const oAppointeeData = this.getAppointeeData();
 
           // oDetailModel.setProperty('/FormData/Appernr', oAppointeeData.Pernr);
-          oDetailModel.setProperty('/FormData', 
-            {
-              Kdsvh: 'ALL',
-              Apcnt: '0',
-              Pvcnt: '0',
-              Rjcnt: '0',
-              Pyyea: mListData.Pyyea
-            },
-          );
+          oDetailModel.setProperty('/FormData', {
+            Kdsvh: 'ALL',
+            Apcnt: '0',
+            Pvcnt: '0',
+            Rjcnt: '0',
+            Pyyea: mListData.Pyyea,
+          });
 
           oDetailModel.setProperty('/ApplyInfo', {
             Apename: oAppointeeData.Ename,
@@ -187,7 +185,7 @@ sap.ui.define(
                 oDetailModel.setProperty('/FormData', oTargetData);
                 oDetailModel.setProperty('/ApplyInfo', oTargetData);
                 oDetailModel.setProperty('/TargetDetails', oTargetData);
-                
+
                 oDetailModel.setProperty('/HisList', aHisList);
 
                 const iHisLength = aHisList.length;
@@ -230,13 +228,7 @@ sap.ui.define(
 
         // 영수증구분
         oModel.read('/MedExpenseReceiptListSet', {
-          filters: [
-            new sap.ui.model.Filter('Adult', sap.ui.model.FilterOperator.EQ, sAdult),
-            new sap.ui.model.Filter('Famgb', sap.ui.model.FilterOperator.EQ, sKey),
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
-            new sap.ui.model.Filter('Pyyea', sap.ui.model.FilterOperator.EQ, sPyyea || String(new Date().getFullYear())),
-            new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sAppno),
-          ],
+          filters: [new sap.ui.model.Filter('Adult', sap.ui.model.FilterOperator.EQ, sAdult), new sap.ui.model.Filter('Famgb', sap.ui.model.FilterOperator.EQ, sKey), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks), new sap.ui.model.Filter('Pyyea', sap.ui.model.FilterOperator.EQ, sPyyea || String(new Date().getFullYear())), new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sAppno)],
           success: (oData) => {
             if (oData) {
               oDetailModel.setProperty('/ReceiptType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: oData.results }));
@@ -264,7 +256,7 @@ sap.ui.define(
               reject(new ODataReadError(oError));
             },
           });
-        })
+        });
       },
 
       // 신청대상 선택시
@@ -283,7 +275,7 @@ sap.ui.define(
         oDetailModel.setProperty('/FormData/Famgb', mSelectedDetail.Famgb);
         oDetailModel.setProperty('/FormData/Pratetx', mSelectedDetail.Pratetx);
 
-        if(oEvent.getSource().getSelectedItem().getBindingContext().getPath().substr(-1) === '0') return;
+        if (oEvent.getSource().getSelectedItem().getBindingContext().getPath().substr(-1) === '0') return;
 
         oDetailModel.setProperty('/HisList', []);
         oDetailModel.setProperty('/listInfo/rowCount', 0);
@@ -293,14 +285,14 @@ sap.ui.define(
       // 신청액 & 신청건수
       setAppAmount() {
         const oDetailModel = this.getViewModel();
-        const aSumAmount = oDetailModel.getProperty('/HisList').map(a => a.Bettot);
+        const aSumAmount = oDetailModel.getProperty('/HisList').map((a) => a.Bettot);
 
         if (!aSumAmount.length) return;
 
         const iAmount = aSumAmount.reduce((acc, cur) => {
           return parseInt(acc) + parseInt(cur);
         });
-        
+
         oDetailModel.setProperty('/FormData/Apbet', String(iAmount));
         oDetailModel.setProperty('/FormData/Apcnt', String(aSumAmount.length));
       },
@@ -318,13 +310,13 @@ sap.ui.define(
 
         oDetailModel.setProperty('/HisList', aHisList);
       },
-      
+
       checkError() {
         const oDetailModel = this.getViewModel();
         const mFormData = oDetailModel.getProperty('/FormData');
 
         // 신청대상
-        if ((mFormData.Kdsvh === 'ALL' || !mFormData.Kdsvh)) {
+        if (mFormData.Kdsvh === 'ALL' || !mFormData.Kdsvh) {
           MessageBox.alert(this.getBundleText('MSG_09025'));
           return true;
         }
@@ -346,7 +338,7 @@ sap.ui.define(
         // 첨부파일
         const bResult = aHisList.every((e) => e.Attyn === 'X');
 
-        if (!bResult && !AttachFileAction.getFileLength.call(this)) {
+        if (!bResult && !AttachFileAction.getFileCount.call(this)) {
           MessageBox.alert(this.getBundleText('MSG_09028'));
           return true;
         }
@@ -390,15 +382,15 @@ sap.ui.define(
                 oSendObject.Waers = 'KRW';
                 oSendObject.MedExpenseItemSet = oDetailModel.getProperty('/HisList');
                 // FileUpload
-                if (!!AttachFileAction.getFileLength.call(this)) {
-                  await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.TYPE_CODE);
+                if (!!AttachFileAction.getFileCount.call(this)) {
+                  await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.APPTP);
                 }
-                
+
                 const aHislist = oDetailModel.getProperty('/HisList');
 
                 if (!!aHislist.length && !!this.byId('DetailHisDialog')) {
                   await aHislist.forEach((e) => {
-                    AttachFileAction.uploadFile.call(this, e.Appno2, this.TYPE_CODE, this.DIALOG_FILE_ID);
+                    AttachFileAction.uploadFile.call(this, e.Appno2, this.APPTP, this.DIALOG_FILE_ID);
                   });
                 }
 
@@ -406,10 +398,9 @@ sap.ui.define(
 
                 if (!!aDeleteDatas.length) {
                   await aDeleteDatas.forEach((e) => {
-                    AttachFileAction.deleteFile(e.Appno2, this.TYPE_CODE);
+                    AttachFileAction.deleteFile(e.Appno2, this.APPTP);
                   });
                 }
-
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/MedExpenseApplSet', oSendObject, {
@@ -466,15 +457,15 @@ sap.ui.define(
                 oSendObject.MedExpenseItemSet = oDetailModel.getProperty('/HisList');
 
                 // FileUpload
-                if (!!AttachFileAction.getFileLength.call(this)) {
-                  await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.TYPE_CODE);
+                if (!!AttachFileAction.getFileCount.call(this)) {
+                  await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.APPTP);
                 }
 
                 const aHislist = oDetailModel.getProperty('/HisList');
 
                 if (!!aHislist.length && !!this.byId('DetailHisDialog')) {
                   await aHislist.forEach((e) => {
-                    AttachFileAction.uploadFile.call(this, e.Appno2, this.TYPE_CODE, this.DIALOG_FILE_ID);
+                    AttachFileAction.uploadFile.call(this, e.Appno2, this.APPTP, this.DIALOG_FILE_ID);
                   });
                 }
 
@@ -482,7 +473,7 @@ sap.ui.define(
 
                 if (!!aDeleteDatas.length) {
                   await aDeleteDatas.forEach((e) => {
-                    AttachFileAction.deleteFile(e.Appno2, this.TYPE_CODE);
+                    AttachFileAction.deleteFile(e.Appno2, this.APPTP);
                   });
                 }
 
@@ -589,11 +580,10 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const sAppTarget = oDetailModel.getProperty('/FormData/Kdsvh');
 
-        
         if (!sAppTarget || sAppTarget === 'ALL') {
           return MessageBox.alert(this.getBundleText('MSG_09023'));
         }
-        
+
         oDetailModel.setProperty('/DialogData', []);
 
         this.setDialogData();
@@ -623,9 +613,9 @@ sap.ui.define(
         const aDeleteDatas = oDetailModel.getProperty('/HisDeleteDatas');
 
         if (!aDeleteDatas.length) {
-            return MessageBox.alert(this.getBundleText('MSG_00020', 'LABEL_00110'));
+          return MessageBox.alert(this.getBundleText('MSG_00020', 'LABEL_00110'));
         }
-  
+
         oDetailModel.setProperty('/RemoveFiles', aDeleteDatas);
         const aHisList = oDetailModel.getProperty('/HisList');
         const aNoInclued = aHisList.filter((e) => !aDeleteDatas.includes(e));
@@ -646,17 +636,17 @@ sap.ui.define(
 
         AttachFileAction.setAttachFile(this, {
           Editable: !sStatus || sStatus === '10',
-          Type: this.TYPE_CODE,
+          Type: this.APPTP,
           Appno: sAppno,
           Max: 10,
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
         });
       },
-      
+
       /*
-      *******************************************************************************************
-      *****************************DialogEvent***************************************************
-      */
+       *******************************************************************************************
+       *****************************DialogEvent***************************************************
+       */
 
       // 진료내역 check
       checkClinicDetail() {
@@ -698,39 +688,41 @@ sap.ui.define(
           MessageBox.alert(this.getBundleText('MSG_09024'));
           return true;
         }
-        
+
         const mReciptDetails = oDetailModel.getProperty('/ReciptDetails');
-        const mTargetDetails = oDetailModel.getProperty('/TargetDetails');        
+        const mTargetDetails = oDetailModel.getProperty('/TargetDetails');
 
         if (!!mReciptDetails) {
           // 급여인경우
           if (!!mDialogData.Bet01) {
             const iBet01 = parseInt(mReciptDetails.Bet01);
             const iActCost = parseInt(mDialogData.Bet01) * parseFloat(mTargetDetails.Prate);
-  
+
             if (iBet01 < iActCost) {
               MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet01Basic, this.TextUtils.toCurrency(parseInt(iBet01 / parseFloat(mTargetDetails.Prate)))));
               return true;
-            } 
+            }
           }
 
           if (!!mDialogData.Bet02) {
             const iBet02 = parseInt(mReciptDetails.Bet02);
             const sAddBet02 = mReciptDetails.Bet02Add;
             const iActCost = parseInt(mDialogData.Bet02) * parseFloat(mTargetDetails.Prate);
-  
+
             if ((sAddBet02 === '0' || !sAddBet02) && !mReciptDetails.Bet02AddChk) {
-              if (iBet02 < iActCost) { // 비급여 추가한도를 초과했을경우
+              if (iBet02 < iActCost) {
+                // 비급여 추가한도를 초과했을경우
                 MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet02Basic, this.TextUtils.toCurrency(parseInt(iBet02 / parseFloat(mTargetDetails.Prate)))));
                 return true;
-              } 
+              }
             } else {
               const iAddBet02 = parseInt(sAddBet02);
 
-              if (iAddBet02 < iActCost) { // 비급여 한도를 초과했을경우
+              if (iAddBet02 < iActCost) {
+                // 비급여 한도를 초과했을경우
                 MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet02AddBasic, this.TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
                 return true;
-              } 
+              }
             }
           }
         }
@@ -771,9 +763,9 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const mDialogData = oDetailModel.getProperty('/DialogData');
         const oTable = this.byId('medHisTable');
-        
+
         if (this.checkClinicDetail()) return;
-        
+
         try {
           AppUtils.setAppBusy(true, this);
 
@@ -783,30 +775,30 @@ sap.ui.define(
 
           if (!mDialogData.Appno2 || mDialogData.Appno2 === '00000000000000') {
             const vAppno = await Appno.get.call(this);
-            
+
             oDetailModel.setProperty('/DialogData/Appno2', vAppno);
           }
-          
+
           mDialogData.Waers = 'KRW';
-          
+
           const aHisList = [mDialogData, ...oDetailModel.getProperty('/HisList')];
-  
+
           oDetailModel.setProperty('/HisList', aHisList);
           oDetailModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aHisList, sStatCode: 'ZappStat' }));
 
           this.setAppAmount();
           this.addSeqnrNum();
 
-          await AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.TYPE_CODE, this.DIALOG_FILE_ID);
+          await AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.APPTP, this.DIALOG_FILE_ID);
 
           setTimeout(async () => {
             const aFileList = await AttachFileAction.refreshAttachFileList(this, this.DIALOG_FILE_ID);
             let bFile = '';
-  
+
             if (!!aFileList.length) {
-              bFile = 'X'
-            } 
-            
+              bFile = 'X';
+            }
+
             oDetailModel.setProperty('/DialogData/Attyn', bFile);
             this.byId('DetailHisDialog').close();
           }, 200);
@@ -822,9 +814,9 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const mDialogData = oDetailModel.getProperty('/DialogData');
         const aHisList = oDetailModel.getProperty('/HisList');
-        
+
         if (this.checkClinicDetail()) return;
-        
+
         try {
           AppUtils.setAppBusy(true, this);
 
@@ -834,7 +826,7 @@ sap.ui.define(
 
           if (!mDialogData.Appno2 || mDialogData.Appno2 === '00000000000000') {
             const vAppno = await Appno.get.call(this);
-            
+
             oDetailModel.setProperty('/DialogData/Appno2', vAppno);
           }
 
@@ -843,15 +835,15 @@ sap.ui.define(
               oDetailModel.setProperty(`/HisList/${i}`, mDialogData);
             }
           });
-          await AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.TYPE_CODE, this.DIALOG_FILE_ID);
-          
+          await AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.APPTP, this.DIALOG_FILE_ID);
+
           setTimeout(async () => {
             const aFileList = await AttachFileAction.refreshAttachFileList(this, this.DIALOG_FILE_ID);
             let bFile = '';
 
             if (!!aFileList.length) {
-              bFile = 'X'
-            } 
+              bFile = 'X';
+            }
 
             oDetailModel.setProperty('/DialogData/Attyn', bFile);
             this.setAppAmount();
@@ -868,7 +860,6 @@ sap.ui.define(
       onDialogClose(oEvent) {
         this.byId('DetailHisDialog').close();
       },
- 
 
       // 급여 , 비급여 한도 비교
       liveCompar(oEvent) {
@@ -888,34 +879,36 @@ sap.ui.define(
           // 급여인경우
           if (sPath === '/DialogData/Bet01') {
             const iBet01 = parseInt(mReciptDetails.Bet01);
-  
+
             if (iBet01 < iActCost) {
               MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet01Basic, this.TextUtils.toCurrency(parseInt(iBet01 / parseFloat(mTargetDetails.Prate)))));
               oDetailModel.setProperty('/DialogLimit', true);
-            } 
+            }
           } else {
             const iBet02 = parseInt(mReciptDetails.Bet02);
             const sAddBet02 = mReciptDetails.Bet02Add;
-  
+
             if ((sAddBet02 === '0' || !sAddBet02) && !mReciptDetails.Bet02AddChk) {
-              if (iBet02 < iActCost) { // 비급여 추가한도를 초과했을경우
+              if (iBet02 < iActCost) {
+                // 비급여 추가한도를 초과했을경우
                 MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet02Basic, this.TextUtils.toCurrency(parseInt(iBet02 / parseFloat(mTargetDetails.Prate)))));
                 oDetailModel.setProperty('/DialogLimit', true);
-              } 
+              }
             } else {
               const iAddBet02 = parseInt(sAddBet02);
 
-              if (iAddBet02 < iActCost) { // 비급여 한도를 초과했을경우
+              if (iAddBet02 < iActCost) {
+                // 비급여 한도를 초과했을경우
                 MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet02AddBasic, this.TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
                 oDetailModel.setProperty('/DialogLimit', true);
-              } 
+              }
             }
           }
         }
 
         oEventSource.setValue(this.TextUtils.toCurrency(sAmount));
         oDetailModel.setProperty(sPath, !sAmount ? '0' : sAmount);
-        
+
         setTimeout(() => {
           const mDialogData = oDetailModel.getProperty('/DialogData');
           const iBet01 = parseInt(mDialogData.Bet01) || 0;
@@ -960,9 +953,9 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
 
         if (!aSelected) return;
-        
+
         const aDeleteDatas = [];
-        
+
         oDetailModel.setProperty('/HisDeleteDatas', []);
 
         aSelected.forEach((e) => {
@@ -984,12 +977,12 @@ sap.ui.define(
           }
         });
       },
-     
+
       // Dialog SettingData
       async setDialogData(mRowData) {
         const oDetailModel = this.getViewModel();
-      
-        if(!mRowData) {
+
+        if (!mRowData) {
           oDetailModel.setProperty('/DialogData', {
             Recpgb: 'ALL',
             Prate: '0',
@@ -1008,10 +1001,10 @@ sap.ui.define(
       settingsAttachDialog() {
         const oDetailModel = this.getViewModel();
         const sAppno = oDetailModel.getProperty('/DialogData/Appno2') || '';
- 
+
         AttachFileAction.setAttachFile(this, {
           Id: this.DIALOG_FILE_ID,
-          Type: this.TYPE_CODE,
+          Type: this.APPTP,
           Editable: true,
           Appno: sAppno,
           Max: 1,

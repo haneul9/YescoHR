@@ -19,22 +19,22 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-	Appno,
-	AppUtils,
-	ComboEntry,
-	TextUtils,
-	AttachFileAction,
-	ServiceNames,
-	MessageBox,
-	ODataReadError,
-	ODataCreateError,
-	ODataDeleteError,
-	BaseController,
+    Appno,
+    AppUtils,
+    ComboEntry,
+    TextUtils,
+    AttachFileAction,
+    ServiceNames,
+    MessageBox,
+    ODataReadError,
+    ODataCreateError,
+    ODataDeleteError,
+    BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.studentFunds.StudentFundsDetail', {
-      TYPE_CODE: 'HR02',
+      APPTP: 'HR02',
 
       AttachFileAction: AttachFileAction,
       TextUtils: TextUtils,
@@ -117,13 +117,7 @@ sap.ui.define(
 
         new Promise((resolve) => {
           oModel.read(sUrl, {
-            filters: [
-              new sap.ui.model.Filter('Slart', sap.ui.model.FilterOperator.EQ, oFormData.Slart),
-              new sap.ui.model.Filter('Zname', sap.ui.model.FilterOperator.EQ, oFormData.Zname),
-              new sap.ui.model.Filter('Zzobjps', sap.ui.model.FilterOperator.EQ, oFormData.Zzobjps),
-              new sap.ui.model.Filter('Grdsp', sap.ui.model.FilterOperator.EQ, oFormData.Grdsp),
-              new sap.ui.model.Filter('Zyear', sap.ui.model.FilterOperator.EQ, oFormData.Zyear),
-            ],
+            filters: [new sap.ui.model.Filter('Slart', sap.ui.model.FilterOperator.EQ, oFormData.Slart), new sap.ui.model.Filter('Zname', sap.ui.model.FilterOperator.EQ, oFormData.Zname), new sap.ui.model.Filter('Zzobjps', sap.ui.model.FilterOperator.EQ, oFormData.Zzobjps), new sap.ui.model.Filter('Grdsp', sap.ui.model.FilterOperator.EQ, oFormData.Grdsp), new sap.ui.model.Filter('Zyear', sap.ui.model.FilterOperator.EQ, oFormData.Zyear)],
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
               let oList = [];
@@ -255,11 +249,7 @@ sap.ui.define(
           new Promise((resolve, reject) => {
             // 학력구분 조회
             oModel.read(sBenefitUrl, {
-              filters: [
-                new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0006'),
-                new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
-                new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-              ],
+              filters: [new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0006'), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks), new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date())],
               success: (oData) => {
                 if (oData) {
                   this.debug(`${sBenefitUrl} success.`, oData);
@@ -279,13 +269,7 @@ sap.ui.define(
           new Promise((resolve, reject) => {
             // 학년 조회
             oModel.read(sBenefitUrl, {
-              filters: [
-                new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0004'),
-                new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000002'),
-                new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'GRADE'),
-                new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
-                new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-              ],
+              filters: [new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0004'), new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000002'), new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'GRADE'), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks), new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date())],
               success: (oData) => {
                 if (oData) {
                   this.debug(`${sBenefitUrl} success.`, oData);
@@ -385,11 +369,7 @@ sap.ui.define(
         });
 
         oModel.read(sUrl, {
-          filters: [
-            new sap.ui.model.Filter('Zname', sap.ui.model.FilterOperator.EQ, oFormData.Zname),
-            new sap.ui.model.Filter('Slart', sap.ui.model.FilterOperator.EQ, oFormData.Slart),
-            new sap.ui.model.Filter('Zzobjps', sap.ui.model.FilterOperator.EQ, oFormData.Zzobjps),
-          ],
+          filters: [new sap.ui.model.Filter('Zname', sap.ui.model.FilterOperator.EQ, oFormData.Zname), new sap.ui.model.Filter('Slart', sap.ui.model.FilterOperator.EQ, oFormData.Slart), new sap.ui.model.Filter('Zzobjps', sap.ui.model.FilterOperator.EQ, oFormData.Zzobjps)],
           success: (oData) => {
             if (oData) {
               this.debug(`${sUrl} success.`, oData);
@@ -441,12 +421,7 @@ sap.ui.define(
         this.getSupAmount();
 
         oModel.read(sUrl, {
-          filters: [
-            new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0005'),
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks),
-            new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-            new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, vSelected),
-          ],
+          filters: [new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0005'), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks), new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()), new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, vSelected)],
           success: (oData) => {
             if (oData) {
               this.debug(`${sUrl} success.`, oData);
@@ -507,7 +482,7 @@ sap.ui.define(
         }
 
         // 첨부파일
-        if (!AttachFileAction.getFileLength.call(this) && AppBtn === 'O') {
+        if (!AttachFileAction.getFileCount.call(this) && AppBtn === 'O') {
           MessageBox.alert(this.getBundleText('MSG_03005'));
           return true;
         }
@@ -551,7 +526,7 @@ sap.ui.define(
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.APPTP);
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/SchExpenseApplSet', oSendObject, {
@@ -606,7 +581,7 @@ sap.ui.define(
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.APPTP);
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/SchExpenseApplSet', oSendObject, {
@@ -712,7 +687,7 @@ sap.ui.define(
 
         AttachFileAction.setAttachFile(this, {
           Editable: !sStatus || sStatus === '10',
-          Type: this.TYPE_CODE,
+          Type: this.APPTP,
           Appno: sAppno,
           Message: this.getBundleText('MSG_00040'),
           Max: 10,

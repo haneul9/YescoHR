@@ -15,19 +15,19 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-	AppUtils,
-	AttachFileAction,
-	FragmentEvent,
-	TableUtils,
-	TextUtils,
-	ServiceNames,
-	ODataReadError,
-	BaseController,
+    AppUtils,
+    AttachFileAction,
+    FragmentEvent,
+    TableUtils,
+    TextUtils,
+    ServiceNames,
+    ODataReadError,
+    BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.clubJoin.ClubJoin', {
-      TYPE_CODE: 'HR07',
+      APPTP: 'HR07',
 
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
@@ -92,12 +92,7 @@ sap.ui.define(
         oListModel.setProperty('/busy', true);
 
         oModel.read('/ClubJoinApplSet', {
-          filters: [
-            new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'),
-            new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid),
-            new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate),
-            new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2),
-          ],
+          filters: [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'), new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid), new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate), new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2)],
           success: (oData) => {
             if (oData) {
               const oList = oData.results;

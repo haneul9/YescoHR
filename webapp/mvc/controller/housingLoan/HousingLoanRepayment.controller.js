@@ -22,25 +22,25 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     Fragment,
-	JSONModel,
-	MessageBox,
-	Appno,
-	AppUtils,
-	AttachFileAction,
-	ComboEntry,
-	FragmentEvent,
-	TextUtils,
-	TableUtils,
-	ServiceNames,
-	ODataReadError,
-	ODataCreateError,
-	ODataDeleteError,
-	BaseController,
+    JSONModel,
+    MessageBox,
+    Appno,
+    AppUtils,
+    AttachFileAction,
+    ComboEntry,
+    FragmentEvent,
+    TextUtils,
+    TableUtils,
+    ServiceNames,
+    ODataReadError,
+    ODataCreateError,
+    ODataDeleteError,
+    BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.housingLoan.HousingLoanRepayment', {
-      TYPE_CODE: 'HR08',
+      APPTP: 'HR08',
       LIST_PAGE_ID: 'container-ehr---housingLoanDetail',
 
       AttachFileAction: AttachFileAction,
@@ -182,14 +182,7 @@ sap.ui.define(
           new Promise((resolve) => {
             // 입금계좌
             oModel.read('/BenefitCodeListSet', {
-              filters: [
-                new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0015'),
-                new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks),
-                new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-                new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000003'),
-                new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'IN'),
-                new sap.ui.model.Filter('Comcd', sap.ui.model.FilterOperator.EQ, 'BANK'),
-              ],
+              filters: [new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0015'), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks), new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()), new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000003'), new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'IN'), new sap.ui.model.Filter('Comcd', sap.ui.model.FilterOperator.EQ, 'BANK')],
               success: (oData) => {
                 if (oData) {
                   const sText = oData.results[0].Ztext;
@@ -232,11 +225,7 @@ sap.ui.define(
           new Promise((resolve) => {
             // 신청내역
             oModel.read('/LoanRepayApplSet', {
-              filters: [
-                new sap.ui.model.Filter('Lonid', sap.ui.model.FilterOperator.EQ, mDetailData.Lonid),
-                new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mDetailData.Lntyp),
-                new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'),
-              ],
+              filters: [new sap.ui.model.Filter('Lonid', sap.ui.model.FilterOperator.EQ, mDetailData.Lonid), new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mDetailData.Lntyp), new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L')],
               success: (oData) => {
                 if (oData) {
                   const oTable = this.byId('repaymentTable');
@@ -262,11 +251,7 @@ sap.ui.define(
         const oAppointeeData = this.getAppointeeData();
 
         oModel.read('/BenefitCodeListSet', {
-          filters: [
-            new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0016'),
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks),
-            new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-          ],
+          filters: [new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0016'), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks), new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date())],
           success: (oData) => {
             if (oData) {
               const aList = oData.results;
@@ -319,11 +304,7 @@ sap.ui.define(
           sDate = sKey;
         }
 
-        aFiltList.push(
-          new sap.ui.model.Filter('Lonid', sap.ui.model.FilterOperator.EQ, mDialogData.Lonid),
-          new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mDialogData.Lntyp),
-          new sap.ui.model.Filter('Rptyp', sap.ui.model.FilterOperator.EQ, sKey1)
-        );
+        aFiltList.push(new sap.ui.model.Filter('Lonid', sap.ui.model.FilterOperator.EQ, mDialogData.Lonid), new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mDialogData.Lntyp), new sap.ui.model.Filter('Rptyp', sap.ui.model.FilterOperator.EQ, sKey1));
         if (sKey1 === 'FULL') {
           aFiltList.push(new sap.ui.model.Filter('Paydt', sap.ui.model.FilterOperator.EQ, sDate), new sap.ui.model.Filter('RpamtMpr', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/TargetLoanHis/RpamtBal')));
           oDetailModel.setProperty('/DateEditable', true);
@@ -406,7 +387,7 @@ sap.ui.define(
         }
 
         // 첨부파일
-        if (!AttachFileAction.getFileLength.call(this)) {
+        if (!AttachFileAction.getFileCount.call(this)) {
           MessageBox.alert(this.getBundleText('MSG_00046'));
           return true;
         }
@@ -450,7 +431,7 @@ sap.ui.define(
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oDialogData.Appno, this.TYPE_CODE);
+                await AttachFileAction.uploadFile.call(this, oDialogData.Appno, this.APPTP);
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/LoanRepayApplSet', oSendObject, {
@@ -506,7 +487,7 @@ sap.ui.define(
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oDialogData.Appno, this.TYPE_CODE);
+                await AttachFileAction.uploadFile.call(this, oDialogData.Appno, this.APPTP);
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/LoanRepayApplSet', oSendObject, {
@@ -617,7 +598,7 @@ sap.ui.define(
 
         AttachFileAction.setAttachFile(this, {
           Editable: !sStatus || sStatus === '10',
-          Type: this.TYPE_CODE,
+          Type: this.APPTP,
           Appno: sAppno,
           Max: 1,
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],

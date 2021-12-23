@@ -14,19 +14,19 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-	AppUtils,
-	AttachFileAction,
-	FragmentEvent,
-	TableUtils,
-	TextUtils,
-	ServiceNames,
-	ODataReadError,
-	BaseController
+    AppUtils,
+    AttachFileAction,
+    FragmentEvent,
+    TableUtils,
+    TextUtils,
+    ServiceNames,
+    ODataReadError,
+    BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.familyInfo.FamilyInfo', {
-      TYPE_CODE: 'HR03',
+      APPTP: 'HR03',
 
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,

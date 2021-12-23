@@ -20,23 +20,23 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-	AttachFileAction,
-	Appno,
-	AppUtils,
-	ComboEntry,
-	FragmentEvent,
-	TextUtils,
-	ServiceNames,
-	MessageBox,
-	ODataReadError,
-	ODataCreateError,
-	ODataDeleteError,
-	BaseController,
+    AttachFileAction,
+    Appno,
+    AppUtils,
+    ComboEntry,
+    FragmentEvent,
+    TextUtils,
+    ServiceNames,
+    MessageBox,
+    ODataReadError,
+    ODataCreateError,
+    ODataDeleteError,
+    BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.familyInfo.FamilyInfoDetail', {
-      TYPE_CODE: 'HR03',
+      APPTP: 'HR03',
       LIST_PAGE_ID: 'container-ehr---familyInfo',
       GENDER: {
         CODE: {
@@ -325,7 +325,7 @@ sap.ui.define(
         }
 
         // 첨부파일
-        if (!AttachFileAction.getFileLength.call(this)) {
+        if (!AttachFileAction.getFileCount.call(this)) {
           MessageBox.alert(this.getBundleText('MSG_03005'));
           return true;
         }
@@ -358,13 +358,13 @@ sap.ui.define(
                 }
 
                 let oSendObject = {};
-                
+
                 oSendObject = oFormData;
                 oSendObject.Prcty = 'C';
                 oSendObject.Menid = sMenid;
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.APPTP);
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/FamilyInfoApplSet', oSendObject, {
@@ -372,7 +372,7 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      reject(new ODataCreateError({oError}));
+                      reject(new ODataCreateError({ oError }));
                     },
                   });
                 });
@@ -434,7 +434,7 @@ sap.ui.define(
 
         AttachFileAction.setAttachFile(this, {
           Editable: !sStatus || sStatus === '10',
-          Type: this.TYPE_CODE,
+          Type: this.APPTP,
           Appno: sAppno,
           Max: 10,
         });

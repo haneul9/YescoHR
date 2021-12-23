@@ -172,6 +172,14 @@ sap.ui.define(
         return null;
       },
 
+      /**
+       * ApprovalRequestHelper에서 호출
+       * @returns
+       */
+      getApprovalType() {
+        return this.APPTP;
+      },
+
       onRefresh() {
         this.debug('BaseController.onRefresh');
       },

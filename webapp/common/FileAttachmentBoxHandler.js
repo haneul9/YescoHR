@@ -33,7 +33,7 @@ sap.ui.define(
       oFileUploader: null,
       oFilesTable: null,
 
-      /*
+      /**
        * 파일첨부 panel 및 FileUploader Control의 표시여부 등을 설정
        * 문서상태 및 첨부파일 여부에 따라 Control의 표시여부를 결정한다.
        */
@@ -44,10 +44,10 @@ sap.ui.define(
             busy: true,
             boxWrapperId: '',
             appno: '',
+            apptp: '',
             mode: 'S', // S: single file, M: multi file
-            fileSelectionMode: null,
             message: '',
-            docType: '',
+            fileSelectionMode: null,
             fileTypes: [],
             gubun: false,
             visible: true,
@@ -88,8 +88,8 @@ sap.ui.define(
         }
       },
 
-      /*
-       * 첨부파일 리스트를 Binding한다.
+      /**
+       * 첨부 파일 목록 조회
        */
       readFiles() {
         return new Promise((resolve, reject) => {
@@ -104,13 +104,14 @@ sap.ui.define(
           oServiceModel.read(sUrl, {
             filters: [
               new Filter('Appno', FilterOperator.EQ, mSettings.appno), //
-              new Filter('Zworktyp', FilterOperator.EQ, mSettings.docType),
+              new Filter('Zworktyp', FilterOperator.EQ, mSettings.apptp),
             ],
             success: (mData) => {
               const aFiles = (mData || {}).results || [];
               if (aFiles.length) {
                 aFiles.forEach((file) => {
                   file.New = false;
+                  file.Deleted = false;
                 });
               }
 
@@ -125,9 +126,8 @@ sap.ui.define(
         });
       },
 
-      /*
-       * 첨부파일의 Upload가 완료되었을때 처리 내역
-       * refreshAttachFileList Function을 호출한다.
+      /**
+       * 첨부 파일 업로드 완료 event handler
        */
       onAttachmentUploadComplete(oEvent) {
         const sResponse = oEvent.getParameter('response');
@@ -135,8 +135,8 @@ sap.ui.define(
         MessageBox.alert(sResponse);
       },
 
-      /*
-       * Upload할 첨부파일을 선택했을 경우 처리 내역
+      /**
+       * 첨부 파일 선택 event handler
        */
       onAttachmentChange(oEvent) {
         const oFileUploader = oEvent.getSource();
@@ -160,6 +160,7 @@ sap.ui.define(
 
           Object.values(mSelectedFiles).forEach((file, i) => {
             file.New = true;
+            file.Deleted = false;
             file.Zfilename = file.name;
             file.Type = file.type;
             file.Zbinkey = String(parseInt(Math.random() * 100000000000000));
@@ -176,13 +177,16 @@ sap.ui.define(
         }
       },
 
-      /*
-       * 첨부된 파일을 삭제처리
+      /**
+       * 첨부 파일 삭제 버튼 click event handler
        */
       onAttachmentRemove() {
         this.toggleDeleted(true);
       },
 
+      /**
+       * 첨부 파일 삭제 취소 버튼 click event handler
+       */
       onAttachmentRemoveCancel() {
         this.toggleDeleted(false);
       },
@@ -209,11 +213,14 @@ sap.ui.define(
       },
 
       openFileLink(sUrl) {
-        if (_.isEmpty(sUrl)) return;
+        if (_.isEmpty(sUrl)) {
+          return;
+        }
+
         window.open(sUrl, '_blank');
       },
 
-      readFileList(sAppno, sWorkType) {
+      readFileList(sAppno, sApptp) {
         return new Promise((resolve, reject) => {
           const oServiceModel = this.oController.getModel(ServiceNames.COMMON);
           const sUrl = '/FileListSet';
@@ -221,12 +228,13 @@ sap.ui.define(
           oServiceModel.read(sUrl, {
             filters: [
               new Filter('Appno', FilterOperator.EQ, sAppno), // prettier 방지용 주석
-              new Filter('Zworktyp', FilterOperator.EQ, sWorkType),
+              new Filter('Zworktyp', FilterOperator.EQ, sApptp),
             ],
             success: (mData) => {
               const aFiles = (mData || {}).results || [];
               aFiles.forEach((mFile) => {
                 mFile.New = false;
+                mFile.Deleted = false;
               });
 
               resolve(aFiles);
@@ -240,65 +248,28 @@ sap.ui.define(
         });
       },
 
-      /*
-       * 조회화면 list에있는 증빙클릭시 첨부파일리스트 호출
-       */
-      setTableFileList(oController, oTableRowData = {}) {
-        const oListFileTable = oController.byId('listFileTable');
-        const oModel = oController.getModel(ServiceNames.COMMON);
-        const JSonModel = oController.getViewModel();
-        const Datas = { Data: [] };
-
-        oModel.read('/FileListSet', {
-          filters: [
-            new Filter('Appno', FilterOperator.EQ, oTableRowData.Appno), // prettier 방지용 주석
-            new Filter('Zworktyp', FilterOperator.EQ, oController.TYPE_CODE),
-          ],
-          success: (data) => {
-            if (data && data.results.length) {
-              data.results.forEach((elem) => {
-                elem.New = false;
-                Datas.Data.push(elem);
-              });
-            }
-
-            JSonModel.setProperty('/files', Datas.Data);
-            oListFileTable.setVisibleRowCount(Datas.Data.length);
-          },
-          error: (res) => {
-            this.debug(`${sUrl} error.`, res);
-          },
-        });
-      },
-
-      /*
+      /**
        * 첨부파일 개수
        */
-      getFileLength() {
+      getFileCount() {
         return this.oFileAttachmentBox.getModel().getProperty('/settings/fileCount');
       },
 
-      /*
+      /**
        * 첨부파일 Upload
        */
-      async upload(Appno, Type) {
+      async upload(sAppno, sType) {
         return new Promise(async (resolve, reject) => {
           const oBoxModel = this.oFileAttachmentBox.getModel();
-          const aFiles = oBoxModel.getProperty('/files') || [];
+          let aFiles = oBoxModel.getProperty('/files') || [];
 
           // 파일 삭제
           try {
-            await Promise.all(
-              aFiles
-                .filter((mFile) => mFile.Deleted)
-                .map((mFile) => {
-                  this.deleteFile(mFile.Appno, mFile.Zworktyp, mFile.Zfileseq);
-                })
-            );
+            await Promise.all(aFiles.filter((mFile) => mFile.Deleted).map(this.deleteFile));
           } catch (oError) {
-            AppUtils.debug('FileAttachmentBoxHandler > uploadFile Error', oError);
+            AppUtils.debug('FileAttachmentBoxHandler > upload > deleteFile Error', oError);
 
-            throw oError;
+            reject(oError);
           }
 
           // 업로드 완료된 파일만 있는 경우 업로드 동작 불필요
@@ -306,104 +277,131 @@ sap.ui.define(
 
           if (!aFiles.length) {
             resolve();
-            return;
           }
 
           const sServiceUrl = ServiceManager.getServiceUrl('ZHR_COMMON_SRV', AppUtils.getAppComponent());
           const oServiceModel = new ODataModel(sServiceUrl, { json: true, loadMetadataAsync: true, refreshAfterChange: false });
+          const sUploadUrl = `${sServiceUrl}/FileUploadSet/`;
 
-          aFiles.forEach((mFile) => {
-            oServiceModel.refreshSecurityToken();
+          // 파일 업로드
+          try {
+            while (aFiles.length) {
+              await this.uploadFile({ sAppno, sType, oServiceModel, sUploadUrl, mFile: aFiles.shift() });
+            }
+          } catch (oError) {
+            AppUtils.debug('FileAttachmentBoxHandler > upload > uploadFile Error', oError);
 
-            const oRequest = oServiceModel._createRequest();
-            const oHeaders = {
-              'x-csrf-token': oRequest.headers['x-csrf-token'],
-              slug: [Appno, Type, encodeURI(mFile.Zfilename)].join('|'),
-            };
+            reject(oError);
+          }
+        });
+      },
 
-            $.ajax({
-              url: `${sServiceUrl}/FileUploadSet/`,
-              type: 'POST',
-              async: false,
-              cache: false,
-              processData: false,
-              contentType: mFile.type,
-              headers: oHeaders,
-              data: mFile,
-              success: (data) => {
-                AppUtils.debug(`${AppUtils.getBundleText('MSG_00016')}, ${data}`); // 업로드가 완료되었습니다.
-                resolve();
-              },
-              error: (oError) => {
-                AppUtils.debug(`Error: ${oError}`);
+      async uploadFile({ sAppno, sType, mFile, oServiceModel, sUploadUrl }) {
+        return new Promise((resolve, reject) => {
+          const mHeaders = {
+            'x-csrf-token': this.getCsrfToken(oServiceModel),
+            slug: [sAppno, sType, encodeURI(mFile.Zfilename)].join('|'),
+          };
 
-                reject({ code: 'E', message: AppUtils.getBundleText('MSG_00041') }); // 파일 업로드에 실패하였습니다.
-              },
-              complete: () => {
-                this.oFilesTable.clearSelection();
-              },
-            });
+          $.ajax({
+            url: sUploadUrl,
+            type: 'POST',
+            async: false,
+            cache: false,
+            processData: false,
+            contentType: mFile.type,
+            headers: mHeaders,
+            data: mFile,
+            success: (mData) => {
+              AppUtils.debug(`${sUploadUrl} success.`, mData);
+
+              resolve();
+            },
+            error: (oError) => {
+              AppUtils.debug(`${sUploadUrl} error.`, oError);
+
+              const sMessage1 = AppUtils.getBundleText('MSG_00041'); // 파일 업로드에 실패하였습니다.
+              const sMessage2 = AppUtils.getBundleText('MSG_00052', mFile.Zfilename); // 파일명 : {0}
+
+              reject({ code: 'E', message: `${sMessage1}\n\n${sMessage2}` });
+            },
           });
         });
       },
 
-      uploadFile() {},
+      getCsrfToken(oServiceModel) {
+        oServiceModel.refreshSecurityToken();
 
-      /**
-       * @param  {} Appno
-       * @param  {} Type
-       */
-      // upload(sAppno, sType, aFiles) {
-      //   const sServiceUrl = ServiceManager.getServiceUrl('ZHR_COMMON_SRV', this.getOwnerComponent());
-      //   const oModel = new sap.ui.model.odata.ODataModel(sServiceUrl, true, undefined, undefined, undefined, undefined, undefined, false);
+        return oServiceModel._createRequest().headers['x-csrf-token'];
+      },
 
-      //   return new Promise((resolve) => {
-      //     for (let i = 0; i < aFiles.length; i++) {
-      //       oModel.refreshSecurityToken();
-
-      //       const oFile = aFiles[i];
-      //       const oRequest = oModel._createRequest();
-      //       const oHeaders = {
-      //         'x-csrf-token': oRequest.headers['x-csrf-token'],
-      //         slug: [sAppno, sType, encodeURI(oFile.name)].join('|'),
-      //       };
-
-      //       jQuery.ajax({
-      //         type: 'POST',
-      //         async: false,
-      //         url: `${sServiceUrl}/FileUploadSet/`,
-      //         headers: oHeaders,
-      //         cache: false,
-      //         contentType: oFile.type,
-      //         processData: false,
-      //         data: oFile,
-      //         success: (data) => {
-      //           this.debug(`${this.getBundleText('MSG_00016')}, ${data}`);
-      //           resolve();
-      //         },
-      //         error: (oError) => {
-      //           this.debug(`Error: ${oError}`);
-
-      //           // 파일 업로드에 실패하였습니다.
-      //           reject({ code: 'E', message: this.getBundleText('MSG_00041') });
-      //         },
-      //       });
-      //     }
-      //   });
-      // },
-
-      async deleteFile(sAppno, sZworktyp, sZfileseq = '999') {
+      async deleteFile({ Appno, Zworktyp, Zfileseq = '999', Zfilename }) {
         return new Promise((resolve, reject) => {
           const oServiceModel = AppUtils.getAppComponent().getModel(ServiceNames.COMMON);
-          const sUrl = oServiceModel.createKey('/FileListSet', { sAppno, sZworktyp, sZfileseq });
+          const sUrl = oServiceModel.createKey('/FileListSet', { Appno, Zworktyp, Zfileseq });
 
           oServiceModel.remove(sUrl, {
             success: resolve,
-            error: (oError) => {
-              reject({ code: 'E', message: AppUtils.getBundleText('MSG_00008', 'LABEL_00250'), data: { sAppno, sZworktyp, sZfileseq, oError } }); // {파일삭제}중 오류가 발생하였습니다.
+            error: (Error) => {
+              const sMessage1 = AppUtils.getBundleText('MSG_00008', 'LABEL_00250'); // {파일삭제}중 오류가 발생하였습니다.
+              const sMessage2 = AppUtils.getBundleText('MSG_00052', Zfilename); // 파일명 : {0}
+
+              reject({ code: 'E', message: `${sMessage1}\n\n${sMessage2}`, data: { Appno, Zworktyp, Zfileseq, Zfilename, Error } });
             },
           });
         });
+      },
+
+      /**
+       * 첨부 파일 목록 dialog open
+       * @param {sap.ui.base.Event} oEvent
+       */
+      async openFileListDialog(oEvent) {
+        const oContext = oEvent.getSource().getBindingContext();
+        const sPath = oContext.getPath();
+        const sAppno = oContext.getModel().getProperty(`${sPath}/Appno`);
+
+        if (!this.oFileListDialog) {
+          this.oFileListDialog = await Fragment.load({
+            name: 'sap.ui.yesco.fragment.FileListDialog',
+            controller: this,
+          });
+
+          this.oFileListDialog
+            .addStyleClass(AppUtils.getAppComponent().getContentDensityClass())
+            .setModel(
+              new JSONModel({
+                busy: true,
+                appno: null,
+                apptp: null,
+                files: null,
+                fileCount: 1,
+              })
+            )
+            .attachBeforeOpen(() => {
+              this.readDialogData();
+            });
+        }
+
+        this.oFileListDialog.getModel().setProperty('/appno', sAppno);
+        this.oFileListDialog.getModel().setProperty('/apptp', this.oController.getApprovalType());
+        this.oFileListDialog.open();
+      },
+
+      /**
+       * 첨부 파일 목록 dialog 데이터 조회
+       */
+      async readDialogData() {
+        const oModel = this.oFileListDialog.getModel();
+        const aFiles = await this.readFileList(oModel.getProperty('/appno'), oModel.getProperty('/apptp'));
+
+        oModel.setProperty('/files', aFiles);
+        oModel.setProperty('/fileCount', aFiles.length);
+        oModel.setProperty('/busy', false);
+      },
+
+      onPressFileListDialogClose() {
+        this.oFileListDialog.close();
       },
     });
   }

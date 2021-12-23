@@ -20,24 +20,24 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-	MessageBox,
-	Appno,
-	AppUtils,
-	AttachFileAction,
-	ComboEntry,
-	FragmentEvent,
-	TextUtils,
-	TableUtils,
-	ODataReadError,
-	ODataCreateError,
-	ODataDeleteError,
-	ServiceNames,
-	BaseController
+    MessageBox,
+    Appno,
+    AppUtils,
+    AttachFileAction,
+    ComboEntry,
+    FragmentEvent,
+    TextUtils,
+    TableUtils,
+    ODataReadError,
+    ODataCreateError,
+    ODataDeleteError,
+    ServiceNames,
+    BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.housingLoan.HousingLoanDetail', {
-      TYPE_CODE: 'HR07',
+      APPTP: 'HR07',
       LIST_PAGE_ID: 'container-ehr---housingLoan',
 
       AttachFileAction: AttachFileAction,
@@ -228,13 +228,7 @@ sap.ui.define(
           new Promise((resolve) => {
             // 융자구분
             oModel.read(sBenefitUrl, {
-              filters: [
-                new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0008'),
-                new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks),
-                new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-                new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000004'),
-                new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'GRADE'),
-              ],
+              filters: [new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0008'), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks), new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()), new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000004'), new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'GRADE')],
               success: (oData) => {
                 if (oData) {
                   this.debug(`${sBenefitUrl} success.`, oData);
@@ -281,13 +275,7 @@ sap.ui.define(
           new Promise((resolve) => {
             // 주택종류
             oModel.read(sBenefitUrl, {
-              filters: [
-                new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0010'),
-                new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks),
-                new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-                new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000003'),
-                new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'HTYPE'),
-              ],
+              filters: [new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0010'), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks), new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()), new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000003'), new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'HTYPE')],
               success: (oData) => {
                 if (oData) {
                   this.debug(`${sBenefitUrl} success.`, oData);
@@ -307,14 +295,7 @@ sap.ui.define(
           new Promise((resolve) => {
             // 건평
             oModel.read(sBenefitUrl, {
-              filters: [
-                new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0011'),
-                new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks),
-                new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-                new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000003'),
-                new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'OUT'),
-                new sap.ui.model.Filter('Comcd', sap.ui.model.FilterOperator.EQ, 'PY'),
-              ],
+              filters: [new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0011'), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks), new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()), new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000003'), new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'OUT'), new sap.ui.model.Filter('Comcd', sap.ui.model.FilterOperator.EQ, 'PY')],
               success: (oData) => {
                 if (oData) {
                   this.debug(`${sBenefitUrl} success.`, oData);
@@ -343,12 +324,7 @@ sap.ui.define(
         const sBenefitUrl = '/BenefitCodeListSet';
 
         oModel.read(sBenefitUrl, {
-          filters: [
-            new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0012'),
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks),
-            new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-            new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, sKey),
-          ],
+          filters: [new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0012'), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks), new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()), new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, sKey)],
           success: (oData) => {
             if (oData) {
               this.debug(`${sBenefitUrl} success.`, oData);
@@ -389,12 +365,7 @@ sap.ui.define(
         const mFormData = oDetailModel.getProperty('/FormData');
 
         oModel.read(sBenefitUrl, {
-          filters: [
-            new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, mFormData.Pernr),
-            new sap.ui.model.Filter('Begda', sap.ui.model.FilterOperator.EQ, mFormData.Begda),
-            new sap.ui.model.Filter('Endda', sap.ui.model.FilterOperator.EQ, mFormData.Endda),
-            new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mFormData.Lntyp),
-          ],
+          filters: [new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, mFormData.Pernr), new sap.ui.model.Filter('Begda', sap.ui.model.FilterOperator.EQ, mFormData.Begda), new sap.ui.model.Filter('Endda', sap.ui.model.FilterOperator.EQ, mFormData.Endda), new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mFormData.Lntyp)],
           success: (oData) => {
             if (oData) {
               const oList = oData.results[0];
@@ -452,7 +423,7 @@ sap.ui.define(
 
               const oRepayObj = oData.results[0];
 
-              if(!!oRepayObj.Message) {
+              if (!!oRepayObj.Message) {
                 MessageBox.alert(oRepayObj.Message);
                 // oDetailModel.setProperty('/FormData/Lnamt', oRepayObj.Mxamt);
               }
@@ -552,7 +523,7 @@ sap.ui.define(
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.APPTP);
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/LoanAmtApplSet', oSendObject, {
@@ -560,7 +531,7 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      reject(new ODataCreateError({oError}));
+                      reject(new ODataCreateError({ oError }));
                     },
                   });
                 });
@@ -607,7 +578,7 @@ sap.ui.define(
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE);
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.APPTP);
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/LoanAmtApplSet', oSendObject, {
@@ -615,7 +586,7 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      reject(new ODataCreateError({oError}));
+                      reject(new ODataCreateError({ oError }));
                     },
                   });
                 });
@@ -662,7 +633,7 @@ sap.ui.define(
                   });
                 },
                 error: (oError) => {
-                  AppUtils.handleError(new ODataCreateError({oError}));
+                  AppUtils.handleError(new ODataCreateError({ oError }));
                   AppUtils.setAppBusy(false, this);
                 },
               });
@@ -699,7 +670,7 @@ sap.ui.define(
                   });
                 },
                 error: (oError) => {
-                  AppUtils.handleError(new ODataDeleteError({oError}));
+                  AppUtils.handleError(new ODataDeleteError({ oError }));
                   AppUtils.setAppBusy(false, this);
                 },
               });
@@ -716,7 +687,7 @@ sap.ui.define(
 
         AttachFileAction.setAttachFile(this, {
           Editable: !sStatus || sStatus === '10',
-          Type: this.TYPE_CODE,
+          Type: this.APPTP,
           Appno: sAppno,
           Max: 10,
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],

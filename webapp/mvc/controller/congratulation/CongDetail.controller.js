@@ -2,6 +2,8 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
+    'sap/ui/model/Filter',
+    'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
@@ -20,24 +22,27 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     Fragment,
-	JSONModel,
-	Appno,
-	AppUtils,
-	AttachFileAction,
-	ComboEntry,
-	TextUtils,
-	FragmentEvent,
-	ServiceNames,
-  ODataReadError,
-	ODataCreateError,
-	ODataDeleteError,
-	MessageBox,
-	BaseController,
+    Filter,
+    FilterOperator,
+    JSONModel,
+    Appno,
+    AppUtils,
+    AttachFileAction,
+    ComboEntry,
+    TextUtils,
+    FragmentEvent,
+    ServiceNames,
+    ODataReadError,
+    ODataCreateError,
+    ODataDeleteError,
+    MessageBox,
+    BaseController,
+    Date
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.congratulation.CongDetail', {
-      TYPE_CODE: 'HR01',
+      APPTP: 'HR01',
 
       AttachFileAction: AttachFileAction,
       FragmentEvent: FragmentEvent,
@@ -134,10 +139,10 @@ sap.ui.define(
 
             oModel.read(sUrl, {
               filters: [
-                new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'),
-                new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid),
-                new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sDataKey),
-                new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, oAppointeeData.Pernr),
+                new Filter('Prcty', FilterOperator.EQ, 'D'), // prettier 방지용 주석
+                new Filter('Menid', FilterOperator.EQ, sMenid),
+                new Filter('Appno', FilterOperator.EQ, sDataKey),
+                new Filter('Pernr', FilterOperator.EQ, oAppointeeData.Pernr),
               ],
               success: (oData) => {
                 resolve(oData.results[0]);
@@ -158,9 +163,9 @@ sap.ui.define(
         return new Promise((resolve, reject) => {
           oModel.read('/BenefitCodeListSet', {
             filters: [
-              new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0001'),
-              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa || oAppointeeData.Werks),
-              new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
+              new Filter('Cdnum', FilterOperator.EQ, 'BE0001'), // prettier 방지용 주석
+              new Filter('Werks', FilterOperator.EQ, oAppointeeData.Persa || oAppointeeData.Werks),
+              new Filter('Datum', FilterOperator.EQ, new Date()),
             ],
             success: (oData) => {
               resolve(oData.results);
@@ -181,11 +186,11 @@ sap.ui.define(
 
         oModel.read('/BenefitCodeListSet', {
           filters: [
-            new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0002'),
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa || oAppointeeData.Werks),
-            new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-            new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, oFormData.Concode),
-            new sap.ui.model.Filter('Upcod2', sap.ui.model.FilterOperator.EQ, 'E'),
+            new Filter('Cdnum', FilterOperator.EQ, 'BE0002'), // prettier 방지용 주석
+            new Filter('Werks', FilterOperator.EQ, oAppointeeData.Persa || oAppointeeData.Werks),
+            new Filter('Datum', FilterOperator.EQ, new Date()),
+            new Filter('Upcod', FilterOperator.EQ, oFormData.Concode),
+            new Filter('Upcod2', FilterOperator.EQ, 'E'),
           ],
           success: (oData) => {
             if (oData) {
@@ -201,11 +206,11 @@ sap.ui.define(
 
         oModel.read('/BenefitCodeListSet', {
           filters: [
-            new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0003'),
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa || oAppointeeData.Werks),
-            new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-            new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, oFormData.Concode),
-            new sap.ui.model.Filter('Upcod2', sap.ui.model.FilterOperator.EQ, oFormData.Conresn),
+            new Filter('Cdnum', FilterOperator.EQ, 'BE0003'), // prettier 방지용 주석
+            new Filter('Werks', FilterOperator.EQ, oAppointeeData.Persa || oAppointeeData.Werks),
+            new Filter('Datum', FilterOperator.EQ, new Date()),
+            new Filter('Upcod', FilterOperator.EQ, oFormData.Concode),
+            new Filter('Upcod2', FilterOperator.EQ, oFormData.Conresn),
           ],
           success: (oData) => {
             if (oData) {
@@ -250,11 +255,11 @@ sap.ui.define(
         new Promise((resolve) => {
           oModel.read('/BenefitCodeListSet', {
             filters: [
-              new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0002'),
-              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa || oAppointeeData.Werks),
-              new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-              new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, sSelectKey),
-              new sap.ui.model.Filter('Upcod2', sap.ui.model.FilterOperator.EQ, 'E'),
+              new Filter('Cdnum', FilterOperator.EQ, 'BE0002'), // prettier 방지용 주석
+              new Filter('Werks', FilterOperator.EQ, oAppointeeData.Persa || oAppointeeData.Werks),
+              new Filter('Datum', FilterOperator.EQ, new Date()),
+              new Filter('Upcod', FilterOperator.EQ, sSelectKey),
+              new Filter('Upcod2', FilterOperator.EQ, 'E'),
             ],
             success: (oData) => {
               if (oData) {
@@ -303,11 +308,11 @@ sap.ui.define(
 
         oModel.read('/BenefitCodeListSet', {
           filters: [
-            new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0003'),
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa || oAppointeeData.Werks),
-            new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-            new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, oFormData.Concode),
-            new sap.ui.model.Filter('Upcod2', sap.ui.model.FilterOperator.EQ, sSelectKey),
+            new Filter('Cdnum', FilterOperator.EQ, 'BE0003'), // prettier 방지용 주석
+            new Filter('Werks', FilterOperator.EQ, oAppointeeData.Persa || oAppointeeData.Werks),
+            new Filter('Datum', FilterOperator.EQ, new Date()),
+            new Filter('Upcod', FilterOperator.EQ, oFormData.Concode),
+            new Filter('Upcod2', FilterOperator.EQ, sSelectKey),
           ],
           success: (oData) => {
             if (oData) {
@@ -386,10 +391,10 @@ sap.ui.define(
 
         oModel.read('/ConExpenseCheckListSet', {
           filters: [
-            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa || oAppointeeData.Werks),
-            new sap.ui.model.Filter('Concode', sap.ui.model.FilterOperator.EQ, vConcode),
-            new sap.ui.model.Filter('Conresn', sap.ui.model.FilterOperator.EQ, vConresn),
-            new sap.ui.model.Filter('Conddate', sap.ui.model.FilterOperator.EQ, vConddate),
+            new Filter('Werks', FilterOperator.EQ, oAppointeeData.Persa || oAppointeeData.Werks), // prettier 방지용 주석
+            new Filter('Concode', FilterOperator.EQ, vConcode),
+            new Filter('Conresn', FilterOperator.EQ, vConresn),
+            new Filter('Conddate', FilterOperator.EQ, vConddate),
           ],
           success: (oData) => {
             if (oData) {
@@ -462,11 +467,11 @@ sap.ui.define(
         return new Promise((resolve) => {
           oModel.read('/ConExpenseSupportListSet', {
             filters: [
-              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Persa || oAppointeeData.Werks),
-              new sap.ui.model.Filter('Concode', sap.ui.model.FilterOperator.EQ, oFormData.Concode),
-              new sap.ui.model.Filter('Conresn', sap.ui.model.FilterOperator.EQ, oFormData.Conresn),
-              new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-              new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, oAppointeeData.Pernr),
+              new Filter('Werks', FilterOperator.EQ, oAppointeeData.Persa || oAppointeeData.Werks), // prettier 방지용 주석
+              new Filter('Concode', FilterOperator.EQ, oFormData.Concode),
+              new Filter('Conresn', FilterOperator.EQ, oFormData.Conresn),
+              new Filter('Datum', FilterOperator.EQ, new Date()),
+              new Filter('Pernr', FilterOperator.EQ, oAppointeeData.Pernr),
             ],
             success: (oData) => {
               if (oData) {
@@ -584,25 +589,24 @@ sap.ui.define(
             if (vPress && vPress === this.getBundleText('LABEL_00103')) {
               try {
                 AppUtils.setAppBusy(true, this);
-  
+
                 if (!vStatus || vStatus === '45') {
                   const vAppno = await Appno.get.call(this);
-  
+
                   oDetailModel.setProperty('/FormData/Appno', vAppno);
                   oDetailModel.setProperty('/FormData/ZappStatAl', '10');
                   oDetailModel.setProperty('/FormData/Appdt', new Date());
                 }
-  
+
                 let oSendObject = {};
-  
+
                 oSendObject = oFormData;
                 oSendObject.Prcty = 'T';
                 oSendObject.Menid = oDetailModel.getProperty('/menuId');
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE),
-  
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.APPTP);
                 await new Promise((resolve, reject) => {
                   oModel.create('/ConExpenseApplSet', oSendObject, {
                     success: () => {
@@ -612,7 +616,7 @@ sap.ui.define(
                       reject(new ODataCreateError({ oError }));
                     },
                   });
-                })
+                });
 
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
               } catch (oError) {
@@ -656,7 +660,7 @@ sap.ui.define(
 
               Promise.all([
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.TYPE_CODE),
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.APPTP),
                 await new Promise((resolve, reject) => {
                   oModel.create('/ConExpenseApplSet', oSendObject, {
                     success: () => {
@@ -666,26 +670,29 @@ sap.ui.define(
                       reject(new ODataCreateError({ oError }));
                     },
                   });
+                }),
+              ])
+                .catch((oError) => {
+                  AppUtils.handleError(oError);
                 })
-              ]).catch((oError) => {
-                AppUtils.handleError(oError);
-              }).then(() => {
-                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
-                  onClose: () => {
-                    let sRoute = '';
+                .then(() => {
+                  MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
+                    onClose: () => {
+                      let sRoute = '';
 
-                    if (this.isHass()) {
-                      sRoute = 'h/congratulation';
-                    } else {
-                      sRoute = 'congratulation';
-                    }
+                      if (this.isHass()) {
+                        sRoute = 'h/congratulation';
+                      } else {
+                        sRoute = 'congratulation';
+                      }
 
-                    this.getRouter().navTo(sRoute);
-                  },
+                      this.getRouter().navTo(sRoute);
+                    },
+                  });
+                })
+                .finally(() => {
+                  AppUtils.setAppBusy(false, this);
                 });
-              }).finally(() => {
-                AppUtils.setAppBusy(false, this);
-              });
             }
           },
         });
@@ -784,7 +791,7 @@ sap.ui.define(
 
         AttachFileAction.setAttachFile(this, {
           Editable: !sStatus || sStatus === '10',
-          Type: this.TYPE_CODE,
+          Type: this.APPTP,
           Appno: sAppno,
           Max: 10,
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],

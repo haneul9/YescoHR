@@ -135,7 +135,7 @@
             <table:Column width="90px">
               <Label text="{i18n>LABEL_00133}"/>
               <table:template>
-                <Button type="Transparent" class="mnw-0" icon="sap-icon://attachment" press=".TableUtils.onFileListDialog" visible="{= ${Docyn} === 'Y' }"/>
+                <Button type="Transparent" class="mnw-0" icon="sap-icon://attachment" press=".onPressFileListDialogOpen" visible="{= ${Docyn} === 'Y' }"/>
                 <!-- <Text text="{Docynt}" textAlign="Center" width="100%" wrapping="false" /> -->
               </table:template>
             </table:Column>

@@ -8,26 +8,26 @@ sap.ui.define(
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/exceptions/ODataReadError',    
+    'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Currency',
   ],
   (
     // prettier 방지용 주석
     JSONModel,
-	AppUtils,
-	AttachFileAction,
-	FragmentEvent,
-	TableUtils,
-	TextUtils,
-	ServiceNames,
-	ODataReadError,
-	BaseController,
+    AppUtils,
+    AttachFileAction,
+    FragmentEvent,
+    TableUtils,
+    TextUtils,
+    ServiceNames,
+    ODataReadError,
+    BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.studentFunds.StudentFunds', {
-      TYPE_CODE: 'HR02',
+      APPTP: 'HR02',
 
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
@@ -89,12 +89,7 @@ sap.ui.define(
         oListModel.setProperty('/busy', true);
 
         oModel.read('/SchExpenseApplSet', {
-          filters: [
-            new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'),
-            new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid),
-            new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate),
-            new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2),
-          ],
+          filters: [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'), new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid), new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate), new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2)],
           success: (oData) => {
             if (oData) {
               const oList = oData.results;

@@ -7,11 +7,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
   ],
-  (AppUtils,
-	JSONModel,
-	ServiceManager,
-	ServiceNames,
-	MessageBox) => {
+  (AppUtils, JSONModel, ServiceManager, ServiceNames, MessageBox) => {
     'use strict';
 
     return {
@@ -46,16 +42,16 @@ sap.ui.define(
         const sId = options.Id;
         const sIdPath = !!sId ? `${sId}--` : '';
         const oAttachbox = oController.byId(`${sIdPath}ATTACHBOX`);
-        
+
         if (!!sId) {
-          oController.setViewModel(new JSONModel(), sId)
+          oController.setViewModel(new JSONModel(), sId);
           oAttController.AttachId = sId;
         } else {
           oAttController.AttachId = '';
         }
 
         const oJsonModel = !!sId ? oController.getViewModel(sId) : oController.getViewModel();
-        
+
         oJsonModel.setProperty('/Settings', options);
         oJsonModel.setProperty('/DeleteDatas', []);
         try {
@@ -78,7 +74,7 @@ sap.ui.define(
         const sIdPath = !!sId ? `${sId}--` : '';
         const oAttachTable = oController.byId(`${sIdPath}attachTable`);
         const sPath = '/Data';
-        
+
         oAttachTable.setModel(oJsonModel);
         oAttachTable.bindRows(sPath);
         oAttachTable.setVisibleRowCount(aFileList.length);
@@ -112,9 +108,9 @@ sap.ui.define(
         if (sSuffix === this.AttachFileAction.AttachId) {
           sId = this.AttachFileAction.AttachId;
         } else {
-          this.AttachFileAction.AttachId = ''
+          this.AttachFileAction.AttachId = '';
         }
-        
+
         const JSonModel = !!sId ? oEventSource.getModel(sId) : oEventSource.getModel();
         const sPath = '/Data';
         const sSettingPath = '/Settings/';
@@ -204,10 +200,7 @@ sap.ui.define(
 
         return new Promise((resolve, reject) => {
           oModel.read('/FileListSet', {
-            filters: [
-              new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, vAttachFileDatas.Appno), 
-              new sap.ui.model.Filter('Zworktyp', sap.ui.model.FilterOperator.EQ, vAttachFileDatas.Type)
-            ],
+            filters: [new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, vAttachFileDatas.Appno), new sap.ui.model.Filter('Zworktyp', sap.ui.model.FilterOperator.EQ, vAttachFileDatas.Type)],
             success: (data) => {
               if (data && data.results.length) {
                 data.results.forEach((elem) => {
@@ -215,7 +208,7 @@ sap.ui.define(
                   Datas.Data.push(elem);
                 });
               }
-  
+
               resolve(Datas.Data);
             },
             error: (res) => {
@@ -230,10 +223,7 @@ sap.ui.define(
           const oModel = AppUtils.getAppController().getModel(ServiceNames.COMMON);
 
           oModel.read('/FileListSet', {
-            filters: [
-              new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sAppno),
-              new sap.ui.model.Filter('Zworktyp', sap.ui.model.FilterOperator.EQ, sWorkType),
-            ],
+            filters: [new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sAppno), new sap.ui.model.Filter('Zworktyp', sap.ui.model.FilterOperator.EQ, sWorkType)],
             success: (oData) => {
               resolve(
                 oData.results.map((o) => {
@@ -259,7 +249,7 @@ sap.ui.define(
         const Datas = { Data: [] };
 
         oModel.read('/FileListSet', {
-          filters: [new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, oTableRowData.Appno), new sap.ui.model.Filter('Zworktyp', sap.ui.model.FilterOperator.EQ, oController.TYPE_CODE)],
+          filters: [new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, oTableRowData.Appno), new sap.ui.model.Filter('Zworktyp', sap.ui.model.FilterOperator.EQ, oController.APPTP)],
           success: (data) => {
             if (data && data.results.length) {
               data.results.forEach((elem) => {
@@ -282,7 +272,7 @@ sap.ui.define(
       /*
        * 첨부파일 길이
        */
-      getFileLength(sId) {
+      getFileCount(sId) {
         const sIdPath = !!sId ? `${sId}--` : '';
         const Attachbox = this.byId(`${sIdPath}ATTACHBOX`);
         const JSonModel = !!sId ? Attachbox.getModel(sId) : Attachbox.getModel();
@@ -308,11 +298,11 @@ sap.ui.define(
         const aDeleteFiles = JSonModel.getProperty('/DeleteDatas') || [];
         const oAttachTable = this.byId(`${sIdPath}attachTable`);
 
-        return new Promise(async(resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
           // 파일 삭제
           if (!!aDeleteFiles.length) {
             try {
-              aDeleteFiles.forEach(async(e) => {
+              aDeleteFiles.forEach(async (e) => {
                 await this.AttachFileAction.callDeleteFileService(this, e);
               });
             } catch (e) {
