@@ -55,7 +55,7 @@
             <core:Item key="{code}" text="{text}" />
         </ComboBox>
         <Label text="{i18n>LABEL_00300}" />
-        <HBox>
+        <HBox alignItems="Center">
             <Link text="{/employee/dialog/form/Zfilename}" width="80%" textAlign="Begin" visible="{= !!${/employee/dialog/form/Zfilename}}" press=".onPressFileLink">
                 <layoutData>
                     <FlexItemData growFactor="1" />
