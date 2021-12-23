@@ -12,7 +12,7 @@ sap.ui.define(
        * @returns {sap.ui.base.Object}
        */
       constructor: function ({ codeKey = 'code', valueKey = 'text', aEntries = [] }) {
-        return [{ [codeKey]: 'ALL', [valueKey]: AppUtils.getBundleText('LABEL_00268') }, ...aEntries];
+        return [{ [codeKey]: 'ALL', [valueKey]: AppUtils.getBundleText('LABEL_00268') }, ..._.map(aEntries, (o) => _.omit(o, '__metadata'))];
       },
     });
   }

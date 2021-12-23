@@ -620,6 +620,7 @@ sap.ui.define(
 
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
               } catch (oError) {
+                oDetailModel.setProperty('/FormData/Appno', '');
                 AppUtils.handleError(oError);
               } finally {
                 AppUtils.setAppBusy(false, this);
@@ -642,25 +643,24 @@ sap.ui.define(
           actions: [this.getBundleText('LABEL_00121'), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00121')) {
-              AppUtils.setAppBusy(true, this);
+              try {
+                AppUtils.setAppBusy(true, this);
 
-              if (!vStatus || vStatus === '45') {
-                const vAppno = await Appno.get.call(this);
+                if (!vStatus || vStatus === '45') {
+                  const vAppno = await Appno.get.call(this);
 
-                oDetailModel.setProperty('/FormData/Appno', vAppno);
-                oDetailModel.setProperty('/FormData/Appdt', new Date());
-              }
+                  oDetailModel.setProperty('/FormData/Appno', vAppno);
+                  oDetailModel.setProperty('/FormData/Appdt', new Date());
+                }
 
-              let oSendObject = {};
+                let oSendObject = {};
 
-              oSendObject = oFormData;
-              oSendObject.Prcty = 'C';
-              oSendObject.Menid = oDetailModel.getProperty('/menuId');
-              oSendObject.Waers = 'KRW';
-
-              Promise.all([
+                oSendObject = oFormData;
+                oSendObject.Prcty = 'C';
+                oSendObject.Menid = oDetailModel.getProperty('/menuId');
+                oSendObject.Waers = 'KRW';
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.APPTP),
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.APPTP);
                 await new Promise((resolve, reject) => {
                   oModel.create('/ConExpenseApplSet', oSendObject, {
                     success: () => {
@@ -670,29 +670,19 @@ sap.ui.define(
                       reject(new ODataCreateError({ oError }));
                     },
                   });
-                }),
-              ])
-                .catch((oError) => {
-                  AppUtils.handleError(oError);
-                })
-                .then(() => {
-                  MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
-                    onClose: () => {
-                      let sRoute = '';
-
-                      if (this.isHass()) {
-                        sRoute = 'h/congratulation';
-                      } else {
-                        sRoute = 'congratulation';
-                      }
-
-                      this.getRouter().navTo(sRoute);
-                    },
-                  });
-                })
-                .finally(() => {
-                  AppUtils.setAppBusy(false, this);
                 });
+
+                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
+                  onClose: () => {
+                    this.getRouter().navTo(this.getCurrentMenuRouteName());
+                  },
+                });
+              } catch (oError) {
+                oDetailModel.setProperty('/FormData/Appno', '');
+                AppUtils.handleError(oError);
+              } finally {
+                AppUtils.setAppBusy(false, this);
+              }
             }
           },
         });
@@ -720,15 +710,7 @@ sap.ui.define(
                   AppUtils.setAppBusy(false, this);
                   MessageBox.alert(this.getBundleText('MSG_00039', 'LABEL_00121'), {
                     onClose: () => {
-                      let sRoute = '';
-
-                      if (this.isHass()) {
-                        sRoute = 'h/congratulation';
-                      } else {
-                        sRoute = 'congratulation';
-                      }
-
-                      this.getRouter().navTo(sRoute);
+                      this.getRouter().navTo(this.getCurrentMenuRouteName());
                     },
                   });
                 },
@@ -761,15 +743,7 @@ sap.ui.define(
                 success: () => {
                   MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
                     onClose: () => {
-                      let sRoute = '';
-
-                      if (this.isHass()) {
-                        sRoute = 'h/congratulation';
-                      } else {
-                        sRoute = 'congratulation';
-                      }
-
-                      this.getRouter().navTo(sRoute);
+                      this.getRouter().navTo(this.getCurrentMenuRouteName());
                     },
                   });
                 },

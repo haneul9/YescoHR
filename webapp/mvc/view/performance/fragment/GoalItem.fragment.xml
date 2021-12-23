@@ -11,7 +11,7 @@
                         <VBox>
                             <Input value="{Obj0}" maxLength="{/fieldControl/limit/Obj0}" enabled="{= ${/fieldControl/display/Obj0} === 'X' }" visible="{= ${/fieldControl/display/Obj0} !== 'H' }" />
                         </VBox>
-                        <Button icon="sap-icon://sys-minus" text="{i18n>LABEL_10020}" press=".onPressDeleteGoal">
+                        <Button icon="sap-icon://sys-minus" text="{i18n>LABEL_10020}" visible="{/buttons/goal/DELETE/Availability}" press=".onPressDeleteGoal">
                             <customData>
                                 <core:CustomData key="root" value="{rootPath}" />
                                 <core:CustomData key="itemKey" value="{OrderNo}" />
