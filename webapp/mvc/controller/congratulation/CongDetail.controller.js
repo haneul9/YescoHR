@@ -7,14 +7,14 @@ sap.ui.define(
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/TextUtils',
+    'sap/ui/yesco/common/FileAttachmentBoxHandler',
     'sap/ui/yesco/common/FragmentEvent',
+    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/common/exceptions/ODataDeleteError',
+    'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
@@ -27,24 +27,23 @@ sap.ui.define(
     JSONModel,
     Appno,
     AppUtils,
-    AttachFileAction,
     ComboEntry,
-    TextUtils,
+    FileAttachmentBoxHandler,
     FragmentEvent,
+    TextUtils,
     ServiceNames,
-    ODataReadError,
     ODataCreateError,
     ODataDeleteError,
+    ODataReadError,
     MessageBox,
-    BaseController,
-    Date
+    BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.congratulation.CongDetail', {
       APPTP: 'HR01',
 
-      AttachFileAction: AttachFileAction,
+      FileAttachmentBoxHandler: null,
       FragmentEvent: FragmentEvent,
       TextUtils: TextUtils,
 
@@ -84,10 +83,11 @@ sap.ui.define(
 
           const oRowData = await this.getTargetData();
 
-          if (!!oRowData) {
+          if (oRowData) {
             oDetailModel.setProperty('/FormData', oRowData);
             oDetailModel.setProperty('/ApplyInfo', oRowData);
             oDetailModel.setProperty('/ApprovalDetails', oRowData);
+
             this.getBenefitData();
           }
 
@@ -576,55 +576,65 @@ sap.ui.define(
 
       // 임시저장
       onSaveBtn() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const oFormData = oDetailModel.getProperty('/FormData');
-        const vStatus = oFormData.ZappStatAl;
+        if (this.checkError()) {
+          return;
+        }
 
-        if (this.checkError(this)) return;
+        const sMessage = this.getBundleText('MSG_00006', 'LABEL_00103'); // {저장}하시겠습니까?
+        const sYes = this.getBundleText('LABEL_00103'); // 저장
 
-        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00103'), {
-          actions: [this.getBundleText('LABEL_00103'), this.getBundleText('LABEL_00118')],
-          onClose: async (vPress) => {
-            if (vPress && vPress === this.getBundleText('LABEL_00103')) {
-              try {
-                AppUtils.setAppBusy(true, this);
+        MessageBox.confirm(sMessage, {
+          actions: [
+            sYes,
+            this.getBundleText('LABEL_00118'), // 취소
+          ],
+          onClose: async (sAction) => {
+            if (sAction !== sYes) {
+              return;
+            }
 
-                if (!vStatus || vStatus === '45') {
-                  const vAppno = await Appno.get.call(this);
+            try {
+              AppUtils.setAppBusy(true, this);
 
-                  oDetailModel.setProperty('/FormData/Appno', vAppno);
-                  oDetailModel.setProperty('/FormData/ZappStatAl', '10');
-                  oDetailModel.setProperty('/FormData/Appdt', new Date());
-                }
+              const oDetailModel = this.getViewModel();
+              const mFormData = oDetailModel.getProperty('/FormData');
+              const sStatus = mFormData.ZappStatAl;
 
-                let oSendObject = {};
+              if (!sStatus || sStatus === '45') {
+                const sAppno = await Appno.get();
 
-                oSendObject = oFormData;
-                oSendObject.Prcty = 'T';
-                oSendObject.Menid = oDetailModel.getProperty('/menuId');
-                oSendObject.Waers = 'KRW';
-
-                // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.APPTP);
-                await new Promise((resolve, reject) => {
-                  oModel.create('/ConExpenseApplSet', oSendObject, {
-                    success: () => {
-                      resolve();
-                    },
-                    error: (oError) => {
-                      reject(new ODataCreateError({ oError }));
-                    },
-                  });
-                });
-
-                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
-              } catch (oError) {
-                oDetailModel.setProperty('/FormData/Appno', '');
-                AppUtils.handleError(oError);
-              } finally {
-                AppUtils.setAppBusy(false, this);
+                oDetailModel.setProperty('/FormData/Appno', sAppno);
+                oDetailModel.setProperty('/FormData/ZappStatAl', '10');
+                oDetailModel.setProperty('/FormData/Appdt', new Date());
               }
+
+              // 파일 삭제 및 업로드
+              await this.FileListDialogHandler.upload(mFormData.Appno);
+
+              await new Promise((resolve, reject) => {
+                const oModel = this.getModel(ServiceNames.BENEFIT);
+                const mPayload = {
+                  ...mFormData,
+                  Prcty: 'T',
+                  Menid: oDetailModel.getProperty('/menuId'),
+                  Waers: 'KRW',
+                };
+
+                oModel.create('/ConExpenseApplSet', mPayload, {
+                  success: resolve,
+                  error: (oError) => {
+                    reject(new ODataCreateError({ oError }));
+                  },
+                });
+              });
+
+              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103')); // {저장}되었습니다.
+            } catch (oError) {
+              oDetailModel.setProperty('/FormData/Appno', '');
+
+              AppUtils.handleError(oError);
+            } finally {
+              AppUtils.setAppBusy(false, this);
             }
           },
         });
@@ -632,57 +642,69 @@ sap.ui.define(
 
       // 신청
       onApplyBtn() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const oFormData = oDetailModel.getProperty('/FormData');
-        const vStatus = oFormData.ZappStatAl;
+        if (this.checkError()) {
+          return;
+        }
 
-        if (this.checkError(this)) return;
+        const sMessage = this.getBundleText('MSG_00006', 'LABEL_00121'); // {신청}하시겠습니까?
+        const sYes = this.getBundleText('LABEL_00121'); // 신청
 
-        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
-          actions: [this.getBundleText('LABEL_00121'), this.getBundleText('LABEL_00118')],
-          onClose: async (vPress) => {
-            if (vPress && vPress === this.getBundleText('LABEL_00121')) {
-              try {
-                AppUtils.setAppBusy(true, this);
+        MessageBox.confirm(sMessage, {
+          actions: [
+            sYes,
+            this.getBundleText('LABEL_00118'), // 취소
+          ],
+          onClose: async (sAction) => {
+            if (sAction !== sYes) {
+              return;
+            }
 
-                if (!vStatus || vStatus === '45') {
-                  const vAppno = await Appno.get.call(this);
+            try {
+              AppUtils.setAppBusy(true, this);
 
-                  oDetailModel.setProperty('/FormData/Appno', vAppno);
-                  oDetailModel.setProperty('/FormData/Appdt', new Date());
-                }
+              const oDetailModel = this.getViewModel();
+              const mFormData = oDetailModel.getProperty('/FormData');
+              const sStatus = mFormData.ZappStatAl;
 
-                let oSendObject = {};
+              if (!sStatus || sStatus === '45') {
+                const sAppno = await Appno.get();
 
-                oSendObject = oFormData;
-                oSendObject.Prcty = 'C';
-                oSendObject.Menid = oDetailModel.getProperty('/menuId');
-                oSendObject.Waers = 'KRW';
-                // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.APPTP);
-                await new Promise((resolve, reject) => {
-                  oModel.create('/ConExpenseApplSet', oSendObject, {
-                    success: () => {
-                      resolve();
-                    },
-                    error: (oError) => {
-                      reject(new ODataCreateError({ oError }));
-                    },
-                  });
-                });
+                oDetailModel.setProperty('/FormData/Appno', sAppno);
+                oDetailModel.setProperty('/FormData/Appdt', new Date());
+              }
 
-                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
-                  onClose: () => {
-                    this.getRouter().navTo(this.getCurrentMenuRouteName());
+              // 파일 삭제 및 업로드
+              await this.FileListDialogHandler.upload(mFormData.Appno);
+
+              await new Promise((resolve, reject) => {
+                const oModel = this.getModel(ServiceNames.BENEFIT);
+                const mPayload = {
+                  ...mFormData,
+                  Prcty: 'C',
+                  Menid: oDetailModel.getProperty('/menuId'),
+                  Waers: 'KRW',
+                };
+
+                oModel.create('/ConExpenseApplSet', mPayload, {
+                  success: () => {
+                    resolve();
+                  },
+                  error: (oError) => {
+                    reject(new ODataCreateError({ oError }));
                   },
                 });
-              } catch (oError) {
-                oDetailModel.setProperty('/FormData/Appno', '');
-                AppUtils.handleError(oError);
-              } finally {
-                AppUtils.setAppBusy(false, this);
-              }
+              });
+
+              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
+                onClose: () => {
+                  this.onNavBack();
+                },
+              });
+            } catch (oError) {
+              oDetailModel.setProperty('/FormData/Appno', '');
+              AppUtils.handleError(oError);
+            } finally {
+              AppUtils.setAppBusy(false, this);
             }
           },
         });
@@ -731,8 +753,8 @@ sap.ui.define(
 
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
           actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
-          onClose: (vPress) => {
-            if (vPress && vPress === this.getBundleText('LABEL_00110')) {
+          onClose: (sAction) => {
+            if (sAction && sAction === this.getBundleText('LABEL_00110')) {
               AppUtils.setAppBusy(true, this);
 
               const sPath = oModel.createKey('/ConExpenseApplSet', {
@@ -763,12 +785,12 @@ sap.ui.define(
         const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
         const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
 
-        AttachFileAction.setAttachFile(this, {
-          Editable: !sStatus || sStatus === '10',
-          Type: this.APPTP,
-          Appno: sAppno,
-          Max: 10,
-          FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
+        this.FileAttachmentBoxHandler = new FileAttachmentBoxHandler(this, {
+          editable: !sStatus || sStatus === '10',
+          appno: sAppno,
+          apptp: this.getApprovalType(),
+          maxFileCount: 10,
+          fileTypes: ['jpg', 'jpeg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
         });
       },
     });

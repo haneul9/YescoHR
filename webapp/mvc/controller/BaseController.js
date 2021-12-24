@@ -192,6 +192,34 @@ sap.ui.define(
       },
 
       /**
+       * FileAttachmentBox.fragment.xml
+       */
+      onAttachmentChange(oEvent) {
+        this.FileAttachmentBoxHandler.onAttachmentChange(oEvent);
+      },
+
+      /**
+       * FileAttachmentBox.fragment.xml
+       */
+      onAttachmentUploadComplete(oEvent) {
+        this.FileAttachmentBoxHandler.onAttachmentUploadComplete(oEvent);
+      },
+
+      /**
+       * FileAttachmentBox.fragment.xml
+       */
+      onAttachmentRemove(oEvent) {
+        this.FileAttachmentBoxHandler.onAttachmentRemove(oEvent);
+      },
+
+      /**
+       * FileAttachmentBox.fragment.xml
+       */
+      onAttachmentRemoveCancel(oEvent) {
+        this.FileAttachmentBoxHandler.onAttachmentRemoveCancel(oEvent);
+      },
+
+      /**
        * Convenience method for logging.
        * @protected
        */
