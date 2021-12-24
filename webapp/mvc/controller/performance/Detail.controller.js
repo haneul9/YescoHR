@@ -142,7 +142,6 @@ sap.ui.define(
             valid: [],
             strategy: [],
             duty: [],
-            hidden: [],
           },
         });
         this.setViewModel(oViewModel);
@@ -263,40 +262,6 @@ sap.ui.define(
             })
             .value();
 
-          // Hidden value [V] - 원본 값 저장 후 값만 지움
-          const mHiddenFields = _.pickBy(mConvertScreen, (v) => v === this.DISPLAY_TYPE.HIDDEN_VALUE);
-          if (!_.isEmpty(mHiddenFields)) {
-            const mOriginalHidden = oViewModel.getProperty('/goals/hidden') ?? [];
-
-            if (_.has(mHiddenFields, 'Z131') || _.has(mHiddenFields, 'Z132')) {
-              _.chain(mHiddenFields)
-                .omit('Z125Ee')
-                .omit('Z125Er')
-                .keys()
-                .map((k) => {
-                  mOriginalHidden.push({ path: `/manage/${k}`, value: _.get(mDetailData, [k]) });
-                  _.set(mDetailData, [k], _.noop());
-                })
-                .commit();
-            }
-            if (_.has(mHiddenFields, 'Z125Ee') || _.has(mHiddenFields, 'Z125Er')) {
-              _.chain(mHiddenFields)
-                .omit('Z131')
-                .omit('Z132')
-                .keys()
-                .map((k) => {
-                  _.forEach(this.GOAL_TYPE, (goal) => {
-                    _.forEach(mGroupDetailByZ101[goal.code], (o, i) => {
-                      mOriginalHidden.push({ path: `/goals/${goal.name}/${i}/${k}`, value: _.get(o, [k]) });
-                      _.set(o, [k], _.noop());
-                    });
-                  });
-                })
-                .commit();
-            }
-          }
-
-          // 콤보박스 Entry
           oViewModel.setProperty('/entry/topGoals', new ComboEntry({ codeKey: 'Objid', valueKey: 'Stext', aEntries: aTopGoals }) ?? []);
           oViewModel.setProperty('/entry/levels', new ComboEntry({ codeKey: 'ValueEid', valueKey: 'ValueText', aEntries: aGrades }) ?? []);
           oViewModel.setProperty('/entry/status', new ComboEntry({ codeKey: 'ValueEid', valueKey: 'ValueText', aEntries: aStatus }) ?? []);
