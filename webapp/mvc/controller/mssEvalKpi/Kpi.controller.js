@@ -38,6 +38,7 @@ sap.ui.define([
                 busy: false,
                 List: [],
                 Years: [],
+                TeamList: [],
                 PartCode: [],
                 CompanyCode: [],
                 tab: {
@@ -77,7 +78,6 @@ sap.ui.define([
                 });
                 this.onSearch();
                 this.getPartCascading();
-                this.attachDragAndDrop();
             } catch (oError) {
                 AppUtils.handleError(oError);
             } finally {
@@ -146,7 +146,7 @@ sap.ui.define([
         },
 
         // TabBar 선택
-        async onSelectTabBar(oEvent) {
+        async onSelectTabBar() {
             const oViewModel = this.getViewModel();
             const aPartList = await this.partList();
                 
@@ -158,7 +158,8 @@ sap.ui.define([
                 Zyear: String(new Date().getFullYear()),
             });
 
-            this.attachDragAndDrop();
+            this.getAllCascading();
+            this.getPartCascading();
         },
 
         // 회사선택
@@ -181,67 +182,84 @@ sap.ui.define([
             this.getViewModel().setProperty('/search/Orgtx', oEvent.getSource().getValue());
         },
 
-        attachDragAndDrop() {
-			const oGrid = this.byId("grid1");
+        // 수행 팀 수 Link Press
+        async onPressTeam(oEvent) {
+            try {
+                const sPath = oEvent.getSource().getBindingContext().getPath();
+                const oViewModel = this.getViewModel();
+                const aList = await this.getTeamList(oViewModel.getProperty(sPath));
 
-			oGrid.addDragDropConfig(new DragInfo({
-				sourceAggregation: "items"
-			}));
+                oViewModel.setProperty('/TeamList', aList);
+                
+                if (!this.dTeamListDialog) {
+                    this.dTeamListDialog = Fragment.load({
+                      id: oView.getId(),
+                      name: 'sap.ui.yesco.mvc.view.mssEvalKpi.fragment.formDetail.dialog.TeamList',
+                      controller: this,
+                    }).then(function (oDialog) {
+                      oView.addDependent(oDialog);
+                        return oDialog;
+                    });
+                }
+                    
+                this.dTeamListDialog.then(function (oDialog) {
+                oDialog.open();
+                });
+            } catch (oError) {
+                AppUtils.handleError(oError);
+            }
+        },
 
-			oGrid.addDragDropConfig(new GridDropInfo({
-				targetAggregation: "items",
-				// dropPosition: DropPosition.Between,
-				// dropLayout: DropLayout.Horizontal,
-				// dropIndicatorSize: this.onDropIndicatorSize.bind(this),
-				drop: this.onDrop.bind(this)
-			}));
-		},
+        onCloseClick(oEvent) {
+            oEvent.getSource().close();
+        },
+
+        // 수행 팀 목록 조회
+        getTeamList(mSelectedRow = {}) {
+            const oModel = this.getModel(ServiceNames.APPRAISAL);
+
+            this.getViewModel().setProperty('/TeamList', []);
+
+            return new Promise((resolve, reject) => {
+                oModel.read('/KpiCascadingOrgehSet', {
+                    filters: [
+                        new sap.ui.model.Filter('Zyear', sap.ui.model.FilterOperator.EQ, mSelectedRow.Zyear),
+                        new sap.ui.model.Filter('Otype', sap.ui.model.FilterOperator.EQ, mSelectedRow.Otype),
+                        new sap.ui.model.Filter('Objid', sap.ui.model.FilterOperator.EQ, mSelectedRow.Objid),
+                    ],
+                    success: (oData) => {
+                        if (oData) {    
+                            this.debug(oData);
+                            resolve(oData.results);
+                        }
+                    },
+                    error: (oError) => {
+                        this.debug(oError);
+                        reject(new ODataReadError(oError));
+                    },
+                });
+            });
+        },
 
         onDrop(oInfo) {
 			const oViewModel = this.getViewModel();
 			const oDragged = oInfo.getParameter("draggedControl");
-			const oDropped = oInfo.getParameter("droppedControl");
-			const sInsertPosition = oInfo.getParameter("dropPosition");
-			const oDragContainer = oDragged.getParent();
-			const oDropContainer = oInfo.getSource().getParent();
-			const oModelData = oViewModel.getData();
             const oDraggPath = oDragged.getBindingContext().getPath();
 			const mDraggData = oViewModel.getProperty(oDraggPath);
             const aGridList = oViewModel.getProperty('/PartList');
-			// const iDropPosition = oDropContainer.indexOfItem(oDropped);
 
             // 부문 중복체크
             if (aGridList.some((e) => {return e === mDraggData})) {
-                return oViewModel.refresh();
-                // return MessageBox.alert(this.getBundleText('MSG_15001'));
+                return;
             }
 
             oViewModel.setProperty('/PartList', [mDraggData, ...aGridList]);
-
-			// if (oViewModel === oViewModel && iDragPosition < iDropPosition) {
-			// 	iDropPosition--;
-			// }
-
-			if (sInsertPosition === "After") {
-				iDropPosition++;
-			}
-
-			// insert the control in target aggregation
-			// oModelData.splice(iDropPosition, 0, mDraggData);
-
-			// if (oViewModel !== oViewModel) {
-			// 	oViewModel.setData(oModelData);
-			// 	oViewModel.setData(oModelData);
-			// } else {
-			// 	oViewModel.setData(oModelData);
-			// }
 		},
 
         // table rowData Drag
         onDragStart(oEvent) {
             const oDraggedRow = oEvent.getParameter("target");
 			const oDragSession = oEvent.getParameter("dragSession");
-            const sPath = oDraggedRow.getBindingContext().getPath();
 
 			// keep the dragged row context for the drop action
 			oDragSession.setComplexData("draggedRowContext", oDraggedRow.getBindingContext());
@@ -254,9 +272,12 @@ sap.ui.define([
 
 			if (!oDraggedRowContext) return;
 
+            const oViewModel = this.getViewModel();
+            const aPartList = oViewModel.getProperty('/PartList').filter(x => ![oViewModel.getProperty(oDraggedRowContext.getPath())].includes(x));
+            
 			// reset the rank property and update the model to refresh the bindings
-			// this.oProductsModel.setProperty("Rank", this.config.initialRank, oDraggedRowContext);
-			// this.oProductsModel.refresh(true);
+			oViewModel.setProperty('/PartList', aPartList);
+			oViewModel.refresh(true);
         },
 
         // 전사 cascading조회

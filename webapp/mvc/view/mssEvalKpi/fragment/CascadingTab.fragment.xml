@@ -17,6 +17,5 @@
                 </IconTabFilter>
             </items>
         </IconTabBar>
-        <Button text="2222" />
     </HBox>
 </core:FragmentDefinition>

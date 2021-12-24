@@ -1,53 +1,57 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:f="sap.f"
-    xmlns:core="sap.ui.core">
+    xmlns:core="sap.ui.core"
+    xmlns:dnd="sap.ui.core.dnd"
+    xmlns:dnd-grid="sap.f.dnd"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:f="sap.f">
     <HBox justifyContent="SpaceBetween">
         <HBox>
             <ObjectStatus text="{i18n>LABEL_15004}" state="Indication04" />
             <Title level="H4" text="{i18n>LABEL_15018}" />
         </HBox>
         <HBox>
-            <core:Icon src="sap-icon://favorite" />
+            <core:Icon src="sap-icon://alert" />
             <Text text="{i18n>LABEL_15014}" textAlign="Center" width="100%"/>
-            <core:Icon src="sap-icon://favorite" />
+            <core:Icon src="sap-icon://checklist-item" />
             <Text text="{i18n>LABEL_15015}" textAlign="Center" width="100%"/>
-            <core:Icon src="sap-icon://favorite" />
+            <core:Icon src="sap-icon://border" />
             <Text text="{i18n>LABEL_15016}" textAlign="Center" width="100%"/>
-            <core:Icon src="sap-icon://favorite" />
+            <core:Icon src="sap-icon://circle-task" />
             <Text text="{i18n>LABEL_15017}" textAlign="Center" width="100%"/>
         </HBox>
     </HBox>
-    <ScrollContainer height="200PX" width="100%" vertical="true" class="vCardBox">
-        <HBox width="100%" height="100%">
+    <HBox width="100%" height="200px" class="vCardBox">
+        <layoutData>
+            <FlexItemData growFactor="1"/>
+        </layoutData>
+        <Label text="{/search/Orgtx}" width="150px" vAlign="Middle" textAlign="Center" wrapping="true">
             <layoutData>
-                <FlexItemData growFactor="1"/>
+                <FlexItemData minHeight="150px" maxHeight="150px"/>
             </layoutData>
-            <Label text="{/search/Orgtx}" width="150px" textAlign="Center" wrapping="true" />
-            <f:GridContainer id="grid1" width="auto" class="sapUiSmallMargin" snapToRow="true" items="{ path: '/PartList' }">
-                <f:layout>
-                    <f:GridContainerSettings gap="10px" />
-                </f:layout>
-                <HBox >
-                    <GenericTile header="{Stext}" subheader="{Ztext}" visible="{= !!${Stext} }">
-                        <layoutData>
-                            <f:GridContainerItemLayoutData minRows="2" columns="3" />
-                        </layoutData>
-                        <TileContent>
-                            <ImageContent src="sap-icon://home-share" />
-                            <ImageContent src="sap-icon://home-share" />
-                        </TileContent>
-                    </GenericTile>
-                    <GenericTile header="{i18n>MSG_15002}">
-                        <layoutData>
-                            <f:GridContainerItemLayoutData minRows="2" columns="3" />
-                        </layoutData>
-                        <TileContent>
-                            <ImageContent src="sap-icon://home-share" />
-                            <ImageContent src="sap-icon://home-share" />
-                        </TileContent>
-                    </GenericTile>
-                </HBox>
-            </f:GridContainer>
-        </HBox>
-    </ScrollContainer>
+        </Label>
+        <f:GridList items="{/PartList}">
+            <f:dragDropConfig>
+                <dnd:DragInfo sourceAggregation="items" dragStart=".onDragStart" />
+                <dnd-grid:GridDropInfo targetAggregation="items" dropPosition="Between" dropLayout="Default" drop=".onDrop" />
+            </f:dragDropConfig>
+            <f:customLayout>
+                <grid:GridBoxLayout boxMinWidth="30px" boxWidth="200px" />
+            </f:customLayout>
+            <f:GridListItem>
+                <VBox height="70px">
+                    <layoutData>
+                        <FlexItemData growFactor="1" shrinkFactor="0" />
+                    </layoutData>
+                    <HBox>
+                        <core:Icon visible="{= ${Otype} === '90' }" src="sap-icon://alert" />
+                        <core:Icon visible="{= ${Otype} === '91' }" src="sap-icon://checklist-item" />
+                        <core:Icon visible="{= !!${Tmcnt} &amp;&amp; ${Tmcnt} !== '0' }" src="sap-icon://border" />
+                        <core:Icon visible="{= !!${Url} }" src="sap-icon://circle-task" />
+                    </HBox>
+                    <Title text="{Stext}" level="H4" />
+                    <Text text="{Ztext}" wrapping="false" />
+                </VBox>
+            </f:GridListItem>
+        </f:GridList>
+    </HBox>
 </core:FragmentDefinition>

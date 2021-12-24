@@ -124,6 +124,9 @@
 
         { "pattern": "m/EvalKpi", "name": "m/EvalKpi", "target": "m/EvalKpi" },
 
+        { "pattern": "talent", "name": "talent", "target": "talent" },
+        { "pattern": "talent/{oDataKey}", "name": "talent-detail", "target": "talentDetail" },
+        
         { "pattern": "medical", "name": "medical", "target": "medical" },
         { "pattern": "medical/{oDataKey}", "name": "medical-detail", "target": "medicalDetail" },
         { "pattern": "h/medical", "name": "h/medical", "target": "h/medical" },
@@ -146,6 +149,10 @@
 
         { "pattern": "performance", "name": "performance", "target": "performance" },
         { "pattern": "performance/{type}/{year}", "name": "performance-detail", "target": "performanceDetail" },
+        { "pattern": "m/performancePry", "name": "m/performancePry", "target": "m/performancePry" },
+        { "pattern": "m/performancePry/{type}/{year}", "name": "m/performancePry-detail", "target": "performanceDetail" },
+        { "pattern": "m/performanceSry", "name": "m/performanceSry", "target": "m/performanceSry" },
+        { "pattern": "m/performanceSry/{type}/{year}", "name": "m/performanceSry-detail", "target": "performanceDetail" },
         
         { "pattern": "m/organization", "name": "m/organization", "target": "m/organization" },
         
@@ -188,6 +195,9 @@
 
         "m/EvalKpi": { "viewId": "m_EvalKpi", "viewPath": "sap.ui.yesco.mvc.view.mssEvalKpi", "viewName": "Kpi" },
 
+        "talent": { "viewId": "talent", "viewPath": "sap.ui.yesco.mvc.view.talent", "viewName": "Talent" },
+        "talentDetail": { "viewId": "talentDetail", "viewPath": "sap.ui.yesco.mvc.view.talent", "viewName": "TalentDetail" },
+
         "medical": { "viewId": "medical", "viewPath": "sap.ui.yesco.mvc.view.medical", "viewName": "Medical" },
         "h/medical": { "viewId": "h_medical", "viewPath": "sap.ui.yesco.mvc.view.medical", "viewName": "MedicalHass" },
         "medicalDetail": { "viewId": "medicalDetail", "viewPath": "sap.ui.yesco.mvc.view.medical", "viewName": "MedicalDetail" },
@@ -207,6 +217,8 @@
         "excavationDetail": { "viewId": "excavationDetail", "viewPath": "sap.ui.yesco.mvc.view.excavation", "viewName": "Detail" },
 
         "performance": { "viewId": "performance", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "List" },
+        "m/performancePry": { "viewId": "m_performancePry", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "ListPrimary" },
+        "m/performanceSry": { "viewId": "m_performanceSry", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "ListSecondary" },
         "performanceDetail": { "viewId": "performanceDetail", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "Detail" },
         
         "m/organization": { "viewId": "m_organization", "viewPath": "sap.ui.yesco.mvc.view.organization", "viewName": "Main" },

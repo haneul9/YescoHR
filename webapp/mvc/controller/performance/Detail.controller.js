@@ -61,13 +61,13 @@ sap.ui.define(
 
       VALIDATION_PROPERTIES: [
         { field: 'Obj0', label: 'LABEL_10033', type: Validator.INPUT2 }, // 목표
-        { field: 'Fwgt', label: 'LABEL_10033', type: Validator.INPUT2 }, // 가중치
+        { field: 'Fwgt', label: 'LABEL_10021', type: Validator.INPUT2 }, // 가중치(%)
         { field: 'Zapgme', label: 'LABEL_10003', type: Validator.SELECT2 }, // 자기평가
         { field: 'Zapgma', label: 'LABEL_10022', type: Validator.SELECT2 }, // 1차평가
         { field: 'Z103s', label: 'LABEL_10023', type: Validator.SELECT2 }, // 연관 상위 목표
         { field: 'Ztbegda', label: 'LABEL_10024', type: Validator.INPUT1 }, // 목표수행 시작일
         { field: 'Ztendda', label: 'LABEL_10025', type: Validator.INPUT1 }, // 목표수행 종료일
-        { field: 'Z109', label: 'LABEL_10026', type: Validator.INPUT2 }, // 진척도
+        { field: 'Z109', label: 'LABEL_10026', type: Validator.INPUT2 }, // 진척도(%)
         { field: 'Z111', label: 'LABEL_00261', type: Validator.SELECT2 }, // 진행상태
         { field: 'Zmarslt', label: 'LABEL_10027', type: Validator.INPUT2 }, // 핵심결과
         { field: 'Zrslt', label: 'LABEL_10028', type: Validator.INPUT1 }, // 실적
@@ -82,7 +82,11 @@ sap.ui.define(
       ],
 
       getPreviousRouteName() {
-        return 'performance';
+        return _.chain(this.getRouter().getHashChanger().getHash()).split('/').dropRight(2).join('/').value();
+      },
+
+      getCurrentLocationText(oArguments) {
+        return oArguments.year;
       },
 
       initializeFieldsControl(acc, cur) {
@@ -92,13 +96,13 @@ sap.ui.define(
       initializeGoalItem(obj, index) {
         return {
           rootPath: _.chain(this.GOAL_TYPE).findKey({ code: obj.Z101 }).toLower().value(),
-          expanded: false,
-          isSaved: true,
+          expanded: _.stubFalse(),
+          isSaved: !_.stubFalse(),
           OrderNo: String(index),
           ItemNo: String(index + 1),
           ..._.chain(obj).omit('AppraisalDoc').omit('__metadata').value(),
           ..._.chain(this.COMBO_PROPERTIES)
-            .reduce((acc, cur) => ({ ...acc, [cur]: _.isEmpty(obj[cur]) ? 'ALL' : obj[cur] }), {})
+            .reduce((acc, cur) => ({ ...acc, [cur]: _.isEmpty(obj[cur]) ? 'ALL' : obj[cur] }), _.stubObject())
             .value(),
         };
       },
@@ -138,6 +142,7 @@ sap.ui.define(
             valid: [],
             strategy: [],
             duty: [],
+            hidden: [],
           },
         });
         this.setViewModel(oViewModel);
@@ -146,13 +151,16 @@ sap.ui.define(
       },
 
       async onObjectMatched(oParameter) {
-        const oView = this.getView();
         const oViewModel = this.getViewModel();
-        const oModel = this.getModel(ServiceNames.APPRAISAL);
-        const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-        const { type: sType, year: sYear } = oParameter;
+
+        oViewModel.setProperty('/busy', true);
 
         try {
+          const oView = this.getView();
+          const oModel = this.getModel(ServiceNames.APPRAISAL);
+          const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+          const { type: sType, year: sYear } = oParameter;
+
           if (_.isEmpty(oListView) || _.isEmpty(oListView.getModel().getProperty('/parameter/rowData'))) {
             throw new UI5Error({ code: 'E', message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
           }
@@ -160,7 +168,6 @@ sap.ui.define(
           const mParameter = _.omit(_.cloneDeep(oListView.getModel().getProperty('/parameter/rowData')), '__metadata');
           const { Zzapsts: sZzapsts, ZzapstsSub: sZzapstsSub } = _.pick(mParameter, ['Zzapsts', 'ZzapstsSub']);
 
-          oViewModel.setProperty('/busy', true);
           oViewModel.setProperty('/type', sType);
           oViewModel.setProperty('/year', sYear);
           oViewModel.setProperty('/param', { ...mParameter });
@@ -204,7 +211,7 @@ sap.ui.define(
           const aGroupStageByApStatusName = _.chain(aStepList)
             .filter((o) => o.ApStatusSub !== '')
             .groupBy('ApStatusName')
-            .reduce((acc, cur) => [...acc, [...cur]], [])
+            .reduce((acc, cur) => [...acc, [...cur]], _.stubArray())
             .map((item) =>
               item.map((o) => {
                 const mReturn = { ..._.omit(o, '__metadata'), completed: bCompleted };
@@ -220,10 +227,10 @@ sap.ui.define(
             .forOwn((value, key, object) => {
               switch (key) {
                 case 'Papp': // 부분 평가
-                  _.set(object, 'Zapgme', value);
+                  _.chain(object).set('Zapgme', value).set('Papp1', value).commit();
                   break;
                 case 'Fapp': // 최종 평가
-                  _.set(object, 'Zapgma', value);
+                  _.chain(object).set('Zapgma', value).set('Papp2', value).commit();
                   break;
                 case 'Z105': // 목표수행 기간
                   _.chain(object).set('Ztbegda', value).set('Ztendda', value).commit();
@@ -256,12 +263,38 @@ sap.ui.define(
             })
             .value();
 
-          // Hidden value [V] - 값만 지움
-          _.forOwn(mConvertScreen, (value, key) => {
-            if (value === this.DISPLAY_TYPE.HIDDEN_VALUE) {
-              _.set(mDetailData, key, _.noop());
+          // Hidden value [V] - 원본 값 저장 후 값만 지움
+          const mHiddenFields = _.pickBy(mConvertScreen, (v) => v === this.DISPLAY_TYPE.HIDDEN_VALUE);
+          if (!_.isEmpty(mHiddenFields)) {
+            const mOriginalHidden = oViewModel.getProperty('/goals/hidden') ?? [];
+
+            if (_.has(mHiddenFields, 'Z131') || _.has(mHiddenFields, 'Z132')) {
+              _.chain(mHiddenFields)
+                .omit('Z125Ee')
+                .omit('Z125Er')
+                .keys()
+                .map((k) => {
+                  mOriginalHidden.push({ path: `/manage/${k}`, value: _.get(mDetailData, [k]) });
+                  _.set(mDetailData, [k], _.noop());
+                })
+                .commit();
             }
-          });
+            if (_.has(mHiddenFields, 'Z125Ee') || _.has(mHiddenFields, 'Z125Er')) {
+              _.chain(mHiddenFields)
+                .omit('Z131')
+                .omit('Z132')
+                .keys()
+                .map((k) => {
+                  _.forEach(this.GOAL_TYPE, (goal) => {
+                    _.forEach(mGroupDetailByZ101[goal.code], (o, i) => {
+                      mOriginalHidden.push({ path: `/goals/${goal.name}/${i}/${k}`, value: _.get(o, [k]) });
+                      _.set(o, [k], _.noop());
+                    });
+                  });
+                })
+                .commit();
+            }
+          }
 
           // 콤보박스 Entry
           oViewModel.setProperty('/entry/topGoals', new ComboEntry({ codeKey: 'Objid', valueKey: 'Stext', aEntries: aTopGoals }) ?? []);
@@ -303,7 +336,12 @@ sap.ui.define(
           const mButtons = oViewModel.getProperty('/buttons');
           _.chain(mButtons)
             .tap((o) => _.set(o, 'Rjctr', _.get(mDetailData, 'Rjctr', _.noop())))
-            .tap((o) => _.chain(o.goal).set(['ADD', 'Availability'], true).set(['DELETE', 'Availability'], true).commit())
+            .tap((o) =>
+              _.chain(o.goal)
+                .set(['ADD', 'Availability'], _.isEqual(_.get(mConvertScreen, ['Obj0']), this.DISPLAY_TYPE.EDIT))
+                .set(['DELETE', 'Availability'], _.isEqual(_.get(mConvertScreen, ['Obj0']), this.DISPLAY_TYPE.EDIT))
+                .commit()
+            )
             .tap((o) => _.forEach(mDetailData.AppraisalBottnsSet.results, (obj) => _.set(o.submit, obj.ButtonId, _.omit(obj, '__metadata'))))
             .tap((o) => {
               _.chain(this.BUTTON_STATUS_MAP)
@@ -330,10 +368,6 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/busy', false);
         }
-      },
-
-      getCurrentLocationText(oArguments) {
-        return oArguments.year;
       },
 
       renderStageClass() {
@@ -407,21 +441,24 @@ sap.ui.define(
         return sPrcty === 'C' ? _.get(mSubmitButtons, ['Z_SUBMIT', 'ButtonText']) : _.get(mSubmitButtons, ['SAVE', 'ButtonText']);
       },
 
-      createProcess(sPrcty) {
-        const oModel = this.getModel(ServiceNames.APPRAISAL);
+      async createProcess(sPrcty) {
         const oViewModel = this.getViewModel();
-        const mParameter = _.cloneDeep(oViewModel.getProperty('/param'));
-        const mManage = _.cloneDeep(oViewModel.getProperty('/manage'));
-        const mSummary = _.cloneDeep(oViewModel.getProperty('/summary'));
-        const aStrategy = _.cloneDeep(oViewModel.getProperty('/goals/strategy'));
-        const aDuty = _.cloneDeep(oViewModel.getProperty('/goals/duty'));
+
+        oViewModel.setProperty('/busy', true);
 
         try {
+          const oModel = this.getModel(ServiceNames.APPRAISAL);
+          const mParameter = _.cloneDeep(oViewModel.getProperty('/param'));
+          const mManage = _.cloneDeep(oViewModel.getProperty('/manage'));
+          const mSummary = _.cloneDeep(oViewModel.getProperty('/summary'));
+          const aStrategy = _.cloneDeep(oViewModel.getProperty('/goals/strategy'));
+          const aDuty = _.cloneDeep(oViewModel.getProperty('/goals/duty'));
+
           if (sPrcty === 'C') {
             _.chain(mParameter).set('OldStatus', mParameter.Zzapsts).set('OldStatusSub', mParameter.ZzapstsSub).set('OldStatusPart', mParameter.ZzapstsPSub).commit();
           }
 
-          Client.deep(oModel, 'AppraisalDoc', {
+          await Client.deep(oModel, 'AppraisalDoc', {
             ...mParameter,
             ...mManage,
             ...mSummary,
@@ -440,6 +477,8 @@ sap.ui.define(
           this.debug('Controller > Performance Detail > createProcess Error', oError);
 
           AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
         }
       },
 
@@ -468,23 +507,23 @@ sap.ui.define(
         // 삭제하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00049'), {
           onClose: (sAction) => {
-            if (MessageBox.Action.OK === sAction) {
-              const { root: sRootPath, itemKey: sDeleteTargetNum } = oSource.data();
-              const aItems = oViewModel.getProperty(`/goals/${sRootPath}`);
-              const bIsSaved = _.chain(aItems).find({ OrderNo: sDeleteTargetNum }).get('isSaved').value();
-              let iCurrentItemsLength = oViewModel.getProperty('/currentItemsLength') ?? 0;
+            if (MessageBox.Action.CANCEL === sAction) return;
 
-              oViewModel.setProperty('/currentItemsLength', --iCurrentItemsLength);
-              oViewModel.setProperty(
-                `/goals/${sRootPath}`,
-                _.chain(aItems)
-                  .tap((array) => _.remove(array, { OrderNo: sDeleteTargetNum }))
-                  .map((o, i) => ({ ...o, OrderNo: String(i), ItemNo: String(i + 1) }))
-                  .value()
-              );
+            const { root: sRootPath, itemKey: sDeleteTargetNum } = oSource.data();
+            const aItems = oViewModel.getProperty(`/goals/${sRootPath}`);
+            const bIsSaved = _.chain(aItems).find({ OrderNo: sDeleteTargetNum }).get('isSaved').value();
+            let iCurrentItemsLength = oViewModel.getProperty('/currentItemsLength') ?? 0;
 
-              if (bIsSaved) MessageBox.success(this.getBundleText('MSG_10004')); // 저장 버튼을 클릭하여 삭제를 완료하시기 바랍니다.
-            }
+            oViewModel.setProperty('/currentItemsLength', --iCurrentItemsLength);
+            oViewModel.setProperty(
+              `/goals/${sRootPath}`,
+              _.chain(aItems)
+                .tap((array) => _.remove(array, { OrderNo: sDeleteTargetNum }))
+                .map((o, i) => ({ ...o, OrderNo: String(i), ItemNo: String(i + 1) }))
+                .value()
+            );
+
+            if (bIsSaved) MessageBox.success(this.getBundleText('MSG_10004')); // 저장 버튼을 클릭하여 삭제를 완료하시기 바랍니다.
           },
         });
       },
@@ -534,7 +573,9 @@ sap.ui.define(
         MessageBox.confirm(this.getBundleText('MSG_00006', this.getButtonText(sPrcty)), {
           // {전송}하시겠습니까?
           onClose: (sAction) => {
-            if (MessageBox.Action.OK === sAction) this.createProcess(sPrcty);
+            if (MessageBox.Action.CANCEL === sAction) return;
+
+            this.createProcess(sPrcty);
           },
         });
       },
