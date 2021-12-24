@@ -52,7 +52,8 @@ sap.ui.define(
         },
 
         setLineThrough(Zfilename, Deleted) {
-          this.toggleStyleClass('text-line-through', Deleted);
+          console.log(arguments);
+          // this.toggleStyleClass('text-line-through', Deleted);
 
           return Zfilename;
         },

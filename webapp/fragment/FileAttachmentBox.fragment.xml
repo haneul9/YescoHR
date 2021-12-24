@@ -41,8 +41,8 @@
           <Label text="{i18n>LABEL_00248}" width="100%" />
           <table:template>
             <HBox width="100%">
-              <Link text="{ parts: [ { path: 'Zfilename' }, { path: 'Deleted' } ], formatter: .TextUtils.setLineThrough }" href="{Fileuri}" target="_blank" width="100%" textAlign="Begin" visible="{= !${New} &amp;&amp; !${Deleted}  }" />
-              <Text text="{ parts: [ { path: 'Zfilename' }, { path: 'Deleted' } ], formatter: .TextUtils.setLineThrough }" width="100%" visible="{= ${New} || ${Deleted} }" />
+              <Link text="{ parts: [ { path: 'Zfilename' }, { path: 'Deleted' } ], formatter: '.TextUtils.setLineThrough' }" href="{Fileuri}" target="_blank" width="100%" textAlign="Begin" visible="{= !${New} &amp;&amp; !${Deleted}  }" />
+              <Text text="{ parts: [ { path: 'Zfilename' }, { path: 'Deleted' } ], formatter: '.TextUtils.setLineThrough' }" width="100%" visible="{= ${New} || ${Deleted} }" />
             </HBox>
           </table:template>
         </table:Column>
