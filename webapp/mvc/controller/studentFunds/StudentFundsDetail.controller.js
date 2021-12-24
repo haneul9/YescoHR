@@ -573,7 +573,7 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      reject(new ODataCreateError(oError));
+                      reject(new ODataCreateError({oError}));
                     },
                   });
                 });
@@ -628,7 +628,7 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      reject(new ODataCreateError(oError));
+                      reject(new ODataCreateError({oError}));
                     },
                   });
                 });
@@ -675,7 +675,7 @@ sap.ui.define(
                   });
                 },
                 error: (oError) => {
-                  AppUtils.handleError(new ODataCreateError(oError));
+                  AppUtils.handleError(new ODataCreateError({oError}));
                   AppUtils.setAppBusy(false, this);
                 },
               });

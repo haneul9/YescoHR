@@ -21,18 +21,18 @@
         </HBox>
     </HBox>
     <HBox width="100%" height="200px" class="vCardBox">
-        <layoutData>
-            <FlexItemData growFactor="1"/>
-        </layoutData>
-        <Label text="{/search/Orgtx}" width="150px" vAlign="Middle" textAlign="Center" wrapping="true">
+        <Label text="{/search/Orgtx}" width="150px" vAlign="Middle" textAlign="Center">
             <layoutData>
                 <FlexItemData minHeight="150px" maxHeight="150px"/>
             </layoutData>
         </Label>
         <f:GridList items="{/PartList}">
+            <f:layoutData>
+                <FlexItemData growFactor="1"/>
+            </f:layoutData>
             <f:dragDropConfig>
                 <dnd:DragInfo sourceAggregation="items" dragStart=".onDragStart" />
-                <dnd-grid:GridDropInfo targetAggregation="items" dropPosition="Between" dropLayout="Default" drop=".onDrop" />
+                <dnd-grid:GridDropInfo targetAggregation="items" dropPosition="Between" dropLayout="Horizontal" drop=".onDrop" />
             </f:dragDropConfig>
             <f:customLayout>
                 <grid:GridBoxLayout boxMinWidth="30px" boxWidth="200px" />
@@ -48,7 +48,7 @@
                         <core:Icon visible="{= !!${Tmcnt} &amp;&amp; ${Tmcnt} !== '0' }" src="sap-icon://border" />
                         <core:Icon visible="{= !!${Url} }" src="sap-icon://circle-task" />
                     </HBox>
-                    <Title text="{Stext}" level="H4" />
+                    <Title text="{= !!${Stext} ? ${Stext} : ${i18n>MSG_15002} }" level="H4" />
                     <Text text="{Ztext}" wrapping="false" />
                 </VBox>
             </f:GridListItem>
