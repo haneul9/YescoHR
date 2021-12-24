@@ -1,0 +1,77 @@
+[
+	{		
+		"Name": "홍길동 부장 / 팀장",
+        "position": "부장 / 팀장 ",
+		"ProductPicUrl": "asset/image/photo1.png",
+		"Status": "Success",
+        "edu": "동국대(석사졸업)/마케팅",
+        "birth": "1972.12.14",
+        "duty": "홍보팀 (15년 3개월)"
+	},
+    {		
+		"Name": "홍길동 부장 / 팀장",
+        "position": "부장 / 팀장 ",
+		"ProductPicUrl": "asset/image/photo2.png",
+		"Status": "Information",
+        "edu": "동국대(석사졸업)/마케팅",
+        "birth": "1972.12.14",
+        "duty": "홍보팀 (15년 3개월)"
+	},
+    {		
+		"Name": "홍길동 부장 / 팀장",
+        "position": "부장 / 팀장 ",
+		"ProductPicUrl": "asset/image/photo3.jpeg",
+		"Status": "Error",
+        "edu": "동국대(석사졸업)/마케팅",
+        "birth": "1972.12.14",
+        "duty": "홍보팀 (15년 3개월)"
+	},
+    {		
+		"Name": "홍길동 부장 / 팀장",
+        "position": "부장 / 팀장 ",
+		"ProductPicUrl": "asset/image/photo4.jpeg",
+		"Status": "Warning",
+        "edu": "동국대(석사졸업)/마케팅",
+        "birth": "1972.12.14",
+        "duty": "홍보팀 (15년 3개월)"
+	},
+    {		
+		"Name": "홍길동 부장 / 팀장",
+        "position": "부장 / 팀장 ",
+		"ProductPicUrl": "asset/image/photo1.png",
+		"Status": "Information",
+        "edu": "동국대(석사졸업)/마케팅",
+        "birth": "1972.12.14",
+        "duty": "홍보팀 (15년 3개월)"
+	},
+    {		
+		"Name": "홍길동 부장 / 팀장",
+        "position": "부장 / 팀장 ",
+		"ProductPicUrl": "asset/image/photo1.png",
+		"Status": "Information",
+        "edu": "동국대(석사졸업)/마케팅",
+        "birth": "1972.12.14",
+        "duty": "홍보팀 (15년 3개월)"
+	},
+    {		
+		"Name": "홍길동 부장 / 팀장",
+        "position": "부장 / 팀장 ",
+		"ProductPicUrl": "asset/image/photo1.png",
+		"Status": "Information",
+        "edu": "동국대(석사졸업)/마케팅",
+        "birth": "1972.12.14",
+        "duty": "홍보팀 (15년 3개월)"
+	},
+	{
+		"Name": "홍길동 부장 / 팀장",
+        "position": "부장 / 팀장 ",
+		"ProductPicUrl": "asset/image/photo1.png",
+		"Status": "Information",
+        "edu": "동국대(석사졸업)/마케팅",
+        "birth": "1972.12.14",
+        "duty": "홍보팀 (15년 3개월)",
+		"Quantity": 14,
+		"type": "DetailAndActive",
+		"Quantity": 3
+	}
+]
