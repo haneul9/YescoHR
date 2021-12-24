@@ -139,6 +139,7 @@ sap.ui.define(
         return (
           _.chain(this.getOwnerComponent().getMetadataModel().getData())
             .get([sServiceName, sEntityType])
+            .omitBy(_.isString)
             .reduce((acc, cur) => ({ ...acc, [cur.name]: _.toInteger(cur.maxLength) }), {})
             .omit(_.isUndefined)
             .omit(_.isNull)

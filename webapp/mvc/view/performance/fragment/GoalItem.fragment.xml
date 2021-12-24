@@ -205,8 +205,7 @@
                         <layoutData>
                             <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '11 / 13' : '10 / 12' }" gridColumn="span 3" />
                         </layoutData>
-                        <TextArea width="100%" value="{Z125Ee}" rows="5" maxLength="{/fieldControl/limit/Z125Ee}" enabled="{= ${/fieldControl/display/Z125Ee} === 'X' }" visible="{= ${/fieldControl/display/Z125Ee} !== 'H' }">
-                        </TextArea>
+                        <TextArea width="100%" value="{= ${/fieldControl/display/Z125Ee} === 'V' ? '' : ${Z125Ee} }" rows="5" maxLength="{/fieldControl/limit/Z125Ee}" enabled="{= ${/fieldControl/display/Z125Ee} === 'X' }" visible="{= ${/fieldControl/display/Z125Ee} !== 'H' }" />
                     </VBox>
                     <VBox>
                         <layoutData>
@@ -218,8 +217,7 @@
                         <layoutData>
                             <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '11 / 13' : '10 / 12' }" gridColumn="span 3" />
                         </layoutData>
-                        <TextArea width="100%" value="{Z125Er}" rows="5" maxLength="{/fieldControl/limit/Z125Er}" enabled="{= ${/fieldControl/display/Z125Er} === 'X' }" visible="{= ${/fieldControl/display/Z125Er} !== 'H' }">
-                        </TextArea>
+                        <TextArea width="100%" value="{= ${/fieldControl/display/Z125Er} === 'V' ? '' : ${Z125Er} }" rows="5" maxLength="{/fieldControl/limit/Z125Er}" enabled="{= ${/fieldControl/display/Z125Er} === 'X' }" visible="{= ${/fieldControl/display/Z125Er} !== 'H' }"/>
                     </VBox>
                 </grid:CSSGrid>
             </content>

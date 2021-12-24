@@ -244,16 +244,38 @@ sap.ui.define([
         onDrop(oInfo) {
 			const oViewModel = this.getViewModel();
 			const oDragged = oInfo.getParameter("draggedControl");
+            const oDropped = oInfo.getParameter("droppedControl");
             const oDraggPath = oDragged.getBindingContext().getPath();
+            const sInsertPosition = oInfo.getParameter("dropPosition");
+            const oGrid = oDropped.getParent();
 			const mDraggData = oViewModel.getProperty(oDraggPath);
             const aGridList = oViewModel.getProperty('/PartList');
+            const iDropPosition = oGrid.indexOfItem(oDropped);
 
             // 부문 중복체크
             if (aGridList.some((e) => {return e === mDraggData})) {
                 return;
             }
 
-            oViewModel.setProperty('/PartList', [mDraggData, ...aGridList]);
+            // remove the item
+            const iDragPosition = oGrid.indexOfItem(oDragged) || 0;
+			const oItem = aGridList[iDragPosition];
+			aGridList.splice(iDragPosition, 1);
+
+			if (iDragPosition < iDropPosition) {
+				iDropPosition--;
+			}
+
+            // insert the control in target aggregation
+			if (sInsertPosition === "Before") {
+				aGridList.splice(iDropPosition, 0, oItem);
+			} else {
+				aGridList.splice(iDropPosition + 1, 0, oItem);
+			}
+
+			oViewModel.setProperty("/PartList", aGridList);
+
+            // oViewModel.setProperty('/PartList', [mDraggData, ...aGridList]);
 		},
 
         // table rowData Drag
