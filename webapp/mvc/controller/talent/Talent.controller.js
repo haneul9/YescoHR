@@ -1,41 +1,47 @@
-sap.ui.define(['sap/ui/yesco/mvc/controller/BaseController', 'sap/m/Button', 'sap/m/Dialog', 'sap/m/List', 'sap/m/StandardListItem', 'sap/ui/core/mvc/Controller', 'sap/ui/model/json/JSONModel', 'sap/m/ButtonType', 'sap/m/MessageToast'], function (BaseController, Button, Dialog, List, StandardListItem, Controller, JSONModel, ButtonType, MessageToast) {
+sap.ui.define(['sap/ui/yesco/mvc/controller/BaseController', 
+  'sap/m/Button',
+  'sap/m/Dialog', 
+  'sap/m/List', 
+  'sap/m/StandardListItem', 
+  'sap/ui/core/mvc/Controller', 
+  'sap/ui/model/json/JSONModel', 
+  'sap/m/ButtonType', 
+  'sap/ui/core/Fragment', 
+  'sap/m/MessageToast'
+  ], function (BaseController, 
+    Button, 
+    Dialog, 
+    List, 
+    StandardListItem, 
+    Controller, 
+    JSONModel, 
+    ButtonType, 
+    Fragment, 
+    MessageToast
+  ) {
   'use strict';
 
   return BaseController.extend('sap.ui.yesco.mvc.controller.talent.Talent', {
-    pressDialog: null,
-    fixedSizeDialog: null,
-    resizableDialog: null,
-    draggableDialog: null,
-    escapePreventDialog: null,
-    confirmEscapePreventDialog: null,
-    onDialogPress: function () {
-      if (!this.pressDialog) {
-        this.pressDialog = new Dialog({
-          title: '인재검색',
-          content: new List({
-            items: {
-              path: '/ProductCollection',
-              template: new StandardListItem({
-                title: '{Name}',
-                counter: '{Quantity}',
-              }),
-            },
-          }),
-          beginButton: new Button({
-            type: ButtonType.Emphasized,
-            text: '확인',
-            press: function () {
-              this.pressDialog.close();
-            }.bind(this),
-          }),
-        });
+    onDialog() {
+			if (!this.byId('talentCompareDialog')) {
+				Fragment.load({
+					id: this.getView().getId(),
+					name: 'sap.ui.yesco.mvc.view.talent.fregment.CompareDialog',
+					controller: this,
+				}).then((oDialog) => {
+					// connect dialog to the root view of this component (models, lifecycle)
+					this.getView().addDependent(oDialog);
+					oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
+					oDialog.open();
+				});
+			}else {
+				this.byId('talentCompareDialog').open();
+			}
+		},
 
-        //to get access to the global model
-        this.getView().addDependent(this.pressDialog);
-      }
-
-      this.pressDialog.open();
-    },
+		onClick() {
+			this.byId('talentCompareDialog').close();
+		},
 
     /**
      * @override
@@ -56,7 +62,7 @@ sap.ui.define(['sap/ui/yesco/mvc/controller/BaseController', 'sap/m/Button', 'sa
       var oGridListItem = oEvent.getParameter('listItem'),
         bSelected = oEvent.getParameter('selected');
 
-      MessageToast.show((bSelected ? 'Selected' : 'Unselected') + ' item with Id ' + oGridListItem.getId());
+       MessageToast.show((bSelected ? 'Selected' : 'Unselected') + ' item with Id ' + oGridListItem.getId());
     },
 
     onDelete: function (oEvent) {
@@ -76,5 +82,11 @@ sap.ui.define(['sap/ui/yesco/mvc/controller/BaseController', 'sap/m/Button', 'sa
 
       MessageToast.show('Pressed item with Id ' + oGridListItem.getId());
     },
+
+    onToggleExpand() {
+      const osearchFilterBody = this.byId('searchFilterBody');
+      osearchFilterBody.toggleStyleClass('expanded');
+    },
+
   });
 });
