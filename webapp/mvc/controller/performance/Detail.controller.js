@@ -268,10 +268,10 @@ sap.ui.define(
           _.forEach(mConvertScreen, (value, key) => {
             if (_.isEqual(value, this.DISPLAY_TYPE.HIDDEN_VALUE)) {
               if (_.includes(['Z131', 'Z132'], key)) {
-                _.chain(mDetailData).set(['origin', key], value).set(key, _.noop()).commit();
+                _.chain(mDetailData).set(['origin', key], _.get(mDetailData, key)).set(key, _.noop()).commit();
               } else {
-                _.forEach(mDetailData.AppraisalDocDetailSet, (obj) => {
-                  _.chain(obj).set(['origin', key], value).set(key, _.noop()).commit();
+                _.forEach(mDetailData.AppraisalDocDetailSet.results, (obj) => {
+                  _.chain(obj).set(['origin', key], _.get(obj, key)).set(key, _.noop()).commit();
                 });
               }
 

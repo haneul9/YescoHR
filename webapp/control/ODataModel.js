@@ -39,23 +39,6 @@ sap.ui.define(
               this.convertValue(oData, key);
             }
           });
-
-          // Object.keys(oData).forEach((key) => {
-          //   this.convertValue(oData, key);
-
-          //   if (!_.has(mEntityMetadata, key) && !Array.isArray(oData[key])) {
-          //     delete oData[key];
-          //   } else if (Array.isArray(oData[key])) {
-          //     const mAssociationMetadata = mModelMetadata[mModelMetadata[mEntityMetadata[key]]];
-
-          //     oData[key].forEach((ass) => {
-          //       Object.keys(ass).forEach((assKey) => {
-          //         this.convertValue(ass, assKey);
-          //         if (!_.has(mAssociationMetadata, assKey)) delete ass[assKey];
-          //       });
-          //     });
-          //   }
-          // });
         }
 
         if (ODataModel.prototype.create) {
@@ -64,7 +47,7 @@ sap.ui.define(
       },
 
       convertValue(mData, sKey) {
-        const sValue = mData[sKey];
+        const sValue = _.get(mData, sKey);
 
         if (_.isEqual(sValue, 'ALL')) {
           _.set(mData, sKey, _.noop());
@@ -72,6 +55,8 @@ sap.ui.define(
           _.set(mData, sKey, DateUtils.parse(sValue));
         } else if (_.isNumber(sValue)) {
           _.set(mData, sKey, _.toString(sValue));
+        } else if (_.isBoolean(sValue)) {
+          _.set(mData, sKey, _.isEqual(true, sValue) ? 'X' : '');
         }
       },
     });
