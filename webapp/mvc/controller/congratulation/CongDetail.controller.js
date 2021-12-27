@@ -609,7 +609,7 @@ sap.ui.define(
               }
 
               // 파일 삭제 및 업로드
-              await this.FileListDialogHandler.upload(mFormData.Appno);
+              await this.FileAttachmentBoxHandler.upload(mFormData.Appno);
 
               await new Promise((resolve, reject) => {
                 const oModel = this.getModel(ServiceNames.BENEFIT);
@@ -675,7 +675,7 @@ sap.ui.define(
               }
 
               // 파일 삭제 및 업로드
-              await this.FileListDialogHandler.upload(mFormData.Appno);
+              await this.FileAttachmentBoxHandler.upload(mFormData.Appno);
 
               await new Promise((resolve, reject) => {
                 const oModel = this.getModel(ServiceNames.BENEFIT);
