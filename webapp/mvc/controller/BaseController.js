@@ -111,12 +111,20 @@ sap.ui.define(
         return this.getOwnerComponent().getBundleText(...aArgs);
       },
 
-      getCurrentMenuId() {
-        return this.getOwnerComponent().getMenuModel().getCurrentMenuId();
+      getMenuModel() {
+        return this.getOwnerComponent().getMenuModel();
       },
 
       getCurrentMenuRouteName() {
-        return this.getOwnerComponent().getMenuModel().getCurrentMenuRouteName();
+        return this.getMenuModel().getCurrentMenuRouteName();
+      },
+
+      getCurrentMenuViewId() {
+        return this.getMenuModel().getCurrentMenuViewId();
+      },
+
+      getCurrentMenuId() {
+        return this.getMenuModel().getCurrentMenuId();
       },
 
       getSessionModel() {
@@ -167,6 +175,8 @@ sap.ui.define(
        */
       onNavBack() {
         const sPreviousHash = History.getInstance().getPreviousHash();
+
+        this.getOwnerComponent().reduceViewResource();
 
         if (sPreviousHash) {
           window.history.go(-1);

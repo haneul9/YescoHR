@@ -54,6 +54,7 @@ sap.ui.define(
       },
 
       onBeforeShow() {
+        // 이전 버튼 클릭 후 다시 들어오는 경우를 위해 ||= 로 처리
         this.oRequestDetailHelper ||= new RequestDetailHelper(this);
         this.oApprovalRequestHelper ||= new ApprovalRequestHelper(this);
       },
