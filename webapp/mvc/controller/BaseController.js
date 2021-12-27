@@ -119,20 +119,28 @@ sap.ui.define(
         return this.getOwnerComponent().getMenuModel().getCurrentMenuRouteName();
       },
 
+      getSessionModel() {
+        return this.getOwnerComponent().getSessionModel();
+      },
+
       getSessionData() {
-        return this.getOwnerComponent().getSessionModel().getData();
+        return this.getSessionModel().getData();
       },
 
       getSessionProperty(sPath) {
-        return this.getOwnerComponent().getSessionModel().getProperty(`/${sPath}`);
+        return this.getSessionModel().getProperty(`/${sPath}`);
+      },
+
+      getAppointeeModel() {
+        return this.getOwnerComponent().getAppointeeModel();
       },
 
       getAppointeeData() {
-        return this.getOwnerComponent().getAppointeeModel().getData();
+        return this.getAppointeeModel().getData();
       },
 
       getAppointeeProperty(sPath) {
-        return this.getOwnerComponent().getAppointeeModel().getProperty(`/${sPath}`);
+        return this.getAppointeeModel().getProperty(`/${sPath}`);
       },
 
       getEntityLimit(sServiceName, sEntityType) {
@@ -169,6 +177,10 @@ sap.ui.define(
         }
       },
 
+      /**
+       * @abstract
+       * @returns
+       */
       getPreviousRouteName() {
         return null;
       },

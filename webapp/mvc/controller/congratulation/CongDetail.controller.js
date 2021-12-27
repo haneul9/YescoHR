@@ -109,7 +109,7 @@ sap.ui.define(
         const sDataKey = oDetailModel.getProperty('/FormStatus');
         const sMenid = this.getCurrentMenuId();
         const oSessionData = this.getSessionData();
-        const oAppointeeData = this.getViewModel('appointeeModel').getData();
+        const oAppointeeData = this.getAppointeeData();
 
         return new Promise((resolve, reject) => {
           oDetailModel.setProperty('/menuId', sMenid);
@@ -158,7 +158,7 @@ sap.ui.define(
       // 경조유형
       getBenefitType() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oAppointeeData = this.getViewModel('appointeeModel').getData();
+        const oAppointeeData = this.getAppointeeData();
 
         return new Promise((resolve, reject) => {
           oModel.read('/BenefitCodeListSet', {
@@ -182,7 +182,7 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
         const oFormData = oDetailModel.getProperty('/FormData');
-        const oAppointeeData = this.getViewModel('appointeeModel').getData();
+        const oAppointeeData = this.getAppointeeData();
 
         oModel.read('/BenefitCodeListSet', {
           filters: [
@@ -247,7 +247,7 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
         const sSelectKey = oEvent.getSource().getSelectedKey();
-        const oAppointeeData = this.getViewModel('appointeeModel').getData();
+        const oAppointeeData = this.getAppointeeData();
         let sSelectText = oEvent.getSource().getSelectedItem().getText();
 
         oDetailModel.setProperty('/FormData/Context', sSelectText);
@@ -300,7 +300,7 @@ sap.ui.define(
         const oFormData = oDetailModel.getProperty('/FormData');
         const sSelectKey = oEvent.getSource().getSelectedKey();
         const sSelectText = oEvent.getSource().getSelectedItem().getText();
-        const oAppointeeData = this.getViewModel('appointeeModel').getData();
+        const oAppointeeData = this.getAppointeeData();
 
         oDetailModel.setProperty('/FormData/Conretx', sSelectText);
 
@@ -385,7 +385,7 @@ sap.ui.define(
         const vConcode = oDetailModel.getProperty('/FormData/Concode');
         const vConresn = oDetailModel.getProperty('/FormData/Conresn');
         const vConddate = oDetailModel.getProperty('/FormData/Conddate');
-        const oAppointeeData = this.getViewModel('appointeeModel').getData();
+        const oAppointeeData = this.getAppointeeData();
 
         if (!vConcode || !vConresn || !vConddate) return;
 
@@ -462,7 +462,7 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
         const oFormData = oDetailModel.getProperty('/FormData');
-        const oAppointeeData = this.getViewModel('appointeeModel').getData();
+        const oAppointeeData = this.getAppointeeData();
 
         return new Promise((resolve) => {
           oModel.read('/ConExpenseSupportListSet', {
@@ -505,7 +505,7 @@ sap.ui.define(
 
       // Dialog 대상자 클릭
       TargetClick(oEvent) {
-        const vPath = oEvent.getParameters().rowBindingContext.getPath();
+        const vPath = oEvent.getParameter('rowBindingContext').getPath();
         const oDetailModel = this.getViewModel();
         const oRowData = oDetailModel.getProperty(vPath);
 
@@ -593,10 +593,11 @@ sap.ui.define(
               return;
             }
 
+            const oDetailModel = this.getViewModel();
+
             try {
               AppUtils.setAppBusy(true, this);
 
-              const oDetailModel = this.getViewModel();
               const mFormData = oDetailModel.getProperty('/FormData');
               const sStatus = mFormData.ZappStatAl;
 
@@ -609,7 +610,7 @@ sap.ui.define(
               }
 
               // 파일 삭제 및 업로드
-              await this.FileListDialogHandler.upload(mFormData.Appno);
+              await this.FileAttachmentBoxHandler.upload(mFormData.Appno);
 
               await new Promise((resolve, reject) => {
                 const oModel = this.getModel(ServiceNames.BENEFIT);
@@ -621,14 +622,20 @@ sap.ui.define(
                 };
 
                 oModel.create('/ConExpenseApplSet', mPayload, {
-                  success: resolve,
+                  success: () => {
+                    resolve();
+                  },
                   error: (oError) => {
                     reject(new ODataCreateError({ oError }));
                   },
                 });
               });
 
-              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103')); // {저장}되었습니다.
+              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'), {
+                onClose: () => {
+                  this.FileAttachmentBoxHandler.readFileList();
+                },
+              }); // {저장}되었습니다.
             } catch (oError) {
               oDetailModel.setProperty('/FormData/Appno', '');
 
@@ -659,10 +666,11 @@ sap.ui.define(
               return;
             }
 
+            const oDetailModel = this.getViewModel();
+
             try {
               AppUtils.setAppBusy(true, this);
 
-              const oDetailModel = this.getViewModel();
               const mFormData = oDetailModel.getProperty('/FormData');
               const sStatus = mFormData.ZappStatAl;
 
@@ -674,7 +682,7 @@ sap.ui.define(
               }
 
               // 파일 삭제 및 업로드
-              await this.FileListDialogHandler.upload(mFormData.Appno);
+              await this.FileAttachmentBoxHandler.upload(mFormData.Appno);
 
               await new Promise((resolve, reject) => {
                 const oModel = this.getModel(ServiceNames.BENEFIT);
@@ -702,6 +710,7 @@ sap.ui.define(
               });
             } catch (oError) {
               oDetailModel.setProperty('/FormData/Appno', '');
+
               AppUtils.handleError(oError);
             } finally {
               AppUtils.setAppBusy(false, this);
@@ -721,18 +730,18 @@ sap.ui.define(
             if (vPress && vPress === this.getBundleText('LABEL_00114')) {
               AppUtils.setAppBusy(true, this);
 
-              let oSendObject = {};
+              const mPayload = {
+                ...oDetailModel.getProperty('/FormData'),
+                Prcty: 'W',
+                Menid: oDetailModel.getProperty('/menuId'),
+              };
 
-              oSendObject = oDetailModel.getProperty('/FormData');
-              oSendObject.Prcty = 'W';
-              oSendObject.Menid = oDetailModel.getProperty('/menuId');
-
-              oModel.create('/ConExpenseApplSet', oSendObject, {
+              oModel.create('/ConExpenseApplSet', mPayload, {
                 success: () => {
                   AppUtils.setAppBusy(false, this);
                   MessageBox.alert(this.getBundleText('MSG_00039', 'LABEL_00121'), {
                     onClose: () => {
-                      this.getRouter().navTo(this.getCurrentMenuRouteName());
+                      this.onNavBack();
                     },
                   });
                 },
@@ -765,7 +774,7 @@ sap.ui.define(
                 success: () => {
                   MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
                     onClose: () => {
-                      this.getRouter().navTo(this.getCurrentMenuRouteName());
+                      this.onNavBack();
                     },
                   });
                 },
@@ -790,7 +799,7 @@ sap.ui.define(
           appno: sAppno,
           apptp: this.getApprovalType(),
           maxFileCount: 10,
-          fileTypes: ['jpg', 'jpeg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
+          fileTypes: ['ppt', 'pptx', 'doc', 'docx', 'xls', 'xlsx', 'jpg', 'jpeg', 'bmp', 'gif', 'png', 'pdf'],
         });
       },
     });

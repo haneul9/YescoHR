@@ -2,12 +2,11 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/base/Object',
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/model/odata/ODataModel',
     'sap/ui/table/SelectionMode',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/FileDataProvider',
     'sap/ui/yesco/common/odata/ServiceManager',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
@@ -15,12 +14,11 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     BaseObject,
-    Filter,
-    FilterOperator,
     JSONModel,
     ODataModel,
     SelectionMode,
     AppUtils,
+    FileDataProvider,
     ServiceManager,
     ServiceNames,
     MessageBox
@@ -43,7 +41,7 @@ sap.ui.define(
        */
       constructor: function (oController, opt) {
         const options = {
-          boxWrapperId: '',
+          fragmentId: '',
           appno: '',
           apptp: '',
           message: '',
@@ -56,13 +54,13 @@ sap.ui.define(
           ...opt,
         };
 
-        const sBoxWrapperId = options.boxWrapperId ? `${options.boxWrapperId}--` : '';
-        const sBoxId = `${sBoxWrapperId}fileAttachmentBox`;
+        const sFragmentId = options.fragmentId ? `${options.fragmentId}--` : '';
+        const sBoxId = `${sFragmentId}fileAttachmentBox`;
 
         this.oController = oController;
         this.oFileAttachmentBox = oController.byId(sBoxId);
-        this.oFileUploader = oController.byId(`${sBoxWrapperId}fileUploader`);
-        this.oFilesTable = oController.byId(`${sBoxWrapperId}filesTable`);
+        this.oFileUploader = oController.byId(`${sFragmentId}fileUploader`);
+        this.oFilesTable = oController.byId(`${sFragmentId}filesTable`);
 
         const oBoxModel = new JSONModel({
           settings: options,
@@ -73,12 +71,21 @@ sap.ui.define(
         });
         this.oFileAttachmentBox.setModel(oBoxModel);
 
-        this.showData(oBoxModel);
+        this.readFileList();
       },
 
-      async showData(oBoxModel) {
+      /**
+       * 첨부 파일 목록 조회
+       */
+      async readFileList() {
         try {
-          const aFiles = await this.readFiles();
+          this.oFileUploader.clear();
+          this.oFileUploader.setValue('');
+
+          const oBoxModel = this.oFileAttachmentBox.getModel();
+          const mSettings = oBoxModel.getProperty('/settings');
+
+          const aFiles = await FileDataProvider.readListData(mSettings.appno, mSettings.apptp);
 
           oBoxModel.setProperty('/files', aFiles);
           oBoxModel.setProperty('/fileCount', aFiles.length);
@@ -87,47 +94,6 @@ sap.ui.define(
         } finally {
           this.oFileAttachmentBox.setBusy(false);
         }
-      },
-
-      /**
-       * 첨부 파일 목록 조회
-       */
-      async readFiles() {
-        const oBoxModel = this.oFileAttachmentBox.getModel();
-        const mSettings = oBoxModel.getProperty('/settings');
-
-        this.oFileUploader.clear();
-        this.oFileUploader.setValue('');
-
-        return this.readFileList(mSettings.appno, mSettings.apptp);
-      },
-
-      readFileList(sAppno, sApptp) {
-        return new Promise((resolve, reject) => {
-          const oServiceModel = AppUtils.getAppComponent().getModel(ServiceNames.COMMON);
-          const sUrl = '/FileListSet';
-
-          oServiceModel.read(sUrl, {
-            filters: [
-              new Filter('Appno', FilterOperator.EQ, sAppno), // prettier 방지용 주석
-              new Filter('Zworktyp', FilterOperator.EQ, sApptp),
-            ],
-            success: (mData) => {
-              const aFiles = (mData || {}).results || [];
-              aFiles.forEach((mFile) => {
-                mFile.New = false;
-                mFile.Deleted = false;
-              });
-
-              resolve(aFiles);
-            },
-            error: (oError) => {
-              AppUtils.debug(`${sUrl} error.`, oError);
-
-              reject({ code: 'E', message: AppUtils.getBundleText('MSG_00045') }); // 파일을 조회할 수 없습니다.
-            },
-          });
-        });
       },
 
       /**
@@ -239,9 +205,17 @@ sap.ui.define(
 
           // 파일 삭제
           try {
-            await Promise.all(aFiles.filter((mFile) => mFile.Deleted).map(this.deleteFile));
+            const oRemoveModel = AppUtils.getAppComponent().getModel(ServiceNames.COMMON);
+
+            await Promise.all(
+              aFiles
+                .filter((mFile) => mFile.Deleted)
+                .map((mFile) => {
+                  return this.removeFile(oRemoveModel, mFile);
+                })
+            );
           } catch (oError) {
-            AppUtils.debug('FileAttachmentBoxHandler > upload > deleteFile Error', oError);
+            AppUtils.debug('FileAttachmentBoxHandler > upload > removeFile Error', oError);
 
             reject(oError);
           }
@@ -254,14 +228,14 @@ sap.ui.define(
           }
 
           const sServiceUrl = ServiceManager.getServiceUrl('ZHR_COMMON_SRV', AppUtils.getAppComponent());
-          const oServiceModel = new ODataModel(sServiceUrl, { json: true, loadMetadataAsync: true, refreshAfterChange: false });
+          const oUploadModel = new ODataModel(sServiceUrl, { json: true, loadMetadataAsync: true, refreshAfterChange: false });
           const sUploadUrl = `${sServiceUrl}/FileUploadSet/`;
           const sApptp = oBoxModel.getProperty('/settings/apptp');
 
           // 파일 업로드
           try {
             while (aFiles.length) {
-              await this.uploadFile({ sAppno, sApptp, oServiceModel, sUploadUrl, mFile: aFiles.shift() });
+              await this.uploadFile({ sAppno, sApptp, oUploadModel, sUploadUrl, mFile: aFiles.shift() });
             }
           } catch (oError) {
             AppUtils.debug('FileAttachmentBoxHandler > upload > uploadFile Error', oError);
@@ -271,12 +245,11 @@ sap.ui.define(
         });
       },
 
-      async deleteFile({ Appno, Zworktyp, Zfileseq = '999', Zfilename }) {
+      async removeFile(oRemoveModel, { Appno, Zworktyp, Zfileseq = 999, Zfilename }) {
         return new Promise((resolve, reject) => {
-          const oServiceModel = AppUtils.getAppComponent().getModel(ServiceNames.COMMON);
-          const sUrl = oServiceModel.createKey('/FileListSet', { Appno, Zworktyp, Zfileseq });
+          const sUrl = oRemoveModel.createKey('/FileListSet', { Appno, Zworktyp, Zfileseq });
 
-          oServiceModel.remove(sUrl, {
+          oRemoveModel.remove(sUrl, {
             success: resolve,
             error: (Error) => {
               const sMessage1 = AppUtils.getBundleText('MSG_00008', 'LABEL_00250'); // {파일삭제}중 오류가 발생하였습니다.
@@ -288,10 +261,10 @@ sap.ui.define(
         });
       },
 
-      async uploadFile({ sAppno, sApptp, oServiceModel, sUploadUrl, mFile }) {
+      async uploadFile({ sAppno, sApptp, oUploadModel, sUploadUrl, mFile }) {
         return new Promise((resolve, reject) => {
           const mHeaders = {
-            'x-csrf-token': this.getCsrfToken(oServiceModel),
+            'x-csrf-token': this.getCsrfToken(oUploadModel),
             slug: [sAppno, sApptp, encodeURI(mFile.Zfilename)].join('|'),
           };
 
@@ -321,10 +294,10 @@ sap.ui.define(
         });
       },
 
-      getCsrfToken(oServiceModel) {
-        oServiceModel.refreshSecurityToken();
+      getCsrfToken(oUploadModel) {
+        oUploadModel.refreshSecurityToken();
 
-        return oServiceModel._createRequest().headers['x-csrf-token'];
+        return oUploadModel._createRequest().headers['x-csrf-token'];
       },
     });
   }

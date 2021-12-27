@@ -17,7 +17,7 @@
           </Column>
           <Column width="auto">
             <template>
-              <m:Link text="{Zfilename}" href="{= ${Fileuri} ? ${Fileuri} : 'javascript:;' }" width="100%" textAlign="Begin" />
+              <m:Link text="{Zfilename}" href="{= ${Fileuri} ? ${Fileuri} : 'javascript:;' }" target="_blank" width="100%" textAlign="Begin" />
             </template>
           </Column>
         </columns>
