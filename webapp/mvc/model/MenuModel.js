@@ -447,10 +447,11 @@ sap.ui.define(
       /**
        * 현재 메뉴 라우팅 정보 저장
        * @param {string} routeName
+       * @param {string} viewId
        * @param {string} menuId
        * @param {string} currentLocationText
        */
-      setCurrentMenuData({ routeName, menuId, currentLocationText = '', isSubRoute = false }) {
+      setCurrentMenuData({ routeName, viewId, menuId, currentLocationText = '', isSubRoute = false }) {
         this.setProperty('/breadcrumbs', {
           currentLocationText: '',
           links: null,
@@ -477,11 +478,15 @@ sap.ui.define(
 
         this.setProperty('/breadcrumbs/currentLocationText', currentLocationText || mCurrentMenuProperties.Mname);
         this.setProperty('/breadcrumbs/links', aLinks);
-        this.setProperty('/current', { routeName, menuId, currentLocationText: currentLocationText || mCurrentMenuProperties.Mname });
+        this.setProperty('/current', { routeName, viewId, menuId, currentLocationText: currentLocationText || mCurrentMenuProperties.Mname });
       },
 
       getCurrentMenuRouteName() {
         return this.getProperty('/current/routeName');
+      },
+
+      getCurrentMenuViewId() {
+        return this.getProperty('/current/viewId');
       },
 
       getCurrentMenuId() {
