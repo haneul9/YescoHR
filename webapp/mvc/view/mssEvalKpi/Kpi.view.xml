@@ -4,7 +4,22 @@
     xmlns:mvc="sap.ui.core.mvc">
     <VBox class="contents">
         <VBox id="profileBody" class="main-profile" busyIndicatorDelay="0" busy="{/busy}">
-            <core:Fragment fragmentName="sap.ui.yesco.mvc.view.mssEvalKpi.fragment.CascadingTab" type="XML" />
+            <IconTabBar class="type-b" expandable="false" selectedKey="{/tab/selectedKey}" select=".onSelectTabBar">
+                <layoutData>
+                    <FlexItemData growFactor="1"/>
+                </layoutData>
+                <items>
+                    <IconTabFilter text="{i18n>LABEL_15001}" key="A">
+                        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.mssEvalKpi.fragment.tab.Category" type="XML" />
+                    </IconTabFilter>
+                    <IconTabFilter text="{i18n>LABEL_15002}" key="B">
+                        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.mssEvalKpi.fragment.tab.Team" type="XML" />
+                    </IconTabFilter>
+                    <IconTabFilter text="{i18n>LABEL_15003}" key="C">
+                        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.mssEvalKpi.fragment.tab.Status" type="XML" />
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
         </VBox>
     </VBox>
 </mvc:View>

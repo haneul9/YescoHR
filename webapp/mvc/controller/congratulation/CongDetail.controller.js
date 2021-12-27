@@ -593,10 +593,10 @@ sap.ui.define(
               return;
             }
 
+            const oDetailModel = this.getViewModel();
             try {
               AppUtils.setAppBusy(true, this);
 
-              const oDetailModel = this.getViewModel();
               const mFormData = oDetailModel.getProperty('/FormData');
               const sStatus = mFormData.ZappStatAl;
 
@@ -659,10 +659,11 @@ sap.ui.define(
               return;
             }
 
+            const oDetailModel = this.getViewModel();
+            
             try {
               AppUtils.setAppBusy(true, this);
 
-              const oDetailModel = this.getViewModel();
               const mFormData = oDetailModel.getProperty('/FormData');
               const sStatus = mFormData.ZappStatAl;
 

@@ -194,7 +194,7 @@ sap.ui.define([
                 if (!this.dTeamListDialog) {
                     this.dTeamListDialog = Fragment.load({
                       id: oView.getId(),
-                      name: 'sap.ui.yesco.mvc.view.mssEvalKpi.fragment.formDetail.dialog.TeamList',
+                      name: 'sap.ui.yesco.mvc.view.mssEvalKpi.fragment.tabDetail.dialog.TeamList',
                       controller: this,
                     }).then(function (oDialog) {
                       oView.addDependent(oDialog);
@@ -253,13 +253,14 @@ sap.ui.define([
             const iDropPosition = oGrid.indexOfItem(oDropped);
 
             // 부문 중복체크
-            if (aGridList.some((e) => {return e === mDraggData})) {
+            if (oDropped === oDragged && aGridList.some((e) => {return e === mDraggData})) {
                 return;
             }
 
             // remove the item
             const iDragPosition = oGrid.indexOfItem(oDragged) || 0;
 			const oItem = aGridList[iDragPosition];
+            
 			aGridList.splice(iDragPosition, 1);
 
 			if (iDragPosition < iDropPosition) {

@@ -1,0 +1,4 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.mssEvalKpi.fragment.tabDetail.CascadingForm" type="XML" />
+</core:FragmentDefinition>
