@@ -109,8 +109,8 @@ sap.ui.define(
         try {
           const oView = this.getView();
           const oModel = this.getModel(ServiceNames.APPRAISAL);
-          const oListView = oView.getParent().getPage(Constants.LIST_PAGE_ID);
           const { type: sType, year: sYear } = oParameter;
+          const oListView = oView.getParent().getPage(_.get(Constants.LIST_PAGE_ID, sType));
 
           if (_.isEmpty(oListView) || _.isEmpty(oListView.getModel().getProperty('/parameter/rowData'))) {
             throw new UI5Error({ code: 'E', message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.

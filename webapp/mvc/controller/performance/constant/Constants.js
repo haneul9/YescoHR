@@ -6,7 +6,7 @@ sap.ui.define(
     'use strict';
 
     return {
-      LIST_PAGE_ID: 'container-ehr---performance',
+      LIST_PAGE_ID: { ME: 'container-ehr---performance', MA: 'container-ehr---m_performancePry', MB: 'container-ehr---m_performanceSry' },
       REJECT_DIALOG_ID: 'sap.ui.yesco.mvc.view.performance.fragment.RejectDialog',
 
       APPRAISER_URL_TYPE: { performance: 'ME', ['m/performancePry']: 'MA', ['m/performanceSry']: 'MB' },
