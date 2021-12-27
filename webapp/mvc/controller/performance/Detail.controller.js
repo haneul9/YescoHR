@@ -132,7 +132,7 @@ sap.ui.define(
             Client.deep(oModel, 'AppraisalDoc', {
               ...mParameter,
               Menid: this.getCurrentMenuId(),
-              Prcty: 'D',
+              Prcty: Constants.PROCESS_TYPE.DETAIL.code,
               Zzappgb: sType,
               AppraisalDocDetailSet: [],
               AppraisalBottnsSet: [],
@@ -330,14 +330,7 @@ sap.ui.define(
         this.pRejectDialog.then((oDialog) => oDialog.open());
       },
 
-      getButtonText(sPrcty) {
-        const oViewModel = this.getViewModel();
-        const mSubmitButtons = oViewModel.getProperty('/buttons/submit');
-
-        return sPrcty === 'C' ? _.get(mSubmitButtons, ['Z_SUBMIT', 'ButtonText']) : _.get(mSubmitButtons, ['SAVE', 'ButtonText']);
-      },
-
-      async createProcess(sPrcty) {
+      async createProcess({ code, label }) {
         const oViewModel = this.getViewModel();
 
         oViewModel.setProperty('/busy', true);
@@ -350,7 +343,7 @@ sap.ui.define(
           const aStrategy = _.cloneDeep(oViewModel.getProperty('/goals/strategy'));
           const aDuty = _.cloneDeep(oViewModel.getProperty('/goals/duty'));
 
-          if (sPrcty === 'C') {
+          if (_.isEqual(code, Constants.PROCESS_TYPE.SEND.code)) {
             _.chain(mParameter).set('OldStatus', mParameter.Zzapsts).set('OldStatusSub', mParameter.ZzapstsSub).set('OldStatusPart', mParameter.ZzapstsPSub).commit();
           }
 
@@ -359,14 +352,14 @@ sap.ui.define(
             ...mManage,
             ...mSummary,
             Menid: this.getCurrentMenuId(),
-            Prcty: sPrcty,
+            Prcty: code,
             AppraisalDocDetailSet: [...aStrategy, ...aDuty],
           });
 
           // {저장|전송}되었습니다.
-          MessageBox.success(this.getBundleText('MSG_00007', this.getButtonText(sPrcty)), {
+          MessageBox.success(this.getBundleText('MSG_00007', label), {
             onClose: () => {
-              if (sPrcty === 'C') this.getRouter().navTo('performance');
+              if (_.isEqual(code, Constants.PROCESS_TYPE.SEND.code)) this.getRouter().navTo('performance');
             },
           });
         } catch (oError) {
@@ -406,14 +399,14 @@ sap.ui.define(
             if (MessageBox.Action.CANCEL === sAction) return;
 
             const { root: sRootPath, itemKey: sDeleteTargetNum } = oSource.data();
-            const aItems = oViewModel.getProperty(`/goals/${sRootPath}`);
-            const bIsSaved = _.chain(aItems).find({ OrderNo: sDeleteTargetNum }).get('isSaved').value();
+            const aGoalItems = oViewModel.getProperty(`/goals/${sRootPath}`);
+            const bIsSaved = _.chain(aGoalItems).find({ OrderNo: sDeleteTargetNum }).get('isSaved').value();
             let iCurrentItemsLength = oViewModel.getProperty('/currentItemsLength') ?? 0;
 
             oViewModel.setProperty('/currentItemsLength', --iCurrentItemsLength);
             oViewModel.setProperty(
               `/goals/${sRootPath}`,
-              _.chain(aItems)
+              _.chain(aGoalItems)
                 .tap((array) => _.remove(array, { OrderNo: sDeleteTargetNum }))
                 .map((o, i) => ({ ...o, OrderNo: String(i), ItemNo: String(i + 1) }))
                 .value()
@@ -447,7 +440,7 @@ sap.ui.define(
       },
 
       onPressSaveButton() {
-        this.createProcess('T');
+        this.createProcess(Constants.PROCESS_TYPE.SAVE);
       },
 
       onPressSubmitButton() {
@@ -455,7 +448,7 @@ sap.ui.define(
         const aStrategyGoals = oViewModel.getProperty('/goals/strategy');
         const aDutyGoals = oViewModel.getProperty('/goals/duty');
         const aFieldProperties = oViewModel.getProperty('/goals/valid');
-        const sPrcty = 'C';
+        const mProcessType = Constants.PROCESS_TYPE.SEND;
 
         // validation
         if (_.some(aStrategyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties }))) return;
@@ -466,12 +459,12 @@ sap.ui.define(
           return;
         }
 
-        MessageBox.confirm(this.getBundleText('MSG_00006', this.getButtonText(sPrcty)), {
+        MessageBox.confirm(this.getBundleText('MSG_00006', mProcessType.label), {
           // {전송}하시겠습니까?
           onClose: (sAction) => {
             if (MessageBox.Action.CANCEL === sAction) return;
 
-            this.createProcess(sPrcty);
+            this.createProcess(mProcessType);
           },
         });
       },

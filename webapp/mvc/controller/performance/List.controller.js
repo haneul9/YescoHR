@@ -52,7 +52,7 @@ sap.ui.define(
           oViewModel.setProperty('/type', sType);
 
           const aTableData = await Client.getEntitySet(oModel, 'AppraisalPeeList', {
-            Prcty: 'L',
+            Prcty: Constants.PROCESS_TYPE.LIST.code,
             Zzappgb: sType,
             Menid: this.getCurrentMenuId(),
             Werks: this.getAppointeeProperty('Werks'),
