@@ -37,8 +37,8 @@ sap.ui.define(
 
       REJECT_PROPERTIES: ['Rjctr', 'Rjctrin'],
       SUMMARY_PROPERTIES: ['Zmepoint', 'Zmapoint', 'Zmbgrade'],
-      MANAGE_PROPERTIES: ['Z131', 'Z132', 'Z136', 'Z137', 'Z140', 'Papp1', 'Papp2'],
-      GOAL_PROPERTIES: ['Obj0', 'Fwgt', 'Z101', 'Z103', 'Z103s', 'Z109', 'Z111', 'Zapgme', 'Zapgma', 'Ztbegda', 'Ztendda', 'Zmarslt', 'Zrslt', 'Z1175', 'Z1174', 'Z1173', 'Z1172', 'Z1171', 'Z125Ee', 'Z125Er'],
+      MANAGE_PROPERTIES: ['Z131', 'Z132', 'Z136', 'Z137', 'Z140', 'Papp1', 'Papp2', 'origin'],
+      GOAL_PROPERTIES: ['Obj0', 'Fwgt', 'Z101', 'Z103', 'Z103s', 'Z109', 'Z111', 'Zapgme', 'Zapgma', 'Ztbegda', 'Ztendda', 'Zmarslt', 'Zrslt', 'Z1175', 'Z1174', 'Z1173', 'Z1172', 'Z1171', 'Z125Ee', 'Z125Er', 'origin'],
       COMBO_PROPERTIES: ['Zapgme', 'Zapgma', 'Z103s', 'Z111', 'Zmbgrade'],
 
       BUTTON_STATUS_MAP: {
@@ -137,6 +137,7 @@ sap.ui.define(
           fieldControl: {
             display: _.reduce([...this.GOAL_PROPERTIES, ...this.SUMMARY_PROPERTIES, ...this.MANAGE_PROPERTIES, ...this.REJECT_PROPERTIES], this.initializeFieldsControl.bind(this), {}),
             limit: {},
+            hiddenKeys: [],
           },
           goals: {
             valid: [],
@@ -261,6 +262,22 @@ sap.ui.define(
               }
             })
             .value();
+
+          // V - 값 숨김
+          const aHiddenKeys = oViewModel.getProperty('/fieldControl/hiddenKeys');
+          _.forEach(mConvertScreen, (value, key) => {
+            if (_.isEqual(value, this.DISPLAY_TYPE.HIDDEN_VALUE)) {
+              if (_.includes(['Z131', 'Z132'], key)) {
+                _.chain(mDetailData).set(['origin', key], value).set(key, _.noop()).commit();
+              } else {
+                _.forEach(mDetailData.AppraisalDocDetailSet, (obj) => {
+                  _.chain(obj).set(['origin', key], value).set(key, _.noop()).commit();
+                });
+              }
+
+              aHiddenKeys.push(key);
+            }
+          });
 
           oViewModel.setProperty('/entry/topGoals', new ComboEntry({ codeKey: 'Objid', valueKey: 'Stext', aEntries: aTopGoals }) ?? []);
           oViewModel.setProperty('/entry/levels', new ComboEntry({ codeKey: 'ValueEid', valueKey: 'ValueText', aEntries: aGrades }) ?? []);
@@ -418,10 +435,22 @@ sap.ui.define(
           const mSummary = _.cloneDeep(oViewModel.getProperty('/summary'));
           const aStrategy = _.cloneDeep(oViewModel.getProperty('/goals/strategy'));
           const aDuty = _.cloneDeep(oViewModel.getProperty('/goals/duty'));
+          const aHiddenKeys = oViewModel.getProperty('/fieldControl/hiddenKeys');
 
           if (sPrcty === 'C') {
             _.chain(mParameter).set('OldStatus', mParameter.Zzapsts).set('OldStatusSub', mParameter.ZzapstsSub).set('OldStatusPart', mParameter.ZzapstsPSub).commit();
           }
+
+          // V - Hidden 값 복원
+          _.forEach(aHiddenKeys, (key) => {
+            if (_.includes(['Z131', 'Z132'], key)) {
+              _.set(mSummary, key, _.get(mSummary, ['origin', key]));
+            } else {
+              _.forEach([...aStrategy, ...aDuty], (obj) => {
+                _.set(obj, key, _.get(obj, ['origin', key]));
+              });
+            }
+          });
 
           await Client.deep(oModel, 'AppraisalDoc', {
             ...mParameter,
