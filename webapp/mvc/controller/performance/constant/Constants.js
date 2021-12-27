@@ -6,7 +6,7 @@ sap.ui.define(
     'use strict';
 
     return {
-      LIST_PAGE: { ME: { route: 'performance', id: 'container-ehr---performance' }, MA: { route: 'm/performancePry', id: 'container-ehr---m_performancePry' }, MB: { route: 'm/performanceSry', id: 'container-ehr---m_performanceSry' } },
+      LIST_PAGE: { ME: { route: 'performance', detail: 'performance-detail', id: 'container-ehr---performance' }, MA: { route: 'm/performancePry', detail: 'm/performancePry-detail', id: 'container-ehr---m_performancePry' }, MB: { route: 'm/performanceSry', detail: 'm/performanceSry-detail', id: 'container-ehr---m_performanceSry' } },
       REJECT_DIALOG_ID: 'sap.ui.yesco.mvc.view.performance.fragment.RejectDialog',
 
       APPRAISER_TYPE: { ME: 'ME', MA: 'MA', MB: 'MB' },

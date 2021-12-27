@@ -262,7 +262,7 @@ sap.ui.define(
           this.debug(`Controller > ${mListRoute.route} Detail > onObjectMatched Error`, oError);
 
           AppUtils.handleError(oError, {
-            onClose: () => this.getRouter().navTo(mListRoute.route),
+            onClose: () => this.onNavBack(),
           });
         } finally {
           oViewModel.setProperty('/busy', false);
