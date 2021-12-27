@@ -178,7 +178,7 @@ sap.ui.define(
       },
 
       /**
-       * @abstract
+       * abstract
        * @returns
        */
       getPreviousRouteName() {
