@@ -3,21 +3,17 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/base/Object',
     'sap/ui/core/Fragment',
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/common/FileDataProvider',
   ],
   (
     // prettier 방지용 주석
     BaseObject,
     Fragment,
-    Filter,
-    FilterOperator,
     JSONModel,
     AppUtils,
-    ServiceNames
+    FileDataProvider
   ) => {
     'use strict';
 
@@ -27,28 +23,6 @@ sap.ui.define(
 
       constructor: function (oController) {
         this.oController = oController;
-      },
-
-      readFileList(sAppno, sApptp) {
-        return new Promise((resolve, reject) => {
-          const oServiceModel = this.oController.getModel(ServiceNames.COMMON);
-          const sUrl = '/FileListSet';
-
-          oServiceModel.read(sUrl, {
-            filters: [
-              new Filter('Appno', FilterOperator.EQ, sAppno), // prettier 방지용 주석
-              new Filter('Zworktyp', FilterOperator.EQ, sApptp),
-            ],
-            success: (mData) => {
-              resolve((mData || {}).results || []);
-            },
-            error: (oError) => {
-              AppUtils.debug(`${sUrl} error.`, oError);
-
-              reject({ code: 'E', message: AppUtils.getBundleText('MSG_00045') }); // 파일을 조회할 수 없습니다.
-            },
-          });
-        });
       },
 
       /**
@@ -71,23 +45,30 @@ sap.ui.define(
 
           this.oFileListDialog
             .addStyleClass(AppUtils.getAppComponent().getContentDensityClass())
-            .setModel(
-              new JSONModel({
-                busy: true,
-                appno: null,
-                apptp: null,
-                files: null,
-                fileCount: 1,
-              })
-            )
+            .setModel(new JSONModel(this.getInitData()))
             .attachBeforeOpen(() => {
               this.readDialogData();
+            })
+            .attachAfterClose(() => {
+              this.oFileListDialog.setContentHeight('45px').getModel().setData(this.getInitData());
             });
         }
 
-        this.oFileListDialog.getModel().setProperty('/appno', sAppno);
-        this.oFileListDialog.getModel().setProperty('/apptp', sApptp);
+        const oModel = this.oFileListDialog.getModel();
+        oModel.setProperty('/appno', sAppno);
+        oModel.setProperty('/apptp', sApptp);
+
         this.oFileListDialog.open();
+      },
+
+      getInitData() {
+        return {
+          busy: true,
+          appno: null,
+          apptp: null,
+          files: null,
+          fileCount: 1,
+        };
       },
 
       /**
@@ -95,14 +76,16 @@ sap.ui.define(
        */
       async readDialogData() {
         const oModel = this.oFileListDialog.getModel();
-        const aFiles = await this.readFileList(oModel.getProperty('/appno'), oModel.getProperty('/apptp'));
+
+        const aFiles = await FileDataProvider.readListData(oModel.getProperty('/appno'), oModel.getProperty('/apptp'));
         const iFileCount = aFiles.length;
 
         oModel.setProperty('/files', aFiles);
         oModel.setProperty('/fileCount', iFileCount);
-        oModel.setProperty('/busy', false);
 
         this.oFileListDialog.setContentHeight(`${iFileCount * 45 + 1}px`);
+
+        oModel.setProperty('/busy', false);
       },
 
       onPressFileListDialogClose() {

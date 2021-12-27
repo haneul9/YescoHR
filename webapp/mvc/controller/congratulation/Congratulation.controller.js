@@ -1,6 +1,8 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/model/Filter',
+    'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/EmployeeSearch',
@@ -12,6 +14,8 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
+    Filter,
+    FilterOperator,
     JSONModel,
     AppUtils,
     EmployeeSearch,
@@ -58,14 +62,14 @@ sap.ui.define(
       onObjectMatched() {
         this.onSearch();
         this.getTotalPay();
-        this.getViewModel('appointeeModel').setProperty('/showChangeButton', this.isHass());
+        this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
       },
 
       // 대상자 정보 사원선택시 화면 Refresh
       onRefresh() {
         this.onSearch();
         this.getTotalPay();
-        this.getViewModel('appointeeModel').setProperty('/showChangeButton', this.isHass());
+        this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
       },
 
       onClick() {
@@ -91,9 +95,9 @@ sap.ui.define(
         const aFilters = [];
 
         if (this.isHass()) {
-          const sPernr = this.getViewModel('appointeeModel').getProperty('/Pernr');
+          const sPernr = this.getAppointeeProperty('Pernr');
 
-          aFilters.push(new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, sPernr));
+          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
         }
 
         oModel.read(sUrl, {
@@ -120,14 +124,19 @@ sap.ui.define(
         const dDate = moment(oSearchDate.secondDate).hours(9).toDate();
         const dDate2 = moment(oSearchDate.date).hours(9).toDate();
         const sMenid = this.getCurrentMenuId();
-        const aFilters = [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'), new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid), new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate), new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2)];
+        const aFilters = [
+          new Filter('Prcty', FilterOperator.EQ, 'L'), // prettier 방지용 주석
+          new Filter('Menid', FilterOperator.EQ, sMenid),
+          new Filter('Apbeg', FilterOperator.EQ, dDate),
+          new Filter('Apend', FilterOperator.EQ, dDate2),
+        ];
 
         oListModel.setProperty('/busy', true);
 
         if (this.isHass()) {
-          const sPernr = this.getViewModel('appointeeModel').getProperty('/Pernr');
+          const sPernr = this.getAppointeeProperty('Pernr');
 
-          aFilters.push(new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, sPernr));
+          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
           this.getTotalPay();
         }
 
@@ -151,7 +160,7 @@ sap.ui.define(
       },
 
       onSelectRow(oEvent) {
-        const vPath = oEvent.getParameters().rowBindingContext.getPath();
+        const vPath = oEvent.getParameter('rowBindingContext').getPath();
         const oRowData = this.getViewModel().getProperty(vPath);
 
         this.getRouter().navTo(this.isHass() ? 'h/congratulation-detail' : 'congratulation-detail', { oDataKey: oRowData.Appno });

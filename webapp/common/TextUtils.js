@@ -50,13 +50,6 @@ sap.ui.define(
         getDocnoTxt(sDocno) {
           return (sDocno || '').replace(/^0+/, '');
         },
-
-        setLineThrough(Zfilename, Deleted) {
-          console.log(arguments);
-          // this.toggleStyleClass('text-line-through', Deleted);
-
-          return Zfilename;
-        },
       };
     }
 );

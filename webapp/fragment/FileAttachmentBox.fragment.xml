@@ -32,8 +32,8 @@
           <table:template>
             <Select selectedKey="{Gubun}" editable="{/settings/gubun}">
               <!-- <core:Item key="00" text="선택" />
-                            <core:Item key="10" text="5대암" />
-                            <core:Item key="20" text="난임" /> -->
+                   <core:Item key="10" text="5대암" />
+                   <core:Item key="20" text="난임" /> -->
             </Select>
           </table:template>
         </table:Column>
@@ -41,8 +41,12 @@
           <Label text="{i18n>LABEL_00248}" width="100%" />
           <table:template>
             <HBox width="100%">
-              <Link text="{ parts: [ { path: 'Zfilename' }, { path: 'Deleted' } ], formatter: '.TextUtils.setLineThrough' }" href="{Fileuri}" target="_blank" width="100%" textAlign="Begin" visible="{= !${New} &amp;&amp; !${Deleted}  }" />
-              <Text text="{ parts: [ { path: 'Zfilename' }, { path: 'Deleted' } ], formatter: '.TextUtils.setLineThrough' }" width="100%" visible="{= ${New} || ${Deleted} }" />
+              <!-- 저장되었고 삭제 flag 처리되지 않은 상태 -->
+              <Link text="{Zfilename}" href="{Fileuri}" target="_blank" width="100%" textAlign="Begin" visible="{= !${New} &amp;&amp; !${Deleted}  }" />
+              <!-- 저장되었고 삭제 flag 처리된 상태 -->
+              <Link text="{Zfilename}" href="{Fileuri}" target="_blank" width="100%" textAlign="Begin" visible="{= !${New} &amp;&amp; ${Deleted}  }" class="text-line-through" />
+              <!-- 신규 추가 후 저장되지 않은 상태 -->
+              <Text text="{Zfilename}" width="100%" visible="{New}" />
             </HBox>
           </table:template>
         </table:Column>
