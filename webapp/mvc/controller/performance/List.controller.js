@@ -85,10 +85,10 @@ sap.ui.define(
         const oRowData = oViewModel.getProperty(sPath);
         const sType = oViewModel.getProperty('/type');
 
-        if (!_.isEqual(oRowData.Zonlydsp, '')) {
-          MessageBox.alert(this.getBundleText('MSG_10006')); // 현재 평가상태에서는 상세내역을 조회하실 수 없습니다.
-          return;
-        }
+        // if (!_.isEqual(oRowData.Zonlydsp, '')) {
+        //   MessageBox.alert(this.getBundleText('MSG_10006')); // 현재 평가상태에서는 상세내역을 조회하실 수 없습니다.
+        //   return;
+        // }
 
         oViewModel.setProperty('/parameter/rowData', { ...oRowData });
         this.getRouter().navTo('performance-detail', { type: sType, year: _.chain(oRowData.Zperiod).split('.', 1).head().value() });

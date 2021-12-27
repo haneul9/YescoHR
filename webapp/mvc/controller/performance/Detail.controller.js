@@ -137,7 +137,6 @@ sap.ui.define(
           fieldControl: {
             display: _.reduce([...this.GOAL_PROPERTIES, ...this.SUMMARY_PROPERTIES, ...this.MANAGE_PROPERTIES, ...this.REJECT_PROPERTIES], this.initializeFieldsControl.bind(this), {}),
             limit: {},
-            hiddenKeys: [],
           },
           goals: {
             valid: [],
@@ -166,7 +165,7 @@ sap.ui.define(
           }
 
           const mParameter = _.omit(_.cloneDeep(oListView.getModel().getProperty('/parameter/rowData')), '__metadata');
-          const { Zzapsts: sZzapsts, ZzapstsSub: sZzapstsSub } = _.pick(mParameter, ['Zzapsts', 'ZzapstsSub']);
+          const { Zzapsts: sZzapsts, ZzapstsSub: sZzapstsSub, Zonlydsp: sZonlydsp } = _.pick(mParameter, ['Zzapsts', 'ZzapstsSub', 'Zonlydsp']);
 
           oViewModel.setProperty('/type', sType);
           oViewModel.setProperty('/year', sYear);
@@ -263,22 +262,6 @@ sap.ui.define(
             })
             .value();
 
-          // V - 값 숨김
-          const aHiddenKeys = oViewModel.getProperty('/fieldControl/hiddenKeys');
-          _.forEach(mConvertScreen, (value, key) => {
-            if (_.isEqual(value, this.DISPLAY_TYPE.HIDDEN_VALUE)) {
-              if (_.includes(['Z131', 'Z132'], key)) {
-                _.chain(mDetailData).set(['origin', key], _.get(mDetailData, key)).set(key, _.noop()).commit();
-              } else {
-                _.forEach(mDetailData.AppraisalDocDetailSet.results, (obj) => {
-                  _.chain(obj).set(['origin', key], _.get(obj, key)).set(key, _.noop()).commit();
-                });
-              }
-
-              aHiddenKeys.push(key);
-            }
-          });
-
           oViewModel.setProperty('/entry/topGoals', new ComboEntry({ codeKey: 'Objid', valueKey: 'Stext', aEntries: aTopGoals }) ?? []);
           oViewModel.setProperty('/entry/levels', new ComboEntry({ codeKey: 'ValueEid', valueKey: 'ValueText', aEntries: aGrades }) ?? []);
           oViewModel.setProperty('/entry/status', new ComboEntry({ codeKey: 'ValueEid', valueKey: 'ValueText', aEntries: aStatus }) ?? []);
@@ -337,6 +320,16 @@ sap.ui.define(
                 .commit();
             })
             .commit();
+
+          // 조회모드
+          if (_.isEqual(sZonlydsp, 'X')) {
+            _.forEach(mButtons.goal, (v) => _.set(v, 'Availability', false));
+            _.forEach(mButtons.submit, (v) => _.set(v, 'Availability', ''));
+
+            _.forEach(mConvertScreen, (v, p) => {
+              if (_.isEqual(v, this.DISPLAY_TYPE.EDIT)) _.set(mConvertScreen, p, this.DISPLAY_TYPE.DISPLAY_ONLY);
+            });
+          }
 
           // 필드속성
           oViewModel.setProperty('/fieldControl/display', mConvertScreen);
@@ -435,22 +428,10 @@ sap.ui.define(
           const mSummary = _.cloneDeep(oViewModel.getProperty('/summary'));
           const aStrategy = _.cloneDeep(oViewModel.getProperty('/goals/strategy'));
           const aDuty = _.cloneDeep(oViewModel.getProperty('/goals/duty'));
-          const aHiddenKeys = oViewModel.getProperty('/fieldControl/hiddenKeys');
 
           if (sPrcty === 'C') {
             _.chain(mParameter).set('OldStatus', mParameter.Zzapsts).set('OldStatusSub', mParameter.ZzapstsSub).set('OldStatusPart', mParameter.ZzapstsPSub).commit();
           }
-
-          // V - Hidden 값 복원
-          _.forEach(aHiddenKeys, (key) => {
-            if (_.includes(['Z131', 'Z132'], key)) {
-              _.set(mSummary, key, _.get(mSummary, ['origin', key]));
-            } else {
-              _.forEach([...aStrategy, ...aDuty], (obj) => {
-                _.set(obj, key, _.get(obj, ['origin', key]));
-              });
-            }
-          });
 
           await Client.deep(oModel, 'AppraisalDoc', {
             ...mParameter,
