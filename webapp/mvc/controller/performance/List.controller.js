@@ -8,6 +8,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/controller/performance/constant/Constants',
     'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
     'sap/ui/yesco/mvc/model/type/Pernr',
   ],
@@ -19,13 +20,12 @@ sap.ui.define(
     Client,
     ServiceNames,
     TableUtils,
-    BaseController
+    BaseController,
+    Constants
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.performance.List', {
-      APPRAISER_TYPE: { performance: 'ME', ['m/performancePry']: 'MA', ['m/performanceSry']: 'MB' },
-
       onBeforeShow() {
         const oViewModel = new JSONModel({
           busy: false,
@@ -44,7 +44,7 @@ sap.ui.define(
       async onObjectMatched() {
         const oModel = this.getModel(ServiceNames.APPRAISAL);
         const oViewModel = this.getViewModel();
-        const sType = this.APPRAISER_TYPE[this.getRouter().getHashChanger().getHash()];
+        const sType = Constants.APPRAISER_URL_TYPE[this.getRouter().getHashChanger().getHash()];
         const sEmpField = sType === 'ME' ? 'Zzappee' : 'Zzapper';
 
         try {
