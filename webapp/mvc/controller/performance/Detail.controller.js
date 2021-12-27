@@ -36,7 +36,7 @@ sap.ui.define(
       },
 
       getCurrentLocationText(oArguments) {
-        return oArguments.year;
+        return oArguments.year ?? moment().format('YYYY');
       },
 
       initializeFieldsControl(acc, cur) {
@@ -103,14 +103,15 @@ sap.ui.define(
 
       async onObjectMatched(oParameter) {
         const oViewModel = this.getViewModel();
+        const { type: sType, year: sYear } = oParameter;
+        const mListRoute = _.get(Constants.LIST_PAGE, sType);
 
         oViewModel.setProperty('/busy', true);
 
         try {
           const oView = this.getView();
           const oModel = this.getModel(ServiceNames.APPRAISAL);
-          const { type: sType, year: sYear } = oParameter;
-          const oListView = oView.getParent().getPage(_.get(Constants.LIST_PAGE_ID, sType));
+          const oListView = oView.getParent().getPage(mListRoute.id);
 
           if (_.isEmpty(oListView) || _.isEmpty(oListView.getModel().getProperty('/parameter/rowData'))) {
             throw new UI5Error({ code: 'E', message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
@@ -258,10 +259,10 @@ sap.ui.define(
           oViewModel.setProperty('/fieldControl/display', mConvertScreen);
           oViewModel.setProperty('/fieldControl/limit', _.assignIn(this.getEntityLimit(ServiceNames.APPRAISAL, 'AppraisalDoc'), this.getEntityLimit(ServiceNames.APPRAISAL, 'AppraisalDocDetail')));
         } catch (oError) {
-          this.debug('Controller > Performance Detail > onObjectMatched Error', oError);
+          this.debug(`Controller > ${mListRoute.route} Detail > onObjectMatched Error`, oError);
 
           AppUtils.handleError(oError, {
-            // onClose: () => this.getRouter().navTo('performance'),
+            onClose: () => this.getRouter().navTo(mListRoute.route),
           });
         } finally {
           oViewModel.setProperty('/busy', false);
@@ -332,6 +333,8 @@ sap.ui.define(
 
       async createProcess({ code, label }) {
         const oViewModel = this.getViewModel();
+        const sType = oViewModel.getProperty('/type');
+        const sListRouteName = _.get(Constants.LIST_PAGE, [sType, 'route']);
 
         oViewModel.setProperty('/busy', true);
 
@@ -359,11 +362,11 @@ sap.ui.define(
           // {저장|전송}되었습니다.
           MessageBox.success(this.getBundleText('MSG_00007', label), {
             onClose: () => {
-              if (_.isEqual(code, Constants.PROCESS_TYPE.SEND.code)) this.getRouter().navTo('performance');
+              if (_.isEqual(code, Constants.PROCESS_TYPE.SEND.code)) this.getRouter().navTo(sListRouteName);
             },
           });
         } catch (oError) {
-          this.debug('Controller > Performance Detail > createProcess Error', oError);
+          this.debug(`Controller > ${sListRouteName} Detail > createProcess Error`, oError);
 
           AppUtils.handleError(oError);
         } finally {

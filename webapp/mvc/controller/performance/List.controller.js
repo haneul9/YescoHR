@@ -44,8 +44,8 @@ sap.ui.define(
       async onObjectMatched() {
         const oModel = this.getModel(ServiceNames.APPRAISAL);
         const oViewModel = this.getViewModel();
-        const sType = Constants.APPRAISER_URL_TYPE[this.getRouter().getHashChanger().getHash()];
-        const sEmpField = sType === 'ME' ? 'Zzappee' : 'Zzapper';
+        const sType = _.findKey(Constants.LIST_PAGE, { route: this.getRouter().getHashChanger().getHash() });
+        const sEmpField = _.isEqual(sType, Constants.APPRAISER_TYPE.ME) ? 'Zzappee' : 'Zzapper';
 
         try {
           oViewModel.setProperty('/busy', true);

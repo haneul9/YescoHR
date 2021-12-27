@@ -6,10 +6,9 @@ sap.ui.define(
     'use strict';
 
     return {
-      LIST_PAGE_ID: { ME: 'container-ehr---performance', MA: 'container-ehr---m_performancePry', MB: 'container-ehr---m_performanceSry' },
+      LIST_PAGE: { ME: { route: 'performance', id: 'container-ehr---performance' }, MA: { route: 'm/performancePry', id: 'container-ehr---m_performancePry' }, MB: { route: 'm/performanceSry', id: 'container-ehr---m_performanceSry' } },
       REJECT_DIALOG_ID: 'sap.ui.yesco.mvc.view.performance.fragment.RejectDialog',
 
-      APPRAISER_URL_TYPE: { performance: 'ME', ['m/performancePry']: 'MA', ['m/performanceSry']: 'MB' },
       APPRAISER_TYPE: { ME: 'ME', MA: 'MA', MB: 'MB' },
       PROCESS_TYPE: { LIST: { code: 'L', label: 'LABEL_00177' }, DETAIL: { code: 'D', label: 'LABEL_00165' }, SAVE: { code: 'T', label: 'LABEL_00103' }, SEND: { code: 'C', label: 'LABEL_00175' } },
       DISPLAY_TYPE: { EDIT: 'X', DISPLAY_ONLY: 'D', HIDE: 'H', HIDDEN_VALUE: 'V' },
