@@ -1,6 +1,7 @@
 sap.ui.define([
 	// prettier 방지용 주석
     'sap/ui/model/json/JSONModel',
+    'sap/ui/core/Fragment',
     "sap/ui/core/dnd/DragInfo",
 	"sap/ui/core/dnd/DropInfo",
 	"sap/ui/core/dnd/DropPosition",
@@ -8,7 +9,6 @@ sap.ui.define([
 	"sap/f/dnd/GridDropInfo",
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -16,6 +16,7 @@ sap.ui.define([
     'sap/ui/yesco/mvc/controller/BaseController',
 ], function(
 	JSONModel,
+	Fragment,
 	DragInfo,
 	DropInfo,
 	DropPosition,
@@ -23,7 +24,6 @@ sap.ui.define([
 	GridDropInfo,
 	MessageBox,
 	AppUtils,
-	FragmentEvent,
 	TableUtils,
 	TextUtils,
 	ServiceNames,
@@ -77,7 +77,6 @@ sap.ui.define([
                     Zyear: String(new Date().getFullYear()),
                 });
                 this.onSearch();
-                this.getPartCascading();
             } catch (oError) {
                 AppUtils.handleError(oError);
             } finally {
@@ -186,10 +185,17 @@ sap.ui.define([
         async onPressTeam(oEvent) {
             try {
                 const sPath = oEvent.getSource().getBindingContext().getPath();
+                const oView = this.getView();
                 const oViewModel = this.getViewModel();
                 const aList = await this.getTeamList(oViewModel.getProperty(sPath));
+                const iLength = aList.length;
+
+                if (!iLength) {
+                    return;
+                }
 
                 oViewModel.setProperty('/TeamList', aList);
+                oViewModel.setProperty('/TeamRowCount', iLength);
                 
                 if (!this.dTeamListDialog) {
                     this.dTeamListDialog = Fragment.load({
@@ -211,7 +217,7 @@ sap.ui.define([
         },
 
         onCloseClick(oEvent) {
-            oEvent.getSource().close();
+            oEvent.getSource().getParent().close()
         },
 
         // 수행 팀 목록 조회
@@ -221,7 +227,7 @@ sap.ui.define([
             this.getViewModel().setProperty('/TeamList', []);
 
             return new Promise((resolve, reject) => {
-                oModel.read('/KpiCascadingOrgehSet', {
+                oModel.read('/KpiCascadingTeamListSet', {
                     filters: [
                         new sap.ui.model.Filter('Zyear', sap.ui.model.FilterOperator.EQ, mSelectedRow.Zyear),
                         new sap.ui.model.Filter('Otype', sap.ui.model.FilterOperator.EQ, mSelectedRow.Otype),
@@ -246,37 +252,33 @@ sap.ui.define([
 			const oDragged = oInfo.getParameter("draggedControl");
             const oDropped = oInfo.getParameter("droppedControl");
             const oDraggPath = oDragged.getBindingContext().getPath();
-            const sInsertPosition = oInfo.getParameter("dropPosition");
             const oGrid = oDropped.getParent();
 			const mDraggData = oViewModel.getProperty(oDraggPath);
             const aGridList = oViewModel.getProperty('/PartList');
-            const iDropPosition = oGrid.indexOfItem(oDropped);
+            let bInsertPosition = oInfo.getParameter("dropPosition") === "Before";
+            let iDropPosition = oGrid.indexOfItem(oDropped);
 
             // 부문 중복체크
-            if (oDropped === oDragged && aGridList.some((e) => {return e === mDraggData})) {
+            if (oDropped.sParentAggregationName !== oDragged.sParentAggregationName && aGridList.some((e) => {return e === mDraggData})) {
+                MessageBox.alert(this.getBundleText('MSG_15001'));
                 return;
             }
 
             // remove the item
-            const iDragPosition = oGrid.indexOfItem(oDragged) || 0;
-			const oItem = aGridList[iDragPosition];
+            const bDragIndex = oGrid.indexOfItem(oDragged) === -1;
+            const iDragPosition = bDragIndex ? 0 : oGrid.indexOfItem(oDragged);
             
-			aGridList.splice(iDragPosition, 1);
+            if (!bDragIndex) {
+                aGridList.splice(iDragPosition, 1);
 
-			if (iDragPosition < iDropPosition) {
-				iDropPosition--;
-			}
+                if (iDragPosition < iDropPosition && aGridList.length === iDropPosition) {
+                    iDropPosition--;
+                }
+            }
 
             // insert the control in target aggregation
-			if (sInsertPosition === "Before") {
-				aGridList.splice(iDropPosition, 0, oItem);
-			} else {
-				aGridList.splice(iDropPosition + 1, 0, oItem);
-			}
-
+            aGridList.splice(iDropPosition, bInsertPosition ? 0 : -1, mDraggData);
 			oViewModel.setProperty("/PartList", aGridList);
-
-            // oViewModel.setProperty('/PartList', [mDraggData, ...aGridList]);
 		},
 
         // table rowData Drag
@@ -290,13 +292,14 @@ sap.ui.define([
 
         // DropEvent
         onDropTable(oEvent) {
+            const oViewModel = this.getViewModel();
             const oDragSession = oEvent.getParameter("dragSession");
 			const oDraggedRowContext = oDragSession.getComplexData("draggedRowContext");
+            const mDraggData = oViewModel.getProperty(oDraggedRowContext.getPath());
 
-			if (!oDraggedRowContext) return;
+			if (!oDraggedRowContext || !mDraggData.Ztext) return;
 
-            const oViewModel = this.getViewModel();
-            const aPartList = oViewModel.getProperty('/PartList').filter(x => ![oViewModel.getProperty(oDraggedRowContext.getPath())].includes(x));
+            const aPartList = oViewModel.getProperty('/PartList').filter(x => ![mDraggData].includes(x));
             
 			// reset the rank property and update the model to refresh the bindings
 			oViewModel.setProperty('/PartList', aPartList);
@@ -353,6 +356,7 @@ sap.ui.define([
                 success: (oData) => {
                     if (oData) {
                         const oList = oData.results;
+                        oList.push({Stext: this.getBundleText('MSG_15002')});
 
                         oListModel.setProperty('/PartList', oList);
                         oListModel.setProperty('/busy', false);

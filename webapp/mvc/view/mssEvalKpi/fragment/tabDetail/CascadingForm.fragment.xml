@@ -110,7 +110,7 @@
                             <core:Icon visible="{= !!${Tmcnt} &amp;&amp; ${Tmcnt} !== '0' }" src="sap-icon://border" />
                             <core:Icon visible="{= !!${Url} }" src="sap-icon://circle-task" />
                         </HBox>
-                        <Title text="{= !!${Stext} ? ${Stext} : ${i18n>MSG_15002} }" level="H4" />
+                        <Title text="{Stext}" level="H4" />
                         <Text text="{Ztext}" wrapping="false" />
                     </VBox>
                 </f:GridListItem>
