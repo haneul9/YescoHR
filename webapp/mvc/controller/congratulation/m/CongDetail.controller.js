@@ -649,7 +649,7 @@ sap.ui.define(
               oModel.create('/ConExpenseApplSet', oSendObject, {
                 success: () => {
                   AppUtils.setAppBusy(false, this);
-                  MessageBox.alert(this.getBundleText('MSG_00038', 'LABEL_00121'), {
+                  MessageBox.alert(this.getBundleText('MSG_00039', 'LABEL_00121'), {
                     onClose: () => {
                       this.getRouter().navTo('congratulation');
                     },
