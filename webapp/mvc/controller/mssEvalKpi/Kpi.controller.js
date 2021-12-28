@@ -13,7 +13,9 @@ sap.ui.define([
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/exceptions/ODataReadError',
+    'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/mvc/controller/BaseController',
+	"sap/m/VBox",
 ], function(
 	JSONModel,
 	Fragment,
@@ -28,7 +30,9 @@ sap.ui.define([
 	TextUtils,
 	ServiceNames,
 	ODataReadError,
-	BaseController
+	ODataCreateError,
+	BaseController,
+	VBox
 ) {
 	"use strict";
 
@@ -157,8 +161,59 @@ sap.ui.define([
                 Zyear: String(new Date().getFullYear()),
             });
 
-            this.getAllCascading();
-            this.getPartCascading();
+            try {
+                oViewModel.setProperty('/busy', true);
+
+                if (oViewModel.getProperty('/tab/selectedKey') !== 'C') {
+                    const aTableList = await this.getAllCascading();
+                    const iTableLength = aTableList.length;
+
+                    oViewModel.setProperty('/List', aTableList);
+                    oViewModel.setProperty('/listRowCount', iTableLength > 10 ? 10 : iTableLength);
+
+                    const aPartList = await this.getPartCascading();
+    
+                    if (oViewModel.getProperty('/tab/selectedKey') === 'B') {
+                        this.setTeamGridList(aPartList);
+                    }
+                    
+                    aPartList.push({Stext: this.getBundleText('MSG_15002')});
+                    oViewModel.setProperty('/PartList', aPartList);
+                } else {
+                    //
+                }
+            } catch (oError) {
+                AppUtils.handleError(oError);
+            } finally {
+                oViewModel.setProperty('/busy', false);
+            }
+        },
+
+        // 부문에 해당되는 팀 Cadcading
+        detailTeamList() {
+            const oModel = this.getModel(ServiceNames.APPRAISAL);
+            const oViewModel = this.getViewModel();
+            const mSearch = oViewModel.getProperty('/search');
+
+            return new Promise((resolve, reject) => {
+                oModel.read('/KpiCascadingTeamListSet', {
+                    filters: [
+                        new sap.ui.model.Filter('Zyear', sap.ui.model.FilterOperator.EQ, mSearch.Zyear),
+                        new sap.ui.model.Filter('Otype', sap.ui.model.FilterOperator.EQ, mSearch.Otype),
+                        new sap.ui.model.Filter('Objid', sap.ui.model.FilterOperator.EQ, mSearch.Objid),
+                    ],
+                    success: (oData) => {
+                        if (oData) {    
+                            this.debug(oData);
+                            resolve(oData.results);
+                        }
+                    },
+                    error: (oError) => {
+                        this.debug(oError);
+                        reject(new ODataReadError(oError));
+                    },
+                });
+            });
         },
 
         // 회사선택
@@ -171,9 +226,30 @@ sap.ui.define([
             oViewModel.setProperty('/search/Orgtx', !!aPartList.length ? aPartList[0].Orgtx : '');
         },
 
-        onSearch() {
-            this.getAllCascading();
-            this.getPartCascading();
+        async onSearch() {
+            const oViewModel = this.getViewModel();
+
+            oViewModel.setProperty('/busy', true);
+            try {
+                const aTableList = await this.getAllCascading();
+                const iTableLength = aTableList.length;
+
+                oViewModel.setProperty('/List', aTableList);
+                oViewModel.setProperty('/listRowCount', iTableLength > 10 ? 10 : iTableLength);
+
+                const aPartList = await this.getPartCascading();
+
+                if (oViewModel.getProperty('/tab/selectedKey') === 'B') {
+                    this.setTeamGridList(aPartList);
+                }
+
+                aPartList.push({Stext: this.getBundleText('MSG_15002')});
+                oViewModel.setProperty('/PartList', aPartList);
+            } catch (oError) {
+                AppUtils.handleError(oError);
+            } finally {
+                oViewModel.setProperty('/busy', false);
+            }
         },
         
         // 부문 선택
@@ -209,7 +285,7 @@ sap.ui.define([
                 }
                     
                 this.dTeamListDialog.then(function (oDialog) {
-                oDialog.open();
+                    oDialog.open();
                 });
             } catch (oError) {
                 AppUtils.handleError(oError);
@@ -276,6 +352,8 @@ sap.ui.define([
                 }
             }
 
+            mDraggData.Orgeh = oViewModel.getProperty('/search/Orgeh');
+
             // insert the control in target aggregation
             aGridList.splice(iDropPosition, bInsertPosition ? 0 : -1, mDraggData);
 			oViewModel.setProperty("/PartList", aGridList);
@@ -306,68 +384,211 @@ sap.ui.define([
 			oViewModel.refresh(true);
         },
 
-        // 전사 cascading조회
+        // table cascading조회
         getAllCascading() {
             const oModel = this.getModel(ServiceNames.APPRAISAL);
             const oListModel = this.getViewModel();
             const oSearch = oListModel.getProperty('/search');
 
-            oListModel.setProperty('/busy', true);
-
-            oModel.read('/KpiCascadingListSet', {
-                filters: [
-                    new sap.ui.model.Filter('Gubun', sap.ui.model.FilterOperator.EQ, oListModel.getProperty('/tab/selectedKey')),
-                    new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oSearch.Werks),
-                    new sap.ui.model.Filter('Orgeh', sap.ui.model.FilterOperator.EQ, oSearch.Orgeh),
-                    new sap.ui.model.Filter('Zyear', sap.ui.model.FilterOperator.EQ, oSearch.Zyear),
-                ],
-                success: (oData) => {
-                    if (oData) {
-                        const oList = oData.results;
-
-                        oListModel.setProperty('/List', oList);
-                        oListModel.setProperty('/listRowCount', oList.length > 10 ? 10 : oList.length);
-                        oListModel.setProperty('/busy', false);
-                    }
-                },
-                error: (oError) => {
-                    this.debug(oError);
-                    AppUtils.handleError(new ODataReadError(oError));
-                    oListModel.setProperty('/busy', false);
-                },
+            return new Promise((resolve, reject) => {
+                oModel.read('/KpiCascadingListSet', {
+                    filters: [
+                        new sap.ui.model.Filter('Gubun', sap.ui.model.FilterOperator.EQ, oListModel.getProperty('/tab/selectedKey')),
+                        new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oSearch.Werks),
+                        new sap.ui.model.Filter('Orgeh', sap.ui.model.FilterOperator.EQ, oSearch.Orgeh),
+                        new sap.ui.model.Filter('Zyear', sap.ui.model.FilterOperator.EQ, oSearch.Zyear),
+                    ],
+                    success: (oData) => {
+                        resolve(oData.results);    
+                    },
+                    error: (oError) => {
+                        this.debug(oError);
+                        reject(new ODataReadError(oError));                        
+                    },
+                });
             });
         },
 
-        // 부문 cascading조회
+        // grid cascading조회
         getPartCascading(sOrgeh = '') {
             const oModel = this.getModel(ServiceNames.APPRAISAL);
             const oListModel = this.getViewModel();
             const oSearch = oListModel.getProperty('/search');
 
-            oListModel.setProperty('/busy', true);            
+            return new Promise((resolve, reject) => {
+                oModel.read('/KpiCascadingOrgListSet', {
+                    filters: [
+                        new sap.ui.model.Filter('Gubun', sap.ui.model.FilterOperator.EQ, oListModel.getProperty('/tab/selectedKey')),
+                        new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oSearch.Werks),
+                        new sap.ui.model.Filter('Orgeh', sap.ui.model.FilterOperator.EQ, sOrgeh || oSearch.Orgeh),
+                        new sap.ui.model.Filter('Zyear', sap.ui.model.FilterOperator.EQ, oSearch.Zyear),
+                    ],
+                    success: (oData) => {
+                        if (oData) {
+                            resolve(oData.results);                            
+                        }
+                    },
+                    error: (oError) => {
+                        this.debug(oError);
+                        reject(new ODataReadError(oError));
+                    },
+                });
+            }); 
+        },
 
-            oModel.read('/KpiCascadingOrgListSet', {
-                filters: [
-                    new sap.ui.model.Filter('Gubun', sap.ui.model.FilterOperator.EQ, oListModel.getProperty('/tab/selectedKey')),
-                    new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oSearch.Werks),
-                    new sap.ui.model.Filter('Orgeh', sap.ui.model.FilterOperator.EQ, sOrgeh || oSearch.Orgeh),
-                    new sap.ui.model.Filter('Zyear', sap.ui.model.FilterOperator.EQ, oSearch.Zyear),
-                ],
-                success: (oData) => {
-                    if (oData) {
-                        const oList = oData.results;
-                        oList.push({Stext: this.getBundleText('MSG_15002')});
+        // 팀 cascading grid settings
+        setTeamGridList(aList = []) {
+            const oGridBox = this.byId('teamGridBox');
+            const oViewModel = this.getViewModel();
+            const aFilterList = _.map(aList.filter((character, idx, arr) => {
+                return (arr.findIndex((item) => item.Orgtx === character.Orgtx) === idx)
+            }), (ele) => {
+                return ele;
+            });
 
-                        oListModel.setProperty('/PartList', oList);
-                        oListModel.setProperty('/busy', false);
+            oGridBox.destroyItems();
+
+            aFilterList.forEach((e) => {
+                oGridBox.addItem(
+                    new sap.m.HBox({
+                        width: '100%',
+                        height: '100px',
+                        items: [
+                            new sap.m.Label({
+                                text: e.Orgtx,
+                                width: '150px',
+                                vAlign: 'Middle',
+                                textAlign: 'Center',
+                                layoutData: new sap.m.FlexItemData({ minHeight: '80px', maxHeight: '80px' }),
+                            }),
+                            new sap.f.GridList({
+                                layoutData: new sap.m.FlexItemData({ growFactor: 1 }),
+                                customLayout: new sap.ui.layout.cssgrid.GridBoxLayout({ boxMinWidth: '30px', boxWidth: '200px' }),
+                                dragDropConfig: [
+                                    new sap.ui.core.dnd.DragInfo({ sourceAggregation: 'items', dragStart: this.onDragStart }),
+                                    new sap.f.dnd.GridDropInfo({ targetAggregation: 'items', dropPosition: 'Between', dropLayout: 'Horizontal', drop: this.onDrop }),
+                                ],
+                                items: [
+                                    new sap.f.GridListItem({
+                                        content: [
+                                            new sap.m.VBox({
+                                                height: '70px',
+                                                layoutData: new sap.m.FlexItemData({ growFactor: 1, shrinkFactor: 0 }),
+                                                items: [
+                                                    new sap.m.HBox({
+                                                        items: [
+                                                            new sap.ui.core.Icon({
+                                                                visible: {
+                                                                    path: 'Otype',
+                                                                    formatter: function(v) {
+                                                                        return v === '90';
+                                                                    }
+                                                                },
+                                                                src: 'sap-icon://alert'
+                                                            }),
+                                                            new sap.ui.core.Icon({
+                                                                visible: {
+                                                                    path: 'Otype',
+                                                                    formatter: function(v) {
+                                                                        return v === '91';
+                                                                    }
+                                                                },
+                                                                src: 'sap-icon://checklist-item'
+                                                            }),
+                                                            new sap.ui.core.Icon({
+                                                                visible: {
+                                                                    path: 'Tmcnt',
+                                                                    formatter: function(v) {
+                                                                        return v !== '0' && !!v;
+                                                                    }
+                                                                },
+                                                                src: 'sap-icon://border'
+                                                            }),
+                                                            new sap.ui.core.Icon({
+                                                                visible: {
+                                                                    path: 'Url',
+                                                                    formatter: function(v) {
+                                                                        return !!v;
+                                                                    }
+                                                                },
+                                                                src: 'sap-icon://circle-task'
+                                                            }),
+                                                        ]
+                                                    }),
+                                                    new sap.m.Title({ text: '{Stext}', level: 'H4'}),
+                                                    new sap.m.Text({ text: '{Ztext}', wrapping: false}),
+                                                ]
+                                            }),
+                                        ],
+                                    }),
+                                ]
+                            })
+                            .bindRows(`/${e.Orgtx}`)
+                        ]
+                    }).addStyleClass('vCardBox')
+                )
+            });
+
+            for(let i = 0; i < aList.length; i++) {
+                aFilterList.forEach((e) => {
+                   if (aList[i] === e) {
+
+                   } 
+                });
+                oViewModel.setProperty(`/${aList[i].Orgtx}`, aList[i]);
+            }
+        },
+
+        // 저장
+        onSaveBtn() {
+            MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00103'), { // {저장}하시겠습니까?
+                actions: [this.getBundleText('LABEL_00103'), this.getBundleText('LABEL_00118')], // 저장, 취소
+                onClose: async (vPress) => {
+                    if (!vPress || vPress !== this.getBundleText('LABEL_00103')) { // 저장
+                        return;
+                    }
+                    
+                    try {
+                        AppUtils.setAppBusy(true, this);
+                        
+                        const aList = [];
+                        const oViewModel = this.getViewModel();
+                        const aGridData = oViewModel.getProperty('/PartList');
+
+                        aGridData.forEach((e) => {
+                            if (!!e.Ztext) {
+                                aList.push(e);
+                            }
+                        });
+                        
+                        const sTabKey = oViewModel.getProperty('/tab/selectedKey');
+                        let oSendObject = {
+                            Gubun: sTabKey,
+                            Zyear: oViewModel.getProperty('/search/Zyear'),
+                            KpiCascadingNav: aList,
+                        };
+                        
+                        const oModel = this.getModel(ServiceNames.APPRAISAL);
+
+                        await new Promise((resolve, reject) => {
+                            oModel.create('/KpiCascadingOrgListSet', oSendObject, {
+                                success: () => {
+                                    resolve();
+                                },
+                                error: (oError) => {
+                                    reject(new ODataCreateError({ oError }));
+                                },
+                            });
+                        });
+    
+                        MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103')); // {저장}되었습니다.
+                    } catch (oError) {
+                        AppUtils.handleError(oError);
+                    } finally {
+                        AppUtils.setAppBusy(false, this);
                     }
                 },
-                error: (oError) => {
-                    this.debug(oError);
-                    AppUtils.handleError(new ODataReadError(oError));
-                    oListModel.setProperty('/busy', false);
-                },
             });
-        },
+          },
 	});
 });
