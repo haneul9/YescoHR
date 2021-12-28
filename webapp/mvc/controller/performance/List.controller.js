@@ -45,13 +45,14 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.APPRAISAL);
         const oViewModel = this.getViewModel();
         const sType = _.findKey(Constants.LIST_PAGE, { route: this.getRouter().getHashChanger().getHash() });
+        const sRoute = _.get(Constants.LIST_PAGE, [sType, 'route']);
         const sEmpField = _.isEqual(sType, Constants.APPRAISER_TYPE.ME) ? 'Zzappee' : 'Zzapper';
 
         try {
           oViewModel.setProperty('/busy', true);
           oViewModel.setProperty('/type', sType);
 
-          const aTableData = await Client.getEntitySet(oModel, 'AppraisalPeeList', {
+          const aRowData = await Client.getEntitySet(oModel, 'AppraisalPeeList', {
             Prcty: Constants.PROCESS_TYPE.LIST.code,
             Zzappgb: sType,
             Menid: this.getCurrentMenuId(),
@@ -59,9 +60,9 @@ sap.ui.define(
             [sEmpField]: this.getAppointeeProperty('Pernr'),
           });
 
-          this.setTableData({ oViewModel, aTableData });
+          this.setTableData({ oViewModel, aRowData });
         } catch (oError) {
-          this.debug('Controller > Performance List > onObjectMatched Error', oError);
+          this.debug(`Controller > ${sRoute} List > onObjectMatched Error`, oError);
 
           AppUtils.handleError(oError);
         } finally {
@@ -69,11 +70,11 @@ sap.ui.define(
         }
       },
 
-      setTableData({ oViewModel, aTableData }) {
+      setTableData({ oViewModel, aRowData }) {
         const oTable = this.byId('performanceTable');
 
-        oViewModel.setProperty('/list', [...aTableData]);
-        oViewModel.setProperty('/listInfo/rowCount', TableUtils.count({ oTable, aRowData: aTableData }).rowCount);
+        oViewModel.setProperty('/list', [...aRowData]);
+        oViewModel.setProperty('/listInfo/rowCount', _.get(TableUtils.count({ oTable, aRowData }), 'rowCount', 1));
       },
 
       /*****************************************************************
@@ -84,6 +85,7 @@ sap.ui.define(
         const sPath = oEvent.getParameters().rowBindingContext.getPath();
         const oRowData = oViewModel.getProperty(sPath);
         const sType = oViewModel.getProperty('/type');
+        const sDetailRoute = _.get(Constants.LIST_PAGE, [sType, 'detail']);
 
         // if (!_.isEqual(oRowData.Zonlydsp, '')) {
         //   MessageBox.alert(this.getBundleText('MSG_10006')); // 현재 평가상태에서는 상세내역을 조회하실 수 없습니다.
@@ -91,7 +93,7 @@ sap.ui.define(
         // }
 
         oViewModel.setProperty('/parameter/rowData', { ...oRowData });
-        this.getRouter().navTo('performance-detail', { type: sType, year: _.chain(oRowData.Zperiod).split('.', 1).head().value() });
+        this.getRouter().navTo(sDetailRoute, { type: sType, year: _.chain(oRowData.Zperiod).split('.', 1).head().value() });
       },
 
       /*****************************************************************

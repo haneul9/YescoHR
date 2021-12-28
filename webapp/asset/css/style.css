@@ -465,6 +465,7 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt {outline-style:none !important}
 
 .vCardBox h2.sapMTitle, .hCardBox h2.sapMTitle, .customBox h2.sapMTitle {line-height:24px; font-size:24px; font-weight:800; color:#222;display: flex;}
 h3.sapMTitle {font-size:24px; font-weight:800;color:#222}
+h4.sapMTitle {font-size:20px; font-weight:800;color:#222}
 .hCardBox.appointee-box,
 .hCardBox.summary-box,
 .hCardBox.search-box {box-sizing:border-box; height:240px; overflow:hidden}
@@ -1139,3 +1140,42 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .pay-summary .sapMLabel:nth-child(1):before {background-color: rgb(231, 181, 16);}
 .pay-summary .sapMLabel:nth-child(2):before {background-color: rgb(143, 148, 228);}
 .pay-summary .sapMLabel:last-child:before {display:none;}
+
+
+
+/* 인재검색 */
+.form-bar {}
+.form-bar > * {margin-right:12px;}
+.search-filter.expanded {display: grid!important;}
+.search-filter {display: none!important;border-top:1px solid #222;padding-top: 20px;margin-top:20px!important;}
+.search-filter .sapMTextMaxWidth {padding: 0 4px;}
+
+.talent-list {padding: 0!important;}
+.talent-list.sapFGridList .sapUiTinyMargin {margin:5px;}
+.talent-list.sapFGridList .sapMLIB:not(.sapMGHLI) {border-radius:8px 0 0 8px;border: none;box-shadow: 0 2px 4px rgb(0 0 0 / 16%);}
+.talent-list.sapFGridList .sapMLIB:not(.sapMGHLI) .sapMLIBHighlight {border-top-right-radius: 0; border-bottom-right-radius: 0;border-top-left-radius: 0; border-bottom-left-radius: 0;}
+.talent-list.sapFGridList .sapMLIBHighlight {width: 3px;left: auto;right: 0;}
+.talent-list.sapFGridList .sapFGLI .sapFGLIWrapper .sapFGLIToolbar {height: 2rem;padding: 0; position: absolute;right: 0;top: 8px;box-shadow: inset 0 0 #d1e0ee;z-index:2}
+.talent-list.sapFGridList .sapMLIBSelectM {width:auto}
+.talent-list.sapFGridList .sapFGLI .sapFGLIWrapperc {box-shadow: 0 2px 4px rgba(0, 0, 0, .16);}
+.talent-list.sapFGridList .sapFGLI .sapFGLIWrapper .sapFGLIToolbar + .sapMLIBContent { height: auto;}
+.talent-list.sapFGridList .sapMFlexItemAlignAuto {display: inherit;}
+.talent-list.sapFGridList .sapMImg {width:76px!important;height:100px!important;margin-right: 10px!important;}
+.talent-list.sapFGridList .sapMTitle.sapMTitleStyleAuto {margin-bottom:8px;font-size:14px;font-weight: 700;}
+.talent-list.sapFGridList .sapMLabel {font-size:11px;font-weight: 400;}
+.sapMLIBHighlightExecutives {background: #38a238;}
+
+.compare-block {}
+.compare-block .sapUiBlockLayoutRow.sapUiBlockHorizontalCellsRow {border-bottom:1px solid rgba(112, 112, 112, .5);}
+.compare-block .sapUiBlockLayoutRow .sapUiBlockLayoutOddCell .sapUiBlockCellContent{background-color:#fff!important;}
+.compare-block .sapUiBlockLayoutRow .sapUiBlockLayoutEvenCell .sapUiBlockCellContent {background-color:#F7F7F7!important;}
+.compare-block .sapUiBlockLayoutRow div .sapUiBlockLayoutCell:first-child {max-width: 200px;text-align:center;}
+.compare-block .sapUiBlockLayoutRow div .sapUiBlockLayoutCell:first-child .sapMVBox {height:100%;display: inline-grid;align-items: center;font-weight:700;}
+.compare-block .sapUiBlockLayoutRow:first-child .sapMText {margin-top:24px;font-weight:700;}
+
+.compare-block.sapUiBlockLayoutBackgroundLight .sapUiBlockLayoutRow .sapUiBlockLayoutOddCell .sapUiBlockCellContent{background-color:#fff!important;}
+.compare-block.sapUiBlockLayoutBackgroundLight .sapUiBlockLayoutRow .sapUiBlockLayoutEvenCell .sapUiBlockCellContent{background-color:#F7F7F7!important;}
+
+.compare-block .sapUiBlockLayoutSizeXL:not(.sapUiBlockLayoutKeepFontSize) .sapUiBlockCellContent,
+.compare-block.sapUiBlockLayoutBackgroundLight .sapUiBlockLayoutRow .sapUiBlockCellContent
+{padding: 16px 30px; font-size: 14px;}
