@@ -26,11 +26,11 @@ sap.ui.define(
     'use strict';
 
     return BaseObject.extend('sap.ui.yesco.control.app.Menus', {
-      constructor: function (oController) {
-        this.oController = oController;
+      constructor: function (oAppController) {
+        this.oAppController = oAppController;
         this.oMenuButton = null;
         this.oMenuLayer = null;
-        this.oMenuModel = this.oController.getOwnerComponent().getMenuModel();
+        this.oMenuModel = this.oAppController.getOwnerComponent().getMenuModel();
 
         this.buildAppMenu();
       },
@@ -42,7 +42,7 @@ sap.ui.define(
         await this.oMenuModel.getPromise();
 
         const aMenuTree = this.oMenuModel.getTree() || [];
-        const oAppMenuToolbar = this.oController.byId('appMenuToolbar');
+        const oAppMenuToolbar = this.oAppController.byId('appMenuToolbar');
 
         if (!aMenuTree.length) {
           oAppMenuToolbar.insertContent(new Label({ text: '{i18n>MSG_01001}' }), 2); // 조회된 메뉴가 없습니다.
@@ -114,7 +114,7 @@ sap.ui.define(
           if (this.oMenuLayer && this.oMenuLayer.getVisible()) {
             this.oMenuLayer.setVisible(false);
           }
-        }, 0);
+        });
       },
 
       /**
@@ -127,7 +127,7 @@ sap.ui.define(
         const bFavor = oContext.getProperty('Favor');
         const sUrl = '/MenuFavoriteSet';
 
-        this.oController.getModel(ServiceNames.COMMON).create(
+        this.oAppController.getModel(ServiceNames.COMMON).create(
           sUrl,
           {
             Menid: oContext.getProperty('Menid'),
@@ -212,7 +212,7 @@ sap.ui.define(
           return;
         }
 
-        const oCommonModel = this.oController.getModel(ServiceNames.COMMON);
+        const oCommonModel = this.oAppController.getModel(ServiceNames.COMMON);
         const sUrl = oCommonModel.createKey('/GetMenuUrlSet', {
           Menid: sMenid,
         });
@@ -253,8 +253,10 @@ sap.ui.define(
           return;
         }
 
-        this.oController.getRouter().navTo(sRouteName);
-        // this.oController
+        this.oAppController.getOwnerComponent().reduceViewResource();
+
+        this.oAppController.getRouter().navTo(sRouteName);
+        // this.oAppController
         //   .getRouter()
         //   .getTargets()
         //   .display(sRouteName)

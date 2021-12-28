@@ -5,7 +5,7 @@
 		"ProductPicUrl": "asset/image/photo1.png",
 		"Status": "Success",
         "edu": "동국대(석사졸업)/마케팅",
-        "birth": "1972.12.14",
+        "birth": "생년월일 : 1972.12.14 / 입사 : 2001. 01.01",
         "duty": "홍보팀 (15년 3개월)"
 	},
     {		
@@ -69,9 +69,7 @@
 		"Status": "Information",
         "edu": "동국대(석사졸업)/마케팅",
         "birth": "1972.12.14",
-        "duty": "홍보팀 (15년 3개월)",
-		"Quantity": 14,
-		"type": "DetailAndActive",
-		"Quantity": 3
+        "duty": "홍보팀 (15년 3개월)"
+
 	}
 ]

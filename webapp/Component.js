@@ -239,8 +239,8 @@ sap.ui.define(
           .attachRouteMatched((oEvent) => {
             AppUtils.debug('routeMatched', oEvent.getParameters());
 
-            const sRouteName = oEvent.getParameter('name');
             const mArguments = oEvent.getParameter('arguments');
+            const mConfig = oEvent.getParameter('config');
             const oView = oEvent.getParameter('view');
             const oController = oView.getController();
 
@@ -249,7 +249,7 @@ sap.ui.define(
             // 화면에서 사용될 Model들이 모두 초기화된 후 동작될 수 있도록 Promise 처리하여 변수로 저장
             this._oAllBaseModelReadyPromise = Promise.all([
               this.onSessionModelReady(), // prettier 방지용 주석
-              this.onMenuModelReady({ mArguments, oController, sRouteName }),
+              this.onMenuModelReady({ mArguments, mConfig, oController }),
             ]).catch((oError) => {
               this.getRouter().getTargets().display('notFound', {
                 from: 'home',
@@ -279,34 +279,38 @@ sap.ui.define(
         return this.getAppointeeModel().getPromise();
       },
 
-      async onMenuModelReady({ mArguments, oController, sRouteName }) {
+      async onMenuModelReady({ mArguments, mConfig, oController }) {
         await this.getMenuModel().getPromise();
 
+        const sRouteName = mConfig.name;
+        const [sRouteNameMain, sRouteNameSub] = sRouteName.split(/-/);
+
         return Promise.all([
-          this._saveBreadcrumbsData({ mArguments, oController, sRouteName }), //
-          this._checkRouteName(sRouteName),
+          this._saveBreadcrumbsData({ mArguments, mConfig, sRouteNameMain, sRouteNameSub, oController }), //
+          this._checkRouteName(sRouteNameMain, sRouteNameSub),
         ]);
       },
 
       /**
        * Breadcrumbs 정보 저장
        * @param {object} mArguments
+       * @param {object} mConfig
+       * @param {string} sRouteNameMain
+       * @param {string} sRouteNameSub
        * @param {object} oController
-       * @param {string} sRouteName
        * @private
        */
-      async _saveBreadcrumbsData({ mArguments, oController, sRouteName }) {
+      async _saveBreadcrumbsData({ mArguments, mConfig, sRouteNameMain, sRouteNameSub, oController }) {
         const oMenuModel = this.getMenuModel();
 
-        const [sRouteNameMain, sRouteNameSub] = sRouteName.split(/-/);
         if (sRouteNameMain === 'ehrHome') {
-          oMenuModel.setCurrentMenuData({ routeName: '', menuId: '', currentLocationText: '', isSubRoute: false });
+          oMenuModel.setCurrentMenuData({ routeName: sRouteNameMain, viewId: mConfig.target, menuId: '', currentLocationText: '', isSubRoute: false });
           return;
         }
 
         const sMenid = oMenuModel.getMenid(sRouteNameMain);
         if ((AppUtils.isLOCAL() || AppUtils.isDEV()) && /^X/.test(sMenid)) {
-          oMenuModel.setCurrentMenuData({ routeName: '', menuId: '', currentLocationText: '', isSubRoute: false });
+          oMenuModel.setCurrentMenuData({ routeName: '', viewId: '', menuId: '', currentLocationText: '', isSubRoute: true });
           return;
         }
 
@@ -317,6 +321,7 @@ sap.ui.define(
 
         oMenuModel.setCurrentMenuData({
           routeName: sRouteNameMain,
+          viewId: mConfig.target,
           menuId: sMenid,
           currentLocationText: sCurrentLocationText || '',
           isSubRoute: !!sRouteNameSub,
@@ -326,14 +331,13 @@ sap.ui.define(
       /**
        * 메뉴 권한 체크
        * @private
-       * @param {string} sRouteName
+       * @param {string} sRouteNameMain
        */
-      async _checkRouteName(sRouteName) {
+      async _checkRouteName(sRouteNameMain) {
         // do something, i.e. send usage statistics to back end
         // in order to improve our app and the user experience (Build-Measure-Learn cycle)
         // AppUtils.debug(`User accessed route ${sRouteName}, timestamp = ${new Date().getTime()}`);
 
-        const sRouteNameMain = sRouteName.split(/-/)[0];
         if (sRouteNameMain === 'ehrHome') {
           return;
         }
@@ -362,6 +366,15 @@ sap.ui.define(
             },
           });
         });
+      },
+
+      reduceViewResource() {
+        const sCurrentMenuViewId = this.getMenuModel().getCurrentMenuViewId();
+        const oView = this.byId(sCurrentMenuViewId);
+
+        if (oView) {
+          oView.setVisible(false);
+        }
       },
 
       /**
