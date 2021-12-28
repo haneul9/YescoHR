@@ -1,24 +1,20 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/BoxHandler',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/TableUtils',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
   ],
   (
     // prettier 방지용 주석
-    Filter,
-    FilterOperator,
     AppUtils,
     BoxHandler,
     ComboEntry,
     TableUtils,
-    ODataReadError,
+    Client,
     ServiceNames
   ) => {
     'use strict';
@@ -67,7 +63,7 @@ sap.ui.define(
         try {
           this.setBusy('/search/busy', true);
 
-          const aRequestListData = await this.readRequestListData();
+          const aRequestListData = await this.readData();
 
           this.setRequestListData(aRequestListData);
         } catch (oError) {
@@ -79,31 +75,19 @@ sap.ui.define(
         }
       },
 
-      async readRequestListData() {
-        return new Promise((resolve, reject) => {
-          const sUrl = '/OnCallChangeAppSet';
-          const sMenid = this.oController.getCurrentMenuId();
-          const oApbeg = this.oBoxModel.getProperty('/search/Apbeg');
-          const oApend = this.oBoxModel.getProperty('/search/Apend');
+      async readData() {
+        const oApbeg = this.oBoxModel.getProperty('/search/Apbeg');
+        const oApend = this.oBoxModel.getProperty('/search/Apend');
 
-          this.oController.getModel(ServiceNames.WORKTIME).read(sUrl, {
-            filters: [
-              new Filter('Menid', FilterOperator.EQ, sMenid), //
-              new Filter('Apbeg', FilterOperator.EQ, moment(oApbeg).hours(9).toDate()),
-              new Filter('Apend', FilterOperator.EQ, moment(oApend).hours(9).toDate()),
-            ],
-            success: (mData) => {
-              AppUtils.debug(`${sUrl} success.`, mData);
+        const oModel = this.oController.getModel(ServiceNames.WORKTIME);
+        const sUrl = 'OnCallChangeApp';
+        const mFilters = {
+          Menid: this.oController.getCurrentMenuId(),
+          Apbeg: moment(oApbeg).hours(9).toDate(),
+          Apend: moment(oApend).hours(9).toDate(),
+        };
 
-              resolve(mData.results);
-            },
-            error: (oError) => {
-              AppUtils.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
+        return Client.getEntitySet(oModel, sUrl, mFilters);
       },
 
       setRequestListData(aRowData) {

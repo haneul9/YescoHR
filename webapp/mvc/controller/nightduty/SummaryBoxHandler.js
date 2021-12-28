@@ -1,21 +1,17 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/BoxHandler',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/nightduty/CurrentListDialogHandler',
   ],
   (
     // prettier 방지용 주석
-    Filter,
-    FilterOperator,
     AppUtils,
     BoxHandler,
-    ODataReadError,
+    Client,
     ServiceNames,
     CurrentListDialogHandler
   ) => {
@@ -36,22 +32,22 @@ sap.ui.define(
           summary: {
             busy: true,
             year: this.sThisYear,
-            yearMonth: this.oController.getBundleText('MSG_06002', oTodayMoment.format('YYYY'), oTodayMoment.format('M')),
+            yearMonth: AppUtils.getBundleText('MSG_06002', oTodayMoment.format('YYYY'), oTodayMoment.format('M')),
           },
         });
         this.oController.byId('summaryBox').setModel(this.oBoxModel).bindElement('/summary');
 
-        this.showSummaryData();
+        this.showData();
       },
 
       /**
        * 나의 당직근무 정보 조회
        */
-      async showSummaryData() {
+      async showData() {
         try {
           this.setBusy('/summary/busy', true);
 
-          const aResultsData = await this.readSummaryData();
+          const aResultsData = await this.readData();
 
           const mSummaryData = aResultsData[0] || {};
           if (mSummaryData.__metadata) {
@@ -72,27 +68,14 @@ sap.ui.define(
        *
        * @returns
        */
-      async readSummaryData() {
-        return new Promise((resolve, reject) => {
-          const sUrl = '/OnCallSummarySet';
-          const sPernr = this.oController.getAppointeeProperty('Pernr');
+      async readData() {
+        const oModel = this.oController.getModel(ServiceNames.WORKTIME);
+        const sUrl = 'OnCallSummary';
+        const mFilters = {
+          Pernr: this.oController.getAppointeeProperty('Pernr'),
+        };
 
-          this.oController.getModel(ServiceNames.WORKTIME).read(sUrl, {
-            filters: [
-              new Filter('Pernr', FilterOperator.EQ, sPernr), //
-            ],
-            success: (mData) => {
-              AppUtils.debug(`${sUrl} success.`, mData);
-
-              resolve(mData.results);
-            },
-            error: (oError) => {
-              AppUtils.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
+        return Client.getEntitySet(oModel, sUrl, mFilters);
       },
 
       /**

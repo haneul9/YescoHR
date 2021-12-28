@@ -1,36 +1,32 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/yesco/common/exceptions/UI5Error',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/AppUtils',
   ],
   (
     // prettier 방지용 주석
+    UI5Error,
+    Client,
     ServiceNames,
     AppUtils
   ) => {
     'use strict';
 
     return {
-      get() {
-        return new Promise((resolve, reject) => {
+      async get() {
+        try {
           const oModel = AppUtils.getAppComponent().getModel(ServiceNames.COMMON);
+          const aResults = await Client.getEntitySet(oModel, 'CreateAppno');
 
-          oModel.read('/CreateAppnoSet', {
-            success: (oData) => {
-              if (oData && oData.results.length) {
-                resolve(oData.results[0].Appno);
-              } else {
-                reject({ code: 'E', message: AppUtils.getBundleText('MSG_00047') }); // 결재문서번호 생성중 오류가 발생하였습니다.\n잠시 후 다시 시도해주세요.
-              }
-            },
-            error: (oError) => {
-              AppUtils.debug(oError);
+          return (aResults[0] || {}).Appno || '';
+        } catch (oError) {
+          AppUtils.debug('Appno.get error.', oError);
 
-              reject({ code: 'E', message: AppUtils.getBundleText('MSG_00047') }); // 결재문서번호 생성중 오류가 발생하였습니다.\n잠시 후 다시 시도해주세요.
-            },
-          });
-        });
+          throw new UI5Error({ message: AppUtils.getBundleText('MSG_00047') }); // 결재문서번호 생성중 오류가 발생하였습니다.\n잠시 후 다시 시도해주세요.
+        }
       },
     };
   }
