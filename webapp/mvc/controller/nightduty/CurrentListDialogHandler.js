@@ -3,26 +3,22 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/base/Object',
     'sap/ui/core/Fragment',
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/table/SelectionMode',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
   ],
   (
     // prettier 방지용 주석
     BaseObject,
     Fragment,
-    Filter,
-    FilterOperator,
     JSONModel,
     SelectionMode,
     AppUtils,
     ComboEntry,
-    ODataReadError,
+    Client,
     ServiceNames
   ) => {
     'use strict';
@@ -62,6 +58,7 @@ sap.ui.define(
       async openDialog() {
         if (!this.oCurrentListDialog) {
           const oView = this.oController.getView();
+
           this.oCurrentListDialog = await Fragment.load({
             id: oView.createId(this.sSelectionMode.toLowerCase()),
             name: 'sap.ui.yesco.mvc.view.nightduty.fragment.CurrentListDialog',
@@ -90,7 +87,7 @@ sap.ui.define(
        */
       initDialogData() {
         if (this.sSelectionMode === SelectionMode.MultiToggle) {
-          this.oController.getView().byId(`${this.sSelectionMode.toLowerCase()}--${this.sCurrentListTableId}`).clearSelection();
+          this.oController.byId(`${this.sSelectionMode.toLowerCase()}--${this.sCurrentListTableId}`).clearSelection();
         }
         this.oDialogModel.setData(this.getInitialData());
       },
@@ -115,35 +112,20 @@ sap.ui.define(
       },
 
       async readCurrentListTableData() {
-        return new Promise((resolve, reject) => {
-          const sPernr = this.oController.getAppointeeProperty('Pernr');
-          const sYearMonth = this.oDialogModel.getProperty('/dialog/yearMonth').replace(/\D/g, '');
-          const aFilters = [
-            new Filter('Pernr', FilterOperator.EQ, sPernr), //
-            new Filter('Begmm', FilterOperator.EQ, sYearMonth),
-            new Filter('Endmm', FilterOperator.EQ, sYearMonth),
-          ];
+        const sPernr = this.oController.getAppointeeProperty('Pernr');
+        const sYearMonth = this.oDialogModel.getProperty('/dialog/yearMonth').replace(/\D/g, '');
+        const sSelectedDutyGroup = this.oDialogModel.getProperty('/dialog/selectedDutyGroup');
 
-          const sSelectedDutyGroup = this.oDialogModel.getProperty('/dialog/selectedDutyGroup').replace(/ALL/g, '');
-          if (sSelectedDutyGroup) {
-            aFilters.push(new Filter('Ocshf', FilterOperator.EQ, sSelectedDutyGroup));
-          }
+        const oModel = this.oController.getModel(ServiceNames.WORKTIME);
+        const sUrl = 'OnCallList';
+        const mFilters = {
+          Pernr: sPernr, // prettier 방지용 주석
+          Begmm: sYearMonth,
+          Endmm: sYearMonth,
+          Ocshf: sSelectedDutyGroup,
+        };
 
-          const sUrl = '/OnCallListSet';
-          this.oController.getModel(ServiceNames.WORKTIME).read(sUrl, {
-            filters: aFilters,
-            success: (mData) => {
-              AppUtils.debug(`${sUrl} success.`, mData);
-
-              resolve(mData.results);
-            },
-            error: (oError) => {
-              AppUtils.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
+        return Client.getEntitySet(oModel, sUrl, mFilters);
       },
 
       setCurrentListTableData(aCurrentListData) {

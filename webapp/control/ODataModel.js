@@ -14,7 +14,7 @@ sap.ui.define(
     ('use strict');
 
     return ODataModel.extend('sap.ui.yesco.control.ODataModel', {
-      create(sPath, oData) {
+      create(sPath, mData) {
         AppUtils.debug(arguments);
 
         if (sap.ui.getCore().byId('container-ehr---app')) {
@@ -23,26 +23,29 @@ sap.ui.define(
           const sEntityKey = sPath.replace(/\/|Set$/g, '');
           const mEntityMetadata = mModelMetadata[sEntityKey];
 
-          _.forEach(oData, (value, key) => {
-            if (!_.has(mEntityMetadata, key) && !_.isArray(oData[key])) {
-              delete oData[key];
-            } else if (_.isArray(oData[key])) {
-              const mAssociationMetadata = mModelMetadata[mModelMetadata[mEntityMetadata[key]]];
+          _.forEach(mData, (vObject, sKey) => {
+            if (!_.has(mEntityMetadata, sKey) && !_.isArray(vObject)) {
+              delete mData[sKey];
+            } else if (_.isArray(vObject)) {
+              const mAssociationMetadata = mModelMetadata[mModelMetadata[mEntityMetadata[sKey]]];
 
-              _.forEach(oData[key], (obj) => {
-                _.forEach(obj, (v, k) => {
-                  if (!_.has(mAssociationMetadata, k)) delete obj[k];
-                  else this.convertValue(obj, k);
+              _.forEach(vObject, (o) => {
+                _.forEach(o, (v, k) => {
+                  if (!_.has(mAssociationMetadata, k)) {
+                    delete o[k];
+                  } else {
+                    this.convertValue(o, k);
+                  }
                 });
               });
             } else {
-              this.convertValue(oData, key);
+              this.convertValue(mData, sKey);
             }
           });
         }
 
         if (ODataModel.prototype.create) {
-          ODataModel.prototype.create.apply(this, arguments); //run the super class's method first
+          ODataModel.prototype.create.apply(this, arguments); // run the super class's method first
         }
       },
 

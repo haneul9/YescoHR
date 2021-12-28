@@ -6,6 +6,7 @@ sap.ui.define(
     'sap/ui/core/routing/HashChanger',
     'sap/ui/core/routing/History',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/exceptions/UI5Error',
   ],
   (
     // prettier 방지용 주석
@@ -13,7 +14,8 @@ sap.ui.define(
     Controller,
     HashChanger,
     History,
-    AppUtils
+    AppUtils,
+    UI5Error
   ) => {
     'use strict';
 
@@ -200,7 +202,7 @@ sap.ui.define(
        * @returns
        */
       getApprovalType() {
-        return this.APPTP;
+        throw new UI5Error({ message: this.getBundleText('MSG_00053', 'getApprovalType') }); // Controller에 {getApprovalType} function을 선언하세요.
       },
 
       onRefresh() {
@@ -218,28 +220,32 @@ sap.ui.define(
        * FileAttachmentBox.fragment.xml
        */
       onAttachmentChange(oEvent) {
-        this.FileAttachmentBoxHandler.onAttachmentChange(oEvent);
+        this.getFileAttachmentBoxHandler().onAttachmentChange(oEvent);
       },
 
       /**
        * FileAttachmentBox.fragment.xml
        */
       onAttachmentUploadComplete(oEvent) {
-        this.FileAttachmentBoxHandler.onAttachmentUploadComplete(oEvent);
+        this.getFileAttachmentBoxHandler().onAttachmentUploadComplete(oEvent);
       },
 
       /**
        * FileAttachmentBox.fragment.xml
        */
       onAttachmentRemove(oEvent) {
-        this.FileAttachmentBoxHandler.onAttachmentRemove(oEvent);
+        this.getFileAttachmentBoxHandler().onAttachmentRemove(oEvent);
       },
 
       /**
        * FileAttachmentBox.fragment.xml
        */
       onAttachmentRemoveCancel(oEvent) {
-        this.FileAttachmentBoxHandler.onAttachmentRemoveCancel(oEvent);
+        this.getFileAttachmentBoxHandler().onAttachmentRemoveCancel(oEvent);
+      },
+
+      getFileAttachmentBoxHandler() {
+        return this.FileAttachmentBoxHandler;
       },
 
       /**

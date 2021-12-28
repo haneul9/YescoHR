@@ -27,7 +27,7 @@
             <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onPressRemoveRowButton" visible="{/detail/editable}" enabled="{/detail/enabled}" />
           </HBox>
         </HBox>
-        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.nightduty.fragment.DetailListTable" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.nightduty.fragment.ScheduleTable" type="XML" />
       </VBox>
       <VBox class="vCardBox" id="nightduty-request-detail-reason">
         <HBox class="table-toolbar">
@@ -37,7 +37,7 @@
         </HBox>
         <TextArea width="100%" class="required" value="{/detail/chgrsn}" editable="{/detail/editable}" />
       </VBox>
-      <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
+      <core:Fragment fragmentName="sap.ui.yesco.fragment.FileAttachmentBox" type="XML" />
       <core:Fragment fragmentName="sap.ui.yesco.fragment.ApplyInfo" type="XML" />
       <core:Fragment fragmentName="sap.ui.yesco.fragment.ApprovalDetails" type="XML" />
     </VBox>
