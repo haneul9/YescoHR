@@ -10,7 +10,7 @@ sap.ui.define(
       REJECT_DIALOG_ID: 'sap.ui.yesco.mvc.view.performance.fragment.RejectDialog',
 
       APPRAISER_TYPE: { ME: 'ME', MA: 'MA', MB: 'MB' },
-      PROCESS_TYPE: { LIST: { code: 'L', label: 'LABEL_00177' }, DETAIL: { code: 'D', label: 'LABEL_00165' }, SAVE: { code: 'T', label: 'LABEL_00103' }, SEND: { code: 'C', label: 'LABEL_00175' } },
+      PROCESS_TYPE: { LIST: { code: 'L', label: 'LABEL_00177' }, DETAIL: { code: 'D', label: 'LABEL_00165' }, SAVE: { code: 'T', label: 'LABEL_00103' }, SEND: { code: 'C', label: 'LABEL_00175' }, APPROVE: { code: 'P', label: 'LABEL_00123' } },
       DISPLAY_TYPE: { EDIT: 'X', DISPLAY_ONLY: 'D', HIDE: 'H', HIDDEN_VALUE: 'V' },
       GOAL_TYPE: { STRATEGY: { code: '1', name: 'strategy' }, DUTY: { code: '2', name: 'duty' } },
 
@@ -42,15 +42,6 @@ sap.ui.define(
         { field: 'Zmbgrade', label: 'LABEL_10014', type: Validator.SELECT1 }, // 최종 평가등급
       ],
 
-      BUTTON_STATUS_MAP: {
-        2: {
-          A: { REJECT_REASON: { label: 'LABEL_00142', ME: '', MA: '', MB: '' }, TOP_GOAL: { label: 'LABEL_10032', ME: '', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: '', MA: '', MB: '' } },
-          B: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: 'X', MA: 'X', MB: '' } },
-          C: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: '', MA: 'X', MB: '' } },
-          D: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: '', MA: 'X', MB: '' } },
-        },
-      },
-
       FIELD_MAPPING: {
         Z131: ['Z131'],
         Z132: ['Z132'],
@@ -71,6 +62,25 @@ sap.ui.define(
           B: { Zmepoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmapoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmbgrade: { ME: 'H', MA: 'H', MB: 'H' }, Zrslt: { ME: 'H', MA: 'H', MB: 'H' }, Z125Ee: { ME: 'X', MA: 'V', MB: 'V' }, Z125Er: { ME: 'D', MA: 'D', MB: 'D' }, Z131: { MA: 'V', MB: 'V' } },
           C: { Zmepoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmapoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmbgrade: { ME: 'H', MA: 'H', MB: 'H' }, Zrslt: { ME: 'H', MA: 'H', MB: 'H' }, Z125Ee: { ME: 'D', MA: 'D', MB: 'D' }, Z125Er: { ME: 'V', MA: 'X', MB: 'V' }, Z132: { ME: 'V', MB: 'V' } },
           D: { Zmepoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmapoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmbgrade: { ME: 'H', MA: 'H', MB: 'H' }, Zrslt: { ME: 'H', MA: 'H', MB: 'H' } },
+        },
+        3: {
+          F: { Zmepoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmapoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmbgrade: { ME: 'H', MA: 'H', MB: 'H' }, Zrslt: { ME: 'H', MA: 'H', MB: 'H' }, Z125Ee: { ME: 'X', MA: 'V', MB: 'V' }, Z125Er: { ME: 'D', MA: 'D', MB: 'D' }, Z131: { MA: 'V', MB: 'V' } },
+          G: { Zmepoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmapoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmbgrade: { ME: 'H', MA: 'H', MB: 'H' }, Zrslt: { ME: 'H', MA: 'H', MB: 'H' }, Z125Ee: { ME: 'D', MA: 'D', MB: 'D' }, Z125Er: { ME: 'V', MA: 'X', MB: 'V' }, Z132: { ME: 'V', MB: 'V' } },
+          H: { Zmepoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmapoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmbgrade: { ME: 'H', MA: 'H', MB: 'H' }, Zrslt: { ME: 'H', MA: 'H', MB: 'H' } },
+        },
+      },
+
+      BUTTON_STATUS_MAP: {
+        2: {
+          A: { REJECT_REASON: { label: 'LABEL_00142', ME: '', MA: '', MB: '' }, TOP_GOAL: { label: 'LABEL_10032', ME: '', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: '', MA: '', MB: '' } },
+          B: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: 'X', MA: 'X', MB: '' } },
+          C: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: '', MA: 'X', MB: '' } },
+          D: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: '', MA: 'X', MB: '' } },
+        },
+        3: {
+          F: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: 'X', MA: 'X', MB: '' } },
+          G: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: '', MA: 'X', MB: '' } },
+          H: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: '', MA: 'X', MB: '' } },
         },
       },
     };

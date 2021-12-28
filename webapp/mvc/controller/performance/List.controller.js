@@ -93,7 +93,7 @@ sap.ui.define(
         // }
 
         oViewModel.setProperty('/parameter/rowData', { ...oRowData });
-        this.getRouter().navTo(sDetailRoute, { type: sType, year: _.chain(oRowData.Zperiod).split('.', 1).head().value() });
+        this.getRouter().navTo(sDetailRoute, { sType, sYear: _.chain(oRowData.Zperiod).split('.', 1).head().value() });
       },
 
       /*****************************************************************

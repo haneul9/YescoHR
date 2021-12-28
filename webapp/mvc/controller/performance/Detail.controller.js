@@ -36,7 +36,7 @@ sap.ui.define(
       },
 
       getCurrentLocationText(oArguments) {
-        return oArguments.year ?? moment().format('YYYY');
+        return oArguments.sYear ?? moment().format('YYYY');
       },
 
       initializeFieldsControl(acc, cur) {
@@ -47,7 +47,7 @@ sap.ui.define(
         return {
           rootPath: _.chain(Constants.GOAL_TYPE).findKey({ code: obj.Z101 }).toLower().value(),
           expanded: _.stubFalse(),
-          isSaved: !_.stubFalse(),
+          isSaved: _.stubTrue(),
           OrderNo: String(index),
           ItemNo: String(index + 1),
           ..._.chain(obj).omit('AppraisalDoc').omit('__metadata').value(),
@@ -103,7 +103,7 @@ sap.ui.define(
 
       async onObjectMatched(oParameter) {
         const oViewModel = this.getViewModel();
-        const { type: sType, year: sYear } = oParameter;
+        const { sType, sYear } = oParameter;
         const mListRoute = _.get(Constants.LIST_PAGE, sType);
 
         oViewModel.setProperty('/busy', true);
@@ -155,32 +155,27 @@ sap.ui.define(
           });
 
           // 상시관리
-          oViewModel.setProperty('/manage', { ..._.pick(mDetailData, Constants.MANAGE_PROPERTIES) });
+          oViewModel.setProperty('/manage', { ..._.pick({ ...mDetailData }, Constants.MANAGE_PROPERTIES) });
 
           // 평가 프로세스 목록 - 헤더
           let bCompleted = true;
           const mGroupStageByApStatusSub = _.groupBy(aStepList, 'ApStatusSub');
-          const aStageHeader = _.chain(mGroupStageByApStatusSub)
-            .pick('')
-            .values()
-            .head()
-            .map((o) => {
-              const mReturn = { ..._.omit(o, '__metadata'), completed: bCompleted };
-              if (sZzapstsSub !== 'X' && o.ApStatus === sZzapsts) bCompleted = false;
-              return mReturn;
-            })
-            .value();
+          const aStageHeader = _.map(mGroupStageByApStatusSub[''], (o) => {
+            const mReturn = { ..._.omit(o, '__metadata'), completed: bCompleted };
+            if (!_.isEqual(sZzapstsSub, 'X') && _.isEqual(o.ApStatus, sZzapsts)) bCompleted = false;
+            return mReturn;
+          });
 
           // 평가 프로세스 목록 - 하위
           bCompleted = true;
           const aGroupStageByApStatusName = _.chain(aStepList)
-            .filter((o) => o.ApStatusSub !== '')
+            .filter((o) => !_.isEqual(o.ApStatusSub, ''))
             .groupBy('ApStatusName')
             .reduce((acc, cur) => [...acc, [...cur]], _.stubArray())
             .map((item) =>
-              item.map((o) => {
+              _.map(item, (o) => {
                 const mReturn = { ..._.omit(o, '__metadata'), completed: bCompleted };
-                if (o.ApStatus === sZzapsts && o.ApStatusSub === sZzapstsSub) bCompleted = false;
+                if (_.isEqual(o.ApStatus, sZzapsts) && _.isEqual(o.ApStatusSub, sZzapstsSub)) bCompleted = false;
                 return mReturn;
               })
             )
@@ -190,9 +185,7 @@ sap.ui.define(
           oViewModel.setProperty('/stage/headers', aStageHeader);
           oViewModel.setProperty(
             '/stage/rows',
-            _.chain(mGroupStageByApStatusSub[''])
-              .map((o, i) => ({ child: aGroupStageByApStatusName[i] }))
-              .value()
+            _.map(mGroupStageByApStatusSub[''], (o, i) => ({ child: aGroupStageByApStatusName[i] }))
           );
 
           const mButtons = oViewModel.getProperty('/buttons');
@@ -200,7 +193,7 @@ sap.ui.define(
             .reduce((acc, cur) => ({ ...acc, [_.capitalize(cur.ColumnId)]: cur.Zdipopt }), oViewModel.getProperty('/fieldControl/display'))
             .forOwn((value, key, object) => {
               if (_.has(Constants.FIELD_MAPPING, key)) {
-                _.forEach(_.get(Constants.FIELD_MAPPING, key), (subkey) => _.set(object, subkey, _.get(Constants.FIELD_STATUS_MAP, [sZzapsts, sZzapstsSub, subkey, sType], value)));
+                _.forEach(_.get(Constants.FIELD_MAPPING, key), (subKey) => _.set(object, subKey, _.get(Constants.FIELD_STATUS_MAP, [sZzapsts, sZzapstsSub, subKey, sType], value)));
               }
             })
             .value();
@@ -246,11 +239,11 @@ sap.ui.define(
           const mGroupDetailByZ101 = _.groupBy(mDetailData.AppraisalDocDetailSet.results, 'Z101');
 
           _.forEach(Constants.GOAL_TYPE, (v) => oViewModel.setProperty(`/goals/${v.name}`, _.map(mGroupDetailByZ101[v.code], this.initializeGoalItem.bind(this)) ?? []));
-          oViewModel.setProperty('/currentItemsLength', _.toLength(mDetailData.AppraisalDocDetailSet.results));
+          oViewModel.setProperty('/currentItemsLength', _.size(mDetailData.AppraisalDocDetailSet.results));
           oViewModel.setProperty(
             '/goals/valid',
             _.chain(Constants.VALIDATION_PROPERTIES)
-              .filter((o) => _.get(mConvertScreen, o.field) === Constants.DISPLAY_TYPE.EDIT)
+              .filter((o) => _.isEqual(_.get(mConvertScreen, o.field), Constants.DISPLAY_TYPE.EDIT))
               .map((o) => ({ ...o, label: this.getBundleText(o.label) }))
               .value()
           );
@@ -304,7 +297,7 @@ sap.ui.define(
         oViewModel.setProperty(`/goals/${name}`, [
           ...aItems,
           {
-            ..._.reduce(Constants.GOAL_PROPERTIES, (acc, cur) => ({ ...acc, [cur]: _.includes(Constants.COMBO_PROPERTIES, cur) ? 'ALL' : _.noop() }), {}),
+            ..._.reduce(Constants.GOAL_PROPERTIES, (acc, cur) => ({ ...acc, [cur]: _.includes(Constants.COMBO_PROPERTIES, cur) ? 'ALL' : _.noop() }), _.stubObject()),
             Z101: code,
             rootPath: name,
             expanded: _.stubTrue(),
@@ -345,8 +338,9 @@ sap.ui.define(
           const mSummary = _.cloneDeep(oViewModel.getProperty('/summary'));
           const aStrategy = _.cloneDeep(oViewModel.getProperty('/goals/strategy'));
           const aDuty = _.cloneDeep(oViewModel.getProperty('/goals/duty'));
+          const bIsSend = _.isEqual(code, Constants.PROCESS_TYPE.SEND.code);
 
-          if (_.isEqual(code, Constants.PROCESS_TYPE.SEND.code)) {
+          if (bIsSend) {
             _.chain(mParameter).set('OldStatus', mParameter.Zzapsts).set('OldStatusSub', mParameter.ZzapstsSub).set('OldStatusPart', mParameter.ZzapstsPSub).commit();
           }
 
@@ -362,7 +356,7 @@ sap.ui.define(
           // {저장|전송}되었습니다.
           MessageBox.success(this.getBundleText('MSG_00007', label), {
             onClose: () => {
-              if (_.isEqual(code, Constants.PROCESS_TYPE.SEND.code)) this.getRouter().navTo(sListRouteName);
+              if (bIsSend) this.getRouter().navTo(sListRouteName);
             },
           });
         } catch (oError) {
@@ -401,24 +395,26 @@ sap.ui.define(
           onClose: (sAction) => {
             if (MessageBox.Action.CANCEL === sAction) return;
 
-            const { root: sRootPath, itemKey: sDeleteTargetNum } = oSource.data();
+            const { sRootPath, sDeleteTargetNum } = oSource.data();
             const aGoalItems = oViewModel.getProperty(`/goals/${sRootPath}`);
-            const bIsSaved = _.chain(aGoalItems).find({ OrderNo: sDeleteTargetNum }).get('isSaved').value();
+            const bIsSavedGoalItem = _.chain(aGoalItems).find({ OrderNo: sDeleteTargetNum }).get('isSaved').value();
             let iCurrentItemsLength = oViewModel.getProperty('/currentItemsLength') ?? 0;
 
             oViewModel.setProperty('/currentItemsLength', --iCurrentItemsLength);
             oViewModel.setProperty(
               `/goals/${sRootPath}`,
               _.chain(aGoalItems)
-                .tap((array) => _.remove(array, { OrderNo: sDeleteTargetNum }))
+                .reject({ OrderNo: sDeleteTargetNum })
                 .map((o, i) => ({ ...o, OrderNo: String(i), ItemNo: String(i + 1) }))
                 .value()
             );
 
-            if (bIsSaved) MessageBox.success(this.getBundleText('MSG_10004')); // 저장 버튼을 클릭하여 삭제를 완료하시기 바랍니다.
+            if (bIsSavedGoalItem) MessageBox.success(this.getBundleText('MSG_10004')); // 저장 버튼을 클릭하여 삭제를 완료하시기 바랍니다.
           },
         });
       },
+
+      onPressDiagnosisButton() {},
 
       onPressRejectViewButton() {
         const oViewModel = this.getViewModel();
@@ -430,6 +426,14 @@ sap.ui.define(
       onPressRejectDialogClose() {
         this.byId('rejectDialog').close();
       },
+
+      onPressApproveButton() {
+        this.createProcess(Constants.PROCESS_TYPE.APPROVE);
+      },
+
+      onPressCheckedButton() {},
+
+      onPressOppositionButton() {},
 
       onPressRejectButton() {
         const oViewModel = this.getViewModel();
@@ -448,16 +452,25 @@ sap.ui.define(
 
       onPressSubmitButton() {
         const oViewModel = this.getViewModel();
-        const aStrategyGoals = oViewModel.getProperty('/goals/strategy');
-        const aDutyGoals = oViewModel.getProperty('/goals/duty');
-        const aFieldProperties = oViewModel.getProperty('/goals/valid');
+        const aStrategyGoals = _.cloneDeep(oViewModel.getProperty('/goals/strategy'));
+        const aDutyGoals = _.cloneDeep(oViewModel.getProperty('/goals/duty'));
+        const aFieldProperties = _.cloneDeep(oViewModel.getProperty('/goals/valid'));
         const mProcessType = Constants.PROCESS_TYPE.SEND;
 
         // validation
         if (_.some(aStrategyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties }))) return;
         if (_.some(aDutyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: _.reject(aFieldProperties, { field: 'Z103s' }) }))) return;
 
-        if (_.sumBy([...aStrategyGoals, ...aDutyGoals], (o) => _.toNumber(o.Fwgt)) !== 100) {
+        if (
+          !_.isEqual(
+            100,
+            _.chain([...aStrategyGoals, ...aDutyGoals])
+              .map('Fwgt')
+              .map(_.toNumber)
+              .sum()
+              .value()
+          )
+        ) {
           MessageBox.alert(this.getBundleText('MSG_10005')); // 가중치의 총합은 100이어야 합니다.
           return;
         }
@@ -471,6 +484,8 @@ sap.ui.define(
           },
         });
       },
+
+      onPressCompleteButton() {},
 
       /*****************************************************************
        * ! Call oData

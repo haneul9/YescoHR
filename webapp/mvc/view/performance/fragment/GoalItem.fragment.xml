@@ -9,12 +9,12 @@
                     <grid:CSSGrid gridTemplateColumns="1fr 9fr 1fr" gridGap="0px 11px">
                         <Label text="{ItemNo}" textAlign="Left" />
                         <VBox>
-                            <Input value="{Obj0}" maxLength="{/fieldControl/limit/Obj0}" enabled="{= ${/fieldControl/display/Obj0} === 'X' }" visible="{= ${/fieldControl/display/Obj0} !== 'H' }" />
+                            <Input value="{Obj0}" placeholder="{i18n>MSG_10007}" maxLength="{/fieldControl/limit/Obj0}" enabled="{= ${/fieldControl/display/Obj0} === 'X' }" visible="{= ${/fieldControl/display/Obj0} !== 'H' }" />
                         </VBox>
                         <Button icon="sap-icon://sys-minus" text="{i18n>LABEL_10020}" visible="{/buttons/goal/DELETE/Availability}" press=".onPressDeleteGoal">
                             <customData>
-                                <core:CustomData key="root" value="{rootPath}" />
-                                <core:CustomData key="itemKey" value="{OrderNo}" />
+                                <core:CustomData key="sRootPath" value="{rootPath}" />
+                                <core:CustomData key="sDeleteTargetNum" value="{OrderNo}" />
                             </customData>
                         </Button>
                     </grid:CSSGrid>
@@ -26,7 +26,7 @@
                         <Label text="{i18n>LABEL_10021}" visible="{= ${/fieldControl/display/Fwgt} !== 'H' }" />
                     </VBox>
                     <VBox>
-                        <Input class="required" type="Number" value="{ path: 'Fwgt', type: 'sap.ui.model.type.Integer' }" enabled="{= ${/fieldControl/display/Fwgt} === 'X' }" visible="{= ${/fieldControl/display/Fwgt} !== 'H' }" />
+                        <custom:NumberInput class="required" value="{Fwgt}" enabled="{= ${/fieldControl/display/Fwgt} === 'X' }" visible="{= ${/fieldControl/display/Fwgt} !== 'H' }" />
                     </VBox>
                     <VBox>
                         <Label text="{i18n>LABEL_10003}" visible="{= ${/fieldControl/display/Zapgme} !== 'H' }" />
@@ -74,7 +74,7 @@
                         <Label width="100%" text="{i18n>LABEL_10026}" visible="{= ${/fieldControl/display/Z109} !== 'H' }"/>
                     </VBox>
                     <VBox>
-                        <Input width="100%" class="required" type="Number" value="{Z109}" enabled="{= ${/fieldControl/display/Z109} === 'X' }" visible="{= ${/fieldControl/display/Z109} !== 'H' }" />
+                        <custom:NumberInput width="100%" class="required" value="{Z109}" enabled="{= ${/fieldControl/display/Z109} === 'X' }" visible="{= ${/fieldControl/display/Z109} !== 'H' }" />
                     </VBox>
                     <VBox>
                         <Label width="100%" text="{i18n>LABEL_00261}" visible="{= ${/fieldControl/display/Z111} !== 'H' }"/>

@@ -148,11 +148,11 @@
         { "pattern": "excavation/{appno}", "name": "excavation-detail", "target": "excavationDetail" },
 
         { "pattern": "performance", "name": "performance", "target": "performance" },
-        { "pattern": "performance/{type}/{year}", "name": "performance-detail", "target": "performanceDetail" },
+        { "pattern": "performance/{sType}/{sYear}", "name": "performance-detail", "target": "performanceDetail" },
         { "pattern": "m/performancePry", "name": "m/performancePry", "target": "m/performancePry" },
-        { "pattern": "m/performancePry/{type}/{year}", "name": "m/performancePry-detail", "target": "performanceDetail" },
+        { "pattern": "m/performancePry/{sType}/{sYear}", "name": "m/performancePry-detail", "target": "performanceDetail" },
         { "pattern": "m/performanceSry", "name": "m/performanceSry", "target": "m/performanceSry" },
-        { "pattern": "m/performanceSry/{type}/{year}", "name": "m/performanceSry-detail", "target": "performanceDetail" },
+        { "pattern": "m/performanceSry/{sType}/{sYear}", "name": "m/performanceSry-detail", "target": "performanceDetail" },
         
         { "pattern": "m/organization", "name": "m/organization", "target": "m/organization" },
         
