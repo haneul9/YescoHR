@@ -433,7 +433,9 @@ sap.ui.define(
         });
       },
 
-      onPressDiagnosisButton() {},
+      onPressDiagnosisButton() {
+        MessageBox.alert('Not ready yet.');
+      },
 
       onPressRejectViewButton() {
         const oViewModel = this.getViewModel();
@@ -459,9 +461,13 @@ sap.ui.define(
         });
       },
 
-      onPressCheckedButton() {},
+      onPressCheckedButton() {
+        MessageBox.alert('Not ready yet.');
+      },
 
-      onPressOppositionButton() {},
+      onPressOppositionButton() {
+        MessageBox.alert('Not ready yet.');
+      },
 
       onPressRejectButton() {
         const oViewModel = this.getViewModel();
