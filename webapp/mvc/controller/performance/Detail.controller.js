@@ -523,14 +523,11 @@ sap.ui.define(
         if (!Validator.check({ mFieldValue: mManage, aFieldProperties: aManageValid })) return;
 
         if (
-          !_.isEqual(
-            100,
-            _.chain([...aStrategyGoals, ...aDutyGoals])
-              .map('Fwgt')
-              .map(_.toNumber)
-              .sum()
-              .value()
-          )
+          !_.chain([...aStrategyGoals, ...aDutyGoals])
+            .map((o) => _.toNumber(o.Fwgt))
+            .sum()
+            .isEqual(100)
+            .value()
         ) {
           MessageBox.alert(this.getBundleText('MSG_10005')); // 가중치의 총합은 100이어야 합니다.
           return;
