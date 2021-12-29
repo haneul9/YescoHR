@@ -26,7 +26,7 @@
                         <Label text="{i18n>LABEL_10021}" visible="{= ${/fieldControl/display/Fwgt} !== 'H' }" />
                     </VBox>
                     <VBox>
-                        <custom:NumberInput class="required" value="{Fwgt}" enabled="{= ${/fieldControl/display/Fwgt} === 'X' }" visible="{= ${/fieldControl/display/Fwgt} !== 'H' }" />
+                        <custom:NumberInput class="required" value="{ path: 'Fwgt', type: 'sap.ui.yesco.mvc.model.type.Percent' }" enabled="{= ${/fieldControl/display/Fwgt} === 'X' }" visible="{= ${/fieldControl/display/Fwgt} !== 'H' }" />
                     </VBox>
                     <VBox>
                         <Label text="{i18n>LABEL_10003}" visible="{= ${/fieldControl/display/Zapgme} !== 'H' }" />
@@ -62,19 +62,19 @@
                         <Label width="100%" text="{i18n>LABEL_10024}" visible="{= ${/fieldControl/display/Ztbegda} !== 'H' }"/>
                     </VBox>
                     <VBox>
-                        <custom:DatePicker width="100%" class="required" dateValue="{ path: 'Ztbegda', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{= ${/fieldControl/display/Ztbegda} === 'X' }" visible="{= ${/fieldControl/display/Ztbegda} !== 'H' }"/>
+                        <custom:DatePicker width="100%" class="required" dateValue="{ path: 'Ztbegda', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{= ${/fieldControl/display/Ztbegda} === 'X' }" visible="{= ${/fieldControl/display/Ztbegda} !== 'H' }" change=".onChangeZtbegda"/>
                     </VBox>
                     <VBox>
                         <Label width="100%" text="{i18n>LABEL_10025}" visible="{= ${/fieldControl/display/Ztendda} !== 'H' }"/>
                     </VBox>
                     <VBox>
-                        <custom:DatePicker width="100%" class="required" dateValue="{ path: 'Ztendda', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{= ${/fieldControl/display/Ztendda} === 'X' }" visible="{= ${/fieldControl/display/Ztendda} !== 'H' }"/>
+                        <custom:DatePicker width="100%" class="required" dateValue="{ path: 'Ztendda', type: 'sap.ui.yesco.mvc.model.type.Date' }" minDate="{Ztbegda}" enabled="{= ${/fieldControl/display/Ztendda} === 'X' }" visible="{= ${/fieldControl/display/Ztendda} !== 'H' }" />
                     </VBox>
                     <VBox>
                         <Label width="100%" text="{i18n>LABEL_10026}" visible="{= ${/fieldControl/display/Z109} !== 'H' }"/>
                     </VBox>
                     <VBox>
-                        <custom:NumberInput width="100%" class="required" value="{Z109}" enabled="{= ${/fieldControl/display/Z109} === 'X' }" visible="{= ${/fieldControl/display/Z109} !== 'H' }" />
+                        <custom:NumberInput width="100%" class="required" value="{ path: 'Z109', type: 'sap.ui.yesco.mvc.model.type.Percent' }" enabled="{= ${/fieldControl/display/Z109} === 'X' }" visible="{= ${/fieldControl/display/Z109} !== 'H' }" />
                     </VBox>
                     <VBox>
                         <Label width="100%" text="{i18n>LABEL_00261}" visible="{= ${/fieldControl/display/Z111} !== 'H' }"/>

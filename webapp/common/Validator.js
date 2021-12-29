@@ -29,15 +29,19 @@ sap.ui.define(
       /**************************
        * Functions
        *************************/
-      check({ mFieldValue, aFieldProperties = [] }) {
+      check({ mFieldValue, aFieldProperties = [], sPrefixMessage }) {
         if (!mFieldValue) {
           return false;
         }
 
         const bIsValid = !aFieldProperties.some((o) => {
           const sValue = mFieldValue[o.field];
+          const aMessages = [sPrefixMessage];
+
           if (!sValue || ((o.type === this.SELECT1 || o.type === this.SELECT2) && sValue === 'ALL')) {
-            MessageBox.alert(AppUtils.getBundleText(mMessageType[o.type], o.label));
+            aMessages.push(AppUtils.getBundleText(mMessageType[o.type], o.label));
+            MessageBox.alert(_.chain(aMessages).compact().join(' ').value());
+
             return true;
           }
         });

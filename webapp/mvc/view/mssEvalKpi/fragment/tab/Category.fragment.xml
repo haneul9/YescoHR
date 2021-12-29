@@ -6,55 +6,58 @@
     xmlns:f="sap.f">
     <VBox class="contents">
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.mssEvalKpi.fragment.tabDetail.CascadingForm" type="XML" />
-        <HBox justifyContent="SpaceBetween">
-            <HBox>
-                <ObjectStatus text="{i18n>LABEL_15004}" state="Indication04" />
-                <Title level="H4" text="{i18n>LABEL_15018}" />
+        
+        <VBox width="100%" class="vCardBox">
+            <HBox justifyContent="SpaceBetween" class="table-toolbar">
+                <HBox calss="title">
+                    <ObjectStatus text="{i18n>LABEL_15004}" state="Indication04" />
+                    <Title level="H4" text="{i18n>LABEL_15018}" />
+                </HBox>
+                <HBox class="cascading-type-list">
+                    <Image src="asset/image/icon_cascading_type01.png"/>
+                    <Text text="{i18n>LABEL_15014}" textAlign="Center" width="100%"/>
+                    <Image src="asset/image/icon_cascading_type02.png"/>
+                    <Text text="{i18n>LABEL_15015}" textAlign="Center" width="100%"/>
+                    <Image src="asset/image/icon_cascading_type03.png"/>
+                    <Text text="{i18n>LABEL_15016}" textAlign="Center" width="100%"/>
+                    <Image src="asset/image/icon_cascading_type04.png"/>
+                    <Text text="{i18n>LABEL_15017}" textAlign="Center" width="100%"/>
+                </HBox>
             </HBox>
-            <HBox>
-                <core:Icon src="sap-icon://alert" />
-                <Text text="{i18n>LABEL_15014}" textAlign="Center" width="100%"/>
-                <core:Icon src="sap-icon://checklist-item" />
-                <Text text="{i18n>LABEL_15015}" textAlign="Center" width="100%"/>
-                <core:Icon src="sap-icon://border" />
-                <Text text="{i18n>LABEL_15016}" textAlign="Center" width="100%"/>
-                <core:Icon src="sap-icon://circle-task" />
-                <Text text="{i18n>LABEL_15017}" textAlign="Center" width="100%"/>
+            <HBox class="cascading-wrap">
+                <Label text="{/search/Orgtx}" class="Org-name">
+                    <layoutData>
+                        <FlexItemData />
+                    </layoutData>
+                </Label>
+                <f:GridList items="{/PartList}" class="part-cascading-list">
+                    <f:layoutData>
+                        <FlexItemData growFactor="1"/>
+                    </f:layoutData>
+                    <f:dragDropConfig>
+                        <dnd:DragInfo sourceAggregation="items" dragStart=".onDragStart" />
+                        <dnd-grid:GridDropInfo targetAggregation="items" dropPosition="Between" dropLayout="Horizontal" drop=".onDrop" />
+                    </f:dragDropConfig>
+                    <f:customLayout>
+                        <grid:GridBoxLayout boxMinWidth="30px" boxWidth="280px" />
+                    </f:customLayout>
+                    <f:GridListItem>
+                        <VBox height="80px">
+                            <layoutData>
+                                <FlexItemData growFactor="1" shrinkFactor="0" />
+                            </layoutData>
+                            <HBox>
+                                <Image visible="{= ${Otype} === '90' }" src="asset/image/icon_cascading_type01.png" />
+                                <Image visible="{= ${Otype} === '91' }" src="asset/image/icon_cascading_type02.png" />
+                                <Image visible="{= !!${Tmcnt} &amp;&amp; ${Tmcnt} !== '0' }" src="asset/image/icon_cascading_type03.png" />
+                                <Image visible="{= !!${Url} }" src="asset/image/icon_cascading_type04.png" />
+                            </HBox>
+                            <Title text="{Stext}" />
+                            <Text text="{Ztext}" wrapping="false" />
+                        </VBox>
+                    </f:GridListItem>
+                </f:GridList>
             </HBox>
-        </HBox>
-        <HBox width="100%" height="200px" class="vCardBox">
-            <Label text="{/search/Orgtx}" width="150px" vAlign="Middle" textAlign="Center">
-                <layoutData>
-                    <FlexItemData minHeight="150px" maxHeight="150px" />
-                </layoutData>
-            </Label>
-            <f:GridList items="{/PartList}">
-                <f:layoutData>
-                    <FlexItemData growFactor="1"/>
-                </f:layoutData>
-                <f:dragDropConfig>
-                    <dnd:DragInfo sourceAggregation="items" dragStart=".onDragStart" />
-                    <dnd-grid:GridDropInfo targetAggregation="items" dropPosition="Between" dropLayout="Horizontal" drop=".onDrop" />
-                </f:dragDropConfig>
-                <f:customLayout>
-                    <grid:GridBoxLayout boxMinWidth="30px" boxWidth="200px" />
-                </f:customLayout>
-                <f:GridListItem>
-                    <VBox height="70px">
-                        <layoutData>
-                            <FlexItemData growFactor="1" shrinkFactor="0" />
-                        </layoutData>
-                        <HBox>
-                            <core:Icon visible="{= ${Otype} === '90' }" src="sap-icon://alert" />
-                            <core:Icon visible="{= ${Otype} === '91' }" src="sap-icon://checklist-item" />
-                            <core:Icon visible="{= !!${Tmcnt} &amp;&amp; ${Tmcnt} !== '0' }" src="sap-icon://border" />
-                            <core:Icon visible="{= !!${Url} }" src="sap-icon://circle-task" />
-                        </HBox>
-                        <Title text="{Stext}" level="H4" />
-                        <Text text="{Ztext}" wrapping="false" />
-                    </VBox>
-                </f:GridListItem>
-            </f:GridList>
-        </HBox>
+        </VBox>
     </VBox>
 </core:FragmentDefinition>

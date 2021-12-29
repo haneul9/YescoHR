@@ -87,10 +87,10 @@ sap.ui.define(
         const sType = oViewModel.getProperty('/type');
         const sDetailRoute = _.get(Constants.LIST_PAGE, [sType, 'detail']);
 
-        // if (!_.isEqual(oRowData.Zonlydsp, '')) {
-        //   MessageBox.alert(this.getBundleText('MSG_10006')); // 현재 평가상태에서는 상세내역을 조회하실 수 없습니다.
-        //   return;
-        // }
+        if (!_.isEqual(oRowData.Godetl, 'X')) {
+          MessageBox.alert(this.getBundleText('MSG_10006')); // 현재 평가상태에서는 상세내역을 조회하실 수 없습니다.
+          return;
+        }
 
         oViewModel.setProperty('/parameter/rowData', { ...oRowData });
         this.getRouter().navTo(sDetailRoute, { sType, sYear: _.chain(oRowData.Zperiod).split('.', 1).head().value() });

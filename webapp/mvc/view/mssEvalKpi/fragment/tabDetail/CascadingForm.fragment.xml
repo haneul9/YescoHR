@@ -5,7 +5,7 @@
     xmlns:table="sap.ui.table"
     xmlns:grid="sap.ui.layout.cssgrid">
     <VBox class="vCardBox">
-        <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr 1fr 2fr 1fr" gridGap="10px" class="sapUiMediumMarginBottom">
+        <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr 1fr 2fr 1fr" gridGap="10px">
             <Label text="{i18n>LABEL_00220}" />
             <ComboBox items="{/CompanyCode}" selectedKey="{/search/Werks}" change=".onCompSelect">
                 <core:Item text="{Pbtxt}" key="{Werks}" />
@@ -24,9 +24,11 @@
     <VBox class="vCardBox">
         <table:Table rows="{/List}" visibleRowCount="{/listRowCount}" width="100%" busyIndicatorDelay="0" busy="{/busy}" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
             <table:extension>
-                <HBox>
-                    <ObjectStatus text="{= ${/tab/selectedKey} === 'A' ? ${i18n>LABEL_15006} : ${i18n>LABEL_15007} }" state="Indication04" />
-                    <Title level="H4" text="{i18n>LABEL_15008}" />
+                <HBox class="table-toolbar">
+                    <HBox class="title">
+                        <ObjectStatus text="{= ${/tab/selectedKey} === 'A' ? ${i18n>LABEL_15006} : ${i18n>LABEL_15007} }" state="Indication04" />
+                        <Title level="H4" text="{i18n>LABEL_15008}" />
+                    </HBox>
                 </HBox>
             </table:extension>
             <table:dragDropConfig>
