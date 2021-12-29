@@ -29,7 +29,7 @@ sap.ui.define(
       /**************************
        * Functions
        *************************/
-      check({ mFieldValue, aFieldProperties = [], sPrefixMessage = null }) {
+      check({ mFieldValue, aFieldProperties = [], sPrefixMessage }) {
         if (!mFieldValue) {
           return false;
         }
