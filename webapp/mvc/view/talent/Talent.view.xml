@@ -26,7 +26,7 @@
                     <Select width="184px" forceSelection="false" selectedKey="{/SelectedProduct}">
                     </Select>
                     <Button icon="asset/image/icon_del.png" class="icon-button" type="Transparent" />
-                    <Button text="검색" icon="sap-icon://search" class="sapUiTinyMarginEnd" /> 
+                    <Button text="검색" icon="asset/image/icon_search03.png" /> 
                     <Input width="520px" value=""  placeholder="검색" />
                     <Button text="초기화" icon="asset/image/icon_reset.png" />
                     <Button text="상세검색" icon="asset/image/icon_sort.png" press=".onToggleExpand" />

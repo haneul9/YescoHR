@@ -595,7 +595,7 @@ span.sapMBtnInner.sapMBtnEmphasized {text-shadow: none;}
 
 .sapMBtnText>.sapMBtnIcon {position: static; top: 0; left: 0;}
 .sapMBtnInner > img.sapMImg {height: auto; max-width: auto; width: auto; padding: 0 5px;}
-.sapMBtnInner .sapMBtnIcon.sapMImg {height: auto; max-width: auto; width: auto; padding: 0 5px 0 0;}
+.sapMBtnInner .sapMBtnIcon.sapMImg {height: auto; max-width: auto; width: auto; padding: 0 3px 0 0;}
 .sapUiSizeCompact .sapMBtnIcon { margin-left: 0; margin-right: 5px;}
 
 /*message box*/
@@ -685,11 +685,18 @@ span.sapMBtnInner.sapMBtnEmphasized {text-shadow: none;}
 .sapMSegB .sapMSegBBtn .sapMSegBBtnInner {background-color:#f8f8f8; border-radius:0px; border:0; color:var(--FontColorNormal); height:100%; line-height:33px; font-size:14px; font-weight:bold}
 .sapMSegB .sapMSegBBtn.sapMSegBBtnSel .sapMSegBBtnInner {background-color:#fff; border:0; color:#222; border-radius:4px}
 html.sap-desktop .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnSel:hover .sapMSegBBtnInner, html.sap-desktop .sapMSegBBtnFocusable.sapMBtnActive:hover .sapMSegBBtnInner { background: #f2f4f7;}
-
-.sapUiSizeCompact .sapMSegB { display: flex;height:40px;background-color: #F2F4F7;border: 1px solid #DDE1E6; padding:2px;border-radius: 4px;}
+.sapMSegB { display: flex;height:40px;background-color: #F2F4F7;border: 1px solid #DDE1E6; padding:2px;border-radius: 4px;}
 .sapMSegB .sapMSegBBtn .sapMSegBBtnInner { background-color: #f2f4f7;}
-.sapUiSizeCompact .sapMSegB .sapMSegBBtn {height:100%; padding:0;margin-right: 3px;}
-.sapUiSizeCompact .sapMSegB .sapMSegBBtn:last-child {margin-right: 0px;}
+.sapMSegB .sapMSegBBtn {height:100%; padding:0;margin-right: 3px;}
+.sapMSegB .sapMSegBBtn:last-child {margin-right: 0px;}
+
+.sapMSegB.type-b .sapMSegBBtn .sapMSegBBtnInner {background-color:#f8f8f8; border-radius:0px; border:0; color:var(--FontColorNormal); height:100%; line-height:40px; font-size:14px; font-weight:bold}
+.sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnSel .sapMSegBBtnInner {background-color:#64A7FF; border:0; color:#fff; border-radius:50px}
+html.sap-desktop .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnSel:hover .sapMSegBBtnInner, html.sap-desktop .sapMSegBBtnFocusable.sapMBtnActive:hover .sapMSegBBtnInner { background: #64A7FF;}
+.sapMSegB.type-b { display: flex;height:40px;background-color: transparent;border: 1px solid transparent; padding:0px;border-radius:50px;}
+.sapMSegB.type-b .sapMSegBBtn .sapMSegBBtnInner { background-color: #f2f4f7;border-radius: 50px;}
+.sapMSegB.type-b .sapMSegBBtn {height:40px; padding:0;margin-right: 10px;}
+.sapMSegB.type-b .sapMSegBBtn:last-child {margin-right: 0px;}
 
 /*toggle button*/
 .toggle_edit .sapMBtnDefault {font-size:17px; font-weight:bold}
@@ -1189,6 +1196,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 /* 인재검색 */
 .form-bar {}
 .form-bar > * {margin-right:12px;}
+.form-bar .sapMLabel {padding-left:30px;padding-right:20px;} 
 .search-filter.expanded {display: grid!important;}
 .search-filter {display: none!important;border-top:1px solid #222;padding-top: 20px;margin-top:20px!important;}
 .search-filter .sapMTextMaxWidth {padding: 0 4px;}
