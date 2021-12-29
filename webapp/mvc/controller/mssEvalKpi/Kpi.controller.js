@@ -468,27 +468,16 @@ sap.ui.define(
       // 팀 cascading grid settings
       setTeamGridList(aList = []) {
         const oViewModel = this.getViewModel();
-        const aFilterList = _.map(
-          aList.filter((character, idx, arr) => {
-            return arr.findIndex((item) => item.Orgtx === character.Orgtx) === idx;
-          }),
-          (ele) => {
-            return ele;
-          }
+        const sTempMessage = this.getBundleText('MSG_15002');
+
+        oViewModel.setProperty(
+          '/Tmp',
+          _.chain(aList)
+            .groupBy('Orgtx')
+            .map((v, p) => ({ Label: p, TmpGrid: v }))
+            .forEach((o) => o.TmpGrid.push({ Stext: sTempMessage }))
+            .value()
         );
-
-        const aTempleteList = [];
-
-        aFilterList.forEach((e) => {
-          const aDetailList = aList.filter((e1) => {
-            return e.Orgeh === e1.Orgeh;
-          });
-
-          aDetailList.push({ Stext: this.getBundleText('MSG_15002') });
-          aTempleteList.push({ Label: e.Orgtx, TmpGrid: aDetailList });
-        });
-
-        oViewModel.setProperty('/Tmp', aTempleteList);
       },
 
       // 저장
