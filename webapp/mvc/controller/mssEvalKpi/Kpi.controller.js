@@ -10,15 +10,15 @@ sap.ui.define(
     'sap/f/dnd/GridDropInfo',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/m/VBox',
   ],
-  function (JSONModel, Fragment, DragInfo, DropInfo, DropPosition, DropLayout, GridDropInfo, MessageBox, AppUtils, TableUtils, TextUtils, ServiceNames, ODataReadError, ODataCreateError, BaseController, VBox) {
+  function (JSONModel, Fragment, DragInfo, DropInfo, DropPosition, DropLayout, GridDropInfo, MessageBox, AppUtils, ComboEntry, TableUtils, TextUtils, ServiceNames, ODataReadError, ODataCreateError, BaseController) {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.mssEvalKpi.Kpi', {
@@ -40,6 +40,10 @@ sap.ui.define(
             Orgtx: '',
             Zyear: '',
           },
+          situation: {
+            segmentKey: 'A',
+          },
+          CascadingSitu: {},
           listRowCount: 1,
         });
 
@@ -132,43 +136,144 @@ sap.ui.define(
       // TabBar 선택
       async onSelectTabBar() {
         const oViewModel = this.getViewModel();
-        const aPartList = await this.partList();
-
-        oViewModel.setProperty('/PartCode', aPartList);
-        oViewModel.setProperty('/search', {
-          Werks: this.getSessionProperty('Werks'),
-          Orgeh: oViewModel.getProperty('/PartCode/0/Orgeh'),
-          Orgtx: oViewModel.getProperty('/PartCode/0/Orgtx'),
-          Zyear: String(new Date().getFullYear()),
-        });
 
         try {
           oViewModel.setProperty('/busy', true);
 
           if (oViewModel.getProperty('/tab/selectedKey') !== 'C') {
+            const aPartList = await this.partList();
+
+            oViewModel.setProperty('/PartCode', aPartList);
+            oViewModel.setProperty('/search', {
+              Werks: this.getSessionProperty('Werks'),
+              Orgeh: oViewModel.getProperty('/PartCode/0/Orgeh'),
+              Orgtx: oViewModel.getProperty('/PartCode/0/Orgtx'),
+              Zyear: String(new Date().getFullYear()),
+            });
             const aTableList = await this.getAllCascading();
             const iTableLength = aTableList.length;
 
             oViewModel.setProperty('/List', aTableList);
             oViewModel.setProperty('/listRowCount', iTableLength > 10 ? 10 : iTableLength);
 
-            const aPartList = await this.getPartCascading();
+            const aGridList = await this.getPartCascading();
 
             if (oViewModel.getProperty('/tab/selectedKey') === 'B') {
-              this.setTeamGridList(aPartList);
+              this.setTeamGridList(aGridList);
             } else {
-              aPartList.push({ Stext: this.getBundleText('MSG_15002') });
+              aGridList.push({ Stext: this.getBundleText('MSG_15002') });
             }
 
-            oViewModel.setProperty('/PartList', aPartList);
+            oViewModel.setProperty('/PartList', aGridList);
           } else {
-            //
+            oViewModel.setProperty('/situation/segmentKey', 'A');
+
+            oViewModel.setProperty('/CascadingSitu', {
+              Label1: this.getBundleText('LABEL_00224'),
+              Label2: '',
+            });
+
+            oViewModel.setProperty('/search', {
+              Werks: this.getSessionProperty('Werks'),
+              Zyear: String(new Date().getFullYear()),
+            });
+
+            const aTreeList = await this.getTreeList();
+
+            // oViewModel.setProperty('/CascadingSitu/SecondCode', aGridList);
           }
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/busy', false);
         }
+      },
+
+      // Cascading KPI 종류
+      getKPIList() {
+        const oModel = this.getModel(ServiceNames.APPRAISAL);
+        const oViewModel = this.getViewModel();
+        const mSearch = oViewModel.getProperty('/search');
+
+        return new Promise((resolve, reject) => {
+          oModel.read('/KpiCascadingKpiListSet', {
+            filters: [new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, this.getSessionProperty('Werks')), new sap.ui.model.Filter('Zyear', sap.ui.model.FilterOperator.EQ, mSearch.Zyear)],
+            success: (oData) => {
+              if (oData) {
+                this.debug(oData);
+                resolve(new ComboEntry({ codeKey: 'Objid', valueKey: 'Stext', aEntries: oData.results }));
+              }
+            },
+            error: (oError) => {
+              this.debug(oError);
+              reject(new ODataReadError(oError));
+            },
+          });
+        });
+      },
+
+      // Cascading 현황 SegmaneBtn
+      async onSegmentBtn() {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/search', {
+          Werks: this.getSessionProperty('Werks'),
+          Zyear: String(new Date().getFullYear()),
+          Objid: 'ALL',
+          Otype: '',
+        });
+
+        if (oViewModel.getProperty('/situation/segmentKey') === 'A') {
+          oViewModel.setProperty('/CascadingSitu', {
+            Label1: this.getBundleText('LABEL_00224'),
+            Label2: '',
+          });
+        } else {
+          const aKpiList = await this.getKPIList();
+
+          oViewModel.setProperty('/CascadingSitu', {
+            Label1: this.getBundleText('LABEL_00220'),
+            Label2: this.getBundleText('LABEL_15014'),
+            SecondCode: aKpiList,
+          });
+        }
+
+        const aTreeList = await this.getTreeList();
+      },
+
+      // Cascading 현황에 조직 별 treetable
+      getTreeList() {
+        const oModel = this.getModel(ServiceNames.APPRAISAL);
+        const oViewModel = this.getViewModel();
+        const mSearch = oViewModel.getProperty('/search');
+        const bKey = oViewModel.getProperty('/situation/segmentKey') === 'A';
+
+        return new Promise((resolve, reject) => {
+          oModel.read('/KpiCascadingTreeSet', {
+            filters: [new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, mSearch.Werks), new sap.ui.model.Filter('Zyear', sap.ui.model.FilterOperator.EQ, mSearch.Zyear), new sap.ui.model.Filter('Seroty', sap.ui.model.FilterOperator.EQ, bKey ? 'O' : mSearch.Otype), new sap.ui.model.Filter('Serobj', sap.ui.model.FilterOperator.EQ, bKey ? '10000000' : mSearch.Objid === 'ALL' ? '' : mSearch.Objid)],
+            success: (oData) => {
+              if (oData) {
+                this.debug(oData);
+                resolve(oData.results);
+              }
+            },
+            error: (oError) => {
+              this.debug(oError);
+              reject(new ODataReadError(oError));
+            },
+          });
+        });
+      },
+
+      onCasSituSecSelect(oEvent) {
+        const oViewModel = this.getViewModel();
+        const sKey = oEvent.getSource().getSelectedKey();
+
+        oViewModel.getProperty('/CascadingSitu/SecondCode').forEach((e) => {
+          if (sKey === e.Objid) {
+            oViewModel.setProperty('/search/Otype', e.Otype);
+          }
+        });
       },
 
       // 부문에 해당되는 팀 Cadcading
