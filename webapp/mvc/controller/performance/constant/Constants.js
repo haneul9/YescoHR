@@ -10,9 +10,9 @@ sap.ui.define(
       REJECT_DIALOG_ID: 'sap.ui.yesco.mvc.view.performance.fragment.RejectDialog',
 
       APPRAISER_TYPE: { ME: 'ME', MA: 'MA', MB: 'MB' },
-      PROCESS_TYPE: { LIST: { code: 'L', label: 'LABEL_00177' }, DETAIL: { code: 'D', label: 'LABEL_00165' }, SAVE: { code: 'T', label: 'LABEL_00103' }, SEND: { code: 'C', label: 'LABEL_00175' }, APPROVE: { code: 'P', label: 'LABEL_00123' } },
       DISPLAY_TYPE: { EDIT: 'X', DISPLAY_ONLY: 'D', HIDE: 'H', HIDDEN_VALUE: 'V' },
       GOAL_TYPE: { STRATEGY: { code: '1', name: 'strategy' }, DUTY: { code: '2', name: 'duty' } },
+      PROCESS_TYPE: { LIST: { code: 'L', label: 'LABEL_00177' }, DETAIL: { code: 'D', label: 'LABEL_00165' }, SAVE: { code: 'T', label: 'LABEL_00103' }, SEND: { code: 'C', label: 'LABEL_00175' }, APPROVE: { code: 'P', label: 'LABEL_00123' }, REJECT: { code: 'R', label: 'LABEL_00124' }, CANCEL: { code: 'W', label: 'LABEL_00118' } },
 
       REJECT_PROPERTIES: ['Rjctr', 'Rjctrin'],
       SUMMARY_PROPERTIES: ['Zmepoint', 'Zmapoint', 'Zmbgrade'],
@@ -40,6 +40,12 @@ sap.ui.define(
         { field: 'Zmepoint', label: 'LABEL_10012', type: Validator.INPUT2 }, // 자기 평가점수
         { field: 'Zmapoint', label: 'LABEL_10013', type: Validator.INPUT2 }, // 1차 평가점수
         { field: 'Zmbgrade', label: 'LABEL_10014', type: Validator.SELECT1 }, // 최종 평가등급
+        { field: 'Z131', label: 'LABEL_10017', type: Validator.INPUT1 }, // 목표 수립
+        { field: 'Z132', label: 'LABEL_10017', type: Validator.INPUT1 }, // 목표 수립
+        { field: 'Z136', label: 'LABEL_10018', type: Validator.INPUT1 }, // 중간 점검
+        { field: 'Z137', label: 'LABEL_10018', type: Validator.INPUT1 }, // 중간 점검
+        { field: 'Papp1', label: 'LABEL_10019', type: Validator.INPUT2 }, // 성과 평가
+        { field: 'Papp2', label: 'LABEL_10019', type: Validator.INPUT2 }, // 성과 평가
       ],
 
       FIELD_MAPPING: {

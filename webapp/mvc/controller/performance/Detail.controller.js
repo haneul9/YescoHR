@@ -13,6 +13,7 @@ sap.ui.define(
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/performance/constant/Constants',
     'sap/ui/yesco/mvc/model/type/Date',
+    'sap/ui/yesco/mvc/model/type/Percent',
   ],
   (
     // prettier 방지용 주석
@@ -338,10 +339,17 @@ sap.ui.define(
           const mSummary = _.cloneDeep(oViewModel.getProperty('/summary'));
           const aStrategy = _.cloneDeep(oViewModel.getProperty('/goals/strategy'));
           const aDuty = _.cloneDeep(oViewModel.getProperty('/goals/duty'));
-          const bIsSend = _.isEqual(code, Constants.PROCESS_TYPE.SEND.code);
+          const bIsSave = _.isEqual(code, Constants.PROCESS_TYPE.SAVE.code);
 
-          if (bIsSend) {
-            _.chain(mParameter).set('OldStatus', mParameter.Zzapsts).set('OldStatusSub', mParameter.ZzapstsSub).set('OldStatusPart', mParameter.ZzapstsPSub).commit();
+          if (!bIsSave) {
+            switch (code) {
+              case Constants.PROCESS_TYPE.SAVE.code:
+              case Constants.PROCESS_TYPE.REJECT.code:
+              case Constants.PROCESS_TYPE.CANCEL.code:
+                _.chain(mParameter).set('OldStatus', mParameter.Zzapsts).set('OldStatusSub', mParameter.ZzapstsSub).set('OldStatusPart', mParameter.ZzapstsPSub).commit();
+              default:
+                break;
+            }
           }
 
           await Client.deep(oModel, 'AppraisalDoc', {
@@ -353,10 +361,10 @@ sap.ui.define(
             AppraisalDocDetailSet: [...aStrategy, ...aDuty],
           });
 
-          // {저장|전송}되었습니다.
+          // {저장|전송|승인|취소}되었습니다.
           MessageBox.success(this.getBundleText('MSG_00007', label), {
             onClose: () => {
-              if (bIsSend) this.getRouter().navTo(sListRouteName);
+              if (!bIsSave) this.getRouter().navTo(sListRouteName);
             },
           });
         } catch (oError) {
@@ -371,6 +379,17 @@ sap.ui.define(
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
+      onChangeZtbegda(oEvent) {
+        const oControl = oEvent.getSource();
+        const oBinding = oControl.getBindingContext();
+        const dStartDate = moment(oControl.getDateValue());
+        const dEndDate = oBinding.getProperty('Ztendda');
+
+        if (_.isDate(dEndDate) && moment(dEndDate).isBefore(dStartDate)) {
+          oBinding.getModel().setProperty(`${oBinding.getPath()}/Ztendda`, _.noop());
+        }
+      },
+
       onPressAddStrategy() {
         const oViewModel = this.getViewModel();
 
@@ -428,7 +447,16 @@ sap.ui.define(
       },
 
       onPressApproveButton() {
-        this.createProcess(Constants.PROCESS_TYPE.APPROVE);
+        const mProcessType = Constants.PROCESS_TYPE.APPROVE;
+
+        MessageBox.confirm(this.getBundleText('MSG_00006', mProcessType.label), {
+          // {승인}하시겠습니까?
+          onClose: (sAction) => {
+            if (MessageBox.Action.CANCEL === sAction) return;
+
+            this.createProcess(mProcessType);
+          },
+        });
       },
 
       onPressCheckedButton() {},
@@ -443,7 +471,30 @@ sap.ui.define(
       },
 
       onPressRejectDialogSave() {
-        this.onPressRejectDialogClose();
+        const mProcessType = Constants.PROCESS_TYPE.REJECT;
+
+        MessageBox.confirm(this.getBundleText('MSG_00006', mProcessType.label), {
+          // {반려}하시겠습니까?
+          onClose: (sAction) => {
+            if (MessageBox.Action.CANCEL === sAction) return;
+
+            this.createProcess(mProcessType);
+            this.onPressRejectDialogClose();
+          },
+        });
+      },
+
+      onPressCancelButton() {
+        const mProcessType = Constants.PROCESS_TYPE.CANCEL;
+
+        MessageBox.confirm(this.getBundleText('MSG_00006', mProcessType.label), {
+          // {취소}하시겠습니까?
+          onClose: (sAction) => {
+            if (MessageBox.Action.CANCEL === sAction) return;
+
+            this.createProcess(mProcessType);
+          },
+        });
       },
 
       onPressSaveButton() {
@@ -454,12 +505,16 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const aStrategyGoals = _.cloneDeep(oViewModel.getProperty('/goals/strategy'));
         const aDutyGoals = _.cloneDeep(oViewModel.getProperty('/goals/duty'));
-        const aFieldProperties = _.cloneDeep(oViewModel.getProperty('/goals/valid'));
+        const mManage = _.cloneDeep(oViewModel.getProperty('/manage'));
+        const aValid = _.cloneDeep(oViewModel.getProperty('/goals/valid'));
+        const aGoalValid = _.filter(aValid, (o) => _.includes(Constants.GOAL_PROPERTIES, o.field));
+        const aManageValid = _.filter(aValid, (o) => _.includes(Constants.MANAGE_PROPERTIES, o.field));
         const mProcessType = Constants.PROCESS_TYPE.SEND;
 
         // validation
-        if (_.some(aStrategyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties }))) return;
-        if (_.some(aDutyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: _.reject(aFieldProperties, { field: 'Z103s' }) }))) return;
+        if (_.some(aStrategyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: aGoalValid, sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` }))) return;
+        if (_.some(aDutyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: _.reject(aGoalValid, { field: 'Z103s' }), sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` }))) return;
+        if (!Validator.check({ mFieldValue: mManage, aFieldProperties: aManageValid })) return;
 
         if (
           !_.isEqual(
