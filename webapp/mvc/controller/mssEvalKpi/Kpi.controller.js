@@ -415,7 +415,7 @@ sap.ui.define(
 
         if (!oDraggedRowContext || !mDraggData.Objid) return;
 
-        const aGridList = bTabKey ? oViewModel.getProperty('/PartList') : sDraggPath.substring(sDraggPath.indexOf('TmpGrid/') + 8);
+        const aGridList = bTabKey ? oViewModel.getProperty('/PartList') : oViewModel.getProperty(sDraggPath.slice(0, sDraggPath.lastIndexOf('/')));
         const aPartList = aGridList.filter((x) => ![mDraggData].includes(x));
 
         // reset the rank property and update the model to refresh the bindings
