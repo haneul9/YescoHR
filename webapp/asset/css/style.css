@@ -489,7 +489,7 @@ h4.sapMTitle {font-size:20px; font-weight:800;color:#222}
 .hCardBox.search-box .title {margin-bottom:20px}
 
 .vCardBox .table-toolbar, .customBox .table-toolbar {justify-content:space-between; align-items:center; margin-top:-25px; height:75px}
-.table-toolbar .sapMObjStatus{font-size: 20px;}
+/* .table-toolbar .sapMObjStatus{font-size: 20px;} */
 .vCardBox .table-toolbar .title {align-items:center}
 .vCardBox .table-toolbar .title > div {height:24px}
 .vCardBox .table-toolbar .table-actions {align-items:center}
