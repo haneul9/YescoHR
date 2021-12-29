@@ -13,6 +13,25 @@ sap.ui.define(['sap/m/Input'], function (Input) {
     },
 
     init: function () {
+      const allowedKeyCodes = {
+        8: true, // Backspace
+        9: true, // Tab
+        13: true, // Enter
+        35: true, // End
+        36: true, // Home
+        37: true, // Arrow Left
+        39: true, // Arrow Right
+        46: true, // Delete
+      };
+
+      this.attachBrowserEvent('keydown', (oEvent) => {
+        const iMaxLength = oEvent.target.maxLength;
+        if (iMaxLength && oEvent.target.value.length >= iMaxLength && !allowedKeyCodes[oEvent.which || oEvent.keyCode]) {
+          oEvent.preventDefault();
+          oEvent.stopImmediatePropagation();
+        }
+      });
+
       this.attachBrowserEvent('mousewheel', (oEvent) => oEvent.preventDefault());
 
       if (sap.ui.core.Control.prototype.init) {

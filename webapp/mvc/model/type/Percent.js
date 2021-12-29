@@ -54,7 +54,7 @@ sap.ui.define(
         }
 
         if (typeof oValue === 'number' || oValue instanceof Number) {
-          return Math.min(100, Math.max(0, Math.abs(oValue)));
+          return String(Math.min(100, Math.max(0, Math.abs(oValue))));
         }
 
         if (typeof oValue === 'string' || oValue instanceof String) {
