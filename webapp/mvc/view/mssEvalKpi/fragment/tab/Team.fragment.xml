@@ -7,16 +7,16 @@
     <VBox class="contents">
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.mssEvalKpi.fragment.tabDetail.CascadingForm" type="XML" />
         <VBox class="vCardBox">
-            <HBox justifyContent="SpaceBetween">
+            <HBox justifyContent="SpaceBetween" class="table-toolbar">
                 <Title level="H4" text="{i18n>LABEL_15021}" />
-                <HBox>
-                    <core:Icon src="sap-icon://alert" />
+                <HBox class="cascading-type-list">
+                    <Image src="asset/image/icon_cascading_type01.png"/>
                     <Text text="{i18n>LABEL_15014}" textAlign="Center" width="100%"/>
-                    <core:Icon src="sap-icon://checklist-item" />
+                    <Image src="asset/image/icon_cascading_type02.png"/>
                     <Text text="{i18n>LABEL_15015}" textAlign="Center" width="100%"/>
-                    <core:Icon src="sap-icon://border" />
+                    <Image src="asset/image/icon_cascading_type03.png"/>
                     <Text text="{i18n>LABEL_15016}" textAlign="Center" width="100%"/>
-                    <core:Icon src="sap-icon://circle-task" />
+                    <Image src="asset/image/icon_cascading_type04.png"/>
                     <Text text="{i18n>LABEL_15017}" textAlign="Center" width="100%"/>
                 </HBox>
             </HBox>

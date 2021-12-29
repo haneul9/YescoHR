@@ -273,6 +273,21 @@ div.sapUiCalItemSelBetween>.sapUiCalItemText:active {outline-style:none !importa
 div.sapUiCalItemSelBetween>.sapUiCalItemText:focus {outline-style:none !important}
 div.sapUiCalItemSelBetween>.sapUiCalItemText:after {display:none !important}
 
+
+.sapUiCalHead {background-color: #f2f2f2;}
+.sapUiCalHead>button, .sapUiCalCancel, .sapUiCalHead>button .sapUiIcon::before {font-weight:700}
+.sapUiCalHead>.sapUiCalHeadB, 
+.sapUiCalCancel, 
+html.sap-desktop .sapUiCalHead>.sapUiCalHeadB:hover, 
+html.sap-desktop .sapUiCalHead>.sapUiCalHeadB:focus {color: #222;}
+.sapUiSizeCompact .sapUiCal, .sapUiSizeCompact.sapUiCal { padding: 0;}
+.sapUiCalMonthView > div:not(.sapUiCalItems)  {background-color: #f2f2f2;}
+.sapUiSizeCompact .sapUiCal .sapUiCalMonthView, 
+.sapUiSizeCompact.sapUiCal .sapUiCalMonthView, 
+.sapUiSizeCompact .sapUiCal .sapUiCalRow, 
+.sapUiSizeCompact.sapUiCal .sapUiCalRow {padding-left: 0;padding-right: 0;padding-bottom: 0;}
+.sapUiCalWH, .sapUiCalItem { border: 0 solid #ffffff;}
+
 div.sapUiCalItemSel {color:#fff !important; font-weight:700; background:#fb635e !important}/* 달력 선택 */
 div.sapUiCalItemSel>.sapUiCalItemText:hover {color:#000 !important; background:#cae6f7 !important}
 div.sapUiCalItemSel>.sapUiCalItemText {border:none; outline-style:none !important}
@@ -474,6 +489,7 @@ h4.sapMTitle {font-size:20px; font-weight:800;color:#222}
 .hCardBox.search-box .title {margin-bottom:20px}
 
 .vCardBox .table-toolbar, .customBox .table-toolbar {justify-content:space-between; align-items:center; margin-top:-25px; height:75px}
+.table-toolbar .sapMObjStatus{font-size: 20px;}
 .vCardBox .table-toolbar .title {align-items:center}
 .vCardBox .table-toolbar .title > div {height:24px}
 .vCardBox .table-toolbar .table-actions {align-items:center}
@@ -1102,6 +1118,27 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .sapMPanelExpandableIcon {top: 2px;background: #E8E8E8;color: #222;border-radius: 50%;width: 40px;height: 40px;margin: 0;display: flex;justify-content: center;align-items: center;transform:translateY(0%) rotate(90deg);}
 .sapMPanelExpandableIconExpanded {transform:translateY(0%) rotate(-90deg);}
 
+/* KPI */
+.cascading-type-list .sapMImg {margin-left:16px;margin-right:4px;}
+.sapFGridList.part-cascading-list .sapMLIB:not(.sapMGHLI) {padding:20px;}
+.sapFGridList.sapFGridList.part-cascading-list .sapFGLIWrapper .sapMLIBContent {margin: 0px;}
+.sapUiSizeCompact .sapFGridList.part-cascading-list .sapFGLIWrapper .sapMLIBContent .sapMVBox > * { margin-bottom:0px;}
+.sapFGridList.sapFGridList.part-cascading-list .sapFGLIWrapper .sapMLIBContent .sapMImg {margin-bottom:14px;margin-right:5px;}
+.sapFGridList.sapFGridList.part-cascading-list .sapFGLIWrapper .sapMLIBContent .sapMTitle {margin-bottom:3px;font-size:15px;font-weight:700;} 
+.sapFGridList.sapFGridList.part-cascading-list .sapFGLIWrapper .sapMLIBContent .sapMText {font-size:13px;font-weight:400;}
+.sapFGridList.part-cascading-list .sapMLIB:not(.sapMGHLI) {    box-shadow: 0 0 0 1px rgb(0 0 0 / 0%);border: 1px solid #AFB9BE;}
+.sapFGridList.part-cascading-list .sapMLIB:not(.sapMGHLI):last-child {background-color: #F4F4F4;text-align: center;border: 1px dashed #B7B7B7;}
+.sapFGridList.part-cascading-list .sapMLIB:not(.sapMGHLI):last-child .sapMTitle {font-size:12px;color:#656F74;font-weight:400;} 
+.sapFGridList.part-cascading-list .sapMLIB:not(.sapMGHLI):last-child .sapMTitle::before {content:"";display:block;width:38px;height:38px;margin: 10px auto 10px;background-image:url(../image/icon_kpi_info.png);background-repeat: no-repeat;}
+
+.cascading-wrap {display: flex;border: 1px solid #F3F3F3;}
+.cascading-wrap > .sapMFlexItem {padding: 20px;}
+.cascading-wrap > .sapMFlexItem:first-child {display:flex;text-align:center;background-color: #FBFCFD;    border-right: 1px solid #F3F3F3;}
+.cascading-wrap .Org-name {display: inherit;width:280px;align-items: center;text-align:center;background-color: #FBFCFD;}
+.cascading-wrap .Org-name.sapMLabel {}
+.cascading-wrap .Org-name.sapMLabel bdi{margin:0 auto}
+.cascading-wrap .sapFGridList ul:not(.sapUiLayoutCSSGridBoxLayoutPolyfill) {margin-bottom: 0;gap: 18px !important;}
+
 /* 근태 */
 .year-plan-head {display: flex;align-items: center;margin-bottom:16px;}
 .year-plan-head .sapMFlexItem {height:24px;}
@@ -1155,6 +1192,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .talent-list.sapFGridList .sapMLIB:not(.sapMGHLI) {border-radius:8px 0 0 8px;border: none;box-shadow: 0 2px 4px rgb(0 0 0 / 16%);}
 .talent-list.sapFGridList .sapMLIB:not(.sapMGHLI) .sapMLIBHighlight {border-top-right-radius: 0; border-bottom-right-radius: 0;border-top-left-radius: 0; border-bottom-left-radius: 0;}
 .talent-list.sapFGridList .sapMLIBHighlight {width: 3px;left: auto;right: 0;}
+.sapMLIBHighlightSuccess {background: #38a238;}
 .talent-list.sapFGridList .sapFGLI .sapFGLIWrapper .sapFGLIToolbar {height: 2rem;padding: 0; position: absolute;right: 0;top: 8px;box-shadow: inset 0 0 #d1e0ee;z-index:2}
 .talent-list.sapFGridList .sapMLIBSelectM {width:auto}
 .talent-list.sapFGridList .sapFGLI .sapFGLIWrapperc {box-shadow: 0 2px 4px rgba(0, 0, 0, .16);}
@@ -1162,8 +1200,10 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .talent-list.sapFGridList .sapMFlexItemAlignAuto {display: inherit;}
 .talent-list.sapFGridList .sapMImg {width:76px!important;height:100px!important;margin-right: 10px!important;}
 .talent-list.sapFGridList .sapMTitle.sapMTitleStyleAuto {margin-bottom:8px;font-size:14px;font-weight: 700;}
-.talent-list.sapFGridList .sapMLabel {font-size:11px;font-weight: 400;}
-.sapMLIBHighlightExecutives {background: #38a238;}
+.talent-list.sapFGridList .sapMLabel, .talent-list.sapFGridList .sapMText  {font-size:11px;font-weight: 400;}
+.sapMLIBHighlightExecutives {background: #65B8FF;}/*임원*/
+.sapMLIBHighlightInformation {background: #A1E094;}/*팀장*/
+.sapMLIBHighlightWarning {background: #FFE479;}/*팀원*/
 
 .compare-block {}
 .compare-block .sapUiBlockLayoutRow.sapUiBlockHorizontalCellsRow {border-bottom:1px solid rgba(112, 112, 112, .5);}

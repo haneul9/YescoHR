@@ -139,7 +139,7 @@
                     <f:customLayout>
                         <grid:GridBasicLayout
                             gridTemplateColumns="repeat(auto-fit, minmax(17rem, 1fr))"
-                            gridGap="20px"/>
+                            gridGap="20px" />
                     </f:customLayout>
                     <f:GridListItem
                         detailPress="onDetailPress"
@@ -153,10 +153,10 @@
                                 <Image src="{ProductPicUrl}" width="3rem" class="sapUiSmallMarginEnd"/>
                                 <VBox>
                                     <Title text="{Name}" wrapping="true"/>
-                                    <Label text="{position}" wrapping="true" />
-                                    <Label text="{birth}" wrapping="true" />
-                                    <Label text="{edu}" wrapping="true" />
-                                    <Label text="{duty}" wrapping="true" />
+                                    <Text text="{position}" wrapping="true" />
+                                    <Text text="{birth}" wrapping="true" />
+                                    <Text text="{edu}" wrapping="true" />
+                                    <Text text="{duty}" wrapping="true" />
                                 </VBox>
                             </HBox>
                         </VBox>
