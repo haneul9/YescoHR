@@ -89,6 +89,10 @@ sap.ui.define(
 
         // 3rd level 메뉴 속성 정리
         aLevel3.map((m) => {
+          const mMenuProperties = mMenidToProperties[m.Menid] || {};
+          if (!mMenuProperties.Mnurl) {
+            return;
+          }
           if (m.Hide === 'X') {
             return;
           }
@@ -96,27 +100,29 @@ sap.ui.define(
             aFavoriteMenids.push(m.Menid);
           }
 
-          const mMenuProperties = mMenidToProperties[m.Menid] || {};
-          mMenuProperties.Level = 3;
-          mMenuProperties.Mnid1 = m.Mnid1;
-          mMenuProperties.Mnid2 = m.Mnid2;
-          mMenuProperties.Mnid3 = m.Mnid3;
-          mMenuProperties.Mname = m.Mnnm3;
-          mMenuProperties.Mepop = m.Mepop === 'X';
-          mMenuProperties.Favor = m.Favor === 'X';
-          mMenuProperties.Pwchk = m.Pwchk === 'X';
-          mMenidToProperties[m.Mnid3] = { ...mMenidToProperties[m.Menid], ...mMenuProperties };
+          mMenidToProperties[m.Mnid3] = {
+            ...mMenuProperties,
+            Level: 3,
+            Mnid1: m.Mnid1,
+            Mnid2: m.Mnid2,
+            Mnid3: m.Mnid3,
+            Mname: m.Mnnm3,
+            Mepop: m.Mepop === 'X',
+            Favor: m.Favor === 'X',
+            Pwchk: m.Pwchk === 'X',
+          };
 
           const aLevel2SubMenu = mLevel2Sub[m.Mnid2];
           if (aLevel2SubMenu) {
-            aLevel2SubMenu.push(mMenuProperties);
+            aLevel2SubMenu.push(mMenidToProperties[m.Mnid3]);
           } else {
-            mLevel2Sub[m.Mnid2] = [mMenuProperties];
+            mLevel2Sub[m.Mnid2] = [mMenidToProperties[m.Mnid3]];
           }
         });
 
         // 2nd level 메뉴 속성 정리
         aLevel2.map((m) => {
+          const mMenuProperties = mMenidToProperties[m.Menid] || {};
           if (m.Hide === 'X') {
             return;
           }
@@ -124,29 +130,30 @@ sap.ui.define(
             aFavoriteMenids.push(m.Menid);
           }
 
-          const mMenuProperties = {
+          mMenidToProperties[m.Mnid2] = {
+            ...mMenuProperties,
             Level: 2,
             Menid: m.Menid,
             Mnid2: m.Mnid2,
             Mname: m.Mnnm2,
-            Mnurl: !m.Menid ? '' : (mMenidToProperties[m.Menid] || {}).Mnurl || '',
+            Mnurl: !m.Menid ? '' : mMenuProperties.Mnurl || '',
             Mepop: m.Mepop === 'X',
             Favor: m.Favor === 'X',
             Pwchk: m.Pwchk === 'X',
             Children: mLevel2Sub[m.Mnid2] || [],
           };
-          mMenidToProperties[m.Mnid2] = { ...mMenidToProperties[m.Menid], ...mMenuProperties };
 
           const aLevel1SubMenu = mLevel1Sub[m.Mnid1];
           if (aLevel1SubMenu) {
-            aLevel1SubMenu.push(mMenuProperties);
+            aLevel1SubMenu.push(mMenidToProperties[m.Mnid2]);
           } else {
-            mLevel1Sub[m.Mnid1] = [mMenuProperties];
+            mLevel1Sub[m.Mnid1] = [mMenidToProperties[m.Mnid2]];
           }
         });
 
         // Top level 메뉴 속성 정리
         const tree = aLevel1.map((m) => {
+          const mMenuProperties = mMenidToProperties[m.Menid] || {};
           if (m.Hide === 'X') {
             return;
           }
@@ -154,21 +161,21 @@ sap.ui.define(
             aFavoriteMenids.push(m.Menid);
           }
 
-          const mMenuProperties = {
+          mMenidToProperties[m.Mnid1] = {
+            ...mMenuProperties,
             Level: 1,
             Menid: m.Menid,
             Mnid1: m.Mnid1,
             Mname: m.Mnnm1,
-            Mnurl: !m.Menid ? '' : (mMenidToProperties[m.Menid] || {}).Mnurl || '',
+            Mnurl: !m.Menid ? '' : mMenuProperties.Mnurl || '',
             Mepop: m.Mepop === 'X',
             Favor: m.Favor === 'X',
             Pwchk: m.Pwchk === 'X',
             Children: mLevel1Sub[m.Mnid1] || [],
             StyleClasses: this.getStyleClasses(m),
           };
-          mMenidToProperties[m.Mnid1] = { ...mMenidToProperties[m.Menid], ...mMenuProperties };
 
-          return mMenuProperties;
+          return mMenidToProperties[m.Mnid1];
         });
 
         return {

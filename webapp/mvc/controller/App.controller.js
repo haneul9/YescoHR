@@ -40,6 +40,10 @@ sap.ui.define(
         this.byId('logoImage').toggleStyleClass(`logo-${sWerks}`, true);
         return `asset/image/logo-${sWerks}.png`;
       },
+
+      navToProfile() {
+        this.getRouter().navTo('employee');
+      },
     });
   }
 );

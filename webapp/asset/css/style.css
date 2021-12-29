@@ -811,8 +811,14 @@ html.sap-desktop .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnSel:hover .sapMSeg
 .breadcrumbs .sapMBtn {margin-right: 5px!important;}
 .breadcrumbs .contents {width:1600px; display:flex; justify-content:space-between}
 
+.app-menu-toolbar .my-info {margin:0; height:100%; padding:0 6px; box-shadow:none}
+.app-menu-toolbar .my-info .sapMGTContent,
+.app-menu-toolbar .my-info .sapMTileCnt,
+.app-menu-toolbar .my-info .sapMTileCntContent {margin:0; height:100%; padding:0}
+.app-menu-toolbar .my-info .sapMGTHdrContent,
+.app-menu-toolbar .my-info .sapMTileCntFtrTxt {display:none}
 .app-menu-toolbar .my-info .name {margin-right:5px; color:#59a7f4; font-weight:700}
-.app-menu-toolbar .my-info .sapMImg {margin-left:10px; margin-right:6px; width:26px; height:26px; border-radius:50%}
+.app-menu-toolbar .my-info .sapMImg {margin-left:10px; width:26px; height:26px; border-radius:50%}
 
 .appointee-bar {display:flex; justify-content:flex-start; align-content:center; padding:1rem 1.6rem; height:100px}
 .appointee-bar .sapMFlexItem {flex:1 auto; padding-right:54px; align-self:center; color:#222; font-weight:700}

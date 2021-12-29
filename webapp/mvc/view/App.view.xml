@@ -14,11 +14,15 @@
 
     <ToolbarSpacer />
 
-    <HBox alignItems="Center" class="my-info">
-      <Text text="{sessionModel>/Ename}" class="name" />
-      <Text text="{sessionModel>/Zzjikgbt} / {sessionModel>/Zzjiktlt}" />
-      <Image src="{sessionModel>/Photo}" mode="Background" backgroundPosition="center center" width="26px" />
-    </HBox>
+    <GenericTile frameType="Auto" width="auto" class="my-info" press=".navToProfile">
+      <TileContent>
+        <HBox alignItems="Center" height="100%">
+          <Text text="{sessionModel>/Ename}" class="name" />
+          <Text text="{sessionModel>/Zzjikgbt} / {sessionModel>/Zzjiktlt}" />
+          <Image src="{sessionModel>/Photo}" mode="Background" backgroundPosition="center center" width="26px" />
+        </HBox>
+      </TileContent>
+    </GenericTile>
 
     <Button type="Transparent" class="icon-button notice" />
 
