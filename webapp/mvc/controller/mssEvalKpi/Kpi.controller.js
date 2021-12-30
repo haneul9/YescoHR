@@ -43,7 +43,9 @@ sap.ui.define(
           situation: {
             segmentKey: 'A',
           },
-          CascadingSitu: {},
+          CascadingSitu: {
+            SituList: [],
+          },
           listRowCount: 1,
         });
 
@@ -178,9 +180,10 @@ sap.ui.define(
               Zyear: String(new Date().getFullYear()),
             });
 
-            const aTreeList = await this.getTreeList();
+            const aTreeList = await this.setTreeList();
+            const aVariat = this.oDataChangeTree(aTreeList);
 
-            // oViewModel.setProperty('/CascadingSitu/SecondCode', aGridList);
+            oViewModel.setProperty('/CascadingSitu/SituList', aVariat);
           }
         } catch (oError) {
           AppUtils.handleError(oError);
@@ -238,11 +241,14 @@ sap.ui.define(
           });
         }
 
-        const aTreeList = await this.getTreeList();
+        const aTreeList = await this.setTreeList();
+        const aVariat = this.oDataChangeTree(aTreeList);
+
+        oViewModel.setProperty('/CascadingSitu/SituList', aVariat);
       },
 
       // Cascading 현황에 조직 별 treetable
-      getTreeList() {
+      setTreeList() {
         const oModel = this.getModel(ServiceNames.APPRAISAL);
         const oViewModel = this.getViewModel();
         const mSearch = oViewModel.getProperty('/search');
@@ -265,13 +271,52 @@ sap.ui.define(
         });
       },
 
+      // Cascading 조회
+      async onCasSituList() {
+        const oViewModel = this.getViewModel();
+        const aTreeList = await this.setTreeList();
+        const aVariat = this.oDataChangeTree(aTreeList);
+
+        oViewModel.setProperty('/CascadingSitu/SituList', aVariat);
+      },
+
+      // oData Tree구조로 만듦
+      oDataChangeTree(aList = []) {
+        const oViewModel = this.getViewModel();
+        const map = {};
+        const roots = [];
+        let node;
+        let i;
+
+        oViewModel.setProperty('/CascadingSitu/SituList', []);
+        const aslist = this.byId('CascadSituList');
+        debugger;
+        for (i = 0; i < aList.length; i += 1) {
+          map[aList[i].Objid] = i; // initialize the map
+          aList[i].children = []; // initialize the children
+          delete aList[i].__metadata;
+        }
+
+        for (i = 0; i < aList.length; i += 1) {
+          node = aList[i];
+          if (node.ObjidUp !== '00000000') {
+            // if you have dangling branches check that map[node.ObjidUp] exists
+            aList[map[node.ObjidUp]].children.push(node);
+          } else {
+            roots.push(node);
+          }
+        }
+
+        return roots;
+      },
+
       onCasSituSecSelect(oEvent) {
         const oViewModel = this.getViewModel();
         const sKey = oEvent.getSource().getSelectedKey();
 
         oViewModel.getProperty('/CascadingSitu/SecondCode').forEach((e) => {
           if (sKey === e.Objid) {
-            oViewModel.setProperty('/search/Otype', e.Otype);
+            oViewModel.setProperty('/search/Otype', e.Otype || '');
           }
         });
       },
