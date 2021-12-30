@@ -1,24 +1,23 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/mvc/model/SessionModel',
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     SessionModel
   ) => {
     'use strict';
 
     return SessionModel.extend('sap.ui.yesco.mvc.model.AppointeeModel', {
       constructor: function (oUIComponent) {
-        JSONModel.apply(this, this.getInitialData());
+        SessionModel.call(this, oUIComponent);
 
         this.setProperty('/showChangeButton', false);
+      },
 
-        this.setUIComponent(oUIComponent);
-        this.setPromise(this.cloneSessionData());
+      async retrieve() {
+        return this.cloneSessionData();
       },
 
       async cloneSessionData() {

@@ -29,7 +29,7 @@ sap.ui.define(
           Dtfmt = oBindingValueType.oFormatOptions.pattern;
         }
         if (!Dtfmt) {
-          Dtfmt = AppUtils.getAppComponent().getSessionModel().getProperty('/Dtfmt');
+          Dtfmt = AppUtils.getAppComponent().getAppointeeModel().getProperty('/Dtfmt');
           this.setShowFooter(true);
         }
 

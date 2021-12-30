@@ -189,7 +189,7 @@ sap.ui.define(
           Actda: moment().hour(9).toDate(),
         };
 
-        return await Client.getEntitySet(oModel, sUrl, mFilters);
+        return Client.getEntitySet(oModel, sUrl, mFilters);
       },
 
       onSelectSuggestion(oEvent) {

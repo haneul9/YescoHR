@@ -282,7 +282,7 @@ sap.ui.define(
         }
 
         const oAppModel = this.getViewModel('appointeeModel');
-        oAppModel.setProperty('/', aSelectedEmp[0]);
+        oAppModel.setData(aSelectedEmp[0], true);
         oEvent.getSource().getParent().close();
         this.onRefresh();
       },

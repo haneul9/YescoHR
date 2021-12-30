@@ -1,60 +1,41 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/mvc/model/base/PromiseJSONModel',
+    'sap/ui/yesco/mvc/model/base/UIComponentBaseModel',
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     AppUtils,
+    Client,
     ServiceNames,
-    PromiseJSONModel
+    UIComponentBaseModel
   ) => {
     'use strict';
 
-    return PromiseJSONModel.extend('sap.ui.yesco.mvc.model.MenuModel', {
-      constructor: function (oUIComponent) {
-        JSONModel.apply(this);
+    return UIComponentBaseModel.extend('sap.ui.yesco.mvc.model.MenuModel', {
+      async retrieve() {
+        try {
+          const oModel = this.getUIComponent().getModel(ServiceNames.COMMON);
+          const sUrl = 'GetMenuLv';
+          const mPayload = {
+            Device: '',
+            GetMenuLv1Nav: [],
+            GetMenuLv2Nav: [],
+            GetMenuLv3Nav: [],
+            GetMenuLv4Nav: [],
+          };
 
-        this.setUIComponent(oUIComponent);
-        this.setPromise(this.retrieve());
-      },
+          const oData = await Client.deep(oModel, sUrl, mPayload);
 
-      retrieve() {
-        return new Promise((resolve, reject) => {
-          const sUrl = '/GetMenuLvSet';
-          this.getUIComponent()
-            .getModel(ServiceNames.COMMON)
-            .create(
-              sUrl,
-              {
-                Device: '',
-                GetMenuLv1Nav: [],
-                GetMenuLv2Nav: [],
-                GetMenuLv3Nav: [],
-                GetMenuLv4Nav: [],
-              },
-              {
-                success: (oData, oResponse) => {
-                  AppUtils.debug(`${sUrl} success.`, oData, oResponse);
+          this.setData(this.curryData(oData));
 
-                  this.setData(this.transform(oData));
-
-                  resolve();
-                },
-                error: (oError) => {
-                  AppUtils.debug(`${sUrl} error.`, oError);
-
-                  this.setData(this.transform({}));
-
-                  reject(oError);
-                },
-              }
-            );
-        });
+          return Promise.resolve();
+        } catch (oError) {
+          return Promise.reject(oError);
+        }
       },
 
       /**
@@ -65,7 +46,7 @@ sap.ui.define(
        * @param {map} GetMenuLv4Nav 메뉴 속성 정보
        * @returns {array} 메뉴 tree 정보
        */
-      transform({ GetMenuLv1Nav = {}, GetMenuLv2Nav = {}, GetMenuLv3Nav = {}, GetMenuLv4Nav = {} }) {
+      curryData({ GetMenuLv1Nav = {}, GetMenuLv2Nav = {}, GetMenuLv3Nav = {}, GetMenuLv4Nav = {} }) {
         const { results: aLevel1 = [] } = GetMenuLv1Nav;
         const { results: aLevel2 = [] } = GetMenuLv2Nav;
         const { results: aLevel3 = [] } = GetMenuLv3Nav;
@@ -100,8 +81,7 @@ sap.ui.define(
             aFavoriteMenids.push(m.Menid);
           }
 
-          mMenidToProperties[m.Mnid3] = {
-            ...mMenuProperties,
+          mMenidToProperties[m.Mnid3] = $.extend(true, mMenuProperties, {
             Level: 3,
             Mnid1: m.Mnid1,
             Mnid2: m.Mnid2,
@@ -110,13 +90,13 @@ sap.ui.define(
             Mepop: m.Mepop === 'X',
             Favor: m.Favor === 'X',
             Pwchk: m.Pwchk === 'X',
-          };
+          });
 
           const aLevel2SubMenu = mLevel2Sub[m.Mnid2];
           if (aLevel2SubMenu) {
-            aLevel2SubMenu.push(mMenidToProperties[m.Mnid3]);
+            aLevel2SubMenu.push(mMenuProperties);
           } else {
-            mLevel2Sub[m.Mnid2] = [mMenidToProperties[m.Mnid3]];
+            mLevel2Sub[m.Mnid2] = [mMenuProperties];
           }
         });
 
@@ -130,8 +110,7 @@ sap.ui.define(
             aFavoriteMenids.push(m.Menid);
           }
 
-          mMenidToProperties[m.Mnid2] = {
-            ...mMenuProperties,
+          mMenidToProperties[m.Mnid2] = $.extend(true, mMenuProperties, {
             Level: 2,
             Menid: m.Menid,
             Mnid2: m.Mnid2,
@@ -141,13 +120,13 @@ sap.ui.define(
             Favor: m.Favor === 'X',
             Pwchk: m.Pwchk === 'X',
             Children: mLevel2Sub[m.Mnid2] || [],
-          };
+          });
 
           const aLevel1SubMenu = mLevel1Sub[m.Mnid1];
           if (aLevel1SubMenu) {
-            aLevel1SubMenu.push(mMenidToProperties[m.Mnid2]);
+            aLevel1SubMenu.push(mMenuProperties);
           } else {
-            mLevel1Sub[m.Mnid1] = [mMenidToProperties[m.Mnid2]];
+            mLevel1Sub[m.Mnid1] = [mMenuProperties];
           }
         });
 
@@ -161,8 +140,7 @@ sap.ui.define(
             aFavoriteMenids.push(m.Menid);
           }
 
-          mMenidToProperties[m.Mnid1] = {
-            ...mMenuProperties,
+          mMenidToProperties[m.Mnid1] = $.extend(true, mMenuProperties, {
             Level: 1,
             Menid: m.Menid,
             Mnid1: m.Mnid1,
@@ -173,9 +151,9 @@ sap.ui.define(
             Pwchk: m.Pwchk === 'X',
             Children: mLevel1Sub[m.Mnid1] || [],
             StyleClasses: this.getStyleClasses(m),
-          };
+          });
 
-          return mMenidToProperties[m.Mnid1];
+          return mMenuProperties;
         });
 
         return {

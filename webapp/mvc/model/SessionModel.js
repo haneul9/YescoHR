@@ -1,83 +1,73 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
-    'sap/ui/model/json/JSONModel',
-    'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/mvc/model/base/PromiseJSONModel',
+    'sap/ui/yesco/mvc/model/base/UIComponentBaseModel',
   ],
   (
     // prettier 방지용 주석
-    Filter,
-    FilterOperator,
-    JSONModel,
-    AppUtils,
+    Client,
     ServiceNames,
-    PromiseJSONModel
+    UIComponentBaseModel
   ) => {
     'use strict';
 
     const DATE_FORMAT = 'yyyy.MM.dd';
 
-    return PromiseJSONModel.extend('sap.ui.yesco.mvc.model.SessionModel', {
-      constructor: function (oUIComponent) {
-        JSONModel.apply(this, this.getInitialData());
-
-        this.setUIComponent(oUIComponent);
-        this.setPromise(this.retrieve());
-      },
-
+    return UIComponentBaseModel.extend('sap.ui.yesco.mvc.model.SessionModel', {
       getInitialData() {
         return {
           Dtfmt: DATE_FORMAT,
+          DtfmtYYYYMM: 'yyyy.MM',
+          DtfmtYYYY: 'yyyy',
           DTFMT: DATE_FORMAT.toUpperCase(),
+          DTFMTYYYYMM: 'YYYY.MM',
+          DTFMTYYYY: 'YYYY',
           Werks: 'init',
-          Photo: 'asset/image/employee.png',
+          Photo: 'asset/image/avatar-unknown.svg',
         };
       },
 
-      async retrieve(sPernr) {
-        return new Promise((resolve, reject) => {
-          const sUrl = '/EmpLoginInfoSet';
-          const filters = sPernr ? [new Filter('Pernr', FilterOperator.EQ, sPernr)] : []; // AppointeeModel용
+      async retrieve() {
+        return this.read();
+      },
 
-          this.getUIComponent()
-            .getModel(ServiceNames.COMMON)
-            .read(sUrl, {
-              filters: filters,
-              success: (oData, oResponse) => {
-                AppUtils.debug(`${sUrl} success.`, oData, oResponse);
+      async read(sPernr) {
+        try {
+          const oModel = this.getUIComponent().getModel(ServiceNames.COMMON);
+          const sUrl = 'EmpLoginInfo';
+          const mFilters = sPernr ? { Pernr: sPernr } : {}; // AppointeeModel용
 
-                const mSessionData = (oData.results || [])[0] || {};
-                delete mSessionData.__metadata;
+          const aResults = await Client.getEntitySet(oModel, sUrl, mFilters);
 
-                const Dtfmt = mSessionData.Dtfmt;
-                if (Dtfmt && Dtfmt.length >= 8) {
-                  mSessionData.Dtfmt = Dtfmt.replace(/y/gi, 'y').replace(/m/gi, 'M').replace(/d/gi, 'd');
-                  mSessionData.DTFMT = Dtfmt.toUpperCase();
-                } else {
-                  mSessionData.Dtfmt = DATE_FORMAT;
-                  mSessionData.DTFMT = DATE_FORMAT.toUpperCase();
-                }
-                mSessionData.DtfmtYYYYMM = mSessionData.Dtfmt.replace(/([a-zA-Z]{4})([^a-zA-Z]?)([a-zA-Z]{2}).*/, '$1$2$3');
-                mSessionData.DtfmtYYYY = mSessionData.Dtfmt.replace(/([a-zA-Z]{4}).*/, '$1');
-                mSessionData.DTFMTYYYYMM = mSessionData.DTFMT.replace(/([a-zA-Z]{4})([^a-zA-Z]?)([a-zA-Z]{2}).*/, '$1$2$3');
-                mSessionData.DTFMTYYYY = mSessionData.DTFMT.replace(/([a-zA-Z]{4}).*/, '$1');
-                mSessionData.Photo ||= 'asset/image/avatar-unknown.svg';
+          this.setData(this.curryData(aResults), true);
 
-                this.setData(mSessionData, true);
+          return Promise.resolve();
+        } catch (oError) {
+          return Promise.reject(oError);
+        }
+      },
 
-                resolve();
-              },
-              error: (oError) => {
-                AppUtils.debug(`${sUrl} error.`, oError);
+      curryData(aResults) {
+        const mSessionData = aResults[0] || {};
+        delete mSessionData.__metadata;
 
-                reject(oError);
-              },
-            });
-        });
+        const Dtfmt = mSessionData.Dtfmt;
+        if (Dtfmt && Dtfmt.length >= 8) {
+          mSessionData.Dtfmt = Dtfmt.replace(/y/gi, 'y').replace(/m/gi, 'M').replace(/d/gi, 'd');
+          mSessionData.DTFMT = Dtfmt.toUpperCase();
+        } else {
+          mSessionData.Dtfmt = DATE_FORMAT;
+          mSessionData.DTFMT = DATE_FORMAT.toUpperCase();
+        }
+        mSessionData.DtfmtYYYYMM = mSessionData.Dtfmt.replace(/([a-zA-Z]{4})([^a-zA-Z]?)([a-zA-Z]{2}).*/, '$1$2$3');
+        mSessionData.DtfmtYYYY = mSessionData.Dtfmt.replace(/([a-zA-Z]{4}).*/, '$1');
+        mSessionData.DTFMTYYYYMM = mSessionData.DTFMT.replace(/([a-zA-Z]{4})([^a-zA-Z]?)([a-zA-Z]{2}).*/, '$1$2$3');
+        mSessionData.DTFMTYYYY = mSessionData.DTFMT.replace(/([a-zA-Z]{4}).*/, '$1');
+        mSessionData.Photo ||= 'asset/image/avatar-unknown.svg';
+
+        return mSessionData;
       },
     });
   }
