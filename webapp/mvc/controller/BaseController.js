@@ -202,7 +202,7 @@ sap.ui.define(
        * @returns
        */
       getApprovalType() {
-        throw new UI5Error({ message: this.getBundleText('MSG_00053', 'getApprovalType') }); // Controller에 {getApprovalType} function을 선언하세요.
+        throw new UI5Error({ message: this.getBundleText('MSG_00053', 'Controller', 'getApprovalType') }); // {Controller}에 {getApprovalType} function을 선언하세요.
       },
 
       onRefresh() {

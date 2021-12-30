@@ -31,7 +31,7 @@ sap.ui.define(
           }
         }
         if (!Dtfmt) {
-          Dtfmt = AppUtils.getAppComponent().getSessionModel().getProperty('/Dtfmt');
+          Dtfmt = AppUtils.getAppComponent().getAppointeeModel().getProperty('/Dtfmt');
         }
 
         this.setShowFooter(true).setValueFormat(Dtfmt).setDisplayFormat(Dtfmt).setPlaceholder(`${Dtfmt} - ${Dtfmt}`).addStyleClass('sapIcon_Date');

@@ -3,10 +3,9 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/Device',
     'sap/ui/core/UIComponent',
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceManager',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/ErrorHandler',
@@ -19,10 +18,9 @@ sap.ui.define(
     // prettier 방지용 주석
     Device,
     UIComponent,
-    Filter,
-    FilterOperator,
     JSONModel,
     AppUtils,
+    Client,
     ServiceManager,
     ServiceNames,
     ErrorHandler,
@@ -239,7 +237,7 @@ sap.ui.define(
           .attachRouteMatched((oEvent) => {
             AppUtils.debug('routeMatched', oEvent.getParameters());
 
-            const mArguments = oEvent.getParameter('arguments');
+            const mRouteArguments = oEvent.getParameter('arguments');
             const mConfig = oEvent.getParameter('config');
             const oView = oEvent.getParameter('view');
             const oController = oView.getController();
@@ -248,8 +246,8 @@ sap.ui.define(
 
             // 화면에서 사용될 Model들이 모두 초기화된 후 동작될 수 있도록 Promise 처리하여 변수로 저장
             this._oAllBaseModelReadyPromise = Promise.all([
-              this.onSessionModelReady(), // prettier 방지용 주석
-              this.onMenuModelReady({ mArguments, mConfig, oController }),
+              this.readySessionModel(), // prettier 방지용 주석
+              this.readyMenuModel({ mRouteArguments, mConfig, oController }),
             ]).catch((oError) => {
               this.getRouter().getTargets().display('notFound', {
                 from: 'home',
@@ -260,7 +258,7 @@ sap.ui.define(
           .attachRoutePatternMatched(async (oEvent) => {
             AppUtils.debug('routePatternMatched', oEvent.getParameters());
 
-            const mArguments = oEvent.getParameter('arguments');
+            const mRouteArguments = oEvent.getParameter('arguments');
             const oView = oEvent.getParameter('view');
             const oController = oView.getController();
 
@@ -269,38 +267,38 @@ sap.ui.define(
             oView.setVisible(true); // 반드시 onObjectMatched 이전에 실행되야함
 
             if (oController && oController.onObjectMatched && typeof oController.onObjectMatched === 'function') {
-              oController.onObjectMatched(mArguments);
+              oController.onObjectMatched(mRouteArguments);
             }
           });
         return this;
       },
 
-      async onSessionModelReady() {
+      async readySessionModel() {
         return this.getAppointeeModel().getPromise();
       },
 
-      async onMenuModelReady({ mArguments, mConfig, oController }) {
+      async readyMenuModel({ mRouteArguments, mConfig, oController }) {
         await this.getMenuModel().getPromise();
 
         const sRouteName = mConfig.name;
         const [sRouteNameMain, sRouteNameSub] = sRouteName.split(/-/);
 
         return Promise.all([
-          this._saveBreadcrumbsData({ mArguments, mConfig, sRouteNameMain, sRouteNameSub, oController }), //
+          this._saveBreadcrumbsData({ mRouteArguments, mConfig, sRouteNameMain, sRouteNameSub, oController }), //
           this._checkRouteName(sRouteNameMain, sRouteNameSub),
         ]);
       },
 
       /**
        * Breadcrumbs 정보 저장
-       * @param {object} mArguments
+       * @param {object} mRouteArguments
        * @param {object} mConfig
        * @param {string} sRouteNameMain
        * @param {string} sRouteNameSub
        * @param {object} oController
        * @private
        */
-      async _saveBreadcrumbsData({ mArguments, mConfig, sRouteNameMain, sRouteNameSub, oController }) {
+      async _saveBreadcrumbsData({ mRouteArguments, mConfig, sRouteNameMain, sRouteNameSub, oController }) {
         const oMenuModel = this.getMenuModel();
 
         if (sRouteNameMain === 'ehrHome') {
@@ -316,7 +314,7 @@ sap.ui.define(
 
         let sCurrentLocationText;
         if (oController && typeof oController.getCurrentLocationText === 'function') {
-          sCurrentLocationText = oController.getCurrentLocationText(mArguments);
+          sCurrentLocationText = oController.getCurrentLocationText(mRouteArguments);
         }
 
         oMenuModel.setCurrentMenuData({
@@ -347,25 +345,13 @@ sap.ui.define(
           return;
         }
 
-        return new Promise((resolve, reject) => {
-          const sUrl = '/GetMenuidRoleSet';
-          this.getModel(ServiceNames.COMMON).read(sUrl, {
-            filters: [
-              // prettier 방지용 주석
-              new Filter('Menid', FilterOperator.EQ, sMenid),
-            ],
-            success: (oData, oResponse) => {
-              AppUtils.debug(`${sUrl} success.`, oData, oResponse);
+        const oModel = this.getModel(ServiceNames.COMMON);
+        const sUrl = 'GetMenuidRole';
+        const mFilters = {
+          Menid: sMenid,
+        };
 
-              resolve(); // TODO : Code 구분해서 reject
-            },
-            error: (oError) => {
-              AppUtils.debug(`${sUrl} error.`, oError);
-
-              reject(oError);
-            },
-          });
-        });
+        return Client.getEntitySet(oModel, sUrl, mFilters);
       },
 
       reduceViewResource() {
