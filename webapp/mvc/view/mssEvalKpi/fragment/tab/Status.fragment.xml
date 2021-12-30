@@ -12,7 +12,7 @@
             </SegmentedButton>
         </VBox>
         <VBox class="vCardBox">
-            <VBox class="form-bar" alignItems="Center">
+            <VBox class="form-bar" alignItems="Center" justifyContent="Start">
                 <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr 1fr 2fr 1fr" gridGap="10px">
                     <Label text="{/CascadingSitu/Label1}" />
                     <ComboBox items="{/CompanyCode}" selectedKey="{/search/Werks}" change=".onCasSituFirSelect">
@@ -28,12 +28,14 @@
                     </ComboBox>
                     <Button text="{i18n>LABEL_00100}" icon="asset/image/icon_search03.png" press=".onCasSituList"/>
                 </grid:CSSGrid>
-                <smartList:SmartList id="CascadSituList" listType="Tree" enableAutoBinding="true" showRowCount="false" showFullScreenButton="true" listBindingPath="/CascadingSitu/SituList">
-                    <smartList:listItemTemplate>
-                        <StandardTreeItem title="{Stext}" />
-                    </smartList:listItemTemplate>
-                </smartList:SmartList>
             </VBox>
+        </VBox>
+        <VBox class="vCardBox">
+            <smartList:SmartList id="CascadSituList" listType="Tree" enableAutoBinding="true" showRowCount="false" showFullScreenButton="true" listBindingPath="/CascadingSitu/SituList">
+                <smartList:listItemTemplate>
+                    <StandardTreeItem title="{Stext}" />
+                </smartList:listItemTemplate>
+            </smartList:SmartList>
         </VBox>
     </VBox>
 </core:FragmentDefinition>
