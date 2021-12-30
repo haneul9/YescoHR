@@ -1151,6 +1151,8 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .cascading-wrap .Org-name.sapMLabel {}
 .cascading-wrap .Org-name.sapMLabel bdi{margin:0 auto}
 .cascading-wrap .sapFGridList ul:not(.sapUiLayoutCSSGridBoxLayoutPolyfill) {margin-bottom: 0;gap: 18px !important;}
+#container-ehr---m_EvalKpi--EmployeeSearch-cont {padding-top:30px;}
+
 
 /* 근태 */
 .year-plan-head {display: flex;align-items: center;margin-bottom:16px;}

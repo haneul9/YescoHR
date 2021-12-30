@@ -21,13 +21,13 @@
                 </HBox>
             </HBox>
             <VBox items="{/Tmp}">
-                <HBox width="100%" height="100px">
-                    <Label text="{Label}" width="150px" vAlign="Middle" textAlign="Center">
+                <HBox class="cascading-wrap">
+                    <Label text="{Label}" class="Org-name">
                         <layoutData>
-                            <FlexItemData minHeight="150px" maxHeight="150px" />
+                            <FlexItemData />
                         </layoutData>
                     </Label>
-                    <f:GridList items="{TmpGrid}">
+                    <f:GridList items="{TmpGrid}" class="part-cascading-list">
                         <f:layoutData>
                             <FlexItemData growFactor="1"/>
                         </f:layoutData>
@@ -36,20 +36,20 @@
                             <dnd-grid:GridDropInfo targetAggregation="items" dropPosition="Between" dropLayout="Horizontal" drop=".onTeamDrop" />
                         </f:dragDropConfig>
                         <f:customLayout>
-                            <grid:GridBoxLayout boxMinWidth="30px" boxWidth="200px" />
+                            <grid:GridBoxLayout boxMinWidth="30px" boxWidth="280px" />
                         </f:customLayout>
                         <f:GridListItem>
-                            <VBox height="70px">
+                            <VBox height="80px">
                                 <layoutData>
                                     <FlexItemData growFactor="1" shrinkFactor="0" />
                                 </layoutData>
                                 <HBox>
-                                    <core:Icon visible="{= ${Otype} === '90' }" src="sap-icon://alert" />
-                                    <core:Icon visible="{= ${Otype} === '91' }" src="sap-icon://checklist-item" />
-                                    <core:Icon visible="{= !!${Tmcnt} &amp;&amp; ${Tmcnt} !== '0' }" src="sap-icon://border" />
-                                    <core:Icon visible="{= !!${Url} }" src="sap-icon://circle-task" />
+                                    <Image visible="{= ${Otype} === '90' }" src="asset/image/icon_cascading_type01.png" />
+                                    <Image visible="{= ${Otype} === '91' }" src="asset/image/icon_cascading_type02.png" />
+                                    <Image visible="{= !!${Tmcnt} &amp;&amp; ${Tmcnt} !== '0' }" src="asset/image/icon_cascading_type03.png" />
+                                    <Image visible="{= !!${Url} }" src="asset/image/icon_cascading_type04.png" />
                                 </HBox>
-                                <Title text="{Stext}" level="H4" />
+                                <Title text="{Stext}" />
                                 <Text text="{Ztext}" wrapping="false" />
                             </VBox>
                         </f:GridListItem>
