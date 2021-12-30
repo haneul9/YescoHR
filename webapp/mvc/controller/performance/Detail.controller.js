@@ -529,7 +529,7 @@ sap.ui.define(
             .isEqual(100)
             .value()
         ) {
-          MessageBox.alert(this.getBundleText('MSG_10005')); // 가중치의 총합은 100이어야 합니다.
+          MessageBox.alert(this.getBundleText('MSG_10005')); // 가중치의 총합은 100%이어야 합니다.
           return;
         }
 
