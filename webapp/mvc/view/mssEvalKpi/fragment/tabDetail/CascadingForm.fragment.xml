@@ -5,7 +5,7 @@
     xmlns:table="sap.ui.table"
     xmlns:grid="sap.ui.layout.cssgrid">
     <VBox class="vCardBox">
-        <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr 1fr 2fr 1fr" gridGap="10px">
+        <!-- <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr 1fr 2fr 1fr" gridGap="10px">
             <Label text="{i18n>LABEL_00220}" />
             <ComboBox items="{/CompanyCode}" selectedKey="{/search/Werks}" change=".onCompSelect">
                 <core:Item text="{Pbtxt}" key="{Werks}" />
@@ -18,8 +18,23 @@
             <ComboBox items="{/Years}" selectedKey="{/search/Zyear}">
                 <core:Item text="{Ztext}" key="{Zcode}" />
             </ComboBox>
-            <Button text="{i18n>LABEL_00100}" press=".onSearch"/>
-        </grid:CSSGrid>
+            <Button text="{i18n>LABEL_00100}" icon="asset/image/icon_search03.png" press=".onSearch"/>
+        </grid:CSSGrid> -->
+        <HBox class="form-bar" justifyContent="Start" alignItems="Center">
+            <Label text="{i18n>LABEL_00220}" />
+            <ComboBox items="{/CompanyCode}" selectedKey="{/search/Werks}" change=".onCompSelect">
+                <core:Item text="{Pbtxt}" key="{Werks}" />
+            </ComboBox>
+            <Label text="{i18n>LABEL_15004}" />
+            <ComboBox items="{/PartCode}" selectedKey="{/search/Orgeh}" change=".onPartSelect">
+                <core:Item text="{Orgtx}" key="{Orgeh}" />
+            </ComboBox>
+            <Label text="{i18n>LABEL_15005}" />
+            <ComboBox items="{/Years}" selectedKey="{/search/Zyear}">
+                <core:Item text="{Ztext}" key="{Zcode}" />
+            </ComboBox>
+            <Button text="{i18n>LABEL_00100}" icon="asset/image/icon_search03.png" press=".onSearch"/>
+        </HBox>
     </VBox>
     <VBox class="vCardBox">
         <table:Table rows="{/List}" visibleRowCount="{/listRowCount}" width="100%" busyIndicatorDelay="0" busy="{/busy}" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
