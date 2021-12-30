@@ -282,32 +282,16 @@ sap.ui.define(
 
       // oData Tree구조로 만듦
       oDataChangeTree(aList = []) {
-        const oViewModel = this.getViewModel();
-        const map = {};
-        const roots = [];
-        let node;
-        let i;
+        const aConvertedList = _.chain(aList)
+          .cloneDeep()
+          .map((o) => _.omit(o, '__metadata'))
+          .value();
+        const mGroupedByParents = _.groupBy(aConvertedList, 'ObjidUp');
+        const mCatsById = _.keyBy(aConvertedList, 'Objid');
 
-        oViewModel.setProperty('/CascadingSitu/SituList', []);
-        const aslist = this.byId('CascadSituList');
-        debugger;
-        for (i = 0; i < aList.length; i += 1) {
-          map[aList[i].Objid] = i; // initialize the map
-          aList[i].children = []; // initialize the children
-          delete aList[i].__metadata;
-        }
+        _.each(_.omit(mGroupedByParents, '00000000'), (children, parentId) => _.set(mCatsById, [parentId, 'children'], children));
 
-        for (i = 0; i < aList.length; i += 1) {
-          node = aList[i];
-          if (node.ObjidUp !== '00000000') {
-            // if you have dangling branches check that map[node.ObjidUp] exists
-            aList[map[node.ObjidUp]].children.push(node);
-          } else {
-            roots.push(node);
-          }
-        }
-
-        return roots;
+        return mGroupedByParents['00000000'];
       },
 
       onCasSituSecSelect(oEvent) {
