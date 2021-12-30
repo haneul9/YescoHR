@@ -99,27 +99,57 @@
 									<Label text="{i18n>LABEL_00147}" width="100%" textAlign="Center" />
 									<Label text="{i18n>LABEL_10015}" width="100%" textAlign="Center" />
 									<Label text="{i18n>LABEL_10016}" width="100%" textAlign="Center" />
-									<Label text="{i18n>LABEL_10017}" width="100%" textAlign="Center" visible="{= ${/fieldControl/display/Z131} !== 'H' || ${/fieldControl/display/Z132} !== 'H' }" />
+									<Label text="{i18n>LABEL_10017}" width="100%" textAlign="Center" visible="{= ${/fieldControl/display/Z131} !== 'H' || ${/fieldControl/display/Z132} !== 'H' }">
+										<layoutData>
+											<grid:GridItemLayoutData gridRow="2" />
+										</layoutData>
+									</Label>
 									<VBox visible="{= ${/fieldControl/display/Z131} !== 'H' }">
+										<layoutData>
+											<grid:GridItemLayoutData gridRow="2" />
+										</layoutData>
 										<TextArea rows="5" value="" width="100%" enabled="false" visible="{= ${/fieldControl/display/Z131} === 'V' }" />
 										<TextArea class="required" rows="5" value="{/manage/Z131}" width="100%" maxLength="{/fieldControl/limit/Z131}" enabled="{= ${/fieldControl/display/Z131} === 'X' }" visible="{= ${/fieldControl/display/Z131} !== 'V' }" />
 									</VBox>
 									<VBox visible="{= ${/fieldControl/display/Z132} !== 'H' }">
+										<layoutData>
+											<grid:GridItemLayoutData gridRow="2" />
+										</layoutData>
 										<TextArea rows="5" value="" width="100%" enabled="false" visible="{= ${/fieldControl/display/Z132} === 'V' }" />
 										<TextArea class="required" rows="5" value="{/manage/Z132}" width="100%" maxLength="{/fieldControl/limit/Z132}" enabled="{= ${/fieldControl/display/Z132} === 'X' }" visible="{= ${/fieldControl/display/Z132} !== 'V' }" />
 									</VBox>
-									<Label text="{i18n>LABEL_10018}" width="100%" textAlign="Center" visible="{= ${/fieldControl/display/Z136} !== 'H' || ${/fieldControl/display/Z137} !== 'H' }" />
+									<Label text="{i18n>LABEL_10018}" width="100%" textAlign="Center" visible="{= ${/fieldControl/display/Z136} !== 'H' || ${/fieldControl/display/Z137} !== 'H' }">
+										<layoutData>
+											<grid:GridItemLayoutData gridRow="3" />
+										</layoutData>
+									</Label>
 									<VBox visible="{= ${/fieldControl/display/Z136} !== 'H' }">
+										<layoutData>
+											<grid:GridItemLayoutData gridRow="3" />
+										</layoutData>
 										<TextArea class="required" rows="5" value="{/manage/Z136}" width="100%" maxLength="{/fieldControl/limit/Z136}" enabled="{= ${/fieldControl/display/Z136} === 'X' }" />
 									</VBox>
 									<VBox visible="{= ${/fieldControl/display/Z137} !== 'H' }">
+										<layoutData>
+											<grid:GridItemLayoutData gridRow="3" />
+										</layoutData>
 										<TextArea class="required" rows="5" value="{/manage/Z137}" width="100%" maxLength="{/fieldControl/limit/Z137}" enabled="{= ${/fieldControl/display/Z137} === 'X' }" />
 									</VBox>
-									<Label text="{i18n>LABEL_10019}" width="100%" textAlign="Center" visible="{= ${/fieldControl/display/Papp1} !== 'H' || ${/fieldControl/display/Papp2} !== 'H' }" />
+									<Label text="{i18n>LABEL_10019}" width="100%" textAlign="Center" visible="{= ${/fieldControl/display/Papp1} !== 'H' || ${/fieldControl/display/Papp2} !== 'H' }">
+										<layoutData>
+											<grid:GridItemLayoutData gridRow="4" />
+										</layoutData>
+									</Label>
 									<VBox visible="{= ${/fieldControl/display/Papp1} !== 'H' }">
+										<layoutData>
+											<grid:GridItemLayoutData gridRow="4" />
+										</layoutData>
 										<TextArea class="required" rows="5" value="{/manage/Papp1}" width="100%" maxLength="{/fieldControl/limit/Papp1}" enabled="{= ${/fieldControl/display/Papp1} === 'X' }" />
 									</VBox>
 									<VBox visible="{= ${/fieldControl/display/Papp2} !== 'H' }">
+										<layoutData>
+											<grid:GridItemLayoutData gridRow="4" />
+										</layoutData>
 										<TextArea class="required" rows="5" value="{/manage/Papp2}" width="100%" maxLength="{/fieldControl/limit/Papp2}" enabled="{= ${/fieldControl/display/Papp2} === 'X' }" />
 									</VBox>
 								</grid:CSSGrid>
