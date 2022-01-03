@@ -249,7 +249,7 @@ sap.ui.define(
         const Datas = { Data: [] };
 
         oModel.read('/FileListSet', {
-          filters: [new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, oTableRowData.Appno), new sap.ui.model.Filter('Zworktyp', sap.ui.model.FilterOperator.EQ, oController.APPTP)],
+          filters: [new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, oTableRowData.Appno), new sap.ui.model.Filter('Zworktyp', sap.ui.model.FilterOperator.EQ, oController.getApprovalType())],
           success: (data) => {
             if (data && data.results.length) {
               data.results.forEach((elem) => {
