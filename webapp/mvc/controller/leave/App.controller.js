@@ -1,7 +1,9 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/core/Fragment',
     'sap/ui/model/json/JSONModel',
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/odata/Client',
@@ -11,7 +13,9 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
+    Fragment,
     JSONModel,
+    MessageBox,
     AppUtils,
     ComboEntry,
     Client,
@@ -49,6 +53,11 @@ sap.ui.define(
             rowCount: 2,
           },
           list: [],
+          dialog: {
+            busy: false,
+            rowCount: 1,
+            list: [],
+          },
         });
         this.setViewModel(oViewModel);
 
@@ -106,6 +115,29 @@ sap.ui.define(
         }, 100);
       },
 
+      openPersonalDialog() {
+        const oView = this.getView();
+
+        if (!this.pPersonalDialog) {
+          this.pPersonalDialog = Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.mvc.view.leave.fragment.PersonalDialog',
+            controller: this,
+          }).then((oDialog) => {
+            oView.addDependent(oDialog);
+
+            TableUtils.adjustRowSpan({
+              oTable: this.byId('leaveByPersonalTable'),
+              aColIndices: [0, 1, 2, 3, 4, 5, 6, 11],
+              sTheadOrTbody: 'thead',
+            });
+
+            return oDialog;
+          });
+        }
+        this.pPersonalDialog.then((oDialog) => oDialog.open());
+      },
+
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
@@ -133,6 +165,10 @@ sap.ui.define(
         }
       },
 
+      onPressPersonalDialogClose() {
+        this.byId('personalDialog').close();
+      },
+
       onPressExcelDownload() {
         const oTable = this.byId(this.TABLE_ID);
         const aTableData = this.getViewModel().getProperty('/list');
@@ -141,13 +177,42 @@ sap.ui.define(
         TableUtils.export({ oTable, aTableData, sFileName, aDateProps: ['Paydt'] });
       },
 
-      onSelectRow(oEvent) {
-        const sPath = oEvent.getParameters().rowBindingContext.getPath();
-        const oRowData = this.getViewModel().getProperty(sPath);
+      async onSelectRow(oEvent) {
+        const oViewModel = this.getViewModel();
+        const oControl = oEvent.getSource();
+        const mControlParam = oEvent.getParameters();
+        const sFldcd = oControl.getColumns()[mControlParam.columnIndex].data('field');
+        const mRowData = oControl.getRows()[mControlParam.rowIndex].getBindingContext().getObject();
 
-        if (isNaN(oRowData.Seqnr)) return;
+        if (mRowData.Sumrow || _.isEmpty(sFldcd)) return;
 
-        this.getRouter().navTo('leave-detail', { seqnr: _.trimStart(oRowData.Seqnr, '0') });
+        try {
+          oViewModel.setProperty('/dialog/busy', true);
+
+          const aDetailRow = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'LeaveUseDetail', {
+            ..._.pick(mRowData, ['Zyymm', 'Orgeh', 'Qtaty']),
+            Fldcd: sFldcd,
+          });
+
+          if (_.isEmpty(aDetailRow)) {
+            MessageBox.alert(this.getBundleText('MSG_00034')); // 조회할 수 없습니다.
+            return;
+          }
+
+          oViewModel.setProperty('/dialog/rowCount', aDetailRow.length || 1);
+          oViewModel.setProperty(
+            '/dialog/list',
+            _.map(aDetailRow, (o, i) => ({ Idx: i + 1, ...o }))
+          );
+
+          this.openPersonalDialog();
+        } catch (oError) {
+          this.debug('Controller > leave App > onSelectRow Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/dialog/busy', false);
+        }
       },
 
       /*****************************************************************

@@ -1,0 +1,123 @@
+<core:FragmentDefinition xmlns="sap.ui.table"
+  xmlns:m="sap.m"
+  xmlns:core="sap.ui.core">
+  <m:Dialog id="personalDialog" title="{i18n>LABEL_16012}" contentWidth="1000px" contentHeight="500px">
+    <m:content>
+      <Table id="leaveByPersonalTable" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" rows="{/dialog/list}" visibleRowCount="{/dialog/rowCount}" busyIndicatorDelay="0" busy="{/dialog/busy}" noData="{i18n>MSG_00001}">
+        <columns>
+          <Column width="5%" filterProperty="Idx" sortProperty="Idx">
+            <multiLabels>
+              <m:Label text="No."/>
+              <m:Label text="No."/>
+            </multiLabels>
+            <template>
+              <m:Text text="{ path: 'Idx', type: 'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" />
+            </template>
+          </Column>
+          <Column width="8%" filterProperty="Pernr" sortProperty="Pernr">
+            <multiLabels>
+              <m:Label text="{i18n>LABEL_00209}"/>
+              <m:Label text="{i18n>LABEL_00209}"/>
+            </multiLabels>
+            <template>
+              <m:Text text="{Pernr}" width="100%" textAlign="Center" />
+            </template>
+          </Column>
+          <Column width="8%" filterProperty="Ename" sortProperty="Ename">
+            <multiLabels>
+              <m:Label text="{i18n>LABEL_00210}"/>
+              <m:Label text="{i18n>LABEL_00210}"/>
+            </multiLabels>
+            <template>
+              <m:Text text="{Ename}" width="100%" textAlign="Center" />
+            </template>
+          </Column>
+          <Column width="8%" filterProperty="Zzjikgbt" sortProperty="Zzjikgbt">
+            <multiLabels>
+              <m:Label text="{i18n>LABEL_00215}"/>
+              <m:Label text="{i18n>LABEL_00215}"/>
+            </multiLabels>
+            <template>
+              <m:Text text="{Zzjikgbt}" width="100%" textAlign="Center" />
+            </template>
+          </Column>
+          <Column width="8%" filterProperty="Zzjikcht" sortProperty="Zzjikcht">
+            <multiLabels>
+              <m:Label text="{i18n>LABEL_00217}"/>
+              <m:Label text="{i18n>LABEL_00217}"/>
+            </multiLabels>
+            <template>
+              <m:Text text="{Zzjikcht}" width="100%" textAlign="Center" />
+            </template>
+          </Column>
+          <Column filterProperty="Orgtx" sortProperty="Orgtx">
+            <multiLabels>
+              <m:Label text="{i18n>LABEL_00227}"/>
+              <m:Label text="{i18n>LABEL_00227}"/>
+            </multiLabels>
+            <template>
+              <m:Text text="{Orgtx}" width="100%" textAlign="Center" />
+            </template>
+          </Column>
+          <Column width="8%" filterProperty="Crecnt" sortProperty="Crecnt">
+            <multiLabels>
+              <m:Label text="{i18n>LABEL_16013}"/>
+              <m:Label text="{i18n>LABEL_16013}"/>
+            </multiLabels>
+            <template>
+              <m:Text text="{ path: 'Crecnt', type: 'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" />
+            </template>
+          </Column>
+          <Column width="8%" filterProperty="Usecnt1" sortProperty="Usecnt1" headerSpan="2">
+            <multiLabels>
+              <m:Label text="{i18n>LABEL_16014}"/>
+              <m:Label text="{i18n>LABEL_16017}"/>
+            </multiLabels>
+            <template>
+              <m:Text text="{ path: 'Usecnt1', type: 'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" />
+            </template>
+          </Column>
+          <Column width="8%" filterProperty="Userte1" sortProperty="Userte1">
+            <multiLabels>
+              <m:Label text="{i18n>LABEL_16014}"/>
+              <m:Label text="&#37;"/>
+            </multiLabels>
+            <template>
+              <m:Text text="{ path: 'Userte1', type: 'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" />
+            </template>
+          </Column>
+          <Column width="8%" filterProperty="Usecnt2" sortProperty="Usecnt2" headerSpan="2">
+            <multiLabels>
+              <m:Label text="{i18n>LABEL_16015}"/>
+              <m:Label text="{i18n>LABEL_16017}"/>
+            </multiLabels>
+            <template>
+              <m:Text text="{ path: 'Usecnt2', type: 'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" />
+            </template>
+          </Column>
+          <Column width="8%" filterProperty="Userte2" sortProperty="Userte2">
+            <multiLabels>
+              <m:Label text="{i18n>LABEL_16015}"/>
+              <m:Label text="&#37;"/>
+            </multiLabels>
+            <template>
+              <m:Text text="{ path: 'Userte2', type: 'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" />
+            </template>
+          </Column>
+          <Column width="8%" filterProperty="Balcnt" sortProperty="Balcnt">
+            <multiLabels>
+              <m:Label text="{i18n>LABEL_16016}"/>
+              <m:Label text="{i18n>LABEL_16016}"/>
+            </multiLabels>
+            <template>
+              <m:Text text="{ path: 'Balcnt', type: 'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" />
+            </template>
+          </Column>
+        </columns>
+      </Table>
+    </m:content>
+    <m:buttons>
+      <m:Button text="{i18n>LABEL_00115}" press=".onPressPersonalDialogClose"/>
+    </m:buttons>
+  </m:Dialog>
+</core:FragmentDefinition>
