@@ -289,6 +289,7 @@ sap.ui.define(
         const mGroupedByParents = _.groupBy(aConvertedList, 'ObjidUp');
         const mCatsById = _.keyBy(aConvertedList, 'Objid');
 
+        this.setFragment();
         _.each(_.omit(mGroupedByParents, '00000000'), (children, parentId) => _.set(mCatsById, [parentId, 'children'], children));
 
         return mGroupedByParents['00000000'];
@@ -553,7 +554,7 @@ sap.ui.define(
         const aPartList = aGridList.filter((x) => ![mDraggData].includes(x));
 
         // reset the rank property and update the model to refresh the bindings
-        oViewModel.setProperty(bTabKey ? '/PartList' : sDraggPath, aPartList);
+        oViewModel.setProperty(bTabKey ? '/PartList' : sDraggPath.slice(0, sDraggPath.lastIndexOf('/')), aPartList);
         oViewModel.refresh(true);
       },
 
@@ -582,13 +583,34 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.APPRAISAL);
         const oListModel = this.getViewModel();
         const oSearch = oListModel.getProperty('/search');
+        const sKey = oListModel.getProperty('/tab/selectedKey');
 
         return new Promise((resolve, reject) => {
           oModel.read('/KpiCascadingOrgListSet', {
-            filters: [new sap.ui.model.Filter('Gubun', sap.ui.model.FilterOperator.EQ, oListModel.getProperty('/tab/selectedKey')), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oSearch.Werks), new sap.ui.model.Filter('Orgeh', sap.ui.model.FilterOperator.EQ, sOrgeh || oSearch.Orgeh), new sap.ui.model.Filter('Zyear', sap.ui.model.FilterOperator.EQ, oSearch.Zyear)],
+            filters: [new sap.ui.model.Filter('Gubun', sap.ui.model.FilterOperator.EQ, sKey), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oSearch.Werks), new sap.ui.model.Filter('Orgeh', sap.ui.model.FilterOperator.EQ, sOrgeh || oSearch.Orgeh), new sap.ui.model.Filter('Zyear', sap.ui.model.FilterOperator.EQ, oSearch.Zyear)],
             success: (oData) => {
               if (oData) {
-                resolve(oData.results);
+                const aGridList = oData.results;
+                let aNotEmpty = [];
+
+                if (sKey === 'A') {
+                  aNotEmpty = aGridList.filter((e) => {
+                    return !!e.Stext || !!e.Ztext;
+                  });
+                } else {
+                  aGridList.forEach((e) => {
+                    if (!e.Stext && !e.Ztext) {
+                      aNotEmpty.push({
+                        Label: e.Orgtx,
+                        TmpGrid: [],
+                      });
+                    } else {
+                      aNotEmpty.push(e);
+                    }
+                  });
+                }
+
+                resolve(aNotEmpty);
               }
             },
             error: (oError) => {
@@ -599,19 +621,45 @@ sap.ui.define(
         });
       },
 
+      setFragment() {
+        debugger;
+        // if (!!this.dGridListDialog) {
+        //   this.byId('smartListBox').destroyItems();
+        // }
+
+        // const oView = this.getView();
+
+        // this.dGridListDialog = Fragment.load({
+        //   // id: `${oView.getId()}SmartList`,
+        //   name: 'sap.ui.yesco.mvc.view.mssEvalKpi.fragment.tabDetail.dialog.SmartList',
+        //   controller: this,
+        // }).then(function (oDialog) {
+        //   oView.addDependent(oDialog);
+        //   return oDialog;
+        // });
+      },
+
       // 팀 cascading grid settings
       setTeamGridList(aList = []) {
         const oViewModel = this.getViewModel();
         const sTempMessage = this.getBundleText('MSG_15002');
+        let aFilterList = [];
 
-        oViewModel.setProperty(
-          '/Tmp',
-          _.chain(aList)
+        if (!aList.length) {
+          aFilterList = [];
+        } else if (!aList[0].Ztext && !aList[0].Stext) {
+          aFilterList = _.each(aList, (o) => {
+            o.TmpGrid.push({ Stext: sTempMessage });
+          });
+        } else {
+          aFilterList = _.chain(aList)
             .groupBy('Orgtx')
             .map((v, p) => ({ Label: p, TmpGrid: v }))
             .forEach((o) => o.TmpGrid.push({ Stext: sTempMessage }))
-            .value()
-        );
+            .value();
+        }
+
+        oViewModel.setProperty('/Tmp', aFilterList);
       },
 
       // 저장

@@ -1,7 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core"
-    xmlns:smartList="sap.ui.comp.smartlist"
-    xmlns:grid="sap.ui.layout.cssgrid">
+    xmlns:smartList="sap.ui.comp.smartlist">
     <VBox class="contents">
         <VBox width="100%" class="vCardBox">
             <SegmentedButton width="30%" selectedKey="{/situation/segmentKey}" selectionChange=".onSegmentBtn" class="type-b">
@@ -28,12 +27,8 @@
                 <Button text="{i18n>LABEL_00100}" icon="asset/image/icon_search03.png" press=".onCasSituList"/>
             </HBox>
         </VBox>
-        <VBox class="vCardBox">
-            <smartList:SmartList id="CascadSituList" listType="Tree" enableAutoBinding="true" showRowCount="false" showFullScreenButton="true" listBindingPath="/CascadingSitu/SituList">
-                <smartList:listItemTemplate>
-                    <StandardTreeItem title="{Stext}" />
-                </smartList:listItemTemplate>
-            </smartList:SmartList>
+        <VBox class="vCardBox" id="smartListBox">
+            <core:Fragment fragmentName="sap.ui.yesco.mvc.view.mssEvalKpi.fragment.tabDetail.dialog.SmartList" type="XML" />
         </VBox>
     </VBox>
 </core:FragmentDefinition>
