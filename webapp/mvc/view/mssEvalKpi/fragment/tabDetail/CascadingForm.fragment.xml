@@ -60,8 +60,10 @@
                 <table:Column width="300px">
                     <Label text="{i18n>LABEL_15010}"/>
                     <table:template>
-                        <!-- <Text text="{Stext}" textAlign="Begin" width="100%" wrapping="false" class="tableRow_Text"/> -->
-                        <Link href="{Url}" text="{Stext}"/>
+                        <HBox>
+                            <Text visible="{= !${Url} }" text="{Stext}" wrapping="false" class="tableRow_Text"/>
+                            <Link visible="{= !!${Url} }" href="{Url}" text="{Stext}"/>
+                        </HBox>
                     </table:template>
                 </table:Column>
                 <table:Column width="auto">
