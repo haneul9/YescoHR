@@ -156,6 +156,8 @@
         
         { "pattern": "m/organization", "name": "m/organization", "target": "m/organization" },
         
+        { "pattern": "m/leave", "name": "m/leave", "target": "m/leave" },
+        
         { "pattern": "paystub", "name": "paystub", "target": "paystub" },
         { "pattern": "paystub/{seqnr}", "name": "paystub-detail", "target": "paystubDetail" },
 
@@ -222,6 +224,8 @@
         "performanceDetail": { "viewId": "performanceDetail", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "Detail" },
         
         "m/organization": { "viewId": "m_organization", "viewPath": "sap.ui.yesco.mvc.view.organization", "viewName": "Main" },
+        
+        "m/leave": { "viewId": "m_leave", "viewPath": "sap.ui.yesco.mvc.view.leave", "viewName": "App" },
         
         "paystub": { "viewId": "paystub", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "List" },
         "paystubDetail": { "viewId": "paystubDetail", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "Detail" },
