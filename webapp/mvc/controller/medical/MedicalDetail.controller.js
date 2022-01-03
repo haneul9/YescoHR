@@ -41,7 +41,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.medical.MedicalDetail', {
-      APPTP: 'HR09',
       LIST_PAGE_ID: 'container-ehr---medical',
       DIALOG_FILE_ID: 'DialogAttFile',
 
@@ -99,6 +98,11 @@ sap.ui.define(
         } finally {
           oDetailModel.setProperty('/busy', false);
         }
+      },
+
+      // override AttachFileCode
+      getApprovalType() {
+        return 'HR09';
       },
 
       getCurrentLocationText(oArguments) {

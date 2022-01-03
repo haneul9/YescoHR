@@ -29,8 +29,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.housingLoan.HousingLoan', {
-      APPTP: 'HR07',
-
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
       TextUtils: TextUtils,
@@ -67,6 +65,11 @@ sap.ui.define(
 
       onClick() {
         this.getRouter().navTo('housingLoan-detail', { oDataKey: 'N' });
+      },
+
+      // override AttachFileCode
+      getApprovalType() {
+        return 'HR07';
       },
 
       formatNumber(vNum = '0') {

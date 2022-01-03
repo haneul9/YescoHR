@@ -27,8 +27,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.studentFunds.StudentFunds', {
-      APPTP: 'HR02',
-
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
       TextUtils: TextUtils,
@@ -59,6 +57,11 @@ sap.ui.define(
       onObjectMatched() {
         this.onSearch();
         this.totalCount();
+      },
+
+      // override AttachFileCode
+      getApprovalType() {
+        return 'HR02';
       },
 
       onClick() {

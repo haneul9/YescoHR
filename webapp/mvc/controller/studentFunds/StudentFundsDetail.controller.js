@@ -34,8 +34,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.studentFunds.StudentFundsDetail', {
-      APPTP: 'HR02',
-
       AttachFileAction: AttachFileAction,
       TextUtils: TextUtils,
 
@@ -82,6 +80,11 @@ sap.ui.define(
           .catch((oError) => {
             AppUtils.handleError(new ODataReadError(oError));
           });
+      },
+
+      // override AttachFileCode
+      getApprovalType() {
+        return 'HR02';
       },
 
       // 해외학교 체크시
@@ -548,7 +551,7 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      reject(new ODataCreateError({oError}));
+                      reject(new ODataCreateError({ oError }));
                     },
                   });
                 });
@@ -603,7 +606,7 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      reject(new ODataCreateError({oError}));
+                      reject(new ODataCreateError({ oError }));
                     },
                   });
                 });
@@ -650,7 +653,7 @@ sap.ui.define(
                   });
                 },
                 error: (oError) => {
-                  AppUtils.handleError(new ODataCreateError({oError}));
+                  AppUtils.handleError(new ODataCreateError({ oError }));
                   AppUtils.setAppBusy(false, this);
                 },
               });

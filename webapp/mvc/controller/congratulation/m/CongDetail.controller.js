@@ -31,8 +31,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.congratulation.m.CongDetail', {
-      APPTP: 'HR01',
-
       AttachFileAction: AttachFileAction,
       FragmentEvent: FragmentEvent,
       TextUtils: TextUtils,
@@ -57,6 +55,11 @@ sap.ui.define(
         const sAction = oArguments.oDataKey === 'N' ? this.getBundleText('LABEL_04002') : this.getBundleText('LABEL_00165');
 
         return sAction;
+      },
+
+      // override AttachFileCode
+      getApprovalType() {
+        return 'HR01';
       },
 
       async onObjectMatched(mArgs) {

@@ -27,8 +27,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.clubJoin.ClubJoin', {
-      APPTP: 'HR07',
-
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
       TextUtils: TextUtils,
@@ -60,6 +58,11 @@ sap.ui.define(
       onObjectMatched() {
         this.totalCount();
         this.onSearch();
+      },
+
+      // override AttachFileCode
+      getApprovalType() {
+        return 'HR07';
       },
 
       onClick() {

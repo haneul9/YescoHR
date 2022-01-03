@@ -26,8 +26,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.familyInfo.FamilyInfo', {
-      APPTP: 'HR03',
-
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
       TextUtils: TextUtils,
@@ -62,6 +60,11 @@ sap.ui.define(
 
       onClick() {
         this.getRouter().navTo('familyInfo-detail', { oDataKey: 'N' });
+      },
+
+      // override AttachFileCode
+      getApprovalType() {
+        return 'HR03';
       },
 
       formatNumber(vNum = '0') {

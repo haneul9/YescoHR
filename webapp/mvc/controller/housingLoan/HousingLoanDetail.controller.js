@@ -37,7 +37,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.housingLoan.HousingLoanDetail', {
-      APPTP: 'HR07',
       LIST_PAGE_ID: 'container-ehr---housingLoan',
 
       AttachFileAction: AttachFileAction,
@@ -85,6 +84,11 @@ sap.ui.define(
         const sAction = oArguments.oDataKey === 'N' ? this.getBundleText('LABEL_04002') : this.getBundleText('LABEL_00165');
 
         return sAction;
+      },
+
+      // override AttachFileCode
+      getApprovalType() {
+        return 'HR07';
       },
 
       // 상환이력 Excel

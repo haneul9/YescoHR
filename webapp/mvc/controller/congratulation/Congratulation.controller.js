@@ -28,8 +28,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.congratulation.Congratulation', {
-      APPTP: 'HR01',
-
       FileListDialogHandler: null,
       EmployeeSearch: EmployeeSearch,
       TableUtils: TableUtils,
@@ -62,6 +60,11 @@ sap.ui.define(
         this.onSearch();
         this.getTotalPay();
         this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+      },
+
+      // override AttachFileCode
+      getApprovalType() {
+        return 'HR01';
       },
 
       // 대상자 정보 사원선택시 화면 Refresh

@@ -31,7 +31,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.notice.NoticeDetail', {
-      APPTP: '10',
       LIST_PAGE_ID: {
         E: 'container-ehr---notice',
         H: 'container-ehr---h_notice',
@@ -59,6 +58,11 @@ sap.ui.define(
         const sAction = oArguments.oDataKey === 'N' ? this.getBundleText('LABEL_00167') : this.getBundleText('LABEL_00165');
 
         return sAction;
+      },
+
+      // override AttachFileCode
+      getApprovalType() {
+        return '10';
       },
 
       onObjectMatched(oParameter) {

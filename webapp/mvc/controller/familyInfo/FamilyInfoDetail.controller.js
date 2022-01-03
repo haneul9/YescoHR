@@ -36,7 +36,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.familyInfo.FamilyInfoDetail', {
-      APPTP: 'HR03',
       LIST_PAGE_ID: 'container-ehr---familyInfo',
       GENDER: {
         CODE: {
@@ -107,6 +106,11 @@ sap.ui.define(
         await this.setFormData();
 
         this.getViewModel().setProperty('/busy', false);
+      },
+
+      // override AttachFileCode
+      getApprovalType() {
+        return 'HR03';
       },
 
       getCurrentLocationText(oArguments) {

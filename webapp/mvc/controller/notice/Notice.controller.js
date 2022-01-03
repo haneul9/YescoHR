@@ -26,8 +26,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.notice.Notice', {
-      APPTP: '10',
-
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
       TextUtils: TextUtils,
@@ -60,6 +58,11 @@ sap.ui.define(
 
       onObjectMatched() {
         this.onSearch();
+      },
+
+      // override AttachFileCode
+      getApprovalType() {
+        return '10';
       },
 
       onClick() {

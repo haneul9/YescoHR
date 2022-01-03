@@ -20,8 +20,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.congratulation.m.Congratulation', {
-      APPTP: 'HR01',
-
       TableUtils: TableUtils,
       FragmentEvent: FragmentEvent,
       AppUtils: AppUtils,
@@ -36,6 +34,11 @@ sap.ui.define(
 
       onObjectMatched() {
         this.onSearch();
+      },
+
+      // override AttachFileCode
+      getApprovalType() {
+        return 'HR01';
       },
 
       onClick() {

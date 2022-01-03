@@ -40,7 +40,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.housingLoan.HousingLoanRepayment', {
-      APPTP: 'HR08',
       LIST_PAGE_ID: 'container-ehr---housingLoanDetail',
 
       AttachFileAction: AttachFileAction,
@@ -81,6 +80,11 @@ sap.ui.define(
 
       getCurrentLocationText() {
         return this.getBundleText('LABEL_07034');
+      },
+
+      // override AttachFileCode
+      getApprovalType() {
+        return 'HR08';
       },
 
       // 원금상환액

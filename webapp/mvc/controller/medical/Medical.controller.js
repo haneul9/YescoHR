@@ -26,8 +26,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.medical.Medical', {
-      APPTP: 'HR09',
-
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
       TextUtils: TextUtils,
@@ -81,6 +79,11 @@ sap.ui.define(
 
         oListModel.setProperty('/parameters/Pyyea', oListModel.getProperty('/Total/Zyear'));
         this.getRouter().navTo('medical-detail', { oDataKey: 'N' });
+      },
+
+      // override AttachFileCode
+      getApprovalType() {
+        return 'HR09';
       },
 
       formatNumber(vNum = '0') {
