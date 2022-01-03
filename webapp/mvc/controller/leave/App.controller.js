@@ -5,11 +5,11 @@ sap.ui.define(
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/model/type/Pernr',
   ],
   (
     // prettier 방지용 주석
@@ -17,7 +17,6 @@ sap.ui.define(
     JSONModel,
     MessageBox,
     AppUtils,
-    ComboEntry,
     Client,
     ServiceNames,
     TableUtils,
@@ -28,6 +27,8 @@ sap.ui.define(
     return BaseController.extend('sap.ui.yesco.mvc.controller.leave.App', {
       TableUtils: TableUtils,
       TABLE_ID: 'leaveTable',
+      PERSONAL_DIALOG_ID: 'sap.ui.yesco.mvc.view.leave.fragment.PersonalDialog',
+      PERSONAL_TABLE_ID: 'leaveByPersonalTable',
 
       onBeforeShow() {
         const today = moment();
@@ -36,18 +37,25 @@ sap.ui.define(
           search: {
             Zyymm: today.format('YYYYMM'),
             Orgeh: '',
-            Qtaty: 'ALL',
+            Qtaty: '',
           },
           entry: {
             department: [],
-            leaveType: new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext' }),
+            leaveType: [],
           },
           summary: {
-            year: today.format('YYYY'),
-            Todo1: '20,000,000',
-            Todo2: '20,000,000',
-            Todo3: '2,500,000',
-            Todo4: '42,500,000',
+            chart: {
+              showhovereffect: '1',
+              drawcrossline: '1',
+              theme: 'fusion',
+              anchorbgcolor: '#72D7B2',
+              palettecolors: '#72D7B2',
+            },
+            categories: [{ category: [] }],
+            dataset: [
+              { seriesname: '당월', data: [] },
+              { seriesname: '누적', data: [] },
+            ],
           },
           listInfo: {
             rowCount: 2,
@@ -66,6 +74,8 @@ sap.ui.define(
           aColIndices: [0, 1],
           sTheadOrTbody: 'thead',
         });
+
+        // this.buildChart();
       },
 
       async onObjectMatched() {
@@ -80,15 +90,15 @@ sap.ui.define(
           ]);
 
           oViewModel.setProperty('/entry/department', aDepartment ?? []);
-          oViewModel.setProperty('/entry/leaveType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aLeaveType }));
+          oViewModel.setProperty('/entry/leaveType', aLeaveType ?? []);
 
-          const sOrgeh = _.get(aDepartment, [0, 'Orgeh']);
+          const sOrgeh = _.get(aDepartment, [0, 'Orgeh'], '');
+          const sQtaty = _.get(aLeaveType, [0, 'Zcode'], '');
 
-          if (!_.isEmpty(sOrgeh)) {
-            oViewModel.setProperty('/search/Orgeh', sOrgeh);
+          oViewModel.setProperty('/search/Orgeh', sOrgeh);
+          oViewModel.setProperty('/search/Qtaty', sQtaty);
 
-            this.onPressSearch();
-          }
+          if (!_.isEmpty(sOrgeh) && !_.isEmpty(sQtaty)) this.onPressSearch();
         } catch (oError) {
           this.debug('Controller > leave App > onObjectMatched Error', oError);
 
@@ -121,13 +131,13 @@ sap.ui.define(
         if (!this.pPersonalDialog) {
           this.pPersonalDialog = Fragment.load({
             id: oView.getId(),
-            name: 'sap.ui.yesco.mvc.view.leave.fragment.PersonalDialog',
+            name: this.PERSONAL_DIALOG_ID,
             controller: this,
           }).then((oDialog) => {
             oView.addDependent(oDialog);
 
             TableUtils.adjustRowSpan({
-              oTable: this.byId('leaveByPersonalTable'),
+              oTable: this.byId(this.PERSONAL_TABLE_ID),
               aColIndices: [0, 1, 2, 3, 4, 5, 6, 11],
               sTheadOrTbody: 'thead',
             });
@@ -136,6 +146,21 @@ sap.ui.define(
           });
         }
         this.pPersonalDialog.then((oDialog) => oDialog.open());
+      },
+
+      buildChart() {
+        const mDataSource = this.getViewModel().getProperty('/summary');
+
+        FusionCharts.ready(function () {
+          new FusionCharts({
+            type: 'msline',
+            renderAt: 'chart-container',
+            width: '100%',
+            height: '100%',
+            dataFormat: 'json',
+            dataSource: mDataSource,
+          }).render();
+        });
       },
 
       /*****************************************************************
@@ -149,13 +174,35 @@ sap.ui.define(
 
           const mFilters = oViewModel.getProperty('/search');
           const fCurried = Client.getEntitySet(this.getModel(ServiceNames.WORKTIME));
-          // const [aSummary, aRowData] = await Promise.all([
-          //   fCurried('LeaveUseHistory', { ...mFilters }), //
-          //   fCurried('LeaveUseBoard', { ...mFilters }),
-          // ]);
-          const aRowData = await fCurried('LeaveUseBoard', { ...mFilters });
+          const [aSummary, aRowData] = await Promise.all([
+            fCurried('LeaveUseHistory', { ...mFilters }), //
+            fCurried('LeaveUseBoard', { ...mFilters }),
+          ]);
 
           this.setTableData({ oViewModel, aRowData });
+
+          oViewModel.setProperty(
+            '/summary/categories/0/category',
+            _.reduce(aSummary, (acc, cur) => [...acc, { label: cur.Oyymm }], [])
+          );
+          oViewModel.setProperty('/summary/dataset', [
+            {
+              seriesname: '당월',
+              data: _.chain(aSummary)
+                .groupBy('Oyymm')
+                .map((v) => ({ value: _.get(v, [0, 'Monuse']) }))
+                .value(),
+            },
+            {
+              seriesname: '누적',
+              data: _.chain(aSummary)
+                .groupBy('Oyymm')
+                .map((v) => ({ value: _.get(v, [0, 'Cumuse']) }))
+                .value(),
+            },
+          ]);
+
+          this.buildChart();
         } catch (oError) {
           this.debug('Controller > leave App > onPressSearch Error', oError);
 
@@ -166,7 +213,7 @@ sap.ui.define(
       },
 
       onPressPersonalDialogClose() {
-        this.byId('personalDialog').close();
+        this.pPersonalDialog.then((oDialog) => oDialog.close());
       },
 
       onPressExcelDownload() {

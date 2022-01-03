@@ -35,8 +35,8 @@
                         <Title level="H2" text="{i18n>LABEL_16002}" />
                     </HBox>
                 </HBox>
-                <HBox>
-                    <VBox id="useLeaveMonthly" />
+                <HBox height="300px">
+                    <core:HTML content="&lt;div id='chart-container'&gt;&lt;/div&gt;" />
                 </HBox>
             </VBox>
             <VBox class="vCardBox">
