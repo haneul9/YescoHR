@@ -25,6 +25,7 @@ sap.ui.define(
       onBeforeShow() {
         const oViewModel = new JSONModel({
           busy: false,
+          BtnStat: true,
           List: [],
           Years: [],
           TeamList: [],
@@ -133,6 +134,32 @@ sap.ui.define(
         aYearsList.push({ Zcode: String(iYear), Ztext: `${iYear}년` }, { Zcode: String(iYear - 1), Ztext: `${iYear - 1}년` });
 
         oViewModel.setProperty('/Years', aYearsList);
+      },
+
+      // 저장 BtnVisible
+      hideSaveBtn(sWerks = this.getSessionProperty('Werks')) {
+        const oModel = this.getModel(ServiceNames.APPRAISAL);
+
+        return new Promise((resolve, reject) => {
+          oModel.read('/KpiCascadingActiveSet', {
+            filters: [new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks)],
+            success: (oData) => {
+              if (oData) {
+                this.debug(oData);
+                resolve(oData.results[0].Active === 'X');
+              }
+            },
+            error: (oError) => {
+              this.debug(oError);
+              reject(new ODataReadError(oError));
+            },
+          });
+        });
+      },
+
+      // 평가년도 클릭
+      onYearsBtn() {
+        this.onSearch();
       },
 
       // TabBar 선택
@@ -288,8 +315,10 @@ sap.ui.define(
           .value();
         const mGroupedByParents = _.groupBy(aConvertedList, 'ObjidUp');
         const mCatsById = _.keyBy(aConvertedList, 'Objid');
+        const oTree = this.byId('SituTree');
 
-        this.setFragment();
+        oTree.collapseAll();
+        oTree.expandToLevel(1);
         _.each(_.omit(mGroupedByParents, '00000000'), (children, parentId) => _.set(mCatsById, [parentId, 'children'], children));
 
         return mGroupedByParents['00000000'];
@@ -337,6 +366,10 @@ sap.ui.define(
         oViewModel.setProperty('/PartCode', aPartList);
         oViewModel.setProperty('/search/Orgeh', !!aPartList.length ? aPartList[0].Orgeh : '');
         oViewModel.setProperty('/search/Orgtx', !!aPartList.length ? aPartList[0].Orgtx : '');
+
+        const sBtnStat = await this.hideSaveBtn(oViewModel.getProperty('/search/Werks'));
+
+        oViewModel.setProperty('/BtnStat', sBtnStat);
       },
 
       async onSearch() {
@@ -344,6 +377,10 @@ sap.ui.define(
 
         oViewModel.setProperty('/busy', true);
         try {
+          const sBtnStat = await this.hideSaveBtn(oViewModel.getProperty('/search/Werks'));
+
+          oViewModel.setProperty('/BtnStat', sBtnStat);
+
           const aTableList = await this.getAllCascading();
           const iTableLength = aTableList.length;
 
@@ -367,8 +404,14 @@ sap.ui.define(
       },
 
       // 부문 선택
-      onPartSelect(oEvent) {
-        this.getViewModel().setProperty('/search/Orgtx', oEvent.getSource().getValue());
+      async onPartSelect(oEvent) {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/search/Orgtx', oEvent.getSource().getValue());
+
+        const sBtnStat = await this.hideSaveBtn(oViewModel.getProperty('/search/Werks'));
+
+        oViewModel.setProperty('/BtnStat', sBtnStat);
       },
 
       // 수행 팀 수 Link Press
@@ -441,7 +484,8 @@ sap.ui.define(
         const oDraggPath = oDragged.getBindingContext().getPath();
         const oGrid = oDropped.getParent();
         const mDraggData = oViewModel.getProperty(oDraggPath);
-        const sDropPath = `${oDropped.getParent().getBindingContext().getPath()}/TmpGrid`;
+        const sDraggListPath = oDropped.getParent().getBindingContext().getPath();
+        const sDropPath = `${sDraggListPath}/TmpGrid`;
         const aGridList = oViewModel.getProperty(sDropPath);
         let bInsertPosition = oInfo.getParameter('dropPosition') === 'Before';
         let iDropPosition = oGrid.indexOfItem(oDropped);
@@ -455,7 +499,7 @@ sap.ui.define(
         if (
           oDropped.sParentAggregationName !== oDragged.sParentAggregationName &&
           aGridList.some((e) => {
-            return e === mDraggData;
+            return e.Otype === mDraggData.Otype && e.Stext === mDraggData.Stext;
           })
         ) {
           MessageBox.alert(this.getBundleText('MSG_15001'));
@@ -474,8 +518,8 @@ sap.ui.define(
           }
         }
 
-        mDraggData.Orgeh = oViewModel.getProperty(`${sDropPath}/0/Orgeh`);
-        mDraggData.Orgtx = oViewModel.getProperty(`${sDropPath}/0/Orgtx`);
+        mDraggData.Orgeh = oViewModel.getProperty(`${sDraggListPath}/Orgeh`);
+        mDraggData.Orgtx = oViewModel.getProperty(`${sDraggListPath}/Label`);
 
         // insert the control in target aggregation
         aGridList.splice(iDropPosition, bInsertPosition ? 0 : -1, mDraggData);
@@ -504,7 +548,7 @@ sap.ui.define(
         if (
           oDropped.sParentAggregationName !== oDragged.sParentAggregationName &&
           aGridList.some((e) => {
-            return e === mDraggData;
+            return e.Otype === mDraggData.Otype && e.Stext === mDraggData.Stext;
           })
         ) {
           MessageBox.alert(this.getBundleText('MSG_15001'));
@@ -602,6 +646,8 @@ sap.ui.define(
                     if (!e.Stext && !e.Ztext) {
                       aNotEmpty.push({
                         Label: e.Orgtx,
+                        Orgtx: e.Orgtx,
+                        Orgeh: e.Orgeh,
                         TmpGrid: [],
                       });
                     } else {
@@ -621,24 +667,6 @@ sap.ui.define(
         });
       },
 
-      setFragment() {
-        debugger;
-        // if (!!this.dGridListDialog) {
-        //   this.byId('smartListBox').destroyItems();
-        // }
-
-        // const oView = this.getView();
-
-        // this.dGridListDialog = Fragment.load({
-        //   // id: `${oView.getId()}SmartList`,
-        //   name: 'sap.ui.yesco.mvc.view.mssEvalKpi.fragment.tabDetail.dialog.SmartList',
-        //   controller: this,
-        // }).then(function (oDialog) {
-        //   oView.addDependent(oDialog);
-        //   return oDialog;
-        // });
-      },
-
       // 팀 cascading grid settings
       setTeamGridList(aList = []) {
         const oViewModel = this.getViewModel();
@@ -647,14 +675,10 @@ sap.ui.define(
 
         if (!aList.length) {
           aFilterList = [];
-        } else if (!aList[0].Ztext && !aList[0].Stext) {
-          aFilterList = _.each(aList, (o) => {
-            o.TmpGrid.push({ Stext: sTempMessage });
-          });
         } else {
           aFilterList = _.chain(aList)
             .groupBy('Orgtx')
-            .map((v, p) => ({ Label: p, TmpGrid: v }))
+            .map((v, p) => ({ Label: p, Orgeh: v[0].Orgeh, TmpGrid: !!v[0].Ztext || !!v[0].Stext ? v : [] }))
             .forEach((o) => o.TmpGrid.push({ Stext: sTempMessage }))
             .value();
         }
@@ -676,17 +700,29 @@ sap.ui.define(
             try {
               AppUtils.setAppBusy(true, this);
 
-              const aList = [];
               const oViewModel = this.getViewModel();
-              const aGridData = oViewModel.getProperty('/PartList');
-
-              aGridData.forEach((e) => {
-                if (!!e.Ztext) {
-                  aList.push(e);
-                }
-              });
-
               const sTabKey = oViewModel.getProperty('/tab/selectedKey');
+              const aList = [];
+              let aGridData = [];
+
+              if (sTabKey === 'A') {
+                aGridData = oViewModel.getProperty('/PartList');
+
+                aGridData.forEach((e) => {
+                  if (!!e.Ztext) {
+                    aList.push(e);
+                  }
+                });
+              } else {
+                aGridData = oViewModel.getProperty('/Tmp');
+
+                aGridData.forEach((e) => {
+                  const TmpList = e.TmpGrid;
+
+                  aList.push(...TmpList);
+                });
+              }
+
               let oSendObject = {
                 Gubun: sTabKey,
                 Zyear: oViewModel.getProperty('/search/Zyear'),

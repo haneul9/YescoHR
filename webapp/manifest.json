@@ -105,6 +105,9 @@
         { "pattern": "m/congratulation", "name": "m/congratulation", "target": "m/congratulation" },
         { "pattern": "m/congratulation/:oDataKey:", "name": "m/congratulation-detail", "target": "m/congDetail" },
 
+        { "pattern": "certification", "name": "certification", "target": "certification" },
+        { "pattern": "certification/{oDataKey}", "name": "certification-detail", "target": "certificationDetail" },
+        
         { "pattern": "clubJoin", "name": "clubJoin", "target": "clubJoin" },
         { "pattern": "clubJoin/{oDataKey}", "name": "clubJoin-detail", "target": "clubJoinDetail" },
         { "pattern": "h/clubJoin", "name": "h/clubJoin", "target": "h/clubJoin" },
@@ -179,6 +182,9 @@
         "congDetail": { "viewId": "congDetail", "viewPath": "sap.ui.yesco.mvc.view.congratulation", "viewName": "CongDetail" },
         "m/congratulation": { "viewId": "congratulationMobile", "viewPath": "sap.ui.yesco.mvc.view.congratulation.m", "viewName": "Congratulation" },
         "m/congDetail": { "viewId": "congDetailMobile", "viewPath": "sap.ui.yesco.mvc.view.congratulation.m", "viewName": "CongDetail" },
+
+        "certification": { "viewId": "certification", "viewPath": "sap.ui.yesco.mvc.view.certification", "viewName": "Certification" },
+        "certificationDetail": { "viewId": "certificationDetail", "viewPath": "sap.ui.yesco.mvc.view.certification", "viewName": "CertificationDetail" },
 
         "clubJoin": { "viewId": "clubJoin", "viewPath": "sap.ui.yesco.mvc.view.clubJoin", "viewName": "ClubJoin" },
         "h/clubJoin": { "viewId": "h_clubJoin", "viewPath": "sap.ui.yesco.mvc.view.clubJoin", "viewName": "ClubJoinHass" },
