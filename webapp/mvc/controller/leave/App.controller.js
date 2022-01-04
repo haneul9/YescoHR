@@ -189,11 +189,23 @@ sap.ui.define(
             .defaults({ ..._.times(12, (v) => ({ [`${this.getBundleText('LABEL_16019', v + 1)}`]: [{ [this.CHARTS.ACC.prop]: 0, [this.CHARTS.CUR.prop]: 0 }] })).reduce((acc, cur) => ({ ...acc, ...cur }), {}) })
             .value();
 
+          const iCurrentMonthIndex = moment(mFilters.Zyymm).month() + 1;
+          const mVerticalLineMonth = {
+            vline: 'true',
+            lineposition: '0',
+            color: '#6baa01',
+            labelHAlign: 'center',
+            labelPosition: '0',
+            // label: 'Selected Month',
+            dashed: '1',
+          };
+
           oViewModel.setProperty(
             '/summary/categories/0/category',
             _.chain(aSummary)
               .reduce((acc, cur) => [...acc, { label: cur.Oyymm }], [])
               .defaults(_.times(12, (v) => ({ label: this.getBundleText('LABEL_16019', v + 1) })))
+              .tap((arr) => arr.splice(iCurrentMonthIndex, 0, mVerticalLineMonth))
               .value()
           );
           oViewModel.setProperty('/summary/dataset', [
