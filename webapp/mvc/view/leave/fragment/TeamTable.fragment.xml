@@ -1,0 +1,170 @@
+<core:FragmentDefinition xmlns="sap.ui.table"
+    xmlns:m="sap.m"
+    xmlns:core="sap.ui.core">
+    <Table id="leaveTable" fixedBottomRowCount="1" selectionMode="None" class="row-link" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/list}" visibleRowCount="{/listInfo/rowCount}" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
+        <columns>
+            <Column width="" filterProperty="Orgtx" sortProperty="Orgtx">
+                <multiLabels>
+                    <m:Label text="{i18n>LABEL_00224}"/>
+                    <m:Label text="{i18n>LABEL_00224}"/>
+                </multiLabels>
+                <template>
+                    <m:Text text="{Orgtx}" width="100%" textAlign="Center" />
+                </template>
+            </Column>
+            <Column width="5%" filterProperty="Empcnt" sortProperty="Empcnt">
+                <multiLabels>
+                    <m:Label text="{i18n>LABEL_16004}"/>
+                    <m:Label text="{i18n>LABEL_16004}"/>
+                </multiLabels>
+                <template>
+                    <m:Text text="{ path: 'Empcnt', type: 'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+            <Column width="7%" filterProperty="Inw01" sortProperty="Inw01" headerSpan="6">
+                <customData>
+                    <core:CustomData key="field" value="Inw01" />
+                </customData>
+                <multiLabels>
+                    <m:Label text="{i18n>LABEL_16005}"/>
+                    <m:Label text="{i18n>LABEL_16006}"/>
+                </multiLabels>
+                <template>
+                    <m:Text text="{ path: 'Inw01', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+            <Column width="7%" filterProperty="Inw02" sortProperty="Inw02">
+                <customData>
+                    <core:CustomData key="field" value="Inw02" />
+                </customData>
+                <multiLabels>
+                    <m:Label text="{i18n>LABEL_16005}"/>
+                    <m:Label text="{i18n>LABEL_16007}"/>
+                </multiLabels>
+                <template>
+                    <m:Text text="{ path: 'Inw02', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+            <Column width="7%" filterProperty="Inw03" sortProperty="Inw03">
+                <customData>
+                    <core:CustomData key="field" value="Inw03" />
+                </customData>
+                <multiLabels>
+                    <m:Label text="{i18n>LABEL_16005}"/>
+                    <m:Label text="{i18n>LABEL_16008}"/>
+                </multiLabels>
+                <template>
+                    <m:Text text="{ path: 'Inw03', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+            <Column width="7%" filterProperty="Inw04" sortProperty="Inw04">
+                <customData>
+                    <core:CustomData key="field" value="Inw04" />
+                </customData>
+                <multiLabels>
+                    <m:Label text="{i18n>LABEL_16005}"/>
+                    <m:Label text="{i18n>LABEL_16009}"/>
+                </multiLabels>
+                <template>
+                    <m:Text text="{ path: 'Inw04', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+            <Column width="7%" filterProperty="Inw05" sortProperty="Inw05">
+                <customData>
+                    <core:CustomData key="field" value="Inw05" />
+                </customData>
+                <multiLabels>
+                    <m:Label text="{i18n>LABEL_16005}"/>
+                    <m:Label text="{i18n>LABEL_16010}"/>
+                </multiLabels>
+                <template>
+                    <m:Text text="{ path: 'Inw05', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+            <Column width="7%" filterProperty="Inw06" sortProperty="Inw06">
+                <customData>
+                    <core:CustomData key="field" value="Inw06" />
+                </customData>
+                <multiLabels>
+                    <m:Label text="{i18n>LABEL_16005}"/>
+                    <m:Label text="{i18n>LABEL_00245}"/>
+                </multiLabels>
+                <template>
+                    <m:Text text="{ path: 'Inw06', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+            <Column width="7%" filterProperty="Inw07" sortProperty="Inw07" headerSpan="6">
+                <customData>
+                    <core:CustomData key="field" value="Inw07" />
+                </customData>
+                <multiLabels>
+                    <m:Label text="{i18n>LABEL_16011}"/>
+                    <m:Label text="{i18n>LABEL_16006}"/>
+                </multiLabels>
+                <template>
+                    <m:Text text="{ path: 'Inw07', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+            <Column width="7%" filterProperty="Inw08" sortProperty="Inw08">
+                <customData>
+                    <core:CustomData key="field" value="Inw08" />
+                </customData>
+                <multiLabels>
+                    <m:Label text="{i18n>LABEL_16011}"/>
+                    <m:Label text="{i18n>LABEL_16007}"/>
+                </multiLabels>
+                <template>
+                    <m:Text text="{ path: 'Inw08', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+            <Column width="7%" filterProperty="Inw09" sortProperty="Inw09">
+                <customData>
+                    <core:CustomData key="field" value="Inw09" />
+                </customData>
+                <multiLabels>
+                    <m:Label text="{i18n>LABEL_16011}"/>
+                    <m:Label text="{i18n>LABEL_16008}"/>
+                </multiLabels>
+                <template>
+                    <m:Text text="{ path: 'Inw09', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+            <Column width="7%" filterProperty="Inw10" sortProperty="Inw10">
+                <customData>
+                    <core:CustomData key="field" value="Inw10" />
+                </customData>
+                <multiLabels>
+                    <m:Label text="{i18n>LABEL_16011}"/>
+                    <m:Label text="{i18n>LABEL_16009}"/>
+                </multiLabels>
+                <template>
+                    <m:Text text="{ path: 'Inw10', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+            <Column width="7%" filterProperty="Inw11" sortProperty="Inw11">
+                <customData>
+                    <core:CustomData key="field" value="Inw11" />
+                </customData>
+                <multiLabels>
+                    <m:Label text="{i18n>LABEL_16011}"/>
+                    <m:Label text="{i18n>LABEL_16010}"/>
+                </multiLabels>
+                <template>
+                    <m:Text text="{ path: 'Inw11', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+            <Column width="7%" filterProperty="Inw12" sortProperty="Inw12">
+                <customData>
+                    <core:CustomData key="field" value="Inw12" />
+                </customData>
+                <multiLabels>
+                    <m:Label text="{i18n>LABEL_16011}"/>
+                    <m:Label text="{i18n>LABEL_00245}"/>
+                </multiLabels>
+                <template>
+                    <m:Text text="{ path: 'Inw12', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+            </Column>
+        </columns>
+    </Table>
+</core:FragmentDefinition>

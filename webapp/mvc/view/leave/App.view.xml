@@ -1,0 +1,55 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.leave.App"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:custom="sap.ui.yesco.control">
+    <Page showHeader="false">
+        <VBox class="contents-header">
+            <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+                <custom:Breadcrumbs />
+                <HBox>
+                    <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" />
+                    <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" />
+                </HBox>
+            </HBox>
+        </VBox>
+        <VBox class="contents">
+            <VBox class="vCardBox">
+                <HBox class="form-bar" alignItems="Center">
+                    <Label text="{i18n>LABEL_00328}" />
+                    <DatePicker value="{/search/Zyymm}" displayFormat="yyyy.MM" valueFormat="yyyyMM" />
+                    <Label text="{i18n>LABEL_00227}" />
+                    <ComboBox selectedKey="{/search/Orgeh}" items="{/entry/department}">
+                        <core:Item key="{Orgeh}" text="{Orgtx}" />
+                    </ComboBox>
+                    <Label text="{i18n>LABEL_16001}" />
+                    <ComboBox selectedKey="{/search/Qtaty}" items="{/entry/leaveType}">
+                        <core:Item key="{Zcode}" text="{Ztext}" />
+                    </ComboBox>
+                    <Button text="{i18n>LABEL_00100}" icon="asset/image/icon_search03.png" press=".onPressSearch" />
+                </HBox>
+            </VBox>
+            <VBox class="vCardBox">
+                <HBox alignItems="Center" class="table-toolbar">
+                    <HBox class="title">
+                        <Title level="H2" text="{i18n>LABEL_16002}" />
+                    </HBox>
+                </HBox>
+                <HBox height="300px">
+                    <core:HTML content="&lt;div id='chart-container'&gt;&lt;/div&gt;" />
+                </HBox>
+            </VBox>
+            <VBox class="vCardBox">
+                <HBox alignItems="Center" class="table-toolbar">
+                    <HBox class="title">
+                        <Title level="H2" text="{i18n>LABEL_16003}" />
+                        <Text text="{i18n>MSG_16001}" class="desc-txt" />
+                    </HBox>
+                </HBox>
+                <HBox>
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.leave.fragment.TeamTable" type="XML" />
+                </HBox>
+            </VBox>
+        </VBox>
+    </Page>
+</mvc:View>

@@ -23,7 +23,10 @@ sap.ui.define(
       getEntitySet: _.curry((oModel, sUrl, mFilters = {}) => {
         return new Promise((resolve, reject) => {
           oModel.read(`/${sUrl}Set`, {
-            filters: _.map(mFilters, (v, p) => new Filter(p, FilterOperator.EQ, v)),
+            filters: _.chain(mFilters)
+              .omitBy((fv) => _.isEqual(fv, 'ALL'))
+              .map((v, p) => new Filter(p, FilterOperator.EQ, v))
+              .value(),
             success: (oData) => {
               AppUtils.debug(`${sUrl} get-entityset success.`, oData);
 
