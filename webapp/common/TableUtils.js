@@ -55,22 +55,25 @@ sap.ui.define(
       count({ oTable, aRowData, sStatCode = 'ZappStatAl', bHasSumRow = false }) {
         const iVisibleRowCountLimit = this.calculateVisibleRowCount(oTable);
         const iDataLength = bHasSumRow ? (aRowData.length || 1) + 1 : aRowData.length;
-        const aZappStatAls = _.map(aRowData, sStatCode);
-        const oOccurCount = _.defaults(_.countBy(aZappStatAls), {
-          [STATE_IN_PROGRESS1]: 0,
-          [STATE_IN_PROGRESS2]: 0,
-          [STATE_APPLY1]: 0,
-          [STATE_APPLY2]: 0,
-          [STATE_APPLY3]: 0,
-          [STATE_APPROVE]: 0,
-          [STATE_REJECT1]: 0,
-          [STATE_REJECT2]: 0,
-          [STATE_COMPLETE]: 0,
-        });
+        const oOccurCount = _.chain(aRowData)
+          .map(sStatCode)
+          .countBy()
+          .defaults({
+            [STATE_IN_PROGRESS1]: 0,
+            [STATE_IN_PROGRESS2]: 0,
+            [STATE_APPLY1]: 0,
+            [STATE_APPLY2]: 0,
+            [STATE_APPLY3]: 0,
+            [STATE_APPROVE]: 0,
+            [STATE_REJECT1]: 0,
+            [STATE_REJECT2]: 0,
+            [STATE_COMPLETE]: 0,
+          })
+          .value();
 
         return {
-          rowCount: iVisibleRowCountLimit > iDataLength ? iDataLength : iVisibleRowCountLimit,
-          totalCount: aZappStatAls.length,
+          rowCount: Math.min(iVisibleRowCountLimit, iDataLength),
+          totalCount: aRowData.length,
           progressCount: oOccurCount[STATE_IN_PROGRESS1] + oOccurCount[STATE_IN_PROGRESS2],
           applyCount: oOccurCount[STATE_APPLY1] + oOccurCount[STATE_APPLY2] + oOccurCount[STATE_APPLY3],
           approveCount: oOccurCount[STATE_APPROVE],

@@ -38,6 +38,40 @@ sap.ui.define(
             Todo2: '20,000,000',
             Todo3: '2,500,000',
             Todo4: '42,500,000',
+            dataSources: {
+              chart: {
+                showLegend: '0',
+                showValues: '0',
+                showLabels: '0',
+                showPercentInTooltip: '0',
+                showToolTipShadow: '0',
+                slicingDistance: '5',
+                formatNumber: '1',
+                formatNumberScale: false,
+                decimals: '1',
+                numberSuffix: '₩',
+                useDataPlotColorForLabels: '1',
+                theme: 'fusion',
+                paletteColors: '#7bb4eb,#81daea,#faca74',
+              },
+              data: [
+                {
+                  label: '급여',
+                  value: '20000000',
+                  isSliced: '1',
+                },
+                {
+                  label: '상여',
+                  value: '20000000',
+                  isSliced: '0',
+                },
+                {
+                  label: '인정상여',
+                  value: '2500000',
+                  isSliced: '0',
+                },
+              ],
+            },
           },
           listInfo: {
             rowCount: 2,
@@ -75,6 +109,7 @@ sap.ui.define(
             Endym: moment(sYear).month(11).format('YYYYMM'),
           });
 
+          this.buildChart();
           this.setTableData({ oViewModel, aRowData });
         } catch (oError) {
           this.debug('Controller > paystub List > onObjectMatched Error', oError);
@@ -101,6 +136,21 @@ sap.ui.define(
         setTimeout(() => {
           TableUtils.setColorColumn({ oTable, bHasSumRow: true, mColorMap: { 6: 'bgType01', 8: 'bgType02', 10: 'bgType03' } });
         }, 100);
+      },
+
+      buildChart() {
+        const mDataSource = this.getViewModel().getProperty('/summary/dataSources');
+
+        FusionCharts.ready(function () {
+          new FusionCharts({
+            type: 'pie2d',
+            renderAt: 'chart-container',
+            width: '180',
+            height: '160',
+            dataFormat: 'json',
+            dataSource: mDataSource,
+          }).render();
+        });
       },
 
       /*****************************************************************
