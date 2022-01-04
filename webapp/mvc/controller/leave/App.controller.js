@@ -201,7 +201,12 @@ sap.ui.define(
               seriesname: this.getBundleText(this.CHARTS.ACC.label),
               anchorBorderColor: this.CHARTS.ACC.color,
               anchorBgColor: this.CHARTS.ACC.color,
-              data: _.map(mGroupByOyymm, (v) => ({ value: _.get(v, [0, this.CHARTS.ACC.prop]) })),
+              data: _.chain(mGroupByOyymm)
+                .map((v) => ({ value: _.get(v, [0, this.CHARTS.ACC.prop]) }))
+                .forEach((v, i, o) => {
+                  if (_.isEqual(v.value, 0)) v.value = _.get(o, [i - 1, 'value']);
+                })
+                .value(),
             },
             {
               seriesname: this.getBundleText(this.CHARTS.CUR.label),
