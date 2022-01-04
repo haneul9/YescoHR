@@ -1,9 +1,15 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:smartList="sap.ui.comp.smartlist">
-  <smartList:SmartList listType="Tree" enableAutoBinding="true" showRowCount="false" showFullScreenButton="true" listBindingPath="/CascadingSitu/SituList">
+  <!-- <smartList:SmartList listType="Tree" enableAutoBinding="true" showRowCount="false" showFullScreenButton="true" listBindingPath="/CascadingSitu/SituList">
     <smartList:listItemTemplate>
       <StandardTreeItem title="{Stext}" />
     </smartList:listItemTemplate>
-  </smartList:SmartList>
+  </smartList:SmartList> -->
+  <Tree id="SituTree" mode="SingleSelectMaster" items="{path: '/CascadingSitu/SituList'}">
+    <layoutData>
+      <FlexItemData growFactor="1" />
+    </layoutData>
+    <StandardTreeItem title="{Stext}"/>
+  </Tree>
 </core:FragmentDefinition>

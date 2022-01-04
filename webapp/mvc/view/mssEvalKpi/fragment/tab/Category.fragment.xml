@@ -6,10 +6,10 @@
     xmlns:f="sap.f">
     <VBox class="contents">
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.mssEvalKpi.fragment.tabDetail.CascadingForm" type="XML" />
-        
+
         <VBox width="100%" class="vCardBox">
             <HBox justifyContent="SpaceBetween" class="table-toolbar">
-                <HBox calss="title">
+                <HBox class="title">
                     <ObjectStatus text="{i18n>LABEL_15004}" state="Indication04" />
                     <Title level="H4" text="{i18n>LABEL_15018}" />
                 </HBox>

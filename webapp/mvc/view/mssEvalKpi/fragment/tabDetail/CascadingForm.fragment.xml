@@ -2,24 +2,8 @@
     xmlns:core="sap.ui.core"
     xmlns:dnd="sap.ui.core.dnd"
     xmlns:dnd-grid="sap.f.dnd"
-    xmlns:table="sap.ui.table"
-    xmlns:grid="sap.ui.layout.cssgrid">
+    xmlns:table="sap.ui.table">
     <VBox class="vCardBox">
-        <!-- <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr 1fr 2fr 1fr" gridGap="10px">
-            <Label text="{i18n>LABEL_00220}" />
-            <ComboBox items="{/CompanyCode}" selectedKey="{/search/Werks}" change=".onCompSelect">
-                <core:Item text="{Pbtxt}" key="{Werks}" />
-            </ComboBox>
-            <Label text="{i18n>LABEL_15004}" />
-            <ComboBox items="{/PartCode}" selectedKey="{/search/Orgeh}" change=".onPartSelect">
-                <core:Item text="{Orgtx}" key="{Orgeh}" />
-            </ComboBox>
-            <Label text="{i18n>LABEL_15005}" />
-            <ComboBox items="{/Years}" selectedKey="{/search/Zyear}">
-                <core:Item text="{Ztext}" key="{Zcode}" />
-            </ComboBox>
-            <Button text="{i18n>LABEL_00100}" icon="asset/image/icon_search03.png" press=".onSearch"/>
-        </grid:CSSGrid> -->
         <HBox class="form-bar" justifyContent="Start" alignItems="Center">
             <Label text="{i18n>LABEL_00220}" />
             <ComboBox items="{/CompanyCode}" selectedKey="{/search/Werks}" change=".onCompSelect">
@@ -30,7 +14,7 @@
                 <core:Item text="{Orgtx}" key="{Orgeh}" />
             </ComboBox>
             <Label text="{i18n>LABEL_15005}" />
-            <ComboBox items="{/Years}" selectedKey="{/search/Zyear}">
+            <ComboBox items="{/Years}" selectedKey="{/search/Zyear}" change=".onYearsBtn">
                 <core:Item text="{Ztext}" key="{Zcode}" />
             </ComboBox>
             <Button text="{i18n>LABEL_00100}" icon="asset/image/icon_search03.png" press=".onSearch"/>

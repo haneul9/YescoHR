@@ -8,7 +8,7 @@
             <HBox justifyContent="SpaceBetween" class="breadcrumbs">
                 <custom:Breadcrumbs />
                 <HBox>
-                    <Button text="{i18n>LABEL_00103}" type="Emphasized" press=".onSaveBtn" visible="{= !!${/tab/selectedKey} &amp;&amp; ${/tab/selectedKey} !== 'C' }" />
+                    <Button text="{i18n>LABEL_00103}" type="Emphasized" press=".onSaveBtn" visible="{= (!!${/tab/selectedKey} &amp;&amp; !!${/BtnStat}) &amp;&amp; ${/tab/selectedKey} !== 'C' }" />
                     <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" />
                     <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" />
                 </HBox>
