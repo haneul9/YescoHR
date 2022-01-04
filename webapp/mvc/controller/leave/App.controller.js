@@ -30,6 +30,11 @@ sap.ui.define(
       PERSONAL_DIALOG_ID: 'sap.ui.yesco.mvc.view.leave.fragment.PersonalDialog',
       PERSONAL_TABLE_ID: 'leaveByPersonalTable',
 
+      CHARTS: {
+        ACC: { color: '#dc3545', label: 'LABEL_16018', prop: 'Cumuse' },
+        CUR: { color: '#2972c8', label: 'LABEL_16005', prop: 'Monuse' },
+      },
+
       onBeforeShow() {
         const today = moment();
         const oViewModel = new JSONModel({
@@ -48,13 +53,12 @@ sap.ui.define(
               showhovereffect: '1',
               drawcrossline: '1',
               theme: 'fusion',
-              anchorbgcolor: '#72D7B2',
-              palettecolors: '#72D7B2',
+              paletteColors: _.join([this.CHARTS.ACC.color, this.CHARTS.CUR.color], ','),
             },
             categories: [{ category: [] }],
             dataset: [
-              { seriesname: '당월', data: [] },
-              { seriesname: '누적', data: [] },
+              { seriesname: '', data: [] },
+              { seriesname: '', data: [] },
             ],
           },
           listInfo: {
@@ -63,6 +67,7 @@ sap.ui.define(
           list: [],
           dialog: {
             busy: false,
+            title: '',
             rowCount: 1,
             list: [],
           },
@@ -74,8 +79,6 @@ sap.ui.define(
           aColIndices: [0, 1],
           sTheadOrTbody: 'thead',
         });
-
-        // this.buildChart();
       },
 
       async onObjectMatched() {
@@ -181,24 +184,30 @@ sap.ui.define(
 
           this.setTableData({ oViewModel, aRowData });
 
+          const mGroupByOyymm = _.chain(aSummary)
+            .groupBy('Oyymm')
+            .defaults({ ..._.times(12, (v) => ({ [`${this.getBundleText('LABEL_16019', v + 1)}`]: [{ [this.CHARTS.ACC.prop]: 0, [this.CHARTS.CUR.prop]: 0 }] })).reduce((acc, cur) => ({ ...acc, ...cur }), {}) })
+            .value();
+
           oViewModel.setProperty(
             '/summary/categories/0/category',
-            _.reduce(aSummary, (acc, cur) => [...acc, { label: cur.Oyymm }], [])
+            _.chain(aSummary)
+              .reduce((acc, cur) => [...acc, { label: cur.Oyymm }], [])
+              .defaults(_.times(12, (v) => ({ label: this.getBundleText('LABEL_16019', v + 1) })))
+              .value()
           );
           oViewModel.setProperty('/summary/dataset', [
             {
-              seriesname: '당월',
-              data: _.chain(aSummary)
-                .groupBy('Oyymm')
-                .map((v) => ({ value: _.get(v, [0, 'Monuse']) }))
-                .value(),
+              seriesname: this.getBundleText(this.CHARTS.ACC.label),
+              anchorBorderColor: this.CHARTS.ACC.color,
+              anchorBgColor: this.CHARTS.ACC.color,
+              data: _.map(mGroupByOyymm, (v) => ({ value: _.get(v, [0, this.CHARTS.ACC.prop]) })),
             },
             {
-              seriesname: '누적',
-              data: _.chain(aSummary)
-                .groupBy('Oyymm')
-                .map((v) => ({ value: _.get(v, [0, 'Cumuse']) }))
-                .value(),
+              seriesname: this.getBundleText(this.CHARTS.CUR.label),
+              anchorBorderColor: this.CHARTS.CUR.color,
+              anchorBgColor: this.CHARTS.CUR.color,
+              data: _.map(mGroupByOyymm, (v) => ({ value: _.get(v, [0, this.CHARTS.CUR.prop]) })),
             },
           ]);
 
@@ -246,7 +255,10 @@ sap.ui.define(
             return;
           }
 
-          oViewModel.setProperty('/dialog/rowCount', aDetailRow.length || 1);
+          const aLeaveType = oViewModel.getProperty('/entry/leaveType');
+
+          oViewModel.setProperty('/dialog/title', _.find(aLeaveType, { Zcode: mRowData.Qtaty }).Ztext ?? '');
+          oViewModel.setProperty('/dialog/rowCount', Math.min(6, aDetailRow.length || 1));
           oViewModel.setProperty(
             '/dialog/list',
             _.map(aDetailRow, (o, i) => ({ Idx: i + 1, ...o }))
