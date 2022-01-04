@@ -417,7 +417,7 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt {outline-style:none !important}
 .sapUiTableHeaderDataCell>.sapUiTableCellInner>div:first-child{display:block !important;text-align:center !important;line-height:1}
 
 .sapUiTableColHdrCnt + .sapUiTableCtrlBefore + .sapUiTableCCnt, .sapUiTableColHdrCnt + .sapUiTableCCnt {margin-top:-1px}
-.sapUiTableCCnt {min-height:44px !important; border-bottom:1px solid #f5f5f5; border-left:1px solid #f5f5f5; border-right:1px solid #f5f5f5}
+.sapUiTableCCnt {min-height:44px !important; border-bottom:1px solid #f5f5f5; border-left:1px solid #f5f5f5; border-right:1px solid #f5f5f5;background-color: #eff3f8;}
 .sapUiTableHeaderRow { background-color: #FBFCFD;}
 .sapUiTableHeaderCell:not(.sapUiTableRowActionHeaderCell):hover {background-color: #F5F9FD;color: #222;}
 .sapUiTable:not(.sapUiTableDragDrop) .sapUiTableHeaderCellActive:active {background-color: #E2EBF4;color: #222;}
@@ -436,15 +436,8 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt {outline-style:none !important}
 .sapUiTableVSb {max-height:none !important;background: #f6f6f6;border-bottom: 1px solid #e5e5e5; border-top: 1px solid #e7eaed;border-right: 1px solid #e7eaed; margin-top: -1px;}
 .sapUiTableVScr .sapUiTableCtrlScr {border-right: 1px solid #e7eaed;}
 .sapUiTableCell.sapUiTableCellLastFixed {border-right-color: #bec6c6;}
-.sapUiTableHSb {
-  position: relative;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: auto;
-  background-color: #f7f7f7;
-  border-bottom: 1px solid #f5f5f5;
-  border-right: 1px solid #f5f5f5;
-}
+.sapUiTableHSb {position: relative;overflow-x: scroll;overflow-y: hidden;-webkit-overflow-scrolling: auto;background-color: #f7f7f7;border-bottom: 1px solid #f5f5f5;border-right: 1px solid #f5f5f5;}
+.sapUiTableRowFirstFixedBottom td {background-color: #eff3f8;}
 
 /* GNB */
 .megadrop-menu-layer {position:absolute; z-index:4; top:59px; border-radius:0; color:#222; background-color:#fff; box-shadow:0 3px 5px 0 rgb(0 0 0 / 10%), 0 0 0 1px rgb(0 0 0 / 5%)}
@@ -1185,13 +1178,17 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 /* 급여 */
 .pay-summary .sapMText {font-size:18px;text-align:right!important;}
 .pay-summary .sapMText:last-child, .pay-summary .sapMLabel:last-child {font-weight:800;}
-.pay-summary .sapMLabel {position: relative;justify-content: start;}
-.pay-summary .sapMLabel:before {content:"";display: inline-block; margin-right:8px; width:10px;height:10px;background-color: rgb(231, 159, 159);}
-.pay-summary .sapMLabel:first-child:before {background-color: rgb(194, 80, 80);}
-.pay-summary .sapMLabel:nth-child(1):before {background-color: rgb(194, 80, 80);}
-.pay-summary .sapMLabel:nth-child(1):before {background-color: rgb(231, 181, 16);}
-.pay-summary .sapMLabel:nth-child(2):before {background-color: rgb(143, 148, 228);}
-.pay-summary .sapMLabel:last-child:before {display:none;}
+.pay-summary > .sapMLabel {position: relative;justify-content: start;}
+.pay-summary > span.sapMLabel:before {content:"";display: inline-block; margin-right:8px; width:10px;height:10px;}
+.pay-summary > span.sapMLabel:nth-child(1):before {background-color: #7bb4eb;}
+.pay-summary > span.sapMLabel:nth-child(2):before {background-color: #81daea;}
+.pay-summary > span.sapMLabel:nth-child(3):before {background-color: #faca74;}
+.pay-summary > span.sapMLabel:nth-child(4):before {background-color: transparent;}
+
+.pay-summary > span.sapMLabel[aria-label=급여]:before {background-color: #7bb4eb;}
+.pay-summary > span.sapMLabel[aria-label=상여]:before {background-color: #81daea;}
+.pay-summary > span.sapMLabel[aria-label=인정상여]:before {background-color: #faca74;}
+.pay-summary > span.sapMLabel[aria-label=소득총액]:before {background-color: transparent;}
 
 
 
