@@ -395,12 +395,7 @@ sap.ui.define(
         const { sProp, sTarget } = oEvent.getSource().data();
         const aGoals = [...oViewModel.getProperty('/goals/strategy'), ...oViewModel.getProperty('/goals/duty')];
 
-        if (
-          !_.chain(aGoals)
-            .filter({ [sProp]: 'ALL' })
-            .isEmpty()
-            .value()
-        ) {
+        if (_.some(aGoals, [sProp, 'ALL'])) {
           oViewModel.setProperty(`/summary/${sTarget}`, '0');
           return;
         }
@@ -408,7 +403,7 @@ sap.ui.define(
         oViewModel.setProperty(
           `/summary/${sTarget}`,
           _.chain(aGoals)
-            .reduce((acc, cur) => (acc += _.multiply(cur.Fwgt, cur[sProp])), 0)
+            .reduce((acc, cur) => _.add(acc, _.multiply(cur.Fwgt, cur[sProp])), 0)
             .divide(100)
             .floor(2)
             .value()
