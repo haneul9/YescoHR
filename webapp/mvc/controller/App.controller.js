@@ -1,11 +1,13 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/core/Fragment',
     'sap/ui/yesco/control/app/Menus',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
   (
     // prettier 방지용 주석
+    Fragment, 
     Menus,
     BaseController
   ) => {
@@ -44,6 +46,38 @@ sap.ui.define(
       navToProfile() {
         this.getRouter().navTo('employee');
       },
+
+      onExit: function () {
+        if (this._oPopover) {
+          this._oPopover.destroy();
+        }
+      },
+  
+      notifyOpenPopover: function (oEvent) {
+        var oButton = oEvent.getSource();
+  
+        // create popover
+        if (!this._oPopover) {
+          Fragment.load({
+            name: "sap.ui.yesco.fragment.app.NotifyPopover",
+            controller: this
+          }).then(function(pPopover) {
+            this._oPopover = pPopover;
+            this.getView().addDependent(this._oPopover);
+            this._oPopover.bindElement("/ProductCollection/0");
+            this._oPopover.openBy(oButton);
+          }.bind(this));
+        } else {
+          this._oPopover.openBy(oButton);
+        }
+      },
+  
+      notifyClosePopover: function () {
+        this._oPopover.close();
+      }
+
+
+
     });
   }
 );

@@ -1,4 +1,5 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.App"
+  xmlns:l="sap.ui.layout"
   xmlns="sap.m"
   xmlns:mvc="sap.ui.core.mvc" displayBlock="true">
   <OverflowToolbar id="appMenuToolbar" asyncMode="true" busy="{appModel>/isMenuBusy}" busyIndicatorDelay="0" class="app-menu-toolbar" height="60px">
@@ -24,7 +25,7 @@
       </TileContent>
     </GenericTile>
 
-    <Button type="Transparent" class="icon-button notice" />
+    <Button type="Transparent" class="icon-button notice" press="notifyOpenPopover" />
 
     <Button type="Transparent" visible="{appModel>/isAtHome}" class="icon-button setting">
       <layoutData>

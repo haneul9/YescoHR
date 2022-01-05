@@ -1178,6 +1178,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 /* 급여 */
 .pay-summary .sapMText {font-size:18px;text-align:right!important;}
 .pay-summary .sapMText:last-child, .pay-summary .sapMLabel:last-child {font-weight:800;}
+.pay-summary .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem {    min-height: 39px;}
 .pay-summary > .sapMLabel {position: relative;justify-content: start;}
 .pay-summary > span.sapMLabel:before {content:"";display: inline-block; margin-right:8px; width:10px;height:10px;}
 .pay-summary > span.sapMLabel:nth-child(1):before {background-color: #7bb4eb;}
@@ -1230,5 +1231,31 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .compare-block.sapUiBlockLayoutBackgroundLight .sapUiBlockLayoutRow .sapUiBlockLayoutEvenCell .sapUiBlockCellContent{background-color:#F7F7F7!important;}
 
 .compare-block .sapUiBlockLayoutSizeXL:not(.sapUiBlockLayoutKeepFontSize) .sapUiBlockCellContent,
-.compare-block.sapUiBlockLayoutBackgroundLight .sapUiBlockLayoutRow .sapUiBlockCellContent
-{padding: 16px 30px; font-size: 14px;}
+.compare-block.sapUiBlockLayoutBackgroundLight .sapUiBlockLayoutRow .sapUiBlockCellContent {padding: 16px 30px; font-size: 14px;}
+
+
+/* 알림센터 */
+.notify ul {position: relative;margin:0 20px;}
+.notify ul:before {content:"";display:inline-block;position:absolute;left: 5px;top:0;width:1px;height:100%;background-color: #DDE1E6;}
+.notify li {position:relative;margin: 0 0px 5px 28px;padding: 10px 14px;border: 1px solid #dde1e6;border-radius:4px;} 
+.notify li:before {content:"";display:inline-block;position:absolute;left: -28px;top:center;width:9px;height:9px;border-radius:50%;background-color: #A2C5FA;}
+.notify li.read {background-color: #f8f9fa;border: 1px solid #dde1e6;}
+.notify li.read .sapMLnk, .notify li.read .sapMText, .notify li.read .sapUiIcon::before  {color:#ccc}
+.notify .sapMLnk {white-space: normal;color:#222;font-weight: 600;}
+.notify .sapMFlexBox {align-self: center;}
+.notify .sapMFlexBox.subject {width: 74%;padding:0 10px;}
+.notify .sapMFlexBox.subject * {align-self: flex-start;}
+.notify li .sapMText {font-weight:400;color:#959595;font-size:12px;}
+.notify .status {min-width: 50px;text-align: right;justify-content: right;}
+.notify .status bdi {padding:0px 4px;border:1px solid #8FBCFF;border-radius:2px;display:inline-block;text-align:center!important;font-size:10px;color:#387FE9;background-color: #fff;}
+.notify li.read .status bdi {border:1px solid #ddd;color:#222;}
+.sapMList .sapMIBar.sapMTB .sapMBarChild + .sapMBarChild:not(.app-menu-level1) {margin-left: 5px;}
+
+
+
+/* Popover */
+.sapMPopover:not(.sapMRPCalendar) .sapMPopoverFooter {margin: 0 20px;}
+.sapMListHdrText, .sapUiSizeCompact .sapMTB.sapMTBHeader-CTX {height: 75px;line-height: 75px;padding-left: 20px;padding-right: 20px;border-bottom: 0px solid #cccccc;font-size:24px;}
+.sapMTB-Transparent-CTX>.sapMTitleTB.sapMTitleStyleAuto { font-size: 24px;}
+.sapMPopoverFooter .sapMIBar.sapMTB .sapMBarChild + .sapMBarChild:not(.app-menu-level1) {margin-left: 5px;}
+.sapMPopoverFooter .sapMIBar.sapMTB .sapMBarChild:last-child:not(.app-menu-level1) { margin-right: 0px;}
