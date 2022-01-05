@@ -27,7 +27,7 @@
 
     <Button type="Transparent" class="icon-button notice" press="notifyOpenPopover" />
 
-    <Button type="Transparent" visible="{appModel>/isAtHome}" class="icon-button setting">
+    <Button type="Transparent" visible="{appModel>/isAtHome}" class="icon-button setting" press="settingDialog">
       <layoutData>
         <OverflowToolbarLayoutData priority="NeverOverflow" />
       </layoutData>

@@ -868,6 +868,8 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 .contents {margin:0 auto; max-width:1600px; min-width:1600px; padding-bottom:20px}
 .sapMPageEnableScrolling > .sapMFlexBox + .sapMFlexBox {margin-top:20px}
 .contents > .sapMFlexBox + .sapMFlexBox {margin-top:20px}
+.contents .sapMHBox > .sapMFlexBox {margin-right:20px}
+.contents .sapMHBox > .sapMFlexBox:last-child {margin-right:0px}
 .contents > .sapUiHiddenPlaceholder + .sapMFlexBox {margin-top:20px}
 .contents > .sapUiBlockLayerTabbable + .sapMFlexBox {margin-top:20px}
 .appointee-box, .summary-box, .search-box {width:33%}
@@ -1255,7 +1257,18 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 
 /* Popover */
 .sapMPopover:not(.sapMRPCalendar) .sapMPopoverFooter {margin: 0 20px;}
-.sapMListHdrText, .sapUiSizeCompact .sapMTB.sapMTBHeader-CTX {height: 75px;line-height: 75px;padding-left: 20px;padding-right: 20px;border-bottom: 0px solid #cccccc;font-size:24px;}
-.sapMTB-Transparent-CTX>.sapMTitleTB.sapMTitleStyleAuto { font-size: 24px;}
-.sapMPopoverFooter .sapMIBar.sapMTB .sapMBarChild + .sapMBarChild:not(.app-menu-level1) {margin-left: 5px;}
-.sapMPopoverFooter .sapMIBar.sapMTB .sapMBarChild:last-child:not(.app-menu-level1) { margin-right: 0px;}
+.sapUiSizeCompact .sapMPopoverHeader .sapMBar {height:75px;box-shadow: inset 0 0px #ebebeb;}
+.sapMListHdrText, .sapUiSizeCompact .sapMTB.sapMTBHeader-CTX, .sapMPopoverHeader .sapMBarMiddle>.sapMBarPH {height: 75px;line-height: 75px;padding-left: 20px;padding-right: 20px;border-bottom: 0px solid #cccccc;font-size:24px;}
+.sapMTB-Transparent-CTX>.sapMTitleTB.sapMTitleStyleAuto, .sapMIBar .sapMBarChild:first-child { font-size: 24px;font-weight: 800; color: #222;}
+.sapMPopover:not(.sapMRPCalendar) .sapMPopoverFooter .sapMIBar.sapMTB .sapMBarChild + .sapMBarChild:not(.app-menu-level1) {margin-left: 5px;}
+.sapMPopover:not(.sapMRPCalendar) .sapMPopoverFooter .sapMIBar.sapMTB .sapMBarChild:last-child:not(.app-menu-level1) { margin-right: 0px;}
+.sapMPopover .sapMPopoverFooter .sapContrast span.sapMBtnInner.sapMBtnEmphasized {background-image: none;background-color: #002866;border-color: #002866;color: #ffffff; text-shadow: 0 0 0.125rem rgb(0 0 0 / 0%);}
+.sapMPopoverWithBar.sapMPopoverWithFooter:not(.sapMRPCalendar)>.sapMPopoverCont { margin-bottom: 0; margin-top: 0; padding: 0 20px;}
+
+
+
+.personal-menu-setting .sapMCb {display:flex;-webkit-flex-direction: row-reverse;flex-direction: row-reverse;white-space: nowrap;border: 1px solid #e3e6ea;align-items: center;padding-left: 20px;padding-right: 20px;height:50px;border-radius: 4px;}
+.personal-menu-setting .sapMCb[aria-checked=false] {background-color: #f8f9fa;border: 1px dashed #b0b7bb;color:#9da6ab}
+.personal-menu-setting .sapMCb[aria-checked=false] .sapMLabel {color:#999;}
+.personal-menu-setting .sapMCb .sapMCbBg {display: inline-block;position: static;}
+.personal-menu-setting .sapMCb .sapMLabel {font-weight: 600;}
