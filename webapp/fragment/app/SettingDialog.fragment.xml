@@ -15,14 +15,14 @@
             <VBox class="personal-menu-setting">
             <grid:CSSGrid id="grid1" gridTemplateRows="1fr 1fr" gridTemplateColumns="repeat(2,1fr)" gridGap="10px 20px">
                 <grid:items>
-                    <CheckBox text="근태정보" selected="true"/>
-                    <CheckBox text="성과관리" selected="true"/>
-                    <CheckBox text="오늘팀원 현황" selected="true" />
-                    <CheckBox text="인원현황" selected="true"/>
-                    <CheckBox text="공지사항" selected="true"/>
-                    <CheckBox text="즐겨찾기 메뉴"/>
-                    <CheckBox text="팀달력" selected="true" />
-                    <CheckBox text="인원현황"/>
+                    <CheckBox text="근태정보" selected="true" class="type-b" />
+                    <CheckBox text="성과관리" class="type-b" />
+                    <CheckBox text="오늘팀원 현황" selected="true" class="type-b" />
+                    <CheckBox text="인원현황" selected="true" class="type-b" />
+                    <CheckBox text="공지사항" selected="true" class="type-b" />
+                    <CheckBox text="즐겨찾기 메뉴" class="type-b" />
+                    <CheckBox text="팀달력" selected="true" class="type-b" />
+                    <CheckBox text="인원현황" class="type-b" />
                 </grid:items>
             </grid:CSSGrid>            
         </VBox>

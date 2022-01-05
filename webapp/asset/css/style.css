@@ -666,6 +666,14 @@ span.sapMBtnInner.sapMBtnEmphasized {text-shadow: none;}
 .sapUiSizeCompact .sapMRb>.sapMLabel {max-width:fit-content}
 .sapMCbBg.sapMCbMarkChecked.sapMCbMarkPartiallyChecked:before {content:""; width:8px; height:8px; background-color:currentColor; border:1px solid transparent; box-sizing:border-box; background-clip:padding-box; margin-top:3px}
 .sapUiSizeCompact.sapMCb .sapMCbMarkChecked.sapMCbMarkPartiallyChecked:before, .sapUiSizeCompact .sapMCbBg.sapMCbMarkChecked.sapMCbMarkPartiallyChecked:before {border-width:0px}
+
+/* custom style checkbox */
+.type-b .sapMCbBg {width: 20px; height: 20px;}
+.type-b.sapMCb .sapMCbBg, .type-b.sapMCb .sapMCbMarkChecked {border-color:transparent!important}
+.type-b .sapMCbBg>input {display: none;}
+.type-b .sapMCbBg.sapMCbMarkChecked:before {content:"";display: inline-block;width:20px;height:20px; background-image: url(../image/icon_check_on.png);background-size: 20px;}
+.type-b .sapMCbBg:before {content:"";display: inline-block;width:20px;height:20px;background-image: url(../image/icon_check_off.png);background-size: 20px;}
+
 /*switch*/
 .sapUiSizeCompact .sapMSwtCont {padding:0}
 .sapMSwt {border:0}
