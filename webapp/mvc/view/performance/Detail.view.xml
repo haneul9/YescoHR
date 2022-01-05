@@ -66,19 +66,19 @@
 									<core:Fragment fragmentName="sap.ui.yesco.mvc.view.performance.fragment.GoalItem" type="XML" />
 								</VBox>
 							</VBox>
-							<HBox class="vCardBox sapUiSmallMarginTop" visible="{= ${/fieldControl/display/Zmepoint} !== 'H' &amp;&amp; ${/fieldControl/display/Zmapoint} !== 'H' &amp;&amp; ${/fieldControl/display/Zmbgrade} !== 'H' }">
+							<HBox class="vCardBox sapUiSmallMarginTop" visible="{= ${/fieldControl/display/Zmepoint} !== 'H' || ${/fieldControl/display/Zmapoint} !== 'H' || ${/fieldControl/display/Zmbgrade} !== 'H' }">
 								<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr">
 									<VBox>
 										<Label text="{i18n>LABEL_10012}" visible="{= ${/fieldControl/display/Zmepoint} !== 'H' }"/>
 									</VBox>
 									<VBox>
-										<Input class="required" type="Number" value="{ path: '/summary/Zmepoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" enabled="{= ${/fieldControl/display/Zmepoint} === 'X' }" visible="{= ${/fieldControl/display/Zmepoint} !== 'H' }"/>
+										<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/Zmepoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" visible="{= ${/fieldControl/display/Zmepoint} !== 'H' }"/>
 									</VBox>
 									<VBox>
 										<Label text="{i18n>LABEL_10013}" visible="{= ${/fieldControl/display/Zmapoint} !== 'H' }"/>
 									</VBox>
 									<VBox>
-										<Input class="required" type="Number" value="{ path: '/summary/Zmapoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" enabled="{= ${/fieldControl/display/Zmapoint} === 'X' }" visible="{= ${/fieldControl/display/Zmapoint} !== 'H' }"/>
+										<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/Zmapoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" visible="{= ${/fieldControl/display/Zmapoint} !== 'H' }"/>
 									</VBox>
 									<VBox>
 										<Label text="{i18n>LABEL_10014}" visible="{= ${/fieldControl/display/Zmbgrade} !== 'H' }"/>

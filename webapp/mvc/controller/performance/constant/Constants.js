@@ -51,11 +51,9 @@ sap.ui.define(
       FIELD_MAPPING: {
         Z131: ['Z131'],
         Z132: ['Z132'],
-        Zmepoint: ['Zmepoint'],
-        Zmapoint: ['Zmapoint'],
-        Zmbgrade: ['Zmbgrade'],
-        Papp: ['Zapgme', 'Papp1'],
-        Fapp: ['Zapgma', 'Papp2'],
+        Papp: ['Zapgme', 'Zapgma', 'Papp1', 'Papp2', 'Zmepoint', 'Zmapoint'],
+        Fapp: ['Zmbgrade'],
+        Z103: ['Z103s'],
         Z105: ['Ztbegda', 'Ztendda'],
         Z113: ['Zmarslt', 'Zrslt'],
         Z125: ['Z125Ee', 'Z125Er'],
@@ -64,21 +62,21 @@ sap.ui.define(
 
       FIELD_STATUS_MAP: {
         2: {
-          A: { Zmepoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmapoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmbgrade: { ME: 'H', MA: 'H', MB: 'H' }, Zrslt: { ME: 'H', MA: 'H', MB: 'H' } },
-          B: { Zmepoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmapoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmbgrade: { ME: 'H', MA: 'H', MB: 'H' }, Zrslt: { ME: 'H', MA: 'H', MB: 'H' }, Z125Ee: { ME: 'X', MA: 'V', MB: 'V' }, Z125Er: { ME: 'D', MA: 'D', MB: 'D' }, Z131: { MA: 'V', MB: 'V' } },
-          C: { Zmepoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmapoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmbgrade: { ME: 'H', MA: 'H', MB: 'H' }, Zrslt: { ME: 'H', MA: 'H', MB: 'H' }, Z125Ee: { ME: 'D', MA: 'D', MB: 'D' }, Z125Er: { ME: 'V', MA: 'X', MB: 'V' }, Z132: { ME: 'V', MB: 'V' } },
-          D: { Zmepoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmapoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmbgrade: { ME: 'H', MA: 'H', MB: 'H' }, Zrslt: { ME: 'H', MA: 'H', MB: 'H' } },
+          A: { Zrslt: { ME: 'H', MA: 'H', MB: 'H' } },
+          B: { Zrslt: { ME: 'H', MA: 'H', MB: 'H' }, Z125Ee: { ME: 'X', MA: 'V', MB: 'V' }, Z125Er: { ME: 'D', MA: 'D', MB: 'D' }, Z131: { MA: 'V', MB: 'V' } },
+          C: { Zrslt: { ME: 'H', MA: 'H', MB: 'H' }, Z125Ee: { ME: 'D', MA: 'D', MB: 'D' }, Z125Er: { ME: 'V', MA: 'X', MB: 'V' }, Z132: { ME: 'V', MB: 'V' } },
+          D: { Zrslt: { ME: 'H', MA: 'H', MB: 'H' } },
         },
         3: {
-          F: { Zmepoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmapoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmbgrade: { ME: 'H', MA: 'H', MB: 'H' }, Zrslt: { ME: 'H', MA: 'H', MB: 'H' }, Z125Ee: { ME: 'X', MA: 'V', MB: 'V' }, Z125Er: { ME: 'D', MA: 'D', MB: 'D' }, Z131: { MA: 'V', MB: 'V' } },
-          G: { Zmepoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmapoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmbgrade: { ME: 'H', MA: 'H', MB: 'H' }, Zrslt: { ME: 'H', MA: 'H', MB: 'H' }, Z125Ee: { ME: 'D', MA: 'D', MB: 'D' }, Z125Er: { ME: 'V', MA: 'X', MB: 'V' }, Z132: { ME: 'V', MB: 'V' } },
-          H: { Zmepoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmapoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmbgrade: { ME: 'H', MA: 'H', MB: 'H' }, Zrslt: { ME: 'H', MA: 'H', MB: 'H' } },
+          F: { Zrslt: { ME: 'H', MA: 'H', MB: 'H' }, Z125Ee: { ME: 'X', MA: 'V', MB: 'V' }, Z125Er: { ME: 'D', MA: 'D', MB: 'D' }, Z131: { MA: 'V', MB: 'V' } },
+          G: { Zrslt: { ME: 'H', MA: 'H', MB: 'H' }, Z125Ee: { ME: 'D', MA: 'D', MB: 'D' }, Z125Er: { ME: 'V', MA: 'X', MB: 'V' }, Z132: { ME: 'V', MB: 'V' } },
+          H: { Zrslt: { ME: 'H', MA: 'H', MB: 'H' } },
         },
         4: {
-          1: { Zapgme: { MA: 'H', MB: 'H' }, Zapgma: { ME: 'H', MA: 'H', MB: 'H' }, Z131: { MA: 'H', MB: 'H' }, Z132: { ME: 'H', MA: 'H', MB: 'H' }, Z125Ee: { ME: 'D' } },
-          A: { Zapgme: { ME: 'D', MA: 'H', MB: 'H' }, Zapgma: { MA: 'H', MB: 'H' }, Z131: { ME: 'D', MA: 'H', MB: 'H' }, Z132: { MA: 'H', MB: 'H' } },
-          2: { Zapgme: { MA: 'D', MB: 'D' }, Zapgma: { MA: 'D', MB: 'D' }, Z131: { MA: 'D', MB: 'D' }, Z132: { MA: 'D', MB: 'D' } },
-          K: { Zapgme: { MA: 'D', MB: 'D' }, Zapgma: { MA: 'D', MB: 'D' }, Z131: { MA: 'D', MB: 'D' }, Z132: { MA: 'D', MB: 'D' } },
+          1: { Zapgme: { ME: 'X', MA: 'H', MB: 'H' }, Zapgma: { ME: 'H', MA: 'H', MB: 'H' }, Papp1: { ME: 'X', MA: 'H', MB: 'H' }, Papp2: { ME: 'H', MA: 'H', MB: 'H' }, Zmepoint: { ME: 'X', MA: 'H', MB: 'H' }, Zmapoint: { ME: 'H', MA: 'H', MB: 'H' } },
+          A: { Zapgme: { ME: 'D', MA: 'D', MB: 'D' }, Zapgma: { ME: 'H', MA: 'X', MB: 'H' }, Papp1: { ME: 'D', MA: 'D', MB: 'D' }, Papp2: { ME: 'H', MA: 'X', MB: 'H' }, Zmepoint: { ME: 'D', MA: 'D', MB: 'D' }, Zmapoint: { ME: 'H', MA: 'X', MB: 'H' } },
+          2: { Zapgme: { ME: 'D', MA: 'D', MB: 'D' }, Zapgma: { ME: 'H', MA: 'D', MB: 'D' }, Papp1: { ME: 'D', MA: 'D', MB: 'D' }, Papp2: { ME: 'H', MA: 'D', MB: 'D' }, Zmepoint: { ME: 'D', MA: 'D', MB: 'D' }, Zmapoint: { ME: 'H', MA: 'D', MB: 'D' } },
+          K: { Zapgme: { ME: 'D', MA: 'D', MB: 'D' }, Zapgma: { ME: 'H', MA: 'D', MB: 'D' }, Papp1: { ME: 'D', MA: 'D', MB: 'D' }, Papp2: { ME: 'H', MA: 'D', MB: 'D' }, Zmepoint: { ME: 'D', MA: 'D', MB: 'D' }, Zmapoint: { ME: 'H', MA: 'D', MB: 'D' } },
         },
       },
 

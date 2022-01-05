@@ -7,6 +7,7 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Pernr',
@@ -19,6 +20,7 @@ sap.ui.define(
     AppUtils,
     Client,
     ServiceNames,
+    UI5Error,
     TableUtils,
     BaseController
   ) => {
@@ -56,10 +58,7 @@ sap.ui.define(
               paletteColors: _.join([this.CHARTS.ACC.color, this.CHARTS.CUR.color], ','),
             },
             categories: [{ category: [] }],
-            dataset: [
-              { seriesname: '', data: [] },
-              { seriesname: '', data: [] },
-            ],
+            dataset: [],
           },
           listInfo: {
             rowCount: 2,
@@ -95,8 +94,8 @@ sap.ui.define(
           oViewModel.setProperty('/entry/department', aDepartment ?? []);
           oViewModel.setProperty('/entry/leaveType', aLeaveType ?? []);
 
-          const sOrgeh = _.get(aDepartment, [0, 'Orgeh'], '');
-          const sQtaty = _.get(aLeaveType, [0, 'Zcode'], '');
+          const sOrgeh = _.get(aDepartment, [0, 'Orgeh'], _.noop());
+          const sQtaty = _.get(aLeaveType, [0, 'Zcode'], _.noop());
 
           oViewModel.setProperty('/search/Orgeh', sOrgeh);
           oViewModel.setProperty('/search/Qtaty', sQtaty);
@@ -216,7 +215,7 @@ sap.ui.define(
               data: _.chain(mGroupByOyymm)
                 .map((v) => ({ value: _.get(v, [0, this.CHARTS.ACC.prop]) }))
                 .forEach((v, i, o) => {
-                  if (_.isEqual(v.value, 0)) v.value = _.get(o, [i - 1, 'value']);
+                  if (_.isEqual(v.value, 0)) v.value = _.get(o, [i - 1, 'value'], 0);
                 })
                 .value(),
             },
@@ -224,7 +223,7 @@ sap.ui.define(
               seriesname: this.getBundleText(this.CHARTS.CUR.label),
               anchorBorderColor: this.CHARTS.CUR.color,
               anchorBgColor: this.CHARTS.CUR.color,
-              data: _.map(mGroupByOyymm, (v) => ({ value: _.get(v, [0, this.CHARTS.CUR.prop]) })),
+              data: _.map(mGroupByOyymm, (v) => ({ value: _.get(v, [0, this.CHARTS.CUR.prop], 0) })),
             },
           ]);
 
@@ -240,14 +239,6 @@ sap.ui.define(
 
       onPressPersonalDialogClose() {
         this.pPersonalDialog.then((oDialog) => oDialog.close());
-      },
-
-      onPressExcelDownload() {
-        const oTable = this.byId(this.TABLE_ID);
-        const aTableData = this.getViewModel().getProperty('/list');
-        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_13036'); // {급여명세서}_목록
-
-        TableUtils.export({ oTable, aTableData, sFileName, aDateProps: ['Paydt'] });
       },
 
       async onSelectRow(oEvent) {
@@ -267,10 +258,7 @@ sap.ui.define(
             Fldcd: sFldcd,
           });
 
-          if (_.isEmpty(aDetailRow)) {
-            MessageBox.alert(this.getBundleText('MSG_00034')); // 조회할 수 없습니다.
-            return;
-          }
+          if (_.isEmpty(aDetailRow)) throw new UI5Error({ message: this.getBundleText('MSG_00043') }); // 조회할 수 없습니다.
 
           const aLeaveType = oViewModel.getProperty('/entry/leaveType');
 

@@ -32,7 +32,11 @@
                         <Label text="{i18n>LABEL_10003}" visible="{= ${/fieldControl/display/Zapgme} !== 'H' }" />
                     </VBox>
                     <HBox>
-                        <ComboBox width="100%" class="required" selectedKey="{Zapgme}" items="{ path: '/entry/levels', templateShareable: true }" enabled="{= ${/fieldControl/display/Zapgme} === 'X' }" visible="{= ${/fieldControl/display/Zapgme} !== 'H' }">
+                        <ComboBox width="100%" class="required" selectedKey="{Zapgme}" items="{ path: '/entry/levels', templateShareable: true }" enabled="{= ${/fieldControl/display/Zapgme} === 'X' }" visible="{= ${/fieldControl/display/Zapgme} !== 'H' }" change=".onChangeScore">
+                            <customData>
+                                <core:CustomData key="sProp" value="Zapgme" />
+                                <core:CustomData key="sTarget" value="Zmepoint" />
+                            </customData>
                             <core:Item key="{ValueEid}" text="{ValueText}" />
                         </ComboBox>
                     </HBox>
@@ -40,7 +44,11 @@
                         <Label text="{i18n>LABEL_10022}" visible="{= ${/fieldControl/display/Zapgma} !== 'H' }" />
                     </VBox>
                     <HBox>
-                        <ComboBox width="100%" class="required" selectedKey="{Zapgma}" items="{ path: '/entry/levels', templateShareable: true }" enabled="{= ${/fieldControl/display/Zapgma} === 'X' }" visible="{= ${/fieldControl/display/Zapgma} !== 'H' }">
+                        <ComboBox width="100%" class="required" selectedKey="{Zapgma}" items="{ path: '/entry/levels', templateShareable: true }" enabled="{= ${/fieldControl/display/Zapgma} === 'X' }" visible="{= ${/fieldControl/display/Zapgma} !== 'H' }" change=".onChangeScore">
+                            <customData>
+                                <core:CustomData key="sProp" value="Zapgma" />
+                                <core:CustomData key="sTarget" value="Zmapoint" />
+                            </customData>
                             <core:Item key="{ValueEid}" text="{ValueText}" />
                         </ComboBox>
                     </HBox>

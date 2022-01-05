@@ -390,6 +390,31 @@ sap.ui.define(
         }
       },
 
+      onChangeScore(oEvent) {
+        const oViewModel = this.getViewModel();
+        const { sProp, sTarget } = oEvent.getSource().data();
+        const aGoals = [...oViewModel.getProperty('/goals/strategy'), ...oViewModel.getProperty('/goals/duty')];
+
+        if (
+          !_.chain(aGoals)
+            .filter({ [sProp]: 'ALL' })
+            .isEmpty()
+            .value()
+        ) {
+          oViewModel.setProperty(`/summary/${sTarget}`, '0');
+          return;
+        }
+
+        oViewModel.setProperty(
+          `/summary/${sTarget}`,
+          _.chain(aGoals)
+            .reduce((acc, cur) => (acc += _.multiply(cur.Fwgt, cur[sProp])), 0)
+            .divide(100)
+            .floor(2)
+            .value()
+        );
+      },
+
       onPressAddStrategy() {
         const oViewModel = this.getViewModel();
 
