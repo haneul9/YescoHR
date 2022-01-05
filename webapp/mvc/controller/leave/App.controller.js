@@ -34,7 +34,7 @@ sap.ui.define(
 
       CHARTS: {
         ACC: { color: '#dc3545', label: 'LABEL_16018', prop: 'Cumuse' },
-        CUR: { color: '#2972c8', label: 'LABEL_16005', prop: 'Monuse' },
+        CUR: { color: '#2972c8', label: 'LABEL_16020', prop: 'Monuse' },
       },
 
       onBeforeShow() {
@@ -55,6 +55,9 @@ sap.ui.define(
               showhovereffect: '1',
               drawcrossline: '1',
               theme: 'fusion',
+              numberSuffix: '%',
+              yAxisMinValue: 0,
+              yAxisMaxValue: 100,
               paletteColors: _.join([this.CHARTS.ACC.color, this.CHARTS.CUR.color], ','),
             },
             categories: [{ category: [] }],
