@@ -1,4 +1,4 @@
-<mvc:View controllerName="sap.ui.yesco.mvc.controller.certification.Certification"
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.certification.certification"
   xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:mvc="sap.ui.core.mvc"

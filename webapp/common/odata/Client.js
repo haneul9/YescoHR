@@ -69,7 +69,7 @@ sap.ui.define(
             error: (oError) => {
               AppUtils.debug(`${sUrl} create error.`, oError);
 
-              reject(new ODataCreateError(oError));
+              reject(new ODataCreateError({ oError }));
             },
           });
         });

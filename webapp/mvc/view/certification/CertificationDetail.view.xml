@@ -1,5 +1,28 @@
-<mvc:View controllerName="sap.ui.yesco.mvc.controller.certification.CertificationDetail"
-  xmlns:mvc="sap.ui.core.mvc"
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.certification.certificationDetail"
   xmlns="sap.m"
-  xmlns:c="sap.ui.core" displayBlock="true" height="100%" busyIndicatorDelay="0">
+  xmlns:core="sap.ui.core"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:custom="sap.ui.yesco.control">
+  <Page showHeader="false">
+    <content>
+      <VBox class="contents-header">
+        <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+          <custom:Breadcrumbs />
+          <HBox>
+            <Button text="{i18n>LABEL_00179}" class="sapUiTinyMarginEnd" type="Emphasized" press=".onIssueBtn" visible="{= !${/FormData/ZappStatAl} }" />
+            <Button text="{i18n>LABEL_00121}" class="sapUiTinyMarginEnd" type="Emphasized" press=".onApplyBtn" visible="{= !${/FormData/ZappStatAl} }" />
+            <Button text="{i18n>LABEL_00110}" class="sapUiTinyMarginEnd" type="Reject" press=".onDeleteBtn" visible="{= ${/FormData/ZappStatAl} === '20'}" />
+            <Button text="{i18n>LABEL_00146}" class="sapUiTinyMarginEnd" press=".onNavBack" />
+          </HBox>
+        </HBox>
+      </VBox>
+      <VBox class="contents">
+        <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.fragment.InfoMessage" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.certification.fragment.DetailForm" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.fragment.ApplyInfo" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.fragment.ApprovalDetails" type="XML" />
+      </VBox>
+    </content>
+  </Page>
 </mvc:View>

@@ -25,7 +25,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.certification.Certification', {
+    return BaseController.extend('sap.ui.yesco.mvc.controller.certification.certification', {
       TableUtils: TableUtils,
       TextUtils: TextUtils,
       FragmentEvent: FragmentEvent,
@@ -43,13 +43,11 @@ sap.ui.define(
             secondDate: new Date(dDate.getFullYear(), 0, 1),
           },
           listInfo: {
-            isShowProgress: false,
+            isShowProgress: true,
             isShowApply: true,
             isShowApprove: true,
-            isShowReject: false,
-            isShowComplete: false,
-            ObjTxt2: this.getBundleText('LABEL_00121'),
-            ObjTxt3: this.getBundleText('LABEL_00116'),
+            isShowReject: true,
+            isShowComplete: true,
             rowCount: 1,
             totalCount: 0,
             progressCount: 0,
@@ -69,11 +67,8 @@ sap.ui.define(
           oListModel.setProperty('/busy', true);
 
           const aTableList = await this.tableList();
-          const oTable = this.byId('certiTable');
 
           oListModel.setProperty('/List', aTableList);
-          oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
-          oListModel.setProperty('/listInfo/infoMessage', this.getBundleText('MSG_17001'));
 
           // const aMyCertiList = await this.totalCount();
 
@@ -102,7 +97,17 @@ sap.ui.define(
             filters: [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'), new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid), new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate), new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2)],
             success: (oData) => {
               if (oData) {
-                resolve(oData.results);
+                const oTable = this.byId('certiTable');
+                const aList = oData.results;
+
+                oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aList }));
+                oListModel.setProperty('/listInfo/infoMessage', this.getBundleText('MSG_17001'));
+                oListModel.setProperty('/listInfo/isShowProgress', false);
+                oListModel.setProperty('/listInfo/isShowApply', true);
+                oListModel.setProperty('/listInfo/isShowApprove', false);
+                oListModel.setProperty('/listInfo/isShowReject', false);
+                oListModel.setProperty('/listInfo/isShowComplete', true);
+                resolve(aList);
               }
             },
             error: (oError) => {
@@ -118,12 +123,10 @@ sap.ui.define(
 
         try {
           oListModel.setProperty('/busy', true);
+
           const aTableList = await this.tableList();
-          const oTable = this.byId('certiTable');
 
           oListModel.setProperty('/List', aTableList);
-          oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
-          oListModel.setProperty('/listInfo/infoMessage', this.getBundleText('MSG_17001'));
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
