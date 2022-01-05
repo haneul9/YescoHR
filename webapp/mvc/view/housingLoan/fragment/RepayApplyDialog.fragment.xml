@@ -16,7 +16,7 @@
                 <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
                     <Label text="{i18n>LABEL_07040}" />
                     <VBox>
-                        <ComboBox items="{/LaonType}" selectedKey="{/DialogData/Rptyp}" change=".onLaonType" editable="{= ${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta} }">
+                        <ComboBox items="{/LaonType}" selectedKey="{/DialogData/Rptyp}" change=".onLaonType" editable="{= ${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta} }" class="required">
                             <core:Item text="{Ztext}" key="{Zcode}" />
                         </ComboBox>
                     </VBox>
@@ -26,14 +26,14 @@
                     </VBox>
                     <Label text="{i18n>LABEL_07044}"/>
                     <VBox>
-                        <custom:DatePicker change=".onPayDateChange" maxDate="{/maxDate}" dateValue="{ path: '/DialogData/Paydt', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= (${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta}) &amp;&amp; !!${/DateEditable} }" />
+                        <custom:DatePicker change=".onPayDateChange" maxDate="{/maxDate}" dateValue="{ path: '/DialogData/Paydt', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= (${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta}) &amp;&amp; !!${/DateEditable} }" class="required"/>
                     </VBox>
                     <Label text="{i18n>LABEL_07041}"/>
                     <VBox>
                         <Input value="{
                         path: '/DialogData/RpamtMpr',
                         type: 'sap.ui.yesco.mvc.model.type.Currency'
-                    }" liveChange=".repayCost" editable="{= (${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta}) &amp;&amp; !${/DateEditable} }" />
+                    }" liveChange=".repayCost" editable="{= (${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta}) &amp;&amp; !${/DateEditable} }" class="required"/>
                     </VBox>
                     <Label text="{i18n>LABEL_00266}"/>
                     <VBox>

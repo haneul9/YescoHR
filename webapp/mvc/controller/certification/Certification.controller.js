@@ -87,9 +87,23 @@ sap.ui.define(
           oListModel.setProperty('/listInfo/isShowComplete', true);
           oListModel.setProperty('/List', aTableList);
 
-          const aCertifList = await Client.getEntitySet(oModel, 'CertificateObjList');
+          const aCertiList = await Client.getEntitySet(oModel, 'CertificateObjList');
+          const aCerTextList = await Client.getEntitySet(oModel, 'IssuedResults');
 
-          oListModel.setProperty('/myCerti', aCertifList);
+          delete aCerTextList[0].__metadata;
+          delete aCerTextList[0].Pernr;
+
+          const aList = [];
+
+          _.map(aCerTextList[0], (v) => {
+            aList.push(v);
+          });
+
+          _.each(aCertiList, (v, i) => {
+            v.Text = aList[i];
+          });
+
+          oListModel.setProperty('/myCerti', aCertiList);
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {

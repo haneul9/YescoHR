@@ -11,7 +11,7 @@
         <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0px" class="form-grid">
             <Label text="{i18n>LABEL_03012}" />
             <VBox>
-                <ComboBox id="AppTarget" class="LongSelectBox" items="{/AppTarget}" selectedKey="{/FormData/Zzobjps}" change=".onTargetChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+                <ComboBox id="AppTarget" class="required LongSelectBox" items="{/AppTarget}" selectedKey="{/FormData/Zzobjps}" change=".onTargetChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
                     <core:Item text="{Znametx}" key="{Zzobjps}" />
                 </ComboBox>
             </VBox>
@@ -21,21 +21,21 @@
             </VBox>
             <Label text="{i18n>LABEL_03014}"/>
             <VBox>
-                <ComboBox id="AcademicSort" items="{/AcademicSort}" selectedKey="{/FormData/Slart}" change=".onShcoolList" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+                <ComboBox id="AcademicSort" items="{/AcademicSort}" selectedKey="{/FormData/Slart}" change=".onShcoolList" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="required">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
             </VBox>
             <Label text="{i18n>LABEL_03015}"/>
             <HBox class="mb-0 ">
-                <Input value="{/FormData/Schtx}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="sapUiTinyMarginEnd" />
+                <Input value="{/FormData/Schtx}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="required sapUiTinyMarginEnd" />
                 <Input value="{/FormData/Majnm}" editable="{= (${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl}) &amp;&amp; !!${/MajorInput} }" />
             </HBox>
             <Label text="{i18n>LABEL_03016}"/>
             <HBox class="mb-0 ">
-                <ComboBox id="GradeList" change=".onGrade" items="{/GradeList}" selectedKey="{/FormData/Grdsp}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="sapUiTinyMarginEnd">
+                <ComboBox id="GradeList" change=".onGrade" items="{/GradeList}" selectedKey="{/FormData/Grdsp}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="required sapUiTinyMarginEnd">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
-                <ComboBox id="QuarterList" items="{/QuarterList}" selectedKey="{/FormData/Divcd}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+                <ComboBox id="QuarterList" items="{/QuarterList}" selectedKey="{/FormData/Divcd}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="required">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
             </HBox>
@@ -70,7 +70,7 @@
                 <Input value="{
                 path: '/FormData/ZbetClass',
                 type: 'sap.ui.yesco.mvc.model.type.Currency'
-            }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="required"/>
             </VBox>
             <Label text="{i18n>LABEL_03022}"/>
             <VBox>

@@ -224,7 +224,7 @@ sap.ui.define(
         }
 
         // 주소
-        if (!mFormData.Pstlzf || !mFormData.Adds1 || !mFormData.Adds2) {
+        if (!mFormData.Pstlzf || !mFormData.Addf1 || !mFormData.Addf2) {
           MessageBox.alert(this.getBundleText('MSG_17007'));
           return true;
         }
@@ -382,5 +382,5 @@ function fn_SetAddr(sZip, sFullAddr) {
   const oViewModel = oView.getModel();
 
   oViewModel.setProperty('/FormData/Pstlzf', sZip);
-  oViewModel.setProperty('/FormData/Adds1', sFullAddr);
+  oViewModel.setProperty('/FormData/Addf1', sFullAddr);
 }

@@ -8,37 +8,37 @@
     <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
       <Label text="{i18n>LABEL_17011}" />
       <VBox>
-        <ComboBox items="{/CertiType}" selectedKey="{/FormData/Certy}" editable="{= !${/FormData/ZappStatAl} }">
+        <ComboBox items="{/CertiType}" selectedKey="{/FormData/Certy}" editable="{= !${/FormData/ZappStatAl} }" class="required">
           <core:Item text="{Certx}" key="{Certy}" />
         </ComboBox>
       </VBox>
       <Label text="{i18n>LABEL_00147}"/>
       <VBox>
-        <ComboBox items="{/CertiGubun}" selectedKey="{/FormData/Reqty}" editable="{= !${/FormData/ZappStatAl} }">
+        <ComboBox items="{/CertiGubun}" selectedKey="{/FormData/Reqty}" editable="{= !${/FormData/ZappStatAl} }" class="required">
           <core:Item text="{Reqtx}" key="{Reqty}" />
         </ComboBox>
       </VBox>
       <Label text="{i18n>LABEL_17012}"/>
       <VBox>
-        <ComboBox items="{/AppPiece}" selectedKey="{/FormData/Reqnt}" editable="{= !${/FormData/ZappStatAl} }">
+        <ComboBox items="{/AppPiece}" selectedKey="{/FormData/Reqnt}" editable="{= !${/FormData/ZappStatAl} }" class="required">
           <core:Item text="{Ztext}" key="{Zcode}" />
         </ComboBox>
       </VBox>
       <Label text="{i18n>LABEL_17013}"/>
       <VBox>
-        <ComboBox items="{/IssuanceArea}" selectedKey="{/FormData/Btrtl}" editable="{= !${/FormData/ZappStatAl} }">
+        <ComboBox items="{/IssuanceArea}" selectedKey="{/FormData/Btrtl}" editable="{= !${/FormData/ZappStatAl} }" class="required">
           <core:Item text="{Btext}" key="{Btrtl}" />
         </ComboBox>
       </VBox>
       <Label text="{i18n>LABEL_17014}"/>
       <VBox>
-        <ComboBox items="{/IssuanceList}" selectedKey="{/FormData/Usety}" editable="{= !${/FormData/ZappStatAl} }">
+        <ComboBox items="{/IssuanceList}" selectedKey="{/FormData/Usety}" editable="{= !${/FormData/ZappStatAl} }" class="required">
           <core:Item text="{Usetx}" key="{Usety}" />
         </ComboBox>
       </VBox>
       <Label text="{i18n>LABEL_17008}"/>
       <VBox>
-        <ComboBox items="{/Receive}" selectedKey="{/FormData/Recty}" editable="{= !${/FormData/ZappStatAl} }">
+        <ComboBox items="{/Receive}" selectedKey="{/FormData/Recty}" editable="{= !${/FormData/ZappStatAl} }" class="required">
           <core:Item text="{Rectx}" key="{Recty}" />
         </ComboBox>
       </VBox>
@@ -52,13 +52,13 @@
       </VBox>
       <Label text="{i18n>LABEL_00152}"/>
       <HBox>
-        <Input value="{/FormData/Pstlzf}" editable="{= !${/FormData/ZappStatAl} }" showValueHelp="true" valueHelpOnly= "true" valueHelpRequest=".onAddressSearch" />
-        <Input value="{/FormData/Adds1}" editable="false">
+        <Input value="{/FormData/Pstlzf}" editable="{= !${/FormData/ZappStatAl} }" showValueHelp="true" valueHelpOnly= "true" valueHelpRequest=".onAddressSearch" class="required" />
+        <Input value="{/FormData/Addf1}" editable="false" class="required">
           <layoutData>
             <FlexItemData growFactor="0.5"/>
           </layoutData>
         </Input>
-        <Input value="{/FormData/Adds2}" editable="{= !${/FormData/ZappStatAl} }">
+        <Input value="{/FormData/Addf2}" editable="{= !${/FormData/ZappStatAl} }" class="required">
           <layoutData>
             <FlexItemData growFactor="0.5"/>
           </layoutData>

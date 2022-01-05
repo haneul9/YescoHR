@@ -8,7 +8,7 @@
         <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0px" class="form-grid">
             <Label text="{i18n>LABEL_07002}" />
             <VBox>
-                <ComboBox items="{/LaonType}" selectedKey="{/FormData/Lntyp}" change=".onLaonType" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }">
+                <ComboBox items="{/LaonType}" selectedKey="{/FormData/Lntyp}" change=".onLaonType" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
             </VBox>
@@ -18,31 +18,31 @@
             </VBox>
             <Label text="{i18n>LABEL_07019}"/>
             <VBox>
-                <ComboBox items="{/AssuranceType}" selectedKey="{/FormData/Asmtd}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }">
+                <ComboBox items="{/AssuranceType}" selectedKey="{/FormData/Asmtd}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
             </VBox>
             <Label text="{i18n>LABEL_07020}"/>
             <VBox>
-                <ComboBox items="{/HouseType}" selectedKey="{/FormData/Htype}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }">
+                <ComboBox items="{/HouseType}" selectedKey="{/FormData/Htype}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
             </VBox>
             <Label text="{i18n>LABEL_07021}"/>
             <HBox>
-                <Input value="{/FormData/Zsize}" liveChange=".areaSize" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
+                <Input value="{/FormData/Zsize}" liveChange=".areaSize" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required"/>
                 <Text text="{/baseArea/Text}"/>
             </HBox>
             <Label text="{i18n>LABEL_00152}"/>
             <VBox>
-                <Input value="{/FormData/Addre}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
+                <Input value="{/FormData/Addre}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required"/>
             </VBox>
             <Label text="{i18n>LABEL_07022}"/>
             <HBox>
                 <Input value="{
                     path: '/FormData/Lnamt',
                     type: 'sap.ui.yesco.mvc.model.type.Currency'
-                }" liveChange=".loanCost" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
+                }" liveChange=".loanCost" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required"/>
                 <Text text="{/loanAmount/Text}"/>
             </HBox>
             <Label text="{i18n>LABEL_00266}" visible="{= !!${/FormData/Lnsta} }"/>
