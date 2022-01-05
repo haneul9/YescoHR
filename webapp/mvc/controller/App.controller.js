@@ -74,9 +74,28 @@ sap.ui.define(
   
       notifyClosePopover: function () {
         this._oPopover.close();
-      }
+      },
 
+      settingDialog() {
+        if (!this.byId('settingDialog')) {
+          Fragment.load({
+            id: this.getView().getId(),
+            name: 'sap.ui.yesco.fragment.app.SettingDialog',
+            controller: this,
+          }).then((oDialog) => {
+            // connect dialog to the root view of this component (models, lifecycle)
+            this.getView().addDependent(oDialog);
+            oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
+            oDialog.open();
+          });
+        }else {
+          this.byId('settingDialog').open();
+        }
+      },
 
+      onClick() {
+        this.byId('settingDialog').close();
+      },
 
     });
   }
