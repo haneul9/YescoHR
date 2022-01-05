@@ -46,7 +46,7 @@
           <Text text="{Usetx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="100px" sortProperty="Sendp" filterProperty="Sendp">
+      <table:Column width="auto" sortProperty="Sendp" filterProperty="Sendp">
         <Label text="{i18n>LABEL_17007}"/>
         <table:template>
           <Text text="{Sendp}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>

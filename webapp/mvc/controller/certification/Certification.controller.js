@@ -70,10 +70,12 @@ sap.ui.define(
 
           const oModel = this.getModel(ServiceNames.PA);
           const oSearch = oListModel.getProperty('/search');
-          const dDate = moment(oSearch.secondDate).hours(9).toDate();
-          const dDate2 = moment(oSearch.date).hours(9).toDate();
-          const sMenid = this.getCurrentMenuId();
-          const aTableList = await Client.getEntitySet(oModel, 'CertificateAppl', { Prcty: 'L', Menid: sMenid, Apbeg: dDate, Apend: dDate2 });
+          const aTableList = await Client.getEntitySet(oModel, 'CertificateAppl', {
+            Prcty: 'L',
+            Menid: this.getCurrentMenuId(),
+            Apbeg: moment(oSearch.secondDate).hours(9).toDate(),
+            Apend: moment(oSearch.date).hours(9).toDate(),
+          });
           const oTable = this.byId('certiTable');
 
           oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
@@ -107,10 +109,12 @@ sap.ui.define(
 
           const oModel = this.getModel(ServiceNames.PA);
           const oSearch = oListModel.getProperty('/search');
-          const dDate = moment(oSearch.secondDate).hours(9).toDate();
-          const dDate2 = moment(oSearch.date).hours(9).toDate();
-          const sMenid = this.getCurrentMenuId();
-          const aTableList = await Client.getEntitySet(oModel, 'CertificateAppl', { Prcty: 'L', Menid: sMenid, Apbeg: dDate, Apend: dDate2 });
+          const aTableList = await Client.getEntitySet(oModel, 'CertificateAppl', {
+            Prcty: 'L',
+            Menid: this.getCurrentMenuId(),
+            Apbeg: moment(oSearch.secondDate).hours(9).toDate(),
+            Apend: moment(oSearch.date).hours(9).toDate(),
+          });
           const oTable = this.byId('certiTable');
 
           oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));

@@ -119,10 +119,10 @@ sap.ui.define(
 
         oDetailModel.setProperty(
           '/InfoMessage',
-          `<p>${this.getBundleText('LABEL_17017')}</p>
-          <p>${this.getBundleText('MSG_17010')}</p>
-          <p>${this.getBundleText('MSG_17011')}</p>
-          <p>${this.getBundleText('MSG_17012')}</p>`
+          `<h5>${this.getBundleText('LABEL_17017')}</h5> 
+          <li>${this.getBundleText('MSG_17010')}</li>
+          <li>${this.getBundleText('MSG_17011')}</li>
+          <li>${this.getBundleText('MSG_17012')}</li>`
         );
 
         if (sViewKey === 'N' || !sViewKey) {
