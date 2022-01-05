@@ -184,7 +184,7 @@
         "m/congDetail": { "viewId": "congDetailMobile", "viewPath": "sap.ui.yesco.mvc.view.congratulation.m", "viewName": "CongDetail" },
 
         "certification": { "viewId": "certification", "viewPath": "sap.ui.yesco.mvc.view.certification", "viewName": "Certification" },
-        "certificationDetail": { "viewId": "certificationDetail", "viewPath": "sap.ui.yesco.mvc.view.certification", "viewName": "CertificationDetail" },
+        "certificationDetail": { "viewId": "certificationDetail", "viewPath": "sap.ui.yesco.mvc.view.certification", "viewName": "certificationDetail" },
 
         "clubJoin": { "viewId": "clubJoin", "viewPath": "sap.ui.yesco.mvc.view.clubJoin", "viewName": "ClubJoin" },
         "h/clubJoin": { "viewId": "h_clubJoin", "viewPath": "sap.ui.yesco.mvc.view.clubJoin", "viewName": "ClubJoinHass" },

@@ -25,7 +25,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.certification.certification', {
+    return BaseController.extend('sap.ui.yesco.mvc.controller.certification.Certification', {
       TableUtils: TableUtils,
       TextUtils: TextUtils,
       FragmentEvent: FragmentEvent,
@@ -93,7 +93,7 @@ sap.ui.define(
           const dDate2 = moment(oSearch.date).hours(9).toDate();
           const sMenid = this.getCurrentMenuId();
 
-          oModel.read('/CertipicateApplSet', {
+          oModel.read('/CertificateApplSet', {
             filters: [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'), new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid), new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate), new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2)],
             success: (oData) => {
               if (oData) {

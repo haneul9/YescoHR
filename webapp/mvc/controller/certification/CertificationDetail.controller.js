@@ -2,7 +2,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/core/Fragment',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
@@ -13,16 +12,12 @@ sap.ui.define(
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
-    'sap/ui/yesco/common/exceptions/ODataCreateError',
-    'sap/ui/yesco/common/exceptions/ODataDeleteError',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date',
     'sap/ui/yesco/mvc/model/type/Currency',
   ],
   (
     // prettier 방지용 주석
-    Fragment,
     JSONModel,
     MessageBox,
     Appno,
@@ -33,9 +28,6 @@ sap.ui.define(
     TableUtils,
     Client,
     ServiceNames,
-    ODataReadError,
-    ODataCreateError,
-    ODataDeleteError,
     BaseController
   ) => {
     'use strict';
@@ -266,7 +258,11 @@ sap.ui.define(
                 Menid: oDetailModel.getProperty('/menid'),
               };
 
-              await Client.create(oModel, 'CertipicateAppl', oSendObject);
+              const oData = await Client.create(oModel, 'CertificateAppl', oSendObject);
+
+              if (!!oData && !!oData.Pdfurl) {
+                window.open(oData.Pdfurl, '_blank');
+              }
 
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00179'), {
                 // {발급}되었습니다.
@@ -317,7 +313,7 @@ sap.ui.define(
                 Menid: oDetailModel.getProperty('/menid'),
               };
 
-              await Client.create(oModel, 'CertipicateAppl', oSendObject);
+              await Client.create(oModel, 'CertificateAppl', oSendObject);
 
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
                 // {신청}되었습니다.
@@ -351,7 +347,7 @@ sap.ui.define(
             try {
               AppUtils.setAppBusy(true, this);
 
-              await Client.remove(oModel, 'CertipicateAppl', { Appno: oDetailModel.getProperty('/FormData/Appno') });
+              await Client.remove(oModel, 'CertificateAppl', { Appno: oDetailModel.getProperty('/FormData/Appno') });
 
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
                 // {삭제}되었습니다.
