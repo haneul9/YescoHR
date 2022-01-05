@@ -74,6 +74,14 @@
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
       </VBox>
+      <Label text="{i18n>LABEL_17018}"/>
+      <HBox>
+        <CheckBox selected="{= ${/FormData/Renck} === 'N' }" select=".onChecked" editable="{= !${/FormData/ZappStatAl} }" />
+        <Text text="{i18n>LABEL_17019}"/>
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+        </layoutData>
+      </HBox>
       <Label text="{i18n>LABEL_00163}"/>
       <VBox>
         <Input value="{/FormData/Deuse}" editable="{= !${/FormData/ZappStatAl} }"/>

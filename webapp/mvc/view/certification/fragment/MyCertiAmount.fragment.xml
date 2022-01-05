@@ -5,6 +5,12 @@
       <HBox justifyContent="SpaceBetween" class="title">
         <Title level="H2" text="{i18n>LABEL_17002}" />
       </HBox>
+      <VBox items="{/myCerti}">
+        <HBox justifyContent="SpaceBetween">
+          <Text text="{Certx}"/>
+          <Text text="{Text}"/>
+        </HBox>
+      </VBox>
     </VBox>
   </VBox>
 </core:FragmentDefinition>

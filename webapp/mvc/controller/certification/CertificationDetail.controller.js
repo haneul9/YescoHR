@@ -120,9 +120,9 @@ sap.ui.define(
         oDetailModel.setProperty(
           '/InfoMessage',
           `<p>${this.getBundleText('LABEL_17017')}</p>
-          <p>${this.getBundleText('MSG_09003')}</p>
-          <p>${this.getBundleText('MSG_09004')}</p>
-          <p>${this.getBundleText('MSG_09005')}</p>`
+          <p>${this.getBundleText('MSG_17010')}</p>
+          <p>${this.getBundleText('MSG_17011')}</p>
+          <p>${this.getBundleText('MSG_17012')}</p>`
         );
 
         if (sViewKey === 'N' || !sViewKey) {
@@ -135,6 +135,7 @@ sap.ui.define(
             Btrtl: 'ALL',
             Usety: 'ALL',
             Recty: 'ALL',
+            Appernr: this.getSessionProperty('Pernr'),
             Iyear: String(new Date().getFullYear()),
           });
 
@@ -162,6 +163,13 @@ sap.ui.define(
         }
 
         return aYearsList;
+      },
+
+      // 주민등록번호 표기 checkBox
+      onChecked(oEvent) {
+        const bSelected = oEvent.getSource().getSelected();
+
+        this.getViewModel().setProperty('/FormData/Renck', bSelected ? 'N' : '');
       },
 
       // 통합주소검색 Dialog
