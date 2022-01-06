@@ -1,6 +1,22 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:smartList="sap.ui.comp.smartlist">
+  
+  <HBox justifyContent="SpaceBetween" class="table-toolbar">
+      <HBox class="title">
+          <Title level="H2" text="{i18n>LABEL_15022}" />
+      </HBox>
+      <HBox class="cascading-type-list">
+          <Image src="asset/image/icon_cascading_type01.png"/>
+          <Text text="{i18n>LABEL_15014}" textAlign="Center" width="100%"/>
+          <Image src="asset/image/icon_cascading_type02.png"/>
+          <Text text="{i18n>LABEL_15015}" textAlign="Center" width="100%"/>
+          <Image src="asset/image/icon_cascading_type03.png"/>
+          <Text text="{i18n>LABEL_15016}" textAlign="Center" width="100%"/>
+          <Image src="asset/image/icon_cascading_type04.png"/>
+          <Text text="{i18n>LABEL_15017}" textAlign="Center" width="100%"/>
+      </HBox>
+  </HBox>
   <!-- <smartList:SmartList listType="Tree" enableAutoBinding="true" showRowCount="false" showFullScreenButton="true" listBindingPath="/CascadingSitu/SituList">
     <smartList:listItemTemplate>
       <StandardTreeItem title="{Stext}" />

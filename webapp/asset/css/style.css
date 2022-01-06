@@ -540,29 +540,35 @@ h4.sapMTitle {font-size:20px; font-weight:800;color:#222}
 .organization-info .sapMText {font-size: 16px;}
 .organization-legend {position: absolute; right: 100px; top: 110px;}
 .organization-legend .sapMFlexItem {margin-top: 10px;}
-.organization-legend .sapMFlexItem>span>bdi {margin-left: 30px;}
-.organization-legend .sapMLabel[data-level="10"]::before {content: "";width: 20px;height: 20px;background-color: #68a9f0;position: absolute;}
-.organization-legend .sapMLabel[data-level="20"]::before {content: "";width: 20px;height: 20px;background-color: #a6e2a0;position: absolute;}
-.organization-legend .sapMLabel[data-level="30"]::before {content: "";width: 20px;height: 20px;background-color: #0b5e04;position: absolute;}
-.organization-legend .sapMLabel[data-level="35"]::before {content: "";width: 20px;height: 20px;background-color: #e06500;position: absolute;}
-.organization-legend .sapMLabel[data-level="40"]::before {content: "";width: 20px;height: 20px;background-color: #510158;position: absolute;}
-.organization-legend .sapMLabel[data-level="50"]::before {content: "";width: 20px;height: 20px;background-color: #003876;position: absolute;}
+.organization-legend .sapMFlexItem>span>bdi {margin-left: 20px;color:#343A40;font-weight:400;}
+.organization-legend .sapMLabel[data-level="10"]::before {content: "";width: 14px;height: 14px;border-radius:50%;background-color: #65B8FF;position: absolute;}
+.organization-legend .sapMLabel[data-level="20"]::before {content: "";width: 14px;height: 14px;border-radius:50%;background-color: #a6e2a0;position: absolute;}
+.organization-legend .sapMLabel[data-level="30"]::before {content: "";width: 14px;height: 14px;border-radius:50%;background-color: #FFE479;position: absolute;}
+.organization-legend .sapMLabel[data-level="35"]::before {content: "";width: 14px;height: 14px;border-radius:50%;background-color: #FFB764;position: absolute;}
+.organization-legend .sapMLabel[data-level="40"]::before {content: "";width: 14px;height: 14px;border-radius:50%;background-color: #C1A7FF;position: absolute;}
+.organization-legend .sapMLabel[data-level="50"]::before {content: "";width: 14px;height: 14px;border-radius:50%;background-color: #D0C0A6;position: absolute;}
 .org-container {display: grid;grid-template-rows: 40px 45px 25px 25px 25px;grid-template-columns: 100px 1fr 1fr;column-gap: 10px;border-radius:8px;background-color:white;border:1px solid lightgray;overflow: hidden;}
-.org-container .title {grid-column: 1 / 4;font-size:16px;font-weight: bold;text-align: center;background-color: #858585;color: azure;line-height: 40px;}
-.org-container .title.level10 {background-color: #68a9f0;}
+.org-container .title {grid-column: 1 / 4;font-size:14px;font-weight: bold;text-align: center;background-color: #959BA3;color: #222;line-height: 40px;}
+.org-container .title.level10 {background-color: #65B8FF;}
 .org-container .title.level20 {background-color: #a6e2a0;}
-.org-container .title.level30 {background-color: #0b5e04;}
+.org-container .title.level30 {background-color: #FFE479;}
 .org-container .title.level35 {background-color: #e06500;}
-.org-container .title.level40 {background-color: #510158;}
-.org-container .title.level50 {background-color: #003876;}
+.org-container .title.level40 {background-color: #C1A7FF;}
+.org-container .title.level50 {background-color: #D0C0A6;}
 .org-container .image {grid-row: 2 / 6;margin-left: 10px;margin-top: 10px;}
 .org-container .image>img {width: 90px;max-height: 105px;}
-.org-container .name {grid-column: 2 / 4;font-size:15px; font-weight:bold;line-height: 45px;}
-.org-container .label, .org-container .content {font-size:14px;line-height: 20px;}
+.org-container .name {grid-column: 2 / 4;font-size:14px; font-weight:bold;line-height: 45px;}
+.org-container .label, .org-container .content {font-size:12px;line-height: 20px;}
+.org-container .label {font-weight:bold;}
 
 .bgType01 { background-color: #e9f7ae;}
 .bgType02 { background-color: #aad2fc;}
 .bgType03 { background-color: #f6abfd;}
+
+.node-button-div {display: inline-block!important;}
+.node-button-div > div {border-radius: 50%!important;width: 100%!important;height: 100%!important;padding:0!important;background-color: #fff!important;border: 1px solid #ccc!important;font-size: 10px!important;margin: auto auto!important;}
+.node-button-div > div > div {margin-top:0!important;text-align:center;}
+
 /* -- DEVELOPER Temporary style */
 
 /*추가 20211101------------------------------------------------------------*/
@@ -1135,24 +1141,24 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .sapMPanelExpandableIconExpanded {transform:translateY(0%) rotate(-90deg);}
 
 /* KPI */
-.cascading-type-list .sapMImg {margin-left:16px;margin-right:4px;}
-.sapFGridList.part-cascading-list .sapMLIB:not(.sapMGHLI) {padding:20px;}
+.cascading-type-list .sapMImg {margin-left:22px;margin-right:5px;width: 20px;height: 20px;}
+.sapFGridList.part-cascading-list .sapMLIB:not(.sapMGHLI) {padding:19px;}
 .sapFGridList.sapFGridList.part-cascading-list .sapFGLIWrapper .sapMLIBContent {margin: 0px;}
 .sapUiSizeCompact .sapFGridList.part-cascading-list .sapFGLIWrapper .sapMLIBContent .sapMVBox > * { margin-bottom:0px;}
-.sapFGridList.sapFGridList.part-cascading-list .sapFGLIWrapper .sapMLIBContent .sapMImg {margin-bottom:14px;margin-right:5px;}
-.sapFGridList.sapFGridList.part-cascading-list .sapFGLIWrapper .sapMLIBContent .sapMTitle {margin-bottom:3px;font-size:15px;font-weight:700;} 
+.sapFGridList.sapFGridList.part-cascading-list .sapFGLIWrapper .sapMLIBContent .sapMImg {margin-bottom:12px;margin-right:5px;}
+.sapFGridList.sapFGridList.part-cascading-list .sapFGLIWrapper .sapMLIBContent .sapMTitle {margin-bottom:1px;font-size:15px;font-weight:700;} 
 .sapFGridList.sapFGridList.part-cascading-list .sapFGLIWrapper .sapMLIBContent .sapMText {font-size:13px;font-weight:400;}
 .sapFGridList.part-cascading-list .sapMLIB:not(.sapMGHLI) {box-shadow: 0 0 0 1px rgb(0 0 0 / 0%);border: 1px solid #AFB9BE;}
 .sapFGridList.part-cascading-list .sapMLIB:not(.sapMGHLI):first-child {background-color: #F4F4F4;text-align: center;border: 1px dashed #B7B7B7;}
 .sapFGridList.part-cascading-list .sapMLIB:not(.sapMGHLI):first-child .sapMTitle {font-size:12px;color:#656F74;font-weight:400;} 
-.sapFGridList.part-cascading-list .sapMLIB:not(.sapMGHLI):first-child .sapMTitle::before {content:"";display:block;width:38px;height:38px;margin: 10px auto 10px;background-image:url(../image/icon_kpi_info.png);background-repeat: no-repeat;}
+.sapFGridList.part-cascading-list .sapMLIB:not(.sapMGHLI):first-child .sapMTitle::before {content:"";display:block;width:38px;height:38px;margin: 14px auto 7px;background-image:url(../image/icon_kpi_info.png);background-repeat: no-repeat;}
 
 .cascading-wrap {display: flex;border: 1px solid #F3F3F3;}
 .cascading-wrap > .sapMFlexItem {padding: 20px;}
 .cascading-wrap > .sapMFlexItem:first-child {display:flex;text-align:center;background-color: #FBFCFD;    border-right: 1px solid #F3F3F3;}
 .cascading-wrap .Org-name {display: inherit;width:280px;align-items: center;text-align:center;background-color: #FBFCFD;}
 .cascading-wrap .Org-name.sapMLabel {}
-.cascading-wrap .Org-name.sapMLabel bdi{margin:0 auto}
+.cascading-wrap .Org-name.sapMLabel bdi{margin:0 auto;color:#222;font-size: 20px;font-weight:500}
 .cascading-wrap .sapFGridList ul:not(.sapUiLayoutCSSGridBoxLayoutPolyfill) {margin-bottom: 0;gap: 18px !important;}
 #container-ehr---m_EvalKpi--EmployeeSearch-cont {padding-top:30px;}
 
@@ -1316,3 +1322,8 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .sapMBtn.portlet-btn.color-04 .sapMBtnDefault {background-color: rgba(229, 169, 56, .1);}
 .sapMBtn.portlet-btn.color-05 .sapMBtnDefault {background-color: rgba(13, 181, 150, .1);}
 .sapMBtn.portlet-btn.color-06 .sapMBtnDefault {background-color: rgba(17, 128, 174, .1);}
+
+/* tree */
+.sapMList [role=tree] {border:1px solid #F3F3F3}
+.sapMTreeItemBase, .sapMTreeItemBaseChildren {background-color: #ffffff; border-bottom-color: #F3F3F3;height: 50px;}
+.sapMTreeItemBase>.sapMLIBContent { font-size: 15px;}
