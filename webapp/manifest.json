@@ -130,6 +130,8 @@
 
         { "pattern": "individualWorkState", "name": "individualWorkState", "target": "individualWorkState" },
 
+        { "pattern": "consolidAppBox", "name": "consolidAppBox", "target": "consolidAppBox" },
+
         { "pattern": "talent", "name": "talent", "target": "talent" },
         { "pattern": "talent/{oDataKey}", "name": "talent-detail", "target": "talentDetail" },
         
@@ -208,6 +210,8 @@
         "m/EvalKpi": { "viewId": "m_EvalKpi", "viewPath": "sap.ui.yesco.mvc.view.mssEvalKpi", "viewName": "Kpi" },
 
         "individualWorkState": { "viewId": "individualWorkState", "viewPath": "sap.ui.yesco.mvc.view.individualWorkState", "viewName": "IndiWorkState" },
+        
+        "consolidAppBox": { "viewId": "consolidAppBox", "viewPath": "sap.ui.yesco.mvc.view.consolidAppBox", "viewName": "ConsolidAppBox" },
 
         "talent": { "viewId": "talent", "viewPath": "sap.ui.yesco.mvc.view.talent", "viewName": "Talent" },
         "talentDetail": { "viewId": "talentDetail", "viewPath": "sap.ui.yesco.mvc.view.talent", "viewName": "TalentDetail" },

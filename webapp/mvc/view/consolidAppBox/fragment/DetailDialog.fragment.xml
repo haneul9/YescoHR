@@ -1,0 +1,12 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:table="sap.ui.table">
+  <Dialog id= "EmployeeSearch" showHeader="false" contentWidth="300px" contentHeight="200px" busyIndicatorDelay="0" busy="{/employeeModel/busy}">
+    <endButton>
+      <Button text="{i18n>LABEL_00115}" press=".onCloseClick" />
+    </endButton>
+    <content>
+
+    </content>
+  </Dialog>
+</core:FragmentDefinition>
