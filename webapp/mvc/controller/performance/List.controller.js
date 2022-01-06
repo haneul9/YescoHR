@@ -32,6 +32,16 @@ sap.ui.define(
           type: '',
           listInfo: {
             rowCount: 1,
+            columns: {
+              ZzapstsSubnm: { width: '15%' },
+              Zperiod: { width: 'auto' },
+              Ename: { width: '10%' },
+              Orgtx: { width: '15%' },
+              Zzjikgbt: { width: '10%' },
+              Zzjikcht: { width: '10%' },
+              Zapgme: { width: '10%', visible: true },
+              Zapgma: { width: '10%', visible: true },
+            },
           },
           list: [],
           parameter: {
@@ -75,6 +85,12 @@ sap.ui.define(
 
         oViewModel.setProperty('/list', [...aRowData]);
         oViewModel.setProperty('/listInfo/rowCount', _.get(TableUtils.count({ oTable, aRowData }), 'rowCount', 1));
+
+        if (_.some(aRowData, (o) => _.isEmpty(o.Zapgma) && _.isEmpty(o.Zapgme))) {
+          const mColumnsInfo = oViewModel.getProperty('/listInfo/columns');
+
+          _.chain(mColumnsInfo).set(['Zapgme', 'visible'], false).set(['Zapgma', 'visible'], false).set(['Ename', 'width'], '15%').set(['Zzjikgbt', 'width'], '15%').set(['Zzjikcht', 'width'], '15%').commit();
+        }
       },
 
       /*****************************************************************

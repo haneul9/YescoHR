@@ -4,49 +4,49 @@
   <HBox>
     <table:Table id="performanceTable" selectionMode="None" class="row-link" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/list}" visibleRowCount="{/listInfo/rowCount}" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
       <table:columns>
-        <table:Column width="15%" filterProperty="ZzapstsSubnm" sortProperty="ZzapstsSubnm">
+        <table:Column width="{/listInfo/columns/ZzapstsSubnm/width}" filterProperty="ZzapstsSubnm" sortProperty="ZzapstsSubnm">
           <Label text="{i18n>LABEL_10001}"/>
           <table:template>
             <Text text="{ZzapstsSubnm}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
           </table:template>
         </table:Column>
-        <table:Column filterProperty="Zperiod" sortProperty="Zperiod">
+        <table:Column width="{/listInfo/columns/Zperiod/width}" filterProperty="Zperiod" sortProperty="Zperiod">
           <Label text="{i18n>LABEL_10002}"/>
           <table:template>
             <Text text="{Zperiod}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
           </table:template>
         </table:Column>
-        <table:Column width="10%" filterProperty="Ename" sortProperty="Ename">
+        <table:Column width="{/listInfo/columns/Ename/width}" filterProperty="Ename" sortProperty="Ename">
           <Label text="{i18n>LABEL_00210}"/>
           <table:template>
             <Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
           </table:template>
         </table:Column>
-        <table:Column width="15%" filterProperty="Orgtx" sortProperty="Orgtx">
+        <table:Column width="{/listInfo/columns/Orgtx/width}" filterProperty="Orgtx" sortProperty="Orgtx">
           <Label text="{i18n>LABEL_00226}"/>
           <table:template>
             <Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
           </table:template>
         </table:Column>
-        <table:Column width="10%" filterProperty="Zzjikgbt" sortProperty="Zzjikgbt">
+        <table:Column width="{/listInfo/columns/Zzjikgbt/width}" filterProperty="Zzjikgbt" sortProperty="Zzjikgbt">
           <Label text="{i18n>LABEL_00215}"/>
           <table:template>
             <Text text="{Zzjikgbt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
           </table:template>
         </table:Column>
-        <table:Column width="10%" filterProperty="Zzjikcht" sortProperty="Zzjikcht">
+        <table:Column width="{/listInfo/columns/Zzjikcht/width}" filterProperty="Zzjikcht" sortProperty="Zzjikcht">
           <Label text="{i18n>LABEL_00217}"/>
           <table:template>
             <Text text="{Zzjikcht}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
           </table:template>
         </table:Column>
-        <table:Column width="10%" filterProperty="Zapgme" sortProperty="Zapgme">
+        <table:Column width="{/listInfo/columns/Zapgme/width}" filterProperty="Zapgme" sortProperty="Zapgme" visible="{/listInfo/columns/Zapgme/visible}">
           <Label text="{i18n>LABEL_10003}"/>
           <table:template>
             <Text text="{Zapgme}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
           </table:template>
         </table:Column>
-        <table:Column width="10%" filterProperty="Zapgma" sortProperty="Zapgma">
+        <table:Column width="{/listInfo/columns/Zapgma/width}" filterProperty="Zapgma" sortProperty="Zapgma" visible="{/listInfo/columns/Zapgma/visible}">
           <Label text="{i18n>LABEL_10004}"/>
           <table:template>
             <Text text="{Zapgma}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
