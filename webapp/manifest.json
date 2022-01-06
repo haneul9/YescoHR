@@ -39,7 +39,7 @@
   "sap.ui5": {
     "rootView": {
       "id": "app",
-      "viewName": "sap.ui.yesco.mvc.view.App",
+      "viewName": "sap.ui.yesco.mvc.view.app.App",
       "type": "XML",
       "async": true
     },

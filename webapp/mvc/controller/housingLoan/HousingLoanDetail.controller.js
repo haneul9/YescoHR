@@ -167,7 +167,7 @@ sap.ui.define(
           oDetailModel.setProperty('/ApplyInfo', {
             Apename: oAppointeeData.Ename,
             Aporgtx: `${oAppointeeData.Btrtx}/${oAppointeeData.Orgtx}`,
-            Apjikgbtl: `${oAppointeeData.Zzjikgbt}/${oAppointeeData.Zzjiktlt}`,
+            Apjikgbtl: `${oAppointeeData.Zzjikgbt}/${oAppointeeData.Zzjikcht}`,
           });
 
           this.settingsAttachTable();

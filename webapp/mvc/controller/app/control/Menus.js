@@ -9,7 +9,7 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
-    'sap/ui/yesco/control/app/MenuLevel1',
+    'sap/ui/yesco/mvc/controller/app/control/MenuLevel1',
   ],
   (
     // prettier 방지용 주석
@@ -25,7 +25,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseObject.extend('sap.ui.yesco.control.app.Menus', {
+    return BaseObject.extend('sap.ui.yesco.mvc.controller.app.control.Menus', {
       constructor: function (oAppController) {
         this.oAppController = oAppController;
         this.oMenuButton = null;
@@ -77,7 +77,7 @@ sap.ui.define(
 
         if (!this.oMenuLayer) {
           this.oMenuLayer = await Fragment.load({
-            name: 'sap.ui.yesco.fragment.app.MegadropMenu',
+            name: 'sap.ui.yesco.mvc.view.app.fragment.MegadropMenu',
             controller: this,
           });
 
@@ -253,9 +253,9 @@ sap.ui.define(
           return;
         }
 
-        this.oAppController.getOwnerComponent().reduceViewResource();
-
-        this.oAppController.getRouter().navTo(sRouteName);
+        const oUIComponent = this.oAppController.getOwnerComponent();
+        oUIComponent.reduceViewResource(); // 메뉴 이동 전 View hidden 처리로 불필요한 DOM 정보를 제거
+        oUIComponent.getRouter().navTo(sRouteName);
         // this.oAppController
         //   .getRouter()
         //   .getTargets()

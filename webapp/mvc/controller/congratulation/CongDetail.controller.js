@@ -132,7 +132,7 @@ sap.ui.define(
             oDetailModel.setProperty('/ApplyInfo', {
               Apename: oSessionData.Ename,
               Aporgtx: `${oSessionData.Btrtx}/${oSessionData.Orgtx}`,
-              Apjikgbtl: `${oSessionData.Zzjikgbt}/${oSessionData.Zzjiktlt}`,
+              Apjikgbtl: `${oSessionData.Zzjikgbt}/${oSessionData.Zzjikcht}`,
             });
 
             resolve();

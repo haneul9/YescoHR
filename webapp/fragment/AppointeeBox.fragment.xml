@@ -11,7 +11,7 @@
       </VBox>
       <VBox justifyContent="Center" class="appointee-info">
         <Text text="{appointeeModel>/Ename}" class="name" />
-        <Text text="{appointeeModel>/Zzjikgbt} / {appointeeModel>/Zzjiktlt}" />
+        <Text text="{appointeeModel>/Zzjikgbt} / {appointeeModel>/Zzjikcht}" />
         <Text text="{appointeeModel>/Pbtxt} {appointeeModel>/Btrtx}" />
         <Text text="{appointeeModel>/Orgtx}" />
       </VBox>

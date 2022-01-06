@@ -1,0 +1,23 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:core="sap.ui.core">
+  <Dialog contentWidth="600px" draggable="true" horizontalScrolling="false" title="{i18n>LABEL_01101}">
+    <HBox height="70px" visible="{= !${/available} }" justifyContent="Center" alignItems="Center">
+      <Text text="{i18n>MSG_01901}" />
+    </HBox>
+    <grid:CSSGrid gridTemplateColumns="1fr 1fr" gridGap="20px" items="{/allList}" visible="{/available}">
+      <HBox class="hCardBox portlet-selector" height="70px" justifyContent="SpaceBetween" alignItems="Center">
+        <customData>
+          <core:CustomData key="hide" value="{= ${active} ? 'X' : 'O' }" writeToDom="true" />
+        </customData>
+        <items>
+          <Text text="{title}" />
+          <ToggleButton width="2.5rem" icon="sap-icon://accept" pressed="{active}" press=".onPressPortletToggleButton" enabled="{switchable}" />
+        </items>
+      </HBox>
+    </grid:CSSGrid>
+    <buttons>
+      <Button text="{i18n>LABEL_00115}" press=".onPressPortletsP13nDialogClose" />
+    </buttons>
+  </Dialog>
+</core:FragmentDefinition>

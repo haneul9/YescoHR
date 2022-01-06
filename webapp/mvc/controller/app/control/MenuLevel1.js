@@ -15,11 +15,11 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return Label.extend('sap.ui.yesco.control.app.MenuLevel1', {
+    return Label.extend('sap.ui.yesco.mvc.controller.app.control.MenuLevel1', {
       metadata: {
         properties: {
           appMenu: {
-            type: 'sap.ui.yesco.control.app.Menus',
+            type: 'sap.ui.yesco.mvc.controller.app.control.Menus',
           },
         },
       },

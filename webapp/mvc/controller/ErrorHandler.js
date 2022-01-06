@@ -39,7 +39,7 @@ sap.ui.define(
           // An entity that was not found in the service is also throwing a 404 error in oData.
           // We already cover this case with a notFound target so we skip it here.
           // A request that cannot be sent to the server is a technical error that we have to handle though
-          if (mResponse.statusCode !== '404' || (mResponse.statusCode === 404 && mResponse.responseText.indexOf('Cannot POST') === 0)) {
+          if (mResponse.statusCode !== 400 && (mResponse.statusCode !== 404 || (mResponse.statusCode === 404 && mResponse.responseText.indexOf('Cannot POST') === 0))) {
             this._showServiceError(mResponse);
           }
         }, this);

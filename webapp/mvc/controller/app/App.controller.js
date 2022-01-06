@@ -2,18 +2,18 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
-    'sap/ui/yesco/control/app/Menus',
     'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/controller/app/control/Menus',
   ],
   (
     // prettier 방지용 주석
-    Fragment, 
-    Menus,
-    BaseController
+    Fragment,
+    BaseController,
+    Menus
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.App', {
+    return BaseController.extend('sap.ui.yesco.mvc.controller.app.App', {
       onInit() {
         this.debug('App.onInit');
 
@@ -31,11 +31,9 @@ sap.ui.define(
           return;
         }
 
-        this.getOwnerComponent().reduceViewResource();
-
-        this.getRouter().navTo('ehrHome');
-
-        // TODO : master 전환 후 callback 호출 필요(ex: localStorage, sessionStorage, global temporary variables/functions 등 제거 callback)
+        const oUIComponent = this.getOwnerComponent();
+        oUIComponent.reduceViewResource(); // 메뉴 이동 전 View hidden 처리로 불필요한 DOM 정보를 제거
+        oUIComponent.getRouter().navTo('ehrHome'); // TODO : ehrMobileHome
       },
 
       getLogoPath(sWerks = 'init') {
@@ -52,26 +50,28 @@ sap.ui.define(
           this._oPopover.destroy();
         }
       },
-  
+
       notifyOpenPopover: function (oEvent) {
         var oButton = oEvent.getSource();
-  
+
         // create popover
         if (!this._oPopover) {
           Fragment.load({
-            name: "sap.ui.yesco.fragment.app.NotifyPopover",
-            controller: this
-          }).then(function(pPopover) {
-            this._oPopover = pPopover;
-            this.getView().addDependent(this._oPopover);
-            this._oPopover.bindElement("/ProductCollection/0");
-            this._oPopover.openBy(oButton);
-          }.bind(this));
+            name: 'sap.ui.yesco.fragment.app.NotifyPopover',
+            controller: this,
+          }).then(
+            function (pPopover) {
+              this._oPopover = pPopover;
+              this.getView().addDependent(this._oPopover);
+              this._oPopover.bindElement('/ProductCollection/0');
+              this._oPopover.openBy(oButton);
+            }.bind(this)
+          );
         } else {
           this._oPopover.openBy(oButton);
         }
       },
-  
+
       notifyClosePopover: function () {
         this._oPopover.close();
       },
@@ -88,7 +88,7 @@ sap.ui.define(
             oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
             oDialog.open();
           });
-        }else {
+        } else {
           this.byId('settingDialog').open();
         }
       },
@@ -97,6 +97,9 @@ sap.ui.define(
         this.byId('settingDialog').close();
       },
 
+      onPressPortletsP13nDialogOpen() {
+        this.getOwnerComponent().byId('home').getController().onPressPortletsP13nDialogOpen();
+      },
     });
   }
 );

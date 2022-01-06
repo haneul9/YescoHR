@@ -111,7 +111,7 @@ sap.ui.define(
           this.oApprovalRequestModel.setProperty('/ApplyInfo', {
             Apename: mAppointeeData.Ename,
             Aporgtx: `${mAppointeeData.Btrtx}/${mAppointeeData.Orgtx}`,
-            Apjikgbtl: `${mAppointeeData.Zzjikgbt}/${mAppointeeData.Zzjiktlt}`,
+            Apjikgbtl: `${mAppointeeData.Zzjikgbt}/${mAppointeeData.Zzjikcht}`,
           });
         } else {
           this.oApprovalRequestModel.setProperty('/ApplyInfo', mApporvalData);
@@ -264,7 +264,7 @@ sap.ui.define(
         return this.oApprovalRequestModel;
       },
 
-      setBusy(sPath = '/busy', bBusy = true) {
+      setBusy(bBusy = true, sPath = '/busy') {
         setTimeout(() => {
           this.oApprovalRequestModel.setProperty(sPath, bBusy);
         });

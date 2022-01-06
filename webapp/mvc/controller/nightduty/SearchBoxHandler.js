@@ -61,7 +61,7 @@ sap.ui.define(
        */
       async onPressIcon() {
         try {
-          this.setBusy('/search/busy', true);
+          this.setBusy(true, '/search/busy');
 
           const aRequestListData = await this.readData();
 
@@ -71,7 +71,7 @@ sap.ui.define(
 
           AppUtils.handleError(oError);
         } finally {
-          this.setBusy('/search/busy', false);
+          this.setBusy(false, '/search/busy');
         }
       },
 

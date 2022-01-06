@@ -9,11 +9,11 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return ScrollContainer.extend('sap.ui.yesco.control.app.MegadropMenu', {
+    return ScrollContainer.extend('sap.ui.yesco.mvc.controller.app.control.MegadropMenu', {
       metadata: {
         properties: {
           appMenu: {
-            type: 'sap.ui.yesco.control.app.Menus',
+            type: 'sap.ui.yesco.mvc.controller.app.control.Menus',
           },
         },
       },
