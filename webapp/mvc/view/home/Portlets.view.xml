@@ -1,8 +1,10 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.home.Portlets"
   xmlns="sap.m"
+	xmlns:custom="sap.ui.yesco.control"
   xmlns:f="sap.f"
   xmlns:cards="sap.f.cards"
   xmlns:mvc="sap.ui.core.mvc"
+	xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:widgets="sap.ui.integration.widgets"
   xmlns:unified="sap.ui.unified">
   <ScrollContainer height="100%" vertical="true">
@@ -10,34 +12,34 @@
     <HBox justifyContent="Center">
       <f:GridContainer id="portlets-grid" class="sapUiSmallMarginTopBottom mx-auto" snapToRow="true">
         <f:layout>
-          <f:GridContainerSettings rowSize="150px" columns="4" columnSize="377.5px" gap="30px" />
+          <f:GridContainerSettings rowSize="270px" columns="4" columnSize="377.5px" gap="20px" />
         </f:layout>
         <f:layoutXL>
           <!-- 1440px ~ -->
-          <f:GridContainerSettings rowSize="150px" columns="4" columnSize="377.5px" gap="30px" />
+          <f:GridContainerSettings rowSize="270px" columns="4" columnSize="377.5px" gap="20px" />
         </f:layoutXL>
         <f:layoutL>
           <!-- 1023px ~ 1439px -->
-          <f:GridContainerSettings rowSize="150px" columns="3" columnSize="377.5px" gap="30px" />
+          <f:GridContainerSettings rowSize="270px" columns="3" columnSize="377.5px" gap="20px" />
         </f:layoutL>
         <f:layoutM>
           <!-- 600px ~ 1023px -->
-          <f:GridContainerSettings rowSize="150px" columns="2" columnSize="377.5px" gap="30px" />
+          <f:GridContainerSettings rowSize="270px" columns="2" columnSize="377.5px" gap="20px" />
         </f:layoutM>
         <f:layoutS>
           <!-- 375px ~ 599px -->
-          <f:GridContainerSettings rowSize="150px" columns="1" columnSize="377.5px" gap="30px" />
+          <f:GridContainerSettings rowSize="270px" columns="1" columnSize="377.5px" gap="20px" />
         </f:layoutS>
         <f:layoutXS>
           <!-- 0 ~ 374px -->
-          <f:GridContainerSettings rowSize="150px" columns="1" columnSize="377.5px" gap="30px" />
+          <f:GridContainerSettings rowSize="270px" columns="1" columnSize="377.5px" gap="20px" />
         </f:layoutXS>
         <f:items>
-          <GenericTile header="Sales Fulfillment Application Title" subheader="Subtitle" width="100%">
+          <GenericTile header="공지사항" width="100%" class="portlet">
             <layoutData>
-              <f:GridContainerItemLayoutData minRows="2"/>
+              <f:GridContainerItemLayoutData minRows="1"/>
             </layoutData>
-            <TileContent unit="EUR" footer="Current Quarter">
+            <TileContent>
               <ImageContent src="sap-icon://home-share"/>
             </TileContent>
           </GenericTile>
@@ -48,7 +50,7 @@
           </widgets:Card>
           <f:Card>
             <f:layoutData>
-              <f:GridContainerItemLayoutData minRows="3"/>
+              <f:GridContainerItemLayoutData minRows="2"/>
             </f:layoutData>
             <f:header>
               <cards:Header title="My Team Calendar"/>
@@ -63,38 +65,81 @@
               </HBox>
             </f:content>
           </f:Card>
+          <GenericTile header="나의 휴가 현황" subheader="현재일 기준" width="100%" class="portlet">
+            <layoutData>
+              <f:GridContainerItemLayoutData minRows="1"/>
+            </layoutData>
+            <TileContent >
+              <VBox class="vacation-summary">
+                <VBox width="100%">
+                  <Label text="연차 : 발생 15" />
+                  <custom:VacationIndicator width="100%" total="15" used="5" showTotal="{/show1}" />
+                </VBox>
+                <VBox width="100%">
+                  <Label text="하계휴가 : 발생 15" />
+                  <custom:VacationIndicator width="100%" total="5" used="2" showTotal="{/show1}" />
+                </VBox>
+              </VBox>
+            </TileContent>
+          </GenericTile>
           <widgets:Card manifest="{portletsModel>/listContent/smallList}">
             <widgets:layoutData>
-              <f:GridContainerItemLayoutData minRows="2"/>
+              <f:GridContainerItemLayoutData minRows="1"/>
             </widgets:layoutData>
           </widgets:Card>
           <widgets:Card manifest="{portletsModel>/listContent/mediumList}">
             <widgets:layoutData>
-              <f:GridContainerItemLayoutData minRows="3"/>
+              <f:GridContainerItemLayoutData minRows="2"/>
             </widgets:layoutData>
           </widgets:Card>
-          <GenericTile header="Cumulative Totals" subheader="Subtitle" width="100%">
+          <GenericTile header="이런 메뉴 어떠세요?" subheader="버튼을 클릭 시 업무화면으로 바로 이동합니다." width="100%" class="portlet type-b">
             <layoutData>
-              <f:GridContainerItemLayoutData minRows="2"/>
-            </layoutData>
-            <TileContent unit="Unit" footer="Footer Text">
-              <NumericContent value="12"/>
-            </TileContent>
-          </GenericTile>
-          <GenericTile header="Travel and Expenses" subheader="Access Concur" width="100%">
-            <layoutData>
-              <f:GridContainerItemLayoutData minRows="2"/>
+              <f:GridContainerItemLayoutData minRows="1"/>
             </layoutData>
             <TileContent>
-              <ImageContent src="sap-icon://travel-expense"/>
+              <grid:CSSGrid id="grid1" gridTemplateRows="1fr 1fr" gridTemplateColumns="repeat(2,1fr)" gridGap="16px 14px" width="100%">
+                  <grid:items>
+                      <Button text="의료비" class="portlet-btn color-01" />
+                      <Button text="급여명세서" class="portlet-btn color-02" />
+                      <Button text="경조금" class="portlet-btn color-03" />
+                      <Button text="연말정산" class="portlet-btn color-04" />
+                      <Button text="동호회" class="portlet-btn color-05" />
+                      <Button text="학자금" class="portlet-btn color-06" />
+                  </grid:items>
+              </grid:CSSGrid>
             </TileContent>
           </GenericTile>
-          <GenericTile header="Success Map" subheader="Access Success Map" width="100%">
+          <GenericTile header="Quick Link"  width="100%" class="portlet">
             <layoutData>
-              <f:GridContainerItemLayoutData minRows="2"/>
+              <f:GridContainerItemLayoutData minRows="1"/>
             </layoutData>
-            <TileContent unit="EUR" footer="Current Quarter">
-              <ImageContent src="sap-icon://map-3"/>
+            <TileContent>
+              <grid:CSSGrid id="grid2" gridTemplateRows="1fr 1fr" gridTemplateColumns="repeat(2,1fr)" gridGap="8px 14px" width="100%">
+                  <grid:items>
+                      <Button text="네이버" class="portlet-btn" />
+                      <Button text="애플" class="portlet-btn" />
+                      <Button text="싸이월드" class="portlet-btn" />
+                      <Button text="코로나현황" class="portlet-btn" />
+                      <Button text="Kakao" class="portlet-btn" />
+                      <Button text="Wikipedia" class="portlet-btn" />
+                      <Button text="링크추가" class="portlet-btn blank" >
+                        <layoutData>
+                         <grid:GridItemLayoutData gridColumn="span 2" gridRow="4"/>
+                        </layoutData>
+                      </Button>
+                  </grid:items>
+              </grid:CSSGrid>
+            </TileContent>
+          </GenericTile>
+          <GenericTile header="즐겨찾기" width="100%" class="portlet">
+            <layoutData>
+              <f:GridContainerItemLayoutData minRows="1"/>
+            </layoutData>
+            <TileContent >
+              <HBox>
+                <ToggleButton type="Transparent" icon="sap-icon://favorite" press="onPress" pressed="true" class="icon-button favorite" />
+                <Text text="역할기술서" />
+              </HBox>
             </TileContent>
           </GenericTile>
         </f:items>
