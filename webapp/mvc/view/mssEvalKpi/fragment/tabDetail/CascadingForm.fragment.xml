@@ -25,8 +25,7 @@
             <table:extension>
                 <HBox class="table-toolbar">
                     <HBox class="title">
-                        <ObjectStatus text="{= ${/tab/selectedKey} === 'A' ? ${i18n>LABEL_15006} : ${i18n>LABEL_15007} }" state="Indication04" />
-                        <Title level="H4" text="{i18n>LABEL_15008}" />
+                        <Title level="H4" text="{= ${/tab/selectedKey} === 'A' ? ${i18n>LABEL_15006} : ${i18n>LABEL_15007} } {i18n>LABEL_15008}" />
                     </HBox>
                 </HBox>
             </table:extension>

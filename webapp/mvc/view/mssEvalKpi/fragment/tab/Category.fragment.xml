@@ -10,8 +10,7 @@
         <VBox width="100%" class="vCardBox">
             <HBox justifyContent="SpaceBetween" class="table-toolbar">
                 <HBox class="title">
-                    <ObjectStatus text="{i18n>LABEL_15004}" state="Indication04" />
-                    <Title level="H4" text="{i18n>LABEL_15018}" />
+                    <Title level="H4" text="{i18n>LABEL_15004} {i18n>LABEL_15018}" />
                 </HBox>
                 <HBox class="cascading-type-list">
                     <Image src="asset/image/icon_cascading_type01.png"/>

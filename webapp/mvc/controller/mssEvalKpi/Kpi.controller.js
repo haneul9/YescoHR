@@ -142,7 +142,7 @@ sap.ui.define(
 
         return new Promise((resolve, reject) => {
           oModel.read('/KpiCascadingActiveSet', {
-            filters: [new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks)],
+            filters: [new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks), new sap.ui.model.Filter('Zyear', sap.ui.model.FilterOperator.EQ, this.getViewModel().getProperty('/search/Zyear'))],
             success: (oData) => {
               if (oData) {
                 this.debug(oData);
@@ -183,14 +183,14 @@ sap.ui.define(
             const iTableLength = aTableList.length;
 
             oViewModel.setProperty('/List', aTableList);
-            oViewModel.setProperty('/listRowCount', iTableLength > 10 ? 10 : iTableLength);
+            oViewModel.setProperty('/listRowCount', iTableLength > 7 ? 7 : iTableLength);
 
             const aGridList = await this.getPartCascading();
 
             if (oViewModel.getProperty('/tab/selectedKey') === 'B') {
               this.setTeamGridList(aGridList);
             } else {
-              aGridList.push({ Stext: this.getBundleText('MSG_15002') });
+              aGridList.unshift({ Stext: this.getBundleText('MSG_15002') });
             }
 
             oViewModel.setProperty('/PartList', aGridList);
@@ -385,14 +385,14 @@ sap.ui.define(
           const iTableLength = aTableList.length;
 
           oViewModel.setProperty('/List', aTableList);
-          oViewModel.setProperty('/listRowCount', iTableLength > 10 ? 10 : iTableLength);
+          oViewModel.setProperty('/listRowCount', iTableLength > 7 ? 7 : iTableLength);
 
           const aPartList = await this.getPartCascading();
 
           if (oViewModel.getProperty('/tab/selectedKey') === 'B') {
             this.setTeamGridList(aPartList);
           } else {
-            aPartList.push({ Stext: this.getBundleText('MSG_15002') });
+            aPartList.unshift({ Stext: this.getBundleText('MSG_15002') });
           }
 
           oViewModel.setProperty('/PartList', aPartList);
@@ -487,11 +487,12 @@ sap.ui.define(
         const sDraggListPath = oDropped.getParent().getBindingContext().getPath();
         const sDropPath = `${sDraggListPath}/TmpGrid`;
         const aGridList = oViewModel.getProperty(sDropPath);
+        const bDragIndex = oGrid.indexOfItem(oDragged) === -1;
         let bInsertPosition = oInfo.getParameter('dropPosition') === 'Before';
         let iDropPosition = oGrid.indexOfItem(oDropped);
 
-        // 빈 박스 드롭시
-        if (!mDraggData.Ztext) {
+        // 빈 박스 드롭시 , 첫번째 drop시
+        if (!mDraggData.Ztext || (iDropPosition === 0 && !bDragIndex)) {
           return;
         }
 
@@ -507,22 +508,25 @@ sap.ui.define(
         }
 
         // remove the item
-        const bDragIndex = oGrid.indexOfItem(oDragged) === -1;
         const iDragPosition = bDragIndex ? 0 : oGrid.indexOfItem(oDragged);
 
         if (!bDragIndex) {
           aGridList.splice(iDragPosition, 1);
 
-          if (iDragPosition < iDropPosition && aGridList.length === iDropPosition) {
-            iDropPosition--;
+          // if (iDragPosition < iDropPosition && aGridList.length === iDropPosition) {
+          //   iDropPosition--;
+          // }
+        } else {
+          if (iDropPosition === 0) {
+            iDropPosition++;
           }
         }
 
         mDraggData.Orgeh = oViewModel.getProperty(`${sDraggListPath}/Orgeh`);
         mDraggData.Orgtx = oViewModel.getProperty(`${sDraggListPath}/Label`);
 
-        // insert the control in target aggregation
-        aGridList.splice(iDropPosition, bInsertPosition ? 0 : -1, mDraggData);
+        // insert the control in target aggregation bInsertPosition ? 0 : -1
+        aGridList.splice(iDropPosition, 0, mDraggData);
         oViewModel.setProperty(sDropPath, aGridList);
         oViewModel.setProperty('/PartList', [mDraggData, ...oViewModel.getProperty('/PartList')]);
       },
@@ -536,11 +540,12 @@ sap.ui.define(
         const oGrid = oDropped.getParent();
         const mDraggData = oViewModel.getProperty(oDraggPath);
         const aGridList = oViewModel.getProperty('/PartList');
+        const bDragIndex = oGrid.indexOfItem(oDragged) === -1;
         let bInsertPosition = oInfo.getParameter('dropPosition') === 'Before';
         let iDropPosition = oGrid.indexOfItem(oDropped);
 
-        // 빈 박스 드롭시
-        if (!mDraggData.Objid) {
+        // 빈 박스 드롭시 , 첫번째 Drop시
+        if (!mDraggData.Objid || (iDropPosition === 0 && !bDragIndex)) {
           return;
         }
 
@@ -556,21 +561,24 @@ sap.ui.define(
         }
 
         // remove the item
-        const bDragIndex = oGrid.indexOfItem(oDragged) === -1;
         const iDragPosition = bDragIndex ? 0 : oGrid.indexOfItem(oDragged);
 
         if (!bDragIndex) {
           aGridList.splice(iDragPosition, 1);
 
-          if (iDragPosition < iDropPosition && aGridList.length === iDropPosition) {
-            iDropPosition--;
+          // if (iDragPosition < iDropPosition && aGridList.length === iDropPosition) {
+          //   iDropPosition--;
+          // }
+        } else {
+          if (iDropPosition === 0) {
+            iDropPosition++;
           }
         }
 
         mDraggData.Orgeh = oViewModel.getProperty('/search/Orgeh');
 
         // insert the control in target aggregation
-        aGridList.splice(iDropPosition, bInsertPosition ? 0 : -1, mDraggData);
+        aGridList.splice(iDropPosition, 0, mDraggData);
         oViewModel.setProperty('/PartList', aGridList);
       },
 
@@ -592,7 +600,7 @@ sap.ui.define(
         const mDraggData = oViewModel.getProperty(sDraggPath);
         const bTabKey = oViewModel.getProperty('/tab/selectedKey') === 'A';
 
-        if (!oDraggedRowContext || !mDraggData.Objid) return;
+        if (!oDraggedRowContext || !mDraggData.Objid || oDragSession.getDragControl().getMetadata().getElementName().search('GridListItem') === -1) return;
 
         const aGridList = bTabKey ? oViewModel.getProperty('/PartList') : oViewModel.getProperty(sDraggPath.slice(0, sDraggPath.lastIndexOf('/')));
         const aPartList = aGridList.filter((x) => ![mDraggData].includes(x));
@@ -679,7 +687,7 @@ sap.ui.define(
           aFilterList = _.chain(aList)
             .groupBy('Orgtx')
             .map((v, p) => ({ Label: p, Orgeh: v[0].Orgeh, TmpGrid: !!v[0].Ztext || !!v[0].Stext ? v : [] }))
-            .forEach((o) => o.TmpGrid.push({ Stext: sTempMessage }))
+            .forEach((o) => o.TmpGrid.unshift({ Stext: sTempMessage }))
             .value();
         }
 
@@ -743,6 +751,7 @@ sap.ui.define(
               });
 
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103')); // {저장}되었습니다.
+              this.onSearch();
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
