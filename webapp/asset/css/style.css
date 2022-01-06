@@ -1016,7 +1016,7 @@ html.sap-desktop .sapMPopoverFooter .sapContrast.sapMIBar.sapMFooter-CTX, html.s
 .sapUiLayoutCSSGrid.form-grid .sapMInputBase:not(.sapMTextArea), .sapUiLayoutCSSGrid.form-grid .sapMCb {align-self: center;}
 .sapUiLayoutCSSGrid.form-grid .sapMInputDescriptionWrapper {width:auto!important;}
 .sapUiLayoutCSSGrid.form-grid .sapMInputBaseReadonly .sapMInputBaseContentWrapper {height:100%}
-.sapUiLayoutCSSGrid.form-grid .sapMLnk {align-self: center;}
+.sapUiLayoutCSSGrid.form-grid .sapMLnk, .sapUiLayoutCSSGrid.form-grid .sapMBtn {align-self: center;}
 
 .sapUiLayoutCSSGrid.form-grid.type-b {border-top: 0px solid #F5F5F5; border-bottom: 0px solid #F5F5F5; padding-top: 0px; padding-left: 0;background-color: transparent!important;}
 .sapUiLayoutCSSGrid.form-grid.type-b > * {height:100%;min-height: 50px;padding-left: 0;align-self: center;background: #F9FAFA;justify-content: center;}
@@ -1325,8 +1325,8 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .sapFGridContainer .sapFGridContainerItemWrapper {box-shadow: 0 2px 4px rgba(0, 0, 0, .0);}
 .portlet .sapMTileCntContent, .portlet .sapMTileCnt, .portlet .sapMGTContent{height:auto;}
 .sapMTileCntContent { margin-bottom: 0.25rem;  margin-top: 0.25rem;  padding-left: 20px;padding-right: 20px;}
-.portlet.type-b .sapMGTHdrContent {display: block;justify-content: flex-start;align-items:center;height: auto;margin-top: 18px;margin-bottom: 18px;margin-left: 20px;margin-right: 20px;}
-.portlet .sapMGTHdrContent {display: flex;justify-content: flex-start;align-items:center;height: auto;margin-top: 18px;margin-bottom: 18px;margin-left: 20px;margin-right: 20px;}
+.portlet .sapMGTHdrContent {display: flex;justify-content: flex-start;align-items:center;height: auto;margin-top: 18px;margin-bottom: 14px;margin-left: 20px;margin-right: 20px;}
+.portlet.type-b .sapMGTHdrContent {display: block;justify-content: flex-start;align-items:center;height: auto;}
 .portlet .sapMGTHdrContent .sapMGTHdrTxt {font-size:20px;font-weight:600;}
 .portlet .sapMGTHdrContent .sapMGTHdrTxt>.sapMText{font-size:20px;font-weight:700;color:#222}
 .portlet .sapMGTSubHdrTxt {margin-top: 2px;margin-left: 10px;}
@@ -1347,7 +1347,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .portlet.team-member-list .sapMImg {width:30px;height:30px;border-radius: 50%;}
 
 
-.portlet-btn .sapMBtnInner {border-radius: 4px!important;font-weight: 500;font-size:14px;}
+.portlet-btn .sapMBtnInner {border-radius: 8px!important;font-weight: 500;font-size:14px;}
 .sapUiSizeCompact .sapMBtn.portlet-btn { min-width: 100%;}
 .sapUiSizeCompact .sapMBtn.portlet-btn.blank .sapMBtnInner { border: 1px dashed #DDE1E6;background-color: #fff;font-size: 12px;}
 .sapMBtn.portlet-btn[class*=color] .sapMBtnInner {border: 0;}
