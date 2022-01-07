@@ -30,7 +30,6 @@ html, body {box-sizing:border-box; overflow:hidden}
 /* Home portlets drag and drop 영역이 메뉴 영역을 가리지 않도록 스타일 수정 */
 #sap-ui-static .sapUiDnDIndicatorWrapper {top:60px}
 
-.portlet-selector[data-hide="O"] {border-style:dashed; border-color:#ccc; background-color:#f6f6f6; box-shadow:none}
 .portlet {box-sizing:border-box; overflow:hidden}
 .portlet-box {position:relative; border:1px solid whitesmoke; border-radius:10px; padding:25px 30px; background-color:#fff; box-shadow:0px 2px 4px rgb(0 0 0 / 16%)}
 .portlet-height-1 {height:300px}

@@ -42,6 +42,7 @@ sap.ui.define(
         P02: P02PortletHandler,
         P03: P03PortletHandler,
       },
+      mPortletHandlerInstances: {},
 
       onInit() {
         this.debug('Portlets.onInit');
@@ -140,6 +141,8 @@ sap.ui.define(
           controller: this,
         });
 
+        this.oPortletsP13nDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
+
         this.getView().addDependent(this.oPortletsP13nDialog);
       },
 
@@ -167,6 +170,7 @@ sap.ui.define(
           mPortletsP13nData[o.Potid] = o;
         });
 
+        const mActivePortletInstances = {};
         const mActivePortlets = {};
         const aActivePortlets = [];
         const mAllPortlets = {};
@@ -189,7 +193,7 @@ sap.ui.define(
               mActivePortlets[o.Potid] = mPortletData;
 
               setTimeout(() => {
-                new PortletHandler(this, mPortletData);
+                mActivePortletInstances[o.Potid] = new PortletHandler(this, mPortletData);
               });
             }
 
@@ -203,6 +207,7 @@ sap.ui.define(
           allList: aAllPortlets,
           activeList: aActivePortlets,
           activeMap: mActivePortlets,
+          activeInstanceMap: mActivePortletInstances,
         });
       },
 
@@ -229,13 +234,44 @@ sap.ui.define(
         };
       },
 
-      onPressPortletToggleButton(oEvent) {
-        const oParent = oEvent.getSource().getParent();
-        const bPressed = oEvent.getParameter('pressed');
+      onSelectPortletSwitch(oEvent) {
+        const bSelected = oEvent.getParameter('selected');
+        const oBindingContext = oEvent.getSource().getBindingContext();
+        const oPortletsModel = oBindingContext.getModel();
+        const sPortletId = oBindingContext.getProperty('id');
 
-        // TODO : portlet instance 생성
+        oPortletsModel.setProperty('/busy', true);
 
-        oParent.toggleStyleClass('portlet-hide', !bPressed);
+        setTimeout(() => {
+          if (bSelected) {
+            const PortletHandler = this.mPortletHandlers[sPortletId];
+            if (!PortletHandler) {
+              this.debug(`Portlets.controller > onSelectPortletSwitch > '${sPortletId}'에 해당하는 PortletHandler가 없습니다.`);
+              return;
+            }
+
+            const aActiveList = oPortletsModel.getProperty('/activeList');
+            const mPortletData = oPortletsModel.getProperty(`/allMap/${sPortletId}`);
+
+            aActiveList.push(mPortletData);
+
+            oPortletsModel.setProperty(`/allMap/${sPortletId}/position/column`, 1);
+            oPortletsModel.setProperty(`/allMap/${sPortletId}/position/sequence`, aActiveList.length + 1);
+            oPortletsModel.setProperty(`/activeMap/${sPortletId}`, mPortletData);
+            oPortletsModel.setProperty(`/activeInstanceMap/${sPortletId}`, new PortletHandler(this, mPortletData));
+          } else {
+            oPortletsModel.setProperty(`/allMap/${sPortletId}/position/column`, 0);
+            oPortletsModel.setProperty(`/allMap/${sPortletId}/position/sequence`, 0);
+            oPortletsModel.getProperty(`/activeInstanceMap/${sPortletId}`).destroy();
+            _.remove(oPortletsModel.getProperty('/activeList'), (mPortletData) => {
+              return mPortletData.id === sPortletId;
+            });
+            delete oPortletsModel.getProperty(`/activeMap/${sPortletId}`);
+            delete oPortletsModel.getProperty(`/activeInstanceMap/${sPortletId}`);
+          }
+          oPortletsModel.refresh();
+          oPortletsModel.setProperty('/busy', false);
+        });
       },
 
       /**

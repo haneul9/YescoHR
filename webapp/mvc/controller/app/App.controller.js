@@ -45,19 +45,13 @@ sap.ui.define(
         this.getRouter().navTo('employee');
       },
 
-      onExit: function () {
-        if (this._oPopover) {
-          this._oPopover.destroy();
-        }
-      },
-
-      notifyOpenPopover: function (oEvent) {
+      notifyOpenPopover(oEvent) {
         var oButton = oEvent.getSource();
 
         // create popover
         if (!this._oPopover) {
           Fragment.load({
-            name: 'sap.ui.yesco.fragment.app.NotifyPopover',
+            name: 'sap.ui.yesco.mvc.view.app.fragment.NotifyPopover',
             controller: this,
           }).then(
             function (pPopover) {
@@ -72,33 +66,18 @@ sap.ui.define(
         }
       },
 
-      notifyClosePopover: function () {
+      notifyClosePopover() {
         this._oPopover.close();
-      },
-
-      settingDialog() {
-        if (!this.byId('settingDialog')) {
-          Fragment.load({
-            id: this.getView().getId(),
-            name: 'sap.ui.yesco.fragment.app.SettingDialog',
-            controller: this,
-          }).then((oDialog) => {
-            // connect dialog to the root view of this component (models, lifecycle)
-            this.getView().addDependent(oDialog);
-            oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
-            oDialog.open();
-          });
-        } else {
-          this.byId('settingDialog').open();
-        }
-      },
-
-      onClick() {
-        this.byId('settingDialog').close();
       },
 
       onPressPortletsP13nDialogOpen() {
         this.getOwnerComponent().byId('home').getController().onPressPortletsP13nDialogOpen();
+      },
+
+      onExit() {
+        if (this._oPopover) {
+          this._oPopover.destroy();
+        }
       },
     });
   }

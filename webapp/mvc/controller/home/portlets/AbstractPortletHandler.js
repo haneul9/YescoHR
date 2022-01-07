@@ -129,6 +129,11 @@ sap.ui.define(
         });
         return this;
       },
+
+      destroy() {
+        this.oPortletModel.destroy();
+        this.oFragment.destroy();
+      },
     });
   }
 );
