@@ -1,6 +1,7 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/core/Fragment',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -10,6 +11,7 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
+    Fragment,
     AppUtils,
     Client,
     ServiceNames,
@@ -19,24 +21,45 @@ sap.ui.define(
     'use strict';
 
     /**
-     * 부서원 및 동료 현황 Portlet
+     * 부서원 현황 Portlet
      */
     return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.P03PortletHandler', {
-      async readContentData() {
-        const oModel = this.getController().getModel(ServiceNames.COMMON);
-        const [aOrgMembers, aMyMembers] = await Promise.all([
-          Client.getEntitySet(oModel, 'PortletOrgInfo'), //
-          Client.getEntitySet(oModel, 'PortletPartners'),
-        ]);
+      async addPortlet() {
+        const oPortletModel = this.getPortletModel();
+        const oP04PortletHandler = this.getController().getViewModel().getProperty('/activeInstanceMap/P04');
+        if (oP04PortletHandler) {
+          this.setFragment(oP04PortletHandler.getFragment());
 
-        return [aOrgMembers, aMyMembers];
+          const oP04PortletModel = oP04PortletHandler.getPortletModel();
+          oP04PortletModel.setData(oPortletModel.getData(), true);
+          this.setPortletModel(oP04PortletModel);
+
+          return;
+        }
+
+        const oFragment = await Fragment.load({
+          name: 'sap.ui.yesco.mvc.view.home.fragment.PortletsP03P04',
+          controller: this,
+        });
+
+        const iPortletHeight = oPortletModel.getProperty('/height');
+        oFragment.setModel(oPortletModel).bindElement('/').addStyleClass(`portlet-height-${iPortletHeight}`);
+
+        this.oController.byId(this.sContainerId).addItem(oFragment);
+        this.setFragment(oFragment);
       },
 
-      transformContentData([aOrgMembers = [], aMyMembers = []]) {
+      async readContentData() {
+        const oModel = this.getController().getModel(ServiceNames.COMMON);
+
+        return Client.getEntitySet(oModel, 'PortletOrgInfo');
+      },
+
+      transformContentData(aOrgMembers) {
         return {
+          activeOrgMembers: true,
           selectedMembersTab: 'ORG',
           orgMembers: this.transformMembersData(aOrgMembers),
-          myMembers: this.transformMembersData(aMyMembers),
         };
       },
 
@@ -63,85 +86,12 @@ sap.ui.define(
         };
       },
 
-      async onPressMyMemberAdd() {
-        const oController = this.getController();
-
-        await oController.EmployeeSearch.onSearchDialog.call(oController, (mSelectedEmp = {}) => {
-          this.addMyMember(mSelectedEmp.Pernr);
-        });
-
-        const oViewModel = oController.getViewModel();
-        oViewModel.setProperty('/employeeModel/Enabled/Stat2', false);
-        oViewModel.setProperty('/employeeModel/Search/Stat2', '3');
+      onPressMyMemberAdd() {
+        this.getController().getViewModel().getProperty('/activeInstanceMap/P04').onPressMyMemberAdd();
       },
 
       onPressMyMemberRemove(oEvent) {
-        const oEventSource = oEvent.getSource();
-        const sPath = oEventSource.getBindingContext().getPath();
-        const sPernr = oEventSource.getModel().getProperty(`${sPath}/Pernr`);
-        const sMessage = AppUtils.getBundleText('MSG_01101'); // 내동료 목록에서 삭제하시겠습니까?
-
-        MessageBox.confirm(sMessage, {
-          onClose: (sAction) => {
-            if (!sAction || sAction === MessageBox.Action.CANCEL) {
-              return;
-            }
-
-            this.removeMyMember(sPernr);
-          },
-        });
-      },
-
-      async addMyMember(sPernr) {
-        try {
-          AppUtils.setAppBusy(true);
-
-          if (!(sPernr || '').replace(/^0+/, '')) {
-            throw new UI5Error({ message: AppUtils.getBundleText('MSG_00035') }); // 대상자 사번이 없습니다.
-          }
-
-          const oModel = this.getController().getModel(ServiceNames.COMMON);
-
-          await Client.create(oModel, 'PortletPartners', {
-            Pernr: sPernr,
-          });
-
-          this.refreshMyMembers();
-        } catch (oError) {
-          AppUtils.handleError(oError);
-        } finally {
-          AppUtils.setAppBusy(false);
-        }
-      },
-
-      async removeMyMember(sPernr) {
-        try {
-          AppUtils.setAppBusy(true);
-
-          const oModel = this.getController().getModel(ServiceNames.COMMON);
-
-          await Client.remove(oModel, 'PortletPartners', {
-            Pernr: sPernr,
-          });
-
-          this.refreshMyMembers();
-          // const sMessage = AppUtils.getBundleText('MSG_00007', 'LABEL_00110'); // {삭제}되었습니다.
-          // MessageBox.alert(sMessage, {
-          //   onClose: () => {
-          //   },
-          // });
-        } catch (oError) {
-          AppUtils.handleError(oError);
-        } finally {
-          AppUtils.setAppBusy(false);
-        }
-      },
-
-      async refreshMyMembers() {
-        const oModel = this.getController().getModel(ServiceNames.COMMON);
-        const aMyMembers = await Client.getEntitySet(oModel, 'PortletPartners');
-
-        this.getPortletModel().setProperty('/myMembers', this.transformMembersData(aMyMembers));
+        this.getController().getViewModel().getProperty('/activeInstanceMap/P04').onPressMyMemberRemove(oEvent);
       },
     });
   }

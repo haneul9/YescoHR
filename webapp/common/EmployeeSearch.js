@@ -340,11 +340,12 @@ sap.ui.define(
             .attachBeforeOpen(() => {
               this.byId('empTable').clearSelection();
             })
-            .attachBeforeClose(() => {
+            .attachBeforeClose((oEvent) => {
               if (fnCallback && typeof fnCallback === 'function') {
                 const aSelectedEmp = this.getViewModel().getProperty('/employeeModel/SelectedEmp') || [];
+                const bClickedCloseButton = oEvent.getParameter('origin').getProperty('text') === AppUtils.getBundleText('LABEL_00115');
 
-                fnCallback(aSelectedEmp[0] || {});
+                fnCallback(aSelectedEmp[0] || {}, bClickedCloseButton);
               }
             });
         }

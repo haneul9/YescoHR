@@ -41,15 +41,16 @@ sap.ui.define(
         const oPortletModel = this.getPortletModel();
         const sPortletId = oPortletModel.getProperty('/id');
 
-        this.oFragment = await Fragment.load({
+        const oFragment = await Fragment.load({
           name: `sap.ui.yesco.mvc.view.home.fragment.Portlets${sPortletId}`,
           controller: this,
         });
 
         const iPortletHeight = oPortletModel.getProperty('/height');
-        this.oFragment.setModel(oPortletModel).bindElement('/').addStyleClass(`portlet-height-${iPortletHeight}`);
+        oFragment.setModel(oPortletModel).bindElement('/').addStyleClass(`portlet-height-${iPortletHeight}`);
 
-        this.oController.byId(this.sContainerId).addItem(this.oFragment);
+        this.oController.byId(this.sContainerId).addItem(oFragment);
+        this.setFragment(oFragment);
       },
 
       async showContentData() {
@@ -86,7 +87,9 @@ sap.ui.define(
         throw new UI5Error({ message: AppUtils.getBundleText('MSG_00053', `${sPortletId}PortletHandler`, 'readContentData') }); // {PortletHandler}에 {readContentData} function을 선언하세요.
       },
 
-      onPressClose() {
+      onPressClose(oEvent) {
+        // const sPernr = oEvent.getSource().getBindingContext().getProperty('Pernr');
+
         const sTitle = this.getPortletModel().getProperty('/title');
         alert(`${sTitle} Portlet 사용안함 : 준비중!`);
       },
@@ -123,6 +126,15 @@ sap.ui.define(
         return this.oPortletModel;
       },
 
+      setFragment(oFragment) {
+        this.oFragment = oFragment;
+        return this;
+      },
+
+      getFragment() {
+        return this.oFragment;
+      },
+
       setBusy(bBusy = true, sPath = '/busy') {
         setTimeout(() => {
           this.getPortletModel().setProperty(sPath, bBusy);
@@ -131,8 +143,8 @@ sap.ui.define(
       },
 
       destroy() {
-        this.oPortletModel.destroy();
-        this.oFragment.destroy();
+        this.getPortletModel().destroy();
+        this.getFragment().destroy();
       },
     });
   }

@@ -14,6 +14,7 @@ sap.ui.define(
     'sap/ui/yesco/mvc/controller/home/portlets/P01PortletHandler',
     'sap/ui/yesco/mvc/controller/home/portlets/P02PortletHandler',
     'sap/ui/yesco/mvc/controller/home/portlets/P03PortletHandler',
+    'sap/ui/yesco/mvc/controller/home/portlets/P04PortletHandler',
   ],
   (
     // prettier 방지용 주석
@@ -29,7 +30,8 @@ sap.ui.define(
     BaseController,
     P01PortletHandler,
     P02PortletHandler,
-    P03PortletHandler
+    P03PortletHandler,
+    P04PortletHandler
   ) => {
     'use strict';
 
@@ -40,10 +42,9 @@ sap.ui.define(
       mPortletHandlers: {
         P01: P01PortletHandler,
         P02: P02PortletHandler,
-        P03: P03PortletHandler, // P03, P04는 같은 PortletHandler를 공유함
-        P04: P03PortletHandler, // P03, P04는 같은 PortletHandler를 공유함
+        P03: P03PortletHandler,
+        P04: P04PortletHandler,
       },
-      mPortletHandlerInstances: {},
 
       onBeforeShow() {
         const oGrid = this.byId('portlets-grid');
@@ -176,11 +177,6 @@ sap.ui.define(
                 return mPortletData;
               }
 
-              if ((o.Potid === 'P03' && mActivePortlets.P04) || (o.Potid === 'P04' && mActivePortlets.P03)) {
-                this.debug(`Portlets.controller > getPortletsModel > '${o.Potid}'에 해당하는 PortletHandler가 이미 존재합니다.`);
-                return mPortletData;
-              }
-
               aActivePortlets.push(mPortletData);
               mActivePortlets[o.Potid] = mPortletData;
 
@@ -228,12 +224,12 @@ sap.ui.define(
 
       onSelectPortletSwitch(oEvent) {
         const bSelected = oEvent.getParameter('selected');
-        const oBindingContext = oEvent.getSource().getBindingContext();
-        const oPortletsModel = oBindingContext.getModel();
-        const sPortletId = oBindingContext.getProperty('id');
+        const sPortletId = oEvent.getSource().getBindingContext().getProperty('id');
+        const oPortletsModel = this.getViewModel();
 
         oPortletsModel.setProperty('/busy', true);
 
+        // TODO : 저장
         setTimeout(() => {
           if (bSelected) {
             const PortletHandler = this.mPortletHandlers[sPortletId];

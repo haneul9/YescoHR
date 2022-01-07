@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:f="sap.f"
   xmlns:core="sap.ui.core">
-  <VBox class="portlet portlet-box portlet-p03" tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
+  <VBox class="portlet portlet-box portlet-p03p04" tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
     <customData>
       <core:CustomData key="portlet-id" value="{id}" writeToDom="true" />
     </customData>
@@ -13,13 +13,13 @@
         <FlexItemData minHeight="15%" />
       </layoutData>
       <Title level="H2" text="{title}" visible="{= !${hideTitle} }" />
-      <SegmentedButton selectedKey="{selectedMembersTab}">
+      <SegmentedButton selectedKey="{selectedMembersTab}" visible="{= !!${activeOrgMembers} &amp;&amp; !!${activeMyMembers} }">
         <items>
-          <SegmentedButtonItem text="{i18n>LABEL_01201}" key="ORG" />
-          <SegmentedButtonItem text="{i18n>LABEL_01202}" key="MY" />
+          <SegmentedButtonItem text="{i18n>LABEL_01201}" key="ORG" visible="{= !!${activeOrgMembers} }" />
+          <SegmentedButtonItem text="{i18n>LABEL_01202}" key="MY" visible="{= !!${activeMyMembers} }" />
         </items>
       </SegmentedButton>
-      <Button icon="sap-icon://add" type="Transparent" class="icon-button" visible="{= ${selectedMembersTab} === 'MY' }" press=".onPressMyMemberAdd" />
+      <Button icon="sap-icon://add" type="Transparent" class="icon-button" visible="{= !!${activeMyMembers} &amp;&amp; ${selectedMembersTab} === 'MY' }" press=".onPressMyMemberAdd" />
       <Text text="">
         <layoutData>
           <FlexItemData growFactor="1" />
@@ -28,7 +28,7 @@
       <Button icon="sap-icon://decline" type="Transparent" visible="{switchable}" class="icon-button portlet-close" press=".onPressClose" />
       <Button icon="sap-icon://add" type="Transparent" visible="{hasLink}" class="icon-button" press=".onPressLink" />
     </HBox>
-    <ScrollContainer height="85%" vertical="true" visible="{= ${selectedMembersTab} === 'ORG' }">
+    <ScrollContainer height="85%" vertical="true" visible="{= !!${activeOrgMembers} &amp;&amp; ${selectedMembersTab} === 'ORG' }">
       <layoutData>
         <FlexItemData growFactor="1" />
       </layoutData>
@@ -55,7 +55,7 @@
         </HBox>
       </VBox>
     </ScrollContainer>
-    <ScrollContainer height="85%" vertical="true" visible="{= ${selectedMembersTab} === 'MY' }">
+    <ScrollContainer height="85%" vertical="true" visible="{= !!${activeMyMembers} &amp;&amp; ${selectedMembersTab} === 'MY' }">
       <layoutData>
         <FlexItemData growFactor="1" />
       </layoutData>
@@ -79,7 +79,7 @@
               <core:CustomData key="portlet-member-status" value="{Icon}" writeToDom="true" />
             </customData>
           </Text>
-          <Button icon="sap-icon://decline" type="Transparent" class="icon-button" press=".onPressMyMemberRemove" />
+          <Button icon="sap-icon://decline" type="Transparent" class="icon-button portlet-member-remove" press=".onPressMyMemberRemove" />
         </HBox>
       </VBox>
     </ScrollContainer>

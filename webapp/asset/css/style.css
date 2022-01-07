@@ -41,15 +41,17 @@ html, body {box-sizing:border-box; overflow:hidden}
 .portlet .sapMBtn.icon-button.portlet-close {display:none}
 .portlet:hover .sapMBtn.icon-button.portlet-close {display:initial}
 .portlet-p01 .sapMImg {border-radius:50%}
-.portlet-p03 .sapMImg {border-radius:50%}
-.portlet-p03 [data-portlet-member-status] {border:1px solid; border-radius:3px}
-.portlet-p03 [data-portlet-member-status=""] {border-color:transparent; color:transparent}
-.portlet-p03 [data-portlet-member-status="red"] {border-color:red; color:red; font-size:0.6rem}
-.portlet-p03 [data-portlet-member-status="blue"] {border-color:blue; color:blue; font-size:0.6rem}
-.portlet-p03 [data-portlet-member-status="grey"] {border-color:lightgray; color:lightgray; font-size:0.6rem}
-.portlet-p03 .portlet-member > .sapMFlexItem {margin-right:5px}
-.portlet-p03 .portlet-member-name {font-size:1rem; font-weight:700; color:blue}
-.portlet-p03 .portlet-member-org {color:lightgray}
+.portlet-p03p04 .sapMImg {border-radius:50%}
+.portlet-p03p04 [data-portlet-member-status] {border:1px solid; border-radius:3px}
+.portlet-p03p04 [data-portlet-member-status=""] {border-color:transparent; color:transparent}
+.portlet-p03p04 [data-portlet-member-status="red"] {border-color:red; color:red; font-size:0.6rem}
+.portlet-p03p04 [data-portlet-member-status="blue"] {border-color:blue; color:blue; font-size:0.6rem}
+.portlet-p03p04 [data-portlet-member-status="grey"] {border-color:lightgray; color:lightgray; font-size:0.6rem}
+.portlet-p03p04 .portlet-member > .sapMFlexItem {margin-right:5px}
+.portlet-p03p04 .portlet-member-name {font-size:1rem; font-weight:700; color:blue}
+.portlet-p03p04 .portlet-member-org {color:lightgray}
+.portlet-p03p04 .sapMBtn.icon-button.portlet-member-remove {display:none}
+.portlet-p03p04:hover .sapMBtn.icon-button.portlet-member-remove {display:initial}
 .sapUiSizeCompact .portlet .sapMBtn,
 .sapUiSizeCompact .portlet .sapMBtnInner {min-width:auto}
 .sapUiSizeCompact .portlet .sapMBtnIcon {margin-right:0; width:auto; line-height:100%}

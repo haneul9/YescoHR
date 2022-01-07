@@ -30,9 +30,7 @@ sap.ui.define(
        * @param {sap.ui.base.Event} oEvent
        */
       async openDialog(oEvent) {
-        const oContext = oEvent.getSource().getBindingContext();
-        const sPath = oContext.getPath();
-        const sAppno = oContext.getModel().getProperty(`${sPath}/Appno`);
+        const sAppno = oEvent.getSource().getBindingContext().getProperty('Appno');
         const sApptp = this.oController.getApprovalType();
 
         if (!this.oFileListDialog) {
