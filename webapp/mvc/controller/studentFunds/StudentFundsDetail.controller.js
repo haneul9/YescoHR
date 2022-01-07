@@ -172,13 +172,13 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const sUrl = '/SchExpenseApplSet';
         const sViewKey = oDetailModel.getProperty('/ViewKey');
-        const oSessionData = this.getSessionData();
+        const mSessionData = this.getSessionData();
 
         if (sViewKey === 'N' || !sViewKey) {
-          oDetailModel.setProperty('/FormData', oSessionData);
+          oDetailModel.setProperty('/FormData', mSessionData);
           oDetailModel.setProperty('/FormData', {
-            Apename: oSessionData.Ename,
-            Appernr: oSessionData.Pernr,
+            Apename: mSessionData.Ename,
+            Appernr: mSessionData.Pernr,
             Zzobjps: 'ALL',
             Slart: 'ALL',
             Grdsp: 'ALL',
@@ -187,9 +187,9 @@ sap.ui.define(
           });
 
           oDetailModel.setProperty('/ApplyInfo', {
-            Apename: oSessionData.Ename,
-            Aporgtx: `${oSessionData.Btrtx} / ${oSessionData.Orgtx}`,
-            Apjikgbtl: `${oSessionData.Zzjikgbt} / ${oSessionData.Zzjikcht}`,
+            Apename: mSessionData.Ename,
+            Aporgtx: `${mSessionData.Btrtx} / ${mSessionData.Orgtx}`,
+            Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
           });
 
           this.setYearsList();

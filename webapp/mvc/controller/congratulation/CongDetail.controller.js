@@ -111,28 +111,28 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const sDataKey = oDetailModel.getProperty('/FormStatus');
         const sMenid = this.getCurrentMenuId();
-        const oSessionData = this.getSessionData();
-        const oAppointeeData = this.getAppointeeData();
+        const mSessionData = this.getSessionData();
+        const mAppointeeData = this.getAppointeeData();
 
         return new Promise((resolve, reject) => {
           oDetailModel.setProperty('/menuId', sMenid);
 
           if (!sDataKey || sDataKey === 'N') {
-            oDetailModel.setProperty('/FormData', oSessionData);
+            oDetailModel.setProperty('/FormData', mSessionData);
             oDetailModel.setProperty('/FormData', {
-              Apename: oSessionData.Ename,
-              Appernr: oSessionData.Pernr,
-              Ename: oAppointeeData.Ename,
-              Pernr: oAppointeeData.Pernr,
+              Apename: mSessionData.Ename,
+              Appernr: mSessionData.Pernr,
+              Ename: mAppointeeData.Ename,
+              Pernr: mAppointeeData.Pernr,
               Concode: 'ALL',
               Conresn: 'ALL',
               Kdsvh: 'ALL',
             });
 
             oDetailModel.setProperty('/ApplyInfo', {
-              Apename: oSessionData.Ename,
-              Aporgtx: `${oSessionData.Btrtx} / ${oSessionData.Orgtx}`,
-              Apjikgbtl: `${oSessionData.Zzjikgbt} / ${oSessionData.Zzjikcht}`,
+              Apename: mSessionData.Ename,
+              Aporgtx: `${mSessionData.Btrtx} / ${mSessionData.Orgtx}`,
+              Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
             });
 
             resolve();
@@ -145,7 +145,7 @@ sap.ui.define(
                 new Filter('Prcty', FilterOperator.EQ, 'D'), // prettier 방지용 주석
                 new Filter('Menid', FilterOperator.EQ, sMenid),
                 new Filter('Appno', FilterOperator.EQ, sDataKey),
-                new Filter('Pernr', FilterOperator.EQ, oAppointeeData.Pernr),
+                new Filter('Pernr', FilterOperator.EQ, mAppointeeData.Pernr),
               ],
               success: (oData) => {
                 resolve(oData.results[0]);

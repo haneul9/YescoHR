@@ -157,17 +157,17 @@ sap.ui.define(
         );
 
         if (sViewKey === 'N' || !sViewKey) {
-          const oAppointeeData = this.getAppointeeData();
+          const mSessionData = this.getSessionData();
 
-          oDetailModel.setProperty('/FormData/Appernr', oAppointeeData.Pernr);
+          oDetailModel.setProperty('/FormData/Appernr', mSessionData.Pernr);
           oDetailModel.setProperty('/FormData/Lntyp', 'ALL');
           oDetailModel.setProperty('/FormData/Asmtd', 'ALL');
           oDetailModel.setProperty('/FormData/Htype', 'ALL');
 
           oDetailModel.setProperty('/ApplyInfo', {
-            Apename: oAppointeeData.Ename,
-            Aporgtx: `${oAppointeeData.Btrtx} / ${oAppointeeData.Orgtx}`,
-            Apjikgbtl: `${oAppointeeData.Zzjikgbt} / ${oAppointeeData.Zzjikcht}`,
+            Apename: mSessionData.Ename,
+            Aporgtx: `${mSessionData.Btrtx} / ${mSessionData.Orgtx}`,
+            Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
           });
 
           this.settingsAttachTable();
