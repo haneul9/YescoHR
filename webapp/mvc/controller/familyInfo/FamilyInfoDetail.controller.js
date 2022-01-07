@@ -147,19 +147,22 @@ sap.ui.define(
             Hndcd: 'ALL',
             Dptyp: 'ALL',
           });
+          this.settingsAttachTable();
         } else {
           const oModel = this.getModel(ServiceNames.PA);
           const oView = this.getView();
           const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
 
-          if (!!oListView && !!oListView.getModel().getProperty('/parameters')) {
-            oDetailModel.setProperty('/FormData', oListView.getModel().getProperty('/parameters'));
+          if (!!oListView && !!oListView.getModel().getProperty('/parameter')) {
+            oDetailModel.setProperty('/FormData', oListView.getModel().getProperty('/parameter'));
+            this.settingsAttachTable();
           } else {
             oModel.read('/FamilyInfoApplSet', {
               filters: [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'), new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, this.getCurrentMenuId()), new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sKey)],
               success: (oData) => {
                 if (oData) {
                   oDetailModel.setProperty('/FormData', oData.results[0]);
+                  this.settingsAttachTable();
                 }
               },
               error: (oError) => {
@@ -168,8 +171,6 @@ sap.ui.define(
             });
           }
         }
-
-        this.settingsAttachTable();
       },
 
       // 화면관련 List호출
