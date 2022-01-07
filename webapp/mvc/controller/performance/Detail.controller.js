@@ -263,6 +263,10 @@ sap.ui.define(
         }
       },
 
+      changeTab(sTabKey) {
+        this.getViewModel().setProperty('/tab/selectedKey', sTabKey);
+      },
+
       renderStageClass() {
         const oStageHeader = this.byId('stageHeader');
         oStageHeader.addEventDelegate({
@@ -334,12 +338,15 @@ sap.ui.define(
         const aGoalValid = _.filter(aValid, (o) => _.includes(Constants.GOAL_PROPERTIES, o.field));
         const aManageValid = _.filter(aValid, (o) => _.includes(Constants.MANAGE_PROPERTIES, o.field));
 
-        // validation
-        if (_.some(aStrategyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: aGoalValid, sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` }))) return false;
-        if (_.some(aDutyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: _.reject(aGoalValid, { field: 'Z103s' }), sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` }))) return false;
+        const bStrategyValid = _.some(aStrategyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: aGoalValid, sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` }));
+        const bDutyValid = _.some(aDutyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: _.reject(aGoalValid, { field: 'Z103s' }), sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` }));
+
+        if (bStrategyValid || bDutyValid) {
+          this.changeTab('T01');
+          return false;
+        }
         if (!Validator.check({ mFieldValue: mManage, aFieldProperties: aManageValid })) {
-          // tab 이동
-          oViewModel.setProperty('/tab/selectedKey', 'T02');
+          this.changeTab('T02');
           return false;
         }
 
