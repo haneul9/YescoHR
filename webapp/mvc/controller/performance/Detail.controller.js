@@ -325,6 +325,38 @@ sap.ui.define(
         this.pRejectDialog.then((oDialog) => oDialog.open());
       },
 
+      validation() {
+        const oViewModel = this.getViewModel();
+        const aStrategyGoals = _.cloneDeep(oViewModel.getProperty('/goals/strategy'));
+        const aDutyGoals = _.cloneDeep(oViewModel.getProperty('/goals/duty'));
+        const mManage = _.cloneDeep(oViewModel.getProperty('/manage'));
+        const aValid = _.cloneDeep(oViewModel.getProperty('/goals/valid'));
+        const aGoalValid = _.filter(aValid, (o) => _.includes(Constants.GOAL_PROPERTIES, o.field));
+        const aManageValid = _.filter(aValid, (o) => _.includes(Constants.MANAGE_PROPERTIES, o.field));
+
+        // validation
+        if (_.some(aStrategyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: aGoalValid, sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` }))) return false;
+        if (_.some(aDutyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: _.reject(aGoalValid, { field: 'Z103s' }), sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` }))) return false;
+        if (!Validator.check({ mFieldValue: mManage, aFieldProperties: aManageValid })) {
+          // tab 이동
+          oViewModel.setProperty('/tab/selectedKey', 'T02');
+          return false;
+        }
+
+        if (
+          !_.chain([...aStrategyGoals, ...aDutyGoals])
+            .map((o) => _.toNumber(o.Fwgt))
+            .sum()
+            .isEqual(100)
+            .value()
+        ) {
+          MessageBox.alert(this.getBundleText('MSG_10005')); // 가중치의 총합은 100%이어야 합니다.
+          return false;
+        }
+
+        return true;
+      },
+
       async createProcess({ code, label }) {
         const oViewModel = this.getViewModel();
         const sType = oViewModel.getProperty('/type');
@@ -337,6 +369,7 @@ sap.ui.define(
           const mParameter = _.cloneDeep(oViewModel.getProperty('/param'));
           const mManage = _.cloneDeep(oViewModel.getProperty('/manage'));
           const mSummary = _.cloneDeep(oViewModel.getProperty('/summary'));
+          const mReject = _.cloneDeep(oViewModel.getProperty('/buttons/form'));
           const aStrategy = _.cloneDeep(oViewModel.getProperty('/goals/strategy'));
           const aDuty = _.cloneDeep(oViewModel.getProperty('/goals/duty'));
           const bIsSave = _.isEqual(code, Constants.PROCESS_TYPE.SAVE.code);
@@ -356,6 +389,7 @@ sap.ui.define(
             ...mParameter,
             ...mManage,
             ...mSummary,
+            ...mReject,
             Menid: this.getCurrentMenuId(),
             Prcty: code,
             AppraisalDocDetailSet: [...aStrategy, ...aDuty],
@@ -471,6 +505,8 @@ sap.ui.define(
       onPressApproveButton() {
         const mProcessType = Constants.PROCESS_TYPE.APPROVE;
 
+        if (!this.validation()) return;
+
         MessageBox.confirm(this.getBundleText('MSG_00006', mProcessType.label), {
           // {승인}하시겠습니까?
           onClose: (sAction) => {
@@ -482,6 +518,8 @@ sap.ui.define(
       },
 
       onPressCheckedButton() {
+        if (!this.validation()) return;
+
         MessageBox.alert('Not ready yet.');
       },
 
@@ -528,30 +566,9 @@ sap.ui.define(
       },
 
       onPressSubmitButton() {
-        const oViewModel = this.getViewModel();
-        const aStrategyGoals = _.cloneDeep(oViewModel.getProperty('/goals/strategy'));
-        const aDutyGoals = _.cloneDeep(oViewModel.getProperty('/goals/duty'));
-        const mManage = _.cloneDeep(oViewModel.getProperty('/manage'));
-        const aValid = _.cloneDeep(oViewModel.getProperty('/goals/valid'));
-        const aGoalValid = _.filter(aValid, (o) => _.includes(Constants.GOAL_PROPERTIES, o.field));
-        const aManageValid = _.filter(aValid, (o) => _.includes(Constants.MANAGE_PROPERTIES, o.field));
         const mProcessType = Constants.PROCESS_TYPE.SEND;
 
-        // validation
-        if (_.some(aStrategyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: aGoalValid, sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` }))) return;
-        if (_.some(aDutyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: _.reject(aGoalValid, { field: 'Z103s' }), sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` }))) return;
-        if (!Validator.check({ mFieldValue: mManage, aFieldProperties: aManageValid })) return;
-
-        if (
-          !_.chain([...aStrategyGoals, ...aDutyGoals])
-            .map((o) => _.toNumber(o.Fwgt))
-            .sum()
-            .isEqual(100)
-            .value()
-        ) {
-          MessageBox.alert(this.getBundleText('MSG_10005')); // 가중치의 총합은 100%이어야 합니다.
-          return;
-        }
+        if (!this.validation()) return;
 
         MessageBox.confirm(this.getBundleText('MSG_00006', mProcessType.label), {
           // {전송}하시겠습니까?
@@ -563,7 +580,11 @@ sap.ui.define(
         });
       },
 
-      onPressCompleteButton() {},
+      onPressCompleteButton() {
+        if (!this.validation()) return;
+
+        MessageBox.alert('Not ready yet.');
+      },
 
       /*****************************************************************
        * ! Call oData

@@ -82,7 +82,7 @@
                         <Label width="100%" text="{i18n>LABEL_10026}" visible="{= ${/fieldControl/display/Z109} !== 'H' }"/>
                     </VBox>
                     <VBox>
-                        <custom:NumberInput width="100%" class="required" maxLength="3" value="{ path: 'Z109', type: 'sap.ui.yesco.mvc.model.type.Percent' }" enabled="{= ${/fieldControl/display/Z109} === 'X' }" visible="{= ${/fieldControl/display/Z109} !== 'H' }" />
+                        <custom:NumberInput width="100%" maxLength="3" value="{ path: 'Z109', type: 'sap.ui.yesco.mvc.model.type.Percent' }" enabled="{= ${/fieldControl/display/Z109} === 'X' }" visible="{= ${/fieldControl/display/Z109} !== 'H' }" />
                     </VBox>
                     <VBox>
                         <Label width="100%" text="{i18n>LABEL_00261}" visible="{= ${/fieldControl/display/Z111} !== 'H' }"/>
