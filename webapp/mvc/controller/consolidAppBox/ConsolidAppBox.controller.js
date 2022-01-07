@@ -3,6 +3,7 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
@@ -16,6 +17,7 @@ sap.ui.define(
     // prettier 방지용 주석
     JSONModel,
     AppUtils,
+    ComboEntry,
     FragmentEvent,
     TableUtils,
     TextUtils,
@@ -34,13 +36,11 @@ sap.ui.define(
         const dDate = new Date();
         const oViewModel = new JSONModel({
           busy: false,
-          Data: [],
-          LoanType: [],
-          TargetCode: {},
+          AppType: [],
           parameters: {},
           search: {
-            date: new Date(),
-            secondDate: new Date(dDate.getFullYear(), 0, 1),
+            date: dDate,
+            secondDate: new Date(dDate.getFullYear(), dDate.getMonth() - 1, dDate.getDate() + 1),
           },
           listInfo: {
             isShowProgress: true,
@@ -66,51 +66,33 @@ sap.ui.define(
         try {
           oListModel.setProperty('/busy', true);
 
-          const oModel = this.getModel(ServiceNames.PA);
+          const oModel = this.getModel(ServiceNames.COMMON);
           const oSearch = oListModel.getProperty('/search');
-          const aTableList = await Client.getEntitySet(oModel, 'CertificateAppl', {
-            Prcty: 'L',
-            Menid: this.getCurrentMenuId(),
-            Apbeg: moment(oSearch.secondDate).hours(9).toDate(),
-            Apend: moment(oSearch.date).hours(9).toDate(),
+          const aTableList = await Client.getEntitySet(oModel, 'TotalApproval2', {
+            ZreqForm: oSearch.ZreqForm || '',
+            MidE: this.getCurrentMenuId(),
+            Begda: moment(oSearch.secondDate).hours(9).toDate(),
+            Endda: moment(oSearch.date).hours(9).toDate(),
           });
-          const oTable = this.byId('certiTable');
+          const oTable = this.byId('consolidTable');
 
           oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
-          oListModel.setProperty('/listInfo/infoMessage', this.getBundleText('MSG_17001'));
-          oListModel.setProperty('/listInfo/isShowProgress', false);
-          oListModel.setProperty('/listInfo/isShowApply', true);
-          oListModel.setProperty('/listInfo/isShowApprove', false);
-          oListModel.setProperty('/listInfo/isShowReject', false);
-          oListModel.setProperty('/listInfo/isShowComplete', true);
+          oListModel.setProperty('/listInfo/infoMessage', this.getBundleText('MSG_19001'));
           oListModel.setProperty('/List', aTableList);
 
-          const aCertiList = await Client.getEntitySet(oModel, 'CertificateObjList');
-          const aCerTextList = await Client.getEntitySet(oModel, 'IssuedResults');
+          const aAppList = await Client.getEntitySet(oModel, 'TotalApproval3');
 
-          delete aCerTextList[0].__metadata;
-          delete aCerTextList[0].Pernr;
+          oListModel.setProperty('/AppType', new ComboEntry({ codeKey: 'ZreqForm', valueKey: 'ZreqForx', aEntries: aAppList }));
+          oListModel.setProperty('/search/ZreqForm', 'ALL');
 
-          const aList = [];
+          const aMyTotalList = await Client.getEntitySet(oModel, 'TotalApproval1');
 
-          _.map(aCerTextList[0], (v) => {
-            aList.push(v);
-          });
-
-          _.each(aCertiList, (v, i) => {
-            v.Text = aList[i];
-          });
-
-          oListModel.setProperty('/myCerti', aCertiList);
+          oListModel.setProperty('/Total', aMyTotalList[0]);
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
           oListModel.setProperty('/busy', false);
         }
-      },
-
-      onClick() {
-        this.getRouter().navTo('certification-detail', { oDataKey: 'N' });
       },
 
       async onSearch() {
@@ -119,23 +101,18 @@ sap.ui.define(
         try {
           oListModel.setProperty('/busy', true);
 
-          const oModel = this.getModel(ServiceNames.PA);
+          const oModel = this.getModel(ServiceNames.COMMON);
           const oSearch = oListModel.getProperty('/search');
-          const aTableList = await Client.getEntitySet(oModel, 'CertificateAppl', {
-            Prcty: 'L',
-            Menid: this.getCurrentMenuId(),
-            Apbeg: moment(oSearch.secondDate).hours(9).toDate(),
-            Apend: moment(oSearch.date).hours(9).toDate(),
+          const aTableList = await Client.getEntitySet(oModel, 'TotalApproval2', {
+            ZreqForm: oSearch.ZreqForm || '',
+            MidE: this.getCurrentMenuId(),
+            Begda: moment(oSearch.secondDate).hours(9).toDate(),
+            Endda: moment(oSearch.date).hours(9).toDate(),
           });
-          const oTable = this.byId('certiTable');
+          const oTable = this.byId('consolidTable');
 
           oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
-          oListModel.setProperty('/listInfo/infoMessage', this.getBundleText('MSG_17001'));
-          oListModel.setProperty('/listInfo/isShowProgress', false);
-          oListModel.setProperty('/listInfo/isShowApply', true);
-          oListModel.setProperty('/listInfo/isShowApprove', false);
-          oListModel.setProperty('/listInfo/isShowReject', false);
-          oListModel.setProperty('/listInfo/isShowComplete', true);
+          oListModel.setProperty('/listInfo/infoMessage', this.getBundleText('MSG_19001'));
           oListModel.setProperty('/List', aTableList);
         } catch (oError) {
           AppUtils.handleError(oError);
@@ -148,15 +125,15 @@ sap.ui.define(
         const vPath = oEvent.getParameter('rowBindingContext').getPath();
         const oListModel = this.getViewModel();
         const oRowData = oListModel.getProperty(vPath);
+        const sMenuUrl = `${AppUtils.getAppComponent().getMenuModel().getProperties(`${oRowData.MidE}/Mnurl`)}-detail`;
 
-        oListModel.setProperty('/parameters', oRowData);
-        this.getRouter().navTo('certification-detail', { oDataKey: oRowData.Appno });
+        this.getRouter().navTo(sMenuUrl, { oDataKey: oRowData.Appno });
       },
 
       onPressExcelDownload() {
-        const oTable = this.byId('certiTable');
+        const oTable = this.byId('consolidTable');
         const aTableData = this.getViewModel().getProperty('/ZappStatAl');
-        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_17001');
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_19001');
 
         TableUtils.export({ oTable, aTableData, sFileName });
       },

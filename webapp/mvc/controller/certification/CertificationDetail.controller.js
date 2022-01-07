@@ -113,7 +113,7 @@ sap.ui.define(
       },
 
       // FormData Settings
-      setFormData() {
+      async setFormData() {
         const oDetailModel = this.getViewModel();
         const sViewKey = oDetailModel.getProperty('/ViewKey');
 
@@ -145,12 +145,15 @@ sap.ui.define(
             Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
           });
         } else {
-          const oView = this.getView();
-          const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-          const mListData = oListView.getModel().getProperty('/parameters');
+          const oModel = this.getModel(ServiceNames.PA);
+          const mListData = await Client.getEntitySet(oModel, 'CertificateAppl', {
+            Prcty: 'D',
+            Menid: this.getCurrentMenuId(),
+            Appno: sViewKey,
+          });
 
-          oDetailModel.setProperty('/FormData', mListData);
-          oDetailModel.setProperty('/ApplyInfo', mListData);
+          oDetailModel.setProperty('/FormData', mListData[0]);
+          oDetailModel.setProperty('/ApplyInfo', mListData[0]);
         }
       },
 

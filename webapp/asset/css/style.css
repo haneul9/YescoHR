@@ -905,7 +905,7 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 .info-area .sapMFlexItem .sapMFT p {padding:0;margin-block-start: 0;margin-block-end: 4px;}
 .info-area .sapMFlexItem .sapMFT p:last-child {padding:0;margin-block-start: 0;margin-block-end: 0;}
 
-.contents-header {align-items:center; box-shadow:0 3px 3px rgb(0 0 0 / 10%); padding:0; background-color:#fff; height:60px}
+.contents-header {position:sticky;top: 0;z-index: 9;align-items:center; box-shadow:0 3px 3px rgb(0 0 0 / 10%); padding:0; background-color:#fff; height:60px}
 .contents-header + .contents {margin-top:20px}
 .contents {margin:0 auto; max-width:1600px; min-width:1600px; padding-bottom:20px}
 .sapMPageEnableScrolling > .sapMFlexBox + .sapMFlexBox {margin-top:20px}

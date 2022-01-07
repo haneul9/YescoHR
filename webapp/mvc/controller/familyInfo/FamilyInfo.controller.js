@@ -90,7 +90,7 @@ sap.ui.define(
         oListModel.setProperty('/busy', true);
 
         oModel.read('/FamilyInfoApplSet', {
-          filters: [new sap.ui.model.Filter('Begda', sap.ui.model.FilterOperator.EQ, dDate), new sap.ui.model.Filter('Endda', sap.ui.model.FilterOperator.EQ, dDate2)],
+          filters: [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'), new sap.ui.model.Filter('Begda', sap.ui.model.FilterOperator.EQ, dDate), new sap.ui.model.Filter('Endda', sap.ui.model.FilterOperator.EQ, dDate2)],
           success: (oData) => {
             if (oData) {
               const oList = oData.results;

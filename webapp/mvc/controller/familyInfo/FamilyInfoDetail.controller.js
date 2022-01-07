@@ -133,11 +133,8 @@ sap.ui.define(
       },
 
       setFormData() {
-        const oView = this.getView();
         const oDetailModel = this.getViewModel();
         const sKey = oDetailModel.getProperty('/FormStatus');
-        const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-        const mListData = oListView.getModel().getProperty('/parameter');
 
         if (!sKey || sKey === 'N') {
           const oAppointeeData = this.getAppointeeData();
@@ -151,7 +148,19 @@ sap.ui.define(
             Dptyp: 'ALL',
           });
         } else {
-          oDetailModel.setProperty('/FormData', mListData);
+          const oModel = this.getModel(ServiceNames.PA);
+
+          oModel.read('/FamilyInfoApplSet', {
+            filters: [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'), new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, this.getCurrentMenuId()), new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sKey)],
+            success: (oData) => {
+              if (oData) {
+                oDetailModel.setProperty('/FormData', oData.results[0]);
+              }
+            },
+            error: (oError) => {
+              AppUtils.handleError(new ODataReadError(oError));
+            },
+          });
         }
 
         this.settingsAttachTable();
