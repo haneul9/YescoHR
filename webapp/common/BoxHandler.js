@@ -50,9 +50,9 @@ sap.ui.define(
         return this.oBoxModel;
       },
 
-      setBusy(path = '/busy', busy = true) {
+      setBusy(bBusy = true, sPath = '/busy') {
         setTimeout(() => {
-          this.oBoxModel.setProperty(path, busy);
+          this.oBoxModel.setProperty(sPath, bBusy);
         });
         return this;
       },

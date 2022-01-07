@@ -126,7 +126,7 @@ sap.ui.define(
         );
 
         if (sViewKey === 'N' || !sViewKey) {
-          const oAppointeeData = this.getAppointeeData();
+          const mSessionData = this.getSessionData();
 
           oDetailModel.setProperty('/FormData', {
             Reqnt: '1',
@@ -140,9 +140,9 @@ sap.ui.define(
           });
 
           oDetailModel.setProperty('/ApplyInfo', {
-            Apename: oAppointeeData.Ename,
-            Aporgtx: `${oAppointeeData.Btrtx}/${oAppointeeData.Orgtx}`,
-            Apjikgbtl: `${oAppointeeData.Zzjikgbt}/${oAppointeeData.Zzjiktlt}`,
+            Apename: mSessionData.Ename,
+            Aporgtx: `${mSessionData.Btrtx} / ${mSessionData.Orgtx}`,
+            Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
           });
         } else {
           const oModel = this.getModel(ServiceNames.PA);

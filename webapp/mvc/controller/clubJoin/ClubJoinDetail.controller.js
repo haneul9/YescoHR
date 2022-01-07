@@ -20,18 +20,18 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-	MessageBox,
-	Appno,
-	AppUtils,
-	ComboEntry,
-	FragmentEvent,
-	TextUtils,
-	TableUtils,
-	ServiceNames,
-	ODataReadError,
-	ODataCreateError,
-	ODataDeleteError,
-	BaseController,
+    MessageBox,
+    Appno,
+    AppUtils,
+    ComboEntry,
+    FragmentEvent,
+    TextUtils,
+    TableUtils,
+    ServiceNames,
+    ODataReadError,
+    ODataCreateError,
+    ODataDeleteError,
+    BaseController
   ) => {
     'use strict';
 
@@ -76,7 +76,7 @@ sap.ui.define(
           const aList = await this.getList();
 
           oDetailModel.setProperty('/ClubType', new ComboEntry({ codeKey: 'Zclub', valueKey: 'Zclubtx', aEntries: aList }));
-          this.setFormData();          
+          this.setFormData();
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -106,32 +106,23 @@ sap.ui.define(
         );
 
         if (sViewKey === 'N' || (!sViewKey && !mListData)) {
-          const oAppointeeData = this.getAppointeeData();
+          const mSessionData = this.getSessionData();
 
           oDetailModel.setProperty('/FormData/Coaid', '');
           oDetailModel.setProperty('/FormData/Zclub', 'ALL');
 
           oDetailModel.setProperty('/ApplyInfo', {
-            Apename: oAppointeeData.Ename,
-            Aporgtx: `${oAppointeeData.Btrtx}/${oAppointeeData.Orgtx}`,
-            Apjikgbtl: `${oAppointeeData.Zzjikgbt}/${oAppointeeData.Zzjiktlt}`,
+            Apename: mSessionData.Ename,
+            Aporgtx: `${mSessionData.Btrtx} / ${mSessionData.Orgtx}`,
+            Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
           });
         } else {
           const aFilter = [];
 
           if (sViewKey === '00000000000000') {
-            aFilter.push(
-              new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'),
-              new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, mListData.Pernr),
-              new sap.ui.model.Filter('Begda', sap.ui.model.FilterOperator.EQ, mListData.Begda),
-              new sap.ui.model.Filter('Endda', sap.ui.model.FilterOperator.EQ, mListData.Endda),
-              new sap.ui.model.Filter('Zclub', sap.ui.model.FilterOperator.EQ, mListData.Zclub),
-            );
-          } else {            
-            aFilter.push(
-              new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'),
-              new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sViewKey),
-            );
+            aFilter.push(new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'), new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, mListData.Pernr), new sap.ui.model.Filter('Begda', sap.ui.model.FilterOperator.EQ, mListData.Begda), new sap.ui.model.Filter('Endda', sap.ui.model.FilterOperator.EQ, mListData.Endda), new sap.ui.model.Filter('Zclub', sap.ui.model.FilterOperator.EQ, mListData.Zclub));
+          } else {
+            aFilter.push(new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'), new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sViewKey));
           }
 
           oModel.read('/ClubJoinApplSet', {
@@ -158,9 +149,7 @@ sap.ui.define(
         return new Promise((resolve, reject) => {
           // 동호회
           oModel.read('/ClubJoinClublistSet', {
-            filters: [
-              new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-            ],
+            filters: [new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date())],
             success: (oData) => {
               if (oData) {
                 resolve(oData.results);
@@ -170,10 +159,10 @@ sap.ui.define(
               reject(new ODataReadError(oError));
             },
           });
-        })
+        });
       },
 
-        // 동호회 선택시
+      // 동호회 선택시
       onClubType(oEvent) {
         const oDetailModel = this.getViewModel();
         const sKey = oEvent.getSource().getSelectedKey();
@@ -207,9 +196,7 @@ sap.ui.define(
           const oModel = this.getModel(ServiceNames.BENEFIT);
 
           oModel.read('/ClubJoinApplSet', {
-            filters: [
-              new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, '1'),
-            ],
+            filters: [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, '1')],
             success: () => {
               oDetailModel.setProperty('/FormData/Coaid', 'X');
             },
@@ -277,7 +264,7 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      reject(new ODataCreateError({oError}));
+                      reject(new ODataCreateError({ oError }));
                     },
                   });
                 });
@@ -329,7 +316,7 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      reject(new ODataCreateError({oError}));
+                      reject(new ODataCreateError({ oError }));
                     },
                   });
                 });
@@ -377,7 +364,7 @@ sap.ui.define(
                   });
                 },
                 error: (oError) => {
-                  AppUtils.handleError(new ODataCreateError({oError}));
+                  AppUtils.handleError(new ODataCreateError({ oError }));
                   AppUtils.setAppBusy(false, this);
                 },
               });

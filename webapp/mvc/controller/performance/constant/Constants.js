@@ -28,7 +28,6 @@ sap.ui.define(
         { field: 'Z103s', label: 'LABEL_10023', type: Validator.SELECT2 }, // 연관 상위 목표
         { field: 'Ztbegda', label: 'LABEL_10024', type: Validator.INPUT1 }, // 목표수행 시작일
         { field: 'Ztendda', label: 'LABEL_10025', type: Validator.INPUT1 }, // 목표수행 종료일
-        { field: 'Z109', label: 'LABEL_10026', type: Validator.INPUT2 }, // 진척도(%)
         { field: 'Z111', label: 'LABEL_00261', type: Validator.SELECT2 }, // 진행상태
         { field: 'Zmarslt', label: 'LABEL_10027', type: Validator.INPUT2 }, // 핵심결과
         { field: 'Zrslt', label: 'LABEL_10028', type: Validator.INPUT1 }, // 실적
@@ -40,12 +39,13 @@ sap.ui.define(
         { field: 'Zmepoint', label: 'LABEL_10012', type: Validator.INPUT2 }, // 자기 평가점수
         { field: 'Zmapoint', label: 'LABEL_10013', type: Validator.INPUT2 }, // 1차 평가점수
         { field: 'Zmbgrade', label: 'LABEL_10014', type: Validator.SELECT1 }, // 최종 평가등급
-        { field: 'Z131', label: 'LABEL_10017', type: Validator.INPUT1 }, // 목표 수립
-        { field: 'Z132', label: 'LABEL_10017', type: Validator.INPUT1 }, // 목표 수립
-        { field: 'Z136', label: 'LABEL_10018', type: Validator.INPUT1 }, // 중간 점검
-        { field: 'Z137', label: 'LABEL_10018', type: Validator.INPUT1 }, // 중간 점검
-        { field: 'Papp1', label: 'LABEL_10019', type: Validator.INPUT2 }, // 성과 평가
-        { field: 'Papp2', label: 'LABEL_10019', type: Validator.INPUT2 }, // 성과 평가
+        { field: 'Z131', label: 'LABEL_10036', type: Validator.INPUT1 }, // 목표 수립 의견
+        { field: 'Z132', label: 'LABEL_10036', type: Validator.INPUT1 }, // 목표 수립 의견
+        { field: 'Z136', label: 'LABEL_10037', type: Validator.INPUT1 }, // 중간 점검 의견
+        { field: 'Z137', label: 'LABEL_10037', type: Validator.INPUT1 }, // 중간 점검 의견
+        { field: 'Papp1', label: 'LABEL_10038', type: Validator.INPUT2 }, // 성과 평가 의견
+        { field: 'Papp2', label: 'LABEL_10038', type: Validator.INPUT2 }, // 성과 평가 의견
+        // { field: 'Z109', label: 'LABEL_10026', type: Validator.INPUT2 }, // 진척도(%)
       ],
 
       FIELD_MAPPING: {

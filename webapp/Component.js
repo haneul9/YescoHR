@@ -31,7 +31,6 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    // class Component extends UIComponent 선언으로 실행하면 new 키워드 사용없이 invoke 할 수 없다는 에러가 발생함
     return UIComponent.extend('sap.ui.yesco.Component', {
       metadata: {
         manifest: 'json',
@@ -74,7 +73,7 @@ sap.ui.define(
        */
       setAppModel() {
         setTimeout(() => {
-          this.setModel(new JSONModel({ isAppBusy: true, delay: 0, isAtHome: true }), 'appModel');
+          this.setModel(new JSONModel({ isAppBusy: true, delay: 0, isAtHome: false }), 'appModel');
         });
         return this;
       },
@@ -238,11 +237,16 @@ sap.ui.define(
             AppUtils.debug('routeMatched', oEvent.getParameters());
 
             const mRouteArguments = oEvent.getParameter('arguments');
+            const sRouteName = oEvent.getParameter('name');
             const mConfig = oEvent.getParameter('config');
             const oView = oEvent.getParameter('view');
             const oController = oView.getController();
 
             oView.setVisible(false);
+
+            setTimeout(() => {
+              this.getAppModel().setProperty('/isAtHome', sRouteName === 'ehrHome' || sRouteName === 'ehrMobileHome');
+            });
 
             // 화면에서 사용될 Model들이 모두 초기화된 후 동작될 수 있도록 Promise 처리하여 변수로 저장
             this._oAllBaseModelReadyPromise = Promise.all([
@@ -269,6 +273,10 @@ sap.ui.define(
             if (oController && oController.onObjectMatched && typeof oController.onObjectMatched === 'function') {
               oController.onObjectMatched(mRouteArguments);
             }
+
+            setTimeout(() => {
+              $('#sap-ui-preserve').empty();
+            });
           });
         return this;
       },
@@ -301,14 +309,14 @@ sap.ui.define(
       async _saveBreadcrumbsData({ mRouteArguments, mConfig, sRouteNameMain, sRouteNameSub, oController }) {
         const oMenuModel = this.getMenuModel();
 
-        if (sRouteNameMain === 'ehrHome') {
+        if (sRouteNameMain === 'ehrHome' || sRouteNameMain === 'ehrMobileHome') {
           oMenuModel.setCurrentMenuData({ routeName: sRouteNameMain, viewId: mConfig.target, menuId: '', currentLocationText: '', isSubRoute: false });
           return;
         }
 
         const sMenid = oMenuModel.getMenid(sRouteNameMain);
         if ((AppUtils.isLOCAL() || AppUtils.isDEV()) && /^X/.test(sMenid)) {
-          oMenuModel.setCurrentMenuData({ routeName: '', viewId: '', menuId: '', currentLocationText: '', isSubRoute: true });
+          oMenuModel.setCurrentMenuData({ routeName: sRouteNameMain, viewId: sRouteNameMain, menuId: '', currentLocationText: '', isSubRoute: true });
           return;
         }
 
@@ -336,7 +344,7 @@ sap.ui.define(
         // in order to improve our app and the user experience (Build-Measure-Learn cycle)
         // AppUtils.debug(`User accessed route ${sRouteName}, timestamp = ${new Date().getTime()}`);
 
-        if (sRouteNameMain === 'ehrHome') {
+        if (sRouteNameMain === 'ehrHome' || sRouteNameMain === 'ehrMobileHome') {
           return;
         }
 
@@ -354,11 +362,17 @@ sap.ui.define(
         return Client.getEntitySet(oModel, sUrl, mFilters);
       },
 
+      /**
+       * 메뉴 이동 전 View hidden 처리로 불필요한 DOM 정보를 제거
+       */
       reduceViewResource() {
         const sCurrentMenuViewId = this.getMenuModel().getCurrentMenuViewId();
         const oView = this.byId(sCurrentMenuViewId);
-
         if (oView) {
+          const oController = oView.getController();
+          if (oController.reduceViewResource && typeof oController.reduceViewResource === 'function') {
+            oController.reduceViewResource();
+          }
           oView.setVisible(false);
         }
       },

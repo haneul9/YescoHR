@@ -2,14 +2,28 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
+    'sap/ui/model/Filter',
+    'sap/ui/model/FilterOperator',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
   ],
-  function (Fragment, AppUtils, ComboEntry, ServiceNames, ODataReadError, MessageBox) {
+  (
+    // prettier 방지용 주석
+    Fragment,
+    Filter,
+    FilterOperator,
+    AppUtils,
+    ComboEntry,
+    Client,
+    ServiceNames,
+    ODataReadError,
+    MessageBox
+  ) => {
     'use strict';
 
     return {
@@ -22,17 +36,17 @@ sap.ui.define(
 
         oEmpModel.setProperty('/employeeModel/busy', true);
         try {
-          const aAreaList = await this.setPersAreaCode(oController);
+          const oModel = oController.getModel(ServiceNames.COMMON);
 
-          oEmpModel.setProperty('/employeeModel/PersArea', aAreaList);
+          const [aAreaList, aWorkList, aEmpList] = await Promise.all([
+            Client.getEntitySet(oModel, 'PersAreaList'), //
+            Client.getEntitySet(oModel, 'EmpCodeList', { Field: 'STAT2' }),
+            Client.getEntitySet(oModel, 'EmpCodeList', { Field: 'PERSG' }),
+          ]);
 
-          const aWorkList = await this.setWorkCode(oController);
-
-          oEmpModel.setProperty('/employeeModel/WorkType', aWorkList);
-
-          const aEmpList = await this.setEmpCode(oController);
-
-          oEmpModel.setProperty('/employeeModel/EmpGroup', aEmpList);
+          oEmpModel.setProperty('/employeeModel/PersArea', new ComboEntry({ codeKey: 'Werks', valueKey: 'Pbtxt', aEntries: aAreaList }));
+          oEmpModel.setProperty('/employeeModel/WorkType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aWorkList }));
+          oEmpModel.setProperty('/employeeModel/EmpGroup', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aEmpList }));
           oEmpModel.setProperty('/employeeModel/SubEmpGroup', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext' }));
           oEmpModel.setProperty('/employeeModel/Search', {
             Persa: 'ALL',
@@ -42,92 +56,14 @@ sap.ui.define(
             Persg: 'ALL',
             Persk: 'ALL',
           });
+
+          return true;
         } catch (oError) {
           AppUtils.handleError(oError);
+          return false;
         } finally {
           oEmpModel.setProperty('/employeeModel/busy', false);
         }
-      },
-
-      /*
-       *  인사영역 Code
-       */
-      setPersAreaCode(oController) {
-        const oModel = oController.getModel(ServiceNames.COMMON);
-        const sUrl = '/PersAreaListSet';
-
-        return new Promise((resolve, reject) => {
-          // 인사영역
-          oModel.read(sUrl, {
-            filters: [],
-            success: (oData) => {
-              if (oData) {
-                oController.debug(`${sUrl} success.`, oData);
-
-                resolve(new ComboEntry({ codeKey: 'Werks', valueKey: 'Pbtxt', aEntries: oData.results }));
-              }
-            },
-            error: (oError) => {
-              oController.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
-
-      /*
-       *  재직구분 Code
-       */
-      setWorkCode(oController) {
-        const oModel = oController.getModel(ServiceNames.COMMON);
-        const sUrl = '/EmpCodeListSet';
-
-        return new Promise((resolve, reject) => {
-          // 재직구분
-          oModel.read(sUrl, {
-            filters: [new sap.ui.model.Filter('Field', sap.ui.model.FilterOperator.EQ, 'STAT2')],
-            success: (oData) => {
-              if (oData) {
-                oController.debug(`${sUrl} success.`, oData);
-
-                resolve(new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: oData.results }));
-              }
-            },
-            error: (oError) => {
-              oController.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
-
-      /*
-       *  사원그룹 Code
-       */
-      setEmpCode(oController) {
-        const oModel = oController.getModel(ServiceNames.COMMON);
-        const sUrl = '/EmpCodeListSet';
-
-        return new Promise((resolve, reject) => {
-          // 사원그룹
-          oModel.read(sUrl, {
-            filters: [new sap.ui.model.Filter('Field', sap.ui.model.FilterOperator.EQ, 'PERSG')],
-            success: (oData) => {
-              if (oData) {
-                oController.debug(`${sUrl} success.`, oData);
-
-                resolve(new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: oData.results }));
-              }
-            },
-            error: (oError) => {
-              oController.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
       },
 
       /*
@@ -145,7 +81,10 @@ sap.ui.define(
 
         // 사원하위
         oModel.read(sUrl, {
-          filters: [new sap.ui.model.Filter('Field', sap.ui.model.FilterOperator.EQ, 'PERSG'), new sap.ui.model.Filter('Excod', sap.ui.model.FilterOperator.EQ, sKey)],
+          filters: [
+            new Filter('Field', FilterOperator.EQ, 'PERSG'), //
+            new Filter('Excod', FilterOperator.EQ, sKey),
+          ],
           success: (oData) => {
             if (oData) {
               const aList = oData.results;
@@ -169,8 +108,8 @@ sap.ui.define(
         const oEmpModel = this.getViewModel();
         const mSearchData = oEmpModel.getProperty('/employeeModel/org');
         const sUrl = '/OrgListSet';
-        const vDate = !mSearchData.Date ? '' : new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, mSearchData.Date);
-        const vStext = !mSearchData.Stext ? '' : new sap.ui.model.Filter('Stext', sap.ui.model.FilterOperator.EQ, mSearchData.Stext);
+        const vDate = !mSearchData.Date ? '' : new Filter('Datum', FilterOperator.EQ, mSearchData.Date);
+        const vStext = !mSearchData.Stext ? '' : new Filter('Stext', FilterOperator.EQ, mSearchData.Stext);
         const oOrgTable = AppUtils.getAppComponent().byId(`${this.getView().getId()}GroupDetail--orgTable`);
         const aFilters = [];
 
@@ -216,13 +155,13 @@ sap.ui.define(
         const sMenid = this.getCurrentMenuId();
         const sUrl = '/EmpSearchResultSet';
         const mSearchData = oEmpModel.getProperty('/employeeModel/Search');
-        const vEname = !mSearchData.Ename ? '' : new sap.ui.model.Filter('Ename', sap.ui.model.FilterOperator.EQ, mSearchData.Ename);
-        const vOrgeh = !mSearchData.Orgeh ? '' : new sap.ui.model.Filter('Orgeh', sap.ui.model.FilterOperator.EQ, mSearchData.Orgeh);
-        const vPersa = mSearchData.Persa === 'ALL' || !mSearchData.Persa ? '' : new sap.ui.model.Filter('Persa', sap.ui.model.FilterOperator.EQ, mSearchData.Persa);
-        const vStat2 = mSearchData.Stat2 === 'ALL' || !mSearchData.Stat2 ? '' : new sap.ui.model.Filter('Stat2', sap.ui.model.FilterOperator.EQ, mSearchData.Stat2);
-        const vPersg = mSearchData.Persg === 'ALL' || !mSearchData.Persg ? '' : new sap.ui.model.Filter('Persg', sap.ui.model.FilterOperator.EQ, mSearchData.Persg);
-        const vPersk = mSearchData.Persk === 'ALL' || !mSearchData.Persk ? '' : new sap.ui.model.Filter('Persk', sap.ui.model.FilterOperator.EQ, mSearchData.Persk);
-        const aFilters = [new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid)];
+        const vEname = !mSearchData.Ename ? '' : new Filter('Ename', FilterOperator.EQ, mSearchData.Ename);
+        const vOrgeh = !mSearchData.Orgeh ? '' : new Filter('Orgeh', FilterOperator.EQ, mSearchData.Orgeh);
+        const vPersa = mSearchData.Persa === 'ALL' || !mSearchData.Persa ? '' : new Filter('Persa', FilterOperator.EQ, mSearchData.Persa);
+        const vStat2 = mSearchData.Stat2 === 'ALL' || !mSearchData.Stat2 ? '' : new Filter('Stat2', FilterOperator.EQ, mSearchData.Stat2);
+        const vPersg = mSearchData.Persg === 'ALL' || !mSearchData.Persg ? '' : new Filter('Persg', FilterOperator.EQ, mSearchData.Persg);
+        const vPersk = mSearchData.Persk === 'ALL' || !mSearchData.Persk ? '' : new Filter('Persk', FilterOperator.EQ, mSearchData.Persk);
+        const aFilters = [new Filter('Menid', FilterOperator.EQ, sMenid)];
 
         if (!!vEname) {
           aFilters.push(vEname);
@@ -284,7 +223,7 @@ sap.ui.define(
         const oAppModel = this.getViewModel('appointeeModel');
         oAppModel.setData(aSelectedEmp[0], true);
         oEvent.getSource().getParent().close();
-        this.onRefresh();
+        this.onRefresh(aSelectedEmp[0]);
       },
 
       /*
@@ -365,7 +304,7 @@ sap.ui.define(
       /*
        *  사원검색 Dialog호출
        */
-      async onSearchDialog() {
+      async onSearchDialog(fnCallback) {
         const oView = this.getView();
 
         // this.getOwnerComponent().setModel(new JSONModel({
@@ -379,6 +318,7 @@ sap.ui.define(
         // }), 'employeeModel');
         this.getViewModel().setProperty('/employeeModel', {
           Search: {},
+          Enabled: {},
           SelectedEmp: [],
           empList: [],
           PersArea: [],
@@ -388,22 +328,30 @@ sap.ui.define(
         });
 
         if (!this.dSearchDialog) {
-          this.dSearchDialog = Fragment.load({
+          this.dSearchDialog = await Fragment.load({
             id: oView.getId(),
             name: 'sap.ui.yesco.fragment.EmployeeSearch',
             controller: this,
-          }).then(function (oDialog) {
-            oView.addDependent(oDialog);
-            return oDialog;
           });
+
+          oView.addDependent(this.dSearchDialog);
+
+          this.dSearchDialog
+            .attachBeforeOpen(() => {
+              this.byId('empTable').clearSelection();
+            })
+            .attachBeforeClose(() => {
+              if (fnCallback && typeof fnCallback === 'function') {
+                const aSelectedEmp = this.getViewModel().getProperty('/employeeModel/SelectedEmp') || [];
+
+                fnCallback(aSelectedEmp[0] || {});
+              }
+            });
         }
 
-        this.dSearchDialog.then(function (oDialog) {
-          oDialog.open();
-        });
+        this.dSearchDialog.open();
 
-        this.byId('empTable').clearSelection();
-        this.EmployeeSearch.setEmpConditionCode(this);
+        return this.EmployeeSearch.setEmpConditionCode(this);
       },
 
       /*

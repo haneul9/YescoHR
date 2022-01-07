@@ -1,5 +1,4 @@
-<mvc:View controllerName="sap.ui.yesco.mvc.controller.App"
-  xmlns:l="sap.ui.layout"
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.app.App"
   xmlns="sap.m"
   xmlns:mvc="sap.ui.core.mvc" displayBlock="true">
   <OverflowToolbar id="appMenuToolbar" asyncMode="true" busy="{appModel>/isMenuBusy}" busyIndicatorDelay="0" class="app-menu-toolbar" height="60px">
@@ -15,11 +14,11 @@
 
     <ToolbarSpacer />
 
-    <GenericTile frameType="Auto" width="auto" class="my-info" press=".navToProfile">
+    <GenericTile frameType="Auto" width="auto" class="my-info" press=".navToProfile" tooltip="{sessionModel>/Pernr}">
       <TileContent>
         <HBox alignItems="Center" height="100%">
           <Text text="{sessionModel>/Ename}" class="name" />
-          <Text text="{sessionModel>/Zzjikgbt} / {sessionModel>/Zzjiktlt}" />
+          <Text text="{sessionModel>/Zzjikgbt} / {sessionModel>/Zzjikcht}" />
           <Image src="{sessionModel>/Photo}" mode="Background" backgroundPosition="center center" width="26px" />
         </HBox>
       </TileContent>
@@ -27,7 +26,7 @@
 
     <Button type="Transparent" class="icon-button notice" press="notifyOpenPopover" />
 
-    <Button type="Transparent" visible="{appModel>/isAtHome}" class="icon-button setting" press="settingDialog">
+    <Button type="Transparent" visible="{appModel>/isAtHome}" class="icon-button setting" press=".onPressPortletsP13nDialogOpen">
       <layoutData>
         <OverflowToolbarLayoutData priority="NeverOverflow" />
       </layoutData>

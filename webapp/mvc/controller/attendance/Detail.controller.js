@@ -197,12 +197,12 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         if (_.isEmpty(detailData)) {
-          const mAppointeeData = this.getAppointeeData();
+          const mSessionData = this.getSessionData();
 
           oViewModel.setProperty('/ApplyInfo', {
-            Apename: mAppointeeData.Ename,
-            Aporgtx: `${mAppointeeData.Btrtx}/${mAppointeeData.Orgtx}`,
-            Apjikgbtl: `${mAppointeeData.Zzjikgbt}/${mAppointeeData.Zzjiktlt}`,
+            Apename: mSessionData.Ename,
+            Aporgtx: `${mSessionData.Btrtx} / ${mSessionData.Orgtx}`,
+            Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
           });
         } else {
           oViewModel.setProperty('/ApplyInfo', { ...detailData });

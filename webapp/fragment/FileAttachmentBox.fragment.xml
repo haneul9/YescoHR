@@ -41,12 +41,12 @@
           <Label text="{i18n>LABEL_00248}" width="100%" />
           <table:template>
             <HBox width="100%">
-              <!-- 저장되었고 삭제 flag 처리되지 않은 상태 -->
-              <Link text="{Zfilename}" href="{Fileuri}" target="_blank" width="100%" textAlign="Begin" visible="{= !${New} &amp;&amp; !${Deleted}  }" />
-              <!-- 저장되었고 삭제 flag 처리된 상태 -->
-              <Link text="{Zfilename}" href="{Fileuri}" target="_blank" width="100%" textAlign="Begin" visible="{= !${New} &amp;&amp; ${Deleted}  }" class="text-line-through" />
-              <!-- 신규 추가 후 저장되지 않은 상태 -->
-              <Text text="{Zfilename}" width="100%" visible="{New}" />
+              <Link text="{Zfilename}" href="{Fileuri}" target="_blank" width="100%" textAlign="Begin" subtle="{New}">
+                <customData>
+                  <core:CustomData key="deteled-attachment" value="{= !${New} &amp;&amp; ${Deleted} ? 'O' : 'X' }" writeToDom="true" />
+                  <core:CustomData key="new-attachment" value="{= ${New} ? 'O' : 'X' }" writeToDom="true" />
+                </customData>
+              </Link>
             </HBox>
           </table:template>
         </table:Column>

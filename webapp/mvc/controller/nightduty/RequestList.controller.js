@@ -6,7 +6,7 @@ sap.ui.define(
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/nightduty/SummaryBoxHandler',
     'sap/ui/yesco/mvc/controller/nightduty/SearchBoxHandler',
-    'sap/ui/yesco/mvc/model/type/Currency', // Expression binding용 type preloading
+    'sap/ui/yesco/mvc/model/type/Currency', // XML expression binding용 type preloading
     'sap/ui/yesco/mvc/model/type/Date',
     'sap/ui/yesco/mvc/model/type/Month',
     'sap/ui/yesco/mvc/model/type/Pernr',

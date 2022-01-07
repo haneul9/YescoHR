@@ -45,7 +45,7 @@ sap.ui.define(
        */
       async showData() {
         try {
-          this.setBusy('/summary/busy', true);
+          this.setBusy(true, '/summary/busy');
 
           const aResultsData = await this.readData();
 
@@ -60,7 +60,7 @@ sap.ui.define(
 
           AppUtils.handleError(oError);
         } finally {
-          this.setBusy('/summary/busy', false);
+          this.setBusy(false, '/summary/busy');
         }
       },
 
@@ -89,11 +89,11 @@ sap.ui.define(
        * @override
        */
       onPressIcon() {
-        this.setBusy('/summary/busy', true);
+        this.setBusy(true, '/summary/busy');
 
         this.oCurrentListDialogHandler.openDialog();
 
-        this.setBusy('/summary/busy', false);
+        this.setBusy(false, '/summary/busy');
       },
     });
   }

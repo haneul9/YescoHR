@@ -1,0 +1,62 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:core="sap.ui.core">
+  <VBox class="portlet portlet-box portlet-p02" tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
+    <customData>
+      <core:CustomData key="portlet-id" value="{id}" writeToDom="true" />
+    </customData>
+    <layoutData>
+      <f:GridContainerItemLayoutData rows="{height}" columns="{width}" />
+    </layoutData>
+    <HBox width="100%" class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
+      <layoutData>
+        <FlexItemData minHeight="15%" />
+      </layoutData>
+      <Title level="H2" text="{title}" visible="{= !${hideTitle} }" />
+      <Text text="">
+        <layoutData>
+          <FlexItemData growFactor="1" />
+        </layoutData>
+      </Text>
+      <Button icon="sap-icon://decline" type="Transparent" visible="{switchable}" class="icon-button portlet-close" press=".onPressClose" />
+      <Button icon="sap-icon://add" type="Transparent" visible="{hasLink}" class="icon-button" press=".onPressLink" />
+    </HBox>
+    <ScrollContainer height="85%" vertical="true">
+      <layoutData>
+        <FlexItemData growFactor="1" />
+      </layoutData>
+      <HBox width="100%" height="1.5rem" justifyContent="Center" alignItems="Center" visible="{= ${listCount} === 0 }">
+        <Text text="{i18n>MSG_00001}" />
+      </HBox>
+      <HBox width="100%" visible="{= ${listCount} &gt; 0 }">
+        <VBox items="{list}" width="60%">
+          <layoutData>
+            <FlexItemData growFactor="1" />
+          </layoutData>
+          <HBox height="1.5rem" alignItems="Center">
+            <Link text="{Title}" tooltip="{Title}" subtle="true" press=".onPressNoticeArticle">
+              <layoutData>
+                <FlexItemData maxWidth="100%" />
+              </layoutData>
+            </Link>
+          </HBox>
+        </VBox>
+        <VBox items="{list}" width="24%">
+          <HBox height="1.5rem" justifyContent="End" alignItems="Center">
+            <Text text="{ path: 'Sdate', type: 'sap.ui.yesco.mvc.model.type.Date' }" wrapping="false" />
+          </HBox>
+        </VBox>
+        <VBox items="{list}" width="8%" visible="{= ${newCount} > 0 }">
+          <HBox height="1.5rem" justifyContent="End" alignItems="Center">
+            <core:Icon src="sap-icon://paper-plane" tooltip="{i18n>LABEL_00105}" size="1rem" color="{= ${Newitem} === 'X' ? 'Default' : 'transparent' }" />
+          </HBox>
+        </VBox>
+        <VBox items="{list}" width="8%" visible="{= ${importantCount} > 0 }">
+          <HBox height="1.5rem" justifyContent="End" alignItems="Center">
+            <core:Icon src="sap-icon://notification" tooltip="{i18n>LABEL_00178}" size="1rem" color="{= ${Impor} === 'X' ? 'Default' : 'transparent' }" />
+          </HBox>
+        </VBox>
+      </HBox>
+    </ScrollContainer>
+  </VBox>
+</core:FragmentDefinition>

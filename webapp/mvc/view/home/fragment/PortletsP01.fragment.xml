@@ -1,0 +1,48 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:core="sap.ui.core">
+  <VBox class="portlet portlet-p01" tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
+    <customData>
+      <core:CustomData key="portlet-id" value="{id}" writeToDom="true" />
+    </customData>
+    <layoutData>
+      <f:GridContainerItemLayoutData rows="{height}" columns="{width}" />
+    </layoutData>
+    <!-- <HBox width="100%" class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
+      <layoutData>
+        <FlexItemData minHeight="15%" />
+      </layoutData>
+      <Title level="H2" text="{title}" visible="{= !${hideTitle} }" />
+      <Text text="">
+        <layoutData>
+          <FlexItemData growFactor="1" />
+        </layoutData>
+      </Text>
+      <Button icon="sap-icon://decline" type="Transparent" visible="{switchable}" class="icon-button portlet-close" press=".onPressClose" />
+      <Button icon="sap-icon://add" type="Transparent" visible="{hasLink}" class="icon-button" press=".onPressLink" />
+    </HBox> -->
+    <HBox width="100%">
+      <layoutData>
+        <FlexItemData growFactor="1" />
+      </layoutData>
+      <VBox width="50%">
+        <Image src="{sessionModel>/Photo}" mode="Background" backgroundPosition="center center" width="146px" height="146px" />
+        <Text text="{Ename}" />
+        <Text text="{Zzjiktlt}" />
+        <Text text="{Orgtx}" />
+        <Text text="{Stltx}" />
+      </VBox>
+      <VBox width="50%">
+        <Text text="{i18n>LABEL_01102}" />
+        <Text text="{Zyymm1}" />
+        <Text text="{Period1}" />
+        <Text text="{i18n>LABEL_01103}" />
+        <Text text="{Zyymm2}" />
+        <Text text="{Period2}" />
+        <Text text="{i18n>LABEL_01104}" />
+        <Text text="{Zyymm3}" />
+        <Text text="{Period3}" />
+      </VBox>
+    </HBox>
+  </VBox>
+</core:FragmentDefinition>

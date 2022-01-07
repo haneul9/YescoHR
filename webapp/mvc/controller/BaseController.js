@@ -178,16 +178,21 @@ sap.ui.define(
       onNavBack() {
         const sPreviousHash = History.getInstance().getPreviousHash();
 
-        this.getOwnerComponent().reduceViewResource();
+        const oUIComponent = this.getOwnerComponent();
+        oUIComponent.reduceViewResource();
 
         if (sPreviousHash) {
           window.history.go(-1);
         } else {
-          const sPreviousRouteName = this.getPreviousRouteName();
-
-          this.getRouter().navTo(sPreviousRouteName || 'ehrHome', {}, true /* no history */);
+          const sPreviousRouteName = this.getPreviousRouteName() || 'ehrHome'; // TODO : ehrMobileHome
+          oUIComponent.getRouter().navTo(sPreviousRouteName, {}, true /* no history */);
         }
       },
+
+      /**
+       *
+       */
+      reduceViewResource: null,
 
       /**
        * abstract

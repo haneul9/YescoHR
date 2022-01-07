@@ -2,42 +2,68 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/f/dnd/GridDropInfo',
+    'sap/ui/core/Fragment',
     'sap/ui/core/dnd/DragInfo',
     'sap/ui/core/dnd/DropLayout',
     'sap/ui/core/dnd/DropPosition',
     'sap/ui/model/json/JSONModel',
-    'sap/ui/unified/library',
-    'sap/ui/unified/CalendarLegendItem',
-    'sap/ui/unified/DateTypeRange',
+    'sap/ui/yesco/common/EmployeeSearch',
+    'sap/ui/yesco/common/odata/Client',
+    'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/localService/RevealGrid',
+    'sap/ui/yesco/mvc/controller/home/portlets/P01PortletHandler',
+    'sap/ui/yesco/mvc/controller/home/portlets/P02PortletHandler',
+    'sap/ui/yesco/mvc/controller/home/portlets/P03PortletHandler',
   ],
   (
     // prettier 방지용 주석
     GridDropInfo,
+    Fragment,
     DragInfo,
     DropLayout,
     DropPosition,
     JSONModel,
-    library,
-    CalendarLegendItem,
-    DateTypeRange,
+    EmployeeSearch,
+    Client,
+    ServiceNames,
     BaseController,
-    RevealGrid
+    P01PortletHandler,
+    P02PortletHandler,
+    P03PortletHandler
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.home.Portlets', {
-      onBeforeShow() {
-        // const p13nGridModel = new JSONModel(sap.ui.require.toUrl('sap/ui/yesco/localService/p13nGridData.json'));
-        const portletsModel = new JSONModel();
-        portletsModel.loadData('localService/p13nGridData.json');
-        this.setViewModel(portletsModel, 'portletsModel');
+      EmployeeSearch,
 
+      bMobile: false,
+      mPortletHandlers: {
+        P01: P01PortletHandler,
+        P02: P02PortletHandler,
+        P03: P03PortletHandler,
+      },
+
+      onInit() {
+        this.debug('Portlets.onInit');
+
+        this.initGrid();
+
+        this.getView().addEventDelegate(
+          {
+            onBeforeShow: this.onBeforeShow,
+            onAfterShow: this.onAfterShow,
+          },
+          this
+        );
+      },
+
+      initGrid() {
         const oGrid = this.byId('portlets-grid');
+
         oGrid.addDragDropConfig(
           new DragInfo({
             sourceAggregation: 'items',
+            dragStart: this.onDragStart,
           })
         );
 
@@ -46,26 +72,8 @@ sap.ui.define(
             targetAggregation: 'items',
             dropPosition: DropPosition.Between,
             dropLayout: DropLayout.Horizontal,
-            drop(oInfo) {
-              const oDragged = oInfo.getParameter('draggedControl');
-              const oDropped = oInfo.getParameter('droppedControl');
-              const sInsertPosition = oInfo.getParameter('dropPosition');
-              const iDragPosition = oGrid.indexOfItem(oDragged);
-              let iDropPosition = oGrid.indexOfItem(oDropped);
-
-              oGrid.removeItem(oDragged);
-
-              if (iDragPosition < iDropPosition) {
-                iDropPosition--;
-              }
-
-              if (sInsertPosition === 'After') {
-                iDropPosition++;
-              }
-
-              oGrid.insertItem(oDragged, iDropPosition);
-              // oGrid.focusItem(iDropPosition);
-            },
+            drop: this.onDrop,
+            dragEnter: this.onDragEnter,
           })
         );
 
@@ -83,80 +91,317 @@ sap.ui.define(
         });
       },
 
-      onRevealGrid() {
-        RevealGrid.toggle('p13n-grid', this.getView());
+      onDragStart(oEvent) {
+        const oPortlet = oEvent.getParameter('target');
+        if (oPortlet.data('portlet-id') === 'P01') {
+          oEvent.preventDefault();
+        }
       },
 
-      onExit() {
-        RevealGrid.destroy('p13n-grid', this.getView());
+      onDragEnter(oEvent) {
+        const oPortlet = oEvent.getParameter('target');
+        if (oPortlet && oPortlet.data('portlet-id') === 'P01') {
+          oEvent.preventDefault();
+        }
       },
 
-      handleShowSpecialDays(oEvent) {
-        const oTeamCalendar = this.byId('team-calendar');
-        const oTeamCalendarLegend = this.byId('team-calendar-legend');
+      onDrop(oEvent) {
+        const oGrid = oEvent.getSource().getParent();
+        const oDragged = oEvent.getParameter('draggedControl');
+        const oDropped = oEvent.getParameter('droppedControl');
+        const sInsertPosition = oEvent.getParameter('dropPosition');
+        const iDragPosition = oGrid.indexOfItem(oDragged);
+        let iDropPosition = oGrid.indexOfItem(oDropped);
+
+        oGrid.removeItem(oDragged);
+
+        if (iDragPosition < iDropPosition) {
+          iDropPosition--;
+        }
+
+        if (sInsertPosition === 'After') {
+          iDropPosition++;
+        }
+
+        oGrid.insertItem(oDragged, iDropPosition);
+        // oGrid.focusItem(iDropPosition);
+      },
+
+      async onBeforeShow() {
+        const mPortletsData = await this.readPortletsSetting();
+
+        // this.setTestData(mPortletsData);
+
+        const oPortletsModel = this.getPortletsModel(mPortletsData);
+        this.setViewModel(oPortletsModel);
+
+        this.oPortletsP13nDialog = await Fragment.load({
+          name: 'sap.ui.yesco.mvc.view.home.fragment.PortletsP13nDialog',
+          controller: this,
+        });
+
+        this.getView().addDependent(this.oPortletsP13nDialog);
+      },
+
+      async readPortletsSetting() {
+        const oModel = this.getModel(ServiceNames.COMMON);
+        const sUrl = 'PortletInfo';
+        const mPayload = {
+          Mode: 'R',
+          PortletInfoTab1Set: [],
+          PortletInfoTab2Set: [],
+        };
+
+        return Client.deep(oModel, sUrl, mPayload);
+      },
+
+      getPortletsModel({ PortletInfoTab1Set = {}, PortletInfoTab2Set = {} }) {
+        const aPortletInfoTab1Set = PortletInfoTab1Set.results || []; // Portlet 개별 세팅 정보
+        const aPortletInfoTab2Set = PortletInfoTab2Set.results || []; // Portlet 개인화 정보
+
+        // Portlet 개인화 정보
+        const mPortletsP13nData = {};
+        aPortletInfoTab2Set.map((o) => {
+          delete o.__metadata;
+
+          mPortletsP13nData[o.Potid] = o;
+        });
+
+        const mActivePortlets = {};
+        const aActivePortlets = [];
+        const mAllPortlets = {};
+        const aAllPortlets = aPortletInfoTab1Set
+          .map((o) => {
+            delete o.__metadata;
+
+            const mOriginal = $.extend(o, mPortletsP13nData[o.Potid]);
+            const mPortletData = this.transform(mOriginal);
+            mAllPortlets[o.Potid] = mPortletData;
+
+            if (mPortletData.active) {
+              const PortletHandler = this.mPortletHandlers[o.Potid];
+              if (!PortletHandler) {
+                this.debug(`Portlets.controller > getPortletsModel > '${o.Potid}'에 해당하는 PortletHandler가 없습니다.`);
+                return mPortletData;
+              }
+
+              aActivePortlets.push(mPortletData);
+              mActivePortlets[o.Potid] = mPortletData;
+
+              setTimeout(() => {
+                new PortletHandler(this, mPortletData);
+              });
+            }
+
+            return mPortletData;
+          })
+          .sort((o1, o2) => o1.position.column * 100 + o1.position.sequence - (o2.position.column * 100 + o2.position.sequence));
+
+        return new JSONModel({
+          available: aAllPortlets.length > 0,
+          allMap: mAllPortlets,
+          allList: aAllPortlets,
+          activeList: aActivePortlets,
+          activeMap: mActivePortlets,
+        });
+      },
+
+      transform(mPortletData) {
+        return {
+          original: mPortletData,
+          id: mPortletData.Potid,
+          carousel: mPortletData.Mocat === 'A',
+          position: {
+            column: this.bMobile ? Number(mPortletData.MSeq) || 0 : Number(mPortletData.Colno) || 0,
+            sequence: Number(mPortletData.Seqno) || 0,
+          },
+          height: Number(mPortletData.Htall) || 1,
+          icon: mPortletData.Iconid,
+          title: mPortletData.Potnm,
+          tooltip: mPortletData.TooltipTx,
+          url: this.bMobile ? mPortletData.LinkUrl2 : mPortletData.LinkUrl1,
+          mid: this.bMobile ? mPortletData.LinkMenid2 : mPortletData.LinkMenid1,
+          active: mPortletData.Zhide !== 'X',
+          popup: mPortletData.Mepop === 'X',
+          switchable: mPortletData.Fixed !== 'X',
+          hideTitle: mPortletData.HideName === 'X',
+          hasLink: !!(this.bMobile ? mPortletData.LinkUrl2 : mPortletData.LinkUrl1),
+        };
+      },
+
+      onPressPortletToggleButton(oEvent) {
+        const oParent = oEvent.getSource().getParent();
         const bPressed = oEvent.getParameter('pressed');
 
-        if (bPressed) {
-          const oSpecialDates = [
-            { date: '2021-09-01', type: 'Type01' },
-            { date: '2021-09-02', type: 'Type02' },
-            { date: '2021-09-03', type: 'Type03' },
-            { date: '2021-09-04', type: 'Type04' },
-            { date: '2021-09-05', type: 'Type05' },
-            { date: '2021-09-06', type: 'Type06' },
-            { date: '2021-09-07', type: 'Type07' },
-            { date: '2021-09-08', type: 'Type08' },
-            { date: '2021-09-09', type: 'Type09' },
-            { date: '2021-09-10', type: 'Type10' },
-          ];
+        // TODO : portlet instance 생성
 
-          oSpecialDates.forEach(({ date: sDate, type: sType }) => {
-            oTeamCalendar.addSpecialDate(
-              new DateTypeRange({
-                startDate: new Date(sDate),
-                type: sType,
-                tooltip: '근태 ' + sType,
-              })
-            );
-            oTeamCalendarLegend.addItem(
-              new CalendarLegendItem({
-                text: '근태 ' + sType,
-              })
-            );
-          });
+        oParent.toggleStyleClass('portlet-hide', !bPressed);
+      },
 
-          oTeamCalendar.addSpecialDate(
-            new DateTypeRange({
-              startDate: new Date('2021-09-12'),
-              type: 'Type11',
-            })
-          );
+      /**
+       * App.controller.js 에서 호출
+       */
+      onPressPortletsP13nDialogOpen() {
+        this.oPortletsP13nDialog.open();
+      },
 
-          oTeamCalendar.addSpecialDate(
-            new DateTypeRange({
-              startDate: new Date('2021-09-13'),
-              type: 'Type11',
-            })
-          );
+      onPressPortletsP13nDialogClose() {
+        this.oPortletsP13nDialog.close();
+      },
 
-          oTeamCalendar.addSpecialDate(
-            new DateTypeRange({
-              startDate: new Date('2021-09-11'),
-              endDate: new Date('2021-09-21'),
-              type: unifiedLibrary.CalendarDayType.NonWorking,
-            })
-          );
+      async onPressPortletsP13nSave() {
+        const oModel = this.getModel(ServiceNames.COMMON);
+        const sUrl = 'PortletInfo';
+        const mPayload = {
+          Mode: 'U',
+          PortletInfoTab2Set: [],
+        };
 
-          oTeamCalendar.addSpecialDate(
-            new DateTypeRange({
-              startDate: new Date('2021-09-24'),
-              type: unifiedLibrary.CalendarDayType.NonWorking,
-            })
-          );
-        } else {
-          oTeamCalendar.destroySpecialDates();
-          oTeamCalendarLegend.destroyItems();
-        }
+        return Client.create(oModel, sUrl, mPayload);
+      },
+
+      reduceViewResource() {
+        this.byId('portlets-grid').destroyItems();
+        this.setViewModel(null);
+        this.getView().removeDependent(this.oPortletsP13nDialog);
+        this.oPortletsP13nDialog.destroy();
+        return this;
+      },
+
+      setTestData(mPortletsData) {
+        mPortletsData.PortletInfoTab1Set = {
+          results: [
+            {
+              Potid: 'P01',
+              Potnm: '테스트 1',
+              Odataid: '',
+              Colno: '1',
+              Seqno: '01',
+              Htall: '1',
+              Fixed: '',
+              HideName: '',
+              Mocat: '',
+              MSeq: '',
+              Iconid: '',
+              LinkUrl1: '',
+              LinkMenid1: '',
+              LinkUrl2: '',
+              LinkMenid2: '',
+              TooltipTx: '툴팁 1 입니다.',
+              Mepop: '',
+            },
+            {
+              Potid: 'P02',
+              Potnm: '테스트 2',
+              Odataid: '',
+              Colno: '1',
+              Seqno: '02',
+              Htall: '1',
+              Fixed: '',
+              HideName: '',
+              Mocat: '',
+              MSeq: '',
+              Iconid: '',
+              LinkUrl1: '',
+              LinkMenid1: '',
+              LinkUrl2: '',
+              LinkMenid2: '',
+              TooltipTx: '툴팁 2 입니다.',
+              Mepop: '',
+            },
+            {
+              Potid: 'P03',
+              Potnm: '테스트 3',
+              Odataid: '',
+              Colno: '1',
+              Seqno: '03',
+              Htall: '1',
+              Fixed: '',
+              HideName: '',
+              Mocat: '',
+              MSeq: '',
+              Iconid: '',
+              LinkUrl1: '',
+              LinkMenid1: '',
+              LinkUrl2: '',
+              LinkMenid2: '',
+              TooltipTx: '툴팁 3 입니다.',
+              Mepop: '',
+            },
+            {
+              Potid: 'P04',
+              Potnm: '테스트 4',
+              Odataid: '',
+              Colno: '1',
+              Seqno: '04',
+              Htall: '1',
+              Fixed: '',
+              HideName: '',
+              Mocat: '',
+              MSeq: '',
+              Iconid: '',
+              LinkUrl1: '',
+              LinkMenid1: '',
+              LinkUrl2: '',
+              LinkMenid2: '',
+              TooltipTx: '툴팁 4 입니다.',
+              Mepop: '',
+            },
+            {
+              Potid: 'P05',
+              Potnm: '테스트 5',
+              Odataid: '',
+              Colno: '1',
+              Seqno: '05',
+              Htall: '1',
+              Fixed: '',
+              HideName: '',
+              Mocat: '',
+              MSeq: '',
+              Iconid: '',
+              LinkUrl1: '',
+              LinkMenid1: '',
+              LinkUrl2: '',
+              LinkMenid2: '',
+              TooltipTx: '툴팁 5 입니다.',
+              Mepop: '',
+            },
+          ],
+        };
+        mPortletsData.PortletInfoTab2Set = {
+          results: [
+            {
+              Potid: 'P01',
+              PCol: '1',
+              PSeq: '01',
+              Zhide: '',
+            },
+            {
+              Potid: 'P02',
+              PCol: '1',
+              PSeq: '02',
+              Zhide: '',
+            },
+            {
+              Potid: 'P03',
+              PCol: '1',
+              PSeq: '03',
+              Zhide: 'X',
+            },
+            {
+              Potid: 'P04',
+              PCol: '1',
+              PSeq: '04',
+              Zhide: '',
+            },
+            {
+              Potid: 'P05',
+              PCol: '1',
+              PSeq: '05',
+              Zhide: '',
+            },
+          ],
+        };
       },
     });
   }
