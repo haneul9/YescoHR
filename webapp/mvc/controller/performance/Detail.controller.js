@@ -293,7 +293,7 @@ sap.ui.define(
         const iItemsLength = aItems.length;
         let iCurrentItemsLength = oViewModel.getProperty('/currentItemsLength') ?? 0;
 
-        if (iCurrentItemsLength === 7) {
+        if (iCurrentItemsLength === 10) {
           MessageBox.alert(this.getBundleText('MSG_10002')); // 더 이상 추가 할 수 없습니다.
           return;
         }
@@ -358,6 +358,7 @@ sap.ui.define(
             .value()
         ) {
           MessageBox.alert(this.getBundleText('MSG_10005')); // 가중치의 총합은 100%이어야 합니다.
+          this.changeTab('T01');
           return false;
         }
 
