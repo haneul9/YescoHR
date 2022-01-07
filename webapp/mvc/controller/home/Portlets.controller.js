@@ -41,7 +41,7 @@ sap.ui.define(
         P01: P01PortletHandler,
         P02: P02PortletHandler,
         P03: P03PortletHandler, // P03, P04는 같은 PortletHandler를 공유함
-        // P04: P03PortletHandler, // P03, P04는 같은 PortletHandler를 공유함
+        P04: P03PortletHandler, // P03, P04는 같은 PortletHandler를 공유함
       },
       mPortletHandlerInstances: {},
 
@@ -176,8 +176,9 @@ sap.ui.define(
                 return mPortletData;
               }
 
-              if (mActivePortlets[o.Potid]) {
-                return;
+              if ((o.Potid === 'P03' && mActivePortlets.P04) || (o.Potid === 'P04' && mActivePortlets.P03)) {
+                this.debug(`Portlets.controller > getPortletsModel > '${o.Potid}'에 해당하는 PortletHandler가 이미 존재합니다.`);
+                return mPortletData;
               }
 
               aActivePortlets.push(mPortletData);
