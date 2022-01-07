@@ -149,18 +149,24 @@ sap.ui.define(
           });
         } else {
           const oModel = this.getModel(ServiceNames.PA);
+          const oView = this.getView();
+          const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
 
-          oModel.read('/FamilyInfoApplSet', {
-            filters: [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'), new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, this.getCurrentMenuId()), new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sKey)],
-            success: (oData) => {
-              if (oData) {
-                oDetailModel.setProperty('/FormData', oData.results[0]);
-              }
-            },
-            error: (oError) => {
-              AppUtils.handleError(new ODataReadError(oError));
-            },
-          });
+          if (!!oListView && !!oListView.getModel().getProperty('/parameters')) {
+            oDetailModel.setProperty('/FormData', oListView.getModel().getProperty('/parameters'));
+          } else {
+            oModel.read('/FamilyInfoApplSet', {
+              filters: [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'), new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, this.getCurrentMenuId()), new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sKey)],
+              success: (oData) => {
+                if (oData) {
+                  oDetailModel.setProperty('/FormData', oData.results[0]);
+                }
+              },
+              error: (oError) => {
+                AppUtils.handleError(new ODataReadError(oError));
+              },
+            });
+          }
         }
 
         this.settingsAttachTable();

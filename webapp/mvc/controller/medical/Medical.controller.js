@@ -75,9 +75,6 @@ sap.ui.define(
       },
 
       onClick() {
-        const oListModel = this.getViewModel();
-
-        oListModel.setProperty('/parameters/Pyyea', oListModel.getProperty('/Total/Zyear'));
         this.getRouter().navTo('medical-detail', { oDataKey: 'N' });
       },
 
@@ -210,7 +207,6 @@ sap.ui.define(
         const oListModel = this.getViewModel();
         const oRowData = oListModel.getProperty(vPath);
 
-        oListModel.setProperty('/parameters', oRowData);
         this.getRouter().navTo('medical-detail', { oDataKey: oRowData.Appno });
       },
 

@@ -174,16 +174,24 @@ sap.ui.define(
         } else {
           const oView = this.getView();
           const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-          const mListData = oListView.getModel().getProperty('/parameters');
           let oSendObject = {};
+
+          if (!!oListView && !!oListView.getModel().getProperty('/parameters')) {
+            const mListData = oListView.getModel().getProperty('/parameters');
+
+            oSendObject.Begda = mListData.Begda;
+            oSendObject.Endda = mListData.Endda;
+            oSendObject.Lntyp = mListData.Lntyp;
+            oSendObject.Seqnr = mListData.Seqnr;
+            oSendObject.Pernr = mListData.Pernr;
+          } else {
+            oSendObject.Appbox = 'X';
+            oSendObject.Pernr = this.getAppointeeProperty('Pernr');
+            oSendObject.Menid = this.getCurrentMenuId();
+          }
 
           oSendObject.Prcty = 'D';
           oSendObject.Appno = sViewKey;
-          oSendObject.Begda = mListData.Begda;
-          oSendObject.Endda = mListData.Endda;
-          oSendObject.Lntyp = mListData.Lntyp;
-          oSendObject.Seqnr = mListData.Seqnr;
-          oSendObject.Pernr = mListData.Pernr;
           oSendObject.LoanAmtHistorySet = [];
           oSendObject.LoanAmtRecordSet = [];
 

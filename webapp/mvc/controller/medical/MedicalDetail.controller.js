@@ -112,7 +112,7 @@ sap.ui.define(
       },
 
       // FormData Settings
-      setFormData() {
+      async setFormData() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
         const sViewKey = oDetailModel.getProperty('/ViewKey');
@@ -148,11 +148,8 @@ sap.ui.define(
           ${sMsg}`
         );
 
-        const oView = this.getView();
-        const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-        const mListData = oListView.getModel().getProperty('/parameters');
-
         if (sViewKey === 'N' || !sViewKey) {
+          const sYear = await this.getTotalYear();
           const mSessionData = this.getSessionData();
 
           // oDetailModel.setProperty('/FormData/Appernr', mSessionData.Pernr);
@@ -161,7 +158,7 @@ sap.ui.define(
             Apcnt: '0',
             Pvcnt: '0',
             Rjcnt: '0',
-            Pyyea: mListData.Pyyea,
+            Pyyea: sYear,
           });
 
           oDetailModel.setProperty('/ApplyInfo', {
@@ -211,6 +208,25 @@ sap.ui.define(
         }
       },
 
+      getTotalYear() {
+        const oModel = this.getModel(ServiceNames.BENEFIT);
+
+        return new Promise((resolve, reject) => {
+          oModel.read('/MedExpenseMymedSet', {
+            filters: [],
+            success: (oData) => {
+              if (oData) {
+                resolve(oData.results[0].Zyear);
+              }
+            },
+            error: (oError) => {
+              this.debug(oError);
+              reject(new ODataReadError(oError));
+            },
+          });
+        });
+      },
+
       getReceiptList(sKey, sAdult) {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
@@ -220,14 +236,12 @@ sap.ui.define(
         let sPyyea = '';
 
         if (!!sViewKey && sViewKey !== 'N') {
-          const oView = this.getView();
-          const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-          const mListData = oListView.getModel().getProperty('/parameters');
+          const mFormData = oDetailModel.getProperty('/FormData');
 
-          sAppno = mListData.Appno;
-          sKey = mListData.Famgb;
-          sAdult = mListData.Adult;
-          sPyyea = mListData.Pyyea;
+          sAppno = mFormData.Appno;
+          sKey = mFormData.Famgb;
+          sAdult = mFormData.Adult;
+          sPyyea = mFormData.Pyyea;
         }
 
         // 영수증구분
