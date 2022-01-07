@@ -40,7 +40,8 @@ sap.ui.define(
       mPortletHandlers: {
         P01: P01PortletHandler,
         P02: P02PortletHandler,
-        P03: P03PortletHandler,
+        P03: P03PortletHandler, // P03, P04는 같은 PortletHandler를 공유함
+        // P04: P03PortletHandler, // P03, P04는 같은 PortletHandler를 공유함
       },
       mPortletHandlerInstances: {},
 
@@ -175,6 +176,10 @@ sap.ui.define(
                 return mPortletData;
               }
 
+              if (mActivePortlets[o.Potid]) {
+                return;
+              }
+
               aActivePortlets.push(mPortletData);
               mActivePortlets[o.Potid] = mPortletData;
 
@@ -255,6 +260,7 @@ sap.ui.define(
             delete oPortletsModel.getProperty(`/activeMap/${sPortletId}`);
             delete oPortletsModel.getProperty(`/activeInstanceMap/${sPortletId}`);
           }
+
           oPortletsModel.refresh();
           oPortletsModel.setProperty('/busy', false);
         });
