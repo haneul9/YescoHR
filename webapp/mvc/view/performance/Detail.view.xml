@@ -127,13 +127,15 @@
 										<layoutData>
 											<grid:GridItemLayoutData gridRow="3" />
 										</layoutData>
-										<TextArea class="required" rows="5" value="{/manage/Z136}" width="100%" maxLength="{/fieldControl/limit/Z136}" enabled="{= ${/fieldControl/display/Z136} === 'X' }" />
+										<TextArea rows="5" value="" width="100%" enabled="false" visible="{= ${/fieldControl/display/Z136} === 'V' }" />
+										<TextArea class="required" rows="5" value="{/manage/Z136}" width="100%" maxLength="{/fieldControl/limit/Z136}" enabled="{= ${/fieldControl/display/Z136} === 'X' }" visible="{= ${/fieldControl/display/Z136} !== 'V' }" />
 									</VBox>
 									<VBox visible="{= ${/fieldControl/display/Z137} !== 'H' }">
 										<layoutData>
 											<grid:GridItemLayoutData gridRow="3" />
 										</layoutData>
-										<TextArea class="required" rows="5" value="{/manage/Z137}" width="100%" maxLength="{/fieldControl/limit/Z137}" enabled="{= ${/fieldControl/display/Z137} === 'X' }" />
+										<TextArea rows="5" value="" width="100%" enabled="false" visible="{= ${/fieldControl/display/Z137} === 'V' }" />
+										<TextArea class="required" rows="5" value="{/manage/Z137}" width="100%" maxLength="{/fieldControl/limit/Z137}" enabled="{= ${/fieldControl/display/Z137} === 'X' }" visible="{= ${/fieldControl/display/Z137} !== 'V' }" />
 									</VBox>
 									<Label text="{i18n>LABEL_10038}" width="100%" textAlign="Center" visible="{= ${/fieldControl/display/Papp1} !== 'H' || ${/fieldControl/display/Papp2} !== 'H' }">
 										<layoutData>

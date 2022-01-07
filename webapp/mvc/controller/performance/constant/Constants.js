@@ -51,6 +51,8 @@ sap.ui.define(
       FIELD_MAPPING: {
         Z131: ['Z131'],
         Z132: ['Z132'],
+        Z136: ['Z136'],
+        Z137: ['Z137'],
         Papp: ['Zapgme', 'Zapgma', 'Papp1', 'Papp2', 'Zmepoint', 'Zmapoint'],
         Fapp: ['Zmbgrade'],
         Z103: ['Z103s'],
