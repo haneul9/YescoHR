@@ -158,8 +158,8 @@ sap.ui.define(
 
           oViewModel.setProperty('/ApplyInfo', {
             Apename: mAppointeeData.Ename,
-            Aporgtx: `${mAppointeeData.Btrtx}/${mAppointeeData.Orgtx}`,
-            Apjikgbtl: `${mAppointeeData.Zzjikgbt}/${mAppointeeData.Zzjikcht}`,
+            Aporgtx: `${mAppointeeData.Btrtx} / ${mAppointeeData.Orgtx}`,
+            Apjikgbtl: `${mAppointeeData.Zzjikgbt} / ${mAppointeeData.Zzjikcht}`,
           });
         } else {
           oViewModel.setProperty('/ApplyInfo', { ...detailData });

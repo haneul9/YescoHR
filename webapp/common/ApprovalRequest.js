@@ -106,12 +106,12 @@ sap.ui.define(
 
       setApplyInfoBoxData(mApporvalData) {
         if (_.isEmpty(mApporvalData)) {
-          const mAppointeeData = this.oController.getAppointeeData();
+          const mSessionData = this.oController.getSessionData();
 
           this.oApprovalRequestModel.setProperty('/ApplyInfo', {
-            Apename: mAppointeeData.Ename,
-            Aporgtx: `${mAppointeeData.Btrtx}/${mAppointeeData.Orgtx}`,
-            Apjikgbtl: `${mAppointeeData.Zzjikgbt}/${mAppointeeData.Zzjikcht}`,
+            Apename: mSessionData.Ename,
+            Aporgtx: `${mSessionData.Btrtx} / ${mSessionData.Orgtx}`,
+            Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
           });
         } else {
           this.oApprovalRequestModel.setProperty('/ApplyInfo', mApporvalData);

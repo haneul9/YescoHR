@@ -113,8 +113,8 @@ sap.ui.define(
 
           oDetailModel.setProperty('/ApplyInfo', {
             Apename: oAppointeeData.Ename,
-            Aporgtx: `${oAppointeeData.Btrtx}/${oAppointeeData.Orgtx}`,
-            Apjikgbtl: `${oAppointeeData.Zzjikgbt}/${oAppointeeData.Zzjikcht}`,
+            Aporgtx: `${oAppointeeData.Btrtx} / ${oAppointeeData.Orgtx}`,
+            Apjikgbtl: `${oAppointeeData.Zzjikgbt} / ${oAppointeeData.Zzjikcht}`,
           });
         } else {
           const aFilter = [];
