@@ -96,8 +96,6 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const sViewKey = oDetailModel.getProperty('/ViewKey');
-        const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-        const mListData = oListView.getModel().getProperty('/parameters');
 
         oDetailModel.setProperty(
           '/InfoMessage',
@@ -105,7 +103,7 @@ sap.ui.define(
           <p>${this.getBundleText('MSG_14003')}</p>`
         );
 
-        if (sViewKey === 'N' || (!sViewKey && !mListData)) {
+        if (sViewKey === 'N' || !sViewKey) {
           const mSessionData = this.getSessionData();
 
           oDetailModel.setProperty('/FormData/Coaid', '');
@@ -117,10 +115,16 @@ sap.ui.define(
             Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
           });
         } else {
+          const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+          const mListData = oListView.getModel().getProperty('/parameters');
           const aFilter = [];
 
-          if (sViewKey === '00000000000000') {
-            aFilter.push(new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'), new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, mListData.Pernr), new sap.ui.model.Filter('Begda', sap.ui.model.FilterOperator.EQ, mListData.Begda), new sap.ui.model.Filter('Endda', sap.ui.model.FilterOperator.EQ, mListData.Endda), new sap.ui.model.Filter('Zclub', sap.ui.model.FilterOperator.EQ, mListData.Zclub));
+          if (!!oListView && !!oListView.getModel().getProperty('/parameters')) {
+            if (sViewKey === '00000000000000') {
+              aFilter.push(new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'), new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, mListData.Pernr), new sap.ui.model.Filter('Begda', sap.ui.model.FilterOperator.EQ, mListData.Begda), new sap.ui.model.Filter('Endda', sap.ui.model.FilterOperator.EQ, mListData.Endda), new sap.ui.model.Filter('Zclub', sap.ui.model.FilterOperator.EQ, mListData.Zclub));
+            } else {
+              aFilter.push(new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'), new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sViewKey));
+            }
           } else {
             aFilter.push(new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'), new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sViewKey));
           }
