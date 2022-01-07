@@ -44,21 +44,7 @@ sap.ui.define(
       },
       mPortletHandlerInstances: {},
 
-      onInit() {
-        this.debug('Portlets.onInit');
-
-        this.initGrid();
-
-        this.getView().addEventDelegate(
-          {
-            onBeforeShow: this.onBeforeShow,
-            onAfterShow: this.onAfterShow,
-          },
-          this
-        );
-      },
-
-      initGrid() {
+      onBeforeShow() {
         const oGrid = this.byId('portlets-grid');
 
         oGrid.addDragDropConfig(
@@ -128,7 +114,7 @@ sap.ui.define(
         // oGrid.focusItem(iDropPosition);
       },
 
-      async onBeforeShow() {
+      async onObjectMatched() {
         const mPortletsData = await this.readPortletsSetting();
 
         // this.setTestData(mPortletsData);

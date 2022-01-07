@@ -96,6 +96,10 @@ sap.ui.define(
         try {
           AppUtils.setAppBusy(true);
 
+          if (!(sPernr || '').replace(/^0+/, '')) {
+            throw new UI5Error({ message: AppUtils.getBundleText('MSG_00035') }); // 대상자 사번이 없습니다.
+          }
+
           const oModel = this.getController().getModel(ServiceNames.COMMON);
 
           await Client.create(oModel, 'PortletPartners', {
