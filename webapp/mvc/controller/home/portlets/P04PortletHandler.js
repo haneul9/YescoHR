@@ -26,6 +26,14 @@ sap.ui.define(
     return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.P04PortletHandler', {
       async addPortlet() {
         const oPortletModel = this.getPortletModel();
+        oPortletModel.setData(
+          {
+            myMembers: oPortletModel.getData(),
+          },
+          true
+        );
+        delete oPortletModel.getProperty('/').original;
+
         const oP03PortletHandler = this.getController().getViewModel().getProperty('/activeInstanceMap/P03');
         if (oP03PortletHandler) {
           this.setFragment(oP03PortletHandler.getFragment());
@@ -57,9 +65,12 @@ sap.ui.define(
 
       transformContentData(aMyMembers) {
         return {
-          activeMyMembers: true,
+          multiPortlet: true,
           selectedMembersTab: 'MY',
-          myMembers: this.transformMembersData(aMyMembers),
+          myMembers: {
+            active: true,
+            ...this.transformMembersData(aMyMembers),
+          },
         };
       },
 
@@ -164,8 +175,33 @@ sap.ui.define(
       async refreshMyMembers() {
         const oModel = this.getController().getModel(ServiceNames.COMMON);
         const aMyMembers = await Client.getEntitySet(oModel, 'PortletPartners');
+        const mMyMembers = this.transformMembersData(aMyMembers);
 
-        this.getPortletModel().setProperty('/myMembers', this.transformMembersData(aMyMembers));
+        this.getPortletModel().setProperty('/myMembers/list', mMyMembers.list);
+        this.getPortletModel().setProperty('/myMembers/listCount', mMyMembers.listCount);
+      },
+
+      destroy() {
+        const oPortletModel = this.getPortletModel();
+        const bActiveOrgMembers = oPortletModel.getProperty('/orgMembers/active');
+        if (bActiveOrgMembers) {
+          const sPortletId = oPortletModel.getProperty('/id');
+          const oPortletsModel = this.getController().getViewModel();
+          oPortletsModel.setProperty(`/allMap/${sPortletId}/active`, false);
+          oPortletsModel.setProperty(`/allMap/${sPortletId}/position/column`, 0);
+          oPortletsModel.setProperty(`/allMap/${sPortletId}/position/sequence`, 0);
+          _.remove(oPortletsModel.getProperty('/activeList'), (mPortletData) => {
+            return mPortletData.id === sPortletId;
+          });
+          delete oPortletsModel.getProperty('/activeMap')[sPortletId];
+          delete oPortletsModel.getProperty('/activeInstanceMap')[sPortletId];
+
+          oPortletModel.setProperty('/selectedMembersTab', 'ORG');
+          delete oPortletModel.getProperty('/').myMembers;
+        } else {
+          oPortletModel.destroy();
+          this.getFragment().destroy();
+        }
       },
     });
   }
