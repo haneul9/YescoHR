@@ -16,6 +16,7 @@ sap.ui.define(
     'sap/ui/yesco/mvc/controller/home/portlets/P02PortletHandler',
     'sap/ui/yesco/mvc/controller/home/portlets/P03PortletHandler',
     'sap/ui/yesco/mvc/controller/home/portlets/P04PortletHandler',
+    'sap/ui/yesco/mvc/controller/home/portlets/P05PortletHandler',
   ],
   (
     // prettier 방지용 주석
@@ -33,7 +34,8 @@ sap.ui.define(
     P01PortletHandler,
     P02PortletHandler,
     P03PortletHandler,
-    P04PortletHandler
+    P04PortletHandler,
+    P05PortletHandler
   ) => {
     'use strict';
 
@@ -46,6 +48,7 @@ sap.ui.define(
         P02: P02PortletHandler,
         P03: P03PortletHandler,
         P04: P04PortletHandler,
+        P05: P05PortletHandler,
       },
 
       onBeforeShow() {
@@ -123,8 +126,6 @@ sap.ui.define(
 
       async onObjectMatched() {
         const mPortletsData = await this.readPortletsSetting();
-
-        // this.setTestData(mPortletsData);
 
         const oPortletsModel = this.getPortletsModel(mPortletsData);
         this.setViewModel(oPortletsModel);
@@ -338,142 +339,6 @@ sap.ui.define(
         this.getView().removeDependent(this.oPortletsP13nDialog);
         this.oPortletsP13nDialog.destroy();
         return this;
-      },
-
-      setTestData(mPortletsData) {
-        mPortletsData.PortletInfoTab1Set = {
-          results: [
-            {
-              Potid: 'P01',
-              Potnm: '테스트 1',
-              Odataid: '',
-              Colno: '1',
-              Seqno: '01',
-              Htall: '1',
-              Fixed: '',
-              HideName: '',
-              Mocat: '',
-              MSeq: '',
-              Iconid: '',
-              LinkUrl1: '',
-              LinkMenid1: '',
-              LinkUrl2: '',
-              LinkMenid2: '',
-              TooltipTx: '툴팁 1 입니다.',
-              Mepop: '',
-            },
-            {
-              Potid: 'P02',
-              Potnm: '테스트 2',
-              Odataid: '',
-              Colno: '1',
-              Seqno: '02',
-              Htall: '1',
-              Fixed: '',
-              HideName: '',
-              Mocat: '',
-              MSeq: '',
-              Iconid: '',
-              LinkUrl1: '',
-              LinkMenid1: '',
-              LinkUrl2: '',
-              LinkMenid2: '',
-              TooltipTx: '툴팁 2 입니다.',
-              Mepop: '',
-            },
-            {
-              Potid: 'P03',
-              Potnm: '테스트 3',
-              Odataid: '',
-              Colno: '1',
-              Seqno: '03',
-              Htall: '1',
-              Fixed: '',
-              HideName: '',
-              Mocat: '',
-              MSeq: '',
-              Iconid: '',
-              LinkUrl1: '',
-              LinkMenid1: '',
-              LinkUrl2: '',
-              LinkMenid2: '',
-              TooltipTx: '툴팁 3 입니다.',
-              Mepop: '',
-            },
-            {
-              Potid: 'P04',
-              Potnm: '테스트 4',
-              Odataid: '',
-              Colno: '1',
-              Seqno: '04',
-              Htall: '1',
-              Fixed: '',
-              HideName: '',
-              Mocat: '',
-              MSeq: '',
-              Iconid: '',
-              LinkUrl1: '',
-              LinkMenid1: '',
-              LinkUrl2: '',
-              LinkMenid2: '',
-              TooltipTx: '툴팁 4 입니다.',
-              Mepop: '',
-            },
-            {
-              Potid: 'P05',
-              Potnm: '테스트 5',
-              Odataid: '',
-              Colno: '1',
-              Seqno: '05',
-              Htall: '1',
-              Fixed: '',
-              HideName: '',
-              Mocat: '',
-              MSeq: '',
-              Iconid: '',
-              LinkUrl1: '',
-              LinkMenid1: '',
-              LinkUrl2: '',
-              LinkMenid2: '',
-              TooltipTx: '툴팁 5 입니다.',
-              Mepop: '',
-            },
-          ],
-        };
-        mPortletsData.PortletInfoTab2Set = {
-          results: [
-            {
-              Potid: 'P01',
-              PCol: '1',
-              PSeq: '01',
-              Zhide: '',
-            },
-            {
-              Potid: 'P02',
-              PCol: '1',
-              PSeq: '02',
-              Zhide: '',
-            },
-            {
-              Potid: 'P03',
-              PCol: '1',
-              PSeq: '03',
-              Zhide: 'X',
-            },
-            {
-              Potid: 'P04',
-              PCol: '1',
-              PSeq: '04',
-              Zhide: '',
-            },
-            {
-              Potid: 'P05',
-              PCol: '1',
-              PSeq: '05',
-              Zhide: '',
-            },
-          ],
-        };
       },
     });
   }

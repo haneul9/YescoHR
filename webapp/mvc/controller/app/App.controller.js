@@ -21,6 +21,8 @@ sap.ui.define(
         this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
 
         this.oAppMenu = new Menus(this);
+
+        this.getOwnerComponent().setAppMenu(this.oAppMenu);
       },
 
       navToHome() {

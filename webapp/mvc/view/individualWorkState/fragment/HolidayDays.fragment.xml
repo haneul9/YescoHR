@@ -1,0 +1,34 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:microchart="sap.suite.ui.microchart"
+  xmlns:grid="sap.ui.layout.cssgrid">
+  <VBox width="50%" class="vCardBox">
+    <HBox class="table-toolbar">
+      <Title level="H2" text="{i18n>LABEL_18005}" />
+    </HBox>
+    <HBox justifyContent="SpaceBetween">
+      <microchart:InteractiveDonutChart class="w-auto h-auto" selectionEnabled="false">
+        <microchart:layoutData>
+          <FlexItemData growFactor="1"/>
+        </microchart:layoutData>
+        <microchart:segments>
+          <microchart:InteractiveDonutChartSegment label="{i18n>LABEL_18002}" value="{/vacationChart/pUsed}" displayedValue="{/vacationChart/dUsed}{i18n>LABEL_00254}"/>
+          <microchart:InteractiveDonutChartSegment label="{i18n>LABEL_18003}" value="{/vacationChart/pPlan}" displayedValue="{/vacationChart/dPlan}{i18n>LABEL_00254}"/>
+          <microchart:InteractiveDonutChartSegment label="{i18n>LABEL_18004}" value="{/vacationChart/pUnPlan}" displayedValue="{/vacationChart/dUnPlan}{i18n>LABEL_00254}"/>
+        </microchart:segments>
+      </microchart:InteractiveDonutChart>
+      <VBox>
+        <Text text="{/vacationChart/pUsed}%"/>
+        <Text text="{/vacationChart/pPlan}%"/>
+        <Text text="{/vacationChart/pUnPlan}%"/>
+      </VBox>
+    </HBox>
+    <!-- <grid:CSSGrid gridTemplateColumns="1fr 1fr" gridTemplateRows="110px 156px" gridGap="0" class="form-grid">
+        <VBox>
+          <Text text="{/vacationChart/dUsed}{i18n>LABEL_00254}"/>
+          <Text text="{/vacationChart/dPlan}{i18n>LABEL_00254}"/>
+          <Text text="{/vacationChart/dUnPlan}{i18n>LABEL_00254}"/>
+        </VBox>
+      </grid:CSSGrid> -->
+  </VBox>
+</core:FragmentDefinition>

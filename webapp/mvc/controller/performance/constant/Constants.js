@@ -48,18 +48,20 @@ sap.ui.define(
         // { field: 'Z109', label: 'LABEL_10026', type: Validator.INPUT2 }, // 진척도(%)
       ],
 
+      // ABAP <-> WEB Mapping fields
       FIELD_MAPPING: {
+        Z103: ['Z103s'],
         Z131: ['Z131'],
         Z132: ['Z132'],
         Z136: ['Z136'],
         Z137: ['Z137'],
-        Papp: ['Zapgme', 'Zapgma', 'Papp1', 'Papp2', 'Zmepoint', 'Zmapoint'],
+        Z140: ['Z140'],
         Fapp: ['Zmbgrade'],
-        Z103: ['Z103s'],
         Z105: ['Ztbegda', 'Ztendda'],
         Z113: ['Zmarslt', 'Zrslt'],
         Z125: ['Z125Ee', 'Z125Er'],
         Z117: ['Z1175', 'Z1174', 'Z1173', 'Z1172', 'Z1171'],
+        Papp: ['Zapgme', 'Zapgma', 'Papp1', 'Papp2', 'Zmepoint', 'Zmapoint'],
       },
 
       FIELD_STATUS_MAP: {
@@ -67,25 +69,25 @@ sap.ui.define(
           A: { Zrslt: { ME: 'H', MA: 'H', MB: 'H' } },
           B: { Zrslt: { ME: 'H', MA: 'H', MB: 'H' }, Z125Ee: { ME: 'X', MA: 'V', MB: 'V' }, Z125Er: { ME: 'D', MA: 'D', MB: 'D' }, Z131: { MA: 'V', MB: 'V' } },
           C: { Zrslt: { ME: 'H', MA: 'H', MB: 'H' }, Z125Ee: { ME: 'D', MA: 'D', MB: 'D' }, Z125Er: { ME: 'V', MA: 'X', MB: 'V' }, Z132: { ME: 'V', MB: 'V' } },
-          D: { Zrslt: { ME: 'H', MA: 'H', MB: 'H' } },
+          D: { Zrslt: { ME: 'H', MA: 'H', MB: 'H' }, Z140: { MA: 'X' } },
         },
         3: {
-          F: { Zrslt: { ME: 'H', MA: 'H', MB: 'H' }, Z125Ee: { ME: 'X', MA: 'V', MB: 'V' }, Z125Er: { ME: 'D', MA: 'D', MB: 'D' }, Z136: { MA: 'V', MB: 'V' } },
+          F: { Zrslt: { ME: 'H', MA: 'H', MB: 'H' }, Z125Ee: { ME: 'X', MA: 'V', MB: 'V' }, Z125Er: { ME: 'D', MA: 'D', MB: 'D' }, Z136: { MA: 'V', MB: 'V' }, Z140: { MA: 'X' } },
           G: { Zrslt: { ME: 'H', MA: 'H', MB: 'H' }, Z125Ee: { ME: 'D', MA: 'D', MB: 'D' }, Z125Er: { ME: 'V', MA: 'X', MB: 'V' }, Z137: { ME: 'V', MB: 'V' } },
-          H: { Zrslt: { ME: 'H', MA: 'H', MB: 'H' } },
+          H: { Zrslt: { ME: 'H', MA: 'H', MB: 'H' }, Z140: { MA: 'X' } },
         },
         4: {
-          1: { Zapgme: { ME: 'X', MA: 'H', MB: 'H' }, Zapgma: { ME: 'H', MA: 'H', MB: 'H' }, Papp1: { ME: 'X', MA: 'H', MB: 'H' }, Papp2: { ME: 'H', MA: 'H', MB: 'H' }, Zmepoint: { ME: 'X', MA: 'H', MB: 'H' }, Zmapoint: { ME: 'H', MA: 'H', MB: 'H' } },
+          1: { Zapgme: { ME: 'X', MA: 'H', MB: 'H' }, Zapgma: { ME: 'H', MA: 'H', MB: 'H' }, Papp1: { ME: 'X', MA: 'H', MB: 'H' }, Papp2: { ME: 'H', MA: 'H', MB: 'H' }, Zmepoint: { ME: 'X', MA: 'H', MB: 'H' }, Zmapoint: { ME: 'H', MA: 'H', MB: 'H' }, Z140: { MA: 'X' } },
           A: { Zapgme: { ME: 'D', MA: 'D', MB: 'D' }, Zapgma: { ME: 'H', MA: 'X', MB: 'H' }, Papp1: { ME: 'D', MA: 'D', MB: 'D' }, Papp2: { ME: 'H', MA: 'X', MB: 'H' }, Zmepoint: { ME: 'D', MA: 'D', MB: 'D' }, Zmapoint: { ME: 'H', MA: 'X', MB: 'H' } },
-          2: { Zapgme: { ME: 'D', MA: 'D', MB: 'D' }, Zapgma: { ME: 'H', MA: 'D', MB: 'D' }, Papp1: { ME: 'D', MA: 'D', MB: 'D' }, Papp2: { ME: 'H', MA: 'D', MB: 'D' }, Zmepoint: { ME: 'D', MA: 'D', MB: 'D' }, Zmapoint: { ME: 'H', MA: 'D', MB: 'D' } },
-          K: { Zapgme: { ME: 'D', MA: 'D', MB: 'D' }, Zapgma: { ME: 'H', MA: 'D', MB: 'D' }, Papp1: { ME: 'D', MA: 'D', MB: 'D' }, Papp2: { ME: 'H', MA: 'D', MB: 'D' }, Zmepoint: { ME: 'D', MA: 'D', MB: 'D' }, Zmapoint: { ME: 'H', MA: 'D', MB: 'D' } },
+          2: { Zapgme: { ME: 'D', MA: 'D', MB: 'D' }, Zapgma: { ME: 'H', MA: 'D', MB: 'D' }, Papp1: { ME: 'D', MA: 'D', MB: 'D' }, Papp2: { ME: 'H', MA: 'D', MB: 'D' }, Zmepoint: { ME: 'D', MA: 'D', MB: 'D' }, Zmapoint: { ME: 'H', MA: 'D', MB: 'D' }, Zmbgrade: { MB: 'D' } },
+          K: { Zapgme: { ME: 'D', MA: 'D', MB: 'D' }, Zapgma: { ME: 'H', MA: 'D', MB: 'D' }, Papp1: { ME: 'D', MA: 'D', MB: 'D' }, Papp2: { ME: 'H', MA: 'D', MB: 'D' }, Zmepoint: { ME: 'D', MA: 'D', MB: 'D' }, Zmapoint: { ME: 'H', MA: 'D', MB: 'D' }, Zmbgrade: { MB: 'D' } },
         },
       },
 
       BUTTON_STATUS_MAP: {
         2: {
           A: { REJECT_REASON: { label: 'LABEL_00142', ME: '', MA: '', MB: '' }, TOP_GOAL: { label: 'LABEL_10032', ME: '', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: '', MA: '', MB: '' } },
-          B: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: 'X', MA: 'X', MB: '' } },
+          B: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: 'X', MA: '', MB: '' } },
           C: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: '', MA: 'X', MB: '' } },
           D: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: '', MA: 'X', MB: '' } },
         },

@@ -79,7 +79,7 @@ sap.ui.define(
 
           const fCurriedGetEntitySet = Client.getEntitySet(oModel);
           const [aQuotaResultData, aRowData] = await Promise.all([
-            fCurriedGetEntitySet('AbsQuotaList', { Pernr: sPernr }), //
+            fCurriedGetEntitySet('AbsQuotaList', { Menid: this.getCurrentMenuId(), Pernr: sPernr }), //
             fCurriedGetEntitySet('LeaveApplContent', { Menid: this.getCurrentMenuId(), Apbeg: DateUtils.parse(oSearchConditions.Apbeg), Apend: DateUtils.parse(oSearchConditions.Apend) }),
           ]);
 

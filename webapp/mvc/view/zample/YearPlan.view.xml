@@ -31,17 +31,21 @@
                     </custom:DayBox>
                 </grid:CSSGrid>
                 <HBox class="status-wrap year-plan">
-                    <ObjectStatus text="연차" icon="sap-icon://circle-task-2" state="None" />
-                    <ObjectStatus text="하계휴가" icon="sap-icon://circle-task-2" state="Indication02" />
-                    <ObjectStatus text="유급휴가" icon="sap-icon://circle-task-2" state="Indication03" />
-                    <ObjectStatus text="무급휴가" icon="sap-icon://circle-task-2" state="Indication04" />
-                    <ObjectStatus text="병가" icon="sap-icon://circle-task-2" state="Indication05" />
-                    <ObjectStatus text="출산휴가" icon="sap-icon://circle-task-2" state="None" />
-                    <ObjectStatus text="모성보호" icon="sap-icon://circle-task-2" state="Indication02" />
-                    <ObjectStatus text="휴직" icon="sap-icon://circle-task-2" state="Indication03" />
-                    <ObjectStatus text="휴무" icon="sap-icon://circle-task-2" state="Indication04" />
-                    <ObjectStatus text="징계" icon="sap-icon://circle-task-2" state="Indication05" />
-                    <ObjectStatus text="공휴일" icon="sap-icon://circle-task-2" state="Indication01" />
+                    <Text text="연차" class="type01" />
+                    <Text text="하계휴가" class="type02" />
+                    <Text text="유급휴가" class="type03" />
+                    <Text text="무급휴가" class="type04" />
+                    <Text text="병가" class="type05" />
+                    <Text text="출산" class="type06" />
+                    <Text text="모성보호" class="type07" />
+                    <Text text="휴직" class="type08" />
+                    <Text text="휴무" class="type09" />
+                    <Text text="징계" class="type010" />
+                    <Text text="교육" class="type11" />
+                    <Text text="출장" class="type12" />
+                    <Text text="당직" class="type13" />
+                    <Text text="통합굴착" class="type14" />
+                    <Text text="공휴일" class="type15" />
                 </HBox>
             </VBox>
 

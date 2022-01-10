@@ -28,33 +28,34 @@ sap.ui.define(
     return BaseController.extend('sap.ui.yesco.mvc.controller.organization.Main', {
       async onBeforeShow() {
         this.chartHolder = this.byId('ChartHolder');
-
         this.chartHolder.setBusy(true);
         this.chartHolder.removeAllItems();
       },
 
       async onObjectMatched() {
         try {
-          const [aReturnData, aOrgLevel] = await Promise.all([
-            this.readEmployeeOrgTree(), //
-            this.readOrglevel(),
-          ]);
+          if (_.isEmpty(this.getViewModel())) {
+            const [aReturnData, aOrgLevel] = await Promise.all([
+              this.readEmployeeOrgTree(), //
+              this.readOrglevel(),
+            ]);
 
-          const oViewModel = new JSONModel({
-            orgList: [
-              ...aReturnData.map((o) => {
-                if (!o.Photo) o.Photo = 'https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1';
-                o.Ipdat = o.Ipdat ? moment(o.Ipdat).format('YYYY.MM.DD') : '';
+            const oViewModel = new JSONModel({
+              extendNode: '',
+              orgLevel: aOrgLevel ?? [],
+              orgList: _.map(aReturnData, (o) => ({
+                ...o,
+                Photo: _.isEmpty(o.Photo) ? 'asset/image/avatar-unknown.svg' : o.Photo,
+                Ipdat: _.isEmpty(o.Ipdat) ? '' : moment(o.Ipdat).format('YYYY.MM.DD'),
+              })),
+            });
 
-                return o;
-              }),
-            ],
-            orgLevel: aOrgLevel ?? [],
-          });
+            this.setViewModel(oViewModel);
+          }
 
-          this.setViewModel(oViewModel);
-
+          const sExtendNode = this.getViewModel().getProperty('/extendNode') || _.noop();
           const oChart = new D3OrgChart({
+            extendNode: sExtendNode,
             items: {
               path: '/orgList',
               template: new D3OrgChartItem({

@@ -1,0 +1,45 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:custom="sap.ui.yesco.control">
+  <VBox width="100%" class="vCardBox">
+    <HBox justifyContent="Center" class="year-plan-head">
+      <Button icon="sap-icon://navigation-left-arrow" press=".onPressPrevYear" class="icon-button" />
+      <Title level="H2" text="{/year}" />
+      <Button icon="sap-icon://navigation-right-arrow" press=".onPressNextYear" class="icon-button" />
+    </HBox>
+    <grid:CSSGrid id="yearPlanGrid" class="year-plan-grid" gridTemplateColumns="70px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr" gridGap="1px" items="{path: '/plans'}">
+      <custom:DayBox width="100%" mouseover=".onMouseOverDayBox" mouseout=".onMouseOutDayBox">
+        <custom:customData>
+          <core:CustomData key="day" value="{day}" />
+          <core:CustomData key="style" value="{classNames}" writeToDom="true" />
+          <core:CustomData key="border" value="{borderNames}" writeToDom="true" />
+        </custom:customData>
+        <Text width="100%" textAlign="Center" text="{label}">
+          <layoutData>
+            <FlexItemData growFactor="1" />
+          </layoutData>
+          <customData>
+            <core:CustomData key="day" value="{day}" />
+            <core:CustomData key="stripes" value="{stripes}" writeToDom="true" />
+          </customData>
+        </Text>
+      </custom:DayBox>
+    </grid:CSSGrid>
+    <HBox class="status-wrap year-plan">
+      <ObjectStatus text="{i18n>LABEL_00180}" icon="sap-icon://circle-task-2" state="None" />
+      <ObjectStatus text="{i18n>LABEL_04015}" icon="sap-icon://circle-task-2" state="Indication02" />
+      <ObjectStatus text="{i18n>LABEL_00181}" icon="sap-icon://circle-task-2" state="Indication03" />
+      <ObjectStatus text="{i18n>LABEL_00182}" icon="sap-icon://circle-task-2" state="Indication04" />
+      <ObjectStatus text="{i18n>LABEL_04007}" icon="sap-icon://circle-task-2" state="Indication05" />
+      <ObjectStatus text="{i18n>LABEL_00183}" icon="sap-icon://circle-task-2" state="None" />
+      <ObjectStatus text="{i18n>LABEL_00184}" icon="sap-icon://circle-task-2" state="Indication02" />
+      <ObjectStatus text="{i18n>LABEL_00185}" icon="sap-icon://circle-task-2" state="Indication03" />
+      <ObjectStatus text="{i18n>LABEL_00186}" icon="sap-icon://circle-task-2" state="Indication04" />
+      <ObjectStatus text="{i18n>LABEL_00187}" icon="sap-icon://circle-task-2" state="Indication05" />
+      <ObjectStatus text="{i18n>LABEL_00188}" icon="sap-icon://circle-task-2" state="Indication05" />
+      <ObjectStatus text="{i18n>LABEL_00189}" icon="sap-icon://circle-task-2" state="Indication05" />
+      <ObjectStatus text="{i18n>LABEL_11003}" icon="sap-icon://circle-task-2" state="Indication01" />
+    </HBox>
+  </VBox>
+</core:FragmentDefinition>

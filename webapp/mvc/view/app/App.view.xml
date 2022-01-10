@@ -19,7 +19,7 @@
         <HBox alignItems="Center" height="100%">
           <Text text="{sessionModel>/Ename}" class="name" />
           <Text text="{sessionModel>/Zzjikgbt} / {sessionModel>/Zzjikcht}" />
-          <Image src="{sessionModel>/Photo}" mode="Background" backgroundPosition="center center" width="26px" />
+          <Image src="{sessionModel>/Photo}" mode="Background" class="member-photo" width="26px" />
         </HBox>
       </TileContent>
     </GenericTile>

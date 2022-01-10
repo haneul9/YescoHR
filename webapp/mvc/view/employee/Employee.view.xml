@@ -8,7 +8,7 @@
             <HBox justifyContent="SpaceBetween" class="breadcrumbs">
                 <custom:Breadcrumbs />
                 <HBox>
-                    <Button icon="sap-icon://crm-service-manager" text="{i18n>LABEL_00275}" class="sapUiTinyMarginEnd" />
+                    <Button icon="sap-icon://crm-service-manager" text="{i18n>LABEL_00275}" class="sapUiTinyMarginEnd type-print" />
                     <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" />
                     <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" />
                 </HBox>

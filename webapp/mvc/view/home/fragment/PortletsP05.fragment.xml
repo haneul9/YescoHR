@@ -1,0 +1,44 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:core="sap.ui.core">
+  <VBox class="portlet portlet-box portlet-p05" tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
+    <customData>
+      <core:CustomData key="portlet-id" value="{id}" writeToDom="true" />
+    </customData>
+    <layoutData>
+      <f:GridContainerItemLayoutData rows="{height}" columns="{width}" />
+    </layoutData>
+    <HBox width="100%" class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
+      <layoutData>
+        <FlexItemData minHeight="15%" />
+      </layoutData>
+      <Title level="H2" text="{title}" visible="{= !${hideTitle} }" />
+      <Text text="">
+        <layoutData>
+          <FlexItemData growFactor="1" />
+        </layoutData>
+      </Text>
+      <Button icon="sap-icon://decline" type="Transparent" visible="{switchable}" class="icon-button portlet-close" press=".onPressClose" />
+      <Button icon="sap-icon://add" type="Transparent" visible="{hasLink}" class="icon-button" press=".onPressLink" />
+    </HBox>
+    <ScrollContainer height="85%" vertical="true">
+      <layoutData>
+        <FlexItemData growFactor="1" />
+      </layoutData>
+      <HBox width="100%" height="1.5rem" justifyContent="Center" alignItems="Center" visible="{= ${listCount} === 0 }">
+        <Text text="{i18n>MSG_00001}" />
+      </HBox>
+      <List items="{ path: 'list', templateShareable: false }" visible="{= ${listCount} &gt; 0 }" width="100%" rememberSelections="false" showSeparators="None" showNoData="false">
+        <CustomListItem>
+          <HBox>
+            <core:Icon size="14px" class="menu-favorite-icon" src="sap-icon://favorite" press=".toggleFavorite" />
+            <!-- 메뉴 이동인 경우 -->
+            <Link text="{Mname}" visible="{= !!${Mnurl} &amp;&amp; !${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" press=".handleMenuLink" />
+            <!-- http|https|javascript로 시작되는 경우 -->
+            <Link text="{Mname}" visible="{= !!${Mnurl} &amp;&amp; ${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" target="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuTarget' }" />
+          </HBox>
+        </CustomListItem>
+      </List>
+    </ScrollContainer>
+  </VBox>
+</core:FragmentDefinition>

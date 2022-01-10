@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core">
   <HBox class="vCardBox appointee-bar">
-    <Image src="{appointeeModel>/Photo}" mode="Background" backgroundPosition="center center" width="63px" height="63px" />
+    <Image src="{appointeeModel>/Photo}" class="member-photo" mode="Background" width="63px" height="63px" />
     <Text text="{appointeeModel>/Ename}" class="name"/>
     <Text text="{appointeeModel>/Zzjikgbt} / {appointeeModel>/Zzjikcht}"/>
     <Text text="{appointeeModel>/Pbtxt}"/>

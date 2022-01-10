@@ -127,6 +127,7 @@ sap.ui.define(
         const oViewModel = new JSONModel({
           busy: false,
           pernr: null,
+          orgtx: null,
           sideNavigation: {
             isShow: true,
             selectedKey: 'list',
@@ -146,7 +147,7 @@ sap.ui.define(
             width: '73%',
             busy: true,
             header: {
-              profilePath: 'https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1',
+              profilePath: 'asset/image/avatar-unknown.svg?ssl=1',
               baseInfo: [],
               timeline: [
                 { label: '회사입사일', data: '2010.01.01' },
@@ -215,19 +216,26 @@ sap.ui.define(
       onObjectMatched(oParameter) {
         const oViewModel = this.getView().getModel();
         const sPernr = oParameter.pernr || this.getSessionData().Pernr;
+        const sOrgtx = oParameter.orgtx ?? _.noop();
 
         oViewModel.setProperty('/employee/busy', true);
         oViewModel.setProperty('/pernr', sPernr);
+        oViewModel.setProperty('/orgtx', sOrgtx);
 
-        this.initialList({ oViewModel, sPernr });
+        if (!_.isEmpty(sOrgtx)) {
+          oViewModel.setProperty('/sideNavigation/search/searchText', sOrgtx);
+        }
+
+        this.initialList({ oViewModel, sPernr, sOrgtx });
         this.loadProfile({ oViewModel, sPernr });
       },
 
-      async initialList({ oViewModel, sPernr }) {
+      async initialList({ oViewModel, sPernr, sOrgtx }) {
         const oSideBody = this.byId('sideBody');
         const oSideList = this.byId('sideEmployeeList');
         const mSessionData = this.getSessionData();
-        const aSearchResults = await this.readEmpSearchResult({ searchText: sPernr || mSessionData.Pernr, Werks: mSessionData.Werks });
+        const sSearchText = _.isEmpty(sOrgtx) ? sPernr : sOrgtx;
+        const aSearchResults = await this.readEmpSearchResult({ searchText: sSearchText, Werks: mSessionData.Werks });
         const iSideViewHeight = Math.floor($(document).height() - oSideBody.getParent().$().offset().top - 20);
         const iScrollViewHeight = Math.floor($(document).height() - oSideList.getParent().$().offset().top - 36);
 
@@ -671,7 +679,7 @@ sap.ui.define(
         const sWerks = this.getSessionProperty('Werks');
 
         if (!sSearchText) {
-          MessageBox.alert(this.getBundleText('MSG_00003', 'LABEL_00201')); // {검색어}를 입력하세요.
+          // MessageBox.alert(this.getBundleText('MSG_00003', 'LABEL_00201')); // {검색어}를 입력하세요.
           return;
         } else if (sSearchText.length < 2) {
           MessageBox.alert(this.getBundleText('MSG_00026')); // 성명은 2자 이상이어야 합니다.
