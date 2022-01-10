@@ -87,7 +87,7 @@ sap.ui.define(
       BUTTON_STATUS_MAP: {
         2: {
           A: { REJECT_REASON: { label: 'LABEL_00142', ME: '', MA: '', MB: '' }, TOP_GOAL: { label: 'LABEL_10032', ME: '', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: '', MA: '', MB: '' } },
-          B: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: 'X', MA: 'X', MB: '' } },
+          B: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: 'X', MA: '', MB: '' } },
           C: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: '', MA: 'X', MB: '' } },
           D: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: '', MA: 'X', MB: '' } },
         },
