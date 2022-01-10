@@ -3,10 +3,12 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/m/Label',
     'sap/ui/base/Object',
+    'sap/ui/core/CustomData',
     'sap/ui/core/Fragment',
     'sap/ui/core/routing/HashChanger',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/app/control/MenuLevel1',
@@ -15,10 +17,12 @@ sap.ui.define(
     // prettier 방지용 주석
     Label,
     BaseObject,
+    CustomData,
     Fragment,
     HashChanger,
     JSONModel,
     AppUtils,
+    Client,
     ServiceNames,
     MessageBox,
     MenuLevel1
@@ -55,10 +59,11 @@ sap.ui.define(
             new MenuLevel1({
               text: mMenu.Mname,
               tooltip: `${mMenu.Mname} (${mMenu.Mnid1}:${mMenu.Menid})`,
+              customData: new CustomData({ key: 'Mnid1', value: mMenu.Mnid1 }),
             })
               .addStyleClass(mMenu.StyleClasses)
-              .setAppMenu(this)
-              .setModel(new JSONModel(mMenu)),
+              .setAppMenu(this),
+            // .setModel(new JSONModel(mMenu)),
             i + 2 // App logo, ToolbarSpacer 이후부터 menu 추가
           );
         });
@@ -82,10 +87,14 @@ sap.ui.define(
           });
 
           this.oMenuLayer.setAppMenu(this);
+          this.oMenuLayer.setModel(this.oMenuModel);
           this.oMenuLayer.placeAt('sap-ui-static');
         }
 
-        this.oMenuLayer.setModel(new JSONModel({ ...oMenuButton.getModel().getData() }));
+        console.log(oMenuButton.data('Mnid1'));
+        console.log(this.oMenuModel.getProperty(oMenuButton.data('Mnid1')));
+        this.oMenuModel.setProperty('/Children', this.oMenuModel.getProperty(oMenuButton.data('Mnid1')).Children);
+        // this.oMenuLayer.setModel(oMenuButton.getModel());
 
         if (!this.oMenuLayer.getVisible()) {
           this.oMenuLayer.setVisible(true);
@@ -121,37 +130,46 @@ sap.ui.define(
        * 메뉴의 즐겨찾기 클릭 이벤트 처리
        * @param {object} oEvent
        */
-      toggleFavorite(oEvent) {
-        const oEventSource = oEvent.getSource();
-        const oContext = oEventSource.getBindingContext();
-        const bFavor = oContext.getProperty('Favor');
-        const sUrl = '/MenuFavoriteSet';
+      async toggleFavorite(oEvent) {
+        try {
+          const oEventSource = oEvent.getSource();
+          const oContext = oEventSource.getBindingContext();
+          const oContextModel = oContext.getModel();
+          const sPath = oContext.getPath();
+          const sMenid = oContext.getProperty('Menid');
+          const bToBeUnfavorite = oContext.getProperty('Favor');
 
-        this.oAppController.getModel(ServiceNames.COMMON).create(
-          sUrl,
-          {
-            Menid: oContext.getProperty('Menid'),
+          const oCommonModel = this.oAppController.getModel(ServiceNames.COMMON);
+          const sUrl = 'PortletFavoriteMenu';
+          const mPayload = {
+            Menid: sMenid,
             Mnid1: oContext.getProperty('Mnid1'),
             Mnid2: oContext.getProperty('Mnid2'),
             Mnid3: oContext.getProperty('Mnid3'),
-            Favor: bFavor ? '' : 'X',
-          },
-          {
-            success: (oData, oResponse) => {
-              AppUtils.debug(`${sUrl} success.`, oData, oResponse);
+          };
 
-              oContext.getModel().setProperty(`${oContext.getPath()}/Favor`, bFavor ? '' : 'X');
-              oEventSource.setSrc(bFavor ? 'sap-icon://unfavorite' : 'sap-icon://favorite');
+          if (bToBeUnfavorite) {
+            await Client.remove(oCommonModel, sUrl, mPayload);
 
-              // TODO : 즐겨찾기 portlet 갱신
-            },
-            error: (oError) => {
-              AppUtils.debug(`${sUrl} error.`, oError);
+            oContextModel.setProperty(`${sPath}/Favor`, false);
+            oContextModel.setProperty(`${sPath}/Icon`, 'sap-icon://unfavorite');
 
-              MessageBox.error(AppUtils.getBundleText('MSG_00008', 'MSG_01002')); // {즐겨찾기 수정}중 오류가 발생하였습니다.
-            },
+            this.oMenuModel.removeFavoriteMenus(sMenid);
+          } else {
+            await Client.create(oCommonModel, sUrl, mPayload);
+
+            oContextModel.setProperty(`${sPath}/Favor`, true);
+            oContextModel.setProperty(`${sPath}/Icon`, 'sap-icon://favorite');
+
+            this.oMenuModel.addFavoriteMenus(sMenid);
           }
-        );
+
+          return true;
+        } catch (oError) {
+          MessageBox.error(AppUtils.getBundleText('MSG_00008', 'MSG_01002')); // {즐겨찾기 수정}중 오류가 발생하였습니다.
+
+          return false;
+        }
       },
 
       /**
@@ -191,7 +209,7 @@ sap.ui.define(
        *  - http|https|javascript로 시작되는 경우에는 anchor 본연의 link 기능으로 동작함
        * @param {object} oEvent
        */
-      handleMenuLink(oEvent) {
+      async handleMenuLink(oEvent) {
         oEvent.preventDefault();
 
         setTimeout(() => {
@@ -212,27 +230,22 @@ sap.ui.define(
           return;
         }
 
-        const oCommonModel = this.oAppController.getModel(ServiceNames.COMMON);
-        const sUrl = oCommonModel.createKey('/GetMenuUrlSet', {
-          Menid: sMenid,
-        });
+        try {
+          const oCommonModel = this.oAppController.getModel(ServiceNames.COMMON);
+          const sUrl = 'GetMenuUrl';
+          const mKeyMap = {
+            Menid: sMenid,
+          };
 
-        oCommonModel.read(sUrl, {
-          success: (oData, oResponse) => {
-            AppUtils.debug(`${sUrl} success.`, oData, oResponse);
-
-            if (oData.Mnurl) {
-              this.moveToMenu(oData.Mnurl);
-            } else {
-              this.failMenuLink();
-            }
-          },
-          error: (oError) => {
-            AppUtils.debug(`${sUrl} error.`, oError);
-
+          const mData = await Client.get(oCommonModel, sUrl, mKeyMap);
+          if (mData.Mnurl) {
+            this.moveToMenu(mData.Mnurl);
+          } else {
             this.failMenuLink();
-          },
-        });
+          }
+        } catch (oError) {
+          this.failMenuLink();
+        }
       },
 
       failMenuLink() {

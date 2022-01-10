@@ -57,7 +57,7 @@ sap.ui.define(
 
         const mUrlToMenid = {}; // mUrlToMenid[URL] -> Menid
         const mMenidToProperties = {}; // mMenidToProperties[Menid] -> Menu
-        const aFavoriteMenids = [];
+        const aFavoriteMenus = [];
 
         // 샘플 메뉴 추가
         this.appendSampleMenu({ aLevel1, aLevel2, aLevel3, aLevel4 });
@@ -77,9 +77,6 @@ sap.ui.define(
           if (m.Hide === 'X') {
             return;
           }
-          if (m.Favor === 'X') {
-            aFavoriteMenids.push(m.Menid);
-          }
 
           mMenidToProperties[m.Mnid3] = $.extend(true, mMenuProperties, {
             Level: 3,
@@ -88,9 +85,13 @@ sap.ui.define(
             Mnid3: m.Mnid3,
             Mname: m.Mnnm3,
             Mepop: m.Mepop === 'X',
-            Favor: m.Favor === 'X',
             Pwchk: m.Pwchk === 'X',
+            Favor: m.Favor === 'X',
+            Icon: m.Favor === 'X' ? 'sap-icon://favorite' : 'sap-icon://unfavorite',
           });
+          if (m.Favor === 'X') {
+            aFavoriteMenus.push(mMenidToProperties[m.Mnid3]);
+          }
 
           const aLevel2SubMenu = mLevel2Sub[m.Mnid2];
           if (aLevel2SubMenu) {
@@ -106,9 +107,6 @@ sap.ui.define(
           if (m.Hide === 'X') {
             return;
           }
-          if (m.Favor === 'X') {
-            aFavoriteMenids.push(m.Menid);
-          }
 
           mMenidToProperties[m.Mnid2] = $.extend(true, mMenuProperties, {
             Level: 2,
@@ -117,10 +115,14 @@ sap.ui.define(
             Mname: m.Mnnm2,
             Mnurl: !m.Menid ? '' : mMenuProperties.Mnurl || '',
             Mepop: m.Mepop === 'X',
-            Favor: m.Favor === 'X',
             Pwchk: m.Pwchk === 'X',
+            Favor: m.Favor === 'X',
+            Icon: m.Favor === 'X' ? 'sap-icon://favorite' : 'sap-icon://unfavorite',
             Children: mLevel2Sub[m.Mnid2] || [],
           });
+          if (m.Favor === 'X') {
+            aFavoriteMenus.push(mMenidToProperties[m.Mnid2]);
+          }
 
           const aLevel1SubMenu = mLevel1Sub[m.Mnid1];
           if (aLevel1SubMenu) {
@@ -136,9 +138,6 @@ sap.ui.define(
           if (m.Hide === 'X') {
             return;
           }
-          if (m.Favor === 'X') {
-            aFavoriteMenids.push(m.Menid);
-          }
 
           mMenidToProperties[m.Mnid1] = $.extend(true, mMenuProperties, {
             Level: 1,
@@ -147,11 +146,15 @@ sap.ui.define(
             Mname: m.Mnnm1,
             Mnurl: !m.Menid ? '' : mMenuProperties.Mnurl || '',
             Mepop: m.Mepop === 'X',
-            Favor: m.Favor === 'X',
             Pwchk: m.Pwchk === 'X',
+            Favor: m.Favor === 'X',
+            Icon: m.Favor === 'X' ? 'sap-icon://favorite' : 'sap-icon://unfavorite',
             Children: mLevel1Sub[m.Mnid1] || [],
             StyleClasses: this.getStyleClasses(m),
           });
+          if (m.Favor === 'X') {
+            aFavoriteMenus.push(mMenidToProperties[m.Mnid1]);
+          }
 
           return mMenuProperties;
         });
@@ -160,7 +163,7 @@ sap.ui.define(
           tree,
           menidToProperties: mMenidToProperties,
           urlToMenid: mUrlToMenid,
-          favoriteMenids: aFavoriteMenids,
+          favoriteMenus: aFavoriteMenus,
           current: {},
           breadcrumbs: {},
         };
@@ -230,6 +233,12 @@ sap.ui.define(
             },
             {
               Pinfo: '',
+              Menid: 'X190',
+              Mnurl: 'samplePortlets',
+              Mentx: 'Portlets',
+            },
+            {
+              Pinfo: '',
               Menid: 'X210',
               Mnurl: 'https://www.google.co.kr',
               Mentx: '구글',
@@ -252,7 +261,7 @@ sap.ui.define(
               Device: 'A',
               Mnetc: '',
               Pwchk: '',
-              Favor: 'X',
+              Favor: '',
             },
             {
               Mnid1: 'X0000',
@@ -347,6 +356,19 @@ sap.ui.define(
             },
             {
               Mnid1: 'X0000',
+              Mnid2: 'X1000',
+              Mnid3: 'X190',
+              Mnnm3: 'Portlets',
+              Mnsrt: '009',
+              Menid: 'X190',
+              Mepop: '',
+              Device: 'A',
+              Mnetc: '',
+              Pwchk: '',
+              Favor: '',
+            },
+            {
+              Mnid1: 'X0000',
               Mnid2: 'X2000',
               Mnid3: 'X210',
               Mnnm3: '구글',
@@ -425,8 +447,26 @@ sap.ui.define(
         return this.getProperty('/urlToMenid')[sUrl];
       },
 
-      getFavoriteMenids() {
-        return this.getProperty('/favoriteMenids');
+      getFavoriteMenus() {
+        return this.getProperty('/favoriteMenus');
+      },
+
+      addFavoriteMenus(sMenid) {
+        this.setProperty(`/menidToProperties/${sMenid}/Favor`, true);
+        this.setProperty(`/menidToProperties/${sMenid}/Icon`, 'sap-icon://favorite');
+
+        this.getProperty('/favoriteMenus').push(this.getProperties(sMenid));
+        this.refresh();
+      },
+
+      removeFavoriteMenus(sMenid) {
+        this.setProperty(`/menidToProperties/${sMenid}/Favor`, false);
+        this.setProperty(`/menidToProperties/${sMenid}/Icon`, 'sap-icon://unfavorite');
+
+        _.remove(this.getProperty('/favoriteMenus'), (mMenuProperties) => {
+          return mMenuProperties.Menid === sMenid;
+        });
+        this.refresh();
       },
 
       /**

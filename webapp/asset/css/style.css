@@ -505,10 +505,15 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt {outline-style:none !important}
 .megadrop-menu-layer {position:absolute; z-index:4; top:59px; border-radius:0; color:#222; background-color:#fff; box-shadow:0 3px 5px 0 rgb(0 0 0 / 10%), 0 0 0 1px rgb(0 0 0 / 5%)}
 .megadrop-menu-layer:before {content:""; height:0px !important; width:100%; border-bottom:1px solid #ccc; position:absolute; top:0; left:0; right:0}
 .megadrop-menu-layer .sapMIBar.sapMTB .sapMBarChild {font-size: 17px;font-weight: 800;color: #002866;letter-spacing: -0.2px;}
-.megadrop-menu-layer .sapMListUl .sapUiIcon {margin-right:6px}
-.megadrop-menu-layer .sapMListUl .sapUiIcon[aria-label=unfavorite]:before, .sapMListUl .sapUiIcon[aria-label=favorite]:before {display:none;}
-.megadrop-menu-layer .sapMListUl .sapUiIcon[aria-label=favorite]:after {content:"";display:inline-block;width:15px;height:15px;background-image: url(../image/icon_star2_on.svg);background-position: center;background-repeat: no-repeat;background-size: 15px;}
-.megadrop-menu-layer .sapMListUl .sapUiIcon[aria-label=unfavorite]:after {content:"";display:inline-block;width:15px;height:15px;background-image: url(../image/icon_star3.svg);background-position: center 1px;background-repeat: no-repeat;;background-size: 14px;}
+.megadrop-menu-layer .sapMListUl .sapUiIcon, .menu-favorite-icon {margin-right:6px}
+.megadrop-menu-layer .sapMListUl .sapUiIcon[aria-label=favorite]:before,
+.megadrop-menu-layer .sapMListUl .sapUiIcon[aria-label=unfavorite]:before,
+.sapMListUl .sapUiIcon.menu-favorite-icon[aria-label=favorite]:before,
+.sapMListUl .sapUiIcon.menu-favorite-icon[aria-label=unfavorite]:before {display:none;}
+.megadrop-menu-layer .sapMListUl .sapUiIcon[aria-label=favorite]:after,
+.sapMListUl .sapUiIcon.menu-favorite-icon[aria-label=favorite]:after {content:"";display:inline-block;width:15px;height:15px;background-image: url(../image/icon_star2_on.svg);background-position: center;background-repeat: no-repeat;background-size: 15px;}
+.megadrop-menu-layer .sapMListUl .sapUiIcon[aria-label=unfavorite]:after,
+.sapMListUl .sapUiIcon.menu-favorite-icon[aria-label=unfavorite]:after {content:"";display:inline-block;width:15px;height:15px;background-image: url(../image/icon_star3.svg);background-position: center 1px;background-repeat: no-repeat;;background-size: 14px;}
 .megadrop-menu-layer .sapMTBStandard {border-bottom:1px solid transparent}
 .megadrop-menu-layer .sapMListUl .sapMLIB:not(.sapMComboBoxBaseItem) {margin-top:15px}
 .megadrop-menu-layer .sapMListUl .sapMLIB:first-child {margin-top:5px}

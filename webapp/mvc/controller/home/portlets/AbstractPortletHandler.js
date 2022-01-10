@@ -88,6 +88,7 @@ sap.ui.define(
       },
 
       onPressClose(oEvent) {
+        console.log(oEvent);
         // const sPernr = oEvent.getSource().getBindingContext().getProperty('Pernr');
 
         const sTitle = this.getPortletModel().getProperty('/title');

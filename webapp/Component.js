@@ -34,6 +34,11 @@ sap.ui.define(
     return UIComponent.extend('sap.ui.yesco.Component', {
       metadata: {
         manifest: 'json',
+        properties: {
+          appMenu: {
+            type: 'sap.ui.yesco.mvc.controller.app.control.Menus',
+          },
+        },
       },
 
       /**
