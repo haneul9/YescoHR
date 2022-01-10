@@ -147,7 +147,7 @@
 
         { "pattern": "attendance", "name": "attendance", "target": "attendance" },
         { "pattern": "attendance/{type}/:appno:", "name": "attendance-detail", "target": "attendanceDetail" },
-        { "pattern": "employee/:pernr:", "name": "employee", "target": "employee" },
+        { "pattern": "employee/:pernr:/:orgtx:", "name": "employee", "target": "employee" },
 
         { "pattern": "nightduty", "name": "nightduty", "target": "nightduty" },
         { "pattern": "nightduty/{sAppno}", "name": "nightduty-detail", "target": "nightdutyDetail" },
@@ -164,6 +164,8 @@
         
         { "pattern": "m/organization", "name": "m/organization", "target": "m/organization" },
         
+        { "pattern": "leavePlan", "name": "leavePlan", "target": "leavePlan" },
+
         { "pattern": "m/leave", "name": "m/leave", "target": "m/leave" },
         
         { "pattern": "paystub", "name": "paystub", "target": "paystub" },
@@ -241,6 +243,7 @@
         
         "m/organization": { "viewId": "m_organization", "viewPath": "sap.ui.yesco.mvc.view.organization", "viewName": "Main" },
         
+        "leavePlan": { "viewId": "leavePlan", "viewPath": "sap.ui.yesco.mvc.view.leavePlan", "viewName": "App" },
         "m/leave": { "viewId": "m_leave", "viewPath": "sap.ui.yesco.mvc.view.leave", "viewName": "App" },
         
         "paystub": { "viewId": "paystub", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "List" },

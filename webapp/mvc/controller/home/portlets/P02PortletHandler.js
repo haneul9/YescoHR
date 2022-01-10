@@ -66,9 +66,7 @@ sap.ui.define(
       },
 
       onPressNoticeArticle(oEvent) {
-        const oEventSource = oEvent.getSource();
-        const sPath = oEventSource.getBindingContext().getPath();
-        const sSeqnr = oEventSource.getModel().getProperty(`${sPath}/Seqnr`);
+        const sSeqnr = oEvent.getSource().getBindingContext().getProperty('Seqnr');
 
         this.navTo('notice-detail', { oDataKey: sSeqnr });
       },

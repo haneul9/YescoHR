@@ -19,6 +19,7 @@ sap.ui.define(
       metadata: {
         properties: {
           title: { type: 'String', group: 'Misc', defaultValue: '화상조직도' },
+          extendNode: { type: 'String', group: 'Misc', defaultValue: '' },
         },
         aggregations: {
           items: { type: 'sap.ui.yesco.control.D3OrgChartItem', multiple: true, singularName: 'item' },
@@ -63,10 +64,9 @@ sap.ui.define(
           .data(aChartData)
           .layout('left')
           .compact(false)
-          // .nodeWidth(() => 250)
+          .setActiveNodeCentered(false)
           .nodeWidth(() => 350)
           .initialZoom(0.8)
-          // .nodeHeight(() => 175)
           .nodeHeight(() => 170)
           .childrenMargin(() => 40)
           .compactMarginBetween(() => 15)
@@ -81,8 +81,6 @@ sap.ui.define(
             }
           })
           .nodeContent(function (o) {
-            // const sPernr = o.data.Pernr.replace(/^0+/, '');
-
             return `
             <div class="org-container" style="height: ${o.height}px;">
               <div class="title level${o.data.ZorgLevl}">${o.data.Stext}</div>
@@ -99,27 +97,24 @@ sap.ui.define(
             </div>
             `;
           })
-          .onNodeClick(function (sNodeId) {
+          .onNodeClick(function (event, sNodeId) {
+            const oViewModel = sap.ui.getCore().byId('container-ehr---m_organization--ChartHolder').getModel();
             const sPernr = _.find(this.data, { nodeId: sNodeId }).Pernr;
 
             if (!sPernr) return;
+            oViewModel.setProperty('/extendNode', sNodeId);
 
-            AppUtils.getAppComponent().getRouter().navTo('employee', { pernr: sPernr });
+            if ([...event.srcElement.classList].includes('title')) {
+              AppUtils.getAppComponent().getRouter().navTo('employee', { pernr: sPernr, orgtx: event.srcElement.textContent });
+            } else {
+              AppUtils.getAppComponent().getRouter().navTo('employee', { pernr: sPernr });
+            }
           })
           .render();
 
-        // <div style="padding-top:30px;background-color:none;margin-left:1px;height:${o.height}px;border-radius:2px;overflow:visible">
-        //       <div style="height:${o.height - 32}px;padding-top:0px;background-color:white;border:1px solid lightgray;">
-        //           <img src=" ${o.data.Photo}" style="margin-top:-30px;margin-left:${o.width / 2 - 30}px;border-radius:100px;width:60px;height:60px;" />
-        //           <div style="margin-right:10px;margin-top:15px;float:right">${o.data.Pernr}</div>
-        //           <div style="margin-top:-30px;background-color:#3AB6E3;height:10px;width:${o.width - 2}px;border-radius:1px"></div>
-        //           <div style="padding:20px; padding-top:35px;text-align:center">
-        //               <div style="color:#111672;font-size:16px;font-weight:bold"> ${o.data.Stext} </div>
-        //               <div style="color:#111672;font-size:16px;font-weight:bold"> ${o.data.Ename} </div>
-        //               <div style="color:#404040;font-size:16px;margin-top:4px"> ${o.data.Botxt} </div>
-        //           </div>
-        //       </div>
-        //   </div>
+        if (!_.isEmpty(this.getExtendNode())) {
+          this.oD3Chart.setExpanded(this.getExtendNode()).setHighlighted(this.getExtendNode()).render();
+        }
       },
     });
   }

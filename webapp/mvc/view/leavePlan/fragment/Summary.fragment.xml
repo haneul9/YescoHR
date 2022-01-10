@@ -1,0 +1,16 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <VBox class="hCardBox summary-box">
+    <HBox alignItems="End">
+      <Title level="H2" text="{i18n>LABEL_20001}" />
+      <Text text="{i18n>LABEL_20002}({/summary/rangeTxt})" class="sapUiSmallMarginBegin" />
+    </HBox>
+    <VBox items="{/summary/quota}">
+      <HBox>
+        <Label text="{Todo1}" />
+        <custom:VacationIndicator width="8rem" total="{Todo2}" used="{Todo3}" class="sapUiSmallMarginTop" />
+      </HBox>
+    </VBox>
+  </VBox>
+</core:FragmentDefinition>

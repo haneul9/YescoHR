@@ -4,7 +4,7 @@
   <VBox class="vCardBox" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
     <HBox justifyContent="SpaceBetween" class="header-wrap">
       <Title level="H3" text="{i18n>LABEL_07033}" class="sapUiSmallMarginEnd" />
-      <Button icon="sap-icon://excel-attachment" width="117px" text="Excel" press=".onPressExcelDownload" busyIndicatorDelay="0" busy="{/busy}" />
+      <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressExcelDownload" busyIndicatorDelay="0" busy="{/busy}" />
     </HBox>
     <table:Table id="repayHisTable" rows="{/RepayHisList}" visibleRowCount="{/RepayHisLength}" width="100%" busyIndicatorDelay="0" busy="{/hisBusy}" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
       <table:columns>
