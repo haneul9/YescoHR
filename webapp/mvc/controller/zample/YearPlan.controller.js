@@ -102,16 +102,7 @@ sap.ui.define(
         const aWeekNames = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
         const mWeekHeaders = aWeekNames.map((o) => this.getBoxObject({ label: o, classNames: 'Header' }));
 
-        return [
-          this.getBoxObject({ label: 'Month', classNames: 'Header' }),
-          ...mWeekHeaders,
-          ...mWeekHeaders,
-          ...mWeekHeaders,
-          ...mWeekHeaders,
-          ...mWeekHeaders,
-          this.getBoxObject({ label: 'M', classNames: 'Header' }),
-          this.getBoxObject({ label: 'T', classNames: 'Header' }),
-        ];
+        return [this.getBoxObject({ label: 'Month', classNames: 'Header' }), ...mWeekHeaders, ...mWeekHeaders, ...mWeekHeaders, ...mWeekHeaders, ...mWeekHeaders, this.getBoxObject({ label: 'M', classNames: 'Header' }), this.getBoxObject({ label: 'T', classNames: 'Header' })];
       },
 
       getWeekBody(month) {

@@ -553,14 +553,21 @@ h4.sapMTitle {font-size:20px; font-weight:800;color:#222}
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Normal"] { background-color: rgb(255, 255, 255); }
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Weekend"] { background-color: rgb(151, 150, 150); }
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type01"] { background-color: rgb(226, 57, 57); }
-.sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type02"] { background-color: rgb(205, 240, 77); }
-.sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type03"] { background-color: rgb(233, 47, 155); }
-.sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type04"] { background-color: rgb(24, 214, 34); }
-.sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type05"] { background-color: rgb(214, 125, 24); }
+.sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type02"] { background-color: rgb(29, 194, 57); }
+.sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type03"] { background-color: rgb(83, 170, 241); }
+.sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type04"] { background-color: rgb(129, 243, 135); }
+.sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type05"] { background-color: rgb(250, 151, 120); }
+.sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type06"] { background-color: rgb(253, 113, 218); }
+.sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type07"] { background-color: rgb(211, 62, 17); }
+.sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type08"] { background-color: rgb(214, 125, 24); }
+.sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type09"] { background-color: rgb(52, 17, 146); }
+.sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type10"] { background-color: rgb(109, 14, 96); }
+.sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type11"] { background-color: rgb(78, 246, 252); }
 .sapUiLayoutCSSGrid .sapMFlexBox[data-border="Default"] { border: 1px solid black; --webkit-box-sizing: border-box; -moz-box-sizing: border-box;box-sizing: border-box; }
 .sapUiLayoutCSSGrid .sapMFlexBox[data-border="Today"] .sapMText::after { content: ""; display: inline-block; position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: 5px solid rgb(48, 116, 241); --webkit-box-sizing: border-box; -moz-box-sizing: border-box;box-sizing: border-box; }
 .sapUiLayoutCSSGrid .sapMFlexBox .sapMText[data-stripes="OK"] { background: repeating-linear-gradient(135deg, rgb(124, 124, 124), rgb(124, 124, 124) 2px, #8880 0, #8880 6px); }
 
+/* .sapSuiteIDCChart {width: auto !important} */
 .sapMTitle[data-color=blue] {color: blue;}
 .sapMText[data-color=blue] {color: blue;}
 
