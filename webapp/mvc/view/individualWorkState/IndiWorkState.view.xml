@@ -8,28 +8,22 @@
       <HBox justifyContent="SpaceBetween" class="breadcrumbs">
         <custom:Breadcrumbs />
         <HBox>
-          <Button text="{i18n>LABEL_00103}" type="Emphasized" press=".onSaveBtn" visible="{= (!!${/tab/selectedKey} &amp;&amp; !!${/BtnStat}) &amp;&amp; ${/tab/selectedKey} !== 'C' }" />
           <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" />
-          <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" />
         </HBox>
       </HBox>
     </VBox>
-    <HBox class="contents" justifyContent="SpaceBetween">
-      <VBox busyIndicatorDelay="0" busy="{/busy}">
-        <IconTabBar class="type-b" expandable="false" selectedKey="{/tab/selectedKey}" select=".onSelectTabBar">
-          <items>
-            <IconTabFilter text="{i18n>LABEL_15001}" key="A">
-              <core:Fragment fragmentName="sap.ui.yesco.mvc.view.mssEvalKpi.fragment.tab.Category" type="XML" />
-            </IconTabFilter>
-            <IconTabFilter text="{i18n>LABEL_15002}" key="B">
-              <core:Fragment fragmentName="sap.ui.yesco.mvc.view.mssEvalKpi.fragment.tab.Team" type="XML" />
-            </IconTabFilter>
-            <IconTabFilter text="{i18n>LABEL_15003}" key="C">
-              <core:Fragment fragmentName="sap.ui.yesco.mvc.view.mssEvalKpi.fragment.tab.Status" type="XML" />
-            </IconTabFilter>
-          </items>
-        </IconTabBar>
-      </VBox>
-    </HBox>
+    <VBox class="contents" busyIndicatorDelay="0" busy="{/busy}">
+      <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
+      <core:Fragment fragmentName="sap.ui.yesco.mvc.view.individualWorkState.fragment.YearPlan" type="XML" />
+      <HBox>
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.individualWorkState.fragment.HolidayDays" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.individualWorkState.fragment.HolidayType" type="XML" />
+      </HBox>
+      <HBox>
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.individualWorkState.fragment.WorkDays" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.individualWorkState.fragment.WeekWorkTime" type="XML" />
+      </HBox>
+      <core:Fragment fragmentName="sap.ui.yesco.mvc.view.individualWorkState.fragment.UseHoliday" type="XML" />
+    </VBox>
   </Page>
 </mvc:View>
