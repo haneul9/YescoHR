@@ -48,18 +48,19 @@ sap.ui.define(
         // { field: 'Z109', label: 'LABEL_10026', type: Validator.INPUT2 }, // 진척도(%)
       ],
 
+      // ABAP <-> WEB Mapping fields
       FIELD_MAPPING: {
+        Z103: ['Z103s'],
         Z131: ['Z131'],
         Z132: ['Z132'],
         Z136: ['Z136'],
         Z137: ['Z137'],
-        Papp: ['Zapgme', 'Zapgma', 'Papp1', 'Papp2', 'Zmepoint', 'Zmapoint'],
         Fapp: ['Zmbgrade'],
-        Z103: ['Z103s'],
         Z105: ['Ztbegda', 'Ztendda'],
         Z113: ['Zmarslt', 'Zrslt'],
         Z125: ['Z125Ee', 'Z125Er'],
         Z117: ['Z1175', 'Z1174', 'Z1173', 'Z1172', 'Z1171'],
+        Papp: ['Zapgme', 'Zapgma', 'Papp1', 'Papp2', 'Zmepoint', 'Zmapoint'],
       },
 
       FIELD_STATUS_MAP: {

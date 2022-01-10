@@ -538,6 +538,7 @@ sap.ui.define(
           if (Prcty === 'C') {
             aFilters = [
               ...aFilters, //
+              new Filter('Menid', FilterOperator.EQ, this.getCurrentMenuId()),
               new Filter('Awart', FilterOperator.EQ, Awart),
               new Filter('Begda', FilterOperator.EQ, DateUtils.parse(Begda)),
               new Filter('Endda', FilterOperator.EQ, DateUtils.parse(Endda)),
