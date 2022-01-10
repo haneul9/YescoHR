@@ -99,12 +99,15 @@ sap.ui.define(
             </div>
             `;
           })
-          .onNodeClick(function (sNodeId) {
+          .onNodeClick(function (event, sNodeId) {
             const sPernr = _.find(this.data, { nodeId: sNodeId }).Pernr;
-
             if (!sPernr) return;
 
-            AppUtils.getAppComponent().getRouter().navTo('employee', { pernr: sPernr });
+            if ([...event.srcElement.classList].includes('title')) {
+              AppUtils.getAppComponent().getRouter().navTo('employee', { pernr: sPernr, orgtx: event.srcElement.textContent });
+            } else {
+              AppUtils.getAppComponent().getRouter().navTo('employee', { pernr: sPernr });
+            }
           })
           .render();
 
