@@ -502,7 +502,7 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt {outline-style:none !important}
 .sapUiTableRowFirstFixedBottom td {background-color: #eff3f8;}
 
 /* GNB */
-.megadrop-menu-layer {position:absolute; z-index:4; top:59px; border-radius:0; color:#222; background-color:#fff; box-shadow:0 3px 5px 0 rgb(0 0 0 / 10%), 0 0 0 1px rgb(0 0 0 / 5%)}
+.megadrop-menu-layer {box-sizing:border-box; position:absolute; z-index:4; top:59px; border-radius:0; padding-bottom:15px; color:#222; background-color:#fff; box-shadow:0 3px 5px 0 rgb(0 0 0 / 10%), 0 0 0 1px rgb(0 0 0 / 5%)}
 .megadrop-menu-layer:before {content:""; height:0px !important; width:100%; border-bottom:1px solid #ccc; position:absolute; top:0; left:0; right:0}
 .megadrop-menu-layer .sapMIBar.sapMTB .sapMBarChild {font-size: 17px;font-weight: 800;color: #002866;letter-spacing: -0.2px;}
 .megadrop-menu-layer .sapMListUl .sapUiIcon, .menu-favorite-icon {margin-right:6px}
