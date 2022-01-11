@@ -125,7 +125,7 @@ sap.ui.define(
         const vPath = oEvent.getParameter('rowBindingContext').getPath();
         const oListModel = this.getViewModel();
         const oRowData = oListModel.getProperty(vPath);
-        const sMenuUrl = `${AppUtils.getAppComponent().getMenuModel().getProperties(`${oRowData.MidE}/Mnurl`)}-detail`;
+        const sMenuUrl = `${AppUtils.getAppComponent().getMenuModel().getProperties(`${oRowData.MidE}`).Mnurl}-detail`;
 
         this.getRouter().navTo(sMenuUrl, { oDataKey: oRowData.Appno });
       },

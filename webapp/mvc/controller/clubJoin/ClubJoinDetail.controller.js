@@ -115,11 +115,12 @@ sap.ui.define(
             Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
           });
         } else {
-          const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-          const mListData = oListView.getModel().getProperty('/parameters');
           const aFilter = [];
+          const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
 
           if (!!oListView && !!oListView.getModel().getProperty('/parameters')) {
+            const mListData = oListView.getModel().getProperty('/parameters');
+
             if (sViewKey === '00000000000000') {
               aFilter.push(new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'), new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, mListData.Pernr), new sap.ui.model.Filter('Begda', sap.ui.model.FilterOperator.EQ, mListData.Begda), new sap.ui.model.Filter('Endda', sap.ui.model.FilterOperator.EQ, mListData.Endda), new sap.ui.model.Filter('Zclub', sap.ui.model.FilterOperator.EQ, mListData.Zclub));
             } else {
@@ -327,7 +328,7 @@ sap.ui.define(
 
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
                   onClose: () => {
-                    this.getRouter().navTo('clubJoin');
+                    this.onNavBack();
                   },
                 });
               } catch (oError) {
@@ -363,7 +364,7 @@ sap.ui.define(
                   AppUtils.setAppBusy(false, this);
                   MessageBox.alert(this.getBundleText('MSG_00039', 'LABEL_00121'), {
                     onClose: () => {
-                      this.getRouter().navTo('clubJoin');
+                      this.onNavBack();
                     },
                   });
                 },
@@ -397,7 +398,7 @@ sap.ui.define(
                   AppUtils.setAppBusy(false, this);
                   MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
                     onClose: () => {
-                      this.getRouter().navTo('clubJoin');
+                      this.onNavBack();
                     },
                   });
                 },

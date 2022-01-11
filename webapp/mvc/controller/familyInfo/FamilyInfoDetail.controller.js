@@ -399,7 +399,7 @@ sap.ui.define(
 
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
                   onClose: () => {
-                    this.getRouter().navTo('familyInfo');
+                    this.onNavBack();
                   },
                 });
               } catch (oError) {
@@ -432,7 +432,7 @@ sap.ui.define(
                   MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
                     onClose: () => {
                       AppUtils.setAppBusy(false, this);
-                      this.getRouter().navTo('familyInfo');
+                      this.onNavBack();
                     },
                   });
                 },

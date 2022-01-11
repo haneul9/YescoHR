@@ -295,15 +295,7 @@ sap.ui.define(
 
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00106'), {
                   onClose: () => {
-                    let sPageName = '';
-
-                    if (this.isHass()) {
-                      sPageName = 'h/notice';
-                    } else {
-                      sPageName = 'notice';
-                    }
-
-                    this.getRouter().navTo(sPageName);
+                    this.onNavBack();
                   },
                 });
               } catch (error) {
@@ -351,15 +343,7 @@ sap.ui.define(
                 success: () => {
                   MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
                     onClose: () => {
-                      let sPageName = '';
-
-                      if (this.isHass()) {
-                        sPageName = 'h/notice';
-                      } else {
-                        sPageName = 'notice';
-                      }
-
-                      this.getRouter().navTo(sPageName);
+                      this.onNavBack();
                     },
                   });
                   AppUtils.setAppBusy(false, this);

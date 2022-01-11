@@ -27,19 +27,21 @@
       </custom:DayBox>
     </grid:CSSGrid>
     <HBox class="status-wrap year-plan">
-      <ObjectStatus text="{i18n>LABEL_00180}" icon="sap-icon://circle-task-2" state="None" />
-      <ObjectStatus text="{i18n>LABEL_04015}" icon="sap-icon://circle-task-2" state="Indication02" />
-      <ObjectStatus text="{i18n>LABEL_00181}" icon="sap-icon://circle-task-2" state="Indication03" />
-      <ObjectStatus text="{i18n>LABEL_00182}" icon="sap-icon://circle-task-2" state="Indication04" />
-      <ObjectStatus text="{i18n>LABEL_04007}" icon="sap-icon://circle-task-2" state="Indication05" />
-      <ObjectStatus text="{i18n>LABEL_00183}" icon="sap-icon://circle-task-2" state="None" />
-      <ObjectStatus text="{i18n>LABEL_00184}" icon="sap-icon://circle-task-2" state="Indication02" />
-      <ObjectStatus text="{i18n>LABEL_00185}" icon="sap-icon://circle-task-2" state="Indication03" />
-      <ObjectStatus text="{i18n>LABEL_00186}" icon="sap-icon://circle-task-2" state="Indication04" />
-      <ObjectStatus text="{i18n>LABEL_00187}" icon="sap-icon://circle-task-2" state="Indication05" />
-      <ObjectStatus text="{i18n>LABEL_00188}" icon="sap-icon://circle-task-2" state="Indication05" />
-      <ObjectStatus text="{i18n>LABEL_00189}" icon="sap-icon://circle-task-2" state="Indication05" />
-      <ObjectStatus text="{i18n>LABEL_11003}" icon="sap-icon://circle-task-2" state="Indication01" />
+      <Text text="{i18n>LABEL_04015}" class="type01" />
+      <Text text="{i18n>LABEL_04007}" class="type02" />
+      <Text text="유급휴가" class="type03" />
+      <Text text="무급휴가" class="type04" />
+      <Text text="병가" class="type05" />
+      <Text text="{i18n>LABEL_00184}" class="type06" />
+      <Text text="{i18n>LABEL_00185}" class="type07" />
+      <Text text="{i18n>LABEL_00188}" class="type08" />
+      <Text text="{i18n>LABEL_00186}" class="type09" />
+      <Text text="징계" class="type010" />
+      <Text text="{i18n>LABEL_00182}" class="type11" />
+      <Text text="{i18n>LABEL_00181}" class="type12" />
+      <Text text="{i18n>LABEL_00189}" class="type13" />
+      <Text text="{i18n>LABEL_11003}" class="type14" />
+      <Text text="{i18n>LABEL_00180}" class="type15" />
     </HBox>
   </VBox>
 </core:FragmentDefinition>
