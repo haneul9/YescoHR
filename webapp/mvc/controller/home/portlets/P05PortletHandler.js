@@ -53,11 +53,9 @@ sap.ui.define(
 
         const bSuccess = await this.oAppMenu.saveFavorite(oContext.getProperty());
         if (bSuccess) {
-          // 즐겨찾기 Portlet 새로고침
-          this.refreshFavorites();
+          this.refreshFavorites(); // 즐겨찾기 Portlet 새로고침
 
-          // 메뉴에서 즐겨찾기 제거
-          this.oMenuModel.removeFavoriteMenid(oContext.getProperty('Menid'));
+          this.oMenuModel.removeFavoriteMenid(oContext.getProperty('Menid')); // 메뉴에서 즐겨찾기 제거
         } else {
           const sPath = oContext.getPath();
           oContext.getModel().setProperty(`${sPath}/Favor`, !bPressed);

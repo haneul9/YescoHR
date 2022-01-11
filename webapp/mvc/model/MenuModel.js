@@ -28,7 +28,7 @@ sap.ui.define(
             GetMenuLv4Nav: [],
           };
 
-          const oData = await Client.deep(oModel, sUrl, mPayload);
+          const oData = await Client.deep(oModel, sUrl, mPayload); // 메뉴 정보 조회
 
           this.setData(this.curryData(oData));
 
@@ -63,9 +63,9 @@ sap.ui.define(
         this.appendSampleMenu({ aLevel1, aLevel2, aLevel3, aLevel4 });
 
         // 각 메뉴 속성 정리
-        aLevel4.map(({ Mnurl, Menid, Phead }) => {
+        aLevel4.map(({ Mnurl, Menid, Phead, Zample = false }) => {
           mUrlToMenid[Mnurl] = Menid;
-          mMenidToProperties[Menid] = { Menid, Mnurl, Phead };
+          mMenidToProperties[Menid] = { Menid, Mnurl, Phead, Zample };
         });
 
         // 3rd level 메뉴 속성 정리
@@ -167,11 +167,11 @@ sap.ui.define(
 
         return {
           tree,
-          menidToProperties: mMenidToProperties,
-          urlToMenid: mUrlToMenid,
-          favoriteMenids: aFavoriteMenids,
-          current: {},
-          breadcrumbs: {},
+          menidToProperties: mMenidToProperties, // 메뉴 Menid로 속성 정보를 얻기 위한 object
+          urlToMenid: mUrlToMenid, // 메뉴 URL로 Menid를 얻기 위한 object
+          favoriteMenids: aFavoriteMenids, // 즐겨찾기 메뉴 Menid 목록
+          current: {}, // 현재 메뉴 라우팅 정보 object, Component.js 참조
+          breadcrumbs: {}, // 현재 메뉴의 breadcrumbs 정보 object, Component.js 참조
         };
       },
 
@@ -179,269 +179,19 @@ sap.ui.define(
         return m.Mnid1 === '70000' ? 'menu-70000' : m.Mnid1 === '80000' ? 'menu-80000' : m.Mnid1 === 'X0000' ? 'menu-sample' : '';
       },
 
-      appendSampleMenu({ aLevel1, aLevel2, aLevel3, aLevel4 }) {
-        // 샘플 메뉴 정보 추가
-        if (!AppUtils.isLOCAL() && !AppUtils.isDEV()) {
-          return;
-        }
-
-        aLevel4.splice(
-          ...[
-            aLevel4.length,
-            0,
-            {
-              Pinfo: '',
-              Menid: 'X110',
-              Mnurl: 'sampleComponents',
-              Mentx: '퍼블용 컴포넌트',
-            },
-            {
-              Pinfo: '',
-              Menid: 'X120',
-              Mnurl: 'sampleTimeline',
-              Mentx: 'Timeline sample',
-            },
-            {
-              Pinfo: '',
-              Menid: 'X130',
-              Mnurl: 'sampleNinebox',
-              Mentx: '9 Box Model',
-            },
-            {
-              Pinfo: '',
-              Menid: 'X140',
-              Mnurl: 'sampleDonutChart',
-              Mentx: 'Donut Chart',
-            },
-            {
-              Pinfo: '',
-              Menid: 'X150',
-              Mnurl: 'sampleDatePicker',
-              Mentx: 'DatePicker',
-            },
-            {
-              Pinfo: '',
-              Menid: 'X160',
-              Mnurl: 'sampleVacationIndicator',
-              Mentx: 'VacationIndicator',
-            },
-            {
-              Pinfo: '',
-              Menid: 'X170',
-              Mnurl: 'sampleOrgChart',
-              Mentx: 'OrgChart',
-            },
-            {
-              Pinfo: '',
-              Menid: 'X180',
-              Mnurl: 'sampleYearPlan',
-              Mentx: 'YearPlan',
-            },
-            {
-              Pinfo: '',
-              Menid: 'X190',
-              Mnurl: 'samplePortlets',
-              Mentx: 'Portlets',
-            },
-            {
-              Pinfo: '',
-              Menid: 'X210',
-              Mnurl: 'https://www.google.co.kr',
-              Mentx: '구글',
-            },
-          ]
-        );
-
-        aLevel3.splice(
-          ...[
-            aLevel3.length,
-            0,
-            {
-              Mnid1: 'X0000',
-              Mnid2: 'X1000',
-              Mnid3: 'X110',
-              Mnnm3: '퍼블용 컴포넌트',
-              Mnsrt: '001',
-              Menid: 'X110',
-              Mepop: '',
-              Device: 'A',
-              Mnetc: '',
-              Pwchk: '',
-              Favor: '',
-            },
-            {
-              Mnid1: 'X0000',
-              Mnid2: 'X1000',
-              Mnid3: 'X120',
-              Mnnm3: 'Timeline',
-              Mnsrt: '002',
-              Menid: 'X120',
-              Mepop: '',
-              Device: 'A',
-              Mnetc: '',
-              Pwchk: '',
-              Favor: '',
-            },
-            {
-              Mnid1: 'X0000',
-              Mnid2: 'X1000',
-              Mnid3: 'X130',
-              Mnnm3: '9 Box Model',
-              Mnsrt: '003',
-              Menid: 'X130',
-              Mepop: '',
-              Device: 'A',
-              Mnetc: '',
-              Pwchk: '',
-              Favor: '',
-            },
-            {
-              Mnid1: 'X0000',
-              Mnid2: 'X1000',
-              Mnid3: 'X140',
-              Mnnm3: 'Donut Chart',
-              Mnsrt: '004',
-              Menid: 'X140',
-              Mepop: '',
-              Device: 'A',
-              Mnetc: '',
-              Pwchk: '',
-              Favor: '',
-            },
-            {
-              Mnid1: 'X0000',
-              Mnid2: 'X1000',
-              Mnid3: 'X150',
-              Mnnm3: 'DatePicker',
-              Mnsrt: '005',
-              Menid: 'X150',
-              Mepop: '',
-              Device: 'A',
-              Mnetc: '',
-              Pwchk: '',
-              Favor: '',
-            },
-            {
-              Mnid1: 'X0000',
-              Mnid2: 'X1000',
-              Mnid3: 'X160',
-              Mnnm3: 'VacationIndicator',
-              Mnsrt: '006',
-              Menid: 'X160',
-              Mepop: '',
-              Device: 'A',
-              Mnetc: '',
-              Pwchk: '',
-              Favor: '',
-            },
-            {
-              Mnid1: 'X0000',
-              Mnid2: 'X1000',
-              Mnid3: 'X170',
-              Mnnm3: 'OrgChart',
-              Mnsrt: '007',
-              Menid: 'X170',
-              Mepop: '',
-              Device: 'A',
-              Mnetc: '',
-              Pwchk: '',
-              Favor: '',
-            },
-            {
-              Mnid1: 'X0000',
-              Mnid2: 'X1000',
-              Mnid3: 'X180',
-              Mnnm3: 'YearPlan',
-              Mnsrt: '008',
-              Menid: 'X180',
-              Mepop: '',
-              Device: 'A',
-              Mnetc: '',
-              Pwchk: '',
-              Favor: '',
-            },
-            {
-              Mnid1: 'X0000',
-              Mnid2: 'X1000',
-              Mnid3: 'X190',
-              Mnnm3: 'Portlets',
-              Mnsrt: '009',
-              Menid: 'X190',
-              Mepop: '',
-              Device: 'A',
-              Mnetc: '',
-              Pwchk: '',
-              Favor: '',
-            },
-            {
-              Mnid1: 'X0000',
-              Mnid2: 'X2000',
-              Mnid3: 'X210',
-              Mnnm3: '구글',
-              Mnsrt: '001',
-              Menid: 'X210',
-              Mepop: 'X',
-              Device: 'A',
-              Mnetc: '',
-              Pwchk: '',
-              Favor: '',
-            },
-          ]
-        );
-
-        aLevel2.splice(
-          ...[
-            aLevel2.length,
-            0,
-            {
-              Mnid1: 'X0000',
-              Mnid2: 'X1000',
-              Mnnm2: '샘플 1',
-              Mnsrt: '001',
-              Menid: 'X100',
-              Mepop: '',
-              Device: 'A',
-              Mnetc: '',
-              Pwchk: '',
-              Favor: '',
-            },
-            {
-              Mnid1: 'X0000',
-              Mnid2: 'X2000',
-              Mnnm2: '샘플 2',
-              Mnsrt: '002',
-              Menid: 'X200',
-              Mepop: '',
-              Device: 'A',
-              Mnetc: '',
-              Pwchk: '',
-              Favor: '',
-            },
-          ]
-        );
-
-        aLevel1.splice(
-          ...[
-            aLevel1.length,
-            0,
-            {
-              Mnid1: 'X0000',
-              Mnnm1: 'Samples',
-              Mnsrt: '999',
-              Menid: 'X000',
-              Mepop: '',
-              Device: 'A',
-              Mnetc: '',
-              Pwchk: '',
-            },
-          ]
-        );
-      },
-
+      /**
+       * 메뉴 tree 얻기
+       * @returns
+       */
       getTree() {
         return this.getProperty('/tree');
       },
 
+      /**
+       * 메뉴 Menid로 속성 정보들 얻기
+       * @param {string} sMenid
+       * @returns
+       */
       getProperties(sMenid) {
         if (sMenid) {
           return this.getProperty('/menidToProperties')[sMenid];
@@ -449,14 +199,25 @@ sap.ui.define(
         return this.getProperty(`/menidToProperties`);
       },
 
+      /**
+       * 메뉴의 URL로 Menid 얻기
+       */
       getMenid(sUrl) {
-        return this.getProperty('/urlToMenid')[sUrl];
+        return this.getProperty('/urlToMenid')[sUrl]; // sUrl에 특수문자가 들어있는 경우를 위해 []를 사용
       },
 
+      /**
+       * 즐겨찾기 Menid 목록 반환
+       * @returns {array}
+       */
       getFavoriteMenids() {
         return this.getProperty('/favoriteMenids');
       },
 
+      /**
+       * 즐겨찾기 등록
+       * @param {string} sMenid
+       */
       addFavoriteMenid(sMenid) {
         this.setProperty(`/menidToProperties/${sMenid}/Favor`, true);
 
@@ -464,6 +225,10 @@ sap.ui.define(
         this.refresh();
       },
 
+      /**
+       * 즐겨찾기 제거
+       * @param {string} sMenid
+       */
       removeFavoriteMenid(sMenid) {
         this.setProperty(`/menidToProperties/${sMenid}/Favor`, false);
 
@@ -518,6 +283,269 @@ sap.ui.define(
 
       getCurrentMenuId() {
         return this.getProperty('/current/menuId');
+      },
+
+      appendSampleMenu({ aLevel1, aLevel2, aLevel3, aLevel4 }) {
+        // 샘플 메뉴 정보 추가
+        if (!AppUtils.isLOCAL() && !AppUtils.isDEV()) {
+          return;
+        }
+
+        aLevel4.splice(
+          aLevel4.length,
+          0,
+          {
+            Pinfo: '',
+            Menid: 'X110',
+            Mnurl: 'sampleComponents',
+            Mentx: '퍼블용 컴포넌트',
+            Zample: true,
+          },
+          {
+            Pinfo: '',
+            Menid: 'X120',
+            Mnurl: 'sampleTimeline',
+            Mentx: 'Timeline sample',
+            Zample: true,
+          },
+          {
+            Pinfo: '',
+            Menid: 'X130',
+            Mnurl: 'sampleNinebox',
+            Mentx: '9 Box Model',
+            Zample: true,
+          },
+          {
+            Pinfo: '',
+            Menid: 'X140',
+            Mnurl: 'sampleDonutChart',
+            Mentx: 'Donut Chart',
+            Zample: true,
+          },
+          {
+            Pinfo: '',
+            Menid: 'X150',
+            Mnurl: 'sampleDatePicker',
+            Mentx: 'DatePicker',
+            Zample: true,
+          },
+          {
+            Pinfo: '',
+            Menid: 'X160',
+            Mnurl: 'sampleVacationIndicator',
+            Mentx: 'VacationIndicator',
+            Zample: true,
+          },
+          {
+            Pinfo: '',
+            Menid: 'X170',
+            Mnurl: 'sampleOrgChart',
+            Mentx: 'OrgChart',
+            Zample: true,
+          },
+          {
+            Pinfo: '',
+            Menid: 'X180',
+            Mnurl: 'sampleYearPlan',
+            Mentx: 'YearPlan',
+            Zample: true,
+          },
+          {
+            Pinfo: '',
+            Menid: 'X190',
+            Mnurl: 'samplePortlets',
+            Mentx: 'Portlets',
+            Zample: true,
+          },
+          {
+            Pinfo: '',
+            Menid: 'X210',
+            Mnurl: 'https://www.google.co.kr',
+            Mentx: '구글',
+            Zample: true,
+          }
+        );
+
+        aLevel3.splice(
+          aLevel3.length,
+          0,
+          {
+            Mnid1: 'X0000',
+            Mnid2: 'X1000',
+            Mnid3: 'X110',
+            Mnnm3: '퍼블용 컴포넌트',
+            Mnsrt: '001',
+            Menid: 'X110',
+            Mepop: '',
+            Device: 'A',
+            Mnetc: '',
+            Pwchk: '',
+            Favor: '',
+            Zample: true,
+          },
+          {
+            Mnid1: 'X0000',
+            Mnid2: 'X1000',
+            Mnid3: 'X120',
+            Mnnm3: 'Timeline',
+            Mnsrt: '002',
+            Menid: 'X120',
+            Mepop: '',
+            Device: 'A',
+            Mnetc: '',
+            Pwchk: '',
+            Favor: '',
+            Zample: true,
+          },
+          {
+            Mnid1: 'X0000',
+            Mnid2: 'X1000',
+            Mnid3: 'X130',
+            Mnnm3: '9 Box Model',
+            Mnsrt: '003',
+            Menid: 'X130',
+            Mepop: '',
+            Device: 'A',
+            Mnetc: '',
+            Pwchk: '',
+            Favor: '',
+          },
+          {
+            Mnid1: 'X0000',
+            Mnid2: 'X1000',
+            Mnid3: 'X140',
+            Mnnm3: 'Donut Chart',
+            Mnsrt: '004',
+            Menid: 'X140',
+            Mepop: '',
+            Device: 'A',
+            Mnetc: '',
+            Pwchk: '',
+            Favor: '',
+          },
+          {
+            Mnid1: 'X0000',
+            Mnid2: 'X1000',
+            Mnid3: 'X150',
+            Mnnm3: 'DatePicker',
+            Mnsrt: '005',
+            Menid: 'X150',
+            Mepop: '',
+            Device: 'A',
+            Mnetc: '',
+            Pwchk: '',
+            Favor: '',
+          },
+          {
+            Mnid1: 'X0000',
+            Mnid2: 'X1000',
+            Mnid3: 'X160',
+            Mnnm3: 'VacationIndicator',
+            Mnsrt: '006',
+            Menid: 'X160',
+            Mepop: '',
+            Device: 'A',
+            Mnetc: '',
+            Pwchk: '',
+            Favor: '',
+          },
+          {
+            Mnid1: 'X0000',
+            Mnid2: 'X1000',
+            Mnid3: 'X170',
+            Mnnm3: 'OrgChart',
+            Mnsrt: '007',
+            Menid: 'X170',
+            Mepop: '',
+            Device: 'A',
+            Mnetc: '',
+            Pwchk: '',
+            Favor: '',
+          },
+          {
+            Mnid1: 'X0000',
+            Mnid2: 'X1000',
+            Mnid3: 'X180',
+            Mnnm3: 'YearPlan',
+            Mnsrt: '008',
+            Menid: 'X180',
+            Mepop: '',
+            Device: 'A',
+            Mnetc: '',
+            Pwchk: '',
+            Favor: '',
+          },
+          {
+            Mnid1: 'X0000',
+            Mnid2: 'X1000',
+            Mnid3: 'X190',
+            Mnnm3: 'Portlets',
+            Mnsrt: '009',
+            Menid: 'X190',
+            Mepop: '',
+            Device: 'A',
+            Mnetc: '',
+            Pwchk: '',
+            Favor: '',
+          },
+          {
+            Mnid1: 'X0000',
+            Mnid2: 'X2000',
+            Mnid3: 'X210',
+            Mnnm3: '구글',
+            Mnsrt: '001',
+            Menid: 'X210',
+            Mepop: 'X',
+            Device: 'A',
+            Mnetc: '',
+            Pwchk: '',
+            Favor: '',
+          }
+        );
+
+        aLevel2.splice(
+          aLevel2.length,
+          0,
+          {
+            Mnid1: 'X0000',
+            Mnid2: 'X1000',
+            Mnnm2: '샘플 1',
+            Mnsrt: '001',
+            Menid: 'X100',
+            Mepop: '',
+            Device: 'A',
+            Mnetc: '',
+            Pwchk: '',
+            Favor: '',
+          },
+          {
+            Mnid1: 'X0000',
+            Mnid2: 'X2000',
+            Mnnm2: '샘플 2',
+            Mnsrt: '002',
+            Menid: 'X200',
+            Mepop: '',
+            Device: 'A',
+            Mnetc: '',
+            Pwchk: '',
+            Favor: '',
+          }
+        );
+
+        aLevel1.splice(
+          aLevel1.length, //
+          0,
+          {
+            Mnid1: 'X0000',
+            Mnnm1: 'Samples',
+            Mnsrt: '999',
+            Menid: 'X000',
+            Mepop: '',
+            Device: 'A',
+            Mnetc: '',
+            Pwchk: '',
+          }
+        );
       },
     });
   }

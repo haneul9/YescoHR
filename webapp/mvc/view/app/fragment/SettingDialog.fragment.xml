@@ -1,5 +1,5 @@
-<core:FragmentDefinition xmlns:l="sap.ui.layout"
-  xmlns="sap.m"
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:l="sap.ui.layout"
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:core="sap.ui.core">
   <Dialog id="settingDialog" title="개인메뉴 설정" contentWidth="500px" contentHeight="300px">

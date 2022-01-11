@@ -517,6 +517,7 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt {outline-style:none !important}
 .menu-favorite-icon [data-sap-ui-icon-content=""]::before {content:"";display:inline-block;width:15px;height:15px;background-image: url(../image/icon_star3.svg);background-position: center;background-repeat: no-repeat;background-size:15px}
 .menu-link {color:#555; font-size:14px; vertical-align:middle}
 .megadrop-menu-layer.sapUiSizeCompact .sapMTB.sapMTBHeader-CTX {padding:0}
+.dummy-favorite-icon {margin-top:-1px; margin-right:6px; vertical-align:middle}
 
 .sapMPopover {color:#222;border-radius:0;box-shadow: 0 3px 5px 0 rgb(0 0 0 / 10%), 0 0 0 1px rgb(0 0 0 / 5%);}
 
