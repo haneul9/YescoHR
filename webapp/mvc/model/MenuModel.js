@@ -57,7 +57,7 @@ sap.ui.define(
 
         const mUrlToMenid = {}; // mUrlToMenid[URL] -> Menid
         const mMenidToProperties = {}; // mMenidToProperties[Menid] -> Menu
-        const mFavoriteMenus = {};
+        const aFavoriteMenids = [];
 
         // 샘플 메뉴 추가
         this.appendSampleMenu({ aLevel1, aLevel2, aLevel3, aLevel4 });
@@ -78,7 +78,7 @@ sap.ui.define(
             return;
           }
           if (m.Favor === 'X') {
-            mFavoriteMenus[m.Menid] = mMenuProperties;
+            aFavoriteMenids.push(m.Menid);
           }
 
           $.extend(true, mMenuProperties, {
@@ -110,7 +110,7 @@ sap.ui.define(
             return;
           }
           if (m.Favor === 'X') {
-            mFavoriteMenus[m.Menid] = mMenuProperties;
+            aFavoriteMenids.push(m.Menid);
           }
 
           $.extend(true, mMenuProperties, {
@@ -143,7 +143,7 @@ sap.ui.define(
             return;
           }
           if (m.Favor === 'X') {
-            mFavoriteMenus[m.Menid] = mMenuProperties;
+            aFavoriteMenids.push(m.Menid);
           }
 
           $.extend(true, mMenuProperties, {
@@ -169,7 +169,7 @@ sap.ui.define(
           tree,
           menidToProperties: mMenidToProperties,
           urlToMenid: mUrlToMenid,
-          favoriteMenuMap: mFavoriteMenus,
+          favoriteMenids: aFavoriteMenids,
           current: {},
           breadcrumbs: {},
         };
@@ -453,16 +453,22 @@ sap.ui.define(
         return this.getProperty('/urlToMenid')[sUrl];
       },
 
-      addFavoriteMenus(sMenid) {
-        // this.setProperty(`/menidToProperties/${sMenid}/Favor`, true);
-        // this.setProperty(`/menidToProperties/${sMenid}/Icon`, 'sap-icon://favorite');
-        this.setProperty(`/favoriteMenuMap/${sMenid}`, this.getProperties(sMenid));
+      getFavoriteMenids() {
+        return this.getProperty('/aFavoriteMenids');
       },
 
-      removeFavoriteMenus(sMenid) {
+      addFavoriteMenid(sMenid) {
+        // this.setProperty(`/menidToProperties/${sMenid}/Favor`, true);
+        // this.setProperty(`/menidToProperties/${sMenid}/Icon`, 'sap-icon://favorite');
+        this.getProperty('/aFavoriteMenids').push(sMenid);
+        this.refresh();
+      },
+
+      removeFavoriteMenid(sMenid) {
         // this.setProperty(`/menidToProperties/${sMenid}/Favor`, false);
         // this.setProperty(`/menidToProperties/${sMenid}/Icon`, 'sap-icon://unfavorite');
-        delete this.getProperty('/favoriteMenuMap')[sMenid];
+        _.pull(this.getProperty('/aFavoriteMenids'), sMenid);
+        this.refresh();
       },
 
       /**
