@@ -94,13 +94,17 @@ sap.ui.define(
         const sMessage = AppUtils.getBundleText('MSG_01902', sTitle); // {sTitle} portlet을 홈화면에 더이상 표시하지 않습니다.\n다시 표시하려면 홈화면 우측 상단 톱니바퀴 아이콘을 클릭하여 설정할 수 있습니다.
 
         MessageBox.confirm(sMessage, {
-          onClose: (sAction) => {
+          onClose: async (sAction) => {
             if (!sAction || sAction === MessageBox.Action.CANCEL) {
               return;
             }
 
-            this.destroy();
-            this.getController().onPressPortletsP13nSave();
+            const oPortletModel = this.getPortletModel();
+            const sPortletId = oPortletModel.getProperty('/id');
+            const bSuccess = await this.getController().onPressPortletsP13nSave(sPortletId);
+            if (bSuccess) {
+              this.destroy();
+            }
           },
         });
       },
@@ -158,7 +162,7 @@ sap.ui.define(
         const sPortletId = oPortletModel.getProperty('/id');
         const oPortletsModel = this.getController().getViewModel();
         oPortletsModel.setProperty(`/allMap/${sPortletId}/active`, false);
-        oPortletsModel.setProperty(`/allMap/${sPortletId}/position/column`, 0);
+        oPortletsModel.setProperty(`/allMap/${sPortletId}/position/column`, 1);
         oPortletsModel.setProperty(`/allMap/${sPortletId}/position/sequence`, 0);
         _.remove(oPortletsModel.getProperty('/activeList'), (mPortletData) => {
           return mPortletData.id === sPortletId;

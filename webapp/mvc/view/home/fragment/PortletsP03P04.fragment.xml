@@ -13,13 +13,13 @@
         <FlexItemData minHeight="15%" />
       </layoutData>
       <Title level="H2" text="{= ${selectedMembersTab} === 'ORG' ? ${orgMembers/title} : (${selectedMembersTab} === 'MY' ? ${myMembers/title} : '') }" visible="{= !${hideTitle} }" />
-      <SegmentedButton selectedKey="{selectedMembersTab}" visible="{= !!${orgMembers/active} &amp;&amp; !!${myMembers/active} }">
+      <SegmentedButton selectedKey="{selectedMembersTab}" visible="{= !!${orgMembers} &amp;&amp; !!${orgMembers/active} &amp;&amp; !!${myMembers} &amp;&amp; !!${myMembers/active} }">
         <items>
-          <SegmentedButtonItem text="{i18n>LABEL_01201}" key="ORG" visible="{= !!${orgMembers/active} }" />
-          <SegmentedButtonItem text="{i18n>LABEL_01202}" key="MY" visible="{= !!${myMembers/active} }" />
+          <SegmentedButtonItem text="{i18n>LABEL_01201}" key="ORG" visible="{= !!${orgMembers} &amp;&amp; !!${orgMembers/active} }" />
+          <SegmentedButtonItem text="{i18n>LABEL_01202}" key="MY" visible="{= !!${myMembers} &amp;&amp; !!${myMembers/active} }" />
         </items>
       </SegmentedButton>
-      <Button icon="sap-icon://add" type="Transparent" class="icon-button" visible="{= !!${myMembers/active} &amp;&amp; ${selectedMembersTab} === 'MY' }" press=".onPressMyMemberAdd" />
+      <Button icon="sap-icon://add" type="Transparent" class="icon-button" visible="{= !!${myMembers} &amp;&amp; !!${myMembers/active} &amp;&amp; ${selectedMembersTab} === 'MY' }" press=".onPressMyMemberAdd" />
       <Text text="">
         <layoutData>
           <FlexItemData growFactor="1" />

@@ -226,7 +226,7 @@ sap.ui.define(
           id: mPortletData.Potid,
           carousel: mPortletData.Mocat === 'A',
           position: {
-            column: this.bMobile ? Number(mPortletData.MSeq) || 0 : Number(mPortletData.Colno) || 0,
+            column: this.bMobile ? Number(mPortletData.MSeq) || 1 : Number(mPortletData.Colno) || 1,
             sequence: Number(mPortletData.Seqno) || 0,
           },
           height: Number(mPortletData.Htall) || 1,
@@ -243,6 +243,10 @@ sap.ui.define(
         };
       },
 
+      /**
+       * Portlet 설정 팝업 스위치 on/off 이벤트 처리
+       * @param {sap.ui.base.Event} oEvent
+       */
       onSelectPortletSwitch(oEvent) {
         const bSelected = oEvent.getParameter('selected');
         const sPortletId = oEvent.getSource().getBindingContext().getProperty('id');
@@ -258,9 +262,8 @@ sap.ui.define(
               return;
             }
 
-            const aActiveList = oPortletsModel.getProperty('/activeList');
             const mPortletData = oPortletsModel.getProperty(`/allMap/${sPortletId}`);
-
+            const aActiveList = oPortletsModel.getProperty('/activeList');
             aActiveList.push(mPortletData);
 
             oPortletsModel.setProperty(`/allMap/${sPortletId}/active`, true);
@@ -288,25 +291,38 @@ sap.ui.define(
         this.oPortletsP13nDialog.close();
       },
 
-      async onPressPortletsP13nSave() {
+      /**
+       * Portlet 개인화 정보 저장
+       */
+      async onPressPortletsP13nSave(sClosingPortletId) {
         try {
           // AppUtils.setAppBusy(true);
 
-          // const aAllList = oPortletsModel.getProperty('/allList');
-          const aActiveList = [];
+          const oPortletsModel = this.getViewModel();
+          const mActivePortletsData = {};
+
           this.byId('portlets-grid')
             .getItems()
             .forEach((oPortlet) => {
-              this.appendPortletPosition({ aActiveList, oPortlet });
+              this.mapPortletPosition(oPortlet, mActivePortletsData, sClosingPortletId);
             });
-          this.getViewModel().refresh();
+          oPortletsModel.refresh();
+
+          const aPortletData = oPortletsModel.getProperty('/allList').map((mPortletData) => {
+            const mData = mActivePortletsData[mPortletData.id];
+            if (mData) {
+              return mData;
+            }
+            return this.getPortletPosition(mPortletData, -1);
+          });
 
           const oModel = this.getModel(ServiceNames.COMMON);
           const sUrl = 'PortletInfo';
           const mPayload = {
             Mode: 'U',
-            PortletInfoTab2Set: aActiveList,
+            PortletInfoTab2Set: aPortletData,
           };
+          return;
 
           await Client.create(oModel, sUrl, mPayload);
         } catch (oError) {
@@ -316,30 +332,67 @@ sap.ui.define(
         }
       },
 
-      appendPortletPosition({ aActiveList, oPortlet }) {
+      /**
+       * 활성화된 portlet 위치 정보 저장
+       * @param {object} oPortlet 위치 정보를 추출할 portlet object
+       * @param {map} mActivePortletsData 위치 정보가 저장될 map
+       * @param {string} sClosingPortletId Portlet 닫기 버튼 클릭 또는 스위치 off로 비활성화될 portlet의 id
+       */
+      mapPortletPosition(oPortlet, mActivePortletsData, sClosingPortletId) {
         const oPortletModel = oPortlet.getModel();
 
         if (oPortletModel.getProperty('/multiPortlet')) {
           if (oPortletModel.getProperty('/orgMembers/active')) {
-            aActiveList.push(this.getPortletPosition(oPortletModel.getProperty('/orgMembers'), aActiveList.length));
+            const mPortletData = oPortletModel.getProperty('/orgMembers');
+            if (mPortletData.id === sClosingPortletId) {
+              return;
+            }
+
+            const iPortletCount = this.getPortletCount(mActivePortletsData);
+
+            mActivePortletsData[mPortletData.id] = this.getPortletPosition(mPortletData, iPortletCount);
           }
           if (oPortletModel.getProperty('/myMembers/active')) {
-            aActiveList.push(this.getPortletPosition(oPortletModel.getProperty('/myMembers'), aActiveList.length));
+            const mPortletData = oPortletModel.getProperty('/myMembers');
+            if (mPortletData.id === sClosingPortletId) {
+              return;
+            }
+
+            const iPortletCount = this.getPortletCount(mActivePortletsData);
+
+            mActivePortletsData[mPortletData.id] = this.getPortletPosition(mPortletData, iPortletCount);
           }
         } else {
-          aActiveList.push(this.getPortletPosition(oPortletModel.getData(), aActiveList.length));
+          const mPortletData = oPortletModel.getData();
+          if (mPortletData.id === sClosingPortletId) {
+            return;
+          }
+
+          const iPortletCount = this.getPortletCount(mActivePortletsData);
+
+          mActivePortletsData[mPortletData.id] = this.getPortletPosition(mPortletData, iPortletCount);
         }
       },
 
-      getPortletPosition(mPortletData, i) {
-        mPortletData.position.sequence = i + 1;
+      /**
+       * Portlet 위치 정보 생성
+       * @param {map} mPortletData
+       * @param {int} iPortletCount
+       * @returns
+       */
+      getPortletPosition(mPortletData, iPortletCount) {
+        mPortletData.position.sequence = iPortletCount + 1;
 
         return {
-          PCol: String(mPortletData.position.column),
+          PCol: String(mPortletData.position.column || 1),
           PSeq: String(mPortletData.position.sequence).padStart(2, 0),
           Potid: mPortletData.id,
           Zhide: mPortletData.active ? '' : 'X',
         };
+      },
+
+      getPortletCount(mData) {
+        return Object.keys(mData).length;
       },
 
       reduceViewResource() {

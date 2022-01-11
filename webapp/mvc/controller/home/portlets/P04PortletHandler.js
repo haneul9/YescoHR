@@ -184,19 +184,23 @@ sap.ui.define(
         const oPortletModel = this.getPortletModel();
         const bActiveOrgMembers = oPortletModel.getProperty('/orgMembers/active');
         if (bActiveOrgMembers) {
+          oPortletModel.setProperty('/selectedMembersTab', 'ORG');
+          oPortletModel.setProperty('/myMembers/active', false);
+
           const sPortletId = oPortletModel.getProperty('/id');
           const oPortletsModel = this.getController().getViewModel();
           oPortletsModel.setProperty(`/allMap/${sPortletId}/active`, false);
-          oPortletsModel.setProperty(`/allMap/${sPortletId}/position/column`, 0);
+          oPortletsModel.setProperty(`/allMap/${sPortletId}/position/column`, 1);
           oPortletsModel.setProperty(`/allMap/${sPortletId}/position/sequence`, 0);
           _.remove(oPortletsModel.getProperty('/activeList'), (mPortletData) => {
             return mPortletData.id === sPortletId;
           });
           delete oPortletsModel.getProperty('/activeMap')[sPortletId];
           delete oPortletsModel.getProperty('/activeInstanceMap')[sPortletId];
+          oPortletsModel.refresh();
 
-          oPortletModel.setProperty('/selectedMembersTab', 'ORG');
           delete oPortletModel.getProperty('/').myMembers;
+          oPortletModel.refresh();
         } else {
           oPortletModel.destroy();
           this.getFragment().destroy();
