@@ -72,7 +72,6 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const sMenid = this.getCurrentMenuId();
 
-        debugger;
         oDetailModel.setProperty('/ViewSeqnr', sSeqnr);
         oDetailModel.setProperty('/ViewSdate', sSdate);
         oDetailModel.setProperty('/Menid', sMenid);
