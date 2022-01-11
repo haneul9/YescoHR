@@ -347,8 +347,8 @@ html.sap-desktop .sapContrast.sapMIBar.sapMFooter-CTX, html.sap-desktop .sapMIBa
 /* html.sap-desktop .sapContrast.sapMIBar.sapMFooter-CTX .sapMBtnText {height:1.9rem !important; padding:0 0.9rem !important; color:#fff !important; border:none !important; text-shadow:none !important; background:#304456 !important} */
 /* html.sap-desktop .sapContrast.sapMIBar.sapMFooter-CTX .sapMBtnText{padding:0 0.9rem !important;color:#fff !important;border:none !important;text-shadow:none !important;background:#304456 !important;} */
 html.sap-desktop .sapContrast.sapMIBar.sapMFooter-CTX .sapMBtnText .sapMBtnContent {text-shadow: 0 0 0rem rgb(0 0 0 / 50%);}
-html.sap-desktop .sapContrast.sapMIBar.sapMFooter-CTX .sapMBtnText:hover {color:#5A6268 !important; background:#F4F4F4 !important}
-html.sap-desktop .sapContrast.sapMIBar.sapMFooter-CTX .sapMBtnText:active {color:#5A6268 !important; border-color:#D8DBDD;background:#D8DBDD !important}
+html.sap-desktop .sapContrast.sapMIBar.sapMFooter-CTX .sapMBtnText:hover {color:#5A6268; background:#F4F4F4}
+html.sap-desktop .sapContrast.sapMIBar.sapMFooter-CTX .sapMBtnText:active {color:#5A6268; border-color:#D8DBDD;background:#D8DBDD;}
 html.sap-desktop .sapContrast.sapMIBar.sapMFooter-CTX .sapMBtnDisabled {opacity:0.7 !important}
 /* html.sap-desktop .sapContrast.sapMIBar.sapMFooter-CTX .sapMBtnActive bdi {color:#fff !important} */
 
@@ -1254,6 +1254,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .year-plan-grid .sapMFlexBox[data-style="Weekend"] {background-color:#D9DCDF;}
 .year-plan-grid .sapMFlexBox[data-style="None"] {background-color:#CFD1D5}
 .year-plan.status-wrap .sapMFlexItem {margin-right:20px;height:60px; position: relative;}
+.year-plan.status-wrap .sapMFlexItem .sapMText {display: flex;justify-content: flex-start; align-items: center;}
 .year-plan.status-wrap .sapMFlexItem .sapMText::before {content:"";position: relative;display: inline-block;width:14px;height:14px;background-color: #888;margin-right:5px;border-radius: 50%;}
 
 /* 타임라인 */
