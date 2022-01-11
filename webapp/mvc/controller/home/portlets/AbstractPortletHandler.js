@@ -6,6 +6,7 @@ sap.ui.define(
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/exceptions/UI5Error',
+    'sap/ui/yesco/control/MessageBox',
   ],
   (
     // prettier 방지용 주석
@@ -13,7 +14,8 @@ sap.ui.define(
     Fragment,
     JSONModel,
     AppUtils,
-    UI5Error
+    UI5Error,
+    MessageBox
   ) => {
     'use strict';
 
@@ -88,11 +90,19 @@ sap.ui.define(
       },
 
       onPressClose(oEvent) {
-        console.log(oEvent);
-        // const sPernr = oEvent.getSource().getBindingContext().getProperty('Pernr');
+        const sTitle = oEvent.getSource().getBindingContext().getProperty('title');
+        const sMessage = AppUtils.getBundleText('MSG_01902', sTitle); // {sTitle} portlet을 홈화면에 더이상 표시하지 않습니다.\n다시 표시하려면 홈화면 우측 상단 톱니바퀴 아이콘을 클릭하여 설정할 수 있습니다.
 
-        const sTitle = this.getPortletModel().getProperty('/title');
-        alert(`${sTitle} Portlet 사용안함 : 준비중!`);
+        MessageBox.confirm(sMessage, {
+          onClose: (sAction) => {
+            if (!sAction || sAction === MessageBox.Action.CANCEL) {
+              return;
+            }
+
+            this.destroy();
+            this.getController().onPressPortletsP13nSave();
+          },
+        });
       },
 
       onPressLink() {
@@ -144,7 +154,19 @@ sap.ui.define(
       },
 
       destroy() {
-        this.getPortletModel().destroy();
+        const oPortletModel = this.getPortletModel();
+        const sPortletId = oPortletModel.getProperty('/id');
+        const oPortletsModel = this.getController().getViewModel();
+        oPortletsModel.setProperty(`/allMap/${sPortletId}/active`, false);
+        oPortletsModel.setProperty(`/allMap/${sPortletId}/position/column`, 0);
+        oPortletsModel.setProperty(`/allMap/${sPortletId}/position/sequence`, 0);
+        _.remove(oPortletsModel.getProperty('/activeList'), (mPortletData) => {
+          return mPortletData.id === sPortletId;
+        });
+        delete oPortletsModel.getProperty('/activeMap')[sPortletId];
+        delete oPortletsModel.getProperty('/activeInstanceMap')[sPortletId];
+
+        oPortletModel.destroy();
         this.getFragment().destroy();
       },
     });

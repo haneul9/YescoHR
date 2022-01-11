@@ -7,6 +7,7 @@ sap.ui.define(
     'sap/ui/core/dnd/DropLayout',
     'sap/ui/core/dnd/DropPosition',
     'sap/ui/model/json/JSONModel',
+    'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -25,6 +26,7 @@ sap.ui.define(
     DropLayout,
     DropPosition,
     JSONModel,
+    AppUtils,
     EmployeeSearch,
     Client,
     ServiceNames,
@@ -55,7 +57,7 @@ sap.ui.define(
         oGrid.addDragDropConfig(
           new DragInfo({
             sourceAggregation: 'items',
-            dragStart: this.onDragStart,
+            dragStart: this.onDragStart.bind(this),
           })
         );
 
@@ -64,8 +66,8 @@ sap.ui.define(
             targetAggregation: 'items',
             dropPosition: DropPosition.Between,
             dropLayout: DropLayout.Horizontal,
-            drop: this.onDrop,
-            dragEnter: this.onDragEnter,
+            drop: this.onDrop.bind(this),
+            dragEnter: this.onDragEnter.bind(this),
           })
         );
 
@@ -108,14 +110,18 @@ sap.ui.define(
         oGrid.removeItem(oDragged);
 
         if (iDragPosition < iDropPosition) {
-          iDropPosition--;
+          iDropPosition -= 1;
         }
-
         if (sInsertPosition === 'After') {
-          iDropPosition++;
+          iDropPosition += 1;
         }
 
         oGrid.insertItem(oDragged, iDropPosition);
+        // oGrid.focusItem(iDropPosition);
+
+        setTimeout(() => {
+          this.onPressPortletsP13nSave();
+        }, 300);
       },
 
       async onObjectMatched() {
@@ -129,7 +135,11 @@ sap.ui.define(
           controller: this,
         });
 
-        this.oPortletsP13nDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
+        this.oPortletsP13nDialog
+          .attachAfterClose(() => {
+            this.onPressPortletsP13nSave();
+          })
+          .addStyleClass(this.getOwnerComponent().getContentDensityClass());
 
         this.getView().addDependent(this.oPortletsP13nDialog);
       },
@@ -158,36 +168,38 @@ sap.ui.define(
           mPortletsP13nData[o.Potid] = o;
         });
 
-        const mActivePortletInstances = {};
         const mActivePortlets = {};
         const aActivePortlets = [];
         const mAllPortlets = {};
-        const aAllPortlets = aPortletInfoTab1Set
-          .map((o) => {
-            delete o.__metadata;
+        const aAllPortlets = aPortletInfoTab1Set.map((o) => {
+          delete o.__metadata;
 
-            const mOriginal = $.extend(o, mPortletsP13nData[o.Potid]);
-            const mPortletData = this.transform(mOriginal);
-            mAllPortlets[o.Potid] = mPortletData;
+          const mOriginal = $.extend(o, mPortletsP13nData[o.Potid]);
+          const mPortletData = this.transform(mOriginal);
+          mAllPortlets[o.Potid] = mPortletData;
 
-            if (mPortletData.active) {
-              const PortletHandler = this.mPortletHandlers[o.Potid];
+          if (mPortletData.active) {
+            aActivePortlets.push(mPortletData);
+            mActivePortlets[o.Potid] = mPortletData;
+          }
+
+          return mPortletData;
+        });
+
+        const mActivePortletInstances = {};
+        aActivePortlets
+          .sort((o1, o2) => o1.position.column * 100 + o1.position.sequence - (o2.position.column * 100 + o2.position.sequence))
+          .forEach((mPortletData) => {
+            setTimeout(() => {
+              const PortletHandler = this.mPortletHandlers[mPortletData.id];
               if (!PortletHandler) {
-                this.debug(`Portlets.controller > getPortletsModel > '${o.Potid}'에 해당하는 PortletHandler가 없습니다.`);
+                this.debug(`Portlets.controller > getPortletsModel > '${mPortletData.id}'에 해당하는 PortletHandler가 없습니다.`);
                 return mPortletData;
               }
 
-              aActivePortlets.push(mPortletData);
-              mActivePortlets[o.Potid] = mPortletData;
-
-              setTimeout(() => {
-                mActivePortletInstances[o.Potid] = new PortletHandler(this, mPortletData);
-              });
-            }
-
-            return mPortletData;
-          })
-          .sort((o1, o2) => o1.position.column * 100 + o1.position.sequence - (o2.position.column * 100 + o2.position.sequence));
+              mActivePortletInstances[mPortletData.id] = new PortletHandler(this, mPortletData);
+            });
+          });
 
         return new JSONModel({
           available: aAllPortlets.length > 0,
@@ -229,7 +241,6 @@ sap.ui.define(
 
         oPortletsModel.setProperty('/busy', true);
 
-        // TODO : 저장
         setTimeout(() => {
           if (bSelected) {
             const PortletHandler = this.mPortletHandlers[sPortletId];
@@ -243,19 +254,13 @@ sap.ui.define(
 
             aActiveList.push(mPortletData);
 
+            oPortletsModel.setProperty(`/allMap/${sPortletId}/active`, true);
             oPortletsModel.setProperty(`/allMap/${sPortletId}/position/column`, 1);
             oPortletsModel.setProperty(`/allMap/${sPortletId}/position/sequence`, aActiveList.length + 1);
             oPortletsModel.setProperty(`/activeMap/${sPortletId}`, mPortletData);
             oPortletsModel.setProperty(`/activeInstanceMap/${sPortletId}`, new PortletHandler(this, mPortletData));
           } else {
-            oPortletsModel.setProperty(`/allMap/${sPortletId}/position/column`, 0);
-            oPortletsModel.setProperty(`/allMap/${sPortletId}/position/sequence`, 0);
-            oPortletsModel.getProperty(`/activeInstanceMap/${sPortletId}`).destroy();
-            _.remove(oPortletsModel.getProperty('/activeList'), (mPortletData) => {
-              return mPortletData.id === sPortletId;
-            });
-            delete oPortletsModel.getProperty(`/activeMap/${sPortletId}`);
-            delete oPortletsModel.getProperty(`/activeInstanceMap/${sPortletId}`);
+            oPortletsModel.getProperty(`/activeInstanceMap`)[sPortletId].destroy();
           }
 
           oPortletsModel.refresh();
@@ -275,19 +280,62 @@ sap.ui.define(
       },
 
       async onPressPortletsP13nSave() {
-        const oModel = this.getModel(ServiceNames.COMMON);
-        const sUrl = 'PortletInfo';
-        const mPayload = {
-          Mode: 'U',
-          PortletInfoTab2Set: [],
-        };
+        try {
+          // AppUtils.setAppBusy(true);
 
-        return Client.create(oModel, sUrl, mPayload);
+          const aAllList = oPortletsModel.getProperty('/allList');
+          const aActiveList = [];
+          this.byId('portlets-grid')
+            .getItems()
+            .forEach((oPortlet) => {
+              this.appendPortletPosition({ aActiveList, oPortlet });
+            });
+          this.getViewModel().refresh();
+
+          const oModel = this.getModel(ServiceNames.COMMON);
+          const sUrl = 'PortletInfo';
+          const mPayload = {
+            Mode: 'U',
+            PortletInfoTab2Set: aActiveList,
+          };
+
+          await Client.create(oModel, sUrl, mPayload);
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          // AppUtils.setAppBusy(false);
+        }
+      },
+
+      appendPortletPosition({ aActiveList, oPortlet }) {
+        const oPortletModel = oPortlet.getModel();
+
+        if (oPortletModel.getProperty('/multiPortlet')) {
+          if (oPortletModel.getProperty('/orgMembers/active')) {
+            aActiveList.push(this.getPortletPosition(oPortletModel.getProperty('/orgMembers'), aActiveList.length));
+          }
+          if (oPortletModel.getProperty('/myMembers/active')) {
+            aActiveList.push(this.getPortletPosition(oPortletModel.getProperty('/myMembers'), aActiveList.length));
+          }
+        } else {
+          aActiveList.push(this.getPortletPosition(oPortletModel.getData(), aActiveList.length));
+        }
+      },
+
+      getPortletPosition(mPortletData, i) {
+        mPortletData.position.sequence = i + 1;
+
+        return {
+          PCol: String(mPortletData.position.column),
+          PSeq: String(mPortletData.position.sequence).padStart(2, 0),
+          Potid: mPortletData.id,
+          Zhide: mPortletData.active ? '' : 'X',
+        };
       },
 
       reduceViewResource() {
         this.byId('portlets-grid').destroyItems();
-        this.setViewModel(null);
+        this.getViewModel().destroy();
         this.getView().removeDependent(this.oPortletsP13nDialog);
         this.oPortletsP13nDialog.destroy();
         return this;

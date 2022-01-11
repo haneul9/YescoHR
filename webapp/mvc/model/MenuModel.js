@@ -78,7 +78,7 @@ sap.ui.define(
             return;
           }
 
-          mMenidToProperties[m.Mnid3] = $.extend(true, mMenuProperties, {
+          $.extend(true, mMenuProperties, {
             Level: 3,
             Mnid1: m.Mnid1,
             Mnid2: m.Mnid2,
@@ -89,8 +89,12 @@ sap.ui.define(
             Favor: m.Favor === 'X',
             Icon: m.Favor === 'X' ? 'sap-icon://favorite' : 'sap-icon://unfavorite',
           });
+
+          mMenidToProperties[m.Menid] = mMenuProperties;
+          mMenidToProperties[m.Mnid3] = mMenuProperties;
+
           if (m.Favor === 'X') {
-            aFavoriteMenus.push(mMenidToProperties[m.Mnid3]);
+            aFavoriteMenus.push(mMenuProperties);
           }
 
           const aLevel2SubMenu = mLevel2Sub[m.Mnid2];
@@ -108,7 +112,7 @@ sap.ui.define(
             return;
           }
 
-          mMenidToProperties[m.Mnid2] = $.extend(true, mMenuProperties, {
+          $.extend(true, mMenuProperties, {
             Level: 2,
             Menid: m.Menid,
             Mnid2: m.Mnid2,
@@ -120,8 +124,12 @@ sap.ui.define(
             Icon: m.Favor === 'X' ? 'sap-icon://favorite' : 'sap-icon://unfavorite',
             Children: mLevel2Sub[m.Mnid2] || [],
           });
+
+          mMenidToProperties[m.Menid] = mMenuProperties;
+          mMenidToProperties[m.Mnid2] = mMenuProperties;
+
           if (m.Favor === 'X') {
-            aFavoriteMenus.push(mMenidToProperties[m.Mnid2]);
+            aFavoriteMenus.push(mMenuProperties);
           }
 
           const aLevel1SubMenu = mLevel1Sub[m.Mnid1];
@@ -139,7 +147,7 @@ sap.ui.define(
             return;
           }
 
-          mMenidToProperties[m.Mnid1] = $.extend(true, mMenuProperties, {
+          $.extend(true, mMenuProperties, {
             Level: 1,
             Menid: m.Menid,
             Mnid1: m.Mnid1,
@@ -152,8 +160,12 @@ sap.ui.define(
             Children: mLevel1Sub[m.Mnid1] || [],
             StyleClasses: this.getStyleClasses(m),
           });
+
+          mMenidToProperties[m.Menid] = mMenuProperties;
+          mMenidToProperties[m.Mnid1] = mMenuProperties;
+
           if (m.Favor === 'X') {
-            aFavoriteMenus.push(mMenidToProperties[m.Mnid1]);
+            aFavoriteMenus.push(mMenuProperties);
           }
 
           return mMenuProperties;
@@ -438,17 +450,13 @@ sap.ui.define(
 
       getProperties(sMenid) {
         if (sMenid) {
-          return this.getProperty(`/menidToProperties/${sMenid}`);
+          return this.getProperty('/menidToProperties')[sMenid];
         }
         return this.getProperty(`/menidToProperties`);
       },
 
       getMenid(sUrl) {
         return this.getProperty('/urlToMenid')[sUrl];
-      },
-
-      getFavoriteMenus() {
-        return this.getProperty('/favoriteMenus');
       },
 
       addFavoriteMenus(sMenid) {

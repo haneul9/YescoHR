@@ -90,10 +90,7 @@ sap.ui.define(
           this.oMenuLayer.placeAt('sap-ui-static');
         }
 
-        console.log(oMenuButton.data('Mnid1'));
-        console.log(this.oMenuModel.getProperty(oMenuButton.data('Mnid1')));
-        this.oMenuModel.setProperty('/Children', this.oMenuModel.getProperty(oMenuButton.data('Mnid1')).Children);
-        // this.oMenuLayer.setModel(oMenuButton.getModel());
+        this.oMenuLayer.bindElement(`/menidToProperties/${oMenuButton.data('Mnid1')}`);
 
         if (!this.oMenuLayer.getVisible()) {
           this.oMenuLayer.setVisible(true);
@@ -130,37 +127,42 @@ sap.ui.define(
        * @param {object} oEvent
        */
       async toggleFavorite(oEvent) {
-        try {
-          const oEventSource = oEvent.getSource();
-          const oContext = oEventSource.getBindingContext();
-          const oContextModel = oContext.getModel();
-          const sPath = oContext.getPath();
-          const sMenid = oContext.getProperty('Menid');
-          const bToBeUnfavorite = oContext.getProperty('Favor');
+        const oEventSource = oEvent.getSource();
+        const oContext = oEventSource.getBindingContext();
+        const oContextModel = oContext.getModel();
+        const sPath = oContext.getPath();
 
+        const bSuccess = await this.saveFavorite(oContext.getProperty());
+        if (bSuccess) {
+          if (oContext.getProperty('Favor')) {
+            oContextModel.setProperty(`${sPath}/Favor`, false);
+            oContextModel.setProperty(`${sPath}/Icon`, 'sap-icon://unfavorite');
+          } else {
+            oContextModel.setProperty(`${sPath}/Favor`, true);
+            oContextModel.setProperty(`${sPath}/Icon`, 'sap-icon://favorite');
+          }
+        }
+      },
+
+      async saveFavorite({ Favor, Menid, Mnid1, Mnid2, Mnid3 }) {
+        try {
           const oCommonModel = this.oAppController.getModel(ServiceNames.COMMON);
           const sUrl = 'PortletFavoriteMenu';
           const mPayload = {
-            Menid: sMenid,
-            Mnid1: oContext.getProperty('Mnid1'),
-            Mnid2: oContext.getProperty('Mnid2'),
-            Mnid3: oContext.getProperty('Mnid3'),
+            Menid: Menid,
+            Mnid1: Mnid1,
+            Mnid2: Mnid2,
+            Mnid3: Mnid3,
           };
 
-          if (bToBeUnfavorite) {
+          if (Favor) {
             await Client.remove(oCommonModel, sUrl, mPayload);
 
-            oContextModel.setProperty(`${sPath}/Favor`, false);
-            oContextModel.setProperty(`${sPath}/Icon`, 'sap-icon://unfavorite');
-
-            this.oMenuModel.removeFavoriteMenus(sMenid);
+            this.oMenuModel.removeFavoriteMenus(Menid);
           } else {
             await Client.create(oCommonModel, sUrl, mPayload);
 
-            oContextModel.setProperty(`${sPath}/Favor`, true);
-            oContextModel.setProperty(`${sPath}/Icon`, 'sap-icon://favorite');
-
-            this.oMenuModel.addFavoriteMenus(sMenid);
+            this.oMenuModel.addFavoriteMenus(Menid);
           }
 
           return true;

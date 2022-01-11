@@ -147,7 +147,7 @@ sap.ui.define(
             width: '73%',
             busy: true,
             header: {
-              profilePath: 'https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1',
+              profilePath: 'asset/image/avatar-unknown.svg?ssl=1',
               baseInfo: [],
               timeline: [
                 { label: '회사입사일', data: '2010.01.01' },
