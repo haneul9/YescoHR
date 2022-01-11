@@ -61,9 +61,8 @@ sap.ui.define(
               tooltip: `${mMenu.Mname} (${mMenu.Mnid1}:${mMenu.Menid})`,
               customData: new CustomData({ key: 'Mnid1', value: mMenu.Mnid1 }),
             })
-              .addStyleClass(mMenu.StyleClasses)
-              .setAppMenu(this),
-            // .setModel(new JSONModel(mMenu)),
+            .addStyleClass(mMenu.StyleClasses)
+            .setAppMenu(this),
             i + 2 // App logo, ToolbarSpacer 이후부터 menu 추가
           );
         });

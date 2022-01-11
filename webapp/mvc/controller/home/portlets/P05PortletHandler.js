@@ -3,7 +3,6 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/mvc/controller/home/portlets/AbstractPortletHandler',
-    'sap/ui/yesco/mvc/model/type/Date', // XML expression binding용 type preloading
   ],
   (
     // prettier 방지용 주석
