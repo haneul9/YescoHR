@@ -70,7 +70,7 @@ sap.ui.define(
         const sSeqnr = oContext.getProperty('Seqnr');
         const iSdate = oContext.getProperty('Sdate').getTime();
 
-        this.navTo('notice-detail', { oDataKey: 0, Sdate: iSdate, Seqnr: sSeqnr });
+        this.navTo('notice-detail', { Sdate: iSdate, Seqnr: sSeqnr });
       },
     });
   }
