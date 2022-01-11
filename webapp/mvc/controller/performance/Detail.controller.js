@@ -119,7 +119,9 @@ sap.ui.define(
           }
 
           const mParameter = _.chain(oListView.getModel().getProperty('/parameter/rowData')).cloneDeep().omit('__metadata').value();
-          const { Zzapsts: sZzapsts, ZzapstsSub: sZzapstsSub, Zonlydsp: sZonlydsp } = mParameter;
+          const { Zzapsts: sZzapsts, ZzapstsSub: sZzapstsSub, ZzapstsPSub: sZzapstsPSub, Zonlydsp: sZonlydsp } = mParameter;
+          // 4-1 평가실시 - 부분평가중일 경우 ZzapstsPSub가 A로 들어오면 1차평가중 상태로 변경한다.
+          const sLogicalZzapstsSub = _.isEqual(sZzapsts + sZzapstsSub, '41') && _.isEqual(sZzapstsPSub, 'A') ? sZzapstsPSub : sZzapstsSub;
 
           oViewModel.setProperty('/type', sType);
           oViewModel.setProperty('/year', sYear);
@@ -163,7 +165,7 @@ sap.ui.define(
           const mGroupStageByApStatusSub = _.groupBy(aStepList, 'ApStatusSub');
           const aStageHeader = _.map(mGroupStageByApStatusSub[''], (o) => {
             const mReturn = { ..._.omit(o, '__metadata'), completed: bCompleted };
-            if (!_.isEqual(sZzapstsSub, 'X') && _.isEqual(o.ApStatus, sZzapsts)) bCompleted = false;
+            if (!_.isEqual(sLogicalZzapstsSub, 'X') && _.isEqual(o.ApStatus, sZzapsts)) bCompleted = false;
             return mReturn;
           });
 
@@ -176,7 +178,7 @@ sap.ui.define(
             .map((item) =>
               _.map(item, (o) => {
                 const mReturn = { ..._.omit(o, '__metadata'), completed: bCompleted };
-                if (_.isEqual(o.ApStatus, sZzapsts) && _.isEqual(o.ApStatusSub, sZzapstsSub)) bCompleted = false;
+                if (_.isEqual(o.ApStatus, sZzapsts) && _.isEqual(o.ApStatusSub, sLogicalZzapstsSub)) bCompleted = false;
                 return mReturn;
               })
             )
@@ -194,7 +196,7 @@ sap.ui.define(
             .reduce((acc, cur) => ({ ...acc, [_.capitalize(cur.ColumnId)]: cur.Zdipopt }), oViewModel.getProperty('/fieldControl/display'))
             .forOwn((value, key, object) => {
               if (_.has(Constants.FIELD_MAPPING, key)) {
-                _.forEach(_.get(Constants.FIELD_MAPPING, key), (subKey) => _.set(object, subKey, _.get(Constants.FIELD_STATUS_MAP, [sZzapsts, sZzapstsSub, subKey, sType], value)));
+                _.forEach(_.get(Constants.FIELD_MAPPING, key), (subKey) => _.set(object, subKey, _.get(Constants.FIELD_STATUS_MAP, [sZzapsts, sLogicalZzapstsSub, subKey, sType], value)));
               }
             })
             .value();
@@ -211,7 +213,7 @@ sap.ui.define(
             .tap((o) => _.forEach(mDetailData.AppraisalBottnsSet.results, (obj) => _.set(o.submit, obj.ButtonId, _.chain(obj).set('process', _.stubTrue()).omit('__metadata').value())))
             .tap((o) => {
               _.chain(Constants.BUTTON_STATUS_MAP)
-                .get([sZzapsts, sZzapstsSub])
+                .get([sZzapsts, sLogicalZzapstsSub])
                 .forOwn((v, k) =>
                   _.chain(o.submit)
                     .set([k, 'Availability'], _.get(v, sType))
