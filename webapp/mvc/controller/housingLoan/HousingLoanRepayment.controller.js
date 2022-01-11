@@ -401,14 +401,17 @@ sap.ui.define(
 
       // 재작성
       onRewriteBtn() {
-        this.getViewModel().setProperty('/DialogData/Lnsta', '');
+        const oDetailModel = this.getViewModel();
+
+        oDetailModel.setProperty('/FormData/Appno', '');
+        oDetailModel.setProperty('/FormData/Lnsta', '');
       },
 
       // 임시저장
       onSaveBtn() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
-        const sStatus = oDetailModel.getProperty('/DialogData/Lnsta');
+        const sAppno = oDetailModel.getProperty('/DialogData/Appno');
         const oDialogData = oDetailModel.getProperty('/DialogData');
         const oRepayDialog = this.byId('RepayApplyDialog');
 
@@ -421,10 +424,10 @@ sap.ui.define(
               try {
                 oRepayDialog.setBusy(true);
 
-                if (!sStatus) {
-                  const vAppno = await Appno.get.call(this);
+                if (!sAppno) {
+                  const sAppno = await Appno.get.call(this);
 
-                  oDetailModel.setProperty('/DialogData/Appno', vAppno);
+                  oDetailModel.setProperty('/DialogData/Appno', sAppno);
                   oDetailModel.setProperty('/DialogData/Appda', new Date());
                 }
 
@@ -464,7 +467,7 @@ sap.ui.define(
       onApplyBtn() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
-        const sStatus = oDetailModel.getProperty('/DialogData/Lnsta');
+        const sAppno = oDetailModel.getProperty('/DialogData/Appno');
         const oDialogData = oDetailModel.getProperty('/DialogData');
         const oRepayDialog = this.byId('RepayApplyDialog');
 
@@ -477,10 +480,10 @@ sap.ui.define(
               try {
                 oRepayDialog.setBusy(true);
 
-                if (!sStatus) {
-                  const vAppno = await Appno.get.call(this);
+                if (!sAppno) {
+                  const sAppno = await Appno.get.call(this);
 
-                  oDetailModel.setProperty('/DialogData/Appno', vAppno);
+                  oDetailModel.setProperty('/DialogData/Appno', sAppno);
                   oDetailModel.setProperty('/DialogData/Appda', new Date());
                 }
 

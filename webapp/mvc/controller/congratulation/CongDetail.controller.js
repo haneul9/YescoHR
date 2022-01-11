@@ -574,7 +574,10 @@ sap.ui.define(
 
       // 재작성
       onRewriteBtn() {
-        this.getViewModel().setProperty('/FormData/ZappStatAl', '');
+        const oDetailModel = this.getViewModel();
+
+        oDetailModel.setProperty('/FormData/Appno', '');
+        oDetailModel.setProperty('/FormData/ZappStatAl', '');
       },
 
       // 임시저장
@@ -602,9 +605,9 @@ sap.ui.define(
               AppUtils.setAppBusy(true, this);
 
               const mFormData = oDetailModel.getProperty('/FormData');
-              const sStatus = mFormData.ZappStatAl;
+              const sAppno = mFormData.Appno;
 
-              if (!sStatus || sStatus === '45') {
+              if (!sAppno) {
                 const sAppno = await Appno.get();
 
                 oDetailModel.setProperty('/FormData/Appno', sAppno);
@@ -675,9 +678,9 @@ sap.ui.define(
               AppUtils.setAppBusy(true, this);
 
               const mFormData = oDetailModel.getProperty('/FormData');
-              const sStatus = mFormData.ZappStatAl;
+              const sAppno = mFormData.Appno;
 
-              if (!sStatus || sStatus === '45') {
+              if (!sAppno) {
                 const sAppno = await Appno.get();
 
                 oDetailModel.setProperty('/FormData/Appno', sAppno);

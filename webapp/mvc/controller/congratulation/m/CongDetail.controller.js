@@ -562,7 +562,10 @@ sap.ui.define(
 
       // 재작성
       onRewriteBtn() {
-        this.getViewModel().setProperty('/FormData/ZappStatAl', '10');
+        const oDetailModel = this.getViewModel();
+
+        oDetailModel.setProperty('/FormData/Appno', '');
+        oDetailModel.setProperty('/FormData/ZappStatAl', '');
       },
 
       // 임시저장
@@ -570,7 +573,7 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
         const oFormData = oDetailModel.getProperty('/FormData');
-        const vStatus = oFormData.ZappStatAl;
+        const sAppno = oFormData.Appno;
 
         if (this.checkError(this)) return;
 
@@ -581,10 +584,10 @@ sap.ui.define(
               try {
                 AppUtils.setAppBusy(true, this);
 
-                if (!vStatus || vStatus === '45') {
-                  const vAppno = await Appno.get.call(this);
+                if (!sAppno) {
+                  const sAppno = await Appno.get.call(this);
 
-                  oDetailModel.setProperty('/FormData/Appno', vAppno);
+                  oDetailModel.setProperty('/FormData/Appno', sAppno);
                   oDetailModel.setProperty('/FormData/ZappStatAl', '10');
                   oDetailModel.setProperty('/FormData/Appdt', new Date());
                 }
@@ -625,7 +628,7 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
         const oFormData = oDetailModel.getProperty('/FormData');
-        const vStatus = oFormData.ZappStatAl;
+        const sAppno = oFormData.Appno;
 
         if (this.checkError(this)) return;
 
@@ -636,10 +639,10 @@ sap.ui.define(
               try {
                 AppUtils.setAppBusy(true, this);
 
-                if (!vStatus || vStatus === '45') {
-                  const vAppno = await Appno.get.call(this);
+                if (!sAppno) {
+                  const sAppno = await Appno.get.call(this);
 
-                  oDetailModel.setProperty('/FormData/Appno', vAppno);
+                  oDetailModel.setProperty('/FormData/Appno', sAppno);
                   oDetailModel.setProperty('/FormData/Appdt', new Date());
                 }
 

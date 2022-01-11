@@ -43,7 +43,7 @@
                     </VBox>
                     <Label text="{i18n>LABEL_09019}"/>
                     <FlexBox alignItems="Start" justifyContent="End">
-                        <Text text="{/DialogData/Prate} %" />
+                        <Text text="{/DialogData/Pratetx} %" />
                     </FlexBox>
                     <HBox></HBox>
                     <HBox></HBox>
