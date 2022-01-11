@@ -118,13 +118,16 @@ sap.ui.define(
           const aOTList = await Client.getEntitySet(oModel, 'OvertimeStatus', mTablePayLoad);
 
           oViewModel.setProperty('/OTWorkList', aOTList);
-          debugger;
         } catch (oError) {
           this.debug(oError);
           AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/busy', false);
         }
+      },
+
+      getFormatFloat(sVal = '0') {
+        return parseFloat(sVal);
       },
 
       setMonth() {
