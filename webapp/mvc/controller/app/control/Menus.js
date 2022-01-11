@@ -61,8 +61,8 @@ sap.ui.define(
               tooltip: `${mMenu.Mname} (${mMenu.Mnid1}:${mMenu.Menid})`,
               customData: new CustomData({ key: 'Mnid1', value: mMenu.Mnid1 }),
             })
-            .addStyleClass(mMenu.StyleClasses)
-            .setAppMenu(this),
+              .addStyleClass(mMenu.StyleClasses)
+              .setAppMenu(this),
             i + 2 // App logo, ToolbarSpacer 이후부터 menu 추가
           );
         });
@@ -153,18 +153,20 @@ sap.ui.define(
           };
 
           if (Favor) {
-            await Client.remove(oCommonModel, sUrl, mPayload);
-
-            this.oMenuModel.removeFavoriteMenus(Menid);
-          } else {
             await Client.create(oCommonModel, sUrl, mPayload);
 
             this.oMenuModel.addFavoriteMenus(Menid);
+          } else {
+            await Client.remove(oCommonModel, sUrl, mPayload);
+
+            this.oMenuModel.removeFavoriteMenus(Menid);
           }
 
           return true;
         } catch (oError) {
-          MessageBox.error(AppUtils.getBundleText('MSG_00008', 'MSG_01002')); // {즐겨찾기 수정}중 오류가 발생하였습니다.
+          AppUtils.debug('Menus > saveFavorite error.', oError);
+
+          AppUtils.handleError({ message: AppUtils.getBundleText('MSG_00008', 'MSG_01002') }); // {즐겨찾기 수정}중 오류가 발생하였습니다.
 
           return false;
         }

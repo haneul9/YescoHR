@@ -462,7 +462,7 @@ sap.ui.define(
       removeFavoriteMenus(sMenid) {
         // this.setProperty(`/menidToProperties/${sMenid}/Favor`, false);
         // this.setProperty(`/menidToProperties/${sMenid}/Icon`, 'sap-icon://unfavorite');
-        this.removeProperty(`/favoriteMenuMap/${sMenid}`);
+        delete this.getProperty('/favoriteMenuMap')[sMenid];
       },
 
       /**
