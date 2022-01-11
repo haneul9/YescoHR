@@ -131,6 +131,10 @@ sap.ui.define(
         const oEventSource = oEvent.getSource();
         const oContext = oEventSource.getBindingContext();
 
+        if (this.oMenuModel.getFavoriteMenid().length >= 10) {
+          return;
+        }
+
         this.saveFavorite(oContext.getProperty());
         // if (bSuccess) {
         //   if (oContext.getProperty('Favor')) {
@@ -155,11 +159,11 @@ sap.ui.define(
           if (Favor) {
             await Client.create(oCommonModel, sUrl, mPayload);
 
-            this.oMenuModel.addFavoriteMenus(Menid);
+            this.oMenuModel.addFavoriteMenid(Menid);
           } else {
             await Client.remove(oCommonModel, sUrl, mPayload);
 
-            this.oMenuModel.removeFavoriteMenus(Menid);
+            this.oMenuModel.removeFavoriteMenid(Menid);
           }
 
           return true;

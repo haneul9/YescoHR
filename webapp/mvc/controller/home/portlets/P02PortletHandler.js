@@ -66,9 +66,11 @@ sap.ui.define(
       },
 
       onPressNoticeArticle(oEvent) {
-        const sSeqnr = oEvent.getSource().getBindingContext().getProperty('Seqnr');
+        const oContext = oEvent.getSource().getBindingContext();
+        const sSeqnr = oContext.getProperty('Seqnr');
+        const iSdate = oContext.getProperty('Sdate').getTime();
 
-        this.navTo('notice-detail', { oDataKey: sSeqnr });
+        this.navTo('notice-detail', { oDataKey: 0, Sdate: iSdate, Seqnr: sSeqnr });
       },
     });
   }
