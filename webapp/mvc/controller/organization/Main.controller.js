@@ -46,7 +46,7 @@ sap.ui.define(
               orgList: _.map(aReturnData, (o) => ({
                 ...o,
                 Photo: _.isEmpty(o.Photo) ? 'asset/image/avatar-unknown.svg' : o.Photo,
-                Ipdat: _.isEmpty(o.Ipdat) ? '' : moment(o.Ipdat).format('YYYY.MM.DD'),
+                Ipdat: _.isDate(o.Ipdat) ? moment(o.Ipdat).format('YYYY.MM.DD') : '',
               })),
             });
 
