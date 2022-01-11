@@ -278,7 +278,7 @@ sap.ui.define(
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00179'), {
                 // {발급}되었습니다.
                 onClose: () => {
-                  this.getRouter().navTo(this.LIST_PAGE);
+                  this.onNavBack();
                 },
               });
             } catch (oError) {
@@ -329,7 +329,7 @@ sap.ui.define(
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
                 // {신청}되었습니다.
                 onClose: () => {
-                  this.getRouter().navTo(this.LIST_PAGE);
+                  this.onNavBack();
                 },
               });
             } catch (oError) {
@@ -363,7 +363,7 @@ sap.ui.define(
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
                 // {삭제}되었습니다.
                 onClose: () => {
-                  this.getRouter().navTo(this.LIST_PAGE);
+                  this.onNavBack();
                 },
               });
             } catch (oError) {

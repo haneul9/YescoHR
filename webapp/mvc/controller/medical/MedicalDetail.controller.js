@@ -508,7 +508,7 @@ sap.ui.define(
 
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
                   onClose: () => {
-                    this.getRouter().navTo('medical');
+                    this.onNavBack();
                   },
                 });
               } catch (oError) {
@@ -544,7 +544,7 @@ sap.ui.define(
                   AppUtils.setAppBusy(false, this);
                   MessageBox.alert(this.getBundleText('MSG_00039', 'LABEL_00121'), {
                     onClose: () => {
-                      this.getRouter().navTo('medical');
+                      this.onNavBack();
                     },
                   });
                 },
@@ -579,7 +579,7 @@ sap.ui.define(
                   AppUtils.setAppBusy(false, this);
                   MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
                     onClose: () => {
-                      this.getRouter().navTo('medical');
+                      this.onNavBack();
                     },
                   });
                 },
