@@ -85,6 +85,7 @@ sap.ui.define(
             controller: this,
           });
 
+          this.oMenuLayer.addStyleClass(this.oAppController.getOwnerComponent().getContentDensityClass());
           this.oMenuLayer.setAppMenu(this);
           this.oMenuLayer.setModel(this.oMenuModel);
           this.oMenuLayer.placeAt('sap-ui-static');
@@ -129,19 +130,15 @@ sap.ui.define(
       async toggleFavorite(oEvent) {
         const oEventSource = oEvent.getSource();
         const oContext = oEventSource.getBindingContext();
-        const oContextModel = oContext.getModel();
-        const sPath = oContext.getPath();
 
-        const bSuccess = await this.saveFavorite(oContext.getProperty());
-        if (bSuccess) {
-          if (oContext.getProperty('Favor')) {
-            oContextModel.setProperty(`${sPath}/Favor`, false);
-            oContextModel.setProperty(`${sPath}/Icon`, 'sap-icon://unfavorite');
-          } else {
-            oContextModel.setProperty(`${sPath}/Favor`, true);
-            oContextModel.setProperty(`${sPath}/Icon`, 'sap-icon://favorite');
-          }
-        }
+        this.saveFavorite(oContext.getProperty());
+        // if (bSuccess) {
+        //   if (oContext.getProperty('Favor')) {
+        //     oContextModel.setProperty(`${sPath}/Icon`, 'sap-icon://unfavorite');
+        //   } else {
+        //     oContextModel.setProperty(`${sPath}/Icon`, 'sap-icon://favorite');
+        //   }
+        // }
       },
 
       async saveFavorite({ Favor, Menid, Mnid1, Mnid2, Mnid3 }) {

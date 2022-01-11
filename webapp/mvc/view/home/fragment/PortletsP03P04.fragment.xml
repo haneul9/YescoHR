@@ -40,7 +40,7 @@
           <FlexItemData growFactor="1" />
         </layoutData>
         <HBox height="1.8rem" alignItems="Center" class="portlet-member">
-          <Image src="{Photo}" mode="Background" backgroundPosition="center center" width="1.5rem" height="1.5rem" />
+          <Image src="{Photo}" mode="Background" backgroundPosition="center top" width="1.5rem" height="1.5rem" />
           <Text text="{Ename}" wrapping="false" class="portlet-member-name" />
           <Text text="{Zzjikgbt} {Orgtx}" wrapping="false" class="portlet-member-org">
             <layoutData>
@@ -67,7 +67,7 @@
           <FlexItemData growFactor="1" />
         </layoutData>
         <HBox height="1.8rem" alignItems="Center" class="portlet-member">
-          <Image src="{Photo}" mode="Background" backgroundPosition="center center" width="1.5rem" height="1.5rem" />
+          <Image src="{Photo}" mode="Background" backgroundPosition="center top" width="1.5rem" height="1.5rem" />
           <Text text="{Ename}" wrapping="false" class="portlet-member-name" />
           <Text text="{Zzjikgbt} {Orgtx}" wrapping="false" class="portlet-member-org">
             <layoutData>

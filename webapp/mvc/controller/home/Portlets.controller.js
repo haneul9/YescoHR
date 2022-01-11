@@ -40,7 +40,7 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.home.Portlets', {
-      EmployeeSearch,
+      EmployeeSearch: EmployeeSearch,
 
       bMobile: false,
       mPortletHandlers: {
@@ -127,7 +127,7 @@ sap.ui.define(
       async onObjectMatched() {
         const mPortletsData = await this.readPortletsSetting();
 
-        const oPortletsModel = this.getPortletsModel(mPortletsData);
+        const oPortletsModel = await this.getPortletsModel(mPortletsData);
         this.setViewModel(oPortletsModel);
 
         this.oPortletsP13nDialog = await Fragment.load({
@@ -156,7 +156,7 @@ sap.ui.define(
         return Client.deep(oModel, sUrl, mPayload);
       },
 
-      getPortletsModel({ PortletInfoTab1Set = {}, PortletInfoTab2Set = {} }) {
+      async getPortletsModel({ PortletInfoTab1Set = {}, PortletInfoTab2Set = {} }) {
         const aPortletInfoTab1Set = PortletInfoTab1Set.results || []; // Portlet 개별 세팅 정보
         const aPortletInfoTab2Set = PortletInfoTab2Set.results || []; // Portlet 개인화 정보
 
@@ -200,6 +200,15 @@ sap.ui.define(
               mActivePortletInstances[mPortletData.id] = new PortletHandler(this, mPortletData);
             });
           });
+
+        if (!aActivePortlets.length) {
+          const oFragment = await Fragment.load({
+            name: `sap.ui.yesco.mvc.view.home.fragment.PortletsNotFound`,
+            controller: this,
+          });
+
+          this.byId('portlets-grid').addItem(oFragment);
+        }
 
         return new JSONModel({
           available: aAllPortlets.length > 0,
@@ -283,7 +292,7 @@ sap.ui.define(
         try {
           // AppUtils.setAppBusy(true);
 
-          const aAllList = oPortletsModel.getProperty('/allList');
+          // const aAllList = oPortletsModel.getProperty('/allList');
           const aActiveList = [];
           this.byId('portlets-grid')
             .getItems()

@@ -26,7 +26,7 @@
         <FlexItemData growFactor="1" />
       </layoutData>
       <VBox width="50%">
-        <Image src="{sessionModel>/Photo}" mode="Background" backgroundPosition="center center" width="146px" height="146px" />
+        <Image src="{sessionModel>/Photo}" mode="Background" backgroundPosition="center top" width="146px" height="146px" />
         <Text text="{Ename}" />
         <Text text="{Zzjiktlt}" />
         <Text text="{Orgtx}" />
