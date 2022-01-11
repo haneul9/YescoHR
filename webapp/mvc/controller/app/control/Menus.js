@@ -63,7 +63,6 @@ sap.ui.define(
             })
               .addStyleClass(mMenu.StyleClasses)
               .setAppMenu(this),
-            // .setModel(new JSONModel(mMenu)),
             i + 2 // App logo, ToolbarSpacer 이후부터 menu 추가
           );
         });
@@ -86,6 +85,7 @@ sap.ui.define(
             controller: this,
           });
 
+          this.oMenuLayer.addStyleClass(this.oAppController.getOwnerComponent().getContentDensityClass());
           this.oMenuLayer.setAppMenu(this);
           this.oMenuLayer.setModel(this.oMenuModel);
           this.oMenuLayer.placeAt('sap-ui-static');
@@ -130,19 +130,15 @@ sap.ui.define(
       async toggleFavorite(oEvent) {
         const oEventSource = oEvent.getSource();
         const oContext = oEventSource.getBindingContext();
-        const oContextModel = oContext.getModel();
-        const sPath = oContext.getPath();
 
-        const bSuccess = await this.saveFavorite(oContext.getProperty());
-        if (bSuccess) {
-          if (oContext.getProperty('Favor')) {
-            oContextModel.setProperty(`${sPath}/Favor`, false);
-            oContextModel.setProperty(`${sPath}/Icon`, 'sap-icon://unfavorite');
-          } else {
-            oContextModel.setProperty(`${sPath}/Favor`, true);
-            oContextModel.setProperty(`${sPath}/Icon`, 'sap-icon://favorite');
-          }
-        }
+        this.saveFavorite(oContext.getProperty());
+        // if (bSuccess) {
+        //   if (oContext.getProperty('Favor')) {
+        //     oContextModel.setProperty(`${sPath}/Icon`, 'sap-icon://unfavorite');
+        //   } else {
+        //     oContextModel.setProperty(`${sPath}/Icon`, 'sap-icon://favorite');
+        //   }
+        // }
       },
 
       async saveFavorite({ Favor, Menid, Mnid1, Mnid2, Mnid3 }) {
@@ -157,18 +153,20 @@ sap.ui.define(
           };
 
           if (Favor) {
-            await Client.remove(oCommonModel, sUrl, mPayload);
-
-            this.oMenuModel.removeFavoriteMenus(Menid);
-          } else {
             await Client.create(oCommonModel, sUrl, mPayload);
 
             this.oMenuModel.addFavoriteMenus(Menid);
+          } else {
+            await Client.remove(oCommonModel, sUrl, mPayload);
+
+            this.oMenuModel.removeFavoriteMenus(Menid);
           }
 
           return true;
         } catch (oError) {
-          MessageBox.error(AppUtils.getBundleText('MSG_00008', 'MSG_01002')); // {즐겨찾기 수정}중 오류가 발생하였습니다.
+          AppUtils.debug('Menus > saveFavorite error.', oError);
+
+          AppUtils.handleError({ message: AppUtils.getBundleText('MSG_00008', 'MSG_01002') }); // {즐겨찾기 수정}중 오류가 발생하였습니다.
 
           return false;
         }

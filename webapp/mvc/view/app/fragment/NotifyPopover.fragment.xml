@@ -1,61 +1,56 @@
-<core:FragmentDefinition
-	xmlns="sap.m"
-	xmlns:core="sap.ui.core"
-	xmlns:mvc="sap.ui.core.mvc">
-	<Popover
-		showHeader="false"
-		contentWidth="480px"
-		contentHeight="500px"
-		placement="Bottom" >
-        <footer>
-			<OverflowToolbar>
-				<ToolbarSpacer/>
-				<Button type="Emphasized" text="모두 확인 처리" press="" />
-                <Button text="닫기" press="notifyClosePopover" />
-			</OverflowToolbar>
-		</footer>
-		<!-- <List headerText="Custom Content" mode="Delete" items="{path: '/ProductCollection'}" > -->
-        <List class="notify">
-            <headerToolbar>
-                <OverflowToolbar>
-                    <content>
-                        <Title text="알림센터" level="H3"/>
-                        <ToolbarSpacer />
-                        <Label text="미확인 건만 조회" />
-                        <Switch state="true" customTextOn=" " customTextOff=" ">
-                            <layoutData>
-                                <FlexItemData growFactor="1"/>
-                            </layoutData>
-                        </Switch>
-                    </content>
-                </OverflowToolbar>
-            </headerToolbar>
-            <CustomListItem>            
-                <HBox>
-                    <core:Icon size="1rem" src="sap-icon://attachment-photo" />
-                    <VBox class="subject" >
-                        <Link text="일이삼사오육칠팔구십일이삼사오육칠팔구십" target="{ProductPicUrl}" press="handlePress"/>
-                        <Text text="2022.12.25 09:23"/>
-                    </VBox>
-                    <HBox>
-                        <Button type="Transparent" class="icon-button notice" />
-                        <Label text="미확인" class="status"/>
-                    </HBox>
-                </HBox>
-            </CustomListItem>
-            <CustomListItem class="read">
-                <HBox>
-                    <core:Icon size="1rem" src="sap-icon://attachment-photo" class="" />
-                    <VBox class="subject" >
-                        <Link text="일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십" target="{ProductPicUrl}" press="handlePress"/>
-                        <Text text="2022.12.25 09:23"/>
-                    </VBox>
-                    <HBox class="" alignItems="Center" >
-                        <Button type="Transparent" class="icon-button notice" />
-                        <Label text="확인" class="status" />
-                    </HBox>
-                </HBox>
-            </CustomListItem>
-        </List>
-	</Popover>
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:mvc="sap.ui.core.mvc">
+  <Popover showHeader="false" contentWidth="480px" contentHeight="500px" placement="Bottom">
+    <footer>
+      <OverflowToolbar>
+        <ToolbarSpacer/>
+        <Button type="Emphasized" text="모두 확인 처리" press="" />
+        <Button text="닫기" press="notifyClosePopover" />
+      </OverflowToolbar>
+    </footer>
+    <!-- <List headerText="Custom Content" mode="Delete" items="{path: '/ProductCollection'}"> -->
+    <List class="notify">
+      <headerToolbar>
+        <OverflowToolbar>
+          <content>
+            <Title text="알림센터" level="H3"/>
+            <ToolbarSpacer />
+            <Label text="미확인 건만 조회" />
+            <Switch state="true" customTextOn=" " customTextOff=" ">
+              <layoutData>
+                <FlexItemData growFactor="1"/>
+              </layoutData>
+            </Switch>
+          </content>
+        </OverflowToolbar>
+      </headerToolbar>
+      <CustomListItem>
+        <HBox>
+          <core:Icon size="1rem" src="sap-icon://attachment-photo" />
+          <VBox class="subject">
+            <Link text="일이삼사오육칠팔구십일이삼사오육칠팔구십" target="{ProductPicUrl}" press="handlePress"/>
+            <Text text="2022.12.25 09:23"/>
+          </VBox>
+          <HBox>
+            <Button type="Transparent" class="icon-button notice" />
+            <Label text="미확인" class="status"/>
+          </HBox>
+        </HBox>
+      </CustomListItem>
+      <CustomListItem class="read">
+        <HBox>
+          <core:Icon size="1rem" src="sap-icon://attachment-photo" class="" />
+          <VBox class="subject">
+            <Link text="일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십" target="{ProductPicUrl}" press="handlePress"/>
+            <Text text="2022.12.25 09:23"/>
+          </VBox>
+          <HBox class="" alignItems="Center">
+            <Button type="Transparent" class="icon-button notice" />
+            <Label text="확인" class="status" />
+          </HBox>
+        </HBox>
+      </CustomListItem>
+    </List>
+  </Popover>
 </core:FragmentDefinition>

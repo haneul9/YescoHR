@@ -139,25 +139,25 @@
               <List width="100%" rememberSelections="false" showSeparators="None" showNoData="false">
                 <CustomListItem>
                   <HBox>
-                    <ToggleButton type="Transparent" icon="sap-icon://favorite" press="onPress" pressed="true" class="icon-button favorite" />
+                    <ToggleButton type="Transparent" icon="sap-icon://favorite" press="onPress" pressed="true" class="icon-button menu-favorite-icon" />
                     <Text text="역할기술서" />
                   </HBox>
                 </CustomListItem>
                 <CustomListItem>
                   <HBox>
-                    <ToggleButton type="Transparent" icon="sap-icon://favorite" press="onPress" pressed="true" class="icon-button favorite" />
+                    <ToggleButton type="Transparent" icon="sap-icon://favorite" press="onPress" pressed="true" class="icon-button menu-favorite-icon" />
                     <Text text="역할기술서" />
                   </HBox>
                 </CustomListItem>
                 <CustomListItem>
                   <HBox>
-                    <ToggleButton type="Transparent" icon="sap-icon://favorite" press="onPress" pressed="true" class="icon-button favorite" />
+                    <ToggleButton type="Transparent" icon="sap-icon://favorite" press="onPress" pressed="true" class="icon-button menu-favorite-icon" />
                     <Text text="역할기술서" />
                   </HBox>
                 </CustomListItem>
                 <CustomListItem>
                   <HBox>
-                    <ToggleButton type="Transparent" icon="sap-icon://favorite" press="onPress" pressed="true" class="icon-button favorite" />
+                    <ToggleButton type="Transparent" icon="sap-icon://unfavorite" press="onPress" pressed="true" class="icon-button menu-favorite-icon" />
                     <Text text="역할기술서" />
                   </HBox>
                 </CustomListItem>
