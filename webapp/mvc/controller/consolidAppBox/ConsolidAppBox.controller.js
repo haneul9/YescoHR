@@ -85,7 +85,15 @@ sap.ui.define(
           oListModel.setProperty('/AppType', new ComboEntry({ codeKey: 'ZreqForm', valueKey: 'ZreqForx', aEntries: aAppList }));
           oListModel.setProperty('/search/ZreqForm', 'ALL');
 
-          const aMyTotalList = await Client.getEntitySet(oModel, 'TotalApproval1');
+          const dDate = new Date();
+          const mPayLoad = {
+            Begda: moment(new Date(dDate.getFullYear(), dDate.getMonth() - 1, dDate.getDate() + 1))
+              .hours(9)
+              .toDate(),
+            Endda: moment(dDate).hours(9).toDate(),
+          };
+
+          const aMyTotalList = await Client.getEntitySet(oModel, 'TotalApproval1', mPayLoad);
 
           oListModel.setProperty('/Total', aMyTotalList[0]);
         } catch (oError) {
@@ -125,7 +133,11 @@ sap.ui.define(
         const vPath = oEvent.getParameter('rowBindingContext').getPath();
         const oListModel = this.getViewModel();
         const oRowData = oListModel.getProperty(vPath);
-        const sMenuUrl = `${AppUtils.getAppComponent().getMenuModel().getProperties(`${oRowData.MidE}`).Mnurl}-detail`;
+        let sMenuUrl = `${AppUtils.getAppComponent().getMenuModel().getProperties(`${oRowData.MidE}`).Mnurl}-detail`;
+
+        if (oRowData.ZreqForm === 'HR08') {
+          sMenuUrl = 'housingLoan-repay';
+        }
 
         this.getRouter().navTo(sMenuUrl, { oDataKey: oRowData.Appno });
       },

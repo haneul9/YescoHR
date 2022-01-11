@@ -48,6 +48,8 @@ sap.ui.define(
           plans: [],
           PlanMonths: [],
           WorkMonths: [],
+          VacaTypeList1: [],
+          VacaTypeList2: [],
           vacationChart: {
             dUsed: 0,
             dPlan: 0,
@@ -100,6 +102,12 @@ sap.ui.define(
 
           // 휴가유형 별 현황
           const aVacaTypeList = await Client.getEntitySet(oModel, 'AbsQuotaList', { Menid: this.getCurrentMenuId() });
+
+          oViewModel.setProperty('/VacaTypeList1', aVacaTypeList.slice(0, 4));
+
+          if (aVacaTypeList.length > 3) {
+            oViewModel.setProperty('/VacaTypeList2', aVacaTypeList.slice(4));
+          }
 
           debugger;
 
