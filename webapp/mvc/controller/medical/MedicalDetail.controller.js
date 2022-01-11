@@ -12,6 +12,7 @@ sap.ui.define(
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/TableUtils',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/exceptions/ODataCreateError',
@@ -32,6 +33,7 @@ sap.ui.define(
     FragmentEvent,
     TextUtils,
     TableUtils,
+    Client,
     ServiceNames,
     ODataReadError,
     ODataCreateError,
@@ -227,7 +229,7 @@ sap.ui.define(
         });
       },
 
-      getReceiptList(sKey, sAdult) {
+      async getReceiptList(sKey, sAdult) {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
         const sWerks = this.getSessionProperty('Werks');
@@ -242,11 +244,15 @@ sap.ui.define(
           sKey = mFormData.Famgb;
           sAdult = mFormData.Adult;
           sPyyea = mFormData.Pyyea;
+        } else {
+          const aYearData = await Client.getEntitySet(oModel, 'MedExpenseMymed');
+
+          sPyyea = aYearData[0].Zyear;
         }
 
         // 영수증구분
         oModel.read('/MedExpenseReceiptListSet', {
-          filters: [new sap.ui.model.Filter('Adult', sap.ui.model.FilterOperator.EQ, sAdult), new sap.ui.model.Filter('Famgb', sap.ui.model.FilterOperator.EQ, sKey), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks), new sap.ui.model.Filter('Pyyea', sap.ui.model.FilterOperator.EQ, sPyyea || String(new Date().getFullYear())), new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sAppno)],
+          filters: [new sap.ui.model.Filter('Adult', sap.ui.model.FilterOperator.EQ, sAdult), new sap.ui.model.Filter('Famgb', sap.ui.model.FilterOperator.EQ, sKey), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks), new sap.ui.model.Filter('Pyyea', sap.ui.model.FilterOperator.EQ, sPyyea), new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sAppno)],
           success: (oData) => {
             if (oData) {
               oDetailModel.setProperty('/ReceiptType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: oData.results }));

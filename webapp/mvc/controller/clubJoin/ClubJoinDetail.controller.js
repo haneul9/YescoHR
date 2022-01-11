@@ -206,7 +206,7 @@ sap.ui.define(
               oDetailModel.setProperty('/FormData/Coaid', 'X');
             },
             error: (oError) => {
-              AppUtils.handleError(oError);
+              AppUtils.handleError(new ODataReadError(oError));
               oDetailModel.setProperty('/FormData/Coaid', '');
             },
           });

@@ -11,7 +11,7 @@
         <Button icon="sap-icon://less" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" text="{i18n>LABEL_00110}" press=".onDelDetails" />
       </HBox>
     </HBox>
-    <table:Table id="medHisTable" cellClick=".onDetailsRow" rowSelectionChange=".onRowSelection" class="row-link" rows="{/HisList}" visibleRowCount="{/listInfo/rowCount}" width="100%" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
+    <table:Table id="medHisTable" cellClick=".onDetailsRow" fixedColumnCount="5" rowSelectionChange=".onRowSelection" class="row-link" rows="{/HisList}" visibleRowCount="{/listInfo/rowCount}" width="100%" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
       <table:rowSettingsTemplate>
         <table:RowSettings highlight="{
                     path: 'ZappStat',
@@ -19,7 +19,7 @@
                 }"/>
       </table:rowSettingsTemplate>
       <table:columns>
-        <table:Column width="auto">
+        <table:Column width="50px">
           <Label text="{i18n>LABEL_00164}"/>
           <table:template>
             <Text text="{Seqnr}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
