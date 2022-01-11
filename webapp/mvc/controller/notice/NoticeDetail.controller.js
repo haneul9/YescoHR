@@ -70,6 +70,7 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const sMenid = this.getCurrentMenuId();
 
+        debugger;
         oDetailModel.setProperty('/ViewKey', sDataKey);
         oDetailModel.setProperty('/Menid', sMenid);
 
@@ -106,11 +107,14 @@ sap.ui.define(
           this.settingsAttachTable();
           oDetailModel.setProperty('/busy', false);
         } else {
-          const oView = this.getView();
-          const oListView = oView.getParent().getPage(this.isHass() ? this.LIST_PAGE_ID.H : this.LIST_PAGE_ID.E);
-          const mListData = oListView.getModel().getProperty('/parameter');
-          const sWerks = this.getSessionProperty('Werks');
           let oSendObject = {};
+          if (sViewKey === 0) {
+          } else {
+            const oView = this.getView();
+            const oListView = oView.getParent().getPage(this.isHass() ? this.LIST_PAGE_ID.H : this.LIST_PAGE_ID.E);
+            const mListData = oListView.getModel().getProperty('/parameter');
+          }
+          const sWerks = this.getSessionProperty('Werks');
 
           oSendObject.Prcty = '1';
           oSendObject.Sdate = mListData.Sdate;

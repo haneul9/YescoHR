@@ -81,6 +81,10 @@ sap.ui.define(
             }
           })
           .nodeContent(function (o) {
+            const sJikgbtlLabel = _.isEmpty(o.data.Ename) ? '' : '직급';
+            const sIpdatLabel = _.isEmpty(o.data.Ename) ? '' : '입사일';
+            const sTenureLabel = _.isEmpty(o.data.Ename) ? '' : '현부서재임기간';
+
             return `
             <div class="org-container" style="height: ${o.height}px;">
               <div class="title level${o.data.ZorgLevl}">${o.data.Stext}</div>
@@ -88,11 +92,11 @@ sap.ui.define(
                   <img src="${o.data.Photo}" loading="lazy" />
               </div>
               <div class="name">${o.data.Ename}</div>
-              <div class="label">직급</div>
+              <div class="label">${sJikgbtlLabel}</div>
               <div class="content">${o.data.Jikgbtl}</div>
-              <div class="label">입사일</div>
+              <div class="label">${sIpdatLabel}</div>
               <div class="content">${o.data.Ipdat}</div>
-              <div class="label">현부서재임기간</div>
+              <div class="label">${sTenureLabel}</div>
               <div class="content">${o.data.Tenure}</div>
             </div>
             `;

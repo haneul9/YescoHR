@@ -18,7 +18,7 @@ sap.ui.define(
           Stext: { type: 'String', defaultValue: null },
           Pernr: { type: 'String', defaultValue: null },
           Ename: { type: 'String', defaultValue: null },
-          Ipdat: { type: 'Object', defaultValue: null },
+          Ipdat: { type: 'String', defaultValue: null },
           Photo: { type: 'String', defaultValue: null },
           Botxt: { type: 'String', defaultValue: null },
           Jikgbtl: { type: 'String', defaultValue: null },
