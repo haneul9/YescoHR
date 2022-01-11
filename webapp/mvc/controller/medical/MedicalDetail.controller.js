@@ -410,14 +410,14 @@ sap.ui.define(
                 oSendObject.MedExpenseItemSet = oDetailModel.getProperty('/HisList');
                 // FileUpload
                 if (!!AttachFileAction.getFileCount.call(this)) {
-                  await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.APPTP);
+                  await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
                 }
 
                 const aHislist = oDetailModel.getProperty('/HisList');
 
                 if (!!aHislist.length && !!this.byId('DetailHisDialog')) {
                   await aHislist.forEach((e) => {
-                    AttachFileAction.uploadFile.call(this, e.Appno2, this.APPTP, this.DIALOG_FILE_ID);
+                    AttachFileAction.uploadFile.call(this, e.Appno2, this.getApprovalType(), this.DIALOG_FILE_ID);
                   });
                 }
 
@@ -425,7 +425,7 @@ sap.ui.define(
 
                 if (!!aDeleteDatas.length) {
                   await aDeleteDatas.forEach((e) => {
-                    AttachFileAction.deleteFile(e.Appno2, this.APPTP);
+                    AttachFileAction.deleteFile(e.Appno2, this.getApprovalType());
                   });
                 }
 
@@ -485,14 +485,14 @@ sap.ui.define(
 
                 // FileUpload
                 if (!!AttachFileAction.getFileCount.call(this)) {
-                  await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.APPTP);
+                  await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
                 }
 
                 const aHislist = oDetailModel.getProperty('/HisList');
 
                 if (!!aHislist.length && !!this.byId('DetailHisDialog')) {
                   await aHislist.forEach((e) => {
-                    AttachFileAction.uploadFile.call(this, e.Appno2, this.APPTP, this.DIALOG_FILE_ID);
+                    AttachFileAction.uploadFile.call(this, e.Appno2, this.getApprovalType(), this.DIALOG_FILE_ID);
                   });
                 }
 
@@ -500,7 +500,7 @@ sap.ui.define(
 
                 if (!!aDeleteDatas.length) {
                   await aDeleteDatas.forEach((e) => {
-                    AttachFileAction.deleteFile(e.Appno2, this.APPTP);
+                    AttachFileAction.deleteFile(e.Appno2, this.getApprovalType());
                   });
                 }
 
@@ -663,7 +663,7 @@ sap.ui.define(
 
         AttachFileAction.setAttachFile(this, {
           Editable: !sStatus || sStatus === '10',
-          Type: this.APPTP,
+          Type: this.getApprovalType(),
           Appno: sAppno,
           Max: 10,
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
@@ -816,7 +816,7 @@ sap.ui.define(
           this.setAppAmount();
           this.addSeqnrNum();
 
-          await AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.APPTP, this.DIALOG_FILE_ID);
+          await AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.getApprovalType(), this.DIALOG_FILE_ID);
 
           setTimeout(async () => {
             const aFileList = await AttachFileAction.refreshAttachFileList(this, this.DIALOG_FILE_ID);
@@ -862,7 +862,7 @@ sap.ui.define(
               oDetailModel.setProperty(`/HisList/${i}`, mDialogData);
             }
           });
-          await AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.APPTP, this.DIALOG_FILE_ID);
+          await AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.getApprovalType(), this.DIALOG_FILE_ID);
 
           setTimeout(async () => {
             const aFileList = await AttachFileAction.refreshAttachFileList(this, this.DIALOG_FILE_ID);
@@ -1031,7 +1031,7 @@ sap.ui.define(
 
         AttachFileAction.setAttachFile(this, {
           Id: this.DIALOG_FILE_ID,
-          Type: this.APPTP,
+          Type: this.getApprovalType(),
           Editable: true,
           Appno: sAppno,
           Max: 1,

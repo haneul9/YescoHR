@@ -546,7 +546,7 @@ sap.ui.define(
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.APPTP);
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/SchExpenseApplSet', oSendObject, {
@@ -601,7 +601,7 @@ sap.ui.define(
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.APPTP);
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/SchExpenseApplSet', oSendObject, {
@@ -707,7 +707,7 @@ sap.ui.define(
 
         AttachFileAction.setAttachFile(this, {
           Editable: !sStatus || sStatus === '10',
-          Type: this.APPTP,
+          Type: this.getApprovalType(),
           Appno: sAppno,
           Message: this.getBundleText('MSG_00040'),
           Max: 10,

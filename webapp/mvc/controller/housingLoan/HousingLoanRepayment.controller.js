@@ -438,7 +438,7 @@ sap.ui.define(
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oDialogData.Appno, this.APPTP);
+                await AttachFileAction.uploadFile.call(this, oDialogData.Appno, this.getApprovalType());
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/LoanRepayApplSet', oSendObject, {
@@ -494,7 +494,7 @@ sap.ui.define(
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oDialogData.Appno, this.APPTP);
+                await AttachFileAction.uploadFile.call(this, oDialogData.Appno, this.getApprovalType());
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/LoanRepayApplSet', oSendObject, {
@@ -605,7 +605,7 @@ sap.ui.define(
 
         AttachFileAction.setAttachFile(this, {
           Editable: !sStatus || sStatus === '10',
-          Type: this.APPTP,
+          Type: this.getApprovalType(),
           Appno: sAppno,
           Max: 1,
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
