@@ -56,6 +56,7 @@ sap.ui.define(
           menid: this.getCurrentMenuId(),
           Hass: this.isHass(),
           ViewKey: '',
+          sYear: '',
           FormData: {},
           DialogData: {},
           TargetDetails: {},
@@ -149,12 +150,13 @@ sap.ui.define(
           </ul>
           ${sMsg}`
         );
+        const sYear = await this.getTotalYear();
+
+        oDetailModel.setProperty('/sYear', sYear);
 
         if (sViewKey === 'N' || !sViewKey) {
-          const sYear = await this.getTotalYear();
           const mSessionData = this.getSessionData();
 
-          // oDetailModel.setProperty('/FormData/Appernr', mSessionData.Pernr);
           oDetailModel.setProperty('/FormData', {
             Kdsvh: 'ALL',
             Apcnt: '0',
@@ -818,17 +820,19 @@ sap.ui.define(
 
           await AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.getApprovalType(), this.DIALOG_FILE_ID);
 
-          setTimeout(async () => {
-            const aFileList = await AttachFileAction.refreshAttachFileList(this, this.DIALOG_FILE_ID);
-            let bFile = '';
+          const oDialogModel = this.getViewModel(this.DIALOG_FILE_ID);
+          let bFile = '';
 
-            if (!!aFileList.length) {
-              bFile = 'X';
-            }
+          if (!!oDialogModel.getProperty('/DeleteDatas').length) {
+            bFile = '';
+          }
 
-            oDetailModel.setProperty('/DialogData/Attyn', bFile);
-            this.byId('DetailHisDialog').close();
-          }, 200);
+          if (!!oDialogModel.getProperty('/Data').length) {
+            bFile = 'X';
+          }
+
+          oDetailModel.setProperty('/DialogData/Attyn', bFile);
+          this.byId('DetailHisDialog').close();
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -862,20 +866,24 @@ sap.ui.define(
               oDetailModel.setProperty(`/HisList/${i}`, mDialogData);
             }
           });
+
           await AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.getApprovalType(), this.DIALOG_FILE_ID);
 
-          setTimeout(async () => {
-            const aFileList = await AttachFileAction.refreshAttachFileList(this, this.DIALOG_FILE_ID);
-            let bFile = '';
+          const oDialogModel = this.getViewModel(this.DIALOG_FILE_ID);
 
-            if (!!aFileList.length) {
-              bFile = 'X';
-            }
+          let bFile = '';
 
-            oDetailModel.setProperty('/DialogData/Attyn', bFile);
-            this.setAppAmount();
-            this.byId('DetailHisDialog').close();
-          }, 200);
+          if (!!oDialogModel.getProperty('/DeleteDatas').length) {
+            bFile = '';
+          }
+
+          if (!!oDialogModel.getProperty('/Data').length) {
+            bFile = 'X';
+          }
+
+          oDetailModel.setProperty('/DialogData/Attyn', bFile);
+          this.setAppAmount();
+          this.byId('DetailHisDialog').close();
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -1012,7 +1020,7 @@ sap.ui.define(
         if (!mRowData) {
           oDetailModel.setProperty('/DialogData', {
             Recpgb: 'ALL',
-            Prate: '0',
+            Pratetx: '0',
             Pybet: '0',
             isNew: true,
           });
@@ -1021,7 +1029,10 @@ sap.ui.define(
           oDetailModel.setProperty('/DialogData/isNew', false);
         }
 
-        oDetailModel.setProperty('/DialogData/maxDate', new Date(new Date().getFullYear(), 12, 0));
+        const iYear = parseInt(oDetailModel.getProperty('/sYear'));
+
+        oDetailModel.setProperty('/DialogData/minDate', new Date(iYear, 0, 1));
+        oDetailModel.setProperty('/DialogData/maxDate', new Date(iYear, 12, 0));
       },
 
       // Dialog AttachFileTable Settings

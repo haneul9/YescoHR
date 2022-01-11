@@ -13,7 +13,7 @@
                 <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 2fr" gridGap="1px 0" class="form-grid">
                     <Label text="{i18n>LABEL_09021}"/>
                     <VBox>
-                        <custom:DateRangeSelection maxDate="{/DialogData/maxDate}" dateValue="{ path: '/DialogData/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/DialogData/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date required" />
+                        <custom:DateRangeSelection maxDate="{/DialogData/maxDate}" minDate="{/DialogData/minDate}" dateValue="{ path: '/DialogData/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/DialogData/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date required" />
                     </VBox>
                     <Label text="{i18n>LABEL_09016}"/>
                     <FlexBox alignItems="Start" justifyContent="End">
