@@ -19,9 +19,8 @@ sap.ui.define(
     return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.P01PortletHandler', {
       async readContentData() {
         const oModel = this.getController().getModel(ServiceNames.COMMON);
-        const sUrl = 'PortletPernrInfo';
 
-        return Client.getEntitySet(oModel, sUrl);
+        return Client.getEntitySet(oModel, 'PortletPernrInfo');
       },
     });
   }

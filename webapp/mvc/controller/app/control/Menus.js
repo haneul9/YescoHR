@@ -6,7 +6,6 @@ sap.ui.define(
     'sap/ui/core/CustomData',
     'sap/ui/core/Fragment',
     'sap/ui/core/routing/HashChanger',
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -20,7 +19,6 @@ sap.ui.define(
     CustomData,
     Fragment,
     HashChanger,
-    JSONModel,
     AppUtils,
     Client,
     ServiceNames,
@@ -128,21 +126,16 @@ sap.ui.define(
        * @param {object} oEvent
        */
       async toggleFavorite(oEvent) {
-        const oEventSource = oEvent.getSource();
-        const oContext = oEventSource.getBindingContext();
+        const oContext = oEvent.getSource().getBindingContext();
+        const bPressed = oEvent.getParameter('pressed');
 
-        if (this.oMenuModel.getFavoriteMenid().length >= 10) {
-          return;
+        const bSuccess = await this.saveFavorite(oContext.getProperty());
+        if (bSuccess) {
+          AppUtils.getAppComponent().byId('home').getModel().getProperty('/activeInstanceMap/P05').refreshFavorites();
+        } else {
+          const sPath = oContext.getPath();
+          oContext.getModel().setProperty(`${sPath}/Favor`, !bPressed);
         }
-
-        this.saveFavorite(oContext.getProperty());
-        // if (bSuccess) {
-        //   if (oContext.getProperty('Favor')) {
-        //     oContextModel.setProperty(`${sPath}/Icon`, 'sap-icon://unfavorite');
-        //   } else {
-        //     oContextModel.setProperty(`${sPath}/Icon`, 'sap-icon://favorite');
-        //   }
-        // }
       },
 
       async saveFavorite({ Favor, Menid, Mnid1, Mnid2, Mnid3 }) {
@@ -168,9 +161,7 @@ sap.ui.define(
 
           return true;
         } catch (oError) {
-          AppUtils.debug('Menus > saveFavorite error.', oError);
-
-          AppUtils.handleError({ message: AppUtils.getBundleText('MSG_00008', 'MSG_01002') }); // {즐겨찾기 수정}중 오류가 발생하였습니다.
+          AppUtils.handleError(oError);
 
           return false;
         }

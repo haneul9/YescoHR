@@ -1,7 +1,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/home/portlets/AbstractPortletHandler',
@@ -9,7 +8,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    AppUtils,
     Client,
     ServiceNames,
     AbstractPortletHandler
@@ -22,27 +20,11 @@ sap.ui.define(
     return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.P02PortletHandler', {
       async readContentData() {
         const oModel = this.getController().getModel(ServiceNames.COMMON);
-        const sUrl = 'PortletNotice';
 
-        return Client.getEntitySet(oModel, sUrl);
+        return Client.getEntitySet(oModel, 'PortletNotice');
       },
 
       transformContentData(aPortletContentData = []) {
-        // const mTemp = aPortletContentData[0];
-        // aPortletContentData.splice(0, 0, { ...mTemp }, { ...mTemp }, { ...mTemp }, { ...mTemp }, { ...mTemp }, { ...mTemp }, { ...mTemp }, { ...mTemp }, { ...mTemp }, { ...mTemp }, { ...mTemp }, { ...mTemp }, { ...mTemp }, { ...mTemp });
-
-        // aPortletContentData.forEach((mData, i) => {
-        //   mData.Title += mData.Title;
-        //   mData.Newitem = '';
-        //   mData.Impor = '';
-        //   if (i % 3 === 1) {
-        //     mData.Newitem = 'X';
-        //   }
-        //   if (i % 3 === 2) {
-        //     mData.Impor = 'X';
-        //   }
-        // });
-
         let newCount = 0;
         let importantCount = 0;
 

@@ -172,12 +172,12 @@ sap.ui.define(
       },
 
       async refreshMyMembers() {
-        const oModel = this.getController().getModel(ServiceNames.COMMON);
-        const aMyMembers = await Client.getEntitySet(oModel, 'PortletPartners');
+        const aMyMembers = await this.readContentData();
         const mMyMembers = this.transformMembersData(aMyMembers);
+        const oPortletModel = this.getPortletModel();
 
-        this.getPortletModel().setProperty('/myMembers/list', mMyMembers.list);
-        this.getPortletModel().setProperty('/myMembers/listCount', mMyMembers.listCount);
+        oPortletModel.setProperty('/myMembers/list', mMyMembers.list);
+        oPortletModel.setProperty('/myMembers/listCount', mMyMembers.listCount);
       },
 
       destroy() {

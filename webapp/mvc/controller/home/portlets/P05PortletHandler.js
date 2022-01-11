@@ -16,7 +16,7 @@ sap.ui.define(
     'use strict';
 
     /**
-     * 공지사항 Portlet
+     * 즐겨찾기 Portlet
      */
     return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.P05PortletHandler', {
       init() {
@@ -29,13 +29,18 @@ sap.ui.define(
 
       async readContentData() {
         const oModel = this.getController().getModel(ServiceNames.COMMON);
-        const sUrl = 'PortletFavoriteMenu';
 
-        return Client.getEntitySet(oModel, sUrl);
+        return Client.getEntitySet(oModel, 'PortletFavoriteMenu');
       },
 
       transformContentData(aPortletContentData = []) {
-        const aList = aPortletContentData.map((mFavoriteMenuData) => this.oMenuModel.getProperties(mFavoriteMenuData.Menid));
+        const aList = aPortletContentData
+          .filter(({ Menid }) => {
+            return Menid && this.oMenuModel.getProperties(Menid);
+          })
+          .map(({ Menid }) => {
+            return { ...this.oMenuModel.getProperties(Menid), Favor: true };
+          });
         return {
           list: aList,
           listCount: aList.length,
@@ -43,18 +48,29 @@ sap.ui.define(
       },
 
       async toggleFavorite(oEvent) {
-        const oEventSource = oEvent.getSource();
-        const oContext = oEventSource.getBindingContext();
+        const oContext = oEvent.getSource().getBindingContext();
+        const bPressed = oEvent.getParameter('pressed');
 
         const bSuccess = await this.oAppMenu.saveFavorite(oContext.getProperty());
         if (bSuccess) {
-          const oPortletModel = this.getPortletModel();
-          const sMenid = oContext.getProperty('Menid');
-          _.remove(oPortletModel.getProperty('/list'), (mMenuProperties) => {
-            return mMenuProperties.Menid === sMenid;
-          });
-          oPortletModel.refresh();
+          // 즐겨찾기 Portlet 새로고침
+          this.refreshFavorites();
+
+          // 메뉴에서 즐겨찾기 제거
+          this.oMenuModel.removeFavoriteMenid(oContext.getProperty('Menid'));
+        } else {
+          const sPath = oContext.getPath();
+          oContext.getModel().setProperty(`${sPath}/Favor`, !bPressed);
         }
+      },
+
+      async refreshFavorites() {
+        const aFavorites = await this.readContentData();
+        const mFavorites = this.transformContentData(aFavorites);
+        const oPortletModel = this.getPortletModel();
+
+        oPortletModel.setProperty('/list', mFavorites.list);
+        oPortletModel.setProperty('/listCount', mFavorites.listCount);
       },
 
       formatMenuUrl(...aArgs) {

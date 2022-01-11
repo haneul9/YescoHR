@@ -81,7 +81,7 @@ sap.ui.define(
             aFavoriteMenids.push(m.Menid);
           }
 
-          $.extend(true, mMenuProperties, {
+          $.extend(mMenuProperties, {
             Level: 3,
             Mnid1: m.Mnid1,
             Mnid2: m.Mnid2,
@@ -113,7 +113,7 @@ sap.ui.define(
             aFavoriteMenids.push(m.Menid);
           }
 
-          $.extend(true, mMenuProperties, {
+          $.extend(mMenuProperties, {
             Level: 2,
             Menid: m.Menid,
             Mnid2: m.Mnid2,
@@ -146,7 +146,7 @@ sap.ui.define(
             aFavoriteMenids.push(m.Menid);
           }
 
-          $.extend(true, mMenuProperties, {
+          $.extend(mMenuProperties, {
             Level: 1,
             Menid: m.Menid,
             Mnid1: m.Mnid1,
@@ -454,20 +454,20 @@ sap.ui.define(
       },
 
       getFavoriteMenids() {
-        return this.getProperty('/aFavoriteMenids');
+        return this.getProperty('/favoriteMenids');
       },
 
       addFavoriteMenid(sMenid) {
-        // this.setProperty(`/menidToProperties/${sMenid}/Favor`, true);
-        // this.setProperty(`/menidToProperties/${sMenid}/Icon`, 'sap-icon://favorite');
-        this.getProperty('/aFavoriteMenids').push(sMenid);
+        this.setProperty(`/menidToProperties/${sMenid}/Favor`, true);
+
+        this.getProperty('/favoriteMenids').push(sMenid);
         this.refresh();
       },
 
       removeFavoriteMenid(sMenid) {
-        // this.setProperty(`/menidToProperties/${sMenid}/Favor`, false);
-        // this.setProperty(`/menidToProperties/${sMenid}/Icon`, 'sap-icon://unfavorite');
-        _.pull(this.getProperty('/aFavoriteMenids'), sMenid);
+        this.setProperty(`/menidToProperties/${sMenid}/Favor`, false);
+
+        _.pull(this.getProperty('/favoriteMenids'), sMenid);
         this.refresh();
       },
 
