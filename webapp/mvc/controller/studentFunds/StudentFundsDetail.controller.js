@@ -509,14 +509,17 @@ sap.ui.define(
 
       // 재작성
       onRewriteBtn() {
-        this.getViewModel().setProperty('/FormData/ZappStatAl', '');
+        const oDetailModel = this.getViewModel();
+
+        oDetailModel.setProperty('/FormData/Appno', '');
+        oDetailModel.setProperty('/FormData/ZappStatAl', '');
       },
 
       // 임시저장
       onSaveBtn() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
-        const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
+        const sAppno = oDetailModel.getProperty('/FormData/Appno');
         const oFormData = oDetailModel.getProperty('/FormData');
 
         if (this.checkError()) return;
@@ -528,10 +531,10 @@ sap.ui.define(
               try {
                 AppUtils.setAppBusy(true, this);
 
-                if (!sStatus || sStatus === '45') {
-                  const vAppno = await Appno.get.call(this);
+                if (!sAppno) {
+                  const sAppno = await Appno.get.call(this);
 
-                  oDetailModel.setProperty('/FormData/Appno', vAppno);
+                  oDetailModel.setProperty('/FormData/Appno', sAppno);
                   oDetailModel.setProperty('/FormData/Appdt', new Date());
                 }
 
@@ -543,7 +546,7 @@ sap.ui.define(
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.APPTP);
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/SchExpenseApplSet', oSendObject, {
@@ -571,7 +574,7 @@ sap.ui.define(
       onApplyBtn() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
-        const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
+        const sAppno = oDetailModel.getProperty('/FormData/Appno');
         const oFormData = oDetailModel.getProperty('/FormData');
 
         if (this.checkError('O')) return;
@@ -583,10 +586,10 @@ sap.ui.define(
               try {
                 AppUtils.setAppBusy(true, this);
 
-                if (!sStatus || sStatus === '45') {
-                  const vAppno = await Appno.get.call(this);
+                if (!sAppno) {
+                  const sAppno = await Appno.get.call(this);
 
-                  oDetailModel.setProperty('/FormData/Appno', vAppno);
+                  oDetailModel.setProperty('/FormData/Appno', sAppno);
                   oDetailModel.setProperty('/FormData/Appdt', new Date());
                 }
 
@@ -598,7 +601,7 @@ sap.ui.define(
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.APPTP);
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/SchExpenseApplSet', oSendObject, {
@@ -704,7 +707,7 @@ sap.ui.define(
 
         AttachFileAction.setAttachFile(this, {
           Editable: !sStatus || sStatus === '10',
-          Type: this.APPTP,
+          Type: this.getApprovalType(),
           Appno: sAppno,
           Message: this.getBundleText('MSG_00040'),
           Max: 10,

@@ -384,7 +384,7 @@ sap.ui.define(
                 oSendObject.Menid = sMenid;
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.APPTP);
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/FamilyInfoApplSet', oSendObject, {
@@ -454,7 +454,7 @@ sap.ui.define(
 
         AttachFileAction.setAttachFile(this, {
           Editable: !sStatus || sStatus === '10',
-          Type: this.APPTP,
+          Type: this.getApprovalType(),
           Appno: sAppno,
           Max: 10,
         });

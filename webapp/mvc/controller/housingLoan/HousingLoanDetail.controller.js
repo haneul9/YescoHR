@@ -501,14 +501,17 @@ sap.ui.define(
 
       // 재작성
       onRewriteBtn() {
-        this.getViewModel().setProperty('/FormData/Lnsta', '');
+        const oDetailModel = this.getViewModel();
+
+        oDetailModel.setProperty('/FormData/Appno', '');
+        oDetailModel.setProperty('/FormData/Lnsta', '');
       },
 
       // 임시저장
       onSaveBtn() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
-        const sStatus = oDetailModel.getProperty('/FormData/Lnsta');
+        const sAppno = oDetailModel.getProperty('/FormData/Appno');
         const oFormData = oDetailModel.getProperty('/FormData');
 
         if (this.checkError()) return;
@@ -520,10 +523,10 @@ sap.ui.define(
               try {
                 AppUtils.setAppBusy(true, this);
 
-                if (!sStatus) {
-                  const vAppno = await Appno.get.call(this);
+                if (!sAppno) {
+                  const sAppno = await Appno.get.call(this);
 
-                  oDetailModel.setProperty('/FormData/Appno', vAppno);
+                  oDetailModel.setProperty('/FormData/Appno', sAppno);
                   oDetailModel.setProperty('/FormData/Appda', new Date());
                 }
 
@@ -535,7 +538,7 @@ sap.ui.define(
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.APPTP);
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/LoanAmtApplSet', oSendObject, {
@@ -563,7 +566,7 @@ sap.ui.define(
       onApplyBtn() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
-        const sStatus = oDetailModel.getProperty('/FormData/Lnsta');
+        const sAppno = oDetailModel.getProperty('/FormData/Appno');
         const oFormData = oDetailModel.getProperty('/FormData');
 
         if (this.checkError()) return;
@@ -575,10 +578,10 @@ sap.ui.define(
               try {
                 AppUtils.setAppBusy(true, this);
 
-                if (!sStatus) {
-                  const vAppno = await Appno.get.call(this);
+                if (!sAppno) {
+                  const sAppno = await Appno.get.call(this);
 
-                  oDetailModel.setProperty('/FormData/Appno', vAppno);
+                  oDetailModel.setProperty('/FormData/Appno', sAppno);
                   oDetailModel.setProperty('/FormData/Appda', new Date());
                 }
 
@@ -590,7 +593,7 @@ sap.ui.define(
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.APPTP);
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/LoanAmtApplSet', oSendObject, {
@@ -699,7 +702,7 @@ sap.ui.define(
 
         AttachFileAction.setAttachFile(this, {
           Editable: !sStatus || sStatus === '10',
-          Type: this.APPTP,
+          Type: this.getApprovalType(),
           Appno: sAppno,
           Max: 10,
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
