@@ -66,7 +66,7 @@ sap.ui.define(
       },
 
       onClick() {
-        this.getRouter().navTo(this.isHass() ? 'h/notice-detail' : 'notice-detail', { oDataKey: 'N' });
+        this.getRouter().navTo(this.isHass() ? 'h/notice-detail' : 'notice-detail', { Sdate: 'N', Seqnr: 'N' });
       },
 
       onSearch() {
@@ -116,7 +116,7 @@ sap.ui.define(
         const oRowData = this.getViewModel().getProperty(vPath);
 
         this.getViewModel().setProperty('/parameter', oRowData);
-        this.getRouter().navTo(this.isHass() ? 'h/notice-detail' : 'notice-detail', { oDataKey: oRowData.Appno });
+        this.getRouter().navTo(this.isHass() ? 'h/notice-detail' : 'notice-detail', { Sdate: oRowData.Sdate.getTime(), Seqnr: oRowData.Seqnr });
       },
 
       onPressExcelDownload() {

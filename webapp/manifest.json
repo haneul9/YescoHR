@@ -122,9 +122,9 @@
         { "pattern": "housingLoanRepay/{oDataKey}", "name": "housingLoan-repay", "target": "housingLoanRepay" },
 
         { "pattern": "notice", "name": "notice", "target": "notice" },
-        { "pattern": "notice/{oDataKey}/:Sdate:/:Seqnr:", "name": "notice-detail", "target": "noticeDetail" },
+        { "pattern": "notice/{Sdate}/{Seqnr}", "name": "notice-detail", "target": "noticeDetail" },
         { "pattern": "h/notice", "name": "h/notice", "target": "h/notice" },
-        { "pattern": "h/notice/{oDataKey}", "name": "h/notice-detail", "target": "noticeDetail" },
+        { "pattern": "h/notice/{Sdate}/{Seqnr}", "name": "h/notice-detail", "target": "noticeDetail" },
 
         { "pattern": "m/EvalKpi", "name": "m/EvalKpi", "target": "m/EvalKpi" },
 

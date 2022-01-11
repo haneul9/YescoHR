@@ -40,7 +40,8 @@ sap.ui.define(
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
-          ViewKey: '',
+          ViewSeqnr: '',
+          ViewSdate: '',
           MenId: '',
           MySelf: false,
           Hass: this.isHass(),
@@ -55,7 +56,7 @@ sap.ui.define(
       },
 
       getCurrentLocationText(oArguments) {
-        const sAction = oArguments.oDataKey === 'N' ? this.getBundleText('LABEL_00167') : this.getBundleText('LABEL_00165');
+        const sAction = oArguments.Sdate === 'N' ? this.getBundleText('LABEL_00167') : this.getBundleText('LABEL_00165');
 
         return sAction;
       },
@@ -66,12 +67,14 @@ sap.ui.define(
       },
 
       onObjectMatched(oParameter) {
-        const sDataKey = oParameter.oDataKey;
+        const sSdate = new Date(parseInt(oParameter.Sdate)) || oParameter.Sdate;
+        const sSeqnr = oParameter.Seqnr;
         const oDetailModel = this.getViewModel();
         const sMenid = this.getCurrentMenuId();
 
         debugger;
-        oDetailModel.setProperty('/ViewKey', sDataKey);
+        oDetailModel.setProperty('/ViewSeqnr', sSeqnr);
+        oDetailModel.setProperty('/ViewSdate', sSdate);
         oDetailModel.setProperty('/Menid', sMenid);
 
         this.getTargetData();
@@ -93,10 +96,10 @@ sap.ui.define(
       getTargetData() {
         const oModel = this.getModel(ServiceNames.COMMON);
         const oDetailModel = this.getViewModel();
-        const sViewKey = oDetailModel.getProperty('/ViewKey');
+        const sViewSeqnr = oDetailModel.getProperty('/ViewSeqnr');
         const oSessionData = this.getSessionData();
 
-        if (sViewKey === 'N') {
+        if (!sViewSeqnr || sViewSeqnr === 'N') {
           oDetailModel.setProperty('/MySelf', true);
           oDetailModel.setProperty('/FormData', oSessionData);
           oDetailModel.setProperty('/FormData', {
@@ -107,18 +110,13 @@ sap.ui.define(
           this.settingsAttachTable();
           oDetailModel.setProperty('/busy', false);
         } else {
-          let oSendObject = {};
-          if (sViewKey === 0) {
-          } else {
-            const oView = this.getView();
-            const oListView = oView.getParent().getPage(this.isHass() ? this.LIST_PAGE_ID.H : this.LIST_PAGE_ID.E);
-            const mListData = oListView.getModel().getProperty('/parameter');
-          }
           const sWerks = this.getSessionProperty('Werks');
+          const sViewSdate = oDetailModel.getProperty('/ViewSdate');
+          let oSendObject = {};
 
           oSendObject.Prcty = '1';
-          oSendObject.Sdate = mListData.Sdate;
-          oSendObject.Seqnr = mListData.Seqnr;
+          oSendObject.Sdate = sViewSdate;
+          oSendObject.Seqnr = sViewSeqnr;
           oSendObject.Werks = sWerks;
           oSendObject.Notice1Nav = [];
           oSendObject.Notice2Nav = [];
@@ -217,7 +215,7 @@ sap.ui.define(
                 };
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.APPTP);
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/NoticeManageSet', oSendObject, {
@@ -284,7 +282,7 @@ sap.ui.define(
                 };
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.APPTP);
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/NoticeManageSet', oSendObject, {
@@ -404,7 +402,7 @@ sap.ui.define(
 
         AttachFileAction.setAttachFile(this, {
           Editable: !!bHass && !!bMySelf,
-          Type: this.APPTP,
+          Type: this.getApprovalType(),
           Appno: sAppno,
           Max: 10,
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
