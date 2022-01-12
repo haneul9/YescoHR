@@ -169,7 +169,6 @@ sap.ui.define(
           mNavigationInfo.url = 'housingLoan-detail';
         }
 
-        debugger;
         this.getRouter().navTo(
           mNavigationInfo.url,
           _.reduce(mNavigationInfo.key, (acc, cur) => ({ ...acc, [cur.key]: oListModel.getProperty(`${vPath}/${cur.value}`) }), {})
