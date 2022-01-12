@@ -52,6 +52,7 @@ sap.ui.define(
           ZappStatAl: null,
           form: {
             hasRow: false,
+            suggestCompleted: false,
             rowCount: 1,
             listMode: 'MultiToggle',
             Chgrsn: '',
@@ -329,14 +330,39 @@ sap.ui.define(
         const sRowPath = oEvent.getSource()?.getParent()?.getBindingContext()?.getPath();
         let mEmployee = { Pernr: '', Ename: '', Fulln: '', Zzjikgbt: '' };
 
-        if (!_.isEmpty(oSelectedItem)) {
+        if (!_.isEmpty(oSelectedItem) && !_.isEmpty(sRowPath)) {
           const sSelectedPernr = oEvent.getParameter('selectedItem')?.getKey() ?? 'None';
           const aEmployees = oViewModel.getProperty('/form/employees');
 
           mEmployee = _.find(aEmployees, { Pernr: sSelectedPernr }) ?? { Pernr: '', Ename: '', Fulln: '', Zzjikgbt: '' };
-        }
 
-        if (sRowPath) {
+          oViewModel.setProperty('/form/suggestCompleted', true);
+          oViewModel.setProperty(sRowPath, {
+            ...oViewModel.getProperty(sRowPath),
+            PernrA: mEmployee.Pernr,
+            EnameA: mEmployee.Ename,
+            OrgtxA: mEmployee.Fulln,
+            ZzjikgbtA: mEmployee.Zzjikgbt,
+          });
+        }
+      },
+
+      onSubmitSuggest(oEvent) {
+        const oViewModel = this.getViewModel();
+        const sInputValue = oEvent.getParameter('value');
+        const bSuggestCompleted = oViewModel.getProperty('/form/suggestCompleted');
+
+        if (bSuggestCompleted) {
+          oViewModel.setProperty('/form/suggestCompleted', false);
+          return;
+        }
+        if (_.isNaN(parseInt(sInputValue))) return;
+
+        const sRowPath = oEvent.getSource()?.getParent()?.getBindingContext()?.getPath();
+        const aEmployees = oViewModel.getProperty('/form/employees');
+        const [mEmployee] = _.filter(aEmployees, (o) => _.startsWith(o.Pernr, sInputValue));
+
+        if (sRowPath && !_.isEmpty(mEmployee)) {
           oViewModel.setProperty(sRowPath, {
             ...oViewModel.getProperty(sRowPath),
             PernrA: mEmployee.Pernr,
