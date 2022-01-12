@@ -10,8 +10,8 @@
     <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
       <Label text="{i18n>LABEL_00138}" />
       <VBox>
-        <Text visible="{= !${/ApprovalDetails/Zurl} }" text="{ path: '/ApprovalDetails/Docno', formatter: '.TextUtils.getDocnoTxt' }" />
-        <Link visible="{= !!${/ApprovalDetails/Zurl} }" target="_blank" href="{/ApprovalDetails/Zurl}" text="{/ApprovalDetails/Docno}"/>
+        <Text visible="{= !${/ApprovalDetails/ZappUrl} }" text="{ path: '/ApprovalDetails/Docno', formatter: '.TextUtils.getDocnoTxt' }" />
+        <Link visible="{= !!${/ApprovalDetails/ZappUrl} }" target="_blank" href="{/ApprovalDetails/ZappUrl}" text="{/ApprovalDetails/Docno}"/>
       </VBox>
       <Label text="{i18n>LABEL_00140}" />
       <VBox>
