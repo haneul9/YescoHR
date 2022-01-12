@@ -33,29 +33,29 @@ sap.ui.define(
       FragmentEvent: FragmentEvent,
 
       NAVIGATION: {
-        1120: { url: 'familyInfo-detail', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 가족변경
-        1210: { url: 'certification-detail', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 제증명
+        1120: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 가족변경
+        1210: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 제증명
         2110: {
           // 근태
-          url: 'attendance-detail',
+          url: '',
           key: [
             { key: 'appno', value: 'Appno' },
             { key: 'type', value: 'Appty' },
           ],
         },
-        2140: { url: 'excavation-detail', key: [{ key: 'appno', value: 'Appno' }] }, // 통합굴착야간
-        4110: { url: 'congratulation-detail', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 경조금
-        4210: { url: 'studentFunds-detail', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 학자금
+        2140: { url: '', key: [{ key: 'appno', value: 'Appno' }] }, // 통합굴착야간
+        4110: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 경조금
+        4210: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 학자금
         4310: {
-          url: 'housingLoan-detail',
+          url: '',
           key: [
             { key: 'oDataKey', value: 'Appno' },
             { key: 'lonid', value: 'AppLonid' },
           ],
         }, // 융자 & 용자상환
-        4410: { url: 'medical-detail', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 의료비
-        4510: { url: 'clubJoin-detail', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 동호회
-        8410: { url: 'h/congratulation-detail', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 경조금 hass
+        4410: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 의료비
+        4510: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 동호회
+        8410: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 경조금 hass
         // 2140: { url: 'excavation-detail', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 당직변경
         // 2140: { url: 'excavation-detail', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 연장/휴일근무
       },
@@ -94,6 +94,8 @@ sap.ui.define(
         try {
           oListModel.setProperty('/busy', true);
 
+          this.setNavigationUrl();
+
           const oModel = this.getModel(ServiceNames.COMMON);
           const oSearch = oListModel.getProperty('/search');
           const aTableList = await Client.getEntitySet(oModel, 'TotalApproval2', {
@@ -129,6 +131,12 @@ sap.ui.define(
         } finally {
           oListModel.setProperty('/busy', false);
         }
+      },
+
+      setNavigationUrl() {
+        const oMenuData = AppUtils.getAppComponent().getMenuModel().getData();
+
+        _.forOwn(this.NAVIGATION, (value, key, object) => _.set(object, [key, 'url'], `${_.get(oMenuData, ['menidToProperties', key, 'Mnurl'])}-detail`));
       },
 
       async onSearch() {
