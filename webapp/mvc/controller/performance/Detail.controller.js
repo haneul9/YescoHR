@@ -236,6 +236,10 @@ sap.ui.define(
             _.forEach(mConvertScreen, (v, p) => {
               if (_.isEqual(v, Constants.DISPLAY_TYPE.EDIT)) _.set(mConvertScreen, p, Constants.DISPLAY_TYPE.DISPLAY_ONLY);
             });
+
+            if (_.isEqual(['2', 'D'], [sZzapsts, sLogicalZzapstsSub]) || _.isEqual(['3', 'H'], [sZzapsts, sLogicalZzapstsSub])) {
+              _.set(mConvertScreen, 'Z140', Constants.DISPLAY_TYPE.EDIT);
+            }
           }
 
           // 목표(전략/직무)
@@ -439,15 +443,10 @@ sap.ui.define(
         const { sProp, sTarget } = oEvent.getSource().data();
         const aGoals = [...oViewModel.getProperty('/goals/strategy'), ...oViewModel.getProperty('/goals/duty')];
 
-        if (_.some(aGoals, [sProp, 'ALL'])) {
-          oViewModel.setProperty(`/summary/${sTarget}`, '0');
-          return;
-        }
-
         oViewModel.setProperty(
           `/summary/${sTarget}`,
           _.chain(aGoals)
-            .reduce((acc, cur) => _.add(acc, _.multiply(cur.Fwgt, cur[sProp])), 0)
+            .reduce((acc, cur) => _.add(acc, _.defaultTo(_.multiply(cur.Fwgt, cur[sProp]), 0)), 0)
             .divide(100)
             .floor(2)
             .value()
