@@ -76,17 +76,6 @@ sap.ui.define(
         };
       },
 
-      onAfterRendering() {
-        var oButton = this.byId('showQuickView');
-        oButton.$().attr('aria-haspopup', true);
-
-        oButton = this.byId('employeeQuickView');
-        oButton.$().attr('aria-haspopup', true);
-
-        oButton = this.byId('genericQuickView');
-        oButton.$().attr('aria-haspopup', true);
-      },
-
       onHover1(oEvent) {
         this.openPopover(oEvent.getSource(), '/table1');
       },

@@ -76,6 +76,8 @@ sap.ui.define(
       transformMembersData(aMembers = []) {
         aMembers.forEach((mData, i) => {
           delete mData.__metadata;
+
+          mData.Photo ||= 'asset/image/avatar-unknown.svg';
           // if (i % 3 === 0) {
           //   mData.Icon = 'red';
           //   mData.Atext = '외근';
