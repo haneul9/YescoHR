@@ -77,7 +77,7 @@ sap.ui.define(
           H: { Zrslt: { ME: 'H', MA: 'H', MB: 'H' }, Z140: { MA: 'X' } },
         },
         4: {
-          1: { Zapgme: { ME: 'X', MA: 'H', MB: 'H' }, Zapgma: { ME: 'H', MA: 'H', MB: 'H' }, Papp1: { ME: 'X', MA: 'H', MB: 'H' }, Papp2: { ME: 'H', MA: 'H', MB: 'H' }, Zmepoint: { ME: 'X', MA: 'H', MB: 'H' }, Zmapoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmarslt: { ME: 'D' }, Zrslt: { ME: 'X' }, Z140: { MA: 'X' } },
+          1: { Zapgme: { ME: 'X', MA: 'H', MB: 'H' }, Zapgma: { ME: 'H', MA: 'H', MB: 'H' }, Papp1: { ME: 'X', MA: 'H', MB: 'H' }, Papp2: { ME: 'H', MA: 'H', MB: 'H' }, Zmepoint: { ME: 'X', MA: 'H', MB: 'H' }, Zmapoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmarslt: { ME: 'D' }, Z140: { MA: 'X' } },
           A: { Zapgme: { ME: 'D', MA: 'D', MB: 'D' }, Zapgma: { ME: 'H', MA: 'X', MB: 'H' }, Papp1: { ME: 'D', MA: 'D', MB: 'D' }, Papp2: { ME: 'H', MA: 'X', MB: 'H' }, Zmepoint: { ME: 'D', MA: 'D', MB: 'D' }, Zmapoint: { ME: 'H', MA: 'X', MB: 'H' } },
           2: { Zapgme: { ME: 'D', MA: 'D', MB: 'D' }, Zapgma: { ME: 'H', MA: 'D', MB: 'D' }, Papp1: { ME: 'D', MA: 'D', MB: 'D' }, Papp2: { ME: 'H', MA: 'D', MB: 'D' }, Zmepoint: { ME: 'D', MA: 'D', MB: 'D' }, Zmapoint: { ME: 'H', MA: 'D', MB: 'D' }, Zmbgrade: { MB: 'D' } },
           K: { Zapgme: { ME: 'D', MA: 'D', MB: 'D' }, Zapgma: { ME: 'H', MA: 'D', MB: 'D' }, Papp1: { ME: 'D', MA: 'D', MB: 'D' }, Papp2: { ME: 'H', MA: 'D', MB: 'D' }, Zmepoint: { ME: 'D', MA: 'D', MB: 'D' }, Zmapoint: { ME: 'H', MA: 'D', MB: 'D' }, Zmbgrade: { MB: 'D' } },
