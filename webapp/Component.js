@@ -269,6 +269,7 @@ sap.ui.define(
 
             const mRouteArguments = oEvent.getParameter('arguments');
             const oView = oEvent.getParameter('view');
+            const sRouteName = oEvent.getParameter('name');
             const oController = oView.getController();
 
             await this._oAllBaseModelReadyPromise;
@@ -276,6 +277,9 @@ sap.ui.define(
             oView.setVisible(true); // 반드시 onObjectMatched 이전에 실행되야함
 
             if (oController && oController.onObjectMatched && typeof oController.onObjectMatched === 'function') {
+              if (!_.startsWith(sRouteName, 'h/')) {
+                this.getAppointeeModel().setData(this.getSessionModel().getData());
+              }
               oController.onObjectMatched(mRouteArguments);
             }
 

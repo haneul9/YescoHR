@@ -179,19 +179,17 @@ sap.ui.define(
         }
 
         const sSessPernr = oRowData.ZreqPernr1;
-        const sAppoPernr = oRowData.ZreqPernr2;
+        const sAppointeePernr = oRowData.ZreqPernr2;
         const oAppModel = this.getViewModel('appointeeModel');
 
-        if (this.getSessionProperty('Pernr') === sSessPernr && sSessPernr !== sAppoPernr) {
+        if (this.getSessionProperty('Pernr') === sSessPernr && sSessPernr !== sAppointeePernr) {
           const oModel = this.getModel(ServiceNames.COMMON);
-          const aEmp = await Client.getEntitySet(oModel, 'EmpSearchResult', {
+          const [mEmp] = await Client.getEntitySet(oModel, 'EmpSearchResult', {
             Menid: this.getCurrentMenuId(),
-            Ename: sAppoPernr,
+            Ename: sAppointeePernr,
           });
-          oAppModel.setData(aEmp[0], true);
-          oAppModel.setProperty('/Orgtx', aEmp[0].Fulln);
-        } else {
-          oAppModel.setData(this.getSessionData(), true);
+
+          setTimeout(() => oAppModel.setData({ ...mEmp, Orgtx: mEmp.Fulln }, true), 200);
         }
 
         this.getRouter().navTo(
