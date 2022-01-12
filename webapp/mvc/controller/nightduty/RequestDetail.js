@@ -31,6 +31,7 @@ sap.ui.define(
           detail: {
             editable: false,
             enabled: false,
+            suggestCompleted: false,
             list: [],
             listMode: SelectionMode.MultiToggle,
             rowCount: 1,
@@ -196,17 +197,41 @@ sap.ui.define(
         let mEmployee;
 
         const oSelectedItem = oEvent.getParameter('selectedItem');
-        if (oSelectedItem) {
+        const sRowPath = oEvent.getSource().getParent().getBindingContext().getPath();
+
+        if (oSelectedItem && sRowPath) {
           const sSelectedPernr = oSelectedItem.getKey() || 'None';
           const aEmployees = this.oDetailModel.getProperty('/detail/employees') || [];
 
           mEmployee = _.find(aEmployees, { Pernr: sSelectedPernr });
+          mEmployee ||= { Pernr: '', Ename: '', Fulln: '', Zzjikgbt: '' };
+
+          this.oDetailModel.setProperty('/detail/suggestCompleted', true);
+          this.oDetailModel.setProperty(sRowPath, {
+            ...this.oDetailModel.getProperty(sRowPath),
+            PernrA: mEmployee.Pernr,
+            EnameA: mEmployee.Ename,
+            OrgtxA: mEmployee.Fulln,
+            ZzjikgbtA: mEmployee.Zzjikgbt,
+          });
         }
+      },
 
-        mEmployee ||= { Pernr: '', Ename: '', Fulln: '', Zzjikgbt: '' };
+      onSubmitSuggest(oEvent) {
+        const sInputValue = oEvent.getParameter('value');
+        const bSuggestCompleted = this.oDetailModel.getProperty('/detail/suggestCompleted');
 
-        const sRowPath = oEvent.getSource().getParent().getBindingContext().getPath();
-        if (sRowPath) {
+        if (bSuggestCompleted) {
+          this.oDetailModel.setProperty('/detail/suggestCompleted', false);
+          return;
+        }
+        if (_.isNaN(parseInt(sInputValue))) return;
+
+        const sRowPath = oEvent.getSource()?.getParent()?.getBindingContext()?.getPath();
+        const aEmployees = this.oDetailModel.getProperty('/detail/employees');
+        const [mEmployee] = _.filter(aEmployees, (o) => _.startsWith(o.Pernr, sInputValue));
+
+        if (sRowPath && !_.isEmpty(mEmployee)) {
           this.oDetailModel.setProperty(sRowPath, {
             ...this.oDetailModel.getProperty(sRowPath),
             PernrA: mEmployee.Pernr,
