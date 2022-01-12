@@ -1,10 +1,10 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:f="sap.f"
   xmlns:core="sap.ui.core">
-  <VBox class="portlet portlet-not-found" id="portlets-not-found">
+  <VBox class="portlet portlet-not-found" id="portlets-not-found" justifyContent="Center" alignItems="Center">
     <layoutData>
-      <f:GridContainerItemLayoutData rows="1" columns="2" />
+      <f:GridContainerItemLayoutData rows="1" columns="4" />
     </layoutData>
-    <Text text="{i18n>MSG_01901}" />
+    <Title level="H4" text="{i18n>MSG_01901}" />
   </VBox>
 </core:FragmentDefinition>

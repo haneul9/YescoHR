@@ -1,0 +1,28 @@
+<core:FragmentDefinition xmlns="sap.ui.table"
+  xmlns:m="sap.m"
+  xmlns:core="sap.ui.core">
+  <m:Popover contentWidth="300px" contentHeight="272px" offsetY="-21" horizontalScrolling="false" verticalScrolling="false" showHeader="false" class="team-member-count-popover">
+    <Table selectionMode="None" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{list}" visibleRowCount="5" noData="{i18n>MSG_00001}">
+      <columns>
+        <Column width="30%">
+          <m:Label text="{i18n>LABEL_01305}" />
+          <template>
+            <m:Text text="{Ename}" wrapping="false" class="tableRow_Text" />
+          </template>
+        </Column>
+        <Column width="30%">
+          <m:Label text="{i18n>LABEL_01306}" />
+          <template>
+            <m:Text text="{Orgtx}" wrapping="false" class="tableRow_Text" />
+          </template>
+        </Column>
+        <Column width="auto">
+          <m:Label text="{i18n>LABEL_01307}" />
+          <template>
+            <m:Text text="{Period}" wrapping="false" class="tableRow_Text" />
+          </template>
+        </Column>
+      </columns>
+    </Table>
+  </m:Popover>
+</core:FragmentDefinition>

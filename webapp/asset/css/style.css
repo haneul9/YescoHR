@@ -78,9 +78,12 @@ html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl) {text-decoration: none;}
 .portlet-p03p04:hover .sapMBtn.icon-button.portlet-member-remove {display:initial}
 .portlet-p05 .sapMListUl .sapMLIB:not(.sapMComboBoxBaseItem) {margin-top:10px}
 .portlet-p05 .sapMListUl .sapMLIB:first-child {margin-top:0}
+.portlet-p06 .today {color:grey}
+.portlet-p06 .team-member-count {font-size:2rem; cursor:default}
 .sapUiSizeCompact .portlet .sapMBtn,
 .sapUiSizeCompact .portlet .sapMBtnInner {min-width:auto}
 .sapUiSizeCompact .portlet .sapMBtnIcon {margin-right:0; width:auto; line-height:100%}
+.team-member-count-popover .sapMPopoverArr {top:149px !important}
 
 .portlet-member {display: flex;justify-content: space-between;align-items: center;height:auto!important;margin-bottom: 10px;}
 .sapMFlexBox .portlet-member:last-child {margin-bottom:0;}
