@@ -34,7 +34,7 @@ html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl) {text-decoration: none;}
 .portlet {box-sizing:border-box; overflow:hidden}
 .portlet-box {position:relative; border:1px solid whitesmoke; border-radius:10px; padding:20px 20px; background-color:#fff; box-shadow:0px 2px 4px rgb(0 0 0 / 16%)}
 .portlet-box .portlet-header + .sapMFlexItem {height: 100%;}
-.portlet-box .portlet-header + .sapMFlexItem .sapMScrollContVH {height: 100%!important;}
+.portlet-box .portlet-header + .sapMFlexItem .sapMScrollContVH {max-height: 100%!important;}
 .portlet-height-1 {height:270px}
 .portlet-height-2 {height:540px}
 .portlet-height-3 {height:810px}
@@ -77,7 +77,6 @@ html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl) {text-decoration: none;}
 .portlet-p03p04:hover .sapMBtn.icon-button.portlet-member-remove {display:initial}
 .portlet-p05 .sapMListUl .sapMLIB:not(.sapMComboBoxBaseItem) {margin-top:10px}
 .portlet-p05 .sapMListUl .sapMLIB:first-child {margin-top:0}
-.portlet-box.portlet-p05  .portlet-header + .sapMFlexItem .sapMScrollContVH {height: 85%!important;}
 .sapUiSizeCompact .portlet .sapMBtn,
 .sapUiSizeCompact .portlet .sapMBtnInner {min-width:auto}
 .sapUiSizeCompact .portlet .sapMBtnIcon {margin-right:0; width:auto; line-height:100%}
