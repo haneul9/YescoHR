@@ -7,27 +7,27 @@
     <HBox justifyContent="Center">
       <f:GridContainer id="portlets-grid" class="sapUiSmallMarginTopBottom mx-auto" snapToRow="true">
         <f:layout>
-          <f:GridContainerSettings rowSize="300px" columns="4" columnSize="377.5px" gap="30px" />
+          <f:GridContainerSettings rowSize="270px" columns="4" columnSize="385px" gap="20px" />
         </f:layout>
         <f:layoutXL>
           <!-- 1440px ~ -->
-          <f:GridContainerSettings rowSize="300px" columns="4" columnSize="377.5px" gap="30px" />
+          <f:GridContainerSettings rowSize="270px" columns="4" columnSize="385px" gap="20px" />
         </f:layoutXL>
         <f:layoutL>
           <!-- 1023px ~ 1439px -->
-          <f:GridContainerSettings rowSize="300px" columns="3" columnSize="377.5px" gap="30px" />
+          <f:GridContainerSettings rowSize="270px" columns="3" columnSize="385px" gap="20px" />
         </f:layoutL>
         <f:layoutM>
           <!-- 600px ~ 1023px -->
-          <f:GridContainerSettings rowSize="300px" columns="2" columnSize="377.5px" gap="30px" />
+          <f:GridContainerSettings rowSize="270px" columns="2" columnSize="385px" gap="20px" />
         </f:layoutM>
         <f:layoutS>
           <!-- 375px ~ 599px -->
-          <f:GridContainerSettings rowSize="300px" columns="1" columnSize="377.5px" gap="30px" />
+          <f:GridContainerSettings rowSize="270px" columns="1" columnSize="385px" gap="20px" />
         </f:layoutS>
         <f:layoutXS>
           <!-- 0 ~ 374px -->
-          <f:GridContainerSettings rowSize="300px" columns="1" columnSize="377.5px" gap="30px" />
+          <f:GridContainerSettings rowSize="270px" columns="1" columnSize="385px" gap="20px" />
         </f:layoutXS>
         <!-- <f:items>
           <HBox class="hCardBox portlet-selector" height="70px" justifyContent="SpaceBetween" alignItems="Center">

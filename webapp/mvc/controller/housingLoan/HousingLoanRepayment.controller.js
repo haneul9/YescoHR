@@ -73,7 +73,15 @@ sap.ui.define(
           });
         }
 
-        this.getViewModel().setProperty('/ViewKey', sDataKey);
+        const oDetailModel = this.getViewModel();
+
+        if (!!oParameter.lonid) {
+          const sLonid = oParameter.lonid;
+
+          oDetailModel.setProperty('/ViewLonid', sLonid);
+        }
+
+        oDetailModel.setProperty('/ViewKey', sDataKey);
 
         this.getList();
       },
@@ -144,12 +152,18 @@ sap.ui.define(
       },
 
       // 상환신청내역 클릭
-      onSelectRow(oEvent) {
-        const vPath = oEvent.getParameters().rowBindingContext.getPath();
+      async onSelectRow(oEvent) {
         const oDetailModel = this.getViewModel();
-        const oRowData = $.extend(true, {}, oDetailModel.getProperty(vPath));
+        let oRowData = '';
 
-        this.getRepayType();
+        if (!oEvent.Appno) {
+          const vPath = oEvent.getParameters().rowBindingContext.getPath();
+          oRowData = $.extend(true, {}, oDetailModel.getProperty(vPath));
+        } else {
+          oRowData = oEvent;
+        }
+
+        await this.getRepayType();
 
         if (!this.byId('RepayApplyDialog')) {
           Fragment.load({
@@ -173,6 +187,35 @@ sap.ui.define(
         }
       },
 
+      // 통합 신청함에서 바로 들어올 경우 상세조회 호출
+      repayDetail() {
+        const oModel = this.getModel(ServiceNames.BENEFIT);
+        let oSendObject = {};
+
+        oSendObject.Appbox = 'X';
+        oSendObject.Pernr = this.getAppointeeProperty('Pernr');
+        oSendObject.Menid = this.getCurrentMenuId();
+        oSendObject.Prcty = 'D';
+        oSendObject.Appno = this.getViewModel().getProperty('/ViewLonid');
+        oSendObject.LoanAmtHistorySet = [];
+        oSendObject.LoanAmtRecordSet = [];
+
+        return new Promise((resolve, reject) => {
+          oModel.create('/LoanAmtApplSet', oSendObject, {
+            success: (oData) => {
+              if (oData) {
+                this.debug(`${'/LoanAmtApplSet'} success.`, oData);
+                resolve(oData);
+              }
+            },
+            error: (oError) => {
+              AppUtils.handleError(new ODataReadError(oError));
+              reject();
+            },
+          });
+        });
+      },
+
       // 화면관련 List호출
       async getList() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
@@ -180,7 +223,14 @@ sap.ui.define(
         const oAppointeeData = this.getAppointeeData();
         const oView = this.getView();
         const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-        const mDetailData = oListView.getModel().getProperty('/FormData');
+        const bRouteAppBox = !!oListView && oListView.getModel().getProperty('/FormData');
+        let mDetailData = '';
+
+        if (bRouteAppBox) {
+          mDetailData = oListView.getModel().getProperty('/FormData');
+        } else {
+          mDetailData = await this.repayDetail();
+        }
 
         return Promise.all([
           new Promise((resolve) => {
@@ -237,6 +287,11 @@ sap.ui.define(
 
                   oDetailModel.setProperty('/LoanAppList', aList);
                   oDetailModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aList, sStatCode: 'Lnsta' }));
+
+                  if (!bRouteAppBox) {
+                    this.onSelectRow(_.each(aList, (v) => (v.Appno = oDetailModel.getProperty('/ViewKey')))[0]);
+                  }
+
                   resolve();
                 }
               },
@@ -254,18 +309,22 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const oAppointeeData = this.getAppointeeData();
 
-        oModel.read('/BenefitCodeListSet', {
-          filters: [new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0016'), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks), new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date())],
-          success: (oData) => {
-            if (oData) {
-              const aList = oData.results;
+        return new Promise((resolve, reject) => {
+          oModel.read('/BenefitCodeListSet', {
+            filters: [new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0016'), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks), new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date())],
+            success: (oData) => {
+              if (oData) {
+                const aList = oData.results;
 
-              oDetailModel.setProperty('/LaonType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
-            }
-          },
-          error: (oError) => {
-            AppUtils.handleError(new ODataReadError(oError));
-          },
+                oDetailModel.setProperty('/LaonType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
+                resolve();
+              }
+            },
+            error: (oError) => {
+              AppUtils.handleError(new ODataReadError(oError));
+              reject();
+            },
+          });
         });
       },
 
@@ -338,8 +397,8 @@ sap.ui.define(
       },
 
       // 상환신청
-      onRepayDetailApp() {
-        this.getRepayType();
+      async onRepayDetailApp() {
+        await this.getRepayType();
         this.setInitDialogData();
 
         if (!this.byId('RepayApplyDialog')) {
@@ -403,8 +462,8 @@ sap.ui.define(
       onRewriteBtn() {
         const oDetailModel = this.getViewModel();
 
-        oDetailModel.setProperty('/FormData/Appno', '');
-        oDetailModel.setProperty('/FormData/Lnsta', '');
+        oDetailModel.setProperty('/DialogData/Appno', '');
+        oDetailModel.setProperty('/DialogData/Lnsta', '');
       },
 
       // 임시저장
