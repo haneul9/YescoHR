@@ -104,13 +104,13 @@
             <Text text="{Pratetx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
-        <table:Column width="150px">
+        <table:Column width="150px" visible="{= ${/DialogData/ZappStat} === 'P' || ${/DialogData/ZappStat} === 'F'}">
           <Label text="{i18n>LABEL_09009}"/>
           <table:template>
             <Text text="{
-                            path: 'Pybet',
-                            type: 'sap.ui.yesco.mvc.model.type.Currency'
-                        }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                path: 'Pybet',
+                type: 'sap.ui.yesco.mvc.model.type.Currency'
+            }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
         <table:Column width="100px">
