@@ -26,7 +26,7 @@
 			</HBox>
 		</VBox>
 		<VBox class="contents">
-			<core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
+			<core:Fragment fragmentName="sap.ui.yesco.mvc.view.performance.fragment.AppointeeBar" type="XML" />
 			<VBox class="vCardBox">
 				<HBox class="table-toolbar">
 					<HBox alignItems="Center" class="title">
