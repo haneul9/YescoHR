@@ -28,7 +28,7 @@
       <Button icon="sap-icon://decline" type="Transparent" visible="{switchable}" class="icon-button portlet-close" press=".onPressClose" />
       <Button icon="sap-icon://add" type="Transparent" visible="{hasLink}" class="icon-button" press=".onPressLink" />
     </HBox>
-    <ScrollContainer height="85%" vertical="true" visible="{= !!${orgMembers/active} &amp;&amp; ${selectedMembersTab} === 'ORG' }">
+    <ScrollContainer height="100%" vertical="true" visible="{= !!${orgMembers/active} &amp;&amp; ${selectedMembersTab} === 'ORG' }">
       <layoutData>
         <FlexItemData growFactor="1" />
       </layoutData>
@@ -42,7 +42,8 @@
         <HBox height="1.8rem" alignItems="Center" class="portlet-member">
           <Image src="{Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="30px" height="30px" />
           <Text text="{Ename}" wrapping="false" class="portlet-member-name" />
-          <Text text="{Zzjikgbt} {Orgtx}" wrapping="false" class="portlet-member-org">
+          <Text text="{Zzjikgbt}" wrapping="false" class="portlet-member-position" />
+          <Text text="{Orgtx}" wrapping="false" class="portlet-member-org">
             <layoutData>
               <FlexItemData growFactor="1" />
             </layoutData>
@@ -69,7 +70,8 @@
         <HBox height="1.8rem" alignItems="Center" class="portlet-member">
           <Image src="{Photo}" mode="Background" backgroundPosition="center top" width="1.5rem" height="1.5rem" />
           <Text text="{Ename}" wrapping="false" class="portlet-member-name" />
-          <Text text="{Zzjikgbt} {Orgtx}" wrapping="false" class="portlet-member-org">
+          <Text text="{Zzjikgbt}" wrapping="false" class="portlet-member-position" />
+          <Text text="{Orgtx}" wrapping="false" class="portlet-member-org">
             <layoutData>
               <FlexItemData growFactor="1" />
             </layoutData>
