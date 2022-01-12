@@ -35,7 +35,7 @@
         <HBox alignItems="Center" class="table-toolbar">
           <Title text="{i18n>LABEL_04013}" level="H2" />
         </HBox>
-        <TextArea width="100%" class="required" value="{/form/Chgrsn}" editable="{= !${/ZappStatAl} }" />
+        <TextArea width="100%" class="required" rows="5" growing="true" value="{/form/Chgrsn}" editable="{= !${/ZappStatAl} }" />
       </VBox>
       <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
       <core:Fragment fragmentName="sap.ui.yesco.fragment.ApplyInfo" type="XML" />
