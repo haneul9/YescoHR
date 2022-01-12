@@ -34,7 +34,7 @@ html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl) {text-decoration: none;}
 .portlet {box-sizing:border-box; overflow:hidden}
 .portlet-box {position:relative; border:1px solid whitesmoke; border-radius:10px; padding:20px 20px; background-color:#fff; box-shadow:0px 2px 4px rgb(0 0 0 / 16%)}
 .portlet-box .portlet-header + .sapMFlexItem {height: 100%;}
-.portlet-box .portlet-header + .sapMFlexItem .sapMScrollContVH {max-height: 100%!important;}
+.portlet-box .portlet-header + .sapMFlexItem .sapMScrollContVH {max-height: 100%!important;height: 100%!important;}
 .portlet-height-1 {height:270px}
 .portlet-height-2 {height:540px}
 .portlet-height-3 {height:810px}
