@@ -65,6 +65,7 @@ sap.ui.define(
           type: '',
           year: moment().format('YYYY'),
           tab: { selectedKey: 'T01' },
+          appointee: {},
           stage: {
             headers: [],
             rows: [],
@@ -122,6 +123,8 @@ sap.ui.define(
           const { Zzapsts: sZzapsts, ZzapstsSub: sZzapstsSub, ZzapstsPSub: sZzapstsPSub, Zonlydsp: sZonlydsp } = mParameter;
           // 4-1 평가실시 - 부분평가중일 경우 ZzapstsPSub가 A로 들어오면 1차평가중 상태로 변경한다.
           const sLogicalZzapstsSub = _.isEqual(sZzapsts + sZzapstsSub, '41') && _.isEqual(sZzapstsPSub, 'A') ? sZzapstsPSub : sZzapstsSub;
+
+          this.setAppointee(sType, mParameter.Zzappee);
 
           oViewModel.setProperty('/type', sType);
           oViewModel.setProperty('/year', sYear);
@@ -266,6 +269,20 @@ sap.ui.define(
           });
         } finally {
           oViewModel.setProperty('/busy', false);
+        }
+      },
+
+      async setAppointee(sType, sPernr) {
+        const oViewModel = this.getViewModel();
+
+        if (_.isEqual(sType, Constants.APPRAISER_TYPE.ME)) {
+          oViewModel.setProperty('/appointee', AppUtils.getAppComponent().getAppointeeModel().getData());
+        } else {
+          const [mAppointee] = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'EmpSearchResult', {
+            Ename: sPernr,
+          });
+
+          oViewModel.setProperty('/appointee', { ...mAppointee, Orgtx: mAppointee.Fulln, Photo: mAppointee.Photo || 'asset/image/avatar-unknown.svg' });
         }
       },
 
