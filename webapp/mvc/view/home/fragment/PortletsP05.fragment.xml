@@ -21,7 +21,7 @@
       <Button icon="sap-icon://decline" type="Transparent" visible="{switchable}" class="icon-button portlet-close" press=".onPressClose" />
       <Button icon="sap-icon://add" type="Transparent" visible="{hasLink}" class="icon-button" press=".onPressLink" />
     </HBox>
-    <ScrollContainer height="85%" vertical="true">
+    <ScrollContainer height="100%" vertical="true">
       <layoutData>
         <FlexItemData growFactor="1" />
       </layoutData>
