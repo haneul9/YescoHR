@@ -17,6 +17,7 @@ sap.ui.define(
     'sap/ui/yesco/mvc/controller/home/portlets/P03PortletHandler',
     'sap/ui/yesco/mvc/controller/home/portlets/P04PortletHandler',
     'sap/ui/yesco/mvc/controller/home/portlets/P05PortletHandler',
+    'sap/ui/yesco/mvc/controller/home/portlets/P06PortletHandler',
   ],
   (
     // prettier 방지용 주석
@@ -35,7 +36,8 @@ sap.ui.define(
     P02PortletHandler,
     P03PortletHandler,
     P04PortletHandler,
-    P05PortletHandler
+    P05PortletHandler,
+    P06PortletHandler
   ) => {
     'use strict';
 
@@ -49,6 +51,7 @@ sap.ui.define(
         P03: P03PortletHandler,
         P04: P04PortletHandler,
         P05: P05PortletHandler,
+        P06: P06PortletHandler,
       },
 
       onBeforeShow() {
@@ -130,6 +133,8 @@ sap.ui.define(
         const oPortletsModel = await this.getPortletsModel(mPortletsData);
         this.setViewModel(oPortletsModel);
 
+        this.showPortlets(oPortletsModel);
+
         this.oPortletsP13nDialog = await Fragment.load({
           name: 'sap.ui.yesco.mvc.view.home.fragment.PortletsP13nDialog',
           controller: this,
@@ -176,8 +181,8 @@ sap.ui.define(
 
           const mOriginal = $.extend(o, mPortletsP13nData[o.Potid]);
           const mPortletData = this.transform(mOriginal);
-          mAllPortlets[o.Potid] = mPortletData;
 
+          mAllPortlets[o.Potid] = mPortletData;
           if (mPortletData.active) {
             aActivePortlets.push(mPortletData);
             mActivePortlets[o.Potid] = mPortletData;
@@ -186,37 +191,13 @@ sap.ui.define(
           return mPortletData;
         });
 
-        const mActivePortletInstances = {};
-        aActivePortlets
-          .sort((o1, o2) => o1.position.column * 100 + o1.position.sequence - (o2.position.column * 100 + o2.position.sequence))
-          .forEach((mPortletData) => {
-            setTimeout(() => {
-              const PortletHandler = this.mPortletHandlers[mPortletData.id];
-              if (!PortletHandler) {
-                this.debug(`Portlets.controller > getPortletsModel > '${mPortletData.id}'에 해당하는 PortletHandler가 없습니다.`);
-                return mPortletData;
-              }
-
-              mActivePortletInstances[mPortletData.id] = new PortletHandler(this, mPortletData);
-            });
-          });
-
-        if (!aActivePortlets.length) {
-          const oFragment = await Fragment.load({
-            name: `sap.ui.yesco.mvc.view.home.fragment.PortletsNotFound`,
-            controller: this,
-          });
-
-          this.byId('portlets-grid').addItem(oFragment);
-        }
-
         return new JSONModel({
           available: aAllPortlets.length > 0,
           allMap: mAllPortlets,
           allList: aAllPortlets,
           activeList: aActivePortlets,
           activeMap: mActivePortlets,
-          activeInstanceMap: mActivePortletInstances,
+          activeInstanceMap: {},
         });
       },
 
@@ -227,7 +208,7 @@ sap.ui.define(
           carousel: mPortletData.Mocat === 'A',
           position: {
             column: this.bMobile ? Number(mPortletData.MSeq) || 1 : Number(mPortletData.Colno) || 1,
-            sequence: Number(mPortletData.Seqno) || 0,
+            sequence: mPortletData.Zhide !== 'X' ? Number(mPortletData.Seqno) || 99 : 0,
           },
           height: Number(mPortletData.Htall) || 1,
           icon: mPortletData.Iconid,
@@ -241,6 +222,31 @@ sap.ui.define(
           hideTitle: mPortletData.HideName === 'X',
           hasLink: !!(this.bMobile ? mPortletData.LinkUrl2 : mPortletData.LinkUrl1),
         };
+      },
+
+      async showPortlets(oPortletsModel) {
+        const aActivePortlets = oPortletsModel.getProperty('/activeList');
+        if (!aActivePortlets.length) {
+          const oFragment = await Fragment.load({
+            name: `sap.ui.yesco.mvc.view.home.fragment.PortletsNotFound`,
+            controller: this,
+          });
+
+          this.byId('portlets-grid').addItem(oFragment);
+          return;
+        }
+
+        aActivePortlets
+          .sort((o1, o2) => o1.position.column * 100 + o1.position.sequence - (o2.position.column * 100 + o2.position.sequence))
+          .forEach((mPortletData) => {
+            const PortletHandler = this.mPortletHandlers[mPortletData.id];
+            if (!PortletHandler) {
+              this.debug(`Portlets.controller > getPortletsModel > '${mPortletData.id}'에 해당하는 PortletHandler가 없습니다.`);
+              return mPortletData;
+            }
+
+            oPortletsModel.setProperty(`/activeInstanceMap/${mPortletData.id}`, new PortletHandler(this, mPortletData));
+          });
       },
 
       /**
@@ -271,7 +277,7 @@ sap.ui.define(
           oPortletsModel.setProperty(`/activeMap/${sPortletId}`, mPortletData);
           oPortletsModel.setProperty(`/activeInstanceMap/${sPortletId}`, new PortletHandler(this, mPortletData));
         } else {
-          oPortletsModel.getProperty(`/activeInstanceMap`)[sPortletId].destroy();
+          oPortletsModel.getProperty(`/activeInstanceMap/${sPortletId}`).destroy();
         }
 
         oPortletsModel.refresh();
@@ -294,22 +300,22 @@ sap.ui.define(
        */
       async onPressPortletsP13nSave(sClosingPortletId) {
         try {
-          // AppUtils.setAppBusy(true);
-
           const oPortletsModel = this.getViewModel();
-          const mActivePortletsData = {};
+          const mActivePortlets = {};
 
           this.byId('portlets-grid')
             .getItems()
             .forEach((oPortlet) => {
-              this.mapPortletPosition(oPortlet, mActivePortletsData, sClosingPortletId);
+              this.mapPortletPosition(oPortlet, mActivePortlets, sClosingPortletId);
             });
-          oPortletsModel.refresh();
 
           const aPortletData = oPortletsModel.getProperty('/allList').map((mPortletData) => {
-            const mData = mActivePortletsData[mPortletData.id];
+            const mData = mActivePortlets[mPortletData.id];
             if (mData) {
               return mData;
+            }
+            if (mPortletData.id === sClosingPortletId) {
+              mPortletData.active = false;
             }
             return this.getPortletPosition(mPortletData, -1);
           });
@@ -320,23 +326,24 @@ sap.ui.define(
             Mode: 'U',
             PortletInfoTab2Set: aPortletData,
           };
-          return;
 
           await Client.create(oModel, sUrl, mPayload);
+
+          return true;
         } catch (oError) {
           AppUtils.handleError(oError);
-        } finally {
-          // AppUtils.setAppBusy(false);
+
+          return false;
         }
       },
 
       /**
        * 활성화된 portlet 위치 정보 저장
        * @param {object} oPortlet 위치 정보를 추출할 portlet object
-       * @param {map} mActivePortletsData 위치 정보가 저장될 map
+       * @param {map} mActivePortlets 위치 정보가 저장될 map
        * @param {string} sClosingPortletId Portlet 닫기 버튼 클릭 또는 스위치 off로 비활성화될 portlet의 id
        */
-      mapPortletPosition(oPortlet, mActivePortletsData, sClosingPortletId) {
+      mapPortletPosition(oPortlet, mActivePortlets, sClosingPortletId) {
         const oPortletModel = oPortlet.getModel();
 
         if (oPortletModel.getProperty('/multiPortlet')) {
@@ -346,9 +353,9 @@ sap.ui.define(
               return;
             }
 
-            const iPortletCount = this.getPortletCount(mActivePortletsData);
+            const iPortletCount = this.getPortletCount(mActivePortlets);
 
-            mActivePortletsData[mPortletData.id] = this.getPortletPosition(mPortletData, iPortletCount);
+            mActivePortlets[mPortletData.id] = this.getPortletPosition(mPortletData, iPortletCount);
           }
           if (oPortletModel.getProperty('/myMembers/active')) {
             const mPortletData = oPortletModel.getProperty('/myMembers');
@@ -356,9 +363,9 @@ sap.ui.define(
               return;
             }
 
-            const iPortletCount = this.getPortletCount(mActivePortletsData);
+            const iPortletCount = this.getPortletCount(mActivePortlets);
 
-            mActivePortletsData[mPortletData.id] = this.getPortletPosition(mPortletData, iPortletCount);
+            mActivePortlets[mPortletData.id] = this.getPortletPosition(mPortletData, iPortletCount);
           }
         } else {
           const mPortletData = oPortletModel.getData();
@@ -366,9 +373,9 @@ sap.ui.define(
             return;
           }
 
-          const iPortletCount = this.getPortletCount(mActivePortletsData);
+          const iPortletCount = this.getPortletCount(mActivePortlets);
 
-          mActivePortletsData[mPortletData.id] = this.getPortletPosition(mPortletData, iPortletCount);
+          mActivePortlets[mPortletData.id] = this.getPortletPosition(mPortletData, iPortletCount);
         }
       },
 

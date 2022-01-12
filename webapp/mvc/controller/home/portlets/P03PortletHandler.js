@@ -72,18 +72,18 @@ sap.ui.define(
       transformMembersData(aMembers = []) {
         aMembers.forEach((mData, i) => {
           delete mData.__metadata;
-          if (i % 3 === 0) {
-            mData.Icon = 'red';
-            mData.Atext = '외근';
-          }
-          if (i % 3 === 1) {
-            mData.Icon = 'blue';
-            mData.Atext = '근무중';
-          }
-          if (i % 3 === 2) {
-            mData.Icon = 'grey';
-            mData.Atext = '휴가중';
-          }
+          // if (i % 3 === 0) {
+          //   mData.Icon = 'red';
+          //   mData.Atext = '외근';
+          // }
+          // if (i % 3 === 1) {
+          //   mData.Icon = 'blue';
+          //   mData.Atext = '근무중';
+          // }
+          // if (i % 3 === 2) {
+          //   mData.Icon = 'grey';
+          //   mData.Atext = '휴가중';
+          // }
         });
 
         return {
@@ -100,6 +100,8 @@ sap.ui.define(
         this.getController().getViewModel().getProperty('/activeInstanceMap/P04').onPressMyMemberRemove(oEvent);
       },
 
+      onPressClose() {},
+
       destroy() {
         const oPortletModel = this.getPortletModel();
         const bActiveMyMembers = oPortletModel.getProperty('/myMembers/active');
@@ -107,17 +109,7 @@ sap.ui.define(
           oPortletModel.setProperty('/selectedMembersTab', 'MY');
           oPortletModel.setProperty('/orgMembers/active', false);
 
-          const sPortletId = oPortletModel.getProperty('/id');
-          const oPortletsModel = this.getController().getViewModel();
-          oPortletsModel.setProperty(`/allMap/${sPortletId}/active`, false);
-          oPortletsModel.setProperty(`/allMap/${sPortletId}/position/column`, 1);
-          oPortletsModel.setProperty(`/allMap/${sPortletId}/position/sequence`, 0);
-          _.remove(oPortletsModel.getProperty('/activeList'), (mPortletData) => {
-            return mPortletData.id === sPortletId;
-          });
-          delete oPortletsModel.getProperty('/activeMap')[sPortletId];
-          delete oPortletsModel.getProperty('/activeInstanceMap')[sPortletId];
-          oPortletsModel.refresh();
+          this.resetPortletData(oPortletModel.getProperty('/orgMembers/id'));
 
           delete oPortletModel.getProperty('/').orgMembers;
           oPortletModel.refresh();

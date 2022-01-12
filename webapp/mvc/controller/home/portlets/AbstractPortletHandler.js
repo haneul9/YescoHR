@@ -159,19 +159,27 @@ sap.ui.define(
 
       destroy() {
         const oPortletModel = this.getPortletModel();
-        const sPortletId = oPortletModel.getProperty('/id');
+
+        this.resetPortletData(oPortletModel.getProperty('/id'));
+
+        oPortletModel.destroy();
+        this.getFragment().destroy();
+      },
+
+      resetPortletData(sPortletId) {
         const oPortletsModel = this.getController().getViewModel();
+
         oPortletsModel.setProperty(`/allMap/${sPortletId}/active`, false);
         oPortletsModel.setProperty(`/allMap/${sPortletId}/position/column`, 1);
         oPortletsModel.setProperty(`/allMap/${sPortletId}/position/sequence`, 0);
         _.remove(oPortletsModel.getProperty('/activeList'), (mPortletData) => {
           return mPortletData.id === sPortletId;
         });
+
         delete oPortletsModel.getProperty('/activeMap')[sPortletId];
         delete oPortletsModel.getProperty('/activeInstanceMap')[sPortletId];
 
-        oPortletModel.destroy();
-        this.getFragment().destroy();
+        oPortletsModel.refresh();
       },
     });
   }
