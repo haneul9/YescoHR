@@ -759,21 +759,28 @@ sap.ui.define(
         return false;
       },
 
-      checkedDialogData() {
+      checkedDialogData(sType) {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
         const mFormData = oDetailModel.getProperty('/FormData');
-        const aDeep = [oDetailModel.getProperty('/DialogData'), ...oDetailModel.getProperty('/HisList')];
+        const aHisList = oDetailModel.getProperty('/HisList');
+        const aDetailList = [];
+
+        if (sType === 'C') {
+          aDetailList.push(oDetailModel.getProperty('/DialogData'), ...aHisList);
+        } else {
+          aDetailList.push(...aHisList);
+        }
 
         let oSendObject = {};
 
-        aDeep.forEach((e) => {
+        aDetailList.forEach((e) => {
           e.Waers = 'KRW';
         });
 
         oSendObject = mFormData;
         oSendObject.Prcty = '1';
-        oSendObject.MedExpenseItemSet = aDeep;
+        oSendObject.MedExpenseItemSet = aDetailList;
 
         return new Promise((resolve, reject) => {
           oModel.create('/MedExpenseApplSet', oSendObject, {
@@ -798,7 +805,7 @@ sap.ui.define(
         try {
           AppUtils.setAppBusy(true, this);
 
-          const bSuccess = await this.checkedDialogData();
+          const bSuccess = await this.checkedDialogData('C');
 
           if (!bSuccess) return;
 

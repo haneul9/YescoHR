@@ -35,7 +35,7 @@
             <Label text="{i18n>LABEL_14013}"/>
             <HBox>
                 <CheckBox selected="{= !!${/FormData/Coaid} }" select=".onSelected" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
-                <Text text="{i18n>MSG_14005}"/>
+                <Text text="{/FormData/CountMessage}"/>
             </HBox>
             <Label text="{i18n>LABEL_14010}"/>
             <HBox>

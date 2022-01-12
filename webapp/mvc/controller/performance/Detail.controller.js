@@ -122,7 +122,7 @@ sap.ui.define(
           const mParameter = _.chain(oListView.getModel().getProperty('/parameter/rowData')).cloneDeep().omit('__metadata').value();
           const { Zzapsts: sZzapsts, ZzapstsSub: sZzapstsSub, ZzapstsPSub: sZzapstsPSub, Zonlydsp: sZonlydsp } = mParameter;
           // 4-1 평가실시 - 부분평가중일 경우 ZzapstsPSub가 A로 들어오면 1차평가중 상태로 변경한다.
-          const sLogicalZzapstsSub = _.isEqual(sZzapsts + sZzapstsSub, '41') && _.isEqual(sZzapstsPSub, 'A') ? sZzapstsPSub : sZzapstsSub;
+          const sLogicalZzapstsSub = _.isEqual(sZzapsts + sZzapstsSub, '41') && !_.isEmpty(sZzapstsPSub) ? sZzapstsPSub : sZzapstsSub;
 
           this.setAppointee(sType, mParameter.Zzappee);
 
