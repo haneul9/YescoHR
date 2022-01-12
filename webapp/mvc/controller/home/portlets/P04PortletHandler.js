@@ -76,18 +76,18 @@ sap.ui.define(
       transformMembersData(aMembers = []) {
         aMembers.forEach((mData, i) => {
           delete mData.__metadata;
-          // if (i % 3 === 0) {
-          //   mData.Icon = 'red';
-          //   mData.Atext = '외근';
-          // }
-          // if (i % 3 === 1) {
-          //   mData.Icon = 'blue';
-          //   mData.Atext = '근무중';
-          // }
-          // if (i % 3 === 2) {
-          //   mData.Icon = 'grey';
-          //   mData.Atext = '휴가중';
-          // }
+          if (i % 3 === 0) {
+            mData.Icon = 'red';
+            mData.Atext = '외근';
+          }
+          if (i % 3 === 1) {
+            mData.Icon = 'blue';
+            mData.Atext = '근무중';
+          }
+          if (i % 3 === 2) {
+            mData.Icon = 'grey';
+            mData.Atext = '휴가중';
+          }
         });
 
         return {

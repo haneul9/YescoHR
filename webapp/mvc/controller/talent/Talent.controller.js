@@ -23,25 +23,25 @@ sap.ui.define(['sap/ui/yesco/mvc/controller/BaseController',
 
   return BaseController.extend('sap.ui.yesco.mvc.controller.talent.Talent', {
     onDialog() {
-			if (!this.byId('talentCompareDialog')) {
-				Fragment.load({
-					id: this.getView().getId(),
-					name: 'sap.ui.yesco.mvc.view.talent.fregment.CompareDialog',
-					controller: this,
-				}).then((oDialog) => {
-					// connect dialog to the root view of this component (models, lifecycle)
-					this.getView().addDependent(oDialog);
-					oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
-					oDialog.open();
-				});
-			}else {
-				this.byId('talentCompareDialog').open();
-			}
-		},
+            if (!this.byId('talentCompareDialog')) {
+                Fragment.load({
+                    id: this.getView().getId(),
+                    name: 'sap.ui.yesco.mvc.view.talent.fregment.CompareDialog',
+                    controller: this,
+                }).then((oDialog) => {
+                    // connect dialog to the root view of this component (models, lifecycle)
+                    this.getView().addDependent(oDialog);
+                    oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
+                    oDialog.open();
+                });
+            }else {
+                this.byId('talentCompareDialog').open();
+            }
+        },
 
-		onClick() {
-			this.byId('talentCompareDialog').close();
-		},
+        onClick() {
+            this.byId('talentCompareDialog').close();
+        },
 
     /**
      * @override

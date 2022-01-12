@@ -136,10 +136,10 @@ sap.ui.define(
 
       /**
        * @param {object} o = {
-       * 		table: sap.ui.table.Table instance
-       * 		colIndices: rowspan을 적용할 zero-base column index array, 행선택용 checkbox 컬럼 미포함
-       * 		theadOrTbody: 'thead' or 'tbody'
-       * 	}
+       *   table: sap.ui.table.Table instance
+       *   colIndices: rowspan을 적용할 zero-base column index array, 행선택용 checkbox 컬럼 미포함
+       *   theadOrTbody: 'thead' or 'tbody'
+       * }
        */
       adjustRowSpan({ oTable, aColIndices, sTheadOrTbody }) {
         if (!aColIndices.length) return;

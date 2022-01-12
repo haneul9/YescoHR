@@ -254,30 +254,28 @@ sap.ui.define(
 
         oPortletsModel.setProperty('/busy', true);
 
-        setTimeout(() => {
-          if (bSelected) {
-            const PortletHandler = this.mPortletHandlers[sPortletId];
-            if (!PortletHandler) {
-              this.debug(`Portlets.controller > onSelectPortletSwitch > '${sPortletId}'에 해당하는 PortletHandler가 없습니다.`);
-              return;
-            }
-
-            const mPortletData = oPortletsModel.getProperty(`/allMap/${sPortletId}`);
-            const aActiveList = oPortletsModel.getProperty('/activeList');
-            aActiveList.push(mPortletData);
-
-            oPortletsModel.setProperty(`/allMap/${sPortletId}/active`, true);
-            oPortletsModel.setProperty(`/allMap/${sPortletId}/position/column`, 1);
-            oPortletsModel.setProperty(`/allMap/${sPortletId}/position/sequence`, aActiveList.length + 1);
-            oPortletsModel.setProperty(`/activeMap/${sPortletId}`, mPortletData);
-            oPortletsModel.setProperty(`/activeInstanceMap/${sPortletId}`, new PortletHandler(this, mPortletData));
-          } else {
-            oPortletsModel.getProperty(`/activeInstanceMap`)[sPortletId].destroy();
+        if (bSelected) {
+          const PortletHandler = this.mPortletHandlers[sPortletId];
+          if (!PortletHandler) {
+            this.debug(`Portlets.controller > onSelectPortletSwitch > '${sPortletId}'에 해당하는 PortletHandler가 없습니다.`);
+            return;
           }
 
-          oPortletsModel.refresh();
-          oPortletsModel.setProperty('/busy', false);
-        });
+          const mPortletData = oPortletsModel.getProperty(`/allMap/${sPortletId}`);
+          const aActiveList = oPortletsModel.getProperty('/activeList');
+          aActiveList.push(mPortletData);
+
+          oPortletsModel.setProperty(`/allMap/${sPortletId}/active`, true);
+          oPortletsModel.setProperty(`/allMap/${sPortletId}/position/column`, 1);
+          oPortletsModel.setProperty(`/allMap/${sPortletId}/position/sequence`, aActiveList.length + 1);
+          oPortletsModel.setProperty(`/activeMap/${sPortletId}`, mPortletData);
+          oPortletsModel.setProperty(`/activeInstanceMap/${sPortletId}`, new PortletHandler(this, mPortletData));
+        } else {
+          oPortletsModel.getProperty(`/activeInstanceMap`)[sPortletId].destroy();
+        }
+
+        oPortletsModel.refresh();
+        oPortletsModel.setProperty('/busy', false);
       },
 
       /**
