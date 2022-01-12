@@ -25,7 +25,7 @@
       <Button icon="sap-icon://decline" type="Transparent" visible="{switchable}" class="icon-button portlet-close" press=".onPressClose" />
       <Button icon="asset/image/icon_add.png" type="Transparent" visible="{hasLink}" class="icon-button" press=".onPressLink" />
     </HBox>
-    <ScrollContainer height="85%" vertical="true" visible="{= !!${orgMembers/active} &amp;&amp; ${selectedMembersTab} === 'ORG' }">
+    <ScrollContainer height="100%" vertical="true" visible="{= !!${orgMembers/active} &amp;&amp; ${selectedMembersTab} === 'ORG' }">
       <layoutData>
         <FlexItemData growFactor="1" />
       </layoutData>
