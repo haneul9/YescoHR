@@ -119,7 +119,7 @@
 
         { "pattern": "housingLoan", "name": "housingLoan", "target": "housingLoan" },
         { "pattern": "housingLoan/{oDataKey}", "name": "housingLoan-detail", "target": "housingLoanDetail" },
-        { "pattern": "housingLoanRepay/{oDataKey}", "name": "housingLoan-repay", "target": "housingLoanRepay" },
+        { "pattern": "housingLoanRepay/{oDataKey}/:lonid:", "name": "housingLoan-repay", "target": "housingLoanRepay" },
 
         { "pattern": "notice", "name": "notice", "target": "notice" },
         { "pattern": "notice/{Sdate}/{Seqnr}", "name": "notice-detail", "target": "noticeDetail" },

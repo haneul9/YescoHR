@@ -33,7 +33,30 @@ sap.ui.define(
       FragmentEvent: FragmentEvent,
 
       NAVIGATION: {
-        2140: { url: 'excavation-detail', key: 'appno' },
+        1120: { url: 'familyInfo-detail', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 가족변경
+        1210: { url: 'certification-detail', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 제증명
+        2110: {
+          // 근태
+          url: 'attendance-detail',
+          key: [
+            { key: 'appno', value: 'Appno' },
+            { key: 'type', value: 'Appty' },
+          ],
+        },
+        2140: { url: 'excavation-detail', key: [{ key: 'appno', value: 'Appno' }] }, // 통합굴착야간
+        4110: { url: 'congratulation-detail', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 경조금
+        4210: { url: 'studentFunds-detail', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 학자금
+        4310: {
+          url: 'housingLoan-detail',
+          key: [
+            { key: 'oDataKey', value: 'Appno' },
+            { key: 'lonid', value: 'AppLonid' },
+          ],
+        }, // 융자 & 용자상환
+        4410: { url: 'medical-detail', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 의료비
+        4510: { url: 'clubJoin-detail', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 동호회
+        // 2140: { url: 'excavation-detail', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 당직변경
+        // 2140: { url: 'excavation-detail', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 연장/휴일근무
       },
 
       onBeforeShow() {
@@ -137,14 +160,18 @@ sap.ui.define(
         const vPath = oEvent.getParameter('rowBindingContext').getPath();
         const oListModel = this.getViewModel();
         const oRowData = oListModel.getProperty(vPath);
-        let sMenuUrl = `${AppUtils.getAppComponent().getMenuModel().getProperties(`${oRowData.MidE}`).Mnurl}-detail`;
+        const mNavigationInfo = this.NAVIGATION[oRowData.MidE];
+        // let sMenuUrl = `${AppUtils.getAppComponent().getMenuModel().getProperties(`${oRowData.MidE}`).Mnurl}-detail`;
 
         if (oRowData.ZreqForm === 'HR08') {
-          sMenuUrl = 'housingLoan-repay';
+          mNavigationInfo.url = 'housingLoan-repay';
         }
 
-        const mNavigationInfo = this.NAVIGATION[oRowData.MidE];
-        this.getRouter().navTo(mNavigationInfo.url, { [mNavigationInfo.key]: oRowData.Appno });
+        debugger;
+        this.getRouter().navTo(
+          mNavigationInfo.url,
+          _.reduce(mNavigationInfo.key, (acc, cur) => ({ ...acc, [cur.key]: oListModel.getProperty(`${vPath}/${cur.value}`) }), {})
+        );
       },
 
       onPressExcelDownload() {
