@@ -19,7 +19,7 @@
           <SegmentedButtonItem text="{i18n>LABEL_01202}" key="MY" visible="{= !!${myMembers} &amp;&amp; !!${myMembers/active} }" />
         </items>
       </SegmentedButton>
-      <Button icon="sap-icon://add" type="Transparent" class="icon-button" visible="{= !!${myMembers} &amp;&amp; !!${myMembers/active} &amp;&amp; ${selectedMembersTab} === 'MY' }" press=".onPressMyMemberAdd" />
+      <Button icon="asset/image/icon_write.png" type="Transparent" class="icon-button" visible="{= !!${myMembers} &amp;&amp; !!${myMembers/active} &amp;&amp; ${selectedMembersTab} === 'MY' }" press=".onPressMyMemberAdd" />
       <Text text="">
         <layoutData>
           <FlexItemData growFactor="1" />
@@ -40,14 +40,14 @@
           <FlexItemData growFactor="1" />
         </layoutData>
         <HBox height="1.8rem" alignItems="Center" class="portlet-member">
-          <Image src="{Photo}" mode="Background" backgroundPosition="center top" width="1.5rem" height="1.5rem" />
+          <Image src="{Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="30px" height="30px" />
           <Text text="{Ename}" wrapping="false" class="portlet-member-name" />
           <Text text="{Zzjikgbt} {Orgtx}" wrapping="false" class="portlet-member-org">
             <layoutData>
               <FlexItemData growFactor="1" />
             </layoutData>
           </Text>
-          <Text text="{Atext}" wrapping="false" textAlign="Right">
+          <Text text="{Atext}" wrapping="false" textAlign="Right" class="portlet-member-status">
             <customData>
               <core:CustomData key="portlet-member-status" value="{Icon}" writeToDom="true" />
             </customData>
@@ -79,7 +79,7 @@
               <core:CustomData key="portlet-member-status" value="{Icon}" writeToDom="true" />
             </customData>
           </Text>
-          <Button icon="sap-icon://decline" type="Transparent" class="icon-button portlet-member-remove" press=".onPressMyMemberRemove" />
+          <Button icon="asset/image/icon_remove.png" type="Transparent" class="icon-button portlet-member-remove" press=".onPressMyMemberRemove" />
         </HBox>
       </VBox>
     </ScrollContainer>

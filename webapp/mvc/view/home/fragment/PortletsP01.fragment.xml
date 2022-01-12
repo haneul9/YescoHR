@@ -25,23 +25,23 @@
       <layoutData>
         <FlexItemData growFactor="1" />
       </layoutData>
-      <VBox width="50%">
-        <Image src="{sessionModel>/Photo}" mode="Background" backgroundPosition="center top" width="146px" height="146px" />
-        <Text text="{Ename}" />
-        <Text text="{Zzjiktlt}" />
-        <Text text="{Orgtx}" />
-        <Text text="{Stltx}" />
+      <VBox width="45%" class="my-info">
+        <Image src="{sessionModel>/Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="120px" height="120px" />
+        <Text text="{Ename}" class="name"/>
+        <Text text="{Zzjiktlt}" class="position"/>
+        <Text text="{Orgtx}" class="team" />
+        <Text text="{Stltx}" class="org" />
       </VBox>
-      <VBox width="50%">
-        <Text text="{i18n>LABEL_01102}" />
+      <VBox width="55%" class="my-info-summary">
+        <Label text="{i18n>LABEL_01102}" />
         <Text text="{Zyymm1}" />
-        <Text text="{Period1}" />
-        <Text text="{i18n>LABEL_01103}" />
+        <Text text="{Period1}" class="date"/>
+        <Label text="{i18n>LABEL_01103}" />
         <Text text="{Zyymm2}" />
-        <Text text="{Period2}" />
-        <Text text="{i18n>LABEL_01104}" />
+        <Text text="{Period2}" class="date"/>
+        <Label text="{i18n>LABEL_01104}" />
         <Text text="{Zyymm3}" />
-        <Text text="{Period3}" />
+        <Text text="{Period3}" class="date"/>
       </VBox>
     </HBox>
   </VBox>
