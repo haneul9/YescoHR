@@ -32,6 +32,10 @@ sap.ui.define(
       TextUtils: TextUtils,
       FragmentEvent: FragmentEvent,
 
+      NAVIGATION: {
+        2140: { url: 'excavation-detail', key: 'appno' },
+      },
+
       onBeforeShow() {
         const dDate = new Date();
         const oViewModel = new JSONModel({
@@ -139,7 +143,8 @@ sap.ui.define(
           sMenuUrl = 'housingLoan-repay';
         }
 
-        this.getRouter().navTo(sMenuUrl, { oDataKey: oRowData.Appno });
+        const mNavigationInfo = this.NAVIGATION[oRowData.MidE];
+        this.getRouter().navTo(mNavigationInfo.url, { [mNavigationInfo.key]: oRowData.Appno });
       },
 
       onPressExcelDownload() {
