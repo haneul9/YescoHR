@@ -47,6 +47,14 @@ sap.ui.define(
      * @constant {number} 결재 승인
      */
     const STATE_COMPLETE = 60;
+    /**
+     * @constant {string}} 의료비 상세내역 승인
+     */
+    const MED_STATE_COMPLETE = 'P';
+    /**
+     * @constant {string}} 의료비 상세내역 반려
+     */
+    const MED_STATE_REJECT = 'F';
 
     return {
       /**************************
@@ -213,7 +221,9 @@ sap.ui.define(
        * Formatter
        *************************/
       rowHighlight(sValue) {
-        switch (parseInt(sValue, 10)) {
+        const vValue = !parseInt(sValue, 10) ? sValue : parseInt(sValue, 10);
+
+        switch (vValue) {
           case STATE_IN_PROGRESS1:
           case STATE_IN_PROGRESS2:
             // 작성중
@@ -224,10 +234,12 @@ sap.ui.define(
             // 신청
             return sap.ui.core.IndicationColor.Indication03;
           case STATE_APPROVE:
+          case MED_STATE_COMPLETE:
             // 승인
             return sap.ui.core.IndicationColor.Indication04;
           case STATE_REJECT1:
           case STATE_REJECT2:
+          case MED_STATE_REJECT:
             // 반려
             return sap.ui.core.IndicationColor.Indication02;
           case STATE_COMPLETE:
@@ -243,7 +255,9 @@ sap.ui.define(
       },
 
       StatusTxt(sValue = 0) {
-        switch (parseInt(sValue, 10)) {
+        const vValue = !parseInt(sValue, 10) ? sValue : parseInt(sValue, 10);
+
+        switch (vValue) {
           case STATE_IN_PROGRESS1:
           case STATE_IN_PROGRESS2:
             // 작성중
@@ -254,10 +268,12 @@ sap.ui.define(
             // 신청
             return '신청';
           case STATE_APPROVE:
+          case MED_STATE_COMPLETE:
             // 승인
             return '승인';
           case STATE_REJECT1:
           case STATE_REJECT2:
+          case MED_STATE_REJECT:
             // 반려
             return '반려';
           case STATE_COMPLETE:
