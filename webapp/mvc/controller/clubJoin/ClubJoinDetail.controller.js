@@ -10,6 +10,7 @@ sap.ui.define(
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/TableUtils',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/exceptions/ODataCreateError',
@@ -27,6 +28,7 @@ sap.ui.define(
     FragmentEvent,
     TextUtils,
     TableUtils,
+    Client,
     ServiceNames,
     ODataReadError,
     ODataCreateError,
@@ -91,17 +93,27 @@ sap.ui.define(
       },
 
       // 상세조회
-      setFormData() {
+      async setFormData() {
         const oView = this.getView();
         const oDetailModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const sViewKey = oDetailModel.getProperty('/ViewKey');
+        const mListData = await Client.getEntitySet(oModel, 'BenefitCodeList', {
+          Werks: this.getAppointeeProperty('Werks'),
+          Cdnum: 'BE0018',
+          Grcod: 'BE000030',
+          Sbcod: 'APPDT',
+        });
+
+        const sMaximubCount = mListData[0].Zchar1;
 
         oDetailModel.setProperty(
           '/InfoMessage',
-          `<p>${this.getBundleText('MSG_14002')}</p>
+          `<p>${this.getBundleText('MSG_14002', sMaximubCount)}</p>
           <p>${this.getBundleText('MSG_14003')}</p>`
         );
+
+        oDetailModel.setProperty('/FormData/CountMessage', this.getBundleText('MSG_14005', sMaximubCount));
 
         if (sViewKey === 'N' || !sViewKey) {
           const mSessionData = this.getSessionData();
