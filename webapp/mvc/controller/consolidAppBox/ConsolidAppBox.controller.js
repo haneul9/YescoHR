@@ -55,8 +55,9 @@ sap.ui.define(
         }, // 융자 & 용자상환
         4410: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 의료비
         4510: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 동호회
-        // 2140: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 당직변경
-        // 2140: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 연장/휴일근무
+        8410: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 경조금 hass
+        // 2140: { url: 'excavation-detail', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 당직변경
+        // 2140: { url: 'excavation-detail', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 연장/휴일근무
       },
 
       onBeforeShow() {
