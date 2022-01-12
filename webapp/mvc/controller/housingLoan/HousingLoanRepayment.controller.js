@@ -289,7 +289,7 @@ sap.ui.define(
                   oDetailModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aList, sStatCode: 'Lnsta' }));
 
                   if (!bRouteAppBox) {
-                    this.onSelectRow(mDetailData);
+                    this.onSelectRow(_.each(aList, (v) => (v.Appno = oDetailModel.getProperty('/ViewKey')))[0]);
                   }
 
                   resolve();

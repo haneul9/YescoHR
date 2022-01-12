@@ -165,6 +165,8 @@ sap.ui.define(
 
         if (oRowData.ZreqForm === 'HR08') {
           mNavigationInfo.url = 'housingLoan-repay';
+        } else if (oRowData.ZreqForm === 'HR07') {
+          mNavigationInfo.url = 'housingLoan-detail';
         }
 
         debugger;
