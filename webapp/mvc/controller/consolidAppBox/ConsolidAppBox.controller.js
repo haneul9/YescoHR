@@ -157,7 +157,7 @@ sap.ui.define(
         }
       },
 
-      onSelectRow(oEvent) {
+      async onSelectRow(oEvent) {
         const vPath = oEvent.getParameter('rowBindingContext').getPath();
         const oListModel = this.getViewModel();
         const oRowData = oListModel.getProperty(vPath);
@@ -170,9 +170,25 @@ sap.ui.define(
           mNavigationInfo.url = 'housingLoan-detail';
         }
 
+        const sSessPernr = oRowData.ZreqPernr1;
+        const sAppoPernr = oRowData.ZreqPernr2;
+        const oAppModel = this.getViewModel('appointeeModel');
+
+        if (this.getSessionProperty('Pernr') === sSessPernr && sSessPernr !== sAppoPernr) {
+          const oModel = this.getModel(ServiceNames.COMMON);
+          const aEmp = await Client.getEntitySet(oModel, 'EmpSearchResult', {
+            Menid: this.getCurrentMenuId(),
+            Ename: sAppoPernr,
+          });
+          oAppModel.setData(aEmp[0], true);
+          oAppModel.setProperty('/Orgtx', aEmp[0].Fulln);
+        } else {
+          oAppModel.setData(this.getSessionData(), true);
+        }
+
         this.getRouter().navTo(
           mNavigationInfo.url,
-          _.reduce(mNavigationInfo.key, (acc, cur) => ({ ...acc, [cur.key]: oListModel.getProperty(`${vPath}/${cur.value}`) }), {})
+          _.reduce(mNavigationInfo.key, (acc, cur) => ({ ...acc, [cur.key]: oRowData[cur.value] }), {})
         );
       },
 
