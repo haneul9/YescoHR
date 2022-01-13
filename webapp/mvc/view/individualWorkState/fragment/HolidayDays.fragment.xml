@@ -2,7 +2,7 @@
   xmlns:core="sap.ui.core"
   xmlns:microchart="sap.suite.ui.microchart"
   xmlns:grid="sap.ui.layout.cssgrid">
-  <VBox width="50%" class="vCardBox">
+  <VBox width="50%" class="vCardBox sapUiMediumMarginEnd">
     <HBox class="table-toolbar">
       <Title level="H2" text="{i18n>LABEL_18005}" />
     </HBox>
