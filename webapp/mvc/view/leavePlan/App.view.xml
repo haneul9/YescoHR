@@ -2,14 +2,16 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:mvc="sap.ui.core.mvc"
+    xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:custom="sap.ui.yesco.control">
     <Page showHeader="false">
         <VBox class="contents-header">
             <HBox justifyContent="SpaceBetween" class="breadcrumbs">
                 <custom:Breadcrumbs />
                 <HBox>
-                    <Button text="{i18n>LABEL_00104}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" press=".onPressSave" />
-                    <Button text="{i18n>LABEL_00121}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" press=".onPressApproval" />
+                    <Button text="{i18n>LABEL_00104}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{/buttons/SAVE}" press=".onPressSave" />
+                    <Button text="{i18n>LABEL_00121}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{/buttons/APPROVAL}" press=".onPressApproval" />
+                    <Button text="{i18n>LABEL_00171}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{/buttons/PRINT}" press=".onPressPrint" />
                     <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" />
                     <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" />
                 </HBox>
@@ -21,10 +23,45 @@
                 <core:Fragment fragmentName="sap.ui.yesco.mvc.view.leavePlan.fragment.Summary" type="XML" />
                 <core:Fragment fragmentName="sap.ui.yesco.mvc.view.leavePlan.fragment.OverviewSearchCondition" type="XML" />
             </HBox>
-            <HBox class="vCardBox">
-                <custom:Signature id="signature-pad" />
-                <Button text="Clear" press=".onPressSignatureClear" />
-            </HBox>
+            <VBox class="vCardBox">
+                <HBox justifyContent="SpaceBetween">
+                    <HBox alignItems="Center" class="title">
+                        <Title level="H2" text="{i18n>LABEL_20005}" />
+                        <Text class="desc-txt" text="{i18n>MSG_20001}" />
+                    </HBox>
+                    <HBox class="status-wrap year-plan">
+                        <Text text="{i18n>LABEL_20006}" class="type02" />
+                        <Text text="{i18n>LABEL_20007}" class="type07" />
+                        <Text text="{i18n>LABEL_20008}" class="type05" />
+                    </HBox>
+                </HBox>
+                <grid:CSSGrid id="yearPlanGrid" class="year-plan-grid" gridTemplateColumns="70px 70px repeat(31, 1fr)" gridGap="1px" items="{path: '/plans/grid'}">
+                    <custom:DayBox width="100%" click=".onClickDay">
+                        <custom:customData>
+                            <core:CustomData key="day" value="{day}" />
+                            <core:CustomData key="style" value="{classNames}" writeToDom="true" />
+                        </custom:customData>
+                        <Text width="100%" textAlign="Center" text="{label}">
+                            <layoutData>
+                                <FlexItemData growFactor="1" />
+                            </layoutData>
+                            <customData>
+                                <core:CustomData key="day" value="{day}" />
+                            </customData>
+                        </Text>
+                    </custom:DayBox>
+                </grid:CSSGrid>
+            </VBox>
+            <VBox class="vCardBox" visible="{= ${/summary/Sgnyn} === 'X' }">
+                <HBox alignItems="Center" class="title">
+                    <Title level="H2" text="{i18n>LABEL_20009}" />
+                    <Text class="desc-txt" text="{i18n>MSG_20002}" />
+                </HBox>
+                <HBox>
+                    <custom:Signature id="signature-pad" width="500" height="300" />
+                    <Button text="Clear" press=".onPressSignatureClear" />
+                </HBox>
+            </VBox>
         </VBox>
     </Page>
 </mvc:View>
