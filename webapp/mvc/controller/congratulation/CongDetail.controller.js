@@ -395,6 +395,7 @@ sap.ui.define(
         oModel.read('/ConExpenseCheckListSet', {
           filters: [
             new Filter('Werks', FilterOperator.EQ, oAppointeeData.Persa || oAppointeeData.Werks), // prettier 방지용 주석
+            new Filter('Pernr', FilterOperator.EQ, this.getAppointeeProperty('Pernr')),
             new Filter('Concode', FilterOperator.EQ, vConcode),
             new Filter('Conresn', FilterOperator.EQ, vConresn),
             new Filter('Conddate', FilterOperator.EQ, vConddate),
