@@ -52,8 +52,8 @@
       </VBox>
       <Label text="{i18n>LABEL_00152}"/>
       <HBox>
-        <Input value="{/FormData/Pstlzf}" editable="{= !${/FormData/ZappStatAl} }" showValueHelp="true" valueHelpOnly= "true" valueHelpRequest=".onAddressSearch" class="required" />
-        <Input value="{/FormData/Addf1}" enabled="false" class="required">
+        <Input value="{/FormData/Pstlzf}" editable="{= !${/FormData/ZappStatAl} }" showValueHelp="true" valueHelpOnly= "true" valueHelpRequest=".onAddressSearch" class="sapUiTinyMarginEnd required" />
+        <Input value="{/FormData/Addf1}" enabled="false" class="sapUiTinyMarginEnd required">
           <layoutData>
             <FlexItemData growFactor="0.5"/>
           </layoutData>
