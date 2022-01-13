@@ -30,7 +30,9 @@ sap.ui.define(
     Client,
     ServiceNames,
     BaseController,
-    YearPlanBoxHandler
+    YearPlanBoxHandler,
+    Date,
+    Currency
   ) => {
     'use strict';
 
@@ -44,6 +46,15 @@ sap.ui.define(
           year: moment().year(),
           menid: this.getCurrentMenuId(),
           Hass: this.isHass(),
+          WeekWorkDate: new Date(),
+          WeekWork: {
+            Wkrultx: '',
+            WeekTime: 52,
+            Tottime: 0,
+            Bastime: 0,
+            Ottime: 0,
+            WorkTime: 0,
+          },
           yearPlan: [],
           plans: [],
           PlanMonths: [],
@@ -77,7 +88,8 @@ sap.ui.define(
           const oModel = this.getModel(ServiceNames.WORKTIME);
 
           // 근태유형 색상
-          // const aList1 = await Client.getEntitySet(oModel, 'TimeTypeLegend', { Werks: this.getAppointeeProperty('Werks') });
+          const aList1 = await Client.getEntitySet(oModel, 'TimeTypeLegend', { Werks: this.getAppointeeProperty('Werks') });
+
           this.YearPlanBoxHandler.getYearPlan();
 
           const sWerks = this.getAppointeeProperty('Werks');
@@ -109,8 +121,6 @@ sap.ui.define(
             oViewModel.setProperty('/VacaTypeList2', aVacaTypeList.slice(4));
           }
 
-          debugger;
-
           const sMonth = oViewModel.getProperty('/WorkMonth');
           // 근무현황
           const mTablePayLoad = {
@@ -119,13 +129,31 @@ sap.ui.define(
             Month: sMonth,
           };
 
+          // 근무현황 -> 근무일수
           const aWorkList = await Client.getEntitySet(oModel, 'WorkingStatus', mTablePayLoad);
 
           oViewModel.setProperty('/MonthWorkList', aWorkList);
 
+          // 근무현황 -> OT현황
           const aOTList = await Client.getEntitySet(oModel, 'OvertimeStatus', mTablePayLoad);
 
           oViewModel.setProperty('/OTWorkList', aOTList);
+
+          const mWeekWorkPayLoad = {
+            Werks: sWerks,
+            Datum: moment(oViewModel.getProperty('/WeekWorkDate')).hours(9).toDate(),
+          };
+
+          // 주 52시간 현황
+          const aWeekTime = await Client.getEntitySet(oModel, 'WorkLimitStatus', mWeekWorkPayLoad);
+
+          oViewModel.setProperty('/WeekWork/Wkrultx', aWeekTime[0].Wkrultx);
+          oViewModel.setProperty('/WeekWork/Tottime', parseFloat(aWeekTime[0].Tottime));
+          oViewModel.setProperty('/WeekWork/Bastime', parseFloat(aWeekTime[0].Bastime));
+          oViewModel.setProperty('/WeekWork/Ottime', parseFloat(aWeekTime[0].Ottime));
+          oViewModel.setProperty('/WeekWork/WorkTime', `${aWeekTime[0].Beguz} ~ ${aWeekTime[0].Enduz} (${aWeekTime[0].Stdaz}${this.getBundleText('LABEL_00330')})`);
+
+          debugger;
         } catch (oError) {
           this.debug(oError);
           AppUtils.handleError(oError);
@@ -168,6 +196,25 @@ sap.ui.define(
         const aOTList = await Client.getEntitySet(oModel, 'OvertimeStatus', mPayLoad);
 
         oViewModel.setProperty('/OTWorkList', aOTList);
+      },
+
+      // 주 52시간 현황 날짜선택
+      async onWeekWorkTime() {
+        const oViewModel = this.getViewModel();
+        const oModel = this.getModel(ServiceNames.WORKTIME);
+        const mWeekWorkPayLoad = {
+          Werks: this.getAppointeeProperty('Werks'),
+          Datum: moment(oViewModel.getProperty('/WeekWorkDate')).hours(9).toDate(),
+        };
+
+        // 주 52시간 현황
+        const aWeekTime = await Client.getEntitySet(oModel, 'WorkLimitStatus', mWeekWorkPayLoad);
+
+        oViewModel.setProperty('/WeekWork/Wkrultx', aWeekTime[0].Wkrultx);
+        oViewModel.setProperty('/WeekWork/Tottime', parseFloat(aWeekTime[0].Tottime));
+        oViewModel.setProperty('/WeekWork/Bastime', parseFloat(aWeekTime[0].Bastime));
+        oViewModel.setProperty('/WeekWork/Ottime', parseFloat(aWeekTime[0].Ottime));
+        oViewModel.setProperty('/WeekWork/WorkTime', `${aWeekTime[0].Beguz} ~ ${aWeekTime[0].Enduz} (${aWeekTime[0].Stdaz}${this.getBundleText('LABEL_00330')})`);
       },
 
       getCurrentLocationText(oArguments) {
