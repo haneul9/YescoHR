@@ -43,12 +43,12 @@
                     </VBox>
                     <Label text="{i18n>LABEL_09019}"/>
                     <FlexBox alignItems="Start" justifyContent="End">
-                        <Text text="{/DialogData/Pratetx} %" />
+                        <Text text="{/DialogData/Pratetx}" />
                     </FlexBox>
-                    <HBox></HBox>
-                    <HBox></HBox>
-                    <Label text="{i18n>LABEL_09009}"/>
-                    <FlexBox alignItems="Start" justifyContent="End">
+                    <HBox visible="{= ${/DialogData/ZappStat} === 'P' || ${/DialogData/ZappStat} === 'F'}"></HBox>
+                    <HBox visible="{= ${/DialogData/ZappStat} === 'P' || ${/DialogData/ZappStat} === 'F'}"></HBox>
+                    <Label text="{i18n>LABEL_09009}" visible="{= ${/DialogData/ZappStat} === 'P' || ${/DialogData/ZappStat} === 'F'}"/>
+                    <FlexBox alignItems="Start" justifyContent="End" visible="{= ${/DialogData/ZappStat} === 'P' || ${/DialogData/ZappStat} === 'F'}">
                         <Text text="{ path: '/DialogData/Pybet', type: 'sap.ui.yesco.mvc.model.type.Currency' } 원" />
                     </FlexBox>
                 </grid:CSSGrid>

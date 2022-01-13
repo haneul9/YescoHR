@@ -26,7 +26,7 @@
             </VBox>
             <Label text="{i18n>LABEL_00211}" />
             <VBox>
-              <Input value="{/employeeModel/Search/Ename}"/>
+              <Input value="{/employeeModel/Search/Ename}" submit=".EmployeeSearch.onEmpSearch" />
             </VBox>
             <Label text="{i18n>LABEL_00226}" />
             <VBox>

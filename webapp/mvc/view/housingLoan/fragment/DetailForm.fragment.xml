@@ -30,7 +30,7 @@
             </VBox>
             <Label text="{i18n>LABEL_07021}"/>
             <HBox>
-                <Input value="{/FormData/Zsize}" liveChange=".areaSize" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required"/>
+                <Input value="{/FormData/Zsize}" liveChange=".areaSize" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="sapUiTinyMarginEnd required"/>
                 <Text text="{/baseArea/Text}"/>
             </HBox>
             <Label text="{i18n>LABEL_00152}"/>
@@ -42,7 +42,7 @@
                 <Input value="{
                     path: '/FormData/Lnamt',
                     type: 'sap.ui.yesco.mvc.model.type.Currency'
-                }" liveChange=".loanCost" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required"/>
+                }" liveChange=".loanCost" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="sapUiTinyMarginEnd required"/>
                 <Text text="{/loanAmount/Text}"/>
             </HBox>
             <Label text="{i18n>LABEL_00266}" visible="{= !!${/FormData/Lnsta} }"/>

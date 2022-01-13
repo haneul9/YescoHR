@@ -126,9 +126,10 @@ sap.ui.define(
 
           this.setAppointee(sType, mParameter.Zzappee);
 
+          _.chain(mParameter).set('OldStatus', mParameter.Zzapsts).set('OldStatusSub', mParameter.ZzapstsSub).set('OldStatusPart', mParameter.ZzapstsPSub).commit();
+          oViewModel.setProperty('/param', { ...mParameter });
           oViewModel.setProperty('/type', sType);
           oViewModel.setProperty('/year', sYear);
-          oViewModel.setProperty('/param', { ...mParameter });
 
           const fCurriedGetEntitySet = Client.getEntitySet(oModel);
           const [aStepList, aTopGoals, aStatus, aGrades, mDetailData] = await Promise.all([
@@ -404,17 +405,6 @@ sap.ui.define(
           const aStrategy = _.cloneDeep(oViewModel.getProperty('/goals/strategy'));
           const aDuty = _.cloneDeep(oViewModel.getProperty('/goals/duty'));
           const bIsSave = _.isEqual(code, Constants.PROCESS_TYPE.SAVE.code);
-
-          if (!bIsSave) {
-            switch (code) {
-              case Constants.PROCESS_TYPE.SAVE.code:
-              case Constants.PROCESS_TYPE.REJECT.code:
-              case Constants.PROCESS_TYPE.CANCEL.code:
-                _.chain(mParameter).set('OldStatus', mParameter.Zzapsts).set('OldStatusSub', mParameter.ZzapstsSub).set('OldStatusPart', mParameter.ZzapstsPSub).commit();
-              default:
-                break;
-            }
-          }
 
           await Client.deep(oModel, 'AppraisalDoc', {
             ...mParameter,

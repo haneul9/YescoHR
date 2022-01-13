@@ -34,12 +34,14 @@ html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl) {text-decoration: none;}
 
 .portlet {box-sizing:border-box; height:100%; overflow:hidden}
 .portlet-box {position:relative; border:1px solid whitesmoke; border-radius:10px; padding:20px; background-color:#fff; box-shadow:0px 2px 4px rgb(0 0 0 / 16%)}
-/* .portlet-box .portlet-header + .sapMFlexItem .sapMScrollCont, .portlet-box .sapMScrollCont {max-height:100%} */
+.portlet-box .portlet-header + .sapMFlexItem, .portlet-box .portlet-header + .sapMFlexItem + .sapMFlexItem {height: calc(100% - 44px);}
+.portlet-box .portlet-header + .sapMFlexItem .sapMScrollCont, .portlet-box .sapMScrollCont {max-height: 100%;}
 .portlet-header {margin-top:-6px; margin-bottom:10px; width:100%; height:35px; align-items:center}
+.portlet-header {display: flex;justify-content: center;align-items: flex-end;margin-bottom: 20px;height: 24px;}
 .portlet-header > .sapMFlexItem + .sapMFlexItem {margin-left:5px}
 .portlet-header h2.sapMTitle {vertical-align:middle; font-size:20px; font-weight:700}
-.sapUiSizeCompact .portlet-header .sapMSegB {height:30px;margin-left:20px;background-color: #E9E9E9;border-radius: 8px;width: auto!important;}
-.sapUiSizeCompact .portlet-header .sapMSegB .sapMSegBBtn {min-width:70px;}
+.sapUiSizeCompact .portlet-header .sapMSegB {height:30px; margin-left:20px; margin-top:-5px; background-color:#e9e9e9; border-radius:8px; width:auto !important}
+.sapUiSizeCompact .portlet-header .sapMSegB .sapMSegBBtn {min-width:72px}
 .portlet-header .sapMSegB .sapMSegBBtn .sapMSegBBtnInner {background-color: transparent;border-radius: 8px!important;line-height: 25px;font-weight: 500;}
 .portlet-header .sapMSegB .sapMSegBBtn.sapMSegBBtnSel .sapMSegBBtnInner {font-weight: 700;}
 .portlet .sapMBtn.icon-button.portlet-close {display:none}
@@ -620,7 +622,9 @@ h4.sapMTitle {font-size:20px; font-weight:800;color:#222}
 .sapMText[data-status="Z30"] {color:var(--BorderColorWarning) !important}
 .sapMText[data-status="Z50"] {color:var(--BorderColorWarning) !important}
 .sapMText[data-status="Z40"] {color:var(--BorderColorSuccess) !important}
+.sapMText[data-status="ZP"] {color:var(--BorderColorSuccess) !important}
 .sapMText[data-status="Z45"] {color:var(--BorderColorError) !important}
+.sapMText[data-status="ZF"] {color:var(--BorderColorError) !important}
 .sapMText[data-status="Z65"] {color:var(--BorderColorError) !important}
 .sapMText[data-status="Z60"] {color:var(--BorderColorFocus) !important}
  
@@ -1100,6 +1104,7 @@ html.sap-desktop .sapMPopoverFooter .sapContrast.sapMIBar.sapMFooter-CTX, html.s
 .sapUiLayoutCSSGrid.form-grid .sapMInputBaseReadonly .sapMInputBaseContentWrapper {height:100%}
 .sapUiLayoutCSSGrid.form-grid .sapMLnk, .sapUiLayoutCSSGrid.form-grid .sapMBtn {align-self: center;}
 .sapUiLayoutCSSGrid.form-grid .sapMFlexItem + .sapMFlexItem > .sapMBtn  {margin-left:10px;}
+.sapUiLayoutCSSGrid.form-grid .sapUiTinyMarginEnd {    margin-right: 0.5rem!important;}
 
 .sapUiLayoutCSSGrid.form-grid.type-b {border-top: 0px solid #F5F5F5; border-bottom: 0px solid #F5F5F5; padding-top: 0px; padding-left: 0;background-color: transparent!important;}
 .sapUiLayoutCSSGrid.form-grid.type-b > * {height:100%;min-height: 50px;padding-left: 0;align-self: center;background: #F9FAFA;justify-content: center;}

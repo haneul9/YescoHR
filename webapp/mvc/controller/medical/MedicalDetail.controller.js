@@ -300,6 +300,7 @@ sap.ui.define(
         oDetailModel.setProperty('/FormData/Kdsvh', mSelectedDetail.Kdsvh);
         oDetailModel.setProperty('/FormData/Famgb', mSelectedDetail.Famgb);
         oDetailModel.setProperty('/FormData/Pratetx', mSelectedDetail.Pratetx);
+        oDetailModel.setProperty('/FormData/Prate', mSelectedDetail.Prate);
 
         if (oEvent.getSource().getSelectedItem().getBindingContext().getPath().substr(-1) === '0') return;
 
@@ -805,10 +806,6 @@ sap.ui.define(
         try {
           AppUtils.setAppBusy(true, this);
 
-          const bSuccess = await this.checkedDialogData('C');
-
-          if (!bSuccess) return;
-
           if (!mDialogData.Appno2 || mDialogData.Appno2 === '00000000000000') {
             const vAppno = await Appno.get.call(this);
 
@@ -818,8 +815,20 @@ sap.ui.define(
           mDialogData.Waers = 'KRW';
 
           const aHisList = [mDialogData, ...oDetailModel.getProperty('/HisList')];
+          const aDetail = [];
 
-          oDetailModel.setProperty('/HisList', aHisList);
+          aHisList.forEach((e) => {
+            if (e.Appno2 === mDialogData.Appno2) {
+              e.Line = 'X';
+            } else {
+              e.Line = '';
+            }
+            aDetail.push(e);
+          });
+
+          await this.checkedDialogData('C');
+
+          oDetailModel.setProperty('/HisList', aDetail);
           oDetailModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aHisList, sStatCode: 'ZappStat' }));
 
           this.setAppAmount();
@@ -858,21 +867,32 @@ sap.ui.define(
         try {
           AppUtils.setAppBusy(true, this);
 
-          const bSuccess = await this.checkedDialogData();
-
-          if (!bSuccess) return;
-
           if (!mDialogData.Appno2 || mDialogData.Appno2 === '00000000000000') {
             const vAppno = await Appno.get.call(this);
 
             oDetailModel.setProperty('/DialogData/Appno2', vAppno);
           }
 
-          aHisList.forEach((e, i) => {
-            if (mDialogData.Seqnr === e.Seqnr) {
-              oDetailModel.setProperty(`/HisList/${i}`, mDialogData);
+          const aDetail = [];
+
+          aHisList.forEach((e) => {
+            if (e.Appno2 === mDialogData.Appno2) {
+              e.Line = 'X';
+            } else {
+              e.Line = '';
             }
+            aDetail.push(e);
           });
+
+          oDetailModel.setProperty('/HisList', aDetail);
+
+          await this.checkedDialogData();
+
+          // aHisList.forEach((e, i) => {
+          //   if (mDialogData.Seqnr === e.Seqnr) {
+          //     oDetailModel.setProperty(`/HisList/${i}`, mDialogData);
+          //   }
+          // });
 
           await AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.getApprovalType(), this.DIALOG_FILE_ID);
 
@@ -1027,7 +1047,8 @@ sap.ui.define(
         if (!mRowData) {
           oDetailModel.setProperty('/DialogData', {
             Recpgb: 'ALL',
-            Pratetx: '0',
+            Pratetx: oDetailModel.getProperty('/FormData/Pratetx'),
+            Prate: oDetailModel.getProperty('/FormData/Prate'),
             Pybet: '0',
             isNew: true,
           });
