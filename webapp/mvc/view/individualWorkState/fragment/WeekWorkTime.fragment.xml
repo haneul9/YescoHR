@@ -1,5 +1,4 @@
 <core:FragmentDefinition xmlns="sap.m"
-  xmlns:table="sap.ui.table"
   xmlns:core="sap.ui.core"
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control">
@@ -27,8 +26,12 @@
           <Text text="{i18n>LABEL_00330}"/>
         </HBox>
       </grid:CSSGrid>
-      <HBox height="60px" alignItems="End">
-        <custom:VacationIndicator width="100%" total="{/WeekWork/WeekTime}" used="{/WeekWork/Tottime}" showTotal="true" align="Bottom" />
+      <HBox alignItems="End">
+        <custom:VacationIndicator width="100%" total="{/WeekWork/WeekTime}" used="{/WeekWork/Tottime}" showTotal="true">
+          <custom:layoutData>
+            <FlexItemData growFactor="1" />
+          </custom:layoutData>
+        </custom:VacationIndicator>
       </HBox>
       <HBox>
         <Label text="{i18n>LABEL_18020}"/>

@@ -34,7 +34,7 @@
           }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="120px" sortProperty="ZreqForx" filterProperty="ZreqForx">
+      <table:Column width="160px" sortProperty="ZreqForx" filterProperty="ZreqForx">
         <Label text="{i18n>LABEL_19002}"/>
         <table:template>
           <Text text="{ZreqForx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>

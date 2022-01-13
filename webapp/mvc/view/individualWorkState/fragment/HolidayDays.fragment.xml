@@ -3,8 +3,9 @@
   xmlns:microchart="sap.suite.ui.microchart"
   xmlns:grid="sap.ui.layout.cssgrid">
   <VBox width="50%" class="vCardBox sapUiMediumMarginEnd">
-    <HBox class="table-toolbar">
+    <HBox>
       <Title level="H2" text="{i18n>LABEL_18005}" />
+      <Text text="{/FullYear}"/>
     </HBox>
     <HBox justifyContent="SpaceBetween">
       <microchart:InteractiveDonutChart class="w-auto h-auto" selectionEnabled="false">

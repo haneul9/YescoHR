@@ -8,10 +8,10 @@
         </HBox>
         <grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="8px">
             <Label text="{i18n>LABEL_20003}" design="Bold" />
-            <DatePicker class="sapIcon_Date" value="{/search/year}" displayFormat="yyyy" valueFormat="yyyy" />
+            <DatePicker class="sapIcon_Date" value="{/search/Plnyy}" displayFormat="yyyy" valueFormat="yyyy" change=".onChangePlnyy" />
             <Label text="{i18n>LABEL_20004}" design="Bold" />
-            <ComboBox selectedKey="{/search/Todo1}" items="{/entry/Todo1List}">
-                <core:Item key="{Zcode}" text="{Ztext}" />
+            <ComboBox selectedKey="{/search/Seqno}" items="{/entry/SeqnoList}">
+                <core:Item key="{Seqno}" text="{Seqno}" />
             </ComboBox>
         </grid:CSSGrid>
     </VBox>

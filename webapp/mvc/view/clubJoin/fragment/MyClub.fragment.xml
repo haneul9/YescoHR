@@ -15,21 +15,21 @@
                     <ObjectStatus text="{
                         path: '/Total/Ccnt',
                         formatter: '.formatNumber'
-                    }" state="Indication05" />
+                    }" state="Indication04" />
                 </VBox>
                 <VBox width="30%" class="summary-info">
                     <Label design="Bold" text="{i18n>LABEL_14004}" />
                     <ObjectStatus text="{
                         path: '/Total/Bet01',
                         formatter: '.formatPay'
-                    }" state="Indication05" />
+                    }" state="Indication04" />
                 </VBox>
                 <VBox class="summary-info">
                     <Label design="Bold" text="{i18n>LABEL_14005}" />
                     <ObjectStatus text="{
                         path: '/Total/Bet02',
                         formatter: '.formatPay'
-                    }" state="Indication05" />
+                    }" state="Indication04" />
                 </VBox>
             </HBox>
         </VBox>
