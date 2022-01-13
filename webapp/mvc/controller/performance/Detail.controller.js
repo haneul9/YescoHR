@@ -405,16 +405,7 @@ sap.ui.define(
           const aDuty = _.cloneDeep(oViewModel.getProperty('/goals/duty'));
           const bIsSave = _.isEqual(code, Constants.PROCESS_TYPE.SAVE.code);
 
-          if (!bIsSave) {
-            switch (code) {
-              case Constants.PROCESS_TYPE.SAVE.code:
-              case Constants.PROCESS_TYPE.REJECT.code:
-              case Constants.PROCESS_TYPE.CANCEL.code:
-                _.chain(mParameter).set('OldStatus', mParameter.Zzapsts).set('OldStatusSub', mParameter.ZzapstsSub).set('OldStatusPart', mParameter.ZzapstsPSub).commit();
-              default:
-                break;
-            }
-          }
+          _.chain(mParameter).set('OldStatus', mParameter.Zzapsts).set('OldStatusSub', mParameter.ZzapstsSub).set('OldStatusPart', mParameter.ZzapstsPSub).commit();
 
           await Client.deep(oModel, 'AppraisalDoc', {
             ...mParameter,
