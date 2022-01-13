@@ -13,7 +13,7 @@
         </buttons>
         <content>
             <VBox class="vCardBox sapUiMediumMarginBottom">
-                <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
+                <grid:CSSGrid gridTemplateColumns="1fr 2fr 1fr 2fr" gridGap="1px 0" class="form-grid">
                     <Label text="{i18n>LABEL_07040}" />
                     <VBox>
                         <ComboBox items="{/LaonType}" selectedKey="{/DialogData/Rptyp}" change=".onLaonType" editable="{= ${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta} }" class="required">

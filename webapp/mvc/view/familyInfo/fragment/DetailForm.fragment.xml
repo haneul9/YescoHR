@@ -9,9 +9,9 @@
         <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
             <Label text="{i18n>LABEL_00210}" />
             <HBox class="mb-0 " alignItems="Center">
-                <Text text="{i18n>LABEL_05004}"/>
-                <Input value="{/FormData/Lnmhg}" editable="{= !${/FormData/ZappStatAl} }" class="required"/>
-                <Text text="{i18n>LABEL_05005}"/>
+                <Text text="{i18n>LABEL_05004}" class="sapUiTinyMarginEnd" />
+                <Input value="{/FormData/Lnmhg}" editable="{= !${/FormData/ZappStatAl} }" class="sapUiTinyMarginEnd required"/>
+                <Text text="{i18n>LABEL_05005}" class="sapUiTinyMarginEnd" />
                 <Input value="{/FormData/Fnmhg}" editable="{= !${/FormData/ZappStatAl} }" class="required"/>
             </HBox>
             <Label text="{i18n>LABEL_05006}" />
