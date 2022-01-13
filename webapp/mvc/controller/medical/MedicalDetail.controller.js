@@ -817,11 +817,20 @@ sap.ui.define(
           }
 
           mDialogData.Waers = 'KRW';
-          mDialogData.Line = 'X';
 
           const aHisList = [mDialogData, ...oDetailModel.getProperty('/HisList')];
+          const aDetail = [];
 
-          oDetailModel.setProperty('/HisList', aHisList);
+          aHisList.forEach((e) => {
+            if (e.Appno2 === mDialogData.Appno2) {
+              e.Line = 'X';
+            } else {
+              e.Line = '';
+            }
+            aDetail.push(e);
+          });
+
+          oDetailModel.setProperty('/HisList', aDetail);
           oDetailModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aHisList, sStatCode: 'ZappStat' }));
 
           this.setAppAmount();
@@ -870,13 +879,24 @@ sap.ui.define(
             oDetailModel.setProperty('/DialogData/Appno2', vAppno);
           }
 
-          mDialogData.Line = 'X';
+          const aDetail = [];
 
-          aHisList.forEach((e, i) => {
-            if (mDialogData.Seqnr === e.Seqnr) {
-              oDetailModel.setProperty(`/HisList/${i}`, mDialogData);
+          aHisList.forEach((e) => {
+            if (e.Appno2 === mDialogData.Appno2) {
+              e.Line = 'X';
+            } else {
+              e.Line = '';
             }
+            aDetail.push(e);
           });
+
+          oDetailModel.setProperty('/HisList', aDetail);
+
+          // aHisList.forEach((e, i) => {
+          //   if (mDialogData.Seqnr === e.Seqnr) {
+          //     oDetailModel.setProperty(`/HisList/${i}`, mDialogData);
+          //   }
+          // });
 
           await AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.getApprovalType(), this.DIALOG_FILE_ID);
 
