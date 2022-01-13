@@ -30,26 +30,29 @@ sap.ui.define(
         const oViewModel = new JSONModel({
           busy: false,
           search: {
-            year: today.format('YYYY'),
-            Todo1: '1',
+            Plnyy: today.format('YYYY'),
+            Seqno: '',
           },
           entry: {
-            Todo1List: [
-              { Zcode: '1', Ztext: '1' },
-              { Zcode: '2', Ztext: '2' },
-              { Zcode: '3', Ztext: '3' },
-              { Zcode: '4', Ztext: '4' },
+            SeqnoList: [],
+            AwartList: [
+              { label: '연차', selected: true },
+              { label: '반차', selected: false },
             ],
           },
-          summary: {
-            rangeTxt: '(2022.01.01~2022.01.31)',
-            quota: [
-              { Todo1: '연차휴가', Todo2: 52, Todo3: 40 },
-              { Todo1: '하계휴가', Todo2: 20, Todo3: 5 },
-              { Todo1: '휴가계획', Todo2: 20, Todo3: 5 },
-            ],
+          buttons: {
+            SAVE: false,
+            APPROVAL: false,
+            PRINT: false,
+          },
+          summary: {},
+          plans: {
+            raw: [],
+            grid: [],
           },
         });
+
+        oViewModel.setSizeLimit(500);
         this.setViewModel(oViewModel);
       },
 
@@ -57,6 +60,8 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         try {
+          await this.setHolPlanSeqno();
+          this.onPressSearch();
         } catch (oError) {
           this.debug('Controller > leavePlan App > onObjectMatched Error', oError);
 
@@ -66,76 +71,151 @@ sap.ui.define(
         }
       },
 
+      buildPlanGrid() {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/plans/grid', [
+          ...this.getPlanHeader(), //
+          ..._.times(12, (n) => this.getPlanBody(n)).reduce((a, b) => [...a, ...b], []),
+        ]);
+      },
+
+      getBoxObject({ day = 'NONE', label = '', classNames = '' }) {
+        return { day, label, classNames };
+      },
+
+      getPlanHeader() {
+        return [
+          this.getBoxObject({ label: this.getBundleText('LABEL_00253'), classNames: 'Header' }), //  월
+          this.getBoxObject({ label: this.getBundleText('LABEL_20010'), classNames: 'Header' }), // 개수
+          ..._.times(31, (n) => this.getBoxObject({ label: n + 1, classNames: 'Header' })),
+        ];
+      },
+
+      getPlanBody(iMonth) {
+        const oViewModel = this.getViewModel();
+        const sYear = oViewModel.getProperty('/search/Plnyy');
+        const sYearMonth = `${sYear}-${_.padStart(iMonth + 1, 2, '0')}`;
+
+        return [
+          this.getBoxObject({ label: this.getBundleText('LABEL_20011', iMonth + 1), classNames: 'Header' }), //  {0}월
+          this.getBoxObject({ label: 0, classNames: 'Header' }),
+          ..._.times(31, (n) => {
+            const sDay = `${sYearMonth}-${_.padStart(n + 1, 2, '0')}`;
+            return this.getBoxObject({ day: sDay, label: '', classNames: this.getDayStyle(sDay) });
+          }),
+        ];
+      },
+
+      getDayStyle(sDay) {
+        const mPlansRawData = this.getViewModel().getProperty('/plans/raw');
+        const sHolyn = _.get(mPlansRawData, [sDay, 'Holyn']);
+        const sInpyn = _.get(mPlansRawData, [sDay, 'Inpyn']);
+        const mClasses = {
+          Weekend: { sHolyn: 'X', sInpyn: '' },
+          Disable: { sHolyn: '', sInpyn: 'X' },
+          Normal: { sHolyn: '', sInpyn: '' },
+        };
+
+        return moment(sDay).isValid() ? _.chain(mClasses).findKey({ sHolyn, sInpyn }).value() : 'None';
+      },
+
+      toggleButton() {
+        const oViewModel = this.getViewModel();
+        const mSummary = oViewModel.getProperty('/summary');
+        const mButtons = oViewModel.getProperty('/buttons');
+
+        if (!_.isEqual(mSummary.Prdyn, 'X')) {
+          _.forOwn(mButtons, (value, key, object) => _.set(object, key, false));
+        } else {
+          const iZappStatAl = _.toNumber(mButtons.ZappStatAl);
+
+          _.chain(mButtons)
+            .set('SAVE', _.inRange(iZappStatAl, 11, 65))
+            .set('APPROVAL', _.inRange(iZappStatAl, 11, 65))
+            .set('PRINT', _.isEqual(iZappStatAl, 20) || _.isEqual(iZappStatAl, 60))
+            .commit();
+        }
+      },
+
+      async setHolPlanSeqno() {
+        const oViewModel = this.getViewModel();
+        const sPlnyy = oViewModel.getProperty('/search/Plnyy');
+
+        const aSeqno = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'HolPlanSeqno', { Pernr: this.getAppointeeProperty('Pernr'), Plnyy: sPlnyy });
+
+        oViewModel.setProperty('/search/Seqno', _.chain(aSeqno).find({ Curseq: 'X' }).get('Seqno').value());
+        oViewModel.setProperty('/entry/SeqnoList', aSeqno);
+      },
+
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
+      onChangePlnyy() {
+        this.setHolPlanSeqno();
+      },
+
       async onPressSearch() {
         const oViewModel = this.getViewModel();
 
         try {
           oViewModel.setProperty('/busy', true);
 
-          const mFilters = oViewModel.getProperty('/search');
+          const mSearchConditions = oViewModel.getProperty('/search');
+          const sPernr = this.getAppointeeProperty('Pernr');
           const fCurried = Client.getEntitySet(this.getModel(ServiceNames.WORKTIME));
-          const [aSummary, aRowData] = await Promise.all([
-            fCurried('LeaveUseHistory', { ...mFilters }), //
-            fCurried('LeaveUseBoard', { ...mFilters }),
+
+          const [[mAnnualLeaveStatus], aAnnualLeavePlan] = await Promise.all([
+            fCurried('AnnualLeaveStatus', { Pernr: sPernr, ...mSearchConditions }), //
+            fCurried('AnnualLeavePlan', { Pernr: sPernr, ...mSearchConditions }),
           ]);
 
-          this.setTableData({ oViewModel, aRowData });
+          // 발생/사용 개수 convert to Number
+          _.forOwn(mAnnualLeaveStatus, (value, key, object) => {
+            if (_.startsWith(key, 'Crecnt') || _.startsWith(key, 'Usecnt')) {
+              _.set(object, key, _.toNumber(value));
+            }
+          });
 
-          const mGroupByOyymm = _.chain(aSummary)
-            .groupBy('Oyymm')
-            .defaults({ ..._.times(12, (v) => ({ [`${this.getBundleText('LABEL_16019', v + 1)}`]: [{ [this.CHARTS.ACC.prop]: 0, [this.CHARTS.CUR.prop]: 0 }] })).reduce((acc, cur) => ({ ...acc, ...cur }), {}) })
-            .value();
-
-          const iCurrentMonthIndex = moment(mFilters.Zyymm).month() + 1;
-          const mVerticalLineMonth = {
-            vline: 'true',
-            lineposition: '0',
-            color: '#6baa01',
-            labelHAlign: 'center',
-            labelPosition: '0',
-            // label: 'Selected Month',
-            dashed: '1',
-          };
-
+          oViewModel.setProperty('/summary', _.omit(mAnnualLeaveStatus, '__metadata'));
           oViewModel.setProperty(
-            '/summary/categories/0/category',
-            _.chain(aSummary)
-              .reduce((acc, cur) => [...acc, { label: cur.Oyymm }], [])
-              .defaults(_.times(12, (v) => ({ label: this.getBundleText('LABEL_16019', v + 1) })))
-              .tap((arr) => arr.splice(iCurrentMonthIndex, 0, mVerticalLineMonth))
+            '/plans/raw',
+            _.chain(aAnnualLeavePlan)
+              .groupBy((o) => moment(o.Tmdat).format('YYYY-MM-DD'))
+              .forOwn((v, p, obj) => (obj[p] = _.omit(v[0], '__metadata')))
               .value()
           );
-          oViewModel.setProperty('/summary/dataset', [
-            {
-              seriesname: this.getBundleText(this.CHARTS.ACC.label),
-              anchorBorderColor: this.CHARTS.ACC.color,
-              anchorBgColor: this.CHARTS.ACC.color,
-              data: _.chain(mGroupByOyymm)
-                .map((v) => ({ value: _.get(v, [0, this.CHARTS.ACC.prop]) }))
-                .forEach((v, i, o) => {
-                  if (_.isEqual(v.value, 0)) v.value = _.get(o, [i - 1, 'value'], 0);
-                })
-                .value(),
-            },
-            {
-              seriesname: this.getBundleText(this.CHARTS.CUR.label),
-              anchorBorderColor: this.CHARTS.CUR.color,
-              anchorBgColor: this.CHARTS.CUR.color,
-              data: _.map(mGroupByOyymm, (v) => ({ value: _.get(v, [0, this.CHARTS.CUR.prop], 0) })),
-            },
-          ]);
 
-          this.buildChart();
+          this.toggleButton();
+          this.buildPlanGrid();
         } catch (oError) {
-          this.debug('Controller > leave App > onPressSearch Error', oError);
+          this.debug('Controller > leavePlan App > onPressSearch Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/busy', false);
         }
+      },
+
+      onClickDay(oEvent) {
+        const { day: sDay, style: sStyle } = oEvent.data();
+
+        if (_.isEqual(sDay, 'NONE') || !_.isEqual(sStyle, 'Normal')) return;
+
+        if (!this._pPopover) {
+          this._pPopover = Fragment.load({
+            id: this.getView().getId(),
+            name: 'sap.ui.yesco.mvc.view.leavePlan.fragment.AwartPopover',
+            controller: this,
+          }).then(function (oPopover) {
+            // oView.addDependent(oPopover);
+            // oPopover.bindElement('/ProductCollection/0');
+            return oPopover;
+          });
+        }
+        this._pPopover.then(function (oPopover) {
+          oPopover.openBy(oEvent);
+        });
       },
 
       onPressSignatureClear() {
@@ -145,6 +225,8 @@ sap.ui.define(
       onPressSave() {},
 
       onPressApproval() {},
+
+      onPressPrint() {},
 
       /*****************************************************************
        * ! Call oData
