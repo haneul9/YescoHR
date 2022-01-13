@@ -300,6 +300,7 @@ sap.ui.define(
         oDetailModel.setProperty('/FormData/Kdsvh', mSelectedDetail.Kdsvh);
         oDetailModel.setProperty('/FormData/Famgb', mSelectedDetail.Famgb);
         oDetailModel.setProperty('/FormData/Pratetx', mSelectedDetail.Pratetx);
+        oDetailModel.setProperty('/FormData/Prate', mSelectedDetail.Prate);
 
         if (oEvent.getSource().getSelectedItem().getBindingContext().getPath().substr(-1) === '0') return;
 
@@ -816,6 +817,7 @@ sap.ui.define(
           }
 
           mDialogData.Waers = 'KRW';
+          mDialogData.Line = 'X';
 
           const aHisList = [mDialogData, ...oDetailModel.getProperty('/HisList')];
 
@@ -867,6 +869,8 @@ sap.ui.define(
 
             oDetailModel.setProperty('/DialogData/Appno2', vAppno);
           }
+
+          mDialogData.Line = 'X';
 
           aHisList.forEach((e, i) => {
             if (mDialogData.Seqnr === e.Seqnr) {
@@ -1027,7 +1031,8 @@ sap.ui.define(
         if (!mRowData) {
           oDetailModel.setProperty('/DialogData', {
             Recpgb: 'ALL',
-            Pratetx: '0',
+            Pratetx: oDetailModel.getProperty('/FormData/Pratetx'),
+            Prate: oDetailModel.getProperty('/FormData/Prate'),
             Pybet: '0',
             isNew: true,
           });

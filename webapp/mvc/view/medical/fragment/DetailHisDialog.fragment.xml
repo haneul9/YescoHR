@@ -43,7 +43,7 @@
                     </VBox>
                     <Label text="{i18n>LABEL_09019}"/>
                     <FlexBox alignItems="Start" justifyContent="End">
-                        <Text text="{/DialogData/Pratetx} %" />
+                        <Text text="{/DialogData/Pratetx}" />
                     </FlexBox>
                     <HBox visible="{= ${/DialogData/ZappStat} === 'P' || ${/DialogData/ZappStat} === 'F'}"></HBox>
                     <HBox visible="{= ${/DialogData/ZappStat} === 'P' || ${/DialogData/ZappStat} === 'F'}"></HBox>

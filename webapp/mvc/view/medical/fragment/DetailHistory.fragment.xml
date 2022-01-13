@@ -104,7 +104,7 @@
             <Text text="{Pratetx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
-        <table:Column width="150px" visible="{= ${/DialogData/ZappStat} === 'P' || ${/DialogData/ZappStat} === 'F'}">
+        <table:Column width="150px">
           <Label text="{i18n>LABEL_09009}"/>
           <table:template>
             <Text text="{
