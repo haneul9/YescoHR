@@ -8,7 +8,7 @@
     <layoutData>
       <f:GridContainerItemLayoutData rows="{height}" columns="{width}" />
     </layoutData>
-    <HBox width="100%" height="15%" class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
+    <HBox width="100%" class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
       <Title level="H2" text="{= ${selectedMembersTab} === 'ORG' ? ${orgMembers/title} : (${selectedMembersTab} === 'MY' ? ${myMembers/title} : '') }" visible="{= !${hideTitle} }" />
       <SegmentedButton selectedKey="{selectedMembersTab}" visible="{= !!${orgMembers} &amp;&amp; !!${orgMembers/active} &amp;&amp; !!${myMembers} &amp;&amp; !!${myMembers/active} }">
         <items>

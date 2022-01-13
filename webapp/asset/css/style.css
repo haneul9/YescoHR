@@ -34,18 +34,18 @@ html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl) {text-decoration: none;}
 
 .portlet {box-sizing:border-box; overflow:hidden}
 .portlet-box {position:relative; border:1px solid whitesmoke; border-radius:10px; padding:20px 20px; background-color:#fff; box-shadow:0px 2px 4px rgb(0 0 0 / 16%)}
-.portlet-box .portlet-header + .sapMFlexItem, .portlet-box .portlet-header + .sapMFlexItem + .sapMFlexItem {height: calc(100% - 35px);}
-.portlet-box .portlet-header + .sapMFlexItem .sapMScrollCont, .portlet-box .sapMScrollCont {max-height: 100%;_height: calc(100% - 35px);}
+.portlet-box .portlet-header + .sapMFlexItem, .portlet-box .portlet-header + .sapMFlexItem + .sapMFlexItem {height: calc(100% - 44px);}
+.portlet-box .portlet-header + .sapMFlexItem .sapMScrollCont, .portlet-box .sapMScrollCont {max-height: 100%;}
 .portlet-height-1 {height:270px}
 .portlet-height-2 {height:540px}
 .portlet-height-3 {height:810px}
 .portlet-height-4 {height:1080px}
 .portlet-height-5 {height:1350px}
-.portlet-header {display: flex;justify-content: center;align-items: center;margin-top: -6px;margin-bottom: 10px;}
+.portlet-header {display: flex;justify-content: center;align-items: flex-end;margin-bottom: 20px;height: 24px;}
 .portlet-header > .sapMFlexItem + .sapMFlexItem {margin-left:5px}
 .portlet-header h2.sapMTitle {align-self: center; display: flex;font-size:20px;font-weight:700;} 
-.sapUiSizeCompact .portlet-header .sapMSegB {height:30px;margin-left:20px;background-color: #E9E9E9;border-radius: 8px;width: auto!important;}
-.sapUiSizeCompact .portlet-header .sapMSegB .sapMSegBBtn {min-width:70px;}
+.sapUiSizeCompact .portlet-header .sapMSegB {height:30px;margin-left:20px;margin-top: -5px;background-color: #E9E9E9;border-radius: 8px;width: auto!important;}
+.sapUiSizeCompact .portlet-header .sapMSegB .sapMSegBBtn {min-width:72px;}
 .portlet-header .sapMSegB .sapMSegBBtn .sapMSegBBtnInner {background-color: transparent;border-radius: 8px!important;line-height: 25px;font-weight: 500;}
 .portlet-header .sapMSegB .sapMSegBBtn.sapMSegBBtnSel .sapMSegBBtnInner {font-weight: 700;}
 .portlet .sapMBtn.icon-button.portlet-close {display:none}
@@ -79,8 +79,8 @@ html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl) {text-decoration: none;}
 .portlet-p03p04 .portlet-member-name {font-weight:700;margin-right: 15px;width: 49px;}
 .portlet-p03p04 .portlet-member-position {margin-right:12px;width: 49px;}
 .portlet-p03p04 .portlet-member-org {width: 90px;}
-.portlet-p03p04 .sapMBtn.icon-button.portlet-member-remove {display:none}
-.portlet-p03p04:hover .sapMBtn.icon-button.portlet-member-remove {display:initial}
+.portlet-p03p04 .sapMBtn.icon-button.portlet-member-remove {visibility: hidden;}
+.portlet-p03p04:hover .sapMBtn.icon-button.portlet-member-remove {visibility:visible}
 .portlet-p05 .sapMListUl .sapMLIB:not(.sapMComboBoxBaseItem) {margin-top:11px}
 .portlet-p05 .sapMListUl .sapMLIB:first-child {margin-top:0}
 .portlet-p06 .today {color:grey}

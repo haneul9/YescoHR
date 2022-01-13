@@ -9,7 +9,7 @@
     <layoutData>
       <f:GridContainerItemLayoutData rows="{height}" columns="{width}" />
     </layoutData>
-    <HBox width="100%" height="15%" class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
+    <HBox width="100%" class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
       <Title level="H2" text="{title}" visible="{= !${hideTitle} }" />
       <Text text="">
         <layoutData>
