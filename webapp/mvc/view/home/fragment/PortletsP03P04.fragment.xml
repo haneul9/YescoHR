@@ -36,14 +36,14 @@
         <VBox width="100%" items="{orgMembers/list}" visible="{= ${orgMembers/listCount} &gt; 0 }" class="portlet-member">
           <HBox width="100%" alignItems="Center">
             <Image src="{Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="30px" height="30px" />
-            <Text text="{Ename}" wrapping="false" class="portlet-member-name" />
-            <Text text="{Zzjikgbt}" wrapping="false" class="portlet-member-position" />
-            <Text text="{Orgtx}" wrapping="false" class="portlet-member-org">
+            <Text text="{Ename}" tooltip="{Ename}" wrapping="false" class="portlet-member-name" />
+            <Text text="{Zzjikgbt}" tooltip="{Zzjikgbt}" wrapping="false" class="portlet-member-position" />
+            <Text text="{Orgtx}" tooltip="{Orgtx}" wrapping="false" class="portlet-member-org">
               <layoutData>
                 <FlexItemData growFactor="1" />
               </layoutData>
             </Text>
-            <Text text="{Atext}" wrapping="false" class="portlet-member-status">
+            <Text text="{Atext}" tooltip="{Atext}" wrapping="false" class="portlet-member-status">
               <customData>
                 <core:CustomData key="portlet-member-status" value="{Icon}" writeToDom="true" />
               </customData>
@@ -61,14 +61,14 @@
         <VBox width="100%" items="{myMembers/list}" visible="{= ${myMembers/listCount} &gt; 0 }" class="portlet-member">
           <HBox width="100%" alignItems="Center">
             <Image src="{Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="30px" height="30px" />
-            <Text text="{Ename}" wrapping="false" class="portlet-member-name" />
-            <Text text="{Zzjikgbt}" wrapping="false" class="portlet-member-position" />
-            <Text text="{Orgtx}" wrapping="false" class="portlet-member-org">
+            <Text text="{Ename}" tooltip="{Ename}" wrapping="false" class="portlet-member-name" />
+            <Text text="{Zzjikgbt}" tooltip="{Zzjikgbt}" wrapping="false" class="portlet-member-position" />
+            <Text text="{Orgtx}" tooltip="{Orgtx}" wrapping="false" class="portlet-member-org">
               <layoutData>
                 <FlexItemData growFactor="1" />
               </layoutData>
             </Text>
-            <Text text="{Atext}" wrapping="false" class="portlet-member-status">
+            <Text text="{Atext}" tooltip="{Atext}" wrapping="false" class="portlet-member-status">
               <customData>
                 <core:CustomData key="portlet-member-status" value="{Icon}" writeToDom="true" />
               </customData>
