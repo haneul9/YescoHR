@@ -30,9 +30,7 @@ sap.ui.define(
     Client,
     ServiceNames,
     BaseController,
-    YearPlanBoxHandler,
-    Date,
-    Currency
+    YearPlanBoxHandler
   ) => {
     'use strict';
 
