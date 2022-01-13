@@ -3,10 +3,7 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/model/json/JSONModel',
-    'sap/ui/yesco/control/MessageBox',
-    'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/TableUtils',
@@ -20,10 +17,7 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
-    MessageBox,
-    Appno,
     AppUtils,
-    ComboEntry,
     FragmentEvent,
     TextUtils,
     TableUtils,
@@ -41,6 +35,7 @@ sap.ui.define(
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
+          FullYear: `${moment().year()}${this.getBundleText('LABEL_00252')}`,
           year: moment().year(),
           menid: this.getCurrentMenuId(),
           Hass: this.isHass(),
@@ -145,11 +140,16 @@ sap.ui.define(
           // 주 52시간 현황
           const aWeekTime = await Client.getEntitySet(oModel, 'WorkLimitStatus', mWeekWorkPayLoad);
 
-          oViewModel.setProperty('/WeekWork/Wkrultx', aWeekTime[0].Wkrultx);
-          oViewModel.setProperty('/WeekWork/Tottime', parseFloat(aWeekTime[0].Tottime));
-          oViewModel.setProperty('/WeekWork/Bastime', parseFloat(aWeekTime[0].Bastime));
-          oViewModel.setProperty('/WeekWork/Ottime', parseFloat(aWeekTime[0].Ottime));
-          oViewModel.setProperty('/WeekWork/WorkTime', `${aWeekTime[0].Beguz} ~ ${aWeekTime[0].Enduz} (${aWeekTime[0].Stdaz}${this.getBundleText('LABEL_00330')})`);
+          // oViewModel.setProperty('/WeekWork/Wkrultx', aWeekTime[0].Wkrultx);
+          // oViewModel.setProperty('/WeekWork/Tottime', parseFloat(aWeekTime[0].Tottime));
+          // oViewModel.setProperty('/WeekWork/Bastime', parseFloat(aWeekTime[0].Bastime));
+          // oViewModel.setProperty('/WeekWork/Ottime', parseFloat(aWeekTime[0].Ottime));
+          // oViewModel.setProperty('/WeekWork/WorkTime', `${aWeekTime[0].Beguz} ~ ${aWeekTime[0].Enduz} (${aWeekTime[0].Stdaz}${this.getBundleText('LABEL_00330')})`);
+          oViewModel.setProperty('/WeekWork/Wkrultx', '시차출퇴근제');
+          oViewModel.setProperty('/WeekWork/Tottime', 40.5);
+          oViewModel.setProperty('/WeekWork/Bastime', 38);
+          oViewModel.setProperty('/WeekWork/Ottime', 2.5);
+          oViewModel.setProperty('/WeekWork/WorkTime', '09:00 ~ 18:00 (8시간)');
 
           debugger;
         } catch (oError) {
@@ -198,21 +198,19 @@ sap.ui.define(
 
       // 주 52시간 현황 날짜선택
       async onWeekWorkTime() {
-        const oViewModel = this.getViewModel();
-        const oModel = this.getModel(ServiceNames.WORKTIME);
-        const mWeekWorkPayLoad = {
-          Werks: this.getAppointeeProperty('Werks'),
-          Datum: moment(oViewModel.getProperty('/WeekWorkDate')).hours(9).toDate(),
-        };
-
-        // 주 52시간 현황
-        const aWeekTime = await Client.getEntitySet(oModel, 'WorkLimitStatus', mWeekWorkPayLoad);
-
-        oViewModel.setProperty('/WeekWork/Wkrultx', aWeekTime[0].Wkrultx);
-        oViewModel.setProperty('/WeekWork/Tottime', parseFloat(aWeekTime[0].Tottime));
-        oViewModel.setProperty('/WeekWork/Bastime', parseFloat(aWeekTime[0].Bastime));
-        oViewModel.setProperty('/WeekWork/Ottime', parseFloat(aWeekTime[0].Ottime));
-        oViewModel.setProperty('/WeekWork/WorkTime', `${aWeekTime[0].Beguz} ~ ${aWeekTime[0].Enduz} (${aWeekTime[0].Stdaz}${this.getBundleText('LABEL_00330')})`);
+        // const oViewModel = this.getViewModel();
+        // const oModel = this.getModel(ServiceNames.WORKTIME);
+        // const mWeekWorkPayLoad = {
+        //   Werks: this.getAppointeeProperty('Werks'),
+        //   Datum: moment(oViewModel.getProperty('/WeekWorkDate')).hours(9).toDate(),
+        // };
+        // // 주 52시간 현황
+        // const aWeekTime = await Client.getEntitySet(oModel, 'WorkLimitStatus', mWeekWorkPayLoad);
+        // oViewModel.setProperty('/WeekWork/Wkrultx', aWeekTime[0].Wkrultx);
+        // oViewModel.setProperty('/WeekWork/Tottime', parseFloat(aWeekTime[0].Tottime));
+        // oViewModel.setProperty('/WeekWork/Bastime', parseFloat(aWeekTime[0].Bastime));
+        // oViewModel.setProperty('/WeekWork/Ottime', parseFloat(aWeekTime[0].Ottime));
+        // oViewModel.setProperty('/WeekWork/WorkTime', `${aWeekTime[0].Beguz} ~ ${aWeekTime[0].Enduz} (${aWeekTime[0].Stdaz}${this.getBundleText('LABEL_00330')})`);
       },
 
       getCurrentLocationText(oArguments) {

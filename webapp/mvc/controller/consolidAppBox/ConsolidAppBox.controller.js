@@ -108,6 +108,7 @@ sap.ui.define(
 
           oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
           oListModel.setProperty('/listInfo/infoMessage', this.getBundleText('MSG_19001'));
+          oListModel.setProperty('/listInfo/isShowProgress', false);
           oListModel.setProperty('/List', aTableList);
 
           const aAppList = await Client.getEntitySet(oModel, 'TotalApproval3');
@@ -178,24 +179,30 @@ sap.ui.define(
           mNavigationInfo.url = 'housingLoan-detail';
         }
 
-        const sSessPernr = oRowData.ZreqPernr1;
+        const sApproverPernr = oRowData.ZappPernr;
+        const sApplyPernr = oRowData.ZreqPernr1;
         const sAppointeePernr = oRowData.ZreqPernr2;
-        const oAppModel = this.getViewModel('appointeeModel');
 
-        if (this.getSessionProperty('Pernr') === sSessPernr && sSessPernr !== sAppointeePernr) {
-          const oModel = this.getModel(ServiceNames.COMMON);
-          const [mEmp] = await Client.getEntitySet(oModel, 'EmpSearchResult', {
-            Menid: this.getCurrentMenuId(),
-            Ename: sAppointeePernr,
-          });
+        if (sApproverPernr !== '00000000' && sApproverPernr !== sApplyPernr && sApproverPernr !== sAppointeePernr) {
+          window.open(oRowData.ZappUrl, '_blank');
+        } else {
+          const oAppModel = this.getViewModel('appointeeModel');
 
-          setTimeout(() => oAppModel.setData({ ...mEmp, Orgtx: mEmp.Fulln }, true), 200);
+          if (this.getSessionProperty('Pernr') === sApplyPernr && sApplyPernr !== sAppointeePernr) {
+            const oModel = this.getModel(ServiceNames.COMMON);
+            const [mEmp] = await Client.getEntitySet(oModel, 'EmpSearchResult', {
+              Menid: this.getCurrentMenuId(),
+              Ename: sAppointeePernr,
+            });
+
+            setTimeout(() => oAppModel.setData({ ...mEmp, Orgtx: mEmp.Fulln }, true), 200);
+          }
+
+          this.getRouter().navTo(
+            mNavigationInfo.url,
+            _.reduce(mNavigationInfo.key, (acc, cur) => ({ ...acc, [cur.key]: oRowData[cur.value] }), {})
+          );
         }
-
-        this.getRouter().navTo(
-          mNavigationInfo.url,
-          _.reduce(mNavigationInfo.key, (acc, cur) => ({ ...acc, [cur.key]: oRowData[cur.value] }), {})
-        );
       },
 
       onPressExcelDownload() {
