@@ -6,7 +6,7 @@
 			<Title level="H2" text="{i18n>LABEL_18006}" />
 		</HBox>
 		<HBox justifyContent="SpaceBetween">
-			<table:Table class="pr-5-px" rows="{/VacaTypeList1}" visibleRowCount="3" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
+			<table:Table class="pr-20-px" rows="{/VacaTypeList1}" visibleRowCount="3" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
 				<table:Column width="auto" sortProperty="Kotxt" filterProperty="Kotxt">
 					<Label text="{i18n>LABEL_18007}"/>
 					<table:template>
