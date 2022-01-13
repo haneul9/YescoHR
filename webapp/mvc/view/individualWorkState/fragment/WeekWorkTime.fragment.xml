@@ -1,5 +1,39 @@
 <core:FragmentDefinition xmlns="sap.m"
-  xmlns:core="sap.ui.core">
+  xmlns:table="sap.ui.table"
+  xmlns:core="sap.ui.core"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:custom="sap.ui.yesco.control">
   <VBox width="50%" class="vCardBox">
+    <HBox justifyContent="SpaceBetween" class="table-toolbar">
+      <Title level="H2" text="{i18n>LABEL_18015}" />
+      <custom:DatePicker dateValue="{ path: '/WeekWorkDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="200px" change=".onWeekWorkTime" />
+    </HBox>
+    <VBox>
+      <Label text="{i18n>LABEL_18016}{= ${/WeekWork/Wkrultx} }"/>
+      <grid:CSSGrid gridTemplateColumns="2fr 2fr 2fr" gridGap="4px">
+        <Label text="{i18n>LABEL_18017}"/>
+        <Label text="{i18n>LABEL_18018}"/>
+        <Label text="{i18n>LABEL_18019}"/>
+        <HBox>
+          <Text text="{/WeekWork/Tottime}"/>
+          <Text text="{i18n>LABEL_00330}"/>
+        </HBox>
+        <HBox>
+          <Text text="{/WeekWork/Bastime}"/>
+          <Text text="{i18n>LABEL_00330}"/>
+        </HBox>
+        <HBox>
+          <Text text="{/WeekWork/Ottime}"/>
+          <Text text="{i18n>LABEL_00330}"/>
+        </HBox>
+      </grid:CSSGrid>
+      <HBox height="60px" alignItems="End">
+        <custom:VacationIndicator width="100%" total="{/WeekWork/WeekTime}" used="{/WeekWork/Tottime}" showTotal="true" align="Bottom" />
+      </HBox>
+      <HBox>
+        <Label text="{i18n>LABEL_18020}"/>
+        <Text text="{/WeekWork/WorkTime}"/>
+      </HBox>
+    </VBox>
   </VBox>
 </core:FragmentDefinition>

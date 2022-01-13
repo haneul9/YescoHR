@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:table="sap.ui.table"
   xmlns:core="sap.ui.core">
-  <VBox width="50%" class="vCardBox">
+  <VBox width="50%" class="vCardBox sapUiMediumMarginEnd">
     <HBox justifyContent="SpaceBetween" class="table-toolbar">
       <Title level="H2" text="{i18n>LABEL_18011}" />
       <ComboBox width="80px" items="{/WorkMonths}" selectedKey="{/WorkMonth}" change=".onWorkMonth">
@@ -9,7 +9,7 @@
       </ComboBox>
     </HBox>
     <HBox justifyContent="SpaceBetween">
-      <table:Table class="pr-5-px" rows="{/MonthWorkList}" visibleRowCount="6" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
+      <table:Table class="pr-20-px" rows="{/MonthWorkList}" visibleRowCount="6" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
         <table:Column width="auto" sortProperty="Wktxt" filterProperty="Wktxt">
           <Label text="{i18n>LABEL_18012}"/>
           <table:template>
