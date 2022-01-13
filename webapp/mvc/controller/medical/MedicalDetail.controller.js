@@ -806,10 +806,6 @@ sap.ui.define(
         try {
           AppUtils.setAppBusy(true, this);
 
-          const bSuccess = await this.checkedDialogData('C');
-
-          if (!bSuccess) return;
-
           if (!mDialogData.Appno2 || mDialogData.Appno2 === '00000000000000') {
             const vAppno = await Appno.get.call(this);
 
@@ -829,6 +825,8 @@ sap.ui.define(
             }
             aDetail.push(e);
           });
+
+          await this.checkedDialogData('C');
 
           oDetailModel.setProperty('/HisList', aDetail);
           oDetailModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aHisList, sStatCode: 'ZappStat' }));
@@ -869,10 +867,6 @@ sap.ui.define(
         try {
           AppUtils.setAppBusy(true, this);
 
-          const bSuccess = await this.checkedDialogData();
-
-          if (!bSuccess) return;
-
           if (!mDialogData.Appno2 || mDialogData.Appno2 === '00000000000000') {
             const vAppno = await Appno.get.call(this);
 
@@ -891,6 +885,8 @@ sap.ui.define(
           });
 
           oDetailModel.setProperty('/HisList', aDetail);
+
+          await this.checkedDialogData();
 
           // aHisList.forEach((e, i) => {
           //   if (mDialogData.Seqnr === e.Seqnr) {
