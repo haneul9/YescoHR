@@ -278,7 +278,7 @@ sap.ui.define(
 
             if (oController && oController.onObjectMatched && typeof oController.onObjectMatched === 'function') {
               if (!_.startsWith(sRouteName, 'h/')) {
-                this.getAppointeeModel().setData(this.getSessionModel().getData());
+                this.getAppointeeModel().setData({ ...this.getSessionModel().getData(), showChangeButton: false });
               }
               oController.onObjectMatched(mRouteArguments);
             }
