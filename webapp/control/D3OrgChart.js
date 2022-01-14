@@ -105,11 +105,13 @@ sap.ui.define(
             const oViewModel = sap.ui.getCore().byId('container-ehr---m_organization--ChartHolder').getModel();
             const sPernr = _.find(this.data, { nodeId: sNodeId }).Pernr;
 
+            oViewModel.setProperty('/extendNode', sNodeId);
+
             if (!sPernr) {
               if ([...event.srcElement.classList].includes('title')) {
                 AppUtils.getAppComponent()
                   .getRouter()
-                  .navTo('employee', { pernr: 'none', orgtx: _.replace(event.srcElement.textContent, /\//g, '--') });
+                  .navTo('employee', { pernr: 'NA', orgtx: _.replace(event.srcElement.textContent, /\//g, '--') });
               }
             } else {
               if ([...event.srcElement.classList].includes('title')) {
@@ -120,7 +122,6 @@ sap.ui.define(
                 AppUtils.getAppComponent().getRouter().navTo('employee', { pernr: sPernr });
               }
             }
-            oViewModel.setProperty('/extendNode', sNodeId);
           })
           .render();
 

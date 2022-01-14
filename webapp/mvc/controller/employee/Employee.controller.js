@@ -227,7 +227,7 @@ sap.ui.define(
         }
 
         this.initialList({ oViewModel, sPernr, sOrgtx });
-        if (!_.isEqual(sPernr, 'none')) this.loadProfile({ oViewModel, sPernr });
+        if (!_.isEqual(sPernr, 'NA')) this.loadProfile({ oViewModel, sPernr });
       },
 
       async initialList({ oViewModel, sPernr, sOrgtx }) {
