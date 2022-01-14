@@ -24,6 +24,7 @@
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.individualWorkState.fragment.WeekWorkTime" type="XML" />
       </HBox>
       <core:Fragment fragmentName="sap.ui.yesco.mvc.view.individualWorkState.fragment.UseHoliday" type="XML" />
+      <core:Fragment fragmentName="sap.ui.yesco.mvc.view.individualWorkState.fragment.DailyWork" type="XML" />
     </VBox>
   </Page>
 </mvc:View>

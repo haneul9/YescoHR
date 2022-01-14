@@ -7,8 +7,8 @@
       <Title level="H2" text="{i18n>LABEL_18015}" />
       <custom:DatePicker dateValue="{ path: '/WeekWorkDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="200px" change=".onWeekWorkTime" />
     </HBox>
+    <Label text="{i18n>LABEL_18016}{= ${/WeekWork/Wkrultx} }"/>
     <VBox>
-      <Label text="{i18n>LABEL_18016}{= ${/WeekWork/Wkrultx} }"/>
       <grid:CSSGrid gridTemplateColumns="2fr 2fr 2fr" gridGap="4px">
         <Label text="{i18n>LABEL_18017}"/>
         <Label text="{i18n>LABEL_18018}"/>
@@ -26,13 +26,11 @@
           <Text text="{i18n>LABEL_00330}"/>
         </HBox>
       </grid:CSSGrid>
-      <HBox alignItems="End">
-        <custom:VacationIndicator width="100%" total="{/WeekWork/WeekTime}" used="{/WeekWork/Tottime}" showTotal="true">
-          <custom:layoutData>
-            <FlexItemData growFactor="1" />
-          </custom:layoutData>
-        </custom:VacationIndicator>
-      </HBox>
+      <custom:VacationIndicator width="100%" total="{/WeekWork/WeekTime}" used="{/WeekWork/Bastime}" used2="{/WeekWork/Ottime}" chartOnly="true" showTotal="true" usedType="WeekTime">
+        <custom:layoutData>
+          <FlexItemData growFactor="1" />
+        </custom:layoutData>
+      </custom:VacationIndicator>
       <HBox>
         <Label text="{i18n>LABEL_18020}"/>
         <Text text="{/WeekWork/WorkTime}"/>

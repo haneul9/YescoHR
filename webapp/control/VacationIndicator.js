@@ -24,11 +24,23 @@ sap.ui.define(
             type: 'float',
             defaultValue: 0,
           },
+          used2: {
+            type: 'float',
+            defaultValue: 0,
+          },
           total: {
             type: 'float',
             defaultValue: 14,
           },
           showTotal: {
+            type: 'boolean',
+            defaultValue: false,
+          },
+          usedType: {
+            type: 'string',
+            defaultValue: 'Base',
+          },
+          chartOnly: {
             type: 'boolean',
             defaultValue: false,
           },
@@ -54,13 +66,31 @@ sap.ui.define(
 
         setTimeout(() => {
           if (bShowTotal) {
-            $indicator.find('.vacation-indicator-remain').show().css('width', '66.6666667%').toggleClass('vacation-indicator-animation', true);
-            $indicator.find('.vacation-indicator-used').show().css('width', '33.3333333%').toggleClass('vacation-indicator-animation', true);
+            let sRemain = '66.66666%';
+            let sUsed = '33.33333%';
+
+            if (this.getUsedType() === 'WeekTime') {
+              const fTotal = this.getTotal();
+              const fUsed = this.getUsed();
+
+              sRemain = this._getWeekTimePercent(fTotal, this.getUsed2(), fUsed);
+              sUsed = this._getWeekTimePercent(fTotal, fUsed);
+            }
+
+            $indicator.find('.vacation-indicator-remain').show().css('width', sRemain).toggleClass('vacation-indicator-animation', true);
+            $indicator.find('.vacation-indicator-used').show().css('width', sUsed).toggleClass('vacation-indicator-animation', true);
           } else {
             $indicator.find('.vacation-indicator-remain').toggleClass('w-100', true);
             $indicator.find('.vacation-indicator-used').show().css('width', this._getUsedPercent()).toggleClass('vacation-indicator-animation', true);
           }
         }, 300);
+      },
+
+      // 개인별 근태현황 주 52시간 현황
+      _getWeekTimePercent(fTotal = 0, fUsed = 0, fOverUesd = 0) {
+        let fTimePercent = ((parseFloat(fUsed) + parseFloat(fOverUesd)) / parseFloat(fTotal)) * 100;
+
+        return `${fTimePercent}%`;
       },
 
       _getUsedPercent() {
@@ -89,7 +119,10 @@ sap.ui.define(
           oRM.openEnd();
 
           this.insertWrapper(oRM, oControl, 'gauge'); // gauge wrapper div
-          this.insertWrapper(oRM, oControl, 'text'); // text wrapper div
+
+          if (!oControl.getChartOnly()) {
+            this.insertWrapper(oRM, oControl, 'text'); // text wrapper div
+          }
 
           oRM.close('div');
         },
@@ -143,9 +176,26 @@ sap.ui.define(
           return sAlign === 'Top' ? 'vacation-indicator-top' : sAlign === 'Bottom' ? 'vacation-indicator-bottom' : 'vacation-indicator-middle';
         },
         getRemain(oControl) {
-          const fTotal = parseFloat(oControl.getTotal());
-          const fUsed = parseFloat(oControl.getUsed());
-          return fTotal - fUsed;
+          let fTotal = 0;
+          let fUsed = 0;
+          let fRemain = 0;
+
+          if (oControl.getUsedType() === 'WeekTime') {
+            let fUsed2 = 0;
+
+            fTotal = parseFloat(oControl.getTotal());
+            fUsed = parseFloat(oControl.getUsed());
+            fUsed2 = parseFloat(oControl.getUsed2());
+
+            fRemain = fUsed + fUsed2;
+          } else {
+            fTotal = parseFloat(oControl.getTotal());
+            fUsed = parseFloat(oControl.getUsed());
+
+            fRemain = fTotal - fUsed;
+          }
+
+          return fRemain;
         },
       },
     });

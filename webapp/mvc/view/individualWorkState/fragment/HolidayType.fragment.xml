@@ -11,7 +11,7 @@
 				<table:Column width="auto" sortProperty="Kotxt" filterProperty="Kotxt">
 					<Label text="{i18n>LABEL_18007}"/>
 					<table:template>
-						<Text text="{Kotxt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+						<Text text="{Kotxt}" textAlign="Left" wrapping="false" width="100%" class="tableRow_Text"/>
 					</table:template>
 				</table:Column>
 				<table:Column width="60px" sortProperty="Crecnt" filterProperty="Crecnt">
@@ -37,7 +37,7 @@
 				<table:Column width="auto" sortProperty="Kotxt" filterProperty="Kotxt">
 					<Label text="{i18n>LABEL_18007}"/>
 					<table:template>
-						<Text text="{Kotxt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+						<Text text="{Kotxt}" textAlign="Left" wrapping="false" width="100%" class="tableRow_Text"/>
 					</table:template>
 				</table:Column>
 				<table:Column width="60px" sortProperty="Crecnt" filterProperty="Crecnt">
