@@ -2,7 +2,7 @@
     xmlns:core="sap.ui.core"
     xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:custom="sap.ui.yesco.control">
-    <grid:CSSGrid gridTemplateColumns="3fr 7fr" gridGap="8px">
+    <grid:CSSGrid gridTemplateColumns="3fr 7fr" gridGap="0px">
         <grid:layoutData>
             <FlexItemData growFactor="1"/>
         </grid:layoutData>
@@ -18,8 +18,27 @@
         </ComboBox>
         <Label text="{i18n>LABEL_00273}" />
         <HBox width="100%">
-            <Input width="80%" class="required" value="{/employee/dialog/form/Pstlz}" enabled="false" />
-            <Button text="{i18n>LABEL_00101}" press=".openSearchZipCodePopup"/>
+            <!-- <Input width="80%" class="required" value="{/employee/dialog/form/Pstlz}" enabled="false" />
+            <Button text="{i18n>LABEL_00101}" press=".openSearchZipCodePopup"/> -->
+            <!-- <SearchField class="required" value="{/employee/dialog/form/Pstlz}" width="100%" press=".openSearchZipCodePopup" /> -->
+            <SearchField
+				id="searchField"
+				width="50%"
+				placeholder="search for..."
+				enableSuggestions="true"
+				search="onSearch"
+				suggest="onSuggest"
+				suggestionItems="{
+					path: '/ProductCollection',
+					sorter: { path: 'Name' }
+				}"
+                 class="required"
+                 width="100%" 
+				>
+				<suggestionItems>
+					<SuggestionItem text="{Name}" description="{path:'Price'} {path:'CurrencyCode'}" key="{ProductId}"/>
+				</suggestionItems>
+			</SearchField>
         </HBox>
         <Label text="{i18n>LABEL_00152}" />
         <Input width="100%" value="{/employee/dialog/form/Zzaddr1}" editable="false" />
