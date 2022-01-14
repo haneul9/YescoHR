@@ -51,20 +51,21 @@ sap.ui.define(
 
       // ABAP <-> WEB Mapping fields
       FIELD_MAPPING: {
-        Z103: ['Z103s'],
-        Z131: ['Z131'],
-        Z132: ['Z132'],
-        Z136: ['Z136'],
-        Z137: ['Z137'],
-        Z140: ['Z140'],
-        Fapp: ['Zmbgrade'],
-        Z105: ['Ztbegda', 'Ztendda'],
-        Z113: ['Zmarslt', 'Zrslt'],
-        Z125: ['Z125Ee', 'Z125Er'],
-        Z117: ['Z1175', 'Z1174', 'Z1173', 'Z1172', 'Z1171'],
-        Papp: ['Zapgme', 'Zapgma', 'Papp1', 'Papp2', 'Zmepoint', 'Zmapoint'],
+        Z103: ['Z103s'], // 연관 상위 목표
+        Z131: ['Z131'], // 목표수립의견-대상자
+        Z132: ['Z132'], // 목표수립의견-평가자
+        Z136: ['Z136'], // 중간점검의견-대상자
+        Z137: ['Z137'], // 중간점검의견-평가자
+        Z140: ['Z140'], // 상시관리
+        Fapp: ['Zmbgrade'], // 최종평가등급
+        Z105: ['Ztbegda', 'Ztendda'], // 목표수행시작일-Ztbegda, 목표수행종료일-Ztbegda
+        Z113: ['Zmarslt', 'Zrslt'], // Zmarslt-핵심결과, Zrslt-실적
+        Z125: ['Z125Ee', 'Z125Er'], // 목표항목별의견(평가대상자)-Z125Ee, 목표항목별의견(평가자)-Z125Er
+        Z117: ['Z1175', 'Z1174', 'Z1173', 'Z1172', 'Z1171'], // 달성수준 1,2,3,4,5
+        Papp: ['Zapgme', 'Zapgma', 'Papp1', 'Papp2', 'Zmepoint', 'Zmapoint'], // 자기평가-Zapgme, 1차평가-Zapgma, 성과평가의견(대상자)-Papp1, 성과평가의견(평가자)-Papp2, 자기평가점수-Zmepoint, 1차평가점수-Zmapoint
       },
 
+      // Web custom control by FIELD_MAPPING base
       FIELD_STATUS_MAP: {
         2: {
           A: { Zrslt: { ME: 'H', MA: 'H', MB: 'H' } },

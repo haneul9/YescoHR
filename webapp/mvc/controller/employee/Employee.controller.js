@@ -216,7 +216,7 @@ sap.ui.define(
       onObjectMatched(oParameter) {
         const oViewModel = this.getView().getModel();
         const sPernr = oParameter.pernr || this.getSessionData().Pernr;
-        const sOrgtx = oParameter.orgtx ?? _.noop();
+        const sOrgtx = _.replace(oParameter.orgtx, /--/g, '/') ?? _.noop();
 
         oViewModel.setProperty('/employee/busy', true);
         oViewModel.setProperty('/pernr', sPernr);
@@ -227,7 +227,7 @@ sap.ui.define(
         }
 
         this.initialList({ oViewModel, sPernr, sOrgtx });
-        this.loadProfile({ oViewModel, sPernr });
+        if (!_.isEqual(sPernr, 'none')) this.loadProfile({ oViewModel, sPernr });
       },
 
       async initialList({ oViewModel, sPernr, sOrgtx }) {
@@ -244,6 +244,11 @@ sap.ui.define(
         oViewModel.setProperty('/sideNavigation/search/results', aSearchResults);
         oViewModel.setProperty('/sideNavigation/height', `${iSideViewHeight}px`);
         oViewModel.setProperty('/sideNavigation/scrollHeight', `${iScrollViewHeight}px`);
+
+        // if (_.isEqual(sPernr, 'none')) {
+        //   const sFirstPernr = _.get(aSearchResults, [0, 'Pernr']);
+        //   this.loadProfile({ oViewModel, sFirstPernr });
+        // }
       },
 
       async loadProfile({ oViewModel, sPernr }) {
