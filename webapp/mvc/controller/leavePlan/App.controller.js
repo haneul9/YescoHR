@@ -44,6 +44,8 @@ sap.ui.define(
           },
           summary: {},
           plans: {
+            selectedDay: '',
+            count: {},
             raw: [],
             grid: [],
           },
@@ -79,8 +81,8 @@ sap.ui.define(
         ]);
       },
 
-      getBoxObject({ day = 'NONE', label = '', classNames = '' }) {
-        return { day, label, classNames };
+      getBoxObject({ day = 'NONE', label = '', classNames = '', awart = '' }) {
+        return { day, label, classNames, awart };
       },
 
       getPlanHeader() {
@@ -93,21 +95,24 @@ sap.ui.define(
 
       getPlanBody(iMonth) {
         const oViewModel = this.getViewModel();
+        const mCount = oViewModel.getProperty('/plans/count');
+        const mPlansRawData = oViewModel.getProperty('/plans/raw');
         const sYear = oViewModel.getProperty('/search/Plnyy');
         const sYearMonth = `${sYear}-${_.padStart(iMonth + 1, 2, '0')}`;
 
+        _.set(mCount, iMonth + 1, 0);
+
         return [
           this.getBoxObject({ label: this.getBundleText('LABEL_20011', iMonth + 1), classNames: 'Header' }), //  {0}월
-          this.getBoxObject({ label: 0, classNames: 'Header' }),
+          this.getBoxObject({ day: `Count-${iMonth + 1}`, label: 0, classNames: 'Header' }),
           ..._.times(31, (n) => {
             const sDay = `${sYearMonth}-${_.padStart(n + 1, 2, '0')}`;
-            return this.getBoxObject({ day: sDay, label: '', classNames: this.getDayStyle(sDay) });
+            return this.getBoxObject({ day: sDay, label: '', classNames: this.getDayStyle(mPlansRawData, sDay), awart: _.get(mPlansRawData, [sDay, 'Awart'], '') });
           }),
         ];
       },
 
-      getDayStyle(sDay) {
-        const mPlansRawData = this.getViewModel().getProperty('/plans/raw');
+      getDayStyle(mPlansRawData, sDay) {
         const sHolyn = _.get(mPlansRawData, [sDay, 'Holyn']);
         const sInpyn = _.get(mPlansRawData, [sDay, 'Inpyn']);
         const mClasses = {
@@ -147,6 +152,26 @@ sap.ui.define(
         oViewModel.setProperty('/entry/SeqnoList', aSeqno);
       },
 
+      calcMonthLeaveCount() {
+        const oViewModel = this.getViewModel();
+        const mAwartCount = { 2000: 1, 2010: 1, 2001: 0.5, 2002: 0.5 };
+        const mCount = oViewModel.getProperty('/plans/count');
+        const aGridPlans = oViewModel.getProperty('/plans/grid');
+        const aGridCounts = aGridPlans.filter((o) => _.startsWith(o.day, 'Count'));
+        const mGroupByMonth = _.chain(aGridPlans)
+          .reject({ awart: '' })
+          .groupBy((o) => _.chain(o.day).split('-', '2').last().toNumber().value())
+          .map((v, p) => ({ [p]: _.sumBy(v, (obj) => mAwartCount[obj.awart]) }))
+          .reduce((a, c) => ({ ...a, ...c }), {})
+          .value();
+
+        _.chain(mCount)
+          .forOwn((v, p, obj) => _.set(obj, p, 0))
+          .assign(mGroupByMonth)
+          .forOwn((v, p) => _.set(aGridCounts, [p - 1, 'label'], v))
+          .commit();
+      },
+
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
@@ -156,10 +181,24 @@ sap.ui.define(
 
       onSelectedAwart(oEvent) {
         const oViewModel = this.getViewModel();
+        const mCustomData = oEvent.getSource().data();
         const aAwarts = oViewModel.getProperty('/entry/AwartList');
+        const aGridPlans = oViewModel.getProperty('/plans/grid');
+        const bSelected = oEvent.getParameter('selected');
+        const sDay = oViewModel.getProperty('/plans/selectedDay');
+
+        _.chain(aGridPlans)
+          .find({ day: sDay })
+          .set('awart', bSelected ? mCustomData.Awart : '')
+          .commit();
+
+        this.calcMonthLeaveCount();
+
+        this._pPopover.then(function (oPopover) {
+          oPopover.close();
+        });
 
         _.chain(aAwarts)
-          .reject(oEvent.getSource().data())
           .forEach((o) => _.set(o, 'selected', false))
           .commit();
       },
@@ -202,6 +241,7 @@ sap.ui.define(
 
           this.toggleButton();
           this.buildPlanGrid();
+          this.calcMonthLeaveCount();
         } catch (oError) {
           this.debug('Controller > leavePlan App > onPressSearch Error', oError);
 
@@ -213,13 +253,24 @@ sap.ui.define(
 
       onClickDay(oEvent) {
         const oView = this.getView();
-        const { day: sDay, style: sStyle } = oEvent.data();
+        const oViewModel = this.getViewModel();
+        const { day: sDay, style: sStyle, awart: sAwart } = oEvent.data();
 
         if (_.isEqual(sDay, 'NONE') || !_.isEqual(sStyle, 'Normal')) return;
 
+        const aAwarts = oViewModel.getProperty('/entry/AwartList');
+        _.chain(aAwarts)
+          .forEach((o) => _.set(o, 'selected', false))
+          .find({ Awart: sAwart })
+          .set('selected', true)
+          .commit();
+
+        oViewModel.setProperty('/plans/selectedDay', sDay);
+        oViewModel.setProperty('/entry/AwartList', aAwarts);
+
         if (!this._pPopover) {
           this._pPopover = Fragment.load({
-            id: this.getView().getId(),
+            id: oView.getId(),
             name: 'sap.ui.yesco.mvc.view.leavePlan.fragment.AwartPopover',
             controller: this,
           }).then(function (oPopover) {

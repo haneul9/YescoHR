@@ -1279,6 +1279,10 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .year-plan-grid .sapMFlexBox[data-style="Header"] {background-color:#f7f7f7; }
 .year-plan-grid .sapMFlexBox[data-style="Weekend"] {background-color:#D9DCDF; }
 .year-plan-grid .sapMFlexBox[data-style="None"] {background-color:#CFD1D5}
+.year-plan-grid .sapMFlexBox[data-awart="2000"] {background-color:#65B8FF}
+.year-plan-grid .sapMFlexBox[data-awart="2001"]::before {content: '';width: 50%;height: 100%;position: relative;top: 0;left: 0;background-color:#FFE479}
+.year-plan-grid .sapMFlexBox[data-awart="2002"]::after {content: '';width: 50%;height: 100%;position: relative;top: 0;left: 0;background-color:#FFE479}
+.year-plan-grid .sapMFlexBox[data-awart="2010"] {background-color:#FFAC4B}
 .year-plan.status-wrap .sapMFlexItem {margin-right:20px; height:60px; position:relative}
 .year-plan.status-wrap .sapMFlexItem .sapMText {display:flex; justify-content:flex-start; align-items:center}
 .year-plan.status-wrap .sapMFlexItem .sapMText::before {content:""; position:relative; display:inline-block; width:14px; height:14px; background-color:#888; margin-right:5px; border-radius:50%}
