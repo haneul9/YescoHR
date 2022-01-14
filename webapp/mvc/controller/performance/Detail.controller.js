@@ -121,7 +121,7 @@ sap.ui.define(
 
           const mParameter = _.chain(oListView.getModel().getProperty('/parameter/rowData')).cloneDeep().omit('__metadata').value();
           const { Zzapsts: sZzapsts, ZzapstsSub: sZzapstsSub, ZzapstsPSub: sZzapstsPSub, Zonlydsp: sZonlydsp } = mParameter;
-          // 4-1 평가실시 - 부분평가중일 경우 ZzapstsPSub가 A로 들어오면 1차평가중 상태로 변경한다.
+          // 4-1 평가실시 - 부분평가중일 경우 ZzapstsPSub가 A|B로 들어오면 1차평가중 상태로 변경한다.
           const sLogicalZzapstsSub = _.isEqual(sZzapsts + sZzapstsSub, '41') && !_.isEmpty(sZzapstsPSub) ? sZzapstsPSub : sZzapstsSub;
 
           this.setAppointee(sType, mParameter.Zzappee);
@@ -362,10 +362,7 @@ sap.ui.define(
         const aGoalValid = _.filter(aValid, (o) => _.includes(Constants.GOAL_PROPERTIES, o.field));
         const aManageValid = _.filter(aValid, (o) => _.includes(Constants.MANAGE_PROPERTIES, o.field));
 
-        const bStrategyValid = _.some(aStrategyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: aGoalValid, sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` }));
-        const bDutyValid = _.some(aDutyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: _.reject(aGoalValid, { field: 'Z103s' }), sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` }));
-
-        if (bStrategyValid || bDutyValid) {
+        if (_.some(aStrategyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: aGoalValid, sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` })) || _.some(aDutyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: _.reject(aGoalValid, { field: 'Z103s' }), sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` }))) {
           this.changeTab('T01');
           return false;
         }
