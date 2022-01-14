@@ -25,7 +25,9 @@
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.InfoMessage" type="XML" />
 				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.medical.fragment.DetailForm" type="XML" />
 				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.medical.fragment.DetailHistory" type="XML" />
-				<core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
+				<VBox visible="{/Werks}">
+					<core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
+				</VBox>
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.ApplyInfo" type="XML" />
 				<core:Fragment fragmentName="sap.ui.yesco.fragment.ApprovalDetails" type="XML" />
 			</VBox>

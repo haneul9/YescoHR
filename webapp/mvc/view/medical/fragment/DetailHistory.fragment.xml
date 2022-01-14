@@ -4,7 +4,7 @@
   <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
     <HBox justifyContent="SpaceBetween" class="table-toolbar">
       <HBox alignItems="Center" class="title">
-        <Title level="H2" text="{i18n>LABEL_00168}" />
+        <Title level="H2" text="{i18n>LABEL_09022}" />
       </HBox>
       <HBox class="table-actions">
         <Button icon="sap-icon://add" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" text="{i18n>LABEL_00107}" press=".onAddDetails" class="sapUiTinyMarginEnd" />
