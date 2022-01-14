@@ -9,6 +9,7 @@ sap.ui.define(
       LIST_PAGE: { ME: { route: 'performance', detail: 'performance-detail', id: 'container-ehr---performance' }, MA: { route: 'm/performancePry', detail: 'm/performancePry-detail', id: 'container-ehr---m_performancePry' }, MB: { route: 'm/performanceSry', detail: 'm/performanceSry-detail', id: 'container-ehr---m_performanceSry' } },
       REJECT_DIALOG_ID: 'sap.ui.yesco.mvc.view.performance.fragment.RejectDialog',
 
+      TAB: { GOAL: 'T01', OPINION: 'T02' },
       APPRAISER_TYPE: { ME: 'ME', MA: 'MA', MB: 'MB' },
       DISPLAY_TYPE: { EDIT: 'X', DISPLAY_ONLY: 'D', HIDE: 'H', HIDDEN_VALUE: 'V' },
       GOAL_TYPE: { STRATEGY: { code: '1', name: 'strategy' }, DUTY: { code: '2', name: 'duty' } },
@@ -101,7 +102,7 @@ sap.ui.define(
           H: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, SAVE: { label: 'LABEL_00103', ME: '', MA: 'X', MB: '' } },
         },
         4: {
-          1: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, DIAGNOSIS: { label: 'LABEL_10034', ME: 'X', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: 'X', MA: '', MB: '' } },
+          1: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, DIAGNOSIS: { label: 'LABEL_10034', ME: 'X', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: 'X', MA: 'X', MB: '' } },
           A: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, DIAGNOSIS: { label: 'LABEL_10034', ME: 'X', MA: 'X', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: '', MA: 'X', MB: '' } },
           B: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, DIAGNOSIS: { label: 'LABEL_10034', ME: 'X', MA: 'X', MB: 'X' } },
           2: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, DIAGNOSIS: { label: 'LABEL_10034', ME: 'X', MA: 'X', MB: 'X' }, SAVE: { process: true, label: 'LABEL_00103', ME: '', MA: '', MB: 'X' } },

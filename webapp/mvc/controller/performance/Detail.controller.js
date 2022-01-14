@@ -64,7 +64,7 @@ sap.ui.define(
           param: {},
           type: '',
           year: moment().format('YYYY'),
-          tab: { selectedKey: 'T01' },
+          tab: { selectedKey: Constants.TAB.GOAL },
           appointee: {},
           stage: {
             headers: [],
@@ -363,11 +363,11 @@ sap.ui.define(
         const aManageValid = _.filter(aValid, (o) => _.includes(Constants.MANAGE_PROPERTIES, o.field));
 
         if (_.some(aStrategyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: aGoalValid, sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` })) || _.some(aDutyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: _.reject(aGoalValid, { field: 'Z103s' }), sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` }))) {
-          this.changeTab('T01');
+          this.changeTab(Constants.TAB.GOAL);
           return false;
         }
         if (!Validator.check({ mFieldValue: mManage, aFieldProperties: aManageValid })) {
-          this.changeTab('T02');
+          this.changeTab(Constants.TAB.OPINION);
           return false;
         }
 
@@ -379,7 +379,7 @@ sap.ui.define(
             .value()
         ) {
           MessageBox.alert(this.getBundleText('MSG_10005')); // 가중치의 총합은 100%이어야 합니다.
-          this.changeTab('T01');
+          this.changeTab(Constants.TAB.GOAL);
           return false;
         }
 
