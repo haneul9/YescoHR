@@ -105,13 +105,22 @@ sap.ui.define(
             const oViewModel = sap.ui.getCore().byId('container-ehr---m_organization--ChartHolder').getModel();
             const sPernr = _.find(this.data, { nodeId: sNodeId }).Pernr;
 
-            if (!sPernr) return;
             oViewModel.setProperty('/extendNode', sNodeId);
 
-            if ([...event.srcElement.classList].includes('title')) {
-              AppUtils.getAppComponent().getRouter().navTo('employee', { pernr: sPernr, orgtx: event.srcElement.textContent });
+            if (!sPernr) {
+              if ([...event.srcElement.classList].includes('title')) {
+                AppUtils.getAppComponent()
+                  .getRouter()
+                  .navTo('employee', { pernr: 'NA', orgtx: _.replace(event.srcElement.textContent, /\//g, '--') });
+              }
             } else {
-              AppUtils.getAppComponent().getRouter().navTo('employee', { pernr: sPernr });
+              if ([...event.srcElement.classList].includes('title')) {
+                AppUtils.getAppComponent()
+                  .getRouter()
+                  .navTo('employee', { pernr: sPernr, orgtx: _.replace(event.srcElement.textContent, /\//g, '--') });
+              } else {
+                AppUtils.getAppComponent().getRouter().navTo('employee', { pernr: sPernr });
+              }
             }
           })
           .render();
