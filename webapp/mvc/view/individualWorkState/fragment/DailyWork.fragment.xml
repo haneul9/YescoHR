@@ -1,0 +1,104 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:table="sap.ui.table"
+  xmlns:core="sap.ui.core">
+  <VBox width="100%" class="vCardBox">
+    <HBox class="table-toolbar">
+      <Title level="H2" text="{i18n>LABEL_18029}" />
+      <Text text="{/FullYear}"/>
+    </HBox>
+    <HBox justifyContent="SpaceBetween">
+      <table:Table rows="{/DailyWorkList}" visibleRowCount="{/DailyWorkCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
+        <table:Column width="80px" sortProperty="Wktxt" filterProperty="Wktxt">
+          <Label text="{i18n>LABEL_00164}"/>
+          <table:template>
+            <Text text="{Wktxt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+        <table:Column width="150px" sortProperty="Begda" filterProperty="Begda">
+          <Label text="{i18n>LABEL_00148}"/>
+          <table:template>
+            <Text text="{
+              path: 'Begda',
+              type: 'sap.ui.model.type.Date',
+              formatOptions: {
+                  pattern: 'yyyy.MM.dd'
+              }
+            }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+        <table:Column width="150px" sortProperty="Endda" filterProperty="Endda">
+          <Label text="{i18n>LABEL_00149}"/>
+          <table:template>
+            <Text text="{
+              path: 'Endda',
+              type: 'sap.ui.model.type.Date',
+              formatOptions: {
+                  pattern: 'yyyy.MM.dd'
+              }
+            }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+        <table:Column width="auto" sortProperty="Atext" filterProperty="Atext">
+          <Label text="{i18n>LABEL_18030}"/>
+          <table:template>
+            <Text text="{Atext}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+        <table:Column width="100px" sortProperty="Abrtg" filterProperty="Abrtg">
+          <Label text="{i18n>LABEL_00155}"/>
+          <table:template>
+            <Text text="{Abrtg}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+        <table:Column width="100px" sortProperty="Abrst" filterProperty="Abrst">
+          <Label text="{i18n>LABEL_00330}"/>
+          <table:template>
+            <Text text="{Abrst}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+        <table:Column width="150px" sortProperty="ZreqDate" filterProperty="ZreqDate">
+          <Label text="{i18n>LABEL_00266}"/>
+          <table:template>
+            <Text text="{
+              path: 'ZreqDate',
+              type: 'sap.ui.model.type.Date',
+              formatOptions: {
+                  pattern: 'yyyy.MM.dd'
+              }
+            }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+        <table:Column width="150px" sortProperty="ZappDate" filterProperty="ZappDate">
+          <Label text="{i18n>LABEL_00269}"/>
+          <table:template>
+            <Text text="{
+              path: 'ZappDate',
+              type: 'sap.ui.model.type.Date',
+              formatOptions: {
+                  pattern: 'yyyy.MM.dd'
+              }
+            }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+        <table:Column width="100px" sortProperty="Val02" filterProperty="Val02">
+          <Label text="{i18n>LABEL_00135}"/>
+          <table:template>
+            <Text text="{Val02}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+        <table:Column width="100px" sortProperty="Val02" filterProperty="Val02">
+          <Label text="{i18n>LABEL_18031}"/>
+          <table:template>
+            <Text text="{Val02}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+        <table:Column width="auto" sortProperty="Val02" filterProperty="Val02">
+          <Label text="{i18n>LABEL_00163}"/>
+          <table:template>
+            <Text text="{Val02}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+      </table:Table>
+    </HBox>
+  </VBox>
+</core:FragmentDefinition>
