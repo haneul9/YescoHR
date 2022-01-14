@@ -43,7 +43,7 @@
       <table:Column width="auto" sortProperty="ZappTitl" filterProperty="ZappTitl">
         <Label text="{i18n>LABEL_19003}"/>
         <table:template>
-          <Text text="{ZappTitl}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{ZappTitl}" textAlign="Left" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="100px" sortProperty="Pernr1Name" filterProperty="Pernr1Name">

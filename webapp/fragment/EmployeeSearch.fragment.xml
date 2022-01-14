@@ -67,55 +67,37 @@
                   <Text text="{Pernr}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
                 </table:template>
               </table:Column>
-              <table:Column width="auto" sortProperty="Ename" filterProperty="Ename">
+              <table:Column width="150px" sortProperty="Ename" filterProperty="Ename">
                 <Label text="{i18n>LABEL_00210}"/>
                 <table:template>
                   <Text text="{Ename}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
               </table:Column>
-              <table:Column width="auto" sortProperty="Context" filterProperty="Context">
+              <table:Column width="auto" sortProperty="Fulln" filterProperty="Fulln">
                 <Label text="{i18n>LABEL_00227}"/>
                 <table:template>
-                  <Text text="{Context}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+                  <Text text="{Fulln}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
                 </table:template>
               </table:Column>
-              <table:Column width="auto" sortProperty="Stetx" filterProperty="Stetx">
-                <Label text="{i18n>LABEL_00219}"/>
-                <table:template>
-                  <Text text="{Stetx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-                </table:template>
-              </table:Column>
-              <table:Column width="100px" sortProperty="Zzjikgbt" filterProperty="Zzjikgbt">
+              <table:Column width="120px" sortProperty="Zzjikgbt" filterProperty="Zzjikgbt">
                 <Label text="{i18n>LABEL_00215}"/>
                 <table:template>
                   <Text text="{Zzjikgbt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
               </table:Column>
-              <table:Column width="100px" sortProperty="Postx" filterProperty="Postx">
-                <Label text="{i18n>LABEL_00213}"/>
-                <table:template>
-                  <Text text="{Postx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-                </table:template>
-              </table:Column>
-              <table:Column width="100px" sortProperty="Zzjikcht" filterProperty="Zzjikcht">
+              <table:Column width="120px" sortProperty="Zzjikcht" filterProperty="Zzjikcht">
                 <Label text="{i18n>LABEL_00217}"/>
                 <table:template>
                   <Text text="{Zzjikcht}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
               </table:Column>
-              <table:Column width="90px" sortProperty="Text1" filterProperty="Text1">
-                <Label text="{i18n>LABEL_00234}"/>
-                <table:template>
-                  <Text text="{Text1}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-                </table:template>
-              </table:Column>
-              <table:Column width="100px" sortProperty="Stat2tx" filterProperty="Stat2tx">
+              <table:Column width="130px" sortProperty="Stat2tx" filterProperty="Stat2tx">
                 <Label text="{i18n>LABEL_00240}"/>
                 <table:template>
                   <Text text="{Stat2tx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
               </table:Column>
-              <table:Column width="100px" sortProperty="Entda" filterProperty="Entda">
+              <table:Column width="130px" sortProperty="Entda" filterProperty="Entda">
                 <Label text="{i18n>LABEL_00235}"/>
                 <table:template>
                   <Text text="{
@@ -127,7 +109,7 @@
                                 }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
               </table:Column>
-              <table:Column width="100px" sortProperty="Retdt" filterProperty="Retdt">
+              <table:Column width="130px" sortProperty="Retdt" filterProperty="Retdt">
                 <Label text="{i18n>LABEL_00236}"/>
                 <table:template>
                   <Text text="{
