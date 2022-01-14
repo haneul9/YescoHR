@@ -3,6 +3,7 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
     'sap/ui/model/json/JSONModel',
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -15,6 +16,7 @@ sap.ui.define(
     // prettier 방지용 주석
     Fragment,
     JSONModel,
+    MessageBox,
     AppUtils,
     Client,
     ServiceNames,
@@ -25,6 +27,8 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.leavePlan.App', {
+      AWART_COUNT: { 2000: 1, 2010: 1, 2001: 0.5, 2002: 0.5 },
+
       onBeforeShow() {
         const today = moment();
         const oViewModel = new JSONModel({
@@ -79,6 +83,7 @@ sap.ui.define(
           ...this.getPlanHeader(), //
           ..._.times(12, (n) => this.getPlanBody(n)).reduce((a, b) => [...a, ...b], []),
         ]);
+        oViewModel.setProperty('/plans/raw', []);
       },
 
       getBoxObject({ day = 'NONE', label = '', classNames = '', awart = '' }) {
@@ -154,22 +159,56 @@ sap.ui.define(
 
       calcMonthLeaveCount() {
         const oViewModel = this.getViewModel();
-        const mAwartCount = { 2000: 1, 2010: 1, 2001: 0.5, 2002: 0.5 };
-        const mCount = oViewModel.getProperty('/plans/count');
         const aGridPlans = oViewModel.getProperty('/plans/grid');
         const aGridCounts = aGridPlans.filter((o) => _.startsWith(o.day, 'Count'));
         const mGroupByMonth = _.chain(aGridPlans)
           .reject({ awart: '' })
           .groupBy((o) => _.chain(o.day).split('-', '2').last().toNumber().value())
-          .map((v, p) => ({ [p]: _.sumBy(v, (obj) => mAwartCount[obj.awart]) }))
+          .map((v, p) => ({ [p]: _.sumBy(v, (obj) => this.AWART_COUNT[obj.awart]) }))
           .reduce((a, c) => ({ ...a, ...c }), {})
           .value();
+
+        const mCount = oViewModel.getProperty('/plans/count');
 
         _.chain(mCount)
           .forOwn((v, p, obj) => _.set(obj, p, 0))
           .assign(mGroupByMonth)
           .forOwn((v, p) => _.set(aGridCounts, [p - 1, 'label'], v))
           .commit();
+
+        const mGroupByAwart = _.chain(aGridPlans)
+          .filter((o) => !_.isEmpty(o.awart))
+          .groupBy('awart')
+          .map((v, p) => ({ [p]: _.sumBy(v, (obj) => this.AWART_COUNT[obj.awart]) }))
+          .reduce((a, c) => ({ ...a, ...c }), {})
+          .value();
+        const mSummary = oViewModel.getProperty('/summary');
+        const iYearCount = _.sum([mGroupByAwart['2000'], mGroupByAwart['2001'], mGroupByAwart['2002']]) || 0;
+        const iSummerCount = mGroupByAwart['2010'] || 0;
+
+        _.set(mSummary, 'Plncnt', iYearCount);
+        _.set(mSummary, 'Plnperc', _.chain(iYearCount).divide(mSummary.Crecnt).multiply(100).floor().value());
+        _.set(mSummary, 'Plncnt2', iSummerCount);
+        _.set(mSummary, 'Plnperc2', _.chain(iSummerCount).divide(mSummary.Crecnt2).multiply(100).floor().value());
+      },
+
+      checkLimit(sAwart) {
+        const oViewModel = this.getViewModel();
+        const mSummary = oViewModel.getProperty('/summary');
+
+        if (_.isEqual(sAwart, '2010')) {
+          if (_.gt(_.add(mSummary.Plncnt2, this.AWART_COUNT[sAwart]), mSummary.Crecnt2)) {
+            MessageBox.alert(this.getBundleText('MSG_20003', 'LABEL_20008')); // {하계휴가}의 선택 가능한 개수를 초과하였습니다.
+            return false;
+          }
+        } else {
+          if (_.gt(_.add(mSummary.Plncnt, this.AWART_COUNT[sAwart]), mSummary.Crecnt)) {
+            MessageBox.alert(this.getBundleText('MSG_20003', 'LABEL_20006')); // {연차}의 선택 가능한 개수를 초과하였습니다.
+            return false;
+          }
+        }
+
+        return true;
       },
 
       /*****************************************************************
@@ -186,6 +225,8 @@ sap.ui.define(
         const aGridPlans = oViewModel.getProperty('/plans/grid');
         const bSelected = oEvent.getParameter('selected');
         const sDay = oViewModel.getProperty('/plans/selectedDay');
+
+        if (bSelected && !this.checkLimit(mCustomData.Awart)) return;
 
         _.chain(aGridPlans)
           .find({ day: sDay })
@@ -230,6 +271,16 @@ sap.ui.define(
             '/entry/AwartList',
             _.map(aAwarts, (o) => _.set(o, 'selected', false))
           );
+
+          mAnnualLeaveStatus.Crecnt = '2';
+          mAnnualLeaveStatus.Plncnt = '0';
+          mAnnualLeaveStatus.Plnperc = '0';
+          mAnnualLeaveStatus.Crecnt2 = '2';
+          mAnnualLeaveStatus.Plncnt2 = '0';
+          mAnnualLeaveStatus.Plnperc2 = '0';
+          mAnnualLeaveStatus.Crecnt3 = '2';
+          mAnnualLeaveStatus.Usecnt3 = '0';
+          mAnnualLeaveStatus.Useperc3 = '0';
           oViewModel.setProperty('/summary', _.omit(mAnnualLeaveStatus, '__metadata'));
           oViewModel.setProperty(
             '/plans/raw',
