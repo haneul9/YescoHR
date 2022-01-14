@@ -3,9 +3,9 @@
   xmlns:core="sap.ui.core">
   <VBox width="50%" class="vCardBox sapUiMediumMarginEnd">
     <HBox justifyContent="SpaceBetween" class="table-toolbar">
-      <HBox>
+      <HBox class="title">
         <Title level="H2" text="{i18n>LABEL_18011}" />
-        <Text text="{/FullYear}"/>
+        <Text text="{/FullYear}" class="desc-txt" />
       </HBox>
       <ComboBox width="80px" items="{/WorkMonths}" selectedKey="{/WorkMonth}" change=".onWorkMonth">
         <core:Item text="{Ztext}" key="{Zcode}" />

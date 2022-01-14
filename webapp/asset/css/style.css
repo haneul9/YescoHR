@@ -1269,7 +1269,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 
 
 /* 근태 */
-.year-plan-head {display:flex; align-items:center; margin-bottom:16px; }
+.year-plan-head {display:flex; align-items:center; margin-bottom:16px; position: absolute; left: 50%; transform: translate(-50%, 0); }
 .year-plan-head .sapMFlexItem {height:24px; }
 .year-plan-head .sapMTitle {font-size:20px; font-weight:700; min-width:64px; text-align:center; }
 .year-plan-head .icon-button .sapMBtnInner, .year-plan-head .icon-button:hover .sapMBtnInner, .year-plan-head .icon-button:active .sapMBtnInner.sapMBtnActive{padding:0 10px; border:0; background:transparent!important; border-color:transparent !important; align-self:center; }
