@@ -237,6 +237,8 @@ sap.ui.define(
             while (aFiles.length) {
               await this.uploadFile({ sAppno, sApptp, oUploadModel, sUploadUrl, mFile: aFiles.shift() });
             }
+
+            resolve();
           } catch (oError) {
             AppUtils.debug('FileAttachmentBoxHandler > upload > uploadFile Error', oError);
 
