@@ -1,9 +1,13 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:core="sap.ui.core">
-    <Popover id="awartPopover" contentMinWidth="200px">
+    <Popover id="awartPopover" showHeader="false" contentMinWidth="200px">
         <grid:CSSGrid gridTemplateColumns="1fr" gridRowGap="10px" items="{/entry/AwartList}">
-            <RadioButton text="{label}" selected="{selected}" />
+            <CheckBox text="{Atext}" selected="{selected}" select=".onSelectedAwart">
+                <customData>
+                    <core:CustomData key="Awart" value="{Awart}" />
+                </customData>
+            </CheckBox>
         </grid:CSSGrid>
     </Popover>
 </core:FragmentDefinition>

@@ -48,6 +48,8 @@ sap.ui.define(
             Ottime: 0,
             WorkTime: 0,
           },
+          DailyWorkList: [],
+          DailyWorkCount: 1,
           yearPlan: [],
           plans: [],
           PlanMonths: [],
@@ -150,8 +152,6 @@ sap.ui.define(
           oViewModel.setProperty('/WeekWork/Bastime', 38);
           oViewModel.setProperty('/WeekWork/Ottime', 2.5);
           oViewModel.setProperty('/WeekWork/WorkTime', '09:00 ~ 18:00 (8시간)');
-
-          debugger;
         } catch (oError) {
           this.debug(oError);
           AppUtils.handleError(oError);

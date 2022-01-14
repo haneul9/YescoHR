@@ -15,12 +15,12 @@
           <FlexItemData growFactor="1"/>
         </microchart:layoutData>
         <microchart:segments>
-          <microchart:InteractiveDonutChartSegment value="{/vacationChart/pUsed}"/>
-          <microchart:InteractiveDonutChartSegment value="{/vacationChart/pPlan}"/>
-          <microchart:InteractiveDonutChartSegment value="{/vacationChart/pUnPlan}"/>
+          <microchart:InteractiveDonutChartSegment label="{i18n>LABEL_18002}" value="{/vacationChart/pUsed}" displayedValue="{/vacationChart/dUsed}{i18n>LABEL_00254} {/vacationChart/pUsed}%" />
+          <microchart:InteractiveDonutChartSegment label="{i18n>LABEL_18003}" value="{/vacationChart/pPlan}" displayedValue="{/vacationChart/dPlan}{i18n>LABEL_00254} {/vacationChart/pPlan}%" />
+          <microchart:InteractiveDonutChartSegment label="{i18n>LABEL_18004}" value="{/vacationChart/pUnPlan}" displayedValue="{/vacationChart/dUnPlan}{i18n>LABEL_00254} {/vacationChart/pUnPlan}%" />
         </microchart:segments>
       </microchart:InteractiveDonutChart>
-      <grid:CSSGrid gridTemplateColumns="3fr 1fr 1fr" gridGap="8px 0" class="form-grid status-wrap year-plan">
+      <!-- <grid:CSSGrid gridTemplateColumns="3fr 1fr 1fr" gridGap="8px 0" class="status-wrap year-plan">
         <Text text="{i18n>LABEL_18002}" class="type02" />
         <Text text="{/vacationChart/dUsed}{i18n>LABEL_00254}"/>
         <Text text="{/vacationChart/pPlan}%"/>
@@ -30,14 +30,7 @@
         <Text text="{i18n>LABEL_18004}" class="type07" />
         <Text text="{/vacationChart/dUnPlan}{i18n>LABEL_00254}"/>
         <Text text="{/vacationChart/pUnPlan}%"/>
-      </grid:CSSGrid>
-    </HBox>
-    <!-- <grid:CSSGrid gridTemplateColumns="1fr 1fr" gridTemplateRows="110px 156px" gridGap="0" class="form-grid">
-        <VBox>
-          <Text text="{/vacationChart/dUsed}{i18n>LABEL_00254}"/>
-          <Text text="{/vacationChart/dPlan}{i18n>LABEL_00254}"/>
-          <Text text="{/vacationChart/dUnPlan}{i18n>LABEL_00254}"/>
-        </VBox>
       </grid:CSSGrid> -->
+    </HBox>
   </VBox>
 </core:FragmentDefinition>

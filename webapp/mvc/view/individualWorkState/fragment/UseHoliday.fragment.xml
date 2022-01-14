@@ -1,7 +1,8 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
-  xmlns:grid="sap.ui.layout.cssgrid"
-  xmlns:custom="sap.ui.yesco.control">
+  xmlns:viz="sap.viz.ui5.controls"
+  xmlns:viz.data="sap.viz.ui5.data"
+  xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds">
   <VBox width="100%" class="vCardBox">
     <HBox justifyContent="SpaceBetween" class="table-toolbar">
       <HBox  class="title">
@@ -12,36 +13,26 @@
         <core:Item text="{Ztext}" key="{Zcode}" />
       </ComboBox>
     </HBox>
-    <VBox>
-      <Label text="{i18n>LABEL_18016}{= ${/WeekWork/Wkrultx} }"/>
-      <grid:CSSGrid gridTemplateColumns="2fr 2fr 2fr" gridGap="4px">
-        <Label text="{i18n>LABEL_18017}"/>
-        <Label text="{i18n>LABEL_18018}"/>
-        <Label text="{i18n>LABEL_18019}"/>
-        <HBox>
-          <Text text="{/WeekWork/Tottime}"/>
-          <Text text="{i18n>LABEL_00330}"/>
-        </HBox>
-        <HBox>
-          <Text text="{/WeekWork/Bastime}"/>
-          <Text text="{i18n>LABEL_00330}"/>
-        </HBox>
-        <HBox>
-          <Text text="{/WeekWork/Ottime}"/>
-          <Text text="{i18n>LABEL_00330}"/>
-        </HBox>
-      </grid:CSSGrid>
-      <HBox alignItems="End">
-        <custom:VacationIndicator width="100%" total="{/WeekWork/WeekTime}" used="{/WeekWork/Tottime}" showTotal="true">
-          <custom:layoutData>
-            <FlexItemData growFactor="1" />
-          </custom:layoutData>
-        </custom:VacationIndicator>
-      </HBox>
-      <HBox>
-        <Label text="{i18n>LABEL_18020}"/>
-        <Text text="{/WeekWork/WorkTime}"/>
-      </HBox>
-    </VBox>
+    <viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" height='100%' width="100%" vizType='combination'>
+      <viz:dataset>
+        <viz.data:FlattenedDataset data="{/milk}">
+          <viz.data:dimensions>
+            <viz.data:DimensionDefinition name="Week" value="{Week}" />
+          </viz.data:dimensions>
+          <viz.data:measures>
+            <viz.data:MeasureDefinition name="Revenue" value="{Revenue}" />
+            <viz.data:MeasureDefinition name="Cost" value="{Cost}" />
+            <viz.data:MeasureDefinition name="Cost2" value="{Cost2}" />
+            <viz.data:MeasureDefinition name="Cost1" value="{Cost1}" />
+          </viz.data:measures>
+        </viz.data:FlattenedDataset>
+      </viz:dataset>
+
+      <viz:feeds>
+        <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Revenue" />
+        <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Cost" />
+        <viz.feeds:FeedItem id="feedCategoryAxis" uid="categoryAxis" type="Dimension" values="Week" />
+      </viz:feeds>
+    </viz:VizFrame>
   </VBox>
 </core:FragmentDefinition>

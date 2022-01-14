@@ -35,10 +35,7 @@ sap.ui.define(
           },
           entry: {
             SeqnoList: [],
-            AwartList: [
-              { label: '연차', selected: true },
-              { label: '반차', selected: false },
-            ],
+            AwartList: [],
           },
           buttons: {
             SAVE: false,
@@ -60,6 +57,8 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         try {
+          oViewModel.setProperty('/busy', true);
+
           await this.setHolPlanSeqno();
           this.onPressSearch();
         } catch (oError) {
@@ -155,6 +154,16 @@ sap.ui.define(
         this.setHolPlanSeqno();
       },
 
+      onSelectedAwart(oEvent) {
+        const oViewModel = this.getViewModel();
+        const aAwarts = oViewModel.getProperty('/entry/AwartList');
+
+        _.chain(aAwarts)
+          .reject(oEvent.getSource().data())
+          .forEach((o) => _.set(o, 'selected', false))
+          .commit();
+      },
+
       async onPressSearch() {
         const oViewModel = this.getViewModel();
 
@@ -165,7 +174,8 @@ sap.ui.define(
           const sPernr = this.getAppointeeProperty('Pernr');
           const fCurried = Client.getEntitySet(this.getModel(ServiceNames.WORKTIME));
 
-          const [[mAnnualLeaveStatus], aAnnualLeavePlan] = await Promise.all([
+          const [aAwarts, [mAnnualLeaveStatus], aAnnualLeavePlan] = await Promise.all([
+            fCurried('HolPlanAwrsn', { Pernr: sPernr, Plnyy: mSearchConditions.Plnyy }), //
             fCurried('AnnualLeaveStatus', { Pernr: sPernr, ...mSearchConditions }), //
             fCurried('AnnualLeavePlan', { Pernr: sPernr, ...mSearchConditions }),
           ]);
@@ -177,6 +187,10 @@ sap.ui.define(
             }
           });
 
+          oViewModel.setProperty(
+            '/entry/AwartList',
+            _.map(aAwarts, (o) => _.set(o, 'selected', false))
+          );
           oViewModel.setProperty('/summary', _.omit(mAnnualLeaveStatus, '__metadata'));
           oViewModel.setProperty(
             '/plans/raw',
@@ -198,6 +212,7 @@ sap.ui.define(
       },
 
       onClickDay(oEvent) {
+        const oView = this.getView();
         const { day: sDay, style: sStyle } = oEvent.data();
 
         if (_.isEqual(sDay, 'NONE') || !_.isEqual(sStyle, 'Normal')) return;
@@ -208,8 +223,7 @@ sap.ui.define(
             name: 'sap.ui.yesco.mvc.view.leavePlan.fragment.AwartPopover',
             controller: this,
           }).then(function (oPopover) {
-            // oView.addDependent(oPopover);
-            // oPopover.bindElement('/ProductCollection/0');
+            oView.addDependent(oPopover);
             return oPopover;
           });
         }

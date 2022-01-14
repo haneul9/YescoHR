@@ -53,6 +53,7 @@ sap.ui.define(
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
+          Werks: this.getSessionProperty('Werks') !== '2000',
           menid: this.getCurrentMenuId(),
           Hass: this.isHass(),
           ViewKey: '',
@@ -122,34 +123,78 @@ sap.ui.define(
         const sWerks = this.getSessionProperty('Werks');
         let sMsg = '';
 
-        if (sWerks === '1000' || sWerks === '2000') {
-          sMsg = `<p>${this.getBundleText('MSG_09015')}</p>`;
-        } else {
-          sMsg = `<p>${this.getBundleText('MSG_09016')}</p>`;
+        if (sWerks === '2000') {
+          sMsg = `<p>${this.getBundleText('MSG_09002')}</p>
+            <p>${this.getBundleText('MSG_09003')}</p>
+            <p>${this.getBundleText('MSG_09004')}</p>
+            <p>${this.getBundleText('MSG_09005')}</p>
+            <ul>
+              <li>${this.getBundleText('MSG_09006')}
+                <ul>
+                  <li>${this.getBundleText('MSG_09007')}</li>
+                  <li>${this.getBundleText('MSG_09008')}</li>
+                  <li>${this.getBundleText('MSG_09009')}</li>
+                  <li>${this.getBundleText('MSG_09010')}</li>
+                  <li>${this.getBundleText('MSG_09011')}</li>
+                  <li>${this.getBundleText('MSG_09012')}</li>
+                  <li>${this.getBundleText('MSG_09013')}</li>
+                  <li>${this.getBundleText('MSG_09014')}</li>
+                </ul>
+              </li>
+            </ul>
+            <p>${this.getBundleText('MSG_09015')}</p>`;
+        } else if (sWerks === '1000' || sWerks === '4000') {
+          sMsg = `<ol>
+            <li>${this.getBundleText('MSG_09029')}</il>
+            <li>${this.getBundleText('MSG_09030')}</il>
+            <ul>
+              <li>${this.getBundleText('MSG_09031')}</li>
+              <li>${this.getBundleText('MSG_09032')}</li>
+            </ul>
+            <li>${this.getBundleText('MSG_09033')}</il>
+            <li>${this.getBundleText('MSG_09034')}</il>
+            <li>${this.getBundleText('MSG_09035')}</il>
+            <ul>
+              <li>${this.getBundleText('MSG_09036')}</li>
+              <li>${this.getBundleText('MSG_09037')}</li>
+              <li>${this.getBundleText('MSG_09038')}</li>
+            </ul>
+            <li>${this.getBundleText('MSG_09039')}</il>
+            <ul>
+              <li>${this.getBundleText('MSG_09040')}</li>
+              ${this.getBundleText('MSG_09041')}
+              <li>${this.getBundleText('MSG_09042')}</li>
+              <li>${this.getBundleText('MSG_09043')}</li>
+              <li>${this.getBundleText('MSG_09044')}</li>
+              <li>${this.getBundleText('MSG_09045')}</li>
+              <li>${this.getBundleText('MSG_09046')}</li>
+              <li>${this.getBundleText('MSG_09047')}</li>
+            </ul>
+          </ol>`;
+        } else if (sWerks === '3000') {
+          sMsg = `<p>${this.getBundleText('MSG_09002')}</p>
+            <p>${this.getBundleText('MSG_09003')}</p>
+            <p>${this.getBundleText('MSG_09004')}</p>
+            <p>${this.getBundleText('MSG_09005')}</p>
+            <ul>
+              <li>${this.getBundleText('MSG_09006')}
+                <ul>
+                  <li>${this.getBundleText('MSG_09007')}</li>
+                  <li>${this.getBundleText('MSG_09008')}</li>
+                  <li>${this.getBundleText('MSG_09009')}</li>
+                  <li>${this.getBundleText('MSG_09010')}</li>
+                  <li>${this.getBundleText('MSG_09011')}</li>
+                  <li>${this.getBundleText('MSG_09012')}</li>
+                  <li>${this.getBundleText('MSG_09013')}</li>
+                  <li>${this.getBundleText('MSG_09014')}</li>
+                </ul>
+              </li>
+            </ul>
+            <p>${this.getBundleText('MSG_09016')}</p>`;
         }
 
-        oDetailModel.setProperty(
-          '/InfoMessage',
-          `<p>${this.getBundleText('MSG_09002')}</p>
-          <p>${this.getBundleText('MSG_09003')}</p>
-          <p>${this.getBundleText('MSG_09004')}</p>
-          <p>${this.getBundleText('MSG_09005')}</p>
-          <ul>
-          <li>${this.getBundleText('MSG_09006')}
-          <ul>
-          <li>${this.getBundleText('MSG_09007')}</li>
-          <li>${this.getBundleText('MSG_09008')}</li>
-          <li>${this.getBundleText('MSG_09009')}</li>
-          <li>${this.getBundleText('MSG_09010')}</li>
-          <li>${this.getBundleText('MSG_09011')}</li>
-          <li>${this.getBundleText('MSG_09012')}</li>
-          <li>${this.getBundleText('MSG_09013')}</li>
-          <li>${this.getBundleText('MSG_09014')}</li>
-          </ul>
-          </li>
-          </ul>
-          ${sMsg}`
-        );
+        oDetailModel.setProperty('/InfoMessage', sMsg);
+
         const sYear = await this.getTotalYear();
 
         oDetailModel.setProperty('/sYear', sYear);
@@ -755,6 +800,12 @@ sap.ui.define(
               }
             }
           }
+        }
+
+        // 인사영역 2000번일경우는 첨부파일 필수
+        if (this.getAppointeeProperty('Werks') === '2000' && !AttachFileAction.getFileCount.call(this)) {
+          MessageBox.alert(this.getBundleText('MSG_00046'));
+          return true;
         }
 
         return false;
