@@ -241,7 +241,7 @@ sap.ui.define(
               if (_.isEqual(v, Constants.DISPLAY_TYPE.EDIT)) _.set(mConvertScreen, p, Constants.DISPLAY_TYPE.DISPLAY_ONLY);
             });
 
-            if (_.isEqual(['2', 'D'], [sZzapsts, sLogicalZzapstsSub]) || _.isEqual(['3', 'H'], [sZzapsts, sLogicalZzapstsSub])) {
+            if (_.isEqual(sType, Constants.APPRAISER_TYPE.MA) && (_.isEqual(['2', 'D'], [sZzapsts, sLogicalZzapstsSub]) || _.isEqual(['3', 'H'], [sZzapsts, sLogicalZzapstsSub]))) {
               _.set(mConvertScreen, 'Z140', Constants.DISPLAY_TYPE.EDIT);
             }
           }
