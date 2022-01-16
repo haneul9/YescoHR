@@ -40,6 +40,7 @@
                         <custom:customData>
                             <core:CustomData key="day" value="{day}" />
                             <core:CustomData key="style" value="{classNames}" writeToDom="true" />
+                            <core:CustomData key="awart" value="{awart}" writeToDom="true" />
                         </custom:customData>
                         <Text width="100%" textAlign="Center" text="{label}">
                             <layoutData>

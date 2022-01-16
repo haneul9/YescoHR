@@ -5,7 +5,7 @@
         <grid:CSSGrid gridTemplateColumns="1fr" gridRowGap="10px" items="{/entry/AwartList}">
             <CheckBox text="{Atext}" selected="{selected}" select=".onSelectedAwart">
                 <customData>
-                    <core:CustomData key="Awart" value="{Awart}" />
+                    <core:CustomData key="Awart" value="{Awart}" writeToDom="true" />
                 </customData>
             </CheckBox>
         </grid:CSSGrid>

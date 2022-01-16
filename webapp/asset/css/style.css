@@ -629,6 +629,7 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Header"] { background-color:rgb(224, 224, 224)}
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="None"] { background-color:rgb(112, 112, 112)}
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Normal"] { background-color:rgb(255, 255, 255)}
+.sapUiLayoutCSSGrid .sapMFlexBox[data-style="Disable"] { background-color:rgb(199, 220, 255)}
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Weekend"] { background-color:rgb(151, 150, 150)}
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type01"], .year-plan.status-wrap .sapMFlexItem .sapMText.type01::before { background-color:#81DAEA}/* 연차 */
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type02"], .year-plan.status-wrap .sapMFlexItem .sapMText.type02::before { background-color:#65B8FF}/* 하계휴가 */
@@ -1279,6 +1280,10 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .year-plan-grid .sapMFlexBox[data-style="Header"] {background-color:#f7f7f7; }
 .year-plan-grid .sapMFlexBox[data-style="Weekend"] {background-color:#D9DCDF; }
 .year-plan-grid .sapMFlexBox[data-style="None"] {background-color:#CFD1D5}
+.year-plan-grid .sapMFlexBox[data-awart="2000"] {background-color:#65B8FF}
+.year-plan-grid .sapMFlexBox[data-awart="2001"]::before {content: '';width: 50%;height: 100%;position: relative;top: 0;left: 0;background-color:#FFE479}
+.year-plan-grid .sapMFlexBox[data-awart="2002"]::after {content: '';width: 50%;height: 100%;position: relative;top: 0;left: 0;background-color:#FFE479}
+.year-plan-grid .sapMFlexBox[data-awart="2010"] {background-color:#FFAC4B}
 .year-plan.status-wrap .sapMFlexItem {margin-right:20px; height:60px; position:relative}
 .year-plan.status-wrap .sapMFlexItem .sapMText {display:flex; justify-content:flex-start; align-items:center}
 .year-plan.status-wrap .sapMFlexItem .sapMText::before {content:""; position:relative; display:inline-block; width:14px; height:14px; background-color:#888; margin-right:5px; border-radius:50%}

@@ -3,6 +3,7 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
     'sap/ui/model/json/JSONModel',
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -15,6 +16,7 @@ sap.ui.define(
     // prettier 방지용 주석
     Fragment,
     JSONModel,
+    MessageBox,
     AppUtils,
     Client,
     ServiceNames,
@@ -25,6 +27,8 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.leavePlan.App', {
+      AWART_COUNT: { 2000: 1, 2010: 1, 2001: 0.5, 2002: 0.5 },
+
       onBeforeShow() {
         const today = moment();
         const oViewModel = new JSONModel({
@@ -44,6 +48,8 @@ sap.ui.define(
           },
           summary: {},
           plans: {
+            selectedDay: '',
+            count: {},
             raw: [],
             grid: [],
           },
@@ -77,10 +83,11 @@ sap.ui.define(
           ...this.getPlanHeader(), //
           ..._.times(12, (n) => this.getPlanBody(n)).reduce((a, b) => [...a, ...b], []),
         ]);
+        oViewModel.setProperty('/plans/raw', []);
       },
 
-      getBoxObject({ day = 'NONE', label = '', classNames = '' }) {
-        return { day, label, classNames };
+      getBoxObject({ day = 'NONE', label = '', classNames = '', awart = '' }) {
+        return { day, label, classNames, awart };
       },
 
       getPlanHeader() {
@@ -93,21 +100,24 @@ sap.ui.define(
 
       getPlanBody(iMonth) {
         const oViewModel = this.getViewModel();
+        const mCount = oViewModel.getProperty('/plans/count');
+        const mPlansRawData = oViewModel.getProperty('/plans/raw');
         const sYear = oViewModel.getProperty('/search/Plnyy');
         const sYearMonth = `${sYear}-${_.padStart(iMonth + 1, 2, '0')}`;
 
+        _.set(mCount, iMonth + 1, 0);
+
         return [
           this.getBoxObject({ label: this.getBundleText('LABEL_20011', iMonth + 1), classNames: 'Header' }), //  {0}월
-          this.getBoxObject({ label: 0, classNames: 'Header' }),
+          this.getBoxObject({ day: `Count-${iMonth + 1}`, label: 0, classNames: 'Header' }),
           ..._.times(31, (n) => {
             const sDay = `${sYearMonth}-${_.padStart(n + 1, 2, '0')}`;
-            return this.getBoxObject({ day: sDay, label: '', classNames: this.getDayStyle(sDay) });
+            return this.getBoxObject({ day: sDay, label: '', classNames: this.getDayStyle(mPlansRawData, sDay), awart: _.get(mPlansRawData, [sDay, 'Awart'], '') });
           }),
         ];
       },
 
-      getDayStyle(sDay) {
-        const mPlansRawData = this.getViewModel().getProperty('/plans/raw');
+      getDayStyle(mPlansRawData, sDay) {
         const sHolyn = _.get(mPlansRawData, [sDay, 'Holyn']);
         const sInpyn = _.get(mPlansRawData, [sDay, 'Inpyn']);
         const mClasses = {
@@ -147,6 +157,60 @@ sap.ui.define(
         oViewModel.setProperty('/entry/SeqnoList', aSeqno);
       },
 
+      calcMonthLeaveCount() {
+        const oViewModel = this.getViewModel();
+        const aGridPlans = oViewModel.getProperty('/plans/grid');
+        const aGridCounts = aGridPlans.filter((o) => _.startsWith(o.day, 'Count'));
+        const mGroupByMonth = _.chain(aGridPlans)
+          .reject({ awart: '' })
+          .groupBy((o) => _.chain(o.day).split('-', '2').last().toNumber().value())
+          .map((v, p) => ({ [p]: _.sumBy(v, (obj) => this.AWART_COUNT[obj.awart]) }))
+          .reduce((a, c) => ({ ...a, ...c }), {})
+          .value();
+
+        const mCount = oViewModel.getProperty('/plans/count');
+
+        _.chain(mCount)
+          .forOwn((v, p, obj) => _.set(obj, p, 0))
+          .assign(mGroupByMonth)
+          .forOwn((v, p) => _.set(aGridCounts, [p - 1, 'label'], v))
+          .commit();
+
+        const mGroupByAwart = _.chain(aGridPlans)
+          .filter((o) => !_.isEmpty(o.awart))
+          .groupBy('awart')
+          .map((v, p) => ({ [p]: _.sumBy(v, (obj) => this.AWART_COUNT[obj.awart]) }))
+          .reduce((a, c) => ({ ...a, ...c }), {})
+          .value();
+        const mSummary = oViewModel.getProperty('/summary');
+        const iYearCount = _.sum([mGroupByAwart['2000'], mGroupByAwart['2001'], mGroupByAwart['2002']]) || 0;
+        const iSummerCount = mGroupByAwart['2010'] || 0;
+
+        _.set(mSummary, 'Plncnt', iYearCount);
+        _.set(mSummary, 'Plnperc', _.chain(iYearCount).divide(mSummary.Crecnt).multiply(100).floor().value());
+        _.set(mSummary, 'Plncnt2', iSummerCount);
+        _.set(mSummary, 'Plnperc2', _.chain(iSummerCount).divide(mSummary.Crecnt2).multiply(100).floor().value());
+      },
+
+      checkLimit(sAwart) {
+        const oViewModel = this.getViewModel();
+        const mSummary = oViewModel.getProperty('/summary');
+
+        if (_.isEqual(sAwart, '2010')) {
+          if (_.gt(_.add(mSummary.Plncnt2, this.AWART_COUNT[sAwart]), mSummary.Crecnt2)) {
+            MessageBox.alert(this.getBundleText('MSG_20003', 'LABEL_20008')); // {하계휴가}의 선택 가능한 개수를 초과하였습니다.
+            return false;
+          }
+        } else {
+          if (_.gt(_.add(mSummary.Plncnt, this.AWART_COUNT[sAwart]), mSummary.Crecnt)) {
+            MessageBox.alert(this.getBundleText('MSG_20003', 'LABEL_20006')); // {연차}의 선택 가능한 개수를 초과하였습니다.
+            return false;
+          }
+        }
+
+        return true;
+      },
+
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
@@ -156,10 +220,26 @@ sap.ui.define(
 
       onSelectedAwart(oEvent) {
         const oViewModel = this.getViewModel();
+        const mCustomData = oEvent.getSource().data();
         const aAwarts = oViewModel.getProperty('/entry/AwartList');
+        const aGridPlans = oViewModel.getProperty('/plans/grid');
+        const bSelected = oEvent.getParameter('selected');
+        const sDay = oViewModel.getProperty('/plans/selectedDay');
+
+        if (bSelected && !this.checkLimit(mCustomData.Awart)) return;
+
+        _.chain(aGridPlans)
+          .find({ day: sDay })
+          .set('awart', bSelected ? mCustomData.Awart : '')
+          .commit();
+
+        this.calcMonthLeaveCount();
+
+        this._pPopover.then(function (oPopover) {
+          oPopover.close();
+        });
 
         _.chain(aAwarts)
-          .reject(oEvent.getSource().data())
           .forEach((o) => _.set(o, 'selected', false))
           .commit();
       },
@@ -191,6 +271,16 @@ sap.ui.define(
             '/entry/AwartList',
             _.map(aAwarts, (o) => _.set(o, 'selected', false))
           );
+
+          mAnnualLeaveStatus.Crecnt = '2';
+          mAnnualLeaveStatus.Plncnt = '0';
+          mAnnualLeaveStatus.Plnperc = '0';
+          mAnnualLeaveStatus.Crecnt2 = '2';
+          mAnnualLeaveStatus.Plncnt2 = '0';
+          mAnnualLeaveStatus.Plnperc2 = '0';
+          mAnnualLeaveStatus.Crecnt3 = '2';
+          mAnnualLeaveStatus.Usecnt3 = '0';
+          mAnnualLeaveStatus.Useperc3 = '0';
           oViewModel.setProperty('/summary', _.omit(mAnnualLeaveStatus, '__metadata'));
           oViewModel.setProperty(
             '/plans/raw',
@@ -202,6 +292,7 @@ sap.ui.define(
 
           this.toggleButton();
           this.buildPlanGrid();
+          this.calcMonthLeaveCount();
         } catch (oError) {
           this.debug('Controller > leavePlan App > onPressSearch Error', oError);
 
@@ -213,13 +304,24 @@ sap.ui.define(
 
       onClickDay(oEvent) {
         const oView = this.getView();
-        const { day: sDay, style: sStyle } = oEvent.data();
+        const oViewModel = this.getViewModel();
+        const { day: sDay, style: sStyle, awart: sAwart } = oEvent.data();
 
         if (_.isEqual(sDay, 'NONE') || !_.isEqual(sStyle, 'Normal')) return;
 
+        const aAwarts = oViewModel.getProperty('/entry/AwartList');
+        _.chain(aAwarts)
+          .forEach((o) => _.set(o, 'selected', false))
+          .find({ Awart: sAwart })
+          .set('selected', true)
+          .commit();
+
+        oViewModel.setProperty('/plans/selectedDay', sDay);
+        oViewModel.setProperty('/entry/AwartList', aAwarts);
+
         if (!this._pPopover) {
           this._pPopover = Fragment.load({
-            id: this.getView().getId(),
+            id: oView.getId(),
             name: 'sap.ui.yesco.mvc.view.leavePlan.fragment.AwartPopover',
             controller: this,
           }).then(function (oPopover) {
