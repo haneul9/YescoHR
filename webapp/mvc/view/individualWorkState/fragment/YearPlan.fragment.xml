@@ -2,7 +2,7 @@
   xmlns:core="sap.ui.core"
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control">
-  <VBox width="100%" class="vCardBox">
+  <VBox width="100%" class="vCardBox small">
     <HBox class="table-toolbar">
       <HBox class="title">
         <Title level="H2" text="My Time Calendar" />

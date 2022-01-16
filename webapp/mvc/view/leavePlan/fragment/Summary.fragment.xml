@@ -7,7 +7,7 @@
       <Title level="H2" text="{i18n>LABEL_20001}" />
       <Text text="{i18n>LABEL_20002}({/summary/ZappStxtAl})" class="desc-txt sapUiSmallMarginBegin" visible="{= !!${/summary/ZappStxtAl} }" />
     </HBox>
-    <grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="8px">
+    <grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="10px" class="vacation-plan-summary pt-28-px">
       <Label design="Bold" text="{i18n>LABEL_20012}" />
       <VBox>
         <ProgressIndicator displayOnly="true" displayValue="{/summary/Plncnt}" percentValue="{/summary/Plnperc}" state="Information" />

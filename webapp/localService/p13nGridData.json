@@ -36,7 +36,7 @@
       "sap.card": {
         "type": "List",
         "header": {
-          "title": "Contacts",
+          "title": "팀원현황",
           "subTitle": "Recent",
           "icon": {
             "src": "sap-icon://activities"
@@ -45,8 +45,11 @@
         "content": {
           "items": [
             {
-              "title": "Alain Chevalier",
-              "icon": "sap-icon://person-placeholder"
+              "title": "홍길동",
+              "icon": "../asset/image/photo4.jpeg",
+              "info": "부장",
+              "Name": "인사팀",
+              "Description": "근무중"
             },
             {
               "title": "Monique Legrand",

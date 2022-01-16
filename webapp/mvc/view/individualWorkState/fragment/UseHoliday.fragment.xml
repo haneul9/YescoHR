@@ -3,7 +3,7 @@
   xmlns:viz="sap.viz.ui5.controls"
   xmlns:viz.data="sap.viz.ui5.data"
   xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds">
-  <VBox width="100%" class="vCardBox">
+  <VBox width="100%" class="vCardBox small">
     <HBox justifyContent="SpaceBetween" class="table-toolbar">
       <HBox  class="title">
         <Title level="H2" text="{i18n>LABEL_18021}" />

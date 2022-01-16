@@ -24,10 +24,10 @@
                 <core:Fragment fragmentName="sap.ui.yesco.mvc.view.leavePlan.fragment.OverviewSearchCondition" type="XML" />
             </HBox>
             <VBox class="vCardBox">
-                <HBox justifyContent="SpaceBetween">
-                    <HBox alignItems="Center" class="title">
+                <HBox class="table-toolbar" justifyContent="SpaceBetween">
+                    <HBox class="title">
                         <Title level="H2" text="{i18n>LABEL_20005}" />
-                        <Text class="desc-txt" text="{i18n>MSG_20001}" />
+                        <Text text="{i18n>MSG_20001}" class="desc-txt" />
                     </HBox>
                     <HBox class="status-wrap year-plan">
                         <Text text="{i18n>LABEL_20006}" class="type02" />
@@ -54,12 +54,14 @@
                 </grid:CSSGrid>
             </VBox>
             <VBox class="vCardBox" visible="{= ${/summary/Sgnyn} === 'X' }">
-                <HBox alignItems="Center" class="title">
-                    <Title level="H2" text="{i18n>LABEL_20009}" />
-                    <Text class="desc-txt" text="{i18n>MSG_20002}" />
-                </HBox>
-                <HBox>
-                    <custom:Signature id="signature-pad" width="500" height="300" />
+                <HBox class="table-toolbar">
+                    <HBox class="title">
+                        <Title level="H2" text="{i18n>LABEL_20009}" />
+                        <Text text="{i18n>MSG_20002}" class="desc-txt" />
+                    </HBox>
+                    </HBox>
+                <HBox alignItems="End">
+                    <custom:Signature id="signature-pad" width="500" height="120" class="sapUiSmallMarginEnd" />
                     <Button text="Clear" press=".onPressSignatureClear" />
                 </HBox>
             </VBox>
