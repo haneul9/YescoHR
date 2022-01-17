@@ -27,7 +27,7 @@
             <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onPressRemoveRowButton" visible="{/detail/editable}" enabled="{/detail/enabled}" />
           </HBox>
         </HBox>
-        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.nightduty.fragment.ScheduleTable" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.nightduty.fragment.ToBeScheduleTable" type="XML" />
       </VBox>
       <VBox class="vCardBox" id="nightduty-request-detail-reason">
         <HBox class="table-toolbar">

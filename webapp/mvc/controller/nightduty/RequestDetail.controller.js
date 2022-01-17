@@ -6,6 +6,7 @@ sap.ui.define(
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/nightduty/RequestDetail',
     'sap/ui/yesco/mvc/model/type/Date',
+    'sap/ui/yesco/mvc/model/type/Month',
     'sap/ui/yesco/mvc/model/type/Pernr',
   ],
   (
@@ -64,7 +65,7 @@ sap.ui.define(
        * 신청내역 삭제 button click event handler
        */
       onPressRemoveRowButton() {
-        this.oApprovalRequest.getRequestDetail().removeSchedule();
+        this.oApprovalRequest.getRequestDetail().removeToBeSchedule();
       },
 
       /**

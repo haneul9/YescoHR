@@ -8,6 +8,7 @@ sap.ui.define(
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/nightduty/CurrentListDialogHandler',
   ],
   (
@@ -19,12 +20,13 @@ sap.ui.define(
     TableUtils,
     Client,
     ServiceNames,
+    MessageBox,
     CurrentListDialogHandler
   ) => {
     'use strict';
 
     return BaseObject.extend('sap.ui.yesco.mvc.controller.nightduty.RequestDetail', {
-      sScheduleTableId: 'scheduleTable',
+      sToBeScheduleTableId: 'toBeScheduleTable',
 
       constructor: function (oController) {
         const oModel = new JSONModel({
@@ -33,7 +35,7 @@ sap.ui.define(
             enabled: false,
             suggestCompleted: false,
             list: [],
-            listMode: SelectionMode.MultiToggle,
+            listMode: SelectionMode.None,
             rowCount: 1,
             chgrsn: '',
             employees: [],
@@ -45,7 +47,7 @@ sap.ui.define(
         this.oCurrentListDialogHandler = new CurrentListDialogHandler({
           oController: this.oController,
           sSelectionMode: SelectionMode.MultiToggle,
-          fnCallback: this.appendSchedule.bind(this),
+          fnCallback: this.appendToBeSchedule.bind(this),
         });
 
         oController.byId('nightduty-request-detail-toolbar').setModel(oModel);
@@ -53,28 +55,28 @@ sap.ui.define(
         oController.byId('nightduty-request-detail-reason').setModel(oModel);
 
         TableUtils.adjustRowSpan({
-          oTable: this.oController.byId(this.sScheduleTableId),
+          oTable: this.oController.byId(this.sToBeScheduleTableId),
           aColIndices: [0, 1, 2],
           sTheadOrTbody: 'thead',
         });
       },
 
       async showData(sAppno, bFormEditable = false) {
-        let aScheduleTableData;
+        let aToBeScheduleTableData;
         let mDetailData;
 
         if (sAppno) {
           // 임시저장 상태 또는 상세 조회
-          aScheduleTableData = await this.readData(sAppno);
-          mDetailData = (aScheduleTableData || [])[0] || {};
+          aToBeScheduleTableData = await this.readData(sAppno);
+          mDetailData = (aToBeScheduleTableData || [])[0] || {};
         }
 
         this.mDetailData = mDetailData || {};
         this.oDetailModel.setProperty('/detail/editable', bFormEditable);
         this.oDetailModel.setProperty('/detail/chgrsn', this.mDetailData.Chgrsn);
-        this.oDetailModel.setProperty('/detail/listMode', SelectionMode.None);
+        this.oDetailModel.setProperty('/detail/listMode', bFormEditable ? SelectionMode.MultiToggle : SelectionMode.None);
 
-        this.setScheduleTableData(aScheduleTableData);
+        this.setToBeScheduleTableData(aToBeScheduleTableData);
 
         this.prepareSuggestionData();
 
@@ -97,10 +99,10 @@ sap.ui.define(
         return Client.getEntitySet(oModel, sUrl, mFilters);
       },
 
-      setScheduleTableData(aScheduleTableData) {
-        const iRowCount = (aScheduleTableData || []).length;
+      setToBeScheduleTableData(aToBeScheduleTableData) {
+        const iRowCount = (aToBeScheduleTableData || []).length;
 
-        this.oDetailModel.setProperty('/detail/list', aScheduleTableData);
+        this.oDetailModel.setProperty('/detail/list', aToBeScheduleTableData);
         this.oDetailModel.setProperty('/detail/rowCount', iRowCount);
         this.oDetailModel.setProperty('/detail/enabled', iRowCount > 0);
 
@@ -121,15 +123,17 @@ sap.ui.define(
         return this;
       },
 
-      appendSchedule(aSelectedListData) {
-        const aScheduleTableData = this.oDetailModel.getProperty('/detail/list') || [];
-        aScheduleTableData.splice(
-          aScheduleTableData.length,
+      appendToBeSchedule(aSelectedListData) {
+        const aToBeScheduleTableData = this.oDetailModel.getProperty('/detail/list') || [];
+        aToBeScheduleTableData.splice(
+          aToBeScheduleTableData.length,
           0,
           ...(aSelectedListData || []).map((o) => ({
             Datum: o.Datum,
             Kurzt: o.Kurzt,
             Tagty: o.Tagty,
+            Awart: o.Awart,
+            Ocshf: o.Ocshf,
             PernrB: o.Pernr,
             EnameB: o.Ename,
             OrgtxB: o.Orgtx,
@@ -137,15 +141,15 @@ sap.ui.define(
           }))
         );
 
-        this.setScheduleTableData(aScheduleTableData);
+        this.setToBeScheduleTableData(aToBeScheduleTableData);
 
         return this;
       },
 
-      removeSchedule() {
-        const aScheduleTableData = this.oDetailModel.getProperty('/detail/list') || [];
-        const oScheduleTable = this.oController.byId(this.sScheduleTableId);
-        const aSelectedIndices = oScheduleTable.getSelectedIndices();
+      removeToBeSchedule() {
+        const aToBeScheduleTableData = this.oDetailModel.getProperty('/detail/list') || [];
+        const oToBeScheduleTable = this.oController.byId(this.sToBeScheduleTableId);
+        const aSelectedIndices = oToBeScheduleTable.getSelectedIndices();
 
         if (!aSelectedIndices.length) {
           MessageBox.alert(AppUtils.getBundleText('MSG_00020', 'LABEL_00110')); // {삭제}할 행을 선택하세요.
@@ -159,13 +163,13 @@ sap.ui.define(
               return;
             }
 
-            const aUnselectedData = aScheduleTableData.filter((elem, i) => {
+            const aUnselectedData = aToBeScheduleTableData.filter((elem, i) => {
               return !aSelectedIndices.includes(i);
             });
 
-            oScheduleTable.clearSelection();
+            oToBeScheduleTable.clearSelection();
 
-            this.setScheduleTableData(aUnselectedData);
+            this.setToBeScheduleTableData(aUnselectedData);
           },
         });
       },
@@ -246,12 +250,12 @@ sap.ui.define(
        * 신청 정보 유효성 검사
        */
       validateRequestData() {
-        const aScheduleTableData = this.oDetailModel.getProperty('/detail/list');
-        if (!_.every(aScheduleTableData, 'PernrA')) {
+        const aToBeScheduleTableData = this.oDetailModel.getProperty('/detail/list');
+        if (!_.every(aToBeScheduleTableData, 'PernrA')) {
           throw new UI5Error({ message: AppUtils.getBundleText('MSG_00005', 'LABEL_11006') }); // {근무자}를 선택하세요.
         }
 
-        const sChgrsn = this.oDetailModel.getProperty('/detail/chgrsn').trim();
+        const sChgrsn = this.oDetailModel.getProperty('/detail/chgrsn');
         if (!sChgrsn) {
           throw new UI5Error({ message: AppUtils.getBundleText('MSG_00003', 'LABEL_04013') }); // {변경사유}를 입력하세요.
         }
