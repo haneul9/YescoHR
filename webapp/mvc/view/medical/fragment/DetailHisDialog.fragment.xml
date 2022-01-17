@@ -45,9 +45,17 @@
                     <FlexBox alignItems="Start" justifyContent="End">
                         <Text text="{/DialogData/Pratetx}" />
                     </FlexBox>
-                    <HBox visible="{= ${/DialogData/ZappStat} === 'P' || ${/DialogData/ZappStat} === 'F'}"></HBox>
-                    <HBox visible="{= ${/DialogData/ZappStat} === 'P' || ${/DialogData/ZappStat} === 'F'}"></HBox>
+                    <Label text="{i18n>LABEL_09023}" visible="{= ${/DialogData/ZappStat} === 'P' || ${/DialogData/ZappStat} === 'F'}"/>
+                    <FlexBox alignItems="Start" justifyContent="End" visible="{= ${/DialogData/ZappStat} === 'P' || ${/DialogData/ZappStat} === 'F'}">
+                        <Text text="{ path: '/DialogData/Pybet', type: 'sap.ui.yesco.mvc.model.type.Currency' } 원" />
+                    </FlexBox>
                     <Label text="{i18n>LABEL_09009}" visible="{= ${/DialogData/ZappStat} === 'P' || ${/DialogData/ZappStat} === 'F'}"/>
+                    <FlexBox alignItems="Start" justifyContent="End" visible="{= ${/DialogData/ZappStat} === 'P' || ${/DialogData/ZappStat} === 'F'}">
+                        <Text text="{ path: '/DialogData/Pybet', type: 'sap.ui.yesco.mvc.model.type.Currency' } 원" />
+                    </FlexBox>
+                    <HBox visible="{= ${/DialogData/ZappStat} === 'P' || ${/DialogData/ZappStat} === 'F'}"></HBox>
+                    <HBox visible="{= ${/DialogData/ZappStat} === 'P' || ${/DialogData/ZappStat} === 'F'}"></HBox>
+                    <Label text="{i18n>LABEL_09024}" visible="{= ${/DialogData/ZappStat} === 'P' || ${/DialogData/ZappStat} === 'F'}"/>
                     <FlexBox alignItems="Start" justifyContent="End" visible="{= ${/DialogData/ZappStat} === 'P' || ${/DialogData/ZappStat} === 'F'}">
                         <Text text="{ path: '/DialogData/Pybet', type: 'sap.ui.yesco.mvc.model.type.Currency' } 원" />
                     </FlexBox>
