@@ -62,13 +62,15 @@ sap.ui.define(
       async showData() {
         try {
           const sAppno = this.getAppno();
+          const aResultsData = sAppno ? await this.oRequestDetail.readData(sAppno) : []; // 결재 상세 정보 조회 위임
+          const mApprovalRequestData = (aResultsData || [])[0] || {};
 
-          await this.oRequestDetail.showData(sAppno, this.isFormEditable()); // 결재 상세 정보 조회 위임
+          this.oApprovalRequestModel.setProperty('/ZappStatAl', mApprovalRequestData.ZappStatAl);
+          this.oRequestDetail.showData(aResultsData, this.isFormEditable()); // 결재 상세 정보 조회 위임
 
           // 결재 공통 정보(첨부파일, 신청자, 결재선 정보) 세팅
-          const mApprovalRequestData = this.oRequestDetail.getData();
           if (this.oRequestDetail.showFileAttachmentBox()) {
-            this.setFileAttachmentBoxData(mApprovalRequestData);
+            this.setFileAttachmentBoxData();
           }
           this.setApplyInfoBoxData(mApprovalRequestData).setApprovalBoxData(mApprovalRequestData);
         } catch (oError) {

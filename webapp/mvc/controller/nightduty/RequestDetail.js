@@ -61,28 +61,6 @@ sap.ui.define(
         });
       },
 
-      async showData(sAppno, bFormEditable = false) {
-        let aToBeScheduleTableData;
-        let mDetailData;
-
-        if (sAppno) {
-          // 임시저장 상태 또는 상세 조회
-          aToBeScheduleTableData = await this.readData(sAppno);
-          mDetailData = (aToBeScheduleTableData || [])[0] || {};
-        }
-
-        this.mDetailData = mDetailData || {};
-        this.oDetailModel.setProperty('/detail/editable', bFormEditable);
-        this.oDetailModel.setProperty('/detail/chgrsn', this.mDetailData.Chgrsn);
-        this.oDetailModel.setProperty('/detail/listMode', bFormEditable ? SelectionMode.MultiToggle : SelectionMode.None);
-
-        this.setToBeScheduleTableData(aToBeScheduleTableData);
-
-        this.prepareSuggestionData();
-
-        return this;
-      },
-
       /**
        * 신청 상세 조회
        * @param {string} sAppno
@@ -97,6 +75,21 @@ sap.ui.define(
         };
 
         return Client.getEntitySet(oModel, sUrl, mFilters);
+      },
+
+      async showData(aResultsData, bFormEditable = false) {
+        const mDetailData = (aResultsData || [])[0] || {};
+
+        this.mDetailData = mDetailData || {};
+        this.oDetailModel.setProperty('/detail/editable', bFormEditable);
+        this.oDetailModel.setProperty('/detail/chgrsn', mDetailData.Chgrsn);
+        this.oDetailModel.setProperty('/detail/listMode', bFormEditable ? SelectionMode.MultiToggle : SelectionMode.None);
+
+        this.setToBeScheduleTableData(aResultsData);
+
+        this.prepareSuggestionData();
+
+        return this;
       },
 
       setToBeScheduleTableData(aToBeScheduleTableData) {
