@@ -1,7 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
-  xmlns:grid="sap.ui.layout.cssgrid"
-  xmlns:custom="sap.ui.yesco.control">
+  xmlns:grid="sap.ui.layout.cssgrid">
   <VBox class="hCardBox summary-box">
     <HBox alignItems="End">
       <Title level="H2" text="{i18n>LABEL_20001}" />
@@ -12,29 +11,32 @@
       <VBox>
         <ProgressIndicator displayOnly="true" displayValue="{/summary/Plncnt}" percentValue="{/summary/Plnperc}" state="Information" />
         <HBox width="100%" justifyContent="SpaceBetween">
-          <Text text="0" />
-          <Text text="{/summary/Crecnt}" />
+          <Text text="0" visible="{= ${/summary/Plnperc} !== 0 }" />
+          <Text text="" visible="{= ${/summary/Plnperc} === 0 }" />
+          <Text text="{/summary/Crecnt}" visible="{= ${/summary/Plnperc} !== 100 }" />
+          <Text text="" visible="{= ${/summary/Plnperc} === 100 }" />
         </HBox>
       </VBox>
-      <!-- <custom:VacationIndicator width="18rem" total="{ path: '/summary/Crecnt', type: 'sap.ui.model.type.Integer' }" used="{ path: '/summary/Usecnt', type: 'sap.ui.model.type.Integer' }" align="Top" class="sapUiSmallMarginTop" /> -->
       <Label design="Bold" text="{i18n>LABEL_20008}" />
       <VBox>
         <ProgressIndicator displayOnly="true" displayValue="{/summary/Plncnt2}" height="" percentValue="{/summary/Plnperc2}" state="Error" />
         <HBox width="100%" justifyContent="SpaceBetween">
-          <Text text="0" />
-          <Text text="{/summary/Crecnt2}" />
+          <Text text="0" visible="{= ${/summary/Plncnt2} !== 0 }" />
+          <Text text="" visible="{= ${/summary/Plncnt2} 0== 0 }" />
+          <Text text="{/summary/Crecnt2}" visible="{= ${/summary/Plnperc2} !== 100 }" />
+          <Text text="" visible="{= ${/summary/Plnperc2} === 100 }" />
         </HBox>
       </VBox>
-      <!-- <custom:VacationIndicator width="18rem" total="{ path: '/summary/Crecnt2', type: 'sap.ui.model.type.Integer' }" used="{ path: '/summary/Usecnt2', type: 'sap.ui.model.type.Integer' }" align="Top" class="sapUiSmallMarginTop" /> -->
       <Label design="Bold" text="{i18n>LABEL_20005}" />
       <VBox>
         <ProgressIndicator displayOnly="true" displayValue="{/summary/Usecnt3}" height="" percentValue="{/summary/Useperc3}" state="Success" />
         <HBox width="100%" justifyContent="SpaceBetween">
-          <Text text="0" />
-          <Text text="{/summary/Crecnt3}" />
+          <Text text="0" visible="{= ${/summary/Usecnt3} !== 0 }" />
+          <Text text="" visible="{= ${/summary/Usecnt3} === 0 }" />
+          <Text text="{/summary/Crecnt3}" visible="{= ${/summary/Useperc3} !== 100 }" />
+          <Text text="" visible="{= ${/summary/Useperc3} === 100 }" />
         </HBox>
       </VBox>
-      <!-- <custom:VacationIndicator width="18rem" total="{ path: '/summary/Crecnt3', type: 'sap.ui.model.type.Integer' }" used="{ path: '/summary/Usecnt3', type: 'sap.ui.model.type.Integer' }" align="Top" class="sapUiSmallMarginTop" /> -->
     </grid:CSSGrid>
   </VBox>
 </core:FragmentDefinition>

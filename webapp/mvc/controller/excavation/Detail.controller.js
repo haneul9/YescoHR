@@ -337,6 +337,7 @@ sap.ui.define(
           mEmployee = _.find(aEmployees, { Pernr: sSelectedPernr }) ?? { Pernr: '', Ename: '', Fulln: '', Zzjikgbt: '' };
 
           oViewModel.setProperty('/form/suggestCompleted', true);
+          oViewModel.setProperty(`${sRowPath}/PernrA`, ''); // 오작동 방지 초기화
           oViewModel.setProperty(sRowPath, {
             ...oViewModel.getProperty(sRowPath),
             PernrA: mEmployee.Pernr,
@@ -344,6 +345,7 @@ sap.ui.define(
             OrgtxA: mEmployee.Fulln,
             ZzjikgbtA: mEmployee.Zzjikgbt,
           });
+          oViewModel.refresh();
         }
       },
 
