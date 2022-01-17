@@ -518,6 +518,7 @@ sap.ui.define(
         oDetailModel.setProperty('/FormData/Appno', '');
         oDetailModel.setProperty('/FormData/ZappStatAl', '');
         this.settingsAttachTable();
+        this.onShcoolList();
       },
 
       // 임시저장
