@@ -593,63 +593,34 @@
         <HBox class="sapUiResponsiveMargin" width="auto">
           <VBox>
             <Title level="H3" text="Button" class="component-title" />
-            <!-- <HBox>
-							<Button width="117px" text="Default" ariaDescribedBy="defaultButtonDescription genericButtonDescription">
-								<layoutData>
-									<FlexItemData growFactor="1"/>
-								</layoutData>
-							</Button>
-							<Button width="117px" type="Accept" text="Accept" ariaDescribedBy="acceptButtonDescription genericButtonDescription">
-								<layoutData>
-									<FlexItemData growFactor="1"/>
-								</layoutData>
-							</Button>
-							<Button width="117px" type="Reject" text="Reject" ariaDescribedBy="rejectButtonDescription genericButtonDescription">
-								<layoutData>
-									<FlexItemData growFactor="1"/>
-								</layoutData>
-							</Button>
-							<Button width="117px" text="Coming Soon" ariaDescribedBy="comingSoonButtonDescription genericButtonDescription" enabled="false">
-								<layoutData>
-									<FlexItemData growFactor="1"/>
-								</layoutData>
-							</Button>
-							<Button width="117px" type="Emphasized" text="Emphasized" />
-							<Button width="117px" type="Emphasized" text="Emphasized disabled" enabled="false" disabled="disabled"/>
-							<Button width="117px" text="Default"/>
-							<Button width="117px" text="Transparent" type="Transparent" />
-							<Button width="117px" icon="sap-icon://action" type="Transparent" text="With Icon" />
-						</HBox> -->
-            <HBox class="sapUiSmallMarginTop">
-              <Text text="Enable" />
-              <Button type="Emphasized" text="Emphasized" />
-              <Text text="disable" />
-              <Button type="Emphasized" text="Emphasized" enabled="false" />
-            </HBox>
-            <HBox class="sapUiSmallMarginTop">
-              <Text text="Enable" />
-              <Button type="Transparent" text="Transparent" />
-              <Text text="disable" />
-              <Button type="Transparent" text="Transparent" enabled="false" />
-            </HBox>
-            <HBox class="sapUiSmallMarginTop">
-              <Text text="Enable" />
-              <Button text="Default" />
-              <Text text="disable" />
-              <Button text="Default" enabled="false" />
-            </HBox>
-            <HBox class="sapUiSmallMarginTop">
-              <Text text="Enable" />
-              <Button type="Accept" text="Accept" />
-              <Text text="disable" />
-              <Button type="Accept" text="Accept" enabled="false" />
-            </HBox>
-            <HBox class="sapUiSmallMarginTop">
-              <Text text="Enable" />
-              <Button type="Reject" text="Reject" />
-              <Text text="disable" />
-              <Button type="Reject" text="Reject" enabled="false" />
-            </HBox>
+            <VBox class="sapUiTinyMarginBottom">
+              <HBox alignItems="Center">
+                  <Text text="Enable" />
+                  <Button type="Emphasized" text="Emphasized" />
+                  <Button type="Accept" text="Accept" />
+                  <Button type="Reject" text="Reject" />
+                  <Button text="취소" class="cancel"/>
+                  <Button text="이전" />
+                  <Button text="Coming Soon" />
+                  <Button text="Default"/>
+                  <Button text="Transparent" type="Transparent" />
+                  <Button icon="sap-icon://action" type="Transparent" text="With Icon" />
+              </HBox>
+            </VBox>
+            <VBox class="sapUiTinyMarginBottom">
+              <HBox alignItems="Center">
+                  <Text text="disable" height="40px" />
+                  <Button type="Emphasized" text="Emphasized" enabled="false" />
+                  <Button type="Accept" text="Accept" enabled="false" />
+                  <Button type="Reject" text="Reject" enabled="false" />
+                  <Button text="취소" class="cancel" enabled="false" />
+                  <Button text="이전" enabled="false" />
+                  <Button text="Coming Soon" enabled="false" />
+                  <Button text="Default" enabled="false"/>
+                  <Button text="Transparent" type="Transparent" enabled="false" />
+                  <Button icon="sap-icon://action" type="Transparent" text="With Icon" enabled="false" />
+              </HBox>
+            </VBox>
           </VBox>
         </HBox>
         <HBox class="sapUiResponsiveMargin" width="auto">

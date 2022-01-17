@@ -568,14 +568,16 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt {outline-style:none !important}
 .sapIcon_Select_Arrow .sapMInputBaseIconContainer .sapUiIcon::before {content:'화살표'; font-size:0; background-size:auto; background-image:url(./images/icon_arrow.png)}
 
 /* DEVELOPER Temporary style */
-.hCardBox {position:relative; border:1px solid whitesmoke; border-radius:10px; padding:25px 30px; background-color:#fff; box-shadow:0px 2px 4px rgb(0 0 0 / 16%)}
-.vCardBox, .customBox {position:relative; margin:0; border:1px solid whitesmoke; border-radius:10px; padding:25px 30px; background-color:#fff; box-shadow:0px 2px 4px rgb(0 0 0 / 16%)}
+.hCardBox {position:relative; border:1px solid whitesmoke; border-radius:8px; padding:25px 30px; background-color:#fff; box-shadow:0px 2px 4px rgb(0 0 0 / 16%)}
+.vCardBox, .customBox {position:relative; margin:0; border:1px solid whitesmoke; border-radius:8px; padding:25px 30px; background-color:#fff; box-shadow:0px 2px 4px rgb(0 0 0 / 16%)}
+.vCardBox.small {padding:20px 20px;}
 .vCardBox.sapUiMediumMarginBottom, .customBox.sapUiMediumMarginBottom {margin-bottom:20px !important}
 .vCardBox.sapUiMediumMarginEnd {margin-right:20px!important}
 /* .sapMHBox .vCardBox {margin-right:20px} */
 .sapMHBox .vCardBox:last-child {margin-right:0px}
 
 .vCardBox h2.sapMTitle, .hCardBox h2.sapMTitle, .customBox h2.sapMTitle {line-height:24px; font-size:24px; font-weight:800; color:#222; display:flex}
+.vCardBox.small h2.sapMTitle {font-size:20px;}
 h3.sapMTitle {font-size:24px; font-weight:800; color:#222}
 h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .hCardBox.appointee-box,
@@ -629,12 +631,13 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Header"] { background-color:rgb(224, 224, 224)}
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="None"] { background-color:rgb(112, 112, 112)}
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Normal"] { background-color:rgb(255, 255, 255)}
+.sapUiLayoutCSSGrid .sapMFlexBox[data-style="Disable"] { background-color:rgb(199, 220, 255)}
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Weekend"] { background-color:rgb(151, 150, 150)}
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type01"], .year-plan.status-wrap .sapMFlexItem .sapMText.type01::before { background-color:#81DAEA}/* 연차 */
-.sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type02"], .year-plan.status-wrap .sapMFlexItem .sapMText.type02::before { background-color:#65B8FF}/* 하계휴가 */
-.sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type03"], .year-plan.status-wrap .sapMFlexItem .sapMText.type03::before { background-color:#A1E094}/* 유급휴가 */
+.sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type02"], .year-plan.status-wrap .sapMFlexItem .sapMText.type02::before, .vacation-indicator.type02 .vacation-indicator-gauge .vacation-indicator-used { background-color:#65B8FF}/* 하계휴가 */
+.sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type03"], .year-plan.status-wrap .sapMFlexItem .sapMText.type03::before, .vacation-indicator.type03 .vacation-indicator-gauge .vacation-indicator-used { background-color:#A1E094}/* 유급휴가 */
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type04"], .year-plan.status-wrap .sapMFlexItem .sapMText.type04::before { background-color:#8FABE8}/* 무급휴가 */
-.sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type05"], .year-plan.status-wrap .sapMFlexItem .sapMText.type05::before { background-color:#FFAC4B}/* 병가 */
+.sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type05"], .year-plan.status-wrap .sapMFlexItem .sapMText.type05::before, .vacation-indicator.type05 .vacation-indicator-gauge .vacation-indicator-used { background-color:#FFAC4B}/* 병가 */
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type06"], .year-plan.status-wrap .sapMFlexItem .sapMText.type06::before { background-color:#FFB7AF}/* 출산 */
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type07"], .year-plan.status-wrap .sapMFlexItem .sapMText.type07::before { background-color:#FFE479}/* 모성보호 */
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type08"], .year-plan.status-wrap .sapMFlexItem .sapMText.type08::before { background-color:#9679DB}/* 휴직 */
@@ -686,7 +689,7 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .node-button-div > div {border-radius:50%!important; width:100%!important; height:100%!important; padding:0!important; background-color:#fff!important; border:1px solid #ccc!important; font-size:10px!important; margin:auto auto!important}
 .node-button-div > div > div {margin-top:3px!important; text-align:center}
 
-.signature-pad {border:1px solid black}
+.signature-pad {border:1px solid #B7B7B7}
 /* -- DEVELOPER Temporary style */
 
 /*추가 20211101------------------------------------------------------------*/
@@ -708,6 +711,7 @@ button .sapMBtnTransparent {border-radius:20px}
 .sapUiSizeCompact.menu-favorite-icon .sapMBtnInner{height:15px}
 span.sapMBtnInner.sapMBtnEmphasized {text-shadow:none}
 .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem {min-height:40px; padding-left:20px; font-weight:700}
+.sapUiLayoutCSSGrid:not(.form-grid) .sapMLabel {padding-left:0px}
 .search-box .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem {padding-left:0}
 .sapMBtn.sapUiTinyMarginEnd {margin-right:5px!important}
 
@@ -1269,7 +1273,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 
 
 /* 근태 */
-.year-plan-head {display:flex; align-items:center; margin-bottom:16px; }
+.year-plan-head {display:flex; align-items:center; margin-bottom:16px; position: absolute; left: 50%; transform: translate(-50%, 0); }
 .year-plan-head .sapMFlexItem {height:24px; }
 .year-plan-head .sapMTitle {font-size:20px; font-weight:700; min-width:64px; text-align:center; }
 .year-plan-head .icon-button .sapMBtnInner, .year-plan-head .icon-button:hover .sapMBtnInner, .year-plan-head .icon-button:active .sapMBtnInner.sapMBtnActive{padding:0 10px; border:0; background:transparent!important; border-color:transparent !important; align-self:center; }
@@ -1279,6 +1283,10 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .year-plan-grid .sapMFlexBox[data-style="Header"] {background-color:#f7f7f7; }
 .year-plan-grid .sapMFlexBox[data-style="Weekend"] {background-color:#D9DCDF; }
 .year-plan-grid .sapMFlexBox[data-style="None"] {background-color:#CFD1D5}
+.year-plan-grid .sapMFlexBox[data-awart="2000"] {background-color:#65B8FF}
+.year-plan-grid .sapMFlexBox[data-awart="2001"]::before {content: '';width: 50%;height: 100%;position: relative;top: 0;left: 0;background-color:#FFE479}
+.year-plan-grid .sapMFlexBox[data-awart="2002"]::after {content: '';width: 50%;height: 100%;position: relative;top: 0;left: 0;background-color:#FFE479}
+.year-plan-grid .sapMFlexBox[data-awart="2010"] {background-color:#FFAC4B}
 .year-plan.status-wrap .sapMFlexItem {margin-right:20px; height:60px; position:relative}
 .year-plan.status-wrap .sapMFlexItem .sapMText {display:flex; justify-content:flex-start; align-items:center}
 .year-plan.status-wrap .sapMFlexItem .sapMText::before {content:""; position:relative; display:inline-block; width:14px; height:14px; background-color:#888; margin-right:5px; border-radius:50%}
@@ -1450,3 +1458,49 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .excavation-summary .summary-info {margin-bottom:0; margin-top:0}
 .excavation-summary .summary-info .sapMFlexItem:last-child {margin-bottom:0}
 
+.week-Work-summary {padding:43px 20px;background: #F5F6F7 0% 0% no-repeat padding-box;border-radius: 8px;height: 233px;}
+.week-Work-summary .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem {min-height: auto;}
+.week-Work-summary .vacation-indicator {height: 40px;}
+.week-Work-summary .vacation-indicator div {
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    height: 100%;
+    border-radius: 20px;
+    line-height: 20px;
+    font-size: .875rem;
+    font-weight: normal;
+}
+.week-Work-summary .sapUiLayoutCSSGrid .sapMFlexItem{align-items: flex-end;display: flex;}
+.week-Work-summary .sapUiLayoutCSSGrid .sapMFlexItem .sapMText{font-size:50px;align-self: flex-end;height: auto;}
+.week-Work-summary .sapUiLayoutCSSGrid .sapMFlexItem + .sapMFlexItem .sapMText{margin-bottom: 13px;margin-left: 6px;font-size:20px;align-self: flex-end;height: auto;}
+.week-Work-summary .vacation-indicator .vacation-indicator-gauge .vacation-indicator-used { background-color: #7BB4EB;}
+.vacation-indicator .vacation-indicator-gauge .vacation-indicator-remain {background-color: #A1E094 ;}
+.vacation-indicator .vacation-indicator-gauge .vacation-indicator-total {background-color: #FFE479 ;}
+
+.vacation-plan-summary .vacation-indicator[clas=""] .vacation-indicator-gauge .vacation-indicator-used {background-color: #A1E094;}
+.vacation-plan-summary .vacation-indicator .vacation-indicator-gauge .vacation-indicator-remain {background-color: #F7F7F7;}
+.vacation-plan-summary .sapMPIBar { border-radius: 10px;} 
+.vacation-plan-summary .sapMPI { overflow: inherit;}
+.vacation-plan-summary .sapMPI.sapMPIDisplayOnly { height: 20px; min-width: 4rem; margin: 0;}
+.vacation-plan-summary .sapMPIDisplayOnly .sapMPIText {position: absolute; top: 22.5px;padding-left: 0;font-size:14px;font-weight: 600;}
+.vacation-plan-summary .sapMPIValueMin .sapMPIBarRemaining {position: relative; border-radius: 10px;border: 0px solid #bfbfbf;}
+.vacation-plan-summary .sapMText {font-size: 12px;color:#666;}
+.vacation-plan-summary .sapMLabel bdi {height:20px;align-self: flex-start;margin-top: 3px;}
+.sapMPIBar.sapMPIBarInformation {background: #65B8FF ;}
+.sapMPIBar.sapMPIBarNegative {background: #FFAC4B ;}
+.sapMPIBar.sapMPIBarPositive {background: #A1E094 ;}
+.sapMPIBarInformation + .sapMPIBarRemaining .sapMPIText, .sapMPIDisplayOnly:not(.sapMPIBarDisabled) .sapMPIBar.sapMPIBarInformation .sapMPIText.sapMPITextLeft {color: #65B8FF ;}
+.sapMPIBarNegative + .sapMPIBarRemaining .sapMPIText, .sapMPIDisplayOnly:not(.sapMPIBarDisabled) .sapMPIBar.sapMPIBarNegative .sapMPIText.sapMPITextLeft {color: #FFAC4B ;}
+.sapMPIBarPositive + .sapMPIBarRemaining .sapMPIText, .sapMPIDisplayOnly:not(.sapMPIBarDisabled) .sapMPIBar.sapMPIBarPositive .sapMPIText.sapMPITextLeft {color: #A1E094 ;}
+
+
+.awart-popover.sapMPopover {padding:20px;border: 1px solid #666666;border-radius: 4px;}
+.awart-popover.sapMPopover .sapMPopoverArrLeft:after {margin: 0.125rem 0 0 0.25rem; box-shadow: 0.375rem 0.375rem 0.75rem 0 rgb(0 0 0), 0 0 0.125rem 0 rgb(0 0 0);}
+.awart-popover .sapMCbHasLabel {display: flex;padding-left: 11px;height:40px;align-items:center;border:1px solid #ddd;box-shadow: 0px 1px 2px #22222229;border-radius: 4px;}
+.awart-popover .sapMCbHasLabel[aria-checked=true] {border:2px solid #FFAC4B;}
+.awart-popover .sapMCbHasLabel.type02[aria-checked=true] {border:2px solid #65B8FF;}/*연차*/
+.awart-popover .sapMCbHasLabel.type05[aria-checked=true] {border:2px solid #FFAC4B;}/*하계휴가*/
+.awart-popover .sapMCbHasLabel.type[aria-checked=true] {border:2px solid #FFE479;}/*반차*/
+.awart-popover .sapMCbHasLabel * {display:flex;align-self:center;}
+.awart-popover .sapMCbBg {display:none;}

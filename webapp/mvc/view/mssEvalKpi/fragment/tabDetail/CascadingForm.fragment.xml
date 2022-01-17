@@ -26,6 +26,7 @@
                 <HBox class="table-toolbar">
                     <HBox class="title">
                         <Title level="H4" text="{= ${/tab/selectedKey} === 'A' ? ${i18n>LABEL_15006} : ${i18n>LABEL_15007} } {i18n>LABEL_15008}" />
+                        <Text text="목록을 아래 부문 Cascading 영역으로 드레그 하시면 됩니다." class="desc-txt"/>
                     </HBox>
                 </HBox>
             </table:extension>

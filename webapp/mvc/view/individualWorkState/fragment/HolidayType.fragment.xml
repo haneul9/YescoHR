@@ -1,10 +1,12 @@
 <core:FragmentDefinition xmlns="sap.m"
 	xmlns:table="sap.ui.table"
 	xmlns:core="sap.ui.core">
-	<VBox width="50%" class="vCardBox">
-		<HBox>
-			<Title level="H2" text="{i18n>LABEL_18006}" />
-			<Text text="{/FullYear}"/>
+	<VBox width="50%" class="vCardBox small">
+		<HBox class="table-toolbar">
+			<HBox class="title">
+				<Title level="H2" text="{i18n>LABEL_18006}" />
+				<Text text="{/FullYear}" class="desc-txt" />
+			</HBox>
 		</HBox>
 		<HBox justifyContent="SpaceBetween">
 			<table:Table class="pr-20-px" rows="{/VacaTypeList1}" visibleRowCount="3" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">

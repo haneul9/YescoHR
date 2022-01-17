@@ -1,18 +1,18 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:table="sap.ui.table"
   xmlns:core="sap.ui.core">
-  <VBox width="50%" class="vCardBox sapUiMediumMarginEnd">
+  <VBox width="50%" class="vCardBox small sapUiMediumMarginEnd">
     <HBox justifyContent="SpaceBetween" class="table-toolbar">
-      <HBox>
+      <HBox class="title">
         <Title level="H2" text="{i18n>LABEL_18011}" />
-        <Text text="{/FullYear}"/>
+        <Text text="{/FullYear}" class="desc-txt" />
       </HBox>
       <ComboBox width="80px" items="{/WorkMonths}" selectedKey="{/WorkMonth}" change=".onWorkMonth">
         <core:Item text="{Ztext}" key="{Zcode}" />
       </ComboBox>
     </HBox>
     <HBox justifyContent="SpaceBetween">
-      <table:Table class="pr-20-px" rows="{/MonthWorkList}" visibleRowCount="6" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
+      <table:Table class="pr-20-px" rows="{/MonthWorkList}" visibleRowCount="6" width="100%" selectionMode="None" columnHeaderHeight="38" rowHeight="37" noData="{i18n>MSG_00001}">
         <table:Column width="auto" sortProperty="Wktxt" filterProperty="Wktxt">
           <Label text="{i18n>LABEL_18012}"/>
           <table:template>
@@ -32,7 +32,7 @@
           </table:template>
         </table:Column>
       </table:Table>
-      <table:Table rows="{/OTWorkList}" visibleRowCount="6" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
+      <table:Table rows="{/OTWorkList}" visibleRowCount="6" width="100%" selectionMode="None" columnHeaderHeight="38" rowHeight="37" noData="{i18n>MSG_00001}">
         <table:Column width="auto" sortProperty="Ottxt" filterProperty="Ottxt">
           <Label text="{i18n>LABEL_18013}"/>
           <table:template>

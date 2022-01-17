@@ -2,10 +2,12 @@
   xmlns:core="sap.ui.core"
   xmlns:microchart="sap.suite.ui.microchart"
   xmlns:grid="sap.ui.layout.cssgrid">
-  <VBox width="50%" class="vCardBox sapUiMediumMarginEnd">
-    <HBox>
-      <Title level="H2" text="{i18n>LABEL_18005}" />
-      <Text text="{/FullYear}"/>
+  <VBox width="50%" class="vCardBox small sapUiMediumMarginEnd">
+    <HBox class="table-toolbar">
+      <HBox class="title">
+        <Title level="H2" text="{i18n>LABEL_18005}" />
+        <Text text="{/FullYear}" class="desc-txt" />
+      </HBox>
     </HBox>
     <HBox>
       <microchart:InteractiveDonutChart class="w-auto h-auto" selectionEnabled="false">

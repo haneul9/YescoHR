@@ -7,13 +7,34 @@
       <Title level="H2" text="{i18n>LABEL_20001}" />
       <Text text="{i18n>LABEL_20002}({/summary/ZappStxtAl})" class="desc-txt sapUiSmallMarginBegin" visible="{= !!${/summary/ZappStxtAl} }" />
     </HBox>
-    <grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="8px">
+    <grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="10px" class="vacation-plan-summary pt-28-px">
       <Label design="Bold" text="{i18n>LABEL_20012}" />
-      <custom:VacationIndicator width="18rem" total="{ path: '/summary/Crecnt', type: 'sap.ui.model.type.Integer' }" used="{ path: '/summary/Usecnt', type: 'sap.ui.model.type.Integer' }" align="Top" class="sapUiSmallMarginTop" />
+      <VBox>
+        <ProgressIndicator displayOnly="true" displayValue="{/summary/Plncnt}" percentValue="{/summary/Plnperc}" state="Information" />
+        <HBox width="100%" justifyContent="SpaceBetween">
+          <Text text="0" />
+          <Text text="{/summary/Crecnt}" />
+        </HBox>
+      </VBox>
+      <!-- <custom:VacationIndicator width="18rem" total="{ path: '/summary/Crecnt', type: 'sap.ui.model.type.Integer' }" used="{ path: '/summary/Usecnt', type: 'sap.ui.model.type.Integer' }" align="Top" class="sapUiSmallMarginTop" /> -->
       <Label design="Bold" text="{i18n>LABEL_20008}" />
-      <custom:VacationIndicator width="18rem" total="{ path: '/summary/Crecnt2', type: 'sap.ui.model.type.Integer' }" used="{ path: '/summary/Usecnt2', type: 'sap.ui.model.type.Integer' }" align="Top" class="sapUiSmallMarginTop" />
+      <VBox>
+        <ProgressIndicator displayOnly="true" displayValue="{/summary/Plncnt2}" height="" percentValue="{/summary/Plnperc2}" state="Error" />
+        <HBox width="100%" justifyContent="SpaceBetween">
+          <Text text="0" />
+          <Text text="{/summary/Crecnt2}" />
+        </HBox>
+      </VBox>
+      <!-- <custom:VacationIndicator width="18rem" total="{ path: '/summary/Crecnt2', type: 'sap.ui.model.type.Integer' }" used="{ path: '/summary/Usecnt2', type: 'sap.ui.model.type.Integer' }" align="Top" class="sapUiSmallMarginTop" /> -->
       <Label design="Bold" text="{i18n>LABEL_20005}" />
-      <custom:VacationIndicator width="18rem" total="{ path: '/summary/Crecnt3', type: 'sap.ui.model.type.Integer' }" used="{ path: '/summary/Usecnt3', type: 'sap.ui.model.type.Integer' }" align="Top" class="sapUiSmallMarginTop" />
+      <VBox>
+        <ProgressIndicator displayOnly="true" displayValue="{/summary/Usecnt3}" height="" percentValue="{/summary/Useperc3}" state="Success" />
+        <HBox width="100%" justifyContent="SpaceBetween">
+          <Text text="0" />
+          <Text text="{/summary/Crecnt3}" />
+        </HBox>
+      </VBox>
+      <!-- <custom:VacationIndicator width="18rem" total="{ path: '/summary/Crecnt3', type: 'sap.ui.model.type.Integer' }" used="{ path: '/summary/Usecnt3', type: 'sap.ui.model.type.Integer' }" align="Top" class="sapUiSmallMarginTop" /> -->
     </grid:CSSGrid>
   </VBox>
 </core:FragmentDefinition>

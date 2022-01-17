@@ -3,11 +3,11 @@
   xmlns:viz="sap.viz.ui5.controls"
   xmlns:viz.data="sap.viz.ui5.data"
   xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds">
-  <VBox width="100%" class="vCardBox">
+  <VBox width="100%" class="vCardBox small">
     <HBox justifyContent="SpaceBetween" class="table-toolbar">
-      <HBox>
+      <HBox  class="title">
         <Title level="H2" text="{i18n>LABEL_18021}" />
-        <Text text="{/FullYear}"/>
+        <Text text="{/FullYear}" class="desc-txt" />
       </HBox>
       <ComboBox width="80px" items="{/WorkMonths}" selectedKey="{/WorkMonth}" change=".onWorkMonth">
         <core:Item text="{Ztext}" key="{Zcode}" />

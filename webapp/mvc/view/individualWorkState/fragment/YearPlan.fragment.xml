@@ -2,14 +2,16 @@
   xmlns:core="sap.ui.core"
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control">
-  <VBox width="100%" class="vCardBox">
-    <HBox>
-      <Text text="{i18n>LABEL_18001}"/>
-      <HBox justifyContent="Center" class="year-plan-head">
-        <Button icon="sap-icon://navigation-left-arrow" press=".onPressPrevYear" class="icon-button" />
-        <Title level="H2" text="{/year}" />
-        <Button icon="sap-icon://navigation-right-arrow" press=".onPressNextYear" class="icon-button" />
+  <VBox width="100%" class="vCardBox small">
+    <HBox class="table-toolbar">
+      <HBox class="title">
+        <Title level="H2" text="My Time Calendar" />
       </HBox>
+    </HBox>
+    <HBox justifyContent="Center" class="year-plan-head">
+      <Button icon="sap-icon://navigation-left-arrow" press=".onPressPrevYear" class="icon-button" />
+      <Title level="H2" text="{/year}" />
+      <Button icon="sap-icon://navigation-right-arrow" press=".onPressNextYear" class="icon-button" />
     </HBox>
     <grid:CSSGrid id="yearPlanGrid" class="year-plan-grid" gridTemplateColumns="70px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr" gridGap="1px" items="{path: '/plans'}">
       <custom:DayBox width="100%" mouseover=".onMouseOverDayBox" mouseout=".onMouseOutDayBox">
