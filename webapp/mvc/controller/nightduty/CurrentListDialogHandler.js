@@ -148,7 +148,7 @@ sap.ui.define(
         this.oDialogModel.setProperty('/dialog/enabled', aSelectedIndices.length > 0);
         this.oDialogModel.setProperty(
           '/dialog/selectedList',
-          aSelectedIndices.map((i) => this.oDialogModel.getProperty(`/dialog/list/${i}`))
+          aSelectedIndices.map((i) => this.oDialogModel.getProperty(`/dialog/currentList/${i}`))
         );
       },
 

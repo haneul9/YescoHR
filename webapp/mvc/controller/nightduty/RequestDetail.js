@@ -251,7 +251,7 @@ sap.ui.define(
           throw new UI5Error({ message: AppUtils.getBundleText('MSG_00005', 'LABEL_11006') }); // {근무자}를 선택하세요.
         }
 
-        const sChgrsn = this.oDetailModel.getProperty('/detail/chgrsn').trim();
+        const sChgrsn = this.oDetailModel.getProperty('/detail/chgrsn');
         if (!sChgrsn) {
           throw new UI5Error({ message: AppUtils.getBundleText('MSG_00003', 'LABEL_04013') }); // {변경사유}를 입력하세요.
         }
