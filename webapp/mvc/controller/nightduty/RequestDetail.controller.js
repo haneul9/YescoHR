@@ -65,7 +65,7 @@ sap.ui.define(
        * 신청내역 삭제 button click event handler
        */
       onPressRemoveRowButton() {
-        this.oApprovalRequest.getRequestDetail().removeSchedule();
+        this.oApprovalRequest.getRequestDetail().removeToBeSchedule();
       },
 
       /**
