@@ -2,15 +2,19 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
+    'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/home/portlets/AbstractPortletHandler',
   ],
   (
     // prettier 방지용 주석
     Fragment,
+    AppUtils,
     Client,
     ServiceNames,
+    MessageBox,
     AbstractPortletHandler
   ) => {
     'use strict';
@@ -102,7 +106,50 @@ sap.ui.define(
         this.getController().getViewModel().getProperty('/activeInstanceMap/P04').onPressMyMemberRemove(oEvent);
       },
 
-      onPressClose() {},
+      onPressLink() {
+        const oPortletModel = this.getPortletModel();
+        const sSelectedMembersTab = oPortletModel.getProperty('/selectedMembersTab');
+        if (sSelectedMembersTab === 'MY') {
+          this.getController().getViewModel().getProperty('/activeInstanceMap/P04').onPressLink();
+          return;
+        }
+
+        const bHasLink = oPortletModel.getProperty('/orgMembers/hasLink');
+        const sUrl = oPortletModel.getProperty('/orgMembers/url');
+        if (!bHasLink || !sUrl) {
+          const sTitle = oPortletModel.getProperty('/orgMembers/title');
+          MessageBox.alert(AppUtils.getBundleText('MSG_01903', sTitle)); // {sTitle} portlet의 더보기 링크가 없거나 설정이 올바르지 않습니다.
+          return;
+        }
+
+        this.navTo(sUrl);
+      },
+
+      onPressClose() {
+        const oPortletModel = this.getPortletModel();
+        const sSelectedMembersTab = oPortletModel.getProperty('/selectedMembersTab');
+        if (sSelectedMembersTab === 'MY') {
+          this.getController().getViewModel().getProperty('/activeInstanceMap/P04').onPressClose();
+          return;
+        }
+
+        const sTitle = oPortletModel.getProperty('/orgMembers/title');
+        const sMessage = AppUtils.getBundleText('MSG_01902', sTitle); // {sTitle} portlet을 홈화면에 더이상 표시하지 않습니다.\n다시 표시하려면 홈화면 우측 상단 톱니바퀴 아이콘을 클릭하여 설정할 수 있습니다.
+
+        MessageBox.confirm(sMessage, {
+          onClose: async (sAction) => {
+            if (!sAction || sAction === MessageBox.Action.CANCEL) {
+              return;
+            }
+
+            const sPortletId = oPortletModel.getProperty('/orgMembers/id');
+            const bSuccess = await this.getController().onPressPortletsP13nSave(sPortletId);
+            if (bSuccess) {
+              this.destroy();
+            }
+          },
+        });
+      },
 
       destroy() {
         const oPortletModel = this.getPortletModel();

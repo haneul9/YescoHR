@@ -90,25 +90,30 @@ sap.ui.define(
 
       onDragStart(oEvent) {
         const oPortlet = oEvent.getParameter('target');
-        if (oPortlet.data('portlet-id') === 'P01') {
+        if (oPortlet && oPortlet.data('portlet-switchable') === 'N') {
           oEvent.preventDefault();
         }
       },
 
       onDragEnter(oEvent) {
         const oPortlet = oEvent.getParameter('target');
-        if (oPortlet && oPortlet.data('portlet-id') === 'P01') {
+        if (oPortlet && oPortlet.data('portlet-switchable') === 'N') {
           oEvent.preventDefault();
         }
       },
 
       onDrop(oEvent) {
         const oGrid = oEvent.getSource().getParent();
-        const oDragged = oEvent.getParameter('draggedControl');
         const oDropped = oEvent.getParameter('droppedControl');
-        const sInsertPosition = oEvent.getParameter('dropPosition');
-        const iDragPosition = oGrid.indexOfItem(oDragged);
         let iDropPosition = oGrid.indexOfItem(oDropped);
+        if (iDropPosition === 0) {
+          oEvent.preventDefault();
+          return;
+        }
+
+        const oDragged = oEvent.getParameter('draggedControl');
+        const iDragPosition = oGrid.indexOfItem(oDragged);
+        const sInsertPosition = oEvent.getParameter('dropPosition');
 
         oGrid.removeItem(oDragged);
 
