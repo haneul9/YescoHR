@@ -35,11 +35,12 @@ sap.ui.define(
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
-          FullYear: `${moment().year()}${this.getBundleText('LABEL_00252')}`,
+          FullYear: '',
           year: moment().year(),
           menid: this.getCurrentMenuId(),
           Hass: this.isHass(),
           WeekWorkDate: new Date(),
+          MonthStrList: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
           WeekWork: {
             Wkrultx: '',
             WeekTime: 52,
@@ -80,7 +81,29 @@ sap.ui.define(
 
         try {
           this.YearPlanBoxHandler ||= new YearPlanBoxHandler({ oController: this });
+          this.byId('idVizFrame').setVizProperties({
+            valueAxis: {
+              title: {
+                visible: false,
+              },
+            },
+            categoryAxis: {
+              title: {
+                visible: false,
+              },
+            },
+            plotArea: {
+              dataLabel: {
+                visible: true,
+              },
+            },
+            title: {
+              visible: false,
+            },
+          });
           this.setMonth();
+          this.formYear();
+
           const oModel = this.getModel(ServiceNames.WORKTIME);
 
           // 근태유형 색상
@@ -163,14 +186,29 @@ sap.ui.define(
           const mWorkTypePayLoad = {
             Werks: sWerks,
             Awart: sCode,
-            Tmyea: oViewModel.getProperty('/year'),
+            Tmyea: sYear,
           };
 
-          // 주 52시간 현황
+          // 근태유형 별 연간 사용현황
           const aWorkTypeList = await Client.getEntitySet(oModel, 'TimeUsageGraph', mWorkTypePayLoad);
+          const aTransList = [];
 
-          oViewModel.setProperty('/UseTimeGraph', aWorkTypeCodeList);
+          aWorkTypeList.forEach((e, i) => {
+            aTransList.push({ ...e, StrMonth: oViewModel.getProperty('/MonthStrList')[i] });
+          });
+
+          oViewModel.setProperty('/UseTimeGraph', aTransList);
           debugger;
+          const mDailyWorkPayLoad = {
+            Werks: sWerks,
+            Tmyea: sYear,
+          };
+
+          // 일별 근태현황
+          const aDailyList = await Client.getEntitySet(oModel, 'ApprTimeList', mDailyWorkPayLoad);
+
+          oViewModel.setProperty('/DailyWorkList', aDailyList);
+          oViewModel.setProperty('/DailyWorkCount', aDailyList.length);
         } catch (oError) {
           this.debug(oError);
           AppUtils.handleError(oError);
@@ -181,6 +219,50 @@ sap.ui.define(
 
       getFormatFloat(sVal = '0') {
         return parseFloat(sVal);
+      },
+
+      setting() {
+        var formatPattern = ChartFormatter.DefaultPattern; // set explored app's demo model on this sample
+        var oModel = new JSONModel(this.settingsModel);
+        oModel.setDefaultBindingMode(BindingMode.OneWay);
+        this.getView().setModel(oModel);
+
+        var oVizFrame = this.getView().byId('idVizFrame');
+        oVizFrame.setVizProperties({
+          plotArea: {
+            dataLabel: {
+              formatString: formatPattern.SHORTFLOAT_MFD2,
+              visible: false,
+            },
+            dataShape: {
+              primaryAxis: ['line', 'bar'],
+            },
+          },
+          valueAxis: {
+            label: {
+              formatString: formatPattern.SHORTFLOAT,
+            },
+            title: {
+              visible: false,
+            },
+          },
+          categoryAxis: {
+            title: {
+              visible: false,
+            },
+          },
+          title: {
+            visible: false,
+          },
+        });
+        var dataModel = new JSONModel(this.dataPath + '/betterMedium.json');
+        oVizFrame.setModel(dataModel);
+
+        var oPopOver = this.getView().byId('idPopOver');
+        oPopOver.connect(oVizFrame.getVizUid());
+        oPopOver.setFormatString(formatPattern.STANDARDFLOAT);
+
+        InitPageUtil.initPageSettings(this.getView());
       },
 
       setMonth() {
@@ -232,16 +314,122 @@ sap.ui.define(
         // oViewModel.setProperty('/WeekWork/WorkTime', `${aWeekTime[0].Beguz} ~ ${aWeekTime[0].Enduz} (${aWeekTime[0].Stdaz}${this.getBundleText('LABEL_00330')})`);
       },
 
+      // 년도 선택시 화면전체 년도
+      formYear(sYear = moment().year()) {
+        return this.getViewModel().setProperty('/FullYear', `${sYear}${this.getBundleText('LABEL_00252')}`);
+      },
+
+      // 년도 선택시 화면전체조회
+      async formReflesh() {
+        const oViewModel = this.getViewModel();
+
+        try {
+          oViewModel.setProperty('/busy', true);
+
+          const sWerks = this.getAppointeeProperty('Werks');
+          const sYear = oViewModel.getProperty('/year');
+
+          // 휴가계획현황
+          const mPayLoad = {
+            Werks: sWerks,
+            Tmyea: sYear,
+          };
+
+          const oModel = this.getModel(ServiceNames.WORKTIME);
+          const aPlanList = await Client.getEntitySet(oModel, 'LeavePlan', mPayLoad);
+
+          oViewModel.setProperty('/vacationChart', {
+            dUsed: parseInt(aPlanList[0].Cnt01),
+            dPlan: parseInt(aPlanList[0].Cnt02),
+            dUnPlan: parseInt(aPlanList[0].Cnt03),
+            pUsed: parseFloat(aPlanList[0].Rte01),
+            pPlan: parseFloat(aPlanList[0].Rte02),
+            pUnPlan: parseFloat(aPlanList[0].Rte03),
+          });
+
+          // 휴가유형 별 현황
+          const aVacaTypeList = await Client.getEntitySet(oModel, 'AbsQuotaList', { Menid: this.getCurrentMenuId() });
+
+          oViewModel.setProperty('/VacaTypeList1', aVacaTypeList.slice(0, 4));
+
+          if (aVacaTypeList.length > 3) {
+            oViewModel.setProperty('/VacaTypeList2', aVacaTypeList.slice(4));
+          }
+
+          const sMonth = oViewModel.getProperty('/WorkMonth');
+          // 근무현황
+          const mTablePayLoad = {
+            Werks: sWerks,
+            Tmyea: sYear,
+            Month: sMonth,
+          };
+
+          // 근무현황 -> 근무일수
+          const aWorkList = await Client.getEntitySet(oModel, 'WorkingStatus', mTablePayLoad);
+
+          oViewModel.setProperty('/MonthWorkList', aWorkList);
+
+          // 근무현황 -> OT현황
+          const aOTList = await Client.getEntitySet(oModel, 'OvertimeStatus', mTablePayLoad);
+
+          oViewModel.setProperty('/OTWorkList', aOTList);
+
+          const mWeekWorkPayLoad = {
+            Werks: sWerks,
+            Datum: moment(oViewModel.getProperty('/WeekWorkDate')).hours(9).toDate(),
+          };
+
+          // 주 52시간 현황
+          const aWeekTime = await Client.getEntitySet(oModel, 'WorkLimitStatus', mWeekWorkPayLoad);
+
+          // oViewModel.setProperty('/WeekWork/Wkrultx', aWeekTime[0].Wkrultx);
+          // oViewModel.setProperty('/WeekWork/Tottime', parseFloat(aWeekTime[0].Tottime));
+          // oViewModel.setProperty('/WeekWork/Bastime', parseFloat(aWeekTime[0].Bastime));
+          // oViewModel.setProperty('/WeekWork/Ottime', parseFloat(aWeekTime[0].Ottime));
+          // oViewModel.setProperty('/WeekWork/WorkTime', `${aWeekTime[0].Beguz} ~ ${aWeekTime[0].Enduz} (${aWeekTime[0].Stdaz}${this.getBundleText('LABEL_00330')})`);
+          oViewModel.setProperty('/WeekWork/Wkrultx', '시차출퇴근제');
+          oViewModel.setProperty('/WeekWork/Tottime', 40.5);
+          oViewModel.setProperty('/WeekWork/Bastime', 38);
+          oViewModel.setProperty('/WeekWork/Ottime', 2.5);
+          oViewModel.setProperty('/WeekWork/WorkTime', '09:00 ~ 18:00 (8시간)');
+
+          const aWorkTypeCodeList = await Client.getEntitySet(oModel, 'AwartCodeList');
+          const sCode = '2000';
+
+          oViewModel.setProperty('/WorkTypeUseList', aWorkTypeCodeList);
+          oViewModel.setProperty('/WorkTypeUse', sCode);
+
+          const mWorkTypePayLoad = {
+            Werks: sWerks,
+            Awart: sCode,
+            Tmyea: oViewModel.getProperty('/year'),
+          };
+
+          // 주 52시간 현황
+          const aWorkTypeList = await Client.getEntitySet(oModel, 'TimeUsageGraph', mWorkTypePayLoad);
+
+          oViewModel.setProperty('/UseTimeGraph', aWorkTypeCodeList);
+        } catch (oError) {
+          this.debug(oError);
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
+      },
       getCurrentLocationText(oArguments) {
         return this.getBundleText('LABEL_18001');
       },
 
       onPressPrevYear() {
         this.YearPlanBoxHandler.onPressPrevYear();
+        this.formYear(this.getViewModel().getProperty('/year'));
+        this.formReflesh();
       },
 
       onPressNextYear() {
         this.YearPlanBoxHandler.onPressNextYear();
+        this.formYear(this.getViewModel().getProperty('/year'));
+        this.formReflesh();
       },
 
       onMouseOverDayBox() {

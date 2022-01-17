@@ -13,23 +13,23 @@
         <core:Item text="{Atext}" key="{Awart}" />
       </ComboBox>
     </HBox>
-    <viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" height='100%' width="100%" vizType='combination'>
+    <viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" height="300px" width="100%" vizType='combination'>
       <viz:dataset>
         <viz.data:FlattenedDataset data="{/UseTimeGraph}">
           <viz.data:dimensions>
-            <viz.data:DimensionDefinition name="Week" value="{Zyymm}" />
+            <viz.data:DimensionDefinition name="Month" value="{StrMonth}" />
           </viz.data:dimensions>
           <viz.data:measures>
-            <viz.data:MeasureDefinition name="Revenue" value="{Cumuse}" />
-            <viz.data:MeasureDefinition name="Cost" value="{Monuse}" />
+            <viz.data:MeasureDefinition name="Accumulative" value="{Monuse}" />
+            <viz.data:MeasureDefinition name="Current month" value="{Cumuse}" />
           </viz.data:measures>
         </viz.data:FlattenedDataset>
       </viz:dataset>
 
       <viz:feeds>
-        <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Revenue" />
-        <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Cost" />
-        <viz.feeds:FeedItem id="feedCategoryAxis" uid="categoryAxis" type="Dimension" values="Week" />
+        <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Accumulative" />
+        <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Current month" />
+        <viz.feeds:FeedItem id="feedCategoryAxis" uid="categoryAxis" type="Dimension" values="Month" />
       </viz:feeds>
     </viz:VizFrame>
   </VBox>

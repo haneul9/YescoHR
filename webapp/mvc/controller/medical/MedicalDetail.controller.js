@@ -172,25 +172,26 @@ sap.ui.define(
             </ul>
           </ol>`;
         } else if (sWerks === '3000') {
-          sMsg = `<p>${this.getBundleText('MSG_09002')}</p>
-            <p>${this.getBundleText('MSG_09003')}</p>
-            <p>${this.getBundleText('MSG_09004')}</p>
-            <p>${this.getBundleText('MSG_09005')}</p>
-            <ul>
-              <li>${this.getBundleText('MSG_09006')}
-                <ul>
-                  <li>${this.getBundleText('MSG_09007')}</li>
-                  <li>${this.getBundleText('MSG_09008')}</li>
-                  <li>${this.getBundleText('MSG_09009')}</li>
-                  <li>${this.getBundleText('MSG_09010')}</li>
-                  <li>${this.getBundleText('MSG_09011')}</li>
-                  <li>${this.getBundleText('MSG_09012')}</li>
-                  <li>${this.getBundleText('MSG_09013')}</li>
-                  <li>${this.getBundleText('MSG_09014')}</li>
-                </ul>
-              </li>
-            </ul>
-            <p>${this.getBundleText('MSG_09016')}</p>`;
+          sMsg = `<dl>
+            <dt>${this.getBundleText('MSG_09002')}</dt>
+            <dd>${this.getBundleText('MSG_09048')}</dd>
+            <dt>${this.getBundleText('MSG_09004')}</dt>
+            <br>
+            <dt>${this.getBundleText('MSG_09005')}</dt>
+            <dt>${this.getBundleText('LABEL_09025')}</dt>
+              <dd>${this.getBundleText('MSG_09049')}</dd>
+              <dd>${this.getBundleText('MSG_09050')}</dd>
+              <dd>${this.getBundleText('MSG_09051')}</dd>
+              <dd>${this.getBundleText('MSG_09052')}</dd>
+            <dt>${this.getBundleText('LABEL_09026')}</dt>
+              <dd>${this.getBundleText('MSG_09053')}</dd>
+              <dd>${this.getBundleText('MSG_09054')}</dd>
+              <dd>${this.getBundleText('MSG_09055')}</dd>
+              <dd>${this.getBundleText('MSG_09056')}</dd>
+              <dd>${this.getBundleText('MSG_09057')}</dd>
+              <dd>${this.getBundleText('MSG_09058')}</dd>
+              <dd>${this.getBundleText('MSG_09059')}</dd>
+          </dl>`;
         }
 
         oDetailModel.setProperty('/InfoMessage', sMsg);
