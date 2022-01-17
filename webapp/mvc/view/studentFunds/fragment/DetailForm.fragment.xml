@@ -70,7 +70,7 @@
                 <Input value="{
                 path: '/FormData/ZbetClass',
                 type: 'sap.ui.yesco.mvc.model.type.Currency'
-            }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="required"/>
+            }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             </VBox>
             <Label text="{i18n>LABEL_03022}"/>
             <VBox>

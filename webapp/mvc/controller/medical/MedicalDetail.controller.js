@@ -423,6 +423,7 @@ sap.ui.define(
 
         oDetailModel.setProperty('/FormData/Appno', '');
         oDetailModel.setProperty('/FormData/Lnsta', '');
+        this.settingsAttachTable();
       },
 
       // 임시저장

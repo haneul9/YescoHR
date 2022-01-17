@@ -492,8 +492,8 @@ sap.ui.define(
           return true;
         }
 
-        // 수업료
-        if (!oFormData.ZbetClass) {
+        // 지원금액 > 0
+        if (!parseInt(oFormData.ZpayAmt) && AppBtn === 'O') {
           MessageBox.alert(this.getBundleText('MSG_03004'));
           return true;
         }
@@ -513,6 +513,7 @@ sap.ui.define(
 
         oDetailModel.setProperty('/FormData/Appno', '');
         oDetailModel.setProperty('/FormData/ZappStatAl', '');
+        this.settingsAttachTable();
       },
 
       // 임시저장
@@ -619,7 +620,10 @@ sap.ui.define(
                     this.onNavBack();
                   },
                 });
-              } catch (error) {
+              } catch (oError) {
+                const sReAppno = await Appno.get.call(this);
+
+                oDetailModel.setProperty('/FormData/Appno', sReAppno);
                 AppUtils.handleError(oError);
               } finally {
                 AppUtils.setAppBusy(false, this);
