@@ -8,6 +8,7 @@ sap.ui.define(
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/nightduty/CurrentListDialogHandler',
   ],
   (
@@ -19,6 +20,7 @@ sap.ui.define(
     TableUtils,
     Client,
     ServiceNames,
+    MessageBox,
     CurrentListDialogHandler
   ) => {
     'use strict';
@@ -33,7 +35,7 @@ sap.ui.define(
             enabled: false,
             suggestCompleted: false,
             list: [],
-            listMode: SelectionMode.MultiToggle,
+            listMode: SelectionMode.None,
             rowCount: 1,
             chgrsn: '',
             employees: [],
@@ -72,7 +74,7 @@ sap.ui.define(
         this.mDetailData = mDetailData || {};
         this.oDetailModel.setProperty('/detail/editable', bFormEditable);
         this.oDetailModel.setProperty('/detail/chgrsn', this.mDetailData.Chgrsn);
-        this.oDetailModel.setProperty('/detail/listMode', SelectionMode.None);
+        this.oDetailModel.setProperty('/detail/listMode', bFormEditable ? SelectionMode.MultiToggle : SelectionMode.None);
 
         this.setScheduleTableData(aScheduleTableData);
 

@@ -537,6 +537,7 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt {outline-style:none !important}
 .sapUiTableCell {border-right:1px solid #E7EAED; border-bottom:1px solid #f5f5f5}
 .sapUiTableContentRow .sapUiTableCell{border-right:1px solid #f5f5f5}
 .sapUiTableCell.sapUiTableHeaderCell {border-bottom:0.0625rem solid #E7EAED}
+.sapUiTableCell.sapUiTableHeaderCell.sapUiTableRowSelectionHeaderCell {border-right:none}
 .sapUiTableHeaderDataCell>.sapUiTableCellInner>div:first-child {display:block !important; text-align:center !important; line-height:1}
 .sapUiTableHeaderDataCell>.sapUiTableCellInner>div:first-child>* { display:initial}
 .sapUiTableCell .sapMLabel {color:#222}
