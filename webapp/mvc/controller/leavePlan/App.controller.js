@@ -192,7 +192,7 @@ sap.ui.define(
         _.set(mSummary, 'Plnperc2', _.chain(iSummerCount).divide(mSummary.Crecnt2).multiply(100).floor().value());
       },
 
-      checkLimit(sAwart) {
+      checkLimit(mTargetDay, sAwart) {
         const oViewModel = this.getViewModel();
         const mSummary = oViewModel.getProperty('/summary');
 
@@ -202,7 +202,9 @@ sap.ui.define(
             return false;
           }
         } else {
-          if (_.gt(_.add(mSummary.Plncnt, this.AWART_COUNT[sAwart]), mSummary.Crecnt)) {
+          const iCurCnt = _.isEmpty(mTargetDay.awart) ? mSummary.Plncnt : _.subtract(mSummary.Plncnt, this.AWART_COUNT[mTargetDay.awart]);
+
+          if (_.gt(_.add(iCurCnt, this.AWART_COUNT[sAwart]), mSummary.Crecnt)) {
             MessageBox.alert(this.getBundleText('MSG_20003', 'LABEL_20006')); // {연차}의 선택 가능한 개수를 초과하였습니다.
             return false;
           }
@@ -222,16 +224,14 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const mCustomData = oEvent.getSource().data();
         const aAwarts = oViewModel.getProperty('/entry/AwartList');
-        const aGridPlans = oViewModel.getProperty('/plans/grid');
         const bSelected = oEvent.getParameter('selected');
+        const aGridPlans = oViewModel.getProperty('/plans/grid');
         const sDay = oViewModel.getProperty('/plans/selectedDay');
+        const mTargetDay = _.find(aGridPlans, { day: sDay });
 
-        if (bSelected && !this.checkLimit(mCustomData.Awart)) return;
+        if (bSelected && !this.checkLimit(mTargetDay, mCustomData.Awart)) return;
 
-        _.chain(aGridPlans)
-          .find({ day: sDay })
-          .set('awart', bSelected ? mCustomData.Awart : '')
-          .commit();
+        _.set(mTargetDay, 'awart', bSelected ? mCustomData.Awart : '');
 
         this.calcMonthLeaveCount();
 
@@ -272,13 +272,13 @@ sap.ui.define(
             _.map(aAwarts, (o) => _.set(o, 'selected', false))
           );
 
-          mAnnualLeaveStatus.Crecnt = '2';
+          mAnnualLeaveStatus.Crecnt = '20';
           mAnnualLeaveStatus.Plncnt = '0';
           mAnnualLeaveStatus.Plnperc = '0';
-          mAnnualLeaveStatus.Crecnt2 = '2';
+          mAnnualLeaveStatus.Crecnt2 = '8';
           mAnnualLeaveStatus.Plncnt2 = '0';
           mAnnualLeaveStatus.Plnperc2 = '0';
-          mAnnualLeaveStatus.Crecnt3 = '2';
+          mAnnualLeaveStatus.Crecnt3 = '20';
           mAnnualLeaveStatus.Usecnt3 = '0';
           mAnnualLeaveStatus.Useperc3 = '0';
           oViewModel.setProperty('/summary', _.omit(mAnnualLeaveStatus, '__metadata'));

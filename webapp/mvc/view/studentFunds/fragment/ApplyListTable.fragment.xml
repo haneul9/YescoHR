@@ -28,7 +28,7 @@
           <Text text="{Famtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="auto" sortProperty="Zname" filterProperty="Zname">
+      <table:Column width="100px" sortProperty="Zname" filterProperty="Zname">
         <Label text="{i18n>LABEL_03010}"/>
         <table:template>
           <Text text="{Zname}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
@@ -73,7 +73,7 @@
           <Button type="Transparent" icon="sap-icon://attachment" class="mnw-0" press=".TableUtils.onFileListDialog" visible="{= ${Docyn} === 'Y' }"/>
         </table:template>
       </table:Column>
-      <table:Column width="200px" sortProperty="Appda" filterProperty="Appda">
+      <table:Column width="150px" sortProperty="Appda" filterProperty="Appda">
         <Label text="{i18n>LABEL_00266}"/>
         <table:template>
           <Text text="{
@@ -85,7 +85,7 @@
                     }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="200px" sortProperty="Sgnda" filterProperty="Sgnda">
+      <table:Column width="150px" sortProperty="Sgnda" filterProperty="Sgnda">
         <Label text="{i18n>LABEL_00269}"/>
         <table:template>
           <Text text="{
@@ -97,7 +97,7 @@
                     }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="200px" sortProperty="Zpayym" filterProperty="Zpayym">
+      <table:Column width="150px" sortProperty="Zpayym" filterProperty="Zpayym">
         <Label text="{i18n>LABEL_03002}"/>
         <table:template>
           <Text text="{

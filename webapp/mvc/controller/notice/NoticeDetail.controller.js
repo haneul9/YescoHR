@@ -222,7 +222,7 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      reject(new ODataCreateError(oError));
+                      reject(new ODataCreateError({ oError }));
                     },
                   });
                 });
@@ -289,7 +289,7 @@ sap.ui.define(
                       resolve();
                     },
                     error: (oError) => {
-                      reject(new ODataCreateError(oError));
+                      reject(new ODataCreateError({ oError }));
                     },
                   });
                 });
