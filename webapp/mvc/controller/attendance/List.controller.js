@@ -87,7 +87,7 @@ sap.ui.define(
 
           const mQuotaResult = _.reduce(
             aQuotaResultData,
-            (acc, { Ktart, Kotxt, Crecnt, Usecnt }) => ({
+            (acc, { Ktart, Kotxt, Crecnt, Usecnt, Balcnt }) => ({
               ...acc,
               [Ktart]: {
                 Kotxt,
