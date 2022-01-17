@@ -52,6 +52,8 @@ sap.ui.define(
       // ABAP <-> WEB Mapping fields
       FIELD_MAPPING: {
         Z103: ['Z103s'], // 연관 상위 목표
+        Z109: ['Z109'], // 진척도
+        Z111: ['Z111'], // 진행상태
         Z131: ['Z131'], // 목표수립의견-대상자
         Z132: ['Z132'], // 목표수립의견-평가자
         Z136: ['Z136'], // 중간점검의견-대상자
@@ -79,11 +81,11 @@ sap.ui.define(
           H: { Zrslt: { ME: 'H', MA: 'H', MB: 'H' }, Z140: { MA: 'X' } },
         },
         4: {
-          1: { Zapgme: { ME: 'X', MA: 'H', MB: 'H' }, Zapgma: { ME: 'H', MA: 'H', MB: 'H' }, Papp1: { ME: 'X', MA: 'H', MB: 'H' }, Papp2: { ME: 'H', MA: 'H', MB: 'H' }, Zmepoint: { ME: 'X', MA: 'H', MB: 'H' }, Zmapoint: { ME: 'H', MA: 'H', MB: 'H' }, Zmarslt: { ME: 'D' }, Z140: { MA: 'X' } },
-          A: { Zapgme: { ME: 'D', MA: 'D', MB: 'D' }, Zapgma: { ME: 'H', MA: 'X', MB: 'H' }, Papp1: { ME: 'D', MA: 'D', MB: 'D' }, Papp2: { ME: 'H', MA: 'X', MB: 'H' }, Zmepoint: { ME: 'D', MA: 'D', MB: 'D' }, Zmapoint: { ME: 'H', MA: 'X', MB: 'H' } },
-          B: { Zapgme: { ME: 'D', MA: 'D', MB: 'D' }, Zapgma: { ME: 'H', MA: 'X', MB: 'H' }, Papp1: { ME: 'D', MA: 'D', MB: 'D' }, Papp2: { ME: 'H', MA: 'X', MB: 'H' }, Zmepoint: { ME: 'D', MA: 'D', MB: 'D' }, Zmapoint: { ME: 'H', MA: 'X', MB: 'H' } },
-          2: { Zapgme: { ME: 'D', MA: 'D', MB: 'D' }, Zapgma: { ME: 'H', MA: 'D', MB: 'D' }, Papp1: { ME: 'D', MA: 'D', MB: 'D' }, Papp2: { ME: 'H', MA: 'D', MB: 'D' }, Zmepoint: { ME: 'D', MA: 'D', MB: 'D' }, Zmapoint: { ME: 'H', MA: 'D', MB: 'D' }, Zmbgrade: { MB: 'D' } },
-          K: { Zapgme: { ME: 'D', MA: 'D', MB: 'D' }, Zapgma: { ME: 'H', MA: 'D', MB: 'D' }, Papp1: { ME: 'D', MA: 'D', MB: 'D' }, Papp2: { ME: 'H', MA: 'D', MB: 'D' }, Zmepoint: { ME: 'D', MA: 'D', MB: 'D' }, Zmapoint: { ME: 'H', MA: 'D', MB: 'D' }, Zmbgrade: { MB: 'D' } },
+          1: { Zapgme: { ME: 'X', MA: 'V', MB: 'V' }, Zapgma: { ME: 'H', MA: 'D', MB: 'V' }, Papp1: { ME: 'X', MA: 'V', MB: 'V' }, Papp2: { ME: 'V', MA: 'D', MB: 'V' }, Zmepoint: { ME: 'D', MA: 'V', MB: 'V' }, Zmapoint: { ME: 'H', MA: 'D', MB: 'V' }, Zmarslt: { ME: 'D', MA: 'D' }, Zrslt: { MA: 'V', MB: 'V' }, Z140: { MA: 'X' }, Zmbgrade: { ME: 'H', MA: 'H', MB: 'H' } },
+          A: { Ztbegda: { ME: 'D' }, Ztendda: { ME: 'D' }, Z109: { ME: 'D' }, Z111: { ME: 'D' }, Zmarslt: { ME: 'D' }, Zrslt: { ME: 'D' }, Zapgme: { ME: 'D', MA: 'D', MB: 'D' }, Papp1: { ME: 'D', MA: 'D', MB: 'D' }, Zmepoint: { ME: 'D', MA: 'D', MB: 'D' }, Zapgma: { ME: 'H', MA: 'X', MB: 'V' }, Papp2: { ME: 'V', MA: 'X', MB: 'V' }, Zmapoint: { ME: 'H', MA: 'D', MB: 'V' }, Zmbgrade: { ME: 'H', MA: 'H', MB: 'H' } },
+          B: { Ztbegda: { ME: 'D' }, Ztendda: { ME: 'D' }, Z109: { ME: 'D' }, Z111: { ME: 'D' }, Zmarslt: { ME: 'D' }, Zrslt: { ME: 'D' }, Zapgme: { ME: 'D', MA: 'D', MB: 'D' }, Papp1: { ME: 'D', MA: 'D', MB: 'D' }, Zmepoint: { ME: 'D', MA: 'D', MB: 'D' }, Zapgma: { ME: 'H', MA: 'D', MB: 'D' }, Papp2: { ME: 'D', MA: 'D', MB: 'D' }, Zmapoint: { ME: 'H', MA: 'D', MB: 'D' }, Z140: { MA: 'D' }, Zmbgrade: { ME: 'H', MA: 'H', MB: 'H' } },
+          2: { Zapgme: { ME: 'D', MA: 'D', MB: 'D' }, Papp1: { ME: 'D', MA: 'D', MB: 'D' }, Zmepoint: { ME: 'D', MA: 'D', MB: 'D' }, Zapgma: { ME: 'H', MA: 'D', MB: 'D' }, Papp2: { ME: 'D', MA: 'D', MB: 'D' }, Zmapoint: { ME: 'H', MA: 'D', MB: 'D' }, Zmbgrade: { ME: 'H', MA: 'H', MB: 'X' } },
+          K: { Zapgme: { ME: 'D', MA: 'D', MB: 'D' }, Papp1: { ME: 'D', MA: 'D', MB: 'D' }, Zmepoint: { ME: 'D', MA: 'D', MB: 'D' }, Zapgma: { ME: 'D', MA: 'D', MB: 'D' }, Papp2: { ME: 'D', MA: 'D', MB: 'D' }, Zmapoint: { ME: 'D', MA: 'D', MB: 'D' }, Zmbgrade: { ME: 'H', MA: 'H', MB: 'D' } },
         },
         5: {
           X: {},
