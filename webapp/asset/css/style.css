@@ -37,7 +37,7 @@ html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl) {text-decoration:none}
 .portlet-header {margin-top:-0px; margin-bottom:20px; width:100%; height:24px; align-items:flex-end}
 .portlet-header > .sapMFlexItem + .sapMFlexItem {margin-left:5px}
 .portlet-header h2.sapMTitle {vertical-align:middle; font-size:20px; font-weight:700}
-.sapUiSizeCompact .portlet-header .sapMSegB {height:30px; margin-left:20px; margin-top:-5px; background-color:#e9e9e9; border-radius:8px; width:auto !important}
+.sapUiSizeCompact .portlet-header .sapMSegB {height:30px; margin-left:20px; margin-bottom:-3px; background-color:#e9e9e9; border-radius:8px; width:auto !important}
 .sapUiSizeCompact .portlet-header .sapMSegB .sapMSegBBtn {min-width:72px}
 .portlet-header .sapMSegB .sapMSegBBtn .sapMSegBBtnInner {background-color:transparent; border-radius:8px!important; line-height:25px; font-weight:500}
 .portlet-header .sapMSegB .sapMSegBBtn.sapMSegBBtnSel .sapMSegBBtnInner {font-weight:700}
