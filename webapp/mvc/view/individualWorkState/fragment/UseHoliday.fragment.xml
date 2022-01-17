@@ -9,7 +9,7 @@
         <Title level="H2" text="{i18n>LABEL_18021}" />
         <Text text="{/FullYear}" class="desc-txt" />
       </HBox>
-      <ComboBox width="80px" items="{/WorkTypeUseList}" selectedKey="{/WorkTypeUse}" change=".onWorkTypeUse">
+      <ComboBox width="200px" items="{/WorkTypeUseList}" selectedKey="{/WorkTypeUse}" change=".onWorkTypeUse">
         <core:Item text="{Atext}" key="{Awart}" />
       </ComboBox>
     </HBox>
@@ -25,7 +25,6 @@
           </viz.data:measures>
         </viz.data:FlattenedDataset>
       </viz:dataset>
-
       <viz:feeds>
         <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Accumulative" />
         <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Current month" />
