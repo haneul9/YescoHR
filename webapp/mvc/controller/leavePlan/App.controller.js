@@ -228,7 +228,7 @@ sap.ui.define(
 
           if (!oSignature.isDraw()) throw new UI5Error({ code: 'E', message: this.getBundleText('MSG_20005') }); // 서명을 입력하여 주십시오.
 
-          await AttachFileAction.upload.call(this, mSummary.Appno, this.APPTP, [oSignature.dataURItoBlob()], `Leave-signature-${this.getAppointeeProperty('Pernr')}`);
+          await AttachFileAction.upload.call(this, mSummary.Appno, this.APPTP, [oSignature.dataURItoBlob()], `Leave-signature-${this.getAppointeeProperty('Pernr')}.png`);
         } catch (oError) {
           throw oError;
         }
@@ -317,6 +317,9 @@ sap.ui.define(
             _.map(aAwarts, (o) => _.set(o, 'selected', false))
           );
 
+          mAnnualLeaveStatus.Crecnt = '20';
+          mAnnualLeaveStatus.Crecnt2 = '8';
+          mAnnualLeaveStatus.Crecnt3 = '28';
           oViewModel.setProperty('/summary', _.omit(mAnnualLeaveStatus, '__metadata'));
           oViewModel.setProperty(
             '/plans/raw',

@@ -153,24 +153,15 @@ sap.ui.define(
       },
 
       dataURItoBlob: function () {
-        const dataURI = this.oCanvas.toDataURL();
-        let byteString;
+        const dataURI = this.oCanvas.toDataURL('image/png');
+        const blobBin = atob(dataURI.split(',')[1]); // base64 데이터 디코딩
+        let array = [];
 
-        if (dataURI.split(',')[0].indexOf('base64') >= 0) byteString = atob(dataURI.split(',')[1]);
-        else byteString = unescape(dataURI.split(',')[1]);
-
-        // separate out the mime component
-        const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-
-        // write the bytes of the string to a typed array
-        const ia = new Uint8Array(byteString.length);
-        for (let i = 0; i < byteString.length; i++) {
-          ia[i] = byteString.charCodeAt(i);
+        for (let i = 0; i < blobBin.length; i++) {
+          array.push(blobBin.charCodeAt(i));
         }
 
-        return new Blob([ia], {
-          type: mimeString,
-        });
+        return new Blob([new Uint8Array(array)], { type: 'image/png' });
       },
     });
   }
