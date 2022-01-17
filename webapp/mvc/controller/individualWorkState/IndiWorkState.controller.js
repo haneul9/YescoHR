@@ -53,7 +53,6 @@ sap.ui.define(
           DailyWorkCount: 1,
           yearPlan: [],
           plans: [],
-          PlanMonths: [],
           WorkMonths: [],
           VacaTypeList1: [],
           VacaTypeList2: [],
@@ -207,8 +206,13 @@ sap.ui.define(
 
           // 일별 근태현황
           const aDailyList = await Client.getEntitySet(oModel, 'ApprTimeList', mDailyWorkPayLoad);
+          const aAddNum = [];
 
-          oViewModel.setProperty('/DailyWorkList', aDailyList);
+          aDailyList.forEach((e, i) => {
+            aAddNum.push({ ...e, No: i + 1 });
+          });
+
+          oViewModel.setProperty('/DailyWorkList', aAddNum);
           oViewModel.setProperty('/DailyWorkCount', aDailyList.length);
         } catch (oError) {
           this.debug(oError);
@@ -230,8 +234,6 @@ sap.ui.define(
           aMonth.push({ Zcode: i, Ztext: i + this.getBundleText('LABEL_00253') });
         }
 
-        oViewModel.setProperty('/PlanMonths', aMonth);
-        oViewModel.setProperty('/PlanMonth', moment().month() + 1);
         oViewModel.setProperty('/WorkMonths', aMonth);
         oViewModel.setProperty('/WorkMonth', moment().month() + 1);
       },
@@ -352,25 +354,6 @@ sap.ui.define(
 
           oViewModel.setProperty('/OTWorkList', aOTList);
 
-          const mWeekWorkPayLoad = {
-            Werks: sWerks,
-            Datum: moment(oViewModel.getProperty('/WeekWorkDate')).hours(9).toDate(),
-          };
-
-          // 주 52시간 현황
-          const aWeekTime = await Client.getEntitySet(oModel, 'WorkLimitStatus', mWeekWorkPayLoad);
-
-          // oViewModel.setProperty('/WeekWork/Wkrultx', aWeekTime[0].Wkrultx);
-          // oViewModel.setProperty('/WeekWork/Tottime', parseFloat(aWeekTime[0].Tottime));
-          // oViewModel.setProperty('/WeekWork/Bastime', parseFloat(aWeekTime[0].Bastime));
-          // oViewModel.setProperty('/WeekWork/Ottime', parseFloat(aWeekTime[0].Ottime));
-          // oViewModel.setProperty('/WeekWork/WorkTime', `${aWeekTime[0].Beguz} ~ ${aWeekTime[0].Enduz} (${aWeekTime[0].Stdaz}${this.getBundleText('LABEL_00330')})`);
-          oViewModel.setProperty('/WeekWork/Wkrultx', '시차출퇴근제');
-          oViewModel.setProperty('/WeekWork/Tottime', 40.5);
-          oViewModel.setProperty('/WeekWork/Bastime', 38);
-          oViewModel.setProperty('/WeekWork/Ottime', 2.5);
-          oViewModel.setProperty('/WeekWork/WorkTime', '09:00 ~ 18:00 (8시간)');
-
           // 근태유형 Combo
           const aWorkTypeCodeList = await Client.getEntitySet(oModel, 'AwartCodeList');
           const sCode = '2000';
@@ -401,8 +384,13 @@ sap.ui.define(
 
           // 일별 근태현황
           const aDailyList = await Client.getEntitySet(oModel, 'ApprTimeList', mDailyWorkPayLoad);
+          const aAddNum = [];
 
-          oViewModel.setProperty('/DailyWorkList', aDailyList);
+          aDailyList.forEach((e, i) => {
+            aAddNum.push({ ...e, No: i + 1 });
+          });
+
+          oViewModel.setProperty('/DailyWorkList', aAddNum);
           oViewModel.setProperty('/DailyWorkCount', aDailyList.length);
         } catch (oError) {
           this.debug(oError);
