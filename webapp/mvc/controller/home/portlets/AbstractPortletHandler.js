@@ -110,8 +110,16 @@ sap.ui.define(
       },
 
       onPressLink() {
-        const sTitle = this.getPortletModel().getProperty('/title');
-        alert(`${sTitle} Portlet 더보기 링크 : 준비중!`);
+        const oPortletModel = this.getPortletModel();
+        const bHasLink = oPortletModel.getProperty('/hasLink');
+        const sUrl = oPortletModel.getProperty('/url');
+        if (!bHasLink || !sUrl) {
+          const sTitle = oPortletModel.getProperty('/title');
+          MessageBox.alert(AppUtils.getBundleText('MSG_01903', sTitle)); // {sTitle} portlet의 더보기 링크가 없거나 설정이 올바르지 않습니다.
+          return;
+        }
+
+        this.navTo(sUrl);
       },
 
       navTo(...aArgs) {

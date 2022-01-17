@@ -498,6 +498,10 @@ sap.ui.define(
           return true;
         }
 
+        if (!oFormData.ZbetClass) {
+          oDetailModel.setProperty('/FormData/ZbetClass', '0');
+        }
+
         // 첨부파일
         if (!AttachFileAction.getFileCount.call(this) && AppBtn === 'O') {
           MessageBox.alert(this.getBundleText('MSG_03005'));
@@ -514,6 +518,7 @@ sap.ui.define(
         oDetailModel.setProperty('/FormData/Appno', '');
         oDetailModel.setProperty('/FormData/ZappStatAl', '');
         this.settingsAttachTable();
+        this.onShcoolList();
       },
 
       // 임시저장

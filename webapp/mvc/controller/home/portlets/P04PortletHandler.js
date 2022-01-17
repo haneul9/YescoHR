@@ -182,6 +182,51 @@ sap.ui.define(
         oPortletModel.setProperty('/myMembers/listCount', mMyMembers.listCount);
       },
 
+      onPressLink() {
+        const oPortletModel = this.getPortletModel();
+        const sSelectedMembersTab = oPortletModel.getProperty('/selectedMembersTab');
+        if (sSelectedMembersTab === 'ORG') {
+          this.getController().getViewModel().getProperty('/activeInstanceMap/P03').onPressLink();
+          return;
+        }
+
+        const bHasLink = oPortletModel.getProperty('/myMembers/hasLink');
+        const sUrl = oPortletModel.getProperty('/myMembers/url');
+        if (!bHasLink || !sUrl) {
+          const sTitle = oPortletModel.getProperty('/myMembers/title');
+          MessageBox.alert(AppUtils.getBundleText('MSG_01903', sTitle)); // {sTitle} portlet의 더보기 링크가 없거나 설정이 올바르지 않습니다.
+          return;
+        }
+
+        this.navTo(sUrl);
+      },
+
+      onPressClose() {
+        const oPortletModel = this.getPortletModel();
+        const sSelectedMembersTab = oPortletModel.getProperty('/selectedMembersTab');
+        if (sSelectedMembersTab === 'ORG') {
+          this.getController().getViewModel().getProperty('/activeInstanceMap/P03').onPressClose();
+          return;
+        }
+
+        const sTitle = oPortletModel.getProperty('/myMembers/title');
+        const sMessage = AppUtils.getBundleText('MSG_01902', sTitle); // {sTitle} portlet을 홈화면에 더이상 표시하지 않습니다.\n다시 표시하려면 홈화면 우측 상단 톱니바퀴 아이콘을 클릭하여 설정할 수 있습니다.
+
+        MessageBox.confirm(sMessage, {
+          onClose: async (sAction) => {
+            if (!sAction || sAction === MessageBox.Action.CANCEL) {
+              return;
+            }
+
+            const sPortletId = oPortletModel.getProperty('/myMembers/id');
+            const bSuccess = await this.getController().onPressPortletsP13nSave(sPortletId);
+            if (bSuccess) {
+              this.destroy();
+            }
+          },
+        });
+      },
+
       destroy() {
         const oPortletModel = this.getPortletModel();
         const bActiveOrgMembers = oPortletModel.getProperty('/orgMembers/active');

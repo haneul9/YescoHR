@@ -3,7 +3,7 @@
   xmlns:core="sap.ui.core">
   <VBox class="portlet portlet-box portlet-p02" tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
     <customData>
-      <core:CustomData key="portlet-id" value="{id}" writeToDom="true" />
+      <core:CustomData key="portlet-switchable" value="{switchable}" />
     </customData>
     <layoutData>
       <f:GridContainerItemLayoutData rows="{height}" columns="{width}" />
@@ -15,8 +15,8 @@
           <FlexItemData growFactor="1" />
         </layoutData>
       </Text>
-      <Button icon="sap-icon://decline" type="Transparent" visible="{switchable}" class="icon-button portlet-close" press=".onPressClose" />
-      <Button icon="sap-icon://add" type="Transparent" visible="{hasLink}" class="icon-button" press=".onPressLink" />
+      <Button icon="sap-icon://decline" type="Transparent" visible="{switchable}" class="icon-button portlet-close-icon" press=".onPressClose" />
+      <Button icon="sap-icon://add" type="Transparent" visible="{hasLink}" class="icon-button portlet-link-icon" press=".onPressLink" />
     </HBox>
     <HBox class="portlet-body">
       <ScrollContainer>
