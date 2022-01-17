@@ -70,8 +70,9 @@ sap.ui.define(
       },
 
       onSelectRow(oEvent) {
-        const sPath = oEvent.getParameter('rowBindingContext').getPath();
-        const sAppno = this.getViewModel().getProperty(`${sPath}/Appno`);
+        // const sRowPath = oEvent.getSource().getParent().getBindingContext().getPath();
+        // const sPath = oEvent.getParameter('rowBindingContext').getPath();
+        const sAppno = oEvent.getSource().getBindingContext().getProperty('Appno');
 
         this.getRouter().navTo('nightduty-detail', { sAppno });
         // this.getRouter().getTargets().display('nightdutyDetail', { appno: sAppno });

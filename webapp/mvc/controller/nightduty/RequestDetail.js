@@ -132,6 +132,8 @@ sap.ui.define(
             Datum: o.Datum,
             Kurzt: o.Kurzt,
             Tagty: o.Tagty,
+            Awart: o.Awart,
+            Ocshf: o.Ocshf,
             PernrB: o.Pernr,
             EnameB: o.Ename,
             OrgtxB: o.Orgtx,
