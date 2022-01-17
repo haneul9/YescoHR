@@ -32,7 +32,8 @@
                         <Label text="{i18n>LABEL_10003}" visible="{= ${/fieldControl/display/Zapgme} !== 'H' }" />
                     </VBox>
                     <HBox>
-                        <ComboBox width="100%" class="required" selectedKey="{Zapgme}" items="{ path: '/entry/levels', templateShareable: true }" enabled="{= ${/fieldControl/display/Zapgme} === 'X' }" visible="{= ${/fieldControl/display/Zapgme} !== 'H' }" change=".onChangeScore">
+                        <Input value="" enabled="false" visible="{= ${/fieldControl/display/Zapgme} !== 'H' &amp;&amp; ${/fieldControl/display/Zapgme} === 'V' }" />
+                        <ComboBox width="100%" class="required" selectedKey="{Zapgme}" items="{ path: '/entry/levels', templateShareable: true }" enabled="{= ${/fieldControl/display/Zapgme} === 'X' }" visible="{= ${/fieldControl/display/Zapgme} !== 'H' &amp;&amp; ${/fieldControl/display/Zapgme} !== 'V' }" change=".onChangeScore">
                             <customData>
                                 <core:CustomData key="sProp" value="Zapgme" />
                                 <core:CustomData key="sTarget" value="Zmepoint" />
@@ -44,7 +45,8 @@
                         <Label text="{i18n>LABEL_10022}" visible="{= ${/fieldControl/display/Zapgma} !== 'H' }" />
                     </VBox>
                     <HBox>
-                        <ComboBox width="100%" class="required" selectedKey="{Zapgma}" items="{ path: '/entry/levels', templateShareable: true }" enabled="{= ${/fieldControl/display/Zapgma} === 'X' }" visible="{= ${/fieldControl/display/Zapgma} !== 'H' }" change=".onChangeScore">
+                        <Input value="" enabled="false" visible="{= ${/fieldControl/display/Zapgma} !== 'H' &amp;&amp; ${/fieldControl/display/Zapgma} === 'V' }" />
+                        <ComboBox width="100%" class="required" selectedKey="{Zapgma}" items="{ path: '/entry/levels', templateShareable: true }" enabled="{= ${/fieldControl/display/Zapgma} === 'X' }" visible="{= ${/fieldControl/display/Zapgma} !== 'H' &amp;&amp; ${/fieldControl/display/Zapgma} !== 'V' }" change=".onChangeScore">
                             <customData>
                                 <core:CustomData key="sProp" value="Zapgma" />
                                 <core:CustomData key="sTarget" value="Zmapoint" />
@@ -115,7 +117,8 @@
                         <layoutData>
                             <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '4 / 6' : '3 / 5' }" gridColumn="6 / 9" />
                         </layoutData>
-                        <TextArea width="100%" class="required" rows="5" value="{Zrslt}" maxLength="{/fieldControl/limit/Zrslt}" enabled="{= ${/fieldControl/display/Zrslt} === 'X' }" visible="{= ${/fieldControl/display/Zrslt} !== 'H' }"/>
+                        <TextArea rows="5" value="" enabled="false" visible="{= ${/fieldControl/display/Zrslt} !== 'H' &amp;&amp; ${/fieldControl/display/Zrslt} === 'V' }"/>
+                        <TextArea width="100%" class="required" rows="5" value="{Zrslt}" maxLength="{/fieldControl/limit/Zrslt}" enabled="{= ${/fieldControl/display/Zrslt} === 'X' }" visible="{= ${/fieldControl/display/Zrslt} !== 'H' &amp;&amp; ${/fieldControl/display/Zrslt} !== 'V' }"/>
                     </VBox>
                     <VBox>
                         <layoutData>

@@ -72,13 +72,15 @@
 										<Label text="{i18n>LABEL_10012}" visible="{= ${/fieldControl/display/Zmepoint} !== 'H' }"/>
 									</VBox>
 									<VBox>
-										<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/Zmepoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" visible="{= ${/fieldControl/display/Zmepoint} !== 'H' }"/>
+										<Input value="" enabled="false" visible="{= ${/fieldControl/display/Zmepoint} !== 'H' &amp;&amp; ${/fieldControl/display/Zmepoint} === 'V' }" />
+										<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/Zmepoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" visible="{= ${/fieldControl/display/Zmepoint} !== 'H' &amp;&amp; ${/fieldControl/display/Zmepoint} !== 'V' }"/>
 									</VBox>
 									<VBox>
 										<Label text="{i18n>LABEL_10013}" visible="{= ${/fieldControl/display/Zmapoint} !== 'H' }"/>
 									</VBox>
 									<VBox>
-										<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/Zmapoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" visible="{= ${/fieldControl/display/Zmapoint} !== 'H' }"/>
+										<Input value="" enabled="false" visible="{= ${/fieldControl/display/Zmapoint} !== 'H' &amp;&amp; ${/fieldControl/display/Zmapoint} === 'V' }" />
+										<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/Zmapoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" visible="{= ${/fieldControl/display/Zmapoint} !== 'H' &amp;&amp; ${/fieldControl/display/Zmapoint} !== 'V' }"/>
 									</VBox>
 									<VBox>
 										<Label text="{i18n>LABEL_10014}" visible="{= ${/fieldControl/display/Zmbgrade} !== 'H' }"/>
@@ -146,13 +148,15 @@
 										<layoutData>
 											<grid:GridItemLayoutData gridRow="4" />
 										</layoutData>
-										<TextArea class="required" rows="5" value="{/manage/Papp1}" width="100%" maxLength="{/fieldControl/limit/Papp1}" enabled="{= ${/fieldControl/display/Papp1} === 'X' }" />
+										<TextArea rows="5" value="" width="100%" enabled="false" visible="{= ${/fieldControl/display/Papp1} === 'V' }" />
+										<TextArea class="required" rows="5" value="{/manage/Papp1}" width="100%" maxLength="{/fieldControl/limit/Papp1}" enabled="{= ${/fieldControl/display/Papp1} === 'X' }" visible="{= ${/fieldControl/display/Papp1} !== 'V' }" />
 									</VBox>
 									<VBox visible="{= ${/fieldControl/display/Papp2} !== 'H' }">
 										<layoutData>
 											<grid:GridItemLayoutData gridRow="4" />
 										</layoutData>
-										<TextArea class="required" rows="5" value="{/manage/Papp2}" width="100%" maxLength="{/fieldControl/limit/Papp2}" enabled="{= ${/fieldControl/display/Papp2} === 'X' }" />
+										<TextArea rows="5" value="" width="100%" enabled="false" visible="{= ${/fieldControl/display/Papp2} === 'V' }" />
+										<TextArea class="required" rows="5" value="{/manage/Papp2}" width="100%" maxLength="{/fieldControl/limit/Papp2}" enabled="{= ${/fieldControl/display/Papp2} === 'X' }" visible="{= ${/fieldControl/display/Papp2} !== 'V' }" />
 									</VBox>
 								</grid:CSSGrid>
 							</VBox>
