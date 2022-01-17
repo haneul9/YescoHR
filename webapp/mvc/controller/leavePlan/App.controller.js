@@ -4,29 +4,33 @@ sap.ui.define(
     'sap/ui/core/Fragment',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
+    'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/AttachFileAction',
+    'sap/ui/yesco/common/DateUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/exceptions/UI5Error',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/type/Pernr',
   ],
   (
     // prettier 방지용 주석
     Fragment,
     JSONModel,
     MessageBox,
+    Appno,
     AppUtils,
+    AttachFileAction,
+    DateUtils,
     Client,
     ServiceNames,
     UI5Error,
-    TableUtils,
     BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.leavePlan.App', {
+      APPTP: 'HR13',
       AWART_COUNT: { 2000: 1, 2010: 1, 2001: 0.5, 2002: 0.5 },
 
       onBeforeShow() {
@@ -122,8 +126,8 @@ sap.ui.define(
         const sInpyn = _.get(mPlansRawData, [sDay, 'Inpyn']);
         const mClasses = {
           Weekend: { sHolyn: 'X', sInpyn: '' },
-          Disable: { sHolyn: '', sInpyn: 'X' },
-          Normal: { sHolyn: '', sInpyn: '' },
+          Disable: { sHolyn: '', sInpyn: '' },
+          Normal: { sHolyn: '', sInpyn: 'X' },
         };
 
         return moment(sDay).isValid() ? _.chain(mClasses).findKey({ sHolyn, sInpyn }).value() : 'None';
@@ -137,11 +141,11 @@ sap.ui.define(
         if (!_.isEqual(mSummary.Prdyn, 'X')) {
           _.forOwn(mButtons, (value, key, object) => _.set(object, key, false));
         } else {
-          const iZappStatAl = _.toNumber(mButtons.ZappStatAl);
+          const iZappStatAl = _.toNumber(mSummary.ZappStatAl);
 
           _.chain(mButtons)
-            .set('SAVE', _.inRange(iZappStatAl, 11, 65))
-            .set('APPROVAL', _.inRange(iZappStatAl, 11, 65))
+            .set('SAVE', !_.inRange(iZappStatAl, 11, 65))
+            .set('APPROVAL', !_.inRange(iZappStatAl, 11, 65))
             .set('PRINT', _.isEqual(iZappStatAl, 20) || _.isEqual(iZappStatAl, 60))
             .commit();
         }
@@ -190,6 +194,8 @@ sap.ui.define(
         _.set(mSummary, 'Plnperc', _.chain(iYearCount).divide(mSummary.Crecnt).multiply(100).floor().value());
         _.set(mSummary, 'Plncnt2', iSummerCount);
         _.set(mSummary, 'Plnperc2', _.chain(iSummerCount).divide(mSummary.Crecnt2).multiply(100).floor().value());
+        _.set(mSummary, 'Usecnt3', _.add(iYearCount, iSummerCount));
+        _.set(mSummary, 'Useperc3', _.chain(_.add(iYearCount, iSummerCount)).divide(mSummary.Crecnt3).multiply(100).floor().value());
       },
 
       checkLimit(mTargetDay, sAwart) {
@@ -211,6 +217,48 @@ sap.ui.define(
         }
 
         return true;
+      },
+
+      async uploadSignature() {
+        const oViewModel = this.getViewModel();
+
+        try {
+          const oSignature = this.byId('signature-pad');
+          const mSummary = oViewModel.getProperty('/summary');
+
+          if (!oSignature.isDraw()) throw new UI5Error({ code: 'E', message: this.getBundleText('MSG_20005') }); // 서명을 입력하여 주십시오.
+
+          await AttachFileAction.upload.call(this, mSummary.Appno, this.APPTP, [oSignature.dataURItoBlob()], `Leave-signature-${this.getAppointeeProperty('Pernr')}`);
+        } catch (oError) {
+          throw oError;
+        }
+      },
+
+      async createProcess(sPrcty) {
+        const oViewModel = this.getViewModel();
+
+        try {
+          const oModel = this.getModel(ServiceNames.WORKTIME);
+          const mSummary = _.cloneDeep(oViewModel.getProperty('/summary'));
+          const aPlans = _.cloneDeep(oViewModel.getProperty('/plans/grid'));
+          const sPernr = this.getAppointeeProperty('Pernr');
+          const sYear = oViewModel.getProperty('/search/year');
+
+          await Client.deep(oModel, 'AnnualLeaveStatus', {
+            ...mSummary,
+            Prcty: sPrcty,
+            Menid: this.getCurrentMenuId(),
+            AnnualLeaveNav: _.chain(aPlans)
+              .reject({ awart: '' })
+              .map((o) => ({ Seqno: '1', Pernr: sPernr, Plnyy: sYear, Tmdat: DateUtils.parse(o.day), Awart: o.awart }))
+              .value(),
+          });
+
+          // {저장|신청}되었습니다.
+          MessageBox.success(this.getBundleText('MSG_00007', _.isEqual(sPrcty, 'T') ? 'LABEL_00103' : 'LABEL_00121'));
+        } catch (oError) {
+          throw oError;
+        }
       },
 
       /*****************************************************************
@@ -237,11 +285,8 @@ sap.ui.define(
 
         this._pPopover.then(function (oPopover) {
           oPopover.close();
+          _.forEach(aAwarts, (o) => _.set(o, 'selected', false));
         });
-
-        _.chain(aAwarts)
-          .forEach((o) => _.set(o, 'selected', false))
-          .commit();
       },
 
       async onPressSearch() {
@@ -272,15 +317,6 @@ sap.ui.define(
             _.map(aAwarts, (o) => _.set(o, 'selected', false))
           );
 
-          mAnnualLeaveStatus.Crecnt = '20';
-          mAnnualLeaveStatus.Plncnt = '0';
-          mAnnualLeaveStatus.Plnperc = '0';
-          mAnnualLeaveStatus.Crecnt2 = '8';
-          mAnnualLeaveStatus.Plncnt2 = '0';
-          mAnnualLeaveStatus.Plnperc2 = '0';
-          mAnnualLeaveStatus.Crecnt3 = '20';
-          mAnnualLeaveStatus.Usecnt3 = '0';
-          mAnnualLeaveStatus.Useperc3 = '0';
           oViewModel.setProperty('/summary', _.omit(mAnnualLeaveStatus, '__metadata'));
           oViewModel.setProperty(
             '/plans/raw',
@@ -338,11 +374,79 @@ sap.ui.define(
         this.byId('signature-pad').clear();
       },
 
-      onPressSave() {},
+      async onPressSave() {
+        const oViewModel = this.getViewModel();
 
-      onPressApproval() {},
+        oViewModel.setProperty('/busy', true);
 
-      onPressPrint() {},
+        try {
+          const mSummary = oViewModel.getProperty('/summary');
+
+          // validation
+          if (!_.isEqual(100, mSummary.Useperc3)) throw new UI5Error({ code: 'E', message: this.getBundleText('MSG_20004') }); // 미계획 일수가 존재합니다. 계획수립이 완료되어야 신청이 가능합니다.
+
+          // Appno 채번
+          if (_.isEqual(mSummary.Appno, '00000000000000')) _.set(mSummary, 'Appno', await Appno.get());
+
+          // deep
+          MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00103'), {
+            // {저장}하시겠습니까?
+            onClose: (sAction) => {
+              if (MessageBox.Action.CANCEL === sAction) return;
+
+              this.createProcess('T');
+            },
+          });
+        } catch (oError) {
+          this.debug('Controller > leavePlan App > onPressSave Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
+      },
+
+      async onPressApproval() {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/busy', true);
+
+        try {
+          const mSummary = oViewModel.getProperty('/summary');
+
+          // validation
+          if (!_.isEqual(100, mSummary.Useperc3)) throw new UI5Error({ code: 'E', message: this.getBundleText('MSG_20004') }); // 미계획 일수가 존재합니다. 계획수립이 완료되어야 신청이 가능합니다.
+
+          // Appno 채번
+          if (_.isEqual(mSummary.Appno, '00000000000000')) _.set(mSummary, 'Appno', await Appno.get());
+
+          // 서명
+          if (_.isEqual('X', mSummary.Sgnyn)) await this.uploadSignature();
+
+          // deep
+          MessageBox.confirm(this.getBundleText(_.isEqual('X', mSummary.Appyn) ? 'MSG_20006' : 'MSG_20007'), {
+            // 제출 및 결재 상신하시겠습니까? || 제출 하시겠습니까?
+            onClose: (sAction) => {
+              if (MessageBox.Action.CANCEL === sAction) return;
+
+              this.createProcess('S');
+            },
+          });
+        } catch (oError) {
+          this.debug('Controller > leavePlan App > onPressApproval Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
+      },
+
+      onPressPrint() {
+        const oViewModel = this.getViewModel();
+        const sPdfUrl = oViewModel.getProperty('/summary/Pdfurl');
+
+        if (!_.isEmpty(sPdfUrl)) window.open(sPdfUrl);
+      },
 
       /*****************************************************************
        * ! Call oData

@@ -642,7 +642,7 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Header"] { background-color:rgb(224, 224, 224)}
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="None"] { background-color:rgb(112, 112, 112)}
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Normal"] { background-color:rgb(255, 255, 255)}
-.sapUiLayoutCSSGrid .sapMFlexBox[data-style="Disable"] { background-color:rgb(199, 220, 255)}
+.sapUiLayoutCSSGrid .sapMFlexBox[data-style="Disable"] { background-color:#EAF2FF}
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Weekend"] { background-color:rgb(151, 150, 150)}
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type01"], .year-plan.status-wrap .sapMFlexItem .sapMText.type01::before { background-color:#81DAEA}/* 연차 */
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type02"], .year-plan.status-wrap .sapMFlexItem .sapMText.type02::before, .vacation-indicator.type02 .vacation-indicator-gauge .vacation-indicator-used { background-color:#65B8FF}/* 하계휴가 */

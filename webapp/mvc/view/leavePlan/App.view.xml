@@ -17,7 +17,7 @@
                 </HBox>
             </HBox>
         </VBox>
-        <VBox class="contents">
+        <VBox class="contents" busyIndicatorDelay="0" busy="{/busy}">
             <HBox justifyContent="SpaceAround">
                 <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBox" type="XML" />
                 <core:Fragment fragmentName="sap.ui.yesco.mvc.view.leavePlan.fragment.Summary" type="XML" />
@@ -59,11 +59,16 @@
                         <Title level="H2" text="{i18n>LABEL_20009}" />
                         <Text text="{i18n>MSG_20002}" class="desc-txt" />
                     </HBox>
-                    </HBox>
-                <HBox alignItems="End">
-                    <custom:Signature id="signature-pad" width="500" height="120" class="sapUiSmallMarginEnd" />
-                    <Button text="Clear" press=".onPressSignatureClear" />
                 </HBox>
+                <VBox>
+                    <HBox visible="{= !${/summary/Fileurl} }" alignItems="End">
+                        <custom:Signature id="signature-pad" width="500" height="120" class="sapUiSmallMarginEnd" />
+                        <Button text="Clear" press=".onPressSignatureClear" />
+                    </HBox>
+                    <HBox visible="{= !!${/summary/Fileurl} }">
+                        <Image width="500px" height="120px" src="{/summary/Fileurl}" alt="Signature" />
+                    </HBox>
+                </VBox>
             </VBox>
         </VBox>
     </Page>

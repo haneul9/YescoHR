@@ -355,7 +355,7 @@ sap.ui.define(
        * @param  {} Appno
        * @param  {} Type
        */
-      upload(sAppno, sType, aFiles) {
+      upload(sAppno, sType, aFiles, sFileName) {
         const sServiceUrl = ServiceManager.getServiceUrl('ZHR_COMMON_SRV', this.getOwnerComponent());
         const oModel = new sap.ui.model.odata.ODataModel(sServiceUrl, true, undefined, undefined, undefined, undefined, undefined, false);
 
@@ -367,7 +367,7 @@ sap.ui.define(
             const oRequest = oModel._createRequest();
             const oHeaders = {
               'x-csrf-token': oRequest.headers['x-csrf-token'],
-              slug: [sAppno, sType, encodeURI(oFile.name)].join('|'),
+              slug: [sAppno, sType, encodeURI(oFile.name || sFileName)].join('|'),
             };
 
             jQuery.ajax({
