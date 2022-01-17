@@ -1498,7 +1498,10 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .awart-popover.sapMPopover {padding:20px;border: 1px solid #666666;border-radius: 4px;}
 .awart-popover.sapMPopover .sapMPopoverArrLeft:after {margin: 0.125rem 0 0 0.25rem; box-shadow: 0.375rem 0.375rem 0.75rem 0 rgb(0 0 0), 0 0 0.125rem 0 rgb(0 0 0);}
 .awart-popover .sapMCbHasLabel {display: flex;padding-left: 11px;height:40px;align-items:center;border:1px solid #ddd;box-shadow: 0px 1px 2px #22222229;border-radius: 4px;}
-.awart-popover .sapMCbHasLabel[aria-checked=true] {border:2px solid #FFAC4B;}
+.awart-popover .sapMCbHasLabel[data-awart="2000"][aria-checked=true] {border:2px solid #65B8FF;}/*연차*/
+.awart-popover .sapMCbHasLabel[data-awart="2001"][aria-checked=true] {border:2px solid #FFE479;}/*반차*/
+.awart-popover .sapMCbHasLabel[data-awart="2002"][aria-checked=true] {border:2px solid #FFE479;}/*반차*/
+.awart-popover .sapMCbHasLabel[data-awart="2010"][aria-checked=true] {border:2px solid #FFAC4B;}/*하계휴가*/
 .awart-popover .sapMCbHasLabel.type02[aria-checked=true] {border:2px solid #65B8FF;}/*연차*/
 .awart-popover .sapMCbHasLabel.type05[aria-checked=true] {border:2px solid #FFAC4B;}/*하계휴가*/
 .awart-popover .sapMCbHasLabel.type[aria-checked=true] {border:2px solid #FFE479;}/*반차*/
