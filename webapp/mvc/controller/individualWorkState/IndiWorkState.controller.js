@@ -56,6 +56,7 @@ sap.ui.define(
           WorkMonths: [],
           VacaTypeList1: [],
           VacaTypeList2: [],
+          WorkTypeUseList: [],
           vacationChart: {
             dUsed: 0,
             dPlan: 0,
@@ -152,6 +153,24 @@ sap.ui.define(
           oViewModel.setProperty('/WeekWork/Bastime', 38);
           oViewModel.setProperty('/WeekWork/Ottime', 2.5);
           oViewModel.setProperty('/WeekWork/WorkTime', '09:00 ~ 18:00 (8시간)');
+
+          const aWorkTypeCodeList = await Client.getEntitySet(oModel, 'AwartCodeList');
+          const sCode = '2000';
+
+          oViewModel.setProperty('/WorkTypeUseList', aWorkTypeCodeList);
+          oViewModel.setProperty('/WorkTypeUse', sCode);
+
+          const mWorkTypePayLoad = {
+            Werks: sWerks,
+            Awart: sCode,
+            Tmyea: oViewModel.getProperty('/year'),
+          };
+
+          // 주 52시간 현황
+          const aWorkTypeList = await Client.getEntitySet(oModel, 'TimeUsageGraph', mWorkTypePayLoad);
+
+          oViewModel.setProperty('/UseTimeGraph', aWorkTypeCodeList);
+          debugger;
         } catch (oError) {
           this.debug(oError);
           AppUtils.handleError(oError);

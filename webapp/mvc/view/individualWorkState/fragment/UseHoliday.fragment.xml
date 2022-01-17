@@ -5,25 +5,23 @@
   xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds">
   <VBox width="100%" class="vCardBox small">
     <HBox justifyContent="SpaceBetween" class="table-toolbar">
-      <HBox  class="title">
+      <HBox class="title">
         <Title level="H2" text="{i18n>LABEL_18021}" />
         <Text text="{/FullYear}" class="desc-txt" />
       </HBox>
-      <ComboBox width="80px" items="{/WorkMonths}" selectedKey="{/WorkMonth}" change=".onWorkMonth">
-        <core:Item text="{Ztext}" key="{Zcode}" />
+      <ComboBox width="80px" items="{/WorkTypeUseList}" selectedKey="{/WorkTypeUse}" change=".onWorkTypeUse">
+        <core:Item text="{Atext}" key="{Awart}" />
       </ComboBox>
     </HBox>
     <viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" height='100%' width="100%" vizType='combination'>
       <viz:dataset>
-        <viz.data:FlattenedDataset data="{/milk}">
+        <viz.data:FlattenedDataset data="{/UseTimeGraph}">
           <viz.data:dimensions>
-            <viz.data:DimensionDefinition name="Week" value="{Week}" />
+            <viz.data:DimensionDefinition name="Week" value="{Zyymm}" />
           </viz.data:dimensions>
           <viz.data:measures>
-            <viz.data:MeasureDefinition name="Revenue" value="{Revenue}" />
-            <viz.data:MeasureDefinition name="Cost" value="{Cost}" />
-            <viz.data:MeasureDefinition name="Cost2" value="{Cost2}" />
-            <viz.data:MeasureDefinition name="Cost1" value="{Cost1}" />
+            <viz.data:MeasureDefinition name="Revenue" value="{Cumuse}" />
+            <viz.data:MeasureDefinition name="Cost" value="{Monuse}" />
           </viz.data:measures>
         </viz.data:FlattenedDataset>
       </viz:dataset>
