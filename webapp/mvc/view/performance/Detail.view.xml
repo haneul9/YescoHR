@@ -161,14 +161,15 @@
 								</grid:CSSGrid>
 							</VBox>
 							<VBox class="vCardBox sapUiSmallMarginTop" visible="{= ${/fieldControl/display/Z140} !== 'H' }">
-								<HBox alignItems="Center" class="title">
-									<layoutData>
-										<FlexItemData growFactor="1"/>
-									</layoutData>
-									<Title level="H2" text="{i18n>LABEL_10010}" />
-									<Text text="{i18n>MSG_10008}" class="desc-txt" />
+								<HBox class="table-toolbar">
+									<HBox class="title">
+										<Title level="H2" text="{i18n>LABEL_10010}" />
+										<Text text="{i18n>MSG_10008}" class="desc-txt" />
+									</HBox>
 								</HBox>
-								<TextArea width="100%" rows="5" value="{/manage/Z140}" maxLength="{/fieldControl/limit/Z140}" enabled="{= ${/fieldControl/display/Z140} === 'X' }" />
+								<VBox>
+									<TextArea width="100%" rows="5" value="{/manage/Z140}" maxLength="{/fieldControl/limit/Z140}" enabled="{= ${/fieldControl/display/Z140} === 'X' }" />
+								</VBox>
 							</VBox>
 						</IconTabFilter>
 					</items>
