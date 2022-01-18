@@ -805,7 +805,7 @@ sap.ui.define(
         }
 
         // 인사영역 2000번일경우는 첨부파일 필수
-        if (this.getAppointeeProperty('Werks') === '2000' && !AttachFileAction.getFileCount.call(this)) {
+        if (this.getAppointeeProperty('Werks') === '2000' && !this.getViewModel(this.DIALOG_FILE_ID).getProperty('/Data').length) {
           MessageBox.alert(this.getBundleText('MSG_00046'));
           return true;
         }
