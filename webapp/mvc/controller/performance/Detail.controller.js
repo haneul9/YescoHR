@@ -190,11 +190,15 @@ sap.ui.define(
             )
             .value();
 
-          // 평가 단계
+          // 평가 단계 - 하위 평가완료(5-X)는 숨김처리
           oViewModel.setProperty('/stage/headers', aStageHeader);
           oViewModel.setProperty(
             '/stage/rows',
-            _.map(mGroupStageByApStatusSub[''], (o, i) => ({ child: aGroupStageByApStatusName[i] }))
+            _.chain(mGroupStageByApStatusSub[''])
+              .map((o, i) => ({ child: aGroupStageByApStatusName[i] }))
+              .take(4)
+              .concat([{ child: [] }])
+              .value()
           );
 
           const mButtons = oViewModel.getProperty('/buttons');
