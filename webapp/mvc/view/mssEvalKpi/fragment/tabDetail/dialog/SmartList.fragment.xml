@@ -13,8 +13,6 @@
       <Text text="{i18n>LABEL_15015}" textAlign="Center" width="100%"/>
       <Image src="asset/image/icon_cascading_type03.png"/>
       <Text text="{i18n>LABEL_15016}" textAlign="Center" width="100%"/>
-      <Image src="asset/image/icon_cascading_type04.png"/>
-      <Text text="{i18n>LABEL_15017}" textAlign="Center" width="100%"/>
     </HBox>
   </HBox>
   <!-- <smartList:SmartList listType="Tree" enableAutoBinding="true" showRowCount="false" showFullScreenButton="true" listBindingPath="/CascadingSitu/SituList">
@@ -28,8 +26,7 @@
     </layoutData>
     <Image visible="{= ${Otype} === '90' }" src="asset/image/icon_cascading_type01.png" />
     <Image visible="{= ${Otype} === '91' }" src="asset/image/icon_cascading_type02.png" />
-    <Image visible="{= !!${Tmcnt} &amp;&amp; ${Tmcnt} !== '0' }" src="asset/image/icon_cascading_type03.png" />
-    <Image visible="{= !!${Url} }" src="asset/image/icon_cascading_type04.png" />
+    <Image visible="{= ${Otype} === 'O' }" src="asset/image/icon_cascading_type03.png" />
     <StandardTreeItem title="{Stext}"/>
   </Tree>
 </core:FragmentDefinition>
