@@ -113,7 +113,7 @@
             }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
-        <table:Column width="150px" visible="{= ${/FormData/Lnsta} === '40' }">
+        <table:Column width="150px" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
           <Label text="{i18n>LABEL_09027}"/>
           <table:template>
             <Text text="{
@@ -122,7 +122,7 @@
             }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
-        <table:Column width="150px" visible="{= ${/FormData/Lnsta} === '40' }">
+        <table:Column width="150px" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
           <Label text="{i18n>LABEL_09028}"/>
           <table:template>
             <Text text="{
