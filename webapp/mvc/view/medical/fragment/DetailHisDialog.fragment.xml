@@ -45,18 +45,18 @@
                     <FlexBox alignItems="Start" justifyContent="End">
                         <Text text="{/DialogData/Pratetx}" />
                     </FlexBox>
-                    <Label text="{i18n>LABEL_09023}" visible="{= ${/FormData/Lnsta} === '40'}"/>
-                    <FlexBox alignItems="Start" justifyContent="End" visible="{= ${/FormData/Lnsta} === '40'}">
+                    <Label text="{i18n>LABEL_09023}" visible="{= ${/DialogData/ZappStat} === 'P' }" />
+                    <FlexBox alignItems="Start" justifyContent="End" visible="{= ${/DialogData/ZappStat} === 'P' }">
                         <Text text="{ path: '/DialogData/Mobet', type: 'sap.ui.yesco.mvc.model.type.Currency' } 원" />
                     </FlexBox>
-                    <Label text="{i18n>LABEL_09009}" visible="{= ${/DialogData/ZappStat} === 'P' || ${/DialogData/ZappStat} === 'F'} }"/>
-                    <FlexBox alignItems="Start" justifyContent="End" visible="{= ${/DialogData/ZappStat} === 'P' || ${/DialogData/ZappStat} === 'F'} }">
+                    <Label text="{i18n>LABEL_09009}" visible="{= ${/DialogData/ZappStat} === 'P' }"/>
+                    <FlexBox alignItems="Start" justifyContent="End" visible="{= ${/DialogData/ZappStat} === 'P' }">
                         <Text text="{ path: '/DialogData/Pybet', type: 'sap.ui.yesco.mvc.model.type.Currency' } 원" />
                     </FlexBox>
-                    <HBox visible="{= ${/FormData/Lnsta} === '40' }"></HBox>
-                    <HBox visible="{= ${/FormData/Lnsta} === '40' }"></HBox>
-                    <Label text="{i18n>LABEL_09024}" visible="{= ${/FormData/Lnsta} === '40' }"/>
-                    <FlexBox alignItems="Start" justifyContent="End" visible="{= ${/FormData/Lnsta} === '40' }">
+                    <HBox visible="{= ${/DialogData/ZappStat} === 'P' }"></HBox>
+                    <HBox visible="{= ${/DialogData/ZappStat} === 'P' }"></HBox>
+                    <Label text="{i18n>LABEL_09024}" visible="{= ${/DialogData/ZappStat} === 'P' }" />
+                    <FlexBox alignItems="Start" justifyContent="End" visible="{= ${/DialogData/ZappStat} === 'P' }">
                         <Text text="{ path: '/DialogData/Ttmon', type: 'sap.ui.yesco.mvc.model.type.Currency' } 원" />
                     </FlexBox>
                 </grid:CSSGrid>
