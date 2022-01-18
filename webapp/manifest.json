@@ -120,6 +120,9 @@
         { "pattern": "housingLoan", "name": "housingLoan", "target": "housingLoan" },
         { "pattern": "housingLoan/{oDataKey}", "name": "housingLoan-detail", "target": "housingLoanDetail" },
         { "pattern": "housingLoanRepay/{oDataKey}/:lonid:", "name": "housingLoan-repay", "target": "housingLoanRepay" },
+        
+        { "pattern": "healthCare", "name": "healthCare", "target": "healthCare" },
+        { "pattern": "healthCare/{oDataKey}", "name": "healthCare-detail", "target": "healthCareDetail" },
 
         { "pattern": "notice", "name": "notice", "target": "notice" },
         { "pattern": "notice/{Sdate}/{Seqnr}", "name": "notice-detail", "target": "noticeDetail" },
@@ -205,6 +208,9 @@
         "housingLoan": { "viewId": "housingLoan", "viewPath": "sap.ui.yesco.mvc.view.housingLoan", "viewName": "HousingLoan" },
         "housingLoanDetail": { "viewId": "housingLoanDetail", "viewPath": "sap.ui.yesco.mvc.view.housingLoan", "viewName": "HousingLoanDetail" },
         "housingLoanRepay": { "viewId": "housingLoanRepay", "viewPath": "sap.ui.yesco.mvc.view.housingLoan", "viewName": "HousingLoanRepayment" },
+        
+        "healthCare": { "viewId": "healthCare", "viewPath": "sap.ui.yesco.mvc.view.healthCare", "viewName": "HealthCare" },
+        "healthCareDetail": { "viewId": "healthCareDetail", "viewPath": "sap.ui.yesco.mvc.view.healthCare", "viewName": "HealthCareDetail" },
 
         "notice": { "viewId": "notice", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "Ess" },
         "h/notice": { "viewId": "h_notice", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "Hass" },

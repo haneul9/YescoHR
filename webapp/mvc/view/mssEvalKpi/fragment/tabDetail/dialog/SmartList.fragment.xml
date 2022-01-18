@@ -26,6 +26,10 @@
     <layoutData>
       <FlexItemData growFactor="1" />
     </layoutData>
+    <Image visible="{= ${Otype} === '90' }" src="asset/image/icon_cascading_type01.png" />
+    <Image visible="{= ${Otype} === '91' }" src="asset/image/icon_cascading_type02.png" />
+    <Image visible="{= !!${Tmcnt} &amp;&amp; ${Tmcnt} !== '0' }" src="asset/image/icon_cascading_type03.png" />
+    <Image visible="{= !!${Url} }" src="asset/image/icon_cascading_type04.png" />
     <StandardTreeItem title="{Stext}"/>
   </Tree>
 </core:FragmentDefinition>
