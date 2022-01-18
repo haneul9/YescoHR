@@ -190,12 +190,14 @@ sap.ui.define(
         const iYearCount = _.sum([mGroupByAwart['2000'], mGroupByAwart['2001'], mGroupByAwart['2002']]) || 0;
         const iSummerCount = mGroupByAwart['2010'] || 0;
 
-        _.set(mSummary, 'Plncnt', iYearCount);
-        _.set(mSummary, 'Plnperc', _.chain(iYearCount).divide(mSummary.Crecnt).multiply(100).floor().value());
-        _.set(mSummary, 'Plncnt2', iSummerCount);
-        _.set(mSummary, 'Plnperc2', _.chain(iSummerCount).divide(mSummary.Crecnt2).multiply(100).floor().value());
-        _.set(mSummary, 'Usecnt3', _.add(iYearCount, iSummerCount));
-        _.set(mSummary, 'Useperc3', _.chain(_.add(iYearCount, iSummerCount)).divide(mSummary.Crecnt3).multiply(100).floor().value());
+        _.chain(mSummary)
+          .set('Plncnt', iYearCount)
+          .set('Plnperc', _.chain(iYearCount).divide(mSummary.Crecnt).multiply(100).floor().value())
+          .set('Plncnt2', iSummerCount)
+          .set('Plnperc2', _.chain(iSummerCount).divide(mSummary.Crecnt2).multiply(100).floor().value())
+          .set('Usecnt3', _.add(iYearCount, iSummerCount))
+          .set('Useperc3', _.chain(_.add(iYearCount, iSummerCount)).divide(mSummary.Crecnt3).multiply(100).floor().value())
+          .commit();
       },
 
       checkLimit(mTargetDay, sAwart) {
