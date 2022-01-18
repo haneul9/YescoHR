@@ -9,7 +9,7 @@
                     <grid:CSSGrid gridTemplateColumns="1fr 9fr 1fr" gridGap="0px 11px">
                         <Label text="{ItemNo}" textAlign="Left" />
                         <VBox>
-                            <Input value="{Obj0}" placeholder="{i18n>MSG_10007}" maxLength="{/fieldControl/limit/Obj0}" enabled="{= ${/fieldControl/display/Obj0} === 'X' }" visible="{= ${/fieldControl/display/Obj0} !== 'H' }" />
+                            <Input value="{Obj0}" class="goal-subject" placeholder="{i18n>MSG_10007}" maxLength="{/fieldControl/limit/Obj0}" enabled="{= ${/fieldControl/display/Obj0} === 'X' }" visible="{= ${/fieldControl/display/Obj0} !== 'H' }" />
                         </VBox>
                         <Button icon="sap-icon://sys-minus" text="{i18n>LABEL_10020}" visible="{/buttons/goal/DELETE/Availability}" press=".onPressDeleteGoal">
                             <customData>
