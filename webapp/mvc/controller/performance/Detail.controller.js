@@ -136,7 +136,7 @@ sap.ui.define(
             fCurriedGetEntitySet('AppStatusStepList', { Zzappid: mParameter.Zzappid }),
             fCurriedGetEntitySet('RelaUpTarget', { Zzappee: mParameter.Zzappee }),
             fCurriedGetEntitySet('AppValueList', { VClass: 'Q', VType: '807' }),
-            fCurriedGetEntitySet('AppValueList', { VType: '801' }),
+            fCurriedGetEntitySet('AppValueList', { VClass: 'Q', VType: '801' }),
             fCurriedGetEntitySet('AppGradeList'),
             Client.deep(oModel, 'AppraisalDoc', {
               ...mParameter,
