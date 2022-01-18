@@ -716,7 +716,7 @@ button .sapMBtnReject {border-radius:20px}
 button .sapMBtnEmphasized {border-radius:20px}
 button .sapMBtnTransparent {border-radius:20px}
 .sapUiSizeCompact .sapMBtn{padding:0; font-weight:bold; height:auto; min-width:86px}
-.sapUiSizeCompact .sapMBtnInner.sapMBtnText, .sapMBtnText.sapMBtnIconFirst.sapMBtnDefault{padding-left:30px; padding-right:30px; border-radius:20px; width:100%; height:40px; display:inline-flex; justify-content:center; align-items:center}
+.sapUiSizeCompact .sapMBtnInner.sapMBtnText{padding-left:30px; padding-right:30px; border-radius:20px; width:100%; height:40px; display:inline-flex; justify-content:center; align-items:center}
 .sapUiSizeCompact .sapMBtnContent {line-height:40px}
 .sapUiSizeCompact .sapMBtnInner{height:auto; font-size:15px}
 .sapUiSizeCompact.menu-favorite-icon .sapMBtnInner{height:15px}
@@ -1024,7 +1024,7 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 .sapMFlexBox + .search-box, .sapUiBlockLayerTabbable + .search-box {margin-left:30px}
 
 /*Layer popup style*/
-.sapUiSizeCompact.sapMDialog, .sapUiSizeCompact .sapMDialog, .sapMDialog { min-height:45px; padding:75px 0px 80px; background-color:#fff}
+.sapUiSizeCompact.sapMDialog, .sapUiSizeCompact .sapMDialog, .sapMDialog { min-height:45px; padding:65px 0px 80px; background-color:#fff}
 .sapMDialogSection, .sapMDialogSubHeader {padding:0px 30px}
 .sapMDialogSection .sapMPanelContent:not(.sapMPanelBGTransparent), .sapMDialogSection .sapMPanelHdr {padding:0px} 
 .sapUiSizeCompact.sapMDialog>.sapMDialogTitle, .sapUiSizeCompact .sapMDialog>.sapMDialogTitle {height:75px}
@@ -1039,7 +1039,7 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
  padding-bottom:0.25rem;
  box-sizing:border-box;
 }
-.sapUiSizeCompact .sapMBarLeft, .sapUiSizeCompact .sapMBarRight, .sapUiSizeCompact .sapMBarPH, .sapMDialog .sapMBarPH { height:2rem; line-height:2rem; }
+.sapUiSizeCompact .sapMBarLeft, .sapUiSizeCompact .sapMBarRight, .sapUiSizeCompact .sapMBarPH, .sapMDialog .sapMBarPH { height:1.8rem; line-height:1.8rem; }
 .sapMDialog>header.sapMDialogTitle .sapMTitle {color:#262C2F; margin:0; vertical-align:middle; font-size:25px; font-weight:700; }
 html.sap-desktop .sapContrast.sapMIBar.sapMFooter-CTX, html.sap-desktop .sapMIBar.sapMFooter-CTX { height:80px; }
 html.sap-tablet .sapMDialog, html.sap-desktop .sapMDialog {min-width:20rem; background:#fff; padding-bottom:80px; }
@@ -1338,6 +1338,9 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 /* 인재검색 */
 .form-bar > * {margin-right:12px}
 .form-bar .sapMLabel {padding-left:30px; padding-right:20px} 
+.form-bar .sapMFlexItem:first-child .sapMLabel {padding-left:0px;} 
+.form-bar .sapMInputBaseHeightMargin {margin:0;}
+.form-bar .sapMBtn {padding:0;height:auto;}
 .search-filter.expanded {display:grid!important}
 .search-filter {display:none!important; border-top:1px solid #222; padding-top:20px; margin-top:20px!important}
 .search-filter .sapMTextMaxWidth {padding:0 4px}
