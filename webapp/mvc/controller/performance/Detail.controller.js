@@ -112,7 +112,6 @@ sap.ui.define(
 
         try {
           const oView = this.getView();
-          const oModel = this.getModel(ServiceNames.APPRAISAL);
           const oListView = oView.getParent().getPage(mListRoute.id);
 
           if (_.isEmpty(oListView) || _.isEmpty(oListView.getModel().getProperty('/parameter/rowData'))) {
@@ -131,11 +130,13 @@ sap.ui.define(
           oViewModel.setProperty('/type', sType);
           oViewModel.setProperty('/year', sYear);
 
+          const oModel = this.getModel(ServiceNames.APPRAISAL);
           const fCurriedGetEntitySet = Client.getEntitySet(oModel);
-          const [aStepList, aTopGoals, aStatus, aGrades, mDetailData] = await Promise.all([
+          const [aStepList, aTopGoals, aStatus, aFinalStatus, aGrades, mDetailData] = await Promise.all([
             fCurriedGetEntitySet('AppStatusStepList', { Zzappid: mParameter.Zzappid }),
             fCurriedGetEntitySet('RelaUpTarget', { Zzappee: mParameter.Zzappee }),
             fCurriedGetEntitySet('AppValueList'),
+            fCurriedGetEntitySet('AppValueList', { VType: '801' }),
             fCurriedGetEntitySet('AppGradeList'),
             Client.deep(oModel, 'AppraisalDoc', {
               ...mParameter,
@@ -152,6 +153,7 @@ sap.ui.define(
           oViewModel.setProperty('/entry/topGoals', new ComboEntry({ codeKey: 'Objid', valueKey: 'Stext', aEntries: aTopGoals }) ?? []);
           oViewModel.setProperty('/entry/levels', new ComboEntry({ codeKey: 'ValueEid', valueKey: 'ValueText', aEntries: aGrades }) ?? []);
           oViewModel.setProperty('/entry/status', new ComboEntry({ codeKey: 'ValueEid', valueKey: 'ValueText', aEntries: aStatus }) ?? []);
+          oViewModel.setProperty('/entry/statusF', new ComboEntry({ codeKey: 'ValueEid', valueKey: 'ValueText', aEntries: aFinalStatus }) ?? []);
 
           // 합계점수
           oViewModel.setProperty('/summary', {

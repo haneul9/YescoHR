@@ -86,7 +86,7 @@
 										<Label text="{i18n>LABEL_10014}" visible="{= ${/fieldControl/display/Zmbgrade} !== 'H' }"/>
 									</VBox>
 									<VBox>
-										<ComboBox class="required" selectedKey="{/summary/Zmbgrade}" items="{ path: '/entry/levels', templateShareable: true }" enabled="{= ${/fieldControl/display/Zmbgrade} === 'X' }" visible="{= ${/fieldControl/display/Zmbgrade} !== 'H' }">
+										<ComboBox class="required" selectedKey="{/summary/Zmbgrade}" items="{ path: '/entry/statusF', templateShareable: true }" enabled="{= ${/fieldControl/display/Zmbgrade} === 'X' }" visible="{= ${/fieldControl/display/Zmbgrade} !== 'H' }">
 											<core:Item key="{ValueEid}" text="{ValueText}" />
 										</ComboBox>
 									</VBox>
