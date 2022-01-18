@@ -135,7 +135,7 @@ sap.ui.define(
           const [aStepList, aTopGoals, aStatus, aFinalStatus, aGrades, mDetailData] = await Promise.all([
             fCurriedGetEntitySet('AppStatusStepList', { Zzappid: mParameter.Zzappid }),
             fCurriedGetEntitySet('RelaUpTarget', { Zzappee: mParameter.Zzappee }),
-            fCurriedGetEntitySet('AppValueList'),
+            fCurriedGetEntitySet('AppValueList', { VClass: 'Q', VType: '807' }),
             fCurriedGetEntitySet('AppValueList', { VType: '801' }),
             fCurriedGetEntitySet('AppGradeList'),
             Client.deep(oModel, 'AppraisalDoc', {
