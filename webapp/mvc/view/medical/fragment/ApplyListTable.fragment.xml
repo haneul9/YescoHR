@@ -4,18 +4,18 @@
   <table:Table id="medTable" class="row-link" rows="{/List}" visibleRowCount="{/listInfo/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
     <table:rowSettingsTemplate>
       <table:RowSettings highlight="{
-                path: 'Lnsta',
-                formatter: '.TableUtils.rowHighlight'
-            }"/>
+          path: 'Lnsta',
+          formatter: '.TableUtils.rowHighlight'
+      }"/>
     </table:rowSettingsTemplate>
     <table:columns>
       <table:Column width="100px" sortProperty="Lnsta" filterProperty="Lnsta">
         <Label text="{i18n>LABEL_00144}"/>
         <table:template>
           <Text text="{
-                            path: 'Lnsta',
-                            formatter: '.TableUtils.StatusTxt'
-                        }" width="100%" textAlign="Center">
+                path: 'Lnsta',
+                formatter: '.TableUtils.StatusTxt'
+            }" width="100%" textAlign="Center">
             <customData>
               <core:CustomData key="status" value="Z{Lnsta}" writeToDom="true" />
             </customData>
@@ -26,12 +26,12 @@
         <Label text="{i18n>LABEL_00266}"/>
         <table:template>
           <Text text="{
-                        path: 'Appda',
-                        type: 'sap.ui.model.type.Date',
-                        formatOptions: {
-                            pattern: 'yyyy.MM.dd'
-                        }
-                    }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+              path: 'Appda',
+              type: 'sap.ui.model.type.Date',
+              formatOptions: {
+                  pattern: 'yyyy.MM.dd'
+              }
+          }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Znametx" filterProperty="Znametx">
@@ -50,9 +50,9 @@
         <Label text="{i18n>LABEL_09005}"/>
         <table:template>
           <Text text="{
-                        path: 'Apbet',
-                        type: 'sap.ui.yesco.mvc.model.type.Currency'
-                    }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+              path: 'Apbet',
+              type: 'sap.ui.yesco.mvc.model.type.Currency'
+          }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="100px" sortProperty="Pvcnt" filterProperty="Pvcnt">
@@ -65,9 +65,9 @@
         <Label text="{i18n>LABEL_09007}"/>
         <table:template>
           <Text text="{
-                        path: 'Pvbet',
-                        type: 'sap.ui.yesco.mvc.model.type.Currency'
-                    }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+              path: 'Pvbet',
+              type: 'sap.ui.yesco.mvc.model.type.Currency'
+          }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="100px" sortProperty="Rjcnt" filterProperty="Rjcnt">
