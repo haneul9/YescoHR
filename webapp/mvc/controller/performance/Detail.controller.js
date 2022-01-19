@@ -133,7 +133,7 @@ sap.ui.define(
           const oModel = this.getModel(ServiceNames.APPRAISAL);
           const fCurriedGetEntitySet = Client.getEntitySet(oModel);
           const [aStepList, aTopGoals, aStatus, aFinalStatus, aGrades, mDetailData] = await Promise.all([
-            fCurriedGetEntitySet('AppStatusStepList', { Zzappid: mParameter.Zzappid }),
+            fCurriedGetEntitySet('AppStatusStepList', { Werks: this.getSessionProperty('Werks'), Zzappid: mParameter.Zzappid, Zzappty: sType }),
             fCurriedGetEntitySet('RelaUpTarget', { Zzappee: mParameter.Zzappee }),
             fCurriedGetEntitySet('AppValueList', { VClass: 'Q', VType: '807' }),
             fCurriedGetEntitySet('AppValueList', { VClass: 'Q', VType: '801' }),
