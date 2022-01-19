@@ -453,6 +453,11 @@ sap.ui.define(
         oEvent.getSource().getParent().close();
       },
 
+      // GridContainer의 정의서 url
+      onUrlPress(oEvent) {
+        window.open(this.getViewModel().getProperty(`${oEvent.getSource().getBindingContext().getPath()}/Url`), '_blank');
+      },
+
       // 수행 팀 목록 조회
       getTeamList(mSelectedRow = {}) {
         const oModel = this.getModel(ServiceNames.APPRAISAL);
@@ -524,6 +529,7 @@ sap.ui.define(
 
         mDraggData.Orgeh = oViewModel.getProperty(`${sDraggListPath}/Orgeh`);
         mDraggData.Orgtx = oViewModel.getProperty(`${sDraggListPath}/Label`);
+        mDraggData.Zteam = mDraggData.Tmcnt === '0' ? '' : 'X';
 
         // insert the control in target aggregation bInsertPosition ? 0 : -1
         aGridList.splice(iDropPosition, 0, mDraggData);
@@ -576,6 +582,7 @@ sap.ui.define(
         }
 
         mDraggData.Orgeh = oViewModel.getProperty('/search/Orgeh');
+        mDraggData.Zteam = mDraggData.Tmcnt === '0' ? '' : 'X';
 
         // insert the control in target aggregation
         aGridList.splice(iDropPosition, 0, mDraggData);

@@ -194,6 +194,7 @@ sap.ui.define(
             new Filter('Datum', FilterOperator.EQ, new Date()),
             new Filter('Upcod', FilterOperator.EQ, oFormData.Concode),
             new Filter('Upcod2', FilterOperator.EQ, 'E'),
+            new Filter('Pernr', FilterOperator.EQ, oAppointeeData.Pernr),
           ],
           success: (oData) => {
             if (oData) {
@@ -263,6 +264,7 @@ sap.ui.define(
               new Filter('Datum', FilterOperator.EQ, new Date()),
               new Filter('Upcod', FilterOperator.EQ, sSelectKey),
               new Filter('Upcod2', FilterOperator.EQ, 'E'),
+              new Filter('Pernr', FilterOperator.EQ, oAppointeeData.Pernr),
             ],
             success: (oData) => {
               if (oData) {

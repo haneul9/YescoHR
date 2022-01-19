@@ -24,9 +24,19 @@
     <layoutData>
       <FlexItemData growFactor="1" />
     </layoutData>
-    <Image visible="{= ${Otype} === '90' }" src="asset/image/icon_cascading_type01.png" />
-    <Image visible="{= ${Otype} === '91' }" src="asset/image/icon_cascading_type02.png" />
-    <Image visible="{= ${Otype} === 'O' }" src="asset/image/icon_cascading_type03.png" />
-    <StandardTreeItem title="{Stext}"/>
+    <CustomTreeItem>
+      <HBox visible="{= ${Otype} === '90' }">
+        <Image src="asset/image/icon_cascading_type01.png" />
+        <Text text="{Stext}"/>
+      </HBox>
+      <HBox visible="{= ${Otype} === '91' }">
+        <Image src="asset/image/icon_cascading_type02.png" />
+        <Text text="{Stext}"/>
+      </HBox>
+      <HBox visible="{= ${Otype} === 'O' }">
+        <Image src="asset/image/icon_cascading_type03.png" />
+        <Text text="{Stext}"/>
+      </HBox>
+    </CustomTreeItem>
   </Tree>
 </core:FragmentDefinition>
