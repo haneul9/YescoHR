@@ -64,18 +64,14 @@
 				</VBox>
 			</VBox>
 			<HBox class="vCardBox sapUiSmallMarginTop" visible="true">
-				<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="4fr repeat(4, 1fr)">
+				<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="830px repeat(4, 1fr)">
 					<HBox />
-					<VBox>
-						<Label text="{i18n>LABEL_10051}" visible="true"/>
-					</VBox>
+					<Label text="{i18n>LABEL_10051}" visible="true"/>
 					<VBox>
 						<Input value="" enabled="false" visible="false" />
 						<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/Zmepoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" visible="true"/>
 					</VBox>
-					<VBox>
-						<Label text="{i18n>LABEL_10052}" visible="true"/>
-					</VBox>
+					<Label text="{i18n>LABEL_10052}" visible="true"/>
 					<VBox>
 						<Input value="" enabled="false" visible="false" />
 						<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/Zmapoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" visible="true"/>

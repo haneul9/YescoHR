@@ -10,7 +10,7 @@
         </layoutData>
         <headerToolbar>
             <OverflowToolbar height="3rem" style="Clear">
-                <grid:CSSGrid gridTemplateColumns="1fr repeat({/level/count}, 2fr)" gridGap="6px" items="{/level/headers}">
+                <grid:CSSGrid gridTemplateColumns="200px repeat({/level/count}, 2fr)" gridGap="8px" items="{/level/headers}">
                     <VBox>
                         <customData>
                             <core:CustomData key="type" value="{type}" writeToDom="true" />
@@ -22,7 +22,7 @@
             </OverflowToolbar>
         </headerToolbar>
         <content>
-            <grid:CSSGrid gridTemplateColumns="1fr repeat({/level/count}, 2fr)" gridGap="6px" items="{/level/rows}">
+            <grid:CSSGrid gridTemplateColumns="200px repeat({/level/count}, 2fr)" gridGap="8px" items="{/level/rows}">
                 <VBox items="{child}">
                     <customData>
                         <core:CustomData key="type" value="{type}" writeToDom="true" />

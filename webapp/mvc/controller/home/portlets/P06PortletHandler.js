@@ -111,7 +111,7 @@ sap.ui.define(
           });
 
           this.getController().getView().addDependent(this.oPopover);
-          this.oPopover.setModel(this.getPortletModel()).addStyleClass(AppUtils.getAppComponent().getContentDensityClass());
+          this.oPopover.setModel(this.getPortletModel());
         }
       },
 

@@ -5,13 +5,11 @@
         <Panel expandable="true" expanded="{expanded}" class="per-panel">
             <headerToolbar>
                 <Toolbar height="45px" width="100%">
-                    <grid:CSSGrid gridTemplateColumns="4fr repeat(4, 1fr)" gridGap="0px 11px">
+                    <grid:CSSGrid gridTemplateColumns="750px repeat(4, 1fr)" gridGap="0px 11px">
                         <VBox>
                             <Input value="{Obj0}" class="goal-subject" placeholder="{i18n>MSG_10007}" maxLength="{/fieldControl/limit/Obj0}" enabled="true" visible="true" />
                         </VBox>
-                        <VBox>
-                            <Label text="{i18n>LABEL_10057}" visible="true" />
-                        </VBox>
+                        <Label text="{i18n>LABEL_10057}" visible="true" />
                         <HBox>
                             <Input width="100%" value="" enabled="false" visible="false" />
                             <ComboBox width="100%" class="required" selectedKey="{Zapgme}" items="{ path: '/entry/levels', templateShareable: true }" enabled="true" visible="true" change=".onChangeScore">
@@ -22,9 +20,7 @@
                                 <core:Item key="{ValueEid}" text="{ValueText}" />
                             </ComboBox>
                         </HBox>
-                        <VBox>
-                            <Label text="{i18n>LABEL_10058}" visible="true" />
-                        </VBox>
+                        <Label text="{i18n>LABEL_10058}" visible="true" />
                         <HBox>
                             <Input width="100%" value="" enabled="false" visible="false" />
                             <ComboBox width="100%" class="required" selectedKey="{Zapgma}" items="{ path: '/entry/levels', templateShareable: true }" enabled="true" visible="true" change=".onChangeScore">

@@ -435,7 +435,6 @@ sap.ui.define(
           }).then(async (oDialog) => {
             // connect dialog to the root view of this component (models, lifecycle)
             this.getView().addDependent(oDialog);
-            oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
             await this.getTargetList();
 
             const oTargetData = oDetailModel.getProperty('/TargetList');

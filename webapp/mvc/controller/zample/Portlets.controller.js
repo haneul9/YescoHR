@@ -17,7 +17,7 @@ sap.ui.define(
     DropLayout,
     DropPosition,
     JSONModel,
-    BaseController,
+    BaseController
   ) => {
     'use strict';
 
@@ -84,8 +84,6 @@ sap.ui.define(
           name: 'sap.ui.yesco.mvc.view.app.fragment.SettingDialog',
           controller: this,
         });
-
-        this.oSettingDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
 
         this.getView().addDependent(this.oSettingDialog);
       },

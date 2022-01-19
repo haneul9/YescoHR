@@ -17,9 +17,6 @@ sap.ui.define(
       onInit() {
         this.debug('App.onInit');
 
-        // apply content density mode to root view
-        this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
-
         this.oAppMenu = new Menus(this);
 
         this.getOwnerComponent().setAppMenu(this.oAppMenu);
@@ -33,9 +30,7 @@ sap.ui.define(
           return;
         }
 
-        const oUIComponent = this.getOwnerComponent();
-        oUIComponent.reduceViewResource(); // 메뉴 이동 전 View hidden 처리로 불필요한 DOM 정보를 제거
-        oUIComponent.getRouter().navTo('ehrHome'); // TODO : ehrMobileHome
+        this.oAppMenu.moveToMenu('ehrHome'); // TODO : ehrMobileHome
       },
 
       getLogoPath(sWerks = 'init') {
@@ -44,32 +39,27 @@ sap.ui.define(
       },
 
       navToProfile() {
-        this.getRouter().navTo('employee');
+        this.oAppMenu.moveToMenu('employee');
       },
 
-      notifyOpenPopover(oEvent) {
-        var oButton = oEvent.getSource();
+      async onPressNotificationPopoverOpen(oEvent) {
+        const oButton = oEvent.getSource();
 
-        // create popover
-        if (!this._oPopover) {
-          Fragment.load({
-            name: 'sap.ui.yesco.mvc.view.app.fragment.NotifyPopover',
+        if (!this.oNotificationPopover) {
+          this.oNotificationPopover = await Fragment.load({
+            name: 'sap.ui.yesco.mvc.view.app.fragment.NotificationPopover',
             controller: this,
-          }).then(
-            function (pPopover) {
-              this._oPopover = pPopover;
-              this.getView().addDependent(this._oPopover);
-              this._oPopover.bindElement('/ProductCollection/0');
-              this._oPopover.openBy(oButton);
-            }.bind(this)
-          );
-        } else {
-          this._oPopover.openBy(oButton);
+          });
+
+          this.getView().addDependent(this.oNotificationPopover);
+          this.oNotificationPopover.bindElement('/ProductCollection/0');
         }
+
+        this.oNotificationPopover.openBy(oButton);
       },
 
-      notifyClosePopover() {
-        this._oPopover.close();
+      onPressNotificationPopoverClose() {
+        this.oNotificationPopover.close();
       },
 
       onPressPortletsP13nDialogOpen() {
@@ -77,8 +67,8 @@ sap.ui.define(
       },
 
       onExit() {
-        if (this._oPopover) {
-          this._oPopover.destroy();
+        if (this.oNotificationPopover) {
+          this.oNotificationPopover.destroy();
         }
       },
     });
