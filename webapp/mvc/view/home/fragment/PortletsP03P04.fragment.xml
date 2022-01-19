@@ -9,24 +9,33 @@
       <f:GridContainerItemLayoutData rows="{height}" columns="{width}" />
     </layoutData>
     <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
-      <Title level="H2" text="{= ${selectedMembersTab} === 'ORG' ? ${orgMembers/title} : (${selectedMembersTab} === 'MY' ? ${myMembers/title} : '') }" visible="{= !${hideTitle} }" />
-      <SegmentedButton selectedKey="{selectedMembersTab}" visible="{= !!${orgMembers} &amp;&amp; !!${orgMembers/active} &amp;&amp; !!${myMembers} &amp;&amp; !!${myMembers/active} }">
+      <Title level="H2" text="{=
+        ${selectedMembersButton} === 'P03' ? ${orgMembers/title} : (
+        ${selectedMembersButton} === 'P04' ? ${myMembers/title} : ''
+      )}" visible="{= !${hideTitle} }" />
+      <SegmentedButton selectedKey="{selectedMembersButton}" visible="{= !!${orgMembersActive} &amp;&amp; !!${myMembersActive} }">
         <items>
-          <SegmentedButtonItem text="{i18n>LABEL_01201}" key="ORG" visible="{= !!${orgMembers} &amp;&amp; !!${orgMembers/active} }" />
-          <SegmentedButtonItem text="{i18n>LABEL_01202}" key="MY" visible="{= !!${myMembers} &amp;&amp; !!${myMembers/active} }" />
+          <SegmentedButtonItem text="{i18n>LABEL_01201}" key="P03" visible="{= !!${orgMembersActive} }" />
+          <SegmentedButtonItem text="{i18n>LABEL_01202}" key="P04" visible="{= !!${myMembersActive} }" />
         </items>
       </SegmentedButton>
-      <Button icon="asset/image/icon_write.png" type="Transparent" class="icon-button" visible="{= !!${myMembers} &amp;&amp; !!${myMembers/active} &amp;&amp; ${selectedMembersTab} === 'MY' }" press=".onPressMyMemberAdd" />
+      <Button icon="asset/image/icon_write.png" type="Transparent" class="icon-button" visible="{= !!${myMembersActive} &amp;&amp; ${selectedMembersButton} === 'P04' }" press=".onPressMyMemberAdd" />
       <Text text="">
         <layoutData>
           <FlexItemData growFactor="1" />
         </layoutData>
       </Text>
-      <Button icon="sap-icon://decline" type="Transparent" visible="{switchable}" class="icon-button portlet-close-icon" press=".onPressClose" />
-      <Button icon="sap-icon://add" type="Transparent" visible="{hasLink}" class="icon-button portlet-link-icon" press=".onPressLink" />
+      <Button visible="{=
+        ${selectedMembersButton} === 'P03' ? ${orgMembers/switchable} : (
+        ${selectedMembersButton} === 'P04' ? ${myMembers/switchable} : false
+      ) }" icon="sap-icon://decline" type="Transparent" class="icon-button portlet-close-icon" press=".onPressClose" />
+      <Button visible="{=
+        ${selectedMembersButton} === 'P03' ? ${orgMembers/hasLink} : (
+        ${selectedMembersButton} === 'P04' ? ${myMembers/hasLink} : false
+      ) }" icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" press=".onPressLink" />
     </HBox>
     <HBox class="portlet-body">
-      <ScrollContainer visible="{= !!${orgMembers/active} &amp;&amp; ${selectedMembersTab} === 'ORG' }">
+      <ScrollContainer visible="{= !!${orgMembersActive} &amp;&amp; ${selectedMembersButton} === 'P03' }">
         <layoutData>
           <FlexItemData growFactor="1" maxWidth="100%" />
         </layoutData>
@@ -51,7 +60,7 @@
           </HBox>
         </VBox>
       </ScrollContainer>
-      <ScrollContainer visible="{= !!${myMembers/active} &amp;&amp; ${selectedMembersTab} === 'MY' }">
+      <ScrollContainer visible="{= !!${myMembersActive} &amp;&amp; ${selectedMembersButton} === 'P04' }">
         <layoutData>
           <FlexItemData growFactor="1" maxWidth="100%" />
         </layoutData>

@@ -299,7 +299,6 @@ sap.ui.define(
           }).then((oDialog) => {
             // connect dialog to the root view of this component (models, lifecycle)
             this.getView().addDependent(oDialog);
-            oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
             this.AttachFileAction.setTableFileList(this, oRowData);
             oDialog.open();
           });

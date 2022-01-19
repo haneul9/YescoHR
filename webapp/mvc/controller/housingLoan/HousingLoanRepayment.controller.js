@@ -173,7 +173,6 @@ sap.ui.define(
           }).then(async (oDialog) => {
             // connect dialog to the root view of this component (models, lifecycle)
             this.getView().addDependent(oDialog);
-            oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
             oDetailModel.setProperty('/DialogData', oRowData);
             oDetailModel.setProperty('/DateEditable', oRowData.Rptyp === 'FULL');
             this.settingsAttachTable();
@@ -409,7 +408,6 @@ sap.ui.define(
           }).then(async (oDialog) => {
             // connect dialog to the root view of this component (models, lifecycle)
             this.getView().addDependent(oDialog);
-            oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
             this.settingsAttachTable();
 
             oDialog.open();

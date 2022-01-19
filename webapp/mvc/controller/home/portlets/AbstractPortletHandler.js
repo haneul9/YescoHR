@@ -27,10 +27,10 @@ sap.ui.define(
        * @override
        */
       constructor: function (oController, mPortletData) {
-        this.setController(oController) // prettier 방지용 주석
-          .setPortletModel(new JSONModel(mPortletData))
-          .setWidth()
-          .init();
+        this.oController = oController;
+        this.oPortletModel = new JSONModel(mPortletData);
+
+        this.init();
       },
 
       async init() {
@@ -48,8 +48,7 @@ sap.ui.define(
           controller: this,
         });
 
-        const iPortletHeight = oPortletModel.getProperty('/height');
-        oFragment.setModel(oPortletModel).bindElement('/').addStyleClass(`portlet-height-${iPortletHeight}`);
+        oFragment.setModel(oPortletModel).bindElement('/');
 
         this.oController.byId(this.sContainerId).addItem(oFragment);
         this.setFragment(oFragment);
@@ -70,15 +69,6 @@ sap.ui.define(
         }
 
         return mPortletContentData;
-      },
-
-      setWidth() {
-        this.getPortletModel().setProperty('/width', this.getWidth());
-        return this;
-      },
-
-      getWidth() {
-        return 1;
       },
 
       /**

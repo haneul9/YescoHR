@@ -1,5 +1,6 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.app.App"
   xmlns="sap.m"
+  xmlns:core="sap.ui.core"
   xmlns:mvc="sap.ui.core.mvc" displayBlock="true">
   <OverflowToolbar id="appMenuToolbar" asyncMode="true" busy="{appModel>/isMenuBusy}" busyIndicatorDelay="0" class="app-menu-toolbar" height="60px">
     <ImageContent id="logoImage" src="{ path: 'sessionModel>/Werks', formatter: '.getLogoPath' }" description="{sessionModel>/Pbtxt} eHR Home" press=".navToHome">
@@ -24,7 +25,11 @@
       </TileContent>
     </GenericTile>
 
-    <Button type="Transparent" class="icon-button notice" press="notifyOpenPopover" tooltip="{i18n>LABEL_01002}" />
+    <Button type="Transparent" class="icon-button notification" press=".onPressNotificationPopoverOpen" tooltip="{i18n>LABEL_01002}">
+      <customData>
+        <core:CustomData key="unread" value="{= ${sessionModel>/Alarmck} === 'X' ? 'O' : 'X' }" writeToDom="true" />
+      </customData>
+    </Button>
 
     <Button type="Transparent" visible="{appModel>/isAtHome}" class="icon-button setting" press=".onPressPortletsP13nDialogOpen" tooltip="{i18n>LABEL_01101}">
       <layoutData>
