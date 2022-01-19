@@ -36,7 +36,7 @@
 			<VBox class="vCardBox">
 				<HBox class="table-toolbar">
 					<HBox alignItems="Center" class="title">
-						<Title level="H2" text="{/year} {i18n>LABEL_10046}" />
+						<Title level="H2" text="{i18n>LABEL_10046}" />
 					</HBox>
 				</HBox>
 				<HBox>

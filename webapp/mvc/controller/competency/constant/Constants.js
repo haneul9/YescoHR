@@ -6,10 +6,10 @@ sap.ui.define(
     'use strict';
 
     return {
-      LIST_PAGE: { ME: { route: 'competency', detail: 'competency-detail', id: 'container-ehr---competency' }, MA: { route: 'm/competencyPry', detail: 'm/competencyPry-detail', id: 'container-ehr---m_competencyPry' }, MB: { route: 'm/competencySry', detail: 'm/competencySry-detail', id: 'container-ehr---m_competencySry' } },
+      LIST_PAGE: { ME: { route: 'competency', detail: 'competency-detail', id: 'container-ehr---competency' }, MA: { route: 'm/competency', detail: 'm/competency-detail', id: 'container-ehr---m_competency' } },
       REJECT_DIALOG_ID: 'sap.ui.yesco.mvc.view.competency.fragment.RejectDialog',
 
-      APPRAISER_TYPE: { ME: 'ME', MA: 'MA', MB: 'MB' },
+      APPRAISER_TYPE: { ME: 'ME', MA: 'MA' },
       DISPLAY_TYPE: { EDIT: 'X', DISPLAY_ONLY: 'D', HIDE: 'H', HIDDEN_VALUE: 'V' },
       GOAL_TYPE: { STRATEGY: { code: '1', name: 'strategy' }, DUTY: { code: '2', name: 'duty' } },
       PROCESS_TYPE: { LIST: { code: 'L', label: 'LABEL_00177' }, DETAIL: { code: 'D', label: 'LABEL_00165' }, SAVE: { code: 'T', label: 'LABEL_00103' }, SEND: { code: 'C', label: 'LABEL_00175' }, APPROVE: { code: 'P', label: 'LABEL_00123' }, REJECT: { code: 'R', label: 'LABEL_00124' }, CANCEL: { code: 'W', label: 'LABEL_00118' } },

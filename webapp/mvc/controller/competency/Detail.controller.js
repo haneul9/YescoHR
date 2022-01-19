@@ -70,22 +70,30 @@ sap.ui.define(
             rows: [],
           },
           level: {
-            count: 3,
+            expanded: false,
+            type: 'level5',
+            count: 5,
             headers: [
-              { width: '16%', Todo1: '역량 수준' }, //
-              { width: '21%', Todo1: 'Level 1', Todo2: '(학습 단계)' },
-              { width: '21%', Todo1: 'Level 2' },
-              { width: '21%', Todo1: 'Level 3', Todo2: '(적응 단계 or 적응/지도)' },
-              { width: '21%', Todo1: 'Level 4' },
-              { width: '21%', Todo1: 'Level 5', Todo2: '(지도/조정 단계 or 실현단계)' },
+              { type: 'head', text: '역량 수준' }, //
+              { type: 'body', label: 'Level 1', text: '(학습 단계)' },
+              { type: 'body', label: 'Level 2' },
+              { type: 'body', label: 'Level 3', text: '(적응 단계 or 적응/지도)' },
+              { type: 'body', label: 'Level 4' },
+              { type: 'body', label: 'Level 5', text: '(지도/조정 단계 or 실현단계)' },
             ],
             rows: [
-              { width: '16%', Todo1: '단계 정의', Todo2: '특징' }, //
-              { width: '21%', Todo1: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계', Todo2: '직무와 관련된 각종 단위 업무들을 학습함' },
-              { width: '21%', Todo1: 'Level 1과 3 사이' },
-              { width: '21%', Todo1: '학습된 지식을 적용하고 자신의 분야에서 전문화 및 전문역량을 완성하는 단계', Todo2: '타인의 지도 없이도 독립적인 문제해결 및 의사결정을 시도함' },
-              { width: '21%', Todo1: 'Level 3과 5 사이' },
-              { width: '21%', Todo1: '소속 조직의 업무를 리드하고 프로세스를 조율하며, 구성원들을 지도하는 단계', Todo2: '직무수행영역에서 가장 영항력 있는 의사결정을 내리며 자원배분의 책임을 가짐' },
+              { type: 'head', child: [{ text: '단계 정의' }] }, //
+              { type: 'body', child: [{ text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }] },
+              { type: 'body', child: [{ text: 'Level 1과 3 사이' }] },
+              { type: 'body', child: [{ text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }] },
+              { type: 'body', child: [{ text: 'Level 3과 5 사이' }] },
+              { type: 'body', child: [{ text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }] },
+              { type: 'head', child: [{ text: '특징' }] },
+              { type: 'body', child: [{ text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }, { text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }, { text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }] },
+              { type: 'blank', child: [] },
+              { type: 'body', child: [{ text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }, { text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }, { text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }] },
+              { type: 'blank', child: [] },
+              { type: 'body', child: [{ text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }, { text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }, { text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }] },
             ],
           },
           entry: {
@@ -159,7 +167,7 @@ sap.ui.define(
           const oModel = this.getModel(ServiceNames.APPRAISAL);
           const fCurriedGetEntitySet = Client.getEntitySet(oModel);
           const [aStepList, aTopGoals, aStatus, aFinalStatus, aGrades, mDetailData] = await Promise.all([
-            fCurriedGetEntitySet('AppStatusStepList', { Werks: this.getSessionProperty('Werks'), Zzappid: mParameter.Zzappid, Zzappty: mParameter.Zzappty }),
+            fCurriedGetEntitySet('AppStatusStepList', { Werks: this.getSessionProperty('Werks'), Zzappid: mParameter.Zzappid, Zzappty: '20' }),
             fCurriedGetEntitySet('RelaUpTarget', { Zzappee: mParameter.Zzappee }),
             fCurriedGetEntitySet('AppValueList', { VClass: 'Q', VType: '807' }),
             fCurriedGetEntitySet('AppValueList', { VClass: 'Q', VType: '801' }),
