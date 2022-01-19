@@ -1,30 +1,78 @@
 <core:FragmentDefinition xmlns="sap.m"
+    xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:core="sap.ui.core">
-    <Panel expandable="true" expanded="true" class="type-b">
+    <Panel expandable="true" width="auto" class="capability-level">
         <layoutData>
-            <FlexItemData growFactor="1" />
+            <FlexItemData growFactor="1"/>
         </layoutData>
         <headerToolbar>
-            <Toolbar width="100%" height="auto">
-                <HBox width="100%" items="{/level/headers}" class="per-status">
-                    <VBox width="{width}">
-                        <Title level="H4" text="{Todo1}" />
-                        <Text text="{Todo2}" visible="{= !!${Todo2}}" />
+            <OverflowToolbar height="3rem" style="Clear">
+                <grid:CSSGrid gridTemplateColumns="1fr repeat(5, 2fr)" gridGap="6px">
+                    <VBox class="head">
+                        <Text text="역량 수준" />
                     </VBox>
-                </HBox>
-            </Toolbar>
+                    <VBox>
+                        <Label text="Level 1" />
+                        <Text text="(학습단계)" />
+                    </VBox>
+                    <VBox>
+                        <Label text="Level 2" />
+                    </VBox>
+                    <VBox>
+                        <Label text="Level 3" />
+                        <Text text="(적용 단계  적용/지도)" />
+                    </VBox>
+                    <VBox>
+                        <Label text="Level 4" />
+                    </VBox>
+                    <VBox>
+                        <Label text="Level 5" />
+                        <Text text="(지도/조정 단계 or 실현단계)" />
+                    </VBox>
+                </grid:CSSGrid>
+            </OverflowToolbar>
         </headerToolbar>
         <content>
-            <HBox width="100%" items="{/level/rows}" class="per-status-d">
-                <VBox width="{width}">
-                    <HBox height="40%">
-                        <Text text="{Todo1}" />
-                    </HBox>
-                    <HBox>
-                        <Text text="{Todo2}" />
-                    </HBox>
+            <grid:CSSGrid gridTemplateColumns="1fr repeat(5, 2fr)" gridGap="6px">
+                <VBox class="head">
+                    <Text text="단계 정의" />
                 </VBox>
-            </HBox>
+                <VBox>
+                    <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                </VBox>
+                <VBox>
+                    <Text text="Level 1과 3 사이" />
+                </VBox>
+                <VBox>
+                    <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                </VBox>
+                <VBox>
+                    <Text text="Level 3과 5 사이" />
+                </VBox>
+                <VBox>
+                    <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                </VBox>
+                <VBox class="head">
+                    <Text text="특징" />
+                </VBox>
+                <VBox>
+                    <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                    <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                    <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                </VBox>
+                <VBox class="blank" />
+                <VBox>
+                    <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                    <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                    <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                </VBox>
+                <VBox class="blank" />
+                <VBox>
+                    <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                    <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                    <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                </VBox>
+            </grid:CSSGrid>
         </content>
     </Panel>
 </core:FragmentDefinition>
