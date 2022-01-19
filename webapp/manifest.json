@@ -165,6 +165,8 @@
         { "pattern": "m/performanceSry", "name": "m/performanceSry", "target": "m/performanceSry" },
         { "pattern": "m/performanceSry/{sType}/{sYear}", "name": "m/performanceSry-detail", "target": "performanceDetail" },
         
+        { "pattern": "competency", "name": "competency", "target": "competency" },
+        
         { "pattern": "m/organization", "name": "m/organization", "target": "m/organization" },
         
         { "pattern": "leavePlan", "name": "leavePlan", "target": "leavePlan" },
@@ -247,6 +249,8 @@
         "m/performancePry": { "viewId": "m_performancePry", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "ListPrimary" },
         "m/performanceSry": { "viewId": "m_performanceSry", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "ListSecondary" },
         "performanceDetail": { "viewId": "performanceDetail", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "Detail" },
+        
+        "competency": { "viewId": "competency", "viewPath": "sap.ui.yesco.mvc.view.competency", "viewName": "List" },
         
         "m/organization": { "viewId": "m_organization", "viewPath": "sap.ui.yesco.mvc.view.organization", "viewName": "Main" },
         
