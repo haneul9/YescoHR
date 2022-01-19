@@ -452,7 +452,7 @@
                 <headerToolbar>
                   <OverflowToolbar height="3rem" style="Clear">
                     <grid:CSSGrid gridTemplateColumns="8fr 1fr 1fr 1fr 1fr" gridGap="6px" class="form-grid">
-                      <Input  width="100%" value="No edit" type="Text" class="goal-subject" />
+                      <Input width="100%" value="No edit" type="Text" class="goal-subject" />
                       <Label text="Level 2" />
                       <ComboBox width="250px" class="sapIcon_Select_Arrow" />
                       <Label text="Level 4" />
@@ -718,30 +718,30 @@
             <Title level="H3" text="Button" class="component-title" />
             <VBox class="sapUiTinyMarginBottom">
               <HBox alignItems="Center">
-                  <Text text="Enable" />
-                  <Button type="Emphasized" text="Emphasized" />
-                  <Button type="Accept" text="Accept" />
-                  <Button type="Reject" text="Reject" />
-                  <Button text="취소" class="cancel"/>
-                  <Button text="이전" />
-                  <Button text="Coming Soon" />
-                  <Button text="Default"/>
-                  <Button text="Transparent" type="Transparent" />
-                  <Button icon="sap-icon://action" type="Transparent" text="With Icon" />
+                <Text text="Enable" />
+                <Button type="Emphasized" text="Emphasized" />
+                <Button type="Accept" text="Accept" />
+                <Button type="Reject" text="Reject" />
+                <Button text="취소" class="cancel"/>
+                <Button text="이전" />
+                <Button text="Coming Soon" />
+                <Button text="Default"/>
+                <Button text="Transparent" type="Transparent" />
+                <Button icon="sap-icon://action" type="Transparent" text="With Icon" />
               </HBox>
             </VBox>
             <VBox class="sapUiTinyMarginBottom">
               <HBox alignItems="Center">
-                  <Text text="disable" height="40px" />
-                  <Button type="Emphasized" text="Emphasized" enabled="false" />
-                  <Button type="Accept" text="Accept" enabled="false" />
-                  <Button type="Reject" text="Reject" enabled="false" />
-                  <Button text="취소" class="cancel" enabled="false" />
-                  <Button text="이전" enabled="false" />
-                  <Button text="Coming Soon" enabled="false" />
-                  <Button text="Default" enabled="false"/>
-                  <Button text="Transparent" type="Transparent" enabled="false" />
-                  <Button icon="sap-icon://action" type="Transparent" text="With Icon" enabled="false" />
+                <Text text="disable" height="40px" />
+                <Button type="Emphasized" text="Emphasized" enabled="false" />
+                <Button type="Accept" text="Accept" enabled="false" />
+                <Button type="Reject" text="Reject" enabled="false" />
+                <Button text="취소" class="cancel" enabled="false" />
+                <Button text="이전" enabled="false" />
+                <Button text="Coming Soon" enabled="false" />
+                <Button text="Default" enabled="false"/>
+                <Button text="Transparent" type="Transparent" enabled="false" />
+                <Button icon="sap-icon://action" type="Transparent" text="With Icon" enabled="false" />
               </HBox>
             </VBox>
           </VBox>

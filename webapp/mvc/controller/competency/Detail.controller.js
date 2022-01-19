@@ -70,6 +70,7 @@ sap.ui.define(
             rows: [],
           },
           level: {
+            count: 3,
             headers: [
               { width: '16%', Todo1: '역량 수준' }, //
               { width: '21%', Todo1: 'Level 1', Todo2: '(학습 단계)' },

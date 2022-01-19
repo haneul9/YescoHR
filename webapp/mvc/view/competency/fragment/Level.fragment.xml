@@ -7,7 +7,7 @@
         </layoutData>
         <headerToolbar>
             <OverflowToolbar height="3rem" style="Clear">
-                <grid:CSSGrid gridTemplateColumns="1fr repeat(5, 2fr)" gridGap="6px">
+                <grid:CSSGrid gridTemplateColumns="1fr repeat({/level/count}, 2fr)" gridGap="6px">
                     <VBox class="head">
                         <Text text="역량 수준" />
                     </VBox>
@@ -22,18 +22,18 @@
                         <Label text="Level 3" />
                         <Text text="(적용 단계  적용/지도)" />
                     </VBox>
-                    <VBox>
+                    <!-- <VBox>
                         <Label text="Level 4" />
                     </VBox>
                     <VBox>
                         <Label text="Level 5" />
                         <Text text="(지도/조정 단계 or 실현단계)" />
-                    </VBox>
+                    </VBox> -->
                 </grid:CSSGrid>
             </OverflowToolbar>
         </headerToolbar>
         <content>
-            <grid:CSSGrid gridTemplateColumns="1fr repeat(5, 2fr)" gridGap="6px">
+            <grid:CSSGrid gridTemplateColumns="1fr repeat({/level/count}, 2fr)" gridGap="6px">
                 <VBox class="head">
                     <Text text="단계 정의" />
                 </VBox>
@@ -46,12 +46,12 @@
                 <VBox>
                     <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
                 </VBox>
-                <VBox>
+                <!-- <VBox>
                     <Text text="Level 3과 5 사이" />
                 </VBox>
                 <VBox>
                     <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
-                </VBox>
+                </VBox> -->
                 <VBox class="head">
                     <Text text="특징" />
                 </VBox>
@@ -66,12 +66,12 @@
                     <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
                     <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
                 </VBox>
-                <VBox class="blank" />
+                <!-- <VBox class="blank" />
                 <VBox>
                     <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
                     <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
                     <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
-                </VBox>
+                </VBox> -->
             </grid:CSSGrid>
         </content>
     </Panel>
