@@ -1,0 +1,30 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Panel expandable="true" expanded="true" class="type-b">
+        <layoutData>
+            <FlexItemData growFactor="1" />
+        </layoutData>
+        <headerToolbar>
+            <Toolbar width="100%" height="auto">
+                <HBox width="100%" items="{/level/headers}" class="per-status">
+                    <VBox width="{width}">
+                        <Title level="H4" text="{Todo1}" />
+                        <Text text="{Todo2}" visible="{= !!${Todo2}}" />
+                    </VBox>
+                </HBox>
+            </Toolbar>
+        </headerToolbar>
+        <content>
+            <HBox width="100%" items="{/level/rows}" class="per-status-d">
+                <VBox width="{width}">
+                    <HBox height="40%">
+                        <Text text="{Todo1}" />
+                    </HBox>
+                    <HBox>
+                        <Text text="{Todo2}" />
+                    </HBox>
+                </VBox>
+            </HBox>
+        </content>
+    </Panel>
+</core:FragmentDefinition>

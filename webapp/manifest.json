@@ -166,6 +166,7 @@
         { "pattern": "m/performanceSry/{sType}/{sYear}", "name": "m/performanceSry-detail", "target": "performanceDetail" },
         
         { "pattern": "competency", "name": "competency", "target": "competency" },
+        { "pattern": "competency/{sType}/{sYear}", "name": "competency-detail", "target": "competencyDetail" },
         
         { "pattern": "m/organization", "name": "m/organization", "target": "m/organization" },
         
@@ -251,6 +252,7 @@
         "performanceDetail": { "viewId": "performanceDetail", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "Detail" },
         
         "competency": { "viewId": "competency", "viewPath": "sap.ui.yesco.mvc.view.competency", "viewName": "List" },
+        "competencyDetail": { "viewId": "competencyDetail", "viewPath": "sap.ui.yesco.mvc.view.competency", "viewName": "Detail" },
         
         "m/organization": { "viewId": "m_organization", "viewPath": "sap.ui.yesco.mvc.view.organization", "viewName": "Main" },
         
