@@ -1,13 +1,13 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:core="sap.ui.core">
-    <Panel expandable="true" width="auto" class="capability-level">
+    <Panel expandable="true" width="auto" class="capability-level level-3"><!-- level-3 level-4 level-5 -->
         <layoutData>
             <FlexItemData growFactor="1"/>
         </layoutData>
         <headerToolbar>
             <OverflowToolbar height="3rem" style="Clear">
-                <grid:CSSGrid gridTemplateColumns="1fr repeat({/level/count}, 2fr)" gridGap="6px">
+                <grid:CSSGrid gridTemplateColumns="200px repeat({/level/count}, 2fr)" gridGap="8px">
                     <VBox class="head">
                         <Text text="역량 수준" />
                     </VBox>
@@ -33,7 +33,7 @@
             </OverflowToolbar>
         </headerToolbar>
         <content>
-            <grid:CSSGrid gridTemplateColumns="1fr repeat({/level/count}, 2fr)" gridGap="6px">
+            <grid:CSSGrid gridTemplateColumns="200px repeat({/level/count}, 2fr)" gridGap="8px">
                 <VBox class="head">
                     <Text text="단계 정의" />
                 </VBox>

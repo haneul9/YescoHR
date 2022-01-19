@@ -368,7 +368,7 @@
                 </layoutData>
                 <headerToolbar>
                   <OverflowToolbar height="3rem" style="Clear">
-                    <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr" gridGap="6px">
+                    <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr" gridGap="8px">
                       <VBox class="head">
                         <Text text="역량 수준" />
                       </VBox>
@@ -387,7 +387,7 @@
                   </OverflowToolbar>
                 </headerToolbar>
                 <content>
-                  <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr" gridGap="6px">
+                  <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr" gridGap="8px">
                     <VBox class="head">
                       <Text text="단계 정의" />
                     </VBox>
@@ -431,7 +431,7 @@
                 </layoutData>
                 <headerToolbar>
                   <OverflowToolbar height="3rem" style="Clear">
-                    <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr 2fr 2fr" gridGap="6px">
+                    <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr 2fr 2fr" gridGap="8px">
                       <VBox class="head">
                         <Text text="역량 수준" />
                       </VBox>
@@ -457,7 +457,7 @@
                   </OverflowToolbar>
                 </headerToolbar>
                 <content>
-                  <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr 2fr 2fr" gridGap="6px">
+                  <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr 2fr 2fr" gridGap="8px">
                     <VBox class="head">
                       <Text text="단계 정의" />
                     </VBox>

@@ -727,7 +727,7 @@ button .sapMBtnTransparent {border-radius:20px}
 .sapUiSizeCompact .sapMBtnInner{height:auto; font-size:15px}
 .sapUiSizeCompact.menu-favorite-icon .sapMBtnInner{height:15px}
 span.sapMBtnInner.sapMBtnEmphasized {text-shadow:none}
-.sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem {min-height:40px; padding-left:20px; font-weight:700}
+.sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem {min-height:40px; padding-left:20px;color: #222; font-weight:700}
 .sapUiLayoutCSSGrid:not(.form-grid) .sapMLabel {padding-left:0px}
 .search-box .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem {padding-left:0}
 .sapMBtn.sapUiTinyMarginEnd {margin-right:5px!important}
@@ -1535,21 +1535,25 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .awart-popover .sapMCbBg {display:none;}
 
 
-.capability-level .sapMIBar {height:auto!important;margin-bottom: 6px;}
+.capability-level .sapMIBar {height:auto!important;margin-bottom: 8px;}
 .capability-level .sapUiLayoutCSSGrid .head {display: inline-grid;padding: 0!important;justify-content: center;}
 .capability-level .sapUiLayoutCSSGrid .head .sapMText {justify-content: center;font-size:20px;color:#222;font-weight:500;}
-.capability-level.level-3 .sapUiLayoutCSSGrid > *:nth-child(4n + 1) {background-color: #eff7ff;} 
-.capability-level.level-3 .sapUiLayoutCSSGrid > *:nth-child(4n + 2) {background-color: #dbedff;} 
-.capability-level.level-3 .sapUiLayoutCSSGrid > *:nth-child(4n + 3) {background-color: #b8dbff;} 
-.capability-level.level-3 .sapUiLayoutCSSGrid > *:nth-child(4n + 4) {background-color: #99cbff;} 
-
-.capability-level.level-5 .sapUiLayoutCSSGrid > *:nth-child(6n + 1) {background-color: #eff7ff;} 
-.capability-level.level-5 .sapUiLayoutCSSGrid > *:nth-child(6n + 2) {background-color: #dbedff;} 
-.capability-level.level-5 .sapUiLayoutCSSGrid > *:nth-child(6n + 3) {background-color: #b8dbff;} 
-.capability-level.level-5 .sapUiLayoutCSSGrid > *:nth-child(6n + 4) {background-color: #99cbff;} 
-.capability-level.level-5 .sapUiLayoutCSSGrid > *:nth-child(6n + 5) {background-color: #83c0ff;} 
-.capability-level.level-5 .sapUiLayoutCSSGrid > *:nth-child(6n + 6) {background-color: #6ab3ff;} 
-.capability-level .sapUiLayoutCSSGrid > .blank {background-color: transparent;}
+.capability-level.level-3 .sapUiLayoutCSSGrid > *:nth-child(4n + 1) {background-color: #fbfcfd;}
+.capability-level.level-3 .sapUiLayoutCSSGrid > *:nth-child(4n + 2) {background-color: #eff8ff;}
+.capability-level.level-3 .sapUiLayoutCSSGrid > *:nth-child(4n + 3) {background-color: #d5ecfe;}
+.capability-level.level-3 .sapUiLayoutCSSGrid > *:nth-child(4n + 4) {background-color: #c4e4fe;}
+.capability-level.level-4 .sapUiLayoutCSSGrid > *:nth-child(5n + 1) {background-color: #fbfcfd;}
+.capability-level.level-4 .sapUiLayoutCSSGrid > *:nth-child(5n + 2) {background-color: #eff8ff;}
+.capability-level.level-4 .sapUiLayoutCSSGrid > *:nth-child(5n + 3) {background-color: #d5ecfe;}
+.capability-level.level-4 .sapUiLayoutCSSGrid > *:nth-child(5n + 4) {background-color: #c4e4fe;}
+.capability-level.level-4 .sapUiLayoutCSSGrid > *:nth-child(5n + 5) {background-color: #b2dcfe;}
+.capability-level.level-5 .sapUiLayoutCSSGrid > *:nth-child(6n + 1) {background-color: #fbfcfd;}
+.capability-level.level-5 .sapUiLayoutCSSGrid > *:nth-child(6n + 2) {background-color: #eff8ff;}
+.capability-level.level-5 .sapUiLayoutCSSGrid > *:nth-child(6n + 3) {background-color: #d5ecfe;}
+.capability-level.level-5 .sapUiLayoutCSSGrid > *:nth-child(6n + 4) {background-color: #c4e4fe;}
+.capability-level.level-5 .sapUiLayoutCSSGrid > *:nth-child(6n + 5) {background-color: #b2dcfe;}
+.capability-level.level-5 .sapUiLayoutCSSGrid > *:nth-child(6n + 6) {background-color: #99d1fd;}
+.capability-level .sapUiLayoutCSSGrid > .blank {background-color: transparent!important;}
 .capability-level .sapUiLayoutCSSGrid .sapMFlexBox {width:100%;padding:10px 30px; border-radius: 8px;text-align:center;}
 .capability-level .sapUiLayoutCSSGrid .sapMFlexBox .sapMFlexItem {display: flex;}
 .capability-level .sapUiLayoutCSSGrid .sapMLabel, .capability-level .sapUiLayoutCSSGrid .sapMText{width:100%;font-size: 12px; border-radius: 8px;text-align:center!important;text-shadow: none;}
