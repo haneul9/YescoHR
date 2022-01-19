@@ -360,15 +360,78 @@
 
         <HBox class="sapUiResponsiveMargin" width="auto">
           <VBox width="100%">
-            <Title level="H3" text="행동지표 수준 정의" class="component-title" />
+            <Title level="H3" text="행동지표 수준 정의 레벨3개" class="component-title" />
             <VBox>
-              <Panel expandable="true" width="auto" class="capability-level">
+              <Panel expandable="true" width="auto" class="capability-level level-3">
                 <layoutData>
                   <FlexItemData growFactor="1"/>
                 </layoutData>
                 <headerToolbar>
                   <OverflowToolbar height="3rem" style="Clear">
-                    <grid:CSSGrid gridTemplateColumns="1fr 2fr 2fr 2fr 2fr 2fr" gridGap="6px">
+                    <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr" gridGap="6px">
+                      <VBox class="head">
+                        <Text text="역량 수준" />
+                      </VBox>
+                      <VBox>
+                        <Label text="Level 1" />
+                        <Text text="(학습단계)" />
+                      </VBox>
+                      <VBox>
+                        <Label text="Level 2" />
+                      </VBox>
+                      <VBox>
+                        <Label text="Level 3" />
+                        <Text text="(적용 단계  적용/지도)" />
+                      </VBox>
+                    </grid:CSSGrid>
+                  </OverflowToolbar>
+                </headerToolbar>
+                <content>
+                  <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr" gridGap="6px">
+                    <VBox class="head">
+                      <Text text="단계 정의" />
+                    </VBox>
+                    <VBox>
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                    </VBox>
+                    <VBox>
+                      <Text text="Level 1과 3 사이" />
+                    </VBox>
+                    <VBox>
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                    </VBox>
+                    <VBox class="head">
+                      <Text text="특징" />
+                    </VBox>
+                    <VBox>
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                    </VBox>
+                    <VBox class="blank" />
+                    <VBox>
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                    </VBox>
+                  </grid:CSSGrid>
+                </content>
+              </Panel>
+            </VBox>
+          </VBox>
+        </HBox>
+
+        <HBox class="sapUiResponsiveMargin" width="auto">
+          <VBox width="100%">
+            <Title level="H3" text="행동지표 수준 정의 레벨5개" class="component-title" />
+            <VBox>
+              <Panel expandable="true" width="auto" class="capability-level level-5">
+                <layoutData>
+                  <FlexItemData growFactor="1"/>
+                </layoutData>
+                <headerToolbar>
+                  <OverflowToolbar height="3rem" style="Clear">
+                    <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr 2fr 2fr" gridGap="6px">
                       <VBox class="head">
                         <Text text="역량 수준" />
                       </VBox>
@@ -394,7 +457,7 @@
                   </OverflowToolbar>
                 </headerToolbar>
                 <content>
-                  <grid:CSSGrid gridTemplateColumns="1fr 2fr 2fr 2fr 2fr 2fr" gridGap="6px">
+                  <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr 2fr 2fr" gridGap="6px">
                     <VBox class="head">
                       <Text text="단계 정의" />
                     </VBox>
