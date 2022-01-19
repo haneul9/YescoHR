@@ -363,13 +363,19 @@
             <Title level="H3" text="행동지표 수준 정의 레벨3개" class="component-title" />
             <VBox>
               <Panel expandable="true" width="auto" class="capability-level level-3">
+                <customData>
+                  <core:CustomData key="type" value="level3" writeToDom="true" />
+                </customData>
                 <layoutData>
                   <FlexItemData growFactor="1"/>
                 </layoutData>
                 <headerToolbar>
                   <OverflowToolbar height="3rem" style="Clear">
                     <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr" gridGap="8px">
-                      <VBox class="head">
+                      <VBox>
+                        <customData>
+                          <core:CustomData key="type" value="head" writeToDom="true" />
+                        </customData>
                         <Text text="역량 수준" />
                       </VBox>
                       <VBox>
@@ -388,7 +394,10 @@
                 </headerToolbar>
                 <content>
                   <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr" gridGap="8px">
-                    <VBox class="head">
+                    <VBox>
+                      <customData>
+                        <core:CustomData key="type" value="head" writeToDom="true" />
+                      </customData>
                       <Text text="단계 정의" />
                     </VBox>
                     <VBox>
@@ -400,7 +409,10 @@
                     <VBox>
                       <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
                     </VBox>
-                    <VBox class="head">
+                    <VBox>
+                      <customData>
+                        <core:CustomData key="type" value="head" writeToDom="true" />
+                      </customData>
                       <Text text="특징" />
                     </VBox>
                     <VBox>
@@ -408,7 +420,11 @@
                       <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
                       <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
                     </VBox>
-                    <VBox class="blank" />
+                    <VBox>
+                      <customData>
+                        <core:CustomData key="type" value="blank" writeToDom="true" />
+                      </customData>
+                    </VBox>
                     <VBox>
                       <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
                       <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
@@ -425,14 +441,20 @@
           <VBox width="100%">
             <Title level="H3" text="행동지표 수준 정의 레벨5개" class="component-title" />
             <VBox>
-              <Panel expandable="true" width="auto" class="capability-level level-5">
+              <Panel expandable="true" width="auto" class="capability-level">
+                <customData>
+                  <core:CustomData key="type" value="level5" writeToDom="true" />
+                </customData>
                 <layoutData>
                   <FlexItemData growFactor="1"/>
                 </layoutData>
                 <headerToolbar>
                   <OverflowToolbar height="3rem" style="Clear">
                     <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr 2fr 2fr" gridGap="8px">
-                      <VBox class="head">
+                      <VBox>
+                        <customData>
+                          <core:CustomData key="type" value="head" writeToDom="true" />
+                        </customData>
                         <Text text="역량 수준" />
                       </VBox>
                       <VBox>
@@ -458,7 +480,10 @@
                 </headerToolbar>
                 <content>
                   <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr 2fr 2fr" gridGap="8px">
-                    <VBox class="head">
+                    <VBox>
+                      <customData>
+                        <core:CustomData key="type" value="head" writeToDom="true" />
+                      </customData>
                       <Text text="단계 정의" />
                     </VBox>
                     <VBox>
@@ -476,7 +501,10 @@
                     <VBox>
                       <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
                     </VBox>
-                    <VBox class="head">
+                    <VBox>
+                      <customData>
+                        <core:CustomData key="type" value="head" writeToDom="true" />
+                      </customData>
                       <Text text="특징" />
                     </VBox>
                     <VBox>
@@ -484,13 +512,21 @@
                       <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
                       <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
                     </VBox>
-                    <VBox class="blank" />
+                    <VBox>
+                      <customData>
+                        <core:CustomData key="type" value="blank" writeToDom="true" />
+                      </customData>
+                    </VBox>
                     <VBox>
                       <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
                       <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
                       <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
                     </VBox>
-                    <VBox class="blank" />
+                    <VBox>
+                      <customData>
+                        <core:CustomData key="type" value="blank" writeToDom="true" />
+                      </customData>
+                    </VBox>
                     <VBox>
                       <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
                       <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />

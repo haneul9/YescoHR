@@ -71,15 +71,15 @@ sap.ui.define(
           },
           level: {
             expanded: false,
-            type: 'level5',
-            count: 5,
+            type: 'level4',
+            count: 4,
             headers: [
               { type: 'head', text: '역량 수준' }, //
               { type: 'body', label: 'Level 1', text: '(학습 단계)' },
               { type: 'body', label: 'Level 2' },
               { type: 'body', label: 'Level 3', text: '(적응 단계 or 적응/지도)' },
               { type: 'body', label: 'Level 4' },
-              { type: 'body', label: 'Level 5', text: '(지도/조정 단계 or 실현단계)' },
+              // { type: 'body', label: 'Level 5', text: '(지도/조정 단계 or 실현단계)' },
             ],
             rows: [
               { type: 'head', child: [{ text: '단계 정의' }] }, //
@@ -87,13 +87,13 @@ sap.ui.define(
               { type: 'body', child: [{ text: 'Level 1과 3 사이' }] },
               { type: 'body', child: [{ text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }] },
               { type: 'body', child: [{ text: 'Level 3과 5 사이' }] },
-              { type: 'body', child: [{ text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }] },
+              // { type: 'body', child: [{ text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }] },
               { type: 'head', child: [{ text: '특징' }] },
               { type: 'body', child: [{ text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }, { text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }, { text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }] },
               { type: 'blank', child: [] },
               { type: 'body', child: [{ text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }, { text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }, { text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }] },
               { type: 'blank', child: [] },
-              { type: 'body', child: [{ text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }, { text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }, { text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }] },
+              // { type: 'body', child: [{ text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }, { text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }, { text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }] },
             ],
           },
           entry: {
