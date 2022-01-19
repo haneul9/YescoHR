@@ -87,7 +87,7 @@ sap.ui.define(
 
           const mQuotaResult = _.reduce(
             aQuotaResultData,
-            (acc, { Ktart, Kotxt, Crecnt, Usecnt }) => ({
+            (acc, { Ktart, Kotxt, Crecnt, Usecnt, Balcnt }) => ({
               ...acc,
               [Ktart]: {
                 Kotxt,
@@ -174,7 +174,7 @@ sap.ui.define(
             !aSelectedIndices.some((idx) => {
               const oRowData = oViewModel.getProperty(`/list/${idx}`);
 
-              return oRowData.Appty !== this.PAGE_TYPE.NEW || oRowData.ZappStatAl !== '20';
+              return oRowData.Appty !== this.PAGE_TYPE.NEW || oRowData.ZappStatAl !== '60';
             })
           );
         }

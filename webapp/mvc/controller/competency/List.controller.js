@@ -8,7 +8,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/controller/performance/constant/Constants',
+    'sap/ui/yesco/mvc/controller/competency/constant/Constants',
     'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
     'sap/ui/yesco/mvc/model/type/Pernr',
   ],
@@ -25,7 +25,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.performance.List', {
+    return BaseController.extend('sap.ui.yesco.mvc.controller.competency.List', {
       onBeforeShow() {
         const oViewModel = new JSONModel({
           busy: false,
@@ -81,7 +81,7 @@ sap.ui.define(
       },
 
       setTableData({ oViewModel, aRowData }) {
-        const oTable = this.byId('performanceTable');
+        const oTable = this.byId('competencyTable');
 
         oViewModel.setProperty('/list', [...aRowData]);
         oViewModel.setProperty('/listInfo/rowCount', _.get(TableUtils.count({ oTable, aRowData }), 'rowCount', 1));

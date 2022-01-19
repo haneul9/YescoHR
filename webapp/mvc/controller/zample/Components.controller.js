@@ -7,6 +7,7 @@ sap.ui.define(
     'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/DateUtils',
+    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -21,14 +22,15 @@ sap.ui.define(
     FilterOperator,
     JSONModel,
     DateUtils,
+    EmployeeSearch,
     TableUtils,
     MessageBox,
     BaseController
   ) => {
     'use strict';
-
     return BaseController.extend('sap.ui.yesco.mvc.controller.zample.Components', {
       DateUtils,
+      EmployeeSearch,
 
       /* =========================================================== */
       /* lifecycle methods                                           */
@@ -109,21 +111,23 @@ sap.ui.define(
       },
 
       openEmployeeDialog() {
-        var oView = this.getView();
+        this.EmployeeSearch.onSearchDialog.call(this);
+      },
 
-        if (!this._pEmployeeDialog) {
-          this._pEmployeeDialog = Fragment.load({
+      openTestDialog() {
+        const oView = this.getView();
+
+        if (!this.pRejectDialog) {
+          this.pRejectDialog = Fragment.load({
             id: oView.getId(),
-            name: 'sap.ui.yesco.mvc.view.zample.fragment.EmployeeDialog',
+            name: 'sap.ui.yesco.mvc.view.zample.fragment.RejectDialog',
             controller: this,
-          }).then(function (oDialog) {
+          }).then((oDialog) => {
             oView.addDependent(oDialog);
             return oDialog;
           });
         }
-        this._pEmployeeDialog.then(function (oDialog) {
-          oDialog.open();
-        });
+        this.pRejectDialog.then((oDialog) => oDialog.open());
       },
 
       onEmployeeClose() {

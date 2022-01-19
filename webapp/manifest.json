@@ -120,6 +120,9 @@
         { "pattern": "housingLoan", "name": "housingLoan", "target": "housingLoan" },
         { "pattern": "housingLoan/{oDataKey}", "name": "housingLoan-detail", "target": "housingLoanDetail" },
         { "pattern": "housingLoanRepay/{oDataKey}/:lonid:", "name": "housingLoan-repay", "target": "housingLoanRepay" },
+        
+        { "pattern": "healthCare", "name": "healthCare", "target": "healthCare" },
+        { "pattern": "healthCare/{oDataKey}", "name": "healthCare-detail", "target": "healthCareDetail" },
 
         { "pattern": "notice", "name": "notice", "target": "notice" },
         { "pattern": "notice/{Sdate}/{Seqnr}", "name": "notice-detail", "target": "noticeDetail" },
@@ -161,6 +164,9 @@
         { "pattern": "m/performancePry/{sType}/{sYear}", "name": "m/performancePry-detail", "target": "performanceDetail" },
         { "pattern": "m/performanceSry", "name": "m/performanceSry", "target": "m/performanceSry" },
         { "pattern": "m/performanceSry/{sType}/{sYear}", "name": "m/performanceSry-detail", "target": "performanceDetail" },
+        
+        { "pattern": "competency", "name": "competency", "target": "competency" },
+        { "pattern": "competency/{sType}/{sYear}", "name": "competency-detail", "target": "competencyDetail" },
         
         { "pattern": "m/organization", "name": "m/organization", "target": "m/organization" },
         
@@ -205,6 +211,9 @@
         "housingLoan": { "viewId": "housingLoan", "viewPath": "sap.ui.yesco.mvc.view.housingLoan", "viewName": "HousingLoan" },
         "housingLoanDetail": { "viewId": "housingLoanDetail", "viewPath": "sap.ui.yesco.mvc.view.housingLoan", "viewName": "HousingLoanDetail" },
         "housingLoanRepay": { "viewId": "housingLoanRepay", "viewPath": "sap.ui.yesco.mvc.view.housingLoan", "viewName": "HousingLoanRepayment" },
+        
+        "healthCare": { "viewId": "healthCare", "viewPath": "sap.ui.yesco.mvc.view.healthCare", "viewName": "HealthCare" },
+        "healthCareDetail": { "viewId": "healthCareDetail", "viewPath": "sap.ui.yesco.mvc.view.healthCare", "viewName": "HealthCareDetail" },
 
         "notice": { "viewId": "notice", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "Ess" },
         "h/notice": { "viewId": "h_notice", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "Hass" },
@@ -241,6 +250,9 @@
         "m/performancePry": { "viewId": "m_performancePry", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "ListPrimary" },
         "m/performanceSry": { "viewId": "m_performanceSry", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "ListSecondary" },
         "performanceDetail": { "viewId": "performanceDetail", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "Detail" },
+        
+        "competency": { "viewId": "competency", "viewPath": "sap.ui.yesco.mvc.view.competency", "viewName": "List" },
+        "competencyDetail": { "viewId": "competencyDetail", "viewPath": "sap.ui.yesco.mvc.view.competency", "viewName": "Detail" },
         
         "m/organization": { "viewId": "m_organization", "viewPath": "sap.ui.yesco.mvc.view.organization", "viewName": "Main" },
         

@@ -190,12 +190,14 @@ sap.ui.define(
         const iYearCount = _.sum([mGroupByAwart['2000'], mGroupByAwart['2001'], mGroupByAwart['2002']]) || 0;
         const iSummerCount = mGroupByAwart['2010'] || 0;
 
-        _.set(mSummary, 'Plncnt', iYearCount);
-        _.set(mSummary, 'Plnperc', _.chain(iYearCount).divide(mSummary.Crecnt).multiply(100).floor().value());
-        _.set(mSummary, 'Plncnt2', iSummerCount);
-        _.set(mSummary, 'Plnperc2', _.chain(iSummerCount).divide(mSummary.Crecnt2).multiply(100).floor().value());
-        _.set(mSummary, 'Usecnt3', _.add(iYearCount, iSummerCount));
-        _.set(mSummary, 'Useperc3', _.chain(_.add(iYearCount, iSummerCount)).divide(mSummary.Crecnt3).multiply(100).floor().value());
+        _.chain(mSummary)
+          .set('Plncnt', iYearCount)
+          .set('Plnperc', _.chain(iYearCount).divide(mSummary.Crecnt).multiply(100).floor().value())
+          .set('Plncnt2', iSummerCount)
+          .set('Plnperc2', _.chain(iSummerCount).divide(mSummary.Crecnt2).multiply(100).floor().value())
+          .set('Usecnt3', _.add(iYearCount, iSummerCount))
+          .set('Useperc3', _.chain(_.add(iYearCount, iSummerCount)).divide(mSummary.Crecnt3).multiply(100).floor().value())
+          .commit();
       },
 
       checkLimit(mTargetDay, sAwart) {
@@ -228,7 +230,7 @@ sap.ui.define(
 
           if (!oSignature.isDraw()) throw new UI5Error({ code: 'E', message: this.getBundleText('MSG_20005') }); // 서명을 입력하여 주십시오.
 
-          await AttachFileAction.upload.call(this, mSummary.Appno, this.APPTP, [oSignature.dataURItoBlob()], `Leave-signature-${this.getAppointeeProperty('Pernr')}`);
+          await AttachFileAction.upload.call(this, mSummary.Appno, this.APPTP, [oSignature.dataURItoBlob()], `Leave-signature-${this.getAppointeeProperty('Pernr')}.png`);
         } catch (oError) {
           throw oError;
         }
@@ -257,7 +259,9 @@ sap.ui.define(
           // {저장|신청}되었습니다.
           MessageBox.success(this.getBundleText('MSG_00007', _.isEqual(sPrcty, 'T') ? 'LABEL_00103' : 'LABEL_00121'));
         } catch (oError) {
-          throw oError;
+          this.debug('Controller > leavePlan App > createProcess Error', oError);
+
+          AppUtils.handleError(oError);
         }
       },
 

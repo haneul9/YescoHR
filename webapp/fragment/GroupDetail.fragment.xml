@@ -11,35 +11,33 @@
             <Button text="{i18n>LABEL_00115}" press=".EmployeeSearch.onCloseClick" />
         </endButton>
         <content>
-            <table:Table id="orgTable" rows="{/employeeModel/org/orgList}" rowSelectionChange=".EmployeeSearch.onOrgListRowSelection" visibleRowCount="{/employeeModel/org/orgList/length}" rowHeight="44" columnHeaderHeight="45">
-                <table:extension>
-                    <grid:CSSGrid gridTemplateColumns="1fr 2fr 1fr 2fr 1fr" gridGap="10px" class="sapUiMediumMarginBottom">
-                        <Label text="{i18n>LABEL_00259}" />
-                        <VBox>
-                            <custom:DatePicker dateValue="{ path: '/employeeModel/org/Date', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" />
-                        </VBox>
-                        <Label text="{i18n>LABEL_00201}" />
-                        <VBox>
-                            <Input value="{/employeeModel/org/Word}"/>
-                        </VBox>
-                        <Button icon="sap-icon://search" text="{i18n>LABEL_00101}" press=".EmployeeSearch.onOrgList" />
-                    </grid:CSSGrid>
-                </table:extension>
-                <table:columns>
-                    <table:Column width="auto" sortProperty="Stext" filterProperty="Stext">
-                        <Label text="{i18n>LABEL_00227}"/>
-                        <table:template>
-                            <Text text="{Stext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
-                        </table:template>
-                    </table:Column>
-                    <table:Column width="200px" sortProperty="EnameM" filterProperty="EnameM">
-                        <Label text="{i18n>LABEL_00230}"/>
-                        <table:template>
-                            <Text text="{EnameM}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-                        </table:template>
-                    </table:Column>
-                </table:columns>
-            </table:Table>
+            <VBox class="hCardBox sapUiSmallMarginBottom">
+                <HBox class="form-bar" justifyContent="Start" alignItems="Center">
+                    <Label text="{i18n>LABEL_00259}" />
+                    <custom:DatePicker dateValue="{ path: '/employeeModel/org/Date', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="200px" />
+                    <Label text="{i18n>LABEL_00201}" />
+                    <Input value="{/employeeModel/org/Word}" width="200px" />
+                    <Button icon="asset/image/icon_search03.png" text="{i18n>LABEL_00101}" press=".EmployeeSearch.onOrgList" class="icon-button" />
+                </HBox>
+            </VBox>            
+            <VBox class="hCardBox">
+                <table:Table id="orgTable" rows="{/employeeModel/org/orgList}" rowSelectionChange=".EmployeeSearch.onOrgListRowSelection" visibleRowCount="{/employeeModel/org/orgList/length}" rowHeight="44" columnHeaderHeight="45">
+                    <table:columns>
+                        <table:Column width="auto" sortProperty="Stext" filterProperty="Stext">
+                            <Label text="{i18n>LABEL_00227}"/>
+                            <table:template>
+                                <Text text="{Stext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+                            </table:template>
+                        </table:Column>
+                        <table:Column width="200px" sortProperty="EnameM" filterProperty="EnameM">
+                            <Label text="{i18n>LABEL_00230}"/>
+                            <table:template>
+                                <Text text="{EnameM}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                            </table:template>
+                        </table:Column>
+                    </table:columns>
+                </table:Table>
+            </VBox>
         </content>
     </Dialog>
 </core:FragmentDefinition>

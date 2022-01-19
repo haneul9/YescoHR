@@ -11,7 +11,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/Validator',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/controller/performance/constant/Constants',
+    'sap/ui/yesco/mvc/controller/competency/constant/Constants',
     'sap/ui/yesco/mvc/model/type/Date',
     'sap/ui/yesco/mvc/model/type/Percent',
   ],
@@ -31,7 +31,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.performance.Detail', {
+    return BaseController.extend('sap.ui.yesco.mvc.controller.competency.Detail', {
       getPreviousRouteName() {
         return _.chain(this.getRouter().getHashChanger().getHash()).split('/').dropRight(2).join('/').value();
       },
@@ -64,11 +64,29 @@ sap.ui.define(
           param: {},
           type: '',
           year: moment().format('YYYY'),
-          tab: { selectedKey: Constants.TAB.GOAL },
           appointee: {},
           stage: {
             headers: [],
             rows: [],
+          },
+          level: {
+            count: 3,
+            headers: [
+              { width: '16%', Todo1: '역량 수준' }, //
+              { width: '21%', Todo1: 'Level 1', Todo2: '(학습 단계)' },
+              { width: '21%', Todo1: 'Level 2' },
+              { width: '21%', Todo1: 'Level 3', Todo2: '(적응 단계 or 적응/지도)' },
+              { width: '21%', Todo1: 'Level 4' },
+              { width: '21%', Todo1: 'Level 5', Todo2: '(지도/조정 단계 or 실현단계)' },
+            ],
+            rows: [
+              { width: '16%', Todo1: '단계 정의', Todo2: '특징' }, //
+              { width: '21%', Todo1: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계', Todo2: '직무와 관련된 각종 단위 업무들을 학습함' },
+              { width: '21%', Todo1: 'Level 1과 3 사이' },
+              { width: '21%', Todo1: '학습된 지식을 적용하고 자신의 분야에서 전문화 및 전문역량을 완성하는 단계', Todo2: '타인의 지도 없이도 독립적인 문제해결 및 의사결정을 시도함' },
+              { width: '21%', Todo1: 'Level 3과 5 사이' },
+              { width: '21%', Todo1: '소속 조직의 업무를 리드하고 프로세스를 조율하며, 구성원들을 지도하는 단계', Todo2: '직무수행영역에서 가장 영항력 있는 의사결정을 내리며 자원배분의 책임을 가짐' },
+            ],
           },
           entry: {
             levels: [],
@@ -94,8 +112,16 @@ sap.ui.define(
           },
           goals: {
             valid: [],
-            strategy: [],
-            duty: [],
+            strategy: [
+              { Obj0: 'Integrity', Zapgme: '4', Zapgma: '5', Zmarslt: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' }, //
+              { Obj0: 'Respect', Zapgme: '5', Zapgma: '4', Zmarslt: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' },
+              { Obj0: 'Excellence', Zapgme: '3', Zapgma: '3', Zmarslt: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' },
+              { Obj0: '성장 마인드', Zapgme: '2', Zapgma: '2', Zmarslt: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' },
+            ],
+            duty: [
+              { Obj0: '창의적 변화주도', Zapgme: '1', Zapgma: '1', Zmarslt: '조직이 새로운 아이디어에 더욱 개방적이고 유연하게 대처 할 수 있도록 활력을 불어넣으며 기존의 방식에서 과감히\n탈피하여 새로운 방법, 절차, 기술을 적용하도록 적극적으로 장려하여 창의적 변화를 주도한다.' }, //
+              { Obj0: '통찰력 있는 비전제시', Zapgme: '5', Zapgma: '4', Zmarslt: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' },
+            ],
           },
         });
         this.setViewModel(oViewModel);
@@ -253,9 +279,9 @@ sap.ui.define(
           }
 
           // 목표(전략/직무)
-          const mGroupDetailByZ101 = _.groupBy(mDetailData.AppraisalDocDetailSet.results, 'Z101');
+          // const mGroupDetailByZ101 = _.groupBy(mDetailData.AppraisalDocDetailSet.results, 'Z101');
 
-          _.forEach(Constants.GOAL_TYPE, (v) => oViewModel.setProperty(`/goals/${v.name}`, _.map(mGroupDetailByZ101[v.code], this.initializeGoalItem.bind(this)) ?? []));
+          // _.forEach(Constants.GOAL_TYPE, (v) => oViewModel.setProperty(`/goals/${v.name}`, _.map(mGroupDetailByZ101[v.code], this.initializeGoalItem.bind(this)) ?? []));
           oViewModel.setProperty('/currentItemsLength', _.size(mDetailData.AppraisalDocDetailSet.results));
           oViewModel.setProperty(
             '/goals/valid',

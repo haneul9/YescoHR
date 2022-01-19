@@ -42,7 +42,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.medical.MedicalDetail', {
+    return BaseController.extend('sap.ui.yesco.mvc.controller.healthCare.HealthCareDetail', {
       LIST_PAGE_ID: 'container-ehr---medical',
       DIALOG_FILE_ID: 'DialogAttFile',
 
@@ -673,6 +673,7 @@ sap.ui.define(
           }).then((oDialog) => {
             // connect dialog to the root view of this component (models, lifecycle)
             this.getView().addDependent(oDialog);
+            oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
             this.settingsAttachDialog();
 
             oDialog.open();
@@ -1050,6 +1051,7 @@ sap.ui.define(
           }).then((oDialog) => {
             // connect dialog to the root view of this component (models, lifecycle)
             this.getView().addDependent(oDialog);
+            oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
             this.settingsAttachDialog();
 
             oDialog.open();

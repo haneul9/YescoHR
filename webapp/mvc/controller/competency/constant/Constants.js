@@ -6,10 +6,9 @@ sap.ui.define(
     'use strict';
 
     return {
-      LIST_PAGE: { ME: { route: 'performance', detail: 'performance-detail', id: 'container-ehr---performance' }, MA: { route: 'm/performancePry', detail: 'm/performancePry-detail', id: 'container-ehr---m_performancePry' }, MB: { route: 'm/performanceSry', detail: 'm/performanceSry-detail', id: 'container-ehr---m_performanceSry' } },
-      REJECT_DIALOG_ID: 'sap.ui.yesco.mvc.view.performance.fragment.RejectDialog',
+      LIST_PAGE: { ME: { route: 'competency', detail: 'competency-detail', id: 'container-ehr---competency' }, MA: { route: 'm/competencyPry', detail: 'm/competencyPry-detail', id: 'container-ehr---m_competencyPry' }, MB: { route: 'm/competencySry', detail: 'm/competencySry-detail', id: 'container-ehr---m_competencySry' } },
+      REJECT_DIALOG_ID: 'sap.ui.yesco.mvc.view.competency.fragment.RejectDialog',
 
-      TAB: { GOAL: 'T01', OPINION: 'T02' },
       APPRAISER_TYPE: { ME: 'ME', MA: 'MA', MB: 'MB' },
       DISPLAY_TYPE: { EDIT: 'X', DISPLAY_ONLY: 'D', HIDE: 'H', HIDDEN_VALUE: 'V' },
       GOAL_TYPE: { STRATEGY: { code: '1', name: 'strategy' }, DUTY: { code: '2', name: 'duty' } },

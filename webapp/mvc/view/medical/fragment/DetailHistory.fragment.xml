@@ -14,9 +14,9 @@
     <table:Table id="medHisTable" cellClick=".onDetailsRow" fixedColumnCount="5" rowSelectionChange=".onRowSelection" class="row-link" rows="{/HisList}" visibleRowCount="{/listInfo/rowCount}" width="100%" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
       <table:rowSettingsTemplate>
         <table:RowSettings highlight="{
-                    path: 'ZappStat',
-                    formatter: '.TableUtils.rowHighlight'
-                }"/>
+            path: 'ZappStat',
+            formatter: '.TableUtils.rowHighlight'
+        }"/>
       </table:rowSettingsTemplate>
       <table:columns>
         <table:Column width="50px">
@@ -29,9 +29,9 @@
           <Label text="{i18n>LABEL_00144}"/>
           <table:template>
             <Text text="{
-                                path: 'ZappStat',
-                                formatter: '.TableUtils.StatusTxt'
-                            }" width="100%" textAlign="Center">
+                  path: 'ZappStat',
+                  formatter: '.TableUtils.StatusTxt'
+              }" width="100%" textAlign="Center">
               <customData>
                 <core:CustomData key="status" value="Z{ZappStat}" writeToDom="true" />
               </customData>
@@ -42,24 +42,24 @@
           <Label text="{i18n>LABEL_09012}"/>
           <table:template>
             <Text text="{
-                            path: 'Begda',
-                            type: 'sap.ui.model.type.Date',
-                            formatOptions: {
-                                pattern: 'yyyy.MM.dd'
-                            }
-                        }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+                path: 'Begda',
+                type: 'sap.ui.model.type.Date',
+                formatOptions: {
+                    pattern: 'yyyy.MM.dd'
+                }
+            }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
         <table:Column width="120px">
           <Label text="{i18n>LABEL_09013}"/>
           <table:template>
             <Text text="{
-                            path: 'Endda',
-                            type: 'sap.ui.model.type.Date',
-                            formatOptions: {
-                                pattern: 'yyyy.MM.dd'
-                            }
-                        }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+                path: 'Endda',
+                type: 'sap.ui.model.type.Date',
+                formatOptions: {
+                    pattern: 'yyyy.MM.dd'
+                }
+            }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
         <table:Column width="200px">
@@ -109,6 +109,24 @@
           <table:template>
             <Text text="{
                 path: 'Pybet',
+                type: 'sap.ui.yesco.mvc.model.type.Currency'
+            }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+        <table:Column width="150px" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
+          <Label text="{i18n>LABEL_09027}"/>
+          <table:template>
+            <Text text="{
+                path: 'Mobet',
+                type: 'sap.ui.yesco.mvc.model.type.Currency'
+            }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+        <table:Column width="150px" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
+          <Label text="{i18n>LABEL_09028}"/>
+          <table:template>
+            <Text text="{
+                path: 'Ttmon',
                 type: 'sap.ui.yesco.mvc.model.type.Currency'
             }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
           </table:template>
