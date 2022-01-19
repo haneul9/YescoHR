@@ -62,8 +62,7 @@ sap.ui.define(
           oViewModel.setProperty('/busy', true);
           oViewModel.setProperty('/type', sType);
 
-          // const aRowData = await Client.getEntitySet(oModel, 'AppraisalCoPeeList', {
-          const aRowData = await Client.getEntitySet(oModel, 'AppraisalPeeList', {
+          const aRowData = await Client.getEntitySet(oModel, 'AppraisalCoPeeList', {
             Prcty: Constants.PROCESS_TYPE.LIST.code,
             Zzappgb: sType,
             Menid: this.getCurrentMenuId(),

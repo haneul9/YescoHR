@@ -51,7 +51,7 @@ sap.ui.define(
                 decimals: '1',
                 numberSuffix: '₩',
                 useDataPlotColorForLabels: '1',
-                theme: 'fusion',
+                theme: 'ocean',
                 paletteColors: '#7bb4eb,#81daea,#faca74',
               },
               data: [
