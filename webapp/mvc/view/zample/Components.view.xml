@@ -548,6 +548,7 @@
             <Title level="H3" text="Dialog" class="component-title" />
             <HBox>
               <Button width="117px" text="사원검색" press=".openEmployeeDialog" />
+              <Button width="117px" text="Dialog Test" press=".openTestDialog" />
             </HBox>
           </VBox>
         </HBox>
