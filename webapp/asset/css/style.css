@@ -1541,30 +1541,34 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 
 .capability-level .sapMIBar {height:auto!important;margin-bottom: 8px;}
 .capability-level .sapUiLayoutCSSGrid [data-type="head"] {display: inline-grid;padding: 0!important;justify-content: center;}
-.capability-level .sapUiLayoutCSSGrid [data-type="head"] .sapMText {justify-content: center;font-size:20px;color:#222;font-weight:500;}
-.capability-level[data-type="level3"] .sapUiLayoutCSSGrid > *:nth-child(4n + 1) {background-color: #fbfcfd;}
-.capability-level[data-type="level3"] .sapUiLayoutCSSGrid > *:nth-child(4n + 2) {background-color: #eff8ff;}
-.capability-level[data-type="level3"] .sapUiLayoutCSSGrid > *:nth-child(4n + 3) {background-color: #d5ecfe;}
-.capability-level[data-type="level3"] .sapUiLayoutCSSGrid > *:nth-child(4n + 4) {background-color: #c4e4fe;}
-.capability-level[data-type="level4"] .sapUiLayoutCSSGrid > *:nth-child(5n + 1) {background-color: #fbfcfd;}
-.capability-level[data-type="level4"] .sapUiLayoutCSSGrid > *:nth-child(5n + 2) {background-color: #eff8ff;}
-.capability-level[data-type="level4"] .sapUiLayoutCSSGrid > *:nth-child(5n + 3) {background-color: #d5ecfe;}
-.capability-level[data-type="level4"] .sapUiLayoutCSSGrid > *:nth-child(5n + 4) {background-color: #c4e4fe;}
-.capability-level[data-type="level4"] .sapUiLayoutCSSGrid > *:nth-child(5n + 5) {background-color: #b2dcfe;}
-.capability-level[data-type="level5"] .sapUiLayoutCSSGrid > *:nth-child(6n + 1) {background-color: #fbfcfd;}
-.capability-level[data-type="level5"] .sapUiLayoutCSSGrid > *:nth-child(6n + 2) {background-color: #eff8ff;}
-.capability-level[data-type="level5"] .sapUiLayoutCSSGrid > *:nth-child(6n + 3) {background-color: #d5ecfe;}
-.capability-level[data-type="level5"] .sapUiLayoutCSSGrid > *:nth-child(6n + 4) {background-color: #c4e4fe;}
-.capability-level[data-type="level5"] .sapUiLayoutCSSGrid > *:nth-child(6n + 5) {background-color: #b2dcfe;}
-.capability-level[data-type="level5"] .sapUiLayoutCSSGrid > *:nth-child(6n + 6) {background-color: #99d1fd;}
+.capability-level .sapUiLayoutCSSGrid [data-type="head"] .sapMText {justify-content: center;font-size:14px!important;color:#222;font-weight:600;}
+.capability-level[data-type="level3"] .sapUiLayoutCSSGrid > *:nth-child(4n + 1) {background-color: #EFF8FF;}
+.capability-level[data-type="level3"] .sapUiLayoutCSSGrid > *:nth-child(4n + 2) {background-color: #A2EBD9;}
+.capability-level[data-type="level3"] .sapUiLayoutCSSGrid > *:nth-child(4n + 3) {background-color: #9FE5E2;}
+.capability-level[data-type="level3"] .sapUiLayoutCSSGrid > *:nth-child(4n + 4) {background-color: #9DDEEB;}
+.capability-level[data-type="level4"] .sapUiLayoutCSSGrid > *:nth-child(5n + 1) {background-color: #EFF8FF;}
+.capability-level[data-type="level4"] .sapUiLayoutCSSGrid > *:nth-child(5n + 2) {background-color: #A2EBD9;}
+.capability-level[data-type="level4"] .sapUiLayoutCSSGrid > *:nth-child(5n + 3) {background-color: #9FE5E2;}
+.capability-level[data-type="level4"] .sapUiLayoutCSSGrid > *:nth-child(5n + 4) {background-color: #9DDEEB;}
+.capability-level[data-type="level4"] .sapUiLayoutCSSGrid > *:nth-child(5n + 5) {background-color: #9BD8F4;}
+.capability-level[data-type="level5"] .sapUiLayoutCSSGrid > *:nth-child(6n + 1) {background-color: #EFF8FF;}
+.capability-level[data-type="level5"] .sapUiLayoutCSSGrid > *:nth-child(6n + 2) {background-color: #A2EBD9;}
+.capability-level[data-type="level5"] .sapUiLayoutCSSGrid > *:nth-child(6n + 3) {background-color: #9FE5E2;}
+.capability-level[data-type="level5"] .sapUiLayoutCSSGrid > *:nth-child(6n + 4) {background-color: #9DDEEB;}
+.capability-level[data-type="level5"] .sapUiLayoutCSSGrid > *:nth-child(6n + 5) {background-color: #9BD8F4;}
+.capability-level[data-type="level5"] .sapUiLayoutCSSGrid > *:nth-child(6n + 6) {background-color: #99D1FD;}
 .capability-level .sapUiLayoutCSSGrid > [data-type="blank"] {background-color: transparent!important;}
 .capability-level .sapUiLayoutCSSGrid .sapMFlexBox {width:100%;padding:10px 30px; border-radius: 8px;text-align:center;}
+.capability-level .sapMPanelContent  .sapUiLayoutCSSGrid .sapMFlexBox {padding:20px 30px;} 
 .capability-level .sapUiLayoutCSSGrid .sapMFlexBox .sapMFlexItem {display: flex;}
-.capability-level .sapUiLayoutCSSGrid .sapMLabel, .capability-level .sapUiLayoutCSSGrid .sapMText{width:100%;font-size: 12px; border-radius: 8px;text-align:center!important;text-shadow: none;}
+.capability-level div:not(.sapMIBar) .sapUiLayoutCSSGrid .sapMFlexBox .sapMFlexItem + .sapMFlexItem {margin-top:0.8rem;}
+.capability-level .sapMIBar .sapUiLayoutCSSGrid .sapMText {font-size:12px;} 
+.capability-level .sapUiLayoutCSSGrid .sapMLabel, .capability-level .sapUiLayoutCSSGrid .sapMText{width:100%;font-size: 14px; border-radius: 8px;text-align:center!important;text-shadow: none;line-height: 1.25;}
 .capability-level .sapUiLayoutCSSGrid .sapMLabel {font-size: 20px;font-weight:600;}
 .capability-level .sapUiLayoutCSSGrid .sapMLabel bdi {margin: 0 auto}
 .capability-level .sapMPanelContent {position: relative;padding: 0;padding-left:65px;}
 .capability-level .sapMIBar.sapMTB .sapMBarChild:only-child {padding-left: 0;padding-right: 0;}
+.capability-level .sapMPanelExpandableIcon {top: 10px;}
 
 .dialog-post {padding: 16px 0px 85px !important;}
 .dialog-post .sapMDialogSection {padding: 0px !important;}
