@@ -803,6 +803,7 @@ span.sapMBtnInner.sapMBtnEmphasized {text-shadow:none}
 .sapUiSizeCompact .sapMTokenIcon.sapUiIcon::before {content:'\e03e'}
 .sapMTokenizerIndicator {padding-left:11px}
 .sapMSltArrow::before {font-family:"SAP-icons"; content:"\e1ef"; font-weight:100; color:#999; font-size:18px; line-height:2}
+[role=combobox] .sapMInputBaseIcon {font-size:1rem;}
 
 /*radio*/
 .sapUiSizeCompact .sapMRbG .sapMRbBLabel {padding-left:29px}
@@ -1065,13 +1066,9 @@ html.sap-desktop .sapMPopoverFooter .sapContrast.sapMIBar.sapMFooter-CTX, html.s
 .sapUiSizeCompact.sapMDialog.file-list-dialog>.sapMDialogSection, .sapUiSizeCompact .sapMDialog.file-list-dialog>.sapMDialogSection {padding-bottom:20px; }
 .sapMDialog>footer {height:80px}
 .sapMDialog>footer .sapContrast span.sapMBtnInner {font-size:15px; font-weight:700}
-.sapMDialog>footer .sapContrast span.sapMBtnInner.sapMBtnEmphasized {
- background-image:none;
- background-color:#002866;
- border-color:#002866;
- color:#ffffff;
- text-shadow:0 0 0.125rem rgb(0 0 0 / 0%);
-}
+.sapMDialog>footer .sapContrast span.sapMBtnInner.sapMBtnEmphasized {background-image:none;background-color:#002866;border-color:#002866;color:#ffffff;text-shadow:0 0 0.125rem rgb(0 0 0 / 0%);}
+.sapMDialog>footer .sapMBtnDisabled span.sapMBtnInner.sapMBtnEmphasized {background-image:none;background-color:#DDE1E6;border-color:#DDE1E6;color:#9CA5AA;text-shadow:0 0 0.125rem rgb(0 0 0 / 0%);}
+.sapMDialog>footer .sapMBtnDisabled:hover span.sapMBtnInner.sapMBtnEmphasized {background-image:none;background-color:#DDE1E6!important;border-color:#DDE1E6;color:#9CA5AA!important;text-shadow:0 0 0.125rem rgb(0 0 0 / 0%);}
 .sapMDialog>footer .sapContrast span.sapMBtnInner.sapMBtnDefault {background-image:none; background-color:#D8DBDD; border-color:#707070; text-shadow:0 0 0.125rem rgb(0 0 0 / 0%); color:#5A6268!important}
 .sapMDialog>footer .sapContrast span.sapMBtnInner.sapMBtnDefault:hover {background-image:none; background-color:#E2E6EA!important; border-color:#707070; text-shadow:0 0 0.125rem rgb(0 0 0 / 0%); color:#5A6268!important}
 .sapMDialog>footer .sapMIBar.sapMTB .sapMBarChild:last-child {margin-right:0px; margin-left:5px}
