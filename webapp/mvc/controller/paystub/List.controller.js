@@ -25,7 +25,9 @@ sap.ui.define(
       TableUtils: TableUtils,
       TABLE_ID: 'paystubTable',
 
-      onBeforeShow() {
+      onInit() {
+        BaseController.prototype.onInit.apply(this, arguments);
+
         const today = moment();
         const oViewModel = new JSONModel({
           busy: false,
@@ -34,10 +36,10 @@ sap.ui.define(
           },
           summary: {
             year: today.format('YYYY'),
-            Todo1: '20,000,000',
-            Todo2: '20,000,000',
-            Todo3: '2,500,000',
-            Todo4: '42,500,000',
+            Bet01: '0',
+            Bet02: '0',
+            Bet03: '0',
+            Bet04: '0',
             dataSources: {
               chart: {
                 showLegend: '0',
@@ -56,18 +58,18 @@ sap.ui.define(
               },
               data: [
                 {
-                  label: '급여',
-                  value: '20000000',
+                  label: this.getBundleText('LABEL_13002'), // 급여
+                  value: '0',
                   isSliced: '1',
                 },
                 {
-                  label: '상여',
-                  value: '20000000',
+                  label: this.getBundleText('LABEL_13003'), // 상여
+                  value: '0',
                   isSliced: '0',
                 },
                 {
-                  label: '인정상여',
-                  value: '2500000',
+                  label: this.getBundleText('LABEL_13004'), // 인정상여
+                  value: '0',
                   isSliced: '0',
                 },
               ],
@@ -91,7 +93,9 @@ sap.ui.define(
           list: [],
         });
         this.setViewModel(oViewModel);
+      },
 
+      onBeforeShow() {
         TableUtils.summaryColspan({ oTable: this.byId(this.TABLE_ID), aHideIndex: [1, 2] });
       },
 
@@ -109,8 +113,8 @@ sap.ui.define(
             Endym: moment(sYear).month(11).format('YYYYMM'),
           });
 
-          this.buildChart();
           this.setTableData({ oViewModel, aRowData });
+          this.buildChart();
         } catch (oError) {
           this.debug('Controller > paystub List > onObjectMatched Error', oError);
 
@@ -130,6 +134,13 @@ sap.ui.define(
           vCalcProps: /^Bet0/,
         });
 
+        oViewModel.setProperty('/summary/Bet01', _.get(mSumRow, 'Bet01', '0'));
+        oViewModel.setProperty('/summary/Bet02', _.get(mSumRow, 'Bet02', '0'));
+        oViewModel.setProperty('/summary/Bet03', _.get(mSumRow, 'Bet03', '0'));
+        oViewModel.setProperty('/summary/Bet04', _.get(mSumRow, 'Bet04', '0'));
+        oViewModel.setProperty('/summary/dataSources/data/0/value', _.get(mSumRow, 'Bet01', '0'));
+        oViewModel.setProperty('/summary/dataSources/data/1/value', _.get(mSumRow, 'Bet02', '0'));
+        oViewModel.setProperty('/summary/dataSources/data/2/value', _.get(mSumRow, 'Bet03', '0'));
         oViewModel.setProperty('/list', _.isEmpty(mSumRow) ? [] : [...aRowData.map((o, i) => ({ ...o, Idx: ++i })), { Idx: sSumLabel, ...mSumRow }]);
         oViewModel.setProperty('/listInfo', { ...oListInfo, ...TableUtils.count({ oTable, aRowData, bHasSumRow: true }) });
 
@@ -171,6 +182,7 @@ sap.ui.define(
           });
 
           this.setTableData({ oViewModel, aRowData });
+          this.buildChart();
         } catch (oError) {
           this.debug('Controller > paystub List > onPressSearch Error', oError);
 
