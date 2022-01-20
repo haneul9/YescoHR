@@ -35,9 +35,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.certification.certificationDetail', {
-      LIST_PAGE_ID: 'container-ehr---certification',
-      LIST_PAGE: 'certification',
-
       PostcodeDialogHandler: null,
       TextUtils: TextUtils,
       TableUtils: TableUtils,
