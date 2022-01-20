@@ -51,7 +51,7 @@ sap.ui.define(
                 formatNumber: '1',
                 formatNumberScale: false,
                 decimals: '1',
-                numberSuffix: '₩',
+                // numberSuffix: '₩',
                 useDataPlotColorForLabels: '1',
                 theme: 'ocean',
                 paletteColors: '#7bb4eb,#81daea,#faca74',
