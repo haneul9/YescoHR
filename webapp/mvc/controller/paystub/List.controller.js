@@ -76,9 +76,10 @@ sap.ui.define(
             },
           },
           listInfo: {
+            Title: this.getBundleText('LABEL_13037'), // 급상여내역
             rowCount: 2,
             totalCount: 0,
-            infoMessage: this.getBundleText('MSG_13001'), // 현재 데이터를 수정하고자 할 경우에는 확정 상태의 데이터를 선택한 다음 신청 버튼을 클릭하시기 바랍니다.
+            infoMessage: this.getBundleText('MSG_13001'), // 라인을 클릭하시면 상세내역이 조회됩니다.
             isShowProgress: false,
             progressCount: 0,
             isShowApply: false,
