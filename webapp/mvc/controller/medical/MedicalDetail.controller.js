@@ -652,6 +652,114 @@ sap.ui.define(
         });
       },
 
+      // Excel Copy to Dialog
+      async excelCopy() {
+        const sCopiedText = await window.navigator.clipboard.readText();
+        const aTextList = sCopiedText.split('\t');
+        const oDetailController = AppUtils.getAppComponent().byId('medicalDetail');
+        const oViewModel = oDetailController.getModel();
+
+        aTextList.forEach((e, i) => {
+          switch (i) {
+            // 진료기간 paste
+            case 0:
+              const oDateRange = oDetailController.byId(`DialogData${i + 1}`);
+              const sDate = e.trim().replace(/[^\d]/g, '');
+              const iDateLength = sDate.length;
+              const iBaseYear = parseInt(oViewModel.getProperty('/sYear'));
+
+              // 선택된 날짜에 '-'가 있는경우 ('20200101-20200202')
+              if (iDateLength === 17) {
+                const dDate = moment(moment(sDate.slice(0, 8)).format('YYYY-MM-DD')).toDate();
+                const dSecendDate = moment(moment(sDate.slice(9)).format('YYYY-MM-DD')).toDate();
+                const iDateYear = moment(dDate).year();
+                const iSecDateYear = moment(dSecendDate).year();
+
+                // 유효한 날짜체크
+                if (iBaseYear !== iDateYear || iBaseYear !== iSecDateYear) {
+                  MessageBox.alert(oDetailController.getController().getBundleText('MSG_09060', iBaseYear));
+                  oDateRange.setDateValue(new Date());
+                  oDateRange.setSecondDateValue(new Date());
+                  return;
+                }
+
+                oDateRange.setDateValue(dDate);
+                oDateRange.setSecondDateValue(dSecendDate);
+
+                // 선택된 날짜에 '-'가 없는경우 ('2020010120200202')
+              } else if (iDateLength === 16) {
+                const dDate = moment(moment(sDate.slice(0, 8)).format('YYYY-MM-DD')).toDate();
+                const dSecendDate = moment(moment(sDate.slice(8)).format('YYYY-MM-DD')).toDate();
+                const iDateYear = moment(dDate).year();
+                const iSecDateYear = moment(dSecendDate).year();
+
+                // 유효한 날짜체크
+                if (iBaseYear !== iDateYear || iBaseYear !== iSecDateYear) {
+                  MessageBox.alert(oDetailController.getController().getBundleText('MSG_09060', iBaseYear));
+                  oDateRange.setDateValue(new Date());
+                  oDateRange.setSecondDateValue(new Date());
+                  return;
+                }
+
+                oDateRange.setDateValue(dDate);
+                oDateRange.setSecondDateValue(dSecendDate);
+              }
+
+              break;
+            // 급여
+            case 1:
+              const oInput1 = oDetailController.byId(`DialogData${i + 1}`);
+              const sCost1 = e.trim().replace(/[^\d]/g, '');
+
+              oInput1.setValue(new Intl.NumberFormat('ko-KR').format(sCost1 || 0));
+              oViewModel.setProperty('/DialogData/Bet01', sCost1);
+              break;
+            // 병명/진료과목
+            case 2:
+              const oInput2 = oDetailController.byId(`DialogData${i + 1}`);
+
+              oInput2.setValue(e);
+              break;
+            // 비급여
+            case 3:
+              const oInput3 = oDetailController.byId(`DialogData${i + 1}`);
+              const sCost2 = e.trim().replace(/[^\d]/g, '');
+
+              oInput3.setValue(new Intl.NumberFormat('ko-KR').format(sCost2 || 0));
+              oViewModel.setProperty('/DialogData/Bet02', sCost2);
+              oViewModel.setProperty('/DialogData/Bettot', String(parseInt(sCost2) + parseInt(oViewModel.getProperty('/DialogData/Bet01'))));
+              break;
+            // 의료기관
+            case 4:
+              const oInput4 = oDetailController.byId(`DialogData${i + 1}`);
+
+              oInput4.setValue(e);
+              break;
+            // 영수증구분
+            case 5:
+              const oInput5 = oDetailController.byId(`DialogData${i + 1}`);
+              const sText = e.slice(0, e.search(`\r\n`));
+              let bSucces = true;
+
+              oViewModel.getProperty('/ReceiptType').forEach((ele) => {
+                if (ele.Ztext === sText) {
+                  oInput5.setValue(ele.Ztext);
+                  oViewModel.setProperty('/DialogData/Recpgb', ele.Zcode);
+                  bSucces = false;
+                }
+              });
+
+              if (bSucces) {
+                MessageBox.alert(oDetailController.getController().getBundleText('MSG_09061'));
+                oViewModel.setProperty('/DialogData/Recpgb', 'ALL');
+                return;
+              }
+
+              break;
+          }
+        });
+      },
+
       // 상세내역 추가
       onAddDetails() {
         const oDetailModel = this.getViewModel();
@@ -674,6 +782,12 @@ sap.ui.define(
             // connect dialog to the root view of this component (models, lifecycle)
             this.getView().addDependent(oDialog);
             this.settingsAttachDialog();
+            this.byId('DialogData1').attachBrowserEvent('paste', this.excelCopy);
+            this.byId('DialogData2').attachBrowserEvent('paste', this.excelCopy);
+            this.byId('DialogData3').attachBrowserEvent('paste', this.excelCopy);
+            this.byId('DialogData4').attachBrowserEvent('paste', this.excelCopy);
+            this.byId('DialogData5').attachBrowserEvent('paste', this.excelCopy);
+            this.byId('DialogData6').attachBrowserEvent('paste', this.excelCopy);
 
             oDialog.open();
           });
@@ -1051,6 +1165,12 @@ sap.ui.define(
             // connect dialog to the root view of this component (models, lifecycle)
             this.getView().addDependent(oDialog);
             this.settingsAttachDialog();
+            this.byId('DialogDate').attachBrowserEvent('paste', this.excelCopy);
+            this.byId('DialogInput1').attachBrowserEvent('paste', this.excelCopy);
+            this.byId('DialogInput2').attachBrowserEvent('paste', this.excelCopy);
+            this.byId('DialogInput3').attachBrowserEvent('paste', this.excelCopy);
+            this.byId('DialogInput4').attachBrowserEvent('paste', this.excelCopy);
+            this.byId('DialogCombo').attachBrowserEvent('paste', this.excelCopy);
 
             oDialog.open();
           });

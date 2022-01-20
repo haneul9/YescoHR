@@ -12,7 +12,7 @@
     <content>
       <HBox width="100%" class="dialog-content">
         <VBox width="20%" class="hCardBox sapUiSmallMarginEnd">
-          <HBox justifyContent="SpaceBetween" alignItems="Center" class="header-wrap search-head">
+          <HBox justifyContent="SpaceBetween" alignItems="Center" class="search-head pb-10-px">
             <!-- <core:Icon src="sap-icon://filter" /> -->
             <Label text="{i18n>LABEL_00203}" />
             <Button press=".EmployeeSearch.onEmpSearch" class="icon-button search" />
@@ -53,13 +53,10 @@
           </grid:CSSGrid>
         </VBox>
         <VBox width="80%" class="hCardBox">
+          <HBox justifyContent="SpaceBetween" class="table-toolbar">
+                <Title level="H3" text="{i18n>LABEL_00204}" class="title pb-15-px" />
+          </HBox>
           <table:Table id="empTable" rows="{/employeeModel/empList}" rowSelectionChange=".EmployeeSearch.onRowSelection" visibleRowCount="{/employeeModel/empListLength}" rowHeight="44" columnHeaderHeight="45">
-            <table:extension>
-              <OverflowToolbar class="header-wrap search-head">
-                <!-- <core:Icon src="sap-icon://table-chart" /> -->
-                <Label text="{i18n>LABEL_00204}" />
-              </OverflowToolbar>
-            </table:extension>
             <table:columns>
               <table:Column width="100px" sortProperty="Pernr" filterProperty="Pernr">
                 <Label text="{i18n>LABEL_00209}"/>
