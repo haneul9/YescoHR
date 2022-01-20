@@ -121,7 +121,7 @@ sap.ui.define(
           const mParameter = _.chain(oListView.getModel().getProperty('/parameter/rowData')).cloneDeep().omit('__metadata').value();
           const { Zzapsts: sZzapsts, ZzapstsSub: sZzapstsSub, ZzapstsPSub: sZzapstsPSub, Zonlydsp: sZonlydsp } = mParameter;
           // 4-1 평가실시 - 부분평가중일 경우 ZzapstsPSub가 A|B로 들어오면 1차평가중 상태로 변경한다.
-          const sLogicalZzapstsSub = _.isEqual(sZzapsts + sZzapstsSub, '41') && !_.isEmpty(sZzapstsPSub) ? sZzapstsPSub : sZzapstsSub;
+          const sLogicalZzapstsSub = !_.isEmpty(sZzapstsPSub) ? sZzapstsPSub : sZzapstsSub;
 
           this.setAppointee(sType, mParameter.Zzappee);
 
@@ -171,7 +171,7 @@ sap.ui.define(
           const mGroupStageByApStatusSub = _.groupBy(aStepList, 'ApStatusSub');
           const aStageHeader = _.map(mGroupStageByApStatusSub[''], (o) => {
             const mReturn = { ..._.omit(o, '__metadata'), completed: bCompleted };
-            if (!_.isEqual(sLogicalZzapstsSub, 'X') && _.isEqual(o.ApStatus, sZzapsts)) bCompleted = false;
+            if (_.isEqual(o.ApStatus, sZzapsts)) bCompleted = false;
             return mReturn;
           });
 
@@ -179,7 +179,7 @@ sap.ui.define(
           bCompleted = true;
           const aGroupStageByApStatusName = _.chain(aStepList)
             .filter((o) => !_.isEqual(o.ApStatusSub, ''))
-            .groupBy('ApStatusName')
+            .groupBy('ApStatus')
             .reduce((acc, cur) => [...acc, [...cur]], _.stubArray())
             .map((item) =>
               _.map(item, (o) => {
@@ -195,9 +195,7 @@ sap.ui.define(
           oViewModel.setProperty(
             '/stage/rows',
             _.chain(mGroupStageByApStatusSub[''])
-              .map((o, i) => ({ child: aGroupStageByApStatusName[i] }))
-              .take(4)
-              .concat([{ child: [] }])
+              .map((o, i) => ({ child: _.map(aGroupStageByApStatusName[i], (o) => ({ ...o, visible: !_.isEqual('X', o.ApStatusSub) })) }))
               .value()
           );
 
