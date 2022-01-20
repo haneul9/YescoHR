@@ -109,6 +109,8 @@
         { "pattern": "certification", "name": "certification", "target": "certification" },
         { "pattern": "certification/{oDataKey}", "name": "certification-detail", "target": "certificationDetail" },
         
+        { "pattern": "competencyDefine", "name": "competencyDefine", "target": "competencyDefine" },
+
         { "pattern": "clubJoin", "name": "clubJoin", "target": "clubJoin" },
         { "pattern": "clubJoin/{oDataKey}", "name": "clubJoin-detail", "target": "clubJoinDetail" },
         { "pattern": "h/clubJoin", "name": "h/clubJoin", "target": "h/clubJoin" },
@@ -200,6 +202,8 @@
 
         "certification": { "viewId": "certification", "viewPath": "sap.ui.yesco.mvc.view.certification", "viewName": "Certification" },
         "certificationDetail": { "viewId": "certificationDetail", "viewPath": "sap.ui.yesco.mvc.view.certification", "viewName": "certificationDetail" },
+        
+        "competencyDefine": { "viewId": "competencyDefine", "viewPath": "sap.ui.yesco.mvc.view.competencyDefine", "viewName": "CompetencyDefine" },
 
         "clubJoin": { "viewId": "clubJoin", "viewPath": "sap.ui.yesco.mvc.view.clubJoin", "viewName": "ClubJoin" },
         "h/clubJoin": { "viewId": "h_clubJoin", "viewPath": "sap.ui.yesco.mvc.view.clubJoin", "viewName": "ClubJoinHass" },
