@@ -164,19 +164,19 @@ sap.ui.define(
           const [
             aStepList, //
             aGrades,
-            // mDetailData,
+            mDetailData,
           ] = await Promise.all([
             fCurriedGetEntitySet('AppStatusStepList', { Werks: this.getSessionProperty('Werks'), Zzappid: mParameter.Zzappid, Zzappty: '20' }),
-            fCurriedGetEntitySet('AppGradeList'),
-            // Client.deep(oModel, 'AppraisalDoc', {
-            //   ...mParameter,
-            //   Menid: this.getCurrentMenuId(),
-            //   Prcty: Constants.PROCESS_TYPE.DETAIL.code,
-            //   Zzappgb: sType,
-            //   AppraisalDocDetailSet: [],
-            //   AppraisalBottnsSet: [],
-            //   AppraisalScreenSet: [],
-            // }),
+            fCurriedGetEntitySet('AppValueList', { VClass: 'Q', VType: '702' }),
+            Client.deep(oModel, 'AppraisalCoDoc', {
+              ...mParameter,
+              Menid: this.getCurrentMenuId(),
+              Prcty: Constants.PROCESS_TYPE.DETAIL.code,
+              Zzappgb: sType,
+              AppraisalCoDocDetSet: [],
+              AppraisalBottnsSet: [],
+              AppraisalScreenSet: [],
+            }),
           ]);
 
           // Combo Entry
@@ -187,7 +187,7 @@ sap.ui.define(
           const mGroupStageByApStatusSub = _.groupBy(aStepList, 'ApStatusSub');
           const aStageHeader = _.map(mGroupStageByApStatusSub[''], (o) => {
             const mReturn = { ..._.omit(o, '__metadata'), completed: bCompleted };
-            if (!_.isEqual(sLogicalZzapstsSub, 'X') && _.isEqual(o.ApStatus, sZzapsts)) bCompleted = false;
+            if (_.isEqual(o.ApStatus, sZzapsts)) bCompleted = false;
             return mReturn;
           });
 
@@ -195,7 +195,7 @@ sap.ui.define(
           bCompleted = true;
           const aGroupStageByApStatusName = _.chain(aStepList)
             .filter((o) => !_.isEqual(o.ApStatusSub, ''))
-            .groupBy('ApStatusName')
+            .groupBy('ApStatus')
             .reduce((acc, cur) => [...acc, [...cur]], _.stubArray())
             .map((item) =>
               _.map(item, (o) => {
@@ -206,11 +206,13 @@ sap.ui.define(
             )
             .value();
 
-          // 평가 단계
+          // 평가 단계 - 하위 평가완료(5-X)는 숨김처리
           oViewModel.setProperty('/stage/headers', aStageHeader);
           oViewModel.setProperty(
             '/stage/rows',
-            _.map(mGroupStageByApStatusSub[''], (o, i) => ({ child: aGroupStageByApStatusName[i] }))
+            _.chain(mGroupStageByApStatusSub[''])
+              .map((o, i) => ({ child: _.map(aGroupStageByApStatusName[i], (o) => ({ ...o, visible: !_.isEqual('X', o.ApStatusSub) })) }))
+              .value()
           );
 
           // const mButtons = oViewModel.getProperty('/buttons');
