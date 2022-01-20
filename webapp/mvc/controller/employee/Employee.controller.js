@@ -458,7 +458,7 @@ sap.ui.define(
             if (mMenu.type === this.SUB_TYPE.TABLE) {
               const sTableDataPath = `/employee/sub/${menuKey}/contents/${key}`;
               const aVisibleHeaders = _.filter(mMenu.header, { Invisible: false });
-              const bFixedColumns = aVisibleHeaders.length > 10;
+              // const bFixedColumns = aVisibleHeaders.length > 10;
               const oTable = new Table({
                 width: '100%',
                 columnHeaderHeight: 45,
@@ -468,10 +468,11 @@ sap.ui.define(
                 noData: this.getBundleText('MSG_00001'),
               }).bindRows(`${sTableDataPath}/data`);
 
-              if (bFixedColumns) oTable.setFixedColumnCount(3);
+              // if (bFixedColumns) oTable.setFixedColumnCount(3);
 
               aVisibleHeaders.forEach((head, index) => {
-                const oColumn = new sap.ui.table.Column({ width: bFixedColumns ? '6.8rem' : 'auto' });
+                // const oColumn = new sap.ui.table.Column({ width: bFixedColumns ? '6.8rem' : 'auto' });
+                const oColumn = new sap.ui.table.Column({ width: _.isEqual(head.Width, '000') ? 'auto' : `${_.toNumber(head.Width)}%` });
 
                 oColumn.setLabel(new sap.m.Label({ text: head.Header }));
                 oColumn.setTemplate(new sap.m.Text({ width: '100%', textAlign: 'Center', text: { path: `Value${_.padStart(index + 1, 2, '0')}` } }));
