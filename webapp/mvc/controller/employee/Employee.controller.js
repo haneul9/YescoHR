@@ -1308,12 +1308,3 @@ sap.ui.define(
     });
   }
 );
-
-// eslint-disable-next-line no-unused-vars
-function fn_SetAddr(sZip, sFullAddr) {
-  const oView = sap.ui.getCore().byId('container-ehr---employee');
-  const oViewModel = oView.getModel();
-
-  oViewModel.setProperty('/employee/dialog/form/Pstlz', sZip);
-  oViewModel.setProperty('/employee/dialog/form/Zzaddr1', sFullAddr);
-}
