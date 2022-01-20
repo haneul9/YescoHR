@@ -13,13 +13,13 @@
         <core:HTML content="&lt;div id='chart-container'&gt;&lt;/div&gt;" />
       </FlexBox>
       <Label text="{i18n>LABEL_13002}" />
-      <Text text="{/summary/Todo1}" />
+      <Text text="{ path: '/summary/Bet01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
       <Label text="{i18n>LABEL_13003}" />
-      <Text text="{/summary/Todo2}" />
+      <Text text="{ path: '/summary/Bet02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
       <Label text="{i18n>LABEL_13004}" />
-      <Text text="{/summary/Todo3}" />
+      <Text text="{ path: '/summary/Bet03', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
       <Label text="{i18n>LABEL_13005}" />
-      <Text text="{/summary/Todo4}" />
+      <Text text="{ path: '/summary/Bet04', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
     </grid:CSSGrid>
   </VBox>
 </core:FragmentDefinition>

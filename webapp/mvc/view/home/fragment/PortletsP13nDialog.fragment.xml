@@ -5,7 +5,7 @@
     <HBox height="70px" visible="{= !${/available} }" justifyContent="Center" alignItems="Center">
       <Text text="{i18n>MSG_01901}" />
     </HBox>
-    <grid:CSSGrid gridTemplateRows="1fr 1fr" gridTemplateColumns="repeat(2,1fr)" gridGap="10px 20px" items="{/allList}" visible="{/available}" class="personal-menu-setting" busy="{/busy}" busyIndicatorDelay="0">
+    <grid:CSSGrid gridTemplateRows="1fr 1fr" gridTemplateColumns="repeat(2,1fr)" gridGap="10px 20px" items="{/allList}" visible="{/available}" class="personal-portlets-setting" busy="{/busy}" busyIndicatorDelay="0">
       <CheckBox text="{title}" selected="{active}" enabled="{switchable}" select=".onSelectPortletSwitch" class="type-b" />
     </grid:CSSGrid>
     <buttons>

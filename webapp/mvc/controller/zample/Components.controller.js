@@ -114,6 +114,22 @@ sap.ui.define(
         this.EmployeeSearch.onSearchDialog.call(this);
       },
 
+      openTestDialog() {
+        const oView = this.getView();
+
+        if (!this.pRejectDialog) {
+          this.pRejectDialog = Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.mvc.view.zample.fragment.RejectDialog',
+            controller: this,
+          }).then((oDialog) => {
+            oView.addDependent(oDialog);
+            return oDialog;
+          });
+        }
+        this.pRejectDialog.then((oDialog) => oDialog.open());
+      },
+
       onEmployeeClose() {
         this.byId('employeeDialog').close();
       },

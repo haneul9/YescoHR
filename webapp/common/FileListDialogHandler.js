@@ -42,7 +42,6 @@ sap.ui.define(
           this.oController.getView().addDependent(this.oFileListDialog);
 
           this.oFileListDialog
-            .addStyleClass(AppUtils.getAppComponent().getContentDensityClass())
             .setModel(new JSONModel(this.getInitData()))
             .attachBeforeOpen(() => {
               this.readDialogData();

@@ -25,7 +25,9 @@ sap.ui.define(
       TableUtils: TableUtils,
       TABLE_ID: 'paystubTable',
 
-      onBeforeShow() {
+      onInit() {
+        BaseController.prototype.onInit.apply(this, arguments);
+
         const today = moment();
         const oViewModel = new JSONModel({
           busy: false,
@@ -34,10 +36,10 @@ sap.ui.define(
           },
           summary: {
             year: today.format('YYYY'),
-            Todo1: '20,000,000',
-            Todo2: '20,000,000',
-            Todo3: '2,500,000',
-            Todo4: '42,500,000',
+            Bet01: '0',
+            Bet02: '0',
+            Bet03: '0',
+            Bet04: '0',
             dataSources: {
               chart: {
                 showLegend: '0',
@@ -49,34 +51,35 @@ sap.ui.define(
                 formatNumber: '1',
                 formatNumberScale: false,
                 decimals: '1',
-                numberSuffix: '₩',
+                // numberSuffix: '₩',
                 useDataPlotColorForLabels: '1',
-                theme: 'fusion',
+                theme: 'ocean',
                 paletteColors: '#7bb4eb,#81daea,#faca74',
               },
               data: [
                 {
-                  label: '급여',
-                  value: '20000000',
+                  label: this.getBundleText('LABEL_13002'), // 급여
+                  value: '0',
                   isSliced: '1',
                 },
                 {
-                  label: '상여',
-                  value: '20000000',
+                  label: this.getBundleText('LABEL_13003'), // 상여
+                  value: '0',
                   isSliced: '0',
                 },
                 {
-                  label: '인정상여',
-                  value: '2500000',
+                  label: this.getBundleText('LABEL_13004'), // 인정상여
+                  value: '0',
                   isSliced: '0',
                 },
               ],
             },
           },
           listInfo: {
+            Title: this.getBundleText('LABEL_13037'), // 급상여내역
             rowCount: 2,
             totalCount: 0,
-            infoMessage: this.getBundleText('MSG_13001'), // 현재 데이터를 수정하고자 할 경우에는 확정 상태의 데이터를 선택한 다음 신청 버튼을 클릭하시기 바랍니다.
+            infoMessage: this.getBundleText('MSG_13001'), // 라인을 클릭하시면 상세내역이 조회됩니다.
             isShowProgress: false,
             progressCount: 0,
             isShowApply: false,
@@ -91,7 +94,9 @@ sap.ui.define(
           list: [],
         });
         this.setViewModel(oViewModel);
+      },
 
+      onBeforeShow() {
         TableUtils.summaryColspan({ oTable: this.byId(this.TABLE_ID), aHideIndex: [1, 2] });
       },
 
@@ -109,8 +114,8 @@ sap.ui.define(
             Endym: moment(sYear).month(11).format('YYYYMM'),
           });
 
-          this.buildChart();
           this.setTableData({ oViewModel, aRowData });
+          this.buildChart();
         } catch (oError) {
           this.debug('Controller > paystub List > onObjectMatched Error', oError);
 
@@ -130,6 +135,13 @@ sap.ui.define(
           vCalcProps: /^Bet0/,
         });
 
+        oViewModel.setProperty('/summary/Bet01', _.get(mSumRow, 'Bet01', '0'));
+        oViewModel.setProperty('/summary/Bet02', _.get(mSumRow, 'Bet02', '0'));
+        oViewModel.setProperty('/summary/Bet03', _.get(mSumRow, 'Bet03', '0'));
+        oViewModel.setProperty('/summary/Bet04', _.get(mSumRow, 'Bet04', '0'));
+        oViewModel.setProperty('/summary/dataSources/data/0/value', _.get(mSumRow, 'Bet01', '0'));
+        oViewModel.setProperty('/summary/dataSources/data/1/value', _.get(mSumRow, 'Bet02', '0'));
+        oViewModel.setProperty('/summary/dataSources/data/2/value', _.get(mSumRow, 'Bet03', '0'));
         oViewModel.setProperty('/list', _.isEmpty(mSumRow) ? [] : [...aRowData.map((o, i) => ({ ...o, Idx: ++i })), { Idx: sSumLabel, ...mSumRow }]);
         oViewModel.setProperty('/listInfo', { ...oListInfo, ...TableUtils.count({ oTable, aRowData, bHasSumRow: true }) });
 
@@ -171,6 +183,7 @@ sap.ui.define(
           });
 
           this.setTableData({ oViewModel, aRowData });
+          this.buildChart();
         } catch (oError) {
           this.debug('Controller > paystub List > onPressSearch Error', oError);
 

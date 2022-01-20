@@ -191,19 +191,16 @@ sap.ui.define(
       },
 
       onSelectSuggestion(oEvent) {
-        let mEmployee;
-
         const oSelectedItem = oEvent.getParameter('selectedItem');
         const sRowPath = oEvent.getSource().getParent().getBindingContext().getPath();
 
         if (oSelectedItem && sRowPath) {
           const sSelectedPernr = oSelectedItem.getKey() || 'None';
           const aEmployees = this.oDetailModel.getProperty('/detail/employees') || [];
-
-          mEmployee = _.find(aEmployees, { Pernr: sSelectedPernr });
-          mEmployee ||= { Pernr: '', Ename: '', Fulln: '', Zzjikgbt: '' };
+          const mEmployee = _.find(aEmployees, { Pernr: sSelectedPernr }) || { Pernr: '', Ename: '', Fulln: '', Zzjikgbt: '' };
 
           this.oDetailModel.setProperty('/detail/suggestCompleted', true);
+          this.oDetailModel.setProperty(`${sRowPath}/PernrA`, ''); // 오작동 방지 초기화
           this.oDetailModel.setProperty(sRowPath, {
             ...this.oDetailModel.getProperty(sRowPath),
             PernrA: mEmployee.Pernr,
@@ -222,7 +219,9 @@ sap.ui.define(
           this.oDetailModel.setProperty('/detail/suggestCompleted', false);
           return;
         }
-        if (_.isNaN(parseInt(sInputValue))) return;
+        if (_.isNaN(parseInt(sInputValue))) {
+          return;
+        }
 
         const sRowPath = oEvent.getSource()?.getParent()?.getBindingContext()?.getPath();
         const aEmployees = this.oDetailModel.getProperty('/detail/employees');

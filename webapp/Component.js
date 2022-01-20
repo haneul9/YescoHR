@@ -48,6 +48,8 @@ sap.ui.define(
        * @override
        */
       init(...aArgs) {
+        $('body').toggleClass(this.getContentDensityClass(), true);
+
         this.setDeviceModel() // 디바이스 모델 생성
           .setAppModel() // Busy indicator 값 저장 모델 생성
           .setMetadataModel()
@@ -384,6 +386,7 @@ sap.ui.define(
           }
           oView.setVisible(false);
         }
+        return this;
       },
 
       /**

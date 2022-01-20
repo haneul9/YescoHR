@@ -46,12 +46,12 @@ sap.ui.define(
 
       bMobile: false,
       mPortletHandlers: {
-        P01: P01PortletHandler,
-        P02: P02PortletHandler,
-        P03: P03PortletHandler,
-        P04: P04PortletHandler,
-        P05: P05PortletHandler,
-        P06: P06PortletHandler,
+        P01PortletHandler,
+        P02PortletHandler,
+        P03PortletHandler,
+        P04PortletHandler,
+        P05PortletHandler,
+        P06PortletHandler,
       },
 
       onBeforeShow() {
@@ -90,14 +90,14 @@ sap.ui.define(
 
       onDragStart(oEvent) {
         const oPortlet = oEvent.getParameter('target');
-        if (oPortlet && oPortlet.data('portlet-switchable') === 'N') {
+        if (oPortlet && oPortlet.data('portlet-switchable') === false) {
           oEvent.preventDefault();
         }
       },
 
       onDragEnter(oEvent) {
         const oPortlet = oEvent.getParameter('target');
-        if (oPortlet && oPortlet.data('portlet-switchable') === 'N') {
+        if (oPortlet && oPortlet.data('portlet-switchable') === false) {
           oEvent.preventDefault();
         }
       },
@@ -145,11 +145,9 @@ sap.ui.define(
           controller: this,
         });
 
-        this.oPortletsP13nDialog
-          .attachAfterClose(() => {
-            this.onPressPortletsP13nSave();
-          })
-          .addStyleClass(this.getOwnerComponent().getContentDensityClass());
+        this.oPortletsP13nDialog.attachAfterClose(() => {
+          this.onPressPortletsP13nSave();
+        });
 
         this.getView().addDependent(this.oPortletsP13nDialog);
       },
@@ -208,13 +206,14 @@ sap.ui.define(
 
       transform(mPortletData) {
         return {
-          original: mPortletData,
+          busy: true,
           id: mPortletData.Potid,
           carousel: mPortletData.Mocat === 'A',
           position: {
             column: this.bMobile ? Number(mPortletData.MSeq) || 1 : Number(mPortletData.Colno) || 1,
             sequence: mPortletData.Zhide !== 'X' ? Number(mPortletData.Seqno) || 99 : 0,
           },
+          width: 1,
           height: Number(mPortletData.Htall) || 1,
           icon: mPortletData.Iconid,
           title: mPortletData.Potnm,
@@ -226,6 +225,7 @@ sap.ui.define(
           switchable: mPortletData.Fixed !== 'X',
           hideTitle: mPortletData.HideName === 'X',
           hasLink: !!(this.bMobile ? mPortletData.LinkUrl2 : mPortletData.LinkUrl1),
+          original: mPortletData,
         };
       },
 
@@ -244,7 +244,7 @@ sap.ui.define(
         aActivePortlets
           .sort((o1, o2) => o1.position.column * 100 + o1.position.sequence - (o2.position.column * 100 + o2.position.sequence))
           .forEach((mPortletData) => {
-            const PortletHandler = this.mPortletHandlers[mPortletData.id];
+            const PortletHandler = this.mPortletHandlers[`${mPortletData.id}PortletHandler`];
             if (!PortletHandler) {
               this.debug(`Portlets.controller > getPortletsModel > '${mPortletData.id}'에 해당하는 PortletHandler가 없습니다.`);
               return mPortletData;
@@ -266,7 +266,7 @@ sap.ui.define(
         oPortletsModel.setProperty('/busy', true);
 
         if (bSelected) {
-          const PortletHandler = this.mPortletHandlers[sPortletId];
+          const PortletHandler = this.mPortletHandlers[`${sPortletId}PortletHandler`];
           if (!PortletHandler) {
             this.debug(`Portlets.controller > onSelectPortletSwitch > '${sPortletId}'에 해당하는 PortletHandler가 없습니다.`);
             return;
@@ -352,7 +352,7 @@ sap.ui.define(
         const oPortletModel = oPortlet.getModel();
 
         if (oPortletModel.getProperty('/multiPortlet')) {
-          if (oPortletModel.getProperty('/orgMembers/active')) {
+          if (oPortletModel.getProperty('/orgMembersActive')) {
             const mPortletData = oPortletModel.getProperty('/orgMembers');
             if (mPortletData.id === sClosingPortletId) {
               return;
@@ -362,7 +362,7 @@ sap.ui.define(
 
             mActivePortlets[mPortletData.id] = this.getPortletPosition(mPortletData, iPortletCount);
           }
-          if (oPortletModel.getProperty('/myMembers/active')) {
+          if (oPortletModel.getProperty('/myMembersActive')) {
             const mPortletData = oPortletModel.getProperty('/myMembers');
             if (mPortletData.id === sClosingPortletId) {
               return;

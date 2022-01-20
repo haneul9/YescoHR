@@ -781,7 +781,6 @@ sap.ui.define(
           }).then((oDialog) => {
             // connect dialog to the root view of this component (models, lifecycle)
             this.getView().addDependent(oDialog);
-            oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
             this.settingsAttachDialog();
             this.byId('DialogData1').attachBrowserEvent('paste', this.excelCopy);
             this.byId('DialogData2').attachBrowserEvent('paste', this.excelCopy);
@@ -1165,7 +1164,6 @@ sap.ui.define(
           }).then((oDialog) => {
             // connect dialog to the root view of this component (models, lifecycle)
             this.getView().addDependent(oDialog);
-            oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
             this.settingsAttachDialog();
             this.byId('DialogDate').attachBrowserEvent('paste', this.excelCopy);
             this.byId('DialogInput1').attachBrowserEvent('paste', this.excelCopy);

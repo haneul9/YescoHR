@@ -178,8 +178,7 @@ sap.ui.define(
       onNavBack() {
         const sPreviousHash = History.getInstance().getPreviousHash();
 
-        const oUIComponent = this.getOwnerComponent();
-        oUIComponent.reduceViewResource();
+        const oUIComponent = this.getOwnerComponent().reduceViewResource();
 
         if (sPreviousHash) {
           window.history.go(-1);
@@ -187,6 +186,10 @@ sap.ui.define(
           const sPreviousRouteName = this.getPreviousRouteName() || 'ehrHome'; // TODO : ehrMobileHome
           oUIComponent.getRouter().navTo(sPreviousRouteName, {}, true /* no history */);
         }
+      },
+
+      onPagePrint() {
+        window.print();
       },
 
       /**

@@ -357,11 +357,234 @@
             </VBox>
           </VBox>
         </HBox>
+
+        <HBox class="sapUiResponsiveMargin" width="auto">
+          <VBox width="100%">
+            <Title level="H3" text="행동지표 수준 정의 레벨3개" class="component-title" />
+            <VBox>
+              <Panel expandable="true" width="auto" class="capability-level level-3">
+                <customData>
+                  <core:CustomData key="type" value="level3" writeToDom="true" />
+                </customData>
+                <layoutData>
+                  <FlexItemData growFactor="1"/>
+                </layoutData>
+                <headerToolbar>
+                  <OverflowToolbar height="3rem" style="Clear">
+                    <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr" gridGap="8px">
+                      <VBox>
+                        <customData>
+                          <core:CustomData key="type" value="head" writeToDom="true" />
+                        </customData>
+                        <Text text="역량 수준" />
+                      </VBox>
+                      <VBox>
+                        <Label text="Level 1" />
+                        <Text text="(학습단계)" />
+                      </VBox>
+                      <VBox>
+                        <Label text="Level 2" />
+                      </VBox>
+                      <VBox>
+                        <Label text="Level 3" />
+                        <Text text="(적용 단계  적용/지도)" />
+                      </VBox>
+                    </grid:CSSGrid>
+                  </OverflowToolbar>
+                </headerToolbar>
+                <content>
+                  <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr" gridGap="8px">
+                    <VBox>
+                      <customData>
+                        <core:CustomData key="type" value="head" writeToDom="true" />
+                      </customData>
+                      <Text text="단계 정의" />
+                    </VBox>
+                    <VBox>
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                    </VBox>
+                    <VBox>
+                      <Text text="Level 1과 3 사이" />
+                    </VBox>
+                    <VBox>
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                    </VBox>
+                    <VBox>
+                      <customData>
+                        <core:CustomData key="type" value="head" writeToDom="true" />
+                      </customData>
+                      <Text text="특징" />
+                    </VBox>
+                    <VBox>
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                    </VBox>
+                    <VBox>
+                      <customData>
+                        <core:CustomData key="type" value="blank" writeToDom="true" />
+                      </customData>
+                    </VBox>
+                    <VBox>
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                    </VBox>
+                  </grid:CSSGrid>
+                </content>
+              </Panel>
+            </VBox>
+          </VBox>
+        </HBox>
+
+        <HBox class="sapUiResponsiveMargin" width="auto">
+          <VBox width="100%">
+            <Title level="H3" text="행동지표 수준 정의 레벨5개" class="component-title" />
+            <VBox>
+              <Panel expandable="true" width="auto" class="capability-level">
+                <customData>
+                  <core:CustomData key="type" value="level5" writeToDom="true" />
+                </customData>
+                <layoutData>
+                  <FlexItemData growFactor="1"/>
+                </layoutData>
+                <headerToolbar>
+                  <OverflowToolbar height="3rem" style="Clear">
+                    <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr 2fr 2fr" gridGap="8px">
+                      <VBox>
+                        <customData>
+                          <core:CustomData key="type" value="head" writeToDom="true" />
+                        </customData>
+                        <Text text="역량 수준" />
+                      </VBox>
+                      <VBox>
+                        <Label text="Level 1" />
+                        <Text text="(학습단계)" />
+                      </VBox>
+                      <VBox>
+                        <Label text="Level 2" />
+                      </VBox>
+                      <VBox>
+                        <Label text="Level 3" />
+                        <Text text="(적용 단계  적용/지도)" />
+                      </VBox>
+                      <VBox>
+                        <Label text="Level 4" />
+                      </VBox>
+                      <VBox>
+                        <Label text="Level 5" />
+                        <Text text="(지도/조정 단계 or 실현단계)" />
+                      </VBox>
+                    </grid:CSSGrid>
+                  </OverflowToolbar>
+                </headerToolbar>
+                <content>
+                  <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr 2fr 2fr" gridGap="8px">
+                    <VBox>
+                      <customData>
+                        <core:CustomData key="type" value="head" writeToDom="true" />
+                      </customData>
+                      <Text text="단계 정의" />
+                    </VBox>
+                    <VBox>
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                    </VBox>
+                    <VBox>
+                      <Text text="Level 1과 3 사이" />
+                    </VBox>
+                    <VBox>
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                    </VBox>
+                    <VBox>
+                      <Text text="Level 3과 5 사이" />
+                    </VBox>
+                    <VBox>
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                    </VBox>
+                    <VBox>
+                      <customData>
+                        <core:CustomData key="type" value="head" writeToDom="true" />
+                      </customData>
+                      <Text text="특징" />
+                    </VBox>
+                    <VBox>
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                    </VBox>
+                    <VBox>
+                      <customData>
+                        <core:CustomData key="type" value="blank" writeToDom="true" />
+                      </customData>
+                    </VBox>
+                    <VBox>
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                    </VBox>
+                    <VBox>
+                      <customData>
+                        <core:CustomData key="type" value="blank" writeToDom="true" />
+                      </customData>
+                    </VBox>
+                    <VBox>
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                      <Text text="직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계" />
+                    </VBox>
+                  </grid:CSSGrid>
+                </content>
+              </Panel>
+            </VBox>
+          </VBox>
+        </HBox>
+
+
+        <HBox class="sapUiResponsiveMargin" width="auto">
+          <VBox width="100%">
+            <Title level="H3" text="공통역량" class="component-title" />
+            <VBox>
+              <Panel expandable="true" width="auto" class="level">
+                <layoutData>
+                  <FlexItemData growFactor="1"/>
+                </layoutData>
+                <headerToolbar>
+                  <OverflowToolbar height="3rem" style="Clear">
+                    <grid:CSSGrid gridTemplateColumns="8fr 1fr 1fr 1fr 1fr" gridGap="6px" class="form-grid">
+                      <Input width="100%" value="No edit" type="Text" class="goal-subject" />
+                      <Label text="Level 2" />
+                      <ComboBox width="250px" class="sapIcon_Select_Arrow" />
+                      <Label text="Level 4" />
+                      <ComboBox width="250px" class="sapIcon_Select_Arrow" items="{
+                        path: '/ProductCollection',
+                        sorter: {
+                          path: 'text'
+                        },
+                        templateShareable: true
+                      }">
+                        <core:Item key="{ProductId}" text="{Name}" />
+                      </ComboBox>
+                    </grid:CSSGrid>
+                  </OverflowToolbar>
+                </headerToolbar>
+                <content>
+                  <grid:CSSGrid gridTemplateColumns="1fr 13fr" gridGap="6px" class="form-grid">
+                    <Text text="단계 정의" />
+                    <TextArea value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod" rows="5" width="100%" />
+                  </grid:CSSGrid>
+                </content>
+              </Panel>
+            </VBox>
+          </VBox>
+        </HBox>
+
+
         <HBox class="sapUiResponsiveMargin" width="auto">
           <VBox>
             <Title level="H3" text="Dialog" class="component-title" />
             <HBox>
               <Button width="117px" text="사원검색" press=".openEmployeeDialog" />
+              <Button width="117px" text="Dialog Test" press=".openTestDialog" />
             </HBox>
           </VBox>
         </HBox>
@@ -595,30 +818,30 @@
             <Title level="H3" text="Button" class="component-title" />
             <VBox class="sapUiTinyMarginBottom">
               <HBox alignItems="Center">
-                  <Text text="Enable" />
-                  <Button type="Emphasized" text="Emphasized" />
-                  <Button type="Accept" text="Accept" />
-                  <Button type="Reject" text="Reject" />
-                  <Button text="취소" class="cancel"/>
-                  <Button text="이전" />
-                  <Button text="Coming Soon" />
-                  <Button text="Default"/>
-                  <Button text="Transparent" type="Transparent" />
-                  <Button icon="sap-icon://action" type="Transparent" text="With Icon" />
+                <Text text="Enable" />
+                <Button type="Emphasized" text="Emphasized" />
+                <Button type="Accept" text="Accept" />
+                <Button type="Reject" text="Reject" />
+                <Button text="취소" class="cancel"/>
+                <Button text="이전" />
+                <Button text="Coming Soon" />
+                <Button text="Default"/>
+                <Button text="Transparent" type="Transparent" />
+                <Button icon="sap-icon://action" type="Transparent" text="With Icon" />
               </HBox>
             </VBox>
             <VBox class="sapUiTinyMarginBottom">
               <HBox alignItems="Center">
-                  <Text text="disable" height="40px" />
-                  <Button type="Emphasized" text="Emphasized" enabled="false" />
-                  <Button type="Accept" text="Accept" enabled="false" />
-                  <Button type="Reject" text="Reject" enabled="false" />
-                  <Button text="취소" class="cancel" enabled="false" />
-                  <Button text="이전" enabled="false" />
-                  <Button text="Coming Soon" enabled="false" />
-                  <Button text="Default" enabled="false"/>
-                  <Button text="Transparent" type="Transparent" enabled="false" />
-                  <Button icon="sap-icon://action" type="Transparent" text="With Icon" enabled="false" />
+                <Text text="disable" height="40px" />
+                <Button type="Emphasized" text="Emphasized" enabled="false" />
+                <Button type="Accept" text="Accept" enabled="false" />
+                <Button type="Reject" text="Reject" enabled="false" />
+                <Button text="취소" class="cancel" enabled="false" />
+                <Button text="이전" enabled="false" />
+                <Button text="Coming Soon" enabled="false" />
+                <Button text="Default" enabled="false"/>
+                <Button text="Transparent" type="Transparent" enabled="false" />
+                <Button icon="sap-icon://action" type="Transparent" text="With Icon" enabled="false" />
               </HBox>
             </VBox>
           </VBox>

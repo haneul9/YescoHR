@@ -34,37 +34,37 @@
         </template>
       </Column>
       <Column>
-        <m:Label text="{i18n>LABEL_13025}" wrapping="true"/>
+        <m:Label text="{i18n>LABEL_13028}" wrapping="true"/>
         <template>
           <m:Text text="{ path:'Tim506', type:'sap.ui.model.type.Float' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
         </template>
       </Column>
       <Column>
-        <m:Label text="{i18n>LABEL_13026}"/>
+        <m:Label text="{i18n>LABEL_13029}"/>
         <template>
           <m:Text text="{ path:'Tim507', type:'sap.ui.model.type.Float' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
         </template>
       </Column>
       <Column>
-        <m:Label text="{i18n>LABEL_13027}" wrapping="true"/>
+        <m:Label text="{i18n>LABEL_13030}" wrapping="true"/>
         <template>
           <m:Text text="{ path:'Tim508', type:'sap.ui.model.type.Float' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
         </template>
       </Column>
       <Column>
-        <m:Label text="{i18n>LABEL_13028}"/>
+        <m:Label text="{i18n>LABEL_13025}"/>
         <template>
           <m:Text text="{ path:'Tim509', type:'sap.ui.model.type.Float' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
         </template>
       </Column>
       <Column>
-        <m:Label text="{i18n>LABEL_13029}" wrapping="true"/>
+        <m:Label text="{i18n>LABEL_13026}" wrapping="true"/>
         <template>
           <m:Text text="{ path:'Tim510', type:'sap.ui.model.type.Float' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
         </template>
       </Column>
       <Column>
-        <m:Label text="{i18n>LABEL_13030}" wrapping="true"/>
+        <m:Label text="{i18n>LABEL_13027}" wrapping="true"/>
         <template>
           <m:Text text="{ path:'Tim511', type:'sap.ui.model.type.Float' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
         </template>

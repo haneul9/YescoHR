@@ -321,9 +321,6 @@ sap.ui.define(
             _.map(aAwarts, (o) => _.set(o, 'selected', false))
           );
 
-          mAnnualLeaveStatus.Crecnt = '20';
-          mAnnualLeaveStatus.Crecnt2 = '8';
-          mAnnualLeaveStatus.Crecnt3 = '28';
           oViewModel.setProperty('/summary', _.omit(mAnnualLeaveStatus, '__metadata'));
           oViewModel.setProperty(
             '/plans/raw',

@@ -83,7 +83,6 @@ sap.ui.define(
             controller: this,
           });
 
-          this.oMenuLayer.addStyleClass(this.oAppController.getOwnerComponent().getContentDensityClass());
           this.oMenuLayer.setAppMenu(this);
           this.oMenuLayer.setModel(this.oMenuModel);
           this.oMenuLayer.placeAt('sap-ui-static');
@@ -261,9 +260,11 @@ sap.ui.define(
           return;
         }
 
-        const oUIComponent = this.oAppController.getOwnerComponent();
-        oUIComponent.reduceViewResource(); // 메뉴 이동 전 View hidden 처리로 불필요한 DOM 정보를 제거
-        oUIComponent.getRouter().navTo(sRouteName);
+        this.oAppController
+          .getOwnerComponent()
+          .reduceViewResource() // 메뉴 이동 전 View hidden 처리로 불필요한 DOM 정보를 제거
+          .getRouter()
+          .navTo(sRouteName);
         // this.oAppController
         //   .getRouter()
         //   .getTargets()

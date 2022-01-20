@@ -1,0 +1,126 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.competency.Detail"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:grid="sap.ui.layout.cssgrid"
+	xmlns:custom="sap.ui.yesco.control">
+	<Page showHeader="false">
+		<VBox class="contents-header">
+			<HBox justifyContent="SpaceBetween" class="breadcrumbs">
+				<custom:Breadcrumbs />
+				<HBox>
+					<Button text="{i18n>LABEL_00142}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/REJECT_REASON/Availability} === 'X' &amp;&amp; !!${/buttons/form/Rjctr} }" press=".onPressRejectViewButton" />
+					<Button text="{i18n>LABEL_00175}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/Z_SUBMIT/Availability} === 'X' || ${/buttons/submit/COMPL_P/Availability} === 'X' }" press=".onPressSubmitButton" />
+					<Button text="{i18n>LABEL_00117}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/COMPLETE/Availability} === 'X' }" press=".onPressCompleteButton" />
+					<Button text="{i18n>LABEL_00124}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/REJECT/Availability} === 'X' }" press=".onPressRejectButton" />
+					<Button text="{i18n>LABEL_10048}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/Z_CANCEL/Availability} === 'X' }" press=".onPressCancelButton" />
+					<Button text="{i18n>LABEL_10049}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/Z_CMCNCL/Availability} === 'X' }" press=".onPressCancelButton" />
+					<Button text="{i18n>LABEL_00103}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/SAVE/Availability} === 'X' }" press=".onPressSaveButton" />
+					<Button text="{i18n>LABEL_00146}" class="sapUiTinyMarginEnd" press=".onNavBack" />
+					<Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
+				</HBox>
+			</HBox>
+		</VBox>
+		<VBox class="contents">
+			<core:Fragment fragmentName="sap.ui.yesco.mvc.view.competency.fragment.AppointeeBar" type="XML" />
+			<VBox class="vCardBox">
+				<HBox class="table-toolbar">
+					<HBox alignItems="Center" class="title">
+						<Title level="H2" text="{/year} {i18n>LABEL_10045}" />
+					</HBox>
+				</HBox>
+				<HBox>
+					<core:Fragment fragmentName="sap.ui.yesco.mvc.view.competency.fragment.Stage" type="XML" />
+				</HBox>
+			</VBox>
+			<VBox class="vCardBox">
+				<HBox class="table-toolbar">
+					<HBox alignItems="Center" class="title">
+						<Title level="H2" text="{i18n>LABEL_10046}" />
+					</HBox>
+				</HBox>
+				<HBox>
+					<core:Fragment fragmentName="sap.ui.yesco.mvc.view.competency.fragment.Level" type="XML" />
+				</HBox>
+			</VBox>
+			<VBox class="vCardBox">
+				<HBox>
+					<HBox alignItems="Center" class="table-toolbar">
+						<Title level="H2" text="{i18n>LABEL_10047}" class="sapUiMediumMarginEnd"/>
+					</HBox>
+				</HBox>
+				<VBox items="{/goals/strategy}">
+					<core:Fragment fragmentName="sap.ui.yesco.mvc.view.competency.fragment.Item" type="XML" />
+				</VBox>
+			</VBox>
+			<VBox class="vCardBox sapUiSmallMarginTop">
+				<HBox>
+					<HBox alignItems="Center" class="table-toolbar">
+						<Title level="H3" text="{i18n>LABEL_10050}" class="sapUiMediumMarginEnd" />
+					</HBox>
+				</HBox>
+				<VBox items="{/goals/duty}">
+					<core:Fragment fragmentName="sap.ui.yesco.mvc.view.competency.fragment.Item" type="XML" />
+				</VBox>
+			</VBox>
+			<HBox class="vCardBox sapUiSmallMarginTop" visible="true">
+				<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="830px repeat(4, 1fr)">
+					<HBox />
+					<Label text="{i18n>LABEL_10051}" visible="true"/>
+					<VBox>
+						<Input value="" enabled="false" visible="false" />
+						<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/Zmepoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" visible="true"/>
+					</VBox>
+					<Label text="{i18n>LABEL_10052}" visible="true"/>
+					<VBox>
+						<Input value="" enabled="false" visible="false" />
+						<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/Zmapoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" visible="true"/>
+					</VBox>
+				</grid:CSSGrid>
+			</HBox>
+			<VBox class="vCardBox">
+				<HBox>
+					<HBox alignItems="Center" class="table-toolbar">
+						<Title level="H2" text="{i18n>LABEL_10053}" class="sapUiMediumMarginEnd"/>
+					</HBox>
+				</HBox>
+				<VBox>
+					<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="1fr 3fr 1fr 3fr">
+						<VBox>
+							<Label width="100%" text="{i18n>LABEL_10054}" vAlign="Top" visible="true"/>
+						</VBox>
+						<VBox>
+							<TextArea width="100%" rows="5" value="" enabled="false" visible="false" />
+							<TextArea width="100%" class="required" rows="5" value="{Zmarslt}" maxLength="{/fieldControl/limit/Zmarslt}" enabled="true" visible="true" />
+						</VBox>
+						<VBox>
+							<Label width="100%" text="{i18n>LABEL_10055}" vAlign="Top" visible="true"/>
+						</VBox>
+						<VBox>
+							<TextArea width="100%" rows="5" value="" enabled="false" visible="false" />
+							<TextArea width="100%" class="required" rows="5" value="{Zrslt}" maxLength="{/fieldControl/limit/Zrslt}" enabled="true" visible="true" />
+						</VBox>
+					</grid:CSSGrid>
+				</VBox>
+			</VBox>
+			<VBox class="vCardBox">
+				<HBox>
+					<HBox alignItems="Center" class="table-toolbar">
+						<Title level="H2" text="{i18n>LABEL_10010}" class="sapUiMediumMarginEnd"/>
+					</HBox>
+				</HBox>
+				<VBox>
+					<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="1fr 7fr">
+						<VBox>
+							<Label width="100%" text="{i18n>LABEL_10056}" vAlign="Top" visible="true"/>
+						</VBox>
+						<VBox>
+							<TextArea width="100%" rows="5" value="" enabled="false" visible="false" />
+							<TextArea width="100%" class="required" rows="5" value="{Z140}" maxLength="{/fieldControl/limit/Z140}" enabled="true" visible="true" />
+						</VBox>
+					</grid:CSSGrid>
+				</VBox>
+			</VBox>
+		</VBox>
+	</Page>
+</mvc:View>

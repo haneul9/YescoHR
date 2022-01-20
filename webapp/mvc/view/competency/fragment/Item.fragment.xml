@@ -1,0 +1,50 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:grid="sap.ui.layout.cssgrid">
+    <VBox>
+        <Panel expandable="true" expanded="{expanded}" class="per-panel">
+            <headerToolbar>
+                <Toolbar height="45px" width="100%">
+                    <grid:CSSGrid gridTemplateColumns="750px repeat(4, 1fr)" gridGap="0px 11px">
+                        <VBox>
+                            <Input value="{Obj0}" class="goal-subject" placeholder="{i18n>MSG_10007}" maxLength="{/fieldControl/limit/Obj0}" enabled="true" visible="true" />
+                        </VBox>
+                        <Label text="{i18n>LABEL_10057}" visible="true" />
+                        <HBox>
+                            <Input width="100%" value="" enabled="false" visible="false" />
+                            <ComboBox width="100%" class="required" selectedKey="{Zapgme}" items="{ path: '/entry/levels', templateShareable: true }" enabled="true" visible="true" change=".onChangeScore">
+                                <customData>
+                                    <core:CustomData key="sProp" value="Zapgme" />
+                                    <core:CustomData key="sTarget" value="Zmepoint" />
+                                </customData>
+                                <core:Item key="{ValueEid}" text="{ValueText}" />
+                            </ComboBox>
+                        </HBox>
+                        <Label text="{i18n>LABEL_10058}" visible="true" />
+                        <HBox>
+                            <Input width="100%" value="" enabled="false" visible="false" />
+                            <ComboBox width="100%" class="required" selectedKey="{Zapgma}" items="{ path: '/entry/levels', templateShareable: true }" enabled="true" visible="true" change=".onChangeScore">
+                                <customData>
+                                    <core:CustomData key="sProp" value="Zapgma" />
+                                    <core:CustomData key="sTarget" value="Zmapoint" />
+                                </customData>
+                                <core:Item key="{ValueEid}" text="{ValueText}" />
+                            </ComboBox>
+                        </HBox>
+                    </grid:CSSGrid>
+                </Toolbar>
+            </headerToolbar>
+            <content>
+                <grid:CSSGrid gridTemplateColumns="1fr 7fr" gridGap="1px 0px" class="form-grid">
+                    <VBox>
+                        <Label width="100%" text="{i18n>LABEL_10059}" vAlign="Top" visible="true"/>
+                    </VBox>
+                    <VBox>
+                        <TextArea width="100%" rows="5" value="" enabled="false" visible="false" />
+                        <TextArea width="100%" class="required" rows="5" value="{Zmarslt}" maxLength="{/fieldControl/limit/Zmarslt}" enabled="true" visible="true" />
+                    </VBox>
+                </grid:CSSGrid>
+            </content>
+        </Panel>
+    </VBox>
+</core:FragmentDefinition>

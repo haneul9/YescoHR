@@ -1,0 +1,28 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Panel expandable="true" expanded="true" class="type-b">
+        <layoutData>
+            <FlexItemData growFactor="1" />
+        </layoutData>
+        <headerToolbar>
+            <Toolbar width="100%" height="auto">
+                <HBox id="stageHeader" width="100%" items="{/stage/headers}" class="per-status">
+                    <VBox>                        <!-- completed 일때 on -->
+                        <Title level="H4" text="{ApStatusName}" />
+                        <core:Icon src="{icon}" size="2rem" width="18%" />
+                    </VBox>
+                </HBox>
+            </Toolbar>
+        </headerToolbar>
+        <content>
+            <HBox id="stageBody" width="100%" items="{/stage/rows}" class="per-status-d">
+                <VBox items="{ path: 'child', templateShareable: true }">
+                    <HBox visible="{visible}">
+                        <core:Icon src="sap-icon://arrow-down" />
+                        <Text text="{ApStatusSubName}" />
+                    </HBox>
+                </VBox>
+            </HBox>
+        </content>
+    </Panel>
+</core:FragmentDefinition>
