@@ -1561,3 +1561,6 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .capability-level .sapUiLayoutCSSGrid .sapMLabel bdi {margin: 0 auto}
 .capability-level .sapMPanelContent {position: relative;padding: 0;padding-left:65px;}
 .capability-level .sapMIBar.sapMTB .sapMBarChild:only-child {padding-left: 0;padding-right: 0;}
+
+.dialog-post {padding: 16px 0px 85px !important;}
+.dialog-post .sapMDialogSection {padding: 0px !important;}

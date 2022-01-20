@@ -17,6 +17,7 @@ sap.ui.define(
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/exceptions/ODataUpdateError',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/common/PostcodeDialogHandler',
     'sap/ui/yesco/common/Validator',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -40,6 +41,7 @@ sap.ui.define(
     ODataReadError,
     ODataUpdateError,
     ServiceNames,
+    PostcodeDialogHandler,
     Validator,
     MessageBox,
     BaseController
@@ -47,6 +49,8 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.employee.Employee', {
+      PostcodeDialogHandler: null,
+
       SUB_TYPE: {
         TABLE: '5',
         GRID: '6',
@@ -124,6 +128,8 @@ sap.ui.define(
       },
 
       onBeforeShow() {
+        this.PostcodeDialogHandler = new PostcodeDialogHandler(this, this.callbackPostcode.bind(this));
+
         const oViewModel = new JSONModel({
           busy: false,
           pernr: null,
@@ -1156,7 +1162,7 @@ sap.ui.define(
       },
 
       openSearchZipCodePopup() {
-        window.open('postcodeForBrowser.html?CBF=fn_SetAddr', 'pop', 'width=550,height=550, scrollbars=yes, resizable=yes');
+        this.PostcodeDialogHandler.openDialog();
       },
 
       onInputFormDialogClose() {
@@ -1182,6 +1188,13 @@ sap.ui.define(
         const sUrl = oViewModel.getProperty('/employee/dialog/form/Fileuri');
 
         AttachFileAction.openFileLink(sUrl);
+      },
+
+      callbackPostcode({ sPostcode, sFullAddr }) {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/employee/dialog/form/Pstlz', sPostcode);
+        oViewModel.setProperty('/employee/dialog/form/Zzaddr1', sFullAddr);
       },
 
       /*****************************************************************
