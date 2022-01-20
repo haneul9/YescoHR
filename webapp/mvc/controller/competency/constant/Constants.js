@@ -93,25 +93,15 @@ sap.ui.define(
 
       BUTTON_STATUS_MAP: {
         2: {
-          A: { REJECT_REASON: { label: 'LABEL_00142', ME: '', MA: '', MB: '' }, TOP_GOAL: { label: 'LABEL_10032', ME: '', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: '', MA: '', MB: '' } },
-          B: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: 'X', MA: '', MB: '' } },
-          C: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: '', MA: 'X', MB: '' } },
-          D: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, SAVE: { label: 'LABEL_00103', ME: '', MA: 'X', MB: '' } },
-        },
-        3: {
-          F: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: 'X', MA: 'X', MB: '' } },
-          G: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: '', MA: 'X', MB: '' } },
-          H: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, SAVE: { label: 'LABEL_00103', ME: '', MA: 'X', MB: '' } },
+          E: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X' }, SAVE: { process: true, label: 'LABEL_00103', ME: '', MA: 'X' } },
         },
         4: {
-          1: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, DIAGNOSIS: { label: 'LABEL_10034', ME: 'X', MA: '', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: 'X', MA: 'X', MB: '' } },
-          A: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, DIAGNOSIS: { label: 'LABEL_10034', ME: 'X', MA: 'X', MB: '' }, SAVE: { process: true, label: 'LABEL_00103', ME: '', MA: 'X', MB: '' } },
-          B: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, DIAGNOSIS: { label: 'LABEL_10034', ME: 'X', MA: 'X', MB: 'X' } },
-          2: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, DIAGNOSIS: { label: 'LABEL_10034', ME: 'X', MA: 'X', MB: 'X' }, SAVE: { process: true, label: 'LABEL_00103', ME: '', MA: '', MB: 'X' } },
-          K: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X', MB: 'X' }, TOP_GOAL: { label: 'LABEL_10032', ME: 'X', MA: '', MB: '' }, DIAGNOSIS: { label: 'LABEL_10034', ME: 'X', MA: 'X', MB: 'X' } },
+          J: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X' }, SAVE: { process: true, label: 'LABEL_00103', ME: 'X', MA: 'X' } },
+          L: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X' }, SAVE: { process: true, label: 'LABEL_00103', ME: '', MA: 'X' } },
+          O: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X' }, SAVE: { process: true, label: 'LABEL_00103', ME: '', MA: '' } },
         },
         5: {
-          X: {},
+          X: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X' } },
         },
       },
     };

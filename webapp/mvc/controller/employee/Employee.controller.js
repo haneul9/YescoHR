@@ -9,6 +9,7 @@ sap.ui.define(
     'sap/ui/table/Table',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/DateUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
@@ -33,6 +34,7 @@ sap.ui.define(
     Table,
     Appno,
     AppUtils,
+    Client,
     DateUtils,
     AttachFileAction,
     ComboEntry,
@@ -1188,6 +1190,18 @@ sap.ui.define(
         const sUrl = oViewModel.getProperty('/employee/dialog/form/Fileuri');
 
         AttachFileAction.openFileLink(sUrl);
+      },
+
+      async onEmployeePrint() {
+        try {
+          const [mResult] = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'PerCardPrint', { Gubun: 'F' });
+
+          if (!_.isEmpty(mResult.Url)) window.open(mResult.Url, '_blank');
+        } catch (oError) {
+          this.debug('Controller > Employee > onEmployeePrint Error', oError);
+
+          AppUtils.handleError(oError);
+        }
       },
 
       callbackPostcode({ sPostcode, sFullAddr }) {

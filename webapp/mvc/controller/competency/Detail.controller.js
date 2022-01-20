@@ -116,14 +116,14 @@ sap.ui.define(
             valid: [],
             header: {},
             strategy: [
-              { Obj0: 'Integrity', Zapgme: '4', Zapgma: '5', Zmarslt: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' }, //
-              { Obj0: 'Respect', Zapgme: '5', Zapgma: '4', Zmarslt: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' },
-              { Obj0: 'Excellence', Zapgme: '3', Zapgma: '3', Zmarslt: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' },
-              { Obj0: '성장 마인드', Zapgme: '2', Zapgma: '2', Zmarslt: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' },
+              { Obj0: 'Integrity', Zapgme: 'ALL', Zapgma: 'ALL', Zmarslt: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' }, //
+              { Obj0: 'Respect', Zapgme: 'ALL', Zapgma: 'ALL', Zmarslt: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' },
+              { Obj0: 'Excellence', Zapgme: 'ALL', Zapgma: 'ALL', Zmarslt: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' },
+              { Obj0: '성장 마인드', Zapgme: 'ALL', Zapgma: 'ALL', Zmarslt: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' },
             ],
             duty: [
-              { Obj0: '창의적 변화주도', Zapgme: '1', Zapgma: '1', Zmarslt: '조직이 새로운 아이디어에 더욱 개방적이고 유연하게 대처 할 수 있도록 활력을 불어넣으며 기존의 방식에서 과감히\n탈피하여 새로운 방법, 절차, 기술을 적용하도록 적극적으로 장려하여 창의적 변화를 주도한다.' }, //
-              { Obj0: '통찰력 있는 비전제시', Zapgme: '5', Zapgma: '4', Zmarslt: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' },
+              { Obj0: '창의적 변화주도', Zapgme: 'ALL', Zapgma: 'ALL', Zmarslt: '조직이 새로운 아이디어에 더욱 개방적이고 유연하게 대처 할 수 있도록 활력을 불어넣으며 기존의 방식에서 과감히\n탈피하여 새로운 방법, 절차, 기술을 적용하도록 적극적으로 장려하여 창의적 변화를 주도한다.' }, //
+              { Obj0: '통찰력 있는 비전제시', Zapgme: 'ALL', Zapgma: 'ALL', Zmarslt: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' },
             ],
           },
         });
@@ -215,7 +215,7 @@ sap.ui.define(
               .value()
           );
 
-          // const mButtons = oViewModel.getProperty('/buttons');
+          const mButtons = oViewModel.getProperty('/buttons');
           // const mConvertScreen = _.chain(mDetailData.AppraisalScreenSet.results)
           //   .reduce((acc, cur) => ({ ...acc, [_.capitalize(cur.ColumnId)]: cur.Zdipopt }), oViewModel.getProperty('/fieldControl/display'))
           //   .forOwn((value, key, object) => {
@@ -225,23 +225,23 @@ sap.ui.define(
           //   })
           //   .value();
 
-          // // 기능버튼
-          // _.chain(mButtons)
-          //   .tap((o) => _.set(o, ['form', 'Rjctr'], _.get(mDetailData, 'Rjctr', _.noop())))
-          //   .tap((o) => _.forEach(mDetailData.AppraisalBottnsSet.results, (obj) => _.set(o.submit, obj.ButtonId, _.chain(obj).set('process', _.stubTrue()).omit('__metadata').value())))
-          //   .tap((o) => {
-          //     _.chain(Constants.BUTTON_STATUS_MAP)
-          //       .get([sZzapsts, sLogicalZzapstsSub])
-          //       .forOwn((v, k) =>
-          //         _.chain(o.submit)
-          //           .set([k, 'Availability'], _.get(v, sType))
-          //           .set([k, 'ButtonText'], this.getBundleText(_.get(v, 'label')))
-          //           .set([k, 'process'], _.get(v, 'process', _.stubFalse()))
-          //           .commit()
-          //       )
-          //       .commit();
-          //   })
-          //   .commit();
+          // 기능버튼
+          _.chain(mButtons)
+            .tap((o) => _.set(o, ['form', 'Rjctr'], _.get(mDetailData, 'Rjctr', _.noop())))
+            .tap((o) => _.forEach(mDetailData.AppraisalBottnsSet.results, (obj) => _.set(o.submit, obj.ButtonId, _.chain(obj).set('process', _.stubTrue()).omit('__metadata').value())))
+            .tap((o) => {
+              _.chain(Constants.BUTTON_STATUS_MAP)
+                .get([sZzapsts, sLogicalZzapstsSub])
+                .forOwn((v, k) =>
+                  _.chain(o.submit)
+                    .set([k, 'Availability'], _.get(v, sType))
+                    .set([k, 'ButtonText'], this.getBundleText(_.get(v, 'label')))
+                    .set([k, 'process'], _.get(v, 'process', _.stubFalse()))
+                    .commit()
+                )
+                .commit();
+            })
+            .commit();
 
           // // 조회모드
           // if (_.isEqual(sZonlydsp, 'X')) {
