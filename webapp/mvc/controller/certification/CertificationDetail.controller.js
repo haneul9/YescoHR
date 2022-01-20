@@ -12,6 +12,7 @@ sap.ui.define(
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/common/PostcodeDialogHandler',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date',
     'sap/ui/yesco/mvc/model/type/Currency',
@@ -28,6 +29,7 @@ sap.ui.define(
     TableUtils,
     Client,
     ServiceNames,
+    PostcodeDialogHandler,
     BaseController
   ) => {
     'use strict';
@@ -36,11 +38,14 @@ sap.ui.define(
       LIST_PAGE_ID: 'container-ehr---certification',
       LIST_PAGE: 'certification',
 
+      PostcodeDialogHandler: null,
       TextUtils: TextUtils,
       TableUtils: TableUtils,
       FragmentEvent: FragmentEvent,
 
       onBeforeShow() {
+        this.PostcodeDialogHandler = new PostcodeDialogHandler(this, this.callbackPostcode.bind(this));
+
         const oViewModel = new JSONModel({
           menid: this.getCurrentMenuId(),
           Hass: this.isHass(),
@@ -177,7 +182,16 @@ sap.ui.define(
 
       // 통합주소검색 Dialog
       onAddressSearch() {
-        window.open('postcodeForBrowser.html?CBF=fn_SetAddr', 'pop', 'width=550,height=550, scrollbars=yes, resizable=yes');
+        this.PostcodeDialogHandler.openDialog();
+        // window.open('postcodeForBrowser.html?CBF=fn_SetAddr', 'pop', 'width=550,height=550, scrollbars=yes, resizable=yes');
+      },
+
+      // 주소 검색 Dialog 선택시
+      callbackPostcode({ sPostcode, sFullAddr }) {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/FormData/Pstlzf', sPostcode);
+        oViewModel.setProperty('/FormData/Addf1', sFullAddr);
       },
 
       checkError(sAppType) {
@@ -377,13 +391,3 @@ sap.ui.define(
     });
   }
 );
-
-// 주소 검색 Dialog 선택시
-// eslint-disable-next-line no-unused-vars
-function fn_SetAddr(sZip, sFullAddr) {
-  const oView = sap.ui.getCore().byId('container-ehr---certificationDetail');
-  const oViewModel = oView.getModel();
-
-  oViewModel.setProperty('/FormData/Pstlzf', sZip);
-  oViewModel.setProperty('/FormData/Addf1', sFullAddr);
-}
