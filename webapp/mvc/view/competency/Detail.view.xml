@@ -17,7 +17,7 @@
 					<Button text="{i18n>LABEL_10049}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/Z_CMCNCL/Availability} === 'X' }" press=".onPressCancelButton" />
 					<Button text="{i18n>LABEL_00103}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/SAVE/Availability} === 'X' }" press=".onPressSaveButton" />
 					<Button text="{i18n>LABEL_00146}" class="sapUiTinyMarginEnd" press=".onNavBack" />
-					<Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" />
+					<Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
 				</HBox>
 			</HBox>
 		</VBox>

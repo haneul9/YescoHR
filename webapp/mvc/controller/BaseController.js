@@ -188,6 +188,10 @@ sap.ui.define(
         }
       },
 
+      onPagePrint() {
+        window.print();
+      },
+
       /**
        *
        */

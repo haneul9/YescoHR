@@ -15,7 +15,7 @@
 						<Button text="{i18n>LABEL_00118}" class="sapUiTinyMarginEnd" press=".onCancelBtn" visible="{= ${/FormData/Lnsta} === '20' }" />
 						<Button text="{i18n>LABEL_00110}" class="sapUiTinyMarginEnd" type="Reject" press=".onDeleteBtn" visible="{= ${/FormData/Lnsta} === '10' || ${/FormData/Lnsta} === '45' }" />
 						<Button text="{i18n>LABEL_00146}" class="sapUiTinyMarginEnd" press=".onNavBack" />
-						<Button text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" icon="sap-icon://print" press=".FragmentEvent.onPagePrint" />
+						<Button text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" icon="sap-icon://print" press=".onPagePrint" />
 						<Button text="{i18n>LABEL_00132}" icon="sap-icon://sys-help" />
 					</HBox>
 				</HBox>
