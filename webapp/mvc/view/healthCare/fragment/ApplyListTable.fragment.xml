@@ -1,32 +1,43 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:table="sap.ui.table"
   xmlns:core="sap.ui.core">
-  <table:Table id="medTable" class="row-link" rows="{/List}" visibleRowCount="{/listInfo/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
-    <table:rowSettingsTemplate>
-      <table:RowSettings highlight="{
-          path: 'Lnsta',
-          formatter: '.TableUtils.rowHighlight'
-      }"/>
-    </table:rowSettingsTemplate>
+  <table:Table id="healthTable" class="row-link" rows="{/List}" visibleRowCount="{/listInfo/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
     <table:columns>
-      <table:Column width="100px" sortProperty="Lnsta" filterProperty="Lnsta">
-        <Label text="{i18n>LABEL_00144}"/>
+      <table:Column width="180px" sortProperty="Gjahr" filterProperty="Gjahr">
+        <Label text="{i18n>LABEL_21007}"/>
         <table:template>
-          <Text text="{
-                path: 'Lnsta',
-                formatter: '.TableUtils.StatusTxt'
-            }" width="100%" textAlign="Center">
-            <customData>
-              <core:CustomData key="status" value="Z{Lnsta}" writeToDom="true" />
-            </customData>
-          </Text>
+          <Text text="{Gjahr}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="auto" sortProperty="Appda" filterProperty="Appda">
-        <Label text="{i18n>LABEL_00266}"/>
+      <table:Column width="180px" sortProperty="PtypeTxt" filterProperty="PtypeTxt">
+        <Label text="{i18n>LABEL_21008}"/>
+        <table:template>
+          <Text text="{PtypeTxt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="180px" sortProperty="Pname" filterProperty="Pname">
+        <Label text="{i18n>LABEL_21009}"/>
+        <table:template>
+          <Text text="{Pname}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="180px" sortProperty="Pyear" filterProperty="Pyear">
+        <Label text="{i18n>LABEL_21010}"/>
+        <table:template>
+          <Text text="{Pyear}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="180px" sortProperty="ItypeTxt" filterProperty="ItypeTxt">
+        <Label text="{i18n>LABEL_21011}"/>
+        <table:template>
+          <Text text="{ItypeTxt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="180px" sortProperty="Begda" filterProperty="Begda">
+        <Label text="{i18n>LABEL_21003}"/>
         <table:template>
           <Text text="{
-              path: 'Appda',
+              path: 'Begda',
               type: 'sap.ui.model.type.Date',
               formatOptions: {
                   pattern: 'yyyy.MM.dd'
@@ -34,58 +45,16 @@
           }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="auto" sortProperty="Znametx" filterProperty="Znametx">
-        <Label text="{i18n>LABEL_03010}"/>
+      <table:Column width="200px" sortProperty="Ihopt" filterProperty="Ihopt">
+        <Label text="{i18n>LABEL_21012}"/>
         <table:template>
-          <Text text="{Znametx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Ihopt}" textAlign="Left" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="100px" sortProperty="Apcnt" filterProperty="Apcnt">
-        <Label text="{i18n>LABEL_09004}"/>
+      <table:Column width="auto" sortProperty="Instx" filterProperty="Instx">
+        <Label text="{i18n>LABEL_21013}"/>
         <table:template>
-          <Text text="{Apcnt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
-        </table:template>
-      </table:Column>
-      <table:Column width="200px" sortProperty="Apbet" filterProperty="Apbet">
-        <Label text="{i18n>LABEL_09005}"/>
-        <table:template>
-          <Text text="{
-              path: 'Apbet',
-              type: 'sap.ui.yesco.mvc.model.type.Currency'
-          }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-        </table:template>
-      </table:Column>
-      <table:Column width="100px" sortProperty="Pvcnt" filterProperty="Pvcnt">
-        <Label text="{i18n>LABEL_09006}"/>
-        <table:template>
-          <Text text="{Pvcnt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
-        </table:template>
-      </table:Column>
-      <table:Column width="200px" sortProperty="Pvbet" filterProperty="Pvbet">
-        <Label text="{i18n>LABEL_09007}"/>
-        <table:template>
-          <Text text="{
-              path: 'Pvbet',
-              type: 'sap.ui.yesco.mvc.model.type.Currency'
-          }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-        </table:template>
-      </table:Column>
-      <table:Column width="100px" sortProperty="Rjcnt" filterProperty="Rjcnt">
-        <Label text="{i18n>LABEL_09008}"/>
-        <table:template>
-          <Text text="{Rjcnt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
-        </table:template>
-      </table:Column>
-      <table:Column width="auto" sortProperty="Paymm" filterProperty="Paymm">
-        <Label text="{i18n>LABEL_03002}"/>
-        <table:template>
-          <Text text="{= !${Paymm} || ${Paymm} === '0000000' ? '' : ${Paymm} }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-        </table:template>
-      </table:Column>
-      <table:Column width="60px">
-        <Label text="{i18n>LABEL_00133}"/>
-        <table:template>
-          <Button type="Transparent" icon="sap-icon://attachment" class="mnw-0" press=".TableUtils.onFileListDialog" visible="{= ${Attyn} === 'Y' }"/>
+          <Text text="{Instx}" textAlign="Left" width="100%" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
     </table:columns>

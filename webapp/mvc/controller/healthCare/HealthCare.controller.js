@@ -2,24 +2,29 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/model/json/JSONModel',
+    'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Currency',
-    'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
+    'sap/ui/yesco/mvc/model/type/Date',
+    'sap/ui/yesco/mvc/model/type/Year', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
   ],
   (
     // prettier 방지용 주석
     JSONModel,
+    AppUtils,
     AttachFileAction,
     ComboEntry,
     FragmentEvent,
     TableUtils,
     TextUtils,
+    Client,
     ServiceNames,
     BaseController
   ) => {
@@ -35,13 +40,17 @@ sap.ui.define(
         const dDate = new Date();
         const oViewModel = new JSONModel({
           busy: false,
-          Data: [],
-          LoanType: [],
-          TargetCode: {},
-          parameters: {},
+          TargetCode: [],
           search: {
             date: new Date(dDate.getFullYear(), 12, 0),
-            secondDate: new Date(),
+            secondDate: new Date(dDate.getFullYear(), 0, 1),
+            Ptype: '',
+          },
+          Total: {
+            Zyear: '',
+            HealthTot: '',
+            HealthIng: '',
+            HealthCom: '',
           },
           listInfo: {
             rowCount: 1,
@@ -58,148 +67,75 @@ sap.ui.define(
 
       async onObjectMatched() {
         const oListModel = this.getViewModel();
+        const oModel = this.getModel(ServiceNames.BENEFIT);
 
         try {
           oListModel.setProperty('/busy', true);
-          const aList = await this.getFamilyCode();
+          const aTargetList = await Client.getEntitySet(oModel, 'HealthCarePtype');
 
-          oListModel.setProperty('/FamilyCode', new ComboEntry({ codeKey: 'Seqnr', valueKey: 'Znametx', aEntries: aList }));
-          oListModel.setProperty('/search/Seqnr', 'ALL');
+          oListModel.setProperty('/TargetCode', new ComboEntry({ codeKey: 'Ptype', valueKey: 'PtypeTxt', aEntries: aTargetList }));
+          oListModel.setProperty('/search/Ptype', 'ALL');
 
-          this.onSearch();
-          this.totalCount();
+          const mSearch = oListModel.getProperty('/search');
+          const mPayLoad = {
+            Begda: moment(mSearch.secondDate).hours(9).toDate(),
+            Endda: moment(mSearch.date).hours(9).toDate(),
+            Ptype: mSearch.Ptype,
+          };
+          const aTableList = await Client.getEntitySet(oModel, 'HealthCareContents', mPayLoad);
+          const oTable = this.byId('healthTable');
+
+          oListModel.setProperty('/List', aTableList);
+          oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
+          oListModel.setProperty('/listInfo/visibleStatus', 'X');
+          oListModel.setProperty('/listInfo/Title', this.getBundleText('LABEL_14006'));
+
+          const aTotaltList = await Client.getEntitySet(oModel, 'HealthCareCount');
+
+          oListModel.setProperty('/Total/HealthTot', aTotaltList[0].HealthTot);
+          oListModel.setProperty('/Total/HealthIng', aTotaltList[0].HealthIng);
+          oListModel.setProperty('/Total/HealthCom', aTotaltList[0].HealthCom);
+          oListModel.setProperty('/Total/Zyear', moment().year());
         } catch (oError) {
+          AppUtils.handleError(oError);
         } finally {
           oListModel.setProperty('/busy', false);
         }
-      },
-
-      onClick() {
-        this.getRouter().navTo('medical-detail', { oDataKey: 'N' });
-      },
-
-      // override AttachFileCode
-      getApprovalType() {
-        return 'HR09';
       },
 
       formatNumber(vNum = '0') {
         return !vNum ? '0' : vNum;
       },
 
-      formatPay(vPay = '0') {
-        vPay = this.TextUtils.toCurrency(vPay);
-
-        return `${vPay}${this.getBundleText('LABEL_00158')}`;
-      },
-
       thisYear(sYear = String(moment().format('YYYY'))) {
-        return this.getBundleText('MSG_09001', sYear);
+        return this.getBundleText('MSG_21001', sYear);
       },
 
-      onSearch() {
+      async onSearch() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oListModel = this.getViewModel();
-        const oSearch = oListModel.getProperty('/search');
-        const dDate = moment(oSearch.secondDate).hours(9).toDate();
-        const dDate2 = moment(oSearch.date).hours(9).toDate();
-        const sMenid = this.getCurrentMenuId();
-        let sFamgb = '';
-        let sFamsa = '';
-        let sObjps = '';
-        let sKdsvh = '';
+        const mSearch = oListModel.getProperty('/search');
+        const mPayLoad = {
+          Begda: moment(mSearch.secondDate).hours(9).toDate(),
+          Endda: moment(mSearch.date).hours(9).toDate(),
+          Ptype: mSearch.Ptype,
+        };
 
         oListModel.setProperty('/busy', true);
 
-        if (!!oSearch.Seqnr && oSearch.Seqnr !== 'ALL') {
-          sFamgb = oListModel.getProperty('/TargetCode/Famgb');
-          sFamsa = oListModel.getProperty('/TargetCode/Famsa');
-          sObjps = oListModel.getProperty('/TargetCode/Objps');
-          sKdsvh = oListModel.getProperty('/TargetCode/Kdsvh');
+        try {
+          const aTableList = await Client.getEntitySet(oModel, 'HealthCareContents', mPayLoad);
+          const oTable = this.byId('healthTable');
+
+          oListModel.setProperty('/List', aTableList);
+          oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
+          oListModel.setProperty('/listInfo/visibleStatus', 'X');
+          oListModel.setProperty('/listInfo/Title', this.getBundleText('LABEL_14006'));
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oListModel.setProperty('/busy', false);
         }
-
-        oModel.read('/MedExpenseApplSet', {
-          filters: [
-            new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'),
-            new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid),
-            new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate),
-            new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2),
-            new sap.ui.model.Filter('Famgb', sap.ui.model.FilterOperator.EQ, sFamgb),
-            new sap.ui.model.Filter('Famsa', sap.ui.model.FilterOperator.EQ, sFamsa),
-            new sap.ui.model.Filter('Objps', sap.ui.model.FilterOperator.EQ, sObjps),
-            new sap.ui.model.Filter('Kdsvh', sap.ui.model.FilterOperator.EQ, sKdsvh),
-          ],
-          success: (oData) => {
-            if (oData) {
-              const aMedList = oData.results;
-              const oTable = this.byId('medTable');
-
-              oListModel.setProperty('/List', aMedList);
-              oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aMedList, sStatCode: 'Lnsta' }));
-            }
-            oListModel.setProperty('/busy', false);
-          },
-          error: (oError) => {
-            this.debug(oError);
-            oListModel.setProperty('/busy', false);
-          },
-        });
-      },
-
-      getFamilyCode() {
-        return new Promise((resolve, reject) => {
-          const oModel = this.getModel(ServiceNames.BENEFIT);
-
-          oModel.read('/MedExpenseSupportListSet', {
-            filters: [new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date())],
-            success: (oData) => {
-              if (oData) {
-                resolve(oData.results);
-              }
-            },
-            error: (oError) => {
-              reject(oError);
-            },
-          });
-        });
-      },
-
-      totalCount() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oListModel = this.getViewModel();
-
-        oModel.read('/MedExpenseMymedSet', {
-          filters: [],
-          success: (oData) => {
-            if (oData) {
-              const oList = oData.results[0];
-
-              oListModel.setProperty('/Total', oList);
-
-              if (!!oList.Note) {
-                oListModel.setProperty('/listInfo/infoMessage', oList.Note);
-              }
-            }
-          },
-          error: (oError) => {
-            this.debug(oError);
-
-            oListModel.setProperty('/busy', false);
-          },
-        });
-      },
-
-      // 대상자 선택시
-      onFamilyCode(oEvent) {
-        const sKey = oEvent.getSource().getSelectedKey();
-        const oViewModel = this.getViewModel();
-        const oFCode = oViewModel.getProperty('/FamilyCode');
-
-        oFCode.forEach((e) => {
-          if (e.Seqnr === sKey) {
-            oViewModel.setProperty('/TargetCode', e);
-          }
-        });
       },
 
       onSelectRow(oEvent) {
@@ -207,15 +143,16 @@ sap.ui.define(
         const oListModel = this.getViewModel();
         const oRowData = oListModel.getProperty(vPath);
 
-        this.getRouter().navTo('medical-detail', { oDataKey: oRowData.Appno });
+        oListModel.setProperty('/parameters', oRowData);
+        this.getRouter().navTo('healthCare-detail', { oDataKey: oRowData.Seqnr });
       },
 
       onPressExcelDownload() {
-        const oTable = this.byId('medTable');
+        const oTable = this.byId('healthTable');
         const aTableData = this.getViewModel().getProperty('/List');
-        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_09010');
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_21001');
 
-        TableUtils.export({ oTable, aTableData, sFileName, sStatCode: 'Lnsta', sStatTxt: 'Lnstatx' });
+        TableUtils.export({ oTable, aTableData, sFileName });
       },
     });
   }

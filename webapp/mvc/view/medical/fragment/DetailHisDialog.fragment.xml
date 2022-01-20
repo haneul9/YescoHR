@@ -13,23 +13,23 @@
                 <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 2fr" gridGap="1px 0" class="form-grid">
                     <Label text="{i18n>LABEL_09021}"/>
                     <VBox>
-                        <custom:DateRangeSelection maxDate="{/DialogData/maxDate}" minDate="{/DialogData/minDate}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" dateValue="{ path: '/DialogData/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/DialogData/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date required" />
+                        <custom:DateRangeSelection id="DialogData1" maxDate="{/DialogData/maxDate}" minDate="{/DialogData/minDate}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" dateValue="{ path: '/DialogData/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/DialogData/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date required" />
                     </VBox>
                     <Label text="{i18n>LABEL_09016}"/>
                     <FlexBox alignItems="Start" justifyContent="End">
-                        <Input value="{ path: '/DialogData/Bet01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveCompar" description="{i18n>LABEL_00158}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }"/>
+                        <Input id="DialogData2" value="{ path: '/DialogData/Bet01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveCompar" description="{i18n>LABEL_00158}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }"/>
                     </FlexBox>
                     <Label text="{i18n>LABEL_09020}"/>
                     <VBox>
-                        <Input value="{/DialogData/Disenm}" class="required" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }"/>
+                        <Input id="DialogData3" value="{/DialogData/Disenm}" class="required" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }"/>
                     </VBox>
                     <Label text="{i18n>LABEL_09017}"/>
                     <FlexBox alignItems="Start" justifyContent="End">
-                        <Input value="{ path: '/DialogData/Bet02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveCompar" description="{i18n>LABEL_00158}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }"/>
+                        <Input id="DialogData4" value="{ path: '/DialogData/Bet02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveCompar" description="{i18n>LABEL_00158}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }"/>
                     </FlexBox>
                     <Label text="{i18n>LABEL_09014}"/>
                     <VBox>
-                        <Input value="{/DialogData/Medorg}" class="required" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }"/>
+                        <Input id="DialogData5" value="{/DialogData/Medorg}" class="required" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }"/>
                     </VBox>
                     <Label text="{i18n>LABEL_09018}"/>
                     <FlexBox alignItems="Start" justifyContent="End">
@@ -37,7 +37,7 @@
                     </FlexBox>
                     <Label text="{i18n>LABEL_09015}"/>
                     <VBox>
-                        <ComboBox items="{/ReceiptType}" selectedKey="{/DialogData/Recpgb}" change=".onRecipt" class="required" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }">
+                        <ComboBox id="DialogData6" items="{/ReceiptType}" selectedKey="{/DialogData/Recpgb}" change=".onRecipt" class="required" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }">
                             <core:Item text="{Ztext}" key="{Zcode}" />
                         </ComboBox>
                     </VBox>

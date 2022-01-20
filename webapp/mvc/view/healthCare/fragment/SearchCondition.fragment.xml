@@ -8,11 +8,11 @@
             <Button type="Transparent" press=".onSearch" class="icon-button search" />
         </HBox>
         <grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="8px">
-            <Label text="{i18n>LABEL_00266}" design="Bold" />
+            <Label text="{i18n>LABEL_21003}" design="Bold" />
             <custom:DateRangeSelection dateValue="{ path: '/search/secondDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/search/date', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" />
-            <Label text="{i18n>LABEL_03010}" design="Bold" />
-            <ComboBox items="{/FamilyCode}" selectedKey="{/search/Seqnr}" change=".onFamilyCode">
-                <core:Item text="{Znametx}" key="{Seqnr}" />
+            <Label text="{i18n>LABEL_21004}" design="Bold" />
+            <ComboBox items="{/TargetCode}" selectedKey="{/search/Ptype}">
+                <core:Item text="{PtypeTxt}" key="{Ptype}" />
             </ComboBox>
         </grid:CSSGrid>
     </VBox>
