@@ -1,0 +1,29 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.jobCompetency.JobCompetency"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:custom="sap.ui.yesco.control">
+  <Page showHeader="false">
+    <VBox class="contents-header">
+      <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+        <custom:Breadcrumbs />
+        <HBox>
+          <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
+          <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" />
+        </HBox>
+      </HBox>
+    </VBox>
+    <HBox class="contents" busyIndicatorDelay="0" busy="{/busy}">
+      <IconTabBar class="type-b" expandable="false" selectedKey="{/selectedKey}" select=".onSelectTabBar">
+        <items>
+          <IconTabFilter text="{i18n>LABEL_22002}" key="A">
+            <core:Fragment fragmentName="sap.ui.yesco.mvc.view.jobCompetency.fragment.jopDefine.Main" type="XML" />
+          </IconTabFilter>
+          <IconTabFilter text="{i18n>LABEL_22001}" key="B">
+            <core:Fragment fragmentName="sap.ui.yesco.mvc.view.jobCompetency.fragment.competencyDefine.Main" type="XML" />
+          </IconTabFilter>
+        </items>
+      </IconTabBar>
+    </HBox>
+  </Page>
+</mvc:View>

@@ -1,0 +1,102 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:grid="sap.ui.layout.cssgrid">
+  <HBox class="contents" justifyContent="SpaceBetween">
+    <ScrollContainer height="600px" vertical="true">
+      <layoutData>
+        <FlexItemData growFactor="0.8" />
+      </layoutData>
+      <Tree id="CompTree" mode="SingleSelectMaster" items="{path: '/Competency/CompTree'}" selectionChange=".onTreePress">
+        <layoutData>
+          <FlexItemData growFactor="1" />
+        </layoutData>
+        <CustomTreeItem>
+          <HBox>
+            <Image visible="{= ${Otype} === 'Q' }" src="asset/image/icon_cascading_type03.png" />
+            <Text text="{Stext}"/>
+          </HBox>
+        </CustomTreeItem>
+      </Tree>
+    </ScrollContainer>
+    <VBox width="100%">
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <Title level="H4" text="{i18n>LABEL_22003}" />
+        <TextArea editable="false" value="{/Competency/Defin}" width="100%" />
+      </VBox>
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <Title level="H4" text="{i18n>LABEL_22004}" />
+        <VBox>
+          <Panel expandable="true" width="auto" class="capability-level">
+            <customData>
+              <core:CustomData key="type" value="level5" writeToDom="true" />
+            </customData>
+            <layoutData>
+              <FlexItemData growFactor="1"/>
+            </layoutData>
+            <headerToolbar>
+              <OverflowToolbar height="3rem" style="Clear">
+                <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr 2fr 2fr" gridGap="8px">
+                  <VBox>
+                    <customData>
+                      <core:CustomData key="type" value="head" writeToDom="true" />
+                    </customData>
+                    <Text text="{i18n>LABEL_22006}" />
+                  </VBox>
+                  <HBox items="{/Competency/BehaviIndicat}">
+                    <VBox>
+                      <Label text="{Head/Level}" />
+                      <Text text="{Head/LevelTxt}" />
+                    </VBox>
+                  </HBox>
+                </grid:CSSGrid>
+              </OverflowToolbar>
+            </headerToolbar>
+            <content>
+              <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr 2fr 2fr" gridGap="8px">
+                <VBox>
+                  <customData>
+                    <core:CustomData key="type" value="head" writeToDom="true" />
+                  </customData>
+                  <Text text="{i18n>LABEL_22007}" />
+                </VBox>
+                <HBox items="{/Competency/BehaviIndicat}">
+                  <VBox>
+                    <Text text="{Step}" />
+                  </VBox>
+                </HBox>
+                <VBox>
+                  <customData>
+                    <core:CustomData key="type" value="head" writeToDom="true" />
+                  </customData>
+                  <Text text="{i18n>LABEL_22008}" />
+                </VBox>
+                <HBox items="{/Competency/BehaviIndicat}">
+                  <VBox visible="{= !${Note01} }">
+                    <customData>
+                      <core:CustomData key="type" value="blank" writeToDom="true" />
+                    </customData>
+                  </VBox>
+                  <VBox visible="{= !!${Note01} }">
+                    <Text text="{Note01}" visible="{= !!${Note01} }" />
+                    <Text text="{Note02}" visible="{= !!${Note02} }" />
+                    <Text text="{Note03}" visible="{= !!${Note03} }" />
+                    <Text text="{Note04}" visible="{= !!${Note04} }" />
+                    <Text text="{Note05}" visible="{= !!${Note05} }" />
+                    <Text text="{Note06}" visible="{= !!${Note06} }" />
+                    <Text text="{Note07}" visible="{= !!${Note07} }" />
+                    <Text text="{Note08}" visible="{= !!${Note08} }" />
+                    <Text text="{Note09}" visible="{= !!${Note09} }" />
+                    <Text text="{Note10}" visible="{= !!${Note10} }" />
+                  </VBox>
+                </HBox>
+              </grid:CSSGrid>
+            </content>
+          </Panel>
+        </VBox>
+      </VBox>
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <Title level="H4" text="{i18n>LABEL_22005}" />
+      </VBox>
+    </VBox>
+  </HBox>
+</core:FragmentDefinition>
