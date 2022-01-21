@@ -109,7 +109,7 @@
         { "pattern": "certification", "name": "certification", "target": "certification" },
         { "pattern": "certification/{oDataKey}", "name": "certification-detail", "target": "certificationDetail" },
         
-        { "pattern": "competencyDefine", "name": "competencyDefine", "target": "competencyDefine" },
+        { "pattern": "jobCompetency", "name": "jobCompetency", "target": "jobCompetency" },
 
         { "pattern": "clubJoin", "name": "clubJoin", "target": "clubJoin" },
         { "pattern": "clubJoin/{oDataKey}", "name": "clubJoin-detail", "target": "clubJoinDetail" },
@@ -203,7 +203,7 @@
         "certification": { "viewId": "certification", "viewPath": "sap.ui.yesco.mvc.view.certification", "viewName": "Certification" },
         "certificationDetail": { "viewId": "certificationDetail", "viewPath": "sap.ui.yesco.mvc.view.certification", "viewName": "certificationDetail" },
         
-        "competencyDefine": { "viewId": "competencyDefine", "viewPath": "sap.ui.yesco.mvc.view.competencyDefine", "viewName": "CompetencyDefine" },
+        "jobCompetency": { "viewId": "jobCompetency", "viewPath": "sap.ui.yesco.mvc.view.jobCompetency", "viewName": "JobCompetency" },
 
         "clubJoin": { "viewId": "clubJoin", "viewPath": "sap.ui.yesco.mvc.view.clubJoin", "viewName": "ClubJoin" },
         "h/clubJoin": { "viewId": "h_clubJoin", "viewPath": "sap.ui.yesco.mvc.view.clubJoin", "viewName": "ClubJoinHass" },
