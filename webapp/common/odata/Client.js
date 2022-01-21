@@ -1,3 +1,4 @@
+/* eslint-disable no-else-return */
 sap.ui.define(
   [
     // prettier 방지용 주석
@@ -25,7 +26,16 @@ sap.ui.define(
           oModel.read(`/${sUrl}Set`, {
             filters: _.chain(mFilters)
               .omitBy((fv) => _.isEqual(fv, 'ALL'))
-              .map((v, p) => new Filter(p, FilterOperator.EQ, v))
+              .map((v, p) => {
+                if (_.isArray(v)) {
+                  return new Filter({
+                    filters: _.map(v, (value) => new Filter(p, FilterOperator.EQ, value)),
+                    and: false,
+                  });
+                } else {
+                  return new Filter(p, FilterOperator.EQ, v);
+                }
+              })
               .value(),
             success: (oData) => {
               AppUtils.debug(`${sUrl} get-entityset success.`, oData);

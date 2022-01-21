@@ -266,7 +266,15 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/dialog/busy', true);
 
-          let aSummaryList = await Client.getEntitySet(oModel, 'DrillList', { Prcty: sMode, Zyymm: sYearMonth });
+          const sPernr = this.getAppointeeProperty('Pernr');
+          let aSummaryList = await Client.getEntitySet(oModel, 'DrillList', {
+            Prcty: sMode,
+            Zyymm: sYearMonth,
+            Pernr: _.chain(aList)
+              .reduce((acc, cur) => [...acc, _.get(cur, 'PernrA'), _.get(cur, 'PernrB')], [sPernr])
+              .uniq()
+              .value(),
+          });
 
           aSummaryList = _.differenceWith(aSummaryList, aList, (a, b) => moment(a.Datum).format('YYYYMMDD') === moment(b.Datum).format('YYYYMMDD'));
 
