@@ -75,6 +75,10 @@ sap.ui.define(
         this.oApprovalRequest.getRequestDetail().onSelectSuggestion(oEvent);
       },
 
+      onSubmitSuggest(oEvent) {
+        this.oApprovalRequest.getRequestDetail().onSubmitSuggest(oEvent);
+      },
+
       /**
        * 신청 button click event handler
        */

@@ -41,7 +41,7 @@ sap.ui.define(
             employees: [],
           },
         });
-        oModel.setSizeLimit(10000);
+        oModel.setSizeLimit(10000); // employees suggestion item 최대 개수 기본값은 100이므로 제한을 늘려줌
 
         this.oController = oController;
         this.oDetailModel = oModel;
@@ -69,13 +69,12 @@ sap.ui.define(
        */
       async readData(sAppno) {
         const oModel = this.oController.getModel(ServiceNames.WORKTIME);
-        const sUrl = 'OnCallChangeApp';
         const mFilters = {
           Menid: this.oController.getCurrentMenuId(),
           Appno: sAppno,
         };
 
-        return Client.getEntitySet(oModel, sUrl, mFilters);
+        return Client.getEntitySet(oModel, 'OnCallChangeApp', mFilters);
       },
 
       async showData(aResultsData, bFormEditable = false) {
@@ -112,7 +111,13 @@ sap.ui.define(
       },
 
       openCurrentListDialog() {
-        this.oCurrentListDialogHandler.openDialog();
+        const sPernr = this.oController.getAppointeeProperty('Pernr');
+        const aPernrList = _.chain(this.oDetailModel.getProperty('/detail/list'))
+          .reduce((acc, cur) => [...acc, _.get(cur, 'PernrA'), _.get(cur, 'PernrB')], [sPernr])
+          .uniq()
+          .value();
+
+        this.oCurrentListDialogHandler.openDialog(aPernrList);
 
         return this;
       },
@@ -179,7 +184,6 @@ sap.ui.define(
 
       async readSuggestionData() {
         const oModel = this.oController.getModel(ServiceNames.COMMON);
-        const sUrl = 'EmpSearchResult';
         const mFilters = {
           Menid: this.oController.getCurrentMenuId(),
           Persa: this.oController.getAppointeeProperty('Werks'),
@@ -188,7 +192,7 @@ sap.ui.define(
           Actda: moment().hour(9).toDate(),
         };
 
-        return Client.getEntitySet(oModel, sUrl, mFilters);
+        return Client.getEntitySet(oModel, 'EmpSearchResult', mFilters);
       },
 
       onSelectSuggestion(oEvent) {
@@ -264,7 +268,6 @@ sap.ui.define(
         const sChgrsn = this.oDetailModel.getProperty('/detail/chgrsn');
 
         const oModel = this.oController.getModel(ServiceNames.WORKTIME);
-        const sUrl = 'OnCallChangeApp';
         const mPayload = {
           Menid: this.oController.getCurrentMenuId(),
           Appno: sAppno,
@@ -273,7 +276,7 @@ sap.ui.define(
           OnCallChangeNav: aDetailListData.map((o) => ({ ...o, Chgrsn: sChgrsn })),
         };
 
-        return Client.create(oModel, sUrl, mPayload);
+        return Client.create(oModel, 'OnCallChangeApp', mPayload);
       },
     });
   }

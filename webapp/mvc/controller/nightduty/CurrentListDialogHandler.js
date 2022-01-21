@@ -51,11 +51,13 @@ sap.ui.define(
             currentListRowCount: 1,
             currentListMode: this.sSelectionMode,
             selectedList: [],
+            pernrList: [],
           },
         };
       },
 
-      async openDialog() {
+      async openDialog(aPernrList) {
+        console.log(aPernrList);
         if (!this.oCurrentListDialog) {
           const oView = this.oController.getView();
 
@@ -79,6 +81,8 @@ sap.ui.define(
             });
         }
 
+        this.oDialogModel.setProperty('/dialog/pernrList', aPernrList || []);
+
         this.oCurrentListDialog.open();
       },
 
@@ -89,7 +93,11 @@ sap.ui.define(
         if (this.sSelectionMode === SelectionMode.MultiToggle) {
           this.oController.byId(`${this.sSelectionMode.toLowerCase()}--${this.sCurrentListTableId}`).clearSelection();
         }
+
+        const aPernrList = this.oDialogModel.getProperty('/dialog/pernrList');
+
         this.oDialogModel.setData(this.getInitialData());
+        this.oDialogModel.setProperty('/dialog/pernrList', aPernrList || []);
       },
 
       /**
@@ -112,25 +120,25 @@ sap.ui.define(
       },
 
       async readCurrentListTableData() {
-        const sPernr = this.oController.getAppointeeProperty('Pernr');
+        const aPernrList = this.oDialogModel.getProperty('/dialog/pernrList');
         const sYearMonth = this.oDialogModel.getProperty('/dialog/yearMonth').replace(/\D/g, '');
         const sSelectedDutyGroup = this.oDialogModel.getProperty('/dialog/selectedDutyGroup');
 
         const oModel = this.oController.getModel(ServiceNames.WORKTIME);
-        const sUrl = 'OnCallList';
         const mFilters = {
-          Pernr: sPernr, // prettier 방지용 주석
+          Pernr: aPernrList, // prettier 방지용 주석
           Begmm: sYearMonth,
           Endmm: sYearMonth,
           Ocshf: sSelectedDutyGroup,
         };
 
-        return Client.getEntitySet(oModel, sUrl, mFilters);
+        console.log(aPernrList);
+        return Client.getEntitySet(oModel, 'OnCallList', mFilters);
       },
 
-      setCurrentListTableData(aCurrentListData) {
-        this.oDialogModel.setProperty('/dialog/currentList', aCurrentListData);
-        this.oDialogModel.setProperty('/dialog/currentListRowCount', (aCurrentListData || []).length || 1);
+      setCurrentListTableData(aCurrentListTableData) {
+        this.oDialogModel.setProperty('/dialog/currentList', aCurrentListTableData);
+        this.oDialogModel.setProperty('/dialog/currentListRowCount', (aCurrentListTableData || []).length || 1);
         if (this.sSelectionMode === SelectionMode.MultiToggle) {
           this.oDialogModel.setProperty('/dialog/selectedList', []);
           this.oDialogModel.setProperty('/dialog/enabled', false);
