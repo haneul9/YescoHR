@@ -7,26 +7,30 @@
                 <Toolbar height="45px" width="100%">
                     <grid:CSSGrid gridTemplateColumns="750px repeat(4, 1fr)" gridGap="0px 11px">
                         <VBox>
-                            <Input value="{Obj0}" class="goal-subject" placeholder="{i18n>MSG_10007}" maxLength="{/fieldControl/limit/Obj0}" enabled="true" visible="true" />
+                            <Input value="{Obj0}" class="goal-subject" placeholder="{i18n>MSG_10007}" maxLength="{/fieldControl/limit/Obj0}" enabled="{= ${/fieldControl/display/Obj0} === 'X' }" visible="{= ${/fieldControl/display/Obj0} !== 'H' }" />
                         </VBox>
-                        <Label text="{i18n>LABEL_10057}" visible="true" />
-                        <HBox>
-                            <Input width="100%" value="" enabled="false" visible="false" />
-                            <ComboBox width="100%" class="required" selectedKey="{Zapgme}" items="{ path: '/entry/levels', templateShareable: true }" enabled="true" visible="true" change=".onChangeScore">
+                        <Label text="{i18n>LABEL_10057}" visible="{= ${/fieldControl/display/Z200} !== 'H' }" />
+                        <HBox visible="{= ${/fieldControl/display/Z200} !== 'H' }">
+                            <Input width="100%" value="" enabled="false" visible="{= ${/fieldControl/display/Z200} === 'V' }" />
+                            <ComboBox width="100%" class="required" selectedKey="{Z200}" items="{ path: '/entry/levels', templateShareable: true }" enabled="{= ${/fieldControl/display/Z200} === 'X' }" visible="{= ${/fieldControl/display/Z200} !== 'V' }" change=".onChangeScore">
                                 <customData>
-                                    <core:CustomData key="sProp" value="Zapgme" />
-                                    <core:CustomData key="sTarget" value="Zmepoint" />
+                                    <core:CustomData key="sRoot" value="{= ${Zvbgubun}  === '1' ? 'common' : 'duty' }" />
+                                    <core:CustomData key="sProp" value="Z200" />
+                                    <core:CustomData key="sTarget" value="{= ${Zvbgubun}  === '1' ? 'D1z200' : 'D2z200' }" />
+                                    <core:CustomData key="sTotTarget" value="HZ200" />
                                 </customData>
                                 <core:Item key="{ValueEid}" text="{ValueText}" />
                             </ComboBox>
                         </HBox>
-                        <Label text="{i18n>LABEL_10058}" visible="true" />
-                        <HBox>
-                            <Input width="100%" value="" enabled="false" visible="false" />
-                            <ComboBox width="100%" class="required" selectedKey="{Zapgma}" items="{ path: '/entry/levels', templateShareable: true }" enabled="true" visible="true" change=".onChangeScore">
+                        <Label text="{i18n>LABEL_10058}" visible="{= ${/fieldControl/display/Fapp} !== 'H' }" />
+                        <HBox visible="{= ${/fieldControl/display/Fapp} !== 'H' }">
+                            <Input width="100%" value="" enabled="false" visible="{= ${/fieldControl/display/Fapp} === 'V' }" />
+                            <ComboBox width="100%" class="required" selectedKey="{Fapp}" items="{ path: '/entry/levels', templateShareable: true }" enabled="{= ${/fieldControl/display/Fapp} === 'X' }" visible="{= ${/fieldControl/display/Fapp} !== 'V' }" change=".onChangeScore">
                                 <customData>
-                                    <core:CustomData key="sProp" value="Zapgma" />
-                                    <core:CustomData key="sTarget" value="Zmapoint" />
+                                    <core:CustomData key="sRoot" value="{= ${Zvbgubun}  === '1' ? 'common' : 'duty' }" />
+                                    <core:CustomData key="sProp" value="Fapp" />
+                                    <core:CustomData key="sTarget" value="{= ${Zvbgubun}  === '1' ? 'D1fapp' : 'D2fapp' }" />
+                                    <core:CustomData key="sTotTarget" value="HFapp" />
                                 </customData>
                                 <core:Item key="{ValueEid}" text="{ValueText}" />
                             </ComboBox>
@@ -37,11 +41,10 @@
             <content>
                 <grid:CSSGrid gridTemplateColumns="1fr 7fr" gridGap="1px 0px" class="form-grid">
                     <VBox>
-                        <Label width="100%" text="{i18n>LABEL_10059}" vAlign="Top" visible="true"/>
+                        <Label width="100%" text="{i18n>LABEL_10059}" vAlign="Top" />
                     </VBox>
                     <VBox>
-                        <TextArea width="100%" rows="5" value="" enabled="false" visible="false" />
-                        <TextArea width="100%" class="required" rows="5" value="{Zmarslt}" maxLength="{/fieldControl/limit/Zmarslt}" enabled="true" visible="true" />
+                        <TextArea width="100%" rows="5" value="{ElementQdesc}" enabled="false" />
                     </VBox>
                 </grid:CSSGrid>
             </content>
