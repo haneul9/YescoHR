@@ -184,6 +184,15 @@ sap.ui.define(
             )
             .value();
 
+          // 평가 단계 - 하위 평가완료(5-X)는 숨김처리
+          oViewModel.setProperty('/stage/headers', aStageHeader);
+          oViewModel.setProperty(
+            '/stage/rows',
+            _.chain(mGroupStageByApStatusSub[''])
+              .map((o, i) => ({ child: _.map(aGroupStageByApStatusName[i], (o) => ({ ...o, visible: !_.isEqual('X', o.ApStatusSub) })) }))
+              .value()
+          );
+
           // 행동지표 수준 정의
           const mLevel = oViewModel.getProperty('/level');
           _.chain(mLevel)
@@ -213,15 +222,6 @@ sap.ui.define(
                 .value(),
             ])
             .commit();
-
-          // 평가 단계 - 하위 평가완료(5-X)는 숨김처리
-          oViewModel.setProperty('/stage/headers', aStageHeader);
-          oViewModel.setProperty(
-            '/stage/rows',
-            _.chain(mGroupStageByApStatusSub[''])
-              .map((o, i) => ({ child: _.map(aGroupStageByApStatusName[i], (o) => ({ ...o, visible: !_.isEqual('X', o.ApStatusSub) })) }))
-              .value()
-          );
 
           const mButtons = oViewModel.getProperty('/buttons');
           const mConvertScreen = _.chain(mDetailData.AppraisalScreenSet.results)
@@ -345,31 +345,19 @@ sap.ui.define(
 
       validation() {
         const oViewModel = this.getViewModel();
-        const aStrategyGoals = _.cloneDeep(oViewModel.getProperty('/goals/strategy'));
+        const aCommonGoals = _.cloneDeep(oViewModel.getProperty('/goals/common'));
         const aDutyGoals = _.cloneDeep(oViewModel.getProperty('/goals/duty'));
-        const mManage = _.cloneDeep(oViewModel.getProperty('/manage'));
+        const mSummary = _.cloneDeep(oViewModel.getProperty('/summary'));
         const aValid = _.cloneDeep(oViewModel.getProperty('/goals/valid'));
         const aGoalValid = _.filter(aValid, (o) => _.includes(Constants.GOAL_PROPERTIES, o.field));
-        const aManageValid = _.filter(aValid, (o) => _.includes(Constants.MANAGE_PROPERTIES, o.field));
+        const aSummaryValid = _.filter(aValid, (o) => _.includes(Constants.SUMMARY_PROPERTIES, o.field));
 
-        if (_.some(aStrategyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: aGoalValid, sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` })) || _.some(aDutyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: _.reject(aGoalValid, { field: 'Z103s' }), sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` }))) {
-          this.changeTab(Constants.TAB.GOAL);
+        if (_.some(aCommonGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: aGoalValid, sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` })) || _.some(aDutyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: _.reject(aGoalValid, { field: 'Z103s' }), sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` }))) {
+          this.changeTab(Constants.TAB.ABILITY);
           return false;
         }
-        if (!Validator.check({ mFieldValue: mManage, aFieldProperties: aManageValid })) {
+        if (!Validator.check({ mFieldValue: mSummary, aFieldProperties: aSummaryValid })) {
           this.changeTab(Constants.TAB.OPINION);
-          return false;
-        }
-
-        if (
-          !_.chain([...aStrategyGoals, ...aDutyGoals])
-            .map((o) => _.toNumber(o.Fwgt))
-            .sum()
-            .isEqual(100)
-            .value()
-        ) {
-          MessageBox.alert(this.getBundleText('MSG_10005')); // 가중치의 총합은 100%이어야 합니다.
-          this.changeTab(Constants.TAB.GOAL);
           return false;
         }
 
@@ -386,21 +374,19 @@ sap.ui.define(
         try {
           const oModel = this.getModel(ServiceNames.APPRAISAL);
           const mParameter = _.cloneDeep(oViewModel.getProperty('/param'));
-          const mManage = _.cloneDeep(oViewModel.getProperty('/manage'));
           const mSummary = _.cloneDeep(oViewModel.getProperty('/summary'));
           const mReject = _.cloneDeep(oViewModel.getProperty('/buttons/form'));
-          const aStrategy = _.cloneDeep(oViewModel.getProperty('/goals/strategy'));
+          const aCommon = _.cloneDeep(oViewModel.getProperty('/goals/common'));
           const aDuty = _.cloneDeep(oViewModel.getProperty('/goals/duty'));
           const bIsSave = _.isEqual(code, Constants.PROCESS_TYPE.SAVE.code);
 
           await Client.deep(oModel, 'AppraisalCoDoc', {
             ...mParameter,
-            ...mManage,
             ...mSummary,
             ...mReject,
             Menid: this.getCurrentMenuId(),
             Prcty: code,
-            AppraisalDocDetailSet: [...aStrategy, ...aDuty],
+            AppraisalCoDocDetSet: [...aCommon, ...aDuty],
           });
 
           // {저장|전송|승인|취소}되었습니다.
