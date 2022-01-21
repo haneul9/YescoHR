@@ -417,14 +417,23 @@ sap.ui.define(
        *****************************************************************/
       onChangeScore(oEvent) {
         const oViewModel = this.getViewModel();
-        const { sProp, sTarget } = oEvent.getSource().data();
-        const aGoals = [...oViewModel.getProperty('/goals/strategy'), ...oViewModel.getProperty('/goals/duty')];
+        const { sRoot, sProp, sTarget, sTotTarget } = oEvent.getSource().data();
+        const aGoals = [...oViewModel.getProperty('/goals/common'), ...oViewModel.getProperty('/goals/duty')];
+        const aGroupGoals = [...oViewModel.getProperty(`/goals/${sRoot}`)];
 
         oViewModel.setProperty(
-          `/summary/${sTarget}`,
+          `/summary/${sTotTarget}`,
           _.chain(aGoals)
-            .reduce((acc, cur) => _.add(acc, _.defaultTo(_.multiply(cur.Fwgt, cur[sProp]), 0)), 0)
-            .divide(100)
+            .reduce((acc, cur) => _.add(acc, _.defaultTo(_.multiply(1, cur[sProp]), 0)), 0)
+            .divide(aGoals.length)
+            .floor(2)
+            .value()
+        );
+        oViewModel.setProperty(
+          `/summary/${sTarget}`,
+          _.chain(aGroupGoals)
+            .reduce((acc, cur) => _.add(acc, _.defaultTo(_.multiply(1, cur[sProp]), 0)), 0)
+            .divide(aGroupGoals.length)
             .floor(2)
             .value()
         );
