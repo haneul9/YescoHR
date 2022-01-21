@@ -44,14 +44,11 @@ sap.ui.define(
         return { ...acc, [cur]: Constants.DISPLAY_TYPE.EDIT };
       },
 
-      initializeGoalItem(obj, index) {
+      initializeGoalItem(obj) {
         return {
           rootPath: _.chain(Constants.GOAL_TYPE).findKey({ code: obj.Z101 }).toLower().value(),
           expanded: _.stubFalse(),
-          isSaved: _.stubTrue(),
-          OrderNo: String(index),
-          ItemNo: String(index + 1),
-          ..._.chain(obj).omit('AppraisalDoc').omit('__metadata').value(),
+          ..._.chain(obj).omit('AppraisalCoDoc').omit('__metadata').value(),
           ..._.chain(Constants.COMBO_PROPERTIES)
             .reduce((acc, cur) => ({ ...acc, [cur]: _.isEmpty(obj[cur]) ? 'ALL' : obj[cur] }), _.stubObject())
             .value(),
@@ -108,23 +105,22 @@ sap.ui.define(
               isRejectProcess: false,
             },
           },
-          currentItemsLength: 0,
           fieldControl: {
-            display: _.reduce([...Constants.GOAL_PROPERTIES, ...Constants.SUMMARY_PROPERTIES, ...Constants.MANAGE_PROPERTIES, ...Constants.REJECT_PROPERTIES], this.initializeFieldsControl.bind(this), {}),
+            display: _.reduce([...Constants.GOAL_PROPERTIES, ...Constants.SUMMARY_PROPERTIES, ...Constants.REJECT_PROPERTIES], this.initializeFieldsControl.bind(this), {}),
             limit: {},
           },
           goals: {
             valid: [],
             header: {},
-            strategy: [
-              { Obj0: 'Integrity', Zapgme: 'ALL', Zapgma: 'ALL', Zmarslt: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' }, //
-              { Obj0: 'Respect', Zapgme: 'ALL', Zapgma: 'ALL', Zmarslt: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' },
-              { Obj0: 'Excellence', Zapgme: 'ALL', Zapgma: 'ALL', Zmarslt: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' },
-              { Obj0: '성장 마인드', Zapgme: 'ALL', Zapgma: 'ALL', Zmarslt: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' },
+            common: [
+              { Obj0: 'Integrity', Z200: 'ALL', Fapp: 'ALL', ElementQdesc: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' }, //
+              { Obj0: 'Respect', Z200: 'ALL', Fapp: 'ALL', ElementQdesc: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' },
+              { Obj0: 'Excellence', Z200: 'ALL', Fapp: 'ALL', ElementQdesc: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' },
+              { Obj0: '성장 마인드', Z200: 'ALL', Fapp: 'ALL', ElementQdesc: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' },
             ],
             duty: [
-              { Obj0: '창의적 변화주도', Zapgme: 'ALL', Zapgma: 'ALL', Zmarslt: '조직이 새로운 아이디어에 더욱 개방적이고 유연하게 대처 할 수 있도록 활력을 불어넣으며 기존의 방식에서 과감히\n탈피하여 새로운 방법, 절차, 기술을 적용하도록 적극적으로 장려하여 창의적 변화를 주도한다.' }, //
-              { Obj0: '통찰력 있는 비전제시', Zapgme: 'ALL', Zapgma: 'ALL', Zmarslt: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' },
+              { Obj0: '창의적 변화주도', Z200: 'ALL', Fapp: 'ALL', ElementQdesc: '조직이 새로운 아이디어에 더욱 개방적이고 유연하게 대처 할 수 있도록 활력을 불어넣으며 기존의 방식에서 과감히\n탈피하여 새로운 방법, 절차, 기술을 적용하도록 적극적으로 장려하여 창의적 변화를 주도한다.' }, //
+              { Obj0: '통찰력 있는 비전제시', Z200: 'ALL', Fapp: 'ALL', ElementQdesc: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' },
             ],
           },
         });
@@ -149,9 +145,7 @@ sap.ui.define(
           }
 
           const mParameter = _.chain(oListView.getModel().getProperty('/parameter/rowData')).cloneDeep().omit('__metadata').value();
-          const { Zzapsts: sZzapsts, ZzapstsSub: sZzapstsSub, ZzapstsPSub: sZzapstsPSub, Zonlydsp: sZonlydsp } = mParameter;
-          // 4-1 평가실시 - 부분평가중일 경우 ZzapstsPSub가 A|B로 들어오면 1차평가중 상태로 변경한다.
-          const sLogicalZzapstsSub = _.isEqual(sZzapsts + sZzapstsSub, '41') && !_.isEmpty(sZzapstsPSub) ? sZzapstsPSub : sZzapstsSub;
+          const { Zzapsts: sZzapsts, ZzapstsSub: sZzapstsSub, Zonlydsp: sZonlydsp } = mParameter;
 
           this.setAppointee(sType, mParameter.Zzappee);
 
@@ -183,6 +177,13 @@ sap.ui.define(
           // Combo Entry
           oViewModel.setProperty('/entry/levels', new ComboEntry({ codeKey: 'ValueEid', valueKey: 'ValueText', aEntries: aGrades }) ?? []);
 
+          // Header
+          oViewModel.setProperty('/summary', {
+            ..._.chain({ ...mDetailData })
+              .pick(Constants.SUMMARY_PROPERTIES)
+              .value(),
+          });
+
           // 평가 프로세스 목록 - 헤더
           let bCompleted = true;
           const mGroupStageByApStatusSub = _.groupBy(aStepList, 'ApStatusSub');
@@ -201,7 +202,7 @@ sap.ui.define(
             .map((item) =>
               _.map(item, (o) => {
                 const mReturn = { ..._.omit(o, '__metadata'), completed: bCompleted };
-                if (_.isEqual(o.ApStatus, sZzapsts) && _.isEqual(o.ApStatusSub, sLogicalZzapstsSub)) bCompleted = false;
+                if (_.isEqual(o.ApStatus, sZzapsts) && _.isEqual(o.ApStatusSub, sZzapstsSub)) bCompleted = false;
                 return mReturn;
               })
             )
@@ -217,14 +218,14 @@ sap.ui.define(
           );
 
           const mButtons = oViewModel.getProperty('/buttons');
-          // const mConvertScreen = _.chain(mDetailData.AppraisalScreenSet.results)
-          //   .reduce((acc, cur) => ({ ...acc, [_.capitalize(cur.ColumnId)]: cur.Zdipopt }), oViewModel.getProperty('/fieldControl/display'))
-          //   .forOwn((value, key, object) => {
-          //     if (_.has(Constants.FIELD_MAPPING, key)) {
-          //       _.forEach(_.get(Constants.FIELD_MAPPING, key), (subKey) => _.set(object, subKey, _.get(Constants.FIELD_STATUS_MAP, [sZzapsts, sLogicalZzapstsSub, subKey, sType], value)));
-          //     }
-          //   })
-          //   .value();
+          const mConvertScreen = _.chain(mDetailData.AppraisalScreenSet.results)
+            .reduce((acc, cur) => ({ ...acc, [_.capitalize(cur.ColumnId)]: cur.Zdipopt }), oViewModel.getProperty('/fieldControl/display'))
+            .forOwn((value, key, object) => {
+              if (_.has(Constants.FIELD_MAPPING, key)) {
+                _.forEach(_.get(Constants.FIELD_MAPPING, key), (subKey) => _.set(object, subKey, _.get(Constants.FIELD_STATUS_MAP, [sZzapsts, sZzapstsSub, subKey, sType], value)));
+              }
+            })
+            .value();
 
           // 기능버튼
           _.chain(mButtons)
@@ -232,7 +233,7 @@ sap.ui.define(
             .tap((o) => _.forEach(mDetailData.AppraisalBottnsSet.results, (obj) => _.set(o.submit, obj.ButtonId, _.chain(obj).set('process', _.stubTrue()).omit('__metadata').value())))
             .tap((o) => {
               _.chain(Constants.BUTTON_STATUS_MAP)
-                .get([sZzapsts, sLogicalZzapstsSub])
+                .get([sZzapsts, sZzapstsSub])
                 .forOwn((v, k) =>
                   _.chain(o.submit)
                     .set([k, 'Availability'], _.get(v, sType))
@@ -244,39 +245,33 @@ sap.ui.define(
             })
             .commit();
 
-          // // 조회모드
-          // if (_.isEqual(sZonlydsp, 'X')) {
-          //   _.forEach(mButtons.goal, (v) => _.set(v, 'Availability', _.stubFalse()));
-          //   _.chain(mButtons.submit)
-          //     .filter({ process: true })
-          //     .forEach((v) => _.set(v, 'Availability', ''))
-          //     .commit();
+          // 조회모드
+          if (_.isEqual(sZonlydsp, 'X')) {
+            _.chain(mButtons.submit)
+              .filter({ process: true })
+              .forEach((v) => _.set(v, 'Availability', ''))
+              .commit();
 
-          //   _.forEach(mConvertScreen, (v, p) => {
-          //     if (_.isEqual(v, Constants.DISPLAY_TYPE.EDIT)) _.set(mConvertScreen, p, Constants.DISPLAY_TYPE.DISPLAY_ONLY);
-          //   });
+            _.forEach(mConvertScreen, (v, p) => {
+              if (_.isEqual(v, Constants.DISPLAY_TYPE.EDIT)) _.set(mConvertScreen, p, Constants.DISPLAY_TYPE.DISPLAY_ONLY);
+            });
+          }
 
-          //   if (_.isEqual(sType, Constants.APPRAISER_TYPE.MA) && (_.isEqual(['2', 'D'], [sZzapsts, sLogicalZzapstsSub]) || _.isEqual(['3', 'H'], [sZzapsts, sLogicalZzapstsSub]))) {
-          //     _.set(mConvertScreen, 'Z140', Constants.DISPLAY_TYPE.EDIT);
-          //   }
-          // }
+          // 목표(공통/직무)
+          const mGroupDetailByZvbgubun = _.groupBy(mDetailData.AppraisalCoDocDetSet.results, 'Zvbgubun');
 
-          // 목표(전략/직무)
-          // const mGroupDetailByZ101 = _.groupBy(mDetailData.AppraisalDocDetailSet.results, 'Z101');
+          _.forEach(Constants.GOAL_TYPE, (v) => oViewModel.setProperty(`/goals/${v.name}`, _.map(mGroupDetailByZvbgubun[v.code], this.initializeGoalItem.bind(this)) ?? []));
+          oViewModel.setProperty(
+            '/goals/valid',
+            _.chain(Constants.VALIDATION_PROPERTIES)
+              .filter((o) => _.isEqual(_.get(mConvertScreen, o.field), Constants.DISPLAY_TYPE.EDIT))
+              .map((o) => ({ ...o, label: this.getBundleText(o.label) }))
+              .value()
+          );
 
-          // _.forEach(Constants.GOAL_TYPE, (v) => oViewModel.setProperty(`/goals/${v.name}`, _.map(mGroupDetailByZ101[v.code], this.initializeGoalItem.bind(this)) ?? []));
-          // oViewModel.setProperty('/currentItemsLength', _.size(mDetailData.AppraisalDocDetailSet.results));
-          // oViewModel.setProperty(
-          //   '/goals/valid',
-          //   _.chain(Constants.VALIDATION_PROPERTIES)
-          //     .filter((o) => _.isEqual(_.get(mConvertScreen, o.field), Constants.DISPLAY_TYPE.EDIT))
-          //     .map((o) => ({ ...o, label: this.getBundleText(o.label) }))
-          //     .value()
-          // );
-
-          // // 필드속성
-          // oViewModel.setProperty('/fieldControl/display', mConvertScreen);
-          // oViewModel.setProperty('/fieldControl/limit', _.assignIn(this.getEntityLimit(ServiceNames.APPRAISAL, 'AppraisalDoc'), this.getEntityLimit(ServiceNames.APPRAISAL, 'AppraisalDocDetail')));
+          // 필드속성
+          oViewModel.setProperty('/fieldControl/display', mConvertScreen);
+          oViewModel.setProperty('/fieldControl/limit', _.assignIn(this.getEntityLimit(ServiceNames.APPRAISAL, 'AppraisalCoDoc'), this.getEntityLimit(ServiceNames.APPRAISAL, 'AppraisalCoDocDet')));
         } catch (oError) {
           this.debug(`Controller > ${mListRoute.route} Detail > onObjectMatched Error`, oError);
 
@@ -324,32 +319,6 @@ sap.ui.define(
             });
           }),
         });
-      },
-
-      addGoalItem({ code, name }) {
-        const oViewModel = this.getViewModel();
-        const aItems = oViewModel.getProperty(`/goals/${name}`);
-        const iItemsLength = aItems.length;
-        let iCurrentItemsLength = oViewModel.getProperty('/currentItemsLength') ?? 0;
-
-        if (iCurrentItemsLength === 10) {
-          MessageBox.alert(this.getBundleText('MSG_10002')); // 더 이상 추가 할 수 없습니다.
-          return;
-        }
-
-        oViewModel.setProperty('/currentItemsLength', ++iCurrentItemsLength);
-        oViewModel.setProperty(`/goals/${name}`, [
-          ...aItems,
-          {
-            ..._.reduce(Constants.GOAL_PROPERTIES, (acc, cur) => ({ ...acc, [cur]: _.includes(Constants.COMBO_PROPERTIES, cur) ? 'ALL' : _.noop() }), _.stubObject()),
-            Z101: code,
-            rootPath: name,
-            expanded: _.stubTrue(),
-            isSaved: _.stubFalse(),
-            OrderNo: String(iItemsLength),
-            ItemNo: String(iItemsLength + 1),
-          },
-        ]);
       },
 
       openRejectDialog() {
@@ -418,7 +387,7 @@ sap.ui.define(
           const aDuty = _.cloneDeep(oViewModel.getProperty('/goals/duty'));
           const bIsSave = _.isEqual(code, Constants.PROCESS_TYPE.SAVE.code);
 
-          await Client.deep(oModel, 'AppraisalDoc', {
+          await Client.deep(oModel, 'AppraisalCoDoc', {
             ...mParameter,
             ...mManage,
             ...mSummary,
@@ -446,17 +415,6 @@ sap.ui.define(
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
-      onChangeZtbegda(oEvent) {
-        const oControl = oEvent.getSource();
-        const oBinding = oControl.getBindingContext();
-        const dStartDate = moment(oControl.getDateValue());
-        const dEndDate = oBinding.getProperty('Ztendda');
-
-        if (_.isDate(dEndDate) && moment(dEndDate).isBefore(dStartDate)) {
-          oBinding.getModel().setProperty(`${oBinding.getPath()}/Ztendda`, _.noop());
-        }
-      },
-
       onChangeScore(oEvent) {
         const oViewModel = this.getViewModel();
         const { sProp, sTarget } = oEvent.getSource().data();
@@ -472,53 +430,6 @@ sap.ui.define(
         );
       },
 
-      onPressAddStrategy() {
-        const oViewModel = this.getViewModel();
-
-        if (_.isEmpty(oViewModel.getProperty('/entry/topGoals'))) {
-          MessageBox.alert(this.getBundleText('MSG_10003')); // 연관 상위 목표가 존재하지 않는 경우 전략목표를 생성할 수 없습니다.
-          return;
-        }
-
-        this.addGoalItem(Constants.GOAL_TYPE.STRATEGY);
-      },
-
-      onPressAddDuty() {
-        this.addGoalItem(Constants.GOAL_TYPE.DUTY);
-      },
-
-      onPressDeleteGoal(oEvent) {
-        const oViewModel = this.getViewModel();
-        const oSource = oEvent.getSource();
-
-        // 삭제하시겠습니까?
-        MessageBox.confirm(this.getBundleText('MSG_00049'), {
-          onClose: (sAction) => {
-            if (MessageBox.Action.CANCEL === sAction) return;
-
-            const { sRootPath, sDeleteTargetNum } = oSource.data();
-            const aGoalItems = oViewModel.getProperty(`/goals/${sRootPath}`);
-            const bIsSavedGoalItem = _.chain(aGoalItems).find({ OrderNo: sDeleteTargetNum }).get('isSaved').value();
-            let iCurrentItemsLength = oViewModel.getProperty('/currentItemsLength') ?? 0;
-
-            oViewModel.setProperty('/currentItemsLength', --iCurrentItemsLength);
-            oViewModel.setProperty(
-              `/goals/${sRootPath}`,
-              _.chain(aGoalItems)
-                .reject({ OrderNo: sDeleteTargetNum })
-                .map((o, i) => ({ ...o, OrderNo: String(i), ItemNo: String(i + 1) }))
-                .value()
-            );
-
-            if (bIsSavedGoalItem) MessageBox.success(this.getBundleText('MSG_10004')); // 저장 버튼을 클릭하여 삭제를 완료하시기 바랍니다.
-          },
-        });
-      },
-
-      onPressDiagnosisButton() {
-        MessageBox.alert('Not ready yet.');
-      },
-
       onPressRejectViewButton() {
         const oViewModel = this.getViewModel();
 
@@ -528,31 +439,6 @@ sap.ui.define(
 
       onPressRejectDialogClose() {
         this.byId('rejectDialog').close();
-      },
-
-      onPressApproveButton() {
-        const mProcessType = Constants.PROCESS_TYPE.APPROVE;
-
-        if (!this.validation()) return;
-
-        MessageBox.confirm(this.getBundleText('MSG_00006', mProcessType.label), {
-          // {승인}하시겠습니까?
-          onClose: (sAction) => {
-            if (MessageBox.Action.CANCEL === sAction) return;
-
-            this.createProcess(mProcessType);
-          },
-        });
-      },
-
-      onPressCheckedButton() {
-        if (!this.validation()) return;
-
-        MessageBox.alert('Not ready yet.');
-      },
-
-      onPressOppositionButton() {
-        MessageBox.alert('Not ready yet.');
       },
 
       onPressRejectButton() {
@@ -587,6 +473,10 @@ sap.ui.define(
             this.createProcess(mProcessType);
           },
         });
+      },
+
+      onPressCancelComplButton() {
+        MessageBox.alert('Not ready yet.');
       },
 
       onPressSaveButton() {

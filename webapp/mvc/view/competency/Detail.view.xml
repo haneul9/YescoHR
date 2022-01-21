@@ -14,7 +14,7 @@
 					<Button text="{i18n>LABEL_00117}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/COMPLETE/Availability} === 'X' }" press=".onPressCompleteButton" />
 					<Button text="{i18n>LABEL_00124}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/REJECT/Availability} === 'X' }" press=".onPressRejectButton" />
 					<Button text="{i18n>LABEL_10048}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/Z_CANCEL/Availability} === 'X' }" press=".onPressCancelButton" />
-					<Button text="{i18n>LABEL_10049}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/Z_CMCNCL/Availability} === 'X' }" press=".onPressCancelButton" />
+					<Button text="{i18n>LABEL_10049}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/Z_CMCNCL/Availability} === 'X' }" press=".onPressCancelComplButton" />
 					<Button text="{i18n>LABEL_00103}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/SAVE/Availability} === 'X' }" press=".onPressSaveButton" />
 					<Button text="{i18n>LABEL_00146}" class="sapUiTinyMarginEnd" press=".onNavBack" />
 					<Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
@@ -56,21 +56,21 @@
 										<Title level="H2" text="{i18n>LABEL_10047}" class="sapUiMediumMarginEnd"/>
 									</HBox>
 								</HBox>
-								<VBox items="{/goals/strategy}">
+								<VBox items="{/goals/common}">
 									<core:Fragment fragmentName="sap.ui.yesco.mvc.view.competency.fragment.Item" type="XML" />
 								</VBox>
-								<VBox>
+								<VBox visible="{= ${/fieldControl/display/D1z200} !== 'H' &amp;&amp; ${/fieldControl/display/D1fapp} !== 'H' }">
 									<grid:CSSGrid gridTemplateColumns="830px repeat(4, 1fr)" gridGap="1px 0px" class="form-grid">
 										<HBox />
-										<Label text="{i18n>LABEL_10060}" visible="true"/>
-										<VBox>
-											<Input value="" enabled="false" visible="false" />
-											<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/Zmepoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" visible="true"/>
+										<Label text="{i18n>LABEL_10060}" visible="{= ${/fieldControl/display/D1z200} !== 'H' }" />
+										<VBox visible="{= ${/fieldControl/display/D1z200} !== 'H' }">
+											<Input value="" enabled="false" visible="{= ${/fieldControl/display/D1z200} === 'V' }" />
+											<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/D1z200', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="{= ${/fieldControl/display/D1z200} === 'X' }" visible="{= ${/fieldControl/display/D1z200} !== 'V' }"/>
 										</VBox>
-										<Label text="{i18n>LABEL_10061}" visible="true"/>
-										<VBox>
-											<Input value="" enabled="false" visible="false" />
-											<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/Zmapoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" visible="true"/>
+										<Label text="{i18n>LABEL_10061}" visible="{= ${/fieldControl/display/D1fapp} !== 'H' }" />
+										<VBox visible="{= ${/fieldControl/display/D1fapp} !== 'H' }">
+											<Input value="" enabled="false" visible="{= ${/fieldControl/display/D1fapp} === 'V' }" />
+											<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/D1fapp', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="{= ${/fieldControl/display/D1fapp} === 'X' }" visible="{= ${/fieldControl/display/D1fapp} !== 'V' }"/>
 										</VBox>
 									</grid:CSSGrid>
 								</VBox>
@@ -84,34 +84,34 @@
 								<VBox items="{/goals/duty}">
 									<core:Fragment fragmentName="sap.ui.yesco.mvc.view.competency.fragment.Item" type="XML" />
 								</VBox>
-								<VBox>
+								<VBox visible="{= ${/fieldControl/display/D2z200} !== 'H' &amp;&amp; ${/fieldControl/display/D2fapp} !== 'H' }">
 									<grid:CSSGrid gridTemplateColumns="830px repeat(4, 1fr)" gridGap="1px 0px" class="form-grid">
 										<HBox />
-										<Label text="{i18n>LABEL_10062}" visible="true"/>
-										<VBox>
-											<Input value="" enabled="false" visible="false" />
-											<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/Zmepoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" visible="true"/>
+										<Label text="{i18n>LABEL_10062}" visible="{= ${/fieldControl/display/D2z200} !== 'H' }"/>
+										<VBox visible="{= ${/fieldControl/display/D2z200} !== 'H' }">
+											<Input value="" enabled="false" visible="{= ${/fieldControl/display/D2z200} === 'V' }" />
+											<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/D2z200', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="{= ${/fieldControl/display/D2z200} === 'X' }" visible="{= ${/fieldControl/display/D2z200} !== 'V' }"/>
 										</VBox>
-										<Label text="{i18n>LABEL_10063}" visible="true"/>
-										<VBox>
-											<Input value="" enabled="false" visible="false" />
-											<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/Zmapoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" visible="true"/>
+										<Label text="{i18n>LABEL_10063}" visible="{= ${/fieldControl/display/D2fapp} !== 'H' }"/>
+										<VBox visible="{= ${/fieldControl/display/D2fapp} !== 'H' }">
+											<Input value="" enabled="false" visible="{= ${/fieldControl/display/D2fapp} === 'V' }" />
+											<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/D2fapp', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="{= ${/fieldControl/display/D2fapp} === 'X' }" visible="{= ${/fieldControl/display/D2fapp} !== 'V' }"/>
 										</VBox>
 									</grid:CSSGrid>
 								</VBox>
 							</VBox>
-							<HBox class="vCardBox sapUiSmallMarginTop" visible="true">
+							<HBox class="vCardBox sapUiSmallMarginTop" visible="{= ${/fieldControl/display/HZ200} !== 'H' &amp;&amp; ${/fieldControl/display/HFapp} !== 'H' }">
 								<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="830px repeat(4, 1fr)">
 									<HBox />
-									<Label text="{i18n>LABEL_10051}" visible="true"/>
-									<VBox>
-										<Input value="" enabled="false" visible="false" />
-										<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/Zmepoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" visible="true"/>
+									<Label text="{i18n>LABEL_10051}" visible="{= ${/fieldControl/display/HZ200} !== 'H' }"/>
+									<VBox visible="{= ${/fieldControl/display/HZ200} !== 'H' }">
+										<Input value="" enabled="false" visible="{= ${/fieldControl/display/HZ200} === 'V' }" />
+										<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/HZ200', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="{= ${/fieldControl/display/HZ200} === 'X' }" visible="{= ${/fieldControl/display/HZ200} !== 'V' }"/>
 									</VBox>
-									<Label text="{i18n>LABEL_10052}" visible="true"/>
-									<VBox>
-										<Input value="" enabled="false" visible="false" />
-										<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/Zmapoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" visible="true"/>
+									<Label text="{i18n>LABEL_10052}" visible="{= ${/fieldControl/display/HFapp} !== 'H' }"/>
+									<VBox visible="{= ${/fieldControl/display/HFapp} !== 'H' }">
+										<Input value="" enabled="false" visible="{= ${/fieldControl/display/HFapp} === 'V' }" />
+										<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/HFapp', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="{= ${/fieldControl/display/HFapp} === 'X' }" visible="{= ${/fieldControl/display/HFapp} !== 'V' }"/>
 									</VBox>
 								</grid:CSSGrid>
 							</HBox>
@@ -126,23 +126,23 @@
 								<VBox>
 									<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="1fr 3fr 1fr 3fr">
 										<VBox>
-											<Label width="100%" text="{i18n>LABEL_10054}" vAlign="Top" visible="true"/>
+											<Label width="100%" text="{i18n>LABEL_10054}" vAlign="Top" visible="{= ${/fieldControl/display/Z200r} !== 'H' }"/>
 										</VBox>
 										<VBox>
-											<TextArea width="100%" rows="5" value="" enabled="false" visible="false" />
-											<TextArea width="100%" class="required" rows="5" value="{Zmarslt}" maxLength="{/fieldControl/limit/Zmarslt}" enabled="true" visible="true" />
+											<TextArea width="100%" rows="5" value="" enabled="false" visible="{= ${/fieldControl/display/Z200r} === 'V' }" />
+											<TextArea width="100%" class="required" rows="5" value="{/summary/Z200r}" maxLength="{/fieldControl/limit/Z200r}" enabled="{= ${/fieldControl/display/Z200r} === 'X' }" visible="{= ${/fieldControl/display/Z200r} !== 'H' &amp;&amp; ${/fieldControl/display/Z200r} !== 'V' }" />
 										</VBox>
 										<VBox>
-											<Label width="100%" text="{i18n>LABEL_10055}" vAlign="Top" visible="true"/>
+											<Label width="100%" text="{i18n>LABEL_10055}" vAlign="Top" visible="{= ${/fieldControl/display/Fappr} !== 'H' }"/>
 										</VBox>
 										<VBox>
-											<TextArea width="100%" rows="5" value="" enabled="false" visible="false" />
-											<TextArea width="100%" class="required" rows="5" value="{Zrslt}" maxLength="{/fieldControl/limit/Zrslt}" enabled="true" visible="true" />
+											<TextArea width="100%" rows="5" value="" enabled="false" visible="{= ${/fieldControl/display/Fappr} === 'V' }" />
+											<TextArea width="100%" class="required" rows="5" value="{/summary/Fappr}" maxLength="{/fieldControl/limit/Fappr}" enabled="{= ${/fieldControl/display/Fappr} === 'X' }" visible="{= ${/fieldControl/display/Fappr} !== 'H' &amp;&amp; ${/fieldControl/display/Fappr} !== 'V' }" />
 										</VBox>
 									</grid:CSSGrid>
 								</VBox>
 							</VBox>
-							<VBox class="vCardBox">
+							<VBox class="vCardBox" visible="{= ${/fieldControl/display/Z209} !== 'H' }">
 								<HBox>
 									<HBox alignItems="Center" class="table-toolbar">
 										<Title level="H2" text="{i18n>LABEL_10010}" class="sapUiMediumMarginEnd"/>
@@ -151,11 +151,11 @@
 								<VBox>
 									<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="1fr 7fr">
 										<VBox>
-											<Label width="100%" text="{i18n>LABEL_10056}" vAlign="Top" visible="true"/>
+											<Label width="100%" text="{i18n>LABEL_10056}" vAlign="Top"/>
 										</VBox>
 										<VBox>
-											<TextArea width="100%" rows="5" value="" enabled="false" visible="false" />
-											<TextArea width="100%" class="required" rows="5" value="{Z140}" maxLength="{/fieldControl/limit/Z140}" enabled="true" visible="true" />
+											<TextArea width="100%" rows="5" value="" enabled="false" visible="{= ${/fieldControl/display/Z209} === 'V' }" />
+											<TextArea width="100%" class="required" rows="5" value="{/summary/Z209}" maxLength="{/fieldControl/limit/Z209}" enabled="{= ${/fieldControl/display/Z209} === 'X' }" visible="{= ${/fieldControl/display/Z209} !== 'V' }" />
 										</VBox>
 									</grid:CSSGrid>
 								</VBox>
