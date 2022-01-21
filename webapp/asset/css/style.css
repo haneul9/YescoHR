@@ -1034,6 +1034,7 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 
 /*Layer popup style*/
 .sapUiSizeCompact.sapMDialog, .sapUiSizeCompact .sapMDialog, .sapMDialog { min-height:45px; padding:65px 0px 80px; background-color:#fff}
+.sapMDialog.sapMDialog-NoHeader { padding-top:0;}
 .sapMDialogSection, .sapMDialogSubHeader {padding:0px 30px}
 .sapMDialogSection .sapMPanelContent:not(.sapMPanelBGTransparent), .sapMDialogSection .sapMPanelHdr {padding:0px} 
 .sapUiSizeCompact.sapMDialog>.sapMDialogTitle, .sapUiSizeCompact .sapMDialog>.sapMDialogTitle {height:75px}
@@ -1084,6 +1085,7 @@ html.sap-desktop .sapMDialog>footer .sapContrast.sapMIBar.sapMFooter-CTX .sapMBt
 .sapMDialog.sapMDialogWithSubHeader {padding-top:70px}
 .sapMDialog header.sapMDialogSubHeader + .sapMDialogSection {padding-top:20px}
 .sapMDialog header.sapMDialogSubHeader {cursor:default; height:auto; left:0; position:relative; right:0; top:0; z-index:2}
+.sapUiSizeCompact.sapMDialog header.sapMDialogSubHeader, .sapUiSizeCompact .sapMDialog header.sapMDialogSubHeader { height: 2rem; top: 0rem;}
 .sapMDialog header.sapMDialogWithSubHeader {padding-top:5rem; margin-bottom:10px}
 .sapMDialog header.sapMDialogWithSubHeader .sapUiSizeCompact .sapMBarLeft, 
 .sapMDialog header.sapMDialogWithSubHeader .sapUiSizeCompact .sapMBarRight, 
@@ -1231,8 +1233,9 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .sapMPanelExpandableIconExpanded {transform:translateY(0%) rotate(-90deg)}
 
 /* 평가 */
-.per-status {position:relative; display:flex; justify-content:space-between; margin-left:30px!important; z-index:2}
+.per-status {position:relative; display:flex; justify-content:space-between; margin-left:30px!important;margin-right:30px!important; z-index:2}
 .per-status .sapMFlexItem {position:relative; flex:1; z-index:2}
+.per-status > .sapMFlexItem:last-child {flex: inherit;}
 .per-status .sapMVBox .sapMFlexItem + .sapMFlexItem:after {content:""; display:inline-block; height:2px; position:absolute; left:0%; right:0%; top:calc(50% - 1px); background:#CCCCCC; z-index:-1}
 .sapMIBar.sapMTB .per-status.sapMBarChild:only-child {padding-left:0rem; padding-right:0}
 .per-status .sapMVBox.on .sapMFlexItem + .sapMFlexItem:after {background:#66B0F0}
@@ -1250,6 +1253,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .per-status .sapMFlexBox:nth-child(5) .sapUiIcon:after {background-image:url(../image/icon_per_status_05.png)}
 .per-status-d {display:flex; justify-content:space-between; padding-left:95px}
 .per-status-d .sapMVBox {margin-left:10px; flex:1}
+.per-status-d > .sapMVBox:last-child {margin-right: 18px!important;min-width: 35px;flex: inherit;}
 .per-status-d .sapMVBox .sapMFlexItem {margin-bottom:8px}
 .per-status-d .sapMVBox .sapMFlexItem:last-child {margin-bottom:0px}
 .per-status-d .sapUiIcon {margin-right:10px; margin-top:2px}

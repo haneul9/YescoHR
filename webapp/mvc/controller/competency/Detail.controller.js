@@ -6,6 +6,7 @@ sap.ui.define(
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
+    'sap/ui/yesco/common/DateUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -22,6 +23,7 @@ sap.ui.define(
     MessageBox,
     AppUtils,
     ComboEntry,
+    DateUtils,
     Client,
     UI5Error,
     ServiceNames,
@@ -71,28 +73,8 @@ sap.ui.define(
             expanded: false,
             type: 'level5',
             count: 5,
-            headers: [
-              { type: 'head', text: '역량 수준' }, //
-              { type: 'body', label: 'Level 1', text: '(학습 단계)' },
-              { type: 'body', label: 'Level 2' },
-              { type: 'body', label: 'Level 3', text: '(적응 단계 or 적응/지도)' },
-              { type: 'body', label: 'Level 4' },
-              { type: 'body', label: 'Level 5', text: '(지도/조정 단계 or 실현단계)' },
-            ],
-            rows: [
-              { type: 'head', child: [{ text: '단계 정의' }] }, //
-              { type: 'body', child: [{ text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }] },
-              { type: 'body', child: [{ text: 'Level 1과 3 사이' }] },
-              { type: 'body', child: [{ text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }] },
-              { type: 'body', child: [{ text: 'Level 3과 5 사이' }] },
-              { type: 'body', child: [{ text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }] },
-              { type: 'head', child: [{ text: '특징' }] },
-              { type: 'body', child: [{ text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }, { text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }, { text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }] },
-              { type: 'blank', child: [] },
-              { type: 'body', child: [{ text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }, { text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }, { text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }] },
-              { type: 'blank', child: [] },
-              { type: 'body', child: [{ text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }, { text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }, { text: '직무역할과 관련된 기능적 기술 및 지식을 학습하는 단계' }] },
-            ],
+            headers: [],
+            rows: [],
           },
           entry: {
             levels: [],
@@ -112,16 +94,8 @@ sap.ui.define(
           goals: {
             valid: [],
             header: {},
-            common: [
-              { Obj0: 'Integrity', Z200: 'ALL', Fapp: 'ALL', ElementQdesc: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' }, //
-              { Obj0: 'Respect', Z200: 'ALL', Fapp: 'ALL', ElementQdesc: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' },
-              { Obj0: 'Excellence', Z200: 'ALL', Fapp: 'ALL', ElementQdesc: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' },
-              { Obj0: '성장 마인드', Z200: 'ALL', Fapp: 'ALL', ElementQdesc: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' },
-            ],
-            duty: [
-              { Obj0: '창의적 변화주도', Z200: 'ALL', Fapp: 'ALL', ElementQdesc: '조직이 새로운 아이디어에 더욱 개방적이고 유연하게 대처 할 수 있도록 활력을 불어넣으며 기존의 방식에서 과감히\n탈피하여 새로운 방법, 절차, 기술을 적용하도록 적극적으로 장려하여 창의적 변화를 주도한다.' }, //
-              { Obj0: '통찰력 있는 비전제시', Z200: 'ALL', Fapp: 'ALL', ElementQdesc: 'LS인은 원칙과 기본을 지키고 모든 일을 합리적으로 수행한다.' },
-            ],
+            common: [],
+            duty: [],
           },
         });
         this.setViewModel(oViewModel);
@@ -145,7 +119,7 @@ sap.ui.define(
           }
 
           const mParameter = _.chain(oListView.getModel().getProperty('/parameter/rowData')).cloneDeep().omit('__metadata').value();
-          const { Zzapsts: sZzapsts, ZzapstsSub: sZzapstsSub, Zonlydsp: sZonlydsp } = mParameter;
+          const { Elementqid: sElementqid, Zzapsts: sZzapsts, ZzapstsSub: sZzapstsSub, Zonlydsp: sZonlydsp } = mParameter;
 
           this.setAppointee(sType, mParameter.Zzappee);
 
@@ -159,10 +133,12 @@ sap.ui.define(
           const [
             aStepList, //
             aGrades,
+            aScales,
             mDetailData,
           ] = await Promise.all([
             fCurriedGetEntitySet('AppStatusStepList', { Werks: this.getSessionProperty('Werks'), Zzappid: mParameter.Zzappid, Zzappty: '20' }),
             fCurriedGetEntitySet('AppValueList', { VClass: 'Q', VType: '702' }),
+            fCurriedGetEntitySet('CompAppStatScale', { Objid: sElementqid, Datum: DateUtils.parse(new Date()) }),
             Client.deep(oModel, 'AppraisalCoDoc', {
               ...mParameter,
               Menid: this.getCurrentMenuId(),
@@ -207,6 +183,36 @@ sap.ui.define(
               })
             )
             .value();
+
+          // 행동지표 수준 정의
+          const mLevel = oViewModel.getProperty('/level');
+          _.chain(mLevel)
+            .set('type', `level${aScales.length}`)
+            .set('count', aScales.length)
+            .set(
+              'headers',
+              _.reduce(aScales, (acc, cur) => [...acc, { type: 'body', label: cur.Pstext.substring(0, 7), text: _.replace(cur.Pstext, cur.Pstext.substring(0, 8), '') }], [{ type: 'head', text: this.getBundleText('LABEL_22006') }])
+            )
+            .set('rows', [
+              ..._.reduce(aScales, (acc, cur) => [...acc, { type: 'body', child: [{ text: cur.Steptext }] }], [{ type: 'head', child: [{ text: this.getBundleText('LABEL_22007') }] }]), //
+              ..._.chain(aScales)
+                .reduce(
+                  (acc, cur) => [
+                    ...acc,
+                    {
+                      type: 'body',
+                      child: _.chain(cur)
+                        .pickBy((v, p) => _.startsWith(p, 'Note') && !_.isEmpty(v))
+                        .map((v) => ({ text: v }))
+                        .value(),
+                    },
+                  ],
+                  [{ type: 'head', child: [{ text: this.getBundleText('LABEL_22008') }] }]
+                )
+                .map((o) => ({ ...o, type: _.isEmpty(o.child) ? 'blank' : o.type }))
+                .value(),
+            ])
+            .commit();
 
           // 평가 단계 - 하위 평가완료(5-X)는 숨김처리
           oViewModel.setProperty('/stage/headers', aStageHeader);
