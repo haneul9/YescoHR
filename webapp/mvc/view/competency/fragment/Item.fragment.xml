@@ -7,7 +7,7 @@
                 <Toolbar height="45px" width="100%">
                     <grid:CSSGrid gridTemplateColumns="750px repeat(4, 1fr)" gridGap="0px 11px">
                         <VBox>
-                            <Input value="{Obj0}" class="goal-subject" placeholder="{i18n>MSG_10007}" maxLength="{/fieldControl/limit/Obj0}" enabled="true" visible="true" />
+                            <Input value="{Obj0}" class="goal-subject" placeholder="{i18n>MSG_10007}" maxLength="{/fieldControl/limit/Obj0}" enabled="{= ${/fieldControl/display/Obj0} === 'X' }" />
                         </VBox>
                         <Label text="{i18n>LABEL_10057}" visible="true" />
                         <HBox>
@@ -37,11 +37,10 @@
             <content>
                 <grid:CSSGrid gridTemplateColumns="1fr 7fr" gridGap="1px 0px" class="form-grid">
                     <VBox>
-                        <Label width="100%" text="{i18n>LABEL_10059}" vAlign="Top" visible="true"/>
+                        <Label width="100%" text="{i18n>LABEL_10059}" vAlign="Top" />
                     </VBox>
                     <VBox>
-                        <TextArea width="100%" rows="5" value="" enabled="false" visible="false" />
-                        <TextArea width="100%" class="required" rows="5" value="{Zmarslt}" maxLength="{/fieldControl/limit/Zmarslt}" enabled="true" visible="true" />
+                        <TextArea width="100%" rows="5" value="{Zmarslt}" enabled="false" />
                     </VBox>
                 </grid:CSSGrid>
             </content>

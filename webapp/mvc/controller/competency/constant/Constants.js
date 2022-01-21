@@ -9,6 +9,7 @@ sap.ui.define(
       LIST_PAGE: { ME: { route: 'competency', detail: 'competency-detail', id: 'container-ehr---competency' }, MA: { route: 'm/competency', detail: 'm/competency-detail', id: 'container-ehr---m_competency' } },
       REJECT_DIALOG_ID: 'sap.ui.yesco.mvc.view.competency.fragment.RejectDialog',
 
+      TAB: { ABILITY: 'T01', OPINION: 'T02' },
       APPRAISER_TYPE: { ME: 'ME', MA: 'MA' },
       DISPLAY_TYPE: { EDIT: 'X', DISPLAY_ONLY: 'D', HIDE: 'H', HIDDEN_VALUE: 'V' },
       GOAL_TYPE: { STRATEGY: { code: '1', name: 'strategy' }, DUTY: { code: '2', name: 'duty' } },

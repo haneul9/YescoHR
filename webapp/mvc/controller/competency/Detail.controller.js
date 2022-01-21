@@ -65,6 +65,7 @@ sap.ui.define(
           type: '',
           year: moment().format('YYYY'),
           appointee: {},
+          tab: { selectedKey: Constants.TAB.ABILITY },
           stage: {
             headers: [],
             rows: [],

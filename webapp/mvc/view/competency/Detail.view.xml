@@ -43,84 +43,127 @@
 					<core:Fragment fragmentName="sap.ui.yesco.mvc.view.competency.fragment.Level" type="XML" />
 				</HBox>
 			</VBox>
-			<VBox class="vCardBox">
-				<HBox>
-					<HBox alignItems="Center" class="table-toolbar">
-						<Title level="H2" text="{i18n>LABEL_10047}" class="sapUiMediumMarginEnd"/>
-					</HBox>
-				</HBox>
-				<VBox items="{/goals/strategy}">
-					<core:Fragment fragmentName="sap.ui.yesco.mvc.view.competency.fragment.Item" type="XML" />
-				</VBox>
-			</VBox>
-			<VBox class="vCardBox sapUiSmallMarginTop">
-				<HBox>
-					<HBox alignItems="Center" class="table-toolbar">
-						<Title level="H3" text="{i18n>LABEL_10050}" class="sapUiMediumMarginEnd" />
-					</HBox>
-				</HBox>
-				<VBox items="{/goals/duty}">
-					<core:Fragment fragmentName="sap.ui.yesco.mvc.view.competency.fragment.Item" type="XML" />
-				</VBox>
-			</VBox>
-			<HBox class="vCardBox sapUiSmallMarginTop" visible="true">
-				<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="830px repeat(4, 1fr)">
-					<HBox />
-					<Label text="{i18n>LABEL_10051}" visible="true"/>
-					<VBox>
-						<Input value="" enabled="false" visible="false" />
-						<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/Zmepoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" visible="true"/>
-					</VBox>
-					<Label text="{i18n>LABEL_10052}" visible="true"/>
-					<VBox>
-						<Input value="" enabled="false" visible="false" />
-						<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/Zmapoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" visible="true"/>
-					</VBox>
-				</grid:CSSGrid>
+			<HBox>
+				<IconTabBar class="type-b" selectedKey="{/tab/selectedKey}" expandable="false">
+					<layoutData>
+						<FlexItemData growFactor="1"/>
+					</layoutData>
+					<items>
+						<IconTabFilter text="{i18n>LABEL_10045}" key="T01">
+							<VBox class="vCardBox">
+								<HBox>
+									<HBox alignItems="Center" class="table-toolbar">
+										<Title level="H2" text="{i18n>LABEL_10047}" class="sapUiMediumMarginEnd"/>
+									</HBox>
+								</HBox>
+								<VBox items="{/goals/strategy}">
+									<core:Fragment fragmentName="sap.ui.yesco.mvc.view.competency.fragment.Item" type="XML" />
+								</VBox>
+								<VBox>
+									<grid:CSSGrid gridTemplateColumns="830px repeat(4, 1fr)" gridGap="1px 0px" class="form-grid">
+										<HBox />
+										<Label text="{i18n>LABEL_10060}" visible="true"/>
+										<VBox>
+											<Input value="" enabled="false" visible="false" />
+											<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/Zmepoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" visible="true"/>
+										</VBox>
+										<Label text="{i18n>LABEL_10061}" visible="true"/>
+										<VBox>
+											<Input value="" enabled="false" visible="false" />
+											<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/Zmapoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" visible="true"/>
+										</VBox>
+									</grid:CSSGrid>
+								</VBox>
+							</VBox>
+							<VBox class="vCardBox sapUiSmallMarginTop">
+								<HBox>
+									<HBox alignItems="Center" class="table-toolbar">
+										<Title level="H3" text="{i18n>LABEL_10050}" class="sapUiMediumMarginEnd" />
+									</HBox>
+								</HBox>
+								<VBox items="{/goals/duty}">
+									<core:Fragment fragmentName="sap.ui.yesco.mvc.view.competency.fragment.Item" type="XML" />
+								</VBox>
+								<VBox>
+									<grid:CSSGrid gridTemplateColumns="830px repeat(4, 1fr)" gridGap="1px 0px" class="form-grid">
+										<HBox />
+										<Label text="{i18n>LABEL_10062}" visible="true"/>
+										<VBox>
+											<Input value="" enabled="false" visible="false" />
+											<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/Zmepoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" visible="true"/>
+										</VBox>
+										<Label text="{i18n>LABEL_10063}" visible="true"/>
+										<VBox>
+											<Input value="" enabled="false" visible="false" />
+											<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/Zmapoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" visible="true"/>
+										</VBox>
+									</grid:CSSGrid>
+								</VBox>
+							</VBox>
+							<HBox class="vCardBox sapUiSmallMarginTop" visible="true">
+								<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="830px repeat(4, 1fr)">
+									<HBox />
+									<Label text="{i18n>LABEL_10051}" visible="true"/>
+									<VBox>
+										<Input value="" enabled="false" visible="false" />
+										<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/Zmepoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" visible="true"/>
+									</VBox>
+									<Label text="{i18n>LABEL_10052}" visible="true"/>
+									<VBox>
+										<Input value="" enabled="false" visible="false" />
+										<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/Zmapoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" visible="true"/>
+									</VBox>
+								</grid:CSSGrid>
+							</HBox>
+						</IconTabFilter>
+						<IconTabFilter text="{i18n>LABEL_10064}" key="T02">
+							<VBox class="vCardBox">
+								<HBox>
+									<HBox alignItems="Center" class="table-toolbar">
+										<Title level="H2" text="{i18n>LABEL_10053}" class="sapUiMediumMarginEnd"/>
+									</HBox>
+								</HBox>
+								<VBox>
+									<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="1fr 3fr 1fr 3fr">
+										<VBox>
+											<Label width="100%" text="{i18n>LABEL_10054}" vAlign="Top" visible="true"/>
+										</VBox>
+										<VBox>
+											<TextArea width="100%" rows="5" value="" enabled="false" visible="false" />
+											<TextArea width="100%" class="required" rows="5" value="{Zmarslt}" maxLength="{/fieldControl/limit/Zmarslt}" enabled="true" visible="true" />
+										</VBox>
+										<VBox>
+											<Label width="100%" text="{i18n>LABEL_10055}" vAlign="Top" visible="true"/>
+										</VBox>
+										<VBox>
+											<TextArea width="100%" rows="5" value="" enabled="false" visible="false" />
+											<TextArea width="100%" class="required" rows="5" value="{Zrslt}" maxLength="{/fieldControl/limit/Zrslt}" enabled="true" visible="true" />
+										</VBox>
+									</grid:CSSGrid>
+								</VBox>
+							</VBox>
+							<VBox class="vCardBox">
+								<HBox>
+									<HBox alignItems="Center" class="table-toolbar">
+										<Title level="H2" text="{i18n>LABEL_10010}" class="sapUiMediumMarginEnd"/>
+									</HBox>
+								</HBox>
+								<VBox>
+									<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="1fr 7fr">
+										<VBox>
+											<Label width="100%" text="{i18n>LABEL_10056}" vAlign="Top" visible="true"/>
+										</VBox>
+										<VBox>
+											<TextArea width="100%" rows="5" value="" enabled="false" visible="false" />
+											<TextArea width="100%" class="required" rows="5" value="{Z140}" maxLength="{/fieldControl/limit/Z140}" enabled="true" visible="true" />
+										</VBox>
+									</grid:CSSGrid>
+								</VBox>
+							</VBox>
+						</IconTabFilter>
+					</items>
+				</IconTabBar>
 			</HBox>
-			<VBox class="vCardBox">
-				<HBox>
-					<HBox alignItems="Center" class="table-toolbar">
-						<Title level="H2" text="{i18n>LABEL_10053}" class="sapUiMediumMarginEnd"/>
-					</HBox>
-				</HBox>
-				<VBox>
-					<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="1fr 3fr 1fr 3fr">
-						<VBox>
-							<Label width="100%" text="{i18n>LABEL_10054}" vAlign="Top" visible="true"/>
-						</VBox>
-						<VBox>
-							<TextArea width="100%" rows="5" value="" enabled="false" visible="false" />
-							<TextArea width="100%" class="required" rows="5" value="{Zmarslt}" maxLength="{/fieldControl/limit/Zmarslt}" enabled="true" visible="true" />
-						</VBox>
-						<VBox>
-							<Label width="100%" text="{i18n>LABEL_10055}" vAlign="Top" visible="true"/>
-						</VBox>
-						<VBox>
-							<TextArea width="100%" rows="5" value="" enabled="false" visible="false" />
-							<TextArea width="100%" class="required" rows="5" value="{Zrslt}" maxLength="{/fieldControl/limit/Zrslt}" enabled="true" visible="true" />
-						</VBox>
-					</grid:CSSGrid>
-				</VBox>
-			</VBox>
-			<VBox class="vCardBox">
-				<HBox>
-					<HBox alignItems="Center" class="table-toolbar">
-						<Title level="H2" text="{i18n>LABEL_10010}" class="sapUiMediumMarginEnd"/>
-					</HBox>
-				</HBox>
-				<VBox>
-					<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="1fr 7fr">
-						<VBox>
-							<Label width="100%" text="{i18n>LABEL_10056}" vAlign="Top" visible="true"/>
-						</VBox>
-						<VBox>
-							<TextArea width="100%" rows="5" value="" enabled="false" visible="false" />
-							<TextArea width="100%" class="required" rows="5" value="{Z140}" maxLength="{/fieldControl/limit/Z140}" enabled="true" visible="true" />
-						</VBox>
-					</grid:CSSGrid>
-				</VBox>
-			</VBox>
 		</VBox>
 	</Page>
 </mvc:View>
