@@ -57,7 +57,6 @@ sap.ui.define(
       },
 
       async openDialog(aPernrList) {
-        console.log(aPernrList);
         if (!this.oCurrentListDialog) {
           const oView = this.oController.getView();
 
@@ -132,7 +131,6 @@ sap.ui.define(
           Ocshf: sSelectedDutyGroup,
         };
 
-        console.log(aPernrList);
         return Client.getEntitySet(oModel, 'OnCallList', mFilters);
       },
 
