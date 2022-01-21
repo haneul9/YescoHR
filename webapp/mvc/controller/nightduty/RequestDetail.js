@@ -41,6 +41,7 @@ sap.ui.define(
             employees: [],
           },
         });
+        oModel.setSizeLimit(10000);
 
         this.oController = oController;
         this.oDetailModel = oModel;
