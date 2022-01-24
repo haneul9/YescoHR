@@ -25,25 +25,25 @@ sap.ui.define(
       },
 
       transformContentData(aPortletContentData = []) {
-        let newCount = 0;
-        let importantCount = 0;
+        let iNewCount = 0;
+        let iImportantCount = 0;
 
         aPortletContentData.forEach((mData) => {
           delete mData.__metadata;
 
           if (mData.Newitem === 'X') {
-            newCount += 1;
+            iNewCount += 1;
           }
           if (mData.Impor === 'X') {
-            importantCount += 1;
+            iImportantCount += 1;
           }
         });
 
         return {
           list: aPortletContentData,
           listCount: aPortletContentData.length,
-          newCount,
-          importantCount,
+          newCount: iNewCount,
+          importantCount: iImportantCount,
         };
       },
 

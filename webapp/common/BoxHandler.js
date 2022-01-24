@@ -15,11 +15,11 @@ sap.ui.define(
       /**
        * @override
        */
-      constructor: function (controller, requestListTableId) {
-        this.oController = controller;
+      constructor: function (oController, sRequestListTableId) {
+        this.oController = oController;
         this.oBoxModel = new JSONModel();
 
-        this.init(requestListTableId);
+        this.init(sRequestListTableId);
       },
 
       /**
@@ -32,8 +32,8 @@ sap.ui.define(
        */
       onPressIcon() {},
 
-      setController(controller) {
-        this.oController = controller;
+      setController(oController) {
+        this.oController = oController;
         return this;
       },
 
@@ -41,8 +41,8 @@ sap.ui.define(
         return this.oController;
       },
 
-      setBoxModel(boxModel) {
-        this.oBoxModel = boxModel;
+      setBoxModel(oBoxModel) {
+        this.oBoxModel = oBoxModel;
         return this;
       },
 

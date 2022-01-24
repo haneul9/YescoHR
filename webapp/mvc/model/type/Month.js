@@ -11,6 +11,9 @@ sap.ui.define(
   ) => {
     'use strict';
 
+    /**
+     * Edm.DateTime
+     */
     return TypeDate.extend('sap.ui.yesco.mvc.model.type.Month', {
       constructor: function (...args) {
         TypeDate.apply(this, args);
@@ -21,7 +24,6 @@ sap.ui.define(
         };
         this.setFormatOptions(oFormatOptions);
         this.sName = 'CustomMonth';
-        this.FORMAT_PATTERN = formatPattern;
       },
 
       getFormatPatternForMoment() {

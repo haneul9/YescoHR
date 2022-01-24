@@ -11,6 +11,9 @@ sap.ui.define(
   ) => {
     'use strict';
 
+    /**
+     * Edm.DateTime
+     */
     return TypeDate.extend('sap.ui.yesco.mvc.model.type.Year', {
       constructor: function (...args) {
         TypeDate.apply(this, args);
@@ -21,7 +24,6 @@ sap.ui.define(
         };
         this.setFormatOptions(oFormatOptions);
         this.sName = 'CustomYear';
-        this.FORMAT_PATTERN = formatPattern;
       },
 
       getFormatPatternForMoment() {

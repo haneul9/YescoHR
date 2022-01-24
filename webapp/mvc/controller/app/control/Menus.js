@@ -226,12 +226,11 @@ sap.ui.define(
 
         try {
           const oCommonModel = this.oAppController.getModel(ServiceNames.COMMON);
-          const sUrl = 'GetMenuUrl';
           const mKeyMap = {
             Menid: sMenid,
           };
 
-          const mData = await Client.get(oCommonModel, sUrl, mKeyMap);
+          const mData = await Client.get(oCommonModel, 'GetMenuUrl', mKeyMap);
           if (mData.Mnurl) {
             this.moveToMenu(mData.Mnurl);
           } else {

@@ -1,14 +1,16 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/core/Fragment',
+    'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/controller/app/NotificationPopoverHandler',
     'sap/ui/yesco/mvc/controller/app/control/Menus',
   ],
   (
     // prettier 방지용 주석
-    Fragment,
+    AppUtils,
     BaseController,
+    NotificationPopoverHandler,
     Menus
   ) => {
     'use strict';
@@ -18,8 +20,13 @@ sap.ui.define(
         this.debug('App.onInit');
 
         this.oAppMenu = new Menus(this);
+        this.oNotificationPopoverHandler = new NotificationPopoverHandler(this);
 
         this.getOwnerComponent().setAppMenu(this.oAppMenu);
+      },
+
+      getAppMenu() {
+        return this.oAppMenu;
       },
 
       navToHome() {
@@ -30,11 +37,11 @@ sap.ui.define(
           return;
         }
 
-        this.oAppMenu.moveToMenu('ehrHome'); // TODO : ehrMobileHome
+        this.oAppMenu.moveToMenu(AppUtils.isMobile() ? 'ehrMobileHome' : 'ehrHome');
       },
 
       getLogoPath(sWerks = 'init') {
-        this.byId('logoImage').toggleStyleClass(`logo-${sWerks}`, true);
+        this.byId('logo-image').toggleStyleClass(`logo-${sWerks}`, true);
         return `asset/image/logo-${sWerks}.png`;
       },
 
@@ -42,34 +49,12 @@ sap.ui.define(
         this.oAppMenu.moveToMenu('employee');
       },
 
-      async onPressNotificationPopoverOpen(oEvent) {
-        const oButton = oEvent.getSource();
-
-        if (!this.oNotificationPopover) {
-          this.oNotificationPopover = await Fragment.load({
-            name: 'sap.ui.yesco.mvc.view.app.fragment.NotificationPopover',
-            controller: this,
-          });
-
-          this.getView().addDependent(this.oNotificationPopover);
-          this.oNotificationPopover.bindElement('/ProductCollection/0');
-        }
-
-        this.oNotificationPopover.openBy(oButton);
-      },
-
-      onPressNotificationPopoverClose() {
-        this.oNotificationPopover.close();
+      onPressNotificationPopoverOpen(oEvent) {
+        this.oNotificationPopoverHandler.onPressNotificationOpenBy(oEvent.getSource());
       },
 
       onPressPortletsP13nDialogOpen() {
         this.getOwnerComponent().byId('home').getController().onPressPortletsP13nDialogOpen();
-      },
-
-      onExit() {
-        if (this.oNotificationPopover) {
-          this.oNotificationPopover.destroy();
-        }
       },
     });
   }

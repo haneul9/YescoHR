@@ -1,25 +1,25 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/base/Object',
     'sap/ui/core/Fragment',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/Debuggable',
     'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/control/MessageBox',
   ],
   (
     // prettier 방지용 주석
-    BaseObject,
     Fragment,
     JSONModel,
     AppUtils,
+    Debuggable,
     UI5Error,
     MessageBox
   ) => {
     'use strict';
 
-    return BaseObject.extend('sap.ui.yesco.mvc.controller.home.portlets.AbstractPortletHandler', {
+    return Debuggable.extend('sap.ui.yesco.mvc.controller.home.portlets.AbstractPortletHandler', {
       sContainerId: 'portlets-grid',
       oFragment: null,
 

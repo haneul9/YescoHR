@@ -4,35 +4,26 @@ sap.ui.define(
     'sap/ui/model/FormatException',
     'sap/ui/model/ParseException',
     'sap/ui/model/SimpleType',
-    'sap/ui/yesco/common/AppUtils',
   ],
   (
     // prettier 방지용 주석
     FormatException,
     ParseException,
-    SimpleType,
-    AppUtils
+    SimpleType
   ) => {
     'use strict';
 
     /**
-     * Edm.DateTime
+     * Edm.Time
      */
-    return SimpleType.extend('sap.ui.yesco.mvc.model.type.Date', {
+    return SimpleType.extend('sap.ui.yesco.mvc.model.type.Time', {
       constructor: function (...args) {
         SimpleType.apply(this, args);
 
-        const formatPattern = AppUtils.getAppComponent().getSessionModel().getProperty('/Dtfmt');
-        const oFormatOptions = {
-          pattern: formatPattern,
-        };
-        this.setFormatOptions(oFormatOptions);
-        this.sName = 'CustomDate';
+        this.sName = 'CustomTime';
       },
 
       formatValue(oValue, sTargetType) {
-        // AppUtils.debug(`sap/ui/yesco/mvc/model/type/Date.formatValue(${oValue}, ${sTargetType})`);
-
         switch (this.getPrimitiveType(sTargetType)) {
           case 'string':
           case 'any':
@@ -40,13 +31,11 @@ sap.ui.define(
           case 'object':
             return this._toObject(oValue, sTargetType);
           default:
-            throw new FormatException(`Don't know how to format Date to ${sTargetType}`);
+            throw new FormatException(`Don't know how to format Time to ${sTargetType}`);
         }
       },
 
       parseValue(oValue, sTargetType) {
-        // AppUtils.debug(`sap/ui/yesco/mvc/model/type/Date.parseValue(${oValue}, ${sTargetType})`);
-
         switch (this.getPrimitiveType(sTargetType)) {
           case 'string':
             return this._toString(oValue, sTargetType);
@@ -54,7 +43,7 @@ sap.ui.define(
           case 'any':
             return this._toObject(oValue, sTargetType);
           default:
-            throw new ParseException(`Don't know how to parse Date from ${sTargetType}`);
+            throw new ParseException(`Don't know how to parse Time from ${sTargetType}`);
         }
       },
 
@@ -67,17 +56,17 @@ sap.ui.define(
           return '';
         }
 
-        const sDTFMT = this.getFormatPatternForMoment();
+        const sHHmmss = this.oFormatOptions.pattern;
 
-        if (oValue instanceof Date) {
-          return moment(oValue).format(sDTFMT);
+        if ($.isPlainObject(oValue)) {
+          return moment(oValue.ms).format(sHHmmss);
         }
 
         if (typeof oValue === 'string' || oValue instanceof String) {
-          return this.getMoment(oValue).format(sDTFMT);
+          return this.getMoment(oValue).format(sHHmmss);
         }
 
-        throw new FormatException(`Don't know how to format Date to ${sTargetType}`);
+        throw new FormatException(`Don't know how to format Time to ${sTargetType}`);
       },
 
       _toObject(oValue, sTargetType) {
@@ -85,33 +74,28 @@ sap.ui.define(
           return null;
         }
 
-        if (oValue instanceof Date) {
+        if ($.isPlainObject(oValue)) {
           return oValue;
         }
 
         if (typeof oValue === 'string' || oValue instanceof String) {
-          return this.getMoment(oValue).toDate();
+          return { __edmType: 'Edm.Time', ms: this.getMoment(oValue).get('millisecond') };
         }
 
-        throw new ParseException(`Don't know how to parse Date from ${sTargetType}`);
-      },
-
-      getFormatPatternForMoment() {
-        return AppUtils.getAppComponent().getSessionModel().getProperty('/DTFMT');
+        throw new ParseException(`Don't know how to parse Time from ${sTargetType}`);
       },
 
       getParsePatternForMoment() {
-        return 'YYYYMMDD';
+        return 'HHmmss';
       },
 
       getMoment(oValue) {
-        if (/^\/Date/.test(oValue)) {
-          const iTime = parseInt(oValue.replace(/\/Date\((-?\d+)\)\//, '$1'), 10);
-          return moment(iTime).hour(9);
+        if (/^PT/.test(oValue)) {
+          return moment(oValue, '[PT]HH[H]mm[M]ss[S]');
         }
 
         const sDateString = oValue.replace(/[^\d]/g, '');
-        return moment(sDateString, this.getParsePatternForMoment()).hour(9);
+        return moment(`19700101${sDateString}`, this.getParsePatternForMoment());
       },
     });
   }

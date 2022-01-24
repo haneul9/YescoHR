@@ -15,6 +15,9 @@ sap.ui.define(
   ) => {
     'use strict';
 
+    /**
+     * 0 ~ 100
+     */
     return SimpleType.extend('sap.ui.yesco.mvc.model.type.Percent', {
       formatValue(oValue, sTargetType) {
         // AppUtils.debug(`sap/ui/yesco/mvc/model/type/Percent.formatValue(${oValue}, ${sTargetType})`);

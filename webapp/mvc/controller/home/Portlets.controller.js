@@ -12,6 +12,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/controller/home/PortletsP13nDialogHandler',
     'sap/ui/yesco/mvc/controller/home/portlets/P01PortletHandler',
     'sap/ui/yesco/mvc/controller/home/portlets/P02PortletHandler',
     'sap/ui/yesco/mvc/controller/home/portlets/P03PortletHandler',
@@ -32,6 +33,7 @@ sap.ui.define(
     Client,
     ServiceNames,
     BaseController,
+    PortletsP13nDialogHandler,
     P01PortletHandler,
     P02PortletHandler,
     P03PortletHandler,
@@ -42,9 +44,7 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.home.Portlets', {
-      EmployeeSearch: EmployeeSearch,
-
-      bMobile: false,
+      bMobile: AppUtils.isMobile(),
       mPortletHandlers: {
         P01PortletHandler,
         P02PortletHandler,
@@ -53,6 +53,8 @@ sap.ui.define(
         P05PortletHandler,
         P06PortletHandler,
       },
+
+      EmployeeSearch: EmployeeSearch,
 
       onBeforeShow() {
         const oGrid = this.byId('portlets-grid');
@@ -134,22 +136,13 @@ sap.ui.define(
 
       async onObjectMatched() {
         const mPortletsData = await this.readPortletsSetting();
-
         const oPortletsModel = await this.getPortletsModel(mPortletsData);
+
         this.setViewModel(oPortletsModel);
 
+        this.oPortletsP13nDialogHandler = new PortletsP13nDialogHandler(this, oPortletsModel);
+
         this.showPortlets(oPortletsModel);
-
-        this.oPortletsP13nDialog = await Fragment.load({
-          name: 'sap.ui.yesco.mvc.view.home.fragment.PortletsP13nDialog',
-          controller: this,
-        });
-
-        this.oPortletsP13nDialog.attachAfterClose(() => {
-          this.onPressPortletsP13nSave();
-        });
-
-        this.getView().addDependent(this.oPortletsP13nDialog);
       },
 
       async readPortletsSetting() {
@@ -213,7 +206,7 @@ sap.ui.define(
             column: this.bMobile ? Number(mPortletData.MSeq) || 1 : Number(mPortletData.Colno) || 1,
             sequence: mPortletData.Zhide !== 'X' ? Number(mPortletData.Seqno) || 99 : 0,
           },
-          width: 1,
+          width: Number(mPortletData.Hwidth) || 1,
           height: Number(mPortletData.Htall) || 1,
           icon: mPortletData.Iconid,
           title: mPortletData.Potnm,
@@ -241,175 +234,42 @@ sap.ui.define(
           return;
         }
 
-        aActivePortlets
+        aActivePortlets // prettier 방지용 주석
           .sort((o1, o2) => o1.position.column * 100 + o1.position.sequence - (o2.position.column * 100 + o2.position.sequence))
-          .forEach((mPortletData) => {
-            const PortletHandler = this.mPortletHandlers[`${mPortletData.id}PortletHandler`];
-            if (!PortletHandler) {
-              this.debug(`Portlets.controller > getPortletsModel > '${mPortletData.id}'에 해당하는 PortletHandler가 없습니다.`);
-              return mPortletData;
-            }
-
-            oPortletsModel.setProperty(`/activeInstanceMap/${mPortletData.id}`, new PortletHandler(this, mPortletData));
-          });
+          .forEach((mPortletData) => this.activatePortlet(mPortletData, oPortletsModel));
       },
 
-      /**
-       * Portlet 설정 팝업 스위치 on/off 이벤트 처리
-       * @param {sap.ui.base.Event} oEvent
-       */
-      onSelectPortletSwitch(oEvent) {
-        const bSelected = oEvent.getParameter('selected');
-        const sPortletId = oEvent.getSource().getBindingContext().getProperty('id');
-        const oPortletsModel = this.getViewModel();
-
-        oPortletsModel.setProperty('/busy', true);
-
-        if (bSelected) {
-          const PortletHandler = this.mPortletHandlers[`${sPortletId}PortletHandler`];
-          if (!PortletHandler) {
-            this.debug(`Portlets.controller > onSelectPortletSwitch > '${sPortletId}'에 해당하는 PortletHandler가 없습니다.`);
-            return;
-          }
-
-          const mPortletData = oPortletsModel.getProperty(`/allMap/${sPortletId}`);
-          const aActiveList = oPortletsModel.getProperty('/activeList');
-          aActiveList.push(mPortletData);
-
-          oPortletsModel.setProperty(`/allMap/${sPortletId}/active`, true);
-          oPortletsModel.setProperty(`/allMap/${sPortletId}/position/column`, 1);
-          oPortletsModel.setProperty(`/allMap/${sPortletId}/position/sequence`, aActiveList.length + 1);
-          oPortletsModel.setProperty(`/activeMap/${sPortletId}`, mPortletData);
-          oPortletsModel.setProperty(`/activeInstanceMap/${sPortletId}`, new PortletHandler(this, mPortletData));
-        } else {
-          oPortletsModel.getProperty(`/activeInstanceMap/${sPortletId}`).destroy();
+      activatePortlet(mPortletData, oPortletsModel) {
+        const PortletHandler = this.mPortletHandlers[`${mPortletData.id}PortletHandler`];
+        if (!PortletHandler) {
+          this.debug(`Portlets.controller > getPortletsModel > '${mPortletData.id}'에 해당하는 PortletHandler가 없습니다.`);
+          return false;
         }
 
-        oPortletsModel.refresh();
-        oPortletsModel.setProperty('/busy', false);
+        oPortletsModel.setProperty(`/activeInstanceMap/${mPortletData.id}`, new PortletHandler(this, mPortletData));
+
+        return true;
+      },
+
+      getPortletItems() {
+        return this.byId('portlets-grid').getItems();
       },
 
       /**
        * App.controller.js 에서 호출
        */
       onPressPortletsP13nDialogOpen() {
-        this.oPortletsP13nDialog.open();
+        this.oPortletsP13nDialogHandler.openPortletsP13nDialog();
       },
 
-      onPressPortletsP13nDialogClose() {
-        this.oPortletsP13nDialog.close();
-      },
-
-      /**
-       * Portlet 개인화 정보 저장
-       */
       async onPressPortletsP13nSave(sClosingPortletId) {
-        try {
-          const oPortletsModel = this.getViewModel();
-          const mActivePortlets = {};
-
-          this.byId('portlets-grid')
-            .getItems()
-            .forEach((oPortlet) => {
-              this.mapPortletPosition(oPortlet, mActivePortlets, sClosingPortletId);
-            });
-
-          const aPortletData = oPortletsModel.getProperty('/allList').map((mPortletData) => {
-            const mData = mActivePortlets[mPortletData.id];
-            if (mData) {
-              return mData;
-            }
-            if (mPortletData.id === sClosingPortletId) {
-              mPortletData.active = false;
-            }
-            return this.getPortletPosition(mPortletData, -1);
-          });
-
-          const oModel = this.getModel(ServiceNames.COMMON);
-          const sUrl = 'PortletInfo';
-          const mPayload = {
-            Mode: 'U',
-            PortletInfoTab2Set: aPortletData,
-          };
-
-          await Client.create(oModel, sUrl, mPayload);
-
-          return true;
-        } catch (oError) {
-          AppUtils.handleError(oError);
-
-          return false;
-        }
-      },
-
-      /**
-       * 활성화된 portlet 위치 정보 저장
-       * @param {object} oPortlet 위치 정보를 추출할 portlet object
-       * @param {map} mActivePortlets 위치 정보가 저장될 map
-       * @param {string} sClosingPortletId Portlet 닫기 버튼 클릭 또는 스위치 off로 비활성화될 portlet의 id
-       */
-      mapPortletPosition(oPortlet, mActivePortlets, sClosingPortletId) {
-        const oPortletModel = oPortlet.getModel();
-
-        if (oPortletModel.getProperty('/multiPortlet')) {
-          if (oPortletModel.getProperty('/orgMembersActive')) {
-            const mPortletData = oPortletModel.getProperty('/orgMembers');
-            if (mPortletData.id === sClosingPortletId) {
-              return;
-            }
-
-            const iPortletCount = this.getPortletCount(mActivePortlets);
-
-            mActivePortlets[mPortletData.id] = this.getPortletPosition(mPortletData, iPortletCount);
-          }
-          if (oPortletModel.getProperty('/myMembersActive')) {
-            const mPortletData = oPortletModel.getProperty('/myMembers');
-            if (mPortletData.id === sClosingPortletId) {
-              return;
-            }
-
-            const iPortletCount = this.getPortletCount(mActivePortlets);
-
-            mActivePortlets[mPortletData.id] = this.getPortletPosition(mPortletData, iPortletCount);
-          }
-        } else {
-          const mPortletData = oPortletModel.getData();
-          if (mPortletData.id === sClosingPortletId) {
-            return;
-          }
-
-          const iPortletCount = this.getPortletCount(mActivePortlets);
-
-          mActivePortlets[mPortletData.id] = this.getPortletPosition(mPortletData, iPortletCount);
-        }
-      },
-
-      /**
-       * Portlet 위치 정보 생성
-       * @param {map} mPortletData
-       * @param {int} iPortletCount
-       * @returns
-       */
-      getPortletPosition(mPortletData, iPortletCount) {
-        mPortletData.position.sequence = iPortletCount + 1;
-
-        return {
-          PCol: String(mPortletData.position.column || 1),
-          PSeq: String(mPortletData.position.sequence).padStart(2, 0),
-          Potid: mPortletData.id,
-          Zhide: mPortletData.active ? '' : 'X',
-        };
-      },
-
-      getPortletCount(mData) {
-        return Object.keys(mData).length;
+        return this.oPortletsP13nDialogHandler.onPressPortletsP13nSave(sClosingPortletId);
       },
 
       reduceViewResource() {
         this.byId('portlets-grid').destroyItems();
         this.getViewModel().destroy();
-        this.getView().removeDependent(this.oPortletsP13nDialog);
-        this.oPortletsP13nDialog.destroy();
+        this.oPortletsP13nDialogHandler.destroy();
         return this;
       },
     });

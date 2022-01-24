@@ -34,37 +34,56 @@ sap.ui.define(
 
         const oPortletModel = this.getPortletModel();
         const oPortletData = oPortletModel.getData();
-
-        oPortletModel.setProperty(`/${this.ROOT_PATH}`, { ...oPortletData });
-
-        delete oPortletModel.getProperty('/').original;
-
         const oSiblingPortletHandler = this.getController().getViewModel().getProperty(`/activeInstanceMap/${this.SIBLING_BUTTON_KEY}`);
-        if (oSiblingPortletHandler) {
-          this.setFragment(oSiblingPortletHandler.getFragment());
 
+        if (oSiblingPortletHandler) {
           const oSiblingPortletModel = oSiblingPortletHandler.getPortletModel();
           const iWidth = Math.max(oPortletData.width, oSiblingPortletModel.getProperty('/width'));
           const iHeight = Math.max(oPortletData.height, oSiblingPortletModel.getProperty('/height'));
 
-          oSiblingPortletModel.setData(oPortletData, true);
+          oSiblingPortletModel.setProperty(`/${this.ROOT_PATH}`, oPortletData);
           oSiblingPortletModel.setProperty('/width', iWidth);
           oSiblingPortletModel.setProperty('/height', iHeight);
 
+          oPortletModel.destroy();
+
           this.setPortletModel(oSiblingPortletModel);
 
-          return;
-        }
+          const oSiblingPortletFragment = oSiblingPortletHandler.getFragment();
+          if (oSiblingPortletFragment) {
+            oSiblingPortletFragment
+              .$()
+              .parent()
+              .css({ 'grid-column': `span ${iWidth}`, 'grid-row': `span ${iHeight}` });
 
+            this.setFragment(oSiblingPortletFragment);
+          }
+        } else {
+          oPortletModel.setData(this.filterProperties(oPortletData));
+          oPortletModel.setProperty(`/${this.ROOT_PATH}`, oPortletData);
+
+          const oFragment = await Fragment.load({
+            name: 'sap.ui.yesco.mvc.view.home.fragment.PortletsP03P04',
+            controller: this,
+          });
+
+          oFragment.setModel(oPortletModel).bindElement('/');
+
+          this.oController.byId(this.sContainerId).addItem(oFragment);
+          this.setFragment(oFragment);
+        }
+      },
+
+      filterProperties(oPortletData) {
+        const { busy, switchable, width, height, hideTitle, multiPortlet, selectedMembersButton, orgMembersActive = false, myMembersActive = false } = oPortletData;
+        return { busy, switchable, width, height, hideTitle, multiPortlet, selectedMembersButton, orgMembersActive, myMembersActive };
+      },
+
+      async getNewPortletFragment() {
         const oFragment = await Fragment.load({
           name: 'sap.ui.yesco.mvc.view.home.fragment.PortletsP03P04',
           controller: this,
         });
-
-        oFragment.setModel(oPortletModel).bindElement('/');
-
-        this.oController.byId(this.sContainerId).addItem(oFragment);
-        this.setFragment(oFragment);
       },
 
       async readContentData() {
@@ -187,13 +206,12 @@ sap.ui.define(
         const oPortletModel = this.getPortletModel();
         const bOrgMembersActive = oPortletModel.getProperty('/orgMembersActive');
         const bMyMembersActive = oPortletModel.getProperty('/myMembersActive');
+        const sPortletId = oPortletModel.getProperty(`/${this.ROOT_PATH}/id`);
 
         if (bOrgMembersActive && bMyMembersActive) {
           oPortletModel.setProperty('/selectedMembersButton', this.SIBLING_BUTTON_KEY);
           oPortletModel.setProperty(`/${this.ACTIVE_PATH}`, false);
           oPortletModel.setProperty(`/${this.ROOT_PATH}/active`, false);
-
-          this.resetPortletData(oPortletModel.getProperty(`/${this.ROOT_PATH}/id`));
 
           delete oPortletModel.getProperty('/')[this.ROOT_PATH];
           oPortletModel.refresh();
@@ -201,6 +219,8 @@ sap.ui.define(
           oPortletModel.destroy();
           this.getFragment().destroy();
         }
+
+        this.resetPortletData(sPortletId);
       },
     });
   }

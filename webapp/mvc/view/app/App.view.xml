@@ -3,9 +3,9 @@
   xmlns:core="sap.ui.core"
   xmlns:mvc="sap.ui.core.mvc" displayBlock="true">
   <OverflowToolbar id="appMenuToolbar" asyncMode="true" busy="{appModel>/isMenuBusy}" busyIndicatorDelay="0" class="app-menu-toolbar" height="60px">
-    <ImageContent id="logoImage" src="{ path: 'sessionModel>/Werks', formatter: '.getLogoPath' }" description="{sessionModel>/Pbtxt} eHR Home" press=".navToHome">
+    <ImageContent id="logo-image" src="{ path: 'sessionModel>/Werks', formatter: '.getLogoPath' }" description="{sessionModel>/Pbtxt} eHR Home" press=".navToHome" class="home-logo">
       <layoutData>
-        <OverflowToolbarLayoutData priority="NeverOverflow"/>
+        <OverflowToolbarLayoutData priority="NeverOverflow" />
       </layoutData>
     </ImageContent>
 
