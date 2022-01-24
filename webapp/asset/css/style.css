@@ -1160,7 +1160,7 @@ html.sap-desktop .sapMDialog>footer .sapContrast.sapMIBar.sapMFooter-CTX .sapMBt
 .sapUiLayoutCSSGrid.form-grid.type-d .sapMInputBase.sapMInputBaseHeightMargin.sapMTextArea {margin:0; height:100%!important; }
 .sapUiLayoutCSSGrid.form-grid.type-d .sapMLabel > bdi {padding-left:0px; padding-right:0px; }
 
-.sapUiLayoutCSSGrid.form-grid.type-comp .firstInputWrap { padding-right: 7px; }
+.sapUiLayoutCSSGrid.form-grid.type-comp .firstInputWrap { padding-left: 1px; padding-right: 7px; }
 .sapUiLayoutCSSGrid.form-grid.type-comp .secondInputWrap { padding-left: 5px; padding-right: 4px; }
 
 .search-head .sapMLabel {font-size:18px; font-weight:800; letter-spacing:-0.2px; }
