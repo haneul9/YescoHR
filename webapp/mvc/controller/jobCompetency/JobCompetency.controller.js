@@ -90,6 +90,13 @@ sap.ui.define(
             // 직무기술서
           } else {
             // 역량정의서
+            oViewModel.setProperty('/Competency', {
+              Defin: '',
+              CompTree: [],
+              Level: '',
+              Count: 0,
+              BehaviIndicat: [],
+            });
             const oModel = this.getModel(ServiceNames.APPRAISAL);
             const mPayLoad = {
               Mode: '1',
