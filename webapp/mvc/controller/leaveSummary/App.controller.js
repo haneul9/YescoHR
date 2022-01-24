@@ -7,6 +7,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
+    'sap/ui/yesco/common/GroupDialogHandler',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Pernr',
   ],
@@ -18,6 +19,7 @@ sap.ui.define(
     Client,
     ServiceNames,
     TableUtils,
+    GroupDialogHandler,
     BaseController
   ) => {
     'use strict';
@@ -26,7 +28,11 @@ sap.ui.define(
       TableUtils: TableUtils,
       TABLE_ID: 'leaveSummaryTable',
 
+      GroupDialogHandler: null,
+
       onBeforeShow() {
+        this.GroupDialogHandler = new GroupDialogHandler(this, () => {});
+
         const today = moment();
         const oViewModel = new JSONModel({
           busy: false,
@@ -55,7 +61,7 @@ sap.ui.define(
                 decimals: '1',
                 useDataPlotColorForLabels: '1',
                 theme: 'ocean',
-                paletteColors: '#7bb4eb,#81daea,#faca74,#faca74',
+                paletteColors: '#97C4EF,#FFE479,#A1E094,#FE827D',
               },
               data: [
                 {
@@ -176,13 +182,14 @@ sap.ui.define(
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
-      onPressSearchOrgeh() {},
+      onPressSearchOrgeh() {
+        this.GroupDialogHandler.openDialog();
+      },
 
       onFileView(oEvent) {
         const sUrl = oEvent.getSource().data('url');
 
         if (_.isEmpty(sUrl)) return;
-
         window.open(sUrl, '_blank');
       },
 

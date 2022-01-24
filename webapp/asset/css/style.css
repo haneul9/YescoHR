@@ -1360,10 +1360,10 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .leave-summary .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem { min-height:32px}
 .leave-summary > .sapMLabel {position:relative; justify-content:start}
 .leave-summary > span.sapMLabel:before {content:""; display:inline-block; margin-right:8px; width:10px; height:10px}
-.leave-summary > span.sapMLabel[aria-label=미입력]:before {background-color:#7bb4eb}
-.leave-summary > span.sapMLabel[aria-label=신청]:before {background-color:#81daea}
-.leave-summary > span.sapMLabel[aria-label=승인]:before {background-color:#faca74}
-.leave-summary > span.sapMLabel[aria-label=반려]:before {background-color:#faca74}
+.leave-summary > span.sapMLabel[aria-label=미입력]:before {background-color:#97C4EF}
+.leave-summary > span.sapMLabel[aria-label=신청]:before {background-color:#FFE479}
+.leave-summary > span.sapMLabel[aria-label=승인]:before {background-color:#A1E094}
+.leave-summary > span.sapMLabel[aria-label=반려]:before {background-color:#FE827D}
 .leave-summary > span.sapMLabel[aria-label=전체건수]:before {background-color:transparent}
 
 
