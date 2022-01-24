@@ -129,7 +129,10 @@
             <table:Column width="100px" sortProperty="ZpayBetT" filterProperty="ZpayBetT">
               <Label text="{i18n>LABEL_02011}"/>
               <table:template>
-                <Text text="{ZpayBetT}" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
+                <Text text="{
+                    path: 'ZpayBet',
+                    type: 'sap.ui.yesco.mvc.model.type.Currency'
+                }" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
               </table:template>
             </table:Column>
             <table:Column width="90px">

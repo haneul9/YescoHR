@@ -35,60 +35,62 @@
             </layoutData>
             <headerToolbar>
               <OverflowToolbar height="3rem" style="Clear">
-                <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr 2fr 2fr" gridGap="8px">
+                <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr 2fr 2fr" gridGap="8px" items="{/Competency/BehaviIndicat}">
                   <VBox>
-                    <customData>
-                      <core:CustomData key="type" value="head" writeToDom="true" />
-                    </customData>
-                    <Text text="{i18n>LABEL_22006}" />
-                  </VBox>
-                  <HBox items="{/Competency/BehaviIndicat}">
-                    <VBox>
+                    <VBox visible="{Header}">
+                      <customData>
+                        <core:CustomData key="type" value="head" writeToDom="true" />
+                      </customData>
+                      <Text text="{i18n>LABEL_22006}" />
+                    </VBox>
+                    <VBox visible="{= !${Header} }">
                       <Label text="{Head/Level}" />
                       <Text text="{Head/LevelTxt}" />
                     </VBox>
-                  </HBox>
+                  </VBox>
                 </grid:CSSGrid>
               </OverflowToolbar>
             </headerToolbar>
             <content>
-              <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr 2fr 2fr" gridGap="8px">
-                <VBox>
-                  <customData>
-                    <core:CustomData key="type" value="head" writeToDom="true" />
-                  </customData>
-                  <Text text="{i18n>LABEL_22007}" />
-                </VBox>
-                <HBox items="{/Competency/BehaviIndicat}">
-                  <VBox>
+              <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr 2fr 2fr" gridGap="8px" items="{/Competency/BehaviIndicat}">
+                <VBox visible="{Content}">
+                  <VBox visible="{Header}">
+                    <customData>
+                      <core:CustomData key="type" value="head" writeToDom="true" />
+                    </customData>
+                    <Text text="{i18n>LABEL_22007}" />
+                  </VBox>
+                  <VBox visible="{= !${Header} }">
                     <Text text="{Step}" />
                   </VBox>
-                </HBox>
-                <VBox>
-                  <customData>
-                    <core:CustomData key="type" value="head" writeToDom="true" />
-                  </customData>
-                  <Text text="{i18n>LABEL_22008}" />
                 </VBox>
-                <HBox items="{/Competency/BehaviIndicat}">
-                  <VBox visible="{= !${Note01} }">
+                <VBox visible="{= !${Content} }">
+                  <VBox visible="{= ${Header} }">
                     <customData>
-                      <core:CustomData key="type" value="blank" writeToDom="true" />
+                      <core:CustomData key="type" value="head" writeToDom="true" />
                     </customData>
+                    <Text text="{i18n>LABEL_22008}" />
                   </VBox>
-                  <VBox visible="{= !!${Note01} }">
-                    <Text text="{Note01}" visible="{= !!${Note01} }" />
-                    <Text text="{Note02}" visible="{= !!${Note02} }" />
-                    <Text text="{Note03}" visible="{= !!${Note03} }" />
-                    <Text text="{Note04}" visible="{= !!${Note04} }" />
-                    <Text text="{Note05}" visible="{= !!${Note05} }" />
-                    <Text text="{Note06}" visible="{= !!${Note06} }" />
-                    <Text text="{Note07}" visible="{= !!${Note07} }" />
-                    <Text text="{Note08}" visible="{= !!${Note08} }" />
-                    <Text text="{Note09}" visible="{= !!${Note09} }" />
-                    <Text text="{Note10}" visible="{= !!${Note10} }" />
+                  <VBox visible="{= !${Header} }">
+                    <VBox visible="{= !${Note01} }">
+                      <customData>
+                        <core:CustomData key="type" value="blank" writeToDom="true" />
+                      </customData>
+                    </VBox>
+                    <VBox visible="{= !!${Note01} }">
+                      <Text text="{Note01}" visible="{= !!${Note01} }" />
+                      <Text text="{Note02}" visible="{= !!${Note02} }" />
+                      <Text text="{Note03}" visible="{= !!${Note03} }" />
+                      <Text text="{Note04}" visible="{= !!${Note04} }" />
+                      <Text text="{Note05}" visible="{= !!${Note05} }" />
+                      <Text text="{Note06}" visible="{= !!${Note06} }" />
+                      <Text text="{Note07}" visible="{= !!${Note07} }" />
+                      <Text text="{Note08}" visible="{= !!${Note08} }" />
+                      <Text text="{Note09}" visible="{= !!${Note09} }" />
+                      <Text text="{Note10}" visible="{= !!${Note10} }" />
+                    </VBox>
                   </VBox>
-                </HBox>
+                </VBox>
               </grid:CSSGrid>
             </content>
           </Panel>

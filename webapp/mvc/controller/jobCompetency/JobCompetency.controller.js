@@ -39,6 +39,9 @@ sap.ui.define(
             CompTree: [],
             BehaviIndicat: [
               {
+                Point: true,
+                Content: true,
+                Header: true,
                 Head: {
                   Level: '',
                   LevelTxt: '',
@@ -130,40 +133,10 @@ sap.ui.define(
 
         oViewModel.setProperty('/Competency/Defin', aDetailItems.Defin);
 
-        const aFormatBegavioral = this.behavioralIndicators(aDetailItems.CompAppStatScaleSet['results']);
+        // const aFormatBegavioral = this.behavioralIndicators(aDetailItems.CompAppStatScaleSet['results']);
 
         oViewModel.setProperty('/Competency/BehaviIndicat', aFormatBegavioral);
         debugger;
-      },
-
-      // 행동지표 수준정의 ItemsSettings
-      behavioralIndicators(aList = []) {
-        const aLoadList = [];
-
-        aList.forEach((e) => {
-          const iTitleIdx = e.Pstext.indexOf('(');
-          const bTitle = iTitleIdx === -1;
-
-          aLoadList.push({
-            Head: {
-              Level: bTitle ? e.Pstext : e.Pstext.substr(0, iTitleIdx),
-              LevelTxt: bTitle ? '' : e.Pstext.slice(iTitleIdx),
-            },
-            Step: e.Steptext,
-            Note01: e.Note01,
-            Note02: e.Note02,
-            Note03: e.Note03,
-            Note04: e.Note04,
-            Note05: e.Note05,
-            Note06: e.Note06,
-            Note07: e.Note07,
-            Note08: e.Note08,
-            Note09: e.Note09,
-            Note10: e.Note10,
-          });
-        });
-
-        return aLoadList;
       },
 
       // oData Tree구조로 만듦
