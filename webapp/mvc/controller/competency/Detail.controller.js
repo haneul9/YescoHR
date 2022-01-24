@@ -46,10 +46,10 @@ sap.ui.define(
         return { ...acc, [cur]: Constants.DISPLAY_TYPE.EDIT };
       },
 
-      initializeGoalItem(obj) {
+      initializeGoalItem(obj, index) {
         return {
           rootPath: _.chain(Constants.GOAL_TYPE).findKey({ code: obj.Z101 }).toLower().value(),
-          expanded: _.stubFalse(),
+          expanded: _.isEqual(index, 0),
           ..._.chain(obj).omit('AppraisalCoDoc').omit('__metadata').value(),
           ..._.chain(Constants.COMBO_PROPERTIES)
             .reduce((acc, cur) => ({ ...acc, [cur]: _.isEmpty(obj[cur]) ? 'ALL' : obj[cur] }), _.stubObject())

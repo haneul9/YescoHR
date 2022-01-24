@@ -142,7 +142,7 @@
 									</grid:CSSGrid>
 								</VBox>
 							</VBox>
-							<VBox class="vCardBox" visible="{= ${/fieldControl/display/Z209} !== 'H' }">
+							<VBox class="vCardBox sapUiSmallMarginTop" visible="{= ${/fieldControl/display/Z209} !== 'H' }">
 								<HBox>
 									<HBox alignItems="Center" class="table-toolbar">
 										<Title level="H2" text="{i18n>LABEL_10010}" class="sapUiMediumMarginEnd"/>
