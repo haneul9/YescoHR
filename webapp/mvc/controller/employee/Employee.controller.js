@@ -1194,7 +1194,7 @@ sap.ui.define(
 
       async onEmployeePrint() {
         try {
-          const [mResult] = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'PerCardPrint', { Gubun: 'F' });
+          const [mResult] = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'PerCardPrint', { Gubun: 'S' });
 
           if (!_.isEmpty(mResult.Url)) window.open(mResult.Url, '_blank');
         } catch (oError) {
