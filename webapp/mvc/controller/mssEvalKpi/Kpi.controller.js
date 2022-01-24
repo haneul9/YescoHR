@@ -1,24 +1,32 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/model/Filter',
+    'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/core/Fragment',
-    'sap/ui/core/dnd/DragInfo',
-    'sap/ui/core/dnd/DropInfo',
-    'sap/ui/core/dnd/DropPosition',
-    'sap/ui/core/dnd/DropLayout',
-    'sap/f/dnd/GridDropInfo',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/TableUtils',
-    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
-  function (JSONModel, Fragment, DragInfo, DropInfo, DropPosition, DropLayout, GridDropInfo, MessageBox, AppUtils, ComboEntry, TableUtils, TextUtils, ServiceNames, ODataReadError, ODataCreateError, BaseController) {
+  (
+    //
+    Filter,
+    FilterOperator,
+    JSONModel,
+    Fragment,
+    MessageBox,
+    AppUtils,
+    ComboEntry,
+    ServiceNames,
+    ODataReadError,
+    ODataCreateError,
+    BaseController
+  ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.mssEvalKpi.Kpi', {
@@ -111,7 +119,7 @@ sap.ui.define(
 
         return new Promise((resolve, reject) => {
           oModel.read('/KpiCascadingOrgehSet', {
-            filters: [new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks)],
+            filters: [new Filter('Werks', FilterOperator.EQ, sWerks)],
             success: (oData) => {
               if (oData) {
                 this.debug(oData);
@@ -142,7 +150,11 @@ sap.ui.define(
 
         return new Promise((resolve, reject) => {
           oModel.read('/KpiCascadingActiveSet', {
-            filters: [new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks), new sap.ui.model.Filter('Zyear', sap.ui.model.FilterOperator.EQ, this.getViewModel().getProperty('/search/Zyear'))],
+            filters: [
+              //
+              new Filter('Werks', FilterOperator.EQ, sWerks),
+              new Filter('Zyear', FilterOperator.EQ, this.getViewModel().getProperty('/search/Zyear')),
+            ],
             success: (oData) => {
               if (oData) {
                 this.debug(oData);
@@ -227,7 +239,7 @@ sap.ui.define(
 
         return new Promise((resolve, reject) => {
           oModel.read('/KpiCascadingKpiListSet', {
-            filters: [new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, this.getSessionProperty('Werks')), new sap.ui.model.Filter('Zyear', sap.ui.model.FilterOperator.EQ, mSearch.Zyear)],
+            filters: [new Filter('Werks', FilterOperator.EQ, this.getSessionProperty('Werks')), new Filter('Zyear', FilterOperator.EQ, mSearch.Zyear)],
             success: (oData) => {
               if (oData) {
                 this.debug(oData);
@@ -283,7 +295,12 @@ sap.ui.define(
 
         return new Promise((resolve, reject) => {
           oModel.read('/KpiCascadingTreeSet', {
-            filters: [new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, mSearch.Werks), new sap.ui.model.Filter('Zyear', sap.ui.model.FilterOperator.EQ, mSearch.Zyear), new sap.ui.model.Filter('Seroty', sap.ui.model.FilterOperator.EQ, bKey ? 'O' : mSearch.Otype), new sap.ui.model.Filter('Serobj', sap.ui.model.FilterOperator.EQ, bKey ? '10000000' : mSearch.Objid === 'ALL' ? '' : mSearch.Objid)],
+            filters: [
+              new Filter('Werks', FilterOperator.EQ, mSearch.Werks), //
+              new Filter('Zyear', FilterOperator.EQ, mSearch.Zyear),
+              new Filter('Seroty', FilterOperator.EQ, bKey ? 'O' : mSearch.Otype),
+              new Filter('Serobj', FilterOperator.EQ, bKey ? '10000000' : mSearch.Objid === 'ALL' ? '' : mSearch.Objid),
+            ],
             success: (oData) => {
               if (oData) {
                 this.debug(oData);
@@ -343,7 +360,7 @@ sap.ui.define(
 
         return new Promise((resolve, reject) => {
           oModel.read('/KpiCascadingTeamListSet', {
-            filters: [new sap.ui.model.Filter('Zyear', sap.ui.model.FilterOperator.EQ, mSearch.Zyear), new sap.ui.model.Filter('Otype', sap.ui.model.FilterOperator.EQ, mSearch.Otype), new sap.ui.model.Filter('Objid', sap.ui.model.FilterOperator.EQ, mSearch.Objid)],
+            filters: [new Filter('Zyear', FilterOperator.EQ, mSearch.Zyear), new Filter('Otype', FilterOperator.EQ, mSearch.Otype), new Filter('Objid', FilterOperator.EQ, mSearch.Objid)],
             success: (oData) => {
               if (oData) {
                 this.debug(oData);
@@ -466,7 +483,7 @@ sap.ui.define(
 
         return new Promise((resolve, reject) => {
           oModel.read('/KpiCascadingTeamListSet', {
-            filters: [new sap.ui.model.Filter('Zyear', sap.ui.model.FilterOperator.EQ, mSelectedRow.Zyear), new sap.ui.model.Filter('Otype', sap.ui.model.FilterOperator.EQ, mSelectedRow.Otype), new sap.ui.model.Filter('Objid', sap.ui.model.FilterOperator.EQ, mSelectedRow.Objid)],
+            filters: [new Filter('Zyear', FilterOperator.EQ, mSelectedRow.Zyear), new Filter('Otype', FilterOperator.EQ, mSelectedRow.Otype), new Filter('Objid', FilterOperator.EQ, mSelectedRow.Objid)],
             success: (oData) => {
               if (oData) {
                 this.debug(oData);
@@ -625,7 +642,7 @@ sap.ui.define(
 
         return new Promise((resolve, reject) => {
           oModel.read('/KpiCascadingListSet', {
-            filters: [new sap.ui.model.Filter('Gubun', sap.ui.model.FilterOperator.EQ, oListModel.getProperty('/tab/selectedKey')), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oSearch.Werks), new sap.ui.model.Filter('Orgeh', sap.ui.model.FilterOperator.EQ, oSearch.Orgeh), new sap.ui.model.Filter('Zyear', sap.ui.model.FilterOperator.EQ, oSearch.Zyear)],
+            filters: [new Filter('Gubun', FilterOperator.EQ, oListModel.getProperty('/tab/selectedKey')), new Filter('Werks', FilterOperator.EQ, oSearch.Werks), new Filter('Orgeh', FilterOperator.EQ, oSearch.Orgeh), new Filter('Zyear', FilterOperator.EQ, oSearch.Zyear)],
             success: (oData) => {
               resolve(oData.results);
             },
@@ -646,7 +663,7 @@ sap.ui.define(
 
         return new Promise((resolve, reject) => {
           oModel.read('/KpiCascadingOrgListSet', {
-            filters: [new sap.ui.model.Filter('Gubun', sap.ui.model.FilterOperator.EQ, sKey), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oSearch.Werks), new sap.ui.model.Filter('Orgeh', sap.ui.model.FilterOperator.EQ, sOrgeh || oSearch.Orgeh), new sap.ui.model.Filter('Zyear', sap.ui.model.FilterOperator.EQ, oSearch.Zyear)],
+            filters: [new Filter('Gubun', FilterOperator.EQ, sKey), new Filter('Werks', FilterOperator.EQ, oSearch.Werks), new Filter('Orgeh', FilterOperator.EQ, sOrgeh || oSearch.Orgeh), new Filter('Zyear', FilterOperator.EQ, oSearch.Zyear)],
             success: (oData) => {
               if (oData) {
                 const aGridList = oData.results;

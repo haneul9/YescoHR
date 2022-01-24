@@ -37,28 +37,20 @@ sap.ui.define(
           Competency: {
             Defin: '',
             CompTree: [],
+            Level: 'level5',
+            Count: 0,
             BehaviIndicat: [
               {
                 Point: true,
                 Content: true,
-                Header: true,
-                Head: {
-                  Level: '',
-                  LevelTxt: '',
-                },
-                Step: '',
-                Note01: '',
-                Note02: '',
-                Note03: '',
-                Note04: '',
-                Note05: '',
-                Note06: '',
-                Note07: '',
-                Note08: '',
-                Note09: '',
-                Note10: '',
+                Header: { type: '', Level: '', LevelTxt: '' },
+                Content: { type: '', Step: '' },
+                Point: { type: '', Note: '' },
               },
             ],
+            RelateJobs: {
+              JobTypes: [{ JobName: '' }, { Objid: '' }],
+            },
           },
           busy: false,
         });
@@ -95,7 +87,16 @@ sap.ui.define(
           oViewModel.setProperty('/busy', true);
 
           if (sTabKey === 'A') {
+            // 직무기술서
           } else {
+            // 역량정의서
+            oViewModel.setProperty('/Competency', {
+              Defin: '',
+              CompTree: [],
+              Level: '',
+              Count: 0,
+              BehaviIndicat: [],
+            });
             const oModel = this.getModel(ServiceNames.APPRAISAL);
             const mPayLoad = {
               Mode: '1',
@@ -129,14 +130,76 @@ sap.ui.define(
           CompAppStatJobSet: [],
           CompAppStatScaleSet: [],
         };
+        // 역량정의서
         const aDetailItems = await Client.deep(oModel, 'CompAppStatDefin', mPayLoad);
 
+        // 상시관리 Text
         oViewModel.setProperty('/Competency/Defin', aDetailItems.Defin);
 
-        // const aFormatBegavioral = this.behavioralIndicators(aDetailItems.CompAppStatScaleSet['results']);
+        // 행동지표 수준 GridSetting
+        const aFormatBegavioral = this.behavioralIndicators(aDetailItems.CompAppStatScaleSet['results']);
 
         oViewModel.setProperty('/Competency/BehaviIndicat', aFormatBegavioral);
-        debugger;
+
+        // 관련 직무 Btn
+        const aRelateJobBtn = this.relateJobBtn(aDetailItems.CompAppStatJobSet['results']);
+
+        oViewModel.setProperty('/Competency/RelateJobs', aRelateJobBtn);
+      },
+
+      // 관련직무 Btn
+      relateJobBtn(aList = []) {
+        const aLoadList = [];
+        _.chain(aLoadList)
+          .set(
+            'JobTypes',
+            _.reduce(aList, (acc, cur) => [...acc, { JobName: cur.Stext, Objid: cur.Objid }], [])
+          )
+          .value();
+
+        return aLoadList;
+      },
+
+      // 관련직무 선택
+      onPressJob(oEvent) {
+        const mSelectedBtn = this.getViewModel().getProperty(oEvent.getSource().getBindingContext().getPath());
+      },
+
+      // 행동지표 수준정의 ItemsSettings
+      behavioralIndicators(aList = []) {
+        const aLoadList = [];
+        _.chain(aLoadList)
+          .set(
+            'Headers',
+            _.reduce(aList, (acc, cur) => [...acc, { type: 'body', Level: cur.Pstext.substring(0, 7), LevelTxt: _.replace(cur.Pstext, cur.Pstext.substring(0, 8), '') }], [{ type: 'head', LevelTxt: this.getBundleText('LABEL_22006') }])
+          )
+          .set('Contents', [
+            ..._.reduce(aList, (acc, cur) => [...acc, { type: 'body', Note: [{ text: cur.Steptext }] }], [{ type: 'head', Note: [{ text: this.getBundleText('LABEL_22007') }] }]), //
+            ..._.chain(aList)
+              .reduce(
+                (acc, cur) => [
+                  ...acc,
+                  {
+                    type: 'body',
+                    Note: _.chain(cur)
+                      .pickBy((v, p) => _.startsWith(p, 'Note') && !_.isEmpty(v))
+                      .map((v) => ({ text: v }))
+                      .value(),
+                  },
+                ],
+                [{ type: 'head', Note: [{ text: this.getBundleText('LABEL_22008') }] }]
+              )
+              .map((o) => ({ ...o, type: _.isEmpty(o.Note) ? 'blank' : o.type }))
+              .value(),
+          ])
+          .commit();
+
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/Competency/Level', `level${aList.length}`);
+        oViewModel.setProperty('/Competency/Count', aList.length);
+
+        return aLoadList;
       },
 
       // oData Tree구조로 만듦
@@ -151,7 +214,7 @@ sap.ui.define(
 
         oTree.collapseAll();
         oTree.expandToLevel(1);
-        _.each(_.omit(mGroupedByParents, '00000000'), (children, parentId) => _.set(mCatsById, [parentId, 'children'], children));
+        _.each(_.omit(mGroupedByParents, '00000000'), (Noteren, parentId) => _.set(mCatsById, [parentId, 'Noteren'], Noteren));
 
         return mGroupedByParents['00000000'];
       },

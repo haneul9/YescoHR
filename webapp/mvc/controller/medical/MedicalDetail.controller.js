@@ -109,6 +109,16 @@ sap.ui.define(
         return 'HR09';
       },
 
+      formatPayMent(sPay, sRate) {
+        return !sPay || sPay === '0' ? '' : `  (${sRate})`;
+      },
+
+      formatDate(sDate = '') {
+        sDate = !sDate || sDate === '000000' ? '' : `${sDate.slice(0, 4)}.${sDate.slice(4, 6)}`;
+
+        return sDate;
+      },
+
       getCurrentLocationText(oArguments) {
         const sAction = oArguments.oDataKey === 'N' ? this.getBundleText('LABEL_04002') : this.getBundleText('LABEL_00165');
 

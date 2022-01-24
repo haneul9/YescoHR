@@ -11,8 +11,8 @@
             <Label text="{i18n>LABEL_00266}" design="Bold" />
             <custom:DateRangeSelection dateValue="{ path: '/search/secondDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/search/date', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" />
             <Label text="{i18n>LABEL_03010}" design="Bold" />
-            <ComboBox items="{/FamilyCode}" selectedKey="{/search/Seqnr}" change=".onFamilyCode">
-                <core:Item text="{Znametx}" key="{Seqnr}" />
+            <ComboBox items="{/FamilyCode}" selectedKey="{/search/Famgb}{/search/Famsa}{/search/Objps}{/search/Kdsvh}" change=".onFamilyCode">
+                <core:Item text="{Znametx}" key="{Famgb}{Famsa}{Objps}{Kdsvh}" />
             </ComboBox>
         </grid:CSSGrid>
     </VBox>

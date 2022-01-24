@@ -1,7 +1,10 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:f="sap.f"
   xmlns:core="sap.ui.core">
-  <VBox class="portlet portlet-box portlet-p03p04" tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
+  <VBox class="portlet portlet-box portlet-p03p04" tooltip="{=
+      ${selectedMembersButton} === 'P03' ? ${orgMembers/tooltip} : (
+      ${selectedMembersButton} === 'P04' ? ${myMembers/tooltip} : ''
+    )}" busy="{busy}" busyIndicatorDelay="0">
     <customData>
       <core:CustomData key="portlet-switchable" value="{switchable}" />
     </customData>
@@ -15,8 +18,8 @@
       )}" visible="{= !${hideTitle} }" />
       <SegmentedButton selectedKey="{selectedMembersButton}" visible="{= !!${orgMembersActive} &amp;&amp; !!${myMembersActive} }">
         <items>
-          <SegmentedButtonItem text="{i18n>LABEL_01201}" key="P03" visible="{= !!${orgMembersActive} }" />
-          <SegmentedButtonItem text="{i18n>LABEL_01202}" key="P04" visible="{= !!${myMembersActive} }" />
+          <SegmentedButtonItem text="{i18n>LABEL_01201}" key="P03" />
+          <SegmentedButtonItem text="{i18n>LABEL_01202}" key="P04" />
         </items>
       </SegmentedButton>
       <Button icon="asset/image/icon_write.png" type="Transparent" class="icon-button" visible="{= !!${myMembersActive} &amp;&amp; ${selectedMembersButton} === 'P04' }" press=".onPressMyMemberAdd" />

@@ -50,11 +50,17 @@
                 <Text text="{
                     path: '/FormData/PybetTot',
                     type: 'sap.ui.yesco.mvc.model.type.Currency'
-                } {= !${/FormData/PybetTot} || ${/FormData/PybetTot} === '0' ? '' : (${/FormData/Pratetx}) }"/>
+                } {
+                    parts: [ {path: '/FormData/PybetTot'}, {path: '/FormData/Pratetx'} ],
+                    formatter: '.formatPayMent'
+                }"/>
             </VBox>
             <Label text="{i18n>LABEL_03002}"/>
             <VBox>
-                <Text text="{= !${/FormData/Paymm} || ${/FormData/Paymm} === '000000' ? '' : ${/FormData/Paymm} }" />
+                <Text text="{
+                    path: '/FormData/Paymm',
+                    formatter: '.formatDate'
+                }" />
             </VBox>
             <Label text="{i18n>LABEL_09011}"/>
             <VBox>

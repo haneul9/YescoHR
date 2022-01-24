@@ -9,6 +9,9 @@ sap.ui.define(
   ) => {
     'use strict';
 
+    /**
+     * Leading zero trim
+     */
     return SimpleType.extend('sap.ui.yesco.mvc.model.type.Pernr', {
       formatValue(oValue) {
         return (oValue || '').replace(/^0+/, '');

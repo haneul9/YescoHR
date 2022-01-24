@@ -100,6 +100,10 @@ sap.ui.define(
           return /^yeshrsap/.test(location.hostname);
         },
 
+        isMobile() {
+          return $('html').attr('device') === 'mobile';
+        },
+
         /**
          * @public
          */

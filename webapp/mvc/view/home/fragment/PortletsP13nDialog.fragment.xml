@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:core="sap.ui.core">
-  <Dialog contentWidth="500px" draggable="true" horizontalScrolling="false" title="{i18n>LABEL_01101}">
+  <Dialog contentWidth="500px" draggable="true" horizontalScrolling="false" title="{i18n>LABEL_01101}" busy="{/busy}" busyIndicatorDelay="0">
     <HBox height="70px" visible="{= !${/available} }" justifyContent="Center" alignItems="Center">
       <Text text="{i18n>MSG_01901}" />
     </HBox>

@@ -109,7 +109,7 @@ sap.ui.define(
         const mSearchData = oEmpModel.getProperty('/employeeModel/org');
         const sUrl = '/OrgListSet';
         const vDate = !mSearchData.Date ? '' : new Filter('Datum', FilterOperator.EQ, mSearchData.Date);
-        const vStext = !mSearchData.Stext ? '' : new Filter('Stext', FilterOperator.EQ, mSearchData.Stext);
+        const vStext = !mSearchData.Word ? '' : new Filter('Stext', FilterOperator.EQ, mSearchData.Word);
         const oOrgTable = AppUtils.getAppComponent().byId(`${this.getView().getId()}GroupDetail--orgTable`);
         const aFilters = [];
 

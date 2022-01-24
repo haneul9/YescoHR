@@ -28,68 +28,31 @@
         <VBox>
           <Panel expandable="true" width="auto" class="capability-level">
             <customData>
-              <core:CustomData key="type" value="level5" writeToDom="true" />
+              <core:CustomData key="type" value="{/Competency/Level}" writeToDom="true" />
             </customData>
             <layoutData>
               <FlexItemData growFactor="1"/>
             </layoutData>
             <headerToolbar>
               <OverflowToolbar height="3rem" style="Clear">
-                <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr 2fr 2fr" gridGap="8px" items="{/Competency/BehaviIndicat}">
+                <grid:CSSGrid gridTemplateColumns="200px repeat({/Competency/Count}, 2fr)" gridGap="8px" items="{/Competency/BehaviIndicat/Headers}">
                   <VBox>
-                    <VBox visible="{Header}">
-                      <customData>
-                        <core:CustomData key="type" value="head" writeToDom="true" />
-                      </customData>
-                      <Text text="{i18n>LABEL_22006}" />
-                    </VBox>
-                    <VBox visible="{= !${Header} }">
-                      <Label text="{Head/Level}" />
-                      <Text text="{Head/LevelTxt}" />
-                    </VBox>
+                    <customData>
+                      <core:CustomData key="type" value="{type}" writeToDom="true" />
+                    </customData>
+                    <Label text="{Level}" visible="{= !!${Level} }"/>
+                    <Text text="{LevelTxt}" visible="{= !!${LevelTxt} }"/>
                   </VBox>
                 </grid:CSSGrid>
               </OverflowToolbar>
             </headerToolbar>
             <content>
-              <grid:CSSGrid gridTemplateColumns="200px 2fr 2fr 2fr 2fr 2fr" gridGap="8px" items="{/Competency/BehaviIndicat}">
-                <VBox visible="{Content}">
-                  <VBox visible="{Header}">
-                    <customData>
-                      <core:CustomData key="type" value="head" writeToDom="true" />
-                    </customData>
-                    <Text text="{i18n>LABEL_22007}" />
-                  </VBox>
-                  <VBox visible="{= !${Header} }">
-                    <Text text="{Step}" />
-                  </VBox>
-                </VBox>
-                <VBox visible="{= !${Content} }">
-                  <VBox visible="{= ${Header} }">
-                    <customData>
-                      <core:CustomData key="type" value="head" writeToDom="true" />
-                    </customData>
-                    <Text text="{i18n>LABEL_22008}" />
-                  </VBox>
-                  <VBox visible="{= !${Header} }">
-                    <VBox visible="{= !${Note01} }">
-                      <customData>
-                        <core:CustomData key="type" value="blank" writeToDom="true" />
-                      </customData>
-                    </VBox>
-                    <VBox visible="{= !!${Note01} }">
-                      <Text text="{Note01}" visible="{= !!${Note01} }" />
-                      <Text text="{Note02}" visible="{= !!${Note02} }" />
-                      <Text text="{Note03}" visible="{= !!${Note03} }" />
-                      <Text text="{Note04}" visible="{= !!${Note04} }" />
-                      <Text text="{Note05}" visible="{= !!${Note05} }" />
-                      <Text text="{Note06}" visible="{= !!${Note06} }" />
-                      <Text text="{Note07}" visible="{= !!${Note07} }" />
-                      <Text text="{Note08}" visible="{= !!${Note08} }" />
-                      <Text text="{Note09}" visible="{= !!${Note09} }" />
-                      <Text text="{Note10}" visible="{= !!${Note10} }" />
-                    </VBox>
-                  </VBox>
+              <grid:CSSGrid gridTemplateColumns="200px repeat({/Competency/Count}, 2fr)" gridGap="8px" items="{/Competency/BehaviIndicat/Contents}">
+                <VBox items="{Note}">
+                  <customData>
+                    <core:CustomData key="type" value="{type}" writeToDom="true" />
+                  </customData>
+                  <Text text="{text}" />
                 </VBox>
               </grid:CSSGrid>
             </content>
@@ -98,6 +61,9 @@
       </VBox>
       <VBox class="vCardBox sapUiMediumMarginBottom">
         <Title level="H4" text="{i18n>LABEL_22005}" />
+        <HBox items="{/Competency/RelateJobs/JobTypes}">
+          <Button text="{JobName}" press=".onPressJob" />
+        </HBox>
       </VBox>
     </VBox>
   </HBox>
