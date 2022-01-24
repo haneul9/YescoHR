@@ -109,10 +109,6 @@ sap.ui.define(
         return 'HR09';
       },
 
-      formatPayMent(sPay, sRate) {
-        return !sPay || sPay === '0' ? '' : `  (${sRate})`;
-      },
-
       formatDate(sDate = '') {
         sDate = !sDate || sDate === '000000' ? '' : `${sDate.slice(0, 4)}.${sDate.slice(4, 6)}`;
 
@@ -1175,12 +1171,12 @@ sap.ui.define(
             // connect dialog to the root view of this component (models, lifecycle)
             this.getView().addDependent(oDialog);
             this.settingsAttachDialog();
-            this.byId('DialogDate').attachBrowserEvent('paste', this.excelCopy);
-            this.byId('DialogInput1').attachBrowserEvent('paste', this.excelCopy);
-            this.byId('DialogInput2').attachBrowserEvent('paste', this.excelCopy);
-            this.byId('DialogInput3').attachBrowserEvent('paste', this.excelCopy);
-            this.byId('DialogInput4').attachBrowserEvent('paste', this.excelCopy);
-            this.byId('DialogCombo').attachBrowserEvent('paste', this.excelCopy);
+            this.byId('DialogData1').attachBrowserEvent('paste', this.excelCopy);
+            this.byId('DialogData2').attachBrowserEvent('paste', this.excelCopy);
+            this.byId('DialogData3').attachBrowserEvent('paste', this.excelCopy);
+            this.byId('DialogData4').attachBrowserEvent('paste', this.excelCopy);
+            this.byId('DialogData5').attachBrowserEvent('paste', this.excelCopy);
+            this.byId('DialogData6').attachBrowserEvent('paste', this.excelCopy);
 
             oDialog.open();
           });
