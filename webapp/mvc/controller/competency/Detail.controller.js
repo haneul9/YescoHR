@@ -219,17 +219,8 @@ sap.ui.define(
             ])
             .commit();
 
-          const mButtons = oViewModel.getProperty('/buttons');
-          const mConvertScreen = _.chain(mDetailData.AppraisalScreenSet.results)
-            .reduce((acc, cur) => ({ ...acc, [_.capitalize(cur.ColumnId)]: cur.Zdipopt }), oViewModel.getProperty('/fieldControl/display'))
-            .forOwn((value, key, object) => {
-              if (_.has(Constants.FIELD_MAPPING, key)) {
-                _.forEach(_.get(Constants.FIELD_MAPPING, key), (subKey) => _.set(object, subKey, _.get(Constants.FIELD_STATUS_MAP, [sZzapsts, sZzapstsSub, subKey, sType], value)));
-              }
-            })
-            .value();
-
           // 기능버튼
+          const mButtons = oViewModel.getProperty('/buttons');
           _.chain(mButtons)
             .tap((o) => _.set(o, ['form', 'Rjctr'], _.get(mDetailData, 'Rjctr', _.noop())))
             .tap((o) => _.forEach(mDetailData.AppraisalBottnsSet.results, (obj) => _.set(o.submit, obj.ButtonId, _.chain(obj).set('process', _.stubTrue()).omit('__metadata').value())))
@@ -246,6 +237,16 @@ sap.ui.define(
                 .commit();
             })
             .commit();
+
+          // 필드 컨트롤
+          const mConvertScreen = _.chain(mDetailData.AppraisalScreenSet.results)
+            .reduce((acc, cur) => ({ ...acc, [_.capitalize(cur.ColumnId)]: cur.Zdipopt }), oViewModel.getProperty('/fieldControl/display'))
+            .forOwn((value, key, object) => {
+              if (_.has(Constants.FIELD_MAPPING, key)) {
+                _.forEach(_.get(Constants.FIELD_MAPPING, key), (subKey) => _.set(object, subKey, _.get(Constants.FIELD_STATUS_MAP, [sZzapsts, sZzapstsSub, subKey, sType], value)));
+              }
+            })
+            .value();
 
           // 조회모드
           if (_.isEqual(sZonlydsp, 'X')) {
@@ -291,9 +292,7 @@ sap.ui.define(
         if (_.isEqual(sType, Constants.APPRAISER_TYPE.ME)) {
           oViewModel.setProperty('/appointee', AppUtils.getAppComponent().getAppointeeModel().getData());
         } else {
-          const [mAppointee] = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'EmpSearchResult', {
-            Ename: sPernr,
-          });
+          const [mAppointee] = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'EmpSearchResult', { Ename: sPernr });
 
           oViewModel.setProperty('/appointee', { ...mAppointee, Orgtx: mAppointee.Fulln, Photo: mAppointee.Photo || 'asset/image/avatar-unknown.svg' });
         }

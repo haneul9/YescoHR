@@ -1354,6 +1354,18 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .pay-summary > span.sapMLabel[aria-label=인정상여]:before {background-color:#faca74}
 .pay-summary > span.sapMLabel[aria-label=소득총액]:before {background-color:transparent}
 
+/* 연간휴가계획현황 */
+.leave-summary .sapMText {font-size:18px; text-align:right!important}
+.leave-summary .sapMText:last-child, .leave-summary .sapMLabel:last-child {font-weight:800}
+.leave-summary .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem { min-height:32px}
+.leave-summary > .sapMLabel {position:relative; justify-content:start}
+.leave-summary > span.sapMLabel:before {content:""; display:inline-block; margin-right:8px; width:10px; height:10px}
+.leave-summary > span.sapMLabel[aria-label=미입력]:before {background-color:#7bb4eb}
+.leave-summary > span.sapMLabel[aria-label=신청]:before {background-color:#81daea}
+.leave-summary > span.sapMLabel[aria-label=승인]:before {background-color:#faca74}
+.leave-summary > span.sapMLabel[aria-label=반려]:before {background-color:#faca74}
+.leave-summary > span.sapMLabel[aria-label=전체건수]:before {background-color:transparent}
+
 
 
 /* 인재검색 */

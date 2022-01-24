@@ -175,6 +175,7 @@
         { "pattern": "m/organization", "name": "m/organization", "target": "m/organization" },
         
         { "pattern": "leavePlan", "name": "leavePlan", "target": "leavePlan" },
+        { "pattern": "m/leaveSummary", "name": "m/leaveSummary", "target": "m/leaveSummary" },
 
         { "pattern": "m/leave", "name": "m/leave", "target": "m/leave" },
         
@@ -265,6 +266,7 @@
         
         "leavePlan": { "viewId": "leavePlan", "viewPath": "sap.ui.yesco.mvc.view.leavePlan", "viewName": "App" },
         "m/leave": { "viewId": "m_leave", "viewPath": "sap.ui.yesco.mvc.view.leave", "viewName": "App" },
+        "m/leaveSummary": { "viewId": "m_leaveSummary", "viewPath": "sap.ui.yesco.mvc.view.leaveSummary", "viewName": "App" },
         
         "paystub": { "viewId": "paystub", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "List" },
         "paystubDetail": { "viewId": "paystubDetail", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "Detail" },

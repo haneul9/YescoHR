@@ -52,7 +52,7 @@ sap.ui.define(
             chart: {
               showhovereffect: '1',
               drawcrossline: '1',
-              theme: 'fusion',
+              theme: 'ocean',
               numberSuffix: '%',
               yAxisMinValue: 0,
               yAxisMaxValue: 100,
