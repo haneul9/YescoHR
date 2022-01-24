@@ -1,0 +1,163 @@
+<core:FragmentDefinition xmlns="sap.ui.table"
+  xmlns:m="sap.m"
+  xmlns:core="sap.ui.core">
+  <Table id="leaveSummaryTable" selectionMode="None" class="row-link" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/list}" visibleRowCount="{/listInfo/rowCount}" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
+    <rowSettingsTemplate>
+      <RowSettings highlight="{ path: 'ZappStatAl', formatter: '.TableUtils.rowHighlight' }"/>
+    </rowSettingsTemplate>
+    <columns>
+      <Column width="7%" filterProperty="ZappStxtAl" sortProperty="ZappStxtAl">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_00144}"/>
+          <m:Label text="{i18n>LABEL_00144}"/>
+        </multiLabels>
+        <template>
+          <m:Text text="{ZappStxtAl}" width="100%" textAlign="Center">
+            <m:customData>
+              <core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
+            </m:customData>
+          </m:Text>
+        </template>
+      </Column>
+      <Column width="7%" filterProperty="Pernr" sortProperty="Pernr">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_00209}"/>
+          <m:Label text="{i18n>LABEL_00209}"/>
+        </multiLabels>
+        <template>
+          <m:Text text="{ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+      <Column width="7%" filterProperty="Ename" sortProperty="Ename">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_00210}"/>
+          <m:Label text="{i18n>LABEL_00210}"/>
+        </multiLabels>
+        <template>
+          <m:Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+      <Column width="7%" filterProperty="Zzjikgbt" sortProperty="Zzjikgbt">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_00215}"/>
+          <m:Label text="{i18n>LABEL_00215}"/>
+        </multiLabels>
+        <template>
+          <m:Text text="{Zzjikgbt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+      <Column width="auto" filterProperty="Orgtx" sortProperty="Orgtx">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_00224}"/>
+          <m:Label text="{i18n>LABEL_00224}"/>
+        </multiLabels>
+        <template>
+          <m:Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+      <Column width="5%" filterProperty="Crecnt" sortProperty="Crecnt" headerSpan="5">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_23002}"/>
+          <m:Label text="{i18n>LABEL_23003}"/>
+        </multiLabels>
+        <template>
+          <m:Text text="{Crecnt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+      <Column width="5%" filterProperty="Usecnt" sortProperty="Usecnt">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_23002}"/>
+          <m:Label text="{i18n>LABEL_23004}"/>
+        </multiLabels>
+        <template>
+          <m:Text text="{Usecnt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+      <Column width="5%" filterProperty="Userte" sortProperty="Userte">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_23002}"/>
+          <m:Label text="{i18n>LABEL_23005}"/>
+        </multiLabels>
+        <template>
+          <m:Text text="{Userte}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+      <Column width="5%" filterProperty="Balcnt" sortProperty="Balcnt">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_23002}"/>
+          <m:Label text="{i18n>LABEL_23006}"/>
+        </multiLabels>
+        <template>
+          <m:Text text="{Balcnt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+      <Column width="5%" filterProperty="Plncnt" sortProperty="Plncnt">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_23002}"/>
+          <m:Label text="{i18n>LABEL_23007}"/>
+        </multiLabels>
+        <template>
+          <m:Text text="{Plncnt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+      <Column width="5%" filterProperty="Crecnt2" sortProperty="Crecnt2" headerSpan="5">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_23008}"/>
+          <m:Label text="{i18n>LABEL_23003}"/>
+        </multiLabels>
+        <template>
+          <m:Text text="{Crecnt2}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+      <Column width="5%" filterProperty="Usecnt2" sortProperty="Usecnt2">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_23008}"/>
+          <m:Label text="{i18n>LABEL_23004}"/>
+        </multiLabels>
+        <template>
+          <m:Text text="{Usecnt2}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+      <Column width="5%" filterProperty="Userte2" sortProperty="Userte2">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_23008}"/>
+          <m:Label text="{i18n>LABEL_23005}"/>
+        </multiLabels>
+        <template>
+          <m:Text text="{Userte2}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+      <Column width="5%" filterProperty="Balcnt2" sortProperty="Balcnt2">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_23008}"/>
+          <m:Label text="{i18n>LABEL_23006}"/>
+        </multiLabels>
+        <template>
+          <m:Text text="{Balcnt2}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+      <Column width="5%" filterProperty="Plncnt2" sortProperty="Plncnt2">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_23008}"/>
+          <m:Label text="{i18n>LABEL_23007}"/>
+        </multiLabels>
+        <template>
+          <m:Text text="{Plncnt2}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+      <Column width="6%">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_23009}"/>
+          <m:Label text="{i18n>LABEL_23009}"/>
+        </multiLabels>
+        <template>
+          <m:Button type="Transparent" icon="sap-icon://attachment" class="mnw-0" press=".onFileView" visible="{= !!${Pdfurl} }">
+            <m:customData>
+              <core:CustomData key="url" value="{Pdfurl}" />
+            </m:customData>
+          </m:Button>
+        </template>
+      </Column>
+    </columns>
+  </Table>
+</core:FragmentDefinition>

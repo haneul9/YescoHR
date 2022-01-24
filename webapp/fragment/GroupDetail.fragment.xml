@@ -1,7 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:table="sap.ui.table"
-    xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:custom="sap.ui.yesco.control">
     <Dialog id= "EmployeeSearch" title="{i18n>LABEL_00207}" contentWidth="800px" contentHeight="410px" busyIndicatorDelay="0" busy="{/employeeModel/org/busy}">
         <beginButton>
