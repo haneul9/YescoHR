@@ -1,0 +1,28 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:core="sap.ui.core">
+  <VBox class="hCardBox summary-box">
+    <HBox class="title">
+      <Title level="H2" text="{i18n>LABEL_23011}" />
+      <Text text="{/summary/infoText}" class="desc-txt" />
+    </HBox>
+    <grid:CSSGrid gridTemplateColumns="2fr 1fr 1fr" gridGap="0px" class="leave-summary">
+      <FlexBox width="100%" height="100%">
+        <layoutData>
+          <grid:GridItemLayoutData gridRow="1 / 6" />
+        </layoutData>
+        <core:HTML content="&lt;div id='chart-container'&gt;&lt;/div&gt;" />
+      </FlexBox>
+      <Label text="{i18n>LABEL_23013}" />
+      <Text text="{ path: '/summary/Cnt01', type: 'sap.ui.model.type.Integer' }" />
+      <Label text="{i18n>LABEL_00121}" />
+      <Text text="{ path: '/summary/Cnt03', type: 'sap.ui.model.type.Integer' }" />
+      <Label text="{i18n>LABEL_00123}" />
+      <Text text="{ path: '/summary/Cnt04', type: 'sap.ui.model.type.Integer' }" />
+      <Label text="{i18n>LABEL_00124}" />
+      <Text text="{ path: '/summary/Cnt05', type: 'sap.ui.model.type.Integer' }" />
+      <Label text="{i18n>LABEL_23014}" />
+      <Text text="{ path: '/summary/Cnttot', type: 'sap.ui.model.type.Integer' }" />
+    </grid:CSSGrid>
+  </VBox>
+</core:FragmentDefinition>

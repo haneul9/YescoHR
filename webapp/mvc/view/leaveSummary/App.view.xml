@@ -1,0 +1,28 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.leaveSummary.App"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:custom="sap.ui.yesco.control">
+    <Page showHeader="false">
+        <VBox class="contents-header">
+            <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+                <custom:Breadcrumbs />
+                <HBox>
+                    <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
+                    <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" />
+                </HBox>
+            </HBox>
+        </VBox>
+        <VBox class="contents" busyIndicatorDelay="0" busy="{/busy}">
+            <HBox justifyContent="SpaceAround">
+                <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBox" type="XML" />
+                <core:Fragment fragmentName="sap.ui.yesco.mvc.view.leaveSummary.fragment.Summary" type="XML" />
+                <core:Fragment fragmentName="sap.ui.yesco.mvc.view.leaveSummary.fragment.OverviewSearchCondition" type="XML" />
+            </HBox>
+            <VBox class="vCardBox">
+                <core:Fragment fragmentName="sap.ui.yesco.fragment.OverviewTableHeader" type="XML" />
+                <core:Fragment fragmentName="sap.ui.yesco.mvc.view.leaveSummary.fragment.OverviewTable" type="XML" />
+            </VBox>
+        </VBox>
+    </Page>
+</mvc:View>
