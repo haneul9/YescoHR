@@ -25,6 +25,7 @@ sap.ui.define(
         return new Promise((resolve, reject) => {
           oModel.read(`/${sUrl}Set`, {
             filters: _.chain(mFilters)
+              .omitBy(_.isNil)
               .omitBy((fv) => _.isEqual(fv, 'ALL'))
               .map((v, p) => {
                 if (_.isArray(v)) {

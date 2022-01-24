@@ -154,11 +154,7 @@ sap.ui.define(
           oViewModel.setProperty('/entry/levels', new ComboEntry({ codeKey: 'ValueEid', valueKey: 'ValueText', aEntries: aGrades }) ?? []);
 
           // Header
-          oViewModel.setProperty('/summary', {
-            ..._.chain({ ...mDetailData })
-              .pick(Constants.SUMMARY_PROPERTIES)
-              .value(),
-          });
+          oViewModel.setProperty('/summary', { ..._.pick(mDetailData, Constants.SUMMARY_PROPERTIES) });
 
           // 평가 프로세스 목록 - 헤더
           let bCompleted = true;
