@@ -365,6 +365,7 @@ sap.ui.define(
         this.getViewModel().setProperty('/employeeModel/org', {
           Date: '',
           Word: '',
+          orgListLength: 1,
           orgList: [],
           SelectedOrg: [],
           busy: false,
