@@ -60,15 +60,15 @@
 									<core:Fragment fragmentName="sap.ui.yesco.mvc.view.competency.fragment.Item" type="XML" />
 								</VBox>
 								<VBox visible="{= ${/fieldControl/display/D1z200} !== 'H' &amp;&amp; ${/fieldControl/display/D1fapp} !== 'H' }">
-									<grid:CSSGrid gridTemplateColumns="830px repeat(4, 1fr)" gridGap="1px 0px" class="form-grid">
+									<grid:CSSGrid gridTemplateColumns="830px repeat(4, 1fr)" gridGap="1px 0px" class="form-grid type-comp">
 										<HBox />
 										<Label text="{i18n>LABEL_10060}" visible="{= ${/fieldControl/display/D1z200} !== 'H' }" />
-										<VBox visible="{= ${/fieldControl/display/D1z200} !== 'H' }">
+										<VBox class="firstInputWrap" visible="{= ${/fieldControl/display/D1z200} !== 'H' }">
 											<Input value="" enabled="false" visible="{= ${/fieldControl/display/D1z200} === 'V' }" />
 											<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/D1z200', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="{= ${/fieldControl/display/D1z200} === 'X' }" visible="{= ${/fieldControl/display/D1z200} !== 'V' }"/>
 										</VBox>
 										<Label text="{i18n>LABEL_10061}" visible="{= ${/fieldControl/display/D1fapp} !== 'H' }" />
-										<VBox visible="{= ${/fieldControl/display/D1fapp} !== 'H' }">
+										<VBox class="secondInputWrap" visible="{= ${/fieldControl/display/D1fapp} !== 'H' }">
 											<Input value="" enabled="false" visible="{= ${/fieldControl/display/D1fapp} === 'V' }" />
 											<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/D1fapp', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="{= ${/fieldControl/display/D1fapp} === 'X' }" visible="{= ${/fieldControl/display/D1fapp} !== 'V' }"/>
 										</VBox>
@@ -85,15 +85,15 @@
 									<core:Fragment fragmentName="sap.ui.yesco.mvc.view.competency.fragment.Item" type="XML" />
 								</VBox>
 								<VBox visible="{= ${/fieldControl/display/D2z200} !== 'H' &amp;&amp; ${/fieldControl/display/D2fapp} !== 'H' }">
-									<grid:CSSGrid gridTemplateColumns="830px repeat(4, 1fr)" gridGap="1px 0px" class="form-grid">
+									<grid:CSSGrid gridTemplateColumns="830px repeat(4, 1fr)" gridGap="1px 0px" class="form-grid type-comp">
 										<HBox />
 										<Label text="{i18n>LABEL_10062}" visible="{= ${/fieldControl/display/D2z200} !== 'H' }"/>
-										<VBox visible="{= ${/fieldControl/display/D2z200} !== 'H' }">
+										<VBox class="firstInputWrap" visible="{= ${/fieldControl/display/D2z200} !== 'H' }">
 											<Input value="" enabled="false" visible="{= ${/fieldControl/display/D2z200} === 'V' }" />
 											<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/D2z200', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="{= ${/fieldControl/display/D2z200} === 'X' }" visible="{= ${/fieldControl/display/D2z200} !== 'V' }"/>
 										</VBox>
 										<Label text="{i18n>LABEL_10063}" visible="{= ${/fieldControl/display/D2fapp} !== 'H' }"/>
-										<VBox visible="{= ${/fieldControl/display/D2fapp} !== 'H' }">
+										<VBox class="secondInputWrap" visible="{= ${/fieldControl/display/D2fapp} !== 'H' }">
 											<Input value="" enabled="false" visible="{= ${/fieldControl/display/D2fapp} === 'V' }" />
 											<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/D2fapp', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="{= ${/fieldControl/display/D2fapp} === 'X' }" visible="{= ${/fieldControl/display/D2fapp} !== 'V' }"/>
 										</VBox>
@@ -101,15 +101,15 @@
 								</VBox>
 							</VBox>
 							<HBox class="vCardBox sapUiSmallMarginTop" visible="{= ${/fieldControl/display/HZ200} !== 'H' &amp;&amp; ${/fieldControl/display/HFapp} !== 'H' }">
-								<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="830px repeat(4, 1fr)">
+								<grid:CSSGrid gridGap="1px 0" class="form-grid type-comp" gridTemplateColumns="830px repeat(4, 1fr)">
 									<HBox />
 									<Label text="{i18n>LABEL_10051}" visible="{= ${/fieldControl/display/HZ200} !== 'H' }"/>
-									<VBox visible="{= ${/fieldControl/display/HZ200} !== 'H' }">
+									<VBox class="firstInputWrap" visible="{= ${/fieldControl/display/HZ200} !== 'H' }">
 										<Input value="" enabled="false" visible="{= ${/fieldControl/display/HZ200} === 'V' }" />
 										<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/HZ200', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="{= ${/fieldControl/display/HZ200} === 'X' }" visible="{= ${/fieldControl/display/HZ200} !== 'V' }"/>
 									</VBox>
 									<Label text="{i18n>LABEL_10052}" visible="{= ${/fieldControl/display/HFapp} !== 'H' }"/>
-									<VBox visible="{= ${/fieldControl/display/HFapp} !== 'H' }">
+									<VBox class="secondInputWrap" visible="{= ${/fieldControl/display/HFapp} !== 'H' }">
 										<Input value="" enabled="false" visible="{= ${/fieldControl/display/HFapp} === 'V' }" />
 										<custom:NumberInput class="required" maxLength="5" value="{ path: '/summary/HFapp', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="{= ${/fieldControl/display/HFapp} === 'X' }" visible="{= ${/fieldControl/display/HFapp} !== 'V' }"/>
 									</VBox>
