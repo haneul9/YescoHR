@@ -162,8 +162,6 @@ sap.ui.define(
       behavioralIndicators(aList = []) {
         const aLoadList = [];
         _.chain(aLoadList)
-          .set('Level', `level${aList.length}`)
-          .set('Count', aList.length)
           .set(
             'Headers',
             _.reduce(aList, (acc, cur) => [...acc, { type: 'body', Level: cur.Pstext.substring(0, 7), LevelTxt: _.replace(cur.Pstext, cur.Pstext.substring(0, 8), '') }], [{ type: 'head', LevelTxt: this.getBundleText('LABEL_22006') }])
@@ -188,6 +186,11 @@ sap.ui.define(
               .value(),
           ])
           .commit();
+
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/Competency/Level', `level${aList.length}`);
+        oViewModel.setProperty('/Competency/Count', aList.length);
 
         return aLoadList;
       },

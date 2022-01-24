@@ -17,7 +17,7 @@
                     </VBox>
                     <Label text="{i18n>LABEL_09016}"/>
                     <FlexBox alignItems="Start" justifyContent="End">
-                        <Input id="DialogData2" value="{ path: '/DialogData/Bet01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveCompar" description="{i18n>LABEL_00158}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }"/>
+                        <Input id="DialogData2" textAlign="Right" value="{ path: '/DialogData/Bet01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveCompar" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }"/>
                     </FlexBox>
                     <Label text="{i18n>LABEL_09020}"/>
                     <VBox>
@@ -25,7 +25,7 @@
                     </VBox>
                     <Label text="{i18n>LABEL_09017}"/>
                     <FlexBox alignItems="Start" justifyContent="End">
-                        <Input id="DialogData4" value="{ path: '/DialogData/Bet02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveCompar" description="{i18n>LABEL_00158}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }"/>
+                        <Input id="DialogData4" textAlign="Right" value="{ path: '/DialogData/Bet02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveCompar" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }"/>
                     </FlexBox>
                     <Label text="{i18n>LABEL_09014}"/>
                     <VBox>
@@ -33,7 +33,7 @@
                     </VBox>
                     <Label text="{i18n>LABEL_09018}"/>
                     <FlexBox alignItems="Start" justifyContent="End">
-                        <Text text="{ path: '/DialogData/Bettot', type: 'sap.ui.yesco.mvc.model.type.Currency' } 원" />
+                        <Text text="{ path: '/DialogData/Bettot', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
                     </FlexBox>
                     <Label text="{i18n>LABEL_09015}"/>
                     <VBox>
@@ -46,18 +46,18 @@
                         <Text text="{/DialogData/Pratetx}" />
                     </FlexBox>
                     <Label text="{i18n>LABEL_09023}" visible="{= ${/DialogData/ZappStat} === 'P' }" />
-                    <FlexBox alignItems="Start" justifyContent="End" visible="{= ${/DialogData/ZappStat} === 'P' }">
-                        <Text text="{ path: '/DialogData/Mobet', type: 'sap.ui.yesco.mvc.model.type.Currency' } 원" />
+                    <FlexBox alignItems="Start" visible="{= ${/DialogData/ZappStat} === 'P' }">
+                        <Text text="{ path: '/DialogData/Mobet', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
                     </FlexBox>
                     <Label text="{i18n>LABEL_09009}" visible="{= ${/DialogData/ZappStat} === 'P' }"/>
                     <FlexBox alignItems="Start" justifyContent="End" visible="{= ${/DialogData/ZappStat} === 'P' }">
-                        <Text text="{ path: '/DialogData/Pybet', type: 'sap.ui.yesco.mvc.model.type.Currency' } 원" />
+                        <Text text="{ path: '/DialogData/Pybet', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
                     </FlexBox>
                     <HBox visible="{= ${/DialogData/ZappStat} === 'P' }"></HBox>
                     <HBox visible="{= ${/DialogData/ZappStat} === 'P' }"></HBox>
                     <Label text="{i18n>LABEL_09024}" visible="{= ${/DialogData/ZappStat} === 'P' }" />
                     <FlexBox alignItems="Start" justifyContent="End" visible="{= ${/DialogData/ZappStat} === 'P' }">
-                        <Text text="{ path: '/DialogData/Ttmon', type: 'sap.ui.yesco.mvc.model.type.Currency' } 원" />
+                        <Text text="{ path: '/DialogData/Ttmon', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
                     </FlexBox>
                 </grid:CSSGrid>
             </VBox>

@@ -37,11 +37,14 @@ sap.ui.define(
           busy: false,
           Data: [],
           LoanType: [],
-          TargetCode: {},
           parameters: {},
           search: {
-            date: new Date(dDate.getFullYear(), 12, 0),
-            secondDate: new Date(),
+            date: new Date(),
+            secondDate: new Date(dDate.getFullYear(), 0, 1),
+            Famgb: '',
+            Famsa: '',
+            Objps: '',
+            Kdsvh: '',
           },
           listInfo: {
             rowCount: 1,
@@ -63,8 +66,11 @@ sap.ui.define(
           oListModel.setProperty('/busy', true);
           const aList = await this.getFamilyCode();
 
-          oListModel.setProperty('/FamilyCode', new ComboEntry({ codeKey: 'Seqnr', valueKey: 'Znametx', aEntries: aList }));
-          oListModel.setProperty('/search/Seqnr', 'ALL');
+          oListModel.setProperty('/FamilyCode', new ComboEntry({ codeKey: 'Famgb', valueKey: 'Znametx', aEntries: aList }));
+          oListModel.setProperty('/search/Famgb', 'ALL');
+          oListModel.setProperty('/search/Famsa', 'ALL');
+          oListModel.setProperty('/search/Objps', 'ALL');
+          oListModel.setProperty('/search/Kdsvh', 'ALL');
 
           this.onSearch();
           this.totalCount();
@@ -111,11 +117,11 @@ sap.ui.define(
 
         oListModel.setProperty('/busy', true);
 
-        if (!!oSearch.Seqnr && oSearch.Seqnr !== 'ALL') {
-          sFamgb = oListModel.getProperty('/TargetCode/Famgb');
-          sFamsa = oListModel.getProperty('/TargetCode/Famsa');
-          sObjps = oListModel.getProperty('/TargetCode/Objps');
-          sKdsvh = oListModel.getProperty('/TargetCode/Kdsvh');
+        if (!!oSearch.Famgb && oSearch.Famgb !== 'ALL') {
+          sFamgb = oSearch.Famgb;
+          sFamsa = oSearch.Famsa;
+          sObjps = oSearch.Objps;
+          sKdsvh = oSearch.Kdsvh;
         }
 
         oModel.read('/MedExpenseApplSet', {
@@ -196,8 +202,16 @@ sap.ui.define(
         const oFCode = oViewModel.getProperty('/FamilyCode');
 
         oFCode.forEach((e) => {
-          if (e.Seqnr === sKey) {
-            oViewModel.setProperty('/TargetCode', e);
+          if (`${e.Famgb}${e.Famsa}${e.Objps}${e.Kdsvh}` === sKey) {
+            oViewModel.setProperty('/search/Famgb', e.Famgb);
+            oViewModel.setProperty('/search/Famsa', e.Famsa);
+            oViewModel.setProperty('/search/Objps', e.Objps);
+            oViewModel.setProperty('/search/Kdsvh', e.Kdsvh);
+          } else if ('ALL' === sKey) {
+            oViewModel.setProperty('/search/Famgb', '');
+            oViewModel.setProperty('/search/Famsa', '');
+            oViewModel.setProperty('/search/Objps', '');
+            oViewModel.setProperty('/search/Kdsvh', '');
           }
         });
       },

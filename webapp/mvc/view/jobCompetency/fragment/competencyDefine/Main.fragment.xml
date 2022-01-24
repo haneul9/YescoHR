@@ -28,14 +28,14 @@
         <VBox>
           <Panel expandable="true" width="auto" class="capability-level">
             <customData>
-              <core:CustomData key="type" value="{/Competency/BehaviIndicat/Level}" writeToDom="true" />
+              <core:CustomData key="type" value="{/Competency/Level}" writeToDom="true" />
             </customData>
             <layoutData>
               <FlexItemData growFactor="1"/>
             </layoutData>
             <headerToolbar>
               <OverflowToolbar height="3rem" style="Clear">
-                <grid:CSSGrid gridTemplateColumns="200px repeat({/Competency/BehaviIndicat/Count}, 2fr)" gridGap="8px" items="{/Competency/BehaviIndicat/Headers}">
+                <grid:CSSGrid gridTemplateColumns="200px repeat({/Competency/Count}, 2fr)" gridGap="8px" items="{/Competency/BehaviIndicat/Headers}">
                   <VBox>
                     <customData>
                       <core:CustomData key="type" value="{type}" writeToDom="true" />
@@ -47,7 +47,7 @@
               </OverflowToolbar>
             </headerToolbar>
             <content>
-              <grid:CSSGrid gridTemplateColumns="200px repeat({/Competency/BehaviIndicat/Count}, 2fr)" gridGap="8px" items="{/Competency/BehaviIndicat/Contents}">
+              <grid:CSSGrid gridTemplateColumns="200px repeat({/Competency/Count}, 2fr)" gridGap="8px" items="{/Competency/BehaviIndicat/Contents}">
                 <VBox items="{Note}">
                   <customData>
                     <core:CustomData key="type" value="{type}" writeToDom="true" />
