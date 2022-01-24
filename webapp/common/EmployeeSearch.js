@@ -133,7 +133,7 @@ sap.ui.define(
 
               this.debug(`${sUrl} success.`, oData);
               oEmpModel.setProperty('/employeeModel/org/orgList', aList);
-              oEmpModel.setProperty('/employeeModel/org/orgList/length', iLength > 10 ? 10 : iLength);
+              oEmpModel.setProperty('/employeeModel/org/orgListLength', iLength > 4 ? 4 : iLength);
             }
             oEmpModel.setProperty('/employeeModel/org/busy', false);
           },
@@ -272,7 +272,7 @@ sap.ui.define(
 
         if (aSelected.length > 1) {
           oEventSource.clearSelection();
-          return MessageBox.alert(this.getBundleText('MSG_00029'));
+          return MessageBox.alert(this.getBundleText('MSG_00028'));
         }
 
         const aSelectionDatas = [];
@@ -365,6 +365,7 @@ sap.ui.define(
         this.getViewModel().setProperty('/employeeModel/org', {
           Date: '',
           Word: '',
+          orgListLength: 1,
           orgList: [],
           SelectedOrg: [],
           busy: false,

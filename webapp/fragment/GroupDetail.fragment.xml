@@ -2,7 +2,7 @@
     xmlns:core="sap.ui.core"
     xmlns:table="sap.ui.table"
     xmlns:custom="sap.ui.yesco.control">
-    <Dialog id= "EmployeeSearch" title="{i18n>LABEL_00207}" contentWidth="800px" contentHeight="400px" busyIndicatorDelay="0" busy="{/employeeModel/org/busy}">
+    <Dialog id= "EmployeeSearch" title="{i18n>LABEL_00207}" contentWidth="800px" contentHeight="410px" busyIndicatorDelay="0" busy="{/employeeModel/org/busy}">
         <beginButton>
             <Button text="{i18n>LABEL_00112}" press=".EmployeeSearch.onOrgClick" type="Emphasized" />
         </beginButton>
@@ -15,12 +15,12 @@
                     <Label text="{i18n>LABEL_00259}" />
                     <custom:DatePicker dateValue="{ path: '/employeeModel/org/Date', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="200px" />
                     <Label text="{i18n>LABEL_00201}" />
-                    <Input value="{/employeeModel/org/Word}" width="200px" />
+                    <Input value="{/employeeModel/org/Word}" width="200px" submit=".EmployeeSearch.onOrgList" />
                     <Button icon="asset/image/icon_search03.png" text="{i18n>LABEL_00101}" press=".EmployeeSearch.onOrgList" class="icon-button" />
                 </HBox>
             </VBox>
             <VBox class="hCardBox">
-                <table:Table id="orgTable" rows="{/employeeModel/org/orgList}" rowSelectionChange=".EmployeeSearch.onOrgListRowSelection" visibleRowCount="{/employeeModel/org/orgList/length}" rowHeight="44" columnHeaderHeight="45">
+                <table:Table id="orgTable" rows="{/employeeModel/org/orgList}" rowSelectionChange=".EmployeeSearch.onOrgListRowSelection" visibleRowCount="{/employeeModel/org/orgListLength}" rowHeight="44" columnHeaderHeight="45">
                     <table:columns>
                         <table:Column width="auto" sortProperty="Stext" filterProperty="Stext">
                             <Label text="{i18n>LABEL_00227}"/>

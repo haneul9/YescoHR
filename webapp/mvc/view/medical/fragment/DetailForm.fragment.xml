@@ -50,9 +50,6 @@
                 <Text text="{
                     path: '/FormData/PybetTot',
                     type: 'sap.ui.yesco.mvc.model.type.Currency'
-                } {
-                    parts: [ {path: '/FormData/PybetTot'}, {path: '/FormData/Pratetx'} ],
-                    formatter: '.formatPayMent'
                 }"/>
             </VBox>
             <Label text="{i18n>LABEL_03002}"/>

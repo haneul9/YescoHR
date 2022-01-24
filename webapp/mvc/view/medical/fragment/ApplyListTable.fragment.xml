@@ -79,7 +79,10 @@
       <table:Column width="auto" sortProperty="Paymm" filterProperty="Paymm">
         <Label text="{i18n>LABEL_03002}"/>
         <table:template>
-          <Text text="{= !${Paymm} || ${Paymm} === '0000000' ? '' : ${Paymm} }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          <Text text="{
+                    path: '/FormData/Paymm',
+                    formatter: '.formatDate'
+                }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text" />
         </table:template>
       </table:Column>
       <table:Column width="60px">
