@@ -309,11 +309,14 @@ sap.ui.define(
         }
       },
 
-      onFileView(oEvent) {
-        const sUrl = oEvent.getSource().data('url');
+      async onFileView(oEvent) {
+        const mCustomData = oEvent.getSource().data();
 
-        if (_.isEmpty(sUrl)) return;
-        window.open(sUrl, '_blank');
+        if (_.isEmpty(mCustomData.url)) return;
+
+        const mPlanData = await Client.get(this.getModel(ServiceNames.WORKTIME), 'HolPlanList', _.omit(mCustomData, 'url'));
+
+        window.open(mPlanData.Pdfurl, '_blank');
       },
 
       onChangePlnyy() {
