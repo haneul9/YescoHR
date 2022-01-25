@@ -25,7 +25,7 @@
                         <table:Column width="auto" sortProperty="Stext" filterProperty="Stext">
                             <Label text="{i18n>LABEL_00227}"/>
                             <table:template>
-                                <Text text="{Stext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+                                <Text text="{Stext}" width="100%" wrapping="false" class="tableRow_Text"/>
                             </table:template>
                         </table:Column>
                         <table:Column width="200px" sortProperty="EnameM" filterProperty="EnameM">

@@ -31,7 +31,12 @@ sap.ui.define(
       GroupDialogHandler: null,
 
       onBeforeShow() {
-        this.GroupDialogHandler = new GroupDialogHandler(this, () => {});
+        this.GroupDialogHandler = new GroupDialogHandler(this, ([mOrgData]) => {
+          const oViewModel = this.getViewModel();
+
+          oViewModel.setProperty('/search/Orgeh', mOrgData.Orgeh);
+          oViewModel.setProperty('/search/Orgtx', mOrgData.Stext);
+        });
 
         const today = moment();
         const oViewModel = new JSONModel({
@@ -241,6 +246,18 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/busy', false);
         }
+      },
+
+      async onSelectRow(oEvent) {
+        const sPath = oEvent.getParameters().rowBindingContext.getPath();
+        const oRowData = this.getViewModel().getProperty(sPath);
+        const [mAppointee] = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'EmpSearchResult', {
+          Ename: oRowData.Pernr,
+        });
+
+        this.getAppointeeModel().setData({ ...mAppointee, showChangeButton: false });
+
+        this.getRouter().navTo('leavePlan', _.pick(oRowData, ['Plnyy', 'Seqno']));
       },
 
       onPressExcelDownload() {

@@ -174,7 +174,7 @@
         
         { "pattern": "m/organization", "name": "m/organization", "target": "m/organization" },
         
-        { "pattern": "leavePlan", "name": "leavePlan", "target": "leavePlan" },
+        { "pattern": "leavePlan/:Plnyy:/:Seqno:", "name": "leavePlan", "target": "leavePlan" },
         { "pattern": "m/leaveSummary", "name": "m/leaveSummary", "target": "m/leaveSummary" },
 
         { "pattern": "m/leave", "name": "m/leave", "target": "m/leave" },
