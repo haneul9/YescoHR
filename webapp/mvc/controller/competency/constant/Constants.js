@@ -43,8 +43,8 @@ sap.ui.define(
         },
         4: {
           J: { Obj0: { ME: 'D' }, Z200: { MA: 'V' }, D1z200: { ME: 'D', MA: 'V' }, D2z200: { ME: 'D', MA: 'V' }, HZ200: { ME: 'D', MA: 'V' }, Z200r: { MA: 'V' }, Fapp: { MA: 'V' }, D1fapp: { MA: 'V' }, D2fapp: { MA: 'V' }, HFapp: { MA: 'V' }, Fappr: { MA: 'V' } },
-          L: { Fapp: { MA: 'V' }, D1fapp: { ME: 'D', MA: 'V' }, D2fapp: { ME: 'D', MA: 'V' }, HFapp: { ME: 'D', MA: 'V' }, Fappr: { MA: 'V' } },
-          O: { Fapp: { MA: 'V' }, D1fapp: { MA: 'V' }, D2fapp: { MA: 'V' }, HFapp: { MA: 'V' }, Fappr: { MA: 'V' } },
+          L: { Fapp: { ME: 'V' }, D1fapp: { ME: 'V', MA: 'D' }, D2fapp: { ME: 'V', MA: 'D' }, HFapp: { ME: 'V', MA: 'D' }, Fappr: { ME: 'V' } },
+          O: { Fapp: { ME: 'V' }, D1fapp: { ME: 'V' }, D2fapp: { ME: 'V' }, HFapp: { ME: 'V' }, Fappr: { ME: 'V' } },
         },
         5: {
           X: { Z209: { MA: 'H' } },
