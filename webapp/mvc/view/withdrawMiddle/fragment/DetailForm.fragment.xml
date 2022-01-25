@@ -9,14 +9,14 @@
         <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
             <Label text="{i18n>LABEL_24005}" />
             <VBox>
-                <custom:DatePicker dateValue="{ path: '/FormData/Wtdat', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{= !${/FormData/ZappStatAl} }" class="required" />
+                <custom:DatePicker width="auto" dateValue="{ path: '/FormData/Wtdat', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{= !${/FormData/ZappStatAl} }" class="required" />
             </VBox>
             <Label text="{i18n>LABEL_24004}"/>
             <VBox>
                 <Input value="{
                     path: '/FormData/Wtamt',
                     type: 'sap.ui.yesco.mvc.model.type.Currency'
-                }" liveChange=".costCalculation" editable="{= !${/FormData/ZappStatAl} }" class="required" />
+                }" liveChange=".costCalculation" width="auto" editable="{= !${/FormData/ZappStatAl} }" class="required" />
             </VBox>
         </grid:CSSGrid>
     </VBox>
