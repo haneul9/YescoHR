@@ -1,0 +1,27 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.withdrawMiddle.WithdrawMiddleDetail"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:custom="sap.ui.yesco.control">
+  <Page showHeader="false">
+    <content>
+      <VBox class="contents-header">
+        <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+          <custom:Breadcrumbs />
+          <HBox>
+            <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= !${/FormData/ZappStatAl} }" />
+            <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= ${/FormData/ZappStatAl} === '20' || ${/FormData/ZappStatAl} === '65'}" />
+            <Button text="{i18n>LABEL_00146}" press=".onNavBack" class="sapUiTinyMarginEnd" />
+            <Button icon="sap-icon://print" press=".onPagePrint" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd"/>
+            <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" />
+          </HBox>
+        </HBox>
+      </VBox>
+      <VBox class="contents">
+        <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.fragment.InfoMessage" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.withdrawMiddle.fragment.DetailForm" type="XML" />
+      </VBox>
+    </content>
+  </Page>
+</mvc:View>

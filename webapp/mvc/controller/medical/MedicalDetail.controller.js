@@ -110,7 +110,7 @@ sap.ui.define(
       },
 
       formatDate(sDate = '') {
-        sDate = !sDate || sDate === '000000' ? '' : `${sDate.slice(0, 4)}.${sDate.slice(4, 6)}`;
+        sDate = !sDate || _.toNumber(sDate) === 0 ? '' : `${sDate.slice(0, 4)}.${sDate.slice(4, 6)}`;
 
         return sDate;
       },
