@@ -153,7 +153,6 @@
         <template>
           <m:Button type="Transparent" icon="sap-icon://attachment" class="mnw-0" press=".onFileView" visible="{= !!${Pdfurl} }">
             <m:customData>
-              <core:CustomData key="url" value="{Pdfurl}" />
               <core:CustomData key="Plnyy" value="{Plnyy}" />
               <core:CustomData key="Seqno" value="{Seqno}" />
               <core:CustomData key="Pernr" value="{Pernr}" />

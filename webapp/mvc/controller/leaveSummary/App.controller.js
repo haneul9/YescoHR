@@ -311,10 +311,7 @@ sap.ui.define(
 
       async onFileView(oEvent) {
         const mCustomData = oEvent.getSource().data();
-
-        if (_.isEmpty(mCustomData.url)) return;
-
-        const mPlanData = await Client.get(this.getModel(ServiceNames.WORKTIME), 'HolPlanList', _.omit(mCustomData, 'url'));
+        const mPlanData = await Client.get(this.getModel(ServiceNames.WORKTIME), 'HolPlanList', mCustomData);
 
         window.open(mPlanData.Pdfurl, '_blank');
       },
