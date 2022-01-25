@@ -47,7 +47,7 @@ sap.ui.define(
           O: { Fapp: { ME: 'V' }, D1fapp: { ME: 'V' }, D2fapp: { ME: 'V' }, HFapp: { ME: 'V' }, Fappr: { ME: 'V' } },
         },
         5: {
-          X: { Z209: { MA: 'H' } },
+          X: { Z209: { ME: 'H' } },
         },
       },
 
