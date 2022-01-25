@@ -44,6 +44,7 @@ sap.ui.define(
           ],
         },
         2140: { url: '', key: [{ key: 'appno', value: 'Appno' }] }, // 통합굴착야간
+        3210: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 중도인출
         4110: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 경조금
         4210: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 학자금
         4310: {
@@ -179,11 +180,12 @@ sap.ui.define(
           mNavigationInfo.url = 'housingLoan-detail';
         }
 
-        const sApproverPernr = oRowData.ZappPernr;
-        const sApplyPernr = oRowData.ZreqPernr1;
-        const sAppointeePernr = oRowData.ZreqPernr2;
+        const sPernr = this.getAppointeeProperty('Pernr'); // 로그인 사번
+        const sApplyPernr = oRowData.ZreqPernr1; // 신청자
+        const sAppointeePernr = oRowData.ZreqPernr2; // 대상자
+        const sApproverPernr = oRowData.ZappPernr; // 결재자
 
-        if (sApproverPernr !== '00000000' && sApproverPernr !== sApplyPernr && sApproverPernr !== sAppointeePernr) {
+        if (sApproverPernr !== '00000000' && sPernr !== sApplyPernr && sPernr !== sAppointeePernr) {
           window.open(oRowData.ZappUrl, '_blank');
         } else {
           const oAppModel = this.getViewModel('appointeeModel');
