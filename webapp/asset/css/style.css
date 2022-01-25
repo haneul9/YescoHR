@@ -1254,7 +1254,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .per-status .sapMFlexBox:nth-child(3) .sapUiIcon:after {background-image:url(../image/icon_per_status_03.png)}
 .per-status .sapMFlexBox:nth-child(4) .sapUiIcon:after {background-image:url(../image/icon_per_status_04.png)}
 .per-status .sapMFlexBox:nth-child(5) .sapUiIcon:after {background-image:url(../image/icon_per_status_05.png)}
-.per-status-d {display:flex; justify-content:space-between; padding-left:105px}
+.per-status-d {display:flex; justify-content:space-between; padding-left:97px}
 .per-status-d .sapMVBox {margin-left:10px; flex:1}
 .per-status-d > .sapMVBox:last-child {margin-right: 18px!important;min-width: 35px;flex: inherit;width:110px;}
 .per-status-d .sapMVBox .sapMFlexItem {margin-bottom:8px}
@@ -1268,7 +1268,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 
 .per-panel .sapMIBar {display:flex; justify-content:space-between}
 .per-panel .sapMPanelContent {padding-right:0; padding-left:67px; padding-top:2px; padding-bottom:0}
-.sapMPanel.per-panel .sapMPanelWrappingDiv .sapMPanelHdr, .sapMPanel .sapMPanelWrappingDivTb .sapMIBar.sapMTB {margin-left:0; padding-left:75px}
+.sapMPanel.per-panel .sapMPanelWrappingDiv .sapMPanelHdr, .sapMPanel .sapMPanelWrappingDivTb .sapMIBar.sapMTB {margin-left:0; padding-left:65px}
 .per-panel .sapMPanelWrappingDivTb .goal-subject .sapMInputBaseContentWrapper {border-color:transparent; background:linear-gradient(#fff 70%, #A8D7FF 70% 85%, #fff 85%) no-repeat!important}
 .per-panel .sapMPanelWrappingDivTb .goal-subject .sapMInputBaseContentWrapper:hover {border-color:transparent!important; background:linear-gradient(#fff 70%, #A8D7FF 70% 85%, #fff 85%) no-repeat}
 .per-panel .sapMPanelWrappingDivTb .goal-subject .sapMInputBaseContentWrapper .sapMInputBaseInner {font-size:20px; padding-left:0!important}
@@ -1586,7 +1586,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .capability-level[data-type="level5"] .sapUiLayoutCSSGrid > *:nth-child(6n + 6) {background-color: #99D1FD;}
 .capability-level .sapUiLayoutCSSGrid > [data-type="blank"] {background-color: transparent!important;}
 .capability-level .sapUiLayoutCSSGrid .sapMFlexBox {width:100%;padding:10px 30px; border-radius: 8px;text-align:center;}
-.capability-level .sapMPanelContent  .sapUiLayoutCSSGrid .sapMFlexBox {padding:20px 30px;} 
+.capability-level .sapMPanelContent  .sapUiLayoutCSSGrid .sapMFlexBox {padding:20px 20px;} 
 .capability-level .sapUiLayoutCSSGrid .sapMFlexBox .sapMFlexItem {display: flex;}
 .capability-level div:not(.sapMIBar) .sapUiLayoutCSSGrid .sapMFlexBox .sapMFlexItem + .sapMFlexItem {margin-top:0.8rem;}
 .capability-level .sapMIBar .sapUiLayoutCSSGrid .sapMText {font-size:12px;} 
@@ -1599,3 +1599,11 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 
 .dialog-post {padding: 16px 0px 85px !important;}
 .dialog-post .sapMDialogSection {padding: 0px !important;}
+
+.flex-wrap {flex-wrap: wrap;}
+.flex-wrap > * {margin-right:5px;margin-bottom:5px;}
+.sapMBtn.job .sapMBtnDefault {
+    color: var(--FontColorNormal) !important;
+    border-color: #DDE1E6 !important;
+    background-color: #DDE1E6;
+}

@@ -2,29 +2,35 @@
   xmlns:core="sap.ui.core"
   xmlns:grid="sap.ui.layout.cssgrid">
   <HBox class="contents" justifyContent="SpaceBetween">
-    <ScrollContainer height="600px" vertical="true">
-      <layoutData>
-        <FlexItemData growFactor="0.8" />
-      </layoutData>
-      <Tree id="CompTree" mode="SingleSelectMaster" items="{path: '/Competency/CompTree'}" selectionChange=".onTreePress">
+    <VBox width="520px" class="vCardBox sapUiMediumMarginEnd">
+      <ScrollContainer height="600px" width="100%" vertical="true">
         <layoutData>
-          <FlexItemData growFactor="1" />
+          <FlexItemData growFactor="0.8" />
         </layoutData>
-        <CustomTreeItem>
-          <HBox>
-            <Image visible="{= ${Otype} === 'Q' }" src="asset/image/icon_cascading_type03.png" />
-            <Text text="{Stext}"/>
-          </HBox>
-        </CustomTreeItem>
-      </Tree>
-    </ScrollContainer>
-    <VBox width="100%">
+        <Tree id="CompTree" mode="SingleSelectMaster" items="{path: '/Competency/CompTree'}" selectionChange=".onTreePress">
+          <layoutData>
+            <FlexItemData growFactor="1" />
+          </layoutData>
+          <CustomTreeItem>
+            <HBox>
+              <Image visible="{= ${Otype} === 'Q' }" src="asset/image/icon_tree_node.svg" />
+              <Text text="{Stext}"/>
+            </HBox>
+          </CustomTreeItem>
+        </Tree>
+      </ScrollContainer>
+    </VBox>
+    <VBox width="100%" class="mt-0-px">
       <VBox class="vCardBox sapUiMediumMarginBottom">
-        <Title level="H4" text="{i18n>LABEL_22003}" />
-        <TextArea editable="false" value="{/Competency/Defin}" width="100%" />
+        <HBox alignItems="Center" class="table-toolbar">
+          <Title level="H2" text="{i18n>LABEL_22003}" />
+        </HBox>
+        <TextArea enabled="false" value="{/Competency/Defin}" width="100%" />
       </VBox>
       <VBox class="vCardBox sapUiMediumMarginBottom">
-        <Title level="H4" text="{i18n>LABEL_22004}" />
+        <HBox alignItems="Center" class="table-toolbar">
+          <Title level="H2" text="{i18n>LABEL_22004}" />
+        </HBox>
         <VBox>
           <Panel expandable="true" width="auto" class="capability-level">
             <customData>
@@ -60,9 +66,11 @@
         </VBox>
       </VBox>
       <VBox class="vCardBox sapUiMediumMarginBottom">
-        <Title level="H4" text="{i18n>LABEL_22005}" />
-        <HBox items="{/Competency/RelateJobs/JobTypes}">
-          <Button text="{JobName}" press=".onPressJob" />
+        <HBox alignItems="Center" class="table-toolbar">
+          <Title level="H2" text="{i18n>LABEL_22005}" />
+        </HBox>        
+        <HBox items="{/Competency/RelateJobs/JobTypes}" class="flex-wrap">
+          <Button text="{JobName}" press=".onPressJob" class="job"/>
         </HBox>
       </VBox>
     </VBox>
