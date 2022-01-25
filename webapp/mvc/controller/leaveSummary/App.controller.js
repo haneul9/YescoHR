@@ -299,8 +299,14 @@ sap.ui.define(
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
-      onPressSearchOrgeh() {
-        this.GroupDialogHandler.openDialog();
+      onPressSearchOrgeh(oEvent) {
+        const bClearPressed = oEvent.getParameter('clearButtonPressed');
+
+        if (bClearPressed) {
+          this.getViewModel().setProperty('/search/Orgeh', '');
+        } else {
+          this.GroupDialogHandler.openDialog();
+        }
       },
 
       onFileView(oEvent) {
