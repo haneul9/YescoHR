@@ -1,6 +1,7 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/core/Fragment',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
@@ -13,6 +14,7 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
+    Fragment,
     JSONModel,
     AppUtils,
     ComboEntry,
@@ -29,6 +31,8 @@ sap.ui.define(
       TABLE_ID: 'leaveSummaryTable',
 
       GroupDialogHandler: null,
+
+      AWART_COUNT: { 2000: 1, 2010: 1, 2001: 0.5, 2002: 0.5 },
 
       onBeforeShow() {
         this.GroupDialogHandler = new GroupDialogHandler(this, ([mOrgData]) => {
@@ -108,7 +112,16 @@ sap.ui.define(
             infoMessage: this.getBundleText('LABEL_23010', '2021.01.01~2021.12.31'),
           },
           list: [],
+          plans: {
+            Plnyy: '',
+            Seqno: '',
+            selectedDay: '',
+            count: {},
+            raw: [],
+            grid: [],
+          },
         });
+        oViewModel.setSizeLimit(500);
         this.setViewModel(oViewModel);
 
         TableUtils.adjustRowSpan({
@@ -144,7 +157,7 @@ sap.ui.define(
             .set('SeqnoList', new ComboEntry({ codeKey: 'Seqno', valueKey: 'Seqno', aEntries: aPlanSeqnr }) ?? [])
             .commit();
 
-          this.onPressSearch();
+          await this.onPressSearch();
         } catch (oError) {
           this.debug('Controller > leaveSummary App > onObjectMatched Error', oError);
 
@@ -182,6 +195,105 @@ sap.ui.define(
             dataSource: mDataSource,
           }).render();
         });
+      },
+
+      getBoxObject({ day = 'NONE', label = '', classNames = '', awart = '' }) {
+        return { day, label, classNames, awart };
+      },
+
+      getPlanHeader() {
+        return [
+          this.getBoxObject({ label: this.getBundleText('LABEL_00253'), classNames: 'Header' }), //  월
+          this.getBoxObject({ label: this.getBundleText('LABEL_20010'), classNames: 'Header' }), // 개수
+          ..._.times(31, (n) => this.getBoxObject({ label: n + 1, classNames: 'Header' })),
+        ];
+      },
+
+      getPlanBody(iMonth) {
+        const oViewModel = this.getViewModel();
+        const mCount = oViewModel.getProperty('/plans/count');
+        const mPlansRawData = oViewModel.getProperty('/plans/raw');
+        const sYear = oViewModel.getProperty('/plans/Plnyy');
+        const sYearMonth = `${sYear}-${_.padStart(iMonth + 1, 2, '0')}`;
+
+        _.set(mCount, iMonth + 1, 0);
+
+        return [
+          this.getBoxObject({ label: this.getBundleText('LABEL_20011', iMonth + 1), classNames: 'Header' }), //  {0}월
+          this.getBoxObject({ day: `Count-${iMonth + 1}`, label: 0, classNames: 'Header' }),
+          ..._.times(31, (n) => {
+            const sDay = `${sYearMonth}-${_.padStart(n + 1, 2, '0')}`;
+            return this.getBoxObject({ day: sDay, label: '', classNames: this.getDayStyle(mPlansRawData, sDay), awart: _.get(mPlansRawData, [sDay, 'Awart'], '') });
+          }),
+        ];
+      },
+
+      getDayStyle(mPlansRawData, sDay) {
+        const sHolyn = _.get(mPlansRawData, [sDay, 'Holyn']);
+        const sInpyn = _.get(mPlansRawData, [sDay, 'Inpyn']);
+        const mClasses = {
+          Weekend: { sHolyn: 'X', sInpyn: '' },
+          Disable: { sHolyn: '', sInpyn: '' },
+          Normal: { sHolyn: '', sInpyn: 'X' },
+        };
+
+        return moment(sDay).isValid() ? _.chain(mClasses).findKey({ sHolyn, sInpyn }).value() : 'None';
+      },
+
+      async buildPlanGrid({ Pernr, Plnyy, Seqno }) {
+        const oViewModel = this.getViewModel();
+        const aAnnualLeavePlan = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'AnnualLeavePlan', {
+          Menid: this.getCurrentMenuId(),
+          Pernr,
+          Plnyy,
+          Seqno,
+        });
+
+        oViewModel.setProperty('/plans/Plnyy', Plnyy);
+        oViewModel.setProperty('/plans/Seqno', Seqno);
+        oViewModel.setProperty(
+          '/plans/raw',
+          _.chain(aAnnualLeavePlan)
+            .groupBy((o) => moment(o.Tmdat).format('YYYY-MM-DD'))
+            .forOwn((v, p, obj) => (obj[p] = _.omit(v[0], '__metadata')))
+            .value()
+        );
+        oViewModel.setProperty('/plans/grid', [
+          ...this.getPlanHeader(), //
+          ..._.times(12, (n) => this.getPlanBody(n)).reduce((a, b) => [...a, ...b], []),
+        ]);
+        oViewModel.setProperty('/plans/raw', []);
+
+        const aGridPlans = oViewModel.getProperty('/plans/grid');
+        const aGridCounts = aGridPlans.filter((o) => _.startsWith(o.day, 'Count'));
+        const mGroupByMonth = _.chain(aGridPlans)
+          .reject({ awart: '' })
+          .groupBy((o) => _.chain(o.day).split('-', '2').last().toNumber().value())
+          .map((v, p) => ({ [p]: _.sumBy(v, (obj) => this.AWART_COUNT[obj.awart]) }))
+          .reduce((a, c) => ({ ...a, ...c }), {})
+          .value();
+        const mCount = oViewModel.getProperty('/plans/count');
+        _.chain(mCount)
+          .forOwn((v, p, obj) => _.set(obj, p, 0))
+          .assign(mGroupByMonth)
+          .forOwn((v, p) => _.set(aGridCounts, [p - 1, 'label'], v))
+          .commit();
+      },
+
+      async openPlanDialog() {
+        const oView = this.getView();
+
+        if (!this._oPlanDialog) {
+          this._oPlanDialog = await Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.mvc.view.leaveSummary.fragment.PlanDialog',
+            controller: this,
+          });
+
+          oView.addDependent(this._oPlanDialog);
+        }
+
+        this._oPlanDialog.open();
       },
 
       /*****************************************************************
@@ -249,15 +361,21 @@ sap.ui.define(
       },
 
       async onSelectRow(oEvent) {
+        const oViewModel = this.getViewModel();
         const sPath = oEvent.getParameters().rowBindingContext.getPath();
         const oRowData = this.getViewModel().getProperty(sPath);
-        const [mAppointee] = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'EmpSearchResult', {
-          Ename: oRowData.Pernr,
-        });
 
-        this.getAppointeeModel().setData({ ...mAppointee, showChangeButton: false });
+        oViewModel.setProperty('/plans/busy', true);
+        oViewModel.setProperty('/plans/headerTxt', this.getBundleText('LABEL_23016', oRowData.Orgtx, oRowData.Ename, oRowData.Zzjikgbt, _.toNumber(oRowData.Pernr), oRowData.Plnyy, oRowData.Seqno));
 
-        this.getRouter().navTo('leavePlan', _.pick(oRowData, ['Plnyy', 'Seqno']));
+        await this.openPlanDialog();
+        await this.buildPlanGrid(oRowData);
+
+        oViewModel.setProperty('/plans/busy', false);
+      },
+
+      onPressClosePlanDialog() {
+        this._oPlanDialog.close();
       },
 
       onPressExcelDownload() {

@@ -2,14 +2,16 @@
     xmlns:core="sap.ui.core"
     xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:custom="sap.ui.yesco.control">
-    <Dialog title="{i18n>LABEL_20005} {/plan/Plnyy}({/plan/Seqno})" contentWidth="1500px" contentHeight="550px" busyIndicatorDelay="0" busy="{/plan/busy}">
+    <Dialog title="{i18n>LABEL_20005}" contentWidth="1500px" contentHeight="660px" busyIndicatorDelay="0" busy="{/plans/busy}">
         <endButton>
             <Button text="{i18n>LABEL_00115}" press=".onPressClosePlanDialog" />
         </endButton>
         <content>
-            <VBox>
+            <VBox class="vCardBox">
                 <HBox class="table-toolbar" justifyContent="SpaceBetween">
-                    <HBox />
+                    <HBox class="title">
+                        <Title level="H2" text="{/plans/headerTxt}" />
+                    </HBox>
                     <HBox class="status-wrap year-plan">
                         <Text text="{i18n>LABEL_20006}" class="type02" />
                         <Text text="{i18n>LABEL_20007}" class="type07" />
@@ -17,7 +19,7 @@
                     </HBox>
                 </HBox>
                 <grid:CSSGrid class="year-plan-grid" gridTemplateColumns="70px 70px repeat(31, 1fr)" gridGap="1px" items="{path: '/plans/grid'}">
-                    <custom:DayBox width="100%" click=".onClickDay">
+                    <custom:DayBox width="100%">
                         <custom:customData>
                             <core:CustomData key="day" value="{day}" />
                             <core:CustomData key="style" value="{classNames}" writeToDom="true" />

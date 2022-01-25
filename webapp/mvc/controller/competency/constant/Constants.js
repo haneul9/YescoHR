@@ -13,7 +13,7 @@ sap.ui.define(
       APPRAISER_TYPE: { ME: 'ME', MA: 'MA' },
       DISPLAY_TYPE: { EDIT: 'X', DISPLAY_ONLY: 'D', HIDE: 'H', HIDDEN_VALUE: 'V' },
       GOAL_TYPE: { COMMON: { code: '1', name: 'common' }, DUTY: { code: '2', name: 'duty' } },
-      PROCESS_TYPE: { LIST: { code: 'L', label: 'LABEL_00177' }, DETAIL: { code: 'D', label: 'LABEL_00165' }, SAVE: { code: 'T', label: 'LABEL_00103' }, SEND: { code: 'C', label: 'LABEL_00175' }, APPROVE: { code: 'P', label: 'LABEL_00123' }, REJECT: { code: 'R', label: 'LABEL_00124' }, CANCEL: { code: 'W', label: 'LABEL_00118' } },
+      PROCESS_TYPE: { LIST: { code: 'L', label: 'LABEL_00177' }, DETAIL: { code: 'D', label: 'LABEL_00165' }, SAVE: { code: 'T', label: 'LABEL_00103' }, SEND: { code: 'C', label: 'LABEL_00175' }, APPROVE: { code: 'P', label: 'LABEL_00123' }, REJECT: { code: 'R', label: 'LABEL_00124' }, CANCEL: { code: 'W', label: 'LABEL_00118' }, COMPLETE: { code: '', label: 'LABEL_00117' } },
 
       REJECT_PROPERTIES: ['Rjctr', 'Rjctrin'],
       SUMMARY_PROPERTIES: ['D1z200', 'D1fapp', 'D2z200', 'D2fapp', 'HZ200', 'HFapp', 'Z200r', 'Fappr', 'Z209'],
