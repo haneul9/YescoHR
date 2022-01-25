@@ -290,6 +290,11 @@ sap.ui.define(
             controller: this,
           });
 
+          this._oPlanDialog.attachBeforeOpen(() => {
+            this.getViewModel().setProperty('/plans/count', {});
+            this.getViewModel().setProperty('/plans/grid', []);
+          });
+
           oView.addDependent(this._oPlanDialog);
         }
 
