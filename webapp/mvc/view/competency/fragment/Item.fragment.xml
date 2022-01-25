@@ -44,7 +44,7 @@
                         <Label width="100%" text="{i18n>LABEL_10059}" vAlign="Top" />
                     </VBox>
                     <VBox>
-                        <TextArea width="100%" rows="5" value="{ElementQdesc}" enabled="false" />
+                        <TextArea width="100%" rows="3" value="{ElementQdesc}" enabled="false" />
                     </VBox>
                 </grid:CSSGrid>
             </content>

@@ -13,7 +13,7 @@ sap.ui.define(
       APPRAISER_TYPE: { ME: 'ME', MA: 'MA' },
       DISPLAY_TYPE: { EDIT: 'X', DISPLAY_ONLY: 'D', HIDE: 'H', HIDDEN_VALUE: 'V' },
       GOAL_TYPE: { COMMON: { code: '1', name: 'common' }, DUTY: { code: '2', name: 'duty' } },
-      PROCESS_TYPE: { LIST: { code: 'L', label: 'LABEL_00177' }, DETAIL: { code: 'D', label: 'LABEL_00165' }, SAVE: { code: 'T', label: 'LABEL_00103' }, SEND: { code: 'C', label: 'LABEL_00175' }, APPROVE: { code: 'P', label: 'LABEL_00123' }, REJECT: { code: 'R', label: 'LABEL_00124' }, CANCEL: { code: 'W', label: 'LABEL_00118' } },
+      PROCESS_TYPE: { LIST: { code: 'L', label: 'LABEL_00177' }, DETAIL: { code: 'D', label: 'LABEL_00165' }, SAVE: { code: 'T', label: 'LABEL_00103' }, SEND: { code: 'C', label: 'LABEL_00175' }, APPROVE: { code: 'P', label: 'LABEL_00123' }, REJECT: { code: 'R', label: 'LABEL_00124' }, CANCEL: { code: 'W', label: 'LABEL_00118' }, COMPLETE: { code: '', label: 'LABEL_00117' } },
 
       REJECT_PROPERTIES: ['Rjctr', 'Rjctrin'],
       SUMMARY_PROPERTIES: ['D1z200', 'D1fapp', 'D2z200', 'D2fapp', 'HZ200', 'HFapp', 'Z200r', 'Fappr', 'Z209'],
@@ -43,11 +43,11 @@ sap.ui.define(
         },
         4: {
           J: { Obj0: { ME: 'D' }, Z200: { MA: 'V' }, D1z200: { ME: 'D', MA: 'V' }, D2z200: { ME: 'D', MA: 'V' }, HZ200: { ME: 'D', MA: 'V' }, Z200r: { MA: 'V' }, Fapp: { MA: 'V' }, D1fapp: { MA: 'V' }, D2fapp: { MA: 'V' }, HFapp: { MA: 'V' }, Fappr: { MA: 'V' } },
-          L: { Fapp: { MA: 'V' }, D1fapp: { ME: 'D', MA: 'V' }, D2fapp: { ME: 'D', MA: 'V' }, HFapp: { ME: 'D', MA: 'V' }, Fappr: { MA: 'V' } },
-          O: { Fapp: { MA: 'V' }, D1fapp: { MA: 'V' }, D2fapp: { MA: 'V' }, HFapp: { MA: 'V' }, Fappr: { MA: 'V' } },
+          L: { Fapp: { ME: 'V' }, D1fapp: { ME: 'V', MA: 'D' }, D2fapp: { ME: 'V', MA: 'D' }, HFapp: { ME: 'V', MA: 'D' }, Fappr: { ME: 'V' } },
+          O: { Fapp: { ME: 'V' }, D1fapp: { ME: 'V' }, D2fapp: { ME: 'V' }, HFapp: { ME: 'V' }, Fappr: { ME: 'V' } },
         },
         5: {
-          X: { Z209: { MA: 'H' } },
+          X: { Z209: { ME: 'H' } },
         },
       },
 

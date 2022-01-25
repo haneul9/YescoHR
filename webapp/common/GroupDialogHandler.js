@@ -4,6 +4,7 @@ sap.ui.define(
     'sap/ui/base/Object',
     'sap/ui/model/json/JSONModel',
     'sap/ui/core/Fragment',
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -13,6 +14,7 @@ sap.ui.define(
     BaseObject,
     JSONModel,
     Fragment,
+    MessageBox,
     AppUtils,
     Client,
     ServiceNames
@@ -22,6 +24,7 @@ sap.ui.define(
     return BaseObject.extend('sap.ui.yesco.common.GroupDialogHandler', {
       oController: null,
       oGroupDialog: null,
+      oTable: null,
       fCallback: null,
 
       constructor: function (oController, fCallback) {
@@ -39,9 +42,11 @@ sap.ui.define(
           this.oGroupDialog
             .setModel(new JSONModel(this.getInitData()))
             .attachBeforeOpen(() => {
+              this.oTable = this.oGroupDialog.getContent()[1].getItems()[0];
               this.readDialogData();
             })
             .attachAfterClose(() => {
+              this.oTable.clearSelection();
               this.oGroupDialog.getModel().setData(this.getInitData());
             });
         }
@@ -85,7 +90,15 @@ sap.ui.define(
       },
 
       onPressSelectOrg() {
-        this.fCallback({ sPostcode, sFullAddr, sSido, sSigungu });
+        const aOrgList = this.oGroupDialog.getModel().getProperty('/orglist');
+        const aSelectedIndices = this.oTable.getSelectedIndices();
+
+        if (_.isEmpty(aSelectedIndices)) {
+          MessageBox.alert(this.oController.getBundleText('MSG_00054')); // 부서를 선택하세요.
+          return;
+        }
+
+        this.fCallback(_.map(aSelectedIndices, (v) => _.get(aOrgList, v)));
         this.oGroupDialog.close();
       },
 

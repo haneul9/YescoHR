@@ -63,13 +63,20 @@ sap.ui.define(
         this.setViewModel(oViewModel);
       },
 
-      async onObjectMatched() {
+      async onObjectMatched(mParameter) {
         const oViewModel = this.getViewModel();
 
         try {
           oViewModel.setProperty('/busy', true);
 
-          await this.setHolPlanSeqno();
+          if (!_.isEmpty(mParameter.Plnyy) && !_.isEmpty(mParameter.Seqno)) {
+            oViewModel.setProperty('/search/Plnyy', mParameter.Plnyy);
+            await this.setHolPlanSeqno();
+            oViewModel.setProperty('/search/Seqno', mParameter.Seqno);
+          } else {
+            await this.setHolPlanSeqno();
+          }
+
           this.onPressSearch();
         } catch (oError) {
           this.debug('Controller > leavePlan App > onObjectMatched Error', oError);
