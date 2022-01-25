@@ -384,18 +384,18 @@ sap.ui.define(
             AppraisalCoDocDetSet: [...aCommon, ...aDuty],
           });
 
-          // {저장|전송|승인|취소}되었습니다.
-          MessageBox.success(this.getBundleText('MSG_00007', label), {
+          // {저장|전송|승인|완료|취소}되었습니다.
+          await MessageBox.success(this.getBundleText('MSG_00007', label), {
             onClose: () => {
               if (!bIsSave) this.getRouter().navTo(sListRouteName);
+              oViewModel.setProperty('/busy', false);
             },
           });
         } catch (oError) {
           this.debug(`Controller > ${sListRouteName} Detail > createProcess Error`, oError);
 
-          AppUtils.handleError(oError);
-        } finally {
           oViewModel.setProperty('/busy', false);
+          AppUtils.handleError(oError);
         }
       },
 
@@ -462,7 +462,7 @@ sap.ui.define(
         const mProcessType = Constants.PROCESS_TYPE.CANCEL;
 
         MessageBox.confirm(this.getBundleText('MSG_00006', mProcessType.label), {
-          // {취소}하시겠습니까?
+          // {전송취소}하시겠습니까?
           onClose: (sAction) => {
             if (MessageBox.Action.CANCEL === sAction) return;
 
@@ -472,7 +472,16 @@ sap.ui.define(
       },
 
       onPressCancelComplButton() {
-        MessageBox.alert('Not ready yet.');
+        const mProcessType = Constants.PROCESS_TYPE.CANCEL_COMPLETE;
+
+        MessageBox.confirm(this.getBundleText('MSG_00006', mProcessType.label), {
+          // {확정취소}하시겠습니까?
+          onClose: (sAction) => {
+            if (MessageBox.Action.CANCEL === sAction) return;
+
+            this.createProcess(mProcessType);
+          },
+        });
       },
 
       onPressSaveButton() {
@@ -495,9 +504,18 @@ sap.ui.define(
       },
 
       onPressCompleteButton() {
+        const mProcessType = Constants.PROCESS_TYPE.COMPLETE;
+
         if (!this.validation()) return;
 
-        MessageBox.alert('Not ready yet.');
+        MessageBox.confirm(this.getBundleText('MSG_00006', mProcessType.label), {
+          // {완료}하시겠습니까?
+          onClose: (sAction) => {
+            if (MessageBox.Action.CANCEL === sAction) return;
+
+            this.createProcess(mProcessType);
+          },
+        });
       },
 
       /*****************************************************************
