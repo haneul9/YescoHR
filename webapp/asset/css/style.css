@@ -1172,10 +1172,12 @@ html.sap-desktop .sapMDialog>footer .sapContrast.sapMIBar.sapMFooter-CTX .sapMBt
 /* .employee-card-list li div[id*=__vbox1] > .sapMFlexItem{height:76px} */
 .employee-card-list li {position:relative; height:106px; margin:0 0 10px; border-radius:8px; padding:14px; background-color:#fff; border:1px solid #DBDBDB; box-shadow:1px 1px 3px rgb(0 0 0 / 0%)}
 .employee-card-list li .sapMFlexBox {display:flex; justify-content:flex-start; width:100%}
+.employee-card-list li .sapMFlexBox > .sapMFlexItem {display:flex;}
 .employee-card-list li .sapMImg {width:60px; height:auto}
 .employee-card-list-d{ padding-left:20px}
 .employee-card-list-d .sapMFlexBox > .sapMFlexItem:first-child .sapMLabel {margin-right:12px; color:#222; font-weight:700}
 .employee-card-list .employee-card-list-d .name {display:flex; justify-content:space-between; margin-bottom:8px; font-size:14px; color:#343A40; font-weight:700}
+.employee-card-list-d .sapMHBox  {margin-bottom:2px;}
 .employee-card-list-d .sapMFlexItem .sapMLabel {font-size:12px; font-weight:400; padding:0px 0}
 .employee-card-list-d .sapMFlexItem .sapMLabel.label{font-weight:700; margin-right:10px}
 .employee-card-list-d .sapMFlexItem.name .sapMText {font-size:19px; font-weight:700; margin-bottom:10px}
@@ -1218,7 +1220,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 
 .side-navigation { width: 0%; transition: width 0.5s; }
 .side-navigation.expanded { width: 27%; }
-.main-profile { max-width: 73%; transition: width 0.5s; }
+.main-profile { width: 73%; transition: width 0.5s; }
 .main-profile.expanded { width: 100%; }
 
 .lineItem-wrap:after {content:""; display:inline-block; height:2px; position:absolute; left:10%; right:10%; top:50%; background:linear-gradient(to right, #F5EC95, 50%, #70CF8D); z-index:1}
