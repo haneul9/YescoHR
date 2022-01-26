@@ -80,9 +80,9 @@
         <Label text="{i18n>LABEL_03002}"/>
         <table:template>
           <Text text="{
-                    path: '/FormData/Paymm',
-                    formatter: '.formatDate'
-                }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text" />
+              path: 'Paymm',
+              formatter: '.formatDate'
+          }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text" />
         </table:template>
       </table:Column>
       <table:Column width="60px">
