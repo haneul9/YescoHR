@@ -21,14 +21,23 @@ sap.ui.define(
       async getYearPlan(sYear = String(moment().year())) {
         const oViewModel = this.oController.getViewModel();
         const oModel = this.oController.getModel(ServiceNames.WORKTIME);
+        const sWerks = this.oController.getAppointeeProperty('Werks');
         const mPayLoad = {
-          Werks: this.oController.getAppointeeProperty('Werks'),
+          Werks: sWerks,
           Tmyea: sYear,
         };
 
         // 1년근태
         const aList1 = await Client.getEntitySet(oModel, 'PersonalTimeDashboard', mPayLoad);
+        // 근태유형 색상
+        const aTimeTypeList = await Client.getEntitySet(oModel, 'TimeTypeLegend', { Werks: sWerks });
 
+        oViewModel.setProperty(
+          '/TimeTypeList',
+          _.each(aTimeTypeList, (e) => {
+            e.classNames = e.Colty.toLowerCase();
+          })
+        );
         oViewModel.setProperty(
           '/yearPlan',
           _.each(aList1, (e) => {
@@ -119,21 +128,14 @@ sap.ui.define(
           sBorderNames = 'Today';
         }
 
-        // oScheduleData.forEach((e) => {
-        //   if (e.FullDate === sFormatDate) {
-        //     sClassNames = oScheduleData[sFormatDate].type;
-        //     // sStripes = oScheduleData[sFormatDate].inProgress;
-        //   }
-        // });
+        const oDateObject = _.filter(oScheduleData, (e) => {
+          return e.FullDate === sFormatDate;
+        });
 
-        // if (
-        //   oScheduleData.some((e) => {
-        //     return e.FullDate === sFormatDate;
-        //   })
-        // ) {
-        //   sClassNames = oScheduleData[sFormatDate].type;
-        //   sStripes = oScheduleData[sFormatDate].inProgress;
-        // }
+        if (!_.isEmpty(oDateObject[0].Colty)) {
+          sClassNames = oDateObject[0].Colty;
+        }
+        // sStripes = oDateObject[0].inProgress;
 
         return this.getBoxObject({ day: sFormatDate, label: String(iDay), classNames: sClassNames, borderNames: sBorderNames, stripes: sStripes });
       },

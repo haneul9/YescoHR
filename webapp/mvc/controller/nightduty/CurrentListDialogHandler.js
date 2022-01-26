@@ -56,7 +56,7 @@ sap.ui.define(
         };
       },
 
-      async openDialog(aPernrList) {
+      async openDialog(aPernrList = []) {
         if (!this.oCurrentListDialog) {
           const oView = this.oController.getView();
 
@@ -125,11 +125,13 @@ sap.ui.define(
 
         const oModel = this.oController.getModel(ServiceNames.WORKTIME);
         const mFilters = {
-          Pernr: aPernrList, // prettier 방지용 주석
-          Begmm: sYearMonth,
+          Begmm: sYearMonth, // prettier 방지용 주석
           Endmm: sYearMonth,
           Ocshf: sSelectedDutyGroup,
         };
+        if (aPernrList.length) {
+          mFilters.Pernr = aPernrList;
+        }
 
         return Client.getEntitySet(oModel, 'OnCallList', mFilters);
       },

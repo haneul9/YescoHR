@@ -402,9 +402,10 @@ sap.ui.define(
       onPressAddData(oEvent) {
         const oViewModel = this.getViewModel();
         const aSelectedData = oViewModel.getProperty('/dialog/selectedData');
-        const aList = [
-          ...oViewModel.getProperty('/form/list'),
-          ...aSelectedData.map((o) => ({
+        const aList = oViewModel.getProperty('/form/list');
+
+        _.map(aSelectedData, (o) =>
+          aList.push({
             Datum: o.Datum,
             Kurzt: o.Kurzt,
             Tagty: o.Tagty,
@@ -412,11 +413,10 @@ sap.ui.define(
             EnameB: o.Ename,
             OrgtxB: o.Orgtx,
             ZzjikgbtB: o.Zzjikgbt,
-          })),
-        ];
+          })
+        );
 
         oViewModel.setProperty('/form/rowCount', aList.length);
-        oViewModel.setProperty('/form/list', aList);
         oViewModel.setProperty('/dialog/selectedData', []);
 
         this.toggleHasRowProperty();
@@ -426,7 +426,7 @@ sap.ui.define(
       onPressSummaryDialogClose(oEvent) {
         AppUtils.setAppBusy(false, this);
 
-        oEvent.getSource().getParent().getContent()[1].clearSelection();
+        oEvent.getSource().getParent().getContent()[1].getItems()[0].clearSelection();
         this.byId('summaryDialog').close();
       },
 
