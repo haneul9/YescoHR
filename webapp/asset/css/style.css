@@ -1243,9 +1243,10 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .sapMPanelExpandableIconExpanded {transform:translateY(0%) rotate(-90deg)}
 
 /* 평가 */
-.per-status {position:relative; display:flex; justify-content:space-between; margin-left:30px!important;margin-right:30px!important; z-index:2}
+.per-status {position:relative; display:flex; justify-content:space-between; padding-left:30px!important;xmargin-right:0px!important; z-index:2}
+.sapMIBar.sapMTB .per-status.sapMBarChild:last-child:only-child { margin-right:0px!important;}
 .per-status .sapMFlexItem {position:relative; flex:1; z-index:2}
-.per-status > .sapMFlexItem:last-child {flex: inherit;width:110px;}
+.per-status > .sapMFlexItem:last-child {flex: inherit;width:138px;}
 .per-status .sapMVBox .sapMFlexItem + .sapMFlexItem:after {content:""; display:inline-block; height:2px; position:absolute; left:0%; right:0%; top:calc(50% - 1px); background:#CCCCCC; z-index:-1}
 .sapMIBar.sapMTB .per-status.sapMBarChild:only-child {padding-left:0rem; padding-right:0}
 .per-status .sapMVBox.on .sapMFlexItem + .sapMFlexItem:after {background:#66B0F0}
@@ -1261,9 +1262,9 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .per-status .sapMFlexBox:nth-child(3) .sapUiIcon:after {background-image:url(../image/icon_per_status_03.png)}
 .per-status .sapMFlexBox:nth-child(4) .sapUiIcon:after {background-image:url(../image/icon_per_status_04.png)}
 .per-status .sapMFlexBox:nth-child(5) .sapUiIcon:after {background-image:url(../image/icon_per_status_05.png)}
-.per-status-d {display:flex; justify-content:space-between; padding-left:97px}
-.per-status-d .sapMVBox {margin-left:10px; flex:1}
-.per-status-d > .sapMVBox:last-child {margin-right: 18px!important;min-width: 35px;flex: inherit;width:110px;}
+.per-status-d {display:flex; justify-content:space-between; padding-left:95px}
+.per-status-d .sapMVBox {padding-left:10px; flex:1}
+.per-status-d > .sapMVBox:last-child {margin-right: 0!important;min-width: 35px;flex: inherit;width:138px;}
 .per-status-d .sapMVBox .sapMFlexItem {margin-bottom:8px}
 .per-status-d .sapMVBox .sapMFlexItem:last-child {margin-bottom:0px}
 .per-status-d .sapUiIcon {margin-right:10px; margin-top:2px}
