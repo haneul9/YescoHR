@@ -6,11 +6,7 @@
                 <FlexItemData growFactor="1"/>
             </layoutData>
             <items>
-                <IconTabFilter text="{Menu1}" key="{Menuc1}">
-                    <customData>
-                        <core:CustomData key="mid" value="{Menuc1}" />
-                    </customData>
-                </IconTabFilter>
+                <IconTabFilter text="{Menu1}" key="{Menuc1}" />
             </items>
         </IconTabBar>
     </HBox>
