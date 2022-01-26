@@ -116,6 +116,9 @@
         { "pattern": "h/clubJoin", "name": "h/clubJoin", "target": "h/clubJoin" },
         { "pattern": "h/clubJoin/{oDataKey}", "name": "h/clubJoin-detail", "target": "clubJoinDetail" },
 
+        { "pattern": "carMaintainCost", "name": "carMaintainCost", "target": "carMaintainCost" },
+        { "pattern": "carMaintainCost/{oDataKey}", "name": "carMaintainCost-detail", "target": "carMaintainCostDetail" },
+
         { "pattern": "familyInfo", "name": "familyInfo", "target": "familyInfo" },
         { "pattern": "familyInfo/{oDataKey}", "name": "familyInfo-detail", "target": "familyInfoDetail" },
 
@@ -214,6 +217,9 @@
         "clubJoin": { "viewId": "clubJoin", "viewPath": "sap.ui.yesco.mvc.view.clubJoin", "viewName": "ClubJoin" },
         "h/clubJoin": { "viewId": "h_clubJoin", "viewPath": "sap.ui.yesco.mvc.view.clubJoin", "viewName": "ClubJoinHass" },
         "clubJoinDetail": { "viewId": "clubJoinDetail", "viewPath": "sap.ui.yesco.mvc.view.clubJoin", "viewName": "ClubJoinDetail" },
+
+        "carMaintainCost": { "viewId": "carMaintainCost", "viewPath": "sap.ui.yesco.mvc.view.carMaintainCost", "viewName": "CarMaintainCost" },
+        "carMaintainCostDetail": { "viewId": "carMaintainCostDetail", "viewPath": "sap.ui.yesco.mvc.view.carMaintainCost", "viewName": "CarMaintainCostDetail" },
 
         "familyInfo": { "viewId": "familyInfo", "viewPath": "sap.ui.yesco.mvc.view.familyInfo", "viewName": "FamilyInfo" },
         "familyInfoDetail": { "viewId": "familyInfoDetail", "viewPath": "sap.ui.yesco.mvc.view.familyInfo", "viewName": "FamilyInfoDetail" },
