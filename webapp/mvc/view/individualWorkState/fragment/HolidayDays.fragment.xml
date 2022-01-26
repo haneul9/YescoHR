@@ -9,8 +9,8 @@
         <Text text="{/FullYear}" class="desc-txt" />
       </HBox>
     </HBox>
-    <HBox height="160px">
-      <microchart:InteractiveDonutChart class="w-85 microchart" selectionEnabled="false">
+    <HBox height="176px">
+      <microchart:InteractiveDonutChart class="w-90 microchart" selectionEnabled="false">
         <microchart:layoutData>
           <FlexItemData growFactor="0.8"/>
         </microchart:layoutData>
@@ -20,7 +20,7 @@
           <microchart:InteractiveDonutChartSegment label="{i18n>LABEL_18004}" value="{/vacationChart/pUnPlan}" displayedValue="{/vacationChart/dUnPlan}{i18n>LABEL_00254}" />
         </microchart:segments>
       </microchart:InteractiveDonutChart>
-      <grid:CSSGrid gridTemplateColumns="1fr" gridGap="28px 20px" class="pt-17-px">
+      <grid:CSSGrid gridTemplateColumns="1fr" gridGap="28px 20px" class="pt-24-px">
         <Text text="{/vacationChart/pUsed}%"/>
         <Text text="{/vacationChart/pPlan}%"/>
         <Text text="{/vacationChart/pUnPlan}%"/>
