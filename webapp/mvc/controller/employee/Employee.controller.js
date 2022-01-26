@@ -337,7 +337,7 @@ sap.ui.define(
           aTabMenus.forEach((data) => {
             this.debug(`Tab ${data.Menu1}`, data);
 
-            _.set(oViewModelData, ['employee', 'sub', data.Menuc1], { isShow: data.Pressed, contents: {} });
+            _.set(oViewModelData, ['employee', 'sub', data.Menuc1], { contents: {} });
 
             aHeaderRequests.push(this.readOdata({ sUrl: '/EmpProfileHeaderTabSet', mFilters: { Menuc: data.Menuc1, ...mFilters } }));
             aContentRequests.push(this.readOdata({ sUrl: '/EmpProfileContentsTabSet', mFilters: { Menuc: data.Menuc1, ...mFilters } }));
@@ -402,17 +402,19 @@ sap.ui.define(
       makeProfileBody() {
         const oViewModel = this.getViewModel();
         const oParentBox = this.byId('profileBody');
+        const aProfileTabItems = this.byId('profileTabBar').getItems();
         const aSubMenu = oViewModel.getProperty('/employee/sub');
 
         Object.keys(aSubMenu).forEach((menuKey) => {
           const aSubMenuContents = _.get(aSubMenu, [menuKey, 'contents']);
+          const oTabContainer = _.find(aProfileTabItems, (o) => _.isEqual(o.getProperty('key'), menuKey));
           let oWrapperVBox = sap.ui.getCore().byId(`sub${menuKey}`);
 
           if (oWrapperVBox) {
             oWrapperVBox.destroyItems();
             oParentBox.removeItem(oWrapperVBox);
           } else {
-            oWrapperVBox = new sap.m.VBox({ id: `sub${menuKey}`, visible: { path: `/employee/sub/${menuKey}/isShow` } });
+            oWrapperVBox = new sap.m.VBox({ id: `sub${menuKey}`, visible: true });
           }
 
           /**
@@ -493,13 +495,18 @@ sap.ui.define(
                 oCSSGrid.addItem(new sap.m.Input({ value: mMenu.data[index], editable: false }));
               });
 
+              if (mMenu.header.length % 2 === 1) {
+                oCSSGrid.addItem(new sap.m.Label({ text: '' }));
+                oCSSGrid.addItem(new sap.m.Input({ value: '', editable: false }));
+              }
+
               oSubVBox.addItem(oCSSGrid);
             }
 
             oWrapperVBox.addItem(oSubVBox);
           });
 
-          oParentBox.addItem(oWrapperVBox);
+          oTabContainer.addContent(oWrapperVBox);
         });
       },
 
@@ -745,20 +752,6 @@ sap.ui.define(
 
           this.loadProfile({ oViewModel, sPernr });
         }
-      },
-
-      onToggleTab(oEvent) {
-        const oViewModel = this.getView().getModel();
-        const aSubTabs = oViewModel.getProperty('/employee/sub');
-        const sSelectedKey = oEvent.getParameter('key');
-
-        Object.keys(aSubTabs).forEach((subId) => {
-          if (subId === sSelectedKey) {
-            oViewModel.setProperty(`/employee/sub/${subId}/isShow`, true);
-          } else {
-            oViewModel.setProperty(`/employee/sub/${subId}/isShow`, false);
-          }
-        });
       },
 
       onPressRegTable(oEvent) {
