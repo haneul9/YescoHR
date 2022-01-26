@@ -404,7 +404,9 @@ sap.ui.define(
         const aSelectedData = oViewModel.getProperty('/dialog/selectedData');
         const aList = oViewModel.getProperty('/form/list');
 
-        _.map(aSelectedData, (o) =>
+        oViewModel.setProperty('/form/list', []);
+
+        _.forEach(aSelectedData, (o) =>
           aList.push({
             Datum: o.Datum,
             Kurzt: o.Kurzt,
@@ -416,7 +418,12 @@ sap.ui.define(
           })
         );
 
+        if (aList.length === 2) {
+          _.chain(aList[1]).set('PernrA', aList[0].PernrB).set('EnameA', aList[0].EnameB).set('OrgtxA', aList[0].OrgtxB).set('ZzjikgbtA', aList[0].ZzjikgbtB).commit();
+        }
+
         oViewModel.setProperty('/form/rowCount', aList.length);
+        oViewModel.setProperty('/form/list', aList);
         oViewModel.setProperty('/dialog/selectedData', []);
 
         this.toggleHasRowProperty();
