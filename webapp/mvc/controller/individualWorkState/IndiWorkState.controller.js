@@ -209,8 +209,10 @@ sap.ui.define(
             aAddNum.push({ ...e, No: i + 1 });
           });
 
+          const iLength = aDailyList.length;
+
           oViewModel.setProperty('/DailyWorkList', aAddNum);
-          oViewModel.setProperty('/DailyWorkCount', aDailyList.length);
+          oViewModel.setProperty('/DailyWorkCount', iLength > 10 ? 10 : iLength);
         } catch (oError) {
           this.debug(oError);
           AppUtils.handleError(oError);
