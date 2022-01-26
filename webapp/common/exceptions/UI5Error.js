@@ -16,6 +16,7 @@ sap.ui.define(
     return BaseObject.extend('sap.ui.yesco.common.exceptions.UI5Error', {
       LEVEL: {
         INFORMATION: 'I',
+        ALERT: 'A',
         WARNING: 'W',
         ERROR: 'E',
       },
@@ -26,7 +27,8 @@ sap.ui.define(
        */
       constructor: function ({ code = this.LEVEL.ERROR, message }) {
         this.MESSAGE_LEVEL = {
-          INFORMATION: [this.LEVEL.INFORMATION, this.LEVEL.WARNING, this.LEVEL.ERROR],
+          INFORMATION: [this.LEVEL.INFORMATION, this.LEVEL.ALERT, this.LEVEL.WARNING, this.LEVEL.ERROR],
+          ALERT: [this.LEVEL.ALERT, this.LEVEL.WARNING, this.LEVEL.ERROR],
           WARNING: [this.LEVEL.WARNING, this.LEVEL.ERROR],
           ERROR: [this.LEVEL.ERROR],
         };
@@ -52,6 +54,9 @@ sap.ui.define(
           switch (sCode) {
             case this.LEVEL.INFORMATION:
               MessageBox.information(sMessage, { ...mOptions });
+              break;
+            case this.LEVEL.ALERT:
+              MessageBox.alert(sMessage, { ...mOptions });
               break;
             case this.LEVEL.WARNING:
               MessageBox.warning(sMessage, { ...mOptions });

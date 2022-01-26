@@ -2,23 +2,23 @@
   xmlns="sap.suite.ui.microchart"
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:mvc="sap.ui.core.mvc">
-  <grid:CSSGrid width="675px" gridTemplateColumns="1fr 1fr 1fr" gridTemplateRows="110px 156px" gridGap="0" class="sampleUi">
+  <grid:CSSGrid width="675px" gridTemplateColumns="1fr 1fr 1fr" gridTemplateRows="110px 156px" gridGap="0">
     <grid:items>
-      <InteractiveDonutChart selectionChanged="onSelectionChanged">
+      <InteractiveDonutChart selectionChanged="onSelectionChanged" class="sampleUi">
         <segments>
           <InteractiveDonutChartSegment label="발생" value="20" displayedValue="20개"/>
           <InteractiveDonutChartSegment label="사용" value="4" displayedValue="4개"/>
           <InteractiveDonutChartSegment label="현황" value="16" displayedValue="16개"/>
         </segments>
       </InteractiveDonutChart>
-      <InteractiveDonutChart selectionChanged="onSelectionChanged">
+      <InteractiveDonutChart selectionChanged="onSelectionChanged" class="sampleUi">
         <segments>
           <InteractiveDonutChartSegment label="발생" value="20" displayedValue="20개"/>
           <InteractiveDonutChartSegment label="사용" value="4" displayedValue="4개"/>
           <InteractiveDonutChartSegment label="현황" value="16" displayedValue="16개"/>
         </segments>
       </InteractiveDonutChart>
-      <InteractiveDonutChart selectionChanged="onSelectionChanged">
+      <InteractiveDonutChart selectionChanged="onSelectionChanged" class="sampleUi">
         <segments>
           <InteractiveDonutChartSegment label="발생" value="20" displayedValue="20개"/>
           <InteractiveDonutChartSegment label="사용" value="4" displayedValue="4개"/>
