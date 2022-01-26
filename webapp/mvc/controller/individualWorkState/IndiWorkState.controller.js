@@ -49,6 +49,7 @@ sap.ui.define(
             Ottime: 0,
             WorkTime: 0,
           },
+          TimeTypeList: [],
           DailyWorkList: [],
           DailyWorkCount: 1,
           yearPlan: [],
@@ -103,11 +104,6 @@ sap.ui.define(
           this.setMonth();
           this.formYear();
 
-          const oModel = this.getModel(ServiceNames.WORKTIME);
-
-          // 근태유형 색상
-          const aList1 = await Client.getEntitySet(oModel, 'TimeTypeLegend', { Werks: this.getAppointeeProperty('Werks') });
-
           this.YearPlanBoxHandler.getYearPlan();
 
           const sWerks = this.getAppointeeProperty('Werks');
@@ -119,6 +115,7 @@ sap.ui.define(
             Tmyea: sYear,
           };
 
+          const oModel = this.getModel(ServiceNames.WORKTIME);
           const aPlanList = await Client.getEntitySet(oModel, 'LeavePlan', mPayLoad);
 
           oViewModel.setProperty('/vacationChart', {

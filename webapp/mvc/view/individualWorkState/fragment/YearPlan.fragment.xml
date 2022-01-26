@@ -31,8 +31,13 @@
         </Text>
       </custom:DayBox>
     </grid:CSSGrid>
-    <HBox class="status-wrap year-plan">
-      <Text text="{i18n>LABEL_04015}" class="type01" />
+    <HBox class="status-wrap year-plan" items="{/TimeTypeList}">
+      <Text text="{Coltytx}" class="{classNames}"/>
+      <!-- <customData>
+          <core:CustomData key="style" value="{Colty}" writeToDom="true" />
+        </customData>
+      </Text> -->
+      <!-- <Text text="{i18n>LABEL_04015}" class="type01" />
       <Text text="{i18n>LABEL_04007}" class="type02" />
       <Text text="{i18n>LABEL_18028}" class="type03" />
       <Text text="{i18n>LABEL_18027}" class="type04" />
@@ -46,7 +51,7 @@
       <Text text="{i18n>LABEL_00181}" class="type12" />
       <Text text="{i18n>LABEL_00189}" class="type13" />
       <Text text="{i18n>LABEL_18022}" class="type14" />
-      <Text text="{i18n>LABEL_00180}" class="type15" />
+      <Text text="{i18n>LABEL_00180}" class="type15" /> -->
     </HBox>
   </VBox>
 </core:FragmentDefinition>
