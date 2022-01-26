@@ -3,8 +3,8 @@
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
   <m:Dialog title="{i18n>MSG_06004}" busy="{busy}" busyIndicatorDelay="0" contentWidth="1000px" contentHeight="400px" draggable="true">
-    <m:HBox justifyContent="SpaceBetween">
-      <m:HBox>
+    <m:HBox justifyContent="SpaceBetween" alignItems="Center" class="hCardBox sapUiSmallMarginBottom">
+      <m:HBox class="form-bar" alignItems="Center">
         <m:Label text="{i18n>MSG_06005}" />
         <custom:DatePicker value="{ path: 'yearMonth', type: 'sap.ui.yesco.mvc.model.type.Month' }" />
         <m:Label text="{i18n>MSG_06006}" />
