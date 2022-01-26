@@ -21,8 +21,8 @@
         </microchart:segments>
       </microchart:InteractiveDonutChart>
       <grid:CSSGrid gridTemplateColumns="1fr" gridGap="18px 20px" class="pt-10-px">
+        <Text text="{/vacationChart/pUsed}%"/>
         <Text text="{/vacationChart/pPlan}%"/>
-        <Text text="{/vacationChart/pUnPlan}%"/>
         <Text text="{/vacationChart/pUnPlan}%"/>
       </grid:CSSGrid>
     </HBox>
