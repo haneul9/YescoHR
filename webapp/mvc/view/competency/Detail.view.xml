@@ -149,13 +149,10 @@
 									</HBox>
 								</HBox>
 								<VBox>
-									<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="1fr 7fr">
-										<VBox>
-											<Label width="100%" text="{i18n>LABEL_10056}" vAlign="Top"/>
-										</VBox>
+									<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="1fr">
 										<VBox>
 											<TextArea width="100%" rows="5" value="" enabled="false" visible="{= ${/fieldControl/display/Z209} === 'V' }" />
-											<TextArea width="100%" class="required" rows="5" value="{/summary/Z209}" maxLength="{/fieldControl/limit/Z209}" enabled="{= ${/fieldControl/display/Z209} === 'X' }" visible="{= ${/fieldControl/display/Z209} !== 'V' }" />
+											<TextArea width="100%" rows="5" value="{/summary/Z209}" maxLength="{/fieldControl/limit/Z209}" enabled="{= ${/fieldControl/display/Z209} === 'X' }" visible="{= ${/fieldControl/display/Z209} !== 'V' }" />
 										</VBox>
 									</grid:CSSGrid>
 								</VBox>

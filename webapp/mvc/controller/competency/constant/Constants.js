@@ -25,7 +25,6 @@ sap.ui.define(
         { field: 'Fapp', label: 'LABEL_10058', type: Validator.SELECT1 }, // 팀장진단
         { field: 'Z200r', label: 'LABEL_10053', type: Validator.INPUT1 }, // 역량진단 의견
         { field: 'Fappr', label: 'LABEL_10053', type: Validator.INPUT1 }, // 역량진단 의견
-        { field: 'Z209', label: 'LABEL_10010', type: Validator.INPUT2 }, // 상시관리
       ],
 
       // ABAP <-> WEB Mapping fields
@@ -42,7 +41,7 @@ sap.ui.define(
           E: {},
         },
         4: {
-          J: { Obj0: { ME: 'D' }, Z200: { MA: 'V' }, D1z200: { ME: 'D', MA: 'V' }, D2z200: { ME: 'D', MA: 'V' }, HZ200: { ME: 'D', MA: 'V' }, Z200r: { MA: 'V' }, Fapp: { MA: 'V' }, D1fapp: { MA: 'V' }, D2fapp: { MA: 'V' }, HFapp: { MA: 'V' }, Fappr: { MA: 'V' } },
+          J: { Obj0: { ME: 'D' }, Z200: { MA: 'V' }, D1z200: { ME: 'D', MA: 'V' }, D2z200: { ME: 'D', MA: 'V' }, HZ200: { ME: 'D', MA: 'V' }, Z200r: { MA: 'V' }, Fapp: { ME: 'V' }, D1fapp: { ME: 'V' }, D2fapp: { ME: 'V' }, HFapp: { ME: 'V' }, Fappr: { ME: 'V' } },
           L: { Fapp: { ME: 'V' }, D1fapp: { ME: 'V', MA: 'D' }, D2fapp: { ME: 'V', MA: 'D' }, HFapp: { ME: 'V', MA: 'D' }, Fappr: { ME: 'V' } },
           O: { Fapp: { ME: 'V' }, D1fapp: { ME: 'V' }, D2fapp: { ME: 'V' }, HFapp: { ME: 'V' }, Fappr: { ME: 'V' } },
         },

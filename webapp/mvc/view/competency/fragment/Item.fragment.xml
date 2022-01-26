@@ -11,7 +11,9 @@
                         </VBox>
                         <Label text="{i18n>LABEL_10057}" visible="{= ${/fieldControl/display/Z200} !== 'H' }" />
                         <HBox visible="{= ${/fieldControl/display/Z200} !== 'H' }">
-                            <Input width="100%" value="" enabled="false" visible="{= ${/fieldControl/display/Z200} === 'V' }" />
+                            <ComboBox width="100%" selectedKey="" enabled="false" items="{ path: '/entry/levels', templateShareable: true }" visible="{= ${/fieldControl/display/Z200} === 'V' }">
+                                <core:Item key="{ValueEid}" text="{ValueText}" />
+                            </ComboBox>
                             <ComboBox width="100%" class="required" selectedKey="{Z200}" items="{ path: '/entry/levels', templateShareable: true }" enabled="{= ${/fieldControl/display/Z200} === 'X' }" visible="{= ${/fieldControl/display/Z200} !== 'V' }" change=".onChangeScore">
                                 <customData>
                                     <core:CustomData key="sRoot" value="{= ${Zvbgubun}  === '1' ? 'common' : 'duty' }" />
@@ -24,7 +26,9 @@
                         </HBox>
                         <Label text="{i18n>LABEL_10058}" visible="{= ${/fieldControl/display/Fapp} !== 'H' }" />
                         <HBox visible="{= ${/fieldControl/display/Fapp} !== 'H' }">
-                            <Input width="100%" value="" enabled="false" visible="{= ${/fieldControl/display/Fapp} === 'V' }" />
+                            <ComboBox width="100%" selectedKey="" enabled="false" items="{ path: '/entry/levels', templateShareable: true }" visible="{= ${/fieldControl/display/Fapp} === 'V' }">
+                                <core:Item key="{ValueEid}" text="{ValueText}" />
+                            </ComboBox>
                             <ComboBox width="100%" class="required" selectedKey="{Fapp}" items="{ path: '/entry/levels', templateShareable: true }" enabled="{= ${/fieldControl/display/Fapp} === 'X' }" visible="{= ${/fieldControl/display/Fapp} !== 'V' }" change=".onChangeScore">
                                 <customData>
                                     <core:CustomData key="sRoot" value="{= ${Zvbgubun}  === '1' ? 'common' : 'duty' }" />
