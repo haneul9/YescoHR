@@ -203,6 +203,12 @@ sap.ui.define(
 
                 const oTargetData = oData.results[0];
 
+                _.each(oDetailModel.getProperty('/AppTarget'), (e) => {
+                  if (e.Zname === oTargetData.Zname) {
+                    oTargetData.Zzobjps = e.Zzobjps;
+                  }
+                });
+
                 oDetailModel.setProperty('/FormData', oTargetData);
                 oDetailModel.setProperty('/ApplyInfo', oTargetData);
                 oDetailModel.setProperty('/ApprovalDetails', oTargetData);

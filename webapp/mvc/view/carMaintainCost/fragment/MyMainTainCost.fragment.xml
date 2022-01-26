@@ -3,7 +3,7 @@
     <VBox class="hCardBox summary-box" width="33%" busyIndicatorDelay="0" busy="{/busy}">
         <VBox>
             <HBox justifyContent="SpaceBetween" class="title">
-                <Title level="H2" text="{i18n>LABEL_09002}" />
+                <Title level="H2" text="{i18n>LABEL_25002}" />
             </HBox>
             <Text text="{
                 path: '/Total/Zyear',
@@ -11,15 +11,15 @@
             }" class="sapUiSmallMarginBottom" />
             <HBox>
                 <VBox width="40%" class="summary-info">
-                    <Label design="Bold" text="{i18n>LABEL_02003}" />
+                    <Label design="Bold" text="{i18n>LABEL_09009}" />
                     <ObjectStatus text="{
-                        path: '/Total/Count',
+                        path: '/Total/Betrg',
                         formatter: '.formatPay'
                     }" state="Indication05" />
                 </VBox>
                 <VBox class="summary-info">
-                    <Label design="Bold" text="{i18n>LABEL_09003}" />
-                    <ObjectStatus text="{/Total/Apbet}" state="Indication01" />
+                    <Label design="Bold" text="{i18n>LABEL_25003}" />
+                    <ObjectStatus text="{/Total/Carno}" state="Indication01" />
                 </VBox>
             </HBox>
         </VBox>

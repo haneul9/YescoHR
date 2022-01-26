@@ -15,7 +15,7 @@
                     <core:Item text="{Znametx}" key="{Zzobjps}" />
                 </ComboBox>
             </VBox>
-            <Label text="{i18n>LABEL_03013}" />
+            <Label text="{i18n>LABEL_03013}" width="200px" />
             <VBox>
                 <Text text="{/FormData/Cnttx}"/>
             </VBox>
@@ -41,9 +41,10 @@
             </HBox>
             <Label text="{i18n>LABEL_03017}"/>
             <VBox>
-                <ComboBox change=".onYearsSelect" items="{/FundsYears}" selectedKey="{/FormData/Zyear}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+                <ComboBox change=".onYearsSelect" items="{/FundsYears}" selectedKey="{/FormData/Zyear}" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
+                <Text text="{/FormData/Zyear}" visible="{= ${/FormData/ZappStatAl} !== '10' &amp;&amp; !!${/FormData/ZappStatAl} }"/>
             </VBox>
             <Label text="{i18n>LABEL_03018}"/>
             <VBox>
@@ -93,7 +94,7 @@
                 type: 'sap.ui.yesco.mvc.model.type.Currency'
             }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             </VBox>
-            <Label text="{i18n>LABEL_03024}" width="190px" />
+            <Label text="{i18n>LABEL_03024}" />
             <VBox>
                 <Text text="{
                 path: '/FormData/ZbetTotl',
