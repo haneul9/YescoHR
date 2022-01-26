@@ -6,13 +6,13 @@
     <m:HBox justifyContent="SpaceBetween" alignItems="Center" class="hCardBox sapUiSmallMarginBottom">
       <m:HBox class="form-bar" alignItems="Center">
         <m:Label text="{i18n>MSG_06005}" />
-        <custom:DatePicker value="{ path: 'yearMonth', type: 'sap.ui.yesco.mvc.model.type.Month' }" />
+        <custom:DatePicker value="{ path: 'yearMonth', type: 'sap.ui.yesco.mvc.model.type.Month' }" change=".onChangeYearMonth" />
         <m:Label text="{i18n>MSG_06006}" />
-        <m:ComboBox items="{dutyGroups}" selectedKey="{selectedDutyGroup}">
+        <m:ComboBox items="{dutyGroups}" selectedKey="{selectedDutyGroup}" change=".onChangeDutyGroup" selectionChange=".onChangeDutyGroup">
           <core:Item key="{code}" text="{text}" />
         </m:ComboBox>
       </m:HBox>
-      <m:Button type="Transparent" class="icon-button search" press=".onPressCurrentListSearch" />
+      <m:Button type="Transparent" class="icon-button search" press=".onPressCurrentListSearch" visible="false" />
     </m:HBox>
     <Table id="currentListTable" class="row-link" width="100%" columnHeaderHeight="45" rowHeight="44" selectionMode="{currentListMode}" rows="{currentList}" visibleRowCount="{currentListRowCount}" busy="{busy}" busyIndicatorDelay="0" noData="{i18n>MSG_00001}" rowSelectionChange=".onChangeRowSelection">
       <columns>

@@ -52,7 +52,6 @@ sap.ui.define(
           ZappStatAl: null,
           form: {
             hasRow: false,
-            suggestCompleted: false,
             rowCount: 1,
             listMode: 'MultiToggle',
             Chgrsn: '',
@@ -333,53 +332,42 @@ sap.ui.define(
       },
 
       onSelectSuggest(oEvent) {
-        const oViewModel = this.getViewModel();
-        const oSelectedItem = oEvent.getParameter('selectedItem');
-        const sRowPath = oEvent.getSource()?.getParent()?.getBindingContext()?.getPath();
-        let mEmployee = { Pernr: '', Ename: '', Fulln: '', Zzjikgbt: '' };
+        const oInput = oEvent.getSource();
+        const oSelectedSuggestionRow = oEvent.getParameter('selectedRow');
+        if (oSelectedSuggestionRow) {
+          const oContext = oSelectedSuggestionRow.getBindingContext();
+          oInput.setValue(oContext.getProperty('Pernr'));
 
-        if (!_.isEmpty(oSelectedItem) && !_.isEmpty(sRowPath)) {
-          const sSelectedPernr = oEvent.getParameter('selectedItem')?.getKey() ?? 'None';
-          const aEmployees = oViewModel.getProperty('/form/employees');
-
-          mEmployee = _.find(aEmployees, { Pernr: sSelectedPernr }) ?? { Pernr: '', Ename: '', Fulln: '', Zzjikgbt: '' };
-
-          oViewModel.setProperty('/form/suggestCompleted', true);
-          oViewModel.setProperty(`${sRowPath}/PernrA`, ''); // 오작동 방지 초기화
-          oViewModel.setProperty(sRowPath, {
-            ...oViewModel.getProperty(sRowPath),
-            PernrA: mEmployee.Pernr,
-            EnameA: mEmployee.Ename,
-            OrgtxA: mEmployee.Fulln,
-            ZzjikgbtA: mEmployee.Zzjikgbt,
-          });
-          oViewModel.refresh();
+          const sRowPath = oInput.getParent().getBindingContext().getPath();
+          const oViewModel = this.getViewModel();
+          oViewModel.setProperty(`${sRowPath}/EnameA`, oContext.getProperty('Ename'));
+          oViewModel.setProperty(`${sRowPath}/OrgtxA`, oContext.getProperty('Fulln'));
+          oViewModel.setProperty(`${sRowPath}/ZzjikgbtA`, oContext.getProperty('Zzjikgbt'));
         }
+        oInput.getBinding('suggestionRows').filter([]);
       },
 
       onSubmitSuggest(oEvent) {
         const oViewModel = this.getViewModel();
-        const sInputValue = oEvent.getParameter('value');
-        const bSuggestCompleted = oViewModel.getProperty('/form/suggestCompleted');
+        const oInput = oEvent.getSource();
+        const oContext = oInput.getParent().getBindingContext();
+        const sRowPath = oContext.getPath();
 
-        if (bSuggestCompleted) {
-          oViewModel.setProperty('/form/suggestCompleted', false);
+        const sInputValue = oEvent.getParameter('value');
+        if (!sInputValue) {
+          oViewModel.setProperty(`${sRowPath}/EnameA`, '');
+          oViewModel.setProperty(`${sRowPath}/OrgtxA`, '');
+          oViewModel.setProperty(`${sRowPath}/ZzjikgbtA`, '');
           return;
         }
-        if (_.isNaN(parseInt(sInputValue))) return;
 
-        const sRowPath = oEvent.getSource()?.getParent()?.getBindingContext()?.getPath();
-        const aEmployees = oViewModel.getProperty('/form/employees');
+        const aEmployees = oViewModel.getProperty('/detail/employees');
         const [mEmployee] = _.filter(aEmployees, (o) => _.startsWith(o.Pernr, sInputValue));
 
         if (sRowPath && !_.isEmpty(mEmployee)) {
-          oViewModel.setProperty(sRowPath, {
-            ...oViewModel.getProperty(sRowPath),
-            PernrA: mEmployee.Pernr,
-            EnameA: mEmployee.Ename,
-            OrgtxA: mEmployee.Fulln,
-            ZzjikgbtA: mEmployee.Zzjikgbt,
-          });
+          oViewModel.setProperty(`${sRowPath}/EnameA`, mEmployee.Ename);
+          oViewModel.setProperty(`${sRowPath}/OrgtxA`, mEmployee.Fulln);
+          oViewModel.setProperty(`${sRowPath}/ZzjikgbtA`, mEmployee.Zzjikgbt);
         }
       },
 

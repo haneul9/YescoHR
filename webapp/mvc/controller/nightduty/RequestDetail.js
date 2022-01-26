@@ -33,7 +33,6 @@ sap.ui.define(
           detail: {
             editable: false,
             enabled: false,
-            suggestCompleted: false,
             list: [],
             listMode: SelectionMode.None,
             rowCount: 1,
@@ -196,50 +195,40 @@ sap.ui.define(
       },
 
       onSelectSuggestion(oEvent) {
-        const oSelectedItem = oEvent.getParameter('selectedItem');
-        const sRowPath = oEvent.getSource().getParent().getBindingContext().getPath();
+        const oInput = oEvent.getSource();
+        const oSelectedSuggestionRow = oEvent.getParameter('selectedRow');
+        if (oSelectedSuggestionRow) {
+          const oContext = oSelectedSuggestionRow.getBindingContext();
+          oInput.setValue(oContext.getProperty('Pernr'));
 
-        if (oSelectedItem && sRowPath) {
-          const sSelectedPernr = oSelectedItem.getKey() || 'None';
-          const aEmployees = this.oDetailModel.getProperty('/detail/employees') || [];
-          const mEmployee = _.find(aEmployees, { Pernr: sSelectedPernr }) || { Pernr: '', Ename: '', Fulln: '', Zzjikgbt: '' };
-
-          this.oDetailModel.setProperty('/detail/suggestCompleted', true);
-          this.oDetailModel.setProperty(`${sRowPath}/PernrA`, ''); // 오작동 방지 초기화
-          this.oDetailModel.setProperty(sRowPath, {
-            ...this.oDetailModel.getProperty(sRowPath),
-            PernrA: mEmployee.Pernr,
-            EnameA: mEmployee.Ename,
-            OrgtxA: mEmployee.Fulln,
-            ZzjikgbtA: mEmployee.Zzjikgbt,
-          });
+          const sRowPath = oInput.getParent().getBindingContext().getPath();
+          this.oDetailModel.setProperty(`${sRowPath}/EnameA`, oContext.getProperty('Ename'));
+          this.oDetailModel.setProperty(`${sRowPath}/OrgtxA`, oContext.getProperty('Fulln'));
+          this.oDetailModel.setProperty(`${sRowPath}/ZzjikgbtA`, oContext.getProperty('Zzjikgbt'));
         }
+        oInput.getBinding('suggestionRows').filter([]);
       },
 
       onSubmitSuggest(oEvent) {
+        const oInput = oEvent.getSource();
+        const oContext = oInput.getParent().getBindingContext();
+        const sRowPath = oContext.getPath();
+
         const sInputValue = oEvent.getParameter('value');
-        const bSuggestCompleted = this.oDetailModel.getProperty('/detail/suggestCompleted');
-
-        if (bSuggestCompleted) {
-          this.oDetailModel.setProperty('/detail/suggestCompleted', false);
-          return;
-        }
-        if (_.isNaN(parseInt(sInputValue))) {
+        if (!sInputValue) {
+          this.oDetailModel.setProperty(`${sRowPath}/EnameA`, '');
+          this.oDetailModel.setProperty(`${sRowPath}/OrgtxA`, '');
+          this.oDetailModel.setProperty(`${sRowPath}/ZzjikgbtA`, '');
           return;
         }
 
-        const sRowPath = oEvent.getSource()?.getParent()?.getBindingContext()?.getPath();
         const aEmployees = this.oDetailModel.getProperty('/detail/employees');
         const [mEmployee] = _.filter(aEmployees, (o) => _.startsWith(o.Pernr, sInputValue));
 
         if (sRowPath && !_.isEmpty(mEmployee)) {
-          this.oDetailModel.setProperty(sRowPath, {
-            ...this.oDetailModel.getProperty(sRowPath),
-            PernrA: mEmployee.Pernr,
-            EnameA: mEmployee.Ename,
-            OrgtxA: mEmployee.Fulln,
-            ZzjikgbtA: mEmployee.Zzjikgbt,
-          });
+          this.oDetailModel.setProperty(`${sRowPath}/EnameA`, mEmployee.Ename);
+          this.oDetailModel.setProperty(`${sRowPath}/OrgtxA`, mEmployee.Fulln);
+          this.oDetailModel.setProperty(`${sRowPath}/ZzjikgbtA`, mEmployee.Zzjikgbt);
         }
       },
 

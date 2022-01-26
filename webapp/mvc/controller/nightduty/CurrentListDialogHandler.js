@@ -99,6 +99,14 @@ sap.ui.define(
         this.oDialogModel.setProperty('/dialog/pernrList', aPernrList || []);
       },
 
+      onChangeYearMonth() {
+        this.onPressCurrentListSearch();
+      },
+
+      onChangeDutyGroup() {
+        this.onPressCurrentListSearch();
+      },
+
       /**
        * 나의 당직근무 - 당직근무현황 조회 아이콘 press event handler
        */

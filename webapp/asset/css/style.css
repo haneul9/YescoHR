@@ -1629,3 +1629,6 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .microchart .sapSuiteIDCLegendSegment { margin-bottom: 12px;}
 .microchart .sapSuiteIDCLegendLabelValue {color: #222;}
 .microchart .sapSuiteIDCChartSegment {stroke: #427cac;stroke-width: 0px;}
+
+/* input suggestion popover */
+.sapMSuggestionsPopover .sapMLabel {display:inline-block}
