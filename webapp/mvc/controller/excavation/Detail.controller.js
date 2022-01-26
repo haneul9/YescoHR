@@ -426,7 +426,7 @@ sap.ui.define(
       onPressSummaryDialogClose(oEvent) {
         AppUtils.setAppBusy(false, this);
 
-        oEvent.getSource().getParent().getContent()[1].clearSelection();
+        oEvent.getSource().getParent().getContent()[1].getItems()[0].clearSelection();
         this.byId('summaryDialog').close();
       },
 
