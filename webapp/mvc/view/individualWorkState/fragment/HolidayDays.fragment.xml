@@ -1,4 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m"
+  xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:core="sap.ui.core"
   xmlns:microchart="sap.suite.ui.microchart">
   <VBox width="50%" class="vCardBox small sapUiMediumMarginEnd">
@@ -19,11 +20,11 @@
           <microchart:InteractiveDonutChartSegment label="{i18n>LABEL_18004}" value="{/vacationChart/pUnPlan}" displayedValue="{/vacationChart/dUnPlan}{i18n>LABEL_00254}" />
         </microchart:segments>
       </microchart:InteractiveDonutChart>
-      <VBox>
+      <grid:CSSGrid gridTemplateColumns="1fr" gridGap="18px 20px" class="pt-10-px">
         <Text text="{/vacationChart/pPlan}%"/>
         <Text text="{/vacationChart/pUnPlan}%"/>
         <Text text="{/vacationChart/pUnPlan}%"/>
-      </VBox>
+      </grid:CSSGrid>
     </HBox>
   </VBox>
 </core:FragmentDefinition>
