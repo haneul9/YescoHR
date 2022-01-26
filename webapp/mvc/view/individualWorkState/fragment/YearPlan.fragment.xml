@@ -32,11 +32,11 @@
       </custom:DayBox>
     </grid:CSSGrid>
     <HBox class="status-wrap year-plan" items="{/TimeTypeList}">
-      <Text text="{Coltytx}" class="{classNames}"/>
-      <!-- <customData>
-          <core:CustomData key="style" value="{Colty}" writeToDom="true" />
+      <Text text="{Coltytx}">
+        <customData>
+          <core:CustomData key="style" value="{classNames}" writeToDom="true" />
         </customData>
-      </Text> -->
+      </Text>
       <!-- <Text text="{i18n>LABEL_04015}" class="type01" />
       <Text text="{i18n>LABEL_04007}" class="type02" />
       <Text text="{i18n>LABEL_18028}" class="type03" />

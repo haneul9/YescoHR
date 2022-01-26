@@ -35,7 +35,7 @@ sap.ui.define(
         oViewModel.setProperty(
           '/TimeTypeList',
           _.each(aTimeTypeList, (e) => {
-            e.classNames = e.Colty.toLowerCase();
+            e.classNames = e.Colty;
           })
         );
         oViewModel.setProperty(
