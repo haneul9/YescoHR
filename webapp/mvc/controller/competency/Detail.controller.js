@@ -84,6 +84,7 @@ sap.ui.define(
             form: {
               Rjctr: '',
               Rjctrin: '',
+              confirmEnable: false,
               isRejectProcess: false,
             },
           },
@@ -424,6 +425,10 @@ sap.ui.define(
             .floor(2)
             .value()
         );
+      },
+
+      onCheckReject(oEvent) {
+        this.getViewModel().setProperty('/buttons/form/confirmEnable', !!oEvent.getSource().getValue());
       },
 
       onPressRejectViewButton() {
