@@ -544,7 +544,7 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt {outline-style:none !important}
 .sapUiTableHeaderDataCell>.sapUiTableCellInner>div:first-child {display:block !important; text-align:center !important; line-height:1}
 .sapUiTableHeaderDataCell>.sapUiTableCellInner>div:first-child>* { display:initial}
 .sapUiTableCell .sapMLabel {color:#222}
-.sapUiSizeCompact .sapUiTableCell .sapMLabel, .sapUiSizeCondensed .sapUiTableCell .sapMLabel { font-weight:700; font-size:14px}
+.sapUiSizeCompact .sapUiTableCell .sapMLabel, .sapUiSizeCondensed .sapUiTableCell .sapMLabel { font-weight:500; font-size:14px}
 .sapUiTableDataCell {border-right:0.0625rem solid #F5F5F5; border-bottom:0.0625rem solid #F5F5F5}
 
 .sapUiTableColHdrCnt { background-color:#fbfcfd; border-bottom:1px solid #fbfcfd; border-left:1px solid #e7eaed; border-right:1px solid #e7eaed}
