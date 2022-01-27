@@ -92,7 +92,7 @@ sap.ui.define(
       },
 
       setToBeScheduleTableData(aToBeScheduleTableData) {
-        const iRowCount = (aToBeScheduleTableData || []).length;
+        const iRowCount = (aToBeScheduleTableData || []).length || 1;
 
         this.oDetailModel.setProperty('/detail/list', aToBeScheduleTableData);
         this.oDetailModel.setProperty('/detail/rowCount', iRowCount);

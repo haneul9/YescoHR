@@ -148,7 +148,7 @@ sap.ui.define(
       },
 
       setTableData({ oViewModel, aRowData }) {
-        oViewModel.setProperty('/form/rowCount', aRowData.length);
+        oViewModel.setProperty('/form/rowCount', aRowData.length || 1);
         oViewModel.setProperty('/form/list', aRowData);
 
         this.toggleHasRowProperty();
@@ -281,8 +281,9 @@ sap.ui.define(
 
           aSummaryList = _.differenceWith(aSummaryList, aList, (a, b) => moment(a.Datum).format('YYYYMMDD') === moment(b.Datum).format('YYYYMMDD'));
 
+          const iRowCount = aSummaryList.length || 1;
           oViewModel.setProperty('/dialog/list', [...aSummaryList]);
-          oViewModel.setProperty('/dialog/rowCount', aSummaryList.length || 1);
+          oViewModel.setProperty('/dialog/rowCount', iRowCount > 10 ? 10 : iRowCount);
         } catch (oError) {
           this.debug('Controller > excavation Detail > retrieveCurrentDuty Error', oError);
 
@@ -327,7 +328,7 @@ sap.ui.define(
             });
 
             oViewModel.setProperty('/form/list', aUnSelectedData);
-            oViewModel.setProperty('/form/rowCount', aUnSelectedData.length);
+            oViewModel.setProperty('/form/rowCount', aUnSelectedData.length || 1);
 
             this.toggleHasRowProperty();
             oTable.clearSelection();
@@ -421,7 +422,7 @@ sap.ui.define(
           _.chain(aList[1]).set('PernrA', aList[0].PernrB).set('EnameA', aList[0].EnameB).set('OrgtxA', aList[0].OrgtxB).set('ZzjikgbtA', aList[0].ZzjikgbtB).commit();
         }
 
-        oViewModel.setProperty('/form/rowCount', aList.length);
+        oViewModel.setProperty('/form/rowCount', aList.length || 1);
         oViewModel.setProperty('/form/list', aList);
         oViewModel.setProperty('/dialog/selectedData', []);
 

@@ -600,6 +600,7 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .hCardBox.appointee-box,
 .hCardBox.summary-box,
 .hCardBox.search-box {box-sizing:border-box; height:240px; overflow:hidden}
+.hCardBox.dialog-search-box {box-sizing:border-box; padding-top:10px; padding-bottom:10px; overflow:hidden}
 .hCardBox.appointee-box .title,
 .hCardBox.summary-box .title,
 .hCardBox.search-box .title {margin-bottom:20px}

@@ -145,8 +145,10 @@ sap.ui.define(
       },
 
       setCurrentListTableData(aCurrentListTableData) {
+        const iCurrentListRowCount = (aCurrentListTableData || []).length || 1;
+
         this.oDialogModel.setProperty('/dialog/currentList', aCurrentListTableData);
-        this.oDialogModel.setProperty('/dialog/currentListRowCount', (aCurrentListTableData || []).length || 1);
+        this.oDialogModel.setProperty('/dialog/currentListRowCount', iCurrentListRowCount > 10 ? 10 : iCurrentListRowCount);
         if (this.sSelectionMode === SelectionMode.MultiToggle) {
           this.oDialogModel.setProperty('/dialog/selectedList', []);
           this.oDialogModel.setProperty('/dialog/enabled', false);

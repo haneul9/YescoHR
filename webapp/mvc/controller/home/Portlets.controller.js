@@ -58,6 +58,7 @@ sap.ui.define(
 
       onBeforeShow() {
         const oGrid = this.byId('portlets-grid');
+        oGrid.destroyItems();
 
         oGrid.addDragDropConfig(
           new DragInfo({
