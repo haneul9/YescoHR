@@ -1,5 +1,15 @@
 @charset "utf-8";
 
+@page { size: landscape; margin: 0; }
+@media print { 
+    #container-ehr---app--appMenuToolbar, .contents-header { display: none; }
+    .contents { min-width: 0 !important; width: 95% !important; }
+    .sapMTitle { font-size: 16px !important; }
+    .sapMLabel { font-size: 12px !important; }
+    .sapMText { font-size: 12px !important; }
+    .sapMObjStatus { font-size: 14px !important; }
+}
+
 html *:not(.sapUiIcon):not(.sapMMsgStripCloseButton):not(i) {font-family:Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif}
 html:not([data-sap-ui-browser^="ie"]):not([data-sap-ui-browser^="ed"]) .sapUiIcon:focus {outline-width:0px; outline-style:dashed; outline-offset:-1px}
 html, body {box-sizing:border-box; overflow:hidden}
