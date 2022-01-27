@@ -46,6 +46,7 @@ sap.ui.define(
           MySelf: false,
           Hass: this.isHass(),
           FormData: {},
+          FieldLimit: {},
           Settings: {},
           busy: false,
         });
@@ -75,7 +76,7 @@ sap.ui.define(
         oDetailModel.setProperty('/ViewSeqnr', sSeqnr);
         oDetailModel.setProperty('/ViewSdate', sSdate);
         oDetailModel.setProperty('/Menid', sMenid);
-
+        oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.COMMON, 'NoticeManage')));
         this.getTargetData();
       },
 
@@ -273,6 +274,8 @@ sap.ui.define(
                 });
 
                 oFormData.Detail = '';
+                oFormData.Hide = '';
+
                 let oSendObject = {
                   Prcty: '2',
                   Werks: sWerks,
