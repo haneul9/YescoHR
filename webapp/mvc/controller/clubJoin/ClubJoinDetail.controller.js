@@ -205,23 +205,24 @@ sap.ui.define(
         });
       },
 
-      onSelected(oEvent) {
+      // 회사지원체크
+      async onSelected(oEvent) {
         const oDetailModel = this.getViewModel();
-        const bSelected = oEvent.getSource().getSelected();
+        const oEventSource = oEvent.getSource();
+        const bSelected = oEventSource.getSelected();
 
         if (bSelected) {
-          const oModel = this.getModel(ServiceNames.BENEFIT);
+          try {
+            const oModel = this.getModel(ServiceNames.BENEFIT);
 
-          oModel.read('/ClubJoinApplSet', {
-            filters: [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, '1')],
-            success: () => {
-              oDetailModel.setProperty('/FormData/Coaid', 'X');
-            },
-            error: (oError) => {
-              AppUtils.handleError(new ODataReadError(oError));
-              oDetailModel.setProperty('/FormData/Coaid', '');
-            },
-          });
+            await Client.getEntitySet(oModel, 'ClubJoinAppl', { Prcty: '1' });
+
+            oDetailModel.setProperty('/FormData/Coaid', 'X');
+          } catch (oError) {
+            AppUtils.handleError(oError);
+            oDetailModel.setProperty('/FormData/Coaid', '');
+            oEventSource.setSelected(false);
+          }
         } else {
           oDetailModel.setProperty('/FormData/Coaid', '');
         }

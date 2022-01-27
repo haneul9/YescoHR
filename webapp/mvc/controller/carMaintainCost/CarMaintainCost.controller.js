@@ -38,11 +38,10 @@ sap.ui.define(
         const oViewModel = new JSONModel({
           busy: false,
           Data: [],
-          parameters: {},
           Total: {},
           search: {
-            date: new Date(),
-            secondDate: new Date(dDate.getFullYear(), 0, 1),
+            secondDate: new Date(2020, 0, 1),
+            date: new Date(dDate.getFullYear(), 12, 0),
           },
           listInfo: {
             rowCount: 1,
@@ -71,8 +70,8 @@ sap.ui.define(
 
           const mSearch = oListModel.getProperty('/search');
           const mPayLoad = {
-            Apbeg: moment(mSearch.secondDate).hours(9).toDate(),
-            Apend: moment(mSearch.date).hours(9).toDate(),
+            Begda: moment(mSearch.secondDate).hours(9).toDate(),
+            Endda: moment(mSearch.date).hours(9).toDate(),
             Menid: this.getCurrentMenuId(),
           };
           const aTableList = await Client.getEntitySet(oModel, 'MaintenanceCarAppl', mPayLoad);
@@ -93,7 +92,7 @@ sap.ui.define(
 
       // override AttachFileCode
       getApprovalType() {
-        return 'HR09';
+        return 'HR14';
       },
 
       formatPay(vPay = '0') {
@@ -114,8 +113,8 @@ sap.ui.define(
 
           const mSearch = oListModel.getProperty('/search');
           const mPayLoad = {
-            Apbeg: moment(mSearch.secondDate).hours(9).toDate(),
-            Apend: moment(mSearch.date).hours(9).toDate(),
+            Begda: moment(mSearch.secondDate).hours(9).toDate(),
+            Endda: moment(mSearch.date).hours(9).toDate(),
             Menid: this.getCurrentMenuId(),
           };
           const oModel = this.getModel(ServiceNames.BENEFIT);

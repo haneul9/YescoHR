@@ -22,7 +22,7 @@
           </Text>
         </table:template>
       </table:Column>
-      <table:Column width="auto" sortProperty="Appda" filterProperty="Appda">
+      <table:Column width="200px" sortProperty="Appda" filterProperty="Appda">
         <Label text="{i18n>LABEL_00266}"/>
         <table:template>
           <Text text="{
@@ -34,31 +34,28 @@
           }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="auto" sortProperty="Znametx" filterProperty="Znametx">
+      <table:Column width="200px" sortProperty="ApptyTxt" filterProperty="ApptyTxt">
         <Label text="{i18n>LABEL_25004}"/>
         <table:template>
-          <Text text="{Znametx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{ApptyTxt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="100px" sortProperty="Apcnt" filterProperty="Apcnt">
+      <table:Column width="200px" sortProperty="Carno" filterProperty="Carno">
         <Label text="{i18n>LABEL_25005}"/>
         <table:template>
-          <Text text="{Apcnt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Carno}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="200px" sortProperty="Apbet" filterProperty="Apbet">
+      <table:Column width="auto" sortProperty="Payorg" filterProperty="Payorg">
         <Label text="{i18n>LABEL_25006}"/>
         <table:template>
-          <Text text="{
-              path: 'Apbet',
-              type: 'sap.ui.yesco.mvc.model.type.Currency'
-          }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          <Text text="{Payorg}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="100px" sortProperty="Pvcnt" filterProperty="Pvcnt">
+      <table:Column width="200px" sortProperty="PaytyTxt" filterProperty="PaytyTxt">
         <Label text="{i18n>LABEL_25007}"/>
         <table:template>
-          <Text text="{Pvcnt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{PaytyTxt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="60px">

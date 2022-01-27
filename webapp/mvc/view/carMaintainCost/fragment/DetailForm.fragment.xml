@@ -1,78 +1,100 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:grid="sap.ui.layout.cssgrid"
-    xmlns:core="sap.ui.core">
+    xmlns:core="sap.ui.core"
+    xmlns:custom="sap.ui.yesco.control">
     <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
         <HBox alignItems="Center" class="table-toolbar">
             <Title level="H2" text="{i18n>LABEL_00129}" />
         </HBox>
         <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
-            <Label text="{i18n>LABEL_03012}" />
+            <Label text="{i18n>LABEL_25008}" />
             <VBox>
-                <ComboBox items="{/TargetList}" selectedKey="{/FormData/Famsa},{/FormData/Objps},{/FormData/Kdsvh},{/FormData/Famgb}" change=".onTargetList" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required">
-                    <core:Item text="{Znametx}" key="{Famsa},{Objps},{Kdsvh},{Famgb}" />
+                <ComboBox items="{/MaintainType}" selectedKey="{/FormData/Appty}" change="onMaintainType" editable="{/FormData/Fixed}" class="required">
+                    <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
             </VBox>
-            <Label text="{= !!${/FormData/Lnsta} ? ${i18n>LABEL_00261} : '' }" />
+            <Label text="{i18n>LABEL_25009}" />
             <VBox>
-                <Text text="{= !!${/FormData/Lnsta} ? ${/FormData/Lnstatx} : ''}"/>
+                <ComboBox items="{/AppDept}" selectedKey="{/FormData/Payorg}" editable="{/FormData/Fixed}" class="required">
+                    <core:Item text="{Ztext}" key="{Zcode}" />
+                </ComboBox>
             </VBox>
-            <Label text="{i18n>LABEL_09005}"/>
-            <VBox>
-                <Text text="{
-                    path: '/FormData/Apbet',
-                    type: 'sap.ui.yesco.mvc.model.type.Currency'
-                }"/>
-            </VBox>
-            <Label text="{i18n>LABEL_09004}"/>
-            <VBox>
-                <Text text="{/FormData/Apcnt}"/>
-            </VBox>
-            <Label text="{i18n>LABEL_00163}"/>
-            <VBox>
-                <Input value="{/FormData/Zbigo}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required"/>
+            <Label text="{i18n>LABEL_25010}"/>
+            <HBox>
+                <custom:DatePicker dateValue="{ path: '/FormData/Expdt', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= !${/FormData/Fixed} }" class="sapUiTinyMarginEnd required"/>
+                <Text text="{i18n>MSG_25002}"/>
                 <layoutData>
                     <grid:GridItemLayoutData gridColumn="2 / 5"/>
                 </layoutData>
-            </VBox>
-            <Label text="{i18n>LABEL_09007}"/>
+            </HBox>
+            <Label text="{i18n>LABEL_25005}"/>
             <VBox>
-                <Text text="{
-                    path: '/FormData/Pvbet',
-                    type: 'sap.ui.yesco.mvc.model.type.Currency'
-                }"/>
+                <Input value="{/FormData/Carno}" editable="{/FormData/Fixed}" class="required"/>
             </VBox>
-            <Label text="{i18n>LABEL_09006}"/>
+            <Label text="{i18n>LABEL_25011}"/>
             <VBox>
-                <Text text="{/FormData/Pvcnt}"/>
+                <Input value="{/FormData/Carty}" editable="{/FormData/Fixed}" class="required"/>
             </VBox>
-            <Label text="{i18n>LABEL_09009}"/>
+            <Label text="{i18n>LABEL_25012}"/>
             <VBox>
-                <Text text="{
-                    path: '/FormData/PybetTot',
-                    type: 'sap.ui.yesco.mvc.model.type.Currency'
-                }"/>
+                <Input value="{/FormData/Cc}" editable="{/FormData/Fixed}" class="required"/>
             </VBox>
-            <Label text="{i18n>LABEL_03002}"/>
+            <Label text="{i18n>LABEL_25013}"/>
             <VBox>
-                <Text text="{
-                    path: '/FormData/Paymm',
-                    formatter: '.formatDate'
-                }" />
+                <Input value="{/FormData/Caryr}" editable="{/FormData/Fixed}" class="required"/>
             </VBox>
-            <Label text="{i18n>LABEL_09011}"/>
+            <Label text="{i18n>LABEL_25014}"/>
             <VBox>
-                <ObjectStatus text="{
-                    path: '/FormData/Rjbet',
-                    type: 'sap.ui.yesco.mvc.model.type.Currency'
-                }" state="Indication04"/>
+                <custom:DatePicker dateValue="{ path: '/FormData/Cardt', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{/FormData/Fixed}" class="required"/>
             </VBox>
-            <Label text="{i18n>LABEL_09008}"/>
+            <Label text="{i18n>LABEL_25015}"/>
             <VBox>
-                <ObjectStatus text="{/FormData/Rjcnt}" state="Indication04"/>
+                <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Insu} }" editable="{/FormData/Fixed}" class="required"/>
             </VBox>
-            <Label text="{i18n>LABEL_00142}" visible="{= !!${/FormData/ZappResn} }"/>
-            <VBox visible="{= !!${/FormData/ZappResn} }">
-                <Text text="{/FormData/ZappResn}"/>
+            <VBox>
+                <layoutData>
+                    <grid:GridItemLayoutData gridColumn="1 / 5"/>
+                </layoutData>
+            </VBox>
+            <Label text="{i18n>LABEL_25016}"/>
+            <VBox>
+                <Input value="{/FormData/Lnmhg}" editable="{/FormData/Fixed}" class="required"/>
+            </VBox>
+            <Label text="{i18n>LABEL_25017}"/>
+            <VBox>
+                <ComboBox items="{/LicenseType}" selectedKey="{/FormData/Idtype}" change=".onShcoolList" editable="{/FormData/Fixed}" class="required">
+                    <core:Item text="{Ztext}" key="{Zcode}" />
+                </ComboBox>
+            </VBox>
+            <VBox>
+                <layoutData>
+                    <grid:GridItemLayoutData gridColumn="1 / 5"/>
+                </layoutData>
+            </VBox>
+            <Label text="{i18n>LABEL_25007}" />
+            <VBox >
+                <ComboBox items="{/PayType}" selectedKey="{/FormData/Payty}" change=".onShcoolList" editable="{/FormData/Fixed}" class="required">
+                    <core:Item text="{Ztext}" key="{Zcode}" />
+                </ComboBox>
+            </VBox>
+            <Label text="{i18n>LABEL_25018}" />
+            <HBox>
+                <Text text="{/FormData/Ename}" class="sapUiTinyMarginEnd"/>
+                <Text text="{i18n>MSG_25003}"/>
+            </HBox>
+            <Label text="{i18n>LABEL_25019}" />
+            <VBox >
+                <ComboBox items="{/BankList}" selectedKey="{/FormData/Bankl}" editable="{/FormData/Fixed}" class="required">
+                    <core:Item text="{Ztext}" key="{Zcode}" />
+                </ComboBox>
+            </VBox>
+            <Label text="{i18n>LABEL_25020}" />
+            <VBox >
+                <Input value="{/FormData/Bankn}" editable="{/FormData/Fixed}" class="required"/>
+            </VBox>
+            <Label text="{i18n>LABEL_00163}" />
+            <VBox >
+                <Input value="{/FormData/Zbigo}" editable="{/FormData/Fixed}" />
                 <layoutData>
                     <grid:GridItemLayoutData gridColumn="2 / 5"/>
                 </layoutData>
