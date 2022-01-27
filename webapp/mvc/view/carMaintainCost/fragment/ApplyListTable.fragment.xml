@@ -46,10 +46,10 @@
           <Text text="{Carno}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="auto" sortProperty="Payorg" filterProperty="Payorg">
+      <table:Column width="auto" sortProperty="PayorgTxt" filterProperty="PayorgTxt">
         <Label text="{i18n>LABEL_25006}"/>
         <table:template>
-          <Text text="{Payorg}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{PayorgTxt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="200px" sortProperty="PaytyTxt" filterProperty="PaytyTxt">

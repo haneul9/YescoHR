@@ -7,6 +7,7 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/exceptions/ODataCreateError',
@@ -21,6 +22,7 @@ sap.ui.define(
     AppUtils,
     AttachFileAction,
     ServiceNames,
+    Client,
     MessageBox,
     ODataReadError,
     ODataCreateError,
@@ -172,12 +174,6 @@ sap.ui.define(
 
       // 임시저장
       onSaveBtn() {
-        const oModel = this.getModel(ServiceNames.COMMON);
-        const oDetailModel = this.getViewModel();
-        const sAppno = oDetailModel.getProperty('/FormData/Appno');
-        const oFormData = oDetailModel.getProperty('/FormData');
-        const sWerks = this.getSessionProperty('Werks');
-
         if (this.checkError()) return;
 
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00103'), {
@@ -187,6 +183,9 @@ sap.ui.define(
               try {
                 AppUtils.setAppBusy(true, this);
 
+                const oDetailModel = this.getViewModel();
+                const sAppno = oDetailModel.getProperty('/FormData/Appno');
+
                 if (!sAppno) {
                   const vAppno = await Appno.get.call(this);
 
@@ -195,6 +194,7 @@ sap.ui.define(
                 }
 
                 const aDetail = [];
+                const oFormData = oDetailModel.getProperty('/FormData');
                 const aList = oFormData.Detail.match(new RegExp('.{1,' + 4000 + '}', 'g'));
 
                 aList.forEach((e) => {
@@ -207,25 +207,17 @@ sap.ui.define(
                 oFormData.Detail = '';
                 oFormData.Hide = 'X';
 
-                let oSendObject = {
+                // FileUpload
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
+
+                const oModel = this.getModel(ServiceNames.COMMON);
+                const sWerks = this.getSessionProperty('Werks');
+
+                await Client.deep(oModel, 'NoticeManage', {
                   Prcty: '2',
                   Werks: sWerks,
                   Notice1Nav: [oFormData],
                   Notice2Nav: aDetail,
-                };
-
-                // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
-
-                await new Promise((resolve, reject) => {
-                  oModel.create('/NoticeManageSet', oSendObject, {
-                    success: () => {
-                      resolve();
-                    },
-                    error: (oError) => {
-                      reject(new ODataCreateError({ oError }));
-                    },
-                  });
                 });
 
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
@@ -241,12 +233,6 @@ sap.ui.define(
 
       // 등록
       onRegistBtn() {
-        const oModel = this.getModel(ServiceNames.COMMON);
-        const oDetailModel = this.getViewModel();
-        const sAppno = oDetailModel.getProperty('/FormData/Appno');
-        const oFormData = oDetailModel.getProperty('/FormData');
-        const sWerks = this.getSessionProperty('Werks');
-
         if (this.checkError()) return;
 
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00106'), {
@@ -255,6 +241,8 @@ sap.ui.define(
             if (vPress && vPress === this.getBundleText('LABEL_00106')) {
               try {
                 AppUtils.setAppBusy(true, this);
+                const oDetailModel = this.getViewModel();
+                const sAppno = oDetailModel.getProperty('/FormData/Appno');
 
                 if (!sAppno) {
                   const vAppno = await Appno.get.call(this);
@@ -264,6 +252,7 @@ sap.ui.define(
                 }
 
                 const aDetail = [];
+                const oFormData = oDetailModel.getProperty('/FormData');
                 const aList = oFormData.Detail.match(new RegExp('.{1,' + 4000 + '}', 'g'));
 
                 aList.forEach((e) => {
@@ -276,6 +265,12 @@ sap.ui.define(
                 oFormData.Detail = '';
                 oFormData.Hide = '';
 
+                const sWerks = this.getSessionProperty('Werks');
+
+                // FileUpload
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
+
+                const oModel = this.getModel(ServiceNames.COMMON);
                 let oSendObject = {
                   Prcty: '2',
                   Werks: sWerks,
@@ -283,19 +278,7 @@ sap.ui.define(
                   Notice2Nav: aDetail,
                 };
 
-                // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
-
-                await new Promise((resolve, reject) => {
-                  oModel.create('/NoticeManageSet', oSendObject, {
-                    success: () => {
-                      resolve();
-                    },
-                    error: (oError) => {
-                      reject(new ODataCreateError({ oError }));
-                    },
-                  });
-                });
+                await Client.deep(oModel, 'NoticeManage', oSendObject);
 
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00106'), {
                   onClose: () => {

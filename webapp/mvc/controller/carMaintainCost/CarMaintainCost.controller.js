@@ -73,6 +73,7 @@ sap.ui.define(
             Begda: moment(mSearch.secondDate).hours(9).toDate(),
             Endda: moment(mSearch.date).hours(9).toDate(),
             Menid: this.getCurrentMenuId(),
+            Prcty: 'L',
           };
           const aTableList = await Client.getEntitySet(oModel, 'MaintenanceCarAppl', mPayLoad);
           const oTable = this.byId('carTable');
@@ -116,6 +117,7 @@ sap.ui.define(
             Begda: moment(mSearch.secondDate).hours(9).toDate(),
             Endda: moment(mSearch.date).hours(9).toDate(),
             Menid: this.getCurrentMenuId(),
+            Prcty: 'L',
           };
           const oModel = this.getModel(ServiceNames.BENEFIT);
           const aTableList = await Client.getEntitySet(oModel, 'MaintenanceCarAppl', mPayLoad);

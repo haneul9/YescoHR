@@ -19,9 +19,9 @@
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
             </VBox>
-            <Label text="{i18n>LABEL_25010}" visible="{= !${/FormData/Fixed} }"/>
-            <HBox visible="{= !${/FormData/Fixed} }">
-                <custom:DatePicker dateValue="{ path: '/FormData/Expdt', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" class="sapUiTinyMarginEnd required"/>
+            <Label text="{i18n>LABEL_25010}" visible="{= ${/FormData/Appty} === 'D' }"/>
+            <HBox visible="{= ${/FormData/Appty} === 'D' }">
+                <custom:DatePicker dateValue="{ path: '/FormData/Expdt', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= ${/FormData/Appty} === 'D' &amp;&amp; !${/FormData/Fixed} }" class="sapUiTinyMarginEnd required"/>
                 <Text text="{i18n>MSG_25002}"/>
                 <layoutData>
                     <grid:GridItemLayoutData gridColumn="2 / 5"/>
@@ -29,19 +29,19 @@
             </HBox>
             <Label text="{i18n>LABEL_25005}"/>
             <VBox>
-                <Input value="{/FormData/Carno}" editable="{/FormData/Fixed}" class="required"/>
+                <Input value="{/FormData/Carno}" maxLength="{/FieldLimit/Carno}" editable="{/FormData/Fixed}" class="required"/>
             </VBox>
             <Label text="{i18n>LABEL_25011}"/>
             <VBox>
-                <Input value="{/FormData/Carty}" editable="{/FormData/Fixed}" class="required"/>
+                <Input value="{/FormData/Carty}" maxLength="{/FieldLimit/Carty}" editable="{/FormData/Fixed}" class="required"/>
             </VBox>
             <Label text="{i18n>LABEL_25012}"/>
             <VBox>
-                <Input value="{/FormData/Cc}" editable="{/FormData/Fixed}" class="required"/>
+                <Input value="{/FormData/Cc}" maxLength="{/FieldLimit/Cc}" editable="{/FormData/Fixed}" class="required"/>
             </VBox>
             <Label text="{i18n>LABEL_25013}"/>
             <VBox>
-                <Input value="{/FormData/Caryr}" editable="{/FormData/Fixed}" class="required"/>
+                <Input value="{/FormData/Caryr}" maxLength="{/FieldLimit/Caryr}" editable="{/FormData/Fixed}" class="required"/>
             </VBox>
             <Label text="{i18n>LABEL_25014}"/>
             <VBox>
@@ -58,7 +58,7 @@
             </VBox>
             <Label text="{i18n>LABEL_25016}"/>
             <VBox>
-                <Input value="{/FormData/Lnmhg}" editable="{/FormData/Fixed}" class="required"/>
+                <Input value="{/FormData/Id}" maxLength="{/FieldLimit/Id}" editable="{/FormData/Fixed}" class="required"/>
             </VBox>
             <Label text="{i18n>LABEL_25017}"/>
             <VBox>
@@ -90,7 +90,7 @@
             </VBox>
             <Label text="{i18n>LABEL_25020}" visible="{/FormData/bPayType}" />
             <VBox visible="{/FormData/bPayType}">
-                <Input value="{/FormData/Bankn}" editable="{/FormData/Fixed}" class="required"/>
+                <Input value="{/FormData/Bankn}" maxLength="{/FieldLimit/Bankn}" editable="{/FormData/Fixed}" class="required"/>
             </VBox>
             <Label text="{i18n>LABEL_00163}" />
             <VBox>
