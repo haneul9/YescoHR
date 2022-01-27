@@ -117,7 +117,7 @@
         { "pattern": "h/clubJoin/{oDataKey}", "name": "h/clubJoin-detail", "target": "clubJoinDetail" },
 
         { "pattern": "carMaintainCost", "name": "carMaintainCost", "target": "carMaintainCost" },
-        { "pattern": "carMaintainCost/{oDataKey}", "name": "carMaintainCost-detail", "target": "carMaintainCostDetail" },
+        { "pattern": "carMaintainCost/{oDataKey}/:appty:", "name": "carMaintainCost-detail", "target": "carMaintainCostDetail" },
 
         { "pattern": "familyInfo", "name": "familyInfo", "target": "familyInfo" },
         { "pattern": "familyInfo/{oDataKey}", "name": "familyInfo-detail", "target": "familyInfoDetail" },
