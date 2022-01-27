@@ -26,13 +26,17 @@
                         <Label text="{i18n>LABEL_10003}" />
                     </VBox>
                     <HBox>
-                        <Input width="100%" value="{Zapgme}" enabled="false" />
+                        <ComboBox width="100%" selectedKey="{Zapgme}" items="{ path: '/entry/levels', templateShareable: true }" enabled="false">
+                            <core:Item key="{ValueEid}" text="{ValueText}" />
+                        </ComboBox>
                     </HBox>
                     <VBox>
                         <Label text="{i18n>LABEL_10022}" />
                     </VBox>
                     <HBox>
-                        <Input width="100%" value="{Zapgma}" enabled="false" />
+                        <ComboBox width="100%" selectedKey="{Zapgma}" items="{ path: '/entry/levels', templateShareable: true }" enabled="false">
+                            <core:Item key="{ValueEid}" text="{ValueText}" />
+                        </ComboBox>
                     </HBox>
                     <HBox width="100%" />
                     <HBox width="100%" />
