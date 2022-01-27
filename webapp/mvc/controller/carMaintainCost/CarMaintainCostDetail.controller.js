@@ -147,7 +147,7 @@ sap.ui.define(
             oDetailModel.setProperty('/FormData', {
               Ename: this.getAppointeeProperty('Ename'),
               Fixed: true,
-              Appty: ,
+              Appty: '',
               Payorg: 'ALL',
               Idtype: 'ALL',
               Payty: 'ALL',
