@@ -14,9 +14,6 @@ sap.ui.define(
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
-    'sap/ui/yesco/common/exceptions/ODataCreateError',
-    'sap/ui/yesco/common/exceptions/ODataDeleteError',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date',
     'sap/ui/yesco/mvc/model/type/Currency',
@@ -35,9 +32,6 @@ sap.ui.define(
     TableUtils,
     Client,
     ServiceNames,
-    ODataReadError,
-    ODataCreateError,
-    ODataDeleteError,
     BaseController
   ) => {
     'use strict';
@@ -58,6 +52,7 @@ sap.ui.define(
           sYear: '',
           FormData: {
             Fixed: true,
+            bPayType: true,
           },
           DialogData: {},
           TargetDetails: {},
@@ -85,7 +80,6 @@ sap.ui.define(
 
       async onObjectMatched(oParameter) {
         const sDataKey = oParameter.oDataKey;
-        const sAppty = oParameter.appty || '';
         const oDetailModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.BENEFIT);
 
@@ -143,11 +137,13 @@ sap.ui.define(
 
           if (sDataKey === 'N' || !sDataKey) {
             const mSessionData = this.getSessionData();
+            const sAppCode = mMaintainType[0].Zcode;
 
             oDetailModel.setProperty('/FormData', {
               Ename: this.getAppointeeProperty('Ename'),
-              Fixed: true,
-              Appty: '',
+              Fixed: sAppCode !== 'D',
+              bPayType: true,
+              Appty: sAppCode,
               Payorg: 'ALL',
               Idtype: 'ALL',
               Payty: 'ALL',
@@ -197,41 +193,129 @@ sap.ui.define(
       onMaintainType(oEvent) {
         const oDetailModel = this.getViewModel();
         const sKey = oEvent.getSource().getSelectedKey();
+        let bEdit = false;
 
         switch (sKey) {
-          case '':
-            oDetailModel.setProperty('/FormData/Fixed', true);
+          case 'I':
+          case 'U':
+            bEdit = true;
             break;
-          case '':
-            oDetailModel.setProperty('/FormData/Fixed');
-            break;
-          case '':
-            oDetailModel.setProperty('/FormData/Fixed');
+          case 'D':
+            bEdit = false;
             break;
         }
+
+        oDetailModel.setProperty('/FormData/Fixed', bEdit);
+      },
+
+      // 지급방식
+      onPayType(oEvent) {
+        const oDetailModel = this.getViewModel();
+        const sKey = oEvent.getSource().getSelectedKey();
+
+        if (sKey === 'ALL') {
+          return;
+        }
+
+        let bType = '';
+
+        if (sKey === 'PAY') {
+          bType = false;
+        } else {
+          bType = true;
+        }
+
+        oDetailModel.setProperty('/FormData/bPayType', bType);
+      },
+
+      // 보험가입
+      onCheckBox(oEvent) {
+        const oDetailModel = this.getViewModel();
+        const bSelected = oEvent.getSource().getSelected();
+        let sKey = '';
+
+        if (bSelected) {
+          sKey = 'X';
+        } else {
+          sKey = '';
+        }
+
+        oDetailModel.setProperty('/FormData/Insu', sKey);
       },
 
       checkError() {
         const oDetailModel = this.getViewModel();
         const mFormData = oDetailModel.getProperty('/FormData');
 
-        // 신청대상
-        if (mFormData.Kdsvh === 'ALL' || !mFormData.Kdsvh) {
-          MessageBox.alert(this.getBundleText('MSG_09025'));
+        // 신청부서/업무
+        if (mFormData.Payorg === 'ALL' || !mFormData.Payorg) {
+          MessageBox.alert(this.getBundleText('MSG_25005'));
           return true;
         }
 
-        // 비고
-        if (!mFormData.Zbigo) {
-          MessageBox.alert(this.getBundleText('MSG_09026'));
+        // 해지일(지원종료일)
+        if (!mFormData.Expdt) {
+          MessageBox.alert(this.getBundleText('MSG_25006'));
           return true;
         }
 
-        const aHisList = oDetailModel.getProperty('/HisList');
+        // 차량번호
+        if (!mFormData.Carno) {
+          MessageBox.alert(this.getBundleText('MSG_25007'));
+          return true;
+        }
 
-        // 상세내역
-        if (!aHisList.length) {
-          MessageBox.alert(this.getBundleText('MSG_09027'));
+        // 차종
+        if (!mFormData.Carty) {
+          MessageBox.alert(this.getBundleText('MSG_25008'));
+          return true;
+        }
+
+        // 배기량
+        if (!mFormData.Cc) {
+          MessageBox.alert(this.getBundleText('MSG_25009'));
+          return true;
+        }
+
+        // 년식
+        if (!mFormData.Caryr) {
+          MessageBox.alert(this.getBundleText('MSG_25010'));
+          return true;
+        }
+
+        // 차량등록일
+        if (!mFormData.Cardt) {
+          MessageBox.alert(this.getBundleText('MSG_25011'));
+          return true;
+        }
+
+        // 운전면허번호
+        if (!mFormData.Lnmhg) {
+          MessageBox.alert(this.getBundleText('MSG_25012'));
+          return true;
+        }
+
+        // 운전면허종별
+        if (mFormData.Idtype === 'ALL' || !mFormData.Idtype) {
+          MessageBox.alert(this.getBundleText('MSG_25013'));
+          return true;
+        }
+
+        // 지급방식
+        if (mFormData.Payty === 'ALL' || !mFormData.Payty) {
+          MessageBox.alert(this.getBundleText('MSG_25014'));
+          return true;
+        }
+
+        // 지정은행
+        if (mFormData.Bankl === 'ALL' || !mFormData.Bankl) {
+          MessageBox.alert(this.getBundleText('MSG_25015'));
+          return true;
+        }
+
+        // 지정계좌번호
+        if (!mFormData.Bankn) {
+          MessageBox.alert(this.getBundleText('MSG_25016'));
           return true;
         }
 
@@ -483,10 +567,11 @@ sap.ui.define(
       settingsAttachTable() {
         const oDetailModel = this.getViewModel();
         const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
+        const bFixed = oDetailModel.getProperty('/FormData/Fixed');
         const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
 
         AttachFileAction.setAttachFile(this, {
-          Editable: !sStatus || sStatus === '10',
+          Editable: !bFixed && (!sStatus || sStatus === '10'),
           Type: this.getApprovalType(),
           Appno: sAppno,
           Max: 10,

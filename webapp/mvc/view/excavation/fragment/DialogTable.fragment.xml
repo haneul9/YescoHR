@@ -9,7 +9,7 @@
           <m:DatePicker value="{/dialog/yearMonth}" displayFormat="yyyy.MM" valueFormat="yyyyMM" change=".onChangeDialogSearch" />
         </m:HBox>
       </m:VBox>
-      <m:VBox class="hCardBox mb-16-px">
+      <m:VBox class="hCardBox mb-16-px dialog-content-table">
         <Table width="100%" selectionMode="{/dialog/listMode}" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/list}" visibleRowCount="{/dialog/rowCount}" busyIndicatorDelay="0" busy="{/dialog/busy}" noData="{i18n>MSG_00001}" rowSelectionChange=".onChangeRowSelection">
           <columns>
             <Column width="12%" filterProperty="Datum" sortProperty="Datum">

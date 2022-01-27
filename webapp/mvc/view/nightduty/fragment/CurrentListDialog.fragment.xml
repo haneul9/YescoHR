@@ -14,34 +14,34 @@
       </m:HBox>
       <m:Button type="Transparent" class="icon-button search" press=".onPressCurrentListSearch" visible="false" />
     </m:HBox>
-    <m:VBox class="hCardBox mb-16-px">
+    <m:VBox class="hCardBox mb-16-px dialog-content-table">
       <Table id="currentListTable" width="100%" columnHeaderHeight="35" rowHeight="34" selectionMode="{currentListMode}" rows="{currentList}" visibleRowCount="{currentListRowCount}" busy="{busy}" busyIndicatorDelay="0" noData="{i18n>MSG_00001}" rowSelectionChange=".onChangeRowSelection">
         <columns>
-          <Column width="10%" filterProperty="Datum" sortProperty="Datum">
+          <Column width="12%" filterProperty="Datum" sortProperty="Datum">
             <m:Label text="{i18n>LABEL_06101}" />
             <template>
               <m:Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
             </template>
           </Column>
-          <Column width="10%" filterProperty="Kurzt" sortProperty="Kurzt">
+          <Column width="6%" filterProperty="Kurzt" sortProperty="Kurzt">
             <m:Label text="{i18n>LABEL_06102}" />
             <template>
               <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
             </template>
           </Column>
-          <Column width="10%" filterProperty="Tagty" sortProperty="Tagty">
+          <Column width="6%" filterProperty="Tagty" sortProperty="Tagty">
             <m:Label text="{i18n>LABEL_06103}" />
             <template>
               <m:Text text="{Tagty}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
             </template>
           </Column>
-          <Column filterProperty="Awart" sortProperty="Atext">
+          <Column width="18%" filterProperty="Awart" sortProperty="Atext">
             <m:Label text="{i18n>LABEL_06104}" />
             <template>
               <m:Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
             </template>
           </Column>
-          <Column width="10%" filterProperty="Ocshf" sortProperty="Ocshf">
+          <Column width="7%" filterProperty="Ocshf" sortProperty="Ocshf">
             <m:Label text="{i18n>MSG_06006}" />
             <template>
               <m:Text text="{Ocshf}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
@@ -53,19 +53,19 @@
               <m:Text text="{ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
             </template>
           </Column>
-          <Column width="10%" filterProperty="EnameB" sortProperty="EnameB">
+          <Column width="12%" filterProperty="EnameB" sortProperty="EnameB">
             <m:Label text="{i18n>LABEL_00210}" />
             <template>
               <m:Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
             </template>
           </Column>
-          <Column width="10%" filterProperty="OrgtxB" sortProperty="OrgtxB">
+          <Column filterProperty="OrgtxB" sortProperty="OrgtxB">
             <m:Label text="{i18n>LABEL_00224}" />
             <template>
               <m:Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
             </template>
           </Column>
-          <Column width="10%" filterProperty="ZzjikgbtB" sortProperty="ZzjikgbtB">
+          <Column width="9%" filterProperty="ZzjikgbtB" sortProperty="ZzjikgbtB">
             <m:Label text="{i18n>LABEL_00215}" />
             <template>
               <m:Text text="{Zzjikgbt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
