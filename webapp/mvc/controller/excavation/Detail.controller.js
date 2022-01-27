@@ -3,6 +3,8 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
+    'sap/ui/model/Filter',
+    'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/odata/Client',
@@ -20,6 +22,8 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     Fragment,
+    Filter,
+    FilterOperator,
     JSONModel,
     MessageBox,
     Client,
@@ -355,6 +359,7 @@ sap.ui.define(
 
         const sInputValue = oEvent.getParameter('value');
         if (!sInputValue) {
+          oViewModel.setProperty(`${sRowPath}/PernrA`, '');
           oViewModel.setProperty(`${sRowPath}/EnameA`, '');
           oViewModel.setProperty(`${sRowPath}/OrgtxA`, '');
           oViewModel.setProperty(`${sRowPath}/ZzjikgbtA`, '');
@@ -365,9 +370,15 @@ sap.ui.define(
         const [mEmployee] = _.filter(aEmployees, (o) => _.startsWith(o.Pernr, sInputValue));
 
         if (sRowPath && !_.isEmpty(mEmployee)) {
+          oViewModel.setProperty(`${sRowPath}/PernrA`, mEmployee.Pernr);
           oViewModel.setProperty(`${sRowPath}/EnameA`, mEmployee.Ename);
           oViewModel.setProperty(`${sRowPath}/OrgtxA`, mEmployee.Fulln);
           oViewModel.setProperty(`${sRowPath}/ZzjikgbtA`, mEmployee.Zzjikgbt);
+        } else {
+          oViewModel.setProperty(`${sRowPath}/PernrA`, '');
+          oViewModel.setProperty(`${sRowPath}/EnameA`, '');
+          oViewModel.setProperty(`${sRowPath}/OrgtxA`, '');
+          oViewModel.setProperty(`${sRowPath}/ZzjikgbtA`, '');
         }
       },
 

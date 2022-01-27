@@ -139,6 +139,11 @@ sap.ui.define(
           }))
         );
 
+        // 2행인 경우에만 복사해줌
+        if (aToBeScheduleTableData.length === 2) {
+          _.chain(aToBeScheduleTableData[1]).set('PernrA', aToBeScheduleTableData[0].PernrB).set('EnameA', aToBeScheduleTableData[0].EnameB).set('OrgtxA', aToBeScheduleTableData[0].OrgtxB).set('ZzjikgbtA', aToBeScheduleTableData[0].ZzjikgbtB).commit();
+        }
+
         this.setToBeScheduleTableData(aToBeScheduleTableData);
 
         return this;
@@ -216,6 +221,7 @@ sap.ui.define(
 
         const sInputValue = oEvent.getParameter('value');
         if (!sInputValue) {
+          this.oDetailModel.setProperty(`${sRowPath}/PernrA`, '');
           this.oDetailModel.setProperty(`${sRowPath}/EnameA`, '');
           this.oDetailModel.setProperty(`${sRowPath}/OrgtxA`, '');
           this.oDetailModel.setProperty(`${sRowPath}/ZzjikgbtA`, '');
@@ -226,9 +232,15 @@ sap.ui.define(
         const [mEmployee] = _.filter(aEmployees, (o) => _.startsWith(o.Pernr, sInputValue));
 
         if (sRowPath && !_.isEmpty(mEmployee)) {
+          this.oDetailModel.setProperty(`${sRowPath}/PernrA`, mEmployee.Pernr);
           this.oDetailModel.setProperty(`${sRowPath}/EnameA`, mEmployee.Ename);
           this.oDetailModel.setProperty(`${sRowPath}/OrgtxA`, mEmployee.Fulln);
           this.oDetailModel.setProperty(`${sRowPath}/ZzjikgbtA`, mEmployee.Zzjikgbt);
+        } else {
+          this.oDetailModel.setProperty(`${sRowPath}/PernrA`, '');
+          this.oDetailModel.setProperty(`${sRowPath}/EnameA`, '');
+          this.oDetailModel.setProperty(`${sRowPath}/OrgtxA`, '');
+          this.oDetailModel.setProperty(`${sRowPath}/ZzjikgbtA`, '');
         }
       },
 
