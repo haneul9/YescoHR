@@ -367,7 +367,7 @@ sap.ui.define(
           return;
         }
 
-        const aEmployees = oViewModel.getProperty('/detail/employees');
+        const aEmployees = oViewModel.getProperty('/form/employees');
         const [mEmployee] = _.filter(aEmployees, (o) => _.startsWith(o.Pernr, sInputValue));
 
         if (sRowPath && !_.isEmpty(mEmployee)) {
