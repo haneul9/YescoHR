@@ -85,6 +85,8 @@ sap.ui.define(
               Rjctr: '',
               Rjctrin: '',
               isRejectProcess: false,
+              Zzapper2: '',
+              Zdocid2: '',
             },
           },
           currentItemsLength: 0,
@@ -211,6 +213,8 @@ sap.ui.define(
 
           // 기능버튼
           _.chain(mButtons)
+            .set(['form', 'Zdocid2'], _.get(mDetailData, 'Zdocid2'))
+            .set(['form', 'Zzapper2'], _.get(mDetailData, 'Zzapper2'))
             .tap((o) => _.set(o, ['form', 'Rjctr'], _.get(mDetailData, 'Rjctr', _.noop())))
             .tap((o) =>
               _.chain(o.goal)
@@ -517,6 +521,14 @@ sap.ui.define(
 
       onPressRejectDialogClose() {
         this.byId('rejectDialog').close();
+      },
+
+      onPressTopGoal() {
+        const oViewModel = this.getViewModel();
+        const sType = oViewModel.getProperty('/type');
+        const { Zzapper2: sPernr, Zdocid2: sDocid } = oViewModel.getProperty('/buttons/form');
+
+        window.open(`/index.html#/performanceView/${sType}/${sPernr}/${sDocid}`, '_blank', 'width=1200&height=800');
       },
 
       onPressApproveButton() {

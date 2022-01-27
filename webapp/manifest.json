@@ -168,6 +168,7 @@
 
         { "pattern": "performance", "name": "performance", "target": "performance" },
         { "pattern": "performance/{sType}/{sYear}", "name": "performance-detail", "target": "performanceDetail" },
+        { "pattern": "performanceView/{sType}/{sPernr}/{sDocid}", "name": "performance-view", "target": "performanceView" },
         { "pattern": "m/performancePry", "name": "m/performancePry", "target": "m/performancePry" },
         { "pattern": "m/performancePry/{sType}/{sYear}", "name": "m/performancePry-detail", "target": "performanceDetail" },
         { "pattern": "m/performanceSry", "name": "m/performanceSry", "target": "m/performanceSry" },
@@ -269,6 +270,7 @@
         "m/performancePry": { "viewId": "m_performancePry", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "ListPrimary" },
         "m/performanceSry": { "viewId": "m_performanceSry", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "ListSecondary" },
         "performanceDetail": { "viewId": "performanceDetail", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "Detail" },
+        "performanceView": { "viewId": "performanceView", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "Document" },
         
         "competency": { "viewId": "competency", "viewPath": "sap.ui.yesco.mvc.view.competency", "viewName": "List" },
         "m/competency": { "viewId": "m_competency", "viewPath": "sap.ui.yesco.mvc.view.competency", "viewName": "ListM" },
