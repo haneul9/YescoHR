@@ -67,7 +67,7 @@
 								</VBox>
 							</VBox>
 							<HBox class="vCardBox sapUiSmallMarginTop" visible="{= ${/fieldControl/display/Zmepoint} !== 'H' || ${/fieldControl/display/Zmapoint} !== 'H' || ${/fieldControl/display/Zmbgrade} !== 'H' }">
-								<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr">
+								<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="repeat(8, 1fr)">
 									<VBox>
 										<Label text="{i18n>LABEL_10012}" visible="{= ${/fieldControl/display/Zmepoint} !== 'H' }"/>
 									</VBox>

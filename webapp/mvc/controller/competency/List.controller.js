@@ -86,14 +86,14 @@ sap.ui.define(
 
         _.map(aRowData, (o) => ({
           ...o,
-          Zapgma: _.isEqual('V', _.get(Constants.FIELD_STATUS_MAP, ['Zzapsts', 'ZzapstsSub', 'Z200', sType], '')) ? '0.00' : o.Zapgma,
-          Zapgme: _.isEqual('V', _.get(Constants.FIELD_STATUS_MAP, ['Zzapsts', 'ZzapstsSub', 'Fapp', sType], '')) ? '0.00' : o.Zapgme,
+          Zapgma: _.isEqual('V', _.get(Constants.FIELD_STATUS_MAP, [o.Zzapsts, o.ZzapstsSub, 'Z200', sType], '')) ? '0.00' : o.Zapgma,
+          Zapgme: _.isEqual('V', _.get(Constants.FIELD_STATUS_MAP, [o.Zzapsts, o.ZzapstsSub, 'Fapp', sType], '')) ? '0.00' : o.Zapgme,
         }));
 
         oViewModel.setProperty('/list', [...aRowData]);
         oViewModel.setProperty('/listInfo/rowCount', _.get(TableUtils.count({ oTable, aRowData }), 'rowCount', 1));
 
-        if (_.some(aRowData, (o) => _.isEqual(_.toNumber(o.Zapgma), 0) && _.isEqual(_.toNumber(o.Zapgme), 0))) {
+        if (_.every(aRowData, (o) => _.isEqual(_.toNumber(o.Zapgma), 0) && _.isEqual(_.toNumber(o.Zapgme), 0))) {
           const mColumnsInfo = oViewModel.getProperty('/listInfo/columns');
 
           _.chain(mColumnsInfo).set(['Zapgme', 'visible'], false).set(['Zapgma', 'visible'], false).set(['Ename', 'width'], '15%').set(['Zzjikgbt', 'width'], '15%').set(['Zzjikcht', 'width'], '15%').commit();

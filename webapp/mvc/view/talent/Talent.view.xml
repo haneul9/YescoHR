@@ -26,7 +26,7 @@
           <Button text="초기화" icon="asset/image/icon_reset.png" />
           <Button text="상세검색" icon="asset/image/icon_sort.png" press=".onToggleExpand" />
         </HBox>
-        <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr 1fr 3fr 1fr 3fr" gridGap="8px" class="search-filter expanded" id="searchFilterBody">
+        <grid:CSSGrid gridTemplateColumns="repeat(4, 1fr 3fr)" gridGap="8px" class="search-filter expanded" id="searchFilterBody">
           <Label text="검색저장" />
           <HBox alignItems="Center">
             <layoutData>

@@ -21,7 +21,7 @@
                 </Toolbar>
             </headerToolbar>
             <content>
-                <grid:CSSGrid gridTemplateColumns="2fr 3fr 2fr 3fr 2fr 3fr 2fr 3fr" gridGap="1px 0px" class="form-grid">
+                <grid:CSSGrid gridTemplateColumns="repeat(4, 2fr 3fr)" gridGap="1px 0px" class="form-grid">
                     <VBox>
                         <Label text="{i18n>LABEL_10021}" visible="{= ${/fieldControl/display/Fwgt} !== 'H' }" />
                     </VBox>
