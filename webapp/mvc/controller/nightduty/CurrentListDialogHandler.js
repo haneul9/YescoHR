@@ -48,7 +48,7 @@ sap.ui.define(
               ],
             }),
             currentList: null,
-            currentListRowCount: 1,
+            currentListRowCount: 0,
             currentListMode: this.sSelectionMode,
             selectedList: [],
             pernrList: [],
@@ -145,7 +145,7 @@ sap.ui.define(
       },
 
       setCurrentListTableData(aCurrentListTableData) {
-        const iCurrentListRowCount = (aCurrentListTableData || []).length || 1;
+        const iCurrentListRowCount = (aCurrentListTableData || []).length;
 
         this.oDialogModel.setProperty('/dialog/currentList', aCurrentListTableData);
         this.oDialogModel.setProperty('/dialog/currentListRowCount', iCurrentListRowCount > 10 ? 10 : iCurrentListRowCount);

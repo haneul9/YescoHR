@@ -37,7 +37,7 @@ sap.ui.define(
             enabled: false,
             list: [],
             listMode: SelectionMode.None,
-            rowCount: 1,
+            rowCount: 0,
             chgrsn: '',
             employees: [],
           },
@@ -94,7 +94,7 @@ sap.ui.define(
       },
 
       setToBeScheduleTableData(aToBeScheduleTableData) {
-        const iRowCount = (aToBeScheduleTableData || []).length || 1;
+        const iRowCount = (aToBeScheduleTableData || []).length;
 
         this.oDetailModel.setProperty('/detail/list', aToBeScheduleTableData);
         this.oDetailModel.setProperty('/detail/rowCount', iRowCount);

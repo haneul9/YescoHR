@@ -23,8 +23,8 @@
             <Title level="H2" text="{i18n>LABEL_00129}" />
           </HBox>
           <HBox class="table-actions">
-            <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" press=".onPressAddRowButton" visible="{/detail/editable}" class="sapUiTinyMarginEnd" />
-            <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onPressRemoveRowButton" visible="{/detail/editable}" enabled="{/detail/enabled}" />
+            <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" press=".onPressAddRowButton" visible="{= ${/detail/editable} &amp;&amp; ${/detail/rowCount} &lt; 2 }" class="sapUiTinyMarginEnd" />
+            <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onPressRemoveRowButton" visible="{= ${/detail/editable} &amp;&amp; ${/detail/rowCount} &gt; 0 }" enabled="{/detail/enabled}" />
           </HBox>
         </HBox>
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.nightduty.fragment.ToBeScheduleTable" type="XML" />

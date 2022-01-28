@@ -43,7 +43,7 @@ sap.ui.define(
           },
           requestList: [],
           requestListInfo: {
-            rowCount: 1,
+            rowCount: 0,
             totalCount: 0,
             progressCount: 0,
             applyCount: 0,

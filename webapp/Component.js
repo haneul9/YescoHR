@@ -377,6 +377,11 @@ sap.ui.define(
        * 메뉴 이동 전 View hidden 처리로 불필요한 DOM 정보를 제거
        */
       reduceViewResource() {
+        const oBG = $('#container-ehr---app--app-BG');
+        if (oBG.length) {
+          oBG.remove();
+        }
+
         const sCurrentMenuViewId = this.getMenuModel().getCurrentMenuViewId();
         const oView = this.byId(sCurrentMenuViewId);
         if (oView) {
