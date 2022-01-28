@@ -24,7 +24,7 @@
             <Text text="{i18n>MSG_11003}" class="desc-txt" />
           </HBox>
           <HBox class="table-actions">
-            <Button icon="sap-icon://add" class="sapUiTinyMarginEnd" text="{i18n>LABEL_00107}" press=".onPressAddBtn" visible="{= !${/ZappStatAl} }" />
+            <Button icon="sap-icon://add" class="sapUiTinyMarginEnd" text="{i18n>LABEL_00107}" press=".onPressAddBtn" enabled="{= ${/form/rowCount} &lt; 2 }" visible="{= !${/ZappStatAl} }" />
             <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onPressDelBtn" visible="{= !${/ZappStatAl} }" enabled="{= ${/form/hasRow}}" />
           </HBox>
         </HBox>

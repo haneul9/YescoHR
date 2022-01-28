@@ -42,8 +42,6 @@ sap.ui.define(
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
-          ViewSeqnr: '',
-          ViewSdate: '',
           MenId: '',
           MySelf: false,
           Hass: this.isHass(),
@@ -69,17 +67,62 @@ sap.ui.define(
         return '10';
       },
 
-      onObjectMatched(oParameter) {
-        const sSdate = new Date(parseInt(oParameter.Sdate)) || oParameter.Sdate;
-        const sSeqnr = oParameter.Seqnr;
+      async onObjectMatched(oParameter) {
         const oDetailModel = this.getViewModel();
-        const sMenid = this.getCurrentMenuId();
 
-        oDetailModel.setProperty('/ViewSeqnr', sSeqnr);
-        oDetailModel.setProperty('/ViewSdate', sSdate);
-        oDetailModel.setProperty('/Menid', sMenid);
-        oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.COMMON, 'NoticeManage')));
-        this.getTargetData();
+        try {
+          const sSdate = new Date(parseInt(oParameter.Sdate)) || oParameter.Sdate;
+          const sSeqnr = oParameter.Seqnr;
+          const sMenid = this.getCurrentMenuId();
+
+          oDetailModel.setProperty('/Menid', sMenid);
+          oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.COMMON, 'NoticeManage')));
+
+          if (!sSeqnr || sSeqnr === 'N') {
+            const oSessionData = this.getSessionData();
+
+            oDetailModel.setProperty('/MySelf', true);
+            oDetailModel.setProperty('/FormData', oSessionData);
+            oDetailModel.setProperty('/FormData', {
+              ApernTxt: `${oSessionData.Orgtx} ${oSessionData.Ename}`,
+              Apern: oSessionData.Pernr,
+            });
+          } else {
+            const sWerks = this.getSessionProperty('Werks');
+            let oSendObject = {
+              Prcty: '1',
+              Sdate: sSdate,
+              Seqnr: sSeqnr,
+              Werks: sWerks,
+              Notice1Nav: [],
+              Notice2Nav: [],
+            };
+
+            const oModel = this.getModel(ServiceNames.COMMON);
+            const oDetail = await Client.deep(oModel, 'NoticeManage', oSendObject);
+
+            const oTargetData = oDetail.Notice1Nav.results[0];
+            const oDetailData = oDetail.Notice2Nav.results;
+
+            if (this.getSessionProperty('Pernr') === oTargetData.Apern) {
+              oDetailModel.setProperty('/MySelf', true);
+            }
+
+            oTargetData.Detail = '';
+
+            oDetailData.forEach((e) => {
+              oTargetData.Detail += e.Detail;
+            });
+
+            oDetailModel.setProperty('/FormData', oTargetData);
+          }
+
+          this.settingsAttachTable();
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oDetailModel.setProperty('/busy', false);
+        }
       },
 
       // 중요항목 & 임시저장 Check
@@ -91,65 +134,6 @@ sap.ui.define(
           this.getViewModel().setProperty(sPath, 'X');
         } else {
           this.getViewModel().setProperty(sPath, '');
-        }
-      },
-
-      // 상세조회
-      getTargetData() {
-        const oModel = this.getModel(ServiceNames.COMMON);
-        const oDetailModel = this.getViewModel();
-        const sViewSeqnr = oDetailModel.getProperty('/ViewSeqnr');
-        const oSessionData = this.getSessionData();
-
-        if (!sViewSeqnr || sViewSeqnr === 'N') {
-          oDetailModel.setProperty('/MySelf', true);
-          oDetailModel.setProperty('/FormData', oSessionData);
-          oDetailModel.setProperty('/FormData', {
-            ApernTxt: `${oSessionData.Orgtx} ${oSessionData.Ename}`,
-            Apern: oSessionData.Pernr,
-          });
-
-          this.settingsAttachTable();
-          oDetailModel.setProperty('/busy', false);
-        } else {
-          const sWerks = this.getSessionProperty('Werks');
-          const sViewSdate = oDetailModel.getProperty('/ViewSdate');
-          let oSendObject = {};
-
-          oSendObject.Prcty = '1';
-          oSendObject.Sdate = sViewSdate;
-          oSendObject.Seqnr = sViewSeqnr;
-          oSendObject.Werks = sWerks;
-          oSendObject.Notice1Nav = [];
-          oSendObject.Notice2Nav = [];
-
-          oModel.create('/NoticeManageSet', oSendObject, {
-            success: (oData) => {
-              if (oData) {
-                const oTargetData = oData.Notice1Nav.results[0];
-                const oDetailData = oData.Notice2Nav.results;
-
-                if (this.getSessionProperty('Pernr') === oTargetData.Apern) {
-                  oDetailModel.setProperty('/MySelf', true);
-                }
-
-                oTargetData.Detail = '';
-
-                oDetailData.forEach((e) => {
-                  oTargetData.Detail += e.Detail;
-                });
-
-                oDetailModel.setProperty('/FormData', oTargetData);
-
-                this.settingsAttachTable();
-                oDetailModel.setProperty('/busy', false);
-              }
-            },
-            error: (oError) => {
-              AppUtils.handleError(new ODataReadError(oError));
-              oDetailModel.setProperty('/busy', false);
-            },
-          });
         }
       },
 
@@ -355,7 +339,7 @@ sap.ui.define(
         }
 
         const oRichTextEditor = new RTE('myRTE', {
-          editorType: 'TinyMCE4',
+          editorType: sap.ui.richtexteditor.EditorType.TinyMCE4, // 'TinyMCE4',
           layoutData: new sap.m.FlexItemData({ growFactor: 1 }),
           width: '99.8%',
           height: '500px',
