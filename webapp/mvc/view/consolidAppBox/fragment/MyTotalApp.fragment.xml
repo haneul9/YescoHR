@@ -9,11 +9,11 @@
       <HBox>
         <VBox width="50%" class="summary-info">
           <Label design="Bold" text="{i18n>LABEL_19008}" />
-          <ObjectStatus text="{= !${/Total/AppIng} ? '0' : ${/Total/AppIng} }" state="Indication04" />
+          <ObjectStatus text="{= !${/Total/AppIng} ? '0' : ${/Total/AppIng} }" state="Indication05" />
         </VBox>
         <VBox class="summary-info">
           <Label design="Bold" text="{i18n>LABEL_00117}" />
-          <ObjectStatus text="{= !${/Total/AppCom} ? '0' : ${/Total/AppCom} }" state="Indication04" />
+          <ObjectStatus text="{= !${/Total/AppCom} ? '0' : ${/Total/AppCom} }" state="Indication05" />
         </VBox>
       </HBox>
     </VBox>

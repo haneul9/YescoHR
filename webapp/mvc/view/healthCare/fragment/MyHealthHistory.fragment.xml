@@ -9,27 +9,27 @@
                 path: '/Total/Zyear',
                 formatter: '.thisYear'
             }" class="sapUiSmallMarginBottom" />
-            <HBox>
+            <HBox class="mt-50-px">
                 <VBox width="30%" class="summary-info">
                     <Label design="Bold" text="{i18n>LABEL_21005}" />
                     <ObjectStatus text="{
                         path: '/Total/HealthTot',
                         formatter: '.formatNumber'
-                    }" state="Indication04" />
+                    }" state="Indication05" />
                 </VBox>
                 <VBox width="30%" class="summary-info">
                     <Label design="Bold" text="{i18n>LABEL_21006}" />
                     <ObjectStatus text="{
                         path: '/Total/HealthIng',
                         formatter: '.formatNumber'
-                    }" state="Indication04" />
+                    }" state="Indication05" />
                 </VBox>
                 <VBox class="summary-info">
                     <Label design="Bold" text="{i18n>LABEL_00117}" />
                     <ObjectStatus text="{
                         path: '/Total/HealthCom',
                         formatter: '.formatNumber'
-                    }" state="Indication04" />
+                    }" state="Indication05" />
                 </VBox>
             </HBox>
         </VBox>

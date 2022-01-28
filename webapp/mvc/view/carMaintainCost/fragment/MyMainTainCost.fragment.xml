@@ -12,10 +12,13 @@
             <HBox class="mt-50-px">
                 <VBox width="40%" class="summary-info">
                     <Label design="Bold" text="{i18n>LABEL_09009}" />
-                    <ObjectStatus text="{
-                        path: '/Total/Betrg',
-                        formatter: '.formatPay'
-                    }" state="Indication05" />
+                    <HBox alignItems="Baseline">
+                        <ObjectStatus text="{
+                            path: '/Total/Betrg',
+                            formatter: '.formatPay'
+                        }" state="Indication05" class="mr-5-px" />
+                        <Label design="Bold" text="{i18n>LABEL_00158}" />
+                    </HBox>
                 </VBox>
                 <VBox class="summary-info">
                     <Label design="Bold" text="{i18n>LABEL_25003}" />

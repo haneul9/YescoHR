@@ -134,7 +134,7 @@ sap.ui.define(
       },
 
       formatPay(vPay = '0') {
-        return `${vPay}${this.getBundleText('LABEL_00158')}`;
+        return vPay;
       },
 
       async onSearch() {

@@ -89,7 +89,7 @@ sap.ui.define(
       formatPay(vPay) {
         if (!vPay || vPay === '0') return '0';
 
-        return `${vPay}${this.getBundleText('LABEL_00158')}`;
+        return vPay;
       },
 
       getTotalPay() {

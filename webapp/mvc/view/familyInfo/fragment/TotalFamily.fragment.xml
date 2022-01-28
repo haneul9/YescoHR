@@ -11,14 +11,14 @@
                     path: '/Total/Famcnt',
                     formatter: '.formatNumber'
                 }" state="Indication05" class="sapUiSmallMarginBottom" />
-                <Text text="{i18n>MSG_05002}" />
+                <Text text="{i18n>MSG_05018}" />
             </HBox>
             <HBox class="desc pt-16-px">
                 <Text text="{i18n>MSG_05003}"/>
                 <ObjectStatus text="{
                     path: '/Total/Famamt',
                     formatter: '.formatPay'
-                }" state="Indication04" class="font-30-px"/>
+                }" state="Indication05" class="font-30-px"/>
                 <Text text="{i18n>MSG_05002}"/>
             </HBox>
             <Text text="{i18n>MSG_05004}" class="col-j pt-18-px" />

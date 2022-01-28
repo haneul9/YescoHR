@@ -73,7 +73,7 @@ sap.ui.define(
       },
 
       formatPay(vPay = '0') {
-        return vPay === '0' ? this.TextUtils.toCurrency(vPay) : `${this.TextUtils.toCurrency(vPay)}${this.getBundleText('LABEL_00158')}`;
+        return this.TextUtils.toCurrency(vPay);
       },
 
       thisYear(sYear = String(moment().format('YYYY'))) {

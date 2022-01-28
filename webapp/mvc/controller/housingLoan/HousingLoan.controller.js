@@ -79,7 +79,7 @@ sap.ui.define(
       formatPay(vPay = '0') {
         vPay = this.TextUtils.toCurrency(vPay);
 
-        return `${vPay}${this.getBundleText('LABEL_00158')}`;
+        return vPay;
       },
 
       onSearch() {

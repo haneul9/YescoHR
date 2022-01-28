@@ -28,14 +28,17 @@
               <ObjectStatus text="{
 									path: '/Total/Pycnt',
 									formatter: '.formatNumber'
-								}" state="Indication04" />
+								}" state="Indication05" />
             </VBox>
             <VBox class="summary-info">
               <Label design="Bold" text="{i18n>LABEL_02002}" />
-              <ObjectStatus text="{
+              <HBox alignItems="Baseline">
+                <ObjectStatus text="{
 									path: '/Total/ZpayBetT',
 									formatter: '.formatPay'
-								}" state="Indication04" />
+								}" state="Indication05" class="mr-5-px" />
+                <Label design="Bold" text="{i18n>LABEL_00158}" />
+              </HBox>
             </VBox>
           </HBox>
           <HBox class="desc">

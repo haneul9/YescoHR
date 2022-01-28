@@ -9,27 +9,33 @@
                 path: '/Total/Zyear',
                 formatter: '.thisYear'
             }" class="sapUiSmallMarginBottom" />
-            <HBox>
+            <HBox class="mt-50-px">
                 <VBox width="20%" class="summary-info">
                     <Label design="Bold" text="{i18n>LABEL_02003}" />
                     <ObjectStatus text="{
                         path: '/Total/Count',
                         formatter: '.formatNumber'
-                    }" state="Indication04" />
+                    }" state="Indication05" />
                 </VBox>
                 <VBox width="40%" class="summary-info">
                     <Label design="Bold" text="{i18n>LABEL_09009}" />
-                    <ObjectStatus text="{
-                        path: '/Total/Pybet',
-                        formatter: '.formatPay'
-                    }" state="Indication04" />
+                    <HBox alignItems="Baseline">
+                        <ObjectStatus text="{
+                            path: '/Total/Pybet',
+                            formatter: '.formatPay'
+                        }" state="Indication05" class="mr-5-px" />
+                        <Label design="Bold" text="{i18n>LABEL_00158}" />
+                    </HBox>
                 </VBox>
                 <VBox class="summary-info">
                     <Label design="Bold" text="{i18n>LABEL_09003}" />
-                    <ObjectStatus text="{
-                        path: '/Total/Apbet',
-                        formatter: '.formatPay'
-                    }" state="Indication04" />
+                    <HBox alignItems="Baseline">
+                        <ObjectStatus text="{
+                            path: '/Total/Apbet',
+                            formatter: '.formatPay'
+                        }" state="Indication04" class="mr-5-px" />
+                        <Label design="Bold" text="{i18n>LABEL_00158}" />
+                    </HBox>
                 </VBox>
             </HBox>
         </VBox>

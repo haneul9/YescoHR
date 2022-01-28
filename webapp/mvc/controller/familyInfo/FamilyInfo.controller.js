@@ -68,11 +68,11 @@ sap.ui.define(
       },
 
       formatNumber(vNum = '0') {
-        return `${vNum}${this.getBundleText('LABEL_00159')}`;
+        return vNum;
       },
 
       formatPay(vPay = '0') {
-        return `${vPay}${this.getBundleText('LABEL_00158')}`;
+        return vPay;
       },
 
       thisYear(sYear = String(moment().format('YYYY'))) {
