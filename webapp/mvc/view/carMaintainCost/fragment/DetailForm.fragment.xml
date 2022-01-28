@@ -21,7 +21,7 @@
             </VBox>
             <Label text="{i18n>LABEL_25010}" visible="{= ${/FormData/Appty} === 'D' }"/>
             <HBox visible="{= ${/FormData/Appty} === 'D' }">
-                <custom:DatePicker dateValue="{ path: '/FormData/Expdt', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= ${/FormData/Appty} === 'D' &amp;&amp; !${/FormData/Fixed} }" class="sapUiTinyMarginEnd required"/>
+                <custom:DatePicker dateValue="{ path: '/FormData/Expdt', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= (${/FormData/Appty} === 'D' &amp;&amp; !${/FormData/Fixed}) &amp;&amp; (!${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10') }" class="sapUiTinyMarginEnd required"/>
                 <Text text="{i18n>MSG_25002}"/>
                 <layoutData>
                     <grid:GridItemLayoutData gridColumn="2 / 5"/>
