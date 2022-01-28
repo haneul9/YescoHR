@@ -106,7 +106,7 @@ sap.ui.define(
       async createPopover() {
         if (!this.oPopover) {
           this.oPopover = await Fragment.load({
-            name: 'sap.ui.yesco.mvc.view.home.fragment.PortletsP06Popover',
+            name: 'sap.ui.yesco.mvc.view.home.fragment.P06PortletDataPopover',
             controller: this,
           });
 

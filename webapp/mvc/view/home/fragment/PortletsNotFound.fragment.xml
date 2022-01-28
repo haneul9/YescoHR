@@ -5,6 +5,6 @@
     <layoutData>
       <f:GridContainerItemLayoutData rows="1" columns="4" />
     </layoutData>
-    <Title level="H4" text="{i18n>MSG_01901}" />
+    <Title level="H4" text="{/message}" />
   </VBox>
 </core:FragmentDefinition>

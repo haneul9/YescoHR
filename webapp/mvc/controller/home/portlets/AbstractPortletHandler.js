@@ -1,27 +1,31 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/m/HBox',
     'sap/ui/core/Fragment',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/Debuggable',
     'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/control/MessageBox',
+    'sap/ui/yesco/control/PortletBox',
   ],
   (
     // prettier 방지용 주석
+    HBox,
     Fragment,
     JSONModel,
     AppUtils,
     Debuggable,
     UI5Error,
-    MessageBox
+    MessageBox,
+    PortletBox
   ) => {
     'use strict';
 
     return Debuggable.extend('sap.ui.yesco.mvc.controller.home.portlets.AbstractPortletHandler', {
       sContainerId: 'portlets-grid',
-      oFragment: null,
+      oPortletBox: null,
 
       /**
        * @override
@@ -41,17 +45,18 @@ sap.ui.define(
 
       async addPortlet() {
         const oPortletModel = this.getPortletModel();
-        const sPortletId = oPortletModel.getProperty('/id');
+        const sPortletID = oPortletModel.getProperty('/id');
 
-        const oFragment = await Fragment.load({
-          name: `sap.ui.yesco.mvc.view.home.fragment.Portlets${sPortletId}`,
+        const oPortletBodyContent = await Fragment.load({
+          name: `sap.ui.yesco.mvc.view.home.fragment.${sPortletID}PortletBodyContent`,
           controller: this,
         });
 
-        oFragment.setModel(oPortletModel).bindElement('/');
+        const oPortletBox = new PortletBox({ controller: this }).setModel(oPortletModel).bindElement('/');
+        oPortletBox.getItems()[1].addItem(oPortletBodyContent);
 
-        this.oController.byId(this.sContainerId).addItem(oFragment);
-        this.setFragment(oFragment);
+        this.oController.byId(this.sContainerId).addItem(oPortletBox);
+        this.setPortletBox(oPortletBox);
       },
 
       async showContentData() {
@@ -139,13 +144,13 @@ sap.ui.define(
         return this.oPortletModel;
       },
 
-      setFragment(oFragment) {
-        this.oFragment = oFragment;
+      setPortletBox(oPortletBox) {
+        this.oPortletBox = oPortletBox;
         return this;
       },
 
-      getFragment() {
-        return this.oFragment;
+      getPortletBox() {
+        return this.oPortletBox;
       },
 
       setBusy(bBusy = true, sPath = '/busy') {
@@ -161,7 +166,7 @@ sap.ui.define(
         this.resetPortletData(oPortletModel.getProperty('/id'));
 
         oPortletModel.destroy();
-        this.getFragment().destroy();
+        this.getPortletBox().destroy();
       },
 
       resetPortletData(sPortletId) {

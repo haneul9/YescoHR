@@ -11,7 +11,7 @@
           <Button text="{i18n>LABEL_00121}" class="sapUiTinyMarginEnd" type="Emphasized" visible="{/detail/editable}" enabled="{/detail/enabled}" press=".onPressRequestApproval" busy="{/busy}" busyIndicatorDelay="0" />
           <Button text="{i18n>LABEL_00146}" class="sapUiTinyMarginEnd" press=".onNavBack" />
           <Button text="{i18n>LABEL_00131}" icon="sap-icon://print" class="sapUiTinyMarginEnd" press=".onPagePrint" />
-          <Button text="{i18n>LABEL_00132}" icon="sap-icon://sys-help" />
+          <Button text="{i18n>LABEL_00132}" icon="sap-icon://sys-help" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
         </HBox>
       </HBox>
     </VBox>

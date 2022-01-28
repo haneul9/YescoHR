@@ -1,6 +1,6 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.app.App"
   xmlns="sap.m"
-  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control"
   xmlns:mvc="sap.ui.core.mvc" displayBlock="true">
   <OverflowToolbar id="appMenuToolbar" asyncMode="true" busy="{appModel>/isMenuBusy}" busyIndicatorDelay="0" class="app-menu-toolbar" height="60px">
     <ImageContent id="logo-image" src="{ path: 'sessionModel>/Werks', formatter: '.getLogoPath' }" description="{sessionModel>/Pbtxt} eHR Home" press=".navToHome" class="home-logo">
@@ -17,7 +17,7 @@
 
     <GenericTile frameType="Auto" width="auto" class="my-info" press=".navToProfile" tooltip="{sessionModel>/Pernr}">
       <TileContent>
-        <HBox alignItems="Center" height="100%">
+        <HBox justifyContent="End" alignItems="Center" height="100%">
           <Text text="{sessionModel>/Ename}" class="name" />
           <Text text="{sessionModel>/Zzjikgbt} / {sessionModel>/Zzjikcht}" />
           <Image src="{sessionModel>/Photo}" mode="Background" class="member-photo" width="26px" />
@@ -25,13 +25,18 @@
       </TileContent>
     </GenericTile>
 
-    <Button type="Transparent" class="icon-button notification" press=".onPressNotificationPopoverOpen" tooltip="{i18n>LABEL_01002}">
-      <customData>
-        <core:CustomData key="unread" value="{= ${sessionModel>/Alarmck} === 'X' ? 'O' : 'X' }" writeToDom="true" />
-      </customData>
+    <HBox alignItems="Center" class="notification-wrapper">
+      <Button id="notification-bell" type="Transparent" class="icon-button notification" press=".onPressNotificationPopoverOpen" tooltip="{i18n>LABEL_01002}" />
+      <custom:PressableLabel text="{notificationModel>/unreadCount}" visible="{= !!${notificationModel>/showUnreadCount} }" class="notification-count" press=".onPressNotificationPopoverOpen" displayOnly="true" textAlign="Center" />
+    </HBox>
+
+    <Button type="Transparent" visible="{appModel>/isAtHome}" class="icon-button settings" press=".onPressPortletsP13nDialogOpen" tooltip="{i18n>LABEL_01003}">
+      <layoutData>
+        <OverflowToolbarLayoutData priority="NeverOverflow" />
+      </layoutData>
     </Button>
 
-    <Button type="Transparent" visible="{appModel>/isAtHome}" class="icon-button setting" press=".onPressPortletsP13nDialogOpen" tooltip="{i18n>LABEL_01101}">
+    <Button type="Transparent" class="icon-button logout" press=".onPressLogout" tooltip="{i18n>LABEL_01004}">
       <layoutData>
         <OverflowToolbarLayoutData priority="NeverOverflow" />
       </layoutData>

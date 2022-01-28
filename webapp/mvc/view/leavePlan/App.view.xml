@@ -1,75 +1,75 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.leavePlan.App"
-    xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns:grid="sap.ui.layout.cssgrid"
-    xmlns:custom="sap.ui.yesco.control">
-    <Page showHeader="false">
-        <VBox class="contents-header">
-            <HBox justifyContent="SpaceBetween" class="breadcrumbs">
-                <custom:Breadcrumbs />
-                <HBox>
-                    <Button text="{i18n>LABEL_00104}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{/buttons/SAVE}" press=".onPressSave" />
-                    <Button text="{i18n>LABEL_00121}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{/buttons/APPROVAL}" press=".onPressApproval" />
-                    <Button text="{i18n>LABEL_00171}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{/buttons/PRINT}" press=".onPressPrint" />
-                    <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
-                    <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" />
-                </HBox>
-            </HBox>
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:custom="sap.ui.yesco.control">
+  <Page showHeader="false">
+    <VBox class="contents-header">
+      <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+        <custom:Breadcrumbs />
+        <HBox>
+          <Button text="{i18n>LABEL_00104}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{/buttons/SAVE}" press=".onPressSave" />
+          <Button text="{i18n>LABEL_00121}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{/buttons/APPROVAL}" press=".onPressApproval" />
+          <Button text="{i18n>LABEL_00171}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{/buttons/PRINT}" press=".onPressPrint" />
+          <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
+          <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
+        </HBox>
+      </HBox>
+    </VBox>
+    <VBox class="contents" busyIndicatorDelay="0" busy="{/busy}">
+      <HBox justifyContent="SpaceAround">
+        <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBox" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.leavePlan.fragment.Summary" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.leavePlan.fragment.OverviewSearchCondition" type="XML" />
+      </HBox>
+      <VBox class="vCardBox">
+        <HBox class="table-toolbar" justifyContent="SpaceBetween">
+          <HBox class="title">
+            <Title level="H2" text="{i18n>LABEL_20005}" />
+            <Text text="{i18n>MSG_20001}" class="desc-txt" />
+          </HBox>
+          <HBox class="status-wrap year-plan">
+            <Text text="{i18n>LABEL_20006}" class="type02" />
+            <Text text="{i18n>LABEL_20007}" class="type07" />
+            <Text text="{i18n>LABEL_20008}" class="type05" />
+          </HBox>
+        </HBox>
+        <grid:CSSGrid id="yearPlanGrid" class="year-plan-grid" gridTemplateColumns="70px 70px repeat(31, 1fr)" gridGap="1px" items="{path: '/plans/grid'}">
+          <custom:DayBox width="100%" click=".onClickDay">
+            <custom:customData>
+              <core:CustomData key="day" value="{day}" />
+              <core:CustomData key="style" value="{classNames}" writeToDom="true" />
+              <core:CustomData key="awart" value="{awart}" writeToDom="true" />
+            </custom:customData>
+            <Text width="100%" textAlign="Center" text="{label}">
+              <layoutData>
+                <FlexItemData growFactor="1" />
+              </layoutData>
+              <customData>
+                <core:CustomData key="day" value="{day}" />
+              </customData>
+            </Text>
+          </custom:DayBox>
+        </grid:CSSGrid>
+      </VBox>
+      <VBox class="vCardBox" visible="{= ${/summary/Sgnyn} === 'X' }">
+        <HBox class="table-toolbar">
+          <HBox class="title">
+            <Title level="H2" text="{i18n>LABEL_20009}" />
+            <Text text="{i18n>MSG_20002}" class="desc-txt" />
+          </HBox>
+        </HBox>
+        <VBox>
+          <HBox visible="{= !${/summary/Fileurl} }" alignItems="End">
+            <custom:Signature id="signature-pad" width="500" height="120" class="sapUiSmallMarginEnd" />
+            <Button text="Clear" press=".onPressSignatureClear" />
+          </HBox>
+          <HBox visible="{= !!${/summary/Fileurl} }">
+            <Image width="500px" height="120px" src="{/summary/Fileurl}" alt="Signature" />
+          </HBox>
         </VBox>
-        <VBox class="contents" busyIndicatorDelay="0" busy="{/busy}">
-            <HBox justifyContent="SpaceAround">
-                <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBox" type="XML" />
-                <core:Fragment fragmentName="sap.ui.yesco.mvc.view.leavePlan.fragment.Summary" type="XML" />
-                <core:Fragment fragmentName="sap.ui.yesco.mvc.view.leavePlan.fragment.OverviewSearchCondition" type="XML" />
-            </HBox>
-            <VBox class="vCardBox">
-                <HBox class="table-toolbar" justifyContent="SpaceBetween">
-                    <HBox class="title">
-                        <Title level="H2" text="{i18n>LABEL_20005}" />
-                        <Text text="{i18n>MSG_20001}" class="desc-txt" />
-                    </HBox>
-                    <HBox class="status-wrap year-plan">
-                        <Text text="{i18n>LABEL_20006}" class="type02" />
-                        <Text text="{i18n>LABEL_20007}" class="type07" />
-                        <Text text="{i18n>LABEL_20008}" class="type05" />
-                    </HBox>
-                </HBox>
-                <grid:CSSGrid id="yearPlanGrid" class="year-plan-grid" gridTemplateColumns="70px 70px repeat(31, 1fr)" gridGap="1px" items="{path: '/plans/grid'}">
-                    <custom:DayBox width="100%" click=".onClickDay">
-                        <custom:customData>
-                            <core:CustomData key="day" value="{day}" />
-                            <core:CustomData key="style" value="{classNames}" writeToDom="true" />
-                            <core:CustomData key="awart" value="{awart}" writeToDom="true" />
-                        </custom:customData>
-                        <Text width="100%" textAlign="Center" text="{label}">
-                            <layoutData>
-                                <FlexItemData growFactor="1" />
-                            </layoutData>
-                            <customData>
-                                <core:CustomData key="day" value="{day}" />
-                            </customData>
-                        </Text>
-                    </custom:DayBox>
-                </grid:CSSGrid>
-            </VBox>
-            <VBox class="vCardBox" visible="{= ${/summary/Sgnyn} === 'X' }">
-                <HBox class="table-toolbar">
-                    <HBox class="title">
-                        <Title level="H2" text="{i18n>LABEL_20009}" />
-                        <Text text="{i18n>MSG_20002}" class="desc-txt" />
-                    </HBox>
-                </HBox>
-                <VBox>
-                    <HBox visible="{= !${/summary/Fileurl} }" alignItems="End">
-                        <custom:Signature id="signature-pad" width="500" height="120" class="sapUiSmallMarginEnd" />
-                        <Button text="Clear" press=".onPressSignatureClear" />
-                    </HBox>
-                    <HBox visible="{= !!${/summary/Fileurl} }">
-                        <Image width="500px" height="120px" src="{/summary/Fileurl}" alt="Signature" />
-                    </HBox>
-                </VBox>
-            </VBox>
-        </VBox>
-    </Page>
+      </VBox>
+    </VBox>
+  </Page>
 </mvc:View>

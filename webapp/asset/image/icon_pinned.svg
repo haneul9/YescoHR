@@ -1,0 +1,28 @@
+<svg id="그룹_179564" data-name="그룹 179564" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: none;
+      }
+
+      .cls-2 {
+        stroke: #387fe9;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .cls-3 {
+        fill: #3480e9;
+      }
+    </style>
+  </defs>
+  <path id="패스_53780" data-name="패스 53780" class="cls-1" d="M0,0H18V18H0Z"/>
+  <g id="그룹_179551" data-name="그룹 179551" transform="translate(0.528 -0.219)">
+    <g id="그룹_179550" data-name="그룹 179550" transform="translate(3.369 3.365)">
+      <path id="패스_53781" data-name="패스 53781" class="cls-2" d="M11.941,4.5,9.229,7.212,6.517,8.229,5.5,9.246l4.746,4.746,1.017-1.017,1.017-2.712,2.712-2.712" transform="translate(-4.782 -4.5)"/>
+      <line id="선_3977" data-name="선 3977" class="cls-2" x1="3.093" y2="3.093" transform="translate(0 7.117)"/>
+    </g>
+    <line id="선_3978" data-name="선 3978" class="cls-2" x2="3.781" y2="3.781" transform="translate(10.17 2.993)"/>
+    <path id="패스_53786" data-name="패스 53786" class="cls-3" d="M10.572,3.395,7.886,6.081,5,7.178,3.972,8.2,8.831,13.06l1.023-1.023L10.916,8.9,13.5,6.32Z"/>
+  </g>
+</svg>
