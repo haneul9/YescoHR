@@ -9,13 +9,13 @@
         <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
             <Label text="{i18n>LABEL_25008}" />
             <VBox>
-                <ComboBox items="{/MaintainType}" selectedKey="{/FormData/Appty}" change="onMaintainType" editable="{/FormData/Fixed}" class="required">
+                <ComboBox items="{/MaintainType}" width="250px" selectedKey="{/FormData/Appty}" change="onMaintainType" editable="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" class="required">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
             </VBox>
             <Label text="{i18n>LABEL_25009}" />
             <VBox>
-                <ComboBox items="{/AppDept}" selectedKey="{/FormData/Payorg}" editable="{/FormData/Fixed}" class="required">
+                <ComboBox items="{/AppDept}" width="250px" selectedKey="{/FormData/Payorg}" editable="{/FormData/Fixed}" class="required">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
             </VBox>
@@ -62,7 +62,7 @@
             </VBox>
             <Label text="{i18n>LABEL_25017}"/>
             <VBox>
-                <ComboBox items="{/LicenseType}" selectedKey="{/FormData/Idtype}" editable="{/FormData/Fixed}" class="required">
+                <ComboBox items="{/LicenseType}" width="250px" selectedKey="{/FormData/Idtype}" editable="{/FormData/Fixed}" class="required">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
             </VBox>
@@ -73,7 +73,7 @@
             </VBox>
             <Label text="{i18n>LABEL_25007}" />
             <VBox>
-                <ComboBox items="{/PayType}" selectedKey="{/FormData/Payty}" change=".onPayType" editable="{/FormData/Fixed}" class="required">
+                <ComboBox items="{/PayType}" width="250px" selectedKey="{/FormData/Payty}" change=".onPayType" editable="{/FormData/Fixed}" class="required">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
             </VBox>
@@ -84,7 +84,7 @@
             </HBox>
             <Label text="{i18n>LABEL_25019}" visible="{/FormData/bPayType}" />
             <VBox visible="{/FormData/bPayType}">
-                <ComboBox items="{/BankList}" selectedKey="{/FormData/Bankl}" editable="{/FormData/Fixed}" class="required">
+                <ComboBox items="{/BankList}" width="250px" selectedKey="{/FormData/Bankl}" editable="{/FormData/Fixed}" class="required">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
             </VBox>

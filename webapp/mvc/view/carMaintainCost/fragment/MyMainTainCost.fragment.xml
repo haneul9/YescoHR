@@ -9,7 +9,7 @@
                 path: '/Total/Zyear',
                 formatter: '.thisYear'
             }" class="sapUiSmallMarginBottom" />
-            <HBox>
+            <HBox class="mt-50-px">
                 <VBox width="40%" class="summary-info">
                     <Label design="Bold" text="{i18n>LABEL_09009}" />
                     <ObjectStatus text="{

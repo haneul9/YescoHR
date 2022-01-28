@@ -37,8 +37,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.carMaintainCost.CarMaintainCostDetail', {
-      LIST_PAGE_ID: 'container-ehr---carMaintainCost',
-
       AttachFileAction: AttachFileAction,
       TextUtils: TextUtils,
       TableUtils: TableUtils,
@@ -87,14 +85,18 @@ sap.ui.define(
           // 지정은행
           oDetailModel.setProperty('/BankList', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: mBankList }));
 
+          const dDatum = new Date();
           // 신청구분
-          const mMaintainType = await Client.getEntitySet(oModel, 'BenefitCodeList', { Cdnum: 'BE0020' });
+          const mMaintainType = await Client.getEntitySet(oModel, 'BenefitCodeList', {
+            Pernr: this.getAppointeeProperty('Pernr'),
+            Cdnum: 'BE0020',
+            Datum: dDatum,
+          });
 
           oDetailModel.setProperty('/MaintainType', mMaintainType);
 
           // 운전면허종별
           const sWerks = this.getAppointeeProperty('Werks');
-          const dDatum = new Date();
           const mLicenseType = await Client.getEntitySet(oModel, 'BenefitCodeList', {
             Werks: sWerks,
             Datum: dDatum,
@@ -204,6 +206,7 @@ sap.ui.define(
         }
 
         oDetailModel.setProperty('/FormData/Fixed', bEdit);
+        this.settingsAttachTable();
       },
 
       // 지급방식
@@ -245,82 +248,84 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const mFormData = oDetailModel.getProperty('/FormData');
 
-        // 신청부서/업무
-        if (mFormData.Payorg === 'ALL' || !mFormData.Payorg) {
-          MessageBox.alert(this.getBundleText('MSG_25005'));
-          return true;
-        }
+        if (mFormData.Fixed) {
+          // 신청부서/업무
+          if (mFormData.Payorg === 'ALL' || !mFormData.Payorg) {
+            MessageBox.alert(this.getBundleText('MSG_25005'));
+            return true;
+          }
 
-        // 해지일(지원종료일)
-        if (!mFormData.Expdt && !mFormData.Fixed) {
-          MessageBox.alert(this.getBundleText('MSG_25006'));
-          return true;
-        }
+          // 차량번호
+          if (!mFormData.Carno) {
+            MessageBox.alert(this.getBundleText('MSG_25007'));
+            return true;
+          }
 
-        // 차량번호
-        if (!mFormData.Carno) {
-          MessageBox.alert(this.getBundleText('MSG_25007'));
-          return true;
-        }
+          // 차종
+          if (!mFormData.Carty) {
+            MessageBox.alert(this.getBundleText('MSG_25008'));
+            return true;
+          }
 
-        // 차종
-        if (!mFormData.Carty) {
-          MessageBox.alert(this.getBundleText('MSG_25008'));
-          return true;
-        }
+          // 배기량
+          if (!mFormData.Cc) {
+            MessageBox.alert(this.getBundleText('MSG_25009'));
+            return true;
+          }
 
-        // 배기량
-        if (!mFormData.Cc) {
-          MessageBox.alert(this.getBundleText('MSG_25009'));
-          return true;
-        }
+          // 년식
+          if (!mFormData.Caryr) {
+            MessageBox.alert(this.getBundleText('MSG_25010'));
+            return true;
+          }
 
-        // 년식
-        if (!mFormData.Caryr) {
-          MessageBox.alert(this.getBundleText('MSG_25010'));
-          return true;
-        }
+          // 차량등록일
+          if (!mFormData.Cardt) {
+            MessageBox.alert(this.getBundleText('MSG_25011'));
+            return true;
+          }
 
-        // 차량등록일
-        if (!mFormData.Cardt) {
-          MessageBox.alert(this.getBundleText('MSG_25011'));
-          return true;
-        }
+          // 운전면허번호
+          if (!mFormData.Id) {
+            MessageBox.alert(this.getBundleText('MSG_25012'));
+            return true;
+          }
 
-        // 운전면허번호
-        if (!mFormData.Id) {
-          MessageBox.alert(this.getBundleText('MSG_25012'));
-          return true;
-        }
+          // 운전면허종별
+          if (mFormData.Idtype === 'ALL' || !mFormData.Idtype) {
+            MessageBox.alert(this.getBundleText('MSG_25013'));
+            return true;
+          }
 
-        // 운전면허종별
-        if (mFormData.Idtype === 'ALL' || !mFormData.Idtype) {
-          MessageBox.alert(this.getBundleText('MSG_25013'));
-          return true;
-        }
+          // 지급방식
+          if (mFormData.Payty === 'ALL' || !mFormData.Payty) {
+            MessageBox.alert(this.getBundleText('MSG_25014'));
+            return true;
+          }
 
-        // 지급방식
-        if (mFormData.Payty === 'ALL' || !mFormData.Payty) {
-          MessageBox.alert(this.getBundleText('MSG_25014'));
-          return true;
-        }
+          // 지정은행
+          if ((mFormData.Bankl === 'ALL' || !mFormData.Bankl) && mFormData.bPayType) {
+            MessageBox.alert(this.getBundleText('MSG_25015'));
+            return true;
+          }
 
-        // 지정은행
-        if ((mFormData.Bankl === 'ALL' || !mFormData.Bankl) && mFormData.bPayType) {
-          MessageBox.alert(this.getBundleText('MSG_25015'));
-          return true;
-        }
+          // 지정계좌번호
+          if (!mFormData.Bankn && mFormData.bPayType) {
+            MessageBox.alert(this.getBundleText('MSG_25016'));
+            return true;
+          }
 
-        // 지정계좌번호
-        if (!mFormData.Bankn && mFormData.bPayType) {
-          MessageBox.alert(this.getBundleText('MSG_25016'));
-          return true;
-        }
-
-        // 첨부파일
-        if (mFormData.Fixed && !AttachFileAction.getFileCount.call(this)) {
-          MessageBox.alert(this.getBundleText('MSG_00046'));
-          return true;
+          // 첨부파일
+          if (mFormData.Fixed && !AttachFileAction.getFileCount.call(this)) {
+            MessageBox.alert(this.getBundleText('MSG_00046'));
+            return true;
+          }
+        } else {
+          // 해지일(지원종료일)
+          if (!mFormData.Expdt) {
+            MessageBox.alert(this.getBundleText('MSG_25006'));
+            return true;
+          }
         }
 
         return false;
@@ -328,8 +333,10 @@ sap.ui.define(
       // 재작성
       onRewriteBtn() {
         const oDetailModel = this.getViewModel();
+        const bFixed = oDetailModel.getProperty('/FormData/Appty') !== 'D';
 
         oDetailModel.setProperty('/FormData/Appno', '');
+        oDetailModel.setProperty('/FormData/Fixed', bFixed);
         oDetailModel.setProperty('/FormData/ZappStatAl', '');
         this.settingsAttachTable();
       },
@@ -371,7 +378,7 @@ sap.ui.define(
               const oModel = this.getModel(ServiceNames.BENEFIT);
               let oSendObject = {
                 ...mFormData,
-                Prcty: 'C',
+                Prcty: 'T',
                 Menid: this.getCurrentMenuId(),
               };
 
@@ -484,11 +491,12 @@ sap.ui.define(
       settingsAttachTable() {
         const oDetailModel = this.getViewModel();
         const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
-        const bFixed = oDetailModel.getProperty('/FormData/Fixed');
+        const bFixed = oDetailModel.getProperty('/FormData/Appty') !== 'D';
         const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
 
         AttachFileAction.setAttachFile(this, {
-          Editable: bFixed && (!sStatus || sStatus === '10'),
+          Editable: !sStatus || sStatus === '10',
+          Visible: bFixed,
           Type: this.getApprovalType(),
           Appno: sAppno,
           Max: 10,
