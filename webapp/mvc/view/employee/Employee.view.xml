@@ -1,39 +1,39 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.employee.Employee"
-    xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns:custom="sap.ui.yesco.control">
-    <Page showHeader="false">
-        <VBox class="contents-header">
-            <HBox justifyContent="SpaceBetween" class="breadcrumbs">
-                <custom:Breadcrumbs />
-                <HBox>
-                    <Button icon="sap-icon://crm-service-manager" text="{i18n>LABEL_00275}" class="sapUiTinyMarginEnd type-print" press=".onEmployeePrint" />
-                    <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
-                    <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" />
-                </HBox>
-            </HBox>
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:custom="sap.ui.yesco.control">
+  <Page showHeader="false">
+    <VBox class="contents-header">
+      <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+        <custom:Breadcrumbs />
+        <HBox>
+          <Button icon="sap-icon://crm-service-manager" text="{i18n>LABEL_00275}" class="sapUiTinyMarginEnd type-print" press=".onEmployeePrint" />
+          <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
+          <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
+        </HBox>
+      </HBox>
+    </VBox>
+    <VBox class="contents">
+      <HBox>
+        <VBox id="sideBody" class="vCardBox side-navigation expanded sapUiSmallMarginEnd" height="{/sideNavigation/height}">
+          <ToggleButton icon="sap-icon://navigation-left-arrow" press=".onToggleNavigation" class="icon-button toggle-navi" />
+          <!-- 펼침버튼 디자인 변경-->
+          <IconTabBar selectedKey="{/sideNavigation/selectedKey}" expandable="false" visible="{= ${/sideNavigation/isShow}}" select=".onSelectSideTab">
+            <layoutData>
+              <FlexItemData growFactor="1"/>
+            </layoutData>
+            <items>
+              <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.SideList" type="XML" />
+              <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.SideTree" type="XML" />
+            </items>
+          </IconTabBar>
         </VBox>
-        <VBox class="contents">
-            <HBox>
-                <VBox id="sideBody" class="vCardBox side-navigation expanded sapUiSmallMarginEnd" height="{/sideNavigation/height}">
-                    <ToggleButton icon="sap-icon://navigation-left-arrow" press=".onToggleNavigation" class="icon-button toggle-navi" />
-                    <!-- 펼침버튼 디자인 변경-->
-                    <IconTabBar selectedKey="{/sideNavigation/selectedKey}" expandable="false" visible="{= ${/sideNavigation/isShow}}" select=".onSelectSideTab">
-                        <layoutData>
-                            <FlexItemData growFactor="1"/>
-                        </layoutData>
-                        <items>
-                            <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.SideList" type="XML" />
-                            <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.SideTree" type="XML" />
-                        </items>
-                    </IconTabBar>
-                </VBox>
-                <VBox id="profileBody" class="main-profile" busyIndicatorDelay="0" busy="{/employee/busy}">
-                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.ProfileOverview" type="XML" />
-                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.ProfileTab" type="XML" />
-                </VBox>
-            </HBox>
+        <VBox id="profileBody" class="main-profile" busyIndicatorDelay="0" busy="{/employee/busy}">
+          <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.ProfileOverview" type="XML" />
+          <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.ProfileTab" type="XML" />
         </VBox>
-    </Page>
+      </HBox>
+    </VBox>
+  </Page>
 </mvc:View>

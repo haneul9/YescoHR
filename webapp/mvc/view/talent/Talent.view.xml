@@ -11,7 +11,7 @@
         <HBox>
           <Button type="Emphasized" class="sapUiTinyMarginEnd" text="프로파일 비교" press=".onDialog" />
           <Button text="{i18n>LABEL_00131}" icon="sap-icon://print" press=".onPagePrint" class="sapUiTinyMarginEnd" />
-          <Button text="{i18n>LABEL_00132}" icon="sap-icon://sys-help" />
+          <Button text="{i18n>LABEL_00132}" icon="sap-icon://sys-help" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
         </HBox>
       </HBox>
     </VBox>

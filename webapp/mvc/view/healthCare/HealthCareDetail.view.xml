@@ -12,8 +12,8 @@
             <Button text="{i18n>LABEL_00108}" class="sapUiTinyMarginEnd" type="Emphasized" press=".onFixBtn" visible="{= ${/FormData/Chanable} === 'X' &amp;&amp; !${/Fixed} }" />
             <Button text="{i18n>LABEL_00103}" class="sapUiTinyMarginEnd" type="Emphasized" press=".onSaveBtn" visible="{/Fixed}" />
             <Button text="{i18n>LABEL_00146}" class="sapUiTinyMarginEnd" press=".onNavBack" />
-            <Button text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" icon="sap-icon://print" press=".FragmentEvent.onPagePrint" />
-            <Button text="{i18n>LABEL_00132}" icon="sap-icon://sys-help" />
+            <Button text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" icon="sap-icon://print" press=".onPagePrint" />
+            <Button text="{i18n>LABEL_00132}" icon="sap-icon://sys-help" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
           </HBox>
         </HBox>
       </VBox>

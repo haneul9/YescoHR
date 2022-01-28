@@ -1,28 +1,28 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.organization.Main"
-	xmlns="sap.m"
-	xmlns:core="sap.ui.core"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:custom="sap.ui.yesco.control">
-	<Page showHeader="false">
-		<VBox class="contents-header">
-			<HBox justifyContent="SpaceBetween" class="breadcrumbs">
-				<custom:Breadcrumbs />
-				<HBox>
-					<Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
-					<Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" />
-				</HBox>
-			</HBox>
-		</VBox>
-		<FlexBox class="organization-info">
-			<Text text="{i18n>MSG_12001}" />
-		</FlexBox>
-		<VBox class="organization-legend" items="{/orgLevel}">
-			<Label text="{ZorgLevlt}">
-				<customData>
-					<core:CustomData key="level" value="{ZorgLevl}" writeToDom="true" />
-				</customData>
-			</Label>
-		</VBox>
-		<FlexBox id="ChartHolder" width="100%" height="100%" alignItems="Start" justifyContent="Center" busyIndicatorDelay="0" />
-	</Page>
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:custom="sap.ui.yesco.control">
+  <Page showHeader="false">
+    <VBox class="contents-header">
+      <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+        <custom:Breadcrumbs />
+        <HBox>
+          <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
+          <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
+        </HBox>
+      </HBox>
+    </VBox>
+    <FlexBox class="organization-info">
+      <Text text="{i18n>MSG_12001}" />
+    </FlexBox>
+    <VBox class="organization-legend" items="{/orgLevel}">
+      <Label text="{ZorgLevlt}">
+        <customData>
+          <core:CustomData key="level" value="{ZorgLevl}" writeToDom="true" />
+        </customData>
+      </Label>
+    </VBox>
+    <FlexBox id="ChartHolder" width="100%" height="100%" alignItems="Start" justifyContent="Center" busyIndicatorDelay="0" />
+  </Page>
 </mvc:View>

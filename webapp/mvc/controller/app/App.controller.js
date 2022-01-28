@@ -56,6 +56,10 @@ sap.ui.define(
       onPressPortletsP13nDialogOpen() {
         this.getOwnerComponent().byId('home').getController().onPressPortletsP13nDialogOpen();
       },
+
+      onPressLogout() {
+        location.href = '/sap/public/bc/icf/logoff';
+      },
     });
   }
 );

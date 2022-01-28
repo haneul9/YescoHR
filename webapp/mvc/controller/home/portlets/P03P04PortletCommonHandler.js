@@ -49,41 +49,34 @@ sap.ui.define(
 
           this.setPortletModel(oSiblingPortletModel);
 
-          const oSiblingPortletFragment = oSiblingPortletHandler.getFragment();
-          if (oSiblingPortletFragment) {
-            oSiblingPortletFragment
+          const oSiblingPortletBox = oSiblingPortletHandler.getPortletBox();
+          if (oSiblingPortletBox) {
+            oSiblingPortletBox
               .$()
               .parent()
               .css({ 'grid-column': `span ${iWidth}`, 'grid-row': `span ${iHeight}` });
 
-            this.setFragment(oSiblingPortletFragment);
+            this.setPortletBox(oSiblingPortletBox);
           }
         } else {
           oPortletModel.setData(this.filterProperties(oPortletData));
           oPortletModel.setProperty(`/${this.ROOT_PATH}`, oPortletData);
 
-          const oFragment = await Fragment.load({
-            name: 'sap.ui.yesco.mvc.view.home.fragment.PortletsP03P04',
+          const oPortletBox = await Fragment.load({
+            name: 'sap.ui.yesco.mvc.view.home.fragment.P03P04PortletBox',
             controller: this,
           });
 
-          oFragment.setModel(oPortletModel).bindElement('/');
+          oPortletBox.setModel(oPortletModel).bindElement('/');
 
-          this.oController.byId(this.sContainerId).addItem(oFragment);
-          this.setFragment(oFragment);
+          this.oController.byId(this.sContainerId).addItem(oPortletBox);
+          this.setPortletBox(oPortletBox);
         }
       },
 
       filterProperties(oPortletData) {
         const { busy, switchable, width, height, hideTitle, multiPortlet, selectedMembersButton, orgMembersActive = false, myMembersActive = false } = oPortletData;
         return { busy, switchable, width, height, hideTitle, multiPortlet, selectedMembersButton, orgMembersActive, myMembersActive };
-      },
-
-      async getNewPortletFragment() {
-        const oFragment = await Fragment.load({
-          name: 'sap.ui.yesco.mvc.view.home.fragment.PortletsP03P04',
-          controller: this,
-        });
       },
 
       async readContentData() {
@@ -217,7 +210,7 @@ sap.ui.define(
           oPortletModel.refresh();
         } else {
           oPortletModel.destroy();
-          this.getFragment().destroy();
+          this.getPortletBox().destroy();
         }
 
         this.resetPortletData(sPortletId);

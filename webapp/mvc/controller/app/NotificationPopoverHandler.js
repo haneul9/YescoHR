@@ -22,12 +22,13 @@ sap.ui.define(
     'use strict';
 
     return Debuggable.extend('sap.ui.yesco.mvc.controller.app.NotificationPopoverHandler', {
-      bMobile: AppUtils.isMobile(),
+      bMobile: null,
 
       /**
        * @override
        */
       constructor: function (oController) {
+        this.bMobile = AppUtils.isMobile();
         this.oController = oController;
         this.oNotificationModel = new JSONModel(this.getInitialData());
 
@@ -36,13 +37,12 @@ sap.ui.define(
 
       getInitialData() {
         return {
-          notification: {
-            busy: true,
-            onlyUnread: false,
-            list: [],
-            listCount: 0,
-            unreadCount: 0,
-          },
+          busy: true,
+          onlyUnread: false,
+          list: [],
+          listCount: 0,
+          unreadCount: 0,
+          showUnreadCount: false,
         };
       },
 
@@ -52,6 +52,8 @@ sap.ui.define(
           controller: this,
         });
 
+        const oNotificationModel = this.getNotificationModel();
+
         this.oNotificationPopover
           .attachBeforeOpen(() => {
             this.onChangeNotificationOnlyUnread();
@@ -59,29 +61,31 @@ sap.ui.define(
           .attachAfterClose(() => {
             this.clearContentData();
           })
-          .setModel(this.getNotificationModel())
-          .bindElement('/notification');
+          .setModel(oNotificationModel)
+          .bindElement('/');
 
-        this.getController().getView().addDependent(this.oNotificationPopover);
+        const oView = this.getController().getView();
+        oView.setModel(oNotificationModel, 'notificationModel');
+        oView.addDependent(this.oNotificationPopover);
+
+        this.showContentData();
       },
 
       async showContentData() {
         const aContentData = await this.readContentData();
         const mContentData = this.transformContentData(aContentData);
 
+        const iUnreadCount = Math.min(mContentData.unreadCount, 99);
         const oNotificationModel = this.getNotificationModel();
-        oNotificationModel.setProperty('/notification/list', mContentData.list);
-        oNotificationModel.setProperty('/notification/listCount', mContentData.listCount);
-        oNotificationModel.setProperty('/notification/unreadCount', mContentData.unreadCount);
-
-        this.getController()
-          .getSessionModel()
-          .setProperty('/Alarmck', !mContentData.unreadCount ? '' : 'X', true);
+        oNotificationModel.setProperty('/list', mContentData.list);
+        oNotificationModel.setProperty('/listCount', mContentData.listCount);
+        oNotificationModel.setProperty('/unreadCount', `${iUnreadCount > 99 ? '+' : ''}${iUnreadCount}`);
+        oNotificationModel.setProperty('/showUnreadCount', mContentData.unreadCount > 0);
       },
 
       async readContentData() {
         const oNotificationModel = this.getNotificationModel();
-        const bOnlyUnread = oNotificationModel.getProperty('/notification/onlyUnread');
+        const bOnlyUnread = oNotificationModel.getProperty('/onlyUnread');
 
         const oCommonModel = this.getController().getModel(ServiceNames.COMMON);
         const mFilters = {
@@ -113,7 +117,21 @@ sap.ui.define(
       },
 
       clearContentData() {
-        this.getNotificationModel().setData(this.getInitialData());
+        const oNotificationModel = this.getNotificationModel();
+        const iUnreadCount = oNotificationModel.getProperty('/unreadCount');
+        const bShowUnreadCount = oNotificationModel.getProperty('/showUnreadCount');
+
+        oNotificationModel.setData(this.getInitialData());
+        oNotificationModel.setProperty('/unreadCount', iUnreadCount);
+        oNotificationModel.setProperty('/showUnreadCount', bShowUnreadCount);
+      },
+
+      onUpdateStarted(oEvent) {
+        this.debug(oEvent);
+      },
+
+      onUpdateFinished(oEvent) {
+        this.debug(oEvent);
       },
 
       async onChangeNotificationOnlyUnread(oEvent) {
@@ -216,11 +234,11 @@ sap.ui.define(
         }
       },
 
-      onPressNotificationOpenBy(oControl) {
+      onPressNotificationOpenBy() {
         if (this.oNotificationPopover.isOpen()) {
           this.onPressNotificationClose();
         } else {
-          this.oNotificationPopover.openBy(oControl);
+          this.oNotificationPopover.openBy(this.getController().byId('notification-bell'));
         }
       },
 
@@ -239,7 +257,7 @@ sap.ui.define(
       setBusy(bBusy = true) {
         setTimeout(
           () => {
-            this.getNotificationModel().setProperty('/notification/busy', bBusy);
+            this.getNotificationModel().setProperty('/busy', bBusy);
           },
           bBusy ? 0 : 500
         );

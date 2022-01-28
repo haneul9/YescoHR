@@ -5,19 +5,19 @@
     <Table selectionMode="None" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{list}" visibleRowCount="5" noData="{i18n>MSG_00001}">
       <columns>
         <Column width="30%">
-          <m:Label text="{i18n>LABEL_01305}" />
+          <m:Label text="{i18n>LABEL_01127}" />
           <template>
             <m:Text text="{Ename}" wrapping="false" class="tableRow_Text" />
           </template>
         </Column>
         <Column width="30%">
-          <m:Label text="{i18n>LABEL_01306}" />
+          <m:Label text="{i18n>LABEL_01128}" />
           <template>
             <m:Text text="{Orgtx}" wrapping="false" class="tableRow_Text" />
           </template>
         </Column>
         <Column width="auto">
-          <m:Label text="{i18n>LABEL_01307}" />
+          <m:Label text="{i18n>LABEL_01129}" />
           <template>
             <m:Text text="{Period}" wrapping="false" class="tableRow_Text" />
           </template>

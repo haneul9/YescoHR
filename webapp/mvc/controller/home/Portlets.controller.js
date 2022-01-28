@@ -44,7 +44,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.home.Portlets', {
-      bMobile: AppUtils.isMobile(),
       mPortletHandlers: {
         P01PortletHandler,
         P02PortletHandler,
@@ -209,6 +208,7 @@ sap.ui.define(
           },
           width: Number(mPortletData.Hwidth) || 1,
           height: Number(mPortletData.Htall) || 1,
+          borderless: mPortletData.Potid === 'P01',
           icon: mPortletData.Iconid,
           title: mPortletData.Potnm,
           tooltip: mPortletData.TooltipTx,
@@ -226,18 +226,17 @@ sap.ui.define(
       async showPortlets(oPortletsModel) {
         const aActivePortlets = oPortletsModel.getProperty('/activeList');
         if (!aActivePortlets.length) {
-          const oFragment = await Fragment.load({
-            name: `sap.ui.yesco.mvc.view.home.fragment.PortletsNotFound`,
-            controller: this,
-          });
-
-          this.byId('portlets-grid').addItem(oFragment);
+          this.setPortletsNotFound(this.getBundleText('MSG_01901')); // 조회된 Portlet 정보가 없습니다.
           return;
         }
 
-        aActivePortlets // prettier 방지용 주석
+        const aActivateSuccesses = aActivePortlets // prettier 방지용 주석
           .sort((o1, o2) => o1.position.column * 100 + o1.position.sequence - (o2.position.column * 100 + o2.position.sequence))
-          .forEach((mPortletData) => this.activatePortlet(mPortletData, oPortletsModel));
+          .map((mPortletData) => this.activatePortlet(mPortletData, oPortletsModel));
+
+        if (aActivateSuccesses.every((bSuccess) => !bSuccess)) {
+          this.setPortletsNotFound(this.getBundleText('MSG_01904')); // 개발자가 PortletHandler 로직 설정을 누락하였습니다.
+        }
       },
 
       activatePortlet(mPortletData, oPortletsModel) {
@@ -250,6 +249,17 @@ sap.ui.define(
         oPortletsModel.setProperty(`/activeInstanceMap/${mPortletData.id}`, new PortletHandler(this, mPortletData));
 
         return true;
+      },
+
+      async setPortletsNotFound(message) {
+        const oFragment = await Fragment.load({
+          name: `sap.ui.yesco.mvc.view.home.fragment.PortletsNotFound`,
+          controller: this,
+        });
+
+        oFragment.setModel(new JSONModel({ message }));
+
+        this.byId('portlets-grid').addItem(oFragment);
       },
 
       getPortletItems() {

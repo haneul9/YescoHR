@@ -1,36 +1,36 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.medical.MedicalDetail"
-	xmlns="sap.m"
-	xmlns:core="sap.ui.core"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:custom="sap.ui.yesco.control">
-	<Page showHeader="false">
-		<content>
-			<VBox class="contents-header">
-				<HBox justifyContent="SpaceBetween" class="breadcrumbs">
-					<custom:Breadcrumbs />
-					<HBox>
-						<Button text="{i18n>LABEL_00120}" class="sapUiTinyMarginEnd" type="Emphasized" press=".onRewriteBtn" visible="{= ${/FormData/Lnsta} === '45' }" />
-						<Button text="{i18n>LABEL_00104}" class="sapUiTinyMarginEnd" type="Emphasized" press=".onSaveBtn" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
-						<Button text="{i18n>LABEL_00121}" class="sapUiTinyMarginEnd" type="Emphasized" press=".onApplyBtn" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
-						<Button text="{i18n>LABEL_00118}" class="sapUiTinyMarginEnd" press=".onCancelBtn" visible="{= ${/FormData/Lnsta} === '20' }" />
-						<Button text="{i18n>LABEL_00110}" class="sapUiTinyMarginEnd" type="Reject" press=".onDeleteBtn" visible="{= ${/FormData/Lnsta} === '10' || ${/FormData/Lnsta} === '45' }" />
-						<Button text="{i18n>LABEL_00146}" class="sapUiTinyMarginEnd" press=".onNavBack" />
-						<Button text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" icon="sap-icon://print" press=".onPagePrint" />
-						<Button text="{i18n>LABEL_00132}" icon="sap-icon://sys-help" />
-					</HBox>
-				</HBox>
-			</VBox>
-			<VBox class="contents">
-				<core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
-				<core:Fragment fragmentName="sap.ui.yesco.fragment.InfoMessage" type="XML" />
-				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.medical.fragment.DetailForm" type="XML" />
-				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.medical.fragment.DetailHistory" type="XML" />
-				<VBox visible="{/Werks}">
-					<core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
-				</VBox>
-				<core:Fragment fragmentName="sap.ui.yesco.fragment.ApplyInfo" type="XML" />
-				<core:Fragment fragmentName="sap.ui.yesco.fragment.ApprovalDetails" type="XML" />
-			</VBox>
-		</content>
-	</Page>
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:custom="sap.ui.yesco.control">
+  <Page showHeader="false">
+    <content>
+      <VBox class="contents-header">
+        <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+          <custom:Breadcrumbs />
+          <HBox>
+            <Button text="{i18n>LABEL_00120}" class="sapUiTinyMarginEnd" type="Emphasized" press=".onRewriteBtn" visible="{= ${/FormData/Lnsta} === '45' }" />
+            <Button text="{i18n>LABEL_00104}" class="sapUiTinyMarginEnd" type="Emphasized" press=".onSaveBtn" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
+            <Button text="{i18n>LABEL_00121}" class="sapUiTinyMarginEnd" type="Emphasized" press=".onApplyBtn" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
+            <Button text="{i18n>LABEL_00118}" class="sapUiTinyMarginEnd" press=".onCancelBtn" visible="{= ${/FormData/Lnsta} === '20' }" />
+            <Button text="{i18n>LABEL_00110}" class="sapUiTinyMarginEnd" type="Reject" press=".onDeleteBtn" visible="{= ${/FormData/Lnsta} === '10' || ${/FormData/Lnsta} === '45' }" />
+            <Button text="{i18n>LABEL_00146}" class="sapUiTinyMarginEnd" press=".onNavBack" />
+            <Button text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" icon="sap-icon://print" press=".onPagePrint" />
+            <Button text="{i18n>LABEL_00132}" icon="sap-icon://sys-help" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
+          </HBox>
+        </HBox>
+      </VBox>
+      <VBox class="contents">
+        <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.fragment.InfoMessage" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.medical.fragment.DetailForm" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.medical.fragment.DetailHistory" type="XML" />
+        <VBox visible="{/Werks}">
+          <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
+        </VBox>
+        <core:Fragment fragmentName="sap.ui.yesco.fragment.ApplyInfo" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.fragment.ApprovalDetails" type="XML" />
+      </VBox>
+    </content>
+  </Page>
 </mvc:View>

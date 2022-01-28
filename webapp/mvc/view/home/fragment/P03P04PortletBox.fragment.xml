@@ -18,8 +18,8 @@
       )}" visible="{= !${hideTitle} }" />
       <SegmentedButton selectedKey="{selectedMembersButton}" visible="{= !!${orgMembersActive} &amp;&amp; !!${myMembersActive} }">
         <items>
-          <SegmentedButtonItem text="{i18n>LABEL_01201}" key="P03" />
-          <SegmentedButtonItem text="{i18n>LABEL_01202}" key="P04" />
+          <SegmentedButtonItem text="{i18n>LABEL_01111}" key="P03" />
+          <SegmentedButtonItem text="{i18n>LABEL_01112}" key="P04" />
         </items>
       </SegmentedButton>
       <Button icon="asset/image/icon_write.png" type="Transparent" class="icon-button" visible="{= !!${myMembersActive} &amp;&amp; ${selectedMembersButton} === 'P04' }" press=".onPressMyMemberAdd" />

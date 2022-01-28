@@ -1,53 +1,53 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.familyInfo.FamilyInfoDetail"
-	xmlns="sap.m"
-	xmlns:core="sap.ui.core"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:grid="sap.ui.layout.cssgrid"
-	xmlns:custom="sap.ui.yesco.control">
-	<Page showHeader="false">
-		<content>
-			<VBox class="contents-header">
-				<HBox justifyContent="SpaceBetween" class="breadcrumbs">
-					<custom:Breadcrumbs />
-					<HBox>
-						<Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= !${/FormData/ZappStatAl} }" />
-						<Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= !!${/FormData/ZappStatAl} }" />
-						<Button text="{i18n>LABEL_00146}" press=".onNavBack" class="sapUiTinyMarginEnd" />
-						<Button icon="sap-icon://print" press=".onPagePrint" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd"/>
-						<Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" />
-					</HBox>
-				</HBox>
-			</VBox>
-			<VBox class="contents">
-				<core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
-				<core:Fragment fragmentName="sap.ui.yesco.fragment.InfoMessage" type="XML" />
-				<core:Fragment fragmentName="sap.ui.yesco.mvc.view.familyInfo.fragment.DetailForm" type="XML" />
-				<core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
-				<VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}" visible="{= !!${/FormData/ZappStatAl} }">
-					<grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="4px 0" class="form-grid">
-						<Label text="{i18n>LABEL_00266}" />
-						<VBox>
-							<Text text="{
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:custom="sap.ui.yesco.control">
+  <Page showHeader="false">
+    <content>
+      <VBox class="contents-header">
+        <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+          <custom:Breadcrumbs />
+          <HBox>
+            <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= !${/FormData/ZappStatAl} }" />
+            <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= !!${/FormData/ZappStatAl} }" />
+            <Button text="{i18n>LABEL_00146}" press=".onNavBack" class="sapUiTinyMarginEnd" />
+            <Button icon="sap-icon://print" press=".onPagePrint" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd"/>
+            <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
+          </HBox>
+        </HBox>
+      </VBox>
+      <VBox class="contents">
+        <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.fragment.InfoMessage" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.familyInfo.fragment.DetailForm" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
+        <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}" visible="{= !!${/FormData/ZappStatAl} }">
+          <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="4px 0" class="form-grid">
+            <Label text="{i18n>LABEL_00266}" />
+            <VBox>
+              <Text text="{
 							path: '/FormData/ZreqDate',
 							type: 'sap.ui.model.type.Date',
 							formatOptions: {
 								pattern: 'yyyy.MM.dd'
 							}
 						}" />
-						</VBox>
-						<Label text="{i18n>LABEL_05003}" />
-						<VBox>
-							<Text text="{
+            </VBox>
+            <Label text="{i18n>LABEL_05003}" />
+            <VBox>
+              <Text text="{
 							path: '/FormData/ZappDate',
 							type: 'sap.ui.model.type.Date',
 							formatOptions: {
 								pattern: 'yyyy.MM.dd'
 							}
 						}" />
-						</VBox>
-					</grid:CSSGrid>
-				</VBox>
-			</VBox>
-		</content>
-	</Page>
+            </VBox>
+          </grid:CSSGrid>
+        </VBox>
+      </VBox>
+    </content>
+  </Page>
 </mvc:View>

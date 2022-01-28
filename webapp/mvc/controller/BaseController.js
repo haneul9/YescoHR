@@ -7,6 +7,7 @@ sap.ui.define(
     'sap/ui/core/routing/History',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/exceptions/UI5Error',
+    'sap/ui/yesco/control/MessageBox',
   ],
   (
     // prettier 방지용 주석
@@ -15,13 +16,18 @@ sap.ui.define(
     HashChanger,
     History,
     AppUtils,
-    UI5Error
+    UI5Error,
+    MessageBox
   ) => {
     'use strict';
 
     return Controller.extend('sap.ui.yesco.mvc.controller.BaseController', {
+      bMobile: null,
+
       onInit() {
         this.debug('BaseController.onInit');
+
+        this.bMobile = AppUtils.isMobile();
 
         // 각 업무 controller에서는 onInit overriding 대신 onBeforeShow, onAfterShow를 사용할 것
         this.getView().addEventDelegate(
@@ -183,13 +189,17 @@ sap.ui.define(
         if (sPreviousHash) {
           window.history.back();
         } else {
-          const sPreviousRouteName = this.getPreviousRouteName() || 'ehrHome'; // TODO : ehrMobileHome
+          const sPreviousRouteName = this.getPreviousRouteName() || (this.bMobile ? 'ehrMobileHome' : 'ehrHome');
           oUIComponent.getRouter().navTo(sPreviousRouteName, {}, true /* no history */);
         }
       },
 
       onPagePrint() {
         window.print();
+      },
+
+      onPressHelp() {
+        MessageBox.alert('도움말 메뉴 개발 완료 후 정상 동작됩니다!');
       },
 
       /**

@@ -18,14 +18,14 @@
       <HBox height="3rem" justifyContent="Center" visible="{= ${listCount} === 0 }">
         <Text text="{i18n>MSG_00001}" />
       </HBox>
-      <List items="{ path: 'list', templateShareable: false }" visible="{= ${listCount} &gt; 0 }" rememberSelections="false" showUnread="true" growing="true" growingScrollToLoad="true" growingThreshold="10" showNoData="false">
+      <List items="{ path: 'list', templateShareable: false }" visible="{= ${listCount} &gt; 0 }" updateStarted=".onUpdateStarted" updateFinished=".onUpdateFinished" rememberSelections="false" showUnread="true" growing="true" growingScrollToLoad="true" growingThreshold="10" showNoData="false">
         <CustomListItem unread="{= ${Checked} !== 'X' }">
           <HBox alignItems="Center">
-            <core:Icon width="1rem" size="1rem" src="{= ${Pinned} === 'X' ? 'sap-icon://pushpin-on' : 'sap-icon://pushpin-off' }" press=".onPressNotificationPin">
-              <core:layoutData>
+            <ToggleButton icon="{= ${Pinned} === 'X' ? 'asset/image/icon_pinned.svg' : 'asset/image/icon_pin_disabled.svg' }" pressed="{= ${Pinned} === 'X' }" press=".onPressNotificationPin" width="1rem" class="icon-button pin-toggle-icon">
+              <layoutData>
                 <FlexItemData alignSelf="Start" />
-              </core:layoutData>
-            </core:Icon>
+              </layoutData>
+            </ToggleButton>
             <VBox class="subject">
               <Text text="{Msg}" />
               <Text text="{ path: 'Adate', type: 'sap.ui.yesco.mvc.model.type.Date' } { path: 'Atime', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } }" class="notification-datetime" />

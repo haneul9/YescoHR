@@ -1,25 +1,25 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/m/ObjectStatus',
+    'sap/m/Label',
   ],
   (
     // prettier 방지용 주석
-    ObjectStatus
+    Label
   ) => {
     'use strict';
 
-    return ObjectStatus.extend('sap.ui.yesco.control.ObjectStatus', {
+    return Label.extend('sap.ui.yesco.control.PressableLabel', {
       metadata: {
         events: {
-          hover: {},
+          press: {},
         },
       },
 
       renderer: {},
 
-      onmouseover() {
-        this.fireHover();
+      onclick() {
+        this.firePress();
       },
     });
   }
