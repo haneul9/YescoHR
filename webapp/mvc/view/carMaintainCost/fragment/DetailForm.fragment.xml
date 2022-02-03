@@ -80,7 +80,7 @@
             <Label text="{= ${/FormData/bPayType} ? ${i18n>LABEL_25018} : '' }" />
             <HBox>
                 <Text text="{/FormData/Ename}" class="sapUiTinyMarginEnd" visible="{/FormData/bPayType}"/>
-                <Text text="{i18n>MSG_25003}" visible="{/FormData/bPayType}"/>
+                <Text text="{i18n>MSG_25003}" visible="{= ${/FormData/bPayType} &amp;&amp; ${/FormData/Fixed} }"/>
             </HBox>
             <Label text="{i18n>LABEL_25019}" visible="{/FormData/bPayType}" />
             <VBox visible="{/FormData/bPayType}">

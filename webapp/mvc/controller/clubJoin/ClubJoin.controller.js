@@ -1,9 +1,12 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/model/Filter',
+    'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
+    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
@@ -14,9 +17,12 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
+    Filter,
+    FilterOperator,
     JSONModel,
     AppUtils,
     AttachFileAction,
+    EmployeeSearch,
     FragmentEvent,
     TableUtils,
     TextUtils,
@@ -28,6 +34,7 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.clubJoin.ClubJoin', {
       AttachFileAction: AttachFileAction,
+      EmployeeSearch: EmployeeSearch,
       TableUtils: TableUtils,
       TextUtils: TextUtils,
       FragmentEvent: FragmentEvent,
@@ -35,6 +42,7 @@ sap.ui.define(
       onBeforeShow() {
         const dDate = new Date();
         const oViewModel = new JSONModel({
+          detailName: this.isHass() ? 'h/clubJoin-detail' : 'clubJoin-detail',
           busy: false,
           Data: [],
           LoanType: [],
@@ -58,6 +66,14 @@ sap.ui.define(
       onObjectMatched() {
         this.totalCount();
         this.onSearch();
+        this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+      },
+
+      // 대상자 정보 사원선택시 화면 Refresh
+      onRefresh() {
+        this.totalCount();
+        this.onSearch();
+        this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
       },
 
       // override AttachFileCode
@@ -66,7 +82,7 @@ sap.ui.define(
       },
 
       onClick() {
-        this.getRouter().navTo('clubJoin-detail', { oDataKey: 'N' });
+        this.getRouter().navTo(this.getViewModel().getProperty('/detailName'), { oDataKey: 'N' });
       },
 
       thisYear(sYear = String(moment().format('YYYY'))) {
@@ -91,11 +107,24 @@ sap.ui.define(
         const dDate = moment(oSearch.secondDate).hours(10).toDate();
         const dDate2 = moment(oSearch.date).hours(10).toDate();
         const sMenid = this.getCurrentMenuId();
+        const aFilters = [
+          // prettier 방지주석
+          new Filter('Prcty', FilterOperator.EQ, 'L'),
+          new Filter('Menid', FilterOperator.EQ, sMenid),
+          new Filter('Apbeg', FilterOperator.EQ, dDate),
+          new Filter('Apend', FilterOperator.EQ, dDate2),
+        ];
 
         oListModel.setProperty('/busy', true);
 
+        if (this.isHass()) {
+          const sPernr = this.getAppointeeProperty('Pernr');
+
+          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
+        }
+
         oModel.read('/ClubJoinApplSet', {
-          filters: [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'), new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid), new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate), new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2)],
+          filters: aFilters,
           success: (oData) => {
             if (oData) {
               const oList = oData.results;
@@ -117,9 +146,16 @@ sap.ui.define(
       totalCount() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oListModel = this.getViewModel();
+        const aFilters = [];
+
+        if (this.isHass()) {
+          const sPernr = this.getAppointeeProperty('Pernr');
+
+          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
+        }
 
         oModel.read('/ClubJoinMyclubSet', {
-          filters: [],
+          filters: aFilters,
           success: (oData) => {
             if (oData) {
               const oList = oData.results[0];
@@ -136,12 +172,12 @@ sap.ui.define(
       },
 
       onSelectRow(oEvent) {
-        const vPath = oEvent.getParameters().rowBindingContext.getPath();
+        const vPath = oEvent.getParameter('rowBindingContext').getPath();
         const oListModel = this.getViewModel();
         const oRowData = oListModel.getProperty(vPath);
 
         oListModel.setProperty('/parameters', oRowData);
-        this.getRouter().navTo('clubJoin-detail', { oDataKey: oRowData.Appno });
+        this.getRouter().navTo(oListModel.getProperty('/detailName'), { oDataKey: oRowData.Appno });
       },
 
       onPressExcelDownload() {

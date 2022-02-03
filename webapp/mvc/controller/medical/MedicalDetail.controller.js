@@ -2,6 +2,8 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/model/Filter',
+    'sap/ui/model/FilterOperator',
     'sap/ui/core/Fragment',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
@@ -23,6 +25,8 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
+    Filter,
+    FilterOperator,
     Fragment,
     JSONModel,
     MessageBox,
@@ -43,7 +47,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.medical.MedicalDetail', {
-      LIST_PAGE_ID: 'container-ehr---medical',
       DIALOG_FILE_ID: 'DialogAttFile',
 
       AttachFileAction: AttachFileAction,
@@ -53,7 +56,7 @@ sap.ui.define(
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
-          Werks: this.getSessionProperty('Werks') !== '2000',
+          Werks: this.getAppointeeProperty('Werks') !== '2000',
           menid: this.getCurrentMenuId(),
           Hass: this.isHass(),
           ViewKey: '',
@@ -126,7 +129,7 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
         const sViewKey = oDetailModel.getProperty('/ViewKey');
-        const sWerks = this.getSessionProperty('Werks');
+        const sWerks = this.getAppointeeProperty('Werks');
         let sMsg = '';
 
         if (sWerks === '2000') {
@@ -208,8 +211,10 @@ sap.ui.define(
 
         if (sViewKey === 'N' || !sViewKey) {
           const mSessionData = this.getSessionData();
+          const mAppointeeData = this.getAppointeeData();
 
           oDetailModel.setProperty('/FormData', {
+            Pernr: mAppointeeData.Pernr,
             Kdsvh: 'ALL',
             Apcnt: '0',
             Pvcnt: '0',
@@ -226,6 +231,12 @@ sap.ui.define(
           this.settingsAttachTable();
         } else {
           let oSendObject = {};
+
+          if (this.isHass()) {
+            const sPernr = this.getAppointeeProperty('Pernr');
+
+            oSendObject.Pernr = sPernr;
+          }
 
           oSendObject.Prcty = 'D';
           oSendObject.Appno = sViewKey;
@@ -266,10 +277,17 @@ sap.ui.define(
 
       getTotalYear() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
+        const aFilters = [];
+
+        if (this.isHass()) {
+          const sPernr = this.getAppointeeProperty('Pernr');
+
+          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
+        }
 
         return new Promise((resolve, reject) => {
           oModel.read('/MedExpenseMymedSet', {
-            filters: [],
+            filters: aFilters,
             success: (oData) => {
               if (oData) {
                 resolve(oData.results[0].Zyear);
@@ -304,9 +322,24 @@ sap.ui.define(
           sPyyea = aYearData[0].Zyear;
         }
 
+        const aFilters = [
+          // prettier 방지주석
+          new Filter('Adult', FilterOperator.EQ, sAdult),
+          new Filter('Famgb', FilterOperator.EQ, sKey),
+          new Filter('Werks', FilterOperator.EQ, sWerks),
+          new Filter('Pyyea', FilterOperator.EQ, sPyyea),
+          new Filter('Appno', FilterOperator.EQ, sAppno),
+        ];
+
+        if (this.isHass()) {
+          const sPernr = this.getAppointeeProperty('Pernr');
+
+          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
+        }
+
         // 영수증구분
         oModel.read('/MedExpenseReceiptListSet', {
-          filters: [new sap.ui.model.Filter('Adult', sap.ui.model.FilterOperator.EQ, sAdult), new sap.ui.model.Filter('Famgb', sap.ui.model.FilterOperator.EQ, sKey), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks), new sap.ui.model.Filter('Pyyea', sap.ui.model.FilterOperator.EQ, sPyyea), new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sAppno)],
+          filters: aFilters,
           success: (oData) => {
             if (oData) {
               oDetailModel.setProperty('/ReceiptType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: oData.results }));
@@ -321,10 +354,17 @@ sap.ui.define(
       async getTargetList() {
         return new Promise((resolve, reject) => {
           const oModel = this.getModel(ServiceNames.BENEFIT);
+          const aFilters = [new Filter('Datum', FilterOperator.EQ, new Date())];
+
+          if (this.isHass()) {
+            const sPernr = this.getAppointeeProperty('Pernr');
+
+            aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
+          }
 
           // 신청대상
           oModel.read('/MedExpenseSupportListSet', {
-            filters: [new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date())],
+            filters: aFilters,
             success: (oData) => {
               if (oData) {
                 resolve(oData.results);

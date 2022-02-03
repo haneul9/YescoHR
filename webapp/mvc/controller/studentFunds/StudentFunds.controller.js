@@ -1,9 +1,12 @@
 sap.ui.define(
   [
-    // prettier 방지용 주석
+    // prettier 방지용 주석'sap/ui/model/Filter',
+    'sap/ui/model/Filter',
+    'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
+    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
@@ -14,9 +17,12 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
+    Filter,
+    FilterOperator,
     JSONModel,
     AppUtils,
     AttachFileAction,
+    EmployeeSearch,
     FragmentEvent,
     TableUtils,
     TextUtils,
@@ -30,11 +36,13 @@ sap.ui.define(
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
       TextUtils: TextUtils,
+      EmployeeSearch: EmployeeSearch,
       FragmentEvent: FragmentEvent,
 
       onBeforeShow() {
         const dDate = new Date();
         const oViewModel = new JSONModel({
+          detailName: this.isHass() ? 'h/studentFunds-detail' : 'studentFunds-detail',
           busy: false,
           Data: [],
           searchDate: {
@@ -57,6 +65,14 @@ sap.ui.define(
       onObjectMatched() {
         this.onSearch();
         this.totalCount();
+        this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+      },
+
+      // 대상자 정보 사원선택시 화면 Refresh
+      onRefresh() {
+        this.onSearch();
+        this.totalCount();
+        this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
       },
 
       // override AttachFileCode
@@ -65,7 +81,7 @@ sap.ui.define(
       },
 
       onClick() {
-        this.getRouter().navTo('studentFunds-detail', { oDataKey: 'N' });
+        this.getRouter().navTo(this.getViewModel().getProperty('/detailName'), { oDataKey: 'N' });
       },
 
       formatNumber(vNum = '0') {
@@ -85,14 +101,29 @@ sap.ui.define(
         const oListModel = this.getViewModel();
         const oTable = this.byId('studentTable');
         const oSearchDate = oListModel.getProperty('/searchDate');
-        const dDate = moment(oSearchDate.secondDate).hours(10).toDate();
-        const dDate2 = moment(oSearchDate.date).hours(10).toDate();
+        const dDate = moment(oSearchDate.secondDate).hours(9).toDate();
+        const dDate2 = moment(oSearchDate.date).hours(9).toDate();
         const sMenid = this.getCurrentMenuId();
 
         oListModel.setProperty('/busy', true);
 
+        const aFilters = [
+          // prettier 방지용 주석
+          new Filter('Prcty', FilterOperator.EQ, 'L'),
+          new Filter('Menid', FilterOperator.EQ, sMenid),
+          new Filter('Apbeg', FilterOperator.EQ, dDate),
+          new Filter('Apend', FilterOperator.EQ, dDate2),
+        ];
+
+        if (this.isHass()) {
+          const sPernr = this.getAppointeeProperty('Pernr');
+
+          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
+          this.totalCount();
+        }
+
         oModel.read('/SchExpenseApplSet', {
-          filters: [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'), new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid), new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate), new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2)],
+          filters: aFilters,
           success: (oData) => {
             if (oData) {
               const oList = oData.results;
@@ -112,9 +143,16 @@ sap.ui.define(
       totalCount() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oListModel = this.getViewModel();
+        const aFilters = [];
+
+        if (this.isHass()) {
+          const sPernr = this.getAppointeeProperty('Pernr');
+
+          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
+        }
 
         oModel.read('/SchExpenseMyschSet', {
-          filters: [],
+          filters: aFilters,
           success: (oData) => {
             if (oData) {
               const oList = oData.results[0];
@@ -133,10 +171,11 @@ sap.ui.define(
       },
 
       onSelectRow(oEvent) {
+        const oListModel = this.getViewModel();
         const vPath = oEvent.getParameters().rowBindingContext.getPath();
-        const oRowData = this.getViewModel().getProperty(vPath);
+        const oRowData = oListModel.getProperty(vPath);
 
-        this.getRouter().navTo('studentFunds-detail', { oDataKey: oRowData.Appno });
+        this.getRouter().navTo(oListModel.getProperty('/detailName'), { oDataKey: oRowData.Appno });
       },
 
       onPressExcelDownload() {
