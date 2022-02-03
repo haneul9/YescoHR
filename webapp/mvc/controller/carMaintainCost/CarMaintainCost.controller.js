@@ -137,7 +137,7 @@ sap.ui.define(
         const oListModel = this.getViewModel();
         const oRowData = oListModel.getProperty(vPath);
 
-        this.getRouter().navTo('carMaintainCost-detail', { oDataKey: oRowData.Appno });
+        this.getRouter().navTo('carMaintainCost-detail', { oDataKey: oRowData.Appno, sStatus: oRowData.ZappStatAl });
       },
 
       onPressExcelDownload() {

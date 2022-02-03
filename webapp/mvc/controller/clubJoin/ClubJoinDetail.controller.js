@@ -2,6 +2,8 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/model/Filter',
+    'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
@@ -20,6 +22,8 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
+    Filter,
+    FilterOperator,
     JSONModel,
     MessageBox,
     Appno,
@@ -98,7 +102,9 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const sViewKey = oDetailModel.getProperty('/ViewKey');
+        const mPernr = this.isHass() ? { Pernr: this.getAppointeeProperty('Pernr') } : {};
         const mListData = await Client.getEntitySet(oModel, 'BenefitCodeList', {
+          ...mPernr,
           Werks: this.getAppointeeProperty('Werks'),
           Cdnum: 'BE0018',
           Grcod: 'BE000030',
@@ -117,9 +123,12 @@ sap.ui.define(
 
         if (sViewKey === 'N' || !sViewKey) {
           const mSessionData = this.getSessionData();
+          const mAppointeeData = this.getAppointeeData();
 
           oDetailModel.setProperty('/FormData/Coaid', '');
           oDetailModel.setProperty('/FormData/Zclub', 'ALL');
+          oDetailModel.setProperty('/FormData/Pernr', mAppointeeData.Pernr);
+          oDetailModel.setProperty('/FormData/Ename', mAppointeeData.Ename);
 
           oDetailModel.setProperty('/ApplyInfo', {
             Apename: mSessionData.Ename,
@@ -127,19 +136,32 @@ sap.ui.define(
             Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
           });
         } else {
-          const aFilter = [];
+          const aFilter = [new Filter('Prcty', FilterOperator.EQ, 'D')];
+
+          if (this.isHass()) {
+            const sPernr = this.getAppointeeProperty('Pernr');
+
+            aFilter.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
+          }
+
           const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
 
           if (!!oListView && !!oListView.getModel().getProperty('/parameters')) {
             const mListData = oListView.getModel().getProperty('/parameters');
 
             if (sViewKey === '00000000000000') {
-              aFilter.push(new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'), new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, mListData.Pernr), new sap.ui.model.Filter('Begda', sap.ui.model.FilterOperator.EQ, mListData.Begda), new sap.ui.model.Filter('Endda', sap.ui.model.FilterOperator.EQ, mListData.Endda), new sap.ui.model.Filter('Zclub', sap.ui.model.FilterOperator.EQ, mListData.Zclub));
+              aFilter.push(
+                // prettier 방지주석
+                new Filter('Pernr', FilterOperator.EQ, mListData.Pernr),
+                new Filter('Begda', FilterOperator.EQ, mListData.Begda),
+                new Filter('Endda', FilterOperator.EQ, mListData.Endda),
+                new Filter('Zclub', FilterOperator.EQ, mListData.Zclub)
+              );
             } else {
-              aFilter.push(new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'), new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sViewKey));
+              aFilter.push(new Filter('Appno', FilterOperator.EQ, sViewKey));
             }
           } else {
-            aFilter.push(new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'), new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sViewKey));
+            aFilter.push(new Filter('Appno', FilterOperator.EQ, sViewKey));
           }
 
           oModel.read('/ClubJoinApplSet', {
@@ -162,11 +184,18 @@ sap.ui.define(
       // 화면관련 List호출
       getList() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
+        const aFilters = [new Filter('Datum', FilterOperator.EQ, new Date())];
+
+        if (this.isHass()) {
+          const sPernr = this.getAppointeeProperty('Pernr');
+
+          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
+        }
 
         return new Promise((resolve, reject) => {
           // 동호회
           oModel.read('/ClubJoinClublistSet', {
-            filters: [new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date())],
+            filters: aFilters,
             success: (oData) => {
               if (oData) {
                 resolve(oData.results);
@@ -214,8 +243,15 @@ sap.ui.define(
         if (bSelected) {
           try {
             const oModel = this.getModel(ServiceNames.BENEFIT);
+            const mPayLoad = { Prcty: '1' };
 
-            await Client.getEntitySet(oModel, 'ClubJoinAppl', { Prcty: '1' });
+            if (this.isHass()) {
+              const sPernr = this.getAppointeeProperty('Pernr');
+
+              mPayLoad.Pernr = sPernr;
+            }
+
+            await Client.getEntitySet(oModel, 'ClubJoinAppl', mPayLoad);
 
             oDetailModel.setProperty('/FormData/Coaid', 'X');
           } catch (oError) {

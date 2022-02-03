@@ -71,6 +71,7 @@ sap.ui.define(
 
       async onObjectMatched(oParameter) {
         const sDataKey = oParameter.oDataKey;
+        const sStatKey = oParameter.sStatus;
         const oDetailModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.BENEFIT);
 
@@ -87,7 +88,7 @@ sap.ui.define(
           // 신청구분
           const mMaintainType = await Client.getEntitySet(oModel, 'BenefitCodeList', {
             Pernr: this.getAppointeeProperty('Pernr'),
-            Cdnum: 'BE0020',
+            Cdnum: !!sStatKey && sStatKey !== '10' ? 'BE0023' : 'BE0020',
             Datum: dDatum,
           });
 

@@ -1,32 +1,43 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/model/Filter',
+    'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
+    'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
+    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Currency',
     'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
   ],
   (
     // prettier 방지용 주석
+    Filter,
+    FilterOperator,
     JSONModel,
+    AppUtils,
     AttachFileAction,
     ComboEntry,
+    EmployeeSearch,
     FragmentEvent,
     TableUtils,
     TextUtils,
     ServiceNames,
+    ODataReadError,
     BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.medical.Medical', {
       AttachFileAction: AttachFileAction,
+      EmployeeSearch: EmployeeSearch,
       TableUtils: TableUtils,
       TextUtils: TextUtils,
       FragmentEvent: FragmentEvent,
@@ -34,6 +45,7 @@ sap.ui.define(
       onBeforeShow() {
         const dDate = new Date();
         const oViewModel = new JSONModel({
+          detailName: this.isHass() ? 'h/medical-detail' : 'medical-detail',
           busy: false,
           Data: [],
           LoanType: [],
@@ -74,14 +86,23 @@ sap.ui.define(
 
           this.onSearch();
           this.totalCount();
+          this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
         } catch (oError) {
+          AppUtils.handleError(oError);
         } finally {
           oListModel.setProperty('/busy', false);
         }
       },
 
+      // 대상자 정보 사원선택시 화면 Refresh
+      onRefresh() {
+        this.onSearch();
+        this.totalCount();
+        this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+      },
+
       onClick() {
-        this.getRouter().navTo('medical-detail', { oDataKey: 'N' });
+        this.getRouter().navTo(this.getViewModel().getProperty('/detailName'), { oDataKey: 'N' });
       },
 
       formatDate(sDate = '') {
@@ -109,7 +130,7 @@ sap.ui.define(
         return this.getBundleText('MSG_09001', sYear);
       },
 
-      onSearch() {
+      async onSearch() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oListModel = this.getViewModel();
         const oSearch = oListModel.getProperty('/search');
@@ -130,17 +151,32 @@ sap.ui.define(
           sKdsvh = oSearch.Kdsvh;
         }
 
+        const aFilters = [
+          // prettier 방지주석
+          new Filter('Prcty', FilterOperator.EQ, 'L'),
+          new Filter('Menid', FilterOperator.EQ, sMenid),
+          new Filter('Apbeg', FilterOperator.EQ, dDate),
+          new Filter('Apend', FilterOperator.EQ, dDate2),
+          new Filter('Famgb', FilterOperator.EQ, sFamgb),
+          new Filter('Famsa', FilterOperator.EQ, sFamsa),
+          new Filter('Objps', FilterOperator.EQ, sObjps),
+          new Filter('Kdsvh', FilterOperator.EQ, sKdsvh),
+        ];
+
+        if (this.isHass()) {
+          const sPernr = this.getAppointeeProperty('Pernr');
+
+          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
+          const aList = await this.getFamilyCode();
+          oListModel.setProperty('/FamilyCode', new ComboEntry({ codeKey: 'Famgb', valueKey: 'Znametx', aEntries: aList }));
+          oListModel.setProperty('/search/Famgb', 'ALL');
+          oListModel.setProperty('/search/Famsa', 'ALL');
+          oListModel.setProperty('/search/Objps', 'ALL');
+          oListModel.setProperty('/search/Kdsvh', 'ALL');
+        }
+
         oModel.read('/MedExpenseApplSet', {
-          filters: [
-            new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'),
-            new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid),
-            new sap.ui.model.Filter('Apbeg', sap.ui.model.FilterOperator.EQ, dDate),
-            new sap.ui.model.Filter('Apend', sap.ui.model.FilterOperator.EQ, dDate2),
-            new sap.ui.model.Filter('Famgb', sap.ui.model.FilterOperator.EQ, sFamgb),
-            new sap.ui.model.Filter('Famsa', sap.ui.model.FilterOperator.EQ, sFamsa),
-            new sap.ui.model.Filter('Objps', sap.ui.model.FilterOperator.EQ, sObjps),
-            new sap.ui.model.Filter('Kdsvh', sap.ui.model.FilterOperator.EQ, sKdsvh),
-          ],
+          filters: aFilters,
           success: (oData) => {
             if (oData) {
               const aMedList = oData.results;
@@ -153,6 +189,7 @@ sap.ui.define(
           },
           error: (oError) => {
             this.debug(oError);
+            AppUtils.handleError(new ODataReadError(oError));
             oListModel.setProperty('/busy', false);
           },
         });
@@ -161,9 +198,16 @@ sap.ui.define(
       getFamilyCode() {
         return new Promise((resolve, reject) => {
           const oModel = this.getModel(ServiceNames.BENEFIT);
+          const aFilters = [new Filter('Datum', FilterOperator.EQ, new Date())];
+
+          if (this.isHass()) {
+            const sPernr = this.getAppointeeProperty('Pernr');
+
+            aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
+          }
 
           oModel.read('/MedExpenseSupportListSet', {
-            filters: [new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date())],
+            filters: aFilters,
             success: (oData) => {
               if (oData) {
                 resolve(oData.results);
@@ -179,9 +223,16 @@ sap.ui.define(
       totalCount() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oListModel = this.getViewModel();
+        const aFilters = [];
+
+        if (this.isHass()) {
+          const sPernr = this.getAppointeeProperty('Pernr');
+
+          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
+        }
 
         oModel.read('/MedExpenseMymedSet', {
-          filters: [],
+          filters: aFilters,
           success: (oData) => {
             if (oData) {
               const oList = oData.results[0];
@@ -195,7 +246,7 @@ sap.ui.define(
           },
           error: (oError) => {
             this.debug(oError);
-
+            AppUtils.handleError(new ODataReadError(oError));
             oListModel.setProperty('/busy', false);
           },
         });
@@ -227,7 +278,7 @@ sap.ui.define(
         const oListModel = this.getViewModel();
         const oRowData = oListModel.getProperty(vPath);
 
-        this.getRouter().navTo('medical-detail', { oDataKey: oRowData.Appno });
+        this.getRouter().navTo(oListModel.getProperty('/detailName'), { oDataKey: oRowData.Appno });
       },
 
       onPressExcelDownload() {

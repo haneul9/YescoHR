@@ -2,6 +2,8 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/model/Filter',
+    'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
@@ -18,6 +20,8 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
+    Filter,
+    FilterOperator,
     JSONModel,
     Appno,
     AppUtils,
@@ -117,10 +121,24 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const oFormData = oDetailModel.getProperty('/FormData');
         const sUrl = '/SchExpenseLimitAmtSet';
+        const aFilters = [
+          // prettier 방지주석
+          new Filter('Slart', FilterOperator.EQ, oFormData.Slart),
+          new Filter('Zname', FilterOperator.EQ, oFormData.Zname),
+          new Filter('Zzobjps', FilterOperator.EQ, oFormData.Zzobjps),
+          new Filter('Grdsp', FilterOperator.EQ, oFormData.Grdsp),
+          new Filter('Zyear', FilterOperator.EQ, oFormData.Zyear),
+        ];
+
+        if (this.isHass()) {
+          const sPernr = this.getAppointeeProperty('Pernr');
+
+          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
+        }
 
         new Promise((resolve) => {
           oModel.read(sUrl, {
-            filters: [new sap.ui.model.Filter('Slart', sap.ui.model.FilterOperator.EQ, oFormData.Slart), new sap.ui.model.Filter('Zname', sap.ui.model.FilterOperator.EQ, oFormData.Zname), new sap.ui.model.Filter('Zzobjps', sap.ui.model.FilterOperator.EQ, oFormData.Zzobjps), new sap.ui.model.Filter('Grdsp', sap.ui.model.FilterOperator.EQ, oFormData.Grdsp), new sap.ui.model.Filter('Zyear', sap.ui.model.FilterOperator.EQ, oFormData.Zyear)],
+            filters: aFilters,
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
               let oList = [];
@@ -173,12 +191,15 @@ sap.ui.define(
         const sUrl = '/SchExpenseApplSet';
         const sViewKey = oDetailModel.getProperty('/ViewKey');
         const mSessionData = this.getSessionData();
+        const mAppointeeData = this.getAppointeeData();
 
         if (sViewKey === 'N' || !sViewKey) {
           oDetailModel.setProperty('/FormData', mSessionData);
           oDetailModel.setProperty('/FormData', {
             Apename: mSessionData.Ename,
             Appernr: mSessionData.Pernr,
+            Ename: mAppointeeData.Ename,
+            Pernr: mAppointeeData.Pernr,
             Zzobjps: 'ALL',
             Slart: 'ALL',
             Grdsp: 'ALL',
@@ -195,8 +216,20 @@ sap.ui.define(
           this.setYearsList();
           this.settingsAttachTable();
         } else {
+          const aFilters = [
+            // prettier 방지주석
+            new Filter('Prcty', FilterOperator.EQ, 'D'),
+            new Filter('Appno', FilterOperator.EQ, sViewKey),
+          ];
+
+          if (this.isHass()) {
+            const sPernr = this.getAppointeeProperty('Pernr');
+
+            aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
+          }
+
           oModel.read(sUrl, {
-            filters: [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'), new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sViewKey)],
+            filters: aFilters,
             success: (oData) => {
               if (oData) {
                 this.debug(`${sUrl} success.`, oData);
@@ -233,12 +266,23 @@ sap.ui.define(
         const sWerks = this.getSessionProperty('Werks');
         const sSchExpenseUrl = '/SchExpenseSupportListSet';
         const sBenefitUrl = '/BenefitCodeListSet';
+        const aPernr = [];
+
+        if (this.isHass()) {
+          const sPernr = this.getAppointeeProperty('Pernr');
+
+          aPernr.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
+        }
 
         return Promise.all([
           await new Promise((resolve, reject) => {
             // 신청대상 조회
             oModel.read(sSchExpenseUrl, {
-              filters: [new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date())],
+              filters: [
+                // perttier 방지주석
+                new Filter('Datum', FilterOperator.EQ, new Date()),
+                ...aPernr,
+              ],
               success: (oData) => {
                 if (oData) {
                   this.debug(`${sSchExpenseUrl} success.`, oData);
@@ -258,7 +302,13 @@ sap.ui.define(
           new Promise((resolve, reject) => {
             // 학력구분 조회
             oModel.read(sBenefitUrl, {
-              filters: [new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0006'), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks), new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date())],
+              filters: [
+                // perttier 방지주석
+                new Filter('Cdnum', FilterOperator.EQ, 'BE0006'),
+                new Filter('Werks', FilterOperator.EQ, sWerks),
+                new Filter('Datum', FilterOperator.EQ, new Date()),
+                ...aPernr,
+              ],
               success: (oData) => {
                 if (oData) {
                   this.debug(`${sBenefitUrl} success.`, oData);
@@ -278,7 +328,15 @@ sap.ui.define(
           new Promise((resolve, reject) => {
             // 학년 조회
             oModel.read(sBenefitUrl, {
-              filters: [new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0004'), new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000002'), new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'GRADE'), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks), new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date())],
+              filters: [
+                // prettier 방지주석
+                ...aPernr,
+                new Filter('Cdnum', FilterOperator.EQ, 'BE0004'),
+                new Filter('Grcod', FilterOperator.EQ, 'BE000002'),
+                new Filter('Sbcod', FilterOperator.EQ, 'GRADE'),
+                new Filter('Werks', FilterOperator.EQ, sWerks),
+                new Filter('Datum', FilterOperator.EQ, new Date()),
+              ],
               success: (oData) => {
                 if (oData) {
                   this.debug(`${sBenefitUrl} success.`, oData);
@@ -380,8 +438,21 @@ sap.ui.define(
           }
         });
 
+        const aFilters = [
+          // perttier 방지주석
+          new Filter('Zname', FilterOperator.EQ, oFormData.Zname),
+          new Filter('Slart', FilterOperator.EQ, oFormData.Slart),
+          new Filter('Zzobjps', FilterOperator.EQ, oFormData.Zzobjps),
+        ];
+
+        if (this.isHass()) {
+          const sPernr = this.getAppointeeProperty('Pernr');
+
+          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
+        }
+
         oModel.read(sUrl, {
-          filters: [new sap.ui.model.Filter('Zname', sap.ui.model.FilterOperator.EQ, oFormData.Zname), new sap.ui.model.Filter('Slart', sap.ui.model.FilterOperator.EQ, oFormData.Slart), new sap.ui.model.Filter('Zzobjps', sap.ui.model.FilterOperator.EQ, oFormData.Zzobjps)],
+          filters: aFilters,
           success: (oData) => {
             if (oData) {
               this.debug(`${sUrl} success.`, oData);
@@ -447,10 +518,23 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const sUrl = '/BenefitCodeListSet';
         const sWerks = this.getSessionProperty('Werks');
+        const aFilters = [
+          // prettier 방지주석
+          new Filter('Cdnum', FilterOperator.EQ, 'BE0005'),
+          new Filter('Werks', FilterOperator.EQ, sWerks),
+          new Filter('Datum', FilterOperator.EQ, new Date()),
+          new Filter('Upcod', FilterOperator.EQ, sUpcod),
+        ];
+
+        if (this.isHass()) {
+          const sPernr = this.getAppointeeProperty('Pernr');
+
+          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
+        }
 
         return new Promise((resolve, reject) => {
           oModel.read(sUrl, {
-            filters: [new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0005'), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, sWerks), new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()), new sap.ui.model.Filter('Upcod', sap.ui.model.FilterOperator.EQ, sUpcod)],
+            filters: aFilters,
             success: (oData) => {
               if (oData) {
                 this.debug(`${sUrl} success.`, oData);

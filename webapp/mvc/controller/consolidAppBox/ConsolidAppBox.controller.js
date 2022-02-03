@@ -58,6 +58,8 @@ sap.ui.define(
         4510: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 동호회
         4710: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 차량유지비
         8410: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 경조금 hass
+        8420: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 학자금 hass
+        8430: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 의료비 hass
         // 2140: { url: 'excavation-detail', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 당직변경
         // 2140: { url: 'excavation-detail', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 연장/휴일근무
       },
