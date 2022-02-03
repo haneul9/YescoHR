@@ -2,6 +2,7 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/app/NotificationPopoverHandler',
     'sap/ui/yesco/mvc/controller/app/control/Menus',
@@ -9,6 +10,7 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     AppUtils,
+    MessageBox,
     BaseController,
     NotificationPopoverHandler,
     Menus
@@ -58,7 +60,15 @@ sap.ui.define(
       },
 
       onPressLogout() {
-        location.href = '/sap/public/bc/icf/logoff';
+        // 로그아웃하시겠습니까?
+        MessageBox.confirm(this.getBundleText('MSG_01004'), {
+          actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+          onClose: (sAction) => {
+            if (sAction === MessageBox.Action.YES) {
+              location.href = '/sap/public/bc/icf/logoff';
+            }
+          },
+        });
       },
     });
   }
