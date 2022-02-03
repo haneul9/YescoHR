@@ -74,7 +74,7 @@ sap.ui.define(
       /**
        * @override
        */
-      async onBeforeRendering(...aArgs) {
+      onBeforeRendering(...aArgs) {
         VBox.prototype.onBeforeRendering.apply(this, aArgs);
 
         const oContext = this.getBindingContext();

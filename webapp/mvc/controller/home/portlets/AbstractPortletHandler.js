@@ -46,7 +46,6 @@ sap.ui.define(
       async addPortlet() {
         const oPortletModel = this.getPortletModel();
         const sPortletID = oPortletModel.getProperty('/id');
-
         const oPortletBodyContent = await Fragment.load({
           name: `sap.ui.yesco.mvc.view.home.fragment.${sPortletID}PortletBodyContent`,
           controller: this,

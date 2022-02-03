@@ -20,13 +20,50 @@ sap.ui.define(
     'use strict';
 
     /**
-     * 공지사항 Portlet
+     * 근무 현황 Portlet
      */
     return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.P06PortletHandler', {
+      async addPortlet() {
+        const oPortletModel = this.getPortletModel();
+        const oPortletBox = await Fragment.load({
+          name: 'sap.ui.yesco.mvc.view.home.fragment.P06PortletBox',
+          controller: this,
+        });
+
+        oPortletModel.setProperty('/selectedDate', new Date());
+
+        oPortletBox.setModel(oPortletModel).bindElement('/');
+
+        this.oController.byId(this.sContainerId).addItem(oPortletBox);
+        this.setPortletBox(oPortletBox);
+
+        this.buildChart();
+      },
+
+      buildChart() {
+        FusionCharts.ready(() => {
+          new FusionCharts({
+            id: 'portlet-absence-chart',
+            type: 'cylinder',
+            renderAt: 'portlet-absence-chart-container',
+            width: '110px',
+            height: '100%',
+            dataFormat: 'json',
+            dataSource: {
+              chart: this.getChartOption(0),
+              value: 0,
+            },
+          }).render();
+        });
+      },
+
       async readContentData() {
+        const oPortletModel = this.getPortletModel();
+        const oSelectedDate = oPortletModel.getProperty('/selectedDate') || new Date();
+
         const oModel = this.getController().getModel(ServiceNames.COMMON);
         const mPayload = {
-          Datum: new Date(),
+          Datum: oSelectedDate,
           PortletPcountNav1: [],
           PortletPcountNav2: [],
         };
@@ -35,61 +72,65 @@ sap.ui.define(
       },
 
       transformContentData({ PortletPcountNav1, PortletPcountNav2 }) {
-        const { Datum, Week, Cnt01, Cnt02, Cnt03, Cnt04 } = ((PortletPcountNav1 || {}).results || [])[0] || {};
+        const { Datum, Week, ...mCountData } = ((PortletPcountNav1 || {}).results || [])[0] || {};
 
-        const table1 = [];
-        const table2 = [];
-        const table3 = [];
-        const table4 = [];
-
+        const mTables = {};
         ((PortletPcountNav2 || {}).results || []).forEach(({ Gubun, Pernr, Ename, Orgtx, Period }) => {
           const mData = { Pernr, Ename, Orgtx, Period };
-          if (Gubun === '1') {
-            table1.push(mData);
-          } else if (Gubun === '2') {
-            table2.push(mData);
-          } else if (Gubun === '3') {
-            table3.push(mData);
-          } else if (Gubun === '4') {
-            table4.push(mData);
+          if (mTables[Gubun]) {
+            mTables[Gubun].push(mData);
+          } else {
+            mTables[Gubun] = [mData];
           }
         });
 
+        const mPortletContentData = {
+          counts: { Datum, Week, ...mCountData }, // Cnt01, Cnt02, Cnt03, Cnt04, Cnt05, Cnt06, Cnt07
+        };
+
+        Object.keys(mCountData).forEach((sKey) => {
+          const sTableKey = sKey.replace(/^[\D]+/, '').replace(/^0+/, '');
+          const aTableData = mTables[sTableKey] || [];
+          mPortletContentData[`table${sTableKey}`] = {
+            list: aTableData,
+            listCount: aTableData.length,
+          };
+        });
+
+        const iValue = Number(mCountData.Cnt07);
+        FusionCharts('portlet-absence-chart').setChartData(
+          {
+            chart: this.getChartOption(iValue),
+            value: iValue,
+          },
+          'json'
+        );
+
+        return mPortletContentData;
+      },
+
+      getChartOption(iValue) {
         return {
-          counts: { Datum, Week, Cnt01, Cnt02, Cnt03, Cnt04 },
-          table1: {
-            list: table1,
-            listCount: table1.length,
-          },
-          table2: {
-            list: table2,
-            listCount: table2.length,
-          },
-          table3: {
-            list: table3,
-            listCount: table3.length,
-          },
-          table4: {
-            list: table4,
-            listCount: table4.length,
-          },
+          caption: AppUtils.getBundleText('LABEL_01130'), // 출근율
+          lowerlimit: '0',
+          upperlimit: '100',
+          lowerlimitdisplay: '0%',
+          upperlimitdisplay: '100%',
+          numbersuffix: '%',
+          cylfillcolor: '#5D62B5',
+          plottooltext: AppUtils.getBundleText('LABEL_01131', iValue), // 출근율: <b>${iValue}%</b>
+          cylfillhoveralpha: '85',
+          theme: 'ocean',
         };
       },
 
-      onHover1(oEvent) {
-        this.openPopover(oEvent.getSource(), '/table1');
+      onChangeSelectedDate() {
+        this.showContentData();
       },
 
-      onHover2(oEvent) {
-        this.openPopover(oEvent.getSource(), '/table2');
-      },
-
-      onHover3(oEvent) {
-        this.openPopover(oEvent.getSource(), '/table3');
-      },
-
-      onHover4(oEvent) {
-        this.openPopover(oEvent.getSource(), '/table4');
+      onClick(oEvent) {
+        const oEventSource = oEvent.getSource();
+        this.openPopover(oEventSource, `/table${oEventSource.data('table-key')}`);
       },
 
       async openPopover(oEventSource, sPath) {
@@ -113,6 +154,21 @@ sap.ui.define(
           this.getController().getView().addDependent(this.oPopover);
           this.oPopover.setModel(this.getPortletModel());
         }
+      },
+
+      async getPortletBox(oPortletModel) {
+        if (!this.oPortletBox) {
+          this.oPortletBox = await Fragment.load({
+            name: 'sap.ui.yesco.mvc.view.home.fragment.P06PortletBox',
+            controller: this,
+          });
+
+          oPortletModel.setProperty('/selectedDate', new Date());
+
+          this.oPortletBox.setModel(oPortletModel).bindElement('/');
+        }
+
+        return this.oPortletBox;
       },
 
       destroy() {

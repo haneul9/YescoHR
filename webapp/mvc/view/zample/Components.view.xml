@@ -145,11 +145,11 @@
                           </VBox>
                           <VBox>
                             <Label labelFor="gcg44" text="목표수행 시작일" />
-                            <DatePicker id="DP1-21" width="100%" class="sapIcon_Date" value="{ path: '/today', formatter: '.DateUtils.format' }" valueFormat="{sessionModel&gt;/Dtfmt}" displayFormat="{sessionModel&gt;/Dtfmt}" placeholder="{sessionModel&gt;/Dtfmt}" />
+                            <DatePicker id="DP1-21" width="100%" value="{ path: '/today', formatter: '.DateUtils.format' }" valueFormat="{sessionModel&gt;/Dtfmt}" displayFormat="{sessionModel&gt;/Dtfmt}" placeholder="{sessionModel&gt;/Dtfmt}" />
                           </VBox>
                           <VBox>
                             <Label labelFor="gcg222" text="목표수행 종료일" />
-                            <DatePicker id="DP1-22" width="100%" class="sapIcon_Date" value="{ path: '/today', formatter: '.DateUtils.format' }" valueFormat="{sessionModel&gt;/Dtfmt}" displayFormat="{sessionModel&gt;/Dtfmt}" placeholder="{sessionModel&gt;/Dtfmt}" />
+                            <DatePicker id="DP1-22" width="100%" value="{ path: '/today', formatter: '.DateUtils.format' }" valueFormat="{sessionModel&gt;/Dtfmt}" displayFormat="{sessionModel&gt;/Dtfmt}" placeholder="{sessionModel&gt;/Dtfmt}" />
                           </VBox>
                           <VBox>
                             <Label labelFor="gcg333" text="진척도" />
@@ -740,35 +740,35 @@
             </HBox>
             <HBox class="sapUiSmallMarginTop" alignItems="Center">
               <!-- standard DatePicker 대신 custom:DatePicker 사용 -->
-              <DatePicker id="DP1-1" width="140px" class="sapIcon_Date" value="{ path: '/today', formatter: '.DateUtils.format' }" valueFormat="{sessionModel&gt;/Dtfmt}" displayFormat="{sessionModel&gt;/Dtfmt}" placeholder="{sessionModel&gt;/Dtfmt}" />
+              <DatePicker id="DP1-1" width="140px" value="{ path: '/today', formatter: '.DateUtils.format' }" valueFormat="{sessionModel&gt;/Dtfmt}" displayFormat="{sessionModel&gt;/Dtfmt}" placeholder="{sessionModel&gt;/Dtfmt}" />
               <Label text="standard DatePicker /Date(1640358000000)/ formatter" labelFor="DP1-1" />
             </HBox>
             <HBox class="sapUiSmallMarginTop" alignItems="Center">
               <!-- value에 formatter 적용 : model에 값이 적용되지 않으므로 비추 -->
-              <custom:DatePicker id="DP1-2" width="140px" class="sapIcon_Date" value="{ path: '/today', formatter: '.DateUtils.format' }" />
+              <custom:DatePicker id="DP1-2" width="140px" value="{ path: '/today', formatter: '.DateUtils.format' }" />
               <Label text="custom DatePicker /Date(1640358000000)/ formatter" labelFor="DP1-2" />
             </HBox>
             <HBox class="sapUiSmallMarginTop" alignItems="Center">
               <!-- standard DatePicker 대신 custom:DatePicker 사용 -->
-              <DatePicker id="DP2-1" width="140px" class="sapIcon_Date" value="{ path: '/today', type: 'sap.ui.yesco.mvc.model.type.Date' }" valueFormat="{sessionModel&gt;/Dtfmt}" displayFormat="{sessionModel&gt;/Dtfmt}" placeholder="{sessionModel&gt;/Dtfmt}" />
+              <DatePicker id="DP2-1" width="140px" value="{ path: '/today', type: 'sap.ui.yesco.mvc.model.type.Date' }" valueFormat="{sessionModel&gt;/Dtfmt}" displayFormat="{sessionModel&gt;/Dtfmt}" placeholder="{sessionModel&gt;/Dtfmt}" />
               <Label text="standard DatePicker /Date(1640358000000)/ sap.ui.yesco.mvc.model.type.Date" labelFor="DP2-1" />
             </HBox>
             <HBox class="sapUiSmallMarginTop" alignItems="Center">
               <!-- value에 custom type 적용 : model에 값이 적용되므로 강추! -->
-              <custom:DatePicker id="DP2-2" width="140px" class="sapIcon_Date" value="{ path: '/today', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
+              <custom:DatePicker id="DP2-2" width="140px" value="{ path: '/today', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
               <Label text="custom DatePicker /Date(1640358000000)/ sap.ui.yesco.mvc.model.type.Date" labelFor="DP2-2" />
             </HBox>
             <HBox class="sapUiSmallMarginTop" alignItems="Center">
-              <custom:DatePicker id="DP3-1" width="140px" class="sapIcon_Date" value="{/today1}" />
-              <DatePicker id="DP3-2" width="140px" class="sapIcon_Date" value="{/today1}" valueFormat="{sessionModel&gt;/Dtfmt}" displayFormat="{sessionModel&gt;/Dtfmt}" placeholder="{sessionModel&gt;/Dtfmt}" />
+              <custom:DatePicker id="DP3-1" width="140px" value="{/today1}" />
+              <DatePicker id="DP3-2" width="140px" value="{/today1}" valueFormat="{sessionModel&gt;/Dtfmt}" displayFormat="{sessionModel&gt;/Dtfmt}" placeholder="{sessionModel&gt;/Dtfmt}" />
               <Label text="2021.12.25" labelFor="DP3-2" />
             </HBox>
             <HBox class="sapUiSmallMarginTop" alignItems="Center">
               <!-- dateValue/secondDateValue에 custom type 적용 : model에 값이 적용되므로 강추! -->
-              <custom:DateRangeSelection id="DRS1" width="230px" class="sapIcon_Date" dateValue="{ path: '/today', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/tomorrow', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
-              <custom:DateRangeSelection id="DRS2" width="230px" class="sapIcon_Date" dateValue="{ path: '/today1', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/tomorrow1', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
+              <custom:DateRangeSelection id="DRS1" width="230px" dateValue="{ path: '/today', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/tomorrow', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
+              <custom:DateRangeSelection id="DRS2" width="230px" dateValue="{ path: '/today1', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/tomorrow1', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
               <!-- standard DateRangeSelection 대신 custom:DateRangeSelection 사용 -->
-              <DateRangeSelection id="DRS3" width="230px" class="sapIcon_Date" dateValue="{
+              <DateRangeSelection id="DRS3" width="230px" dateValue="{
 									path: '/today1', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'yyyy.MM.dd', source: { pattern: 'yyyy.MM.dd' } }
 								}" secondDateValue="{
 									path: '/tomorrow1', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'yyyy.MM.dd', source: { pattern: 'yyyy.MM.dd' } }
@@ -1008,7 +1008,7 @@
                 <table:Column width="155px" hAlign="Center" filterProperty="DeliveryDate" sortProperty="DeliveryDate">
                   <Label text="Delivery Date"/>
                   <table:template>
-                    <custom:DatePicker value="{ path: 'DeliveryDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" />
+                    <custom:DatePicker value="{ path: 'DeliveryDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
                   </table:template>
                 </table:Column>
               </table:columns>
@@ -1092,7 +1092,7 @@
                 <table:Column width="155px" hAlign="Center" filterProperty="DeliveryDate1" sortProperty="DeliveryDate1">
                   <Label text="Delivery Date"/>
                   <table:template>
-                    <custom:DatePicker value="{ path: 'DeliveryDate1', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" />
+                    <custom:DatePicker value="{ path: 'DeliveryDate1', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
                   </table:template>
                 </table:Column>
               </table:columns>

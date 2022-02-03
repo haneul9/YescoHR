@@ -18,6 +18,12 @@ sap.ui.define(
      * ResponsivePopover Footer의 '확인' 버튼을 감추고 '취소' 버튼을 '오늘' 버튼으로 오버라이딩
      */
     return DatePicker.extend('sap.ui.yesco.control.DatePicker', {
+      metadata: {
+        properties: {
+          pickOnly: 'boolean',
+        },
+      },
+
       renderer: {},
 
       constructor: function (...aArgs) {
@@ -34,6 +40,21 @@ sap.ui.define(
         }
 
         this.setValueFormat(Dtfmt).setDisplayFormat(Dtfmt).setPlaceholder(Dtfmt).addStyleClass('sapIcon_Date');
+      },
+
+      /**
+       * @override
+       */
+      onAfterRendering(...aArgs) {
+        DatePicker.prototype.onAfterRendering.apply(this, aArgs);
+
+        this.$()
+          .find('input')
+          .prop('readonly', true)
+          .off('click')
+          .on('click', () => {
+            this.toggleOpen(this.isOpen());
+          });
       },
 
       _createPopup() {

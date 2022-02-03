@@ -104,7 +104,10 @@ html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl) {text-decoration:none}
 .portlet-p05 .sapMListUl .sapMLIB:first-child {margin-top:0}
 .portlet-p06 .today {color:grey}
 .portlet-p06 .sapUiLayoutCSSGrid {height:100%}
-.portlet-p06 .team-member-count {font-size:2rem; cursor:default}
+.portlet-p06 .team-member-count {font-size:2rem; cursor:pointer}
+.portlet-p06 .sapIcon_Date {margin-bottom:-8px !important}
+.portlet-p06 .sapIcon_Date .sapMInputBaseContentWrapper {border:none}
+.portlet-p06 .sapIcon_Date .sapUiIcon::before {content:'달력'; font-size:0; background-size:auto; background-image:url(./images/icon_date.png); display:inline-block; width:100%; height:100%; clear:both; vertical-align:top; background-repeat:no-repeat; background-position:4px center}
 .sapUiSizeCompact .portlet .sapMBtn,
 .sapUiSizeCompact .portlet .sapMBtnInner {min-width:auto}
 .sapUiSizeCompact .portlet .sapMBtnIcon {margin-right:0; width:auto; line-height:100%}
@@ -589,7 +592,7 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt {outline-style:none !important}
 /* Icon 변경 */
 .sapUiIconf::before{display:inline-block; width:100%; height:100%; clear:both; vertical-align:top; background-repeat:no-repeat; background-position:center center}/* 아이콘 공통 before */
 .sapIcon_Search .sapUiIcon::before {content:'검색'; font-size:0; background-size:auto 60%; background-image:url(./images/icon_search.png)}
-.sapIcon_Date .sapUiIcon::before{content:'달력'; font-size:0; background-size:auto; background-image:url(./images/icon_date.png); display:inline-block; width:100%; height:100%; clear:both; vertical-align:top; background-repeat:no-repeat; background-position:4px center}
+.sapIcon_Date .sapUiIcon::before {content:'달력'; font-size:0; background-size:auto; background-image:url(./images/icon_date.png); display:inline-block; width:100%; height:100%; clear:both; vertical-align:top; background-repeat:no-repeat; background-position:4px center}
 .sapIcon_Time .sapUiIcon::before {content:'시간'; font-size:0; background-size:auto; background-image:url(./images/icon_time.png)}
 .sapIcon_Datetime .sapUiIcon::before {content:'달력, 시간'; font-size:0; background-size:auto; background-image:url(./images/icon_datetime.png)}
 .sapIcon_Select_Arrow .sapMInputBaseIconContainer .sapUiIcon::before {content:'화살표'; font-size:0; background-size:auto; background-image:url(./images/icon_arrow.png)}
