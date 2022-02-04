@@ -1,0 +1,81 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:table="sap.ui.table"
+  xmlns:core="sap.ui.core">
+  <table:Table id="certiTable" class="row-link" rows="{/List}" visibleRowCount="{/listInfo/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
+    <table:rowSettingsTemplate>
+      <table:RowSettings highlight="{
+          path: 'ZappStatAl',
+          formatter: '.TableUtils.rowHighlight'
+      }"/>
+    </table:rowSettingsTemplate>
+    <table:columns>
+      <table:Column width="100px" sortProperty="ZappStatAl" filterProperty="ZappStatAl">
+        <Label text="{i18n>LABEL_00144}"/>
+        <table:template>
+          <Text text="{
+                path: 'ZappStatAl',
+                formatter: '.TableUtils.StatusTxt'
+            }" width="100%" textAlign="Center">
+            <customData>
+              <core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
+            </customData>
+          </Text>
+        </table:template>
+      </table:Column>
+      <table:Column width="150px" sortProperty="Accttx" filterProperty="Accttx">
+        <Label text="{i18n>LABEL_26005}"/>
+        <table:template>
+          <Text text="{Accttx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="150px" sortProperty="Banka" filterProperty="Banka">
+        <Label text="{i18n>LABEL_26003}"/>
+        <table:template>
+          <Text text="{Banka}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="auto" sortProperty="BanknBef" filterProperty="BanknBef">
+        <Label text="{i18n>LABEL_26004}"/>
+        <table:template>
+          <Text text="{BanknBef}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="150px" sortProperty="ZreqDate" filterProperty="ZreqDate">
+        <Label text="{i18n>LABEL_26006}"/>
+        <table:template>
+          <Text text="{
+              path: 'ZreqDate',
+              type: 'sap.ui.model.type.Date',
+              formatOptions: {
+                  pattern: 'yyyy.MM.dd'
+              }
+          }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="150px" sortProperty="Appda" filterProperty="Appda">
+        <Label text="{i18n>LABEL_00266}"/>
+        <table:template>
+          <Text text="{
+              path: 'Appda',
+              type: 'sap.ui.model.type.Date',
+              formatOptions: {
+                  pattern: 'yyyy.MM.dd'
+              }
+          }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="150px" sortProperty="ZappDate" filterProperty="ZappDate">
+        <Label text="{i18n>LABEL_05003}"/>
+        <table:template>
+          <Text text="{
+              path: 'ZappDate',
+              type: 'sap.ui.model.type.Date',
+              formatOptions: {
+                  pattern: 'yyyy.MM.dd'
+              }
+          }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+    </table:columns>
+  </table:Table>
+</core:FragmentDefinition>
