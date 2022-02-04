@@ -28,7 +28,9 @@ sap.ui.define(
 
       PAGE_TYPE: { NEW: 'A', CHANGE: 'B', CANCEL: 'C' },
 
-      onBeforeShow() {
+      onInit() {
+        BaseController.prototype.onInit.apply(this, arguments);
+
         const oViewModel = new JSONModel({
           busy: false,
           isVisibleActionButton: false,
@@ -66,6 +68,8 @@ sap.ui.define(
         });
         this.setViewModel(oViewModel);
       },
+
+      // onBeforeShow() {},
 
       async onObjectMatched() {
         const oModel = this.getModel(ServiceNames.WORKTIME);
