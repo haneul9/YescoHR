@@ -69,7 +69,7 @@ sap.ui.define(
 
           oPortletBox.setModel(oPortletModel).bindElement('/');
 
-          this.oController.byId(this.sContainerId).addItem(oPortletBox);
+          this.getController().byId(this.sContainerId).addItem(oPortletBox);
           this.setPortletBox(oPortletBox);
         }
       },

@@ -108,10 +108,11 @@ html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl) {text-decoration:none}
 .portlet-p06 .sapIcon_Date {margin-bottom:-8px !important}
 .portlet-p06 .sapIcon_Date .sapMInputBaseContentWrapper {border:none}
 .portlet-p06 .sapIcon_Date .sapUiIcon::before {content:'달력'; font-size:0; background-size:auto; background-image:url(./images/icon_date.png); display:inline-block; width:100%; height:100%; clear:both; vertical-align:top; background-repeat:no-repeat; background-position:4px center}
+.portlet-p06 .sapMObjStatusLink:hover .sapMObjStatusText {text-decoration:none}
 .sapUiSizeCompact .portlet .sapMBtn,
 .sapUiSizeCompact .portlet .sapMBtnInner {min-width:auto}
 .sapUiSizeCompact .portlet .sapMBtnIcon {margin-right:0; width:auto; line-height:100%}
-.team-member-count-popover .sapMPopoverArr {top:149px !important}
+/* .team-member-count-popover .sapMPopoverArr {top:149px !important} */
 
 .sapMLnkSubtle {color:#222}
 
@@ -543,6 +544,7 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt {outline-style:none !important}
 
 .sapUiTableColHdrCnt + .sapUiTableCtrlBefore + .sapUiTableCCnt, .sapUiTableColHdrCnt + .sapUiTableCCnt {margin-top:-1px}
 .sapUiTableCCnt {min-height:44px !important; border-bottom:1px solid #f5f5f5; border-left:1px solid #f5f5f5; border-right:1px solid #f5f5f5; background-color:#eff3f8}
+.sapUiTableCtrlCnt {min-height:44px !important}
 .dialog-content-table .sapUiTableCCnt {min-height:34px !important}
 .sapUiTableHeaderRow { background-color:#FBFCFD}
 .sapUiTableHeaderCell:not(.sapUiTableRowActionHeaderCell):hover {background-color:#F5F9FD; color:#222}

@@ -1,25 +1,25 @@
 <core:FragmentDefinition xmlns="sap.ui.table"
   xmlns:m="sap.m"
   xmlns:core="sap.ui.core">
-  <m:Popover contentWidth="300px" contentHeight="272px" offsetY="-21" horizontalScrolling="false" verticalScrolling="false" showHeader="false" class="team-member-count-popover">
-    <Table selectionMode="None" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{list}" visibleRowCount="5" noData="{i18n>MSG_00001}">
+  <m:Popover contentWidth="430px" contentHeight="247px" offsetY="0" horizontalScrolling="false" verticalScrolling="false" showHeader="false" class="team-member-count-popover">
+    <Table selectionMode="None" width="100%" columnHeaderHeight="35" rowHeight="34" rows="{list}" visibleRowCount="6" noData="{i18n>MSG_00001}">
       <columns>
-        <Column width="30%">
+        <Column width="80px">
           <m:Label text="{i18n>LABEL_01127}" />
           <template>
             <m:Text text="{Ename}" wrapping="false" class="tableRow_Text" />
           </template>
         </Column>
-        <Column width="30%">
+        <Column width="150px">
           <m:Label text="{i18n>LABEL_01128}" />
           <template>
             <m:Text text="{Orgtx}" wrapping="false" class="tableRow_Text" />
           </template>
         </Column>
-        <Column width="auto">
+        <Column width="200px">
           <m:Label text="{i18n>LABEL_01129}" />
           <template>
-            <m:Text text="{Period}" wrapping="false" class="tableRow_Text" />
+            <m:Text text="{Period}" textAlign="Center" wrapping="false" class="tableRow_Text" />
           </template>
         </Column>
       </columns>

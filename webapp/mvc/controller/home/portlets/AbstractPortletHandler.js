@@ -54,7 +54,7 @@ sap.ui.define(
         const oPortletBox = new PortletBox({ controller: this }).setModel(oPortletModel).bindElement('/');
         oPortletBox.getItems()[1].addItem(oPortletBodyContent);
 
-        this.oController.byId(this.sContainerId).addItem(oPortletBox);
+        this.getController().byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);
       },
 
@@ -124,6 +124,8 @@ sap.ui.define(
           .getRouter()
           .navTo(...aArgs);
       },
+
+      onAfterDragAndDrop() {},
 
       setController(oController) {
         this.oController = oController;

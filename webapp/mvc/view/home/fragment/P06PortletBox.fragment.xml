@@ -34,7 +34,7 @@
         </FlexBox>
         <VBox justifyContent="Center" alignItems="Center">
           <Label design="Bold" text="{i18n>LABEL_01121}" />
-          <ObjectStatus text="{ path: 'counts/Cnt01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication01" press=".onClick" class="team-member-count">
+          <ObjectStatus text="{ path: 'counts/Cnt01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication01" active="true" press=".onPressCount" class="team-member-count">
             <customData>
               <core:CustomData key="table-key" value="1" />
             </customData>
@@ -42,7 +42,7 @@
         </VBox>
         <VBox justifyContent="Center" alignItems="Center">
           <Label design="Bold" text="{i18n>LABEL_01122}" />
-          <ObjectStatus text="{ path: 'counts/Cnt02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication01" press=".onClick" class="team-member-count">
+          <ObjectStatus text="{ path: 'counts/Cnt02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication01" active="true" press=".onPressCount" class="team-member-count">
             <customData>
               <core:CustomData key="table-key" value="2" />
             </customData>
@@ -50,7 +50,7 @@
         </VBox>
         <VBox justifyContent="Center" alignItems="Center">
           <Label design="Bold" text="{i18n>LABEL_01123}" />
-          <ObjectStatus text="{ path: 'counts/Cnt03', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication01" press=".onClick" class="team-member-count">
+          <ObjectStatus text="{ path: 'counts/Cnt03', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication01" active="true" press=".onPressCount" class="team-member-count">
             <customData>
               <core:CustomData key="table-key" value="3" />
             </customData>
@@ -58,7 +58,7 @@
         </VBox>
         <VBox justifyContent="Center" alignItems="Center">
           <Label design="Bold" text="{i18n>LABEL_01124}" />
-          <ObjectStatus text="{ path: 'counts/Cnt04', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication01" press=".onClick" class="team-member-count">
+          <ObjectStatus text="{ path: 'counts/Cnt04', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication01" active="true" press=".onPressCount" class="team-member-count">
             <customData>
               <core:CustomData key="table-key" value="4" />
             </customData>
@@ -66,7 +66,7 @@
         </VBox>
         <VBox justifyContent="Center" alignItems="Center">
           <Label design="Bold" text="{i18n>LABEL_01125}" />
-          <ObjectStatus text="{ path: 'counts/Cnt05', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication01" press=".onClick" class="team-member-count">
+          <ObjectStatus text="{ path: 'counts/Cnt05', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication01" active="true" press=".onPressCount" class="team-member-count">
             <customData>
               <core:CustomData key="table-key" value="5" />
             </customData>
@@ -74,7 +74,7 @@
         </VBox>
         <VBox justifyContent="Center" alignItems="Center">
           <Label design="Bold" text="{i18n>LABEL_01126}" />
-          <ObjectStatus text="{ path: 'counts/Cnt06', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication01" press=".onClick" class="team-member-count">
+          <ObjectStatus text="{ path: 'counts/Cnt06', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication01" active="true" press=".onPressCount" class="team-member-count">
             <customData>
               <core:CustomData key="table-key" value="6" />
             </customData>

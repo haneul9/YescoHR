@@ -23,6 +23,8 @@ sap.ui.define(
      * 근무 현황 Portlet
      */
     return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.P06PortletHandler', {
+      sChartId: 'portlet-absence-chart',
+
       async addPortlet() {
         const oPortletModel = this.getPortletModel();
         const oPortletBox = await Fragment.load({
@@ -34,7 +36,7 @@ sap.ui.define(
 
         oPortletBox.setModel(oPortletModel).bindElement('/');
 
-        this.oController.byId(this.sContainerId).addItem(oPortletBox);
+        this.getController().byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);
 
         this.buildChart();
@@ -43,7 +45,7 @@ sap.ui.define(
       buildChart() {
         FusionCharts.ready(() => {
           new FusionCharts({
-            id: 'portlet-absence-chart',
+            id: this.sChartId,
             type: 'cylinder',
             renderAt: 'portlet-absence-chart-container',
             width: '110px',
@@ -74,6 +76,10 @@ sap.ui.define(
       transformContentData({ PortletPcountNav1, PortletPcountNav2 }) {
         const { Datum, Week, ...mCountData } = ((PortletPcountNav1 || {}).results || [])[0] || {};
 
+        delete mCountData.__metadata;
+        delete mCountData.PortletPcountNav1;
+        delete mCountData.PortletPcountNav2;
+
         const mTables = {};
         ((PortletPcountNav2 || {}).results || []).forEach(({ Gubun, Pernr, Ename, Orgtx, Period }) => {
           const mData = { Pernr, Ename, Orgtx, Period };
@@ -97,19 +103,25 @@ sap.ui.define(
           };
         });
 
-        const iValue = Number(mCountData.Cnt07);
-        FusionCharts('portlet-absence-chart').setChartData(
-          {
-            chart: this.getChartOption(iValue),
-            value: iValue,
-          },
-          'json'
-        );
+        const fValue = Number(mCountData.Cnt07);
+        this.setChartData(fValue);
 
         return mPortletContentData;
       },
 
-      getChartOption(iValue) {
+      setChartData(fValue) {
+        const oChart = FusionCharts(this.sChartId);
+        oChart.setChartData(
+          {
+            chart: this.getChartOption(fValue),
+            value: fValue,
+          },
+          'json'
+        );
+        oChart.render();
+      },
+
+      getChartOption(fValue) {
         return {
           caption: AppUtils.getBundleText('LABEL_01130'), // 출근율
           lowerlimit: '0',
@@ -117,18 +129,24 @@ sap.ui.define(
           lowerlimitdisplay: '0%',
           upperlimitdisplay: '100%',
           numbersuffix: '%',
-          cylfillcolor: '#5D62B5',
-          plottooltext: AppUtils.getBundleText('LABEL_01131', iValue), // 출근율: <b>${iValue}%</b>
+          cylfillcolor: '#5d62b5',
+          plottooltext: AppUtils.getBundleText('LABEL_01131', fValue), // 출근율: <b>{fValue}%</b>
           cylfillhoveralpha: '85',
+          animation: 1,
+          refreshInstantly: 1,
           theme: 'ocean',
         };
       },
 
       onChangeSelectedDate() {
-        this.showContentData();
+        this.setChartData(0);
+
+        setTimeout(() => {
+          this.showContentData();
+        }, 300);
       },
 
-      onClick(oEvent) {
+      onPressCount(oEvent) {
         const oEventSource = oEvent.getSource();
         this.openPopover(oEventSource, `/table${oEventSource.data('table-key')}`);
       },
@@ -169,6 +187,10 @@ sap.ui.define(
         }
 
         return this.oPortletBox;
+      },
+
+      onAfterDragAndDrop() {
+        FusionCharts(this.sChartId).render();
       },
 
       destroy() {
