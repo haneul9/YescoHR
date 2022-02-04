@@ -29,7 +29,9 @@ sap.ui.define(
       TableUtils: TableUtils,
       TABLE_ID: 'excavationTable',
 
-      onBeforeShow() {
+      onInit() {
+        BaseController.prototype.onInit.apply(this, arguments);
+
         const today = moment();
         const oViewModel = new JSONModel({
           busy: false,
@@ -76,7 +78,9 @@ sap.ui.define(
           },
         });
         this.setViewModel(oViewModel);
+      },
 
+      onBeforeShow() {
         TableUtils.adjustRowSpan({
           oTable: this.byId(this.TABLE_ID),
           aColIndices: [0, 1, 2, 3, 12, 13],

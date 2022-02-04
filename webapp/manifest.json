@@ -99,6 +99,9 @@
         { "pattern": "", "name": "ehrHome", "target": "home" },
         { "pattern": "mobile", "name": "ehrMobileHome", "target": "mobileHome" },
 
+        { "pattern": "accountChange", "name": "accountChange", "target": "accountChange" },
+        { "pattern": "accountChange/:oDataKey:", "name": "accountChange-detail", "target": "accountChangeDetail" },
+
         { "pattern": "congratulation", "name": "congratulation", "target": "congratulation" },
         { "pattern": "congratulation/:oDataKey:", "name": "congratulation-detail", "target": "congDetail" },
         { "pattern": "h/congratulation", "name": "h/congratulation", "target": "h/congratulation" },
@@ -203,6 +206,9 @@
         "home": { "viewId": "home", "viewPath": "sap.ui.yesco.mvc.view.home", "viewName": "Portlets" },
         "mobileHome": { "viewId": "mobileHome", "viewPath": "sap.ui.yesco.mvc.view.home.mobile", "viewName": "Portlets" },
         "notFound": { "viewId": "notFound", "viewName": "NotFound", "transition": "show" },
+
+        "accountChange": { "viewId": "accountChange", "viewPath": "sap.ui.yesco.mvc.view.accountChange", "viewName": "AccountChange" },
+        "accountChangeDetail": { "viewId": "accountChangeDetail", "viewPath": "sap.ui.yesco.mvc.view.accountChange", "viewName": "AccountChangeDetail" },
 
         "congratulation": { "viewId": "congratulation", "viewPath": "sap.ui.yesco.mvc.view.congratulation", "viewName": "Congratulation" },
         "h/congratulation": { "viewId": "h_congratulation", "viewPath": "sap.ui.yesco.mvc.view.congratulation", "viewName": "CongratulationHass" },
