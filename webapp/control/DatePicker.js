@@ -30,8 +30,8 @@ sap.ui.define(
         DatePicker.apply(this, aArgs);
 
         let Dtfmt;
-        const oBindingValueType = (this.getBindingInfo('value') || {}).type;
-        if (oBindingValueType && ['CustomMonth', 'CustomYear'].includes(oBindingValueType.getName())) {
+        const oBindingValueType = (this.getBindingInfo('value') || this.getBindingInfo('dateValue') || {}).type;
+        if (oBindingValueType && ['CustomDateWeekday', 'CustomMonth', 'CustomYear'].includes(oBindingValueType.getName())) {
           Dtfmt = oBindingValueType.oFormatOptions.pattern;
         }
         if (!Dtfmt) {
@@ -48,13 +48,15 @@ sap.ui.define(
       onAfterRendering(...aArgs) {
         DatePicker.prototype.onAfterRendering.apply(this, aArgs);
 
-        this.$()
-          .find('input')
-          .prop('readonly', true)
-          .off('click')
-          .on('click', () => {
-            this.toggleOpen(this.isOpen());
-          });
+        if (this.getPickOnly()) {
+          this.$()
+            .find('input')
+            .prop('readonly', true)
+            .off('click')
+            .on('click', () => {
+              this.toggleOpen(this.isOpen());
+            });
+        }
       },
 
       _createPopup() {

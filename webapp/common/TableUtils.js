@@ -56,6 +56,17 @@ sap.ui.define(
      */
     const MED_STATE_REJECT = 'F';
 
+    function rem2px(rem) {
+      if (rem.endsWith('px')) {
+        return parseFloat(rem);
+      }
+      const fRem = parseFloat(rem);
+      if (fRem === 0) {
+        return 0;
+      }
+      return parseFloat($('html').css('font-size')) / fRem;
+    }
+
     return {
       /**************************
        * Functions
@@ -91,11 +102,13 @@ sap.ui.define(
       },
 
       calculateVisibleRowCount(oTable) {
+        // sapUiTableColHdrCnt
         const iBodyHeight = Math.floor($('body').height()); // body 높이
-        const iOffsetTopOfTbody = Math.ceil(oTable.$().find('.sapUiTableCCnt').offset().top); // Table 데이터 시작행의 border-top으로부터 body 최상단까지의 거리
-        const $parentBox = oTable.$().parents('.sapMFlexBox'); // Table을 감싸고 있는 FlexBox
-        const iParentBoxPaddingBottom = parseInt($parentBox.css('padding-bottom'), 10);
-        const iParentBoxBorderBottomWidth = parseInt($parentBox.css('border-bottom-width'), 10);
+        const $Table = oTable.$();
+        const iOffsetTopOfTbody = Math.ceil($Table.find('.sapUiTableCCnt').offset().top); // Table 데이터 시작행의 border-top으로부터 body 최상단까지의 거리
+        const $parentBox = $Table.parents('.sapMFlexBox'); // Table을 감싸고 있는 FlexBox
+        const iParentBoxPaddingBottom = rem2px($parentBox.css('padding-bottom'));
+        const iParentBoxBorderBottomWidth = rem2px($parentBox.css('border-bottom-width'));
         const iRowHeight = oTable.getRowHeight() + 1; // Table에 세팅된 행높이 + 실제 렌더링될 때 더해지는 1픽셀
         const iVisibleRowCount = Math.floor((iBodyHeight - iOffsetTopOfTbody - iParentBoxPaddingBottom - iParentBoxBorderBottomWidth) / iRowHeight);
         // console.log('calculateVisibleRowCount', { iBodyHeight, iOffsetTopOfTbody, iParentBoxPaddingBottom, iParentBoxBorderBottomWidth, iRowHeight, iVisibleRowCount });

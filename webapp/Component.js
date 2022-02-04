@@ -50,6 +50,8 @@ sap.ui.define(
       init(...aArgs) {
         $('body').toggleClass(this.getContentDensityClass(), true);
 
+        moment.locale(navigator.language || 'ko');
+
         this.setDeviceModel() // 디바이스 모델 생성
           .setAppModel() // Busy indicator 값 저장 모델 생성
           .setMetadataModel()

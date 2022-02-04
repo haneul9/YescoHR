@@ -17,7 +17,7 @@
           <FlexItemData growFactor="1" />
         </layoutData>
       </Text>
-      <custom:DatePicker dateValue="{ path: 'selectedDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" change=".onChangeSelectedDate" width="120px" pickOnly="true" />
+      <custom:DatePicker dateValue="{ path: 'selectedDate', type: 'sap.ui.yesco.mvc.model.type.DateWeekday' }" change=".onChangeSelectedDate" width="135px" pickOnly="true" />
       <Button visible="{switchable}" icon="sap-icon://decline" type="Transparent" class="icon-button portlet-close-icon" press=".onPressClose" />
       <Button visible="{hasLink}" icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" press=".onPressLink" />
     </HBox>
@@ -34,49 +34,49 @@
         </FlexBox>
         <VBox justifyContent="Center" alignItems="Center">
           <Label design="Bold" text="{i18n>LABEL_01121}" />
-          <ObjectStatus text="{ path: 'counts/Cnt01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication01" active="true" press=".onPressCount" class="team-member-count">
+          <ObjectStatus text="{ path: 'counts/Cnt01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount" class="team-member-count">
             <customData>
-              <core:CustomData key="table-key" value="1" />
+              <core:CustomData key="table-key" value="1" writeToDom="true" />
             </customData>
           </ObjectStatus>
         </VBox>
         <VBox justifyContent="Center" alignItems="Center">
           <Label design="Bold" text="{i18n>LABEL_01122}" />
-          <ObjectStatus text="{ path: 'counts/Cnt02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication01" active="true" press=".onPressCount" class="team-member-count">
+          <ObjectStatus text="{ path: 'counts/Cnt02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount" class="team-member-count">
             <customData>
-              <core:CustomData key="table-key" value="2" />
+              <core:CustomData key="table-key" value="2" writeToDom="true" />
             </customData>
           </ObjectStatus>
         </VBox>
         <VBox justifyContent="Center" alignItems="Center">
           <Label design="Bold" text="{i18n>LABEL_01123}" />
-          <ObjectStatus text="{ path: 'counts/Cnt03', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication01" active="true" press=".onPressCount" class="team-member-count">
+          <ObjectStatus text="{ path: 'counts/Cnt03', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount" class="team-member-count">
             <customData>
-              <core:CustomData key="table-key" value="3" />
+              <core:CustomData key="table-key" value="3" writeToDom="true" />
             </customData>
           </ObjectStatus>
         </VBox>
         <VBox justifyContent="Center" alignItems="Center">
           <Label design="Bold" text="{i18n>LABEL_01124}" />
-          <ObjectStatus text="{ path: 'counts/Cnt04', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication01" active="true" press=".onPressCount" class="team-member-count">
+          <ObjectStatus text="{ path: 'counts/Cnt04', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount" class="team-member-count">
             <customData>
-              <core:CustomData key="table-key" value="4" />
+              <core:CustomData key="table-key" value="4" writeToDom="true" />
             </customData>
           </ObjectStatus>
         </VBox>
         <VBox justifyContent="Center" alignItems="Center">
           <Label design="Bold" text="{i18n>LABEL_01125}" />
-          <ObjectStatus text="{ path: 'counts/Cnt05', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication01" active="true" press=".onPressCount" class="team-member-count">
+          <ObjectStatus text="{ path: 'counts/Cnt05', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount" class="team-member-count">
             <customData>
-              <core:CustomData key="table-key" value="5" />
+              <core:CustomData key="table-key" value="5" writeToDom="true" />
             </customData>
           </ObjectStatus>
         </VBox>
         <VBox justifyContent="Center" alignItems="Center">
           <Label design="Bold" text="{i18n>LABEL_01126}" />
-          <ObjectStatus text="{ path: 'counts/Cnt06', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication01" active="true" press=".onPressCount" class="team-member-count">
+          <ObjectStatus text="{ path: 'counts/Cnt06', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount" class="team-member-count">
             <customData>
-              <core:CustomData key="table-key" value="6" />
+              <core:CustomData key="table-key" value="6" writeToDom="true" />
             </customData>
           </ObjectStatus>
         </VBox>
