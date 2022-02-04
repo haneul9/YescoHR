@@ -285,13 +285,16 @@ sap.ui.define(
                   const aList = oData.results;
 
                   oDetailModel.setProperty('/LoanAppList', aList);
-                  oDetailModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aList, sStatCode: 'Lnsta' }));
 
-                  if (!bRouteAppBox) {
-                    this.onSelectRow(_.each(aList, (v) => (v.Appno = oDetailModel.getProperty('/ViewKey')))[0]);
-                  }
+                  setTimeout(() => {
+                    oDetailModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aList, sStatCode: 'Lnsta' }));
 
-                  resolve();
+                    if (!bRouteAppBox) {
+                      this.onSelectRow(_.each(aList, (v) => (v.Appno = oDetailModel.getProperty('/ViewKey')))[0]);
+                    }
+
+                    resolve();
+                  }, 100);
                 }
               },
               error: (oError) => {
