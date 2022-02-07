@@ -4,7 +4,7 @@
   <VBox class="vCardBox">
     <HBox justifyContent="SpaceBetween" class="table-toolbar">
       <Title level="H2" text="{i18n>LABEL_07036}" class="sapUiSmallMarginEnd" />
-      <Button text="{i18n>LABEL_07034}" press=".onRepayDetailApp" />
+      <Button text="{i18n>LABEL_07034}" press=".onRepayDetailApp" visible="{= !!${/TargetLoanHis/RpamtBal} &amp;&amp; ${/TargetLoanHis/RpamtBal} !== '0' }" />
     </HBox>
     <table:Table id="repaymentTable" rows="{/LoanAppList}" visibleRowCount="{/listInfo/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
       <table:rowSettingsTemplate>

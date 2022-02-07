@@ -1,0 +1,51 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:core="sap.ui.core">
+  <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
+    <HBox alignItems="Center" class="table-toolbar" justifyContent="SpaceBetween">
+      <Title level="H2" text="{i18n>LABEL_00129}" />
+      <HBox>
+        <Button text="{i18n>LABEL_26009}" press=".onAccNameCheck" visible="{= !${/FormData/ZappStatAl} }" />
+        <Button text="{i18n>LABEL_26009}" press=".onAccNameCheck" visible="{= !${/FormData/ZappStatAl} }" />
+      </HBox>
+    </HBox>
+    <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
+      <Label text="{i18n>LABEL_26008}" />
+      <VBox>
+        <ComboBox items="{/AccType}" selectedKey="{/FormData/Acctty}" change=".onAccChange" editable="{= !${/FormData/ZappStatAl} }" class="required">
+          <core:Item text="{Ztext}" key="{Zcode}" />
+        </ComboBox>
+      </VBox>
+      <Label text="{= !${/FormData/ZappStatAl} ? ${i18n>LABEL_26009} : ${i18n>LABEL_25018} }"/>
+      <VBox>
+        <CheckBox selected="{= ${/FormData/Chkyn} === 'X' }" editable="false" visible="{= !${/FormData/ZappStatAl} }" />
+        <Text text="{/FormData/Ename}" visible="{= !!${/FormData/ZappStatAl} }" />
+      </VBox>
+      <Label text="{i18n>LABEL_26010}"/>
+      <VBox>
+        <ComboBox items="{/BankList}" selectedKey="{/FormData/Bankl}" change=".onBankList" editable="{= !${/FormData/ZappStatAl} }" class="required">
+          <core:Item text="{Banka}" key="{Bankl}" />
+        </ComboBox>
+      </VBox>
+      <Label text="{i18n>LABEL_26011}"/>
+      <VBox>
+        <Input value="{/FormData/Bankn}" liveChange=".onAccChangeInput" editable="{= !${/FormData/ZappStatAl} }" />
+      </VBox>
+      <Label text="{i18n>LABEL_26012}"/>
+      <VBox>
+        <Text text="{/FormData/BankaBef}"/>
+      </VBox>
+      <Label text="{i18n>LABEL_26013}"/>
+      <VBox>
+        <Text text="{/FormData/BanknBef}"/>
+      </VBox>
+      <Label text="{i18n>LABEL_26006}"/>
+      <VBox>
+        <DatePicker displayFormat="yyyy-MM" value="{/FormData/PayYearMon}" change=".onDatePick" width="230px" editable="{= !${/FormData/ZappStatAl} }" />
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+        </layoutData>
+      </VBox>
+    </grid:CSSGrid>
+  </VBox>
+</core:FragmentDefinition>

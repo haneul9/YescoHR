@@ -8,7 +8,6 @@ sap.ui.define(
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Currency',
     'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
@@ -22,7 +21,6 @@ sap.ui.define(
     TextUtils,
     Client,
     ServiceNames,
-    ODataReadError,
     BaseController
   ) => {
     'use strict';
@@ -32,7 +30,9 @@ sap.ui.define(
       TextUtils: TextUtils,
       FragmentEvent: FragmentEvent,
 
-      onBeforeShow() {
+      onInit() {
+        BaseController.prototype.onInit.apply(this, arguments);
+
         const dDate = new Date();
         const oViewModel = new JSONModel({
           busy: false,

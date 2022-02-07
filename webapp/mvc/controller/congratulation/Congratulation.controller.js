@@ -35,8 +35,8 @@ sap.ui.define(
       TableUtils: TableUtils,
       AppUtils: AppUtils,
 
-      onBeforeShow() {
-        this.FileListDialogHandler = new FileListDialogHandler(this);
+      onInit() {
+        BaseController.prototype.onInit.apply(this, arguments);
 
         const oViewModel = new JSONModel({
           busy: false,
@@ -56,6 +56,9 @@ sap.ui.define(
           },
         });
         this.setViewModel(oViewModel);
+      },
+      onBeforeShow() {
+        this.FileListDialogHandler = new FileListDialogHandler(this);
       },
 
       onObjectMatched() {

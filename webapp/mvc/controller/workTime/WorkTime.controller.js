@@ -27,7 +27,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.carMaintainCost.CarMaintainCost', {
+    return BaseController.extend('sap.ui.yesco.mvc.controller.workTime.WorkTime', {
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
       TextUtils: TextUtils,
@@ -36,14 +36,13 @@ sap.ui.define(
       onInit() {
         BaseController.prototype.onInit.apply(this, arguments);
 
-        const dDate = new Date();
         const oViewModel = new JSONModel({
           busy: false,
           Data: [],
-          Total: {},
+          MyWork: {},
           search: {
-            secondDate: new Date(2020, 0, 1),
-            date: new Date(dDate.getFullYear(), 12, 0),
+            secondDate: moment().subtract(1, 'month').add(1, 'day').toDate(),
+            date: moment().toDate(),
           },
           listInfo: {
             rowCount: 1,
@@ -64,21 +63,33 @@ sap.ui.define(
         try {
           oListModel.setProperty('/busy', true);
 
-          // 중도인출 List
-          const oModel = this.getModel(ServiceNames.BENEFIT);
-          const aMyMaintain = await Client.getEntitySet(oModel, 'MaintenanceCarReport');
+          const mPernr = {};
 
-          oListModel.setProperty('/Total', aMyMaintain[0]);
+          if (this.isHass()) {
+            const sPernr = this.getAppointeeProperty('Pernr');
+
+            mPernr.Pernr = sPernr;
+          }
+
+          const mMyWorkPayLoad = {
+            Menid: this.getCurrentMenuId(),
+            ...mPernr,
+          };
+          const oModel = this.getModel(ServiceNames.WORKTIME);
+          // 나의 근무시간현황
+          const aMyWork = await Client.getEntitySet(oModel, 'WorkingTime', mMyWorkPayLoad);
+
+          oListModel.setProperty('/MyWork', aMyWork[0]);
 
           const mSearch = oListModel.getProperty('/search');
           const mPayLoad = {
-            Begda: moment(mSearch.secondDate).hours(9).toDate(),
-            Endda: moment(mSearch.date).hours(9).toDate(),
+            Apbeg: moment(mSearch.secondDate).hours(9).toDate(),
+            Apend: moment(mSearch.date).hours(9).toDate(),
             Menid: this.getCurrentMenuId(),
-            Prcty: 'L',
+            ...mPernr,
           };
-          const aTableList = await Client.getEntitySet(oModel, 'MaintenanceCarAppl', mPayLoad);
-          const oTable = this.byId('carTable');
+          const aTableList = await Client.getEntitySet(oModel, 'OtWorkApply', mPayLoad);
+          const oTable = this.byId('workTable');
 
           oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
           oListModel.setProperty('/List', aTableList);
@@ -89,23 +100,43 @@ sap.ui.define(
         }
       },
 
+      // 대상자 정보 사원선택시 화면 Refresh
+      async onRefresh() {
+        const oListModel = this.getViewModel();
+
+        try {
+          oListModel.setProperty('/busy', true);
+
+          const mMyWork = {
+            Menid: this.getCurrentMenuId(),
+            Pernr: this.getAppointeeProperty('Pernr'),
+          };
+          const oModel = this.getModel(ServiceNames.WORKTIME);
+          // 나의 근무시간현황
+          const aMyWork = await Client.getEntitySet(oModel, 'WorkingTime', mMyWork);
+
+          oListModel.setProperty('/MyWork', aMyWork[0]);
+
+          this.onSearch();
+          this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oListModel.setProperty('/busy', false);
+        }
+      },
+
+      formatWeek(sWeek = '') {
+        return `${this.getBundleText('MSG_27001', sWeek)}`;
+      },
+
       onClick() {
-        this.getRouter().navTo('carMaintainCost-detail', { oDataKey: 'N' });
+        this.getRouter().navTo('workTime-detail', { oDataKey: 'N' });
       },
 
       // override AttachFileCode
       getApprovalType() {
-        return 'HR14';
-      },
-
-      formatPay(vPay = '0') {
-        vPay = this.TextUtils.toCurrency(vPay);
-
-        return vPay;
-      },
-
-      thisYear(sYear = String(moment().format('YYYY'))) {
-        return this.getBundleText('MSG_25001', sYear);
+        return 'HR17';
       },
 
       async onSearch() {
@@ -114,16 +145,24 @@ sap.ui.define(
         try {
           oListModel.setProperty('/busy', true);
 
+          const mPernr = {};
+
+          if (this.isHass()) {
+            const sPernr = this.getAppointeeProperty('Pernr');
+
+            mPernr.Pernr = sPernr;
+          }
+
           const mSearch = oListModel.getProperty('/search');
           const mPayLoad = {
-            Begda: moment(mSearch.secondDate).hours(9).toDate(),
-            Endda: moment(mSearch.date).hours(9).toDate(),
+            Apbeg: moment(mSearch.secondDate).hours(9).toDate(),
+            Apend: moment(mSearch.date).hours(9).toDate(),
             Menid: this.getCurrentMenuId(),
-            Prcty: 'L',
+            ...mPernr,
           };
-          const oModel = this.getModel(ServiceNames.BENEFIT);
-          const aTableList = await Client.getEntitySet(oModel, 'MaintenanceCarAppl', mPayLoad);
-          const oTable = this.byId('carTable');
+          const oModel = this.getModel(ServiceNames.WORKTIME);
+          const aTableList = await Client.getEntitySet(oModel, 'OtWorkApply', mPayLoad);
+          const oTable = this.byId('workTable');
 
           oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
           oListModel.setProperty('/List', aTableList);
@@ -139,13 +178,13 @@ sap.ui.define(
         const oListModel = this.getViewModel();
         const oRowData = oListModel.getProperty(vPath);
 
-        this.getRouter().navTo('carMaintainCost-detail', { oDataKey: oRowData.Appno, sStatus: oRowData.ZappStatAl });
+        this.getRouter().navTo('workTime-detail', { oDataKey: oRowData.Appno });
       },
 
       onPressExcelDownload() {
-        const oTable = this.byId('carTable');
+        const oTable = this.byId('workTable');
         const aTableData = this.getViewModel().getProperty('/List');
-        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_25001');
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_27001');
 
         TableUtils.export({ oTable, aTableData, sFileName });
       },
