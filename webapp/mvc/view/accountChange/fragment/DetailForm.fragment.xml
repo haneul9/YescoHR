@@ -26,7 +26,7 @@
       </VBox>
       <Label text="{i18n>LABEL_26011}"/>
       <VBox>
-        <Input value="{/FormData/Bankn}" liveChange=".onAccChangeInput" editable="{= !${/FormData/ZappStatAl} }"/>
+        <Input value="{/FormData/Bankn}" liveChange=".onAccChangeInput" editable="{= !${/FormData/ZappStatAl} }" />
       </VBox>
       <Label text="{i18n>LABEL_26012}"/>
       <VBox>
@@ -35,6 +35,13 @@
       <Label text="{i18n>LABEL_26013}"/>
       <VBox>
         <Text text="{/FormData/BanknBef}"/>
+      </VBox>
+      <Label text="{i18n>LABEL_26006}"/>
+      <VBox>
+        <DatePicker displayFormat="yyyy-MM" value="{/FormData/PayYearMon}" change=".onDatePick" width="230px" editable="{= !${/FormData/ZappStatAl} }" />
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+        </layoutData>
       </VBox>
     </grid:CSSGrid>
   </VBox>
