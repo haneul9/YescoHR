@@ -1,0 +1,67 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:core="sap.ui.core">
+  <VBox class="portlet portlet-box portlet-p06" tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
+    <customData>
+      <core:CustomData key="portlet-switchable" value="{switchable}" />
+    </customData>
+    <layoutData>
+      <f:GridContainerItemLayoutData rows="{height}" columns="{width}" />
+    </layoutData>
+    <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
+      <Title level="H2" text="{title}" visible="{= !${hideTitle} }" />
+      <SegmentedButton selectedKey="{selectedTabKey}">
+        <items>
+          <SegmentedButtonItem text="{i18n>LABEL_01132}" key="Today" />
+          <SegmentedButtonItem text="{i18n>LABEL_01133}" key="Future" />
+        </items>
+      </SegmentedButton>
+      <Text text="">
+        <layoutData>
+          <FlexItemData growFactor="1" />
+        </layoutData>
+      </Text>
+      <Button visible="{switchable}" icon="sap-icon://decline" type="Transparent" class="icon-button portlet-close-icon" press=".onPressClose" />
+    </HBox>
+    <HBox class="portlet-body">
+      <ScrollContainer visible="{= ${selectedTabKey} === 'Today' }">
+        <layoutData>
+          <FlexItemData growFactor="1" maxWidth="100%" />
+        </layoutData>
+        <HBox width="100%" height="2rem" justifyContent="Center" alignItems="Center" visible="{= ${today/listCount} === 0 }">
+          <Text text="{i18n>MSG_00001}" />
+        </HBox>
+        <VBox width="100%" items="{today/list}" visible="{= ${today/listCount} &gt; 0 }" class="portlet-org-members">
+          <HBox width="100%" alignItems="Center" justifyContent="SpaceBetween">
+            <!-- 메뉴 없는 경우 -->
+            <Text text="{Title}" wrapping="false" tooltip="{Title}" visible="{= !${Mnurl} }" />
+            <!-- 메뉴 이동인 경우 -->
+            <Link text="{Title}" visible="{= !!${Mnurl} &amp;&amp; !${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" press=".handleMenuLink" class="menu-link" />
+            <!-- http|https|javascript로 시작되는 경우 -->
+            <Link text="{Title}" visible="{= !!${Mnurl} &amp;&amp; ${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" target="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuTarget' }" class="menu-link" />
+            <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
+          </HBox>
+        </VBox>
+      </ScrollContainer>
+      <ScrollContainer visible="{= ${selectedTabKey} === 'Future' }">
+        <layoutData>
+          <FlexItemData growFactor="1" maxWidth="100%" />
+        </layoutData>
+        <HBox width="100%" height="2rem" justifyContent="Center" alignItems="Center" visible="{= ${future/listCount} === 0 }">
+          <Text text="{i18n>MSG_00001}" />
+        </HBox>
+        <VBox width="100%" items="{future/list}" visible="{= ${future/listCount} &gt; 0 }" class="portlet-org-members">
+          <HBox width="100%" alignItems="Center" justifyContent="SpaceBetween">
+            <!-- 메뉴 없는 경우 -->
+            <Text text="{Title}" wrapping="false" tooltip="{Title}" visible="{= !${Mnurl} }" />
+            <!-- 메뉴 이동인 경우 -->
+            <Link text="{Title}" visible="{= !!${Mnurl} &amp;&amp; !${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" press=".handleMenuLink" class="menu-link" />
+            <!-- http|https|javascript로 시작되는 경우 -->
+            <Link text="{Title}" visible="{= !!${Mnurl} &amp;&amp; ${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" target="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuTarget' }" class="menu-link" />
+            <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
+          </HBox>
+        </VBox>
+      </ScrollContainer>
+    </HBox>
+  </VBox>
+</core:FragmentDefinition>
