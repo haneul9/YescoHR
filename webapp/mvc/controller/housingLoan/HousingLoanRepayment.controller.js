@@ -17,6 +17,7 @@ sap.ui.define(
     'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/common/exceptions/ODataDeleteError',
     'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/model/type/Currency',
     'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
   ],
   (
