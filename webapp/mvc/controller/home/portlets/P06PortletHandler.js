@@ -160,12 +160,6 @@ sap.ui.define(
         this.oPopover.close();
         this.oPopover.bindElement(sPath);
 
-        const oPortletModel = this.getPortletModel();
-        const iListCount = oPortletModel.getProperty(`${sPath}/listCount`);
-        if (iListCount < 5) {
-          this.oPopover.setContentHeight('211px'); // TODO
-        }
-
         setTimeout(() => {
           this.oPopover.openBy(oEventSource);
         }, 300);

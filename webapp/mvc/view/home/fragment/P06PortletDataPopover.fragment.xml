@@ -1,8 +1,8 @@
 <core:FragmentDefinition xmlns="sap.ui.table"
   xmlns:m="sap.m"
   xmlns:core="sap.ui.core">
-  <m:Popover contentWidth="430px" contentHeight="211px" horizontalScrolling="false" verticalScrolling="false" showHeader="false" class="team-member-count-popover">
-    <Table selectionMode="None" width="100%" columnHeaderHeight="35" rowHeight="34" rows="{list}" visibleRowCount="{listCount}" noData="{i18n>MSG_00001}">
+  <m:Popover contentWidth="430px" horizontalScrolling="false" verticalScrolling="false" showHeader="false" class="team-member-count-popover">
+    <Table selectionMode="None" columnHeaderHeight="35" rowHeight="34" rows="{list}" visibleRowCount="{listCount}" noData="{i18n>MSG_00001}">
       <columns>
         <Column width="80px">
           <m:Label text="{i18n>LABEL_01127}" />
@@ -16,7 +16,7 @@
             <m:Text text="{Orgtx}" wrapping="false" class="tableRow_Text" />
           </template>
         </Column>
-        <Column width="200px">
+        <Column width="198px">
           <m:Label text="{i18n>LABEL_01129}" />
           <template>
             <m:Text text="{Period}" textAlign="Center" wrapping="false" class="tableRow_Text" />

@@ -119,7 +119,8 @@ html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl) {text-decoration:none}
 .portlet-p06 .team-member-count[data-table-key="5"] .sapMObjStatusText {color:#6edecf}
 .portlet-p06 .team-member-count[data-table-key="6"] .sapMObjStatusText {color:#ffc86f}
 .portlet-p06 .sapMObjStatusLink:hover .sapMObjStatusText {text-decoration:none}
-.sapIcon_Date.pickonly-datepicker .sapMInputBaseContentWrapper {border:none}
+.team-member-count-popover .sapUiTableCCnt,
+.team-member-count-popover .sapUiTableCtrlCnt {min-height:34px !important}
 .sapUiSizeCompact .portlet .sapMBtn,
 .sapUiSizeCompact .portlet .sapMBtnInner {min-width:auto}
 .sapUiSizeCompact .portlet .sapMBtnIcon {margin-right:0; width:auto; line-height:100%}
