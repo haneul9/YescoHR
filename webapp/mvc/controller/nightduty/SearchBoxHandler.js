@@ -1,6 +1,7 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/BoxHandler',
     'sap/ui/yesco/common/ComboEntry',
@@ -10,6 +11,7 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
+    JSONModel,
     AppUtils,
     BoxHandler,
     ComboEntry,
@@ -45,13 +47,24 @@ sap.ui.define(
           requestListInfo: {
             rowCount: 0,
             totalCount: 0,
-            progressCount: 0,
-            applyCount: 0,
-            approveCount: 0,
-            rejectCount: 0,
-            completeCount: 0,
           },
         });
+        this.oController.setViewModel(
+          new JSONModel({
+            listInfo: {
+              isShowProgress: false,
+              progressCount: 0,
+              isShowApply: true,
+              applyCount: 0,
+              isShowApprove: true,
+              approveCount: 0,
+              isShowReject: true,
+              rejectCount: 0,
+              isShowComplete: true,
+              completeCount: 0,
+            },
+          })
+        );
         this.oController.byId('searchBox').setModel(this.oBoxModel).bindElement('/search');
         this.oController.byId(requestListTableId).setModel(this.oBoxModel).bindElement('/search');
       },
@@ -92,9 +105,16 @@ sap.ui.define(
 
       setRequestListData(aRowData) {
         const oTable = this.oController.byId(this.sRequestListTableId);
+        const { rowCount, totalCount, applyCount, approveCount, rejectCount, completeCount } = TableUtils.count({ oTable, aRowData });
 
         this.oBoxModel.setProperty('/search/requestList', aRowData);
-        this.oBoxModel.setProperty('/search/requestListInfo', TableUtils.count({ oTable, aRowData }));
+        this.oBoxModel.setProperty('/search/requestListInfo', { rowCount, totalCount });
+
+        const oViewModel = this.oController.getViewModel();
+        oViewModel.setProperty('/listInfo/applyCount', applyCount);
+        oViewModel.setProperty('/listInfo/approveCount', approveCount);
+        oViewModel.setProperty('/listInfo/rejectCount', rejectCount);
+        oViewModel.setProperty('/listInfo/completeCount', completeCount);
       },
 
       getRequestListTableData() {
