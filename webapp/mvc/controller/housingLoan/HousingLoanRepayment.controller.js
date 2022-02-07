@@ -316,7 +316,16 @@ sap.ui.define(
             filters: [new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0016'), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks), new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date())],
             success: (oData) => {
               if (oData) {
-                const aList = oData.results;
+                const oView = this.getView();
+                const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+                const mDetailData = oListView.getModel().getProperty('/FormData');
+                let aList = oData.results;
+
+                if (!mDetailData.Lnsta || mDetailData.Lnsta === '10') {
+                  aList = _.filter(aList, (e) => {
+                    return e.Zcode !== 'PAY';
+                  });
+                }
 
                 oDetailModel.setProperty('/LaonType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
                 resolve();
