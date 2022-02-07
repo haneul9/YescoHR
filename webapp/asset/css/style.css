@@ -49,6 +49,8 @@ html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl) {text-decoration:none}
 .sapUiSizeCompact .portlet-header .sapMSegB .sapMSegBBtn {min-width:72px}
 .portlet-header .sapMSegB .sapMSegBBtn .sapMSegBBtnInner {background-color:transparent; border-radius:8px!important; line-height:25px; font-weight:500}
 .portlet-header .sapMSegB .sapMSegBBtn.sapMSegBBtnSel .sapMSegBBtnInner {font-weight:700}
+.portlet-header .sapIcon_Date {margin-bottom:-8px !important}
+.portlet-header .sapIcon_Date .sapUiIcon::before {content:'달력'; font-size:0; background-size:auto; background-image:url(./images/icon_date.png); display:inline-block; width:100%; height:100%; clear:both; vertical-align:top; background-repeat:no-repeat; background-position:4px center}
 .portlet .sapMBtn.icon-button.portlet-close-icon {visibility:hidden}
 .portlet:hover .sapMBtn.icon-button.portlet-close-icon {visibility:visible}
 .portlet .sapMBtn.icon-button .sapMBtnIcon {color:#222; font-weight:200}
@@ -76,11 +78,14 @@ html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl) {text-decoration:none}
 .portlet-p02 .portlet-body .icon-mimic {border:1px solid #387fe9; border-radius:3px; padding:0 4px; font-size:10px; color:#387fe9; cursor:default}
 .portlet-p02 .portlet-body .sapUiIcon {vertical-align:text-top}
 .portlet-p03p04 .sapMImg {width:30px; height:30px; margin-right:15px; border:1px solid #fff; box-sizing:border-box}
-.portlet-p03p04 [data-portlet-member-status] {margin-right:0px; border:1px solid; border-radius:2px; font-size:0.6rem; min-width:40px; line-height:16px; height:17px; text-align:center !important}
+.portlet-p03p04 [data-portlet-member-status] {margin-right:0px; border:1px solid; border-radius:3px; font-size:0.6rem; min-width:40px; line-height:16px; height:17px; text-align:center !important}
 .portlet-p03p04 [data-portlet-member-status=""] {border-color:transparent; color:transparent}
-.portlet-p03p04 [data-portlet-member-status="red"] {border-color:#67A4FF; background-color:#67A4FF; color:#fff}/*하계휴가*/
-.portlet-p03p04 [data-portlet-member-status="blue"] {border-color:#67A4FF; background-color:#67A4FF; color:#fff}/*연차*/
-.portlet-p03p04 [data-portlet-member-status="grey"] {border-color:#8FBCFF; color:#387FE9}/*근무중*/
+.portlet-p03p04 [data-portlet-member-status="1"],/*휴가중*/
+.portlet-p03p04 [data-portlet-member-status="2"],/*출장중*/
+.portlet-p03p04 [data-portlet-member-status="3"],/*교육중*/
+.portlet-p03p04 [data-portlet-member-status="4"],/*파견중*/
+.portlet-p03p04 [data-portlet-member-status="H"] {border-color:#67a4ff; background-color:#67a4ff; color:#fff}/*휴일*/
+.portlet-p03p04 [data-portlet-member-status="W"] {border-color:#8fbcff; background-color:transparent; color:#387FE9}/*근무중*/
 .portlet-p03p04 .portlet-org-members,
 .portlet-p03p04 .portlet-my-members {justify-content:space-between; align-items:center; height:auto !important}
 .portlet-p03p04 .portlet-org-members > div,
@@ -111,14 +116,11 @@ html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl) {text-decoration:none}
 .portlet-p06 .team-member-count[data-table-key="4"] .sapMObjStatusText {color:#c68dff}
 .portlet-p06 .team-member-count[data-table-key="5"] .sapMObjStatusText {color:#6edecf}
 .portlet-p06 .team-member-count[data-table-key="6"] .sapMObjStatusText {color:#ffc86f}
-.portlet-p06 .sapIcon_Date {margin-bottom:-8px !important}
-.portlet-p06 .sapIcon_Date .sapMInputBaseContentWrapper {border:none}
-.portlet-p06 .sapIcon_Date .sapUiIcon::before {content:'달력'; font-size:0; background-size:auto; background-image:url(./images/icon_date.png); display:inline-block; width:100%; height:100%; clear:both; vertical-align:top; background-repeat:no-repeat; background-position:4px center}
 .portlet-p06 .sapMObjStatusLink:hover .sapMObjStatusText {text-decoration:none}
+.sapIcon_Date.pickonly-datepicker .sapMInputBaseContentWrapper {border:none}
 .sapUiSizeCompact .portlet .sapMBtn,
 .sapUiSizeCompact .portlet .sapMBtnInner {min-width:auto}
 .sapUiSizeCompact .portlet .sapMBtnIcon {margin-right:0; width:auto; line-height:100%}
-/* .team-member-count-popover .sapMPopoverArr {top:149px !important} */
 
 .sapMLnkSubtle {color:#222}
 
@@ -351,6 +353,7 @@ div.sapUiTableSelectAllCheckBox::after, div.sapUiTableRowSelectionCell::after {b
 .sapMFocus .sapMInputBaseIcon:active {color:#346187; background:var(--BackgroundColorFocus) !important}
 .sapMInputBaseIconPressed .sapMInputBaseIcon {color:#346187; background:var(--BackgroundColorFocus) !important}
 .sapMInputBaseIconPressed .sapMInputBaseIcon::before {color:#346187}
+.sapIcon_Date.pickonly-datepicker .sapMInputBaseContentWrapper {border:none}
 
 div.sapUiCalItem {color:#000; background:none}/* 달력 기본 */
 div.sapUiCalItem>.sapUiCalItemText {box-shadow:none !important}

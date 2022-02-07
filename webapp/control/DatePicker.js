@@ -31,7 +31,7 @@ sap.ui.define(
 
         let Dtfmt;
         const oBindingValueType = (this.getBindingInfo('value') || this.getBindingInfo('dateValue') || {}).type;
-        if (oBindingValueType && ['CustomDateWeekday', 'CustomMonth', 'CustomYear'].includes(oBindingValueType.getName())) {
+        if (oBindingValueType && (oBindingValueType.getName() || '').startsWith('Custom')) {
           Dtfmt = oBindingValueType.oFormatOptions.pattern;
         }
         if (!Dtfmt) {
@@ -40,6 +40,9 @@ sap.ui.define(
         }
 
         this.setValueFormat(Dtfmt).setDisplayFormat(Dtfmt).setPlaceholder(Dtfmt).addStyleClass('sapIcon_Date');
+        if (this.getPickOnly()) {
+          this.addStyleClass('pickonly-datepicker');
+        }
       },
 
       /**

@@ -12,8 +12,8 @@
       <Title level="H2" text="{title}" visible="{= !${hideTitle} }" />
       <SegmentedButton selectedKey="{selectedTabKey}">
         <items>
-          <SegmentedButtonItem text="{i18n>LABEL_01132}" key="Today" />
-          <SegmentedButtonItem text="{i18n>LABEL_01133}" key="Future" />
+          <SegmentedButtonItem text="{i18n>LABEL_01141}" key="Today" />
+          <SegmentedButtonItem text="{i18n>LABEL_01142}" key="Future" />
         </items>
       </SegmentedButton>
       <Text text="">
