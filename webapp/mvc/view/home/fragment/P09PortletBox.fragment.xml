@@ -21,12 +21,12 @@
       <Button visible="{hasLink}" icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" press=".onPressLink" />
     </HBox>
     <HBox class="portlet-body">
-      <VBox width="50%" height="100%">
+      <VBox width="48%" height="100%">
         <HBox width="100%" alignItems="Center">
           <Label text="{i18n>LABEL_01151}" design="Bold" displayOnly="true" vAlign="Middle" />
           <Image alt="{i18n>LABEL_01151}" src="asset/image/icon_star2_on.svg" width=".7rem" class="ml-5-px" />
         </HBox>
-        <ScrollContainer horizontal="false" vertical="true" class="mt-3-px">
+        <ScrollContainer horizontal="false" vertical="true" class="mt-10-px">
           <layoutData>
             <FlexItemData growFactor="1" />
           </layoutData>
@@ -35,7 +35,7 @@
           </HBox>
           <List items="{ path: 'birthday/list', templateShareable: false }" visible="{= ${birthday/listCount} &gt; 0 }" rememberSelections="false" showSeparators="None" showNoData="false">
             <CustomListItem>
-              <HBox alignItems="Center" height="20px">
+              <HBox alignItems="Center" height="24px">
                 <Text text="{Ename}" tooltip="{Ename}" wrapping="false">
                   <layoutData>
                     <FlexItemData growFactor="1" />
@@ -43,7 +43,7 @@
                 </Text>
                 <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.MonthDate' }" wrapping="false">
                   <layoutData>
-                    <FlexItemData minWidth="50%" maxWidth="50%" />
+                    <FlexItemData minWidth="40%" maxWidth="40%" />
                   </layoutData>
                 </Text>
               </HBox>
@@ -51,12 +51,12 @@
           </List>
         </ScrollContainer>
       </VBox>
-      <VBox width="50%" height="100%">
+      <VBox width="48%" height="100%" class="ml-4">
         <HBox width="100%" alignItems="Center">
           <Label text="{i18n>LABEL_01152}" design="Bold" displayOnly="true" vAlign="Middle" />
           <Image alt="{i18n>LABEL_01152}" src="asset/image/icon_star2_on.svg" width=".7rem" class="ml-5-px" />
         </HBox>
-        <ScrollContainer horizontal="false" vertical="true" class="mt-3-px">
+        <ScrollContainer horizontal="false" vertical="true" class="mt-10-px">
           <layoutData>
             <FlexItemData growFactor="1" />
           </layoutData>
@@ -65,7 +65,7 @@
           </HBox>
           <List items="{ path: 'wedding/list', templateShareable: false }" visible="{= ${wedding/listCount} &gt; 0 }" rememberSelections="false" showSeparators="None" showNoData="false">
             <CustomListItem>
-              <HBox alignItems="Center" height="20px">
+              <HBox alignItems="Center" height="24px">
                 <Text text="{Ename}" tooltip="{Ename}" wrapping="false">
                   <layoutData>
                     <FlexItemData growFactor="1" />
@@ -73,7 +73,7 @@
                 </Text>
                 <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.MonthDate' }" wrapping="false">
                   <layoutData>
-                    <FlexItemData minWidth="50%" maxWidth="50%" />
+                    <FlexItemData minWidth="40%" maxWidth="40%" />
                   </layoutData>
                 </Text>
               </HBox>
