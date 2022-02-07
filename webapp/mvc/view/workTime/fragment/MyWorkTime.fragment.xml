@@ -1,0 +1,23 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core">
+  <VBox class="hCardBox summary-box" width="33%" busyIndicatorDelay="0" busy="{/busy}">
+    <VBox>
+      <HBox class="title" alignItems="End">
+        <Title level="H2" text="{i18n>LABEL_27002}" />
+        <Text text="{i18n>LABEL_27003}" />
+      </HBox>
+      <VBox class="summary-info" alignItems="Center">
+        <HBox>
+        </HBox>
+        <HBox alignItems="End">
+          <Text text="{
+                path: '/MyWork/Prdtx',
+                formatter: '.formatWeek'
+            }" />
+          <ObjectStatus text="{/MyWork/Reltm}" state="Indication05" />
+          <Text text="{i18n>MSG_27002}" />
+        </HBox>
+      </VBox>
+    </VBox>
+  </VBox>
+</core:FragmentDefinition>

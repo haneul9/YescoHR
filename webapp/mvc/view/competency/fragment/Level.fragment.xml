@@ -23,7 +23,7 @@
         </headerToolbar>
         <content>
             <grid:CSSGrid gridTemplateColumns="200px repeat({/level/count}, 2fr)" gridGap="8px" items="{/level/rows}">
-                <VBox items="{child}">
+                <VBox items="{ path: 'child', templateShareable: true }">
                     <customData>
                         <core:CustomData key="type" value="{type}" writeToDom="true" />
                     </customData>

@@ -39,7 +39,9 @@ sap.ui.define(
       TextUtils: TextUtils,
       FragmentEvent: FragmentEvent,
 
-      onBeforeShow() {
+      onInit() {
+        BaseController.prototype.onInit.apply(this, arguments);
+
         const dDate = new Date();
         const oViewModel = new JSONModel({
           detailName: this.isHass() ? 'h/clubJoin-detail' : 'clubJoin-detail',

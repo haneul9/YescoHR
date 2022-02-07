@@ -157,13 +157,12 @@ sap.ui.define(
             header: {
               profilePath: 'asset/image/avatar-unknown.svg?ssl=1',
               baseInfo: [],
-              timeline: [
-                { label: '회사입사일', data: '2010.01.01' },
-                { label: '부서배치일', data: '2015.01.01' },
-                { label: '직급승진일', data: '2016.01.01' },
-                { label: '직책임용일', data: '2010.01.01' },
-                { label: '10년장기근속일', data: '2019.12.31' },
-              ],
+              timeline: null,
+              // { Dattx: '회사입사일', Datum: '2010.01.01' },
+              // { Dattx: '부서배치일', Datum: '2015.01.01' },
+              // { Dattx: '직급승진일', Datum: '2016.01.01' },
+              // { Dattx: '직책임용일', Datum: '2010.01.01' },
+              // { Dattx: '10년장기근속일', Datum: '2019.12.31' },
             },
             tab: {
               list: [],
@@ -272,6 +271,7 @@ sap.ui.define(
           // 1. 상단 프로필, 탭 메뉴, 주소유형, 시/도
           const [
             aProfileReturnData, //
+            // aMilestoneReturnData,
             aMenuReturnData,
             aCountryList,
             aMajorList,
@@ -284,6 +284,7 @@ sap.ui.define(
             aTestGradeList,
           ] = await Promise.all([
             this.readOdata({ sUrl: '/EmpProfileHeaderNewSet', mFilters }),
+            // this.readOdata({ sUrl: '/EmpProfileMilestoneSet' }),
             this.readOdata({ sUrl: '/EmpProfileMenuSet', mFilters }),
             this.readOdata({ sUrl: '/CountryCodeSet' }),
             this.readOdata({ sUrl: '/MajorCodeSet' }),
@@ -295,6 +296,9 @@ sap.ui.define(
             this.readComboEntry({ oModel, sUrl: '/LanguageTypeCodeSet', sPath: 'languageTypeList', mEntryInfo: { codeKey: 'Quali', valueKey: 'Qualitx' } }),
             this.readComboEntry({ oModel, sUrl: '/TestGradeCodeSet', sPath: 'gradeList', mEntryInfo: { codeKey: 'Eamgr', valueKey: 'Eamgrtx' } }),
           ]);
+
+          // Milestone set
+          // oViewModel.setProperty('/employee/header/timeline', _.map(aMilestoneReturnData, (o) => ({ ...o, Datum: DateUtils.format(o.Datum) })) || _.noop());
 
           // Dialog Combo entry set
           oViewModel.setProperty('/employee/dialog/countryList', aCountryList);

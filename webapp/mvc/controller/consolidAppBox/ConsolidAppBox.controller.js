@@ -65,7 +65,9 @@ sap.ui.define(
         // 2140: { url: 'excavation-detail', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 연장/휴일근무
       },
 
-      onBeforeShow() {
+      onInit() {
+        BaseController.prototype.onInit.apply(this, arguments);
+
         const dDate = new Date();
         const oViewModel = new JSONModel({
           busy: false,

@@ -2,8 +2,10 @@
 
 @page { size: landscape; margin: 0; }
 @media print { 
-    #container-ehr---app--appMenuToolbar, .contents-header { display: none; }
-    .contents { min-width: 0 !important; width: 95% !important; }
+    #container-ehr---app--appMenuToolbar { display: none; }
+    html, body {width: 297mm !important; min-height: 2500px !important; overflow-y:auto !important}
+    .sapMPage>section {overflow-y: hidden !important;}
+    .contents { min-width: 280mm !important; }
     .sapMTitle { font-size: 16px !important; }
     .sapMLabel { font-size: 12px !important; }
     .sapMText { font-size: 12px !important; }
