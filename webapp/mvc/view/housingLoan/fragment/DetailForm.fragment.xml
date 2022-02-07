@@ -8,9 +8,10 @@
         <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0px" class="form-grid">
             <Label text="{i18n>LABEL_07002}" />
             <VBox>
-                <ComboBox items="{/LaonType}" selectedKey="{/FormData/Lntyp}" change=".onLaonType" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required">
+                <ComboBox items="{/LaonType}" selectedKey="{/FormData/Lntyp}" change=".onLaonType" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
+                <Input value="{/FormData/Lntyptx}" editable="false" visible="{= ${/FormData/Lnsta} !== '10' &amp;&amp; !!${/FormData/Lnsta} }" />
             </VBox>
             <Label text="{i18n>LABEL_00261}" />
             <VBox>

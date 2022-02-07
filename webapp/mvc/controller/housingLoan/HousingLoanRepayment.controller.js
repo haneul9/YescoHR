@@ -117,11 +117,13 @@ sap.ui.define(
       },
 
       // DialogData setting
-      setInitDialogData() {
+      async setInitDialogData() {
         const oView = this.getView();
         const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
         const mDetailData = oListView.getModel().getProperty('/FormData');
         const oDetailModel = this.getViewModel();
+
+        await this.getRepayType('');
 
         oDetailModel.setProperty('/DialogData', mDetailData);
         oDetailModel.setProperty('/DialogData/Appda', new Date());
@@ -163,7 +165,7 @@ sap.ui.define(
           oRowData = oEvent;
         }
 
-        await this.getRepayType();
+        await this.getRepayType(oRowData.Lnsta);
 
         if (!this.byId('RepayApplyDialog')) {
           Fragment.load({
@@ -306,22 +308,24 @@ sap.ui.define(
       },
 
       // 상환유형 Code호출
-      getRepayType() {
+      getRepayType(sLnsta) {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
         const oAppointeeData = this.getAppointeeData();
 
         return new Promise((resolve, reject) => {
           oModel.read('/BenefitCodeListSet', {
-            filters: [new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0016'), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks), new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date())],
+            filters: [
+              // prettier 방지주석
+              new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0016'),
+              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks),
+              new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
+            ],
             success: (oData) => {
               if (oData) {
-                const oView = this.getView();
-                const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-                const mDetailData = oListView.getModel().getProperty('/FormData');
                 let aList = oData.results;
 
-                if (!mDetailData.Lnsta || mDetailData.Lnsta === '10') {
+                if (!sLnsta || sLnsta === '10') {
                   aList = _.filter(aList, (e) => {
                     return e.Zcode !== 'PAY';
                   });
@@ -409,7 +413,6 @@ sap.ui.define(
 
       // 상환신청
       async onRepayDetailApp() {
-        await this.getRepayType();
         this.setInitDialogData();
 
         if (!this.byId('RepayApplyDialog')) {
