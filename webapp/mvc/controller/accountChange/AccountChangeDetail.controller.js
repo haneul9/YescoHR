@@ -103,7 +103,10 @@ sap.ui.define(
               Pernr: mAppointeeData.Pernr,
               Acctty: 'A',
               Bankl: 'ALL',
+              Begym: moment().format('YYYYMM'),
+              PayYearMon: moment().format('YYYY-MM'),
               BankaBef: aMyAcc[0].Banka,
+              BanklBef: aMyAcc[0].Bankl,
               BanknBef: aMyAcc[0].Bankn,
             });
 
@@ -116,6 +119,8 @@ sap.ui.define(
             const oTargetData = await Client.getEntitySet(oModel, 'BankAccount', {
               Appno: sDataKey,
             });
+
+            oTargetData[0].PayYearMon = `${oTargetData[0].Begym.slice(0, 4)}-${oTargetData[0].Begym.slice(4)}`;
 
             oDetailModel.setProperty('/FormData', oTargetData[0]);
             oDetailModel.setProperty('/ApplyInfo', oTargetData[0]);
@@ -176,6 +181,15 @@ sap.ui.define(
         const aAccCheck = await Client.getEntitySet(oModel, 'CheckAccount', mPayLoad);
 
         oDetailModel.setProperty('/FormData/Chkyn', aAccCheck[0].Chkyn);
+      },
+
+      // 지급년월
+      onDatePick(oEvent) {
+        const oDetailModel = this.getViewModel();
+        const dDateValue = oEvent.getSource().getDateValue();
+
+        oDetailModel.setProperty('/FormData/PayYearMon', moment(dDateValue).format('YYYY-MM'));
+        oDetailModel.setProperty('/FormData/Begym', moment(dDateValue).format('YYYYMM'));
       },
 
       // 변경된 은행계좌입력시

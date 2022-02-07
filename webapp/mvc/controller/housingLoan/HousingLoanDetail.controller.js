@@ -16,6 +16,8 @@ sap.ui.define(
     'sap/ui/yesco/common/exceptions/ODataDeleteError',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/model/type/Currency',
+    'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
   ],
   (
     // prettier 방지용 주석
@@ -336,7 +338,13 @@ sap.ui.define(
         const sBenefitUrl = '/BenefitCodeListSet';
 
         oModel.read(sBenefitUrl, {
-          filters: [new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0012'), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks), new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()), new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, sKey)],
+          filters: [
+            // prettier 방지주석
+            new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0012'),
+            new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks),
+            new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
+            new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, sKey),
+          ],
           success: (oData) => {
             if (oData) {
               this.debug(`${sBenefitUrl} success.`, oData);

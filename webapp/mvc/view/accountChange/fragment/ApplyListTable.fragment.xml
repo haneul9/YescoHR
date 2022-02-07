@@ -40,16 +40,10 @@
           <Text text="{BanknBef}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="200px" sortProperty="Appdt" filterProperty="Appdt">
+      <table:Column width="200px" sortProperty="Begym" filterProperty="Begym">
         <Label text="{i18n>LABEL_26006}"/>
         <table:template>
-          <Text text="{
-              path: 'Appdt',
-              type: 'sap.ui.model.type.Date',
-              formatOptions: {
-                  pattern: 'yyyy.MM.dd'
-              }
-          }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          <Text text="{Begym}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="200px" sortProperty="ZreqDate" filterProperty="ZreqDate">
