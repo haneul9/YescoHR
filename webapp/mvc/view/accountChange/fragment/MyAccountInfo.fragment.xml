@@ -6,27 +6,24 @@
         <Title level="H2" text="{i18n>LABEL_26007}" />
       </HBox>
       <Text text="{i18n>LABEL_26002}" class="sapUiSmallMarginBottom" />
-      <HBox class="mt-50-px">
-        <VBox width="40%" class="summary-info">
+      <HBox>
+        <VBox class="summary-info">
           <HBox>
             <Label design="Bold" text="{i18n>LABEL_26003}" />
-            <ObjectStatus text="{
-                path: '/Total/Betrg',
-                formatter: '.formatPay'
-            }" state="Indication05" />
+            <ObjectStatus text="{/MyAcc/Banka}" state="Indication05" />
           </HBox>
           <HBox>
             <Label design="Bold" text="{i18n>LABEL_26004}" />
-            <ObjectStatus text="{
-                path: '/Total/Betrg',
-                formatter: '.formatPay'
-            }" state="Indication05" />
+            <ObjectStatus text="{/MyAcc/Bankn}" state="Indication05" />
           </HBox>
           <HBox>
             <Label design="Bold" text="{i18n>LABEL_00271}" />
             <ObjectStatus text="{
-                path: '/Total/Betrg',
-                formatter: '.formatPay'
+                path: '/MyAcc/Begda',
+                type: 'sap.ui.model.type.Date',
+                formatOptions: {
+                    pattern: 'yyyy.MM.dd'
+                }
             }" state="Indication05" />
           </HBox>
         </VBox>

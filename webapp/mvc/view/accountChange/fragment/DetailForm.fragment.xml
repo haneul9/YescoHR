@@ -2,92 +2,39 @@
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:core="sap.ui.core">
   <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
-    <HBox alignItems="Center" class="table-toolbar">
+    <HBox alignItems="Center" class="table-toolbar" justifyContent="SpaceBetween">
       <Title level="H2" text="{i18n>LABEL_00129}" />
+      <Button text="{i18n>LABEL_26009}" press=".onAccNameCheck" visible="{= !${/FormData/ZappStatAl} }" />
     </HBox>
     <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
-      <Label text="{i18n>LABEL_17011}" />
+      <Label text="{i18n>LABEL_26008}" />
       <VBox>
-        <ComboBox items="{/CertiType}" selectedKey="{/FormData/Certy}" editable="{= !${/FormData/ZappStatAl} }" class="required">
-          <core:Item text="{Certx}" key="{Certy}" />
-        </ComboBox>
-      </VBox>
-      <Label text="{i18n>LABEL_00147}"/>
-      <VBox>
-        <ComboBox items="{/CertiGubun}" selectedKey="{/FormData/Reqty}" editable="{= !${/FormData/ZappStatAl} }" class="required">
-          <core:Item text="{Reqtx}" key="{Reqty}" />
-        </ComboBox>
-      </VBox>
-      <Label text="{i18n>LABEL_17012}"/>
-      <VBox>
-        <ComboBox items="{/AppPiece}" selectedKey="{/FormData/Reqnt}" editable="{= !${/FormData/ZappStatAl} }" class="required">
+        <ComboBox items="{/AccType}" selectedKey="{/FormData/Acctty}" change=".onAccChange" editable="{= !${/FormData/ZappStatAl} }" class="required">
           <core:Item text="{Ztext}" key="{Zcode}" />
         </ComboBox>
       </VBox>
-      <Label text="{i18n>LABEL_17013}"/>
+      <Label text="{= !${/FormData/ZappStatAl} ? ${i18n>LABEL_26009} : ${i18n>LABEL_25018} }"/>
       <VBox>
-        <ComboBox items="{/IssuanceArea}" selectedKey="{/FormData/Btrtl}" editable="{= !${/FormData/ZappStatAl} }" class="required">
-          <core:Item text="{Btext}" key="{Btrtl}" />
+        <CheckBox selected="{= ${/FormData/Chkyn} === 'X' }" editable="false" visible="{= !${/FormData/ZappStatAl} }" />
+        <Text text="{/FormData/Ename}" visible="{= !!${/FormData/ZappStatAl} }" />
+      </VBox>
+      <Label text="{i18n>LABEL_26010}"/>
+      <VBox>
+        <ComboBox items="{/BankList}" selectedKey="{/FormData/Bankl}" change=".onBankList" editable="{= !${/FormData/ZappStatAl} }" class="required">
+          <core:Item text="{Banka}" key="{Bankl}" />
         </ComboBox>
       </VBox>
-      <Label text="{i18n>LABEL_17014}"/>
+      <Label text="{i18n>LABEL_26011}"/>
       <VBox>
-        <ComboBox items="{/IssuanceList}" selectedKey="{/FormData/Usety}" editable="{= !${/FormData/ZappStatAl} }" class="required">
-          <core:Item text="{Usetx}" key="{Usety}" />
-        </ComboBox>
+        <Input value="{/FormData/Bankn}" liveChange=".onAccChangeInput" editable="{= !${/FormData/ZappStatAl} }"/>
       </VBox>
-      <Label text="{i18n>LABEL_17008}"/>
+      <Label text="{i18n>LABEL_26012}"/>
       <VBox>
-        <ComboBox items="{/Receive}" selectedKey="{/FormData/Recty}" editable="{= !${/FormData/ZappStatAl} }" class="required">
-          <core:Item text="{Rectx}" key="{Recty}" />
-        </ComboBox>
+        <Text text="{/FormData/BankaBef}"/>
       </VBox>
-      <Label text="{i18n>LABEL_17015}"/>
+      <Label text="{i18n>LABEL_26013}"/>
       <VBox>
-        <Text text="{/FormData/Iyear}"/>
-      </VBox>
-      <Label text="{i18n>LABEL_17007}"/>
-      <VBox>
-        <Input value="{/FormData/Sendp}" editable="{= !${/FormData/ZappStatAl} }"/>
-      </VBox>
-      <Label text="{i18n>LABEL_00152}"/>
-      <HBox>
-        <Input value="{/FormData/Pstlzf}" editable="{= !${/FormData/ZappStatAl} }" showValueHelp="true" valueHelpOnly= "true" valueHelpRequest=".onAddressSearch" class="sapUiTinyMarginEnd required" />
-        <Input value="{/FormData/Addf1}" enabled="false" class="sapUiTinyMarginEnd required">
-          <layoutData>
-            <FlexItemData growFactor="0.5"/>
-          </layoutData>
-        </Input>
-        <Input value="{/FormData/Addf2}" editable="{= !${/FormData/ZappStatAl} }" class="required">
-          <layoutData>
-            <FlexItemData growFactor="0.5"/>
-          </layoutData>
-        </Input>
-        <layoutData>
-          <grid:GridItemLayoutData gridColumn="2 / 5"/>
-        </layoutData>
-      </HBox>
-      <Label text="{i18n>LABEL_17016}"/>
-      <VBox>
-        <Input value="{/FormData/Adden}" editable="{= !${/FormData/ZappStatAl} }"/>
-        <layoutData>
-          <grid:GridItemLayoutData gridColumn="2 / 5"/>
-        </layoutData>
-      </VBox>
-      <Label text="{i18n>LABEL_17018}"/>
-      <HBox>
-        <CheckBox selected="{= ${/FormData/Renck} === 'N' }" select=".onChecked" editable="{= !${/FormData/ZappStatAl} }" />
-        <Text text="{i18n>LABEL_17019}"/>
-        <layoutData>
-          <grid:GridItemLayoutData gridColumn="2 / 5"/>
-        </layoutData>
-      </HBox>
-      <Label text="{i18n>LABEL_00163}"/>
-      <VBox>
-        <Input value="{/FormData/Deuse}" editable="{= !${/FormData/ZappStatAl} }"/>
-        <layoutData>
-          <grid:GridItemLayoutData gridColumn="2 / 5"/>
-        </layoutData>
+        <Text text="{/FormData/BanknBef}"/>
       </VBox>
     </grid:CSSGrid>
   </VBox>

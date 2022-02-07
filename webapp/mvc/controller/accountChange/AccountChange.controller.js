@@ -34,14 +34,13 @@ sap.ui.define(
       FragmentEvent: FragmentEvent,
 
       onBeforeShow() {
-        const dDate = new Date();
         const oViewModel = new JSONModel({
           busy: false,
           Data: [],
-          Total: {},
+          MyAcc: {},
           search: {
-            secondDate: new Date(2020, 0, 1),
-            date: new Date(dDate.getFullYear(), 12, 0),
+            secondDate: moment().subtract(1, 'years').add(1, 'day').toDate(),
+            date: moment().toDate(),
           },
           listInfo: {
             rowCount: 1,
@@ -62,21 +61,33 @@ sap.ui.define(
         try {
           oListModel.setProperty('/busy', true);
 
-          // 중도인출 List
-          const oModel = this.getModel(ServiceNames.BENEFIT);
-          const aMyMaintain = await Client.getEntitySet(oModel, 'MaintenanceCarReport');
+          const mPernr = {};
 
-          oListModel.setProperty('/Total', aMyMaintain[0]);
+          if (this.isHass()) {
+            const sPernr = this.getAppointeeProperty('Pernr');
+
+            mPernr.Pernr = sPernr;
+          }
+
+          const mMyAccPayLoad = {
+            Menid: this.getCurrentMenuId(),
+            ...mPernr,
+          };
+          const oModel = this.getModel(ServiceNames.PAY);
+          // 나의 계좌정보
+          const aMyAcc = await Client.getEntitySet(oModel, 'CurrentAcctInfo', mMyAccPayLoad);
+
+          oListModel.setProperty('/MyAcc', aMyAcc[0]);
 
           const mSearch = oListModel.getProperty('/search');
           const mPayLoad = {
-            Begda: moment(mSearch.secondDate).hours(9).toDate(),
-            Endda: moment(mSearch.date).hours(9).toDate(),
+            Apbeg: moment(mSearch.secondDate).hours(9).toDate(),
+            Apend: moment(mSearch.date).hours(9).toDate(),
             Menid: this.getCurrentMenuId(),
-            Prcty: 'L',
+            ...mPernr,
           };
-          const aTableList = await Client.getEntitySet(oModel, 'MaintenanceCarAppl', mPayLoad);
-          const oTable = this.byId('carTable');
+          const aTableList = await Client.getEntitySet(oModel, 'BankAccount', mPayLoad);
+          const oTable = this.byId('accTable');
 
           oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
           oListModel.setProperty('/List', aTableList);
@@ -87,23 +98,39 @@ sap.ui.define(
         }
       },
 
+      // 대상자 정보 사원선택시 화면 Refresh
+      async onRefresh() {
+        const oListModel = this.getViewModel();
+
+        try {
+          oListModel.setProperty('/busy', true);
+
+          const mMyAccPayLoad = {
+            Menid: this.getCurrentMenuId(),
+            Pernr: this.getAppointeeProperty('Pernr'),
+          };
+          const oModel = this.getModel(ServiceNames.PAY);
+          // 나의 계좌정보
+          const aMyAcc = await Client.getEntitySet(oModel, 'CurrentAcctInfo', mMyAccPayLoad);
+
+          oListModel.setProperty('/MyAcc', aMyAcc[0]);
+
+          this.onSearch();
+          this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oListModel.setProperty('/busy', false);
+        }
+      },
+
       onClick() {
-        this.getRouter().navTo('carMaintainCost-detail', { oDataKey: 'N' });
+        this.getRouter().navTo('accountChange-detail', { oDataKey: 'N' });
       },
 
       // override AttachFileCode
       getApprovalType() {
-        return 'HR14';
-      },
-
-      formatPay(vPay = '0') {
-        vPay = this.TextUtils.toCurrency(vPay);
-
-        return vPay;
-      },
-
-      thisYear(sYear = String(moment().format('YYYY'))) {
-        return this.getBundleText('MSG_25001', sYear);
+        return 'HR16';
       },
 
       async onSearch() {
@@ -112,16 +139,24 @@ sap.ui.define(
         try {
           oListModel.setProperty('/busy', true);
 
+          const mPernr = {};
+
+          if (this.isHass()) {
+            const sPernr = this.getAppointeeProperty('Pernr');
+
+            mPernr.Pernr = sPernr;
+          }
+
           const mSearch = oListModel.getProperty('/search');
           const mPayLoad = {
-            Begda: moment(mSearch.secondDate).hours(9).toDate(),
-            Endda: moment(mSearch.date).hours(9).toDate(),
+            Apbeg: moment(mSearch.secondDate).hours(9).toDate(),
+            Apend: moment(mSearch.date).hours(9).toDate(),
             Menid: this.getCurrentMenuId(),
-            Prcty: 'L',
+            ...mPernr,
           };
-          const oModel = this.getModel(ServiceNames.BENEFIT);
-          const aTableList = await Client.getEntitySet(oModel, 'MaintenanceCarAppl', mPayLoad);
-          const oTable = this.byId('carTable');
+          const oModel = this.getModel(ServiceNames.PAY);
+          const aTableList = await Client.getEntitySet(oModel, 'BankAccount', mPayLoad);
+          const oTable = this.byId('accTable');
 
           oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
           oListModel.setProperty('/List', aTableList);
@@ -137,13 +172,13 @@ sap.ui.define(
         const oListModel = this.getViewModel();
         const oRowData = oListModel.getProperty(vPath);
 
-        this.getRouter().navTo('carMaintainCost-detail', { oDataKey: oRowData.Appno, sStatus: oRowData.ZappStatAl });
+        this.getRouter().navTo('accountChange-detail', { oDataKey: oRowData.Appno });
       },
 
       onPressExcelDownload() {
-        const oTable = this.byId('carTable');
+        const oTable = this.byId('accTable');
         const aTableData = this.getViewModel().getProperty('/List');
-        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_25001');
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_26001');
 
         TableUtils.export({ oTable, aTableData, sFileName });
       },

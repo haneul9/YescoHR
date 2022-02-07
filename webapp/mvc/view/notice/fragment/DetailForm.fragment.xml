@@ -41,7 +41,7 @@
                 <layoutData>
                     <grid:GridItemLayoutData gridColumn="2 / 5"/>
                 </layoutData>
-                <rte:RichTextEditor value="{/FormData/Detail}" ready=".editorReady" editorType="TinyMCE4" width="99.8%" height="500px" customToolbar="true" showGroupFont="true" showGroupInsert="true" sanitizeValue="false" editable="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" class="required"/>
+                <rte:RichTextEditor value="{/FormData/Detail}" ready=".editorReady" editorType="TinyMCE4" width="99.8%" height="500px" customToolbar="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" showGroupFont="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" showGroupInsert="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" sanitizeValue="false" editable="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" class="required"/>
             </VBox>
         </grid:CSSGrid>
     </VBox>

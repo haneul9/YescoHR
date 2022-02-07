@@ -18,7 +18,7 @@
       <VBox class="contents">
         <HBox justifyContent="SpaceAround">
           <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBox" type="XML" />
-          <core:Fragment fragmentName="sap.ui.yesco.mvc.view.accountChange.fragment.MyMainTainCost" type="XML" />
+          <core:Fragment fragmentName="sap.ui.yesco.mvc.view.accountChange.fragment.MyAccountInfo" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.accountChange.fragment.SearchCondition" type="XML" />
         </HBox>
         <VBox class="vCardBox">
