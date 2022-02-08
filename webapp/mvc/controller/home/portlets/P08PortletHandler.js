@@ -51,27 +51,6 @@ sap.ui.define(
       },
 
       transformContentData(aPortletContentData = []) {
-        // Test
-        aPortletContentData.push({ Datum: new Date(), Title: '연간휴가계획 입력', MenidPc: '7440' });
-        aPortletContentData.push({ Datum: new Date(), Title: '연간휴가계획 입력', MenidPc: '7440' });
-        aPortletContentData.push({ Datum: new Date(), Title: '연간휴가계획 입력', MenidPc: '7440' });
-        aPortletContentData.push({ Datum: new Date(), Title: '연간휴가계획 입력', MenidPc: '7440' });
-        aPortletContentData.push({ Datum: new Date(), Title: '연간휴가계획 입력', MenidPc: '7440' });
-        aPortletContentData.push({ Datum: new Date(), Title: '연간휴가계획 입력', MenidPc: '' });
-        aPortletContentData.push({ Datum: new Date(), Title: '연간휴가계획 입력', MenidPc: '' });
-        aPortletContentData.push({ Datum: new Date(), Title: '연간휴가계획 입력', MenidPc: '' });
-        aPortletContentData.push({ Datum: new Date(), Title: '연간휴가계획 입력', MenidPc: '7440' });
-        aPortletContentData.push({ Datum: new Date('2022-03-01'), Title: '연간휴가계획 입력', MenidPc: '7440' });
-        aPortletContentData.push({ Datum: new Date('2022-03-01'), Title: '연간휴가계획 입력', MenidPc: '' });
-        aPortletContentData.push({ Datum: new Date('2022-03-01'), Title: '연간휴가계획 입력', MenidPc: '7440' });
-        aPortletContentData.push({ Datum: new Date('2022-03-01'), Title: '연간휴가계획 입력', MenidPc: '' });
-        aPortletContentData.push({ Datum: new Date('2022-03-01'), Title: '연간휴가계획 입력', MenidPc: '7440' });
-        aPortletContentData.push({ Datum: new Date(), Title: '연간휴가계획 입력', MenidPc: '7440' });
-        aPortletContentData.push({ Datum: new Date(), Title: '연간휴가계획 입력', MenidPc: '7440' });
-        aPortletContentData.push({ Datum: new Date(), Title: '연간휴가계획 입력', MenidPc: '7440' });
-        aPortletContentData.push({ Datum: new Date(), Title: '연간휴가계획 입력', MenidPc: '7440' });
-        // Test-End
-
         const aTodayList = _.chain(aPortletContentData)
           .filter((o) => moment(o.Datum).isSame(moment(), 'day'))
           .map((o) => ({ ...o, ...this.oMenuModel.getProperties(o.MenidPc) }))
