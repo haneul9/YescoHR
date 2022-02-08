@@ -23,8 +23,8 @@
     <HBox class="portlet-body">
       <VBox width="48%" height="100%">
         <HBox width="100%" alignItems="Center">
-          <Label text="{i18n>LABEL_01151}" design="Bold" displayOnly="true" vAlign="Middle" />
-          <Image alt="{i18n>LABEL_01151}" src="asset/image/icon_star2_on.svg" width=".7rem" class="ml-5-px" />
+          <Label text="{i18n>LABEL_01151}" design="Bold" displayOnly="true" />
+          <Image alt="{i18n>LABEL_01151}" src="asset/image/icon_birthday.svg" class="ml-5-px" />
         </HBox>
         <ScrollContainer horizontal="false" vertical="true" class="mt-10-px">
           <layoutData>
@@ -53,8 +53,8 @@
       </VBox>
       <VBox width="48%" height="100%" class="ml-4">
         <HBox width="100%" alignItems="Center">
-          <Label text="{i18n>LABEL_01152}" design="Bold" displayOnly="true" vAlign="Middle" />
-          <Image alt="{i18n>LABEL_01152}" src="asset/image/icon_star2_on.svg" width=".7rem" class="ml-5-px" />
+          <Label text="{i18n>LABEL_01152}" design="Bold" displayOnly="true" />
+          <Image alt="{i18n>LABEL_01152}" src="asset/image/icon_wedding.svg" class="ml-5-px" />
         </HBox>
         <ScrollContainer horizontal="false" vertical="true" class="mt-10-px">
           <layoutData>
