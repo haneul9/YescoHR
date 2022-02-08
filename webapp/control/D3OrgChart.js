@@ -64,7 +64,7 @@ sap.ui.define(
           .data(aChartData)
           .layout('left')
           .compact(false)
-          .setActiveNodeCentered(false)
+          .setActiveNodeCentered(true)
           .nodeWidth(() => 350)
           .initialZoom(0.8)
           .nodeHeight(() => 170)
@@ -73,8 +73,8 @@ sap.ui.define(
           .compactMarginPair(() => 80)
           .linkUpdate(function (d) {
             d3.select(this)
-              .attr('stroke', (d) => (d.data._upToTheRootHighlighted ? '#14760D' : '#002a79'))
-              .attr('stroke-width', (d) => (d.data._upToTheRootHighlighted ? 15 : 1));
+              .attr('stroke', (d) => (d.data._upToTheRootHighlighted ? '#c6c6c6' : '#c6c6c6'))
+              .attr('stroke-width', (d) => (d.data._upToTheRootHighlighted ? 3 : 1));
 
             if (d.data._upToTheRootHighlighted) {
               d3.select(this).raise();
@@ -126,7 +126,10 @@ sap.ui.define(
           .render();
 
         if (!_.isEmpty(this.getExtendNode())) {
-          this.oD3Chart.setExpanded(this.getExtendNode()).setHighlighted(this.getExtendNode()).render();
+          this.oD3Chart.setExpanded(this.getExtendNode()).setCentered(this.getExtendNode()).render();
+          // .setHighlighted(this.getExtendNode())
+        } else {
+          this.oD3Chart.setCentered('12000000').render();
         }
       },
     });
