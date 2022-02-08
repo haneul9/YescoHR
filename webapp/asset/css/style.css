@@ -140,8 +140,8 @@ html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl) {text-decoration:none}
 .portlet-p06 .portlet-org-members .sapMFlexBox {background-color: #FAFAFA;height:40px;padding:0 10px;border-radius: 8px;}
 .portlet-p06 .portlet-org-members .sapMFlexBox + .sapMFlexBox {margin-top:9px;}
 
-.portlet-p07 .sapMFlexItem:not(.no-data) {width:100%;border-radius: 8px;}
-.portlet-p07 .menu-link { border-radius: 8px;width: 100%;height: 40px;display: inline-flex;justify-content: center;align-items: center;}
+.portlet-p07 .portlet-body .sapMFlexItem:not(.no-data) {width:100%;border-radius: 8px;}
+.portlet-p07 .portlet-body .menu-link { border-radius: 8px;width: 100%;height: 40px;display: inline-flex;justify-content: center;align-items: center;}
 .sapMBtn.portlet-btn.color-01 .sapMBtnDefault, .portlet-p07 .sapUiLayoutCSSGrid .sapUiLayoutCSSGridItem:nth-child(1) .sapMFlexItem {background-color:rgba(241, 123, 39, .1)}
 .sapMBtn.portlet-btn.color-02 .sapMBtnDefault, .portlet-p07 .sapUiLayoutCSSGrid .sapUiLayoutCSSGridItem:nth-child(2) .sapMFlexItem {background-color:rgba(19, 184, 214, .1)}
 .sapMBtn.portlet-btn.color-03 .sapMBtnDefault, .portlet-p07 .sapUiLayoutCSSGrid .sapUiLayoutCSSGridItem:nth-child(3) .sapMFlexItem {background-color:rgba(109, 91, 151, .1)}
