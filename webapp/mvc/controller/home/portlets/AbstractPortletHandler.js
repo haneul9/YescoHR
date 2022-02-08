@@ -51,7 +51,7 @@ sap.ui.define(
           controller: this,
         });
 
-        const oPortletBox = new PortletBox({ controller: this }).setModel(oPortletModel).bindElement('/');
+        const oPortletBox = new PortletBox({ portletHandler: this }).setModel(oPortletModel).bindElement('/');
         oPortletBox.getItems()[1].addItem(oPortletBodyContent);
 
         this.getController().byId(this.sContainerId).addItem(oPortletBox);

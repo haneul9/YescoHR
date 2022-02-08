@@ -18,7 +18,7 @@ sap.ui.define(
     'use strict';
 
     /**
-     * 즐겨찾기 Portlet
+     * To Do List Portlet
      */
     return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.P08PortletHandler', {
       init() {

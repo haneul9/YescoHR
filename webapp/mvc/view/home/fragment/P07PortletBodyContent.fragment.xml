@@ -1,17 +1,14 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:core="sap.ui.core">
-  <HBox justifyContent="Center">
-    <layoutData>
-      <FlexItemData growFactor="1" maxWidth="100%" />
-    </layoutData>
-    <HBox class="no-data" height="2rem" justifyContent="Center" alignItems="Center" visible="{= ${listCount} === 0 }">
+  <HBox width="100%">
+    <HBox width="100%" height="2rem" justifyContent="Center" alignItems="Center" visible="{= ${listCount} === 0 }">
       <Text text="{i18n>MSG_00001}" />
     </HBox>
-    <VBox visible="{= ${listCount} &gt; 0 }">
+    <VBox width="100%" visible="{= ${listCount} &gt; 0 }">
       <Text text="{i18n>MSG_01102}" class="font-12-px" />
       <grid:CSSGrid gridGap="16px 14px" gridTemplateColumns="repeat(2, 1fr)" items="{ path: 'list', templateShareable: false }" class="pt-20-px">
-        <HBox width="100%">
+        <HBox width="100%" justifyContent="Center">
           <!-- 메뉴 이동인 경우 -->
           <Link text="{Mname}" visible="{= !!${Mnurl} &amp;&amp; !${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" press=".handleMenuLink" class="menu-link" />
           <!-- http|https|javascript로 시작되는 경우 -->

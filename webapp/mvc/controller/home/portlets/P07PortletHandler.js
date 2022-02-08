@@ -16,7 +16,7 @@ sap.ui.define(
     'use strict';
 
     /**
-     * 즐겨찾기 Portlet
+     * 이런 메뉴 어떠세요? Portlet
      */
     return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.P07PortletHandler', {
       init() {

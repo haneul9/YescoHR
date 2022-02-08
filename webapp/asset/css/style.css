@@ -46,6 +46,11 @@ html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl) {text-decoration:none}
 #sap-ui-static .sapUiDnDIndicatorWrapper {top:60px}
 
 .portlet {box-sizing:border-box; height:100%; overflow:hidden}
+.sapUiSizeCompact .portlet .sapMBtn,
+.sapUiSizeCompact .portlet .sapMBtnInner {min-width:auto}
+.sapUiSizeCompact .portlet .sapMBtnIcon {margin-right:0; width:auto; line-height:100%}
+html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
+.portlet .sapMObjStatusLink:hover .sapMObjStatusText {text-decoration:none}
 .portlet-box {position:relative; border:1px solid whitesmoke; border-radius:10px; padding:20px; background-color:#fff; box-shadow:0px 2px 4px rgb(0 0 0 / 16%)}
 .portlet-header {margin-top:-0px; margin-bottom:20px; width:100%; height:24px; align-items:flex-end}
 .portlet-header > .sapMFlexItem + .sapMFlexItem {margin-left:5px}
@@ -121,36 +126,23 @@ html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl) {text-decoration:none}
 .portlet-p06 .team-member-count[data-table-key="4"] .sapMObjStatusText {color:#c68dff}
 .portlet-p06 .team-member-count[data-table-key="5"] .sapMObjStatusText {color:#6edecf}
 .portlet-p06 .team-member-count[data-table-key="6"] .sapMObjStatusText {color:#ffc86f}
-.portlet-p06 .sapIcon_Date {margin-bottom:-8px !important}
-.portlet-p06 .sapIcon_Date .sapMInputBaseContentWrapper {border:none}
-.portlet-p06 .sapIcon_Date .sapUiIcon::before {content:'달력'; font-size:0; background-size:auto; background-image:url(../image/icon_arrow_cal.svg); display:inline-block; width:100%; height:100%; clear:both; vertical-align:top; background-repeat:no-repeat; background-position:4px center}
-.portlet-p06 .sapIcon_Date {margin-bottom:-8px !important}
-.portlet-p06 .sapIcon_Date .sapMInputBaseContentWrapper {border:none}
-.portlet-p06 .sapIcon_Date .sapUiIcon::before {content:'달력'; font-size:0; background-size:auto; background-image:url(../image/icon_arrow_cal.svg); display:inline-block; width:100%; height:100%; clear:both; vertical-align:top; background-repeat:no-repeat; background-position:4px center}
-.portlet-p06 .sapMObjStatusLink:hover .sapMObjStatusText {text-decoration:none}
-.portlet-p06 g[class*=caption] tspan, .portlet-p06 g[class*=datalabel] tspan {font-size:11px;}
-.portlet-p06 tspan {font-size:7px;}
 .team-member-count-popover .sapUiTableCCnt,
 .team-member-count-popover .sapUiTableCtrlCnt {min-height:34px !important}
-.sapUiSizeCompact .portlet .sapMBtn,
-.sapUiSizeCompact .portlet .sapMBtnInner {min-width:auto}
-.sapUiSizeCompact .portlet .sapMBtnIcon {margin-right:0; width:auto; line-height:100%}
-/* .team-member-count-popover .sapMPopoverArr {top:149px !important} */
-
-.portlet-p06 .portlet-org-members .sapMFlexBox {background-color: #FAFAFA;height:40px;padding:0 10px;border-radius: 8px;}
-.portlet-p06 .portlet-org-members .sapMFlexBox + .sapMFlexBox {margin-top:9px;}
-
-.portlet-p07 .portlet-body .sapMFlexItem:not(.no-data) {width:100%;border-radius: 8px;}
-.portlet-p07 .portlet-body .menu-link { border-radius: 8px;width: 100%;height: 40px;display: inline-flex;justify-content: center;align-items: center;}
+.portlet-p06 tspan {font-size:7px}
+.portlet-p06 g[class*=caption] tspan, .portlet-p06 g[class*=datalabel] tspan {font-size:11px}
+.portlet-p07 .guide-message {font-size:11px; color:#666}
+.portlet-p07 .sapUiLayoutCSSGrid .sapMFlexItem {width:100%; border-radius:8px}
+.portlet-p07 .menu-link {border-radius:8px; width:100%; height:40px; display:inline-flex; justify-content:center; align-items:center}
 .sapMBtn.portlet-btn.color-01 .sapMBtnDefault, .portlet-p07 .sapUiLayoutCSSGrid .sapUiLayoutCSSGridItem:nth-child(1) .sapMFlexItem {background-color:rgba(241, 123, 39, .1)}
 .sapMBtn.portlet-btn.color-02 .sapMBtnDefault, .portlet-p07 .sapUiLayoutCSSGrid .sapUiLayoutCSSGridItem:nth-child(2) .sapMFlexItem {background-color:rgba(19, 184, 214, .1)}
 .sapMBtn.portlet-btn.color-03 .sapMBtnDefault, .portlet-p07 .sapUiLayoutCSSGrid .sapUiLayoutCSSGridItem:nth-child(3) .sapMFlexItem {background-color:rgba(109, 91, 151, .1)}
 .sapMBtn.portlet-btn.color-04 .sapMBtnDefault, .portlet-p07 .sapUiLayoutCSSGrid .sapUiLayoutCSSGridItem:nth-child(4) .sapMFlexItem {background-color:rgba(229, 169, 56, .1)}
 .sapMBtn.portlet-btn.color-05 .sapMBtnDefault, .portlet-p07 .sapUiLayoutCSSGrid .sapUiLayoutCSSGridItem:nth-child(5) .sapMFlexItem {background-color:rgba(13, 181, 150, .1)}
 .sapMBtn.portlet-btn.color-06 .sapMBtnDefault, .portlet-p07 .sapUiLayoutCSSGrid .sapUiLayoutCSSGridItem:nth-child(6) .sapMFlexItem {background-color:rgba(17, 128, 174, .1)}
-
-.portlet-p09 img {vertical-align: sub;}
-.portlet-p09 .sapMInputBaseContentWrapper {border:0;}
+.portlet-p08 .portlet-todo-list .sapMFlexBox {background-color:#fafafa; height:40px; padding:0 10px; border-radius:8px}
+.portlet-p08 .portlet-todo-list .sapMFlexBox + .sapMFlexBox {margin-top:9px}
+.portlet-p08 .portlet-todo-list .menu-link-text {margin-bottom:-6px; font-weight:700; color:#555}
+.portlet-p09 img {vertical-align:sub}
 
 .sapMLnkSubtle {color:#222}
 
@@ -1591,6 +1583,17 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .sapMBtn.portlet-btn.color-04 .sapMBtnDefault {background-color:rgba(229, 169, 56, .1)}
 .sapMBtn.portlet-btn.color-05 .sapMBtnDefault {background-color:rgba(13, 181, 150, .1)}
 .sapMBtn.portlet-btn.color-06 .sapMBtnDefault {background-color:rgba(17, 128, 174, .1)}
+
+.portlet-suggested-menu .sapMBtnInner {border-radius:8px; font-weight:500}
+.sapUiSizeCompact .sapMBtn.portlet-suggested-menu { min-width:100%}
+.sapUiSizeCompact .sapMBtn.portlet-suggested-menu.blank .sapMBtnInner { border:1px dashed #DDE1E6; background-color:#fff; font-size:12px}
+.sapMBtn.portlet-suggested-menu[class*=color] .sapMBtnInner {border:0}
+.sapMBtn.portlet-suggested-menu[data-color="1"] .sapMBtnDefault {background-color:rgba(241, 123, 39, .1)}
+.sapMBtn.portlet-suggested-menu[data-color="2"] .sapMBtnDefault {background-color:rgba(19, 184, 214, .1)}
+.sapMBtn.portlet-suggested-menu[data-color="3"] .sapMBtnDefault {background-color:rgba(109, 91, 151, .1)}
+.sapMBtn.portlet-suggested-menu[data-color="4"] .sapMBtnDefault {background-color:rgba(229, 169, 56, .1)}
+.sapMBtn.portlet-suggested-menu[data-color="5"] .sapMBtnDefault {background-color:rgba(13, 181, 150, .1)}
+.sapMBtn.portlet-suggested-menu[data-color="6"] .sapMBtnDefault {background-color:rgba(17, 128, 174, .1)}
 
 /* tree */
 .sapMList [role=tree] {border:1px solid #F3F3F3}
