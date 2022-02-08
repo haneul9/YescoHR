@@ -9,9 +9,9 @@
       <Text text="{i18n>MSG_00001}" />
     </HBox>
     <VBox visible="{= ${listCount} &gt; 0 }">
-      <Text text="{i18n>MSG_01102}" />
-      <grid:CSSGrid gridGap="10px 10px" gridTemplateColumns="repeat(2, 1fr)" items="{ path: 'list', templateShareable: false }">
-        <HBox>
+      <Text text="{i18n>MSG_01102}" class="font-12-px" />
+      <grid:CSSGrid gridGap="16px 14px" gridTemplateColumns="repeat(2, 1fr)" items="{ path: 'list', templateShareable: false }" class="pt-20-px">
+        <HBox width="100%">
           <!-- 메뉴 이동인 경우 -->
           <Link text="{Mname}" visible="{= !!${Mnurl} &amp;&amp; !${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" press=".handleMenuLink" class="menu-link" />
           <!-- http|https|javascript로 시작되는 경우 -->

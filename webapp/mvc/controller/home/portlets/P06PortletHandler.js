@@ -26,20 +26,25 @@ sap.ui.define(
       sChartId: 'portlet-absence-chart',
 
       async addPortlet() {
-        const oPortletModel = this.getPortletModel();
+        const oController = this.getController();
         const oPortletBox = await Fragment.load({
+          id: oController.getView().getId(),
           name: 'sap.ui.yesco.mvc.view.home.fragment.P06PortletBox',
           controller: this,
         });
 
+        const oPortletModel = this.getPortletModel();
         oPortletModel.setProperty('/selectedDate', new Date());
 
         oPortletBox.setModel(oPortletModel).bindElement('/');
 
-        this.getController().byId(this.sContainerId).addItem(oPortletBox);
+        oController.byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);
 
-        this.buildChart();
+        // 다른 화면에 갔다 되돌아오는 경우 id 중복 오류가 발생하므로 체크함
+        if (!FusionCharts('portlet-absence-chart')) {
+          this.buildChart();
+        }
       },
 
       buildChart() {
