@@ -3,6 +3,7 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/model/json/JSONModel',
+    'sap/ui/core/routing/History',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
@@ -20,6 +21,7 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
+    History,
     MessageBox,
     Appno,
     AppUtils,
@@ -46,6 +48,7 @@ sap.ui.define(
         const oViewModel = new JSONModel({
           menid: this.getCurrentMenuId(),
           Hass: this.isHass(),
+          previousName: History.getInstance().getPreviousHash(),
           ViewKey: '',
           FormData: {},
           CertiType: [],
@@ -112,6 +115,11 @@ sap.ui.define(
         const sAction = oArguments.oDataKey === 'N' ? this.getBundleText('LABEL_04002') : this.getBundleText('LABEL_00165');
 
         return sAction;
+      },
+
+      // 이전화면
+      onPreBack() {
+        this.getRouter().navTo(this.getViewModel().getProperty('/previousName'));
       },
 
       // FormData Settings
@@ -289,8 +297,7 @@ sap.ui.define(
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00179'), {
                 // {발급}되었습니다.
                 onClose: () => {
-                  this.getRouter().navTo('certification');
-                  // this.onNavBack();
+                  this.getRouter().navTo(oDetailModel.getProperty('/previousName'));
                 },
               });
             } catch (oError) {
@@ -341,8 +348,7 @@ sap.ui.define(
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
                 // {신청}되었습니다.
                 onClose: () => {
-                  this.getRouter().navTo('certification');
-                  // this.onNavBack();
+                  this.getRouter().navTo(oDetailModel.getProperty('/previousName'));
                 },
               });
             } catch (oError) {
