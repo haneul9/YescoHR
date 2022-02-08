@@ -34,14 +34,6 @@ sap.ui.define(
       },
 
       transformContentData(aPortletContentData = []) {
-        // TEST
-        aPortletContentData.push(
-          { Seqnr: '1', Menid: '21100', Mennm: '근태신청' }, //
-          { Seqnr: '2', Menid: '21400', Mennm: '통합굴착야간근무변경신청' },
-          { Seqnr: '3', Menid: '21300', Mennm: '당직변경신청' }
-        );
-        // TEST-end
-
         const aList = aPortletContentData
           .filter(({ Menid }) => {
             return Menid && this.oMenuModel.getProperties(Menid);
