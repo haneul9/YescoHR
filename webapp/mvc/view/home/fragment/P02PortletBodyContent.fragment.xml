@@ -4,7 +4,7 @@
     <layoutData>
       <FlexItemData growFactor="1" maxWidth="100%" />
     </layoutData>
-    <HBox width="100%" height="2rem" justifyContent="Center" alignItems="Center" visible="{= ${listCount} === 0 }">
+    <HBox width="100%" class="no-data" visible="{= ${listCount} === 0 }">
       <Text text="{i18n>MSG_00001}" />
     </HBox>
     <HBox width="100%" visible="{= ${listCount} &gt; 0 }">

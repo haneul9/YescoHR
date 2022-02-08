@@ -29,30 +29,6 @@
           <!-- 0 ~ 374px -->
           <f:GridContainerSettings rowSize="270px" columns="1" columnSize="385px" gap="20px" />
         </f:layoutXS>
-        <!-- <f:items>
-          <HBox class="hCardBox portlet-selector" height="70px" justifyContent="SpaceBetween" alignItems="Center">
-            <customData>
-              <core:CustomData key="hide" value="{= ${use} ? 'X' : 'O' }" writeToDom="true" />
-            </customData>
-            <items>
-              <Text text="{title}" />
-              <ToggleButton width="2.5rem" icon="sap-icon://accept" pressed="{use}" press=".onPressPortletToggleButton" />
-            </items>
-          </HBox>
-          <GenericTile header="Sales Fulfillment Application Title" subheader="Subtitle" width="100%">
-            <layoutData>
-              <f:GridContainerItemLayoutData minRows="1"/>
-            </layoutData>
-            <TileContent>
-              <ImageContent src="sap-icon://home-share"/>
-            </TileContent>
-          </GenericTile>
-          <widgets:Card manifest="{portletsModel>/listContent/largeList}">
-            <widgets:layoutData>
-              <f:GridContainerItemLayoutData minRows="2" columns="2" />
-            </widgets:layoutData>
-          </widgets:Card>
-        </f:items> -->
       </f:GridContainer>
     </HBox>
   </ScrollContainer>
