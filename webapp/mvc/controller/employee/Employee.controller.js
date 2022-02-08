@@ -271,7 +271,7 @@ sap.ui.define(
           // 1. 상단 프로필, 탭 메뉴, 주소유형, 시/도
           const [
             aProfileReturnData, //
-            // aMilestoneReturnData,
+            aMilestoneReturnData,
             aMenuReturnData,
             aCountryList,
             aMajorList,
@@ -284,7 +284,7 @@ sap.ui.define(
             aTestGradeList,
           ] = await Promise.all([
             this.readOdata({ sUrl: '/EmpProfileHeaderNewSet', mFilters }),
-            // this.readOdata({ sUrl: '/EmpProfileMilestoneSet' }),
+            this.readOdata({ sUrl: '/EmpProfileMilestoneSet' }),
             this.readOdata({ sUrl: '/EmpProfileMenuSet', mFilters }),
             this.readOdata({ sUrl: '/CountryCodeSet' }),
             this.readOdata({ sUrl: '/MajorCodeSet' }),
@@ -298,7 +298,7 @@ sap.ui.define(
           ]);
 
           // Milestone set
-          // oViewModel.setProperty('/employee/header/timeline', _.map(aMilestoneReturnData, (o) => ({ ...o, Datum: DateUtils.format(o.Datum) })) || _.noop());
+          oViewModel.setProperty('/employee/header/timeline', _.map(aMilestoneReturnData, (o) => ({ ...o, Datum: DateUtils.format(o.Datum) })) || _.noop());
 
           // Dialog Combo entry set
           oViewModel.setProperty('/employee/dialog/countryList', aCountryList);
