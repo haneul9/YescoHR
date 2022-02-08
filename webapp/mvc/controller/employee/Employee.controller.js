@@ -679,7 +679,7 @@ sap.ui.define(
           const oSideTree = this.byId('OrganizationTree');
           const aReturnTreeData = await this.readOdata({ sUrl: '/AuthOrgTreeSet', mFilters: { Datum: moment().hour(9).toDate(), Xpern: 'X' } });
           const mConvertedTreeData = this.transformTreeData({ aTreeData: aReturnTreeData, sRootId: '00000000' });
-          const iTreeViewHeight = Math.floor($(document).height() - oSideTree.$().offset().top - 35);
+          const iTreeViewHeight = Math.min(Math.floor($(document).height() - oSideTree.$().offset().top - 35), 500);
 
           this.debug('mConvertedTreeData', mConvertedTreeData);
 
