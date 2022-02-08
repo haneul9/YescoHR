@@ -249,7 +249,10 @@ sap.ui.define(
 
         oSideList.getBinding('items').filter([new Filter('Stat2', FilterOperator.EQ, '3')]);
 
-        oViewModel.setProperty('/sideNavigation/search/results', aSearchResults);
+        oViewModel.setProperty(
+          '/sideNavigation/search/results',
+          _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? 'asset/image/avatar-unknown.svg?ssl=1' : o.Photo }))
+        );
         oViewModel.setProperty('/sideNavigation/height', `${iSideViewHeight}px`);
         oViewModel.setProperty('/sideNavigation/scrollHeight', `${iScrollViewHeight}px`);
         oViewModel.setProperty('/sideNavigation/busy', false);
@@ -326,7 +329,7 @@ sap.ui.define(
             .map((v, k) => ({ data: v, labelOrText: _.includes(aTextFields, k) ? 'text' : 'label' }))
             .value();
 
-          oViewModel.setProperty('/employee/header/profilePath', Pturl);
+          oViewModel.setProperty('/employee/header/profilePath', _.isEmpty(Pturl) ? 'asset/image/avatar-unknown.svg?ssl=1' : Pturl);
           oViewModel.setProperty('/employee/header/baseInfo', aConvertData);
           //End 상단 프로필 Set
 
