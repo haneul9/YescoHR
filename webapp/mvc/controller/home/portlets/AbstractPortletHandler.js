@@ -155,9 +155,12 @@ sap.ui.define(
       },
 
       setBusy(bBusy = true, sPath = '/busy') {
-        setTimeout(() => {
-          this.getPortletModel().setProperty(sPath, bBusy);
-        });
+        setTimeout(
+          () => {
+            this.getPortletModel().setProperty(sPath, bBusy);
+          },
+          bBusy ? 0 : 500
+        );
         return this;
       },
 

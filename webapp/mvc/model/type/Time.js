@@ -20,6 +20,7 @@ sap.ui.define(
       constructor: function (...args) {
         SimpleType.apply(this, args);
 
+        this.i9Hours = 9 * 60 * 60 * 1000;
         this.sName = 'CustomTime';
       },
 
@@ -59,7 +60,7 @@ sap.ui.define(
         const sHHmmss = this.oFormatOptions.pattern;
 
         if ($.isPlainObject(oValue)) {
-          return moment(oValue.ms).format(sHHmmss);
+          return moment(oValue.ms - this.i9Hours).format(sHHmmss);
         }
 
         if (typeof oValue === 'string' || oValue instanceof String) {
@@ -86,12 +87,12 @@ sap.ui.define(
       },
 
       getParsePatternForMoment() {
-        return 'HHmmss';
+        return 'YYYYMMDDHHmmss';
       },
 
       getMoment(oValue) {
         if (/^PT/.test(oValue)) {
-          return moment(oValue, '[PT]HH[H]mm[M]ss[S]');
+          return moment(oValue, '[PT]HH[H]mm[M]ss[S]').add(this.i9Hours, 'milliseconds');
         }
 
         const sDateString = oValue.replace(/[^\d]/g, '');

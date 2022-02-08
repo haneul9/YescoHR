@@ -22,7 +22,7 @@ sap.ui.define(
       constructor: function (...args) {
         SimpleType.apply(this, args);
 
-        const formatPattern = AppUtils.getAppComponent().getSessionModel().getProperty('/Dtfmt');
+        const formatPattern = this.getSessionProperty('/Dtfmt');
         const oFormatOptions = {
           pattern: formatPattern,
         };
@@ -31,8 +31,6 @@ sap.ui.define(
       },
 
       formatValue(oValue, sTargetType) {
-        // AppUtils.debug(`sap/ui/yesco/mvc/model/type/Date.formatValue(${oValue}, ${sTargetType})`);
-
         switch (this.getPrimitiveType(sTargetType)) {
           case 'string':
           case 'any':
@@ -45,8 +43,6 @@ sap.ui.define(
       },
 
       parseValue(oValue, sTargetType) {
-        // AppUtils.debug(`sap/ui/yesco/mvc/model/type/Date.parseValue(${oValue}, ${sTargetType})`);
-
         switch (this.getPrimitiveType(sTargetType)) {
           case 'string':
             return this._toString(oValue, sTargetType);
@@ -97,7 +93,7 @@ sap.ui.define(
       },
 
       getFormatPatternForMoment() {
-        return AppUtils.getAppComponent().getSessionModel().getProperty('/DTFMT');
+        return this.getSessionProperty('/DTFMT');
       },
 
       getParsePatternForMoment() {
@@ -112,6 +108,10 @@ sap.ui.define(
 
         const sDateString = oValue.replace(/[^\d]/g, '');
         return moment(sDateString, this.getParsePatternForMoment()).hour(9);
+      },
+
+      getSessionProperty(sPath) {
+        return AppUtils.getAppComponent().getSessionModel().getProperty(sPath);
       },
     });
   }

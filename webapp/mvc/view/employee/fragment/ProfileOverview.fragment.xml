@@ -19,12 +19,12 @@
                 </Label>
             </grid:CSSGrid>
         </grid:CSSGrid>
-        <Panel expandable="true" expanded="true" width="auto" class="timeline-wrap">
+        <Panel expandable="true" expanded="true" width="auto" class="timeline-wrap" visible="{= !!${/employee/header/timeline} }">
             <content>
                 <VBox class="timeline">
                     <HBox justifyContent="SpaceAround" items="{path: '/employee/header/timeline'}">
                         <VBox width="20%" alignItems="Center">
-                            <Text text="{label}" />
+                            <Text text="{Dattx}" />
                         </VBox>
                     </HBox>
                     <HBox justifyContent="SpaceAround" items="{path: '/employee/header/timeline'}" class="lineItem-wrap">
@@ -34,7 +34,7 @@
                     </HBox>
                     <HBox justifyContent="SpaceAround" items="{path: '/employee/header/timeline'}">
                         <VBox width="20%" alignItems="Center">
-                            <Text text="{data}" />
+                            <Text text="{Datum}" />
                         </VBox>
                     </HBox>
                 </VBox>

@@ -90,6 +90,7 @@ sap.ui.define(
           }
         });
 
+        const oPortletModel = this.getPortletModel();
         const mPortletContentData = {
           counts: { Datum, Week, ...mCountData }, // Cnt01, Cnt02, Cnt03, Cnt04, Cnt05, Cnt06, Cnt07
         };
@@ -99,8 +100,10 @@ sap.ui.define(
           const aTableData = mTables[sTableKey] || [];
           mPortletContentData[`table${sTableKey}`] = {
             list: aTableData,
-            listCount: aTableData.length,
+            listCount: Math.min(aTableData.length, 5),
           };
+
+          oPortletModel.setProperty(`/table${sTableKey}/list`, []);
         });
 
         const fValue = Number(mCountData.Cnt07);

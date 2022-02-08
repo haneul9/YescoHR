@@ -1,0 +1,86 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <VBox class="portlet portlet-box portlet-p09" tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
+    <customData>
+      <core:CustomData key="portlet-switchable" value="{switchable}" />
+    </customData>
+    <layoutData>
+      <f:GridContainerItemLayoutData rows="{height}" columns="{width}" />
+    </layoutData>
+    <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
+      <Title level="H2" text="{title}" visible="{= !${hideTitle} }" />
+      <custom:DatePicker id="selectedYearMonth" dateValue="{ path: 'selectedYearMonth', type: 'sap.ui.yesco.mvc.model.type.Month' }" change=".onChangeSelectedYearMonth" width="100px" pickOnly="true" />
+      <Text text="">
+        <layoutData>
+          <FlexItemData growFactor="1" />
+        </layoutData>
+      </Text>
+      <Button visible="{switchable}" icon="sap-icon://decline" type="Transparent" class="icon-button portlet-close-icon" press=".onPressClose" />
+      <Button visible="{hasLink}" icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" press=".onPressLink" />
+    </HBox>
+    <HBox class="portlet-body">
+      <VBox width="48%" height="100%">
+        <HBox width="100%" alignItems="Center">
+          <Label text="{i18n>LABEL_01151}" design="Bold" displayOnly="true" vAlign="Middle" />
+          <Image alt="{i18n>LABEL_01151}" src="asset/image/icon_star2_on.svg" width=".7rem" class="ml-5-px" />
+        </HBox>
+        <ScrollContainer horizontal="false" vertical="true" class="mt-10-px">
+          <layoutData>
+            <FlexItemData growFactor="1" />
+          </layoutData>
+          <HBox width="100%" height="2rem" justifyContent="Center" alignItems="Center" visible="{= ${birthday/listCount} === 0 }">
+            <Text text="{i18n>MSG_00001}" />
+          </HBox>
+          <List items="{ path: 'birthday/list', templateShareable: false }" visible="{= ${birthday/listCount} &gt; 0 }" rememberSelections="false" showSeparators="None" showNoData="false">
+            <CustomListItem>
+              <HBox alignItems="Center" height="24px">
+                <Text text="{Ename}" tooltip="{Ename}" wrapping="false">
+                  <layoutData>
+                    <FlexItemData growFactor="1" />
+                  </layoutData>
+                </Text>
+                <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.MonthDate' }" wrapping="false">
+                  <layoutData>
+                    <FlexItemData minWidth="40%" maxWidth="40%" />
+                  </layoutData>
+                </Text>
+              </HBox>
+            </CustomListItem>
+          </List>
+        </ScrollContainer>
+      </VBox>
+      <VBox width="48%" height="100%" class="ml-4">
+        <HBox width="100%" alignItems="Center">
+          <Label text="{i18n>LABEL_01152}" design="Bold" displayOnly="true" vAlign="Middle" />
+          <Image alt="{i18n>LABEL_01152}" src="asset/image/icon_star2_on.svg" width=".7rem" class="ml-5-px" />
+        </HBox>
+        <ScrollContainer horizontal="false" vertical="true" class="mt-10-px">
+          <layoutData>
+            <FlexItemData growFactor="1" />
+          </layoutData>
+          <HBox width="100%" height="2rem" justifyContent="Center" alignItems="Center" visible="{= ${wedding/listCount} === 0 }">
+            <Text text="{i18n>MSG_00001}" />
+          </HBox>
+          <List items="{ path: 'wedding/list', templateShareable: false }" visible="{= ${wedding/listCount} &gt; 0 }" rememberSelections="false" showSeparators="None" showNoData="false">
+            <CustomListItem>
+              <HBox alignItems="Center" height="24px">
+                <Text text="{Ename}" tooltip="{Ename}" wrapping="false">
+                  <layoutData>
+                    <FlexItemData growFactor="1" />
+                  </layoutData>
+                </Text>
+                <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.MonthDate' }" wrapping="false">
+                  <layoutData>
+                    <FlexItemData minWidth="40%" maxWidth="40%" />
+                  </layoutData>
+                </Text>
+              </HBox>
+            </CustomListItem>
+          </List>
+        </ScrollContainer>
+      </VBox>
+    </HBox>
+  </VBox>
+</core:FragmentDefinition>

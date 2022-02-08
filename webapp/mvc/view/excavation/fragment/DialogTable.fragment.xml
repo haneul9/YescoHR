@@ -6,7 +6,7 @@
       <m:VBox class="hCardBox dialog-search-box sapUiSmallMarginBottom">
         <m:HBox class="form-bar" alignItems="Center">
           <m:Label text="{i18n>MSG_06005}" />
-          <m:DatePicker value="{/dialog/yearMonth}" displayFormat="yyyy.MM" valueFormat="yyyyMM" change=".onChangeDialogSearch" />
+          <m:DatePicker value="{/dialog/yearMonth}" displayFormat="yyyy.MM" valueFormat="yyyyMM" change=".onChangeDialogSearch" width="110px" />
         </m:HBox>
       </m:VBox>
       <m:VBox class="hCardBox mb-16-px dialog-content-table">

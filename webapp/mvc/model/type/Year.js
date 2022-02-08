@@ -18,7 +18,7 @@ sap.ui.define(
       constructor: function (...args) {
         TypeDate.apply(this, args);
 
-        const formatPattern = AppUtils.getAppComponent().getSessionModel().getProperty('/DtfmtYYYY');
+        const formatPattern = this.getSessionProperty('/DtfmtYYYY');
         const oFormatOptions = {
           pattern: formatPattern,
         };
@@ -27,11 +27,7 @@ sap.ui.define(
       },
 
       getFormatPatternForMoment() {
-        return AppUtils.getAppComponent().getSessionModel().getProperty('/DTFMTYYYY');
-      },
-
-      getParsePatternForMoment() {
-        return 'YYYY';
+        return this.getSessionProperty('/DTFMTYYYY');
       },
     });
   }

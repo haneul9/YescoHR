@@ -14,20 +14,20 @@ sap.ui.define(
     /**
      * Edm.DateTime
      */
-    return TypeDate.extend('sap.ui.yesco.mvc.model.type.Month', {
+    return TypeDate.extend('sap.ui.yesco.mvc.model.type.MonthDate', {
       constructor: function (...args) {
         TypeDate.apply(this, args);
 
-        const formatPattern = this.getSessionProperty('/DtfmtYYYYMM');
+        const formatPattern = this.getSessionProperty('/Dtfmt');
         const oFormatOptions = {
-          pattern: formatPattern,
+          pattern: formatPattern.replace(/^YYYY[.-/]?/g, ''),
         };
         this.setFormatOptions(oFormatOptions);
-        this.sName = 'CustomMonth';
+        this.sName = 'CustomMonthDate';
       },
 
       getFormatPatternForMoment() {
-        return this.getSessionProperty('/DTFMTYYYYMM');
+        return this.getSessionProperty('/DTFMT').replace(/^YYYY[.-/]?/g, '');
       },
     });
   }
