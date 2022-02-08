@@ -254,11 +254,6 @@ sap.ui.define(
         oViewModel.setProperty('/sideNavigation/height', `${iSideViewHeight}px`);
         oViewModel.setProperty('/sideNavigation/scrollHeight', `${iScrollViewHeight}px`);
         oViewModel.setProperty('/sideNavigation/busy', false);
-
-        // if (_.isEqual(sPernr, 'none')) {
-        //   const sFirstPernr = _.get(aSearchResults, [0, 'Pernr']);
-        //   this.loadProfile({ oViewModel, sFirstPernr });
-        // }
       },
 
       async loadProfile({ oViewModel, sPernr }) {
