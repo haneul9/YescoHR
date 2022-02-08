@@ -8,6 +8,7 @@
       <HBox justifyContent="SpaceBetween" class="breadcrumbs">
         <custom:Breadcrumbs />
         <HBox>
+          <Button type="Emphasized" class="sapUiTinyMarginEnd" text="Swap" press=".onPressSwapBtn" />
           <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
           <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
         </HBox>

@@ -37,6 +37,10 @@ sap.ui.define(
         return oChartLayout;
       },
 
+      getChart: function () {
+        return this.oD3Chart;
+      },
+
       renderer: function (oRm, oControl) {
         const layout = oControl.createChart();
 
@@ -111,13 +115,13 @@ sap.ui.define(
               if ([...event.srcElement.classList].includes('title')) {
                 AppUtils.getAppComponent()
                   .getRouter()
-                  .navTo('employee', { pernr: 'NA', orgtx: _.replace(event.srcElement.textContent, /\//g, '--') });
+                  .navTo('employee', { pernr: 'NA', orgeh: sNodeId, orgtx: _.replace(event.srcElement.textContent, /\//g, '--') });
               }
             } else {
               if ([...event.srcElement.classList].includes('title')) {
                 AppUtils.getAppComponent()
                   .getRouter()
-                  .navTo('employee', { pernr: sPernr, orgtx: _.replace(event.srcElement.textContent, /\//g, '--') });
+                  .navTo('employee', { pernr: sPernr, orgeh: sNodeId, orgtx: _.replace(event.srcElement.textContent, /\//g, '--') });
               } else {
                 AppUtils.getAppComponent().getRouter().navTo('employee', { pernr: sPernr });
               }

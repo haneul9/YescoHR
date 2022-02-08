@@ -136,6 +136,7 @@ sap.ui.define(
           busy: false,
           pernr: null,
           orgtx: null,
+          orgeh: null,
           sideNavigation: {
             isShow: true,
             busy: false,
@@ -220,27 +221,29 @@ sap.ui.define(
         const oViewModel = this.getView().getModel();
         const sPernr = oParameter.pernr || this.getSessionData().Pernr;
         const sOrgtx = _.replace(oParameter.orgtx, /--/g, '/') ?? _.noop();
+        const sOrgeh = oParameter.orgeh ?? _.noop();
 
         oViewModel.setProperty('/employee/busy', true);
         oViewModel.setProperty('/sideNavigation/busy', true);
         oViewModel.setProperty('/pernr', sPernr);
         oViewModel.setProperty('/orgtx', sOrgtx);
+        oViewModel.setProperty('/orgeh', sOrgeh);
 
         if (!_.isEmpty(sOrgtx)) {
           oViewModel.setProperty('/sideNavigation/search/searchText', sOrgtx);
         }
 
-        this.initialList({ oViewModel, sPernr, sOrgtx });
+        this.initialList({ oViewModel, sPernr, sOrgtx, sOrgeh });
         if (!_.isEqual(sPernr, 'NA')) this.loadProfile({ oViewModel, sPernr });
       },
 
-      async initialList({ oViewModel, sPernr, sOrgtx }) {
+      async initialList({ oViewModel, sPernr, sOrgtx, sOrgeh }) {
         const oSideBody = this.byId('sideBody');
         const oSideList = this.byId('sideEmployeeList');
         const mSessionData = this.getSessionData();
         const sSearchText = _.isEmpty(sOrgtx) ? sPernr : sOrgtx;
-        const sLeaderPernr = _.isEmpty(sOrgtx) ? _.noop() : sPernr;
-        const aSearchResults = await this.readEmpSearchResult({ searchText: sSearchText, Werks: mSessionData.Werks, Pernr: sLeaderPernr });
+        const sSearchOrgeh = _.isEmpty(sOrgeh) ? _.noop() : sOrgeh;
+        const aSearchResults = await this.readEmpSearchResult({ searchText: sSearchText, Werks: mSessionData.Werks, Orgeh: sSearchOrgeh });
         const iSideViewHeight = Math.floor($(document).height() - oSideBody.getParent().$().offset().top - 20);
         const iScrollViewHeight = Math.floor($(document).height() - oSideList.getParent().$().offset().top - 36);
 
@@ -250,6 +253,11 @@ sap.ui.define(
         oViewModel.setProperty('/sideNavigation/height', `${iSideViewHeight}px`);
         oViewModel.setProperty('/sideNavigation/scrollHeight', `${iScrollViewHeight}px`);
         oViewModel.setProperty('/sideNavigation/busy', false);
+
+        if (_.isEqual(sPernr, 'NA')) {
+          const sFirstPernr = _.get(aSearchResults, [0, 'Pernr'], _.noop());
+          this.loadProfile({ oViewModel, sPernr: sFirstPernr });
+        }
       },
 
       async loadProfile({ oViewModel, sPernr }) {
@@ -1205,7 +1213,7 @@ sap.ui.define(
       /*****************************************************************
        * ! Call oData
        *****************************************************************/
-      readEmpSearchResult({ Werks, searchText, Pernr }) {
+      readEmpSearchResult({ Werks, searchText, Orgeh }) {
         return new Promise((resolve, reject) => {
           const oModel = this.getModel(ServiceNames.COMMON);
           const sUrl = '/EmpSearchResultSet';
@@ -1216,7 +1224,7 @@ sap.ui.define(
             new Filter('Ename', FilterOperator.EQ, searchText),
           ];
 
-          if (!_.isEmpty(Pernr)) aFilters.push(new Filter('Pernr', FilterOperator.EQ, Pernr));
+          if (!_.isEmpty(Orgeh)) aFilters.push(new Filter('Orgeh', FilterOperator.EQ, Orgeh));
 
           oModel.read(sUrl, {
             filters: aFilters,

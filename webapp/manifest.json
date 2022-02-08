@@ -164,7 +164,7 @@
 
         { "pattern": "attendance", "name": "attendance", "target": "attendance" },
         { "pattern": "attendance/{type}/:appno:", "name": "attendance-detail", "target": "attendanceDetail" },
-        { "pattern": "employee/:pernr:/:orgtx:", "name": "employee", "target": "employee" },
+        { "pattern": "employee/:pernr:/:orgtx:/:orgeh:", "name": "employee", "target": "employee" },
 
         { "pattern": "nightduty", "name": "nightduty", "target": "nightduty" },
         { "pattern": "nightduty/{sAppno}", "name": "nightduty-detail", "target": "nightdutyDetail" },

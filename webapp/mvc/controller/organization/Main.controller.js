@@ -26,10 +26,14 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.organization.Main', {
+      LAYOUT: ['left', 'top'],
+      LAYOUT_COUNT: 0,
+
       async onBeforeShow() {
         this.chartHolder = this.byId('ChartHolder');
         this.chartHolder.setBusy(true);
         this.chartHolder.removeAllItems();
+        this.oD3Chart = null;
       },
 
       async onObjectMatched() {
@@ -54,7 +58,7 @@ sap.ui.define(
           }
 
           const sExtendNode = this.getViewModel().getProperty('/extendNode') || _.noop();
-          const oChart = new D3OrgChart({
+          this.oD3Chart = new D3OrgChart({
             extendNode: sExtendNode,
             items: {
               path: '/orgList',
@@ -75,7 +79,7 @@ sap.ui.define(
             },
           });
 
-          this.chartHolder.addItem(oChart);
+          this.chartHolder.addItem(this.oD3Chart);
         } catch (oError) {
           this.debug('Controller > organization Main > onObjectMatched Error', oError);
 
@@ -88,6 +92,13 @@ sap.ui.define(
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
+      onPressSwapBtn() {
+        this.oD3Chart
+          .getChart()
+          .layout(this.LAYOUT[++this.LAYOUT_COUNT % 2])
+          .render()
+          .fit();
+      },
 
       /*****************************************************************
        * ! Call oData
