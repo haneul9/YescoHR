@@ -146,6 +146,7 @@ sap.ui.define(
             Fasex: 'ALL',
             Hndcd: 'ALL',
             Dptyp: 'ALL',
+            Endda: moment('9999-12-31').hours(9).toDate(),
           });
           this.settingsAttachTable();
         } else {
