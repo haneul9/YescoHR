@@ -58,9 +58,9 @@
                     <core:Item text="{Dptyx}" key="{Dptyp}" />
                 </ComboBox>
             </VBox>
-            <Label text="{i18n>LABEL_05014}"/>
+            <Label text="{= ${/werks} === '1000' || ${/werks} === '3000' ? '' : ${i18n>LABEL_05014} }"/>
             <VBox>
-                <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Famid} ? true : false }" editable="{= !${/FormData/ZappStatAl} }" />
+                <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Famid} ? true : false }" editable="{= !${/FormData/ZappStatAl} }" visible="{= ${/werks} !== '1000' &amp;&amp; ${/werks} !== '3000' }" />
             </VBox>
             <Label text="{i18n>LABEL_05015}"/>
             <VBox>
