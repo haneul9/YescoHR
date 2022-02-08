@@ -716,7 +716,10 @@ sap.ui.define(
         try {
           const aSearchResults = await this.readEmpSearchResult({ searchText: sSearchText, Werks: sWerks });
 
-          oViewModel.setProperty('/sideNavigation/search/results', aSearchResults);
+          oViewModel.setProperty(
+            '/sideNavigation/search/results',
+            _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? 'asset/image/avatar-unknown.svg?ssl=1' : o.Photo }))
+          );
         } catch (oError) {
           this.debug('Controller > Employee > onPressEmployeeSearch Error', oError);
 
