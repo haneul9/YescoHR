@@ -2,6 +2,7 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/core/Fragment',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
@@ -19,6 +20,7 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
+    Fragment,
     JSONModel,
     MessageBox,
     Appno,
@@ -44,16 +46,17 @@ sap.ui.define(
         const oViewModel = new JSONModel({
           FormData: {},
           FieldLimit: {},
-          BankList: [],
-          listInfo: {
+          detail: {
+            listMode: 'MultiToggle', // None
+            list: [],
             rowCount: 1,
-            totalCount: 0,
-            progressCount: 0,
-            applyCount: 0,
-            approveCount: 0,
-            rejectCount: 0,
-            completeCount: 0,
           },
+          dialog: {
+            listMode: 'MultiToggle', // None
+            list: [],
+            rowCount: 1,
+          },
+          BankList: [],
           busy: false,
         });
         this.setViewModel(oViewModel);
@@ -70,21 +73,8 @@ sap.ui.define(
           // Input Field Imited
           oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.WORKTIME, 'OtWorkApply')));
 
-          // // 변경은행
-          // const aBankList = await Client.getEntitySet(oModel, 'BanklCodeList');
-
-          // oDetailModel.setProperty('/BankList', new ComboEntry({ codeKey: 'Bankl', valueKey: 'Banka', aEntries: aBankList }));
-
           if (sDataKey === 'N' || !sDataKey) {
             const mSessionData = this.getSessionData();
-            const mAppointeeData = this.getAppointeeData();
-
-            oDetailModel.setProperty('/FormData', {
-              Pernr: mAppointeeData.Pernr,
-              Acctty: 'A',
-              Bankl: 'ALL',
-              Begym: moment().format('YYYYMM'),
-            });
 
             oDetailModel.setProperty('/ApplyInfo', {
               Apename: mSessionData.Ename,
@@ -96,7 +86,14 @@ sap.ui.define(
               Appno: sDataKey,
             });
 
-            oDetailModel.setProperty('/FormData', oTargetData[0]);
+            const iLength = oTargetData.length;
+
+            oDetailModel.setProperty('/detail', {
+              listMode: 'MultiToggle',
+              list: oTargetData,
+              rowCount: iLength < 5 ? iLength : 5,
+            });
+
             oDetailModel.setProperty('/ApplyInfo', oTargetData[0]);
             oDetailModel.setProperty('/ApprovalDetails', oTargetData[0]);
           }
@@ -110,6 +107,11 @@ sap.ui.define(
         }
       },
 
+      // 근무시간
+      formatTime(sTime = '') {
+        return !sTime ? '0' : `${sTime.slice(-4, -2)}:${sTime.slice(-2)}`;
+      },
+
       // override AttachFileCode
       getApprovalType() {
         return 'HR17';
@@ -121,25 +123,138 @@ sap.ui.define(
         return sAction;
       },
 
-      checkError(sType) {
+      // 신청내역 추가
+      onAddDetail() {
+        const oView = this.getView();
+        AppUtils.setAppBusy(true, this);
+
+        setTimeout(() => {
+          if (!this._pDetailDialog) {
+            this._pDetailDialog = Fragment.load({
+              id: oView.getId(),
+              name: 'sap.ui.yesco.mvc.view.workTime.fragment.WorkTimeDialog',
+              controller: this,
+            }).then(function (oDialog) {
+              oView.addDependent(oDialog);
+              return oDialog;
+            });
+          }
+
+          const oDetailModel = this.getViewModel();
+          const oModel = this.getModel(ServiceNames.WORKTIME);
+          const mAppointeeData = this.getAppointeeData();
+
+          this._pDetailDialog.then(async function (oDialog) {
+            // 근무 사유
+            const aCauseList = await Client.getEntitySet(oModel, 'WorktimeCodeList', {
+              Datum: new Date(),
+              Cdnum: 'TM0003',
+              Grcod: 'TM000003',
+            });
+
+            oDetailModel.setProperty('/CauseType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aCauseList }));
+            oDetailModel.setProperty('/DialogData', {
+              Datum: new Date(),
+              Beguz: '18:00',
+              Abrst: '',
+              Ottyp: 'ALL',
+            });
+
+            oDetailModel.setProperty('/dialog/list', [...oDetailModel.getProperty('/detail/list')]);
+            let iLength = 1;
+
+            // 신청내역이 없을경우
+            if (!_.size(oDetailModel.getProperty('/dialog/list'))) {
+              oDetailModel.setProperty('/dialog/list', [
+                {
+                  Pernr: mAppointeeData.Pernr,
+                  Ename: mAppointeeData.Ename,
+                  Zzjikgbt: mAppointeeData.Zzjikgbt,
+                  Zzjikcht: mAppointeeData.Zzjikcht,
+                  Orgtx: mAppointeeData.Orgtx,
+                },
+              ]);
+
+              iLength = _.size(oDetailModel.getProperty('/dialog/list'));
+            } else {
+            }
+
+            oDetailModel.setProperty('/dialog/rowCount', iLength < 5 ? iLength : 5);
+            AppUtils.setAppBusy(false, this);
+            oDialog.open();
+          });
+        }, 100);
+      },
+
+      // 신청내역 삭제
+      onDelDetail() {},
+
+      // Dialog 저장
+      onDialogSavBtn() {
+        if (this.checkError()) {
+          return;
+        }
+
         const oDetailModel = this.getViewModel();
-        const mFormData = oDetailModel.getProperty('/FormData');
+        oDetailModel.setProperty('/detail/list', [
+          _.filter(oDetailModel.getProperty('/dialog/list'), (e) => {
+            return !!e.Pernr;
+          }),
+        ]);
+      },
 
-        // 변경은행
-        if (mFormData.Bankl === 'ALL' || !mFormData.Bankl) {
-          MessageBox.alert(this.getBundleText('MSG_26004'));
+      //  Dialig 추가
+      onDialogAdd() {
+        const oDetailModel = this.getViewModel();
+        const aDialogTable = oDetailModel.getProperty('/dialog/list');
+
+        oDetailModel.setProperty('/dialog/list', [
+          ...aDialogTable,
+          {
+            Pernr: '',
+            Ename: '',
+            Zzjikgbt: '',
+            Zzjikcht: '',
+            Orgtx: '',
+          },
+        ]);
+
+        const iLength = _.size(oDetailModel.getProperty('/dialog/list'));
+
+        oDetailModel.setProperty('/dialog/rowCount', iLength < 5 ? iLength : 5);
+      },
+
+      // Dialog 삭제
+      onDialogDel() {},
+
+      // Dialog Close
+      onDialogClose(oEvent) {
+        oEvent.getSource().getParent().close();
+      },
+
+      // 근무시간
+      onTimePicker() {
+        const oDetailModel = this.getViewModel();
+        const mDialogData = oDetailModel.getProperty('/DialogData');
+        let iWorkTime = _.subtract(mDialogData.Enduz.replace(':', ''), mDialogData.Beguz.replace(':', ''));
+
+        iWorkTime = Math.sign(iWorkTime) === -1 ? iWorkTime + 2400 : iWorkTime;
+        oDetailModel.setProperty('/DialogData/Abrst', !iWorkTime ? '' : _.toString(iWorkTime));
+      },
+
+      checkError() {
+        const oDetailModel = this.getViewModel();
+        const mDialogData = oDetailModel.getProperty('/DialogData');
+
+        // 사유
+        if (mDialogData.Ottyp === 'ALL' || !mDialogData.Ottyp) {
+          MessageBox.alert(this.getBundleText('MSG_27004'));
           return true;
         }
 
-        // 변경계좌
-        if (!mFormData.Bankn) {
-          MessageBox.alert(this.getBundleText('MSG_26005'));
-          return true;
-        }
-
-        // 계좌실명확인
-        if (sType === 'C' && mFormData.Chkyn !== 'X') {
-          MessageBox.alert(this.getBundleText('MSG_26006'));
+        // 근무시간
+        if (mDialogData.Abrst === '0' || !mDialogData.Abrst) {
+          MessageBox.alert(this.getBundleText('MSG_27005'));
           return true;
         }
 

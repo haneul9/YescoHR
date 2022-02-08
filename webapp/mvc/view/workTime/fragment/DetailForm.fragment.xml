@@ -14,61 +14,61 @@
         <table:Column width="90px">
           <Label text="{i18n>LABEL_00209}" />
           <table:template>
-            <Text text="{Atext}" width="100%" textAlign="Center" />
+            <Text text="{Pernr}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="90px">
           <Label text="{i18n>LABEL_00210}" />
           <table:template>
-            <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
+            <Text text="{Ename}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="70px">
+        <table:Column width="90px">
           <Label text="{i18n>LABEL_00215}" />
           <table:template>
-            <Text text="{ path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
+            <Text text="{Zzjikgbt}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="100px">
           <Label text="{i18n>LABEL_00227}" />
           <table:template>
-            <Text text="{AbrtgTxt}" width="100%" textAlign="Center" />
+            <Text text="{Orgtx}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="100px">
+        <table:Column width="150px">
           <Label text="{i18n>LABEL_27004}" />
           <table:template>
-            <Text text="{Tmrsn}" width="100%" textAlign="Center" />
+            <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="100px">
           <Label text="{i18n>LABEL_27005}" />
           <table:template>
-            <Text text="{Tmrsn}" width="100%" textAlign="Center" />
+            <Text text="{Beguz}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="100px">
           <Label text="{i18n>LABEL_27006}" />
           <table:template>
-            <Text text="{Tmrsn}" width="100%" textAlign="Center" />
+            <Text text="{Enduz}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="70px">
           <Label text="{i18n>LABEL_27007}" />
           <table:template>
-            <Text text="{Tmrsn}" width="100%" textAlign="Center" />
+            <Text text="{Abrst}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="auto">
           <Label text="{i18n>LABEL_00154}" />
           <table:template>
-            <Text text="{Tmrsn}" width="100%" textAlign="Center" />
+            <Text text="{Ottyptx}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="auto">
           <Label text="{i18n>LABEL_27008}" />
           <table:template>
-            <Text text="{Tmrsn}" width="100%" textAlign="Center" />
+            <Text text="{Atrsn}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
       </table:columns>

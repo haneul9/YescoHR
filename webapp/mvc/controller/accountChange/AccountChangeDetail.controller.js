@@ -265,7 +265,7 @@ sap.ui.define(
               }
 
               const oModel = this.getModel(ServiceNames.PAY);
-              const oSendObject = {
+              let oSendObject = {
                 ...mFormData,
                 Menid: this.getCurrentMenuId(),
               };
