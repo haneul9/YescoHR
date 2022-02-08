@@ -136,13 +136,13 @@ sap.ui.define(
         }
 
         oGrid.insertItem(oDragged, iDropPosition);
-        // oGrid.focusItem(iDropPosition);
 
         setTimeout(() => {
-          const oPortletsModel = this.getViewModel();
-          const mActivePortlets = oPortletsModel.getProperty('/activeInstanceMap');
-
-          Object.values(mActivePortlets).forEach((oPortletHandler) => oPortletHandler.onAfterDragAndDrop());
+          const sPortletId = oDragged.getBindingContext().getProperty('id');
+          const oPortletHandler = this.getViewModel().getProperty(`/activeInstanceMap/${sPortletId}`);
+          if (oPortletHandler) {
+            oPortletHandler.onAfterDragAndDrop();
+          }
         });
         setTimeout(() => {
           this.onPressPortletsP13nSave();
