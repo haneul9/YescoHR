@@ -111,7 +111,7 @@ html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl) {text-decoration:none}
 .portlet-p05 .sapMListUl .sapMLIB:first-child {margin-top:0}
 .portlet-p06 .today {color:grey}
 .portlet-p06 .sapUiLayoutCSSGrid {height:100%}
-.portlet-p06 .team-member-count {font-size:2rem; font-weight:500; cursor:pointer}
+.portlet-p06 .team-member-count {margin-top:8px;font-size:2rem; font-weight:500; cursor:pointer}
 .portlet-p06 .team-member-count[data-table-key="1"] .sapMObjStatusText {color:#222}
 .portlet-p06 .team-member-count[data-table-key="2"] .sapMObjStatusText {color:#ff5a5a}
 .portlet-p06 .team-member-count[data-table-key="3"] .sapMObjStatusText {color:#5a86ff}
@@ -119,6 +119,8 @@ html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl) {text-decoration:none}
 .portlet-p06 .team-member-count[data-table-key="5"] .sapMObjStatusText {color:#6edecf}
 .portlet-p06 .team-member-count[data-table-key="6"] .sapMObjStatusText {color:#ffc86f}
 .portlet-p06 .sapMObjStatusLink:hover .sapMObjStatusText {text-decoration:none}
+.portlet-p06 g[class*=caption] tspan, .portlet-p06 g[class*=datalabel] tspan {font-size:11px;}
+.portlet-p06 tspan {font-size:7px;}
 .team-member-count-popover .sapUiTableCCnt,
 .team-member-count-popover .sapUiTableCtrlCnt {min-height:34px !important}
 .sapUiSizeCompact .portlet .sapMBtn,
