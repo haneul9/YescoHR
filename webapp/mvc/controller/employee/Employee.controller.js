@@ -138,6 +138,7 @@ sap.ui.define(
           orgtx: null,
           sideNavigation: {
             isShow: true,
+            busy: false,
             selectedKey: 'list',
             width: '27%',
             height: '900px',
@@ -226,6 +227,7 @@ sap.ui.define(
         const sOrgtx = _.replace(oParameter.orgtx, /--/g, '/') ?? _.noop();
 
         oViewModel.setProperty('/employee/busy', true);
+        oViewModel.setProperty('/sideNavigation/busy', true);
         oViewModel.setProperty('/pernr', sPernr);
         oViewModel.setProperty('/orgtx', sOrgtx);
 
@@ -251,6 +253,7 @@ sap.ui.define(
         oViewModel.setProperty('/sideNavigation/search/results', aSearchResults);
         oViewModel.setProperty('/sideNavigation/height', `${iSideViewHeight}px`);
         oViewModel.setProperty('/sideNavigation/scrollHeight', `${iScrollViewHeight}px`);
+        oViewModel.setProperty('/sideNavigation/busy', false);
 
         // if (_.isEqual(sPernr, 'none')) {
         //   const sFirstPernr = _.get(aSearchResults, [0, 'Pernr']);
@@ -284,7 +287,7 @@ sap.ui.define(
             aTestGradeList,
           ] = await Promise.all([
             this.readOdata({ sUrl: '/EmpProfileHeaderNewSet', mFilters }),
-            this.readOdata({ sUrl: '/EmpProfileMilestoneSet' }),
+            this.readOdata({ sUrl: '/EmpProfileMilestoneSet', mFilters }),
             this.readOdata({ sUrl: '/EmpProfileMenuSet', mFilters }),
             this.readOdata({ sUrl: '/CountryCodeSet' }),
             this.readOdata({ sUrl: '/MajorCodeSet' }),
