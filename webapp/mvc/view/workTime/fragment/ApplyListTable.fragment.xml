@@ -40,16 +40,16 @@
           <Text text="{Ename}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="100px" sortProperty="Apjikgbt" filterProperty="Apjikgbt">
+      <table:Column width="100px" sortProperty="Zzjikgbt" filterProperty="Zzjikgbt">
         <Label text="{i18n>LABEL_00215}"/>
         <table:template>
-          <Text text="{Apjikgbt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Zzjikgbt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="150px" sortProperty="Aporgtx" filterProperty="Aporgtx">
+      <table:Column width="150px" sortProperty="Orgtx" filterProperty="Orgtx">
         <Label text="{i18n>LABEL_00224}"/>
         <table:template>
-          <Text text="{Aporgtx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Orgtx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Datum" filterProperty="Datum">

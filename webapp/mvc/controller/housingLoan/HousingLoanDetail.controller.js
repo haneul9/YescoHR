@@ -14,6 +14,7 @@ sap.ui.define(
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/common/exceptions/ODataDeleteError',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Currency',
@@ -33,6 +34,7 @@ sap.ui.define(
     ODataReadError,
     ODataCreateError,
     ODataDeleteError,
+    Client,
     ServiceNames,
     BaseController
   ) => {
@@ -421,40 +423,30 @@ sap.ui.define(
       },
 
       // 융자금액 입력시 월 상환액
-      getMonthlyRepayment(sAmount) {
+      async getMonthlyRepayment(sAmount) {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
-        const sBenefitUrl = '/LoanAmtCheckSet';
         const mFormData = oDetailModel.getProperty('/FormData');
 
         if (mFormData.Lntyp === 'ALL' || !mFormData.Lntyp) return;
 
-        oModel.read(sBenefitUrl, {
-          filters: [
-            new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mFormData.Lntyp),
-            new sap.ui.model.Filter('Lnprd', sap.ui.model.FilterOperator.EQ, mFormData.Lnprd || ''),
-            new sap.ui.model.Filter('Lnrte', sap.ui.model.FilterOperator.EQ, mFormData.Lnrte || ''),
-            new sap.ui.model.Filter('LnamtT', sap.ui.model.FilterOperator.EQ, sAmount),
-            // new sap.ui.model.Filter('Waers', sap.ui.model.FilterOperator.EQ, 'KRW'),
-          ],
-          success: (oData) => {
-            if (oData) {
-              this.debug(`${sBenefitUrl} success.`, oData);
+        try {
+          const oRepayObj = await Client.getEntitySet(oModel, 'LoanAmtCheck', {
+            Lntyp: mFormData.Lntyp,
+            Lnprd: mFormData.Lnprd || '',
+            Lnrte: mFormData.Lnrte || '',
+            LnamtT: sAmount,
+          });
 
-              const oRepayObj = oData.results[0];
+          if (!!oRepayObj[0].Message) {
+            MessageBox.alert(oRepayObj[0].Message);
+            // oDetailModel.setProperty('/FormData/Lnamt', oRepayObj[0].Mxamt);
+          }
 
-              if (!!oRepayObj.Message) {
-                MessageBox.alert(oRepayObj.Message);
-                // oDetailModel.setProperty('/FormData/Lnamt', oRepayObj.Mxamt);
-              }
-
-              oDetailModel.setProperty('/FormData/RpamtMon', oRepayObj.RpamtMon);
-            }
-          },
-          error: (oError) => {
-            AppUtils.handleError(new ODataReadError(oError));
-          },
-        });
+          oDetailModel.setProperty('/FormData/RpamtMon', oRepayObj[0].RpamtMon);
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        }
       },
 
       checkError() {

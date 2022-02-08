@@ -6,7 +6,7 @@
         <Title level="H2" text="{i18n>LABEL_19007}" />
       </HBox>
       <Text text="{i18n>MSG_19002}" class="sapUiSmallMarginBottom" />
-      <HBox>
+      <HBox class="mt-50-px">
         <VBox width="50%" class="summary-info">
           <Label design="Bold" text="{i18n>LABEL_19008}" />
           <ObjectStatus text="{= !${/Total/AppIng} ? '0' : ${/Total/AppIng} }" state="Indication05" />
