@@ -34,7 +34,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.certification.certificationDetail', {
+    return BaseController.extend('sap.ui.yesco.mvc.controller.certification.CertificationDetail', {
       PostcodeDialogHandler: null,
       TextUtils: TextUtils,
       TableUtils: TableUtils,
@@ -289,7 +289,8 @@ sap.ui.define(
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00179'), {
                 // {발급}되었습니다.
                 onClose: () => {
-                  this.onNavBack();
+                  this.getRouter().navTo('certification');
+                  // this.onNavBack();
                 },
               });
             } catch (oError) {
@@ -303,11 +304,6 @@ sap.ui.define(
 
       // 신청
       onApplyBtn() {
-        const oModel = this.getModel(ServiceNames.PA);
-        const oDetailModel = this.getViewModel();
-        const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
-        const mFormData = oDetailModel.getProperty('/FormData');
-
         if (this.checkError('C')) return;
 
         // {신청}하시겠습니까?
@@ -320,6 +316,10 @@ sap.ui.define(
             }
 
             try {
+              const oDetailModel = this.getViewModel();
+              const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
+              const mFormData = oDetailModel.getProperty('/FormData');
+
               AppUtils.setAppBusy(true, this);
 
               if (!sStatus) {
@@ -329,6 +329,7 @@ sap.ui.define(
                 oDetailModel.setProperty('/FormData/Appda', new Date());
               }
 
+              const oModel = this.getModel(ServiceNames.PA);
               const oSendObject = {
                 ...mFormData,
                 Prcty: 'C',
@@ -340,7 +341,8 @@ sap.ui.define(
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
                 // {신청}되었습니다.
                 onClose: () => {
-                  this.onNavBack();
+                  this.getRouter().navTo('certification');
+                  // this.onNavBack();
                 },
               });
             } catch (oError) {
@@ -374,7 +376,8 @@ sap.ui.define(
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
                 // {삭제}되었습니다.
                 onClose: () => {
-                  this.onNavBack();
+                  this.getRouter().navTo('certification');
+                  // this.onNavBack();
                 },
               });
             } catch (oError) {

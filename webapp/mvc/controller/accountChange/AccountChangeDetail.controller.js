@@ -81,8 +81,8 @@ sap.ui.define(
           // 21일 이후 신청 내역은 익월 급상여 시 적용됩니다.
           // 통장사본은 반드시 입력하여 주세요.
           const sMsg = `<ul>
-            <li>${this.getBundleText('MSG_26001')}</li>
-            <li>${this.getBundleText('MSG_26002')}</li>
+            <li style='margin-bottom: 5px;'>${this.getBundleText('MSG_26001')}</li>
+            <li style='margin-bottom: 5px;'>${this.getBundleText('MSG_26002')}</li>
             <li>${this.getBundleText('MSG_26003')}</li>
           </ul>`;
 
@@ -265,7 +265,7 @@ sap.ui.define(
               }
 
               const oModel = this.getModel(ServiceNames.PAY);
-              let oSendObject = {
+              const oSendObject = {
                 ...mFormData,
                 Menid: this.getCurrentMenuId(),
               };
