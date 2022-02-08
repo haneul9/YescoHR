@@ -1,51 +1,77 @@
 <core:FragmentDefinition xmlns="sap.m"
-  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:table="sap.ui.table"
   xmlns:core="sap.ui.core">
   <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
     <HBox alignItems="Center" class="table-toolbar" justifyContent="SpaceBetween">
       <Title level="H2" text="{i18n>LABEL_00129}" />
       <HBox>
-        <Button text="{i18n>LABEL_26009}" press=".onAccNameCheck" visible="{= !${/FormData/ZappStatAl} }" />
-        <Button text="{i18n>LABEL_26009}" press=".onAccNameCheck" visible="{= !${/FormData/ZappStatAl} }" />
+        <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" press=".onAddDetail" class="sapUiTinyMarginEnd" />
+        <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onDelDetail" />
       </HBox>
     </HBox>
-    <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
-      <Label text="{i18n>LABEL_26008}" />
-      <VBox>
-        <ComboBox items="{/AccType}" selectedKey="{/FormData/Acctty}" change=".onAccChange" editable="{= !${/FormData/ZappStatAl} }" class="required">
-          <core:Item text="{Ztext}" key="{Zcode}" />
-        </ComboBox>
-      </VBox>
-      <Label text="{= !${/FormData/ZappStatAl} ? ${i18n>LABEL_26009} : ${i18n>LABEL_25018} }"/>
-      <VBox>
-        <CheckBox selected="{= ${/FormData/Chkyn} === 'X' }" editable="false" visible="{= !${/FormData/ZappStatAl} }" />
-        <Text text="{/FormData/Ename}" visible="{= !!${/FormData/ZappStatAl} }" />
-      </VBox>
-      <Label text="{i18n>LABEL_26010}"/>
-      <VBox>
-        <ComboBox items="{/BankList}" selectedKey="{/FormData/Bankl}" change=".onBankList" editable="{= !${/FormData/ZappStatAl} }" class="required">
-          <core:Item text="{Banka}" key="{Bankl}" />
-        </ComboBox>
-      </VBox>
-      <Label text="{i18n>LABEL_26011}"/>
-      <VBox>
-        <Input value="{/FormData/Bankn}" liveChange=".onAccChangeInput" editable="{= !${/FormData/ZappStatAl} }" />
-      </VBox>
-      <Label text="{i18n>LABEL_26012}"/>
-      <VBox>
-        <Text text="{/FormData/BankaBef}"/>
-      </VBox>
-      <Label text="{i18n>LABEL_26013}"/>
-      <VBox>
-        <Text text="{/FormData/BanknBef}"/>
-      </VBox>
-      <Label text="{i18n>LABEL_26006}"/>
-      <VBox>
-        <DatePicker displayFormat="yyyy-MM" value="{/FormData/PayYearMon}" change=".onDatePick" width="230px" editable="{= !${/FormData/ZappStatAl} }" />
-        <layoutData>
-          <grid:GridItemLayoutData gridColumn="2 / 5"/>
-        </layoutData>
-      </VBox>
-    </grid:CSSGrid>
+    <table:Table id="workTimeTable" selectionMode="{/detail/listMode}" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/detail/list}" visibleRowCount="{/detail/rowCount}" noData="{i18n>MSG_00001}">
+      <table:columns>
+        <table:Column width="90px">
+          <Label text="{i18n>LABEL_00209}" />
+          <table:template>
+            <Text text="{Atext}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="90px">
+          <Label text="{i18n>LABEL_00210}" />
+          <table:template>
+            <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="70px">
+          <Label text="{i18n>LABEL_00215}" />
+          <table:template>
+            <Text text="{ path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="100px">
+          <Label text="{i18n>LABEL_00227}" />
+          <table:template>
+            <Text text="{AbrtgTxt}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="100px">
+          <Label text="{i18n>LABEL_27004}" />
+          <table:template>
+            <Text text="{Tmrsn}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="100px">
+          <Label text="{i18n>LABEL_27005}" />
+          <table:template>
+            <Text text="{Tmrsn}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="100px">
+          <Label text="{i18n>LABEL_27006}" />
+          <table:template>
+            <Text text="{Tmrsn}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="70px">
+          <Label text="{i18n>LABEL_27007}" />
+          <table:template>
+            <Text text="{Tmrsn}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="auto">
+          <Label text="{i18n>LABEL_00154}" />
+          <table:template>
+            <Text text="{Tmrsn}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="auto">
+          <Label text="{i18n>LABEL_27008}" />
+          <table:template>
+            <Text text="{Tmrsn}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+      </table:columns>
+    </table:Table>
   </VBox>
 </core:FragmentDefinition>

@@ -42,10 +42,8 @@ sap.ui.define(
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
-          Hass: this.isHass(),
           FormData: {},
           FieldLimit: {},
-          AccType: [{ Zcode: 'A', Ztext: this.getBundleText('LABEL_26014') }],
           BankList: [],
           listInfo: {
             rowCount: 1,
@@ -66,48 +64,26 @@ sap.ui.define(
       async onObjectMatched(oParameter) {
         const sDataKey = oParameter.oDataKey;
         const oDetailModel = this.getViewModel();
-        const oModel = this.getModel(ServiceNames.PAY);
+        const oModel = this.getModel(ServiceNames.WORKTIME);
 
         try {
           // Input Field Imited
-          oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.PAY, 'BankAccount')));
+          oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.WORKTIME, 'OtWorkApply')));
 
-          // 변경은행
-          const aBankList = await Client.getEntitySet(oModel, 'BanklCodeList');
+          // // 변경은행
+          // const aBankList = await Client.getEntitySet(oModel, 'BanklCodeList');
 
-          oDetailModel.setProperty('/BankList', new ComboEntry({ codeKey: 'Bankl', valueKey: 'Banka', aEntries: aBankList }));
-
-          // 매월 20일까지 신청한 내역에 대해서 당월급상여 시 적용됩니다.
-          // 21일 이후 신청 내역은 익월 급상여 시 적용됩니다.
-          // 통장사본은 반드시 입력하여 주세요.
-          const sMsg = `<ul>
-            <li>${this.getBundleText('MSG_26001')}</li>
-            <li>${this.getBundleText('MSG_26002')}</li>
-            <li>${this.getBundleText('MSG_26003')}</li>
-          </ul>`;
-
-          oDetailModel.setProperty('/InfoMessage', sMsg);
+          // oDetailModel.setProperty('/BankList', new ComboEntry({ codeKey: 'Bankl', valueKey: 'Banka', aEntries: aBankList }));
 
           if (sDataKey === 'N' || !sDataKey) {
             const mSessionData = this.getSessionData();
             const mAppointeeData = this.getAppointeeData();
-
-            const mMyAccPayLoad = {
-              Menid: this.getCurrentMenuId(),
-              Pernr: mAppointeeData.Pernr,
-            };
-            // 나의 계좌정보
-            const aMyAcc = await Client.getEntitySet(oModel, 'CurrentAcctInfo', mMyAccPayLoad);
 
             oDetailModel.setProperty('/FormData', {
               Pernr: mAppointeeData.Pernr,
               Acctty: 'A',
               Bankl: 'ALL',
               Begym: moment().format('YYYYMM'),
-              PayYearMon: moment().format('YYYY-MM'),
-              BankaBef: aMyAcc[0].Banka,
-              BanklBef: aMyAcc[0].Bankl,
-              BanknBef: aMyAcc[0].Bankn,
             });
 
             oDetailModel.setProperty('/ApplyInfo', {
@@ -116,11 +92,9 @@ sap.ui.define(
               Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
             });
           } else {
-            const oTargetData = await Client.getEntitySet(oModel, 'BankAccount', {
+            const oTargetData = await Client.getEntitySet(oModel, 'OtWorkApply', {
               Appno: sDataKey,
             });
-
-            oTargetData[0].PayYearMon = `${oTargetData[0].Begym.slice(0, 4)}-${oTargetData[0].Begym.slice(4)}`;
 
             oDetailModel.setProperty('/FormData', oTargetData[0]);
             oDetailModel.setProperty('/ApplyInfo', oTargetData[0]);
@@ -147,58 +121,6 @@ sap.ui.define(
         return sAction;
       },
 
-      // 계좌구분 선택
-      onAccChange(oEvent) {
-        const oDetailModel = this.getViewModel();
-        const sKey = oEvent.getSource().getSelectedKey();
-
-        oDetailModel.setProperty('/FormData/Chkyn', '');
-        oDetailModel.setProperty('/FormData/Bankl', 'ALL');
-        oDetailModel.setProperty('/FormData/Bankn', '');
-      },
-
-      // 변경된 은행선택
-      onBankList() {
-        const oDetailModel = this.getViewModel();
-
-        oDetailModel.setProperty('/FormData/Chkyn', '');
-      },
-
-      // 계좌실명확인 Btn
-      async onAccNameCheck() {
-        if (this.checkError()) return;
-
-        const oDetailModel = this.getViewModel();
-        const mFormData = oDetailModel.getProperty('/FormData');
-        const oModel = this.getModel(ServiceNames.PAY);
-        const mPayLoad = {
-          Menid: this.getCurrentMenuId(),
-          Pernr: this.getAppointeeProperty('Pernr'),
-          Bankl: mFormData.Bankl,
-          Bankn: mFormData.Bankn,
-        };
-        // 실명확인
-        const aAccCheck = await Client.getEntitySet(oModel, 'CheckAccount', mPayLoad);
-
-        oDetailModel.setProperty('/FormData/Chkyn', aAccCheck[0].Chkyn);
-      },
-
-      // 지급년월
-      onDatePick(oEvent) {
-        const oDetailModel = this.getViewModel();
-        const dDateValue = oEvent.getSource().getDateValue();
-
-        oDetailModel.setProperty('/FormData/PayYearMon', moment(dDateValue).format('YYYY-MM'));
-        oDetailModel.setProperty('/FormData/Begym', moment(dDateValue).format('YYYYMM'));
-      },
-
-      // 변경된 은행계좌입력시
-      onAccChangeInput() {
-        const oDetailModel = this.getViewModel();
-
-        oDetailModel.setProperty('/FormData/Chkyn', '');
-      },
-
       checkError(sType) {
         const oDetailModel = this.getViewModel();
         const mFormData = oDetailModel.getProperty('/FormData');
@@ -220,12 +142,6 @@ sap.ui.define(
           MessageBox.alert(this.getBundleText('MSG_26006'));
           return true;
         }
-
-        // 첨부파일
-        // if (!AttachFileAction.getFileCount.call(this)) {
-        //   MessageBox.alert(this.getBundleText('MSG_00046'));
-        //   return true;
-        // }
 
         return false;
       },
@@ -264,13 +180,13 @@ sap.ui.define(
                 await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
               }
 
-              const oModel = this.getModel(ServiceNames.PAY);
+              const oModel = this.getModel(ServiceNames.WORKTIME);
               let oSendObject = {
                 ...mFormData,
                 Menid: this.getCurrentMenuId(),
               };
 
-              await Client.create(oModel, 'BankAccount', oSendObject);
+              await Client.create(oModel, 'OtWorkApply', oSendObject);
 
               // {신청}되었습니다.
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
@@ -303,9 +219,9 @@ sap.ui.define(
 
             try {
               const oDetailModel = this.getViewModel();
-              const oModel = this.getModel(ServiceNames.PAY);
+              const oModel = this.getModel(ServiceNames.WORKTIME);
 
-              await Client.remove(oModel, 'BankAccount', { Appno: oDetailModel.getProperty('/FormData/Appno') });
+              await Client.remove(oModel, 'OtWorkApply', { Appno: oDetailModel.getProperty('/FormData/Appno') });
 
               // {삭제}되었습니다.
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {

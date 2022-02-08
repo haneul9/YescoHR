@@ -152,7 +152,7 @@
         { "pattern": "h/medical/{oDataKey}", "name": "h/medical-detail", "target": "medicalDetail" },
 
         { "pattern": "workTime", "name": "workTime", "target": "workTime" },
-        { "pattern": "workTime/{oDataKey}", "name": "workTime-detail", "target": "WorkTimeDetail" },
+        { "pattern": "workTime/{oDataKey}", "name": "workTime-detail", "target": "workTimeDetail" },
 
         { "pattern": "withdrawMiddle", "name": "withdrawMiddle", "target": "withdrawMiddle" },
         { "pattern": "withdrawMiddle/{oDataKey}", "name": "withdrawMiddle-detail", "target": "withdrawMiddleDetail" },
