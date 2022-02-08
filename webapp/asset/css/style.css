@@ -70,7 +70,8 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-body {width:100%; height:100%}
 .portlet-body .sapMScrollCont {width:100% !important; height:100% !important; padding-right:5px; overflow:hidden auto !important}
 .portlet-body .no-data {display:flex; justify-content: center; align-items: center;color:#ccc;height:calc(100% - 24px)!important}
-.portlet-body .no-data *{color:#ccc;}
+.portlet-body .no-data .sapMText:before {content: "";display:block;width:26px;height:26px;margin:0 auto 6px;background-image: url(../image/no-data.svg);background-size: 100%;}
+.portlet-body .no-data .sapMText {color:#ccc;}
 .portlet-body .sapMScrollContScroll {height:100%;}
 .portlet-not-found {height:100%}
 .portlet-p01 {position:relative; padding:20px}
@@ -1248,7 +1249,8 @@ html.sap-desktop .sapMDialog>footer .sapContrast.sapMIBar.sapMFooter-CTX .sapMBt
 .employee-card-list li .sapMImg {width:60px; height:auto}
 .employee-card-list-d{ padding-left:20px}
 .employee-card-list-d .sapMFlexBox > .sapMFlexItem:first-child .sapMLabel {margin-right:12px; color:#222; font-weight:700}
-.employee-card-list .employee-card-list-d .name {display:flex; justify-content:space-between; margin-bottom:8px; font-size:14px; color:#343A40; font-weight:700}
+.employee-card-list .employee-card-list-d .name {display:flex; justify-content:space-between; font-size:14px; color:#343A40; font-weight:700}
+.employee-card-list .employee-card-list-d .organization {margin-top: 8px;}
 .employee-card-list-d .sapMHBox  {margin-bottom:2px;}
 .employee-card-list-d .sapMFlexItem .sapMLabel {font-size:12px; font-weight:400; padding:0px 0}
 .employee-card-list-d .sapMFlexItem .sapMLabel.label{font-weight:700; margin-right:10px}

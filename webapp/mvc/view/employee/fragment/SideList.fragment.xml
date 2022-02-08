@@ -24,9 +24,9 @@
                                         <FlexItemData growFactor="1" />
                                     </layoutData>
                                 </Text>
-                                <core:Icon visible="{= !!${Chief}}" src="sap-icon://manager" />
+                                <Image src="asset/image/icon_captain.svg" width="1.2rem" alt="Captain" visible="{= !!${Chief}}" />
                             </HBox>
-                            <HBox>
+                            <HBox class="organization">
                                 <Label text="{i18n>LABEL_00226}" />
                                 <Label text="{Pbtxt} {Fulln}" />
                             </HBox>

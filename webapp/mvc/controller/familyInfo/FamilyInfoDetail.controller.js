@@ -71,6 +71,7 @@ sap.ui.define(
       onBeforeShow() {
         const oViewModel = new JSONModel({
           FormStatus: '',
+          werks: this.getAppointeeProperty('Werks'),
           FormData: {},
           Relations: [],
           Gender: [
