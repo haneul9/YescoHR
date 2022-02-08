@@ -83,11 +83,14 @@ html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl) {text-decoration:none}
 .portlet-p02 .portlet-body .icon-mimic {border:1px solid #387fe9; border-radius:3px; padding:0 4px; font-size:10px; color:#387fe9; cursor:default}
 .portlet-p02 .portlet-body .sapUiIcon {vertical-align:text-top}
 .portlet-p03p04 .sapMImg {width:30px; height:30px; margin-right:15px; border:1px solid #fff; box-sizing:border-box}
-.portlet-p03p04 [data-portlet-member-status] {margin-right:0px; border:1px solid; border-radius:2px; font-size:0.6rem; min-width:40px; line-height:16px; height:17px; text-align:center !important}
+.portlet-p03p04 [data-portlet-member-status] {margin-right:0px; border:1px solid; border-radius:3px; font-size:0.6rem; min-width:40px; line-height:16px; height:17px; text-align:center !important}
 .portlet-p03p04 [data-portlet-member-status=""] {border-color:transparent; color:transparent}
-.portlet-p03p04 [data-portlet-member-status="red"] {border-color:#67A4FF; background-color:#67A4FF; color:#fff}/*하계휴가*/
-.portlet-p03p04 [data-portlet-member-status="blue"] {border-color:#67A4FF; background-color:#67A4FF; color:#fff}/*연차*/
-.portlet-p03p04 [data-portlet-member-status="grey"] {border-color:#8FBCFF; color:#387FE9}/*근무중*/
+.portlet-p03p04 [data-portlet-member-status="1"],/*휴가중*/
+.portlet-p03p04 [data-portlet-member-status="2"],/*출장중*/
+.portlet-p03p04 [data-portlet-member-status="3"],/*교육중*/
+.portlet-p03p04 [data-portlet-member-status="4"],/*파견중*/
+.portlet-p03p04 [data-portlet-member-status="H"] {border-color:#67a4ff; background-color:#67a4ff; color:#fff}/*휴일*/
+.portlet-p03p04 [data-portlet-member-status="W"] {border-color:#8fbcff; background-color:transparent; color:#387FE9}/*근무중*/
 .portlet-p03p04 .portlet-org-members,
 .portlet-p03p04 .portlet-my-members {justify-content:space-between; align-items:center; height:auto !important}
 .portlet-p03p04 .portlet-org-members > div,
@@ -120,7 +123,10 @@ html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl) {text-decoration:none}
 .portlet-p06 .team-member-count[data-table-key="6"] .sapMObjStatusText {color:#ffc86f}
 .portlet-p06 .sapIcon_Date {margin-bottom:-8px !important}
 .portlet-p06 .sapIcon_Date .sapMInputBaseContentWrapper {border:none}
-.portlet-p06 .sapIcon_Date .sapUiIcon::before {content:'달력'; font-size:0; background-size:auto; background-image:url(./images/icon_date.png); display:inline-block; width:100%; height:100%; clear:both; vertical-align:top; background-repeat:no-repeat; background-position:4px center}
+.portlet-p06 .sapIcon_Date .sapUiIcon::before {content:'달력'; font-size:0; background-size:auto; background-image:url(../image/icon_arrow_cal.svg); display:inline-block; width:100%; height:100%; clear:both; vertical-align:top; background-repeat:no-repeat; background-position:4px center}
+.portlet-p06 .sapIcon_Date {margin-bottom:-8px !important}
+.portlet-p06 .sapIcon_Date .sapMInputBaseContentWrapper {border:none}
+.portlet-p06 .sapIcon_Date .sapUiIcon::before {content:'달력'; font-size:0; background-size:auto; background-image:url(../image/icon_arrow_cal.svg); display:inline-block; width:100%; height:100%; clear:both; vertical-align:top; background-repeat:no-repeat; background-position:4px center}
 .portlet-p06 .sapMObjStatusLink:hover .sapMObjStatusText {text-decoration:none}
 .portlet-p06 g[class*=caption] tspan, .portlet-p06 g[class*=datalabel] tspan {font-size:11px;}
 .portlet-p06 tspan {font-size:7px;}
@@ -144,6 +150,7 @@ html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl) {text-decoration:none}
 .sapMBtn.portlet-btn.color-06 .sapMBtnDefault, .portlet-p07 .sapUiLayoutCSSGrid .sapUiLayoutCSSGridItem:nth-child(6) .sapMFlexItem {background-color:rgba(17, 128, 174, .1)}
 
 .portlet-p09 img {vertical-align: sub;}
+.portlet-p09 .sapMInputBaseContentWrapper {border:0;}
 
 .sapMLnkSubtle {color:#222}
 
@@ -376,6 +383,7 @@ div.sapUiTableSelectAllCheckBox::after, div.sapUiTableRowSelectionCell::after {b
 .sapMFocus .sapMInputBaseIcon:active {color:#346187; background:var(--BackgroundColorFocus) !important}
 .sapMInputBaseIconPressed .sapMInputBaseIcon {color:#346187; background:var(--BackgroundColorFocus) !important}
 .sapMInputBaseIconPressed .sapMInputBaseIcon::before {color:#346187}
+.sapIcon_Date.pickonly-datepicker .sapMInputBaseContentWrapper {border:none}
 
 div.sapUiCalItem {color:#000; background:none}/* 달력 기본 */
 div.sapUiCalItem>.sapUiCalItemText {box-shadow:none !important}
@@ -1093,10 +1101,12 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 
 /*Layer popup style*/
 .sapUiSizeCompact.sapMDialog, .sapUiSizeCompact .sapMDialog, .sapMDialog { min-height:45px; padding:65px 0px 80px; background-color:#fff}
+.sapMDialog[data-sap-ui*=alert] { min-height:45px; padding:54px 0px 80px; padding-bottom: 60px!important; background-color:#fff}
 .sapMDialog.sapMDialog-NoHeader { padding-top:0;}
 .sapMDialogSection, .sapMDialogSubHeader {padding:0px 30px}
 .sapMDialogSection .sapMPanelContent:not(.sapMPanelBGTransparent), .sapMDialogSection .sapMPanelHdr {padding:0px} 
 .sapUiSizeCompact.sapMDialog>.sapMDialogTitle, .sapUiSizeCompact .sapMDialog>.sapMDialogTitle {height:75px}
+.sapUiSizeCompact .sapMDialog[data-sap-ui*=alert]>.sapMDialogTitle {height:60px}
 .sapMBarMiddle {text-align:left}
 .sapMBarLeft, .sapMBarPH {padding-left:0}
 .sapMDialog:not(.sapMDialogWithSubHeader)>header>.sapMIBar, .sapMDialog>header:last-of-type .sapMIBar {box-shadow:inset 0 0px #ebebeb}
@@ -1126,12 +1136,14 @@ html.sap-desktop .sapMPopoverFooter .sapContrast.sapMIBar.sapMFooter-CTX, html.s
 .sapUiSizeCompact.sapMDialog.file-list-dialog>.sapMDialogSection, .sapUiSizeCompact .sapMDialog.file-list-dialog>.sapMDialogSection {padding-bottom:20px; }
 .sapMDialog>footer {height:80px}
 .sapMDialog>footer .sapContrast span.sapMBtnInner {font-size:15px; font-weight:700}
+.sapMDialog>footer .sapContrast span.sapMBtnInner.sapMBtnEmphasized, .sapMDialog[data-sap-ui*=alert]>footer span.sapMBtnInner.sapMBtnEmphasized {background-image:none;background-color:#002866;border-color:#002866;color:#ffffff;text-shadow:0 0 0.125rem rgb(0 0 0 / 0%);}
 .sapMDialog>footer .sapContrast span.sapMBtnInner.sapMBtnEmphasized {background-image:none;background-color:#002866;border-color:#002866;color:#ffffff;text-shadow:0 0 0.125rem rgb(0 0 0 / 0%);}
 .sapMDialog>footer .sapMDialog>footer .sapContrast.sapMIBar-CTX .sapMBtn:hover>.sapMBtnHoverable.sapMBtnEmphasized:not(.sapMBtnActive) {background-image:none;background-color:#254D8B;border-color:#254D8B;color:#ffffff;text-shadow:0 0 0.125rem rgb(0 0 0 / 0%);}
 
 .sapMDialog>footer .sapMBtnDisabled span.sapMBtnInner.sapMBtnEmphasized {background-image:none;background-color:#DDE1E6;border-color:#DDE1E6;color:#9CA5AA;text-shadow:0 0 0.125rem rgb(0 0 0 / 0%);}
 .sapMDialog>footer .sapMBtnDisabled:hover span.sapMBtnInner.sapMBtnEmphasized {background-image:none;background-color:#DDE1E6!important;border-color:#DDE1E6!important;color:#9CA5AA!important;text-shadow:0 0 0.125rem rgb(0 0 0 / 0%);}
 .sapMDialog>footer .sapContrast span.sapMBtnInner.sapMBtnDefault {background-image:none; background-color:#D8DBDD; border-color:#707070; text-shadow:0 0 0.125rem rgb(0 0 0 / 0%); color:#5A6268!important}
+.sapMDialog>footer .sapContrast span.sapMBtnInner.sapMBtnDefault:hover, .sapContrast.sapMIBar-CTX .sapMBtn:hover>.sapMBtnHoverable:not(.sapMBtnActive):not(.sapMBtnEmphasized) {background-image:none; background-color:#E2E6EA!important; border-color:#707070; text-shadow:0 0 0.125rem rgb(0 0 0 / 0%); color:#5A6268!important}
 .sapMDialog>footer .sapContrast span.sapMBtnInner.sapMBtnDefault:hover {background-image:none; background-color:#E2E6EA!important; border-color:#707070; text-shadow:0 0 0.125rem rgb(0 0 0 / 0%); color:#5A6268!important}
 .sapMDialog>footer .sapMIBar.sapMTB .sapMBarChild:last-child {margin-right:0px; margin-left:5px}
 .sapMDialog .sapMPanelContent .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem{padding-left:0px}
@@ -1252,9 +1264,9 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .employee-detail .member-photo {display:inline-block; width:111px; height:111px; margin-bottom:10px; background-image:url(../../asset/image/avatar-unknown.svg)}
 .employee-detail .sapMImg.sapMNoImg {display:inline-block; background-image:url(../../asset/image/photo2.png)}
 .employee-detail .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem { min-height:35px}
-.employee-detail .sapUiLayoutCSSGridItem {font-size:14px; font-weight:400}
-.employee-detail .sapUiLayoutCSSGridItem .sapMLabel[data-type=label] {font-weight:700}
-.employee-detail .sapUiLayoutCSSGridItem .sapMLabel[data-type=text] {font-weight:400}
+.employee-detail .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem {font-size:14px; font-weight:400}
+.employee-detail .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem[data-type=label] {font-weight:700}
+.employee-detail .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem[data-type=text] {font-weight:400}
 
 .sapMPanel.timeline-wrap {border-top:1px solid #B9E2C1}
 .sapMPanel.timeline-wrap .sapMPanelHdr {height:2rem; line-height:2rem; text-indent:-999999px}
@@ -1381,6 +1393,9 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .year-plan-head .sapMFlexItem {height:24px; }
 .year-plan-head .sapMTitle {font-size:20px; font-weight:700; min-width:64px; text-align:center; }
 .year-plan-head .icon-button .sapMBtnInner, .year-plan-head .icon-button:hover .sapMBtnInner, .year-plan-head .icon-button:active .sapMBtnInner.sapMBtnActive{padding:0 10px; border:0; background:transparent!important; border-color:transparent !important; align-self:center; }
+/* .year-plan-head .sapMBtn .sapMBtnDefault.sapMBtnIconFirst.sapMFocusable:not(.sapMPopup-CTX .sapMBtn .sapMBtnDefault.sapMFocusable) {    background: #fff!important;    border-color: #fff!important;} */
+.year-plan-head .sapMBtnIcon { margin-left: 0; margin-right: 0px;}
+.year-plan-head h2.sapMTitle {justify-content: center;}
 .year-plan-grid{background-color:#E5E5E5; border:1px solid #E5E5E5; }
 .year-plan-grid .sapMFlexBox, .year-plan-grid .sapMText {height:40px; display:flex; justify-content:center; align-items:center; font-size:11px; font-weight:700; }
 .year-plan-grid .sapMFlexBox[data-border="Default"] {border:0px solid black; }
@@ -1676,11 +1691,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 
 .flex-wrap {flex-wrap: wrap;}
 .flex-wrap > * {margin-right:5px;margin-bottom:5px;}
-.sapMBtn.job .sapMBtnDefault {
-    color: var(--FontColorNormal) !important;
-    border-color: #DDE1E6 !important;
-    background-color: #DDE1E6;
-}
+.sapMBtn.job .sapMBtnDefault {color: var(--FontColorNormal) !important;border-color: #DDE1E6 !important;background-color: #DDE1E6;}
 
 
 .microchart {display: flex;align-items: center;}
