@@ -17,9 +17,14 @@
                             <Image src="{Photo}" />
                         </VBox>
                         <VBox class="employee-card-list-d">
-                            <HBox justifyContent="SpaceBetween">
+                            <HBox>
                                 <Text text="{Ename} {Zzjikgbt} / {Zzjikcht}" class="name" />
-                                <core:Icon visible="{= !!${Manager}}" src="sap-icon://manager" />
+                                <Text text="">
+                                    <layoutData>
+                                        <FlexItemData growFactor="1" />
+                                    </layoutData>
+                                </Text>
+                                <core:Icon visible="{= !!${Chief}}" src="sap-icon://manager" />
                             </HBox>
                             <HBox>
                                 <Label text="{i18n>LABEL_00226}" />
