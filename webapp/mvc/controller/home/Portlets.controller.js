@@ -64,7 +64,9 @@ sap.ui.define(
 
       EmployeeSearch: EmployeeSearch,
 
-      onBeforeShow() {
+      onInit() {
+        BaseController.prototype.onInit.apply(this);
+
         const oGrid = this.byId('portlets-grid');
         oGrid.destroyItems();
 
@@ -100,16 +102,21 @@ sap.ui.define(
       },
 
       onDragStart(oEvent) {
-        const oPortlet = oEvent.getParameter('target');
-        if (oPortlet && oPortlet.data('portlet-switchable') === false) {
+        const oDraggedPortlet = oEvent.getParameter('target');
+
+        // 위치 고정 portlet을 drag할 때
+        if (oDraggedPortlet && oDraggedPortlet.data('portlet-switchable') === false) {
           oEvent.preventDefault();
         }
       },
 
       onDragEnter(oEvent) {
-        const oPortlet = oEvent.getParameter('target');
-        if (oPortlet && oPortlet.data('portlet-switchable') === false) {
-          oEvent.preventDefault();
+        const oDroppedPortlet = oEvent.getParameter('target');
+
+        // 위치 고정 portlet에 drag 중인 portlet을 올려놓을 때
+        if (oDroppedPortlet && oDroppedPortlet.data('portlet-switchable') === false) {
+          // oEvent.preventDefault(); // preventDefault를 해버리면 drag event 자체가 비활성화되면서 다른 위치에 drop도 할 수 없게됨
+          return;
         }
       },
 

@@ -26,7 +26,7 @@ sap.ui.define(
     return VBox.extend('sap.ui.yesco.control.PortletBox', {
       metadata: {
         properties: {
-          controller: 'object',
+          portletHandler: 'object',
         },
       },
 
@@ -60,8 +60,7 @@ sap.ui.define(
         const oPortletHeader = new HBox({
           visible: '{= !${hideTitle} || ${switchable} }',
           items: [
-            //
-            new Title({ level: 'H2', text: '{title}', visible: '{= !${hideTitle} }' }),
+            new Title({ level: 'H2', text: '{title}', visible: '{= !${hideTitle} }' }), //
             new Text({ text: '', layoutData: new FlexItemData({ growFactor: 1 }) }),
             oCloseButton,
             oLinkButton,
@@ -89,11 +88,11 @@ sap.ui.define(
       },
 
       onPressClose(oEvent) {
-        this.getController().onPressClose(oEvent);
+        this.getPortletHandler().onPressClose(oEvent);
       },
 
       onPressLink(oEvent) {
-        this.getController().onPressLink(oEvent);
+        this.getPortletHandler().onPressLink(oEvent);
       },
     });
   }
