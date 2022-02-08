@@ -21,7 +21,7 @@
       <List items="{ path: 'list', templateShareable: false }" visible="{= ${listCount} &gt; 0 }" updateStarted=".onUpdateStarted" updateFinished=".onUpdateFinished" rememberSelections="false" showUnread="true" growing="true" growingScrollToLoad="true" growingThreshold="10" showNoData="false">
         <CustomListItem unread="{= ${Checked} !== 'X' }">
           <HBox alignItems="Center">
-            <ToggleButton icon="{= ${Pinned} === 'X' ? 'asset/image/icon_pinned.svg' : 'asset/image/icon_pin_disabled.svg' }" pressed="{= ${Pinned} === 'X' }" press=".onPressNotificationPin" width="1rem" class="icon-button pin-toggle-icon">
+            <ToggleButton icon="{= ${Pinned} === 'X' ? 'asset/image/icon_pinned.svg' : 'asset/image/icon_noti2.svg' }" pressed="{= ${Pinned} === 'X' }" press=".onPressNotificationPin" width="1rem" class="icon-button pin-toggle-icon">
               <layoutData>
                 <FlexItemData alignSelf="Start" />
               </layoutData>
