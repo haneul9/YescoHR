@@ -60,6 +60,7 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-header .sapMSegB .sapMSegBBtn .sapMSegBBtnInner {background-color:transparent; border-radius:8px!important; line-height:25px; font-weight:500}
 .portlet-header .sapMSegB .sapMSegBBtn.sapMSegBBtnSel .sapMSegBBtnInner {font-weight:700}
 .portlet-header .sapIcon_Date {margin-bottom:-8px !important}
+.portlet-header .sapIcon_Date .sapUiIcon::before {content:'달력'; font-size:0; background-size:auto; background-image:url(../image/icon_arrow_cal.svg); display:inline-block; width:100%; height:100%; clear:both; vertical-align:top; background-repeat:no-repeat; background-position:4px center}
 .portlet .sapMBtn.icon-button.portlet-close-icon {visibility:hidden}
 .portlet:hover .sapMBtn.icon-button.portlet-close-icon {visibility:visible}
 .portlet .sapMBtn.icon-button .sapMBtnIcon {color:#222; font-weight:200}
