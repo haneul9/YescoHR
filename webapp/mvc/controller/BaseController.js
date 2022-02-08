@@ -195,6 +195,10 @@ sap.ui.define(
       },
 
       onPagePrint() {
+        const $contents = $('.contents');
+        const iContentsHeight = $contents.eq($contents.length - 1).outerHeight();
+        $('#for-print').text('@media print {' + 'html, body {' + 'min-height: ' + (iContentsHeight + 100) + 'px !important;' + '}' + '}');
+
         window.print();
       },
 
