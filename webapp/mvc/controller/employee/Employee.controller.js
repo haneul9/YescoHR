@@ -136,8 +136,10 @@ sap.ui.define(
           busy: false,
           pernr: null,
           orgtx: null,
+          orgeh: null,
           sideNavigation: {
             isShow: true,
+            busy: false,
             selectedKey: 'list',
             width: '27%',
             height: '900px',
@@ -158,11 +160,6 @@ sap.ui.define(
               profilePath: 'asset/image/avatar-unknown.svg?ssl=1',
               baseInfo: [],
               timeline: null,
-              // { Dattx: '회사입사일', Datum: '2010.01.01' },
-              // { Dattx: '부서배치일', Datum: '2015.01.01' },
-              // { Dattx: '직급승진일', Datum: '2016.01.01' },
-              // { Dattx: '직책임용일', Datum: '2010.01.01' },
-              // { Dattx: '10년장기근속일', Datum: '2019.12.31' },
             },
             tab: {
               list: [],
@@ -224,38 +221,46 @@ sap.ui.define(
         const oViewModel = this.getView().getModel();
         const sPernr = oParameter.pernr || this.getSessionData().Pernr;
         const sOrgtx = _.replace(oParameter.orgtx, /--/g, '/') ?? _.noop();
+        const sOrgeh = oParameter.orgeh ?? _.noop();
 
         oViewModel.setProperty('/employee/busy', true);
+        oViewModel.setProperty('/sideNavigation/busy', true);
         oViewModel.setProperty('/pernr', sPernr);
         oViewModel.setProperty('/orgtx', sOrgtx);
+        oViewModel.setProperty('/orgeh', sOrgeh);
 
         if (!_.isEmpty(sOrgtx)) {
           oViewModel.setProperty('/sideNavigation/search/searchText', sOrgtx);
         }
 
-        this.initialList({ oViewModel, sPernr, sOrgtx });
+        this.initialList({ oViewModel, sPernr, sOrgtx, sOrgeh });
         if (!_.isEqual(sPernr, 'NA')) this.loadProfile({ oViewModel, sPernr });
       },
 
-      async initialList({ oViewModel, sPernr, sOrgtx }) {
+      async initialList({ oViewModel, sPernr, sOrgtx, sOrgeh }) {
         const oSideBody = this.byId('sideBody');
         const oSideList = this.byId('sideEmployeeList');
         const mSessionData = this.getSessionData();
         const sSearchText = _.isEmpty(sOrgtx) ? sPernr : sOrgtx;
-        const aSearchResults = await this.readEmpSearchResult({ searchText: sSearchText, Werks: mSessionData.Werks });
+        const sSearchOrgeh = _.isEmpty(sOrgeh) ? _.noop() : sOrgeh;
+        const aSearchResults = await this.readEmpSearchResult({ searchText: sSearchText, Werks: mSessionData.Werks, Orgeh: sSearchOrgeh });
         const iSideViewHeight = Math.floor($(document).height() - oSideBody.getParent().$().offset().top - 20);
         const iScrollViewHeight = Math.floor($(document).height() - oSideList.getParent().$().offset().top - 36);
 
         oSideList.getBinding('items').filter([new Filter('Stat2', FilterOperator.EQ, '3')]);
 
-        oViewModel.setProperty('/sideNavigation/search/results', aSearchResults);
+        oViewModel.setProperty(
+          '/sideNavigation/search/results',
+          _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? 'asset/image/avatar-unknown.svg?ssl=1' : o.Photo }))
+        );
         oViewModel.setProperty('/sideNavigation/height', `${iSideViewHeight}px`);
         oViewModel.setProperty('/sideNavigation/scrollHeight', `${iScrollViewHeight}px`);
+        oViewModel.setProperty('/sideNavigation/busy', false);
 
-        // if (_.isEqual(sPernr, 'none')) {
-        //   const sFirstPernr = _.get(aSearchResults, [0, 'Pernr']);
-        //   this.loadProfile({ oViewModel, sFirstPernr });
-        // }
+        if (_.isEqual(sPernr, 'NA')) {
+          const sFirstPernr = _.get(aSearchResults, [0, 'Pernr'], _.noop());
+          this.loadProfile({ oViewModel, sPernr: sFirstPernr });
+        }
       },
 
       async loadProfile({ oViewModel, sPernr }) {
@@ -284,7 +289,7 @@ sap.ui.define(
             aTestGradeList,
           ] = await Promise.all([
             this.readOdata({ sUrl: '/EmpProfileHeaderNewSet', mFilters }),
-            this.readOdata({ sUrl: '/EmpProfileMilestoneSet' }),
+            this.readOdata({ sUrl: '/EmpProfileMilestoneSet', mFilters }),
             this.readOdata({ sUrl: '/EmpProfileMenuSet', mFilters }),
             this.readOdata({ sUrl: '/CountryCodeSet' }),
             this.readOdata({ sUrl: '/MajorCodeSet' }),
@@ -324,7 +329,7 @@ sap.ui.define(
             .map((v, k) => ({ data: v, labelOrText: _.includes(aTextFields, k) ? 'text' : 'label' }))
             .value();
 
-          oViewModel.setProperty('/employee/header/profilePath', Pturl);
+          oViewModel.setProperty('/employee/header/profilePath', _.isEmpty(Pturl) ? 'asset/image/avatar-unknown.svg?ssl=1' : Pturl);
           oViewModel.setProperty('/employee/header/baseInfo', aConvertData);
           //End 상단 프로필 Set
 
@@ -711,7 +716,10 @@ sap.ui.define(
         try {
           const aSearchResults = await this.readEmpSearchResult({ searchText: sSearchText, Werks: sWerks });
 
-          oViewModel.setProperty('/sideNavigation/search/results', aSearchResults);
+          oViewModel.setProperty(
+            '/sideNavigation/search/results',
+            _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? 'asset/image/avatar-unknown.svg?ssl=1' : o.Photo }))
+          );
         } catch (oError) {
           this.debug('Controller > Employee > onPressEmployeeSearch Error', oError);
 
@@ -1211,18 +1219,21 @@ sap.ui.define(
       /*****************************************************************
        * ! Call oData
        *****************************************************************/
-      readEmpSearchResult({ Werks, searchText }) {
+      readEmpSearchResult({ Werks, searchText, Orgeh }) {
         return new Promise((resolve, reject) => {
           const oModel = this.getModel(ServiceNames.COMMON);
           const sUrl = '/EmpSearchResultSet';
+          const aFilters = [
+            new Filter('Persa', FilterOperator.EQ, Werks), //
+            new Filter('Zflag', FilterOperator.EQ, 'X'),
+            new Filter('Actda', FilterOperator.EQ, moment().hour(9).toDate()),
+            new Filter('Ename', FilterOperator.EQ, searchText),
+          ];
+
+          if (!_.isEmpty(Orgeh)) aFilters.push(new Filter('Orgeh', FilterOperator.EQ, Orgeh));
 
           oModel.read(sUrl, {
-            filters: [
-              new Filter('Persa', FilterOperator.EQ, Werks), //
-              new Filter('Zflag', FilterOperator.EQ, 'X'),
-              new Filter('Actda', FilterOperator.EQ, moment().hour(9).toDate()),
-              new Filter('Ename', FilterOperator.EQ, searchText),
-            ],
+            filters: aFilters,
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
 
