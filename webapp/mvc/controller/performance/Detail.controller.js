@@ -525,10 +525,11 @@ sap.ui.define(
 
       onPressTopGoal() {
         const oViewModel = this.getViewModel();
+        const sHost = window.location.href.split('#')[0];
         const sType = oViewModel.getProperty('/type');
         const { Zzapper2: sPernr, Zdocid2: sDocid } = oViewModel.getProperty('/buttons/form');
 
-        window.open(`/index.html#/performanceView/${sType}/${sPernr}/${sDocid}`, '_blank', 'width=1200&height=800');
+        window.open(`${sHost}#/performanceView/${sType}/${sPernr}/${sDocid}`, '_blank', 'width=1200&height=800');
       },
 
       onPressApproveButton() {

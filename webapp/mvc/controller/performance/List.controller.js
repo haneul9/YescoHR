@@ -82,6 +82,13 @@ sap.ui.define(
 
       setTableData({ oViewModel, aRowData }) {
         const oTable = this.byId('performanceTable');
+        const sType = oViewModel.getProperty('/type');
+
+        _.map(aRowData, (o) => ({
+          ...o,
+          Zapgma: _.isEqual('V', _.get(Constants.FIELD_STATUS_MAP, [o.Zzapsts, o.ZzapstsSub, 'Zapgma', sType], '')) ? '0.00' : o.Zapgma,
+          Zapgme: _.isEqual('V', _.get(Constants.FIELD_STATUS_MAP, [o.Zzapsts, o.ZzapstsSub, 'Zapgme', sType], '')) ? '0.00' : o.Zapgme,
+        }));
 
         oViewModel.setProperty('/list', [...aRowData]);
         oViewModel.setProperty('/listInfo/rowCount', _.get(TableUtils.count({ oTable, aRowData }), 'rowCount', 1));
