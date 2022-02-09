@@ -139,12 +139,11 @@ sap.ui.define(
         const sKey = oDetailModel.getProperty('/FormStatus');
         const oView = this.getView();
         const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-        const mParameter = oListView.getModel().getProperty('/parameter');
 
         if (!sKey || sKey === 'N') {
-          if (!!mParameter) {
+          if (!!oListView && !!oListView.getModel().getProperty('/parameter')) {
             oDetailModel.setProperty('/Fixed', true);
-            oDetailModel.setProperty('/FormData', mParameter);
+            oDetailModel.setProperty('/FormData', oListView.getModel().getProperty('/parameter'));
           } else {
             const oAppointeeData = this.getAppointeeData();
 
@@ -162,8 +161,8 @@ sap.ui.define(
         } else {
           const oModel = this.getModel(ServiceNames.PA);
 
-          if (!!oListView && !!mParameter) {
-            oDetailModel.setProperty('/FormData', mParameter);
+          if (!!oListView && !!oListView.getModel().getProperty('/parameter')) {
+            oDetailModel.setProperty('/FormData', oListView.getModel().getProperty('/parameter'));
             this.settingsAttachTable();
           } else {
             oModel.read('/FamilyInfoApplSet', {
@@ -262,10 +261,8 @@ sap.ui.define(
           // 부양가족
           case 'Dptid':
             if (bSelected) {
-              oDetailModel.setProperty('/SupCheck', 'Warning');
               oDetailModel.setProperty('/SupEditable', true);
             } else {
-              oDetailModel.setProperty('/SupCheck', 'None');
               oDetailModel.setProperty('/SupEditable', false);
             }
             oDetailModel.setProperty('/FormData/Dptyp', 'ALL');
@@ -273,10 +270,8 @@ sap.ui.define(
           // 장애여부
           case 'Hndid':
             if (bSelected) {
-              oDetailModel.setProperty('/DisabCheck', 'Warning');
               oDetailModel.setProperty('/DisabEditable', true);
             } else {
-              oDetailModel.setProperty('/DisabCheck', 'None');
               oDetailModel.setProperty('/DisabEditable', false);
             }
             oDetailModel.setProperty('/FormData/Hndcd', 'ALL');
@@ -364,12 +359,6 @@ sap.ui.define(
 
       // 신청
       async onApplyBtn() {
-        const oModel = this.getModel(ServiceNames.PA);
-        const oDetailModel = this.getViewModel();
-        const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
-        const oFormData = oDetailModel.getProperty('/FormData');
-        const sMenid = this.getCurrentMenuId();
-
         if (this.checkError()) return;
 
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
@@ -379,6 +368,9 @@ sap.ui.define(
               try {
                 AppUtils.setAppBusy(true, this);
 
+                const oDetailModel = this.getViewModel();
+                const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
+
                 if (!sStatus || sStatus === '60') {
                   const vAppno = await Appno.get.call(this);
 
@@ -386,6 +378,9 @@ sap.ui.define(
                   oDetailModel.setProperty('/FormData/Appdt', new Date());
                 }
 
+                const oModel = this.getModel(ServiceNames.PA);
+                const oFormData = oDetailModel.getProperty('/FormData');
+                const sMenid = this.getCurrentMenuId();
                 let oSendObject = {};
 
                 oSendObject = oFormData;

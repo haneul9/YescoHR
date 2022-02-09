@@ -40,7 +40,7 @@
             <Label text="{i18n>LABEL_05010}"/>
             <HBox >
                 <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Hndid} ? true : false }" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" class="required"/>
-                <ComboBox change=".onYearsSelect" items="{/Disability}" selectedKey="{/FormData/Hndcd}" editable="{= !${/FormData/ZappStatAl} &amp;&amp; ${/DisabEditable} }">
+                <ComboBox change=".onYearsSelect" items="{/Disability}" selectedKey="{/FormData/Hndcd}" editable="{= (!${/FormData/ZappStatAl} || ${/Fixed}) &amp;&amp; ${/DisabEditable} }">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
             </HBox>
@@ -54,7 +54,7 @@
             </VBox>
             <Label text="{i18n>LABEL_05013}"/>
             <VBox>
-                <ComboBox change=".onYearsSelect" items="{/Support}" selectedKey="{/FormData/Dptyp}" editable="{= !${/FormData/ZappStatAl} &amp;&amp; ${/SupEditable} || ${/Fixed} }">
+                <ComboBox change=".onYearsSelect" items="{/Support}" selectedKey="{/FormData/Dptyp}" editable="{= (!${/FormData/ZappStatAl} || ${/Fixed}) &amp;&amp; ${/SupEditable} }">
                     <core:Item text="{Dptyx}" key="{Dptyp}" />
                 </ComboBox>
             </VBox>
