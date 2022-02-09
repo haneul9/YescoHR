@@ -620,7 +620,7 @@ sap.ui.define(
         _.each(mCatsById, (cat) => {
           delete cat.__metadata;
           delete cat.Datum;
-          cat.ref = cat.Otype === 'O' ? 'sap-icon://org-chart' : cat.Xchif === 'X' ? 'sap-icon://manager' : 'sap-icon://employee';
+          cat.ref = cat.Otype === 'O' ? _.noop() : cat.Xchif === 'X' ? 'asset/image/icon_employee.svg' : 'asset/image/icon_employee.svg';
           cat.isParent = !_.isEmpty(cat.nodes);
         });
 
