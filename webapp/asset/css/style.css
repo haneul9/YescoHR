@@ -12,6 +12,8 @@
     .sapMObjStatus { font-size: 12px !important; }
 
     /* 사원프로파일 */
+    .employee-card-list li .sapMImg:not([aria-label=Captain]) { width: 40px !important; }
+    .employee-card-list-d { padding-left: 15px !important; width: 85% !important; }
     html .type-b .sapMITBInLine.sapMITBTextOnly>.sapMITBVertical { padding-left: 15px !important; padding-right: 15px !important; }
 }
 
@@ -1300,6 +1302,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .side-navigation.expanded .sapMFlexItem:not(:first-child) {opacity:1; }
 .side-navigation .sapMBtn.icon-button.toggle-navi {left:-10px}
 .side-navigation.expanded .sapMBtn.icon-button.toggle-navi {left:-31px}
+.side-navigation .sapMScrollCont:hover::-webkit-scrollbar { width: 13px !important; }
 .main-profile { width: 73%; transition: width 0.5s; }
 .main-profile.expanded { width: 100%; }
 
