@@ -379,7 +379,7 @@ sap.ui.define(
               try {
                 AppUtils.setAppBusy(true, this);
 
-                if (!sStatus) {
+                if (!sStatus || sStatus === '60') {
                   const vAppno = await Appno.get.call(this);
 
                   oDetailModel.setProperty('/FormData/Appno', vAppno);
