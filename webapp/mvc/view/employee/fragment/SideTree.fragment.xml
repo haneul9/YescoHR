@@ -8,7 +8,7 @@
                 </layoutData>
                 <CustomTreeItem>
                     <HBox>
-                        <Image src="{ref}" alt="icon-employee" width="2rem" />
+                        <Image src="{ref}" alt="icon-employee" width="2rem" visible="{= !!${ref} }" />
                         <Text text="{Stext}" />
                     </HBox>
                 </CustomTreeItem>
