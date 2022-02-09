@@ -10,65 +10,65 @@
             <Label text="{i18n>LABEL_00210}" />
             <HBox class="mb-0 " alignItems="Center">
                 <Text text="{i18n>LABEL_05004}" class="sapUiTinyMarginEnd" />
-                <Input value="{/FormData/Lnmhg}" editable="{= !${/FormData/ZappStatAl} }" class="sapUiTinyMarginEnd required"/>
+                <Input value="{/FormData/Lnmhg}" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" class="sapUiTinyMarginEnd required"/>
                 <Text text="{i18n>LABEL_05005}" class="sapUiTinyMarginEnd" />
-                <Input value="{/FormData/Fnmhg}" editable="{= !${/FormData/ZappStatAl} }" class="required"/>
+                <Input value="{/FormData/Fnmhg}" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" class="required"/>
             </HBox>
             <Label text="{i18n>LABEL_05006}" />
             <VBox>
                 <Input value="{
                     path: '/FormData/Regno',
                     formatter: '.setResident'
-                }" liveChange=".ResidentNumber" editable="{= !${/FormData/ZappStatAl} }" class="required"/>
+                }" liveChange=".ResidentNumber" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" class="required"/>
             </VBox>
             <Label text="{i18n>LABEL_05007}"/>
             <VBox>
-                <ComboBox items="{/Relations}" selectedKey="{/FormData/Kdsvh}" change=".onShcoolList" editable="{= !${/FormData/ZappStatAl} }" class="required">
+                <ComboBox items="{/Relations}" selectedKey="{/FormData/Kdsvh}" change=".onShcoolList" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" class="required">
                     <core:Item text="{Atext}" key="{Auspr}" />
                 </ComboBox>
             </VBox>
             <Label text="{i18n>LABEL_05008}"/>
             <VBox>
-                <ComboBox items="{/Gender}" selectedKey="{/FormData/Fasex}" editable="{= !${/FormData/ZappStatAl} }" class="required">
+                <ComboBox items="{/Gender}" selectedKey="{/FormData/Fasex}" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" class="required">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
             </VBox>
             <Label text="{i18n>LABEL_05009}"/>
             <VBox>
-                <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Dptid} ? true : false }" editable="{= !${/FormData/ZappStatAl} }" class="required"/>
+                <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Dptid} ? true : false }" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" class="required"/>
             </VBox>
             <Label text="{i18n>LABEL_05010}"/>
             <HBox >
-                <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Hndid} ? true : false }" editable="{= !${/FormData/ZappStatAl} }" class="required"/>
+                <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Hndid} ? true : false }" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" class="required"/>
                 <ComboBox change=".onYearsSelect" items="{/Disability}" selectedKey="{/FormData/Hndcd}" editable="{= !${/FormData/ZappStatAl} &amp;&amp; ${/DisabEditable} }">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
             </HBox>
             <Label text="{i18n>LABEL_05011}"/>
             <VBox>
-                <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Livid} ? true : false }" editable="{= !${/FormData/ZappStatAl} }" />
+                <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Livid} ? true : false }" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" />
             </VBox>
             <Label text="{i18n>LABEL_05012}"/>
             <VBox>
-                <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Helid} ? true : false }" editable="{= !${/FormData/ZappStatAl} }" />
+                <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Helid} ? true : false }" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" />
             </VBox>
             <Label text="{i18n>LABEL_05013}"/>
             <VBox>
-                <ComboBox change=".onYearsSelect" items="{/Support}" selectedKey="{/FormData/Dptyp}" editable="{= !${/FormData/ZappStatAl} &amp;&amp; ${/SupEditable} }">
+                <ComboBox change=".onYearsSelect" items="{/Support}" selectedKey="{/FormData/Dptyp}" editable="{= !${/FormData/ZappStatAl} &amp;&amp; ${/SupEditable} || ${/Fixed} }">
                     <core:Item text="{Dptyx}" key="{Dptyp}" />
                 </ComboBox>
             </VBox>
             <Label text="{= ${/werks} === '1000' || ${/werks} === '3000' ? '' : ${i18n>LABEL_05014} }"/>
             <VBox>
-                <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Famid} ? true : false }" editable="{= !${/FormData/ZappStatAl} }" visible="{= ${/werks} !== '1000' &amp;&amp; ${/werks} !== '3000' }" />
+                <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Famid} ? true : false }" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" visible="{= ${/werks} !== '1000' &amp;&amp; ${/werks} !== '3000' }" />
             </VBox>
             <Label text="{i18n>LABEL_05015}"/>
             <VBox>
-                <custom:DatePicker dateValue="{ path: '/FormData/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= !${/FormData/ZappStatAl} }" class="required"/>
+                <custom:DatePicker dateValue="{ path: '/FormData/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" class="required"/>
             </VBox>
             <Label text="{i18n>LABEL_05016}"/>
             <VBox>
-                <custom:DatePicker dateValue="{ path: '/FormData/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= !${/FormData/ZappStatAl} }" class="required" />
+                <custom:DatePicker dateValue="{ path: '/FormData/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" class="required" />
             </VBox>
         </grid:CSSGrid>
     </VBox>

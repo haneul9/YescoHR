@@ -85,6 +85,7 @@ sap.ui.define(
             { Zcode: this.DISABIL.CODE.TW, Ztext: this.DISABIL.TEXT.TW },
             { Zcode: this.DISABIL.CODE.TH, Ztext: this.DISABIL.TEXT.TH },
           ],
+          Fixed: false,
           Support: [],
           Settings: {},
           busy: false,
@@ -136,27 +137,33 @@ sap.ui.define(
       setFormData() {
         const oDetailModel = this.getViewModel();
         const sKey = oDetailModel.getProperty('/FormStatus');
+        const oView = this.getView();
+        const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+        const mParameter = oListView.getModel().getProperty('/parameter');
 
         if (!sKey || sKey === 'N') {
-          const oAppointeeData = this.getAppointeeData();
+          if (!!mParameter) {
+            oDetailModel.setProperty('/Fixed', true);
+            oDetailModel.setProperty('/FormData', mParameter);
+          } else {
+            const oAppointeeData = this.getAppointeeData();
 
-          oDetailModel.setProperty('/FormData', {
-            Apename: oAppointeeData.Ename,
-            Appernr: oAppointeeData.Pernr,
-            Kdsvh: 'ALL',
-            Fasex: 'ALL',
-            Hndcd: 'ALL',
-            Dptyp: 'ALL',
-            Endda: moment('9999-12-31').hours(9).toDate(),
-          });
+            oDetailModel.setProperty('/FormData', {
+              Apename: oAppointeeData.Ename,
+              Appernr: oAppointeeData.Pernr,
+              Kdsvh: 'ALL',
+              Fasex: 'ALL',
+              Hndcd: 'ALL',
+              Dptyp: 'ALL',
+              Endda: moment('9999-12-31').hours(9).toDate(),
+            });
+          }
           this.settingsAttachTable();
         } else {
           const oModel = this.getModel(ServiceNames.PA);
-          const oView = this.getView();
-          const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
 
-          if (!!oListView && !!oListView.getModel().getProperty('/parameter')) {
-            oDetailModel.setProperty('/FormData', oListView.getModel().getProperty('/parameter'));
+          if (!!oListView && !!mParameter) {
+            oDetailModel.setProperty('/FormData', mParameter);
             this.settingsAttachTable();
           } else {
             oModel.read('/FamilyInfoApplSet', {
@@ -452,10 +459,11 @@ sap.ui.define(
       settingsAttachTable() {
         const oDetailModel = this.getViewModel();
         const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
+        const bFixed = oDetailModel.getProperty('/Fixed');
         const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
 
         AttachFileAction.setAttachFile(this, {
-          Editable: !sStatus || sStatus === '10',
+          Editable: !sStatus || sStatus === '10' || bFixed,
           Type: this.getApprovalType(),
           Appno: sAppno,
           Max: 10,
