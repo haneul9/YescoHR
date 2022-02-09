@@ -620,7 +620,7 @@ sap.ui.define(
         _.each(mCatsById, (cat) => {
           delete cat.__metadata;
           delete cat.Datum;
-          cat.ref = cat.Otype === 'O' ? 'sap-icon://org-chart' : cat.Xchif === 'X' ? 'sap-icon://manager' : 'sap-icon://employee';
+          cat.ref = cat.Otype === 'O' ? _.noop() : cat.Xchif === 'X' ? 'asset/image/icon_employee.svg' : 'asset/image/icon_employee.svg';
           cat.isParent = !_.isEmpty(cat.nodes);
         });
 
@@ -679,7 +679,7 @@ sap.ui.define(
           const oSideTree = this.byId('OrganizationTree');
           const aReturnTreeData = await this.readOdata({ sUrl: '/AuthOrgTreeSet', mFilters: { Datum: moment().hour(9).toDate(), Xpern: 'X' } });
           const mConvertedTreeData = this.transformTreeData({ aTreeData: aReturnTreeData, sRootId: '00000000' });
-          const iTreeViewHeight = Math.min(Math.floor($(document).height() - oSideTree.$().offset().top - 35), 500);
+          const iTreeViewHeight = Math.max(Math.floor($(document).height() - oSideTree.$().offset().top - 35), 500);
 
           this.debug('mConvertedTreeData', mConvertedTreeData);
 

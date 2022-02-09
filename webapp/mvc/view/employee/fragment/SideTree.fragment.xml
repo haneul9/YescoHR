@@ -2,11 +2,16 @@
     xmlns:core="sap.ui.core">
     <IconTabFilter text="{i18n>LABEL_00231}" key="tree">
         <ScrollContainer width="100%" height="{/sideNavigation/treeHeight}" vertical="true" busyIndicatorDelay="0" busy="{= !${/sideNavigation/treeLoaded}}">
-            <Tree id="OrganizationTree" mode="SingleSelectMaster" items="{path: '/sideNavigation/treeData'}" selectionChange=".onSelectTreeItem">
+            <Tree id="OrganizationTree" class="employee-tree" mode="SingleSelectMaster" items="{path: '/sideNavigation/treeData'}" selectionChange=".onSelectTreeItem">
                 <layoutData>
                     <FlexItemData growFactor="1" />
                 </layoutData>
-                <StandardTreeItem icon="{ref}" title="{Stext}"/>
+                <CustomTreeItem>
+                    <HBox>
+                        <Image src="{ref}" alt="icon-employee" width="2rem" />
+                        <Text text="{Stext}" />
+                    </HBox>
+                </CustomTreeItem>
             </Tree>
         </ScrollContainer>
     </IconTabFilter>
