@@ -1259,7 +1259,7 @@ html.sap-desktop .sapMDialog>footer .sapContrast.sapMIBar.sapMFooter-CTX .sapMBt
 .employee-card-list-d .sapMFlexItem.name .sapMText {font-size:19px; font-weight:700; margin-bottom:10px}
 div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-right:28px!important}
 
-.employee-tree .sapMTreeItemBaseExpander { font-size: 1rem; }
+.employee-tree .sapMTreeItemBaseExpander { font-size: 1rem; color: #222222; }
 
 .member-photo {display:inline-block; width:auto; height:auto; background-image:url(../../asset/image/avatar-unknown.svg); border-radius:50%; background-size:100%; background-position:center top!important; background-repeat:no-repeat}
 .employee-detail .member-photo {display:inline-block; width:111px; height:111px; margin-bottom:10px; background-image:url(../../asset/image/avatar-unknown.svg)}
