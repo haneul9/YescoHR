@@ -22,22 +22,10 @@
                     <VBox>
                         <Input value="{ path: 'Fwgt', type: 'sap.ui.yesco.mvc.model.type.Percent' }" enabled="false" />
                     </VBox>
-                    <VBox>
-                        <Label text="{i18n>LABEL_10003}" />
-                    </VBox>
-                    <HBox>
-                        <ComboBox width="100%" selectedKey="{Zapgme}" items="{ path: '/entry/levels', templateShareable: true }" enabled="false">
-                            <core:Item key="{ValueEid}" text="{ValueText}" />
-                        </ComboBox>
-                    </HBox>
-                    <VBox>
-                        <Label text="{i18n>LABEL_10022}" />
-                    </VBox>
-                    <HBox>
-                        <ComboBox width="100%" selectedKey="{Zapgma}" items="{ path: '/entry/levels', templateShareable: true }" enabled="false">
-                            <core:Item key="{ValueEid}" text="{ValueText}" />
-                        </ComboBox>
-                    </HBox>
+                    <HBox width="100%" />
+                    <HBox width="100%" />
+                    <HBox width="100%" />
+                    <HBox width="100%" />
                     <HBox width="100%" />
                     <HBox width="100%" />
                     <VBox visible="{= ${rootPath} === 'strategy' }">
@@ -187,30 +175,6 @@
                                 </layoutData>
                             </Input>
                         </HBox>
-                    </VBox>
-                    <VBox>
-                        <layoutData>
-                            <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '11 / 13' : '10 / 12' }" />
-                        </layoutData>
-                        <Label width="100%" text="{i18n>LABEL_10030}" />
-                    </VBox>
-                    <VBox>
-                        <layoutData>
-                            <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '11 / 13' : '10 / 12' }" gridColumn="span 3" />
-                        </layoutData>
-                        <TextArea width="100%" value="{Z125Ee}" rows="5" enabled="false" />
-                    </VBox>
-                    <VBox>
-                        <layoutData>
-                            <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '11 / 13' : '10 / 12' }" />
-                        </layoutData>
-                        <Label width="100%" text="{i18n>LABEL_10031}" />
-                    </VBox>
-                    <VBox>
-                        <layoutData>
-                            <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '11 / 13' : '10 / 12' }" gridColumn="span 3" />
-                        </layoutData>
-                        <TextArea width="100%" value="{Z125Er}" rows="5" enabled="false" />
                     </VBox>
                 </grid:CSSGrid>
             </content>
