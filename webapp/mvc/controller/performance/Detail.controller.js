@@ -84,6 +84,7 @@ sap.ui.define(
             form: {
               Rjctr: '',
               Rjctrin: '',
+              confirmEnable: false,
               isRejectProcess: false,
               Zzapper2: '',
               Zdocid2: '',
@@ -521,6 +522,10 @@ sap.ui.define(
 
       onPressRejectDialogClose() {
         this.byId('rejectDialog').close();
+      },
+
+      onCheckReject(oEvent) {
+        this.getViewModel().setProperty('/buttons/form/confirmEnable', !!oEvent.getSource().getValue());
       },
 
       onPressTopGoal() {
