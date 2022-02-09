@@ -1,10 +1,14 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:f="sap.f"
   xmlns:core="sap.ui.core">
-  <VBox class="portlet portlet-not-found" id="portlets-not-found" justifyContent="Center" alignItems="Center">
+  <VBox class="portlet portlets-not-found" justifyContent="Center" alignItems="Center">
     <layoutData>
       <f:GridContainerItemLayoutData rows="1" columns="4" />
     </layoutData>
-    <Title level="H4" text="{/message}" />
+    <HBox class="portlet-body">
+      <HBox width="100%" class="no-data">
+        <Text text="{/message}" />
+      </HBox>
+    </HBox>
   </VBox>
 </core:FragmentDefinition>

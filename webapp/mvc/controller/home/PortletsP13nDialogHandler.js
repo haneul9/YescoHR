@@ -105,8 +105,13 @@ sap.ui.define(
           const oController = this.getController();
           const oPortletsModel = this.getPortletsModel();
           const mActivePortlets = {};
+          const aPortletItems = oController.getPortletItems();
 
-          oController.getPortletItems().forEach((oPortlet) => {
+          if (aPortletItems.length === 1 && aPortletItems[0].hasStyleClass('portlets-not-found')) {
+            return true;
+          }
+
+          aPortletItems.forEach((oPortlet) => {
             this.mapPortletPosition(oPortlet, mActivePortlets, sClosingPortletId);
           });
 

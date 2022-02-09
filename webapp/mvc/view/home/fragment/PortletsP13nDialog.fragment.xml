@@ -2,8 +2,10 @@
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:core="sap.ui.core">
   <Dialog contentWidth="500px" draggable="true" horizontalScrolling="false" title="{i18n>LABEL_01003}" busy="{/busy}" busyIndicatorDelay="0">
-    <HBox height="70px" visible="{= !${/available} }" class="no-data">
-      <Text text="{i18n>MSG_01901}" />
+    <HBox class="portlet-body mt-30-px" justifyContent="Center">
+      <HBox visible="{= !${/available} }" class="no-data">
+        <Text text="{i18n>MSG_01901}" />
+      </HBox>
     </HBox>
     <grid:CSSGrid gridTemplateRows="1fr 1fr" gridTemplateColumns="repeat(2,1fr)" gridGap="10px 20px" items="{/allList}" visible="{/available}" class="personal-portlets-setting" busy="{/busy}" busyIndicatorDelay="0">
       <CheckBox text="{title}" selected="{active}" enabled="{switchable}" select=".onSelectPortletSwitch" class="type-b" />

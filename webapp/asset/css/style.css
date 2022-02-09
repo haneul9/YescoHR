@@ -72,7 +72,7 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-body .no-data {display:flex; justify-content: center; align-items: center;color:#ccc;height:calc(100% - 24px)!important}
 .portlet-body .no-data .sapMText:before {content: "";display:block;width:26px;height:26px;margin:0 auto 6px;background-image: url(../image/no-data.svg);background-size: 100%;}
 .portlet-body .no-data .sapMText {color:#ccc;}
-.portlet-body .sapMScrollContScroll {height:100%;}
+.portlet-body .sapMScrollContScroll {height:100%}
 .portlet-not-found {height:100%}
 .portlet-p01 {position:relative; padding:20px}
 .portlet-p01:before {position:absolute; top:64px; left:82px; right:158px; bottom:48px; content:""; width:162px; height:158px; background-image:url(../image/portlet_bg.svg); background-position:center; filter:blur(50px); -webkit-filter:blur(50px); -moz-filter:blur(50px); -o-filter:blur(50px); -ms-filter:blur(50px)}
