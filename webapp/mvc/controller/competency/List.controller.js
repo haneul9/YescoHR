@@ -86,8 +86,8 @@ sap.ui.define(
 
         _.map(aRowData, (o) => ({
           ...o,
-          Zapgma: _.isEqual('V', _.get(Constants.FIELD_STATUS_MAP, [o.Zzapsts, o.ZzapstsSub, 'Z200', sType], '')) ? '0.00' : o.Zapgma,
-          Zapgme: _.isEqual('V', _.get(Constants.FIELD_STATUS_MAP, [o.Zzapsts, o.ZzapstsSub, 'Fapp', sType], '')) ? '0.00' : o.Zapgme,
+          Zapgma: _.isEqual('V', _.get(Constants.FIELD_STATUS_MAP, [o.Zzapsts, o.ZzapstsSub, 'Z200', sType], '')) ? '' : _.isEqual(o.Zapgma, '0.000') ? '' : o.Zapgma,
+          Zapgme: _.isEqual('V', _.get(Constants.FIELD_STATUS_MAP, [o.Zzapsts, o.ZzapstsSub, 'Fapp', sType], '')) ? '' : _.isEqual(o.Zapgme, '0.000') ? '' : o.Zapgme,
         }));
 
         oViewModel.setProperty('/list', [...aRowData]);
