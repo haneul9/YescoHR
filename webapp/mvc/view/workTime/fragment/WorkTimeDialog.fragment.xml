@@ -27,7 +27,7 @@
           </HBox>
           <Label text="{i18n>LABEL_00154}"/>
           <HBox>
-            <ComboBox items="{/CauseType}" selectedKey="{/DialogData/Ottyp}" change=".onRecipt" class="required" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }">
+            <ComboBox items="{/CauseType}" selectedKey="{/DialogData/Ottyp}" change=".onCause" class="required" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }">
               <core:Item text="{Ztext}" key="{Zcode}" />
             </ComboBox>
           </HBox>
@@ -50,7 +50,32 @@
             <table:Column width="auto">
               <Label text="{i18n>LABEL_00209}" />
               <table:template>
-                <Input value="{Pernr}" width="100%" textAlign="Center" />
+                <Input value="{ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" maxSuggestionWidth="350px" showSuggestion="true" showTableSuggestionValueHelp="false" suggestionRows="{ path:'/employees', templateShareable: true }" suggestionItemSelected=".onSelectSuggest" submit=".onSubmitSuggest" textAlign="Center">
+                  <suggestionColumns>
+                    <Column popinDisplay="Inline" demandPopin="true">
+                      <Label text="{i18n>LABEL_00210}"/>
+                    </Column>
+                    <Column popinDisplay="Inline" demandPopin="true">
+                      <Label text="{i18n>LABEL_00209}"/>
+                    </Column>
+                    <Column popinDisplay="Inline" demandPopin="false" minScreenWidth="Tablet">
+                      <Label text="{i18n>LABEL_00226}"/>
+                    </Column>
+                    <Column popinDisplay="Inline" demandPopin="false">
+                      <Label text="{i18n>LABEL_00215}"/>
+                    </Column>
+                  </suggestionColumns>
+                  <suggestionRows>
+                    <ColumnListItem>
+                      <cells>
+                        <Label text="{Ename}"/>
+                        <Label text="{Pernr}"/>
+                        <Label text="{Fulln}"/>
+                        <Label text="{Zzjikgbt}"/>
+                      </cells>
+                    </ColumnListItem>
+                  </suggestionRows>
+                </Input>
               </table:template>
             </table:Column>
             <table:Column width="120px">

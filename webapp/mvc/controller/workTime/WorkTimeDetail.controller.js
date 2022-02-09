@@ -17,6 +17,7 @@ sap.ui.define(
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date',
     'sap/ui/yesco/mvc/model/type/Currency',
+    'sap/ui/yesco/mvc/model/type/Pernr',
   ],
   (
     // prettier 방지용 주석
@@ -46,6 +47,8 @@ sap.ui.define(
         const oViewModel = new JSONModel({
           FormData: {},
           FieldLimit: {},
+          employees: [],
+          CauseType: [],
           detail: {
             listMode: 'MultiToggle', // None
             list: [],
@@ -56,7 +59,6 @@ sap.ui.define(
             list: [],
             rowCount: 1,
           },
-          BankList: [],
           busy: false,
         });
         this.setViewModel(oViewModel);
@@ -72,6 +74,20 @@ sap.ui.define(
         try {
           // Input Field Imited
           oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.WORKTIME, 'OtWorkApply')));
+
+          const oCommonModel = this.getModel(ServiceNames.COMMON);
+          const aEmployees = await Client.getEntitySet(oCommonModel, 'EmpSearchResult', {
+            Menid: this.getCurrentMenuId(),
+            Persa: this.getAppointeeProperty('Werks'),
+            Stat2: '3',
+            Zflag: 'X',
+            Actda: moment().hour(9).toDate(),
+          });
+
+          oDetailModel.setProperty(
+            '/employees',
+            aEmployees.map((o) => ({ ...o, Pernr: _.trimStart(o.Pernr, '0') }))
+          );
 
           if (sDataKey === 'N' || !sDataKey) {
             const mSessionData = this.getSessionData();
@@ -189,6 +205,73 @@ sap.ui.define(
       // 신청내역 삭제
       onDelDetail() {},
 
+      // InputField사원검색
+      onSelectSuggest(oEvent) {
+        const oInput = oEvent.getSource();
+        const oSelectedSuggestionRow = oEvent.getParameter('selectedRow');
+        if (oSelectedSuggestionRow) {
+          const oContext = oSelectedSuggestionRow.getBindingContext();
+          oInput.setValue(oContext.getProperty('Pernr'));
+
+          const sRowPath = oInput.getParent().getBindingContext().getPath();
+          const oViewModel = this.getViewModel();
+          oViewModel.setProperty(`${sRowPath}/Ename`, oContext.getProperty('Ename'));
+          oViewModel.setProperty(`${sRowPath}/Orgtx`, oContext.getProperty('Fulln'));
+          oViewModel.setProperty(`${sRowPath}/Zzjikgbt`, oContext.getProperty('Zzjikgbt'));
+        }
+        oInput.getBinding('suggestionRows').filter([]);
+      },
+
+      // 사원검색 Submit
+      onSubmitSuggest(oEvent) {
+        const oViewModel = this.getViewModel();
+        const oInput = oEvent.getSource();
+        const oContext = oInput.getParent().getBindingContext();
+        const sRowPath = oContext.getPath();
+
+        const sInputValue = oEvent.getParameter('value');
+        if (!sInputValue) {
+          oViewModel.setProperty(`${sRowPath}/Pernr`, '');
+          oViewModel.setProperty(`${sRowPath}/Ename`, '');
+          oViewModel.setProperty(`${sRowPath}/Zzjikgbt`, '');
+          oViewModel.setProperty(`${sRowPath}/Zzjikcht`, '');
+          oViewModel.setProperty(`${sRowPath}/Orgtx`, '');
+          return;
+        }
+
+        const aEmployees = oViewModel.getProperty('/employees');
+        const [mEmployee] = _.filter(aEmployees, (o) => _.startsWith(o.Pernr, sInputValue));
+
+        if (sRowPath && !_.isEmpty(mEmployee)) {
+          oViewModel.setProperty(`${sRowPath}/Pernr`, mEmployee.Pernr);
+          oViewModel.setProperty(`${sRowPath}/Ename`, mEmployee.Ename);
+          oViewModel.setProperty(`${sRowPath}/Zzjikgbt`, mEmployee.Zzjikgbt);
+          oViewModel.setProperty(`${sRowPath}/Zzjikcht`, mEmployee.Zzjikcht);
+          oViewModel.setProperty(`${sRowPath}/Orgtx`, mEmployee.Fulln);
+        } else {
+          oViewModel.setProperty(`${sRowPath}/Pernr`, '');
+          oViewModel.setProperty(`${sRowPath}/Ename`, '');
+          oViewModel.setProperty(`${sRowPath}/Zzjikgbt`, '');
+          oViewModel.setProperty(`${sRowPath}/Zzjikcht`, '');
+          oViewModel.setProperty(`${sRowPath}/Orgtx`, '');
+        }
+      },
+
+      // Dialog 사유선택
+      onCause(oEvent) {
+        const oDetailModel = this.getViewModel();
+
+        oDetailModel.setProperty(
+          '/DialogData/Ottyptx',
+          _.chain(oDetailModel.getProperty('/CauseType'))
+            .find((e) => {
+              return e.Zcode === oEvent.getSource().getSelectedKey();
+            })
+            .get('Ztext')
+            .value()
+        );
+      },
+
       // Dialog 저장
       onDialogSavBtn() {
         if (this.checkError()) {
@@ -196,11 +279,22 @@ sap.ui.define(
         }
 
         const oDetailModel = this.getViewModel();
-        oDetailModel.setProperty('/detail/list', [
-          _.filter(oDetailModel.getProperty('/dialog/list'), (e) => {
+        const mDialogData = oDetailModel.getProperty('/DialogData');
+        const aFilterList = _.chain(oDetailModel.getProperty('/dialog/list'))
+          .filter((e) => {
             return !!e.Pernr;
-          }),
-        ]);
+          })
+          .each((e) => {
+            e.Datum = mDialogData.Datum;
+            e.Beguz = mDialogData.Beguz;
+            e.Enduz = mDialogData.Enduz;
+            e.Abrst = mDialogData.Abrst;
+            e.Ottyptx = mDialogData.Ottyp;
+            e.Atrsn = mDialogData.Atrsn;
+          })
+          .value();
+
+        oDetailModel.setProperty('/detail/list', aFilterList);
       },
 
       //  Dialig 추가

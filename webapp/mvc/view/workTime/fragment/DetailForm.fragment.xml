@@ -56,7 +56,10 @@
         <table:Column width="70px">
           <Label text="{i18n>LABEL_27007}" />
           <table:template>
-            <Text text="{Abrst}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Abrst',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="auto">
