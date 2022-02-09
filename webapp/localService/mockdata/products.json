@@ -2610,6 +2610,28 @@
       "DimUnit": "cm"
     }
   ],
+  "actions": [
+    {
+      "values": [
+        {"value": "1989.03~1955.02"},
+        {"value": "한국대"},
+        {"value": "입사전"},
+        {"value": "대학교 학사"},
+        {"value": "경영학과"},
+        {"value": "신입"}
+      ]
+    },
+    {
+      "values": [
+        {"value": "1989.03~1955.02"},
+        {"value": "한국고등학교"},
+        {"value": "입사전"},
+        {"value": "고등학교 졸업"},
+        {"value": "경영학과"},
+        {"value": "신입"}
+      ]
+    }
+  ],
   "hospitalCollection": [
     {
       "Idx": "1",
