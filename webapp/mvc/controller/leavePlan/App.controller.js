@@ -264,7 +264,11 @@ sap.ui.define(
           });
 
           // {저장|신청}되었습니다.
-          MessageBox.success(this.getBundleText('MSG_00007', _.isEqual(sPrcty, 'T') ? 'LABEL_00103' : 'LABEL_00121'));
+          MessageBox.success(this.getBundleText('MSG_00007', _.isEqual(sPrcty, 'T') ? 'LABEL_00103' : 'LABEL_00121'), {
+            onClose: () => {
+              this.onPressSearch();
+            },
+          });
         } catch (oError) {
           this.debug('Controller > leavePlan App > createProcess Error', oError);
 
