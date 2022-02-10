@@ -11,6 +11,7 @@ sap.ui.define(
     'sap/ui/yesco/mvc/controller/performance/constant/Constants',
     'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
     'sap/ui/yesco/mvc/model/type/Pernr',
+    'sap/ui/yesco/mvc/model/type/Decimal',
   ],
   (
     // prettier 방지용 주석
@@ -82,8 +83,19 @@ sap.ui.define(
 
       setTableData({ oViewModel, aRowData }) {
         const oTable = this.byId('performanceTable');
+        const sType = oViewModel.getProperty('/type');
 
-        oViewModel.setProperty('/list', [...aRowData]);
+        oViewModel.setProperty(
+          '/list',
+          _.map(aRowData, (o) => {
+            const sLogicalZzapstsSub = !_.isEmpty(o.sZzapstsPSub) ? o.sZzapstsPSub : o.sZzapstsSub;
+            return {
+              ...o,
+              Zapgme: _.includes(['V', 'H'], _.get(Constants.FIELD_STATUS_MAP, [o.Zzapsts, sLogicalZzapstsSub, 'Zapgme', sType], '')) ? '' : _.isEqual(o.Zapgme, '0.000') ? '' : o.Zapgme,
+              Zapgma: _.includes(['V', 'H'], _.get(Constants.FIELD_STATUS_MAP, [o.Zzapsts, sLogicalZzapstsSub, 'Zapgma', sType], '')) ? '' : _.isEqual(o.Zapgma, '0.000') ? '' : o.Zapgma,
+            };
+          })
+        );
         oViewModel.setProperty('/listInfo/rowCount', _.get(TableUtils.count({ oTable, aRowData }), 'rowCount', 1));
 
         if (_.every(aRowData, (o) => _.isEqual(_.toNumber(o.Zapgma), 0) && _.isEqual(_.toNumber(o.Zapgme), 0))) {

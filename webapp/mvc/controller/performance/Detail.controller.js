@@ -84,6 +84,7 @@ sap.ui.define(
             form: {
               Rjctr: '',
               Rjctrin: '',
+              confirmEnable: false,
               isRejectProcess: false,
               Zzapper2: '',
               Zdocid2: '',
@@ -523,12 +524,17 @@ sap.ui.define(
         this.byId('rejectDialog').close();
       },
 
+      onCheckReject(oEvent) {
+        this.getViewModel().setProperty('/buttons/form/confirmEnable', !!oEvent.getSource().getValue());
+      },
+
       onPressTopGoal() {
         const oViewModel = this.getViewModel();
+        const sHost = window.location.href.split('#')[0];
         const sType = oViewModel.getProperty('/type');
         const { Zzapper2: sPernr, Zdocid2: sDocid } = oViewModel.getProperty('/buttons/form');
 
-        window.open(`/index.html#/performanceView/${sType}/${sPernr}/${sDocid}`, '_blank', 'width=1200&height=800');
+        window.open(`${sHost}#/performanceView/${sType}/${sPernr}/${sDocid}`, '_blank', 'width=1400&height=800');
       },
 
       onPressApproveButton() {

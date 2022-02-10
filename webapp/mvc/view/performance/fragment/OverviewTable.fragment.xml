@@ -43,13 +43,13 @@
         <table:Column width="{/listInfo/columns/Zapgme/width}" filterProperty="Zapgme" sortProperty="Zapgme" visible="{/listInfo/columns/Zapgme/visible}">
           <Label text="{i18n>LABEL_10003}"/>
           <table:template>
-            <Text text="{ path: 'Zapgme', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+            <Text text="{ path: 'Zapgme', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
           </table:template>
         </table:Column>
         <table:Column width="{/listInfo/columns/Zapgma/width}" filterProperty="Zapgma" sortProperty="Zapgma" visible="{/listInfo/columns/Zapgma/visible}">
           <Label text="{i18n>LABEL_10004}"/>
           <table:template>
-            <Text text="{ path: 'Zapgma', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+            <Text text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
           </table:template>
         </table:Column>
       </table:columns>

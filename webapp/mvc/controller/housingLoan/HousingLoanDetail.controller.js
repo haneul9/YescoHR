@@ -391,14 +391,15 @@ sap.ui.define(
           success: (oData) => {
             if (oData) {
               const oList = oData.results[0];
-              const oViewer = new sap.m.PDFViewer({
-                source: oList.Url,
-                sourceValidationFailed: function (oEvent) {
-                  oEvent.preventDefault();
-                },
-              });
+              window.open(oList.Url, '_blank');
+              // const oViewer = new sap.m.PDFViewer({
+              //   source: oList.Url,
+              //   sourceValidationFailed: function (oEvent) {
+              //     oEvent.preventDefault();
+              //   },
+              // });
 
-              oViewer.open();
+              // oViewer.open();
             }
           },
           error: (oError) => {

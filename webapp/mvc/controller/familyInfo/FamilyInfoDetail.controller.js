@@ -85,6 +85,7 @@ sap.ui.define(
             { Zcode: this.DISABIL.CODE.TW, Ztext: this.DISABIL.TEXT.TW },
             { Zcode: this.DISABIL.CODE.TH, Ztext: this.DISABIL.TEXT.TH },
           ],
+          Fixed: false,
           Support: [],
           Settings: {},
           busy: false,
@@ -136,24 +137,29 @@ sap.ui.define(
       setFormData() {
         const oDetailModel = this.getViewModel();
         const sKey = oDetailModel.getProperty('/FormStatus');
+        const oView = this.getView();
+        const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
 
         if (!sKey || sKey === 'N') {
-          const oAppointeeData = this.getAppointeeData();
+          if (!!oListView && !!oListView.getModel().getProperty('/parameter')) {
+            oDetailModel.setProperty('/Fixed', true);
+            oDetailModel.setProperty('/FormData', oListView.getModel().getProperty('/parameter'));
+          } else {
+            const oAppointeeData = this.getAppointeeData();
 
-          oDetailModel.setProperty('/FormData', {
-            Apename: oAppointeeData.Ename,
-            Appernr: oAppointeeData.Pernr,
-            Kdsvh: 'ALL',
-            Fasex: 'ALL',
-            Hndcd: 'ALL',
-            Dptyp: 'ALL',
-            Endda: moment('9999-12-31').hours(9).toDate(),
-          });
+            oDetailModel.setProperty('/FormData', {
+              Apename: oAppointeeData.Ename,
+              Appernr: oAppointeeData.Pernr,
+              Kdsvh: 'ALL',
+              Fasex: 'ALL',
+              Hndcd: 'ALL',
+              Dptyp: 'ALL',
+              Endda: moment('9999-12-31').hours(9).toDate(),
+            });
+          }
           this.settingsAttachTable();
         } else {
           const oModel = this.getModel(ServiceNames.PA);
-          const oView = this.getView();
-          const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
 
           if (!!oListView && !!oListView.getModel().getProperty('/parameter')) {
             oDetailModel.setProperty('/FormData', oListView.getModel().getProperty('/parameter'));
@@ -255,10 +261,8 @@ sap.ui.define(
           // 부양가족
           case 'Dptid':
             if (bSelected) {
-              oDetailModel.setProperty('/SupCheck', 'Warning');
               oDetailModel.setProperty('/SupEditable', true);
             } else {
-              oDetailModel.setProperty('/SupCheck', 'None');
               oDetailModel.setProperty('/SupEditable', false);
             }
             oDetailModel.setProperty('/FormData/Dptyp', 'ALL');
@@ -266,10 +270,8 @@ sap.ui.define(
           // 장애여부
           case 'Hndid':
             if (bSelected) {
-              oDetailModel.setProperty('/DisabCheck', 'Warning');
               oDetailModel.setProperty('/DisabEditable', true);
             } else {
-              oDetailModel.setProperty('/DisabCheck', 'None');
               oDetailModel.setProperty('/DisabEditable', false);
             }
             oDetailModel.setProperty('/FormData/Hndcd', 'ALL');
@@ -357,12 +359,6 @@ sap.ui.define(
 
       // 신청
       async onApplyBtn() {
-        const oModel = this.getModel(ServiceNames.PA);
-        const oDetailModel = this.getViewModel();
-        const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
-        const oFormData = oDetailModel.getProperty('/FormData');
-        const sMenid = this.getCurrentMenuId();
-
         if (this.checkError()) return;
 
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
@@ -372,13 +368,19 @@ sap.ui.define(
               try {
                 AppUtils.setAppBusy(true, this);
 
-                if (!sStatus) {
+                const oDetailModel = this.getViewModel();
+                const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
+
+                if (!sStatus || sStatus === '60') {
                   const vAppno = await Appno.get.call(this);
 
                   oDetailModel.setProperty('/FormData/Appno', vAppno);
                   oDetailModel.setProperty('/FormData/Appdt', new Date());
                 }
 
+                const oModel = this.getModel(ServiceNames.PA);
+                const oFormData = oDetailModel.getProperty('/FormData');
+                const sMenid = this.getCurrentMenuId();
                 let oSendObject = {};
 
                 oSendObject = oFormData;
@@ -452,10 +454,11 @@ sap.ui.define(
       settingsAttachTable() {
         const oDetailModel = this.getViewModel();
         const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
+        const bFixed = oDetailModel.getProperty('/Fixed');
         const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
 
         AttachFileAction.setAttachFile(this, {
-          Editable: !sStatus || sStatus === '10',
+          Editable: !sStatus || sStatus === '10' || bFixed,
           Type: this.getApprovalType(),
           Appno: sAppno,
           Max: 10,

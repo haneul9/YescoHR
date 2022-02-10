@@ -299,7 +299,7 @@ sap.ui.define(
               new Filter('Werks', FilterOperator.EQ, mSearch.Werks), //
               new Filter('Zyear', FilterOperator.EQ, mSearch.Zyear),
               new Filter('Seroty', FilterOperator.EQ, bKey ? 'O' : mSearch.Otype),
-              new Filter('Serobj', FilterOperator.EQ, bKey ? '10000000' : mSearch.Objid === 'ALL' ? '' : mSearch.Objid),
+              new Filter('Serobj', FilterOperator.EQ, bKey ? '' : mSearch.Objid === 'ALL' ? '' : mSearch.Objid),
             ],
             success: (oData) => {
               if (oData) {

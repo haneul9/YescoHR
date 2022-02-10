@@ -11,7 +11,8 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Currency',
-    'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
+    'sap/ui/yesco/mvc/model/type/Date',
+    'sap/ui/yesco/mvc/model/type/Pernr',
   ],
   (
     // prettier 방지용 주석
@@ -124,6 +125,11 @@ sap.ui.define(
         } finally {
           oListModel.setProperty('/busy', false);
         }
+      },
+
+      // 근무시간
+      formatTime(sTime = '') {
+        return !sTime ? '0' : `${sTime.slice(-4, -2)}:${sTime.slice(-2)}`;
       },
 
       formatWeek(sWeek = '') {

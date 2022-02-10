@@ -1323,6 +1323,21 @@
             </table:Table>
           </VBox>
         </HBox>
+        <HBox class="sapUiResponsiveMargin" width="100%">
+          <VBox>
+            <layoutData>
+              <FlexItemData growFactor="1" />
+            </layoutData>
+            <Title level="H3" text="Mobile list" class="component-title" />
+            <List headerText="학력정보" items="{/actions}">
+              <CustomListItem>
+                <grid:CSSGrid gridGap="1px 8px" gridTemplateColumns="2fr 2fr 1fr" items="{ path: 'values', templateShareable: false }">
+                  <Text text="{value}" />
+                </grid:CSSGrid>
+              </CustomListItem>
+            </List>
+          </VBox>
+        </HBox>
       </VBox>
     </content>
   </Page>

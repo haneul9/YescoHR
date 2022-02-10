@@ -2,6 +2,7 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/model/json/JSONModel',
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/FragmentEvent',
@@ -14,6 +15,7 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     JSONModel,
+    MessageBox,
     AppUtils,
     AttachFileAction,
     FragmentEvent,
@@ -38,6 +40,7 @@ sap.ui.define(
         const oViewModel = new JSONModel({
           busy: false,
           Data: [],
+          SelectedRow: {},
           searchDate: {
             date: dDate,
             secondDate: new Date(dDate.getFullYear(), dDate.getMonth() - 1, dDate.getDate() + 1),
@@ -61,6 +64,18 @@ sap.ui.define(
       },
 
       onClick() {
+        const oViewModel = this.getViewModel();
+        const mSelectRow = oViewModel.getProperty('/SelectedRow');
+
+        if (!_.isEmpty(mSelectRow) && mSelectRow.ZappStatAl !== '60') {
+          MessageBox.alert(this.getBundleText('MSG_05017'));
+          return;
+        } else if (!_.isEmpty(mSelectRow) && mSelectRow.ZappStatAl === '60') {
+          oViewModel.setProperty('/parameter', mSelectRow);
+        } else {
+          oViewModel.setProperty('/parameter', '');
+        }
+
         this.getRouter().navTo('familyInfo-detail', { oDataKey: 'N' });
       },
 
@@ -74,11 +89,21 @@ sap.ui.define(
       },
 
       formatPay(vPay = '0') {
-        return vPay;
+        return this.TextUtils.toCurrency(vPay) || '0';
       },
 
       thisYear(sYear = String(moment().format('YYYY'))) {
         return this.getBundleText('MSG_03012', sYear);
+      },
+
+      // table 체크박스
+      onRowSelection(oEvent) {
+        const oViewModel = this.getViewModel();
+        const oEventSource = oEvent.getSource();
+        const iSelectedIndex = oEventSource.getSelectedIndex();
+
+        oEventSource.setSelectedIndex(iSelectedIndex);
+        oViewModel.setProperty('/SelectedRow', oViewModel.getProperty(`/FamilyList/${iSelectedIndex}`));
       },
 
       onSearch() {
@@ -99,6 +124,7 @@ sap.ui.define(
 
               oListModel.setProperty('/FamilyList', oList);
               oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: oList }));
+              oListModel.setProperty('/listInfo/infoMessage', this.getBundleText('MSG_05005'));
               oListModel.setProperty('/busy', false);
             }
           },
