@@ -258,7 +258,7 @@ sap.ui.define(
                 oDetailModel.setProperty('/HisList', aHisList);
                 oDetailModel.setProperty(
                   '/ReWriteStat',
-                  !_.find(aHisList, (e) => {
+                  !!_.find(aHisList, (e) => {
                     return e.ZappStat === 'F';
                   })
                 );
