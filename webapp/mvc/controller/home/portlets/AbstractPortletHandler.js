@@ -45,9 +45,9 @@ sap.ui.define(
 
       async addPortlet() {
         const oPortletModel = this.getPortletModel();
-        const sPortletID = oPortletModel.getProperty('/id');
+        const sPortletKey = oPortletModel.getProperty('/key');
         const oPortletBodyContent = await Fragment.load({
-          name: `sap.ui.yesco.mvc.view.home.fragment.${sPortletID}PortletBodyContent`,
+          name: `sap.ui.yesco.mvc.view.home.fragment.${sPortletKey}PortletBodyContent`,
           controller: this,
         });
 
@@ -80,7 +80,8 @@ sap.ui.define(
        * @returns
        */
       async readContentData() {
-        throw new UI5Error({ message: AppUtils.getBundleText('MSG_00053', `${sPortletId}PortletHandler`, 'readContentData') }); // {PortletHandler}에 {readContentData} function을 선언하세요.
+        const sPortletKey = this.getPortletModel().getProperty('/key');
+        throw new UI5Error({ message: AppUtils.getBundleText('MSG_00053', `${sPortletKey}PortletHandler`, 'readContentData') }); // {PortletHandler}에 {readContentData} function을 선언하세요.
       },
 
       onPressClose(oEvent) {
@@ -166,8 +167,9 @@ sap.ui.define(
 
       destroy() {
         const oPortletModel = this.getPortletModel();
+        const sPortletId = oPortletModel.getProperty('/id');
 
-        this.resetPortletData(oPortletModel.getProperty('/id'));
+        this.resetPortletData(sPortletId);
 
         oPortletModel.destroy();
         this.getPortletBox().destroy();

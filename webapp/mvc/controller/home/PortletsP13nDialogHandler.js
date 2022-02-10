@@ -103,18 +103,17 @@ sap.ui.define(
       async onPressPortletsP13nSave(sClosingPortletId) {
         try {
           const oController = this.getController();
-          const oPortletsModel = this.getPortletsModel();
-          const mActivePortlets = {};
           const aPortletItems = oController.getPortletItems();
-
           if (aPortletItems.length === 1 && aPortletItems[0].hasStyleClass('portlets-not-found')) {
             return true;
           }
 
+          const mActivePortlets = {};
           aPortletItems.forEach((oPortlet) => {
             this.mapPortletPosition(oPortlet, mActivePortlets, sClosingPortletId);
           });
 
+          const oPortletsModel = this.getPortletsModel();
           const aPortletData = oPortletsModel.getProperty('/allList').map((mPortletData) => {
             const mData = mActivePortlets[mPortletData.id];
             if (mData) {

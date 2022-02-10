@@ -11,6 +11,7 @@
                 <HBox class="table-toolbar" justifyContent="SpaceBetween">
                     <HBox class="title">
                         <Title level="H2" text="{/plans/headerTxt}" />
+                        <Title level="H4" class="sapUiMediumMarginBegin" text="{/plans/planTxt}" />
                     </HBox>
                     <HBox class="status-wrap year-plan">
                         <Text text="{i18n>LABEL_20006}" class="type02" />

@@ -31,8 +31,8 @@ sap.ui.define(
       PERSONAL_TABLE_ID: 'leaveByPersonalTable',
 
       CHARTS: {
-        ACC: { color: '#dc3545', label: 'LABEL_16018', prop: 'Cumuse' },
-        CUR: { color: '#2972c8', label: 'LABEL_16020', prop: 'Monuse' },
+        ACC: { color: '#dc3545', label: 'LABEL_16018', prop: 'Cumuse', propPerc: 'Cumrte' },
+        CUR: { color: '#2972c8', label: 'LABEL_16020', prop: 'Monuse', propPerc: 'Monrte' },
       },
 
       onBeforeShow() {
@@ -214,7 +214,7 @@ sap.ui.define(
               anchorBorderColor: this.CHARTS.ACC.color,
               anchorBgColor: this.CHARTS.ACC.color,
               data: _.chain(mGroupByOyymm)
-                .map((v) => ({ value: _.get(v, [0, this.CHARTS.ACC.prop]) }))
+                .map((v) => ({ value: _.get(v, [0, this.CHARTS.ACC.propPerc]) }))
                 .forEach((v, i, o) => {
                   if (_.isEqual(v.value, 0)) v.value = _.get(o, [i - 1, 'value'], 0);
                 })
@@ -224,7 +224,7 @@ sap.ui.define(
               seriesname: this.getBundleText(this.CHARTS.CUR.label),
               anchorBorderColor: this.CHARTS.CUR.color,
               anchorBgColor: this.CHARTS.CUR.color,
-              data: _.map(mGroupByOyymm, (v) => ({ value: _.get(v, [0, this.CHARTS.CUR.prop], 0) })),
+              data: _.map(mGroupByOyymm, (v) => ({ value: _.get(v, [0, this.CHARTS.CUR.propPerc], 0) })),
             },
           ]);
 

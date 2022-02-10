@@ -23,18 +23,35 @@ sap.ui.define(
      * 부서원 현황 / 내동료 현황 Portlet 공통
      */
     return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.P03P04PortletCommonHandler', {
-      SEGMENTED_BUTTON_KEY: null,
-      SIBLING_BUTTON_KEY: null,
+      SELECTED_BUTTON: null,
       ROOT_PATH: null,
       ACTIVE_PATH: null,
       ODATA_ENTITY_TYPE: null,
+
+      mButtonKeys: {
+        // 임원용
+        M03: 'ORG',
+        M04: 'MY',
+        // 직원용
+        P03: 'ORG',
+        P04: 'MY',
+      },
+
+      mSiblingKeys: {
+        // 임원용
+        M03: 'M04',
+        M04: 'M03',
+        // 직원용
+        P03: 'P04',
+        P04: 'P03',
+      },
 
       async addPortlet() {
         this.setInherency();
 
         const oPortletModel = this.getPortletModel();
         const oPortletData = oPortletModel.getData();
-        const oSiblingPortletHandler = this.getController().getViewModel().getProperty(`/activeInstanceMap/${this.SIBLING_BUTTON_KEY}`);
+        const oSiblingPortletHandler = this.getController().getViewModel().getProperty(`/activeInstanceMap/${this.mSiblingKeys[oPortletData.id]}`);
 
         if (oSiblingPortletHandler) {
           const oSiblingPortletModel = oSiblingPortletHandler.getPortletModel();
@@ -88,29 +105,17 @@ sap.ui.define(
       transformContentData(aMembers) {
         return {
           multiPortlet: true,
-          selectedMembersButton: this.SEGMENTED_BUTTON_KEY,
+          selectedMembersButton: this.SELECTED_BUTTON,
           [this.ACTIVE_PATH]: true,
           [this.ROOT_PATH]: this.transformMembersData(aMembers),
         };
       },
 
       transformMembersData(aMembers = []) {
-        aMembers.forEach((mData, i) => {
+        aMembers.forEach((mData) => {
           delete mData.__metadata;
 
           mData.Photo ||= 'asset/image/avatar-unknown.svg';
-          // if (i % 3 === 0) {
-          //   mData.Icon = 'red';
-          //   mData.Atext = '외근';
-          // }
-          // if (i % 3 === 1) {
-          //   mData.Icon = 'blue';
-          //   mData.Atext = '근무중';
-          // }
-          // if (i % 3 === 2) {
-          //   mData.Icon = 'grey';
-          //   mData.Atext = '휴가중';
-          // }
         });
 
         return {
@@ -121,8 +126,8 @@ sap.ui.define(
 
       getSelectedPortletHandler() {
         const oPortletModel = this.getPortletModel();
-        const sSelectedMembersButton = oPortletModel.getProperty('/selectedMembersButton');
-        const oPortletHandler = this.getController().getViewModel().getProperty(`/activeInstanceMap/${sSelectedMembersButton}`);
+        const sPortletId = oPortletModel.getProperty('/id');
+        const oPortletHandler = this.getController().getViewModel().getProperty(`/activeInstanceMap/${sPortletId}`);
 
         return {
           oPortletModel,
@@ -202,7 +207,7 @@ sap.ui.define(
         const sPortletId = oPortletModel.getProperty(`/${this.ROOT_PATH}/id`);
 
         if (bOrgMembersActive && bMyMembersActive) {
-          oPortletModel.setProperty('/selectedMembersButton', this.SIBLING_BUTTON_KEY);
+          oPortletModel.setProperty('/selectedMembersButton', this.mButtonKeys[this.mSiblingKeys[sPortletId]]);
           oPortletModel.setProperty(`/${this.ACTIVE_PATH}`, false);
           oPortletModel.setProperty(`/${this.ROOT_PATH}/active`, false);
 

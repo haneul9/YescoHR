@@ -50,16 +50,49 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.home.Portlets', {
+      mPortletKeys: {
+        // 임원용
+        M01: 'P01',
+        M02: 'P02',
+        M03: 'P03',
+        M04: 'P04',
+        M05: 'P05',
+        M06: 'P06',
+        M07: 'P07',
+        M08: 'P08',
+        M09: 'P09',
+        // 직원용
+        P01: 'P01',
+        P02: 'P02',
+        P03: 'P03',
+        P04: 'P04',
+        P05: 'P05',
+        P06: 'P06',
+        P07: 'P07',
+        P08: 'P08',
+        P09: 'P09',
+      },
       mPortletHandlers: {
-        P01PortletHandler,
-        P02PortletHandler,
-        P03PortletHandler,
-        P04PortletHandler,
-        P05PortletHandler,
-        P06PortletHandler,
-        P07PortletHandler,
-        P08PortletHandler,
-        P09PortletHandler,
+        // 임원용
+        M01: P01PortletHandler,
+        M02: P02PortletHandler,
+        M03: P03PortletHandler,
+        M04: P04PortletHandler,
+        M05: P05PortletHandler,
+        M06: P06PortletHandler,
+        M07: P07PortletHandler,
+        M08: P08PortletHandler,
+        M09: P09PortletHandler,
+        // 직원용
+        P01: P01PortletHandler,
+        P02: P02PortletHandler,
+        P03: P03PortletHandler,
+        P04: P04PortletHandler,
+        P05: P05PortletHandler,
+        P06: P06PortletHandler,
+        P07: P07PortletHandler,
+        P08: P08PortletHandler,
+        P09: P09PortletHandler,
       },
 
       EmployeeSearch: EmployeeSearch,
@@ -220,9 +253,11 @@ sap.ui.define(
       },
 
       transform(mPortletData) {
+        const sPortletKey = this.mPortletKeys[mPortletData.Potid];
         return {
           busy: true,
           id: mPortletData.Potid,
+          key: sPortletKey,
           carousel: mPortletData.Mocat === 'A',
           position: {
             column: this.bMobile ? Number(mPortletData.MSeq) || 1 : Number(mPortletData.Colno) || 1,
@@ -230,7 +265,7 @@ sap.ui.define(
           },
           width: Number(mPortletData.Hwidth) || 1,
           height: Number(mPortletData.Htall) || 1,
-          borderless: mPortletData.Potid === 'P01',
+          borderless: sPortletKey === 'P01',
           icon: mPortletData.Iconid,
           title: mPortletData.Potnm,
           tooltip: mPortletData.TooltipTx,
@@ -262,7 +297,7 @@ sap.ui.define(
       },
 
       activatePortlet(mPortletData, oPortletsModel) {
-        const PortletHandler = this.mPortletHandlers[`${mPortletData.id}PortletHandler`];
+        const PortletHandler = this.mPortletHandlers[mPortletData.id];
         if (!PortletHandler) {
           this.debug(`Portlets.controller > getPortletsModel > '${mPortletData.id}'에 해당하는 PortletHandler가 없습니다.`);
           return false;

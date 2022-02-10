@@ -278,6 +278,19 @@ sap.ui.define(
           .assign(mGroupByMonth)
           .forOwn((v, p) => _.set(aGridCounts, [p - 1, 'label'], v))
           .commit();
+        const mGroupByAwart = _.chain(aGridPlans)
+          .reject({ awart: '' })
+          .groupBy('awart')
+          .map((v, p) => ({ [p]: _.sumBy(v, (obj) => this.AWART_COUNT[obj.awart]) }))
+          .reduce((a, c) => ({ ...a, ...c }), {})
+          .value();
+        const iYearOffCount = _.chain(mGroupByAwart)
+          .omit('2010')
+          .reduce((acc, cur) => (acc += cur), 0)
+          .value();
+        const iSummerOffCount = _.get(mGroupByAwart, '2010', 0);
+
+        oViewModel.setProperty('/plans/planTxt', this.getBundleText('LABEL_23017', iYearOffCount, iSummerOffCount));
       },
 
       async openPlanDialog() {
@@ -344,7 +357,7 @@ sap.ui.define(
           const oTable = this.byId(this.TABLE_ID);
           const oListInfo = oViewModel.getProperty('/listInfo');
 
-          oViewModel.setProperty('/list', aPlanList ?? []);
+          oViewModel.setProperty('/list', _.map(aPlanList, (o) => ({ ...o, ZappStxtAl: _.isEqual(o.ZappStxtAl, '') ? '미입력' : o.ZappStxtAl })) ?? []);
           oViewModel.setProperty('/listInfo', {
             ...oListInfo,
             infoMessage: this.getBundleText('LABEL_23010', _.get(mSummary, 'Tmprd')),
