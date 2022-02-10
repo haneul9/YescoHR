@@ -84,13 +84,14 @@ sap.ui.define(
         const oTable = this.byId('competencyTable');
         const sType = oViewModel.getProperty('/type');
 
-        _.map(aRowData, (o) => ({
-          ...o,
-          Zapgma: _.isEqual('V', _.get(Constants.FIELD_STATUS_MAP, [o.Zzapsts, o.ZzapstsSub, 'Z200', sType], '')) ? '' : _.isEqual(o.Zapgma, '0.000') ? '' : o.Zapgma,
-          Zapgme: _.isEqual('V', _.get(Constants.FIELD_STATUS_MAP, [o.Zzapsts, o.ZzapstsSub, 'Fapp', sType], '')) ? '' : _.isEqual(o.Zapgme, '0.000') ? '' : o.Zapgme,
-        }));
-
-        oViewModel.setProperty('/list', [...aRowData]);
+        oViewModel.setProperty(
+          '/list',
+          _.map(aRowData, (o) => ({
+            ...o,
+            Zapgme: _.isEqual('V', _.get(Constants.FIELD_STATUS_MAP, [o.Zzapsts, o.ZzapstsSub, 'Z200', sType], '')) ? '' : _.isEqual(o.Zapgme, '0.000') ? '' : o.Zapgme,
+            Zapgma: _.isEqual('V', _.get(Constants.FIELD_STATUS_MAP, [o.Zzapsts, o.ZzapstsSub, 'Fapp', sType], '')) ? '' : _.isEqual(o.Zapgma, '0.000') ? '' : o.Zapgma,
+          }))
+        );
         oViewModel.setProperty('/listInfo/rowCount', _.get(TableUtils.count({ oTable, aRowData }), 'rowCount', 1));
 
         if (_.every(aRowData, (o) => _.isEqual(_.toNumber(o.Zapgma), 0) && _.isEqual(_.toNumber(o.Zapgme), 0))) {
