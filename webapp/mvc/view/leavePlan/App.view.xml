@@ -61,11 +61,11 @@
           </HBox>
         </HBox>
         <VBox>
-          <HBox visible="{= !${/summary/Fileurl} }" alignItems="End">
+          <HBox visible="{= ${/summary/ZappStatAl} === '' || ${/summary/ZappStatAl} === '10' }" alignItems="End">
             <custom:Signature id="signature-pad" width="500" height="120" class="sapUiSmallMarginEnd" />
             <Button text="Clear" press=".onPressSignatureClear" />
           </HBox>
-          <HBox visible="{= !!${/summary/Fileurl} }">
+          <HBox visible="{= ${/summary/ZappStatAl} !== '' &amp;&amp; ${/summary/ZappStatAl} !== '10' }">
             <Image width="500px" height="120px" src="{/summary/Fileurl}" alt="Signature" />
           </HBox>
         </VBox>
