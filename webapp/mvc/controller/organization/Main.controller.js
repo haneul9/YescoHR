@@ -53,7 +53,7 @@ sap.ui.define(
                 Ipdat: _.isDate(o.Ipdat) ? moment(o.Ipdat).format('YYYY.MM.DD') : '',
               })),
             });
-
+            oViewModel.setSizeLimit(1000);
             this.setViewModel(oViewModel);
           }
 
