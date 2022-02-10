@@ -59,6 +59,7 @@ sap.ui.define(
           Werks: this.getAppointeeProperty('Werks') !== '2000',
           menid: this.getCurrentMenuId(),
           Hass: this.isHass(),
+          ReWriteStat: false,
           ViewKey: '',
           sYear: '',
           FormData: {},
@@ -255,7 +256,12 @@ sap.ui.define(
                 oDetailModel.setProperty('/TargetDetails', oTargetData);
 
                 oDetailModel.setProperty('/HisList', aHisList);
-
+                oDetailModel.setProperty(
+                  '/ReWriteStat',
+                  !_.find(aHisList, (e) => {
+                    return e.ZappStat === 'F';
+                  })
+                );
                 const iHisLength = aHisList.length;
 
                 oDetailModel.setProperty('/listInfo', {
@@ -643,6 +649,8 @@ sap.ui.define(
               oSendObject = oDetailModel.getProperty('/FormData');
               oSendObject.Prcty = 'W';
               oSendObject.Menid = oDetailModel.getProperty('/menid');
+
+              delete oSendObject.isNew;
 
               oModel.create('/MedExpenseApplSet', oSendObject, {
                 success: () => {

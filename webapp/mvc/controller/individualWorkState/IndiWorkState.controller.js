@@ -351,11 +351,11 @@ sap.ui.define(
               ],
               dataset: [
                 {
-                  seriesName: 'Accumulative',
+                  seriesName: 'Current month',
                   data: aWorkTypeList.Monuse,
                 },
                 {
-                  seriesName: 'Current month',
+                  seriesName: 'Accumulative',
                   renderAs: 'line',
                   data: aWorkTypeList.Current,
                 },
@@ -401,11 +401,11 @@ sap.ui.define(
             ],
             dataset: [
               {
-                seriesName: 'Accumulative',
+                seriesName: 'Current month',
                 data: aWorkTypeList.Monuse,
               },
               {
-                seriesName: 'Current month',
+                seriesName: 'Accumulative',
                 renderAs: 'line',
                 data: aWorkTypeList.Current,
               },
