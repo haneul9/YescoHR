@@ -59,6 +59,7 @@ sap.ui.define(
           Werks: this.getAppointeeProperty('Werks') !== '2000',
           menid: this.getCurrentMenuId(),
           Hass: this.isHass(),
+          ReWriteBtn: false,
           ReWriteStat: false,
           ViewKey: '',
           sYear: '',
@@ -257,7 +258,7 @@ sap.ui.define(
 
                 oDetailModel.setProperty('/HisList', aHisList);
                 oDetailModel.setProperty(
-                  '/ReWriteStat',
+                  '/ReWriteBtn',
                   !!_.find(aHisList, (e) => {
                     return e.ZappStat === 'F';
                   })
@@ -476,6 +477,7 @@ sap.ui.define(
 
         oDetailModel.setProperty('/FormData/Appno', '');
         oDetailModel.setProperty('/FormData/Lnsta', '');
+        oDetailModel.setProperty('/ReWriteStat', true);
         this.settingsAttachTable();
       },
 
@@ -1293,10 +1295,13 @@ sap.ui.define(
       // Dialog AttachFileTable Settings
       settingsAttachDialog() {
         const oDetailModel = this.getViewModel();
+        const bStat = oDetailModel.getProperty('/DialogData/ZappStat') === 'F';
+        const sStatus = oDetailModel.getProperty('/FormData/Lnsta');
         const sAppno = oDetailModel.getProperty('/DialogData/Appno2') || '';
 
         AttachFileAction.setAttachFile(this, {
           Id: this.DIALOG_FILE_ID,
+          Editable: (!sStatus || sStatus === '10') && bStat,
           Type: this.getApprovalType(),
           Editable: true,
           Appno: sAppno,
