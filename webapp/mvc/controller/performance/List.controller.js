@@ -87,11 +87,14 @@ sap.ui.define(
 
         oViewModel.setProperty(
           '/list',
-          _.map(aRowData, (o) => ({
-            ...o,
-            Zapgme: _.includes(['V', 'H'], _.get(Constants.FIELD_STATUS_MAP, [o.Zzapsts, o.ZzapstsSub, 'Zapgme', sType], '')) ? '' : _.isEqual(o.Zapgme, '0.000') ? '' : o.Zapgme,
-            Zapgma: _.includes(['V', 'H'], _.get(Constants.FIELD_STATUS_MAP, [o.Zzapsts, o.ZzapstsSub, 'Zapgma', sType], '')) ? '' : _.isEqual(o.Zapgma, '0.000') ? '' : o.Zapgma,
-          }))
+          _.map(aRowData, (o) => {
+            const sLogicalZzapstsSub = !_.isEmpty(o.sZzapstsPSub) ? o.sZzapstsPSub : o.sZzapstsSub;
+            return {
+              ...o,
+              Zapgme: _.includes(['V', 'H'], _.get(Constants.FIELD_STATUS_MAP, [o.Zzapsts, sLogicalZzapstsSub, 'Zapgme', sType], '')) ? '' : _.isEqual(o.Zapgme, '0.000') ? '' : o.Zapgme,
+              Zapgma: _.includes(['V', 'H'], _.get(Constants.FIELD_STATUS_MAP, [o.Zzapsts, sLogicalZzapstsSub, 'Zapgma', sType], '')) ? '' : _.isEqual(o.Zapgma, '0.000') ? '' : o.Zapgma,
+            };
+          })
         );
         oViewModel.setProperty('/listInfo/rowCount', _.get(TableUtils.count({ oTable, aRowData }), 'rowCount', 1));
 
