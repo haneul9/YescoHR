@@ -22,16 +22,19 @@
           </Text>
         </table:template>
       </table:Column>
-      <table:Column width="70px" sortProperty="Ottyp" filterProperty="Ottyp">
+      <table:Column width="150px" sortProperty="Ottyptx" filterProperty="Ottyptx">
         <Label text="{i18n>LABEL_00147}"/>
         <table:template>
-          <Text text="{Ottyp}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Ottyptx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="90px" sortProperty="Pernr" filterProperty="Pernr">
         <Label text="{i18n>LABEL_00209}"/>
         <table:template>
-          <Text text="{Pernr}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{
+              path: 'Pernr',
+              type: 'sap.ui.yesco.mvc.model.type.Pernr'
+          }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="80px" sortProperty="Ename" filterProperty="Ename">
@@ -67,13 +70,19 @@
       <table:Column width="100px" sortProperty="Beguz" filterProperty="Beguz">
         <Label text="{i18n>LABEL_27005}"/>
         <table:template>
-          <Text text="{Beguz}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{
+              path: 'Beguz',
+              formatter: '.formatTime'
+          }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="100px" sortProperty="Enduz" filterProperty="Enduz">
         <Label text="{i18n>LABEL_27006}"/>
         <table:template>
-          <Text text="{Enduz}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{
+              path: 'Enduz',
+              formatter: '.formatTime'
+          }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="70px" sortProperty="Abrst" filterProperty="Abrst">

@@ -45,9 +45,10 @@ sap.ui.define(
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
-          FormData: {},
+          Fixed: true,
           FieldLimit: {},
           employees: [],
+          DeletedRows: [],
           CauseType: [],
           detail: {
             listMode: 'MultiToggle', // None
@@ -62,8 +63,6 @@ sap.ui.define(
           busy: false,
         });
         this.setViewModel(oViewModel);
-
-        this.getViewModel().setProperty('/busy', true);
       },
 
       async onObjectMatched(oParameter) {
@@ -75,21 +74,23 @@ sap.ui.define(
           // Input Field Imited
           oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.WORKTIME, 'OtWorkApply')));
 
-          const oCommonModel = this.getModel(ServiceNames.COMMON);
-          const aEmployees = await Client.getEntitySet(oCommonModel, 'EmpSearchResult', {
-            Menid: this.getCurrentMenuId(),
-            Persa: this.getAppointeeProperty('Werks'),
-            Stat2: '3',
-            Zflag: 'X',
-            Actda: moment().hour(9).toDate(),
-          });
-
-          oDetailModel.setProperty(
-            '/employees',
-            aEmployees.map((o) => ({ ...o, Pernr: _.trimStart(o.Pernr, '0') }))
-          );
-
           if (sDataKey === 'N' || !sDataKey) {
+            const oCommonModel = this.getModel(ServiceNames.COMMON);
+            const aEmployees = await Client.getEntitySet(oCommonModel, 'EmpSearchResult', {
+              Menid: this.getCurrentMenuId(),
+              Persa: this.getAppointeeProperty('Werks'),
+              Stat2: '3',
+              Zflag: 'X',
+              Actda: moment().hour(9).toDate(),
+            });
+
+            oDetailModel.setProperty(
+              '/employees',
+              aEmployees.map((o) => ({ ...o, Pernr: _.trimStart(o.Pernr, '0') }))
+            );
+
+            oDetailModel.setProperty('/busy', true);
+
             const mSessionData = this.getSessionData();
 
             oDetailModel.setProperty('/ApplyInfo', {
@@ -98,6 +99,8 @@ sap.ui.define(
               Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
             });
           } else {
+            oDetailModel.setProperty('/busy', true);
+
             const oTargetData = await Client.getEntitySet(oModel, 'OtWorkApply', {
               Appno: sDataKey,
             });
@@ -105,11 +108,12 @@ sap.ui.define(
             const iLength = oTargetData.length;
 
             oDetailModel.setProperty('/detail', {
-              listMode: 'MultiToggle',
+              listMode: 'None',
               list: oTargetData,
               rowCount: iLength < 5 ? iLength : 5,
             });
 
+            oDetailModel.setProperty('/Fixed', false);
             oDetailModel.setProperty('/ApplyInfo', oTargetData[0]);
             oDetailModel.setProperty('/ApprovalDetails', oTargetData[0]);
           }
@@ -139,6 +143,26 @@ sap.ui.define(
         return sAction;
       },
 
+      // 신청내역 checkBox
+      onRowSelection(oEvent) {
+        const oDetailModel = this.getViewModel();
+        const aSelectedIndex = oEvent.getSource().getSelectedIndices();
+        const oContext = oEvent.getParameter('rowContext');
+        let aDelList = [];
+
+        if (oContext) {
+          const sTableId = oContext.getPath().split('/')[1];
+
+          if (!_.isEmpty(aSelectedIndex)) {
+            aDelList = _.map(aSelectedIndex, (e) => {
+              return oDetailModel.getProperty(`/${sTableId}/list/${e}`);
+            });
+          }
+        }
+
+        oDetailModel.setProperty('/DeletedRows', aDelList);
+      },
+
       // 신청내역 추가
       onAddDetail() {
         const oView = this.getView();
@@ -158,7 +182,10 @@ sap.ui.define(
 
           const oDetailModel = this.getViewModel();
           const oModel = this.getModel(ServiceNames.WORKTIME);
-          const mAppointeeData = this.getAppointeeData();
+          const sMenid = this.getCurrentMenuId();
+          const sPernr = this.getAppointeeProperty('Pernr');
+
+          this.byId('workTimeTable').clearSelection();
 
           this._pDetailDialog.then(async function (oDialog) {
             // 근무 사유
@@ -169,32 +196,46 @@ sap.ui.define(
             });
 
             oDetailModel.setProperty('/CauseType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aCauseList }));
-            oDetailModel.setProperty('/DialogData', {
-              Datum: new Date(),
-              Beguz: '18:00',
-              Abrst: '',
-              Ottyp: 'ALL',
-            });
 
-            oDetailModel.setProperty('/dialog/list', [...oDetailModel.getProperty('/detail/list')]);
+            const aDetailList = oDetailModel.getProperty('/detail/list');
+            let aList = [];
             let iLength = 1;
 
-            // 신청내역이 없을경우
-            if (!_.size(oDetailModel.getProperty('/dialog/list'))) {
-              oDetailModel.setProperty('/dialog/list', [
-                {
-                  Pernr: mAppointeeData.Pernr,
-                  Ename: mAppointeeData.Ename,
-                  Zzjikgbt: mAppointeeData.Zzjikgbt,
-                  Zzjikcht: mAppointeeData.Zzjikcht,
-                  Orgtx: mAppointeeData.Orgtx,
-                },
-              ]);
+            // 신청내역 없을때
+            if (_.isEmpty(aDetailList)) {
+              oDetailModel.setProperty('/DialogData', {
+                Datum: new Date(),
+                Beguz: '18:00',
+                Abrst: '',
+                Ottyp: 'ALL',
+              });
 
-              iLength = _.size(oDetailModel.getProperty('/dialog/list'));
+              // 대상자리스트
+              const aOtpList = await Client.getEntitySet(oModel, 'OtpernrList', {
+                Menid: sMenid,
+                Datum: new Date(),
+                Pernr: sPernr,
+              });
+
+              aList = aOtpList;
+              iLength = _.size(aOtpList);
             } else {
+              const [mList] = aDetailList;
+
+              oDetailModel.setProperty('/DialogData', {
+                Datum: mList.Datum,
+                Beguz: mList.Beguz,
+                Enduz: mList.Enduz,
+                Abrst: mList.Abrst,
+                Ottyp: mList.Ottyp,
+                Atrsn: mList.Atrsn,
+              });
+
+              aList = aDetailList;
+              iLength = _.size(aDetailList);
             }
 
+            oDetailModel.setProperty('/dialog/list', aList);
             oDetailModel.setProperty('/dialog/rowCount', iLength < 5 ? iLength : 5);
             AppUtils.setAppBusy(false, this);
             oDialog.open();
@@ -203,7 +244,21 @@ sap.ui.define(
       },
 
       // 신청내역 삭제
-      onDelDetail() {},
+      onDelDetail() {
+        const oDetailModel = this.getViewModel();
+
+        if (_.isEmpty(oDetailModel.getProperty('/DeletedRows'))) {
+          // 삭제할 데이터를 선택하세요.
+          return MessageBox.alert(this.getBundleText('MSG_00055'));
+        }
+
+        const aDiffList = _.difference(oDetailModel.getProperty('/detail/list'), oDetailModel.getProperty('/DeletedRows'));
+        const iLength = _.size(aDiffList);
+
+        oDetailModel.setProperty('/detail/list', aDiffList);
+        oDetailModel.setProperty('/detail/rowCount', iLength < 5 ? iLength : 5);
+        this.byId('workTimeTable').clearSelection();
+      },
 
       // InputField사원검색
       onSelectSuggest(oEvent) {
@@ -272,6 +327,12 @@ sap.ui.define(
         );
       },
 
+      // DialogAfterClose
+      onDialogAfClose() {
+        this.byId('dialogTable').clearSelection();
+        this.getViewModel().setProperty('/DeletedRows', []);
+      },
+
       // Dialog 저장
       onDialogSavBtn() {
         if (this.checkError()) {
@@ -289,12 +350,17 @@ sap.ui.define(
             e.Beguz = mDialogData.Beguz;
             e.Enduz = mDialogData.Enduz;
             e.Abrst = mDialogData.Abrst;
-            e.Ottyptx = mDialogData.Ottyp;
+            e.Ottyp = mDialogData.Ottyp;
+            e.Ottyptx = mDialogData.Ottyptx;
             e.Atrsn = mDialogData.Atrsn;
           })
           .value();
 
+        const iLength = _.size(aFilterList);
+
         oDetailModel.setProperty('/detail/list', aFilterList);
+        oDetailModel.setProperty('/detail/rowCount', iLength < 5 ? iLength : 5);
+        this.byId('detailDialog').close();
       },
 
       //  Dialig 추가
@@ -319,21 +385,69 @@ sap.ui.define(
       },
 
       // Dialog 삭제
-      onDialogDel() {},
+      onDialogDel() {
+        const oDetailModel = this.getViewModel();
+
+        if (_.isEmpty(oDetailModel.getProperty('/DeletedRows'))) {
+          // 삭제할 데이터를 선택하세요.
+          return MessageBox.alert(this.getBundleText('MSG_00055'));
+        }
+
+        const aDiffList = _.difference(oDetailModel.getProperty('/dialog/list'), oDetailModel.getProperty('/DeletedRows'));
+        const iLength = _.size(aDiffList);
+
+        oDetailModel.setProperty('/dialog/list', aDiffList);
+        oDetailModel.setProperty('/dialog/rowCount', iLength < 5 ? iLength : 5);
+        this.byId('dialogTable').clearSelection();
+      },
 
       // Dialog Close
       onDialogClose(oEvent) {
         oEvent.getSource().getParent().close();
       },
 
-      // 근무시간
-      onTimePicker() {
+      // Dialog 근무시간
+      async onTimePicker() {
         const oDetailModel = this.getViewModel();
         const mDialogData = oDetailModel.getProperty('/DialogData');
-        let iWorkTime = _.subtract(mDialogData.Enduz.replace(':', ''), mDialogData.Beguz.replace(':', ''));
 
-        iWorkTime = Math.sign(iWorkTime) === -1 ? iWorkTime + 2400 : iWorkTime;
-        oDetailModel.setProperty('/DialogData/Abrst', !iWorkTime ? '' : _.toString(iWorkTime));
+        if (!mDialogData.Enduz || !mDialogData.Beguz) {
+          return;
+        }
+
+        // 초과시간
+        const oOverTime = await this.overTime();
+
+        oDetailModel.setProperty('/DialogData/Abrst', oOverTime.Abrst);
+      },
+
+      // Dialog 근무일
+      async onWorkDatePicker() {
+        const oDetailModel = this.getViewModel();
+
+        if (!oDetailModel.getProperty('/DialogData/Datum')) {
+          return;
+        }
+
+        // 초과시간
+        const oOverTime = await this.overTime();
+
+        oDetailModel.setProperty('/DialogData/Abrst', oOverTime.Abrst);
+      },
+
+      // Dialog 초과근무시간
+      overTime() {
+        const oDetailModel = this.getViewModel();
+        const mDialogData = oDetailModel.getProperty('/DialogData');
+        const oModel = this.getModel(ServiceNames.WORKTIME);
+        const mPayLoad = {
+          Pernr: this.getAppointeeProperty('Pernr'),
+          Datum: mDialogData.Datum,
+          Beguz: mDialogData.Beguz.replace(':', ''),
+          Enduz: mDialogData.Enduz.replace(':', ''),
+        };
+
+        return Client.create(oModel, 'OtWorkApply', mPayLoad);
       },
 
       checkError() {
@@ -352,12 +466,30 @@ sap.ui.define(
           return true;
         }
 
+        const aList = oDetailModel.getProperty('/dialog/list');
+        // 동일사번
+        if (
+          _.chain(aList)
+            .map((e) => {
+              return (e.Pernr = _.trimStart(e.Pernr, '0'));
+            })
+            .uniq()
+            .size()
+            .value() !== _.size(aList)
+        ) {
+          MessageBox.alert(this.getBundleText('MSG_27006'));
+          return true;
+        }
+
         return false;
       },
 
       // 신청
       onApplyBtn() {
-        if (this.checkError('C')) return;
+        if (_.isEmpty(this.getViewModel().getProperty('/detail/list'))) {
+          // 신청내역을 등록하세요.
+          return MessageBox.alert(this.getBundleText('MSG_27007'));
+        }
 
         // {신청}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
@@ -373,30 +505,32 @@ sap.ui.define(
               AppUtils.setAppBusy(true, this);
 
               const oDetailModel = this.getViewModel();
-              const sAppno = oDetailModel.getProperty('/FormData/Appno');
-
-              if (!sAppno) {
-                const sAppno = await Appno.get.call(this);
-
-                oDetailModel.setProperty('/FormData/Appno', sAppno);
-                oDetailModel.setProperty('/FormData/Appdt', new Date());
-              }
-
-              const mFormData = oDetailModel.getProperty('/FormData');
+              const sAppno = await Appno.get.call(this);
 
               // FileUpload
               if (!!AttachFileAction.getFileCount.call(this)) {
-                await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
+                await AttachFileAction.uploadFile.call(this, sAppno, this.getApprovalType());
               }
 
               const oModel = this.getModel(ServiceNames.WORKTIME);
+              const aDetailList = _.each(oDetailModel.getProperty('/detail/list'), (e) => {
+                e.Beguz = e.Beguz.replace(':', '');
+                e.Enduz = e.Enduz.replace(':', '');
+              });
               let oSendObject = {
-                ...mFormData,
+                ...aDetailList[0],
+                Appno: sAppno,
+                Appda: new Date(),
                 Menid: this.getCurrentMenuId(),
+                Prcty: 'C',
+                OtWorkNav: aDetailList,
               };
 
-              await Client.create(oModel, 'OtWorkApply', oSendObject);
+              const oUrl = await Client.deep(oModel, 'OtWorkApply', oSendObject);
 
+              if (oUrl.ZappUrl) {
+                window.open(oUrl.ZappUrl, '_blank');
+              }
               // {신청}되었습니다.
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
                 onClose: () => {
@@ -430,7 +564,8 @@ sap.ui.define(
               const oDetailModel = this.getViewModel();
               const oModel = this.getModel(ServiceNames.WORKTIME);
 
-              await Client.remove(oModel, 'OtWorkApply', { Appno: oDetailModel.getProperty('/FormData/Appno') });
+              const [aDetailList] = oDetailModel.getProperty('/detail/list');
+              await Client.remove(oModel, 'OtWorkApply', { Appno: aDetailList.Appno });
 
               // {삭제}되었습니다.
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
@@ -450,11 +585,11 @@ sap.ui.define(
       // AttachFileTable Settings
       settingsAttachTable() {
         const oDetailModel = this.getViewModel();
-        const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
-        const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
+        const [aDetailList] = oDetailModel.getProperty('/detail/list');
+        const sAppno = _.isEmpty(aDetailList) ? '' : aDetailList.Appno;
 
         AttachFileAction.setAttachFile(this, {
-          Editable: !sStatus,
+          Editable: oDetailModel.getProperty('/Fixed'),
           Type: this.getApprovalType(),
           Appno: sAppno,
           Max: 10,

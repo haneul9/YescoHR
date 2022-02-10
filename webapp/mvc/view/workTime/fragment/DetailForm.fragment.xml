@@ -5,16 +5,16 @@
     <HBox alignItems="Center" class="table-toolbar" justifyContent="SpaceBetween">
       <Title level="H2" text="{i18n>LABEL_00129}" />
       <HBox>
-        <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" press=".onAddDetail" class="sapUiTinyMarginEnd" />
-        <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onDelDetail" />
+        <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" visible="{/Fixed}" press=".onAddDetail" class="sapUiTinyMarginEnd" />
+        <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" visible="{/Fixed}" press=".onDelDetail" />
       </HBox>
     </HBox>
-    <table:Table id="workTimeTable" selectionMode="{/detail/listMode}" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/detail/list}" visibleRowCount="{/detail/rowCount}" noData="{i18n>MSG_00001}">
+    <table:Table id="workTimeTable" rowSelectionChange=".onRowSelection" selectionMode="{/detail/listMode}" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/detail/list}" visibleRowCount="{/detail/rowCount}" noData="{i18n>MSG_00001}">
       <table:columns>
         <table:Column width="90px">
           <Label text="{i18n>LABEL_00209}" />
           <table:template>
-            <Text text="{Pernr}" width="100%" textAlign="Center" />
+            <Text text="{ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="90px">
@@ -56,10 +56,7 @@
         <table:Column width="70px">
           <Label text="{i18n>LABEL_27007}" />
           <table:template>
-            <Text text="{
-                path: 'Abrst',
-                formatter: '.formatTime'
-            }" width="100%" textAlign="Center" />
+            <Text text="{Abrst}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="auto">

@@ -3,7 +3,7 @@
   xmlns:table="sap.ui.table"
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
-  <Dialog id="detailDialog" title="{i18n>LABEL_27001}" contentWidth="1100px" contentHeight="auto">
+  <Dialog id="detailDialog" afterClose=".onDialogAfClose" title="{i18n>LABEL_27001}" contentWidth="1100px" contentHeight="auto">
     <buttons>
       <Button text="{i18n>LABEL_00103}" type="Emphasized" press=".onDialogSavBtn" />
       <Button text="{i18n>LABEL_00115}" press=".onDialogClose" />
@@ -13,17 +13,14 @@
         <grid:CSSGrid gridTemplateColumns="1fr 2fr 1fr 3fr" gridGap="1px 0" class="form-grid">
           <Label text="{i18n>LABEL_27004}"/>
           <HBox>
-            <custom:DatePicker dateValue="{ path: '/DialogData/Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date required" />
+            <custom:DatePicker dateValue="{ path: '/DialogData/Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" change=".onWorkDatePicker" class="sapIcon_Date required" />
           </HBox>
           <Label text="{i18n>LABEL_27009}"/>
           <HBox>
             <TimePicker width="110px" value="{/DialogData/Beguz}" change=".onTimePicker" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" minutesStep="5" class="sapIcon_Time required" />
             <Text text="~" />
             <TimePicker width="110px" value="{/DialogData/Enduz}" change=".onTimePicker" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" minutesStep="5" class="sapIcon_Time required" />
-            <Text text="{
-                path: '/DialogData/Abrst',
-                formatter: '.formatTime'
-            }" />
+            <Text text="{/DialogData/Abrst}" />
           </HBox>
           <Label text="{i18n>LABEL_00154}"/>
           <HBox>
@@ -45,7 +42,7 @@
             <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onDialogDel" />
           </HBox>
         </HBox>
-        <table:Table id="dialogTable" selectionMode="{/dialog/listMode}" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/dialog/list}" visibleRowCount="{/dialog/rowCount}" noData="{i18n>MSG_00001}">
+        <table:Table id="dialogTable" rowSelectionChange=".onRowSelection" selectionMode="{/dialog/listMode}" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/dialog/list}" visibleRowCount="{/dialog/rowCount}" noData="{i18n>MSG_00001}">
           <table:columns>
             <table:Column width="auto">
               <Label text="{i18n>LABEL_00209}" />
