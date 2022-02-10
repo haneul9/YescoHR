@@ -37,6 +37,8 @@ sap.ui.define(
 
       onBeforeShow() {
         const oViewModel = new JSONModel({
+          minDate: moment(`${moment().year()}-01-01`).toDate(),
+          maxDate: moment(`${moment().year()}-12-31`).toDate(),
           FormData: {},
           HealthType: [],
           busy: false,
@@ -89,10 +91,12 @@ sap.ui.define(
             Endda: mListData.Endda,
             Seqnr: sDataKey,
           };
-          const aCareDetail = await Client.getEntitySet(oModel, 'HealthCareContents', mPayLoad);
-          aCareDetail[0].Pyear = moment(aCareDetail[0].Pyear)._d;
+          const [aCareDetail] = await Client.getEntitySet(oModel, 'HealthCareContents', mPayLoad);
+          aCareDetail.Pyear = moment(aCareDetail.Pyear)._d;
 
-          oDetailModel.setProperty('/FormData', aCareDetail[0]);
+          oDetailModel.setProperty('/FormData', aCareDetail);
+          oDetailModel.setProperty('/minDate', moment(`${aCareDetail.Gjahr}-01-01`).toDate());
+          oDetailModel.setProperty('/maxDate', moment(`${aCareDetail.Gjahr}-12-31`).toDate());
         } catch (oError) {
           this.debug(oError);
           AppUtils.handleError(oError);

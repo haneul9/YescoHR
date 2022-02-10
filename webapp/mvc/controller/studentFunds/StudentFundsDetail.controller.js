@@ -10,6 +10,7 @@ sap.ui.define(
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/AttachFileAction',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/exceptions/ODataReadError',
@@ -28,6 +29,7 @@ sap.ui.define(
     ComboEntry,
     TextUtils,
     AttachFileAction,
+    Client,
     ServiceNames,
     MessageBox,
     ODataReadError,
@@ -45,8 +47,9 @@ sap.ui.define(
         const oViewModel = new JSONModel({
           ViewKey: '',
           menId: '',
+          AmountRate: 0,
           FormData: {
-            Forsch: false,
+            Forsch: '',
           },
           AppTarget: [],
           AcademicSort: [],
@@ -173,13 +176,21 @@ sap.ui.define(
         let iCostG = parseInt(oFormData.ZbetTotl) || 0;
 
         iCostG = iCostA + iCostB + iCostC + iCostD + iCostE + iCostF;
+
         oDetailModel.setProperty('/FormData/ZbetTotl', String(iCostG));
 
-        if (!!oLimitData && !!oLimitData.Zbetrg && oLimitData.Zbetrg !== '0' && iCostG > parseInt(oLimitData.Zbetrg)) {
-          oDetailModel.setProperty('/FormData/ZpayAmt', oLimitData.Zbetrg);
-          oDetailModel.setProperty('/LimitAmountMSG', true);
+        const iCostH = _.multiply(iCostG, _.divide(oDetailModel.getProperty('/AmountRate'), 100));
+
+        if (oFormData.Forsch === 'X') {
+          if (!!oLimitData && !!oLimitData.Zbetrg && oLimitData.Zbetrg !== '0' && iCostH > parseInt(oLimitData.Zbetrg)) {
+            oDetailModel.setProperty('/FormData/ZpayAmt', oLimitData.Zbetrg);
+            oDetailModel.setProperty('/LimitAmountMSG', true);
+          } else {
+            oDetailModel.setProperty('/FormData/ZpayAmt', String(iCostH));
+            oDetailModel.setProperty('/LimitAmountMSG', false);
+          }
         } else {
-          oDetailModel.setProperty('/FormData/ZpayAmt', String(iCostG));
+          oDetailModel.setProperty('/FormData/ZpayAmt', String(iCostH));
           oDetailModel.setProperty('/LimitAmountMSG', false);
         }
       },
@@ -403,25 +414,35 @@ sap.ui.define(
         let aList2 = [];
 
         if (sKey === '00') {
-          aList1.forEach((e) => {
-            if (e.Zcode === '06') {
-              aList2.push(e);
-            }
-          });
+          // aList1.forEach((e) => {
+          //   if (e.Zcode === '06') {
+          //     aList2.push(e);
+          //   }
+          // });
+          const oModel = this.getModel(ServiceNames.BENEFIT);
+          const mPayLoad = {
+            Cdnum: 'BE0006',
+            Werks: this.getAppointeeProperty('Werks'),
+            Datum: new Date(),
+            Grcod: 'BE000002',
+            Sbcod: 'BONIN',
+          };
+          // 학력구분 호출
+          const aStuList = await Client.getEntitySet(oModel, 'BenefitCodeList', mPayLoad);
 
           if (!oDetailModel.getProperty('/FormData/ZappStatAl')) {
-            oDetailModel.setProperty('/FormData/Slart', aList2[0].Zcode);
-            const aList = await this.getQuarterList(aList2[0].Zcode);
+            const aList = await this.getQuarterList(aStuList[0].Zcode);
 
             oDetailModel.setProperty('/QuarterList', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
           }
 
-          aList2 = aList2;
+          aList2 = aStuList;
         } else {
           aList2 = aList1;
         }
 
         oDetailModel.setProperty('/AcademicSort', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList2 }));
+        oDetailModel.setProperty('/FormData/Slart', 'ALL');
       },
 
       // 지원횟수 조회
@@ -497,6 +518,15 @@ sap.ui.define(
           }
         }
 
+        oDetailModel.setProperty(
+          '/AmountRate',
+          _.chain(oDetailModel.getProperty('/AcademicSort'))
+            .find((e) => {
+              return oEvent.getSource().getSelectedKey() === e.Zcode;
+            })
+            .get('Zchar1')
+            .value()
+        );
         this.getApplyNumber();
         this.getSupAmount();
 

@@ -13,7 +13,7 @@
             </VBox>
             <Label text="{i18n>LABEL_21003}" />
             <VBox>
-                <custom:DatePicker dateValue="{ path: '/FormData/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{/Fixed}" class="required"/>
+                <custom:DatePicker minDate="{/minDate}" maxDate="{/maxDate}" dateValue="{ path: '/FormData/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{/Fixed}" class="required"/>
             </VBox>
             <Label text="{i18n>LABEL_21004}"/>
             <VBox>
