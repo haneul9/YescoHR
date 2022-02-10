@@ -1063,6 +1063,7 @@ sap.ui.define(
           this.byId('DetailHisDialog').close();
         } catch (oError) {
           AppUtils.handleError(oError);
+          oDetailModel.setProperty('/DialogData/Appno2', '');
         } finally {
           AppUtils.setAppBusy(false, this);
         }
@@ -1125,6 +1126,7 @@ sap.ui.define(
           this.byId('DetailHisDialog').close();
         } catch (oError) {
           AppUtils.handleError(oError);
+          oDetailModel.setProperty('/DialogData/Appno2', '');
         } finally {
           AppUtils.setAppBusy(false, this);
         }

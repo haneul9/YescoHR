@@ -35,6 +35,7 @@ sap.ui.define(
           Hass: this.isHass(),
           selectedKey: 'A',
           Competency: {
+            Title: '',
             Defin: '',
             CompTree: [],
             Level: 'level5',
@@ -90,13 +91,6 @@ sap.ui.define(
             // 직무기술서
           } else {
             // 역량정의서
-            oViewModel.setProperty('/Competency', {
-              Defin: '',
-              CompTree: [],
-              Level: '',
-              Count: 0,
-              BehaviIndicat: [],
-            });
             const oModel = this.getModel(ServiceNames.APPRAISAL);
             const mPayLoad = {
               Mode: '1',
@@ -105,7 +99,14 @@ sap.ui.define(
             const aTreeList = await Client.getEntitySet(oModel, 'CompAppTree', mPayLoad);
             const aFormatTree = this.oDataChangeTree(aTreeList);
 
-            oViewModel.setProperty('/Competency/CompTree', aFormatTree);
+            oViewModel.setProperty('/Competency', {
+              Title: aTreeList[0].Stext,
+              Defin: '',
+              CompTree: aFormatTree,
+              Level: '',
+              Count: 0,
+              BehaviIndicat: [],
+            });
           }
         } catch (oError) {
           AppUtils.handleError(oError);
@@ -120,6 +121,8 @@ sap.ui.define(
         const sPath = oEvent.getParameter('listItem').getBindingContext().getPath();
         const oSelectedItem = oViewModel.getProperty(sPath);
         const oModel = this.getModel(ServiceNames.APPRAISAL);
+
+        oViewModel.setProperty('/Competency/Title', oSelectedItem.Stext);
 
         if (oSelectedItem.Otype === 'QK') {
           return;
