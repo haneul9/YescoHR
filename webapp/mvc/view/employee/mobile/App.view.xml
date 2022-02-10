@@ -1,0 +1,4 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.employee.mobile.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+</mvc:View>

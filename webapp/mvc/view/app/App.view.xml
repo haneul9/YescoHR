@@ -2,7 +2,7 @@
   xmlns="sap.m"
   xmlns:custom="sap.ui.yesco.control"
   xmlns:mvc="sap.ui.core.mvc" displayBlock="true">
-  <OverflowToolbar id="appMenuToolbar" asyncMode="true" busy="{appModel>/isMenuBusy}" busyIndicatorDelay="0" class="app-menu-toolbar" height="60px">
+  <OverflowToolbar id="appMenuToolbar" asyncMode="true" busy="{appModel>/isMenuBusy}" busyIndicatorDelay="0" class="app-menu-toolbar" height="60px" visible="{= !${appModel>/isMobile} }">
     <ImageContent id="logo-image" src="{ path: 'sessionModel>/Werks', formatter: '.getLogoPath' }" description="{sessionModel>/Pbtxt} eHR Home" press=".navToHome" class="home-logo">
       <layoutData>
         <OverflowToolbarLayoutData priority="NeverOverflow" />
@@ -44,4 +44,14 @@
   </OverflowToolbar>
 
   <App id="app" class="app-body" autoFocus="false" busy="{appModel>/isAppBusy}" busyIndicatorDelay="0" />
+
+  <OverflowToolbar id="appBottomToolbar" asyncMode="true" busy="{appModel>/isMenuBusy}" busyIndicatorDelay="0" class="app-menu-toolbar" height="60px" visible="{appModel>/isMobile}">
+    <HBox width="100%" justifyContent="SpaceAround">
+      <Image src="asset/image/icon_employee.svg" width="2rem" />
+      <Image src="asset/image/icon_employee.svg" width="2rem" />
+      <Image src="asset/image/icon_employee.svg" width="2rem" />
+      <Image src="asset/image/icon_employee.svg" width="2rem" />
+      <Image src="asset/image/icon_employee.svg" width="2rem" />
+    </HBox>
+  </OverflowToolbar>
 </mvc:View>

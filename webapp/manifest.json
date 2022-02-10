@@ -203,7 +203,9 @@
         { "pattern": "sampleVacationIndicator", "name": "sampleVacationIndicator", "target": "sampleVacationIndicator" },
         { "pattern": "sampleOrgChart", "name": "sampleOrgChart", "target": "sampleOrgChart" },
         { "pattern": "sampleYearPlan", "name": "sampleYearPlan", "target": "sampleYearPlan" },
-        { "pattern": "samplePortlets", "name": "samplePortlets", "target": "samplePortlets" }
+        { "pattern": "samplePortlets", "name": "samplePortlets", "target": "samplePortlets" },
+
+        { "pattern": "mobile/employee/:pernr:/:orgtx:/:orgeh:", "name": "mobile/employee", "target": "mobile/employee" }
       ],
       "targets": {
         "home": { "viewId": "home", "viewPath": "sap.ui.yesco.mvc.view.home", "viewName": "Portlets" },
@@ -293,6 +295,8 @@
         
         "paystub": { "viewId": "paystub", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "List" },
         "paystubDetail": { "viewId": "paystubDetail", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "Detail" },
+
+        "mobile/employee": { "viewId": "mobile_employee", "viewPath": "sap.ui.yesco.mvc.view.employee.mobile", "viewName": "App" },
 
         "sampleComponents": { "viewId": "sampleComponents", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Components", "title": "Components" },
         "sampleTimeline": { "viewId": "sampleTimeline", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Timeline", "title": "Timeline" },
