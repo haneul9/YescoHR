@@ -2,8 +2,8 @@
   xmlns:f="sap.f"
   xmlns:core="sap.ui.core">
   <VBox class="portlet portlet-box portlet-p03p04" tooltip="{=
-      ${selectedMembersButton} === 'P03' ? ${orgMembers/tooltip} : (
-      ${selectedMembersButton} === 'P04' ? ${myMembers/tooltip} : ''
+      ${selectedMembersButton} === 'ORG' ? ${orgMembers/tooltip} : (
+      ${selectedMembersButton} === 'MY' ? ${myMembers/tooltip} : ''
     )}" busy="{busy}" busyIndicatorDelay="0">
     <customData>
       <core:CustomData key="portlet-switchable" value="{switchable}" />
@@ -13,39 +13,39 @@
     </layoutData>
     <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
       <Title level="H2" text="{=
-        ${selectedMembersButton} === 'P03' ? ${orgMembers/title} : (
-        ${selectedMembersButton} === 'P04' ? ${myMembers/title} : ''
+        ${selectedMembersButton} === 'ORG' ? ${orgMembers/title} : (
+        ${selectedMembersButton} === 'MY' ? ${myMembers/title} : ''
       )}" visible="{= !${hideTitle} }" />
       <SegmentedButton selectedKey="{selectedMembersButton}" visible="{= !!${orgMembersActive} &amp;&amp; !!${myMembersActive} }">
         <items>
-          <SegmentedButtonItem text="{i18n>LABEL_01111}" key="P03" />
-          <SegmentedButtonItem text="{i18n>LABEL_01112}" key="P04" />
+          <SegmentedButtonItem text="{i18n>LABEL_01111}" key="ORG" />
+          <SegmentedButtonItem text="{i18n>LABEL_01112}" key="MY" />
         </items>
       </SegmentedButton>
-      <Button icon="asset/image/icon_write.png" type="Transparent" class="icon-button" visible="{= !!${myMembersActive} &amp;&amp; ${selectedMembersButton} === 'P04' }" press=".onPressMyMemberAdd" />
+      <Button icon="asset/image/icon_write.png" type="Transparent" class="icon-button" visible="{= !!${myMembersActive} &amp;&amp; ${selectedMembersButton} === 'MY' }" press=".onPressMyMemberAdd" />
       <Text text="">
         <layoutData>
           <FlexItemData growFactor="1" />
         </layoutData>
       </Text>
       <Button visible="{=
-        ${selectedMembersButton} === 'P03' ? ${orgMembers/switchable} : (
-        ${selectedMembersButton} === 'P04' ? ${myMembers/switchable} : false
+        ${selectedMembersButton} === 'ORG' ? ${orgMembers/switchable} : (
+        ${selectedMembersButton} === 'MY' ? ${myMembers/switchable} : false
       ) }" icon="sap-icon://decline" type="Transparent" class="icon-button portlet-close-icon" press=".onPressClose" />
       <Button visible="{=
-        ${selectedMembersButton} === 'P03' ? ${orgMembers/hasLink} : (
-        ${selectedMembersButton} === 'P04' ? ${myMembers/hasLink} : false
+        ${selectedMembersButton} === 'ORG' ? ${orgMembers/hasLink} : (
+        ${selectedMembersButton} === 'MY' ? ${myMembers/hasLink} : false
       ) }" icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" press=".onPressLink" />
     </HBox>
     <HBox class="portlet-body">
-      <ScrollContainer visible="{= !!${orgMembersActive} &amp;&amp; ${selectedMembersButton} === 'P03' }">
+      <ScrollContainer visible="{= !!${orgMembersActive} &amp;&amp; ${selectedMembersButton} === 'ORG' }">
         <layoutData>
           <FlexItemData growFactor="1" maxWidth="100%" />
         </layoutData>
         <HBox width="100%" class="no-data" visible="{= ${orgMembers/listCount} === 0 }">
           <Text text="{i18n>MSG_00001}" />
         </HBox>
-        <VBox width="100%" items="{orgMembers/list}" visible="{= ${orgMembers/listCount} &gt; 0 }" class="portlet-org-members">
+        <VBox width="100%" items="{orgMembers/list}" visible="{= ${orgMembers/listCount} &gt; 0 }" class="portlet-members">
           <HBox width="100%" alignItems="Center">
             <Image src="{Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="30px" height="30px" />
             <Text text="{Ename}" tooltip="{Ename}" wrapping="false" class="portlet-member-name" />
@@ -63,14 +63,14 @@
           </HBox>
         </VBox>
       </ScrollContainer>
-      <ScrollContainer visible="{= !!${myMembersActive} &amp;&amp; ${selectedMembersButton} === 'P04' }">
+      <ScrollContainer visible="{= !!${myMembersActive} &amp;&amp; ${selectedMembersButton} === 'MY' }">
         <layoutData>
           <FlexItemData growFactor="1" maxWidth="100%" />
         </layoutData>
         <HBox width="100%" class="no-data" visible="{= ${myMembers/listCount} === 0 }">
           <Text text="{i18n>MSG_00001}" />
         </HBox>
-        <VBox width="100%" items="{myMembers/list}" visible="{= ${myMembers/listCount} &gt; 0 }" class="portlet-my-members">
+        <VBox width="100%" items="{myMembers/list}" visible="{= ${myMembers/listCount} &gt; 0 }" class="portlet-members my-members">
           <HBox width="100%" alignItems="Center">
             <Image src="{Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="30px" height="30px" />
             <Text text="{Ename}" tooltip="{Ename}" wrapping="false" class="portlet-member-name" />

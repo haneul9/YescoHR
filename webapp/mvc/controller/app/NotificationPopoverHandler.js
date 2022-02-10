@@ -73,14 +73,15 @@ sap.ui.define(
 
       async showContentData() {
         const aContentData = await this.readContentData();
-        const mContentData = this.transformContentData(aContentData);
+        const { unreadCount, list, listCount } = this.transformContentData(aContentData);
 
-        const iUnreadCount = Math.min(mContentData.unreadCount, 99);
+        const iUnreadCount = Math.min(unreadCount, 99);
         const oNotificationModel = this.getNotificationModel();
-        oNotificationModel.setProperty('/list', mContentData.list);
-        oNotificationModel.setProperty('/listCount', mContentData.listCount);
+
+        oNotificationModel.setProperty('/list', list);
+        oNotificationModel.setProperty('/listCount', listCount);
         oNotificationModel.setProperty('/unreadCount', `${iUnreadCount > 99 ? '+' : ''}${iUnreadCount}`);
-        oNotificationModel.setProperty('/showUnreadCount', mContentData.unreadCount > 0);
+        oNotificationModel.setProperty('/showUnreadCount', unreadCount > 0);
       },
 
       async readContentData() {
@@ -118,12 +119,11 @@ sap.ui.define(
 
       clearContentData() {
         const oNotificationModel = this.getNotificationModel();
-        const iUnreadCount = oNotificationModel.getProperty('/unreadCount');
-        const bShowUnreadCount = oNotificationModel.getProperty('/showUnreadCount');
+        const { unreadCount, showUnreadCount } = oNotificationModel.getProperty('/');
 
         oNotificationModel.setData(this.getInitialData());
-        oNotificationModel.setProperty('/unreadCount', iUnreadCount);
-        oNotificationModel.setProperty('/showUnreadCount', bShowUnreadCount);
+        oNotificationModel.setProperty('/unreadCount', unreadCount);
+        oNotificationModel.setProperty('/showUnreadCount', showUnreadCount);
       },
 
       onUpdateStarted(oEvent) {

@@ -14,8 +14,7 @@ sap.ui.define(
      */
     return P03P04PortletCommonHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.P03PortletHandler', {
       setInherency() {
-        this.SEGMENTED_BUTTON_KEY = 'P03';
-        this.SIBLING_BUTTON_KEY = 'P04';
+        this.SELECTED_BUTTON = 'ORG';
         this.ROOT_PATH = 'orgMembers';
         this.ACTIVE_PATH = 'orgMembersActive';
         this.ODATA_ENTITY_TYPE = 'PortletOrgInfo';
