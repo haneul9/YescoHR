@@ -556,6 +556,7 @@ sap.ui.define(
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
               } catch (oError) {
                 AppUtils.handleError(oError);
+                oDetailModel.setProperty('/FormData/Appno', '');
               } finally {
                 AppUtils.setAppBusy(false, this);
               }
@@ -615,6 +616,7 @@ sap.ui.define(
                 });
               } catch (oError) {
                 AppUtils.handleError(oError);
+                oDetailModel.setProperty('/FormData/Appno', '');
               } finally {
                 AppUtils.setAppBusy(false, this);
               }

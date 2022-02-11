@@ -582,6 +582,8 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const oFormData = oDetailModel.getProperty('/FormData');
 
+        oDetailModel.setProperty('/FormData/ZbetSuf', !oFormData.ZbetSuf ? '0' : oFormData.ZbetSuf);
+
         // 신청대상
         if (oFormData.Zzobjps === 'ALL' || !oFormData.Zzobjps) {
           MessageBox.alert(this.getBundleText('MSG_03007'));
