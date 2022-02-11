@@ -45,7 +45,7 @@ sap.ui.define(
         },
         2140: { url: '', key: [{ key: 'appno', value: 'Appno' }] }, // 통합굴착야간
         2310: {
-          url: '',
+          url: 'leavePlan',
           key: [
             { key: 'Plnyy', value: 'Plnyy' },
             { key: 'Seqno', value: 'Seqno' },
@@ -151,7 +151,7 @@ sap.ui.define(
       setNavigationUrl() {
         const oMenuData = AppUtils.getAppComponent().getMenuModel().getData();
 
-        _.forOwn(this.NAVIGATION, (value, key, object) => _.set(object, [key, 'url'], `${_.get(oMenuData, ['menidToProperties', key, 'Mnurl'])}-detail`));
+        _.forOwn(this.NAVIGATION, (value, key, object) => _.set(object, [key, 'url'], !value.url ? `${_.get(oMenuData, ['menidToProperties', key, 'Mnurl'])}-detail` : value.url));
       },
 
       async onSearch() {

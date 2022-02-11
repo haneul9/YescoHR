@@ -1284,7 +1284,8 @@ sap.ui.define(
 
           oDetailModel.setProperty('/ReWriteStat', true);
         } else {
-          const bRewrit = (!mRowData.ZappStat || mRowData.ZappStat === 'F') && !oDetailModel.getProperty('/FormData/Lnsta');
+          const sLnsta = oDetailModel.getProperty('/FormData/Lnsta');
+          const bRewrit = (!mRowData.ZappStat || mRowData.ZappStat === 'F') && (!sLnsta || sLnsta === '10');
 
           oDetailModel.setProperty('/ReWriteStat', bRewrit);
           oDetailModel.setProperty('/DialogData', _.cloneDeep(mRowData));
