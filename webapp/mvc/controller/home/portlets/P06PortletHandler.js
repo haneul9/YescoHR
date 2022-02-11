@@ -143,6 +143,8 @@ sap.ui.define(
           animation: 1,
           refreshInstantly: 1,
           theme: 'ocean',
+          cylFillColor: '#30c4ee', // 3eb4dd
+          cylYScale: 10,
         };
       },
 

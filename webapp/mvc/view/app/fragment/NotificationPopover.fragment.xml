@@ -15,20 +15,22 @@
       </HBox>
     </custom:customHeader>
     <custom:content>
-      <HBox height="3rem" justifyContent="Center" visible="{= ${listCount} === 0 }">
-        <Text text="{i18n>MSG_00001}" />
+      <HBox height="50px" justifyContent="Center" alignItems="Start" visible="{= ${listCount} === 0 }" class="portlet-body mb-20-px">
+        <HBox width="100%" class="no-data">
+          <Text text="{i18n>MSG_00001}" />
+        </HBox>
       </HBox>
-      <List items="{ path: 'list', templateShareable: false }" visible="{= ${listCount} &gt; 0 }" updateStarted=".onUpdateStarted" updateFinished=".onUpdateFinished" rememberSelections="false" showUnread="true" growing="true" growingScrollToLoad="true" growingThreshold="10" showNoData="false">
+      <List items="{list}" visible="{= ${listCount} &gt; 0 }" updateFinished=".onUpdateFinished" rememberSelections="false" showUnread="true" growingScrollToLoad="true" growingThreshold="5" showNoData="false">
         <CustomListItem unread="{= ${Checked} !== 'X' }">
           <HBox alignItems="Center">
-            <ToggleButton icon="{= ${Pinned} === 'X' ? 'asset/image/icon_pinned.svg' : 'asset/image/icon_noti2.svg' }" pressed="{= ${Pinned} === 'X' }" press=".onPressNotificationPin" width="1rem" class="icon-button pin-toggle-icon">
+            <ToggleButton icon="{= ${Pinned} === 'X' ? 'asset/image/icon_pinned.svg' : 'asset/image/icon_pin.svg' }" pressed="{= ${Pinned} === 'X' }" press=".onPressNotificationPin" width="1rem" class="icon-button pin-toggle-icon">
               <layoutData>
                 <FlexItemData alignSelf="Start" />
               </layoutData>
             </ToggleButton>
             <VBox class="subject">
               <Text text="{Msg}" />
-              <Text text="{ path: 'Adate', type: 'sap.ui.yesco.mvc.model.type.Date' } { path: 'Atime', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } }" class="notification-datetime" />
+              <Text text="{AdateFormatted} { path: 'Atime', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } }" class="notification-datetime" />
             </VBox>
             <core:Icon width="1rem" size=".8rem" src="sap-icon://inspect" visible="{= !!${Menid} }" press=".onPressNotificationLink" />
             <Text text="">

@@ -21,11 +21,11 @@ server:
         changeOrigin: true
         debug: true
         langu: 'KO'
-        client: '100'
+        client: '300'
         baseUri: 'https://yeshrsapdev.yescoholdings.com:8443/'
         query:
           saml2: 'disabled'
-          sap-client: '100'
+          sap-client: '300'
 resources:
   configuration:
     propertiesFileSourceEncoding: UTF-8

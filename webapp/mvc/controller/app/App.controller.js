@@ -6,6 +6,8 @@ sap.ui.define(
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/app/NotificationPopoverHandler',
     'sap/ui/yesco/mvc/controller/app/control/Menus',
+    'sap/ui/yesco/mvc/model/type/Date', // XML expression binding용 type preloading
+    'sap/ui/yesco/mvc/model/type/Time',
   ],
   (
     // prettier 방지용 주석

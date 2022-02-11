@@ -78,10 +78,10 @@ sap.ui.define(
         const iUnreadCount = Math.min(unreadCount, 99);
         const oNotificationModel = this.getNotificationModel();
 
-        oNotificationModel.setProperty('/list', list);
-        oNotificationModel.setProperty('/listCount', listCount);
-        oNotificationModel.setProperty('/unreadCount', `${iUnreadCount > 99 ? '+' : ''}${iUnreadCount}`);
         oNotificationModel.setProperty('/showUnreadCount', unreadCount > 0);
+        oNotificationModel.setProperty('/unreadCount', `${unreadCount > 99 ? '+' : ''}${iUnreadCount}`);
+        oNotificationModel.setProperty('/listCount', listCount);
+        oNotificationModel.setProperty('/list', list);
       },
 
       async readContentData() {
@@ -100,10 +100,12 @@ sap.ui.define(
       transformContentData(aContentData) {
         let iUnreadCount = 0;
 
+        const sDTFMT = this.getController().getSessionProperty('DTFMT');
         aContentData.forEach((mData) => {
           delete mData.__metadata;
 
           mData.Menid = this.bMobile ? mData.MenidMobile : mData.MenidPc;
+          mData.AdateFormatted = moment(mData.Adate).format(sDTFMT);
 
           if (mData.Checked !== 'X') {
             iUnreadCount += 1;
@@ -126,12 +128,54 @@ sap.ui.define(
         oNotificationModel.setProperty('/showUnreadCount', showUnreadCount);
       },
 
-      onUpdateStarted(oEvent) {
-        this.debug(oEvent);
+      onUpdateFinished(oEvent) {
+        this.debug(oEvent, oEvent.mParameters);
+
+        const sReason = oEvent.getParameter('reason');
+        const iActual = oEvent.getParameter('actual');
+        const iTotal = oEvent.getParameter('total');
+        if (sReason === 'Growing' && iActual === iTotal) {
+          this.loadMoreContentData();
+        }
       },
 
-      onUpdateFinished(oEvent) {
-        this.debug(oEvent);
+      async loadMoreContentData() {
+        const aContentData = await this.readMoreContentData();
+        const { unreadCount, list, listCount } = this.transformContentData(aContentData);
+
+        const oNotificationModel = this.getNotificationModel();
+        const { unreadCount: iPrevUnreadCount, list: iPrevList, listCount: iPrevListCount } = oNotificationModel.getProperty('/');
+
+        const iUnreadCount = Math.min(unreadCount + Number(iPrevUnreadCount), 99);
+        iPrevList.push(...list);
+
+        oNotificationModel.setProperty('/showUnreadCount', iUnreadCount > 0);
+        oNotificationModel.setProperty('/unreadCount', `${iUnreadCount === 99 ? '+' : ''}${iUnreadCount}`);
+        oNotificationModel.setProperty('/listCount', listCount + iPrevListCount);
+        oNotificationModel.setProperty('/list', iPrevList);
+      },
+
+      async readMoreContentData() {
+        const oNotificationModel = this.getNotificationModel();
+        const bOnlyUnread = oNotificationModel.getProperty('/onlyUnread');
+        const aList = oNotificationModel.getProperty('/list') || [];
+
+        if (!aList.length) {
+          return;
+        }
+
+        // 화면에 존재하는 가장 오래된 알림의 일시를 구함, 화면 상에서 정렬이 변경되면 안되므로 전개구문으로 배열을 복사해서 정렬함
+        const [{ Adate, Atime }] = [...aList].sort((m1, m2) => m1.Adate.getTime() + m1.Atime.ms - m2.Adate.getTime() - m2.Atime.ms);
+
+        const oCommonModel = this.getController().getModel(ServiceNames.COMMON);
+        const mFilters = {
+          Mode: 'L',
+          Unide: bOnlyUnread ? 'X' : '',
+          Adate: Adate,
+          Atime: Atime,
+        };
+
+        return Client.getEntitySet(oCommonModel, 'AlarmCenter', mFilters);
       },
 
       async onChangeNotificationOnlyUnread(oEvent) {
