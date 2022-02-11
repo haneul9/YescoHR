@@ -741,7 +741,7 @@ sap.ui.define(
                 aGridData = oViewModel.getProperty('/PartList');
 
                 aGridData.forEach((e) => {
-                  if (!!e.Ztext) {
+                  if (!!e.Otype) {
                     aList.push(e);
                   }
                 });

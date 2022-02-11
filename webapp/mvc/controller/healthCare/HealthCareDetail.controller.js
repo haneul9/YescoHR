@@ -174,7 +174,13 @@ sap.ui.define(
               const mFormData = oDetailModel.getProperty('/FormData');
 
               await Client.create(oModel, 'HealthCareContents', mFormData);
-              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103')); // {저장}되었습니다.
+              
+              // {저장}되었습니다.
+              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'), {
+                onClose: () => {
+                  this.onNavBack();
+                },
+              });
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
