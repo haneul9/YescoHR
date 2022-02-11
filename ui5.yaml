@@ -15,6 +15,8 @@ server:
       mountPath: /proxy
       configuration:
         baseUri: 'https://yeshrsapdev.yescoholdings.com:8443'
+        username: UI5_MIDDLEWARE_SIMPLE_PROXY_USERNAME
+        password: UI5_MIDDLEWARE_SIMPLE_PROXY_PASSWORD
         query:
           saml2: 'disabled'
           sap-client: '100'
