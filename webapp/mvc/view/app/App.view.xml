@@ -26,8 +26,8 @@
     </GenericTile>
 
     <HBox alignItems="Center" class="notification-wrapper">
-      <Button id="notification-bell" type="Transparent" class="icon-button notification" press=".onPressNotificationPopoverOpen" tooltip="{i18n>LABEL_01002}" />
-      <custom:PressableLabel text="{notificationModel>/unreadCount}" visible="{= !!${notificationModel>/showUnreadCount} }" class="notification-count" press=".onPressNotificationPopoverOpen" displayOnly="true" textAlign="Center" />
+      <Button id="notification-bell" type="Transparent" class="icon-button notification" press=".onPressNotificationPopoverToggle" tooltip="{i18n>LABEL_01002}" />
+      <custom:PressableLabel text="{notificationModel>/unreadCount}" visible="{= !!${notificationModel>/showUnreadCount} }" class="notification-count" press=".onPressNotificationPopoverToggle" displayOnly="true" textAlign="Center" />
     </HBox>
 
     <Button type="Transparent" visible="{appModel>/isAtHome}" class="icon-button settings" press=".onPressPortletsP13nDialogOpen" tooltip="{i18n>LABEL_01003}">

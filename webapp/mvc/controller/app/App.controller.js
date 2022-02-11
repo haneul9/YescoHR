@@ -53,8 +53,10 @@ sap.ui.define(
         this.oAppMenu.moveToMenu('employee');
       },
 
-      onPressNotificationPopoverOpen(oEvent) {
-        this.oNotificationPopoverHandler.onPressNotificationOpenBy(oEvent.getSource());
+      onPressNotificationPopoverToggle(oEvent) {
+        oEvent.cancelBubble();
+
+        this.oNotificationPopoverHandler.onPopoverToggle();
       },
 
       onPressPortletsP13nDialogOpen() {

@@ -128,19 +128,24 @@ sap.ui.define(
         oNotificationModel.setProperty('/showUnreadCount', showUnreadCount);
       },
 
-      onUpdateFinished(oEvent) {
-        this.debug(oEvent, oEvent.mParameters);
+      onScroll(oEvent) {
+        const oPopoverScroll = oEvent.getParameter('target');
+        const iScrollMarginBottom = oPopoverScroll.scrollHeight - oPopoverScroll.scrollTop;
 
-        const sReason = oEvent.getParameter('reason');
-        const iActual = oEvent.getParameter('actual');
-        const iTotal = oEvent.getParameter('total');
-        if (sReason === 'Growing' && iActual === iTotal) {
+        if (iScrollMarginBottom === 338) {
+          this.setBusy(true);
+
           this.loadMoreContentData();
         }
       },
 
       async loadMoreContentData() {
         const aContentData = await this.readMoreContentData();
+        if (!aContentData.length) {
+          this.this.setBusy(false);
+          return;
+        }
+
         const { unreadCount, list, listCount } = this.transformContentData(aContentData);
 
         const oNotificationModel = this.getNotificationModel();
@@ -278,15 +283,15 @@ sap.ui.define(
         }
       },
 
-      onPressNotificationOpenBy() {
+      onPopoverToggle() {
         if (this.oNotificationPopover.isOpen()) {
-          this.onPressNotificationClose();
+          this.onPopoverClose();
         } else {
           this.oNotificationPopover.openBy(this.getController().byId('notification-bell'));
         }
       },
 
-      onPressNotificationClose() {
+      onPopoverClose() {
         this.oNotificationPopover.close();
       },
 

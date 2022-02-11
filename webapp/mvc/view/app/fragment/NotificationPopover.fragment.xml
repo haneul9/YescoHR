@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
-  xmlns:custom="sap.ui.yesco.common">
-  <custom:Popover contentWidth="490px" placement="Bottom" horizontalScrolling="false" class="notification-popover" busy="{busy}" busyIndicatorDelay="0" initialFocus="notification-popover-close">
+  xmlns:custom="sap.ui.yesco.control">
+  <custom:Popover contentWidth="490px" placement="Bottom" horizontalScrolling="false" class="notification-popover" busy="{busy}" busyIndicatorDelay="0" initialFocus="notification-popover-close" scroll=".onScroll">
     <custom:customHeader>
       <HBox height="75px" alignItems="Center" class="px-20-px">
         <Title text="{i18n>LABEL_01401}" level="H3"/>
@@ -20,7 +20,7 @@
           <Text text="{i18n>MSG_00001}" />
         </HBox>
       </HBox>
-      <List items="{list}" visible="{= ${listCount} &gt; 0 }" updateFinished=".onUpdateFinished" rememberSelections="false" showUnread="true" growingScrollToLoad="true" growingThreshold="5" showNoData="false">
+      <List items="{list}" visible="{= ${listCount} &gt; 0 }" rememberSelections="false" showUnread="true" showNoData="false">
         <CustomListItem unread="{= ${Checked} !== 'X' }">
           <HBox alignItems="Center">
             <ToggleButton icon="{= ${Pinned} === 'X' ? 'asset/image/icon_pinned.svg' : 'asset/image/icon_pin.svg' }" pressed="{= ${Pinned} === 'X' }" press=".onPressNotificationPin" width="1rem" class="icon-button pin-toggle-icon">
@@ -47,7 +47,7 @@
       <OverflowToolbar>
         <ToolbarSpacer/>
         <Button type="Emphasized" text="{i18n>LABEL_01406}" press=".onPressAllNotificationRead" visible="{= ${unreadCount} &gt; 0 }" />
-        <Button text="{i18n>LABEL_00115}" press=".onPressNotificationClose" id="notification-popover-close" />
+        <Button text="{i18n>LABEL_00115}" press=".onPopoverClose" id="notification-popover-close" />
       </OverflowToolbar>
     </custom:footer>
   </custom:Popover>
