@@ -159,7 +159,7 @@ sap.ui.define(
         const oRowData = this.getViewModel().getProperty(sPath);
 
         oViewModel.setProperty('/parameter/rowData', [oRowData]);
-        this.getRouter().navTo('attendance-detail', { type: oRowData.Appty, appno: oRowData.Appno });
+        this.getRouter().navTo('attendance-detail', { type: oRowData.Appty, appno: _.isEqual(oRowData.Appno, '00000000000000') ? 'NA' : oRowData.Appno });
       },
 
       onChangeRowSelection(oEvent) {

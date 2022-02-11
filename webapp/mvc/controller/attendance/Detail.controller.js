@@ -127,7 +127,18 @@ sap.ui.define(
 
         try {
           if (sAppno) {
-            const mResultData = await this.readLeaveApplEmpList({ Prcty: 'R', Appno: sAppno });
+            const mFilters = { Prcty: 'R' };
+
+            if (_.isEqual(sAppno, 'NA')) {
+              const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+              const [mSelectedRowData] = oListView.getModel().getProperty('/parameter/rowData');
+
+              _.chain(mFilters).set('Pernr', mSelectedRowData.Pernr).set('Awart', mSelectedRowData.Awart).set('Begda', mSelectedRowData.Begda).commit();
+            } else {
+              _.set(mFilters, 'Appno', sAppno);
+            }
+
+            const mResultData = await this.readLeaveApplEmpList(mFilters);
 
             oViewModel.setProperty('/ZappStatAl', mResultData.ZappStatAl);
             oViewModel.setProperty('/form/listMode', 'None');
@@ -393,7 +404,7 @@ sap.ui.define(
         const mFormData = oViewModel.getProperty('/form/dialog/data');
 
         try {
-          const mResultData = await this.readLeaveApplEmpList({ ...mFormData, Prcty: 'C' });
+          const mResultData = await this.readLeaveApplEmpList({ Prcty: 'C', Menid: this.getCurrentMenuId(), ..._.pick(mFormData, ['Awart', 'Begda', 'Endda']) });
 
           if (!_.isEmpty(mResultData)) {
             oViewModel.setProperty('/form/dialog/data/Abrst', mResultData.Abrst);
@@ -529,29 +540,22 @@ sap.ui.define(
        * @param {String} Prcty - R: 상세조회, C: 계산
        * @returns
        */
-      readLeaveApplEmpList({ Awart, Begda, Endda, Prcty, Appno }) {
+      readLeaveApplEmpList(mFilters) {
         return new Promise((resolve, reject) => {
           const oModel = this.getModel(ServiceNames.WORKTIME);
           const sUrl = '/LeaveApplEmpListSet';
-          let aFilters = [new Filter('Prcty', FilterOperator.EQ, Prcty)];
-
-          if (Prcty === 'C') {
-            aFilters = [
-              ...aFilters, //
-              new Filter('Menid', FilterOperator.EQ, this.getCurrentMenuId()),
-              new Filter('Awart', FilterOperator.EQ, Awart),
-              new Filter('Begda', FilterOperator.EQ, DateUtils.parse(Begda)),
-              new Filter('Endda', FilterOperator.EQ, DateUtils.parse(Endda)),
-            ];
-          } else if (Prcty === 'R') {
-            aFilters = [
-              ...aFilters, //
-              new Filter('Appno', FilterOperator.EQ, Appno),
-            ];
-          }
 
           oModel.read(sUrl, {
-            filters: aFilters,
+            filters: _.chain(mFilters)
+              .omitBy(_.isNil)
+              .map((v, p) => {
+                if (_.isEqual(p, 'Begda') || _.isEqual(p, 'Endda')) {
+                  return new Filter(p, FilterOperator.EQ, DateUtils.parse(v));
+                } else {
+                  return new Filter(p, FilterOperator.EQ, v);
+                }
+              })
+              .value(),
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
 

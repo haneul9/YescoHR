@@ -1029,7 +1029,7 @@ sap.ui.define(
         try {
           AppUtils.setAppBusy(true, this);
 
-          if (!mDialogData.Appno2 || mDialogData.Appno2 === '00000000000000') {
+          if (!mDialogData.Appno2 || _.parseInt(mDialogData.Appno2) === 0) {
             const vAppno = await Appno.get.call(this);
 
             oDetailModel.setProperty('/DialogData/Appno2', vAppno);
@@ -1060,17 +1060,17 @@ sap.ui.define(
           await AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.getApprovalType(), this.DIALOG_FILE_ID);
 
           const oDialogModel = this.getViewModel(this.DIALOG_FILE_ID);
-          let bFile = '';
+          let sFile = '';
 
           if (!!oDialogModel.getProperty('/DeleteDatas').length) {
-            bFile = '';
+            sFile = '';
           }
 
           if (!!oDialogModel.getProperty('/Data').length) {
-            bFile = 'X';
+            sFile = 'X';
           }
 
-          oDetailModel.setProperty('/DialogData/Attyn', bFile);
+          oDetailModel.setProperty('/DialogData/Attyn', sFile);
           this.byId('DetailHisDialog').close();
         } catch (oError) {
           AppUtils.handleError(oError);
@@ -1092,7 +1092,7 @@ sap.ui.define(
         try {
           AppUtils.setAppBusy(true, this);
 
-          if (!mDialogData.Appno2 || mDialogData.Appno2 === '00000000000000') {
+          if (!mDialogData.Appno2 || _.parseInt(mDialogData.Appno2) === 0) {
             const vAppno = await Appno.get.call(this);
 
             oDetailModel.setProperty('/DialogData/Appno2', vAppno);
@@ -1123,17 +1123,17 @@ sap.ui.define(
 
           const oDialogModel = this.getViewModel(this.DIALOG_FILE_ID);
 
-          let bFile = '';
+          let sFile = '';
 
           if (!!oDialogModel.getProperty('/DeleteDatas').length) {
-            bFile = '';
+            sFile = '';
           }
 
           if (!!oDialogModel.getProperty('/Data').length) {
-            bFile = 'X';
+            sFile = 'X';
           }
 
-          oDetailModel.setProperty('/DialogData/Attyn', bFile);
+          oDetailModel.setProperty('/DialogData/Attyn', sFile);
           this.setAppAmount();
           this.byId('DetailHisDialog').close();
         } catch (oError) {
