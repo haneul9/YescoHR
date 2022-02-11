@@ -1113,11 +1113,11 @@ sap.ui.define(
 
           await this.checkedDialogData();
 
-          // aHisList.forEach((e, i) => {
-          //   if (mDialogData.Seqnr === e.Seqnr) {
-          //     oDetailModel.setProperty(`/HisList/${i}`, mDialogData);
-          //   }
-          // });
+          aHisList.forEach((e, i) => {
+            if (mDialogData.Seqnr === e.Seqnr) {
+              oDetailModel.setProperty(`/HisList/${i}`, mDialogData);
+            }
+          });
 
           await AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.getApprovalType(), this.DIALOG_FILE_ID);
 
@@ -1212,8 +1212,6 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const oRowData = oDetailModel.getProperty(vPath);
 
-        if (!!oRowData.Lnsta && oRowData.Lnsta !== '10') return;
-
         this.setDialogData(oRowData);
 
         if (!this.byId('DetailHisDialog')) {
@@ -1283,8 +1281,13 @@ sap.ui.define(
             Pybet: '0',
             isNew: true,
           });
+
+          oDetailModel.setProperty('/ReWriteStat', true);
         } else {
-          oDetailModel.setProperty('/DialogData', mRowData);
+          const bRewrit = (!mRowData.ZappStat || mRowData.ZappStat === 'F') && !oDetailModel.getProperty('/FormData/Lnsta');
+
+          oDetailModel.setProperty('/ReWriteStat', bRewrit);
+          oDetailModel.setProperty('/DialogData', _.cloneDeep(mRowData));
           oDetailModel.setProperty('/DialogData/isNew', false);
         }
 
@@ -1297,13 +1300,11 @@ sap.ui.define(
       // Dialog AttachFileTable Settings
       settingsAttachDialog() {
         const oDetailModel = this.getViewModel();
-        const bStat = oDetailModel.getProperty('/DialogData/ZappStat') === 'F';
-        const sStatus = oDetailModel.getProperty('/FormData/Lnsta');
         const sAppno = oDetailModel.getProperty('/DialogData/Appno2') || '';
 
         AttachFileAction.setAttachFile(this, {
           Id: this.DIALOG_FILE_ID,
-          Editable: !sStatus || sStatus === '10' || (bStat && oDetailModel.getProperty('/ReWriteStat')),
+          Editable: oDetailModel.getProperty('/ReWriteStat'),
           Type: this.getApprovalType(),
           Appno: sAppno,
           Max: 1,

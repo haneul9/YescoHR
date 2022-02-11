@@ -44,6 +44,13 @@ sap.ui.define(
           ],
         },
         2140: { url: '', key: [{ key: 'appno', value: 'Appno' }] }, // 통합굴착야간
+        2310: {
+          url: '',
+          key: [
+            { key: 'Plnyy', value: 'Plnyy' },
+            { key: 'Seqno', value: 'Seqno' },
+          ],
+        }, // 휴가계획
         3110: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 급여계좌변경
         3210: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 중도인출
         4110: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 경조금
