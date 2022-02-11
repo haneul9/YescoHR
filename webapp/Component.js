@@ -82,7 +82,7 @@ sap.ui.define(
        */
       setAppModel() {
         setTimeout(() => {
-          this.setModel(new JSONModel({ isAppBusy: true, delay: 0, isAtHome: false }), 'appModel');
+          this.setModel(new JSONModel({ isAppBusy: true, delay: 0, isAtHome: false, isMobile: AppUtils.getDevice() === sap.ui.Device.system.SYSTEMTYPE.PHONE }), 'appModel');
         });
         return this;
       },
@@ -254,6 +254,7 @@ sap.ui.define(
             oView.setVisible(false);
 
             setTimeout(() => {
+              console.log(sRouteName);
               this.getAppModel().setProperty('/isAtHome', sRouteName === 'ehrHome' || sRouteName === 'ehrMobileHome');
             });
 

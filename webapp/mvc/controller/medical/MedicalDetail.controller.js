@@ -59,6 +59,8 @@ sap.ui.define(
           Werks: this.getAppointeeProperty('Werks') !== '2000',
           menid: this.getCurrentMenuId(),
           Hass: this.isHass(),
+          ReWriteBtn: false,
+          ReWriteStat: false,
           ViewKey: '',
           sYear: '',
           FormData: {},
@@ -255,7 +257,12 @@ sap.ui.define(
                 oDetailModel.setProperty('/TargetDetails', oTargetData);
 
                 oDetailModel.setProperty('/HisList', aHisList);
-
+                oDetailModel.setProperty(
+                  '/ReWriteBtn',
+                  !!_.find(aHisList, (e) => {
+                    return e.ZappStat === 'F';
+                  })
+                );
                 const iHisLength = aHisList.length;
 
                 oDetailModel.setProperty('/listInfo', {
@@ -470,6 +477,8 @@ sap.ui.define(
 
         oDetailModel.setProperty('/FormData/Appno', '');
         oDetailModel.setProperty('/FormData/Lnsta', '');
+        oDetailModel.setProperty('/ReWriteBtn', false);
+        oDetailModel.setProperty('/ReWriteStat', true);
         this.settingsAttachTable();
       },
 
@@ -643,6 +652,8 @@ sap.ui.define(
               oSendObject = oDetailModel.getProperty('/FormData');
               oSendObject.Prcty = 'W';
               oSendObject.Menid = oDetailModel.getProperty('/menid');
+
+              delete oSendObject.isNew;
 
               oModel.create('/MedExpenseApplSet', oSendObject, {
                 success: () => {
@@ -1063,6 +1074,8 @@ sap.ui.define(
           this.byId('DetailHisDialog').close();
         } catch (oError) {
           AppUtils.handleError(oError);
+          oDetailModel.setProperty('/DialogData/Appno2', '');
+          oDetailModel.setProperty('/DialogData/isNew', true);
         } finally {
           AppUtils.setAppBusy(false, this);
         }
@@ -1100,11 +1113,11 @@ sap.ui.define(
 
           await this.checkedDialogData();
 
-          // aHisList.forEach((e, i) => {
-          //   if (mDialogData.Seqnr === e.Seqnr) {
-          //     oDetailModel.setProperty(`/HisList/${i}`, mDialogData);
-          //   }
-          // });
+          aHisList.forEach((e, i) => {
+            if (mDialogData.Seqnr === e.Seqnr) {
+              oDetailModel.setProperty(`/HisList/${i}`, mDialogData);
+            }
+          });
 
           await AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.getApprovalType(), this.DIALOG_FILE_ID);
 
@@ -1125,6 +1138,7 @@ sap.ui.define(
           this.byId('DetailHisDialog').close();
         } catch (oError) {
           AppUtils.handleError(oError);
+          oDetailModel.setProperty('/DialogData/Appno2', '');
         } finally {
           AppUtils.setAppBusy(false, this);
         }
@@ -1198,8 +1212,6 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const oRowData = oDetailModel.getProperty(vPath);
 
-        if (!!oRowData.Lnsta && oRowData.Lnsta !== '10') return;
-
         this.setDialogData(oRowData);
 
         if (!this.byId('DetailHisDialog')) {
@@ -1269,8 +1281,14 @@ sap.ui.define(
             Pybet: '0',
             isNew: true,
           });
+
+          oDetailModel.setProperty('/ReWriteStat', true);
         } else {
-          oDetailModel.setProperty('/DialogData', mRowData);
+          const sLnsta = oDetailModel.getProperty('/FormData/Lnsta');
+          const bRewrit = (!mRowData.ZappStat || mRowData.ZappStat === 'F') && (!sLnsta || sLnsta === '10');
+
+          oDetailModel.setProperty('/ReWriteStat', bRewrit);
+          oDetailModel.setProperty('/DialogData', _.cloneDeep(mRowData));
           oDetailModel.setProperty('/DialogData/isNew', false);
         }
 
@@ -1287,8 +1305,8 @@ sap.ui.define(
 
         AttachFileAction.setAttachFile(this, {
           Id: this.DIALOG_FILE_ID,
+          Editable: oDetailModel.getProperty('/ReWriteStat'),
           Type: this.getApprovalType(),
-          Editable: true,
           Appno: sAppno,
           Max: 1,
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],

@@ -26,8 +26,7 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.organization.Main', {
-      LAYOUT: ['left', 'top'],
-      LAYOUT_COUNT: 0,
+      LAYOUT: { top: 'left', left: 'top' },
 
       async onBeforeShow() {
         this.chartHolder = this.byId('ChartHolder');
@@ -53,7 +52,7 @@ sap.ui.define(
                 Ipdat: _.isDate(o.Ipdat) ? moment(o.Ipdat).format('YYYY.MM.DD') : '',
               })),
             });
-
+            oViewModel.setSizeLimit(1000);
             this.setViewModel(oViewModel);
           }
 
@@ -93,11 +92,8 @@ sap.ui.define(
        * ! Event handler
        *****************************************************************/
       onPressSwapBtn() {
-        this.oD3Chart
-          .getChart()
-          .layout(this.LAYOUT[++this.LAYOUT_COUNT % 2])
-          .render()
-          .fit();
+        const oChart = this.oD3Chart.getChart();
+        oChart.layout(this.LAYOUT[oChart.layout()]).render().fit();
       },
 
       /*****************************************************************

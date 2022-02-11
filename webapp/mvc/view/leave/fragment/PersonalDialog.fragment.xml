@@ -83,7 +83,7 @@
               <m:Label text="&#37;"/>
             </multiLabels>
             <template>
-              <m:Text text="{ path: 'Userte1', type: 'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" />
+              <m:Text text="{ path: 'Userte1', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" />
             </template>
           </Column>
           <Column width="8%" filterProperty="Usecnt2" sortProperty="Usecnt2" headerSpan="2">
@@ -101,7 +101,7 @@
               <m:Label text="&#37;"/>
             </multiLabels>
             <template>
-              <m:Text text="{ path: 'Userte2', type: 'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" />
+              <m:Text text="{ path: 'Userte2', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" />
             </template>
           </Column>
           <Column width="8%" filterProperty="Balcnt" sortProperty="Balcnt">

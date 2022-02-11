@@ -30,7 +30,7 @@
                     <m:Label text="{i18n>LABEL_16006}"/>
                 </multiLabels>
                 <template>
-                    <m:Text text="{ path: 'Inw01', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    <m:Text text="{ path: 'Inw01', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </template>
             </Column>
             <Column width="7%" filterProperty="Inw02" sortProperty="Inw02">
@@ -42,7 +42,7 @@
                     <m:Label text="{i18n>LABEL_16007}"/>
                 </multiLabels>
                 <template>
-                    <m:Text text="{ path: 'Inw02', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    <m:Text text="{ path: 'Inw02', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </template>
             </Column>
             <Column width="7%" filterProperty="Inw03" sortProperty="Inw03">
@@ -54,7 +54,7 @@
                     <m:Label text="{i18n>LABEL_16008}"/>
                 </multiLabels>
                 <template>
-                    <m:Text text="{ path: 'Inw03', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    <m:Text text="{ path: 'Inw03', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </template>
             </Column>
             <Column width="7%" filterProperty="Inw04" sortProperty="Inw04">
@@ -66,7 +66,7 @@
                     <m:Label text="{i18n>LABEL_16009}"/>
                 </multiLabels>
                 <template>
-                    <m:Text text="{ path: 'Inw04', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    <m:Text text="{ path: 'Inw04', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </template>
             </Column>
             <Column width="7%" filterProperty="Inw05" sortProperty="Inw05">
@@ -78,7 +78,7 @@
                     <m:Label text="{i18n>LABEL_16010}"/>
                 </multiLabels>
                 <template>
-                    <m:Text text="{ path: 'Inw05', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    <m:Text text="{ path: 'Inw05', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </template>
             </Column>
             <Column width="7%" filterProperty="Inw06" sortProperty="Inw06">
@@ -90,7 +90,7 @@
                     <m:Label text="{i18n>LABEL_00245}"/>
                 </multiLabels>
                 <template>
-                    <m:Text text="{ path: 'Inw06', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    <m:Text text="{ path: 'Inw06', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </template>
             </Column>
             <Column width="7%" filterProperty="Inw07" sortProperty="Inw07" headerSpan="6">
@@ -102,7 +102,7 @@
                     <m:Label text="{i18n>LABEL_16006}"/>
                 </multiLabels>
                 <template>
-                    <m:Text text="{ path: 'Inw07', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    <m:Text text="{ path: 'Inw07', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </template>
             </Column>
             <Column width="7%" filterProperty="Inw08" sortProperty="Inw08">
@@ -114,7 +114,7 @@
                     <m:Label text="{i18n>LABEL_16007}"/>
                 </multiLabels>
                 <template>
-                    <m:Text text="{ path: 'Inw08', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    <m:Text text="{ path: 'Inw08', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </template>
             </Column>
             <Column width="7%" filterProperty="Inw09" sortProperty="Inw09">
@@ -126,7 +126,7 @@
                     <m:Label text="{i18n>LABEL_16008}"/>
                 </multiLabels>
                 <template>
-                    <m:Text text="{ path: 'Inw09', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    <m:Text text="{ path: 'Inw09', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </template>
             </Column>
             <Column width="7%" filterProperty="Inw10" sortProperty="Inw10">
@@ -138,7 +138,7 @@
                     <m:Label text="{i18n>LABEL_16009}"/>
                 </multiLabels>
                 <template>
-                    <m:Text text="{ path: 'Inw10', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    <m:Text text="{ path: 'Inw10', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </template>
             </Column>
             <Column width="7%" filterProperty="Inw11" sortProperty="Inw11">
@@ -150,7 +150,7 @@
                     <m:Label text="{i18n>LABEL_16010}"/>
                 </multiLabels>
                 <template>
-                    <m:Text text="{ path: 'Inw11', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    <m:Text text="{ path: 'Inw11', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </template>
             </Column>
             <Column width="7%" filterProperty="Inw12" sortProperty="Inw12">
@@ -162,7 +162,7 @@
                     <m:Label text="{i18n>LABEL_00245}"/>
                 </multiLabels>
                 <template>
-                    <m:Text text="{ path: 'Inw12', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 1 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    <m:Text text="{ path: 'Inw12', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </template>
             </Column>
         </columns>

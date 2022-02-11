@@ -9,7 +9,7 @@
         <HBox justifyContent="SpaceBetween" class="breadcrumbs">
           <custom:Breadcrumbs />
           <HBox>
-            <Button text="{i18n>LABEL_00120}" class="sapUiTinyMarginEnd" type="Emphasized" press=".onRewriteBtn" visible="{= ${/FormData/Lnsta} === '45' }" />
+            <Button text="{i18n>LABEL_00120}" class="sapUiTinyMarginEnd" type="Emphasized" press=".onRewriteBtn" visible="{= ${/FormData/Lnsta} === '45' || ${/ReWriteBtn} }" />
             <Button text="{i18n>LABEL_00104}" class="sapUiTinyMarginEnd" type="Emphasized" press=".onSaveBtn" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
             <Button text="{i18n>LABEL_00121}" class="sapUiTinyMarginEnd" type="Emphasized" press=".onApplyBtn" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
             <Button text="{i18n>LABEL_00118}" class="sapUiTinyMarginEnd" press=".onCancelBtn" visible="{= ${/FormData/Lnsta} === '20' }" />

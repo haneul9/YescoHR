@@ -23,7 +23,7 @@
     <VBox width="100%" class="mt-0-px">
       <VBox class="vCardBox sapUiMediumMarginBottom">
         <HBox alignItems="Center" class="table-toolbar">
-          <Title level="H2" text="{i18n>LABEL_22003}" />
+          <Title level="H2" text="{/Competency/Title}" />
         </HBox>
         <TextArea enabled="false" value="{/Competency/Defin}" width="100%" />
       </VBox>
@@ -68,7 +68,7 @@
       <VBox class="vCardBox sapUiMediumMarginBottom">
         <HBox alignItems="Center" class="table-toolbar">
           <Title level="H2" text="{i18n>LABEL_22005}" />
-        </HBox>        
+        </HBox>
         <HBox items="{/Competency/RelateJobs/JobTypes}" class="flex-wrap">
           <Button text="{JobName}" press=".onPressJob" class="job"/>
         </HBox>

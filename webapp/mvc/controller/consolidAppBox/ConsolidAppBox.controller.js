@@ -44,6 +44,13 @@ sap.ui.define(
           ],
         },
         2140: { url: '', key: [{ key: 'appno', value: 'Appno' }] }, // 통합굴착야간
+        2310: {
+          url: 'leavePlan',
+          key: [
+            { key: 'Plnyy', value: 'Plnyy' },
+            { key: 'Seqno', value: 'Seqno' },
+          ],
+        }, // 휴가계획
         3110: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 급여계좌변경
         3210: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 중도인출
         4110: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 경조금
@@ -144,7 +151,7 @@ sap.ui.define(
       setNavigationUrl() {
         const oMenuData = AppUtils.getAppComponent().getMenuModel().getData();
 
-        _.forOwn(this.NAVIGATION, (value, key, object) => _.set(object, [key, 'url'], `${_.get(oMenuData, ['menidToProperties', key, 'Mnurl'])}-detail`));
+        _.forOwn(this.NAVIGATION, (value, key, object) => _.set(object, [key, 'url'], !value.url ? `${_.get(oMenuData, ['menidToProperties', key, 'Mnurl'])}-detail` : value.url));
       },
 
       async onSearch() {

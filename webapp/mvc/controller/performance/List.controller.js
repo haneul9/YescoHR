@@ -88,7 +88,7 @@ sap.ui.define(
         oViewModel.setProperty(
           '/list',
           _.map(aRowData, (o) => {
-            const sLogicalZzapstsSub = !_.isEmpty(o.sZzapstsPSub) ? o.sZzapstsPSub : o.sZzapstsSub;
+            const sLogicalZzapstsSub = !_.isEmpty(o.ZzapstsPSub) ? o.ZzapstsPSub : o.ZzapstsSub;
             return {
               ...o,
               Zapgme: _.includes(['V', 'H'], _.get(Constants.FIELD_STATUS_MAP, [o.Zzapsts, sLogicalZzapstsSub, 'Zapgme', sType], '')) ? '' : _.isEqual(o.Zapgme, '0.000') ? '' : o.Zapgme,

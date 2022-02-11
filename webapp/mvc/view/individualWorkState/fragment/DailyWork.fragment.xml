@@ -69,7 +69,7 @@
                     pattern: 'yyyy.MM.dd'
                 }
               }" width="100%" visible="{= !${ZappUrl} }" textAlign="Center" wrapping="false" class="tableRow_Text"/>
-              <Link visible="{= !!${ZappUrl} }" href="{ZappUrl}" text="{
+              <Link visible="{= !!${ZappUrl} }" textAlign="Center" href="{ZappUrl}" text="{
                 path: 'ZreqDate',
                 type: 'sap.ui.model.type.Date',
                 formatOptions: {

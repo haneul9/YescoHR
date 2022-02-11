@@ -29,6 +29,9 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.individualWorkState.IndiWorkState', {
+      sCombiChartId: 'combiChart',
+      sDoughChartId: 'doughChart',
+
       TextUtils: TextUtils,
       TableUtils: TableUtils,
       FragmentEvent: FragmentEvent,
@@ -40,7 +43,21 @@ sap.ui.define(
           menid: this.getCurrentMenuId(),
           Hass: this.isHass(),
           WeekWorkDate: new Date(),
-          MonthStrList: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          MonthStrList: [
+            // prettier방지주석
+            { label: 'Jan' },
+            { label: 'Feb' },
+            { label: 'Mar' },
+            { label: 'Apr' },
+            { label: 'May' },
+            { label: 'Jun' },
+            { label: 'Jul' },
+            { label: 'Aug' },
+            { label: 'Sep' },
+            { label: 'Oct' },
+            { label: 'Nov' },
+            { label: 'Dec' },
+          ],
           WeekWork: {
             Wkrultx: '',
             WeekTime: 52,
@@ -81,26 +98,6 @@ sap.ui.define(
 
         try {
           this.YearPlanBoxHandler ||= new YearPlanBoxHandler({ oController: this });
-          this.byId('idVizFrame').setVizProperties({
-            valueAxis: {
-              title: {
-                visible: false,
-              },
-            },
-            categoryAxis: {
-              title: {
-                visible: false,
-              },
-            },
-            plotArea: {
-              dataLabel: {
-                visible: true,
-              },
-            },
-            title: {
-              visible: false,
-            },
-          });
           this.setMonth();
           this.formYear();
 
@@ -116,16 +113,10 @@ sap.ui.define(
           };
 
           const oModel = this.getModel(ServiceNames.WORKTIME);
-          const aPlanList = await Client.getEntitySet(oModel, 'LeavePlan', mPayLoad);
+          const [aPlanList] = await Client.getEntitySet(oModel, 'LeavePlan', mPayLoad);
 
-          oViewModel.setProperty('/vacationChart', {
-            dUsed: parseInt(aPlanList[0].Cnt01),
-            dPlan: parseInt(aPlanList[0].Cnt02),
-            dUnPlan: parseInt(aPlanList[0].Cnt03),
-            pUsed: parseFloat(aPlanList[0].Rte01),
-            pPlan: parseFloat(aPlanList[0].Rte02),
-            pUnPlan: parseFloat(aPlanList[0].Rte03),
-          });
+          // Doughnut Chart
+          this.buildDoughChart(aPlanList);
 
           // 휴가유형 별 현황
           const aVacaTypeList = await Client.getEntitySet(oModel, 'AbsQuotaList', { Menid: this.getCurrentMenuId() });
@@ -188,13 +179,9 @@ sap.ui.define(
 
           // 근태유형 별 연간 사용현황
           const aWorkTypeList = await Client.getEntitySet(oModel, 'TimeUsageGraph', mWorkTypePayLoad);
-          const aTransList = [];
 
-          aWorkTypeList.forEach((e, i) => {
-            aTransList.push({ ...e, StrMonth: oViewModel.getProperty('/MonthStrList')[i] });
-          });
-
-          oViewModel.setProperty('/UseTimeGraph', aTransList);
+          // Combination Chart
+          this.buildCombiChart(aWorkTypeList);
 
           const mDailyWorkPayLoad = {
             Werks: sWerks,
@@ -219,6 +206,214 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/busy', false);
         }
+      },
+
+      //////////////////////////// Doughnut Chart Setting
+      buildDoughChart(aPlanList) {
+        const oDetailModel = this.getViewModel();
+        const mPlan = {
+          dUsed: parseInt(aPlanList.Cnt01),
+          dPlan: parseInt(aPlanList.Cnt02),
+          dUnPlan: parseInt(aPlanList.Cnt03),
+          pUsed: parseFloat(aPlanList.Rte01),
+          pPlan: parseFloat(aPlanList.Rte02),
+          pUnPlan: parseFloat(aPlanList.Rte03),
+        };
+
+        oDetailModel.setProperty('/vacationChart', mPlan);
+
+        FusionCharts.ready(() => {
+          new FusionCharts({
+            id: this.sDoughChartId,
+            type: 'doughnut2d',
+            renderAt: 'chart-doughnut-container',
+            width: '50%',
+            height: '176px',
+            dataFormat: 'json',
+            dataSource: {
+              chart: {
+                legendPosition: 'right',
+                bgColor: '#ffffff',
+                decimals: '0',
+                theme: 'fusion',
+                showHoverEffect: 'false',
+              },
+              data: [
+                {
+                  label: this.getBundleText('LABEL_18002'),
+                  value: mPlan.dUsed,
+                  displayValue: `${mPlan.pUsed}%`,
+                  color: '#7BB4EB',
+                },
+                {
+                  label: this.getBundleText('LABEL_18003'),
+                  value: mPlan.dPlan,
+                  displayValue: `${mPlan.pPlan}%`,
+                  color: '#A2EB7B',
+                },
+                {
+                  label: this.getBundleText('LABEL_18004'),
+                  value: mPlan.dUnPlan,
+                  displayValue: `${mPlan.pUnPlan}%`,
+                  color: '#FFE479',
+                },
+              ],
+            },
+          }).render();
+        });
+      },
+
+      // Combination ReRanderring
+      setDoughChartData(aPlanList) {
+        const oChart = FusionCharts(this.sDoughChartId);
+        const oDetailModel = this.getViewModel();
+        const mPlan = {
+          dUsed: parseInt(aPlanList.Cnt01),
+          dPlan: parseInt(aPlanList.Cnt02),
+          dUnPlan: parseInt(aPlanList.Cnt03),
+          pUsed: parseFloat(aPlanList.Rte01),
+          pPlan: parseFloat(aPlanList.Rte02),
+          pUnPlan: parseFloat(aPlanList.Rte03),
+        };
+
+        oDetailModel.setProperty('/vacationChart', mPlan);
+
+        oChart.setChartData(
+          {
+            chart: {
+              //Cosmetics
+              theme: 'fusion',
+            },
+            categories: [
+              {
+                category: this.getViewModel().getProperty('/MonthStrList'),
+              },
+            ],
+            dataset: [
+              {
+                seriesName: 'Accumulative',
+                data: aWorkTypeList.Monuse,
+              },
+              {
+                seriesName: 'Current month',
+                parentYAxis: 'S',
+                renderAs: 'line',
+                showValues: '0',
+                data: aWorkTypeList.Current,
+              },
+            ],
+          },
+          'json'
+        );
+        oChart.render();
+      },
+
+      //////////////////////////// Combination Chart Setting
+      buildCombiChart(aWorkTypeList) {
+        const oDetailModel = this.getViewModel();
+
+        _.chain(aWorkTypeList)
+          .set(
+            'Current',
+            _.map(aWorkTypeList, (e) => {
+              return { value: e.Cumuse };
+            })
+          )
+          .set(
+            'Monuse',
+            _.map(aWorkTypeList, (e) => {
+              return { value: e.Monuse };
+            })
+          )
+          .value();
+
+        FusionCharts.ready(() => {
+          new FusionCharts({
+            id: this.sCombiChartId,
+            type: 'mscombidy2d',
+            renderAt: 'chart-combination-container',
+            width: '100%',
+            height: '300px',
+            dataFormat: 'json',
+            dataSource: {
+              chart: {
+                //Cosmetics
+                anchorRadius: '4',
+                bgColor: '#ffffff',
+                theme: 'fusion',
+                usePlotGradientColor: '0',
+                showPlotBorder: '0',
+              },
+              categories: [
+                {
+                  category: oDetailModel.getProperty('/MonthStrList'),
+                },
+              ],
+              dataset: [
+                {
+                  seriesName: 'Current month',
+                  data: aWorkTypeList.Monuse,
+                },
+                {
+                  seriesName: 'Accumulative',
+                  renderAs: 'line',
+                  data: aWorkTypeList.Current,
+                },
+              ],
+            },
+          }).render();
+        });
+      },
+
+      // Combination ReRanderring
+      setCombiChartData(aWorkTypeList) {
+        const oChart = FusionCharts(this.sCombiChartId);
+
+        _.chain(aWorkTypeList)
+          .set(
+            'Current',
+            _.map(aWorkTypeList, (e) => {
+              return { value: e.Cumuse };
+            })
+          )
+          .set(
+            'Monuse',
+            _.map(aWorkTypeList, (e) => {
+              return { value: e.Monuse };
+            })
+          )
+          .value();
+
+        oChart.setChartData(
+          {
+            chart: {
+              //Cosmetics
+              anchorRadius: '4',
+              theme: 'fusion',
+              bgColor: '#ffffff',
+              usePlotGradientColor: '0',
+              showPlotBorder: '0',
+            },
+            categories: [
+              {
+                category: this.getViewModel().getProperty('/MonthStrList'),
+              },
+            ],
+            dataset: [
+              {
+                seriesName: 'Current month',
+                data: aWorkTypeList.Monuse,
+              },
+              {
+                seriesName: 'Accumulative',
+                renderAs: 'line',
+                data: aWorkTypeList.Current,
+              },
+            ],
+          },
+          'json'
+        );
+        oChart.render();
       },
 
       getFormatFloat(sVal = '0') {
@@ -284,13 +479,9 @@ sap.ui.define(
 
         // 근태유형 별 연간 사용현황
         const aWorkTypeList = await Client.getEntitySet(oModel, 'TimeUsageGraph', mPayLoad);
-        const aTransList = [];
 
-        aWorkTypeList.forEach((e, i) => {
-          aTransList.push({ ...e, StrMonth: oViewModel.getProperty('/MonthStrList')[i] });
-        });
-
-        oViewModel.setProperty('/UseTimeGraph', aTransList);
+        // Combination Chart
+        this.setCombiChartData(aWorkTypeList);
       },
 
       // 년도 선택시 화면전체 년도
@@ -315,16 +506,10 @@ sap.ui.define(
           };
 
           const oModel = this.getModel(ServiceNames.WORKTIME);
-          const aPlanList = await Client.getEntitySet(oModel, 'LeavePlan', mPayLoad);
+          const [aPlanList] = await Client.getEntitySet(oModel, 'LeavePlan', mPayLoad);
 
-          oViewModel.setProperty('/vacationChart', {
-            dUsed: parseInt(aPlanList[0].Cnt01),
-            dPlan: parseInt(aPlanList[0].Cnt02),
-            dUnPlan: parseInt(aPlanList[0].Cnt03),
-            pUsed: parseFloat(aPlanList[0].Rte01),
-            pPlan: parseFloat(aPlanList[0].Rte02),
-            pUnPlan: parseFloat(aPlanList[0].Rte03),
-          });
+          // Doughnut Chart
+          this.buildDoughChart(aPlanList);
 
           // 휴가유형 별 현황
           const aVacaTypeList = await Client.getEntitySet(oModel, 'AbsQuotaList', { Menid: this.getCurrentMenuId() });
@@ -368,13 +553,9 @@ sap.ui.define(
 
           // 근태유형 별 연간 사용현황
           const aWorkTypeList = await Client.getEntitySet(oModel, 'TimeUsageGraph', mWorkTypePayLoad);
-          const aTransList = [];
 
-          aWorkTypeList.forEach((e, i) => {
-            aTransList.push({ ...e, StrMonth: oViewModel.getProperty('/MonthStrList')[i] });
-          });
-
-          oViewModel.setProperty('/UseTimeGraph', aTransList);
+          // Combination Chart
+          this.setCombiChartData(aWorkTypeList);
 
           const mDailyWorkPayLoad = {
             Werks: sWerks,

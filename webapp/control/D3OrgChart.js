@@ -127,13 +127,11 @@ sap.ui.define(
               }
             }
           })
-          .render();
+          .render()
+          .fit();
 
         if (!_.isEmpty(this.getExtendNode())) {
-          this.oD3Chart.setExpanded(this.getExtendNode()).setCentered(this.getExtendNode()).render();
-          // .setHighlighted(this.getExtendNode())
-        } else {
-          this.oD3Chart.setCentered('12000000').render();
+          this.oD3Chart.setExpanded(this.getExtendNode()).setCentered(this.getExtendNode()).setHighlighted(this.getExtendNode()).render();
         }
       },
     });

@@ -16,7 +16,7 @@
                 <grid:CSSGrid gridTemplateColumns="1fr 2fr 1fr 2fr" gridGap="1px 0" class="form-grid">
                     <Label text="{i18n>LABEL_07040}" />
                     <VBox>
-                        <ComboBox items="{/LaonType}" selectedKey="{/DialogData/Rptyp}" change=".onLaonType" editable="{= ${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta} }" class="required">
+                        <ComboBox items="{/LaonType}" selectedKey="{/DialogData/Rptyp}" change=".onLaonType" editable="{= (${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta}) &amp;&amp; ${/DateEditable} }" class="required">
                             <core:Item text="{Ztext}" key="{Zcode}" />
                         </ComboBox>
                     </VBox>
@@ -60,7 +60,7 @@
                     <VBox>
                         <ObjectStatus text="{
                             path: '/DialogData/RpamtTot',
-                            type: 'sap.ui.yesco.mvc.model.type.Currency'
+                            formatter: '.formatAmount'
                         }" state="Indication05"/>
                         <!-- <Text text="{
                             path: '/DialogData/RpamtTot',
