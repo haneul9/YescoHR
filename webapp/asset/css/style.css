@@ -31,7 +31,7 @@ html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl) {text-decoration:none}
 .sapMImageContent.logo-init {width:145px; height:43px}
 .sapMImageContent.logo-1000 {width:182px; height:30px}
 .sapMImageContent.logo-2000 {width:145px; height:43px}
-.sapMImageContent.logo-3000 {width:145px; height:43px}
+.sapMImageContent.logo-3000 {width:308px; height:43px}
 .sapMLabel.app-menu-level1 {box-sizing:border-box; padding:0 1rem; line-height:60px; font-size:18px; font-weight:800 !important; color:#484c50!important; cursor:default}
 .sapMLabel.app-menu-level1 bdi {box-sizing:border-box; border-top:solid 5px transparent; border-bottom:solid 5px transparent; padding:0 1.0rem; line-height:50px}
 .app-menu-toolbar .sapMLabel.app-menu-level1:first-child bdi {padding-left:0}
