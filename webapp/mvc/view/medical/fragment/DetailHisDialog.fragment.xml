@@ -5,7 +5,7 @@
     <Dialog id="DetailHisDialog" title="{i18n>LABEL_09022}" contentWidth="1100px" contentHeight="auto">
         <buttons>
             <Button text="{i18n>LABEL_00106}" type="Emphasized" press=".onHisRegBtn" visible="{= !!${/DialogData/isNew} &amp;&amp; (${/FormData/Lnsta} === '10' || !${/FormData/Lnsta}) }" />
-            <Button text="{i18n>LABEL_00108}" type="Emphasized" press=".onHisUpBtn" visible="{= !${/DialogData/isNew} &amp;&amp; (${/FormData/Lnsta} === '10' || !${/FormData/Lnsta}) || ${/ReWriteStat} }" />
+            <Button text="{i18n>LABEL_00108}" type="Emphasized" press=".onHisUpBtn" visible="{= !${/DialogData/isNew} &amp;&amp; (${/FormData/Lnsta} === '10' || !${/FormData/Lnsta}) }" />
             <Button text="{i18n>LABEL_00115}" press=".onDialogClose" />
         </buttons>
         <content>
@@ -13,23 +13,23 @@
                 <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 2fr" gridGap="1px 0" class="form-grid">
                     <Label text="{i18n>LABEL_09021}"/>
                     <VBox>
-                        <custom:DateRangeSelection id="DialogData1" maxDate="{/DialogData/maxDate}" minDate="{/DialogData/minDate}" editable="{= (${/FormData/Lnsta} === '10' || !${/FormData/Lnsta}) &amp;&amp; ${/ReWriteStat} }" dateValue="{ path: '/DialogData/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/DialogData/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date required" />
+                        <custom:DateRangeSelection id="DialogData1" maxDate="{/DialogData/maxDate}" minDate="{/DialogData/minDate}" editable="{= (${/FormData/Lnsta} === '10' || !${/FormData/Lnsta}) || (${/DialogData/ZappStat} === 'F' &amp;&amp; ${/ReWriteStat}) }" dateValue="{ path: '/DialogData/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/DialogData/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date required" />
                     </VBox>
                     <Label text="{i18n>LABEL_09016}"/>
                     <FlexBox alignItems="Start" justifyContent="End">
-                        <Input id="DialogData2" textAlign="Right" value="{ path: '/DialogData/Bet01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveCompar" editable="{= (${/FormData/Lnsta} === '10' || !${/FormData/Lnsta}) &amp;&amp; ${/ReWriteStat} }"/>
+                        <Input id="DialogData2" textAlign="Right" value="{ path: '/DialogData/Bet01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveCompar" editable="{= (${/FormData/Lnsta} === '10' || !${/FormData/Lnsta})  || (${/DialogData/ZappStat} === 'F' &amp;&amp; ${/ReWriteStat}) }"/>
                     </FlexBox>
                     <Label text="{i18n>LABEL_09020}"/>
                     <VBox>
-                        <Input id="DialogData3" value="{/DialogData/Disenm}" class="required" editable="{= (${/FormData/Lnsta} === '10' || !${/FormData/Lnsta}) &amp;&amp; ${/ReWriteStat} }"/>
+                        <Input id="DialogData3" value="{/DialogData/Disenm}" class="required" editable="{= (${/FormData/Lnsta} === '10' || !${/FormData/Lnsta}) || (${/DialogData/ZappStat} === 'F' &amp;&amp; ${/ReWriteStat}) }"/>
                     </VBox>
                     <Label text="{i18n>LABEL_09017}"/>
                     <FlexBox alignItems="Start" justifyContent="End">
-                        <Input id="DialogData4" textAlign="Right" value="{ path: '/DialogData/Bet02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveCompar" editable="{= (${/FormData/Lnsta} === '10' || !${/FormData/Lnsta}) &amp;&amp; ${/ReWriteStat} }"/>
+                        <Input id="DialogData4" textAlign="Right" value="{ path: '/DialogData/Bet02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveCompar" editable="{= (${/FormData/Lnsta} === '10' || !${/FormData/Lnsta})  || (${/DialogData/ZappStat} === 'F' &amp;&amp; ${/ReWriteStat}) }"/>
                     </FlexBox>
                     <Label text="{i18n>LABEL_09014}"/>
                     <VBox>
-                        <Input id="DialogData5" value="{/DialogData/Medorg}" class="required" editable="{= (${/FormData/Lnsta} === '10' || !${/FormData/Lnsta}) &amp;&amp; ${/ReWriteStat} }"/>
+                        <Input id="DialogData5" value="{/DialogData/Medorg}" class="required" editable="{= (${/FormData/Lnsta} === '10' || !${/FormData/Lnsta})  || (${/DialogData/ZappStat} === 'F' &amp;&amp; ${/ReWriteStat}) }"/>
                     </VBox>
                     <Label text="{i18n>LABEL_09018}"/>
                     <FlexBox alignItems="Start" justifyContent="End">
@@ -37,7 +37,7 @@
                     </FlexBox>
                     <Label text="{i18n>LABEL_09015}"/>
                     <VBox>
-                        <ComboBox id="DialogData6" items="{/ReceiptType}" selectedKey="{/DialogData/Recpgb}" change=".onRecipt" class="required" editable="{= (${/FormData/Lnsta} === '10' || !${/FormData/Lnsta}) &amp;&amp; ${/ReWriteStat} }">
+                        <ComboBox id="DialogData6" items="{/ReceiptType}" selectedKey="{/DialogData/Recpgb}" change=".onRecipt" class="required" editable="{= (${/FormData/Lnsta} === '10' || !${/FormData/Lnsta})  || (${/DialogData/ZappStat} === 'F' &amp;&amp; ${/ReWriteStat}) }">
                             <core:Item text="{Ztext}" key="{Zcode}" />
                         </ComboBox>
                     </VBox>

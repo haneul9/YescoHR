@@ -87,6 +87,10 @@ sap.ui.define(
         this.getList();
       },
 
+      formatAmount(sAmount) {
+        return this.TextUtils.toCurrency(!_.parseInt(sAmount) ? 0 : sAmount);
+      },
+
       getCurrentLocationText() {
         return this.getBundleText('LABEL_07034');
       },

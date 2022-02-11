@@ -477,6 +477,7 @@ sap.ui.define(
 
         oDetailModel.setProperty('/FormData/Appno', '');
         oDetailModel.setProperty('/FormData/Lnsta', '');
+        oDetailModel.setProperty('/ReWriteBtn', false);
         oDetailModel.setProperty('/ReWriteStat', true);
         this.settingsAttachTable();
       },
@@ -1074,6 +1075,7 @@ sap.ui.define(
         } catch (oError) {
           AppUtils.handleError(oError);
           oDetailModel.setProperty('/DialogData/Appno2', '');
+          oDetailModel.setProperty('/DialogData/isNew', true);
         } finally {
           AppUtils.setAppBusy(false, this);
         }
@@ -1301,9 +1303,8 @@ sap.ui.define(
 
         AttachFileAction.setAttachFile(this, {
           Id: this.DIALOG_FILE_ID,
-          Editable: (!sStatus || sStatus === '10') && bStat,
+          Editable: !sStatus || sStatus === '10' || (bStat && oDetailModel.getProperty('/ReWriteStat')),
           Type: this.getApprovalType(),
-          Editable: true,
           Appno: sAppno,
           Max: 1,
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
