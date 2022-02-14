@@ -226,6 +226,8 @@ sap.ui.define(
             oViewModel.setProperty('/search', {
               Werks: this.getSessionProperty('Werks'),
               Zyear: String(new Date().getFullYear()),
+              Orgeh: this.getAppointeeProperty('Orgeh'),
+              Orgtx: this.getAppointeeProperty('Orgtx'),
             });
 
             const aTreeList = await this.setTreeList();
@@ -271,6 +273,8 @@ sap.ui.define(
           Werks: this.getSessionProperty('Werks'),
           Zyear: String(new Date().getFullYear()),
           Objid: 'ALL',
+          Orgeh: this.getAppointeeProperty('Orgeh'),
+          Orgtx: this.getAppointeeProperty('Orgtx'),
           Otype: '',
         });
 
@@ -308,7 +312,7 @@ sap.ui.define(
               new Filter('Werks', FilterOperator.EQ, mSearch.Werks), //
               new Filter('Zyear', FilterOperator.EQ, mSearch.Zyear),
               new Filter('Seroty', FilterOperator.EQ, bKey ? 'O' : mSearch.Otype),
-              new Filter('Serobj', FilterOperator.EQ, bKey ? '' : mSearch.Objid === 'ALL' ? '' : mSearch.Objid),
+              new Filter('Serobj', FilterOperator.EQ, bKey ? mSearch.Orgeh : mSearch.Objid === 'ALL' ? '' : mSearch.Objid),
             ],
             success: (oData) => {
               if (oData) {
@@ -523,7 +527,7 @@ sap.ui.define(
         let iDropPosition = oGrid.indexOfItem(oDropped);
 
         // 빈 박스 드롭시 , 첫번째 drop시
-        if (!mDraggData.Ztext || (iDropPosition === 0 && !bDragIndex)) {
+        if ((!mDraggData.Ztext && !mDraggData.Stext) || (iDropPosition === 0 && !bDragIndex)) {
           return;
         }
 
@@ -672,7 +676,13 @@ sap.ui.define(
 
         return new Promise((resolve, reject) => {
           oModel.read('/KpiCascadingOrgListSet', {
-            filters: [new Filter('Gubun', FilterOperator.EQ, sKey), new Filter('Werks', FilterOperator.EQ, oSearch.Werks), new Filter('Orgeh', FilterOperator.EQ, sOrgeh || oSearch.Orgeh), new Filter('Zyear', FilterOperator.EQ, oSearch.Zyear)],
+            filters: [
+              // prettier 방지주석
+              new Filter('Gubun', FilterOperator.EQ, sKey),
+              new Filter('Werks', FilterOperator.EQ, oSearch.Werks),
+              new Filter('Orgeh', FilterOperator.EQ, sOrgeh || oSearch.Orgeh),
+              new Filter('Zyear', FilterOperator.EQ, oSearch.Zyear),
+            ],
             success: (oData) => {
               if (oData) {
                 const aGridList = oData.results;
