@@ -9,6 +9,7 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/common/GroupDialogHandler',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -23,6 +24,7 @@ sap.ui.define(
     AppUtils,
     ComboEntry,
     ServiceNames,
+    GroupDialogHandler,
     ODataReadError,
     ODataCreateError,
     BaseController
@@ -30,6 +32,8 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.mssEvalKpi.Kpi', {
+      GroupDialogHandler: null,
+
       onBeforeShow() {
         const oViewModel = new JSONModel({
           busy: false,
@@ -208,6 +212,11 @@ sap.ui.define(
             oViewModel.setProperty('/PartList', aGridList);
           } else {
             oViewModel.setProperty('/situation/segmentKey', 'A');
+
+            this.GroupDialogHandler = new GroupDialogHandler(this, ([mOrgData]) => {
+              oViewModel.setProperty('/search/Orgeh', mOrgData.Orgeh);
+              oViewModel.setProperty('/search/Orgtx', mOrgData.Stext);
+            });
 
             oViewModel.setProperty('/CascadingSitu', {
               Label1: this.getBundleText('LABEL_00224'),
@@ -697,6 +706,11 @@ sap.ui.define(
             },
           });
         });
+      },
+
+      // 부서선택
+      onPressSearchOrgeh() {
+        this.GroupDialogHandler.openDialog();
       },
 
       // 팀 cascading grid settings

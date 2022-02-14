@@ -424,13 +424,15 @@ sap.ui.define(
 
         if (mFormData.Lntyp === 'ALL' || !mFormData.Lntyp) return;
 
+        const mPayLoad = {
+          Lntyp: mFormData.Lntyp,
+          Lnprd: mFormData.Lnprd || '',
+          Lnrte: mFormData.Lnrte || '',
+          LnamtT: sAmount,
+        };
+
         try {
-          const oRepayObj = await Client.getEntitySet(oModel, 'LoanAmtCheck', {
-            Lntyp: mFormData.Lntyp,
-            Lnprd: mFormData.Lnprd || '',
-            Lnrte: mFormData.Lnrte || '',
-            LnamtT: sAmount,
-          });
+          const oRepayObj = await Client.getEntitySet(oModel, 'LoanAmtCheck', _.pickBy(mPayLoad, _.identity));
 
           if (!!oRepayObj[0].Message) {
             MessageBox.alert(oRepayObj[0].Message);

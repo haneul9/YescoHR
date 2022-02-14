@@ -105,9 +105,12 @@
                     <grid:GridItemLayoutData gridColumn="2 / 5"/>
                 </layoutData>
             </VBox>
-            <Label text="{i18n>LABEL_00142}" visible="{= ${/FormData/Lnsta} === '45' }" />
-            <VBox visible="{= ${/FormData/Lnsta} === '45' }">
+            <Label text="{i18n>LABEL_00142}" visible="{= !!${/FormData/ZappResn} }" />
+            <VBox visible="{= !!${/FormData/ZappResn} }">
                 <Text text="{/FormData/ZappResn}" />
+                <layoutData>
+                    <grid:GridItemLayoutData gridColumn="2 / 5"/>
+                </layoutData>
             </VBox>
         </grid:CSSGrid>
     </VBox>
