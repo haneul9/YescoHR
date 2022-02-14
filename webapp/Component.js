@@ -50,6 +50,7 @@ sap.ui.define(
       init(...aArgs) {
         $('body').toggleClass(this.getContentDensityClass(), true);
 
+        this.toggleDeviceStyle();
         moment.locale(navigator.language || 'ko');
 
         this.setDeviceModel() // 디바이스 모델 생성
@@ -102,6 +103,14 @@ sap.ui.define(
 
       getMetadataModel() {
         return this.getModel('metadataModel');
+      },
+
+      toggleDeviceStyle() {
+        if (AppUtils.getDevice() === sap.ui.Device.system.SYSTEMTYPE.PHONE) {
+          $('#desktopstyle').remove();
+        } else {
+          $('#mobilestyle').remove();
+        }
       },
 
       /**

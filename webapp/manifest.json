@@ -70,7 +70,8 @@
     "resources": {
       "css": [
         { "uri": "asset/css/webfonts/pretendard-subset.css" },
-        { "uri": "asset/css/style.css" },
+        { "uri": "asset/css/style.css", "id": "desktopstyle" },
+        { "uri": "asset/css/mobile-style.css", "id": "mobilestyle" },
         { "uri": "asset/css/placeholder.css" },
         { "uri": "asset/css/zample/zample.css" },
         { "uri": "asset/css/util/font-size.css" },
@@ -195,6 +196,8 @@
         { "pattern": "paystub", "name": "paystub", "target": "paystub" },
         { "pattern": "paystub/{seqnr}", "name": "paystub-detail", "target": "paystubDetail" },
 
+        { "pattern": "mobile/employee/:pernr:/:orgtx:/:orgeh:", "name": "mobile/employee", "target": "mobile/employee" },
+
         { "pattern": "sampleComponents", "name": "sampleComponents", "target": "sampleComponents" },
         { "pattern": "sampleTimeline", "name": "sampleTimeline", "target": "sampleTimeline" },
         { "pattern": "sampleNinebox", "name": "sampleNinebox", "target": "sampleNinebox" },
@@ -203,9 +206,7 @@
         { "pattern": "sampleVacationIndicator", "name": "sampleVacationIndicator", "target": "sampleVacationIndicator" },
         { "pattern": "sampleOrgChart", "name": "sampleOrgChart", "target": "sampleOrgChart" },
         { "pattern": "sampleYearPlan", "name": "sampleYearPlan", "target": "sampleYearPlan" },
-        { "pattern": "samplePortlets", "name": "samplePortlets", "target": "samplePortlets" },
-
-        { "pattern": "mobile/employee/:pernr:/:orgtx:/:orgeh:", "name": "mobile/employee", "target": "mobile/employee" }
+        { "pattern": "samplePortlets", "name": "samplePortlets", "target": "samplePortlets" }
       ],
       "targets": {
         "home": { "viewId": "home", "viewPath": "sap.ui.yesco.mvc.view.home", "viewName": "Portlets" },
