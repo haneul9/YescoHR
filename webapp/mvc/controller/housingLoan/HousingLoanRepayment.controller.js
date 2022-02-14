@@ -526,7 +526,7 @@ sap.ui.define(
         }
 
         // 원금상환액
-        if (!mDialogData.RpamtMpr) {
+        if (!mDialogData.RpamtMpr || _.parseInt(mDialogData.RpamtMpr) === 0) {
           MessageBox.alert(this.getBundleText('MSG_07017'));
           return true;
         }
