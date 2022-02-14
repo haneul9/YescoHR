@@ -1,3 +1,5 @@
 @charset "utf-8";
 
+html *:not(.sapUiIcon):not(.sapMMsgStripCloseButton):not(i) {font-family:Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif}
+
 .app-menu-toolbar {width: 100%; bottom: 0; position: fixed; margin:0 auto; background-color:#fff; box-shadow:0 1px 1px rgb(0 0 0 / 10%); z-index:2; }
