@@ -11,7 +11,7 @@
       <Label text="{i18n>LABEL_00138}" />
       <VBox>
         <Text visible="{= !${/ApprovalDetails/ZappUrl} }" text="{ path: '/ApprovalDetails/Docno', formatter: '.TextUtils.getDocnoTxt' }" />
-        <Link visible="{= !!${/ApprovalDetails/ZappUrl} }" target="_blank" href="{/ApprovalDetails/ZappUrl}" text="{/ApprovalDetails/Docno}"/>
+        <Link visible="{= !!${/ApprovalDetails/ZappUrl} }" target="_blank" href="{/ApprovalDetails/ZappUrl}" text="{ path: '/ApprovalDetails/Docno', formatter: '.TextUtils.getDocnoTxt' }"/>
       </VBox>
       <Label text="{i18n>LABEL_00140}" />
       <VBox>

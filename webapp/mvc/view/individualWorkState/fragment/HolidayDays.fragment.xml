@@ -22,13 +22,13 @@
       </microchart:InteractiveDonutChart> -->
       <grid:CSSGrid gridTemplateColumns="2fr 1fr 1fr" gridGap="28px 20px">
         <Label text="{i18n>LABEL_18002}"/>
-        <Text text="{/vacationChart/dUsed}"/>
+        <Text text="{/vacationChart/dUsed}일"/>
         <Text text="{/vacationChart/pUsed}%"/>
         <Label text="{i18n>LABEL_18003}"/>
-        <Text text="{/vacationChart/dPlan}"/>
+        <Text text="{/vacationChart/dPlan}일"/>
         <Text text="{/vacationChart/pPlan}%"/>
         <Label text="{i18n>LABEL_18004}"/>
-        <Text text="{/vacationChart/dUnPlan}"/>
+        <Text text="{/vacationChart/dUnPlan}일"/>
         <Text text="{/vacationChart/pUnPlan}%"/>
       </grid:CSSGrid>
     </HBox>

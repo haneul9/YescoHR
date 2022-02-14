@@ -127,6 +127,8 @@ sap.ui.define(
         const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
         const mDetailData = oListView.getModel().getProperty('/FormData');
         const oDetailModel = this.getViewModel();
+        const mTargetLoan = oDetailModel.getProperty('/TargetLoanHis');
+        const aAccountTxt = oDetailModel.getProperty('/AccountTxt');
 
         oDetailModel.setProperty('/DialogData', _.cloneDeep(mDetailData));
         oDetailModel.setProperty('/DialogData/Appda', new Date());
@@ -135,10 +137,21 @@ sap.ui.define(
         oDetailModel.setProperty('/DialogData/Lnstatx', '');
         oDetailModel.setProperty('/DialogData/Rptyp', 'ALL');
         oDetailModel.setProperty('/DialogData/Paydt', new Date());
-        oDetailModel.setProperty('/DialogData/Lnrte', oDetailModel.getProperty('/TargetLoanHis/Lnrte'));
-        oDetailModel.setProperty('/DialogData/RpamtMpr', oDetailModel.getProperty('/TargetLoanHis/RpamtBal'));
-        oDetailModel.setProperty('/DialogData/RpamtTot', oDetailModel.getProperty('/TargetLoanHis/RpamtBal'));
-        oDetailModel.setProperty('/DialogData/Account', oDetailModel.getProperty('/AccountTxt'));
+        oDetailModel.setProperty('/DialogData/Lnrte', mTargetLoan.Lnrte);
+        oDetailModel.setProperty('/DialogData/RpamtMpr', mTargetLoan.RpamtBal);
+        oDetailModel.setProperty('/DialogData/RpamtTot', mTargetLoan.RpamtBal);
+        oDetailModel.setProperty(
+          '/DialogData/Account',
+          !_.find(aAccountTxt, (e) => {
+            return !e.Zbigo;
+          })
+            ? _.find(aAccountTxt, (e) => {
+                return e.Zbigo === mTargetLoan.Lntyp.slice(0, 1);
+              }).Ztext
+            : _.find(aAccountTxt, (e) => {
+                return !e.Zbigo;
+              }).Ztext
+        );
         oDetailModel.setProperty('/DateEditable', true);
       },
 
@@ -170,6 +183,9 @@ sap.ui.define(
 
         await this.getRepayType(oRowData.Lnsta);
 
+        const mTargetLoan = oDetailModel.getProperty('/TargetLoanHis');
+        const aAccountTxt = oDetailModel.getProperty('/AccountTxt');
+
         if (!this.byId('RepayApplyDialog')) {
           Fragment.load({
             id: this.getView().getId(),
@@ -179,14 +195,36 @@ sap.ui.define(
             // connect dialog to the root view of this component (models, lifecycle)
             this.getView().addDependent(oDialog);
             oDetailModel.setProperty('/DialogData', oRowData);
-            oDetailModel.setProperty('/DialogData/Account', oDetailModel.getProperty('/AccountTxt'));
+            oDetailModel.setProperty(
+              '/DialogData/Account',
+              !_.find(aAccountTxt, (e) => {
+                return !e.Zbigo;
+              })
+                ? _.find(aAccountTxt, (e) => {
+                    return e.Zbigo === mTargetLoan.Lntyp.slice(0, 1);
+                  }).Ztext
+                : _.find(aAccountTxt, (e) => {
+                    return !e.Zbigo;
+                  }).Ztext
+            );
             oDetailModel.setProperty('/DateEditable', oRowData.Rptyp === 'FULL');
             this.settingsAttachTable();
             oDialog.open();
           });
         } else {
           oDetailModel.setProperty('/DialogData', oRowData);
-          oDetailModel.setProperty('/DialogData/Account', oDetailModel.getProperty('/AccountTxt'));
+          oDetailModel.setProperty(
+            '/DialogData/Account',
+            !_.find(aAccountTxt, (e) => {
+              return !e.Zbigo;
+            })
+              ? _.find(aAccountTxt, (e) => {
+                  return e.Zbigo === mTargetLoan.Lntyp.slice(0, 1);
+                }).Ztext
+              : _.find(aAccountTxt, (e) => {
+                  return !e.Zbigo;
+                }).Ztext
+          );
           oDetailModel.setProperty('/DateEditable', oRowData.Rptyp === 'FULL');
           this.settingsAttachTable();
           this.byId('RepayApplyDialog').open();
@@ -242,17 +280,28 @@ sap.ui.define(
           new Promise((resolve) => {
             // 입금계좌
             oModel.read('/BenefitCodeListSet', {
-              filters: [new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0015'), new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks), new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()), new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000003'), new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'IN'), new sap.ui.model.Filter('Comcd', sap.ui.model.FilterOperator.EQ, 'BANK')],
+              filters: [
+                // prettier 방지주석
+                new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0015'),
+                new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks),
+                new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
+                new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000003'),
+                new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'IN'),
+                new sap.ui.model.Filter('Comcd', sap.ui.model.FilterOperator.EQ, 'BANK'),
+              ],
               success: (oData) => {
                 if (oData) {
-                  const sText = oData.results[0].Ztext;
+                  const aData = oData.results;
+                  const sText = aData[0].Ztext;
                   const sRedText = `<span style='color:red;'>${this.getBundleText('MSG_07020')}</span>`;
+                  const sText2 = _.size(aData) === 2 ? `<p style='margin-left:59px'>${aData[1].Ztext}</p>` : '';
 
-                  oDetailModel.setProperty('/AccountTxt', sText);
+                  oDetailModel.setProperty('/AccountTxt', aData);
                   oDetailModel.setProperty(
                     '/InfoMessage',
                     `<p>${this.getBundleText('MSG_07014')}</p>
                     <p>${this.getBundleText('MSG_07018', sText)}</p>
+                    ${sText2}
                     <p>${this.getBundleText('MSG_07019', sRedText)}</p>`
                   );
 
@@ -267,7 +316,11 @@ sap.ui.define(
           new Promise((resolve) => {
             // 융자내역
             oModel.read('/LoanRepayHistorySet', {
-              filters: [new sap.ui.model.Filter('Lonid', sap.ui.model.FilterOperator.EQ, mDetailData.Lonid), new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mDetailData.Lntyp)],
+              filters: [
+                // prettier 방지주석
+                new sap.ui.model.Filter('Lonid', sap.ui.model.FilterOperator.EQ, mDetailData.Lonid),
+                new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mDetailData.Lntyp),
+              ],
               success: (oData) => {
                 if (oData) {
                   const oHis = oData.results[0];
@@ -467,13 +520,13 @@ sap.ui.define(
         }
 
         // 상환일
-        if (sType === 'C' && mDialogData.Paydt > moment().toDate()) {
+        if (sType === 'C' && mDialogData.Paydt > moment().toDate() && mDialogData.Rptyp === 'FULL') {
           MessageBox.alert(this.getBundleText('MSG_07024'));
           return true;
         }
 
         // 원금상환액
-        if (!mDialogData.RpamtMpr) {
+        if (!mDialogData.RpamtMpr || _.parseInt(mDialogData.RpamtMpr) === 0) {
           MessageBox.alert(this.getBundleText('MSG_07017'));
           return true;
         }
@@ -518,6 +571,7 @@ sap.ui.define(
 
                   oDetailModel.setProperty('/DialogData/Appno', sAppno);
                   oDetailModel.setProperty('/DialogData/Appda', new Date());
+                  oDetailModel.setProperty('/DialogData/Seqnr', '');
                 }
 
                 let oSendObject = {};
@@ -540,7 +594,11 @@ sap.ui.define(
                   });
                 });
 
-                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
+                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'), {
+                  onClose: () => {
+                    this.byId('RepayApplyDialog').close();
+                  },
+                });
               } catch (oError) {
                 AppUtils.handleError(oError);
               } finally {
@@ -574,6 +632,7 @@ sap.ui.define(
 
                   oDetailModel.setProperty('/DialogData/Appno', sAppno);
                   oDetailModel.setProperty('/DialogData/Appda', new Date());
+                  oDetailModel.setProperty('/DialogData/Seqnr', '');
                 }
 
                 let oSendObject = {};
