@@ -12,7 +12,7 @@
           <core:Item key="{code}" text="{text}" />
         </m:ComboBox>
       </m:HBox>
-      <m:Button type="Transparent" class="icon-button search" press=".onPressCurrentListSearch" visible="false" />
+      <m:Button type="Transparent" class="icon-button search" press=".onPressCurrentListSearch" visible="false" tooltip="{i18n>LABEL_00100}" />
     </m:HBox>
     <m:VBox class="hCardBox mb-16-px dialog-content-table">
       <Table id="currentListTable" width="100%" columnHeaderHeight="35" rowHeight="34" selectionMode="{currentListMode}" rows="{currentList}" visibleRowCount="{currentListRowCount}" busy="{busy}" busyIndicatorDelay="0" noData="{i18n>MSG_00001}" rowSelectionChange=".onChangeRowSelection">

@@ -131,8 +131,10 @@ sap.ui.define(
       onScroll(oEvent) {
         const oPopoverScroll = oEvent.getParameter('target');
         const iScrollMarginBottom = oPopoverScroll.scrollHeight - oPopoverScroll.scrollTop;
+        const fGrowHeight = this.oNotificationPopover.getGrowCount() * 67.5;
+        this.debug('onScroll iScrollMarginBottom', oPopoverScroll.scrollHeight, oPopoverScroll.scrollTop, iScrollMarginBottom, fGrowHeight);
 
-        if (iScrollMarginBottom === 338) {
+        if (oPopoverScroll.scrollTop > 0 && iScrollMarginBottom === fGrowHeight) {
           this.setBusy(true);
 
           this.loadMoreContentData();
@@ -142,7 +144,7 @@ sap.ui.define(
       async loadMoreContentData() {
         const aContentData = await this.readMoreContentData();
         if (!aContentData.length) {
-          this.this.setBusy(false);
+          this.setBusy(false);
           return;
         }
 
@@ -158,6 +160,8 @@ sap.ui.define(
         oNotificationModel.setProperty('/unreadCount', `${iUnreadCount === 99 ? '+' : ''}${iUnreadCount}`);
         oNotificationModel.setProperty('/listCount', listCount + iPrevListCount);
         oNotificationModel.setProperty('/list', iPrevList);
+
+        this.setBusy(false);
       },
 
       async readMoreContentData() {

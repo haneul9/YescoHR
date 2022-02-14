@@ -105,7 +105,8 @@ sap.ui.define(
           const aTableData = mTables[sTableKey] || [];
           mPortletContentData[`table${sTableKey}`] = {
             list: aTableData,
-            listCount: Math.min(aTableData.length, 5),
+            listCount: aTableData.length,
+            // listCount: Math.min(aTableData.length, 5),
           };
 
           oPortletModel.setProperty(`/table${sTableKey}/list`, []);
@@ -180,7 +181,12 @@ sap.ui.define(
           });
 
           this.getController().getView().addDependent(this.oPopover);
-          this.oPopover.setModel(this.getPortletModel());
+
+          this.oPopover
+            .attachBeforeOpen(() => {
+              this.oPopover.setContentWidth(this.oPopover.getBindingContext().getProperty('listCount') > 5 ? '435px' : '430px');
+            })
+            .setModel(this.getPortletModel());
         }
       },
 

@@ -125,6 +125,7 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p06 .team-member-count[data-table-key="4"] .sapMObjStatusText {color:#c68dff}
 .portlet-p06 .team-member-count[data-table-key="5"] .sapMObjStatusText {color:#6edecf}
 .portlet-p06 .team-member-count[data-table-key="6"] .sapMObjStatusText {color:#ffc86f}
+.team-member-count-popover .sapMPopoverCont {max-height:211px !important}
 .team-member-count-popover .sapUiTableCCnt,
 .team-member-count-popover .sapUiTableCtrlCnt {min-height:34px !important}
 .portlet-p06 tspan {font-size:7px}
@@ -140,7 +141,7 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .sapMBtn.portlet-btn.color-06 .sapMBtnDefault, .portlet-p07 .sapUiLayoutCSSGrid .sapUiLayoutCSSGridItem:nth-child(6) .sapMFlexItem {background-color:rgba(17, 128, 174, .1)}
 .portlet-p08 .portlet-todo-list .sapMFlexBox {background-color:#fafafa; height:40px; padding:0 10px; border-radius:8px}
 .portlet-p08 .portlet-todo-list .sapMFlexBox + .sapMFlexBox {margin-top:9px}
-.portlet-p08 .portlet-todo-list .menu-link-text {margin-bottom:-6px; font-weight:700; color:#555}
+.portlet-p08 .portlet-todo-list .menu-link-text {margin-bottom:-6px; font-weight:700; color:#555 !important}
 .portlet-p09 img {vertical-align:sub}
 .portlet-p09 .sapMCLI .sapMText {vertical-align:middle}
 
@@ -612,7 +613,7 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt {outline-style:none !important}
 .menu-favorite-icon {margin-right:6px; vertical-align:middle}
 .menu-favorite-icon [data-sap-ui-icon-content=""]::before {content:""; display:inline-block; width:15px; height:15px; background-image:url(../image/icon_star2_on.svg); background-position:center; background-repeat:no-repeat; background-size:15px}
 .menu-favorite-icon [data-sap-ui-icon-content=""]::before {content:""; display:inline-block; width:15px; height:15px; background-image:url(../image/icon_star3.svg); background-position:center; background-repeat:no-repeat; background-size:15px}
-.menu-link {color:#555; font-size:14px; vertical-align:middle}
+.menu-link {color:#555 !important; font-size:14px; vertical-align:middle}
 .megadrop-menu-layer.sapUiSizeCompact .sapMTB.sapMTBHeader-CTX {padding:0}
 .dummy-favorite-icon {margin-top:-1px; margin-right:6px; vertical-align:middle}
 
@@ -1498,17 +1499,22 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .sapUiSizeCompact.notification-popover .sapMPopoverHeader .sapMLabel {font-weight:400}
 .sapUiSizeCompact.notification-popover .sapMSwt {margin-right:5px; margin-left:9px; width:62px; height:30px}
 .sapUiSizeCompact.notification-popover .sapMSwtHandle {width:24px; height:24px}
-.sapUiSizeCompact.notification-popover.sapMPopoverWithBar.sapMPopoverWithFooter:not(.sapMRPCalendar)>.sapMPopoverCont {max-height:338px !important; padding:0}/* 68px 135px 338px */
+.sapUiSizeCompact.notification-popover.sapMPopoverWithBar.sapMPopoverWithFooter:not(.sapMRPCalendar)>.sapMPopoverCont {padding:0}
+.sapUiSizeCompact.notification-popover.max-1-rows.sapMPopoverWithBar.sapMPopoverWithFooter:not(.sapMRPCalendar)>.sapMPopoverCont {max-height:67.5px !important}
+.sapUiSizeCompact.notification-popover.max-2-rows.sapMPopoverWithBar.sapMPopoverWithFooter:not(.sapMRPCalendar)>.sapMPopoverCont {max-height:135px !important}
+.sapUiSizeCompact.notification-popover.max-3-rows.sapMPopoverWithBar.sapMPopoverWithFooter:not(.sapMRPCalendar)>.sapMPopoverCont {max-height:202.5px !important}
+.sapUiSizeCompact.notification-popover.max-4-rows.sapMPopoverWithBar.sapMPopoverWithFooter:not(.sapMRPCalendar)>.sapMPopoverCont {max-height:270px !important}
+.sapUiSizeCompact.notification-popover.max-5-rows.sapMPopoverWithBar.sapMPopoverWithFooter:not(.sapMRPCalendar)>.sapMPopoverCont {max-height:337.5px !important}
 .sapUiSizeCompact.notification-popover ul {position:relative; margin:0 20px}
 .sapUiSizeCompact.notification-popover ul:before {content:""; display:inline-block; position:absolute; left:5px; top:0; width:1px; height:100%; background-color:#dde1e6}
 .sapUiSizeCompact.notification-popover li {position:relative; margin:0 0px 5px 28px; padding:10px 14px; border:1px solid #dde1e6; border-radius:4px} 
-.sapUiSizeCompact.notification-popover li:before {content:""; display:inline-block; position:absolute; left:-28px; top:center; width:9px; height:9px; border-radius:50%; background-color:#A2C5FA}
+.sapUiSizeCompact.notification-popover li:before {content:""; display:inline-block; position:absolute; left:-28px; top:center; width:9px; height:9px; border-radius:50%; background-color:#a2c5fa}
 .sapUiSizeCompact.notification-popover li.sapMListNoData:before {display:none}
 .sapUiSizeCompact.notification-popover li:not(.sapMLIBUnread):before {background-color:#ccc}
 .sapUiSizeCompact.notification-popover li:not(.sapMLIBUnread) {background-color:#f8f9fa; border:1px solid #dde1e6}
 .sapUiSizeCompact.notification-popover li:not(.sapMLIBUnread) .sapMText, .notification-popover li:not(.sapMLIBUnread) .sapMText, .notification-popover li:not(.sapMLIBUnread) .sapUiIcon::before {color:#ccc}
-.sapUiSizeCompact.notification-popover li .sapMImg {opacity: 1;}
-.sapUiSizeCompact.notification-popover li:not(.sapMLIBUnread) .sapMImg {opacity: .3;}
+.sapUiSizeCompact.notification-popover li .sapMImg {opacity:1}
+.sapUiSizeCompact.notification-popover li:not(.sapMLIBUnread) .sapMImg {opacity:.3}
 .sapUiSizeCompact.notification-popover .pin-toggle-icon {min-width:auto; vertical-align:middle}
 .sapUiSizeCompact.notification-popover .sapMBtn.icon-button.pin-toggle-icon .sapMBtnInner {border-color:transparent !important; background:transparent !important}
 .sapUiSizeCompact.notification-popover .sapMText {white-space:normal; color:#222; font-weight:600}
@@ -1521,7 +1527,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .sapUiSizeCompact.notification-popover .sapMBtn.toggle-icon {margin-right:5px; min-width:auto}
 .sapUiSizeCompact.notification-popover .sapMBtn.toggle-icon .sapMBtnInner.sapMBtnText {width:100%; height:18px; border:none; padding:0; justify-content:flex-end; background-color:transparent}
 .sapUiSizeCompact.notification-popover .sapMBtn.toggle-icon .sapMBtnContent {line-height:18px}
-.sapUiSizeCompact.notification-popover .sapMBtn.toggle-icon bdi {padding:2px 3px; border:1px solid #387FE9; border-radius:3px; font-size:10px; color:#387FE9}
+.sapUiSizeCompact.notification-popover .sapMBtn.toggle-icon bdi {padding:2px 3px; border:1px solid #387fe9; border-radius:3px; font-size:10px; color:#387fe9}
 .sapUiSizeCompact.notification-popover li:not(.sapMLIBUnread) .sapMBtn.toggle-icon bdi {border:1px solid #ddd; color:#222}
 
 

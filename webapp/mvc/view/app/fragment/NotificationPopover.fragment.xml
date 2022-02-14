@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
-  <custom:Popover contentWidth="490px" placement="Bottom" horizontalScrolling="false" class="notification-popover" busy="{busy}" busyIndicatorDelay="0" initialFocus="notification-popover-close" scroll=".onScroll">
+  <custom:Popover contentWidth="490px" placement="Bottom" horizontalScrolling="false" class="notification-popover" busy="{busy}" busyIndicatorDelay="0" initialFocus="notification-popover-close" scroll=".onScroll" growCount="4">
     <custom:customHeader>
       <HBox height="75px" alignItems="Center" class="px-20-px">
         <Title text="{i18n>LABEL_01401}" level="H3"/>
@@ -23,7 +23,7 @@
       <List items="{list}" visible="{= ${listCount} &gt; 0 }" rememberSelections="false" showUnread="true" showNoData="false">
         <CustomListItem unread="{= ${Checked} !== 'X' }">
           <HBox alignItems="Center">
-            <ToggleButton icon="{= ${Pinned} === 'X' ? 'asset/image/icon_pinned.svg' : 'asset/image/icon_pin.svg' }" pressed="{= ${Pinned} === 'X' }" press=".onPressNotificationPin" width="1rem" class="icon-button pin-toggle-icon">
+            <ToggleButton icon="{= ${Pinned} === 'X' ? 'asset/image/icon_pinned.svg' : 'asset/image/icon_pin.svg' }" pressed="{= ${Pinned} === 'X' }" press=".onPressNotificationPin" width="1rem" class="icon-button pin-toggle-icon" tooltip="{= ${Pinned} === 'X' ? ${i18n>LABEL_01408} : ${i18n>LABEL_01407} }">
               <layoutData>
                 <FlexItemData alignSelf="Start" />
               </layoutData>
@@ -32,13 +32,13 @@
               <Text text="{Msg}" />
               <Text text="{AdateFormatted} { path: 'Atime', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } }" class="notification-datetime" />
             </VBox>
-            <core:Icon width="1rem" size=".8rem" src="sap-icon://inspect" visible="{= !!${Menid} }" press=".onPressNotificationLink" />
+            <core:Icon width="1rem" size=".8rem" src="sap-icon://inspect" visible="{= !!${Menid} }" press=".onPressNotificationLink" tooltip="{i18n>LABEL_01409}" />
             <Text text="">
               <layoutData>
                 <FlexItemData growFactor="1"/>
               </layoutData>
             </Text>
-            <ToggleButton text="{= ${Checked} !== 'X' ? ${i18n>LABEL_01405} : ${i18n>LABEL_01404} }" pressed="{= ${Checked} !== 'X' }" press=".onPressNotificationReadToggle" class="toggle-icon" />
+            <ToggleButton text="{= ${Checked} !== 'X' ? ${i18n>LABEL_01405} : ${i18n>LABEL_01404} }" pressed="{= ${Checked} !== 'X' }" press=".onPressNotificationReadToggle" class="toggle-icon" tooltip="{= ${Checked} !== 'X' ? ${i18n>LABEL_01410} : ${i18n>LABEL_01411} }" />
           </HBox>
         </CustomListItem>
       </List>

@@ -11,6 +11,9 @@ sap.ui.define(
 
     return Popover.extend('sap.ui.yesco.control.Popover', {
       metadata: {
+        properties: {
+          growCount: { type: 'int', defaultValue: 5 },
+        },
         events: {
           scroll: {},
         },
@@ -24,15 +27,13 @@ sap.ui.define(
         this.oPopup.setAutoClose(false);
       },
 
-      onAfterRendering() {
-        Popover.prototype.init.apply(this);
+      onAfterRendering(...aArgs) {
+        Popover.prototype.onAfterRendering.apply(this, aArgs);
 
-        this.$('cont')[0].addEventListener(
-          'scroll',
-          _.throttle((oEvent) => {
-            this.fireScroll(oEvent);
-          }, 1000)
-        );
+        const iGrowCount = this.getGrowCount();
+        this.addStyleClass(`max-${iGrowCount}-rows`);
+
+        this.$('cont')[0].addEventListener('scroll', _.throttle(this.fireScroll.bind(this), 1000));
       },
     });
   }

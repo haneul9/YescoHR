@@ -5,7 +5,7 @@
   <VBox class="hCardBox search-box" busy="{busy}" busyIndicatorDelay="0" id="searchBox">
     <HBox justifyContent="SpaceBetween" class="title">
       <Title text="{i18n>LABEL_00202}" level="H2" />
-      <Button type="Transparent" class="icon-button search" press=".onPressSearchBoxIcon" />
+      <Button type="Transparent" class="icon-button search" press=".onPressSearchBoxIcon" tooltip="{i18n>LABEL_00100}" />
     </HBox>
     <grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="8px">
       <Label text="{i18n>LABEL_00266}" design="Bold" />

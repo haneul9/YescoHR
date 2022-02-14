@@ -1,15 +1,15 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:grid="sap.ui.layout.cssgrid"
-    xmlns:core="sap.ui.core"
-    xmlns:custom="sap.ui.yesco.control">
-    <VBox class="hCardBox search-box" busyIndicatorDelay="0" busy="{/busy}">
-        <HBox justifyContent="SpaceBetween" class="title">
-            <Title text="{i18n>LABEL_00202}" level="H2" />
-            <Button type="Transparent" class="icon-button search" press=".onPressSearch" />
-        </HBox>
-        <grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="8px">
-            <Label text="{i18n>LABEL_00266}" design="Bold" />
-            <custom:DateRangeSelection class="sapIcon_Date" dateValue="{ path: '/search/Apbeg', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/search/Apend', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
-        </grid:CSSGrid>
-    </VBox>
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <VBox class="hCardBox search-box" busyIndicatorDelay="0" busy="{/busy}">
+    <HBox justifyContent="SpaceBetween" class="title">
+      <Title text="{i18n>LABEL_00202}" level="H2" />
+      <Button type="Transparent" class="icon-button search" press=".onPressSearch" tooltip="{i18n>LABEL_00100}" />
+    </HBox>
+    <grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="8px">
+      <Label text="{i18n>LABEL_00266}" design="Bold" />
+      <custom:DateRangeSelection class="sapIcon_Date" dateValue="{ path: '/search/Apbeg', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/search/Apend', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
+    </grid:CSSGrid>
+  </VBox>
 </core:FragmentDefinition>
