@@ -227,16 +227,20 @@ sap.ui.define(
             id: this.sDoughChartId,
             type: 'doughnut2d',
             renderAt: 'chart-doughnut-container',
-            width: '50%',
-            height: '176px',
+            width: '40%',
+            height: '100%',
             dataFormat: 'json',
             dataSource: {
               chart: {
                 legendPosition: 'right',
-                bgColor: '#ffffff',
+                bgColor: 'transparent',
                 decimals: '0',
-                theme: 'fusion',
-                showHoverEffect: 'false',
+                theme: 'ocean',
+                plottooltext: `$label $value일`,
+                slicingDistance: '5',
+                smartLineAlpha: '0',
+                showZeroPies: 'true',
+                captionPadding: '0',
               },
               data: [
                 {
