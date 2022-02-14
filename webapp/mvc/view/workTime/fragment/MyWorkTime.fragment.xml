@@ -7,8 +7,7 @@
         <Text text="{i18n>LABEL_27003}" />
       </HBox>
       <VBox class="summary-info" alignItems="Center">
-        <HBox>
-        </HBox>
+        <core:HTML content='&lt;div id="chart-dial-container"&gt;&lt;/div&gt;' />
         <HBox alignItems="End">
           <Text text="{
                 path: '/MyWork/Prdtx',
