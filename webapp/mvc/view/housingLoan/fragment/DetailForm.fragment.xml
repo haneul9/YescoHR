@@ -32,7 +32,7 @@
             </VBox>
             <Label text="{i18n>LABEL_07021}"/>
             <HBox>
-                <Input value="{/FormData/Zsize}" liveChange=".areaSize" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="sapUiTinyMarginEnd required"/>
+                <Input value="{/FormData/Zsize}" maxLength="6" liveChange=".areaSize" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="sapUiTinyMarginEnd required"/>
                 <Text text="{/baseArea/Text}"/>
             </HBox>
             <Label text="{i18n>LABEL_00152}"/>

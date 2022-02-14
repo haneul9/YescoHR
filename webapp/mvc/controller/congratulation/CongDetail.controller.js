@@ -49,6 +49,7 @@ sap.ui.define(
         const oViewModel = new JSONModel({
           menuId: '',
           FormStatus: '',
+          BirthMaxDate: moment().toDate(),
           FormData: {},
           Settings: {},
           BenefitType: [],

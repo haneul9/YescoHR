@@ -129,12 +129,20 @@ sap.ui.define(
 
       // 건평 입력시
       areaSize(oEvent) {
-        const sValue = oEvent
+        const oDetailModel = this.getViewModel();
+        let sValue = oEvent
           .getParameter('value')
           .trim()
           .replace(/[^\d'.']/g, '');
 
-        this.getViewModel().setProperty('/FormData/Zsize', sValue);
+        if (_.includes(sValue, '.')) {
+          sValue = sValue.replace(/['.']{2}/g, '.');
+        } else {
+          sValue = sValue.slice(0, 3);
+        }
+
+        // oEvent.getSource().setMaxLength(6);
+        oDetailModel.setProperty('/FormData/Zsize', sValue);
         oEvent.getSource().setValue(sValue);
       },
 
