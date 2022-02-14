@@ -594,7 +594,11 @@ sap.ui.define(
                   });
                 });
 
-                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
+                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'), {
+                  onClose: () => {
+                    this.byId('RepayApplyDialog').close();
+                  },
+                });
               } catch (oError) {
                 AppUtils.handleError(oError);
               } finally {
