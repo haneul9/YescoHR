@@ -129,20 +129,13 @@ sap.ui.define(
 
       // 건평 입력시
       areaSize(oEvent) {
-        const oEventSource = oEvent.getSource();
         const sValue = oEvent
           .getParameter('value')
           .trim()
           .replace(/[^\d'.']/g, '');
-        const oDetailModel = this.getViewModel();
-        const sBaseCode = oDetailModel.getProperty('/baseArea/Code');
 
-        if (sValue > parseFloat(sBaseCode)) {
-          MessageBox.alert(this.getBundleText('MSG_07005', sBaseCode));
-          return oEventSource.setValue(oDetailModel.getProperty('/FormData/Zsize'));
-        }
-
-        oEventSource.setValue(sValue);
+        this.getViewModel().setProperty('/FormData/Zsize', sValue);
+        oEvent.getSource().setValue(sValue);
       },
 
       // 상세조회

@@ -57,7 +57,7 @@ sap.ui.define(
           Settings: {},
           TargetLoanHis: {},
           LoanAppList: [],
-          maxDate: new Date(),
+          maxDate: moment().toDate(),
           DateEditable: true,
         });
         this.setViewModel(oViewModel);
@@ -128,9 +128,7 @@ sap.ui.define(
         const mDetailData = oListView.getModel().getProperty('/FormData');
         const oDetailModel = this.getViewModel();
 
-        await this.getRepayType('');
-
-        oDetailModel.setProperty('/DialogData', mDetailData);
+        oDetailModel.setProperty('/DialogData', _.cloneDeep(mDetailData));
         oDetailModel.setProperty('/DialogData/Appda', new Date());
         oDetailModel.setProperty('/DialogData/Appno', '');
         oDetailModel.setProperty('/DialogData/Lnsta', '');
@@ -165,9 +163,9 @@ sap.ui.define(
 
         if (!oEvent.Appno) {
           const vPath = oEvent.getParameters().rowBindingContext.getPath();
-          oRowData = $.extend(true, {}, oDetailModel.getProperty(vPath));
+          oRowData = _.cloneDeep(oDetailModel.getProperty(vPath));
         } else {
-          oRowData = oEvent;
+          oRowData = _.cloneDeep(oEvent);
         }
 
         await this.getRepayType(oRowData.Lnsta);
@@ -181,12 +179,14 @@ sap.ui.define(
             // connect dialog to the root view of this component (models, lifecycle)
             this.getView().addDependent(oDialog);
             oDetailModel.setProperty('/DialogData', oRowData);
+            oDetailModel.setProperty('/DialogData/Account', oDetailModel.getProperty('/AccountTxt'));
             oDetailModel.setProperty('/DateEditable', oRowData.Rptyp === 'FULL');
             this.settingsAttachTable();
             oDialog.open();
           });
         } else {
           oDetailModel.setProperty('/DialogData', oRowData);
+          oDetailModel.setProperty('/DialogData/Account', oDetailModel.getProperty('/AccountTxt'));
           oDetailModel.setProperty('/DateEditable', oRowData.Rptyp === 'FULL');
           this.settingsAttachTable();
           this.byId('RepayApplyDialog').open();
@@ -351,11 +351,15 @@ sap.ui.define(
       // 상환유형선택
       onLaonType(oEvent) {
         const sKey = oEvent.getSource().getSelectedKey();
+        const oDetailModel = this.getViewModel();
 
         if (sKey === 'ALL') {
           return;
         } else if (sKey === 'FULL') {
-          this.getViewModel().setProperty('/DialogData/Paydt', new Date());
+          oDetailModel.setProperty('/maxDate', moment('9999.12.31').toDate());
+          oDetailModel.setProperty('/DialogData/Paydt', moment().toDate());
+        } else {
+          oDetailModel.setProperty('/maxDate', moment().toDate());
         }
 
         this.setLoanType('Type', sKey);
@@ -418,6 +422,7 @@ sap.ui.define(
 
       // 상환신청
       async onRepayDetailApp() {
+        await this.getRepayType('');
         this.setInitDialogData();
 
         if (!this.byId('RepayApplyDialog')) {
@@ -445,7 +450,7 @@ sap.ui.define(
         this.getRouter().navTo('housingLoan-repay', { oDataKey: sAppno });
       },
 
-      checkError() {
+      checkError(sType) {
         const oDetailModel = this.getViewModel();
         const mDialogData = oDetailModel.getProperty('/DialogData');
 
@@ -458,6 +463,12 @@ sap.ui.define(
         // 상환일
         if (!mDialogData.Paydt) {
           MessageBox.alert(this.getBundleText('MSG_07016'));
+          return true;
+        }
+
+        // 상환일
+        if (sType === 'C' && mDialogData.Paydt > moment().toDate()) {
+          MessageBox.alert(this.getBundleText('MSG_07024'));
           return true;
         }
 
@@ -549,7 +560,7 @@ sap.ui.define(
         const oDialogData = oDetailModel.getProperty('/DialogData');
         const oRepayDialog = this.byId('RepayApplyDialog');
 
-        if (this.checkError()) return;
+        if (this.checkError('C')) return;
 
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
           actions: [this.getBundleText('LABEL_00121'), this.getBundleText('LABEL_00118')],

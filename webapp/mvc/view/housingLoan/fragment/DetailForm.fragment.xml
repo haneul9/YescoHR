@@ -19,9 +19,10 @@
             </VBox>
             <Label text="{i18n>LABEL_07019}"/>
             <VBox>
-                <ComboBox items="{/AssuranceType}" selectedKey="{/FormData/Asmtd}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required">
+                <ComboBox items="{/AssuranceType}" selectedKey="{/FormData/Asmtd}" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
+                <Input value="{/FormData/Asmtdtx}" editable="false" visible="{= ${/FormData/Lnsta} !== '10' &amp;&amp; !!${/FormData/Lnsta} }" />
             </VBox>
             <Label text="{i18n>LABEL_07020}"/>
             <VBox>
@@ -106,7 +107,7 @@
             </VBox>
             <Label text="{i18n>LABEL_00142}" visible="{= ${/FormData/Lnsta} === '45' }" />
             <VBox visible="{= ${/FormData/Lnsta} === '45' }">
-                <Text text="{/FormData/Zbigo}" />
+                <Text text="{/FormData/ZappResn}" />
             </VBox>
         </grid:CSSGrid>
     </VBox>
