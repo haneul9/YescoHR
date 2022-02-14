@@ -520,7 +520,7 @@ sap.ui.define(
         }
 
         // 상환일
-        if (sType === 'C' && mDialogData.Paydt > moment().toDate()) {
+        if (sType === 'C' && mDialogData.Paydt > moment().toDate() && mDialogData.Rptyp === 'FULL') {
           MessageBox.alert(this.getBundleText('MSG_07024'));
           return true;
         }
@@ -571,6 +571,7 @@ sap.ui.define(
 
                   oDetailModel.setProperty('/DialogData/Appno', sAppno);
                   oDetailModel.setProperty('/DialogData/Appda', new Date());
+                  oDetailModel.setProperty('/DialogData/Seqnr', '');
                 }
 
                 let oSendObject = {};
@@ -627,6 +628,7 @@ sap.ui.define(
 
                   oDetailModel.setProperty('/DialogData/Appno', sAppno);
                   oDetailModel.setProperty('/DialogData/Appda', new Date());
+                  oDetailModel.setProperty('/DialogData/Seqnr', '');
                 }
 
                 let oSendObject = {};
