@@ -196,7 +196,9 @@
         { "pattern": "paystub", "name": "paystub", "target": "paystub" },
         { "pattern": "paystub/{seqnr}", "name": "paystub-detail", "target": "paystubDetail" },
 
-        { "pattern": "mobile/employee/:pernr:/:orgtx:/:orgeh:", "name": "mobile/employee", "target": "mobile/employee" },
+        { "pattern": "mobile/employee/:pernr:", "name": "mobile/employee", "target": "mobile/employee" },
+        { "pattern": "mobile/m/employee", "name": "mobile/m/employee", "target": "mobile/m/employee" },
+        { "pattern": "mobile/m/employee/{pernr}", "name": "mobile/m/employee-detail", "target": "mobile/employee" },
 
         { "pattern": "sampleComponents", "name": "sampleComponents", "target": "sampleComponents" },
         { "pattern": "sampleTimeline", "name": "sampleTimeline", "target": "sampleTimeline" },
@@ -298,6 +300,7 @@
         "paystubDetail": { "viewId": "paystubDetail", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "Detail" },
 
         "mobile/employee": { "viewId": "mobile_employee", "viewPath": "sap.ui.yesco.mvc.view.employee.mobile", "viewName": "App" },
+        "mobile/m/employee": { "viewId": "mobile_m_employee", "viewPath": "sap.ui.yesco.mvc.view.employee.mobile", "viewName": "Card" },
 
         "sampleComponents": { "viewId": "sampleComponents", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Components", "title": "Components" },
         "sampleTimeline": { "viewId": "sampleTimeline", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Timeline", "title": "Timeline" },
