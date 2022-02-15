@@ -4,8 +4,6 @@ html *:not(.sapUiIcon):not(.sapMMsgStripCloseButton):not(i) {font-family:Pretend
 
 .app-menu-toolbar {width: 100%; bottom: 0; position: fixed; margin:0 auto; background-color:#fff; box-shadow:0 1px 1px rgb(0 0 0 / 10%); z-index:2; }
 
-@charset "utf-8";
-
 @page { size: landscape; margin: 0; }
 @media print { 
     #container-ehr---app--appMenuToolbar, .contents-header { display: none; }
@@ -22,6 +20,8 @@ html *:not(.sapUiIcon):not(.sapMMsgStripCloseButton):not(i) {font-family:Pretend
     .employee-card-list-d { padding-left: 15px !important; width: 85% !important; }
     html .type-b .sapMITBInLine.sapMITBTextOnly>.sapMITBVertical { padding-left: 15px !important; padding-right: 15px !important; }
 }
+
+.overflow-y-hidden {overflow: hidden}
 
 html *:not(.sapUiIcon):not(.sapMMsgStripCloseButton):not(i) {font-family:Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif}
 html:not([data-sap-ui-browser^="ie"]):not([data-sap-ui-browser^="ed"]) .sapUiIcon:focus {outline-width:0px; outline-style:dashed; outline-offset:-1px}

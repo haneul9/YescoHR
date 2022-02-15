@@ -1,52 +1,57 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.employee.mobile.Card"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns:core="sap.ui.core"
-    xmlns="sap.m">
-    <Page showHeader="false">
-        <core:Fragment fragmentName="sap.ui.yesco.fragment.MobileHeader" type="XML" />
-        <VBox>
-            <SearchField value="{/search/searchText}" placeholder="{i18n>LABEL_00276}" search=".onPressEmployeeSearch" />
-            <SegmentedButton width="100%" selectedKey="{/search/selectedState}" selectionChange=".onChangeStat" class="sapUiSmallMarginTop">
-                <items>
-                    <SegmentedButtonItem text="{i18n>LABEL_00245}" key="" />
-                    <SegmentedButtonItem text="{i18n>LABEL_00277}" key="3" />
-                    <SegmentedButtonItem text="{i18n>LABEL_00278}" key="0" />
-                </items>
-            </SegmentedButton>
-            <ScrollContainer id="employeeCardListContainer" height="{/scrollHeight}px" horizontal="false" vertical="true" class="sapUiSmallMarginTop">
-                <List id="employeeCardList" items="{path: '/results'}" class="employee-card-list" busyIndicatorDelay="0" busy="{/busy}">
-                    <CustomListItem type="Active" press=".onClickEmployeeCard">
-                        <HBox>
-                            <VBox width="20%" justifyContent="Center" alignItems="Center">
-                                <Image src="{Photo}" />
-                            </VBox>
-                            <VBox class="employee-card-list-d">
-                                <HBox>
-                                    <Text text="{Ename} {Zzjikgbt} / {Zzjikcht}" class="name" />
-                                    <Text text="">
-                                        <layoutData>
-                                            <FlexItemData growFactor="1" />
-                                        </layoutData>
-                                    </Text>
-                                    <Image src="asset/image/icon_captain.svg" width="1.2rem" alt="Captain" visible="{= !!${Chief}}" />
-                                </HBox>
-                                <HBox class="organization">
-                                    <Label text="{i18n>LABEL_00226}" />
-                                    <Label text="{Pbtxt} {Fulln}" />
-                                </HBox>
-                                <HBox>
-                                    <Label text="{i18n>LABEL_00280}" />
-                                    <Label text="{Text1}" />
-                                </HBox>
-                                <HBox>
-                                    <Label text="{i18n>LABEL_00222}" />
-                                    <Label text="{Text2}" />
-                                </HBox>
-                            </VBox>
-                        </HBox>
-                    </CustomListItem>
-                </List>
-            </ScrollContainer>
-        </VBox>
-    </Page>
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns="sap.m">
+  <Page showHeader="false" enableScrolling="false">
+    <VBox height="100%">
+      <core:Fragment fragmentName="sap.ui.yesco.fragment.MobileHeader" type="XML" />
+      <SearchField value="{/search/searchText}" placeholder="{i18n>LABEL_00276}" search=".onPressEmployeeSearch" />
+      <SegmentedButton width="100%" selectedKey="{/search/selectedState}" selectionChange=".onChangeStat" class="sapUiSmallMarginTop">
+        <items>
+          <SegmentedButtonItem text="{i18n>LABEL_00245}" key="" />
+          <SegmentedButtonItem text="{i18n>LABEL_00277}" key="3" />
+          <SegmentedButtonItem text="{i18n>LABEL_00278}" key="0" />
+        </items>
+      </SegmentedButton>
+      <VBox class="overflow-y-hidden sapUiSmallMarginTop sapUiSmallMarginBottom">
+        <layoutData>
+          <FlexItemData growFactor="1" />
+        </layoutData>
+        <ScrollContainer id="employeeCardListContainer" height="100%" horizontal="false" vertical="true">
+          <List id="employeeCardList" items="{path: '/results'}" class="employee-card-list" busyIndicatorDelay="0" busy="{/busy}">
+            <CustomListItem type="Active" press=".onClickEmployeeCard">
+              <HBox>
+                <VBox width="20%" justifyContent="Center" alignItems="Center">
+                  <Image src="{Photo}" />
+                </VBox>
+                <VBox class="employee-card-list-d">
+                  <HBox>
+                    <Text text="{Ename} {Zzjikgbt} / {Zzjikcht}" class="name" />
+                    <Text text="">
+                      <layoutData>
+                        <FlexItemData growFactor="1" />
+                      </layoutData>
+                    </Text>
+                    <Image src="asset/image/icon_captain.svg" width="1.2rem" alt="Captain" visible="{= !!${Chief}}" />
+                  </HBox>
+                  <HBox class="organization">
+                    <Label text="{i18n>LABEL_00226}" />
+                    <Label text="{Pbtxt} {Fulln}" />
+                  </HBox>
+                  <HBox>
+                    <Label text="{i18n>LABEL_00280}" />
+                    <Label text="{Text1}" />
+                  </HBox>
+                  <HBox>
+                    <Label text="{i18n>LABEL_00222}" />
+                    <Label text="{Text2}" />
+                  </HBox>
+                </VBox>
+              </HBox>
+            </CustomListItem>
+          </List>
+        </ScrollContainer>
+      </VBox>
+    </VBox>
+  </Page>
 </mvc:View>
