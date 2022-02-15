@@ -6,17 +6,20 @@
         <Title level="H2" text="{i18n>LABEL_27002}" />
         <Text text="{i18n>LABEL_27003}" />
       </HBox>
-      <VBox class="summary-info" alignItems="Center">
+      <HBox class="summary-info" alignItems="Center">
         <core:HTML content='&lt;div id="chart-dial-container"&gt;&lt;/div&gt;' />
-        <HBox alignItems="End">
+        <VBox alignItems="End">
+          <Label text="today"/>
+          <ObjectStatus text="{/MyWork/Reltm}" state="Indication05" />
           <Text text="{
                 path: '/MyWork/Prdtx',
                 formatter: '.formatWeek'
             }" />
+          <Label text="this week"/>
           <ObjectStatus text="{/MyWork/Reltm}" state="Indication05" />
           <Text text="{i18n>MSG_27002}" />
-        </HBox>
-      </VBox>
+        </VBox>
+      </HBox>
     </VBox>
   </VBox>
 </core:FragmentDefinition>
