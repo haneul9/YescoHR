@@ -170,7 +170,7 @@ sap.ui.define(
           menidToProperties: mMenidToProperties, // 메뉴 Menid로 속성 정보를 얻기 위한 object
           urlToMenid: mUrlToMenid, // 메뉴 URL로 Menid를 얻기 위한 object
           favoriteMenids: aFavoriteMenids, // 즐겨찾기 메뉴 Menid 목록
-          current: { showHelp: true }, // 현재 메뉴 라우팅 정보 object, Component.js 참조
+          current: { showHelp: true, hasPrevious: false }, // 현재 메뉴 라우팅 정보 object, Component.js 참조
           breadcrumbs: {}, // 현재 메뉴의 breadcrumbs 정보 object, Component.js 참조
         };
       },
@@ -243,7 +243,7 @@ sap.ui.define(
        * @param {string} menuId
        * @param {string} currentLocationText
        */
-      setCurrentMenuData({ routeName, viewId, menuId, currentLocationText = '', isSubRoute = false }) {
+      setCurrentMenuData({ routeName, viewId, menuId, currentLocationText = '', isSubRoute = false, hasPrevious = false }) {
         this.setProperty('/breadcrumbs', {
           currentLocationText: '',
           links: null,
@@ -270,7 +270,7 @@ sap.ui.define(
 
         this.setProperty('/breadcrumbs/currentLocationText', currentLocationText || mCurrentMenuProperties.Mname);
         this.setProperty('/breadcrumbs/links', aLinks);
-        this.setProperty('/current', { routeName, viewId, menuId, currentLocationText: currentLocationText || mCurrentMenuProperties.Mname, showHelp: true });
+        this.setProperty('/current', { routeName, viewId, menuId, currentLocationText: currentLocationText || mCurrentMenuProperties.Mname, showHelp: true, hasPrevious });
       },
 
       getCurrentMenuRouteName() {
