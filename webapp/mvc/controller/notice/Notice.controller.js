@@ -31,17 +31,14 @@ sap.ui.define(
       TextUtils: TextUtils,
       FragmentEvent: FragmentEvent,
 
-      onInit() {
-        BaseController.prototype.onInit.apply(this, arguments);
-
-        const dDate = new Date();
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           busy: false,
           Hass: this.isHass(),
           Data: [],
           search: {
-            date: new Date(dDate.getFullYear(), dDate.getMonth() + 1, 0),
-            secondDate: new Date(dDate.getFullYear(), dDate.getMonth() - 1, 1),
+            date: moment().endOf('month').hours(9).toDate(),
+            secondDate: moment().subtract(1, 'month').set('date', 1).hours(9).toDate(),
             title: '',
           },
           listInfo: {
@@ -53,9 +50,7 @@ sap.ui.define(
             rejectCount: 0,
             completeCount: 0,
           },
-        });
-
-        this.setViewModel(oViewModel);
+        };
       },
 
       onObjectMatched() {

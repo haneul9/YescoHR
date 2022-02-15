@@ -29,11 +29,10 @@ sap.ui.define(
       TableUtils: TableUtils,
       TABLE_ID: 'excavationTable',
 
-      onInit() {
-        BaseController.prototype.onInit.apply(this, arguments);
-
+      initializeModel() {
         const today = moment();
-        const oViewModel = new JSONModel({
+
+        return {
           busy: false,
           isVisibleActionButton: false,
           search: {
@@ -76,8 +75,7 @@ sap.ui.define(
             selectedIndices: [],
             rowData: [],
           },
-        });
-        this.setViewModel(oViewModel);
+        };
       },
 
       onBeforeShow() {

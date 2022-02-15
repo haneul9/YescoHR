@@ -43,8 +43,8 @@ sap.ui.define(
       AttachFileAction: AttachFileAction,
       TextUtils: TextUtils,
 
-      onBeforeShow() {
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           ViewKey: '',
           menId: '',
           AmountRate: 0,
@@ -59,10 +59,7 @@ sap.ui.define(
           busy: false,
           LimitAmountMSG: false,
           MajorInput: false,
-        });
-        this.setViewModel(oViewModel);
-
-        this.getViewModel().setProperty('/busy', true);
+        };
       },
 
       getCurrentLocationText(oArguments) {
@@ -76,6 +73,8 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const sMenid = this.getCurrentMenuId();
 
+        oDetailModel.setData(this.initializeModel());
+        oDetailModel.setProperty('/busy', true);
         oDetailModel.setProperty('/ViewKey', sDataKey);
         oDetailModel.setProperty('/Menid', sMenid);
 

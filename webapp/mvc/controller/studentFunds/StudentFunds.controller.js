@@ -39,17 +39,14 @@ sap.ui.define(
       EmployeeSearch: EmployeeSearch,
       FragmentEvent: FragmentEvent,
 
-      onInit() {
-        BaseController.prototype.onInit.apply(this, arguments);
-
-        const dDate = new Date();
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           detailName: this.isHass() ? 'h/studentFunds-detail' : 'studentFunds-detail',
           busy: false,
           Data: [],
           searchDate: {
-            date: dDate,
-            secondDate: new Date(dDate.getFullYear(), dDate.getMonth() - 1, dDate.getDate() + 1),
+            date: moment().hours(9).toDate(),
+            secondDate: moment().subtract(1, 'month').add(1, 'day').hours(9).toDate(),
           },
           listInfo: {
             rowCount: 1,
@@ -60,8 +57,7 @@ sap.ui.define(
             rejectCount: 0,
             completeCount: 0,
           },
-        });
-        this.setViewModel(oViewModel);
+        };
       },
 
       onObjectMatched() {

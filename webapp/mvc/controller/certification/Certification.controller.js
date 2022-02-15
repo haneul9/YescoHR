@@ -30,19 +30,16 @@ sap.ui.define(
       TextUtils: TextUtils,
       FragmentEvent: FragmentEvent,
 
-      onInit() {
-        BaseController.prototype.onInit.apply(this, arguments);
-
-        const dDate = new Date();
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           busy: false,
           Data: [],
           LoanType: [],
           TargetCode: {},
           parameters: {},
           search: {
-            date: new Date(),
-            secondDate: new Date(dDate.getFullYear(), 0, 1),
+            date: moment().hours(9).toDate(),
+            secondDate: moment().startOf('year').hours(9).toDate(),
           },
           listInfo: {
             isShowProgress: true,
@@ -58,8 +55,7 @@ sap.ui.define(
             rejectCount: 0,
             completeCount: 0,
           },
-        });
-        this.setViewModel(oViewModel);
+        };
       },
 
       async onObjectMatched() {

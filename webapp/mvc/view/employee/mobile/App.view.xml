@@ -11,53 +11,29 @@
                     <layoutData>
                         <grid:GridItemLayoutData gridRow="span 5" />
                     </layoutData>
-                    <Image src="{/employee/header/profilePath}" class="member-photo" mode="Background" width="111px" height="111px" />
+                    <Image src="{/header/profilePath}" class="member-photo" mode="Background" width="111px" height="111px" />
                 </VBox>
                 <HBox justifyContent="SpaceBetween">
-                    <Label text="이동섭 부장 / 팀장" design="Bold" />
-                    <core:Icon src="sap-icon://manager" />
+                    <Label text="{/header/name}" design="Bold" />
+                    <Image src="asset/image/icon_captain.svg" width="1.2rem" alt="Captain" visible="{= !!${/header/chief}}" />
                 </HBox>
-                <grid:CSSGrid gridTemplateColumns="1fr 5fr">
-                    <Label text="소속">
+                <grid:CSSGrid items="{path: '/header/baseInfo'}" gridTemplateColumns="1fr 5fr">
+                    <Label text="{data}">
                         <customData>
-                            <core:CustomData key="type" value="label" writeToDom="true" />
-                        </customData>
-                    </Label>
-                    <Label text="주식회사 예스코 인재개발팀">
-                        <customData>
-                            <core:CustomData key="type" value="text" writeToDom="true" />
-                        </customData>
-                    </Label>
-                    <Label text="근속">
-                        <customData>
-                            <core:CustomData key="type" value="label" writeToDom="true" />
-                        </customData>
-                    </Label>
-                    <Label text="26년 7개월 (1995.01.01 입사) 재직">
-                        <customData>
-                            <core:CustomData key="type" value="text" writeToDom="true" />
-                        </customData>
-                    </Label>
-                    <Label text="직무">
-                        <customData>
-                            <core:CustomData key="type" value="label" writeToDom="true" />
-                        </customData>
-                    </Label>
-                    <Label text="인사">
-                        <customData>
-                            <core:CustomData key="type" value="text" writeToDom="true" />
+                            <core:CustomData key="type" value="{labelOrText}" writeToDom="true" />
                         </customData>
                     </Label>
                 </grid:CSSGrid>
             </grid:CSSGrid>
         </HBox>
         <VBox width="100%">
-            <IconTabBar expandable="false" selectedKey="T01">
+            <IconTabBar expandable="false" selectedKey="{/tab/selectedKey}" items="{/tab/list}">
                 <layoutData>
                     <FlexItemData growFactor="1" />
                 </layoutData>
                 <items>
-                    <IconTabFilter text="기본" key="T01">
+                    <IconTabFilter text="{Menu1}" key="{Menuc1}" />
+                    <!-- <IconTabFilter text="기본" key="T01">
                         <VBox>
                             <Title level="H2" text="기본" />
                             <grid:CSSGrid gridGap="1px 8px" gridTemplateColumns="1fr 2fr">
@@ -226,7 +202,7 @@
                                 </CustomListItem>
                             </List>
                         </VBox>
-                    </IconTabFilter>
+                    </IconTabFilter> -->
                 </items>
             </IconTabBar>
         </VBox>

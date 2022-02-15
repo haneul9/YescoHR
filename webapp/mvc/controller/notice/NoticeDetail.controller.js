@@ -40,9 +40,8 @@ sap.ui.define(
 
       AttachFileAction: AttachFileAction,
 
-      onBeforeShow() {
-        console.log('NoticeDetail.onBeforeShow');
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           MenId: '',
           MySelf: false,
           Hass: this.isHass(),
@@ -50,11 +49,7 @@ sap.ui.define(
           FieldLimit: {},
           Settings: {},
           busy: false,
-        });
-        this.setViewModel(oViewModel);
-        // this.setTextEditor();
-
-        this.getViewModel().setProperty('/busy', true);
+        };
       },
 
       getCurrentLocationText(oArguments) {
@@ -70,6 +65,10 @@ sap.ui.define(
 
       async onObjectMatched(oParameter) {
         const oDetailModel = this.getViewModel();
+
+        oDetailModel.setData(this.initializeModel());
+        oDetailModel.setProperty('/busy', true);
+        // this.setTextEditor();
 
         try {
           const sSdate = new Date(parseInt(oParameter.Sdate)) || oParameter.Sdate;

@@ -54,8 +54,8 @@ sap.ui.define(
       TableUtils: TableUtils,
       FragmentEvent: FragmentEvent,
 
-      onBeforeShow() {
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           Werks: this.getAppointeeProperty('Werks') !== '2000',
           menid: this.getCurrentMenuId(),
           Hass: this.isHass(),
@@ -83,16 +83,15 @@ sap.ui.define(
             completeCount: 0,
           },
           busy: false,
-        });
-        this.setViewModel(oViewModel);
-
-        this.getViewModel().setProperty('/busy', true);
+        };
       },
 
       async onObjectMatched(oParameter) {
         const sDataKey = oParameter.oDataKey;
         const oDetailModel = this.getViewModel();
 
+        oDetailModel.setData(this.initializeModel());
+        oDetailModel.setProperty('/busy', true);
         oDetailModel.setProperty('/ViewKey', sDataKey);
 
         try {

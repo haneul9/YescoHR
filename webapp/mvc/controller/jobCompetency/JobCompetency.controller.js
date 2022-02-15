@@ -29,8 +29,8 @@ sap.ui.define(
       TableUtils: TableUtils,
       FragmentEvent: FragmentEvent,
 
-      onBeforeShow() {
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           menid: this.getCurrentMenuId(),
           Hass: this.isHass(),
           selectedKey: 'A',
@@ -54,16 +54,15 @@ sap.ui.define(
             },
           },
           busy: false,
-        });
-
-        oViewModel.setSizeLimit(500);
-        this.setViewModel(oViewModel);
-
-        this.getViewModel().setProperty('/busy', true);
+        };
       },
 
       async onObjectMatched() {
         const oViewModel = this.getViewModel();
+
+        oViewModel.setSizeLimit(500);
+        oViewModel.setData(this.initializeModel());
+        oViewModel.setProperty('/busy', true);
 
         try {
           const oModel = this.getModel(ServiceNames.APPRAISAL);

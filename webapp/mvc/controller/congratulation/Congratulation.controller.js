@@ -35,10 +35,8 @@ sap.ui.define(
       TableUtils: TableUtils,
       AppUtils: AppUtils,
 
-      onInit() {
-        BaseController.prototype.onInit.apply(this, arguments);
-
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           busy: false,
           Data: [],
           searchDate: {
@@ -54,9 +52,9 @@ sap.ui.define(
             rejectCount: 0,
             completeCount: 0,
           },
-        });
-        this.setViewModel(oViewModel);
+        };
       },
+
       onBeforeShow() {
         this.FileListDialogHandler = new FileListDialogHandler(this);
       },

@@ -68,8 +68,8 @@ sap.ui.define(
       TextUtils: TextUtils,
       FragmentEvent: FragmentEvent,
 
-      onBeforeShow() {
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           FormStatus: '',
           werks: this.getAppointeeProperty('Werks'),
           FormData: {},
@@ -93,17 +93,17 @@ sap.ui.define(
           SupCheck: 'None', // 부양가족유형 CheckState
           SupEditable: false, // 부양가족유형 Combo
           DisabEditable: false, // 장애여부 Combo
-        });
-        this.setViewModel(oViewModel);
-
-        this.getViewModel().setProperty('/busy', true);
+        };
       },
 
       // setData
       async onObjectMatched(oParameter) {
+        const oViewModel = this.getViewModel();
         const sDataKey = oParameter.oDataKey;
 
-        this.getViewModel().setProperty('/FormStatus', sDataKey);
+        oViewModel.setData(this.initializeModel());
+        oViewModel.setProperty('/busy', true);
+        oViewModel.setProperty('/FormStatus', sDataKey);
         await this.getCodeList();
         await this.setFormData();
 

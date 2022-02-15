@@ -32,18 +32,18 @@ sap.ui.define(
       TableUtils: TableUtils,
       FragmentEvent: FragmentEvent,
 
-      onBeforeShow() {
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           FormData: {},
           busy: false,
-        });
-        this.setViewModel(oViewModel);
-
-        this.getViewModel().setProperty('/busy', true);
+        };
       },
 
       async onObjectMatched(oParameter) {
         const oDetailModel = this.getViewModel();
+
+        oDetailModel.setData(this.initializeModel());
+        oDetailModel.setProperty('/busy', true);
 
         try {
           const sDataKey = oParameter.oDataKey;

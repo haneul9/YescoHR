@@ -48,8 +48,8 @@ sap.ui.define(
       TableUtils: TableUtils,
       FragmentEvent: FragmentEvent,
 
-      onBeforeShow() {
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           menid: '',
           ViewKey: '',
           FormData: {},
@@ -64,10 +64,7 @@ sap.ui.define(
           RepayHisLength: 1,
           hisBusy: false,
           busy: false,
-        });
-        this.setViewModel(oViewModel);
-
-        this.getViewModel().setProperty('/busy', true);
+        };
       },
 
       onObjectMatched(oParameter) {
@@ -75,7 +72,9 @@ sap.ui.define(
         const sMenid = this.getCurrentMenuId();
         const oDetailModel = this.getViewModel();
 
+        oDetailModel.setData(this.initializeModel());
         oDetailModel.setProperty('/menid', sMenid);
+        oDetailModel.setProperty('/busy', true);
         oDetailModel.setProperty('/ViewKey', sDataKey);
 
         this.getList().then(() => {

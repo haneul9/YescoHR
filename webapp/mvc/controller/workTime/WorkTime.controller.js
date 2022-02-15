@@ -36,10 +36,8 @@ sap.ui.define(
       TextUtils: TextUtils,
       FragmentEvent: FragmentEvent,
 
-      onInit() {
-        BaseController.prototype.onInit.apply(this, arguments);
-
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           busy: false,
           Data: [],
           MyWork: {},
@@ -56,8 +54,7 @@ sap.ui.define(
             rejectCount: 0,
             completeCount: 0,
           },
-        });
-        this.setViewModel(oViewModel);
+        };
       },
 
       async onObjectMatched() {

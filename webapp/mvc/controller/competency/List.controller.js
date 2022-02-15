@@ -27,8 +27,8 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.competency.List', {
-      onBeforeShow() {
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           busy: false,
           type: '',
           listInfo: {
@@ -48,8 +48,7 @@ sap.ui.define(
           parameter: {
             rowData: {},
           },
-        });
-        this.setViewModel(oViewModel);
+        };
       },
 
       async onObjectMatched() {
@@ -60,6 +59,7 @@ sap.ui.define(
         const sEmpField = _.isEqual(sType, Constants.APPRAISER_TYPE.ME) ? 'Zzappee' : 'Zzapper';
 
         try {
+          oViewModel.setData(this.initializeModel());
           oViewModel.setProperty('/busy', true);
           oViewModel.setProperty('/type', sType);
 

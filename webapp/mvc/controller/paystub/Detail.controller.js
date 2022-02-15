@@ -27,8 +27,8 @@ sap.ui.define(
         return 'paystub';
       },
 
-      onBeforeShow() {
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           busy: false,
           Seqnr: null,
           summary: { rowCount: 1, list: [] },
@@ -37,15 +37,17 @@ sap.ui.define(
           tax: { rowCount: 2, list: [] },
           work: { rowCount: 1, list: [] },
           base: { rowCount: 1, list: [] },
-        });
-        this.setViewModel(oViewModel);
+        };
+      },
 
+      onBeforeShow() {
         TableUtils.summaryColspan({ oTable: this.byId('payTable'), aHideIndex: [1, 2] });
       },
 
       async onObjectMatched(oParameter) {
         const oViewModel = this.getViewModel();
 
+        oViewModel.setData(this.initializeModel());
         oViewModel.setProperty('/Seqnr', oParameter.seqnr);
 
         this.loadPage();

@@ -61,8 +61,8 @@ sap.ui.define(
         return 'attendance';
       },
 
-      onBeforeShow() {
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           busy: false,
           type: this.PAGE_TYPE.NEW,
           Appno: null,
@@ -83,8 +83,7 @@ sap.ui.define(
           },
           ApplyInfo: {},
           ApprovalDetails: {},
-        });
-        this.setViewModel(oViewModel);
+        };
       },
 
       onObjectMatched(oParameter) {
@@ -103,6 +102,7 @@ sap.ui.define(
         }
 
         const oViewModel = this.getView().getModel();
+        oViewModel.setData(this.initializeModel());
         oViewModel.setProperty('/type', oParameter.type);
         oViewModel.setProperty('/Appno', oParameter.appno);
 

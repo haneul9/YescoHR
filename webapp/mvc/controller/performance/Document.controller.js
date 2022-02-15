@@ -46,8 +46,8 @@ sap.ui.define(
         };
       },
 
-      onBeforeShow() {
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           busy: false,
           param: {},
           type: '',
@@ -71,14 +71,14 @@ sap.ui.define(
             strategy: [],
             duty: [],
           },
-        });
-        this.setViewModel(oViewModel);
+        };
       },
 
       async onObjectMatched(oParameter) {
         const oViewModel = this.getViewModel();
         const { sType, sPernr, sDocid } = oParameter;
 
+        oViewModel.setData(this.initializeModel());
         oViewModel.setProperty('/busy', true);
 
         try {

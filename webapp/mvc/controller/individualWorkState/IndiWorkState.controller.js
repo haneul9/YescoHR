@@ -36,8 +36,8 @@ sap.ui.define(
       TableUtils: TableUtils,
       FragmentEvent: FragmentEvent,
 
-      onBeforeShow() {
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           FullYear: '',
           year: moment().year(),
           menid: this.getCurrentMenuId(),
@@ -85,16 +85,15 @@ sap.ui.define(
             Month: moment().month() + 1,
           },
           busy: false,
-        });
-
-        oViewModel.setSizeLimit(500);
-        this.setViewModel(oViewModel);
-
-        this.getViewModel().setProperty('/busy', true);
+        };
       },
 
       async onObjectMatched() {
         const oViewModel = this.getViewModel();
+
+        oViewModel.setSizeLimit(500);
+        oViewModel.setData(this.initializeModel());
+        oViewModel.setProperty('/busy', true);
 
         try {
           this.YearPlanBoxHandler ||= new YearPlanBoxHandler({ oController: this });

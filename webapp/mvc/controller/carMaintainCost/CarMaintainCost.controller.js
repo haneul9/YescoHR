@@ -33,17 +33,14 @@ sap.ui.define(
       TextUtils: TextUtils,
       FragmentEvent: FragmentEvent,
 
-      onInit() {
-        BaseController.prototype.onInit.apply(this, arguments);
-
-        const dDate = new Date();
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           busy: false,
           Data: [],
           Total: {},
           search: {
             secondDate: new Date(2020, 0, 1),
-            date: new Date(dDate.getFullYear(), 12, 0),
+            date: new Date(new Date().getFullYear(), 12, 0),
           },
           listInfo: {
             rowCount: 1,
@@ -54,8 +51,7 @@ sap.ui.define(
             rejectCount: 0,
             completeCount: 0,
           },
-        });
-        this.setViewModel(oViewModel);
+        };
       },
 
       async onObjectMatched() {

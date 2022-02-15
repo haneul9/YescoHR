@@ -43,8 +43,8 @@ sap.ui.define(
       TableUtils: TableUtils,
       FragmentEvent: FragmentEvent,
 
-      onBeforeShow() {
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           Fixed: true,
           FieldLimit: {},
           employees: [],
@@ -61,14 +61,15 @@ sap.ui.define(
             rowCount: 1,
           },
           busy: false,
-        });
-        this.setViewModel(oViewModel);
+        };
       },
 
       async onObjectMatched(oParameter) {
         const sDataKey = oParameter.oDataKey;
         const oDetailModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.WORKTIME);
+
+        oDetailModel.setData(this.initializeModel());
 
         try {
           // Input Field Imited
