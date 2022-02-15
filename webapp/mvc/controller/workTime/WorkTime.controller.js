@@ -144,9 +144,12 @@ sap.ui.define(
                 bgColor: 'transparent',
                 theme: 'ocean',
                 showvalue: '1',
-                usePlotGradientColor: '0',
                 showPlotBorder: '0',
                 showtooltip: '0',
+                majorTMColor: '#aba894',
+                majorTMHeight: '5',
+                majorTMThickness: '2',
+                showGaugeBorder: '0',
               },
               colorrange: {
                 color: [
@@ -157,7 +160,7 @@ sap.ui.define(
                   },
                   {
                     minvalue: aWorkTypeList.Alwtm,
-                    maxvalue: '52',
+                    maxvalue: aWorkTypeList.Maxtm,
                     code: '#fdde17',
                   },
                 ],
@@ -166,6 +169,7 @@ sap.ui.define(
                 dial: [
                   {
                     value: aWorkTypeList.Reltm,
+                    rearExtension: '0',
                   },
                 ],
               },

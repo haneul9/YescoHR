@@ -44,6 +44,7 @@ sap.ui.define(
           ],
         },
         2140: { url: '', key: [{ key: 'appno', value: 'Appno' }] }, // 통합굴착야간
+        2150: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 근무신청
         2310: {
           url: 'leavePlan',
           key: [
