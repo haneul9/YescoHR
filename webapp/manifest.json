@@ -126,8 +126,8 @@
         { "pattern": "congratulation/:oDataKey:", "name": "congratulation-detail", "target": "congDetail" },
         { "pattern": "h/congratulation", "name": "h/congratulation", "target": "h/congratulation" },
         { "pattern": "h/congratulation/:oDataKey:", "name": "h/congratulation-detail", "target": "congDetail" },
-        { "pattern": "m/congratulation", "name": "m/congratulation", "target": "m/congratulation" },
-        { "pattern": "m/congratulation/:oDataKey:", "name": "m/congratulation-detail", "target": "m/congDetail" },
+        { "pattern": "mobile/congratulation", "name": "mobile/congratulation", "target": "mobile/congratulation" },
+        { "pattern": "mobile/congratulation/:oDataKey:", "name": "mobile/congratulation-detail", "target": "mobile/congDetail" },
         
         { "pattern": "consolidAppBox", "name": "consolidAppBox", "target": "consolidAppBox" },
 
@@ -238,8 +238,8 @@
         "congratulation": { "viewId": "congratulation", "viewPath": "sap.ui.yesco.mvc.view.congratulation", "viewName": "Congratulation" },
         "h/congratulation": { "viewId": "h_congratulation", "viewPath": "sap.ui.yesco.mvc.view.congratulation", "viewName": "CongratulationHass" },
         "congDetail": { "viewId": "congDetail", "viewPath": "sap.ui.yesco.mvc.view.congratulation", "viewName": "CongDetail" },
-        "m/congratulation": { "viewId": "congratulationMobile", "viewPath": "sap.ui.yesco.mvc.view.congratulation.m", "viewName": "Congratulation" },
-        "m/congDetail": { "viewId": "congDetailMobile", "viewPath": "sap.ui.yesco.mvc.view.congratulation.m", "viewName": "CongDetail" },
+        "mobile/congratulation": { "viewId": "mobile_congratulation", "viewPath": "sap.ui.yesco.mvc.view.congratulation.mobile", "viewName": "Congratulation" },
+        "mobile/congDetail": { "viewId": "mobile_congDetail", "viewPath": "sap.ui.yesco.mvc.view.congratulation.mobile", "viewName": "CongDetail" },
         
         "consolidAppBox": { "viewId": "consolidAppBox", "viewPath": "sap.ui.yesco.mvc.view.consolidAppBox", "viewName": "ConsolidAppBox" },
         

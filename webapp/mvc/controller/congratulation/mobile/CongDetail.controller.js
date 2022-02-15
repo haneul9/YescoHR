@@ -34,7 +34,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.congratulation.m.CongDetail', {
+    return BaseController.extend('sap.ui.yesco.mvc.controller.congratulation.mobile.CongDetail', {
       AttachFileAction: AttachFileAction,
       FragmentEvent: FragmentEvent,
       TextUtils: TextUtils,
