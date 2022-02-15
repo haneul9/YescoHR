@@ -182,11 +182,7 @@ sap.ui.define(
 
           this.getController().getView().addDependent(this.oPopover);
 
-          this.oPopover
-            .attachBeforeOpen(() => {
-              // this.oPopover.setContentWidth(this.oPopover.getBindingContext().getProperty('listCount') > 5 ? '435px' : '430px');
-            })
-            .setModel(this.getPortletModel());
+          this.oPopover.setModel(this.getPortletModel());
         }
       },
 

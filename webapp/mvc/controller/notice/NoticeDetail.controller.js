@@ -41,6 +41,7 @@ sap.ui.define(
       AttachFileAction: AttachFileAction,
 
       onBeforeShow() {
+        console.log('NoticeDetail.onBeforeShow');
         const oViewModel = new JSONModel({
           MenId: '',
           MySelf: false,

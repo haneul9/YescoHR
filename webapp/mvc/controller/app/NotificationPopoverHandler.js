@@ -128,13 +128,8 @@ sap.ui.define(
         oNotificationModel.setProperty('/showUnreadCount', showUnreadCount);
       },
 
-      onScroll(oEvent) {
-        const oPopoverScroll = oEvent.getParameter('target');
-        const iScrollMarginBottom = oPopoverScroll.scrollHeight - oPopoverScroll.scrollTop;
-        const fGrowHeight = this.oNotificationPopover.getGrowCount() * 67.5;
-        this.debug('onScroll iScrollMarginBottom', oPopoverScroll.scrollHeight, oPopoverScroll.scrollTop, iScrollMarginBottom, fGrowHeight);
-
-        if (oPopoverScroll.scrollTop > 0 && iScrollMarginBottom === fGrowHeight) {
+      onScroll() {
+        if (this.oNotificationPopover.isScrollBottom()) {
           this.setBusy(true);
 
           this.loadMoreContentData();
