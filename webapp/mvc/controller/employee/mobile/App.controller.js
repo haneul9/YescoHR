@@ -55,6 +55,22 @@ sap.ui.define(
         TABLE: '5',
         GRID: '6',
       },
+      LIST_GRID_TEMPLATE: {
+        HACT: '1fr 2fr',
+        '0006': '1fr 2fr',
+        '0022': '1fr 1fr 1fr',
+        9002: '1fr 2fr',
+        9006: '1fr 1fr 1fr',
+        JOBL: '1fr 2fr',
+        '0183': '1fr 1fr 1fr',
+        '0545': '1fr 2fr',
+        '0023': '1fr 2fr',
+        INCR: '1fr 2fr',
+        '0021': '1fr 1fr 1fr',
+        EDU1: '1fr 1fr 1fr',
+        9001: '1fr 2fr',
+        PAYS: '1fr 2fr',
+      },
 
       initializeModel() {
         return {
@@ -69,7 +85,9 @@ sap.ui.define(
           tab: {
             selectedKey: '',
             list: [],
+            menu: [],
           },
+          sub: {},
         };
       },
 
@@ -85,9 +103,6 @@ sap.ui.define(
       },
 
       async loadProfile({ oViewModel, sPernr }) {
-        let aHeaderRequests = [];
-        let aContentRequests = [];
-
         try {
           const oViewModelData = oViewModel.getData();
           const fCurriedPA = Client.getEntitySet(this.getModel(ServiceNames.PA));
@@ -99,22 +114,22 @@ sap.ui.define(
             aMenuReturnData,
           ] = await Promise.all([
             fCurriedPA('EmpProfileHeaderNew', mFilters), //
-            fCurriedPA('EmpProfileMenu', mFilters),
+            fCurriedPA('EmpProfileMenu', _.pick(mFilters, 'Pernr')),
           ]);
 
           // 상단 프로필 Set
           const aLabelFields = ['Dat02', 'Dat04', 'Dat06'];
           const aTextFields = ['Dat03', 'Dat05', 'Dat07'];
-          const { Pturl, Data01, Data08, ...oReturnData } = aProfileReturnData[0];
+          const { Pturl, Dat01, Dat08, ...oReturnData } = aProfileReturnData[0];
 
           _.chain(oViewModelData)
             .set(['header', 'profilePath'], _.isEmpty(Pturl) ? 'asset/image/avatar-unknown.svg' : Pturl)
-            .set(['header', 'name'], Data01)
-            .set(['header', 'chief'], _.isEqual(Data08, 'X'))
+            .set(['header', 'name'], Dat01)
+            .set(['header', 'chief'], _.isEqual(Dat08, 'X'))
             .set(
               ['header', 'baseInfo'],
               _.chain(oReturnData)
-                .pick([...aLabelFields, ...aTextFields])
+                .pick([...aLabelFields, ...aTextFields].sort())
                 .map((v, k) => ({ data: v, labelOrText: _.includes(aTextFields, k) ? 'text' : 'label' }))
                 .value()
             )
@@ -122,71 +137,78 @@ sap.ui.define(
           //End 상단 프로필 Set
 
           // 탭 메뉴 Set
-          // const aTabMenus = _.chain(aMenuReturnData)
-          //   .filter({ Child: '1' })
-          //   .map((obj, index) => _.assignIn({ Pressed: index === 0 }, obj))
-          //   .value();
-          // const aSubMenus = _.filter(aMenuReturnData, (o) => o.Child !== '1');
+          const aSubMenus = _.filter(aMenuReturnData, (o) => o.Child !== '1');
+          const aTabMenus = _.chain(aMenuReturnData)
+            .filter({ Child: '1' })
+            .map((obj, index) => _.assignIn({ Pressed: index === 0 }, obj))
+            .value();
 
-          // oViewModel.setProperty('/employee/tab/list', aTabMenus);
-          // oViewModel.setProperty('/employee/tab/menu', aSubMenus);
+          _.chain(oViewModelData)
+            .set(['tab', 'list'], aTabMenus)
+            .set(['tab', 'menu'], aSubMenus)
+            .set(['tab', 'selectedKey'], _.get(aTabMenus, [0, 'Menuc1']))
+            .commit();
 
-          // aTabMenus.forEach((data) => {
-          //   this.debug(`Tab ${data.Menu1}`, data);
+          const aHeaderRequests = [];
+          const aContentRequests = [];
 
-          //   _.set(oViewModelData, ['employee', 'sub', data.Menuc1], { contents: {} });
+          _.forEach(aTabMenus, (data) => {
+            this.debug(`Tab ${data.Menu1}`, data);
 
-          //   aHeaderRequests.push(this.readOdata({ sUrl: '/EmpProfileHeaderTabSet', mFilters: { Menuc: data.Menuc1, ...mFilters } }));
-          //   aContentRequests.push(this.readOdata({ sUrl: '/EmpProfileContentsTabSet', mFilters: { Menuc: data.Menuc1, ...mFilters } }));
-          // });
+            _.set(oViewModelData, ['sub', data.Menuc1], { contents: {} });
 
-          // aSubMenus.forEach((data) => {
-          //   _.set(oViewModelData, ['employee', 'sub', data.Menuc1, 'contents', data.Menuc2], {
-          //     type: data.Child,
-          //     rowCount: 1,
-          //     selectionMode: _.some(this.CRUD_TABLES, (o) => o.key === data.Menuc2) ? 'MultiToggle' : 'None',
-          //     title: data.Menu2,
-          //     code: data.Menuc2,
-          //     sort: data.Sorts,
-          //     header: [],
-          //     data: [],
-          //   });
-          // });
+            aHeaderRequests.push(fCurriedPA('EmpProfileHeaderTab', { Menuc: data.Menuc1, ...mFilters }));
+            aContentRequests.push(fCurriedPA('EmpProfileContentsTab', { Menuc: data.Menuc1, ...mFilters }));
+          });
+
+          _.forEach(aSubMenus, (data) => {
+            _.set(oViewModelData, ['sub', data.Menuc1, 'contents', data.Menuc2], {
+              type: data.Child,
+              title: data.Menu2,
+              code: data.Menuc2,
+              sort: data.Sorts,
+              gridTemplate: '1fr 2fr',
+              header: [],
+              data: [],
+            });
+          });
           //End 탭 메뉴 Set
 
           // 2. Sub 영역 조회[header, contents]
-          // const aHeaderReturnData = await Promise.all(aHeaderRequests);
-          // const aContentReturnData = await Promise.all(aContentRequests);
+          const aHeaderReturnData = await Promise.all(aHeaderRequests);
+          const aContentReturnData = await Promise.all(aContentRequests);
 
           // Header 영역 Set
-          // aHeaderReturnData.forEach((headers, index) => {
-          //   headers.forEach((o, i) => _.set(oViewModelData, ['employee', 'sub', aTabMenus[index].Menuc1, 'contents', o.Menuc, 'header', i], o));
-          // });
+          aHeaderReturnData.forEach((headers, index) => {
+            headers.forEach((o, i) => _.set(oViewModelData, ['sub', aTabMenus[index].Menuc1, 'contents', o.Menuc, 'header', i], o));
+          });
           //End Header 영역 Set
 
           // Contents 영역 Set
-          // aContentReturnData.forEach((content, index) => {
-          //   content.forEach((o) => {
-          //     let mSubMenu = _.get(oViewModelData, ['employee', 'sub', aTabMenus[index].Menuc1, 'contents', o.Menuc]);
+          aContentReturnData.forEach((content, index) => {
+            content.forEach((o) => {
+              let mSubMenu = _.get(oViewModelData, ['sub', aTabMenus[index].Menuc1, 'contents', o.Menuc]);
 
-          //     if (mSubMenu.type === this.SUB_TYPE.GRID) {
-          //       for (let i = 1; i <= mSubMenu.header.length; i++) {
-          //         let sKey = `Value${_.padStart(i, 2, '0')}`;
-          //         mSubMenu.data.push(o[sKey]);
-          //       }
-          //     } else if (mSubMenu.type === this.SUB_TYPE.TABLE) {
-          //       mSubMenu.data.push(o);
-          //     }
-
-          //     mSubMenu.rowCount = mSubMenu.data.length;
-          //   });
-          // });
+              if (mSubMenu.type === this.SUB_TYPE.GRID) {
+                for (let i = 1; i <= mSubMenu.header.length; i++) {
+                  let sKey = `Value${_.padStart(i, 2, '0')}`;
+                  mSubMenu.data.push(o[sKey]);
+                }
+              } else if (mSubMenu.type === this.SUB_TYPE.TABLE) {
+                mSubMenu.gridTemplate = this.LIST_GRID_TEMPLATE[o.Menuc];
+                mSubMenu.data.push({
+                  contents: _.chain(o)
+                    .pickBy((v, p) => _.startsWith(p, 'Value') && !_.isEmpty(v))
+                    .map((v) => ({ valueTxt: v }))
+                    .value(),
+                });
+              }
+            });
+          });
           //End Contents 영역 Set
 
-          // oViewModel.setData(oViewModelData);
-
           // Sub 영역 UI5 Control 생성
-          // this.makeProfileBody();
+          this.makeProfileBody();
         } catch (oError) {
           this.debug('Controller > Mobile-Employee-App > loadProfile Error', oError);
 
@@ -194,6 +216,100 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/busy', false);
         }
+      },
+
+      makeProfileBody() {
+        const oViewModel = this.getViewModel();
+        const aTabItems = this.byId('employeeTabBar').getItems();
+        const aSubMenu = oViewModel.getProperty('/sub');
+
+        Object.keys(aSubMenu).forEach((menuKey) => {
+          const aSubMenuContents = _.get(aSubMenu, [menuKey, 'contents']);
+          const oTabContainer = _.find(aTabItems, (o) => _.isEqual(o.getProperty('key'), menuKey));
+          let oWrapperVBox = sap.ui.getCore().byId(`sub${menuKey}`);
+
+          if (oWrapperVBox) {
+            oWrapperVBox.destroyItems();
+          } else {
+            oWrapperVBox = new sap.m.VBox({ id: `sub${menuKey}`, visible: true });
+          }
+
+          /**
+           * OMenu.type: '5'  Table
+           *      - 주소 테이블의 경우 CRUD가 추가된다.
+           * OMenu.type: '6'  Grid
+           */
+          Object.keys(aSubMenuContents).forEach((key) => {
+            const mMenu = _.get(aSubMenuContents, key);
+            const oSubVBox = new sap.m.VBox().addStyleClass('customBox sapUiMediumMarginBottom');
+
+            this.debug(`Sub ${mMenu.title}`, mMenu);
+
+            // Title
+            oSubVBox.addItem(new sap.m.Title({ level: 'H2', text: mMenu.title }));
+
+            // Content (Table|Grid)
+            if (mMenu.type === this.SUB_TYPE.TABLE) {
+              const sTableDataPath = `/sub/${menuKey}/contents/${key}`;
+              const oListCSSGrid = new CSSGrid({
+                gridGap: '1px 8px',
+                gridTemplateColumns: { path: `${sTableDataPath}/gridTemplate` },
+                items: {
+                  path: 'contents',
+                  templateShareable: false,
+                  template: new Text({ text: '{valueTxt}' }),
+                },
+              });
+              const oList = new List({
+                items: {
+                  path: `${sTableDataPath}/data`,
+                  templateShareable: false,
+                  template: oListCSSGrid,
+                },
+              });
+
+              oSubVBox.addItem(oList);
+            } else if (mMenu.type === this.SUB_TYPE.GRID) {
+              const oCSSGrid = new CSSGrid({ gridTemplateColumns: '1fr 3fr', gridGap: '1px 8px' }).addStyleClass('form-grid');
+
+              mMenu.header.forEach((head, index) => {
+                oCSSGrid.addItem(new sap.m.Label({ text: head.Header }));
+                oCSSGrid.addItem(new sap.m.Input({ value: mMenu.data[index], editable: false }));
+              });
+
+              if (mMenu.header.length % 2 === 1) {
+                oCSSGrid.addItem(new sap.m.Label({ text: '' }));
+                oCSSGrid.addItem(new sap.m.Input({ value: '', editable: false }));
+              }
+
+              oSubVBox.addItem(oCSSGrid);
+            }
+
+            oWrapperVBox.addItem(oSubVBox);
+          });
+
+          oTabContainer.addContent(oWrapperVBox);
+        });
+      },
+
+      readOdata({ sUrl, mFilters = {} }) {
+        return new Promise((resolve, reject) => {
+          const oModel = this.getModel(ServiceNames.PA);
+
+          oModel.read(sUrl, {
+            filters: _.map(mFilters, (v, p) => new Filter(p, FilterOperator.EQ, v)),
+            success: (oData) => {
+              this.debug(`${sUrl} success.`, oData);
+
+              resolve(oData.results);
+            },
+            error: (oError) => {
+              this.debug(`${sUrl} error.`, oError);
+
+              reject(new ODataReadError(oError)); // {조회}중 오류가 발생하였습니다.
+            },
+          });
+        });
       },
     });
   }

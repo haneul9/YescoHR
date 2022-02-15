@@ -27,7 +27,7 @@
             </grid:CSSGrid>
         </HBox>
         <VBox width="100%">
-            <IconTabBar expandable="false" selectedKey="{/tab/selectedKey}" items="{/tab/list}">
+            <IconTabBar id="employeeTabBar" expandable="false" selectedKey="{/tab/selectedKey}" items="{/tab/list}">
                 <layoutData>
                     <FlexItemData growFactor="1" />
                 </layoutData>
