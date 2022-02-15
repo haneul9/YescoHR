@@ -374,6 +374,10 @@ sap.ui.define(
           return;
         }
 
+        if (AppUtils.isLOCAL() && _.startsWith(sRouteNameMain, 'mobile/')) {
+          return;
+        }
+
         const sMenid = this.getMenuModel().getMenid(sRouteNameMain);
         if ((AppUtils.isLOCAL() || AppUtils.isDEV()) && /^X/.test(sMenid)) {
           return;
