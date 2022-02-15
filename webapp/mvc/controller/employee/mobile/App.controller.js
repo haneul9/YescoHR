@@ -281,26 +281,6 @@ sap.ui.define(
           oTabContainer.addContent(oWrapperVBox);
         });
       },
-
-      readOdata({ sUrl, mFilters = {} }) {
-        return new Promise((resolve, reject) => {
-          const oModel = this.getModel(ServiceNames.PA);
-
-          oModel.read(sUrl, {
-            filters: _.map(mFilters, (v, p) => new Filter(p, FilterOperator.EQ, v)),
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError)); // {조회}중 오류가 발생하였습니다.
-            },
-          });
-        });
-      },
     });
   }
 );
