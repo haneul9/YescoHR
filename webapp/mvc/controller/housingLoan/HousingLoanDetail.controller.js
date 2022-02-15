@@ -135,7 +135,10 @@ sap.ui.define(
           .replace(/[^\d'.']/g, '');
 
         if (_.includes(sValue, '.')) {
-          sValue = sValue.replace(/['.']{2}/g, '.');
+          const sReVal = sValue.replace(/['.']{2}/g, '.');
+          const iIndex = sReVal.indexOf('.');
+
+          sValue = sReVal.split('.')[0] + sReVal.slice(iIndex, iIndex + 3);
         } else {
           sValue = sValue.slice(0, 3);
         }
