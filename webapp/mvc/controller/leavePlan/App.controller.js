@@ -33,12 +33,11 @@ sap.ui.define(
       APPTP: 'HR13',
       AWART_COUNT: { 2000: 1, 2010: 1, 2001: 0.5, 2002: 0.5 },
 
-      onBeforeShow() {
-        const today = moment();
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           busy: false,
           search: {
-            Plnyy: today.format('YYYY'),
+            Plnyy: moment().format('YYYY'),
             Seqno: '',
           },
           entry: {
@@ -57,14 +56,14 @@ sap.ui.define(
             raw: [],
             grid: [],
           },
-        });
-
-        oViewModel.setSizeLimit(500);
-        this.setViewModel(oViewModel);
+        };
       },
 
       async onObjectMatched(mParameter) {
         const oViewModel = this.getViewModel();
+
+        oViewModel.setSizeLimit(500);
+        oViewModel.setData(this.initializeModel());
 
         try {
           oViewModel.setProperty('/busy', true);

@@ -42,11 +42,8 @@ sap.ui.define(
       TextUtils: TextUtils,
       FragmentEvent: FragmentEvent,
 
-      onInit() {
-        BaseController.prototype.onInit.apply(this, arguments);
-
-        const dDate = new Date();
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           detailName: this.isHass() ? 'h/medical-detail' : 'medical-detail',
           busy: false,
           Data: [],
@@ -54,7 +51,7 @@ sap.ui.define(
           parameters: {},
           search: {
             date: new Date(),
-            secondDate: new Date(dDate.getFullYear(), 0, 1),
+            secondDate: moment().startOf('year').hours(9).toDate(),
             Famgb: '',
             Famsa: '',
             Objps: '',
@@ -69,8 +66,7 @@ sap.ui.define(
             rejectCount: 0,
             completeCount: 0,
           },
-        });
-        this.setViewModel(oViewModel);
+        };
       },
 
       async onObjectMatched() {

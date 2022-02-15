@@ -27,8 +27,8 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.performance.List', {
-      onBeforeShow() {
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           busy: false,
           type: '',
           listInfo: {
@@ -48,8 +48,7 @@ sap.ui.define(
           parameter: {
             rowData: {},
           },
-        });
-        this.setViewModel(oViewModel);
+        };
       },
 
       async onObjectMatched() {
@@ -59,8 +58,10 @@ sap.ui.define(
         const sRoute = _.get(Constants.LIST_PAGE, [sType, 'route']);
         const sEmpField = _.isEqual(sType, Constants.APPRAISER_TYPE.ME) ? 'Zzappee' : 'Zzapper';
 
+        oViewModel.setData(this.initializeModel());
+        oViewModel.setProperty('/busy', true);
+
         try {
-          oViewModel.setProperty('/busy', true);
           oViewModel.setProperty('/type', sType);
 
           const aRowData = await Client.getEntitySet(oModel, 'AppraisalPeeList', {

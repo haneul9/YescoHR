@@ -33,11 +33,8 @@ sap.ui.define(
       TextUtils: TextUtils,
       FragmentEvent: FragmentEvent,
 
-      onInit() {
-        BaseController.prototype.onInit.apply(this, arguments);
-
-        const dDate = new Date();
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           busy: false,
           Data: [],
           Total: {
@@ -45,7 +42,7 @@ sap.ui.define(
             Pay: '',
           },
           searchDate: {
-            date: dDate,
+            date: new Date(),
             secondDate: new Date(1900, 0, 1),
           },
           listInfo: {
@@ -62,8 +59,7 @@ sap.ui.define(
             rejectCount: 0,
             completeCount: 0,
           },
-        });
-        this.setViewModel(oViewModel);
+        };
       },
 
       async onObjectMatched() {

@@ -42,10 +42,8 @@ sap.ui.define(
       TableUtils: TableUtils,
       FragmentEvent: FragmentEvent,
 
-      onBeforeShow() {
-        this.PostcodeDialogHandler = new PostcodeDialogHandler(this, this.callbackPostcode.bind(this));
-
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           menid: this.getCurrentMenuId(),
           Hass: this.isHass(),
           previousName: History.getInstance().getPreviousHash(),
@@ -59,17 +57,18 @@ sap.ui.define(
           Receive: [],
           Years: [],
           busy: false,
-        });
-        this.setViewModel(oViewModel);
-
-        this.getViewModel().setProperty('/busy', true);
+        };
       },
 
       async onObjectMatched(oParameter) {
         const sDataKey = oParameter.oDataKey;
         const oDetailModel = this.getViewModel();
 
+        oDetailModel.setData(this.initializeModel());
+        oDetailModel.setProperty('/busy', true);
         oDetailModel.setProperty('/ViewKey', sDataKey);
+
+        this.PostcodeDialogHandler = new PostcodeDialogHandler(this, this.callbackPostcode.bind(this));
 
         try {
           const oModel = this.getModel(ServiceNames.PA);

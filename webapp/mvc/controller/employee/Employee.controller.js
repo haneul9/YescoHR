@@ -129,10 +129,8 @@ sap.ui.define(
         CERTIFICATE_GRADE: { path: 'certificateGradeList', codeKey: 'Ctgrd', valueKey: 'Ctgrdtx', fragmentName: 'CertificateGradeDialog' },
       },
 
-      onBeforeShow() {
-        this.PostcodeDialogHandler = new PostcodeDialogHandler(this, this.callbackPostcode.bind(this));
-
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           busy: false,
           pernr: null,
           orgtx: null,
@@ -213,8 +211,11 @@ sap.ui.define(
               selectedHelpDialog: {},
             },
           },
-        });
-        this.setViewModel(oViewModel);
+        };
+      },
+
+      onBeforeShow() {
+        this.PostcodeDialogHandler = new PostcodeDialogHandler(this, this.callbackPostcode.bind(this));
       },
 
       onObjectMatched(oParameter) {
@@ -223,6 +224,7 @@ sap.ui.define(
         const sOrgtx = _.replace(oParameter.orgtx, /--/g, '/') ?? _.noop();
         const sOrgeh = oParameter.orgeh ?? _.noop();
 
+        oViewModel.setData(this.initializeModel());
         oViewModel.setProperty('/employee/busy', true);
         oViewModel.setProperty('/sideNavigation/busy', true);
         oViewModel.setProperty('/pernr', sPernr);

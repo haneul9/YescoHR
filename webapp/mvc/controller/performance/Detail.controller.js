@@ -58,8 +58,8 @@ sap.ui.define(
         };
       },
 
-      onBeforeShow() {
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           busy: false,
           param: {},
           type: '',
@@ -100,9 +100,10 @@ sap.ui.define(
             strategy: [],
             duty: [],
           },
-        });
-        this.setViewModel(oViewModel);
+        };
+      },
 
+      onBeforeShow() {
         this.renderStageClass();
       },
 
@@ -111,6 +112,7 @@ sap.ui.define(
         const { sType, sYear } = oParameter;
         const mListRoute = _.get(Constants.LIST_PAGE, sType);
 
+        oViewModel.setData(this.initializeModel());
         oViewModel.setProperty('/busy', true);
 
         try {

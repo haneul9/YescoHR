@@ -34,17 +34,14 @@ sap.ui.define(
       TextUtils: TextUtils,
       FragmentEvent: FragmentEvent,
 
-      onInit() {
-        BaseController.prototype.onInit.apply(this, arguments);
-
-        const dDate = new Date();
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           busy: false,
           Data: [],
           LoanType: [],
           search: {
-            date: new Date(dDate.getFullYear(), 12, 0),
-            secondDate: new Date(dDate.getFullYear() - 11, 1, 1),
+            date: moment().endOf('year').hours(9).toDate(),
+            secondDate: moment().subtract(11, 'year').set('month', 1).set('date', 1).hours(9).toDate(),
           },
           listInfo: {
             rowCount: 1,
@@ -55,8 +52,7 @@ sap.ui.define(
             rejectCount: 0,
             completeCount: 0,
           },
-        });
-        this.setViewModel(oViewModel);
+        };
       },
 
       async onObjectMatched() {

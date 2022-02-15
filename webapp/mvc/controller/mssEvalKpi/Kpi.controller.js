@@ -34,8 +34,8 @@ sap.ui.define(
     return BaseController.extend('sap.ui.yesco.mvc.controller.mssEvalKpi.Kpi', {
       GroupDialogHandler: null,
 
-      onBeforeShow() {
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           busy: false,
           BtnStat: true,
           List: [],
@@ -60,13 +60,13 @@ sap.ui.define(
             SituList: [],
           },
           listRowCount: 1,
-        });
-
-        this.setViewModel(oViewModel);
+        };
       },
 
       async onObjectMatched() {
         const oViewModel = this.getViewModel();
+
+        oViewModel.setData(this.initializeModel());
 
         try {
           const oSessionData = this.getSessionData();

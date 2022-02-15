@@ -24,15 +24,16 @@ sap.ui.define(
       FragmentEvent: FragmentEvent,
       AppUtils: AppUtils,
 
-      onBeforeShow() {
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           busy: false,
           Data: [],
-        });
-        this.setViewModel(oViewModel);
+        };
       },
 
       onObjectMatched() {
+        this.getViewModel().setData(this.initializeModel());
+
         this.onSearch();
       },
 
