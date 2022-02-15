@@ -57,8 +57,8 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-header {margin-top:-0px; margin-bottom:20px; width:100%; height:24px; align-items:flex-end}
 .portlet-header > .sapMFlexItem + .sapMFlexItem {margin-left:5px}
 .portlet-header h2.sapMTitle {vertical-align:middle; font-size:20px; font-weight:700}
-.sapUiSizeCompact .portlet-header .sapMSegB {height:30px; margin-left:20px; margin-bottom:-3px; background-color:#e9e9e9; border-radius:8px; width:auto !important}
-.sapUiSizeCompact .portlet-header .sapMSegB .sapMSegBBtn {min-width:72px}
+.sapUiSizeCompact .portlet-header .sapMSegB {height:30px; margin-left:10px; margin-bottom:-3px; background-color:#e9e9e9; border-radius:8px; min-width:130px}
+/* .sapUiSizeCompact .portlet-header .sapMSegB .sapMSegBBtn {min-width:60px} */
 .portlet-header .sapMSegB .sapMSegBBtn .sapMSegBBtnInner {background-color:transparent; border-radius:8px!important; line-height:25px; font-weight:500}
 .portlet-header .sapMSegB .sapMSegBBtn.sapMSegBBtnSel .sapMSegBBtnInner {font-weight:700}
 .portlet-header .sapIcon_Date {margin-bottom:-8px !important}
@@ -116,6 +116,8 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p03p04:hover .sapMBtn.icon-button.portlet-member-remove {display:inline-flex; margin-left:10px}
 .portlet-p05 .sapMListUl .sapMLIB:not(.sapMComboBoxBaseItem) {margin-top:11px}
 .portlet-p05 .sapMListUl .sapMLIB:first-child {margin-top:0}
+.portlet-p06 tspan {font-size:7px}
+.portlet-p06 g[class*=caption] tspan, .portlet-p06 g[class*=datalabel] tspan {font-size:11px}
 .portlet-p06 .today {color:grey}
 .portlet-p06 .sapUiLayoutCSSGrid {height:100%}
 .portlet-p06 .team-member-count {margin-top:8px;font-size:2rem; font-weight:500; cursor:pointer}
@@ -125,11 +127,10 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p06 .team-member-count[data-table-key="4"] .sapMObjStatusText {color:#c68dff}
 .portlet-p06 .team-member-count[data-table-key="5"] .sapMObjStatusText {color:#6edecf}
 .portlet-p06 .team-member-count[data-table-key="6"] .sapMObjStatusText {color:#ffc86f}
-.team-member-count-popover .sapMPopoverCont {max-height:211px !important}
-.team-member-count-popover .sapUiTableCCnt,
-.team-member-count-popover .sapUiTableCtrlCnt {min-height:34px !important}
-.portlet-p06 tspan {font-size:7px}
-.portlet-p06 g[class*=caption] tspan, .portlet-p06 g[class*=datalabel] tspan {font-size:11px}
+.sapMPopover.team-member-count-popover {border-radius:4px}
+.sapMPopover.team-member-count-popover .sapMPopoverCont {max-height:211px !important}
+.sapMPopover.team-member-count-popover .sapUiTableCCnt,
+.sapMPopover.team-member-count-popover .sapUiTableCtrlCnt {min-height:34px !important}
 .portlet-p07 .guide-message {font-size:11px; color:#666}
 .portlet-p07 .sapUiLayoutCSSGrid .sapMFlexItem {width:100%; border-radius:8px}
 .portlet-p07 .menu-link {border-radius:8px; width:100%; height:40px; display:inline-flex; justify-content:center; align-items:center}

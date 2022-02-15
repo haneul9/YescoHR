@@ -16,7 +16,7 @@
             <m:Text text="{Orgtx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text" />
           </template>
         </Column>
-        <Column width="auto">
+        <Column width="auto" visible="{visiblePeriod}">
           <m:Label text="{i18n>LABEL_01129}" />
           <template>
             <m:Text text="{Period}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text" />

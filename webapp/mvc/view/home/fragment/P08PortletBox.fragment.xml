@@ -10,10 +10,10 @@
     </layoutData>
     <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
       <Title level="H2" text="{title}" visible="{= !${hideTitle} }" />
-      <SegmentedButton selectedKey="{selectedTabKey}">
+      <SegmentedButton selectedKey="{selectedTabKey}" width="154px">
         <items>
-          <SegmentedButtonItem text="{i18n>LABEL_01141}" key="Today" />
-          <SegmentedButtonItem text="{i18n>LABEL_01142}" key="Future" />
+          <SegmentedButtonItem text="{i18n>LABEL_01141}" key="Today" width="65px" />
+          <SegmentedButtonItem text="{i18n>LABEL_01142}" key="Future" width="80px" />
         </items>
       </SegmentedButton>
       <Text text="">

@@ -104,8 +104,8 @@ sap.ui.define(
           const sTableKey = sKey.replace(/^[\D]+/, '').replace(/^0+/, '');
           const aTableData = mTables[sTableKey] || [];
           mPortletContentData[`table${sTableKey}`] = {
+            visiblePeriod: sTableKey !== '1',
             list: aTableData,
-            // listCount: aTableData.length,
             listCount: Math.min(aTableData.length, 5),
           };
 
@@ -182,7 +182,12 @@ sap.ui.define(
 
           this.getController().getView().addDependent(this.oPopover);
 
-          this.oPopover.setModel(this.getPortletModel());
+          this.oPopover
+            .attachBeforeOpen(() => {
+              const bVisiblePeriod = this.oPopover.getBindingContext().getProperty('visiblePeriod');
+              this.oPopover.setContentWidth(bVisiblePeriod ? '447px' : '249px');
+            })
+            .setModel(this.getPortletModel());
         }
       },
 
