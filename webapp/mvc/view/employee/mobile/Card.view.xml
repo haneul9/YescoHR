@@ -13,7 +13,7 @@
                     <SegmentedButtonItem text="{i18n>LABEL_00278}" key="0" />
                 </items>
             </SegmentedButton>
-            <ScrollContainer height="70vh" horizontal="false" vertical="true" class="sapUiSmallMarginTop">
+            <ScrollContainer id="employeeCardListContainer" height="{/scrollHeight}px" horizontal="false" vertical="true" class="sapUiSmallMarginTop">
                 <List id="employeeCardList" items="{path: '/results'}" class="employee-card-list" busyIndicatorDelay="0" busy="{/busy}">
                     <CustomListItem type="Active" press=".onClickEmployeeCard">
                         <HBox>

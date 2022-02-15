@@ -28,9 +28,16 @@ sap.ui.define(
           pernr: null,
           orgtx: null,
           orgeh: null,
+          scrollHeight: '500',
           search: { searchText: '', selectedState: '3' },
           results: [],
         };
+      },
+
+      onAfterShow() {
+        BaseController.prototype.onAfterShow.apply(this, arguments);
+
+        this.calcScrollHeight();
       },
 
       onObjectMatched(oParameter) {
@@ -50,6 +57,14 @@ sap.ui.define(
         }
 
         this.initialList({ oViewModel, sPernr, sOrgtx, sOrgeh });
+      },
+
+      calcScrollHeight() {
+        const iAvailScrollHeight = screen.availHeight;
+        const iBottomToolBarHeight = 60;
+        const iContainerOffsetTop = this.byId('employeeCardListContainer').$().offset().top;
+
+        this.getViewModel().setProperty('/scrollHeight', iAvailScrollHeight - iContainerOffsetTop - iBottomToolBarHeight);
       },
 
       async initialList({ oViewModel, sPernr, sOrgtx, sOrgeh }) {

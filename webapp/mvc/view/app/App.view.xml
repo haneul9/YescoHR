@@ -45,7 +45,7 @@
 
   <App id="app" class="app-body" autoFocus="false" busy="{appModel>/isAppBusy}" busyIndicatorDelay="0" />
 
-  <OverflowToolbar id="appBottomToolbar" asyncMode="true" busy="{appModel>/isMenuBusy}" busyIndicatorDelay="0" class="app-menu-toolbar" height="60px" visible="{appModel>/isMobile}">
+  <OverflowToolbar id="appBottomToolbar" height="60px" asyncMode="true" busy="{appModel>/isMenuBusy}" busyIndicatorDelay="0" class="app-menu-toolbar" visible="{appModel>/isMobile}">
     <HBox width="100%" justifyContent="SpaceAround">
       <Image src="asset/image/icon_m_employee.svg" width="2rem" />
       <Image src="asset/image/icon_m_notice.svg" width="2rem" />
