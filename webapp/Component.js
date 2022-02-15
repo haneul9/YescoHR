@@ -4,6 +4,7 @@ sap.ui.define(
     'sap/ui/Device',
     'sap/ui/core/UIComponent',
     'sap/ui/model/json/JSONModel',
+    'sap/ui/core/routing/History',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceManager',
@@ -19,6 +20,7 @@ sap.ui.define(
     Device,
     UIComponent,
     JSONModel,
+    History,
     AppUtils,
     Client,
     ServiceManager,
@@ -354,6 +356,7 @@ sap.ui.define(
           menuId: sMenid,
           currentLocationText: sCurrentLocationText || '',
           isSubRoute: !!sRouteNameSub,
+          hasPrevious: !_.isEmpty(History.getInstance().getPreviousHash()),
         });
       },
 

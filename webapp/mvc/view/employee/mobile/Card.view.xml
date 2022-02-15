@@ -1,28 +1,20 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.employee.mobile.Card"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:core="sap.ui.core"
     xmlns="sap.m">
     <Page showHeader="false">
+        <core:Fragment fragmentName="sap.ui.yesco.fragment.MobileHeader" type="XML" />
         <VBox>
-            <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr">
-                <HBox>
-                    <Button text="{i18n>LABEL_00146}" class="sapUiTinyMarginEnd" visible="false" press=".onNavBack" />
-                </HBox>
-                <Title level="H2" textAlign="Center" text="사원프로파일" />
-                <Text text="" />
-            </grid:CSSGrid>
-        </VBox>
-        <VBox>
-            <SearchField value="{/sideNavigation/search/searchText}" placeholder="{i18n>LABEL_00276}" visible="{= ${/sideNavigation/isShow}}" search=".onPressEmployeeSearch" />
-            <SegmentedButton width="100%" selectedKey="{/sideNavigation/search/selectedState}" selectionChange=".onChangeStat" class="sapUiSmallMarginTop">
+            <SearchField value="{/search/searchText}" placeholder="{i18n>LABEL_00276}" search=".onPressEmployeeSearch" />
+            <SegmentedButton width="100%" selectedKey="{/search/selectedState}" selectionChange=".onChangeStat" class="sapUiSmallMarginTop">
                 <items>
                     <SegmentedButtonItem text="{i18n>LABEL_00245}" key="" />
                     <SegmentedButtonItem text="{i18n>LABEL_00277}" key="3" />
                     <SegmentedButtonItem text="{i18n>LABEL_00278}" key="0" />
                 </items>
             </SegmentedButton>
-            <ScrollContainer height="{/sideNavigation/scrollHeight}" horizontal="false" vertical="true" class="sapUiSmallMarginTop">
-                <List id="sideEmployeeList" items="{path: '/sideNavigation/search/results'}" class="employee-card-list" busyIndicatorDelay="0" busy="{/sideNavigation/busy}">
+            <ScrollContainer height="70vh" horizontal="false" vertical="true" class="sapUiSmallMarginTop">
+                <List id="employeeCardList" items="{path: '/results'}" class="employee-card-list" busyIndicatorDelay="0" busy="{/busy}">
                     <CustomListItem type="Active" press=".onClickEmployeeCard">
                         <HBox>
                             <VBox width="20%" justifyContent="Center" alignItems="Center">

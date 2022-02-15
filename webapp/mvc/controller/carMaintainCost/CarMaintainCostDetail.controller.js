@@ -85,9 +85,10 @@ sap.ui.define(
           oDetailModel.setProperty('/BankList', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: mBankList }));
 
           const dDatum = new Date();
+          const sPernr = this.getAppointeeProperty('Pernr');
           // 신청구분
           const mMaintainType = await Client.getEntitySet(oModel, 'BenefitCodeList', {
-            Pernr: this.getAppointeeProperty('Pernr'),
+            Pernr: sPernr,
             Cdnum: !!sStatKey && sStatKey !== '10' ? 'BE0023' : 'BE0020',
             Datum: dDatum,
           });
@@ -108,6 +109,7 @@ sap.ui.define(
 
           // 신청부서/업무
           const mAppDept = await Client.getEntitySet(oModel, 'BenefitCodeList', {
+            Pernr: sPernr,
             Werks: sWerks,
             Datum: dDatum,
             Cdnum: 'BE0022',

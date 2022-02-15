@@ -135,8 +135,8 @@ sap.ui.define(
             id: this.sDialChartId,
             type: 'angulargauge',
             renderAt: 'chart-dial-container',
-            width: '100%',
-            height: '100px',
+            width: '50%',
+            height: '175px',
             dataFormat: 'json',
             dataSource: {
               chart: {
@@ -146,6 +146,7 @@ sap.ui.define(
                 showvalue: '1',
                 usePlotGradientColor: '0',
                 showPlotBorder: '0',
+                showtooltip: '0',
               },
               colorrange: {
                 color: [
