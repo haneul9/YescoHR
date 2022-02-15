@@ -9,11 +9,8 @@ sap.ui.define(
     'sap/m/Title',
     'sap/m/VBox',
     'sap/ui/layout/cssgrid/CSSGrid',
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
@@ -27,11 +24,8 @@ sap.ui.define(
     Title,
     VBox,
     CSSGrid,
-    Filter,
-    FilterOperator,
     AppUtils,
     Client,
-    ODataReadError,
     ServiceNames,
     BaseController
   ) => {
