@@ -45,8 +45,8 @@ sap.ui.define(
       FragmentEvent: FragmentEvent,
       TextUtils: TextUtils,
 
-      onBeforeShow() {
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           menuId: '',
           FormStatus: '',
           BirthMaxDate: moment().toDate(),
@@ -56,10 +56,7 @@ sap.ui.define(
           BenefitCause: [],
           BenefitRelation: [],
           busy: false,
-        });
-        this.setViewModel(oViewModel);
-
-        this.getViewModel().setProperty('/busy', true);
+        };
       },
 
       getCurrentLocationText(oArguments) {
@@ -75,6 +72,9 @@ sap.ui.define(
 
       async onObjectMatched(mArgs) {
         const oDetailModel = this.getViewModel();
+
+        oDetailModel.setData(this.initializeModel());
+        oDetailModel.setProperty('/busy', true);
 
         try {
           oDetailModel.setProperty('/FormStatus', mArgs.oDataKey);

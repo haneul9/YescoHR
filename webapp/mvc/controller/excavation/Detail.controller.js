@@ -49,8 +49,8 @@ sap.ui.define(
         return 'excavation';
       },
 
-      onBeforeShow() {
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           busy: false,
           Appno: null,
           ZappStatAl: null,
@@ -74,10 +74,10 @@ sap.ui.define(
           },
           ApplyInfo: {},
           ApprovalDetails: {},
-        });
-        oViewModel.setSizeLimit(10000);
-        this.setViewModel(oViewModel);
+        };
+      },
 
+      onBeforeShow() {
         TableUtils.adjustRowSpan({
           oTable: this.byId('approvalTable'),
           aColIndices: [0, 1, 2],
@@ -88,6 +88,8 @@ sap.ui.define(
       async onObjectMatched(oParameter) {
         const oViewModel = this.getView().getModel();
 
+        oViewModel.setSizeLimit(10000);
+        oViewModel.setData(this.initializeModel());
         oViewModel.setProperty('/Appno', oParameter.appno === 'n' ? null : oParameter.appno);
 
         this.loadPage();

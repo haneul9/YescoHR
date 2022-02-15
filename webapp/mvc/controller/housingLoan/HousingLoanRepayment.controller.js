@@ -48,8 +48,8 @@ sap.ui.define(
       TableUtils: TableUtils,
       FragmentEvent: FragmentEvent,
 
-      onBeforeShow() {
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           ViewKey: '',
           AccountTxt: '',
           DialogData: {},
@@ -59,8 +59,7 @@ sap.ui.define(
           LoanAppList: [],
           maxDate: moment().toDate(),
           DateEditable: true,
-        });
-        this.setViewModel(oViewModel);
+        };
       },
 
       onObjectMatched(oParameter) {
@@ -75,6 +74,7 @@ sap.ui.define(
         }
 
         const oDetailModel = this.getViewModel();
+        oDetailModel.setData(this.initializeModel());
 
         if (!!oParameter.lonid) {
           const sLonid = oParameter.lonid;

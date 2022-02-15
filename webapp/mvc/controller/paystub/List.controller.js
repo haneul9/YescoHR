@@ -25,11 +25,10 @@ sap.ui.define(
       TableUtils: TableUtils,
       TABLE_ID: 'paystubTable',
 
-      onInit() {
-        BaseController.prototype.onInit.apply(this, arguments);
-
+      initializeModel() {
         const today = moment();
-        const oViewModel = new JSONModel({
+
+        return {
           busy: false,
           search: {
             year: today.format('YYYY'),
@@ -92,8 +91,7 @@ sap.ui.define(
             completeCount: 0,
           },
           list: [],
-        });
-        this.setViewModel(oViewModel);
+        };
       },
 
       onBeforeShow() {

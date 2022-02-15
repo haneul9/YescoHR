@@ -23,7 +23,7 @@
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.accountChange.fragment.DetailForm" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.fragment.ApplyInfo" type="XML" />
-        <!-- <core:Fragment fragmentName="sap.ui.yesco.fragment.ApprovalDetails" type="XML" /> -->
+        <core:Fragment fragmentName="sap.ui.yesco.fragment.ApprovalDetails" type="XML" />
       </VBox>
     </content>
   </Page>

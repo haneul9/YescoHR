@@ -10,14 +10,11 @@
         <core:HTML content='&lt;div id="chart-dial-container"&gt;&lt;/div&gt;' />
         <VBox alignItems="End">
           <Label text="today"/>
-          <ObjectStatus text="{/MyWork/Reltm}" state="Indication05" />
-          <Text text="{
-                path: '/MyWork/Prdtx',
-                formatter: '.formatWeek'
-            }" />
+          <ObjectStatus text="{/MyWork/Timtx}" state="Indication05" />
+          <Text text="{/MyWork/Wktim}" />
           <Label text="this week"/>
           <ObjectStatus text="{/MyWork/Reltm}" state="Indication05" />
-          <Text text="{i18n>MSG_27002}" />
+          <Text text="{/MyWork/Wkrul}" />
         </VBox>
       </HBox>
     </VBox>

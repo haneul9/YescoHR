@@ -40,8 +40,8 @@ sap.ui.define(
       TableUtils: TableUtils,
       FragmentEvent: FragmentEvent,
 
-      onBeforeShow() {
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           Hass: this.isHass(),
           FormData: {
             Fixed: true,
@@ -63,10 +63,7 @@ sap.ui.define(
             completeCount: 0,
           },
           busy: false,
-        });
-        this.setViewModel(oViewModel);
-
-        this.getViewModel().setProperty('/busy', true);
+        };
       },
 
       async onObjectMatched(oParameter) {
@@ -74,6 +71,9 @@ sap.ui.define(
         const sStatKey = oParameter.sStatus;
         const oDetailModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.BENEFIT);
+
+        oDetailModel.setData(this.initializeModel());
+        oDetailModel.setProperty('/busy', true);
 
         try {
           // Input Field Imited

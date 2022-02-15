@@ -35,12 +35,11 @@ sap.ui.define(
         CUR: { color: '#2972c8', label: 'LABEL_16020', prop: 'Monuse', propPerc: 'Monrte' },
       },
 
-      onBeforeShow() {
-        const today = moment();
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           busy: false,
           search: {
-            Zyymm: today.format('YYYYMM'),
+            Zyymm: moment().format('YYYYMM'),
             Orgeh: '',
             Qtaty: '',
           },
@@ -71,9 +70,10 @@ sap.ui.define(
             rowCount: 1,
             list: [],
           },
-        });
-        this.setViewModel(oViewModel);
+        };
+      },
 
+      onBeforeShow() {
         TableUtils.adjustRowSpan({
           oTable: this.byId(this.TABLE_ID),
           aColIndices: [0, 1],
@@ -83,6 +83,8 @@ sap.ui.define(
 
       async onObjectMatched() {
         const oViewModel = this.getViewModel();
+
+        oViewModel.setData(this.initializeModel());
 
         try {
           oViewModel.setProperty('/busy', true);

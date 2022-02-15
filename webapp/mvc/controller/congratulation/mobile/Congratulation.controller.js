@@ -19,20 +19,21 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.congratulation.m.Congratulation', {
+    return BaseController.extend('sap.ui.yesco.mvc.controller.congratulation.mobile.Congratulation', {
       TableUtils: TableUtils,
       FragmentEvent: FragmentEvent,
       AppUtils: AppUtils,
 
-      onBeforeShow() {
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           busy: false,
           Data: [],
-        });
-        this.setViewModel(oViewModel);
+        };
       },
 
       onObjectMatched() {
+        this.getViewModel().setData(this.initializeModel());
+
         this.onSearch();
       },
 

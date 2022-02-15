@@ -35,23 +35,23 @@ sap.ui.define(
       TableUtils: TableUtils,
       FragmentEvent: FragmentEvent,
 
-      onBeforeShow() {
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           minDate: moment(`${moment().year()}-01-01`).toDate(),
           maxDate: moment(`${moment().year()}-12-31`).toDate(),
           FormData: {},
           HealthType: [],
           busy: false,
           Fixed: false,
-        });
-        this.setViewModel(oViewModel);
-
-        this.getViewModel().setProperty('/busy', true);
+        };
       },
 
       async onObjectMatched(oParameter) {
         const sDataKey = oParameter.oDataKey;
         const oDetailModel = this.getViewModel();
+
+        oDetailModel.setData(this.initializeModel());
+        oDetailModel.setProperty('/busy', true);
 
         try {
           const sWerks = this.getSessionProperty('Werks');
@@ -174,7 +174,7 @@ sap.ui.define(
               const mFormData = oDetailModel.getProperty('/FormData');
 
               await Client.create(oModel, 'HealthCareContents', mFormData);
-              
+
               // {저장}되었습니다.
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'), {
                 onClose: () => {

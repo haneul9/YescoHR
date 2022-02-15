@@ -1,4 +1,4 @@
-<mvc:View controllerName="sap.ui.yesco.mvc.controller.congratulation.m.Congratulation"
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.congratulation.mobile.Congratulation"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc">
 	<Page showHeader="false">

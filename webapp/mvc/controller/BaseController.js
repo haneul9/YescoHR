@@ -5,6 +5,7 @@ sap.ui.define(
     'sap/ui/core/mvc/Controller',
     'sap/ui/core/routing/HashChanger',
     'sap/ui/core/routing/History',
+    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/control/MessageBox',
@@ -15,6 +16,7 @@ sap.ui.define(
     Controller,
     HashChanger,
     History,
+    JSONModel,
     AppUtils,
     UI5Error,
     MessageBox
@@ -28,6 +30,10 @@ sap.ui.define(
         this.debug('BaseController.onInit');
 
         this.bMobile = AppUtils.isMobile();
+
+        if (this.initializeModel && typeof this.initializeModel === 'function') {
+          this.setViewModel(new JSONModel(this.initializeModel()));
+        }
 
         // 각 업무 controller에서는 onInit overriding 대신 onBeforeShow, onAfterShow를 사용할 것
         this.getView().addEventDelegate(

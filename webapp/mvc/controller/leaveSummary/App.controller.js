@@ -34,19 +34,11 @@ sap.ui.define(
 
       AWART_COUNT: { 2000: 1, 2010: 1, 2001: 0.5, 2002: 0.5 },
 
-      onBeforeShow() {
-        this.GroupDialogHandler = new GroupDialogHandler(this, ([mOrgData]) => {
-          const oViewModel = this.getViewModel();
-
-          oViewModel.setProperty('/search/Orgeh', mOrgData.Orgeh);
-          oViewModel.setProperty('/search/Orgtx', mOrgData.Stext);
-        });
-
-        const today = moment();
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           busy: false,
           search: {
-            Plnyy: today.format('YYYY'),
+            Plnyy: moment().format('YYYY'),
             Seqno: '',
             Orgeh: '',
             Orgtx: '',
@@ -120,9 +112,16 @@ sap.ui.define(
             raw: [],
             grid: [],
           },
+        };
+      },
+
+      onBeforeShow() {
+        this.GroupDialogHandler = new GroupDialogHandler(this, ([mOrgData]) => {
+          const oViewModel = this.getViewModel();
+
+          oViewModel.setProperty('/search/Orgeh', mOrgData.Orgeh);
+          oViewModel.setProperty('/search/Orgtx', mOrgData.Stext);
         });
-        oViewModel.setSizeLimit(500);
-        this.setViewModel(oViewModel);
 
         TableUtils.adjustRowSpan({
           oTable: this.byId(this.TABLE_ID),
@@ -133,6 +132,9 @@ sap.ui.define(
 
       async onObjectMatched() {
         const oViewModel = this.getViewModel();
+
+        oViewModel.setSizeLimit(500);
+        oViewModel.setData(this.initializeModel());
 
         try {
           oViewModel.setProperty('/busy', true);

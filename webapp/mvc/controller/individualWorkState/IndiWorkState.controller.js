@@ -36,8 +36,8 @@ sap.ui.define(
       TableUtils: TableUtils,
       FragmentEvent: FragmentEvent,
 
-      onBeforeShow() {
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           FullYear: '',
           year: moment().year(),
           menid: this.getCurrentMenuId(),
@@ -85,16 +85,15 @@ sap.ui.define(
             Month: moment().month() + 1,
           },
           busy: false,
-        });
-
-        oViewModel.setSizeLimit(500);
-        this.setViewModel(oViewModel);
-
-        this.getViewModel().setProperty('/busy', true);
+        };
       },
 
       async onObjectMatched() {
         const oViewModel = this.getViewModel();
+
+        oViewModel.setSizeLimit(500);
+        oViewModel.setData(this.initializeModel());
+        oViewModel.setProperty('/busy', true);
 
         try {
           this.YearPlanBoxHandler ||= new YearPlanBoxHandler({ oController: this });
@@ -267,7 +266,7 @@ sap.ui.define(
         });
       },
 
-      // Combination ReRanderring
+      // Dough ReRanderring
       setDoughChartData(aPlanList) {
         const oChart = FusionCharts(this.sDoughChartId);
         const oDetailModel = this.getViewModel();
@@ -285,25 +284,34 @@ sap.ui.define(
         oChart.setChartData(
           {
             chart: {
-              //Cosmetics
-              theme: 'fusion',
+              legendPosition: 'right',
+              bgColor: 'transparent',
+              decimals: '0',
+              theme: 'ocean',
+              plottooltext: `$label $value일`,
+              slicingDistance: '5',
+              smartLineAlpha: '0',
+              showZeroPies: 'true',
+              captionPadding: '0',
             },
-            categories: [
+            data: [
               {
-                category: this.getViewModel().getProperty('/MonthStrList'),
-              },
-            ],
-            dataset: [
-              {
-                seriesName: 'Accumulative',
-                data: aWorkTypeList.Monuse,
+                label: this.getBundleText('LABEL_18002'),
+                value: mPlan.dUsed,
+                displayValue: `${mPlan.pUsed}%`,
+                color: '#7BB4EB',
               },
               {
-                seriesName: 'Current month',
-                parentYAxis: 'S',
-                renderAs: 'line',
-                showValues: '0',
-                data: aWorkTypeList.Current,
+                label: this.getBundleText('LABEL_18003'),
+                value: mPlan.dPlan,
+                displayValue: `${mPlan.pPlan}%`,
+                color: '#A2EB7B',
+              },
+              {
+                label: this.getBundleText('LABEL_18004'),
+                value: mPlan.dUnPlan,
+                displayValue: `${mPlan.pUnPlan}%`,
+                color: '#FFE479',
               },
             ],
           },

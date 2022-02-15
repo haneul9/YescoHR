@@ -28,10 +28,8 @@ sap.ui.define(
 
       PAGE_TYPE: { NEW: 'A', CHANGE: 'B', CANCEL: 'C' },
 
-      onInit() {
-        BaseController.prototype.onInit.apply(this, arguments);
-
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           busy: false,
           isVisibleActionButton: false,
           quota: {
@@ -65,11 +63,8 @@ sap.ui.define(
             selectedIndices: [],
             rowData: [],
           },
-        });
-        this.setViewModel(oViewModel);
+        };
       },
-
-      // onBeforeShow() {},
 
       async onObjectMatched() {
         const oModel = this.getModel(ServiceNames.WORKTIME);

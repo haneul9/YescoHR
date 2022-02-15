@@ -36,10 +36,8 @@ sap.ui.define(
       TextUtils: TextUtils,
       FragmentEvent: FragmentEvent,
 
-      onInit() {
-        BaseController.prototype.onInit.apply(this, arguments);
-
-        const oViewModel = new JSONModel({
+      initializeModel() {
+        return {
           busy: false,
           Data: [],
           MyWork: {},
@@ -56,8 +54,7 @@ sap.ui.define(
             rejectCount: 0,
             completeCount: 0,
           },
-        });
-        this.setViewModel(oViewModel);
+        };
       },
 
       async onObjectMatched() {
@@ -144,9 +141,12 @@ sap.ui.define(
                 bgColor: 'transparent',
                 theme: 'ocean',
                 showvalue: '1',
-                usePlotGradientColor: '0',
                 showPlotBorder: '0',
                 showtooltip: '0',
+                majorTMColor: '#aba894',
+                majorTMHeight: '5',
+                majorTMThickness: '2',
+                showGaugeBorder: '0',
               },
               colorrange: {
                 color: [
@@ -157,7 +157,7 @@ sap.ui.define(
                   },
                   {
                     minvalue: aWorkTypeList.Alwtm,
-                    maxvalue: '52',
+                    maxvalue: aWorkTypeList.Maxtm,
                     code: '#fdde17',
                   },
                 ],
@@ -166,6 +166,7 @@ sap.ui.define(
                 dial: [
                   {
                     value: aWorkTypeList.Reltm,
+                    rearExtension: '0',
                   },
                 ],
               },
