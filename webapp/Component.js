@@ -339,7 +339,7 @@ sap.ui.define(
           return;
         }
 
-        const sMenid = oMenuModel.getMenid(sRouteNameMain);
+        const sMenid = oMenuModel.getMenid(_.replace(sRouteNameMain, 'mobile/', ''));
         if ((AppUtils.isLOCAL() || AppUtils.isDEV()) && /^X/.test(sMenid)) {
           oMenuModel.setCurrentMenuData({ routeName: sRouteNameMain, viewId: sRouteNameMain, menuId: '', currentLocationText: '', isSubRoute: true });
           return;
@@ -374,11 +374,7 @@ sap.ui.define(
           return;
         }
 
-        if (AppUtils.isLOCAL() && _.startsWith(sRouteNameMain, 'mobile/')) {
-          return;
-        }
-
-        const sMenid = this.getMenuModel().getMenid(sRouteNameMain);
+        const sMenid = this.getMenuModel().getMenid(_.replace(sRouteNameMain, 'mobile/', ''));
         if ((AppUtils.isLOCAL() || AppUtils.isDEV()) && /^X/.test(sMenid)) {
           return;
         }

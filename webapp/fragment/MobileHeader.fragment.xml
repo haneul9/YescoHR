@@ -6,7 +6,7 @@
             <HBox>
                 <Button text="{i18n>LABEL_00146}" class="sapUiTinyMarginEnd" visible="{menuModel>/current/hasPrevious}" press=".onNavBack" />
             </HBox>
-            <Title level="H2" textAlign="Center" text="[{menuModel>/current/currentLocationText}]" />
+            <Title level="H2" textAlign="Center" text="{menuModel>/current/currentLocationText}" />
             <Text text="" />
         </grid:CSSGrid>
     </VBox>

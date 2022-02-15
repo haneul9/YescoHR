@@ -34,13 +34,7 @@ sap.ui.define(
         };
       },
 
-      onAfterShow() {
-        BaseController.prototype.onAfterShow.apply(this, arguments);
-
-        this.calcScrollHeight();
-      },
-
-      onObjectMatched(oParameter) {
+      async onObjectMatched(oParameter) {
         const oViewModel = this.getViewModel();
         const mSessionData = this.getSessionData();
         const sPernr = oParameter.pernr || mSessionData.Pernr;
@@ -56,7 +50,8 @@ sap.ui.define(
           oViewModel.setProperty('/search/searchText', sOrgtx);
         }
 
-        this.initialList({ oViewModel, sPernr, sOrgtx, sOrgeh });
+        await this.initialList({ oViewModel, sPernr, sOrgtx, sOrgeh });
+        this.calcScrollHeight();
       },
 
       calcScrollHeight() {
