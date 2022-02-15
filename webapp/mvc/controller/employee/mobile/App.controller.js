@@ -1,6 +1,13 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/m/CustomListItem',
+    'sap/m/Input',
+    'sap/m/Label',
+    'sap/m/List',
+    'sap/m/Text',
+    'sap/m/Title',
+    'sap/m/VBox',
     'sap/ui/layout/cssgrid/CSSGrid',
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
@@ -12,6 +19,13 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
+    CustomListItem,
+    Input,
+    Label,
+    List,
+    Text,
+    Title,
+    VBox,
     CSSGrid,
     Filter,
     FilterOperator,
@@ -180,6 +194,8 @@ sap.ui.define(
           });
           //End Contents 영역 Set
 
+          oViewModel.setData(oViewModelData, true);
+
           // Sub 영역 UI5 Control 생성
           this.makeProfileBody();
         } catch (oError) {
@@ -204,7 +220,7 @@ sap.ui.define(
           if (oWrapperVBox) {
             oWrapperVBox.destroyItems();
           } else {
-            oWrapperVBox = new sap.m.VBox({ id: `sub${menuKey}`, visible: true });
+            oWrapperVBox = new VBox({ id: `sub${menuKey}`, visible: true });
           }
 
           /**
@@ -214,12 +230,12 @@ sap.ui.define(
            */
           Object.keys(aSubMenuContents).forEach((key) => {
             const mMenu = _.get(aSubMenuContents, key);
-            const oSubVBox = new sap.m.VBox().addStyleClass('customBox sapUiMediumMarginBottom');
+            const oSubVBox = new VBox().addStyleClass('customBox sapUiMediumMarginBottom');
 
             this.debug(`Sub ${mMenu.title}`, mMenu);
 
             // Title
-            oSubVBox.addItem(new sap.m.Title({ level: 'H2', text: mMenu.title }));
+            oSubVBox.addItem(new Title({ level: 'H2', text: mMenu.title }));
 
             // Content (Table|Grid)
             if (mMenu.type === this.SUB_TYPE.TABLE) {
@@ -234,10 +250,11 @@ sap.ui.define(
                 },
               });
               const oList = new List({
+                noDataText: this.getBundleText('MSG_00001'),
                 items: {
                   path: `${sTableDataPath}/data`,
                   templateShareable: false,
-                  template: oListCSSGrid,
+                  template: new CustomListItem().addContent(oListCSSGrid),
                 },
               });
 
@@ -246,13 +263,13 @@ sap.ui.define(
               const oCSSGrid = new CSSGrid({ gridTemplateColumns: '1fr 3fr', gridGap: '1px 8px' }).addStyleClass('form-grid');
 
               mMenu.header.forEach((head, index) => {
-                oCSSGrid.addItem(new sap.m.Label({ text: head.Header }));
-                oCSSGrid.addItem(new sap.m.Input({ value: mMenu.data[index], editable: false }));
+                oCSSGrid.addItem(new Label({ text: head.Header }));
+                oCSSGrid.addItem(new Input({ value: mMenu.data[index], editable: false }));
               });
 
               if (mMenu.header.length % 2 === 1) {
-                oCSSGrid.addItem(new sap.m.Label({ text: '' }));
-                oCSSGrid.addItem(new sap.m.Input({ value: '', editable: false }));
+                oCSSGrid.addItem(new Label({ text: '' }));
+                oCSSGrid.addItem(new Input({ value: '', editable: false }));
               }
 
               oSubVBox.addItem(oCSSGrid);
