@@ -1499,12 +1499,17 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .sapUiSizeCompact.notification-popover .sapMPopoverHeader .sapMLabel {font-weight:400}
 .sapUiSizeCompact.notification-popover .sapMSwt {margin-right:5px; margin-left:9px; width:62px; height:30px}
 .sapUiSizeCompact.notification-popover .sapMSwtHandle {width:24px; height:24px}
+.sapUiSizeCompact.notification-popover .max-1-rows {max-height:69px !important}
+.sapUiSizeCompact.notification-popover .max-2-rows {max-height:138px !important}
+.sapUiSizeCompact.notification-popover .max-3-rows {max-height:207px !important}
+.sapUiSizeCompact.notification-popover .max-4-rows {max-height:276px !important}
+.sapUiSizeCompact.notification-popover .max-5-rows {max-height:345px !important}
+.sapUiSizeCompact.notification-popover .max-6-rows {max-height:414px !important}
+.sapUiSizeCompact.notification-popover .max-7-rows {max-height:483px !important}
+.sapUiSizeCompact.notification-popover .max-8-rows {max-height:552px !important}
+.sapUiSizeCompact.notification-popover .max-9-rows {max-height:621px !important}
+.sapUiSizeCompact.notification-popover .max-10-rows {max-height:690px !important}
 .sapUiSizeCompact.notification-popover.sapMPopoverWithBar.sapMPopoverWithFooter:not(.sapMRPCalendar)>.sapMPopoverCont {padding:0}
-.sapUiSizeCompact.notification-popover.max-1-rows.sapMPopoverWithBar.sapMPopoverWithFooter:not(.sapMRPCalendar)>.sapMPopoverCont {max-height:67.5px !important}
-.sapUiSizeCompact.notification-popover.max-2-rows.sapMPopoverWithBar.sapMPopoverWithFooter:not(.sapMRPCalendar)>.sapMPopoverCont {max-height:135px !important}
-.sapUiSizeCompact.notification-popover.max-3-rows.sapMPopoverWithBar.sapMPopoverWithFooter:not(.sapMRPCalendar)>.sapMPopoverCont {max-height:202.5px !important}
-.sapUiSizeCompact.notification-popover.max-4-rows.sapMPopoverWithBar.sapMPopoverWithFooter:not(.sapMRPCalendar)>.sapMPopoverCont {max-height:270px !important}
-.sapUiSizeCompact.notification-popover.max-5-rows.sapMPopoverWithBar.sapMPopoverWithFooter:not(.sapMRPCalendar)>.sapMPopoverCont {max-height:337.5px !important}
 .sapUiSizeCompact.notification-popover ul {position:relative; margin:0 20px}
 .sapUiSizeCompact.notification-popover ul:before {content:""; display:inline-block; position:absolute; left:5px; top:0; width:1px; height:100%; background-color:#dde1e6}
 .sapUiSizeCompact.notification-popover li {position:relative; margin:0 0px 5px 28px; padding:10px 14px; border:1px solid #dde1e6; border-radius:4px} 

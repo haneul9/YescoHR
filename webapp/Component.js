@@ -50,6 +50,7 @@ sap.ui.define(
        * @override
        */
       init(...aArgs) {
+        console.log('component init');
         $('body').toggleClass(this.getContentDensityClass(), true);
 
         this.toggleDeviceStyle();
@@ -265,7 +266,6 @@ sap.ui.define(
             oView.setVisible(false);
 
             setTimeout(() => {
-              console.log(sRouteName);
               this.getAppModel().setProperty('/isAtHome', sRouteName === 'ehrHome' || sRouteName === 'ehrMobileHome');
             });
 
