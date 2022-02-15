@@ -520,11 +520,10 @@ html.sap-desktop .sapMSwtCont:focus>.sapMSwt {outline-style:none !important}
 .sapMBtnInner.sapMBtnEmphasized.sapMBtnActive bdi {color:#fff !important}
 .sapMBtn .sapMBtnEmphasized.sapMFocusable:not(.sapMPopup-CTX .sapMBtnEmphasized.sapMFocusable) {outline-style:none !important}
 
-html.sap-desktop .sapContrast .sapMFooter-CTX .sapMBtnInner.sapMBtnReject, html.sap-desktop .sapContrast.sapMFooter-CTX .sapMBtnInner.sapMBtnReject {
-    border-color: #ff8888;
-    background-color: #FFAAA6;
-    color: #AD211B;
-}
+html.sap-desktop .sapContrast .sapMFooter-CTX .sapMBtnInner.sapMBtnReject, html.sap-desktop .sapContrast.sapMFooter-CTX .sapMBtnInner.sapMBtnReject { border-color: #ff8888; background-color: #FFAAA6; color: #AD211B;}
+.sapMDialog>footer .sapContrast.sapMIBar-CTX .sapMBtn:hover>.sapMBtnHoverable.sapMBtnReject:not(.sapMBtnActive) {background-image: none; border-color: #832D2D;background-color: #FFAAA6!important; color: #AD211B!important;text-shadow: 0 0 0.125rem rgb(0 0 0 / 0%);}
+.sapMDialog>footer .sapContrast.sapMIBar-CTX .sapMBtn:hover>.sapMBtnHoverable.sapMBtnReject:not(.sapMBtnActive) bdi{ color: #AD211B!important;}
+.sapMDialog>footer .sapContrast.sapMIBar-CTX .sapMBtn:hover>.sapMBtnHoverable.sapMBtnReject.sapMBtnActive {background-image: none;border-color: #AD211B;background-color: #AD211B!important;color: #fff!important;text-shadow: 0 0 0.125rem rgb(0 0 0 / 0%);}
 
 .sapMBtnDisabled .sapMBtnEmphasized:not(.sapMPopup-CTX .sapMBtnEmphasized){color:#999999!important; border-color:#DAE8F7!important; background:#DAE8F7!important}
 .sapMBtn:hover .sapMBtnEmphasized.sapMBtnDisabled:not(.sapMPopup-CTX .sapMBtn:hover .sapMBtnEmphasized){color:#DAE8F7 !important; border-color:#DAE8F7 !important; outline-style:none !important; background:#DAE8F7 !important}
