@@ -29,6 +29,8 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.workTime.WorkTime', {
+      sDialChartId: 'dialChart',
+
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
       TextUtils: TextUtils,
@@ -78,10 +80,10 @@ sap.ui.define(
           };
           const oModel = this.getModel(ServiceNames.WORKTIME);
           // 나의 근무시간현황
-          const aMyWork = await Client.getEntitySet(oModel, 'WorkingTime', mMyWorkPayLoad);
+          const [aMyWork] = await Client.getEntitySet(oModel, 'WorkingTime', mMyWorkPayLoad);
 
-          oListModel.setProperty('/MyWork', aMyWork[0]);
-
+          oListModel.setProperty('/MyWork', aMyWork);
+          this.buildDialChart(aMyWork);
           const mSearch = oListModel.getProperty('/search');
           const mPayLoad = {
             Apbeg: moment(mSearch.secondDate).hours(9).toDate(),
@@ -114,10 +116,10 @@ sap.ui.define(
           };
           const oModel = this.getModel(ServiceNames.WORKTIME);
           // 나의 근무시간현황
-          const aMyWork = await Client.getEntitySet(oModel, 'WorkingTime', mMyWork);
+          const [aMyWork] = await Client.getEntitySet(oModel, 'WorkingTime', mMyWork);
 
-          oListModel.setProperty('/MyWork', aMyWork[0]);
-
+          oListModel.setProperty('/MyWork', aMyWork);
+          this.buildDialChart(aMyWork);
           this.onSearch();
           this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
         } catch (oError) {
@@ -125,6 +127,50 @@ sap.ui.define(
         } finally {
           oListModel.setProperty('/busy', false);
         }
+      },
+
+      buildDialChart(aWorkTypeList) {
+        FusionCharts.ready(() => {
+          new FusionCharts({
+            id: this.sDialChartId,
+            type: 'angulargauge',
+            renderAt: 'chart-dial-container',
+            width: '100%',
+            height: '100px',
+            dataFormat: 'json',
+            dataSource: {
+              chart: {
+                //Cosmetics
+                bgColor: 'transparent',
+                theme: 'ocean',
+                showvalue: '1',
+                usePlotGradientColor: '0',
+                showPlotBorder: '0',
+              },
+              colorrange: {
+                color: [
+                  {
+                    minvalue: '0',
+                    maxvalue: aWorkTypeList.Alwtm,
+                    code: '#34649d',
+                  },
+                  {
+                    minvalue: aWorkTypeList.Alwtm,
+                    maxvalue: '52',
+                    code: '#fdde17',
+                  },
+                ],
+              },
+              dials: {
+                dial: [
+                  {
+                    value: aWorkTypeList.Reltm,
+                  },
+                ],
+              },
+            },
+          }).render();
+        });
       },
 
       // 근무시간
