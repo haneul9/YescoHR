@@ -260,7 +260,7 @@ sap.ui.define(
 
               oSubVBox.addItem(oList);
             } else if (mMenu.type === this.SUB_TYPE.GRID) {
-              const oCSSGrid = new CSSGrid({ gridTemplateColumns: '1fr 3fr', gridGap: '1px 8px' }).addStyleClass('form-grid');
+              const oCSSGrid = new CSSGrid({ gridTemplateColumns: '1fr 3fr', gridGap: '1px 8px' });
 
               mMenu.header.forEach((head, index) => {
                 oCSSGrid.addItem(new Label({ text: head.Header }));
