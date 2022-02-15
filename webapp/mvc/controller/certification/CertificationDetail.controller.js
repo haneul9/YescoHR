@@ -163,6 +163,7 @@ sap.ui.define(
 
           oDetailModel.setProperty('/FormData', mListData[0]);
           oDetailModel.setProperty('/ApplyInfo', mListData[0]);
+          oDetailModel.setProperty('/ApprovalDetails', mListData[0]);
         }
       },
 
