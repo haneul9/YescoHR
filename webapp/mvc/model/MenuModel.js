@@ -21,7 +21,7 @@ sap.ui.define(
           const oModel = this.getUIComponent().getModel(ServiceNames.COMMON);
           const sUrl = 'GetMenuLv';
           const mPayload = {
-            Device: '',
+            Device: _.isEqual(AppUtils.getDevice(), sap.ui.Device.system.SYSTEMTYPE.PHONE) ? 'M' : '',
             GetMenuLv1Nav: [],
             GetMenuLv2Nav: [],
             GetMenuLv3Nav: [],
