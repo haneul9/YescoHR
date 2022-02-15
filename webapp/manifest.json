@@ -103,75 +103,81 @@
         { "pattern": "accountChange", "name": "accountChange", "target": "accountChange" },
         { "pattern": "accountChange/:oDataKey:", "name": "accountChange-detail", "target": "accountChangeDetail" },
 
+        { "pattern": "attendance", "name": "attendance", "target": "attendance" },
+        { "pattern": "attendance/{type}/:appno:", "name": "attendance-detail", "target": "attendanceDetail" },
+        
+        { "pattern": "carMaintainCost", "name": "carMaintainCost", "target": "carMaintainCost" },
+        { "pattern": "carMaintainCost/{oDataKey}/:sStatus:", "name": "carMaintainCost-detail", "target": "carMaintainCostDetail" },
+        
+        { "pattern": "certification", "name": "certification", "target": "certification" },
+        { "pattern": "certification/{oDataKey}", "name": "certification-detail", "target": "certificationDetail" },
+        
+        { "pattern": "clubJoin", "name": "clubJoin", "target": "clubJoin" },
+        { "pattern": "clubJoin/{oDataKey}", "name": "clubJoin-detail", "target": "clubJoinDetail" },
+        { "pattern": "h/clubJoin", "name": "h/clubJoin", "target": "clubJoin" },
+        { "pattern": "h/clubJoin/{oDataKey}", "name": "h/clubJoin-detail", "target": "clubJoinDetail" },
+
+        { "pattern": "competency", "name": "competency", "target": "competency" },
+        { "pattern": "competency/{sType}/{sYear}", "name": "competency-detail", "target": "competencyDetail" },
+        { "pattern": "m/competency", "name": "m/competency", "target": "m/competency" },
+        { "pattern": "m/competency/{sType}/{sYear}", "name": "m/competency-detail", "target": "competencyDetail" },
+
         { "pattern": "congratulation", "name": "congratulation", "target": "congratulation" },
         { "pattern": "congratulation/:oDataKey:", "name": "congratulation-detail", "target": "congDetail" },
         { "pattern": "h/congratulation", "name": "h/congratulation", "target": "h/congratulation" },
         { "pattern": "h/congratulation/:oDataKey:", "name": "h/congratulation-detail", "target": "congDetail" },
         { "pattern": "m/congratulation", "name": "m/congratulation", "target": "m/congratulation" },
         { "pattern": "m/congratulation/:oDataKey:", "name": "m/congratulation-detail", "target": "m/congDetail" },
-
-        { "pattern": "certification", "name": "certification", "target": "certification" },
-        { "pattern": "certification/{oDataKey}", "name": "certification-detail", "target": "certificationDetail" },
         
-        { "pattern": "jobCompetency", "name": "jobCompetency", "target": "jobCompetency" },
+        { "pattern": "consolidAppBox", "name": "consolidAppBox", "target": "consolidAppBox" },
 
-        { "pattern": "clubJoin", "name": "clubJoin", "target": "clubJoin" },
-        { "pattern": "clubJoin/{oDataKey}", "name": "clubJoin-detail", "target": "clubJoinDetail" },
-        { "pattern": "h/clubJoin", "name": "h/clubJoin", "target": "clubJoin" },
-        { "pattern": "h/clubJoin/{oDataKey}", "name": "h/clubJoin-detail", "target": "clubJoinDetail" },
+        { "pattern": "employee/:pernr:/:orgtx:/:orgeh:", "name": "employee", "target": "employee" },
+        { "pattern": "mobile/employee/:pernr:", "name": "mobile/employee", "target": "mobile/employee" },
+        { "pattern": "mobile/m/employee", "name": "mobile/m/employee", "target": "mobile/m/employee" },
+        { "pattern": "mobile/m/employee/{pernr}", "name": "mobile/m/employee-detail", "target": "mobile/employee" },
 
-        { "pattern": "carMaintainCost", "name": "carMaintainCost", "target": "carMaintainCost" },
-        { "pattern": "carMaintainCost/{oDataKey}/:sStatus:", "name": "carMaintainCost-detail", "target": "carMaintainCostDetail" },
+        { "pattern": "m/EvalKpi", "name": "m/EvalKpi", "target": "m/EvalKpi" },
 
+        { "pattern": "excavation", "name": "excavation", "target": "excavation" },
+        { "pattern": "excavation/{appno}", "name": "excavation-detail", "target": "excavationDetail" },
+        
         { "pattern": "familyInfo", "name": "familyInfo", "target": "familyInfo" },
         { "pattern": "familyInfo/{oDataKey}", "name": "familyInfo-detail", "target": "familyInfoDetail" },
+
+        { "pattern": "healthCare", "name": "healthCare", "target": "healthCare" },
+        { "pattern": "healthCare/{oDataKey}", "name": "healthCare-detail", "target": "healthCareDetail" },
 
         { "pattern": "housingLoan", "name": "housingLoan", "target": "housingLoan" },
         { "pattern": "housingLoan/{oDataKey}", "name": "housingLoan-detail", "target": "housingLoanDetail" },
         { "pattern": "housingLoanRepay/{oDataKey}/:lonid:", "name": "housingLoan-repay", "target": "housingLoanRepay" },
+
+        { "pattern": "individualWorkState", "name": "individualWorkState", "target": "individualWorkState" },
         
-        { "pattern": "healthCare", "name": "healthCare", "target": "healthCare" },
-        { "pattern": "healthCare/{oDataKey}", "name": "healthCare-detail", "target": "healthCareDetail" },
+        { "pattern": "jobCompetency", "name": "jobCompetency", "target": "jobCompetency" },
+
+        { "pattern": "m/leave", "name": "m/leave", "target": "m/leave" },
+        
+        { "pattern": "leavePlan/:Plnyy:/:Seqno:", "name": "leavePlan", "target": "leavePlan" },
+        
+        { "pattern": "m/leaveSummary", "name": "m/leaveSummary", "target": "m/leaveSummary" },
+
+        { "pattern": "medical", "name": "medical", "target": "medical" },
+        { "pattern": "medical/{oDataKey}", "name": "medical-detail", "target": "medicalDetail" },
+        { "pattern": "h/medical", "name": "h/medical", "target": "medical" },
+        { "pattern": "h/medical/{oDataKey}", "name": "h/medical-detail", "target": "medicalDetail" },
+        
+        { "pattern": "nightduty", "name": "nightduty", "target": "nightduty" },
+        { "pattern": "nightduty/{sAppno}", "name": "nightduty-detail", "target": "nightdutyDetail" },
 
         { "pattern": "notice", "name": "notice", "target": "notice" },
         { "pattern": "notice/{Sdate}/{Seqnr}", "name": "notice-detail", "target": "noticeDetail" },
         { "pattern": "h/notice", "name": "h/notice", "target": "h/notice" },
         { "pattern": "h/notice/{Sdate}/{Seqnr}", "name": "h/notice-detail", "target": "noticeDetail" },
 
-        { "pattern": "m/EvalKpi", "name": "m/EvalKpi", "target": "m/EvalKpi" },
+        { "pattern": "m/organization", "name": "m/organization", "target": "m/organization" },
 
-        { "pattern": "individualWorkState", "name": "individualWorkState", "target": "individualWorkState" },
-
-        { "pattern": "consolidAppBox", "name": "consolidAppBox", "target": "consolidAppBox" },
-
-        { "pattern": "talent", "name": "talent", "target": "talent" },
-        { "pattern": "talent/{oDataKey}", "name": "talent-detail", "target": "talentDetail" },
-        
-        { "pattern": "medical", "name": "medical", "target": "medical" },
-        { "pattern": "medical/{oDataKey}", "name": "medical-detail", "target": "medicalDetail" },
-        { "pattern": "h/medical", "name": "h/medical", "target": "medical" },
-        { "pattern": "h/medical/{oDataKey}", "name": "h/medical-detail", "target": "medicalDetail" },
-
-        { "pattern": "workTime", "name": "workTime", "target": "workTime" },
-        { "pattern": "workTime/{oDataKey}", "name": "workTime-detail", "target": "workTimeDetail" },
-
-        { "pattern": "withdrawMiddle", "name": "withdrawMiddle", "target": "withdrawMiddle" },
-        { "pattern": "withdrawMiddle/{oDataKey}", "name": "withdrawMiddle-detail", "target": "withdrawMiddleDetail" },
-
-        { "pattern": "studentFunds", "name": "studentFunds", "target": "studentFunds" },
-        { "pattern": "studentFunds/{oDataKey}", "name": "studentFunds-detail", "target": "studentFundsDetail" },
-        { "pattern": "h/studentFunds", "name": "h/studentFunds", "target": "studentFunds" },
-        { "pattern": "h/studentFunds/{oDataKey}", "name": "h/studentFunds-detail", "target": "studentFundsDetail" },
-
-        { "pattern": "attendance", "name": "attendance", "target": "attendance" },
-        { "pattern": "attendance/{type}/:appno:", "name": "attendance-detail", "target": "attendanceDetail" },
-        { "pattern": "employee/:pernr:/:orgtx:/:orgeh:", "name": "employee", "target": "employee" },
-
-        { "pattern": "nightduty", "name": "nightduty", "target": "nightduty" },
-        { "pattern": "nightduty/{sAppno}", "name": "nightduty-detail", "target": "nightdutyDetail" },
-
-        { "pattern": "excavation", "name": "excavation", "target": "excavation" },
-        { "pattern": "excavation/{appno}", "name": "excavation-detail", "target": "excavationDetail" },
+        { "pattern": "paystub", "name": "paystub", "target": "paystub" },
+        { "pattern": "paystub/{seqnr}", "name": "paystub-detail", "target": "paystubDetail" },
 
         { "pattern": "performance", "name": "performance", "target": "performance" },
         { "pattern": "performance/{sType}/{sYear}", "name": "performance-detail", "target": "performanceDetail" },
@@ -180,25 +186,20 @@
         { "pattern": "m/performancePry/{sType}/{sYear}", "name": "m/performancePry-detail", "target": "performanceDetail" },
         { "pattern": "m/performanceSry", "name": "m/performanceSry", "target": "m/performanceSry" },
         { "pattern": "m/performanceSry/{sType}/{sYear}", "name": "m/performanceSry-detail", "target": "performanceDetail" },
-        
-        { "pattern": "competency", "name": "competency", "target": "competency" },
-        { "pattern": "competency/{sType}/{sYear}", "name": "competency-detail", "target": "competencyDetail" },
-        { "pattern": "m/competency", "name": "m/competency", "target": "m/competency" },
-        { "pattern": "m/competency/{sType}/{sYear}", "name": "m/competency-detail", "target": "competencyDetail" },
-        
-        { "pattern": "m/organization", "name": "m/organization", "target": "m/organization" },
-        
-        { "pattern": "leavePlan/:Plnyy:/:Seqno:", "name": "leavePlan", "target": "leavePlan" },
-        { "pattern": "m/leaveSummary", "name": "m/leaveSummary", "target": "m/leaveSummary" },
 
-        { "pattern": "m/leave", "name": "m/leave", "target": "m/leave" },
-        
-        { "pattern": "paystub", "name": "paystub", "target": "paystub" },
-        { "pattern": "paystub/{seqnr}", "name": "paystub-detail", "target": "paystubDetail" },
+        { "pattern": "studentFunds", "name": "studentFunds", "target": "studentFunds" },
+        { "pattern": "studentFunds/{oDataKey}", "name": "studentFunds-detail", "target": "studentFundsDetail" },
+        { "pattern": "h/studentFunds", "name": "h/studentFunds", "target": "studentFunds" },
+        { "pattern": "h/studentFunds/{oDataKey}", "name": "h/studentFunds-detail", "target": "studentFundsDetail" },
 
-        { "pattern": "mobile/employee/:pernr:", "name": "mobile/employee", "target": "mobile/employee" },
-        { "pattern": "mobile/m/employee", "name": "mobile/m/employee", "target": "mobile/m/employee" },
-        { "pattern": "mobile/m/employee/{pernr}", "name": "mobile/m/employee-detail", "target": "mobile/employee" },
+        { "pattern": "talent", "name": "talent", "target": "talent" },
+        { "pattern": "talent/{oDataKey}", "name": "talent-detail", "target": "talentDetail" },
+
+        { "pattern": "withdrawMiddle", "name": "withdrawMiddle", "target": "withdrawMiddle" },
+        { "pattern": "withdrawMiddle/{oDataKey}", "name": "withdrawMiddle-detail", "target": "withdrawMiddleDetail" },
+        
+        { "pattern": "workTime", "name": "workTime", "target": "workTime" },
+        { "pattern": "workTime/{oDataKey}", "name": "workTime-detail", "target": "workTimeDetail" },
 
         { "pattern": "sampleComponents", "name": "sampleComponents", "target": "sampleComponents" },
         { "pattern": "sampleTimeline", "name": "sampleTimeline", "target": "sampleTimeline" },
@@ -218,89 +219,91 @@
         "accountChange": { "viewId": "accountChange", "viewPath": "sap.ui.yesco.mvc.view.accountChange", "viewName": "AccountChange" },
         "accountChangeDetail": { "viewId": "accountChangeDetail", "viewPath": "sap.ui.yesco.mvc.view.accountChange", "viewName": "AccountChangeDetail" },
 
+        "attendance": { "viewId": "attendanceList", "viewPath": "sap.ui.yesco.mvc.view.attendance", "viewName": "List" },
+        "attendanceDetail": { "viewId": "attendanceDetail", "viewPath": "sap.ui.yesco.mvc.view.attendance", "viewName": "Detail" },
+
+        "carMaintainCost": { "viewId": "carMaintainCost", "viewPath": "sap.ui.yesco.mvc.view.carMaintainCost", "viewName": "CarMaintainCost" },
+        "carMaintainCostDetail": { "viewId": "carMaintainCostDetail", "viewPath": "sap.ui.yesco.mvc.view.carMaintainCost", "viewName": "CarMaintainCostDetail" },
+
+        "certification": { "viewId": "certification", "viewPath": "sap.ui.yesco.mvc.view.certification", "viewName": "Certification" },
+        "certificationDetail": { "viewId": "certificationDetail", "viewPath": "sap.ui.yesco.mvc.view.certification", "viewName": "CertificationDetail" },
+
+        "clubJoin": { "viewId": "clubJoin", "viewPath": "sap.ui.yesco.mvc.view.clubJoin", "viewName": "ClubJoin" },
+        "clubJoinDetail": { "viewId": "clubJoinDetail", "viewPath": "sap.ui.yesco.mvc.view.clubJoin", "viewName": "ClubJoinDetail" },
+
+        "competency": { "viewId": "competency", "viewPath": "sap.ui.yesco.mvc.view.competency", "viewName": "List" },
+        "m/competency": { "viewId": "m_competency", "viewPath": "sap.ui.yesco.mvc.view.competency", "viewName": "ListM" },
+        "competencyDetail": { "viewId": "competencyDetail", "viewPath": "sap.ui.yesco.mvc.view.competency", "viewName": "Detail" },
+
         "congratulation": { "viewId": "congratulation", "viewPath": "sap.ui.yesco.mvc.view.congratulation", "viewName": "Congratulation" },
         "h/congratulation": { "viewId": "h_congratulation", "viewPath": "sap.ui.yesco.mvc.view.congratulation", "viewName": "CongratulationHass" },
         "congDetail": { "viewId": "congDetail", "viewPath": "sap.ui.yesco.mvc.view.congratulation", "viewName": "CongDetail" },
         "m/congratulation": { "viewId": "congratulationMobile", "viewPath": "sap.ui.yesco.mvc.view.congratulation.m", "viewName": "Congratulation" },
         "m/congDetail": { "viewId": "congDetailMobile", "viewPath": "sap.ui.yesco.mvc.view.congratulation.m", "viewName": "CongDetail" },
-
-        "certification": { "viewId": "certification", "viewPath": "sap.ui.yesco.mvc.view.certification", "viewName": "Certification" },
-        "certificationDetail": { "viewId": "certificationDetail", "viewPath": "sap.ui.yesco.mvc.view.certification", "viewName": "CertificationDetail" },
         
-        "jobCompetency": { "viewId": "jobCompetency", "viewPath": "sap.ui.yesco.mvc.view.jobCompetency", "viewName": "JobCompetency" },
+        "consolidAppBox": { "viewId": "consolidAppBox", "viewPath": "sap.ui.yesco.mvc.view.consolidAppBox", "viewName": "ConsolidAppBox" },
+        
+        "employee": { "viewId": "employee", "viewPath": "sap.ui.yesco.mvc.view.employee", "viewName": "Employee" },
+        "mobile/employee": { "viewId": "mobile_employee", "viewPath": "sap.ui.yesco.mvc.view.employee.mobile", "viewName": "App" },
+        "mobile/m/employee": { "viewId": "mobile_m_employee", "viewPath": "sap.ui.yesco.mvc.view.employee.mobile", "viewName": "Card" },
 
-        "clubJoin": { "viewId": "clubJoin", "viewPath": "sap.ui.yesco.mvc.view.clubJoin", "viewName": "ClubJoin" },
-        "clubJoinDetail": { "viewId": "clubJoinDetail", "viewPath": "sap.ui.yesco.mvc.view.clubJoin", "viewName": "ClubJoinDetail" },
+        "m/EvalKpi": { "viewId": "m_EvalKpi", "viewPath": "sap.ui.yesco.mvc.view.mssEvalKpi", "viewName": "Kpi" },
 
-        "carMaintainCost": { "viewId": "carMaintainCost", "viewPath": "sap.ui.yesco.mvc.view.carMaintainCost", "viewName": "CarMaintainCost" },
-        "carMaintainCostDetail": { "viewId": "carMaintainCostDetail", "viewPath": "sap.ui.yesco.mvc.view.carMaintainCost", "viewName": "CarMaintainCostDetail" },
+        "excavation": { "viewId": "excavation", "viewPath": "sap.ui.yesco.mvc.view.excavation", "viewName": "List" },
+        "excavationDetail": { "viewId": "excavationDetail", "viewPath": "sap.ui.yesco.mvc.view.excavation", "viewName": "Detail" },
 
         "familyInfo": { "viewId": "familyInfo", "viewPath": "sap.ui.yesco.mvc.view.familyInfo", "viewName": "FamilyInfo" },
         "familyInfoDetail": { "viewId": "familyInfoDetail", "viewPath": "sap.ui.yesco.mvc.view.familyInfo", "viewName": "FamilyInfoDetail" },
 
+        "healthCare": { "viewId": "healthCare", "viewPath": "sap.ui.yesco.mvc.view.healthCare", "viewName": "HealthCare" },
+        "healthCareDetail": { "viewId": "healthCareDetail", "viewPath": "sap.ui.yesco.mvc.view.healthCare", "viewName": "HealthCareDetail" },
+
         "housingLoan": { "viewId": "housingLoan", "viewPath": "sap.ui.yesco.mvc.view.housingLoan", "viewName": "HousingLoan" },
         "housingLoanDetail": { "viewId": "housingLoanDetail", "viewPath": "sap.ui.yesco.mvc.view.housingLoan", "viewName": "HousingLoanDetail" },
         "housingLoanRepay": { "viewId": "housingLoanRepay", "viewPath": "sap.ui.yesco.mvc.view.housingLoan", "viewName": "HousingLoanRepayment" },
+
+        "individualWorkState": { "viewId": "individualWorkState", "viewPath": "sap.ui.yesco.mvc.view.individualWorkState", "viewName": "IndiWorkState" },
         
-        "healthCare": { "viewId": "healthCare", "viewPath": "sap.ui.yesco.mvc.view.healthCare", "viewName": "HealthCare" },
-        "healthCareDetail": { "viewId": "healthCareDetail", "viewPath": "sap.ui.yesco.mvc.view.healthCare", "viewName": "HealthCareDetail" },
+        "jobCompetency": { "viewId": "jobCompetency", "viewPath": "sap.ui.yesco.mvc.view.jobCompetency", "viewName": "JobCompetency" },
+
+        "m/leave": { "viewId": "m_leave", "viewPath": "sap.ui.yesco.mvc.view.leave", "viewName": "App" },
+
+        "leavePlan": { "viewId": "leavePlan", "viewPath": "sap.ui.yesco.mvc.view.leavePlan", "viewName": "App" },
+
+        "m/leaveSummary": { "viewId": "m_leaveSummary", "viewPath": "sap.ui.yesco.mvc.view.leaveSummary", "viewName": "App" },
+
+        "medical": { "viewId": "medical", "viewPath": "sap.ui.yesco.mvc.view.medical", "viewName": "Medical" },
+        "medicalDetail": { "viewId": "medicalDetail", "viewPath": "sap.ui.yesco.mvc.view.medical", "viewName": "MedicalDetail" },
+        
+        "nightduty": { "viewId": "nightduty", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "RequestList" },
+        "nightdutyDetail": { "viewId": "nightdutyDetail", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "RequestDetail" },
 
         "notice": { "viewId": "notice", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "Ess" },
         "h/notice": { "viewId": "h_notice", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "Hass" },
         "noticeDetail": { "viewId": "noticeDetail", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "NoticeDetail" },
 
-        "m/EvalKpi": { "viewId": "m_EvalKpi", "viewPath": "sap.ui.yesco.mvc.view.mssEvalKpi", "viewName": "Kpi" },
+        "m/organization": { "viewId": "m_organization", "viewPath": "sap.ui.yesco.mvc.view.organization", "viewName": "Main" },
 
-        "individualWorkState": { "viewId": "individualWorkState", "viewPath": "sap.ui.yesco.mvc.view.individualWorkState", "viewName": "IndiWorkState" },
+        "paystub": { "viewId": "paystub", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "List" },
+        "paystubDetail": { "viewId": "paystubDetail", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "Detail" },
         
-        "consolidAppBox": { "viewId": "consolidAppBox", "viewPath": "sap.ui.yesco.mvc.view.consolidAppBox", "viewName": "ConsolidAppBox" },
-
-        "talent": { "viewId": "talent", "viewPath": "sap.ui.yesco.mvc.view.talent", "viewName": "Talent" },
-        "talentDetail": { "viewId": "talentDetail", "viewPath": "sap.ui.yesco.mvc.view.talent", "viewName": "TalentDetail" },
-
-        "medical": { "viewId": "medical", "viewPath": "sap.ui.yesco.mvc.view.medical", "viewName": "Medical" },
-        "medicalDetail": { "viewId": "medicalDetail", "viewPath": "sap.ui.yesco.mvc.view.medical", "viewName": "MedicalDetail" },
-
-        "workTime": { "viewId": "workTime", "viewPath": "sap.ui.yesco.mvc.view.workTime", "viewName": "WorkTime" },
-        "workTimeDetail": { "viewId": "workTimeDetail", "viewPath": "sap.ui.yesco.mvc.view.workTime", "viewName": "WorkTimeDetail" },
-
-        "withdrawMiddle": { "viewId": "withdrawMiddle", "viewPath": "sap.ui.yesco.mvc.view.withdrawMiddle", "viewName": "WithdrawMiddle" },
-        "withdrawMiddleDetail": { "viewId": "withdrawMiddleDetail", "viewPath": "sap.ui.yesco.mvc.view.withdrawMiddle", "viewName": "WithdrawMiddleDetail" },
-
-        "studentFunds": { "viewId": "studentFunds", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFunds" },
-        "studentFundsDetail": { "viewId": "studentFundsDetail", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFundsDetail" },
-
-        "attendance": { "viewId": "attendanceList", "viewPath": "sap.ui.yesco.mvc.view.attendance", "viewName": "List" },
-        "attendanceDetail": { "viewId": "attendanceDetail", "viewPath": "sap.ui.yesco.mvc.view.attendance", "viewName": "Detail" },
-        "employee": { "viewId": "employee", "viewPath": "sap.ui.yesco.mvc.view.employee", "viewName": "Employee" },
-
-        "nightduty": { "viewId": "nightduty", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "RequestList" },
-        "nightdutyDetail": { "viewId": "nightdutyDetail", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "RequestDetail" },
-
-        "excavation": { "viewId": "excavation", "viewPath": "sap.ui.yesco.mvc.view.excavation", "viewName": "List" },
-        "excavationDetail": { "viewId": "excavationDetail", "viewPath": "sap.ui.yesco.mvc.view.excavation", "viewName": "Detail" },
-
         "performance": { "viewId": "performance", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "List" },
         "m/performancePry": { "viewId": "m_performancePry", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "ListPrimary" },
         "m/performanceSry": { "viewId": "m_performanceSry", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "ListSecondary" },
         "performanceDetail": { "viewId": "performanceDetail", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "Detail" },
         "performanceView": { "viewId": "performanceView", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "Document" },
-        
-        "competency": { "viewId": "competency", "viewPath": "sap.ui.yesco.mvc.view.competency", "viewName": "List" },
-        "m/competency": { "viewId": "m_competency", "viewPath": "sap.ui.yesco.mvc.view.competency", "viewName": "ListM" },
-        "competencyDetail": { "viewId": "competencyDetail", "viewPath": "sap.ui.yesco.mvc.view.competency", "viewName": "Detail" },
-        
-        "m/organization": { "viewId": "m_organization", "viewPath": "sap.ui.yesco.mvc.view.organization", "viewName": "Main" },
-        
-        "leavePlan": { "viewId": "leavePlan", "viewPath": "sap.ui.yesco.mvc.view.leavePlan", "viewName": "App" },
-        "m/leave": { "viewId": "m_leave", "viewPath": "sap.ui.yesco.mvc.view.leave", "viewName": "App" },
-        "m/leaveSummary": { "viewId": "m_leaveSummary", "viewPath": "sap.ui.yesco.mvc.view.leaveSummary", "viewName": "App" },
-        
-        "paystub": { "viewId": "paystub", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "List" },
-        "paystubDetail": { "viewId": "paystubDetail", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "Detail" },
 
-        "mobile/employee": { "viewId": "mobile_employee", "viewPath": "sap.ui.yesco.mvc.view.employee.mobile", "viewName": "App" },
-        "mobile/m/employee": { "viewId": "mobile_m_employee", "viewPath": "sap.ui.yesco.mvc.view.employee.mobile", "viewName": "Card" },
+        "studentFunds": { "viewId": "studentFunds", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFunds" },
+        "studentFundsDetail": { "viewId": "studentFundsDetail", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFundsDetail" },
+
+        "talent": { "viewId": "talent", "viewPath": "sap.ui.yesco.mvc.view.talent", "viewName": "Talent" },
+        "talentDetail": { "viewId": "talentDetail", "viewPath": "sap.ui.yesco.mvc.view.talent", "viewName": "TalentDetail" },
+
+        "withdrawMiddle": { "viewId": "withdrawMiddle", "viewPath": "sap.ui.yesco.mvc.view.withdrawMiddle", "viewName": "WithdrawMiddle" },
+        "withdrawMiddleDetail": { "viewId": "withdrawMiddleDetail", "viewPath": "sap.ui.yesco.mvc.view.withdrawMiddle", "viewName": "WithdrawMiddleDetail" },
+
+        "workTime": { "viewId": "workTime", "viewPath": "sap.ui.yesco.mvc.view.workTime", "viewName": "WorkTime" },
+        "workTimeDetail": { "viewId": "workTimeDetail", "viewPath": "sap.ui.yesco.mvc.view.workTime", "viewName": "WorkTimeDetail" },
 
         "sampleComponents": { "viewId": "sampleComponents", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Components", "title": "Components" },
         "sampleTimeline": { "viewId": "sampleTimeline", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Timeline", "title": "Timeline" },
