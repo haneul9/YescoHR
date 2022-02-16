@@ -36,7 +36,7 @@ sap.ui.define(
         };
       },
 
-      onObjectMatched() {
+      async onObjectMatched() {
         const oViewModel = this.getViewModel();
 
         oViewModel.setData(this.initializeModel());

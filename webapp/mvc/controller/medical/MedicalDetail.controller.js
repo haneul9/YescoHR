@@ -476,8 +476,28 @@ sap.ui.define(
 
         oDetailModel.setProperty('/FormData/Appno', '');
         oDetailModel.setProperty('/FormData/Lnsta', '');
+        oDetailModel.setProperty('/FormData/Pvbet', '0');
+        oDetailModel.setProperty('/FormData/Pvcnt', '0');
+        oDetailModel.setProperty('/FormData/PybetTot', '0');
+        oDetailModel.setProperty('/FormData/Paymm', '');
+        oDetailModel.setProperty('/FormData/Rjbet', '0');
+        oDetailModel.setProperty('/FormData/Rjcnt', '0');
+        oDetailModel.setProperty('/FormData/ZappResn', '');
         oDetailModel.setProperty('/ReWriteBtn', false);
         oDetailModel.setProperty('/ReWriteStat', true);
+
+        const aHisList = _.chain(oDetailModel.getProperty('/HisList'))
+          .filter((e) => {
+            return e.ZappStat === 'F';
+          })
+          .each((e) => {
+            e.ZappStat = '';
+          })
+          .value();
+
+        oDetailModel.setProperty('/HisList', aHisList);
+        oDetailModel.setProperty('/listInfo/rowCount', _.size(aHisList));
+        this.setAppAmount();
         this.settingsAttachTable();
       },
 
@@ -1284,7 +1304,7 @@ sap.ui.define(
           oDetailModel.setProperty('/ReWriteStat', true);
         } else {
           const sLnsta = oDetailModel.getProperty('/FormData/Lnsta');
-          const bRewrit = (!mRowData.ZappStat || mRowData.ZappStat === 'F') && (!sLnsta || sLnsta === '10');
+          const bRewrit = !mRowData.ZappStat && (!sLnsta || sLnsta === '10');
 
           oDetailModel.setProperty('/ReWriteStat', bRewrit);
           oDetailModel.setProperty('/DialogData', _.cloneDeep(mRowData));
