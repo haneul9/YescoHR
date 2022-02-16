@@ -1294,7 +1294,7 @@ sap.ui.define(
         const iYear = parseInt(oDetailModel.getProperty('/sYear'));
 
         oDetailModel.setProperty('/DialogData/minDate', new Date(iYear, 0, 1));
-        oDetailModel.setProperty('/DialogData/maxDate', new Date(iYear, 12, 0));
+        oDetailModel.setProperty('/DialogData/maxDate', new Date());
       },
 
       // Dialog AttachFileTable Settings
