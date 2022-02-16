@@ -48,6 +48,7 @@ sap.ui.define(
         '0183': '1fr 1fr 1fr',
         '0545': '1fr 2fr',
         '0023': '1fr 2fr',
+        '0105': '1fr 2fr',
         INCR: '1fr 2fr',
         '0021': '1fr 1fr 1fr',
         EDU1: '1fr 1fr 1fr',
