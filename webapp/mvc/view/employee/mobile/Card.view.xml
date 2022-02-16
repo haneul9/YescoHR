@@ -1,7 +1,7 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.employee.mobile.Card"
   xmlns:mvc="sap.ui.core.mvc"
   xmlns="sap.m">
-  <Page showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" enableScrolling="false" navButtonPress=".onNavBack">
+  <Page showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
     <SearchField value="{/search/searchText}" placeholder="{i18n>LABEL_00276}" search=".onPressEmployeeSearch" />
     <SegmentedButton width="100%" selectedKey="{/search/selectedState}" selectionChange=".onChangeStat" class="sapUiSmallMarginTop">
       <items>

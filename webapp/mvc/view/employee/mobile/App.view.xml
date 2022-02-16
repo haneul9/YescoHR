@@ -3,7 +3,7 @@
     xmlns:core="sap.ui.core"
     xmlns:grid="sap.ui.layout.cssgrid"
     xmlns="sap.m">
-    <Page showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" enableScrolling="false" navButtonPress=".onNavBack">
+    <Page showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
         <VBox>
             <grid:CSSGrid gridTemplateColumns="1fr 6fr">
                 <VBox justifyContent="Center" alignItems="Center">

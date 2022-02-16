@@ -1843,3 +1843,5 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 
 .sapUiMedia-StdExt-Phone .app-menu-toolbar:before {display: none;}
 .sapUiMedia-StdExt-Phone .app-menu-toolbar:after {border-bottom:0;}
+
+.sapUiMedia-StdExt-Phone .mobile-top {position:sticky;top:0;z-index: 99;}
