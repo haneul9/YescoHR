@@ -5,6 +5,7 @@ sap.ui.define(
     'sap/m/Input',
     'sap/m/Label',
     'sap/m/List',
+    'sap/m/ScrollContainer',
     'sap/m/Text',
     'sap/m/Title',
     'sap/m/VBox',
@@ -20,6 +21,7 @@ sap.ui.define(
     Input,
     Label,
     List,
+    ScrollContainer,
     Text,
     Title,
     VBox,
@@ -65,6 +67,7 @@ sap.ui.define(
           },
           tab: {
             selectedKey: '',
+            scrollHeight: 400,
             list: [],
             menu: [],
           },
@@ -201,14 +204,24 @@ sap.ui.define(
         }
       },
 
+      calcScrollHeight() {
+        const iAvailScrollHeight = screen.availHeight;
+        const iBottomToolBarHeight = 60;
+        const iContainerOffsetTop = this.byId('employeeTabBar').$().offset().top + 51;
+
+        this.getViewModel().setProperty('/tab/scrollHeight', iAvailScrollHeight - iContainerOffsetTop - iBottomToolBarHeight);
+      },
+
       makeProfileBody() {
         const oViewModel = this.getViewModel();
+        const oTabBar = this.byId('employeeTabBar');
         const aTabItems = this.byId('employeeTabBar').getItems();
         const aSubMenu = oViewModel.getProperty('/sub');
 
         Object.keys(aSubMenu).forEach((menuKey) => {
           const aSubMenuContents = _.get(aSubMenu, [menuKey, 'contents']);
           const oTabContainer = _.find(aTabItems, (o) => _.isEqual(o.getProperty('key'), menuKey));
+          const oScrollContainer = new ScrollContainer({ height: '{/tab/scrollHeight}px', horizontal: false, vertical: true });
           let oWrapperVBox = sap.ui.getCore().byId(`sub${menuKey}`);
 
           if (oWrapperVBox) {
@@ -272,8 +285,16 @@ sap.ui.define(
             oWrapperVBox.addItem(oSubVBox);
           });
 
-          oTabContainer.addContent(oWrapperVBox);
+          oScrollContainer.addContent(oWrapperVBox);
+          oTabContainer.addContent(oScrollContainer);
         });
+
+        oTabBar.addEventDelegate(
+          {
+            onAfterRendering: () => this.calcScrollHeight(),
+          },
+          oTabBar
+        );
       },
     });
   }
