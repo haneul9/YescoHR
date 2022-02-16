@@ -9,6 +9,7 @@ sap.ui.define(
     'sap/m/Title',
     'sap/m/VBox',
     'sap/ui/layout/cssgrid/CSSGrid',
+    'sap/ui/yesco/control/MobileScrollContainer',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -24,6 +25,7 @@ sap.ui.define(
     Title,
     VBox,
     CSSGrid,
+    MobileScrollContainer,
     AppUtils,
     Client,
     ServiceNames,
@@ -46,6 +48,7 @@ sap.ui.define(
         '0183': '1fr 1fr 1fr',
         '0545': '1fr 2fr',
         '0023': '1fr 2fr',
+        '0105': '1fr 2fr',
         INCR: '1fr 2fr',
         '0021': '1fr 1fr 1fr',
         EDU1: '1fr 1fr 1fr',
@@ -209,6 +212,7 @@ sap.ui.define(
         Object.keys(aSubMenu).forEach((menuKey) => {
           const aSubMenuContents = _.get(aSubMenu, [menuKey, 'contents']);
           const oTabContainer = _.find(aTabItems, (o) => _.isEqual(o.getProperty('key'), menuKey));
+          const oScrollContainer = new MobileScrollContainer({ horizontal: false, vertical: true });
           let oWrapperVBox = sap.ui.getCore().byId(`sub${menuKey}`);
 
           if (oWrapperVBox) {
@@ -272,7 +276,8 @@ sap.ui.define(
             oWrapperVBox.addItem(oSubVBox);
           });
 
-          oTabContainer.addContent(oWrapperVBox);
+          oScrollContainer.addContent(oWrapperVBox);
+          oTabContainer.addContent(oScrollContainer);
         });
       },
     });

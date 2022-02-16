@@ -1,20 +1,20 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/FragmentEvent',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     ServiceNames,
     AppUtils,
     TableUtils,
     FragmentEvent,
+    Client,
     BaseController
   ) => {
     'use strict';
@@ -27,14 +27,21 @@ sap.ui.define(
       initializeModel() {
         return {
           busy: false,
+          search: {
+            dateRange: '1w',
+            secondDate: moment().subtract(1, 'year').add(1, 'day').toDate(),
+            date: moment().toDate(),
+          },
           Data: [],
         };
       },
 
-      onObjectMatched() {
-        this.getViewModel().setData(this.initializeModel());
+      async onObjectMatched() {
+        const oViewModel = this.getViewModel();
 
-        this.onSearch();
+        oViewModel.setData(this.initializeModel());
+
+        oViewModel.setProperty('/CongList', aList);
       },
 
       // override AttachFileCode
@@ -43,39 +50,46 @@ sap.ui.define(
       },
 
       onClick() {
-        this.getRouter().navTo('m/congratulation-detail', { oDataKey: 'N' });
+        this.getRouter().navTo('mobile/congratulation-detail', { oDataKey: 'N' });
       },
 
+      // 조회
       onSearch() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oListModel = this.getViewModel();
-        const sMenid = this.getCurrentMenuId();
-
-        oListModel.setProperty('/busy', true);
-
-        oModel.read('/ConExpenseApplSet', {
-          filters: [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'), new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, sMenid)],
-          success: (oData) => {
-            if (oData) {
-              const oList = oData.results;
-
-              oListModel.setProperty('/CongList', oList);
-              oListModel.setProperty('/busy', false);
-            }
-          },
-          error: (oError) => {
-            AppUtils.handleError(oError);
-
-            oListModel.setProperty('/busy', false);
-          },
-        });
+        oViewModel.setProperty('/CongList', aList);
       },
+
+      // 신청내역 조회
+      async getAppList() {
+        const oViewModel = this.getViewModel();
+
+        try {
+          oViewModel.setProperty('/busy', true);
+
+          const oModel = this.getModel(ServiceNames.BENEFIT);
+          const mSearch = oViewModel.getProperty('/search');
+          const mPayLoad = {
+            Apbeg: moment(mSearch.secondDate).hours(9).toDate(),
+            Apend: moment(mSearch.date).hours(9).toDate(),
+            Menid: this.getCurrentMenuId(),
+            Prcty: 'L',
+          };
+
+          return await Client.getEntitySet(oModel, 'ConExpenseAppl', mPayLoad);
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
+      },
+
+      // 검색 날짜 선택
+      onSearchList(oEvent) {},
 
       onSelectRow(oEvent) {
         const vPath = oEvent.getParameters().rowBindingContext.getPath();
         const oRowData = this.getViewModel().getProperty(vPath);
 
-        this.getRouter().navTo('m/congratulation-detail', { oDataKey: oRowData.Appno });
+        this.getRouter().navTo('mobile/congratulation-detail', { oDataKey: oRowData.Appno });
       },
     });
   }

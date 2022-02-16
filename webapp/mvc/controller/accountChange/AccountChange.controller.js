@@ -74,9 +74,9 @@ sap.ui.define(
           };
           const oModel = this.getModel(ServiceNames.PAY);
           // 나의 계좌정보
-          const aMyAcc = await Client.getEntitySet(oModel, 'CurrentAcctInfo', mMyAccPayLoad);
+          const [aMyAcc] = await Client.getEntitySet(oModel, 'CurrentAcctInfo', mMyAccPayLoad);
 
-          oListModel.setProperty('/MyAcc', aMyAcc[0]);
+          oListModel.setProperty('/MyAcc', aMyAcc);
 
           const mSearch = oListModel.getProperty('/search');
           const mPayLoad = {
@@ -123,6 +123,10 @@ sap.ui.define(
         }
       },
 
+      formatYear(sYearMon) {
+        return !sYearMon ? '' : `${sYearMon.slice(0, 4)}-${sYearMon.slice(4)}`;
+      },
+
       onClick() {
         this.getRouter().navTo('accountChange-detail', { oDataKey: 'N' });
       },
@@ -146,6 +150,16 @@ sap.ui.define(
             mPernr.Pernr = sPernr;
           }
 
+          const mMyAccPayLoad = {
+            Menid: this.getCurrentMenuId(),
+            ...mPernr,
+          };
+          const oModel = this.getModel(ServiceNames.PAY);
+          // 나의 계좌정보
+          const [aMyAcc] = await Client.getEntitySet(oModel, 'CurrentAcctInfo', mMyAccPayLoad);
+
+          oListModel.setProperty('/MyAcc', aMyAcc);
+
           const mSearch = oListModel.getProperty('/search');
           const mPayLoad = {
             Apbeg: moment(mSearch.secondDate).hours(9).toDate(),
@@ -153,7 +167,6 @@ sap.ui.define(
             Menid: this.getCurrentMenuId(),
             ...mPernr,
           };
-          const oModel = this.getModel(ServiceNames.PAY);
           const aTableList = await Client.getEntitySet(oModel, 'BankAccount', mPayLoad);
           const oTable = this.byId('accTable');
 

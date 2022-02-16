@@ -45,7 +45,7 @@ sap.ui.define(
           Hass: this.isHass(),
           FormData: {
             Fixed: true,
-            bPayType: true,
+            bPayType: false,
           },
           FieldLimit: {},
           BankList: [],
@@ -143,7 +143,7 @@ sap.ui.define(
             oDetailModel.setProperty('/FormData', {
               Ename: sEname,
               Fixed: sAppCode !== 'D',
-              bPayType: true,
+              bPayType: false,
               Appty: sAppCode,
               Payorg: 'ALL',
               Idtype: 'ALL',
@@ -157,17 +157,17 @@ sap.ui.define(
               Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
             });
           } else {
-            const oTargetData = await Client.getEntitySet(oModel, 'MaintenanceCarAppl', {
+            const [oTargetData] = await Client.getEntitySet(oModel, 'MaintenanceCarAppl', {
               Prcty: 'D',
               Appno: sDataKey,
             });
 
-            oDetailModel.setProperty('/FormData', oTargetData[0]);
+            oDetailModel.setProperty('/FormData', oTargetData);
             oDetailModel.setProperty('/FormData/Ename', sEname);
-            oDetailModel.setProperty('/FormData/Fixed', oTargetData[0].Appty !== 'D' && oTargetData[0].ZappStatAl === '10');
-            oDetailModel.setProperty('/FormData/bPayType', oTargetData[0].Payty !== 'PAY');
-            oDetailModel.setProperty('/ApplyInfo', oTargetData[0]);
-            oDetailModel.setProperty('/ApprovalDetails', oTargetData[0]);
+            oDetailModel.setProperty('/FormData/Fixed', oTargetData.Appty !== 'D' && oTargetData.ZappStatAl === '10');
+            oDetailModel.setProperty('/FormData/bPayType', oTargetData.Payty !== 'PAY');
+            oDetailModel.setProperty('/ApplyInfo', oTargetData);
+            oDetailModel.setProperty('/ApprovalDetails', oTargetData);
           }
 
           this.settingsAttachTable();
@@ -283,6 +283,12 @@ sap.ui.define(
           // 차량등록일
           if (!mFormData.Cardt) {
             MessageBox.alert(this.getBundleText('MSG_25011'));
+            return true;
+          }
+
+          // 보험가입
+          if (!mFormData.Insu) {
+            MessageBox.alert(this.getBundleText('MSG_25017'));
             return true;
           }
 

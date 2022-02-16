@@ -476,8 +476,28 @@ sap.ui.define(
 
         oDetailModel.setProperty('/FormData/Appno', '');
         oDetailModel.setProperty('/FormData/Lnsta', '');
+        oDetailModel.setProperty('/FormData/Pvbet', '0');
+        oDetailModel.setProperty('/FormData/Pvcnt', '0');
+        oDetailModel.setProperty('/FormData/PybetTot', '0');
+        oDetailModel.setProperty('/FormData/Paymm', '');
+        oDetailModel.setProperty('/FormData/Rjbet', '0');
+        oDetailModel.setProperty('/FormData/Rjcnt', '0');
+        oDetailModel.setProperty('/FormData/ZappResn', '');
         oDetailModel.setProperty('/ReWriteBtn', false);
         oDetailModel.setProperty('/ReWriteStat', true);
+
+        const aHisList = _.chain(oDetailModel.getProperty('/HisList'))
+          .filter((e) => {
+            return e.ZappStat === 'F';
+          })
+          .each((e) => {
+            e.ZappStat = '';
+          })
+          .value();
+
+        oDetailModel.setProperty('/HisList', aHisList);
+        oDetailModel.setProperty('/listInfo/rowCount', _.size(aHisList));
+        this.setAppAmount();
         this.settingsAttachTable();
       },
 
@@ -1073,7 +1093,6 @@ sap.ui.define(
           this.byId('DetailHisDialog').close();
         } catch (oError) {
           AppUtils.handleError(oError);
-          oDetailModel.setProperty('/DialogData/Appno2', '');
           oDetailModel.setProperty('/DialogData/isNew', true);
         } finally {
           AppUtils.setAppBusy(false, this);
@@ -1110,14 +1129,13 @@ sap.ui.define(
 
           oDetailModel.setProperty('/HisList', aDetail);
 
-          await this.checkedDialogData();
-
           aHisList.forEach((e, i) => {
             if (mDialogData.Seqnr === e.Seqnr) {
               oDetailModel.setProperty(`/HisList/${i}`, mDialogData);
             }
           });
 
+          await this.checkedDialogData();
           await AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.getApprovalType(), this.DIALOG_FILE_ID);
 
           const oDialogModel = this.getViewModel(this.DIALOG_FILE_ID);
@@ -1137,7 +1155,6 @@ sap.ui.define(
           this.byId('DetailHisDialog').close();
         } catch (oError) {
           AppUtils.handleError(oError);
-          oDetailModel.setProperty('/DialogData/Appno2', '');
         } finally {
           AppUtils.setAppBusy(false, this);
         }
@@ -1284,7 +1301,7 @@ sap.ui.define(
           oDetailModel.setProperty('/ReWriteStat', true);
         } else {
           const sLnsta = oDetailModel.getProperty('/FormData/Lnsta');
-          const bRewrit = (!mRowData.ZappStat || mRowData.ZappStat === 'F') && (!sLnsta || sLnsta === '10');
+          const bRewrit = !mRowData.ZappStat && (!sLnsta || sLnsta === '10');
 
           oDetailModel.setProperty('/ReWriteStat', bRewrit);
           oDetailModel.setProperty('/DialogData', _.cloneDeep(mRowData));
@@ -1294,7 +1311,7 @@ sap.ui.define(
         const iYear = parseInt(oDetailModel.getProperty('/sYear'));
 
         oDetailModel.setProperty('/DialogData/minDate', new Date(iYear, 0, 1));
-        oDetailModel.setProperty('/DialogData/maxDate', new Date(iYear, 12, 0));
+        oDetailModel.setProperty('/DialogData/maxDate', new Date());
       },
 
       // Dialog AttachFileTable Settings

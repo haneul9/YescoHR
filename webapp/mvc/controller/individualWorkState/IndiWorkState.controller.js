@@ -243,19 +243,19 @@ sap.ui.define(
               },
               data: [
                 {
-                  label: this.getBundleText('LABEL_18002'),
+                  label: this.getBundleText('LABEL_18002'), // 사용일수
                   value: mPlan.dUsed,
                   displayValue: `${mPlan.pUsed}%`,
                   color: '#7BB4EB',
                 },
                 {
-                  label: this.getBundleText('LABEL_18003'),
+                  label: this.getBundleText('LABEL_18003'), // 계획일수
                   value: mPlan.dPlan,
                   displayValue: `${mPlan.pPlan}%`,
                   color: '#A2EB7B',
                 },
                 {
-                  label: this.getBundleText('LABEL_18004'),
+                  label: this.getBundleText('LABEL_18004'), // 잔여일수 (미사용&미계획)
                   value: mPlan.dUnPlan,
                   displayValue: `${mPlan.pUnPlan}%`,
                   color: '#FFE479',
@@ -296,19 +296,19 @@ sap.ui.define(
             },
             data: [
               {
-                label: this.getBundleText('LABEL_18002'),
+                label: this.getBundleText('LABEL_18002'), // 사용일수
                 value: mPlan.dUsed,
                 displayValue: `${mPlan.pUsed}%`,
                 color: '#7BB4EB',
               },
               {
-                label: this.getBundleText('LABEL_18003'),
+                label: this.getBundleText('LABEL_18003'), // 계획일수
                 value: mPlan.dPlan,
                 displayValue: `${mPlan.pPlan}%`,
                 color: '#A2EB7B',
               },
               {
-                label: this.getBundleText('LABEL_18004'),
+                label: this.getBundleText('LABEL_18004'), // 잔여일수 (미사용&미계획)
                 value: mPlan.dUnPlan,
                 displayValue: `${mPlan.pUnPlan}%`,
                 color: '#FFE479',
@@ -350,11 +350,16 @@ sap.ui.define(
             dataSource: {
               chart: {
                 //Cosmetics
-                anchorRadius: '4',
-                bgColor: '#ffffff',
-                theme: 'fusion',
+                bgColor: 'transparent',
+                theme: 'ocean',
                 usePlotGradientColor: '0',
                 showPlotBorder: '0',
+                baseFontSize: '12',
+                valueFontSize: '12',
+                showXAxisLine: '0',
+                animation: '1',
+                divLineColor: '#dde1e6',
+                divLineDashed: '0',
               },
               categories: [
                 {
@@ -365,11 +370,16 @@ sap.ui.define(
                 {
                   seriesName: 'Current month',
                   data: aWorkTypeList.Monuse,
+                  color: '#7bb4eb',
                 },
                 {
                   seriesName: 'Accumulative',
                   renderAs: 'line',
                   data: aWorkTypeList.Current,
+                  color: '#000000',
+                  anchorBgColor: '#000000',
+                  anchorRadius: '3',
+                  lineThickness: '1',
                 },
               ],
             },
@@ -379,6 +389,7 @@ sap.ui.define(
 
       // Combination ReRanderring
       setCombiChartData(aWorkTypeList) {
+        const oDetailModel = this.getViewModel();
         const oChart = FusionCharts(this.sCombiChartId);
 
         _.chain(aWorkTypeList)
@@ -400,26 +411,36 @@ sap.ui.define(
           {
             chart: {
               //Cosmetics
-              anchorRadius: '4',
-              theme: 'fusion',
-              bgColor: '#ffffff',
+              bgColor: 'transparent',
+              theme: 'ocean',
               usePlotGradientColor: '0',
               showPlotBorder: '0',
+              baseFontSize: '12',
+              valueFontSize: '12',
+              showXAxisLine: '0',
+              animation: '1',
+              divLineColor: '#dde1e6',
+              divLineDashed: '0',
             },
             categories: [
               {
-                category: this.getViewModel().getProperty('/MonthStrList'),
+                category: oDetailModel.getProperty('/MonthStrList'),
               },
             ],
             dataset: [
               {
                 seriesName: 'Current month',
                 data: aWorkTypeList.Monuse,
+                color: '#7bb4eb',
               },
               {
                 seriesName: 'Accumulative',
                 renderAs: 'line',
                 data: aWorkTypeList.Current,
+                color: '#000000',
+                anchorBgColor: '#000000',
+                anchorRadius: '3',
+                lineThickness: '1',
               },
             ],
           },
@@ -437,7 +458,7 @@ sap.ui.define(
         const aMonth = [];
 
         for (let i = 1; i < 13; i++) {
-          aMonth.push({ Zcode: i, Ztext: i + this.getBundleText('LABEL_00253') });
+          aMonth.push({ Zcode: i, Ztext: i + this.getBundleText('LABEL_00253') }); // 월
         }
 
         oViewModel.setProperty('/WorkMonths', aMonth);
@@ -498,7 +519,7 @@ sap.ui.define(
 
       // 년도 선택시 화면전체 년도
       formYear(sYear = moment().year()) {
-        return this.getViewModel().setProperty('/FullYear', `${sYear}${this.getBundleText('LABEL_00252')}`);
+        return this.getViewModel().setProperty('/FullYear', `${sYear}${this.getBundleText('LABEL_00252')}`); // 년
       },
 
       // 년도 선택시 화면전체조회
@@ -521,7 +542,7 @@ sap.ui.define(
           const [aPlanList] = await Client.getEntitySet(oModel, 'LeavePlan', mPayLoad);
 
           // Doughnut Chart
-          this.buildDoughChart(aPlanList);
+          this.setDoughChartData(aPlanList);
 
           // 휴가유형 별 현황
           const aVacaTypeList = await Client.getEntitySet(oModel, 'AbsQuotaList', { Menid: this.getCurrentMenuId() });
@@ -592,7 +613,7 @@ sap.ui.define(
         }
       },
       getCurrentLocationText(oArguments) {
-        return this.getBundleText('LABEL_18001');
+        return this.getBundleText('LABEL_18001'); // My Time Calendar
       },
 
       onPressPrevYear() {

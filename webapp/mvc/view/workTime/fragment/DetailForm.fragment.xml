@@ -44,13 +44,19 @@
         <table:Column width="100px">
           <Label text="{i18n>LABEL_27005}" />
           <table:template>
-            <Text text="{Beguz}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Beguz',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="100px">
           <Label text="{i18n>LABEL_27006}" />
           <table:template>
-            <Text text="{Enduz}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Enduz',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="70px">

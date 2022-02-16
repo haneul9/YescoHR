@@ -127,15 +127,58 @@ sap.ui.define(
       },
 
       buildDialChart(aWorkTypeList) {
-        FusionCharts.ready(() => {
-          new FusionCharts({
-            id: this.sDialChartId,
-            type: 'angulargauge',
-            renderAt: 'chart-dial-container',
-            width: '50%',
-            height: '175px',
-            dataFormat: 'json',
-            dataSource: {
+        const oChart = FusionCharts(this.sDialChartId);
+
+        if (!oChart) {
+          FusionCharts.ready(() => {
+            new FusionCharts({
+              id: this.sDialChartId,
+              type: 'angulargauge',
+              renderAt: 'chart-dial-container',
+              width: '50%',
+              height: '175px',
+              dataFormat: 'json',
+              dataSource: {
+                chart: {
+                  //Cosmetics
+                  bgColor: 'transparent',
+                  theme: 'ocean',
+                  showvalue: '1',
+                  showPlotBorder: '0',
+                  showtooltip: '0',
+                  majorTMColor: '#aba894',
+                  majorTMHeight: '5',
+                  majorTMThickness: '2',
+                  showGaugeBorder: '0',
+                },
+                colorrange: {
+                  color: [
+                    {
+                      minvalue: '0',
+                      maxvalue: aWorkTypeList.Alwtm,
+                      code: '#34649d',
+                    },
+                    {
+                      minvalue: aWorkTypeList.Alwtm,
+                      maxvalue: aWorkTypeList.Maxtm,
+                      code: '#fdde17',
+                    },
+                  ],
+                },
+                dials: {
+                  dial: [
+                    {
+                      value: aWorkTypeList.Reltm,
+                      rearExtension: '0',
+                    },
+                  ],
+                },
+              },
+            }).render();
+          });
+        } else {
+          oChart.setChartData(
+            {
               chart: {
                 //Cosmetics
                 bgColor: 'transparent',
@@ -171,8 +214,10 @@ sap.ui.define(
                 ],
               },
             },
-          }).render();
-        });
+            'json'
+          );
+          oChart.render();
+        }
       },
 
       // 근무시간

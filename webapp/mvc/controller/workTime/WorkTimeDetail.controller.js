@@ -3,7 +3,6 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
@@ -22,7 +21,6 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     Fragment,
-    JSONModel,
     MessageBox,
     Appno,
     AppUtils,
@@ -46,6 +44,7 @@ sap.ui.define(
       initializeModel() {
         return {
           Fixed: true,
+          DelBtn: false,
           FieldLimit: {},
           employees: [],
           DeletedRows: [],
@@ -115,6 +114,7 @@ sap.ui.define(
             });
 
             oDetailModel.setProperty('/Fixed', false);
+            oDetailModel.setProperty('/DelBtn', oTargetData[0].ZappStatAl === '20');
             oDetailModel.setProperty('/ApplyInfo', oTargetData[0]);
             oDetailModel.setProperty('/ApprovalDetails', oTargetData[0]);
           }
@@ -348,8 +348,8 @@ sap.ui.define(
           })
           .each((e) => {
             e.Datum = mDialogData.Datum;
-            e.Beguz = mDialogData.Beguz;
-            e.Enduz = mDialogData.Enduz;
+            e.Beguz = mDialogData.Beguz.replace(':', '');
+            e.Enduz = mDialogData.Enduz.replace(':', '');
             e.Abrst = mDialogData.Abrst;
             e.Ottyp = mDialogData.Ottyp;
             e.Ottyptx = mDialogData.Ottyptx;
@@ -564,8 +564,8 @@ sap.ui.define(
             try {
               const oDetailModel = this.getViewModel();
               const oModel = this.getModel(ServiceNames.WORKTIME);
-
               const [aDetailList] = oDetailModel.getProperty('/detail/list');
+
               await Client.remove(oModel, 'OtWorkApply', { Appno: aDetailList.Appno });
 
               // {삭제}되었습니다.
