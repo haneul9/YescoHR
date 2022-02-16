@@ -348,8 +348,8 @@ sap.ui.define(
           })
           .each((e) => {
             e.Datum = mDialogData.Datum;
-            e.Beguz = mDialogData.Beguz;
-            e.Enduz = mDialogData.Enduz;
+            e.Beguz = mDialogData.Beguz.replace(':', '');
+            e.Enduz = mDialogData.Enduz.replace(':', '');
             e.Abrst = mDialogData.Abrst;
             e.Ottyp = mDialogData.Ottyp;
             e.Ottyptx = mDialogData.Ottyptx;
