@@ -67,7 +67,6 @@ sap.ui.define(
           },
           tab: {
             selectedKey: '',
-            scrollHeight: 400,
             list: [],
             menu: [],
           },
@@ -204,14 +203,6 @@ sap.ui.define(
         }
       },
 
-      calcScrollHeight() {
-        const iAvailScrollHeight = screen.availHeight;
-        const iBottomToolBarHeight = 60;
-        const iContainerOffsetTop = this.byId('employeeTabBar').$().offset().top + 51;
-
-        this.getViewModel().setProperty('/tab/scrollHeight', iAvailScrollHeight - iContainerOffsetTop - iBottomToolBarHeight);
-      },
-
       makeProfileBody() {
         const oViewModel = this.getViewModel();
         const oTabBar = this.byId('employeeTabBar');
@@ -221,7 +212,7 @@ sap.ui.define(
         Object.keys(aSubMenu).forEach((menuKey) => {
           const aSubMenuContents = _.get(aSubMenu, [menuKey, 'contents']);
           const oTabContainer = _.find(aTabItems, (o) => _.isEqual(o.getProperty('key'), menuKey));
-          const oScrollContainer = new ScrollContainer({ height: '{/tab/scrollHeight}px', horizontal: false, vertical: true });
+          const oScrollContainer = new ScrollContainer({ horizontal: false, vertical: true });
           let oWrapperVBox = sap.ui.getCore().byId(`sub${menuKey}`);
 
           if (oWrapperVBox) {
@@ -288,13 +279,6 @@ sap.ui.define(
           oScrollContainer.addContent(oWrapperVBox);
           oTabContainer.addContent(oScrollContainer);
         });
-
-        oTabBar.addEventDelegate(
-          {
-            onAfterRendering: () => this.calcScrollHeight(),
-          },
-          oTabBar
-        );
       },
     });
   }
