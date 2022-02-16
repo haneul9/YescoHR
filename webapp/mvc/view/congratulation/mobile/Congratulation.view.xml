@@ -12,5 +12,6 @@
 				<SegmentedButtonItem text="{i18n>LABEL_00194}" key="12m" />
 				<SegmentedButtonItem text="..." key="0" />
 			</items>
-		</Page>
-	</mvc:View>
+		</SegmentedButton>
+	</Page>
+</mvc:View>
