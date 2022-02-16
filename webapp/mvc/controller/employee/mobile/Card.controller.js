@@ -55,7 +55,6 @@ sap.ui.define(
 
       async initialList({ oViewModel, sPernr, sOrgtx, sOrgeh }) {
         try {
-          const oEmployeeCardList = this.byId('employeeCardList');
           const mSessionData = this.getSessionData();
           const sSearchText = _.isEmpty(sOrgtx) ? sPernr : sOrgtx;
           const sSearchOrgeh = _.isEmpty(sOrgeh) ? _.noop() : sOrgeh;
@@ -67,7 +66,7 @@ sap.ui.define(
             Orgeh: sSearchOrgeh,
           });
 
-          oEmployeeCardList.getBinding('items').filter([new Filter('Stat2', FilterOperator.EQ, '3')]);
+          this.onChangeStat();
 
           oViewModel.setProperty(
             '/results',
@@ -112,7 +111,7 @@ sap.ui.define(
         }
       },
 
-      async onChangeStat() {
+      onChangeStat() {
         const oViewModel = this.getViewModel();
         const oEmployeeCardList = this.byId('employeeCardList');
         const sStat = oViewModel.getProperty('/search/selectedState');
