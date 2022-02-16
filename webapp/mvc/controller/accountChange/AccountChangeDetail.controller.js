@@ -116,15 +116,15 @@ sap.ui.define(
               Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
             });
           } else {
-            const oTargetData = await Client.getEntitySet(oModel, 'BankAccount', {
+            const [oTargetData] = await Client.getEntitySet(oModel, 'BankAccount', {
               Appno: sDataKey,
             });
 
-            oTargetData[0].PayYearMon = `${oTargetData[0].Begym.slice(0, 4)}-${oTargetData[0].Begym.slice(4)}`;
+            oTargetData.PayYearMon = `${oTargetData.Begym.slice(0, 4)}-${oTargetData.Begym.slice(4)}`;
 
-            oDetailModel.setProperty('/FormData', oTargetData[0]);
-            oDetailModel.setProperty('/ApplyInfo', oTargetData[0]);
-            oDetailModel.setProperty('/ApprovalDetails', oTargetData[0]);
+            oDetailModel.setProperty('/FormData', oTargetData);
+            oDetailModel.setProperty('/ApplyInfo', oTargetData);
+            oDetailModel.setProperty('/ApprovalDetails', oTargetData);
           }
 
           this.settingsAttachTable();

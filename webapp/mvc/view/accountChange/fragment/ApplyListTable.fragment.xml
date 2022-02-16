@@ -43,7 +43,10 @@
       <table:Column width="auto" sortProperty="Begym" filterProperty="Begym">
         <Label text="{i18n>LABEL_26006}"/>
         <table:template>
-          <Text text="{Begym}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{
+              path: 'Begym',
+              formatter: '.formatYear'
+          }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="ZreqDate" filterProperty="ZreqDate">

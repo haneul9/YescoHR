@@ -123,6 +123,10 @@ sap.ui.define(
         }
       },
 
+      formatYear(sYearMon) {
+        return !sYearMon ? '' : `${sYearMon.slice(0, 4)}-${sYearMon.slice(4)}`;
+      },
+
       onClick() {
         this.getRouter().navTo('accountChange-detail', { oDataKey: 'N' });
       },
