@@ -1,43 +1,17 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.congratulation.mobile.Congratulation"
 	xmlns="sap.m"
+	xmlns:custom="sap.ui.yesco.control"
 	xmlns:mvc="sap.ui.core.mvc">
-	<Page showHeader="false">
-		<VBox>
-			<Table id="conguTable" items="{/CongList}" itemPress=".onSelectRow">
-				<headerToolbar>
-					<OverflowToolbar>
-						<!-- <ToolbarSpacer/> -->
-						<Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onClick" />
-					</OverflowToolbar>
-				</headerToolbar>
-				<columns>
-					<Column width="50%" />
-					<Column width="auto" />
-				</columns>
-				<items>
-					<ColumnListItem>
-						<cells>
-							<VBox>
-								<Text text="{Conretx}"/>
-							</VBox>
-							<VBox>
-								<Text text="{Famtx}"/>
-								<Text text="{
-									path: 'Conddate',
-									type: 'sap.ui.model.type.Date',
-									formatOptions: {
-										pattern: 'yyyy.MM.dd'
-									}
-								}"/>
-								<ObjectStatus text="{
-									path: 'ZappStxtAl',
-									formatter: '.formatNumber'
-								}" state="Indication04" />
-							</VBox>
-						</cells>
-					</ColumnListItem>
-				</items>
-			</Table>
-		</VBox>
+	<Page enableScrolling="false" busyIndicatorDelay="0" busy="{/busy}" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+		<SegmentedButton width="100%" selectedKey="{/search/dateRange}" selectionChange=".onSearchList" class="sapUiSmallMarginTop">
+			<items>
+				<SegmentedButtonItem text="{i18n>LABEL_00190}" key="1w" />
+				<SegmentedButtonItem text="{i18n>LABEL_00191}" key="1m" />
+				<SegmentedButtonItem text="{i18n>LABEL_00192}" key="3m" />
+				<SegmentedButtonItem text="{i18n>LABEL_00193}" key="6m" />
+				<SegmentedButtonItem text="{i18n>LABEL_00194}" key="12m" />
+				<SegmentedButtonItem text="..." key="0" />
+			</items>
+		</SegmentedButton>
 	</Page>
 </mvc:View>
