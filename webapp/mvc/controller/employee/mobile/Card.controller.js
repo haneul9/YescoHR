@@ -126,7 +126,7 @@ sap.ui.define(
         const sPernr = oViewModel.getProperty(`${sPath}/Pernr`);
 
         if (!sPernr) {
-          MessageBox.error(this.getBundleText('MSG_00035')); // 대상자 사번이 없습니다.
+          MessageBox.alert(this.getBundleText('MSG_00035')); // 대상자 사번이 없습니다.
           return;
         }
 
