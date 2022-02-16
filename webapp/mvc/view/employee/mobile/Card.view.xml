@@ -1,7 +1,8 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.employee.mobile.Card"
   xmlns:mvc="sap.ui.core.mvc"
+  xmlns:custom="sap.ui.yesco.control"
   xmlns="sap.m">
-  <Page showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+  <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
     <SearchField value="{/search/searchText}" placeholder="{i18n>LABEL_00276}" search=".onPressEmployeeSearch" />
     <SegmentedButton width="100%" selectedKey="{/search/selectedState}" selectionChange=".onChangeStat" class="sapUiSmallMarginTop">
       <items>
@@ -10,7 +11,7 @@
         <SegmentedButtonItem text="{i18n>LABEL_00278}" key="0" />
       </items>
     </SegmentedButton>
-    <ScrollContainer id="employeeCardListContainer" horizontal="false" vertical="true">
+    <custom:MobileScrollContainer horizontal="false" vertical="true">
       <List id="employeeCardList" items="{path: '/results'}" class="employee-card-list" busyIndicatorDelay="0" busy="{/busy}">
         <CustomListItem type="Active" press=".onClickEmployeeCard">
           <HBox>
@@ -43,6 +44,6 @@
           </HBox>
         </CustomListItem>
       </List>
-    </ScrollContainer>
+    </custom:MobileScrollContainer>
   </Page>
 </mvc:View>

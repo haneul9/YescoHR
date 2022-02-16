@@ -5,11 +5,11 @@ sap.ui.define(
     'sap/m/Input',
     'sap/m/Label',
     'sap/m/List',
-    'sap/m/ScrollContainer',
     'sap/m/Text',
     'sap/m/Title',
     'sap/m/VBox',
     'sap/ui/layout/cssgrid/CSSGrid',
+    'sap/ui/yesco/control/MobileScrollContainer',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -21,11 +21,11 @@ sap.ui.define(
     Input,
     Label,
     List,
-    ScrollContainer,
     Text,
     Title,
     VBox,
     CSSGrid,
+    MobileScrollContainer,
     AppUtils,
     Client,
     ServiceNames,
@@ -205,14 +205,13 @@ sap.ui.define(
 
       makeProfileBody() {
         const oViewModel = this.getViewModel();
-        const oTabBar = this.byId('employeeTabBar');
         const aTabItems = this.byId('employeeTabBar').getItems();
         const aSubMenu = oViewModel.getProperty('/sub');
 
         Object.keys(aSubMenu).forEach((menuKey) => {
           const aSubMenuContents = _.get(aSubMenu, [menuKey, 'contents']);
           const oTabContainer = _.find(aTabItems, (o) => _.isEqual(o.getProperty('key'), menuKey));
-          const oScrollContainer = new ScrollContainer({ horizontal: false, vertical: true });
+          const oScrollContainer = new MobileScrollContainer({ horizontal: false, vertical: true });
           let oWrapperVBox = sap.ui.getCore().byId(`sub${menuKey}`);
 
           if (oWrapperVBox) {
