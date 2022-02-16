@@ -13,9 +13,9 @@
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
             </VBox>
-            <Label text="{i18n>LABEL_25009}" />
+            <Label text="{= ${/FormData/Appty} !== 'D' ? ${i18n>LABEL_25009} : '' }" />
             <VBox>
-                <ComboBox items="{/AppDept}" width="250px" selectedKey="{/FormData/Payorg}" editable="{/FormData/Fixed}" class="required">
+                <ComboBox items="{/AppDept}" width="250px" selectedKey="{/FormData/Payorg}" visible="{= ${/FormData/Appty} !== 'D' }" editable="{/FormData/Fixed}" class="required">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
             </VBox>
@@ -27,74 +27,74 @@
                     <grid:GridItemLayoutData gridColumn="2 / 5"/>
                 </layoutData>
             </HBox>
-            <Label text="{i18n>LABEL_25005}"/>
-            <VBox>
+            <Label text="{i18n>LABEL_25005}" visible="{= ${/FormData/Appty} !== 'D' }" />
+            <VBox visible="{= ${/FormData/Appty} !== 'D' }">
                 <Input value="{/FormData/Carno}" maxLength="{/FieldLimit/Carno}" editable="{/FormData/Fixed}" class="required"/>
             </VBox>
-            <Label text="{i18n>LABEL_25011}"/>
-            <VBox>
+            <Label text="{i18n>LABEL_25011}" visible="{= ${/FormData/Appty} !== 'D' }" />
+            <VBox visible="{= ${/FormData/Appty} !== 'D' }">
                 <Input value="{/FormData/Carty}" maxLength="{/FieldLimit/Carty}" editable="{/FormData/Fixed}" class="required"/>
             </VBox>
-            <Label text="{i18n>LABEL_25012}"/>
-            <VBox>
+            <Label text="{i18n>LABEL_25012}" visible="{= ${/FormData/Appty} !== 'D' }" />
+            <VBox visible="{= ${/FormData/Appty} !== 'D' }">
                 <Input value="{/FormData/Cc}" maxLength="{/FieldLimit/Cc}" editable="{/FormData/Fixed}" class="required"/>
             </VBox>
-            <Label text="{i18n>LABEL_25013}"/>
-            <VBox>
+            <Label text="{i18n>LABEL_25013}" visible="{= ${/FormData/Appty} !== 'D' }" />
+            <VBox visible="{= ${/FormData/Appty} !== 'D' }">
                 <Input value="{/FormData/Caryr}" maxLength="{/FieldLimit/Caryr}" editable="{/FormData/Fixed}" class="required"/>
             </VBox>
-            <Label text="{i18n>LABEL_25014}"/>
-            <VBox>
+            <Label text="{i18n>LABEL_25014}" visible="{= ${/FormData/Appty} !== 'D' }" />
+            <VBox visible="{= ${/FormData/Appty} !== 'D' }">
                 <custom:DatePicker dateValue="{ path: '/FormData/Cardt', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{/FormData/Fixed}" class="required"/>
             </VBox>
-            <Label text="{i18n>LABEL_25015}"/>
-            <VBox>
+            <Label text="{i18n>LABEL_25015}" visible="{= ${/FormData/Appty} !== 'D' }" />
+            <VBox visible="{= ${/FormData/Appty} !== 'D' }">
                 <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Insu} }" editable="{/FormData/Fixed}" class="required"/>
             </VBox>
-            <VBox>
+            <VBox visible="{= ${/FormData/Appty} !== 'D' }">
                 <layoutData>
                     <grid:GridItemLayoutData gridColumn="1 / 5"/>
                 </layoutData>
             </VBox>
-            <Label text="{i18n>LABEL_25016}"/>
-            <VBox>
+            <Label text="{i18n>LABEL_25016}" visible="{= ${/FormData/Appty} !== 'D' }" />
+            <VBox visible="{= ${/FormData/Appty} !== 'D' }">
                 <Input value="{/FormData/Id}" maxLength="{/FieldLimit/Id}" editable="{/FormData/Fixed}" class="required"/>
             </VBox>
-            <Label text="{i18n>LABEL_25017}"/>
-            <VBox>
+            <Label text="{i18n>LABEL_25017}" visible="{= ${/FormData/Appty} !== 'D' }" />
+            <VBox visible="{= ${/FormData/Appty} !== 'D' }">
                 <ComboBox items="{/LicenseType}" width="250px" selectedKey="{/FormData/Idtype}" editable="{/FormData/Fixed}" class="required">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
             </VBox>
-            <VBox>
+            <VBox visible="{= ${/FormData/Appty} !== 'D' }">
                 <layoutData>
                     <grid:GridItemLayoutData gridColumn="1 / 5"/>
                 </layoutData>
             </VBox>
-            <Label text="{i18n>LABEL_25007}" />
-            <VBox>
+            <Label text="{i18n>LABEL_25007}" visible="{= ${/FormData/Appty} !== 'D' }" />
+            <VBox visible="{= ${/FormData/Appty} !== 'D' }">
                 <ComboBox items="{/PayType}" width="250px" selectedKey="{/FormData/Payty}" change=".onPayType" editable="{/FormData/Fixed}" class="required">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
             </VBox>
-            <Label text="{= ${/FormData/bPayType} ? ${i18n>LABEL_25018} : '' }" />
-            <HBox>
+            <Label text="{= ${/FormData/bPayType} ? ${i18n>LABEL_25018} : '' }" visible="{= ${/FormData/Appty} !== 'D' }" />
+            <HBox visible="{= ${/FormData/Appty} !== 'D' }">
                 <Text text="{/FormData/Ename}" class="sapUiTinyMarginEnd" visible="{/FormData/bPayType}"/>
                 <Text text="{i18n>MSG_25003}" visible="{= ${/FormData/bPayType} &amp;&amp; ${/FormData/Fixed} }"/>
             </HBox>
-            <Label text="{i18n>LABEL_25019}" visible="{/FormData/bPayType}" />
-            <VBox visible="{/FormData/bPayType}">
+            <Label text="{i18n>LABEL_25019}" visible="{= ${/FormData/bPayType} &amp;&amp; ${/FormData/Appty} !== 'D' }" />
+            <VBox visible="{= ${/FormData/bPayType} &amp;&amp; ${/FormData/Appty} !== 'D' }">
                 <ComboBox items="{/BankList}" width="250px" selectedKey="{/FormData/Bankl}" editable="{/FormData/Fixed}" class="required">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
             </VBox>
-            <Label text="{i18n>LABEL_25020}" visible="{/FormData/bPayType}" />
-            <VBox visible="{/FormData/bPayType}">
+            <Label text="{i18n>LABEL_25020}" visible="{= ${/FormData/bPayType} &amp;&amp; ${/FormData/Appty} !== 'D' }" />
+            <VBox visible="{= ${/FormData/bPayType} &amp;&amp; ${/FormData/Appty} !== 'D' }">
                 <Input value="{/FormData/Bankn}" maxLength="{/FieldLimit/Bankn}" editable="{/FormData/Fixed}" class="required"/>
             </VBox>
             <Label text="{i18n>LABEL_00163}" />
             <VBox>
-                <Input value="{/FormData/Zbigo}" editable="{/FormData/Fixed}" />
+                <Input value="{/FormData/Zbigo}" editable="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" />
                 <layoutData>
                     <grid:GridItemLayoutData gridColumn="2 / 5"/>
                 </layoutData>
