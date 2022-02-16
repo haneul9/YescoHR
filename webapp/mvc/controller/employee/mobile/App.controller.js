@@ -39,21 +39,21 @@ sap.ui.define(
         GRID: '6',
       },
       LIST_GRID_TEMPLATE: {
-        HACT: '1fr 2fr',
-        '0006': '1fr 2fr',
-        '0022': '1fr 1fr 1fr',
-        9002: '1fr 2fr',
-        9006: '1fr 1fr 1fr',
-        JOBL: '1fr 2fr',
-        '0183': '1fr 1fr 1fr',
-        '0545': '1fr 2fr',
-        '0023': '1fr 2fr',
-        '0105': '1fr 2fr',
-        INCR: '1fr 2fr',
-        '0021': '1fr 1fr 1fr',
-        EDU1: '1fr 1fr 1fr',
-        9001: '1fr 2fr',
-        PAYS: '1fr 2fr',
+        // HACT: '1fr 2fr', // 발령
+        // '0006': '1fr 2fr', // 주소
+        // 9002: '1fr 2fr', // 어학
+        // JOBL: '1fr 2fr', // 직무이력
+        // '0545': '1fr 2fr', // 징계
+        // '0023': '1fr 2fr', // 사외경력
+        // '0105': '1fr 2fr', // 연락처
+        // INCR: '1fr 2fr', // 사내경력
+        // 9001: '1fr 2fr', // 평가
+        // PAYS: '1fr 2fr', // 급여
+        '0022': '1fr 1fr 1fr', // 학력
+        9006: '1fr 1fr 1fr', // 자격
+        '0183': '1fr 1fr 1fr', // 포상
+        '0021': '1fr 1fr 1fr', // 가족
+        EDU1: '1fr 1fr 1fr', // 교육
       },
 
       initializeModel() {
@@ -179,7 +179,7 @@ sap.ui.define(
                   mSubMenu.data.push(o[sKey]);
                 }
               } else if (mSubMenu.type === this.SUB_TYPE.TABLE) {
-                mSubMenu.gridTemplate = this.LIST_GRID_TEMPLATE[o.Menuc];
+                mSubMenu.gridTemplate = _.get(this.LIST_GRID_TEMPLATE, o.Menuc, mSubMenu.gridTemplate);
                 mSubMenu.data.push({
                   contents: _.chain(o)
                     .pickBy((v, p) => _.startsWith(p, 'Value') && !_.isEmpty(v))
