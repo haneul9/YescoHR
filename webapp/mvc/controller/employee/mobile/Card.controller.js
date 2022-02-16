@@ -50,38 +50,36 @@ sap.ui.define(
           oViewModel.setProperty('/search/searchText', sOrgtx);
         }
 
-        await this.initialList({ oViewModel, sPernr, sOrgtx, sOrgeh });
-        this.calcScrollHeight();
-      },
-
-      calcScrollHeight() {
-        const iAvailScrollHeight = screen.availHeight;
-        const iBottomToolBarHeight = 60;
-        const iContainerOffsetTop = this.byId('employeeCardListContainer').$().offset().top;
-
-        this.getViewModel().setProperty('/scrollHeight', iAvailScrollHeight - iContainerOffsetTop - iBottomToolBarHeight);
+        this.initialList({ oViewModel, sPernr, sOrgtx, sOrgeh });
       },
 
       async initialList({ oViewModel, sPernr, sOrgtx, sOrgeh }) {
-        const oEmployeeCardList = this.byId('employeeCardList');
-        const mSessionData = this.getSessionData();
-        const sSearchText = _.isEmpty(sOrgtx) ? sPernr : sOrgtx;
-        const sSearchOrgeh = _.isEmpty(sOrgeh) ? _.noop() : sOrgeh;
-        const aSearchResults = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'EmpSearchResult', {
-          Persa: mSessionData.Werks,
-          Zflag: 'X',
-          Actda: moment().hours(9).toDate(),
-          Ename: sSearchText,
-          Orgeh: sSearchOrgeh,
-        });
+        try {
+          const oEmployeeCardList = this.byId('employeeCardList');
+          const mSessionData = this.getSessionData();
+          const sSearchText = _.isEmpty(sOrgtx) ? sPernr : sOrgtx;
+          const sSearchOrgeh = _.isEmpty(sOrgeh) ? _.noop() : sOrgeh;
+          const aSearchResults = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'EmpSearchResult', {
+            Persa: mSessionData.Werks,
+            Zflag: 'X',
+            Actda: moment().hours(9).toDate(),
+            Ename: sSearchText,
+            Orgeh: sSearchOrgeh,
+          });
 
-        oEmployeeCardList.getBinding('items').filter([new Filter('Stat2', FilterOperator.EQ, '3')]);
+          oEmployeeCardList.getBinding('items').filter([new Filter('Stat2', FilterOperator.EQ, '3')]);
 
-        oViewModel.setProperty(
-          '/results',
-          _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? 'asset/image/avatar-unknown.svg' : o.Photo }))
-        );
-        oViewModel.setProperty('/busy', false);
+          oViewModel.setProperty(
+            '/results',
+            _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? 'asset/image/avatar-unknown.svg' : o.Photo }))
+          );
+        } catch (oError) {
+          this.debug('Controller > Mobile-Employee-Card > initialList Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       async onPressEmployeeSearch(oEvent) {
