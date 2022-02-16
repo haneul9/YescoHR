@@ -145,6 +145,23 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p08 .portlet-todo-list .menu-link-text {margin-bottom:-6px; font-weight:700; color:#555 !important}
 .portlet-p09 img {vertical-align:sub}
 .portlet-p09 .sapMCLI .sapMText {vertical-align:middle}
+.portlet-p10 [data-appraisal-status-color] {margin-right:0px; border:1px solid; border-radius:3px; font-size:0.6rem; min-width:40px; line-height:16px; height:17px; text-align:center !important}
+.portlet-p10 [data-appraisal-status-color="1"] {color:#1bae49}
+.portlet-p10 [data-appraisal-status-color="2"] {color:#df9f0f}
+.portlet-p10 [data-appraisal-status-color="3"] {color:#767676}
+.portlet-p10 [data-appraisal-status-color="4"] {color:#9655f0}
+.portlet-p10 [data-appraisal-chart-color="1"] {color:#f5a369}
+.portlet-p10 [data-appraisal-chart-color="2"] {color:#faca74}
+.portlet-p10 [data-appraisal-chart-color="3"] {color:#b7c983}
+.portlet-p10 [data-appraisal-chart-color="4"] {color:#5ac6b2}
+.portlet-p10 [data-appraisal-chart-color="5"] {color:#5aa7c6}
+.portlet-p10 [data-appraisal-chart-color="6"] {color:#9a8db7}
+.sapUiSizeCompact .portlet-p11 .sapMBtnInner {font-size:14px}
+.sapUiSizeCompact .portlet-p11 .sapMBtnInner.sapMBtnText {height:30px; border-radius:4px}
+.sapUiSizeCompact .portlet-p11 .sapMBtnContent {line-height:30px}
+.portlet-p11 .portlet-p11-objectstatus {margin-top:3px}
+.portlet-p11 .portlet-p11-objectstatus .sapMObjStatusText {font-size:20px}
+.portlet-p11 .portlet-p11-text.sapMText {margin-top:-3px; font-size:12px}
 
 .sapMLnkSubtle {color:#222}
 

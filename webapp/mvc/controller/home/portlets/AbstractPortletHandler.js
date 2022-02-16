@@ -1,7 +1,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/m/HBox',
     'sap/ui/core/Fragment',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
@@ -12,7 +11,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    HBox,
     Fragment,
     JSONModel,
     AppUtils,

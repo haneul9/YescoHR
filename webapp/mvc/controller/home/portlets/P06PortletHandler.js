@@ -23,7 +23,7 @@ sap.ui.define(
      * 근무 현황 Portlet
      */
     return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.P06PortletHandler', {
-      sChartId: 'portlet-absence-chart',
+      sChartId: 'portlet-p06-chart',
 
       async addPortlet() {
         const oController = this.getController();
@@ -42,7 +42,7 @@ sap.ui.define(
         this.setPortletBox(oPortletBox);
 
         // 다른 화면에 갔다 되돌아오는 경우 id 중복 오류가 발생하므로 체크함
-        if (!FusionCharts('portlet-absence-chart')) {
+        if (!FusionCharts(this.sChartId)) {
           this.buildChart();
         }
       },
@@ -52,7 +52,7 @@ sap.ui.define(
           new FusionCharts({
             id: this.sChartId,
             type: 'cylinder',
-            renderAt: 'portlet-absence-chart-container',
+            renderAt: `${this.sChartId}-container`,
             width: '110px',
             height: '100%',
             dataFormat: 'json',
@@ -189,21 +189,6 @@ sap.ui.define(
             })
             .setModel(this.getPortletModel());
         }
-      },
-
-      async getPortletBox(oPortletModel) {
-        if (!this.oPortletBox) {
-          this.oPortletBox = await Fragment.load({
-            name: 'sap.ui.yesco.mvc.view.home.fragment.P06PortletBox',
-            controller: this,
-          });
-
-          oPortletModel.setProperty('/selectedDate', new Date());
-
-          this.oPortletBox.setModel(oPortletModel).bindElement('/');
-        }
-
-        return this.oPortletBox;
       },
 
       onAfterDragAndDrop() {

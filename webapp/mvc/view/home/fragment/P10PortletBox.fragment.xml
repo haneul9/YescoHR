@@ -1,0 +1,63 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:core="sap.ui.core">
+  <VBox class="portlet portlet-box portlet-p10" tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
+    <customData>
+      <core:CustomData key="portlet-switchable" value="{switchable}" />
+    </customData>
+    <layoutData>
+      <f:GridContainerItemLayoutData rows="{height}" columns="{width}" />
+    </layoutData>
+    <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
+      <Title level="H2" text="{title}" visible="{= !${hideTitle} }" />
+      <Text text="{description}" class="desc-txt" />
+      <Text text="">
+        <layoutData>
+          <FlexItemData growFactor="1" />
+        </layoutData>
+      </Text>
+      <Button visible="{switchable}" icon="sap-icon://decline" type="Transparent" class="icon-button portlet-close-icon" press=".onPressClose" />
+      <Button visible="{hasLink}" icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" press=".onPressLink" />
+    </HBox>
+    <HBox class="portlet-body">
+      <FlexBox width="37%">
+        <core:HTML content='&lt;div id="portlet-p10-chart-container"&gt;&lt;/div&gt;' />
+      </FlexBox>
+      <ScrollContainer>
+        <layoutData>
+          <FlexItemData growFactor="1" maxWidth="100%" />
+        </layoutData>
+        <HBox width="100%" class="no-data" visible="{= ${listCount} === 0 }">
+          <Text text="{i18n>MSG_00001}" />
+        </HBox>
+        <VBox width="100%" height="100%" items="{list}" visible="{= ${listCount} &gt; 0 }" justifyContent="SpaceBetween">
+          <HBox width="100%" alignItems="Center">
+            <core:Icon src="sap-icon://color-fill" width="16px" height="16px" class="pr-5-px">
+              <core:customData>
+                <core:CustomData key="appraisal-chart-color" value="{Color}" writeToDom="true" />
+              </core:customData>
+            </core:Icon>
+            <Text text="{Itext}" tooltip="{Itext}" wrapping="false">
+              <layoutData>
+                <FlexItemData growFactor="1" />
+              </layoutData>
+            </Text>
+            <Text text="{Perce}%" wrapping="false">
+              <layoutData>
+                <FlexItemData baseSize="10%" />
+              </layoutData>
+            </Text>
+            <Text text="{Atext}" wrapping="false">
+              <layoutData>
+                <FlexItemData baseSize="10%" />
+              </layoutData>
+              <customData>
+                <core:CustomData key="appraisal-status-color" value="{Acode}" writeToDom="true" />
+              </customData>
+            </Text>
+          </HBox>
+        </VBox>
+      </ScrollContainer>
+    </HBox>
+  </VBox>
+</core:FragmentDefinition>

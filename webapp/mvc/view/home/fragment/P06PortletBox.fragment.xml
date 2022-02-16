@@ -30,7 +30,7 @@
           <layoutData>
             <grid:GridItemLayoutData gridRow="span 2" />
           </layoutData>
-          <core:HTML content='&lt;div id="portlet-absence-chart-container"&gt;&lt;/div&gt;' />
+          <core:HTML content='&lt;div id="portlet-p06-chart-container"&gt;&lt;/div&gt;' />
         </FlexBox>
         <VBox justifyContent="Center" alignItems="Center">
           <Label design="Bold" text="{i18n>LABEL_01121}" />
