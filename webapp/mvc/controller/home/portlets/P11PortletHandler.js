@@ -21,6 +21,7 @@ sap.ui.define(
      */
     return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.P11PortletHandler', {
       sChartId: 'portlet-p11-chart',
+      oChartPromise: null,
 
       async addPortlet() {
         await AbstractPortletHandler.prototype.addPortlet.call(this);
@@ -32,22 +33,27 @@ sap.ui.define(
       },
 
       buildChart() {
-        FusionCharts.ready(() => {
-          new FusionCharts({
-            id: this.sChartId,
-            type: 'angulargauge',
-            renderAt: `${this.sChartId}-container`,
-            width: '100%',
-            height: 154,
-            dataFormat: 'json',
-            dataSource: {
-              chart: this.getChartOption(),
-              colorrange: this.getChartColorrangeOption(40, 52),
-              dials: {
-                dial: [this.getChartDialOption({ Reltm: 0 })],
+        this.oChartPromise = new Promise((resolve) => {
+          FusionCharts.ready(() => {
+            new FusionCharts({
+              id: this.sChartId,
+              type: 'angulargauge',
+              renderAt: `${this.sChartId}-container`,
+              width: '100%',
+              height: 154,
+              dataFormat: 'json',
+              dataSource: {
+                chart: this.getChartOption(),
+                colorrange: this.getChartColorrangeOption(40, 52),
+                dials: {
+                  dial: [this.getChartDialOption({ Reltm: 0 })],
+                },
               },
-            },
-          }).render();
+              events: {
+                rendered: resolve,
+              },
+            }).render();
+          });
         });
       },
 
@@ -61,7 +67,9 @@ sap.ui.define(
       },
 
       transformContentData([mPortletData = {}]) {
-        this.setChartData(mPortletData);
+        this.oChartPromise.then(() => {
+          this.setChartData(mPortletData);
+        });
 
         return mPortletData;
       },
@@ -78,7 +86,9 @@ sap.ui.define(
           },
           'json'
         );
-        oChart.render();
+        setTimeout(() => {
+          oChart.render();
+        }, 200);
       },
 
       getChartOption() {

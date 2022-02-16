@@ -24,6 +24,7 @@ sap.ui.define(
      */
     return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.P06PortletHandler', {
       sChartId: 'portlet-p06-chart',
+      oChartPromise: null,
 
       async addPortlet() {
         const oController = this.getController();
@@ -48,19 +49,24 @@ sap.ui.define(
       },
 
       buildChart() {
-        FusionCharts.ready(() => {
-          new FusionCharts({
-            id: this.sChartId,
-            type: 'cylinder',
-            renderAt: `${this.sChartId}-container`,
-            width: '110px',
-            height: '100%',
-            dataFormat: 'json',
-            dataSource: {
-              chart: this.getChartOption(0),
-              value: 0,
-            },
-          }).render();
+        this.oChartPromise = new Promise((resolve) => {
+          FusionCharts.ready(() => {
+            new FusionCharts({
+              id: this.sChartId,
+              type: 'cylinder',
+              renderAt: `${this.sChartId}-container`,
+              width: '110px',
+              height: '100%',
+              dataFormat: 'json',
+              dataSource: {
+                chart: this.getChartOption(0),
+                value: 0,
+              },
+              events: {
+                rendered: resolve,
+              },
+            }).render();
+          });
         });
       },
 
@@ -112,8 +118,10 @@ sap.ui.define(
           oPortletModel.setProperty(`/table${sTableKey}/list`, []);
         });
 
-        const fValue = Number(mCountData.Cnt07);
-        this.setChartData(fValue);
+        this.oChartPromise.then(() => {
+          const fValue = Number(mCountData.Cnt07);
+          this.setChartData(fValue);
+        });
 
         return mPortletContentData;
       },
@@ -144,7 +152,7 @@ sap.ui.define(
           animation: 1,
           refreshInstantly: 1,
           theme: 'ocean',
-          cylFillColor: '#30c4ee', // 3eb4dd
+          cylFillColor: '#30c4ee',
           cylYScale: 10,
         };
       },

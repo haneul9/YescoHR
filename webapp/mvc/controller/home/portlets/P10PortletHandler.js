@@ -23,6 +23,7 @@ sap.ui.define(
      */
     return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.P10PortletHandler', {
       sChartId: 'portlet-p10-chart',
+      oChartPromise: null,
 
       async addPortlet() {
         const oPortletModel = this.getPortletModel();
@@ -44,36 +45,40 @@ sap.ui.define(
       },
 
       buildChart() {
-        FusionCharts.ready(() => {
-          new FusionCharts({
-            id: this.sChartId,
-            type: 'pie2d',
-            renderAt: `${this.sChartId}-container`,
-            width: '100%',
-            height: '100%',
-            dataFormat: 'json',
-            dataSource: {
-              chart: this.getChartOption(),
-              data: [
-                // {
-                //   label: AppUtils.getBundleText('MSG_00001'), // No data found.
-                //   value: 100,
-                // },
-              ],
-            },
-          }).render();
+        this.oChartPromise = new Promise((resolve) => {
+          FusionCharts.ready(() => {
+            new FusionCharts({
+              id: this.sChartId,
+              type: 'pie2d',
+              renderAt: `${this.sChartId}-container`,
+              width: '100%',
+              height: '100%',
+              dataFormat: 'json',
+              dataSource: {
+                chart: this.getChartOption(0),
+                data: [
+                  {
+                    label: AppUtils.getBundleText('MSG_00001'), // No data found.
+                    value: 0,
+                    color: 'transparent',
+                  },
+                ],
+              },
+              events: {
+                rendered: resolve,
+              },
+            }).render();
+          });
         });
       },
 
       async readContentData() {
-        const sSelectedYearMonth = ''; // this.getController().byId('selectedYear').getValue() || moment().format('YYYY');
-
-        const oModel = this.getController().getModel(ServiceNames.COMMON);
-        const mFilters = {
-          Zyymm: sSelectedYearMonth.replace(/[^\d]/g, ''),
+        const oModel = this.getController().getModel(ServiceNames.WORKTIME);
+        const mPayload = {
+          Menid: AppUtils.getAppComponent().getMenuModel().getMenid('workTime'),
         };
 
-        return Client.getEntitySet(oModel, 'PortletAnniversary', mFilters);
+        return Client.getEntitySet(oModel, 'WorkingTime', mPayload);
       },
 
       transformContentData(aPortletContentData = []) {
@@ -125,6 +130,11 @@ sap.ui.define(
           }
         );
         aChartData.reverse();
+
+        this.oChartPromise.then(() => {
+          this.setChartData(aChartData);
+        });
+
         aList.push(
           {
             Color: '1',
@@ -177,8 +187,6 @@ sap.ui.define(
           }
         );
 
-        this.setChartData(aChartData);
-
         return {
           description: '목표수립 1차 평가 합의중',
           list: aList,
@@ -198,8 +206,9 @@ sap.ui.define(
         oChart.render();
       },
 
-      getChartOption() {
+      getChartOption(iAnimateDuration = 1000) {
         return {
+          animateDuration: iAnimateDuration,
           animateClockwise: 1,
           startingAngle: 90,
           showLegend: 0,
