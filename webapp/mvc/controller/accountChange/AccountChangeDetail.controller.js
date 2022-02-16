@@ -222,10 +222,10 @@ sap.ui.define(
         }
 
         // 첨부파일
-        // if (!AttachFileAction.getFileCount.call(this)) {
-        //   MessageBox.alert(this.getBundleText('MSG_00046'));
-        //   return true;
-        // }
+        if (sType === 'C' && !AttachFileAction.getFileCount.call(this)) {
+          MessageBox.alert(this.getBundleText('MSG_00046'));
+          return true;
+        }
 
         return false;
       },
