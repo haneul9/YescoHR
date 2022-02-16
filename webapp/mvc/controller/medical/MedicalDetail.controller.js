@@ -1093,7 +1093,6 @@ sap.ui.define(
           this.byId('DetailHisDialog').close();
         } catch (oError) {
           AppUtils.handleError(oError);
-          oDetailModel.setProperty('/DialogData/Appno2', '');
           oDetailModel.setProperty('/DialogData/isNew', true);
         } finally {
           AppUtils.setAppBusy(false, this);
@@ -1130,14 +1129,13 @@ sap.ui.define(
 
           oDetailModel.setProperty('/HisList', aDetail);
 
-          await this.checkedDialogData();
-
           aHisList.forEach((e, i) => {
             if (mDialogData.Seqnr === e.Seqnr) {
               oDetailModel.setProperty(`/HisList/${i}`, mDialogData);
             }
           });
 
+          await this.checkedDialogData();
           await AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.getApprovalType(), this.DIALOG_FILE_ID);
 
           const oDialogModel = this.getViewModel(this.DIALOG_FILE_ID);
@@ -1157,7 +1155,6 @@ sap.ui.define(
           this.byId('DetailHisDialog').close();
         } catch (oError) {
           AppUtils.handleError(oError);
-          oDetailModel.setProperty('/DialogData/Appno2', '');
         } finally {
           AppUtils.setAppBusy(false, this);
         }
