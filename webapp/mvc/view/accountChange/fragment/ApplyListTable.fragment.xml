@@ -22,13 +22,13 @@
           </Text>
         </table:template>
       </table:Column>
-      <table:Column width="150px" sortProperty="Accttx" filterProperty="Accttx">
+      <table:Column width="auto" sortProperty="Accttx" filterProperty="Accttx">
         <Label text="{i18n>LABEL_26005}"/>
         <table:template>
           <Text text="{Accttx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="150px" sortProperty="Banka" filterProperty="Banka">
+      <table:Column width="auto" sortProperty="Banka" filterProperty="Banka">
         <Label text="{i18n>LABEL_26003}"/>
         <table:template>
           <Text text="{Banka}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
@@ -40,13 +40,13 @@
           <Text text="{BanknBef}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="200px" sortProperty="Begym" filterProperty="Begym">
+      <table:Column width="auto" sortProperty="Begym" filterProperty="Begym">
         <Label text="{i18n>LABEL_26006}"/>
         <table:template>
           <Text text="{Begym}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="200px" sortProperty="ZreqDate" filterProperty="ZreqDate">
+      <table:Column width="auto" sortProperty="ZreqDate" filterProperty="ZreqDate">
         <Label text="{i18n>LABEL_00266}"/>
         <table:template>
           <Text text="{
@@ -58,7 +58,7 @@
           }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="200px" sortProperty="ZappDate" filterProperty="ZappDate">
+      <table:Column width="auto" sortProperty="ZappDate" filterProperty="ZappDate">
         <Label text="{i18n>LABEL_05003}"/>
         <table:template>
           <Text text="{
