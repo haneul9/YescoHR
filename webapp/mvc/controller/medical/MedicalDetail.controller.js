@@ -1308,7 +1308,8 @@ sap.ui.define(
           oDetailModel.setProperty('/DialogData/isNew', false);
         }
 
-        const iYear = parseInt(oDetailModel.getProperty('/sYear'));
+        const dBegda = oDetailModel.getProperty('/DialogData/Begda');
+        const iYear = dBegda ? moment(dBegda).year() : parseInt(oDetailModel.getProperty('/sYear'));
 
         oDetailModel.setProperty('/DialogData/minDate', new Date(iYear, 0, 1));
         oDetailModel.setProperty('/DialogData/maxDate', new Date());
