@@ -204,6 +204,15 @@ sap.ui.define(
        * @param {object} oEvent
        */
       async handleMenuLink(oEvent) {
+        const sHref = oEvent.getSource().getProperty('href');
+        if (/^https?:/.test(sHref) || /^javascript:/.test(sHref)) {
+          setTimeout(() => {
+            this.toggleSelectedMenuStyle(false);
+            this.closeMenuLayer(true);
+          });
+          return;
+        }
+
         oEvent.preventDefault();
 
         setTimeout(() => {
