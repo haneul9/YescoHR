@@ -118,10 +118,14 @@ sap.ui.define(
           oPortletModel.setProperty(`/table${sTableKey}/list`, []);
         });
 
-        this.oChartPromise.then(() => {
-          const fValue = Number(mCountData.Cnt07);
-          this.setChartData(fValue);
-        });
+        const fValue = Number(mCountData.Cnt07);
+        if (this.oChartPromise) {
+          this.oChartPromise.then(() => {
+            this.setChartData(fValue);
+          });
+        } else {
+          this.setChartData(fValue); // 다른 메뉴를 갔다가 되돌아오는 경우
+        }
 
         return mPortletContentData;
       },

@@ -60,18 +60,33 @@ sap.ui.define(
       async readContentData() {
         const oModel = this.getController().getModel(ServiceNames.WORKTIME);
         const mPayload = {
-          Menid: AppUtils.getAppComponent().getMenuModel().getMenid('workTime'),
+          Menid: this.getMenid('workTime'),
         };
 
         return Client.getEntitySet(oModel, 'WorkingTime', mPayload);
       },
 
       transformContentData([mPortletData = {}]) {
-        this.oChartPromise.then(() => {
-          this.setChartData(mPortletData);
-        });
+        if (this.oChartPromise) {
+          this.oChartPromise.then(() => {
+            this.setChartData(mPortletData);
+          });
+        } else {
+          this.setChartData(mPortletData); // 다른 메뉴를 갔다가 되돌아오는 경우
+        }
+
+        mPortletData.ButtonText1 = this.getMenuName(this.getMenid('attendance'));
+        mPortletData.ButtonText2 = this.getMenuName(this.getMenid('workTime'));
 
         return mPortletData;
+      },
+
+      getMenid(sMenuUrl) {
+        return AppUtils.getAppComponent().getMenuModel().getMenid(sMenuUrl);
+      },
+
+      getMenuName(sMenid) {
+        return AppUtils.getAppComponent().getMenuModel().getProperties(sMenid).Mname;
       },
 
       setChartData(mPortletData) {
@@ -99,10 +114,12 @@ sap.ui.define(
           gaugeOriginY: 110,
           gaugeOuterRadius: 75,
           gaugeInnerRadius: 53,
+          majorTMNumber: 13,
           majorTMColor: '#333',
           majorTMHeight: -2.5,
           majorTMThickness: 1,
           tickValueDistance: 5,
+          tickValueStep: 10,
           showPlotBorder: 0,
           showGaugeBorder: 0,
           showPivotBorder: 0,
@@ -144,11 +161,13 @@ sap.ui.define(
       },
 
       onPressButton1() {
-        this.navTo('attendance-detail', { type: 'A' });
+        // this.navTo('attendance-detail', { type: 'A' });
+        this.navTo('attendance');
       },
 
       onPressButton2() {
-        this.navTo('workTime-detail', { oDataKey: 'N' });
+        // this.navTo('workTime-detail', { oDataKey: 'N' });
+        this.navTo('workTime');
       },
     });
   }

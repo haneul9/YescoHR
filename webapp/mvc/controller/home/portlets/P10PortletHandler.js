@@ -131,9 +131,13 @@ sap.ui.define(
         );
         aChartData.reverse();
 
-        this.oChartPromise.then(() => {
-          this.setChartData(aChartData);
-        });
+        if (this.oChartPromise) {
+          this.oChartPromise.then(() => {
+            this.setChartData(aChartData);
+          });
+        } else {
+          this.setChartData(aChartData); // 다른 메뉴를 갔다가 되돌아오는 경우
+        }
 
         aList.push(
           {
