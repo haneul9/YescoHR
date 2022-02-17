@@ -12,10 +12,10 @@
         <layoutData>
           <FlexItemData growFactor="1" />
         </layoutData>
-        <Label text="{i18n>LABEL_01161}"/>
+        <Label text="{i18n>LABEL_01161}" />
         <ObjectStatus text="{Timtx}" state="Indication05" class="portlet-p11-objectstatus" />
         <Text text="{Wktim}" class="portlet-p11-text" />
-        <Label text="{i18n>LABEL_01162}"/>
+        <Label text="{i18n>LABEL_01162}" class="mt-15-px" />
         <ObjectStatus text="{Reltm}" state="Indication05" class="portlet-p11-objectstatus" />
         <Text text="{Wkrul}" class="portlet-p11-text" />
       </VBox>

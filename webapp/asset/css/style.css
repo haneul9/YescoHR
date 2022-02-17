@@ -159,9 +159,9 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .sapUiSizeCompact .portlet-p11 .sapMBtnInner {font-size:14px}
 .sapUiSizeCompact .portlet-p11 .sapMBtnInner.sapMBtnText {height:30px; border-radius:4px}
 .sapUiSizeCompact .portlet-p11 .sapMBtnContent {line-height:30px}
-.portlet-p11 .portlet-p11-objectstatus {margin-top:3px}
+.portlet-p11 .portlet-p11-objectstatus {margin-top:5px}
 .portlet-p11 .portlet-p11-objectstatus .sapMObjStatusText {font-size:20px}
-.portlet-p11 .portlet-p11-text.sapMText {margin-top:-3px; font-size:12px}
+.portlet-p11 .portlet-p11-text.sapMText {vertical-align:top; font-size:12px}
 
 .sapMLnkSubtle {color:#222}
 
