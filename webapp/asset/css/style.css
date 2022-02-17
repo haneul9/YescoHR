@@ -1387,6 +1387,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .sapMPanelExpandableIconExpanded {transform:translateY(0%) rotate(-90deg)}
 
 /* KPI */
+.textPoint {color: #dc3545;}
 .cascading-type-list .sapMImg {margin-left:22px; margin-right:5px; width:20px; height:20px}
 .sapFGridList.part-cascading-list .sapMLIB:not(.sapMGHLI) {padding:19px}
 .sapFGridList.sapFGridList.part-cascading-list .sapFGLIWrapper .sapMLIBContent {margin:0px}

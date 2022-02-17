@@ -8,7 +8,10 @@
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.mssEvalKpi.fragment.tabDetail.CascadingForm" type="XML" />
         <VBox class="vCardBox">
             <HBox justifyContent="SpaceBetween" class="table-toolbar">
-                <Title level="H4" text="{i18n>LABEL_15021}" />
+                <HBox class="title">
+                    <Title level="H4" text="{i18n>LABEL_15021}" />
+                    <Text text="{i18n>MSG_15005}" class="desc-txt"/>
+                </HBox>
                 <HBox class="cascading-type-list">
                     <Image src="asset/image/icon_cascading_type01.png"/>
                     <Text text="{i18n>LABEL_15014}" textAlign="Center" width="100%"/>
