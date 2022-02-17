@@ -1606,9 +1606,10 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 
 .portlet-vacation-summary .vacation-indicator {height:40px}
 .portlet-vacation-summary .vacation-indicator div {height:40px; border-radius:20px; line-height:40px; font-size:20px; font-weight:700; text-align:right}
-.portlet-vacation-summary .vacation-indicator .vacation-indicator-gauge .vacation-indicator-remain {z-index:2; color:transparent; background-color:#E7EBEE}
-.portlet-vacation-summary .vacation-indicator .vacation-indicator-gauge .vacation-indicator-used {z-index:3; color:transparent; background-color:#A0C7EC}
-
+.portlet-vacation-summary .vacation-indicator .vacation-indicator-gauge .vacation-indicator-remain {z-index:2; color:transparent; background-color:#e7ebee}
+.portlet-vacation-summary .vacation-indicator .vacation-indicator-gauge .vacation-indicator-used {z-index:3; color:transparent; background-color:#a0c7ec}
+.portlet-vacation-summary .vacation-indicator.vacation-indicator-middle .vacation-indicator-text > div {padding:0 1rem}
+.portlet-vacation-summary .vacation-indicator.vacation-indicator-middle .vacation-indicator-text > div.vacation-indicator-remain {color:#000}
 
 .portlet.team-member-list .sapMImg {width:30px; height:30px; border-radius:50%}
 
