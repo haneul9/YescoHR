@@ -11,7 +11,7 @@
             <HBox justifyContent="SpaceBetween" class="table-toolbar">
                 <HBox class="title">
                     <Title level="H4" text="{i18n>LABEL_15004} {i18n>LABEL_15018}" />
-                    <Text text="위 KPI 목록을 끌어 놓으세요." class="desc-txt"/>
+                    <Text text="{i18n>MSG_15005}" class="desc-txt"/>
                 </HBox>
                 <HBox class="cascading-type-list">
                     <Image src="asset/image/icon_cascading_type01.png"/>

@@ -93,6 +93,10 @@ sap.ui.define(
         }
       },
 
+      formatText(sText = '') {
+        return sText ? ` ${this.getBundleText('MSG_15004')} ` : '';
+      },
+
       onClick() {
         this.getRouter().navTo('clubJoin-detail', { oDataKey: 'N' });
       },
@@ -735,7 +739,7 @@ sap.ui.define(
           aFilterList = _.chain(aList)
             .groupBy('Orgtx')
             .map((v, p) => ({ Label: p, Orgeh: v[0].Orgeh, TmpGrid: !!v[0].Ztext || !!v[0].Stext ? v : [] }))
-            .forEach((o) => o.TmpGrid.unshift({ Stext: sTempMessage }))
+            .forEach((o) => o.TmpGrid.unshift({ Stext: sTempMessage, Orgeh: o.Orgeh }))
             .value();
         }
 
