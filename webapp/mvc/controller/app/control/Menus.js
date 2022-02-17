@@ -205,7 +205,7 @@ sap.ui.define(
        */
       async handleMenuLink(oEvent) {
         const sHref = oEvent.getSource().getProperty('href');
-        if (/^https?:/.test(sHref) || /^javascript:/.test(sHref)) {
+        if (/^https?:/.test(sHref) || (sHref !== 'javascript:;' && /^javascript:/.test(sHref))) {
           setTimeout(() => {
             this.toggleSelectedMenuStyle(false);
             this.closeMenuLayer(true);
