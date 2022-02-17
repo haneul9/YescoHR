@@ -24,6 +24,7 @@ sap.ui.define(
     'sap/ui/yesco/mvc/controller/home/portlets/P09PortletHandler',
     'sap/ui/yesco/mvc/controller/home/portlets/P10PortletHandler',
     'sap/ui/yesco/mvc/controller/home/portlets/P11PortletHandler',
+    'sap/ui/yesco/mvc/controller/home/portlets/P12PortletHandler',
   ],
   (
     // prettier 방지용 주석
@@ -49,7 +50,8 @@ sap.ui.define(
     P08PortletHandler,
     P09PortletHandler,
     P10PortletHandler,
-    P11PortletHandler
+    P11PortletHandler,
+    P12PortletHandler
   ) => {
     'use strict';
 
@@ -77,6 +79,7 @@ sap.ui.define(
         P09: 'P09',
         P10: 'P10',
         P11: 'P11',
+        P12: 'P12',
       },
       mPortletHandlers: {
         // 임원용
@@ -101,6 +104,7 @@ sap.ui.define(
         P09: P09PortletHandler,
         P10: P10PortletHandler,
         P11: P11PortletHandler,
+        P12: P12PortletHandler,
       },
 
       EmployeeSearch: EmployeeSearch,

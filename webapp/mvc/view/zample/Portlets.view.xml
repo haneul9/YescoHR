@@ -70,13 +70,13 @@
               <f:GridContainerItemLayoutData minRows="1"/>
             </layoutData>
             <TileContent >
-              <VBox class="vacation-summary">
+              <VBox class="portlet-vacation-summary">
                 <VBox width="100%">
-                  <Label text="연차 : 발생 15" />
+                  <Label text="연차 : 발생 15" class="mb-10-px" />
                   <custom:VacationIndicator width="100%" total="15" used="5" showTotal="{/show1}" />
                 </VBox>
-                <VBox width="100%">
-                  <Label text="하계휴가 : 발생 15" />
+                <VBox width="100%" class="mt-30-px">
+                  <Label text="하계휴가 : 발생 15" class="mb-10-px" />
                   <custom:VacationIndicator width="100%" total="5" used="2" showTotal="{/show1}" />
                 </VBox>
               </VBox>

@@ -209,6 +209,7 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 
 /* LAYOUT */
 .desc-txt {background:linear-gradient(transparent 60%, #a8ffbe 60%) no-repeat; margin-left:10px}
+.desc-txt2 {background:linear-gradient(transparent 60%, #d0ecff 60%) no-repeat; margin-left:10px}
 /* .sapMHBox > div {margin-right:1rem !important} */
 .worklist .sapMHBox > div {margin-right:1rem !important}
 
@@ -1602,13 +1603,10 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .portlet .sapMGTSubHdrTxt .sapMText {font-size:14px; background:linear-gradient(transparent 70%, #a8ffbe 60%) no-repeat}
 .portlet.type-b .sapMGTSubHdrTxt .sapMText {font-size:11px; background:none}
 
-.vacation-summary .sapMVBox {margin-bottom:30px}
-.vacation-summary .sapMVBox:last-child {margin-bottom:0px}
-.vacation-summary .sapMLabel {margin-bottom:10px}
-.vacation-summary .vacation-indicator {height:40px}
-.vacation-summary .vacation-indicator div {height:40px; border-radius:20px; line-height:40px; font-size:20px; font-weight:700; text-align:right}
-.vacation-summary .vacation-indicator .vacation-indicator-gauge .vacation-indicator-remain {z-index:2; color:transparent; background-color:#E7EBEE}
-.vacation-summary .vacation-indicator .vacation-indicator-gauge .vacation-indicator-used {z-index:3; color:transparent; background-color:#A0C7EC}
+.portlet-vacation-summary .vacation-indicator {height:40px}
+.portlet-vacation-summary .vacation-indicator div {height:40px; border-radius:20px; line-height:40px; font-size:20px; font-weight:700; text-align:right}
+.portlet-vacation-summary .vacation-indicator .vacation-indicator-gauge .vacation-indicator-remain {z-index:2; color:transparent; background-color:#E7EBEE}
+.portlet-vacation-summary .vacation-indicator .vacation-indicator-gauge .vacation-indicator-used {z-index:3; color:transparent; background-color:#A0C7EC}
 
 
 .portlet.team-member-list .sapMImg {width:30px; height:30px; border-radius:50%}
