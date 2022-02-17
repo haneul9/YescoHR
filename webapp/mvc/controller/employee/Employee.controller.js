@@ -219,10 +219,19 @@ sap.ui.define(
       },
 
       onObjectMatched(oParameter) {
-        const oViewModel = this.getView().getModel();
-        const sPernr = oParameter.pernr || this.getSessionData().Pernr;
-        const sOrgtx = _.replace(oParameter.orgtx, /--/g, '/') ?? _.noop();
-        const sOrgeh = oParameter.orgeh ?? _.noop();
+        const oViewModel = this.getViewModel();
+        const sRoute = this.getRouter().getHashChanger().getHash();
+        const mSessionData = this.getAppointeeData();
+        let sPernr = oParameter.pernr || mSessionData.Pernr;
+        let sOrgtx = _.replace(oParameter.orgtx, /--/g, '/') ?? _.noop();
+        let sOrgeh = oParameter.orgeh ?? _.noop();
+
+        // MSS process
+        if (_.isEqual(sRoute, 'm/employee')) {
+          sPernr = mSessionData.Pernr;
+          sOrgtx = mSessionData.Orgtx;
+          sOrgeh = mSessionData.Orgeh;
+        }
 
         oViewModel.setData(this.initializeModel());
         oViewModel.setProperty('/employee/busy', true);

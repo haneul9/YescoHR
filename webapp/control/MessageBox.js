@@ -13,18 +13,16 @@ sap.ui.define(
       return sap.ui.getCore().getComponent('container-ehr').getModel('i18n').getResourceBundle().getText(sCode);
     };
 
-    const getDevice = () => {
-      return sap.ui.Device.system.desktop === true // prettier 방지용 주석
+    const sDevice =
+      sap.ui.Device.system.desktop === true // prettier 방지용 주석
         ? sap.ui.Device.system.SYSTEMTYPE.DESKTOP
         : sap.ui.Device.system.phone === true
         ? sap.ui.Device.system.SYSTEMTYPE.PHONE
         : sap.ui.Device.system.tablet === true
         ? sap.ui.Device.system.SYSTEMTYPE.PHONE
         : '';
-    };
-
     const changePosition = (sMessageBoxSelector) => {
-      if (getDevice() === sap.ui.Device.system.SYSTEMTYPE.DESKTOP) return;
+      if (sDevice === sap.ui.Device.system.SYSTEMTYPE.DESKTOP) return;
 
       setTimeout(() => {
         const $messageBox = $(sMessageBoxSelector);

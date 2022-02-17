@@ -132,6 +132,7 @@
         { "pattern": "consolidAppBox", "name": "consolidAppBox", "target": "consolidAppBox" },
 
         { "pattern": "employee/:pernr:/:orgtx:/:orgeh:", "name": "employee", "target": "employee" },
+        { "pattern": "m/employee", "name": "m/employee", "target": "employee" },
         { "pattern": "mobile/employee/:pernr:", "name": "mobile/employee", "target": "mobile/employee" },
         { "pattern": "mobile/m/employee", "name": "mobile/m/employee", "target": "mobile/m/employee" },
         { "pattern": "mobile/m/employee/{pernr}", "name": "mobile/m/employee-detail", "target": "mobile/employee" },
