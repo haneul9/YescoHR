@@ -455,11 +455,12 @@ sap.ui.define(
         }
       },
 
-      onPressPrint() {
+      async onPressPrint() {
         const oViewModel = this.getViewModel();
-        const sPdfUrl = oViewModel.getProperty('/summary/Pdfurl');
+        const mCustomData = oViewModel.getProperty('/summary');
+        const mPlanData = await Client.get(this.getModel(ServiceNames.WORKTIME), 'AnnualLeaveStatus', _.pick(mCustomData, ['Appno', 'Plnyy', 'Seqno', 'Pernr']));
 
-        if (!_.isEmpty(sPdfUrl)) window.open(sPdfUrl);
+        window.open(mPlanData.Pdfurl, '_blank');
       },
 
       /*****************************************************************
