@@ -191,15 +191,23 @@ sap.ui.define(
             {
               chart: {
                 //Cosmetics
+                showValue: 1,
+                valueFontSize: 12,
+                showTooltip: 0,
+                gaugeOriginY: 110,
+                gaugeOuterRadius: 75,
+                gaugeInnerRadius: 53,
+                majorTMColor: '#333',
+                majorTMHeight: -2.5,
+                majorTMThickness: 1,
+                tickValueDistance: 5,
+                showPlotBorder: 0,
+                showGaugeBorder: 0,
+                showPivotBorder: 0,
                 bgColor: 'transparent',
+                pivotRadius: 3,
+                pivotFillColor: '#000',
                 theme: 'ocean',
-                showvalue: '1',
-                showPlotBorder: '0',
-                showtooltip: '0',
-                majorTMColor: '#aba894',
-                majorTMHeight: '5',
-                majorTMThickness: '2',
-                showGaugeBorder: '0',
               },
               colorrange: {
                 color: [
@@ -219,7 +227,9 @@ sap.ui.define(
                 dial: [
                   {
                     value: aWorkTypeList.Reltm,
-                    rearExtension: '0',
+                    valueY: 123,
+                    baseWidth: 4,
+                    rearExtension: 0,
                   },
                 ],
               },
