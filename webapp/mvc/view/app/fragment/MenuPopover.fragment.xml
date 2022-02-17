@@ -1,0 +1,50 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<ResponsivePopover
+		title="Menu"
+		class="sapUiPopupWithPadding"
+		placement="Bottom" >		
+		<content>
+			<HBox>
+        <IconTabBar class="menu-wrap">
+          <layoutData>
+            <FlexItemData growFactor="1"/>
+          </layoutData>
+          <items>
+            <IconTabFilter text="인사" key="인사">
+              <VBox class="menu-list">
+                <Link text="사원프로파일"	press="handleLinkPress" />
+                <Link text="가족변경사항신청"	press="handleLinkPress" />
+                <Link text="인재검색"	press="handleLinkPress" />
+                <Link text="제증명신청"	press="handleLinkPress" />
+                <Link text="공지사항"	press="handleLinkPress" />
+                <Link text="통합신청함"	press="handleLinkPress" />
+              </VBox>
+            </IconTabFilter>
+            <IconTabFilter text="급여" key="급여">
+              <Text text="급여"/>
+            </IconTabFilter>
+            <IconTabFilter text="근태" key="근태">
+              <Text text="근태"/>
+            </IconTabFilter>
+            <IconTabFilter text="복리후생" key="복리후생">
+              <Text text="복리후생"/>
+            </IconTabFilter>
+            <IconTabFilter text="MSS" key="MSS">
+              <Text text="MSS"/>
+            </IconTabFilter>
+          </items>
+        </IconTabBar>
+      </HBox>
+      <HBox class="favorites-menu-list">
+        <Button text="개인별근태현황" />
+        <Button text="경조금" />
+        <Button text="공지사항" />
+        <Button text="급여명세서 조회" />
+        <Button text="당직변경신청" />
+        <Button text="사원프로파일" />
+      </HBox>
+		</content>
+	</ResponsivePopover>
+</core:FragmentDefinition>

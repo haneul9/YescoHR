@@ -66,15 +66,17 @@ sap.ui.define(
 
           this.setPortletModel(oSiblingPortletModel);
 
-          const oSiblingPortletBox = oSiblingPortletHandler.getPortletBox();
-          if (oSiblingPortletBox) {
-            oSiblingPortletBox
-              .$()
-              .parent()
-              .css({ 'grid-column': `span ${iWidth}`, 'grid-row': `span ${iHeight}` });
+          setTimeout(() => {
+            const oSiblingPortletBox = oSiblingPortletHandler.getPortletBox();
+            if (oSiblingPortletBox) {
+              oSiblingPortletBox
+                .$()
+                .parent()
+                .css({ 'grid-column': `span ${iWidth}`, 'grid-row': `span ${iHeight}` });
 
-            this.setPortletBox(oSiblingPortletBox);
-          }
+              this.setPortletBox(oSiblingPortletBox);
+            }
+          }, 300);
         } else {
           oPortletModel.setData(this.filterProperties(oPortletData));
           oPortletModel.setProperty(`/${this.ROOT_PATH}`, oPortletData);
@@ -126,7 +128,8 @@ sap.ui.define(
 
       getSelectedPortletHandler() {
         const oPortletModel = this.getPortletModel();
-        const sPortletId = oPortletModel.getProperty('/id');
+        const sSelectedMembersButton = oPortletModel.getProperty('/selectedMembersButton').toLowerCase();
+        const sPortletId = oPortletModel.getProperty(`/${sSelectedMembersButton}Members/id`);
         const oPortletHandler = this.getController().getViewModel().getProperty(`/activeInstanceMap/${sPortletId}`);
 
         return {

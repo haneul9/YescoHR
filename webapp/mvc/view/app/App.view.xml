@@ -46,12 +46,12 @@
   <App id="app" class="app-body" autoFocus="false" busy="{appModel>/isAppBusy}" busyIndicatorDelay="0" />
 
   <OverflowToolbar id="appBottomToolbar" height="60px" asyncMode="true" busy="{appModel>/isMenuBusy}" busyIndicatorDelay="0" class="app-menu-toolbar" visible="{appModel>/isMobile}">
-    <HBox width="100%" justifyContent="SpaceAround">
-      <Image src="asset/image/icon_m_employee.svg" width="2rem" />
-      <Image src="asset/image/icon_m_notice.svg" width="2rem" />
-      <Image src="asset/image/icon_m_home.svg" width="2rem" />
-      <Image src="asset/image/icon_m_search.svg" width="2rem" />
-      <Image src="asset/image/icon_m_gnb.svg" width="2rem" />
+    <HBox width="100%" justifyContent="SpaceAround" class="footer-menu">
+      <Button type="Transparent" icon="asset/image/icon_m_employee.svg" class="icon-button" />
+      <Button type="Transparent" icon="asset/image/icon_m_notice.svg" class="icon-button" press=".onPressNotificationPopoverToggle" />
+      <Button type="Transparent" icon="asset/image/icon_m_home.svg" class="icon-button" />
+      <Button type="Transparent" icon="asset/image/icon_m_search.svg" class="icon-button" />
+      <Button type="Transparent" icon="asset/image/icon_m_gnb.svg" class="icon-button" press="handleResponsivePopoverPress" />
     </HBox>
   </OverflowToolbar>
 </mvc:View>
