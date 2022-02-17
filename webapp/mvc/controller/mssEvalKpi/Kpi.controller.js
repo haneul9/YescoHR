@@ -547,7 +547,7 @@ sap.ui.define(
         const oDropped = oInfo.getParameter('droppedControl');
         const oDraggPath = oDragged.getBindingContext().getPath();
         const oGrid = oDropped.getParent();
-        const mDraggData = oViewModel.getProperty(oDraggPath);
+        const mDraggData = _.cloneDeep(oViewModel.getProperty(oDraggPath));
         const sDraggListPath = oDropped.getParent().getBindingContext().getPath();
         const sDropPath = `${sDraggListPath}/TmpGrid`;
         const aGridList = oViewModel.getProperty(sDropPath);
@@ -555,8 +555,16 @@ sap.ui.define(
         let bInsertPosition = oInfo.getParameter('dropPosition') === 'Before';
         let iDropPosition = oGrid.indexOfItem(oDropped);
 
-        // 빈 박스 드롭시 , 첫번째 drop시
-        if ((!mDraggData.Ztext && !mDraggData.Stext) || (iDropPosition === 0 && !bDragIndex)) {
+        // 빈 박스 드롭시 , 첫번째 drop시, 겹칠시
+        if (
+          (!mDraggData.Ztext && !mDraggData.Stext) ||
+          (iDropPosition === 0 && !bDragIndex) ||
+          !_.isEmpty(
+            _.filter(aGridList, (e) => {
+              return e.Objid === mDraggData.Objid;
+            })
+          )
+        ) {
           return;
         }
 
@@ -584,6 +592,18 @@ sap.ui.define(
           if (iDropPosition === 0) {
             iDropPosition++;
           }
+
+          if (oDragged.sParentAggregationName === 'items') {
+            const sDragPath = oDragged.getParent().getBindingContext().getPath();
+            const sDragDetailPath = `${sDragPath}/TmpGrid`;
+
+            oViewModel.setProperty(
+              sDragDetailPath,
+              _.filter(oViewModel.getProperty(sDragDetailPath), (e) => {
+                return mDraggData.Objid !== e.Objid;
+              })
+            );
+          }
         }
 
         mDraggData.Orgeh = oViewModel.getProperty(`${sDraggListPath}/Orgeh`);
@@ -592,6 +612,15 @@ sap.ui.define(
 
         // insert the control in target aggregation bInsertPosition ? 0 : -1
         aGridList.splice(iDropPosition, 0, mDraggData);
+
+        oViewModel.setProperty(
+          '/Tmp',
+          _.each(oViewModel.getProperty('/Tmp'), (e) => {
+            e.TmpGrid = _.filter(e.TmpGrid, (e1) => {
+              return e.Orgeh === e1.Orgeh;
+            });
+          })
+        );
         oViewModel.setProperty(sDropPath, aGridList);
         oViewModel.setProperty('/PartList', [mDraggData, ...oViewModel.getProperty('/PartList')]);
       },
