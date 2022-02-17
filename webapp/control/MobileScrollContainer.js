@@ -12,7 +12,7 @@ sap.ui.define(
     return ScrollContainer.extend('sap.ui.yesco.control.MobileScrollContainer', {
       metadata: {
         properties: {
-          headerHeight: { type: 'int', defaultValue: '56' },
+          headerHeight: { type: 'int', defaultValue: '0' },
           footerHeight: { type: 'int', defaultValue: '68' },
           excludeBottomSelector: { type: 'string' },
         },
