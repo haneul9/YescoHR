@@ -28,12 +28,6 @@
                         <Title level="H4" text="{= ${/tab/selectedKey} === 'A' ? ${i18n>LABEL_15006} : ${i18n>LABEL_15007} } {i18n>LABEL_15008}" />
                         <HBox>
                             <Text text="{i18n>MSG_15003}" class="desc-txt"/>
-                            <Text text="　{i18n>MSG_15004}　" class="desc-txt textPoint ml-0"/>
-                            <!-- <Text text="{
-                                path: '/tab/selectedKey',
-                                formatter: '.formatText'
-                            }" class="desc-txt textPoint ml-0"/> -->
-                            <Text text="{i18n>MSG_15006}" class="desc-txt ml-0"/>
                         </HBox>
                     </HBox>
                 </HBox>

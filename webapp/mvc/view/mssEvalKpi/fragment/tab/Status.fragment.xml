@@ -14,7 +14,7 @@
             <HBox class="form-bar" justifyContent="Start" alignItems="Center">
                 <Label text="{/CascadingSitu/Label1}" />
                 <Input value="{/search/Orgtx}" visible="{= ${/situation/segmentKey} === 'A' }" showValueHelp="true" valueHelpOnly= "true" valueHelpRequest=".onPressSearchOrgeh" />
-                <ComboBox items="{/CompanyCode}" visible="{= ${/situation/segmentKey} === 'B' }" selectedKey="{/search/Werks}" change=".onCasSituFirSelect">
+                <ComboBox items="{/CompanyCode}" visible="{= ${/situation/segmentKey} === 'B' }" selectedKey="{/search/Werks}" change=".onWerksPress">
                     <core:Item text="{Pbtxt}" key="{Werks}" />
                 </ComboBox>
                 <Label text="{/CascadingSitu/Label2}" visible="{= !!${/CascadingSitu/Label2} }" />

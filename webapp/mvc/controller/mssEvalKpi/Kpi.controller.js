@@ -142,6 +142,27 @@ sap.ui.define(
         });
       },
 
+      // Cascading 현황 Kpi별 수행조직현황의 회사선택시
+      async onWerksPress(oEvent) {
+        const oViewModel = this.getViewModel();
+        const aKpiList = await this.getKPIList();
+
+        oViewModel.setProperty('/CascadingSitu', {
+          Label1: this.getBundleText('LABEL_00220'),
+          Label2: this.getBundleText('LABEL_15014'),
+          SecondCode: aKpiList,
+        });
+
+        oViewModel.setProperty('/search/Objid', 'ALL');
+        oViewModel.setProperty('/search/Orgeh', '');
+        oViewModel.setProperty('/search/Otype', '');
+
+        const aTreeList = await this.setTreeList();
+        const aVariat = this.oDataChangeTree(aTreeList);
+
+        oViewModel.setProperty('/CascadingSitu/SituList', aVariat);
+      },
+
       // 평가년도 setting
       setYears(iYear = new Date().getFullYear()) {
         const oViewModel = this.getViewModel();
@@ -254,7 +275,11 @@ sap.ui.define(
 
         return new Promise((resolve, reject) => {
           oModel.read('/KpiCascadingKpiListSet', {
-            filters: [new Filter('Werks', FilterOperator.EQ, this.getSessionProperty('Werks')), new Filter('Zyear', FilterOperator.EQ, mSearch.Zyear)],
+            filters: [
+              // prettier 방지주석
+              new Filter('Werks', FilterOperator.EQ, oViewModel.getProperty('/search/Werks')),
+              new Filter('Zyear', FilterOperator.EQ, mSearch.Zyear),
+            ],
             success: (oData) => {
               if (oData) {
                 this.debug(oData);
