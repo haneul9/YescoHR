@@ -71,6 +71,7 @@ sap.ui.define(
         try {
           const oDialogData = oDialogModel.getData();
           const aOrgList = await Client.getEntitySet(this.oController.getModel(ServiceNames.COMMON), 'OrgList', {
+            Werks: oDialogData.Werks || _.noop(),
             Datum: oDialogData.Datum,
             Stype: '1',
             Stext: oDialogData.Stext || _.noop(),

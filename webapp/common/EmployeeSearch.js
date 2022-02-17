@@ -107,11 +107,13 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.COMMON);
         const oEmpModel = this.getViewModel();
         const mSearchData = oEmpModel.getProperty('/employeeModel/org');
+        const sWerks = oEmpModel.getProperty('/employeeModel/Search/Persa');
         const sUrl = '/OrgListSet';
         const vDate = !mSearchData.Date ? '' : new Filter('Datum', FilterOperator.EQ, mSearchData.Date);
         const vStext = !mSearchData.Word ? '' : new Filter('Stext', FilterOperator.EQ, mSearchData.Word);
+        const vWerks = !sWerks || sWerks === 'ALL' ? '' : new Filter('Werks', FilterOperator.EQ, sWerks);
         const oOrgTable = AppUtils.getAppComponent().byId(`${this.getView().getId()}GroupDetail--orgTable`);
-        const aFilters = [];
+        const aFilters = [vWerks];
 
         oOrgTable.clearSelection();
         oEmpModel.setProperty('/employeeModel/org/busy', true);

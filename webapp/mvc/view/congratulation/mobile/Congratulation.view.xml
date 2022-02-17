@@ -32,21 +32,21 @@
 							<Text text="{Conretx}"/>
 							<Text text="{Famtx}"/>
 							<Text text="{
-									path: 'ZappStatAl',
-									formatter: '.TableUtils.StatusTxt'
-								}"/>
+								path: 'ZappStatAl',
+								formatter: '.TableUtils.StatusTxt'
+							}"/>
 							<Text text="{Zname}"/>
 							<Text text="{
-										path: 'Conddate',
-										type: 'sap.ui.model.type.Date',
-										formatOptions: {
-												pattern: 'yyyy.MM.dd'
-										}
-								}"/>
+									path: 'Conddate',
+									type: 'sap.ui.model.type.Date',
+									formatOptions: {
+											pattern: 'yyyy.MM.dd'
+									}
+							}"/>
 							<Text text="{
-									path: 'ZappStatAl',
-									formatter: '.TableUtils.StatusTxt'
-								}"/>
+								path: 'ZappStatAl',
+								formatter: '.TableUtils.StatusTxt'
+							}" class="sapMText" />
 						</grid:CSSGrid>
 					</CustomListItem>
 				</List>
