@@ -123,24 +123,18 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const oFormData = oDetailModel.getProperty('/FormData');
         const sUrl = '/SchExpenseLimitAmtSet';
-        const aFilters = [
-          // prettier 방지주석
-          new Filter('Slart', FilterOperator.EQ, oFormData.Slart),
-          new Filter('Zname', FilterOperator.EQ, oFormData.Zname),
-          new Filter('Zzobjps', FilterOperator.EQ, oFormData.Zzobjps),
-          new Filter('Grdsp', FilterOperator.EQ, oFormData.Grdsp),
-          new Filter('Zyear', FilterOperator.EQ, oFormData.Zyear),
-        ];
+        const mFilters = _.pick(oFormData, ['Slart', 'Zname', 'Zzobjps', 'Grdsp', 'Zyear']);
 
         if (this.isHass()) {
-          const sPernr = this.getAppointeeProperty('Pernr');
-
-          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
+          _.set(mFilters, 'Pernr', this.getAppointeeProperty('Pernr'));
         }
 
         new Promise((resolve) => {
           oModel.read(sUrl, {
-            filters: aFilters,
+            filters: _.chain(mFilters)
+              .omitBy(_.isNil)
+              .map((v, p) => new Filter(p, FilterOperator.EQ, v))
+              .value(),
             success: (oData) => {
               this.debug(`${sUrl} success.`, oData);
               let oList = [];
@@ -285,7 +279,7 @@ sap.ui.define(
         }
 
         return Promise.all([
-          await new Promise((resolve, reject) => {
+          await new Promise((resolve) => {
             // 신청대상 조회
             oModel.read(sSchExpenseUrl, {
               filters: [
@@ -309,7 +303,7 @@ sap.ui.define(
               },
             });
           }),
-          new Promise((resolve, reject) => {
+          new Promise((resolve) => {
             // 학력구분 조회
             oModel.read(sBenefitUrl, {
               filters: [
@@ -335,7 +329,7 @@ sap.ui.define(
               },
             });
           }),
-          new Promise((resolve, reject) => {
+          new Promise((resolve) => {
             // 학년 조회
             oModel.read(sBenefitUrl, {
               filters: [
