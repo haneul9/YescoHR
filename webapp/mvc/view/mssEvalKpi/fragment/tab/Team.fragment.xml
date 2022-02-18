@@ -30,7 +30,7 @@
                             <FlexItemData />
                         </layoutData>
                     </Label>
-                    <f:GridList items="{TmpGrid}" class="part-cascading-list">
+                    <f:GridList items="{ path: 'TmpGrid', templateShareable: false }" class="part-cascading-list">
                         <f:layoutData>
                             <FlexItemData growFactor="1"/>
                         </f:layoutData>

@@ -97,7 +97,7 @@ sap.ui.define(
               Pernr: mAppointeeData.Pernr,
             };
             // 나의 계좌정보
-            const aMyAcc = await Client.getEntitySet(oModel, 'CurrentAcctInfo', mMyAccPayLoad);
+            const [mMyAcc] = await Client.getEntitySet(oModel, 'CurrentAcctInfo', mMyAccPayLoad);
 
             oDetailModel.setProperty('/FormData', {
               Pernr: mAppointeeData.Pernr,
@@ -105,9 +105,9 @@ sap.ui.define(
               Bankl: 'ALL',
               Begym: moment().format('YYYYMM'),
               PayYearMon: moment().format('YYYY-MM'),
-              BankaBef: aMyAcc[0].Banka,
-              BanklBef: aMyAcc[0].Bankl,
-              BanknBef: aMyAcc[0].Bankn,
+              BankaBef: _.get(mMyAcc, 'Banka'),
+              BanklBef: _.get(mMyAcc, 'Bankl'),
+              BanknBef: _.get(mMyAcc, 'Bankn'),
             });
 
             oDetailModel.setProperty('/ApplyInfo', {

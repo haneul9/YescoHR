@@ -81,12 +81,13 @@ sap.ui.define(
 
           oViewModel.setProperty('/search', {
             Werks: oSessionData.Werks,
-            Orgeh: aPartList[0].Orgeh,
-            Orgtx: aPartList[0].Orgtx,
+            Orgeh: _.get(aPartList, [0, 'Orgeh']),
+            Orgtx: _.get(aPartList, [0, 'Orgtx']),
             Zyear: String(new Date().getFullYear()),
           });
           this.onSearch();
         } catch (oError) {
+          this.debug(oError);
           AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/busy', false);
@@ -143,7 +144,7 @@ sap.ui.define(
       },
 
       // Cascading 현황 Kpi별 수행조직현황의 회사선택시
-      async onWerksPress(oEvent) {
+      async onWerksPress() {
         const oViewModel = this.getViewModel();
         const aKpiList = await this.getKPIList();
 
@@ -552,7 +553,7 @@ sap.ui.define(
         const sDropPath = `${sDraggListPath}/TmpGrid`;
         const aGridList = oViewModel.getProperty(sDropPath);
         const bDragIndex = oGrid.indexOfItem(oDragged) === -1;
-        let bInsertPosition = oInfo.getParameter('dropPosition') === 'Before';
+        // let bInsertPosition = oInfo.getParameter('dropPosition') === 'Before';
         let iDropPosition = oGrid.indexOfItem(oDropped);
 
         // 빈 박스 드롭시 , 첫번째 drop시, 겹칠시
@@ -635,7 +636,7 @@ sap.ui.define(
         const mDraggData = oViewModel.getProperty(oDraggPath);
         const aGridList = oViewModel.getProperty('/PartList');
         const bDragIndex = oGrid.indexOfItem(oDragged) === -1;
-        let bInsertPosition = oInfo.getParameter('dropPosition') === 'Before';
+        // let bInsertPosition = oInfo.getParameter('dropPosition') === 'Before';
         let iDropPosition = oGrid.indexOfItem(oDropped);
 
         // 빈 박스 드롭시 , 첫번째 Drop시
@@ -710,10 +711,17 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.APPRAISAL);
         const oListModel = this.getViewModel();
         const oSearch = oListModel.getProperty('/search');
+        const mFilters = {
+          Gubun: oListModel.getProperty('/tab/selectedKey'),
+          ..._.pick(oSearch, ['Werks', 'Orgeh', 'Zyear']),
+        };
 
         return new Promise((resolve, reject) => {
           oModel.read('/KpiCascadingListSet', {
-            filters: [new Filter('Gubun', FilterOperator.EQ, oListModel.getProperty('/tab/selectedKey')), new Filter('Werks', FilterOperator.EQ, oSearch.Werks), new Filter('Orgeh', FilterOperator.EQ, oSearch.Orgeh), new Filter('Zyear', FilterOperator.EQ, oSearch.Zyear)],
+            filters: _.chain(mFilters)
+              .omitBy(_.isNil)
+              .map((v, p) => new Filter(p, FilterOperator.EQ, v))
+              .value(),
             success: (oData) => {
               resolve(oData.results);
             },
@@ -731,16 +739,18 @@ sap.ui.define(
         const oListModel = this.getViewModel();
         const oSearch = oListModel.getProperty('/search');
         const sKey = oListModel.getProperty('/tab/selectedKey');
+        const mFilters = {
+          Gubun: sKey,
+          Orgeh: sOrgeh || oSearch.Orgeh,
+          ..._.pick(oSearch, ['Werks', 'Zyear']),
+        };
 
         return new Promise((resolve, reject) => {
           oModel.read('/KpiCascadingOrgListSet', {
-            filters: [
-              // prettier 방지주석
-              new Filter('Gubun', FilterOperator.EQ, sKey),
-              new Filter('Werks', FilterOperator.EQ, oSearch.Werks),
-              new Filter('Orgeh', FilterOperator.EQ, sOrgeh || oSearch.Orgeh),
-              new Filter('Zyear', FilterOperator.EQ, oSearch.Zyear),
-            ],
+            filters: _.chain(mFilters)
+              .omitBy(_.isNil)
+              .map((v, p) => new Filter(p, FilterOperator.EQ, v))
+              .value(),
             success: (oData) => {
               if (oData) {
                 const aGridList = oData.results;

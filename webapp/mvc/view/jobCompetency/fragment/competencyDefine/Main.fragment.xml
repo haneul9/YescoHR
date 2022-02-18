@@ -54,7 +54,7 @@
             </headerToolbar>
             <content>
               <grid:CSSGrid gridTemplateColumns="200px repeat({/Competency/Count}, 2fr)" gridGap="8px" items="{/Competency/BehaviIndicat/Contents}">
-                <VBox items="{Note}">
+                <VBox items="{ path: 'Note', templateShareable: false }">
                   <customData>
                     <core:CustomData key="type" value="{type}" writeToDom="true" />
                   </customData>
