@@ -162,6 +162,10 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p11 .portlet-p11-objectstatus {margin-top:5px}
 .portlet-p11 .portlet-p11-objectstatus .sapMObjStatusText {font-size:20px}
 .portlet-p11 .portlet-p11-text.sapMText {vertical-align:top; font-size:12px}
+.portlet-m23 .portlet-body .sapMText {font-size:13px; letter-spacing:-.5px}
+.portlet-m23 .portlet-body .sapMText.portlet-m23-worktime, .portlet-m23 .portlet-body .sapMText.portlet-m23-worktime-unit {color:#387FE9}
+.portlet-m23 .portlet-body .sapMText.portlet-m23-worktime {margin-left:.3rem}
+.portlet-m23 .portlet-body .sapMText.portlet-m23-worktime {font-size:19px}
 
 .sapMLnkSubtle {color:#222}
 
