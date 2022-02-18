@@ -1,6 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:smartList="sap.ui.comp.smartlist">
+    xmlns:core="sap.ui.core">
     <VBox class="contents">
         <VBox width="100%" class="vCardBox">
             <SegmentedButton width="30%" selectedKey="{/situation/segmentKey}" selectionChange=".onSegmentBtn" class="type-b">
@@ -11,7 +10,7 @@
             </SegmentedButton>
         </VBox>
         <VBox class="vCardBox">
-            <HBox class="form-bar" justifyContent="Start" alignItems="Center">
+            <HBox class="form-bar" alignItems="Center">
                 <Label text="{/CascadingSitu/Label1}" />
                 <Input value="{/search/Orgtx}" visible="{= ${/situation/segmentKey} === 'A' }" showValueHelp="true" valueHelpOnly= "true" valueHelpRequest=".onPressSearchOrgeh" />
                 <ComboBox items="{/CompanyCode}" visible="{= ${/situation/segmentKey} === 'B' }" selectedKey="{/search/Werks}" change=".onWerksPress">
