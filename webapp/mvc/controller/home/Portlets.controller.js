@@ -13,6 +13,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/home/PortletsP13nDialogHandler',
+    'sap/ui/yesco/mvc/controller/home/portlets/M22PortletHandler',
     'sap/ui/yesco/mvc/controller/home/portlets/M23PortletHandler',
     'sap/ui/yesco/mvc/controller/home/portlets/M24PortletHandler',
     'sap/ui/yesco/mvc/controller/home/portlets/P01PortletHandler',
@@ -42,6 +43,7 @@ sap.ui.define(
     ServiceNames,
     BaseController,
     PortletsP13nDialogHandler,
+    M22PortletHandler,
     M23PortletHandler,
     M24PortletHandler,
     P01PortletHandler,
@@ -71,6 +73,7 @@ sap.ui.define(
         M07: 'P07',
         M08: 'P08',
         M09: 'P09',
+        M22: 'M22',
         M23: 'M23',
         M24: 'M24',
         // 직원용
@@ -98,6 +101,7 @@ sap.ui.define(
         M07: P07PortletHandler,
         M08: P08PortletHandler,
         M09: P09PortletHandler,
+        M22: M22PortletHandler,
         M23: M23PortletHandler,
         M24: M24PortletHandler,
         // 직원용

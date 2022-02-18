@@ -6,6 +6,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/home/portlets/AbstractPortletHandler',
+    'sap/ui/yesco/mvc/model/type/Month', // XML expression binding용 type preloading
   ],
   (
     // prettier 방지용 주석
@@ -18,17 +19,17 @@ sap.ui.define(
     'use strict';
 
     /**
-     * 근무시간 현황 Portlet (임원용)
+     * 인건비 실적 Portlet (임원용)
      */
-    return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.M23PortletHandler', {
-      sChartId: 'portlet-m23-chart',
+    return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.M22PortletHandler', {
+      sChartId: 'portlet-m22-chart',
       oChartPromise: null,
 
       async addPortlet() {
         const oPortletModel = this.getPortletModel();
         const oPortletBox = await Fragment.load({
           id: this.getController().getView().getId(),
-          name: 'sap.ui.yesco.mvc.view.home.fragment.M23PortletBox',
+          name: 'sap.ui.yesco.mvc.view.home.fragment.M22PortletBox',
           controller: this,
         });
 
@@ -48,17 +49,15 @@ sap.ui.define(
           FusionCharts.ready(() => {
             new FusionCharts({
               id: this.sChartId,
-              type: 'angulargauge',
+              type: 'mscolumn2d',
               renderAt: `${this.sChartId}-container`,
               width: '100%',
-              height: '100%',
+              height: 174,
               dataFormat: 'json',
               dataSource: {
                 chart: this.getChartOption(),
-                colorrange: this.getChartColorrangeOption(40, 52),
-                dials: {
-                  dial: [this.getChartDialOption({ Reltm: 0 })],
-                },
+                categories: [this.getChartCategory()],
+                dataset: this.getChartDataSet(),
               },
               events: {
                 rendered: resolve,
@@ -98,10 +97,8 @@ sap.ui.define(
         oChart.setChartData(
           {
             chart: this.getChartOption(),
-            colorrange: this.getChartColorrangeOption(mPortletData.Alwtm, mPortletData.Maxtm),
-            dials: {
-              dial: [this.getChartDialOption(mPortletData)],
-            },
+            categories: [this.getChartCategory()],
+            dataset: this.getChartDataSet(mPortletData),
           },
           'json'
         );
@@ -112,52 +109,71 @@ sap.ui.define(
 
       getChartOption() {
         return {
-          showValue: 1,
-          valueFontSize: 12,
-          showTooltip: 0,
-          gaugeOriginY: 125,
-          gaugeOuterRadius: 107,
-          gaugeInnerRadius: 75,
-          majorTMNumber: 13,
-          majorTMColor: '#333',
-          majorTMHeight: -2.5,
-          majorTMThickness: 1,
-          tickValueDistance: 5,
-          tickValueStep: 10,
-          showPlotBorder: 0,
-          showGaugeBorder: 0,
-          showPivotBorder: 0,
+          drawCrossLine: 1,
+          showValues: 0,
           bgColor: 'transparent',
-          pivotRadius: 3,
-          pivotFillColor: '#000',
           theme: 'ocean',
         };
       },
 
-      getChartColorrangeOption(iWTMax, iOTMax) {
+      getChartCategory() {
         return {
-          color: [
+          category: [
             {
-              minValue: 0,
-              maxValue: iWTMax,
-              code: '#34649d', // 기본 근무시간
+              label: AppUtils.getBundleText('LABEL_01203'), // 급여
             },
             {
-              minValue: iWTMax,
-              maxValue: iOTMax,
-              code: '#fdde17', // 초과 근무시간
+              label: AppUtils.getBundleText('LABEL_01204'), // 상여
+            },
+            {
+              label: AppUtils.getBundleText('LABEL_01205'), // OT
+            },
+            {
+              label: AppUtils.getBundleText('LABEL_01206'), // 복리후생
             },
           ],
         };
       },
 
-      getChartDialOption(mPortletData) {
-        return {
-          value: mPortletData.Reltm,
-          valueY: 142,
-          baseWidth: 4,
-          rearExtension: 0,
-        };
+      getChartDataSet(mPortletData) {
+        return [
+          {
+            seriesname: AppUtils.getBundleText('LABEL_01207'), // 전년
+            color: '#7bb4eb',
+            data: [
+              {
+                value: 168,
+              },
+              {
+                value: 100,
+              },
+              {
+                value: 115,
+              },
+              {
+                value: 134,
+              },
+            ],
+          },
+          {
+            seriesname: AppUtils.getBundleText('LABEL_01208'), // 금년
+            color: '#ffe479',
+            data: [
+              {
+                value: 173,
+              },
+              {
+                value: 120,
+              },
+              {
+                value: 102,
+              },
+              {
+                value: 110,
+              },
+            ],
+          },
+        ];
       },
 
       onAfterDragAndDrop() {
