@@ -104,36 +104,37 @@ sap.ui.define(
        *  조직검색
        */
       onOrgList() {
-        const oModel = this.getModel(ServiceNames.COMMON);
         const oEmpModel = this.getViewModel();
-        const mSearchData = oEmpModel.getProperty('/employeeModel/org');
-        const sWerks = oEmpModel.getProperty('/employeeModel/Search/Persa');
-        const sUrl = '/OrgListSet';
-        const vDate = !mSearchData.Date ? '' : new Filter('Datum', FilterOperator.EQ, mSearchData.Date);
-        const vStext = !mSearchData.Word ? '' : new Filter('Stext', FilterOperator.EQ, mSearchData.Word);
-        const vWerks = !sWerks || sWerks === 'ALL' ? '' : new Filter('Werks', FilterOperator.EQ, sWerks);
-        const oOrgTable = AppUtils.getAppComponent().byId(`${this.getView().getId()}GroupDetail--orgTable`);
-        const aFilters = [vWerks];
-
-        oOrgTable.clearSelection();
         oEmpModel.setProperty('/employeeModel/org/busy', true);
 
-        if (!!vDate) {
-          aFilters.push(vDate);
+        const { Persa: Werks, Date: Datum, Word: Stext } = oEmpModel.getProperty('/employeeModel/org');
+        const oOrgTable = AppUtils.getAppComponent().byId(`${this.getView().getId()}GroupDetail--orgTable`);
+        oOrgTable.clearSelection();
+
+        const aFilters = [];
+        if (Werks && Werks !== 'ALL') {
+          aFilters.push(new Filter('Werks', FilterOperator.EQ, Werks));
         }
-        if (!!vStext) {
-          aFilters.push(vStext);
+        if (Datum) {
+          aFilters.push(new Filter('Datum', FilterOperator.EQ, Datum));
         }
+        if (Stext) {
+          aFilters.push(new Filter('Stext', FilterOperator.EQ, Stext));
+        }
+
+        const oModel = this.getModel(ServiceNames.COMMON);
+        const sUrl = '/OrgListSet';
 
         // 사원그룹
         oModel.read(sUrl, {
           filters: aFilters,
           success: (oData) => {
             if (oData) {
+              this.debug(`${sUrl} success.`, oData);
+
               const aList = oData.results;
               const iLength = aList.length;
 
-              this.debug(`${sUrl} success.`, oData);
               oEmpModel.setProperty('/employeeModel/org/orgList', aList);
               oEmpModel.setProperty('/employeeModel/org/orgListLength', iLength > 4 ? 4 : iLength);
             }
@@ -152,59 +153,61 @@ sap.ui.define(
        *  검색버튼
        */
       onEmpSearch() {
-        const oModel = this.getModel(ServiceNames.COMMON);
         const oEmpModel = this.getViewModel();
+        const { Ename, Orgeh, Accty, Persa, Stat2, Persg, Persk } = oEmpModel.getProperty('/employeeModel/Search');
         const sMenid = this.getCurrentMenuId();
-        const sUrl = '/EmpSearchResultSet';
-        const mSearchData = oEmpModel.getProperty('/employeeModel/Search');
-        const vEname = !mSearchData.Ename ? '' : new Filter('Ename', FilterOperator.EQ, mSearchData.Ename);
-        const vOrgeh = !mSearchData.Orgeh ? '' : new Filter('Orgeh', FilterOperator.EQ, mSearchData.Orgeh);
-        const vPersa = mSearchData.Persa === 'ALL' || !mSearchData.Persa ? '' : new Filter('Persa', FilterOperator.EQ, mSearchData.Persa);
-        const vStat2 = mSearchData.Stat2 === 'ALL' || !mSearchData.Stat2 ? '' : new Filter('Stat2', FilterOperator.EQ, mSearchData.Stat2);
-        const vPersg = mSearchData.Persg === 'ALL' || !mSearchData.Persg ? '' : new Filter('Persg', FilterOperator.EQ, mSearchData.Persg);
-        const vPersk = mSearchData.Persk === 'ALL' || !mSearchData.Persk ? '' : new Filter('Persk', FilterOperator.EQ, mSearchData.Persk);
         const aFilters = [new Filter('Menid', FilterOperator.EQ, sMenid)];
 
-        if (!!vEname) {
-          aFilters.push(vEname);
+        if (Ename) {
+          aFilters.push(new Filter('Ename', FilterOperator.EQ, Ename));
         }
-        if (!!vOrgeh) {
-          aFilters.push(vOrgeh);
+        if (Orgeh) {
+          aFilters.push(new Filter('Orgeh', FilterOperator.EQ, Orgeh));
         }
-        if (!!vPersa) {
-          aFilters.push(vPersa);
+        if (Accty) {
+          aFilters.push(new Filter('Accty', FilterOperator.EQ, Accty)); // 타사 임직원까지 모두 검색해야하는 경우 : Z
         }
-        if (!!vStat2) {
-          aFilters.push(vStat2);
+        if (Persa && Persa !== 'ALL') {
+          aFilters.push(new Filter('Persa', FilterOperator.EQ, Persa));
         }
-        if (!!vPersg) {
-          aFilters.push(vPersg);
+        if (Stat2 && Stat2 !== 'ALL') {
+          aFilters.push(new Filter('Stat2', FilterOperator.EQ, Stat2));
         }
-        if (!!vPersk) {
-          aFilters.push(vPersk);
+        if (Persg && Persg !== 'ALL') {
+          aFilters.push(new Filter('Persg', FilterOperator.EQ, Persg));
+        }
+        if (Persk && Persk !== 'ALL') {
+          aFilters.push(new Filter('Persk', FilterOperator.EQ, Persk));
         }
 
         oEmpModel.setProperty('/employeeModel/empList', []);
         oEmpModel.setProperty('/employeeModel/empListLength', 1);
         oEmpModel.setProperty('/employeeModel/busy', true);
+
         this.byId('empTable').clearSelection();
+
+        const oModel = this.getModel(ServiceNames.COMMON);
+        const sUrl = '/EmpSearchResultSet';
 
         // 사원검색
         oModel.read(sUrl, {
           filters: aFilters,
           success: (oData) => {
             if (oData) {
+              this.debug(`${sUrl} success.`, oData);
+
               const aList = oData.results;
               const iLength = aList.length;
 
-              this.debug(`${sUrl} success.`, oData);
               oEmpModel.setProperty('/employeeModel/empList', aList);
-              oEmpModel.setProperty('/employeeModel/empListLength', iLength > 13 ? 13 : iLength);
+              oEmpModel.setProperty('/employeeModel/empListLength', iLength > 15 ? 15 : iLength);
             }
+
             oEmpModel.setProperty('/employeeModel/busy', false);
           },
           error: (oError) => {
             this.debug(`${sUrl} error.`, oError);
+
             AppUtils.handleError(new ODataReadError(oError));
             oEmpModel.setProperty('/employeeModel/busy', false);
           },
@@ -345,10 +348,10 @@ sap.ui.define(
             })
             .attachBeforeClose((oEvent) => {
               if (fnCallback && typeof fnCallback === 'function') {
-                const aSelectedEmp = this.getViewModel().getProperty('/employeeModel/SelectedEmp') || [];
+                const [mSelectedEmp] = this.getViewModel().getProperty('/employeeModel/SelectedEmp') || [];
                 const bClickedCloseButton = oEvent.getParameter('origin').getProperty('text') === AppUtils.getBundleText('LABEL_00115');
 
-                fnCallback(aSelectedEmp[0] || {}, bClickedCloseButton);
+                fnCallback(mSelectedEmp || {}, bClickedCloseButton);
               }
             });
         }
