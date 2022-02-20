@@ -1,0 +1,40 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:table="sap.ui.table"
+  xmlns:core="sap.ui.core">
+  <HBox>
+    <table:Table id="gradeTable" selectionMode="None" class="row-link" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/list}" visibleRowCount="{/listInfo/rowCount}" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
+      <table:columns>
+        <table:Column width="20%" filterProperty="ZzapstsSubnm" sortProperty="ZzapstsSubnm">
+          <Label text="{i18n>LABEL_10001}"/>
+          <table:template>
+            <Text text="{ZzapstsSubnm}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          </table:template>
+        </table:Column>
+        <table:Column width="auto" filterProperty="Orgtx2" sortProperty="Orgtx2">
+          <Label text="{i18n>LABEL_10065}"/>
+          <table:template>
+            <Text text="{Orgtx2}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          </table:template>
+        </table:Column>
+        <table:Column width="20%" filterProperty="ZzappgrTxt" sortProperty="ZzappgrTxt">
+          <Label text="{i18n>LABEL_10066}"/>
+          <table:template>
+            <Text text="{ZzappgrTxt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          </table:template>
+        </table:Column>
+        <table:Column width="15%" filterProperty="Zapcnt" sortProperty="Zapcnt">
+          <Label text="{i18n>LABEL_10067}"/>
+          <table:template>
+            <Text text="{Zapcnt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          </table:template>
+        </table:Column>
+        <table:Column width="20%" filterProperty="ZzapperTxt" sortProperty="ZzapperTxt">
+          <Label text="{i18n>LABEL_10068}"/>
+          <table:template>
+            <Text text="{ZzapperTxt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          </table:template>
+        </table:Column>
+      </table:columns>
+    </table:Table>
+  </HBox>
+</core:FragmentDefinition>
