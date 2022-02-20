@@ -1,0 +1,37 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:core="sap.ui.core">
+  <VBox class="portlet portlet-box portlet-m22" tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
+    <customData>
+      <core:CustomData key="portlet-switchable" value="{switchable}" />
+    </customData>
+    <layoutData>
+      <f:GridContainerItemLayoutData rows="{height}" columns="{width}" />
+    </layoutData>
+    <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
+      <Title level="H2" text="{title}" visible="{= !${hideTitle} }" />
+      <Text text="{i18n>LABEL_01201}" class="desc-txt" />
+      <Text text="">
+        <layoutData>
+          <FlexItemData growFactor="1" />
+        </layoutData>
+      </Text>
+      <Button visible="{switchable}" icon="sap-icon://decline" type="Transparent" class="icon-button portlet-close-icon" press=".onPressClose" />
+      <Button visible="{hasLink}" icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" press=".onPressLink" />
+    </HBox>
+    <HBox class="portlet-body">
+      <VBox width="100%">
+        <HBox width="100%" height="30px">
+          <Text text="{i18n>LABEL_01202}" />
+          <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Month' }" />
+        </HBox>
+        <HBox width="100%">
+          <layoutData>
+            <FlexItemData growFactor="1" />
+          </layoutData>
+          <core:HTML content='&lt;div id="portlet-m22-chart-container"&gt;&lt;/div&gt;' />
+        </HBox>
+      </VBox>
+    </HBox>
+  </VBox>
+</core:FragmentDefinition>
