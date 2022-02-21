@@ -1,0 +1,58 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <VBox class="vCardBox small" busyIndicatorDelay="0" busy="{/contents/A03/busy}">
+        <HBox class="table-toolbar">
+            <HBox class="title">
+                <layoutData>
+                    <FlexItemData growFactor="1" />
+                </layoutData>
+                <Title level="H2" text="{i18n>LABEL_28011}" />
+                <Image src="asset/image/avatar-unknown.svg" width="1.2rem" />
+                <Image src="asset/image/avatar-unknown.svg" width="1.2rem" />
+                <Text text="">
+                    <layoutData>
+                        <FlexItemData growFactor="1" />
+                    </layoutData>
+                </Text>
+                <Button icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" />
+            </HBox>
+        </HBox>
+        <HBox>
+            <layoutData>
+                <FlexItemData growFactor="1" />
+            </layoutData>
+            <VBox width="80%">
+                <!-- <layoutData>
+                    <FlexItemData growFactor="1" />
+                </layoutData> -->
+                <core:HTML content='&lt;div id="employee-a03-chart-container"&gt;&lt;/div&gt;'>
+                    <core:layoutData>
+                        <FlexItemData growFactor="1" />
+                    </core:layoutData>
+                </core:HTML>
+            </VBox>
+            <VBox>
+                <HBox>
+                    <Label text="{i18n>LABEL_28021}: " class="legend legend-type01" />
+                    <Text text="{/contents/A03/data01}" />
+                </HBox>
+                <HBox>
+                    <Label text="{i18n>LABEL_28004}: " class="legend legend-type02" />
+                    <Text text="{/contents/A03/data02}" />
+                </HBox>
+                <HBox>
+                    <Label text="{i18n>LABEL_28022}: " class="legend legend-type03" />
+                    <Text text="{/contents/A03/data03}" />
+                </HBox>
+                <HBox>
+                    <Label text="{i18n>LABEL_28023}: " class="legend legend-type04" />
+                    <Text text="{/contents/A03/data04}" />
+                </HBox>
+                <HBox>
+                    <Label text="{i18n>LABEL_28024}: " class="legend legend-type05" />
+                    <Text text="{/contents/A03/data05}" />
+                </HBox>
+            </VBox>
+        </HBox>
+    </VBox>
+</core:FragmentDefinition>
