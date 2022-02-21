@@ -1,22 +1,22 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/core/Fragment',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/FragmentEvent',
+    'sap/ui/yesco/common/mobile/ListStatusPopover',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date',
   ],
   (
     // prettier 방지용 주석
-    Fragment,
     ServiceNames,
     AppUtils,
     TableUtils,
     FragmentEvent,
+    ListStatusPopover,
     Client,
     BaseController
   ) => {
@@ -25,6 +25,7 @@ sap.ui.define(
     return BaseController.extend('sap.ui.yesco.mvc.controller.congratulation.mobile.Congratulation', {
       TableUtils: TableUtils,
       FragmentEvent: FragmentEvent,
+      ListStatusPopover: ListStatusPopover,
       AppUtils: AppUtils,
 
       initializeModel() {
@@ -37,6 +38,15 @@ sap.ui.define(
             dateBox: false,
           },
           Data: [],
+          listInfo: {
+            rowCount: 1,
+            totalCount: 0,
+            progressCount: 0,
+            applyCount: 0,
+            approveCount: 0,
+            rejectCount: 0,
+            completeCount: 0,
+          },
         };
       },
 
@@ -50,6 +60,7 @@ sap.ui.define(
           const aCongList = await this.getAppList();
 
           oViewModel.setProperty('/CongList', aCongList);
+          oViewModel.setProperty('/listInfo/totalCount', _.size(aCongList));
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -66,28 +77,6 @@ sap.ui.define(
         this.getRouter().navTo('mobile/congratulation-detail', { oDataKey: 'N' });
       },
 
-      // 상태값 Popover
-      onPopover(oEvent) {
-        const oButton = oEvent.getSource();
-
-        if (!this._pPopover) {
-          const oView = this.getView();
-
-          this._pPopover = Fragment.load({
-            id: oView.getId(),
-            name: 'sap.ui.yesco.mvc.view.congratulation.mobile.fragment.Popover',
-            controller: this,
-          }).then((oPopover) => {
-            oView.addDependent(oPopover);
-            return oPopover;
-          });
-        }
-
-        this._pPopover.then((oPopover) => {
-          oPopover.openBy(oButton);
-        });
-      },
-
       // 날짜선택
       async onSearchRange() {
         const oViewModel = this.getViewModel();
@@ -98,6 +87,7 @@ sap.ui.define(
           const aCongList = await this.getAppList();
 
           oViewModel.setProperty('/CongList', aCongList);
+          oViewModel.setProperty('/listInfo/totalCount', _.size(aCongList));
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -165,6 +155,7 @@ sap.ui.define(
             const aCongList = await this.getAppList();
 
             oViewModel.setProperty('/CongList', aCongList);
+            oViewModel.setProperty('/listInfo/totalCount', _.size(aCongList));
           }
 
           oViewModel.setProperty('/search/dateBox', bDateRangeBox);

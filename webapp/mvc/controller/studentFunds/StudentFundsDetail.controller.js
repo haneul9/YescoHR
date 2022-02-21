@@ -395,7 +395,7 @@ sap.ui.define(
 
         oDetailModel.setProperty('/FormData/Schtx', '');
         oDetailModel.setProperty('/FormData/Majnm', '');
-
+        oDetailModel.setProperty('/FormData/Slart', 'ALL');
         this.getSupAmount();
         this.getApplyNumber();
       },
@@ -435,7 +435,7 @@ sap.ui.define(
         }
 
         oDetailModel.setProperty('/AcademicSort', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList2 }));
-        oDetailModel.setProperty('/FormData/Slart', 'ALL');
+        // oDetailModel.setProperty('/FormData/Slart', 'ALL');
       },
 
       // 지원횟수 조회
@@ -515,7 +515,7 @@ sap.ui.define(
           '/AmountRate',
           _.chain(oDetailModel.getProperty('/AcademicSort'))
             .find((e) => {
-              return oEvent.getSource().getSelectedKey() === e.Zcode;
+              return vSelected === e.Zcode;
             })
             .get('Zchar1')
             .value()

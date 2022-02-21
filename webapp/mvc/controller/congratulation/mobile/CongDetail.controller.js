@@ -55,6 +55,10 @@ sap.ui.define(
         return 'HR01';
       },
 
+      getCurrentLocationText(oArguments) {
+        return this.getBundleText('LABEL_00195', 'LABEL_02001');
+      },
+
       async onObjectMatched(mArgs) {
         const oDetailModel = this.getViewModel();
 
@@ -396,7 +400,7 @@ sap.ui.define(
         if (!this.byId('targetSettingsDialog')) {
           Fragment.load({
             id: this.getView().getId(),
-            name: 'sap.ui.yesco.mvc.view.congratulation.fragment.TargetDialog',
+            name: 'sap.ui.yesco.mvc.view.congratulation.mobile.fragment.TargetDialog',
             controller: this,
           }).then(async (oDialog) => {
             // connect dialog to the root view of this component (models, lifecycle)
@@ -648,7 +652,7 @@ sap.ui.define(
 
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
                   onClose: () => {
-                    this.getRouter().navTo('congratulation');
+                    this.onNavBack();
                   },
                 });
               } catch (oError) {
@@ -683,7 +687,7 @@ sap.ui.define(
                   AppUtils.setAppBusy(false, this);
                   MessageBox.alert(this.getBundleText('MSG_00039', 'LABEL_00121'), {
                     onClose: () => {
-                      this.getRouter().navTo('congratulation');
+                      this.onNavBack();
                     },
                   });
                 },
@@ -716,7 +720,7 @@ sap.ui.define(
                 success: () => {
                   MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
                     onClose: () => {
-                      this.getRouter().navTo('congratulation');
+                      this.onNavBack();
                     },
                   });
                 },
