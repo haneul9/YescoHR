@@ -67,9 +67,30 @@ sap.ui.define(
         try {
           const oModel = this.getModel(ServiceNames.APPRAISAL);
           const sWerks = this.getAppointeeProperty('Werks');
+          let sMenuId = '';
 
-          // 근태유형 색상
-          // const aList1 = await Client.getEntitySet(oModel, 'TimeTypeLegend', { Werks: this.getAppointeeProperty('Werks') });
+          if (this.getCurrentMenuId() === '5410') {
+            sMenuId = 'A';
+          } else {
+            const mPayLoad = {
+              Mode: '1',
+              Datum: new Date(),
+            };
+            const aTreeList = await Client.getEntitySet(oModel, 'CompAppTree', mPayLoad);
+            const aFormatTree = this.oDataChangeTree(aTreeList);
+
+            sMenuId = 'B';
+            oViewModel.setProperty('/Competency', {
+              Title: aTreeList[0].Stext,
+              Defin: '',
+              CompTree: aFormatTree,
+              Level: '',
+              Count: 0,
+              BehaviIndicat: [],
+            });
+          }
+
+          oViewModel.setProperty('/selectedKey', sMenuId);
         } catch (oError) {
           this.debug(oError);
           AppUtils.handleError(oError);
