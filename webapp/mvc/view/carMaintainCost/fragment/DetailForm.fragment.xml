@@ -29,19 +29,19 @@
             </HBox>
             <Label text="{i18n>LABEL_25005}" visible="{= ${/FormData/Appty} !== 'D' }" />
             <VBox visible="{= ${/FormData/Appty} !== 'D' }">
-                <Input value="{/FormData/Carno}" maxLength="{/FieldLimit/Carno}" editable="{/FormData/Fixed}" class="required"/>
+                <Input value="{/FormData/Carno}" maxLength="{/FieldLimit/Carno}" width="250px" editable="{/FormData/Fixed}" class="required"/>
             </VBox>
             <Label text="{i18n>LABEL_25011}" visible="{= ${/FormData/Appty} !== 'D' }" />
             <VBox visible="{= ${/FormData/Appty} !== 'D' }">
-                <Input value="{/FormData/Carty}" maxLength="{/FieldLimit/Carty}" editable="{/FormData/Fixed}" class="required"/>
+                <Input value="{/FormData/Carty}" maxLength="{/FieldLimit/Carty}" width="250px" editable="{/FormData/Fixed}" class="required"/>
             </VBox>
             <Label text="{i18n>LABEL_25012}" visible="{= ${/FormData/Appty} !== 'D' }" />
             <VBox visible="{= ${/FormData/Appty} !== 'D' }">
-                <Input value="{/FormData/Cc}" maxLength="{/FieldLimit/Cc}" editable="{/FormData/Fixed}" class="required"/>
+                <Input value="{/FormData/Cc}" maxLength="{/FieldLimit/Cc}" liveChange=".onNumberTxt" width="250px" editable="{/FormData/Fixed}" class="required"/>
             </VBox>
             <Label text="{i18n>LABEL_25013}" visible="{= ${/FormData/Appty} !== 'D' }" />
             <VBox visible="{= ${/FormData/Appty} !== 'D' }">
-                <Input value="{/FormData/Caryr}" maxLength="{/FieldLimit/Caryr}" editable="{/FormData/Fixed}" class="required"/>
+                <Input value="{/FormData/Caryr}" maxLength="{/FieldLimit/Caryr}" liveChange=".onNumberTxt" width="250px" editable="{/FormData/Fixed}" class="required"/>
             </VBox>
             <Label text="{i18n>LABEL_25014}" visible="{= ${/FormData/Appty} !== 'D' }" />
             <VBox visible="{= ${/FormData/Appty} !== 'D' }">
@@ -58,7 +58,7 @@
             </VBox>
             <Label text="{i18n>LABEL_25016}" visible="{= ${/FormData/Appty} !== 'D' }" />
             <VBox visible="{= ${/FormData/Appty} !== 'D' }">
-                <Input value="{/FormData/Id}" maxLength="{/FieldLimit/Id}" editable="{/FormData/Fixed}" class="required"/>
+                <Input value="{/FormData/Id}" maxLength="{/FieldLimit/Id}" width="250px" editable="{/FormData/Fixed}" class="required"/>
             </VBox>
             <Label text="{i18n>LABEL_25017}" visible="{= ${/FormData/Appty} !== 'D' }" />
             <VBox visible="{= ${/FormData/Appty} !== 'D' }">
@@ -90,7 +90,7 @@
             </VBox>
             <Label text="{i18n>LABEL_25020}" visible="{= ${/FormData/bPayType} &amp;&amp; ${/FormData/Appty} !== 'D' }" />
             <VBox visible="{= ${/FormData/bPayType} &amp;&amp; ${/FormData/Appty} !== 'D' }">
-                <Input value="{/FormData/Bankn}" maxLength="{/FieldLimit/Bankn}" editable="{/FormData/Fixed}" class="required"/>
+                <Input value="{/FormData/Bankn}" maxLength="{/FieldLimit/Bankn}" liveChange=".onAccountTxt" width="250px" editable="{/FormData/Fixed}" class="required"/>
             </VBox>
             <Label text="{i18n>LABEL_00163}" />
             <VBox>

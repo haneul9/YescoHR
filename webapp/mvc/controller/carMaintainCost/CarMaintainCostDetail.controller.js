@@ -190,6 +190,29 @@ sap.ui.define(
         return sAction;
       },
 
+      // 배기량, 년식 숫자입력
+      onNumberTxt(oEvent) {
+        const oEventSource = oEvent.getSource();
+        const sPath = oEventSource.getBinding('value').getPath();
+        const sValue = oEvent.getParameter('value').trim().replace(/[^\d]/g, '');
+
+        oEventSource.setValue(sValue);
+        oEventSource.getModel().setProperty(sPath, sValue);
+      },
+
+      // 지정계좌번호 입력
+      onAccountTxt(oEvent) {
+        const oEventSource = oEvent.getSource();
+        const sPath = oEventSource.getBinding('value').getPath();
+        const sValue = oEvent
+          .getParameter('value')
+          .trim()
+          .replace(/[^\d || -]/g, '');
+
+        oEventSource.setValue(sValue);
+        oEventSource.getModel().setProperty(sPath, sValue);
+      },
+
       // 신청구분 선택
       onMaintainType(oEvent) {
         const oDetailModel = this.getViewModel();
