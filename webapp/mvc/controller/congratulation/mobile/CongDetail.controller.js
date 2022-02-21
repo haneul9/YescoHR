@@ -55,6 +55,10 @@ sap.ui.define(
         return 'HR01';
       },
 
+      getCurrentLocationText(oArguments) {
+        return this.getBundleText('LABEL_00195', 'LABEL_02001');
+      },
+
       async onObjectMatched(mArgs) {
         const oDetailModel = this.getViewModel();
 
