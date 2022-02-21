@@ -1,0 +1,56 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <VBox class="vCardBox small" busyIndicatorDelay="0" busy="{/contents/A02/busy}">
+        <HBox class="table-toolbar">
+            <HBox class="title">
+                <layoutData>
+                    <FlexItemData growFactor="1" />
+                </layoutData>
+                <Title level="H2" text="{i18n>LABEL_28010}" />
+                <Image src="asset/image/avatar-unknown.svg" width="1.2rem" />
+                <Text text="">
+                    <layoutData>
+                        <FlexItemData growFactor="1" />
+                    </layoutData>
+                </Text>
+                <Button icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" />
+            </HBox>
+        </HBox>
+        <VBox>
+            <layoutData>
+                <FlexItemData growFactor="1" />
+            </layoutData>
+            <HBox width="100%" justifyContent="Center">
+                <Label text="{i18n>LABEL_28020}" />
+            </HBox>
+            <HBox width="100%" justifyContent="SpaceBetween">
+                <HBox>
+                    <ObjectStatus text="M" state="Information" />
+                    <VBox>
+                        <ObjectStatus text="{/contents/A02/data01}" state="Information" />
+                        <ObjectStatus text="{/contents/A02/data02}" state="Information" />
+                    </VBox>
+                </HBox>
+                <HBox>
+                    <Label text="{/contents/A02/tot}" />
+                </HBox>
+                <HBox>
+                    <VBox>
+                        <ObjectStatus text="{/contents/A02/data03}" state="Error" />
+                        <ObjectStatus text="{/contents/A02/data04}" state="Error" />
+                    </VBox>
+                    <ObjectStatus text="Z" state="Error" />
+                </HBox>
+            </HBox>
+            <HBox>
+                <layoutData>
+                    <FlexItemData growFactor="1" />
+                </layoutData>
+                <core:HTML content='&lt;div id="employee-a02-chart-container"&gt;&lt;/div&gt;' />
+            </HBox>
+            <HBox>
+                <Text text="{i18n>MSG_28001}" />
+            </HBox>
+        </VBox>
+    </VBox>
+</core:FragmentDefinition>

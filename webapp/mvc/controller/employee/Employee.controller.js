@@ -155,7 +155,7 @@ sap.ui.define(
             width: '73%',
             busy: true,
             header: {
-              profilePath: 'asset/image/avatar-unknown.svg?ssl=1',
+              profilePath: 'asset/image/avatar-unknown.svg',
               baseInfo: [],
               timeline: null,
             },

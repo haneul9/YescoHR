@@ -1,0 +1,50 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <VBox class="vCardBox small" busyIndicatorDelay="0" busy="{/contents/A04/busy}">
+        <HBox class="table-toolbar">
+            <HBox class="title">
+                <layoutData>
+                    <FlexItemData growFactor="1" />
+                </layoutData>
+                <Title level="H2" text="{i18n>LABEL_28012}" />
+                <Image src="asset/image/avatar-unknown.svg" width="1.2rem" />
+                <Image src="asset/image/avatar-unknown.svg" width="1.2rem" />
+                <Text text="">
+                    <layoutData>
+                        <FlexItemData growFactor="1" />
+                    </layoutData>
+                </Text>
+                <Button icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" />
+            </HBox>
+        </HBox>
+        <HBox>
+            <layoutData>
+                <FlexItemData growFactor="1" />
+            </layoutData>
+            <VBox width="75%">
+                <!-- <layoutData>
+                    <FlexItemData growFactor="1" />
+                </layoutData> -->
+                <core:HTML content='&lt;div id="employee-a04-chart-container"&gt;&lt;/div&gt;'>
+                    <core:layoutData>
+                        <FlexItemData growFactor="1" />
+                    </core:layoutData>
+                </core:HTML>
+            </VBox>
+            <VBox width="25%">
+                <HBox>
+                    <Label text="{i18n>LABEL_28025}: " class="legend legend-type01" />
+                    <Text text="{/contents/A04/data01}" />
+                </HBox>
+                <HBox>
+                    <Label text="{i18n>LABEL_28026}: " class="legend legend-type02" />
+                    <Text text="{/contents/A04/data02}" />
+                </HBox>
+                <HBox>
+                    <Label text="{i18n>LABEL_28004}: " class="legend legend-type03" />
+                    <Text text="{/contents/A04/data03}" />
+                </HBox>
+            </VBox>
+        </HBox>
+    </VBox>
+</core:FragmentDefinition>

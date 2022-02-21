@@ -176,6 +176,8 @@
         { "pattern": "h/notice/{Sdate}/{Seqnr}", "name": "h/notice-detail", "target": "noticeDetail" },
 
         { "pattern": "m/organization", "name": "m/organization", "target": "m/organization" },
+        
+        { "pattern": "m/overviewEmployee", "name": "m/overviewEmployee", "target": "m/overviewEmployee" },
 
         { "pattern": "paystub", "name": "paystub", "target": "paystub" },
         { "pattern": "paystub/{seqnr}", "name": "paystub-detail", "target": "paystubDetail" },
@@ -286,6 +288,8 @@
         "noticeDetail": { "viewId": "noticeDetail", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "NoticeDetail" },
 
         "m/organization": { "viewId": "m_organization", "viewPath": "sap.ui.yesco.mvc.view.organization", "viewName": "Main" },
+        
+        "m/overviewEmployee": { "viewId": "m_overviewEmployee", "viewPath": "sap.ui.yesco.mvc.view.overviewEmployee", "viewName": "Main" },
 
         "paystub": { "viewId": "paystub", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "List" },
         "paystubDetail": { "viewId": "paystubDetail", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "Detail" },
