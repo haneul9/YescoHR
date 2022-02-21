@@ -51,13 +51,15 @@
 					</CustomListItem>
 				</List>
 			</custom:MobileScrollContainer>
-			<HBox>
+		</VBox>
+		<footer>
+			<OverflowToolbar>
 				<Button text="{i18n>LABEL_00121}" type="Emphasized" width="100%" press=".onClick">
 					<layoutData>
 						<FlexItemData growFactor="1"/>
 					</layoutData>
 				</Button>
-			</HBox>
-		</VBox>
+			</OverflowToolbar>
+		</footer>
 	</Page>
 </mvc:View>
