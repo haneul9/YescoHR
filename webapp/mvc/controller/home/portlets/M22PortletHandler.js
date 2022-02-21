@@ -52,12 +52,27 @@ sap.ui.define(
               type: 'mscolumn2d',
               renderAt: `${this.sChartId}-container`,
               width: '100%',
-              height: 174,
+              height: '100%',
               dataFormat: 'json',
               dataSource: {
                 chart: this.getChartOption(),
                 categories: [this.getChartCategory()],
-                dataset: this.getChartDataSet(),
+                dataset: this.getChartDataSet({
+                  lastYear: {
+                    a: 0,
+                    b: 0,
+                    c: 0,
+                    d: 0,
+                    x: 0,
+                  },
+                  thisYear: {
+                    a: 0,
+                    b: 0,
+                    c: 0,
+                    d: 0,
+                    x: 0,
+                  },
+                }),
               },
               events: {
                 rendered: resolve,
@@ -89,6 +104,8 @@ sap.ui.define(
           this.setChartData(mPortletData); // 다른 메뉴를 갔다가 되돌아오는 경우
         }
 
+        mPortletData.Datum = new Date();
+
         return mPortletData;
       },
 
@@ -98,7 +115,22 @@ sap.ui.define(
           {
             chart: this.getChartOption(),
             categories: [this.getChartCategory()],
-            dataset: this.getChartDataSet(mPortletData),
+            dataset: this.getChartDataSet({
+              lastYear: {
+                a: 168,
+                b: 100,
+                c: 115,
+                d: 134,
+                x: 0,
+              },
+              thisYear: {
+                a: 173,
+                b: 120,
+                c: 102,
+                d: 110,
+                x: 0,
+              },
+            }),
           },
           'json'
         );
@@ -109,10 +141,26 @@ sap.ui.define(
 
       getChartOption() {
         return {
-          drawCrossLine: 1,
-          showValues: 0,
-          bgColor: 'transparent',
+          animation: 0,
+          showValues: 1,
+          rotateValues: 0,
+          placeValuesInside: 0,
+          yAxisValueFontSize: 9,
+          yAxisMaxValue: 230,
+          numDivLines: 3,
+          divLineDashed: 0,
+          divLineColor: '#eeeeee',
+          maxColWidth: 23,
           theme: 'ocean',
+          bgColor: 'transparent',
+          valueFontSize: 9,
+          valueFontColor: '#000000',
+          valueBgColor: '#ffffff',
+          showPlotBorder: 1,
+          plotBorderThickness: 3,
+          plotBorderColor: '#ffffff',
+          chartBottomMargin: 0,
+          drawCustomLegendIcon: 1,
         };
       },
 
@@ -138,38 +186,38 @@ sap.ui.define(
       getChartDataSet(mPortletData) {
         return [
           {
-            seriesname: AppUtils.getBundleText('LABEL_01207'), // 전년
+            seriesName: AppUtils.getBundleText('LABEL_01207'), // 전년
             color: '#7bb4eb',
             data: [
               {
-                value: 168,
+                value: mPortletData.lastYear.a,
               },
               {
-                value: 100,
+                value: mPortletData.lastYear.b,
               },
               {
-                value: 115,
+                value: mPortletData.lastYear.c,
               },
               {
-                value: 134,
+                value: mPortletData.lastYear.d,
               },
             ],
           },
           {
-            seriesname: AppUtils.getBundleText('LABEL_01208'), // 금년
+            seriesName: AppUtils.getBundleText('LABEL_01208'), // 금년
             color: '#ffe479',
             data: [
               {
-                value: 173,
+                value: mPortletData.thisYear.a,
               },
               {
-                value: 120,
+                value: mPortletData.thisYear.b,
               },
               {
-                value: 102,
+                value: mPortletData.thisYear.c,
               },
               {
-                value: 110,
+                value: mPortletData.thisYear.d,
               },
             ],
           },

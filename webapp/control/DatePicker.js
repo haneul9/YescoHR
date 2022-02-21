@@ -1,14 +1,16 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/m/DatePicker',
+    'sap/m/Button',
     'sap/m/ButtonType',
+    'sap/m/DatePicker',
     'sap/ui/yesco/common/AppUtils',
   ],
   (
     // prettier 방지용 주석
-    DatePicker,
+    Button,
     ButtonType,
+    DatePicker,
     AppUtils
   ) => {
     'use strict';
