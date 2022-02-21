@@ -68,7 +68,6 @@ sap.ui.define(
 
         oDetailModel.setData(this.initializeModel());
         oDetailModel.setProperty('/busy', true);
-        // this.setTextEditor();
 
         try {
           const sSdate = new Date(parseInt(oParameter.Sdate)) || oParameter.Sdate;
@@ -117,6 +116,7 @@ sap.ui.define(
             oDetailModel.setProperty('/FormData', oTargetData);
           }
 
+          // this.setTextEditor();
           this.settingsAttachTable();
         } catch (oError) {
           AppUtils.handleError(oError);
@@ -338,22 +338,24 @@ sap.ui.define(
           this.byId('EditorBox').destroyItems();
         }
 
+        const oDetailModel = this.getViewModel();
+        const bStat = !!oDetailModel.getProperty('/MySelf') && !!oDetailModel.getProperty('/Hass');
+
         const oRichTextEditor = new RTE('myRTE', {
           editorType: sap.ui.richtexteditor.EditorType.TinyMCE4, // 'TinyMCE4',
           layoutData: new sap.m.FlexItemData({ growFactor: 1 }),
           width: '99.8%',
           height: '500px',
-          customToolbar: true,
-          showGroupFont: true,
-          showGroupInsert: true,
+          customToolbar: bStat,
+          showGroupFont: bStat,
+          showGroupInsert: bStat,
+          showGroupTextAlign: bStat,
+          showGroupStructure: bStat,
+          showGroupFontStyle: bStat,
+          showGroupClipboard: bStat,
           sanitizeValue: false,
-          value: '{/FormData/Detail}',
-          editable: {
-            parts: [{ path: '/MySelf' }, { path: '/Hass' }],
-            formatter: (v1, v2) => {
-              return !!v1 && !!v2;
-            },
-          },
+          value: oDetailModel.getProperty('/FormData/Detail'),
+          editable: bStat,
           ready: function () {
             this.addButtonGroup('styleselect').addButtonGroup('table');
           },

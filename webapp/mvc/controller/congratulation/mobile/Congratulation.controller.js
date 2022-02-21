@@ -176,7 +176,7 @@ sap.ui.define(
       },
 
       onSelectRow(oEvent) {
-        const vPath = oEvent.getParameters().rowBindingContext.getPath();
+        const vPath = oEvent.getSource().getBindingContext().getPath();
         const oRowData = this.getViewModel().getProperty(vPath);
 
         this.getRouter().navTo('mobile/congratulation-detail', { oDataKey: oRowData.Appno });

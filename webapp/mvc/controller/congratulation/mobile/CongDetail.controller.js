@@ -4,7 +4,6 @@ sap.ui.define(
     'sap/ui/core/Fragment',
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
@@ -21,7 +20,6 @@ sap.ui.define(
     Fragment,
     Filter,
     FilterOperator,
-    JSONModel,
     Appno,
     AppUtils,
     AttachFileAction,
@@ -50,12 +48,6 @@ sap.ui.define(
           BenefitRelation: [],
           busy: false,
         };
-      },
-
-      getCurrentLocationText(oArguments) {
-        const sAction = oArguments.oDataKey === 'N' ? this.getBundleText('LABEL_04002') : this.getBundleText('LABEL_00165');
-
-        return sAction;
       },
 
       // override AttachFileCode
@@ -206,7 +198,6 @@ sap.ui.define(
           success: (oData) => {
             if (oData) {
               const oResult = oData.results;
-              const oRelationBtn = this.byId('RelationBtn');
               const oRelationTxt = this.byId('RelationTxt');
               const oBirthDatePicker = this.byId('BirthDatePicker');
 
@@ -216,11 +207,9 @@ sap.ui.define(
               if (!oFormData.ZappStatAl || oFormData.ZappStatAl === '10') {
                 if (!!oResult[0] && oResult[0].Zcode === 'ME') {
                   this.onTargetDialog();
-                  oRelationBtn.setVisible(false);
                   oRelationTxt.setEditable(false);
                   oBirthDatePicker.setEditable(false);
                 } else {
-                  oRelationBtn.setVisible(true);
                   oRelationTxt.setEditable(true);
                   oBirthDatePicker.setEditable(true);
                 }
@@ -262,11 +251,9 @@ sap.ui.define(
                 oDetailModel.setProperty('/FormData/Kdsvh', 'ALL');
               }
 
-              const oRelationBtn = this.byId('RelationBtn');
               const oRelationTxt = this.byId('RelationTxt');
               const oBirthDatePicker = this.byId('BirthDatePicker');
 
-              oRelationBtn.setVisible(true);
               oRelationTxt.setEditable(true);
               oBirthDatePicker.setEditable(true);
               oDetailModel.setProperty('/TargetList', []);
@@ -308,7 +295,6 @@ sap.ui.define(
           success: (oData) => {
             if (oData) {
               const oResult = oData.results;
-              const oRelationBtn = this.byId('RelationBtn');
               const oRelationTxt = this.byId('RelationTxt');
               const oBirthDatePicker = this.byId('BirthDatePicker');
 
@@ -320,13 +306,11 @@ sap.ui.define(
                 if (!!oResult[0] && oResult[0].Zcode === 'ME') {
                   oDetailModel.setProperty('/BenefitRelation', oResult);
                   this.onTargetDialog();
-                  oRelationBtn.setVisible(false);
                   oRelationTxt.setEditable(false);
                   oBirthDatePicker.setEditable(false);
                 } else {
                   oDetailModel.setProperty('/BenefitRelation', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: oResult }));
                   oDetailModel.setProperty('/FormData/Kdsvh', 'ALL');
-                  oRelationBtn.setVisible(true);
                   oRelationTxt.setEditable(true);
                   oBirthDatePicker.setEditable(true);
                 }
@@ -343,7 +327,6 @@ sap.ui.define(
       onRelationChange(oEvent) {
         const oDetailModel = this.getViewModel();
         const sSelectKey = oEvent.getSource().getSelectedKey();
-        const oRelationBtn = this.byId('RelationBtn');
         const oRelationTxt = this.byId('RelationTxt');
         const oBirthDatePicker = this.byId('BirthDatePicker');
 
@@ -351,13 +334,11 @@ sap.ui.define(
 
         if (!!sSelectKey && sSelectKey === 'ME') {
           this.onTargetDialog();
-          oRelationBtn.setVisible(false);
           oRelationTxt.setEditable(false);
           oBirthDatePicker.setEditable(false);
         } else {
           oDetailModel.setProperty('/FormData/Zbirthday', null);
           oDetailModel.setProperty('/FormData/Zname', '');
-          oRelationBtn.setVisible(true);
           oRelationTxt.setEditable(true);
           oBirthDatePicker.setEditable(true);
         }
@@ -468,7 +449,7 @@ sap.ui.define(
                 const oChildList = [];
 
                 oTargetList.forEach((e) => {
-                  if (oTargetList.length !== 0 && (!oFormData.Kdsvh || oFormData.Kdsvh === e.Kdsvh)) {
+                  if (!_.isEmpty(oTargetList) && (!oFormData.Kdsvh || oFormData.Kdsvh === e.Kdsvh)) {
                     oChildList.push(e);
                   }
                 });
@@ -599,7 +580,7 @@ sap.ui.define(
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.APPTP);
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/ConExpenseApplSet', oSendObject, {
@@ -653,7 +634,7 @@ sap.ui.define(
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.APPTP);
+                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
                 await new Promise((resolve, reject) => {
                   oModel.create('/ConExpenseApplSet', oSendObject, {
                     success: () => {
@@ -757,7 +738,7 @@ sap.ui.define(
 
         AttachFileAction.setAttachFile(this, {
           Editable: !sStatus || sStatus === '10',
-          Type: this.APPTP,
+          Type: this.getApprovalType(),
           Appno: sAppno,
           Max: 10,
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],

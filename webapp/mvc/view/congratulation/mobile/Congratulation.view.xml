@@ -27,7 +27,7 @@
 					<core:Icon src="sap-icon://message-information" size="20px" press=".onPopover" />
 				</HBox>
 				<List items="{path: '/CongList'}" busyIndicatorDelay="0" busy="{/busy}">
-					<CustomListItem type="Active" press=".onRowClick">
+					<CustomListItem type="Active" press=".onSelectRow">
 						<grid:CSSGrid gridTemplateColumns="2fr 2fr 1fr" gridGap="1px 0">
 							<Text text="{Conretx}"/>
 							<Text text="{Famtx}"/>
@@ -52,7 +52,7 @@
 				</List>
 			</custom:MobileScrollContainer>
 			<HBox>
-				<Button text="{i18n>LABEL_00121}" type="Emphasized" width="100%">
+				<Button text="{i18n>LABEL_00121}" type="Emphasized" width="100%" press=".onClick">
 					<layoutData>
 						<FlexItemData growFactor="1"/>
 					</layoutData>
