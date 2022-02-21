@@ -1836,36 +1836,3 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .mobile-only {display: none!important;}
 .sapMPageHeader {display: none;}
 .sapUiSizeCompact .sapMPageWithHeader>section {top:0;}
-
-/* MOBILE */
-.sapUiMedia-StdExt-Phone .mobile-only {display: inherit!important;}
-.sapUiMedia-StdExt-Phone .sapMPageEnableScrolling{padding:0 0.0rem;background-color:#EBEEF2;}
-
-.sapUiMedia-StdExt-Phone .sapMPageHeader + .sapMPageEnableScrolling {margin-top: 2.6rem;}
-
-.sapUiMedia-StdExt-Phone .sapUiBody {background-color:#EBEEF2;}
-.sapUiMedia-StdExt-Phone .app-body {position: relative !important; height: calc(100% - 60px) !important; background-color: transparent;}
-
-.sapUiMedia-StdExt-Phone .sapMPageHeader {display: block;text-align:center;height: 2.6rem;line-height:2.6rem;background-color:#fff;}
-.sapUiMedia-StdExt-Phone .sapMPageHeader .sapMBarContainer {display:flex;align-items: center;}
-.sapUiMedia-StdExt-Phone .sapUiSizeCompact .sapMPageHeader .sapMIBar {height:100%;}
-.sapUiMedia-StdExt-Phone .sapMBarMiddle { background-color:#fff; text-align: center;}
-.sapUiMedia-StdExt-Phone .sapMIBar.sapMBar .sapMBarChild:first-child {font-size: 1.2rem;margin: 0 auto;}
-
-.sapUiMedia-StdExt-Phone .contents-header {display: none;}
-
-.sapUiMedia-StdExt-Phone .contents {width:100%;max-width: inherit;min-width: auto;margin-top: 0;}
-
-.sapUiMedia-StdExt-Phone .app-menu-toolbar {width:100%;}
-
-/* .sapUiMedia-StdExt-Phone [data-sap-ui=container-ehr---home--portlets-grid] {grid-template-columns: repeat(1, 100%)!important;grid-gap: 16px!important;padding: 0 0.8rem;} */
-.sapUiMedia-StdExt-Phone .portlet-box {border-radius: 8px;}
-.sapUiMedia-StdExt-Phone .portlet-header {justify-content: space-between;display: flex;}
-.sapUiMedia-StdExt-Phone .portlet-header h2.sapMTitle {font-size: 1.1rem;}
-
-.sapUiMedia-StdExt-Phone .app-menu-toolbar:before {display: none;}
-.sapUiMedia-StdExt-Phone .app-menu-toolbar:after {border-bottom:0;}
-
-
-
-.sapUiMedia-StdExt-Phone .mobile-top {position:sticky;top:0;z-index: 99;}
