@@ -1,40 +1,20 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.congratulation.mobile.Congratulation"
 	xmlns="sap.m"
-	xmlns:core="sap.ui.core"
 	xmlns:grid="sap.ui.layout.cssgrid"
+	xmlns:core="sap.ui.core"
 	xmlns:custom="sap.ui.yesco.control"
 	xmlns:mvc="sap.ui.core.mvc">
 	<Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
 		<VBox>
-			<SegmentedButton width="100%" selectedKey="{/search/dateRange}" selectionChange=".onSearchList" class="sapUiSmallMarginTop">
-				<items>
-					<SegmentedButtonItem text="{i18n>LABEL_00190}" key="1w" />
-					<SegmentedButtonItem text="{i18n>LABEL_00191}" key="1m" />
-					<SegmentedButtonItem text="{i18n>LABEL_00192}" key="3m" />
-					<SegmentedButtonItem text="{i18n>LABEL_00193}" key="6m" />
-					<SegmentedButtonItem text="{i18n>LABEL_00194}" key="12m" />
-					<SegmentedButtonItem text="..." key="0" />
-				</items>
-			</SegmentedButton>
-			<custom:DateRangeSelection visible="{/search/dateBox}" dateValue="{ path: '/search/date', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/search/secondDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" change=".onSearchRange" class="sapIcon_Date" />
+			<core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.OverviewListHeader" type="XML" />
 			<custom:MobileScrollContainer horizontal="false" vertical="true">
-				<HBox justifyContent="SpaceBetween">
-					<HBox class="header">
-						<Title level="H3" text="{= !!${/listInfo/Title} ? ${/listInfo/Title} : ${i18n>LABEL_00129} }" class="sapUiSmallMarginEnd" />
-						<Text text="total {/listInfo/totalCount}" />
-						<Text text="{/listInfo/infoMessage}" visible="{= !!${/listInfo/infoMessage} }" class="desc-txt" />
-					</HBox>
-					<core:Icon src="sap-icon://message-information" size="20px" press=".onPopover" />
-				</HBox>
 				<List items="{path: '/CongList'}" busyIndicatorDelay="0" busy="{/busy}">
 					<CustomListItem type="Active" press=".onSelectRow">
 						<grid:CSSGrid gridTemplateColumns="2fr 2fr 1fr" gridGap="1px 0">
 							<Text text="{Conretx}"/>
 							<Text text="{Famtx}"/>
-							<Text text="{
-								path: 'ZappStatAl',
-								formatter: '.TableUtils.StatusTxt'
-							}"/>
+							<core:Icon src="sap-icon://circle-task-2" width="16px" height="16px" class="pr-5-px">
+							</core:Icon>
 							<Text text="{Zname}"/>
 							<Text text="{
 									path: 'Conddate',
@@ -44,9 +24,13 @@
 									}
 							}"/>
 							<Text text="{
-								path: 'ZappStatAl',
-								formatter: '.TableUtils.StatusTxt'
-							}" class="sapMText" />
+									path: 'ZappStatAl',
+									formatter: '.TableUtils.StatusTxt'
+								}" class="sapMText">
+								<customData>
+									<core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
+								</customData>
+							</Text>
 						</grid:CSSGrid>
 					</CustomListItem>
 				</List>
