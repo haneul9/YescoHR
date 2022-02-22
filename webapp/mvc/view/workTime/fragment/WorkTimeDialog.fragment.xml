@@ -36,8 +36,8 @@
       </VBox>
       <VBox class="vCardBox">
         <HBox alignItems="Center" class="table-toolbar" justifyContent="SpaceBetween">
-            <HBox class="">
-              <Title level="H2" text="{i18n>LABEL_02023}" />
+            <HBox class="title">
+              <Title level="H4" text="{i18n>LABEL_02023}" />
               <Text text="{i18n>MSG_27003}" class="desc-txt" />
             </HBox>
           <HBox>
