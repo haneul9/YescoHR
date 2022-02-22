@@ -7,12 +7,15 @@
                 <Title level="H4" text="" />
             </HBox>
             <HBox class="status-wrap perGrade">
-                <Text text="{/grade/0/text}" class="type02" />
-                <Text text="{/grade/1/text}" class="type07" />
-                <Text text="{/grade/2/text}" class="type05" />
+                <Text text="{/grade/0/text}" class="type01" />
+                <Text text="{/grade/1/text}" class="type02" />
+                <Text text="{/grade/2/text}" class="type03" />
             </HBox>
         </HBox>
-        <table:Table rows="{ path: '/raw/List', templateShareable: true }" visibleRowCount="{/raw/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
+        <table:Table class="perGrade-table" rows="{ path: '/tab/list', templateShareable: true }" visibleRowCount="{/tab/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
+            <table:rowSettingsTemplate>
+                <table:RowSettings highlight="{ path: 'Fapp', formatter: '.formatRowHighlight' }"/>
+            </table:rowSettingsTemplate>
             <table:columns>
                 <table:Column width="4%" filterProperty="Idx" sortProperty="Idx">
                     <Label text="No."/>
@@ -20,10 +23,10 @@
                         <Text text="{Idx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
-                <table:Column width="10%" filterProperty="Pernr" sortProperty="Pernr">
+                <table:Column width="10%" filterProperty="Zzappee" sortProperty="Zzappee">
                     <Label text="{i18n>LABEL_00209}"/>
                     <table:template>
-                        <Text text="{Pernr}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                        <Text text="{ path: 'Zzappee', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
                 <table:Column width="10%" filterProperty="Ename" sortProperty="Ename">
@@ -47,13 +50,13 @@
                 <table:Column width="10%" filterProperty="Zapgme" sortProperty="Zapgme">
                     <Label text="{i18n>LABEL_10003}"/>
                     <table:template>
-                        <Text text="{Zapgme}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                        <Text text="{ path: 'Zapgme', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
                 <table:Column width="10%" filterProperty="Zapgma" sortProperty="Zapgma">
                     <Label text="{i18n>LABEL_10022}"/>
                     <table:template>
-                        <Text text="{Zapgma}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                        <Text text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
                 <table:Column width="10%" filterProperty="Fapp" sortProperty="Fapp">
@@ -67,13 +70,13 @@
                 <table:Column width="10%">
                     <Label text="{i18n>LABEL_00165}"/>
                     <table:template>
-                        <Text text="{Zdocid}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                        <Button type="Transparent" class="mnw-0" icon="asset/image/icon_per_status_04.png" visible="{= !!${Zdocid} }"/>
                     </table:template>
                 </table:Column>
                 <table:Column width="10%">
                     <Label text="{i18n>LABEL_10079}"/>
                     <table:template>
-                        <Text text="{Pernr}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                        <Button type="Transparent" class="mnw-0" icon="asset/image/icon_timeline01.png" visible="{= !!${Zzappee} }"/>
                     </table:template>
                 </table:Column>
             </table:columns>
