@@ -12,7 +12,9 @@
       <table:Column width="100px" visible="{/Hass}">
         <Label text="{i18n>LABEL_08006}"/>
         <table:template>
-          <CheckBox selected="{= !!${Hide} }" width="100%" textAlign="Center" editable="false" class="tableListAlign"/>
+          <VBox alignItems="Center">
+            <CheckBox selected="{= !!${Hide} }" width="100%" textAlign="Center" editable="false" class="tableListAlign"/>
+          </VBox>
         </table:template>
       </table:Column>
       <table:Column width="120px" sortProperty="Sdate" filterProperty="Sdate" visible="{/Hass}">
@@ -39,7 +41,9 @@
       <table:Column width="100px" visible="{/Hass}">
         <Label text="{i18n>LABEL_08007}"/>
         <table:template>
-          <CheckBox selected="{= !!${Impor} }" width="100%" textAlign="Center" editable="false" class="tableListAlign"/>
+          <VBox alignItems="Center">
+            <CheckBox selected="{= !!${Impor} }" width="100%" textAlign="Center" editable="false"/>
+          </VBox>
         </table:template>
       </table:Column>
     </table:columns>
