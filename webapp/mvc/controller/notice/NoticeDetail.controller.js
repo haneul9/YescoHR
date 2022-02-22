@@ -116,7 +116,10 @@ sap.ui.define(
             oDetailModel.setProperty('/FormData', oTargetData);
           }
 
-          // this.setTextEditor();
+          setTimeout(() => {
+            this.setTextEditor();
+          }, 100);
+
           this.settingsAttachTable();
         } catch (oError) {
           AppUtils.handleError(oError);
@@ -340,10 +343,9 @@ sap.ui.define(
 
         const oDetailModel = this.getViewModel();
         const bStat = !!oDetailModel.getProperty('/MySelf') && !!oDetailModel.getProperty('/Hass');
-
         const oRichTextEditor = new RTE('myRTE', {
           editorType: sap.ui.richtexteditor.EditorType.TinyMCE4, // 'TinyMCE4',
-          layoutData: new sap.m.FlexItemData({ growFactor: 1 }),
+          // layoutData: new sap.m.FlexItemData({ growFactor: 1 }),
           width: '99.8%',
           height: '500px',
           customToolbar: bStat,
@@ -353,7 +355,6 @@ sap.ui.define(
           showGroupStructure: bStat,
           showGroupFontStyle: bStat,
           showGroupClipboard: bStat,
-          sanitizeValue: false,
           value: oDetailModel.getProperty('/FormData/Detail'),
           editable: bStat,
           ready: function () {
