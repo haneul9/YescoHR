@@ -5,9 +5,9 @@
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control">
   <Page enableScrolling="false" floatingFooter="true" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
-    <custom:MobileScrollContainer horizontal="false" vertical="true" excludeBottomSelector=".sapMPageFooter">
+    <custom:MobileScrollContainer horizontal="false" vertical="true" excludeBottomSelector=".sapMPageHeader">
       <VBox busyIndicatorDelay="0" busy="{/busy}">
-        <grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="1px 0">
+        <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="7px 0" class="form-grid">
           <Label text="{i18n>LABEL_02013}"/>
           <VBox>
             <ComboBox id="BenefitType" items="{/BenefitType}" selectedKey="{/FormData/Concode}" change="onTypeChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
@@ -67,10 +67,10 @@
     </custom:MobileScrollContainer>
     <footer>
       <OverflowToolbar>
-        <Button text="{i18n>LABEL_00104}" type="Emphasized" press=".onSaveBtn" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="sapUiTinyMarginEnd" />
-        <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="sapUiTinyMarginEnd" />
+        <Button text="{i18n>LABEL_00104}" type="Emphasized" press=".onSaveBtn" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+        <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
         <Button text="{i18n>LABEL_00118}" type="Default" press=".onCancelBtn" visible="{= ${/FormData/ZappStatAl} === '20' }" class="sapUiTinyMarginEnd" />
-        <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= ${/FormData/ZappStatAl} === '10' || ${/FormData/ZappStatAl} === '45' }" class="sapUiTinyMarginEnd" />
+        <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= ${/FormData/ZappStatAl} === '10' || ${/FormData/ZappStatAl} === '45' }" />
       </OverflowToolbar>
     </footer>
   </Page>

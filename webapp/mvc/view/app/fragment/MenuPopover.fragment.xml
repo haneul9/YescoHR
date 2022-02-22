@@ -13,7 +13,7 @@
           </layoutData>
           <items>
             <IconTabFilter text="인사" key="인사">
-              <VBox class="menu-list">                
+              <VBox class="menu-list">
                 <Link text="사원프로파일"	press="handleLinkPress" />
                 <Link text="가족변경사항신청"	press="handleLinkPress" />
                 <Link text="인재검색"	press="handleLinkPress" />
