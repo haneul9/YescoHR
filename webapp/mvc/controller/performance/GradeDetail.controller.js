@@ -10,6 +10,7 @@ sap.ui.define(
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/performance/constant/Constants',
     'sap/ui/yesco/mvc/model/type/Pernr',
+    'sap/ui/yesco/mvc/model/type/Decimal',
   ],
   (
     // prettier 방지용 주석
@@ -28,6 +29,10 @@ sap.ui.define(
       initializeModel() {
         return {
           busy: false,
+          tab: {
+            selectedKey: 'A',
+            list: [],
+          },
           grade: [],
           summary: {
             ZzapstsNm: '2차평가중',
@@ -127,11 +132,11 @@ sap.ui.define(
             { Label: this.getBundleText('LABEL_10077'), Ztotcnt: '0', Zgrade1: '0', Zgrade2: '0', Zgrade3: '0' },
           ]);
 
-          oViewModel.setProperty('/raw/rowCount', Math.min(_.size(mDetailData.Appraisal2GDocDetSet.results), 10));
-          oViewModel.setProperty(
-            '/raw/list',
-            _.map(mDetailData.Appraisal2GDocDetSet.results, (o) => _.omit(o, '__metadata'))
-          );
+          const aRawData = _.map(mDetailData.Appraisal2GDocDetSet.results, (o, i) => ({ Idx: ++i, ..._.omit(o, '__metadata') }));
+
+          oViewModel.setProperty('/raw/list', aRawData);
+          oViewModel.setProperty('/tab/list', aRawData);
+          oViewModel.setProperty('/tab/rowCount', Math.min(_.size(aRawData), 10));
 
           this.calculateByDepart();
         } catch (oError) {
@@ -197,11 +202,17 @@ sap.ui.define(
         oViewModel.setProperty('/department/list', [...aListByDepart, mSumRow]);
       },
 
-      setTableData({ oViewModel, aRowData }) {
-        const oTable = this.byId('gradeTable');
-
-        oViewModel.setProperty('/list', aRowData);
-        oViewModel.setProperty('/listInfo/rowCount', _.get(TableUtils.count({ oTable, aRowData }), 'rowCount', 1));
+      formatRowHighlight(sValue) {
+        switch (_.toNumber(sValue)) {
+          case 3:
+            return sap.ui.core.IndicationColor.Indication01;
+          case 2:
+            return sap.ui.core.IndicationColor.Indication02;
+          case 1:
+            return sap.ui.core.IndicationColor.Indication03;
+          default:
+            return null;
+        }
       },
 
       /*****************************************************************
@@ -211,14 +222,14 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const sPath = oEvent.getParameters().rowBindingContext.getPath();
         const oRowData = oViewModel.getProperty(sPath);
+        const aRawData = oViewModel.getProperty('/raw/list');
+        const aFilteredData = _.filter(aRawData, (o) => _.isEqual(o.Orgeh, oRowData.Orgeh));
 
-        if (!_.isEqual(oRowData.Godetl, 'X')) {
-          MessageBox.alert(this.getBundleText('MSG_10006')); // 현재 평가상태에서는 상세내역을 조회하실 수 없습니다.
-          return;
-        }
-
-        oViewModel.setProperty('/parameter/rowData', { ...oRowData });
-        this.getRouter().navTo('m/performanceGrade-detail', { group: oRowData.Zzappgr });
+        oViewModel.setProperty(
+          '/tab/list',
+          _.map(aFilteredData, (o, i) => _.set(o, 'Idx', ++i))
+        );
+        oViewModel.setProperty('/tab/rowCount', Math.min(_.size(aFilteredData), 10));
       },
 
       /*****************************************************************
