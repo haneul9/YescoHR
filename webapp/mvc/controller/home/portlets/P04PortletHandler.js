@@ -61,11 +61,6 @@ sap.ui.define(
           });
 
           this.refreshMyMembers();
-          // const sMessage = AppUtils.getBundleText('MSG_00007', 'LABEL_00110'); // {삭제}되었습니다.
-          // MessageBox.alert(sMessage, {
-          //   onClose: () => {
-          //   },
-          // });
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {

@@ -9,6 +9,7 @@ sap.ui.define(
     'sap/ui/yesco/mvc/controller/app/control/Menus',
     'sap/ui/yesco/mvc/model/type/Date', // XML expression binding용 type preloading
     'sap/ui/yesco/mvc/model/type/Time',
+    'sap/ui/yesco/mvc/model/type/Pernr',
   ],
   (
     // prettier 방지용 주석
@@ -73,22 +74,24 @@ sap.ui.define(
 
       handleResponsivePopoverPress: function (oEvent) {
         var oButton = oEvent.getSource();
-  
+
         if (!this._oPopover) {
           Fragment.load({
-            name: "sap.ui.yesco.mvc.view.app.fragment.MenuPopover",
-            controller: this
-          }).then(function(oPopover){
-            this._oPopover = oPopover;
-            this.getView().addDependent(this._oPopover);
-            this._oPopover.bindElement("/ProductCollection/0");
-            this._oPopover.openBy(oButton);
-          }.bind(this));
+            name: 'sap.ui.yesco.mvc.view.app.fragment.MenuPopover',
+            controller: this,
+          }).then(
+            function (oPopover) {
+              this._oPopover = oPopover;
+              this.getView().addDependent(this._oPopover);
+              this._oPopover.bindElement('/ProductCollection/0');
+              this._oPopover.openBy(oButton);
+            }.bind(this)
+          );
         } else {
           this._oPopover.openBy(oButton);
         }
       },
-  
+
       handleCloseButton: function (oEvent) {
         this._oPopover.close();
       },

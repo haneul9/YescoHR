@@ -21,7 +21,7 @@
     </HBox>
     <HBox class="portlet-body">
       <VBox width="100%">
-        <HBox width="100%" height="30px">
+        <HBox width="100%" height="35px">
           <Text text="{i18n>LABEL_01202}" />
           <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Month' }" class="ml-5-px" />
         </HBox>

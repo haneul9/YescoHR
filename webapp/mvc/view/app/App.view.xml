@@ -15,7 +15,7 @@
 
     <ToolbarSpacer />
 
-    <GenericTile frameType="Auto" width="auto" class="my-info" press=".navToProfile" tooltip="{sessionModel>/Pernr}">
+    <GenericTile frameType="Auto" width="auto" class="my-info" press=".navToProfile" tooltip="{ path: 'sessionModel>/Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }">
       <TileContent>
         <HBox justifyContent="End" alignItems="Center" height="100%">
           <Text text="{sessionModel>/Ename}" class="name" />

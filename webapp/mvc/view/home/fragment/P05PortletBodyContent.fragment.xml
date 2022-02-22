@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core">
-  <ScrollContainer>
+  <ScrollContainer class="mt-10-px">
     <layoutData>
       <FlexItemData growFactor="1" maxWidth="100%" />
     </layoutData>

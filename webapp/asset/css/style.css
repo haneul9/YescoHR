@@ -54,7 +54,7 @@ html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl) {text-decoration:none}
 html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet .sapMObjStatusLink:hover .sapMObjStatusText {text-decoration:none}
 .portlet-box {position:relative; border:1px solid whitesmoke; border-radius:10px; padding:20px; background-color:#fff; box-shadow:0px 2px 4px rgb(0 0 0 / 16%)}
-.portlet-header {margin-top:-0px; margin-bottom:20px; width:100%; height:24px; align-items:flex-end}
+.portlet-header {margin-bottom:10px; width:100%; height:24px; align-items:flex-end}
 .portlet-header > .sapMFlexItem + .sapMFlexItem {margin-left:5px}
 .portlet-header h2.sapMTitle {vertical-align:middle; font-size:20px; font-weight:700}
 .sapUiSizeCompact .portlet-header .sapMSegB {height:30px; margin-left:10px; margin-bottom:-3px; background-color:#e9e9e9; border-radius:8px; min-width:130px}
@@ -68,7 +68,7 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet .sapMBtn.icon-button .sapMBtnIcon {color:#222; font-weight:200}
 .portlet .sapMBtn.icon-button.portlet-close-icon .sapMBtnIcon {font-size:20px}
 .portlet .sapMBtn.icon-button.portlet-link-icon .sapMBtnIcon {font-size:18px; line-height:110%}
-.portlet-header + .portlet-body {height:calc(100% - 44px)}
+.portlet-header + .portlet-body {height:calc(100% - 34px)}
 .portlet-body {width:100%; height:100%}
 .portlet-body > .sapMFlexBoxScroll .sapMScrollCont {width:100% !important; height:100% !important; padding-right:5px; overflow:hidden auto !important}
 .portlet-body .no-data {display:flex; justify-content: center; align-items: center;color:#ccc;height:calc(100% - 24px)!important}
@@ -162,6 +162,13 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p11 .portlet-p11-objectstatus {margin-top:5px}
 .portlet-p11 .portlet-p11-objectstatus .sapMObjStatusText {font-size:20px}
 .portlet-p11 .portlet-p11-text.sapMText {vertical-align:top; font-size:12px}
+.portlet-m21 .border-bottom {border-bottom:1px solid #dbdbdb}
+.portlet-m21 .font-3-rem {font-weight:500}
+.portlet-m21 .sapMLabel {justify-content:center}
+.portlet-m21 .employee-count-blue,
+.portlet-m21 .employee-count-yellow {width:100%; text-align:center}
+.portlet-m21 .employee-count-blue .sapMObjStatusText {color:#0088ff}
+.portlet-m21 .employee-count-yellow .sapMObjStatusText {color:#ff8900}
 .portlet-m23 .portlet-body .sapMText {font-size:13px; letter-spacing:-.5px}
 .portlet-m23 .portlet-body .sapMText.portlet-m23-worktime, .portlet-m23 .portlet-body .sapMText.portlet-m23-worktime-unit {color:#387FE9}
 .portlet-m23 .portlet-body .sapMText.portlet-m23-worktime {margin-left:.3rem}

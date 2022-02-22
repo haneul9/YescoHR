@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f29e57;
+      }
+    </style>
+  </defs>
+  <g id="그룹_179396" data-name="그룹 179396" transform="translate(-0.407 -0.101)">
+    <path id="합치기_23" data-name="합치기 23" class="cls-1" d="M0,16V14a4,4,0,0,1,4-4H8a4,4,0,0,1,4,4v2ZM2,4A4,4,0,1,1,6,8,4,4,0,0,1,2,4Z" transform="translate(0.407 0.101)"/>
+  </g>
+</svg>

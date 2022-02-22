@@ -38,7 +38,7 @@
       ) }" icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" press=".onPressLink" />
     </HBox>
     <HBox class="portlet-body">
-      <ScrollContainer visible="{= !!${orgMembersActive} &amp;&amp; ${selectedMembersButton} === 'ORG' }">
+      <ScrollContainer visible="{= !!${orgMembersActive} &amp;&amp; ${selectedMembersButton} === 'ORG' }" class="mt-10-px">
         <layoutData>
           <FlexItemData growFactor="1" maxWidth="100%" />
         </layoutData>
@@ -63,7 +63,7 @@
           </HBox>
         </VBox>
       </ScrollContainer>
-      <ScrollContainer visible="{= !!${myMembersActive} &amp;&amp; ${selectedMembersButton} === 'MY' }">
+      <ScrollContainer visible="{= !!${myMembersActive} &amp;&amp; ${selectedMembersButton} === 'MY' }" class="mt-10-px">
         <layoutData>
           <FlexItemData growFactor="1" maxWidth="100%" />
         </layoutData>

@@ -24,7 +24,7 @@
       <Button visible="{switchable}" icon="sap-icon://decline" type="Transparent" class="icon-button portlet-close-icon" press=".onPressClose" />
     </HBox>
     <HBox class="portlet-body">
-      <ScrollContainer visible="{= ${selectedTabKey} === 'Today' }">
+      <ScrollContainer visible="{= ${selectedTabKey} === 'Today' }" class="mt-10-px">
         <layoutData>
           <FlexItemData growFactor="1" maxWidth="100%" />
         </layoutData>
@@ -47,7 +47,7 @@
           </HBox>
         </VBox>
       </ScrollContainer>
-      <ScrollContainer visible="{= ${selectedTabKey} === 'Future' }">
+      <ScrollContainer visible="{= ${selectedTabKey} === 'Future' }" class="mt-10-px">
         <layoutData>
           <FlexItemData growFactor="1" maxWidth="100%" />
         </layoutData>
