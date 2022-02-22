@@ -1,6 +1,82 @@
 <core:FragmentDefinition xmlns="sap.m"
+    xmlns:table="sap.ui.table"
     xmlns:core="sap.ui.core">
     <VBox width="100%" class="vCardBox">
-
+        <HBox justifyContent="SpaceBetween" class="table-toolbar">
+            <HBox class="title">
+                <Title level="H4" text="" />
+            </HBox>
+            <HBox class="status-wrap perGrade">
+                <Text text="{/grade/0/text}" class="type02" />
+                <Text text="{/grade/1/text}" class="type07" />
+                <Text text="{/grade/2/text}" class="type05" />
+            </HBox>
+        </HBox>
+        <table:Table rows="{ path: '/raw/List', templateShareable: true }" visibleRowCount="{/raw/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
+            <table:columns>
+                <table:Column width="4%" filterProperty="Idx" sortProperty="Idx">
+                    <Label text="No."/>
+                    <table:template>
+                        <Text text="{Idx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                    </table:template>
+                </table:Column>
+                <table:Column width="10%" filterProperty="Pernr" sortProperty="Pernr">
+                    <Label text="{i18n>LABEL_00209}"/>
+                    <table:template>
+                        <Text text="{Pernr}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                    </table:template>
+                </table:Column>
+                <table:Column width="10%" filterProperty="Ename" sortProperty="Ename">
+                    <Label text="{i18n>LABEL_00210}"/>
+                    <table:template>
+                        <Text text="{Ename}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                    </table:template>
+                </table:Column>
+                <table:Column width="10%" filterProperty="Zzjikgbt" sortProperty="Zzjikgbt">
+                    <Label text="{i18n>LABEL_00215}"/>
+                    <table:template>
+                        <Text text="{Zzjikgbt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                    </table:template>
+                </table:Column>
+                <table:Column filterProperty="Orgtx" sortProperty="Orgtx">
+                    <Label text="{i18n>LABEL_00224}"/>
+                    <table:template>
+                        <Text text="{Orgtx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                    </table:template>
+                </table:Column>
+                <table:Column width="10%" filterProperty="Zapgme" sortProperty="Zapgme">
+                    <Label text="{i18n>LABEL_10003}"/>
+                    <table:template>
+                        <Text text="{Zapgme}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                    </table:template>
+                </table:Column>
+                <table:Column width="10%" filterProperty="Zapgma" sortProperty="Zapgma">
+                    <Label text="{i18n>LABEL_10022}"/>
+                    <table:template>
+                        <Text text="{Zapgma}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                    </table:template>
+                </table:Column>
+                <table:Column width="10%" filterProperty="Fapp" sortProperty="Fapp">
+                    <Label text="{i18n>LABEL_10078}"/>
+                    <table:template>
+                        <ComboBox selectedKey="{Fapp}" items="{ path: '/grade', templateShareable: true }">
+                            <core:Item text="{text}" key="{code}" />
+                        </ComboBox>
+                    </table:template>
+                </table:Column>
+                <table:Column width="10%">
+                    <Label text="{i18n>LABEL_00165}"/>
+                    <table:template>
+                        <Text text="{Zdocid}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                    </table:template>
+                </table:Column>
+                <table:Column width="10%">
+                    <Label text="{i18n>LABEL_10079}"/>
+                    <table:template>
+                        <Text text="{Pernr}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                    </table:template>
+                </table:Column>
+            </table:columns>
+        </table:Table>
     </VBox>
 </core:FragmentDefinition>
