@@ -70,7 +70,7 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet .sapMBtn.icon-button.portlet-link-icon .sapMBtnIcon {font-size:18px; line-height:110%}
 .portlet-header + .portlet-body {height:calc(100% - 34px)}
 .portlet-body {width:100%; height:100%}
-.portlet-body > .sapMFlexBoxScroll .sapMScrollCont {width:100% !important; height:100% !important; padding-right:5px; overflow:hidden auto !important}
+.portlet-body .sapMFlexBoxScroll .sapMScrollCont {width:100% !important; height:100% !important; padding-right:5px; overflow:hidden auto !important}
 .portlet-body .no-data {display:flex; justify-content: center; align-items: center;color:#ccc;height:calc(100% - 24px)!important}
 .portlet-body .no-data .sapMText:before {content: "";display:block;width:26px;height:26px;margin:0 auto 6px;background-image: url(../image/no-data.svg);background-size: 100%;}
 .portlet-body .no-data .sapMText {color:#ccc;}

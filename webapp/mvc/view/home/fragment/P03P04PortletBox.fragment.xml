@@ -38,57 +38,56 @@
       ) }" icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" press=".onPressLink" />
     </HBox>
     <HBox class="portlet-body">
-      <ScrollContainer visible="{= !!${orgMembersActive} &amp;&amp; ${selectedMembersButton} === 'ORG' }" class="mt-10-px">
+      <VBox class="mt-10-px">
         <layoutData>
           <FlexItemData growFactor="1" maxWidth="100%" />
         </layoutData>
-        <HBox width="100%" class="no-data" visible="{= ${orgMembers/listCount} === 0 }">
-          <Text text="{i18n>MSG_00001}" />
-        </HBox>
-        <VBox width="100%" items="{orgMembers/list}" visible="{= ${orgMembers/listCount} &gt; 0 }" class="portlet-members">
-          <HBox width="100%" alignItems="Center">
-            <Image src="{Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="30px" height="30px" />
-            <Text text="{Ename}" tooltip="{Ename}" wrapping="false" class="portlet-member-name" />
-            <Text text="{Zzjikgbt}" tooltip="{Zzjikgbt}" wrapping="false" class="portlet-member-position" />
-            <Text text="{Orgtx}" tooltip="{Orgtx}" wrapping="false" class="portlet-member-org">
-              <layoutData>
-                <FlexItemData growFactor="1" />
-              </layoutData>
-            </Text>
-            <Text text="{Atext}" tooltip="{Atext}" wrapping="false" class="portlet-member-status">
-              <customData>
-                <core:CustomData key="portlet-member-status" value="{Icon}" writeToDom="true" />
-              </customData>
-            </Text>
+        <ScrollContainer visible="{= !!${orgMembersActive} &amp;&amp; ${selectedMembersButton} === 'ORG' }">
+          <HBox width="100%" class="no-data" visible="{= ${orgMembers/listCount} === 0 }">
+            <Text text="{i18n>MSG_00001}" />
           </HBox>
-        </VBox>
-      </ScrollContainer>
-      <ScrollContainer visible="{= !!${myMembersActive} &amp;&amp; ${selectedMembersButton} === 'MY' }" class="mt-10-px">
-        <layoutData>
-          <FlexItemData growFactor="1" maxWidth="100%" />
-        </layoutData>
-        <HBox width="100%" class="no-data" visible="{= ${myMembers/listCount} === 0 }">
-          <Text text="{i18n>MSG_00001}" />
-        </HBox>
-        <VBox width="100%" items="{myMembers/list}" visible="{= ${myMembers/listCount} &gt; 0 }" class="portlet-members my-members">
-          <HBox width="100%" alignItems="Center">
-            <Image src="{Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="30px" height="30px" />
-            <Text text="{Ename}" tooltip="{Ename}" wrapping="false" class="portlet-member-name" />
-            <Text text="{Zzjikgbt}" tooltip="{Zzjikgbt}" wrapping="false" class="portlet-member-position" />
-            <Text text="{Orgtx}" tooltip="{Orgtx}" wrapping="false" class="portlet-member-org">
-              <layoutData>
-                <FlexItemData growFactor="1" />
-              </layoutData>
-            </Text>
-            <Text text="{Atext}" tooltip="{Atext}" wrapping="false" class="portlet-member-status">
-              <customData>
-                <core:CustomData key="portlet-member-status" value="{Icon}" writeToDom="true" />
-              </customData>
-            </Text>
-            <Button icon="asset/image/icon_remove.png" type="Transparent" class="icon-button portlet-member-remove" press=".onPressMyMemberRemove" />
+          <VBox width="100%" items="{orgMembers/list}" visible="{= ${orgMembers/listCount} &gt; 0 }" class="portlet-members">
+            <HBox width="100%" alignItems="Center">
+              <Image src="{Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="30px" height="30px" />
+              <Text text="{Ename}" tooltip="{Ename}" wrapping="false" class="portlet-member-name" />
+              <Text text="{Zzjikgbt}" tooltip="{Zzjikgbt}" wrapping="false" class="portlet-member-position" />
+              <Text text="{Orgtx}" tooltip="{Orgtx}" wrapping="false" class="portlet-member-org">
+                <layoutData>
+                  <FlexItemData growFactor="1" />
+                </layoutData>
+              </Text>
+              <Text text="{Atext}" tooltip="{Atext}" wrapping="false" class="portlet-member-status">
+                <customData>
+                  <core:CustomData key="portlet-member-status" value="{Icon}" writeToDom="true" />
+                </customData>
+              </Text>
+            </HBox>
+          </VBox>
+        </ScrollContainer>
+        <ScrollContainer visible="{= !!${myMembersActive} &amp;&amp; ${selectedMembersButton} === 'MY' }">
+          <HBox width="100%" class="no-data" visible="{= ${myMembers/listCount} === 0 }">
+            <Text text="{i18n>MSG_00001}" />
           </HBox>
-        </VBox>
-      </ScrollContainer>
+          <VBox width="100%" items="{myMembers/list}" visible="{= ${myMembers/listCount} &gt; 0 }" class="portlet-members my-members">
+            <HBox width="100%" alignItems="Center">
+              <Image src="{Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="30px" height="30px" />
+              <Text text="{Ename}" tooltip="{Ename}" wrapping="false" class="portlet-member-name" />
+              <Text text="{Zzjikgbt}" tooltip="{Zzjikgbt}" wrapping="false" class="portlet-member-position" />
+              <Text text="{Orgtx}" tooltip="{Orgtx}" wrapping="false" class="portlet-member-org">
+                <layoutData>
+                  <FlexItemData growFactor="1" />
+                </layoutData>
+              </Text>
+              <Text text="{Atext}" tooltip="{Atext}" wrapping="false" class="portlet-member-status">
+                <customData>
+                  <core:CustomData key="portlet-member-status" value="{Icon}" writeToDom="true" />
+                </customData>
+              </Text>
+              <Button icon="asset/image/icon_remove.png" type="Transparent" class="icon-button portlet-member-remove" press=".onPressMyMemberRemove" />
+            </HBox>
+          </VBox>
+        </ScrollContainer>
+      </VBox>
     </HBox>
   </VBox>
 </core:FragmentDefinition>
