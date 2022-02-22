@@ -82,25 +82,25 @@
                 </Input>
               </table:template>
             </table:Column>
-            <table:Column width="120px">
+            <table:Column width="auto">
               <Label text="{i18n>LABEL_00210}" />
               <table:template>
                 <Text text="{Ename}" width="100%" textAlign="Center" />
               </table:template>
             </table:Column>
-            <table:Column width="150px">
+            <table:Column width="auto">
               <Label text="{i18n>LABEL_00215}" />
               <table:template>
                 <Text text="{Zzjikgbt}" width="100%" textAlign="Center" />
               </table:template>
             </table:Column>
-            <table:Column width="150px">
+            <table:Column width="auto">
               <Label text="{i18n>LABEL_00217}" />
               <table:template>
                 <Text text="{Zzjikcht}" width="100%" textAlign="Center" />
               </table:template>
             </table:Column>
-            <table:Column width="150px">
+            <table:Column width="auto">
               <Label text="{i18n>LABEL_00224}" />
               <table:template>
                 <Text text="{Orgtx}" width="100%" textAlign="Center" />

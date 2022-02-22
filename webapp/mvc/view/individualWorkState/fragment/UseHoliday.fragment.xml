@@ -11,23 +11,5 @@
       </ComboBox>
     </HBox>
     <core:HTML content='&lt;div id="chart-combination-container"&gt;&lt;/div&gt;' />
-    <!-- <viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" height="300px" width="100%" vizType='combination'>
-      <viz:dataset>
-        <viz.data:FlattenedDataset data="{/UseTimeGraph}">
-          <viz.data:dimensions>
-            <viz.data:DimensionDefinition name="Month" value="{StrMonth}" />
-          </viz.data:dimensions>
-          <viz.data:measures>
-            <viz.data:MeasureDefinition name="Accumulative" value="{Monuse}" />
-            <viz.data:MeasureDefinition name="Current month" value="{Cumuse}" />
-          </viz.data:measures>
-        </viz.data:FlattenedDataset>
-      </viz:dataset>
-      <viz:feeds>
-        <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Accumulative" />
-        <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Current month" />
-        <viz.feeds:FeedItem id="feedCategoryAxis" uid="categoryAxis" type="Dimension" values="Month" />
-      </viz:feeds>
-    </viz:VizFrame> -->
   </VBox>
 </core:FragmentDefinition>

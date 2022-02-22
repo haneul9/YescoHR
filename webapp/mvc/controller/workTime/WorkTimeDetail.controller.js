@@ -270,6 +270,7 @@ sap.ui.define(
           oViewModel.setProperty(`${sRowPath}/Ename`, oContext.getProperty('Ename'));
           oViewModel.setProperty(`${sRowPath}/Orgtx`, oContext.getProperty('Orgtx'));
           oViewModel.setProperty(`${sRowPath}/Zzjikgbt`, oContext.getProperty('Zzjikgbt'));
+          oViewModel.setProperty(`${sRowPath}/Zzjikcht`, oContext.getProperty('Zzjikcht'));
         }
         oInput.getBinding('suggestionRows').filter([]);
       },
@@ -309,21 +310,6 @@ sap.ui.define(
         }
       },
 
-      // Dialog 사유선택
-      onCause(oEvent) {
-        const oDetailModel = this.getViewModel();
-
-        oDetailModel.setProperty(
-          '/DialogData/Ottyptx',
-          _.chain(oDetailModel.getProperty('/CauseType'))
-            .find((e) => {
-              return e.Zcode === oEvent.getSource().getSelectedKey();
-            })
-            .get('Ztext')
-            .value()
-        );
-      },
-
       // DialogAfterClose
       onDialogAfClose() {
         this.byId('dialogTable').clearSelection();
@@ -337,7 +323,15 @@ sap.ui.define(
         }
 
         const oDetailModel = this.getViewModel();
-        const mDialogData = oDetailModel.getProperty('/DialogData');
+        const mDialogData = {
+          ...oDetailModel.getProperty('/DialogData'),
+          Ottyptx: _.chain(oDetailModel.getProperty('/CauseType'))
+            .find((e) => {
+              return e.Zcode === oDetailModel.getProperty('/DialogData/Ottyp');
+            })
+            .get('Ztext')
+            .value(),
+        };
         const aFilterList = _.chain(oDetailModel.getProperty('/dialog/list'))
           .filter((e) => {
             return !!e.Pernr;

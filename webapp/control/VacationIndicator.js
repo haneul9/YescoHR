@@ -72,8 +72,9 @@ sap.ui.define(
             if (this.getUsedType() === 'WeekTime') {
               const fTotal = this.getTotal();
               const fUsed = this.getUsed();
+              const fUsed2 = this.getUsed2();
 
-              sRemain = this._getWeekTimePercent(fTotal, this.getUsed2(), fUsed);
+              sRemain = this._getWeekTimePercent(fTotal, fUsed2);
               sUsed = this._getWeekTimePercent(fTotal, fUsed);
             }
 
@@ -87,8 +88,8 @@ sap.ui.define(
       },
 
       // 개인별 근태현황 주 52시간 현황
-      _getWeekTimePercent(fTotal = 0, fUsed = 0, fOverUsed = 0) {
-        let fTimePercent = ((parseFloat(fUsed) + parseFloat(fOverUsed)) / parseFloat(fTotal)) * 100;
+      _getWeekTimePercent(fTotal = 0, fUsed = 0) {
+        let fTimePercent = (parseFloat(fUsed) / parseFloat(fTotal)) * 100;
 
         return `${fTimePercent}%`;
       },

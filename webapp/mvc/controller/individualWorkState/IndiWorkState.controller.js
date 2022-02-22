@@ -43,21 +43,7 @@ sap.ui.define(
           menid: this.getCurrentMenuId(),
           Hass: this.isHass(),
           WeekWorkDate: new Date(),
-          MonthStrList: [
-            // prettier방지주석
-            { label: 'Jan' },
-            { label: 'Feb' },
-            { label: 'Mar' },
-            { label: 'Apr' },
-            { label: 'May' },
-            { label: 'Jun' },
-            { label: 'Jul' },
-            { label: 'Aug' },
-            { label: 'Sep' },
-            { label: 'Oct' },
-            { label: 'Nov' },
-            { label: 'Dec' },
-          ],
+          MonthStrList: [],
           WeekWork: {
             Wkrultx: '',
             WeekTime: 52,
@@ -103,6 +89,13 @@ sap.ui.define(
           this.YearPlanBoxHandler ||= new YearPlanBoxHandler({ oController: this });
           this.setMonth();
           this.formYear();
+
+          oViewModel.setProperty(
+            '/MonthStrList',
+            _.times(12, (e) => {
+              return { label: `${e + 1}${this.getBundleText('LABEL_00253')}` }; // 월
+            })
+          );
 
           this.YearPlanBoxHandler.getYearPlan();
 
@@ -160,12 +153,10 @@ sap.ui.define(
           oViewModel.setProperty('/WeekWork/Tottime', parseFloat(aWeekTime.Tottime));
           oViewModel.setProperty('/WeekWork/Bastime', parseFloat(aWeekTime.Bastime));
           oViewModel.setProperty('/WeekWork/Ottime', parseFloat(aWeekTime.Ottime));
+          oViewModel.setProperty('/WeekWork/Grp03', parseFloat(aWeekTime.Grp03));
+          oViewModel.setProperty('/WeekWork/Grp01', parseFloat(aWeekTime.Grp01));
+          oViewModel.setProperty('/WeekWork/Grp02', parseFloat(aWeekTime.Grp02));
           oViewModel.setProperty('/WeekWork/WorkTime', `${this.formatTime(aWeekTime.Beguz)} ~ ${this.formatTime(aWeekTime.Enduz)} (${aWeekTime.Stdaz}${this.getBundleText('LABEL_00330')})`);
-          // oViewModel.setProperty('/WeekWork/Wkrultx', '시차출퇴근제');
-          // oViewModel.setProperty('/WeekWork/Tottime', 40.5);
-          // oViewModel.setProperty('/WeekWork/Bastime', 38);
-          // oViewModel.setProperty('/WeekWork/Ottime', 2.5);
-          // oViewModel.setProperty('/WeekWork/WorkTime', '09:00 ~ 18:00 (8시간)');
 
           // 근태유형 Combo
           const aWorkTypeCodeList = await Client.getEntitySet(oModel, 'AwartCodeList');
@@ -358,8 +349,8 @@ sap.ui.define(
                 theme: 'ocean',
                 usePlotGradientColor: '0',
                 showPlotBorder: '0',
-                baseFontSize: '12',
-                valueFontSize: '12',
+                baseFontSize: '13',
+                valueFontSize: '13',
                 showXAxisLine: '0',
                 animation: '1',
                 divLineColor: '#dde1e6',
@@ -372,12 +363,14 @@ sap.ui.define(
               ],
               dataset: [
                 {
-                  seriesName: 'Current month',
+                  seriesName: this.getBundleText('LABEL_16005'),
+                  labelFontSize: '13',
                   data: aWorkTypeList.Monuse,
                   color: '#7bb4eb',
                 },
                 {
-                  seriesName: 'Accumulative',
+                  seriesName: this.getBundleText('LABEL_00196'),
+                  labelFontSize: '13',
                   renderAs: 'line',
                   data: aWorkTypeList.Current,
                   color: '#000000',
@@ -433,12 +426,12 @@ sap.ui.define(
             ],
             dataset: [
               {
-                seriesName: 'Current month',
+                seriesName: this.getBundleText('LABEL_16005'),
                 data: aWorkTypeList.Monuse,
                 color: '#7bb4eb',
               },
               {
-                seriesName: 'Accumulative',
+                seriesName: this.getBundleText('LABEL_00196'),
                 renderAs: 'line',
                 data: aWorkTypeList.Current,
                 color: '#000000',
@@ -501,6 +494,9 @@ sap.ui.define(
         oViewModel.setProperty('/WeekWork/Tottime', parseFloat(aWeekTime.Tottime));
         oViewModel.setProperty('/WeekWork/Bastime', parseFloat(aWeekTime.Bastime));
         oViewModel.setProperty('/WeekWork/Ottime', parseFloat(aWeekTime.Ottime));
+        oViewModel.setProperty('/WeekWork/Grp03', parseFloat(aWeekTime.Grp03));
+        oViewModel.setProperty('/WeekWork/Grp01', parseFloat(aWeekTime.Grp01));
+        oViewModel.setProperty('/WeekWork/Grp02', parseFloat(aWeekTime.Grp02));
         oViewModel.setProperty('/WeekWork/WorkTime', `${this.formatTime(aWeekTime.Beguz)} ~ ${this.formatTime(aWeekTime.Enduz)} (${aWeekTime.Stdaz}${this.getBundleText('LABEL_00330')})`);
       },
 
