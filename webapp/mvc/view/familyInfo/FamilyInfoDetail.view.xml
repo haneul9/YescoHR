@@ -29,7 +29,7 @@
             <VBox>
               <Text text="{
                 path: '/FormData/ZreqDate',
-                type: 'sap.ui.model.type.Date',
+                type: 'sap.ui.yesco.mvc.model.type.Date',
                 formatOptions: {
                   pattern: 'yyyy.MM.dd'
                 }
@@ -39,7 +39,7 @@
             <VBox>
               <Text text="{
                 path: '/FormData/ZappDate',
-                type: 'sap.ui.model.type.Date',
+                type: 'sap.ui.yesco.mvc.model.type.Date',
                 formatOptions: {
                   pattern: 'yyyy.MM.dd'
                 }

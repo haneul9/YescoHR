@@ -65,7 +65,7 @@
           <table:template>
             <Text text="{
                             path: 'Appda',
-                            type: 'sap.ui.model.type.Date',
+                            type: 'sap.ui.yesco.mvc.model.type.Date',
                             formatOptions: {
                                 pattern: 'yyyy.MM.dd'
                             }
@@ -77,7 +77,7 @@
           <table:template>
             <Text text="{
                             path: 'Paydt',
-                            type: 'sap.ui.model.type.Date',
+                            type: 'sap.ui.yesco.mvc.model.type.Date',
                             formatOptions: {
                                 pattern: 'yyyy.MM.dd'
                             }
