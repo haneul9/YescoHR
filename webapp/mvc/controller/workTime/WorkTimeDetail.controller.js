@@ -73,24 +73,23 @@ sap.ui.define(
         try {
           // Input Field Imited
           oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.WORKTIME, 'OtWorkApply')));
+          oDetailModel.setProperty('/busy', true);
+
+          const sMenid = this.getCurrentMenuId();
+          const sPernr = this.getAppointeeProperty('Pernr');
+          // 대상자리스트
+          const aOtpList = await Client.getEntitySet(oModel, 'OtpernrList', {
+            Menid: sMenid,
+            Datum: new Date(),
+            Pernr: sPernr,
+          });
+
+          oDetailModel.setProperty(
+            '/employees',
+            aOtpList.map((o) => ({ ...o, Pernr: _.trimStart(o.Pernr, '0') }))
+          );
 
           if (sDataKey === 'N' || !sDataKey) {
-            const oCommonModel = this.getModel(ServiceNames.COMMON);
-            const aEmployees = await Client.getEntitySet(oCommonModel, 'EmpSearchResult', {
-              Menid: this.getCurrentMenuId(),
-              Persa: this.getAppointeeProperty('Werks'),
-              Stat2: '3',
-              Zflag: 'X',
-              Actda: moment().hour(9).toDate(),
-            });
-
-            oDetailModel.setProperty(
-              '/employees',
-              aEmployees.map((o) => ({ ...o, Pernr: _.trimStart(o.Pernr, '0') }))
-            );
-
-            oDetailModel.setProperty('/busy', true);
-
             const mSessionData = this.getSessionData();
 
             oDetailModel.setProperty('/ApplyInfo', {
@@ -167,7 +166,6 @@ sap.ui.define(
       // 신청내역 추가
       onAddDetail() {
         const oView = this.getView();
-        AppUtils.setAppBusy(true, this);
 
         setTimeout(() => {
           if (!this._pDetailDialog) {
@@ -183,8 +181,7 @@ sap.ui.define(
 
           const oDetailModel = this.getViewModel();
           const oModel = this.getModel(ServiceNames.WORKTIME);
-          const sMenid = this.getCurrentMenuId();
-          const sPernr = this.getAppointeeProperty('Pernr');
+          const oEmpData = this.getAppointeeData();
 
           this.byId('workTimeTable').clearSelection();
 
@@ -211,15 +208,15 @@ sap.ui.define(
                 Ottyp: 'ALL',
               });
 
-              // 대상자리스트
-              const aOtpList = await Client.getEntitySet(oModel, 'OtpernrList', {
-                Menid: sMenid,
-                Datum: new Date(),
-                Pernr: sPernr,
+              aList.push({
+                Pernr: oEmpData.Pernr,
+                Ename: oEmpData.Ename,
+                Zzjikgbt: oEmpData.Zzjikgbt,
+                Zzjikcht: oEmpData.Zzjikcht,
+                Orgtx: oEmpData.Orgtx,
               });
 
-              aList = aOtpList;
-              iLength = _.size(aOtpList);
+              iLength = 1;
             } else {
               const [mList] = aDetailList;
 
@@ -238,7 +235,6 @@ sap.ui.define(
 
             oDetailModel.setProperty('/dialog/list', aList);
             oDetailModel.setProperty('/dialog/rowCount', iLength < 5 ? iLength : 5);
-            AppUtils.setAppBusy(false, this);
             oDialog.open();
           });
         }, 100);
@@ -272,7 +268,7 @@ sap.ui.define(
           const sRowPath = oInput.getParent().getBindingContext().getPath();
           const oViewModel = this.getViewModel();
           oViewModel.setProperty(`${sRowPath}/Ename`, oContext.getProperty('Ename'));
-          oViewModel.setProperty(`${sRowPath}/Orgtx`, oContext.getProperty('Fulln'));
+          oViewModel.setProperty(`${sRowPath}/Orgtx`, oContext.getProperty('Orgtx'));
           oViewModel.setProperty(`${sRowPath}/Zzjikgbt`, oContext.getProperty('Zzjikgbt'));
         }
         oInput.getBinding('suggestionRows').filter([]);
@@ -303,7 +299,7 @@ sap.ui.define(
           oViewModel.setProperty(`${sRowPath}/Ename`, mEmployee.Ename);
           oViewModel.setProperty(`${sRowPath}/Zzjikgbt`, mEmployee.Zzjikgbt);
           oViewModel.setProperty(`${sRowPath}/Zzjikcht`, mEmployee.Zzjikcht);
-          oViewModel.setProperty(`${sRowPath}/Orgtx`, mEmployee.Fulln);
+          oViewModel.setProperty(`${sRowPath}/Orgtx`, mEmployee.Orgtx);
         } else {
           oViewModel.setProperty(`${sRowPath}/Pernr`, '');
           oViewModel.setProperty(`${sRowPath}/Ename`, '');
