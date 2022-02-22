@@ -1390,6 +1390,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 
 .per-panel .sapMIBar {display:flex; justify-content:space-between}
 .per-panel .sapMPanelContent {padding-right:0; padding-left:67px; padding-top:2px; padding-bottom:0}
+.per-panel.grade-department .sapMPanelContent {padding-right:0; padding-left:0; padding-top:16px; padding-bottom:0}
 .sapMPanel.per-panel .sapMPanelWrappingDiv .sapMPanelHdr, .sapMPanel .sapMPanelWrappingDivTb .sapMIBar.sapMTB {margin-left:0; padding-left:65px}
 .per-panel .sapMPanelWrappingDivTb .goal-subject .sapMInputBaseContentWrapper {border-color:transparent; background:linear-gradient(#fff 70%, #A8D7FF 70% 85%, #fff 85%) no-repeat!important}
 .per-panel .sapMPanelWrappingDivTb .goal-subject .sapMInputBaseContentWrapper:hover {border-color:transparent!important; background:linear-gradient(#fff 70%, #A8D7FF 70% 85%, #fff 85%) no-repeat}
@@ -1401,6 +1402,12 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .per-panel .sapMInputBaseDisabled.goal-subject .sapMInputBaseContentWrapper .sapMInputBaseInner {color:var(--FontColorNormal) !important;background-color: transparent;}
 
 .perGrade-info-grid { background-color: #F7F0D5; border-radius: 8px; padding: 8px 16px; }
+.perGrade.status-wrap .sapMFlexItem {margin-right:20px; height:60px; position:relative}
+.perGrade.status-wrap .sapMFlexItem .sapMText {display:flex; justify-content:flex-start; align-items:center}
+.perGrade.status-wrap .sapMFlexItem .sapMText::before {content:""; position:relative; display:inline-block; width:14px; height:14px; background-color:#888; margin-right:5px; border-radius:50%}
+.perGrade.status-wrap .sapMFlexItem .sapMText[data-style="Type01"]::before { background-color: #81DAEA; }
+.perGrade.status-wrap .sapMFlexItem .sapMText[data-style="Type02"]::before { background-color: #A2EB7B; }
+.perGrade.status-wrap .sapMFlexItem .sapMText[data-style="Type03"]::before { background-color: #FFE479; }
 
 .sapMPanel.type-b .sapMPanelContent:not(.sapMPanelBGTransparent), .sapMPanel.type-b .sapMMessageDialog .sapMDialogScrollCont{padding:0.625rem 0px 0 0px}
 .sapMPanelExpandableIcon {top:2px; background:#E8E8E8; color:#222; border-radius:50%; width:40px; height:40px; margin:0; display:flex; justify-content:center; align-items:center; transform:translateY(0%) rotate(90deg)}
