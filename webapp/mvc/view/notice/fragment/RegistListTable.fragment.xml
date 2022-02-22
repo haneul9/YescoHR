@@ -12,19 +12,16 @@
       <table:Column width="100px" visible="{/Hass}">
         <Label text="{i18n>LABEL_08006}"/>
         <table:template>
-          <CheckBox selected="{= !!${Hide} }" width="100%" textAlign="Center" editable="false" class="tableRow_Text"/>
+          <CheckBox selected="{= !!${Hide} }" width="100%" textAlign="Center" editable="false" class="tableListAlign"/>
         </table:template>
       </table:Column>
       <table:Column width="120px" sortProperty="Sdate" filterProperty="Sdate" visible="{/Hass}">
         <Label text="{i18n>LABEL_00321}"/>
         <table:template>
           <Text text="{
-                        path: 'Sdate',
-                        type: 'sap.ui.yesco.mvc.model.type.Date',
-                        formatOptions: {
-                            pattern: 'yyyy.MM.dd'
-                        }
-                    }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+              path: 'Sdate',
+              type: 'sap.ui.yesco.mvc.model.type.Date'
+          }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="250px" sortProperty="Chntm" filterProperty="Chntm">
@@ -42,7 +39,7 @@
       <table:Column width="100px" visible="{/Hass}">
         <Label text="{i18n>LABEL_08007}"/>
         <table:template>
-          <CheckBox selected="{= !!${Impor} }" width="100%" textAlign="Center" editable="false" class="tableRow_Text"/>
+          <CheckBox selected="{= !!${Impor} }" width="100%" textAlign="Center" editable="false" class="tableListAlign"/>
         </table:template>
       </table:Column>
     </table:columns>

@@ -20,10 +20,7 @@
           <Label design="Bold" text="{i18n>LABEL_00271}" />
           <ObjectStatus text="{
                 path: '/MyAcc/Begda',
-                type: 'sap.ui.yesco.mvc.model.type.Date',
-                formatOptions: {
-                    pattern: 'yyyy.MM.dd'
-                }
+                type: 'sap.ui.yesco.mvc.model.type.Date'
             }" state="Indication05" class="font-20-px" />
         </VBox>
       </HBox>

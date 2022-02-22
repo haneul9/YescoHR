@@ -51,10 +51,7 @@
             <HBox visible="{= !!${/FormData/Lnsta} }">
                 <Text text="{
                     path: '/FormData/Appda',
-                    type: 'sap.ui.yesco.mvc.model.type.Date',
-                    formatOptions: {
-                        pattern: 'yyyy.MM.dd'
-                    }
+                    type: 'sap.ui.yesco.mvc.model.type.Date'
                 }"/>
             </HBox>
             <HBox visible="{= !${/FormData/Lnsta} }"></HBox>
@@ -66,12 +63,9 @@
             <Label text="{i18n>LABEL_02012}" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }"/>
             <VBox visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
                 <Text text="{
-                path: '/FormData/Begda',
-                type: 'sap.ui.yesco.mvc.model.type.Date',
-                formatOptions: {
-                    pattern: 'yyyy.MM.dd'
-                }
-            }" />
+                    path: '/FormData/Begda',
+                    type: 'sap.ui.yesco.mvc.model.type.Date'
+                }" />
             </VBox>
             <Label text="{i18n>LABEL_07024}"/>
             <VBox>
@@ -84,10 +78,7 @@
             <VBox visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
                 <Text text="{
                     path: '/FormData/Endda',
-                    type: 'sap.ui.yesco.mvc.model.type.Date',
-                    formatOptions: {
-                        pattern: 'yyyy.MM.dd'
-                    }
+                    type: 'sap.ui.yesco.mvc.model.type.Date'
                 }" />
             </VBox>
             <Label text="{i18n>LABEL_07025}"/>

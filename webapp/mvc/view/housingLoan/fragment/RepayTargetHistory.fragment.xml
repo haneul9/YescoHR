@@ -17,20 +17,14 @@
                 <Label text="{i18n>LABEL_02012}" class="font-16-px mb-10-px" />
                 <Text text="{
                     path: '/TargetLoanHis/Begda',
-                    type: 'sap.ui.yesco.mvc.model.type.Date',
-                    formatOptions: {
-                        pattern: 'yyyy.MM.dd'
-                    }
+                    type: 'sap.ui.yesco.mvc.model.type.Date'
                 }" width="100%" textAlign="Center" wrapping="false"/>
             </VBox>
             <VBox alignItems="Center">
                 <Label text="{i18n>LABEL_07037}" class="font-16-px mb-10-px" />
                 <Text text="{
                     path: '/TargetLoanHis/Dat01',
-                    type: 'sap.ui.yesco.mvc.model.type.Date',
-                    formatOptions: {
-                        pattern: 'yyyy.MM.dd'
-                    }
+                    type: 'sap.ui.yesco.mvc.model.type.Date'
                 }" width="100%" textAlign="Center" wrapping="false"/>
             </VBox>
             <VBox alignItems="Center">

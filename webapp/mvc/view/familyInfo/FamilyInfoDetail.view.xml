@@ -29,20 +29,14 @@
             <VBox>
               <Text text="{
                 path: '/FormData/ZreqDate',
-                type: 'sap.ui.yesco.mvc.model.type.Date',
-                formatOptions: {
-                  pattern: 'yyyy.MM.dd'
-                }
+                type: 'sap.ui.yesco.mvc.model.type.Date'
               }" />
             </VBox>
             <Label text="{i18n>LABEL_05003}" />
             <VBox>
               <Text text="{
                 path: '/FormData/ZappDate',
-                type: 'sap.ui.yesco.mvc.model.type.Date',
-                formatOptions: {
-                  pattern: 'yyyy.MM.dd'
-                }
+                type: 'sap.ui.yesco.mvc.model.type.Date'
               }" />
             </VBox>
           </grid:CSSGrid>

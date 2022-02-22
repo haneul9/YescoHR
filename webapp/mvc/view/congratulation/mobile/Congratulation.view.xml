@@ -21,10 +21,7 @@
 							<Text text="{Zname}"/>
 							<Text text="{
 								path: 'Conddate',
-								type: 'sap.ui.yesco.mvc.model.type.Date',
-								formatOptions: {
-										pattern: 'yyyy.MM.dd'
-								}
+								type: 'sap.ui.yesco.mvc.model.type.Date'
 							}"/>
 							<Text text="{
 									path: 'ZappStatAl',

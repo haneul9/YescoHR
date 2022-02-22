@@ -21,10 +21,7 @@
           <table:template>
             <Text text="{
               path: 'Begda',
-              type: 'sap.ui.yesco.mvc.model.type.Date',
-              formatOptions: {
-                  pattern: 'yyyy.MM.dd'
-              }
+              type: 'sap.ui.yesco.mvc.model.type.Date'
             }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
@@ -33,10 +30,7 @@
           <table:template>
             <Text text="{
               path: 'Endda',
-              type: 'sap.ui.yesco.mvc.model.type.Date',
-              formatOptions: {
-                  pattern: 'yyyy.MM.dd'
-              }
+              type: 'sap.ui.yesco.mvc.model.type.Date'
             }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
@@ -64,17 +58,11 @@
             <HBox>
               <Text text="{
                 path: 'ZreqDate',
-                type: 'sap.ui.yesco.mvc.model.type.Date',
-                formatOptions: {
-                    pattern: 'yyyy.MM.dd'
-                }
+                type: 'sap.ui.yesco.mvc.model.type.Date'
               }" width="100%" visible="{= !${ZappUrl} }" textAlign="Center" wrapping="false" class="tableRow_Text"/>
               <Link visible="{= !!${ZappUrl} }" width="100%" textAlign="Center" href="{ZappUrl}" text="{
                 path: 'ZreqDate',
-                type: 'sap.ui.yesco.mvc.model.type.Date',
-                formatOptions: {
-                    pattern: 'yyyy.MM.dd'
-                }
+                type: 'sap.ui.yesco.mvc.model.type.Date'
               }">
                 <layoutData>
                   <FlexItemData growFactor="1" />
@@ -88,10 +76,7 @@
           <table:template>
             <Text text="{
               path: 'ZappDate',
-              type: 'sap.ui.yesco.mvc.model.type.Date',
-              formatOptions: {
-                  pattern: 'yyyy.MM.dd'
-              }
+              type: 'sap.ui.yesco.mvc.model.type.Date'
             }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
