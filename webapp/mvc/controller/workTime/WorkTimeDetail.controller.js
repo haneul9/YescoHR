@@ -464,15 +464,18 @@ sap.ui.define(
         }
 
         const aList = oDetailModel.getProperty('/dialog/list');
+        const aFilter = _.filter(aList, (e) => {
+          return !!e.Pernr;
+        });
         // 동일사번
         if (
-          _.chain(aList)
+          _.chain(aFilter)
             .map((e) => {
               return (e.Pernr = _.trimStart(e.Pernr, '0'));
             })
             .uniq()
             .size()
-            .value() !== _.size(aList)
+            .value() !== _.size(aFilter)
         ) {
           MessageBox.alert(this.getBundleText('MSG_27006'));
           return true;
