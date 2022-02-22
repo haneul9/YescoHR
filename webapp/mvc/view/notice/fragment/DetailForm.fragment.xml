@@ -41,7 +41,7 @@
                 <layoutData>
                     <grid:GridItemLayoutData gridColumn="2 / 5"/>
                 </layoutData>
-                <rte:RichTextEditor value="{/FormData/Detail}" showGroupTextAlign="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" showGroupStructure="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" showGroupFontStyle="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" showGroupClipboard="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" ready=".editorReady" editorType="TinyMCE4" width="99.8%" height="500px" customToolbar="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" showGroupFont="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" showGroupInsert="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" editable="{= !!${/MySelf} &amp;&amp; !!${/Hass} }"/>
+                <!-- <rte:RichTextEditor value="{/FormData/Detail}" showGroupTextAlign="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" showGroupStructure="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" showGroupFontStyle="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" showGroupClipboard="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" ready=".editorReady" editorType="TinyMCE4" width="99.8%" height="500px" customToolbar="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" showGroupFont="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" showGroupInsert="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" editable="{= !!${/MySelf} &amp;&amp; !!${/Hass} }"/> -->
             </VBox>
         </grid:CSSGrid>
     </VBox>
