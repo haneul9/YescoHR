@@ -71,7 +71,7 @@ sap.ui.define(
         }
       },
 
-      handleResponsivePopoverPress: function (oEvent) {
+      handleMenuPopoverPress: function (oEvent) {
         var oButton = oEvent.getSource();
   
         if (!this._oPopover) {
@@ -80,17 +80,11 @@ sap.ui.define(
             controller: this
           }).then(function(oPopover){
             this._oPopover = oPopover;
-            this.getView().addDependent(this._oPopover);
-            this._oPopover.bindElement("/ProductCollection/0");
             this._oPopover.openBy(oButton);
           }.bind(this));
         } else {
           this._oPopover.openBy(oButton);
         }
-      },
-  
-      handleCloseButton: function (oEvent) {
-        this._oPopover.close();
       },
 
       onPressLogout() {
