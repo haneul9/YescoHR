@@ -19,6 +19,10 @@
         <HBox class="form-bar" alignItems="Center">
           <Label text="{i18n>LABEL_28001}" />
           <custom:DatePicker dateValue="{ path: '/searchConditions/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" />
+          <Label text="{i18n>LABEL_00237}" />
+          <ComboBox items="{/searchConditions/entryPersa}" selectedKey="{/searchConditions/Persa}">
+            <core:Item text="{Pertx}" key="{Persa}" />
+          </ComboBox>
           <Label text="{i18n>LABEL_00224}" />
           <ComboBox items="{/searchConditions/entryOrgeh}" selectedKey="{/searchConditions/Orgeh}">
             <core:Item text="{Orgtx}" key="{Orgeh}" />
@@ -30,7 +34,7 @@
           <Image src="asset/image/avatar-unknown.svg" width="1.2rem" />
         </VBox>
       </HBox>
-      <grid:CSSGrid gridGap="8px" gridTemplateColumns="repeat(4, 1fr)" class=" sapUiSmallMarginTop">
+      <grid:CSSGrid gridGap="8px" gridTemplateRows="repeat(3, 1fr)" gridTemplateColumns="repeat(4, 1fr)" class=" sapUiSmallMarginTop">
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A01" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A02" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A03" type="XML" />

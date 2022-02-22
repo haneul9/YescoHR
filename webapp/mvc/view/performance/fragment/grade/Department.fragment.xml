@@ -1,0 +1,22 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <VBox width="100%" class="vCardBox">
+        <Panel expandable="true" expanded="true" class="per-panel">
+            <headerToolbar>
+                <Toolbar height="45px" width="100%">
+                    <HBox justifyContent="SpaceBetween" class="table-toolbar">
+                        <HBox class="title">
+                            <Title level="H4" text="{i18n>LABEL_10073}" />
+                        </HBox>
+                        <HBox>
+                            <Text text="{i18n>MSG_10010}" class="desc-txt"/>
+                        </HBox>
+                    </HBox>
+                </Toolbar>
+            </headerToolbar>
+            <content>
+                <Text text="test" />
+            </content>
+        </Panel>
+    </VBox>
+</core:FragmentDefinition>

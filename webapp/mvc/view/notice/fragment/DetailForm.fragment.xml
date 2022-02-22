@@ -25,10 +25,7 @@
                 <Text text="{= !${/FormData/Sdate} ? '' : 
                         ${
                         path: '/FormData/Sdate',
-                        type: 'sap.ui.model.type.Date',
-                        formatOptions: {
-                            pattern: 'yyyy.MM.dd'
-                        }
+                        type: 'sap.ui.yesco.mvc.model.type.Date'
                     } 
                 }"/>
             </HBox>

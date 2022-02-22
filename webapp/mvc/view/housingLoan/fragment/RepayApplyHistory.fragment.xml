@@ -9,18 +9,18 @@
     <table:Table id="repaymentTable" rows="{/LoanAppList}" visibleRowCount="{/listInfo/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
       <table:rowSettingsTemplate>
         <table:RowSettings highlight="{
-                    path: 'Lnsta',
-                    formatter: '.TableUtils.rowHighlight'
-                }"/>
+            path: 'Lnsta',
+            formatter: '.TableUtils.rowHighlight'
+        }"/>
       </table:rowSettingsTemplate>
       <table:columns>
         <table:Column width="100px" sortProperty="Lnsta" filterProperty="Lnsta">
           <Label text="{i18n>LABEL_00144}"/>
           <table:template>
             <Text text="{
-                            path: 'Lnsta',
-                            formatter: '.TableUtils.StatusTxt'
-                        }" width="100%" textAlign="Center">
+                  path: 'Lnsta',
+                  formatter: '.TableUtils.StatusTxt'
+              }" width="100%" textAlign="Center">
               <customData>
                 <core:CustomData key="status" value="Z{Lnsta}" writeToDom="true" />
               </customData>
@@ -37,51 +37,45 @@
           <Label text="{i18n>LABEL_07041}"/>
           <table:template>
             <Text text="{
-                            path: 'RpamtMpr',
-                            type: 'sap.ui.yesco.mvc.model.type.Currency'
-                        }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                path: 'RpamtMpr',
+                type: 'sap.ui.yesco.mvc.model.type.Currency'
+            }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
         <table:Column width="130px" sortProperty="RpamtMin" filterProperty="RpamtMin">
           <Label text="{i18n>LABEL_07042}"/>
           <table:template>
             <Text text="{
-                            path: 'RpamtMin',
-                            type: 'sap.ui.yesco.mvc.model.type.Currency'
-                        }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                path: 'RpamtMin',
+                type: 'sap.ui.yesco.mvc.model.type.Currency'
+            }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
         <table:Column width="150px" sortProperty="RpamtTot" filterProperty="RpamtTot">
           <Label text="{i18n>LABEL_07043}"/>
           <table:template>
             <Text text="{
-                            path: 'RpamtTot',
-                            type: 'sap.ui.yesco.mvc.model.type.Currency'
-                        }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                path: 'RpamtTot',
+                type: 'sap.ui.yesco.mvc.model.type.Currency'
+            }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
         <table:Column width="150px" sortProperty="Appda" filterProperty="Appda">
           <Label text="{i18n>LABEL_00266}"/>
           <table:template>
             <Text text="{
-                            path: 'Appda',
-                            type: 'sap.ui.model.type.Date',
-                            formatOptions: {
-                                pattern: 'yyyy.MM.dd'
-                            }
-                        }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                path: 'Appda',
+                type: 'sap.ui.yesco.mvc.model.type.Date'
+            }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
         <table:Column width="150px" sortProperty="Paydt" filterProperty="Paydt">
           <Label text="{i18n>LABEL_07044}"/>
           <table:template>
             <Text text="{
-                            path: 'Paydt',
-                            type: 'sap.ui.model.type.Date',
-                            formatOptions: {
-                                pattern: 'yyyy.MM.dd'
-                            }
-                        }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                path: 'Paydt',
+                type: 'sap.ui.yesco.mvc.model.type.Date'
+            }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
         <table:Column width="auto" sortProperty="ZappResn" filterProperty="ZappResn">

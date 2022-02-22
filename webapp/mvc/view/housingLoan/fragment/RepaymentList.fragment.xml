@@ -12,57 +12,45 @@
           <Label text="{i18n>LABEL_07005}"/>
           <table:template>
             <Text text="{
-                            path: 'Dat01',
-                            type: 'sap.ui.model.type.Date',
-                            formatOptions: {
-                                pattern: 'yyyy.MM.dd'
-                            }
-                        }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+                path: 'Dat01',
+                type: 'sap.ui.yesco.mvc.model.type.Date'
+            }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
         <table:Column width="auto" sortProperty="Rpdat1" filterProperty="Rpdat1">
           <Label text="{i18n>LABEL_07006}"/>
           <table:template>
             <Text text="{
-                            path: 'Rpdat1',
-                            type: 'sap.ui.model.type.Date',
-                            formatOptions: {
-                                pattern: 'yyyy.MM.dd'
-                            }
-                        }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+                path: 'Rpdat1',
+                type: 'sap.ui.yesco.mvc.model.type.Date'
+            }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
           </table:template>
         </table:Column>
         <table:Column width="auto" sortProperty="Rpdat2" filterProperty="Rpdat2">
           <Label text="{i18n>LABEL_07007}"/>
           <table:template>
             <Text text="{
-                            path: 'Rpdat2',
-                            type: 'sap.ui.model.type.Date',
-                            formatOptions: {
-                                pattern: 'yyyy.MM.dd'
-                            }
-                        }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                path: 'Rpdat2',
+                type: 'sap.ui.yesco.mvc.model.type.Date'
+            }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
         <table:Column width="auto" sortProperty="RpdatMid" filterProperty="RpdatMid">
           <Label text="{i18n>LABEL_07008}"/>
           <table:template>
             <Text text="{
-                            path: 'RpdatMid',
-                            type: 'sap.ui.model.type.Date',
-                            formatOptions: {
-                                pattern: 'yyyy.MM.dd'
-                            }
-                        }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                path: 'RpdatMid',
+                type: 'sap.ui.yesco.mvc.model.type.Date'
+            }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
         <table:Column width="auto" sortProperty="Lnamt" filterProperty="Lnamt">
           <Label text="{i18n>LABEL_07009}"/>
           <table:template>
             <Text text="{
-                            path: 'Lnamt',
-                            type: 'sap.ui.yesco.mvc.model.type.Currency'
-                        }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                path: 'Lnamt',
+                type: 'sap.ui.yesco.mvc.model.type.Currency'
+            }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
         <table:Column width="auto" sortProperty="Recount" filterProperty="Recount">
@@ -75,36 +63,36 @@
           <Label text="{i18n>LABEL_07011}"/>
           <table:template>
             <Text text="{
-                            path: 'RpamtRep',
-                            type: 'sap.ui.yesco.mvc.model.type.Currency'
-                        }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                path: 'RpamtRep',
+                type: 'sap.ui.yesco.mvc.model.type.Currency'
+            }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
         <table:Column width="auto" sortProperty="Rpamt1" filterProperty="Rpamt1">
           <Label text="{i18n>LABEL_07012}"/>
           <table:template>
             <Text text="{
-                            path: 'Rpamt1',
-                            type: 'sap.ui.yesco.mvc.model.type.Currency'
-                        }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                path: 'Rpamt1',
+                type: 'sap.ui.yesco.mvc.model.type.Currency'
+            }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
         <table:Column width="auto" sortProperty="Rpamt2" filterProperty="Rpamt2">
           <Label text="{i18n>LABEL_07013}"/>
           <table:template>
             <Text text="{
-                            path: 'Rpamt2',
-                            type: 'sap.ui.yesco.mvc.model.type.Currency'
-                        }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                path: 'Rpamt2',
+                type: 'sap.ui.yesco.mvc.model.type.Currency'
+            }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
         <table:Column width="auto" sortProperty="RpamtMpr" filterProperty="RpamtMpr">
           <Label text="{i18n>LABEL_07014}"/>
           <table:template>
             <Text text="{
-                            path: 'RpamtMpr',
-                            type: 'sap.ui.yesco.mvc.model.type.Currency'
-                        }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                path: 'RpamtMpr',
+                type: 'sap.ui.yesco.mvc.model.type.Currency'
+            }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
         <table:Column width="auto" sortProperty="RpamtMin" filterProperty="RpamtMin">
@@ -117,9 +105,9 @@
           <Label text="{i18n>LABEL_07015}"/>
           <table:template>
             <Text text="{
-                            path: 'RpamtBal',
-                            type: 'sap.ui.yesco.mvc.model.type.Currency'
-                        }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                path: 'RpamtBal',
+                type: 'sap.ui.yesco.mvc.model.type.Currency'
+            }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
       </table:columns>

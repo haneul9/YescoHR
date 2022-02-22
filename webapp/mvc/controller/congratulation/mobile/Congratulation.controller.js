@@ -55,7 +55,6 @@ sap.ui.define(
 
         try {
           oViewModel.setProperty('/busy', true);
-          oViewModel.setData(this.initializeModel());
 
           const aCongList = await this.getAppList();
 

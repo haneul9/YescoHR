@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core">
-  <Popover contentWidth="120px" contentHeight="140px" showHeader="false" placement="Bottom" horizontalScrolling="false" class="notification-popover" busy="{busy}" busyIndicatorDelay="0" initialFocus="notification-popover-close">
+  <Popover contentWidth="120px" contentHeight="140px" showHeader="false" placement="Bottom" horizontalScrolling="false" class="notification-popover" initialFocus="notification-popover-close">
     <VBox class="status-wrap">
       <ObjectStatus text="{= !${/listInfo/ObjTxt1} ? ${i18n>LABEL_00130} : ${/listInfo/ObjTxt1} }" visible="{/listInfo/isShowProgress}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="None" />
       <ObjectStatus text="{= !${/listInfo/ObjTxt2} ? ${i18n>LABEL_00121} : ${/listInfo/ObjTxt2} }" visible="{/listInfo/isShowApply}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication02" />

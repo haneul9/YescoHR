@@ -66,34 +66,19 @@ sap.ui.define(
         this.getOwnerComponent().byId('home').getController().onPressPortletsP13nDialogOpen();
       },
 
-      onExit: function () {
-        if (this._oPopover) {
-          this._oPopover.destroy();
-        }
-      },
-
-      handleResponsivePopoverPress: function (oEvent) {
-        var oButton = oEvent.getSource();
+      async handleMenuPopoverPress(oEvent) {
+        const oButton = oEvent.getSource();
 
         if (!this._oPopover) {
-          Fragment.load({
+          this._oPopover = await Fragment.load({
             name: 'sap.ui.yesco.mvc.view.app.fragment.MenuPopover',
             controller: this,
-          }).then(
-            function (oPopover) {
-              this._oPopover = oPopover;
-              this.getView().addDependent(this._oPopover);
-              this._oPopover.bindElement('/ProductCollection/0');
-              this._oPopover.openBy(oButton);
-            }.bind(this)
-          );
-        } else {
-          this._oPopover.openBy(oButton);
-        }
-      },
+          });
 
-      handleCloseButton: function (oEvent) {
-        this._oPopover.close();
+          this.getView().addDependent(this._oPopover);
+        }
+
+        this._oPopover.openBy(oButton);
       },
 
       onPressLogout() {
@@ -106,6 +91,12 @@ sap.ui.define(
             }
           },
         });
+      },
+
+      onExit: function () {
+        if (this._oPopover) {
+          this._oPopover.destroy();
+        }
       },
     });
   }

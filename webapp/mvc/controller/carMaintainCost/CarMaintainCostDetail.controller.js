@@ -43,6 +43,7 @@ sap.ui.define(
       initializeModel() {
         return {
           Hass: this.isHass(),
+          maxDate: moment().toDate(),
           FormData: {
             Fixed: true,
             bPayType: false,

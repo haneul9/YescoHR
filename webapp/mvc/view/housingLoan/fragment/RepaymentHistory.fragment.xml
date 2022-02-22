@@ -18,30 +18,27 @@
           <Label text="{i18n>LABEL_07028}"/>
           <table:template>
             <Text text="{
-                            path: 'Datum',
-                            type: 'sap.ui.model.type.Date',
-                            formatOptions: {
-                                pattern: 'yyyy.MM.dd'
-                            }
-                        }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+                path: 'Datum',
+                type: 'sap.ui.yesco.mvc.model.type.Date'
+            }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
           </table:template>
         </table:Column>
         <table:Column width="auto" sortProperty="Pni" filterProperty="Pni">
           <Label text="{i18n>LABEL_07029}"/>
           <table:template>
             <Text text="{
-                            path: 'Pni',
-                            type: 'sap.ui.yesco.mvc.model.type.Currency'
-                        }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                path: 'Pni',
+                type: 'sap.ui.yesco.mvc.model.type.Currency'
+            }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
         <table:Column width="auto" sortProperty="Int" filterProperty="Int">
           <Label text="{i18n>LABEL_07030}"/>
           <table:template>
             <Text text="{
-                            path: 'Int',
-                            type: 'sap.ui.yesco.mvc.model.type.Currency'
-                        }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                path: 'Int',
+                type: 'sap.ui.yesco.mvc.model.type.Currency'
+            }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
         <table:Column width="auto" sortProperty="Pyway" filterProperty="Pyway">

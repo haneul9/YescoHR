@@ -11,7 +11,7 @@
           <HBox>
             <Button text="{i18n>LABEL_00104}" type="Emphasized" press=".onSaveBtn" visible="{= ${/Hass} &amp;&amp; ${/MySelf} }" />
             <Button text="{i18n>LABEL_00106}" type="Emphasized" press=".onRegistBtn" visible="{= ${/Hass} &amp;&amp; ${/MySelf} }" />
-            <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= ${/Hass} &amp;&amp; ${/MySelf} }" />
+            <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= !!${/FormData/Appno} &amp;&amp; ${/Hass} &amp;&amp; ${/MySelf} }" />
             <Button text="{i18n>LABEL_00146}" press=".onNavBack" class="sapUiTinyMarginEnd" />
             <Button icon="sap-icon://print" press=".onPagePrint" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" />
             <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />

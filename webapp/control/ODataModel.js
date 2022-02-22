@@ -34,12 +34,12 @@ sap.ui.define(
                   if (!_.has(mAssociationMetadata, k)) {
                     delete o[k];
                   } else {
-                    this.convertValue(o, k);
+                    this.convertValue(o, k, _.get(mAssociationMetadata, [k, 'type']));
                   }
                 });
               });
             } else {
-              this.convertValue(mData, sKey);
+              this.convertValue(mData, sKey, _.get(mEntityMetadata, [sKey, 'type']));
             }
           });
         }
@@ -49,10 +49,12 @@ sap.ui.define(
         }
       },
 
-      convertValue(mData, sKey) {
+      convertValue(mData, sKey, type) {
         const sValue = _.get(mData, sKey);
 
-        if (_.isEqual(sValue, 'ALL')) {
+        if (_.isEqual(type, 'Edm.Int16')) {
+          _.set(mData, sKey, _.toNumber(sValue));
+        } else if (_.isEqual(sValue, 'ALL')) {
           _.set(mData, sKey, _.noop());
         } else if (_.isDate(sValue)) {
           _.set(mData, sKey, DateUtils.parse(sValue));

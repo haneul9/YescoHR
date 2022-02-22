@@ -221,10 +221,20 @@ sap.ui.define(
         });
       },
 
-      setColorColumn({ oTable, mColorMap = {}, bHasSumRow = false }) {
+      setColorColumn({ oTable, mColorMap = {}, bIncludeHeader = false, mHeaderColorMap = {}, bHasSumRow = false }) {
         const aRows = [...oTable.getRows()];
 
         if (bHasSumRow) aRows.pop(); // delete last
+
+        if (bIncludeHeader) {
+          const oColumns = oTable.getColumns();
+
+          if (_.isEmpty(mHeaderColorMap)) {
+            _.forOwn(mColorMap, (value, key) => $(`#${_.get(oColumns, key).getId()}`).addClass(value));
+          } else {
+            _.forOwn(mHeaderColorMap, (value, key) => $(`#${_.get(oColumns, key).getId()}`).addClass(value));
+          }
+        }
 
         aRows.forEach((row) => _.forOwn(mColorMap, (value, key) => $(`#${row.getId()}-col${key}`).addClass(value)));
       },

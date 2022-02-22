@@ -50,8 +50,8 @@
       <Button type="Transparent" icon="asset/image/icon_m_employee.svg" class="icon-button" />
       <Button type="Transparent" icon="asset/image/icon_m_notice.svg" class="icon-button" press=".onPressNotificationPopoverToggle" />
       <Button type="Transparent" icon="asset/image/icon_m_home.svg" class="icon-button" />
-      <Button type="Transparent" icon="asset/image/icon_m_search.svg" class="icon-button" />
-      <Button type="Transparent" icon="asset/image/icon_m_gnb.svg" class="icon-button" press="handleResponsivePopoverPress" />
+      <Button type="Transparent" id="search" icon="asset/image/icon_m_search.svg" class="icon-button" press="handleSearchPopoverPress" />
+      <Button type="Transparent" icon="asset/image/icon_m_gnb.svg" class="icon-button" press="handleMenuPopoverPress" />
     </HBox>
   </OverflowToolbar>
 </mvc:View>

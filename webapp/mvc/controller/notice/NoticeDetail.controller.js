@@ -1,31 +1,26 @@
 /* eslint-disable no-useless-call */
 sap.ui.define(
   [
-    // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
+    // prettier 방지주석
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/control/MessageBox',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
-    'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/common/exceptions/ODataDeleteError',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/richtexteditor/RichTextEditor',
+    'sap/ui/yesco/mvc/model/type/Date',
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     Appno,
     AppUtils,
     AttachFileAction,
     ServiceNames,
     Client,
     MessageBox,
-    ODataReadError,
-    ODataCreateError,
     ODataDeleteError,
     BaseController,
     RTE
@@ -81,7 +76,6 @@ sap.ui.define(
             const oSessionData = this.getSessionData();
 
             oDetailModel.setProperty('/MySelf', true);
-            oDetailModel.setProperty('/FormData', oSessionData);
             oDetailModel.setProperty('/FormData', {
               ApernTxt: `${oSessionData.Orgtx} ${oSessionData.Ename}`,
               Apern: oSessionData.Pernr,
@@ -116,7 +110,10 @@ sap.ui.define(
             oDetailModel.setProperty('/FormData', oTargetData);
           }
 
-          // this.setTextEditor();
+          // setTimeout(() => {
+          //   this.setTextEditor();
+          // }, 100);
+
           this.settingsAttachTable();
         } catch (oError) {
           AppUtils.handleError(oError);
@@ -340,7 +337,6 @@ sap.ui.define(
 
         const oDetailModel = this.getViewModel();
         const bStat = !!oDetailModel.getProperty('/MySelf') && !!oDetailModel.getProperty('/Hass');
-
         const oRichTextEditor = new RTE('myRTE', {
           editorType: sap.ui.richtexteditor.EditorType.TinyMCE4, // 'TinyMCE4',
           layoutData: new sap.m.FlexItemData({ growFactor: 1 }),
@@ -353,7 +349,6 @@ sap.ui.define(
           showGroupStructure: bStat,
           showGroupFontStyle: bStat,
           showGroupClipboard: bStat,
-          sanitizeValue: false,
           value: oDetailModel.getProperty('/FormData/Detail'),
           editable: bStat,
           ready: function () {

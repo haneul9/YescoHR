@@ -69,10 +69,7 @@
         <table:template>
           <Text text="{
               path: 'ZreqDate',
-              type: 'sap.ui.model.type.Date',
-              formatOptions: {
-                  pattern: 'yyyy.MM.dd'
-              }
+              type: 'sap.ui.yesco.mvc.model.type.Date'
           }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
@@ -81,10 +78,7 @@
         <table:template>
           <Text text="{
               path: 'ZappDate',
-              type: 'sap.ui.model.type.Date',
-              formatOptions: {
-                  pattern: 'yyyy.MM.dd'
-              }
+              type: 'sap.ui.yesco.mvc.model.type.Date'
           }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
@@ -93,10 +87,7 @@
         <table:template>
           <Text text="{
               path: 'Pntda',
-              type: 'sap.ui.model.type.Date',
-              formatOptions: {
-                  pattern: 'yyyy.MM.dd'
-              }
+              type: 'sap.ui.yesco.mvc.model.type.Date'
           }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>

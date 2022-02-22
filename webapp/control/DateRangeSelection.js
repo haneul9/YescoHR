@@ -48,7 +48,7 @@ sap.ui.define(
           oEndButton.setType(ButtonType.Emphasized).setText(sTodayText);
         } else {
           this._oPopup.setEndButton(
-            new Button({
+            new sap.m.Button({
               text: sTodayText,
               type: ButtonType.Emphasized,
               press: this._handleCancelButton.bind(this),

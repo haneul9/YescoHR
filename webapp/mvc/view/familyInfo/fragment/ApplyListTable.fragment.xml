@@ -32,24 +32,18 @@
         <Label text="{i18n>LABEL_00148}"/>
         <table:template>
           <Text text="{
-                        path: 'Begda',
-                        type: 'sap.ui.model.type.Date',
-                        formatOptions: {
-                            pattern: 'yyyy.MM.dd'
-                        }
-                    }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+              path: 'Begda',
+              type: 'sap.ui.yesco.mvc.model.type.Date'
+          }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Endda" filterProperty="Endda">
         <Label text="{i18n>LABEL_00149}"/>
         <table:template>
           <Text text="{
-                        path: 'Endda',
-                        type: 'sap.ui.model.type.Date',
-                        formatOptions: {
-                            pattern: 'yyyy.MM.dd'
-                        }
-                    }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+              path: 'Endda',
+              type: 'sap.ui.yesco.mvc.model.type.Date'
+          }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="200px" sortProperty="Famnm" filterProperty="Famnm">
@@ -62,24 +56,18 @@
         <Label text="{i18n>LABEL_00266}"/>
         <table:template>
           <Text text="{
-                        path: 'ZreqDate',
-                        type: 'sap.ui.model.type.Date',
-                        formatOptions: {
-                            pattern: 'yyyy.MM.dd'
-                        }
-                    }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+              path: 'ZreqDate',
+              type: 'sap.ui.yesco.mvc.model.type.Date'
+          }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="ZappDate" filterProperty="ZappDate">
         <Label text="{i18n>LABEL_05003}"/>
         <table:template>
           <Text text="{
-                        path: 'ZappDate',
-                        type: 'sap.ui.model.type.Date',
-                        formatOptions: {
-                            pattern: 'yyyy.MM.dd'
-                        }
-                    }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+              path: 'ZappDate',
+              type: 'sap.ui.yesco.mvc.model.type.Date'
+          }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
     </table:columns>

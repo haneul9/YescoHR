@@ -39,10 +39,7 @@
                     <VBox>
                         <Text text="{
                             path: '/DialogData/Appda',
-                            type: 'sap.ui.model.type.Date',
-                            formatOptions: {
-                                pattern: 'yyyy.MM.dd'
-                            }
+                            type: 'sap.ui.yesco.mvc.model.type.Date'
                         }"/>
                     </VBox>
                     <Label text="{i18n>LABEL_07042}"/>
