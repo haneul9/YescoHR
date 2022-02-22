@@ -104,6 +104,11 @@ sap.ui.define(
 
           _.chain(mColumnsInfo).set(['Zapgme', 'visible'], false).set(['Zapgma', 'visible'], false).set(['Ename', 'width'], '15%').set(['Zzjikgbt', 'width'], '15%').set(['Zzjikcht', 'width'], '15%').commit();
         }
+
+        if (_.isEqual(sType, Constants.APPRAISER_TYPE.ME)) {
+          const mColumnsInfo = oViewModel.getProperty('/listInfo/columns');
+          _.set(mColumnsInfo, ['Zapgma', 'visible'], false);
+        }
       },
 
       /*****************************************************************
