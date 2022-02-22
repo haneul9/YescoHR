@@ -1383,6 +1383,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 
 .per-panel .sapMIBar {display:flex; justify-content:space-between}
 .per-panel .sapMPanelContent {padding-right:0; padding-left:67px; padding-top:2px; padding-bottom:0}
+.per-panel.grade-department .sapMPanelContent {padding-right:0; padding-left:0; padding-top:16px; padding-bottom:0}
 .sapMPanel.per-panel .sapMPanelWrappingDiv .sapMPanelHdr, .sapMPanel .sapMPanelWrappingDivTb .sapMIBar.sapMTB {margin-left:0; padding-left:65px}
 .per-panel .sapMPanelWrappingDivTb .goal-subject .sapMInputBaseContentWrapper {border-color:transparent; background:linear-gradient(#fff 70%, #A8D7FF 70% 85%, #fff 85%) no-repeat!important}
 .per-panel .sapMPanelWrappingDivTb .goal-subject .sapMInputBaseContentWrapper:hover {border-color:transparent!important; background:linear-gradient(#fff 70%, #A8D7FF 70% 85%, #fff 85%) no-repeat}
