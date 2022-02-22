@@ -20,7 +20,7 @@
             <TimePicker width="110px" value="{/DialogData/Beguz}" change=".onTimePicker" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" minutesStep="5" class="sapIcon_Time required" />
             <Text text="~" />
             <TimePicker width="110px" value="{/DialogData/Enduz}" change=".onTimePicker" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" minutesStep="5" class="sapIcon_Time required" />
-            <Text text="{/DialogData/Abrst}" />
+            <Text text="{/DialogData/Abrst}" class="ml-10-px" />
           </HBox>
           <Label text="{i18n>LABEL_00154}"/>
           <HBox>
@@ -36,7 +36,10 @@
       </VBox>
       <VBox class="vCardBox">
         <HBox alignItems="Center" class="table-toolbar" justifyContent="SpaceBetween">
-          <Text text="{i18n>MSG_27003}" class="desc-txt" />
+            <HBox class="title">
+              <Title level="H4" text="{i18n>LABEL_02023}" />
+              <Text text="{i18n>MSG_27003}" class="desc-txt" />
+            </HBox>
           <HBox>
             <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" press=".onDialogAdd" class="sapUiTinyMarginEnd" />
             <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onDialogDel" />

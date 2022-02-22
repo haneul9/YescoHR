@@ -530,6 +530,7 @@ sap.ui.define(
           Visible: bFixed,
           Type: this.getApprovalType(),
           Appno: sAppno,
+          Message: this.getBundleText('MSG_00040'),
           Max: 10,
           FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
         });

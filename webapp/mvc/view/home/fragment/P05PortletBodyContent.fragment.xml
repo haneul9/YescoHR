@@ -1,22 +1,24 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core">
-  <ScrollContainer>
+  <VBox class="mt-10-px">
     <layoutData>
       <FlexItemData growFactor="1" maxWidth="100%" />
     </layoutData>
-    <HBox width="100%" class="no-data" visible="{= ${listCount} === 0 }">
-      <Text text="{i18n>MSG_00001}" />
-    </HBox>
-    <List items="{ path: 'list', templateShareable: false }" visible="{= ${listCount} &gt; 0 }" rememberSelections="false" showSeparators="None" showNoData="false">
-      <CustomListItem>
-        <HBox alignItems="Center" height="20px">
-          <ToggleButton type="Transparent" icon="{= ${Favor} ? 'sap-icon://favorite' : 'sap-icon://unfavorite' }" press=".toggleFavorite" pressed="{Favor}" class="icon-button menu-favorite-icon" />
-          <!-- 메뉴 이동인 경우 -->
-          <Link text="{Mname}" visible="{= !!${Mnurl} &amp;&amp; !${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" press=".handleMenuLink" class="menu-link" />
-          <!-- http|https|javascript로 시작되는 경우 -->
-          <Link text="{Mname}" visible="{= !!${Mnurl} &amp;&amp; ${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" target="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuTarget' }" class="menu-link" />
-        </HBox>
-      </CustomListItem>
-    </List>
-  </ScrollContainer>
+    <ScrollContainer>
+      <HBox width="100%" class="no-data" visible="{= ${listCount} === 0 }">
+        <Text text="{i18n>MSG_00001}" />
+      </HBox>
+      <List items="{ path: 'list', templateShareable: false }" visible="{= ${listCount} &gt; 0 }" rememberSelections="false" showSeparators="None" showNoData="false">
+        <CustomListItem>
+          <HBox alignItems="Center" height="20px">
+            <ToggleButton type="Transparent" icon="{= ${Favor} ? 'sap-icon://favorite' : 'sap-icon://unfavorite' }" press=".toggleFavorite" pressed="{Favor}" class="icon-button menu-favorite-icon" />
+            <!-- 메뉴 이동인 경우 -->
+            <Link text="{Mname}" visible="{= !!${Mnurl} &amp;&amp; !${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" press=".handleMenuLink" class="menu-link" />
+            <!-- http|https|javascript로 시작되는 경우 -->
+            <Link text="{Mname}" visible="{= !!${Mnurl} &amp;&amp; ${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" target="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuTarget' }" class="menu-link" />
+          </HBox>
+        </CustomListItem>
+      </List>
+    </ScrollContainer>
+  </VBox>
 </core:FragmentDefinition>

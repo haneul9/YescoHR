@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core">
-  <VBox width="100%">
+  <VBox width="100%" class="mt-10-px">
     <HBox width="100%">
       <layoutData>
         <FlexItemData growFactor="1" />

@@ -9,6 +9,7 @@ sap.ui.define(
     'sap/ui/yesco/mvc/controller/app/control/Menus',
     'sap/ui/yesco/mvc/model/type/Date', // XML expression binding용 type preloading
     'sap/ui/yesco/mvc/model/type/Time',
+    'sap/ui/yesco/mvc/model/type/Pernr',
   ],
   (
     // prettier 방지용 주석
@@ -65,26 +66,19 @@ sap.ui.define(
         this.getOwnerComponent().byId('home').getController().onPressPortletsP13nDialogOpen();
       },
 
-      onExit: function () {
-        if (this._oPopover) {
-          this._oPopover.destroy();
-        }
-      },
+      async handleMenuPopoverPress(oEvent) {
+        const oButton = oEvent.getSource();
 
-      handleMenuPopoverPress: function (oEvent) {
-        var oButton = oEvent.getSource();
-  
         if (!this._oPopover) {
-          Fragment.load({
-            name: "sap.ui.yesco.mvc.view.app.fragment.MenuPopover",
-            controller: this
-          }).then(function(oPopover){
-            this._oPopover = oPopover;
-            this._oPopover.openBy(oButton);
-          }.bind(this));
-        } else {
-          this._oPopover.openBy(oButton);
+          this._oPopover = await Fragment.load({
+            name: 'sap.ui.yesco.mvc.view.app.fragment.MenuPopover',
+            controller: this,
+          });
+
+          this.getView().addDependent(this._oPopover);
         }
+
+        this._oPopover.openBy(oButton);
       },
 
       onPressLogout() {
@@ -97,6 +91,12 @@ sap.ui.define(
             }
           },
         });
+      },
+
+      onExit: function () {
+        if (this._oPopover) {
+          this._oPopover.destroy();
+        }
       },
     });
   }

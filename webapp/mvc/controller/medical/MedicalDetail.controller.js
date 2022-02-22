@@ -1092,8 +1092,9 @@ sap.ui.define(
           oDetailModel.setProperty('/DialogData/Attyn', sFile);
           this.byId('DetailHisDialog').close();
         } catch (oError) {
-          AppUtils.handleError(oError);
           oDetailModel.setProperty('/DialogData/isNew', true);
+          oDetailModel.setProperty('/DialogData/Appno2', '');
+          AppUtils.handleError(oError);
         } finally {
           AppUtils.setAppBusy(false, this);
         }
@@ -1154,6 +1155,7 @@ sap.ui.define(
           this.setAppAmount();
           this.byId('DetailHisDialog').close();
         } catch (oError) {
+          oDetailModel.setProperty('/DialogData/Appno2', '');
           AppUtils.handleError(oError);
         } finally {
           AppUtils.setAppBusy(false, this);

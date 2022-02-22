@@ -130,7 +130,8 @@ sap.ui.define(
 
         const bSuccess = await this.saveFavorite(oContext.getProperty());
         if (bSuccess) {
-          AppUtils.getAppComponent().byId('home').getModel().getProperty('/activeInstanceMap/P05').refreshFavorites();
+          const mActiveInstanceMap = AppUtils.getAppComponent().byId('home').getModel().getProperty('/activeInstanceMap');
+          (mActiveInstanceMap.P05 || mActiveInstanceMap.M05).refreshFavorites();
         } else {
           const sPath = oContext.getPath();
           oContext.getModel().setProperty(`${sPath}/Favor`, !bPressed);

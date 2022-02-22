@@ -24,52 +24,51 @@
       <Button visible="{switchable}" icon="sap-icon://decline" type="Transparent" class="icon-button portlet-close-icon" press=".onPressClose" />
     </HBox>
     <HBox class="portlet-body">
-      <ScrollContainer visible="{= ${selectedTabKey} === 'Today' }">
+      <VBox class="mt-10-px">
         <layoutData>
           <FlexItemData growFactor="1" maxWidth="100%" />
         </layoutData>
-        <HBox width="100%" class="no-data" visible="{= ${today/listCount} === 0 }">
-          <Text text="{i18n>MSG_00001}" />
-        </HBox>
-        <VBox width="100%" items="{today/list}" visible="{= ${today/listCount} &gt; 0 }" class="portlet-todo-list">
-          <HBox width="100%" alignItems="Center" justifyContent="SpaceBetween">
-            <!-- 메뉴 없는 경우 -->
-            <Text text="{Title}" wrapping="false" tooltip="{Title}" visible="{= !${Mnurl} }" class="menu-link-text" />
-            <!-- 메뉴 이동인 경우 -->
-            <Link text="{Title}" visible="{= !!${Mnurl} &amp;&amp; !${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" press=".handleMenuLink" class="menu-link" />
-            <!-- http|https|javascript로 시작되는 경우 -->
-            <Link text="{Title}" visible="{= !!${Mnurl} &amp;&amp; ${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" target="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuTarget' }" class="menu-link" />
-            <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }">
-              <layoutData>
-                <FlexItemData minWidth="75px" />
-              </layoutData>
-            </Text>
+        <ScrollContainer visible="{= ${selectedTabKey} === 'Today' }">
+          <HBox width="100%" class="no-data" visible="{= ${today/listCount} === 0 }">
+            <Text text="{i18n>MSG_00001}" />
           </HBox>
-        </VBox>
-      </ScrollContainer>
-      <ScrollContainer visible="{= ${selectedTabKey} === 'Future' }">
-        <layoutData>
-          <FlexItemData growFactor="1" maxWidth="100%" />
-        </layoutData>
-        <HBox width="100%" class="no-data" visible="{= ${future/listCount} === 0 }">
-          <Text text="{i18n>MSG_00001}" />
-        </HBox>
-        <VBox width="100%" items="{future/list}" visible="{= ${future/listCount} &gt; 0 }" class="portlet-todo-list">
-          <HBox width="100%" alignItems="Center" justifyContent="SpaceBetween">
-            <!-- 메뉴 없는 경우 -->
-            <Text text="{Title}" wrapping="false" tooltip="{Title}" visible="{= !${Mnurl} }" class="menu-link-text" />
-            <!-- 메뉴 이동인 경우 -->
-            <Link text="{Title}" visible="{= !!${Mnurl} &amp;&amp; !${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" press=".handleMenuLink" class="menu-link" />
-            <!-- http|https|javascript로 시작되는 경우 -->
-            <Link text="{Title}" visible="{= !!${Mnurl} &amp;&amp; ${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" target="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuTarget' }" class="menu-link" />
-            <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }">
-              <layoutData>
-                <FlexItemData minWidth="75px" />
-              </layoutData>
-            </Text>
+          <VBox width="100%" items="{today/list}" visible="{= ${today/listCount} &gt; 0 }" class="portlet-todo-list">
+            <HBox width="100%" alignItems="Center" justifyContent="SpaceBetween">
+              <!-- 메뉴 없는 경우 -->
+              <Text text="{Title}" wrapping="false" tooltip="{Title}" visible="{= !${Mnurl} }" class="menu-link-text" />
+              <!-- 메뉴 이동인 경우 -->
+              <Link text="{Title}" visible="{= !!${Mnurl} &amp;&amp; !${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" press=".handleMenuLink" class="menu-link" />
+              <!-- http|https|javascript로 시작되는 경우 -->
+              <Link text="{Title}" visible="{= !!${Mnurl} &amp;&amp; ${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" target="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuTarget' }" class="menu-link" />
+              <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }">
+                <layoutData>
+                  <FlexItemData minWidth="75px" />
+                </layoutData>
+              </Text>
+            </HBox>
+          </VBox>
+        </ScrollContainer>
+        <ScrollContainer visible="{= ${selectedTabKey} === 'Future' }">
+          <HBox width="100%" class="no-data" visible="{= ${future/listCount} === 0 }">
+            <Text text="{i18n>MSG_00001}" />
           </HBox>
-        </VBox>
-      </ScrollContainer>
+          <VBox width="100%" items="{future/list}" visible="{= ${future/listCount} &gt; 0 }" class="portlet-todo-list">
+            <HBox width="100%" alignItems="Center" justifyContent="SpaceBetween">
+              <!-- 메뉴 없는 경우 -->
+              <Text text="{Title}" wrapping="false" tooltip="{Title}" visible="{= !${Mnurl} }" class="menu-link-text" />
+              <!-- 메뉴 이동인 경우 -->
+              <Link text="{Title}" visible="{= !!${Mnurl} &amp;&amp; !${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" press=".handleMenuLink" class="menu-link" />
+              <!-- http|https|javascript로 시작되는 경우 -->
+              <Link text="{Title}" visible="{= !!${Mnurl} &amp;&amp; ${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" target="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuTarget' }" class="menu-link" />
+              <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }">
+                <layoutData>
+                  <FlexItemData minWidth="75px" />
+                </layoutData>
+              </Text>
+            </HBox>
+          </VBox>
+        </ScrollContainer>
+      </VBox>
     </HBox>
   </VBox>
 </core:FragmentDefinition>
