@@ -11,37 +11,37 @@
     </HBox>
     <table:Table id="workTimeTable" rowSelectionChange=".onRowSelection" selectionMode="{/detail/listMode}" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/detail/list}" visibleRowCount="{/detail/rowCount}" noData="{i18n>MSG_00001}">
       <table:columns>
-        <table:Column width="8%">
+        <table:Column width="7%">
           <Label text="{i18n>LABEL_00209}" />
           <table:template>
             <Text text="{ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="8%">
+        <table:Column width="7%">
           <Label text="{i18n>LABEL_00210}" />
           <table:template>
             <Text text="{Ename}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="8%">
+        <table:Column width="7%">
           <Label text="{i18n>LABEL_00215}" />
           <table:template>
             <Text text="{Zzjikgbt}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="11%">
+        <table:Column width="12%">
           <Label text="{i18n>LABEL_00227}" />
           <table:template>
             <Text text="{Orgtx}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="8%">
+        <table:Column width="7%">
           <Label text="{i18n>LABEL_27004}" />
           <table:template>
             <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="8%">
+        <table:Column width="7%">
           <Label text="{i18n>LABEL_27005}" />
           <table:template>
             <Text text="{
@@ -50,7 +50,7 @@
             }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="8%">
+        <table:Column width="7%">
           <Label text="{i18n>LABEL_27006}" />
           <table:template>
             <Text text="{
@@ -59,25 +59,25 @@
             }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="8%">
+        <table:Column width="7%">
           <Label text="{i18n>LABEL_27007}" />
           <table:template>
             <Text text="{Abrst}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="11%">
+        <table:Column width="12%">
           <Label text="{i18n>LABEL_00154}" />
           <table:template>
             <Text text="{Ottyptx}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="11%">
+        <table:Column width="12%">
           <Label text="{i18n>LABEL_27008}" />
           <table:template>
             <Text text="{Atrsn}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="11%">
+        <table:Column width="15%">
           <Label text="{i18n>LABEL_00163}" />
           <table:template>
             <Text text="{Notes}" width="100%" textAlign="Center" />

@@ -70,6 +70,11 @@ sap.ui.define(
         const oViewModel = this.oController.getViewModel();
         const date = oEvent.data();
 
+        oViewModel.setProperty();
+        _.filter(oViewModel.getProperty('/yearPlan'), (e) => {
+          return e.FullDate === date.day;
+        });
+
         if (!this.oController._pPopover) {
           this.oController._pPopover = Fragment.load({
             id: oView.getId(),
