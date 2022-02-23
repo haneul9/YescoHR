@@ -96,6 +96,7 @@ sap.ui.define(
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
+          $(`#${this.sDialChartId}`).css({ top: '20px' });
           oListModel.setProperty('/busy', false);
         }
       },
@@ -122,8 +123,36 @@ sap.ui.define(
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
+          $(`#${this.sDialChartId}`).css({ top: '20px' });
           oListModel.setProperty('/busy', false);
         }
+      },
+
+      getDialChartOption() {
+        return {
+          //Cosmetics
+          showValue: 1,
+          valueFontSize: 12,
+          showTooltip: 0,
+          gaugeOriginY: 110,
+          gaugeOuterRadius: 75,
+          gaugeInnerRadius: 53,
+          majorTMColor: '#333',
+          majorTMHeight: -2.5,
+          majorTMThickness: 1,
+          tickValueDistance: 5,
+          showPlotBorder: 0,
+          showGaugeBorder: 0,
+          showPivotBorder: 0,
+          bgColor: 'transparent',
+          pivotRadius: 3,
+          pivotFillColor: '#000',
+          chartLeftMargin: -20,
+          chartRightMargin: 0,
+          chartTopMargin: 0,
+          chartBottomMargin: -150,
+          theme: 'ocean',
+        };
       },
 
       buildDialChart(aWorkTypeList) {
@@ -136,29 +165,10 @@ sap.ui.define(
               type: 'angulargauge',
               renderAt: 'chart-dial-container',
               width: '50%',
-              height: '175px',
+              height: '170px',
               dataFormat: 'json',
               dataSource: {
-                chart: {
-                  //Cosmetics
-                  showValue: 1,
-                  valueFontSize: 12,
-                  showTooltip: 0,
-                  gaugeOriginY: 110,
-                  gaugeOuterRadius: 75,
-                  gaugeInnerRadius: 53,
-                  majorTMColor: '#333',
-                  majorTMHeight: -2.5,
-                  majorTMThickness: 1,
-                  tickValueDistance: 5,
-                  showPlotBorder: 0,
-                  showGaugeBorder: 0,
-                  showPivotBorder: 0,
-                  bgColor: 'transparent',
-                  pivotRadius: 3,
-                  pivotFillColor: '#000',
-                  theme: 'ocean',
-                },
+                chart: this.getDialChartOption(),
                 colorrange: {
                   color: [
                     {
@@ -189,26 +199,7 @@ sap.ui.define(
         } else {
           oChart.setChartData(
             {
-              chart: {
-                //Cosmetics
-                showValue: 1,
-                valueFontSize: 12,
-                showTooltip: 0,
-                gaugeOriginY: 110,
-                gaugeOuterRadius: 75,
-                gaugeInnerRadius: 53,
-                majorTMColor: '#333',
-                majorTMHeight: -2.5,
-                majorTMThickness: 1,
-                tickValueDistance: 5,
-                showPlotBorder: 0,
-                showGaugeBorder: 0,
-                showPivotBorder: 0,
-                bgColor: 'transparent',
-                pivotRadius: 3,
-                pivotFillColor: '#000',
-                theme: 'ocean',
-              },
+              chart: this.getDialChartOption(),
               colorrange: {
                 color: [
                   {

@@ -62,12 +62,24 @@ sap.ui.define(
         await this.oController.YearPlanBoxHandler.getYearPlan(iCurrentYear + 1);
       },
 
-      onMouseOverDayBox(oDayBox) {
-        // console.log(oDayBox.data('day'));
-      },
+      // 요일 선택시
+      onClickDay() {
+        const oView = this.getView();
+        const oViewModel = this.getViewModel();
 
-      onMouseOutDayBox(oDayBox) {
-        // console.log(oDayBox.data('day'));
+        if (!this._pPopover) {
+          this._pPopover = Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.mvc.view.individualWorkState.fragment.YearPlanPopover',
+            controller: this,
+          }).then(function (oPopover) {
+            oView.addDependent(oPopover);
+            return oPopover;
+          });
+        }
+        this._pPopover.then(function (oPopover) {
+          oPopover.openBy(oEvent);
+        });
       },
 
       makeCalendarControl() {

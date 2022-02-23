@@ -6,13 +6,13 @@
         <Title level="H2" text="{i18n>LABEL_27002}" />
         <Text text="{i18n>LABEL_27003}" />
       </HBox>
-      <HBox class="summary-info" alignItems="Center">
+      <HBox alignItems="Start">
         <core:HTML content='&lt;div id="chart-dial-container"&gt;&lt;/div&gt;' />
-        <VBox alignItems="End">
+        <VBox alignItems="End" width="100%" class="workTime-summary-box">
           <Label text="today"/>
           <ObjectStatus text="{/MyWork/Timtx}" state="Indication05" />
           <Text text="{/MyWork/Wktim}" />
-          <Label text="this week"/>
+          <Label text="this week" class="mt-10-px"/>
           <ObjectStatus text="{/MyWork/Reltm}" state="Indication05" />
           <Text text="{/MyWork/Wkrul}" />
         </VBox>

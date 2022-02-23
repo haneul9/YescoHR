@@ -621,12 +621,8 @@ sap.ui.define(
         this.formReflesh();
       },
 
-      onMouseOverDayBox() {
-        this.YearPlanBoxHandler.onMouseOverDayBox();
-      },
-
-      onMouseOutDayBox() {
-        this.YearPlanBoxHandler.onMouseOutDayBox();
+      onClickDay() {
+        this.YearPlanBoxHandler.onClickDay();
       },
     });
   }

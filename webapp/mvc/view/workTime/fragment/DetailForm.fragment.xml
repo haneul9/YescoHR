@@ -29,7 +29,7 @@
             <Text text="{Zzjikgbt}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="15%">
+        <table:Column width="11%">
           <Label text="{i18n>LABEL_00227}" />
           <table:template>
             <Text text="{Orgtx}" width="100%" textAlign="Center" />
@@ -65,16 +65,22 @@
             <Text text="{Abrst}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="14%">
+        <table:Column width="11%">
           <Label text="{i18n>LABEL_00154}" />
           <table:template>
             <Text text="{Ottyptx}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="15%">
+        <table:Column width="11%">
           <Label text="{i18n>LABEL_27008}" />
           <table:template>
             <Text text="{Atrsn}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="11%">
+          <Label text="{i18n>LABEL_00163}" />
+          <table:template>
+            <Text text="{Notes}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
       </table:columns>

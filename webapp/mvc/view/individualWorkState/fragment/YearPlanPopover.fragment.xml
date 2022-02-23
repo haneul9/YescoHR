@@ -1,0 +1,16 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:core="sap.ui.core">
+  <Popover title="{/YearPlan/title}" contentMinWidth="200px" class="awart-popover">
+    <grid:CSSGrid gridTemplateColumns="1fr 3fr" gridRowGap="5px" items="{/YearPlan/detail}">
+      <Label text="{i18n>LABEL_18034}" />
+      <Text text="{Atext1}" />
+      <Label text="{i18n>LABEL_00261}" />
+      <Text text="{Appsttx1}" />
+      <Label text="{i18n>LABEL_00154}" />
+      <Text text="{Ename}" />
+      <Label text="{i18n>LABEL_00150}" />
+      <Text text="{Ename}" />
+    </grid:CSSGrid>
+  </Popover>
+</core:FragmentDefinition>

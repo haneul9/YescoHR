@@ -1100,6 +1100,11 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 .sapMBreadcrumbs .sapMLnk {color:#555555 !important; font-size:14px; font-weight:500}
 .sapMBreadcrumbs .sapMBreadcrumbsCurrentLocation {font-size:14px; font-weight:700}
 
+.hCardBox .workTime-summary-box {align-items: flex-end;}
+.hCardBox .workTime-summary-box .sapMObjStatus{font-size: 22px;}
+.hCardBox .workTime-summary-box .sapMText{font-size: 14px;}
+.hCardBox .workTime-summary-box .sapMLabel{font-size: 16px; margin-bottom: 5px;}
+
 .summary-info {margin-bottom:19px; margin-top:6px}
 .summary-info .sapMFlexItem {margin-bottom:0.35rem}
 .summary-info .sapMObjStatus {font-size:30px}
