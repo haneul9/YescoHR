@@ -1053,6 +1053,14 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 .sapMBtn.icon-button.settings .sapMBtnInner:after {content:""; display:inline-block; width:27px; height:23px; background-image:url(../../asset/image/icon_settings.svg); background-repeat:no-repeat; background-position:center}
 .sapMBtn.icon-button.settings:hover .sapMBtnInner:after {background-image:url(../../asset/image/icon_settings_hover.svg)}
 
+/*개인별 근태현황 연차계획 DounutCHart*/
+.sapUiLayoutCSSGrid.year-plan.status-wrap .sapMLabel[data-style="Uesd"]::before { background-color:#7BB4EB}
+.sapUiLayoutCSSGrid.year-plan.status-wrap .sapMLabel[data-style="Plan"]::before { background-color:#A2EB7B}
+.sapUiLayoutCSSGrid.year-plan.status-wrap .sapMLabel[data-style="UnUsed"]::before { background-color:#FFE479}
+.sapUiLayoutCSSGrid.year-plan.status-wrap .sapMLabel{justify-content: left;}
+.sapUiLayoutCSSGrid.year-plan.status-wrap .sapMText{font-weight: bold;}
+.year-plan.status-wrap .sapMLabel::before {content:""; position:relative; display:inline-block; width:14px; height:14px; background-color:#888; margin-right:5px; border-radius:50%}
+
 /*logout button style*/
 .sapMBtn.icon-button.logout .sapMBtnInner {background:transparent!important}
 .sapMBtn.icon-button.logout .sapMBtnInner .sapMBtnIcon {color:#484C50; font-size:22px; font-weight:200}
