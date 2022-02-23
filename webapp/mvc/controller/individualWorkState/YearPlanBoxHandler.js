@@ -68,12 +68,17 @@ sap.ui.define(
       onClickDay(oEvent) {
         const oView = this.oController.getView();
         const oViewModel = this.oController.getViewModel();
-        const date = oEvent.data();
-
-        oViewModel.setProperty();
-        _.filter(oViewModel.getProperty('/yearPlan'), (e) => {
-          return e.FullDate === date.day;
+        const mdate = oEvent.data();
+        const [mSelectedDay] = _.filter(oViewModel.getProperty('/yearPlan'), (e) => {
+          return e.FullDate === mdate.day;
         });
+
+        if (!mSelectedDay || !mSelectedDay.Colty) {
+          return;
+        }
+
+        oViewModel.setProperty('/YearPlan/detail', mSelectedDay);
+        oViewModel.setProperty('/YearPlan/title', moment(mSelectedDay.FullDate).format('YYYY.MM.DD'));
 
         if (!this.oController._pPopover) {
           this.oController._pPopover = Fragment.load({
@@ -121,10 +126,12 @@ sap.ui.define(
       },
 
       getWeekHeader() {
-        const aWeekNames = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+        const aWeekNames = _.times(7, (e) => {
+          return `${this.oController.getBundleText(`LABEL_180${e + 35}`)}`; // 월,화,수,목,금,토,일
+        });
         const mWeekHeaders = aWeekNames.map((o) => this.getBoxObject({ label: o, classNames: 'Header' }));
 
-        return [this.getBoxObject({ label: 'Month', classNames: 'Header' }), ...mWeekHeaders, ...mWeekHeaders, ...mWeekHeaders, ...mWeekHeaders, ...mWeekHeaders, this.getBoxObject({ label: 'M', classNames: 'Header' }), this.getBoxObject({ label: 'T', classNames: 'Header' })];
+        return [this.getBoxObject({ label: this.oController.getBundleText('LABEL_17005'), classNames: 'Header' }), ...mWeekHeaders, ...mWeekHeaders, ...mWeekHeaders, ...mWeekHeaders, ...mWeekHeaders, this.getBoxObject({ label: this.oController.getBundleText('LABEL_18035'), classNames: 'Header' }), this.getBoxObject({ label: this.oController.getBundleText('LABEL_18036'), classNames: 'Header' })];
       },
 
       getActivationDayBody(iMonth, iDay) {

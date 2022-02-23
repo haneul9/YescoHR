@@ -532,6 +532,8 @@ sap.ui.define(
 
               if (!!oCheck.Retmsg) {
                 AppUtils.setAppBusy(false, this);
+                oCheck.Retmsg = _.replace(oCheck.Retmsg, '\\n', '\n');
+
                 // {신청}하시겠습니까?
                 MessageBox.confirm(oCheck.Retmsg, {
                   // 신청, 취소
