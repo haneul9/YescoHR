@@ -540,42 +540,6 @@ sap.ui.define(
         });
       },
 
-      // 삭제
-      onDeleteBtn() {
-        // {삭제}하시겠습니까?
-        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
-          // 삭제, 취소
-          actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
-          onClose: async (vPress) => {
-            // 삭제
-            if (!vPress || vPress !== this.getBundleText('LABEL_00110')) {
-              return;
-            }
-
-            AppUtils.setAppBusy(true, this);
-
-            try {
-              const oDetailModel = this.getViewModel();
-              const oModel = this.getModel(ServiceNames.WORKTIME);
-              const [aDetailList] = oDetailModel.getProperty('/detail/list');
-
-              await Client.remove(oModel, 'OtWorkApply', { Appno: aDetailList.Appno });
-
-              // {삭제}되었습니다.
-              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
-                onClose: () => {
-                  this.onNavBack();
-                },
-              });
-            } catch (oError) {
-              AppUtils.handleError(oError);
-            } finally {
-              AppUtils.setAppBusy(false, this);
-            }
-          },
-        });
-      },
-
       // AttachFileTable Settings
       settingsAttachTable() {
         const oDetailModel = this.getViewModel();

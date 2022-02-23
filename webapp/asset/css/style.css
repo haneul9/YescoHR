@@ -1673,7 +1673,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .excavation-summary .summary-info {margin-bottom:0; margin-top:0}
 .excavation-summary .summary-info .sapMFlexItem:last-child {margin-bottom:0}
 
-.week-Work-summary {padding:43px 20px;background: #F5F6F7 0% 0% no-repeat padding-box;border-radius: 8px;height: 233px;}
+.week-Work-summary {padding:43px 20px;border-radius: 8px;height: 233px;}
 .week-Work-summary .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem {min-height: auto;}
 .week-Work-summary .vacation-indicator {height: 40px;}
 .week-Work-summary .vacation-indicator div {

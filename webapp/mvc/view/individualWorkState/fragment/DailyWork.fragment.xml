@@ -34,19 +34,19 @@
             }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
-        <table:Column width="150px" sortProperty="Atext" filterProperty="Atext">
+        <table:Column width="auto" sortProperty="Atext" filterProperty="Atext">
           <Label text="{i18n>LABEL_18030}"/>
           <table:template>
             <Text text="{Atext}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
           </table:template>
         </table:Column>
-        <table:Column width="100px" sortProperty="Abrtg" filterProperty="Abrtg">
+        <table:Column width="auto" sortProperty="Abrtg" filterProperty="Abrtg">
           <Label text="{i18n>LABEL_00155}"/>
           <table:template>
             <Text text="{Abrtg}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
           </table:template>
         </table:Column>
-        <table:Column width="100px" sortProperty="Abrst" filterProperty="Abrst">
+        <table:Column width="auto" sortProperty="Abrst" filterProperty="Abrst">
           <Label text="{i18n>LABEL_00330}"/>
           <table:template>
             <Text text="{Abrst}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
