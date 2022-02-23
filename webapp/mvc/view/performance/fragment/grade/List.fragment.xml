@@ -1,18 +1,26 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:table="sap.ui.table"
-    xmlns:core="sap.ui.core">
-    <VBox width="100%" class="vCardBox">
-        <HBox justifyContent="SpaceBetween" class="table-toolbar">
-            <HBox class="title">
-                <Title level="H4" text="" />
+    xmlns:core="sap.ui.core"
+    xmlns:custom="sap.ui.yesco.control">
+    <VBox width="100%" class="vCardBox" busyIndicatorDelay="0" busy="{/tab/busy}">
+        <HBox justifyContent="SpaceBetween" class="header-wrap">
+            <HBox class="header">
+                <RadioButtonGroup columns="3" selectedIndex="{/tab/sortIndex}" select=".onSort">
+                    <custom:RadioButton text="조직순" innerSize="35%" />
+                    <custom:RadioButton text="1차평가 점수 순" outerSize="50%" innerSize="35%" />
+                    <custom:RadioButton text="2차평가 등급" outerSize="50%" innerSize="35%" />
+                </RadioButtonGroup>
             </HBox>
-            <HBox class="status-wrap perGrade">
-                <Text text="{/grade/0/text}" class="type01" />
-                <Text text="{/grade/1/text}" class="type02" />
-                <Text text="{/grade/2/text}" class="type03" />
+            <HBox>
+                <HBox class="status-wrap perGrade">
+                    <Text text="{/grade/0/text}" class="type01" />
+                    <Text text="{/grade/1/text}" class="type02" />
+                    <Text text="{/grade/2/text}" class="type03" />
+                </HBox>
+                <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressExcelDownload" />
             </HBox>
         </HBox>
-        <table:Table class="perGrade-table" rows="{ path: '/tab/list', templateShareable: true }" visibleRowCount="{/tab/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
+        <table:Table id="performanceGradeTable" class="perGrade-table" rows="{ path: '/tab/list', templateShareable: true, filters: { path: 'Orgtx', operator: 'NE', value1: 'EMPTY'} }" visibleRowCount="{/tab/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
             <table:rowSettingsTemplate>
                 <table:RowSettings highlight="{ path: 'Fapp', formatter: '.formatRowHighlight' }"/>
             </table:rowSettingsTemplate>
@@ -59,24 +67,24 @@
                         <Text text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
-                <table:Column width="10%" filterProperty="Fapp" sortProperty="Fapp">
+                <table:Column width="14%" filterProperty="Fapp" sortProperty="Fapp">
                     <Label text="{i18n>LABEL_10078}"/>
                     <table:template>
-                        <ComboBox selectedKey="{Fapp}" items="{ path: '/grade', templateShareable: true }">
+                        <ComboBox selectedKey="{Fapp}" items="{ path: '/grade', templateShareable: true }" change=".onChangeFapp">
                             <core:Item text="{text}" key="{code}" />
                         </ComboBox>
                     </table:template>
                 </table:Column>
-                <table:Column width="10%">
+                <table:Column width="9%">
                     <Label text="{i18n>LABEL_00165}"/>
                     <table:template>
-                        <Button type="Transparent" class="mnw-0" icon="asset/image/icon_per_status_04.png" visible="{= !!${Zdocid} }"/>
+                        <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_02_N.svg" visible="{= !!${Zdocid} }"/>
                     </table:template>
                 </table:Column>
-                <table:Column width="10%">
+                <table:Column width="9%">
                     <Label text="{i18n>LABEL_10079}"/>
                     <table:template>
-                        <Button type="Transparent" class="mnw-0" icon="asset/image/icon_timeline01.png" visible="{= !!${Zzappee} }"/>
+                        <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_01_N.svg" visible="{= !!${Zzappee} }"/>
                     </table:template>
                 </table:Column>
             </table:columns>

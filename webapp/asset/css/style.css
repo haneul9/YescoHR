@@ -220,6 +220,7 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 
 /* LAYOUT */
 .desc-txt {background:linear-gradient(transparent 60%, #a8ffbe 60%) no-repeat; margin-left:10px}
+.desc-txt.start {margin-left:0}
 .desc-txt2 {background:linear-gradient(transparent 60%, #d0ecff 60%) no-repeat; margin-left:10px}
 /* .sapMHBox > div {margin-right:1rem !important} */
 .worklist .sapMHBox > div {margin-right:1rem !important}
@@ -243,6 +244,11 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 --BackgroundColorHover:#fff;
 --BackgroundColorActive:#fff;
 --BackgroundColorFocus:#fff;
+/* 평가 */
+--PerformanceGradeColor1:#81DAEA;
+--PerformanceGradeColor2:#A2EB7B;
+--PerformanceGradeColor3:#FFE479;
+--PerformanceGradeColor4:#DDE1E6;
 }
 
 /* 공통 Scroll Bar */
@@ -1783,15 +1789,34 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .sapMBtn.job .sapMBtnDefault {color: var(--FontColorNormal) !important;border-color: #DDE1E6 !important;background-color: #DDE1E6;}
 
 .perGrade-info-grid { background-color: #F7F0D5; border-radius: 8px; padding: 8px 16px; }
-.perGrade.status-wrap .sapMFlexItem {margin-right:20px; height:60px; position:relative}
+.perGrade.status-wrap .sapMFlexItem {margin-right:20px; position:relative;}
 .perGrade.status-wrap .sapMFlexItem .sapMText {display:flex; justify-content:flex-start; align-items:center}
 .perGrade.status-wrap .sapMFlexItem .sapMText::before {content:""; position:relative; display:inline-block; width:14px; height:14px; background-color:#888; margin-right:5px; border-radius:50%}
-.perGrade.status-wrap .sapMFlexItem .sapMText.type01::before { background-color: #81DAEA; }
-.perGrade.status-wrap .sapMFlexItem .sapMText.type02::before { background-color: #A2EB7B; }
-.perGrade.status-wrap .sapMFlexItem .sapMText.type03::before { background-color: #FFE479; }
-.perGrade-table .sapUiTableRowHighlight.sapUiTableRowHighlightIndication01 {background-color: #81DAEA !important}
-.perGrade-table .sapUiTableRowHighlight.sapUiTableRowHighlightIndication02 {background-color: #A2EB7B !important}
-.perGrade-table .sapUiTableRowHighlight.sapUiTableRowHighlightIndication03 {background-color: #FFE479 !important}
+.perGrade.status-wrap .sapMFlexItem .sapMText.type01::before { background-color: var(--PerformanceGradeColor1); }
+.perGrade.status-wrap .sapMFlexItem .sapMText.type02::before { background-color: var(--PerformanceGradeColor2); }
+.perGrade.status-wrap .sapMFlexItem .sapMText.type03::before { background-color: var(--PerformanceGradeColor3); }
+.perGrade-depart-table .sapUiTableRowFirstFixedBottom .sapMText { font-weight: 700; }
+.perGrade-table .sapUiTableRowHighlight.sapUiTableRowHighlightIndication01 {background-color: var(--PerformanceGradeColor1) !important}
+.perGrade-table .sapUiTableRowHighlight.sapUiTableRowHighlightIndication02 {background-color: var(--PerformanceGradeColor2) !important}
+.perGrade-table .sapUiTableRowHighlight.sapUiTableRowHighlightIndication03 {background-color: var(--PerformanceGradeColor3) !important}
+.perGrade-wrap > .sapMVBox { border-top: 1px solid #AFB9BE; border-left: 1px solid #AFB9BE; border-bottom: 1px solid #AFB9BE; }
+.perGrade-wrap > .sapMVBox:last-child { border-right: 1px solid #AFB9BE; }
+.perGrade-wrap .member-photo {margin-left: 8px; display:inline-block; width:32px; height:32px; background-image:url(../../asset/image/avatar-unknown.svg)}
+.perGrade-wrap .name {font-size: 16px; margin-left: 12px; font-weight: 800;}
+.perGrade-wrap .depart {margin-left: 12px; font-size: 12px; color: #8f8f8f;}
+.perGrade-wrap .grade-name { height: 40px; }
+.perGrade-wrap .grade-name .sapMText { font-weight:800; }
+.perGrade-wrap .grade-name.grade-top { background-color: var(--PerformanceGradeColor1); }
+.perGrade-wrap .grade-name.grade-middle { background-color: var(--PerformanceGradeColor2); }
+.perGrade-wrap .grade-name.grade-bottom { background-color: var(--PerformanceGradeColor3); }
+.perGrade-wrap .grade-name.grade-none { background-color: var(--PerformanceGradeColor4); }
+.perGrade-wrap .perGrade-container { height: 100%; box-sizing: border-box; padding: 15px; }
+.perGrade-wrap .perGrade-container .score-box { margin-left: 8px; }
+.perGrade-wrap .perGrade-container .score-box .sapMText { font-size: 12px; }
+.perGrade-wrap .perGrade-container .score-box > .sapMFlexItem:nth-child(3) { margin-left: 8px; }
+.perGrade-wrap .perGrade-container .empty-card {background-color:#F4F4F4; text-align:center; border:1px dashed #B7B7B7}
+.perGrade-wrap .perGrade-container .empty-card .sapMText {font-size:12px; color:#656F74; font-weight:400} 
+.perGrade-wrap .perGrade-container .empty-card .sapMText::before {content:""; display:block; width:38px; height:38px; margin:14px auto 7px; background-image:url(../image/icon_kpi_info.png); background-repeat:no-repeat}
 
 .microchart {display: flex;align-items: center;}
 .microchart .sapSuiteIDCLegend {height:auto!important;color:#222;}

@@ -31,25 +31,25 @@
                                 <Text text="{Label}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                             </table:template>
                         </table:Column>
-                        <table:Column width="19%">
+                        <table:Column width="18%">
                             <Label text="{i18n>LABEL_10015}"/>
                             <table:template>
                                 <Text text="{Ztotcnt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                             </table:template>
                         </table:Column>
-                        <table:Column width="19%">
+                        <table:Column width="18%">
                             <Label text="{/grade/0/text}"/>
                             <table:template>
                                 <Text text="{Zgrade1}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                             </table:template>
                         </table:Column>
-                        <table:Column width="19%">
+                        <table:Column width="18%">
                             <Label text="{/grade/1/text}"/>
                             <table:template>
                                 <Text text="{Zgrade2}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                             </table:template>
                         </table:Column>
-                        <table:Column width="19%">
+                        <table:Column width="18%">
                             <Label text="{/grade/2/text}"/>
                             <table:template>
                                 <Text text="{Zgrade3}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>

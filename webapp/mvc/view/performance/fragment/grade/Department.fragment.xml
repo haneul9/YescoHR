@@ -16,7 +16,7 @@
                 </Toolbar>
             </headerToolbar>
             <content>
-                <table:Table id="departmentTable" selectionMode="None" class="row-link" width="100%" fixedBottomRowCount="1" columnHeaderHeight="45" rowHeight="44" rows="{/department/list}" visibleRowCount="{/department/rowCount}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
+                <table:Table id="departmentTable" selectionMode="None" class="row-link perGrade-depart-table" width="100%" fixedBottomRowCount="1" columnHeaderHeight="45" rowHeight="44" rows="{/department/list}" visibleRowCount="{/department/rowCount}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
                     <table:columns>
                         <table:Column filterProperty="Orgtx" sortProperty="Orgtx">
                             <table:multiLabels>
