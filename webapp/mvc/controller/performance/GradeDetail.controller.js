@@ -30,7 +30,9 @@ sap.ui.define(
         return {
           busy: false,
           tab: {
+            busy: false,
             selectedKey: 'A',
+            sortIndex: 0,
             list: [],
           },
           grade: [],
@@ -139,6 +141,7 @@ sap.ui.define(
           oViewModel.setProperty('/tab/rowCount', Math.min(_.size(aRawData), 10));
 
           this.calculateByDepart();
+          this.onSort();
         } catch (oError) {
           this.debug(`Controller > m/performanceGrade Grade > onObjectMatched Error`, oError);
 
@@ -146,6 +149,23 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/busy', false);
         }
+      },
+
+      setEmptyCard() {
+        const oViewModel = this.getViewModel();
+        const aList = oViewModel.getProperty('/tab/list');
+
+        _.remove(aList, (o) => _.isEmpty(o.Ename));
+
+        const mFappCount = _.countBy(aList, 'Fapp');
+        const aGrade = oViewModel.getProperty('/grade');
+        const aGradeCodes = _.chain(aGrade).map('code').concat(['']).value();
+
+        _.forEach(aGradeCodes, (code) => {
+          if (!_.has(mFappCount, code)) aList.push({ Fapp: code, Orgtx: 'EMPTY' });
+        });
+
+        oViewModel.setProperty('/tab/list', aList);
       },
 
       calculateByDepart() {
@@ -200,6 +220,10 @@ sap.ui.define(
 
         oViewModel.setProperty('/department/rowCount', _.chain(aListByDepart).size().add(1).value());
         oViewModel.setProperty('/department/list', [...aListByDepart, mSumRow]);
+        oViewModel.setProperty('/summary/list/1/Ztotcnt', _.chain(mSumRow).pick(['Dept01', 'Dept03', 'Dept05']).values().sum().value());
+        oViewModel.setProperty('/summary/list/1/Zgrade1', _.get(mSumRow, 'Dept01', 0));
+        oViewModel.setProperty('/summary/list/1/Zgrade2', _.get(mSumRow, 'Dept03', 0));
+        oViewModel.setProperty('/summary/list/1/Zgrade3', _.get(mSumRow, 'Dept05', 0));
       },
 
       formatRowHighlight(sValue) {
@@ -220,16 +244,97 @@ sap.ui.define(
        *****************************************************************/
       onSelectRow(oEvent) {
         const oViewModel = this.getViewModel();
-        const sPath = oEvent.getParameters().rowBindingContext.getPath();
-        const oRowData = oViewModel.getProperty(sPath);
-        const aRawData = oViewModel.getProperty('/raw/list');
-        const aFilteredData = _.filter(aRawData, (o) => _.isEqual(o.Orgeh, oRowData.Orgeh));
 
-        oViewModel.setProperty(
-          '/tab/list',
-          _.map(aFilteredData, (o, i) => _.set(o, 'Idx', ++i))
-        );
-        oViewModel.setProperty('/tab/rowCount', Math.min(_.size(aFilteredData), 10));
+        oViewModel.setProperty('/tab/busy', true);
+
+        try {
+          const sPath = oEvent.getParameters().rowBindingContext.getPath();
+          const oRowData = oViewModel.getProperty(sPath);
+          const aRawData = oViewModel.getProperty('/raw/list');
+          const aFilteredData = _.isEmpty(oRowData.Orgeh) ? aRawData : _.filter(aRawData, (o) => _.isEqual(o.Orgeh, oRowData.Orgeh));
+
+          oViewModel.setProperty('/tab/list', aFilteredData);
+          oViewModel.setProperty('/tab/rowCount', Math.min(_.size(aFilteredData), 10));
+
+          this.onSort();
+        } catch (oError) {
+          this.debug(`Controller > m/performanceGrade Grade > onSelectRow Error`, oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/tab/busy', false);
+        }
+      },
+
+      onChangeFapp() {
+        this.setEmptyCard();
+        this.calculateByDepart();
+      },
+
+      onDrop(oInfo) {
+        const oViewModel = this.getViewModel();
+        const oDragged = oInfo.getParameter('draggedControl');
+        const oDropped = oInfo.getParameter('droppedControl');
+        const oDraggPath = oDragged.getBindingContext().getPath();
+        const mDraggData = oViewModel.getProperty(oDraggPath);
+
+        if (_.isEqual(oDragged, oDropped) || _.isEmpty(mDraggData.Ename)) return;
+
+        const sDroppedFapp = oDropped.getParent().data('Fapp');
+        oViewModel.setProperty(`${oDraggPath}/Fapp`, sDroppedFapp);
+
+        this.onSort();
+        this.calculateByDepart();
+      },
+
+      onSort() {
+        const oViewModel = this.getViewModel();
+        const aTabList = oViewModel.getProperty('/tab/list');
+        const iSortIndex = oViewModel.getProperty('/tab/sortIndex');
+
+        _.remove(aTabList, (o) => _.isEmpty(o.Ename));
+
+        switch (iSortIndex) {
+          case 0:
+            oViewModel.setProperty(
+              '/tab/list',
+              _.chain(aTabList)
+                .orderBy(['Osort', 'Zapgma', 'Fapp', 'Zzjikgb', 'Zzappee'], ['asc', 'desc', 'desc', 'asc', 'asc'])
+                .map((o, i) => _.set(o, 'Idx', ++i))
+                .value()
+            );
+            break;
+          case 1:
+            oViewModel.setProperty(
+              '/tab/list',
+              _.chain(aTabList)
+                .orderBy(['Zapgma', 'Fapp', 'Zzjikgb', 'Zzappee'], ['desc', 'desc', 'asc', 'asc'])
+                .map((o, i) => _.set(o, 'Idx', ++i))
+                .value()
+            );
+            break;
+          case 2:
+            oViewModel.setProperty(
+              '/tab/list',
+              _.chain(aTabList)
+                .orderBy(['Fapp', 'Zapgma', 'Zzjikgb', 'Zzappee'], ['desc', 'desc', 'asc', 'asc'])
+                .map((o, i) => _.set(o, 'Idx', ++i))
+                .value()
+            );
+            break;
+          default:
+            break;
+        }
+
+        this.setEmptyCard();
+      },
+
+      onPressExcelDownload() {
+        const oTable = this.byId('performanceGradeTable');
+        const aTableData = this.getViewModel().getProperty('/tab/list');
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_10083'); // {성과평가등급산출평가리스트}_목록
+
+        TableUtils.export({ oTable, aTableData, sFileName });
       },
 
       /*****************************************************************
