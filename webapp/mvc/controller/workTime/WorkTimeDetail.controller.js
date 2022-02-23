@@ -436,6 +436,11 @@ sap.ui.define(
       overTime() {
         const oDetailModel = this.getViewModel();
         const mDialogData = oDetailModel.getProperty('/DialogData');
+
+        if (!mDialogData.Enduz) {
+          return;
+        }
+
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const mPayLoad = {
           Pernr: this.getAppointeeProperty('Pernr'),
@@ -467,8 +472,11 @@ sap.ui.define(
         const aFilter = _.filter(aList, (e) => {
           return !!e.Pernr;
         });
-        // 동일사번
+        // 동일사번/일자
         if (
+          !!_.find(oDetailModel.getProperty('/detail/list'), (e) => {
+            return moment(e.Datum).format('YYYY.MM.DD') === moment(mDialogData.Datum).format('YYYY.MM.DD');
+          }) ||
           _.chain(aFilter)
             .map((e) => {
               return (e.Pernr = _.trimStart(e.Pernr, '0'));

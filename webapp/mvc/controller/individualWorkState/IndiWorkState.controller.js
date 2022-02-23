@@ -44,6 +44,19 @@ sap.ui.define(
           Hass: this.isHass(),
           WeekWorkDate: new Date(),
           MonthStrList: [],
+          YearPlan: [
+            {
+              title: '',
+              detail: [
+                {
+                  Atext1: '',
+                  Appsttx1: '',
+                  Ename: '',
+                  Ename: '',
+                },
+              ],
+            },
+          ],
           WeekWork: {
             Wkrultx: '',
             WeekTime: 52,
@@ -621,8 +634,8 @@ sap.ui.define(
         this.formReflesh();
       },
 
-      onClickDay() {
-        this.YearPlanBoxHandler.onClickDay();
+      onClickDay(oEvent) {
+        this.YearPlanBoxHandler.onClickDay(oEvent);
       },
     });
   }
