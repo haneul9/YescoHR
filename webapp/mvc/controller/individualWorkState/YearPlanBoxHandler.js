@@ -2,12 +2,14 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/base/Object',
+    'sap/ui/core/Fragment',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
   ],
   (
     // prettier 방지용 주석
     BaseObject,
+    Fragment,
     Client,
     ServiceNames
   ) => {
@@ -62,12 +64,30 @@ sap.ui.define(
         await this.oController.YearPlanBoxHandler.getYearPlan(iCurrentYear + 1);
       },
 
-      onMouseOverDayBox(oDayBox) {
-        // console.log(oDayBox.data('day'));
-      },
+      // 요일 선택시
+      onClickDay(oEvent) {
+        const oView = this.oController.getView();
+        const oViewModel = this.oController.getViewModel();
+        const date = oEvent.data();
 
-      onMouseOutDayBox(oDayBox) {
-        // console.log(oDayBox.data('day'));
+        oViewModel.setProperty();
+        _.filter(oViewModel.getProperty('/yearPlan'), (e) => {
+          return e.FullDate === date.day;
+        });
+
+        if (!this.oController._pPopover) {
+          this.oController._pPopover = Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.mvc.view.individualWorkState.fragment.YearPlanPopover',
+            controller: this.oController,
+          }).then(function (oPopover) {
+            oView.addDependent(oPopover);
+            return oPopover;
+          });
+        }
+        this.oController._pPopover.then(function (oPopover) {
+          oPopover.openBy(oEvent);
+        });
       },
 
       makeCalendarControl() {

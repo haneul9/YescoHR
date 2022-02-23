@@ -44,6 +44,19 @@ sap.ui.define(
           Hass: this.isHass(),
           WeekWorkDate: new Date(),
           MonthStrList: [],
+          YearPlan: [
+            {
+              title: '',
+              detail: [
+                {
+                  Atext1: '',
+                  Appsttx1: '',
+                  Ename: '',
+                  Ename: '',
+                },
+              ],
+            },
+          ],
           WeekWork: {
             Wkrultx: '',
             WeekTime: 52,
@@ -203,6 +216,24 @@ sap.ui.define(
       },
 
       //////////////////////////// Doughnut Chart Setting
+      getDoughnutChartOption() {
+        return {
+          legendPosition: 'right',
+          bgColor: 'transparent',
+          theme: 'ocean',
+          plottooltext: `$label $value일`,
+          animation: 1,
+          slicingDistance: 0,
+          smartLineAlpha: 0,
+          captionPadding: 0,
+          chartLeftMargin: 0,
+          chartRightMargin: 0,
+          chartBottomMargin: 0,
+          chartTopMargin: -10,
+          labelFontSize: 12,
+        };
+      },
+
       buildDoughChart(aPlanList) {
         const oDetailModel = this.getViewModel();
         const mPlan = {
@@ -225,17 +256,7 @@ sap.ui.define(
             height: '100%',
             dataFormat: 'json',
             dataSource: {
-              chart: {
-                legendPosition: 'right',
-                bgColor: 'transparent',
-                decimals: '0',
-                theme: 'ocean',
-                plottooltext: `$label $value일`,
-                slicingDistance: '5',
-                smartLineAlpha: '0',
-                showZeroPies: 'true',
-                captionPadding: '0',
-              },
+              chart: this.getDoughnutChartOption(),
               data: [
                 {
                   label: this.getBundleText('LABEL_18002'), // 사용일수
@@ -278,17 +299,7 @@ sap.ui.define(
 
         oChart.setChartData(
           {
-            chart: {
-              legendPosition: 'right',
-              bgColor: 'transparent',
-              decimals: '0',
-              theme: 'ocean',
-              plottooltext: `$label $value일`,
-              slicingDistance: '5',
-              smartLineAlpha: '0',
-              showZeroPies: 'true',
-              captionPadding: '0',
-            },
+            chart: this.getDoughnutChartOption(),
             data: [
               {
                 label: this.getBundleText('LABEL_18002'), // 사용일수
@@ -316,6 +327,25 @@ sap.ui.define(
       },
 
       //////////////////////////// Combination Chart Setting
+      getCombiChartOption() {
+        return {
+          //Cosmetics
+          bgColor: 'transparent',
+          theme: 'ocean',
+          usePlotGradientColor: 0,
+          showDivLineSecondaryValue: 0,
+          showSecondaryLimits: 0,
+          showPlotBorder: 0,
+          baseFontSize: 13,
+          valueFontSize: 13,
+          legendItemFontSize: 13,
+          showXAxisLine: 0,
+          animation: 1,
+          divLineColor: '#dde1e6',
+          divLineDashed: 0,
+        };
+      },
+
       buildCombiChart(aWorkTypeList) {
         const oDetailModel = this.getViewModel();
 
@@ -343,19 +373,7 @@ sap.ui.define(
             height: '300px',
             dataFormat: 'json',
             dataSource: {
-              chart: {
-                //Cosmetics
-                bgColor: 'transparent',
-                theme: 'ocean',
-                usePlotGradientColor: '0',
-                showPlotBorder: '0',
-                baseFontSize: '13',
-                valueFontSize: '13',
-                showXAxisLine: '0',
-                animation: '1',
-                divLineColor: '#dde1e6',
-                divLineDashed: '0',
-              },
+              chart: this.getCombiChartOption(),
               categories: [
                 {
                   category: oDetailModel.getProperty('/MonthStrList'),
@@ -406,19 +424,7 @@ sap.ui.define(
 
         oChart.setChartData(
           {
-            chart: {
-              //Cosmetics
-              bgColor: 'transparent',
-              theme: 'ocean',
-              usePlotGradientColor: '0',
-              showPlotBorder: '0',
-              baseFontSize: '12',
-              valueFontSize: '12',
-              showXAxisLine: '0',
-              animation: '1',
-              divLineColor: '#dde1e6',
-              divLineDashed: '0',
-            },
+            chart: this.getCombiChartOption(),
             categories: [
               {
                 category: oDetailModel.getProperty('/MonthStrList'),
@@ -628,12 +634,8 @@ sap.ui.define(
         this.formReflesh();
       },
 
-      onMouseOverDayBox() {
-        this.YearPlanBoxHandler.onMouseOverDayBox();
-      },
-
-      onMouseOutDayBox() {
-        this.YearPlanBoxHandler.onMouseOutDayBox();
+      onClickDay(oEvent) {
+        this.YearPlanBoxHandler.onClickDay(oEvent);
       },
     });
   }

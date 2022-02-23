@@ -1059,6 +1059,14 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 .sapMBtn.icon-button.settings .sapMBtnInner:after {content:""; display:inline-block; width:27px; height:23px; background-image:url(../../asset/image/icon_settings.svg); background-repeat:no-repeat; background-position:center}
 .sapMBtn.icon-button.settings:hover .sapMBtnInner:after {background-image:url(../../asset/image/icon_settings_hover.svg)}
 
+/*개인별 근태현황 연차계획 DounutCHart*/
+.sapUiLayoutCSSGrid.year-plan.status-wrap .sapMLabel[data-style="Uesd"]::before { background-color:#7BB4EB}
+.sapUiLayoutCSSGrid.year-plan.status-wrap .sapMLabel[data-style="Plan"]::before { background-color:#A2EB7B}
+.sapUiLayoutCSSGrid.year-plan.status-wrap .sapMLabel[data-style="UnUsed"]::before { background-color:#FFE479}
+.sapUiLayoutCSSGrid.year-plan.status-wrap .sapMLabel{justify-content: left;}
+.sapUiLayoutCSSGrid.year-plan.status-wrap .sapMText{font-weight: bold;}
+.year-plan.status-wrap .sapMLabel::before {content:""; position:relative; display:inline-block; width:14px; height:14px; background-color:#888; margin-right:5px; border-radius:50%}
+
 /*logout button style*/
 .sapMBtn.icon-button.logout .sapMBtnInner {background:transparent!important}
 .sapMBtn.icon-button.logout .sapMBtnInner .sapMBtnIcon {color:#484C50; font-size:22px; font-weight:200}
@@ -1097,6 +1105,11 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 .sapMBreadcrumbs {white-space:nowrap; outline:none; margin:0}
 .sapMBreadcrumbs .sapMLnk {color:#555555 !important; font-size:14px; font-weight:500}
 .sapMBreadcrumbs .sapMBreadcrumbsCurrentLocation {font-size:14px; font-weight:700}
+
+.hCardBox .workTime-summary-box {align-items: flex-end;}
+.hCardBox .workTime-summary-box .sapMObjStatus{font-size: 22px;}
+.hCardBox .workTime-summary-box .sapMText{font-size: 14px;}
+.hCardBox .workTime-summary-box .sapMLabel{font-size: 16px; margin-bottom: 5px;}
 
 .summary-info {margin-bottom:19px; margin-top:6px}
 .summary-info .sapMFlexItem {margin-bottom:0.35rem}
@@ -1679,7 +1692,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .excavation-summary .summary-info {margin-bottom:0; margin-top:0}
 .excavation-summary .summary-info .sapMFlexItem:last-child {margin-bottom:0}
 
-.week-Work-summary {padding:43px 20px;background: #F5F6F7 0% 0% no-repeat padding-box;border-radius: 8px;height: 233px;}
+.week-Work-summary {padding:43px 20px;border-radius: 8px;height: 233px;}
 .week-Work-summary .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem {min-height: auto;}
 .week-Work-summary .vacation-indicator {height: 40px;}
 .week-Work-summary .vacation-indicator div {
