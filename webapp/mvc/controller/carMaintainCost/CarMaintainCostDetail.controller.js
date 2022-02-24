@@ -148,6 +148,9 @@ sap.ui.define(
 
             if (!!oTargetData.Pernr) {
               oTargetData.Cardt = sDate;
+              oTargetData.Cc = _.trimStart(oTargetData.Cc, '0', '');
+              oTargetData.Caryr = _.trimStart(oTargetData.Caryr, '0', '');
+              oTargetData.Id = _.trimStart(oTargetData.Id, '0', '');
 
               oDetailModel.setProperty('/FormData', oTargetData);
               oDetailModel.setProperty('/FormData/Ename', sEname);
