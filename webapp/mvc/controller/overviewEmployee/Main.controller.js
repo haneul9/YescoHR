@@ -154,7 +154,7 @@ sap.ui.define(
             const mChartBSetting = ChartsSetting.CHART.A05;
 
             _.chain(mChartBSetting)
-              .set(['data', 'chart', 'yAxisMaxValue'], '200')
+              // .set(['data', 'chart', 'yAxisMaxValue'], '200')
               .set(
                 ['data', 'data'],
                 _.map(data, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#8FABE8' }))
