@@ -45,7 +45,7 @@
             </VBox>
             <Label text="{i18n>LABEL_25014}" visible="{= ${/FormData/Appty} !== 'D' }" />
             <VBox visible="{= ${/FormData/Appty} !== 'D' }">
-                <custom:DatePicker maxDate="{/maxDate}" dateValue="{ path: '/FormData/Cardt', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{/FormData/Fixed}" class="required"/>
+                <custom:DatePicker minDate="{/minDate}" dateValue="{ path: '/FormData/Cardt', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{/FormData/Fixed}" class="required"/>
             </VBox>
             <Label text="{i18n>LABEL_25015}" visible="{= ${/FormData/Appty} !== 'D' }" />
             <VBox visible="{= ${/FormData/Appty} !== 'D' }">
