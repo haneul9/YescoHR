@@ -37,10 +37,13 @@ sap.ui.define(
           },
           grade: [],
           summary: {
-            ZzapstsNm: '2차평가중',
-            Orgtx2: '경영지원부문',
-            ZzappgrTxt: '과장이상',
-            list: [],
+            ZzapstsNm: '',
+            Orgtx2: '',
+            ZzappgrTxt: '',
+            list: [
+              { ZtotcntState: 'None', Zgrade1State: 'None', Zgrade2State: 'None', Zgrade3State: 'None' },
+              { ZtotcntState: 'None', Zgrade1State: 'None', Zgrade2State: 'None', Zgrade3State: 'None' },
+            ],
           },
           department: {
             rowCount: 2,
@@ -62,22 +65,6 @@ sap.ui.define(
           aColIndices: [0],
           sTheadOrTbody: 'thead',
         });
-      },
-
-      /**
-       * @override
-       */
-      onAfterShow() {
-        BaseController.prototype.onAfterShow.apply(this, arguments);
-
-        setTimeout(() => {
-          TableUtils.setColorColumn({
-            oTable: this.byId('summaryTable'),
-            bIncludeHeader: true,
-            mHeaderColorMap: { 2: 'bgType04', 3: 'bgType05', 4: 'bgType06' },
-            mColorMap: { 2: 'bgType07', 3: 'bgType08', 4: 'bgType09' },
-          });
-        }, 100);
       },
 
       async onObjectMatched() {
@@ -122,6 +109,9 @@ sap.ui.define(
 
           oViewModel.setProperty('/grade', aGrades);
 
+          oViewModel.setProperty('/summary/ZzapstsNm', _.get(mParameter, 'ZzapstsSubnm'));
+          oViewModel.setProperty('/summary/Orgtx2', _.get(mParameter, 'Orgtx2'));
+          oViewModel.setProperty('/summary/ZzappgrTxt', _.get(mParameter, 'ZzappgrTxt'));
           oViewModel.setProperty('/summary/list', [
             _.chain(mDetailData.Appraisal2GGradeSet.results)
               .nth(1)
@@ -130,8 +120,12 @@ sap.ui.define(
                 o[p] = _.trim(v);
               })
               .set('Label', this.getBundleText('LABEL_10076'))
+              .set('ZtotcntState', 'None')
+              .set('Zgrade1State', 'None')
+              .set('Zgrade2State', 'None')
+              .set('Zgrade3State', 'None')
               .value(),
-            { Label: this.getBundleText('LABEL_10077'), Ztotcnt: '0', Zgrade1: '0', Zgrade2: '0', Zgrade3: '0' },
+            { Label: this.getBundleText('LABEL_10077'), Ztotcnt: '0', ZtotcntState: 'None', Zgrade1: '0', Zgrade1State: 'None', Zgrade2: '0', Zgrade2State: 'None', Zgrade3: '0', Zgrade3State: 'None' },
           ]);
 
           const aRawData = _.map(mDetailData.Appraisal2GDocDetSet.results, (o, i) => ({ Idx: ++i, ..._.omit(o, '__metadata') }));
@@ -148,6 +142,15 @@ sap.ui.define(
           AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/busy', false);
+
+          setTimeout(() => {
+            TableUtils.setColorColumn({
+              oTable: this.byId('summaryTable'),
+              bIncludeHeader: true,
+              mHeaderColorMap: { 2: 'bgType04', 3: 'bgType05', 4: 'bgType06' },
+              mColorMap: { 2: 'bgType07', 3: 'bgType08', 4: 'bgType09' },
+            });
+          }, 100);
         }
       },
 
@@ -220,10 +223,26 @@ sap.ui.define(
 
         oViewModel.setProperty('/department/rowCount', _.chain(aListByDepart).size().add(1).value());
         oViewModel.setProperty('/department/list', [...aListByDepart, mSumRow]);
-        oViewModel.setProperty('/summary/list/1/Ztotcnt', _.chain(mSumRow).pick(['Dept01', 'Dept03', 'Dept05']).values().sum().value());
-        oViewModel.setProperty('/summary/list/1/Zgrade1', _.get(mSumRow, 'Dept01', 0));
-        oViewModel.setProperty('/summary/list/1/Zgrade2', _.get(mSumRow, 'Dept03', 0));
-        oViewModel.setProperty('/summary/list/1/Zgrade3', _.get(mSumRow, 'Dept05', 0));
+
+        const [mGradeBase, mGradeSum] = oViewModel.getProperty('/summary/list');
+        const sZtotcnt = _.chain(mSumRow).pick(['Dept01', 'Dept03', 'Dept05']).values().sum().value();
+        const sZgrade1 = _.get(mSumRow, 'Dept01', 0);
+        const sZgrade2 = _.get(mSumRow, 'Dept03', 0);
+        const sZgrade3 = _.get(mSumRow, 'Dept05', 0);
+
+        oViewModel.setProperty(
+          '/summary/list/1',
+          _.chain(mGradeSum)
+            .set('Ztotcnt', sZtotcnt)
+            .set('ZtotcntState', _.gt(sZtotcnt, _.toNumber(mGradeBase.Ztotcnt)) ? 'Error' : 'None')
+            .set('Zgrade1', sZgrade1)
+            .set('Zgrade1State', !_.eq(_.toNumber(mGradeBase.Zgrade1), 0) && _.gt(sZgrade1, _.toNumber(mGradeBase.Zgrade1)) ? 'Error' : 'None')
+            .set('Zgrade2', sZgrade2)
+            .set('Zgrade2State', !_.eq(_.toNumber(mGradeBase.Zgrade2), 0) && _.gt(sZgrade2, _.toNumber(mGradeBase.Zgrade2)) ? 'Error' : 'None')
+            .set('Zgrade3', sZgrade3)
+            .set('Zgrade3State', !_.eq(_.toNumber(mGradeBase.Zgrade3), 0) && _.gt(sZgrade3, _.toNumber(mGradeBase.Zgrade3)) ? 'Error' : 'None')
+            .value()
+        );
       },
 
       formatRowHighlight(sValue) {

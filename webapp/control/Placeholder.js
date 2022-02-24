@@ -12,13 +12,9 @@ sap.ui.define(
     return Control.extend('sap.ui.yesco.control.Placeholder', {
       metadata: {
         properties: {
-          width: { type: 'sap.ui.core.CSSSize', defaultValue: '200px' },
+          width: { type: 'sap.ui.core.CSSSize', defaultValue: '100%' },
           line: { type: 'int', defaultValue: 5 },
         },
-        // aggregations: {
-        //   _rating: { type: 'sap.m.RatingIndicator', multiple: false, visibility: 'hidden' },
-        // },
-        // events: {},
       },
 
       renderer: function (oRM, oControl) {
