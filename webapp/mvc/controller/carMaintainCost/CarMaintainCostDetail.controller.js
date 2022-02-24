@@ -389,10 +389,11 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const bFixed = oDetailModel.getProperty('/FormData/Appty') !== 'D';
 
-        oDetailModel.setProperty('/FormData/Appno', '');
-        oDetailModel.setProperty('/FormData/Fixed', bFixed);
         oDetailModel.setProperty('/FormData/ZappStatAl', '');
+        oDetailModel.setProperty('/FormData/Fixed', bFixed);
+        oDetailModel.setProperty('/ApplyInfo/Appdt', '');
         this.settingsAttachTable();
+        oDetailModel.setProperty('/FormData/Appno', '');
       },
 
       // 임시저장
