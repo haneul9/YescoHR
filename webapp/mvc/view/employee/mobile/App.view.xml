@@ -4,36 +4,38 @@
     xmlns:grid="sap.ui.layout.cssgrid"
     xmlns="sap.m">
     <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
-        <VBox>
-            <grid:CSSGrid gridTemplateColumns="1fr 6fr">
-                <VBox justifyContent="Center" alignItems="Center">
-                    <layoutData>
-                        <grid:GridItemLayoutData gridRow="span 5" />
-                    </layoutData>
-                    <Image src="{/header/profilePath}" class="member-photo" mode="Background" width="111px" height="111px" />
-                </VBox>
-                <HBox justifyContent="SpaceBetween">
-                    <Label text="{/header/name}" design="Bold" />
-                    <Image src="asset/image/icon_captain.svg" width="1.2rem" alt="Captain" visible="{= !!${/header/chief}}" />
-                </HBox>
-                <grid:CSSGrid items="{path: '/header/baseInfo'}" gridTemplateColumns="1fr 5fr">
-                    <Label text="{data}">
-                        <customData>
-                            <core:CustomData key="type" value="{labelOrText}" writeToDom="true" />
-                        </customData>
-                    </Label>
+        <VBox class="contents">
+            <VBox class="wrap">
+                <grid:CSSGrid gridTemplateColumns="1fr 6fr" class="member-detail" gridGap="4px 20px" >
+                    <VBox justifyContent="Center" alignItems="Center">
+                        <layoutData>
+                            <grid:GridItemLayoutData gridRow="span 2" />
+                        </layoutData>
+                        <Image src="{/header/profilePath}" class="member-photo" mode="Background" width="88px" height="88px" />
+                    </VBox>
+                    <HBox justifyContent="SpaceBetween">
+                        <Label text="{/header/name}" class="name" />
+                        <Image src="asset/image/icon_captain.svg" width="1.2rem" alt="Captain" visible="{= !!${/header/chief}}" />
+                    </HBox>
+                    <grid:CSSGrid items="{path: '/header/baseInfo'}" gridTemplateColumns="1fr 5fr">
+                        <Label text="{data}">
+                            <customData>
+                                <core:CustomData key="type" value="{labelOrText}" writeToDom="true" />
+                            </customData>
+                        </Label>
+                    </grid:CSSGrid>
                 </grid:CSSGrid>
-            </grid:CSSGrid>
-        </VBox>
-        <VBox>
-            <IconTabBar id="employeeTabBar" expandable="false" selectedKey="{/tab/selectedKey}" items="{/tab/list}">
-                <layoutData>
-                    <FlexItemData growFactor="1" />
-                </layoutData>
-                <items>
-                    <IconTabFilter text="{Menu1}" key="{Menuc1}" />
-                </items>
-            </IconTabBar>
+            </VBox>
+            <VBox>
+                <IconTabBar id="employeeTabBar" expandable="false" selectedKey="{/tab/selectedKey}" items="{/tab/list}">
+                    <layoutData>
+                        <FlexItemData growFactor="1" />
+                    </layoutData>
+                    <items class="asdf">
+                        <IconTabFilter text="{Menu1}" key="{Menuc1}" />
+                    </items>
+                </IconTabBar>
+            </VBox>
         </VBox>
     </Page>
 </mvc:View>
