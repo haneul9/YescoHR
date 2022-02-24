@@ -99,7 +99,7 @@ sap.ui.define(
         try {
           this.setAllBusy(true);
 
-          const mFilters = { Wekrs: this.getAppointeeProperty('Werks'), Orgeh: this.getAppointeeProperty('Orgeh'), Zyear: '2022' };
+          const mFilters = { Zyear: '2022' };
           const fCurried = Client.getEntitySet(this.getModel(ServiceNames.PA));
           const aCharts = await Promise.all(_.map(this.CHART_TYPE, (type) => fCurried('HeadCountOverview', { ...mFilters, Headty: type })));
 
@@ -107,10 +107,9 @@ sap.ui.define(
             setTimeout(this.buildChart(idx, data), 0);
           });
         } catch (oError) {
-          this.debug('Controller > organization Main > onObjectMatched Error', oError);
+          this.debug('Controller > m/overviewEmployee Main > onObjectMatched Error', oError);
 
           AppUtils.handleError(oError);
-        } finally {
         }
       },
 
@@ -181,7 +180,7 @@ sap.ui.define(
             const mChartCSetting = ChartsSetting.CHART.A09;
 
             _.chain(mChartCSetting)
-              .set(['data', 'chart', 'yAxisMaxValue'], '200')
+              // .set(['data', 'chart', 'yAxisMaxValue'], '200')
               .set(
                 ['data', 'data'],
                 _.map(data, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#8FABE8' }))
@@ -293,7 +292,7 @@ sap.ui.define(
             const mChartFSetting = ChartsSetting.CHART.A10;
 
             _.chain(mChartFSetting)
-              .set(['data', 'chart', 'yAxisMaxValue'], '120')
+              // .set(['data', 'chart', 'yAxisMaxValue'], '120')
               .set(
                 ['data', 'data'],
                 _.map(data, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#8FABE8' }))
@@ -351,7 +350,7 @@ sap.ui.define(
             const mChartHSetting = ChartsSetting.CHART.A07;
 
             _.chain(mChartHSetting)
-              .set(['data', 'chart', 'yAxisMaxValue'], '120')
+              // .set(['data', 'chart', 'yAxisMaxValue'], '120')
               .set(
                 ['data', 'data'],
                 _.map(data, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#8FABE8' }))
@@ -441,7 +440,7 @@ sap.ui.define(
             const mChartKSetting = ChartsSetting.CHART.A11;
 
             _.chain(mChartKSetting)
-              .set(['data', 'chart', 'yAxisMaxValue'], '60')
+              // .set(['data', 'chart', 'yAxisMaxValue'], '60')
               .set(
                 ['data', 'categories'],
                 _.map(data, (o) => ({ label: o.Ttltxt }))
