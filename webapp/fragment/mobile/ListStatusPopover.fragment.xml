@@ -2,11 +2,11 @@
   xmlns:core="sap.ui.core">
   <Popover contentWidth="120px" contentHeight="140px" showHeader="false" placement="Bottom" horizontalScrolling="false" class="notification-popover" initialFocus="notification-popover-close">
     <VBox class="status-wrap">
-      <ObjectStatus text="{= !${/listInfo/ObjTxt1} ? ${i18n>LABEL_00130} : ${/listInfo/ObjTxt1} }" visible="{/listInfo/isShowProgress}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="None" />
-      <ObjectStatus text="{= !${/listInfo/ObjTxt2} ? ${i18n>LABEL_00121} : ${/listInfo/ObjTxt2} }" visible="{/listInfo/isShowApply}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication02" />
-      <ObjectStatus text="{= !${/listInfo/ObjTxt3} ? ${i18n>LABEL_00123} : ${/listInfo/ObjTxt3} }" visible="{/listInfo/isShowApprove}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication03" />
-      <ObjectStatus text="{= !${/listInfo/ObjTxt4} ? ${i18n>LABEL_00124} : ${/listInfo/ObjTxt4} }" visible="{/listInfo/isShowReject}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication04" />
-      <ObjectStatus text="{= !${/listInfo/ObjTxt5} ? ${i18n>LABEL_00117} : ${/listInfo/ObjTxt5} }" visible="{/listInfo/isShowComplete}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication05" />
+      <ObjectStatus text="{= !${/listInfo/ObjTxt1} ? ${i18n>LABEL_00130} : ${/listInfo/ObjTxt1} }" visible="{/listInfo/isShowProgress}" icon="sap-icon://circle-task-2" state="None" />
+      <ObjectStatus text="{= !${/listInfo/ObjTxt2} ? ${i18n>LABEL_00121} : ${/listInfo/ObjTxt2} }" visible="{/listInfo/isShowApply}" icon="sap-icon://circle-task-2" state="Indication02" />
+      <ObjectStatus text="{= !${/listInfo/ObjTxt3} ? ${i18n>LABEL_00123} : ${/listInfo/ObjTxt3} }" visible="{/listInfo/isShowApprove}" icon="sap-icon://circle-task-2" state="Indication03" />
+      <ObjectStatus text="{= !${/listInfo/ObjTxt4} ? ${i18n>LABEL_00124} : ${/listInfo/ObjTxt4} }" visible="{/listInfo/isShowReject}" icon="sap-icon://circle-task-2" state="Indication04" />
+      <ObjectStatus text="{= !${/listInfo/ObjTxt5} ? ${i18n>LABEL_00117} : ${/listInfo/ObjTxt5} }" visible="{/listInfo/isShowComplete}" icon="sap-icon://circle-task-2" state="Indication05" />
     </VBox>
   </Popover>
 </core:FragmentDefinition>
