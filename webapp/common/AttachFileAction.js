@@ -200,7 +200,11 @@ sap.ui.define(
 
         return new Promise((resolve, reject) => {
           oModel.read('/FileListSet', {
-            filters: [new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, vAttachFileDatas.Appno), new sap.ui.model.Filter('Zworktyp', sap.ui.model.FilterOperator.EQ, vAttachFileDatas.Type)],
+            filters: [
+              // prettier 방지주석
+              new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, vAttachFileDatas.Appno),
+              new sap.ui.model.Filter('Zworktyp', sap.ui.model.FilterOperator.EQ, vAttachFileDatas.Type),
+            ],
             success: (data) => {
               if (data && data.results.length) {
                 data.results.forEach((elem) => {
