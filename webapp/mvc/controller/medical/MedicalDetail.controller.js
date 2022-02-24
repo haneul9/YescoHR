@@ -1111,7 +1111,7 @@ sap.ui.define(
         try {
           AppUtils.setAppBusy(true, this);
 
-          if (!mDialogData.Appno2 || _.parseInt(mDialogData.Appno2) === 0) {
+          if (!mDialogData.Appno2 || !mDialogData.ZappStat || (!mDialogData.Appno2 && !mDialogData.ZappStat) || _.parseInt(mDialogData.Appno2) === 0) {
             const vAppno = await Appno.get.call(this);
 
             oDetailModel.setProperty('/DialogData/Appno2', vAppno);
