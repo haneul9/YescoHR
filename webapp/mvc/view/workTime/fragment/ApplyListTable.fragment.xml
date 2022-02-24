@@ -103,11 +103,11 @@
           }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="auto" sortProperty="Stfda" filterProperty="Stfda">
+      <table:Column width="auto" sortProperty="Sgnda" filterProperty="Sgnda">
         <Label text="{i18n>LABEL_00269}"/>
         <table:template>
           <Text text="{
-              path: 'Stfda',
+              path: 'Sgnda',
               type: 'sap.ui.yesco.mvc.model.type.Date'
           }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
         </table:template>
