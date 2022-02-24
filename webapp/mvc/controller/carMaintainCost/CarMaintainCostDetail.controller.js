@@ -43,7 +43,7 @@ sap.ui.define(
       initializeModel() {
         return {
           Hass: this.isHass(),
-          maxDate: moment().toDate(),
+          minDate: moment().toDate(),
           FormData: {
             Fixed: true,
             bPayType: false,
@@ -138,9 +138,18 @@ sap.ui.define(
           const sEname = this.getAppointeeProperty('Ename');
 
           if (sDataKey === 'N' || !sDataKey) {
-            const [oTargetData] = await Client.getEntitySet(oModel, 'MaintenanceCarAppl', { Prcty: 'C' });
+            const [oTargetData] = await Client.getEntitySet(oModel, 'MaintenanceCarChange', {
+              Pernr: sPernr,
+            });
+
+            const dMoment = moment();
+            const iYear = dMoment.year();
+            const iMonth = _.padStart(_.padStart(dMoment.month() + 1, 2, '0'));
+            const sDate = dMoment.date() === 1 ? moment(`${iYear}${iMonth}`).toDate() : moment(`${iYear}${iMonth + 1}`).toDate();
 
             if (!!oTargetData.Appno) {
+              oTargetData.Cardt = sDate;
+
               oDetailModel.setProperty('/FormData', oTargetData);
               oDetailModel.setProperty('/FormData/Ename', sEname);
               oDetailModel.setProperty('/FormData/Fixed', oTargetData.Appty !== 'D' && oTargetData.ZappStatAl === '10');
@@ -156,6 +165,7 @@ sap.ui.define(
                 Fixed: sAppCode !== 'D',
                 bPayType: false,
                 Appty: sAppCode,
+                Cardt: sDate,
                 Payorg: 'ALL',
                 Idtype: 'ALL',
                 Payty: 'ALL',
