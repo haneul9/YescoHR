@@ -1,7 +1,14 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core"
-    xmlns:grid="sap.ui.layout.cssgrid">
-    <VBox class="vCardBox small" busyIndicatorDelay="0" busy="{/contents/A11/busy}">
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:custom="sap.ui.yesco.control">
+    <VBox class="vCardBox small" visible="{/contents/A11/busy}">
+        <layoutData>
+            <grid:GridItemLayoutData gridColumn="span 2" />
+        </layoutData>
+        <custom:Placeholder />
+    </VBox>
+    <VBox class="vCardBox small" visible="{= !${/contents/A11/busy} }">
         <layoutData>
             <grid:GridItemLayoutData gridColumn="span 2" />
         </layoutData>

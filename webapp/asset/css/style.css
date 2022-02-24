@@ -1601,11 +1601,11 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 
 /* Boardroom */
 .legend:before {content:""; display:inline-block; margin-right:8px; width:10px; height:10px; border-radius: 50%;}
-.legend.legend-type01:before {background-color:#8FABE8}
-.legend.legend-type02:before {background-color:#81DAEA}
-.legend.legend-type03:before {background-color:#77D561}
-.legend.legend-type04:before {background-color:#FFE479}
-.legend.legend-type05:before {background-color:#FC564F}
+.legend[data-legend=type01]:before {background-color:#8FABE8}
+.legend[data-legend=type02]:before {background-color:#81DAEA}
+.legend[data-legend=type03]:before {background-color:#77D561}
+.legend[data-legend=type04]:before {background-color:#FFE479}
+.legend[data-legend=type05]:before {background-color:#FC564F}
 
 /* Popover */
 .sapMPopover:not(.sapMRPCalendar) .sapMPopoverFooter {margin:0 20px}

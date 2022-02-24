@@ -1,78 +1,165 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core"
-    xmlns:grid="sap.ui.layout.cssgrid">
-    <VBox class="vCardBox small" busyIndicatorDelay="0" busy="{/contents/A01/busy}">
-        <HBox class="table-toolbar">
-            <HBox class="title">
+    xmlns:custom="sap.ui.yesco.control">
+    <VBox class="portlet portlet-box" visible="{/contents/A01/busy}">
+        <custom:Placeholder />
+    </VBox>
+    <VBox class="portlet portlet-box portlet-m21" visible="{= !${/contents/A01/busy} }">
+        <HBox class="portlet-header">
+            <Title level="H2" text="{i18n>LABEL_28002}" />
+            <Image src="asset/image/icon_human_green.svg" width="12px" class="ml-8-px" />
+            <Image src="asset/image/icon_human_orange.svg" width="12px" class="ml-3-px" />
+            <Text text="">
                 <layoutData>
                     <FlexItemData growFactor="1" />
                 </layoutData>
-                <Title level="H2" text="{i18n>LABEL_28002}" />
-                <Image src="asset/image/avatar-unknown.svg" width="1.2rem" />
-                <Image src="asset/image/avatar-unknown.svg" width="1.2rem" />
-                <Text text="">
+            </Text>
+            <Button visible="{hasLink}" icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" />
+        </HBox>
+        <HBox class="portlet-body">
+            <VBox width="30%">
+                <ObjectStatus text="{/contents/A01/Cnt01}" state="Indication05" class="mt-15-px font-3-rem" />
+                <ObjectStatus text="{i18n>LABEL_01213} : {/contents/A01/Cnt02}" state="Indication05" class="mt-13-px" />
+                <ObjectStatus text="{i18n>LABEL_01212} : {/contents/A01/Cnt03}" state="Indication05" class="mt-7-px" />
+            </VBox>
+            <VBox class="ml-5-px">
+                <layoutData>
+                    <FlexItemData growFactor="1" />
+                </layoutData>
+                <HBox width="100%" height="22px" justifyContent="End" alignItems="Center" class="border-bottom">
+                    <Text text="{i18n>LABEL_01211}" textAlign="Center" width="100%">
+                        <layoutData>
+                            <FlexItemData baseSize="20%" />
+                        </layoutData>
+                    </Text>
+                    <Text text="{i18n>LABEL_01213}" textAlign="Center" width="100%">
+                        <layoutData>
+                            <FlexItemData baseSize="20%" />
+                        </layoutData>
+                    </Text>
+                    <Text text="{i18n>LABEL_01212}" textAlign="Center" width="100%">
+                        <layoutData>
+                            <FlexItemData baseSize="20%" />
+                        </layoutData>
+                    </Text>
+                </HBox>
+                <HBox width="100%" alignItems="Center" class="border-bottom">
                     <layoutData>
                         <FlexItemData growFactor="1" />
                     </layoutData>
-                </Text>
-                <Button icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" />
-            </HBox>
-        </HBox>
-        <HBox width="100%">
-            <VBox width="25%" height="100%">
-                <Label design="Bold" text="{/contents/A01/tot}" />
-                <Label text="{i18n>LABEL_28003}:{/contents/A01/totSub1}" />
-                <Label text="{i18n>LABEL_28004}:{/contents/A01/totSub2}" />
+                    <Label text="{i18n>LABEL_01214}" textAlign="Center" width="100%">
+                        <layoutData>
+                            <FlexItemData growFactor="1" />
+                        </layoutData>
+                    </Label>
+                    <Text text="{ path: '/contents/A01/Cnt40', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+                        <layoutData>
+                            <FlexItemData baseSize="20%" />
+                        </layoutData>
+                    </Text>
+                    <Text text="{ path: '/contents/A01/Cnt41', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+                        <layoutData>
+                            <FlexItemData baseSize="20%" />
+                        </layoutData>
+                    </Text>
+                    <Text text="{ path: '/contents/A01/Cnt42', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+                        <layoutData>
+                            <FlexItemData baseSize="20%" />
+                        </layoutData>
+                    </Text>
+                </HBox>
+                <HBox width="100%" alignItems="Center" class="border-bottom">
+                    <layoutData>
+                        <FlexItemData growFactor="1" />
+                    </layoutData>
+                    <Label text="{i18n>LABEL_01215}" textAlign="Center" width="100%">
+                        <layoutData>
+                            <FlexItemData growFactor="1" />
+                        </layoutData>
+                    </Label>
+                    <Text text="{ path: '/contents/A01/Cnt50', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+                        <layoutData>
+                            <FlexItemData baseSize="20%" />
+                        </layoutData>
+                    </Text>
+                    <ObjectStatus text="{ path: '/contents/A01/Cnt51', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressACount">
+                        <customData>
+                            <!-- 입사자 직원 -->
+                            <core:CustomData key="table-key" value="A1" writeToDom="true" />
+                        </customData>
+                        <layoutData>
+                            <FlexItemData baseSize="20%" styleClass="employee-count-blue" />
+                        </layoutData>
+                    </ObjectStatus>
+                    <ObjectStatus text="{ path: '/contents/A01/Cnt52', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressACount">
+                        <customData>
+                            <!-- 입사자 임원 -->
+                            <core:CustomData key="table-key" value="A2" writeToDom="true" />
+                        </customData>
+                        <layoutData>
+                            <FlexItemData baseSize="20%" styleClass="employee-count-blue" />
+                        </layoutData>
+                    </ObjectStatus>
+                </HBox>
+                <HBox width="100%" alignItems="Center" class="border-bottom">
+                    <layoutData>
+                        <FlexItemData growFactor="1" />
+                    </layoutData>
+                    <Label text="{i18n>LABEL_01216}" textAlign="Center" width="100%">
+                        <layoutData>
+                            <FlexItemData growFactor="1" />
+                        </layoutData>
+                    </Label>
+                    <Text text="{ path: '/contents/A01/Cnt60', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+                        <layoutData>
+                            <FlexItemData baseSize="20%" />
+                        </layoutData>
+                    </Text>
+                    <ObjectStatus text="{ path: '/contents/A01/Cnt61', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressACount">
+                        <customData>
+                            <!-- 퇴사자 직원 -->
+                            <core:CustomData key="table-key" value="B1" writeToDom="true" />
+                        </customData>
+                        <layoutData>
+                            <FlexItemData baseSize="20%" styleClass="employee-count-yellow" />
+                        </layoutData>
+                    </ObjectStatus>
+                    <ObjectStatus text="{ path: '/contents/A01/Cnt62', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressACount">
+                        <customData>
+                            <!-- 퇴사자 임원 -->
+                            <core:CustomData key="table-key" value="B2" writeToDom="true" />
+                        </customData>
+                        <layoutData>
+                            <FlexItemData baseSize="20%" styleClass="employee-count-yellow" />
+                        </layoutData>
+                    </ObjectStatus>
+                </HBox>
+                <HBox width="100%" alignItems="Center" class="border-bottom">
+                    <layoutData>
+                        <FlexItemData growFactor="1" />
+                    </layoutData>
+                    <Label text="{i18n>LABEL_01217}" textAlign="Center" width="100%">
+                        <layoutData>
+                            <FlexItemData growFactor="1" />
+                        </layoutData>
+                    </Label>
+                    <Text text="{ path: '/contents/A01/Cnt70', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+                        <layoutData>
+                            <FlexItemData baseSize="20%" />
+                        </layoutData>
+                    </Text>
+                    <Text text="{ path: '/contents/A01/Cnt71', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+                        <layoutData>
+                            <FlexItemData baseSize="20%" />
+                        </layoutData>
+                    </Text>
+                    <Text text="{ path: '/contents/A01/Cnt72', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+                        <layoutData>
+                            <FlexItemData baseSize="20%" />
+                        </layoutData>
+                    </Text>
+                </HBox>
             </VBox>
-            <grid:CSSGrid gridTemplateColumns="2fr repeat(3, 1fr)" gridGap="1px 0px">
-                <grid:layoutData>
-                    <FlexItemData growFactor="1" />
-                </grid:layoutData>
-                <HBox/>
-                <Label text="{i18n>LABEL_28005}" />
-                <Label text="{i18n>LABEL_28003}" />
-                <Label text="{i18n>LABEL_28004}" />
-                <Label text="{i18n>LABEL_28006}" />
-                <Text text="{/contents/A01/data01}" />
-                <Text text="{/contents/A01/data02}" />
-                <Text text="{/contents/A01/data03}" />
-                <Label text="{i18n>LABEL_28007}" />
-                <Link text="{/contents/A01/data04}">
-                    <customData>
-                        <core:CustomData key="type" value="1" writeToDom="true" />
-                    </customData>
-                </Link>
-                <Link text="{/contents/A01/data05}">
-                    <customData>
-                        <core:CustomData key="type" value="1" writeToDom="true" />
-                    </customData>
-                </Link>
-                <Link text="{/contents/A01/data06}">
-                    <customData>
-                        <core:CustomData key="type" value="1" writeToDom="true" />
-                    </customData>
-                </Link>
-                <Label text="{i18n>LABEL_28008}" />
-                <Link text="{/contents/A01/data07}">
-                    <customData>
-                        <core:CustomData key="type" value="2" writeToDom="true" />
-                    </customData>
-                </Link>
-                <Link text="{/contents/A01/data08}">
-                    <customData>
-                        <core:CustomData key="type" value="2" writeToDom="true" />
-                    </customData>
-                </Link>
-                <Link text="{/contents/A01/data09}">
-                    <customData>
-                        <core:CustomData key="type" value="2" writeToDom="true" />
-                    </customData>
-                </Link>
-                <Label text="{i18n>LABEL_28009}" />
-                <Text text="{/contents/A01/data10}" />
-                <Text text="{/contents/A01/data11}" />
-                <Text text="{/contents/A01/data12}" />
-            </grid:CSSGrid>
         </HBox>
     </VBox>
 </core:FragmentDefinition>

@@ -27,7 +27,7 @@
                 </items>
             </IconTabBar>
         </VBox>
-        <VBox class="contents" visible="{= ${/busy} }">
+        <VBox class="contents" visible="{/busy}">
             <VBox width="100%" justifyContent="Center" class="loadingBox">
                 <custom:Placeholder />
             </VBox>

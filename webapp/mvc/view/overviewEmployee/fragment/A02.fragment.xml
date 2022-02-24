@@ -1,45 +1,44 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core">
-    <VBox class="vCardBox small" busyIndicatorDelay="0" busy="{/contents/A02/busy}">
-        <HBox class="table-toolbar">
-            <HBox class="title">
+    xmlns:core="sap.ui.core"
+    xmlns:custom="sap.ui.yesco.control">
+    <VBox class="portlet portlet-box" visible="{/contents/A02/busy}">
+        <custom:Placeholder />
+    </VBox>
+    <VBox class="portlet portlet-box" visible="{= !${/contents/A02/busy} }">
+        <HBox class="portlet-header">
+            <Title level="H2" text="{i18n>LABEL_28010}" />
+            <Image src="asset/image/icon_human_green.svg" width="12px" class="ml-8-px" />
+            <Text text="">
                 <layoutData>
                     <FlexItemData growFactor="1" />
                 </layoutData>
-                <Title level="H2" text="{i18n>LABEL_28010}" />
-                <Image src="asset/image/avatar-unknown.svg" width="1.2rem" />
-                <Text text="">
-                    <layoutData>
-                        <FlexItemData growFactor="1" />
-                    </layoutData>
-                </Text>
-                <Button icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" />
-            </HBox>
+            </Text>
+            <Button visible="{hasLink}" icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" />
         </HBox>
-        <VBox>
+        <VBox class="portlet-body">
             <layoutData>
                 <FlexItemData growFactor="1" />
             </layoutData>
             <HBox width="100%" justifyContent="Center">
-                <Label text="{i18n>LABEL_28020}" />
+                <Label text="{/contents/A02/Title01}" />
             </HBox>
             <HBox width="100%" justifyContent="SpaceBetween">
                 <HBox>
-                    <ObjectStatus text="M" state="Information" />
+                    <ObjectStatus text="{/contents/A02/Title10}" state="Information" />
                     <VBox>
-                        <ObjectStatus text="{/contents/A02/data01}" state="Information" />
-                        <ObjectStatus text="{/contents/A02/data02}" state="Information" />
+                        <ObjectStatus text="{/contents/A02/Cnt11}" state="Information" />
+                        <ObjectStatus text="{/contents/A02/Cnt12}" state="Information" />
                     </VBox>
                 </HBox>
                 <HBox>
-                    <Label text="{/contents/A02/tot}" />
+                    <Label text="{/contents/A02/Cnt01}명, {/contents/A02/Cnt02}&#37;" />
                 </HBox>
                 <HBox>
                     <VBox>
-                        <ObjectStatus text="{/contents/A02/data03}" state="Error" />
-                        <ObjectStatus text="{/contents/A02/data04}" state="Error" />
+                        <ObjectStatus text="{/contents/A02/Cnt21}" state="Error" />
+                        <ObjectStatus text="{/contents/A02/Cnt22}" state="Error" />
                     </VBox>
-                    <ObjectStatus text="Z" state="Error" />
+                    <ObjectStatus text="{/contents/A02/Title20}" state="Error" />
                 </HBox>
             </HBox>
             <HBox>

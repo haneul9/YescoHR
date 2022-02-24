@@ -34,7 +34,7 @@
           <Image src="asset/image/avatar-unknown.svg" width="1.2rem" />
         </VBox>
       </HBox>
-      <grid:CSSGrid gridGap="8px" gridTemplateRows="repeat(3, 1fr)" gridTemplateColumns="repeat(4, 1fr)" class=" sapUiSmallMarginTop">
+      <grid:CSSGrid gridGap="8px" gridTemplateRows="repeat(3, 270px)" gridTemplateColumns="repeat(4, 1fr)" class=" sapUiSmallMarginTop">
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A01" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A02" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A03" type="XML" />
