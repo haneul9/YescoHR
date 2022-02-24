@@ -26,8 +26,8 @@
                 <HBox>
                     <ObjectStatus text="{/contents/A02/Title10}" state="Information" />
                     <VBox>
-                        <ObjectStatus text="{/contents/A02/Cnt11}" state="Information" />
-                        <ObjectStatus text="{/contents/A02/Cnt12}" state="Information" />
+                        <ObjectStatus text="{/contents/A02/Cnt11}&#37;" state="Information" />
+                        <ObjectStatus text="{/contents/A02/Cnt12}명" state="Information" />
                     </VBox>
                 </HBox>
                 <HBox>
@@ -35,8 +35,8 @@
                 </HBox>
                 <HBox>
                     <VBox>
-                        <ObjectStatus text="{/contents/A02/Cnt21}" state="Error" />
-                        <ObjectStatus text="{/contents/A02/Cnt22}" state="Error" />
+                        <ObjectStatus text="{/contents/A02/Cnt21}&#37;" state="Error" />
+                        <ObjectStatus text="{/contents/A02/Cnt22}명" state="Error" />
                     </VBox>
                     <ObjectStatus text="{/contents/A02/Title20}" state="Error" />
                 </HBox>
