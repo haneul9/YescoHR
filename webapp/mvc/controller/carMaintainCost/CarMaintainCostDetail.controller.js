@@ -437,7 +437,6 @@ sap.ui.define(
 
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103')); // {저장}되었습니다.
             } catch (oError) {
-              oDetailModel.setProperty('/FormData/Appno', '');
               AppUtils.handleError(oError);
             } finally {
               AppUtils.setAppBusy(false, this);
@@ -460,10 +459,11 @@ sap.ui.define(
               return;
             }
 
+            const oDetailModel = this.getViewModel();
+
             try {
               AppUtils.setAppBusy(true, this);
 
-              const oDetailModel = this.getViewModel();
               const sAppno = oDetailModel.getProperty('/FormData/Appno');
 
               if (!sAppno) {
@@ -496,7 +496,6 @@ sap.ui.define(
                 },
               });
             } catch (oError) {
-              oDetailModel.setProperty('/FormData/Appno', '');
               AppUtils.handleError(oError);
             } finally {
               AppUtils.setAppBusy(false, this);
