@@ -144,10 +144,9 @@ sap.ui.define(
 
             const dMoment = moment();
             const iYear = dMoment.year();
-            const iMonth = _.padStart(_.padStart(dMoment.month() + 1, 2, '0'));
-            const sDate = dMoment.date() === 1 ? moment(`${iYear}${iMonth}`).toDate() : moment(`${iYear}${iMonth + 1}`).toDate();
+            const sDate = dMoment.date() === 1 ? moment(`${iYear}${_.padStart(dMoment.month() + 1, 2, '0')}`).toDate() : moment(`${iYear}${_.padStart(dMoment.month() + 2, 2, '0')}`).toDate();
 
-            if (!!oTargetData.Appno) {
+            if (!!oTargetData.Pernr) {
               oTargetData.Cardt = sDate;
 
               oDetailModel.setProperty('/FormData', oTargetData);
