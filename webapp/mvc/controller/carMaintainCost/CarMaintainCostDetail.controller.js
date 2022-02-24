@@ -138,25 +138,36 @@ sap.ui.define(
           const sEname = this.getAppointeeProperty('Ename');
 
           if (sDataKey === 'N' || !sDataKey) {
-            const mSessionData = this.getSessionData();
-            const sAppCode = mMaintainType[0].Zcode;
+            const [oTargetData] = await Client.getEntitySet(oModel, 'MaintenanceCarAppl', { Prcty: 'C' });
 
-            oDetailModel.setProperty('/FormData', {
-              Ename: sEname,
-              Fixed: sAppCode !== 'D',
-              bPayType: false,
-              Appty: sAppCode,
-              Payorg: 'ALL',
-              Idtype: 'ALL',
-              Payty: 'ALL',
-              Bankl: 'ALL',
-            });
+            if (!!oTargetData.Appno) {
+              oDetailModel.setProperty('/FormData', oTargetData);
+              oDetailModel.setProperty('/FormData/Ename', sEname);
+              oDetailModel.setProperty('/FormData/Fixed', oTargetData.Appty !== 'D' && oTargetData.ZappStatAl === '10');
+              oDetailModel.setProperty('/FormData/bPayType', oTargetData.Payty !== 'PAY');
+              oDetailModel.setProperty('/ApplyInfo', oTargetData);
+              oDetailModel.setProperty('/ApprovalDetails', oTargetData);
+            } else {
+              const mSessionData = this.getSessionData();
+              const sAppCode = mMaintainType[0].Zcode;
 
-            oDetailModel.setProperty('/ApplyInfo', {
-              Apename: mSessionData.Ename,
-              Aporgtx: `${mSessionData.Btrtx} / ${mSessionData.Orgtx}`,
-              Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
-            });
+              oDetailModel.setProperty('/FormData', {
+                Ename: sEname,
+                Fixed: sAppCode !== 'D',
+                bPayType: false,
+                Appty: sAppCode,
+                Payorg: 'ALL',
+                Idtype: 'ALL',
+                Payty: 'ALL',
+                Bankl: 'ALL',
+              });
+
+              oDetailModel.setProperty('/ApplyInfo', {
+                Apename: mSessionData.Ename,
+                Aporgtx: `${mSessionData.Btrtx} / ${mSessionData.Orgtx}`,
+                Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
+              });
+            }
           } else {
             const [oTargetData] = await Client.getEntitySet(oModel, 'MaintenanceCarAppl', {
               Prcty: 'D',
