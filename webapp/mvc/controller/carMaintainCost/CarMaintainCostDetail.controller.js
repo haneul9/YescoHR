@@ -151,7 +151,7 @@ sap.ui.define(
 
               oDetailModel.setProperty('/FormData', oTargetData);
               oDetailModel.setProperty('/FormData/Ename', sEname);
-              oDetailModel.setProperty('/FormData/Fixed', oTargetData.Appty !== 'D' && oTargetData.ZappStatAl === '10');
+              oDetailModel.setProperty('/FormData/Fixed', oTargetData.Appty !== 'D' && (!oTargetData.ZappStatAl || oTargetData.ZappStatAl === '10'));
               oDetailModel.setProperty('/FormData/bPayType', oTargetData.Payty !== 'PAY');
               oDetailModel.setProperty('/ApplyInfo', oTargetData);
               oDetailModel.setProperty('/ApprovalDetails', oTargetData);
