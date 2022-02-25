@@ -30,8 +30,14 @@
           <Button text="{i18n>LABEL_00100}" icon="asset/image/icon_search03.png" press=".onPressSearch"/>
         </HBox>
         <VBox>
-          <Image src="asset/image/icon_human_green.svg" width="12px" />
-          <Image src="asset/image/icon_human_orange.svg" width="12px" />
+          <HBox>
+            <Image src="asset/image/icon_human_green.svg" width="12px" />
+            <Text text="{i18n>LABEL_28003}" />
+          </HBox>
+          <HBox>
+            <Image src="asset/image/icon_human_orange.svg" width="12px" />
+            <Text text="{i18n>LABEL_28004}" />
+          </HBox>
         </VBox>
       </HBox>
       <grid:CSSGrid gridGap="8px" gridTemplateRows="repeat(3, 270px)" gridTemplateColumns="repeat(4, 1fr)" class=" sapUiSmallMarginTop">

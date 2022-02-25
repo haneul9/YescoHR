@@ -18,9 +18,9 @@
         </HBox>
         <HBox class="portlet-body">
             <VBox width="30%">
-                <ObjectStatus text="{/contents/A01/Cnt01}" state="Indication05" class="mt-15-px font-3-rem" />
-                <ObjectStatus text="{i18n>LABEL_01213} : {/contents/A01/Cnt02}" state="Indication05" class="mt-13-px" />
-                <ObjectStatus text="{i18n>LABEL_01212} : {/contents/A01/Cnt03}" state="Indication05" class="mt-7-px" />
+                <ObjectStatus text="{/contents/A01/data/Cnt01}" state="Indication05" class="mt-15-px font-3-rem" />
+                <ObjectStatus text="{i18n>LABEL_01213} : {/contents/A01/data/Cnt02}" state="Indication05" class="mt-13-px" />
+                <ObjectStatus text="{i18n>LABEL_01212} : {/contents/A01/data/Cnt03}" state="Indication05" class="mt-7-px" />
             </VBox>
             <VBox class="ml-5-px">
                 <layoutData>
@@ -52,17 +52,17 @@
                             <FlexItemData growFactor="1" />
                         </layoutData>
                     </Label>
-                    <Text text="{ path: '/contents/A01/Cnt40', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+                    <Text text="{ path: '/contents/A01/data/Cnt40', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
                         <layoutData>
                             <FlexItemData baseSize="20%" />
                         </layoutData>
                     </Text>
-                    <Text text="{ path: '/contents/A01/Cnt41', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+                    <Text text="{ path: '/contents/A01/data/Cnt41', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
                         <layoutData>
                             <FlexItemData baseSize="20%" />
                         </layoutData>
                     </Text>
-                    <Text text="{ path: '/contents/A01/Cnt42', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+                    <Text text="{ path: '/contents/A01/data/Cnt42', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
                         <layoutData>
                             <FlexItemData baseSize="20%" />
                         </layoutData>
@@ -77,12 +77,12 @@
                             <FlexItemData growFactor="1" />
                         </layoutData>
                     </Label>
-                    <Text text="{ path: '/contents/A01/Cnt50', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+                    <Text text="{ path: '/contents/A01/data/Cnt50', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
                         <layoutData>
                             <FlexItemData baseSize="20%" />
                         </layoutData>
                     </Text>
-                    <ObjectStatus text="{ path: '/contents/A01/Cnt51', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressACount">
+                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt51', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressACount">
                         <customData>
                             <!-- 입사자 직원 -->
                             <core:CustomData key="table-key" value="A1" writeToDom="true" />
@@ -91,7 +91,7 @@
                             <FlexItemData baseSize="20%" styleClass="employee-count-blue" />
                         </layoutData>
                     </ObjectStatus>
-                    <ObjectStatus text="{ path: '/contents/A01/Cnt52', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressACount">
+                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt52', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressACount">
                         <customData>
                             <!-- 입사자 임원 -->
                             <core:CustomData key="table-key" value="A2" writeToDom="true" />
@@ -110,12 +110,12 @@
                             <FlexItemData growFactor="1" />
                         </layoutData>
                     </Label>
-                    <Text text="{ path: '/contents/A01/Cnt60', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+                    <Text text="{ path: '/contents/A01/data/Cnt60', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
                         <layoutData>
                             <FlexItemData baseSize="20%" />
                         </layoutData>
                     </Text>
-                    <ObjectStatus text="{ path: '/contents/A01/Cnt61', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressACount">
+                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt61', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressACount">
                         <customData>
                             <!-- 퇴사자 직원 -->
                             <core:CustomData key="table-key" value="B1" writeToDom="true" />
@@ -124,7 +124,7 @@
                             <FlexItemData baseSize="20%" styleClass="employee-count-yellow" />
                         </layoutData>
                     </ObjectStatus>
-                    <ObjectStatus text="{ path: '/contents/A01/Cnt62', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressACount">
+                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt62', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressACount">
                         <customData>
                             <!-- 퇴사자 임원 -->
                             <core:CustomData key="table-key" value="B2" writeToDom="true" />
@@ -143,17 +143,17 @@
                             <FlexItemData growFactor="1" />
                         </layoutData>
                     </Label>
-                    <Text text="{ path: '/contents/A01/Cnt70', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+                    <Text text="{ path: '/contents/A01/data/Cnt70', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
                         <layoutData>
                             <FlexItemData baseSize="20%" />
                         </layoutData>
                     </Text>
-                    <Text text="{ path: '/contents/A01/Cnt71', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+                    <Text text="{ path: '/contents/A01/data/Cnt71', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
                         <layoutData>
                             <FlexItemData baseSize="20%" />
                         </layoutData>
                     </Text>
-                    <Text text="{ path: '/contents/A01/Cnt72', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+                    <Text text="{ path: '/contents/A01/data/Cnt72', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
                         <layoutData>
                             <FlexItemData baseSize="20%" />
                         </layoutData>

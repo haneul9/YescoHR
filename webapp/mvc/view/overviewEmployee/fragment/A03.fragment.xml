@@ -27,9 +27,9 @@
                     </core:layoutData>
                 </core:HTML>
             </VBox>
-            <VBox width="25%" items="{ path: '/contents/A03/list', templateShareable: false }">
+            <VBox width="25%" items="{ path: '/contents/A03/data', templateShareable: false }">
                 <HBox>
-                    <Label text="{Ttltxt}: " class="legend">
+                    <Label text="{Ttltxt} :" class="legend">
                         <customData>
                             <core:CustomData key="legend" value="{Type}" writeToDom="true" />
                         </customData>
