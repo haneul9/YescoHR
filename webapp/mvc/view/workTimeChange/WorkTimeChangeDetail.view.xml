@@ -19,7 +19,7 @@
       <VBox class="contents">
         <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.fragment.InfoMessage" type="XML" />
-        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.workTime.fragment.DetailForm" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.workTimeChange.fragment.DetailForm" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.fragment.ApplyInfo" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.fragment.ApprovalDetails" type="XML" />

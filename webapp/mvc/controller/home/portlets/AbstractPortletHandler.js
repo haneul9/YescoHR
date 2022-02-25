@@ -24,11 +24,13 @@ sap.ui.define(
     return Debuggable.extend('sap.ui.yesco.mvc.controller.home.portlets.AbstractPortletHandler', {
       sContainerId: 'portlets-grid',
       oPortletBox: null,
+      bMobile: false,
 
       /**
        * @override
        */
       constructor: function (oController, mPortletData) {
+        this.bMobile = AppUtils.isMobile();
         this.oController = oController;
         this.oPortletModel = new JSONModel(mPortletData);
 

@@ -31,15 +31,20 @@ sap.ui.define(
         Popover.prototype.onAfterRendering.apply(this, aArgs);
 
         const iMaxRows = this.getMaxRows();
-        this.$('cont')
-          .toggleClass(`max-${iMaxRows}-rows`, true)[0]
-          .addEventListener('scroll', _.throttle(this.fireScroll.bind(this), 1000));
+        const oCont = this.$('cont');
+        if (!sap.ui.Device.system.phone) {
+          oCont.toggleClass(`max-${iMaxRows}-rows`, true)[0];
+        }
+        oCont[0].addEventListener('scroll', _.throttle(this.fireScroll.bind(this), 1000));
       },
 
       isScrollBottom() {
         const oPopoverScroll = this.$('cont')[0];
         const iScrollMarginBottom = oPopoverScroll.scrollHeight - oPopoverScroll.scrollTop;
-        const iGrowHeight = this.getMaxRows() * 69;
+        const iGrowHeight =
+          sap.ui.Device.system.phone === true
+            ? screen.availHeight - 143 // top title(83px) + bottom menu(60px)
+            : this.getMaxRows() * 69;
 
         return oPopoverScroll.scrollTop > 0 && iScrollMarginBottom === iGrowHeight;
       },

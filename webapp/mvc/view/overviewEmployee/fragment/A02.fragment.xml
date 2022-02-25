@@ -19,7 +19,7 @@
             <layoutData>
                 <FlexItemData growFactor="1" />
             </layoutData>
-            <HBox width="100%" justifyContent="Center" class="mt-10-px">
+            <HBox width="100%" justifyContent="Center" class="mt-6-px">
                 <Label text="{/contents/A02/data/Title01}" class="font-20-px"/>
             </HBox>
             <HBox width="100%" justifyContent="SpaceBetween" alignItems="Center">

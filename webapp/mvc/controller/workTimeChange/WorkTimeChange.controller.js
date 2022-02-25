@@ -87,7 +87,7 @@ sap.ui.define(
             Menid: this.getCurrentMenuId(),
             ...mPernr,
           };
-          const aTableList = await Client.getEntitySet(oModel, 'OtWorkApply', mPayLoad);
+          const aTableList = await Client.getEntitySet(oModel, 'OtworkChangeApply', mPayLoad);
           const oTable = this.byId('workTable');
 
           oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
@@ -242,7 +242,7 @@ sap.ui.define(
       },
 
       onClick() {
-        this.getRouter().navTo('workTime-detail', { oDataKey: 'N' });
+        this.getRouter().navTo('workTimeChange-detail', { oDataKey: 'N' });
       },
 
       // override AttachFileCode
@@ -289,7 +289,7 @@ sap.ui.define(
         const oListModel = this.getViewModel();
         const oRowData = oListModel.getProperty(vPath);
 
-        this.getRouter().navTo('workTime-detail', { oDataKey: oRowData.Appno });
+        this.getRouter().navTo('workTimeChange-detail', { oDataKey: oRowData.Appno });
       },
 
       onPressExcelDownload() {

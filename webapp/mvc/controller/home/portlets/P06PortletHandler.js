@@ -197,7 +197,7 @@ sap.ui.define(
           this.oPopover
             .attachBeforeOpen(() => {
               const bVisiblePeriod = this.oPopover.getBindingContext().getProperty('visiblePeriod');
-              this.oPopover.setContentWidth(bVisiblePeriod ? '447px' : '249px');
+              this.oPopover.setContentWidth(bVisiblePeriod ? '447px' : this.bMobile ? '240px' : '249px');
             })
             .setModel(this.getPortletModel());
         }

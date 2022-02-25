@@ -19,14 +19,14 @@
             <layoutData>
                 <FlexItemData growFactor="1" />
             </layoutData>
-            <VBox width="75%">
+            <VBox width="73%">
                 <core:HTML content='&lt;div id="employee-a08-chart-container"&gt;&lt;/div&gt;'>
                     <core:layoutData>
                         <FlexItemData growFactor="1" />
                     </core:layoutData>
                 </core:HTML>
             </VBox>
-            <VBox width="25%" items="{ path: '/contents/A08/data', templateShareable: false }" class="legend-wrap">
+            <VBox width="27%" items="{ path: '/contents/A08/data', templateShareable: false }" class="legend-wrap">
                 <HBox>
                     <Label text="{Ttltxt} : " class="legend">
                         <customData>
