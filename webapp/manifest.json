@@ -205,6 +205,9 @@
         
         { "pattern": "workTime", "name": "workTime", "target": "workTime" },
         { "pattern": "workTime/{oDataKey}", "name": "workTime-detail", "target": "workTimeDetail" },
+        
+        { "pattern": "workTimeChange", "name": "workTimeChange", "target": "workTimeChange" },
+        { "pattern": "workTimeChange/{oDataKey}", "name": "workTimeChange-detail", "target": "workTimeChangeDetail" },
 
         { "pattern": "sampleComponents", "name": "sampleComponents", "target": "sampleComponents" },
         { "pattern": "sampleTimeline", "name": "sampleTimeline", "target": "sampleTimeline" },
@@ -314,6 +317,9 @@
 
         "workTime": { "viewId": "workTime", "viewPath": "sap.ui.yesco.mvc.view.workTime", "viewName": "WorkTime" },
         "workTimeDetail": { "viewId": "workTimeDetail", "viewPath": "sap.ui.yesco.mvc.view.workTime", "viewName": "WorkTimeDetail" },
+
+        "workTimeChange": { "viewId": "workTimeChange", "viewPath": "sap.ui.yesco.mvc.view.workTimeChange", "viewName": "WorkTimeChange" },
+        "workTimeChangeDetail": { "viewId": "workTimeChangeDetail", "viewPath": "sap.ui.yesco.mvc.view.workTimeChange", "viewName": "WorkTimeChangeDetail" },
 
         "sampleComponents": { "viewId": "sampleComponents", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Components", "title": "Components" },
         "sampleTimeline": { "viewId": "sampleTimeline", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Timeline", "title": "Timeline" },

@@ -131,7 +131,8 @@ sap.ui.define(
           oDetailModel.setProperty('/PayType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: mPayType }));
 
           // 지급신청 및 해지, 변경사항 발생시 7일 이내에 인재개발팀에 제반 서류를 제출, 등록하시기 바랍니다.
-          let sMsg = this.getBundleText('MSG_25004');
+          let sMsg = `<p>${this.getBundleText('MSG_25004')}</p>
+          <p>${this.getBundleText('MSG_25018')}</p>`;
 
           oDetailModel.setProperty('/InfoMessage', sMsg);
 

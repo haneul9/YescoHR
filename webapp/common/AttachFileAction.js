@@ -12,6 +12,7 @@ sap.ui.define(
 
     return {
       AttachId: '',
+      FileData: '',
       /*
        * 파일첨부 panel 및 FileUploader Control의 표시여부 등을 설정
        * 문서상태 및 첨부파일 여부에 따라 Control의 표시여부를 결정한다.
@@ -328,6 +329,8 @@ sap.ui.define(
                 slug: [Appno, Type, encodeURI(elem.Zfilename)].join('|'),
               };
 
+              this.AttachFileAction.FileData = elem;
+
               jQuery.ajax({
                 type: 'POST',
                 async: false,
@@ -339,6 +342,7 @@ sap.ui.define(
                 data: elem,
                 success: (data) => {
                   this.debug(`${this.getBundleText('MSG_00016')}, ${data}`);
+                  this.AttachFileAction.FileData.New = false;
                   resolve();
                 },
                 error: (oError) => {
