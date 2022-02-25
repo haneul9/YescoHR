@@ -55,7 +55,6 @@ sap.ui.define(
             rowCount: 1,
           },
           dialog: {
-            detail: {},
             appTypeList: [
               {
                 Appty: '1',
@@ -87,22 +86,16 @@ sap.ui.define(
           oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.WORKTIME, 'OtworkChangeApply')));
           oDetailModel.setProperty('/busy', true);
 
-          const sMenid = this.getCurrentMenuId();
-          const sPernr = this.getAppointeeProperty('Pernr');
-          // 대상자리스트
-          const aOtpList = await Client.getEntitySet(oModel, 'OtpernrList', {
-            Menid: sMenid,
-            Datum: new Date(),
-            Pernr: sPernr,
-          });
-
-          oDetailModel.setProperty(
-            '/employees',
-            aOtpList.map((o) => ({ ...o, Pernr: _.trimStart(o.Pernr, '0') }))
-          );
-
           if (sDataKey === 'N' || !sDataKey) {
             const mSessionData = this.getSessionData();
+            const sPernr = this.getAppointeeProperty('Pernr');
+            // 대상자리스트
+            const aOtpList = await Client.deep(oModel, 'OtworkChangeApply', {
+              Prcty: 'D',
+              Datum: new Date(),
+              Pernr: sPernr,
+              OtworkChangeNav: [],
+            });
 
             oDetailModel.setProperty('/ApplyInfo', {
               Apename: mSessionData.Ename,
@@ -320,12 +313,6 @@ sap.ui.define(
           oViewModel.setProperty(`${sRowPath}/Zzjikcht`, '');
           oViewModel.setProperty(`${sRowPath}/Orgtx`, '');
         }
-      },
-
-      // DialogAfterClose
-      onDialogAfClose() {
-        this.byId('dialogTable').clearSelection();
-        this.getViewModel().setProperty('/DeletedRows', []);
       },
 
       // Dialog 저장

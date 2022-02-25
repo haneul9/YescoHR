@@ -44,6 +44,8 @@ sap.ui.define(
         return {
           Hass: this.isHass(),
           minDate: moment().toDate(),
+          maxDate: moment().toDate(),
+          DatePickLabel: '',
           FormData: {
             Fixed: true,
             bPayType: false,
@@ -137,18 +139,31 @@ sap.ui.define(
           oDetailModel.setProperty('/InfoMessage', sMsg);
 
           const sEname = this.getAppointeeProperty('Ename');
+          const dMoment = moment();
+          let dMinDate = '';
+          let dMaxDate = '';
+          let sDatePickLabel = '';
 
           if (sDataKey === 'N' || !sDataKey) {
             const [oTargetData] = await Client.getEntitySet(oModel, 'MaintenanceCarChange', {
               Pernr: sPernr,
             });
 
-            const dMoment = moment();
-            const iYear = dMoment.year();
-            const sDate = dMoment.date() === 1 ? moment(`${iYear}${_.padStart(dMoment.month() + 1, 2, '0')}`).toDate() : moment(`${iYear}${_.padStart(dMoment.month() + 2, 2, '0')}`).toDate();
-
             if (!!oTargetData.Pernr) {
-              oTargetData.Cardt = sDate;
+              if (oTargetData.Appty === 'I') {
+                dMinDate = moment('10000101').toDate();
+                dMaxDate = dMoment.toDate();
+                sDatePickLabel = this.getBundleText('LABEL_25021'); // 지원시작일
+              } else {
+                const iYear = dMoment.year();
+                const sDate = dMoment.date() === 1 ? moment(`${iYear}${_.padStart(dMoment.month() + 1, 2, '0')}`).toDate() : moment(`${iYear}${_.padStart(dMoment.month() + 2, 2, '0')}`).toDate();
+
+                dMinDate = dMoment.toDate();
+                dMaxDate = moment('99991231').toDate();
+                sDatePickLabel = this.getBundleText('LABEL_25014'); // 차량등록일/변경일
+                oTargetData.Cardt = sDate;
+              }
+
               oTargetData.Cc = oTargetData.Cc.replace(/^0+/, '0');
               oTargetData.Caryr = oTargetData.Caryr.replace(/^0+/, '0');
               oTargetData.Id = oTargetData.Id.replace(/^0+/, '0');
@@ -157,6 +172,9 @@ sap.ui.define(
               oDetailModel.setProperty('/FormData/Ename', sEname);
               oDetailModel.setProperty('/FormData/Fixed', oTargetData.Appty !== 'D' && (!oTargetData.ZappStatAl || oTargetData.ZappStatAl === '10'));
               oDetailModel.setProperty('/FormData/bPayType', oTargetData.Payty !== 'PAY');
+              oDetailModel.setProperty('/minDate', dMinDate);
+              oDetailModel.setProperty('/maxDate', dMaxDate);
+              oDetailModel.setProperty('/DatePickLabel', sDatePickLabel);
               oDetailModel.setProperty('/ApplyInfo', oTargetData);
               oDetailModel.setProperty('/ApprovalDetails', oTargetData);
             } else {
@@ -168,12 +186,14 @@ sap.ui.define(
                 Fixed: sAppCode !== 'D',
                 bPayType: false,
                 Appty: sAppCode,
-                Cardt: sDate,
                 Payorg: 'ALL',
                 Idtype: 'ALL',
                 Payty: 'ALL',
                 Bankl: 'ALL',
               });
+              oDetailModel.setProperty('/minDate', moment('10000101').toDate());
+              oDetailModel.setProperty('/maxDate', moment().toDate());
+              oDetailModel.setProperty('/DatePickLabel', this.getBundleText('LABEL_25021')); //지원시작일
 
               oDetailModel.setProperty('/ApplyInfo', {
                 Apename: mSessionData.Ename,
@@ -187,7 +207,18 @@ sap.ui.define(
               Appno: sDataKey,
             });
 
+            if (oTargetData.Appty === 'I') {
+              dMinDate = moment('10000101').toDate();
+              dMaxDate = dMoment.toDate();
+            } else {
+              dMinDate = dMoment.toDate();
+              dMaxDate = moment('99991231').toDate();
+            }
+
             oDetailModel.setProperty('/FormData', oTargetData);
+            oDetailModel.setProperty('/minDate', dMinDate);
+            oDetailModel.setProperty('/maxDate', dMaxDate);
+            oDetailModel.setProperty('/DatePickLabel', this.getBundleText('LABEL_25021')); // 지원시작일
             oDetailModel.setProperty('/FormData/Ename', sEname);
             oDetailModel.setProperty('/FormData/Fixed', oTargetData.Appty !== 'D' && oTargetData.ZappStatAl === '10');
             oDetailModel.setProperty('/FormData/bPayType', oTargetData.Payty !== 'PAY');
