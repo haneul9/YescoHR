@@ -43,7 +43,9 @@ sap.ui.define(
       initializeModel() {
         return {
           Hass: this.isHass(),
+          minDate: moment().toDate(),
           maxDate: moment().toDate(),
+          DatePickLabel: '',
           FormData: {
             Fixed: true,
             bPayType: false,
@@ -131,39 +133,92 @@ sap.ui.define(
           oDetailModel.setProperty('/PayType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: mPayType }));
 
           // 지급신청 및 해지, 변경사항 발생시 7일 이내에 인재개발팀에 제반 서류를 제출, 등록하시기 바랍니다.
-          let sMsg = this.getBundleText('MSG_25004');
+          let sMsg = `<p>${this.getBundleText('MSG_25004')}</p>
+          <p>${this.getBundleText('MSG_25018')}</p>`;
 
           oDetailModel.setProperty('/InfoMessage', sMsg);
 
           const sEname = this.getAppointeeProperty('Ename');
+          const dMoment = moment();
+          let dMinDate = '';
+          let dMaxDate = '';
+          let sDatePickLabel = '';
 
           if (sDataKey === 'N' || !sDataKey) {
-            const mSessionData = this.getSessionData();
-            const sAppCode = mMaintainType[0].Zcode;
-
-            oDetailModel.setProperty('/FormData', {
-              Ename: sEname,
-              Fixed: sAppCode !== 'D',
-              bPayType: false,
-              Appty: sAppCode,
-              Payorg: 'ALL',
-              Idtype: 'ALL',
-              Payty: 'ALL',
-              Bankl: 'ALL',
+            const [oTargetData] = await Client.getEntitySet(oModel, 'MaintenanceCarChange', {
+              Pernr: sPernr,
             });
 
-            oDetailModel.setProperty('/ApplyInfo', {
-              Apename: mSessionData.Ename,
-              Aporgtx: `${mSessionData.Btrtx} / ${mSessionData.Orgtx}`,
-              Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
-            });
+            if (!!oTargetData.Pernr) {
+              if (oTargetData.Appty === 'I') {
+                dMinDate = moment('10000101').toDate();
+                dMaxDate = dMoment.toDate();
+                sDatePickLabel = this.getBundleText('LABEL_25021'); // 지원시작일
+              } else {
+                const iYear = dMoment.year();
+                const sDate = dMoment.date() === 1 ? moment(`${iYear}${_.padStart(dMoment.month() + 1, 2, '0')}`).toDate() : moment(`${iYear}${_.padStart(dMoment.month() + 2, 2, '0')}`).toDate();
+
+                dMinDate = dMoment.toDate();
+                dMaxDate = moment('99991231').toDate();
+                sDatePickLabel = this.getBundleText('LABEL_25014'); // 차량등록일/변경일
+                oTargetData.Cardt = sDate;
+              }
+
+              oTargetData.Cc = oTargetData.Cc.replace(/^0+/, '0');
+              oTargetData.Caryr = oTargetData.Caryr.replace(/^0+/, '0');
+              oTargetData.Id = oTargetData.Id.replace(/^0+/, '0');
+
+              oDetailModel.setProperty('/FormData', oTargetData);
+              oDetailModel.setProperty('/FormData/Ename', sEname);
+              oDetailModel.setProperty('/FormData/Fixed', oTargetData.Appty !== 'D' && (!oTargetData.ZappStatAl || oTargetData.ZappStatAl === '10'));
+              oDetailModel.setProperty('/FormData/bPayType', oTargetData.Payty !== 'PAY');
+              oDetailModel.setProperty('/minDate', dMinDate);
+              oDetailModel.setProperty('/maxDate', dMaxDate);
+              oDetailModel.setProperty('/DatePickLabel', sDatePickLabel);
+              oDetailModel.setProperty('/ApplyInfo', oTargetData);
+              oDetailModel.setProperty('/ApprovalDetails', oTargetData);
+            } else {
+              const mSessionData = this.getSessionData();
+              const sAppCode = mMaintainType[0].Zcode;
+
+              oDetailModel.setProperty('/FormData', {
+                Ename: sEname,
+                Fixed: sAppCode !== 'D',
+                bPayType: false,
+                Appty: sAppCode,
+                Payorg: 'ALL',
+                Idtype: 'ALL',
+                Payty: 'ALL',
+                Bankl: 'ALL',
+              });
+              oDetailModel.setProperty('/minDate', moment('10000101').toDate());
+              oDetailModel.setProperty('/maxDate', moment().toDate());
+              oDetailModel.setProperty('/DatePickLabel', this.getBundleText('LABEL_25021')); //지원시작일
+
+              oDetailModel.setProperty('/ApplyInfo', {
+                Apename: mSessionData.Ename,
+                Aporgtx: `${mSessionData.Btrtx} / ${mSessionData.Orgtx}`,
+                Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
+              });
+            }
           } else {
             const [oTargetData] = await Client.getEntitySet(oModel, 'MaintenanceCarAppl', {
               Prcty: 'D',
               Appno: sDataKey,
             });
 
+            if (oTargetData.Appty === 'I') {
+              dMinDate = moment('10000101').toDate();
+              dMaxDate = dMoment.toDate();
+            } else {
+              dMinDate = dMoment.toDate();
+              dMaxDate = moment('99991231').toDate();
+            }
+
             oDetailModel.setProperty('/FormData', oTargetData);
+            oDetailModel.setProperty('/minDate', dMinDate);
+            oDetailModel.setProperty('/maxDate', dMaxDate);
+            oDetailModel.setProperty('/DatePickLabel', this.getBundleText('LABEL_25021')); // 지원시작일
             oDetailModel.setProperty('/FormData/Ename', sEname);
             oDetailModel.setProperty('/FormData/Fixed', oTargetData.Appty !== 'D' && oTargetData.ZappStatAl === '10');
             oDetailModel.setProperty('/FormData/bPayType', oTargetData.Payty !== 'PAY');
@@ -195,7 +250,7 @@ sap.ui.define(
       onNumberTxt(oEvent) {
         const oEventSource = oEvent.getSource();
         const sPath = oEventSource.getBinding('value').getPath();
-        const sValue = oEvent.getParameter('value').trim().replace(/[^\d]/g, '');
+        const sValue = _.trimStart(oEvent.getParameter('value'), '0').replace(/[^\d]/g, '');
 
         oEventSource.setValue(sValue);
         oEventSource.getModel().setProperty(sPath, sValue);
@@ -361,15 +416,17 @@ sap.ui.define(
 
         return false;
       },
+
       // 재작성
       onRewriteBtn() {
         const oDetailModel = this.getViewModel();
         const bFixed = oDetailModel.getProperty('/FormData/Appty') !== 'D';
 
-        oDetailModel.setProperty('/FormData/Appno', '');
-        oDetailModel.setProperty('/FormData/Fixed', bFixed);
         oDetailModel.setProperty('/FormData/ZappStatAl', '');
+        oDetailModel.setProperty('/FormData/Fixed', bFixed);
+        oDetailModel.setProperty('/ApplyInfo/Appdt', '');
         this.settingsAttachTable();
+        oDetailModel.setProperty('/FormData/Appno', '');
       },
 
       // 임시저장
@@ -401,11 +458,6 @@ sap.ui.define(
 
               const mFormData = oDetailModel.getProperty('/FormData');
 
-              // FileUpload
-              if (!!AttachFileAction.getFileCount.call(this)) {
-                await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
-              }
-
               const oModel = this.getModel(ServiceNames.BENEFIT);
               let oSendObject = {
                 ...mFormData,
@@ -414,6 +466,11 @@ sap.ui.define(
               };
 
               await Client.create(oModel, 'MaintenanceCarAppl', oSendObject);
+
+              // FileUpload
+              if (!!AttachFileAction.getFileCount.call(this)) {
+                await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
+              }
 
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103')); // {저장}되었습니다.
             } catch (oError) {
@@ -439,10 +496,11 @@ sap.ui.define(
               return;
             }
 
+            const oDetailModel = this.getViewModel();
+
             try {
               AppUtils.setAppBusy(true, this);
 
-              const oDetailModel = this.getViewModel();
               const sAppno = oDetailModel.getProperty('/FormData/Appno');
 
               if (!sAppno) {
@@ -459,14 +517,14 @@ sap.ui.define(
                 Menid: oDetailModel.getProperty('/menid'),
               };
 
+              const oModel = this.getModel(ServiceNames.BENEFIT);
+
+              await Client.create(oModel, 'MaintenanceCarAppl', oSendObject);
+
               // FileUpload
               if (!!AttachFileAction.getFileCount.call(this)) {
                 await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
               }
-
-              const oModel = this.getModel(ServiceNames.BENEFIT);
-
-              await Client.create(oModel, 'MaintenanceCarAppl', oSendObject);
 
               // {신청}되었습니다.
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {

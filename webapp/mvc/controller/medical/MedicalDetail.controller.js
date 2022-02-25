@@ -537,14 +537,6 @@ sap.ui.define(
                   await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
                 }
 
-                const aHislist = oDetailModel.getProperty('/HisList');
-
-                if (!!aHislist.length && !!this.byId('DetailHisDialog')) {
-                  await aHislist.forEach((e) => {
-                    AttachFileAction.uploadFile.call(this, e.Appno2, this.getApprovalType(), this.DIALOG_FILE_ID);
-                  });
-                }
-
                 const aDeleteDatas = oDetailModel.getProperty('/RemoveFiles');
 
                 if (!!aDeleteDatas.length) {
@@ -610,14 +602,6 @@ sap.ui.define(
                 // FileUpload
                 if (!!AttachFileAction.getFileCount.call(this)) {
                   await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
-                }
-
-                const aHislist = oDetailModel.getProperty('/HisList');
-
-                if (!!aHislist.length && !!this.byId('DetailHisDialog')) {
-                  await aHislist.forEach((e) => {
-                    AttachFileAction.uploadFile.call(this, e.Appno2, this.getApprovalType(), this.DIALOG_FILE_ID);
-                  });
                 }
 
                 const aDeleteDatas = oDetailModel.getProperty('/RemoveFiles');
@@ -1111,7 +1095,7 @@ sap.ui.define(
         try {
           AppUtils.setAppBusy(true, this);
 
-          if (!mDialogData.Appno2 || _.parseInt(mDialogData.Appno2) === 0) {
+          if (!mDialogData.Appno2 || (!mDialogData.Appno2 && !mDialogData.ZappStat) || _.parseInt(mDialogData.Appno2) === 0) {
             const vAppno = await Appno.get.call(this);
 
             oDetailModel.setProperty('/DialogData/Appno2', vAppno);

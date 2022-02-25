@@ -1,56 +1,40 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core">
-    <VBox class="vCardBox small" busyIndicatorDelay="0" busy="{/contents/A03/busy}">
-        <HBox class="table-toolbar">
-            <HBox class="title">
+    xmlns:core="sap.ui.core"
+    xmlns:custom="sap.ui.yesco.control">
+    <VBox class="portlet portlet-box" visible="{/contents/A03/busy}">
+        <custom:Placeholder />
+    </VBox>
+    <VBox class="portlet portlet-box" visible="{= !${/contents/A03/busy} }">
+        <HBox class="portlet-header">
+            <Title level="H2" text="{i18n>LABEL_28011}" />
+            <Image src="asset/image/icon_human_green.svg" width="12px" class="ml-8-px" />
+            <Image src="asset/image/icon_human_orange.svg" width="12px" class="ml-3-px" />
+            <Text text="">
                 <layoutData>
                     <FlexItemData growFactor="1" />
                 </layoutData>
-                <Title level="H2" text="{i18n>LABEL_28011}" />
-                <Image src="asset/image/avatar-unknown.svg" width="1.2rem" />
-                <Image src="asset/image/avatar-unknown.svg" width="1.2rem" />
-                <Text text="">
-                    <layoutData>
-                        <FlexItemData growFactor="1" />
-                    </layoutData>
-                </Text>
-                <Button icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" />
-            </HBox>
+            </Text>
+            <Button visible="{hasLink}" icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" />
         </HBox>
-        <HBox>
+        <HBox class="portlet-body">
             <layoutData>
                 <FlexItemData growFactor="1" />
             </layoutData>
-            <VBox width="80%">
-                <!-- <layoutData>
-                    <FlexItemData growFactor="1" />
-                </layoutData> -->
+            <VBox width="75%">
                 <core:HTML content='&lt;div id="employee-a03-chart-container"&gt;&lt;/div&gt;'>
                     <core:layoutData>
                         <FlexItemData growFactor="1" />
                     </core:layoutData>
                 </core:HTML>
             </VBox>
-            <VBox>
+            <VBox width="25%" items="{ path: '/contents/A03/data', templateShareable: false }">
                 <HBox>
-                    <Label text="{i18n>LABEL_28021}: " class="legend legend-type01" />
-                    <Text text="{/contents/A03/data01}" />
-                </HBox>
-                <HBox>
-                    <Label text="{i18n>LABEL_28004}: " class="legend legend-type02" />
-                    <Text text="{/contents/A03/data02}" />
-                </HBox>
-                <HBox>
-                    <Label text="{i18n>LABEL_28022}: " class="legend legend-type03" />
-                    <Text text="{/contents/A03/data03}" />
-                </HBox>
-                <HBox>
-                    <Label text="{i18n>LABEL_28023}: " class="legend legend-type04" />
-                    <Text text="{/contents/A03/data04}" />
-                </HBox>
-                <HBox>
-                    <Label text="{i18n>LABEL_28024}: " class="legend legend-type05" />
-                    <Text text="{/contents/A03/data05}" />
+                    <Label text="{Ttltxt} :" class="legend">
+                        <customData>
+                            <core:CustomData key="legend" value="{Type}" writeToDom="true" />
+                        </customData>
+                    </Label>
+                    <Text text="{Cnt01}" />
                 </HBox>
             </VBox>
         </HBox>

@@ -29,7 +29,7 @@
           <Text text="{i18n>LABEL_00330}"/>
         </HBox>
       </grid:CSSGrid>
-      <custom:VacationIndicator width="100%" total="{/WeekWork/WeekTime}" used="{/WeekWork/Bastime}" used2="{/WeekWork/Ottime}" chartOnly="true" showTotal="true" usedType="WeekTime">
+      <custom:VacationIndicator width="100%" total="{/WeekWork/Grp03}" used="{/WeekWork/Grp01}" used2="{/WeekWork/Grp02}" chartOnly="true" showTotal="true" usedType="WeekTime">
         <custom:layoutData>
           <FlexItemData growFactor="1" />
         </custom:layoutData>

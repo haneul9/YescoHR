@@ -22,13 +22,7 @@
           </Text>
         </table:template>
       </table:Column>
-      <table:Column width="150px" sortProperty="Ottyptx" filterProperty="Ottyptx">
-        <Label text="{i18n>LABEL_00147}"/>
-        <table:template>
-          <Text text="{Ottyptx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
-        </table:template>
-      </table:Column>
-      <table:Column width="90px" sortProperty="Pernr" filterProperty="Pernr">
+      <table:Column width="auto" sortProperty="Pernr" filterProperty="Pernr">
         <Label text="{i18n>LABEL_00209}"/>
         <table:template>
           <Text text="{
@@ -37,19 +31,19 @@
           }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="80px" sortProperty="Ename" filterProperty="Ename">
+      <table:Column width="auto" sortProperty="Ename" filterProperty="Ename">
         <Label text="{i18n>LABEL_00210}"/>
         <table:template>
           <Text text="{Ename}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="100px" sortProperty="Zzjikgbt" filterProperty="Zzjikgbt">
+      <table:Column width="auto" sortProperty="Zzjikgbt" filterProperty="Zzjikgbt">
         <Label text="{i18n>LABEL_00215}"/>
         <table:template>
           <Text text="{Zzjikgbt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="150px" sortProperty="Orgtx" filterProperty="Orgtx">
+      <table:Column width="auto" sortProperty="Orgtx" filterProperty="Orgtx">
         <Label text="{i18n>LABEL_00224}"/>
         <table:template>
           <Text text="{Orgtx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
@@ -64,7 +58,7 @@
           }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="100px" sortProperty="Beguz" filterProperty="Beguz">
+      <table:Column width="auto" sortProperty="Beguz" filterProperty="Beguz">
         <Label text="{i18n>LABEL_27005}"/>
         <table:template>
           <Text text="{
@@ -73,7 +67,7 @@
           }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="100px" sortProperty="Enduz" filterProperty="Enduz">
+      <table:Column width="auto" sortProperty="Enduz" filterProperty="Enduz">
         <Label text="{i18n>LABEL_27006}"/>
         <table:template>
           <Text text="{
@@ -82,13 +76,19 @@
           }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="70px" sortProperty="Abrst" filterProperty="Abrst">
+      <table:Column width="auto" sortProperty="Abrst" filterProperty="Abrst">
         <Label text="{i18n>LABEL_27007}"/>
         <table:template>
           <Text text="{Abrst}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="80px" sortProperty="Apename" filterProperty="Apename">
+      <table:Column width="200px" sortProperty="Ottyptx" filterProperty="Ottyptx">
+        <Label text="{i18n>LABEL_00154}"/>
+        <table:template>
+          <Text text="{Ottyptx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="auto" sortProperty="Apename" filterProperty="Apename">
         <Label text="{i18n>LABEL_00135}"/>
         <table:template>
           <Text text="{Apename}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
@@ -103,11 +103,11 @@
           }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="auto" sortProperty="Stfda" filterProperty="Stfda">
+      <table:Column width="auto" sortProperty="Sgnda" filterProperty="Sgnda">
         <Label text="{i18n>LABEL_00269}"/>
         <table:template>
           <Text text="{
-              path: 'Stfda',
+              path: 'Sgnda',
               type: 'sap.ui.yesco.mvc.model.type.Date'
           }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
         </table:template>

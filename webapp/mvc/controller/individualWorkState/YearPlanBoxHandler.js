@@ -2,12 +2,14 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/base/Object',
+    'sap/ui/core/Fragment',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
   ],
   (
     // prettier 방지용 주석
     BaseObject,
+    Fragment,
     Client,
     ServiceNames
   ) => {
@@ -62,12 +64,35 @@ sap.ui.define(
         await this.oController.YearPlanBoxHandler.getYearPlan(iCurrentYear + 1);
       },
 
-      onMouseOverDayBox(oDayBox) {
-        // console.log(oDayBox.data('day'));
-      },
+      // 요일 선택시
+      onClickDay(oEvent) {
+        const oView = this.oController.getView();
+        const oViewModel = this.oController.getViewModel();
+        const mdate = oEvent.data();
+        const [mSelectedDay] = _.filter(oViewModel.getProperty('/yearPlan'), (e) => {
+          return e.FullDate === mdate.day;
+        });
 
-      onMouseOutDayBox(oDayBox) {
-        // console.log(oDayBox.data('day'));
+        if (!mSelectedDay || !mSelectedDay.Colty) {
+          return;
+        }
+
+        oViewModel.setProperty('/YearPlan/detail', mSelectedDay);
+        oViewModel.setProperty('/YearPlan/title', moment(mSelectedDay.FullDate).format('YYYY.MM.DD'));
+
+        if (!this.oController._pPopover) {
+          this.oController._pPopover = Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.mvc.view.individualWorkState.fragment.YearPlanPopover',
+            controller: this.oController,
+          }).then(function (oPopover) {
+            oView.addDependent(oPopover);
+            return oPopover;
+          });
+        }
+        this.oController._pPopover.then(function (oPopover) {
+          oPopover.openBy(oEvent);
+        });
       },
 
       makeCalendarControl() {
@@ -101,10 +126,12 @@ sap.ui.define(
       },
 
       getWeekHeader() {
-        const aWeekNames = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+        const aWeekNames = _.times(7, (e) => {
+          return `${this.oController.getBundleText(`LABEL_180${e + 35}`)}`; // 월,화,수,목,금,토,일
+        });
         const mWeekHeaders = aWeekNames.map((o) => this.getBoxObject({ label: o, classNames: 'Header' }));
 
-        return [this.getBoxObject({ label: 'Month', classNames: 'Header' }), ...mWeekHeaders, ...mWeekHeaders, ...mWeekHeaders, ...mWeekHeaders, ...mWeekHeaders, this.getBoxObject({ label: 'M', classNames: 'Header' }), this.getBoxObject({ label: 'T', classNames: 'Header' })];
+        return [this.getBoxObject({ label: this.oController.getBundleText('LABEL_17005'), classNames: 'Header' }), ...mWeekHeaders, ...mWeekHeaders, ...mWeekHeaders, ...mWeekHeaders, ...mWeekHeaders, this.getBoxObject({ label: this.oController.getBundleText('LABEL_18035'), classNames: 'Header' }), this.getBoxObject({ label: this.oController.getBundleText('LABEL_18036'), classNames: 'Header' })];
       },
 
       getActivationDayBody(iMonth, iDay) {

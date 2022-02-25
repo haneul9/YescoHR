@@ -134,14 +134,14 @@
                             <layoutData>
                                 <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '6' : '5' }" gridColumn="2 / 9" />
                             </layoutData>
-                            <Label width="18px" text="L5" textAlign="Center">
+                            <Label text="{i18n>LABEL_10084}" textAlign="Center">
                                 <layoutData>
                                     <FlexItemData growFactor="1" />
                                 </layoutData>
                             </Label>
                             <Input class="required" value="{Z1175}" maxLength="{/fieldControl/limit/Z1175}" enabled="{= ${/fieldControl/display/Z1175} === 'X' }">
                                 <layoutData>
-                                    <FlexItemData growFactor="20" />
+                                    <FlexItemData growFactor="18" />
                                 </layoutData>
                             </Input>
                         </HBox>
@@ -149,7 +149,7 @@
                             <layoutData>
                                 <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '7' : '6' }" gridColumn="2 / 9" />
                             </layoutData>
-                            <Label width="18px" text="L4">
+                            <Label text="{i18n>LABEL_10085}" textAlign="Center">
                                 <layoutData>
                                     <FlexItemData growFactor="1" />
                                 </layoutData>
@@ -164,7 +164,7 @@
                             <layoutData>
                                 <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '8' : '7' }" gridColumn="2 / 9" />
                             </layoutData>
-                            <Label width="18px" text="L3">
+                            <Label text="{i18n>LABEL_10086}" textAlign="Center">
                                 <layoutData>
                                     <FlexItemData growFactor="1" />
                                 </layoutData>
@@ -179,7 +179,7 @@
                             <layoutData>
                                 <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '9' : '8' }" gridColumn="2 / 9" />
                             </layoutData>
-                            <Label width="18px" text="L2">
+                            <Label text="{i18n>LABEL_10087}" textAlign="Center">
                                 <layoutData>
                                     <FlexItemData growFactor="1" />
                                 </layoutData>
@@ -194,7 +194,7 @@
                             <layoutData>
                                 <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '10' : '9' }" gridColumn="2 / 9" />
                             </layoutData>
-                            <Label width="18px" text="L1">
+                            <Label text="{i18n>LABEL_10088}" textAlign="Center">
                                 <layoutData>
                                     <FlexItemData growFactor="1" />
                                 </layoutData>

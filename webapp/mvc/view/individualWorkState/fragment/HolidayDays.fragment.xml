@@ -10,24 +10,29 @@
     </HBox>
     <HBox height="176px">
       <core:HTML content='&lt;div id="chart-doughnut-container"&gt;&lt;/div&gt;' />
-      <!-- <microchart:InteractiveDonutChart class="w-90 microchart" selectionEnabled="false">
-        <microchart:layoutData>
-          <FlexItemData growFactor="0.8"/>
-        </microchart:layoutData>
-        <microchart:segments>
-          <microchart:InteractiveDonutChartSegment label="{i18n>LABEL_18002}" value="{/vacationChart/pUsed}" displayedValue="{/vacationChart/dUsed}{i18n>LABEL_00254}" />
-          <microchart:InteractiveDonutChartSegment label="{i18n>LABEL_18003}" value="{/vacationChart/pPlan}" displayedValue="{/vacationChart/dPlan}{i18n>LABEL_00254}" />
-          <microchart:InteractiveDonutChartSegment label="{i18n>LABEL_18004}" value="{/vacationChart/pUnPlan}" displayedValue="{/vacationChart/dUnPlan}{i18n>LABEL_00254}" />
-        </microchart:segments>
-      </microchart:InteractiveDonutChart> -->
-      <grid:CSSGrid gridTemplateColumns="2fr 1fr 1fr" gridGap="28px 20px">
-        <Label text="{i18n>LABEL_18002}"/>
+      <grid:CSSGrid class="status-wrap year-plan" gridTemplateColumns="2fr 1fr 1fr" gridGap="20px 50px">
+        <grid:layoutData>
+          <FlexItemData growFactor="1"/>
+        </grid:layoutData>
+        <Label text="{i18n>LABEL_18002}">
+          <customData>
+            <core:CustomData key="style" value="Uesd" writeToDom="true" />
+          </customData>
+        </Label>
         <Text text="{/vacationChart/dUsed}일"/>
         <Text text="{/vacationChart/pUsed}%"/>
-        <Label text="{i18n>LABEL_18003}"/>
+        <Label text="{i18n>LABEL_18003}">
+          <customData>
+            <core:CustomData key="style" value="Plan" writeToDom="true" />
+          </customData>
+        </Label>
         <Text text="{/vacationChart/dPlan}일"/>
         <Text text="{/vacationChart/pPlan}%"/>
-        <Label text="{i18n>LABEL_18004}"/>
+        <Label text="{i18n>LABEL_18004}">
+          <customData>
+            <core:CustomData key="style" value="UnUsed" writeToDom="true" />
+          </customData>
+        </Label>
         <Text text="{/vacationChart/dUnPlan}일"/>
         <Text text="{/vacationChart/pUnPlan}%"/>
       </grid:CSSGrid>

@@ -4,12 +4,16 @@ sap.ui.define(
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/mvc/controller/overviewEmployee/constants/ChartsSetting',
+    'sap/ui/yesco/common/odata/Client',
+    'sap/ui/yesco/common/odata/ServiceNames',
   ],
   (
     // prettier 방지용 주석
     BaseController,
     AppUtils,
-    ChartsSetting
+    ChartsSetting,
+    Client,
+    ServiceNames
   ) => {
     'use strict';
 
@@ -23,88 +27,174 @@ sap.ui.define(
             entryOrgeh: [],
           },
           contents: {
-            A01: {
-              tot: '308',
-              totSub1: '300',
-              totSub2: '8',
-              data01: '297',
-              data02: '290',
-              data03: '7',
-              data04: '21',
-              data05: '20',
-              data06: '1',
-              data07: '10',
-              data08: '10',
-              data09: '0',
-              data10: '1',
-              data11: '1',
-              data12: '0',
-            },
-            A02: {
-              tot: '73명,24.2%',
-              data01: '21.5%',
-              data02: '65명',
-              data03: '2.6%',
-              data04: '8명',
-            },
-            A03: {
-              data01: '292',
-              data02: '8',
-              data03: '4',
-              data04: '3',
-              data05: '1',
-            },
-            A04: {
-              data01: '274',
-              data02: '26',
-              data03: '8',
-            },
-            A05: {
-              tot: '17.1',
-            },
-            A06: {
-              data01: '91.5%',
-              data02: '287명',
-              data03: '8.5%',
-              data04: '24명',
-            },
-            A08: {
-              data01: '117',
-              data02: '64',
-              data03: '53',
-              data04: '38',
-            },
-            A09: {
-              tot: '42.1',
-            },
+            A01: { busy: false, data: {} },
+            A02: { busy: false, data: {} },
+            A03: { busy: false, data: [] },
+            A04: { busy: false, data: [] },
+            A05: { busy: false, data: {} },
+            A06: { busy: false, data: {} },
+            A07: { busy: false, data: [] },
+            A08: { busy: false, data: [] },
+            A09: { busy: false, data: {} },
+            A10: { busy: false },
+            A11: { busy: false },
           },
         };
       },
 
-      async onObjectMatched() {
+      onObjectMatched() {
         try {
-          this.buildChart();
+          this.setAllBusy(true);
+
+          const oModel = this.getModel(ServiceNames.PA);
+          const mFilters = { Zyear: '2022' };
+
+          _.forEach(ChartsSetting.CHART_TYPE, (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
         } catch (oError) {
-          this.debug('Controller > organization Main > onObjectMatched Error', oError);
+          this.debug('Controller > m/overviewEmployee Main > onObjectMatched Error', oError);
 
           AppUtils.handleError(oError);
-        } finally {
         }
       },
 
-      buildChart() {
-        _.forEach(ChartsSetting.CHART, (chart) => {
-          FusionCharts.ready(() => {
-            new FusionCharts({
-              id: chart.id,
-              type: chart.type,
-              renderAt: `${chart.id}-container`,
-              width: '100%',
-              height: '100%',
-              dataFormat: 'json',
-              dataSource: chart.data,
-            }).render();
-          });
+      setAllBusy(bBusy) {
+        const oViewModel = this.getViewModel();
+
+        _.times(11).forEach((idx) => oViewModel.setProperty(`/contents/A${_.padStart(++idx, 2, '0')}/busy`, bBusy));
+      },
+
+      async buildChart(oModel, mFilters, mChartInfo) {
+        const oViewModel = this.getViewModel();
+        const aChartDatas = await Client.getEntitySet(oModel, 'HeadCountOverview', { ...mFilters, Headty: mChartInfo.Headty });
+        const vDataObject = oViewModel.getProperty(`/contents/${mChartInfo.Target}/data`);
+        const mChartSetting = _.get(ChartsSetting.CHART, mChartInfo.Target);
+
+        if (!_.isUndefined(vDataObject)) {
+          if (_.isArray(vDataObject)) {
+            oViewModel.setProperty(
+              `/contents/${mChartInfo.Target}/data`,
+              _.map(aChartDatas, (o, i) => ({ ...o, Type: `type${_.padStart(++i, 2, '0')}` }))
+            );
+          } else {
+            oViewModel.setProperty(
+              `/contents/${mChartInfo.Target}/data`,
+              _.chain(vDataObject)
+                .tap((obj) => _.forEach(mChartInfo.Fields, (o) => _.set(obj, o.prop, _.get(aChartDatas, o.path))))
+                .value()
+            );
+          }
+        }
+
+        oViewModel.setProperty(`/contents/${mChartInfo.Target}/busy`, false);
+
+        switch (mChartInfo.Chart) {
+          case 'column2d':
+            _.chain(mChartSetting)
+              // .set(['data', 'chart', 'yAxisMaxValue'], '200')
+              .set(
+                ['data', 'data'],
+                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB' }))
+              )
+              .commit();
+
+            this.callFusionChart(mChartSetting);
+
+            break;
+          case 'hled':
+            if (aChartDatas.length > 2) aChartDatas.shift();
+
+            const iFirstValue = _.chain(aChartDatas).get([0, mChartInfo.UsedProp]).parseInt().value();
+            const iSecondValue = _.chain(aChartDatas).get([1, mChartInfo.UsedProp]).parseInt().value();
+            const sLimitValue = _.isEmpty(mChartInfo.Limit) ? _.chain(iFirstValue).add(iSecondValue).toString().value() : '100';
+
+            _.chain(mChartSetting)
+              .get('data')
+              .set(['value'], sLimitValue)
+              .set(['chart', 'upperLimit'], sLimitValue)
+              .tap((o) => {
+                _.chain(o)
+                  .set(['colorrange', 'color', 0, 'minvalue'], '0')
+                  .set(['colorrange', 'color', 0, 'maxvalue'], _.toString(iFirstValue))
+                  .set(['colorrange', 'color', 1, 'minvalue'], _.toString(iFirstValue + 1))
+                  .commit();
+
+                if (mChartInfo.RangeCount === 3) {
+                  _.chain(o)
+                    .set(['colorrange', 'color', 1, 'maxvalue'], _.toString(_.add(iFirstValue, iSecondValue)))
+                    .set(['colorrange', 'color', 2, 'minvalue'], _.toString(_.add(iFirstValue, iSecondValue) + 1))
+                    .set(['colorrange', 'color', 2, 'maxvalue'], sLimitValue)
+                    .commit();
+                } else if (mChartInfo.RangeCount === 2) {
+                  _.chain(o).set(['colorrange', 'color', 1, 'maxvalue'], sLimitValue).commit();
+                }
+              })
+              .commit();
+
+            this.callFusionChart(mChartSetting);
+
+            break;
+          case 'bar2d':
+            _.chain(mChartSetting)
+              // .set(['data', 'chart', 'yAxisMaxValue'], '120')
+              .set(
+                ['data', 'data'],
+                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB' }))
+              )
+              .commit();
+
+            this.callFusionChart(mChartSetting);
+
+            break;
+          case 'doughnut2d':
+            _.chain(mChartSetting)
+              .set(['data', 'chart', 'paletteColors'], _.chain(ChartsSetting.COLORS).take(aChartDatas.length).join(',').value())
+              .set(
+                ['data', 'data'],
+                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01 }))
+              )
+              .commit();
+
+            this.callFusionChart(mChartSetting);
+
+            break;
+          case 'mscolumn2d':
+            _.chain(mChartSetting)
+              // .set(['data', 'chart', 'yAxisMaxValue'], '60')
+              .set(
+                ['data', 'categories', 0, 'category'],
+                _.map(aChartDatas, (o) => ({ label: o.Ttltxt }))
+              )
+              .set(['data', 'dataset', 0], {
+                seriesname: this.getBundleText('LABEL_28025'), // 팀원
+                color: '#7BB4EB',
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01 })),
+              })
+              .set(['data', 'dataset', 1], {
+                seriesname: this.getBundleText('LABEL_28026'), // 팀장
+                color: '#FFE479',
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02 })),
+              })
+              .commit();
+
+            this.callFusionChart(mChartSetting);
+
+            break;
+          default:
+            break;
+        }
+      },
+
+      callFusionChart(mChartSetting) {
+        FusionCharts.ready(() => {
+          new FusionCharts({
+            id: mChartSetting.id,
+            type: mChartSetting.type,
+            renderAt: `${mChartSetting.id}-container`,
+            width: '100%',
+            height: '100%',
+            dataFormat: 'json',
+            dataSource: mChartSetting.data,
+          }).render();
         });
       },
 
@@ -112,6 +202,8 @@ sap.ui.define(
        * ! Event handler
        *****************************************************************/
       onPressSearch() {},
+
+      onPressACount() {},
 
       /*****************************************************************
        * ! Call oData

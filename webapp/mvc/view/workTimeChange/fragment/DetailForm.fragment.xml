@@ -1,0 +1,146 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:table="sap.ui.table"
+  xmlns:core="sap.ui.core">
+  <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
+    <HBox alignItems="Center" class="table-toolbar" justifyContent="SpaceBetween">
+      <Title level="H2" text="{i18n>LABEL_00129}" />
+      <HBox>
+        <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" visible="{/Fixed}" press=".onAddDetail" class="sapUiTinyMarginEnd" />
+        <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" visible="{/Fixed}" press=".onDelDetail" />
+      </HBox>
+    </HBox>
+    <table:Table id="workTimeTable" rowSelectionChange=".onRowSelection" selectionMode="{/detail/listMode}" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/detail/list}" visibleRowCount="{/detail/rowCount}" noData="{i18n>MSG_00001}">
+      <table:columns>
+        <table:Column width="7%">
+          <table:multiLabels>
+            <Label text="{i18n>LABEL_00209}" />
+            <Label text="{i18n>LABEL_00209}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="7%">
+          <table:multiLabels>
+            <Label text="{i18n>LABEL_00210}" />
+            <Label text="{i18n>LABEL_00210}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Ename}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="7%">
+          <table:multiLabels>
+            <Label text="{i18n>LABEL_00215}" />
+            <Label text="{i18n>LABEL_00215}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Zzjikgbt}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="12%">
+          <table:multiLabels>
+            <Label text="{i18n>LABEL_00227}" />
+            <Label text="{i18n>LABEL_00227}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Orgtx}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="7%">
+          <table:multiLabels>
+            <Label text="{i18n>LABEL_27004}" />
+            <Label text="{i18n>LABEL_27004}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="7%">
+          <table:multiLabels>
+            <Label text="{i18n>LABEL_27010}" />
+            <Label text="{i18n>LABEL_27005}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{
+                path: 'Beguz',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="7%">
+          <table:multiLabels>
+            <Label text="{i18n>LABEL_27010}" />
+            <Label text="{i18n>LABEL_27006}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{
+                path: 'Enduz',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="7%">
+          <table:multiLabels>
+            <Label text="{i18n>LABEL_27010}" />
+            <Label text="{i18n>LABEL_27007}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Abrst}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="7%">
+          <table:multiLabels>
+            <Label text="{i18n>LABEL_27011}" />
+            <Label text="{i18n>LABEL_27005}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{
+                path: 'Beguz',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="7%">
+          <table:multiLabels>
+            <Label text="{i18n>LABEL_27011}" />
+            <Label text="{i18n>LABEL_27006}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{
+                path: 'Enduz',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="7%">
+          <table:multiLabels>
+            <Label text="{i18n>LABEL_27011}" />
+            <Label text="{i18n>LABEL_27007}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Abrst}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="12%">
+          <table:multiLabels>
+            <Label text="{i18n>LABEL_00154}" />
+            <Label text="{i18n>LABEL_00154}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Ottyptx}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="12%">
+          <table:multiLabels>
+            <Label text="{i18n>LABEL_27012}" />
+            <Label text="{i18n>LABEL_27012}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Atrsn}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+      </table:columns>
+    </table:Table>
+  </VBox>
+</core:FragmentDefinition>
