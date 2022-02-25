@@ -1250,7 +1250,7 @@ html.sap-desktop .sapMDialog>footer .sapContrast.sapMIBar.sapMFooter-CTX .sapMBt
 .sapUiLayoutCSSGrid.form-grid .sapMFlexBox.label_wrap > .sapMHBox {padding:4px 0}
 .sapUiLayoutCSSGrid.form-grid .sapMFlexBox.label_wrap .sapMFlexItem {min-height:auto!important}
 .sapUiLayoutCSSGrid.form-grid .sapMFlexBox.label_wrap .sapMHBox .sapMFlexItem:first-child {flex-grow:inherit!important}
-.sapUiLayoutCSSGrid.form-grid .sapMFlexBox.label_wrap .sapMFlexItem .sapMLabel{width:40px!important; margin-right:4px; padding-left:0; background-color:#FFE89A; border-radius:4px; text-align:center; justify-content:center}
+.sapUiLayoutCSSGrid.form-grid .sapMFlexBox.label_wrap .sapMFlexItem .sapMLabel{width:150px!important; margin-right:4px; padding-left:0; background-color:#FFE89A; border-radius:4px; text-align:center; justify-content:center}
 .sapUiLayoutCSSGrid.form-grid .sapMFlexBox.label_wrap .sapMFlexItem .sapMLabel > bdi {padding-left:0px; padding-right:0px}
 .sapUiLayoutCSSGrid.form-grid .sapMFlexBox.label_wrap .sapMHBox:nth-child(1) .sapMFlexItem .sapMLabel {background-color:#FFE89A}
 .sapUiLayoutCSSGrid.form-grid .sapMFlexBox.label_wrap .sapMHBox:nth-child(2) .sapMFlexItem .sapMLabel {background-color:#FFEDAF}

@@ -2,7 +2,6 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
@@ -19,7 +18,6 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     Fragment,
-    JSONModel,
     MessageBox,
     AppUtils,
     ComboEntry,
@@ -46,10 +44,10 @@ sap.ui.define(
         return { ...acc, [cur]: Constants.DISPLAY_TYPE.EDIT };
       },
 
-      initializeGoalItem(obj, index) {
+      initializeGoalItem(obj) {
         return {
           rootPath: _.chain(Constants.GOAL_TYPE).findKey({ code: obj.Z101 }).toLower().value(),
-          expanded: _.isEqual(index, 0),
+          expanded: _.stubTrue(),
           ..._.chain(obj).omit('AppraisalCoDoc').omit('__metadata').value(),
           ..._.chain(Constants.COMBO_PROPERTIES)
             .reduce((acc, cur) => ({ ...acc, [cur]: _.isEmpty(obj[cur]) ? 'ALL' : obj[cur] }), _.stubObject())
