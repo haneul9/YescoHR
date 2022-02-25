@@ -1,19 +1,23 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/core/Fragment',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/mvc/controller/overviewEmployee/constants/ChartsSetting',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/controller/overviewEmployee/constants/ChartsSetting',
+    'sap/ui/yesco/mvc/model/type/Date',
+    'sap/ui/yesco/mvc/model/type/Decimal',
   ],
   (
     // prettier 방지용 주석
-    BaseController,
+    Fragment,
     AppUtils,
-    ChartsSetting,
     Client,
-    ServiceNames
+    ServiceNames,
+    BaseController,
+    ChartsSetting
   ) => {
     'use strict';
 
@@ -38,6 +42,11 @@ sap.ui.define(
             A09: { busy: false, data: {} },
             A10: { busy: false },
             A11: { busy: false },
+          },
+          dialog: {
+            busy: false,
+            rowCount: 0,
+            list: [],
           },
         };
       },
@@ -209,17 +218,60 @@ sap.ui.define(
         }
       },
 
+      formatDetailRowHighlight(sValue) {
+        switch (_.toNumber(sValue)) {
+          case 1:
+            return sap.ui.core.IndicationColor.Indication01;
+          case 2:
+            return sap.ui.core.IndicationColor.Indication02;
+          case 3:
+            return sap.ui.core.IndicationColor.Indication03;
+          default:
+            return null;
+        }
+      },
+
+      async openDetailDialog() {
+        this.getViewModel().setProperty('/dialog/busy', true);
+
+        if (!this.oDetailDialog) {
+          this.oDetailDialog = await Fragment.load({
+            name: 'sap.ui.yesco.mvc.view.overviewEmployee.fragment.DialogDetail',
+            controller: this,
+          });
+
+          this.getView().addDependent(this.oDetailDialog);
+        }
+
+        this.oDetailDialog.open();
+      },
+
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
       onPressSearch() {},
 
       async onPressCount(oEvent) {
-        const mCustomData = oEvent.getSource().data();
+        const oViewModel = this.getViewModel();
 
-        const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'HeadCountDetail', { ...mCustomData, Zyear: '2022' });
+        try {
+          const mCustomData = oEvent.getSource().data();
 
-        console.log(aDetailData);
+          await this.openDetailDialog();
+          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'HeadCountDetail', { ...mCustomData, Zyear: '2022' });
+
+          oViewModel.setProperty('/dialog/rowCount', Math.min(aDetailData.length, 12));
+          oViewModel.setProperty('/dialog/list', aDetailData);
+          oViewModel.setProperty('/dialog/busy', false);
+        } catch (oError) {
+          this.debug('Controller > m/overviewEmployee Main > onPressCount Error', oError);
+
+          AppUtils.handleError(oError);
+        }
+      },
+
+      onPressDetailDialogClose() {
+        this.oDetailDialog.close();
       },
 
       /*****************************************************************

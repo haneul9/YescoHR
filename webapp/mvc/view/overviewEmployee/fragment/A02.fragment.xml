@@ -24,10 +24,10 @@
             </HBox>
             <HBox width="100%" justifyContent="SpaceBetween" alignItems="Center">
                 <HBox>
-                    <Text text="{/contents/A02/data/Title10}" state="Information" class="font-30-px lh-30-px color-01 pr-4-px pt-2-px" />
+                    <Text text="{/contents/A02/data/Title10}" class="font-30-px lh-30-px color-01 pr-4-px pt-2-px" />
                     <VBox class="h15">
-                        <Text text="{/contents/A02/data/Cnt11}&#37;" state="Information" class="font-12-px color-01"/>
-                        <Text text="{/contents/A02/data/Cnt12}명" state="Information" class="font-12-px color-01"/>
+                        <Text text="{/contents/A02/data/Cnt11}&#37;" class="font-12-px color-01"/>
+                        <Text text="{/contents/A02/data/Cnt12}명" class="font-12-px color-01"/>
                         <!-- <ObjectStatus text="{/contents/A02/data/Cnt11}&#37;" state="Information" class="font-12-px"/>
                         <ObjectStatus text="{/contents/A02/data/Cnt12}명" state="Information" class="font-12-px"/> -->
                     </VBox>
@@ -35,14 +35,14 @@
                 <HBox>
                     <Label text="{/contents/A02/data/Cnt01}명, {/contents/A02/data/Cnt02}&#37;" class="font-27-px" />
                 </HBox>
-                <HBox alignItems="FlexStart">
+                <HBox>
                     <VBox class="h15">
-                        <Text text="{/contents/A02/data/Cnt21}&#37;" state="Error" height="10px" class="font-12-px color-02"/>
-                        <Text text="{/contents/A02/data/Cnt22}명" state="Error" height="10px" class="font-12-px color-02"/>
+                        <Text text="{/contents/A02/data/Cnt21}&#37;" class="font-12-px color-02"/>
+                        <Text text="{/contents/A02/data/Cnt22}명" class="font-12-px color-02"/>
                         <!-- <ObjectStatus text="{/contents/A02/data/Cnt21}&#37;" state="Error" height="10px" class="font-12-px"/>
                         <ObjectStatus text="{/contents/A02/data/Cnt22}명" state="Error" height="10px" class="font-12-px"/> -->
                     </VBox>
-                    <Text text="{/contents/A02/data/Title20}" state="Error" class="font-30-px lh-30-px color-02 pl-4-px  pt-2-px" />
+                    <Text text="{/contents/A02/data/Title20}" class="font-30-px lh-30-px color-02 pl-4-px  pt-2-px" />
                 </HBox>
             </HBox>
             <HBox>
@@ -52,11 +52,11 @@
                 <core:HTML content='&lt;div id="employee-a02-chart-container"&gt;&lt;/div&gt;' />
             </HBox>
             <HBox justifyContent="SpaceBetween">
-                <VBox justifyContent="FlexStart">
+                <VBox>
                     <Label text="{i18n>LABEL_28031}" class="font-9-px" />
                     <Text text="{i18n>MSG_28001}" class="font-9-px ls-small" />
                 </VBox>
-                <VBox alignItems="End" >
+                <VBox alignItems="End">
                     <Label text="{i18n>LABEL_28032}" class="font-9-px text-right " />
                     <Text text="{i18n>MSG_28001}" class="font-9-px text-right ls-small" />
                 </VBox>

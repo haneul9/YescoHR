@@ -1923,10 +1923,15 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .h15 *{height:14px;}
 .color-01 {color:#7BB4EB}
 .color-02 {color:#FF6969}
-.color-03 {color:#006BD3}
+.color-03, .color-03 .sapMObjStatusText {color:#006BD3 !important;}
+.color-04, .color-04 .sapMObjStatusText {color:#FFAAAA !important;}
 .text-right {text-align: right!important;}
 .ls-small {letter-spacing: -0.3px;}
 .normal {font-weight:500;}
+
+.portlet-box .employee-total-count .sapMObjStatusText {font-weight: 500;}
+.portlet-box .employee-count {width:100%; text-align:center}
+.portlet-box .employee-count .sapMObjStatusText {color: var(--FontColorNormal); font-weight: 500;}
 
 #employee-a02-chart-container {height:68px;margin-top:10px;}
 #employee-a06-chart-container {height:76px;}

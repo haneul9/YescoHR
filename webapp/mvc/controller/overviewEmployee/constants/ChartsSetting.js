@@ -127,7 +127,7 @@ sap.ui.define([], function () {
               {
                 minvalue: '23',
                 maxvalue: '25',
-                code: '#FC564F',
+                code: '#FFAAAA',
               },
               {
                 minvalue: '26',
@@ -295,7 +295,7 @@ sap.ui.define([], function () {
               {
                 minvalue: '288',
                 maxvalue: '311',
-                code: '#FC564F',
+                code: '#FFAAAA',
               },
             ],
           },
