@@ -15,8 +15,8 @@
       </HBox>
     </VBox>
     <VBox class="contents">
-      <HBox class="vCardBox" justifyContent="SpaceBetween">
-        <HBox class="form-bar" alignItems="Center">
+      <HBox class="vCardBox" justifyContent="SpaceBetween" height="80px">
+        <HBox class="form-bar" alignItems="Center" >
           <Label text="{i18n>LABEL_28001}" />
           <custom:DatePicker dateValue="{ path: '/searchConditions/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" />
           <Label text="{i18n>LABEL_00237}" />
@@ -33,11 +33,11 @@
         <HBox>
           <HBox justifyContent="SpaceBetween" alignItems="Center">
             <Image src="asset/image/icon_human_green.svg" width="12px" />
-            <Text text="{i18n>LABEL_28003}" class="pl-4-px font-11-px display-flex" />
+            <Text text="{i18n>LABEL_28003}" class="pl-8-px font-11-px display-flex" />
           </HBox>
-          <HBox class="ml-16-px">
+          <HBox class="ml-16-px" justifyContent="SpaceBetween" alignItems="Center">
             <Image src="asset/image/icon_human_orange.svg" width="12px" />
-            <Text text="{i18n>LABEL_28004}" class="pl-4-px font-11-px display-flex" />
+            <Text text="{i18n>LABEL_28004}" class="pl-8-px font-11-px display-flex" />
           </HBox>
           </HBox>
         </VBox>
