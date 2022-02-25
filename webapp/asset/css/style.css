@@ -1600,8 +1600,8 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 
 /* Boardroom */
 .legend-wrap *{display: flex;font-size: 11px;font-weight: 600;}
-.legend-wrap > .sapMFlexBox {margin-bottom:4px;}
-.legend-wrap > .sapMFlexBox .sapMText {padding-left:4px;height:13px;}
+.legend-wrap > .sapMFlexBox {margin-bottom:2px;}
+.legend-wrap > .sapMFlexBox .sapMText {padding-left:4px;}
 .legend {display: flex;align-items: center;}
 .legend:before {content:""; display:inline-block; margin-right:8px; width:12px; height:12px; border-radius: 50%;}
 .legend[data-legend=type01]:before {background-color:#7BB4EB}
