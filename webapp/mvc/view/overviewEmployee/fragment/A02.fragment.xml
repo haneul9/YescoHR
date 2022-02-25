@@ -20,25 +20,25 @@
                 <FlexItemData growFactor="1" />
             </layoutData>
             <HBox width="100%" justifyContent="Center">
-                <Label text="{/contents/A02/Title01}" />
+                <Label text="{/contents/A02/data/Title01}" />
             </HBox>
             <HBox width="100%" justifyContent="SpaceBetween">
                 <HBox>
-                    <ObjectStatus text="{/contents/A02/Title10}" state="Information" />
+                    <ObjectStatus text="{/contents/A02/data/Title10}" state="Information" />
                     <VBox>
-                        <ObjectStatus text="{/contents/A02/Cnt11}&#37;" state="Information" />
-                        <ObjectStatus text="{/contents/A02/Cnt12}명" state="Information" />
+                        <ObjectStatus text="{/contents/A02/data/Cnt11}&#37;" state="Information" />
+                        <ObjectStatus text="{/contents/A02/data/Cnt12}명" state="Information" />
                     </VBox>
                 </HBox>
                 <HBox>
-                    <Label text="{/contents/A02/Cnt01}명, {/contents/A02/Cnt02}&#37;" />
+                    <Label text="{/contents/A02/data/Cnt01}명, {/contents/A02/data/Cnt02}&#37;" />
                 </HBox>
                 <HBox>
                     <VBox>
-                        <ObjectStatus text="{/contents/A02/Cnt21}&#37;" state="Error" />
-                        <ObjectStatus text="{/contents/A02/Cnt22}명" state="Error" />
+                        <ObjectStatus text="{/contents/A02/data/Cnt21}&#37;" state="Error" />
+                        <ObjectStatus text="{/contents/A02/data/Cnt22}명" state="Error" />
                     </VBox>
-                    <ObjectStatus text="{/contents/A02/Title20}" state="Error" />
+                    <ObjectStatus text="{/contents/A02/data/Title20}" state="Error" />
                 </HBox>
             </HBox>
             <HBox>
@@ -47,8 +47,13 @@
                 </layoutData>
                 <core:HTML content='&lt;div id="employee-a02-chart-container"&gt;&lt;/div&gt;' />
             </HBox>
-            <HBox>
+            <HBox justifyContent="SpaceBetween">
+                <Label text="{i18n>LABEL_28031}" />
+                <Label text="{i18n>LABEL_28032}" />
+            </HBox>
+            <HBox justifyContent="SpaceBetween">
                 <Text text="{i18n>MSG_28001}" />
+                <Text text="{i18n>MSG_28002}" />
             </HBox>
         </VBox>
     </VBox>

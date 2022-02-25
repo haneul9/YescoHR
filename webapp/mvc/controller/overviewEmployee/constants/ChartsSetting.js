@@ -2,6 +2,86 @@ sap.ui.define([], function () {
   'use strict';
 
   return {
+    COLORS: ['#7BB4EB', '#81DAEA', '#A9F482', '#FFE479', '#FFB7AF', '#FFAC4B', '#D484F2', '#A684F2', '#9090FF', '#ACB3FF'],
+    CHART_TYPE: [
+      {
+        Headty: 'A',
+        Target: 'A01',
+        Chart: 'none',
+        Fields: [
+          { prop: 'Cnt01', path: [0, 'Cnt01'] }, //
+          { prop: 'Cnt02', path: [0, 'Cnt02'] },
+          { prop: 'Cnt03', path: [0, 'Cnt03'] },
+          { prop: 'Cnt40', path: [1, 'Cnt01'] },
+          { prop: 'Cnt41', path: [1, 'Cnt02'] },
+          { prop: 'Cnt42', path: [1, 'Cnt03'] },
+          { prop: 'Cnt50', path: [2, 'Cnt01'] },
+          { prop: 'Cnt51', path: [2, 'Cnt02'] },
+          { prop: 'Cnt52', path: [2, 'Cnt03'] },
+          { prop: 'Cnt60', path: [3, 'Cnt01'] },
+          { prop: 'Cnt61', path: [3, 'Cnt02'] },
+          { prop: 'Cnt62', path: [3, 'Cnt03'] },
+          { prop: 'Cnt70', path: [4, 'Cnt01'] },
+          { prop: 'Cnt71', path: [4, 'Cnt02'] },
+          { prop: 'Cnt72', path: [4, 'Cnt03'] },
+        ],
+      },
+      {
+        Headty: 'B',
+        Target: 'A05',
+        Chart: 'column2d',
+        Fields: [
+          { prop: 'Cnt01', path: [0, 'Rte01'] }, //
+        ],
+      },
+      {
+        Headty: 'C',
+        Target: 'A09',
+        Chart: 'column2d',
+        Fields: [
+          { prop: 'Cnt01', path: [0, 'Rte01'] }, //
+        ],
+      },
+      {
+        Headty: 'D',
+        Target: 'A02',
+        Chart: 'hled',
+        Fields: [
+          { prop: 'Title01', path: [0, 'Ttltxt'] }, //
+          { prop: 'Title10', path: [1, 'Ttltxt'] },
+          { prop: 'Title20', path: [2, 'Ttltxt'] },
+          { prop: 'Cnt01', path: [0, 'Cnt01'] },
+          { prop: 'Cnt02', path: [0, 'Rte01'] },
+          { prop: 'Cnt11', path: [1, 'Rte01'] },
+          { prop: 'Cnt12', path: [1, 'Cnt01'] },
+          { prop: 'Cnt21', path: [2, 'Rte01'] },
+          { prop: 'Cnt22', path: [2, 'Cnt01'] },
+        ],
+        RangeCount: 3,
+        Limit: '100',
+        UsedProp: 'Rte01',
+      },
+      {
+        Headty: 'E',
+        Target: 'A06',
+        Chart: 'hled',
+        Fields: [
+          { prop: 'Cnt11', path: [0, 'Rte01'] },
+          { prop: 'Cnt12', path: [0, 'Cnt01'] },
+          { prop: 'Cnt21', path: [1, 'Rte01'] },
+          { prop: 'Cnt22', path: [1, 'Cnt01'] },
+        ],
+        RangeCount: 2,
+        Limit: '',
+        UsedProp: 'Cnt01',
+      },
+      { Headty: 'F', Target: 'A10', Chart: 'bar2d' },
+      { Headty: 'G', Target: 'A03', Chart: 'doughnut2d' },
+      { Headty: 'H', Target: 'A07', Chart: 'doughnut2d' },
+      { Headty: 'I', Target: 'A04', Chart: 'doughnut2d' },
+      { Headty: 'J', Target: 'A08', Chart: 'doughnut2d' },
+      { Headty: 'K', Target: 'A11', Chart: 'mscolumn2d' },
+    ],
     CHART: {
       A02: {
         id: 'employee-a02-chart',
@@ -14,7 +94,8 @@ sap.ui.define([], function () {
             lowerLimit: '0',
             minorTMNumber: '0',
             upperLimit: '100',
-            tickMarkDistance: '5',
+            tickMarkDistance: '1',
+            majorTMColor: '#ededed',
             theme: 'ocean',
             showvalue: '0',
             showShadow: '0',
@@ -26,7 +107,7 @@ sap.ui.define([], function () {
               {
                 minvalue: '0',
                 maxvalue: '22',
-                code: '#8FABE8',
+                code: '#7BB4EB',
               },
               {
                 minvalue: '23',
@@ -60,7 +141,7 @@ sap.ui.define([], function () {
             chartTopRight: 0,
             chartTopBottom: 0,
             chartTopLeft: 0,
-            paletteColors: '#8FABE8,#81DAEA,#77D561,#FFE479,#FC564F',
+            paletteColors: '#7BB4EB,#81DAEA,#77D561,#FFE479,#FC564F',
           },
           data: [
             {
@@ -103,7 +184,7 @@ sap.ui.define([], function () {
             chartTopRight: 0,
             chartTopBottom: 0,
             chartTopLeft: 0,
-            paletteColors: '#8FABE8,#81DAEA,#77D561',
+            paletteColors: '#7BB4EB,#81DAEA,#77D561',
           },
           data: [
             {
@@ -150,22 +231,22 @@ sap.ui.define([], function () {
             {
               label: '0-10',
               value: '173',
-              color: '#8FABE8',
+              color: '#7BB4EB',
             },
             {
               label: '10-20',
               value: '98',
-              color: '#8FABE8',
+              color: '#7BB4EB',
             },
             {
               label: '20-30',
               value: '42',
-              color: '#8FABE8',
+              color: '#7BB4EB',
             },
             {
               label: '30-40',
               value: '12',
-              color: '#8FABE8',
+              color: '#7BB4EB',
             },
           ],
         },
@@ -181,7 +262,8 @@ sap.ui.define([], function () {
             lowerLimit: '0',
             minorTMNumber: '0',
             upperLimit: '311',
-            tickMarkDistance: '5',
+            tickMarkDistance: '1',
+            majorTMColor: '#ededed',
             theme: 'ocean',
             showvalue: '0',
             showShadow: '0',
@@ -193,7 +275,7 @@ sap.ui.define([], function () {
               {
                 minvalue: '0',
                 maxvalue: '287',
-                code: '#8FABE8',
+                code: '#7BB4EB',
               },
               {
                 minvalue: '288',
@@ -222,7 +304,7 @@ sap.ui.define([], function () {
             chartTopRight: 0,
             chartTopBottom: 0,
             chartTopLeft: 0,
-            paletteColors: '#8FABE8,#81DAEA,#77D561,#FFE479',
+            paletteColors: '#7BB4EB,#81DAEA,#77D561,#FFE479',
           },
           data: [
             {
@@ -261,7 +343,7 @@ sap.ui.define([], function () {
             chartTopRight: 0,
             chartTopBottom: 0,
             chartTopLeft: 0,
-            paletteColors: '#8FABE8,#81DAEA,#77D561,#FFE479',
+            paletteColors: '#7BB4EB,#81DAEA,#77D561,#FFE479',
           },
           data: [
             {
@@ -312,27 +394,27 @@ sap.ui.define([], function () {
             {
               label: '20-30',
               value: '100',
-              color: '#8FABE8',
+              color: '#7BB4EB',
             },
             {
               label: '30-40',
               value: '178',
-              color: '#8FABE8',
+              color: '#7BB4EB',
             },
             {
               label: '40-50',
               value: '88',
-              color: '#8FABE8',
+              color: '#7BB4EB',
             },
             {
               label: '50-60',
               value: '39',
-              color: '#8FABE8',
+              color: '#7BB4EB',
             },
             {
               label: '60이상',
               value: '25',
-              color: '#8FABE8',
+              color: '#7BB4EB',
             },
           ],
         },
@@ -366,27 +448,27 @@ sap.ui.define([], function () {
             {
               label: '경영진단팀',
               value: '4',
-              color: '#8FABE8',
+              color: '#7BB4EB',
             },
             {
               label: '기획재경부문',
               value: '23',
-              color: '#8FABE8',
+              color: '#7BB4EB',
             },
             {
               label: '경영지원부문',
               value: '29',
-              color: '#8FABE8',
+              color: '#7BB4EB',
             },
             {
               label: '안전부문',
               value: '170',
-              color: '#8FABE8',
+              color: '#7BB4EB',
             },
             {
               label: '고객서비스부문',
               value: '76',
-              color: '#8FABE8',
+              color: '#7BB4EB',
             },
           ],
         },
@@ -396,17 +478,26 @@ sap.ui.define([], function () {
         type: 'mscolumn2d',
         data: {
           chart: {
-            drawCrossLine: '1',
-            rotateValues: '0',
-            showValues: '1',
+            animation: 0,
+            showValues: 1,
+            rotateValues: 0,
+            placeValuesInside: 0,
+            yAxisValueFontSize: 9,
+            // yAxisMaxValue: 230,
+            numDivLines: 3,
+            divLineDashed: 0,
+            divLineColor: '#eeeeee',
+            maxColWidth: 23,
+            theme: 'ocean',
+            bgColor: 'transparent',
             valueFontSize: 9,
             valueFontColor: '#000000',
             valueBgColor: '#ffffff',
-            // yAxisMaxValue: '60',
-            placeValuesInside: '0',
-            bgColor: 'transparent',
-            theme: 'ocean',
-            maxColWidth: 23,
+            showPlotBorder: 1,
+            plotBorderThickness: 3,
+            plotBorderColor: '#ffffff',
+            chartBottomMargin: 0,
+            drawCustomLegendIcon: 1,
           },
           categories: [
             {
@@ -427,7 +518,7 @@ sap.ui.define([], function () {
           dataset: [
             {
               seriesname: '팀원',
-              color: '#8FABE8',
+              color: '#7BB4EB',
               data: [
                 { value: 38.2 }, //
                 { value: 42.5 },

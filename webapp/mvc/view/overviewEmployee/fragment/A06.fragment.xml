@@ -23,14 +23,14 @@
                 <HBox>
                     <ObjectStatus icon="sap-icon://person-placeholder" state="Information" />
                     <VBox>
-                        <ObjectStatus text="{/contents/A06/Cnt11}&#37;" state="Information" />
-                        <ObjectStatus text="{/contents/A06/Cnt12}명" state="Information" />
+                        <ObjectStatus text="{/contents/A06/data/Cnt11}&#37;" state="Information" />
+                        <ObjectStatus text="{/contents/A06/data/Cnt12}명" state="Information" />
                     </VBox>
                 </HBox>
                 <HBox>
                     <VBox>
-                        <ObjectStatus text="{/contents/A06/Cnt21}&#37;" state="Error" />
-                        <ObjectStatus text="{/contents/A06/Cnt22}명" state="Error" />
+                        <ObjectStatus text="{/contents/A06/data/Cnt21}&#37;" state="Error" />
+                        <ObjectStatus text="{/contents/A06/data/Cnt22}명" state="Error" />
                     </VBox>
                     <ObjectStatus icon="sap-icon://person-placeholder" state="Error" />
                 </HBox>

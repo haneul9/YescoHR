@@ -1250,7 +1250,7 @@ html.sap-desktop .sapMDialog>footer .sapContrast.sapMIBar.sapMFooter-CTX .sapMBt
 .sapUiLayoutCSSGrid.form-grid .sapMFlexBox.label_wrap > .sapMHBox {padding:4px 0}
 .sapUiLayoutCSSGrid.form-grid .sapMFlexBox.label_wrap .sapMFlexItem {min-height:auto!important}
 .sapUiLayoutCSSGrid.form-grid .sapMFlexBox.label_wrap .sapMHBox .sapMFlexItem:first-child {flex-grow:inherit!important}
-.sapUiLayoutCSSGrid.form-grid .sapMFlexBox.label_wrap .sapMFlexItem .sapMLabel{width:40px!important; margin-right:4px; padding-left:0; background-color:#FFE89A; border-radius:4px; text-align:center; justify-content:center}
+.sapUiLayoutCSSGrid.form-grid .sapMFlexBox.label_wrap .sapMFlexItem .sapMLabel{width:150px!important; margin-right:4px; padding-left:0; background-color:#FFE89A; border-radius:4px; text-align:center; justify-content:center}
 .sapUiLayoutCSSGrid.form-grid .sapMFlexBox.label_wrap .sapMFlexItem .sapMLabel > bdi {padding-left:0px; padding-right:0px}
 .sapUiLayoutCSSGrid.form-grid .sapMFlexBox.label_wrap .sapMHBox:nth-child(1) .sapMFlexItem .sapMLabel {background-color:#FFE89A}
 .sapUiLayoutCSSGrid.form-grid .sapMFlexBox.label_wrap .sapMHBox:nth-child(2) .sapMFlexItem .sapMLabel {background-color:#FFEDAF}
@@ -1600,12 +1600,17 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .sapUiSizeCompact.notification-popover li:not(.sapMLIBUnread) .sapMBtn.toggle-icon bdi {border:1px solid #ddd; color:#222}
 
 /* Boardroom */
-.legend:before {content:""; display:inline-block; margin-right:8px; width:10px; height:10px; border-radius: 50%;}
-.legend[data-legend=type01]:before {background-color:#8FABE8}
+.legend:before {content:""; display:inline-block; margin-right:8px; width:12px; height:12px; border-radius: 50%;}
+.legend[data-legend=type01]:before {background-color:#7BB4EB}
 .legend[data-legend=type02]:before {background-color:#81DAEA}
-.legend[data-legend=type03]:before {background-color:#77D561}
+.legend[data-legend=type03]:before {background-color:#A9F482}
 .legend[data-legend=type04]:before {background-color:#FFE479}
-.legend[data-legend=type05]:before {background-color:#FC564F}
+.legend[data-legend=type05]:before {background-color:#FFB7AF}
+.legend[data-legend=type06]:before {background-color:#FFAC4B}
+.legend[data-legend=type07]:before {background-color:#D484F2}
+.legend[data-legend=type08]:before {background-color:#A684F2}
+.legend[data-legend=type09]:before {background-color:#9090FF}
+.legend[data-legend=type10]:before {background-color:#ACB3FF}
 
 /* Popover */
 .sapMPopover:not(.sapMRPCalendar) .sapMPopoverFooter {margin:0 20px}
