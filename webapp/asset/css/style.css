@@ -21,8 +21,7 @@ html *:not(.sapUiIcon):not(.sapMMsgStripCloseButton):not(i) {font-family:Pretend
 html:not([data-sap-ui-browser^="ie"]):not([data-sap-ui-browser^="ed"]) .sapUiIcon:focus {outline-width:0px; outline-style:dashed; outline-offset:-1px}
 html, body {box-sizing:border-box; overflow:hidden}
 html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl) {text-decoration:none}
-.sapUiBodyBackground, .sapUiBody {background-color:#F9FAFA}
-/* .sapUiBody * {box-sizing:border-box; -webkit-box-sizing:border-box; } */
+.sapUiBodyBackground, .sapUiBody {background-color:#f9fafa}
 
 .app-menu-toolbar {max-width:1600px; margin:0 auto; background-color:#fff; box-shadow:0 1px 1px rgb(0 0 0 / 10%); z-index:2; }
 .app-menu-toolbar:before {content:""; height:59px!important; width:100%; background-color:#fff; position:fixed; top:0; left:0; right:0; z-index:-1; }
@@ -58,7 +57,6 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-header > .sapMFlexItem + .sapMFlexItem {margin-left:5px}
 .portlet-header h2.sapMTitle {vertical-align:middle; font-size:20px; font-weight:700}
 .sapUiSizeCompact .portlet-header .sapMSegB {height:30px; margin-left:10px; margin-bottom:-3px; background-color:#e9e9e9; border-radius:8px; min-width:130px}
-/* .sapUiSizeCompact .portlet-header .sapMSegB .sapMSegBBtn {min-width:60px} */
 .portlet-header .sapMSegB .sapMSegBBtn .sapMSegBBtnInner {background-color:transparent; border-radius:8px!important; line-height:25px; font-weight:500}
 .portlet-header .sapMSegB .sapMSegBBtn.sapMSegBBtnSel .sapMSegBBtnInner {font-weight:700}
 .portlet-header .sapIcon_Date {margin-bottom:-8px !important}
@@ -246,8 +244,8 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 }
 
 /* 공통 Scroll Bar */
-html.sap-desktop:not(.sapUiNativeScrollbars) ::-webkit-scrollbar {width:5px !important; background:none !important}
-html.sap-desktop:not(.sapUiNativeScrollbars) ::-webkit-scrollbar-thumb {border-radius:5px !important; background-color:#c1c3c8 !important}
+html:not(.sapUiNativeScrollbars) ::-webkit-scrollbar {width:5px !important; background:none !important}
+html:not(.sapUiNativeScrollbars) ::-webkit-scrollbar-thumb {border-radius:5px !important; background-color:#c1c3c8 !important}
 
 /* 공통 Margin, Padding */
 /* .sapMTextArea > div {padding:0.1875rem}
@@ -1038,14 +1036,15 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 .sapMBtn.icon-button.me .sapMBtnInner:after {content:""; display:inline-block; width:27px; height:23px; background-image:url(../css/images/icon_me.png); background-repeat:no-repeat; background-position:center}
 
 /*notification button style*/
-.sapMIBar.sapMTB .sapMBarChild.notification-wrapper {position:relative; margin-left:0.8rem}
-.sapMIBar.sapMTB .sapMBarChild.notification-wrapper .sapMBtn.icon-button.notification {position:relative}
-.sapMIBar.sapMTB .sapMBarChild.notification-wrapper .sapMBtn.icon-button.notification .sapMBtnInner {background:transparent!important}
-.sapMIBar.sapMTB .sapMBarChild.notification-wrapper .sapMBtn.icon-button.notification .sapMBtnInner .sapMBtnIcon {color:#484C50; font-size:22px; font-weight:200}
-.sapMIBar.sapMTB .sapMBarChild.notification-wrapper .sapMBtn.icon-button.notification .sapMBtnInner:after {content:""; display:inline-block; width:27px; height:23px; background-image:url(../../asset/image/icon_notification.svg); background-repeat:no-repeat; background-position:center}
-.sapMIBar.sapMTB .sapMBarChild.notification-wrapper:hover .sapMBtn.icon-button.notification .sapMBtnInner:after {background-image:url(../../asset/image/icon_notification_hover.svg)}
-.sapMIBar.sapMTB .sapMBarChild.notification-wrapper > .sapMFlexItem:last-child {position:absolute; z-index:1; left:50%}
-.sapMIBar.sapMTB .sapMBarChild.notification-wrapper > .sapMFlexItem:last-child .notification-count {display:inline-block; min-width:10px; border-radius:10px; padding:2px 5px; font-size:9px; font-weight:400; color:#fff; background-color:#f00; cursor:pointer}
+.sapMIBar.sapMTB .sapMBarChild.notification-wrapper {margin-left:0.8rem}
+.notification-wrapper {position:relative}
+.notification-wrapper .sapMBtn.icon-button.notification {position:relative}
+.notification-wrapper .sapMBtn.icon-button.notification .sapMBtnInner {background:transparent!important}
+.notification-wrapper .sapMBtn.icon-button.notification .sapMBtnInner .sapMBtnIcon {color:#484C50; font-size:22px; font-weight:200}
+.notification-wrapper .sapMBtn.icon-button.notification .sapMBtnInner:after {content:""; display:inline-block; width:27px; height:23px; background-image:url(../../asset/image/icon_notification.svg); background-repeat:no-repeat; background-position:center}
+.notification-wrapper:hover .sapMBtn.icon-button.notification .sapMBtnInner:after {background-image:url(../../asset/image/icon_notification_hover.svg)}
+.notification-wrapper > .sapMFlexItem:last-child {position:absolute; z-index:1; left:50%}
+.notification-wrapper > .sapMFlexItem:last-child .notification-count {display:inline-block; min-width:10px; border-radius:10px; padding:2px 5px; font-size:9px; font-weight:400; color:#fff; background-color:#f00; cursor:pointer}
 
 /*settings button style*/
 .sapMBtn.icon-button.settings .sapMBtnInner {background:transparent!important}
@@ -1571,9 +1570,9 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .sapUiSizeCompact.notification-popover .sapMFlexBox {align-self:center}
 .sapUiSizeCompact.notification-popover .sapMFlexBox.subject {width:65%; margin-left:10px}
 .sapUiSizeCompact.notification-popover .sapMFlexBox.subject * {align-self:flex-start}
-.sapUiSizeCompact.notification-popover .sapMFlexBox.subject + .sapMFlexItem {margin-left:37px}
+.sapUiSizeCompact.notification-popover .align-right {text-align:right}
 .sapUiSizeCompact.notification-popover .notification-datetime {font-weight:400; color:#959595; font-size:12px}
-.sapUiSizeCompact.notification-popover .sapMBtn.toggle-icon {margin-right:5px; min-width:auto}
+.sapUiSizeCompact.notification-popover .sapMBtn.toggle-icon {margin-right:5px; margin-left:20px; min-width:auto}
 .sapUiSizeCompact.notification-popover .sapMBtn.toggle-icon .sapMBtnInner.sapMBtnText {width:100%; height:18px; border:none; padding:0; justify-content:flex-end; background-color:transparent}
 .sapUiSizeCompact.notification-popover .sapMBtn.toggle-icon .sapMBtnContent {line-height:18px}
 .sapUiSizeCompact.notification-popover .sapMBtn.toggle-icon bdi {padding:2px 3px; border:1px solid #387fe9; border-radius:3px; font-size:10px; color:#387fe9}

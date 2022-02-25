@@ -101,7 +101,7 @@ sap.ui.define(
         },
 
         isMobile() {
-          return $('html').attr('device') === 'mobile';
+          return this.getDevice() === sap.ui.Device.system.SYSTEMTYPE.PHONE;
         },
 
         /**

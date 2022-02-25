@@ -1,6 +1,7 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/m/PlacementType',
     'sap/ui/core/Fragment',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
@@ -12,6 +13,7 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
+    PlacementType,
     Fragment,
     JSONModel,
     AppUtils,
@@ -38,19 +40,28 @@ sap.ui.define(
       getInitialData() {
         return {
           busy: true,
+          placement: this.bMobile ? PlacementType.Top : PlacementType.Bottom,
           onlyUnread: false,
           list: [],
           listCount: 0,
           unreadCount: 0,
           showUnreadCount: false,
+          maxRows: this.bMobile ? Math.ceil((screen.availHeight - 143) / 69) : 5,
         };
       },
 
       async init() {
+        const oView = this.getController().getView();
+
         this.oNotificationPopover = await Fragment.load({
+          id: oView.getId(),
           name: 'sap.ui.yesco.mvc.view.app.fragment.NotificationPopover',
           controller: this,
         });
+
+        if (this.bMobile) {
+          this.oNotificationPopover.addStyleClass('full-popover');
+        }
 
         const oNotificationModel = this.getNotificationModel();
 
@@ -64,7 +75,6 @@ sap.ui.define(
           .setModel(oNotificationModel)
           .bindElement('/');
 
-        const oView = this.getController().getView();
         oView.setModel(oNotificationModel, 'notificationModel');
         oView.addDependent(this.oNotificationPopover);
 
@@ -286,7 +296,8 @@ sap.ui.define(
         if (this.oNotificationPopover.isOpen()) {
           this.onPopoverClose();
         } else {
-          this.oNotificationPopover.openBy(this.getController().byId('notification-bell'));
+          const sId = this.bMobile ? 'mobile-notification-bell' : 'notification-bell';
+          this.oNotificationPopover.openBy(this.getController().byId(sId));
         }
       },
 

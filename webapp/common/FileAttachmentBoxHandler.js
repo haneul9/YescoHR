@@ -238,6 +238,16 @@ sap.ui.define(
               await this.uploadFile({ sAppno, sApptp, oUploadModel, sUploadUrl, mFile: aFiles.shift() });
             }
 
+            // New flag 제거
+            aFiles = oBoxModel.getProperty('/files');
+            aFiles.forEach((mFile) => {
+              if (mFile.New) {
+                mFile.New = false;
+                mFile.Uploaded = true;
+              }
+            });
+            oBoxModel.setProperty('/files', aFiles);
+
             resolve();
           } catch (oError) {
             AppUtils.debug('FileAttachmentBoxHandler > upload > uploadFile Error', oError);

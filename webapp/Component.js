@@ -50,7 +50,6 @@ sap.ui.define(
        * @override
        */
       init(...aArgs) {
-        console.log('component init');
         $('body').toggleClass(this.getContentDensityClass(), true);
 
         this.toggleDeviceStyle();

@@ -17,11 +17,13 @@ sap.ui.define(
 
     return UIComponentBaseModel.extend('sap.ui.yesco.mvc.model.MenuModel', {
       async retrieve() {
+        this.bMobile = _.isEqual(AppUtils.getDevice(), sap.ui.Device.system.SYSTEMTYPE.PHONE);
+
         try {
           const oModel = this.getUIComponent().getModel(ServiceNames.COMMON);
           const sUrl = 'GetMenuLv';
           const mPayload = {
-            Device: _.isEqual(AppUtils.getDevice(), sap.ui.Device.system.SYSTEMTYPE.PHONE) ? 'M' : '',
+            Device: this.bMobile ? 'M' : '',
             GetMenuLv1Nav: [],
             GetMenuLv2Nav: [],
             GetMenuLv3Nav: [],
@@ -58,6 +60,7 @@ sap.ui.define(
         const mUrlToMenid = {}; // mUrlToMenid[URL] -> Menid
         const mMenidToProperties = {}; // mMenidToProperties[Menid] -> Menu
         const aFavoriteMenids = [];
+        const aMobileFavoriteMenus = [];
 
         // 샘플 메뉴 추가
         this.appendSampleMenu({ aLevel1, aLevel2, aLevel3, aLevel4 });
@@ -95,11 +98,24 @@ sap.ui.define(
           mMenidToProperties[m.Menid] = mMenuProperties;
           mMenidToProperties[m.Mnid3] = mMenuProperties;
 
-          const aLevel2SubMenu = mLevel2Sub[m.Mnid2];
-          if (aLevel2SubMenu) {
-            aLevel2SubMenu.push(mMenuProperties);
+          if (this.bMobile) {
+            if (m.Favor === 'X') {
+              aMobileFavoriteMenus.push(mMenuProperties);
+            }
+
+            const aLevel1SubMenu = mLevel1Sub[m.Mnid1];
+            if (aLevel1SubMenu) {
+              aLevel1SubMenu.push(mMenuProperties);
+            } else {
+              mLevel1Sub[m.Mnid1] = [mMenuProperties];
+            }
           } else {
-            mLevel2Sub[m.Mnid2] = [mMenuProperties];
+            const aLevel2SubMenu = mLevel2Sub[m.Mnid2];
+            if (aLevel2SubMenu) {
+              aLevel2SubMenu.push(mMenuProperties);
+            } else {
+              mLevel2Sub[m.Mnid2] = [mMenuProperties];
+            }
           }
         });
 
@@ -128,11 +144,17 @@ sap.ui.define(
           mMenidToProperties[m.Menid] = mMenuProperties;
           mMenidToProperties[m.Mnid2] = mMenuProperties;
 
-          const aLevel1SubMenu = mLevel1Sub[m.Mnid1];
-          if (aLevel1SubMenu) {
-            aLevel1SubMenu.push(mMenuProperties);
+          if (!this.bMobile) {
+            const aLevel1SubMenu = mLevel1Sub[m.Mnid1];
+            if (aLevel1SubMenu) {
+              aLevel1SubMenu.push(mMenuProperties);
+            } else {
+              mLevel1Sub[m.Mnid1] = [mMenuProperties];
+            }
           } else {
-            mLevel1Sub[m.Mnid1] = [mMenuProperties];
+            if (m.Favor === 'X') {
+              aMobileFavoriteMenus.push(mMenuProperties);
+            }
           }
         });
 
@@ -162,10 +184,14 @@ sap.ui.define(
           mMenidToProperties[m.Menid] = mMenuProperties;
           mMenidToProperties[m.Mnid1] = mMenuProperties;
 
+          if (this.bMobile && m.Favor === 'X') {
+            aMobileFavoriteMenus.push(mMenuProperties);
+          }
+
           return mMenuProperties;
         });
 
-        return {
+        const mModelData = {
           tree,
           menidToProperties: mMenidToProperties, // 메뉴 Menid로 속성 정보를 얻기 위한 object
           urlToMenid: mUrlToMenid, // 메뉴 URL로 Menid를 얻기 위한 object
@@ -173,6 +199,12 @@ sap.ui.define(
           current: { showHelp: true, hasPrevious: false }, // 현재 메뉴 라우팅 정보 object, Component.js 참조
           breadcrumbs: {}, // 현재 메뉴의 breadcrumbs 정보 object, Component.js 참조
         };
+
+        if (this.bMobile) {
+          mModelData.mobileFavoriteMenus = aMobileFavoriteMenus;
+        }
+
+        return mModelData;
       },
 
       getStyleClasses(m) {
@@ -222,6 +254,10 @@ sap.ui.define(
         this.setProperty(`/menidToProperties/${sMenid}/Favor`, true);
 
         this.getProperty('/favoriteMenids').push(sMenid);
+        if (this.bMobile) {
+          this.getProperty('/mobileFavoriteMenus').push(this.getProperties(sMenid));
+        }
+
         this.refresh();
       },
 
@@ -233,6 +269,10 @@ sap.ui.define(
         this.setProperty(`/menidToProperties/${sMenid}/Favor`, false);
 
         _.pull(this.getProperty('/favoriteMenids'), sMenid);
+        if (this.bMobile) {
+          _.remove(this.getProperty('/mobileFavoriteMenus'), (mMenuProperties) => mMenuProperties.Menid === sMenid);
+        }
+
         this.refresh();
       },
 
