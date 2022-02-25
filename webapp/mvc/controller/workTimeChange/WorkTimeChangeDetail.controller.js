@@ -35,7 +35,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.workTime.WorkTimeDetail', {
+    return BaseController.extend('sap.ui.yesco.mvc.controller.workTimeChange.WorkTimeChangeDetail', {
       AttachFileAction: AttachFileAction,
       TextUtils: TextUtils,
       TableUtils: TableUtils,
@@ -55,21 +55,9 @@ sap.ui.define(
             rowCount: 1,
           },
           dialog: {
-            detail: {},
-            appTypeList: [
-              {
-                Appty: '1',
-                Apptxt: this.getBundleText('LABEL_00116'), // 확정
-              },
-              {
-                Appty: '2',
-                Apptxt: this.getBundleText('LABEL_00109'), // 변경
-              },
-              {
-                Appty: '3',
-                Apptxt: this.getBundleText('LABEL_00118'), // 취소
-              },
-            ],
+            listMode: 'MultiToggle', // None
+            list: [],
+            rowCount: 1,
           },
           busy: false,
         };
@@ -84,7 +72,7 @@ sap.ui.define(
 
         try {
           // Input Field Imited
-          oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.WORKTIME, 'OtworkChangeApply')));
+          oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.WORKTIME, 'OtWorkApply')));
           oDetailModel.setProperty('/busy', true);
 
           const sMenid = this.getCurrentMenuId();
@@ -112,7 +100,7 @@ sap.ui.define(
           } else {
             oDetailModel.setProperty('/busy', true);
 
-            const oTargetData = await Client.getEntitySet(oModel, 'OtworkChangeApply', {
+            const oTargetData = await Client.getEntitySet(oModel, 'OtWorkApply', {
               Appno: sDataKey,
             });
 
@@ -146,7 +134,7 @@ sap.ui.define(
 
       // override AttachFileCode
       getApprovalType() {
-        return 'HR17';
+        return 'HR18';
       },
 
       getCurrentLocationText(oArguments) {
@@ -461,7 +449,7 @@ sap.ui.define(
           Enduz: mDialogData.Enduz.replace(':', ''),
         };
 
-        return Client.create(oModel, 'OtworkChangeApply', mPayLoad);
+        return Client.create(oModel, 'OtWorkApply', mPayLoad);
       },
 
       checkError() {
@@ -540,7 +528,7 @@ sap.ui.define(
                 OtWorkNav: aDetailList,
               };
 
-              const oCheck = await Client.deep(oModel, 'OtworkChangeApply', oSendObject);
+              const oCheck = await Client.deep(oModel, 'OtWorkApply', oSendObject);
 
               if (!!oCheck.Retmsg) {
                 AppUtils.setAppBusy(false, this);
@@ -566,7 +554,7 @@ sap.ui.define(
 
                       oSendObject.Prcty = 'C';
 
-                      const oUrl = await Client.deep(oModel, 'OtworkChangeApply', oSendObject);
+                      const oUrl = await Client.deep(oModel, 'OtWorkApply', oSendObject);
 
                       if (oUrl.ZappUrl) {
                         window.open(oUrl.ZappUrl, '_blank');
@@ -591,7 +579,7 @@ sap.ui.define(
 
                 oSendObject.Prcty = 'C';
 
-                const oUrl = await Client.deep(oModel, 'OtworkChangeApply', oSendObject);
+                const oUrl = await Client.deep(oModel, 'OtWorkApply', oSendObject);
 
                 if (oUrl.ZappUrl) {
                   window.open(oUrl.ZappUrl, '_blank');
