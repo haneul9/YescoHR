@@ -13,32 +13,36 @@
                     <FlexItemData growFactor="1" />
                 </layoutData>
             </Text>
-            <Button visible="{hasLink}" icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" />
+            <Button visible="{hasLink}" icon="asset/image/icon_window.svg" type="Transparent" class="icon-button portlet-link-icon" />
         </HBox>
         <VBox class="portlet-body">
             <layoutData>
                 <FlexItemData growFactor="1" />
             </layoutData>
-            <HBox width="100%" justifyContent="Center">
-                <Label text="{/contents/A02/data/Title01}" />
+            <HBox width="100%" justifyContent="Center" class="mt-10-px">
+                <Label text="{/contents/A02/data/Title01}" class="font-20-px"/>
             </HBox>
-            <HBox width="100%" justifyContent="SpaceBetween">
+            <HBox width="100%" justifyContent="SpaceBetween" alignItems="Center">
                 <HBox>
-                    <ObjectStatus text="{/contents/A02/data/Title10}" state="Information" />
-                    <VBox>
-                        <ObjectStatus text="{/contents/A02/data/Cnt11}&#37;" state="Information" />
-                        <ObjectStatus text="{/contents/A02/data/Cnt12}명" state="Information" />
+                    <Text text="{/contents/A02/data/Title10}" state="Information" class="font-30-px lh-30-px color-01 pr-4-px pt-2-px" />
+                    <VBox class="h15">
+                        <Text text="{/contents/A02/data/Cnt11}&#37;" state="Information" class="font-12-px color-01"/>
+                        <Text text="{/contents/A02/data/Cnt12}명" state="Information" class="font-12-px color-01"/>
+                        <!-- <ObjectStatus text="{/contents/A02/data/Cnt11}&#37;" state="Information" class="font-12-px"/>
+                        <ObjectStatus text="{/contents/A02/data/Cnt12}명" state="Information" class="font-12-px"/> -->
                     </VBox>
                 </HBox>
                 <HBox>
-                    <Label text="{/contents/A02/data/Cnt01}명, {/contents/A02/data/Cnt02}&#37;" />
+                    <Label text="{/contents/A02/data/Cnt01}명, {/contents/A02/data/Cnt02}&#37;" class="font-27-px" />
                 </HBox>
-                <HBox>
-                    <VBox>
-                        <ObjectStatus text="{/contents/A02/data/Cnt21}&#37;" state="Error" />
-                        <ObjectStatus text="{/contents/A02/data/Cnt22}명" state="Error" />
+                <HBox alignItems="FlexStart">
+                    <VBox class="h15">
+                        <Text text="{/contents/A02/data/Cnt21}&#37;" state="Error" height="10px" class="font-12-px color-02"/>
+                        <Text text="{/contents/A02/data/Cnt22}명" state="Error" height="10px" class="font-12-px color-02"/>
+                        <!-- <ObjectStatus text="{/contents/A02/data/Cnt21}&#37;" state="Error" height="10px" class="font-12-px"/>
+                        <ObjectStatus text="{/contents/A02/data/Cnt22}명" state="Error" height="10px" class="font-12-px"/> -->
                     </VBox>
-                    <ObjectStatus text="{/contents/A02/data/Title20}" state="Error" />
+                    <Text text="{/contents/A02/data/Title20}" state="Error" class="font-30-px lh-30-px color-02 pl-4-px  pt-2-px" />
                 </HBox>
             </HBox>
             <HBox>
@@ -48,12 +52,14 @@
                 <core:HTML content='&lt;div id="employee-a02-chart-container"&gt;&lt;/div&gt;' />
             </HBox>
             <HBox justifyContent="SpaceBetween">
-                <Label text="{i18n>LABEL_28031}" />
-                <Label text="{i18n>LABEL_28032}" />
-            </HBox>
-            <HBox justifyContent="SpaceBetween">
-                <Text text="{i18n>MSG_28001}" />
-                <Text text="{i18n>MSG_28002}" />
+                <VBox justifyContent="FlexStart">
+                    <Label text="{i18n>LABEL_28031}" class="font-9-px" />
+                    <Text text="{i18n>MSG_28001}" class="font-9-px ls-small" />
+                </VBox>
+                <VBox alignItems="End" >
+                    <Label text="{i18n>LABEL_28032}" class="font-9-px text-right " />
+                    <Text text="{i18n>MSG_28001}" class="font-9-px text-right ls-small" />
+                </VBox>
             </HBox>
         </VBox>
     </VBox>

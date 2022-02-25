@@ -14,13 +14,28 @@
                     <FlexItemData growFactor="1" />
                 </layoutData>
             </Text>
-            <Button visible="{hasLink}" icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" />
+            <Button visible="{hasLink}" icon="asset/image/icon_window.svg" type="Transparent" class="icon-button portlet-link-icon" />
         </HBox>
         <HBox class="portlet-body">
             <VBox width="30%">
-                <ObjectStatus text="{/contents/A01/data/Cnt01}" state="Indication05" class="mt-15-px font-3-rem" />
-                <ObjectStatus text="{i18n>LABEL_01213} : {/contents/A01/data/Cnt02}" state="Indication05" class="mt-13-px" />
-                <ObjectStatus text="{i18n>LABEL_01212} : {/contents/A01/data/Cnt03}" state="Indication05" class="mt-7-px" />
+                <ObjectStatus text="{/contents/A01/data/Cnt01}" state="Indication05" class="mt-15-px font-3-rem color-03" active="true" press=".onPressCount">
+                    <customData>
+                        <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
+                        <core:CustomData key="Discod" value="{/contents/A01/data/Cnt01C}" />
+                    </customData>
+                </ObjectStatus>
+                <ObjectStatus text="{i18n>LABEL_01213} : {/contents/A01/data/Cnt02}" state="Indication05" class="mt-10-px color-03" active="true" press=".onPressCount">
+                    <customData>
+                        <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
+                        <core:CustomData key="Discod" value="{/contents/A01/data/Cnt02C}" />
+                    </customData>
+                </ObjectStatus>
+                <ObjectStatus text="{i18n>LABEL_01212} : {/contents/A01/data/Cnt03}" state="Indication05" class="mt-5-px color-03" active="true" press=".onPressCount">
+                    <customData>
+                        <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
+                        <core:CustomData key="Discod" value="{/contents/A01/data/Cnt03C}" />
+                    </customData>
+                </ObjectStatus>
             </VBox>
             <VBox class="ml-5-px">
                 <layoutData>
@@ -43,7 +58,7 @@
                         </layoutData>
                     </Text>
                 </HBox>
-                <HBox width="100%" alignItems="Center" class="border-bottom">
+                <HBox width="100%" height="33px" alignItems="Center" class="border-bottom">
                     <layoutData>
                         <FlexItemData growFactor="1" />
                     </layoutData>
@@ -68,7 +83,7 @@
                         </layoutData>
                     </Text>
                 </HBox>
-                <HBox width="100%" alignItems="Center" class="border-bottom">
+                <HBox width="100%" height="33px" alignItems="Center" class="border-bottom">
                     <layoutData>
                         <FlexItemData growFactor="1" />
                     </layoutData>
@@ -82,7 +97,7 @@
                             <FlexItemData baseSize="20%" />
                         </layoutData>
                     </Text>
-                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt51', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressACount">
+                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt51', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount">
                         <customData>
                             <!-- 입사자 직원 -->
                             <core:CustomData key="table-key" value="A1" writeToDom="true" />
@@ -91,7 +106,7 @@
                             <FlexItemData baseSize="20%" styleClass="employee-count-blue" />
                         </layoutData>
                     </ObjectStatus>
-                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt52', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressACount">
+                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt52', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount">
                         <customData>
                             <!-- 입사자 임원 -->
                             <core:CustomData key="table-key" value="A2" writeToDom="true" />
@@ -101,7 +116,7 @@
                         </layoutData>
                     </ObjectStatus>
                 </HBox>
-                <HBox width="100%" alignItems="Center" class="border-bottom">
+                <HBox width="100%" height="33px" alignItems="Center" class="border-bottom">
                     <layoutData>
                         <FlexItemData growFactor="1" />
                     </layoutData>
@@ -115,7 +130,7 @@
                             <FlexItemData baseSize="20%" />
                         </layoutData>
                     </Text>
-                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt61', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressACount">
+                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt61', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount">
                         <customData>
                             <!-- 퇴사자 직원 -->
                             <core:CustomData key="table-key" value="B1" writeToDom="true" />
@@ -124,7 +139,7 @@
                             <FlexItemData baseSize="20%" styleClass="employee-count-yellow" />
                         </layoutData>
                     </ObjectStatus>
-                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt62', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressACount">
+                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt62', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount">
                         <customData>
                             <!-- 퇴사자 임원 -->
                             <core:CustomData key="table-key" value="B2" writeToDom="true" />
@@ -134,7 +149,7 @@
                         </layoutData>
                     </ObjectStatus>
                 </HBox>
-                <HBox width="100%" alignItems="Center" class="border-bottom">
+                <HBox width="100%" height="33px" alignItems="Center" class="border-bottom">
                     <layoutData>
                         <FlexItemData growFactor="1" />
                     </layoutData>
