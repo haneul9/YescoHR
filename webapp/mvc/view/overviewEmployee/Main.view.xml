@@ -29,18 +29,20 @@
           </ComboBox>
           <Button text="{i18n>LABEL_00100}" icon="asset/image/icon_search03.png" press=".onPressSearch"/>
         </HBox>
-        <VBox justifyContent="SpaceBetween" alignItems="Center">
-          <HBox>
+        <VBox justifyContent="Center" alignItems="Center">
+        <HBox>
+          <HBox justifyContent="SpaceBetween" alignItems="Center">
             <Image src="asset/image/icon_human_green.svg" width="12px" />
-            <Text text="{i18n>LABEL_28003}" class="pl-4-px font-11-px" />
+            <Text text="{i18n>LABEL_28003}" class="pl-4-px font-11-px display-flex" />
           </HBox>
-          <HBox>
+          <HBox class="ml-16-px">
             <Image src="asset/image/icon_human_orange.svg" width="12px" />
-            <Text text="{i18n>LABEL_28004}" class="pl-4-px font-11-px" />
+            <Text text="{i18n>LABEL_28004}" class="pl-4-px font-11-px display-flex" />
+          </HBox>
           </HBox>
         </VBox>
       </HBox>
-      <grid:CSSGrid gridGap="20px" gridTemplateRows="repeat(3, 270px)" gridTemplateColumns="repeat(4, 1fr)" class=" sapUiSmallMarginTop">
+      <grid:CSSGrid gridGap="20px" gridTemplateRows="repeat(3, 230px)" gridTemplateColumns="repeat(4, 1fr)" class="mobile-grid-flow-column sapUiSmallMarginTop">
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A01" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A02" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A03" type="XML" />

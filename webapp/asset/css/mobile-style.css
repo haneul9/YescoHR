@@ -210,3 +210,5 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMRPCalendar {top:calc(50% - 22
 .notification-wrapper > .sapMFlexItem:last-child {top:0}
 .sapUiSizeCompact.notification-popover.sapMPopoverWithBar.sapMPopoverWithFooter:not(.sapMRPCalendar)>.sapMPopoverCont {padding:20px 0}
 .sapUiSizeCompact.notification-popover .sapMBtn.toggle-icon {margin-right:0; margin-left:15px}
+
+.sapUiMedia-Std-Phone .mobile-grid-flow-column {display: grid;grid-template-columns: 1fr!important;grid-template-rows: repeat(11, 230px)!important; grid-gap: 20px 0!important; grid-auto-flow: column!important;}
