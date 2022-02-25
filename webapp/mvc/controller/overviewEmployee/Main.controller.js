@@ -76,6 +76,7 @@ sap.ui.define(
             },
             A07: {
               busy: false,
+              list: [],
             },
             A08: {
               busy: false,
@@ -348,12 +349,18 @@ sap.ui.define(
             break;
           case 7:
             const mChartHSetting = ChartsSetting.CHART.A07;
+            const aHcolors = ['#8FABE8', '#81DAEA', '#77D561', '#FFE479', '#FC564F'];
+
+            oViewModel.setProperty(
+              '/contents/A07/list',
+              _.map(data, (o, i) => ({ ...o, Type: `type0${++i}` }))
+            );
 
             _.chain(mChartHSetting)
-              // .set(['data', 'chart', 'yAxisMaxValue'], '120')
+              .set(['data', 'chart', 'paletteColors'], _.chain(aHcolors).take(data.length).join(',').value())
               .set(
                 ['data', 'data'],
-                _.map(data, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#8FABE8' }))
+                _.map(data, (o) => ({ label: o.Ttltxt, value: o.Cnt01 }))
               )
               .commit();
 
@@ -438,22 +445,22 @@ sap.ui.define(
             break;
           case 10:
             const mChartKSetting = ChartsSetting.CHART.A11;
-
+            debugger;
             _.chain(mChartKSetting)
               // .set(['data', 'chart', 'yAxisMaxValue'], '60')
               .set(
-                ['data', 'categories'],
+                ['data', 'categories', 0, 'category'],
                 _.map(data, (o) => ({ label: o.Ttltxt }))
               )
               .set(['data', 'dataset', 0], {
                 seriesname: '팀원',
                 color: '#8FABE8',
-                data: _.map(data, (o) => ({ value: o.Rte01 })),
+                data: _.map(data, (o) => ({ value: o.Cnt01 })),
               })
               .set(['data', 'dataset', 1], {
                 seriesname: '팀장',
                 color: '#FFE479',
-                data: _.map(data, (o) => ({ value: o.Rte02 })),
+                data: _.map(data, (o) => ({ value: o.Cnt02 })),
               })
               .commit();
 
