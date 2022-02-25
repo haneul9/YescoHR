@@ -250,8 +250,8 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 }
 
 /* 공통 Scroll Bar */
-html:not(.sapUiNativeScrollbars) ::-webkit-scrollbar {width:5px !important; background:none !important}
-html:not(.sapUiNativeScrollbars) ::-webkit-scrollbar-thumb {border-radius:5px !important; background-color:#c1c3c8 !important}
+html:not(.sapUiNativeScrollbars) :not(.mobile-portlets-grid)::-webkit-scrollbar {width:5px !important; background:none !important}
+html:not(.sapUiNativeScrollbars) :not(.mobile-portlets-grid)::-webkit-scrollbar-thumb {border-radius:5px !important; background-color:#c1c3c8 !important}
 
 /* 공통 Margin, Padding */
 /* .sapMTextArea > div {padding:0.1875rem}
@@ -1558,7 +1558,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 
 
 /* 알림센터 */
-.sapUiSizeCompact.notification-popover .sapMPopoverHeader .sapMTitle {font-size:24px}
+.sapUiSizeCompact.notification-popover .sapMPopoverHeader .sapMTitle {vertical-align:middle; font-size:24px}
 .sapUiSizeCompact.notification-popover .sapMPopoverHeader .sapMLabel {font-weight:400}
 .sapUiSizeCompact.notification-popover .sapMSwt {margin-right:5px; margin-left:9px; width:62px; height:30px}
 .sapUiSizeCompact.notification-popover .sapMSwtHandle {width:24px; height:24px}

@@ -2,7 +2,7 @@
   xmlns="sap.m"
   xmlns:f="sap.f"
   xmlns:mvc="sap.ui.core.mvc">
-  <ScrollContainer height="100%" vertical="true">
+  <ScrollContainer height="100%" vertical="true" class="mobile-portlets-grid">
     <!-- <ToggleButton id="reveal-grid-button" text="Reveal Grid" press="onRevealGrid" class="sapUiSmallMarginBegin sapUiSmallMarginTop sapUiTinyMarginBottom" /> -->
     <HBox justifyContent="Center">
       <f:GridContainer id="portlets-grid" class="sapUiSmallMarginTopBottom mx-auto" snapToRow="true">

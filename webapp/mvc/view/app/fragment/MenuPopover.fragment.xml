@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core">
-  <Popover title="{i18n>LABEL_01008}" placement="Top" horizontalScrolling="false" class="full-popover menu-popover" busy="{appModel>/isAppBusy}" busyIndicatorDelay="0">
+  <Popover title="{i18n>LABEL_01008}" placement="Top" horizontalScrolling="false" verticalScrolling="false" class="full-popover menu-popover" busy="{appModel>/isAppBusy}" busyIndicatorDelay="0">
     <content>
       <HBox width="100%" class="menu-wrap">
         <IconTabBar items="{tree}" expandable="false">
