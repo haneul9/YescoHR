@@ -13,26 +13,26 @@
                     <FlexItemData growFactor="1" />
                 </layoutData>
             </Text>
-            <Button visible="{hasLink}" icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" />
+            <Button visible="{hasLink}" icon="asset/image/icon_window.svg" type="Transparent" class="icon-button portlet-link-icon" />
         </HBox>
-        <VBox>
+        <VBox class="portlet-body">
             <layoutData>
                 <FlexItemData growFactor="1" />
             </layoutData>
-            <HBox width="100%" justifyContent="SpaceBetween">
+            <HBox width="100%" justifyContent="SpaceBetween" class="mt-30-px">
                 <HBox>
-                    <ObjectStatus icon="sap-icon://person-placeholder" state="Information" />
+                    <Image src="asset/image/icon_male.svg" />
                     <VBox>
-                        <ObjectStatus text="{/contents/A06/data/Cnt11}&#37;" state="Information" />
-                        <ObjectStatus text="{/contents/A06/data/Cnt12}명" state="Information" />
+                        <Text text="{/contents/A06/data/Cnt11}&#37;" class="color-01 font-20-px" />
+                        <Text text="{/contents/A06/data/Cnt12}명" class="color-01" />
                     </VBox>
                 </HBox>
                 <HBox>
-                    <VBox>
-                        <ObjectStatus text="{/contents/A06/data/Cnt21}&#37;" state="Error" />
-                        <ObjectStatus text="{/contents/A06/data/Cnt22}명" state="Error" />
+                    <VBox alignItems="End">
+                        <Text text="{/contents/A06/data/Cnt21}&#37;" class="color-02 font-20-px" />
+                        <Text text="{/contents/A06/data/Cnt22}명" class="color-02" />
                     </VBox>
-                    <ObjectStatus icon="sap-icon://person-placeholder" state="Error" />
+                    <Image src="asset/image/icon_female.svg" />
                 </HBox>
             </HBox>
             <HBox>

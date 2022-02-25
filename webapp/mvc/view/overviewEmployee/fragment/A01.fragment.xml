@@ -14,13 +14,13 @@
                     <FlexItemData growFactor="1" />
                 </layoutData>
             </Text>
-            <Button visible="{hasLink}" icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" />
+            <Button visible="{hasLink}" icon="asset/image/icon_window.svg" type="Transparent" class="icon-button portlet-link-icon" />
         </HBox>
         <HBox class="portlet-body">
             <VBox width="30%">
-                <ObjectStatus text="{/contents/A01/data/Cnt01}" state="Indication05" class="mt-15-px font-3-rem" />
-                <ObjectStatus text="{i18n>LABEL_01213} : {/contents/A01/data/Cnt02}" state="Indication05" class="mt-13-px" />
-                <ObjectStatus text="{i18n>LABEL_01212} : {/contents/A01/data/Cnt03}" state="Indication05" class="mt-7-px" />
+                <Text text="{/contents/A01/data/Cnt01}" class="mt-15-px font-3-rem color-03" />
+                <Text text="{i18n>LABEL_01213} : {/contents/A01/data/Cnt02}" class="mt-10-px color-03" />
+                <Text text="{i18n>LABEL_01212} : {/contents/A01/data/Cnt03}" class="mt-5-px color-03" />
             </VBox>
             <VBox class="ml-5-px">
                 <layoutData>
@@ -43,7 +43,7 @@
                         </layoutData>
                     </Text>
                 </HBox>
-                <HBox width="100%" alignItems="Center" class="border-bottom">
+                <HBox width="100%" height="33px" alignItems="Center" class="border-bottom">
                     <layoutData>
                         <FlexItemData growFactor="1" />
                     </layoutData>
@@ -68,7 +68,7 @@
                         </layoutData>
                     </Text>
                 </HBox>
-                <HBox width="100%" alignItems="Center" class="border-bottom">
+                <HBox width="100%" height="33px" alignItems="Center" class="border-bottom">
                     <layoutData>
                         <FlexItemData growFactor="1" />
                     </layoutData>
@@ -101,7 +101,7 @@
                         </layoutData>
                     </ObjectStatus>
                 </HBox>
-                <HBox width="100%" alignItems="Center" class="border-bottom">
+                <HBox width="100%" height="33px" alignItems="Center" class="border-bottom">
                     <layoutData>
                         <FlexItemData growFactor="1" />
                     </layoutData>
@@ -134,7 +134,7 @@
                         </layoutData>
                     </ObjectStatus>
                 </HBox>
-                <HBox width="100%" alignItems="Center" class="border-bottom">
+                <HBox width="100%" height="33px" alignItems="Center" class="border-bottom">
                     <layoutData>
                         <FlexItemData growFactor="1" />
                     </layoutData>
