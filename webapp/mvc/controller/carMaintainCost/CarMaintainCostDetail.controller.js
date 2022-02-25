@@ -148,9 +148,9 @@ sap.ui.define(
 
             if (!!oTargetData.Pernr) {
               oTargetData.Cardt = sDate;
-              oTargetData.Cc = _.trimStart(oTargetData.Cc, '0', '');
-              oTargetData.Caryr = _.trimStart(oTargetData.Caryr, '0', '');
-              oTargetData.Id = _.trimStart(oTargetData.Id, '0', '');
+              oTargetData.Cc = oTargetData.Cc.replace(/^0+/, '0');
+              oTargetData.Caryr = oTargetData.Caryr.replace(/^0+/, '0');
+              oTargetData.Id = oTargetData.Id.replace(/^0+/, '0');
 
               oDetailModel.setProperty('/FormData', oTargetData);
               oDetailModel.setProperty('/FormData/Ename', sEname);
@@ -218,7 +218,7 @@ sap.ui.define(
       onNumberTxt(oEvent) {
         const oEventSource = oEvent.getSource();
         const sPath = oEventSource.getBinding('value').getPath();
-        const sValue = oEvent.getParameter('value').trim().replace(/[^\d]/g, '');
+        const sValue = _.trimStart(oEvent.getParameter('value'), '0').replace(/[^\d]/g, '');
 
         oEventSource.setValue(sValue);
         oEventSource.getModel().setProperty(sPath, sValue);
@@ -384,6 +384,7 @@ sap.ui.define(
 
         return false;
       },
+
       // 재작성
       onRewriteBtn() {
         const oDetailModel = this.getViewModel();
@@ -425,11 +426,6 @@ sap.ui.define(
 
               const mFormData = oDetailModel.getProperty('/FormData');
 
-              // FileUpload
-              if (!!AttachFileAction.getFileCount.call(this)) {
-                await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
-              }
-
               const oModel = this.getModel(ServiceNames.BENEFIT);
               let oSendObject = {
                 ...mFormData,
@@ -438,6 +434,11 @@ sap.ui.define(
               };
 
               await Client.create(oModel, 'MaintenanceCarAppl', oSendObject);
+
+              // FileUpload
+              if (!!AttachFileAction.getFileCount.call(this)) {
+                await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
+              }
 
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103')); // {저장}되었습니다.
             } catch (oError) {
