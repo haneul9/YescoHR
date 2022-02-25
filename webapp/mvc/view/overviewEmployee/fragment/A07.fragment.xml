@@ -27,14 +27,18 @@
                 </core:HTML>
             </VBox>
             <VBox width="27%" items="{ path: '/contents/A07/data', templateShareable: false }" class="legend-wrap">
-                <HBox>
-                    <Label text="{Ttltxt} : " class="legend">
+                <custom:HBox class="active-link" click=".onPressCount">
+                    <custom:customData>
+                        <core:CustomData key="Headty" value="{/contents/A07/Headty}" />
+                        <core:CustomData key="Discod" value="{Cod01}" />
+                    </custom:customData>
+                    <Label text="{Ttltxt} :" class="legend">
                         <customData>
                             <core:CustomData key="legend" value="{Type}" writeToDom="true" />
                         </customData>
                     </Label>
-                    <Text text="{Cnt01}" />
-                </HBox>
+                    <Text text=" {Cnt01}" />
+                </custom:HBox>
             </VBox>
         </HBox>
     </VBox>

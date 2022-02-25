@@ -61,31 +61,31 @@
                                 <m:Text text="{Pgtxt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
-                        <Column width="120px" filterProperty="Jobgrtx" sortProperty="Jobgrtx">
+                        <Column width="110px" filterProperty="Jobgrtx" sortProperty="Jobgrtx">
                             <m:Label text="{i18n>LABEL_00218}"/>
                             <template>
                                 <m:Text text="{Jobgrtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
-                        <Column width="120px" filterProperty="Stelltx" sortProperty="Stelltx">
+                        <Column width="110px" filterProperty="Stelltx" sortProperty="Stelltx">
                             <m:Label text="{i18n>LABEL_00222}"/>
                             <template>
                                 <m:Text text="{Stelltx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
-                        <Column width="80px" filterProperty="Geschtx" sortProperty="Geschtx">
+                        <Column width="60px" filterProperty="Geschtx" sortProperty="Geschtx">
                             <m:Label text="{i18n>LABEL_00331}"/>
                             <template>
                                 <m:Text text="{Geschtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
-                        <Column width="80px" filterProperty="Ageyy" sortProperty="Ageyy">
+                        <Column width="60px" filterProperty="Ageyy" sortProperty="Ageyy">
                             <m:Label text="{i18n>LABEL_00332}"/>
                             <template>
                                 <m:Text text="{ path: 'Ageyy', type: 'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
-                        <Column width="200px" filterProperty="Gbdat" sortProperty="Gbdat">
+                        <Column width="110px" filterProperty="Gbdat" sortProperty="Gbdat">
                             <m:Label text="{i18n>LABEL_00333}"/>
                             <template>
                                 <m:Text text="{path: 'Gbdat', type: 'sap.ui.yesco.mvc.model.type.Date'}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
@@ -97,7 +97,7 @@
                                 <m:Text text="{Genty}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
-                        <Column width="200px" filterProperty="Entda" sortProperty="Entda">
+                        <Column width="110px" filterProperty="Entda" sortProperty="Entda">
                             <m:Label text="{i18n>LABEL_00235}"/>
                             <template>
                                 <m:Text text="{path: 'Entda', type: 'sap.ui.yesco.mvc.model.type.Date'}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
@@ -115,13 +115,13 @@
                                 <m:Text text="{path: 'Svryy', type: 'sap.ui.yesco.mvc.model.type.Decimal'}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
-                        <Column width="200px" filterProperty="Loada" sortProperty="Loada">
+                        <Column width="110px" filterProperty="Loada" sortProperty="Loada">
                             <m:Label text="{i18n>LABEL_00335}"/>
                             <template>
                                 <m:Text text="{path: 'Loada', type: 'sap.ui.yesco.mvc.model.type.Date'}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
-                        <Column width="200px" filterProperty="Reida" sortProperty="Reida">
+                        <Column width="110px" filterProperty="Reida" sortProperty="Reida">
                             <m:Label text="{i18n>LABEL_00336}"/>
                             <template>
                                 <m:Text text="{path: 'Reida', type: 'sap.ui.yesco.mvc.model.type.Date'}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
@@ -133,7 +133,7 @@
                                 <m:Text text="{Atx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
-                        <Column width="200px" filterProperty="Retda" sortProperty="Retda">
+                        <Column width="110px" filterProperty="Retda" sortProperty="Retda">
                             <m:Label text="{i18n>LABEL_00236}"/>
                             <template>
                                 <m:Text text="{path: 'Retda', type: 'sap.ui.yesco.mvc.model.type.Date'}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />

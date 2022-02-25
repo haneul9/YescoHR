@@ -19,31 +19,43 @@
             <layoutData>
                 <FlexItemData growFactor="1" />
             </layoutData>
-            <HBox width="100%" justifyContent="Center" class="mt-6-px">
+            <custom:HBox width="100%" justifyContent="Center" class="active-link mt-6-px" click=".onPressCount">
+                <custom:customData>
+                    <core:CustomData key="Headty" value="{/contents/A02/Headty}" />
+                    <core:CustomData key="Discod" value="{/contents/A02/data/Cod01}" />
+                </custom:customData>
                 <Label text="{/contents/A02/data/Title01}" class="font-20-px"/>
-            </HBox>
+            </custom:HBox>
             <HBox width="100%" justifyContent="SpaceBetween" alignItems="Center">
-                <HBox>
+                <custom:HBox class="active-link" click=".onPressCount">
+                    <custom:customData>
+                        <core:CustomData key="Headty" value="{/contents/A02/Headty}" />
+                        <core:CustomData key="Discod" value="{/contents/A02/data/Cod02}" />
+                    </custom:customData>
                     <Text text="{/contents/A02/data/Title10}" class="font-30-px lh-30-px color-01 pr-4-px pt-2-px" />
                     <VBox class="h15">
                         <Text text="{/contents/A02/data/Cnt11}&#37;" class="font-12-px color-01"/>
                         <Text text="{/contents/A02/data/Cnt12}명" class="font-12-px color-01"/>
-                        <!-- <ObjectStatus text="{/contents/A02/data/Cnt11}&#37;" state="Information" class="font-12-px"/>
-                        <ObjectStatus text="{/contents/A02/data/Cnt12}명" state="Information" class="font-12-px"/> -->
                     </VBox>
-                </HBox>
-                <HBox>
+                </custom:HBox>
+                <custom:HBox class="active-link" click=".onPressCount">
+                    <custom:customData>
+                        <core:CustomData key="Headty" value="{/contents/A02/Headty}" />
+                        <core:CustomData key="Discod" value="{/contents/A02/data/Cod01}" />
+                    </custom:customData>
                     <Label text="{/contents/A02/data/Cnt01}명, {/contents/A02/data/Cnt02}&#37;" class="font-27-px" />
-                </HBox>
-                <HBox>
+                </custom:HBox>
+                <custom:HBox class="active-link" click=".onPressCount">
+                    <custom:customData>
+                        <core:CustomData key="Headty" value="{/contents/A02/Headty}" />
+                        <core:CustomData key="Discod" value="{/contents/A02/data/Cod03}" />
+                    </custom:customData>
                     <VBox class="h15">
                         <Text text="{/contents/A02/data/Cnt21}&#37;" class="font-12-px color-02"/>
                         <Text text="{/contents/A02/data/Cnt22}명" class="font-12-px color-02"/>
-                        <!-- <ObjectStatus text="{/contents/A02/data/Cnt21}&#37;" state="Error" height="10px" class="font-12-px"/>
-                        <ObjectStatus text="{/contents/A02/data/Cnt22}명" state="Error" height="10px" class="font-12-px"/> -->
                     </VBox>
                     <Text text="{/contents/A02/data/Title20}" class="font-30-px lh-30-px color-02 pl-4-px  pt-2-px" />
-                </HBox>
+                </custom:HBox>
             </HBox>
             <HBox>
                 <layoutData>

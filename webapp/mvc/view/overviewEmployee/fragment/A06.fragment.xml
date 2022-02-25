@@ -20,20 +20,28 @@
                 <FlexItemData growFactor="1" />
             </layoutData>
             <HBox width="100%" justifyContent="SpaceBetween" class="mt-30-px">
-                <HBox>
+                <custom:HBox class="active-link" click=".onPressCount">
+                    <custom:customData>
+                        <core:CustomData key="Headty" value="{/contents/A06/Headty}" />
+                        <core:CustomData key="Discod" value="{/contents/A06/data/Cod01}" />
+                    </custom:customData>
                     <Image src="asset/image/icon_male.svg" />
                     <VBox>
                         <Text text="{/contents/A06/data/Cnt11}&#37;" class="color-01 font-20-px" />
                         <Text text="{/contents/A06/data/Cnt12}명" class="color-01" />
                     </VBox>
-                </HBox>
-                <HBox>
+                </custom:HBox>
+                <custom:HBox class="active-link" click=".onPressCount">
+                    <custom:customData>
+                        <core:CustomData key="Headty" value="{/contents/A06/Headty}" />
+                        <core:CustomData key="Discod" value="{/contents/A06/data/Cod02}" />
+                    </custom:customData>
                     <VBox alignItems="End">
                         <Text text="{/contents/A06/data/Cnt21}&#37;" class="color-02 font-20-px" />
                         <Text text="{/contents/A06/data/Cnt22}명" class="color-02" />
                     </VBox>
                     <Image src="asset/image/icon_female.svg" />
-                </HBox>
+                </custom:HBox>
             </HBox>
             <HBox>
                 <layoutData>

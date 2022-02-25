@@ -104,7 +104,7 @@ sap.ui.define(
               // .set(['data', 'chart', 'yAxisMaxValue'], '200')
               .set(
                 ['data', 'data'],
-                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB' }))
+                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callDetail-${mChartInfo.Headty},${o.Cod01}` }))
               )
               .commit();
 
@@ -149,7 +149,7 @@ sap.ui.define(
               // .set(['data', 'chart', 'yAxisMaxValue'], '120')
               .set(
                 ['data', 'data'],
-                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB' }))
+                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callDetail-${mChartInfo.Headty},${o.Cod01}` }))
               )
               .commit();
 
@@ -178,12 +178,12 @@ sap.ui.define(
               .set(['data', 'dataset', 0], {
                 seriesname: this.getBundleText('LABEL_28025'), // 팀원
                 color: '#7BB4EB',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01 })),
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01, link: `j-callDetail-${mChartInfo.Headty},A,${o.Ttltxt}` })),
               })
               .set(['data', 'dataset', 1], {
                 seriesname: this.getBundleText('LABEL_28026'), // 팀장
                 color: '#FFE479',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02 })),
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02, link: `j-callDetail-${mChartInfo.Headty},BA,${o.Ttltxt}` })),
               })
               .commit();
 
@@ -221,29 +221,45 @@ sap.ui.define(
       formatDetailRowHighlight(sValue) {
         switch (_.toNumber(sValue)) {
           case 1:
-            return sap.ui.core.IndicationColor.Indication01;
+            return sap.ui.core.IndicationColor.Indication03;
           case 2:
             return sap.ui.core.IndicationColor.Indication02;
           case 3:
-            return sap.ui.core.IndicationColor.Indication03;
+            return sap.ui.core.IndicationColor.Indication04;
           default:
             return null;
         }
       },
 
-      async openDetailDialog() {
-        this.getViewModel().setProperty('/dialog/busy', true);
+      async openDetailDialog(mPayload) {
+        const oViewModel = this.getViewModel();
 
-        if (!this.oDetailDialog) {
-          this.oDetailDialog = await Fragment.load({
-            name: 'sap.ui.yesco.mvc.view.overviewEmployee.fragment.DialogDetail',
-            controller: this,
+        oViewModel.setProperty('/dialog/busy', true);
+
+        try {
+          if (!this.oDetailDialog) {
+            this.oDetailDialog = await Fragment.load({
+              name: 'sap.ui.yesco.mvc.view.overviewEmployee.fragment.DialogDetail',
+              controller: this,
+            });
+
+            this.getView().addDependent(this.oDetailDialog);
+          }
+
+          this.oDetailDialog.open();
+
+          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'HeadCountDetail', { Zyear: '2022', ...mPayload });
+
+          oViewModel.setProperty('/dialog/rowCount', Math.min(aDetailData.length, 12));
+          oViewModel.setProperty('/dialog/list', aDetailData);
+          oViewModel.setProperty('/dialog/busy', false);
+        } catch (oError) {
+          this.debug('Controller > m/overviewEmployee Main > openDetailDialog Error', oError);
+
+          AppUtils.handleError(oError, {
+            onClose: () => this.oDetailDialog.close(),
           });
-
-          this.getView().addDependent(this.oDetailDialog);
         }
-
-        this.oDetailDialog.open();
       },
 
       /*****************************************************************
@@ -251,22 +267,11 @@ sap.ui.define(
        *****************************************************************/
       onPressSearch() {},
 
-      async onPressCount(oEvent) {
-        const oViewModel = this.getViewModel();
-
-        try {
-          const mCustomData = oEvent.getSource().data();
-
-          await this.openDetailDialog();
-          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'HeadCountDetail', { ...mCustomData, Zyear: '2022' });
-
-          oViewModel.setProperty('/dialog/rowCount', Math.min(aDetailData.length, 12));
-          oViewModel.setProperty('/dialog/list', aDetailData);
-          oViewModel.setProperty('/dialog/busy', false);
-        } catch (oError) {
-          this.debug('Controller > m/overviewEmployee Main > onPressCount Error', oError);
-
-          AppUtils.handleError(oError);
+      onPressCount(oEvent) {
+        if (oEvent['getSource'] instanceof Function) {
+          this.openDetailDialog(oEvent.getSource().data());
+        } else {
+          this.openDetailDialog(sap.ui.getCore().byId($(oEvent.currentTarget).attr('id')).data());
         }
       },
 
@@ -280,3 +285,12 @@ sap.ui.define(
     });
   }
 );
+
+// eslint-disable-next-line no-unused-vars
+function callDetail(sArgs) {
+  const oController = sap.ui.getCore().byId('container-ehr---m_overviewEmployee').getController();
+  const aArgs = _.split(sArgs, ',');
+  const mPayload = _.size(aArgs) === 3 ? _.zipObject(['Headty', 'Discod', 'Zyear'], aArgs) : _.zipObject(['Headty', 'Discod'], aArgs);
+
+  oController.openDetailDialog(mPayload);
+}
