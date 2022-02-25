@@ -69,6 +69,8 @@ sap.ui.define(
         const vDataObject = oViewModel.getProperty(`/contents/${mChartInfo.Target}/data`);
         const mChartSetting = _.get(ChartsSetting.CHART, mChartInfo.Target);
 
+        oViewModel.setProperty(`/contents/${mChartInfo.Target}/Headty`, mChartInfo.Headty);
+
         if (!_.isUndefined(vDataObject)) {
           if (_.isArray(vDataObject)) {
             oViewModel.setProperty(
@@ -185,17 +187,26 @@ sap.ui.define(
       },
 
       callFusionChart(mChartSetting) {
-        FusionCharts.ready(() => {
-          new FusionCharts({
-            id: mChartSetting.id,
-            type: mChartSetting.type,
-            renderAt: `${mChartSetting.id}-container`,
-            width: '100%',
-            height: '100%',
-            dataFormat: 'json',
-            dataSource: mChartSetting.data,
-          }).render();
-        });
+        if (_.isEmpty(mChartSetting)) return;
+
+        if (!FusionCharts(mChartSetting.id)) {
+          FusionCharts.ready(() => {
+            new FusionCharts({
+              id: mChartSetting.id,
+              type: mChartSetting.type,
+              renderAt: `${mChartSetting.id}-container`,
+              width: '100%',
+              height: '100%',
+              dataFormat: 'json',
+              dataSource: mChartSetting.data,
+            }).render();
+          });
+        } else {
+          const oChart = FusionCharts(mChartSetting.id);
+
+          oChart.setChartData(mChartSetting.data, 'json');
+          setTimeout(() => oChart.render(), 200);
+        }
       },
 
       /*****************************************************************
@@ -203,7 +214,13 @@ sap.ui.define(
        *****************************************************************/
       onPressSearch() {},
 
-      onPressACount() {},
+      async onPressCount(oEvent) {
+        const mCustomData = oEvent.getSource().data();
+
+        const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'HeadCountDetail', { ...mCustomData, Zyear: '2022' });
+
+        console.log(aDetailData);
+      },
 
       /*****************************************************************
        * ! Call oData
