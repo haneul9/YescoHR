@@ -445,7 +445,6 @@ sap.ui.define(
             break;
           case 10:
             const mChartKSetting = ChartsSetting.CHART.A11;
-            debugger;
             _.chain(mChartKSetting)
               // .set(['data', 'chart', 'yAxisMaxValue'], '60')
               .set(
