@@ -55,9 +55,20 @@ sap.ui.define(
             rowCount: 1,
           },
           dialog: {
-            listMode: 'MultiToggle', // None
-            list: [],
-            rowCount: 1,
+            appTypeList: [
+              {
+                Appty: '1',
+                Apptxt: this.getBundleText('LABEL_00116'), // 확정
+              },
+              {
+                Appty: '2',
+                Apptxt: this.getBundleText('LABEL_00109'), // 변경
+              },
+              {
+                Appty: '3',
+                Apptxt: this.getBundleText('LABEL_00118'), // 취소
+              },
+            ],
           },
           busy: false,
         };
@@ -72,25 +83,19 @@ sap.ui.define(
 
         try {
           // Input Field Imited
-          oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.WORKTIME, 'OtWorkApply')));
+          oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.WORKTIME, 'OtworkChangeApply')));
           oDetailModel.setProperty('/busy', true);
-
-          const sMenid = this.getCurrentMenuId();
-          const sPernr = this.getAppointeeProperty('Pernr');
-          // 대상자리스트
-          const aOtpList = await Client.getEntitySet(oModel, 'OtpernrList', {
-            Menid: sMenid,
-            Datum: new Date(),
-            Pernr: sPernr,
-          });
-
-          oDetailModel.setProperty(
-            '/employees',
-            aOtpList.map((o) => ({ ...o, Pernr: _.trimStart(o.Pernr, '0') }))
-          );
 
           if (sDataKey === 'N' || !sDataKey) {
             const mSessionData = this.getSessionData();
+            const sPernr = this.getAppointeeProperty('Pernr');
+            // 대상자리스트
+            const aOtpList = await Client.deep(oModel, 'OtworkChangeApply', {
+              Prcty: 'D',
+              Datum: new Date(),
+              Pernr: sPernr,
+              OtworkChangeNav: [],
+            });
 
             oDetailModel.setProperty('/ApplyInfo', {
               Apename: mSessionData.Ename,
@@ -100,7 +105,7 @@ sap.ui.define(
           } else {
             oDetailModel.setProperty('/busy', true);
 
-            const oTargetData = await Client.getEntitySet(oModel, 'OtWorkApply', {
+            const oTargetData = await Client.getEntitySet(oModel, 'OtworkChangeApply', {
               Appno: sDataKey,
             });
 
@@ -134,7 +139,7 @@ sap.ui.define(
 
       // override AttachFileCode
       getApprovalType() {
-        return 'HR18';
+        return 'HR17';
       },
 
       getCurrentLocationText(oArguments) {
@@ -310,12 +315,6 @@ sap.ui.define(
         }
       },
 
-      // DialogAfterClose
-      onDialogAfClose() {
-        this.byId('dialogTable').clearSelection();
-        this.getViewModel().setProperty('/DeletedRows', []);
-      },
-
       // Dialog 저장
       onDialogSavBtn() {
         if (this.checkError()) {
@@ -449,7 +448,7 @@ sap.ui.define(
           Enduz: mDialogData.Enduz.replace(':', ''),
         };
 
-        return Client.create(oModel, 'OtWorkApply', mPayLoad);
+        return Client.create(oModel, 'OtworkChangeApply', mPayLoad);
       },
 
       checkError() {
@@ -528,7 +527,7 @@ sap.ui.define(
                 OtWorkNav: aDetailList,
               };
 
-              const oCheck = await Client.deep(oModel, 'OtWorkApply', oSendObject);
+              const oCheck = await Client.deep(oModel, 'OtworkChangeApply', oSendObject);
 
               if (!!oCheck.Retmsg) {
                 AppUtils.setAppBusy(false, this);
@@ -554,7 +553,7 @@ sap.ui.define(
 
                       oSendObject.Prcty = 'C';
 
-                      const oUrl = await Client.deep(oModel, 'OtWorkApply', oSendObject);
+                      const oUrl = await Client.deep(oModel, 'OtworkChangeApply', oSendObject);
 
                       if (oUrl.ZappUrl) {
                         window.open(oUrl.ZappUrl, '_blank');
@@ -579,7 +578,7 @@ sap.ui.define(
 
                 oSendObject.Prcty = 'C';
 
-                const oUrl = await Client.deep(oModel, 'OtWorkApply', oSendObject);
+                const oUrl = await Client.deep(oModel, 'OtworkChangeApply', oSendObject);
 
                 if (oUrl.ZappUrl) {
                   window.open(oUrl.ZappUrl, '_blank');
