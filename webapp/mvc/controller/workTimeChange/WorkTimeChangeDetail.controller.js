@@ -75,7 +75,7 @@ sap.ui.define(
       onBeforeShow() {
         TableUtils.adjustRowSpan({
           oTable: this.byId('workTimeTable'),
-          aColIndices: [0, 1, 2, 3, 4, 5, 11, 12],
+          aColIndices: [0, 1, 2, 3, 4, 5, 6, 12, 13],
           sTheadOrTbody: 'thead',
         });
       },
@@ -189,6 +189,7 @@ sap.ui.define(
           const oDetailModel = this.getViewModel();
           const oModel = this.getModel(ServiceNames.WORKTIME);
           const sPernr = this.getAppointeeProperty('Pernr');
+          const sTxt = this.getBundleText('LABEL_00109');
 
           this._pDetailDialog.then(async function (oDialog) {
             // 실적조회
@@ -201,6 +202,7 @@ sap.ui.define(
             oDetailModel.setProperty('/dialog', {
               ...aOtpList,
               Appty: '2',
+              Apptxt: sTxt,
             });
             oDialog.open();
           });
@@ -279,7 +281,11 @@ sap.ui.define(
           Pernr: sPernr,
         });
 
-        oDetailModel.setProperty('/dialog', { ...aOtpList, Appty: oDetailModel.getProperty('/dialog/Appty') });
+        oDetailModel.setProperty('/dialog', {
+          ...aOtpList,
+          Appty: oDetailModel.getProperty('/dialog/Appty'),
+          Apptxt: oDetailModel.getProperty('/dialog/Apptxt'),
+        });
 
         if (!_.parseInt(oDetailModel.getProperty('/dialog/Enduz'))) {
           return;
@@ -312,6 +318,12 @@ sap.ui.define(
           bEdit = false;
         }
 
+        oDetailModel.setProperty(
+          '/dialog/Apptxt',
+          _.find(oDetailModel.getProperty('/appTypeList'), (e) => {
+            return e.Appty === sKey;
+          }).Apptxt
+        );
         oDetailModel.setProperty('/timeEdit', bEdit);
       },
 
@@ -358,6 +370,11 @@ sap.ui.define(
 
       // 신청
       onApplyBtn() {
+        if (_.isEmpty(this.getViewModel().getProperty('/detail/list'))) {
+          // 신청내역을 등록하세요.
+          return MessageBox.alert(this.getBundleText('MSG_27007'));
+        }
+
         // {신청}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
           // 신청, 취소
@@ -384,7 +401,7 @@ sap.ui.define(
                 Appda: new Date(),
                 Menid: this.getCurrentMenuId(),
                 Prcty: 'V',
-                OtWorkNav: aDetailList,
+                OtworkChangeNav: aDetailList,
               };
 
               const oCheck = await Client.deep(oModel, 'OtworkChangeApply', oSendObject);
@@ -471,7 +488,7 @@ sap.ui.define(
           Type: this.getApprovalType(),
           Appno: sAppno,
           Max: 10,
-          FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
+          FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'txt', 'png'],
         });
       },
     });
