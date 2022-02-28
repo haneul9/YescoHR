@@ -756,7 +756,7 @@ sap.ui.define(
           Type: this.getApprovalType(),
           Appno: sAppno,
           Max: 1,
-          FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
+          FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'txt', 'png'],
         });
       },
     });
