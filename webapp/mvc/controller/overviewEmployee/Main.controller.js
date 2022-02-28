@@ -5,6 +5,7 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/overviewEmployee/constants/ChartsSetting',
     'sap/ui/yesco/mvc/model/type/Date',
@@ -16,6 +17,7 @@ sap.ui.define(
     AppUtils,
     Client,
     ServiceNames,
+    TableUtils,
     BaseController,
     ChartsSetting
   ) => {
@@ -76,7 +78,7 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const aChartDatas = await Client.getEntitySet(oModel, 'HeadCountOverview', { ...mFilters, Headty: mChartInfo.Headty });
         const vDataObject = oViewModel.getProperty(`/contents/${mChartInfo.Target}/data`);
-        const mChartSetting = _.get(ChartsSetting.CHART, mChartInfo.Target);
+        const mChartSetting = _.chain(ChartsSetting.CHART_OPTIONS).get(mChartInfo.Chart).cloneDeep().value();
 
         oViewModel.setProperty(`/contents/${mChartInfo.Target}/Headty`, mChartInfo.Headty);
 
@@ -101,14 +103,14 @@ sap.ui.define(
         switch (mChartInfo.Chart) {
           case 'column2d':
             _.chain(mChartSetting)
-              // .set(['data', 'chart', 'yAxisMaxValue'], '200')
+              // .set(['chart', 'yAxisMaxValue'], '200')
               .set(
-                ['data', 'data'],
+                ['data'],
                 _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callDetail-${mChartInfo.Headty},${o.Cod01}` }))
               )
               .commit();
 
-            this.callFusionChart(mChartSetting);
+            this.callFusionChart(mChartInfo, mChartSetting);
 
             break;
           case 'hled':
@@ -119,11 +121,12 @@ sap.ui.define(
             const sLimitValue = _.isEmpty(mChartInfo.Limit) ? _.chain(iFirstValue).add(iSecondValue).toString().value() : '100';
 
             _.chain(mChartSetting)
-              .get('data')
-              .set(['value'], sLimitValue)
               .set(['chart', 'upperLimit'], sLimitValue)
+              .set(['value'], sLimitValue)
               .tap((o) => {
                 _.chain(o)
+                  .set(['colorrange', 'color', 0, 'code'], '#7BB4EB')
+                  .set(['colorrange', 'color', 1, 'code'], '#FFAAAA')
                   .set(['colorrange', 'color', 0, 'minvalue'], '0')
                   .set(['colorrange', 'color', 0, 'maxvalue'], _.toString(iFirstValue))
                   .set(['colorrange', 'color', 1, 'minvalue'], _.toString(iFirstValue + 1))
@@ -131,6 +134,7 @@ sap.ui.define(
 
                 if (mChartInfo.RangeCount === 3) {
                   _.chain(o)
+                    .set(['colorrange', 'color', 2, 'code'], '#ededed')
                     .set(['colorrange', 'color', 1, 'maxvalue'], _.toString(_.add(iFirstValue, iSecondValue)))
                     .set(['colorrange', 'color', 2, 'minvalue'], _.toString(_.add(iFirstValue, iSecondValue) + 1))
                     .set(['colorrange', 'color', 2, 'maxvalue'], sLimitValue)
@@ -141,53 +145,53 @@ sap.ui.define(
               })
               .commit();
 
-            this.callFusionChart(mChartSetting);
+            this.callFusionChart(mChartInfo, mChartSetting);
 
             break;
           case 'bar2d':
             _.chain(mChartSetting)
-              // .set(['data', 'chart', 'yAxisMaxValue'], '120')
+              // .set(['chart', 'yAxisMaxValue'], '120')
               .set(
-                ['data', 'data'],
+                ['data'],
                 _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callDetail-${mChartInfo.Headty},${o.Cod01}` }))
               )
               .commit();
 
-            this.callFusionChart(mChartSetting);
+            this.callFusionChart(mChartInfo, mChartSetting);
 
             break;
           case 'doughnut2d':
             _.chain(mChartSetting)
-              .set(['data', 'chart', 'paletteColors'], _.chain(ChartsSetting.COLORS).take(aChartDatas.length).join(',').value())
+              .set(['chart', 'paletteColors'], _.chain(ChartsSetting.COLORS).take(aChartDatas.length).join(',').value())
               .set(
-                ['data', 'data'],
+                ['data'],
                 _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01 }))
               )
               .commit();
 
-            this.callFusionChart(mChartSetting);
+            this.callFusionChart(mChartInfo, mChartSetting);
 
             break;
           case 'mscolumn2d':
             _.chain(mChartSetting)
               // .set(['data', 'chart', 'yAxisMaxValue'], '60')
               .set(
-                ['data', 'categories', 0, 'category'],
+                ['categories', 0, 'category'],
                 _.map(aChartDatas, (o) => ({ label: o.Ttltxt }))
               )
-              .set(['data', 'dataset', 0], {
+              .set(['dataset', 0], {
                 seriesname: this.getBundleText('LABEL_28025'), // 팀원
                 color: '#7BB4EB',
                 data: _.map(aChartDatas, (o) => ({ value: o.Cnt01, link: `j-callDetail-${mChartInfo.Headty},A,${o.Ttltxt}` })),
               })
-              .set(['data', 'dataset', 1], {
+              .set(['dataset', 1], {
                 seriesname: this.getBundleText('LABEL_28026'), // 팀장
                 color: '#FFE479',
                 data: _.map(aChartDatas, (o) => ({ value: o.Cnt02, link: `j-callDetail-${mChartInfo.Headty},BA,${o.Ttltxt}` })),
               })
               .commit();
 
-            this.callFusionChart(mChartSetting);
+            this.callFusionChart(mChartInfo, mChartSetting);
 
             break;
           default:
@@ -195,25 +199,27 @@ sap.ui.define(
         }
       },
 
-      callFusionChart(mChartSetting) {
+      callFusionChart(mChartInfo, mChartSetting) {
         if (_.isEmpty(mChartSetting)) return;
 
-        if (!FusionCharts(mChartSetting.id)) {
+        const sChartId = `employee-${_.toLower(mChartInfo.Target)}-chart`;
+
+        if (!FusionCharts(sChartId)) {
           FusionCharts.ready(() => {
             new FusionCharts({
-              id: mChartSetting.id,
-              type: mChartSetting.type,
-              renderAt: `${mChartSetting.id}-container`,
+              id: sChartId,
+              type: mChartInfo.Chart,
+              renderAt: `${sChartId}-container`,
               width: '100%',
               height: '100%',
               dataFormat: 'json',
-              dataSource: mChartSetting.data,
+              dataSource: mChartSetting,
             }).render();
           });
         } else {
-          const oChart = FusionCharts(mChartSetting.id);
+          const oChart = FusionCharts(sChartId);
 
-          oChart.setChartData(mChartSetting.data, 'json');
+          oChart.setChartData(mChartSetting, 'json');
           setTimeout(() => oChart.render(), 200);
         }
       },
@@ -232,6 +238,7 @@ sap.ui.define(
       },
 
       async openDetailDialog(mPayload) {
+        const oView = this.getView();
         const oViewModel = this.getViewModel();
 
         oViewModel.setProperty('/dialog/busy', true);
@@ -239,19 +246,23 @@ sap.ui.define(
         try {
           if (!this.oDetailDialog) {
             this.oDetailDialog = await Fragment.load({
+              id: oView.getId(),
               name: 'sap.ui.yesco.mvc.view.overviewEmployee.fragment.DialogDetail',
               controller: this,
             });
 
-            this.getView().addDependent(this.oDetailDialog);
+            oView.addDependent(this.oDetailDialog);
           }
 
           this.oDetailDialog.open();
 
           const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'HeadCountDetail', { Zyear: '2022', ...mPayload });
 
-          oViewModel.setProperty('/dialog/rowCount', Math.min(aDetailData.length, 12));
-          oViewModel.setProperty('/dialog/list', aDetailData);
+          oViewModel.setProperty('/dialog/rowCount', Math.min(aDetailData.length, 10));
+          oViewModel.setProperty(
+            '/dialog/list',
+            _.map(aDetailData, (o, i) => ({ Idx: ++i, ...o }))
+          );
           oViewModel.setProperty('/dialog/busy', false);
         } catch (oError) {
           this.debug('Controller > m/overviewEmployee Main > openDetailDialog Error', oError);
@@ -277,6 +288,14 @@ sap.ui.define(
 
       onPressDetailDialogClose() {
         this.oDetailDialog.close();
+      },
+
+      onPressDetailExcelDownload() {
+        const oTable = this.byId('overviewEmpDetailTable');
+        const aTableData = this.getViewModel().getProperty('/dialog/list');
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_28038'); // 인원현황상세
+
+        TableUtils.export({ oTable, aTableData, sFileName, aDateProps: ['Gbdat', 'Entda', 'Loada', 'Reida', 'Retda'] });
       },
 
       /*****************************************************************
