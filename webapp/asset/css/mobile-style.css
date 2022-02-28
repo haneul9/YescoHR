@@ -106,7 +106,10 @@ html.sap-phone .sapMDialog.sapMDialogStretched { border: none; box-shadow: 0;bor
 .sapUiMedia-Std-Phone .menu-wrap .sapMITB.sapMITBFilter {margin:0}
 
 .sapMPopover.full-popover .menu-wrap {height:calc(100% - 200px)}
-.sapMPopover.full-popover .menu-wrap .sapMITBHead {margin-top:0; border-bottom:1px solid #e7e9ef}
+.sapUiMedia-Std-Phone .menu-wrap .sapMITBScrollContainer {margin:0 16px}
+.sapUiMedia-Std-Phone .menu-wrap .sapMITBArrowScrollLeftTextOnly {left:0}
+.sapUiMedia-Std-Phone .menu-wrap .sapMITBArrowScrollRightTextOnly {right:0}
+.sapUiMedia-Std-Phone .menu-wrap .sapMITBNotScrollable > .sapMITBArrowScroll {visibility:visible; top:0; z-index:1; display:inline-flex; justify-content:center; align-items:center; width:16px; height:61px; padding:0; background:#fff}
 .sapUiMedia-Std-Phone .menu-wrap .sapMITBHead .sapMITBFilter {margin:0; height:61px}
 .sapUiMedia-Std-Phone .menu-wrap .sapMITBHead .sapMITBFilter .sapMITBText{margin:25px 0 18px 0; padding:0 20px}
 .sapUiMedia-Std-Phone .menu-wrap .sapMITBHead .sapMITBFilter .sapMITBContentArrow {height:0!important}
