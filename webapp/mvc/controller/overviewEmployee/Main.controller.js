@@ -258,7 +258,8 @@ sap.ui.define(
 
           const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'HeadCountDetail', { Zyear: '2022', ...mPayload });
 
-          oViewModel.setProperty('/dialog/rowCount', Math.min(aDetailData.length, 10));
+          oViewModel.setProperty('/dialog/rowCount', Math.min(aDetailData.length, 12));
+          oViewModel.setProperty('/dialog/totalCount', _.size(aDetailData));
           oViewModel.setProperty(
             '/dialog/list',
             _.map(aDetailData, (o, i) => ({ Idx: ++i, ...o }))

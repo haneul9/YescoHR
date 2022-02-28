@@ -2,20 +2,21 @@
     xmlns:m="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:custom="sap.ui.yesco.control">
-    <m:Dialog title="{i18n>LABEL_28033}" contentWidth="1400px" contentHeight="575px" draggable="true">
+    <m:Dialog subHeader="false" contentWidth="1400px" contentHeight="575px" draggable="true">
         <m:content>
             <m:VBox class="hCardBox mb-16-px" visible="{/dialog/busy}">
                 <custom:Placeholder />
             </m:VBox>
-            <m:VBox class="hCardBox mb-16-px dialog-content-table" visible="{= !${/dialog/busy} }">
+            <m:VBox class="dialog-content-table" visible="{= !${/dialog/busy} }">
                 <Table id="overviewEmpDetailTable" width="100%" selectionMode="None" fixedColumnCount="8" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/list}" visibleRowCount="{/dialog/rowCount}" noData="{i18n>MSG_00001}">
                     <rowSettingsTemplate>
                         <RowSettings highlight="{ path: 'Stat1', formatter: '.formatDetailRowHighlight' }" />
                     </rowSettingsTemplate>
                     <extension>
-                        <m:HBox class="table-toolbar" height="75px" justifyContent="SpaceBetween">
-                            <m:HBox class="title">
-                                <m:Title level="H4" text="" />
+                        <m:HBox class="header-wrap" height="75px" justifyContent="SpaceBetween">
+                            <m:HBox class="header" alignItems="Center">
+                                <m:Title level="H4" text="{i18n>LABEL_28033}" class="sapUiSmallMarginEnd" />
+                                <m:Text text="total {/dialog/totalCount}" />
                             </m:HBox>
                             <m:HBox>
                                 <m:Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressDetailExcelDownload" />
