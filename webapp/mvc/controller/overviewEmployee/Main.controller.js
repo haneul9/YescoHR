@@ -271,6 +271,8 @@ sap.ui.define(
           AppUtils.handleError(oError, {
             onClose: () => this.oDetailDialog.close(),
           });
+        } finally {
+          if (this.byId('overviewEmpDetailTable')) this.byId('overviewEmpDetailTable').setFirstVisibleRow();
         }
       },
 
