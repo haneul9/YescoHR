@@ -164,9 +164,9 @@ sap.ui.define(
                 oTargetData.Cardt = sDate;
               }
 
-              oTargetData.Cc = oTargetData.Cc.replace(/^0+/, '0');
-              oTargetData.Caryr = oTargetData.Caryr.replace(/^0+/, '0');
-              oTargetData.Id = oTargetData.Id.replace(/^0+/, '0');
+              oTargetData.Cc = oTargetData.Cc.replace(/^0+/, '');
+              oTargetData.Caryr = oTargetData.Caryr.replace(/^0+/, '');
+              oTargetData.Id = oTargetData.Id.replace(/^0+/, '');
 
               oDetailModel.setProperty('/FormData', oTargetData);
               oDetailModel.setProperty('/FormData/Ename', sEname);
@@ -412,6 +412,10 @@ sap.ui.define(
             MessageBox.alert(this.getBundleText('MSG_25006'));
             return true;
           }
+
+          oDetailModel.setProperty('/FormData/Cc', !mFormData.Cc || '0');
+          oDetailModel.setProperty('/FormData/Caryr', !mFormData.Caryr || '0');
+          oDetailModel.setProperty('/FormData/Id', !mFormData.Id || '0');
         }
 
         return false;

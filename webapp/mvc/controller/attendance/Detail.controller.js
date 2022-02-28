@@ -238,7 +238,7 @@ sap.ui.define(
           Appno: sAppno,
           Max: 10,
           Visible: !(sType === this.PAGE_TYPE.CANCEL),
-          FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'png'],
+          FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'txt', 'png'],
         });
       },
 
