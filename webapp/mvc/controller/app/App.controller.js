@@ -70,10 +70,7 @@ sap.ui.define(
       onPressNotificationPopoverToggle(oEvent) {
         oEvent.cancelBubble();
 
-        if (this.bMobile) {
-          this.oAppMenu.closeMenuLayer();
-        }
-
+        this.oAppMenu.closeMenuLayer();
         this.oNotificationPopoverHandler.onPopoverToggle();
       },
 
@@ -89,8 +86,8 @@ sap.ui.define(
        * @param {sap.ui.base.Event} oEvent
        */
       onPressMobileSearchPopoverToggle(oEvent) {
-        this.oAppMenu.closeMenuLayer();
         this.oNotificationPopoverHandler.onPopoverClose();
+        this.oAppMenu.closeMenuLayer();
       },
 
       /**
@@ -98,8 +95,8 @@ sap.ui.define(
        * @param {sap.ui.base.Event} oEvent
        */
       onPressMobileMenuPopoverToggle(oEvent) {
-        this.oAppMenu.toggleMenuLayer(oEvent);
         this.oNotificationPopoverHandler.onPopoverClose();
+        this.oAppMenu.toggleMenuLayer(oEvent);
       },
 
       /**
