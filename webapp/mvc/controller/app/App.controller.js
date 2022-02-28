@@ -1,10 +1,11 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/core/Fragment',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/controller/app/MobileMyPagePopoverHandler',
+    'sap/ui/yesco/mvc/controller/app/MobileEmployeeSearchDialogHandler',
     'sap/ui/yesco/mvc/controller/app/NotificationPopoverHandler',
     'sap/ui/yesco/mvc/controller/app/control/Menus',
     'sap/ui/yesco/mvc/controller/app/control/MobileMenus',
@@ -14,10 +15,11 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    Fragment,
     AppUtils,
     MessageBox,
     BaseController,
+    MobileMyPagePopoverHandler,
+    MobileEmployeeSearchDialogHandler,
     NotificationPopoverHandler,
     Menus,
     MobileMenus
@@ -31,6 +33,10 @@ sap.ui.define(
         this.bMobile = AppUtils.isMobile();
         this.oAppMenu = this.bMobile ? new MobileMenus(this) : new Menus(this);
         this.oNotificationPopoverHandler = new NotificationPopoverHandler(this);
+        if (this.bMobile) {
+          this.oMobileMyPagePopoverHandler = new MobileMyPagePopoverHandler(this);
+          this.oMobileEmployeeSearchDialogHandler = new MobileEmployeeSearchDialogHandler(this);
+        }
 
         this.getOwnerComponent().setAppMenu(this.oAppMenu);
       },
@@ -49,6 +55,8 @@ sap.ui.define(
 
         if (this.bMobile) {
           this.oNotificationPopoverHandler.onPopoverClose();
+          this.oMobileMyPagePopoverHandler.onPopoverClose();
+          this.oMobileEmployeeSearchDialogHandler.onDialogClose();
         }
 
         const sCurrentMenuViewId = this.getCurrentMenuViewId();
@@ -64,13 +72,17 @@ sap.ui.define(
       },
 
       /**
-       * 알림센터 : PC & 모바일 하단 5버튼
+       * 알림센터 : PC 상단 알림 버튼 & 모바일 하단 5버튼
        * @param {sap.ui.base.Event} oEvent
        */
       onPressNotificationPopoverToggle(oEvent) {
         oEvent.cancelBubble();
 
-        this.oAppMenu.closeMenuLayer();
+        if (this.bMobile) {
+          this.oMobileMyPagePopoverHandler.onPopoverClose();
+          this.oMobileEmployeeSearchDialogHandler.onDialogClose();
+          this.oAppMenu.closeMenuLayer();
+        }
         this.oNotificationPopoverHandler.onPopoverToggle();
       },
 
@@ -82,12 +94,25 @@ sap.ui.define(
       },
 
       /**
-       * 검색 : 모바일 하단 5버튼
-       * @param {sap.ui.base.Event} oEvent
+       * My Page : 모바일 하단 5버튼
        */
-      onPressMobileSearchPopoverToggle(oEvent) {
+      onPressMobileMyPagePopoverToggle() {
         this.oNotificationPopoverHandler.onPopoverClose();
+        this.oMobileEmployeeSearchDialogHandler.onDialogClose();
         this.oAppMenu.closeMenuLayer();
+
+        this.oMobileMyPagePopoverHandler.onPopoverToggle();
+      },
+
+      /**
+       * 검색 : 모바일 하단 5버튼
+       */
+      onPressMobileSearchPopoverToggle() {
+        this.oNotificationPopoverHandler.onPopoverClose();
+        this.oMobileMyPagePopoverHandler.onPopoverClose();
+        this.oAppMenu.closeMenuLayer();
+
+        this.oMobileEmployeeSearchDialogHandler.onDialogToggle();
       },
 
       /**
@@ -96,6 +121,9 @@ sap.ui.define(
        */
       onPressMobileMenuPopoverToggle(oEvent) {
         this.oNotificationPopoverHandler.onPopoverClose();
+        this.oMobileMyPagePopoverHandler.onPopoverClose();
+        this.oMobileEmployeeSearchDialogHandler.onDialogClose();
+
         this.oAppMenu.toggleMenuLayer(oEvent);
       },
 

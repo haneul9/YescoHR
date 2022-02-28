@@ -37,7 +37,11 @@
                 <FlexItemData growFactor="1" styleClass="align-right" />
               </core:layoutData>
             </core:Icon>
-            <ToggleButton text="{= ${Checked} !== 'X' ? ${i18n>LABEL_01405} : ${i18n>LABEL_01404} }" pressed="{= ${Checked} !== 'X' }" press=".onPressNotificationReadToggle" class="toggle-icon" tooltip="{= ${Checked} !== 'X' ? ${i18n>LABEL_01410} : ${i18n>LABEL_01411} }" />
+            <ToggleButton text="{= ${Checked} !== 'X' ? ${i18n>LABEL_01405} : ${i18n>LABEL_01404} }" pressed="{= ${Checked} !== 'X' }" press=".onPressNotificationReadToggle" class="toggle-icon" tooltip="{= ${Checked} !== 'X' ? ${i18n>LABEL_01410} : ${i18n>LABEL_01411} }">
+              <layoutData>
+                <FlexItemData baseSize="35px" growFactor="1" styleClass="align-right" />
+              </layoutData>
+            </ToggleButton>
           </HBox>
         </CustomListItem>
       </List>

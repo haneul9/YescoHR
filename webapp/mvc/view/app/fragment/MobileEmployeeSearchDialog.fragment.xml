@@ -1,0 +1,48 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core">
+  <Dialog contentWidth="100%" contentHeight="300px" showHeader="false" verticalScrolling="false" busy="{busy}" busyIndicatorDelay="0">
+    <content>
+      <VBox>
+        <Input selectedKey="{searchField}" id="emp-search-field" placeholder="{i18n>LABEL_00211}" width="100%" liveChange=".onLiveChange" />
+        <ScrollContainer horizontal="false" vertical="true" width="100%" height="100%">
+          <layoutData>
+            <FlexItemData maxHeight="270px" />
+          </layoutData>
+          <content>
+            <List id="emp-search-list" items="{ path: 'employees', templateShareable: false }" rememberSelections="false" showSeparators="None" noDataText="{i18n>MSG_00001}">
+              <CustomListItem>
+                <HBox alignItems="Center" height="30px">
+                  <Image src="{Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="30px" height="30px">
+                    <layoutData>
+                      <FlexItemData baseSize="10%" />
+                    </layoutData>
+                  </Image>
+                  <Text text="{Ename}" tooltip="{Ename} {Pernr} {Fulln} {Zzjikgbt}" wrapping="false">
+                    <layoutData>
+                      <FlexItemData baseSize="25%" />
+                    </layoutData>
+                  </Text>
+                  <Text text="{Pernr}" tooltip="{Ename} {Pernr} {Fulln} {Zzjikgbt}" wrapping="false">
+                    <layoutData>
+                      <FlexItemData baseSize="20%" />
+                    </layoutData>
+                  </Text>
+                  <Text text="{Fulln}" tooltip="{Ename} {Pernr} {Fulln} {Zzjikgbt}" wrapping="false">
+                    <layoutData>
+                      <FlexItemData baseSize="30%" />
+                    </layoutData>
+                  </Text>
+                  <Text text="{Zzjikgbt}" tooltip="{Ename} {Pernr} {Fulln} {Zzjikgbt}" wrapping="false">
+                    <layoutData>
+                      <FlexItemData baseSize="15%" />
+                    </layoutData>
+                  </Text>
+                </HBox>
+              </CustomListItem>
+            </List>
+          </content>
+        </ScrollContainer>
+      </VBox>
+    </content>
+  </Dialog>
+</core:FragmentDefinition>
