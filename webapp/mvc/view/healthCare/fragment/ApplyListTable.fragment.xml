@@ -33,6 +33,12 @@
           <Text text="{ItypeTxt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
+      <table:Column width="130px" sortProperty="IcompTxt" filterProperty="IcompTxt">
+        <Label text="{i18n>LABEL_21014}"/>
+        <table:template>
+          <Text text="{IcompTxt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
       <table:Column width="150px" sortProperty="Begda" filterProperty="Begda">
         <Label text="{i18n>LABEL_21003}"/>
         <table:template>

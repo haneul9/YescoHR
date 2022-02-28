@@ -27,8 +27,8 @@
             </VBox>
             <Label text="{i18n>LABEL_03015}"/>
             <HBox class="mb-0 ">
-                <Input value="{/FormData/Schtx}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="required sapUiTinyMarginEnd" />
-                <Input value="{/FormData/Majnm}" editable="{= (${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl}) &amp;&amp; !!${/MajorInput} }" />
+                <Input value="{/FormData/Schtx}" maxLength="{/FieldLimit/Schtx}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="required sapUiTinyMarginEnd" />
+                <Input value="{/FormData/Majnm}" maxLength="{/FieldLimit/Majnm}" editable="{= (${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl}) &amp;&amp; !!${/MajorInput} }" />
             </HBox>
             <Label text="{i18n>LABEL_03016}"/>
             <HBox class="mb-0 ">
@@ -57,42 +57,42 @@
                 <Input value="{
                 path: '/FormData/ZbetEntr',
                 type: 'sap.ui.yesco.mvc.model.type.Currency'
-            }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            }" liveChange=".costCalculation" maxLength="{/FieldLimit/ZbetEntr}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             </VBox>
             <Label text="{i18n>LABEL_03020}"/>
             <VBox>
                 <Input value="{
                 path: '/FormData/ZbetMgmt',
                 type: 'sap.ui.yesco.mvc.model.type.Currency'
-            }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            }" liveChange=".costCalculation" maxLength="{/FieldLimit/ZbetMgmt}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             </VBox>
             <Label text="{i18n>LABEL_03021}"/>
             <VBox>
                 <Input value="{
                 path: '/FormData/ZbetClass',
                 type: 'sap.ui.yesco.mvc.model.type.Currency'
-            }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            }" liveChange=".costCalculation" maxLength="{/FieldLimit/ZbetClass}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             </VBox>
             <Label text="{i18n>LABEL_03022}"/>
             <VBox>
                 <Input value="{
                 path: '/FormData/ZbetExer',
                 type: 'sap.ui.yesco.mvc.model.type.Currency'
-            }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            }" liveChange=".costCalculation" maxLength="{/FieldLimit/ZbetExer}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             </VBox>
             <Label text="{i18n>LABEL_03023}"/>
             <VBox>
                 <Input value="{
                 path: '/FormData/ZbetSuf',
                 type: 'sap.ui.yesco.mvc.model.type.Currency'
-            }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            }" liveChange=".costCalculation" maxLength="{/FieldLimit/ZbetSuf}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             </VBox>
             <Label text="{i18n>LABEL_03026}"/>
             <VBox>
                 <Input value="{
                 path: '/FormData/ZbetEtc',
                 type: 'sap.ui.yesco.mvc.model.type.Currency'
-            }" liveChange=".costCalculation" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            }" liveChange=".costCalculation" maxLength="{/FieldLimit/ZbetEtc}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             </VBox>
             <Label text="{i18n>LABEL_03024}" />
             <VBox>
@@ -106,7 +106,7 @@
                 <Input value="{
                 path: '/FormData/ZbetShip',
                 type: 'sap.ui.yesco.mvc.model.type.Currency'
-            }" liveChange=".onSchoCost" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+            }" liveChange=".onSchoCost" maxLength="{/FieldLimit/ZbetShip}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             </VBox>
             <Label text="{i18n>LABEL_03027}"/>
             <HBox >

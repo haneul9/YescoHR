@@ -71,6 +71,9 @@ sap.ui.define(
         this.PostcodeDialogHandler = new PostcodeDialogHandler(this, this.callbackPostcode.bind(this));
 
         try {
+          // Input Field Imited
+          oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.PA, 'CertificateAppl')));
+
           const oModel = this.getModel(ServiceNames.PA);
           // 증명서유형
           const aList1 = await Client.getEntitySet(oModel, 'CertificateObjList');

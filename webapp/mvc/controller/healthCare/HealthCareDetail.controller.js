@@ -54,6 +54,9 @@ sap.ui.define(
         oDetailModel.setProperty('/busy', true);
 
         try {
+          // Input Field Imited
+          oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'HealthCareContents')));
+
           const sWerks = this.getSessionProperty('Werks');
           let sMsg = '';
 

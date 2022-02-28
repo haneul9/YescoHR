@@ -79,6 +79,9 @@ sap.ui.define(
         oDetailModel.setProperty('/ViewKey', sDataKey);
         oDetailModel.setProperty('/Menid', sMenid);
 
+        // Input Field Imited
+        oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'SchExpenseAppl')));
+
         this.getList()
           .then(() => {
             this.getTargetData();
@@ -742,9 +745,6 @@ sap.ui.define(
                   },
                 });
               } catch (oError) {
-                const sReAppno = await Appno.get.call(this);
-
-                oDetailModel.setProperty('/FormData/Appno', sReAppno);
                 AppUtils.handleError(oError);
               } finally {
                 AppUtils.setAppBusy(false, this);

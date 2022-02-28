@@ -29,7 +29,7 @@
             </VBox>
             <Label text="{i18n>LABEL_00163}"/>
             <VBox>
-                <Input value="{/FormData/Zbigo}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required"/>
+                <Input value="{/FormData/Zbigo}" maxLength="{/FieldLimit/Zbigo}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required"/>
                 <layoutData>
                     <grid:GridItemLayoutData gridColumn="2 / 5"/>
                 </layoutData>
