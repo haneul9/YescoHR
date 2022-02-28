@@ -1,0 +1,60 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.referenceRoom.ReferenceRoom"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:custom="sap.ui.yesco.control">
+  <Page showHeader="false">
+    <VBox class="contents-header">
+      <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+        <custom:Breadcrumbs />
+        <HBox>
+          <Button text="{i18n>LABEL_29002}" type="Emphasized" press=".onSaveBtn" visible="{= (!!${/tab/selectedKey} &amp;&amp; !!${/BtnStat}) &amp;&amp; ${/tab/selectedKey} !== 'C' }" />
+          <Button text="{i18n>LABEL_00103}" type="Emphasized" press=".onSaveBtn" visible="{= (!!${/tab/selectedKey} &amp;&amp; !!${/BtnStat}) &amp;&amp; ${/tab/selectedKey} !== 'C' }" />
+          <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
+          <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
+        </HBox>
+      </HBox>
+    </VBox>
+    <HBox class="contents" justifyContent="SpaceBetween">
+      <VBox class="vCardBox sapUiSmallMarginEnd">
+        <Tree id="SituTree" mode="SingleSelectMaster" items="{/CascadingSitu/SituList}">
+          <layoutData>
+            <FlexItemData growFactor="1" />
+          </layoutData>
+          <CustomTreeItem>
+            <HBox>
+              <Image visible="{= ${Otype} === '90' }" src="asset/image/icon_cascading_type01.png" />
+              <Image visible="{= ${Otype} === '91' }" src="asset/image/icon_cascading_type02.png" />
+              <Image visible="{= ${Otype} === 'O' }" src="asset/image/icon_cascading_type03.png" />
+              <Text text="{Stext}"/>
+            </HBox>
+          </CustomTreeItem>
+        </Tree>
+      </VBox>
+      <VBox class="vCardBox">
+        <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0px" class="form-grid">
+          <Label text="{i18n>LABEL_01008}" />
+          <VBox>
+            <Text text="{/FormData/Cnttx}"/>
+            <layoutData>
+              <grid:GridItemLayoutData gridColumn="2 / 5"/>
+            </layoutData>
+          </VBox>
+          <Label text="{i18n>LABEL_29003}"/>
+          <VBox>
+            <Text text="{/FormData/Cnttx}"/>
+          </VBox>
+          <Label text="{i18n>LABEL_08003}" />
+          <VBox>
+            <Text text="{/FormData/Cnttx}"/>
+          </VBox>
+          <Label text="{i18n>LABEL_29004}" />
+          <VBox>
+            <TextArea rows="5" value="{/manage/Z131}" maxLength="{/fieldControl/limit/Z131}" />
+          </VBox>
+        </grid:CSSGrid>
+      </VBox>
+    </HBox>
+  </Page>
+</mvc:View>

@@ -78,6 +78,8 @@ sap.ui.define(
 
         try {
           oDetailModel.setProperty('/FormStatus', mArgs.oDataKey);
+          // Input Field Imited
+          oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'ConExpenseAppl')));
 
           const aTypeCode = await this.getBenefitType();
 
