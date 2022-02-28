@@ -103,6 +103,8 @@ sap.ui.define(
 
         oViewModel.setData(this.initializeModel());
         oViewModel.setProperty('/busy', true);
+        // Input Field Imited
+        oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.PA, 'FamilyInfoAppl')));
         oViewModel.setProperty('/FormStatus', sDataKey);
         await this.getCodeList();
         await this.setFormData();

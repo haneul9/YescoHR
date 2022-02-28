@@ -33,7 +33,7 @@
                         <Input value="{
                         path: '/DialogData/RpamtMpr',
                         type: 'sap.ui.yesco.mvc.model.type.Currency'
-                    }" liveChange=".repayCost" editable="{= (${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta}) &amp;&amp; !${/DateEditable} }" class="required"/>
+                    }" maxLength="{/FieldLimit/RpamtMpr}" liveChange=".repayCost" editable="{= (${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta}) &amp;&amp; !${/DateEditable} }" class="required"/>
                     </VBox>
                     <Label text="{i18n>LABEL_00266}"/>
                     <VBox>

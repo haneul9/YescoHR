@@ -95,6 +95,9 @@ sap.ui.define(
         oDetailModel.setProperty('/ViewKey', sDataKey);
 
         try {
+          // Input Field Imited
+          oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'MedExpenseAppl')));
+
           const aAppList = await this.getTargetList();
 
           oDetailModel.setProperty('/TargetList', new ComboEntry({ codeKey: 'Kdsvh', valueKey: 'Znametx', aEntries: aAppList }));
@@ -1077,7 +1080,6 @@ sap.ui.define(
           this.byId('DetailHisDialog').close();
         } catch (oError) {
           oDetailModel.setProperty('/DialogData/isNew', true);
-          oDetailModel.setProperty('/DialogData/Appno2', '');
           AppUtils.handleError(oError);
         } finally {
           AppUtils.setAppBusy(false, this);
@@ -1139,7 +1141,6 @@ sap.ui.define(
           this.setAppAmount();
           this.byId('DetailHisDialog').close();
         } catch (oError) {
-          oDetailModel.setProperty('/DialogData/Appno2', '');
           AppUtils.handleError(oError);
         } finally {
           AppUtils.setAppBusy(false, this);

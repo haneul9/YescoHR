@@ -48,17 +48,17 @@
       </VBox>
       <Label text="{i18n>LABEL_17007}"/>
       <VBox>
-        <Input value="{/FormData/Sendp}" editable="{= !${/FormData/ZappStatAl} }"/>
+        <Input value="{/FormData/Sendp}" maxLength="{/FieldLimit/Sendp}" editable="{= !${/FormData/ZappStatAl} }"/>
       </VBox>
       <Label text="{i18n>LABEL_00152}"/>
       <HBox>
-        <Input value="{/FormData/Pstlzf}" editable="{= !${/FormData/ZappStatAl} }" showValueHelp="true" valueHelpOnly= "true" valueHelpRequest=".onAddressSearch" class="sapUiTinyMarginEnd required" />
-        <Input value="{/FormData/Addf1}" enabled="false" class="sapUiTinyMarginEnd required">
+        <Input value="{/FormData/Pstlzf}" maxLength="{/FieldLimit/Pstlzf}" editable="{= !${/FormData/ZappStatAl} }" showValueHelp="true" valueHelpOnly= "true" valueHelpRequest=".onAddressSearch" class="sapUiTinyMarginEnd required" />
+        <Input value="{/FormData/Addf1}" maxLength="{/FieldLimit/Addf1}" enabled="false" class="sapUiTinyMarginEnd required">
           <layoutData>
             <FlexItemData growFactor="0.5"/>
           </layoutData>
         </Input>
-        <Input value="{/FormData/Addf2}" editable="{= !${/FormData/ZappStatAl} }" class="required">
+        <Input value="{/FormData/Addf2}" maxLength="{/FieldLimit/Addf2}" editable="{= !${/FormData/ZappStatAl} }" class="required">
           <layoutData>
             <FlexItemData growFactor="0.5"/>
           </layoutData>
@@ -69,7 +69,7 @@
       </HBox>
       <Label text="{i18n>LABEL_17016}"/>
       <VBox>
-        <Input value="{/FormData/Adden}" editable="{= !${/FormData/ZappStatAl} }"/>
+        <Input value="{/FormData/Adden}" maxLength="{/FieldLimit/Adden}" editable="{= !${/FormData/ZappStatAl} }"/>
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
@@ -84,7 +84,7 @@
       </HBox>
       <Label text="{i18n>LABEL_00163}"/>
       <VBox>
-        <Input value="{/FormData/Deuse}" editable="{= !${/FormData/ZappStatAl} }"/>
+        <Input value="{/FormData/Deuse}" maxLength="{/FieldLimit/Deuse}" editable="{= !${/FormData/ZappStatAl} }"/>
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>

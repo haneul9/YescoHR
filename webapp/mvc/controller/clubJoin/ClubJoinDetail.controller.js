@@ -79,6 +79,9 @@ sap.ui.define(
         oDetailModel.setProperty('/ViewKey', sDataKey);
 
         try {
+          // Input Field Imited
+          oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'ClubJoinAppl')));
+
           const aList = await this.getList();
 
           oDetailModel.setProperty('/ClubType', new ComboEntry({ codeKey: 'Zclub', valueKey: 'Zclubtx', aEntries: aList }));
