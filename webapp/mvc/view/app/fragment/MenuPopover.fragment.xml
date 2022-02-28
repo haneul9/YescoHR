@@ -38,11 +38,12 @@
         <ScrollContainer horizontal="false" vertical="true" width="100%" height="100%">
           <content>
             <HBox wrap="Wrap" items="{mobileFavoriteMenus}">
-              <Button text="{Mname}" />
-              <!-- 메뉴 이동인 경우 -->
-              <!-- <Link text="{Mname}" visible="{= !!${Mnurl} &amp;&amp; !${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" press=".handleMenuLink" class="menu-link" /> -->
-              <!-- http|https|javascript로 시작되는 경우 -->
-              <!-- <Link text="{Mname}" visible="{= !!${Mnurl} &amp;&amp; ${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" target="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuTarget' }" class="menu-link" /> -->
+              <HBox>
+                <!-- 메뉴 이동인 경우 -->
+                <Link text="{Mname}" visible="{= !!${Mnurl} &amp;&amp; !${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" press=".handleMenuLink" class="menu-link-button" />
+                <!-- http|https|javascript로 시작되는 경우 -->
+                <Link text="{Mname}" visible="{= !!${Mnurl} &amp;&amp; ${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" target="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuTarget' }" class="menu-link-button" />
+              </HBox>
             </HBox>
           </content>
         </ScrollContainer>
