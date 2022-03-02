@@ -40,7 +40,7 @@
             </VBox>
             <Label text="{i18n>LABEL_02014}"/>
             <VBox>
-              <custom:DatePicker id="BirthDatePicker" maxDate="{/BirthMaxDate}" dateValue="{ path: '/FormData/Zbirthday', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="required"/>
+              <custom:DatePicker id="BirthDatePicker" maxDate="{/BirthMaxDate}" change=".onBirthDate" dateValue="{ path: '/FormData/Zbirthday', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="required"/>
             </VBox>
             <Label text="{i18n>LABEL_02008}"/>
             <VBox>

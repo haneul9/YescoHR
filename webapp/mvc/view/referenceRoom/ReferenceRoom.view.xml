@@ -9,7 +9,6 @@
       <HBox justifyContent="SpaceBetween" class="breadcrumbs">
         <custom:Breadcrumbs />
         <HBox>
-          <Button text="{i18n>LABEL_29002}" type="Emphasized" press=".onSaveBtn" visible="{= (!!${/tab/selectedKey} &amp;&amp; !!${/BtnStat}) &amp;&amp; ${/tab/selectedKey} !== 'C' }" />
           <Button text="{i18n>LABEL_00103}" type="Emphasized" press=".onSaveBtn" visible="{= (!!${/tab/selectedKey} &amp;&amp; !!${/BtnStat}) &amp;&amp; ${/tab/selectedKey} !== 'C' }" />
           <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
           <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
@@ -33,6 +32,10 @@
         </Tree>
       </VBox>
       <VBox class="vCardBox">
+        <HBox alignItems="Center" class="table-toolbar">
+          <Title level="H2" text="{/FormData/Title}"/>
+          <Button text="{i18n>LABEL_29002}" type="Emphasized" press=".onSaveBtn" />
+        </HBox>
         <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0px" class="form-grid">
           <Label text="{i18n>LABEL_01008}" />
           <VBox>
