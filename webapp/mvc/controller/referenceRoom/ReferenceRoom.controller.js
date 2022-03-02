@@ -37,6 +37,7 @@ sap.ui.define(
       initializeModel() {
         return {
           busy: false,
+          Hass: this.isHass(),
           BtnStat: true,
           List: [],
           Years: [],

@@ -2,7 +2,6 @@
   xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:mvc="sap.ui.core.mvc"
-  xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control">
   <Page showHeader="false">
     <VBox class="contents-header">
@@ -31,32 +30,11 @@
           </CustomTreeItem>
         </Tree>
       </VBox>
-      <VBox class="vCardBox">
-        <HBox alignItems="Center" class="table-toolbar">
-          <Title level="H2" text="{/FormData/Title}"/>
-          <Button text="{i18n>LABEL_29002}" type="Emphasized" press=".onSaveBtn" />
-        </HBox>
-        <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0px" class="form-grid">
-          <Label text="{i18n>LABEL_01008}" />
-          <VBox>
-            <Text text="{/FormData/Cnttx}"/>
-            <layoutData>
-              <grid:GridItemLayoutData gridColumn="2 / 5"/>
-            </layoutData>
-          </VBox>
-          <Label text="{i18n>LABEL_29003}"/>
-          <VBox>
-            <Text text="{/FormData/Cnttx}"/>
-          </VBox>
-          <Label text="{i18n>LABEL_08003}" />
-          <VBox>
-            <Text text="{/FormData/Cnttx}"/>
-          </VBox>
-          <Label text="{i18n>LABEL_29004}" />
-          <VBox>
-            <TextArea rows="5" value="{/manage/Z131}" maxLength="{/fieldControl/limit/Z131}" />
-          </VBox>
-        </grid:CSSGrid>
+      <VBox class="vCardBox" visible="{/Hass}">
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.referenceRoom.fragment.Hass" type="XML" />
+      </VBox>
+      <VBox class="vCardBox" visible="{= !${/Hass} }">
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.referenceRoom.fragment.Ess" type="XML" />
       </VBox>
     </HBox>
   </Page>
