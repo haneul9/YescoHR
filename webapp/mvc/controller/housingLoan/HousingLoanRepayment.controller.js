@@ -446,9 +446,18 @@ sap.ui.define(
           sDate = sKey;
         }
 
-        aFiltList.push(new sap.ui.model.Filter('Lonid', sap.ui.model.FilterOperator.EQ, mDialogData.Lonid), new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mDialogData.Lntyp), new sap.ui.model.Filter('Rptyp', sap.ui.model.FilterOperator.EQ, sKey1));
+        aFiltList.push(
+          // prettier 방지주석
+          new sap.ui.model.Filter('Lonid', sap.ui.model.FilterOperator.EQ, mDialogData.Lonid),
+          new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mDialogData.Lntyp),
+          new sap.ui.model.Filter('Rptyp', sap.ui.model.FilterOperator.EQ, sKey1)
+        );
         if (sKey1 === 'FULL') {
-          aFiltList.push(new sap.ui.model.Filter('Paydt', sap.ui.model.FilterOperator.EQ, sDate), new sap.ui.model.Filter('RpamtMpr', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/TargetLoanHis/RpamtBal')));
+          aFiltList.push(
+            // prettier 방지주석
+            new sap.ui.model.Filter('Paydt', sap.ui.model.FilterOperator.EQ, moment(sDate).hours(9).toDate()),
+            new sap.ui.model.Filter('RpamtMpr', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/TargetLoanHis/RpamtBal'))
+          );
           oDetailModel.setProperty('/DateEditable', true);
         } else {
           oDetailModel.setProperty('/DateEditable', false);
