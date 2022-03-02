@@ -989,18 +989,10 @@ sap.ui.define(
         return false;
       },
 
-      checkedDialogData(sType) {
+      checkedDialogData(aDetailList = []) {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const oDetailModel = this.getViewModel();
         const mFormData = oDetailModel.getProperty('/FormData');
-        const aHisList = oDetailModel.getProperty('/HisList');
-        const aDetailList = [];
-
-        if (sType === 'C') {
-          aDetailList.push(oDetailModel.getProperty('/DialogData'), ...aHisList);
-        } else {
-          aDetailList.push(...aHisList);
-        }
 
         let oSendObject = {};
 
@@ -1055,7 +1047,7 @@ sap.ui.define(
             aDetail.push(e);
           });
 
-          await this.checkedDialogData('C');
+          await this.checkedDialogData(aHisList);
 
           oDetailModel.setProperty('/HisList', aDetail);
           oDetailModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aHisList, sStatCode: 'ZappStat' }));
@@ -1103,26 +1095,21 @@ sap.ui.define(
             oDetailModel.setProperty('/DialogData/Appno2', vAppno);
           }
 
-          aHisList.forEach((e, i) => {
-            if (mDialogData.Seqnr === e.Seqnr) {
-              oDetailModel.setProperty(`/HisList/${i}`, mDialogData);
-            }
-          });
-
           const aDetail = [];
 
           aHisList.forEach((e) => {
             if (e.Appno2 === mDialogData.Appno2) {
               e.Line = 'X';
+              e = mDialogData;
             } else {
               e.Line = '';
             }
             aDetail.push(e);
           });
 
-          oDetailModel.setProperty('/HisList', aDetail);
-          await this.checkedDialogData();
+          await this.checkedDialogData(aDetail);
           await AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.getApprovalType(), this.DIALOG_FILE_ID);
+          oDetailModel.setProperty('/HisList', aDetail);
 
           const oDialogModel = this.getViewModel(this.DIALOG_FILE_ID);
 
