@@ -367,7 +367,7 @@ sap.ui.define(
         const sAddDate = oDetailModel.getProperty('/benefitDate');
 
         if (!!sAddDate) {
-          const dDate = moment(oChildList[0].Zbirthday).add('year', sAddDate).toDate();
+          const dDate = moment(oEvent.getSource().getDateValue()).add('year', sAddDate).toDate();
 
           oDetailModel.setProperty('/FormData/Conddate', dDate);
           oDetailModel.setProperty('/FormData/Conrdate', dDate);
@@ -554,7 +554,7 @@ sap.ui.define(
         const sAddDate = oDetailModel.getProperty('/benefitDate');
 
         if (!!sAddDate) {
-          const dDate = moment(oChildList[0].Zbirthday).add('year', sAddDate).toDate();
+          const dDate = moment(oRowData.Zbirthday).add('year', sAddDate).toDate();
 
           oDetailModel.setProperty('/FormData/Conddate', dDate);
           oDetailModel.setProperty('/FormData/Conrdate', dDate);
