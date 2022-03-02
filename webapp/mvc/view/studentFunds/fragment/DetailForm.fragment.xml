@@ -113,7 +113,7 @@
                 <Text text="{
                     path: '/FormData/ZpayAmt',
                     type: 'sap.ui.yesco.mvc.model.type.Currency'
-                }"/>
+                }" class="mr-10-px" />
                 <ObjectStatus text="{i18n>MSG_03002}" state="Indication05" visible="{/LimitAmountMSG}" />
                 <layoutData>
                     <grid:GridItemLayoutData gridColumn="2 / 5"/>
