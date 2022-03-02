@@ -64,7 +64,7 @@
       <table:Column width="90px" sortProperty="Curcnt" filterProperty="Curcnt">
         <Label text="{i18n>LABEL_03009}"/>
         <table:template>
-          <Text text="{Curcnt}" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
+          <Text text="{Curcnt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="90px">
