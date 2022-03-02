@@ -1943,3 +1943,5 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 
 #employee-a02-chart-container {height:66px;}
 #employee-a06-chart-container {height:76px;}
+
+.sapMDialog.sapMDialog-NoHeader .sapMDialogSection {padding-top:25px;}
