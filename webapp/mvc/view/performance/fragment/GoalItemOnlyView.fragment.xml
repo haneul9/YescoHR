@@ -22,10 +22,22 @@
                     <VBox>
                         <Input value="{ path: 'Fwgt', type: 'sap.ui.yesco.mvc.model.type.Percent' }" enabled="false" />
                     </VBox>
-                    <HBox width="100%" />
-                    <HBox width="100%" />
-                    <HBox width="100%" />
-                    <HBox width="100%" />
+                    <VBox>
+                        <Label text="{i18n>LABEL_10003}" visible="{= ${/type} !== 'ME' }" />
+                    </VBox>
+                    <HBox>
+                        <ComboBox width="100%" selectedKey="{Zapgme}" items="{ path: '/entry/levels', templateShareable: true }" enabled="false" visible="{= ${/type} !== 'ME' }">
+                            <core:Item key="{ValueEid}" text="{ValueText}" />
+                        </ComboBox>
+                    </HBox>
+                    <VBox>
+                        <Label text="{i18n>LABEL_10022}" visible="{= ${/type} !== 'ME' }" />
+                    </VBox>
+                    <HBox>
+                        <ComboBox width="100%" selectedKey="{Zapgma}" items="{ path: '/entry/levels', templateShareable: true }" enabled="false" visible="{= ${/type} !== 'ME' }">
+                            <core:Item key="{ValueEid}" text="{ValueText}" />
+                        </ComboBox>
+                    </HBox>
                     <HBox width="100%" />
                     <HBox width="100%" />
                     <VBox visible="{= ${rootPath} === 'strategy' }">

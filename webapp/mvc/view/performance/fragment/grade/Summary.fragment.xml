@@ -34,11 +34,7 @@
                         <table:Column width="18%">
                             <Label text="{i18n>LABEL_10015}"/>
                             <table:template>
-                                <Text text="{Ztotcnt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text">
-                                    <customData>
-                                        <core:CustomData key="over" value="{ZtotcntState}" writeToDom="true" />
-                                    </customData>
-                                </Text>
+                                <Text text="{Ztotcnt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text" />
                             </table:template>
                         </table:Column>
                         <table:Column width="18%">

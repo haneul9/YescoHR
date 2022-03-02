@@ -114,25 +114,27 @@ sap.ui.define(
         return iVisibleRowCount;
       },
 
-      export({ oTable, aTableData, sFileName, sStatCode = 'ZappStatAl', sStatTxt = 'ZappStxtAl', bHasMultiLabel = false, aDateProps = [] }) {
+      export({ oTable, aTableData, sFileName, sStatCode = 'ZappStatAl', sStatTxt = 'ZappStxtAl', bHasMultiLabel = false, aDateProps = [], aCustomColumns = [] }) {
         if (!aTableData.length) return;
 
         const sToday = moment().format('YYYYMMDD');
-        const mColumns = oTable.getColumns().map((col) => ({
-          label: bHasMultiLabel
-            ? [
-                ...col.getMultiLabels().reduce((acc, cur) => {
-                  acc.add(cur.getText());
-                  return acc;
-                }, new Set()),
-              ].join('-')
-            : col.getLabel().getText(),
-          property: !!col.getTemplate().getBindingInfo('text') ? (col.getTemplate().getBindingInfo('text').parts[0].path === sStatCode ? sStatTxt : col.getTemplate().getBindingInfo('text').parts[0].path) : !!col.getTemplate().getBindingInfo('visible') ? col.getTemplate().getBindingInfo('visible').parts[0].path : col.getTemplate().getBindingInfo('selectedKey').parts[0].path,
-          type: exportLibrary.EdmType.String,
-        }));
+        const aColumns = !_.isEmpty(aCustomColumns)
+          ? aCustomColumns
+          : oTable.getColumns().map((col) => ({
+              label: bHasMultiLabel
+                ? [
+                    ...col.getMultiLabels().reduce((acc, cur) => {
+                      acc.add(cur.getText());
+                      return acc;
+                    }, new Set()),
+                  ].join('-')
+                : col.getLabel().getText(),
+              property: !!col.getTemplate().getBindingInfo('text') ? (col.getTemplate().getBindingInfo('text').parts[0].path === sStatCode ? sStatTxt : col.getTemplate().getBindingInfo('text').parts[0].path) : !!col.getTemplate().getBindingInfo('visible') ? col.getTemplate().getBindingInfo('visible').parts[0].path : col.getTemplate().getBindingInfo('selectedKey').parts[0].path,
+              type: exportLibrary.EdmType.String,
+            }));
 
         aDateProps.forEach((prop) => {
-          const mDateColumn = _.find(mColumns, { property: prop });
+          const mDateColumn = _.find(aColumns, { property: prop });
 
           mDateColumn.type = exportLibrary.EdmType.Date;
           mDateColumn.format = 'yyyy.mm.dd';
@@ -140,7 +142,7 @@ sap.ui.define(
 
         const oSettings = {
           workbook: {
-            columns: mColumns,
+            columns: aColumns,
             hierarchyLevel: 'Level',
           },
           dataSource: aTableData,
