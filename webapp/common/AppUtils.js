@@ -129,10 +129,10 @@ sap.ui.define(
               mErrorData.code = errorJSON.error.code;
               mErrorData.message = errorJSON.error.innererror.errordetails[0].message;
             } else if (errorJSON.error.message) {
-              mErrorData.code = 'I';
+              // mErrorData.code = 'I';
               mErrorData.message = errorJSON.error.message.value;
             } else {
-              mErrorData.code = 'I';
+              // mErrorData.code = 'I';
               mErrorData.message = 'Unkown error.';
             }
             return mErrorData;
