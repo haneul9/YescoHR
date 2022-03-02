@@ -42,29 +42,10 @@ sap.ui.define(
 
       initializeModel() {
         return {
-          FormStatus: '',
-          werks: this.getAppointeeProperty('Werks'),
           FormData: {},
-          Relations: [],
-          Gender: [
-            { Zcode: this.GENDER.CODE.A, Ztext: this.GENDER.TEXT.N },
-            { Zcode: this.GENDER.CODE.O, Ztext: this.GENDER.TEXT.M },
-            { Zcode: this.GENDER.CODE.T, Ztext: this.GENDER.TEXT.W },
-          ],
-          Disability: [
-            { Zcode: this.DISABIL.CODE.A, Ztext: this.DISABIL.TEXT.A },
-            { Zcode: this.DISABIL.CODE.O, Ztext: this.DISABIL.TEXT.O },
-            { Zcode: this.DISABIL.CODE.TW, Ztext: this.DISABIL.TEXT.TW },
-            { Zcode: this.DISABIL.CODE.TH, Ztext: this.DISABIL.TEXT.TH },
-          ],
-          Fixed: false,
-          Support: [],
           Settings: {},
+          WorkType: [],
           busy: false,
-          DisabCheck: 'None', // 장애여부 CheckState
-          SupCheck: 'None', // 부양가족유형 CheckState
-          SupEditable: false, // 부양가족유형 Combo
-          DisabEditable: false, // 장애여부 Combo
         };
       },
 
@@ -73,20 +54,20 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const sDataKey = oParameter.oDataKey;
 
-        oViewModel.setData(this.initializeModel());
-        oViewModel.setProperty('/busy', true);
-        // Input Field Imited
-        oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.PA, 'FamilyInfoAppl')));
-        oViewModel.setProperty('/FormStatus', sDataKey);
-        await this.getCodeList();
-        await this.setFormData();
+        // oViewModel.setData(this.initializeModel());
+        // oViewModel.setProperty('/busy', true);
+        // // Input Field Imited
+        // oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.PA, 'FamilyInfoAppl')));
+        // oViewModel.setProperty('/FormStatus', sDataKey);
+        // await this.getCodeList();
+        // await this.setFormData();
 
-        this.getViewModel().setProperty('/busy', false);
+        oViewModel.setProperty('/busy', false);
       },
 
       // override AttachFileCode
       getApprovalType() {
-        return 'HR03';
+        return 'HR19';
       },
 
       getCurrentLocationText(oArguments) {
@@ -428,11 +409,10 @@ sap.ui.define(
       settingsAttachTable() {
         const oDetailModel = this.getViewModel();
         const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
-        const bFixed = oDetailModel.getProperty('/Fixed');
         const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
 
         AttachFileAction.setAttachFile(this, {
-          Editable: !sStatus || sStatus === '10' || bFixed,
+          Editable: !sStatus,
           Type: this.getApprovalType(),
           Appno: sAppno,
           Max: 10,

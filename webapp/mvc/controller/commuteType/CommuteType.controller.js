@@ -77,7 +77,7 @@ sap.ui.define(
 
       // override AttachFileCode
       getApprovalType() {
-        return 'HR03';
+        return 'HR19';
       },
 
       formatNumber(vNum = '0') {
