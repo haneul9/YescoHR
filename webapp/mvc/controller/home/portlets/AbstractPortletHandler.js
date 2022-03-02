@@ -155,6 +155,12 @@ sap.ui.define(
         return this.oPortletBox;
       },
 
+      getMenid(sMenuUrl) {
+        return AppUtils.getAppComponent()
+          .getMenuModel()
+          .getMenid(this.bMobile ? `mobile/${sMenuUrl}` : sMenuUrl);
+      },
+
       setBusy(bBusy = true, sPath = '/busy') {
         setTimeout(
           () => {

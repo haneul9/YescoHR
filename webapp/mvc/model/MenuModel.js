@@ -66,10 +66,20 @@ sap.ui.define(
         this.appendSampleMenu({ aLevel1, aLevel2, aLevel3, aLevel4 });
 
         // 각 메뉴 속성 정리
-        aLevel4.map(({ Mnurl, Menid, Phead, Zample = false }) => {
-          mUrlToMenid[Mnurl] = Menid;
-          mMenidToProperties[Menid] = { Menid, Mnurl, Phead, Zample };
-        });
+        if (this.bMobile) {
+          aLevel4.map(({ Mnurl, Menid, Phead, Zample = false }) => {
+            if (!/^https?:/.test(Mnurl) && !/^javascript:/.test(Mnurl)) {
+              Mnurl = `mobile/${Mnurl}`;
+            }
+            mUrlToMenid[Mnurl] = Menid;
+            mMenidToProperties[Menid] = { Menid, Mnurl, Phead, Zample };
+          });
+        } else {
+          aLevel4.map(({ Mnurl, Menid, Phead, Zample = false }) => {
+            mUrlToMenid[Mnurl] = Menid;
+            mMenidToProperties[Menid] = { Menid, Mnurl, Phead, Zample };
+          });
+        }
 
         // 3rd level 메뉴 속성 정리
         aLevel3.map((m) => {

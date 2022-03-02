@@ -77,10 +77,6 @@ sap.ui.define(
         return Client.getEntitySet(oModel, 'WorkingTime', mPayload);
       },
 
-      getMenid(sMenuUrl) {
-        return AppUtils.getAppComponent().getMenuModel().getMenid(sMenuUrl);
-      },
-
       transformContentData([mPortletData = {}]) {
         if (this.oChartPromise) {
           this.oChartPromise.then(() => {

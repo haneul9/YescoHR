@@ -21,10 +21,10 @@
     </HBox>
     <HBox class="portlet-body">
       <VBox width="100%" height="100%">
-        <FlexBox width="100%" height="500px">
+        <FlexBox width="100%" height="500px" class="my-20-px">
           <core:HTML content='&lt;div id="portlet-p10-chart-container"&gt;&lt;/div&gt;' />
         </FlexBox>
-        <ScrollContainer class="mt-10-px">
+        <ScrollContainer>
           <layoutData>
             <FlexItemData growFactor="1" />
           </layoutData>
