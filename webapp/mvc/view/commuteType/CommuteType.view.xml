@@ -17,7 +17,7 @@
     <VBox class="contents">
       <HBox justifyContent="SpaceAround">
         <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBox" type="XML" />
-        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.commuteType.fragment.TotalFamily" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.commuteType.fragment.MyCommute" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.commuteType.fragment.SearchCondition" type="XML" />
       </HBox>
       <VBox class="vCardBox">
