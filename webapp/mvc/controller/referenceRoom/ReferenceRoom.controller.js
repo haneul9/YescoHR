@@ -28,6 +28,34 @@ sap.ui.define(
           busy: false,
           Hass: this.isHass(),
           FormData: {},
+          ReferenceList: [
+            {
+              Stext: '예스코',
+              Child: [
+                // pretter 방지주석
+                { Stext: '인사' },
+                { Stext: '조직' },
+                { Stext: '근태' },
+                { Stext: '급여' },
+                {
+                  Stext: '복리후생',
+                  Child: [
+                    // pretter 방지주석
+                    { Stext: '경조금' },
+                    { Stext: '의료비' },
+                    { Stext: '학자금' },
+                    { Stext: '주택융자' },
+                    { Stext: '건강검진' },
+                    { Stext: '개인연금' },
+                    { Stext: '동호회' },
+                    { Stext: '차량유지비' },
+                  ],
+                },
+                { Stext: '평가' },
+                { Stext: '교육' },
+              ],
+            },
+          ],
           AccType: [
             { Zcode: '1', Ztext: 'ESS>의료비신청(4410)' },
             { Zcode: '2', Ztext: 'HASS>의료비신청(8430)' },
@@ -54,6 +82,8 @@ sap.ui.define(
             B: '2',
             C: '3',
           });
+
+          this.oDataChangeTree();
           this.settingsAttachTable();
           // const oSessionData = this.getSessionData();
           // const aComList = await this.areaList();
@@ -82,6 +112,14 @@ sap.ui.define(
         const oFileUploader = oEventSource;
         const aFileList = [];
         const files = oEvent.getParameter('files');
+      },
+
+      // oData Tree Setting
+      oDataChangeTree() {
+        const oTree = this.byId('ReferenceTree');
+
+        oTree.collapseAll();
+        oTree.expandToLevel(1);
       },
 
       // override AttachFileCode

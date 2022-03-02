@@ -15,22 +15,20 @@
       </HBox>
     </VBox>
     <HBox class="contents" justifyContent="SpaceBetween">
-      <VBox class="vCardBox sapUiSmallMarginEnd">
-        <Tree id="SituTree" mode="SingleSelectMaster" items="{/CascadingSitu/SituList}">
+      <VBox class="vCardBox sapUiSmallMarginEnd" width="25%">
+        <Tree id="ReferenceTree" mode="SingleSelectMaster" items="{/ReferenceList}">
           <layoutData>
             <FlexItemData growFactor="1" />
           </layoutData>
           <CustomTreeItem>
             <HBox>
-              <Image visible="{= ${Otype} === '90' }" src="asset/image/icon_cascading_type01.png" />
-              <Image visible="{= ${Otype} === '91' }" src="asset/image/icon_cascading_type02.png" />
-              <Image visible="{= ${Otype} === 'O' }" src="asset/image/icon_cascading_type03.png" />
+              <Image src="asset/image/icon_tree_node.svg" />
               <Text text="{Stext}"/>
             </HBox>
           </CustomTreeItem>
         </Tree>
       </VBox>
-      <VBox class="mt-0">
+      <VBox class="mt-0" width="74%">
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.referenceRoom.fragment.Hass" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.referenceRoom.fragment.Ess" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
