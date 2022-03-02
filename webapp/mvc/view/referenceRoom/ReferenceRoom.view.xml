@@ -30,11 +30,10 @@
           </CustomTreeItem>
         </Tree>
       </VBox>
-      <VBox class="vCardBox" visible="{/Hass}">
+      <VBox class="mt-0">
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.referenceRoom.fragment.Hass" type="XML" />
-      </VBox>
-      <VBox class="vCardBox" visible="{= !${/Hass} }">
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.referenceRoom.fragment.Ess" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
       </VBox>
     </HBox>
   </Page>

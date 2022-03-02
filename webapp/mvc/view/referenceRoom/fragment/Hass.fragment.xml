@@ -1,40 +1,75 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:u="sap.ui.unified"
   xmlns:core="sap.ui.core">
-  <HBox alignItems="Center" class="table-toolbar">
-    <Title level="H2" text="{/FormData/Title}"/>
-    <Button text="{i18n>LABEL_29002}" type="Emphasized" press=".onSaveBtn" />
-  </HBox>
-  <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0px" class="form-grid">
-    <Label text="{i18n>LABEL_01008}" />
-    <VBox>
-      <Text text="{/FormData/Cnttx}"/>
-      <layoutData>
-        <grid:GridItemLayoutData gridColumn="2 / 5"/>
-      </layoutData>
-    </VBox>
-    <Label text="{i18n>LABEL_29003}"/>
-    <VBox>
-      <Text text="{/FormData/Cnttx}"/>
-    </VBox>
-    <Label text="{i18n>LABEL_08003}" />
-    <VBox>
-      <Text text="{/FormData/Cnttx}"/>
-    </VBox>
-    <Label text="{i18n>LABEL_29004}" />
-    <VBox>
-      <TextArea rows="5" value="{/manage/Z131}"/>
-      <layoutData>
-        <grid:GridItemLayoutData gridColumn="2 / 5"/>
-      </layoutData>
-    </VBox>
-    <Label text="{i18n>LABEL_29005}" />
-    <VBox>
-      <PDFViewer displayType="Auto" errorPlaceholderMessage="" height="100%" showDownloadButton="true" source="" title="" width="100%">
-        <errorPlaceholder>
-
-        </errorPlaceholder>
-      </PDFViewer>
-    </VBox>
-  </grid:CSSGrid>
+  <VBox class="vCardBox sapUiMediumMarginBottom" visible="{/Hass}">
+    <HBox alignItems="Center" class="table-toolbar">
+      <Title level="H2" text="{/FormData/Title}"/>
+      <Button text="{i18n>LABEL_29002}" type="Emphasized" press=".onSaveBtn" />
+    </HBox>
+    <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0px" class="form-grid">
+      <Label text="{i18n>LABEL_01008}" />
+      <VBox>
+        <Text text="{/FormData/Menu}"/>
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+        </layoutData>
+      </VBox>
+      <Label text="{i18n>LABEL_29003}"/>
+      <VBox>
+        <Text text="{/FormData/Change}"/>
+      </VBox>
+      <Label text="{i18n>LABEL_08003}" />
+      <VBox>
+        <Text text="{/FormData/ChangeDate}"/>
+      </VBox>
+      <Label text="{i18n>LABEL_29004}" />
+      <VBox>
+        <TextArea placeholder="{i18n>MSG_29002}" rows="5" width="100%" value="{/FormData/Head}"/>
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+        </layoutData>
+      </VBox>
+      <Label text="{i18n>LABEL_29005}" />
+      <HBox>
+        <u:FileUploader fileType="pdf" change=".onFileChange" icon="sap-icon://add" buttonText="{i18n>LABEL_00107}" class="sapUiTinyMarginEnd" />
+        <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onDeleteAttachFile" />
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+        </layoutData>
+      </HBox>
+      <Label text="{i18n>LABEL_29006}" />
+      <VBox>
+        <TextArea placeholder="{i18n>MSG_29002}" rows="5" width="100%" value="{/FormData/Mid}"/>
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+        </layoutData>
+      </VBox>
+      <Label text="{i18n>LABEL_29007}" />
+      <VBox>
+        <TextArea placeholder="{i18n>MSG_29002}" rows="5" width="100%" value="{/FormData/Bot}"/>
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+        </layoutData>
+      </VBox>
+      <Label text="{i18n>LABEL_29005}" />
+      <VBox>
+        <Text text="{i18n>MSG_29001}"/>
+        <HBox>
+          <ComboBox items="{/AccType}" selectedKey="{/FormData/A}" change=".onAccChange">
+            <core:Item text="{Ztext}" key="{Zcode}" />
+          </ComboBox>
+          <ComboBox items="{/AccType}" selectedKey="{/FormData/B}" change=".onAccChange">
+            <core:Item text="{Ztext}" key="{Zcode}" />
+          </ComboBox>
+          <ComboBox items="{/AccType}" selectedKey="{/FormData/C}" change=".onAccChange">
+            <core:Item text="{Ztext}" key="{Zcode}" />
+          </ComboBox>
+        </HBox>
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+        </layoutData>
+      </VBox>
+    </grid:CSSGrid>
+  </VBox>
 </core:FragmentDefinition>

@@ -1232,6 +1232,9 @@ html.sap-desktop .sapMDialog>footer .sapContrast.sapMIBar.sapMFooter-CTX .sapMBt
 .sapMDialog .hCardBox, .sapMDialog .vCardBox {background:#FFFFFF; border:1px solid #CFCFCF; box-shadow:none; }
 .sapMDialogSection {padding-bottom:20px; }
 
+/* 자료실 PDF Viewer*/
+.sapUiLayoutCSSGrid .sapMPDFViewerError {width: 100%; height: 90%;}
+
 /* LIST style*/
 .sapMSLITitle, .sapMSLITitleOnly, .sapMSLIDescription, .sapMSLIDescriptionText {font-size:14px; color:#222; font-weight:500}
 .sapMSLI.sapMSLIThumbnail, .sapMSLI.sapMSLINoIconInset, .sapMSLI.sapMSLIWithDescription, .sapMSLI.sapMSLINoTitleAdapt {height:auto; padding:10px 10px 10px 10px}

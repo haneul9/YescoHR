@@ -1,7 +1,62 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:core="sap.ui.core">
-  <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
+  <VBox class="vCardBox sapUiMediumMarginBottom" visible="{= !${/Hass} }">
+    <HBox alignItems="Center" class="table-toolbar">
+      <Title level="H2" text="{/FormData/Title}"/>
+      <Button text="{i18n>LABEL_29002}" type="Emphasized" press=".onSaveBtn" />
+    </HBox>
+    <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0px" class="form-grid">
+      <Label text="{i18n>LABEL_01008}" />
+      <VBox>
+        <Text text="{/FormData/Menu}"/>
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+        </layoutData>
+      </VBox>
+      <Label text="{i18n>LABEL_29003}"/>
+      <VBox>
+        <Text text="{/FormData/Change}"/>
+      </VBox>
+      <Label text="{i18n>LABEL_08003}" />
+      <VBox>
+        <Text text="{/FormData/ChangeDate}"/>
+      </VBox>
+      <Label text="{i18n>LABEL_29004}" />
+      <VBox>
+        <TextArea editable="false" placeholder="{i18n>MSG_29002}" rows="5" width="100%" value="{/FormData/Head}"/>
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+        </layoutData>
+      </VBox>
+      <Label text="{i18n>LABEL_29005}" />
+      <HBox>
+        <PDFViewer displayType="Embedded" height="500px" showDownloadButton="true" source="" width="100%">
+          <layoutData>
+            <FlexItemData growFactor="1" />
+          </layoutData>
+          <errorPlaceholder>
 
+          </errorPlaceholder>
+        </PDFViewer>
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+        </layoutData>
+      </HBox>
+      <Label text="{i18n>LABEL_29006}" />
+      <VBox>
+        <TextArea editable="false" placeholder="{i18n>MSG_29002}" rows="5" width="100%" value="{/FormData/Mid}"/>
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+        </layoutData>
+      </VBox>
+      <Label text="{i18n>LABEL_29007}" />
+      <VBox>
+        <TextArea editable="false" placeholder="{i18n>MSG_29002}" rows="5" width="100%" value="{/FormData/Bot}"/>
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+        </layoutData>
+      </VBox>
+    </grid:CSSGrid>
   </VBox>
 </core:FragmentDefinition>
