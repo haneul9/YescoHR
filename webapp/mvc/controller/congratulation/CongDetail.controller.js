@@ -336,6 +336,7 @@ sap.ui.define(
               oDetailModel.setProperty('/TargetList', []);
               oDetailModel.setProperty('/FormData/Zname', '');
               oDetailModel.setProperty('/FormData/Zbirthday', null);
+              oDetailModel.setProperty('/FormData/Conddate', null);
 
               if (!oDetailModel.getProperty('/FormData/ZappStatAl') || oDetailModel.getProperty('/FormData/ZappStatAl') === '10') {
                 if (!!oResult[0] && oResult[0].Zcode === 'ME') {
@@ -366,7 +367,11 @@ sap.ui.define(
         const sAddDate = oDetailModel.getProperty('/benefitDate');
 
         if (!!sAddDate) {
-          oDetailModel.setProperty('/FormData/Conddate', moment(oEvent.getSource().getDateValue()).add('year', sAddDate).toDate());
+          const dDate = moment(oChildList[0].Zbirthday).add('year', sAddDate).toDate();
+
+          oDetailModel.setProperty('/FormData/Conddate', dDate);
+          oDetailModel.setProperty('/FormData/Conrdate', dDate);
+          this.getNomalPay();
         }
       },
 
@@ -515,7 +520,11 @@ sap.ui.define(
                   const sAddDate = oDetailModel.getProperty('/benefitDate');
 
                   if (!!sAddDate) {
-                    oDetailModel.setProperty('/FormData/Conddate', moment(oChildList[0].Zbirthday).add('year', sAddDate).toDate());
+                    const dDate = moment(oChildList[0].Zbirthday).add('year', sAddDate).toDate();
+
+                    oDetailModel.setProperty('/FormData/Conddate', dDate);
+                    oDetailModel.setProperty('/FormData/Conrdate', dDate);
+                    this.getNomalPay();
                   }
                 }
 
@@ -545,7 +554,11 @@ sap.ui.define(
         const sAddDate = oDetailModel.getProperty('/benefitDate');
 
         if (!!sAddDate) {
-          oDetailModel.setProperty('/FormData/Conddate', moment(oRowData.Zbirthday).add('year', sAddDate).toDate());
+          const dDate = moment(oChildList[0].Zbirthday).add('year', sAddDate).toDate();
+
+          oDetailModel.setProperty('/FormData/Conddate', dDate);
+          oDetailModel.setProperty('/FormData/Conrdate', dDate);
+          this.getNomalPay();
         }
         this.byId('targetSettingsDialog').close();
       },
