@@ -1938,7 +1938,4 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 #employee-a02-chart-container {height:66px;}
 #employee-a06-chart-container {height:76px;}
 
-
-.sapMDialog.type-b  {padding-top:0;}
-.sapMDialog.type-b .sapMDialogSection {padding-top:25px;}
-.sapMDialog.type-b .sapMDialogTitle {display: none;}
+.sapMDialog.sapMDialog-NoHeader .sapMDialogSection {padding-top:25px;}
