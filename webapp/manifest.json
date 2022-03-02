@@ -131,6 +131,9 @@
         
         { "pattern": "consolidAppBox", "name": "consolidAppBox", "target": "consolidAppBox" },
 
+        { "pattern": "commuteType", "name": "commuteType", "target": "commuteType" },
+        { "pattern": "commuteType/{oDataKey}", "name": "commuteType-detail", "target": "commuteTypeDetail" },
+
         { "pattern": "employee/:pernr:/:orgtx:/:orgeh:", "name": "employee", "target": "employee" },
         { "pattern": "m/employee", "name": "m/employee", "target": "m/employee" },
         { "pattern": "mobile/employee/:pernr:", "name": "mobile/employee", "target": "mobile/employee" },
@@ -251,6 +254,9 @@
         "congDetail": { "viewId": "congDetail", "viewPath": "sap.ui.yesco.mvc.view.congratulation", "viewName": "CongDetail" },
         "mobile/congratulation": { "viewId": "mobile_congratulation", "viewPath": "sap.ui.yesco.mvc.view.congratulation.mobile", "viewName": "Congratulation" },
         "mobile/congDetail": { "viewId": "mobile_congDetail", "viewPath": "sap.ui.yesco.mvc.view.congratulation.mobile", "viewName": "CongDetail" },
+        
+        "commuteType": { "viewId": "commuteType", "viewPath": "sap.ui.yesco.mvc.view.commuteType", "viewName": "CommuteType" },
+        "commuteTypeDetail": { "viewId": "commuteTypeDetail", "viewPath": "sap.ui.yesco.mvc.view.commuteType", "viewName": "CommuteTypeDetail" },
         
         "consolidAppBox": { "viewId": "consolidAppBox", "viewPath": "sap.ui.yesco.mvc.view.consolidAppBox", "viewName": "ConsolidAppBox" },
         
