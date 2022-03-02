@@ -5,7 +5,7 @@
   <VBox class="vCardBox sapUiMediumMarginBottom" visible="{/Hass}">
     <HBox alignItems="Center" class="table-toolbar">
       <Title level="H2" text="{/FormData/Title}"/>
-      <Button text="{i18n>LABEL_29002}" type="Emphasized" press=".onSaveBtn" />
+      <Button text="{i18n>LABEL_29002}" type="Emphasized" press=".onManagerBtn" />
     </HBox>
     <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0px" class="form-grid">
       <Label text="{i18n>LABEL_01008}" />
@@ -56,10 +56,10 @@
       <VBox>
         <Text text="{i18n>MSG_29001}"/>
         <HBox>
-          <ComboBox items="{/AccType}" selectedKey="{/FormData/A}" change=".onAccChange">
+          <ComboBox items="{/AccType}" selectedKey="{/FormData/A}" change=".onAccChange" class="mr-20-px">
             <core:Item text="{Ztext}" key="{Zcode}" />
           </ComboBox>
-          <ComboBox items="{/AccType}" selectedKey="{/FormData/B}" change=".onAccChange">
+          <ComboBox items="{/AccType}" selectedKey="{/FormData/B}" change=".onAccChange" class="mr-20-px">
             <core:Item text="{Ztext}" key="{Zcode}" />
           </ComboBox>
           <ComboBox items="{/AccType}" selectedKey="{/FormData/C}" change=".onAccChange">

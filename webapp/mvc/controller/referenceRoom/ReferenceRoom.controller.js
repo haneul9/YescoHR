@@ -28,6 +28,20 @@ sap.ui.define(
           busy: false,
           Hass: this.isHass(),
           FormData: {},
+          ManagerList: [
+            {
+              Atext: '인재개발팀',
+              Zname: '이수만 차장',
+            },
+            {
+              Atext: '인재개발팀',
+              Zname: '정재훈 과장',
+            },
+            {
+              Atext: '노경지원팀',
+              Zname: '이재훈 대리',
+            },
+          ],
           ReferenceList: [
             {
               Stext: '예스코',
@@ -125,6 +139,33 @@ sap.ui.define(
       // override AttachFileCode
       getApprovalType() {
         return 'HR02';
+      },
+
+      // 관리자조회 Dialog 닫기클릭
+      onClick(oEvent) {
+        oEvent.getSource().getParent().close();
+      },
+
+      // 관리자조회
+      onManagerBtn() {
+        const oView = this.getView();
+
+        setTimeout(() => {
+          if (!this._pManagerDialog) {
+            this._pManagerDialog = Fragment.load({
+              id: oView.getId(),
+              name: 'sap.ui.yesco.mvc.view.referenceRoom.fragment.Manager',
+              controller: this,
+            }).then(function (oDialog) {
+              oView.addDependent(oDialog);
+              return oDialog;
+            });
+          }
+
+          this._pManagerDialog.then(async function (oDialog) {
+            oDialog.open();
+          });
+        }, 100);
       },
 
       // AttachFileTable Settings
