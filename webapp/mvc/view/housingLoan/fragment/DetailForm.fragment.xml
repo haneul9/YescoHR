@@ -44,7 +44,7 @@
                 <Input value="{
                     path: '/FormData/Lnamt',
                     type: 'sap.ui.yesco.mvc.model.type.Currency'
-                }" liveChange=".loanCost" maxLength="{/FieldLimit/Lnamt}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="sapUiTinyMarginEnd required"/>
+                }" liveChange=".loanCost" maxLength="16" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="sapUiTinyMarginEnd required"/>
                 <Text text="{/loanAmount/Text}"/>
             </HBox>
             <Label text="{i18n>LABEL_00266}" visible="{= !!${/FormData/Lnsta} }"/>
