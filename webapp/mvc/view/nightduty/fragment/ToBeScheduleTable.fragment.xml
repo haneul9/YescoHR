@@ -80,10 +80,10 @@
               <m:Column popinDisplay="Inline" demandPopin="true">
                 <m:Label text="{i18n>LABEL_00209}" />
               </m:Column>
-              <m:Column popinDisplay="Inline" demandPopin="false" minScreenWidth="Tablet">
+              <m:Column popinDisplay="Inline" minScreenWidth="Tablet">
                 <m:Label text="{i18n>LABEL_00226}" />
               </m:Column>
-              <m:Column popinDisplay="Inline" demandPopin="false">
+              <m:Column popinDisplay="Inline">
                 <m:Label text="{i18n>LABEL_00215}" />
               </m:Column>
             </m:suggestionColumns>
