@@ -41,7 +41,9 @@ sap.ui.define(
         return {
           menuId: '',
           FormStatus: '',
+          BirthMaxDate: moment().toDate(),
           FormData: {},
+          benefitDate: '',
           Settings: {},
           BenefitType: [],
           BenefitCause: [],
@@ -263,6 +265,7 @@ sap.ui.define(
               oDetailModel.setProperty('/TargetList', []);
               oDetailModel.setProperty('/FormData/Zname', '');
               oDetailModel.setProperty('/FormData/Zbirthday', null);
+              oDetailModel.setProperty('/FormData/Conddate', null);
 
               resolve();
             },
@@ -285,6 +288,12 @@ sap.ui.define(
         const sWerks = this.getSessionProperty('Werks');
 
         oDetailModel.setProperty('/FormData/Conretx', sSelectText);
+        oDetailModel.setProperty(
+          '/benefitDate',
+          _.find(oDetailModel.getProperty('/BenefitCause'), (e) => {
+            return sSelectKey === e.Zcode;
+          }).Zchar1
+        );
 
         this.getNomalPay(this);
 
@@ -327,6 +336,16 @@ sap.ui.define(
         });
       },
 
+      // 대상자 생년월일
+      onBirthDate(oEvent) {
+        const oDetailModel = this.getViewModel();
+        const sAddDate = oDetailModel.getProperty('/benefitDate');
+
+        if (!!sAddDate) {
+          oDetailModel.setProperty('/FormData/Conddate', moment(oEvent.getSource().getDateValue()).add('year', sAddDate).toDate());
+        }
+      },
+
       // 대상자 관계선택시
       onRelationChange(oEvent) {
         const oDetailModel = this.getViewModel();
@@ -342,6 +361,7 @@ sap.ui.define(
           oBirthDatePicker.setEditable(false);
         } else {
           oDetailModel.setProperty('/FormData/Zbirthday', null);
+          oDetailModel.setProperty('/FormData/Conddate', null);
           oDetailModel.setProperty('/FormData/Zname', '');
           oRelationTxt.setEditable(true);
           oBirthDatePicker.setEditable(true);
@@ -462,6 +482,12 @@ sap.ui.define(
                   oDetailModel.setProperty('/FormData/Zbirthday', oChildList[0].Zbirthday);
                   oDetailModel.setProperty('/FormData/Kdsvh', oChildList[0].Kdsvh);
                   oDetailModel.setProperty('/FormData/Zname', oChildList[0].Zname);
+
+                  const sAddDate = oDetailModel.getProperty('/benefitDate');
+
+                  if (!!sAddDate) {
+                    oDetailModel.setProperty('/FormData/Conddate', moment(oChildList[0].Zbirthday).add('year', sAddDate).toDate());
+                  }
                 }
 
                 oDetailModel.setProperty('/TargetList', oChildList);
@@ -486,6 +512,12 @@ sap.ui.define(
         oDetailModel.setProperty('/FormData/Zbirthday', oRowData.Zbirthday);
         oDetailModel.setProperty('/FormData/Kdsvh', oRowData.Kdsvh);
         oDetailModel.setProperty('/FormData/Zname', oRowData.Zname);
+
+        const sAddDate = oDetailModel.getProperty('/benefitDate');
+
+        if (!!sAddDate) {
+          oDetailModel.setProperty('/FormData/Conddate', moment(oRowData.Zbirthday).add('year', sAddDate).toDate());
+        }
         this.byId('targetSettingsDialog').close();
       },
 
