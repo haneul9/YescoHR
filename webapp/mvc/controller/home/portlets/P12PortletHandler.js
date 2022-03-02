@@ -39,7 +39,7 @@ sap.ui.define(
       async readContentData() {
         const oModel = this.getController().getModel(ServiceNames.WORKTIME);
         const mPayload = {
-          Menid: AppUtils.getAppComponent().getMenuModel().getMenid('workTime'),
+          Menid: this.getMenid('workTime'),
         };
 
         return Client.getEntitySet(oModel, 'WorkingTime', mPayload);

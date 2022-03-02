@@ -141,7 +141,7 @@ sap.ui.define(
 
       // override AttachFileCode
       getApprovalType() {
-        return 'HR17';
+        return 'HR18';
       },
 
       getCurrentLocationText(oArguments) {
@@ -360,7 +360,7 @@ sap.ui.define(
         }
 
         // 사유
-        if (!mDialogData.Atrsn) {
+        if (!mDialogData.Chgrsn) {
           MessageBox.alert(this.getBundleText('MSG_27009'));
           return true;
         }

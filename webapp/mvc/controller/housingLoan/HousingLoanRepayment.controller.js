@@ -75,6 +75,8 @@ sap.ui.define(
 
         const oDetailModel = this.getViewModel();
         oDetailModel.setData(this.initializeModel());
+        // Input Field Imited
+        oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'LoanRepayAppl')));
 
         if (!!oParameter.lonid) {
           const sLonid = oParameter.lonid;

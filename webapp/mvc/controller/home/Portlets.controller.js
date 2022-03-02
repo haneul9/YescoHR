@@ -232,7 +232,7 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.COMMON);
         const sUrl = 'PortletInfo';
         const mPayload = {
-          Mode: 'R',
+          Mode: this.bMobile ? 'M' : 'R',
           PortletInfoTab1Set: [],
           PortletInfoTab2Set: [],
         };

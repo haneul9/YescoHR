@@ -10,16 +10,16 @@
             <Label text="{i18n>LABEL_00210}" />
             <HBox class="mb-0 " alignItems="Center">
                 <Text text="{i18n>LABEL_05004}" class="sapUiTinyMarginEnd" />
-                <Input value="{/FormData/Lnmhg}" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" class="sapUiTinyMarginEnd required"/>
+                <Input value="{/FormData/Lnmhg}" maxLength="{/FieldLimit/Lnmhg}" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" class="sapUiTinyMarginEnd required"/>
                 <Text text="{i18n>LABEL_05005}" class="sapUiTinyMarginEnd" />
-                <Input value="{/FormData/Fnmhg}" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" class="required"/>
+                <Input value="{/FormData/Fnmhg}" maxLength="{/FieldLimit/Fnmhg}" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" class="required"/>
             </HBox>
             <Label text="{i18n>LABEL_05006}" />
             <VBox>
                 <Input value="{
                     path: '/FormData/Regno',
                     formatter: '.setResident'
-                }" liveChange=".ResidentNumber" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" class="required"/>
+                }" liveChange=".ResidentNumber" maxLength="{/FieldLimit/Regno}" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" class="required"/>
             </VBox>
             <Label text="{i18n>LABEL_05007}"/>
             <VBox>

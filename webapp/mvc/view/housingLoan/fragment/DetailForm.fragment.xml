@@ -11,7 +11,7 @@
                 <ComboBox items="{/LaonType}" selectedKey="{/FormData/Lntyp}" change=".onLaonType" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
-                <Input value="{/FormData/Lntyptx}" editable="false" visible="{= ${/FormData/Lnsta} !== '10' &amp;&amp; !!${/FormData/Lnsta} }" />
+                <Input value="{/FormData/Lntyptx}" maxLength="{/FieldLimit/Lntyptx}" editable="false" visible="{= ${/FormData/Lnsta} !== '10' &amp;&amp; !!${/FormData/Lnsta} }" />
             </VBox>
             <Label text="{i18n>LABEL_00261}" />
             <VBox>
@@ -22,7 +22,7 @@
                 <ComboBox items="{/AssuranceType}" selectedKey="{/FormData/Asmtd}" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
-                <Input value="{/FormData/Asmtdtx}" editable="false" visible="{= ${/FormData/Lnsta} !== '10' &amp;&amp; !!${/FormData/Lnsta} }" />
+                <Input value="{/FormData/Asmtdtx}" maxLength="{/FieldLimit/Asmtdtx}" editable="false" visible="{= ${/FormData/Lnsta} !== '10' &amp;&amp; !!${/FormData/Lnsta} }" />
             </VBox>
             <Label text="{i18n>LABEL_07020}"/>
             <VBox>
@@ -37,14 +37,14 @@
             </HBox>
             <Label text="{i18n>LABEL_00152}"/>
             <VBox>
-                <Input value="{/FormData/Addre}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required"/>
+                <Input value="{/FormData/Addre}" maxLength="{/FieldLimit/Addre}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required"/>
             </VBox>
             <Label text="{i18n>LABEL_07022}"/>
             <HBox>
                 <Input value="{
                     path: '/FormData/Lnamt',
                     type: 'sap.ui.yesco.mvc.model.type.Currency'
-                }" liveChange=".loanCost" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="sapUiTinyMarginEnd required"/>
+                }" liveChange=".loanCost" maxLength="16" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="sapUiTinyMarginEnd required"/>
                 <Text text="{/loanAmount/Text}"/>
             </HBox>
             <Label text="{i18n>LABEL_00266}" visible="{= !!${/FormData/Lnsta} }"/>
@@ -91,7 +91,7 @@
             </VBox>
             <Label text="{i18n>LABEL_00163}"/>
             <VBox>
-                <Input value="{/FormData/Zbigo}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
+                <Input value="{/FormData/Zbigo}" maxLength="{/FieldLimit/Zbigo}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
                 <layoutData>
                     <grid:GridItemLayoutData gridColumn="2 / 5"/>
                 </layoutData>

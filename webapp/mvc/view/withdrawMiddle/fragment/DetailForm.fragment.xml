@@ -16,7 +16,7 @@
                 <Input value="{
                     path: '/FormData/Wtamt',
                     type: 'sap.ui.yesco.mvc.model.type.Currency'
-                }" liveChange=".costCalculation" width="auto" editable="{= !${/FormData/ZappStatAl} }" class="required" />
+                }" maxLength="16" liveChange=".costCalculation" width="auto" editable="{= !${/FormData/ZappStatAl} }" class="required" />
             </VBox>
         </grid:CSSGrid>
     </VBox>

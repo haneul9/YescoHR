@@ -40,7 +40,7 @@
             </VBox>
             <Label text="{i18n>LABEL_02014}"/>
             <VBox>
-              <custom:DatePicker id="BirthDatePicker" maxDate="{/BirthMaxDate}" dateValue="{ path: '/FormData/Zbirthday', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="required"/>
+              <custom:DatePicker id="BirthDatePicker" maxDate="{/BirthMaxDate}" change=".onBirthDate" dateValue="{ path: '/FormData/Zbirthday', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="required"/>
             </VBox>
             <Label text="{i18n>LABEL_02008}"/>
             <VBox>
@@ -60,11 +60,11 @@
             </VBox>
             <Label text="{i18n>LABEL_02016}"/>
             <VBox>
-              <Input value="{/FormData/Zeloc}" class="required" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+              <Input value="{/FormData/Zeloc}" maxLength="{/FieldLimit/Zeloc}" class="required" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             </VBox>
             <Label text="{i18n>LABEL_02017}"/>
             <HBox class="mb-0">
-              <Input id="RelationTxt" class="required" value="{/FormData/Zname}" width="150px" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+              <Input id="RelationTxt" maxLength="{/FieldLimit/Zeloc}" class="required" value="{/FormData/Zname}" width="150px" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
               <Button id="RelationBtn" icon="sap-icon://accept" class="InputinnerButton" text="{i18n>LABEL_00112}" press=".onTargetDialog" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             </HBox>
             <HBox></HBox>

@@ -27,9 +27,10 @@ sap.ui.define(
 
       async addPortlet() {
         const oPortletModel = this.getPortletModel();
+        const sFragmentName = this.bMobile ? 'sap.ui.yesco.mvc.view.home.mobile.P10PortletBox' : 'sap.ui.yesco.mvc.view.home.fragment.P10PortletBox';
         const oPortletBox = await Fragment.load({
           id: this.getController().getView().getId(),
-          name: 'sap.ui.yesco.mvc.view.home.fragment.P10PortletBox',
+          name: sFragmentName,
           controller: this,
         });
 
@@ -75,7 +76,7 @@ sap.ui.define(
       async readContentData() {
         const oModel = this.getController().getModel(ServiceNames.WORKTIME);
         const mPayload = {
-          Menid: AppUtils.getAppComponent().getMenuModel().getMenid('workTime'),
+          Menid: this.getMenid('workTime'),
         };
 
         return Client.getEntitySet(oModel, 'WorkingTime', mPayload);

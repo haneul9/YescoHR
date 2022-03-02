@@ -81,10 +81,6 @@ sap.ui.define(
         return mPortletData;
       },
 
-      getMenid(sMenuUrl) {
-        return AppUtils.getAppComponent().getMenuModel().getMenid(sMenuUrl);
-      },
-
       getMenuName(sMenid) {
         return AppUtils.getAppComponent().getMenuModel().getProperties(sMenid).Mname;
       },

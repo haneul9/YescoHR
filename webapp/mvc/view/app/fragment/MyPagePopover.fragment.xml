@@ -1,0 +1,37 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core">
+  <Popover title="{i18n>LABEL_01005}" placement="Top" horizontalScrolling="false" verticalScrolling="false" class="full-popover" busy="{busy}" busyIndicatorDelay="0">
+    <content>
+      <VBox>
+        <HBox width="100%" height="146px">
+          <VBox width="146px">
+            <Image src="{sessionModel>/Photo}" mode="Background" class="member-photo" width="146px" height="146px" />
+          </VBox>
+          <VBox justifyContent="Center" class="appointee-info">
+            <Text text="{sessionModel>/Ename}" class="name" />
+            <Text text="{sessionModel>/Zzjikgbt} / {sessionModel>/Zzjikcht}" />
+            <Text text="{sessionModel>/Pbtxt} {sessionModel>/Btrtx}" />
+            <Text text="{sessionModel>/Orgtx}" />
+          </VBox>
+        </HBox>
+        <VBox width="100%">
+          <layoutData>
+            <FlexItemData growFactor="1" />
+          </layoutData>
+          <HBox justifyContent="SpaceBetween">
+            <Label text="{i18n>LABEL_01601}" />
+            <Switch state="true" customTextOn=" " customTextOff=" " change=".onChangeMobilePushOnOff" />
+          </HBox>
+          <HBox justifyContent="SpaceBetween">
+            <Label text="{i18n>LABEL_01004}" />
+            <core:Icon src="sap-icon://navigation-right-arrow" alt="{i18n>LABEL_01004}" />
+          </HBox>
+          <HBox justifyContent="SpaceBetween">
+            <Label text="{i18n>LABEL_01602}" />
+            <Text text="ver. 1.0.0.0" />
+          </HBox>
+        </VBox>
+      </VBox>
+    </content>
+  </Popover>
+</core:FragmentDefinition>

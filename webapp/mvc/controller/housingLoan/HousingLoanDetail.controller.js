@@ -76,6 +76,8 @@ sap.ui.define(
         oDetailModel.setProperty('/menid', sMenid);
         oDetailModel.setProperty('/busy', true);
         oDetailModel.setProperty('/ViewKey', sDataKey);
+        // Input Field Imited
+        oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'LoanAmtAppl')));
 
         this.getList().then(() => {
           this.setFormData();

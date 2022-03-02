@@ -28,7 +28,10 @@ sap.ui.define(
     'use strict';
 
     return BaseObject.extend('sap.ui.yesco.mvc.controller.app.control.Menus', {
+      bMobile: false,
+
       constructor: function (oAppController) {
+        this.bMobile = AppUtils.isMobile();
         this.oAppController = oAppController;
         this.oMenuButton = null;
         this.oMenuLayer = null;
@@ -243,9 +246,10 @@ sap.ui.define(
             Menid: sMenid,
           };
 
-          const mData = await Client.get(oCommonModel, 'GetMenuUrl', mKeyMap);
-          if (mData.Mnurl) {
-            this.moveToMenu(mData.Mnurl);
+          const { Mnurl } = await Client.get(oCommonModel, 'GetMenuUrl', mKeyMap);
+          if (Mnurl) {
+            const sMenuUrl = this.bMobile ? `mobile/${Mnurl}` : Mnurl;
+            this.moveToMenu(sMenuUrl);
           } else {
             this.failMenuLink();
           }

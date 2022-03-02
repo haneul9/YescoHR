@@ -26,7 +26,7 @@
       </VBox>
       <Label text="{i18n>LABEL_26011}"/>
       <VBox>
-        <Input value="{/FormData/Bankn}" liveChange=".onAccChangeInput" editable="{= !${/FormData/ZappStatAl} }" />
+        <Input value="{/FormData/Bankn}" maxLength="{/FieldLimit/Bankn}" liveChange=".onAccChangeInput" editable="{= !${/FormData/ZappStatAl} }" />
       </VBox>
       <Label text="{i18n>LABEL_26012}"/>
       <VBox>

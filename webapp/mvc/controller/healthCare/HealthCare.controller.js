@@ -86,7 +86,7 @@ sap.ui.define(
           oListModel.setProperty('/List', aTableList);
           oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
           oListModel.setProperty('/listInfo/visibleStatus', 'X');
-          oListModel.setProperty('/listInfo/Title', this.getBundleText('LABEL_14006'));
+          oListModel.setProperty('/listInfo/Title', this.getBundleText('LABEL_21019'));
 
           const aTotaltList = await Client.getEntitySet(oModel, 'HealthCareCount');
 
@@ -128,7 +128,7 @@ sap.ui.define(
           oListModel.setProperty('/List', aTableList);
           oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
           oListModel.setProperty('/listInfo/visibleStatus', 'X');
-          oListModel.setProperty('/listInfo/Title', this.getBundleText('LABEL_14006'));
+          oListModel.setProperty('/listInfo/Title', this.getBundleText('LABEL_21019'));
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {

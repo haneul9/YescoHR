@@ -9,7 +9,7 @@
         <Text text="{i18n>MSG_00001}" />
       </HBox>
       <HBox width="100%" visible="{= ${listCount} &gt; 0 }">
-        <VBox items="{list}" width="54%">
+        <VBox items="{list}" width="55%">
           <layoutData>
             <FlexItemData growFactor="1" />
           </layoutData>
@@ -21,8 +21,8 @@
             </Link>
           </HBox>
         </VBox>
-        <VBox items="{list}" width="24%">
-          <HBox height="2rem" justifyContent="End" alignItems="Center">
+        <VBox items="{list}" width="23%">
+          <HBox height="2rem" alignItems="Center" class="pl-5-px">
             <Text text="{ path: 'Sdate', type: 'sap.ui.yesco.mvc.model.type.Date' }" wrapping="false" />
           </HBox>
         </VBox>

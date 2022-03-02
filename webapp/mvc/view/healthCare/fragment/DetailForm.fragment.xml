@@ -39,11 +39,11 @@
             </VBox>
             <Label text="{i18n>LABEL_21018}"/>
             <VBox>
-                <Input value="{/FormData/Ihopt}" editable="{/Fixed}" class="required"/>
+                <Input value="{/FormData/Ihopt}" maxLength="{/FieldLimit/Ihopt}" editable="{/Fixed}" class="required"/>
             </VBox>
             <Label text="{i18n>LABEL_21013}"/>
             <VBox>
-                <Input value="{/FormData/Instx}" editable="{/Fixed}" class="required"/>
+                <Input value="{/FormData/Instx}" maxLength="{/FieldLimit/Instx}" editable="{/Fixed}" class="required"/>
                 <layoutData>
                     <grid:GridItemLayoutData gridColumn="2 / 5"/>
                 </layoutData>
