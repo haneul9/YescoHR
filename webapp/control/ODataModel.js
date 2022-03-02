@@ -52,7 +52,7 @@ sap.ui.define(
       convertValue(mData, sKey, type) {
         const sValue = _.get(mData, sKey);
 
-        if (_.isEqual(type, 'Edm.Int16')) {
+        if (_.startsWith(type, 'Edm.Int')) {
           _.set(mData, sKey, _.toNumber(sValue));
         } else if (_.isEqual(sValue, 'ALL')) {
           _.set(mData, sKey, _.noop());

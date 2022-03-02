@@ -1,0 +1,15 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.employee.Document"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc">
+    <Page showHeader="false">
+        <VBox class="contents">
+            <HBox>
+                <VBox id="profileBody" class="main-profile expanded" busyIndicatorDelay="0" busy="{/employee/busy}">
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.ProfileOverview" type="XML" />
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.ProfileTab" type="XML" />
+                </VBox>
+            </HBox>
+        </VBox>
+    </Page>
+</mvc:View>

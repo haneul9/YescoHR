@@ -1,0 +1,66 @@
+<core:FragmentDefinition xmlns="sap.ui.table"
+    xmlns:m="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:custom="sap.ui.yesco.control">
+    <m:Dialog showHeader="false" contentWidth="1470px" draggable="true">
+        <m:content>
+            <m:VBox class="hCardBox mb-16-px" visible="{/dialog/busy}">
+                <custom:Placeholder />
+            </m:VBox>
+            <m:VBox class="dialog-content-table" visible="{= !${/dialog/busy} }">
+                <m:HBox class="header-wrap" height="75px" justifyContent="SpaceBetween">
+                    <m:HBox class="header" alignItems="Center">
+                        <m:Title level="H3" text="{i18n>LABEL_10072}" class="sapUiSmallMarginEnd" />
+                        <m:Text class="desc-txt" text="{/summary/Orgtx2} {/summary/ZzappgrTxt}" />
+                    </m:HBox>
+                    <m:HBox>
+                        <m:Label text="{/dialog/gradeTx}" />
+                    </m:HBox>
+                </m:HBox>
+                <m:HBox id="gradeByDepartContainer" items="{/departments}">
+                    <Table selectionMode="{= ${/isActive} &amp;&amp; ${/dialog/mode} === 'A' ? 'MultiToggle' : 'None' }" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/list}" visibleRowCountMode="Auto" minAutoRowCount="10" noData="{i18n>MSG_00001}" rowSelectionChange=".onChangeByDepartSelection">
+                        <customData>
+                            <core:CustomData key="Orgeh" value="{Orgeh}" />
+                        </customData>
+                        <extension>
+                            <m:HBox class="header-wrap">
+                                <m:HBox class="header" alignItems="Center">
+                                    <m:Title level="H4" text="{Orgtx}" />
+                                </m:HBox>
+                            </m:HBox>
+                        </extension>
+                        <columns>
+                            <Column width="{= ${/dialog/mode} === 'A' ? 'auto' : '30%' }">
+                                <m:Label text="{i18n>LABEL_00210}"/>
+                                <template>
+                                    <m:Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                                </template>
+                            </Column>
+                            <Column width="30%">
+                                <m:Label text="{i18n>LABEL_10082}"/>
+                                <template>
+                                    <m:Text text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                                </template>
+                            </Column>
+                            <Column width="{= ${/dialog/mode} === 'B' ? 'auto' : '30%' }">
+                                <m:Label text="{i18n>LABEL_10089}"/>
+                                <template>
+                                    <m:VBox>
+                                        <m:Text text="{FappTx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" visible="{= !${/isActive} || ${/dialog/mode} === 'A' }" />
+                                        <m:ComboBox class="small-table-input" selectedKey="{Fapp2}" items="{ path: '/grade', templateShareable: true }" visible="{= ${/isActive} &amp;&amp; ${/dialog/mode} === 'B' }">
+                                            <core:Item text="{text}" key="{code}" />
+                                        </m:ComboBox>
+                                    </m:VBox>
+                                </template>
+                            </Column>
+                        </columns>
+                    </Table>
+                </m:HBox>
+            </m:VBox>
+        </m:content>
+        <m:buttons>
+            <m:Button type="Emphasized" text="{i18n>LABEL_00103}" visible="{/isActive}" press=".onPressGradeByDepartDialogApply"/>
+            <m:Button text="{i18n>LABEL_00115}" press=".onPressGradeByDepartDialogClose"/>
+        </m:buttons>
+    </m:Dialog>
+</core:FragmentDefinition>

@@ -1122,10 +1122,10 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 
 .header-wrap {justify-content:space-between; align-items:center; margin-top:-25px; height:75px}
 .header-wrap > .sapMFlexItem {display:flex}
-.vCardBox .header { display:flex; align-items:flex-end; margin-bottom:0rem; margin-top:3px}
-.vCardBox .header > div {display:flex}
-.vCardBox .header h3.sapMTitle {margin-bottom:0rem}
-.vCardBox .header h3.sapMTitle.sapUiSmallMarginEnd {margin-right:5px!important}
+.vCardBox .header, .header-wrap .header { display:flex; align-items:flex-end; margin-bottom:0rem; margin-top:3px}
+.vCardBox .header > div, .header-wrap .header > div {display:flex}
+.vCardBox .header h3.sapMTitle, .header-wrap .header h3.sapMTitle {margin-bottom:0rem}
+.vCardBox .header h3.sapMTitle.sapUiSmallMarginEnd, .header-wrap .header h3.sapMTitle.sapUiSmallMarginEnd {margin-right:5px!important}
 
 .status-wrap {margin-right:20px}
 .status-wrap .sapMFlexItem { justify-content:flex-start; display:flex; align-items:center; font-weight:500}
@@ -1816,10 +1816,10 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .perGrade-wrap .depart {margin-left: 12px; font-size: 12px; color: #8f8f8f;}
 .perGrade-wrap .grade-name { height: 40px; }
 .perGrade-wrap .grade-name .sapMText { font-weight:800; }
-.perGrade-wrap .grade-name.grade-top { background-color: var(--PerformanceGradeColor1); }
-.perGrade-wrap .grade-name.grade-middle { background-color: var(--PerformanceGradeColor2); }
-.perGrade-wrap .grade-name.grade-bottom { background-color: var(--PerformanceGradeColor3); }
-.perGrade-wrap .grade-name.grade-none { background-color: var(--PerformanceGradeColor4); }
+.perGrade-wrap > .sapMFlexItem:nth-child(1) .grade-name { background-color: var(--PerformanceGradeColor1); }
+.perGrade-wrap > .sapMFlexItem:nth-child(2) .grade-name { background-color: var(--PerformanceGradeColor2); }
+.perGrade-wrap > .sapMFlexItem:nth-child(3) .grade-name { background-color: var(--PerformanceGradeColor3); }
+.perGrade-wrap > .sapMFlexItem:nth-child(4) .grade-name { background-color: var(--PerformanceGradeColor4); }
 .perGrade-wrap .perGrade-container { height: 100%; box-sizing: border-box; padding: 15px; }
 .perGrade-wrap .perGrade-container .score-box { margin-left: 8px; }
 .perGrade-wrap .perGrade-container .score-box .sapMText { font-size: 12px; }
@@ -1933,6 +1933,10 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .portlet-box .employee-total-count .sapMObjStatusText {font-weight: 500;}
 .portlet-box .employee-count {width:100%; text-align:center}
 .portlet-box .employee-count .sapMObjStatusText {color: var(--FontColorNormal); font-weight: 500;}
+
+.sapUiSizeCompact .sapMInputBase.small-table-input { height: 30px !important; }
+.small-table-input .sapMInputBaseContentWrapper input { padding-top: 0px !important; padding-bottom: 0px !important; }
+.small-table-input .sapMInputBaseIcon { line-height: 1.7rem !important; }
 
 #employee-a02-chart-container {height:66px;}
 #employee-a06-chart-container {height:76px;}
