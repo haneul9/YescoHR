@@ -8,13 +8,13 @@
           <table:Column width="60%">
             <Label text="{i18n>LABEL_00226}"/>
             <table:template>
-              <Text text="{Atext}" wrapping="false" />
+              <Text text="{Atext}" textAlign="Center" width="100%" wrapping="false" />
             </table:template>
           </table:Column>
           <table:Column>
             <Label text="{i18n>LABEL_29008}"/>
             <table:template>
-              <Text text="{Zname}" wrapping="false" />
+              <Text text="{Zname}" textAlign="Center" width="100%" wrapping="false" />
             </table:template>
           </table:Column>
         </table:columns>
