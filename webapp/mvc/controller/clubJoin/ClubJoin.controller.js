@@ -103,8 +103,8 @@ sap.ui.define(
         const oListModel = this.getViewModel();
         const oTable = this.byId('clubTable');
         const oSearch = oListModel.getProperty('/search');
-        const dDate = moment(oSearch.secondDate).hours(10).toDate();
-        const dDate2 = moment(oSearch.date).hours(10).toDate();
+        const dDate = moment(oSearch.secondDate).hours(9).toDate();
+        const dDate2 = moment(oSearch.date).hours(9).toDate();
         const sMenid = this.getCurrentMenuId();
         const aFilters = [
           // prettier 방지주석

@@ -108,8 +108,8 @@ sap.ui.define(
         const oListModel = this.getViewModel();
         const oTable = this.byId('familyTable');
         const oSearchDate = oListModel.getProperty('/searchDate');
-        const dDate = moment(oSearchDate.secondDate).hours(10).toDate();
-        const dDate2 = moment(oSearchDate.date).hours(10).toDate();
+        const dDate = moment(oSearchDate.secondDate).hours(9).toDate();
+        const dDate2 = moment(oSearchDate.date).hours(9).toDate();
 
         oListModel.setProperty('/busy', true);
 

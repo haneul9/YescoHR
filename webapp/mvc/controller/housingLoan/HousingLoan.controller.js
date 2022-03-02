@@ -86,8 +86,8 @@ sap.ui.define(
         const oListModel = this.getViewModel();
         const oTable = this.byId('loanTable');
         const oSearch = oListModel.getProperty('/search');
-        const dDate = moment(oSearch.secondDate).hours(10).toDate();
-        const dDate2 = moment(oSearch.date).hours(10).toDate();
+        const dDate = moment(oSearch.secondDate).hours(9).toDate();
+        const dDate2 = moment(oSearch.date).hours(9).toDate();
         const vLoanType = !oSearch.Lntyp || oSearch.Lntyp === 'ALL' ? '' : oSearch.Lntyp;
         const sMenid = this.getCurrentMenuId();
 

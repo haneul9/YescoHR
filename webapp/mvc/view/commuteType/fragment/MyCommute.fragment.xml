@@ -8,7 +8,7 @@
             <HBox class="desc">
                 <Text text="{i18n>MSG_05001}" />
                 <ObjectStatus text="{
-                    path: '/Total/Famcnt',
+                    path: '/MyCom/Famcnt',
                     formatter: '.formatNumber'
                 }" state="Indication05" class="sapUiSmallMarginBottom" />
                 <Text text="{i18n>MSG_05018}" />
@@ -16,7 +16,7 @@
             <HBox class="desc pt-16-px">
                 <Text text="{i18n>MSG_05003}"/>
                 <ObjectStatus text="{
-                    path: '/Total/Famamt',
+                    path: '/MyCom/Famamt',
                     formatter: '.formatPay'
                 }" state="Indication05" class="font-30-px"/>
                 <Text text="{i18n>MSG_05002}"/>

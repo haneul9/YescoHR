@@ -36,6 +36,7 @@ sap.ui.define(
         return {
           busy: false,
           Data: [],
+          MyCom: {},
           SelectedRow: {},
           searchDate: {
             date: moment().hours(9).toDate(),
@@ -71,7 +72,7 @@ sap.ui.define(
           oViewModel.setProperty('/parameter', '');
         }
 
-        this.getRouter().navTo('familyInfo-detail', { oDataKey: 'N' });
+        this.getRouter().navTo('commuteType-detail', { oDataKey: 'N' });
       },
 
       // override AttachFileCode
@@ -98,16 +99,16 @@ sap.ui.define(
         const iSelectedIndex = oEventSource.getSelectedIndex();
 
         oEventSource.setSelectedIndex(iSelectedIndex);
-        oViewModel.setProperty('/SelectedRow', oViewModel.getProperty(`/FamilyList/${iSelectedIndex}`));
+        oViewModel.setProperty('/SelectedRow', oViewModel.getProperty(`/CommuteList/${iSelectedIndex}`));
       },
 
       onSearch() {
         const oModel = this.getModel(ServiceNames.PA);
         const oListModel = this.getViewModel();
-        const oTable = this.byId('familyTable');
+        const oTable = this.byId('commuteTable');
         const oSearchDate = oListModel.getProperty('/searchDate');
-        const dDate = moment(oSearchDate.secondDate).hours(10).toDate();
-        const dDate2 = moment(oSearchDate.date).hours(10).toDate();
+        const dDate = moment(oSearchDate.secondDate).hours(9).toDate();
+        const dDate2 = moment(oSearchDate.date).hours(9).toDate();
 
         oListModel.setProperty('/busy', true);
 
@@ -117,9 +118,8 @@ sap.ui.define(
             if (oData) {
               const oList = oData.results;
 
-              oListModel.setProperty('/FamilyList', oList);
+              oListModel.setProperty('/CommuteList', oList);
               oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: oList }));
-              oListModel.setProperty('/listInfo/infoMessage', this.getBundleText('MSG_05005'));
               oListModel.setProperty('/busy', false);
             }
           },
@@ -140,7 +140,7 @@ sap.ui.define(
             if (oData) {
               const oList = oData.results[0];
 
-              oListModel.setProperty('/Total', oList);
+              oListModel.setProperty('/MyCom', oList);
             }
           },
           error: (oError) => {
@@ -155,12 +155,12 @@ sap.ui.define(
         const oRowData = oListModel.getProperty(vPath);
 
         oListModel.setProperty('/parameter', oRowData);
-        this.getRouter().navTo('familyInfo-detail', { oDataKey: oRowData.Appno });
+        this.getRouter().navTo('commuteType-detail', { oDataKey: oRowData.Appno });
       },
 
       onPressExcelDownload() {
-        const oTable = this.byId('familyTable');
-        const aTableData = this.getViewModel().getProperty('/FamilyList');
+        const oTable = this.byId('commuteTable');
+        const aTableData = this.getViewModel().getProperty('/CommuteList');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_05001');
 
         TableUtils.export({ oTable, aTableData, sFileName });
