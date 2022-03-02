@@ -24,7 +24,7 @@ sap.ui.define(
     'use strict';
 
     return Controller.extend('sap.ui.yesco.mvc.controller.BaseController', {
-      bMobile: null,
+      bMobile: false,
 
       onInit() {
         this.debug('BaseController.onInit');
