@@ -695,7 +695,7 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .hCardBox.summary-box .title,
 .hCardBox.search-box .title {margin-bottom:20px}
 
-.vCardBox .table-toolbar, .customBox .table-toolbar {justify-content:space-between; align-items:center; margin-top:-25px; height:75px}
+.vCardBox .table-toolbar, .customBox .table-toolbar {justify-content:space-between; align-items:center; margin-top:-25px; height:70px;padding-top: 20px;padding-bottom: 10px;}
 /* .table-toolbar .sapMObjStatus{font-size:20px} */
 .vCardBox .table-toolbar .title {align-items:center}
 .vCardBox .table-toolbar .title > div {height:24px}
@@ -1122,12 +1122,13 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 .summary-box .desc .sapMObjStatus {padding:0 0.4rem; font-size:20px}
 .summary-box .desc .sapMFlexItem {font-weight:600}
 
-.header-wrap {justify-content:space-between; align-items:center; margin-top:-25px; height:75px}
+.header-wrap {justify-content:space-between; align-items:center; margin-top:-25px; height:70px;padding-top: 20px;padding-bottom: 10px;}
 .header-wrap > .sapMFlexItem {display:flex}
 .vCardBox .header, .header-wrap .header { display:flex; align-items:flex-end; margin-bottom:0rem; margin-top:3px}
 .vCardBox .header > div, .header-wrap .header > div {display:flex}
 .vCardBox .header h3.sapMTitle, .header-wrap .header h3.sapMTitle {margin-bottom:0rem}
 .vCardBox .header h3.sapMTitle.sapUiSmallMarginEnd, .header-wrap .header h3.sapMTitle.sapUiSmallMarginEnd {margin-right:5px!important}
+.header-wrap .sapMRbG>.sapMRb, .header-wrap .sapMRbGCol>.sapMRb {margin-right: 16px;}
 
 .status-wrap {margin-right:20px}
 .status-wrap .sapMFlexItem { justify-content:flex-start; display:flex; align-items:center; font-weight:500}
@@ -1143,7 +1144,7 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 .info-area ol ul {padding-left: 22px;margin-bottom:10px;}
 
 .contents-header {position:sticky; top:0; z-index:9; align-items:center; box-shadow:0 3px 3px rgb(0 0 0 / 10%); padding:0; background-color:#fff; height:60px}
-.contents-header + .contents {margin-top:20px}
+.contents-header + .contents, .contents-header + .sapUiHiddenPlaceholder + .contents {margin-top:20px}
 .contents {margin:0 auto; max-width:1600px; min-width:1600px; padding-bottom:20px}
 .sapMPageEnableScrolling > .sapMFlexBox + .sapMFlexBox {margin-top:20px}
 .contents > .sapMFlexBox + .sapMFlexBox {margin-top:20px}
@@ -1271,6 +1272,7 @@ html.sap-desktop .sapMDialog>footer .sapContrast.sapMIBar.sapMFooter-CTX .sapMBt
 .sapUiLayoutCSSGrid.form-grid .sapMLnk, .sapUiLayoutCSSGrid.form-grid .sapMBtn {align-self:center; }
 .sapUiLayoutCSSGrid.form-grid .sapMFlexItem + .sapMFlexItem > .sapMBtn {margin-left:10px; }
 .sapUiLayoutCSSGrid.form-grid .sapUiTinyMarginEnd {margin-right:0.5rem!important; }
+.sapUiLayoutCSSGrid.form-grid .sapUiFup, .sapUiLayoutCSSGrid.form-grid .sapUiFup form{display: flex!important;align-items: center;}
 
 .sapUiLayoutCSSGrid.form-grid.type-b {border-top:0px solid #F5F5F5; border-bottom:0px solid #F5F5F5; padding-top:0px; padding-left:0; background-color:transparent!important; }
 .sapUiLayoutCSSGrid.form-grid.type-b > * {height:100%; min-height:50px; padding-left:0; align-self:center; background:#F9FAFA; justify-content:center; }
@@ -1697,7 +1699,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 
 /* tree */
 .sapMList [role=tree] {border:1px solid #F3F3F3}
-.sapMList [role=tree] .sapMImg {    margin-right: 5px; width: 20px; height: 20px;}
+.sapMList [role=tree] .sapMImg {margin-right: 5px; width: 20px; height: 20px;vertical-align: middle;}
 .sapMTreeItemBase, .sapMTreeItemBaseChildren {background-color:#ffffff; border-bottom-color:#F3F3F3; height:50px}
 .sapMTreeItemBase>.sapMLIBContent { font-size:15px}
 
@@ -1807,20 +1809,22 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .perGrade.status-wrap .sapMFlexItem {margin-right:20px; position:relative;}
 .perGrade.status-wrap .sapMFlexItem .sapMText {display:flex; justify-content:flex-start; align-items:center}
 .perGrade.status-wrap .sapMFlexItem .sapMText::before {content:""; position:relative; display:inline-block; width:14px; height:14px; background-color:#888; margin-right:5px; border-radius:50%}
-.perGrade.status-wrap .sapMFlexItem .sapMText.type00::before { background-color: var(--PerformanceGradeColor0); }
-.perGrade.status-wrap .sapMFlexItem .sapMText.type01::before { background-color: var(--PerformanceGradeColor1); }
-.perGrade.status-wrap .sapMFlexItem .sapMText.type02::before { background-color: var(--PerformanceGradeColor2); }
-.perGrade.status-wrap .sapMFlexItem .sapMText.type03::before { background-color: var(--PerformanceGradeColor3); }
+.perGrade.status-wrap .sapMFlexItem .sapMText.type00::before, .perGrade-type.type00 { background-color: var(--PerformanceGradeColor0); }
+.perGrade.status-wrap .sapMFlexItem .sapMText.type01::before, .perGrade-type.type01 { background-color: var(--PerformanceGradeColor1); }
+.perGrade.status-wrap .sapMFlexItem .sapMText.type02::before, .perGrade-type.type01 { background-color: var(--PerformanceGradeColor2); }
+.perGrade.status-wrap .sapMFlexItem .sapMText.type03::before, .perGrade-type.type01 { background-color: var(--PerformanceGradeColor3); }
+.perGrade-type {justify-content: center; width:80px;height:30px;}
+
 .perGrade-depart-table .sapUiTableRowFirstFixedBottom .sapMText { font-weight: 700; }
 .perGrade-table .sapUiTableRowHighlight.sapUiTableRowHighlightIndication01 {background-color: var(--PerformanceGradeColor1) !important}
 .perGrade-table .sapUiTableRowHighlight.sapUiTableRowHighlightIndication02 {background-color: var(--PerformanceGradeColor2) !important}
 .perGrade-table .sapUiTableRowHighlight.sapUiTableRowHighlightIndication03 {background-color: var(--PerformanceGradeColor3) !important}
 .perGrade-table .sapUiTableRowHighlight.sapUiTableRowHighlightIndication04 {background-color: var(--PerformanceGradeColor0) !important}
-.perGrade-wrap > .sapMVBox { border-top: 1px solid #AFB9BE; border-left: 1px solid #AFB9BE; border-bottom: 1px solid #AFB9BE; }
-.perGrade-wrap > .sapMVBox:last-child { border-right: 1px solid #AFB9BE; }
-.perGrade-wrap .member-photo {margin-left: 8px; display:inline-block; width:32px; height:32px; background-image:url(../../asset/image/avatar-unknown.svg)}
-.perGrade-wrap .name {font-size: 16px; margin-left: 12px; font-weight: 800;}
-.perGrade-wrap .depart {margin-left: 12px; font-size: 12px; color: #8f8f8f;}
+.perGrade-wrap > .sapMVBox { border-top: 1px solid #F3F3F3; border-left: 1px solid #F3F3F3; border-bottom: 1px solid #F3F3F3; }
+.perGrade-wrap > .sapMVBox:last-child { border-right: 1px solid #F3F3F3; }
+.perGrade-wrap .member-photo {margin-left: 10px;margin-top: 3px; display:inline-block; width:32px; height:32px; background-image:url(../../asset/image/avatar-unknown.svg)}
+.perGrade-wrap .name {height: 20px;padding-top:4px;font-size: 16px; margin-left: 14px; font-weight: 800;}
+.perGrade-wrap .depart {margin-left: 14px; font-size: 12px;}
 .perGrade-wrap .grade-name { height: 40px; }
 .perGrade-wrap .grade-name .sapMText { font-weight:800; }
 .perGrade-wrap > .sapMFlexItem:nth-child(1) .grade-name { background-color: var(--PerformanceGradeColor1); }
@@ -1828,7 +1832,8 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .perGrade-wrap > .sapMFlexItem:nth-child(3) .grade-name { background-color: var(--PerformanceGradeColor3); }
 .perGrade-wrap > .sapMFlexItem:nth-child(4) .grade-name { background-color: var(--PerformanceGradeColor4); }
 .perGrade-wrap .perGrade-container { height: 100%; box-sizing: border-box; padding: 15px; }
-.perGrade-wrap .perGrade-container .score-box { margin-left: 8px; }
+.perGrade-wrap .perGrade-container .score-box { margin-left: 10px; }
+.perGrade-wrap .perGrade-container .score-box * { display: flex; align-items: flex-start;height:22px;font-size: 14px!important;font-weight: 500; }
 .perGrade-wrap .perGrade-container .score-box .sapMText { font-size: 12px; }
 .perGrade-wrap .perGrade-container .score-box > .sapMFlexItem:nth-child(3) { margin-left: 8px; }
 .perGrade-wrap .perGrade-container .empty-card {background-color:#F4F4F4; text-align:center; border:1px dashed #B7B7B7}
@@ -1837,6 +1842,10 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .perSession-wrap > .sapMFlexItem:nth-child(1) .grade-name { background-color: var(--PerformanceGradeColor0); }
 .perSession-wrap > .sapMFlexItem:nth-child(2) .grade-name { background-color: #DDE1E6; }
 .perSession-wrap > .sapMFlexItem:nth-child(3) .grade-name { background-color: var(--PerformanceGradeColor1); }
+.perGrade-wrap .sapMBtnIcon.sapMImg {vertical-align: middle;}
+#container-ehr---m_performanceGradeDetail--gradeByDepartContainer {margin:0 -8px;}
+#container-ehr---m_performanceGradeDetail--gradeByDepartContainer > .sapMFlexItem {margin:0 8px;}
+.perGrade-wrap .sapMObjStatusText {margin-left:5px;padding-top: 2px;}
 
 .sapUiTable .sapMText[data-over=Error] { color: var(--BorderColorError); font-weight: 700; }
 
@@ -1953,3 +1962,13 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 #employee-a06-chart-container {height:76px;}
 
 .sapMDialog.sapMDialog-NoHeader .sapMDialogSection {padding-top:25px;}
+
+
+.file-uploader-wrap > .sapMFlexItem {justify-content: space-between; width:100%}
+.sapMPDFViewerError.sapMPDFViewerEmbeddedContent .sapMMessagePage{background: #fff;border: 1px solid #C0C0C0;border-radius: 4px;}
+.sapMPDFViewerError.sapMPDFViewerEmbeddedContent .sapMMessagePage .sapMText.sapMMessagePageMainText {color: #222;font-size: 14px;}
+.sapUiFup:not(.sapUiFupButtonOnly) .sapUiFupGroup>div>div:last-child {padding-left: 10px;}
+.sapMMessagePage .sapMMessagePageInner>.sapMMessagePageContentWrapper .sapUiIcon {width: 3rem!important;height: 3rem!important;line-height:3rem!important;}
+.sapMMessagePage .sapMMessagePageInner .sapUiIcon::before {font-size: 3rem;}
+.sapMMessagePageInner {align-items: center;}
+.sapMMessagePageContentWrapper {transform: translateY(0rem);}
