@@ -7,8 +7,8 @@ sap.ui.define(
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date',
   ],
@@ -20,8 +20,8 @@ sap.ui.define(
     FragmentEvent,
     TableUtils,
     TextUtils,
+    Client,
     ServiceNames,
-    ODataReadError,
     BaseController
   ) => {
     'use strict';
@@ -38,10 +38,7 @@ sap.ui.define(
           Data: [],
           MyCom: {},
           SelectedRow: {},
-          searchDate: {
-            date: moment().hours(9).toDate(),
-            secondDate: moment().subtract(1, 'month').hours(9).toDate(),
-          },
+          searchDate: {},
           listInfo: {
             rowCount: 1,
             totalCount: 0,
@@ -54,9 +51,75 @@ sap.ui.define(
         };
       },
 
-      onObjectMatched() {
-        this.onSearch();
-        this.totalCount();
+      async onObjectMatched() {
+        const oListModel = this.getViewModel();
+
+        try {
+          oListModel.setProperty('/busy', true);
+
+          // 나의 근무일정
+          const [aMyCom] = await this.getMySchedule();
+
+          oListModel.setProperty('/MyCom', aMyCom);
+
+          const dDate = aMyCom.Zyymm;
+
+          oListModel.setProperty('/searchDate', {
+            date: moment(dDate).month('0').format('yyyyMM'),
+            secondDate: moment(dDate).format('yyyyMM'),
+          });
+
+          const aTableList = await this.getWorkScheduleList();
+          const oTable = this.byId('commuteTable');
+
+          oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
+          oListModel.setProperty('/List', aTableList);
+          this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oListModel.setProperty('/busy', false);
+        }
+      },
+
+      // 대상자 정보 사원선택시 화면 Refresh
+      async onRefresh() {
+        const oListModel = this.getViewModel();
+
+        try {
+          oListModel.setProperty('/busy', true);
+
+          // 나의 근무일정
+          const [aMyCom] = await this.getMySchedule();
+
+          oListModel.setProperty('/MyCom', aMyCom);
+
+          const dDate = aMyCom.Zyymm;
+
+          oListModel.setProperty('/searchDate', {
+            date: moment(dDate).month('0').format('yyyyMM'),
+            secondDate: moment(dDate).format('yyyyMM'),
+          });
+
+          const aTableList = await this.getWorkScheduleList();
+          const oTable = this.byId('commuteTable');
+
+          oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
+          oListModel.setProperty('/List', aTableList);
+          this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oListModel.setProperty('/busy', false);
+        }
+      },
+
+      // 나의 근무일정 대상년월 Text
+      formatSchedule(sYymm = moment().format('yyyy.MM'), dSDate, dEDate) {
+        const dS = dSDate || moment().month(0).format('yyyy.MM.DD');
+        const dD = dEDate || moment().format('yyyy.MM.DD');
+
+        return `${this.getBundleText('LABEL_30005', moment(sYymm).format('yyyy.MM'), dS, dD)}`;
       },
 
       onClick() {
@@ -80,16 +143,42 @@ sap.ui.define(
         return 'HR19';
       },
 
-      formatNumber(vNum = '0') {
-        return vNum;
+      // 조회
+      async onSearch() {
+        const oListModel = this.getViewModel();
+
+        try {
+          oListModel.setProperty('/busy', true);
+
+          // 나의 근무일정
+          const [aMyCom] = await this.getMySchedule();
+
+          oListModel.setProperty('/MyCom', aMyCom);
+
+          const dDate = aMyCom.Zyymm;
+
+          oListModel.setProperty('/searchDate', {
+            date: moment(dDate).month('0').format('yyyyMM'),
+            secondDate: moment(dDate).format('yyyyMM'),
+          });
+
+          const aTableList = await this.getWorkScheduleList();
+          const oTable = this.byId('commuteTable');
+
+          oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
+          oListModel.setProperty('/List', aTableList);
+          this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oListModel.setProperty('/busy', false);
+        }
       },
 
-      formatPay(vPay = '0') {
-        return this.TextUtils.toCurrency(vPay) || '0';
-      },
-
-      thisYear(sYear = String(moment().format('YYYY'))) {
-        return this.getBundleText('MSG_03012', sYear);
+      // 조회년월 선택
+      onSearchDate(oEvent) {
+        const oListModel = this.getViewModel();
+        const mSearch = oListModel.getProperty('/searchDate');
       },
 
       // table 체크박스
@@ -102,51 +191,29 @@ sap.ui.define(
         oViewModel.setProperty('/SelectedRow', oViewModel.getProperty(`/CommuteList/${iSelectedIndex}`));
       },
 
-      onSearch() {
-        const oModel = this.getModel(ServiceNames.PA);
-        const oListModel = this.getViewModel();
-        const oTable = this.byId('commuteTable');
-        const oSearchDate = oListModel.getProperty('/searchDate');
-        const dDate = moment(oSearchDate.secondDate).hours(9).toDate();
-        const dDate2 = moment(oSearchDate.date).hours(9).toDate();
+      // 나의 근무일정
+      async getMySchedule() {
+        const oModel = this.getModel(ServiceNames.WORKTIME);
+        const mMyWorkPayLoad = {
+          Pernr: this.getAppointeeProperty('Pernr'),
+        };
 
-        oListModel.setProperty('/busy', true);
-
-        oModel.read('/FamilyInfoApplSet', {
-          filters: [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'), new sap.ui.model.Filter('Begda', sap.ui.model.FilterOperator.EQ, dDate), new sap.ui.model.Filter('Endda', sap.ui.model.FilterOperator.EQ, dDate2)],
-          success: (oData) => {
-            if (oData) {
-              const oList = oData.results;
-
-              oListModel.setProperty('/CommuteList', oList);
-              oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: oList }));
-              oListModel.setProperty('/busy', false);
-            }
-          },
-          error: (oError) => {
-            AppUtils.handleError(new ODataReadError(oError));
-            oListModel.setProperty('/busy', false);
-          },
-        });
+        return await Client.getEntitySet(oModel, 'MyWorkSchedule', mMyWorkPayLoad);
       },
 
-      totalCount() {
-        const oModel = this.getModel(ServiceNames.PA);
+      // 시차출퇴근신청
+      async getWorkScheduleList() {
         const oListModel = this.getViewModel();
+        const oModel = this.getModel(ServiceNames.WORKTIME);
+        const mSearch = oListModel.getProperty('/searchDate');
+        const mPayLoad = {
+          Prcty: 'L',
+          Begym: mSearch.date,
+          Endym: mSearch.secondDate,
+          Pernr: this.getAppointeeProperty('Pernr'),
+        };
 
-        oModel.read('/FamInfoSummarySet', {
-          filters: [],
-          success: (oData) => {
-            if (oData) {
-              const oList = oData.results[0];
-
-              oListModel.setProperty('/MyCom', oList);
-            }
-          },
-          error: (oError) => {
-            AppUtils.handleError(new ODataReadError(oError));
-          },
-        });
+        return await Client.getEntitySet(oModel, 'WorkScheduleApply', mPayLoad);
       },
 
       onPressExcelDownload() {

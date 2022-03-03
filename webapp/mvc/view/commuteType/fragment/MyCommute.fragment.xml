@@ -7,8 +7,11 @@
             </HBox>
             <VBox class="desc pt-16-px">
                 <Text text="{i18n>MSG_30001}" />
-                <ObjectStatus text="정상근로(09:00~18:00)" state="Indication05" class="pl-0 pt-30-px font-26-px" />
-                <Text text="대상년월 : 2022.03      신청기간 : 2022.02.21 ~ 2022.02.28" class="pt-30-px" />
+                <ObjectStatus text="{/MyCom/Rtext}" state="Indication05" class="pl-0 pt-30-px font-26-px" />
+                <Text text="{
+                    parts: [ {path: '/MyCom/Zyymm'}, {path: '/MyCom/Begda'}, {path: '/MyCom/Endda'} ],
+                    formatter: '.formatSchedule'
+                }" class="pt-30-px" />
             </VBox>
         </VBox>
     </VBox>

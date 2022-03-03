@@ -98,12 +98,13 @@ sap.ui.define(
       },
 
       // 해외학교 체크시
-      onCheckBox(oEvent) {
+      async onCheckBox(oEvent) {
         const bSelected = oEvent.getSource().getSelected();
 
         if (bSelected) {
           this.getViewModel().setProperty('/FormData/Forsch', 'X');
-          this.getSupAmount();
+          await this.getSupAmount();
+          this.totalCost();
         } else {
           this.getViewModel().setProperty('/FormData/Forsch', '');
           this.totalCost();
@@ -133,7 +134,7 @@ sap.ui.define(
           _.set(mFilters, 'Pernr', this.getAppointeeProperty('Pernr'));
         }
 
-        new Promise((resolve) => {
+        return new Promise((resolve) => {
           oModel.read(sUrl, {
             filters: _.chain(mFilters)
               .omitBy(_.isNil)
@@ -154,8 +155,6 @@ sap.ui.define(
               AppUtils.handleError(new ODataReadError(oError));
             },
           });
-        }).then(() => {
-          this.totalCost();
         });
       },
 
@@ -179,7 +178,7 @@ sap.ui.define(
         const iCostH = _.multiply(iCostG, _.divide(oDetailModel.getProperty('/AmountRate'), 100));
 
         if (oFormData.Forsch === 'X') {
-          if (!!oLimitData && !!oLimitData.Zbetrg && oLimitData.Zbetrg !== '0' && iCostH > parseInt(oLimitData.Zbetrg)) {
+          if (!!oLimitData && iCostH > _.parseInt(oLimitData.Zbetrg)) {
             oDetailModel.setProperty('/FormData/ZpayAmt', oLimitData.Zbetrg);
             oDetailModel.setProperty('/LimitAmountMSG', true);
           } else {
@@ -253,11 +252,14 @@ sap.ui.define(
                 oDetailModel.setProperty('/FormData', oTargetData);
                 oDetailModel.setProperty('/ApplyInfo', oTargetData);
                 oDetailModel.setProperty('/ApprovalDetails', oTargetData);
-
                 this.onShcoolList();
                 this.setYearsList();
                 this.reflashList(oTargetData.Zzobjps);
                 this.settingsAttachTable();
+
+                if (oTargetData.Forsch === 'X' && _.parseInt(oTargetData.ZbetTotl) >= _.parseInt(oTargetData.ZpayAmt)) {
+                  oDetailModel.setProperty('/LimitAmountMSG', true);
+                }
               }
             },
             error: (oError) => {
@@ -364,7 +366,7 @@ sap.ui.define(
         ]);
       },
 
-      setYearsList() {
+      async setYearsList() {
         // 학자금 발생년도 셋팅
         const oDetailModel = this.getViewModel();
         const iFullYears = new Date().getFullYear();
@@ -376,12 +378,13 @@ sap.ui.define(
 
         if (!oDetailModel.getProperty('/FormData/ZappStatAl')) {
           oDetailModel.setProperty('/FormData/Zyear', aYearsList[0].Zcode);
-          this.getSupAmount();
+          await this.getSupAmount();
+          this.totalCost();
         }
       },
 
       // 신청대상 선택시
-      onTargetChange(oEvent) {
+      async onTargetChange(oEvent) {
         const sSelectedKey = oEvent.getSource().getSelectedKey();
         const oDetailModel = this.getViewModel();
 
@@ -400,7 +403,8 @@ sap.ui.define(
         oDetailModel.setProperty('/FormData/Schtx', '');
         oDetailModel.setProperty('/FormData/Majnm', '');
         oDetailModel.setProperty('/FormData/Slart', 'ALL');
-        this.getSupAmount();
+        await this.getSupAmount();
+        this.totalCost();
         this.getApplyNumber();
       },
 
@@ -485,13 +489,15 @@ sap.ui.define(
       },
 
       // 학자금 발생년도 클릭
-      onYearsSelect() {
+      async onYearsSelect() {
         this.getApplyNumber();
-        this.getSupAmount();
+        await this.getSupAmount();
+        this.totalCost();
       },
 
-      onGrade() {
-        this.getSupAmount();
+      async onGrade() {
+        await this.getSupAmount();
+        this.totalCost();
       },
 
       // 학력구분 선택시
@@ -525,7 +531,11 @@ sap.ui.define(
             .value()
         );
         this.getApplyNumber();
-        this.getSupAmount();
+        await this.getSupAmount();
+
+        if (!!oEvent) {
+          this.totalCost();
+        }
 
         try {
           const aList = await this.getQuarterList(vSelected);
