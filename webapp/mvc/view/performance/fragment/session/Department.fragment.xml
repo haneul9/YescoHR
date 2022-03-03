@@ -10,7 +10,7 @@
                             <Title level="H4" text="{i18n>LABEL_10097}" />
                         </HBox>
                         <HBox>
-                            <Text text="{i18n>MSG_10011}" class="desc-txt"/>
+                            <Text text="{i18n>MSG_10016}" class="desc-txt"/>
                         </HBox>
                     </HBox>
                 </Toolbar>

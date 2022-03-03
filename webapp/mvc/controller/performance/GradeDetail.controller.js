@@ -585,7 +585,13 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const mSummary = oViewModel.getProperty('/summary/list/1');
         const aGrade = oViewModel.getProperty('/grade');
+        const aRaws = oViewModel.getProperty('/raw/list');
         const aLevelResult = [];
+
+        if (_.some(aRaws, (o) => _.isEqual(o.Fapp, 'ALL'))) {
+          MessageBox.alert(this.getBundleText('MSG_10017')); // 평가등급을 지정하지 않은 인원이 존재합니다.
+          return;
+        }
 
         _.chain(mSummary)
           .pickBy((v, p) => _.endsWith(p, 'State'))
