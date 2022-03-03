@@ -70,7 +70,7 @@
                 </VBox>
                 <VBox alignItems="End">
                     <Label text="{i18n>LABEL_28032}" class="font-9-px text-right " />
-                    <Text text="{i18n>MSG_28001}" class="font-9-px text-right ls-small" />
+                    <Text text="{i18n>MSG_28002}" class="font-9-px text-right ls-small" />
                 </VBox>
             </HBox>
         </VBox>

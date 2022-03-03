@@ -330,13 +330,9 @@ sap.ui.define(
 
           // 상단 프로필 Set
           const { Pturl, ...oReturnData } = aProfileReturnData[0];
-          delete oReturnData.Pernr;
-          delete oReturnData.Langu;
-          delete oReturnData.Prcty;
-          delete oReturnData.Actty;
-          delete oReturnData.__metadata;
           const aTextFields = ['Dat03', 'Dat05', 'Dat08', 'Dat10', 'Dat13', 'Dat15', 'Dat18', 'Dat20', 'Dat23', 'Dat25'];
           const aConvertData = _.chain(oReturnData)
+            .pickBy((v, p) => _.startsWith(p, 'Dat'))
             .map((v, k) => ({ data: v, labelOrText: _.includes(aTextFields, k) ? 'text' : 'label' }))
             .value();
 
@@ -1149,11 +1145,9 @@ sap.ui.define(
         const oControl = oEvent.getSource();
         const sPath = oControl.getBinding('value').getPath();
         const mFormData = oViewModel.getProperty('/employee/dialog/form');
-        const aPointFields = ['Spont', 'Hpont', 'Rpont', 'Wpont'];
-        const iTotalPoint = aPointFields.reduce((acc, cur) => acc + _.defaultTo(Number(mFormData[cur]), 0), 0);
 
         oViewModel.setProperty(sPath, String(Number(oControl.getValue())));
-        oViewModel.setProperty('/employee/dialog/form/Tpont', String(iTotalPoint));
+        oViewModel.setProperty('/employee/dialog/form/Tpont', _.chain(mFormData).pick(['Spont', 'Hpont', 'Rpont', 'Wpont']).values().sumBy(_.toNumber).toString().value());
       },
 
       onPressHelpRequest(oEvent) {

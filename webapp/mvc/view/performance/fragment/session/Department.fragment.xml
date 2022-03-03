@@ -1,0 +1,125 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:table="sap.ui.table"
+    xmlns:core="sap.ui.core">
+    <VBox width="100%" class="vCardBox">
+        <Panel expandable="true" expanded="true" class="per-panel grade-department">
+            <headerToolbar>
+                <Toolbar height="45px" width="100%">
+                    <HBox justifyContent="SpaceBetween" class="table-toolbar">
+                        <HBox class="title">
+                            <Title level="H4" text="{i18n>LABEL_10097}" />
+                        </HBox>
+                        <HBox>
+                            <Text text="{i18n>MSG_10016}" class="desc-txt"/>
+                        </HBox>
+                    </HBox>
+                </Toolbar>
+            </headerToolbar>
+            <content>
+                <table:Table id="departmentTable" selectionMode="None" class="row-link perGrade-depart-table" width="100%" fixedBottomRowCount="1" columnHeaderHeight="45" rowHeight="44" rows="{/department/list}" visibleRowCount="{/department/rowCount}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
+                    <table:columns>
+                        <table:Column filterProperty="Zzappuntx2" sortProperty="Zzappuntx2">
+                            <table:multiLabels>
+                                <Label text="{i18n>LABEL_10090}"/>
+                                <Label text="{i18n>LABEL_10090}"/>
+                            </table:multiLabels>
+                            <table:template>
+                                <Text text="{Zzappuntx2}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                            </table:template>
+                        </table:Column>
+                        <table:Column width="8%" filterProperty="Dept01" sortProperty="Dept01" headerSpan="2">
+                            <table:multiLabels>
+                                <Label text="{/grade/0/ValueText}"/>
+                                <Label text="{i18n>LABEL_10067}"/>
+                            </table:multiLabels>
+                            <table:template>
+                                <Text text="{Dept01}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                            </table:template>
+                        </table:Column>
+                        <table:Column width="8%" filterProperty="Dept02" sortProperty="Dept02">
+                            <table:multiLabels>
+                                <Label text="{/grade/0/ValueText}"/>
+                                <Label text="&#37;"/>
+                            </table:multiLabels>
+                            <table:template>
+                                <Text text="{ path: 'Dept02', type: 'sap.ui.yesco.mvc.model.type.Percent' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                            </table:template>
+                        </table:Column>
+                        <table:Column width="8%" filterProperty="Dept03" sortProperty="Dept03" headerSpan="2">
+                            <table:multiLabels>
+                                <Label text="{/grade/1/ValueText}"/>
+                                <Label text="{i18n>LABEL_10067}"/>
+                            </table:multiLabels>
+                            <table:template>
+                                <Text text="{Dept03}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                            </table:template>
+                        </table:Column>
+                        <table:Column width="8%" filterProperty="Dept04" sortProperty="Dept04">
+                            <table:multiLabels>
+                                <Label text="{/grade/1/ValueText}"/>
+                                <Label text="&#37;"/>
+                            </table:multiLabels>
+                            <table:template>
+                                <Text text="{ path: 'Dept04', type: 'sap.ui.yesco.mvc.model.type.Percent' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                            </table:template>
+                        </table:Column>
+                        <table:Column width="8%" filterProperty="Dept05" sortProperty="Dept05" headerSpan="2">
+                            <table:multiLabels>
+                                <Label text="{/grade/2/ValueText}"/>
+                                <Label text="{i18n>LABEL_10067}"/>
+                            </table:multiLabels>
+                            <table:template>
+                                <Text text="{Dept05}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                            </table:template>
+                        </table:Column>
+                        <table:Column width="8%" filterProperty="Dept06" sortProperty="Dept06">
+                            <table:multiLabels>
+                                <Label text="{/grade/2/ValueText}"/>
+                                <Label text="&#37;"/>
+                            </table:multiLabels>
+                            <table:template>
+                                <Text text="{ path: 'Dept06', type: 'sap.ui.yesco.mvc.model.type.Percent' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                            </table:template>
+                        </table:Column>
+                        <table:Column width="8%" filterProperty="Dept07" sortProperty="Dept07" headerSpan="2">
+                            <table:multiLabels>
+                                <Label text="{/grade/3/ValueText}"/>
+                                <Label text="{i18n>LABEL_10067}"/>
+                            </table:multiLabels>
+                            <table:template>
+                                <Text text="{Dept07}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                            </table:template>
+                        </table:Column>
+                        <table:Column width="8%" filterProperty="Dept08" sortProperty="Dept08">
+                            <table:multiLabels>
+                                <Label text="{/grade/3/ValueText}"/>
+                                <Label text="&#37;"/>
+                            </table:multiLabels>
+                            <table:template>
+                                <Text text="{ path: 'Dept08', type: 'sap.ui.yesco.mvc.model.type.Percent' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                            </table:template>
+                        </table:Column>
+                        <table:Column width="8%" filterProperty="Dept09" sortProperty="Dept09" headerSpan="2">
+                            <table:multiLabels>
+                                <Label text="{i18n>LABEL_00172}"/>
+                                <Label text="{i18n>LABEL_10067}"/>
+                            </table:multiLabels>
+                            <table:template>
+                                <Text text="{Dept09}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                            </table:template>
+                        </table:Column>
+                        <table:Column width="8%" filterProperty="Dept10" sortProperty="Dept10">
+                            <table:multiLabels>
+                                <Label text="{i18n>LABEL_00172}}"/>
+                                <Label text="&#37;"/>
+                            </table:multiLabels>
+                            <table:template>
+                                <Text text="{ path: 'Dept10', type: 'sap.ui.yesco.mvc.model.type.Percent' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                            </table:template>
+                        </table:Column>
+                    </table:columns>
+                </table:Table>
+            </content>
+        </Panel>
+    </VBox>
+</core:FragmentDefinition>

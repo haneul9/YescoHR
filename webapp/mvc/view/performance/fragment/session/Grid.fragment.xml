@@ -30,9 +30,6 @@
                     </Text>
                 </custom:HBox>
                 <f:GridContainer width="100%" class="perGrade-container" snapToRow="true" items="{ path: '/tab/list', templateShareable: true }">
-                    <f:layoutData>
-                        <FlexItemData growFactor="1" />
-                    </f:layoutData>
                     <f:customData>
                         <core:CustomData key="Fapp" value="{code}" />
                     </f:customData>

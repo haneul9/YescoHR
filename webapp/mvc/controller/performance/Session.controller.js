@@ -33,26 +33,16 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.performance.GradeDetail', {
+    return BaseController.extend('sap.ui.yesco.mvc.controller.performance.Session', {
       initializeModel() {
         return {
           busy: false,
           pageBusy: false,
           isActive: false,
-          parameter: {},
           grade: [],
           gradeMap: {},
           gradeEntry: [],
           grids: [],
-          summary: {
-            ZzapstsNm: '',
-            Orgtx2: '',
-            ZzappgrTxt: '',
-            list: [
-              { Zgrade1State: 'None', Zgrade2State: 'None', Zgrade3State: 'None' },
-              { Zgrade1State: 'None', Zgrade2State: 'None', Zgrade3State: 'None' },
-            ],
-          },
           raw: {
             rowCount: 0,
             list: [],
@@ -95,66 +85,32 @@ sap.ui.define(
         oViewModel.setProperty('/busy', true);
 
         try {
-          const oView = this.getView();
-          const oListView = oView.getParent().getPage('container-ehr---m_performanceGrade');
-
-          if (_.isEmpty(oListView) || _.isEmpty(oListView.getModel().getProperty('/parameter/rowData'))) {
-            throw new UI5Error({ code: 'E', message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
-          }
-
-          const mParameter = _.chain(oListView.getModel().getProperty('/parameter/rowData')).cloneDeep().omit('__metadata').value();
-          const mDetailData = await Client.deep(this.getModel(ServiceNames.APPRAISAL), 'Appraisal2GDoc', {
-            Menid: this.getCurrentMenuId(),
-            Prcty: Constants.PROCESS_TYPE.DETAIL.code,
-            ..._.pick(mParameter, ['Orgeh2', 'Zapcnt', 'Zzappgr', 'Zzapper', 'Zzappid', 'Zzapsts', 'ZzapstsSub', 'ZzapstsPSub']),
-            Appraisal2GDocDetSet: [],
-            Appraisal2GGradeSet: [],
-          });
-
-          const aGradeRatings = _.chain(mDetailData.Appraisal2GGradeSet.results)
-            .head()
-            .pickBy((v, p) => _.startsWith(p, 'Rating') && !_.isEqual(v, '0000'))
-            .map((v) => ({ code: _.chain(v).toNumber().toString().value() }))
-            .value();
-          const aGradeErrorLevels = _.chain(mDetailData.Appraisal2GGradeSet.results)
-            .last()
-            .pickBy((v, p) => _.startsWith(p, 'Zgrade') && !_.isEmpty(v))
-            .map((v) => ({ level: v }))
-            .value();
-          const aGrades = _.chain(mDetailData.Appraisal2GGradeSet.results)
-            .head()
-            .pickBy((v, p) => _.startsWith(p, 'Zgrade') && !_.isEmpty(v))
-            .map((v) => ({ text: v }))
-            .map((obj, idx) => ({ ...obj, ..._.get(aGradeRatings, [idx]), ..._.get(aGradeErrorLevels, [idx]) }))
-            .value();
-          const mGradeMap = _.reduce(aGrades, (acc, cur) => ({ ...acc, [cur.code]: cur.text }), {});
-
-          oViewModel.setProperty('/isActive', !_.isEqual(mParameter.Zonlydsp, 'X') && _.isEqual('42', `${mParameter.Zzapsts}${mParameter.ZzapstsSub}`));
-          oViewModel.setProperty('/parameter', mParameter);
-          oViewModel.setProperty('/gradeMap', mGradeMap);
-          oViewModel.setProperty('/grade', aGrades);
-          oViewModel.setProperty('/gradeEntry', new ComboEntry({ codeKey: 'code', valueKey: 'text', aEntries: aGrades }));
-          oViewModel.setProperty('/grids', _.concat(aGrades, { code: 'ALL', text: this.getBundleText('LABEL_10075') })); // 미지정
-
-          oViewModel.setProperty('/summary/ZzapstsNm', _.get(mParameter, 'ZzapstsSubnm'));
-          oViewModel.setProperty('/summary/Orgtx2', _.get(mParameter, 'Orgtx2'));
-          oViewModel.setProperty('/summary/ZzappgrTxt', _.get(mParameter, 'ZzappgrTxt'));
-          oViewModel.setProperty('/summary/list', [
-            _.chain(mDetailData.Appraisal2GGradeSet.results)
-              .nth(1)
-              .pickBy((v, p) => (_.startsWith(p, 'Zgrade') && !_.isEmpty(v)) || _.isEqual(p, 'Ztotcnt'))
-              .forEach((v, p, o) => {
-                o[p] = _.trim(v);
-              })
-              .set('Label', this.getBundleText('LABEL_10076'))
-              .set('Zgrade1State', 'None')
-              .set('Zgrade2State', 'None')
-              .set('Zgrade3State', 'None')
-              .value(),
-            { Label: this.getBundleText('LABEL_10077'), Ztotcnt: '0', Zgrade1: '0', Zgrade1State: 'None', Zgrade2: '0', Zgrade2State: 'None', Zgrade3: '0', Zgrade3State: 'None' },
+          const oModel = this.getModel(ServiceNames.APPRAISAL);
+          const [aGrades, mDetailData] = await Promise.all([
+            Client.getEntitySet(oModel, 'AppValueList', { VClass: 'Q', VType: '810' }), //
+            Client.deep(oModel, 'AppraisalSesDoc', {
+              Menid: this.getCurrentMenuId(),
+              Prcty: Constants.PROCESS_TYPE.DETAIL.code,
+              AppraisalSesDocDetSet: [],
+            }),
           ]);
 
-          const aRawData = _.map(mDetailData.Appraisal2GDocDetSet.results, (o, i) => ({ Idx: ++i, ..._.omit(o, '__metadata'), Fapp: _.isEmpty(o.Fapp) ? 'ALL' : o.Fapp, FappTx: _.get(mGradeMap, o.Fapp, '') }));
+          const mGradeMap = _.reduce(aGrades, (acc, cur) => ({ ...acc, [cur.ValueEid]: cur.ValueText }), {});
+
+          // oViewModel.setProperty('/isActive', !_.isEqual(mParameter.Zonlydsp, 'X') && _.isEqual('42', `${mParameter.Zzapsts}${mParameter.ZzapstsSub}`));
+          oViewModel.setProperty('/isActive', true);
+          oViewModel.setProperty('/gradeMap', mGradeMap);
+          oViewModel.setProperty('/grade', aGrades);
+          oViewModel.setProperty('/gradeEntry', new ComboEntry({ codeKey: 'ValueEid', valueKey: 'ValueText', aEntries: aGrades }));
+
+          const aRawData = _.map(mDetailData.AppraisalSesDocDetSet.results, (o, i) => ({
+            Idx: ++i,
+            ..._.omit(o, '__metadata'),
+            Lfapp: _.isEmpty(o.Lfapp) ? 'ALL' : o.Lfapp,
+            LfappTx: _.get(mGradeMap, o.Lfapp, ''),
+            FappTx: _.get(mGradeMap, o.Fapp, ''),
+            OsortSub: `${o.Osort}-${o.Orgeh}`,
+          }));
 
           oViewModel.setProperty('/raw/list', aRawData);
           oViewModel.setProperty('/tab/list', aRawData);
@@ -163,35 +119,12 @@ sap.ui.define(
           this.calculateByDepart();
           this.onSort();
         } catch (oError) {
-          this.debug(`Controller > m/performanceGrade Grade > onObjectMatched Error`, oError);
+          this.debug(`Controller > m/performanceSession > onObjectMatched Error`, oError);
 
-          AppUtils.handleError(oError, {
-            onClose: () => this.onNavBack(),
-          });
+          AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/busy', false);
-
-          setTimeout(() => {
-            this.setGridFilter();
-
-            TableUtils.setColorColumn({
-              oTable: this.byId('summaryTable'),
-              bIncludeHeader: true,
-              mHeaderColorMap: { 2: 'bgType04', 3: 'bgType05', 4: 'bgType06' },
-              mColorMap: { 2: 'bgType07', 3: 'bgType08', 4: 'bgType09' },
-            });
-          }, 100);
         }
-      },
-
-      setGridFilter() {
-        const oGridBox = this.byId('gridBox');
-
-        oGridBox.getItems().forEach((box) => {
-          var oGridContainer = box.getItems()[1];
-
-          oGridContainer.getBinding('items').filter([new Filter('Fapp', FilterOperator.EQ, oGridContainer.data('Fapp'))]);
-        });
       },
 
       setEmptyCard() {
@@ -200,12 +133,12 @@ sap.ui.define(
 
         _.remove(aList, (o) => _.isEmpty(o.Ename));
 
-        const mFappCount = _.countBy(aList, 'Fapp');
+        const mLFappCount = _.countBy(aList, 'Lfapp');
         const aGrade = oViewModel.getProperty('/grade');
-        const aGradeCodes = _.chain(aGrade).map('code').concat(['ALL']).value();
+        const aGradeCodes = _.chain(aGrade).map('ValueEid').concat(['ALL']).value();
 
         _.forEach(aGradeCodes, (code) => {
-          if (!_.has(mFappCount, code)) aList.push({ Fapp: code, Orgtx: 'EMPTY' });
+          if (!_.has(mLFappCount, code)) aList.push({ Lfapp: code, Zzappuntx2: 'EMPTY' });
         });
 
         oViewModel.setProperty('/tab/list', aList);
@@ -217,21 +150,20 @@ sap.ui.define(
         const aRawList = oViewModel.getProperty('/raw/list');
         const iRawTotalCount = _.size(aRawList);
         const aListByDepart = _.chain(aRawList)
-          .groupBy('Orgeh')
+          .groupBy('Zzappun2')
           .reduce((acc, cur) => {
-            const mFappCount = _.countBy(cur, 'Fapp');
-            const sDept01 = _.get(mFappCount, _.get(aGrades, [0, 'code']), 0);
-            const sDept03 = _.get(mFappCount, _.get(aGrades, [1, 'code']), 0);
-            const sDept05 = _.get(mFappCount, _.get(aGrades, [2, 'code']), 0);
-            const sDept07 = _.get(mFappCount, '', 0);
-            const sDept09 = _.chain(mFappCount).values().sum().value();
+            const mLFappCount = _.countBy(cur, 'Lfapp');
+            const sDept01 = _.get(mLFappCount, _.get(aGrades, [0, 'ValueEid']), 0);
+            const sDept03 = _.get(mLFappCount, _.get(aGrades, [1, 'ValueEid']), 0);
+            const sDept05 = _.get(mLFappCount, _.get(aGrades, [2, 'ValueEid']), 0);
+            const sDept07 = _.get(mLFappCount, _.get(aGrades, [3, 'ValueEid']), 0);
+            const sDept09 = _.chain(mLFappCount).values().sum().value();
 
             return [
               ...acc,
               {
-                Orgeh: _.get(cur, [0, 'Orgeh'], ''),
-                Orgtx: _.get(cur, [0, 'Orgtx'], ''),
-                Osort: _.get(cur, [0, 'Osort'], ''),
+                Zzappun2: _.get(cur, [0, 'Zzappun2'], ''),
+                Zzappuntx2: _.get(cur, [0, 'Zzappuntx2'], ''),
                 Dept01: sDept01,
                 Dept02: _.chain(sDept01).divide(iRawTotalCount).multiply(100).floor(1).value(),
                 Dept03: sDept03,
@@ -245,13 +177,12 @@ sap.ui.define(
               },
             ];
           }, [])
-          .sortBy(['Osort'], ['asc'])
           .value();
 
         const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
         const mSumRow = TableUtils.generateSumRow({
           aTableData: aListByDepart,
-          mSumField: { Orgtx: sSumLabel },
+          mSumField: { Zzappuntx2: sSumLabel },
           vCalcProps: /^Dept/,
         });
 
@@ -265,25 +196,6 @@ sap.ui.define(
 
         oViewModel.setProperty('/department/rowCount', _.chain(aListByDepart).size().add(1).value());
         oViewModel.setProperty('/department/list', [...aListByDepart, mSumRow]);
-
-        const [mGradeBase, mGradeSum] = oViewModel.getProperty('/summary/list');
-        const sZtotcnt = _.chain(mSumRow).pick(['Dept01', 'Dept03', 'Dept05']).values().sum().value();
-        const sZgrade1 = _.get(mSumRow, 'Dept01', 0);
-        const sZgrade2 = _.get(mSumRow, 'Dept03', 0);
-        const sZgrade3 = _.get(mSumRow, 'Dept05', 0);
-
-        oViewModel.setProperty(
-          '/summary/list/1',
-          _.chain(mGradeSum)
-            .set('Ztotcnt', sZtotcnt)
-            .set('Zgrade1', sZgrade1)
-            .set('Zgrade1State', !_.eq(_.toNumber(mGradeBase.Zgrade1), 0) && _.gt(sZgrade1, _.toNumber(mGradeBase.Zgrade1)) ? 'Error' : 'None')
-            .set('Zgrade2', sZgrade2)
-            .set('Zgrade2State', !_.eq(_.toNumber(mGradeBase.Zgrade2), 0) && _.gt(sZgrade2, _.toNumber(mGradeBase.Zgrade2)) ? 'Error' : 'None')
-            .set('Zgrade3', sZgrade3)
-            .set('Zgrade3State', !_.eq(_.toNumber(mGradeBase.Zgrade3), 0) && _.gt(sZgrade3, _.toNumber(mGradeBase.Zgrade3)) ? 'Error' : 'None')
-            .value()
-        );
       },
 
       orderBy(sPath, aProps, aOrders) {
@@ -321,14 +233,12 @@ sap.ui.define(
 
         try {
           const oModel = this.getModel(ServiceNames.APPRAISAL);
-          const mParameter = _.cloneDeep(oViewModel.getProperty('/parameter'));
           const aList = _.cloneDeep(oViewModel.getProperty('/raw/list'));
           const bIsSave = _.isEqual(code, Constants.PROCESS_TYPE.SAVE.code);
 
-          await Client.deep(oModel, 'Appraisal2GDoc', {
+          await Client.deep(oModel, 'AppraisalSesDoc', {
             Menid: this.getCurrentMenuId(),
             Prcty: code,
-            ..._.pick(mParameter, ['Orgeh2', 'Zapcnt', 'Zzappgr', 'Zzapper', 'Zzappid', 'Zzapsts', 'ZzapstsSub', 'ZzapstsPSub']),
             Appraisal2GDocDetSet: _.map(aList, (o) => _.set(o, 'Fapp', _.isEqual(o.Fapp, 'ALL') ? '' : o.Fapp)),
           });
 
@@ -339,7 +249,7 @@ sap.ui.define(
             },
           });
         } catch (oError) {
-          this.debug(`Controller > m/performanceGrade Grade > createProcess Error`, oError);
+          this.debug(`Controller > m/performanceSession > createProcess Error`, oError);
 
           AppUtils.handleError(oError);
         } finally {
@@ -349,6 +259,8 @@ sap.ui.define(
 
       formatRowHighlight(sValue) {
         switch (_.toNumber(sValue)) {
+          case 4:
+            return sap.ui.core.IndicationColor.Indication04;
           case 3:
             return sap.ui.core.IndicationColor.Indication01;
           case 2:
@@ -372,14 +284,14 @@ sap.ui.define(
           const sPath = oEvent.getParameters().rowBindingContext.getPath();
           const oRowData = oViewModel.getProperty(sPath);
           const aRawData = oViewModel.getProperty('/raw/list');
-          const aFilteredData = _.isEmpty(oRowData.Orgeh) ? aRawData : _.filter(aRawData, (o) => _.isEqual(o.Orgeh, oRowData.Orgeh));
+          const aFilteredData = _.isEmpty(oRowData.Zzappun2) ? aRawData : _.filter(aRawData, (o) => _.isEqual(o.Zzappun2, oRowData.Zzappun2));
 
           oViewModel.setProperty('/tab/list', aFilteredData);
           oViewModel.setProperty('/tab/rowCount', Math.min(_.size(aFilteredData), 10));
 
           this.onSort();
         } catch (oError) {
-          this.debug(`Controller > m/performanceGrade Grade > onSelectRow Error`, oError);
+          this.debug(`Controller > m/performanceSession > onSelectRow Error`, oError);
 
           AppUtils.handleError(oError);
         } finally {
@@ -417,32 +329,32 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const iSortIndex = oViewModel.getProperty('/tab/sortIndex');
 
+        oViewModel.setProperty(
+          '/tab/list',
+          _.map(oViewModel.getProperty('/tab/list'), (o) => _.set(o, 'Lfapp', _.isEqual(o.Lfapp, 'ALL') ? '' : o.Lfapp))
+        );
+
         switch (iSortIndex) {
           case 0:
-            this.orderBy('/tab/list', ['Osort', 'Zapgma', 'Fapp', 'Zzjikgb', 'Zzappee'], ['asc', 'desc', 'desc', 'asc', 'asc']);
+            this.orderBy('/tab/list', ['Osort', 'OsortSub', 'Lfapp', 'Fapp', 'Zapgma', 'Zzjikgb', 'Zzappee'], ['asc', 'asc', 'desc', 'desc', 'desc', 'asc', 'asc']);
 
             break;
           case 1:
-            this.orderBy('/tab/list', ['Zapgma', 'Fapp', 'Zzjikgb', 'Zzappee'], ['desc', 'desc', 'asc', 'asc']);
+            this.orderBy('/tab/list', ['Fapp', 'Zapgma', 'Zzjikgb', 'Zzappee'], ['desc', 'desc', 'asc', 'asc']);
 
             break;
           case 2:
-            oViewModel.setProperty(
-              '/tab/list',
-              _.map(oViewModel.getProperty('/tab/list'), (o) => _.set(o, 'Fapp', _.isEqual(o.Fapp, 'ALL') ? '' : o.Fapp))
-            );
-
-            this.orderBy('/tab/list', ['Fapp', 'Zapgma', 'Zzjikgb', 'Zzappee'], ['desc', 'desc', 'asc', 'asc']);
-
-            oViewModel.setProperty(
-              '/tab/list',
-              _.map(oViewModel.getProperty('/tab/list'), (o) => _.set(o, 'Fapp', _.isEqual(o.Fapp, '') ? 'ALL' : o.Fapp))
-            );
+            this.orderBy('/tab/list', ['Lfapp', 'Fapp', 'Zapgma', 'Zzjikgb', 'Zzappee'], ['desc', 'desc', 'desc', 'asc', 'asc']);
 
             break;
           default:
             break;
         }
+
+        oViewModel.setProperty(
+          '/tab/list',
+          _.map(oViewModel.getProperty('/tab/list'), (o) => _.set(o, 'Lfapp', _.isEqual(o.Lfapp, '') ? 'ALL' : o.Lfapp))
+        );
 
         this.setEmptyCard();
       },
@@ -460,7 +372,6 @@ sap.ui.define(
           busy: true,
           mode: sDialogMode,
           list: _.chain(aRaws)
-            .cloneDeep()
             .map((o) =>
               _.chain(o)
                 .set('FappTx', _.get(mGradeMap, o.Fapp, ''))
@@ -511,34 +422,31 @@ sap.ui.define(
 
       onPressGradeByDepartDialogApply() {
         const oViewModel = this.getViewModel();
-        const aDialogList = oViewModel.getProperty('/dialog/list');
         const sMode = oViewModel.getProperty('/dialog/mode');
 
         if (sMode === 'A') {
           const oTableContainer = this.byId('gradeByDepartContainer');
+          const aRaws = oViewModel.getProperty('/raw/list');
           const sGrade = oViewModel.getProperty('/dialog/grade');
 
-          _.chain(aDialogList)
+          _.chain(aRaws)
             .filter((o) => _.isEqual(o.Fapp, sGrade))
-            .forEach((o) => _.set(o, 'Fapp', 'ALL'))
+            .forEach((o) => _.set(o, 'Fapp', ''))
             .commit();
 
-          oViewModel.setProperty('/dialog/list', aDialogList);
+          oViewModel.setProperty('/raw/list', aRaws);
 
           oTableContainer.getItems().forEach((oTable) => {
             const aTableRowContexts = oTable.getBinding('rows').getContexts();
             const aSelectedIndices = oTable.getSelectedIndices();
 
-            aSelectedIndices.forEach((idx) => _.set(aTableRowContexts[idx].getObject(), 'Fapp', sGrade));
+            aSelectedIndices.forEach((idx) => oViewModel.setProperty(`${aTableRowContexts[idx].getPath()}/Fapp`, sGrade));
           });
         } else {
+          const aDialogList = oViewModel.getProperty('/dialog/list');
+
           aDialogList.forEach((o) => _.set(o, 'Fapp', _.isEmpty(o.Fapp2) ? 'ALL' : o.Fapp2));
         }
-
-        const aRaws = oViewModel.getProperty('/raw/list');
-        oViewModel.getProperty('/dialog/list').forEach((o) => {
-          _.set(_.find(aRaws, { Zzappee: o.Zzappee }), 'Fapp', o.Fapp);
-        });
 
         this.onSort();
         this.calculateByDepart();
@@ -585,13 +493,7 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const mSummary = oViewModel.getProperty('/summary/list/1');
         const aGrade = oViewModel.getProperty('/grade');
-        const aRaws = oViewModel.getProperty('/raw/list');
         const aLevelResult = [];
-
-        if (_.some(aRaws, (o) => _.isEqual(o.Fapp, 'ALL'))) {
-          MessageBox.alert(this.getBundleText('MSG_10017')); // 평가등급을 지정하지 않은 인원이 존재합니다.
-          return;
-        }
 
         _.chain(mSummary)
           .pickBy((v, p) => _.endsWith(p, 'State'))
@@ -620,21 +522,23 @@ sap.ui.define(
       },
 
       onPressExcelDownload() {
-        const oTable = this.byId('performanceGradeTable');
-        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_10083'); // {성과평가등급산출평가리스트}_목록
+        const oTable = this.byId('performanceSessionTable');
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_10096'); // {성과평가전사세션평가리스트}_목록
         const aTableData = _.chain(this.getViewModel().getProperty('/tab/list'))
           .cloneDeep()
-          .reject((o) => _.isEqual(o.Orgtx, 'EMPTY'))
+          .reject((o) => _.isEqual(o.Zzappuntx2, 'EMPTY'))
           .value();
         const aCustomColumns = [
           { type: 'String', label: 'No.', property: 'Idx' }, //
           { type: 'String', label: this.getBundleText('LABEL_00209'), property: 'Zzappee' },
           { type: 'String', label: this.getBundleText('LABEL_00210'), property: 'Ename' },
           { type: 'String', label: this.getBundleText('LABEL_00215'), property: 'Zzjikgbt' },
+          { type: 'String', label: this.getBundleText('LABEL_10094'), property: 'Zzappuntx2' },
           { type: 'String', label: this.getBundleText('LABEL_00224'), property: 'Orgtx' },
           { type: 'String', label: this.getBundleText('LABEL_10003'), property: 'Zapgme' },
           { type: 'String', label: this.getBundleText('LABEL_10022'), property: 'Zapgma' },
           { type: 'String', label: this.getBundleText('LABEL_10078'), property: 'FappTx' },
+          { type: 'String', label: this.getBundleText('LABEL_10095'), property: 'LfappTx' },
         ];
 
         TableUtils.export({ oTable, aTableData, sFileName, aCustomColumns });
