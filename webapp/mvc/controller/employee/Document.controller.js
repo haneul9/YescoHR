@@ -241,13 +241,9 @@ sap.ui.define(
 
           // 상단 프로필 Set
           const { Pturl, ...oReturnData } = aProfileReturnData[0];
-          delete oReturnData.Pernr;
-          delete oReturnData.Langu;
-          delete oReturnData.Prcty;
-          delete oReturnData.Actty;
-          delete oReturnData.__metadata;
           const aTextFields = ['Dat03', 'Dat05', 'Dat08', 'Dat10', 'Dat13', 'Dat15', 'Dat18', 'Dat20', 'Dat23', 'Dat25'];
           const aConvertData = _.chain(oReturnData)
+            .pickBy((v, p) => _.startsWith(p, 'Dat'))
             .map((v, k) => ({ data: v, labelOrText: _.includes(aTextFields, k) ? 'text' : 'label' }))
             .value();
 
