@@ -44,7 +44,6 @@ sap.ui.define(
           gradeMap: {},
           gradeEntry: [],
           grids: [],
-          departments: [],
           summary: {
             ZzapstsNm: '',
             Orgtx2: '',
@@ -118,7 +117,7 @@ sap.ui.define(
             .map((v) => ({ code: _.chain(v).toNumber().toString().value() }))
             .value();
           const aGradeErrorLevels = _.chain(mDetailData.Appraisal2GGradeSet.results)
-            .nth(2)
+            .last()
             .pickBy((v, p) => _.startsWith(p, 'Zgrade') && !_.isEmpty(v))
             .map((v) => ({ level: v }))
             .value();
@@ -128,9 +127,11 @@ sap.ui.define(
             .map((v) => ({ text: v }))
             .map((obj, idx) => ({ ...obj, ..._.get(aGradeRatings, [idx]), ..._.get(aGradeErrorLevels, [idx]) }))
             .value();
+          const mGradeMap = _.reduce(aGrades, (acc, cur) => ({ ...acc, [cur.code]: cur.text }), {});
 
           oViewModel.setProperty('/isActive', !_.isEqual(mParameter.Zonlydsp, 'X') && _.isEqual('42', `${mParameter.Zzapsts}${mParameter.ZzapstsSub}`));
           oViewModel.setProperty('/parameter', mParameter);
+          oViewModel.setProperty('/gradeMap', mGradeMap);
           oViewModel.setProperty('/grade', aGrades);
           oViewModel.setProperty('/gradeEntry', new ComboEntry({ codeKey: 'code', valueKey: 'text', aEntries: aGrades }));
           oViewModel.setProperty('/grids', _.concat(aGrades, { code: 'ALL', text: this.getBundleText('LABEL_10075') })); // 미지정
@@ -153,27 +154,20 @@ sap.ui.define(
             { Label: this.getBundleText('LABEL_10077'), Ztotcnt: '0', Zgrade1: '0', Zgrade1State: 'None', Zgrade2: '0', Zgrade2State: 'None', Zgrade3: '0', Zgrade3State: 'None' },
           ]);
 
-          const mGradeMap = _.reduce(aGrades, (acc, cur) => ({ ...acc, [cur.code]: cur.text }), {});
           const aRawData = _.map(mDetailData.Appraisal2GDocDetSet.results, (o, i) => ({ Idx: ++i, ..._.omit(o, '__metadata'), Fapp: _.isEmpty(o.Fapp) ? 'ALL' : o.Fapp, FappTx: _.get(mGradeMap, o.Fapp, '') }));
 
-          oViewModel.setProperty('/gradeMap', mGradeMap);
           oViewModel.setProperty('/raw/list', aRawData);
           oViewModel.setProperty('/tab/list', aRawData);
           oViewModel.setProperty('/tab/rowCount', Math.min(_.size(aRawData), 10));
-          oViewModel.setProperty(
-            '/departments',
-            _.chain(aRawData)
-              .uniqBy('Orgeh')
-              .map((o) => _.pick(o, ['Orgeh', 'Orgtx']))
-              .value()
-          );
 
           this.calculateByDepart();
           this.onSort();
         } catch (oError) {
           this.debug(`Controller > m/performanceGrade Grade > onObjectMatched Error`, oError);
 
-          AppUtils.handleError(oError);
+          AppUtils.handleError(oError, {
+            onClose: () => this.onNavBack(),
+          });
         } finally {
           oViewModel.setProperty('/busy', false);
 

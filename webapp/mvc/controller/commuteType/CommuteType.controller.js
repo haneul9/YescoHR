@@ -40,7 +40,7 @@ sap.ui.define(
           SelectedRow: {},
           searchDate: {
             date: moment().hours(9).toDate(),
-            secondDate: moment().subtract(1, 'month').add(1, 'day').hours(9).toDate(),
+            secondDate: moment().subtract(1, 'month').hours(9).toDate(),
           },
           listInfo: {
             rowCount: 1,
@@ -147,15 +147,6 @@ sap.ui.define(
             AppUtils.handleError(new ODataReadError(oError));
           },
         });
-      },
-
-      onSelectRow(oEvent) {
-        const vPath = oEvent.getParameters().rowBindingContext.getPath();
-        const oListModel = this.getViewModel();
-        const oRowData = oListModel.getProperty(vPath);
-
-        oListModel.setProperty('/parameter', oRowData);
-        this.getRouter().navTo('commuteType-detail', { oDataKey: oRowData.Appno });
       },
 
       onPressExcelDownload() {

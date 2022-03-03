@@ -3,25 +3,13 @@
     <VBox class="hCardBox summary-box" busyIndicatorDelay="0" busy="{/busy}">
         <VBox>
             <HBox justifyContent="SpaceBetween" class="title">
-                <Title level="H2" text="{i18n>LABEL_05002}" />
+                <Title level="H2" text="{i18n>LABEL_30004}" />
             </HBox>
-            <HBox class="desc">
-                <Text text="{i18n>MSG_05001}" />
-                <ObjectStatus text="{
-                    path: '/MyCom/Famcnt',
-                    formatter: '.formatNumber'
-                }" state="Indication05" class="sapUiSmallMarginBottom" />
-                <Text text="{i18n>MSG_05018}" />
-            </HBox>
-            <HBox class="desc pt-16-px">
-                <Text text="{i18n>MSG_05003}"/>
-                <ObjectStatus text="{
-                    path: '/MyCom/Famamt',
-                    formatter: '.formatPay'
-                }" state="Indication05" class="font-30-px"/>
-                <Text text="{i18n>MSG_05002}"/>
-            </HBox>
-            <Text text="{i18n>MSG_05004}" class="col-j pt-18-px" />
+            <VBox class="desc pt-16-px">
+                <Text text="{i18n>MSG_30001}" />
+                <ObjectStatus text="정상근로(09:00~18:00)" state="Indication05" class="pl-0 pt-30-px font-26-px" />
+                <Text text="대상년월 : 2022.03      신청기간 : 2022.02.21 ~ 2022.02.28" class="pt-30-px" />
+            </VBox>
         </VBox>
     </VBox>
 </core:FragmentDefinition>
