@@ -4,32 +4,32 @@
   <table:Table id="commuteTable" class="row-link" rows="{/CommuteList}" rowSelectionChange=".onRowSelection" visibleRowCount="{/listInfo/rowCount}" width="100%" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}">
     <table:rowSettingsTemplate>
       <table:RowSettings highlight="{
-        path: 'ZappStatAl',
-        formatter: '.TableUtils.rowHighlight'
-    }"/>
+          path: 'ZappStatAl',
+          formatter: '.TableUtils.rowHighlight'
+      }"/>
     </table:rowSettingsTemplate>
     <table:columns>
       <table:Column width="100px" sortProperty="ZappStatAl" filterProperty="ZappStatAl">
         <Label text="{i18n>LABEL_00144}"/>
         <table:template>
           <Text text="{
-                    path: 'ZappStatAl',
-                    formatter: '.TableUtils.StatusTxt'
-                }" width="100%" textAlign="Center">
+                path: 'ZappStatAl',
+                formatter: '.TableUtils.StatusTxt'
+            }" width="100%" textAlign="Center">
             <customData>
               <core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
             </customData>
           </Text>
         </table:template>
       </table:Column>
-      <table:Column width="150px" sortProperty="Atext" filterProperty="Atext">
-        <Label text="{i18n>LABEL_02006}"/>
+      <table:Column width="auto" sortProperty="Atext" filterProperty="Atext">
+        <Label text="{i18n>LABEL_00209}"/>
         <table:template>
           <Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Begda" filterProperty="Begda">
-        <Label text="{i18n>LABEL_00148}"/>
+        <Label text="{i18n>LABEL_00210}"/>
         <table:template>
           <Text text="{
               path: 'Begda',
@@ -38,7 +38,7 @@
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Endda" filterProperty="Endda">
-        <Label text="{i18n>LABEL_00149}"/>
+        <Label text="{i18n>LABEL_00215}"/>
         <table:template>
           <Text text="{
               path: 'Endda',
@@ -46,13 +46,37 @@
           }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="200px" sortProperty="Famnm" filterProperty="Famnm">
-        <Label text="{i18n>LABEL_00210}"/>
+      <table:Column width="auto" sortProperty="Famnm" filterProperty="Famnm">
+        <Label text="{i18n>LABEL_00224}"/>
         <table:template>
           <Text text="{Famnm}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="ZreqDate" filterProperty="ZreqDate">
+        <Label text="{i18n>LABEL_30002}"/>
+        <table:template>
+          <Text text="{
+              path: 'ZreqDate',
+              type: 'sap.ui.yesco.mvc.model.type.Date'
+          }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="250px" sortProperty="ZappDate" filterProperty="ZappDate">
+        <Label text="{i18n>LABEL_30003}"/>
+        <table:template>
+          <Text text="{
+              path: 'ZappDate',
+              type: 'sap.ui.yesco.mvc.model.type.Date'
+          }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="auto" sortProperty="Famnm" filterProperty="Famnm">
+        <Label text="{i18n>LABEL_28026}"/>
+        <table:template>
+          <Text text="{Famnm}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="auto" sortProperty="Famnm" filterProperty="Famnm">
         <Label text="{i18n>LABEL_00266}"/>
         <table:template>
           <Text text="{
@@ -61,11 +85,11 @@
           }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="auto" sortProperty="ZappDate" filterProperty="ZappDate">
-        <Label text="{i18n>LABEL_05003}"/>
+      <table:Column width="auto" sortProperty="Famnm" filterProperty="Famnm">
+        <Label text="{i18n>LABEL_00269}"/>
         <table:template>
           <Text text="{
-              path: 'ZappDate',
+              path: 'ZreqDate',
               type: 'sap.ui.yesco.mvc.model.type.Date'
           }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
         </table:template>

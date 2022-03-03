@@ -9,7 +9,7 @@
         </HBox>
         <grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="8px">
             <Label text="{i18n>LABEL_00328}" design="Bold" />
-            <DateRangeSelection displayFormat="yyyy" dateValue="{/searchDate/secondDate}" secondDateValue="{/searchDate/date}" />
+            <DateRangeSelection displayFormat="yyyy.MM" dateValue="{/searchDate/secondDate}" secondDateValue="{/searchDate/date}" />
         </grid:CSSGrid>
     </VBox>
 </core:FragmentDefinition>
