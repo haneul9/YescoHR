@@ -19,7 +19,7 @@ server:
         password: UI5_MIDDLEWARE_SIMPLE_PROXY_PASSWORD
         query:
           saml2: 'disabled'
-          sap-client: '300'
+          sap-client: '100'
 resources:
   configuration:
     propertiesFileSourceEncoding: UTF-8
