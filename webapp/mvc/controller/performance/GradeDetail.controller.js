@@ -231,6 +231,7 @@ sap.ui.define(
               {
                 Orgeh: _.get(cur, [0, 'Orgeh'], ''),
                 Orgtx: _.get(cur, [0, 'Orgtx'], ''),
+                Osort: _.get(cur, [0, 'Osort'], ''),
                 Dept01: sDept01,
                 Dept02: _.chain(sDept01).divide(iRawTotalCount).multiply(100).floor(1).value(),
                 Dept03: sDept03,
@@ -244,6 +245,7 @@ sap.ui.define(
               },
             ];
           }, [])
+          .sortBy(['Osort'], ['asc'])
           .value();
 
         const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
