@@ -17,7 +17,7 @@
                         <m:Label text="{/dialog/gradeTx}" />
                     </m:HBox>
                 </m:HBox>
-                <m:HBox id="gradeByDepartContainer" items="{/departments}">
+                <m:HBox id="gradeByDepartContainer" items="{ path: '/department/list', templateShareable: true, filters: [{path: 'Orgeh', operator: 'NE', value1: ''}] }">
                     <Table selectionMode="{= ${/isActive} &amp;&amp; ${/dialog/mode} === 'A' ? 'MultiToggle' : 'None' }" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/list}" visibleRowCountMode="Auto" minAutoRowCount="10" noData="{i18n>MSG_00001}" rowSelectionChange=".onChangeByDepartSelection">
                         <customData>
                             <core:CustomData key="Orgeh" value="{Orgeh}" />
