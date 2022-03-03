@@ -458,6 +458,7 @@ sap.ui.define(
           busy: true,
           mode: sDialogMode,
           list: _.chain(aRaws)
+            .cloneDeep()
             .map((o) =>
               _.chain(o)
                 .set('FappTx', _.get(mGradeMap, o.Fapp, ''))
@@ -508,31 +509,34 @@ sap.ui.define(
 
       onPressGradeByDepartDialogApply() {
         const oViewModel = this.getViewModel();
+        const aDialogList = oViewModel.getProperty('/dialog/list');
         const sMode = oViewModel.getProperty('/dialog/mode');
 
         if (sMode === 'A') {
           const oTableContainer = this.byId('gradeByDepartContainer');
-          const aRaws = oViewModel.getProperty('/raw/list');
           const sGrade = oViewModel.getProperty('/dialog/grade');
 
-          _.chain(aRaws)
+          _.chain(aDialogList)
             .filter((o) => _.isEqual(o.Fapp, sGrade))
-            .forEach((o) => _.set(o, 'Fapp', ''))
+            .forEach((o) => _.set(o, 'Fapp', 'ALL'))
             .commit();
 
-          oViewModel.setProperty('/raw/list', aRaws);
+          oViewModel.setProperty('/dialog/list', aDialogList);
 
           oTableContainer.getItems().forEach((oTable) => {
             const aTableRowContexts = oTable.getBinding('rows').getContexts();
             const aSelectedIndices = oTable.getSelectedIndices();
 
-            aSelectedIndices.forEach((idx) => oViewModel.setProperty(`${aTableRowContexts[idx].getPath()}/Fapp`, sGrade));
+            aSelectedIndices.forEach((idx) => _.set(aTableRowContexts[idx].getObject(), 'Fapp', sGrade));
           });
         } else {
-          const aDialogList = oViewModel.getProperty('/dialog/list');
-
           aDialogList.forEach((o) => _.set(o, 'Fapp', _.isEmpty(o.Fapp2) ? 'ALL' : o.Fapp2));
         }
+
+        const aRaws = oViewModel.getProperty('/raw/list');
+        oViewModel.getProperty('/dialog/list').forEach((o) => {
+          _.set(_.find(aRaws, { Zzappee: o.Zzappee }), 'Fapp', o.Fapp);
+        });
 
         this.onSort();
         this.calculateByDepart();
