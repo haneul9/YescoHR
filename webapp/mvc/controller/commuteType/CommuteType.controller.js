@@ -150,17 +150,9 @@ sap.ui.define(
         try {
           oListModel.setProperty('/busy', true);
 
-          // 나의 근무일정
-          const [aMyCom] = await this.getMySchedule();
-
-          oListModel.setProperty('/MyCom', aMyCom);
-
-          const dDate = aMyCom.Zyymm;
-
-          oListModel.setProperty('/searchDate', {
-            date: moment(dDate).month('0').format('yyyyMM'),
-            secondDate: moment(dDate).format('yyyyMM'),
-          });
+          if (this.searchCheck()) {
+            return;
+          }
 
           const aTableList = await this.getWorkScheduleList();
           const oTable = this.byId('commuteTable');
@@ -176,9 +168,22 @@ sap.ui.define(
       },
 
       // 조회년월 선택
-      onSearchDate(oEvent) {
+      onSearchDate() {
+        this.searchCheck();
+      },
+
+      // 조회년월 체크
+      searchCheck() {
         const oListModel = this.getViewModel();
         const mSearch = oListModel.getProperty('/searchDate');
+
+        if (_.parseInt(mSearch.date) > _.parseInt(mSearch.secondDate)) {
+          // 조회조건이 잘못 선택 되었습니다.
+          MessageBox.alert(this.getBundleText('MSG_30002'));
+          return true;
+        }
+
+        return false;
       },
 
       // table 체크박스
