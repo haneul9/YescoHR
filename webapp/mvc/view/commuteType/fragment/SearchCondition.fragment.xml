@@ -8,8 +8,8 @@
             <Button type="Transparent" press=".onSearch" class="icon-button search" />
         </HBox>
         <grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="8px">
-            <Label text="{i18n>LABEL_00266}" design="Bold" />
-            <custom:DateRangeSelection dateValue="{ path: '/searchDate/secondDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/searchDate/date', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" />
+            <Label text="{i18n>LABEL_00328}" design="Bold" />
+            <DateRangeSelection displayFormat="yyyy.MM" dateValue="{/searchDate/secondDate}" secondDateValue="{/searchDate/date}" />
         </grid:CSSGrid>
     </VBox>
 </core:FragmentDefinition>

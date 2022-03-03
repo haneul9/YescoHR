@@ -24,11 +24,9 @@ sap.ui.define(
         DateRangeSelection.apply(this, aArgs);
 
         let Dtfmt;
-        const oBindingValueType = (this.getBindingInfo('value') || {}).type;
-        if (oBindingValueType) {
-          if (['CustomDate', 'CustomMonth', 'CustomYear'].includes(oBindingValueType.getName())) {
-            Dtfmt = oBindingValueType.oFormatOptions.pattern;
-          }
+        const oBindingValueType = (this.getBindingInfo('value') || this.getBindingInfo('dateValue') || {}).type;
+        if (oBindingValueType && (oBindingValueType.getName() || '').startsWith('Custom')) {
+          Dtfmt = oBindingValueType.oFormatOptions.pattern;
         }
         if (!Dtfmt) {
           Dtfmt = AppUtils.getAppComponent().getAppointeeModel().getProperty('/Dtfmt');
