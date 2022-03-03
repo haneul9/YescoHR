@@ -66,6 +66,9 @@ sap.ui.define(
           busy: false,
         };
       },
+      onBeforeShow() {
+        TableUtils.summaryColspan({ oTable: this.byId('repayHisTable'), aHideIndex: [1] });
+      },
 
       onObjectMatched(oParameter) {
         const sDataKey = oParameter.oDataKey;

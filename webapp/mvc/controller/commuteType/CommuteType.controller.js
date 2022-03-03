@@ -149,15 +149,6 @@ sap.ui.define(
         });
       },
 
-      onSelectRow(oEvent) {
-        const vPath = oEvent.getParameters().rowBindingContext.getPath();
-        const oListModel = this.getViewModel();
-        const oRowData = oListModel.getProperty(vPath);
-
-        oListModel.setProperty('/parameter', oRowData);
-        this.getRouter().navTo('commuteType-detail', { oDataKey: oRowData.Appno });
-      },
-
       onPressExcelDownload() {
         const oTable = this.byId('commuteTable');
         const aTableData = this.getViewModel().getProperty('/CommuteList');
