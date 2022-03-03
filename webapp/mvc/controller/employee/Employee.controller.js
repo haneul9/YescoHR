@@ -1149,11 +1149,9 @@ sap.ui.define(
         const oControl = oEvent.getSource();
         const sPath = oControl.getBinding('value').getPath();
         const mFormData = oViewModel.getProperty('/employee/dialog/form');
-        const aPointFields = ['Spont', 'Hpont', 'Rpont', 'Wpont'];
-        const iTotalPoint = aPointFields.reduce((acc, cur) => acc + _.defaultTo(Number(mFormData[cur]), 0), 0);
 
         oViewModel.setProperty(sPath, String(Number(oControl.getValue())));
-        oViewModel.setProperty('/employee/dialog/form/Tpont', String(iTotalPoint));
+        oViewModel.setProperty('/employee/dialog/form/Tpont', _.chain(mFormData).pick(['Spont', 'Hpont', 'Rpont', 'Wpont']).values().sumBy(_.toNumber).toString().value());
       },
 
       onPressHelpRequest(oEvent) {
