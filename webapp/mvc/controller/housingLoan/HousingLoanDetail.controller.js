@@ -560,9 +560,9 @@ sap.ui.define(
                   });
                 });
 
+                oDetailModel.setProperty('/FormData/Lnsta', '10');
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
               } catch (oError) {
-                oDetailModel.setProperty('/FormData/Appno', '');
                 AppUtils.handleError(oError);
               } finally {
                 AppUtils.setAppBusy(false, this);
@@ -622,7 +622,6 @@ sap.ui.define(
                   },
                 });
               } catch (oError) {
-                oDetailModel.setProperty('/FormData/Appno', '');
                 AppUtils.handleError(oError);
               } finally {
                 AppUtils.setAppBusy(false, this);
@@ -696,7 +695,7 @@ sap.ui.define(
                   });
                 },
                 error: (oError) => {
-                  AppUtils.handleError(new ODataDeleteError({ oError }));
+                  AppUtils.handleError(new ODataDeleteError(oError));
                   AppUtils.setAppBusy(false, this);
                 },
               });
