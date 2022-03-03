@@ -40,7 +40,7 @@ sap.ui.define(
           SelectedRow: {},
           searchDate: {
             date: moment().hours(9).toDate(),
-            secondDate: moment().subtract(1, 'month').add(1, 'day').hours(9).toDate(),
+            secondDate: moment().subtract(1, 'month').hours(9).toDate(),
           },
           listInfo: {
             rowCount: 1,
