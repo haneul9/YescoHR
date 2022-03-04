@@ -285,8 +285,8 @@ sap.ui.define(
           case 'Helid':
             break;
           // 가족수당
-          case 'Famid':
-            break;
+          // case 'Famid':
+          //   break;
           default:
             return;
         }

@@ -58,10 +58,12 @@
                     <core:Item text="{Dptyx}" key="{Dptyp}" />
                 </ComboBox>
             </VBox>
-            <Label text="{= ${/werks} === '1000' || ${/werks} === '3000' ? '' : ${i18n>LABEL_05014} }"/>
+            <HBox/>
+            <HBox/>
+            <!-- <Label text="{= ${/werks} === '1000' || ${/werks} === '3000' ? '' : ${i18n>LABEL_05014} }"/>
             <VBox>
                 <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Famid} ? true : false }" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" visible="{= ${/werks} !== '1000' &amp;&amp; ${/werks} !== '3000' }" />
-            </VBox>
+            </VBox> -->
             <Label text="{i18n>LABEL_05015}"/>
             <VBox>
                 <custom:DatePicker dateValue="{ path: '/FormData/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" class="required"/>
