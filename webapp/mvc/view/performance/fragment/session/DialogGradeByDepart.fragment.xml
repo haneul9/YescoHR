@@ -13,7 +13,11 @@
                         <m:Title level="H3" text="{i18n>LABEL_10098}" class="sapUiSmallMarginEnd" />
                     </m:HBox>
                     <m:HBox>
-                        <m:Label text="{/dialog/gradeTx}" class="perGrade-type type01"/>
+                        <m:Label text="{/dialog/gradeTx}" class="perGrade-type">
+                            <m:customData>
+                                <core:CustomData key="type" value="type0{/dialog/grade}" writeToDom="true" />
+                            </m:customData>
+                        </m:Label>
                     </m:HBox>
                 </m:HBox>
                 <m:HBox id="gradeByDepartContainer" items="{ path: '/department/list', templateShareable: true, filters: [{path: 'Zzappun2', operator: 'NE', value1: ''}] }" class="pt-20-px">
