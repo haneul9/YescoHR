@@ -13,9 +13,9 @@
                         <RowSettings highlight="{ path: 'Stat1', formatter: '.formatDetailRowHighlight' }" />
                     </rowSettingsTemplate>
                     <extension>
-                        <m:HBox class="header-wrap" height="75px" justifyContent="SpaceBetween">
+                        <m:HBox class="header-wrap" justifyContent="SpaceBetween">
                             <m:HBox class="header" alignItems="Center">
-                                <m:Title level="H4" text="{i18n>LABEL_28033}" class="sapUiSmallMarginEnd" />
+                                <m:Title level="H3" text="{i18n>LABEL_28033}" class="sapUiSmallMarginEnd" />
                                 <m:Text text="total {/dialog/totalCount}" />
                             </m:HBox>
                             <m:HBox>
