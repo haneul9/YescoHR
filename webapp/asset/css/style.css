@@ -1954,7 +1954,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .sapMPageHeader {display: none;}
 .sapUiSizeCompact .sapMPageWithHeader>section {top:0;}
 
-
+.sapMInputBaseDisabled.enabledTxt .sapMInputBaseContentWrapper .sapMInputBaseInner {color: var(--FontColorNormal) !important;}
 .h15 *{height:14px;}
 .color-01 {color:#7BB4EB}
 .color-02 {color:#FF6969}
