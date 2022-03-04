@@ -12,7 +12,7 @@
                     <custom:RadioButton text="{i18n>LABEL_10092}" outerSize="50%" innerSize="35%" />
                     <custom:RadioButton text="{i18n>LABEL_10093}" outerSize="50%" innerSize="35%" />
                 </RadioButtonGroup>
-                <Text text="{i18n>MSG_10011}" class="desc-txt"/>
+                <Text text="{i18n>MSG_10011}" class="desc-txt mt-2-px" />
             </HBox>
             <HBox class="cascading-type-list">
                 <Image src="asset/image/icon_WF_Myinfo_02_N.svg" />
