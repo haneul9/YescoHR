@@ -44,7 +44,7 @@ sap.ui.define(
       },
 
       async init() {
-        const oView = this.getController().getView();
+        const oView = this.oController.getView();
 
         this.oMyPagePopover = await Fragment.load({
           id: oView.getId(),
@@ -52,13 +52,11 @@ sap.ui.define(
           controller: this,
         });
 
-        const oMyPageModel = this.getMyPageModel();
-
         this.oMyPagePopover
           .attachBeforeOpen(() => {
             // this.onChangeMyPageOnlyUnread();
           })
-          .setModel(oMyPageModel)
+          .setModel(this.oMyPageModel)
           .bindElement('/');
 
         oView.addDependent(this.oMyPagePopover);
@@ -81,7 +79,7 @@ sap.ui.define(
         const oNotificationModel = this.getNotificationModel();
         const bOnlyUnread = oNotificationModel.getProperty('/onlyUnread');
 
-        const oCommonModel = this.getController().getModel(ServiceNames.COMMON);
+        const oCommonModel = this.oController.getModel(ServiceNames.COMMON);
         const mFilters = {
           Mode: 'L',
           Unide: bOnlyUnread ? 'X' : '',
@@ -93,7 +91,7 @@ sap.ui.define(
       transformContentData(aContentData) {
         let iUnreadCount = 0;
 
-        const sDTFMT = this.getController().getSessionProperty('DTFMT');
+        const sDTFMT = this.oController.getSessionProperty('DTFMT');
         aContentData.forEach((mData) => {
           delete mData.__metadata;
 
@@ -112,23 +110,17 @@ sap.ui.define(
         };
       },
 
-      async onChangeMobilePushOnOff(oEvent) {
-        try {
-          this.setBusy(true);
+      onChangeMobilePushOnOff() {},
 
-          // await this.showContentData();
-        } catch (oError) {
-          AppUtils.handleError(oError);
-        } finally {
-          this.setBusy(false);
-        }
+      async onPressLogout() {
+        this.oController.onPressLogout();
       },
 
       onPopoverToggle() {
         if (this.oMyPagePopover.isOpen()) {
           this.onPopoverClose();
         } else {
-          this.oMyPagePopover.openBy(this.getController().byId('my-page'));
+          this.oMyPagePopover.openBy(this.oController.byId('my-page'));
           this.setBusy(false);
         }
       },
@@ -137,18 +129,10 @@ sap.ui.define(
         this.oMyPagePopover.close();
       },
 
-      getController() {
-        return this.oController;
-      },
-
-      getMyPageModel() {
-        return this.oMyPageModel;
-      },
-
       setBusy(bBusy = true) {
         setTimeout(
           () => {
-            this.getMyPageModel().setProperty('/busy', bBusy);
+            this.oMyPageModel.setProperty('/busy', bBusy);
           },
           bBusy ? 0 : 500
         );
