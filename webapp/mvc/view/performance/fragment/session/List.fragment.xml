@@ -15,8 +15,6 @@
                 <HBox class="status-wrap perGrade">
                     <Text text="{/grade/0/ValueText}" class="type00" />
                     <Text text="{/grade/1/ValueText}" class="type01" />
-                    <Text text="{/grade/2/ValueText}" class="type02" />
-                    <Text text="{/grade/3/ValueText}" class="type03" />
                 </HBox>
                 <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressExcelDownload" />
             </HBox>
@@ -85,7 +83,7 @@
                     <table:template>
                         <VBox>
                             <Text text="{LfappTx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text" visible="{= !${/isActive} }" />
-                            <ComboBox selectedKey="{Lfapp}" items="{ path: '/gradeEntry', templateShareable: true }" visible="{/isActive}" change=".onChangeFapp">
+                            <ComboBox selectedKey="{Lfapp}" items="{ path: '/gradeEntry', templateShareable: true }" visible="{/isActive}" change=".onChangeLfapp">
                                 <core:Item text="{ValueText}" key="{ValueEid}" />
                             </ComboBox>
                         </VBox>

@@ -16,7 +16,7 @@
                 </Toolbar>
             </headerToolbar>
             <content>
-                <table:Table id="departmentTable" selectionMode="None" class="row-link perGrade-depart-table" width="100%" fixedBottomRowCount="1" columnHeaderHeight="45" rowHeight="44" rows="{/department/list}" visibleRowCount="{/department/rowCount}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
+                <table:Table id="departmentTable" selectionMode="None" class="perGrade-depart-table" width="100%" fixedBottomRowCount="1" columnHeaderHeight="45" rowHeight="44" rows="{/department/list}" visibleRowCount="{/department/rowCount}" noData="{i18n>MSG_00001}">
                     <table:columns>
                         <table:Column filterProperty="Zzappuntx2" sortProperty="Zzappuntx2">
                             <table:multiLabels>
@@ -24,7 +24,7 @@
                                 <Label text="{i18n>LABEL_10090}"/>
                             </table:multiLabels>
                             <table:template>
-                                <Text text="{Zzappuntx2}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                                <Link text="{Zzappuntx2}" class="showLine" width="100%" textAlign="Center" press=".onSelectRow" />
                             </table:template>
                         </table:Column>
                         <table:Column width="8%" filterProperty="Dept01" sortProperty="Dept01" headerSpan="2">
