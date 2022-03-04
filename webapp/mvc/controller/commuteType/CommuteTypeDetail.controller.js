@@ -71,26 +71,12 @@ sap.ui.define(
           if (sDataKey === 'N' || !sDataKey) {
             const sZyymm = oParameter.zyymm;
             const sSchkz = oParameter.schkz;
-            const mSessionData = this.getSessionData();
 
             oDetailModel.setProperty('/FormData', {
+              Pernr: this.getAppointeeProperty('Pernr'),
               Zyymm: sZyymm,
               Schkz: sSchkz,
             });
-
-            oDetailModel.setProperty('/ApplyInfo', {
-              Apename: mSessionData.Ename,
-              Aporgtx: `${mSessionData.Btrtx} / ${mSessionData.Orgtx}`,
-              Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
-            });
-          } else {
-            const oView = this.getView();
-            const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-            const mListData = oListView.getModel().getProperty('/parameters');
-
-            oDetailModel.setProperty('/FormData', mListData);
-            oDetailModel.setProperty('/ApplyInfo', mListData);
-            oDetailModel.setProperty('/ApprovalDetails', mListData);
           }
 
           this.settingsAttachTable();
@@ -113,202 +99,57 @@ sap.ui.define(
         return sAction;
       },
 
-      // 부양가족여부, 장애여부, 동거, 건강보험피부양자, 가족수당 체크
-      onCheckBox(oEvent) {
-        const oEventSource = oEvent.getSource();
-        const sPath = oEventSource.getBinding('selected').aBindings[0].getPath();
-        const iValueIndex = sPath.lastIndexOf('/') + 1;
-        const oDetailModel = this.getViewModel();
-        const bSelected = oEventSource.getSelected();
-
-        switch (sPath.slice(iValueIndex)) {
-          // 부양가족
-          case 'Dptid':
-            if (bSelected) {
-              oDetailModel.setProperty('/SupEditable', true);
-            } else {
-              oDetailModel.setProperty('/SupEditable', false);
-            }
-            oDetailModel.setProperty('/FormData/Dptyp', 'ALL');
-            break;
-          // 장애여부
-          case 'Hndid':
-            if (bSelected) {
-              oDetailModel.setProperty('/DisabEditable', true);
-            } else {
-              oDetailModel.setProperty('/DisabEditable', false);
-            }
-            oDetailModel.setProperty('/FormData/Hndcd', 'ALL');
-            break;
-          // 동거
-          case 'Livid':
-            break;
-          // 건강보험피부양자
-          case 'Helid':
-            break;
-          // 가족수당
-          case 'Famid':
-            break;
-          default:
-            return;
-        }
-
-        if (bSelected) {
-          oDetailModel.setProperty(sPath, 'X');
-        } else {
-          oDetailModel.setProperty(sPath, '');
-        }
-      },
-
-      checkError() {
-        const oDetailModel = this.getViewModel();
-        const oFormData = oDetailModel.getProperty('/FormData');
-
-        // 성명
-        if (!oFormData.Lnmhg || !oFormData.Fnmhg) {
-          MessageBox.alert(this.getBundleText('MSG_05009'));
-          return true;
-        }
-
-        // 주민등록번호
-        if (!oFormData.Regno) {
-          MessageBox.alert(this.getBundleText('MSG_05010'));
-          return true;
-        }
-
-        // 가족관계
-        if (oFormData.Kdsvh === 'ALL' || !oFormData.Kdsvh) {
-          MessageBox.alert(this.getBundleText('MSG_05011'));
-          return true;
-        }
-
-        // 성별
-        if (oFormData.Fasex === 'ALL' || !oFormData.Fasex) {
-          MessageBox.alert(this.getBundleText('MSG_05012'));
-          return true;
-        }
-
-        // 장애여부
-        if (!!oFormData.Hndid && (oFormData.Hndcd === 'ALL' || !oFormData.Hndcd)) {
-          MessageBox.alert(this.getBundleText('MSG_05013'));
-          return true;
-        }
-
-        // 부양가족유형
-        if (!!oFormData.Dptid && (oFormData.Dptyp === 'ALL' || !oFormData.Dptyp)) {
-          MessageBox.alert(this.getBundleText('MSG_05014'));
-          return true;
-        }
-
-        // 적용시작일
-        if (!oFormData.Begda) {
-          MessageBox.alert(this.getBundleText('MSG_05015'));
-          return true;
-        }
-
-        // 적용종료일
-        if (!oFormData.Endda) {
-          MessageBox.alert(this.getBundleText('MSG_05016'));
-          return true;
-        }
-
-        // 첨부파일
-        if (!AttachFileAction.getFileCount.call(this)) {
-          MessageBox.alert(this.getBundleText('MSG_03005'));
-          return true;
-        }
-
-        return false;
-      },
-
       // 신청
       async onApplyBtn() {
-        if (this.checkError()) return;
+        if (!AttachFileAction.getFileCount.call(this)) {
+          //  증빙자료를 꼭 등록하세요.
+          return MessageBox.alert(this.getBundleText('MSG_00040'));
+        }
 
+        // {신청}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
+          // 신청, 취소
           actions: [this.getBundleText('LABEL_00121'), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
-            if (vPress && vPress === this.getBundleText('LABEL_00121')) {
-              try {
-                AppUtils.setAppBusy(true, this);
-
-                const oDetailModel = this.getViewModel();
-                const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
-
-                if (!sStatus || sStatus === '60') {
-                  const vAppno = await Appno.get.call(this);
-
-                  oDetailModel.setProperty('/FormData/Appno', vAppno);
-                  oDetailModel.setProperty('/FormData/Appdt', new Date());
-                }
-
-                const oModel = this.getModel(ServiceNames.PA);
-                const oFormData = oDetailModel.getProperty('/FormData');
-                const sMenid = this.getCurrentMenuId();
-                let oSendObject = {};
-
-                oSendObject = oFormData;
-                oSendObject.Prcty = 'C';
-                oSendObject.Menid = sMenid;
-
-                // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
-
-                await new Promise((resolve, reject) => {
-                  oModel.create('/FamilyInfoApplSet', oSendObject, {
-                    success: () => {
-                      resolve();
-                    },
-                    error: (oError) => {
-                      reject(new ODataCreateError({ oError }));
-                    },
-                  });
-                });
-
-                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
-                  onClose: () => {
-                    this.onNavBack();
-                  },
-                });
-              } catch (oError) {
-                AppUtils.handleError(oError);
-              } finally {
-                AppUtils.setAppBusy(false, this);
-              }
+            // 신청
+            if (!vPress || vPress !== this.getBundleText('LABEL_00121')) {
+              return;
             }
-          },
-        });
-      },
 
-      // 삭제
-      onDeleteBtn() {
-        const oModel = this.getModel(ServiceNames.PA);
-        const oDetailModel = this.getViewModel();
-
-        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
-          actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
-          onClose: (vPress) => {
-            if (vPress && vPress === this.getBundleText('LABEL_00110')) {
+            try {
               AppUtils.setAppBusy(true, this);
 
-              const sPath = oModel.createKey('/FamilyInfoApplSet', {
-                Appno: oDetailModel.getProperty('/FormData/Appno'),
-              });
+              const oDetailModel = this.getViewModel();
+              const sAppno = oDetailModel.getProperty('/FormData/Appno');
 
-              oModel.remove(sPath, {
-                success: () => {
-                  MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
-                    onClose: () => {
-                      AppUtils.setAppBusy(false, this);
-                      this.onNavBack();
-                    },
-                  });
-                },
-                error: (oError) => {
-                  AppUtils.handleError(new ODataDeleteError(oError));
-                  AppUtils.setAppBusy(false, this);
+              if (!sAppno) {
+                const sAppno = await Appno.get.call(this);
+
+                oDetailModel.setProperty('/FormData/Appno', sAppno);
+                oDetailModel.setProperty('/FormData/Appda', new Date());
+              }
+
+              const oModel = this.getModel(ServiceNames.WORKTIME);
+              const oFormData = oDetailModel.getProperty('/FormData');
+              let oSendObject = {
+                ...oFormData,
+                Prcty: 'C',
+              };
+
+              // FileUpload
+              await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
+              await Client.create(oModel, 'WorkScheduleApply', oSendObject);
+
+              // {신청}되었습니다.
+              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
+                onClose: () => {
+                  this.onNavBack();
                 },
               });
+            } catch (oError) {
+              AppUtils.handleError(oError);
+            } finally {
+              AppUtils.setAppBusy(false, this);
             }
           },
         });
@@ -323,6 +164,7 @@ sap.ui.define(
         AttachFileAction.setAttachFile(this, {
           Editable: !sStatus,
           Type: this.getApprovalType(),
+          Message: this.getBundleText('MSG_00040'),
           Appno: sAppno,
           Max: 10,
         });

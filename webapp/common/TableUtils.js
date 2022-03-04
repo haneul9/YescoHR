@@ -12,6 +12,10 @@ sap.ui.define(
     'use strict';
 
     /**
+     * @constant {number} 미신청
+     */
+    const STATE_IN_PROGRESS0 = 15;
+    /**
      * @constant {number} 임시저장
      */
     const STATE_IN_PROGRESS1 = 10;
@@ -248,6 +252,7 @@ sap.ui.define(
         const vValue = !parseInt(sValue, 10) ? sValue : parseInt(sValue, 10);
 
         switch (vValue) {
+          case STATE_IN_PROGRESS0:
           case STATE_IN_PROGRESS1:
           case STATE_IN_PROGRESS2:
             // 작성중
@@ -282,6 +287,9 @@ sap.ui.define(
         const vValue = !parseInt(sValue, 10) ? sValue : parseInt(sValue, 10);
 
         switch (vValue) {
+          case STATE_IN_PROGRESS0:
+            // 미신청
+            return '미신청';
           case STATE_IN_PROGRESS1:
           case STATE_IN_PROGRESS2:
             // 작성중
