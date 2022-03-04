@@ -39,6 +39,7 @@ sap.ui.define(
           busy: false,
           pageBusy: false,
           isActive: false,
+          groups: [],
           grade: [],
           gradeMap: {},
           gradeEntry: [],
@@ -91,6 +92,7 @@ sap.ui.define(
             Client.deep(oModel, 'AppraisalSesDoc', {
               Menid: this.getCurrentMenuId(),
               Prcty: Constants.PROCESS_TYPE.DETAIL.code,
+              AppraisalApGroupSet: [],
               AppraisalSesDocDetSet: [],
             }),
           ]);
@@ -102,6 +104,10 @@ sap.ui.define(
           oViewModel.setProperty('/gradeMap', mGradeMap);
           oViewModel.setProperty('/grade', aGrades);
           oViewModel.setProperty('/gradeEntry', new ComboEntry({ codeKey: 'ValueEid', valueKey: 'ValueText', aEntries: aGrades }));
+          oViewModel.setProperty(
+            '/groups',
+            _.map(mDetailData.AppraisalApGroupSet.results, (o) => _.omit(o, '__metadata'))
+          );
 
           const aRawData = _.map(mDetailData.AppraisalSesDocDetSet.results, (o, i) => ({
             Idx: ++i,
@@ -133,13 +139,22 @@ sap.ui.define(
 
         _.remove(aList, (o) => _.isEmpty(o.Ename));
 
-        const mLFappCount = _.countBy(aList, 'Lfapp');
         const aGrade = oViewModel.getProperty('/grade');
-        const aGradeCodes = _.chain(aGrade).map('ValueEid').concat(['ALL']).value();
+        const aGroups = oViewModel.getProperty('/groups');
+        const mLFappCount = _.chain(aList)
+          .filter((o) => !_.isEqual(o.Lfapp, 'ALL'))
+          .map((o) => _.set(o, 'GridGroup', `${o.Lfapp}-${o.Zzappgr}`))
+          .countBy('GridGroup')
+          .value();
 
-        _.forEach(aGradeCodes, (code) => {
-          if (!_.has(mLFappCount, code)) aList.push({ Lfapp: code, Zzappuntx2: 'EMPTY' });
-        });
+        _.chain(aGrade)
+          .take(2)
+          .forEach((v) => {
+            aGroups.forEach((gv) => {
+              if (!_.has(mLFappCount, `${v.ValueEid}-${gv.Zzappgr}`)) aList.push({ Lfapp: v.ValueEid, Zzappgr: gv.Zzappgr, Zzappuntx2: 'EMPTY' });
+            });
+          })
+          .commit();
 
         oViewModel.setProperty('/tab/list', aList);
       },
