@@ -2,33 +2,29 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/yesco/common/AttachFileAction',
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/ComboEntry',
+    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TextUtils',
+    'sap/ui/yesco/common/TableUtils',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/control/MessageBox',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
-    'sap/ui/yesco/common/exceptions/ODataCreateError',
-    'sap/ui/yesco/common/exceptions/ODataDeleteError',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
+    'sap/ui/yesco/mvc/model/type/Date',
   ],
   (
     // prettier 방지용 주석
-    AttachFileAction,
+    MessageBox,
     Appno,
     AppUtils,
-    ComboEntry,
+    AttachFileAction,
     FragmentEvent,
     TextUtils,
+    TableUtils,
+    Client,
     ServiceNames,
-    MessageBox,
-    ODataReadError,
-    ODataCreateError,
-    ODataDeleteError,
     BaseController
   ) => {
     'use strict';
@@ -38,6 +34,7 @@ sap.ui.define(
 
       AttachFileAction: AttachFileAction,
       TextUtils: TextUtils,
+      TableUtils: TableUtils,
       FragmentEvent: FragmentEvent,
 
       initializeModel() {
@@ -51,18 +48,58 @@ sap.ui.define(
 
       // setData
       async onObjectMatched(oParameter) {
-        const oViewModel = this.getViewModel();
-        const sDataKey = oParameter.oDataKey;
+        const oDetailModel = this.getViewModel();
 
-        // oViewModel.setData(this.initializeModel());
-        // oViewModel.setProperty('/busy', true);
-        // // Input Field Imited
-        // oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.PA, 'FamilyInfoAppl')));
-        // oViewModel.setProperty('/FormStatus', sDataKey);
-        // await this.getCodeList();
-        // await this.setFormData();
+        oDetailModel.setData(this.initializeModel());
 
-        oViewModel.setProperty('/busy', false);
+        try {
+          // Input Field Imited
+          oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.WORKTIME, 'WorkScheduleApply')));
+          oDetailModel.setProperty('/busy', true);
+
+          const sPernr = this.getAppointeeProperty('Pernr');
+          const oModel = this.getModel(ServiceNames.WORKTIME);
+          // 대상자리스트
+          const aOtpList = await Client.getEntitySet(oModel, 'SchkzList', {
+            Pernr: sPernr,
+          });
+
+          oDetailModel.setProperty('/WorkType', aOtpList);
+
+          const sDataKey = oParameter.oDataKey;
+
+          if (sDataKey === 'N' || !sDataKey) {
+            const sZyymm = oParameter.zyymm;
+            const sSchkz = oParameter.schkz;
+            const mSessionData = this.getSessionData();
+
+            oDetailModel.setProperty('/FormData', {
+              Zyymm: sZyymm,
+              Schkz: sSchkz,
+            });
+
+            oDetailModel.setProperty('/ApplyInfo', {
+              Apename: mSessionData.Ename,
+              Aporgtx: `${mSessionData.Btrtx} / ${mSessionData.Orgtx}`,
+              Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
+            });
+          } else {
+            const oView = this.getView();
+            const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+            const mListData = oListView.getModel().getProperty('/parameters');
+
+            oDetailModel.setProperty('/FormData', mListData);
+            oDetailModel.setProperty('/ApplyInfo', mListData);
+            oDetailModel.setProperty('/ApprovalDetails', mListData);
+          }
+
+          this.settingsAttachTable();
+        } catch (oError) {
+          this.debug(oError);
+          AppUtils.handleError(oError);
+        } finally {
+          oDetailModel.setProperty('/busy', false);
+        }
       },
 
       // override AttachFileCode
@@ -74,134 +111,6 @@ sap.ui.define(
         const sAction = oArguments.oDataKey === 'N' ? this.getBundleText('LABEL_04002') : this.getBundleText('LABEL_00165');
 
         return sAction;
-      },
-
-      setResident(s = '') {
-        const iLength = s.length;
-        let sValue = '';
-
-        if (iLength > 6) {
-          sValue = `${s.slice(0, 6)}-${s.slice(6)}`;
-        } else {
-          sValue = s;
-        }
-
-        return sValue;
-      },
-
-      setFormData() {
-        const oDetailModel = this.getViewModel();
-        const sKey = oDetailModel.getProperty('/FormStatus');
-        const oView = this.getView();
-        const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-
-        if (!sKey || sKey === 'N') {
-          if (!!oListView && !!oListView.getModel().getProperty('/parameter')) {
-            oDetailModel.setProperty('/Fixed', true);
-            oDetailModel.setProperty('/FormData', oListView.getModel().getProperty('/parameter'));
-          } else {
-            const oAppointeeData = this.getAppointeeData();
-
-            oDetailModel.setProperty('/FormData', {
-              Apename: oAppointeeData.Ename,
-              Appernr: oAppointeeData.Pernr,
-              Kdsvh: 'ALL',
-              Fasex: 'ALL',
-              Hndcd: 'ALL',
-              Dptyp: 'ALL',
-              Endda: moment('9999-12-31').hours(9).toDate(),
-            });
-          }
-          this.settingsAttachTable();
-        } else {
-          const oModel = this.getModel(ServiceNames.PA);
-
-          if (!!oListView && !!oListView.getModel().getProperty('/parameter')) {
-            oDetailModel.setProperty('/FormData', oListView.getModel().getProperty('/parameter'));
-            this.settingsAttachTable();
-          } else {
-            oModel.read('/FamilyInfoApplSet', {
-              filters: [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'), new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, this.getCurrentMenuId()), new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sKey)],
-              success: (oData) => {
-                if (oData) {
-                  oDetailModel.setProperty('/FormData', oData.results[0]);
-                  this.settingsAttachTable();
-                }
-              },
-              error: (oError) => {
-                AppUtils.handleError(new ODataReadError(oError));
-              },
-            });
-          }
-        }
-      },
-
-      // 화면관련 List호출
-      getCodeList() {
-        const oModel = this.getModel(ServiceNames.PA);
-        const oDetailModel = this.getViewModel();
-        const sKdsvhtUrl = '/KdsvhCodeListSet';
-        const sDptypUrl = '/DptypCodeListSet';
-
-        return Promise.all([
-          new Promise((resolve) => {
-            // 가족관계
-            oModel.read(sKdsvhtUrl, {
-              filters: [],
-              success: (oData) => {
-                if (oData) {
-                  this.debug(`${sKdsvhtUrl} success.`, oData);
-
-                  const aList = oData.results;
-
-                  oDetailModel.setProperty('/Relations', new ComboEntry({ codeKey: 'Auspr', valueKey: 'Atext', aEntries: aList }));
-
-                  resolve();
-                }
-              },
-              error: (oError) => {
-                AppUtils.handleError(new ODataReadError(oError));
-              },
-            });
-          }),
-          new Promise((resolve) => {
-            // 부양가족유형
-            oModel.read(sDptypUrl, {
-              filters: [new sap.ui.model.Filter('Begda', sap.ui.model.FilterOperator.EQ, new Date())],
-              success: (oData) => {
-                if (oData) {
-                  this.debug(`${sDptypUrl} success.`, oData);
-
-                  const aList = oData.results;
-
-                  oDetailModel.setProperty('/Support', new ComboEntry({ codeKey: 'Dptyp', valueKey: 'Dptyx', aEntries: aList }));
-                  resolve();
-                }
-              },
-              error: (oError) => {
-                AppUtils.handleError(new ODataReadError(oError));
-              },
-            });
-          }),
-        ]);
-      },
-
-      // 주민번호입력시
-      ResidentNumber(oEvent) {
-        const oEventSource = oEvent.getSource();
-        const sPath = oEventSource.getBinding('value').getPath();
-        const sValue = oEvent.getParameter('value').trim().replace(/[^\d]/g, '');
-        const iLength = sValue.length;
-        let sPropValue = '';
-
-        if (iLength > 6) {
-          sPropValue = `${sValue.slice(0, 6)}-${sValue.slice(6)}`;
-        } else {
-          sPropValue = sValue;
-        }
-
-        oEventSource.setValue(sPropValue);
-        oEventSource.getModel().setProperty(sPath, sValue);
       },
 
       // 부양가족여부, 장애여부, 동거, 건강보험피부양자, 가족수당 체크
