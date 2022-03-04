@@ -136,9 +136,13 @@ sap.ui.define(
           // 신청할 데이터를 한 건만 선택하세요.
           MessageBox.alert(this.getBundleText('MSG_30003'));
           return;
-        } else if (!_.isEmpty(mSelectRow)) {
-          oViewModel.setProperty('/parameter', mSelectRow);
+        } else if (mSelectRow.Appyn !== 'X') {
+          // 신청 가능한 내역이 아닙니다.
+          MessageBox.alert(this.getBundleText('MSG_30004'));
+          return;
         }
+        
+        oViewModel.setProperty('/parameter', mSelectRow);
 
         this.getRouter().navTo('commuteType-detail', { oDataKey: 'N', zyymm: mSelectRow.Zyymm, schkz: mSelectRow.Schkz });
       },

@@ -251,7 +251,7 @@ sap.ui.define(
         oEventSource.getModel().setProperty(sPath, sValue);
       },
 
-      // 부양가족여부, 장애여부, 동거, 건강보험피부양자, 가족수당 체크
+      // 부양가족여부, 장애여부, 동거, 건강보험피부양자
       onCheckBox(oEvent) {
         const oEventSource = oEvent.getSource();
         const sPath = oEventSource.getBinding('selected').aBindings[0].getPath();
@@ -283,9 +283,6 @@ sap.ui.define(
             break;
           // 건강보험피부양자
           case 'Helid':
-            break;
-          // 가족수당
-          case 'Famid':
             break;
           default:
             return;

@@ -24,6 +24,9 @@
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.familyInfo.fragment.DetailForm" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
         <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}" visible="{= !!${/FormData/ZappStatAl} }">
+          <HBox alignItems="Center" class="table-toolbar">
+            <Title level="H2" text="{i18n>LABEL_05017}" />
+          </HBox>
           <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="4px 0" class="form-grid">
             <Label text="{i18n>LABEL_00266}" />
             <VBox>
