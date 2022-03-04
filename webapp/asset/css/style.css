@@ -1834,7 +1834,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .perGrade-table .sapUiTableRowHighlight.sapUiTableRowHighlightIndication02 {background-color: var(--PerformanceGradeColor2) !important}
 .perGrade-table .sapUiTableRowHighlight.sapUiTableRowHighlightIndication03 {background-color: var(--PerformanceGradeColor3) !important}
 .perGrade-table .sapUiTableRowHighlight.sapUiTableRowHighlightIndication04 {background-color: var(--PerformanceGradeColor0) !important}
-.perGrade-wrap > .sapMVBox { border-top: 1px solid #F3F3F3; border-left: 1px solid #F3F3F3; border-bottom: 1px solid #F3F3F3;border-right: 1px solid #F3F3F3; }
+.perGrade-wrap > .sapMVBox { border-top: 1px solid #F3F3F3; border-left: 1px solid #F3F3F3; border-bottom: 1px solid #F3F3F3; }
 .perGrade-wrap > .sapMVBox:last-child { border-right: 1px solid #F3F3F3; }
 .perGrade-wrap .member-photo {margin-left: 10px;margin-top: 3px; display:inline-block; width:32px; height:32px; background-image:url(../../asset/image/avatar-unknown.svg)}
 .perGrade-wrap .name {height: 20px;padding-top:4px;font-size: 16px; margin-left: 14px; font-weight: 800;}
@@ -1848,6 +1848,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .perGrade-wrap.perSession .sapMHBox > .grade-name:nth-child(1) { background-color: var(--PerformanceGradeColor0); }
 .perGrade-wrap.perSession .sapMHBox > .grade-name:nth-child(2) { background-color: #DDE1E6; }
 .perGrade-wrap.perSession .sapMHBox > .grade-name:nth-child(3) { background-color: var(--PerformanceGradeColor1); }
+.perGrade-wrap.perSession > .sapMVBox { border-right: 1px solid #F3F3F3; }
 .perGrade-wrap.perSession .group-label {background-color: #f8f8f8;}
 .perGrade-wrap.perSession .group-label .sapMText {font-weight: 600;}
 .perGrade-wrap .perGrade-container { height: 100%; box-sizing: border-box; padding: 15px; }
