@@ -116,11 +116,11 @@
                             <layoutData>
                                 <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '6' : '5' }" gridColumn="2 / 9" />
                             </layoutData>
-                            <HBox>
+                            <HBox class="label">
                                 <layoutData>
                                     <FlexItemData growFactor="1" />
                                 </layoutData>
-                                <Label text="L5" textAlign="Center" />
+                                <Text text="L5" textAlign="Center" />
                                 <Label text="{i18n>LABEL_10084}" textAlign="Center" />
                             </HBox>
                             <Input value="{Z1175}" enabled="false">
@@ -133,11 +133,11 @@
                             <layoutData>
                                 <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '7' : '6' }" gridColumn="2 / 9" />
                             </layoutData>
-                            <HBox>
+                            <HBox class="label">
                                 <layoutData>
                                     <FlexItemData growFactor="1" />
                                 </layoutData>
-                                <Label text="L4" textAlign="Center" />
+                                <Text text="L4" textAlign="Center" />
                                 <Label text="{i18n>LABEL_10085}" textAlign="Center" />
                             </HBox>
                             <Input class="required" value="{Z1174}" enabled="false">
@@ -150,11 +150,11 @@
                             <layoutData>
                                 <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '8' : '7' }" gridColumn="2 / 9" />
                             </layoutData>
-                            <HBox>
+                            <HBox class="label">
                                 <layoutData>
                                     <FlexItemData growFactor="1" />
                                 </layoutData>
-                                <Label text="L3" textAlign="Center" />
+                                <Text text="L3" textAlign="Center" />
                                 <Label text="{i18n>LABEL_10086}" textAlign="Center" />
                             </HBox>
                             <Input class="required" value="{Z1173}" enabled="false">
@@ -167,11 +167,11 @@
                             <layoutData>
                                 <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '9' : '8' }" gridColumn="2 / 9" />
                             </layoutData>
-                            <HBox>
+                            <HBox class="label">
                                 <layoutData>
                                     <FlexItemData growFactor="1" />
                                 </layoutData>
-                                <Label text="L2" textAlign="Center" />
+                                <Text text="L2" textAlign="Center" />
                                 <Label text="{i18n>LABEL_10087}" textAlign="Center" />
                             </HBox>
                             <Input class="required" value="{Z1172}" enabled="false">
@@ -184,11 +184,11 @@
                             <layoutData>
                                 <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '10' : '9' }" gridColumn="2 / 9" />
                             </layoutData>
-                            <HBox>
+                            <HBox class="label">
                                 <layoutData>
                                     <FlexItemData growFactor="1" />
                                 </layoutData>
-                                <Label text="L1" textAlign="Center" />
+                                <Text text="L1" textAlign="Center" />
                                 <Label text="{i18n>LABEL_10088}" textAlign="Center" />
                             </HBox>
                             <Input class="required" value="{Z1171}" enabled="false">
