@@ -25,8 +25,8 @@ sap.ui.define(
           const sPath = oEventSource.getBinding('value').getPath();
           const sValue = oEvent.getParameter('value').trim().replace(/[^\d]/g, '');
 
-          oEventSource.setValue(this.toCurrency(sValue));
-          oEventSource.getModel().setProperty(sPath, sValue);
+          oEventSource.setValue(this.toCurrency(sValue || '0'));
+          oEventSource.getModel().setProperty(sPath, sValue || '0');
         },
 
         /**************************

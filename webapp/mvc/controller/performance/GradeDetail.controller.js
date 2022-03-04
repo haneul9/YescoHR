@@ -303,14 +303,14 @@ sap.ui.define(
       reselectionTable() {
         setTimeout(() => {
           this.oTempTable.clearSelection();
-          this.oTempTable
-            .getBinding('rows')
-            .getContexts()
-            .map((ctx, idx) => {
-              if (_.isEqual(_.get(ctx.getObject(), 'tmpSort'), 0)) {
-                this.oTempTable.addSelectionInterval(idx, idx);
-              }
-            });
+          _.chain(this.oTempTable.getBinding('rows').getContexts())
+            .map((ctx) => ctx.getObject())
+            .filter((o) => _.isEqual(o.tmpSort, 0))
+            .size()
+            .tap((cnt) => {
+              if (cnt > 0) this.oTempTable.addSelectionInterval(0, --cnt);
+            })
+            .commit();
         }, 0);
       },
 
@@ -369,8 +369,7 @@ sap.ui.define(
         oViewModel.setProperty('/tab/busy', true);
 
         try {
-          const sPath = oEvent.getParameters().rowBindingContext.getPath();
-          const oRowData = oViewModel.getProperty(sPath);
+          const oRowData = oEvent.getSource().getParent().getBindingContext().getObject();
           const aRawData = oViewModel.getProperty('/raw/list');
           const aFilteredData = _.isEmpty(oRowData.Orgeh) ? aRawData : _.filter(aRawData, (o) => _.isEqual(o.Orgeh, oRowData.Orgeh));
 
@@ -483,17 +482,22 @@ sap.ui.define(
             const oTableContainer = this.byId('gradeByDepartContainer');
             const sGrade = this.getViewModel().getProperty('/dialog/grade');
 
-            oTableContainer.getItems().map((oTable) => {
-              const aTableRows = oTable.getBinding('rows');
+            oTableContainer.getItems().forEach((oTable) => {
+              setTimeout(() => {
+                const aTableRows = oTable.getBinding('rows');
 
-              oTable.clearSelection();
+                oTable.clearSelection();
 
-              aTableRows.filter([new Filter('Orgeh', FilterOperator.EQ, oTable.data('Orgeh'))]);
-              aTableRows.getContexts().map((ctx, idx) => {
-                if (_.isEqual(_.get(ctx.getObject(), 'Fapp'), sGrade)) {
-                  oTable.addSelectionInterval(idx, idx);
-                }
-              });
+                aTableRows.filter([new Filter('Orgeh', FilterOperator.EQ, oTable.data('Orgeh'))]);
+                _.chain(aTableRows.getContexts())
+                  .map((ctx) => ctx.getObject())
+                  .filter((o) => _.isEqual(o.Fapp, sGrade))
+                  .size()
+                  .tap((cnt) => {
+                    if (cnt > 0) oTable.addSelectionInterval(0, --cnt);
+                  })
+                  .commit();
+              }, 0);
             });
           });
 
@@ -562,19 +566,33 @@ sap.ui.define(
       onChangeByDepartSelection(oEvent) {
         const oViewModel = this.getViewModel();
         const aRows = oViewModel.getProperty('/dialog/list');
-        const oTable = oEvent.getSource();
-        const oRowContext = oEvent.getParameter('rowContext');
 
         if (!oEvent.getParameter('userInteraction')) return;
-        if (!oRowContext) return;
 
-        const oSelectedObject = oRowContext.getObject();
+        if (oEvent.getParameter('rowIndices').length > 1) {
+          const bSelectAll = oEvent.getParameter('selectAll');
 
-        oViewModel.setProperty(`${oRowContext.getPath()}/tmpSort`, _.isEqual(oSelectedObject.tmpSort, 1) ? 0 : 1);
-        oViewModel.setProperty('/dialog/list', _.orderBy(aRows, ['tmpSort', 'Zapgma', 'Zzjikgb', 'Zzappee'], ['asc', 'desc', 'asc', 'asc']));
+          oEvent
+            .getSource()
+            .getBinding('rows')
+            .getContexts()
+            .forEach((ctx) => _.set(ctx.getObject(), 'tmpSort', bSelectAll ? 0 : 1));
 
-        this.oTempTable = oTable;
-        this.reselectionTable();
+          oViewModel.setProperty('/dialog/list', _.orderBy(aRows, ['tmpSort', 'Zapgma', 'Zzjikgb', 'Zzappee'], ['asc', 'desc', 'asc', 'asc']));
+        } else {
+          const oRowContext = oEvent.getParameter('rowContext');
+
+          if (!oRowContext) return;
+
+          const oTable = oEvent.getSource();
+          const oSelectedObject = oRowContext.getObject();
+
+          oViewModel.setProperty(`${oRowContext.getPath()}/tmpSort`, _.isEqual(oSelectedObject.tmpSort, 1) ? 0 : 1);
+          oViewModel.setProperty('/dialog/list', _.orderBy(aRows, ['tmpSort', 'Zapgma', 'Zzjikgb', 'Zzappee'], ['asc', 'desc', 'asc', 'asc']));
+
+          this.oTempTable = oTable;
+          this.reselectionTable();
+        }
       },
 
       onPressSave() {

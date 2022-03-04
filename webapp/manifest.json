@@ -132,7 +132,7 @@
         { "pattern": "consolidAppBox", "name": "consolidAppBox", "target": "consolidAppBox" },
 
         { "pattern": "commuteType", "name": "commuteType", "target": "commuteType" },
-        { "pattern": "commuteType/{oDataKey}", "name": "commuteType-detail", "target": "commuteTypeDetail" },
+        { "pattern": "commuteType/{oDataKey}/:zyymm:/:schkz:", "name": "commuteType-detail", "target": "commuteTypeDetail" },
 
         { "pattern": "employee/:pernr:/:orgtx:/:orgeh:", "name": "employee", "target": "employee" },
         { "pattern": "employeeView/{pernr}", "name": "employee-view", "target": "employeeView" },

@@ -554,7 +554,12 @@ sap.ui.define(
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/LoanAmtApplSet', oSendObject, {
-                    success: () => {
+                    success: (oData) => {
+                      if (!oFormData.Lnsta) {
+                        oDetailModel.setProperty('/FormData/Begda', oData.Begda);
+                        oDetailModel.setProperty('/FormData/Endda', oData.Endda);
+                        oDetailModel.setProperty('/FormData/Pernr', oData.Pernr);
+                      }
                       resolve();
                     },
                     error: (oError) => {

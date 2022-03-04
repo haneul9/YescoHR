@@ -34,13 +34,16 @@
                 </ComboBox>
             </VBox>
             <Label text="{i18n>LABEL_05009}"/>
-            <VBox>
+            <HBox>
                 <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Dptid} ? true : false }" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" class="required"/>
-            </VBox>
+                <ComboBox items="{/Support}" selectedKey="{/FormData/Dptyp}" editable="{= (!${/FormData/ZappStatAl} || ${/Fixed}) &amp;&amp; ${/SupEditable} }">
+                    <core:Item text="{Dptyx}" key="{Dptyp}" />
+                </ComboBox>
+            </HBox>
             <Label text="{i18n>LABEL_05010}"/>
-            <HBox >
+            <HBox>
                 <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Hndid} ? true : false }" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" class="required"/>
-                <ComboBox change=".onYearsSelect" items="{/Disability}" selectedKey="{/FormData/Hndcd}" editable="{= (!${/FormData/ZappStatAl} || ${/Fixed}) &amp;&amp; ${/DisabEditable} }">
+                <ComboBox items="{/Disability}" selectedKey="{/FormData/Hndcd}" editable="{= (!${/FormData/ZappStatAl} || ${/Fixed}) &amp;&amp; ${/DisabEditable} }">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
             </HBox>
@@ -51,16 +54,6 @@
             <Label text="{i18n>LABEL_05012}"/>
             <VBox>
                 <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Helid} ? true : false }" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" />
-            </VBox>
-            <Label text="{i18n>LABEL_05013}"/>
-            <VBox>
-                <ComboBox change=".onYearsSelect" items="{/Support}" selectedKey="{/FormData/Dptyp}" editable="{= (!${/FormData/ZappStatAl} || ${/Fixed}) &amp;&amp; ${/SupEditable} }">
-                    <core:Item text="{Dptyx}" key="{Dptyp}" />
-                </ComboBox>
-            </VBox>
-            <Label text="{= ${/werks} === '1000' || ${/werks} === '3000' ? '' : ${i18n>LABEL_05014} }"/>
-            <VBox>
-                <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Famid} ? true : false }" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" visible="{= ${/werks} !== '1000' &amp;&amp; ${/werks} !== '3000' }" />
             </VBox>
             <Label text="{i18n>LABEL_05015}"/>
             <VBox>

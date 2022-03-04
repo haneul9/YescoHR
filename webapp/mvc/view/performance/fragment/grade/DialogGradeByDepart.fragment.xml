@@ -2,7 +2,7 @@
     xmlns:m="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:custom="sap.ui.yesco.control">
-    <m:Dialog showHeader="false" contentWidth="1580px" draggable="true">
+    <m:Dialog showHeader="false" contentWidth="1580px" contentHeight="540px" draggable="true">
         <m:content>
             <m:VBox class="hCardBox mb-16-px" visible="{/dialog/busy}">
                 <custom:Placeholder />
@@ -14,11 +14,15 @@
                         <m:Text class="desc-txt" text="{/summary/Orgtx2} {/summary/ZzappgrTxt}" />
                     </m:HBox>
                     <m:HBox>
-                        <m:Label text="{/dialog/gradeTx}" class="perGrade-type type01"/>
+                        <m:Label text="{/dialog/gradeTx}" class="perGrade-type">
+                            <m:customData>
+                                <core:CustomData key="type" value="type0{/dialog/grade}" writeToDom="true" />
+                            </m:customData>
+                        </m:Label>
                     </m:HBox>
                 </m:HBox>
                 <m:HBox id="gradeByDepartContainer" items="{ path: '/department/list', templateShareable: true, filters: [{path: 'Orgeh', operator: 'NE', value1: ''}] }" class="pt-20-px">
-                    <Table selectionMode="{= ${/isActive} &amp;&amp; ${/dialog/mode} === 'A' ? 'MultiToggle' : 'None' }" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/list}" visibleRowCountMode="Auto" minAutoRowCount="10" noData="{i18n>MSG_00001}" rowSelectionChange=".onChangeByDepartSelection">
+                    <Table selectionMode="{= ${/isActive} &amp;&amp; ${/dialog/mode} === 'A' ? 'MultiToggle' : 'None' }" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/list}" noData="{i18n>MSG_00001}" rowSelectionChange=".onChangeByDepartSelection">
                         <customData>
                             <core:CustomData key="Orgeh" value="{Orgeh}" />
                         </customData>

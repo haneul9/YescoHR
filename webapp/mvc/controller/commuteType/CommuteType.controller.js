@@ -35,7 +35,7 @@ sap.ui.define(
       initializeModel() {
         return {
           busy: false,
-          Data: [],
+          CommuteList: [],
           MyCom: {},
           SelectedRow: {},
           searchDate: {},
@@ -72,8 +72,11 @@ sap.ui.define(
           const aTableList = await this.getWorkScheduleList();
           const oTable = this.byId('commuteTable');
 
-          oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
-          oListModel.setProperty('/List', aTableList);
+          oListModel.setProperty('/listInfo', {
+            ...TableUtils.count({ oTable, aRowData: aTableList }),
+            ObjTxt1: this.getBundleText('LABEL_00197'),
+          });
+          oListModel.setProperty('/CommuteList', aTableList);
           this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
         } catch (oError) {
           AppUtils.handleError(oError);
@@ -104,8 +107,11 @@ sap.ui.define(
           const aTableList = await this.getWorkScheduleList();
           const oTable = this.byId('commuteTable');
 
-          oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
-          oListModel.setProperty('/List', aTableList);
+          oListModel.setProperty('/listInfo', {
+            ...TableUtils.count({ oTable, aRowData: aTableList }),
+            ObjTxt1: this.getBundleText('LABEL_00197'),
+          });
+          oListModel.setProperty('/CommuteList', aTableList);
           this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
         } catch (oError) {
           AppUtils.handleError(oError);
@@ -116,8 +122,8 @@ sap.ui.define(
 
       // 나의 근무일정 대상년월 Text
       formatSchedule(sYymm = moment().format('yyyy.MM'), dSDate, dEDate) {
-        const dS = dSDate || moment().month(0).format('yyyy.MM.DD');
-        const dD = dEDate || moment().format('yyyy.MM.DD');
+        const dS = moment(dSDate).format('yyyy.MM.DD') || moment().format('yyyy.MM.DD');
+        const dD = moment(dEDate).format('yyyy.MM.DD') || moment().format('yyyy.MM.DD');
 
         return `${this.getBundleText('LABEL_30005', moment(sYymm).format('yyyy.MM'), dS, dD)}`;
       },
@@ -126,16 +132,19 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const mSelectRow = oViewModel.getProperty('/SelectedRow');
 
-        if (!_.isEmpty(mSelectRow) && mSelectRow.ZappStatAl !== '60') {
-          MessageBox.alert(this.getBundleText('MSG_05017'));
+        if (_.isEmpty(mSelectRow)) {
+          // 신청할 데이터를 한 건만 선택하세요.
+          MessageBox.alert(this.getBundleText('MSG_30003'));
           return;
-        } else if (!_.isEmpty(mSelectRow) && mSelectRow.ZappStatAl === '60') {
-          oViewModel.setProperty('/parameter', mSelectRow);
-        } else {
-          oViewModel.setProperty('/parameter', '');
+        } else if (mSelectRow.Appyn !== 'X') {
+          // 신청 가능한 내역이 아닙니다.
+          MessageBox.alert(this.getBundleText('MSG_30004'));
+          return;
         }
+        
+        oViewModel.setProperty('/parameter', mSelectRow);
 
-        this.getRouter().navTo('commuteType-detail', { oDataKey: 'N' });
+        this.getRouter().navTo('commuteType-detail', { oDataKey: 'N', zyymm: mSelectRow.Zyymm, schkz: mSelectRow.Schkz });
       },
 
       // override AttachFileCode
@@ -157,8 +166,11 @@ sap.ui.define(
           const aTableList = await this.getWorkScheduleList();
           const oTable = this.byId('commuteTable');
 
-          oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
-          oListModel.setProperty('/List', aTableList);
+          oListModel.setProperty('/listInfo', {
+            ...TableUtils.count({ oTable, aRowData: aTableList }),
+            ObjTxt1: this.getBundleText('LABEL_00197'),
+          });
+          oListModel.setProperty('/CommuteList', aTableList);
           this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
         } catch (oError) {
           AppUtils.handleError(oError);
@@ -224,7 +236,7 @@ sap.ui.define(
       onPressExcelDownload() {
         const oTable = this.byId('commuteTable');
         const aTableData = this.getViewModel().getProperty('/CommuteList');
-        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_05001');
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_30001');
 
         TableUtils.export({ oTable, aTableData, sFileName });
       },
