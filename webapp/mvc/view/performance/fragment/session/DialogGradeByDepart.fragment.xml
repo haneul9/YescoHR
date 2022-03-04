@@ -2,7 +2,7 @@
     xmlns:m="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:custom="sap.ui.yesco.control">
-    <m:Dialog showHeader="false" contentWidth="1580px" draggable="true">
+    <m:Dialog showHeader="false" contentWidth="1600px" contentHeight="520px" draggable="true">
         <m:content>
             <m:VBox class="hCardBox mb-16-px" visible="{/dialog/busy}">
                 <custom:Placeholder />
@@ -17,12 +17,15 @@
                     </m:HBox>
                 </m:HBox>
                 <m:HBox id="gradeByDepartContainer" items="{ path: '/department/list', templateShareable: true, filters: [{path: 'Zzappun2', operator: 'NE', value1: ''}] }" class="pt-20-px">
-                    <Table selectionMode="{= ${/isActive} ? 'MultiToggle' : 'None' }" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/list}" visibleRowCountMode="Auto" minAutoRowCount="10" noData="{i18n>MSG_00001}" rowSelectionChange=".onChangeByDepartSelection">
+                    <Table selectionMode="{= ${/isActive} ? 'MultiToggle' : 'None' }" enableSelectAll="false" rows="{/dialog/list}" noData="{i18n>MSG_00001}" rowSelectionChange=".onChangeByDepartSelection">
                         <customData>
                             <core:CustomData key="Zzappun2" value="{Zzappun2}" />
                         </customData>
                         <extension>
-                            <m:Title level="H4" text="{Zzappuntx2}" class="sapUiTinyMarginBottom"/>
+                            <m:HBox class="sapUiTinyMarginBottom" alignItems="Baseline">
+                                <m:Title level="H4" text="{Zzappuntx2}" />
+                                <m:Text text="total {TargetCnt}" class="sapUiTinyMarginBegin" />
+                            </m:HBox>
                         </extension>
                         <columns class="SmallMarginTop">
                             <Column width="auto">
@@ -31,16 +34,22 @@
                                     <m:Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                                 </template>
                             </Column>
-                            <Column width="30%">
+                            <Column width="20%">
                                 <m:Label text="{i18n>LABEL_10082}"/>
                                 <template>
                                     <m:Text text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                                 </template>
                             </Column>
-                            <Column width="30%">
+                            <Column width="20%">
                                 <m:Label text="{i18n>LABEL_10089}"/>
                                 <template>
                                     <m:Text text="{FappTx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                                </template>
+                            </Column>
+                            <Column width="20%">
+                                <m:Label text="{i18n>LABEL_10099}"/>
+                                <template>
+                                    <m:Text text="{LfappTx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                                 </template>
                             </Column>
                         </columns>

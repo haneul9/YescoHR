@@ -369,8 +369,7 @@ sap.ui.define(
         oViewModel.setProperty('/tab/busy', true);
 
         try {
-          const sPath = oEvent.getParameters().rowBindingContext.getPath();
-          const oRowData = oViewModel.getProperty(sPath);
+          const oRowData = oEvent.getSource().getParent().getBindingContext().getObject();
           const aRawData = oViewModel.getProperty('/raw/list');
           const aFilteredData = _.isEmpty(oRowData.Orgeh) ? aRawData : _.filter(aRawData, (o) => _.isEqual(o.Orgeh, oRowData.Orgeh));
 
