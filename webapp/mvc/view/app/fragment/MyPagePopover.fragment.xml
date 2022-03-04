@@ -18,15 +18,15 @@
           <layoutData>
             <FlexItemData growFactor="1" />
           </layoutData>
-          <HBox justifyContent="SpaceBetween" height="30px">
+          <HBox justifyContent="SpaceBetween" alignItems="Center" height="50px">
             <Label text="{i18n>LABEL_01601}" />
             <Switch state="true" customTextOn=" " customTextOff=" " change=".onChangeMobilePushOnOff" />
           </HBox>
-          <HBox justifyContent="SpaceBetween" height="30px">
+          <HBox justifyContent="SpaceBetween" alignItems="Center" height="50px">
             <Label text="{i18n>LABEL_01004}" />
             <core:Icon src="sap-icon://navigation-right-arrow" alt="{i18n>LABEL_01004}" press=".onPressLogout" />
           </HBox>
-          <HBox justifyContent="SpaceBetween" height="30px">
+          <HBox justifyContent="SpaceBetween" alignItems="Center" height="50px">
             <Label text="{i18n>LABEL_01602}" />
             <Text text="ver. 1.0.0.0" />
           </HBox>
