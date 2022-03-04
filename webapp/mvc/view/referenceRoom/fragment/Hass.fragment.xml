@@ -31,8 +31,8 @@
         </layoutData>
       </VBox>
       <Label text="{i18n>LABEL_29005}" />
-      <HBox>
-        <u:FileUploader fileType="pdf" change=".onFileChange" icon="sap-icon://add" buttonText="{i18n>LABEL_00107}" class="sapUiTinyMarginEnd" />
+      <HBox justifyContent="SpaceBetween" width="100%" class="file-uploader-wrap">
+        <u:FileUploader fileType="pdf" change=".onFileChange" icon="sap-icon://add" buttonText="{i18n>LABEL_00107}" width="100%" />
         <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onDeleteAttachFile" />
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
