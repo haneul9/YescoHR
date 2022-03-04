@@ -16,339 +16,91 @@
                 <Text text="{i18n>LABEL_10080}" textAlign="Center" width="100%"/>
             </HBox>
         </HBox>
-        <VBox id="gridBox" class="perGrade-wrap perSession">
-            <HBox>
-                <layoutData>
-                    <FlexItemData growFactor="1" />
-                </layoutData>
-                <custom:HBox width="25%" class="grade-name active-link" alignItems="Center" click=".onClickGrade">
-                    <Text width="100%" textAlign="Center" text="EX">
-                        <layoutData>
-                            <FlexItemData growFactor="1" />
-                        </layoutData>
-                    </Text>
-                </custom:HBox>
-                <HBox width="12.5%" class="grade-name" alignItems="Center">
-                    <Text width="100%" textAlign="Center" text="평가그룹">
-                        <layoutData>
-                            <FlexItemData growFactor="1" />
-                        </layoutData>
-                    </Text>
+        <VBox id="gridBox" class="perGrade-wrap perSession" items="{/grids}">
+            <VBox>
+                <HBox items="{ path: 'grades', templateShareable: false }" visible="{= ${Zzappgr} === 'X' }">
+                    <layoutData>
+                        <FlexItemData growFactor="1" />
+                    </layoutData>
+                    <custom:HBox width="{width}" class="grade-name active-link" alignItems="Center" click=".onClickGrade">
+                        <custom:customData>
+                            <core:CustomData key="grade" value="{code}" />
+                            <core:CustomData key="gradeTx" value="{text}" />
+                        </custom:customData>
+                        <Text width="100%" textAlign="Center" text="{text}">
+                            <layoutData>
+                                <FlexItemData growFactor="1" />
+                            </layoutData>
+                        </Text>
+                    </custom:HBox>
                 </HBox>
-                <custom:HBox width="62.5%" class="grade-name active-link" alignItems="Center" click=".onClickGrade">
-                    <Text width="100%" textAlign="Center" text="VG">
-                        <layoutData>
-                            <FlexItemData growFactor="1" />
-                        </layoutData>
-                    </Text>
-                </custom:HBox>
-            </HBox>
-            <HBox>
-                <layoutData>
-                    <FlexItemData growFactor="1" />
-                </layoutData>
-                <HBox width="25%">
-                    <f:GridContainer width="100%" class="perGrade-container" snapToRow="true" items="{ path: '/tab/list', templateShareable: true, filters: [{path: 'Lfapp', operator: 'EQ', value1: '4'}, {path: 'Zzappgr', operator: 'EQ', value1: 'Y2'}] }">
-                        <f:layoutData>
-                            <FlexItemData growFactor="1" />
-                        </f:layoutData>
-                        <f:customData>
-                            <core:CustomData key="Fapp" value="{code}" />
-                        </f:customData>
-                        <f:layout>
-                            <f:GridContainerSettings columnSize="170px" gap="12px" />
-                        </f:layout>
-                        <f:dragDropConfig>
-                            <dnd:DragInfo groupName="Y2" sourceAggregation="items" enabled="{/isActive}" />
-                            <dnd-grid:GridDropInfo groupName="Y2" targetAggregation="items" dropLayout="Horizontal" dropPosition="Between" drop=".onDrop" enabled="{/isActive}" />
-                        </f:dragDropConfig>
-                        <f:GridListItem>
-                            <HBox height="80px">
-                                <HBox width="100%" class="empty-card" justifyContent="Center" visible="{= !${Ename} }">
-                                    <Text text="{i18n>MSG_10012}" />
-                                </HBox>
-                                <VBox width="80%" justifyContent="SpaceAround" visible="{= !!${Ename} }">
-                                    <HBox width="100%">
-                                        <VBox width="25%" justifyContent="Center" alignItems="Center">
-                                            <Image src="{Photo}" width="2rem" class="member-photo" />
+                <HBox items="{ path: 'grades', templateShareable: false }" visible="{= ${Zzappgr} !== 'X' }">
+                    <layoutData>
+                        <FlexItemData growFactor="1" />
+                    </layoutData>
+                    <VBox width="{width}">
+                        <HBox visible="{active}">
+                            <layoutData>
+                                <FlexItemData growFactor="1" />
+                            </layoutData>
+                            <f:GridContainer width="100%" class="perGrade-container" snapToRow="true" items="{ path: '/tab/list', templateShareable: true, filters: [{path: 'Lfapp', operator: 'EQ', value1: '3'}, {path: 'Zzappgr', operator: 'EQ', value1: 'Y2'}] }">
+                                <f:layoutData>
+                                    <FlexItemData growFactor="1" />
+                                </f:layoutData>
+                                <f:customData>
+                                    <core:CustomData key="Zzappgr" value="{Zzappgr}" />
+                                    <core:CustomData key="Lfapp" value="{code}" />
+                                </f:customData>
+                                <f:layout>
+                                    <f:GridContainerSettings columnSize="170px" gap="12px" />
+                                </f:layout>
+                                <f:dragDropConfig>
+                                    <dnd:DragInfo groupName="{Zzappgr}" sourceAggregation="items" enabled="{/isActive}" />
+                                    <dnd-grid:GridDropInfo groupName="{Zzappgr}" targetAggregation="items" dropLayout="Horizontal" dropPosition="Between" drop=".onDrop" enabled="{/isActive}" />
+                                </f:dragDropConfig>
+                                <f:GridListItem>
+                                    <HBox height="80px">
+                                        <HBox width="100%" class="empty-card" justifyContent="Center" visible="{= !${Ename} }">
+                                            <Text text="{i18n>MSG_10012}" />
+                                        </HBox>
+                                        <VBox width="80%" justifyContent="SpaceAround" visible="{= !!${Ename} }">
+                                            <HBox width="100%">
+                                                <VBox width="25%" justifyContent="Center" alignItems="Center">
+                                                    <Image src="{Photo}" width="2rem" class="member-photo" mode="Background" />
+                                                </VBox>
+                                                <VBox width="75%" justifyContent="Center" alignItems="Start">
+                                                    <Text text="{Ename}" class="name" />
+                                                    <Text text="{Orgtx} / {Zzjikgbt}" class="depart" />
+                                                </VBox>
+                                            </HBox>
+                                            <HBox width="100%" class="score-box">
+                                                <Text text="{i18n>LABEL_10081}" />
+                                                <ObjectStatus text="{ path: 'Zapgme', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" state="Indication05" />
+                                                <Text text="{i18n>LABEL_10082}" />
+                                                <ObjectStatus text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" state="Indication05" />
+                                            </HBox>
                                         </VBox>
-                                        <VBox width="75%" justifyContent="Center" alignItems="Start">
-                                            <Text text="{Ename}" class="name" />
-                                            <Text text="{Orgtx} / {Zzjikgbt}" class="depart" />
+                                        <VBox width="20%" justifyContent="SpaceAround" visible="{= !!${Ename} }">
+                                            <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_02_N.svg" press=".onPressRowDetail" />
+                                            <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_01_N.svg" press=".onPressRowEmployee" />
                                         </VBox>
                                     </HBox>
-                                    <HBox width="100%" class="score-box">
-                                        <Text text="{i18n>LABEL_10081}" />
-                                        <ObjectStatus text="{ path: 'Zapgme', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" state="Indication05" />
-                                        <Text text="{i18n>LABEL_10082}" />
-                                        <ObjectStatus text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" state="Indication05" />
-                                    </HBox>
-                                </VBox>
-                                <VBox width="20%" justifyContent="SpaceAround" visible="{= !!${Ename} }">
-                                    <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_02_N.svg" press=".onPressRowDetail" />
-                                    <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_01_N.svg" press=".onPressRowEmployee" />
-                                </VBox>
-                            </HBox>
-                        </f:GridListItem>
-                    </f:GridContainer>
+                                </f:GridListItem>
+                            </f:GridContainer>
+                        </HBox>
+                        <HBox class="group-label" alignItems="Center" visible="{= !${active} }">
+                            <layoutData>
+                                <FlexItemData growFactor="1" />
+                            </layoutData>
+                            <Text width="100%" textAlign="Center" text="{text}">
+                                <layoutData>
+                                    <FlexItemData growFactor="1" />
+                                </layoutData>
+                            </Text>
+                        </HBox>
+                    </VBox>
                 </HBox>
-                <HBox width="12.5%" alignItems="Center">
-                    <Text width="100%" textAlign="Center" text="팀장">
-                        <layoutData>
-                            <FlexItemData growFactor="1" />
-                        </layoutData>
-                    </Text>
-                </HBox>
-                <HBox width="62.5%">
-                    <f:GridContainer width="100%" class="perGrade-container" snapToRow="true" items="{ path: '/tab/list', templateShareable: true, filters: [{path: 'Lfapp', operator: 'EQ', value1: '3'}, {path: 'Zzappgr', operator: 'EQ', value1: 'Y2'}] }">
-                        <f:layoutData>
-                            <FlexItemData growFactor="1" />
-                        </f:layoutData>
-                        <f:customData>
-                            <core:CustomData key="Fapp" value="{code}" />
-                        </f:customData>
-                        <f:layout>
-                            <f:GridContainerSettings columnSize="170px" gap="12px" />
-                        </f:layout>
-                        <f:dragDropConfig>
-                            <dnd:DragInfo groupName="Y2" sourceAggregation="items" enabled="{/isActive}" />
-                            <dnd-grid:GridDropInfo groupName="Y2" targetAggregation="items" dropLayout="Horizontal" dropPosition="Between" drop=".onDrop" enabled="{/isActive}" />
-                        </f:dragDropConfig>
-                        <f:GridListItem>
-                            <HBox height="80px">
-                                <HBox width="100%" class="empty-card" justifyContent="Center" visible="{= !${Ename} }">
-                                    <Text text="{i18n>MSG_10012}" />
-                                </HBox>
-                                <VBox width="80%" justifyContent="SpaceAround" visible="{= !!${Ename} }">
-                                    <HBox width="100%">
-                                        <VBox width="25%" justifyContent="Center" alignItems="Center">
-                                            <Image src="{Photo}" width="2rem" class="member-photo" />
-                                        </VBox>
-                                        <VBox width="75%" justifyContent="Center" alignItems="Start">
-                                            <Text text="{Ename}" class="name" />
-                                            <Text text="{Orgtx} / {Zzjikgbt}" class="depart" />
-                                        </VBox>
-                                    </HBox>
-                                    <HBox width="100%" class="score-box">
-                                        <Text text="{i18n>LABEL_10081}" />
-                                        <ObjectStatus text="{ path: 'Zapgme', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" state="Indication05" />
-                                        <Text text="{i18n>LABEL_10082}" />
-                                        <ObjectStatus text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" state="Indication05" />
-                                    </HBox>
-                                </VBox>
-                                <VBox width="20%" justifyContent="SpaceAround" visible="{= !!${Ename} }">
-                                    <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_02_N.svg" press=".onPressRowDetail" />
-                                    <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_01_N.svg" press=".onPressRowEmployee" />
-                                </VBox>
-                            </HBox>
-                        </f:GridListItem>
-                    </f:GridContainer>
-                </HBox>
-            </HBox>
-            <HBox>
-                <layoutData>
-                    <FlexItemData growFactor="1" />
-                </layoutData>
-                <HBox width="25%">
-                    <f:GridContainer width="100%" class="perGrade-container" snapToRow="true" items="{ path: '/tab/list', templateShareable: true, filters: [{path: 'Lfapp', operator: 'EQ', value1: '4'}, {path: 'Zzappgr', operator: 'EQ', value1: 'Y3'}] }">
-                        <f:layoutData>
-                            <FlexItemData growFactor="1" />
-                        </f:layoutData>
-                        <f:customData>
-                            <core:CustomData key="Fapp" value="{code}" />
-                        </f:customData>
-                        <f:layout>
-                            <f:GridContainerSettings columnSize="170px" gap="12px" />
-                        </f:layout>
-                        <f:dragDropConfig>
-                            <dnd:DragInfo groupName="Y3" sourceAggregation="items" enabled="{/isActive}" />
-                            <dnd-grid:GridDropInfo groupName="Y3" targetAggregation="items" dropLayout="Horizontal" dropPosition="Between" drop=".onDrop" enabled="{/isActive}" />
-                        </f:dragDropConfig>
-                        <f:GridListItem>
-                            <HBox height="80px">
-                                <HBox width="100%" class="empty-card" justifyContent="Center" visible="{= !${Ename} }">
-                                    <Text text="{i18n>MSG_10012}" />
-                                </HBox>
-                                <VBox width="80%" justifyContent="SpaceAround" visible="{= !!${Ename} }">
-                                    <HBox width="100%">
-                                        <VBox width="25%" justifyContent="Center" alignItems="Center">
-                                            <Image src="{Photo}" width="2rem" class="member-photo" />
-                                        </VBox>
-                                        <VBox width="75%" justifyContent="Center" alignItems="Start">
-                                            <Text text="{Ename}" class="name" />
-                                            <Text text="{Orgtx} / {Zzjikgbt}" class="depart" />
-                                        </VBox>
-                                    </HBox>
-                                    <HBox width="100%" class="score-box">
-                                        <Text text="{i18n>LABEL_10081}" />
-                                        <ObjectStatus text="{ path: 'Zapgme', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" state="Indication05" />
-                                        <Text text="{i18n>LABEL_10082}" />
-                                        <ObjectStatus text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" state="Indication05" />
-                                    </HBox>
-                                </VBox>
-                                <VBox width="20%" justifyContent="SpaceAround" visible="{= !!${Ename} }">
-                                    <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_02_N.svg" press=".onPressRowDetail" />
-                                    <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_01_N.svg" press=".onPressRowEmployee" />
-                                </VBox>
-                            </HBox>
-                        </f:GridListItem>
-                    </f:GridContainer>
-                </HBox>
-                <HBox width="12.5%" alignItems="Center">
-                    <Text width="100%" textAlign="Center" text="과장 이상">
-                        <layoutData>
-                            <FlexItemData growFactor="1" />
-                        </layoutData>
-                    </Text>
-                </HBox>
-                <HBox width="62.5%">
-                    <f:GridContainer width="100%" class="perGrade-container" snapToRow="true" items="{ path: '/tab/list', templateShareable: true, filters: [{path: 'Lfapp', operator: 'EQ', value1: '3'}, {path: 'Zzappgr', operator: 'EQ', value1: 'Y3'}] }">
-                        <f:layoutData>
-                            <FlexItemData growFactor="1" />
-                        </f:layoutData>
-                        <f:customData>
-                            <core:CustomData key="Fapp" value="{code}" />
-                        </f:customData>
-                        <f:layout>
-                            <f:GridContainerSettings columnSize="170px" gap="12px" />
-                        </f:layout>
-                        <f:dragDropConfig>
-                            <dnd:DragInfo groupName="Y3" sourceAggregation="items" enabled="{/isActive}" />
-                            <dnd-grid:GridDropInfo groupName="Y3" targetAggregation="items" dropLayout="Horizontal" dropPosition="Between" drop=".onDrop" enabled="{/isActive}" />
-                        </f:dragDropConfig>
-                        <f:GridListItem>
-                            <HBox height="80px">
-                                <HBox width="100%" class="empty-card" justifyContent="Center" visible="{= !${Ename} }">
-                                    <Text text="{i18n>MSG_10012}" />
-                                </HBox>
-                                <VBox width="80%" justifyContent="SpaceAround" visible="{= !!${Ename} }">
-                                    <HBox width="100%">
-                                        <VBox width="25%" justifyContent="Center" alignItems="Center">
-                                            <Image src="{Photo}" width="2rem" class="member-photo" />
-                                        </VBox>
-                                        <VBox width="75%" justifyContent="Center" alignItems="Start">
-                                            <Text text="{Ename}" class="name" />
-                                            <Text text="{Orgtx} / {Zzjikgbt}" class="depart" />
-                                        </VBox>
-                                    </HBox>
-                                    <HBox width="100%" class="score-box">
-                                        <Text text="{i18n>LABEL_10081}" />
-                                        <ObjectStatus text="{ path: 'Zapgme', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" state="Indication05" />
-                                        <Text text="{i18n>LABEL_10082}" />
-                                        <ObjectStatus text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" state="Indication05" />
-                                    </HBox>
-                                </VBox>
-                                <VBox width="20%" justifyContent="SpaceAround" visible="{= !!${Ename} }">
-                                    <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_02_N.svg" press=".onPressRowDetail" />
-                                    <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_01_N.svg" press=".onPressRowEmployee" />
-                                </VBox>
-                            </HBox>
-                        </f:GridListItem>
-                    </f:GridContainer>
-                </HBox>
-            </HBox>
-            <HBox>
-                <layoutData>
-                    <FlexItemData growFactor="1" />
-                </layoutData>
-                <HBox width="25%">
-                    <f:GridContainer width="100%" class="perGrade-container" snapToRow="true" items="{ path: '/tab/list', templateShareable: true, filters: [{path: 'Lfapp', operator: 'EQ', value1: '4'}, {path: 'Zzappgr', operator: 'EQ', value1: 'Y4'}] }">
-                        <f:layoutData>
-                            <FlexItemData growFactor="1" />
-                        </f:layoutData>
-                        <f:customData>
-                            <core:CustomData key="Fapp" value="{code}" />
-                        </f:customData>
-                        <f:layout>
-                            <f:GridContainerSettings columnSize="170px" gap="12px" />
-                        </f:layout>
-                        <f:dragDropConfig>
-                            <dnd:DragInfo groupName="Y4" sourceAggregation="items" enabled="{/isActive}" />
-                            <dnd-grid:GridDropInfo groupName="Y4" targetAggregation="items" dropLayout="Horizontal" dropPosition="Between" drop=".onDrop" enabled="{/isActive}" />
-                        </f:dragDropConfig>
-                        <f:GridListItem>
-                            <HBox height="80px">
-                                <HBox width="100%" class="empty-card" justifyContent="Center" visible="{= !${Ename} }">
-                                    <Text text="{i18n>MSG_10012}" />
-                                </HBox>
-                                <VBox width="80%" justifyContent="SpaceAround" visible="{= !!${Ename} }">
-                                    <HBox width="100%">
-                                        <VBox width="25%" justifyContent="Center" alignItems="Center">
-                                            <Image src="{Photo}" width="2rem" class="member-photo" />
-                                        </VBox>
-                                        <VBox width="75%" justifyContent="Center" alignItems="Start">
-                                            <Text text="{Ename}" class="name" />
-                                            <Text text="{Orgtx} / {Zzjikgbt}" class="depart" />
-                                        </VBox>
-                                    </HBox>
-                                    <HBox width="100%" class="score-box">
-                                        <Text text="{i18n>LABEL_10081}" />
-                                        <ObjectStatus text="{ path: 'Zapgme', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" state="Indication05" />
-                                        <Text text="{i18n>LABEL_10082}" />
-                                        <ObjectStatus text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" state="Indication05" />
-                                    </HBox>
-                                </VBox>
-                                <VBox width="20%" justifyContent="SpaceAround" visible="{= !!${Ename} }">
-                                    <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_02_N.svg" press=".onPressRowDetail" />
-                                    <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_01_N.svg" press=".onPressRowEmployee" />
-                                </VBox>
-                            </HBox>
-                        </f:GridListItem>
-                    </f:GridContainer>
-                </HBox>
-                <HBox width="12.5%" alignItems="Center">
-                    <Text width="100%" textAlign="Center" text="대리 이하">
-                        <layoutData>
-                            <FlexItemData growFactor="1" />
-                        </layoutData>
-                    </Text>
-                </HBox>
-                <HBox width="62.5%">
-                    <f:GridContainer width="100%" class="perGrade-container" snapToRow="true" items="{ path: '/tab/list', templateShareable: true, filters: [{path: 'Lfapp', operator: 'EQ', value1: '3'}, {path: 'Zzappgr', operator: 'EQ', value1: 'Y4'}] }">
-                        <f:layoutData>
-                            <FlexItemData growFactor="1" />
-                        </f:layoutData>
-                        <f:customData>
-                            <core:CustomData key="Fapp" value="{code}" />
-                        </f:customData>
-                        <f:layout>
-                            <f:GridContainerSettings columnSize="170px" gap="12px" />
-                        </f:layout>
-                        <f:dragDropConfig>
-                            <dnd:DragInfo groupName="Y4" sourceAggregation="items" enabled="{/isActive}" />
-                            <dnd-grid:GridDropInfo groupName="Y4" targetAggregation="items" dropLayout="Horizontal" dropPosition="Between" drop=".onDrop" enabled="{/isActive}" />
-                        </f:dragDropConfig>
-                        <f:GridListItem>
-                            <HBox height="80px">
-                                <HBox width="100%" class="empty-card" justifyContent="Center" visible="{= !${Ename} }">
-                                    <Text text="{i18n>MSG_10012}" />
-                                </HBox>
-                                <VBox width="80%" justifyContent="SpaceAround" visible="{= !!${Ename} }">
-                                    <HBox width="100%">
-                                        <VBox width="25%" justifyContent="Center" alignItems="Center">
-                                            <Image src="{Photo}" width="2rem" class="member-photo" />
-                                        </VBox>
-                                        <VBox width="75%" justifyContent="Center" alignItems="Start">
-                                            <Text text="{Ename}" class="name" />
-                                            <Text text="{Orgtx} / {Zzjikgbt}" class="depart" />
-                                        </VBox>
-                                    </HBox>
-                                    <HBox width="100%" class="score-box">
-                                        <Text text="{i18n>LABEL_10081}" />
-                                        <ObjectStatus text="{ path: 'Zapgme', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" state="Indication05" />
-                                        <Text text="{i18n>LABEL_10082}" />
-                                        <ObjectStatus text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" state="Indication05" />
-                                    </HBox>
-                                </VBox>
-                                <VBox width="20%" justifyContent="SpaceAround" visible="{= !!${Ename} }">
-                                    <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_02_N.svg" press=".onPressRowDetail" />
-                                    <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_01_N.svg" press=".onPressRowEmployee" />
-                                </VBox>
-                            </HBox>
-                        </f:GridListItem>
-                    </f:GridContainer>
-                </HBox>
-            </HBox>
+            </VBox>
         </VBox>
     </VBox>
 </core:FragmentDefinition>

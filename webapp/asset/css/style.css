@@ -1846,6 +1846,8 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .perGrade-wrap.perSession .sapMHBox > .grade-name:nth-child(1) { background-color: var(--PerformanceGradeColor0); }
 .perGrade-wrap.perSession .sapMHBox > .grade-name:nth-child(2) { background-color: #DDE1E6; }
 .perGrade-wrap.perSession .sapMHBox > .grade-name:nth-child(3) { background-color: var(--PerformanceGradeColor1); }
+.perGrade-wrap.perSession .group-label {background-color: #f8f8f8;}
+.perGrade-wrap.perSession .group-label .sapMText {font-weight: 600;}
 .perGrade-wrap .perGrade-container { height: 100%; box-sizing: border-box; padding: 15px; }
 .perGrade-wrap .perGrade-container .score-box { margin-left: 10px; }
 .perGrade-wrap .perGrade-container .score-box * { display: flex; align-items: flex-start;height:22px;font-size: 14px!important;font-weight: 500; }
@@ -1857,6 +1859,8 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .perGrade-wrap .sapMBtnIcon.sapMImg {vertical-align: middle;}
 #container-ehr---m_performanceGradeDetail--gradeByDepartContainer {margin:0 -8px;}
 #container-ehr---m_performanceGradeDetail--gradeByDepartContainer > .sapMFlexItem {margin:0 8px;}
+#container-ehr---m_performanceSession--gradeByDepartContainer {margin:0 -8px;}
+#container-ehr---m_performanceSession--gradeByDepartContainer > .sapMFlexItem {margin:0 8px;}
 .perGrade-wrap .sapMObjStatusText {margin-left:5px;padding-top: 2px;}
 
 .sapUiTable .sapMText[data-over=Error] { color: var(--BorderColorError); font-weight: 700; }

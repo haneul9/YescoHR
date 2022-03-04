@@ -21,7 +21,7 @@
                 <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressExcelDownload" />
             </HBox>
         </HBox>
-        <table:Table id="performanceSessionTable" class="perGrade-table" rows="{ path: '/tab/list', templateShareable: true, filters: { path: 'Zzappun2', operator: 'NE', value1: 'EMPTY'} }" visibleRowCount="{/tab/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
+        <table:Table id="performanceSessionTable" class="perGrade-table" rows="{ path: '/tab/list', templateShareable: true, filters: [{ path: 'Zzappun2', operator: 'NE', value1: 'EMPTY'}] }" visibleRowCount="{/tab/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
             <table:rowSettingsTemplate>
                 <table:RowSettings highlight="{ path: 'Lfapp', formatter: '.formatRowHighlight' }"/>
             </table:rowSettingsTemplate>

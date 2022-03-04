@@ -2,35 +2,30 @@
     xmlns:m="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:custom="sap.ui.yesco.control">
-    <m:Dialog showHeader="false" contentWidth="1470px" draggable="true">
+    <m:Dialog showHeader="false" contentWidth="1580px" draggable="true">
         <m:content>
             <m:VBox class="hCardBox mb-16-px" visible="{/dialog/busy}">
                 <custom:Placeholder />
             </m:VBox>
             <m:VBox class="dialog-content-table" visible="{= !${/dialog/busy} }">
-                <m:HBox class="header-wrap" height="75px" justifyContent="SpaceBetween">
+                <m:HBox class="header-wrap">
                     <m:HBox class="header" alignItems="Center">
-                        <m:Title level="H3" text="{i18n>LABEL_10072}" class="sapUiSmallMarginEnd" />
-                        <m:Text class="desc-txt" text="{/summary/Orgtx2} {/summary/ZzappgrTxt}" />
+                        <m:Title level="H3" text="{i18n>LABEL_10098}" class="sapUiSmallMarginEnd" />
                     </m:HBox>
                     <m:HBox>
-                        <m:Label text="{/dialog/gradeTx}" />
+                        <m:Label text="{/dialog/gradeTx}" class="perGrade-type type01"/>
                     </m:HBox>
                 </m:HBox>
-                <m:HBox id="gradeByDepartContainer" items="{ path: '/department/list', templateShareable: true, filters: [{path: 'Orgeh', operator: 'NE', value1: ''}] }">
-                    <Table selectionMode="{= ${/isActive} &amp;&amp; ${/dialog/mode} === 'A' ? 'MultiToggle' : 'None' }" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/list}" visibleRowCountMode="Auto" minAutoRowCount="10" noData="{i18n>MSG_00001}" rowSelectionChange=".onChangeByDepartSelection">
+                <m:HBox id="gradeByDepartContainer" items="{ path: '/department/list', templateShareable: true, filters: [{path: 'Zzappun2', operator: 'NE', value1: ''}] }" class="pt-20-px">
+                    <Table selectionMode="{= ${/isActive} ? 'MultiToggle' : 'None' }" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/list}" visibleRowCountMode="Auto" minAutoRowCount="10" noData="{i18n>MSG_00001}" rowSelectionChange=".onChangeByDepartSelection">
                         <customData>
-                            <core:CustomData key="Orgeh" value="{Orgeh}" />
+                            <core:CustomData key="Zzappun2" value="{Zzappun2}" />
                         </customData>
                         <extension>
-                            <m:HBox class="header-wrap">
-                                <m:HBox class="header" alignItems="Center">
-                                    <m:Title level="H4" text="{Orgtx}" />
-                                </m:HBox>
-                            </m:HBox>
+                            <m:Title level="H4" text="{Zzappuntx2}" class="sapUiTinyMarginBottom"/>
                         </extension>
-                        <columns>
-                            <Column width="{= ${/dialog/mode} === 'A' ? 'auto' : '30%' }">
+                        <columns class="SmallMarginTop">
+                            <Column width="auto">
                                 <m:Label text="{i18n>LABEL_00210}"/>
                                 <template>
                                     <m:Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
@@ -42,15 +37,10 @@
                                     <m:Text text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                                 </template>
                             </Column>
-                            <Column width="{= ${/dialog/mode} === 'B' ? 'auto' : '30%' }">
+                            <Column width="30%">
                                 <m:Label text="{i18n>LABEL_10089}"/>
                                 <template>
-                                    <m:VBox>
-                                        <m:Text text="{FappTx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" visible="{= !${/isActive} || ${/dialog/mode} === 'A' }" />
-                                        <m:ComboBox class="small-table-input" selectedKey="{Fapp2}" items="{ path: '/grade', templateShareable: true }" visible="{= ${/isActive} &amp;&amp; ${/dialog/mode} === 'B' }">
-                                            <core:Item text="{text}" key="{code}" />
-                                        </m:ComboBox>
-                                    </m:VBox>
+                                    <m:Text text="{FappTx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                                 </template>
                             </Column>
                         </columns>
