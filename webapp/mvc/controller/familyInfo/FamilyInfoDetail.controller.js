@@ -158,20 +158,36 @@ sap.ui.define(
               Dptyp: 'ALL',
               Endda: moment('9999-12-31').hours(9).toDate(),
             });
+
+            const mSessionData = this.getSessionData();
+
+            oDetailModel.setProperty('/ApplyInfo', {
+              Apename: mSessionData.Ename,
+              Aporgtx: `${mSessionData.Btrtx} / ${mSessionData.Orgtx}`,
+              Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
+            });
           }
           this.settingsAttachTable();
         } else {
           const oModel = this.getModel(ServiceNames.PA);
 
           if (!!oListView && !!oListView.getModel().getProperty('/parameter')) {
-            oDetailModel.setProperty('/FormData', oListView.getModel().getProperty('/parameter'));
+            const oTargetData = oListView.getModel().getProperty('/parameter');
+
+            oDetailModel.setProperty('/FormData', oTargetData);
+            oDetailModel.setProperty('/ApplyInfo', oTargetData);
+            oDetailModel.setProperty('/ApprovalDetails', oTargetData);
             this.settingsAttachTable();
           } else {
             oModel.read('/FamilyInfoApplSet', {
               filters: [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'), new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, this.getCurrentMenuId()), new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sKey)],
               success: (oData) => {
                 if (oData) {
-                  oDetailModel.setProperty('/FormData', oData.results[0]);
+                  const [oTargetData] = oData.results;
+
+                  oDetailModel.setProperty('/FormData', oTargetData);
+                  oDetailModel.setProperty('/ApplyInfo', oTargetData);
+                  oDetailModel.setProperty('/ApprovalDetails', oTargetData);
                   this.settingsAttachTable();
                 }
               },
