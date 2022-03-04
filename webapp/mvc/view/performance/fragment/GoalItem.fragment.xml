@@ -134,11 +134,13 @@
                             <layoutData>
                                 <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '6' : '5' }" gridColumn="2 / 9" />
                             </layoutData>
-                            <Label text="{i18n>LABEL_10084}" textAlign="Center">
+                            <HBox>
                                 <layoutData>
                                     <FlexItemData growFactor="1" />
                                 </layoutData>
-                            </Label>
+                                <Label text="L5" textAlign="Center" />
+                                <Label text="{i18n>LABEL_10084}" textAlign="Center" />
+                            </HBox>
                             <Input class="required" value="{Z1175}" maxLength="{/fieldControl/limit/Z1175}" enabled="{= ${/fieldControl/display/Z1175} === 'X' }">
                                 <layoutData>
                                     <FlexItemData growFactor="18" />
@@ -149,11 +151,13 @@
                             <layoutData>
                                 <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '7' : '6' }" gridColumn="2 / 9" />
                             </layoutData>
-                            <Label text="{i18n>LABEL_10085}" textAlign="Center">
+                            <HBox>
                                 <layoutData>
                                     <FlexItemData growFactor="1" />
                                 </layoutData>
-                            </Label>
+                                <Label text="L4" textAlign="Center" />
+                                <Label text="{i18n>LABEL_10085}" textAlign="Center" />
+                            </HBox>
                             <Input class="required" value="{Z1174}" maxLength="{/fieldControl/limit/Z1174}" enabled="{= ${/fieldControl/display/Z1174} === 'X' }">
                                 <layoutData>
                                     <FlexItemData growFactor="20" />
@@ -164,11 +168,13 @@
                             <layoutData>
                                 <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '8' : '7' }" gridColumn="2 / 9" />
                             </layoutData>
-                            <Label text="{i18n>LABEL_10086}" textAlign="Center">
+                            <HBox>
                                 <layoutData>
                                     <FlexItemData growFactor="1" />
                                 </layoutData>
-                            </Label>
+                                <Label text="L3" textAlign="Center" />
+                                <Label text="{i18n>LABEL_10086}" textAlign="Center" />
+                            </HBox>
                             <Input class="required" value="{Z1173}" maxLength="{/fieldControl/limit/Z1173}" enabled="{= ${/fieldControl/display/Z1173} === 'X' }">
                                 <layoutData>
                                     <FlexItemData growFactor="20" />
@@ -179,11 +185,13 @@
                             <layoutData>
                                 <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '9' : '8' }" gridColumn="2 / 9" />
                             </layoutData>
-                            <Label text="{i18n>LABEL_10087}" textAlign="Center">
+                            <HBox>
                                 <layoutData>
                                     <FlexItemData growFactor="1" />
                                 </layoutData>
-                            </Label>
+                                <Label text="L2" textAlign="Center" />
+                                <Label text="{i18n>LABEL_10087}" textAlign="Center" />
+                            </HBox>
                             <Input class="required" value="{Z1172}" maxLength="{/fieldControl/limit/Z1172}" enabled="{= ${/fieldControl/display/Z1172} === 'X' }">
                                 <layoutData>
                                     <FlexItemData growFactor="20" />
@@ -194,11 +202,13 @@
                             <layoutData>
                                 <grid:GridItemLayoutData gridRow="{= ${rootPath} === 'strategy' ? '10' : '9' }" gridColumn="2 / 9" />
                             </layoutData>
-                            <Label text="{i18n>LABEL_10088}" textAlign="Center">
+                            <HBox>
                                 <layoutData>
                                     <FlexItemData growFactor="1" />
                                 </layoutData>
-                            </Label>
+                                <Label text="L1" textAlign="Center" />
+                                <Label text="{i18n>LABEL_10088}" textAlign="Center" />
+                            </HBox>
                             <Input class="required" value="{Z1171}" maxLength="{/fieldControl/limit/Z1171}" enabled="{= ${/fieldControl/display/Z1171} === 'X' }">
                                 <layoutData>
                                     <FlexItemData growFactor="20" />
