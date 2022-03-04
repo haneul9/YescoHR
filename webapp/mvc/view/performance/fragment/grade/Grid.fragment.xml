@@ -51,7 +51,7 @@
                             <VBox width="80%" justifyContent="SpaceAround" visible="{= !!${Ename} }">
                                 <HBox width="100%">
                                     <VBox width="25%" justifyContent="Center" alignItems="Center">
-                                        <Image src="{Photo}" width="2rem" class="member-photo" />
+                                        <Image src="{Photo}" width="2rem" class="member-photo" mode="Background" />
                                     </VBox>
                                     <VBox width="75%" justifyContent="Center" alignItems="Start">
                                         <Text text="{Ename}" class="name" />
