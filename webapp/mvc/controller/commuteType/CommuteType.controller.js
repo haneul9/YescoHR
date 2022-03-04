@@ -72,7 +72,10 @@ sap.ui.define(
           const aTableList = await this.getWorkScheduleList();
           const oTable = this.byId('commuteTable');
 
-          oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
+          oListModel.setProperty('/listInfo', {
+            ...TableUtils.count({ oTable, aRowData: aTableList }),
+            ObjTxt1: this.getBundleText('LABEL_00197'),
+          });
           oListModel.setProperty('/CommuteList', aTableList);
           this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
         } catch (oError) {
@@ -104,7 +107,10 @@ sap.ui.define(
           const aTableList = await this.getWorkScheduleList();
           const oTable = this.byId('commuteTable');
 
-          oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
+          oListModel.setProperty('/listInfo', {
+            ...TableUtils.count({ oTable, aRowData: aTableList }),
+            ObjTxt1: this.getBundleText('LABEL_00197'),
+          });
           oListModel.setProperty('/CommuteList', aTableList);
           this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
         } catch (oError) {
@@ -116,8 +122,8 @@ sap.ui.define(
 
       // 나의 근무일정 대상년월 Text
       formatSchedule(sYymm = moment().format('yyyy.MM'), dSDate, dEDate) {
-        const dS = dSDate || moment().month(0).format('yyyy.MM.DD');
-        const dD = dEDate || moment().format('yyyy.MM.DD');
+        const dS = moment(dSDate).format('yyyy.MM.DD') || moment().format('yyyy.MM.DD');
+        const dD = moment(dEDate).format('yyyy.MM.DD') || moment().format('yyyy.MM.DD');
 
         return `${this.getBundleText('LABEL_30005', moment(sYymm).format('yyyy.MM'), dS, dD)}`;
       },
@@ -156,7 +162,10 @@ sap.ui.define(
           const aTableList = await this.getWorkScheduleList();
           const oTable = this.byId('commuteTable');
 
-          oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
+          oListModel.setProperty('/listInfo', {
+            ...TableUtils.count({ oTable, aRowData: aTableList }),
+            ObjTxt1: this.getBundleText('LABEL_00197'),
+          });
           oListModel.setProperty('/CommuteList', aTableList);
           this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
         } catch (oError) {

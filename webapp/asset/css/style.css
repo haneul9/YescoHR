@@ -725,6 +725,7 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .sapMObjStatusError .sapMObjStatusText, .sapMObjStatusError .sapMObjStatusIcon {color:#fe5f58 !important}
 
 .sapMText[data-status="Z10"] {color:var(--BorderColorReadonly) !important}
+.sapMText[data-status="Z15"] {color:var(--BorderColorReadonly) !important}
 .sapMText[data-status="Z90"] {color:var(--BorderColorReadonly) !important}
 .sapMText[data-status="Z20"] {color:var(--BorderColorWarning) !important}
 .sapMText[data-status="Z30"] {color:var(--BorderColorWarning) !important}

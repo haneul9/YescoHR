@@ -9,7 +9,7 @@
         </HBox>
         <grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="8px">
             <Label text="{i18n>LABEL_00328}" design="Bold" />
-            <HBox>
+            <HBox alignItems="Center">
                 <DatePicker displayFormat="yyyy.MM" valueFormat="yyyyMM" change=".onSearchDate" value="{/searchDate/date}" />
                 <Text text="~" class="px-10-px" />
                 <DatePicker displayFormat="yyyy.MM" valueFormat="yyyyMM" change=".onSearchDate" value="{/searchDate/secondDate}" />
