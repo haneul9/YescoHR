@@ -141,8 +141,6 @@ sap.ui.define(
           MessageBox.alert(this.getBundleText('MSG_30004'));
           return;
         }
-        
-        oViewModel.setProperty('/parameter', mSelectRow);
 
         this.getRouter().navTo('commuteType-detail', { oDataKey: 'N', zyymm: mSelectRow.Zyymm, schkz: mSelectRow.Schkz });
       },
