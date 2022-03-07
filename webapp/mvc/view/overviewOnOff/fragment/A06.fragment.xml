@@ -13,9 +13,8 @@
             <grid:GridItemLayoutData gridColumn="span 2" />
         </layoutData>
         <HBox class="portlet-header">
-            <Title level="H2" text="{i18n>LABEL_28019}" />
-            <Image src="asset/image/icon_human_green.svg" width="12px" class="ml-8-px" />
-            <Image src="asset/image/icon_human_orange.svg" width="12px" class="ml-3-px" />
+            <Title level="H2" text="{i18n>LABEL_28044}" />
+            <Text text="{i18n>LABEL_28045}" class="desc-txt" />
             <Text text="">
                 <layoutData>
                     <FlexItemData growFactor="1" />
@@ -27,7 +26,7 @@
             <layoutData>
                 <FlexItemData growFactor="1" />
             </layoutData>
-            <core:HTML content='&lt;div id="employee-a06-chart-container"&gt;&lt;/div&gt;'>
+            <core:HTML content='&lt;div id="employeeOnOff-a06-chart-container"&gt;&lt;/div&gt;'>
                 <core:layoutData>
                     <FlexItemData growFactor="1" />
                 </core:layoutData>

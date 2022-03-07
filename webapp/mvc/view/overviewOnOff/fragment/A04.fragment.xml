@@ -6,9 +6,7 @@
     </VBox>
     <VBox class="portlet portlet-box" visible="{= !${/contents/A04/busy} }">
         <HBox class="portlet-header">
-            <Title level="H2" text="{i18n>LABEL_28012}" />
-            <Image src="asset/image/icon_human_green.svg" width="12px" class="ml-8-px" />
-            <Image src="asset/image/icon_human_orange.svg" width="12px" class="ml-3-px" />
+            <Title level="H2" text="{i18n>LABEL_28042}" />
             <Text text="">
                 <layoutData>
                     <FlexItemData growFactor="1" />
@@ -20,26 +18,34 @@
             <layoutData>
                 <FlexItemData growFactor="1" />
             </layoutData>
-            <VBox width="73%">
-                <core:HTML content='&lt;div id="employee-a04-chart-container"&gt;&lt;/div&gt;'>
+            <VBox width="75%">
+                <core:HTML content='&lt;div id="employeeOnOff-a04-chart-container"&gt;&lt;/div&gt;'>
                     <core:layoutData>
                         <FlexItemData growFactor="1" />
                     </core:layoutData>
                 </core:HTML>
             </VBox>
-            <VBox width="27%" items="{ path: '/contents/A04/data', templateShareable: false }" class="legend-wrap">
-                <custom:HBox justifyContent="SpaceBetween" class="active-link" click=".onPressCount">
+            <VBox width="25%">
+                <custom:HBox class="active-link" click=".onPressCount">
                     <custom:customData>
                         <core:CustomData key="Headty" value="{/contents/A04/Headty}" />
-                        <core:CustomData key="Discod" value="{Cod01}" />
+                        <core:CustomData key="Discod" value="all" />
                     </custom:customData>
-                    <Label text="{Ttltxt} :" class="legend">
-                        <customData>
-                            <core:CustomData key="legend" value="{Type}" writeToDom="true" />
-                        </customData>
-                    </Label>
-                    <Text text=" {Cnt01}" />
+                    <Label text="{/contents/A04/data/total}" class="font-42-px color-03 normal ls-small"/>
                 </custom:HBox>
+                <VBox items="{ path: '/contents/A04/data/legends', templateShareable: false }" class="legend-wrap sapUiSmallMarginTop">
+                    <custom:HBox justifyContent="SpaceBetween" class="active-link" click=".onPressCount">
+                        <custom:customData>
+                            <core:CustomData key="Headty" value="{/contents/A04/Headty}" />
+                            <core:CustomData key="Discod" value="{code}" />
+                        </custom:customData>
+                        <Label text="{label}" class="legend">
+                            <customData>
+                                <core:CustomData key="legend" value="{type}" writeToDom="true" />
+                            </customData>
+                        </Label>
+                    </custom:HBox>
+                </VBox>
             </VBox>
         </HBox>
     </VBox>

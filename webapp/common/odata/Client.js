@@ -34,7 +34,7 @@ sap.ui.define(
                     and: false,
                   });
                 } else {
-                  return new Filter(p, FilterOperator.EQ, v);
+                  return new Filter(p, FilterOperator.EQ, v === 'all' ? 'ALL' : v);
                 }
               })
               .value(),
