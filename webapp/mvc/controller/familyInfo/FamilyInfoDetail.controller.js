@@ -171,7 +171,7 @@ sap.ui.define(
         } else {
           const oModel = this.getModel(ServiceNames.PA);
 
-          if (!!oListView && !!oListView.getModel().getProperty('/parameter')) {
+          if (_.parseInt(sKey) === 0 || !sKey) {
             const oTargetData = oListView.getModel().getProperty('/parameter');
 
             oDetailModel.setProperty('/FormData', oTargetData);
@@ -180,7 +180,12 @@ sap.ui.define(
             this.settingsAttachTable();
           } else {
             oModel.read('/FamilyInfoApplSet', {
-              filters: [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'), new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, this.getCurrentMenuId()), new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sKey)],
+              filters: [
+                // prettier 방지주석
+                new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'D'),
+                new sap.ui.model.Filter('Menid', sap.ui.model.FilterOperator.EQ, this.getCurrentMenuId()),
+                new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, sKey),
+              ],
               success: (oData) => {
                 if (oData) {
                   const [oTargetData] = oData.results;
