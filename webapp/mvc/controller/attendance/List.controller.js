@@ -41,8 +41,8 @@ sap.ui.define(
             60: { Kotxt: this.getBundleText('LABEL_04018'), Crecnt: 0, Usecnt: 0 }, // 가족돌봄휴가
           },
           search: {
-            Apbeg: moment().subtract(1, 'month').add(1, 'day').hours(9).toDate(),
-            Apend: moment().hours(9).toDate(),
+            Apbeg: moment().startOf('year').hours(9).toDate(),
+            Apend: moment().endOf('year').hours(9).toDate(),
           },
           listInfo: {
             rowCount: 1,

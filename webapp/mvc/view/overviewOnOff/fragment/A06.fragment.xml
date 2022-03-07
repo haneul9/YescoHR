@@ -1,0 +1,37 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:custom="sap.ui.yesco.control">
+    <VBox class="portlet portlet-box" visible="{/contents/A06/busy}">
+        <layoutData>
+            <grid:GridItemLayoutData gridColumn="span 2" />
+        </layoutData>
+        <custom:Placeholder />
+    </VBox>
+    <VBox class="portlet portlet-box" visible="{= !${/contents/A06/busy} }">
+        <layoutData>
+            <grid:GridItemLayoutData gridColumn="span 2" />
+        </layoutData>
+        <HBox class="portlet-header">
+            <Title level="H2" text="{i18n>LABEL_28019}" />
+            <Image src="asset/image/icon_human_green.svg" width="12px" class="ml-8-px" />
+            <Image src="asset/image/icon_human_orange.svg" width="12px" class="ml-3-px" />
+            <Text text="">
+                <layoutData>
+                    <FlexItemData growFactor="1" />
+                </layoutData>
+            </Text>
+            <Button visible="{hasLink}" icon="asset/image/icon_window.svg" type="Transparent" class="icon-button portlet-link-icon" />
+        </HBox>
+        <VBox class="portlet-body">
+            <layoutData>
+                <FlexItemData growFactor="1" />
+            </layoutData>
+            <core:HTML content='&lt;div id="employee-a06-chart-container"&gt;&lt;/div&gt;'>
+                <core:layoutData>
+                    <FlexItemData growFactor="1" />
+                </core:layoutData>
+            </core:HTML>
+        </VBox>
+    </VBox>
+</core:FragmentDefinition>

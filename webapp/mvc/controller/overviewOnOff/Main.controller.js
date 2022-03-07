@@ -1,0 +1,321 @@
+sap.ui.define(
+  [
+    // prettier 방지용 주석
+    'sap/ui/core/Fragment',
+    'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/odata/Client',
+    'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/common/TableUtils',
+    'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/controller/overviewOnOff/constants/ChartsSetting',
+    'sap/ui/yesco/mvc/model/type/Date',
+    'sap/ui/yesco/mvc/model/type/Decimal',
+  ],
+  (
+    // prettier 방지용 주석
+    Fragment,
+    AppUtils,
+    Client,
+    ServiceNames,
+    TableUtils,
+    BaseController,
+    ChartsSetting
+  ) => {
+    'use strict';
+
+    return BaseController.extend('sap.ui.yesco.mvc.controller.overviewOnOff.Main', {
+      initializeModel() {
+        return {
+          busy: false,
+          searchConditions: {
+            Begda: moment().hours(9).toDate(),
+            Orgeh: '',
+            entryOrgeh: [],
+          },
+          contents: {
+            A01: { busy: false, data: {} },
+            A02: { busy: false, data: { total: 0, legends: [] } },
+            A03: { busy: false, data: [] },
+            A04: { busy: false, data: [] },
+            A05: { busy: false, data: {} },
+            A06: { busy: false, data: {} },
+          },
+          dialog: {
+            busy: false,
+            rowCount: 0,
+            list: [],
+          },
+        };
+      },
+
+      onObjectMatched() {
+        try {
+          this.setAllBusy(true);
+
+          const oModel = this.getModel(ServiceNames.PA);
+          const mFilters = { Zyear: '2022' };
+
+          _.forEach(ChartsSetting.CHART_TYPE, (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
+        } catch (oError) {
+          this.debug('Controller > m/overviewOnOff Main > onObjectMatched Error', oError);
+
+          AppUtils.handleError(oError);
+        }
+      },
+
+      setAllBusy(bBusy) {
+        const oViewModel = this.getViewModel();
+
+        _.times(6).forEach((idx) => oViewModel.setProperty(`/contents/A${_.padStart(++idx, 2, '0')}/busy`, bBusy));
+      },
+
+      async buildChart(oModel, mFilters, mChartInfo) {
+        const oViewModel = this.getViewModel();
+        const aChartDatas = await Client.getEntitySet(oModel, mChartInfo.EntityType, { ...mFilters, Headty: mChartInfo.Headty });
+        const vDataObject = oViewModel.getProperty(`/contents/${mChartInfo.Target}/data`);
+        const mChartSetting = _.chain(ChartsSetting.CHART_OPTIONS).get(mChartInfo.Chart).cloneDeep().value();
+
+        oViewModel.setProperty(`/contents/${mChartInfo.Target}/Headty`, mChartInfo.Headty);
+
+        if (!_.isUndefined(vDataObject)) {
+          if (_.has(vDataObject, 'legends')) {
+            oViewModel.setProperty(`/contents/${mChartInfo.Target}/data/total`, _.get(aChartDatas, [0, 'Total']));
+            oViewModel.setProperty(
+              `/contents/${mChartInfo.Target}/data/legends`,
+              _.chain(aChartDatas)
+                .head()
+                .pickBy((v, p) => _.startsWith(p, 'Leg') && !_.isEmpty(v))
+                .values()
+                .map((v, i) => ({ label: v, code: _.get(aChartDatas, [0, `Cod${_.padStart(i + 1, 2, '0')}`]), value: _.get(aChartDatas, [0, `Cnt${_.padStart(i + 1, 2, '0')}`]), type: `type${_.padStart(i + 1, 2, '0')}` }))
+                .value()
+            );
+          } else {
+            oViewModel.setProperty(
+              `/contents/${mChartInfo.Target}/data`,
+              _.chain(vDataObject)
+                .tap((obj) => _.forEach(mChartInfo.Fields, (o) => _.set(obj, o.prop, _.get(aChartDatas, o.path))))
+                .value()
+            );
+          }
+        }
+
+        oViewModel.setProperty(`/contents/${mChartInfo.Target}/busy`, false);
+
+        switch (mChartInfo.Chart) {
+          case 'stackedcolumn2d':
+            const aLegends = oViewModel.getProperty(`/contents/${mChartInfo.Target}/data/legends`);
+
+            _.chain(mChartSetting)
+              .set(['categories', 0, 'category', 0], { label: _.get(aChartDatas, [0, 'Ttltxt']) })
+              .set(
+                'dataset',
+                _.map(aLegends, (o, i) => ({ seriesname: o.label, color: ChartsSetting.COLORS[i], data: [{ value: o.value }] }))
+              )
+              .commit();
+
+            this.callFusionChart(mChartInfo, mChartSetting);
+
+            break;
+          case 'hled':
+            if (aChartDatas.length > 2) aChartDatas.shift();
+
+            const iFirstValue = _.chain(aChartDatas).get([0, mChartInfo.UsedProp]).parseInt().value();
+            const iSecondValue = _.chain(aChartDatas).get([1, mChartInfo.UsedProp]).parseInt().value();
+            const sLimitValue = _.isEmpty(mChartInfo.Limit) ? _.chain(iFirstValue).add(iSecondValue).toString().value() : '100';
+
+            _.chain(mChartSetting)
+              .set(['chart', 'upperLimit'], sLimitValue)
+              .set(['value'], sLimitValue)
+              .tap((o) => {
+                _.chain(o)
+                  .set(['colorrange', 'color', 0, 'code'], '#7BB4EB')
+                  .set(['colorrange', 'color', 1, 'code'], '#FFAAAA')
+                  .set(['colorrange', 'color', 0, 'minvalue'], '0')
+                  .set(['colorrange', 'color', 0, 'maxvalue'], _.toString(iFirstValue))
+                  .set(['colorrange', 'color', 1, 'minvalue'], _.toString(iFirstValue + 1))
+                  .commit();
+
+                if (mChartInfo.RangeCount === 3) {
+                  _.chain(o)
+                    .set(['colorrange', 'color', 2, 'code'], '#ededed')
+                    .set(['colorrange', 'color', 1, 'maxvalue'], _.toString(_.add(iFirstValue, iSecondValue)))
+                    .set(['colorrange', 'color', 2, 'minvalue'], _.toString(_.add(iFirstValue, iSecondValue) + 1))
+                    .set(['colorrange', 'color', 2, 'maxvalue'], sLimitValue)
+                    .commit();
+                } else if (mChartInfo.RangeCount === 2) {
+                  _.chain(o).set(['colorrange', 'color', 1, 'maxvalue'], sLimitValue).commit();
+                }
+              })
+              .commit();
+
+            this.callFusionChart(mChartInfo, mChartSetting);
+
+            break;
+          case 'bar2d':
+            _.chain(mChartSetting)
+              // .set(['chart', 'yAxisMaxValue'], '120')
+              .set(
+                ['data'],
+                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callDetail-${mChartInfo.Headty},${o.Cod01}` }))
+              )
+              .commit();
+
+            this.callFusionChart(mChartInfo, mChartSetting);
+
+            break;
+          case 'doughnut2d':
+            _.chain(mChartSetting)
+              .set(['chart', 'paletteColors'], _.chain(ChartsSetting.COLORS).take(aChartDatas.length).join(',').value())
+              .set(
+                ['data'],
+                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01 }))
+              )
+              .commit();
+
+            this.callFusionChart(mChartInfo, mChartSetting);
+
+            break;
+          case 'mscolumn2d':
+            _.chain(mChartSetting)
+              // .set(['data', 'chart', 'yAxisMaxValue'], '60')
+              .set(
+                ['categories', 0, 'category'],
+                _.map(aChartDatas, (o) => ({ label: o.Ttltxt }))
+              )
+              .set(['dataset', 0], {
+                seriesname: this.getBundleText('LABEL_28025'), // 팀원
+                color: '#7BB4EB',
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01, link: `j-callDetail-${mChartInfo.Headty},A,${o.Ttltxt}` })),
+              })
+              .set(['dataset', 1], {
+                seriesname: this.getBundleText('LABEL_28026'), // 팀장
+                color: '#FFE479',
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02, link: `j-callDetail-${mChartInfo.Headty},BA,${o.Ttltxt}` })),
+              })
+              .commit();
+
+            this.callFusionChart(mChartInfo, mChartSetting);
+
+            break;
+          default:
+            break;
+        }
+      },
+
+      callFusionChart(mChartInfo, mChartSetting) {
+        if (_.isEmpty(mChartSetting)) return;
+
+        const sChartId = `employeeOnOff-${_.toLower(mChartInfo.Target)}-chart`;
+
+        if (!FusionCharts(sChartId)) {
+          FusionCharts.ready(() => {
+            new FusionCharts({
+              id: sChartId,
+              type: mChartInfo.Chart,
+              renderAt: `${sChartId}-container`,
+              width: '100%',
+              height: '100%',
+              dataFormat: 'json',
+              dataSource: mChartSetting,
+            }).render();
+          });
+        } else {
+          const oChart = FusionCharts(sChartId);
+
+          oChart.setChartData(mChartSetting, 'json');
+          setTimeout(() => oChart.render(), 200);
+        }
+      },
+
+      formatDetailRowHighlight(sValue) {
+        switch (_.toNumber(sValue)) {
+          case 1:
+            return sap.ui.core.IndicationColor.Indication03;
+          case 2:
+            return sap.ui.core.IndicationColor.Indication02;
+          case 3:
+            return sap.ui.core.IndicationColor.Indication04;
+          default:
+            return null;
+        }
+      },
+
+      async openDetailDialog(mPayload) {
+        const oView = this.getView();
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/dialog/busy', true);
+
+        try {
+          if (!this.oDetailDialog) {
+            this.oDetailDialog = await Fragment.load({
+              id: oView.getId(),
+              name: 'sap.ui.yesco.mvc.view.overviewOnOff.fragment.DialogDetail',
+              controller: this,
+            });
+
+            oView.addDependent(this.oDetailDialog);
+          }
+
+          this.oDetailDialog.open();
+
+          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.PA), _.get(mPayload, 'Entity') === 'A' ? 'HeadCountDetail' : 'HeadCountEntRetDetail', { Zyear: '2022', ..._.omit(mPayload, 'Entity') });
+
+          oViewModel.setProperty('/dialog/rowCount', Math.min(aDetailData.length, 12));
+          oViewModel.setProperty('/dialog/totalCount', _.size(aDetailData));
+          oViewModel.setProperty(
+            '/dialog/list',
+            _.map(aDetailData, (o, i) => ({ Idx: ++i, ...o }))
+          );
+          oViewModel.setProperty('/dialog/busy', false);
+        } catch (oError) {
+          this.debug('Controller > m/overviewOnOff Main > openDetailDialog Error', oError);
+
+          AppUtils.handleError(oError, {
+            onClose: () => this.oDetailDialog.close(),
+          });
+        } finally {
+          if (this.byId('overviewEmpDetailTable')) this.byId('overviewEmpDetailTable').setFirstVisibleRow();
+        }
+      },
+
+      /*****************************************************************
+       * ! Event handler
+       *****************************************************************/
+      onPressSearch() {},
+
+      onPressCount(oEvent) {
+        if (oEvent['getSource'] instanceof Function) {
+          this.openDetailDialog(oEvent.getSource().data());
+        } else {
+          this.openDetailDialog(sap.ui.getCore().byId($(oEvent.currentTarget).attr('id')).data());
+        }
+      },
+
+      onPressDetailDialogClose() {
+        this.oDetailDialog.close();
+      },
+
+      onPressDetailExcelDownload() {
+        const oTable = this.byId('overviewEmpDetailTable');
+        const aTableData = this.getViewModel().getProperty('/dialog/list');
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_28038'); // 인원현황상세
+
+        TableUtils.export({ oTable, aTableData, sFileName, aDateProps: ['Gbdat', 'Entda', 'Loada', 'Reida', 'Retda'] });
+      },
+
+      /*****************************************************************
+       * ! Call oData
+       *****************************************************************/
+    });
+  }
+);
+
+// eslint-disable-next-line no-unused-vars
+function callDetail(sArgs) {
+  const oController = sap.ui.getCore().byId('container-ehr---m_overviewOnOff').getController();
+  const aArgs = _.split(sArgs, ',');
+  const mPayload = _.size(aArgs) === 3 ? _.zipObject(['Headty', 'Discod', 'Zyear'], aArgs) : _.zipObject(['Headty', 'Discod'], aArgs);
+
+  oController.openDetailDialog(mPayload);
+}
