@@ -6,6 +6,14 @@
     <title>yesco eHR</title>
     <link rel="shortcut icon" href="asset/image/favicon.ico" />
     <style id="for-print"></style>
+    <script>
+    (function() {
+      const isMobile = /Android/i.test(navigator.userAgent) || /iPhone|iPad|iPod/i.test(navigator.userAgent);
+      if (isMobile && !/#\/mobile/.test(location.href)) {
+        location.href = (location.href.replace(/#$/, '')) + '#/mobile';
+      }
+    })();
+    </script>
     <script type="text/javascript" src="asset/libs/lodash.js"></script>
     <script type="text/javascript" src="asset/libs/moment.js"></script>
     <script type="text/javascript" src="asset/libs/fusioncharts/fusioncharts.js"></script>
