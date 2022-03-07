@@ -69,6 +69,10 @@ sap.ui.define(
           const sDataKey = oParameter.oDataKey;
 
           if (sDataKey === 'N' || !sDataKey) {
+            const oView = this.getView();
+            const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+            const oTargetData = oListView.getModel().getProperty('/SelectedRow');
+
             const sZyymm = oParameter.zyymm;
             const sSchkz = oParameter.schkz;
 
@@ -77,6 +81,8 @@ sap.ui.define(
               Zyymm: sZyymm,
               Schkz: sSchkz,
             });
+            oDetailModel.setProperty('/ApplyInfo', oTargetData);
+            oDetailModel.setProperty('/ApprovalDetails', oTargetData);
           }
 
           this.settingsAttachTable();
