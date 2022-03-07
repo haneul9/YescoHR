@@ -8,7 +8,7 @@
     <style id="for-print"></style>
     <script>
     (function() {
-      const isMobile = /Android/i.test(navigator.userAgent) || /iPhone|iPad|iPod/i.test(navigator.userAgent);
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
       if (isMobile && !/#\/mobile/.test(location.href)) {
         location.href = (location.href.replace(/#$/, '')) + '#/mobile';
       }
