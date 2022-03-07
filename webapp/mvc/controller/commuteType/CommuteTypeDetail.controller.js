@@ -77,7 +77,8 @@ sap.ui.define(
             const sSchkz = oParameter.schkz;
 
             oDetailModel.setProperty('/FormData', {
-              Pernr: this.getAppointeeProperty('Pernr'),
+              Appno: oTargetData.Appno,
+              Pernr: sPernr,
               Zyymm: sZyymm,
               Schkz: sSchkz,
             });

@@ -134,7 +134,7 @@
         { "pattern": "commuteType", "name": "commuteType", "target": "commuteType" },
         { "pattern": "commuteType/{oDataKey}/:zyymm:/:schkz:", "name": "commuteType-detail", "target": "commuteTypeDetail" },
         
-        { "pattern": "commuteComfirm", "name": "commuteComfirm", "target": "commuteComfirm" },
+        { "pattern": "m/commuteConfirm", "name": "m/commuteConfirm", "target": "m/commuteConfirm" },
 
         { "pattern": "employee/:pernr:/:orgtx:/:orgeh:", "name": "employee", "target": "employee" },
         { "pattern": "employeeView/{pernr}", "name": "employee-view", "target": "employeeView" },
@@ -263,7 +263,7 @@
         "commuteType": { "viewId": "commuteType", "viewPath": "sap.ui.yesco.mvc.view.commuteType", "viewName": "CommuteType" },
         "commuteTypeDetail": { "viewId": "commuteTypeDetail", "viewPath": "sap.ui.yesco.mvc.view.commuteType", "viewName": "CommuteTypeDetail" },
 
-        "commuteComfirm": { "viewId": "commuteComfirm", "viewPath": "sap.ui.yesco.mvc.view.commuteComfirm", "viewName": "CommuteComfirm" },
+        "m/commuteConfirm": { "viewId": "m_commuteConfirm", "viewPath": "sap.ui.yesco.mvc.view.commuteConfirm", "viewName": "commuteConfirm" },
         
         "consolidAppBox": { "viewId": "consolidAppBox", "viewPath": "sap.ui.yesco.mvc.view.consolidAppBox", "viewName": "ConsolidAppBox" },
         
