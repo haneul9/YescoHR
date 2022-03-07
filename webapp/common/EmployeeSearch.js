@@ -82,7 +82,7 @@ sap.ui.define(
         // 사원하위
         oModel.read(sUrl, {
           filters: [
-            new Filter('Field', FilterOperator.EQ, 'PERSG'), //
+            new Filter('Field', FilterOperator.EQ, 'PERSK'), //
             new Filter('Excod', FilterOperator.EQ, sKey),
           ],
           success: (oData) => {
