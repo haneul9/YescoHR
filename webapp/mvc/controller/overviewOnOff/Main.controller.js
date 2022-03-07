@@ -33,12 +33,12 @@ sap.ui.define(
             entryOrgeh: [],
           },
           contents: {
-            A01: { busy: false, data: {} },
-            A02: { busy: false, data: { total: 0, legends: [] } },
-            A03: { busy: false, data: [] },
-            A04: { busy: false, data: { total: 0, legends: [] } },
-            A05: { busy: false, data: { total: 0, legends: [] } },
-            A06: { busy: false, data: [] },
+            A01: { busy: false, hasLink: true, data: {} },
+            A02: { busy: false, hasLink: true, data: { total: 0, legends: [] } },
+            A03: { busy: false, hasLink: false },
+            A04: { busy: false, hasLink: true, data: { total: 0, legends: [] } },
+            A05: { busy: false, hasLink: true, data: { total: 0, legends: [] } },
+            A06: { busy: false, hasLink: false },
           },
           dialog: {
             busy: false,
@@ -76,40 +76,34 @@ sap.ui.define(
         const mChartSetting = _.chain(ChartsSetting.CHART_OPTIONS).get(mChartInfo.Chart).cloneDeep().value();
 
         oViewModel.setProperty(`/contents/${mChartInfo.Target}/Headty`, mChartInfo.Headty);
+        oViewModel.setProperty(`/contents/${mChartInfo.Target}/busy`, false);
 
-        if (!_.isUndefined(vDataObject)) {
-          if (_.has(vDataObject, 'legends')) {
-            oViewModel.setProperty(`/contents/${mChartInfo.Target}/data/total`, _.get(aChartDatas, [0, 'Total']));
-            oViewModel.setProperty(
-              `/contents/${mChartInfo.Target}/data/legends`,
-              _.chain(aChartDatas)
-                .head()
-                .pickBy((v, p) => _.startsWith(p, 'Leg') && !_.isEmpty(v))
-                .values()
-                .map((v, i) => ({
-                  label: v,
-                  color: ChartsSetting.COLORS[i],
-                  code: _.get(aChartDatas, [0, `Cod${_.padStart(i + 1, 2, '0')}`]),
-                  value: _.get(aChartDatas, [0, `Cnt${_.padStart(i + 1, 2, '0')}`]),
-                  type: `type${_.padStart(i + 1, 2, '0')}`,
-                }))
-                .value()
-            );
-          } else {
+        switch (mChartInfo.Chart) {
+          case 'none':
             oViewModel.setProperty(
               `/contents/${mChartInfo.Target}/data`,
               _.chain(vDataObject)
                 .tap((obj) => _.forEach(mChartInfo.Fields, (o) => _.set(obj, o.prop, _.get(aChartDatas, o.path))))
                 .value()
             );
-          }
-        }
 
-        oViewModel.setProperty(`/contents/${mChartInfo.Target}/busy`, false);
-
-        switch (mChartInfo.Chart) {
+            break;
           case 'stackedcolumn2d-S':
-            const aLegends = oViewModel.getProperty(`/contents/${mChartInfo.Target}/data/legends`);
+            const aLegends = _.chain(aChartDatas)
+              .head()
+              .pickBy((v, p) => _.startsWith(p, 'Leg') && !_.isEmpty(v))
+              .values()
+              .map((v, i) => ({
+                label: v,
+                color: ChartsSetting.COLORS[i],
+                code: _.get(aChartDatas, [0, `Cod${_.padStart(i + 1, 2, '0')}`]),
+                value: _.get(aChartDatas, [0, `Cnt${_.padStart(i + 1, 2, '0')}`]),
+                type: `type${_.padStart(i + 1, 2, '0')}`,
+              }))
+              .value();
+
+            oViewModel.setProperty(`/contents/${mChartInfo.Target}/data/total`, _.get(aChartDatas, [0, 'Total']));
+            oViewModel.setProperty(`/contents/${mChartInfo.Target}/data/legends`, aLegends);
 
             _.chain(mChartSetting)
               .set(['categories', 0, 'category', 0], { label: _.get(aChartDatas, [0, 'Ttltxt']) })
@@ -197,7 +191,18 @@ sap.ui.define(
                   .map((o) => ({ seriesname: o.label, color: o.color, data: _.map(o.values, (v, i) => ({ ...v, showValue: _.gt(v.value, mChartInfo.minDisplayValue) ? 1 : 0, link: `j-callDetail-${mChartInfo.Headty},${o.code},${_.get(aChartDatas, [i, 'Ttltxt'])}` })) }))
                   .value()
               )
-              .set(['lineset', 0], { seriesname: 'Total', showValues: '1', valuePosition: 'ABOVE', color: '#333333', anchorBgColor: '#333333', includeInLegend: 0, lineThickness: '1', data: _.map(aChartDatas, (o) => ({ value: o.Total2 })) })
+              .set(['lineset', 0], {
+                seriesname: 'Total',
+                showValues: '1',
+                valuePosition: 'ABOVE',
+                color: '#333333',
+                anchorAlpha: 30,
+                anchorBgColor: '#333333',
+                includeInLegend: 0,
+                anchorBorderThickness: '0',
+                lineThickness: '0.5',
+                data: _.map(aChartDatas, (o) => ({ value: o.Total2 })),
+              })
               .commit();
 
             this.callFusionChart(mChartInfo, mChartSetting);
