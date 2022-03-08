@@ -1970,7 +1970,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .ls-small {letter-spacing: -0.3px;}
 .normal {font-weight:500;}
 .display-flex {display: flex;}
-.active-link .sapMLabel, .active-link .sapMText, .active-link .sapMImg {cursor: pointer;}
+text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link .sapMImg {cursor: pointer;}
 
 .portlet-box .employee-total-count .sapMObjStatusText {font-weight: 500;}
 .portlet-box .employee-count {width:100%; text-align:center}
