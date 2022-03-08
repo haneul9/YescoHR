@@ -52,25 +52,25 @@ sap.ui.define(
       },
 
       async onObjectMatched() {
-        const oListModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
         try {
-          oListModel.setProperty('/busy', true);
+          oViewModel.setProperty('/busy', true);
 
           const oModel = this.getModel(ServiceNames.WORKTIME);
 
           const aOrgList = await Client.getEntitySet(oModel, 'MssOrgList', { Pernr: this.getAppointeeProperty('Pernr') });
 
-          oListModel.setProperty('/OrgList', aOrgList);
+          oViewModel.setProperty('/OrgList', aOrgList);
 
           // 나의 근무일정
           const [mMyCom] = await this.getMySchedule();
 
-          oListModel.setProperty('/MyCom', mMyCom);
+          oViewModel.setProperty('/MyCom', mMyCom);
 
           const dDate = mMyCom.Zyymm;
 
-          oListModel.setProperty('/search', {
+          oViewModel.setProperty('/search', {
             date: moment(dDate).format('yyyyMM'),
             dept: aOrgList[0].Orgeh,
           });
@@ -78,17 +78,17 @@ sap.ui.define(
           const aTableList = await this.getWorkScheduleList();
           const oTable = this.byId('commuteTable');
 
-          oListModel.setProperty('/listInfo', {
+          oViewModel.setProperty('/listInfo', {
             ...TableUtils.count({ oTable, aRowData: aTableList }),
             ObjTxt1: this.getBundleText('LABEL_00197'), // 미신청
             // 신청기간 {0} ~ {1}
             infoMessage: `${this.getBundleText('LABEL_30007', moment(mMyCom.Begda).format('yyyy.MM.DD'), moment(mMyCom.Endda).format('yyyy.MM.DD'))}`,
           });
-          oListModel.setProperty('/CommuteList', aTableList);
+          oViewModel.setProperty('/CommuteList', aTableList);
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
-          oListModel.setProperty('/busy', false);
+          oViewModel.setProperty('/busy', false);
         }
       },
 
@@ -139,13 +139,13 @@ sap.ui.define(
                   const oTable = this.byId('commuteTable');
                   const mMyCom = oViewModel.getProperty('/MyCom');
 
-                  oListModel.setProperty('/listInfo', {
+                  oViewModel.setProperty('/listInfo', {
                     ...TableUtils.count({ oTable, aRowData: aTableList }),
                     ObjTxt1: this.getBundleText('LABEL_00197'), // 미신청
                     // 신청기간 {0} ~ {1}
                     infoMessage: `${this.getBundleText('LABEL_30007', moment(mMyCom.Begda).format('yyyy.MM.DD'), moment(mMyCom.Endda).format('yyyy.MM.DD'))}`,
                   });
-                  oListModel.setProperty('/CommuteList', aTableList);
+                  oViewModel.setProperty('/CommuteList', aTableList);
                   oTable.clearSelection();
                 },
               });
@@ -205,13 +205,13 @@ sap.ui.define(
                   const oTable = this.byId('commuteTable');
                   const mMyCom = oViewModel.getProperty('/MyCom');
 
-                  oListModel.setProperty('/listInfo', {
+                  oViewModel.setProperty('/listInfo', {
                     ...TableUtils.count({ oTable, aRowData: aTableList }),
                     ObjTxt1: this.getBundleText('LABEL_00197'), // 미신청
                     // 신청기간 {0} ~ {1}
                     infoMessage: `${this.getBundleText('LABEL_30007', moment(mMyCom.Begda).format('yyyy.MM.DD'), moment(mMyCom.Endda).format('yyyy.MM.DD'))}`,
                   });
-                  oListModel.setProperty('/CommuteList', aTableList);
+                  oViewModel.setProperty('/CommuteList', aTableList);
                   oTable.clearSelection();
                 },
               });
@@ -226,31 +226,31 @@ sap.ui.define(
 
       // 조회
       async onSearch() {
-        const oListModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
         try {
-          oListModel.setProperty('/busy', true);
+          oViewModel.setProperty('/busy', true);
 
           // 신청기간
-          const [mMyCom] = await this.getMySchedule({ Zyymm: oListModel.getProperty('/search/date') });
+          const [mMyCom] = await this.getMySchedule({ Zyymm: oViewModel.getProperty('/search/date') });
 
-          oListModel.setProperty('/MyCom', mMyCom);
+          oViewModel.setProperty('/MyCom', mMyCom);
 
           const aTableList = await this.getWorkScheduleList();
           const oTable = this.byId('commuteTable');
 
-          oListModel.setProperty('/listInfo', {
+          oViewModel.setProperty('/listInfo', {
             ...TableUtils.count({ oTable, aRowData: aTableList }),
             ObjTxt1: this.getBundleText('LABEL_00197'), // 미신청
             // 신청기간 {0} ~ {1}
             infoMessage: `${this.getBundleText('LABEL_30007', moment(mMyCom.Begda).format('yyyy.MM.DD'), moment(mMyCom.Endda).format('yyyy.MM.DD'))}`,
           });
-          oListModel.setProperty('/CommuteList', aTableList);
+          oViewModel.setProperty('/CommuteList', aTableList);
           oTable.clearSelection();
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
-          oListModel.setProperty('/busy', false);
+          oViewModel.setProperty('/busy', false);
         }
       },
 
@@ -279,9 +279,9 @@ sap.ui.define(
 
       // 시차출퇴근신청
       async getWorkScheduleList() {
-        const oListModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.WORKTIME);
-        const mSearch = oListModel.getProperty('/search');
+        const mSearch = oViewModel.getProperty('/search');
         const mPayLoad = {
           Prcty: 'L',
           Orgeh: mSearch.dept,
