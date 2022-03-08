@@ -8,7 +8,7 @@
     <VBox class="contents">
       <custom:MobileScrollContainer horizontal="false" vertical="true" excludeBottomSelector=".sapMPageHeader">
         <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
-          <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="7px 0" class="form-grid">
+          <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
             <Label text="{i18n>LABEL_02013}"/>
             <VBox>
               <ComboBox id="BenefitType" items="{/BenefitType}" selectedKey="{/FormData/Concode}" change="onTypeChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
