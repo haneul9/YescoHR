@@ -5,7 +5,6 @@ sap.ui.define(
     'sap/ui/layout/cssgrid/CSSGrid',
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
-    'sap/ui/model/json/JSONModel',
     'sap/ui/table/Table',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
@@ -30,7 +29,6 @@ sap.ui.define(
     CSSGrid,
     Filter,
     FilterOperator,
-    JSONModel,
     Table,
     Appno,
     AppUtils,
@@ -226,8 +224,8 @@ sap.ui.define(
         let sOrgtx = _.replace(oParameter.orgtx, /--/g, '/') ?? _.noop();
         let sOrgeh = oParameter.orgeh ?? _.noop();
 
-        // MSS process
-        if (_.isEqual(sRoute, 'm/employee')) {
+        // MSS/HASS process
+        if (_.isEqual(sRoute, 'm/employee') || _.isEqual(sRoute, 'h/employee')) {
           sPernr = mSessionData.Pernr;
           sOrgtx = mSessionData.Orgtx;
           sOrgeh = mSessionData.Orgeh;
