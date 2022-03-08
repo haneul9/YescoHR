@@ -226,8 +226,7 @@ sap.ui.define(
         }
 
         const oAppModel = this.getViewModel('appointeeModel');
-        oAppModel.setData(aSelectedEmp[0], true);
-        oAppModel.setProperty('/Orgtx', aSelectedEmp[0].Fulln);
+        oAppModel.setData({ ...aSelectedEmp[0], Werks: aSelectedEmp[0].Persa, Orgtx: aSelectedEmp[0].Fulln }, true);
         oEvent.getSource().getParent().close();
         this.onRefresh(aSelectedEmp[0]);
       },

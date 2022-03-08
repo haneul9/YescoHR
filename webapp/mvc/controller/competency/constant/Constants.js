@@ -6,7 +6,11 @@ sap.ui.define(
     'use strict';
 
     return {
-      LIST_PAGE: { ME: { route: 'competency', detail: 'competency-detail', id: 'container-ehr---competency' }, MA: { route: 'm/competency', detail: 'm/competency-detail', id: 'container-ehr---m_competency' } },
+      LIST_PAGE: [
+        { type: 'ME', route: 'competency', detail: 'competency-detail', id: 'container-ehr---competency' },
+        { type: 'ME', route: 'h/competency', detail: 'h/competency-detail', id: 'container-ehr---h_competency' },
+        { type: 'MA', route: 'm/competency', detail: 'm/competency-detail', id: 'container-ehr---m_competency' },
+      ],
       REJECT_DIALOG_ID: 'sap.ui.yesco.mvc.view.competency.fragment.RejectDialog',
 
       TAB: { ABILITY: 'T01', OPINION: 'T02' },

@@ -119,6 +119,8 @@
 
         { "pattern": "competency", "name": "competency", "target": "competency" },
         { "pattern": "competency/{sType}/{sYear}", "name": "competency-detail", "target": "competencyDetail" },
+        { "pattern": "h/competency", "name": "h/competency", "target": "h/competency" },
+        { "pattern": "h/competency/{sType}/{sYear}", "name": "h/competency-detail", "target": "competencyDetail" },
         { "pattern": "m/competency", "name": "m/competency", "target": "m/competency" },
         { "pattern": "m/competency/{sType}/{sYear}", "name": "m/competency-detail", "target": "competencyDetail" },
 
@@ -254,6 +256,7 @@
         "clubJoinDetail": { "viewId": "clubJoinDetail", "viewPath": "sap.ui.yesco.mvc.view.clubJoin", "viewName": "ClubJoinDetail" },
 
         "competency": { "viewId": "competency", "viewPath": "sap.ui.yesco.mvc.view.competency", "viewName": "List" },
+        "h/competency": { "viewId": "h_competency", "viewPath": "sap.ui.yesco.mvc.view.competency", "viewName": "ListH" },
         "m/competency": { "viewId": "m_competency", "viewPath": "sap.ui.yesco.mvc.view.competency", "viewName": "ListM" },
         "competencyDetail": { "viewId": "competencyDetail", "viewPath": "sap.ui.yesco.mvc.view.competency", "viewName": "Detail" },
 

@@ -87,8 +87,28 @@ sap.ui.define(
         }
       },
 
-      callbackAppointeeChange() {
-        this.debug('passs');
+      async callbackAppointeeChange() {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/busy', true);
+
+        try {
+          const sType = oViewModel.getProperty('/type');
+          const sEmpField = _.isEqual(sType, Constants.APPRAISER_TYPE.ME) ? 'Zzappee' : 'Zzapper';
+          const aRowData = await Client.getEntitySet(this.getModel(ServiceNames.APPRAISAL), 'AppraisalPeeList', {
+            Prcty: Constants.PROCESS_TYPE.LIST.code,
+            Zzappgb: sType,
+            Menid: this.getCurrentMenuId(),
+            Werks: this.getAppointeeProperty('Werks'),
+            [sEmpField]: this.getAppointeeProperty('Pernr'),
+          });
+
+          this.setTableData({ oViewModel, aRowData });
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       setTableData({ oViewModel, aRowData }) {

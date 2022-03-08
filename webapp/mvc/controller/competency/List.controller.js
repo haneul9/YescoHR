@@ -1,9 +1,9 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
@@ -15,9 +15,9 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     MessageBox,
     AppUtils,
+    EmployeeSearch,
     Client,
     ServiceNames,
     TableUtils,
@@ -27,10 +27,13 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.competency.List', {
+      EmployeeSearch: EmployeeSearch,
+
       initializeModel() {
         return {
           busy: false,
           type: '',
+          detailRoute: '',
           listInfo: {
             rowCount: 1,
             columns: {
@@ -54,14 +57,16 @@ sap.ui.define(
       async onObjectMatched() {
         const oModel = this.getModel(ServiceNames.APPRAISAL);
         const oViewModel = this.getViewModel();
-        const sType = _.findKey(Constants.LIST_PAGE, { route: this.getRouter().getHashChanger().getHash() });
-        const sRoute = _.get(Constants.LIST_PAGE, [sType, 'route']);
+        const { type: sType, route: sRoute, detail: sDetailRoute } = _.find(Constants.LIST_PAGE, { route: this.getRouter().getHashChanger().getHash() });
         const sEmpField = _.isEqual(sType, Constants.APPRAISER_TYPE.ME) ? 'Zzappee' : 'Zzapper';
 
+        oViewModel.setData(this.initializeModel());
+        oViewModel.setProperty('/busy', true);
+        this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+
         try {
-          oViewModel.setData(this.initializeModel());
-          oViewModel.setProperty('/busy', true);
           oViewModel.setProperty('/type', sType);
+          oViewModel.setProperty('/detailRoute', sDetailRoute);
 
           const aRowData = await Client.getEntitySet(oModel, 'AppraisalCoPeeList', {
             Prcty: Constants.PROCESS_TYPE.LIST.code,
@@ -75,6 +80,30 @@ sap.ui.define(
         } catch (oError) {
           this.debug(`Controller > ${sRoute} List > onObjectMatched Error`, oError);
 
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
+      },
+
+      async callbackAppointeeChange() {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/busy', true);
+
+        try {
+          const sType = oViewModel.getProperty('/type');
+          const sEmpField = _.isEqual(sType, Constants.APPRAISER_TYPE.ME) ? 'Zzappee' : 'Zzapper';
+          const aRowData = await Client.getEntitySet(this.getModel(ServiceNames.APPRAISAL), 'AppraisalCoPeeList', {
+            Prcty: Constants.PROCESS_TYPE.LIST.code,
+            Zzappgb: sType,
+            Menid: this.getCurrentMenuId(),
+            Werks: this.getAppointeeProperty('Werks'),
+            [sEmpField]: this.getAppointeeProperty('Pernr'),
+          });
+
+          this.setTableData({ oViewModel, aRowData });
+        } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/busy', false);
@@ -110,7 +139,7 @@ sap.ui.define(
         const sPath = oEvent.getParameters().rowBindingContext.getPath();
         const oRowData = oViewModel.getProperty(sPath);
         const sType = oViewModel.getProperty('/type');
-        const sDetailRoute = _.get(Constants.LIST_PAGE, [sType, 'detail']);
+        const sDetailRoute = oViewModel.getProperty('/detailRoute');
 
         if (!_.isEqual(oRowData.Godetl, 'X')) {
           MessageBox.alert(this.getBundleText('MSG_10006')); // 현재 평가상태에서는 상세내역을 조회하실 수 없습니다.
