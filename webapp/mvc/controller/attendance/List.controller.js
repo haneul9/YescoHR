@@ -173,7 +173,7 @@ sap.ui.define(
             !aSelectedIndices.some((idx) => {
               const oRowData = oViewModel.getProperty(`/list/${idx}`);
 
-              return oRowData.Appty !== this.PAGE_TYPE.NEW || oRowData.ZappStatAl !== '60';
+              return oRowData.Appty !== this.PAGE_TYPE.NEW || (oRowData.ZappStatAl !== '40' && oRowData.ZappStatAl !== '60');
             })
           );
         }
