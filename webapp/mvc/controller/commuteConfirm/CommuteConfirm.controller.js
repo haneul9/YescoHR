@@ -57,6 +57,12 @@ sap.ui.define(
         try {
           oListModel.setProperty('/busy', true);
 
+          const oModel = this.getModel(ServiceNames.WORKTIME);
+
+          const aOrgList = await Client.getEntitySet(oModel, 'MssOrgList', { Pernr: this.getAppointeeProperty('Pernr') });
+
+          oListModel.setProperty('/OrgList', aOrgList);
+
           // 나의 근무일정
           const [mMyCom] = await this.getMySchedule();
 
@@ -66,6 +72,7 @@ sap.ui.define(
 
           oListModel.setProperty('/search', {
             date: moment(dDate).format('yyyyMM'),
+            dept: aOrgList[0].Orgeh,
           });
 
           const aTableList = await this.getWorkScheduleList();
@@ -139,6 +146,7 @@ sap.ui.define(
                     infoMessage: `${this.getBundleText('LABEL_30007', moment(mMyCom.Begda).format('yyyy.MM.DD'), moment(mMyCom.Endda).format('yyyy.MM.DD'))}`,
                   });
                   oListModel.setProperty('/CommuteList', aTableList);
+                  oTable.clearSelection();
                 },
               });
             } catch (oError) {
@@ -204,6 +212,7 @@ sap.ui.define(
                     infoMessage: `${this.getBundleText('LABEL_30007', moment(mMyCom.Begda).format('yyyy.MM.DD'), moment(mMyCom.Endda).format('yyyy.MM.DD'))}`,
                   });
                   oListModel.setProperty('/CommuteList', aTableList);
+                  oTable.clearSelection();
                 },
               });
             } catch (oError) {
@@ -222,7 +231,7 @@ sap.ui.define(
         try {
           oListModel.setProperty('/busy', true);
 
-          // 나의 근무일정
+          // 신청기간
           const [mMyCom] = await this.getMySchedule({ Zyymm: oListModel.getProperty('/search/date') });
 
           oListModel.setProperty('/MyCom', mMyCom);
@@ -237,6 +246,7 @@ sap.ui.define(
             infoMessage: `${this.getBundleText('LABEL_30007', moment(mMyCom.Begda).format('yyyy.MM.DD'), moment(mMyCom.Endda).format('yyyy.MM.DD'))}`,
           });
           oListModel.setProperty('/CommuteList', aTableList);
+          oTable.clearSelection();
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -274,8 +284,8 @@ sap.ui.define(
         const mSearch = oListModel.getProperty('/search');
         const mPayLoad = {
           Prcty: 'L',
-          Begym: mSearch.date,
-          Endym: mSearch.secondDate,
+          Orgeh: mSearch.dept,
+          Zyymm: mSearch.date,
           Pernr: this.getAppointeeProperty('Pernr'),
         };
 
