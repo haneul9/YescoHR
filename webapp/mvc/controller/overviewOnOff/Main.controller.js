@@ -35,10 +35,10 @@ sap.ui.define(
           contents: {
             A01: { busy: false, hasLink: true, data: {} },
             A02: { busy: false, hasLink: true, data: { total: 0, legends: [] } },
-            A03: { busy: false, hasLink: false },
+            A03: { busy: false, hasLink: false, data: { headty: 'D', raw: [] } },
             A04: { busy: false, hasLink: true, data: { total: 0, legends: [] } },
             A05: { busy: false, hasLink: true, data: { total: 0, legends: [] } },
-            A06: { busy: false, hasLink: false },
+            A06: { busy: false, hasLink: false, data: { headty: 'E', raw: [] } },
           },
           dialog: {
             busy: false,
@@ -121,6 +121,8 @@ sap.ui.define(
 
             break;
           case 'stackedcolumn2d':
+            oViewModel.setProperty(`/contents/${mChartInfo.Target}/data/raw`, aChartDatas);
+
             const aDataSet = _.chain(aChartDatas)
               .head()
               .pickBy((v, p) => _.startsWith(p, 'Leg') && !_.isEmpty(v))
@@ -159,6 +161,8 @@ sap.ui.define(
 
             break;
           case 'msstackedcolumn2dlinedy':
+            oViewModel.setProperty(`/contents/${mChartInfo.Target}/data/raw`, aChartDatas);
+
             const aDataSet2 = _.chain(aChartDatas)
               .head()
               .pickBy((v, p) => _.startsWith(p, 'Leg') && !_.isEmpty(v))
@@ -228,6 +232,25 @@ sap.ui.define(
               dataFormat: 'json',
               dataSource: mChartSetting,
             }).render();
+
+            FusionCharts.addEventListener('rendered', function () {
+              if (mChartInfo.Target === 'A06' || mChartInfo.Target === 'A03') {
+                $(`#employeeOnOff-${_.toLower(mChartInfo.Target)}-chart g[class$="-parentgroup"] > g[class$="-sumlabels"] > g[class$="-sumlabels"] > text`).each(function (idx) {
+                  $(this)
+                    .off('click')
+                    .on('click', function () {
+                      const oController = sap.ui.getCore().byId('container-ehr---m_overviewOnOff').getController();
+                      const oViewModel = oController.getViewModel();
+                      const sHeadty = oViewModel.getProperty(`/contents/${mChartInfo.Target}/data/headty`);
+                      const sDisyear = oViewModel.getProperty(`/contents/${mChartInfo.Target}/data/raw/${idx}/Ttltxt`);
+                      const mPayload = _.zipObject(['Headty', 'Discod', 'Disyear'], [sHeadty, 'all', sDisyear]);
+
+                      oController.openDetailDialog(mPayload);
+                    })
+                    .addClass('active-link');
+                });
+              }
+            });
           });
         } else {
           const oChart = FusionCharts(sChartId);
