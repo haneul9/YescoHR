@@ -22,11 +22,11 @@
                       <FlexItemData baseSize="25%" />
                     </layoutData>
                   </Text>
-                  <!-- <Text text="{Pernr}" tooltip="{Ename} {Pernr} {Fulln} {Zzjikgbt}" wrapping="false">
+                  <Text text="{Pernr}" tooltip="{Ename} {Pernr} {Fulln} {Zzjikgbt}" wrapping="false">
                     <layoutData>
                       <FlexItemData baseSize="20%" />
                     </layoutData>
-                  </Text> -->
+                  </Text>
                   <Text text="{Fulln}" tooltip="{Ename} {Pernr} {Fulln} {Zzjikgbt}" wrapping="false">
                     <layoutData>
                       <FlexItemData baseSize="30%" />
@@ -37,7 +37,7 @@
                       <FlexItemData baseSize="15%" />
                     </layoutData>
                   </Text>
-                  <Button type="Transparent" class="icon-button" icon="asset/image/icon_WF_Myinfo_02_N.svg" />
+                  <Button type="Transparent" class="icon-button" icon="asset/image/icon_phone.svg" />
                 </HBox>
               </CustomListItem>
             </List>

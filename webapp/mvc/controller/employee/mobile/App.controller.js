@@ -47,10 +47,10 @@ sap.ui.define(
         // '0023': '1fr 2fr', // 사외경력
         // '0105': '1fr 2fr', // 연락처
         // INCR: '1fr 2fr', // 사내경력
-        // 9001: '1fr 2fr', // 평가
+         9001: '1fr 3fr', // 평가
         // PAYS: '1fr 2fr', // 급여
-        '0022': '1fr 1fr 1fr', // 학력
-        9006: '1fr 1fr 1fr', // 자격
+        '0022': '2fr 1fr 1fr', // 학력
+        9006: '3fr 3fr 2fr', // 자격
         '0183': '1fr 1fr 1fr', // 포상
         '0021': '1fr 1fr 1fr', // 가족
         EDU1: '1fr 1fr 1fr', // 교육
@@ -151,7 +151,7 @@ sap.ui.define(
               title: data.Menu2,
               code: data.Menuc2,
               sort: data.Sorts,
-              gridTemplate: '1fr 2fr',
+              gridTemplate: '2fr 3fr',
               header: [],
               data: [],
             });
@@ -228,12 +228,12 @@ sap.ui.define(
            */
           Object.keys(aSubMenuContents).forEach((key) => {
             const mMenu = _.get(aSubMenuContents, key);
-            const oSubVBox = new VBox().addStyleClass('customBox sapUiMediumMarginBottom');
+            const oSubVBox = new VBox().addStyleClass('profile-detail');
 
             this.debug(`Sub ${mMenu.title}`, mMenu);
 
             // Title
-            oSubVBox.addItem(new Title({ level: 'H2', text: mMenu.title }));
+            oSubVBox.addItem(new Title({ level: 'H4', text: mMenu.title }));
 
             // Content (Table|Grid)
             if (mMenu.type === this.SUB_TYPE.TABLE) {
@@ -258,7 +258,7 @@ sap.ui.define(
 
               oSubVBox.addItem(oList);
             } else if (mMenu.type === this.SUB_TYPE.GRID) {
-              const oCSSGrid = new CSSGrid({ gridTemplateColumns: '1fr 3fr', gridGap: '1px 8px' });
+              const oCSSGrid = new CSSGrid({ gridTemplateColumns: '2fr 3fr', gridGap: '1px 8px' });
 
               mMenu.header.forEach((head, index) => {
                 oCSSGrid.addItem(new Label({ text: head.Header }));
