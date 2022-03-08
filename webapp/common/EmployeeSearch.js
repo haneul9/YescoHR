@@ -351,7 +351,7 @@ sap.ui.define(
                 const [mSelectedEmp] = this.getViewModel().getProperty('/employeeModel/SelectedEmp') || [];
                 const bClickedCloseButton = oEvent.getParameter('origin').getProperty('text') === AppUtils.getBundleText('LABEL_00115');
 
-                fnCallback(mSelectedEmp || {}, bClickedCloseButton);
+                fnCallback.call(this, mSelectedEmp || {}, bClickedCloseButton);
               }
             });
         }

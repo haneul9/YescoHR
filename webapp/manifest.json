@@ -193,6 +193,8 @@
         { "pattern": "performance", "name": "performance", "target": "performance" },
         { "pattern": "performance/{sType}/{sYear}", "name": "performance-detail", "target": "performanceDetail" },
         { "pattern": "performanceView/{sType}/{sPernr}/{sDocid}", "name": "performance-view", "target": "performanceView" },
+        { "pattern": "h/performance", "name": "h/performance", "target": "h/performance" },
+        { "pattern": "h/performance/{sType}/{sYear}", "name": "h/performance-detail", "target": "performanceDetail" },
         { "pattern": "m/performancePry", "name": "m/performancePry", "target": "m/performancePry" },
         { "pattern": "m/performancePry/{sType}/{sYear}", "name": "m/performancePry-detail", "target": "performanceDetail" },
         { "pattern": "m/performanceSry", "name": "m/performanceSry", "target": "m/performanceSry" },
@@ -319,6 +321,7 @@
         "paystubDetail": { "viewId": "paystubDetail", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "Detail" },
         
         "performance": { "viewId": "performance", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "List" },
+        "h/performance": { "viewId": "h_performance", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "ListH" },
         "m/performancePry": { "viewId": "m_performancePry", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "ListPrimary" },
         "m/performanceSry": { "viewId": "m_performanceSry", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "ListSecondary" },
         "m/performanceGrade": { "viewId": "m_performanceGrade", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "Grade" },

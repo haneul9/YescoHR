@@ -1,9 +1,9 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
@@ -15,9 +15,9 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     MessageBox,
     AppUtils,
+    EmployeeSearch,
     Client,
     ServiceNames,
     TableUtils,
@@ -27,10 +27,14 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.performance.List', {
+      EmployeeSearch: EmployeeSearch,
+
       initializeModel() {
         return {
           busy: false,
           type: '',
+          detailRoute: '',
+          showChangeButton: true,
           listInfo: {
             rowCount: 1,
             columns: {
@@ -54,15 +58,16 @@ sap.ui.define(
       async onObjectMatched() {
         const oModel = this.getModel(ServiceNames.APPRAISAL);
         const oViewModel = this.getViewModel();
-        const sType = _.findKey(Constants.LIST_PAGE, { route: this.getRouter().getHashChanger().getHash() });
-        const sRoute = _.get(Constants.LIST_PAGE, [sType, 'route']);
+        const { type: sType, route: sRoute, detail: sDetailRoute } = _.find(Constants.LIST_PAGE, { route: this.getRouter().getHashChanger().getHash() });
         const sEmpField = _.isEqual(sType, Constants.APPRAISER_TYPE.ME) ? 'Zzappee' : 'Zzapper';
 
         oViewModel.setData(this.initializeModel());
         oViewModel.setProperty('/busy', true);
+        this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
 
         try {
           oViewModel.setProperty('/type', sType);
+          oViewModel.setProperty('/detailRoute', sDetailRoute);
 
           const aRowData = await Client.getEntitySet(oModel, 'AppraisalPeeList', {
             Prcty: Constants.PROCESS_TYPE.LIST.code,
@@ -80,6 +85,10 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/busy', false);
         }
+      },
+
+      callbackAppointeeChange() {
+        this.debug('passs');
       },
 
       setTableData({ oViewModel, aRowData }) {
@@ -119,7 +128,7 @@ sap.ui.define(
         const sPath = oEvent.getParameters().rowBindingContext.getPath();
         const oRowData = oViewModel.getProperty(sPath);
         const sType = oViewModel.getProperty('/type');
-        const sDetailRoute = _.get(Constants.LIST_PAGE, [sType, 'detail']);
+        const sDetailRoute = oViewModel.getProperty('/detailRoute');
 
         if (!_.isEqual(oRowData.Godetl, 'X')) {
           MessageBox.alert(this.getBundleText('MSG_10006')); // 현재 평가상태에서는 상세내역을 조회하실 수 없습니다.
