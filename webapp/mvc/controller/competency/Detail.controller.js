@@ -103,10 +103,10 @@ sap.ui.define(
         this.renderStageClass();
       },
 
-      async onObjectMatched(oParameter) {
+      async onObjectMatched(oParameter, sRouteName) {
         const oViewModel = this.getViewModel();
         const { sType, sYear } = oParameter;
-        const [mListRoute] = _.filter(Constants.LIST_PAGE, (o) => _.startsWith(this.getRouter().getHashChanger().getHash(), o.route));
+        const mListRoute = _.find(Constants.LIST_PAGE, { detail: sRouteName });
 
         oViewModel.setData(this.initializeModel());
         oViewModel.setProperty('/busy', true);

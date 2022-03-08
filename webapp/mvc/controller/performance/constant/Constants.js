@@ -10,7 +10,9 @@ sap.ui.define(
         { type: 'ME', route: 'performance', detail: 'performance-detail', id: 'container-ehr---performance' },
         { type: 'ME', route: 'h/performance', detail: 'h/performance-detail', id: 'container-ehr---h_performance' },
         { type: 'MA', route: 'm/performancePry', detail: 'm/performancePry-detail', id: 'container-ehr---m_performancePry' },
+        { type: 'MA', route: 'h/performancePry', detail: 'h/performancePry-detail', id: 'container-ehr---h_performancePry' },
         { type: 'MB', route: 'm/performanceSry', detail: 'm/performanceSry-detail', id: 'container-ehr---m_performanceSry' },
+        { type: 'MB', route: 'h/performanceSry', detail: 'h/performanceSry-detail', id: 'container-ehr---h_performanceSry' },
       ],
       REJECT_DIALOG_ID: 'sap.ui.yesco.mvc.view.performance.fragment.RejectDialog',
 
