@@ -585,7 +585,7 @@ html.sap-desktop .sapContrast .sapMFooter-CTX .sapMBtnInner.sapMBtnReject, html.
 .contents-header .sapMBtn:active .sapMBtnDefault:not(.sapMPopup-CTX .sapMBtn:active .sapMBtnDefault,.sapMBtnDisabled .sapMBtnDefault) {color:#484c50 !important; border-color:#D6DBE2!important; outline-style:none !important; background:#D6DBE2!important}
 .contents-header .sapMBtn .sapMBtnDefault.sapMFocusable:not(.sapMPopup-CTX .sapMBtn .sapMBtnDefault.sapMFocusable) {outline-style:none !important} */
 
-.sapMBtn .sapMBtnInner {letter-spacing:-0.38px}
+.sapMBtn .sapMBtnInner {letter-spacing:-0.38px;text-shadow: none;}
 .sapMBtn .sapMBtnDefault.sapMBtnIconFirst {color:var(--FontColorNormal) !important; border-color:#EEEEEF !important; background-color:#F9FAFA}
 .sapMBtn:hover .sapMBtnDefault.sapMBtnIconFirst:not(.sapMPopup-CTX .sapMBtn:hover .sapMBtnDefault,.sapMBtnDisabled .sapMBtnDefault) {color:#484c50 !important; border-color:#A3A3A3!important; outline-style:none !important; background:#F9FAFA}
 .sapMBtn:active .sapMBtnDefault.sapMBtnIconFirst:not(.sapMPopup-CTX .sapMBtn:active .sapMBtnDefault,.sapMBtnDisabled .sapMBtnDefault) {color:#484c50 !important; border-color:#D6DBE2!important; outline-style:none !important; background:#D6DBE2!important}

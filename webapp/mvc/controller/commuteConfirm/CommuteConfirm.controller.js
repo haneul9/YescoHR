@@ -2,6 +2,7 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/control/MessageBox',
+    'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/FragmentEvent',
@@ -15,6 +16,7 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     MessageBox,
+    Appno,
     AppUtils,
     AttachFileAction,
     FragmentEvent,
@@ -125,9 +127,17 @@ sap.ui.define(
               AppUtils.setAppBusy(true, this);
 
               const oModel = this.getModel(ServiceNames.WORKTIME);
+              const oViewModel = this.getViewModel();
 
               await Promise.all([
-                _.forEach(aSelectRows, (e) => {
+                _.forEach(aSelectRows, async (e) => {
+                  if (!e.Appno || _.parseInt(e.Appno) === 0) {
+                    const sAppno = await Appno.get.call(this);
+
+                    e.Appno = sAppno;
+                    e.Appda = new Date();
+                  }
+
                   return Client.create(oModel, 'WorkScheduleConfirm', { ...e, Prcty: 'C' });
                 }),
               ]);
@@ -194,7 +204,7 @@ sap.ui.define(
 
               await Promise.all([
                 _.forEach(aSelectRows, (e) => {
-                  return Client.create(oModel, 'WorkScheduleConfirm', { ...e, Prcty: 'C' });
+                  return Client.create(oModel, 'WorkScheduleConfirm', { ...e, Prcty: 'X' });
                 }),
               ]);
 
