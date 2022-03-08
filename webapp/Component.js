@@ -292,7 +292,7 @@ sap.ui.define(
             oView.setVisible(true); // 반드시 onObjectMatched 이전에 실행되야함
 
             if (oController && oController.onObjectMatched && typeof oController.onObjectMatched === 'function') {
-              if (!_.startsWith(sRouteName, 'h/')) {
+              if (!_.startsWith(sRouteName, 'h/') && !_.startsWith(sRouteName, 'attendance')) {
                 this.getAppointeeModel().setData({ ...this.getSessionModel().getData(), showChangeButton: false });
               }
               oController.onObjectMatched(mRouteArguments, sRouteName);
