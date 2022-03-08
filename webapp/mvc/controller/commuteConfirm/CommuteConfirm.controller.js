@@ -204,7 +204,7 @@ sap.ui.define(
 
               await Promise.all([
                 _.forEach(aSelectRows, (e) => {
-                  return Client.create(oModel, 'WorkScheduleConfirm', { ...e, Prcty: 'C' });
+                  return Client.create(oModel, 'WorkScheduleConfirm', { ...e, Prcty: 'X' });
                 }),
               ]);
 
