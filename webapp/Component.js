@@ -293,7 +293,7 @@ sap.ui.define(
 
             if (oController && oController.onObjectMatched && typeof oController.onObjectMatched === 'function') {
               if (!_.startsWith(sRouteName, 'h/') && !_.startsWith(sRouteName, 'attendance')) {
-                this.getAppointeeModel().setData({ ...this.getSessionModel().getData(), showChangeButton: false });
+                this.getAppointeeModel().setData({ ...this.getSessionModel().getData(), showChangeButton: false, showBarChangeButton: false });
               }
               oController.onObjectMatched(mRouteArguments, sRouteName);
             }

@@ -99,6 +99,8 @@ sap.ui.define(
           });
         }
 
+        this.getAppointeeModel().setProperty('/showBarChangeButton', false);
+
         const oViewModel = this.getView().getModel();
         oViewModel.setData(this.initializeModel());
         oViewModel.setProperty('/type', oParameter.type);

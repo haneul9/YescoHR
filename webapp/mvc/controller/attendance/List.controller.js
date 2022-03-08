@@ -1,8 +1,8 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/DateUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -13,8 +13,8 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     AppUtils,
+    EmployeeSearch,
     DateUtils,
     Client,
     ServiceNames,
@@ -25,13 +25,13 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.attendance.List', {
       TableUtils: TableUtils,
+      EmployeeSearch: EmployeeSearch,
 
       PAGE_TYPE: { NEW: 'A', CHANGE: 'B', CANCEL: 'C' },
 
       initializeModel() {
         return {
           busy: false,
-          isVisibleActionButton: false,
           quota: {
             10: { Kotxt: this.getBundleText('LABEL_04015'), Crecnt: 0, Usecnt: 0 }, // 연차
             20: { Kotxt: this.getBundleText('LABEL_04016'), Crecnt: 0, Usecnt: 0 }, // 1년미만연차
@@ -69,17 +69,23 @@ sap.ui.define(
       async onObjectMatched() {
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const oViewModel = this.getViewModel();
-        const sPernr = this.getSessionProperty('Pernr');
+        const sPernr = this.getAppointeeProperty('Pernr');
         const oSearchConditions = oViewModel.getProperty('/search');
         const mQuota = oViewModel.getProperty('/quota');
 
         try {
           oViewModel.setProperty('/busy', true);
+          this.getAppointeeModel().setProperty('/showChangeButton', true);
 
           const fCurriedGetEntitySet = Client.getEntitySet(oModel);
           const [aQuotaResultData, aRowData] = await Promise.all([
             fCurriedGetEntitySet('AbsQuotaList', { Menid: this.getCurrentMenuId(), Pernr: sPernr }), //
-            fCurriedGetEntitySet('LeaveApplContent', { Menid: this.getCurrentMenuId(), Apbeg: DateUtils.parse(oSearchConditions.Apbeg), Apend: DateUtils.parse(oSearchConditions.Apend) }),
+            fCurriedGetEntitySet('LeaveApplContent', {
+              Menid: this.getCurrentMenuId(),
+              Pernr: sPernr,
+              Apbeg: DateUtils.parse(oSearchConditions.Apbeg),
+              Apend: DateUtils.parse(oSearchConditions.Apend),
+            }),
           ]);
 
           this.setTableData({ oViewModel, aRowData });
@@ -108,6 +114,59 @@ sap.ui.define(
         }
       },
 
+      async callbackAppointeeChange() {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/busy', true);
+
+        try {
+          const oSearchConditions = oViewModel.getProperty('/search');
+          const sPernr = this.getAppointeeProperty('Pernr');
+          const fCurriedGetEntitySet = Client.getEntitySet(this.getModel(ServiceNames.WORKTIME));
+          const [aQuotaResultData, aRowData] = await Promise.all([
+            fCurriedGetEntitySet('AbsQuotaList', { Menid: this.getCurrentMenuId(), Pernr: sPernr }), //
+            fCurriedGetEntitySet('LeaveApplContent', {
+              Menid: this.getCurrentMenuId(),
+              Pernr: sPernr,
+              Apbeg: DateUtils.parse(oSearchConditions.Apbeg),
+              Apend: DateUtils.parse(oSearchConditions.Apend),
+            }),
+          ]);
+
+          this.setTableData({ oViewModel, aRowData });
+
+          const mQuotaResult = _.reduce(
+            aQuotaResultData,
+            (acc, { Ktart, Kotxt, Crecnt, Usecnt, Balcnt }) => ({
+              ...acc,
+              [Ktart]: {
+                Kotxt,
+                Crecnt: parseInt(Crecnt, 10) ?? 0,
+                Usecnt: parseInt(Usecnt, 10) ?? 0,
+                Balcnt: parseInt(Balcnt, 10) ?? 0,
+              },
+            }),
+            {}
+          );
+
+          oViewModel.setProperty('/quota', {
+            ...{
+              10: { Kotxt: this.getBundleText('LABEL_04015'), Crecnt: 0, Usecnt: 0 }, // 연차
+              20: { Kotxt: this.getBundleText('LABEL_04016'), Crecnt: 0, Usecnt: 0 }, // 1년미만연차
+              30: { Kotxt: this.getBundleText('LABEL_04019'), Crecnt: 0, Usecnt: 0 }, // 연차(1년미만)쿼터
+              40: { Kotxt: this.getBundleText('LABEL_04017'), Crecnt: 0, Usecnt: 0 }, // 장기근속휴가
+              50: { Kotxt: this.getBundleText('LABEL_04008'), Crecnt: 0, Usecnt: 0 }, // 보건휴가
+              60: { Kotxt: this.getBundleText('LABEL_04018'), Crecnt: 0, Usecnt: 0 }, // 가족돌봄휴가
+            },
+            ...mQuotaResult,
+          });
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
+      },
+
       setTableData({ oViewModel, aRowData }) {
         const oTable = this.byId('attendanceTable');
         const oListInfo = oViewModel.getProperty('/listInfo');
@@ -127,7 +186,12 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/busy', true);
 
-          const aRowData = await Client.getEntitySet(oModel, 'LeaveApplContent', { Menid: this.getCurrentMenuId(), Apbeg: DateUtils.parse(oSearchConditions.Apbeg), Apend: DateUtils.parse(oSearchConditions.Apend) });
+          const aRowData = await Client.getEntitySet(oModel, 'LeaveApplContent', {
+            Menid: this.getCurrentMenuId(),
+            Pernr: this.getAppointeeProperty('Pernr'),
+            Apbeg: DateUtils.parse(oSearchConditions.Apbeg),
+            Apend: DateUtils.parse(oSearchConditions.Apend),
+          });
 
           this.setTableData({ oViewModel, aRowData });
         } catch (oError) {
@@ -155,28 +219,6 @@ sap.ui.define(
 
         oViewModel.setProperty('/parameter/rowData', [oRowData]);
         this.getRouter().navTo('attendance-detail', { type: oRowData.Appty, appno: _.isEqual(oRowData.Appno, '00000000000000') ? 'NA' : oRowData.Appno });
-      },
-
-      onChangeRowSelection(oEvent) {
-        const oTable = oEvent.getSource();
-        const oViewModel = this.getViewModel();
-        const aSelectedIndices = oTable.getSelectedIndices();
-
-        oViewModel.setProperty('/parameter/rowData', []);
-        oViewModel.setProperty('/parameter/selectedIndices', aSelectedIndices);
-
-        if (!aSelectedIndices.length) {
-          oViewModel.setProperty('/isVisibleActionButton', false);
-        } else {
-          oViewModel.setProperty(
-            '/isVisibleActionButton',
-            !aSelectedIndices.some((idx) => {
-              const oRowData = oViewModel.getProperty(`/list/${idx}`);
-
-              return oRowData.Appty !== this.PAGE_TYPE.NEW || (oRowData.ZappStatAl !== '40' && oRowData.ZappStatAl !== '60');
-            })
-          );
-        }
       },
 
       setRowActionParameters() {

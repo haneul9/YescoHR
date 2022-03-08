@@ -62,7 +62,7 @@ sap.ui.define(
 
         oViewModel.setData(this.initializeModel());
         oViewModel.setProperty('/busy', true);
-        this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+        this.getAppointeeModel().setProperty('/showBarChangeButton', this.isHass());
 
         try {
           oViewModel.setProperty('/type', sType);
