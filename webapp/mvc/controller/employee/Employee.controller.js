@@ -618,16 +618,17 @@ sap.ui.define(
       },
 
       transformTreeData({ aTreeData, sRootId }) {
+        aTreeData = _.map(aTreeData, (o) =>
+          _.chain(o)
+            .omit(['Datum', '__metadata'])
+            .set('ref', o.Otype === 'O' ? _.noop() : o.Xchif === 'X' ? 'asset/image/icon_employee.svg' : 'asset/image/icon_employee.svg')
+            .value()
+        );
+
         const mGroupedByParents = _.groupBy(aTreeData, 'ObjidUp');
         const mCatsById = _.keyBy(aTreeData, 'Objid');
 
         _.each(_.omit(mGroupedByParents, sRootId), (children, parentId) => (mCatsById[parentId].nodes = children));
-        _.each(mCatsById, (cat) => {
-          delete cat.__metadata;
-          delete cat.Datum;
-          cat.ref = cat.Otype === 'O' ? _.noop() : cat.Xchif === 'X' ? 'asset/image/icon_employee.svg' : 'asset/image/icon_employee.svg';
-          cat.isParent = !_.isEmpty(cat.nodes);
-        });
 
         return mGroupedByParents[sRootId];
       },
