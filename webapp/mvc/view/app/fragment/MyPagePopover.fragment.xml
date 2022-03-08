@@ -1,8 +1,9 @@
 <core:FragmentDefinition xmlns="sap.m"
+  xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:core="sap.ui.core">
   <Popover title="{i18n>LABEL_01005}" placement="Top" horizontalScrolling="false" verticalScrolling="false" class="full-popover" busy="{busy}" busyIndicatorDelay="0">
     <content>
-      <VBox>
+      <VBox class="member-detail">
         <HBox width="100%" height="146px">
           <VBox width="146px">
             <Image src="{sessionModel>/Photo}" mode="Background" class="member-photo" width="146px" height="146px" />
@@ -14,19 +15,43 @@
             <Text text="{sessionModel>/Orgtx}" />
           </VBox>
         </HBox>
-        <VBox width="100%">
+
+        <!-- <VBox class="wrap"> 사원프로파일과 같은 디자인이니 같은 구조로 맞춤이 어떨지
+          <grid:CSSGrid gridTemplateColumns="1fr 6fr" class="member-detail" gridGap="4px 20px" >
+              <VBox justifyContent="Center" alignItems="Center">
+                  <layoutData>
+                      <grid:GridItemLayoutData gridRow="span 2" />
+                  </layoutData>
+                  <Image src="{/header/profilePath}" class="member-photo" mode="Background" width="88px" height="88px" />
+              </VBox>
+              <HBox justifyContent="SpaceBetween">
+                  <Label text="{/header/name}" class="name" />
+                  <Image src="asset/image/icon_captain.svg" width="1.2rem" alt="Captain" visible="{= !!${/header/chief}}" />
+              </HBox>
+              <grid:CSSGrid items="{path: '/header/baseInfo'}" gridTemplateColumns="1fr 5fr">
+                  <Label text="{data}">
+                      <customData>
+                          <core:CustomData key="type" value="{labelOrText}" writeToDom="true" />
+                      </customData>
+                  </Label>
+              </grid:CSSGrid>
+          </grid:CSSGrid>
+        </VBox> -->
+
+        <VBox width="100%" class="setting-wrap wrap mt-20-px">
           <layoutData>
             <FlexItemData growFactor="1" />
           </layoutData>
-          <HBox justifyContent="SpaceBetween" alignItems="Center" height="50px">
+          <HBox justifyContent="SpaceBetween" alignItems="Center" height="54px">
             <Label text="{i18n>LABEL_01601}" />
             <Switch state="true" customTextOn=" " customTextOff=" " change=".onChangeMobilePushOnOff" />
           </HBox>
-          <HBox justifyContent="SpaceBetween" alignItems="Center" height="50px">
+          <HBox justifyContent="SpaceBetween" alignItems="Center" height="54px">
             <Label text="{i18n>LABEL_01004}" />
-            <core:Icon src="sap-icon://navigation-right-arrow" alt="{i18n>LABEL_01004}" press=".onPressLogout" />
+            <!-- <core:Icon src="sap-icon://navigation-right-arrow" alt="{i18n>LABEL_01004}" press=".onPressLogout" /> -->
+            <Button type="Transparent" class="icon-button" icon="asset/image/icon_arrow_h-r.svg" press=".onPressLogout" />
           </HBox>
-          <HBox justifyContent="SpaceBetween" alignItems="Center" height="50px">
+          <HBox justifyContent="SpaceBetween" alignItems="Center" height="54px" class="divider">
             <Label text="{i18n>LABEL_01602}" />
             <Text text="ver. 1.0.0.0" />
           </HBox>
