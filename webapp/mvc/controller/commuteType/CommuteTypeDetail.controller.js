@@ -129,7 +129,7 @@ sap.ui.define(
               const oDetailModel = this.getViewModel();
               const sAppno = oDetailModel.getProperty('/FormData/Appno');
 
-              if (!sAppno) {
+              if (!sAppno || _.parseInt(sAppno) === 0) {
                 const sAppno = await Appno.get.call(this);
 
                 oDetailModel.setProperty('/FormData/Appno', sAppno);
