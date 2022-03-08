@@ -58,11 +58,11 @@ sap.ui.define(
           oListModel.setProperty('/busy', true);
 
           // 나의 근무일정
-          const [aMyCom] = await this.getMySchedule();
+          const [mMyCom] = await this.getMySchedule();
 
-          oListModel.setProperty('/MyCom', aMyCom);
+          oListModel.setProperty('/MyCom', mMyCom);
 
-          const dDate = aMyCom.Zyymm;
+          const dDate = mMyCom.Zyymm;
 
           oListModel.setProperty('/search', {
             date: moment(dDate).format('yyyyMM'),
@@ -75,7 +75,7 @@ sap.ui.define(
             ...TableUtils.count({ oTable, aRowData: aTableList }),
             ObjTxt1: this.getBundleText('LABEL_00197'), // 미신청
             // 신청기간 {0} ~ {1}
-            infoMessage: `${this.getBundleText('LABEL_30007', moment(aMyCom.Begda).format('yyyy.MM.DD'), moment(aMyCom.Endda).format('yyyy.MM.DD'))}`,
+            infoMessage: `${this.getBundleText('LABEL_30007', moment(mMyCom.Begda).format('yyyy.MM.DD'), moment(mMyCom.Endda).format('yyyy.MM.DD'))}`,
           });
           oListModel.setProperty('/CommuteList', aTableList);
         } catch (oError) {
@@ -104,6 +104,7 @@ sap.ui.define(
           return;
         }
 
+        // {확정}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00116'), {
           // 확정, 취소
           actions: [this.getBundleText('LABEL_00116'), this.getBundleText('LABEL_00118')],
@@ -126,8 +127,18 @@ sap.ui.define(
 
               // {확정}되었습니다.
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00116'), {
-                onClose: () => {
-                  this.onNavBack();
+                onClose: async () => {
+                  const aTableList = await this.getWorkScheduleList();
+                  const oTable = this.byId('commuteTable');
+                  const mMyCom = oViewModel.getProperty('/MyCom');
+
+                  oListModel.setProperty('/listInfo', {
+                    ...TableUtils.count({ oTable, aRowData: aTableList }),
+                    ObjTxt1: this.getBundleText('LABEL_00197'), // 미신청
+                    // 신청기간 {0} ~ {1}
+                    infoMessage: `${this.getBundleText('LABEL_30007', moment(mMyCom.Begda).format('yyyy.MM.DD'), moment(mMyCom.Endda).format('yyyy.MM.DD'))}`,
+                  });
+                  oListModel.setProperty('/CommuteList', aTableList);
                 },
               });
             } catch (oError) {
@@ -148,20 +159,23 @@ sap.ui.define(
           // 확정취소할 데이터를 선택하세요.
           MessageBox.alert(this.getBundleText('MSG_30007'));
           return;
-        } else if (_.every(aSelectRows, (e) => {
-          return e.ZappStatAl !== '60';
-        })) {
+        } else if (
+          _.every(aSelectRows, (e) => {
+            return e.ZappStatAl !== '60';
+          })
+        ) {
           // 확정 상태의 데이터만 확정취소가 가능합니다.
           MessageBox.alert(this.getBundleText('MSG_30008'));
           return;
         }
 
-        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00116'), {
-          // 확정, 취소
-          actions: [this.getBundleText('LABEL_00116'), this.getBundleText('LABEL_00118')],
+        // {확정취소}하시겠습니까?
+        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_10049'), {
+          // 확정취소, 취소
+          actions: [this.getBundleText('LABEL_10049'), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
-            // 확정
-            if (!vPress || vPress !== this.getBundleText('LABEL_00116')) {
+            // 확정취소
+            if (!vPress || vPress !== this.getBundleText('LABEL_10049')) {
               return;
             }
 
@@ -176,10 +190,20 @@ sap.ui.define(
                 }),
               ]);
 
-              // {확정}되었습니다.
-              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00116'), {
-                onClose: () => {
-                  this.onNavBack();
+              // {확정취소}되었습니다.
+              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_10049'), {
+                onClose: async () => {
+                  const aTableList = await this.getWorkScheduleList();
+                  const oTable = this.byId('commuteTable');
+                  const mMyCom = oViewModel.getProperty('/MyCom');
+
+                  oListModel.setProperty('/listInfo', {
+                    ...TableUtils.count({ oTable, aRowData: aTableList }),
+                    ObjTxt1: this.getBundleText('LABEL_00197'), // 미신청
+                    // 신청기간 {0} ~ {1}
+                    infoMessage: `${this.getBundleText('LABEL_30007', moment(mMyCom.Begda).format('yyyy.MM.DD'), moment(mMyCom.Endda).format('yyyy.MM.DD'))}`,
+                  });
+                  oListModel.setProperty('/CommuteList', aTableList);
                 },
               });
             } catch (oError) {
@@ -199,9 +223,9 @@ sap.ui.define(
           oListModel.setProperty('/busy', true);
 
           // 나의 근무일정
-          const [aMyCom] = await this.getMySchedule({ Zyymm: oListModel.getProperty('/search/date') });
+          const [mMyCom] = await this.getMySchedule({ Zyymm: oListModel.getProperty('/search/date') });
 
-          oListModel.setProperty('/MyCom', aMyCom);
+          oListModel.setProperty('/MyCom', mMyCom);
 
           const aTableList = await this.getWorkScheduleList();
           const oTable = this.byId('commuteTable');
@@ -210,7 +234,7 @@ sap.ui.define(
             ...TableUtils.count({ oTable, aRowData: aTableList }),
             ObjTxt1: this.getBundleText('LABEL_00197'), // 미신청
             // 신청기간 {0} ~ {1}
-            infoMessage: `${this.getBundleText('LABEL_30007', moment(aMyCom.Begda).format('yyyy.MM.DD'), moment(aMyCom.Endda).format('yyyy.MM.DD'))}`,
+            infoMessage: `${this.getBundleText('LABEL_30007', moment(mMyCom.Begda).format('yyyy.MM.DD'), moment(mMyCom.Endda).format('yyyy.MM.DD'))}`,
           });
           oListModel.setProperty('/CommuteList', aTableList);
         } catch (oError) {
