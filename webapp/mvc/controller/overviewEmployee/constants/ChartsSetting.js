@@ -208,6 +208,7 @@ sap.ui.define([], function () {
           valueFontSize: 9,
           valueFontColor: '#000000',
           valueBgColor: '#ffffff',
+          legendIconSides: 0,
           showPlotBorder: 1,
           plotBorderThickness: 3,
           plotBorderColor: '#ffffff',

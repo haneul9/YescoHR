@@ -347,8 +347,9 @@ sap.ui.define(
 // eslint-disable-next-line no-unused-vars
 function callDetail(sArgs) {
   const oController = sap.ui.getCore().byId('container-ehr---m_overviewOnOff').getController();
+  const aProps = ['Headty', 'Discod', 'Disyear'];
   const aArgs = _.split(sArgs, ',');
-  const mPayload = _.size(aArgs) === 3 ? _.zipObject(['Headty', 'Discod', 'Disyear'], aArgs) : _.zipObject(['Headty', 'Discod'], aArgs);
+  const mPayload = _.zipObject(_.take(aProps, aArgs.length), aArgs);
 
   oController.openDetailDialog(mPayload);
 }
