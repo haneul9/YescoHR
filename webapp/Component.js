@@ -295,7 +295,7 @@ sap.ui.define(
               if (!_.startsWith(sRouteName, 'h/')) {
                 this.getAppointeeModel().setData({ ...this.getSessionModel().getData(), showChangeButton: false });
               }
-              oController.onObjectMatched(mRouteArguments);
+              oController.onObjectMatched(mRouteArguments, sRouteName);
             }
 
             setTimeout(() => {
