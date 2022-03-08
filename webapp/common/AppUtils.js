@@ -85,19 +85,19 @@ sap.ui.define(
          * @public
          */
         isDEV() {
-          return /^yeshrsapdev/.test(location.hostname);
+          return /^(yeshrsapdev|devhrportal)/.test(location.hostname);
         },
         /**
          * @public
          */
         isQAS() {
-          return /^yeshrsapqas/.test(location.hostname);
+          return /^(yeshrsapdev|qashrportal)/.test(location.hostname);
         },
         /**
          * @public
          */
         isPRD() {
-          return /^yeshrsap/.test(location.hostname);
+          return /^(yeshrsap|hrportal)/.test(location.hostname);
         },
 
         isMobile() {
