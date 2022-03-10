@@ -1551,7 +1551,6 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .vCardBox .sapUiLayoutCSSGrid .sapUiLayoutCSSGridItem.datePicker { width: 300px; }
 .vCardBox .sapUiLayoutCSSGrid .sapUiLayoutCSSGridItem.comboBox { width: 250px; }
 
-.detailFormTitle::after {content:""; position:relative; top:0; width:100%; height:1px; margin-bottom: 10px; background-color:#262C2F}
 
 /* 인재검색 */
 .form-bar > * {margin-right:12px}

@@ -7,9 +7,6 @@
   <Page enableScrolling="false" floatingFooter="true" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
     <VBox class="contents">
       <custom:MobileScrollContainer horizontal="false" vertical="true" excludeBottomSelector=".sapMPageHeader">
-        <VBox alignItems="Center" justifyContent="SpaceBetween" class="detailFormTitle">
-          <Title level="H2" text="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} ? ${i18n>LABEL_02024} : ${i18n>LABEL_02025} }" />
-        </VBox>
         <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
           <Title level="H2" text="경조금 신청서" />
           <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
