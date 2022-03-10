@@ -64,7 +64,6 @@
               <Text text="{/FormData/ZpayBetT}"/>
             </VBox>
           </grid:CSSGrid>
-          <Title level="H2" text="첨부파일" />
           <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
         </VBox>
       </custom:MobileScrollContainer>
