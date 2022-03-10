@@ -1,13 +1,20 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:table="sap.ui.table"
   xmlns:core="sap.ui.core">
-  <table:Table id="commuteTable" class="row-link" rows="{/CommuteList}" rowSelectionChange=".onRowSelection" visibleRowCount="{/listInfo/rowCount}" width="100%" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}">
+  <table:Table id="commuteTable" class="row-link commuteType" rows="{/CommuteList}" selectionMode="None" visibleRowCount="{/listInfo/rowCount}" width="100%" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}">
     <table:rowSettingsTemplate>
       <table:RowSettings highlight="{
           path: 'ZappStatAl',
           formatter: '.TableUtils.rowHighlight'
       }"/>
     </table:rowSettingsTemplate>
+    <table:columns>
+      <table:Column width="40px">
+        <table:template>
+          <CheckBox select=".onRowSelection" visible="{= ${Appyn} === 'X' }"/>
+        </table:template>
+      </table:Column>
+    </table:columns>
     <table:columns>
       <table:Column width="100px" sortProperty="ZappStatAl" filterProperty="ZappStatAl">
         <Label text="{i18n>LABEL_00144}"/>

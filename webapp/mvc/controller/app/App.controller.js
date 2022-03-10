@@ -31,14 +31,26 @@ sap.ui.define(
         this.debug('App.onInit');
 
         this.bMobile = AppUtils.isMobile();
-        this.oAppMenu = this.bMobile ? new MobileMenus(this) : new Menus(this);
-        this.oNotificationPopoverHandler = new NotificationPopoverHandler(this);
         if (this.bMobile) {
-          this.oMobileMyPagePopoverHandler = new MobileMyPagePopoverHandler(this);
-          this.oMobileEmployeeSearchDialogHandler = new MobileEmployeeSearchDialogHandler(this);
+          setTimeout(() => {
+            this.oMobileEmployeeSearchDialogHandler = new MobileEmployeeSearchDialogHandler(this);
+          });
+          setTimeout(() => {
+            this.oMobileMyPagePopoverHandler = new MobileMyPagePopoverHandler(this);
+          });
+          setTimeout(() => {
+            this.oAppMenu = new MobileMenus(this);
+            this.getOwnerComponent().setAppMenu(this.oAppMenu);
+          });
+        } else {
+          setTimeout(() => {
+            this.oAppMenu = new Menus(this);
+            this.getOwnerComponent().setAppMenu(this.oAppMenu);
+          });
         }
-
-        this.getOwnerComponent().setAppMenu(this.oAppMenu);
+        setTimeout(() => {
+          this.oNotificationPopoverHandler = new NotificationPopoverHandler(this);
+        });
       },
 
       getAppMenu() {
