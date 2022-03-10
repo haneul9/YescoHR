@@ -51,6 +51,26 @@ sap.ui.define(
         };
       },
 
+      // 신청내역 checkBox Visible
+      tableRowCheckbox() {
+        const tbl = this.getView().byId('commuteTable');
+        const header = tbl.$().find('thead');
+        const selectAllCb = header.find('.sapMCb');
+
+        selectAllCb.remove();
+
+        tbl.getRows().forEach(function (r) {
+          const obj = r.getBindingContext().getObject();
+          const oAppyn = obj.Appyn;
+          const cb = r.$().find('.sapMCb');
+          const oCb = sap.ui.getCore().byId(cb.attr('id'));
+
+          if (!oAppyn) {
+            oCb.setVisible(false);
+          }
+        });
+      },
+
       async onObjectMatched() {
         const oListModel = this.getViewModel();
 
@@ -77,6 +97,7 @@ sap.ui.define(
             ObjTxt1: this.getBundleText('LABEL_00197'),
           });
           oListModel.setProperty('/CommuteList', aTableList);
+          // this.tableRowCheckbox();
           this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
         } catch (oError) {
           AppUtils.handleError(oError);
@@ -200,10 +221,9 @@ sap.ui.define(
       onRowSelection(oEvent) {
         const oViewModel = this.getViewModel();
         const oEventSource = oEvent.getSource();
-        const iSelectedIndex = oEventSource.getSelectedIndex();
 
-        oEventSource.setSelectedIndex(iSelectedIndex);
-        oViewModel.setProperty('/SelectedRow', oViewModel.getProperty(`/CommuteList/${iSelectedIndex}`));
+        oEventSource.setSelectedIndex(oEventSource.getSelectedIndex());
+        oViewModel.setProperty('/SelectedRow', oViewModel.getProperty(oEvent.getParameter('rowContext').getPath()));
       },
 
       // 나의 근무일정
