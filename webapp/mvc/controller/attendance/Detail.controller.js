@@ -21,6 +21,7 @@ sap.ui.define(
     'sap/ui/yesco/common/Validator',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date',
+    'sap/ui/yesco/mvc/model/type/Decimal',
   ],
   (
     // prettier 방지용 주석
@@ -380,12 +381,23 @@ sap.ui.define(
             Endda: moment(mSearchConditions.Endda).hours(9).toDate(),
           });
 
-          oViewModel.setProperty('/form/dialog/list', aResults);
+          oViewModel.setProperty(
+            '/form/dialog/list',
+            _.map(aResults, (o) => ({ ..._.omit(o, '__metadata'), isActive: false, isValid: false }))
+          );
         } catch (oError) {
           this.debug('Controller > Attendance Detail > retrieveChange Error', oError);
 
           AppUtils.handleError(oError);
         }
+      },
+
+      async validChangeLeave(oEvent) {
+        const mRowObject = oEvent.getSource().getParent().getBindingContext().getObject();
+
+        try {
+          // const mResultData = await this.readLeaveApplEmpList({ Prcty: 'C', Menid: this.getCurrentMenuId(), ..._.pick(mFormData, ['Awart', 'Begda', 'Endda']) });
+        } catch (oError) {}
       },
 
       async createProcess({ sPrcty = 'C' }) {
@@ -423,6 +435,21 @@ sap.ui.define(
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
+      onSelectionChangeTableRow(oEvent) {
+        const oViewModel = this.getViewModel();
+        const sRowPath = oEvent.getParameter('rowContext').getPath();
+
+        oViewModel.setProperty(`${sRowPath}/isActive`, oEvent.getSource().getSelectedIndex() !== -1);
+      },
+
+      onChangeRowBegda(oEvent) {
+        const mRowObject = oEvent.getSource().getParent().getBindingContext().getObject();
+
+        _.set(mRowObject, 'Endda', mRowObject.Begda);
+
+        this.validChangeLeave(oEvent);
+      },
+
       onPressHalfToOne() {
         const oViewModel = this.getViewModel();
         const oTable = this.byId('dialogChangeTable');

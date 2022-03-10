@@ -16,7 +16,7 @@ sap.ui.define(
       formatValue() {
         const dValue = Float.prototype.formatValue.apply(this, arguments);
 
-        return _.isEqual(_.toNumber(dValue), 0) ? '' : dValue;
+        return _.isEqual(_.toNumber(dValue), 0) ? '' : _.chain(dValue).toNumber().toString().value();
       },
     });
   }
