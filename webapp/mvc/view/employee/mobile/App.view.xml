@@ -6,7 +6,7 @@
     <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
         <VBox class="contents">
             <VBox class="wrap">
-                <grid:CSSGrid gridTemplateColumns="1fr 6fr" class="member-detail" gridGap="4px 20px" >
+                <grid:CSSGrid gridTemplateColumns="1fr 6fr" class="member-detail" gridGap="4px 20px">
                     <VBox justifyContent="Center" alignItems="Center">
                         <layoutData>
                             <grid:GridItemLayoutData gridRow="span 2" />
@@ -17,7 +17,7 @@
                         <Label text="{/header/name}" class="name" />
                         <Image src="asset/image/icon_captain.svg" width="1.2rem" alt="Captain" visible="{= !!${/header/chief}}" />
                     </HBox>
-                    <grid:CSSGrid items="{path: '/header/baseInfo'}" gridTemplateColumns="1fr 5fr">
+                    <grid:CSSGrid items="{path: '/header/baseInfo'}" gridTemplateColumns="1fr">
                         <Label text="{data}">
                             <customData>
                                 <core:CustomData key="type" value="{labelOrText}" writeToDom="true" />

@@ -47,7 +47,7 @@ sap.ui.define(
         // '0023': '1fr 2fr', // 사외경력
         // '0105': '1fr 2fr', // 연락처
         // INCR: '1fr 2fr', // 사내경력
-         9001: '1fr 3fr', // 평가
+        9001: '1fr 3fr', // 평가
         // PAYS: '1fr 2fr', // 급여
         '0022': '2fr 1fr 1fr', // 학력
         9006: '3fr 3fr 2fr', // 자격
@@ -102,8 +102,6 @@ sap.ui.define(
           ]);
 
           // 상단 프로필 Set
-          const aLabelFields = ['Dat02', 'Dat04', 'Dat06'];
-          const aTextFields = ['Dat03', 'Dat05', 'Dat07'];
           const { Pturl, Dat01, Dat08, ...oReturnData } = aProfileReturnData[0];
 
           _.chain(oViewModelData)
@@ -113,8 +111,8 @@ sap.ui.define(
             .set(
               ['header', 'baseInfo'],
               _.chain(oReturnData)
-                .pick([...aLabelFields, ...aTextFields].sort())
-                .map((v, k) => ({ data: v, labelOrText: _.includes(aTextFields, k) ? 'text' : 'label' }))
+                .pick(['Dat02', 'Dat03', 'Dat04'])
+                .map((v) => ({ data: v, labelOrText: 'text' }))
                 .value()
             )
             .commit();

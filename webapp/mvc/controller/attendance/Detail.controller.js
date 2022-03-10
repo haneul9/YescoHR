@@ -14,12 +14,14 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/DateUtils',
     'sap/ui/yesco/common/AttachFileAction',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/Validator',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
+    'sap/ui/yesco/mvc/model/type/Date',
+    'sap/ui/yesco/mvc/model/type/Decimal',
   ],
   (
     // prettier 방지용 주석
@@ -35,6 +37,7 @@ sap.ui.define(
     AppUtils,
     DateUtils,
     AttachFileAction,
+    Client,
     ServiceNames,
     TableUtils,
     TextUtils,
@@ -74,9 +77,11 @@ sap.ui.define(
               calcCompleted: false,
               selectedRowPath: null,
               awartCodeList: new ComboEntry({ codeKey: 'Awart', valueKey: 'Atext' }),
+              search: {},
               data: {
                 Awart: 'ALL',
               },
+              list: [],
             },
           },
           ApplyInfo: {},
@@ -147,19 +152,7 @@ sap.ui.define(
             this.initializeApplyInfoBox(mResultData);
             this.initializeApprovalBox(mResultData);
           } else {
-            if (sType === this.PAGE_TYPE.CHANGE || sType === this.PAGE_TYPE.CANCEL) {
-              const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-              const aRowData = oListView.getModel().getProperty('/parameter/rowData');
-
-              if (sType === this.PAGE_TYPE.CANCEL) {
-                oViewModel.setProperty('/form/listMode', 'None');
-              } else {
-                aRowData.forEach((o) => (o.Tmrsn = ''));
-              }
-
-              // 변경|취소 신청의 경우 List페이지에서 선택된 데이터를 가져온다.
-              this.setTableData({ sType, oViewModel, aRowData });
-            }
+            oViewModel.setProperty('/form/dialog/awartCodeList', await this.readAwartCodeList());
 
             this.initializeApplyInfoBox();
           }
@@ -242,19 +235,26 @@ sap.ui.define(
         });
       },
 
+      callDialog(sType) {
+        switch (sType) {
+          case 'A':
+            this.openFormDialog();
+            break;
+          case 'B':
+            this.openFormChangeDialog();
+            break;
+          case 'C':
+            this.openFormCancelDialog();
+            break;
+          default:
+            break;
+        }
+      },
+
       async openFormDialog() {
         const oView = this.getView();
-        const oViewModel = this.getViewModel();
 
         AppUtils.setAppBusy(true, this);
-
-        // 근태유형
-        try {
-          const aAwartCode = await this.readAwartCodeList();
-          oViewModel.setProperty('/form/dialog/awartCodeList', aAwartCode);
-        } catch (oError) {
-          this.debug('Controller > Attendance Detail > openFormDialog Error', oError);
-        }
 
         setTimeout(() => {
           if (!this.pFormDialog) {
@@ -273,6 +273,87 @@ sap.ui.define(
         }, 100);
       },
 
+      async openFormChangeDialog() {
+        const oView = this.getView();
+
+        if (!this.oFormChangeDialog) {
+          this.oFormChangeDialog = await Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.mvc.view.attendance.fragment.FormChangeDialog',
+            controller: this,
+          });
+
+          this.oFormChangeDialog.attachBeforeOpen(() => {
+            TableUtils.adjustRowSpan({
+              oTable: this.byId('dialogChangeTable'),
+              aColIndices: [8],
+              sTheadOrTbody: 'thead',
+            });
+
+            this.getViewModel().setProperty('/form/dialog/search', {
+              Begda: moment().startOf('year').hours(9).toDate(),
+              Endda: moment().endOf('year').hours(9).toDate(),
+            });
+            this.retrieveChange();
+          });
+
+          oView.addDependent(this.oFormChangeDialog);
+        }
+
+        this.oFormChangeDialog.open();
+      },
+
+      async openHalfToOneDialog() {
+        const oView = this.getView();
+
+        if (!this.oHalfToOneDialog) {
+          this.oHalfToOneDialog = await Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.mvc.view.attendance.fragment.HalfToOneDialog',
+            controller: this,
+          });
+
+          this.oHalfToOneDialog.attachBeforeOpen(() => {
+            this.getViewModel().setProperty('/form/dialog/temp', {
+              Begda: null,
+              Tmrsn: '',
+            });
+          });
+
+          oView.addDependent(this.oHalfToOneDialog);
+        }
+
+        this.oHalfToOneDialog.open();
+      },
+
+      async openOneToHalfDialog() {
+        const oView = this.getView();
+
+        if (!this.oOneToHalfDialog) {
+          this.oOneToHalfDialog = await Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.mvc.view.attendance.fragment.OneToHalfDialog',
+            controller: this,
+          });
+
+          this.oOneToHalfDialog.attachBeforeOpen(() => {
+            this.getViewModel().setProperty('/form/dialog/temp', {
+              Awart1: '2001',
+              Awart2: '2002',
+              Begda1: null,
+              Begda2: null,
+              Tmrsn: '',
+            });
+          });
+
+          oView.addDependent(this.oOneToHalfDialog);
+        }
+
+        this.oOneToHalfDialog.open();
+      },
+
+      async openFormCancelDialog() {},
+
       toggleHasRowProperty() {
         const oViewModel = this.getViewModel();
         const sType = oViewModel.getProperty('/type');
@@ -286,6 +367,37 @@ sap.ui.define(
         } else {
           oViewModel.setProperty('/form/hasRow', !!aTableData.length);
         }
+      },
+
+      async retrieveChange() {
+        const oViewModel = this.getViewModel();
+        const mSearchConditions = oViewModel.getProperty('/form/dialog/search');
+
+        try {
+          const aResults = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'LeaveChangeList', {
+            Prcty: 'C',
+            Pernr: this.getAppointeeProperty('Pernr'),
+            Begda: moment(mSearchConditions.Begda).hours(9).toDate(),
+            Endda: moment(mSearchConditions.Endda).hours(9).toDate(),
+          });
+
+          oViewModel.setProperty(
+            '/form/dialog/list',
+            _.map(aResults, (o) => ({ ..._.omit(o, '__metadata'), isActive: false, isValid: false }))
+          );
+        } catch (oError) {
+          this.debug('Controller > Attendance Detail > retrieveChange Error', oError);
+
+          AppUtils.handleError(oError);
+        }
+      },
+
+      async validChangeLeave(oEvent) {
+        const mRowObject = oEvent.getSource().getParent().getBindingContext().getObject();
+
+        try {
+          // const mResultData = await this.readLeaveApplEmpList({ Prcty: 'C', Menid: this.getCurrentMenuId(), ..._.pick(mFormData, ['Awart', 'Begda', 'Endda']) });
+        } catch (oError) {}
       },
 
       async createProcess({ sPrcty = 'C' }) {
@@ -323,36 +435,70 @@ sap.ui.define(
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
+      onSelectionChangeTableRow(oEvent) {
+        const oViewModel = this.getViewModel();
+        const sRowPath = oEvent.getParameter('rowContext').getPath();
+
+        oViewModel.setProperty(`${sRowPath}/isActive`, oEvent.getSource().getSelectedIndex() !== -1);
+      },
+
+      onChangeRowBegda(oEvent) {
+        const mRowObject = oEvent.getSource().getParent().getBindingContext().getObject();
+
+        _.set(mRowObject, 'Endda', mRowObject.Begda);
+
+        this.validChangeLeave(oEvent);
+      },
+
+      onPressHalfToOne() {
+        const oViewModel = this.getViewModel();
+        const oTable = this.byId('dialogChangeTable');
+        const aSelectedIndices = oTable.getSelectedIndices();
+
+        if (aSelectedIndices.length !== 2) {
+          MessageBox.alert(this.getBundleText('MSG_04003')); // 연차로 변경하고자 하는 반차 2건만 선택하여 주십시오.
+          return;
+        }
+
+        const aDialogList = oViewModel.getProperty('/form/dialog/list');
+        const aSelectedData = _.filter(aDialogList, (o, i) => _.includes(aSelectedIndices, i));
+
+        if (_.some(aSelectedData, (o) => !_.includes(['2001', '2002'], o.Awart2))) {
+          MessageBox.alert(this.getBundleText('MSG_04003')); // 연차로 변경하고자 하는 반차 2건만 선택하여 주십시오.
+          return;
+        }
+
+        this.openHalfToOneDialog();
+      },
+
+      onPressOneToHalf() {
+        const oViewModel = this.getViewModel();
+        const oTable = this.byId('dialogChangeTable');
+        const aSelectedIndices = oTable.getSelectedIndices();
+
+        if (aSelectedIndices.length !== 1) {
+          MessageBox.alert(this.getBundleText('MSG_04004')); // 연차로 변경하고자 하는 반차 2건만 선택하여 주십시오.
+          return;
+        }
+
+        const mSelectedData = oViewModel.getProperty(`/form/dialog/list/${aSelectedIndices[0]}`);
+
+        if (mSelectedData.Awart2 !== '2000') {
+          MessageBox.alert(this.getBundleText('MSG_04004')); // 연차로 변경하고자 하는 반차 2건만 선택하여 주십시오.
+          return;
+        }
+
+        this.openOneToHalfDialog();
+      },
+
       onPressAddBtn() {
         const oViewModel = this.getViewModel();
+        const sType = oViewModel.getProperty('/type');
 
         oViewModel.setProperty('/form/dialog/calcCompleted', false);
         oViewModel.setProperty('/form/dialog/data', { Awart: 'ALL' });
 
-        this.openFormDialog();
-      },
-
-      onPressChangeBtn() {
-        const oViewModel = this.getViewModel();
-        const oTable = this.byId('approveMultipleTable');
-        const aSelectedIndices = oTable.getSelectedIndices();
-
-        if (aSelectedIndices.length < 1) {
-          MessageBox.alert(this.getBundleText('MSG_00020', 'LABEL_00109')); // {변경}할 행을 선택하세요.
-          return;
-        } else if (aSelectedIndices.length > 1) {
-          MessageBox.alert(this.getBundleText('MSG_00038')); // 하나의 행만 선택하세요.
-          return;
-        }
-
-        const sRowPath = oTable.getRows()[aSelectedIndices[0]].getBindingContext().getPath();
-        const mRowData = oViewModel.getProperty(sRowPath);
-
-        oViewModel.setProperty('/form/dialog/calcCompleted', false);
-        oViewModel.setProperty('/form/dialog/selectedRowPath', sRowPath);
-        oViewModel.setProperty('/form/dialog/data', { ...mRowData, AbrtgTxt: `${mRowData.AbrtgTxt}일` });
-
-        this.openFormDialog();
+        this.callDialog(sType);
       },
 
       onPressDelBtn() {
@@ -428,6 +574,22 @@ sap.ui.define(
         AppUtils.setAppBusy(false, this);
         this.byId('formDialog').close();
       },
+
+      onPressFormChangeDialogClose() {
+        this.oFormChangeDialog.close();
+      },
+
+      onPressHalfToOneDialogClose() {
+        this.oHalfToOneDialog.close();
+      },
+
+      onPressOneToHalfDialogClose() {
+        this.oOneToHalfDialog.close();
+      },
+
+      onPressHalfToOneDialogSave() {},
+
+      onPressOneToHalfDialogSave() {},
 
       onPressFormDialogSave() {
         const oViewModel = this.getViewModel();
