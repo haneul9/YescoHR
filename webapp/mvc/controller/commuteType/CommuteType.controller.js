@@ -100,9 +100,9 @@ sap.ui.define(
           oListModel.setProperty('/CommuteList', aTableList);
 
           this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
-          setTimeout(() => {
-            this.tableRowCheckbox();
-          }, 1500);
+          // setTimeout(() => {
+          //   this.tableRowCheckbox();
+          // }, 1500);
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
