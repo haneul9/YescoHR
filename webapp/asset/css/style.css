@@ -1547,7 +1547,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .leave-summary > span.sapMLabel[aria-label=반려]:before {background-color:#FE827D}
 .leave-summary > span.sapMLabel[aria-label=전체건수]:before {background-color:transparent}
 
-/* 시차출퇴근 확정 */
+/* 시차출퇴근 신청, 확정 */
 .vCardBox .sapUiLayoutCSSGrid .sapUiLayoutCSSGridItem.datePicker { width: 300px; }
 .vCardBox .sapUiLayoutCSSGrid .sapUiLayoutCSSGridItem.comboBox { width: 250px; }
 
