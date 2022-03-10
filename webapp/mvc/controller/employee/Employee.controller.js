@@ -249,10 +249,9 @@ sap.ui.define(
       async initialList({ oViewModel, sPernr, sOrgtx, sOrgeh }) {
         const oSideBody = this.byId('sideBody');
         const oSideList = this.byId('sideEmployeeList');
-        const mSessionData = this.getSessionData();
         const sSearchText = _.isEmpty(sOrgtx) ? sPernr : sOrgtx;
         const sSearchOrgeh = _.isEmpty(sOrgeh) ? _.noop() : sOrgeh;
-        const aSearchResults = await this.readEmpSearchResult({ searchText: sSearchText, Werks: mSessionData.Werks, Orgeh: sSearchOrgeh });
+        const aSearchResults = await this.readEmpSearchResult({ searchText: sSearchText, Orgeh: sSearchOrgeh });
         const iSideViewHeight = Math.floor($(document).height() - oSideBody.getParent().$().offset().top - 20);
         const iScrollViewHeight = Math.floor($(document).height() - oSideList.getParent().$().offset().top - 36);
 
@@ -709,7 +708,6 @@ sap.ui.define(
         const oViewModel = this.getView().getModel();
         const oControl = oEvent.getSource();
         const sSearchText = oControl.getValue();
-        const sWerks = this.getSessionProperty('Werks');
 
         if (!sSearchText) {
           // MessageBox.alert(this.getBundleText('MSG_00003', 'LABEL_00201')); // {검색어}를 입력하세요.
@@ -720,7 +718,7 @@ sap.ui.define(
         }
 
         try {
-          const aSearchResults = await this.readEmpSearchResult({ searchText: sSearchText, Werks: sWerks });
+          const aSearchResults = await this.readEmpSearchResult({ searchText: sSearchText });
 
           oViewModel.setProperty(
             '/sideNavigation/search/results',
@@ -1223,13 +1221,12 @@ sap.ui.define(
       /*****************************************************************
        * ! Call oData
        *****************************************************************/
-      readEmpSearchResult({ Werks, searchText, Orgeh }) {
+      readEmpSearchResult({ searchText, Orgeh }) {
         return new Promise((resolve, reject) => {
           const oModel = this.getModel(ServiceNames.COMMON);
           const sUrl = '/EmpSearchResultSet';
           const aFilters = [
-            new Filter('Persa', FilterOperator.EQ, Werks), //
-            new Filter('Zflag', FilterOperator.EQ, 'X'),
+            new Filter('Zflag', FilterOperator.EQ, 'X'), //
             new Filter('Actda', FilterOperator.EQ, moment().hour(9).toDate()),
             new Filter('Ename', FilterOperator.EQ, searchText),
           ];
