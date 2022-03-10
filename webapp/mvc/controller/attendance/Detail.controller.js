@@ -154,6 +154,8 @@ sap.ui.define(
           } else {
             oViewModel.setProperty('/form/dialog/awartCodeList', await this.readAwartCodeList());
 
+            if (_.includes([this.PAGE_TYPE.CHANGE, this.PAGE_TYPE.CANCEL], sType)) this.callDialog(sType);
+
             this.initializeApplyInfoBox();
           }
 
