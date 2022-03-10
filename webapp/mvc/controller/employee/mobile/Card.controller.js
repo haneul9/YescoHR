@@ -25,6 +25,7 @@ sap.ui.define(
       initializeModel() {
         return {
           busy: false,
+          isLoaded: false,
           pernr: null,
           orgtx: null,
           orgeh: null,
@@ -36,21 +37,26 @@ sap.ui.define(
 
       async onObjectMatched(oParameter) {
         const oViewModel = this.getViewModel();
-        const mSessionData = this.getSessionData();
-        const sPernr = oParameter.pernr || mSessionData.Pernr;
-        const sOrgtx = _.replace(oParameter.orgtx, /--/g, '/') || mSessionData.Orgtx;
-        const sOrgeh = oParameter.orgeh ?? mSessionData.Orgeh;
+        const bIsLoaded = oViewModel.getProperty('/isLoaded');
 
-        oViewModel.setSizeLimit(1000);
-        oViewModel.setProperty('/busy', true);
-        oViewModel.setProperty('/pernr', sPernr);
-        oViewModel.setProperty('/orgtx', sOrgtx);
-        oViewModel.setProperty('/orgeh', sOrgeh);
-        if (!_.isEmpty(sOrgtx)) {
-          oViewModel.setProperty('/search/searchText', sOrgtx);
+        if (!bIsLoaded) {
+          const mSessionData = this.getSessionData();
+          const sPernr = oParameter.pernr || mSessionData.Pernr;
+          const sOrgtx = _.replace(oParameter.orgtx, /--/g, '/') || mSessionData.Orgtx;
+          const sOrgeh = oParameter.orgeh ?? mSessionData.Orgeh;
+
+          oViewModel.setSizeLimit(1000);
+          oViewModel.setProperty('/isLoaded', true);
+          oViewModel.setProperty('/busy', true);
+          oViewModel.setProperty('/pernr', sPernr);
+          oViewModel.setProperty('/orgtx', sOrgtx);
+          oViewModel.setProperty('/orgeh', sOrgeh);
+          if (!_.isEmpty(sOrgtx)) {
+            oViewModel.setProperty('/search/searchText', sOrgtx);
+          }
+
+          this.initialList({ oViewModel, sPernr, sOrgtx, sOrgeh });
         }
-
-        this.initialList({ oViewModel, sPernr, sOrgtx, sOrgeh });
       },
 
       async initialList({ oViewModel, sPernr, sOrgtx, sOrgeh }) {
@@ -101,7 +107,7 @@ sap.ui.define(
           });
 
           oViewModel.setProperty(
-            '/search/results',
+            '/results',
             _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? 'asset/image/avatar-unknown.svg' : o.Photo }))
           );
         } catch (oError) {
