@@ -22,7 +22,8 @@ sap.ui.define(
     TextUtils,
     Client,
     ServiceNames,
-    BaseController
+    BaseController,
+    Date
   ) => {
     'use strict';
 
@@ -54,15 +55,15 @@ sap.ui.define(
       // 신청내역 checkBox Visible
       tableRowCheckbox() {
         const tbl = this.getView().byId('commuteTable');
-        const header = tbl.$().find('thead');
-        const selectAllCb = header.find('.sapMCb');
+        // const header = tbl.$().find('.sapUiTableColHdrCnt');
+        // const selectAllCb = header.find('.sapMCb');
 
-        selectAllCb.remove();
+        // selectAllCb.remove();
 
-        tbl.getRows().forEach(function (r) {
+        _.forEach(tbl.getRows(), (r) => {
           const obj = r.getBindingContext().getObject();
           const oAppyn = obj.Appyn;
-          const cb = r.$().find('.sapMCb');
+          const cb = r.$().find('.sapUiTableSelectAllCheckBox');
           const oCb = sap.ui.getCore().byId(cb.attr('id'));
 
           if (!oAppyn) {
@@ -97,8 +98,11 @@ sap.ui.define(
             ObjTxt1: this.getBundleText('LABEL_00197'),
           });
           oListModel.setProperty('/CommuteList', aTableList);
-          // this.tableRowCheckbox();
+
           this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+          // setTimeout(() => {
+          //   this.tableRowCheckbox();
+          // }, 1500);
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
