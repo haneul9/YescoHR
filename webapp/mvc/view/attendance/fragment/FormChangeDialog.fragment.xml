@@ -105,7 +105,7 @@
             </m:VBox>
         </m:content>
         <m:buttons>
-            <m:Button type="Emphasized" text="{i18n>LABEL_00103}" press=".onPressFormDialogClose" />
+            <m:Button type="Emphasized" text="{i18n>LABEL_00103}" press=".onPressFormChangeDialogSave" />
             <m:Button text="{i18n>LABEL_00115}" press=".onPressFormChangeDialogClose" />
         </m:buttons>
     </m:Dialog>
