@@ -736,6 +736,20 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .sapMText[data-status="ZF"] {color:var(--BorderColorError) !important}
 .sapMText[data-status="Z65"] {color:var(--BorderColorError) !important}
 .sapMText[data-status="Z60"] {color:var(--BorderColorFocus) !important}
+
+/* Mobile Icon */
+.sapUiIcon[data-status="Z10"] {color:var(--BorderColorReadonly) !important}
+.sapUiIcon[data-status="Z15"] {color:var(--BorderColorReadonly) !important}
+.sapUiIcon[data-status="Z90"] {color:var(--BorderColorReadonly) !important}
+.sapUiIcon[data-status="Z20"] {color:var(--BorderColorWarning) !important}
+.sapUiIcon[data-status="Z30"] {color:var(--BorderColorWarning) !important}
+.sapUiIcon[data-status="Z50"] {color:var(--BorderColorWarning) !important}
+.sapUiIcon[data-status="Z40"] {color:var(--BorderColorSuccess) !important}
+.sapUiIcon[data-status="ZP"] {color:var(--BorderColorSuccess) !important}
+.sapUiIcon[data-status="Z45"] {color:var(--BorderColorError) !important}
+.sapUiIcon[data-status="ZF"] {color:var(--BorderColorError) !important}
+.sapUiIcon[data-status="Z65"] {color:var(--BorderColorError) !important}
+.sapUiIcon[data-status="Z60"] {color:var(--BorderColorFocus) !important}
  
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Header"] { background-color:rgb(224, 224, 224)}
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="None"] { background-color:rgb(112, 112, 112)}
