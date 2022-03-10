@@ -20,8 +20,7 @@
 
 
 .sapUiSizeCompact .sapMInputBase:not(.sapMTextArea) { height: 48px !important;}
-
-
+.sapUiSizeCompact .portlet .sapMInputBase:not(.sapMTextArea) { height: 38px !important;}
 
 
 .sapUiMedia-StdExt-Phone .contents {
@@ -66,6 +65,8 @@
 .sapUiMedia-StdExt-Phone .portlet-box {border-radius: 8px;}
 .sapUiMedia-StdExt-Phone .portlet-header {justify-content: space-between;display: flex;}
 .sapUiMedia-StdExt-Phone .portlet-header h2.sapMTitle {font-size: 1.1rem;}
+.sapUiSizeCompact .portlet-header .sapMSegB {margin-bottom:-6px}
+.sapUiSizeCompact .portlet-p03p04 .portlet-header .icon-button {margin-bottom:-3px}
 
 .sapUiMedia-StdExt-Phone .app-menu-toolbar:before {display: none;}
 .sapUiMedia-StdExt-Phone .app-menu-toolbar:after {border-bottom:0;}
