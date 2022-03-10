@@ -48,10 +48,10 @@
 
 
 
-.sapUiSizeCompact .form-grid .sapMInputBase:not(.sapMTextArea),
-.sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem{ height: 36px !important;}
-.sapUiMedia-StdExt-Phone .sapUiLayoutCSSGrid.form-grid > * { height: 100%; min-height: 36px;height: 36px;}
-.sapUiMedia-StdExt-Phone .sapUiLayoutCSSGrid.form-grid .sapMFlexBox .sapMFlexItem {min-height: 36px!important;}
+.sapUiMedia-StdExt-Phone .sapMPage:not([data-form-style=request]) .form-grid .sapMInputBase:not(.sapMTextArea),
+.sapUiMedia-StdExt-Phone .sapMPage:not([data-form-style=request]) .form-grid .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem{ height: 34px !important;}
+.sapUiMedia-StdExt-Phone .sapMPage:not([data-form-style=request]) .sapUiLayoutCSSGrid.form-grid > * { height: 100%; min-height: 34px;height: 34px;}
+.sapUiMedia-StdExt-Phone .sapMPage:not([data-form-style=request]) .sapUiLayoutCSSGrid.form-grid .sapMFlexBox .sapMFlexItem {min-height: 34px!important;}
 
 
 
@@ -342,7 +342,7 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker >.sapMDial
 /* .profile-detail li.sapMLIB .sapUiLayoutCSSGrid {align-items: flex-start;align-content: flex-start; display: flex;} */
 .profile-detail .sapMInputBase.sapMInputBaseReadonly {height: 40px !important;}
 .profile-detail .sapMInputBase.sapMInputBaseReadonly:not(.sapMTextArea) {height: 40px !important;}
-.profile-detail .sapMInputBase.sapMInputBaseReadonly:not(.sapMTextArea) input, .profile-detail .sapMLabel  {font-size:16px;font-weight: 500!important;}
+.profile-detail .sapMInputBase.sapMInputBaseReadonly:not(.sapMTextArea) input, .profile-detail .sapMLabel  {padding-top: 0!important;padding-bottom: 0!important;font-size:16px;font-weight: 500!important;}
 .profile-detail .sapMInput.sapMInputBaseReadonly>div>input {padding-left:0!important;}
 
 
