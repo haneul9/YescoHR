@@ -11,6 +11,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date',
+    'sap/m/Size',
   ],
   (
     // prettier 방지용 주석
@@ -23,7 +24,8 @@ sap.ui.define(
     Client,
     ServiceNames,
     BaseController,
-    Date
+    Date,
+    Size
   ) => {
     'use strict';
 
@@ -38,7 +40,7 @@ sap.ui.define(
           busy: false,
           CommuteList: [],
           MyCom: {},
-          SelectedRow: {},
+          SelectedRow: [],
           searchDate: {},
           listInfo: {
             rowCount: 1,
@@ -50,26 +52,6 @@ sap.ui.define(
             completeCount: 0,
           },
         };
-      },
-
-      // 신청내역 checkBox Visible
-      tableRowCheckbox() {
-        const tbl = this.getView().byId('commuteTable');
-        // const header = tbl.$().find('.sapUiTableColHdrCnt');
-        // const selectAllCb = header.find('.sapMCb');
-
-        // selectAllCb.remove();
-
-        _.forEach(tbl.getRows(), (r) => {
-          const obj = r.getBindingContext().getObject();
-          const oAppyn = obj.Appyn;
-          const cb = r.$().find('.sapUiTableSelectAllCheckBox');
-          const oCb = sap.ui.getCore().byId(cb.attr('id'));
-
-          if (!oAppyn) {
-            oCb.setVisible(false);
-          }
-        });
       },
 
       async onObjectMatched() {
@@ -100,9 +82,6 @@ sap.ui.define(
           oListModel.setProperty('/CommuteList', aTableList);
 
           this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
-          // setTimeout(() => {
-          //   this.tableRowCheckbox();
-          // }, 1500);
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -155,19 +134,15 @@ sap.ui.define(
 
       onClick() {
         const oViewModel = this.getViewModel();
-        const mSelectRow = oViewModel.getProperty('/SelectedRow');
+        const aSelectRow = oViewModel.getProperty('/SelectedRow');
 
-        if (_.isEmpty(mSelectRow)) {
+        if (_.isEmpty(aSelectRow) || _.size(aSelectRow) > 1) {
           // 신청할 데이터를 한 건만 선택하세요.
           MessageBox.alert(this.getBundleText('MSG_30003'));
           return;
-        } else if (mSelectRow.Appyn !== 'X') {
-          // 신청 가능한 내역이 아닙니다.
-          MessageBox.alert(this.getBundleText('MSG_30004'));
-          return;
         }
 
-        this.getRouter().navTo('commuteType-detail', { oDataKey: 'N', zyymm: mSelectRow.Zyymm, schkz: mSelectRow.Schkz });
+        this.getRouter().navTo('commuteType-detail', { oDataKey: 'N', zyymm: aSelectRow[0].Zyymm, schkz: aSelectRow[0].Schkz });
       },
 
       // override AttachFileCode
@@ -224,10 +199,22 @@ sap.ui.define(
       // table 체크박스
       onRowSelection(oEvent) {
         const oViewModel = this.getViewModel();
-        const oEventSource = oEvent.getSource();
+        const vPath = oEvent.getSource().getBindingContext().getPath();
+        const aSelectRows = oViewModel.getProperty('/SelectedRow');
+        let mRow = oViewModel.getProperty(vPath);
+        let aList = [];
 
-        oEventSource.setSelectedIndex(oEventSource.getSelectedIndex());
-        oViewModel.setProperty('/SelectedRow', oViewModel.getProperty(oEvent.getParameter('rowContext').getPath()));
+        if (!oEvent.getSource().getSelected()) {
+          aList.push(
+            ..._.reject(aSelectRows, (o) => {
+              return o.Appno === mRow.Appno;
+            })
+          );
+        } else {
+          aList.push(...aSelectRows, mRow);
+        }
+
+        oViewModel.setProperty('/SelectedRow', aList);
       },
 
       // 나의 근무일정
