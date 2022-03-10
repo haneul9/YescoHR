@@ -61,11 +61,9 @@ sap.ui.define(
 
       async initialList({ oViewModel, sPernr, sOrgtx, sOrgeh }) {
         try {
-          const mSessionData = this.getSessionData();
           const sSearchText = _.isEmpty(sOrgtx) ? sPernr : sOrgtx;
           const sSearchOrgeh = _.isEmpty(sOrgeh) ? _.noop() : sOrgeh;
           const aSearchResults = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'EmpSearchResult', {
-            Persa: mSessionData.Werks,
             Zflag: 'X',
             Actda: moment().hours(9).toDate(),
             Ename: sSearchText,
@@ -100,7 +98,6 @@ sap.ui.define(
 
         try {
           const aSearchResults = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'EmpSearchResult', {
-            Persa: this.getSessionProperty('Werks'),
             Zflag: 'X',
             Actda: moment().hours(9).toDate(),
             Ename: sSearchText,

@@ -36,7 +36,7 @@
           <Label text="{i18n>LABEL_00155}" />
         </table:multiLabels>
         <table:template>
-          <Text text="{AbrtgTxt2}" width="100%" textAlign="Center" />
+          <Text text="{ path: 'Abrtg2', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" />
         </table:template>
       </table:Column>
       <table:Column width="12%" headerSpan="3">
@@ -63,7 +63,7 @@
           <Label text="{i18n>LABEL_00155}" />
         </table:multiLabels>
         <table:template>
-          <Text text="{AbrtgTxt}" width="100%" textAlign="Center" />
+          <Text text="{ path: 'Abrtg', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" />
         </table:template>
       </table:Column>
       <table:Column width="24%">
