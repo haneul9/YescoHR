@@ -1,0 +1,33 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:custom="sap.ui.yesco.control">
+    <Dialog id="formDialog" showHeader="false" contentWidth="600px">
+        <buttons>
+            <Button type="Emphasized" text="{i18n>LABEL_00103}" press=".onPressOneToHalfDialogSave" enabled="{= !!${/form/dialog/temp/Begda1} &amp;&amp; !!${/form/dialog/temp/Begda2} }" />
+            <Button text="{i18n>LABEL_00115}" press=".onPressOneToHalfDialogClose" />
+        </buttons>
+        <Panel expanded="true" headerText="{i18n>LABEL_00156}">
+            <content>
+                <grid:CSSGrid gridTemplateColumns="1fr 4fr" gridGap="8px">
+                    <Label text="{i18n>LABEL_04023}" />
+                    <HBox>
+                        <ComboBox width="180px" class="required" selectedKey="{/form/dialog/temp/Awart1}" items="{ path: '/form/dialog/awartCodeList', templateShareable: false, filters: [{path: 'Awart', operator: 'EQ', value1: '2001'}, {path: 'Awart', operator: 'EQ', value1: '2002'}] }">
+                            <core:Item key="{Awart}" text="{Atext}" />
+                        </ComboBox>
+                        <custom:DatePicker width="212px" class="required sapIcon_Date sapUiTinyMarginBegin" dateValue="{ path: '/form/dialog/temp/Begda1', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
+                    </HBox>
+                    <Label text="{i18n>LABEL_04024}" />
+                    <HBox>
+                        <ComboBox width="180px" class="required" selectedKey="{/form/dialog/temp/Awart2}" items="{ path: '/form/dialog/awartCodeList', templateShareable: false, filters: [{path: 'Awart', operator: 'EQ', value1: '2001'}, {path: 'Awart', operator: 'EQ', value1: '2002'}] }">
+                            <core:Item key="{Awart}" text="{Atext}" />
+                        </ComboBox>
+                        <custom:DatePicker width="212px" class="required sapIcon_Date sapUiTinyMarginBegin" dateValue="{ path: '/form/dialog/temp/Begda2', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
+                    </HBox>
+                    <Label text="{i18n>LABEL_04013}" />
+                    <Input width="400px" value="{/form/dialog/temp/Tmrsn}" />
+                </grid:CSSGrid>
+            </content>
+        </Panel>
+    </Dialog>
+</core:FragmentDefinition>
