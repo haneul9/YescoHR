@@ -2,7 +2,7 @@
     xmlns:core="sap.ui.core"
     xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:custom="sap.ui.yesco.control">
-    <Dialog id="formDialog" showHeader="false" contentWidth="600px">
+    <Dialog showHeader="false" contentWidth="600px">
         <buttons>
             <Button type="Emphasized" text="{i18n>LABEL_00103}" enabled="{= !!${/form/dialog/temp/Begda} }" press=".onPressHalfToOneDialogSave"/>
             <Button text="{i18n>LABEL_00115}" press=".onPressHalfToOneDialogClose"/>
