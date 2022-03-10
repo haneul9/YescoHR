@@ -8,6 +8,7 @@
     <VBox class="contents">
       <custom:MobileScrollContainer horizontal="false" vertical="true" excludeBottomSelector=".sapMPageHeader">
         <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
+          <Title level="H2" text="경조금 신청서" />
           <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
             <Label text="{i18n>LABEL_02013}"/>
             <VBox>
@@ -63,6 +64,7 @@
               <Text text="{/FormData/ZpayBetT}"/>
             </VBox>
           </grid:CSSGrid>
+          <Title level="H2" text="첨부파일" />
           <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
         </VBox>
       </custom:MobileScrollContainer>
