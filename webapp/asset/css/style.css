@@ -1550,7 +1550,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 /* 시차출퇴근 신청, 확정 */
 .vCardBox .sapUiLayoutCSSGrid .sapUiLayoutCSSGridItem.datePicker { width: 300px; }
 .vCardBox .sapUiLayoutCSSGrid .sapUiLayoutCSSGridItem.comboBox { width: 250px; }
-
+.commuteType .sapUiTableCellInner { padding: 0 0.2rem;}
 
 /* 인재검색 */
 .form-bar > * {margin-right:12px}
