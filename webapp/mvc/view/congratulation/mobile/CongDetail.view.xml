@@ -11,6 +11,7 @@
           <Title level="H2" text="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} ? ${i18n>LABEL_02024} : ${i18n>LABEL_02025} }" />
         </VBox>
         <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
+          <Title level="H2" text="경조금 신청서" />
           <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
             <Label text="{i18n>LABEL_02013}"/>
             <VBox>
@@ -66,6 +67,7 @@
               <Text text="{/FormData/ZpayBetT}"/>
             </VBox>
           </grid:CSSGrid>
+          <Title level="H2" text="첨부파일" />
           <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
         </VBox>
       </custom:MobileScrollContainer>
