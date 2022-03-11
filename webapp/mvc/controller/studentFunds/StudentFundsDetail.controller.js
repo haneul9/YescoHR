@@ -179,9 +179,8 @@ sap.ui.define(
 
         if (oFormData.Forsch === 'X') {
           if (!!oLimitData && iCostH > _.parseInt(oLimitData.Zbetrg)) {
-            oDetailModel.setProperty('/FormData/ZpayAmt', oLimitData.Zbetrg);
-
             if (oFormData.Grdsp !== 'ALL' && oFormData.Divcd !== 'ALL') {
+              oDetailModel.setProperty('/FormData/ZpayAmt', oLimitData.Zbetrg);
               oDetailModel.setProperty('/LimitAmountMSG', true);
             }
           } else {
