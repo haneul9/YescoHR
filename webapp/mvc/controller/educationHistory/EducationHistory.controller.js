@@ -4,6 +4,7 @@ sap.ui.define(
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
+    'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
@@ -17,6 +18,7 @@ sap.ui.define(
     MessageBox,
     AppUtils,
     AttachFileAction,
+    ComboEntry,
     FragmentEvent,
     TableUtils,
     TextUtils,
@@ -37,7 +39,7 @@ sap.ui.define(
           busy: false,
           EduList: [],
           EduType: [],
-          MyEdu: {},
+          Total: {},
           search: {},
           listInfo: {
             rowCount: 1,
@@ -53,11 +55,11 @@ sap.ui.define(
 
       thisYear(sYear = String(moment().format('YYYY'))) {
         // {0}년의 현황입니다.
-        return this.MSG_31002('MSG_14001', sYear);
+        return this.getBundleText('MSG_14001', sYear);
       },
 
       formatNumber(vNum = '0') {
-        return _.parseInt(vNum);
+        return !vNum ? '0' : _.parseInt(vNum);
       },
 
       async onObjectMatched() {
@@ -66,19 +68,29 @@ sap.ui.define(
         try {
           oListModel.setProperty('/busy', true);
 
-          // 나의 근무일정
+          const oModel = this.getModel(ServiceNames.BENEFIT);
+          const mPayLoad = {
+            Cdnum: 'PA0005',
+          };
+
+          // 교육형태
+          const aEduTypeList = await Client.getEntitySet(oModel, 'BenefitCodeList', mPayLoad);
+
+          oListModel.setProperty('/EduType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aEduTypeList }));
+
+          // 나의 교육이력
           const [aMyEdu] = await this.getMyEdu();
 
-          oListModel.setProperty('/MyEdu', aMyEdu);
+          oListModel.setProperty('/Total', aMyEdu);
 
           oListModel.setProperty('/search', {
-            date: moment(dDate).month('0').format('yyyyMM'),
-            secondDate: moment(dDate).format('yyyyMM'),
+            date: moment().startOf('year').hours(9).toDate(),
+            secondDate: moment().endOf('year').hours(9).toDate(),
             Lntyp: 'ALL',
             Lntyptx: '',
           });
 
-          const aTableList = await this.getWorkScheduleList();
+          const aTableList = await this.getEducationList();
           const oTable = this.byId('eduTable');
 
           oListModel.setProperty('/listInfo', {
@@ -103,17 +115,19 @@ sap.ui.define(
         try {
           oListModel.setProperty('/busy', true);
 
-          // 나의 근무일정
+          // 나의 교육이력
           const [aMyEdu] = await this.getMyEdu();
 
-          oListModel.setProperty('/MyEdu', aMyEdu);
+          oListModel.setProperty('/Total', aMyEdu);
 
           oListModel.setProperty('/search', {
-            date: moment(dDate).month('0').format('yyyyMM'),
-            secondDate: moment(dDate).format('yyyyMM'),
+            date: moment().startOf('year').hours(9).toDate(),
+            secondDate: moment().endOf('year').hours(9).toDate(),
+            Lntyp: 'ALL',
+            Lntyptx: '',
           });
 
-          const aTableList = await this.getWorkScheduleList();
+          const aTableList = await this.getEducationList();
           const oTable = this.byId('eduTable');
 
           oListModel.setProperty('/listInfo', {
@@ -130,27 +144,6 @@ sap.ui.define(
         }
       },
 
-      // 나의 근무일정 대상년월 Text
-      formatSchedule(sYymm = moment().format('yyyy.MM'), dSDate, dEDate) {
-        const dS = moment(dSDate).format('yyyy.MM.DD') || moment().format('yyyy.MM.DD');
-        const dD = moment(dEDate).format('yyyy.MM.DD') || moment().format('yyyy.MM.DD');
-
-        return `${this.getBundleText('LABEL_30005', moment(sYymm).format('yyyy.MM'), dS, dD)}`;
-      },
-
-      onClick() {
-        const oViewModel = this.getViewModel();
-        const aSelectRow = oViewModel.getProperty('/SelectedRow');
-
-        if (_.isEmpty(aSelectRow) || _.size(aSelectRow) > 1) {
-          // 신청할 데이터를 한 건만 선택하세요.
-          MessageBox.alert(this.getBundleText('MSG_30003'));
-          return;
-        }
-
-        this.getRouter().navTo('commuteType-detail', { oDataKey: 'N', zyymm: aSelectRow[0].Zyymm, schkz: aSelectRow[0].Schkz });
-      },
-
       // override AttachFileCode
       getApprovalType() {
         return 'HR19';
@@ -163,11 +156,7 @@ sap.ui.define(
         try {
           oListModel.setProperty('/busy', true);
 
-          if (this.searchCheck()) {
-            return;
-          }
-
-          const aTableList = await this.getWorkScheduleList();
+          const aTableList = await this.getEducationList();
           const oTable = this.byId('eduTable');
 
           oListModel.setProperty('/listInfo', {
@@ -213,7 +202,7 @@ sap.ui.define(
       onPressExcelDownload() {
         const oTable = this.byId('eduTable');
         const aTableData = this.getViewModel().getProperty('/EduList');
-        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_30001');
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_31001');
 
         TableUtils.export({ oTable, aTableData, sFileName });
       },

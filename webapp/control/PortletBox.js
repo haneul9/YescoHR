@@ -79,11 +79,12 @@ sap.ui.define(
         const oContext = this.getBindingContext();
         const bBorderless = oContext.getProperty('borderless');
         const sPortletKey = oContext.getProperty('key').toLowerCase();
+        const iPortletHeight = oContext.getProperty('height');
 
         if (bBorderless) {
-          this.addStyleClass(`portlet portlet-${sPortletKey}`);
+          this.addStyleClass(`portlet portlet-${sPortletKey} portlet-h${iPortletHeight}`);
         } else {
-          this.addStyleClass(`portlet portlet-box portlet-${sPortletKey}`);
+          this.addStyleClass(`portlet portlet-box portlet-${sPortletKey} portlet-h${iPortletHeight}`);
         }
       },
 

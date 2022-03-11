@@ -21,7 +21,7 @@
                     </FlexBox>
                     <Label text="{i18n>LABEL_09020}"/>
                     <VBox>
-                        <Input id="DialogData3" value="{/DialogData/Disenm}" class="required" editable="{/ReWriteStat}"/>
+                        <Input id="DialogData3" maxLength="{/FieldLimitPop/Disenm}" value="{/DialogData/Disenm}" class="required" editable="{/ReWriteStat}"/>
                     </VBox>
                     <Label text="{i18n>LABEL_09017}"/>
                     <FlexBox alignItems="Start" justifyContent="End">
@@ -29,7 +29,7 @@
                     </FlexBox>
                     <Label text="{i18n>LABEL_09014}"/>
                     <VBox>
-                        <Input id="DialogData5" value="{/DialogData/Medorg}" class="required" editable="{/ReWriteStat}"/>
+                        <Input id="DialogData5" maxLength="{/FieldLimitPop/Medorg}" value="{/DialogData/Medorg}" class="required" editable="{/ReWriteStat}"/>
                     </VBox>
                     <Label text="{i18n>LABEL_09018}"/>
                     <FlexBox alignItems="Start" justifyContent="End">

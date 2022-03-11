@@ -26,11 +26,12 @@ sap.ui.define(
         const oPortletModel = this.getPortletModel();
         const oPortletBox = await Fragment.load({
           id: this.getController().getView().getId(),
-          name: 'sap.ui.yesco.mvc.view.home.fragment.P12PortletBox',
+          name: this.bMobile ? 'sap.ui.yesco.mvc.view.home.mobile.P12PortletBox' : 'sap.ui.yesco.mvc.view.home.fragment.P12PortletBox',
           controller: this,
         });
 
-        oPortletBox.setModel(oPortletModel).bindElement('/');
+        const iPortletHeight = oPortletModel.getProperty('/height');
+        oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(`portlet-h${iPortletHeight}`);
 
         this.getController().byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);
@@ -53,8 +54,8 @@ sap.ui.define(
         });
 
         return {
-          Annual: { Total: 15, Used: 10 },
-          Summer: { Total: 5, Used: 2 },
+          Annual: { Total: 15, Used: 10, Remain: 5 },
+          Summer: { Total: 5, Used: 2, Remain: 3 },
         };
       },
     });
