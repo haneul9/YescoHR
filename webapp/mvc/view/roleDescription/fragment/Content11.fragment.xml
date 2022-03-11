@@ -1,0 +1,26 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:table="sap.ui.table">
+    <table:Table width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" rows="{/data/role9/list}" visibleRowCount="{/data/role9/rowCount}" noData="{i18n>MSG_00001}" visible="{/Define/isLoaded}">
+        <table:columns>
+            <table:Column width="15%" resizable="false">
+                <Label text="{i18n>LABEL_22090}" />
+                <table:template>
+                    <Text text="{Zzndrcm}" width="100%" textAlign="Center" />
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" resizable="false">
+                <Label text="{i18n>LABEL_22033}" />
+                <table:template>
+                    <Text text="{Zzcttyp}" width="100%" textAlign="Center" />
+                </table:template>
+            </table:Column>
+            <table:Column width="15%" resizable="false">
+                <Label text="{i18n>LABEL_00309}" />
+                <table:template>
+                    <Text text="{Zzctgrd}" width="100%" textAlign="Center" />
+                </table:template>
+            </table:Column>
+        </table:columns>
+    </table:Table>
+</core:FragmentDefinition>
