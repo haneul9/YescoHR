@@ -1,0 +1,23 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Dialog id="searchDialog" showHeader="false" contentWidth="600px">
+        <buttons>
+            <Button text="취소" press=".onDialogClose" />
+            <Button type="Emphasized" text="확인" />
+        </buttons>
+        <Panel expanded="true" headerText="선택">
+            <content>
+                <Text text="직급을 선택하세요" class="mb-14-px"/>
+                <HBox wrap="Wrap" class="button-group-wrap">
+                    <ToggleButton icon="sap-icon://accept" text="사원" press="onPress" class="toggle-button" />
+                    <ToggleButton icon="sap-icon://accept" text="대리" press="onPress" class="toggle-button" />
+                    <ToggleButton icon="sap-icon://accept" text="과장" press="onPress" class="toggle-button" />
+                    <ToggleButton icon="sap-icon://accept" text="차장" press="onPress" class="toggle-button" />
+                    <ToggleButton icon="sap-icon://accept" text="임원" press="onPress" class="toggle-button" />
+                    <ToggleButton icon="sap-icon://accept" text="부장" press="onPress" class="toggle-button" />
+                    <ToggleButton icon="sap-icon://accept" text="계약" press="onPress" class="toggle-button" />
+                </HBox>
+            </content>
+        </Panel>
+    </Dialog>
+</core:FragmentDefinition>
