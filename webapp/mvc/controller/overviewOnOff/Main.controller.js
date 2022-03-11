@@ -95,6 +95,7 @@ sap.ui.define(
               .values()
               .map((v, i) => ({
                 label: v,
+                count: _.get(aChartDatas, [0, `Cnt${_.padStart(i + 1, 2, '0')}`]),
                 color: ChartsSetting.COLORS[i],
                 code: _.get(aChartDatas, [0, `Cod${_.padStart(i + 1, 2, '0')}`]),
                 value: _.get(aChartDatas, [0, `Cnt${_.padStart(i + 1, 2, '0')}`]),

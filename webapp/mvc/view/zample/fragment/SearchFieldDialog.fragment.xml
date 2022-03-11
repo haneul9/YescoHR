@@ -1,0 +1,30 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Dialog id="searchFieldDialog" showHeader="false" contentWidth="600px">
+        <buttons>
+            <Button text="취소" press=".onDialogClose" />
+            <Button type="Emphasized" text="확인" />
+        </buttons>
+        <Panel expanded="true" headerText="Search">
+            <content>
+                <SearchField
+                    id="searchField"
+                    class="search-field"
+                    width="100%"
+                    placeholder="검색..."
+                    enableSuggestions="true"
+                    search="onSearch"
+                    suggest="onSuggest"
+                    suggestionItems="{
+                        path: '/ProductCollection',
+                        sorter: { path: 'Name' }
+                    }"
+                    >
+                    <suggestionItems>
+                        <SuggestionItem text="{Name}" description="{path:'Price'} {path:'CurrencyCode'}" key="{ProductId}"/>
+                    </suggestionItems>
+                </SearchField>
+            </content>
+        </Panel>
+    </Dialog>
+</core:FragmentDefinition>

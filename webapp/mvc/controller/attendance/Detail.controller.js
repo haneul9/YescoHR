@@ -143,14 +143,14 @@ sap.ui.define(
               _.set(mFilters, 'Appno', sAppno);
             }
 
-            const mResultData = await this.readLeaveApplEmpList(mFilters);
+            const aResultData = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'LeaveApplEmpList', mFilters);
 
-            oViewModel.setProperty('/ZappStatAl', mResultData.ZappStatAl);
+            oViewModel.setProperty('/ZappStatAl', _.get(aResultData, [0, 'ZappStatAl']));
             oViewModel.setProperty('/form/listMode', 'None');
 
-            this.setTableData({ sType, oViewModel, aRowData: [mResultData] });
-            this.initializeApplyInfoBox(mResultData);
-            this.initializeApprovalBox(mResultData);
+            this.setTableData({ sType, oViewModel, aRowData: aResultData });
+            this.initializeApplyInfoBox(aResultData[0]);
+            this.initializeApprovalBox(aResultData[0]);
           } else {
             oViewModel.setProperty('/form/dialog/awartCodeList', await this.readAwartCodeList());
 
