@@ -180,12 +180,12 @@ sap.ui.define(
                 _.map(aChartDatas, (o) => ({ label: o.Ttltxt }))
               )
               .set(['dataset', 0], {
-                seriesname: this.getBundleText('LABEL_28025'), // 팀원
+                seriesname: this.getBundleText('LABEL_28025'), // 임원 1인당 직원수 (팀장포함)
                 color: '#7BB4EB',
                 data: _.map(aChartDatas, (o) => ({ value: o.Cnt01, link: `j-callDetail-${mChartInfo.Headty},A,${o.Ttltxt}` })),
               })
               .set(['dataset', 1], {
-                seriesname: this.getBundleText('LABEL_28026'), // 팀장
+                seriesname: this.getBundleText('LABEL_28026'), // 팀장 1인당 직원수
                 color: '#FFE479',
                 data: _.map(aChartDatas, (o) => ({ value: o.Cnt02, link: `j-callDetail-${mChartInfo.Headty},BA,${o.Ttltxt}` })),
               })
