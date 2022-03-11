@@ -38,7 +38,7 @@
                             </template>
                         </Column>
                         <Column width="auto">
-                            <m:Label text="{i18n>LABEL_04025}" />
+                            <m:Label text="{i18n>LABEL_04006}" />
                             <template>
                                 <m:Input value="{Tmrsn}" class="small-table-input" enabled="{isActive}" />
                             </template>

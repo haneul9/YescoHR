@@ -4,7 +4,7 @@
     <table:Table width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" rows="{/data/role9/list}" visibleRowCount="{/data/role9/rowCount}" noData="{i18n>MSG_00001}" visible="{/Define/isLoaded}">
         <table:columns>
             <table:Column width="15%" resizable="false">
-                <Label text="{i18n>LABEL_22090}" />
+                <Label text="{i18n>LABEL_22003}" />
                 <table:template>
                     <Text text="{Zzndrcm}" width="100%" textAlign="Center" />
                 </table:template>

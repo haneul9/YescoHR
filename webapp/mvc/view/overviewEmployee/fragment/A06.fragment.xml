@@ -28,7 +28,7 @@
                     <Image src="asset/image/icon_male.svg" />
                     <VBox>
                         <Text text="{/contents/A06/data/Cnt11}&#37;" class="color-01 font-20-px" />
-                        <Text text="{/contents/A06/data/Cnt12}명" class="color-01" />
+                        <Text text="{/contents/A06/data/Cnt12}{i18n>LABEL_00159}" class="color-01" />
                     </VBox>
                 </custom:HBox>
                 <custom:HBox class="active-link" click=".onPressCount">
@@ -38,7 +38,7 @@
                     </custom:customData>
                     <VBox alignItems="End">
                         <Text text="{/contents/A06/data/Cnt21}&#37;" class="color-02 font-20-px" />
-                        <Text text="{/contents/A06/data/Cnt22}명" class="color-02" />
+                        <Text text="{/contents/A06/data/Cnt22}{i18n>LABEL_00159}" class="color-02" />
                     </VBox>
                     <Image src="asset/image/icon_female.svg" />
                 </custom:HBox>

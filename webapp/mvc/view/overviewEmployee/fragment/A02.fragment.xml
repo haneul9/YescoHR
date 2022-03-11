@@ -35,7 +35,7 @@
                     <Text text="{/contents/A02/data/Title10}" class="font-30-px lh-30-px color-01 pr-4-px pt-2-px" />
                     <VBox class="h15">
                         <Text text="{/contents/A02/data/Cnt11}&#37;" class="font-12-px color-01"/>
-                        <Text text="{/contents/A02/data/Cnt12}명" class="font-12-px color-01"/>
+                        <Text text="{/contents/A02/data/Cnt12}{i18n>LABEL_00159}" class="font-12-px color-01"/>
                     </VBox>
                 </custom:HBox>
                 <custom:HBox class="active-link" click=".onPressCount">
@@ -43,7 +43,7 @@
                         <core:CustomData key="Headty" value="{/contents/A02/Headty}" />
                         <core:CustomData key="Discod" value="{/contents/A02/data/Cod01}" />
                     </custom:customData>
-                    <Label text="{/contents/A02/data/Cnt01}명, {/contents/A02/data/Cnt02}&#37;" class="font-27-px" />
+                    <Label text="{/contents/A02/data/Cnt01}{i18n>LABEL_00159}, {/contents/A02/data/Cnt02}&#37;" class="font-27-px" />
                 </custom:HBox>
                 <custom:HBox class="active-link" click=".onPressCount">
                     <custom:customData>
@@ -52,7 +52,7 @@
                     </custom:customData>
                     <VBox class="h15">
                         <Text text="{/contents/A02/data/Cnt21}&#37;" class="font-12-px color-02"/>
-                        <Text text="{/contents/A02/data/Cnt22}명" class="font-12-px color-02"/>
+                        <Text text="{/contents/A02/data/Cnt22}{i18n>LABEL_00159}" class="font-12-px color-02"/>
                     </VBox>
                     <Text text="{/contents/A02/data/Title20}" class="font-30-px lh-30-px color-02 pl-4-px  pt-2-px" />
                 </custom:HBox>

@@ -6,7 +6,7 @@
     </VBox>
     <VBox class="portlet portlet-box" visible="{= !${/contents/A04/busy} }">
         <HBox class="portlet-header">
-            <Title level="H2" text="{i18n>LABEL_28049}" />
+            <Title level="H2" text="{i18n>LABEL_28009}" />
             <Text text="">
                 <layoutData>
                     <FlexItemData growFactor="1" />

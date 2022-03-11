@@ -14,7 +14,7 @@
             </table:Column>
             <table:Column width="8%" resizable="false" headerSpan="3">
                 <table:multiLabels>
-                    <Label text="{i18n>LABEL_22079}" />
+                    <Label text="{i18n>LABEL_22039}" />
                     <Label text="{i18n>LABEL_00218}" />
                 </table:multiLabels>
                 <table:template>
@@ -23,7 +23,7 @@
             </table:Column>
             <table:Column width="8%" resizable="false">
                 <table:multiLabels>
-                    <Label text="{i18n>LABEL_22079}" />
+                    <Label text="{i18n>LABEL_22039}" />
                     <Label text="{i18n>LABEL_22025}" />
                 </table:multiLabels>
                 <table:template>
@@ -32,7 +32,7 @@
             </table:Column>
             <table:Column width="8%" resizable="false">
                 <table:multiLabels>
-                    <Label text="{i18n>LABEL_22079}" />
+                    <Label text="{i18n>LABEL_22039}" />
                     <Label text="{i18n>LABEL_22026}" />
                 </table:multiLabels>
                 <table:template>
@@ -41,8 +41,8 @@
             </table:Column>
             <table:Column width="22%" resizable="false">
                 <table:multiLabels>
-                    <Label text="{i18n>LABEL_22081}" />
-                    <Label text="{i18n>LABEL_22081}" />
+                    <Label text="{i18n>LABEL_22031}" />
+                    <Label text="{i18n>LABEL_22031}" />
                 </table:multiLabels>
                 <table:template>
                     <Text text="{Zztasktx}" width="40px" textAlign="Center" />
@@ -59,8 +59,8 @@
             </table:Column>
             <table:Column width="auto" resizable="false">
                 <table:multiLabels>
-                    <Label text="{i18n>LABEL_22078}" />
-                    <Label text="{i18n>LABEL_22078}" />
+                    <Label text="{i18n>LABEL_22056}" />
+                    <Label text="{i18n>LABEL_22056}" />
                 </table:multiLabels>
                 <table:template>
                     <Text text="{Dtail}" width="100%" />

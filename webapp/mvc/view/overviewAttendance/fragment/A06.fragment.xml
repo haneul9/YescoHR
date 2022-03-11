@@ -13,7 +13,7 @@
             <grid:GridItemLayoutData gridColumn="span 2" />
         </layoutData>
         <HBox class="portlet-header">
-            <Title level="H2" text="{i18n>LABEL_28051}" />
+            <Title level="H2" text="{i18n>LABEL_28007}" />
             <Text text="">
                 <layoutData>
                     <FlexItemData growFactor="1" />

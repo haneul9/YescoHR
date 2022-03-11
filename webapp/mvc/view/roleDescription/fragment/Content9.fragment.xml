@@ -8,13 +8,13 @@
             <Text text="{/data/roleM/Slabs}" />
         </VBox>
         <VBox width="14%" class="label" alignItems="Center" justifyContent="Center">
-            <Label text="{i18n>LABEL_22088}" />
+            <Label text="{i18n>LABEL_22010}" />
         </VBox>
         <VBox width="34%" alignItems="Center" justifyContent="Center">
             <Text text="{/data/roleM/Mtmjr}" />
         </VBox>
         <VBox width="14%" class="label" alignItems="Center" justifyContent="Center">
-            <Label text="{i18n>LABEL_22089}" />
+            <Label text="{i18n>LABEL_22009}" />
         </VBox>
         <VBox width="34%" alignItems="Center" justifyContent="Center">
             <Text text="{/data/roleM/Pfmjr}" />

@@ -16,7 +16,7 @@
                 </table:template>
             </table:Column>
             <table:Column width="auto" resizable="false">
-                <Label text="{i18n>LABEL_22078}" />
+                <Label text="{i18n>LABEL_22056}" />
                 <table:template>
                     <Text text="{Dtail}" width="100%" />
                 </table:template>

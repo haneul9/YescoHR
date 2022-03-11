@@ -766,7 +766,7 @@ sap.ui.define(
             throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_04006', 'LABEL_04023') }); // {반차1}의 일자에는 입력이 불가합니다. 다시 입력하여 주십시오.
           }
           if (_.toNumber(mHalf2.Abrtg) !== 0.5) {
-            throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_04006', 'LABEL_04024') }); // {반차2}의 일자에는 입력이 불가합니다. 다시 입력하여 주십시오.
+            throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_04006', 'LABEL_04007') }); // {반차2}의 일자에는 입력이 불가합니다. 다시 입력하여 주십시오.
           }
 
           const oTable = this.byId('dialogChangeTable');

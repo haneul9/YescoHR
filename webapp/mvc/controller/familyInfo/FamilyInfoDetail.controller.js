@@ -481,7 +481,7 @@ sap.ui.define(
           Editable: !sStatus || sStatus === '10' || bFixed,
           Type: this.getApprovalType(),
           Appno: sAppno,
-          Message: this.getBundleText('MSG_05019'), // 증빙자료 필요입력(출생/결혼 : 가족관계증명서, 사망 : 사망증명서, 이혼 : 이혼증명서)
+          Message: this.getBundleText('MSG_05006'), // 증빙자료 필요입력(출생/결혼 : 가족관계증명서, 사망 : 사망증명서, 이혼 : 이혼증명서)
           Max: 10,
         });
       },

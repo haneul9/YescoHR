@@ -10,19 +10,19 @@
                 </table:template>
             </table:Column>
             <table:Column width="42%" resizable="false">
-                <Label text="{i18n>LABEL_22086}" />
+                <Label text="{i18n>LABEL_22011}" />
                 <table:template>
                     <Text text="{Zzextsk}" width="100%" textAlign="Center" />
                 </table:template>
             </table:Column>
             <table:Column width="12%" resizable="false">
-                <Label text="{i18n>LABEL_22084}" />
+                <Label text="{i18n>LABEL_22013}" />
                 <table:template>
                     <Text text="{Zzmtndy}" width="40px" textAlign="Center" />
                 </table:template>
             </table:Column>
             <table:Column width="auto" resizable="false">
-                <Label text="{i18n>LABEL_22085}" />
+                <Label text="{i18n>LABEL_22012}" />
                 <table:template>
                     <Text text="{Zzmdcls}" width="100%" textAlign="Center" />
                 </table:template>

@@ -4,7 +4,7 @@
   <VBox width="100%" class="vCardBox small">
     <HBox class="table-toolbar">
       <HBox class="title">
-        <Title level="H2" text="{i18n>LABEL_18029}" />
+        <Title level="H2" text="{i18n>LABEL_18024}" />
         <Text text="{/FullYear}" class="desc-txt" />
       </HBox>
     </HBox>
@@ -35,7 +35,7 @@
           </table:template>
         </table:Column>
         <table:Column width="auto" sortProperty="Atext" filterProperty="Atext">
-          <Label text="{i18n>LABEL_18030}"/>
+          <Label text="{i18n>LABEL_18023}"/>
           <table:template>
             <Text text="{Atext}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
           </table:template>

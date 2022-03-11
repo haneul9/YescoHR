@@ -7,7 +7,7 @@
             <HBox class="header">
                 <RadioButtonGroup columns="3" selectedIndex="{/tab/sortIndex}" select=".onSort">
                     <custom:RadioButton text="{i18n>LABEL_10091}" innerSize="35%" />
-                    <custom:RadioButton text="{i18n>LABEL_10100}" outerSize="50%" innerSize="35%" />
+                    <custom:RadioButton text="{i18n>LABEL_10017}" outerSize="50%" innerSize="35%" />
                     <custom:RadioButton text="{i18n>LABEL_10092}" outerSize="50%" innerSize="35%" />
                 </RadioButtonGroup>
             </HBox>
