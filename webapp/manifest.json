@@ -194,6 +194,7 @@
         
         { "pattern": "m/overviewEmployee", "name": "m/overviewEmployee", "target": "m/overviewEmployee" },
         { "pattern": "m/overviewOnOff", "name": "m/overviewOnOff", "target": "m/overviewOnOff" },
+        { "pattern": "m/overviewAttendance", "name": "m/overviewAttendance", "target": "m/overviewAttendance" },
 
         { "pattern": "paystub", "name": "paystub", "target": "paystub" },
         { "pattern": "paystub/{seqnr}", "name": "paystub-detail", "target": "paystubDetail" },
@@ -217,6 +218,8 @@
         
         { "pattern": "referenceRoom", "name": "referenceRoom", "target": "referenceRoom" },
         { "pattern": "h/referenceRoom", "name": "h/referenceRoom", "target": "referenceRoom" },
+        
+        { "pattern": "m/roleDescription", "name": "m/roleDescription", "target": "m/roleDescription" },
 
         { "pattern": "studentFunds", "name": "studentFunds", "target": "studentFunds" },
         { "pattern": "studentFunds/{oDataKey}", "name": "studentFunds-detail", "target": "studentFundsDetail" },
@@ -334,6 +337,7 @@
         
         "m/overviewEmployee": { "viewId": "m_overviewEmployee", "viewPath": "sap.ui.yesco.mvc.view.overviewEmployee", "viewName": "Main" },
         "m/overviewOnOff": { "viewId": "m_overviewOnOff", "viewPath": "sap.ui.yesco.mvc.view.overviewOnOff", "viewName": "Main" },
+        "m/overviewAttendance": { "viewId": "m_overviewAttendance", "viewPath": "sap.ui.yesco.mvc.view.overviewAttendance", "viewName": "Main" },
         
         "paystub": { "viewId": "paystub", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "List" },
         "paystubDetail": { "viewId": "paystubDetail", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "Detail" },
@@ -351,6 +355,8 @@
         "performanceView": { "viewId": "performanceView", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "Document" },
         
         "referenceRoom": { "viewId": "referenceRoom", "viewPath": "sap.ui.yesco.mvc.view.referenceRoom", "viewName": "ReferenceRoom" },
+
+        "m/roleDescription": { "viewId": "m_roleDescription", "viewPath": "sap.ui.yesco.mvc.view.roleDescription", "viewName": "Main" },
 
         "studentFunds": { "viewId": "studentFunds", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFunds" },
         "studentFundsDetail": { "viewId": "studentFundsDetail", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFundsDetail" },
