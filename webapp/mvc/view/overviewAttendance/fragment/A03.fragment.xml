@@ -1,25 +1,32 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core"
+    xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:custom="sap.ui.yesco.control">
-    <VBox class="portlet portlet-box" visible="{/contents/A02/busy}">
+    <VBox class="portlet portlet-box" visible="{/contents/A03/busy}">
+        <layoutData>
+            <grid:GridItemLayoutData gridColumn="span 2" />
+        </layoutData>
         <custom:Placeholder />
     </VBox>
-    <VBox class="portlet portlet-box" visible="{= !${/contents/A02/busy} }">
+    <VBox class="portlet portlet-box" visible="{= !${/contents/A03/busy} }">
+        <layoutData>
+            <grid:GridItemLayoutData gridColumn="span 2" />
+        </layoutData>
         <HBox class="portlet-header">
-            <Title level="H2" text="{i18n>LABEL_28039}" />
+            <Title level="H2" text="{i18n>LABEL_28048}" />
             <Text text="">
                 <layoutData>
                     <FlexItemData growFactor="1" />
                 </layoutData>
             </Text>
-            <Button visible="{/contents/A02/hasLink}" icon="asset/image/icon_window.svg" type="Transparent" class="icon-button portlet-link-icon" />
+            <Image src="asset/image/icon_human_green.svg" width="12px" class="ml-8-px" />
         </HBox>
         <HBox class="portlet-body">
             <layoutData>
                 <FlexItemData growFactor="1" />
             </layoutData>
             <VBox width="75%">
-                <core:HTML content='&lt;div id="employeeOnOff-a02-chart-container"&gt;&lt;/div&gt;'>
+                <core:HTML content='&lt;div id="attendance-a03-chart-container"&gt;&lt;/div&gt;'>
                     <core:layoutData>
                         <FlexItemData growFactor="1" />
                     </core:layoutData>
@@ -28,15 +35,15 @@
             <VBox width="25%">
                 <custom:HBox class="active-link" click=".onPressCount">
                     <custom:customData>
-                        <core:CustomData key="Headty" value="{/contents/A02/Headty}" />
+                        <core:CustomData key="Headty" value="{/contents/A03/Headty}" />
                         <core:CustomData key="Discod" value="all" />
                     </custom:customData>
-                    <Label text="{/contents/A02/data/total}" class="font-42-px color-03 normal ls-small"/>
+                    <Label text="{/contents/A03/data/total}" class="font-42-px color-03 normal ls-small"/>
                 </custom:HBox>
-                <VBox items="{ path: '/contents/A02/data/legends', templateShareable: false }" class="legend-wrap sapUiSmallMarginTop">
+                <VBox items="{ path: '/contents/A03/data/legends', templateShareable: false }" class="legend-wrap sapUiSmallMarginTop">
                     <custom:HBox justifyContent="SpaceBetween" class="active-link" click=".onPressCount">
                         <custom:customData>
-                            <core:CustomData key="Headty" value="{/contents/A02/Headty}" />
+                            <core:CustomData key="Headty" value="{/contents/A03/Headty}" />
                             <core:CustomData key="Discod" value="{code}" />
                         </custom:customData>
                         <Label text="{label} :" class="legend">

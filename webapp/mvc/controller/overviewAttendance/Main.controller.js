@@ -8,6 +8,7 @@ sap.ui.define(
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/overviewAttendance/constants/ChartsSetting',
+    'sap/ui/yesco/mvc/model/type/Currency',
     'sap/ui/yesco/mvc/model/type/Date',
     'sap/ui/yesco/mvc/model/type/Decimal',
   ],
@@ -81,7 +82,7 @@ sap.ui.define(
         oViewModel.setProperty(`/contents/${mChartInfo.Target}/busy`, false);
 
         switch (mChartInfo.Chart) {
-          case 'none':
+          case 'cylinder':
             oViewModel.setProperty(
               `/contents/${mChartInfo.Target}/data`,
               _.chain(vDataObject)
@@ -89,130 +90,34 @@ sap.ui.define(
                 .value()
             );
 
+            _.chain(mChartSetting).set(['chart', 'caption'], this.getBundleText('LABEL_01130')).set(['chart', 'plottooltext'], this.getBundleText('LABEL_01131', 0)).set('value', 0).commit();
+
+            this.callFusionChart(mChartInfo, mChartSetting);
+
             break;
-          case 'stackedcolumn2d-S':
-            const aLegends = _.chain(aChartDatas)
-              .head()
-              .pickBy((v, p) => _.startsWith(p, 'Leg') && !_.isEmpty(v))
-              .values()
-              .map((v, i) => ({
-                label: v,
-                count: _.get(aChartDatas, [0, `Cnt${_.padStart(i + 1, 2, '0')}`]),
-                color: ChartsSetting.COLORS[i],
-                code: _.get(aChartDatas, [0, `Cod${_.padStart(i + 1, 2, '0')}`]),
-                value: _.get(aChartDatas, [0, `Cnt${_.padStart(i + 1, 2, '0')}`]),
-                type: `type${_.padStart(i + 1, 2, '0')}`,
-              }))
-              .value();
-
-            oViewModel.setProperty(`/contents/${mChartInfo.Target}/data/total`, _.get(aChartDatas, [0, 'Total']));
-            oViewModel.setProperty(`/contents/${mChartInfo.Target}/data/legends`, aLegends);
-
+          case 'doughnut2d':
             _.chain(mChartSetting)
-              .set(['categories', 0, 'category', 0], { label: _.get(aChartDatas, [0, 'Ttltxt']) })
+              .set(['chart', 'paletteColors'], _.chain(ChartsSetting.COLORS).take(aChartDatas.length).join(',').value())
               .set(
-                'dataset',
-                _.chain(aLegends)
-                  .cloneDeep()
-                  .reverse()
-                  .map((o) => ({ seriesname: o.label, color: o.color, data: [{ value: o.value, link: `j-callDetail-${mChartInfo.Headty},${o.code}` }] }))
-                  .value()
+                ['data'],
+                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01 }))
               )
               .commit();
 
             this.callFusionChart(mChartInfo, mChartSetting);
 
             break;
-          case 'stackedcolumn2d':
-            oViewModel.setProperty(`/contents/${mChartInfo.Target}/data/raw`, aChartDatas);
-
-            const aDataSet = _.chain(aChartDatas)
-              .head()
-              .pickBy((v, p) => _.startsWith(p, 'Leg') && !_.isEmpty(v))
-              .values()
-              .map((v, i) => ({
-                label: v,
-                color: ChartsSetting.COLORS[i],
-                code: _.get(aChartDatas, [0, `Cod${_.padStart(i + 1, 2, '0')}`]),
-                values: _.chain(aChartDatas)
-                  .map((o) => ({
-                    value: _.chain(o)
-                      .pick(`Cnt${_.padStart(i + 1, 2, '0')}`)
-                      .values()
-                      .head()
-                      .value(),
-                  }))
-                  .value(),
-              }))
-              .value();
-
+          case 'bar2d':
             _.chain(mChartSetting)
+              // .set(['chart', 'yAxisMaxValue'], '120')
               .set(
-                ['categories', 0, 'category'],
-                _.map(aChartDatas, (o) => ({ label: o.Ttltxt }))
-              )
-              .set(
-                'dataset',
-                _.chain(aDataSet)
-                  .reverse()
-                  .map((o) => ({ seriesname: o.label, color: o.color, data: _.map(o.values, (v, i) => ({ ...v, showValue: _.gt(v.value, mChartInfo.minDisplayValue) ? 1 : 0, link: `j-callDetail-${mChartInfo.Headty},${o.code},${_.get(aChartDatas, [i, 'Ttltxt'])}` })) }))
-                  .value()
+                ['data'],
+                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callDetail-${mChartInfo.Headty},${o.Cod01}` }))
               )
               .commit();
 
             this.callFusionChart(mChartInfo, mChartSetting);
 
-            break;
-          case 'msstackedcolumn2dlinedy':
-            oViewModel.setProperty(`/contents/${mChartInfo.Target}/data/raw`, aChartDatas);
-
-            const aDataSet2 = _.chain(aChartDatas)
-              .head()
-              .pickBy((v, p) => _.startsWith(p, 'Leg') && !_.isEmpty(v))
-              .values()
-              .map((v, i) => ({
-                label: v,
-                color: ChartsSetting.COLORS[i],
-                code: _.get(aChartDatas, [0, `Cod${_.padStart(i + 1, 2, '0')}`]),
-                values: _.chain(aChartDatas)
-                  .map((o) => ({
-                    value: _.chain(o)
-                      .pick(`Cnt${_.padStart(i + 1, 2, '0')}`)
-                      .values()
-                      .head()
-                      .value(),
-                  }))
-                  .value(),
-              }))
-              .value();
-
-            _.chain(mChartSetting)
-              .set(
-                ['categories', 0, 'category'],
-                _.map(aChartDatas, (o) => ({ label: o.Ttltxt }))
-              )
-              .set(
-                ['dataset', 0, 'dataset'],
-                _.chain(aDataSet2)
-                  .reverse()
-                  .map((o) => ({ seriesname: o.label, color: o.color, data: _.map(o.values, (v, i) => ({ ...v, showValue: _.gt(v.value, mChartInfo.minDisplayValue) ? 1 : 0, link: `j-callDetail-${mChartInfo.Headty},${o.code},${_.get(aChartDatas, [i, 'Ttltxt'])}` })) }))
-                  .value()
-              )
-              .set(['lineset', 0], {
-                seriesname: 'Total',
-                showValues: '1',
-                valuePosition: 'ABOVE',
-                color: '#333333',
-                anchorAlpha: 30,
-                anchorBgColor: '#333333',
-                includeInLegend: 0,
-                anchorBorderThickness: '0',
-                lineThickness: '0.5',
-                data: _.map(aChartDatas, (o) => ({ value: o.Total2 })),
-              })
-              .commit();
-
-            this.callFusionChart(mChartInfo, mChartSetting);
             break;
           default:
             break;
@@ -222,7 +127,7 @@ sap.ui.define(
       callFusionChart(mChartInfo, mChartSetting) {
         if (_.isEmpty(mChartSetting)) return;
 
-        const sChartId = `employeeOnOff-${_.toLower(mChartInfo.Target)}-chart`;
+        const sChartId = `attendance-${_.toLower(mChartInfo.Target)}-chart`;
 
         if (!FusionCharts(sChartId)) {
           FusionCharts.ready(() => {
@@ -230,7 +135,7 @@ sap.ui.define(
               id: sChartId,
               type: _.replace(mChartInfo.Chart, '-S', ''),
               renderAt: `${sChartId}-container`,
-              width: '100%',
+              width: _.has(mChartInfo, 'ChartWidth') ? mChartInfo.ChartWidth : '100%',
               height: '100%',
               dataFormat: 'json',
               dataSource: mChartSetting,
