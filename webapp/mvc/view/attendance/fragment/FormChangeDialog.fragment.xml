@@ -2,7 +2,7 @@
     xmlns:m="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:custom="sap.ui.yesco.control">
-    <m:Dialog title="{i18n>LABEL_00156} {i18n>LABEL_00107}" contentWidth="1400px" contentHeight="533px" draggable="true" horizontalScrolling="false" verticalScrolling="false">
+    <m:Dialog title="{i18n>LABEL_00156} {i18n>LABEL_00107}" contentWidth="1400px" draggable="true" horizontalScrolling="false" verticalScrolling="false">
         <m:content>
             <m:VBox class="hCardBox dialog-search-box sapUiSmallMarginBottom">
                 <m:HBox justifyContent="SpaceBetween" alignItems="Center">
@@ -70,7 +70,7 @@
                                 <m:Label text="{i18n>LABEL_00148}" />
                             </multiLabels>
                             <template>
-                                <custom:DatePicker class="sapIcon_Date" dateValue="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{isActive}" change=".onChangeRowBegda" />
+                                <custom:DatePicker class="sapIcon_Date small-table-input" dateValue="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{isActive}" change=".onChangeRowBegda" />
                             </template>
                         </Column>
                         <Column width="14%">
@@ -79,7 +79,7 @@
                                 <m:Label text="{i18n>LABEL_00149}" />
                             </multiLabels>
                             <template>
-                                <custom:DatePicker class="sapIcon_Date" minDate="{Begda}" dateValue="{ path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{= ${isActive} &amp;&amp; ${Abrtg2} !== '1.00' }" change=".validChangeLeave" />
+                                <custom:DatePicker class="sapIcon_Date small-table-input" minDate="{Begda}" dateValue="{ path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{= ${isActive} &amp;&amp; ${Abrtg2} !== '1.00' }" change=".validChangeLeave" />
                             </template>
                         </Column>
                         <Column width="6%">
@@ -97,7 +97,7 @@
                                 <m:Label text="{i18n>LABEL_04013}" />
                             </multiLabels>
                             <template>
-                                <m:Input value="{Tmrsn}" enabled="{isActive}" />
+                                <m:Input value="{Tmrsn}" class="small-table-input" enabled="{isActive}" />
                             </template>
                         </Column>
                     </columns>
