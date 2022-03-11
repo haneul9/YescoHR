@@ -29,9 +29,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.commuteType.CommuteTypeDetail', {
-      LIST_PAGE_ID: 'container-ehr---commuteType',
-
+    return BaseController.extend('sap.ui.yesco.mvc.controller.educationHistory.EducationHistoryDetail', {
       AttachFileAction: AttachFileAction,
       TextUtils: TextUtils,
       TableUtils: TableUtils,
@@ -71,7 +69,7 @@ sap.ui.define(
           if (sDataKey === 'N' || !sDataKey) {
             const oView = this.getView();
             const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-            const [oTargetData] = oListView.getModel().getProperty('/SelectedRow');
+            const oTargetData = oListView.getModel().getProperty('/SelectedRow');
 
             const sZyymm = oParameter.zyymm;
             const sSchkz = oParameter.schkz;

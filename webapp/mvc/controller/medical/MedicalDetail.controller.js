@@ -97,6 +97,7 @@ sap.ui.define(
         try {
           // Input Field Imited
           oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'MedExpenseAppl')));
+          oDetailModel.setProperty('/FieldLimitPop', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'MedExpenseItem')));
 
           const aAppList = await this.getTargetList();
 
@@ -1099,8 +1100,8 @@ sap.ui.define(
 
           aHisList.forEach((e) => {
             if (e.Appno2 === mDialogData.Appno2) {
-              e.Line = 'X';
               e = mDialogData;
+              e.Line = 'X';
             } else {
               e.Line = '';
             }

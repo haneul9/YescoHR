@@ -530,10 +530,10 @@ sap.ui.define(
             .get('Zchar1')
             .value()
         );
-        this.getApplyNumber();
         await this.getSupAmount();
 
         if (!!oEvent) {
+          this.getApplyNumber();
           this.totalCost();
         }
 

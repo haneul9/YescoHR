@@ -140,6 +140,9 @@
         
         { "pattern": "m/commuteConfirm", "name": "m/commuteConfirm", "target": "m/commuteConfirm" },
 
+        { "pattern": "educationHistory", "name": "educationHistory", "target": "educationHistory" },
+        { "pattern": "educationHistory/{oDataKey}", "name": "educationHistory-detail", "target": "educationHistoryDetail" },
+
         { "pattern": "employee/:pernr:/:orgtx:/:orgeh:", "name": "employee", "target": "employee" },
         { "pattern": "employeeView/{pernr}", "name": "employee-view", "target": "employeeView" },
         { "pattern": "m/employee", "name": "m/employee", "target": "m/employee" },
@@ -275,10 +278,13 @@
         
         "commuteType": { "viewId": "commuteType", "viewPath": "sap.ui.yesco.mvc.view.commuteType", "viewName": "CommuteType" },
         "commuteTypeDetail": { "viewId": "commuteTypeDetail", "viewPath": "sap.ui.yesco.mvc.view.commuteType", "viewName": "CommuteTypeDetail" },
-
+        
         "m/commuteConfirm": { "viewId": "m_commuteConfirm", "viewPath": "sap.ui.yesco.mvc.view.commuteConfirm", "viewName": "commuteConfirm" },
         
         "consolidAppBox": { "viewId": "consolidAppBox", "viewPath": "sap.ui.yesco.mvc.view.consolidAppBox", "viewName": "ConsolidAppBox" },
+
+        "educationHistory": { "viewId": "educationHistory", "viewPath": "sap.ui.yesco.mvc.view.educationHistory", "viewName": "EducationHistory" },
+        "educationHistoryDetail": { "viewId": "educationHistoryDetail", "viewPath": "sap.ui.yesco.mvc.view.educationHistory", "viewName": "EducationHistoryDetail" },
         
         "employee": { "viewId": "employee", "viewPath": "sap.ui.yesco.mvc.view.employee", "viewName": "Employee" },
         "employeeView": { "viewId": "employeeView", "viewPath": "sap.ui.yesco.mvc.view.employee", "viewName": "Document" },
