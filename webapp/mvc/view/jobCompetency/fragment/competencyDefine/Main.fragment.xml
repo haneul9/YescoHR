@@ -2,8 +2,8 @@
   xmlns:core="sap.ui.core"
   xmlns:grid="sap.ui.layout.cssgrid">
   <HBox class="contents" justifyContent="SpaceBetween">
-    <VBox width="520px" class="vCardBox sapUiMediumMarginEnd">
-      <ScrollContainer height="600px" width="100%" vertical="true">
+    <VBox width="520px" height="69vh" class="vCardBox sapUiMediumMarginEnd">
+      <ScrollContainer height="64vh" width="100%" vertical="true">
         <layoutData>
           <FlexItemData growFactor="0.8" />
         </layoutData>

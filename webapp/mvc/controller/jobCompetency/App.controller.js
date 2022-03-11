@@ -76,19 +76,10 @@ sap.ui.define(
         oViewModel.setProperty('/busy', true);
 
         try {
-          let sMenuId = '';
+          await this.loadDefine();
+          await this.loadCompetency();
 
-          if (sRouteName === 'jobDefine') {
-            sMenuId = 'A';
-
-            await this.loadDefine();
-          } else {
-            sMenuId = 'B';
-
-            await this.loadCompetency();
-          }
-
-          oViewModel.setProperty('/selectedKey', sMenuId);
+          oViewModel.setProperty('/selectedKey', sRouteName === 'jobDefine' ? 'A' : 'B');
         } catch (oError) {
           this.debug(oError);
           AppUtils.handleError(oError);
@@ -100,7 +91,7 @@ sap.ui.define(
       async loadCompetency() {
         const oViewModel = this.getViewModel();
         const aTreeList = await Client.getEntitySet(this.getModel(ServiceNames.APPRAISAL), 'CompAppTree', { Mode: '1', Datum: moment().hours(9).toDate() });
-        const aFormatTree = this.oDataChangeTree(aTreeList);
+        const aFormatTree = this.oDataChangeTree(aTreeList, 'CompTree');
 
         oViewModel.setProperty('/Competency', {
           isLoaded: true,
@@ -123,7 +114,7 @@ sap.ui.define(
             Otype: 'C',
           });
 
-          oViewModel.setProperty('/Define/tree', this.oDataChangeTree(aTreeData));
+          oViewModel.setProperty('/Define/tree', this.oDataChangeTree(aTreeData, 'DefineTree'));
 
           TableUtils.adjustRowSpan({
             oTable: this.byId('defineContent2Table'),
@@ -135,6 +126,8 @@ sap.ui.define(
             aColIndices: [0, 1, 2],
             sTheadOrTbody: 'tbody',
           });
+
+          await this.callDefineData(this.getAppointeeProperty('Stell'));
         } catch (oError) {
           this.debug('Controller > jobCompetency App > loadDefine Error', oError);
 
@@ -169,15 +162,19 @@ sap.ui.define(
       },
 
       async onTreeDefinePress(oEvent) {
+        const oSelectedTreeItem = oEvent.getParameter('listItem').getBindingContext().getObject();
+
+        if (oSelectedTreeItem.Otype !== 'C') return;
+
+        await this.callDefineData(oSelectedTreeItem.Objid);
+      },
+
+      async callDefineData(sObjid) {
         const oViewModel = this.getViewModel();
 
         try {
-          const oSelectedTreeItem = oEvent.getParameter('listItem').getBindingContext().getObject();
-
-          if (oSelectedTreeItem.Otype !== 'C') return;
-
           const mDeepDefineResult = await Client.deep(this.getModel(ServiceNames.APPRAISAL), 'JobDescriptionMain', {
-            Stell: oSelectedTreeItem.Objid,
+            Stell: sObjid,
             Datum: moment().hours(9).toDate(),
             JobDescription1Set: [],
             JobDescription2Set: [],
@@ -219,6 +216,8 @@ sap.ui.define(
             list: _.map(mDeepDefineResult.JobDescription6Set.results, (o) => _.omit(o, '__metadata')),
           });
         } catch (oError) {
+          this.debug('Controller > jobCompetency App > callDefineData Error', oError);
+
           AppUtils.handleError(oError);
         }
       },
@@ -228,7 +227,6 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const sPath = oEvent.getParameter('listItem').getBindingContext().getPath();
         const oSelectedItem = oViewModel.getProperty(sPath);
-        const oModel = this.getModel(ServiceNames.APPRAISAL);
 
         oViewModel.setProperty('/Competency/Title', oSelectedItem.Stext);
 
@@ -236,11 +234,18 @@ sap.ui.define(
           return;
         }
 
+        await this.callCompetencyData(oSelectedItem.Objid);
+      },
+
+      async callCompetencyData(sObjid) {
+        const oViewModel = this.getViewModel();
+        const oModel = this.getModel(ServiceNames.APPRAISAL);
         const mPayLoad = {
-          Objid: oSelectedItem.Objid,
+          Objid: sObjid,
           CompAppStatJobSet: [],
           CompAppStatScaleSet: [],
         };
+
         // 역량정의서
         const aDetailItems = await Client.deep(oModel, 'CompAppStatDefin', mPayLoad);
 
@@ -258,7 +263,16 @@ sap.ui.define(
         oViewModel.setProperty('/Competency/RelateJobs', aRelateJobBtn);
       },
 
-      onPress2TableRow(oEvent) {},
+      onPress2TableRow(oEvent) {
+        const oViewModel = this.getViewModel();
+        const oRowData = oEvent.getParameter('rowBindingContext').getObject();
+
+        if (_.isEmpty(oRowData.Zzobjid)) return;
+
+        oViewModel.setProperty('/selectedKey', 'B');
+        oViewModel.setProperty('/Competency/Title', oRowData.Zzqulnm);
+        this.callCompetencyData(oRowData.Zzobjid);
+      },
 
       // 관련직무 Btn
       relateJobBtn(aList = []) {
@@ -274,8 +288,14 @@ sap.ui.define(
       },
 
       // 관련직무 선택
-      onPressJob() {
-        // const mSelectedBtn = this.getViewModel().getProperty(oEvent.getSource().getBindingContext().getPath());
+      onPressJob(oEvent) {
+        const oViewModel = this.getViewModel();
+        const mSelectedData = oEvent.getSource().getBindingContext().getObject();
+
+        if (_.isEmpty(mSelectedData.Objid)) return;
+
+        oViewModel.setProperty('/selectedKey', 'A');
+        this.callDefineData(mSelectedData.Objid);
       },
 
       // 행동지표 수준정의 ItemsSettings
@@ -316,14 +336,14 @@ sap.ui.define(
       },
 
       // oData Tree구조로 만듦
-      oDataChangeTree(aList = []) {
+      oDataChangeTree(aList = [], sTreeId) {
         const aConvertedList = _.chain(aList)
           .cloneDeep()
           .map((o) => _.omit(o, '__metadata'))
           .value();
         const mGroupedByParents = _.groupBy(aConvertedList, 'Upobjid');
         const mCatsById = _.keyBy(aConvertedList, 'Objid');
-        const oTree = this.byId('CompTree');
+        const oTree = this.byId(sTreeId);
 
         oTree.collapseAll();
         oTree.expandToLevel(1);
