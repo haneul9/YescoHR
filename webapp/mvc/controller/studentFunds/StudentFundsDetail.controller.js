@@ -180,7 +180,10 @@ sap.ui.define(
         if (oFormData.Forsch === 'X') {
           if (!!oLimitData && iCostH > _.parseInt(oLimitData.Zbetrg)) {
             oDetailModel.setProperty('/FormData/ZpayAmt', oLimitData.Zbetrg);
-            oDetailModel.setProperty('/LimitAmountMSG', true);
+
+            if (oFormData.Grdsp !== 'ALL' && oFormData.Divcd !== 'ALL') {
+              oDetailModel.setProperty('/LimitAmountMSG', true);
+            }
           } else {
             oDetailModel.setProperty('/FormData/ZpayAmt', String(iCostH));
             oDetailModel.setProperty('/LimitAmountMSG', false);
@@ -403,6 +406,7 @@ sap.ui.define(
         oDetailModel.setProperty('/FormData/Schtx', '');
         oDetailModel.setProperty('/FormData/Majnm', '');
         oDetailModel.setProperty('/FormData/Slart', 'ALL');
+        oDetailModel.setProperty('/FormData/Divcd', 'ALL');
         await this.getSupAmount();
         this.totalCost();
         this.getApplyNumber();
