@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:table="sap.ui.table"
   xmlns:core="sap.ui.core">
-  <table:Table id="eduTable" class="row-link" rows="{/EduList}" selectionMode="None" visibleRowCount="{/listInfo/rowCount}" width="100%" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}">
+  <table:Table id="eduTable" class="row-link" rows="{/EduList}" selectionMode="None" visibleRowCount="{/listInfo/rowCount}" width="100%" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
     <table:columns>
       <table:Column width="auto" sortProperty="Lcnam" filterProperty="Lcnam">
         <Label text="{i18n>LABEL_31005}"/>
@@ -45,10 +45,10 @@
           <Text text="{Total}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="170px" sortProperty="Status" filterProperty="Status">
+      <table:Column width="170px" sortProperty="StatusTxt" filterProperty="StatusTxt">
         <Label text="{i18n>LABEL_00144}"/>
         <table:template>
-          <Text text="{Status}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          <Text text="{StatusTxt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="170px" sortProperty="Passc" filterProperty="Passc">

@@ -39,6 +39,7 @@ sap.ui.define(
           busy: false,
           EduList: [],
           EduType: [],
+          parameters: {},
           Total: {},
           search: {},
           listInfo: {
@@ -55,7 +56,7 @@ sap.ui.define(
 
       thisYear(sYear = String(moment().format('YYYY'))) {
         // {0}년의 현황입니다.
-        return this.getBundleText('MSG_14001', sYear);
+        return this.getBundleText('MSG_31002', sYear);
       },
 
       formatNumber(vNum = '0') {
@@ -86,8 +87,8 @@ sap.ui.define(
           oListModel.setProperty('/search', {
             date: moment().startOf('year').hours(9).toDate(),
             secondDate: moment().endOf('year').hours(9).toDate(),
-            Lntyp: 'ALL',
-            Lntyptx: '',
+            Lctyp: 'ALL',
+            Lcnam: '',
           });
 
           const aTableList = await this.getEducationList();
@@ -123,8 +124,8 @@ sap.ui.define(
           oListModel.setProperty('/search', {
             date: moment().startOf('year').hours(9).toDate(),
             secondDate: moment().endOf('year').hours(9).toDate(),
-            Lntyp: 'ALL',
-            Lntyptx: '',
+            Lctyp: 'ALL',
+            Lcnam: '',
           });
 
           const aTableList = await this.getEducationList();
@@ -191,12 +192,21 @@ sap.ui.define(
         const mPayLoad = {
           Lcnam: mSearch.Lcnam,
           Lctyp: mSearch.Lctyp,
-          Begda: mSearch.date,
-          Endda: mSearch.secondDate,
+          Begda: moment(mSearch.date).hours(9).toDate(),
+          Endda: moment(mSearch.secondDate).hours(9).toDate(),
           Pernr: this.getAppointeeProperty('Pernr'),
         };
 
         return await Client.getEntitySet(oModel, 'EducationList', mPayLoad);
+      },
+
+      onSelectRow(oEvent) {
+        const vPath = oEvent.getParameter('rowBindingContext').getPath();
+        const oListModel = this.getViewModel();
+        const oRowData = oListModel.getProperty(vPath);
+
+        oListModel.setProperty('/parameters', oRowData);
+        this.getRouter().navTo('educationHistory-detail', { oDataKey: oRowData.Lcnam });
       },
 
       onPressExcelDownload() {
