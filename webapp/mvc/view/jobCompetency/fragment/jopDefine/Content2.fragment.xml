@@ -1,18 +1,92 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core"
-    xmlns:grid="sap.ui.layout.cssgrid">
-    <grid:CSSGrid gridTemplateColumns="1fr 2fr 1fr 2fr 1fr 2fr" gridGap="0px">
-        <Label text="{i18n>LABEL_00218}" />
-        <Text text="{/Define/descriptionM/Jobgrtx}" />
-        <Label text="{i18n>LABEL_22025}" />
-        <Text text="{/Define/descriptionM/Jobfmtx}" />
-        <Label text="{i18n>LABEL_22026}" />
-        <Text text="{/Define/descriptionM/Stelltx}" />
-        <Label text="{i18n>LABEL_22027}" />
-        <Text text="{/Define/descriptionM/Zzorgtx}" />
-        <Label text="{i18n>LABEL_22028}" />
-        <Text text="{/Define/descriptionM/Zzowner}" />
-        <Label text="{i18n>LABEL_22029}" />
-        <Text text="{/Define/descriptionM/Zzfnedt}" />
-    </grid:CSSGrid>
+    xmlns:table="sap.ui.table">
+    <table:Table id="defineContent2Table" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" rows="{/Define/description1/list}" visibleRowCount="{/Define/description1/rowCount}" noData="{i18n>MSG_00001}" visible="{/Define/isLoaded}">
+        <table:columns>
+            <table:Column width="4%" resizable="false">
+                <table:multiLabels>
+                    <Label text="No." />
+                    <Label text="No." />
+                </table:multiLabels>
+                <table:template>
+                    <Text text="{Zzseqnr}" width="100%" textAlign="Center" />
+                </table:template>
+            </table:Column>
+            <table:Column width="18%" resizable="false">
+                <table:multiLabels>
+                    <Label text="{i18n>LABEL_22037}" />
+                    <Label text="{i18n>LABEL_22037}" />
+                </table:multiLabels>
+                <table:template>
+                    <Text text="{Zztasktx}" width="100%" textAlign="Center" />
+                </table:template>
+            </table:Column>
+            <table:Column width="8%" resizable="false">
+                <table:multiLabels>
+                    <Label text="{i18n>LABEL_22038}" wrapping="true" />
+                    <Label text="{i18n>LABEL_22038}" wrapping="true" />
+                </table:multiLabels>
+                <table:template>
+                    <Text text="{Zzweihtb}--{Zzseqnr}" width="100%" textAlign="Center" />
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" resizable="false">
+                <table:multiLabels>
+                    <Label text="{i18n>LABEL_22055}" />
+                    <Label text="{i18n>LABEL_22055}" />
+                </table:multiLabels>
+                <table:template>
+                    <HBox width="100%">
+                        <Text text="{Zzmseqnr}" width="40px" textAlign="Center" />
+                        <Text text="{Zzavtvt}" />
+                    </HBox>
+                </table:template>
+            </table:Column>
+            <table:Column width="8%" resizable="false">
+                <table:multiLabels>
+                    <Label text="{i18n>LABEL_22038}" wrapping="true" />
+                    <Label text="{i18n>LABEL_22038}" wrapping="true" />
+                </table:multiLabels>
+                <table:template>
+                    <Text text="{ path: 'Zzweiht', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" />
+                </table:template>
+            </table:Column>
+            <table:Column width="8%" resizable="false">
+                <table:multiLabels>
+                    <Label text="{i18n>LABEL_22040}" />
+                    <Label text="{i18n>LABEL_22040}" />
+                </table:multiLabels>
+                <table:template>
+                    <Text text="{Zzimprt}" width="100%" textAlign="Center" />
+                </table:template>
+            </table:Column>
+            <table:Column width="8%" resizable="false">
+                <table:multiLabels>
+                    <Label text="{i18n>LABEL_22041}" />
+                    <Label text="{i18n>LABEL_22041}" />
+                </table:multiLabels>
+                <table:template>
+                    <Text text="{Zzdifct}" width="100%" textAlign="Center" />
+                </table:template>
+            </table:Column>
+            <table:Column width="9%" resizable="false" headerSpan="2">
+                <table:multiLabels>
+                    <Label text="{i18n>LABEL_22042}" />
+                    <Label text="{i18n>LABEL_22043}" />
+                </table:multiLabels>
+                <table:template>
+                    <Text text="{Zzmngap}" width="100%" textAlign="Center" />
+                </table:template>
+            </table:Column>
+            <table:Column width="9%" resizable="false">
+                <table:multiLabels>
+                    <Label text="{i18n>LABEL_22042}" />
+                    <Label text="{i18n>LABEL_22044}" />
+                </table:multiLabels>
+                <table:template>
+                    <Text text="{Zzsmgap}" width="100%" textAlign="Center" />
+                </table:template>
+            </table:Column>
+        </table:columns>
+    </table:Table>
 </core:FragmentDefinition>

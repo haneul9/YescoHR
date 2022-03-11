@@ -2006,11 +2006,13 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 
 .sapMDialog.sapMDialog-NoHeader .sapMDialogSection {padding-top:25px;}
 
+.table-box .sapMLabel { font-size: 14px; font-weight: 500; }
 .table-box .sapMLabel, .table-box .sapMText { height: 100%; }
-.table-box > .sapMFlexItem { border-left: 1px solid #ccc; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; }
-.table-box > .sapMFlexItem:last-child { border-right: 1px solid #ccc; }
-.table-box .label { background: #f7f7f7; }
-.table-box .complex > .sapMFlexItem:not(:first-child) { border-top: 1px solid #ccc; }
+.table-box > .sapMFlexItem { border-left: 1px solid #e7eaed; border-top: 1px solid #e7eaed; border-bottom: 1px solid #e7eaed; }
+.table-box > .sapMFlexItem:last-child:not(:first-child) { border-right: 1px solid #e7eaed; }
+.table-box.not-first > .sapMFlexItem:first-child { border-left: none; }
+.table-box .label { background: #FBFCFD; }
+.table-box .complex > .sapMFlexItem:not(:first-child) { border-top: 1px solid #e7eaed; }
 
 .file-uploader-wrap > .sapMFlexItem {justify-content: space-between; width:100%}
 .sapMPDFViewerError.sapMPDFViewerEmbeddedContent .sapMMessagePage{background: #fff;border: 1px solid #C0C0C0;border-radius: 4px;}

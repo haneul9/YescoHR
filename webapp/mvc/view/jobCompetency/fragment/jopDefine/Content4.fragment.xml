@@ -1,18 +1,26 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core"
-    xmlns:grid="sap.ui.layout.cssgrid">
-    <grid:CSSGrid gridTemplateColumns="1fr 2fr 1fr 2fr 1fr 2fr" gridGap="0px">
-        <Label text="{i18n>LABEL_00218}" />
-        <Text text="{/Define/descriptionM/Jobgrtx}" />
-        <Label text="{i18n>LABEL_22025}" />
-        <Text text="{/Define/descriptionM/Jobfmtx}" />
-        <Label text="{i18n>LABEL_22026}" />
-        <Text text="{/Define/descriptionM/Stelltx}" />
-        <Label text="{i18n>LABEL_22027}" />
-        <Text text="{/Define/descriptionM/Zzorgtx}" />
-        <Label text="{i18n>LABEL_22028}" />
-        <Text text="{/Define/descriptionM/Zzowner}" />
-        <Label text="{i18n>LABEL_22029}" />
-        <Text text="{/Define/descriptionM/Zzfnedt}" />
-    </grid:CSSGrid>
+    xmlns:table="sap.ui.table">
+    <table:Table width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" rows="{/Define/description3/list}" visibleRowCount="{/Define/description3/rowCount}" noData="{i18n>MSG_00001}" visible="{/Define/isLoaded}">
+        <table:columns>
+            <table:Column width="4%" resizable="false">
+                <Label text="No." />
+                <table:template>
+                    <Text text="{Zzseqnr}" width="100%" textAlign="Center" />
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" resizable="false">
+                <Label text="{i18n>LABEL_22047}" />
+                <table:template>
+                    <Text text="{Zzskknl}" width="100%" textAlign="Center" />
+                </table:template>
+            </table:Column>
+            <table:Column width="8%" resizable="false">
+                <Label text="{i18n>LABEL_22048}" />
+                <table:template>
+                    <Text text="{Zzqulnm}" width="100%" textAlign="Center" />
+                </table:template>
+            </table:Column>
+        </table:columns>
+    </table:Table>
 </core:FragmentDefinition>

@@ -1,6 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core">
-    <HBox width="100%" height="90px" class="table-box">
+    xmlns:core="sap.ui.core"
+    xmlns:table="sap.ui.table">
+    <HBox width="100%" height="90px" class="table-box" visible="{/Define/isLoaded}">
         <VBox width="8%" class="label" alignItems="Center" justifyContent="Center">
             <Label text="{i18n>LABEL_22030}" />
         </VBox>
@@ -48,14 +49,35 @@
             <Text text="{/Define/descriptionM/Zzmajor2}" />
         </VBox>
     </HBox>
-    <HBox width="100%" class="sapUiTinyMarginTop">
+    <HBox width="100%" class="sapUiTinyMarginTop" visible="{/Define/isLoaded}">
         <HBox width="8%" class="table-box">
             <VBox width="100%" class="label" alignItems="Center" justifyContent="Center">
                 <Label text="{i18n>LABEL_22033}" />
             </VBox>
         </HBox>
         <HBox width="92%">
-
+            <table:Table width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" rows="{/Define/description4/list}" visibleRowCount="{/Define/description4/rowCount}" noData="{i18n>MSG_00001}">
+                <table:columns>
+                    <table:Column width="auto" resizable="false">
+                        <Label text="{i18n>LABEL_22034}"/>
+                        <table:template>
+                            <Text text="{Zzndrcm}" width="100%" textAlign="Center" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="35%" resizable="false">
+                        <Label text="{i18n>LABEL_22035}"/>
+                        <table:template>
+                            <Text text="{Zzcttyp}" width="100%" textAlign="Center" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="35%" resizable="false">
+                        <Label text="{i18n>LABEL_22036}"/>
+                        <table:template>
+                            <Text text="{Zzctgrd}" width="100%" textAlign="Center" />
+                        </table:template>
+                    </table:Column>
+                </table:columns>
+            </table:Table>
         </HBox>
     </HBox>
 </core:FragmentDefinition>

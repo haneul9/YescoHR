@@ -9,6 +9,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/model/type/Decimal',
   ],
   (
     // prettier 방지용 주석
@@ -36,6 +37,12 @@ sap.ui.define(
             isLoaded: false,
             tree: [],
             descriptionM: { list1: [] },
+            description1: { list: [], rowCount: 1 },
+            description2: { list: [], rowCount: 1 },
+            description3: { list: [], rowCount: 1 },
+            description4: { list: [], rowCount: 1 },
+            description5: { list: [], rowCount: 1 },
+            description6: { list: [], rowCount: 1 },
           },
           Competency: {
             isLoaded: false,
@@ -117,6 +124,17 @@ sap.ui.define(
           });
 
           oViewModel.setProperty('/Define/tree', this.oDataChangeTree(aTreeData));
+
+          TableUtils.adjustRowSpan({
+            oTable: this.byId('defineContent2Table'),
+            aColIndices: [0, 1, 2, 3, 4, 5, 6],
+            sTheadOrTbody: 'thead',
+          });
+          TableUtils.adjustRowSpan({
+            oTable: this.byId('defineContent2Table'),
+            aColIndices: [0, 1, 2],
+            sTheadOrTbody: 'tbody',
+          });
         } catch (oError) {
           this.debug('Controller > jobCompetency App > loadDefine Error', oError);
 
@@ -170,6 +188,36 @@ sap.ui.define(
           });
 
           oViewModel.setProperty('/Define/descriptionM', _.pick(mDeepDefineResult, ['Jobgrtx', 'Jobfmtx', 'Stelltx', 'Zzorgtx', 'Zzowner', 'Zzfnedt', 'Zzdefin', 'Zzslabs', 'Zzndprf1', 'Zzmajor1', 'Zzndprf2', 'Zzmajor2']));
+          oViewModel.setProperty('/Define/description1', {
+            rowCount: mDeepDefineResult.JobDescription1Set.results.length,
+            list: _.map(mDeepDefineResult.JobDescription1Set.results, (o) =>
+              _.chain(o)
+                .omit('__metadata')
+                .set('Zzweihtb', `${_.toNumber(o.Zzweihtb)}`)
+                .set('Zzweiht', _.trim(o.Zzweiht))
+                .value()
+            ),
+          });
+          oViewModel.setProperty('/Define/description2', {
+            rowCount: mDeepDefineResult.JobDescription2Set.results.length,
+            list: _.map(mDeepDefineResult.JobDescription2Set.results, (o) => _.omit(o, '__metadata')),
+          });
+          oViewModel.setProperty('/Define/description3', {
+            rowCount: mDeepDefineResult.JobDescription3Set.results.length,
+            list: _.map(mDeepDefineResult.JobDescription3Set.results, (o) => _.omit(o, '__metadata')),
+          });
+          oViewModel.setProperty('/Define/description4', {
+            rowCount: mDeepDefineResult.JobDescription4Set.results.length,
+            list: _.map(mDeepDefineResult.JobDescription4Set.results, (o) => _.omit(o, '__metadata')),
+          });
+          oViewModel.setProperty('/Define/description5', {
+            rowCount: Math.max(mDeepDefineResult.JobDescription5Set.results.length, mDeepDefineResult.JobDescription6Set.results.length),
+            list: _.map(mDeepDefineResult.JobDescription5Set.results, (o) => _.omit(o, '__metadata')),
+          });
+          oViewModel.setProperty('/Define/description6', {
+            rowCount: Math.max(mDeepDefineResult.JobDescription5Set.results.length, mDeepDefineResult.JobDescription6Set.results.length),
+            list: _.map(mDeepDefineResult.JobDescription6Set.results, (o) => _.omit(o, '__metadata')),
+          });
         } catch (oError) {
           AppUtils.handleError(oError);
         }
@@ -209,6 +257,8 @@ sap.ui.define(
 
         oViewModel.setProperty('/Competency/RelateJobs', aRelateJobBtn);
       },
+
+      onPress2TableRow(oEvent) {},
 
       // 관련직무 Btn
       relateJobBtn(aList = []) {
