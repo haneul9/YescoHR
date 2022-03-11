@@ -1,0 +1,62 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:table="sap.ui.table"
+  xmlns:core="sap.ui.core">
+  <table:Table id="eduTable" class="row-link" rows="{/EduList}" selectionMode="None" visibleRowCount="{/listInfo/rowCount}" width="100%" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}">
+    <table:columns>
+      <table:Column width="auto" sortProperty="Lcnam" filterProperty="Lcnam">
+        <Label text="{i18n>LABEL_31005}"/>
+        <table:template>
+          <Text text="{Lcnam}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="auto" sortProperty="Lccnt" filterProperty="Lccnt">
+        <Label text="{i18n>LABEL_31009}"/>
+        <table:template>
+          <Text text="{Lccnt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="auto" sortProperty="Begda" filterProperty="Begda">
+        <Label text="{i18n>LABEL_31010}"/>
+        <table:template>
+          <Text text="{
+              path: 'Begda',
+              type: 'sap.ui.yesco.mvc.model.type.Date'
+          }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="auto" sortProperty="Endda" filterProperty="Endda">
+        <Label text="{i18n>LABEL_31011}"/>
+        <table:template>
+          <Text text="{
+              path: 'Endda',
+              type: 'sap.ui.yesco.mvc.model.type.Date'
+          }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="auto" sortProperty="Point" filterProperty="Point">
+        <Label text="{i18n>LABEL_31012}"/>
+        <table:template>
+          <Text text="{Point}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="auto" sortProperty="Total" filterProperty="Total">
+        <Label text="{i18n>LABEL_31013}"/>
+        <table:template>
+          <Text text="{Total}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="250px" sortProperty="Status" filterProperty="Status">
+        <Label text="{i18n>LABEL_00144}"/>
+        <table:template>
+          <Text text="{Status}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="auto" sortProperty="Passc" filterProperty="Passc">
+        <Label text="{i18n>LABEL_31014}"/>
+        <table:template>
+          <Text text="{Passc}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+    </table:columns>
+  </table:Table>
+</core:FragmentDefinition>
