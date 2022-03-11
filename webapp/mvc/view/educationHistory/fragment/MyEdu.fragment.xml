@@ -10,27 +10,27 @@
                 formatter: '.thisYear'
             }" class="sapUiSmallMarginBottom" />
             <HBox class="mt-50-px">
-                <VBox width="20%" class="summary-info">
+                <VBox width="33%" class="summary-info">
                     <Label design="Bold" text="{i18n>LABEL_31006}" />
                     <ObjectStatus text="{
-                        path: '/Total/Ccnt',
+                        path: '/Total/Total',
                         formatter: '.formatNumber'
                     }" state="Indication05" />
                 </VBox>
-                <VBox width="40%" class="summary-info">
+                <VBox width="33%" class="summary-info">
                     <Label design="Bold" text="{i18n>LABEL_31007}" />
                     <HBox alignItems="Baseline">
                         <ObjectStatus text="{
-                            path: '/Total/Bet01',
+                            path: '/Total/NonComplete',
                             formatter: '.formatNumber'
-                        }" state="Indication04" />
+                        }" state="Indication05" />
                     </HBox>
                 </VBox>
                 <VBox class="summary-info">
                     <Label design="Bold" text="{i18n>LABEL_31008}" />
                     <HBox alignItems="Baseline">
                         <ObjectStatus text="{
-                            path: '/Total/Bet02',
+                            path: '/Total/Complete',
                             formatter: '.formatNumber'
                         }" state="Indication05" />
                     </HBox>

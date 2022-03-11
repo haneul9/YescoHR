@@ -15,7 +15,7 @@
         <core:Item text="{Ztext}" key="{Zcode}" />
       </ComboBox>
       <Label text="{i18n>LABEL_31005}" design="Bold" />
-      <Input value="{/FormData/Lntyptx}" />
+      <Input value="{/FormData/Lntyptx}" submit=".onSearch" />
     </grid:CSSGrid>
   </VBox>
 </core:FragmentDefinition>
