@@ -169,7 +169,7 @@
         { "pattern": "individualWorkState", "name": "individualWorkState", "target": "individualWorkState" },
         
         { "pattern": "jobCompetency", "name": "jobCompetency", "target": "jobCompetency" },
-        { "pattern": "jobCompetency/:objid:", "name": "jobCompetency-view", "target": "jobCompetencyView" },
+        { "pattern": "jobCompetency/:objid:/:title:", "name": "jobCompetency-view", "target": "jobCompetencyView" },
         { "pattern": "jobDefine", "name": "jobDefine", "target": "jobDefine" },
         { "pattern": "jobDefine/:objid:", "name": "jobDefine-view", "target": "jobDefineView" },
 

@@ -32,6 +32,7 @@ sap.ui.define(
         return {
           menid: this.getCurrentMenuId(),
           Hass: this.isHass(),
+          isView: true,
           selectedKey: 'A',
           Define: {
             isLoaded: false,
@@ -76,15 +77,44 @@ sap.ui.define(
         oViewModel.setProperty('/busy', true);
 
         try {
-          await this.loadDefine();
-          await this.loadCompetency();
+          if (_.isEmpty(mRouteArguments)) {
+            await this.loadDefine();
+            await this.loadCompetency();
 
-          oViewModel.setProperty('/selectedKey', sRouteName === 'jobDefine' ? 'A' : 'B');
+            oViewModel.setProperty('/selectedKey', sRouteName === 'jobDefine' ? 'A' : 'B');
+          } else {
+            sap.ui.getCore().byId('container-ehr---app--appMenuToolbar').setVisible(false);
+            oViewModel.setProperty('/isView', false);
+
+            if (sRouteName === 'jobDefine-view') {
+              oViewModel.setProperty('/Define/isLoaded', true);
+
+              await this.callDefineData(mRouteArguments.objid);
+            } else {
+              oViewModel.setProperty('/Competency/isLoaded', true);
+              oViewModel.setProperty('/Competency/Title', mRouteArguments.title);
+
+              await this.callCompetencyData(mRouteArguments.objid);
+            }
+
+            setTimeout(() => $('#container-ehr---app--app').addClass('popup-body'), 200);
+          }
         } catch (oError) {
           this.debug(oError);
           AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/busy', false);
+
+          TableUtils.adjustRowSpan({
+            oTable: this.byId('defineContent2Table'),
+            aColIndices: [0, 1, 2, 3, 4, 5, 6],
+            sTheadOrTbody: 'thead',
+          });
+          TableUtils.adjustRowSpan({
+            oTable: this.byId('defineContent2Table'),
+            aColIndices: [0, 1, 2],
+            sTheadOrTbody: 'tbody',
+          });
         }
       },
 
@@ -114,17 +144,6 @@ sap.ui.define(
           });
 
           oViewModel.setProperty('/Define/tree', this.oDataChangeTree(aTreeData, 'DefineTree'));
-
-          TableUtils.adjustRowSpan({
-            oTable: this.byId('defineContent2Table'),
-            aColIndices: [0, 1, 2, 3, 4, 5, 6],
-            sTheadOrTbody: 'thead',
-          });
-          TableUtils.adjustRowSpan({
-            oTable: this.byId('defineContent2Table'),
-            aColIndices: [0, 1, 2],
-            sTheadOrTbody: 'tbody',
-          });
 
           await this.callDefineData(this.getAppointeeProperty('Stell'));
         } catch (oError) {

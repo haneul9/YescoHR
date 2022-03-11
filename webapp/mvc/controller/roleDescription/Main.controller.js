@@ -157,6 +157,21 @@ sap.ui.define(
 
       onPress7TableRow() {},
 
+      openJob() {
+        const sHost = window.location.href.split('#')[0];
+        const sObjid = '13002048';
+
+        window.open(`${sHost}#/jobDefine/${sObjid}`, '_blank', 'width=1300,height=800');
+      },
+
+      openCompetency() {
+        const sHost = window.location.href.split('#')[0];
+        const sObjid = '14001001';
+        const sTitle = 'Integrity';
+
+        window.open(`${sHost}#/jobCompetency/${sObjid}/${sTitle}`, '_blank', 'width=1300,height=800');
+      },
+
       oDataChangeTree(aList = []) {
         const aConvertedList = _.chain(aList)
           .cloneDeep()
