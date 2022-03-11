@@ -169,7 +169,9 @@
         { "pattern": "individualWorkState", "name": "individualWorkState", "target": "individualWorkState" },
         
         { "pattern": "jobCompetency", "name": "jobCompetency", "target": "jobCompetency" },
+        { "pattern": "jobCompetency/:objid:", "name": "jobCompetency-view", "target": "jobCompetencyView" },
         { "pattern": "jobDefine", "name": "jobDefine", "target": "jobDefine" },
+        { "pattern": "jobDefine/:objid:", "name": "jobDefine-view", "target": "jobDefineView" },
 
         { "pattern": "m/leave", "name": "m/leave", "target": "m/leave" },
         
@@ -315,7 +317,9 @@
         "individualWorkState": { "viewId": "individualWorkState", "viewPath": "sap.ui.yesco.mvc.view.individualWorkState", "viewName": "IndiWorkState" },
         
         "jobCompetency": { "viewId": "jobCompetency", "viewPath": "sap.ui.yesco.mvc.view.jobCompetency", "viewName": "JobCompetency" },
-        "jobDefine": { "viewId": "jobDefine", "viewPath": "sap.ui.yesco.mvc.view.jobCompetency", "viewName": "jobDefine" },
+        "jobCompetencyView": { "viewId": "jobCompetencyView", "viewPath": "sap.ui.yesco.mvc.view.jobCompetency", "viewName": "CompetencyView" },
+        "jobDefine": { "viewId": "jobDefine", "viewPath": "sap.ui.yesco.mvc.view.jobCompetency", "viewName": "JobDefine" },
+        "jobDefineView": { "viewId": "jobDefineView", "viewPath": "sap.ui.yesco.mvc.view.jobCompetency", "viewName": "JobView" },
 
         "m/leave": { "viewId": "m_leave", "viewPath": "sap.ui.yesco.mvc.view.leave", "viewName": "App" },
 

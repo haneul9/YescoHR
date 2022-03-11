@@ -111,7 +111,6 @@ sap.ui.define(
           const aTreeData = await Client.getEntitySet(this.getModel(ServiceNames.APPRAISAL), 'DescriptionTree', {
             Mode: '1',
             Datum: moment().hours(9).toDate(),
-            Otype: 'C',
           });
 
           oViewModel.setProperty('/Define/tree', this.oDataChangeTree(aTreeData, 'DefineTree'));
