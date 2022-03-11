@@ -1,18 +1,30 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:grid="sap.ui.layout.cssgrid">
-    <grid:CSSGrid gridTemplateColumns="1fr 2fr 1fr 2fr 1fr 2fr" gridGap="0px">
+    <grid:CSSGrid gridTemplateColumns="1fr 2fr 1fr 2fr 1fr 2fr" gridGap="1px 0" class="form-grid">
         <Label text="{i18n>LABEL_00218}" />
-        <Text text="{/Define/descriptionM/Jobgrtx}" />
+        <VBox>
+            <Text text="{/Define/descriptionM/Jobgrtx}" />
+        </VBox>
         <Label text="{i18n>LABEL_22025}" />
-        <Text text="{/Define/descriptionM/Jobfmtx}" />
+        <VBox>
+            <Text text="{/Define/descriptionM/Jobfmtx}" />
+        </VBox>
         <Label text="{i18n>LABEL_22026}" />
-        <Text text="{/Define/descriptionM/Stelltx}" />
+        <VBox>
+            <Text text="{/Define/descriptionM/Stelltx}" />
+        </VBox>
         <Label text="{i18n>LABEL_22027}" />
-        <Text text="{/Define/descriptionM/Zzorgtx}" />
+        <VBox>
+            <Text text="{/Define/descriptionM/Zzorgtx}" />
+        </VBox>
         <Label text="{i18n>LABEL_22028}" />
-        <Text text="{/Define/descriptionM/Zzowner}" />
+        <VBox>
+            <Text text="{/Define/descriptionM/Zzowner}" />
+        </VBox>
         <Label text="{i18n>LABEL_22029}" />
-        <Text text="{/Define/descriptionM/Zzfnedt}" />
+        <VBox>
+            <Text text="{/Define/descriptionM/Zzfnedt}" />
+        </VBox>
     </grid:CSSGrid>
 </core:FragmentDefinition>

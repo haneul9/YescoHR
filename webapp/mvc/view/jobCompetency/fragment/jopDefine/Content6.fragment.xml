@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:table="sap.ui.table">
-    <HBox width="100%" class="sapUiTinyMarginTop" visible="{/Define/isLoaded}">
+    <HBox width="100%" visible="{/Define/isLoaded}">
         <HBox width="8%" class="table-box">
             <VBox width="100%" class="label" alignItems="Center" justifyContent="Center">
                 <Label text="{i18n>LABEL_22049}" wrapping="true" />
