@@ -62,11 +62,25 @@
 .sapUiMedia-StdExt-Phone .app-menu-toolbar {width:100%;border-top: 1px solid #DFE2EB;}
 
 .sapUiMedia-StdExt-Phone [data-sap-ui=container-ehr---home--portlets-grid] {grid-template-columns: repeat(1, 100%)!important;grid-gap: 16px!important;padding: 0 0.8rem;}
+.sapUiMedia-StdExt-Phone .portlet + .portlet {margin-top:16px}
+.sapUiMedia-StdExt-Phone .portlet.portlet-h1 {max-height:270px; height:270px}
+.sapUiMedia-StdExt-Phone .portlet.portlet-h2 {max-height:540px; height:540px}
+.sapUiMedia-StdExt-Phone .portlet.portlet-h3 {max-height:810px; height:810px}
+.sapUiMedia-StdExt-Phone .portlet.portlet-h4 {max-height:1080px; height:1080px}
+.sapUiMedia-StdExt-Phone .portlet.portlet-h5 {max-height:1350px; height:1350px}
 .sapUiMedia-StdExt-Phone .portlet-box {border-radius: 8px;}
 .sapUiMedia-StdExt-Phone .portlet-header {justify-content: space-between;display: flex;}
 .sapUiMedia-StdExt-Phone .portlet-header h2.sapMTitle {font-size: 1.1rem;}
 .sapUiSizeCompact .portlet-header .sapMSegB {margin-bottom:-6px}
-.sapUiSizeCompact .portlet-p03p04 .portlet-header .icon-button {margin-bottom:-3px}
+.sapUiSizeCompact .portlet-p03p04 .portlet-header .icon-button {display:none}
+.portlet:hover .sapMBtn.icon-button.portlet-close-icon {visibility:hidden}
+.portlet-p03p04:hover .sapMBtn.icon-button.portlet-member-remove {display:none}
+.portlet-p11 .left-box {border:none; background-color:#a3edce}
+.portlet-p11 .right-box {border:none; background-color:#b4cef2}
+.portlet-p11 .portlet-p11-objectstatus {margin-top:18px}
+.portlet-p11 .portlet-p11-objectstatus .sapMObjStatusText {color:#000 !important}
+.sapUiSizeCompact .portlet-p11 .sapMBtn.portlet-box {margin-top:5px; width:100%; border:none}
+.sapUiSizeCompact .portlet-p11 .sapMBtnInner.sapMBtnText {height:auto; border-radius:8px; padding:3px}
 
 .sapUiMedia-StdExt-Phone .app-menu-toolbar:before {display: none;}
 .sapUiMedia-StdExt-Phone .app-menu-toolbar:after {border-bottom:0;}

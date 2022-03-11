@@ -161,6 +161,12 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p11 .portlet-p11-objectstatus {margin-top:5px}
 .portlet-p11 .portlet-p11-objectstatus .sapMObjStatusText {font-size:20px}
 .portlet-p11 .portlet-p11-text.sapMText {vertical-align:top; font-size:12px}
+.portlet-p12 h2.sapMTitle {vertical-align:middle; font-size:20px; font-weight:700}
+.portlet-p12 .vacation-count-size36.sapMText {font-size:36px; line-height:1}
+.portlet-p12 .vacation-count-size24.sapMText {font-size:24px}
+.portlet-p12 .vacation-count-size12.sapMText {font-size:12px}
+.portlet-p12 .vacation-count-color.sapMText {color:#2d94f9}
+.portlet-p12 .vacation-text-color.sapMText {color:#898d9c}
 .portlet-m21 .border-bottom {border-bottom:1px solid #dbdbdb}
 .portlet-m21 .font-3-rem {font-weight:500}
 .portlet-m21 .sapMLabel {justify-content:center}

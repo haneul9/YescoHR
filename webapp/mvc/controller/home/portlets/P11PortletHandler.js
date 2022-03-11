@@ -1,6 +1,7 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/core/Fragment',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -9,6 +10,7 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
+    Fragment,
     AppUtils,
     Client,
     ServiceNames,
@@ -24,11 +26,26 @@ sap.ui.define(
       oChartPromise: null,
 
       async addPortlet() {
-        await AbstractPortletHandler.prototype.addPortlet.call(this);
+        if (this.bMobile) {
+          const oPortletModel = this.getPortletModel();
+          const oPortletBox = await Fragment.load({
+            id: this.getController().getView().getId(),
+            name: 'sap.ui.yesco.mvc.view.home.mobile.P11PortletBox',
+            controller: this,
+          });
 
-        // 다른 화면에 갔다 되돌아오는 경우 id 중복 오류가 발생하므로 체크함
-        if (!FusionCharts(this.sChartId)) {
-          this.buildChart();
+          const iPortletHeight = oPortletModel.getProperty('/height');
+          oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(`portlet-h${iPortletHeight}`);
+
+          this.getController().byId(this.sContainerId).addItem(oPortletBox);
+          this.setPortletBox(oPortletBox);
+        } else {
+          await AbstractPortletHandler.prototype.addPortlet.call(this);
+
+          // 다른 화면에 갔다 되돌아오는 경우 id 중복 오류가 발생하므로 체크함
+          if (!FusionCharts(this.sChartId)) {
+            this.buildChart();
+          }
         }
       },
 
@@ -67,12 +84,14 @@ sap.ui.define(
       },
 
       transformContentData([mPortletData = {}]) {
-        if (this.oChartPromise) {
-          this.oChartPromise.then(() => {
-            this.setChartData(mPortletData);
-          });
-        } else {
-          this.setChartData(mPortletData); // 다른 메뉴를 갔다가 되돌아오는 경우
+        if (!this.bMobile) {
+          if (this.oChartPromise) {
+            this.oChartPromise.then(() => {
+              this.setChartData(mPortletData);
+            });
+          } else {
+            this.setChartData(mPortletData); // 다른 메뉴를 갔다가 되돌아오는 경우
+          }
         }
 
         mPortletData.ButtonText1 = this.getMenuName(this.getMenid('attendance'));
