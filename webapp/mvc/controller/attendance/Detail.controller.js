@@ -347,7 +347,31 @@ sap.ui.define(
         this.oOneToHalfDialog.open();
       },
 
-      async openFormCancelDialog() {},
+      async openFormCancelDialog() {
+        const oView = this.getView();
+
+        if (!this.oFormCancelDialog) {
+          this.oFormCancelDialog = await Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.mvc.view.attendance.fragment.FormCancelDialog',
+            controller: this,
+          });
+
+          this.oFormCancelDialog
+            .attachBeforeOpen(() => {
+              this.getViewModel().setProperty('/form/dialog/search', {
+                Begda: moment().startOf('year').hours(9).toDate(),
+                Endda: moment().endOf('year').hours(9).toDate(),
+              });
+              this.retrieveCancel();
+            })
+            .attachAfterOpen(() => this.byId('dialogCancelTable').clearSelection());
+
+          oView.addDependent(this.oFormCancelDialog);
+        }
+
+        this.oFormCancelDialog.open();
+      },
 
       toggleHasRowProperty() {
         const oViewModel = this.getViewModel();
@@ -380,6 +404,37 @@ sap.ui.define(
           );
         } catch (oError) {
           this.debug('Controller > Attendance Detail > retrieveChange Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/form/dialog/busy', false);
+        }
+      },
+
+      async retrieveCancel() {
+        const oViewModel = this.getViewModel();
+        const mSearchConditions = oViewModel.getProperty('/form/dialog/search');
+
+        oViewModel.setProperty('/form/dialog/busy', true);
+
+        try {
+          const aList = oViewModel.getProperty('/form/list');
+          const aResults = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'LeaveChangeList', {
+            Prcty: 'D',
+            Pernr: this.getAppointeeProperty('Pernr'),
+            Begda: moment(mSearchConditions.Begda).hours(9).toDate(),
+            Endda: moment(mSearchConditions.Endda).hours(9).toDate(),
+          });
+
+          oViewModel.setProperty(
+            '/form/dialog/list',
+            _.chain(aResults)
+              .filter((o) => !_.some(aList, (d) => _.isEqual(o.Awart2, d.Awart2) && moment(o.Begda2).isSame(moment(d.Begda2))))
+              .map((o) => ({ ..._.omit(o, '__metadata'), isActive: false }))
+              .value()
+          );
+        } catch (oError) {
+          this.debug('Controller > Attendance Detail > retrieveCancel Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
@@ -454,6 +509,15 @@ sap.ui.define(
        * ! Event handler
        *****************************************************************/
       onSelectionChangeTableRow(oEvent) {
+        if (!oEvent.getParameter('rowContext')) return;
+
+        const oViewModel = this.getViewModel();
+        const sRowPath = oEvent.getParameter('rowContext').getPath();
+
+        oViewModel.setProperty(`${sRowPath}/isActive`, oEvent.getSource().getSelectedIndex() !== -1);
+      },
+
+      onSelectionCancelTableRow(oEvent) {
         if (!oEvent.getParameter('rowContext')) return;
 
         const oViewModel = this.getViewModel();
@@ -606,6 +670,10 @@ sap.ui.define(
         this.oFormChangeDialog.close();
       },
 
+      onPressFormCancelDialogClose() {
+        this.oFormCancelDialog.close();
+      },
+
       onPressHalfToOneDialogClose() {
         this.oHalfToOneDialog.close();
       },
@@ -746,7 +814,7 @@ sap.ui.define(
           const aSelectedIndices = oTable.getSelectedIndices();
 
           if (!aSelectedIndices.length) {
-            throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_00010', 'LABEL_00109') }); // {변경}할 데이터를 선택하세요.
+            throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_00010', 'LABEL_04003') }); // {변경신청}할 데이터를 선택하세요.
           }
 
           const aDialogList = _.filter(oViewModel.getProperty('/form/dialog/list'), (o, i) => _.includes(aSelectedIndices, i));
@@ -770,6 +838,47 @@ sap.ui.define(
           this.onPressFormChangeDialogClose();
         } catch (oError) {
           this.debug('Controller > Attendance Detail > onPressFormChangeDialogSave Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/form/dialog/busy', false);
+        }
+      },
+
+      onPressFormCancelDialogSave() {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/form/dialog/busy', true);
+
+        try {
+          const oTable = this.byId('dialogCancelTable');
+          const aSelectedIndices = oTable.getSelectedIndices();
+
+          if (!aSelectedIndices.length) {
+            throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_00010', 'LABEL_04004') }); // {취소신청}할 데이터를 선택하세요.
+          }
+
+          const aDialogList = _.filter(oViewModel.getProperty('/form/dialog/list'), (o, i) => _.includes(aSelectedIndices, i));
+          const aList = oViewModel.getProperty('/form/list');
+
+          oViewModel.setProperty('/form/rowCount', _.sum([aList.length, aDialogList.length]));
+          oViewModel.setProperty(
+            '/form/list',
+            _.concat(
+              aList,
+              _.map(aDialogList, (o) =>
+                _.chain(o)
+                  .omit('isActive')
+                  .set('AbrtgTxt', `${_.toNumber(o.Abrtg)}일`)
+                  .value()
+              )
+            )
+          );
+
+          this.toggleHasRowProperty();
+          this.onPressFormCancelDialogClose();
+        } catch (oError) {
+          this.debug('Controller > Attendance Detail > onPressFormCancelDialogSave Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
