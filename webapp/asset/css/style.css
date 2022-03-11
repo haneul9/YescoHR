@@ -2000,6 +2000,11 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 
 .sapMDialog.sapMDialog-NoHeader .sapMDialogSection {padding-top:25px;}
 
+.table-box .sapMLabel, .table-box .sapMText { height: 100%; }
+.table-box > .sapMFlexItem { border-left: 1px solid #ccc; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; }
+.table-box > .sapMFlexItem:last-child { border-right: 1px solid #ccc; }
+.table-box .label { background: #f7f7f7; }
+.table-box .complex > .sapMFlexItem:not(:first-child) { border-top: 1px solid #ccc; }
 
 .file-uploader-wrap > .sapMFlexItem {justify-content: space-between; width:100%}
 .sapMPDFViewerError.sapMPDFViewerEmbeddedContent .sapMMessagePage{background: #fff;border: 1px solid #C0C0C0;border-radius: 4px;}

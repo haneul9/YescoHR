@@ -2,7 +2,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TextUtils',
@@ -13,7 +12,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     AppUtils,
     FragmentEvent,
     TextUtils,
@@ -24,7 +22,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.jobCompetency.JobCompetency', {
+    return BaseController.extend('sap.ui.yesco.mvc.controller.jobCompetency.App', {
       TextUtils: TextUtils,
       TableUtils: TableUtils,
       FragmentEvent: FragmentEvent,
@@ -34,7 +32,13 @@ sap.ui.define(
           menid: this.getCurrentMenuId(),
           Hass: this.isHass(),
           selectedKey: 'A',
+          Define: {
+            isLoaded: false,
+            tree: [],
+            descriptionM: { list1: [] },
+          },
           Competency: {
+            isLoaded: false,
             Title: '',
             Defin: '',
             CompTree: [],
@@ -57,7 +61,7 @@ sap.ui.define(
         };
       },
 
-      async onObjectMatched() {
+      async onObjectMatched(mRouteArguments, sRouteName) {
         const oViewModel = this.getViewModel();
 
         oViewModel.setSizeLimit(500);
@@ -65,29 +69,16 @@ sap.ui.define(
         oViewModel.setProperty('/busy', true);
 
         try {
-          const oModel = this.getModel(ServiceNames.APPRAISAL);
-          const sWerks = this.getAppointeeProperty('Werks');
           let sMenuId = '';
 
-          if (this.getCurrentMenuId() === '5410') {
+          if (sRouteName === 'jobDefine') {
             sMenuId = 'A';
-          } else {
-            const mPayLoad = {
-              Mode: '1',
-              Datum: new Date(),
-            };
-            const aTreeList = await Client.getEntitySet(oModel, 'CompAppTree', mPayLoad);
-            const aFormatTree = this.oDataChangeTree(aTreeList);
 
+            await this.loadDefine();
+          } else {
             sMenuId = 'B';
-            oViewModel.setProperty('/Competency', {
-              Title: aTreeList[0].Stext,
-              Defin: '',
-              CompTree: aFormatTree,
-              Level: '',
-              Count: 0,
-              BehaviIndicat: [],
-            });
+
+            await this.loadCompetency();
           }
 
           oViewModel.setProperty('/selectedKey', sMenuId);
@@ -96,6 +87,42 @@ sap.ui.define(
           AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/busy', false);
+        }
+      },
+
+      async loadCompetency() {
+        const oViewModel = this.getViewModel();
+        const aTreeList = await Client.getEntitySet(this.getModel(ServiceNames.APPRAISAL), 'CompAppTree', { Mode: '1', Datum: moment().hours(9).toDate() });
+        const aFormatTree = this.oDataChangeTree(aTreeList);
+
+        oViewModel.setProperty('/Competency', {
+          isLoaded: true,
+          Title: aTreeList[0].Stext,
+          Defin: '',
+          CompTree: aFormatTree,
+          Level: '',
+          Count: 0,
+          BehaviIndicat: [],
+        });
+      },
+
+      async loadDefine() {
+        const oViewModel = this.getViewModel();
+
+        try {
+          const aTreeData = await Client.getEntitySet(this.getModel(ServiceNames.APPRAISAL), 'DescriptionTree', {
+            Mode: '1',
+            Datum: moment().hours(9).toDate(),
+            Otype: 'C',
+          });
+
+          oViewModel.setProperty('/Define/tree', this.oDataChangeTree(aTreeData));
+        } catch (oError) {
+          this.debug('Controller > jobCompetency App > loadDefine Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/Define/isLoaded', true);
         }
       },
 
@@ -108,30 +135,43 @@ sap.ui.define(
           oViewModel.setProperty('/busy', true);
 
           if (sTabKey === 'A') {
-            // 직무기술서
-          } else {
-            // 역량정의서
-            const oModel = this.getModel(ServiceNames.APPRAISAL);
-            const mPayLoad = {
-              Mode: '1',
-              Datum: new Date(),
-            };
-            const aTreeList = await Client.getEntitySet(oModel, 'CompAppTree', mPayLoad);
-            const aFormatTree = this.oDataChangeTree(aTreeList);
+            if (oViewModel.getProperty('/Define/isLoaded')) return;
 
-            oViewModel.setProperty('/Competency', {
-              Title: aTreeList[0].Stext,
-              Defin: '',
-              CompTree: aFormatTree,
-              Level: '',
-              Count: 0,
-              BehaviIndicat: [],
-            });
+            await this.loadDefine();
+          } else {
+            if (oViewModel.getProperty('/Competency/isLoaded')) return;
+
+            await this.loadCompetency();
           }
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/busy', false);
+        }
+      },
+
+      async onTreeDefinePress(oEvent) {
+        const oViewModel = this.getViewModel();
+
+        try {
+          const oSelectedTreeItem = oEvent.getParameter('listItem').getBindingContext().getObject();
+
+          if (oSelectedTreeItem.Otype !== 'C') return;
+
+          const mDeepDefineResult = await Client.deep(this.getModel(ServiceNames.APPRAISAL), 'JobDescriptionMain', {
+            Stell: oSelectedTreeItem.Objid,
+            Datum: moment().hours(9).toDate(),
+            JobDescription1Set: [],
+            JobDescription2Set: [],
+            JobDescription3Set: [],
+            JobDescription4Set: [],
+            JobDescription5Set: [],
+            JobDescription6Set: [],
+          });
+
+          oViewModel.setProperty('/Define/descriptionM', _.pick(mDeepDefineResult, ['Jobgrtx', 'Jobfmtx', 'Stelltx', 'Zzorgtx', 'Zzowner', 'Zzfnedt', 'Zzdefin', 'Zzslabs', 'Zzndprf1', 'Zzmajor1', 'Zzndprf2', 'Zzmajor2']));
+        } catch (oError) {
+          AppUtils.handleError(oError);
         }
       },
 
@@ -184,8 +224,8 @@ sap.ui.define(
       },
 
       // 관련직무 선택
-      onPressJob(oEvent) {
-        const mSelectedBtn = this.getViewModel().getProperty(oEvent.getSource().getBindingContext().getPath());
+      onPressJob() {
+        // const mSelectedBtn = this.getViewModel().getProperty(oEvent.getSource().getBindingContext().getPath());
       },
 
       // 행동지표 수준정의 ItemsSettings
