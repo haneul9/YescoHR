@@ -1,0 +1,129 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.roleDescription.Main"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:custom="sap.ui.yesco.control">
+    <Page showHeader="false">
+        <VBox class="contents-header">
+            <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+                <custom:Breadcrumbs />
+                <HBox>
+                    <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
+                    <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
+                </HBox>
+            </HBox>
+        </VBox>
+        <HBox class="contents" justifyContent="SpaceBetween" busyIndicatorDelay="0" busy="{/busy}">
+            <VBox width="520px" height="69vh" class="vCardBox sapUiMediumMarginEnd">
+                <ScrollContainer height="64vh" width="100%" vertical="true">
+                    <Tree id="roleTree" mode="SingleSelectMaster" items="{path: '/Define/tree'}" selectionChange=".onPressTreeItem">
+                        <layoutData>
+                            <FlexItemData growFactor="1" />
+                        </layoutData>
+                        <CustomTreeItem>
+                            <HBox>
+                                <Image src="asset/image/icon_tree_node02.svg" visible="{= ${Otype} === 'S' }" />
+                                <Text text="{Stext}"/>
+                            </HBox>
+                        </CustomTreeItem>
+                    </Tree>
+                </ScrollContainer>
+            </VBox>
+            <VBox width="100%" class="mt-0-px">
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <HBox alignItems="Center" class="table-toolbar">
+                        <Title level="H2" text="{i18n>LABEL_22057}" />
+                    </HBox>
+                    <HBox alignItems="Center" class="table-toolbar">
+                        <Title level="H4" text="{i18n>LABEL_22058}" />
+                    </HBox>
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.roleDescription.fragment.Content1" type="XML" />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <HBox alignItems="Center" class="table-toolbar">
+                        <Title level="H2" text="{i18n>LABEL_22059}" />
+                    </HBox>
+                    <HBox alignItems="Center" class="table-toolbar">
+                        <Title level="H4" text="{i18n>LABEL_22060}" />
+                    </HBox>
+                    <TextArea width="100%" value="{/data/roleM/Defin}" growing="true" enabled="false" />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <HBox alignItems="Center" class="table-toolbar">
+                        <Title level="H4" text="{i18n>LABEL_22061}" />
+                    </HBox>
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.roleDescription.fragment.Content2" type="XML" />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <HBox alignItems="Center" class="table-toolbar">
+                        <Title level="H4" text="{i18n>LABEL_22062}" />
+                    </HBox>
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.roleDescription.fragment.Content3" type="XML" />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <HBox alignItems="Center" class="table-toolbar">
+                        <Title level="H2" text="{i18n>LABEL_22063}" />
+                    </HBox>
+                    <HBox alignItems="Center" class="table-toolbar">
+                        <Title level="H4" text="{i18n>LABEL_22064}" />
+                    </HBox>
+                    <TextArea width="100%" value="{/data/roleM/Defin2}" growing="true" enabled="false" />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <HBox alignItems="Center" class="table-toolbar">
+                        <Title level="H4" text="{i18n>LABEL_22065}" />
+                    </HBox>
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.roleDescription.fragment.Content4" type="XML" />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <HBox alignItems="Center" class="table-toolbar">
+                        <Title level="H4" text="{i18n>LABEL_22066}" />
+                    </HBox>
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.roleDescription.fragment.Content5" type="XML" />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <HBox alignItems="Center" class="table-toolbar">
+                        <Title level="H2" text="{i18n>LABEL_22067}" />
+                    </HBox>
+                    <HBox alignItems="Center" class="table-toolbar">
+                        <Title level="H4" text="{i18n>LABEL_22068}" />
+                    </HBox>
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.roleDescription.fragment.Content6" type="XML" />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <HBox alignItems="Center" class="table-toolbar">
+                        <Title level="H4" text="{i18n>LABEL_22069}" />
+                    </HBox>
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.roleDescription.fragment.Content7" type="XML" />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <HBox alignItems="Center" class="table-toolbar">
+                        <Title level="H4" text="{i18n>LABEL_22070}" />
+                    </HBox>
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.roleDescription.fragment.Content8" type="XML" />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <HBox alignItems="Center" class="table-toolbar">
+                        <Title level="H2" text="{i18n>LABEL_22071}" />
+                    </HBox>
+                    <HBox alignItems="Center" class="table-toolbar">
+                        <Title level="H4" text="{i18n>LABEL_22072}" />
+                    </HBox>
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.roleDescription.fragment.Content9" type="XML" />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <HBox alignItems="Center" class="table-toolbar">
+                        <Title level="H4" text="{i18n>LABEL_22073}" />
+                    </HBox>
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.roleDescription.fragment.Content10" type="XML" />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <HBox alignItems="Center" class="table-toolbar">
+                        <Title level="H4" text="{i18n>LABEL_22074}" />
+                    </HBox>
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.roleDescription.fragment.Content11" type="XML" />
+                </VBox>
+            </VBox>
+        </HBox>
+    </Page>
+</mvc:View>

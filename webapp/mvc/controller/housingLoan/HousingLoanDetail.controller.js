@@ -164,8 +164,8 @@ sap.ui.define(
 
         oDetailModel.setProperty(
           '/InfoMessage',
-          `<p>${this.getBundleText('MSG_07021')}</p>
-          <p>${this.getBundleText('MSG_07022', sRedText)}</p>`
+          `<p>${this.getBundleText('MSG_07013')}</p>
+          <p>${this.getBundleText('MSG_07005', sRedText)}</p>`
         );
 
         if (sViewKey === 'N' || !sViewKey) {

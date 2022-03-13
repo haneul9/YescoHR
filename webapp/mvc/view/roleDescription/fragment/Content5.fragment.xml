@@ -1,0 +1,26 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:table="sap.ui.table">
+    <table:Table class="row-link" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" rows="{/data/role4/list}" visibleRowCount="{/data/role4/rowCount}" noData="{i18n>MSG_00001}" visible="{/data/isLoaded}" cellClick=".onPress5TableRow">
+        <table:columns>
+            <table:Column width="4%" resizable="false">
+                <Label text="No." />
+                <table:template>
+                    <Text text="{Number}" width="100%" textAlign="Center" />
+                </table:template>
+            </table:Column>
+            <table:Column width="30%" resizable="false">
+                <Label text="{i18n>LABEL_22045}" />
+                <table:template>
+                    <Text text="{Comptx}" width="100%" textAlign="Center" />
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" resizable="false">
+                <Label text="{i18n>LABEL_22046}" />
+                <table:template>
+                    <Text text="{Compdefin}" width="100%" />
+                </table:template>
+            </table:Column>
+        </table:columns>
+    </table:Table>
+</core:FragmentDefinition>

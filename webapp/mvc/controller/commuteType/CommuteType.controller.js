@@ -11,7 +11,6 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date',
-    'sap/m/Size',
   ],
   (
     // prettier 방지용 주석
@@ -23,9 +22,7 @@ sap.ui.define(
     TextUtils,
     Client,
     ServiceNames,
-    BaseController,
-    Date,
-    Size
+    BaseController
   ) => {
     'use strict';
 

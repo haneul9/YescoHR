@@ -7,7 +7,7 @@
                 <Toolbar height="45px" width="100%">
                     <HBox justifyContent="SpaceBetween" class="table-toolbar">
                         <HBox class="title">
-                            <Title level="H4" text="{i18n>LABEL_10097}" />
+                            <Title level="H4" text="{i18n>LABEL_10056}" />
                         </HBox>
                         <HBox>
                             <Text text="{i18n>MSG_10016}" class="desc-txt"/>

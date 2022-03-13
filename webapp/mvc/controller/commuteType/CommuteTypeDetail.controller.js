@@ -71,7 +71,7 @@ sap.ui.define(
           if (sDataKey === 'N' || !sDataKey) {
             const oView = this.getView();
             const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-            const oTargetData = oListView.getModel().getProperty('/SelectedRow');
+            const [oTargetData] = oListView.getModel().getProperty('/SelectedRow');
 
             const sZyymm = oParameter.zyymm;
             const sSchkz = oParameter.schkz;

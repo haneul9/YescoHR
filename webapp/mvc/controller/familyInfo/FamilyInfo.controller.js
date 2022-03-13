@@ -65,7 +65,7 @@ sap.ui.define(
         const mSelectRow = oViewModel.getProperty('/SelectedRow');
 
         if (!_.isEmpty(mSelectRow) && mSelectRow.ZappStatAl !== '60') {
-          MessageBox.alert(this.getBundleText('MSG_05017'));
+          MessageBox.alert(this.getBundleText('MSG_05008'));
           return;
         } else if (!_.isEmpty(mSelectRow) && mSelectRow.ZappStatAl === '60') {
           oViewModel.setProperty('/parameter', mSelectRow);

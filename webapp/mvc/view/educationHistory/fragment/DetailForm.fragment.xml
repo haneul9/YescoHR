@@ -1,0 +1,50 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:core="sap.ui.core">
+    <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
+        <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
+            <Label text="{i18n>LABEL_31005}"/>
+            <VBox>
+                <Text text="{/FormData/Lcnam}"/>
+                <layoutData>
+                    <grid:GridItemLayoutData gridColumn="2 / 5"/>
+                </layoutData>
+            </VBox>
+            <Label text="{i18n>LABEL_31015}"/>
+            <VBox>
+                <Text text="{/FormData/Zyear}"/>
+            </VBox>
+            <Label text="{i18n>LABEL_31009}"/>
+            <VBox>
+                <Text text="{/FormData/Lccnt}"/>
+            </VBox>
+            <Label text="{i18n>LABEL_31003}"/>
+            <VBox>
+                <Text text="{
+                    parts:[ {path: '/FormData/Begda'}, {path: '/FormData/Endda'} ], 
+                    formatter: '.eduPeriod'
+                }"/>
+            </VBox>
+            <Label text="{i18n>LABEL_31004}"/>
+            <VBox>
+                <Text text="{/FormData/LctypTxt}"/>
+            </VBox>
+            <Label text="{i18n>LABEL_31017}"/>
+            <VBox>
+                <Text text="{/FormData/OrgcdTxt}"/>
+            </VBox>
+            <Label text="{i18n>LABEL_00144}"/>
+            <VBox>
+                <Text text="{/FormData/StatusTxt}"/>
+            </VBox>
+            <Label text="{i18n>LABEL_31016}"/>
+            <VBox>
+                <Text text="{/FormData/Point} / {/FormData/Total}"/>
+            </VBox>
+            <Label text="{i18n>LABEL_31018}"/>
+            <VBox>
+                <Text text="{/FormData/Passc}"/>
+            </VBox>
+        </grid:CSSGrid>
+    </VBox>
+</core:FragmentDefinition>

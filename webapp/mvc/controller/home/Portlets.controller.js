@@ -131,6 +131,10 @@ sap.ui.define(
         const oGrid = this.byId('portlets-grid');
         oGrid.destroyItems();
 
+        if (this.bMobile) {
+          return;
+        }
+
         oGrid.addDragDropConfig(
           new DragInfo({
             sourceAggregation: 'items',

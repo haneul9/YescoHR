@@ -1,0 +1,28 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:custom="sap.ui.yesco.control">
+    <VBox class="portlet portlet-box" visible="{/contents/A04/busy}">
+        <custom:Placeholder />
+    </VBox>
+    <VBox class="portlet portlet-box" visible="{= !${/contents/A04/busy} }">
+        <HBox class="portlet-header">
+            <Title level="H2" text="{i18n>LABEL_28009}" />
+            <Text text="">
+                <layoutData>
+                    <FlexItemData growFactor="1" />
+                </layoutData>
+            </Text>
+            <Image src="asset/image/icon_human_green.svg" width="12px" class="ml-8-px" />
+        </HBox>
+        <VBox class="portlet-body">
+            <layoutData>
+                <FlexItemData growFactor="1" />
+            </layoutData>
+            <core:HTML content='&lt;div id="attendance-a04-chart-container"&gt;&lt;/div&gt;'>
+                <core:layoutData>
+                    <FlexItemData growFactor="1" />
+                </core:layoutData>
+            </core:HTML>
+        </VBox>
+    </VBox>
+</core:FragmentDefinition>

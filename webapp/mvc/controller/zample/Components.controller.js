@@ -131,6 +131,43 @@ sap.ui.define(
         this.pRejectDialog.then((oDialog) => oDialog.open());
       },
 
+      openSearchDialog() {
+        const oView = this.getView();
+
+        if (!this.pRejectDialog) {
+          this.pRejectDialog = Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.mvc.view.zample.fragment.SearchDialog',
+            controller: this,
+          }).then((oDialog) => {
+            oView.addDependent(oDialog);
+            return oDialog;
+          });
+        }
+        this.pRejectDialog.then((oDialog) => oDialog.open());
+      },
+
+      openSearchFieldDialog() {
+        const oView = this.getView();
+
+        if (!this.pRejectDialog) {
+          this.pRejectDialog = Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.mvc.view.zample.fragment.SearchFieldDialog',
+            controller: this,
+          }).then((oDialog) => {
+            oView.addDependent(oDialog);
+            return oDialog;
+          });
+        }
+        this.pRejectDialog.then((oDialog) => oDialog.open());
+      },
+
+      onDialogClose() {
+        this.byId('searchDialog').close();
+        this.byId('searchFieldDialog').close();
+      },
+      
       onEmployeeClose() {
         this.byId('employeeDialog').close();
       },

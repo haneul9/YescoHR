@@ -4,7 +4,6 @@ sap.ui.define(
     'sap/ui/core/Fragment',
     'sap/ui/model/Filter',
     'sap/ui/model/json/JSONModel',
-    'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/Debuggable',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -16,7 +15,6 @@ sap.ui.define(
     Fragment,
     Filter,
     JSONModel,
-    AppUtils,
     Debuggable,
     Client,
     ServiceNames
@@ -30,7 +28,7 @@ sap.ui.define(
       constructor: function (oController) {
         this.oController = oController;
         this.oDialogModel = new JSONModel(this.getInitialData());
-        this.oDialogModel.setSizeLimit(1000);
+        this.oDialogModel.setSizeLimit(10000);
 
         this.init();
       },
@@ -52,19 +50,23 @@ sap.ui.define(
         });
 
         this.oDialog
-          .attachBeforeOpen(() => {
-            // this.onChangeSearchDialogOnlyUnread();
+          .attachAfterOpen(() => {
+            $('#sap-ui-blocklayer-popup').toggleClass('half-dialog', true);
+          })
+          .attachAfterClose(() => {
+            $('#sap-ui-blocklayer-popup').toggleClass('half-dialog', false);
           })
           .setModel(this.oDialogModel)
           .bindElement('/');
 
         oView.addDependent(this.oDialog);
 
-        this.prepareSuggestionData();
+        this.setBusy(false);
       },
 
-      async prepareSuggestionData() {
-        const aEmployees = await this.readSuggestionData();
+      async showSuggestionData(sTerm) {
+        this.setBusy(true);
+        const aEmployees = await this.readSuggestionData(sTerm);
         aEmployees.forEach((o) => {
           o.Pernr = o.Pernr.replace(/^0+/, '');
         });
@@ -73,29 +75,35 @@ sap.ui.define(
         this.setBusy(false);
       },
 
-      async readSuggestionData() {
+      async readSuggestionData(sTerm) {
         const oModel = this.oController.getModel(ServiceNames.COMMON);
         const mFilters = {
           Stat2: '3',
           Accty: 'Z',
         };
 
+        if (/[0-9]+/.test(sTerm)) {
+          mFilters.Pernr = sTerm;
+        } else {
+          mFilters.Ename = sTerm;
+        }
+
         return Client.getEntitySet(oModel, 'EmpSearchResult', mFilters);
       },
 
-      onSelectSuggestion(oEvent) {
-        const oInput = oEvent.getSource();
-        const oSelectedSuggestionRow = oEvent.getParameter('selectedRow');
-        if (oSelectedSuggestionRow) {
-          const oContext = oSelectedSuggestionRow.getBindingContext();
-          oInput.setValue(oContext.getProperty('Pernr'));
+      onSuggest(oEvent) {
+        const sTerm = oEvent.getParameter('suggestValue');
+        this.showSuggestionData(sTerm);
 
-          const sRowPath = oInput.getParent().getBindingContext().getPath();
-          this.oDialogModel.setProperty(`${sRowPath}/EnameA`, oContext.getProperty('Ename'));
-          this.oDialogModel.setProperty(`${sRowPath}/OrgtxA`, oContext.getProperty('Fulln'));
-          this.oDialogModel.setProperty(`${sRowPath}/ZzjikgbtA`, oContext.getProperty('Zzjikgbt'));
-        }
-        oInput.getBinding('suggestionRows').filter([]);
+        // const oInput = oEvent.getSource();
+        // this._oOpenSearchProvider.suggest(sTerm, (sValue, aSuggestions) => {
+        //   if (sValue === oInput.getValue()) {
+        //     oInput.destroySuggestionItems();
+        //     aSuggestions.forEach((sText) => {
+        //       oInput.addSuggestionItem(new Item({ text: sText }));
+        //     });
+        //   }
+        // });
       },
 
       onLiveChange(oEvent) {
@@ -120,18 +128,6 @@ sap.ui.define(
         this.oController.byId('emp-search-list').getBinding('items').filter(aFilters);
       },
 
-      async onChangeMobilePushOnOff(oEvent) {
-        try {
-          this.setBusy(true);
-
-          // await this.showContentData();
-        } catch (oError) {
-          AppUtils.handleError(oError);
-        } finally {
-          this.setBusy(false);
-        }
-      },
-
       onDialogToggle() {
         if (this.oDialog.isOpen()) {
           this.onDialogClose();
@@ -142,10 +138,6 @@ sap.ui.define(
 
       onDialogClose() {
         this.oDialog.close();
-      },
-
-      getSearchDialogModel() {
-        return this.oDialogModel;
       },
 
       setBusy(bBusy = true) {

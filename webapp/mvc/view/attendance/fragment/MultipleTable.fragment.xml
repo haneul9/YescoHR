@@ -3,16 +3,16 @@
   xmlns:core="sap.ui.core">
   <table:Table id="approveMultipleTable" selectionMode="{/form/listMode}" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/form/list}" visibleRowCount="{/form/rowCount}" noData="{i18n>MSG_00001}">
     <table:columns>
-      <table:Column width="12%">
+      <table:Column width="10%" headerSpan="4">
         <table:multiLabels>
-          <Label text="{i18n>LABEL_04010}" />
+          <Label text="{i18n>LABEL_04011}" />
           <Label text="{i18n>LABEL_04010}" />
         </table:multiLabels>
         <table:template>
-          <Text text="{Atext}" width="100%" textAlign="Center" />
+          <Text text="{Atext2}" width="100%" textAlign="Center" />
         </table:template>
       </table:Column>
-      <table:Column width="12%" headerSpan="3">
+      <table:Column width="12%">
         <table:multiLabels>
           <Label text="{i18n>LABEL_04011}" />
           <Label text="{i18n>LABEL_00148}" />
@@ -30,13 +30,22 @@
           <Text text="{ path: 'Endda2', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
         </table:template>
       </table:Column>
-      <table:Column width="8%">
+      <table:Column width="6%">
         <table:multiLabels>
           <Label text="{i18n>LABEL_04011}" />
           <Label text="{i18n>LABEL_00155}" />
         </table:multiLabels>
         <table:template>
-          <Text text="{AbrtgTxt2}" width="100%" textAlign="Center" />
+          <Text text="{ path: 'Abrtg2', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" />
+        </table:template>
+      </table:Column>
+      <table:Column width="10%" headerSpan="4">
+        <table:multiLabels>
+          <Label text="{i18n>LABEL_04012}" />
+          <Label text="{i18n>LABEL_04010}" />
+        </table:multiLabels>
+        <table:template>
+          <Text text="{Atext}" width="100%" textAlign="Center" />
         </table:template>
       </table:Column>
       <table:Column width="12%" headerSpan="3">
@@ -57,16 +66,16 @@
           <Text text="{ path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
         </table:template>
       </table:Column>
-      <table:Column width="8%">
+      <table:Column width="6%">
         <table:multiLabels>
           <Label text="{i18n>LABEL_04012}" />
           <Label text="{i18n>LABEL_00155}" />
         </table:multiLabels>
         <table:template>
-          <Text text="{AbrtgTxt}" width="100%" textAlign="Center" />
+          <Text text="{ path: 'Abrtg', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" />
         </table:template>
       </table:Column>
-      <table:Column width="24%">
+      <table:Column width="auto">
         <table:multiLabels>
           <Label text="{i18n>LABEL_04013}" />
           <Label text="{i18n>LABEL_04013}" />

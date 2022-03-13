@@ -585,6 +585,8 @@
             <HBox>
               <Button width="117px" text="사원검색" press=".openEmployeeDialog" />
               <Button width="117px" text="Dialog Test" press=".openTestDialog" />
+              <Button width="117px" text="선택" press=".openSearchDialog" />
+              <Button text="Search Field" press=".openSearchFieldDialog" />
             </HBox>
           </VBox>
         </HBox>

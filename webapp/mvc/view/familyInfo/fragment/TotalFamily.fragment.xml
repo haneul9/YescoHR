@@ -11,7 +11,7 @@
                     path: '/Total/Famcnt',
                     formatter: '.formatNumber'
                 }" state="Indication05" class="sapUiSmallMarginBottom" />
-                <Text text="{i18n>MSG_05018}" />
+                <Text text="{i18n>MSG_05007}" />
             </HBox>
             <HBox class="desc pt-16-px">
                 <Text text="{i18n>MSG_05003}"/>

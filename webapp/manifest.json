@@ -140,6 +140,9 @@
         
         { "pattern": "m/commuteConfirm", "name": "m/commuteConfirm", "target": "m/commuteConfirm" },
 
+        { "pattern": "educationHistory", "name": "educationHistory", "target": "educationHistory" },
+        { "pattern": "educationHistory/{oDataKey}", "name": "educationHistory-detail", "target": "educationHistoryDetail" },
+
         { "pattern": "employee/:pernr:/:orgtx:/:orgeh:", "name": "employee", "target": "employee" },
         { "pattern": "employeeView/{pernr}", "name": "employee-view", "target": "employeeView" },
         { "pattern": "m/employee", "name": "m/employee", "target": "m/employee" },
@@ -166,6 +169,9 @@
         { "pattern": "individualWorkState", "name": "individualWorkState", "target": "individualWorkState" },
         
         { "pattern": "jobCompetency", "name": "jobCompetency", "target": "jobCompetency" },
+        { "pattern": "jobCompetency/:objid:/:title:", "name": "jobCompetency-view", "target": "jobCompetencyView" },
+        { "pattern": "jobDefine", "name": "jobDefine", "target": "jobDefine" },
+        { "pattern": "jobDefine/:objid:", "name": "jobDefine-view", "target": "jobDefineView" },
 
         { "pattern": "m/leave", "name": "m/leave", "target": "m/leave" },
         
@@ -190,6 +196,7 @@
         
         { "pattern": "m/overviewEmployee", "name": "m/overviewEmployee", "target": "m/overviewEmployee" },
         { "pattern": "m/overviewOnOff", "name": "m/overviewOnOff", "target": "m/overviewOnOff" },
+        { "pattern": "m/overviewAttendance", "name": "m/overviewAttendance", "target": "m/overviewAttendance" },
 
         { "pattern": "paystub", "name": "paystub", "target": "paystub" },
         { "pattern": "paystub/{seqnr}", "name": "paystub-detail", "target": "paystubDetail" },
@@ -213,6 +220,8 @@
         
         { "pattern": "referenceRoom", "name": "referenceRoom", "target": "referenceRoom" },
         { "pattern": "h/referenceRoom", "name": "h/referenceRoom", "target": "referenceRoom" },
+        
+        { "pattern": "m/roleDescription", "name": "m/roleDescription", "target": "m/roleDescription" },
 
         { "pattern": "studentFunds", "name": "studentFunds", "target": "studentFunds" },
         { "pattern": "studentFunds/{oDataKey}", "name": "studentFunds-detail", "target": "studentFundsDetail" },
@@ -275,10 +284,13 @@
         
         "commuteType": { "viewId": "commuteType", "viewPath": "sap.ui.yesco.mvc.view.commuteType", "viewName": "CommuteType" },
         "commuteTypeDetail": { "viewId": "commuteTypeDetail", "viewPath": "sap.ui.yesco.mvc.view.commuteType", "viewName": "CommuteTypeDetail" },
-
+        
         "m/commuteConfirm": { "viewId": "m_commuteConfirm", "viewPath": "sap.ui.yesco.mvc.view.commuteConfirm", "viewName": "commuteConfirm" },
         
         "consolidAppBox": { "viewId": "consolidAppBox", "viewPath": "sap.ui.yesco.mvc.view.consolidAppBox", "viewName": "ConsolidAppBox" },
+
+        "educationHistory": { "viewId": "educationHistory", "viewPath": "sap.ui.yesco.mvc.view.educationHistory", "viewName": "EducationHistory" },
+        "educationHistoryDetail": { "viewId": "educationHistoryDetail", "viewPath": "sap.ui.yesco.mvc.view.educationHistory", "viewName": "EducationHistoryDetail" },
         
         "employee": { "viewId": "employee", "viewPath": "sap.ui.yesco.mvc.view.employee", "viewName": "Employee" },
         "employeeView": { "viewId": "employeeView", "viewPath": "sap.ui.yesco.mvc.view.employee", "viewName": "Document" },
@@ -305,6 +317,9 @@
         "individualWorkState": { "viewId": "individualWorkState", "viewPath": "sap.ui.yesco.mvc.view.individualWorkState", "viewName": "IndiWorkState" },
         
         "jobCompetency": { "viewId": "jobCompetency", "viewPath": "sap.ui.yesco.mvc.view.jobCompetency", "viewName": "JobCompetency" },
+        "jobCompetencyView": { "viewId": "jobCompetencyView", "viewPath": "sap.ui.yesco.mvc.view.jobCompetency", "viewName": "CompetencyView" },
+        "jobDefine": { "viewId": "jobDefine", "viewPath": "sap.ui.yesco.mvc.view.jobCompetency", "viewName": "JobDefine" },
+        "jobDefineView": { "viewId": "jobDefineView", "viewPath": "sap.ui.yesco.mvc.view.jobCompetency", "viewName": "JobView" },
 
         "m/leave": { "viewId": "m_leave", "viewPath": "sap.ui.yesco.mvc.view.leave", "viewName": "App" },
 
@@ -326,6 +341,7 @@
         
         "m/overviewEmployee": { "viewId": "m_overviewEmployee", "viewPath": "sap.ui.yesco.mvc.view.overviewEmployee", "viewName": "Main" },
         "m/overviewOnOff": { "viewId": "m_overviewOnOff", "viewPath": "sap.ui.yesco.mvc.view.overviewOnOff", "viewName": "Main" },
+        "m/overviewAttendance": { "viewId": "m_overviewAttendance", "viewPath": "sap.ui.yesco.mvc.view.overviewAttendance", "viewName": "Main" },
         
         "paystub": { "viewId": "paystub", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "List" },
         "paystubDetail": { "viewId": "paystubDetail", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "Detail" },
@@ -343,6 +359,8 @@
         "performanceView": { "viewId": "performanceView", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "Document" },
         
         "referenceRoom": { "viewId": "referenceRoom", "viewPath": "sap.ui.yesco.mvc.view.referenceRoom", "viewName": "ReferenceRoom" },
+
+        "m/roleDescription": { "viewId": "m_roleDescription", "viewPath": "sap.ui.yesco.mvc.view.roleDescription", "viewName": "Main" },
 
         "studentFunds": { "viewId": "studentFunds", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFunds" },
         "studentFundsDetail": { "viewId": "studentFundsDetail", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFundsDetail" },
