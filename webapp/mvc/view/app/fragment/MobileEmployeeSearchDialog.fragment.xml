@@ -3,7 +3,7 @@
   <Dialog contentWidth="100%" contentHeight="300px" showHeader="false" verticalScrolling="false" busy="{busy}" busyIndicatorDelay="0" class="half-dialog">
     <content>
       <VBox>
-        <Input selectedKey="{searchField}" id="emp-search-field" placeholder="{i18n>LABEL_00211}" width="100%" liveChange=".onLiveChange" class="mb-20-px" />
+        <Input selectedKey="{searchField}" id="emp-search-field" placeholder="{i18n>LABEL_00211}" width="100%" startSuggestion="2" suggest=".onSuggest" class="mb-20-px" />
         <ScrollContainer horizontal="false" vertical="true" width="100%" height="100%">
           <layoutData>
             <FlexItemData maxHeight="300px" />
@@ -37,7 +37,7 @@
                       <FlexItemData baseSize="15%" />
                     </layoutData>
                   </Text>
-                  <Button type="Transparent" class="icon-button" icon="asset/image/icon_phone.svg" />
+                  <Button type="Transparent" class="icon-button" icon="/asset/image/icon_phone.svg" />
                 </HBox>
               </CustomListItem>
             </List>

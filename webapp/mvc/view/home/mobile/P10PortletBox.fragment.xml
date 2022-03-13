@@ -31,33 +31,36 @@
           <HBox width="100%" class="no-data" visible="{= ${listCount} === 0 }">
             <Text text="{i18n>MSG_00001}" />
           </HBox>
-          <VBox width="100%" height="100%" items="{list}" visible="{= ${listCount} &gt; 0 }">
-            <HBox width="100%" height="28px" alignItems="Center">
-              <core:Icon src="sap-icon://color-fill" width="16px" height="16px" class="pr-5-px">
-                <core:customData>
-                  <core:CustomData key="appraisal-chart-color" value="{Color}" writeToDom="true" />
-                </core:customData>
-              </core:Icon>
-              <Text text="{Itext}" tooltip="{Itext}" wrapping="false">
-                <layoutData>
-                  <FlexItemData growFactor="1" maxWidth="72%" />
-                </layoutData>
-              </Text>
-              <Text text="{Perce}%" wrapping="false">
-                <layoutData>
-                  <FlexItemData baseSize="10%" />
-                </layoutData>
-              </Text>
-              <Text text="{Atext}" wrapping="false">
-                <layoutData>
-                  <FlexItemData baseSize="10%" />
-                </layoutData>
-                <customData>
-                  <core:CustomData key="appraisal-status-color" value="{Acode}" writeToDom="true" />
-                </customData>
-              </Text>
-            </HBox>
-          </VBox>
+          <HBox width="100%" visible="{= ${listCount} &gt; 0 }">
+            <VBox width="21px" height="100%" items="{list}">
+              <HBox width="100%" height="28px" alignItems="Center">
+                <core:Icon src="sap-icon://color-fill" width="16px" height="16px" class="pr-5-px">
+                  <core:customData>
+                    <core:CustomData key="appraisal-chart-color" value="{Color}" writeToDom="true" />
+                  </core:customData>
+                </core:Icon>
+              </HBox>
+            </VBox>
+            <VBox width="calc(100% - 96px)" height="100%" items="{list}" class="pr-5-px">
+              <HBox height="28px" alignItems="Center">
+                <Text text="{Itext}" tooltip="{Itext}" wrapping="false" />
+              </HBox>
+            </VBox>
+            <VBox width="35px" height="100%" items="{list}">
+              <HBox width="100%" height="28px" alignItems="Center">
+                <Text text="{Perce}%" wrapping="false" />
+              </HBox>
+            </VBox>
+            <VBox width="40px" height="100%" items="{list}">
+              <HBox width="100%" height="28px" alignItems="Center">
+                <Text text="{Atext}" wrapping="false">
+                  <customData>
+                    <core:CustomData key="appraisal-status-color" value="{Acode}" writeToDom="true" />
+                  </customData>
+                </Text>
+              </HBox>
+            </VBox>
+          </HBox>
         </ScrollContainer>
       </VBox>
     </HBox>

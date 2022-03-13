@@ -199,9 +199,10 @@ html.sap-phone .sapMDialog.sapMDialogStretched { border: none; box-shadow: 0;bor
 .sapUiMedia-Std-Phone .sapMDialog.sapMComboBoxBasePicker .sapMBtnInner.sapMBtnDefault {background-color: #1D87BD;border-color: #1D87BD;color: #ffffff!important;}
 
 
-.sapMDialog.half-dialog {width:100%!important;min-width: 100%!important;height:50vh!important;top:50%!important;bottom:0px!important;left:0!important;right:0!important;border-radius:0;}
+.sapMDialog.half-dialog {width:100%!important;min-width:100%!important;height:50vh!important;top:auto!important;bottom:60px!important;left:0!important;right:0!important;border-radius:0;padding-bottom:0}
 .sapMDialog.half-dialog .sapMDialogSection{padding:20px;background-color: #F4F5F7;}
 .sapMDialog.half-dialog .sapMFlexBoxScroll {overflow: auto;}
+#sap-ui-blocklayer-popup.half-dialog {bottom:60px}
 
 .sapMITBSelected>.sapMITBContentArrow {border-bottom: 2px solid; border-bottom-color: #1E7DB3; height: 15px !important;}
 

@@ -75,7 +75,7 @@ sap.ui.define(
                 .css({ 'grid-column': `span ${iWidth}`, 'grid-row': `span ${iHeight}` });
 
               const iPortletHeight = oPortletModel.getProperty('/height');
-              oPortletBox.addStyleClass(`portlet-h${iPortletHeight}`);
+              oSiblingPortletBox.addStyleClass(`portlet-h${iPortletHeight}`);
 
               this.setPortletBox(oSiblingPortletBox);
             }
