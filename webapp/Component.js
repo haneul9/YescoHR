@@ -378,6 +378,8 @@ sap.ui.define(
           return;
         }
 
+        if (AppUtils.isLOCAL()) return;
+
         const oModel = this.getModel(ServiceNames.COMMON);
         const sUrl = 'GetMenuidRole';
         const mFilters = {

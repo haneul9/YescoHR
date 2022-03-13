@@ -115,7 +115,7 @@ sap.ui.define(
 
           oEventSource.setValue(this.TextUtils.toCurrency(sBeforeRepay));
           oDetailModel.setProperty('/DialogData/RpamtMpr', sBeforeRepay);
-          MessageBox.alert(this.getBundleText('MSG_07023'));
+          MessageBox.alert(this.getBundleText('MSG_07004'));
         } else {
           oEventSource.setValue(sValue);
           oDetailModel.setProperty('/DialogData/RpamtMpr', sValue);
@@ -532,7 +532,7 @@ sap.ui.define(
 
         // 상환일
         if (sType === 'C' && mDialogData.Paydt > moment().toDate() && mDialogData.Rptyp === 'FULL') {
-          MessageBox.alert(this.getBundleText('MSG_07024'));
+          MessageBox.alert(this.getBundleText('MSG_07003'));
           return true;
         }
 

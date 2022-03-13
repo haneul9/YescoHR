@@ -814,7 +814,7 @@ sap.ui.define(
               });
 
               if (bSucces) {
-                MessageBox.alert(oDetailController.getController().getBundleText('MSG_09061'));
+                MessageBox.alert(oDetailController.getController().getBundleText('MSG_09016'));
                 oViewModel.setProperty('/DialogData/Recpgb', 'ALL');
                 return;
               }

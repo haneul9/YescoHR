@@ -1,0 +1,62 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:table="sap.ui.table">
+    <table:Table id="roleDesc6Table" class="row-link" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" rows="{/data/role5/list}" visibleRowCount="{/data/role5/rowCount}" noData="{i18n>MSG_00001}" visible="{/Define/isLoaded}" cellClick=".onPress6TableRow">
+        <table:columns>
+            <table:Column width="8%" resizable="false">
+                <table:multiLabels>
+                    <Label text="{i18n>LABEL_22050}" />
+                    <Label text="{i18n>LABEL_22050}" />
+                </table:multiLabels>
+                <table:template>
+                    <Text text="{Number}" width="100%" textAlign="Center" />
+                </table:template>
+            </table:Column>
+            <table:Column width="14%" resizable="false" headerSpan="3">
+                <table:multiLabels>
+                    <Label text="{i18n>LABEL_22014}" />
+                    <Label text="{i18n>LABEL_00218}" />
+                </table:multiLabels>
+                <table:template>
+                    <Text text="{Jobgrtx}" width="100%" textAlign="Center" />
+                </table:template>
+            </table:Column>
+            <table:Column width="14%" resizable="false">
+                <table:multiLabels>
+                    <Label text="{i18n>LABEL_22014}" />
+                    <Label text="{i18n>LABEL_22025}" />
+                </table:multiLabels>
+                <table:template>
+                    <Text text="{Jobfmtx}" width="100%" textAlign="Center" />
+                </table:template>
+            </table:Column>
+            <table:Column width="14%" resizable="false">
+                <table:multiLabels>
+                    <Label text="{i18n>LABEL_22014}" />
+                    <Label text="{i18n>LABEL_22026}" />
+                </table:multiLabels>
+                <table:template>
+                    <Text text="{Stelltx}" width="100%" textAlign="Center" />
+                </table:template>
+            </table:Column>
+            <table:Column width="12%" resizable="false">
+                <table:multiLabels>
+                    <Label text="{i18n>LABEL_22013}" />
+                    <Label text="{i18n>LABEL_22013}" />
+                </table:multiLabels>
+                <table:template>
+                    <Text text="{Zzmtndy}" width="40px" textAlign="Center" />
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" resizable="false">
+                <table:multiLabels>
+                    <Label text="{i18n>LABEL_22012}" />
+                    <Label text="{i18n>LABEL_22012}" />
+                </table:multiLabels>
+                <table:template>
+                    <Text text="{Zzmdcls}" width="100%" textAlign="Center" />
+                </table:template>
+            </table:Column>
+        </table:columns>
+    </table:Table>
+</core:FragmentDefinition>

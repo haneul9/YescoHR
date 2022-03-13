@@ -143,14 +143,14 @@ sap.ui.define(
               _.set(mFilters, 'Appno', sAppno);
             }
 
-            const mResultData = await this.readLeaveApplEmpList(mFilters);
+            const aResultData = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'LeaveApplEmpList', mFilters);
 
-            oViewModel.setProperty('/ZappStatAl', mResultData.ZappStatAl);
+            oViewModel.setProperty('/ZappStatAl', _.get(aResultData, [0, 'ZappStatAl']));
             oViewModel.setProperty('/form/listMode', 'None');
 
-            this.setTableData({ sType, oViewModel, aRowData: [mResultData] });
-            this.initializeApplyInfoBox(mResultData);
-            this.initializeApprovalBox(mResultData);
+            this.setTableData({ sType, oViewModel, aRowData: aResultData });
+            this.initializeApplyInfoBox(aResultData[0]);
+            this.initializeApprovalBox(aResultData[0]);
           } else {
             oViewModel.setProperty('/form/dialog/awartCodeList', await this.readAwartCodeList());
 
@@ -766,7 +766,7 @@ sap.ui.define(
             throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_04006', 'LABEL_04023') }); // {반차1}의 일자에는 입력이 불가합니다. 다시 입력하여 주십시오.
           }
           if (_.toNumber(mHalf2.Abrtg) !== 0.5) {
-            throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_04006', 'LABEL_04024') }); // {반차2}의 일자에는 입력이 불가합니다. 다시 입력하여 주십시오.
+            throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_04006', 'LABEL_04007') }); // {반차2}의 일자에는 입력이 불가합니다. 다시 입력하여 주십시오.
           }
 
           const oTable = this.byId('dialogChangeTable');

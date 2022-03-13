@@ -1,6 +1,75 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core">
-  <HBox class="contents">
-
+  <HBox class="contents" justifyContent="SpaceBetween">
+    <VBox width="520px" height="69vh" class="vCardBox sapUiMediumMarginEnd" visible="{/isView}">
+      <ScrollContainer height="64vh" width="100%" vertical="true">
+        <Tree id="DefineTree" mode="SingleSelectMaster" items="{path: '/Define/tree'}" selectionChange=".onTreeDefinePress">
+          <layoutData>
+            <FlexItemData growFactor="1" />
+          </layoutData>
+          <CustomTreeItem>
+            <HBox>
+              <Image src="asset/image/icon_tree_node02.svg" visible="{= ${Otype} === 'C' }" />
+              <Text text="{Stext}"/>
+            </HBox>
+          </CustomTreeItem>
+        </Tree>
+      </ScrollContainer>
+    </VBox>
+    <VBox width="100%" class="mt-0-px">
+      <!-- <ScrollContainer height="69vh" width="100%" vertical="true"> -->
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <HBox alignItems="Center" class="table-toolbar">
+          <Title level="H2" text="{i18n>LABEL_22015}" />
+        </HBox>
+        <HBox alignItems="Center" class="table-toolbar">
+          <Title level="H4" text="{i18n>LABEL_22016}" />
+        </HBox>
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.jobCompetency.fragment.jopDefine.Content1" type="XML" />
+      </VBox>
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <HBox alignItems="Center" class="table-toolbar">
+          <Title level="H4" text="{i18n>LABEL_22017}" />
+        </HBox>
+        <TextArea width="100%" value="{/Define/descriptionM/Zzdefin}" growing="true" enabled="false" />
+      </VBox>
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <HBox alignItems="Center" class="table-toolbar">
+          <Title level="H4" text="{i18n>LABEL_22018}" />
+        </HBox>
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.jobCompetency.fragment.jopDefine.Content2" type="XML" />
+      </VBox>
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <HBox alignItems="Center" class="table-toolbar">
+          <Title level="H2" text="{i18n>LABEL_22019}" />
+        </HBox>
+        <HBox alignItems="Center" class="table-toolbar">
+          <Title level="H4" text="{i18n>LABEL_22020}" />
+        </HBox>
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.jobCompetency.fragment.jopDefine.Content3" type="XML" />
+      </VBox>
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <HBox alignItems="Center" class="table-toolbar">
+          <Title level="H4" text="{i18n>LABEL_22021}" />
+        </HBox>
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.jobCompetency.fragment.jopDefine.Content4" type="XML" />
+      </VBox>
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <HBox alignItems="Center" class="table-toolbar">
+          <Title level="H4" text="{i18n>LABEL_22022}" />
+        </HBox>
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.jobCompetency.fragment.jopDefine.Content5" type="XML" />
+      </VBox>
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <HBox alignItems="Center" class="table-toolbar">
+          <Title level="H2" text="{i18n>LABEL_22023}" />
+        </HBox>
+        <HBox alignItems="Center" class="table-toolbar">
+          <Title level="H4" text="{i18n>LABEL_22024}" />
+        </HBox>
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.jobCompetency.fragment.jopDefine.Content6" type="XML" />
+      </VBox>
+      <!-- </ScrollContainer> -->
+    </VBox>
   </HBox>
 </core:FragmentDefinition>

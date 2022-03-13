@@ -127,11 +127,11 @@ sap.ui.define(
 
       getWeekHeader() {
         const aWeekNames = _.times(7, (e) => {
-          return `${this.oController.getBundleText(`LABEL_180${e + 35}`)}`; // 월,화,수,목,금,토,일
+          return `${this.oController.getBundleText(`LABEL_180${e + 25}`)}`; // 월,화,수,목,금,토,일
         });
         const mWeekHeaders = aWeekNames.map((o) => this.getBoxObject({ label: o, classNames: 'Header' }));
 
-        return [this.getBoxObject({ label: this.oController.getBundleText('LABEL_17005'), classNames: 'Header' }), ...mWeekHeaders, ...mWeekHeaders, ...mWeekHeaders, ...mWeekHeaders, ...mWeekHeaders, this.getBoxObject({ label: this.oController.getBundleText('LABEL_18035'), classNames: 'Header' }), this.getBoxObject({ label: this.oController.getBundleText('LABEL_18036'), classNames: 'Header' })];
+        return [this.getBoxObject({ label: this.oController.getBundleText('LABEL_17005'), classNames: 'Header' }), ...mWeekHeaders, ...mWeekHeaders, ...mWeekHeaders, ...mWeekHeaders, ...mWeekHeaders, this.getBoxObject({ label: this.oController.getBundleText('LABEL_18025'), classNames: 'Header' }), this.getBoxObject({ label: this.oController.getBundleText('LABEL_18026'), classNames: 'Header' })];
       },
 
       getActivationDayBody(iMonth, iDay) {

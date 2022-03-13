@@ -11,11 +11,11 @@
       <Label text="{i18n>LABEL_31003}" design="Bold" />
       <custom:DateRangeSelection dateValue="{ path: '/search/date', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/search/secondDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" />
       <Label text="{i18n>LABEL_31004}" design="Bold" />
-      <ComboBox items="{/EduType}" selectedKey="{/search/Lntyp}">
+      <ComboBox items="{/EduType}" selectedKey="{/search/Lctyp}">
         <core:Item text="{Ztext}" key="{Zcode}" />
       </ComboBox>
       <Label text="{i18n>LABEL_31005}" design="Bold" />
-      <Input value="{/FormData/Lntyptx}" submit=".onSearch" />
+      <Input value="{/search/Lcnam}" submit=".onSearch" />
     </grid:CSSGrid>
   </VBox>
 </core:FragmentDefinition>

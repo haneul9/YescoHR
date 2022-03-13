@@ -117,7 +117,7 @@
           </table:template>
         </table:Column>
         <table:Column width="150px" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
-          <Label text="{i18n>LABEL_09028}"/>
+          <Label text="{i18n>LABEL_09001}"/>
           <table:template>
             <Text text="{
                 path: 'Ttmon',

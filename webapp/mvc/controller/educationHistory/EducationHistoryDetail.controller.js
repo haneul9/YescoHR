@@ -2,35 +2,26 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/yesco/control/MessageBox',
-    'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/TableUtils',
-    'sap/ui/yesco/common/odata/Client',
-    'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date',
   ],
   (
     // prettier 방지용 주석
-    MessageBox,
-    Appno,
     AppUtils,
-    AttachFileAction,
     FragmentEvent,
     TextUtils,
     TableUtils,
-    Client,
-    ServiceNames,
     BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.educationHistory.EducationHistoryDetail', {
-      AttachFileAction: AttachFileAction,
+      LIST_PAGE_ID: 'container-ehr---educationHistory',
+
       TextUtils: TextUtils,
       TableUtils: TableUtils,
       FragmentEvent: FragmentEvent,
@@ -38,10 +29,14 @@ sap.ui.define(
       initializeModel() {
         return {
           FormData: {},
-          Settings: {},
-          WorkType: [],
           busy: false,
         };
+      },
+
+      eduPeriod(v1 = moment().toDate(), v2 = moment().toDate()) {
+        v1 = moment(v1).format('YYYY.MM.DD');
+        v2 = moment(v2).format('YYYY.MM.DD');
+        return `${v1} ~ ${v2}`;
       },
 
       // setData
@@ -51,40 +46,13 @@ sap.ui.define(
         oDetailModel.setData(this.initializeModel());
 
         try {
-          // Input Field Imited
-          oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.WORKTIME, 'WorkScheduleApply')));
           oDetailModel.setProperty('/busy', true);
 
-          const sPernr = this.getAppointeeProperty('Pernr');
-          const oModel = this.getModel(ServiceNames.WORKTIME);
-          // 대상자리스트
-          const aOtpList = await Client.getEntitySet(oModel, 'SchkzList', {
-            Pernr: sPernr,
-          });
+          const oView = this.getView();
+          const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+          const mParameters = oListView.getModel().getProperty('/parameters');
 
-          oDetailModel.setProperty('/WorkType', aOtpList);
-
-          const sDataKey = oParameter.oDataKey;
-
-          if (sDataKey === 'N' || !sDataKey) {
-            const oView = this.getView();
-            const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
-            const oTargetData = oListView.getModel().getProperty('/SelectedRow');
-
-            const sZyymm = oParameter.zyymm;
-            const sSchkz = oParameter.schkz;
-
-            oDetailModel.setProperty('/FormData', {
-              Appno: oTargetData.Appno,
-              Pernr: sPernr,
-              Zyymm: sZyymm,
-              Schkz: sSchkz,
-            });
-            oDetailModel.setProperty('/ApplyInfo', oTargetData);
-            oDetailModel.setProperty('/ApprovalDetails', oTargetData);
-          }
-
-          this.settingsAttachTable();
+          oDetailModel.setProperty('/FormData', mParameters);
         } catch (oError) {
           this.debug(oError);
           AppUtils.handleError(oError);
@@ -93,86 +61,8 @@ sap.ui.define(
         }
       },
 
-      // override AttachFileCode
-      getApprovalType() {
-        return 'HR19';
-      },
-
       getCurrentLocationText(oArguments) {
-        const sAction = oArguments.oDataKey === 'N' ? this.getBundleText('LABEL_04002') : this.getBundleText('LABEL_00165');
-
-        return sAction;
-      },
-
-      // 신청
-      async onApplyBtn() {
-        if (!AttachFileAction.getFileCount.call(this)) {
-          //  증빙자료를 꼭 등록하세요.
-          return MessageBox.alert(this.getBundleText('MSG_00040'));
-        }
-
-        // {신청}하시겠습니까?
-        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
-          // 신청, 취소
-          actions: [this.getBundleText('LABEL_00121'), this.getBundleText('LABEL_00118')],
-          onClose: async (vPress) => {
-            // 신청
-            if (!vPress || vPress !== this.getBundleText('LABEL_00121')) {
-              return;
-            }
-
-            try {
-              AppUtils.setAppBusy(true, this);
-
-              const oDetailModel = this.getViewModel();
-              const sAppno = oDetailModel.getProperty('/FormData/Appno');
-
-              if (!sAppno || _.parseInt(sAppno) === 0) {
-                const sAppno = await Appno.get.call(this);
-
-                oDetailModel.setProperty('/FormData/Appno', sAppno);
-                oDetailModel.setProperty('/FormData/Appda', new Date());
-              }
-
-              const oModel = this.getModel(ServiceNames.WORKTIME);
-              const oFormData = oDetailModel.getProperty('/FormData');
-              let oSendObject = {
-                ...oFormData,
-                Prcty: 'C',
-              };
-
-              // FileUpload
-              await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
-              await Client.create(oModel, 'WorkScheduleApply', oSendObject);
-
-              // {신청}되었습니다.
-              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
-                onClose: () => {
-                  this.onNavBack();
-                },
-              });
-            } catch (oError) {
-              AppUtils.handleError(oError);
-            } finally {
-              AppUtils.setAppBusy(false, this);
-            }
-          },
-        });
-      },
-
-      // AttachFileTable Settings
-      settingsAttachTable() {
-        const oDetailModel = this.getViewModel();
-        const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
-        const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
-
-        AttachFileAction.setAttachFile(this, {
-          Editable: !sStatus,
-          Type: this.getApprovalType(),
-          Message: this.getBundleText('MSG_00040'),
-          Appno: sAppno,
-          Max: 10,
-        });
+        return this.getBundleText('LABEL_00165');
       },
     });
   }

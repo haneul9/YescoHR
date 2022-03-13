@@ -9,7 +9,7 @@
     </buttons>
     <content>
       <VBox class="vCardBox">
-        <Text text="{i18n>MSG_27010}" class="desc-txt mb-3-px font-18-px" />
+        <Text text="{i18n>MSG_27002}" class="desc-txt mb-3-px font-18-px" />
         <grid:CSSGrid gridTemplateColumns="1fr 2fr 1fr 2fr" gridGap="1px 0" class="form-grid">
           <Label text="{i18n>LABEL_27004}"/>
           <HBox>

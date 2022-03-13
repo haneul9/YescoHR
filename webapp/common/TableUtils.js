@@ -190,6 +190,14 @@ sap.ui.define(
                   oPrevTD = oTD;
                 }
               });
+
+              $(sId)
+                .get()
+                .forEach((oTD) => {
+                  $(oTD)
+                    .find('span')
+                    .text(_.split($(oTD).text(), '--', 1));
+                });
             });
           },
         });

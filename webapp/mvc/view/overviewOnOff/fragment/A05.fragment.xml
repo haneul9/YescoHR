@@ -6,7 +6,7 @@
     </VBox>
     <VBox class="portlet portlet-box" visible="{= !${/contents/A05/busy} }">
         <HBox class="portlet-header">
-            <Title level="H2" text="{i18n>LABEL_28043}" />
+            <Title level="H2" text="{i18n>LABEL_28027}" />
             <Text text="">
                 <layoutData>
                     <FlexItemData growFactor="1" />
@@ -39,11 +39,12 @@
                             <core:CustomData key="Headty" value="{/contents/A05/Headty}" />
                             <core:CustomData key="Discod" value="{code}" />
                         </custom:customData>
-                        <Label text="{label}" class="legend">
+                        <Label text="{label} :" class="legend">
                             <customData>
                                 <core:CustomData key="legend" value="{type}" writeToDom="true" />
                             </customData>
                         </Label>
+                        <Text text=" {count}" />
                     </custom:HBox>
                 </VBox>
             </VBox>

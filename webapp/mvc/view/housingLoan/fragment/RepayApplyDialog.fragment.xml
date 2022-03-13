@@ -66,7 +66,7 @@
                     <HBox>
                         <Text text="{/DialogData/ZappResn}" visible="{= ${/DialogData/Lnsta} === '45' }"/>
                     </HBox>
-                    <Label text="{i18n>LABEL_07047}"/>
+                    <Label text="{i18n>LABEL_07017}"/>
                     <VBox>
                         <Text text="{/DialogData/Account}"/>
                     </VBox>

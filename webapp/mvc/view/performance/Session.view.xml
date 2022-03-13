@@ -10,7 +10,6 @@
                 <HBox>
                     <Button text="{i18n>LABEL_00103}" class="sapUiTinyMarginEnd" type="Emphasized" visible="{/isActive}" press=".onPressSave" />
                     <Button text="{i18n>LABEL_00117}" class="sapUiTinyMarginEnd" type="Emphasized" visible="{/isActive}" press=".onPressComplete" />
-                    <Button text="{i18n>LABEL_00146}" class="sapUiTinyMarginEnd" press=".onNavBack" />
                     <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
                     <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
                 </HBox>
