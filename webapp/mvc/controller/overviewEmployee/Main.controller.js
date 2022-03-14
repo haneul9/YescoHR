@@ -28,9 +28,13 @@ sap.ui.define(
         return {
           busy: false,
           searchConditions: {
-            Begda: moment().hours(9).toDate(),
+            Zyear: moment().format('YYYY'),
+            Wekrs: '',
             Orgeh: '',
-            entryOrgeh: [],
+          },
+          entry: {
+            Wekrs: [],
+            Orgeh: [],
           },
           contents: {
             A01: { busy: false, data: {} },
@@ -53,12 +57,26 @@ sap.ui.define(
         };
       },
 
-      onObjectMatched() {
+      async onObjectMatched() {
+        const oViewModel = this.getViewModel();
+
         try {
           this.setAllBusy(true);
 
+          const oCommonModel = this.getModel(ServiceNames.COMMON);
+          const mAppointee = this.getAppointeeData();
+          const [aPersaEntry, aOrgehEntry] = await Promise.all([
+            Client.getEntitySet(oCommonModel, 'PersAreaList', { Pernr: mAppointee.Pernr }), //
+            Client.getEntitySet(oCommonModel, 'DashboardOrgList', { Werks: mAppointee.Werks, Pernr: mAppointee.Pernr }),
+          ]);
+
+          oViewModel.setProperty('/entry/Wekrs', aPersaEntry);
+          oViewModel.setProperty('/entry/Orgeh', aOrgehEntry);
+          oViewModel.setProperty('/searchConditions/Wekrs', mAppointee.Werks);
+          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
+
           const oModel = this.getModel(ServiceNames.PA);
-          const mFilters = { Zyear: '2022' };
+          const mFilters = oViewModel.getProperty('/searchConditions');
 
           _.forEach(ChartsSetting.CHART_TYPE, (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
         } catch (oError) {
@@ -279,7 +297,22 @@ sap.ui.define(
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
-      onPressSearch() {},
+      onPressSearch() {
+        const oViewModel = this.getViewModel();
+
+        try {
+          this.setAllBusy(true);
+
+          const oModel = this.getModel(ServiceNames.PA);
+          const mFilters = oViewModel.getProperty('/searchConditions');
+
+          _.forEach(ChartsSetting.CHART_TYPE, (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
+        } catch (oError) {
+          this.debug('Controller > m/overviewEmployee Main > onPressSearch Error', oError);
+
+          AppUtils.handleError(oError);
+        }
+      },
 
       onPressCount(oEvent) {
         if (oEvent['getSource'] instanceof Function) {
