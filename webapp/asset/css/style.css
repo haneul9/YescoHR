@@ -2007,7 +2007,7 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 #employee-a02-chart-container {height:66px;}
 #employee-a06-chart-container {height:76px;}
 
-/* .sapMDialog.sapMDialog-NoHeader .sapMDialogSection {padding-top:25px;} */
+.sapMDialog.sapMDialog-NoHeader .sapMDialogSection {padding-top:25px;}
 
 .table-box .sapMLabel { font-size: 14px; font-weight: 500; }
 .table-box .sapMLabel, .table-box .sapMText { height: 100%; }
