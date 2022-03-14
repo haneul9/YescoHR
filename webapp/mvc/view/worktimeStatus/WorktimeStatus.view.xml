@@ -1,0 +1,28 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.worktimeStatus.WorktimeStatus"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:custom="sap.ui.yesco.control">
+  <Page showHeader="false">
+    <content>
+      <VBox class="contents-header">
+        <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+          <custom:Breadcrumbs />
+          <HBox>
+            <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onClick" class="sapUiTinyMarginEnd" />
+            <Button icon="sap-icon://print" press=".onPagePrint" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" />
+            <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" />
+          </HBox>
+        </HBox>
+      </VBox>
+      <VBox class="contents">
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.worktimeStatus.fragment.SearchCondition" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.worktimeStatus.fragment.WorkTimePortlet" type="XML" />
+        <VBox class="vCardBox">
+          <core:Fragment fragmentName="sap.ui.yesco.fragment.OverviewTableHeader" type="XML" />
+          <core:Fragment fragmentName="sap.ui.yesco.mvc.view.worktimeStatus.fragment.ApplyListTable" type="XML" />
+        </VBox>
+      </VBox>
+    </content>
+  </Page>
+</mvc:View>
