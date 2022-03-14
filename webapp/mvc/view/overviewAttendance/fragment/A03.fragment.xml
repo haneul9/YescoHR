@@ -1,19 +1,13 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core"
-    xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:custom="sap.ui.yesco.control">
     <VBox class="portlet portlet-box" visible="{/contents/A03/busy}">
-        <layoutData>
-            <grid:GridItemLayoutData gridColumn="span 2" />
-        </layoutData>
         <custom:Placeholder />
     </VBox>
     <VBox class="portlet portlet-box" visible="{= !${/contents/A03/busy} }">
-        <layoutData>
-            <grid:GridItemLayoutData gridColumn="span 2" />
-        </layoutData>
         <HBox class="portlet-header">
-            <Title level="H2" text="{i18n>LABEL_28020}" />
+            <Title level="H2" text="{i18n>LABEL_28021}" />
+            <Text class="desc-txt" text="3/7~3/13" />
             <Text text="">
                 <layoutData>
                     <FlexItemData growFactor="1" />
@@ -21,15 +15,21 @@
             </Text>
             <Image src="asset/image/icon_human_green.svg" width="12px" class="ml-8-px" />
         </HBox>
-        <VBox class="portlet-body">
+        <HBox class="portlet-body">
             <layoutData>
                 <FlexItemData growFactor="1" />
             </layoutData>
-            <core:HTML content='&lt;div id="attendance-a03-chart-container"&gt;&lt;/div&gt;'>
-                <core:layoutData>
-                    <FlexItemData growFactor="1" />
-                </core:layoutData>
-            </core:HTML>
-        </VBox>
+            <VBox width="30%" height="100%">
+                <Label text="{i18n>LABEL_28042}" class="font-16-px"/>
+                <Label text="{/contents/A03/data/Cnt01}" class="font-38-px color-03 normal ls-small"/>
+            </VBox>
+            <VBox width="70%">
+                <core:HTML content='&lt;div id="attendance-a03-chart-container"&gt;&lt;/div&gt;'>
+                    <core:layoutData>
+                        <FlexItemData growFactor="1" />
+                    </core:layoutData>
+                </core:HTML>
+            </VBox>
+        </HBox>
     </VBox>
 </core:FragmentDefinition>

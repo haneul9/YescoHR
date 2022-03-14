@@ -2,18 +2,18 @@
     xmlns:core="sap.ui.core"
     xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:custom="sap.ui.yesco.control">
-    <VBox class="portlet portlet-box" visible="{/contents/A07/busy}">
+    <VBox class="portlet portlet-box" visible="{/contents/A10/busy}">
         <layoutData>
             <grid:GridItemLayoutData gridColumn="span 2" />
         </layoutData>
         <custom:Placeholder />
     </VBox>
-    <VBox class="portlet portlet-box" visible="{= !${/contents/A07/busy} }">
+    <VBox class="portlet portlet-box" visible="{= !${/contents/A10/busy} }">
         <layoutData>
             <grid:GridItemLayoutData gridColumn="span 2" />
         </layoutData>
         <HBox class="portlet-header">
-            <Title level="H2" text="{i18n>LABEL_28020}" />
+            <Title level="H2" text="{i18n>LABEL_28007}" />
             <Text text="">
                 <layoutData>
                     <FlexItemData growFactor="1" />
@@ -25,7 +25,7 @@
             <layoutData>
                 <FlexItemData growFactor="1" />
             </layoutData>
-            <core:HTML content='&lt;div id="attendance-a07-chart-container"&gt;&lt;/div&gt;'>
+            <core:HTML content='&lt;div id="attendance-a10-chart-container"&gt;&lt;/div&gt;'>
                 <core:layoutData>
                     <FlexItemData growFactor="1" />
                 </core:layoutData>
