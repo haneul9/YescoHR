@@ -20,11 +20,11 @@
           <Label text="{i18n>LABEL_28001}" />
           <custom:DatePicker dateValue="{ path: '/searchConditions/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" />
           <Label text="{i18n>LABEL_00237}" />
-          <ComboBox items="{/searchConditions/entryPersa}" selectedKey="{/searchConditions/Persa}">
-            <core:Item text="{Pertx}" key="{Persa}" />
+          <ComboBox items="{/entry/Werks}" selectedKey="{/searchConditions/Werks}" change=".onChangeWerks">
+            <core:Item text="{Pbtxt}" key="{Werks}" />
           </ComboBox>
           <Label text="{i18n>LABEL_00224}" />
-          <ComboBox items="{/searchConditions/entryOrgeh}" selectedKey="{/searchConditions/Orgeh}">
+          <ComboBox items="{/entry/Orgeh}" selectedKey="{/searchConditions/Orgeh}">
             <core:Item text="{Orgtx}" key="{Orgeh}" />
           </ComboBox>
           <Button text="{i18n>LABEL_00100}" icon="asset/image/icon_search03.png" press=".onPressSearch"/>
