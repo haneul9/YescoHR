@@ -91,6 +91,7 @@ sap.ui.define(
                 .tap((obj) => _.forEach(mChartInfo.Fields, (o) => _.set(obj, o.prop, _.get(aChartDatas, o.path))))
                 .value()
             );
+            oViewModel.setProperty(`/contents/${mChartInfo.Target}/data/Cnt01`, 300);
 
             _.chain(mChartSetting).set(['chart', 'caption'], this.getBundleText('LABEL_01130')).set(['chart', 'plottooltext'], this.getBundleText('LABEL_01131', 0)).set('value', 0).commit();
 

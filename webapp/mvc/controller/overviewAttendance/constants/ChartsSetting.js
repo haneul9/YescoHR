@@ -51,6 +51,8 @@ sap.ui.define([], function () {
           theme: 'ocean',
           chartTopMargin: 0,
           chartBottomMargin: 0,
+          // chartRightMargin: 0,
+          // chartLeftMargin: 0,
           cylFillColor: '#30c4ee',
           cylYScale: 10,
         },

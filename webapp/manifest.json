@@ -166,6 +166,9 @@
         { "pattern": "housingLoan", "name": "housingLoan", "target": "housingLoan" },
         { "pattern": "housingLoan/{oDataKey}", "name": "housingLoan-detail", "target": "housingLoanDetail" },
         { "pattern": "housingLoanRepay/{oDataKey}/:lonid:", "name": "housingLoan-repay", "target": "housingLoanRepay" },
+        
+        { "pattern": "historyAppraisal", "name": "historyAppraisal", "target": "historyAppraisal" },
+        { "pattern": "m/historyAppraisal", "name": "m/historyAppraisal", "target": "m/historyAppraisal" },
 
         { "pattern": "individualWorkState", "name": "individualWorkState", "target": "individualWorkState" },
         
@@ -319,6 +322,9 @@
         "housingLoan": { "viewId": "housingLoan", "viewPath": "sap.ui.yesco.mvc.view.housingLoan", "viewName": "HousingLoan" },
         "housingLoanDetail": { "viewId": "housingLoanDetail", "viewPath": "sap.ui.yesco.mvc.view.housingLoan", "viewName": "HousingLoanDetail" },
         "housingLoanRepay": { "viewId": "housingLoanRepay", "viewPath": "sap.ui.yesco.mvc.view.housingLoan", "viewName": "HousingLoanRepayment" },
+        
+        "historyAppraisal": { "viewId": "historyAppraisal", "viewPath": "sap.ui.yesco.mvc.view.historyAppraisal", "viewName": "MainE" },
+        "m/historyAppraisal": { "viewId": "m_historyAppraisal", "viewPath": "sap.ui.yesco.mvc.view.historyAppraisal", "viewName": "MainM" },
 
         "individualWorkState": { "viewId": "individualWorkState", "viewPath": "sap.ui.yesco.mvc.view.individualWorkState", "viewName": "IndiWorkState" },
         
