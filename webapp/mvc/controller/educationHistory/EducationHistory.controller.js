@@ -3,6 +3,7 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
+    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
@@ -16,6 +17,7 @@ sap.ui.define(
     // prettier 방지용 주석
     AppUtils,
     AttachFileAction,
+    EmployeeSearch,
     ComboEntry,
     FragmentEvent,
     TableUtils,
@@ -28,6 +30,7 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.educationHistory.EducationHistory', {
       AttachFileAction: AttachFileAction,
+      EmployeeSearch: EmployeeSearch,
       TableUtils: TableUtils,
       TextUtils: TextUtils,
       FragmentEvent: FragmentEvent,
@@ -35,6 +38,7 @@ sap.ui.define(
       initializeModel() {
         return {
           busy: false,
+          PageId: this.isHass() ? 'h/educationHistory-detail' : 'educationHistory-detail',
           EduList: [],
           EduType: [],
           parameters: {},
@@ -202,7 +206,7 @@ sap.ui.define(
         const oRowData = oListModel.getProperty(vPath);
 
         oListModel.setProperty('/parameters', oRowData);
-        this.getRouter().navTo('educationHistory-detail', { oDataKey: oRowData.Lcnam });
+        this.getRouter().navTo(oListModel.getProperty('/PageId'), { oDataKey: oRowData.Lcnam });
       },
 
       onPressExcelDownload() {
