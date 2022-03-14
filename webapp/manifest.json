@@ -141,6 +141,7 @@
         { "pattern": "m/commuteConfirm", "name": "m/commuteConfirm", "target": "m/commuteConfirm" },
 
         { "pattern": "educationHistory", "name": "educationHistory", "target": "educationHistory" },
+        { "pattern": "h/educationHistory", "name": "h/educationHistory", "target": "h/educationHistory" },
         { "pattern": "educationHistory/{oDataKey}", "name": "educationHistory-detail", "target": "educationHistoryDetail" },
 
         { "pattern": "employee/:pernr:/:orgtx:/:orgeh:", "name": "employee", "target": "employee" },
@@ -239,6 +240,9 @@
         
         { "pattern": "workTimeChange", "name": "workTimeChange", "target": "workTimeChange" },
         { "pattern": "workTimeChange/{oDataKey}", "name": "workTimeChange-detail", "target": "workTimeChangeDetail" },
+        
+        { "pattern": "m/worktimeStatus", "name": "m/worktimeStatus", "target": "m/worktimeStatus" },
+        { "pattern": "m/worktimeStatus/{oDataKey}", "name": "m/worktimeStatus-detail", "target": "m/worktimeStatusDetail" },
 
         { "pattern": "sampleComponents", "name": "sampleComponents", "target": "sampleComponents" },
         { "pattern": "sampleTimeline", "name": "sampleTimeline", "target": "sampleTimeline" },
@@ -289,6 +293,7 @@
         
         "consolidAppBox": { "viewId": "consolidAppBox", "viewPath": "sap.ui.yesco.mvc.view.consolidAppBox", "viewName": "ConsolidAppBox" },
 
+        "h/educationHistory": { "viewId": "h_educationHistory", "viewPath": "sap.ui.yesco.mvc.view.educationHistory", "viewName": "EducationHistory" },
         "educationHistory": { "viewId": "educationHistory", "viewPath": "sap.ui.yesco.mvc.view.educationHistory", "viewName": "EducationHistory" },
         "educationHistoryDetail": { "viewId": "educationHistoryDetail", "viewPath": "sap.ui.yesco.mvc.view.educationHistory", "viewName": "EducationHistoryDetail" },
         
@@ -376,6 +381,9 @@
 
         "workTimeChange": { "viewId": "workTimeChange", "viewPath": "sap.ui.yesco.mvc.view.workTimeChange", "viewName": "WorkTimeChange" },
         "workTimeChangeDetail": { "viewId": "workTimeChangeDetail", "viewPath": "sap.ui.yesco.mvc.view.workTimeChange", "viewName": "WorkTimeChangeDetail" },
+
+        "m/worktimeStatus": { "viewId": "m_worktimeStatus", "viewPath": "sap.ui.yesco.mvc.view.worktimeStatus", "viewName": "WorktimeStatus" },
+        "m/worktimeStatusDetail": { "viewId": "m_worktimeStatusDetail", "viewPath": "sap.ui.yesco.mvc.view.worktimeStatus", "viewName": "WorktimeStatusDetail" },
 
         "sampleComponents": { "viewId": "sampleComponents", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Components", "title": "Components" },
         "sampleTimeline": { "viewId": "sampleTimeline", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Timeline", "title": "Timeline" },
