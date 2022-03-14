@@ -16,29 +16,29 @@
     </VBox>
     <VBox class="contents">
       <HBox class="vCardBox" justifyContent="SpaceBetween" height="80px">
-        <HBox class="form-bar" alignItems="Center" >
+        <HBox class="form-bar" alignItems="Center">
           <Label text="{i18n>LABEL_28001}" />
-          <custom:DatePicker dateValue="{ path: '/searchConditions/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" />
+          <DatePicker width="250px" displayFormat="yyyy" valueFormat="yyyy" value="{/searchConditions/Zyear}" />
           <Label text="{i18n>LABEL_00237}" />
-          <ComboBox items="{/searchConditions/entryPersa}" selectedKey="{/searchConditions/Persa}">
-            <core:Item text="{Pertx}" key="{Persa}" />
+          <ComboBox items="{/entry/Werks}" selectedKey="{/searchConditions/Werks}" change=".onChangeWerks">
+            <core:Item text="{Pbtxt}" key="{Werks}" />
           </ComboBox>
           <Label text="{i18n>LABEL_00224}" />
-          <ComboBox items="{/searchConditions/entryOrgeh}" selectedKey="{/searchConditions/Orgeh}">
+          <ComboBox items="{/entry/Orgeh}" selectedKey="{/searchConditions/Orgeh}">
             <core:Item text="{Orgtx}" key="{Orgeh}" />
           </ComboBox>
           <Button text="{i18n>LABEL_00100}" icon="asset/image/icon_search03.png" press=".onPressSearch"/>
         </HBox>
         <VBox justifyContent="Center" alignItems="Center">
-        <HBox>
-          <HBox justifyContent="SpaceBetween" alignItems="Center">
-            <Image src="asset/image/icon_human_green.svg" width="12px" />
-            <Text text="{i18n>LABEL_28003}" class="pl-8-px font-11-px display-flex" />
-          </HBox>
-          <HBox class="ml-16-px" justifyContent="SpaceBetween" alignItems="Center">
-            <Image src="asset/image/icon_human_orange.svg" width="12px" />
-            <Text text="{i18n>LABEL_28004}" class="pl-8-px font-11-px display-flex" />
-          </HBox>
+          <HBox>
+            <HBox justifyContent="SpaceBetween" alignItems="Center">
+              <Image src="asset/image/icon_human_green.svg" width="12px" />
+              <Text text="{i18n>LABEL_28003}" class="pl-8-px font-11-px display-flex" />
+            </HBox>
+            <HBox class="ml-16-px" justifyContent="SpaceBetween" alignItems="Center">
+              <Image src="asset/image/icon_human_orange.svg" width="12px" />
+              <Text text="{i18n>LABEL_28004}" class="pl-8-px font-11-px display-flex" />
+            </HBox>
           </HBox>
         </VBox>
       </HBox>

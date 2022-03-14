@@ -1,0 +1,86 @@
+<c:FragmentDefinition xmlns="sap.m"
+    xmlns:table="sap.ui.table"
+    xmlns:c="sap.ui.core">
+    <table:Table id="apprHistoryTable" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" rows="{/history/list}" visibleRowCount="{/history/rowCount}" busyIndicatorDelay="0" busy="{/history/busy}" noData="{i18n>MSG_00001}">
+        <table:columns>
+            <table:Column width="auto" filterProperty="Pernr" sortProperty="Pernr" visible="{/history/visible/Pernr}">
+                <Label text="{i18n>LABEL_00209}"/>
+                <table:template>
+                    <Text text="{ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" filterProperty="Ename" sortProperty="Ename" visible="{/history/visible/Ename}">
+                <Label text="{i18n>LABEL_00210}"/>
+                <table:template>
+                    <Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" filterProperty="Zyear" sortProperty="Zyear" visible="{/history/visible/Zyear}">
+                <Label text="{i18n>LABEL_15005}"/>
+                <table:template>
+                    <Text text="{Zyear}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" filterProperty="Zzjikgbt" sortProperty="Zzjikgbt">
+                <Label text="{i18n>LABEL_00215}"/>
+                <table:template>
+                    <Text text="{Zzjikgbt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" filterProperty="Zzjikcht" sortProperty="Zzjikcht">
+                <Label text="{i18n>LABEL_00217}"/>
+                <table:template>
+                    <Text text="{Zzjikcht}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </table:template>
+            </table:Column>
+            <table:Column width="15%" filterProperty="Orgtx" sortProperty="Orgtx">
+                <Label text="{i18n>LABEL_00224}"/>
+                <table:template>
+                    <Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" filterProperty="Dettx" sortProperty="Appty">
+                <Label text="{i18n>LABEL_10006}"/>
+                <table:template>
+                    <Link text="{Apptxt}" class="showLine" width="100%" textAlign="Center" press=".onPressRowPerformance" />
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" filterProperty="Appernr" sortProperty="Pernr">
+                <Label text="{i18n>LABEL_10045}"/>
+                <table:template>
+                    <Link text="{Apptxt}" class="showLine" width="100%" textAlign="Center" press=".onPressRowCompetency" />
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" filterProperty="Apename" sortProperty="Ename">
+                <Label text="{i18n>LABEL_00311}"/>
+                <table:template>
+                    <Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" filterProperty="Atext" sortProperty="Awart">
+                <Label text="{i18n>LABEL_10097}"/>
+                <table:template>
+                    <Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" filterProperty="Atext" sortProperty="Awart" visible="{/history/visible/idp}">
+                <Label text="{i18n>LABEL_10098}"/>
+                <table:template>
+                    <Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </table:template>
+            </table:Column>
+            <table:Column width="auto" filterProperty="Atext" sortProperty="Awart">
+                <Label text="{i18n>LABEL_10099}"/>
+                <table:template>
+                    <Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </table:template>
+            </table:Column>
+            <table:Column width="12%" filterProperty="Atext" sortProperty="Awart">
+                <Label text="{i18n>LABEL_00163}"/>
+                <table:template>
+                    <Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </table:template>
+            </table:Column>
+        </table:columns>
+    </table:Table>
+</c:FragmentDefinition>
