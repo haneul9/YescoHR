@@ -246,7 +246,7 @@
         { "pattern": "workTimeChange", "name": "workTimeChange", "target": "workTimeChange" },
         { "pattern": "workTimeChange/{oDataKey}", "name": "workTimeChange-detail", "target": "workTimeChangeDetail" },
         
-        { "pattern": "m/worktimeStatus", "name": "m/worktimeStatus", "target": "m/worktimeStatus" },
+        { "pattern": "m/worktimeStatus", "name": "m/WorktimeStatus", "target": "m/worktimeStatus" },
         { "pattern": "m/worktimeStatus/{oDataKey}", "name": "m/worktimeStatus-detail", "target": "m/worktimeStatusDetail" },
 
         { "pattern": "sampleComponents", "name": "sampleComponents", "target": "sampleComponents" },

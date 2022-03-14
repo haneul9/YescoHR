@@ -38,10 +38,17 @@ sap.ui.define(
         return {
           busy: false,
           Data: [],
-          MyWork: {},
+          AreaList: [],
+          OrgList: [],
+          GubunList: [
+            { Zcode: '1', Ztext: this.getBundleText('LABEL_32009') }, // 개인별
+            { Zcode: '2', Ztext: this.getBundleText('LABEL_32010') }, // 조직별
+          ],
           search: {
-            secondDate: moment().subtract(1, 'month').add(1, 'day').toDate(),
-            date: moment().toDate(),
+            Zyymm: moment().format('yyyyMM'),
+            Werks: this.getAppointeeProperty('Werks'),
+            Orgeh: '',
+            Disty: '1',
           },
           listInfo: {
             rowCount: 1,
@@ -61,37 +68,46 @@ sap.ui.define(
         try {
           oListModel.setProperty('/busy', true);
 
-          const mPernr = {};
+          const oCommonModel = this.getModel(ServiceNames.COMMON);
+          const mAppointee = this.getAppointeeData();
 
-          if (this.isHass()) {
-            const sPernr = this.getAppointeeProperty('Pernr');
+          const [aAreaList, aOrgList] = await Promise.all([
+            Client.getEntitySet(oCommonModel, 'PersAreaList'),
+            Client.getEntitySet(oCommonModel, 'DashboardOrgList', {
+              Pernr: mAppointee.Pernr,
+              Werks: mAppointee.Werks,
+            }),
+          ]);
 
-            mPernr.Pernr = sPernr;
-          }
+          oListModel.setProperty('/AreaList', aAreaList);
+          oListModel.setProperty('/OrgList', aOrgList);
 
-          const mMyWorkPayLoad = {
-            Menid: this.getCurrentMenuId(),
-            ...mPernr,
-          };
+          oListModel.setProperty('/search', {
+            Zyymm: moment().format('yyyyMM'),
+            Werks: mAppointee.Werks,
+            Orgeh: aOrgList[0].Orgeh,
+            Disty: '1',
+          });
+
           const oModel = this.getModel(ServiceNames.WORKTIME);
           // 나의 근무시간현황
-          const [aMyWork] = await Client.getEntitySet(oModel, 'WorkingTime', mMyWorkPayLoad);
+          // const [aMyWork] = await Client.getEntitySet(oModel, 'WorkingTime', mMyWorkPayLoad);
 
-          oListModel.setProperty('/MyWork', aMyWork);
-          this.buildDialChart(aMyWork);
+          // oListModel.setProperty('/MyWork', aMyWork);
+          // this.buildDialChart(aMyWork);
 
-          const mSearch = oListModel.getProperty('/search');
-          const mPayLoad = {
-            Apbeg: moment(mSearch.secondDate).hours(9).toDate(),
-            Apend: moment(mSearch.date).hours(9).toDate(),
-            Menid: this.getCurrentMenuId(),
-            ...mPernr,
-          };
-          const aTableList = await Client.getEntitySet(oModel, 'OtworkChangeApply', mPayLoad);
-          const oTable = this.byId('workTable');
+          // const mSearch = oListModel.getProperty('/search');
+          // const mPayLoad = {
+          //   Apbeg: moment(mSearch.secondDate).hours(9).toDate(),
+          //   Apend: moment(mSearch.date).hours(9).toDate(),
+          //   Menid: this.getCurrentMenuId(),
+          //   ...mPernr,
+          // };
+          // const aTableList = await Client.getEntitySet(oModel, 'OtworkChangeApply', mPayLoad);
+          // const oTable = this.byId('workTable');
 
-          oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
-          oListModel.setProperty('/List', aTableList);
+          // oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
+          // oListModel.setProperty('/List', aTableList);
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -137,7 +153,7 @@ sap.ui.define(
               id: this.sDialChartId,
               type: 'bar2d',
               renderAt: 'chart-bar-container',
-              width: '50%',
+              width: '100%',
               height: '170px',
               dataFormat: 'json',
               dataSource: {
@@ -209,17 +225,8 @@ sap.ui.define(
         return !sTime ? '0' : `${sTime.slice(-4, -2)}:${sTime.slice(-2)}`;
       },
 
-      formatWeek(sWeek = '') {
-        return `${this.getBundleText('MSG_27001', sWeek)}`;
-      },
-
       onClick() {
         this.getRouter().navTo('workTimeChange-detail', { oDataKey: 'N' });
-      },
-
-      // override AttachFileCode
-      getApprovalType() {
-        return 'HR18';
       },
 
       async onSearch() {
@@ -267,7 +274,7 @@ sap.ui.define(
       onPressExcelDownload() {
         const oTable = this.byId('workTable');
         const aTableData = this.getViewModel().getProperty('/List');
-        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_27001');
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_32001'); // {근로시간현황}_목록
 
         TableUtils.export({ oTable, aTableData, sFileName });
       },
