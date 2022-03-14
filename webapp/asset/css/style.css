@@ -2008,6 +2008,7 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 #employee-a06-chart-container {height:76px;}
 
 .sapMDialog.sapMDialog-NoHeader .sapMDialogSection {padding-top:25px;}
+.sapMDialog.sapMDialog-NoHeader .sapMDialogSection .sapMPanelHdr{margin-top:-25px;}
 
 .table-box .sapMLabel { font-size: 14px; font-weight: 500; }
 .table-box .sapMLabel, .table-box .sapMText { height: 100%; }
@@ -2027,7 +2028,22 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .sapMMessagePageContentWrapper {transform: translateY(0rem);}
 
 
-
+.talent-compare-carousel .member-picture {width:69px;height:90px;}
+.talent-compare-carousel .name {font-size:12px;font-weight:600}
+.talent-compare-carousel .sapMLabel {font-size:16px;}
+.talent-compare-carousel .sapMCrslItem {border: 1px solid #DBDBDB;border-radius: 5px;}
+.talent-compare-carousel .sapMCrslItem .wrap {padding:20px;} 
+.talent-compare-carousel .sapMCrslItem .type-01 {border-right: 5px solid #ee0000;}/* 임원 */
+.talent-compare-carousel .sapMCrslItem .type-02 {border-right: 5px solid #A1E094;}/* 팀장 */
+.talent-compare-carousel .sapMCrslItem .type-03 {border-right: 5px solid #FFE479;}/* 팀원 */
+.talent-compare-carousel .sapMCrslControls .sapMCrslPrev, .talent-compare-carousel .sapMCrslHud .sapMCrslPrev, .talent-compare-carousel .sapMCrslControls .sapMCrslNext, .talent-compare-carousel .sapMCrslHud .sapMCrslNext {background-color: rgba(0,0,0,0.05);border: none;color: #000;font-weight: 600;}
+.talent-compare-carousel .sapMCrslHud a{opacity: 1!important;display: block;}
+.talent-compare-carousel .sapMCrslHud a {box-shadow:none;width:40px;height:40px;}
+.talent-compare-carousel .sapMCrsl .sapMCrslHud a:hover, .talent-compare-carousel .sapMCrsl .sapMCrslHud a:focus {background: #898D9C;opacity: 1;display: block;box-shadow:none;}
+.talent-compare-carousel .sapMCrsl .sapMCrslHud a {opacity: 1;display: block;}
+.talent-compare-carousel .sapMCrslHudMiddle a {top: auto; bottom: 10px;}
+.talent-compare-carousel .sapMCrslHud .sapMCrslPrev {left: 0;}
+.talent-compare-carousel .sapMCrslHud .sapMCrslNext {right: 0;}
 
 
 @media screen and (max-width: 480px) {
