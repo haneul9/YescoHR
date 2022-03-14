@@ -29,11 +29,11 @@ sap.ui.define(
           busy: false,
           searchConditions: {
             Zyear: moment().format('YYYY'),
-            Wekrs: '',
+            Werks: '',
             Orgeh: '',
           },
           entry: {
-            Wekrs: [],
+            Werks: [],
             Orgeh: [],
           },
           contents: {
@@ -70,9 +70,9 @@ sap.ui.define(
             Client.getEntitySet(oCommonModel, 'DashboardOrgList', { Werks: mAppointee.Werks, Pernr: mAppointee.Pernr }),
           ]);
 
-          oViewModel.setProperty('/entry/Wekrs', aPersaEntry);
+          oViewModel.setProperty('/entry/Werks', aPersaEntry);
           oViewModel.setProperty('/entry/Orgeh', aOrgehEntry);
-          oViewModel.setProperty('/searchConditions/Wekrs', mAppointee.Werks);
+          oViewModel.setProperty('/searchConditions/Werks', mAppointee.Werks);
           oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
 
           const oModel = this.getModel(ServiceNames.PA);
@@ -297,6 +297,25 @@ sap.ui.define(
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
+      async onChangeWerks() {
+        const oViewModel = this.getViewModel();
+
+        try {
+          const mAppointee = this.getAppointeeData();
+          const aOrgehEntry = Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'DashboardOrgList', {
+            Werks: oViewModel.getProperty('/searchConditions/Werks'),
+            Pernr: mAppointee.Pernr,
+          });
+
+          oViewModel.setProperty('/entry/Orgeh', aOrgehEntry);
+          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
+        } catch (oError) {
+          this.debug('Controller > m/overviewEmployee Main > onPressSearch Error', oError);
+
+          AppUtils.handleError(oError);
+        }
+      },
+
       onPressSearch() {
         const oViewModel = this.getViewModel();
 

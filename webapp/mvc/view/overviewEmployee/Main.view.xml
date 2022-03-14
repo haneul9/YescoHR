@@ -20,7 +20,7 @@
           <Label text="{i18n>LABEL_28001}" />
           <DatePicker width="250px" displayFormat="yyyy" valueFormat="yyyy" value="{/searchConditions/Zyear}" />
           <Label text="{i18n>LABEL_00237}" />
-          <ComboBox items="{/entry/Wekrs}" selectedKey="{/searchConditions/Wekrs}">
+          <ComboBox items="{/entry/Werks}" selectedKey="{/searchConditions/Werks}" change=".onChangeWerks">
             <core:Item text="{Pbtxt}" key="{Werks}" />
           </ComboBox>
           <Label text="{i18n>LABEL_00224}" />
