@@ -37,7 +37,7 @@
         <HBox alignItems="Center" class="table-toolbar">
           <Title level="H2" text="{/Competency/Title}" />
         </HBox>
-        <TextArea enabled="false" value="{/Competency/Defin}" width="100%" />
+        <TextArea class="view-box" enabled="false" value="{/Competency/Defin}" width="100%" />
       </VBox>
       <VBox class="vCardBox sapUiMediumMarginBottom">
         <HBox alignItems="Center" class="table-toolbar">

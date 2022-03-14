@@ -55,7 +55,7 @@
         <HBox alignItems="Center" class="table-toolbar">
           <Title level="H4" text="{i18n>LABEL_22017}" />
         </HBox>
-        <TextArea width="100%" value="{/Define/descriptionM/Zzdefin}" growing="true" enabled="false" />
+        <TextArea width="100%" class="view-box" value="{/Define/descriptionM/Zzdefin}" growing="true" enabled="false" />
       </VBox>
       <VBox class="vCardBox sapUiMediumMarginBottom">
         <HBox alignItems="Center" class="table-toolbar">

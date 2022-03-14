@@ -85,7 +85,7 @@
                     <HBox alignItems="Center" class="table-toolbar">
                         <Title level="H4" text="{i18n>LABEL_22060}" />
                     </HBox>
-                    <TextArea width="100%" value="{/data/roleM/Defin}" growing="true" enabled="false" />
+                    <TextArea width="100%" class="view-box" value="{/data/roleM/Defin}" growing="true" enabled="false" />
                 </VBox>
                 <VBox class="vCardBox sapUiMediumMarginBottom">
                     <HBox alignItems="Center" class="table-toolbar">
@@ -106,7 +106,7 @@
                     <HBox alignItems="Center" class="table-toolbar">
                         <Title level="H4" text="{i18n>LABEL_22064}" />
                     </HBox>
-                    <TextArea width="100%" value="{/data/roleM/Defin2}" growing="true" enabled="false" />
+                    <TextArea width="100%" class="view-box" value="{/data/roleM/Defin2}" growing="true" enabled="false" />
                 </VBox>
                 <VBox class="vCardBox sapUiMediumMarginBottom">
                     <HBox alignItems="Center" class="table-toolbar">
