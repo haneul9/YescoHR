@@ -44,10 +44,10 @@ sap.ui.define([], function () {
         ],
       },
       { Headty: 'B', Target: 'A02', Chart: 'doughnut2d', EntityType: 'HeadCountEntRet' },
-      { Headty: 'E', Target: 'A03', Chart: 'doughnut2d', EntityType: 'HeadCountEntRet' },
+      { Headty: 'E', Target: 'A03', Chart: 'mscombi2d', EntityType: 'HeadCountEntRet' },
       { Headty: 'C', Target: 'A04', Chart: 'bar2d', EntityType: 'HeadCountEntRet' },
       { Headty: 'D', Target: 'A05', Chart: 'doughnut2d', EntityType: 'HeadCountEntRet' },
-      { Headty: 'F', Target: 'A06', Chart: 'doughnut2d', EntityType: 'HeadCountEntRet' },
+      { Headty: 'F', Target: 'A06', Chart: 'mscombi2d', EntityType: 'HeadCountEntRet' },
       { Headty: 'G', Target: 'A07', Chart: 'bar2d', EntityType: 'HeadCountEntRet' },
       { Headty: 'H', Target: 'A08', Chart: 'doughnut2d', EntityType: 'HeadCountEntRet' },
     ],
@@ -117,6 +117,163 @@ sap.ui.define([], function () {
           drawCustomLegendIcon: 1,
         },
         data: [],
+      },
+      mscombi2d: {
+        chart: {
+          showSum: 1,
+          showValues: 1,
+          rotateValues: 0,
+          placeValuesInside: 0,
+          showYAxisValues: 0,
+          yAxisLineThickness: 1,
+          yAxisLineColor: '#ffffff',
+          numDivLines: 0,
+          divLineDashed: 0,
+          divLineColor: '#ffffff',
+          maxColWidth: 25,
+          theme: 'ocean',
+          bgColor: 'transparent',
+          valueFontSize: 9,
+          valueFontColor: '#000000',
+          valueBgColor: 'transparent',
+          showPlotBorder: 0,
+          plotBorderThickness: 3,
+          plotBorderColor: '#ffffff',
+          drawCustomLegendIcon: 1,
+          legendIconSides: 0,
+          chartTopMargin: 0,
+          chartRightMargin: 0,
+          chartBottomMargin: 0,
+          chartLeftMargin: 0,
+        },
+        categories: [
+          {
+            category: [
+              {
+                label: 'Jan',
+              },
+              {
+                label: 'Feb',
+              },
+              {
+                label: 'Mar',
+              },
+              {
+                label: 'Apr',
+              },
+              {
+                label: 'May',
+              },
+              {
+                label: 'Jun',
+              },
+              {
+                label: 'Jul',
+              },
+              {
+                label: 'Aug',
+              },
+              {
+                label: 'Sep',
+              },
+              {
+                label: 'Oct',
+              },
+              {
+                label: 'Nov',
+              },
+              {
+                label: 'Dec',
+              },
+            ],
+          },
+        ],
+        dataset: [
+          {
+            seriesName: 'Actual Revenue',
+            showValues: '1',
+            data: [
+              {
+                value: '16000',
+              },
+              {
+                value: '20000',
+              },
+              {
+                value: '18000',
+              },
+              {
+                value: '19000',
+              },
+              {
+                value: '15000',
+              },
+              {
+                value: '21000',
+              },
+              {
+                value: '16000',
+              },
+              {
+                value: '20000',
+              },
+              {
+                value: '17000',
+              },
+              {
+                value: '25000',
+              },
+              {
+                value: '19000',
+              },
+              {
+                value: '23000',
+              },
+            ],
+          },
+          {
+            seriesName: 'Projected Revenue',
+            renderAs: 'line',
+            data: [
+              {
+                value: '15000',
+              },
+              {
+                value: '16000',
+              },
+              {
+                value: '17000',
+              },
+              {
+                value: '18000',
+              },
+              {
+                value: '19000',
+              },
+              {
+                value: '19000',
+              },
+              {
+                value: '19000',
+              },
+              {
+                value: '19000',
+              },
+              {
+                value: '20000',
+              },
+              {
+                value: '21000',
+              },
+              {
+                value: '22000',
+              },
+              {
+                value: '23000',
+              },
+            ],
+          },
+        ],
       },
     },
   };

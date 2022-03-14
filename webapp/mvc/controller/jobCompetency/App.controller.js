@@ -312,8 +312,14 @@ sap.ui.define(
 
         if (_.isEmpty(mSelectedData.Objid)) return;
 
-        oViewModel.setProperty('/selectedKey', 'A');
-        this.callDefineData(mSelectedData.Objid);
+        if (oViewModel.getProperty('/isView')) {
+          oViewModel.setProperty('/selectedKey', 'A');
+          this.callDefineData(mSelectedData.Objid);
+        } else {
+          const sHost = window.location.href.split('#')[0];
+
+          window.open(`${sHost}#/jobDefine/${mSelectedData.Objid}`, '_blank', 'width=1300,height=800');
+        }
       },
 
       // 행동지표 수준정의 ItemsSettings

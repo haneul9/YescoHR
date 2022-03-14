@@ -1,7 +1,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
@@ -15,7 +14,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    MessageBox,
     AppUtils,
     AttachFileAction,
     ComboEntry,
@@ -41,7 +39,12 @@ sap.ui.define(
           EduType: [],
           parameters: {},
           Total: {},
-          search: {},
+          search: {
+            date: moment().startOf('year').hours(9).toDate(),
+            secondDate: moment().endOf('year').hours(9).toDate(),
+            Lctyp: 'ALL',
+            Lcnam: '',
+          },
           listInfo: {
             rowCount: 1,
             totalCount: 0,
@@ -83,13 +86,6 @@ sap.ui.define(
           const [aMyEdu] = await this.getMyEdu();
 
           oListModel.setProperty('/Total', aMyEdu);
-
-          oListModel.setProperty('/search', {
-            date: moment().startOf('year').hours(9).toDate(),
-            secondDate: moment().endOf('year').hours(9).toDate(),
-            Lctyp: 'ALL',
-            Lcnam: '',
-          });
 
           const aTableList = await this.getEducationList();
           const oTable = this.byId('eduTable');
