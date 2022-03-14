@@ -6,7 +6,7 @@
     </VBox>
     <VBox class="portlet portlet-box" visible="{= !${/contents/A02/busy} }">
         <HBox class="portlet-header">
-            <Title level="H2" text="{i18n>LABEL_28021}" />
+            <Title level="H2" text="{i18n>LABEL_28041}" />
             <Text class="desc-txt" text="3/7~3/13" />
             <Text text="">
                 <layoutData>
@@ -19,26 +19,15 @@
             <layoutData>
                 <FlexItemData growFactor="1" />
             </layoutData>
-            <VBox width="75%">
+            <VBox width="30%" height="100%">
+                <Label text="{/contents/A02/data/Cnt01}" class="font-38-px color-03 normal ls-small"/>
+            </VBox>
+            <VBox width="70%">
                 <core:HTML content='&lt;div id="attendance-a02-chart-container"&gt;&lt;/div&gt;'>
                     <core:layoutData>
                         <FlexItemData growFactor="1" />
                     </core:layoutData>
                 </core:HTML>
-            </VBox>
-            <VBox width="25%" items="{ path: '/contents/A02/data', templateShareable: false }" class="legend-wrap">
-                <custom:HBox justifyContent="SpaceBetween" class="active-link" click=".onPressCount">
-                    <custom:customData>
-                        <core:CustomData key="Headty" value="{/contents/A02/Headty}" />
-                        <core:CustomData key="Discod" value="{Cod01}" />
-                    </custom:customData>
-                    <Label text="{Ttltxt} :" class="legend">
-                        <customData>
-                            <core:CustomData key="legend" value="{Type}" writeToDom="true" />
-                        </customData>
-                    </Label>
-                    <Text text=" {Cnt01}" />
-                </custom:HBox>
             </VBox>
         </HBox>
     </VBox>

@@ -51,6 +51,8 @@
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A06" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A07" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A08" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A09" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A10" type="XML" />
       </grid:CSSGrid>
     </VBox>
   </Page>

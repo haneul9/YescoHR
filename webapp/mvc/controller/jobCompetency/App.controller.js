@@ -283,13 +283,20 @@ sap.ui.define(
 
       onPress2TableRow(oEvent) {
         const oViewModel = this.getViewModel();
-        const oRowData = oEvent.getParameter('rowBindingContext').getObject();
+        const oRowData = oEvent.getSource().getParent().getBindingContext().getObject();
 
         if (_.isEmpty(oRowData.Zzobjid)) return;
 
-        oViewModel.setProperty('/selectedKey', 'B');
-        oViewModel.setProperty('/Competency/Title', oRowData.Zzqulnm);
-        this.callCompetencyData(oRowData.Zzobjid);
+        if (oViewModel.getProperty('/isView')) {
+          oViewModel.setProperty('/selectedKey', 'B');
+          oViewModel.setProperty('/Competency/Title', oRowData.Zzqulnm);
+
+          this.callCompetencyData(oRowData.Zzobjid);
+        } else {
+          const sHost = window.location.href.split('#')[0];
+
+          window.open(`${sHost}#/jobCompetency/${oRowData.Zzobjid}/${oRowData.Zzqulnm}`, '_blank', 'width=1300,height=800');
+        }
       },
 
       // 관련직무 Btn

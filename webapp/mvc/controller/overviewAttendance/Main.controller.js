@@ -35,13 +35,15 @@ sap.ui.define(
           },
           contents: {
             A01: { busy: false, data: {} },
-            A02: { busy: false, data: [] },
-            A03: { busy: false, data: { headty: 'E', raw: [] } },
-            A04: { busy: false },
+            A02: { busy: false, data: { Cnt01: '40.28' } },
+            A03: { busy: false, data: { Cnt01: '2' } },
+            A04: { busy: false, data: { Cnt01: '70.00', Cnt02: '70.00', Cnt03: '100.00', Cnt04: '100.00' } },
             A05: { busy: false, data: [] },
             A06: { busy: false, data: { headty: 'E', raw: [] } },
             A07: { busy: false },
-            A08: { busy: false, data: [] },
+            A08: { busy: false },
+            A09: { busy: false },
+            A10: { busy: false },
           },
           dialog: {
             busy: false,
@@ -74,7 +76,7 @@ sap.ui.define(
 
       async buildChart(oModel, mFilters, mChartInfo) {
         const oViewModel = this.getViewModel();
-        const aChartDatas = await Client.getEntitySet(oModel, mChartInfo.EntityType, { ...mFilters, Headty: mChartInfo.Headty });
+        const aChartDatas = await Client.getEntitySet(oModel, 'HeadCountEntRet', { ...mFilters, Headty: mChartInfo.Headty });
         const vDataObject = oViewModel.getProperty(`/contents/${mChartInfo.Target}/data`);
         const mChartSetting = _.chain(ChartsSetting.CHART_OPTIONS).get(mChartInfo.Chart).cloneDeep().value();
 
@@ -95,12 +97,12 @@ sap.ui.define(
             this.callFusionChart(mChartInfo, mChartSetting);
 
             break;
-          case 'doughnut2d':
+          case 'column2d':
             _.chain(mChartSetting)
-              .set(['chart', 'paletteColors'], _.chain(ChartsSetting.COLORS).take(aChartDatas.length).join(',').value())
+              // .set(['chart', 'yAxisMaxValue'], '200')
               .set(
                 ['data'],
-                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01 }))
+                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callDetail-${mChartInfo.Headty},${o.Cod01}` }))
               )
               .commit();
 
@@ -121,6 +123,30 @@ sap.ui.define(
             break;
           case 'mscombi2d':
             this.callFusionChart(mChartInfo, mChartSetting);
+            break;
+          case 'mscolumn2d':
+            _.chain(mChartSetting)
+              // .set(['data', 'chart', 'yAxisMaxValue'], '60')
+              .set(['categories', 0, 'category'], [{ label: '1W' }, { label: '2W' }, { label: '3W' }, { label: '4W' }, { label: '5W' }])
+              .set(['dataset', 0], {
+                seriesname: '법정',
+                color: '#7BB4EB',
+                data: [{ value: '32.00' }, { value: '32.00' }, { value: '32.00' }, { value: '32.00' }, { value: '32.00' }],
+              })
+              .set(['dataset', 1], {
+                seriesname: 'OT',
+                color: '#FFAC4B',
+                data: [{ value: '1.88' }, { value: '0.00' }, { value: '2.42' }, { value: '0.00' }, { value: '1.88' }],
+              })
+              .set(['dataset', 2], {
+                seriesname: '초과인원',
+                color: '#FFE479',
+                data: [{ value: '1' }, { value: '0' }, { value: '2' }, { value: '0' }, { value: '1' }],
+              })
+              .commit();
+
+            this.callFusionChart(mChartInfo, mChartSetting);
+
             break;
           default:
             break;
