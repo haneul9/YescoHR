@@ -14,7 +14,6 @@
                     <FlexItemData growFactor="1" />
                 </layoutData>
             </Text>
-            <Image src="asset/image/icon_human_green.svg" width="12px" class="ml-8-px" />
         </HBox>
         <VBox class="portlet-body">
             <grid:CSSGrid gridTemplateColumns="1fr 3fr 3fr 3fr 3fr" gridGap="0px" class="mt-10-px">

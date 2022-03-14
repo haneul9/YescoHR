@@ -19,7 +19,6 @@
                     <FlexItemData growFactor="1" />
                 </layoutData>
             </Text>
-            <Image src="asset/image/icon_human_green.svg" width="12px" class="ml-8-px" />
         </HBox>
         <VBox class="portlet-body">
             <layoutData>

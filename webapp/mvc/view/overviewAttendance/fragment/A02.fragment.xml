@@ -13,14 +13,13 @@
                     <FlexItemData growFactor="1" />
                 </layoutData>
             </Text>
-            <Image src="asset/image/icon_human_green.svg" width="12px" class="ml-8-px" />
         </HBox>
         <HBox class="portlet-body">
             <layoutData>
                 <FlexItemData growFactor="1" />
             </layoutData>
             <VBox width="30%" height="100%">
-                <Label text="{/contents/A02/data/Cnt01}" class="font-38-px color-03 normal ls-small"/>
+                <Label text="{/contents/A02/data/Cnt01}" class="font-30-px color-03 pt-8-px normal ls-small"/>
             </VBox>
             <VBox width="70%">
                 <core:HTML content='&lt;div id="attendance-a02-chart-container"&gt;&lt;/div&gt;'>
