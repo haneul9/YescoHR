@@ -53,16 +53,16 @@ sap.ui.define(
             Datum: moment().hours(9).toDate(),
           });
 
-          oViewModel.setProperty('/Define/tree', this.oDataChangeTree(aTreeData));
+          oViewModel.setProperty('/data/tree', this.oDataChangeTree(aTreeData));
 
           TableUtils.adjustRowSpan({ oTable: this.byId('roleDesc2Table'), aColIndices: [0, 1], sTheadOrTbody: 'tbody' });
-          TableUtils.adjustRowSpan({ oTable: this.byId('roleDesc3Table'), aColIndices: [1], sTheadOrTbody: 'tbody' });
+          TableUtils.adjustRowSpan({ oTable: this.byId('roleDesc3Table'), aColIndices: [0, 1], sTheadOrTbody: 'tbody' });
           TableUtils.adjustRowSpan({ oTable: this.byId('roleDesc4Table'), aColIndices: [0, 4, 5, 6], sTheadOrTbody: 'thead' });
           TableUtils.adjustRowSpan({ oTable: this.byId('roleDesc4Table'), aColIndices: [0, 1, 2, 3, 5, 6], sTheadOrTbody: 'tbody' });
           TableUtils.adjustRowSpan({ oTable: this.byId('roleDesc6Table'), aColIndices: [0, 4, 5], sTheadOrTbody: 'thead' });
           TableUtils.adjustRowSpan({ oTable: this.byId('roleDesc7Table'), aColIndices: [0, 4, 5], sTheadOrTbody: 'thead' });
 
-          // await this.callRoleData(this.getAppointeeProperty('Stell'));
+          await this.callRoleData(this.getAppointeeProperty('Plans'));
         } catch (oError) {
           this.debug('Controller > roleDescription App > onObjectMatched Error', oError);
 
@@ -75,7 +75,7 @@ sap.ui.define(
       async onPressTreeItem(oEvent) {
         const oSelectedTreeItem = oEvent.getParameter('listItem').getBindingContext().getObject();
 
-        if (oSelectedTreeItem.Otype !== 'C') return;
+        if (oSelectedTreeItem.Otype !== 'S') return;
 
         await this.callRoleData(oSelectedTreeItem.Objid);
       },
@@ -109,7 +109,7 @@ sap.ui.define(
           });
           oViewModel.setProperty('/data/role3', {
             rowCount: mDeepRoleResult.RoleDescription3Set.results.length,
-            list: _.map(mDeepRoleResult.RoleDescription3Set.results, (o) => _.omit(o, '__metadata')),
+            list: _.map(mDeepRoleResult.RoleDescription3Set.results, (o) => _.chain(o).omit('__metadata').set('Weith', _.toNumber(o.Weith)).value()),
           });
           oViewModel.setProperty('/data/role4', {
             rowCount: mDeepRoleResult.RoleDescription4Set.results.length,
@@ -142,32 +142,54 @@ sap.ui.define(
         }
       },
 
-      onPress3TableRow() {
-        // const oViewModel = this.getViewModel();
-        // const oRowData = oEvent.getParameter('rowBindingContext').getObject();
-        // if (_.isEmpty(oRowData.Zzobjid)) return;
-        // this.callCompetencyData(oRowData.Zzobjid);
+      onPress3TableRow(oEvent) {
+        const oRowData = oEvent.getSource().getParent().getBindingContext().getObject();
+
+        if (_.isEmpty(oRowData.Compcd)) return;
+
+        this.openCompetency(oRowData.Compcd, oRowData.Comptx);
       },
 
-      onPress4TableRow() {},
+      onPress4TableRow(oEvent) {
+        const oRowData = oEvent.getSource().getParent().getBindingContext().getObject();
 
-      onPress5TableRow() {},
+        if (_.isEmpty(oRowData.Stell)) return;
 
-      onPress6TableRow() {},
+        this.openJob(oRowData.Stell);
+      },
 
-      onPress7TableRow() {},
+      onPress5TableRow(oEvent) {
+        const oRowData = oEvent.getSource().getParent().getBindingContext().getObject();
 
-      openJob() {
+        if (_.isEmpty(oRowData.Compcd)) return;
+
+        this.openCompetency(oRowData.Compcd, oRowData.Comptx);
+      },
+
+      onPress6TableRow(oEvent) {
+        const oRowData = oEvent.getSource().getParent().getBindingContext().getObject();
+
+        if (_.isEmpty(oRowData.Stell)) return;
+
+        this.openJob(oRowData.Stell);
+      },
+
+      onPress7TableRow(oEvent) {
+        const oRowData = oEvent.getSource().getParent().getBindingContext().getObject();
+
+        if (_.isEmpty(oRowData.Stell)) return;
+
+        this.openJob(oRowData.Stell);
+      },
+
+      openJob(sObjid) {
         const sHost = window.location.href.split('#')[0];
-        const sObjid = '13002048';
 
         window.open(`${sHost}#/jobDefine/${sObjid}`, '_blank', 'width=1300,height=800');
       },
 
-      openCompetency() {
+      openCompetency(sObjid, sTitle) {
         const sHost = window.location.href.split('#')[0];
-        const sObjid = '14001001';
-        const sTitle = 'Integrity';
 
         window.open(`${sHost}#/jobCompetency/${sObjid}/${sTitle}`, '_blank', 'width=1300,height=800');
       },

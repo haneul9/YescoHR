@@ -18,7 +18,7 @@
             <table:Column width="12%" resizable="false">
                 <Label text="{i18n>LABEL_22013}" />
                 <table:template>
-                    <Text text="{Zzmtndy}" width="40px" textAlign="Center" />
+                    <Text text="{Zzmtndy}" width="100%" textAlign="Center" />
                 </table:template>
             </table:Column>
             <table:Column width="auto" resizable="false">

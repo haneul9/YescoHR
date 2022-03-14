@@ -119,6 +119,9 @@ sap.ui.define(
             this.callFusionChart(mChartInfo, mChartSetting);
 
             break;
+          case 'mscombi2d':
+            this.callFusionChart(mChartInfo, mChartSetting);
+            break;
           default:
             break;
         }
