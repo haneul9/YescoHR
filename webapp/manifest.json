@@ -221,6 +221,7 @@
         { "pattern": "referenceRoom", "name": "referenceRoom", "target": "referenceRoom" },
         { "pattern": "h/referenceRoom", "name": "h/referenceRoom", "target": "referenceRoom" },
         
+        { "pattern": "roleDescription", "name": "roleDescription", "target": "roleDescription" },
         { "pattern": "m/roleDescription", "name": "m/roleDescription", "target": "m/roleDescription" },
 
         { "pattern": "studentFunds", "name": "studentFunds", "target": "studentFunds" },
@@ -360,7 +361,8 @@
         
         "referenceRoom": { "viewId": "referenceRoom", "viewPath": "sap.ui.yesco.mvc.view.referenceRoom", "viewName": "ReferenceRoom" },
 
-        "m/roleDescription": { "viewId": "m_roleDescription", "viewPath": "sap.ui.yesco.mvc.view.roleDescription", "viewName": "Main" },
+        "roleDescription": { "viewId": "roleDescription", "viewPath": "sap.ui.yesco.mvc.view.roleDescription", "viewName": "MainE" },
+        "m/roleDescription": { "viewId": "m_roleDescription", "viewPath": "sap.ui.yesco.mvc.view.roleDescription", "viewName": "MainM" },
 
         "studentFunds": { "viewId": "studentFunds", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFunds" },
         "studentFundsDetail": { "viewId": "studentFundsDetail", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFundsDetail" },

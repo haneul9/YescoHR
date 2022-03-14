@@ -1,7 +1,5 @@
-<mvc:View controllerName="sap.ui.yesco.mvc.controller.roleDescription.Main"
-    xmlns="sap.m"
+<core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core"
-    xmlns:mvc="sap.ui.core.mvc"
     xmlns:custom="sap.ui.yesco.control">
     <Page showHeader="false">
         <VBox class="contents-header">
@@ -126,4 +124,4 @@
             </VBox>
         </HBox>
     </Page>
-</mvc:View>
+</core:FragmentDefinition>
