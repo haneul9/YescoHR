@@ -1,6 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
-  xmlns:grid="sap.ui.layout.cssgrid">
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:custom="sap.ui.yesco.control">
   <HBox class="contents" justifyContent="SpaceBetween">
     <VBox width="520px" height="69vh" class="vCardBox sapUiMediumMarginEnd" visible="{/isView}">
       <ScrollContainer height="64vh" width="100%" vertical="true">
@@ -20,7 +21,18 @@
         </Tree>
       </ScrollContainer>
     </VBox>
-    <VBox width="100%" class="mt-0-px">
+    <VBox width="100%" visible="{/Competency/busy}">
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <custom:Placeholder />
+      </VBox>
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <custom:Placeholder />
+      </VBox>
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <custom:Placeholder />
+      </VBox>
+    </VBox>
+    <VBox width="100%" class="mt-0-px" visible="{= !${/Competency/busy} }">
       <VBox class="vCardBox sapUiMediumMarginBottom">
         <HBox alignItems="Center" class="table-toolbar">
           <Title level="H2" text="{/Competency/Title}" />

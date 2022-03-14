@@ -373,12 +373,12 @@ sap.ui.define(
           return;
         }
 
+        if (AppUtils.isLOCAL()) return;
+
         const sMenid = this.getMenuModel().getMenid(sRouteNameMain);
         if ((AppUtils.isLOCAL() || AppUtils.isDEV()) && /^X/.test(sMenid)) {
           return;
         }
-
-        if (AppUtils.isLOCAL()) return;
 
         const oModel = this.getModel(ServiceNames.COMMON);
         const sUrl = 'GetMenuidRole';

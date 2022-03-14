@@ -27,7 +27,48 @@
                     </Tree>
                 </ScrollContainer>
             </VBox>
-            <VBox width="100%" class="mt-0-px">
+            <VBox width="100%" visible="{/data/busy}">
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <custom:Placeholder />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <custom:Placeholder />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <custom:Placeholder />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <custom:Placeholder />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <custom:Placeholder />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <custom:Placeholder />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <custom:Placeholder />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <custom:Placeholder />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <custom:Placeholder />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <custom:Placeholder />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <custom:Placeholder />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <custom:Placeholder />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <custom:Placeholder />
+                </VBox>
+            </VBox>
+            <VBox width="100%" class="mt-0-px" visible="{= !${/data/busy} }">
                 <VBox class="vCardBox sapUiMediumMarginBottom">
                     <HBox alignItems="Center" class="table-toolbar">
                         <Title level="H2" text="{i18n>LABEL_22057}" />

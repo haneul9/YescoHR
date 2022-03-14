@@ -24,6 +24,7 @@ sap.ui.define(
         return {
           busy: false,
           data: {
+            busy: true,
             isLoaded: true,
             tree: [],
             roleM: { list: [] },
@@ -83,6 +84,8 @@ sap.ui.define(
       async callRoleData(sObjid) {
         const oViewModel = this.getViewModel();
 
+        oViewModel.setProperty('/data/busy', true);
+
         try {
           const mDeepRoleResult = await Client.deep(this.getModel(ServiceNames.APPRAISAL), 'RoleDescriptionMain', {
             Plans: sObjid,
@@ -139,6 +142,8 @@ sap.ui.define(
           this.debug('Controller > roleDescription App > callRoleData Error', oError);
 
           AppUtils.handleError(oError);
+        } finally {
+          setTimeout(() => oViewModel.setProperty('/data/busy', false), 200);
         }
       },
 

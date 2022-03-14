@@ -1,5 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m"
-  xmlns:core="sap.ui.core">
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
   <HBox class="contents" justifyContent="SpaceBetween">
     <VBox width="520px" height="69vh" class="vCardBox sapUiMediumMarginEnd" visible="{/isView}">
       <ScrollContainer height="64vh" width="100%" vertical="true">
@@ -16,7 +17,30 @@
         </Tree>
       </ScrollContainer>
     </VBox>
-    <VBox width="100%" class="mt-0-px">
+    <VBox width="100%" visible="{/Define/busy}">
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <custom:Placeholder />
+      </VBox>
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <custom:Placeholder />
+      </VBox>
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <custom:Placeholder />
+      </VBox>
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <custom:Placeholder />
+      </VBox>
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <custom:Placeholder />
+      </VBox>
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <custom:Placeholder />
+      </VBox>
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <custom:Placeholder />
+      </VBox>
+    </VBox>
+    <VBox width="100%" class="mt-0-px" visible="{= !${/Define/busy} }">
       <!-- <ScrollContainer height="69vh" width="100%" vertical="true"> -->
       <VBox class="vCardBox sapUiMediumMarginBottom">
         <HBox alignItems="Center" class="table-toolbar">

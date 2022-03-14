@@ -35,6 +35,7 @@ sap.ui.define(
           isView: true,
           selectedKey: 'A',
           Define: {
+            busy: true,
             isLoaded: false,
             tree: [],
             descriptionM: { list1: [] },
@@ -46,6 +47,7 @@ sap.ui.define(
             description6: { list: [], rowCount: 1 },
           },
           Competency: {
+            busy: true,
             isLoaded: false,
             Title: '',
             Defin: '',
@@ -164,10 +166,12 @@ sap.ui.define(
           oViewModel.setProperty('/busy', true);
 
           if (sTabKey === 'A') {
+            oViewModel.setProperty('/Define/busy', false);
             if (oViewModel.getProperty('/Define/isLoaded')) return;
 
             await this.loadDefine();
           } else {
+            oViewModel.setProperty('/Competency/busy', false);
             if (oViewModel.getProperty('/Competency/isLoaded')) return;
 
             await this.loadCompetency();
@@ -189,6 +193,8 @@ sap.ui.define(
 
       async callDefineData(sObjid) {
         const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/Define/busy', true);
 
         try {
           const mDeepDefineResult = await Client.deep(this.getModel(ServiceNames.APPRAISAL), 'JobDescriptionMain', {
@@ -237,6 +243,8 @@ sap.ui.define(
           this.debug('Controller > jobCompetency App > callDefineData Error', oError);
 
           AppUtils.handleError(oError);
+        } finally {
+          setTimeout(() => oViewModel.setProperty('/Define/busy', false), 200);
         }
       },
 
@@ -257,28 +265,39 @@ sap.ui.define(
 
       async callCompetencyData(sObjid) {
         const oViewModel = this.getViewModel();
-        const oModel = this.getModel(ServiceNames.APPRAISAL);
-        const mPayLoad = {
-          Objid: sObjid,
-          CompAppStatJobSet: [],
-          CompAppStatScaleSet: [],
-        };
 
-        // 역량정의서
-        const aDetailItems = await Client.deep(oModel, 'CompAppStatDefin', mPayLoad);
+        oViewModel.setProperty('/Competency/busy', true);
 
-        // 상시관리 Text
-        oViewModel.setProperty('/Competency/Defin', aDetailItems.Defin);
+        try {
+          const oModel = this.getModel(ServiceNames.APPRAISAL);
+          const mPayLoad = {
+            Objid: sObjid,
+            CompAppStatJobSet: [],
+            CompAppStatScaleSet: [],
+          };
 
-        // 행동지표 수준 GridSetting
-        const aFormatBegavioral = this.behavioralIndicators(aDetailItems.CompAppStatScaleSet['results']);
+          // 역량정의서
+          const aDetailItems = await Client.deep(oModel, 'CompAppStatDefin', mPayLoad);
 
-        oViewModel.setProperty('/Competency/BehaviIndicat', aFormatBegavioral);
+          // 상시관리 Text
+          oViewModel.setProperty('/Competency/Defin', aDetailItems.Defin);
 
-        // 관련 직무 Btn
-        const aRelateJobBtn = this.relateJobBtn(aDetailItems.CompAppStatJobSet['results']);
+          // 행동지표 수준 GridSetting
+          const aFormatBegavioral = this.behavioralIndicators(aDetailItems.CompAppStatScaleSet['results']);
 
-        oViewModel.setProperty('/Competency/RelateJobs', aRelateJobBtn);
+          oViewModel.setProperty('/Competency/BehaviIndicat', aFormatBegavioral);
+
+          // 관련 직무 Btn
+          const aRelateJobBtn = this.relateJobBtn(aDetailItems.CompAppStatJobSet['results']);
+
+          oViewModel.setProperty('/Competency/RelateJobs', aRelateJobBtn);
+        } catch (oError) {
+          this.debug('Controller > jobCompetency App > callCompetencyData Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          setTimeout(() => oViewModel.setProperty('/Competency/busy', false), 200);
+        }
       },
 
       onPress2TableRow(oEvent) {
