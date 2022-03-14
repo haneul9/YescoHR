@@ -86,15 +86,13 @@ sap.ui.define(
             Zyymm: moment().format('yyyyMM'),
             Werks: mAppointee.Werks,
             Orgeh: aOrgList[0].Orgeh,
-            Disty: '1',
           });
 
-          const oModel = this.getModel(ServiceNames.WORKTIME);
-          // 나의 근무시간현황
-          // const [aMyWork] = await Client.getEntitySet(oModel, 'WorkingTime', mMyWorkPayLoad);
+          // 근무시간주차별 추이
+          const aWorkTime = await this.getTypeWorkTime();
 
-          // oListModel.setProperty('/MyWork', aMyWork);
-          // this.buildDialChart(aMyWork);
+          oListModel.setProperty('/search/Disty', aWorkTime.Disty);
+          this.buildDialChart(aWorkTime.WorkingTime1Nav.results);
 
           // const mSearch = oListModel.getProperty('/search');
           // const mPayLoad = {
@@ -115,73 +113,148 @@ sap.ui.define(
         }
       },
 
+      async onDate() {
+        const oListModel = this.getViewModel();
+        const aWorkTime = await this.getTypeWorkTime();
+
+        this.buildDialChart(aWorkTime.WorkingTime1Nav.results);
+      },
+
+      async onArea() {
+        const oListModel = this.getViewModel();
+        const aWorkTime = await this.getTypeWorkTime();
+
+        this.buildDialChart(aWorkTime.WorkingTime1Nav.results);
+      },
+
+      async onOrg() {
+        const oListModel = this.getViewModel();
+        const aWorkTime = await this.getTypeWorkTime();
+
+        this.buildDialChart(aWorkTime.WorkingTime1Nav.results);
+      },
+
+      // 근무시간주차별 추이
+      async getTypeWorkTime() {
+        const oModel = this.getModel(ServiceNames.WORKTIME);
+        const mSearch = this.getViewModel().getProperty('/search');
+        const mPayLoad = {
+          Zyymm: mSearch.Zyymm,
+          Werks: mSearch.Werks,
+          Orgeh: mSearch.Orgeh,
+          WorkingTime1Nav: [],
+          WorkingTime2Nav: [],
+          WorkingTime3Nav: [],
+          WorkingTime4Nav: [],
+        };
+
+        return await Client.deep(oModel, 'WorkingTimeTrend', mPayLoad);
+      },
+
       getDialChartOption() {
         return {
           //Cosmetics
           showValue: 1,
           valueFontSize: 12,
-          showTooltip: 0,
-          gaugeOriginY: 110,
-          gaugeOuterRadius: 75,
-          gaugeInnerRadius: 53,
-          majorTMNumber: 13,
-          majorTMColor: '#333',
-          majorTMHeight: -2.5,
-          majorTMThickness: 1,
-          tickValueDistance: 5,
-          tickValueStep: 10,
-          showPlotBorder: 0,
-          showGaugeBorder: 0,
           showPivotBorder: 0,
           bgColor: 'transparent',
-          pivotRadius: 3,
-          pivotFillColor: '#000',
-          chartLeftMargin: -20,
-          chartRightMargin: 0,
-          chartTopMargin: 0,
-          chartBottomMargin: -150,
-          theme: 'ocean',
         };
       },
 
-      buildDialChart(aWorkTypeList) {
+      buildDialChart(aWorkTimeList = []) {
         const oChart = FusionCharts(this.sDialChartId);
+        const aList = [];
+
+        _.forEach(aWorkTimeList, (e) => {
+          const aV1 = [];
+          const aV2 = [];
+          const aV3 = [];
+
+          aV1.push({ value: e.Nmtim });
+
+          aList.push({ label: e.Weektx, aV1 });
+        });
+        debugger;
+        aWorkTimeList;
 
         if (!oChart) {
           FusionCharts.ready(() => {
             new FusionCharts({
               id: this.sDialChartId,
-              type: 'bar2d',
+              type: 'column2d',
               renderAt: 'chart-bar-container',
               width: '100%',
               height: '170px',
               dataFormat: 'json',
               dataSource: {
                 chart: this.getDialChartOption(),
-                colorrange: {
-                  color: [
-                    {
-                      minvalue: '0',
-                      maxvalue: aWorkTypeList.Alwtm,
-                      code: '#34649d',
-                    },
-                    {
-                      minvalue: aWorkTypeList.Alwtm,
-                      maxvalue: aWorkTypeList.Maxtm,
-                      code: '#fdde17',
-                    },
-                  ],
-                },
-                dials: {
-                  dial: [
-                    {
-                      value: aWorkTypeList.Reltm,
-                      valueY: 123,
-                      baseWidth: 4,
-                      rearExtension: 0,
-                    },
-                  ],
-                },
+                categories: [
+                  {
+                    category: aList,
+                  },
+                ],
+                dataset: [
+                  {
+                    seriesname: this.getBundleText('LABEL_32004'), // 법정
+                    data: [
+                      {
+                        value: '125000',
+                      },
+                      {
+                        value: '300000',
+                      },
+                      {
+                        value: '480000',
+                      },
+                      {
+                        value: '800000',
+                      },
+                      {
+                        value: '1100000',
+                      },
+                    ],
+                  },
+                  {
+                    seriesname: this.getBundleText('LABEL_01205'), // OT
+                    data: [
+                      {
+                        value: '70000',
+                      },
+                      {
+                        value: '150000',
+                      },
+                      {
+                        value: '350000',
+                      },
+                      {
+                        value: '600000',
+                      },
+                      {
+                        value: '1400000',
+                      },
+                    ],
+                  },
+                  {
+                    seriesname: this.getBundleText('LABEL_32005'), // 초과인원
+                    data: [
+                      {
+                        value: '10000',
+                      },
+                      {
+                        value: '100000',
+                      },
+                      {
+                        value: '300000',
+                      },
+                      {
+                        value: '600000',
+                      },
+                      {
+                        value: '900000',
+                      },
+                    ],
+                  },
+                ],
               },
             }).render();
           });
@@ -189,30 +262,6 @@ sap.ui.define(
           oChart.setChartData(
             {
               chart: this.getDialChartOption(),
-              colorrange: {
-                color: [
-                  {
-                    minvalue: '0',
-                    maxvalue: aWorkTypeList.Alwtm,
-                    code: '#34649d',
-                  },
-                  {
-                    minvalue: aWorkTypeList.Alwtm,
-                    maxvalue: aWorkTypeList.Maxtm,
-                    code: '#fdde17',
-                  },
-                ],
-              },
-              dials: {
-                dial: [
-                  {
-                    value: aWorkTypeList.Reltm,
-                    valueY: 123,
-                    baseWidth: 4,
-                    rearExtension: 0,
-                  },
-                ],
-              },
             },
             'json'
           );
