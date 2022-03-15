@@ -44,7 +44,7 @@ html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl):not(.showLine) {text-decoratio
 
 .app-body:not(.popup-body) {position:relative !important; height:calc(100% - 60px) !important; background-color:#f9fafa}
 
-.sapMPage.popup-view .contents { min-width: 1100px; max-width: 1100px; }
+.sapMPage.popup-view .contents { min-width: 1100px; max-width: 1200px; }
 
 /* Home portlets drag and drop 영역이 메뉴 영역을 가리지 않도록 스타일 수정 */
 #sap-ui-static .sapUiDnDIndicatorWrapper {top:60px}
@@ -2044,6 +2044,10 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .talent-compare-carousel .sapMCrslHudMiddle a {top: auto; bottom: 10px;}
 .talent-compare-carousel .sapMCrslHud .sapMCrslPrev {left: 0;}
 .talent-compare-carousel .sapMCrslHud .sapMCrslNext {right: 0;}
+
+.fusion-tooltip th, .fusion-tooltip td {border: none; padding: 8px; font-size: 14px !important;}
+.fusion-tooltip td { font-weight: 400; text-align: left; }
+.fusion-tooltip th { font-weight: bold; word-break: keep-all; background-color: #f7f7f7; min-width: 40%; }
 
 
 @media screen and (max-width: 480px) {

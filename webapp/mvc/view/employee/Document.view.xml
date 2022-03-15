@@ -2,7 +2,7 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:mvc="sap.ui.core.mvc">
-    <Page showHeader="false">
+    <Page showHeader="false" class="popup-view">
         <VBox class="contents">
             <HBox>
                 <VBox id="profileBody" class="main-profile expanded" busyIndicatorDelay="0" busy="{/employee/busy}">

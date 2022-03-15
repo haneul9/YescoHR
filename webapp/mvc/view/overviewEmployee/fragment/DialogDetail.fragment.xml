@@ -57,7 +57,7 @@
                         <Column width="80px" filterProperty="Ename" sortProperty="Ename">
                             <m:Label text="{i18n>LABEL_00210}"/>
                             <template>
-                                <m:Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                                <m:Link text="{Ename}" class="showLine" width="100%" textAlign="Center" press=".onPressEmployeeRow" />
                             </template>
                         </Column>
                         <Column width="80px" filterProperty="Zzjikgbtx" sortProperty="Zzjikgbtx">

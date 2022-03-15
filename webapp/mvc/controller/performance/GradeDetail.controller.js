@@ -166,7 +166,7 @@ sap.ui.define(
           this.debug(`Controller > m/performanceGrade Grade > onObjectMatched Error`, oError);
 
           AppUtils.handleError(oError, {
-            onClose: () => this.onNavBack(),
+            onClose: () => this.getRouter().navTo('m/performanceGrade'),
           });
         } finally {
           oViewModel.setProperty('/busy', false);
@@ -553,14 +553,14 @@ sap.ui.define(
         const sHost = window.location.href.split('#')[0];
         const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
 
-        window.open(`${sHost}#/performanceView/MB/${mRowData.Zzappee}/${mRowData.Zdocid}`, '_blank', 'width=1400&height=800');
+        window.open(`${sHost}#/performanceView/MB/${mRowData.Zzappee}/${mRowData.Zdocid}`, '_blank', 'width=1400,height=800');
       },
 
       onPressRowEmployee(oEvent) {
         const sHost = window.location.href.split('#')[0];
         const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
 
-        window.open(`${sHost}#/employeeView/${mRowData.Zzappee}`, '_blank', 'width=1400&height=800');
+        window.open(`${sHost}#/employeeView/${mRowData.Zzappee}`, '_blank', 'width=1400,height=800');
       },
 
       onChangeByDepartSelection(oEvent) {
