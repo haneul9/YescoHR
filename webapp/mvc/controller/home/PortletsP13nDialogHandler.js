@@ -4,6 +4,7 @@ sap.ui.define(
     'sap/ui/core/Fragment',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/Debuggable',
+    'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
   ],
@@ -12,6 +13,7 @@ sap.ui.define(
     Fragment,
     AppUtils,
     Debuggable,
+    UI5Error,
     Client,
     ServiceNames
   ) => {
@@ -135,6 +137,10 @@ sap.ui.define(
 
           return true;
         } catch (oError) {
+          if (oError instanceof UI5Error) {
+            oError.code = UI5Error.MESSAGE_LEVEL.INFORMATION;
+          }
+
           AppUtils.handleError(oError);
 
           return false;

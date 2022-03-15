@@ -7,6 +7,7 @@ sap.ui.define(
     'sap/ui/core/Fragment',
     'sap/ui/core/routing/HashChanger',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
@@ -20,6 +21,7 @@ sap.ui.define(
     Fragment,
     HashChanger,
     AppUtils,
+    UI5Error,
     Client,
     ServiceNames,
     MessageBox,
@@ -167,6 +169,9 @@ sap.ui.define(
 
           return true;
         } catch (oError) {
+          if (oError instanceof UI5Error) {
+            oError.code = UI5Error.MESSAGE_LEVEL.INFORMATION;
+          }
           AppUtils.handleError(oError);
 
           return false;
