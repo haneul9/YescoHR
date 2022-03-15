@@ -44,6 +44,9 @@ sap.ui.define(
 
           this.refreshMyMembers();
         } catch (oError) {
+          if (oError instanceof UI5Error) {
+            oError.code = UI5Error.MESSAGE_LEVEL.INFORMATION;
+          }
           AppUtils.handleError(oError);
         } finally {
           AppUtils.setAppBusy(false);
@@ -62,6 +65,9 @@ sap.ui.define(
 
           this.refreshMyMembers();
         } catch (oError) {
+          if (oError instanceof UI5Error) {
+            oError.code = UI5Error.MESSAGE_LEVEL.INFORMATION;
+          }
           AppUtils.handleError(oError);
         } finally {
           AppUtils.setAppBusy(false);
