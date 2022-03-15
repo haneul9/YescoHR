@@ -20,10 +20,21 @@
             <Label text="{i18n>LABEL_00144}" />
           </table:multiLabels>
           <table:template>
-            <core:Icon src="sap-icon://circle-task-2" size="15px" color="{= ${Status} === '1' ? '#FD5F58' : '#007BFF' }" class="tableIcon" />
+            <HBox>
+              <core:Icon src="sap-icon://circle-task-2" size="15px" visible="{= ${Status} !== ${i18n>LABEL_09018} }" color="{= ${Status} === '1' ? '#FD5F58' : '#007BFF' }" class="tableIcon">
+                <core:layoutData>
+                  <FlexItemData growFactor="1" />
+                </core:layoutData>
+              </core:Icon>
+              <Text text="{Status}" width="100%" textAlign="Center" visible="{= ${Status} === ${i18n>LABEL_09018} }">
+                <layoutData>
+                  <FlexItemData growFactor="1" />
+                </layoutData>
+              </Text>
+            </HBox>
           </table:template>
         </table:Column>
-        <table:Column width="120px">
+        <table:Column width="190px">
           <table:multiLabels>
             <Label text="{i18n>LABEL_00224}" />
             <Label text="{i18n>LABEL_00224}" />

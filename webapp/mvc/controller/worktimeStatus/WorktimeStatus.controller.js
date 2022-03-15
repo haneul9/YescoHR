@@ -1,6 +1,7 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/core/Fragment',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/FragmentEvent',
@@ -15,6 +16,7 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
+    Fragment,
     AppUtils,
     AttachFileAction,
     FragmentEvent,
@@ -53,6 +55,10 @@ sap.ui.define(
             Disty: '1',
           },
           detail: {
+            dialog: {
+              list: [],
+              rowCount: 2,
+            },
             org: {
               list: [],
               rowCount: 2,
@@ -400,6 +406,45 @@ sap.ui.define(
           );
           oChart.render();
         }
+      },
+
+      onPernrClick(oEvent) {
+        if (!this._pDetailDialog) {
+          const oView = this.getView();
+
+          this._pDetailDialog = Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.mvc.view.worktimeStatus.fragment.DetailDialog',
+            controller: this,
+          }).then(function (oDialog) {
+            oView.addDependent(oDialog);
+            return oDialog;
+          });
+        }
+
+        const vPath = oEvent.getParameter('rowBindingContext').getPath();
+        const oDetailModel = this.getViewModel();
+        const oRowData = oDetailModel.getProperty(vPath);
+        const aDialogList = _.filter(oDetailModel.getProperty('/Data/WorkingTime4Nav/results'), (e) => {
+          return e.Pernr === oRowData.Pernr;
+        });
+
+        _.map(aDialogList, (e) => {
+          const i = 0;
+
+          return { ...e, No: i + 1 };
+        });
+        debugger;
+        this._pDetailDialog.then(async function (oDialog) {
+          oDetailModel.setProperty('/detail/dialog/list', aDialogList);
+          oDetailModel.setProperty('/detail/dialog/rowCount', _.size(aDialogList));
+          oDialog.open();
+        });
+      },
+
+      // Dialog Close
+      onDialogClose(oEvent) {
+        oEvent.getSource().getParent().close();
       },
 
       onSelectRow(oEvent) {
