@@ -1325,50 +1325,130 @@
             </table:Table>
           </VBox>
         </HBox>
-        <HBox class="sapUiResponsiveMargin" width="100%">
-          <VBox>
-            <layoutData>
-              <FlexItemData growFactor="1" />
-            </layoutData>
-            <Title level="H3" text="Mobile list" class="component-title" />
-            <List headerText="학력정보" items="{/actions}">
-              <CustomListItem>
-                <grid:CSSGrid gridGap="1px 8px" gridTemplateColumns="2fr 2fr 1fr" items="{ path: 'values', templateShareable: false }">
-                  <Text text="{value}" />
-                </grid:CSSGrid>
-              </CustomListItem>
-            </List>
+        
+        
+        <VBox width="480px" class="sapUiMedia-Std-Phone">
+          <HBox class="sapUiResponsiveMargin" width="100%">
+            <VBox>
+              <layoutData>
+                <FlexItemData growFactor="1" />
+              </layoutData>
+              <Title level="H3" text="Mobile list" class="component-title" />
+              <List headerText="학력정보" items="{/actions}">
+                <CustomListItem>
+                  <grid:CSSGrid gridGap="1px 8px" gridTemplateColumns="2fr 2fr 1fr" items="{ path: 'values', templateShareable: false }">
+                    <Text text="{value}" />
+                  </grid:CSSGrid>
+                </CustomListItem>
+              </List>
+            </VBox>
+          </HBox>
+          <HBox class="sapUiResponsiveMargin">
+            <VBox width="90%">
+              <Title level="H3" text="Mobile Tab" class="component-title" />
+              <IconTabBar selectedKey="t01" backgroundDesign="Transparent" class="sapUiResponsiveContentPadding">
+                <items>
+                  <IconTabFilter text="T01" key="t01" />
+                  <IconTabFilter text="T02" key="t02" />
+                  <IconTabFilter text="T03" key="t03" />
+                  <IconTabFilter text="T04" key="t04" />
+                  <IconTabFilter text="T05" key="t05" />
+                  <IconTabFilter text="T06" key="t06" />
+                  <IconTabFilter text="T07" key="t07" />
+                  <IconTabFilter text="T08" key="t08" />
+                  <IconTabFilter text="T09" key="t09" />
+                  <IconTabFilter text="T10" key="t10" />
+                  <IconTabFilter text="T11" key="t11" />
+                  <IconTabFilter text="T12" key="t12" />
+                  <IconTabFilter text="T13" key="t13" />
+                  <IconTabFilter text="T14" key="t14" />
+                  <IconTabFilter text="T15" key="t15" />
+                  <IconTabFilter text="T16" key="t16" />
+                  <IconTabFilter text="T17" key="t17" />
+                  <IconTabFilter text="T18" key="t18" />
+                  <IconTabFilter text="T19" key="t19" />
+                  <IconTabFilter text="T20" key="t20" />
+                </items>
+              </IconTabBar>
+            </VBox>
+          </HBox>        
+          <VBox class="sapUiResponsiveMargin" width="100%">
+            <Title level="H3" text="Mobile Detail" class="component-title" />
+            <VBox class="section">
+              <HBox class="title-bar" justifyContent="SpaceBetween">
+                <HBox>
+                  <Title level="H3" text="선택적근로제 관리" />
+                  <Text text="total 123" />
+                  <Text text="도움말" class="desc-txt" />
+                </HBox>
+                <HBox>
+                  <Image src="/asset/image/icon_tooltip.svg" size="20px" press=".onPopover" />
+                </HBox>
+              </HBox>
+              <VBox class="box style-01">
+                <Text text="내용" />
+              </VBox>
+              <grid:CSSGrid gridTemplateColumns="1fr 1fr" gridGap="0px" class="dl">
+                <Label text="소정근로시간 한도" />
+                <Text text="16:00" />
+                <Label text="연장근로시간 한도" />
+                <Text text="16:00" />
+                <Label text="평균근로시간" />
+                <Text text="16:00" />
+                <Label text="연장근로시간" />
+                <Text text="16:00" />
+                <Label text="휴일근로시간" />
+                <Text text="16:00" />
+                <Label text="상태" />
+                <Text text="소정근로시간 미만" class="color-06" />
+                <Label text="근로시간 합계(월말 예상)" />
+                <Text text="16:00" class="color-06" />
+                <Label text="싱태(월말 예상)" class="color-06" />
+                <Text text="소정근로시간 충족" class="color-06" />
+              </grid:CSSGrid>
+            </VBox>
+
+            
+            <VBox class="section">
+              <HBox class="title-bar" justifyContent="SpaceBetween">
+                <HBox>
+                  <Title level="H3" text="휴가쿼터 근황" />
+                  <Text text="total 123" />
+                  <Text text="도움말" class="desc-txt" />
+                </HBox>
+              </HBox>
+              <VBox class="box style-01 sapUiSmallMarginBottom" height="180px">
+                <Text text="챠트 내용" />
+              </VBox>
+              <grid:CSSGrid gridTemplateColumns="1fr 1fr" gridGap="0px" class="dl">
+                <Label text="하계휴가" />
+                <Text text="발생 5 / 사용 0 / 잔여 5" class="color-06" />
+                <Label text="연차휴가" />
+                <Text text="발생 20 / 사용 2.5 / 잔여 1.75" class="color-06" />
+              </grid:CSSGrid>
+            </VBox>
+
+            <VBox class="section">
+              <HBox class="title-bar" justifyContent="SpaceBetween">
+                <HBox>
+                  <Title level="H3" text="근태수당 현황" />
+                  <Text text="total 123" />
+                  <Text text="도움말" class="desc-txt" />
+                </HBox>
+              </HBox>
+              <VBox class="box style-01 sapUiSmallMarginBottom" height="180px" >
+                <Text text="챠트 내용" />
+              </VBox>
+              <grid:CSSGrid gridTemplateColumns="1fr 1fr" gridGap="0px" class="dl">
+                <Label text="하계휴가" />
+                <Text text="발생 5 / 사용 0 / 잔여 5" class="color-06" />
+                <Label text="연차휴가" />
+                <Text text="발생 20 / 사용 2.5 / 잔여 1.75" class="color-06" />
+              </grid:CSSGrid>
+            </VBox>
+
           </VBox>
-        </HBox>
-        <HBox class="sapUiResponsiveMargin">
-          <VBox width="90%">
-            <Title level="H3" text="Mobile Tab" class="component-title" />
-            <IconTabBar selectedKey="t01" backgroundDesign="Transparent" class="sapUiResponsiveContentPadding">
-              <items>
-                <IconTabFilter text="T01" key="t01" />
-                <IconTabFilter text="T02" key="t02" />
-                <IconTabFilter text="T03" key="t03" />
-                <IconTabFilter text="T04" key="t04" />
-                <IconTabFilter text="T05" key="t05" />
-                <IconTabFilter text="T06" key="t06" />
-                <IconTabFilter text="T07" key="t07" />
-                <IconTabFilter text="T08" key="t08" />
-                <IconTabFilter text="T09" key="t09" />
-                <IconTabFilter text="T10" key="t10" />
-                <IconTabFilter text="T11" key="t11" />
-                <IconTabFilter text="T12" key="t12" />
-                <IconTabFilter text="T13" key="t13" />
-                <IconTabFilter text="T14" key="t14" />
-                <IconTabFilter text="T15" key="t15" />
-                <IconTabFilter text="T16" key="t16" />
-                <IconTabFilter text="T17" key="t17" />
-                <IconTabFilter text="T18" key="t18" />
-                <IconTabFilter text="T19" key="t19" />
-                <IconTabFilter text="T20" key="t20" />
-              </items>
-            </IconTabBar>
-          </VBox>
-        </HBox>
+        </VBox>
       </VBox>
     </content>
   </Page>

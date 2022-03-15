@@ -10,10 +10,10 @@
     <VBox class="contents">
       <custom:MobileScrollContainer horizontal="false" vertical="true" excludeBottomSelector=".sapMPageHeader">
         <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
-          <HBox justifyContent="SpaceBetween">
+          <VBox justifyContent="SpaceBetween">
             <Title level="H2" text="{/FormData/Title}" wrapping="true" />
-            <Text text="{/FormData/Chntm}" />
-          </HBox>
+            <Text text="{/FormData/Chntm}" class="font-12-px"/>
+          </VBox>
           <core:HTML content="{/FormData/Detail}" />
           <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
         </VBox>
