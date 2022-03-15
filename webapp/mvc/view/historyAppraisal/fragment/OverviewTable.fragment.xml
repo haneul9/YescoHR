@@ -42,43 +42,52 @@
             <table:Column width="auto" filterProperty="Dettx" sortProperty="Appty">
                 <Label text="{i18n>LABEL_10006}"/>
                 <table:template>
-                    <Link text="{Apptxt}" class="showLine" width="100%" textAlign="Center" press=".onPressRowPerformance" />
+                    <VBox>
+                        <Link text="{Zzappgd01}" class="showLine" width="100%" textAlign="Center" visible="{= !!${Zdocid1} }" press=".onPressRowPerformance" />
+                        <Text text="{Zzappgd01}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" visible="{= !${Zdocid1} }" />
+                    </VBox>
                 </table:template>
             </table:Column>
             <table:Column width="auto" filterProperty="Appernr" sortProperty="Pernr">
                 <Label text="{i18n>LABEL_10045}"/>
                 <table:template>
-                    <Link text="{Apptxt}" class="showLine" width="100%" textAlign="Center" press=".onPressRowCompetency" />
+                    <VBox>
+                        <Link text="{Zzappgd02}" class="showLine" width="100%" textAlign="Center" visible="{= !!${Zdocid2} }" press=".onPressRowCompetency" />
+                        <Text text="{Zzappgd02}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" visible="{= !${Zdocid2} }" />
+                    </VBox>
                 </table:template>
             </table:Column>
             <table:Column width="auto" filterProperty="Apename" sortProperty="Ename">
                 <Label text="{i18n>LABEL_00311}"/>
                 <table:template>
-                    <Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    <Text text="{ path: 'Zzaptpt', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </table:template>
             </table:Column>
             <table:Column width="auto" filterProperty="Atext" sortProperty="Awart">
                 <Label text="{i18n>LABEL_10097}"/>
                 <table:template>
-                    <Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    <Text text="{Zzaptgd}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </table:template>
             </table:Column>
             <table:Column width="auto" filterProperty="Atext" sortProperty="Awart" visible="{/history/visible/idp}">
                 <Label text="{i18n>LABEL_10098}"/>
                 <table:template>
-                    <Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    <VBox>
+                        <Link text="{Zzappgd03}" class="showLine" width="100%" textAlign="Center" visible="{= !!${Zdocid3} }" press=".onPressRowMulti" />
+                        <Text text="{Zzappgd03}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" visible="{= !${Zdocid3} }" />
+                    </VBox>
                 </table:template>
             </table:Column>
-            <table:Column width="auto" filterProperty="Atext" sortProperty="Awart">
+            <table:Column width="10%" filterProperty="Atext" sortProperty="Awart">
                 <Label text="{i18n>LABEL_10099}"/>
                 <table:template>
-                    <Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_02_N.svg" visible="{= !!${Zdocid4} }" press=".onPressRowDevelop" />
                 </table:template>
             </table:Column>
             <table:Column width="12%" filterProperty="Atext" sortProperty="Awart">
                 <Label text="{i18n>LABEL_00163}"/>
                 <table:template>
-                    <Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    <Text text="{Zzrmark}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </table:template>
             </table:Column>
         </table:columns>

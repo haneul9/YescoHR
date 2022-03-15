@@ -536,7 +536,7 @@ sap.ui.define(
         const sType = oViewModel.getProperty('/type');
         const { Zzapper2: sPernr, Zdocid2: sDocid } = oViewModel.getProperty('/buttons/form');
 
-        window.open(`${sHost}#/performanceView/${sType}/${sPernr}/${sDocid}`, '_blank', 'width=1400&height=800');
+        window.open(`${sHost}#/performanceView/${sType}/${sPernr}/${sDocid}`, '_blank', 'width=1400,height=800');
       },
 
       onPressApproveButton() {

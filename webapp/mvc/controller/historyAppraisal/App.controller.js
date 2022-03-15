@@ -62,12 +62,12 @@ sap.ui.define(
           oViewModel.setProperty('/busy', true);
 
           if (sRouteName === 'historyAppraisal') {
-            oViewModel.setProperty('/isMSS', false);
+            oViewModel.setProperty('/isESS', true);
           } else {
-            const iSideViewHeight = Math.floor($(document).height() - this.byId('sideBody').getParent().$().offset().top - 20);
-            const iScrollViewHeight = Math.floor($(document).height() - this.byId('sideEmployeeList').getParent().$().offset().top - 36);
+            const iSideViewHeight = Math.floor($(document).height() - this.byId('sideBody').getParent().$().offset().top - 10);
+            const iScrollViewHeight = Math.floor($(document).height() - this.byId('sideEmployeeList').getParent().$().offset().top - 26);
 
-            oViewModel.setProperty('/isMSS', true);
+            oViewModel.setProperty('/isESS', false);
             oViewModel.setProperty('/sideNavigation/height', `${iSideViewHeight}px`);
             oViewModel.setProperty('/sideNavigation/scrollHeight', `${iScrollViewHeight}px`);
             oViewModel.setProperty('/sideNavigation/search/searchText', this.getAppointeeProperty('Orgtx'));
@@ -114,15 +114,33 @@ sap.ui.define(
       },
 
       onPressRowPerformance(oEvent) {
+        const sHost = window.location.href.split('#')[0];
         const oRowData = oEvent.getSource().getParent().getBindingContext().getObject();
 
-        this.debug(oRowData);
+        if (!oRowData.Zdocid1) return;
+
+        window.open(`${sHost}#/performanceView/ME/${oRowData.Pernr}/${oRowData.Zdocid1}`, '_blank', 'width=1400,height=800');
       },
 
       onPressRowCompetency(oEvent) {
+        const sHost = window.location.href.split('#')[0];
         const oRowData = oEvent.getSource().getParent().getBindingContext().getObject();
 
-        this.debug(oRowData);
+        if (!oRowData.Zdocid2) return;
+
+        window.open(`${sHost}#/competencyView/ME/${oRowData.Pernr}/${oRowData.Zdocid2}`, '_blank', 'width=1300,height=800');
+      },
+
+      onPressRowMulti(oEvent) {
+        const oRowData = oEvent.getSource().getParent().getBindingContext().getObject();
+
+        this.debug(oRowData.Zdocid3);
+      },
+
+      onPressRowDevelop(oEvent) {
+        const oRowData = oEvent.getSource().getParent().getBindingContext().getObject();
+
+        this.debug(oRowData.Zdocid4);
       },
 
       openPerformance(sObjid) {
@@ -163,7 +181,7 @@ sap.ui.define(
           const oSideTree = this.byId('OrganizationTree');
           const aReturnTreeData = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'AuthOrgTree', { Datum: moment().hour(9).toDate(), Xpern: 'X' });
           const mConvertedTreeData = this.transformTreeData({ aTreeData: aReturnTreeData, sRootId: '00000000' });
-          const iTreeViewHeight = Math.max(Math.floor($(document).height() - oSideTree.$().offset().top - 35), 500);
+          const iTreeViewHeight = Math.max(Math.floor($(document).height() - oSideTree.$().offset().top - 25), 500);
 
           oViewModel.setProperty('/sideNavigation/treeData', mConvertedTreeData);
           oViewModel.setProperty('/sideNavigation/treeHeight', `${iTreeViewHeight}px`);
@@ -277,7 +295,7 @@ sap.ui.define(
             _.map(aRowData, (o) => _.omit(o, '__metadata'))
           );
 
-          this.setVisibleColumns(oViewModel.getProperty('/isMSS'), mListPayload.Otype);
+          this.setVisibleColumns(oViewModel.getProperty('/isESS'), mListPayload.Otype);
         } catch (oError) {
           this.debug('Controller > historyAppraisal > onPressSearch Error', oError);
 

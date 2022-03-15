@@ -15,7 +15,7 @@
         </VBox>
         <VBox class="contents">
             <HBox>
-                <VBox id="sideBody" class="vCardBox side-navigation expanded sapUiSmallMarginEnd" height="{/sideNavigation/height}">
+                <VBox id="sideBody" class="vCardBox side-navigation expanded sapUiSmallMarginEnd sticky-side-tree" height="82vh">
                     <ToggleButton icon="sap-icon://navigation-left-arrow" class="icon-button toggle-navi" press=".onToggleNavigation" />
                     <IconTabBar selectedKey="{/sideNavigation/selectedKey}" expandable="false" visible="{= ${/sideNavigation/isShow}}" select=".onSelectSideTab">
                         <layoutData>
