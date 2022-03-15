@@ -95,7 +95,7 @@ sap.ui.define(
 
           const mGradeMap = _.reduce(aGrades, (acc, cur) => ({ ...acc, [cur.ValueEid]: cur.ValueText }), {});
 
-          oViewModel.setProperty('/isActive', !_.isEqual(mDetailData.Zonlydsp, 'X'));
+          oViewModel.setProperty('/isActive', !_.isEqual(mDetailData.Zonlydsp, 'X') && _.size(mDetailData.AppraisalSesDocDetSet.results) !== 0);
           oViewModel.setProperty('/gradeMap', mGradeMap);
           oViewModel.setProperty('/grade', aGrades);
           oViewModel.setProperty('/gradeEntry', _.take(aGrades, 2));
@@ -258,7 +258,7 @@ sap.ui.define(
           .commit();
 
         oViewModel.setProperty('/department/rowCount', _.chain(aListByDepart).size().add(1).value());
-        oViewModel.setProperty('/department/list', [...aListByDepart, mSumRow]);
+        oViewModel.setProperty('/department/list', _.compact([...aListByDepart, mSumRow]));
       },
 
       orderBy(sPath, aProps, aOrders) {
