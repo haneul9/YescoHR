@@ -3,7 +3,7 @@
     <HBox class="vCardBox" height="80px" visible="{= ${/history/mode} === 'O' }">
         <HBox class="form-bar" alignItems="Center">
             <Label text="{i18n>LABEL_15005}" />
-            <DatePicker displayFormat="yyyy" valueFormat="yyyy" value="{/history/search/Zyear}" change=".onPressSearch" />
+            <DatePicker displayFormat="yyyy" valueFormat="yyyy" value="{/history/search/Zyear}" maxDate="{/history/maxDate}" change=".onPressSearch" />
         </HBox>
     </HBox>
 </core:FragmentDefinition>
