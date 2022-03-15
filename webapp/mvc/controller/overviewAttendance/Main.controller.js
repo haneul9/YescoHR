@@ -133,7 +133,6 @@ sap.ui.define(
             break;
           case 'bar2d':
             _.chain(mChartSetting)
-              // .set(['chart', 'yAxisMaxValue'], '120')
               .set(
                 ['data'],
                 _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callDetail-${mChartInfo.Headty},${o.Cod01}` }))
@@ -226,7 +225,7 @@ sap.ui.define(
                       const sDisyear = oViewModel.getProperty(`/contents/${mChartInfo.Target}/data/raw/${idx}/Ttltxt`);
                       const mPayload = _.zipObject(['Headty', 'Discod', 'Disyear'], [sHeadty, 'all', sDisyear]);
 
-                      oController.openDetailDialog(mPayload);
+                      oController.callDetail(mPayload);
                     })
                     .addClass('active-link');
                 });
@@ -254,24 +253,75 @@ sap.ui.define(
         }
       },
 
-      async openDetailDialog(mPayload) {
+      async openDialog(sHeadty) {
         const oView = this.getView();
+        let oDialog = null;
+
+        switch (sHeadty) {
+          case 'A':
+            if (!this.oDetail1Dialog) {
+              this.oDetail1Dialog = await Fragment.load({
+                id: oView.getId(),
+                name: 'sap.ui.yesco.mvc.view.overviewAttendance.fragment.DialogDetail1',
+                controller: this,
+              });
+
+              oView.addDependent(this.oDetail1Dialog);
+            }
+
+            oDialog = this.oDetail1Dialog;
+            this.oDetail1Dialog.open();
+            break;
+          case 'B':
+          case 'C':
+          case 'H':
+          case 'I':
+          case 'J':
+            if (!this.oDetail3Dialog) {
+              this.oDetail3Dialog = await Fragment.load({
+                id: oView.getId(),
+                name: 'sap.ui.yesco.mvc.view.overviewAttendance.fragment.DialogDetail3',
+                controller: this,
+              });
+
+              oView.addDependent(this.oDetail3Dialog);
+            }
+
+            oDialog = this.oDetail3Dialog;
+            this.oDetail3Dialog.open();
+            break;
+          case 'D':
+          case 'E':
+          case 'F':
+          case 'G':
+            if (!this.oDetail2Dialog) {
+              this.oDetail2Dialog = await Fragment.load({
+                id: oView.getId(),
+                name: 'sap.ui.yesco.mvc.view.overviewAttendance.fragment.DialogDetail2',
+                controller: this,
+              });
+
+              oView.addDependent(this.oDetail2Dialog);
+            }
+
+            oDialog = this.oDetail2Dialog;
+            this.oDetail2Dialog.open();
+            break;
+          default:
+            break;
+        }
+
+        return oDialog;
+      },
+
+      async callDetail(mPayload) {
         const oViewModel = this.getViewModel();
+        let oDialog = null;
 
         oViewModel.setProperty('/dialog/busy', true);
 
         try {
-          if (!this.oDetailDialog) {
-            this.oDetailDialog = await Fragment.load({
-              id: oView.getId(),
-              name: 'sap.ui.yesco.mvc.view.overviewAttendance.fragment.DialogDetail',
-              controller: this,
-            });
-
-            oView.addDependent(this.oDetailDialog);
-          }
-
-          this.oDetailDialog.open();
+          oDialog = await this.openDialog(mPayload.Headty);
 
           const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.PA), _.get(mPayload, 'Entity') === 'A' ? 'HeadCountDetail' : 'HeadCountEntRetDetail', { Zyear: '2022', ..._.omit(mPayload, 'Entity') });
 
@@ -281,15 +331,15 @@ sap.ui.define(
             '/dialog/list',
             _.map(aDetailData, (o, i) => ({ Idx: ++i, ...o }))
           );
-          oViewModel.setProperty('/dialog/busy', false);
         } catch (oError) {
-          this.debug('Controller > m/overviewAttendance Main > openDetailDialog Error', oError);
+          this.debug('Controller > m/overviewAttendance Main > callDetail Error', oError);
 
           AppUtils.handleError(oError, {
-            onClose: () => this.oDetailDialog.close(),
+            onClose: () => oDialog.close(),
           });
         } finally {
-          if (this.byId('overviewEmpDetailTable')) this.byId('overviewEmpDetailTable').setFirstVisibleRow();
+          oViewModel.setProperty('/dialog/busy', false);
+          oDialog.getContent()[0].getItems()[0].setFirstVisibleRow();
         }
       },
 
@@ -334,22 +384,29 @@ sap.ui.define(
 
       onPressCount(oEvent) {
         if (oEvent['getSource'] instanceof Function) {
-          this.openDetailDialog(oEvent.getSource().data());
+          this.callDetail(oEvent.getSource().data());
         } else {
-          this.openDetailDialog(sap.ui.getCore().byId($(oEvent.currentTarget).attr('id')).data());
+          this.callDetail(sap.ui.getCore().byId($(oEvent.currentTarget).attr('id')).data());
         }
       },
 
-      onPressDetailDialogClose() {
-        this.oDetailDialog.close();
+      onPressDetail1DialogClose() {
+        this.oDetail1Dialog.close();
       },
 
-      onPressDetailExcelDownload() {
-        const oTable = this.byId('overviewEmpDetailTable');
-        const aTableData = this.getViewModel().getProperty('/dialog/list');
-        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_28038'); // 인원현황상세
+      onPressEmployeeRow(oEvent) {
+        const sHost = window.location.href.split('#')[0];
+        const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
 
-        TableUtils.export({ oTable, aTableData, sFileName, aDateProps: ['Gbdat', 'Entda', 'Loada', 'Reida', 'Retda'] });
+        window.open(`${sHost}#/employeeView/${mRowData.Pernr}`, '_blank', 'width=1400,height=800');
+      },
+
+      onPressDetailExcelDownload(oEvent) {
+        const oTable = oEvent.getSource().getParent().getParent().getParent();
+        const aTableData = this.getViewModel().getProperty('/dialog/list');
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_28040'); // 근태현황상세
+
+        TableUtils.export({ oTable, aTableData, sFileName, aDateProps: ['Datum'] });
       },
 
       /*****************************************************************
@@ -366,5 +423,5 @@ function callDetail(sArgs) {
   const aArgs = _.split(sArgs, ',');
   const mPayload = _.zipObject(_.take(aProps, aArgs.length), aArgs);
 
-  oController.openDetailDialog(mPayload);
+  oController.callDetail(mPayload);
 }

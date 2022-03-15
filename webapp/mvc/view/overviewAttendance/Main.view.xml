@@ -30,7 +30,7 @@
           <Button text="{i18n>LABEL_00100}" icon="asset/image/icon_search03.png" press=".onPressSearch"/>
         </HBox>
       </HBox>
-      <grid:CSSGrid gridGap="20px" gridTemplateRows="repeat(3, 230px)" gridTemplateColumns="repeat(4, 1fr)" class="mobile-grid-flow-column sapUiSmallMarginTop">
+      <grid:CSSGrid gridGap="20px" gridTemplateRows="230px repeat(2, 280px)" gridTemplateColumns="repeat(4, 1fr)" class="mobile-grid-flow-column sapUiSmallMarginTop">
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A01" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A02" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A03" type="XML" />

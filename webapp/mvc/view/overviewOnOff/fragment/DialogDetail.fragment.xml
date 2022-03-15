@@ -8,7 +8,7 @@
                 <custom:Placeholder />
             </m:VBox>
             <m:VBox class="dialog-content-table" visible="{= !${/dialog/busy} }">
-                <Table id="overviewEmpDetailTable" width="100%" selectionMode="None" fixedColumnCount="8" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/list}" visibleRowCount="{/dialog/rowCount}" noData="{i18n>MSG_00001}">
+                <Table id="overviewOnOffDetailTable" width="100%" selectionMode="None" fixedColumnCount="8" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/list}" visibleRowCount="{/dialog/rowCount}" noData="{i18n>MSG_00001}">
                     <rowSettingsTemplate>
                         <RowSettings highlight="{ path: 'Stat1', formatter: '.formatDetailRowHighlight' }" />
                     </rowSettingsTemplate>
