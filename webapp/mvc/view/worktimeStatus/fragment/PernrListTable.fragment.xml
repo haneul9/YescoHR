@@ -1,0 +1,299 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:table="sap.ui.table"
+  xmlns:core="sap.ui.core">
+  <VBox class="vCardBox" visible="{= ${/search/Disty} !== '2' }">
+    <HBox justifyContent="SpaceBetween" class="header-wrap">
+      <HBox class="header">
+        <Title level="H3" text="{i18n>LABEL_32006}" class="sapUiSmallMarginEnd" />
+        <Text text="{i18n>MSG_32001}" class="desc-txt" />
+      </HBox>
+      <HBox class="status-wrap">
+        <ObjectStatus text="{i18n>LABEL_32012}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication04" />
+        <ObjectStatus text="{i18n>LABEL_32013}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication05" />
+      </HBox>
+    </HBox>
+    <table:Table id="pernrTable" selectionMode="None" fixedBottomRowCount="1" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/detail/org/list}" visibleRowCount="{= ${/detail/org/rowCount} > 10 ? 10 : ${/detail/org/rowCount} }" noData="{i18n>MSG_00001}">
+      <table:columns>
+        <table:Column width="50px">
+          <table:multiLabels>
+            <Label text="{i18n>LABEL_00144}" />
+            <Label text="{i18n>LABEL_00144}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Status}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="100px">
+          <table:multiLabels>
+            <Label text="{i18n>LABEL_00224}" />
+            <Label text="{i18n>LABEL_00224}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Orgtx}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="100px">
+          <table:multiLabels>
+            <Label text="{i18n>LABEL_00224}" />
+            <Label text="{i18n>LABEL_00224}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Orgtx}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="100px">
+          <table:multiLabels>
+            <Label text="{i18n>LABEL_00224}" />
+            <Label text="{i18n>LABEL_00224}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Orgtx}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="100px">
+          <table:multiLabels>
+            <Label text="{i18n>LABEL_00224}" />
+            <Label text="{i18n>LABEL_00224}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Orgtx}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="50px">
+          <table:multiLabels>
+            <Label text="{i18n>LABEL_16004}" />
+            <Label text="{i18n>LABEL_16004}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Empcnt}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="4%" headerSpan="5">
+          <table:multiLabels>
+            <Label text="{Wktx1}" />
+            <Label text="{i18n>LABEL_32004}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim11}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="4%">
+          <table:multiLabels>
+            <Label text="{Wktx1}" />
+            <Label text="{i18n>LABEL_01205}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim12}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="4%">
+          <table:multiLabels>
+            <Label text="{Wktx1}" />
+            <Label text="{i18n>LABEL_01123}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim13}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="4%">
+          <table:multiLabels>
+            <Label text="{Wktx1}" />
+            <Label text="{i18n>LABEL_13028}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim14}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="4%">
+          <table:multiLabels>
+            <Label text="{Wktx1}" />
+            <Label text="{i18n>LABEL_32011}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Over1}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="4%" headerSpan="5">
+          <table:multiLabels>
+            <Label text="{Wktx2}" />
+            <Label text="{i18n>LABEL_32004}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim21}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="4%">
+          <table:multiLabels>
+            <Label text="{Wktx2}" />
+            <Label text="{i18n>LABEL_01205}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim22}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="4%">
+          <table:multiLabels>
+            <Label text="{Wktx2}" />
+            <Label text="{i18n>LABEL_01123}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim23}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="4%">
+          <table:multiLabels>
+            <Label text="{Wktx2}" />
+            <Label text="{i18n>LABEL_13028}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim24}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="4%">
+          <table:multiLabels>
+            <Label text="{Wktx2}" />
+            <Label text="{i18n>LABEL_32011}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Over2}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="4%" headerSpan="5">
+          <table:multiLabels>
+            <Label text="{Wktx3}" />
+            <Label text="{i18n>LABEL_32004}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim31}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="4%">
+          <table:multiLabels>
+            <Label text="{Wktx3}" />
+            <Label text="{i18n>LABEL_01205}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim32}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="4%">
+          <table:multiLabels>
+            <Label text="{Wktx3}" />
+            <Label text="{i18n>LABEL_01123}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim33}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="4%">
+          <table:multiLabels>
+            <Label text="{Wktx3}" />
+            <Label text="{i18n>LABEL_13028}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim34}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="4%">
+          <table:multiLabels>
+            <Label text="{Wktx3}" />
+            <Label text="{i18n>LABEL_32011}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Over3}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="4%" headerSpan="5">
+          <table:multiLabels>
+            <Label text="{Wktx4}" />
+            <Label text="{i18n>LABEL_32004}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim41}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="4%">
+          <table:multiLabels>
+            <Label text="{Wktx4}" />
+            <Label text="{i18n>LABEL_01205}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim42}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="4%">
+          <table:multiLabels>
+            <Label text="{Wktx4}" />
+            <Label text="{i18n>LABEL_01123}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim43}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="4%">
+          <table:multiLabels>
+            <Label text="{Wktx4}" />
+            <Label text="{i18n>LABEL_13028}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim44}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="4%">
+          <table:multiLabels>
+            <Label text="{Wktx4}" />
+            <Label text="{i18n>LABEL_32011}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Over4}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="4%" headerSpan="5">
+          <table:multiLabels>
+            <Label text="{Wktx5}" />
+            <Label text="{i18n>LABEL_32004}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim51}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="4%">
+          <table:multiLabels>
+            <Label text="{Wktx5}" />
+            <Label text="{i18n>LABEL_01205}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim52}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="4%">
+          <table:multiLabels>
+            <Label text="{Wktx5}" />
+            <Label text="{i18n>LABEL_01123}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim53}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="4%">
+          <table:multiLabels>
+            <Label text="{Wktx5}" />
+            <Label text="{i18n>LABEL_13028}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim54}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="4%">
+          <table:multiLabels>
+            <Label text="{Wktx5}" />
+            <Label text="{i18n>LABEL_32011}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Over5}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+      </table:columns>
+    </table:Table>
+  </VBox>
+</core:FragmentDefinition>

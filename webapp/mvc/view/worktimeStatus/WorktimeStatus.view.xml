@@ -17,9 +17,8 @@
       <VBox class="contents">
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.worktimeStatus.fragment.SearchCondition" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.worktimeStatus.fragment.WorkTimePortlet" type="XML" />
-        <VBox class="vCardBox">
-          <!-- <core:Fragment fragmentName="sap.ui.yesco.mvc.view.worktimeStatus.fragment.ApplyListTable" type="XML" /> -->
-        </VBox>
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.worktimeStatus.fragment.OrgListTable" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.worktimeStatus.fragment.PernrListTable" type="XML" />
       </VBox>
     </content>
   </Page>
