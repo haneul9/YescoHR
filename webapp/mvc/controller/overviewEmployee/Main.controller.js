@@ -345,6 +345,13 @@ sap.ui.define(
         this.oDetailDialog.close();
       },
 
+      onPressEmployeeRow(oEvent) {
+        const sHost = window.location.href.split('#')[0];
+        const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
+
+        window.open(`${sHost}#/employeeView/${mRowData.Pernr}`, '_blank', 'width=1400,height=800');
+      },
+
       onPressDetailExcelDownload() {
         const oTable = this.byId('overviewEmpDetailTable');
         const aTableData = this.getViewModel().getProperty('/dialog/list');
