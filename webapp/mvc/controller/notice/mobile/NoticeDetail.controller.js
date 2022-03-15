@@ -2,37 +2,26 @@
 sap.ui.define(
   [
     // prettier 방지주석
-    'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/odata/Client',
-    'sap/ui/yesco/control/MessageBox',
-    'sap/ui/yesco/common/exceptions/ODataDeleteError',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/richtexteditor/RichTextEditor',
     'sap/ui/yesco/mvc/model/type/Date',
   ],
   (
     // prettier 방지용 주석
-    Appno,
     AppUtils,
     AttachFileAction,
     ServiceNames,
     Client,
-    MessageBox,
-    ODataDeleteError,
     BaseController,
     RTE
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.notice.mobile.NoticeDetail', {
-      LIST_PAGE_ID: {
-        E: 'container-ehr---notice',
-        H: 'container-ehr---h_notice',
-      },
-
       AttachFileAction: AttachFileAction,
 
       initializeModel() {
@@ -48,9 +37,7 @@ sap.ui.define(
       },
 
       getCurrentLocationText(oArguments) {
-        const sAction = oArguments.Sdate === 'N' ? this.getBundleText('LABEL_00167') : this.getBundleText('LABEL_00165');
-
-        return sAction;
+        return this.getBundleText('LABEL_08001'); // 공지사항
       },
 
       // override AttachFileCode
@@ -70,45 +57,33 @@ sap.ui.define(
           const sMenid = this.getCurrentMenuId();
 
           oDetailModel.setProperty('/Menid', sMenid);
-          oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.COMMON, 'NoticeManage')));
+          const sWerks = this.getSessionProperty('Werks');
+          let oSendObject = {
+            Prcty: '1',
+            Sdate: sSdate,
+            Seqnr: sSeqnr,
+            Werks: sWerks,
+            Notice1Nav: [],
+            Notice2Nav: [],
+          };
 
-          if (!sSeqnr || sSeqnr === 'N') {
-            const oSessionData = this.getSessionData();
+          const oModel = this.getModel(ServiceNames.COMMON);
+          const oDetail = await Client.deep(oModel, 'NoticeManage', oSendObject);
 
+          const oTargetData = oDetail.Notice1Nav.results[0];
+          const oDetailData = oDetail.Notice2Nav.results;
+
+          if (this.getSessionProperty('Pernr') === oTargetData.Apern) {
             oDetailModel.setProperty('/MySelf', true);
-            oDetailModel.setProperty('/FormData', {
-              ApernTxt: `${oSessionData.Orgtx} ${oSessionData.Ename}`,
-              Apern: oSessionData.Pernr,
-            });
-          } else {
-            const sWerks = this.getSessionProperty('Werks');
-            let oSendObject = {
-              Prcty: '1',
-              Sdate: sSdate,
-              Seqnr: sSeqnr,
-              Werks: sWerks,
-              Notice1Nav: [],
-              Notice2Nav: [],
-            };
-
-            const oModel = this.getModel(ServiceNames.COMMON);
-            const oDetail = await Client.deep(oModel, 'NoticeManage', oSendObject);
-
-            const oTargetData = oDetail.Notice1Nav.results[0];
-            const oDetailData = oDetail.Notice2Nav.results;
-
-            if (this.getSessionProperty('Pernr') === oTargetData.Apern) {
-              oDetailModel.setProperty('/MySelf', true);
-            }
-
-            oTargetData.Detail = '';
-
-            oDetailData.forEach((e) => {
-              oTargetData.Detail += e.Detail;
-            });
-
-            oDetailModel.setProperty('/FormData', oTargetData);
           }
+
+          oTargetData.Detail = '';
+
+          oDetailData.forEach((e) => {
+            oTargetData.Detail += e.Detail;
+          });
+
+          oDetailModel.setProperty('/FormData', oTargetData);
 
           // setTimeout(() => {
           //   this.setTextEditor();
@@ -120,210 +95,6 @@ sap.ui.define(
         } finally {
           oDetailModel.setProperty('/busy', false);
         }
-      },
-
-      // 중요항목 & 임시저장 Check
-      onSelected(oEvent) {
-        const bSelected = oEvent.getSource().getSelected();
-        const sPath = oEvent.getSource().getBinding('selected').getBindings()[0].getPath();
-
-        if (bSelected) {
-          this.getViewModel().setProperty(sPath, 'X');
-        } else {
-          this.getViewModel().setProperty(sPath, '');
-        }
-      },
-
-      checkError() {
-        const oDetailModel = this.getViewModel();
-        const oFormData = oDetailModel.getProperty('/FormData');
-
-        // 제목
-        if (!oFormData.Title) {
-          MessageBox.alert(this.getBundleText('MSG_08001'));
-          return true;
-        }
-
-        // 내용
-        if (!oFormData.Detail) {
-          MessageBox.alert(this.getBundleText('MSG_08002'));
-          return true;
-        }
-
-        return false;
-      },
-
-      // 임시저장
-      onSaveBtn() {
-        if (this.checkError()) return;
-
-        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00103'), {
-          actions: [this.getBundleText('LABEL_00103'), this.getBundleText('LABEL_00118')],
-          onClose: async (vPress) => {
-            if (vPress && vPress === this.getBundleText('LABEL_00103')) {
-              try {
-                AppUtils.setAppBusy(true, this);
-
-                const oDetailModel = this.getViewModel();
-                const sAppno = oDetailModel.getProperty('/FormData/Appno');
-
-                if (!sAppno) {
-                  const vAppno = await Appno.get.call(this);
-
-                  oDetailModel.setProperty('/FormData/Appno', vAppno);
-                  oDetailModel.setProperty('/FormData/Sdate', new Date());
-                }
-
-                const aDetail = [];
-                const oFormData = oDetailModel.getProperty('/FormData');
-                const aList = oFormData.Detail.match(new RegExp('.{1,' + 4000 + '}', 'g'));
-
-                aList.forEach((e) => {
-                  const mDetailObj = {};
-
-                  mDetailObj.Detail = e;
-                  aDetail.push(mDetailObj);
-                });
-
-                oFormData.Detail = '';
-                oFormData.Hide = 'X';
-
-                // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
-
-                const oModel = this.getModel(ServiceNames.COMMON);
-                const sWerks = this.getSessionProperty('Werks');
-
-                await Client.deep(oModel, 'NoticeManage', {
-                  Prcty: '2',
-                  Werks: sWerks,
-                  Notice1Nav: [oFormData],
-                  Notice2Nav: aDetail,
-                });
-
-                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
-              } catch (oError) {
-                AppUtils.handleError(oError);
-              } finally {
-                AppUtils.setAppBusy(false, this);
-              }
-            }
-          },
-        });
-      },
-
-      // 등록
-      onRegistBtn() {
-        if (this.checkError()) return;
-
-        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00106'), {
-          actions: [this.getBundleText('LABEL_00106'), this.getBundleText('LABEL_00118')],
-          onClose: async (vPress) => {
-            if (vPress && vPress === this.getBundleText('LABEL_00106')) {
-              try {
-                AppUtils.setAppBusy(true, this);
-                const oDetailModel = this.getViewModel();
-                const sAppno = oDetailModel.getProperty('/FormData/Appno');
-
-                if (!sAppno) {
-                  const vAppno = await Appno.get.call(this);
-
-                  oDetailModel.setProperty('/FormData/Appno', vAppno);
-                  oDetailModel.setProperty('/FormData/Sdate', new Date());
-                }
-
-                const aDetail = [];
-                const oFormData = oDetailModel.getProperty('/FormData');
-                const aList = oFormData.Detail.match(new RegExp('.{1,' + 4000 + '}', 'g'));
-
-                aList.forEach((e) => {
-                  const mDetailObj = {};
-
-                  mDetailObj.Detail = e;
-                  aDetail.push(mDetailObj);
-                });
-
-                oFormData.Detail = '';
-                oFormData.Hide = '';
-
-                const sWerks = this.getSessionProperty('Werks');
-
-                // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
-
-                const oModel = this.getModel(ServiceNames.COMMON);
-                let oSendObject = {
-                  Prcty: '2',
-                  Werks: sWerks,
-                  Notice1Nav: [oFormData],
-                  Notice2Nav: aDetail,
-                };
-
-                await Client.deep(oModel, 'NoticeManage', oSendObject);
-
-                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00106'), {
-                  onClose: () => {
-                    this.onNavBack();
-                  },
-                });
-              } catch (error) {
-                AppUtils.handleError(error);
-              } finally {
-                AppUtils.setAppBusy(false, this);
-              }
-            }
-          },
-        });
-      },
-
-      // 삭제
-      onDeleteBtn() {
-        const oModel = this.getModel(ServiceNames.COMMON);
-        const sWerks = this.getSessionProperty('Werks');
-
-        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
-          actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
-          onClose: (vPress) => {
-            if (vPress && vPress === this.getBundleText('LABEL_00110')) {
-              AppUtils.setAppBusy(true, this);
-
-              const oFormData = this.getViewModel().getProperty('/FormData');
-              const aList = oFormData.Detail.match(new RegExp('.{1,' + 4000 + '}', 'g'));
-              const aDetail = [];
-
-              aList.forEach((e) => {
-                const mDetailObj = {};
-
-                mDetailObj.Detail = e;
-                aDetail.push(mDetailObj);
-              });
-
-              oFormData.Detail = '';
-
-              let oSendObject = {
-                Prcty: '3',
-                Werks: sWerks,
-                Notice1Nav: [oFormData],
-                Notice2Nav: aDetail,
-              };
-
-              oModel.create('/NoticeManageSet', oSendObject, {
-                success: () => {
-                  MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
-                    onClose: () => {
-                      this.onNavBack();
-                    },
-                  });
-                  AppUtils.setAppBusy(false, this);
-                },
-                error: (oError) => {
-                  AppUtils.handleError(new ODataDeleteError(oError));
-                  AppUtils.setAppBusy(false, this);
-                },
-              });
-            }
-          },
-        });
       },
 
       editorReady(oEvent) {
