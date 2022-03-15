@@ -6,6 +6,7 @@ sap.ui.define(
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/Debuggable',
+    'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/model/type/Date', // XML expression binding용 type preloading
@@ -18,6 +19,7 @@ sap.ui.define(
     JSONModel,
     AppUtils,
     Debuggable,
+    UI5Error,
     Client,
     ServiceNames
   ) => {
@@ -202,6 +204,9 @@ sap.ui.define(
 
           await this.showContentData();
         } catch (oError) {
+          if (oError instanceof UI5Error) {
+            oError.code = UI5Error.MESSAGE_LEVEL.INFORMATION;
+          }
           AppUtils.handleError(oError);
         } finally {
           this.setBusy(false);
@@ -232,6 +237,9 @@ sap.ui.define(
 
           await this.showContentData();
         } catch (oError) {
+          if (oError instanceof UI5Error) {
+            oError.code = UI5Error.MESSAGE_LEVEL.INFORMATION;
+          }
           AppUtils.handleError(oError);
         } finally {
           this.setBusy(false);
@@ -242,6 +250,7 @@ sap.ui.define(
         oEvent.cancelBubble();
 
         this.getController().getAppMenu().handleMenuLink(oEvent);
+        this.onPopoverClose();
       },
 
       async onPressNotificationReadToggle(oEvent) {
@@ -267,6 +276,9 @@ sap.ui.define(
 
           await this.showContentData();
         } catch (oError) {
+          if (oError instanceof UI5Error) {
+            oError.code = UI5Error.MESSAGE_LEVEL.INFORMATION;
+          }
           AppUtils.handleError(oError);
         } finally {
           this.setBusy(false);
@@ -286,6 +298,9 @@ sap.ui.define(
 
           await this.showContentData();
         } catch (oError) {
+          if (oError instanceof UI5Error) {
+            oError.code = UI5Error.MESSAGE_LEVEL.INFORMATION;
+          }
           AppUtils.handleError(oError);
         } finally {
           this.setBusy(false);

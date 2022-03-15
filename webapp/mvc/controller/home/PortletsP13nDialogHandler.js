@@ -140,7 +140,6 @@ sap.ui.define(
           if (oError instanceof UI5Error) {
             oError.code = UI5Error.MESSAGE_LEVEL.INFORMATION;
           }
-
           AppUtils.handleError(oError);
 
           return false;

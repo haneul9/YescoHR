@@ -2,6 +2,7 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/m/Label',
+    'sap/m/Link',
     'sap/ui/base/Object',
     'sap/ui/core/CustomData',
     'sap/ui/core/Fragment',
@@ -16,6 +17,7 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     Label,
+    Link,
     BaseObject,
     CustomData,
     Fragment,
@@ -216,13 +218,16 @@ sap.ui.define(
        * @param {object} oEvent
        */
       async handleMenuLink(oEvent) {
-        const sHref = oEvent.getSource().getProperty('href');
-        if (/^https?:/.test(sHref) || (sHref !== 'javascript:;' && /^javascript:/.test(sHref))) {
-          setTimeout(() => {
-            this.toggleSelectedMenuStyle(false);
-            this.closeMenuLayer(true);
-          });
-          return;
+        const oEventSource = oEvent.getSource();
+        if (oEventSource instanceof Link) {
+          const sHref = oEvent.getSource().getProperty('href');
+          if (/^https?:/.test(sHref) || (sHref !== 'javascript:;' && /^javascript:/.test(sHref))) {
+            setTimeout(() => {
+              this.toggleSelectedMenuStyle(false);
+              this.closeMenuLayer(true);
+            });
+            return;
+          }
         }
 
         oEvent.preventDefault();
@@ -231,7 +236,7 @@ sap.ui.define(
           this.closeMenuLayer(true);
         });
 
-        const oContext = oEvent.getSource().getBindingContext();
+        const oContext = oEventSource.getBindingContext();
         if (oContext.getProperty('Mepop')) {
           return;
         }
