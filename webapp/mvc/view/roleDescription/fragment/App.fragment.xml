@@ -12,8 +12,8 @@
             </HBox>
         </VBox>
         <HBox class="contents" justifyContent="SpaceBetween" busyIndicatorDelay="0" busy="{/busy}">
-            <VBox width="520px" height="69vh" class="vCardBox sapUiMediumMarginEnd">
-                <ScrollContainer height="64vh" width="100%" vertical="true">
+            <VBox width="520px" height="80vh" class="vCardBox sapUiMediumMarginEnd sticky-side-tree">
+                <ScrollContainer height="75vh" width="100%" vertical="true">
                     <Tree id="roleTree" mode="SingleSelectMaster" items="{ path: '/data/tree' }" selectionChange=".onPressTreeItem">
                         <layoutData>
                             <FlexItemData growFactor="1" />

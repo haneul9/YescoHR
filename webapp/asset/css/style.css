@@ -1395,7 +1395,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .timeline .lineItem-wrap > .sapMFlexItem:nth-child(6) .lineItem.sapUiIcon::after{content:""; width:35px; height:35px; background-image:url(../image/icon_timeline06.png); background-repeat:no-repeat; background-position:center; }
 .timeline .lineItem-wrap > .sapMFlexItem .lineItem.sapUiIcon::before {content:attr(data-sap-ui-icon-content); font-weight:normal; -webkit-font-smoothing:antialiased; display:none}
 
-.side-navigation { width: 0%; transition: width 0.5s;padding: 25px 10px;overflow:hidden }
+.side-navigation { width: 0%; transition: width 0.5s;padding: 25px 10px;overflow:hidden; }
 .side-navigation .sapMFlexItem:not(:first-child) {opacity:0; }
 .side-navigation.expanded { width: 27%; transition: width 0.5s;padding: 25px 30px; }
 .side-navigation.expanded .sapMFlexItem:not(:first-child) {opacity:1; }
@@ -2049,6 +2049,7 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .fusion-tooltip td { font-weight: 400; text-align: left; }
 .fusion-tooltip th { font-weight: bold; word-break: keep-all; background-color: #f7f7f7; min-width: 40%; }
 
+.sticky-side-tree { position: sticky; top: 80px; }
 
 @media screen and (max-width: 480px) {
     .contents { margin: 0 auto;max-width: 100%;min-width: 100%;padding-bottom: 20px;}

@@ -40,6 +40,7 @@ sap.ui.define(
             rowCount: 1,
             list: [],
             entryZyear: [],
+            maxDate: moment().toDate(),
             search: { Zyear: null, Otype: '', Objid: '' },
             visible: {
               Zyear: true,
