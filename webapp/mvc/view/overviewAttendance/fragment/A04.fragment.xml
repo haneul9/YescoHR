@@ -25,13 +25,13 @@
                 </VBox>
                 <VBox width="50%" height="100%">
                     <Label text="{i18n>LABEL_28046}" class="font-16-px pb-10-px"/>
-                    <Label text="{/contents/A04/data/Cnt02}" class="font-30-px color-03 normal ls-small"/>
+                    <Label text="{/contents/A04/data/Cnt03}" class="font-30-px color-03 normal ls-small"/>
                 </VBox>
             </HBox>
             <HBox class="pt-6-px">
                 <VBox width="50%" height="100%">
                     <Label text="{i18n>LABEL_28047}" class="font-16-px pb-10-px"/>
-                    <Label text="{/contents/A04/data/Cnt03}" class="font-30-px color-03 normal ls-small"/>
+                    <Label text="{/contents/A04/data/Cnt02}" class="font-30-px color-03 normal ls-small"/>
                 </VBox>
                 <VBox width="50%" height="100%">
                     <Label text="{i18n>LABEL_28047}" class="font-16-px pb-10-px"/>

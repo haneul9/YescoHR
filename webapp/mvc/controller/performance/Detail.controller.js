@@ -64,6 +64,7 @@ sap.ui.define(
           param: {},
           type: '',
           year: moment().format('YYYY'),
+          listInfo: {},
           tab: { selectedKey: Constants.TAB.GOAL },
           appointee: {},
           stage: {
@@ -114,6 +115,7 @@ sap.ui.define(
 
         oViewModel.setData(this.initializeModel());
         oViewModel.setProperty('/busy', true);
+        oViewModel.setProperty('/listInfo', mListRoute);
 
         try {
           const oView = this.getView();
@@ -399,8 +401,7 @@ sap.ui.define(
 
       async createProcess({ code, label }) {
         const oViewModel = this.getViewModel();
-        const sType = oViewModel.getProperty('/type');
-        const sListRouteName = _.get(Constants.LIST_PAGE, [sType, 'route']);
+        const sListRouteName = oViewModel.getProperty('/listInfo/route');
 
         oViewModel.setProperty('/busy', true);
 

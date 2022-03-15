@@ -128,6 +128,8 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p06 .team-member-count[data-table-key="4"] .sapMObjStatusText {color:#c68dff}
 .portlet-p06 .team-member-count[data-table-key="5"] .sapMObjStatusText {color:#6edecf}
 .portlet-p06 .team-member-count[data-table-key="6"] .sapMObjStatusText {color:#ffc86f}
+.portlet-p06 .team-member-count[data-table-key="7"] .sapMObjStatusText {color:#A9F482}
+.portlet-p06 .team-member-count[data-table-key="8"] .sapMObjStatusText {color:#ACB3FF}
 .sapMPopover.team-member-count-popover {border-radius:4px}
 .sapMPopover.team-member-count-popover .sapMPopoverCont {max-height:211px !important}
 .sapMPopover.team-member-count-popover .sapUiTableCCnt,

@@ -18,7 +18,7 @@
       <HBox class="vCardBox" justifyContent="SpaceBetween" height="80px">
         <HBox class="form-bar" alignItems="Center">
           <Label text="{i18n>LABEL_28001}" />
-          <custom:DatePicker dateValue="{ path: '/searchConditions/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" />
+          <custom:DatePicker dateValue="{ path: '/searchConditions/Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" />
           <Label text="{i18n>LABEL_00237}" />
           <ComboBox items="{/entry/Werks}" selectedKey="{/searchConditions/Werks}" change=".onChangeWerks">
             <core:Item text="{Pbtxt}" key="{Werks}" />
