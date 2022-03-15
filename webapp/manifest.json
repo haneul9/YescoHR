@@ -196,6 +196,8 @@
         { "pattern": "notice/{Sdate}/{Seqnr}", "name": "notice-detail", "target": "noticeDetail" },
         { "pattern": "h/notice", "name": "h/notice", "target": "h/notice" },
         { "pattern": "h/notice/{Sdate}/{Seqnr}", "name": "h/notice-detail", "target": "noticeDetail" },
+        { "pattern": "mobile/notice", "name": "mobile/notice", "target": "mobile/notice" },
+        { "pattern": "mobile/notice/{Sdate}/{Seqnr}", "name": "mobile/notice-detail", "target": "mobile/noticeDetail" },
 
         { "pattern": "m/organization", "name": "m/organization", "target": "m/organization" },
         
@@ -348,6 +350,8 @@
         "notice": { "viewId": "notice", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "Ess" },
         "h/notice": { "viewId": "h_notice", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "Hass" },
         "noticeDetail": { "viewId": "noticeDetail", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "NoticeDetail" },
+        "mobile/notice": { "viewId": "notice", "viewPath": "sap.ui.yesco.mvc.view.notice.mobile", "viewName": "Notice" },
+        "mobile/noticeDetail": { "viewId": "mobile_noticeDetail", "viewPath": "sap.ui.yesco.mvc.view.notice.mobile", "viewName": "NoticeDetail" },
         
         "m/organization": { "viewId": "m_organization", "viewPath": "sap.ui.yesco.mvc.view.organization", "viewName": "Main" },
         
