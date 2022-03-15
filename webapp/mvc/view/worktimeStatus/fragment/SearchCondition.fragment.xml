@@ -13,7 +13,7 @@
                 <core:Item text="{Orgtx}" key="{Orgeh}" />
             </ComboBox>
             <Label text="{i18n>LABEL_32002}" design="Bold" />
-            <ComboBox items="{/GubunList}" selectedKey="{/search/Disty}" class="pr-10-px">
+            <ComboBox items="{/GubunList}" selectedKey="{/search/Disty}" class="pr-10-px" change=".onGubun">
                 <core:Item text="{Ztext}" key="{Zcode}" />
             </ComboBox>
             <Button text="{i18n>LABEL_00100}" press=".onSearch" class="icon-button" />

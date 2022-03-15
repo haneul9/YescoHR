@@ -80,6 +80,15 @@ sap.ui.define(
           aColIndices: [0, 1, 2],
           sTheadOrTbody: 'thead',
         });
+
+        TableUtils.adjustRowSpan({
+          oTable: this.byId(this.PERNR_TABLE_ID),
+          aColIndices: [0, 1, 2, 3, 4, 5],
+          sTheadOrTbody: 'thead',
+        });
+
+        TableUtils.summaryColspan({ oTable: this.byId(this.ORG_TABLE_ID), aHideIndex: [1] });
+        TableUtils.summaryColspan({ oTable: this.byId(this.PERNR_TABLE_ID), aHideIndex: [1, 2, 3, 4, 5] });
       },
 
       async onObjectMatched() {
@@ -111,20 +120,32 @@ sap.ui.define(
           // 근무시간주차별 추이
           const aWorkTime = await this.getTypeWorkTime();
 
+          oListModel.setProperty('/Data', aWorkTime);
           oListModel.setProperty('/search/Disty', aWorkTime.Disty);
           this.buildDialChart(aWorkTime.WorkingTime1Nav.results);
 
+          const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
+
           if (oListModel.getProperty('/search/Disty') === '1') {
             const aPernrList = aWorkTime.WorkingTime3Nav.results;
+            const mSumRow = TableUtils.generateSumRow({
+              aTableData: aPernrList,
+              mSumField: { Status: sSumLabel },
+              vCalcProps: ['Tim11', 'Tim12', 'Tim13', 'Tim14', 'Tim15', 'Tim21', 'Tim22', 'Tim23', 'Tim24', 'Tim25', 'Tim31', 'Tim32', 'Tim33', 'Tim34', 'Tim35', 'Tim41', 'Tim42', 'Tim43', 'Tim44', 'Tim45', 'Tim51', 'Tim52', 'Tim53', 'Tim54', 'Tim55'],
+            });
 
-            oListModel.setProperty('/detail/pernr/list', aPernrList);
-            oListModel.setProperty('/detail/pernr/rowCount', _.size(aPernrList));
+            oListModel.setProperty('/detail/pernr/list', [...aPernrList, mSumRow]);
+            oListModel.setProperty('/detail/pernr/Label1', aPernrList[0].Wktx1);
+            oListModel.setProperty('/detail/pernr/Label2', aPernrList[0].Wktx2);
+            oListModel.setProperty('/detail/pernr/Label3', aPernrList[0].Wktx3);
+            oListModel.setProperty('/detail/pernr/Label4', aPernrList[0].Wktx4);
+            oListModel.setProperty('/detail/pernr/Label5', aPernrList[0].Wktx5);
+            oListModel.setProperty('/detail/pernr/rowCount', _.size([...aPernrList, mSumRow]));
           } else {
             const aOrgList = aWorkTime.WorkingTime2Nav.results;
-            const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
             const mSumRow = TableUtils.generateSumRow({
               aTableData: aOrgList,
-              mSumField: { Orgtx: sSumLabel },
+              mSumField: { Status: sSumLabel },
               vCalcProps: ['Empcnt', 'Tim11', 'Tim12', 'Tim13', 'Tim14', 'Tim15', 'Tim21', 'Tim22', 'Tim23', 'Tim24', 'Tim25', 'Tim31', 'Tim32', 'Tim33', 'Tim34', 'Tim35', 'Tim41', 'Tim42', 'Tim43', 'Tim44', 'Tim45', 'Tim51', 'Tim52', 'Tim53', 'Tim54', 'Tim55', 'Over1', 'Over2', 'Over3', 'Over4', 'Over5'],
             });
 
@@ -151,20 +172,31 @@ sap.ui.define(
           // 근무시간주차별 추이
           const aWorkTime = await this.getTypeWorkTime();
 
-          oListModel.setProperty('/search/Disty', aWorkTime.Disty);
+          oListModel.setProperty('/Data', aWorkTime);
           this.buildDialChart(aWorkTime.WorkingTime1Nav.results);
+
+          const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
 
           if (oListModel.getProperty('/search/Disty') === '1') {
             const aPernrList = aWorkTime.WorkingTime3Nav.results;
+            const mSumRow = TableUtils.generateSumRow({
+              aTableData: aPernrList,
+              mSumField: { Status: sSumLabel },
+              vCalcProps: ['Tim11', 'Tim12', 'Tim13', 'Tim14', 'Tim15', 'Tim21', 'Tim22', 'Tim23', 'Tim24', 'Tim25', 'Tim31', 'Tim32', 'Tim33', 'Tim34', 'Tim35', 'Tim41', 'Tim42', 'Tim43', 'Tim44', 'Tim45', 'Tim51', 'Tim52', 'Tim53', 'Tim54', 'Tim55'],
+            });
 
-            oListModel.setProperty('/detail/pernr/list', aPernrList);
-            oListModel.setProperty('/detail/pernr/rowCount', _.size(aPernrList));
+            oListModel.setProperty('/detail/pernr/list', [...aPernrList, mSumRow]);
+            oListModel.setProperty('/detail/pernr/Label1', aPernrList[0].Wktx1);
+            oListModel.setProperty('/detail/pernr/Label2', aPernrList[0].Wktx2);
+            oListModel.setProperty('/detail/pernr/Label3', aPernrList[0].Wktx3);
+            oListModel.setProperty('/detail/pernr/Label4', aPernrList[0].Wktx4);
+            oListModel.setProperty('/detail/pernr/Label5', aPernrList[0].Wktx5);
+            oListModel.setProperty('/detail/pernr/rowCount', _.size([...aPernrList, mSumRow]));
           } else {
             const aOrgList = aWorkTime.WorkingTime2Nav.results;
-            const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
             const mSumRow = TableUtils.generateSumRow({
               aTableData: aOrgList,
-              mSumField: { Orgtx: sSumLabel },
+              mSumField: { Status: sSumLabel },
               vCalcProps: ['Empcnt', 'Tim11', 'Tim12', 'Tim13', 'Tim14', 'Tim15', 'Tim21', 'Tim22', 'Tim23', 'Tim24', 'Tim25', 'Tim31', 'Tim32', 'Tim33', 'Tim34', 'Tim35', 'Tim41', 'Tim42', 'Tim43', 'Tim44', 'Tim45', 'Tim51', 'Tim52', 'Tim53', 'Tim54', 'Tim55', 'Over1', 'Over2', 'Over3', 'Over4', 'Over5'],
             });
 
@@ -196,6 +228,43 @@ sap.ui.define(
       async onOrg() {
         // const aWorkTime = await this.getTypeWorkTime();
         // this.buildDialChart(aWorkTime.WorkingTime1Nav.results);
+      },
+
+      async onGubun() {
+        const oListModel = this.getViewModel();
+        const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
+
+        if (oListModel.getProperty('/search/Disty') === '1') {
+          const aPernrList = oListModel.getProperty('/Data/WorkingTime3Nav/results');
+          const mSumRow = TableUtils.generateSumRow({
+            aTableData: aPernrList,
+            mSumField: { Status: sSumLabel },
+            vCalcProps: ['Tim11', 'Tim12', 'Tim13', 'Tim14', 'Tim15', 'Tim21', 'Tim22', 'Tim23', 'Tim24', 'Tim25', 'Tim31', 'Tim32', 'Tim33', 'Tim34', 'Tim35', 'Tim41', 'Tim42', 'Tim43', 'Tim44', 'Tim45', 'Tim51', 'Tim52', 'Tim53', 'Tim54', 'Tim55'],
+          });
+
+          oListModel.setProperty('/detail/pernr/list', [...aPernrList, mSumRow]);
+          oListModel.setProperty('/detail/pernr/Label1', aPernrList[0].Wktx1);
+          oListModel.setProperty('/detail/pernr/Label2', aPernrList[0].Wktx2);
+          oListModel.setProperty('/detail/pernr/Label3', aPernrList[0].Wktx3);
+          oListModel.setProperty('/detail/pernr/Label4', aPernrList[0].Wktx4);
+          oListModel.setProperty('/detail/pernr/Label5', aPernrList[0].Wktx5);
+          oListModel.setProperty('/detail/pernr/rowCount', _.size([...aPernrList, mSumRow]));
+        } else {
+          const aOrgList = oListModel.getProperty('/Data/WorkingTime2Nav/results');
+          const mSumRow = TableUtils.generateSumRow({
+            aTableData: aOrgList,
+            mSumField: { Status: sSumLabel },
+            vCalcProps: ['Empcnt', 'Tim11', 'Tim12', 'Tim13', 'Tim14', 'Tim15', 'Tim21', 'Tim22', 'Tim23', 'Tim24', 'Tim25', 'Tim31', 'Tim32', 'Tim33', 'Tim34', 'Tim35', 'Tim41', 'Tim42', 'Tim43', 'Tim44', 'Tim45', 'Tim51', 'Tim52', 'Tim53', 'Tim54', 'Tim55', 'Over1', 'Over2', 'Over3', 'Over4', 'Over5'],
+          });
+
+          oListModel.setProperty('/detail/org/list', [...aOrgList, mSumRow]);
+          oListModel.setProperty('/detail/org/Label1', aOrgList[0].Wktx1);
+          oListModel.setProperty('/detail/org/Label2', aOrgList[0].Wktx2);
+          oListModel.setProperty('/detail/org/Label3', aOrgList[0].Wktx3);
+          oListModel.setProperty('/detail/org/Label4', aOrgList[0].Wktx4);
+          oListModel.setProperty('/detail/org/Label5', aOrgList[0].Wktx5);
+          oListModel.setProperty('/detail/org/rowCount', _.size([...aOrgList, mSumRow]));
+        }
       },
 
       // 근무시간주차별 추이

@@ -12,7 +12,7 @@
         <ObjectStatus text="{i18n>LABEL_32008}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication05" />
       </HBox>
     </HBox>
-    <table:Table id="orgTable" selectionMode="None" fixedBottomRowCount="1" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/detail/org/list}" visibleRowCount="{= ${/detail/org/rowCount} > 10 ? 10 : ${/detail/org/rowCount} }" noData="{i18n>MSG_00001}">
+    <table:Table id="orgTable" selectionMode="None" fixedColumnCount="3" fixedBottomRowCount="1" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/detail/org/list}" visibleRowCount="{= ${/detail/org/rowCount} > 10 ? 10 : ${/detail/org/rowCount} }" noData="{i18n>MSG_00001}">
       <table:columns>
         <table:Column width="50px">
           <table:multiLabels>
@@ -20,10 +20,10 @@
             <Label text="{i18n>LABEL_00144}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Status}" width="100%" textAlign="Center" />
+            <core:Icon src="sap-icon://circle-task-2" size="15px" color="{= ${Status} === '1' ? '#FD5F58' : '#007BFF' }" class="tableIcon" />
           </table:template>
         </table:Column>
-        <table:Column width="100px">
+        <table:Column width="120px">
           <table:multiLabels>
             <Label text="{i18n>LABEL_00224}" />
             <Label text="{i18n>LABEL_00224}" />
@@ -32,7 +32,7 @@
             <Text text="{Orgtx}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="50px">
+        <table:Column width="80px">
           <table:multiLabels>
             <Label text="{i18n>LABEL_16004}" />
             <Label text="{i18n>LABEL_16004}" />
@@ -41,7 +41,7 @@
             <Text text="{Empcnt}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="4%" headerSpan="5">
+        <table:Column width="80px" headerSpan="5">
           <table:multiLabels>
             <Label text="{/detail/org/Label1}" />
             <Label text="{i18n>LABEL_32004}" />
@@ -50,7 +50,7 @@
             <Text text="{Tim11}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="4%">
+        <table:Column width="80px">
           <table:multiLabels>
             <Label text="{/detail/org/Label1}" />
             <Label text="{i18n>LABEL_01205}" />
@@ -59,7 +59,7 @@
             <Text text="{Tim12}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="4%">
+        <table:Column width="80px">
           <table:multiLabels>
             <Label text="{/detail/org/Label1}" />
             <Label text="{i18n>LABEL_01123}" />
@@ -68,7 +68,7 @@
             <Text text="{Tim13}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="4%">
+        <table:Column width="80px">
           <table:multiLabels>
             <Label text="{/detail/org/Label1}" />
             <Label text="{i18n>LABEL_13028}" />
@@ -77,7 +77,7 @@
             <Text text="{Tim14}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="4%">
+        <table:Column width="80px">
           <table:multiLabels>
             <Label text="{/detail/org/Label1}" />
             <Label text="{i18n>LABEL_32011}" />
@@ -86,7 +86,7 @@
             <Text text="{Over1}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="4%" headerSpan="5">
+        <table:Column width="80px" headerSpan="5">
           <table:multiLabels>
             <Label text="{/detail/org/Label2}" />
             <Label text="{i18n>LABEL_32004}" />
@@ -95,7 +95,7 @@
             <Text text="{Tim21}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="4%">
+        <table:Column width="80px">
           <table:multiLabels>
             <Label text="{/detail/org/Label2}" />
             <Label text="{i18n>LABEL_01205}" />
@@ -104,7 +104,7 @@
             <Text text="{Tim22}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="4%">
+        <table:Column width="80px">
           <table:multiLabels>
             <Label text="{/detail/org/Label2}" />
             <Label text="{i18n>LABEL_01123}" />
@@ -113,7 +113,7 @@
             <Text text="{Tim23}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="4%">
+        <table:Column width="80px">
           <table:multiLabels>
             <Label text="{/detail/org/Label2}" />
             <Label text="{i18n>LABEL_13028}" />
@@ -122,7 +122,7 @@
             <Text text="{Tim24}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="4%">
+        <table:Column width="80px">
           <table:multiLabels>
             <Label text="{/detail/org/Label2}" />
             <Label text="{i18n>LABEL_32011}" />
@@ -131,7 +131,7 @@
             <Text text="{Over2}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="4%" headerSpan="5">
+        <table:Column width="80px" headerSpan="5">
           <table:multiLabels>
             <Label text="{/detail/org/Label3}" />
             <Label text="{i18n>LABEL_32004}" />
@@ -140,7 +140,7 @@
             <Text text="{Tim31}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="4%">
+        <table:Column width="80px">
           <table:multiLabels>
             <Label text="{/detail/org/Label3}" />
             <Label text="{i18n>LABEL_01205}" />
@@ -149,7 +149,7 @@
             <Text text="{Tim32}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="4%">
+        <table:Column width="80px">
           <table:multiLabels>
             <Label text="{/detail/org/Label3}" />
             <Label text="{i18n>LABEL_01123}" />
@@ -158,7 +158,7 @@
             <Text text="{Tim33}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="4%">
+        <table:Column width="80px">
           <table:multiLabels>
             <Label text="{/detail/org/Label3}" />
             <Label text="{i18n>LABEL_13028}" />
@@ -167,7 +167,7 @@
             <Text text="{Tim34}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="4%">
+        <table:Column width="80px">
           <table:multiLabels>
             <Label text="{/detail/org/Label3}" />
             <Label text="{i18n>LABEL_32011}" />
@@ -176,7 +176,7 @@
             <Text text="{Over3}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="4%" headerSpan="5">
+        <table:Column width="80px" headerSpan="5">
           <table:multiLabels>
             <Label text="{/detail/org/Label4}" />
             <Label text="{i18n>LABEL_32004}" />
@@ -185,7 +185,7 @@
             <Text text="{Tim41}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="4%">
+        <table:Column width="80px">
           <table:multiLabels>
             <Label text="{/detail/org/Label4}" />
             <Label text="{i18n>LABEL_01205}" />
@@ -194,7 +194,7 @@
             <Text text="{Tim42}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="4%">
+        <table:Column width="80px">
           <table:multiLabels>
             <Label text="{/detail/org/Label4}" />
             <Label text="{i18n>LABEL_01123}" />
@@ -203,7 +203,7 @@
             <Text text="{Tim43}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="4%">
+        <table:Column width="80px">
           <table:multiLabels>
             <Label text="{/detail/org/Label4}" />
             <Label text="{i18n>LABEL_13028}" />
@@ -212,7 +212,7 @@
             <Text text="{Tim44}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="4%">
+        <table:Column width="80px">
           <table:multiLabels>
             <Label text="{/detail/org/Label4}" />
             <Label text="{i18n>LABEL_32011}" />
@@ -221,7 +221,7 @@
             <Text text="{Over4}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="4%" headerSpan="5">
+        <table:Column width="80px" headerSpan="5">
           <table:multiLabels>
             <Label text="{/detail/org/Label5}" />
             <Label text="{i18n>LABEL_32004}" />
@@ -230,7 +230,7 @@
             <Text text="{Tim51}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="4%">
+        <table:Column width="80px">
           <table:multiLabels>
             <Label text="{/detail/org/Label5}" />
             <Label text="{i18n>LABEL_01205}" />
@@ -239,7 +239,7 @@
             <Text text="{Tim52}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="4%">
+        <table:Column width="80px">
           <table:multiLabels>
             <Label text="{/detail/org/Label5}" />
             <Label text="{i18n>LABEL_01123}" />
@@ -248,7 +248,7 @@
             <Text text="{Tim53}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="4%">
+        <table:Column width="80px">
           <table:multiLabels>
             <Label text="{/detail/org/Label5}" />
             <Label text="{i18n>LABEL_13028}" />
@@ -257,7 +257,7 @@
             <Text text="{Tim54}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="4%">
+        <table:Column width="80px">
           <table:multiLabels>
             <Label text="{/detail/org/Label5}" />
             <Label text="{i18n>LABEL_32011}" />
