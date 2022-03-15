@@ -166,7 +166,7 @@ sap.ui.define(
           this.debug(`Controller > m/performanceGrade Grade > onObjectMatched Error`, oError);
 
           AppUtils.handleError(oError, {
-            onClose: () => this.onNavBack(),
+            onClose: () => this.getRouter().navTo('m/performanceGrade'),
           });
         } finally {
           oViewModel.setProperty('/busy', false);
