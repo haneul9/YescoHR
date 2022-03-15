@@ -327,7 +327,7 @@ sap.ui.define(
             onClose: () => this.oDetailDialog.close(),
           });
         } finally {
-          if (this.byId('overviewEmpDetailTable')) this.byId('overviewEmpDetailTable').setFirstVisibleRow();
+          if (this.byId('overviewOnOffDetailTable')) this.byId('overviewOnOffDetailTable').setFirstVisibleRow();
         }
       },
 
@@ -390,9 +390,9 @@ sap.ui.define(
       },
 
       onPressDetailExcelDownload() {
-        const oTable = this.byId('overviewEmpDetailTable');
+        const oTable = this.byId('overviewOnOffDetailTable');
         const aTableData = this.getViewModel().getProperty('/dialog/list');
-        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_28038'); // 인원현황상세
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_28049'); // 입퇴사현황상세
 
         TableUtils.export({ oTable, aTableData, sFileName, aDateProps: ['Gbdat', 'Entda', 'Loada', 'Reida', 'Retda'] });
       },
