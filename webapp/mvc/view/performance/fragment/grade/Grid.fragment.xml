@@ -16,9 +16,9 @@
             </HBox>
             <HBox class="cascading-type-list">
                 <Image src="asset/image/icon_WF_Myinfo_02_N.svg" />
-                <Text text="{i18n>LABEL_10079}" textAlign="Center" width="100%"/>
-                <Image src="asset/image/icon_WF_Myinfo_01_N.svg" width="1.2rem" />
                 <Text text="{i18n>LABEL_10080}" textAlign="Center" width="100%"/>
+                <Image src="asset/image/icon_WF_Myinfo_01_N.svg" width="1.2rem" />
+                <Text text="{i18n>LABEL_10079}" textAlign="Center" width="100%"/>
             </HBox>
         </HBox>
         <HBox id="gridBox" class="perGrade-wrap" items="{/grids}">
