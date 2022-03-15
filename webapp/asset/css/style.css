@@ -2045,6 +2045,10 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .talent-compare-carousel .sapMCrslHud .sapMCrslPrev {left: 0;}
 .talent-compare-carousel .sapMCrslHud .sapMCrslNext {right: 0;}
 
+.fusion-tooltip th, .fusion-tooltip td {border: 1px solid #dfdfdf; padding: 8px; font-size: 14px !important;}
+.fusion-tooltip td { font-weight: 400; text-align: left; }
+.fusion-tooltip th { font-weight: bold; background-color: #f7f7f7; min-width: 50%; }
+
 
 @media screen and (max-width: 480px) {
     .contents { margin: 0 auto;max-width: 100%;min-width: 100%;padding-bottom: 20px;}
