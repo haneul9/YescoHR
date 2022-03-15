@@ -38,6 +38,7 @@ sap.ui.define(
         return {
           busy: false,
           BtnStat: true,
+          authority: true,
           List: [],
           Years: [],
           TeamList: [],
@@ -73,19 +74,47 @@ sap.ui.define(
           const aComList = await this.areaList();
 
           oViewModel.setProperty('/CompanyCode', aComList);
+          this.setYears();
 
           const aPartList = await this.partList();
 
-          oViewModel.setProperty('/PartCode', aPartList);
-          this.setYears();
+          // 권한이 없을경우는 현황tab만
+          if (_.isEmpty(aPartList)) {
+            oViewModel.setProperty('/authority', false);
+            oViewModel.setProperty('/tab/selectedKey', 'C');
+            oViewModel.setProperty('/situation/segmentKey', 'A');
 
-          oViewModel.setProperty('/search', {
-            Werks: oSessionData.Werks,
-            Orgeh: _.get(aPartList, [0, 'Orgeh']),
-            Orgtx: _.get(aPartList, [0, 'Orgtx']),
-            Zyear: String(new Date().getFullYear()),
-          });
-          this.onSearch();
+            this.GroupDialogHandler = new GroupDialogHandler(this, ([mOrgData]) => {
+              oViewModel.setProperty('/search/Orgeh', mOrgData.Orgeh);
+              oViewModel.setProperty('/search/Orgtx', mOrgData.Stext);
+            });
+
+            oViewModel.setProperty('/CascadingSitu', {
+              Label1: this.getBundleText('LABEL_00224'),
+              Label2: '',
+            });
+
+            oViewModel.setProperty('/search', {
+              Werks: this.getSessionProperty('Werks'),
+              Zyear: String(new Date().getFullYear()),
+              Orgeh: this.getAppointeeProperty('Orgeh'),
+              Orgtx: this.getAppointeeProperty('Orgtx'),
+            });
+
+            const aTreeList = await this.setTreeList();
+            const aVariat = this.oDataChangeTree(aTreeList);
+
+            oViewModel.setProperty('/CascadingSitu/SituList', aVariat);
+          } else {
+            oViewModel.setProperty('/PartCode', aPartList);
+            oViewModel.setProperty('/search', {
+              Werks: oSessionData.Werks,
+              Orgeh: _.get(aPartList, [0, 'Orgeh']),
+              Orgtx: _.get(aPartList, [0, 'Orgtx']),
+              Zyear: String(new Date().getFullYear()),
+            });
+            this.onSearch();
+          }
         } catch (oError) {
           this.debug(oError);
           AppUtils.handleError(oError);

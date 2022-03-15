@@ -622,6 +622,7 @@ html.sap-desktop .sapContrast .sapMFooter-CTX .sapMBtnInner.sapMBtnReject, html.
 .row-link .sapUiTableCCnt .sapUiTableCtrl>tbody>tr,
 .row-link .sapUiTableCCnt .sapUiTableCtrl>tbody>tr .sapUiTableCellInner>span { cursor:pointer}
 
+.sapUiTableCellInner .tableIcon {width: 100% !important; text-align: center !important;}
 .sapUiTableCellInner .sapMBtn {width:100% !important}
 .sapUiTableHeaderDataCell>.sapUiTableCellInner>div:first-child{display:block !important; text-align:center !important; line-height:1}
 
