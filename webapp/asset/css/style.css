@@ -2047,7 +2047,7 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 
 .fusion-tooltip th, .fusion-tooltip td {border: none; padding: 8px; font-size: 14px !important;}
 .fusion-tooltip td { font-weight: 400; text-align: left; }
-.fusion-tooltip th { font-weight: bold; background-color: #f7f7f7; min-width: 50%; }
+.fusion-tooltip th { font-weight: bold; word-break: keep-all; background-color: #f7f7f7; min-width: 40%; }
 
 
 @media screen and (max-width: 480px) {
