@@ -29,7 +29,7 @@ sap.ui.define(
         return {
           busy: false,
           searchConditions: {
-            Begda: moment().hours(9).toDate(),
+            Datum: moment().hours(9).toDate(),
             Werks: '',
             Orgeh: '',
           },
@@ -39,14 +39,14 @@ sap.ui.define(
           },
           contents: {
             A01: { busy: false, data: {} },
-            A02: { busy: false, data: { Cnt01: '40.28' } },
-            A03: { busy: false, data: { Cnt01: '2' } },
-            A04: { busy: false, data: { Cnt01: '70.00', Cnt02: '70.00', Cnt03: '100.00', Cnt04: '100.00' } },
-            A05: { busy: false, data: [] },
-            A06: { busy: false, data: { headty: 'E', raw: [] } },
+            A02: { busy: false, data: {} },
+            A03: { busy: false, data: {} },
+            A04: { busy: false, data: {} },
+            A05: { busy: false },
+            A06: { busy: false },
             A07: { busy: false },
-            A08: { busy: false },
-            A09: { busy: false },
+            A08: { busy: false, data: {} },
+            A09: { busy: false, data: {} },
             A10: { busy: false },
           },
           dialog: {
@@ -75,9 +75,8 @@ sap.ui.define(
           oViewModel.setProperty('/searchConditions/Werks', mAppointee.Werks);
           oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
 
-          const oModel = this.getModel(ServiceNames.PA);
-          // const mFilters = oViewModel.getProperty('/searchConditions');
-          const mFilters = { Zyear: '2022' };
+          const oModel = this.getModel(ServiceNames.WORKTIME);
+          const mFilters = oViewModel.getProperty('/searchConditions');
 
           _.forEach(ChartsSetting.CHART_TYPE, (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
         } catch (oError) {
@@ -95,31 +94,34 @@ sap.ui.define(
 
       async buildChart(oModel, mFilters, mChartInfo) {
         const oViewModel = this.getViewModel();
-        const aChartDatas = await Client.getEntitySet(oModel, 'HeadCountEntRet', { ...mFilters, Headty: mChartInfo.Headty });
+        const aChartDatas = await Client.getEntitySet(oModel, 'TimeOverview', { ...mFilters, Headty: mChartInfo.Headty });
         const vDataObject = oViewModel.getProperty(`/contents/${mChartInfo.Target}/data`);
         const mChartSetting = _.chain(ChartsSetting.CHART_OPTIONS).get(mChartInfo.Chart).cloneDeep().value();
 
         oViewModel.setProperty(`/contents/${mChartInfo.Target}/Headty`, mChartInfo.Headty);
         oViewModel.setProperty(`/contents/${mChartInfo.Target}/busy`, false);
 
+        if (_.has(mChartInfo, 'Fields')) {
+          oViewModel.setProperty(
+            `/contents/${mChartInfo.Target}/data`,
+            _.chain(vDataObject)
+              .tap((obj) => _.forEach(mChartInfo.Fields, (o) => _.set(obj, o.prop, _.get(aChartDatas, o.path))))
+              .value()
+          );
+        }
+
         switch (mChartInfo.Chart) {
           case 'cylinder':
-            oViewModel.setProperty(
-              `/contents/${mChartInfo.Target}/data`,
-              _.chain(vDataObject)
-                .tap((obj) => _.forEach(mChartInfo.Fields, (o) => _.set(obj, o.prop, _.get(aChartDatas, o.path))))
-                .value()
-            );
-            oViewModel.setProperty(`/contents/${mChartInfo.Target}/data/Cnt01`, 300);
-
-            _.chain(mChartSetting).set(['chart', 'caption'], this.getBundleText('LABEL_01130')).set('value', 10).commit();
+            _.chain(mChartSetting)
+              .set(['chart', 'caption'], this.getBundleText('LABEL_01130'))
+              .set('value', _.chain(aChartDatas).get([0, 'Rte01']).toNumber().value())
+              .commit();
 
             this.callFusionChart(mChartInfo, mChartSetting);
 
             break;
           case 'column2d':
             _.chain(mChartSetting)
-              // .set(['chart', 'yAxisMaxValue'], '200')
               .set(
                 ['data'],
                 _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callDetail-${mChartInfo.Headty},${o.Cod01}` }))
@@ -142,26 +144,48 @@ sap.ui.define(
 
             break;
           case 'mscombi2d':
+            _.chain(mChartSetting)
+              .set(
+                ['categories', 0, 'category', 0],
+                _.map(aChartDatas, (o) => ({ label: o.Ttltxt }))
+              )
+              .set(['dataset', 0], {
+                seriesName: this.getBundleText('LABEL_28048'), // 당일
+                showValues: '1',
+                color: '#7BB4EB',
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01 })),
+              })
+              .set(['dataset', 1], {
+                seriesName: this.getBundleText('LABEL_00196'), // 누적
+                renderAs: 'line',
+                color: '#FFAC4B',
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02 })),
+              })
+              .commit();
+
             this.callFusionChart(mChartInfo, mChartSetting);
+
             break;
           case 'mscolumn2d':
             _.chain(mChartSetting)
-              // .set(['data', 'chart', 'yAxisMaxValue'], '60')
-              .set(['categories', 0, 'category'], [{ label: '1W' }, { label: '2W' }, { label: '3W' }, { label: '4W' }, { label: '5W' }])
+              .set(
+                ['categories', 0, 'category', 0],
+                _.map(aChartDatas, (o) => ({ label: o.Ttltxt }))
+              )
               .set(['dataset', 0], {
-                seriesname: '법정',
+                seriesname: this.getBundleText('LABEL_32004'), // 법정
                 color: '#7BB4EB',
-                data: [{ value: '32.00' }, { value: '32.00' }, { value: '32.00' }, { value: '32.00' }, { value: '32.00' }],
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01 })),
               })
               .set(['dataset', 1], {
                 seriesname: 'OT',
                 color: '#FFAC4B',
-                data: [{ value: '1.88' }, { value: '0.00' }, { value: '2.42' }, { value: '0.00' }, { value: '1.88' }],
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02 })),
               })
               .set(['dataset', 2], {
-                seriesname: '초과인원',
+                seriesname: this.getBundleText('LABEL_32005'), // 초과인원
                 color: '#FFE479',
-                data: [{ value: '1' }, { value: '0' }, { value: '2' }, { value: '0' }, { value: '1' }],
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt03 })),
               })
               .commit();
 
@@ -297,7 +321,7 @@ sap.ui.define(
         try {
           this.setAllBusy(true);
 
-          const oModel = this.getModel(ServiceNames.PA);
+          const oModel = this.getModel(ServiceNames.WORKTIME);
           const mFilters = oViewModel.getProperty('/searchConditions');
 
           _.forEach(ChartsSetting.CHART_TYPE, (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
