@@ -42,6 +42,9 @@ sap.ui.define(
             this.oAppMenu = new MobileMenus(this);
             this.getOwnerComponent().setAppMenu(this.oAppMenu);
           });
+          setTimeout(() => {
+            this.savePushToken();
+          });
         } else {
           setTimeout(() => {
             this.oAppMenu = new Menus(this);
@@ -81,6 +84,24 @@ sap.ui.define(
 
       navToProfile() {
         this.oAppMenu.moveToMenu('employee');
+      },
+
+      async savePushToken() {
+        if (typeof window.YescoApp === undefined) {
+          return;
+        }
+
+        const oModel = this.oController.getModel(ServiceNames.COMMON);
+        const mPayload = {
+          Pernr: this.getSessionProperty('/Pernr'),
+          Token: 'test-token', // window.YescoApp.getPushToken(),
+        };
+
+        try {
+          await Client.create(oModel, 'PernrToken', mPayload);
+        } catch (oError) {
+          this.debug('savePushToken error.', oError);
+        }
       },
 
       /**
