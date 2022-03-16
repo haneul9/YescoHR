@@ -410,6 +410,8 @@ sap.ui.define(
           const oModel = this.getModel(ServiceNames.WORKTIME);
           const mFilters = oViewModel.getProperty('/searchConditions');
 
+          _.set(mFilters, 'Datum', moment(mFilters.Datum).hours(9).toDate());
+
           _.forEach(ChartsSetting.CHART_TYPE, (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
         } catch (oError) {
           this.debug('Controller > m/overviewAttendance Main > onPressSearch Error', oError);

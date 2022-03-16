@@ -105,6 +105,8 @@ sap.ui.define([], function () {
     CHART_OPTIONS: {
       hled: {
         chart: {
+          baseFontSize: 12,
+          valueFontSize: 12,
           animation: '0',
           chartbottommargin: '5',
           ledGap: '0',
@@ -124,6 +126,8 @@ sap.ui.define([], function () {
       },
       doughnut2d: {
         chart: {
+          baseFontSize: 12,
+          valueFontSize: 12,
           showpercentvalues: '1',
           aligncaptionwithcanvas: '0',
           captionpadding: '0',
@@ -150,11 +154,11 @@ sap.ui.define([], function () {
       },
       column2d: {
         chart: {
+          baseFontSize: 12,
+          valueFontSize: 12,
           showValues: 1,
           rotateValues: 0,
           placeValuesInside: 0,
-          yAxisValueFontSize: 9,
-          // yAxisMaxValue: 300,
           numDivLines: 3,
           divLineDashed: 0,
           divLineColor: '#eeeeee',
@@ -179,11 +183,11 @@ sap.ui.define([], function () {
       },
       bar2d: {
         chart: {
+          baseFontSize: 12,
+          valueFontSize: 12,
           showValues: 1,
           rotateValues: 0,
           placeValuesInside: 0,
-          yAxisValueFontSize: 9,
-          // yAxisMaxValue: 200,
           numDivLines: 3,
           divLineDashed: 0,
           divLineColor: '#eeeeee',
@@ -208,12 +212,12 @@ sap.ui.define([], function () {
       },
       mscolumn2d: {
         chart: {
+          baseFontSize: 12,
+          valueFontSize: 12,
           animation: 0,
           showValues: 1,
           rotateValues: 0,
           placeValuesInside: 0,
-          yAxisValueFontSize: 9,
-          // yAxisMaxValue: 230,
           numDivLines: 3,
           divLineDashed: 0,
           divLineColor: '#eeeeee',

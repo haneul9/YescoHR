@@ -51,6 +51,8 @@ sap.ui.define([], function () {
     CHART_OPTIONS: {
       'stackedcolumn2d-S': {
         chart: {
+          baseFontSize: 12,
+          valueFontSize: 12,
           showValues: 1,
           showLegend: 0,
           rotateValues: 0,
@@ -64,7 +66,6 @@ sap.ui.define([], function () {
           maxColWidth: 63,
           theme: 'ocean',
           bgColor: 'transparent',
-          valueFontSize: 9,
           valueFontColor: '#000000',
           valueBgColor: 'transparent',
           showPlotBorder: 0,
@@ -86,6 +87,8 @@ sap.ui.define([], function () {
       },
       stackedcolumn2d: {
         chart: {
+          baseFontSize: 12,
+          valueFontSize: 12,
           showSum: 1,
           showValues: 1,
           rotateValues: 0,
@@ -99,7 +102,6 @@ sap.ui.define([], function () {
           maxColWidth: 25,
           theme: 'ocean',
           bgColor: 'transparent',
-          valueFontSize: 9,
           valueFontColor: '#000000',
           valueBgColor: 'transparent',
           showPlotBorder: 0,
@@ -122,6 +124,8 @@ sap.ui.define([], function () {
       },
       msstackedcolumn2dlinedy: {
         chart: {
+          baseFontSize: 12,
+          valueFontSize: 12,
           showSum: 1,
           showValues: 1,
           rotateValues: 0,
@@ -137,7 +141,6 @@ sap.ui.define([], function () {
           maxColWidth: 25,
           theme: 'ocean',
           bgColor: 'transparent',
-          valueFontSize: 9,
           valueFontColor: '#000000',
           valueBgColor: 'transparent',
           showPlotBorder: 0,

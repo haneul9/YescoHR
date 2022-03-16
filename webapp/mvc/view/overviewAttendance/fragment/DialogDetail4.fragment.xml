@@ -8,7 +8,7 @@
                 <custom:Placeholder />
             </m:VBox>
             <m:VBox class="dialog-content-table" visible="{= !${/dialog/busy} }">
-                <Table width="100%" selectionMode="None" fixedColumnCount="5" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/sub/list}" visibleRowCount="{/dialog/sub/rowCount}" noData="{i18n>MSG_00001}">
+                <Table width="100%" selectionMode="None" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/sub/list}" visibleRowCount="{/dialog/sub/rowCount}" noData="{i18n>MSG_00001}">
                     <extension>
                         <m:HBox class="header-wrap" justifyContent="SpaceBetween">
                             <m:HBox class="header" alignItems="Center">
@@ -21,85 +21,85 @@
                         </m:HBox>
                     </extension>
                     <columns>
-                        <Column width="160px" filterProperty="OrgtxD" sortProperty="OrgtxD">
+                        <Column width="12%" filterProperty="OrgtxD" sortProperty="OrgtxD">
                             <m:Label text="{i18n>LABEL_28034}"/>
                             <template>
                                 <m:Text text="{OrgtxD}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
-                        <Column width="160px" filterProperty="Orgtx" sortProperty="Orgtx">
+                        <Column width="15%" filterProperty="Orgtx" sortProperty="Orgtx">
                             <m:Label text="{i18n>LABEL_00224}"/>
                             <template>
                                 <m:Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
-                        <Column width="80px" filterProperty="Ename" sortProperty="Ename">
+                        <Column width="auto" filterProperty="Ename" sortProperty="Ename">
                             <m:Label text="{i18n>LABEL_00210}"/>
                             <template>
                                 <m:Link text="{Ename}" class="showLine" width="100%" textAlign="Center" press=".onPressEmployeeRow" />
                             </template>
                         </Column>
-                        <Column width="80px" filterProperty="Zzjikgbtx" sortProperty="Zzjikgbtx">
+                        <Column width="auto" filterProperty="Zzjikgbtx" sortProperty="Zzjikgbtx">
                             <m:Label text="{i18n>LABEL_00215}"/>
                             <template>
                                 <m:Text text="{Zzjikgbtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
-                        <Column width="80px" filterProperty="Zzjikchtx" sortProperty="Zzjikchtx">
+                        <Column width="auto" filterProperty="Zzjikchtx" sortProperty="Zzjikchtx">
                             <m:Label text="{i18n>LABEL_00217}"/>
                             <template>
                                 <m:Text text="{Zzjikchtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
-                        <Column width="110px" filterProperty="Datum" sortProperty="Datum">
+                        <Column width="auto" filterProperty="Datum" sortProperty="Datum">
                             <m:Label text="{i18n>LABEL_00170}"/>
                             <template>
                                 <m:Text text="{path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date'}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
-                        <Column width="60px" filterProperty="Daytx" sortProperty="Daytx">
+                        <Column width="auto" filterProperty="Daytx" sortProperty="Daytx">
                             <m:Label text="{i18n>LABEL_06102}"/>
                             <template>
                                 <m:Text text="{Daytx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
-                        <Column width="60px" filterProperty="Offyn" sortProperty="Offyn">
+                        <Column width="auto" filterProperty="Offyn" sortProperty="Offyn">
                             <m:Label text="{i18n>LABEL_06103}"/>
                             <template>
                                 <m:Text text="{Offyn}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
-                        <Column width="80px" filterProperty="Bashr" sortProperty="Bashr">
+                        <Column width="auto" filterProperty="Bashr" sortProperty="Bashr">
                             <m:Label text="{i18n>LABEL_28054}"/>
                             <template>
                                 <m:Text text="{Bashr}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
-                        <Column width="80px" filterProperty="Addhr" sortProperty="Addhr">
+                        <Column width="auto" filterProperty="Addhr" sortProperty="Addhr">
                             <m:Label text="{i18n>LABEL_28055}"/>
                             <template>
                                 <m:Text text="{Addhr}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
-                        <Column width="80px" filterProperty="Dedhr" sortProperty="Dedhr">
+                        <Column width="auto" filterProperty="Dedhr" sortProperty="Dedhr">
                             <m:Label text="{i18n>LABEL_01123}"/>
                             <template>
                                 <m:Text text="{Dedhr}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
-                        <Column width="80px" filterProperty="Holhr" sortProperty="Holhr">
+                        <Column width="auto" filterProperty="Holhr" sortProperty="Holhr">
                             <m:Label text="{i18n>LABEL_13028}"/>
                             <template>
                                 <m:Text text="{Holhr}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
-                        <Column width="80px" filterProperty="Nomtotc" sortProperty="Nomtotc">
+                        <Column width="auto" filterProperty="Nomtotc" sortProperty="Nomtotc">
                             <m:Label text="{i18n>LABEL_28056}"/>
                             <template>
                                 <m:Text text="{Nomtotc}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
-                        <Column width="80px" filterProperty="Holtotc" sortProperty="Holtotc">
+                        <Column width="auto" filterProperty="Holtotc" sortProperty="Holtotc">
                             <m:Label text="{i18n>LABEL_28057}"/>
                             <template>
                                 <m:Text text="{Holtotc}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
