@@ -290,6 +290,7 @@ sap.ui.define(
             onClose: () => this.oDetailDialog.close(),
           });
         } finally {
+          $('#fusioncharts-tooltip-element').hide();
           if (this.byId('overviewEmpDetailTable')) this.byId('overviewEmpDetailTable').setFirstVisibleRow();
         }
       },

@@ -38,16 +38,16 @@ sap.ui.define(
             Orgeh: [],
           },
           contents: {
-            A01: { busy: false, data: {} },
-            A02: { busy: false, data: {} },
-            A03: { busy: false, data: {} },
-            A04: { busy: false, data: {} },
-            A05: { busy: false },
-            A06: { busy: false },
-            A07: { busy: false },
-            A08: { busy: false, data: {} },
-            A09: { busy: false, data: {} },
-            A10: { busy: false },
+            A01: { busy: false, Headty: '', data: {} },
+            A02: { busy: false, Headty: '', data: {} },
+            A03: { busy: false, Headty: '', data: {} },
+            A04: { busy: false, Headty: '', data: {} },
+            A05: { busy: false, Headty: '' },
+            A06: { busy: false, Headty: '' },
+            A07: { busy: false, Headty: '' },
+            A08: { busy: false, Headty: '', data: {} },
+            A09: { busy: false, Headty: '', data: {} },
+            A10: { busy: false, Headty: '' },
           },
           dialog: {
             busy: false,
@@ -152,13 +152,13 @@ sap.ui.define(
                 seriesName: this.getBundleText('LABEL_28048'), // 당일
                 showValues: '1',
                 color: '#7BB4EB',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01 })),
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01, link: `j-callDetail-${mChartInfo.Headty},${o.Cod01}` })),
               })
               .set(['dataset', 1], {
                 seriesName: this.getBundleText('LABEL_00196'), // 누적
                 renderAs: 'line',
                 color: '#FFAC4B',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02 })),
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02, link: `j-callDetail-${mChartInfo.Headty},${o.Cod02}` })),
               })
               .commit();
 
@@ -174,17 +174,17 @@ sap.ui.define(
               .set(['dataset', 0], {
                 seriesname: this.getBundleText('LABEL_32004'), // 법정
                 color: '#7BB4EB',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01 })),
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01, link: `j-callDetail-${mChartInfo.Headty},${o.Cod01}` })),
               })
               .set(['dataset', 1], {
                 seriesname: 'OT',
                 color: '#FFAC4B',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02 })),
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02, link: `j-callDetail-${mChartInfo.Headty},${o.Cod02}` })),
               })
               .set(['dataset', 2], {
                 seriesname: this.getBundleText('LABEL_32005'), // 초과인원
                 color: '#FFE479',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt03 })),
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt03, link: `j-callDetail-${mChartInfo.Headty},${o.Cod03}` })),
               })
               .commit();
 
@@ -311,6 +311,8 @@ sap.ui.define(
             break;
         }
 
+        $('#fusioncharts-tooltip-element').hide();
+
         return oDialog;
       },
 
@@ -339,7 +341,7 @@ sap.ui.define(
           });
         } finally {
           oViewModel.setProperty('/dialog/busy', false);
-          oDialog.getContent()[0].getItems()[0].setFirstVisibleRow();
+          setTimeout(() => oDialog.getContent()[1].getItems()[0].setFirstVisibleRow(), 100);
         }
       },
 
@@ -392,6 +394,14 @@ sap.ui.define(
 
       onPressDetail1DialogClose() {
         this.oDetail1Dialog.close();
+      },
+
+      onPressDetail2DialogClose() {
+        this.oDetail2Dialog.close();
+      },
+
+      onPressDetail3DialogClose() {
+        this.oDetail3Dialog.close();
       },
 
       onPressEmployeeRow(oEvent) {

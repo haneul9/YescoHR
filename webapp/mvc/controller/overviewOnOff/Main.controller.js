@@ -327,6 +327,7 @@ sap.ui.define(
             onClose: () => this.oDetailDialog.close(),
           });
         } finally {
+          $('#fusioncharts-tooltip-element').hide();
           if (this.byId('overviewOnOffDetailTable')) this.byId('overviewOnOffDetailTable').setFirstVisibleRow();
         }
       },
