@@ -32,6 +32,7 @@ sap.ui.define(
       MSCOLUMN_CHART_ID: 'columnChart',
       ORG_TABLE_ID: 'orgTable',
       PERNR_TABLE_ID: 'pernrTable',
+      DIALOG_ORG_TABLE_ID: 'dialogOrgTable',
 
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
@@ -56,8 +57,14 @@ sap.ui.define(
           },
           detail: {
             dialog: {
-              list: [],
-              rowCount: 2,
+              org: {
+                list: [],
+                rowCount: 2,
+              },
+              pernr: {
+                list: [],
+                rowCount: 2,
+              },
             },
             org: {
               list: [],
@@ -107,7 +114,7 @@ sap.ui.define(
           const mAppointee = this.getAppointeeData();
 
           const [aAreaList, aOrgList] = await Promise.all([
-            Client.getEntitySet(oCommonModel, 'PersAreaList'),
+            Client.getEntitySet(oCommonModel, 'PersAreaList', { Pernr: mAppointee.Pernr }),
             Client.getEntitySet(oCommonModel, 'DashboardOrgList', {
               Pernr: mAppointee.Pernr,
               Werks: mAppointee.Werks,
@@ -129,40 +136,7 @@ sap.ui.define(
           oListModel.setProperty('/Data', aWorkTime);
           oListModel.setProperty('/search/Disty', aWorkTime.Disty);
           this.buildDialChart(aWorkTime.WorkingTime1Nav.results);
-
-          const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
-
-          if (oListModel.getProperty('/search/Disty') === '1') {
-            const aPernrList = aWorkTime.WorkingTime3Nav.results;
-            const mSumRow = TableUtils.generateSumRow({
-              aTableData: aPernrList,
-              mSumField: { Status: sSumLabel },
-              vCalcProps: ['Tim11', 'Tim12', 'Tim13', 'Tim14', 'Tim15', 'Tim21', 'Tim22', 'Tim23', 'Tim24', 'Tim25', 'Tim31', 'Tim32', 'Tim33', 'Tim34', 'Tim35', 'Tim41', 'Tim42', 'Tim43', 'Tim44', 'Tim45', 'Tim51', 'Tim52', 'Tim53', 'Tim54', 'Tim55'],
-            });
-
-            oListModel.setProperty('/detail/pernr/list', [...aPernrList, mSumRow]);
-            oListModel.setProperty('/detail/pernr/Label1', aPernrList[0].Wktx1);
-            oListModel.setProperty('/detail/pernr/Label2', aPernrList[0].Wktx2);
-            oListModel.setProperty('/detail/pernr/Label3', aPernrList[0].Wktx3);
-            oListModel.setProperty('/detail/pernr/Label4', aPernrList[0].Wktx4);
-            oListModel.setProperty('/detail/pernr/Label5', aPernrList[0].Wktx5);
-            oListModel.setProperty('/detail/pernr/rowCount', _.size([...aPernrList, mSumRow]));
-          } else {
-            const aOrgList = aWorkTime.WorkingTime2Nav.results;
-            const mSumRow = TableUtils.generateSumRow({
-              aTableData: aOrgList,
-              mSumField: { Status: sSumLabel },
-              vCalcProps: ['Empcnt', 'Tim11', 'Tim12', 'Tim13', 'Tim14', 'Tim15', 'Tim21', 'Tim22', 'Tim23', 'Tim24', 'Tim25', 'Tim31', 'Tim32', 'Tim33', 'Tim34', 'Tim35', 'Tim41', 'Tim42', 'Tim43', 'Tim44', 'Tim45', 'Tim51', 'Tim52', 'Tim53', 'Tim54', 'Tim55', 'Over1', 'Over2', 'Over3', 'Over4', 'Over5'],
-            });
-
-            oListModel.setProperty('/detail/org/list', [...aOrgList, mSumRow]);
-            oListModel.setProperty('/detail/org/Label1', aOrgList[0].Wktx1);
-            oListModel.setProperty('/detail/org/Label2', aOrgList[0].Wktx2);
-            oListModel.setProperty('/detail/org/Label3', aOrgList[0].Wktx3);
-            oListModel.setProperty('/detail/org/Label4', aOrgList[0].Wktx4);
-            oListModel.setProperty('/detail/org/Label5', aOrgList[0].Wktx5);
-            oListModel.setProperty('/detail/org/rowCount', _.size([...aOrgList, mSumRow]));
-          }
+          this.tableSetting(oListModel.getProperty('/search/Disty'));
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -180,40 +154,7 @@ sap.ui.define(
 
           oListModel.setProperty('/Data', aWorkTime);
           this.buildDialChart(aWorkTime.WorkingTime1Nav.results);
-
-          const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
-
-          if (oListModel.getProperty('/search/Disty') === '1') {
-            const aPernrList = aWorkTime.WorkingTime3Nav.results;
-            const mSumRow = TableUtils.generateSumRow({
-              aTableData: aPernrList,
-              mSumField: { Status: sSumLabel },
-              vCalcProps: ['Tim11', 'Tim12', 'Tim13', 'Tim14', 'Tim15', 'Tim21', 'Tim22', 'Tim23', 'Tim24', 'Tim25', 'Tim31', 'Tim32', 'Tim33', 'Tim34', 'Tim35', 'Tim41', 'Tim42', 'Tim43', 'Tim44', 'Tim45', 'Tim51', 'Tim52', 'Tim53', 'Tim54', 'Tim55'],
-            });
-
-            oListModel.setProperty('/detail/pernr/list', [...aPernrList, mSumRow]);
-            oListModel.setProperty('/detail/pernr/Label1', aPernrList[0].Wktx1);
-            oListModel.setProperty('/detail/pernr/Label2', aPernrList[0].Wktx2);
-            oListModel.setProperty('/detail/pernr/Label3', aPernrList[0].Wktx3);
-            oListModel.setProperty('/detail/pernr/Label4', aPernrList[0].Wktx4);
-            oListModel.setProperty('/detail/pernr/Label5', aPernrList[0].Wktx5);
-            oListModel.setProperty('/detail/pernr/rowCount', _.size([...aPernrList, mSumRow]));
-          } else {
-            const aOrgList = aWorkTime.WorkingTime2Nav.results;
-            const mSumRow = TableUtils.generateSumRow({
-              aTableData: aOrgList,
-              mSumField: { Status: sSumLabel },
-              vCalcProps: ['Empcnt', 'Tim11', 'Tim12', 'Tim13', 'Tim14', 'Tim15', 'Tim21', 'Tim22', 'Tim23', 'Tim24', 'Tim25', 'Tim31', 'Tim32', 'Tim33', 'Tim34', 'Tim35', 'Tim41', 'Tim42', 'Tim43', 'Tim44', 'Tim45', 'Tim51', 'Tim52', 'Tim53', 'Tim54', 'Tim55', 'Over1', 'Over2', 'Over3', 'Over4', 'Over5'],
-            });
-
-            oListModel.setProperty('/detail/org/list', [...aOrgList, mSumRow]);
-            oListModel.setProperty('/detail/org/Label1', aOrgList[0].Wktx1);
-            oListModel.setProperty('/detail/org/Label2', aOrgList[0].Wktx2);
-            oListModel.setProperty('/detail/org/Label3', aOrgList[0].Wktx3);
-            oListModel.setProperty('/detail/org/Label4', aOrgList[0].Wktx4);
-            oListModel.setProperty('/detail/org/Label5', aOrgList[0].Wktx5);
-            oListModel.setProperty('/detail/org/rowCount', _.size([...aOrgList, mSumRow]));
-          }
+          this.tableSetting(oListModel.getProperty('/search/Disty'));
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -227,8 +168,15 @@ sap.ui.define(
       },
 
       async onArea() {
-        // const aWorkTime = await this.getTypeWorkTime();
-        // this.buildDialChart(aWorkTime.WorkingTime1Nav.results);
+        const oListModel = this.getViewModel();
+        const oCommonModel = this.getModel(ServiceNames.COMMON);
+        const aOrgList = await Client.getEntitySet(oCommonModel, 'DashboardOrgList', {
+          Pernr: this.getAppointeeProperty('Pernr'),
+          Werks: oListModel.getProperty('/search/Werks'),
+        });
+
+        oListModel.setProperty('/OrgList', aOrgList);
+        oListModel.setProperty('/search/Orgeh', aOrgList[0].Orgeh);
       },
 
       async onOrg() {
@@ -237,10 +185,14 @@ sap.ui.define(
       },
 
       async onGubun() {
+        this.tableSetting(this.getViewModel().getProperty('/search/Disty'));
+      },
+
+      tableSetting(sDisty) {
         const oListModel = this.getViewModel();
         const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
 
-        if (oListModel.getProperty('/search/Disty') === '1') {
+        if (sDisty === '1') {
           const aPernrList = oListModel.getProperty('/Data/WorkingTime3Nav/results');
           const mSumRow = TableUtils.generateSumRow({
             aTableData: aPernrList,
@@ -409,20 +361,64 @@ sap.ui.define(
       },
 
       onOrgClick(oEvent) {
-        this.openDialog(oEvent, oEvent.getParameter('rowBindingContext').getPath().split('/')[2]);
+        if (!this._pOrgDialog) {
+          const oView = this.getView();
+          const oController = this;
+
+          this._pOrgDialog = Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.mvc.view.worktimeStatus.fragment.DialogOrgTable',
+            controller: this,
+          }).then(function (oDialog) {
+            oView.addDependent(oDialog);
+            TableUtils.adjustRowSpan({
+              oTable: oController.byId(oController.DIALOG_ORG_TABLE_ID),
+              aColIndices: [0, 1, 2, 3, 4, 5],
+              sTheadOrTbody: 'thead',
+            });
+
+            TableUtils.summaryColspan({ oTable: oController.byId(oController.DIALOG_ORG_TABLE_ID), aHideIndex: [1, 2, 3, 4, 5] });
+            return oDialog;
+          });
+        }
+
+        const oListModel = this.getViewModel();
+        const vPath = oEvent.getParameter('rowBindingContext').getPath();
+        const oRowData = oListModel.getProperty(vPath);
+        const aDialogList = _.chain(oListModel.getProperty('/Data/WorkingTime3Nav/results'))
+          .filter((e) => {
+            return e.Orgtx === oRowData.Orgtx;
+          })
+          .map((e, i) => {
+            return { ...e, No: i + 1 };
+          })
+          .value();
+        const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
+        const aOrgList = oListModel.getProperty('/Data/WorkingTime2Nav/results');
+        const mSumRow = TableUtils.generateSumRow({
+          aTableData: aOrgList,
+          mSumField: { Status: sSumLabel },
+          vCalcProps: ['Empcnt', 'Tim11', 'Tim12', 'Tim13', 'Tim14', 'Tim15', 'Tim21', 'Tim22', 'Tim23', 'Tim24', 'Tim25', 'Tim31', 'Tim32', 'Tim33', 'Tim34', 'Tim35', 'Tim41', 'Tim42', 'Tim43', 'Tim44', 'Tim45', 'Tim51', 'Tim52', 'Tim53', 'Tim54', 'Tim55', 'Over1', 'Over2', 'Over3', 'Over4', 'Over5'],
+        });
+
+        this._pOrgDialog.then(async function (oDialog) {
+          oListModel.setProperty('/detail/dialog/org/list', [...aDialogList, mSumRow]);
+          oListModel.setProperty('/detail/dialog/org/Label1', aDialogList[0].Wktx1);
+          oListModel.setProperty('/detail/dialog/org/Label2', aDialogList[0].Wktx2);
+          oListModel.setProperty('/detail/dialog/org/Label3', aDialogList[0].Wktx3);
+          oListModel.setProperty('/detail/dialog/org/Label4', aDialogList[0].Wktx4);
+          oListModel.setProperty('/detail/dialog/org/Label5', aDialogList[0].Wktx5);
+          oListModel.setProperty('/detail/dialog/org/rowCount', _.size([...aDialogList, mSumRow]));
+          oDialog.open();
+        });
       },
 
       onPernrClick(oEvent) {
-        this.openDialog(oEvent, oEvent.getParameter('rowBindingContext').getPath().split('/')[2]);
-      },
-
-      openDialog(oEvent, sKey) {
-        if (!this._pDetailDialog) {
+        if (!this._pPernrDialog) {
           const oView = this.getView();
 
-          this._pDetailDialog = Fragment.load({
-            id: oView.getId(),
-            name: 'sap.ui.yesco.mvc.view.worktimeStatus.fragment.DetailDialog',
+          this._pPernrDialog = Fragment.load({
+            name: 'sap.ui.yesco.mvc.view.worktimeStatus.fragment.DialogPernrTable',
             controller: this,
           }).then(function (oDialog) {
             oView.addDependent(oDialog);
@@ -431,25 +427,20 @@ sap.ui.define(
         }
 
         const vPath = oEvent.getParameter('rowBindingContext').getPath();
-        const oDetailModel = this.getViewModel();
-        const oRowData = oDetailModel.getProperty(vPath);
-        let aDialogList = [];
+        const oListModel = this.getViewModel();
+        const oRowData = oListModel.getProperty(vPath);
+        const aDialogList = _.chain(oListModel.getProperty('/Data/WorkingTime4Nav/results'))
+          .filter((e) => {
+            return e.Pernr === oRowData.Pernr;
+          })
+          .map((e, i) => {
+            return { ...e, No: i + 1 };
+          })
+          .value();
 
-        if (sKey === 'pernr') {
-          aDialogList = _.chain(oDetailModel.getProperty('/Data/WorkingTime4Nav/results'))
-            .filter((e) => {
-              return e.Pernr === oRowData.Pernr;
-            })
-            .map((e, i) => {
-              return { ...e, No: i + 1 };
-            })
-            .value();
-        } else {
-        }
-
-        this._pDetailDialog.then(async function (oDialog) {
-          oDetailModel.setProperty('/detail/dialog/list', aDialogList);
-          oDetailModel.setProperty('/detail/dialog/rowCount', _.size(aDialogList));
+        this._pPernrDialog.then(async function (oDialog) {
+          oListModel.setProperty('/detail/dialog/pernr/list', aDialogList);
+          oListModel.setProperty('/detail/dialog/pernr/rowCount', _.size(aDialogList));
           oDialog.open();
         });
       },
@@ -457,14 +448,6 @@ sap.ui.define(
       // Dialog Close
       onDialogClose(oEvent) {
         oEvent.getSource().getParent().close();
-      },
-
-      onSelectRow(oEvent) {
-        const vPath = oEvent.getParameter('rowBindingContext').getPath();
-        const oListModel = this.getViewModel();
-        const oRowData = oListModel.getProperty(vPath);
-
-        this.getRouter().navTo('workTimeChange-detail', { oDataKey: oRowData.Appno });
       },
     });
   }
