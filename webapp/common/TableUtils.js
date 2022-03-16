@@ -167,15 +167,16 @@ sap.ui.define(
        *   theadOrTbody: 'thead' or 'tbody'
        * }
        */
-      adjustRowSpan({ oTable, aColIndices, sTheadOrTbody }) {
+      adjustRowSpan({ oTable, aColIndices, sTheadOrTbody, bMultiLabel = false }) {
         if (!aColIndices.length) return;
 
         oTable.addEventDelegate({
           onAfterRendering() {
             const sTarget = sTheadOrTbody === 'thead' ? 'header' : 'table';
+            const sTableId = bMultiLabel ? '-fixed-fixrow' : '';
 
             aColIndices.forEach((colIndex) => {
-              const sId = `#${oTable.getId()}-${sTarget} tbody>tr td:nth-child(${colIndex + 1}):visible`;
+              const sId = `#${oTable.getId()}-${sTarget}${sTableId} tbody>tr td:nth-child(${colIndex + 1}):visible`;
               const aTDs = $(sId).get();
               let oPrevTD = aTDs.shift();
 

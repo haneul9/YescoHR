@@ -16,7 +16,7 @@
           <ObjectStatus text="{i18n>LABEL_32013}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication05" />
         </HBox>
       </HBox>
-      <table:Table id="dialogOrgTable" fixedBottomRowCount="1" selectionMode="None" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/detail/dialog/org/list}" visibleRowCount="{= ${/detail/dialog/org/rowCount} > 10 ? 10 : ${/detail/dialog/org/rowCount} }" noData="{i18n>MSG_00001}">
+      <table:Table id="dialogOrgTable" fixedColumnCount="6" fixedBottomRowCount="1" selectionMode="None" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/detail/dialog/org/list}" visibleRowCount="{= ${/detail/dialog/org/rowCount} > 10 ? 10 : ${/detail/dialog/org/rowCount} }" noData="{i18n>MSG_00001}">
         <table:columns>
           <table:Column width="50px">
             <table:multiLabels>

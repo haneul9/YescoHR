@@ -92,12 +92,14 @@ sap.ui.define(
           oTable: this.byId(this.ORG_TABLE_ID),
           aColIndices: [0, 1, 2],
           sTheadOrTbody: 'thead',
+          bMultiLabel: true,
         });
 
         TableUtils.adjustRowSpan({
           oTable: this.byId(this.PERNR_TABLE_ID),
           aColIndices: [0, 1, 2, 3, 4, 5],
           sTheadOrTbody: 'thead',
+          bMultiLabel: true,
         });
 
         TableUtils.summaryColspan({ oTable: this.byId(this.ORG_TABLE_ID), aHideIndex: [1] });
@@ -375,6 +377,7 @@ sap.ui.define(
               oTable: oController.byId(oController.DIALOG_ORG_TABLE_ID),
               aColIndices: [0, 1, 2, 3, 4, 5],
               sTheadOrTbody: 'thead',
+              bMultiLabel: true,
             });
 
             TableUtils.summaryColspan({ oTable: oController.byId(oController.DIALOG_ORG_TABLE_ID), aHideIndex: [1, 2, 3, 4, 5] });
