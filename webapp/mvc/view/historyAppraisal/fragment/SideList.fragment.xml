@@ -2,7 +2,7 @@
     xmlns:core="sap.ui.core">
     <IconTabFilter text="{i18n>LABEL_00279}" key="list" class="tablist type-a">
         <SearchField value="{/sideNavigation/search/searchText}" placeholder="{i18n>LABEL_00276}" visible="{= ${/sideNavigation/isShow}}" search=".onPressEmployeeSearch" />
-        <ScrollContainer height="63vh" horizontal="false" vertical="true" class="sapUiSmallMarginTop">
+        <ScrollContainer height="62vh" horizontal="false" vertical="true" class="sapUiSmallMarginTop">
             <List id="sideEmployeeList" items="{path: '/sideNavigation/search/results'}" class="employee-card-list" busyIndicatorDelay="0" busy="{/sideNavigation/busy}">
                 <CustomListItem type="Active" press=".onClickEmployeeCard">
                     <HBox>
