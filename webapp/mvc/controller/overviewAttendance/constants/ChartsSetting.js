@@ -94,7 +94,6 @@ sap.ui.define([], function () {
       cylinder: {
         chart: {
           caption: '', // 출근율
-          baseFontSize: 12,
           valueFontSize: 12,
           lowerlimit: '0',
           upperlimit: '100',
