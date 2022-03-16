@@ -8,7 +8,7 @@
       <core:CustomData key="form-style" value="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} ? 'request' : 'retrieval' }" writeToDom="true" />
     </customData>
     <VBox class="contents">
-      <custom:MobileScrollContainer horizontal="false" vertical="true" excludeBottomSelector=".sapMPageHeader">
+      <custom:MobileScrollContainer horizontal="false" vertical="true" excludeBottomSelector=".sapMPageFooter">
         <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
           <VBox justifyContent="SpaceBetween">
             <Title level="H2" text="{/FormData/Title}" wrapping="true" />
