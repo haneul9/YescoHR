@@ -2,130 +2,110 @@
 <core:FragmentDefinition  
     xmlns:l="sap.ui.layout"
     xmlns="sap.m"
+    xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:core="sap.ui.core">
-    <Dialog id="talentSearchDialog" title='프로파일 비교' contentWidth='440px' contentHeight='650px'>
+    <Dialog id="talentSearchDialog" title='인재 상세검색' contentWidth='440px' contentHeight='650px'>
         <beginButton>
-        <Button type="Emphasized" text="확인" press=".onClick" />
+            <Button text="닫기" press=".onClick" />
+            <Button type="Emphasized" text="확인" press=".onClick" />
         </beginButton>
         <content>
-            <Carousel class="talent-compare-carousel" loop="true" showPageIndicator="false" >
-                <pages>
-                    <HBox class="wrap type-01">
-                        <VBox width="120px">
-                            <Image src="asset/image/photo1.png" class="member-picture" />
-                            <Text text="홍길동 부장 / 팀장" class="name" />
-                        </VBox>
-                        <VBox>
-                            <VBox class="sapUiMediumMarginBottom">
-                                <Label text="기본정보" />
-                                <Text text="부장 / 팀장" />
-                                <Text text="생년월일 : 1972.12.14"  />
-                                <Text text="입사 : 2001.01.01" />
-                                <Text text="학력 : 동국대 (석사졸업) / 마케팅" />
-                                <Text text="현직무 : 홍보팀 (15년 3개월)" />
-                            </VBox>
-                            <VBox class="sapUiMediumMarginBottom">
-                                <Label text="직무" />
-                                <Text text="홍보 (9년 7개월)" />
-                                <Text text="인사 (5년 6개월" />
-                            </VBox>
-                            <VBox class="sapUiMediumMarginBottom">
-                                <Label text="학력" />
-                                <Text text="동국대 (석사졸업) / 마케팅" />
-                            </VBox>
-                            <VBox class="sapUiMediumMarginBottom">
-                                <Label text="평가이력" />
-                                <Text text="2020년 성과A/역량A" />
-                                <Text text="2019년 성과A/역량A" />
-                                <Text text="2018년 성과A/역량A" />
-                                <Image src="asset/image/compare_chart.png" />
-                            </VBox>                            
-                            <VBox>
-                                <Label text="사내경력" />
-                                <Text text="인사팀 : 2001.01.01 ~ 2010.12.31" />
-                                <Text text="홍보팀 : 2011.01.01 ~ 현재" />
-                            </VBox>
-                        </VBox>
-                    </HBox>
-
-                    <HBox class="wrap type-02">
-                        <VBox width="120px">
-                            <Image src="asset/image/photo2.png" class="member-picture" />
-                            <Text text="홍길동 부장 / 팀장" class="name" />
-                        </VBox>
-                        <VBox>
-                            <VBox class="sapUiMediumMarginBottom">
-                                <Label text="기본정보" />
-                                <Text text="부장 / 팀장" />
-                                <Text text="생년월일 : 1972.12.14"  />
-                                <Text text="입사 : 2001.01.01" />
-                                <Text text="학력 : 동국대 (석사졸업) / 마케팅" />
-                                <Text text="현직무 : 홍보팀 (15년 3개월)" />
-                            </VBox>
-                            <VBox class="sapUiMediumMarginBottom">
-                                <Label text="직무" />
-                                <Text text="홍보 (9년 7개월)" />
-                                <Text text="인사 (5년 6개월" />
-                            </VBox>
-                            <VBox class="sapUiMediumMarginBottom">
-                                <Label text="학력" />
-                                <Text text="동국대 (석사졸업) / 마케팅" />
-                            </VBox>
-                            <VBox class="sapUiMediumMarginBottom">
-                                <Label text="평가이력" />
-                                <Text text="2020년 성과A/역량A" />
-                                <Text text="2019년 성과A/역량A" />
-                                <Text text="2018년 성과A/역량A" />
-                                <Image src="asset/image/compare_chart.png" />
-                            </VBox>                            
-                            <VBox>
-                                <Label text="사내경력" />
-                                <Text text="인사팀 : 2001.01.01 ~ 2010.12.31" />
-                                <Text text="홍보팀 : 2011.01.01 ~ 현재" />
-                            </VBox>
-                        </VBox>
-                    </HBox>
-
-                    <HBox class="wrap type-03">
-                        <VBox width="120px">
-                            <Image src="asset/image/photo3.jpeg"  class="member-picture" />
-                            <Text text="홍길동 부장 / 팀장" class="name" />
-                        </VBox>
-                        <VBox>
-                            <VBox class="sapUiMediumMarginBottom">
-                                <Label text="기본정보" />
-                                <Text text="부장 / 팀장" />
-                                <Text text="생년월일 : 1972.12.14"  />
-                                <Text text="입사 : 2001.01.01" />
-                                <Text text="학력 : 동국대 (석사졸업) / 마케팅" />
-                                <Text text="현직무 : 홍보팀 (15년 3개월)" />
-                            </VBox>
-                            <VBox class="sapUiMediumMarginBottom">
-                                <Label text="직무" />
-                                <Text text="홍보 (9년 7개월)" />
-                                <Text text="인사 (5년 6개월" />
-                            </VBox>
-                            <VBox class="sapUiMediumMarginBottom">
-                                <Label text="학력" />
-                                <Text text="동국대 (석사졸업) / 마케팅" />
-                            </VBox>
-                            <VBox class="sapUiMediumMarginBottom">
-                                <Label text="평가이력" />
-                                <Text text="2020년 성과A/역량A" />
-                                <Text text="2019년 성과A/역량A" />
-                                <Text text="2018년 성과A/역량A" />
-                                <Image src="asset/image/compare_chart.png" />
-                            </VBox>
-                            <VBox>
-                                <Label text="사내경력" />
-                                <Text text="인사팀 : 2001.01.01 ~ 2010.12.31" />
-                                <Text text="홍보팀 : 2011.01.01 ~ 현재" />
-                            </VBox>
-                        </VBox>
-                    </HBox>
-                    
-                </pages>
-            </Carousel>
+            <VBox class="section">
+              <HBox class="title-bar" justifyContent="SpaceBetween">
+                <HBox>
+                  <Title level="H3" text="상세검색" />
+                </HBox>
+              </HBox>
+              <grid:CSSGrid gridTemplateColumns="1fr" gridGap="0 8px" class="search-filter expanded">
+                <Label text="검색저장" />
+                <HBox alignItems="Center">
+                    <Input placeholder="검색" class="sapUiTinyMarginEnd" />
+                    <Button text="검색조건 저장" icon="asset/image/icon_inquiry_save.png" />
+                </HBox>
+                <!-- <Label text="검색저장" /> -->
+                <!-- <HBox alignItems="Center">
+                    <layoutData>
+                    <grid:GridItemLayoutData gridColumn="span 7"/>
+                    </layoutData>
+                    <Input width="280px" placeholder="검색" class="sapUiTinyMarginEnd" />
+                    <Button text="검색조건 저장" icon="asset/image/icon_inquiry_save.png" />
+                </HBox> -->
+                <Label text="직군" />
+                <Select width="100%" />
+                <Label text="직급" />
+                <Select width="100%" />
+                <Label text="직책" />
+                <Select width="100%" />
+                <Label text="나이(만)" />
+                <HBox justifyContent="SpaceBetween" alignItems="Center">
+                    <Input />
+                    <Text text="~" />
+                    <Input />
+                </HBox>
+                <Label text="학교" />
+                <Select width="100%" />
+                <Label text="전공" />
+                <Select width="100%" />
+                <Label text="학력" />
+                <Select width="100%" />
+                <Label text="자격증" />
+                <Select width="100%" />
+                <Label text="외국어1" />
+                <HBox justifyContent="SpaceBetween" width="100%">
+                    <Select width="280px"></Select>
+                    <Select width="100%">
+                    </Select>
+                </HBox>
+                <Label text="외국어2" />
+                <HBox justifyContent="SpaceBetween" alignItems="Center">
+                    <Select width="70wh"></Select> 
+                    <Select width="30wh">
+                    </Select>
+                </HBox>
+                <Label text="외국어3" />
+                <HBox justifyContent="SpaceBetween" alignItems="Center">
+                    <Select width="280px"></Select>
+                    <Select width="100%" enabled="false">
+                    </Select>
+                </HBox>
+                <Label text="성별" />
+                <Select width="100%" />
+                <Label text="직무1" />
+                <Select width="100%" />
+                <Label text="기간1" />
+                <HBox justifyContent="SpaceBetween" alignItems="Center">
+                    <Input />
+                    <Text text="~" />
+                    <Input />
+                </HBox>
+                <Label text="직무2" />
+                <Select width="100%" />
+                <Label text="기간2" />
+                <HBox justifyContent="SpaceBetween" alignItems="Center">
+                    <Input />
+                    <Text text="~" />
+                    <Input />
+                </HBox>
+                <Label text="직무3" />
+                <Select width="100%" />
+                <Label text="기간3" />
+                <HBox justifyContent="SpaceBetween" alignItems="Center">
+                    <Input />
+                    <Text text="~" />
+                    <Input />
+                </HBox>
+                <Label text="직무4" />
+                <Select width="100%" />
+                <Label text="기간4" />
+                <HBox justifyContent="SpaceBetween" alignItems="Center">
+                    <Input />
+                    <Text text="~" />
+                    <Input />
+                </HBox>
+            </grid:CSSGrid>
+            </VBox>
+            
+            
         </content>
     </Dialog>
 </core:FragmentDefinition>
