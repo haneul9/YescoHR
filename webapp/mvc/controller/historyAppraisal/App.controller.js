@@ -29,8 +29,6 @@ sap.ui.define(
             busy: false,
             isShow: true,
             treeLoaded: false,
-            treeHeight: '500px',
-            scrollHeight: '700px',
             search: { searchText: '', results: [] },
             treeData: [],
           },
@@ -46,7 +44,7 @@ sap.ui.define(
               Zyear: true,
               Pernr: false,
               Ename: false,
-              idp: false,
+              Zzappgd03: false,
             },
           },
           appointee: {},
@@ -87,9 +85,10 @@ sap.ui.define(
 
       setVisibleColumns(bIsESS, sMode) {
         const oViewModel = this.getViewModel();
+        const sPersg = this.getAppointeeProperty('Persg');
 
         oViewModel.setProperty('/history/visible', {
-          idp: !bIsESS,
+          Zzappgd03: !bIsESS && sPersg === 'A',
           Zyear: sMode === 'P',
           Pernr: sMode === 'O',
           Ename: sMode === 'O',
