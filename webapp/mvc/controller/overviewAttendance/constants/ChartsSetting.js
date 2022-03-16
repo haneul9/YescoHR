@@ -9,6 +9,7 @@ sap.ui.define([], function () {
         Target: 'A01',
         Chart: 'cylinder',
         ChartWidth: '110px',
+        DetailEntity: 'TimeOverviewDetail1',
         Fields: [
           { prop: 'Cnt01', path: [0, 'Cnt01'] }, //
           { prop: 'Cnt02', path: [0, 'Cnt02'] },
@@ -32,6 +33,7 @@ sap.ui.define([], function () {
         Headty: 'B',
         Target: 'A02',
         Chart: 'column2d',
+        DetailEntity: 'TimeOverviewDetail3',
         Fields: [
           { prop: 'Rte01', path: [0, 'Rte01'] }, //
           { prop: 'Rte02', path: [0, 'Rte02'] },
@@ -41,6 +43,7 @@ sap.ui.define([], function () {
         Headty: 'C',
         Target: 'A03',
         Chart: 'column2d',
+        DetailEntity: 'TimeOverviewDetail3',
         Fields: [
           { prop: 'Rte01', path: [0, 'Rte01'] }, //
           { prop: 'Rte02', path: [0, 'Rte02'] },
@@ -50,6 +53,7 @@ sap.ui.define([], function () {
         Headty: 'D',
         Target: 'A04',
         Chart: 'none',
+        DetailEntity: 'TimeOverviewDetail2',
         Fields: [
           { prop: 'Rte01', path: [0, 'Rte01'] }, //
           { prop: 'Rte02', path: [0, 'Rte02'] },
@@ -63,13 +67,14 @@ sap.ui.define([], function () {
           { prop: 'Cnt04C', path: [0, 'Cod04'] },
         ],
       },
-      { Headty: 'E', Target: 'A05', Chart: 'bar2d' },
-      { Headty: 'F', Target: 'A06', Chart: 'bar2d' },
-      { Headty: 'G', Target: 'A07', Chart: 'mscombi2d' },
+      { Headty: 'E', Target: 'A05', Chart: 'bar2d', DetailEntity: 'TimeOverviewDetail2' },
+      { Headty: 'F', Target: 'A06', Chart: 'bar2d', DetailEntity: 'TimeOverviewDetail2' },
+      { Headty: 'G', Target: 'A07', Chart: 'mscombi2d', DetailEntity: 'TimeOverviewDetail2' },
       {
         Headty: 'H',
         Target: 'A08',
         Chart: 'bar2d',
+        DetailEntity: 'TimeOverviewDetail3',
         Fields: [
           { prop: 'Rte02', path: [0, 'Rte02'] }, //
         ],
@@ -78,11 +83,12 @@ sap.ui.define([], function () {
         Headty: 'I',
         Target: 'A09',
         Chart: 'bar2d',
+        DetailEntity: 'TimeOverviewDetail3',
         Fields: [
           { prop: 'Rte02', path: [0, 'Rte02'] }, //
         ],
       },
-      { Headty: 'J', Target: 'A10', Chart: 'mscolumn2d' },
+      { Headty: 'J', Target: 'A10', Chart: 'mscolumn2d', DetailEntity: 'TimeOverviewDetail3' },
     ],
     CHART_OPTIONS: {
       cylinder: {

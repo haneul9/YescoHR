@@ -140,8 +140,10 @@ sap.ui.define(
         aDateProps.forEach((prop) => {
           const mDateColumn = _.find(aColumns, { property: prop });
 
-          mDateColumn.type = exportLibrary.EdmType.Date;
-          mDateColumn.format = 'yyyy.mm.dd';
+          if (!_.isEmpty(mDateColumn)) {
+            mDateColumn.type = exportLibrary.EdmType.Date;
+            mDateColumn.format = 'yyyy.mm.dd';
+          }
         });
 
         const oSettings = {

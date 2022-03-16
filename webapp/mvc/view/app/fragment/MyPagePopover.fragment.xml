@@ -3,42 +3,28 @@
   xmlns:core="sap.ui.core">
   <Popover title="{i18n>LABEL_01005}" placement="Top" horizontalScrolling="false" verticalScrolling="false" class="full-popover" busy="{busy}" busyIndicatorDelay="0">
     <content>
-      <VBox class="member-detail">
-        <HBox width="100%" height="146px">
-          <VBox width="146px">
-            <Image src="{sessionModel>/Photo}" mode="Background" class="member-photo" width="146px" height="146px" />
+      <VBox height="100%">
+        <grid:CSSGrid gridTemplateColumns="1fr 6fr" gridGap="4px 20px" class="member-detail p-20-px">
+          <VBox justifyContent="Center" alignItems="Center">
+            <layoutData>
+              <grid:GridItemLayoutData gridRow="span 2" />
+            </layoutData>
+            <Image src="{sessionModel>/Photo}" class="member-photo" mode="Background" width="88px" height="88px" />
           </VBox>
-          <VBox justifyContent="Center" class="appointee-info">
-            <Text text="{sessionModel>/Ename}" class="name" />
-            <Text text="{sessionModel>/Zzjikgbt} / {sessionModel>/Zzjikcht}" />
-            <Text text="{sessionModel>/Pbtxt} {sessionModel>/Btrtx}" />
-            <Text text="{sessionModel>/Orgtx}" />
-          </VBox>
-        </HBox>
-
-        <!-- <VBox class="wrap"> 사원프로파일과 같은 디자인이니 같은 구조로 맞춤이 어떨지
-          <grid:CSSGrid gridTemplateColumns="1fr 6fr" class="member-detail" gridGap="4px 20px" >
-              <VBox justifyContent="Center" alignItems="Center">
-                  <layoutData>
-                      <grid:GridItemLayoutData gridRow="span 2" />
-                  </layoutData>
-                  <Image src="{/header/profilePath}" class="member-photo" mode="Background" width="88px" height="88px" />
-              </VBox>
-              <HBox justifyContent="SpaceBetween">
-                  <Label text="{/header/name}" class="name" />
-                  <Image src="asset/image/icon_captain.svg" width="1.2rem" alt="Captain" visible="{= !!${/header/chief}}" />
-              </HBox>
-              <grid:CSSGrid items="{path: '/header/baseInfo'}" gridTemplateColumns="1fr 5fr">
-                  <Label text="{data}">
-                      <customData>
-                          <core:CustomData key="type" value="{labelOrText}" writeToDom="true" />
-                      </customData>
-                  </Label>
-              </grid:CSSGrid>
+          <HBox justifyContent="SpaceBetween">
+            <Label text="{sessionModel>/Ename} {sessionModel>/Zzjikgbt} / {sessionModel>/Zzjikcht}" class="name" />
+            <Image src="asset/image/icon_captain.svg" width="1.2rem" alt="Captain" />
+          </HBox>
+          <grid:CSSGrid gridTemplateColumns="1fr 5fr">
+            <Label text="{i18n>LABEL_00226}" />
+            <Label text="{sessionModel>/Pbtxt} {sessionModel>/Btrtx} {sessionModel>/Orgtx}" />
+            <Label text="{i18n>LABEL_00280}" />
+            <Label text="{sessionModel>/Pbtxt} {sessionModel>/Btrtx} {sessionModel>/Orgtx}" />
+            <Label text="{i18n>LABEL_00222}" />
+            <Label text="{sessionModel>/Pbtxt} {sessionModel>/Btrtx} {sessionModel>/Orgtx}" />
           </grid:CSSGrid>
-        </VBox> -->
-
-        <VBox width="100%" class="setting-wrap wrap mt-20-px">
+        </grid:CSSGrid>
+        <VBox width="100%" class="setting-wrap p-20-px">
           <layoutData>
             <FlexItemData growFactor="1" />
           </layoutData>
@@ -53,7 +39,7 @@
           </HBox>
           <HBox justifyContent="SpaceBetween" alignItems="Center" height="54px" class="divider">
             <Label text="{i18n>LABEL_01602}" />
-            <Text text="ver. 1.0.0.0" />
+            <Text text="ver. {Version}" />
           </HBox>
         </VBox>
       </VBox>

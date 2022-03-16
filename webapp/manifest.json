@@ -208,6 +208,8 @@
 
         { "pattern": "paystub", "name": "paystub", "target": "paystub" },
         { "pattern": "paystub/{seqnr}", "name": "paystub-detail", "target": "paystubDetail" },
+        { "pattern": "mobile/paystub", "name": "mobile/paystub", "target": "mobile/paystub" },
+        { "pattern": "mobile/paystub/{seqnr}", "name": "mobile/paystub-detail", "target": "mobile/paystubDetail" },
 
         { "pattern": "performance", "name": "performance", "target": "performance" },
         { "pattern": "performance/{sType}/{sYear}", "name": "performance-detail", "target": "performanceDetail" },
@@ -363,6 +365,8 @@
         
         "paystub": { "viewId": "paystub", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "List" },
         "paystubDetail": { "viewId": "paystubDetail", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "Detail" },
+        "mobile/paystub": { "viewId": "mobile_paystub", "viewPath": "sap.ui.yesco.mvc.view.paystub.mobile", "viewName": "List" },
+        "mobile/paystubDetail": { "viewId": "mobile_paystubDetail", "viewPath": "sap.ui.yesco.mvc.view.paystub.mobile", "viewName": "Detail" },
         
         "performance": { "viewId": "performance", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "List" },
         "h/performance": { "viewId": "h_performance", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "ListH" },
