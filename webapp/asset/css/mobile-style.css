@@ -332,7 +332,6 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker .sapMDialo
 .card-box{border-bottom:8px solid #ebeef2; padding:0 20px}
 .wrap {padding-left:16px!important; padding-right:16px!important}
 
-.member-detail{}
 .member-detail .name {font-size:20px; color:#000}
 .member-detail .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem {min-height:20px; color:#666666; font-weight:500}
 
@@ -354,7 +353,8 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker .sapMDialo
 .sapMSwtOff>.sapMSwtInner {left:auto}
 .sapMSwtOff .sapMSwtHandle {left:2px; right:auto}
 .sapMSwtOn .sapMSwtHandle {right:2px; left:auto}
-.setting-wrap .divider{border-top:1px solid #E7E9EF}
+.setting-wrap {border-top:8px solid #ebeef2; border-bottom:8px solid #ebeef2}
+.setting-wrap .divider {border-top:1px solid #e7e9ef}
 
 
 /* 신청 공통  */

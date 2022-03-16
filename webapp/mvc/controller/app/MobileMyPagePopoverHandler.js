@@ -65,49 +65,23 @@ sap.ui.define(
       },
 
       async showContentData() {
-        // const aContentData = await this.readContentData();
-        // const { unreadCount, list, listCount } = this.transformContentData(aContentData);
-        // const iUnreadCount = Math.min(unreadCount, 99);
-        // const oNotificationModel = this.getNotificationModel();
-        // oNotificationModel.setProperty('/showUnreadCount', unreadCount > 0);
-        // oNotificationModel.setProperty('/unreadCount', `${unreadCount > 99 ? '+' : ''}${iUnreadCount}`);
-        // oNotificationModel.setProperty('/listCount', listCount);
-        // oNotificationModel.setProperty('/list', list);
+        const aContentData = await this.readContentData();
+        const sVersion = this.transformContentData(aContentData);
+
+        this.oMyPageModel.setProperty('/Version', sVersion);
       },
 
       async readContentData() {
-        const oNotificationModel = this.getNotificationModel();
-        const bOnlyUnread = oNotificationModel.getProperty('/onlyUnread');
-
         const oCommonModel = this.oController.getModel(ServiceNames.COMMON);
         const mFilters = {
-          Mode: 'L',
-          Unide: bOnlyUnread ? 'X' : '',
+          Mobos: /iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'IOS' : 'ANDROID',
         };
 
-        return Client.getEntitySet(oCommonModel, 'AlarmCenter', mFilters);
+        return Client.getEntitySet(oCommonModel, 'OsVersion', mFilters);
       },
 
-      transformContentData(aContentData) {
-        let iUnreadCount = 0;
-
-        const sDTFMT = this.oController.getSessionProperty('DTFMT');
-        aContentData.forEach((mData) => {
-          delete mData.__metadata;
-
-          mData.Menid = this.bMobile ? mData.MenidMobile : mData.MenidPc;
-          mData.AdateFormatted = moment(mData.Adate).format(sDTFMT);
-
-          if (mData.Checked !== 'X') {
-            iUnreadCount += 1;
-          }
-        });
-
-        return {
-          list: aContentData,
-          listCount: aContentData.length,
-          unreadCount: iUnreadCount,
-        };
+      transformContentData([{ Version }]) {
+        return Version;
       },
 
       onChangeMobilePushOnOff() {},
