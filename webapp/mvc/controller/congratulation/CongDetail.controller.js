@@ -683,14 +683,8 @@ sap.ui.define(
                 });
               });
 
-              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'), {
-                onClose: () => {
-                  this.FileAttachmentBoxHandler.readFileList();
-                },
-              }); // {저장}되었습니다.
+              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103')); // {저장}되었습니다.
             } catch (oError) {
-              oDetailModel.setProperty('/FormData/Appno', '');
-
               AppUtils.handleError(oError);
             } finally {
               AppUtils.setAppBusy(false, this);
@@ -761,8 +755,6 @@ sap.ui.define(
                 },
               });
             } catch (oError) {
-              oDetailModel.setProperty('/FormData/Appno', '');
-
               AppUtils.handleError(oError);
             } finally {
               AppUtils.setAppBusy(false, this);

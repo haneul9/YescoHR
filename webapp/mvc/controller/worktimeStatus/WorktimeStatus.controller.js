@@ -408,7 +408,15 @@ sap.ui.define(
         }
       },
 
+      onOrgClick(oEvent) {
+        this.openDialog(oEvent, oEvent.getParameter('rowBindingContext').getPath().split('/')[2]);
+      },
+
       onPernrClick(oEvent) {
+        this.openDialog(oEvent, oEvent.getParameter('rowBindingContext').getPath().split('/')[2]);
+      },
+
+      openDialog(oEvent, sKey) {
         if (!this._pDetailDialog) {
           const oView = this.getView();
 
@@ -425,16 +433,20 @@ sap.ui.define(
         const vPath = oEvent.getParameter('rowBindingContext').getPath();
         const oDetailModel = this.getViewModel();
         const oRowData = oDetailModel.getProperty(vPath);
-        const aDialogList = _.filter(oDetailModel.getProperty('/Data/WorkingTime4Nav/results'), (e) => {
-          return e.Pernr === oRowData.Pernr;
-        });
+        let aDialogList = [];
 
-        _.map(aDialogList, (e) => {
-          const i = 0;
+        if (sKey === 'pernr') {
+          aDialogList = _.chain(oDetailModel.getProperty('/Data/WorkingTime4Nav/results'))
+            .filter((e) => {
+              return e.Pernr === oRowData.Pernr;
+            })
+            .map((e, i) => {
+              return { ...e, No: i + 1 };
+            })
+            .value();
+        } else {
+        }
 
-          return { ...e, No: i + 1 };
-        });
-        debugger;
         this._pDetailDialog.then(async function (oDialog) {
           oDetailModel.setProperty('/detail/dialog/list', aDialogList);
           oDetailModel.setProperty('/detail/dialog/rowCount', _.size(aDialogList));
