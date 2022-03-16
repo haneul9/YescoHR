@@ -2,6 +2,7 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
@@ -12,6 +13,7 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
+    MessageBox,
     AppUtils,
     TableUtils,
     Client,
@@ -83,9 +85,10 @@ sap.ui.define(
         }
       },
 
-      setVisibleColumns(bIsESS, sMode) {
+      setVisibleColumns(sMode) {
         const oViewModel = this.getViewModel();
         const sPersg = this.getAppointeeProperty('Persg');
+        const bIsESS = oViewModel.getProperty('/isESS');
 
         oViewModel.setProperty('/history/visible', {
           Zzappgd03: !bIsESS && sPersg === 'A',
@@ -98,18 +101,24 @@ sap.ui.define(
       async setAppointee(sPernr) {
         const oViewModel = this.getViewModel();
 
-        if (_.isEqual(sPernr, this.getSessionProperty('Pernr'))) {
-          oViewModel.setProperty('/appointee', { ...this.getSessionData() });
-        } else {
-          const [mAppointee] = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'EmpSearchResult', {
-            Ename: sPernr,
-          });
-
-          if (_.isEmpty(mAppointee)) {
-            oViewModel.setProperty('/appointee', { Photo: 'asset/image/avatar-unknown.svg' });
+        try {
+          if (_.isEqual(sPernr, this.getSessionProperty('Pernr'))) {
+            oViewModel.setProperty('/appointee', { ...this.getSessionData() });
           } else {
-            oViewModel.setProperty('/appointee', { ...mAppointee, Orgtx: mAppointee.Fulln, Photo: mAppointee.Photo || 'asset/image/avatar-unknown.svg' });
+            const [mAppointee] = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'EmpSearchResult', {
+              Ename: sPernr,
+            });
+
+            if (_.isEmpty(mAppointee)) {
+              oViewModel.setProperty('/appointee', { Photo: 'asset/image/avatar-unknown.svg' });
+            } else {
+              oViewModel.setProperty('/appointee', { ...mAppointee, Orgtx: mAppointee.Fulln, Photo: mAppointee.Photo || 'asset/image/avatar-unknown.svg' });
+            }
           }
+        } catch (oError) {
+          this.debug('Controller > historyAppraisal > setAppointee Error', oError);
+
+          AppUtils.handleError(oError);
         }
       },
 
@@ -253,7 +262,6 @@ sap.ui.define(
         }
 
         oViewModel.setProperty('/history/busy', true);
-
         oViewModel.setProperty('/history/mode', 'P');
         oViewModel.setProperty('/history/search', { Otype: 'P', Zyear: null, Objid: sPernr });
 
@@ -295,7 +303,7 @@ sap.ui.define(
             _.map(aRowData, (o) => _.omit(o, '__metadata'))
           );
 
-          this.setVisibleColumns(oViewModel.getProperty('/isESS'), mListPayload.Otype);
+          this.setVisibleColumns(mListPayload.Otype);
         } catch (oError) {
           this.debug('Controller > historyAppraisal > onPressSearch Error', oError);
 
