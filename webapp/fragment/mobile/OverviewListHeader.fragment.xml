@@ -22,7 +22,7 @@
       <Text text="total {/listInfo/totalCount}" />
       <Text text="{/listInfo/infoMessage}" visible="{= !!${/listInfo/infoMessage} }" class="desc-txt" />
     </HBox>
-    <Image src="/asset/image/icon_tooltip.svg" size="20px" press=".ListStatusPopover.onPopover" />
+    <Image src="asset/image/icon_tooltip.svg" size="20px" press=".ListStatusPopover.onPopover" />
   </HBox>
   <!-- </HBox> -->
 </core:FragmentDefinition>
