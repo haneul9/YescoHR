@@ -57,6 +57,8 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         try {
+          const mAppointee = this.getAppointeeData();
+
           oViewModel.setSizeLimit(500);
           oViewModel.setData(this.initializeModel());
           oViewModel.setProperty('/busy', true);
@@ -64,19 +66,14 @@ sap.ui.define(
           if (sRouteName === 'historyAppraisal') {
             oViewModel.setProperty('/isESS', true);
           } else {
-            const iSideViewHeight = Math.floor($(document).height() - this.byId('sideBody').getParent().$().offset().top - 10);
-            const iScrollViewHeight = Math.floor($(document).height() - this.byId('sideEmployeeList').getParent().$().offset().top - 26);
-
             oViewModel.setProperty('/isESS', false);
-            oViewModel.setProperty('/sideNavigation/height', `${iSideViewHeight}px`);
-            oViewModel.setProperty('/sideNavigation/scrollHeight', `${iScrollViewHeight}px`);
-            oViewModel.setProperty('/sideNavigation/search/searchText', this.getAppointeeProperty('Orgtx'));
+            oViewModel.setProperty('/sideNavigation/search/searchText', mAppointee.Orgtx);
 
-            await this.setAppointee(this.getAppointeeProperty('Pernr'));
-            await this.onPressEmployeeSearch();
+            await this.setAppointee(mAppointee.Pernr);
+            await this.onPressEmployeeSearch(mAppointee.Orgeh);
           }
 
-          oViewModel.setProperty('/history/search', { Otype: 'P', Zyear: null, Objid: this.getAppointeeProperty('Pernr') });
+          oViewModel.setProperty('/history/search', { Otype: 'P', Zyear: null, Objid: mAppointee.Pernr });
 
           await this.onPressSearch();
         } catch (oError) {
@@ -178,13 +175,10 @@ sap.ui.define(
         const bTreeLoaded = oViewModel.getProperty('/sideNavigation/treeLoaded');
 
         if (!bTreeLoaded && sSelectedKey === 'tree') {
-          const oSideTree = this.byId('OrganizationTree');
           const aReturnTreeData = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'AuthOrgTree', { Datum: moment().hour(9).toDate(), Xpern: 'X' });
           const mConvertedTreeData = this.transformTreeData({ aTreeData: aReturnTreeData, sRootId: '00000000' });
-          const iTreeViewHeight = Math.max(Math.floor($(document).height() - oSideTree.$().offset().top - 25), 500);
 
           oViewModel.setProperty('/sideNavigation/treeData', mConvertedTreeData);
-          oViewModel.setProperty('/sideNavigation/treeHeight', `${iTreeViewHeight}px`);
         }
 
         oViewModel.setProperty('/sideNavigation/treeLoaded', true);
@@ -206,7 +200,7 @@ sap.ui.define(
         return mGroupedByParents[sRootId];
       },
 
-      async onPressEmployeeSearch() {
+      async onPressEmployeeSearch(sOrgeh) {
         const oViewModel = this.getViewModel();
         const sSearchText = oViewModel.getProperty('/sideNavigation/search/searchText');
 
@@ -226,6 +220,7 @@ sap.ui.define(
             Stat2: '3',
             Actda: moment().hours(9).toDate(),
             Ename: sSearchText,
+            Orgeh: sOrgeh,
           });
 
           oViewModel.setProperty(
