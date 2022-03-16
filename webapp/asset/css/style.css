@@ -184,6 +184,7 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-m23 .portlet-body .sapMText.portlet-m23-worktime {font-size:19px}
 
 .sapMLnkSubtle {color:#222}
+.sapMLnkLabel {color:#222222}
 
 .type-list > .sapMHBox {margin-bottom:8px; font-weight:500; flex:150px auto}
 .type-list .sapMImg {margin-left:12px}
