@@ -88,7 +88,7 @@ sap.ui.define(
         const sPersg = this.getAppointeeProperty('Persg');
 
         oViewModel.setProperty('/history/visible', {
-          Zzappgd03: !bIsESS,
+          Zzappgd03: !bIsESS && sPersg === 'A',
           Zyear: sMode === 'P',
           Pernr: sMode === 'O',
           Ename: sMode === 'O',
