@@ -184,7 +184,7 @@ sap.ui.define(
         const sUrl = oPortletModel.getProperty(`/${oPortletHandler.ROOT_PATH}/url`);
         if (!bHasLink || !sUrl) {
           const sTitle = oPortletModel.getProperty(`/${oPortletHandler.ROOT_PATH}/title`);
-          MessageBox.alert(AppUtils.getBundleText('MSG_01903', sTitle)); // {sTitle} portlet의 더보기 링크가 없거나 설정이 올바르지 않습니다.
+          MessageBox.information(AppUtils.getBundleText('MSG_01903', sTitle)); // {sTitle} portlet의 더보기 링크가 없거나 설정이 올바르지 않습니다.
           return;
         }
 

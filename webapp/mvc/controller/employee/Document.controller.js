@@ -11,7 +11,6 @@ sap.ui.define(
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/PostcodeDialogHandler',
-    'sap/ui/yesco/common/Validator',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
   ],
@@ -27,7 +26,6 @@ sap.ui.define(
     ODataReadError,
     ServiceNames,
     PostcodeDialogHandler,
-    Validator,
     BaseController
   ) => {
     'use strict';
@@ -136,6 +134,8 @@ sap.ui.define(
         let sPernr = oParameter.pernr || mSessionData.Pernr;
         let sOrgtx = _.replace(oParameter.orgtx, /--/g, '/') ?? _.noop();
         let sOrgeh = oParameter.orgeh ?? _.noop();
+
+        setTimeout(() => $('#container-ehr---app--app').addClass('popup-body'), 200);
 
         // MSS process
         if (_.isEqual(sRoute, 'm/employee')) {

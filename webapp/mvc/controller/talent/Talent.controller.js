@@ -32,8 +32,41 @@ sap.ui.define(
         }
       },
 
+      onCompareDialogM() {
+        if (!this.byId('talentCompareDialog')) {
+          Fragment.load({
+            id: this.getView().getId(),
+            name: 'sap.ui.yesco.mvc.view.talent.fregment.CompareDialogM',
+            controller: this,
+          }).then((oDialog) => {
+            // connect dialog to the root view of this component (models, lifecycle)
+            this.getView().addDependent(oDialog);
+            oDialog.open();
+          });
+        } else {
+          this.byId('talentCompareDialog').open();
+        }
+      },
+
+      onSearchDialog() {
+        if (!this.byId('talentSearchDialog')) {
+          Fragment.load({
+            id: this.getView().getId(),
+            name: 'sap.ui.yesco.mvc.view.talent.fregment.SearchDialog',
+            controller: this,
+          }).then((oDialog) => {
+            // connect dialog to the root view of this component (models, lifecycle)
+            this.getView().addDependent(oDialog);
+            oDialog.open();
+          });
+        } else {
+          this.byId('talentCompareDialog').open();
+        }
+      },
+
       onClick() {
         this.byId('talentCompareDialog').close();
+        this.byId('talentSearchDialog').close();
       },
 
       /**

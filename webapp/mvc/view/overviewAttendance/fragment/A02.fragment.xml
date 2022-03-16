@@ -6,39 +6,31 @@
     </VBox>
     <VBox class="portlet portlet-box" visible="{= !${/contents/A02/busy} }">
         <HBox class="portlet-header">
-            <Title level="H2" text="{i18n>LABEL_28021}" />
-            <Text class="desc-txt" text="3/7~3/13" />
+            <Title level="H2" text="{i18n>LABEL_28041}" />
+            <Text class="desc-txt" text="{/contents/A02/data/Rte02}" />
             <Text text="">
                 <layoutData>
                     <FlexItemData growFactor="1" />
                 </layoutData>
             </Text>
-            <Image src="asset/image/icon_human_green.svg" width="12px" class="ml-8-px" />
         </HBox>
         <HBox class="portlet-body">
             <layoutData>
                 <FlexItemData growFactor="1" />
             </layoutData>
-            <VBox width="75%">
+            <custom:HBox width="26%" height="100%" class="active-link" click=".onPressCount">
+                <custom:customData>
+                    <core:CustomData key="Headty" value="{/contents/A02/Headty}" />
+                    <core:CustomData key="Discod" value="0" />
+                </custom:customData>
+                <Label text="{/contents/A02/data/Rte01}" class="font-30-px color-03 pt-8-px normal ls-small"/>
+            </custom:HBox>
+            <VBox width="74%">
                 <core:HTML content='&lt;div id="attendance-a02-chart-container"&gt;&lt;/div&gt;'>
                     <core:layoutData>
                         <FlexItemData growFactor="1" />
                     </core:layoutData>
                 </core:HTML>
-            </VBox>
-            <VBox width="25%" items="{ path: '/contents/A02/data', templateShareable: false }" class="legend-wrap">
-                <custom:HBox justifyContent="SpaceBetween" class="active-link" click=".onPressCount">
-                    <custom:customData>
-                        <core:CustomData key="Headty" value="{/contents/A02/Headty}" />
-                        <core:CustomData key="Discod" value="{Cod01}" />
-                    </custom:customData>
-                    <Label text="{Ttltxt} :" class="legend">
-                        <customData>
-                            <core:CustomData key="legend" value="{Type}" writeToDom="true" />
-                        </customData>
-                    </Label>
-                    <Text text=" {Cnt01}" />
-                </custom:HBox>
             </VBox>
         </HBox>
     </VBox>

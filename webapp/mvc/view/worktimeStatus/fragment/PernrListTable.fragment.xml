@@ -1,0 +1,276 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:table="sap.ui.table"
+  xmlns:core="sap.ui.core">
+  <VBox class="vCardBox" visible="{= ${/search/Disty} !== '2' }">
+    <HBox justifyContent="SpaceBetween" class="header-wrap">
+      <HBox class="header">
+        <Title level="H3" text="{i18n>LABEL_32006}" class="sapUiSmallMarginEnd" />
+        <Text text="{i18n>MSG_32001}" class="desc-txt" />
+      </HBox>
+      <HBox class="status-wrap">
+        <ObjectStatus text="{i18n>LABEL_32012}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication04" />
+        <ObjectStatus text="{i18n>LABEL_32013}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication05" />
+      </HBox>
+    </HBox>
+    <table:Table id="pernrTable" selectionMode="None" fixedBottomRowCount="1" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/detail/pernr/list}" visibleRowCount="{= ${/detail/pernr/rowCount} > 10 ? 10 : ${/detail/pernr/rowCount} }" noData="{i18n>MSG_00001}">
+      <table:columns>
+        <table:Column width="50px">
+          <table:multiLabels>
+            <Label text="{i18n>LABEL_00144}" />
+            <Label text="{i18n>LABEL_00144}" />
+          </table:multiLabels>
+          <table:template>
+            <HBox>
+              <core:Icon src="sap-icon://circle-task-2" size="15px" visible="{= ${Status} !== ${i18n>LABEL_09018} }" color="{= ${Status} === '1' ? '#FD5F58' : '#007BFF' }" class="tableIcon">
+                <core:layoutData>
+                  <FlexItemData growFactor="1" />
+                </core:layoutData>
+              </core:Icon>
+              <Text text="{Status}" width="100%" textAlign="Center" visible="{= ${Status} === ${i18n>LABEL_09018} }">
+                <layoutData>
+                  <FlexItemData growFactor="1" />
+                </layoutData>
+              </Text>
+            </HBox>
+          </table:template>
+        </table:Column>
+        <table:Column width="190px">
+          <table:multiLabels>
+            <Label text="{i18n>LABEL_00224}" />
+            <Label text="{i18n>LABEL_00224}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Orgtx}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="90px">
+          <table:multiLabels>
+            <Label text="{i18n>LABEL_00209}" />
+            <Label text="{i18n>LABEL_00209}" />
+          </table:multiLabels>
+          <table:template>
+            <Link width="100%" class="sapMLnkLabel" textAlign="Center" press=".onPernrClick" text="{
+                    path: 'Pernr',
+                    type: 'sap.ui.yesco.mvc.model.type.Pernr'
+                }">
+              <layoutData>
+                <FlexItemData growFactor="1" />
+              </layoutData>
+            </Link>
+          </table:template>
+        </table:Column>
+        <table:Column width="90px">
+          <table:multiLabels>
+            <Label text="{i18n>LABEL_00210}" />
+            <Label text="{i18n>LABEL_00210}" />
+          </table:multiLabels>
+          <table:template>
+            <Link width="100%" class="sapMLnkLabel" textAlign="Center" press=".onPernrClick" text="{Ename}">
+              <layoutData>
+                <FlexItemData growFactor="1" />
+              </layoutData>
+            </Link>
+          </table:template>
+        </table:Column>
+        <table:Column width="90px">
+          <table:multiLabels>
+            <Label text="{i18n>LABEL_00215}" />
+            <Label text="{i18n>LABEL_00215}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Zzjikgbtx}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="90px">
+          <table:multiLabels>
+            <Label text="{i18n>LABEL_00217}" />
+            <Label text="{i18n>LABEL_00217}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Zzjikchtx}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="80px" headerSpan="4">
+          <table:multiLabels>
+            <Label text="{/detail/pernr/Label1}" />
+            <Label text="{i18n>LABEL_32004}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim11}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="80px">
+          <table:multiLabels>
+            <Label text="{/detail/pernr/Label1}" />
+            <Label text="{i18n>LABEL_01205}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim12}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="80px">
+          <table:multiLabels>
+            <Label text="{/detail/pernr/Label1}" />
+            <Label text="{i18n>LABEL_01123}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim13}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="80px">
+          <table:multiLabels>
+            <Label text="{/detail/pernr/Label1}" />
+            <Label text="{i18n>LABEL_13028}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim14}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="80px" headerSpan="4">
+          <table:multiLabels>
+            <Label text="{/detail/pernr/Label2}" />
+            <Label text="{i18n>LABEL_32004}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim21}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="80px">
+          <table:multiLabels>
+            <Label text="{/detail/pernr/Label2}" />
+            <Label text="{i18n>LABEL_01205}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim22}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="80px">
+          <table:multiLabels>
+            <Label text="{/detail/pernr/Label2}" />
+            <Label text="{i18n>LABEL_01123}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim23}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="80px">
+          <table:multiLabels>
+            <Label text="{/detail/pernr/Label2}" />
+            <Label text="{i18n>LABEL_13028}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim24}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="80px" headerSpan="4">
+          <table:multiLabels>
+            <Label text="{/detail/pernr/Label3}" />
+            <Label text="{i18n>LABEL_32004}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim31}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="80px">
+          <table:multiLabels>
+            <Label text="{/detail/pernr/Label3}" />
+            <Label text="{i18n>LABEL_01205}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim32}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="80px">
+          <table:multiLabels>
+            <Label text="{/detail/pernr/Label3}" />
+            <Label text="{i18n>LABEL_01123}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim33}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="80px">
+          <table:multiLabels>
+            <Label text="{/detail/pernr/Label3}" />
+            <Label text="{i18n>LABEL_13028}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim34}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="80px" headerSpan="4">
+          <table:multiLabels>
+            <Label text="{/detail/pernr/Label4}" />
+            <Label text="{i18n>LABEL_32004}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim41}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="80px">
+          <table:multiLabels>
+            <Label text="{/detail/pernr/Label4}" />
+            <Label text="{i18n>LABEL_01205}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim42}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="80px">
+          <table:multiLabels>
+            <Label text="{/detail/pernr/Label4}" />
+            <Label text="{i18n>LABEL_01123}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim43}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="80px">
+          <table:multiLabels>
+            <Label text="{/detail/pernr/Label4}" />
+            <Label text="{i18n>LABEL_13028}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim44}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="80px" headerSpan="4">
+          <table:multiLabels>
+            <Label text="{/detail/pernr/Label5}" />
+            <Label text="{i18n>LABEL_32004}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim51}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="80px">
+          <table:multiLabels>
+            <Label text="{/detail/pernr/Label5}" />
+            <Label text="{i18n>LABEL_01205}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim52}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="80px">
+          <table:multiLabels>
+            <Label text="{/detail/pernr/Label5}" />
+            <Label text="{i18n>LABEL_01123}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim53}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="80px">
+          <table:multiLabels>
+            <Label text="{/detail/pernr/Label5}" />
+            <Label text="{i18n>LABEL_13028}" />
+          </table:multiLabels>
+          <table:template>
+            <Text text="{Tim54}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+      </table:columns>
+    </table:Table>
+  </VBox>
+</core:FragmentDefinition>

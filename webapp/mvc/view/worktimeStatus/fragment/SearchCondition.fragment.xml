@@ -1,0 +1,22 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <VBox class="vCardBox">
+        <HBox class="form-bar" alignItems="Center">
+            <Label text="{i18n>LABEL_00328}" design="Bold" />
+            <DatePicker width="200px" displayFormat="yyyy.MM" valueFormat="yyyyMM" change=".onDate" value="{/search/Zyymm}" />
+            <Label text="{i18n>LABEL_00237}" design="Bold" />
+            <ComboBox items="{/AreaList}" selectedKey="{/search/Werks}" change=".onArea">
+                <core:Item text="{Pbtxt}" key="{Werks}" />
+            </ComboBox>
+            <Label text="{i18n>LABEL_00227}" design="Bold" />
+            <ComboBox items="{/OrgList}" selectedKey="{/search/Orgeh}" change=".onOrg">
+                <core:Item text="{Orgtx}" key="{Orgeh}" />
+            </ComboBox>
+            <Label text="{i18n>LABEL_32002}" design="Bold" />
+            <ComboBox items="{/GubunList}" selectedKey="{/search/Disty}" class="pr-10-px" change=".onGubun">
+                <core:Item text="{Ztext}" key="{Zcode}" />
+            </ComboBox>
+            <Button text="{i18n>LABEL_00100}" press=".onSearch" class="icon-button" />
+        </HBox>
+    </VBox>
+</core:FragmentDefinition>

@@ -134,6 +134,7 @@ sap.ui.define(
           });
         } finally {
           sap.ui.getCore().byId('container-ehr---app--appMenuToolbar').setVisible(false);
+          setTimeout(() => $('#container-ehr---app--app').addClass('popup-body'), 200);
           oViewModel.setProperty('/busy', false);
         }
       },

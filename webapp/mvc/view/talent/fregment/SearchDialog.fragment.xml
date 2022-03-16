@@ -1,0 +1,111 @@
+
+<core:FragmentDefinition  
+    xmlns:l="sap.ui.layout"
+    xmlns="sap.m"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:core="sap.ui.core">
+    <Dialog id="talentSearchDialog" title='인재 상세검색' contentWidth='440px' contentHeight='650px'>
+        <beginButton>
+            <Button text="닫기" press=".onClick" />
+            <Button type="Emphasized" text="확인" press=".onClick" />
+        </beginButton>
+        <content>
+            <VBox class="section">
+              <HBox class="title-bar" justifyContent="SpaceBetween">
+                <HBox>
+                  <Title level="H3" text="상세검색" />
+                </HBox>
+              </HBox>
+              <grid:CSSGrid gridTemplateColumns="1fr" gridGap="0 8px" class="search-filter expanded">
+                <Label text="검색저장" />
+                <HBox alignItems="Center">
+                    <Input placeholder="검색" class="sapUiTinyMarginEnd" />
+                    <Button text="검색조건 저장" icon="asset/image/icon_inquiry_save.png" />
+                </HBox>
+                <!-- <Label text="검색저장" /> -->
+                <!-- <HBox alignItems="Center">
+                    <layoutData>
+                    <grid:GridItemLayoutData gridColumn="span 7"/>
+                    </layoutData>
+                    <Input width="280px" placeholder="검색" class="sapUiTinyMarginEnd" />
+                    <Button text="검색조건 저장" icon="asset/image/icon_inquiry_save.png" />
+                </HBox> -->
+                <Label text="직군" />
+                <Select width="100%" />
+                <Label text="직급" />
+                <Select width="100%" />
+                <Label text="직책" />
+                <Select width="100%" />
+                <Label text="나이(만)" />
+                <HBox justifyContent="SpaceBetween" alignItems="Center">
+                    <Input />
+                    <Text text="~" />
+                    <Input />
+                </HBox>
+                <Label text="학교" />
+                <Select width="100%" />
+                <Label text="전공" />
+                <Select width="100%" />
+                <Label text="학력" />
+                <Select width="100%" />
+                <Label text="자격증" />
+                <Select width="100%" />
+                <Label text="외국어1" />
+                <HBox justifyContent="SpaceBetween" width="100%">
+                    <Select width="280px"></Select>
+                    <Select width="100%">
+                    </Select>
+                </HBox>
+                <Label text="외국어2" />
+                <HBox justifyContent="SpaceBetween" alignItems="Center">
+                    <Select width="70wh"></Select> 
+                    <Select width="30wh">
+                    </Select>
+                </HBox>
+                <Label text="외국어3" />
+                <HBox justifyContent="SpaceBetween" alignItems="Center">
+                    <Select width="280px"></Select>
+                    <Select width="100%" enabled="false">
+                    </Select>
+                </HBox>
+                <Label text="성별" />
+                <Select width="100%" />
+                <Label text="직무1" />
+                <Select width="100%" />
+                <Label text="기간1" />
+                <HBox justifyContent="SpaceBetween" alignItems="Center">
+                    <Input />
+                    <Text text="~" />
+                    <Input />
+                </HBox>
+                <Label text="직무2" />
+                <Select width="100%" />
+                <Label text="기간2" />
+                <HBox justifyContent="SpaceBetween" alignItems="Center">
+                    <Input />
+                    <Text text="~" />
+                    <Input />
+                </HBox>
+                <Label text="직무3" />
+                <Select width="100%" />
+                <Label text="기간3" />
+                <HBox justifyContent="SpaceBetween" alignItems="Center">
+                    <Input />
+                    <Text text="~" />
+                    <Input />
+                </HBox>
+                <Label text="직무4" />
+                <Select width="100%" />
+                <Label text="기간4" />
+                <HBox justifyContent="SpaceBetween" alignItems="Center">
+                    <Input />
+                    <Text text="~" />
+                    <Input />
+                </HBox>
+            </grid:CSSGrid>
+            </VBox>
+            
+            
+        </content>
+    </Dialog>
+</core:FragmentDefinition>

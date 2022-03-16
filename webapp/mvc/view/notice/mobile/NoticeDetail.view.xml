@@ -1,0 +1,28 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.notice.mobile.NoticeDetail"
+  xmlns="sap.m"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <Page enableScrolling="false" floatingFooter="true" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+    <customData>
+      <core:CustomData key="form-style" value="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} ? 'request' : 'retrieval' }" writeToDom="true" />
+    </customData>
+    <VBox class="contents">
+      <custom:MobileScrollContainer horizontal="false" vertical="true" excludeBottomSelector=".sapMPageFooter">
+        <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
+          <VBox justifyContent="SpaceBetween">
+            <Title level="H2" text="{/FormData/Title}" wrapping="true" />
+            <Text text="{/FormData/Chntm}" class="font-12-px"/>
+          </VBox>
+          <core:HTML content="{/FormData/Detail}" />
+          <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
+        </VBox>
+      </custom:MobileScrollContainer>
+    </VBox>
+    <footer>
+      <OverflowToolbar>
+        <Button text="{i18n>LABEL_00177}" type="Emphasized" press=".onNavBack" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+      </OverflowToolbar>
+    </footer>
+  </Page>
+</mvc:View>

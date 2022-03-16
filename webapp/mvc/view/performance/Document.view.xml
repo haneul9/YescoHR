@@ -4,7 +4,7 @@
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:grid="sap.ui.layout.cssgrid"
 	xmlns:custom="sap.ui.yesco.control">
-	<Page showHeader="false">
+	<Page showHeader="false" class="popup-view">
 		<VBox class="contents">
 			<core:Fragment fragmentName="sap.ui.yesco.mvc.view.performance.fragment.AppointeeBar" type="XML" />
 			<HBox>

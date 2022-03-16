@@ -28,9 +28,13 @@ sap.ui.define(
         return {
           busy: false,
           searchConditions: {
-            Begda: moment().hours(9).toDate(),
+            Zyear: moment().format('YYYY'),
+            Werks: '',
             Orgeh: '',
-            entryOrgeh: [],
+          },
+          entry: {
+            Werks: [],
+            Orgeh: [],
           },
           contents: {
             A01: { busy: false, hasLink: true, data: {} },
@@ -48,12 +52,26 @@ sap.ui.define(
         };
       },
 
-      onObjectMatched() {
+      async onObjectMatched() {
+        const oViewModel = this.getViewModel();
+
         try {
           this.setAllBusy(true);
 
+          const oCommonModel = this.getModel(ServiceNames.COMMON);
+          const mAppointee = this.getAppointeeData();
+          const [aPersaEntry, aOrgehEntry] = await Promise.all([
+            Client.getEntitySet(oCommonModel, 'PersAreaList', { Pernr: mAppointee.Pernr }), //
+            Client.getEntitySet(oCommonModel, 'DashboardOrgList', { Werks: mAppointee.Werks, Pernr: mAppointee.Pernr }),
+          ]);
+
+          oViewModel.setProperty('/entry/Werks', aPersaEntry);
+          oViewModel.setProperty('/entry/Orgeh', aOrgehEntry);
+          oViewModel.setProperty('/searchConditions/Werks', mAppointee.Werks);
+          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
+
           const oModel = this.getModel(ServiceNames.PA);
-          const mFilters = { Zyear: '2022' };
+          const mFilters = oViewModel.getProperty('/searchConditions');
 
           _.forEach(ChartsSetting.CHART_TYPE, (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
         } catch (oError) {
@@ -309,14 +327,49 @@ sap.ui.define(
             onClose: () => this.oDetailDialog.close(),
           });
         } finally {
-          if (this.byId('overviewEmpDetailTable')) this.byId('overviewEmpDetailTable').setFirstVisibleRow();
+          $('#fusioncharts-tooltip-element').hide();
+          if (this.byId('overviewOnOffDetailTable')) this.byId('overviewOnOffDetailTable').setFirstVisibleRow();
         }
       },
 
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
-      onPressSearch() {},
+      async onChangeWerks() {
+        const oViewModel = this.getViewModel();
+
+        try {
+          const mAppointee = this.getAppointeeData();
+          const aOrgehEntry = Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'DashboardOrgList', {
+            Werks: oViewModel.getProperty('/searchConditions/Werks'),
+            Pernr: mAppointee.Pernr,
+          });
+
+          oViewModel.setProperty('/entry/Orgeh', aOrgehEntry);
+          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
+        } catch (oError) {
+          this.debug('Controller > m/overviewEmployee Main > onPressSearch Error', oError);
+
+          AppUtils.handleError(oError);
+        }
+      },
+
+      onPressSearch() {
+        const oViewModel = this.getViewModel();
+
+        try {
+          this.setAllBusy(true);
+
+          const oModel = this.getModel(ServiceNames.PA);
+          const mFilters = oViewModel.getProperty('/searchConditions');
+
+          _.forEach(ChartsSetting.CHART_TYPE, (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
+        } catch (oError) {
+          this.debug('Controller > m/overviewOnOff Main > onPressSearch Error', oError);
+
+          AppUtils.handleError(oError);
+        }
+      },
 
       onPressCount(oEvent) {
         if (oEvent['getSource'] instanceof Function) {
@@ -330,10 +383,17 @@ sap.ui.define(
         this.oDetailDialog.close();
       },
 
+      onPressEmployeeRow(oEvent) {
+        const sHost = window.location.href.split('#')[0];
+        const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
+
+        window.open(`${sHost}#/employeeView/${mRowData.Pernr}`, '_blank', 'width=1400,height=800');
+      },
+
       onPressDetailExcelDownload() {
-        const oTable = this.byId('overviewEmpDetailTable');
+        const oTable = this.byId('overviewOnOffDetailTable');
         const aTableData = this.getViewModel().getProperty('/dialog/list');
-        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_28038'); // 인원현황상세
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_28049'); // 입퇴사현황상세
 
         TableUtils.export({ oTable, aTableData, sFileName, aDateProps: ['Gbdat', 'Entda', 'Loada', 'Reida', 'Retda'] });
       },

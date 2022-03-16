@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:table="sap.ui.table">
-    <table:Table id="roleDesc3Table" class="row-link" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" rows="{/data/role2/list}" visibleRowCount="{/data/role2/rowCount}" noData="{i18n>MSG_00001}" visible="{/data/isLoaded}" cellClick=".onPress3TableRow">
+    <table:Table id="roleDesc3Table" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" rows="{/data/role2/list}" visibleRowCount="{/data/role2/rowCount}" noData="{i18n>MSG_00001}" visible="{/data/isLoaded}">
         <table:columns>
             <table:Column width="4%" resizable="false">
                 <Label text="No." />
@@ -18,7 +18,7 @@
             <table:Column width="25%" resizable="false">
                 <Label text="{i18n>LABEL_22045}" />
                 <table:template>
-                    <Text text="{Comptx}" width="100%" textAlign="Center" />
+                    <Link text="{Comptx}" class="showLine" width="100%" textAlign="Center" press=".onPress3TableRow" />
                 </table:template>
             </table:Column>
             <table:Column width="auto" resizable="false">

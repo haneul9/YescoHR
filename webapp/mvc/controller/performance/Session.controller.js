@@ -6,7 +6,6 @@ sap.ui.define(
     'sap/ui/model/FilterOperator',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
@@ -22,7 +21,6 @@ sap.ui.define(
     FilterOperator,
     MessageBox,
     AppUtils,
-    ComboEntry,
     Client,
     ServiceNames,
     TableUtils,
@@ -97,7 +95,7 @@ sap.ui.define(
 
           const mGradeMap = _.reduce(aGrades, (acc, cur) => ({ ...acc, [cur.ValueEid]: cur.ValueText }), {});
 
-          oViewModel.setProperty('/isActive', !_.isEqual(mDetailData.Zonlydsp, 'X'));
+          oViewModel.setProperty('/isActive', !_.isEqual(mDetailData.Zonlydsp, 'X') && _.size(mDetailData.AppraisalSesDocDetSet.results) !== 0);
           oViewModel.setProperty('/gradeMap', mGradeMap);
           oViewModel.setProperty('/grade', aGrades);
           oViewModel.setProperty('/gradeEntry', _.take(aGrades, 2));
@@ -260,7 +258,7 @@ sap.ui.define(
           .commit();
 
         oViewModel.setProperty('/department/rowCount', _.chain(aListByDepart).size().add(1).value());
-        oViewModel.setProperty('/department/list', [...aListByDepart, mSumRow]);
+        oViewModel.setProperty('/department/list', _.compact([...aListByDepart, mSumRow]));
       },
 
       orderBy(sPath, aProps, aOrders) {
@@ -529,7 +527,7 @@ sap.ui.define(
         const sHost = window.location.href.split('#')[0];
         const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
 
-        window.open(`${sHost}#/performanceView/MB/${mRowData.Zzappee}/${mRowData.Zdocid}`, '_blank', 'width=1400&height=800');
+        window.open(`${sHost}#/performanceView/MB/${mRowData.Zzappee}/${mRowData.Zdocid}`, '_blank', 'width=1400,height=800');
       },
 
       onPressRowEmployee(oEvent) {

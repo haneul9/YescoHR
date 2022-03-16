@@ -1,0 +1,40 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <IconTabFilter text="{i18n>LABEL_00279}" key="list" class="tablist type-a">
+        <SearchField value="{/sideNavigation/search/searchText}" placeholder="{i18n>LABEL_00276}" visible="{= ${/sideNavigation/isShow}}" search=".onPressEmployeeSearch" />
+        <ScrollContainer height="62vh" horizontal="false" vertical="true" class="sapUiSmallMarginTop">
+            <List id="sideEmployeeList" items="{path: '/sideNavigation/search/results'}" class="employee-card-list" busyIndicatorDelay="0" busy="{/sideNavigation/busy}">
+                <CustomListItem type="Active" press=".onClickEmployeeCard">
+                    <HBox>
+                        <VBox width="20%" justifyContent="Center" alignItems="Center">
+                            <Image src="{Photo}" />
+                        </VBox>
+                        <VBox class="employee-card-list-d">
+                            <HBox>
+                                <Text text="{Ename} {Zzjikgbt} / {Zzjikcht}" class="name" />
+                                <Text text="">
+                                    <layoutData>
+                                        <FlexItemData growFactor="1" />
+                                    </layoutData>
+                                </Text>
+                                <Image src="asset/image/icon_captain.svg" width="1.2rem" alt="Captain" visible="{= !!${Chief}}" />
+                            </HBox>
+                            <HBox class="organization">
+                                <Label text="{i18n>LABEL_00226}" />
+                                <Label text="{Pbtxt} {Fulln}" />
+                            </HBox>
+                            <HBox>
+                                <Label text="{i18n>LABEL_00280}" />
+                                <Label text="{Text1}" />
+                            </HBox>
+                            <HBox>
+                                <Label text="{i18n>LABEL_00222}" />
+                                <Label text="{Text2}" />
+                            </HBox>
+                        </VBox>
+                    </HBox>
+                </CustomListItem>
+            </List>
+        </ScrollContainer>
+    </IconTabFilter>
+</core:FragmentDefinition>

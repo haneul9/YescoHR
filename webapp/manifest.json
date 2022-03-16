@@ -119,6 +119,7 @@
 
         { "pattern": "competency", "name": "competency", "target": "competency" },
         { "pattern": "competency/{sType}/{sYear}", "name": "competency-detail", "target": "competencyDetail" },
+        { "pattern": "competencyView/{sType}/{sPernr}/{sDocid}", "name": "competency-view", "target": "competencyView" },
         { "pattern": "h/competency", "name": "h/competency", "target": "h/competency" },
         { "pattern": "h/competency/{sType}/{sYear}", "name": "h/competency-detail", "target": "competencyDetail" },
         { "pattern": "m/competency", "name": "m/competency", "target": "m/competency" },
@@ -142,6 +143,8 @@
 
         { "pattern": "educationHistory", "name": "educationHistory", "target": "educationHistory" },
         { "pattern": "educationHistory/{oDataKey}", "name": "educationHistory-detail", "target": "educationHistoryDetail" },
+        { "pattern": "h/educationHistory", "name": "h/educationHistory", "target": "educationHistory" },
+        { "pattern": "h/educationHistory/{oDataKey}", "name": "h/educationHistory-detail", "target": "educationHistoryDetail" },
 
         { "pattern": "employee/:pernr:/:orgtx:/:orgeh:", "name": "employee", "target": "employee" },
         { "pattern": "employeeView/{pernr}", "name": "employee-view", "target": "employeeView" },
@@ -165,6 +168,9 @@
         { "pattern": "housingLoan", "name": "housingLoan", "target": "housingLoan" },
         { "pattern": "housingLoan/{oDataKey}", "name": "housingLoan-detail", "target": "housingLoanDetail" },
         { "pattern": "housingLoanRepay/{oDataKey}/:lonid:", "name": "housingLoan-repay", "target": "housingLoanRepay" },
+        
+        { "pattern": "historyAppraisal", "name": "historyAppraisal", "target": "historyAppraisal" },
+        { "pattern": "m/historyAppraisal", "name": "m/historyAppraisal", "target": "m/historyAppraisal" },
 
         { "pattern": "individualWorkState", "name": "individualWorkState", "target": "individualWorkState" },
         
@@ -191,6 +197,8 @@
         { "pattern": "notice/{Sdate}/{Seqnr}", "name": "notice-detail", "target": "noticeDetail" },
         { "pattern": "h/notice", "name": "h/notice", "target": "h/notice" },
         { "pattern": "h/notice/{Sdate}/{Seqnr}", "name": "h/notice-detail", "target": "noticeDetail" },
+        { "pattern": "mobile/notice", "name": "mobile/notice", "target": "mobile/notice" },
+        { "pattern": "mobile/notice/{Sdate}/{Seqnr}", "name": "mobile/notice-detail", "target": "mobile/noticeDetail" },
 
         { "pattern": "m/organization", "name": "m/organization", "target": "m/organization" },
         
@@ -223,6 +231,7 @@
         { "pattern": "referenceRoom", "name": "referenceRoom", "target": "referenceRoom" },
         { "pattern": "h/referenceRoom", "name": "h/referenceRoom", "target": "referenceRoom" },
         
+        { "pattern": "roleDescription", "name": "roleDescription", "target": "roleDescription" },
         { "pattern": "m/roleDescription", "name": "m/roleDescription", "target": "m/roleDescription" },
 
         { "pattern": "studentFunds", "name": "studentFunds", "target": "studentFunds" },
@@ -241,6 +250,9 @@
         
         { "pattern": "workTimeChange", "name": "workTimeChange", "target": "workTimeChange" },
         { "pattern": "workTimeChange/{oDataKey}", "name": "workTimeChange-detail", "target": "workTimeChangeDetail" },
+        
+        { "pattern": "m/worktimeStatus", "name": "m/WorktimeStatus", "target": "m/worktimeStatus" },
+        { "pattern": "m/worktimeStatus/{oDataKey}", "name": "m/worktimeStatus-detail", "target": "m/worktimeStatusDetail" },
 
         { "pattern": "sampleComponents", "name": "sampleComponents", "target": "sampleComponents" },
         { "pattern": "sampleTimeline", "name": "sampleTimeline", "target": "sampleTimeline" },
@@ -277,6 +289,7 @@
         "m/competency": { "viewId": "m_competency", "viewPath": "sap.ui.yesco.mvc.view.competency", "viewName": "ListM" },
         "h/competencyPry": { "viewId": "h_competencyPry", "viewPath": "sap.ui.yesco.mvc.view.competency", "viewName": "ListPryH" },
         "competencyDetail": { "viewId": "competencyDetail", "viewPath": "sap.ui.yesco.mvc.view.competency", "viewName": "Detail" },
+        "competencyView": { "viewId": "competencyView", "viewPath": "sap.ui.yesco.mvc.view.competency", "viewName": "Document" },
 
         "congratulation": { "viewId": "congratulation", "viewPath": "sap.ui.yesco.mvc.view.congratulation", "viewName": "Congratulation" },
         "h/congratulation": { "viewId": "h_congratulation", "viewPath": "sap.ui.yesco.mvc.view.congratulation", "viewName": "CongratulationHass" },
@@ -315,6 +328,9 @@
         "housingLoan": { "viewId": "housingLoan", "viewPath": "sap.ui.yesco.mvc.view.housingLoan", "viewName": "HousingLoan" },
         "housingLoanDetail": { "viewId": "housingLoanDetail", "viewPath": "sap.ui.yesco.mvc.view.housingLoan", "viewName": "HousingLoanDetail" },
         "housingLoanRepay": { "viewId": "housingLoanRepay", "viewPath": "sap.ui.yesco.mvc.view.housingLoan", "viewName": "HousingLoanRepayment" },
+        
+        "historyAppraisal": { "viewId": "historyAppraisal", "viewPath": "sap.ui.yesco.mvc.view.historyAppraisal", "viewName": "MainE" },
+        "m/historyAppraisal": { "viewId": "m_historyAppraisal", "viewPath": "sap.ui.yesco.mvc.view.historyAppraisal", "viewName": "MainM" },
 
         "individualWorkState": { "viewId": "individualWorkState", "viewPath": "sap.ui.yesco.mvc.view.individualWorkState", "viewName": "IndiWorkState" },
         
@@ -338,6 +354,8 @@
         "notice": { "viewId": "notice", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "Ess" },
         "h/notice": { "viewId": "h_notice", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "Hass" },
         "noticeDetail": { "viewId": "noticeDetail", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "NoticeDetail" },
+        "mobile/notice": { "viewId": "notice", "viewPath": "sap.ui.yesco.mvc.view.notice.mobile", "viewName": "Notice" },
+        "mobile/noticeDetail": { "viewId": "mobile_noticeDetail", "viewPath": "sap.ui.yesco.mvc.view.notice.mobile", "viewName": "NoticeDetail" },
         
         "m/organization": { "viewId": "m_organization", "viewPath": "sap.ui.yesco.mvc.view.organization", "viewName": "Main" },
         
@@ -364,7 +382,8 @@
         
         "referenceRoom": { "viewId": "referenceRoom", "viewPath": "sap.ui.yesco.mvc.view.referenceRoom", "viewName": "ReferenceRoom" },
 
-        "m/roleDescription": { "viewId": "m_roleDescription", "viewPath": "sap.ui.yesco.mvc.view.roleDescription", "viewName": "Main" },
+        "roleDescription": { "viewId": "roleDescription", "viewPath": "sap.ui.yesco.mvc.view.roleDescription", "viewName": "MainE" },
+        "m/roleDescription": { "viewId": "m_roleDescription", "viewPath": "sap.ui.yesco.mvc.view.roleDescription", "viewName": "MainM" },
 
         "studentFunds": { "viewId": "studentFunds", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFunds" },
         "studentFundsDetail": { "viewId": "studentFundsDetail", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFundsDetail" },
@@ -380,6 +399,9 @@
 
         "workTimeChange": { "viewId": "workTimeChange", "viewPath": "sap.ui.yesco.mvc.view.workTimeChange", "viewName": "WorkTimeChange" },
         "workTimeChangeDetail": { "viewId": "workTimeChangeDetail", "viewPath": "sap.ui.yesco.mvc.view.workTimeChange", "viewName": "WorkTimeChangeDetail" },
+
+        "m/worktimeStatus": { "viewId": "m_worktimeStatus", "viewPath": "sap.ui.yesco.mvc.view.worktimeStatus", "viewName": "WorktimeStatus" },
+        "m/worktimeStatusDetail": { "viewId": "m_worktimeStatusDetail", "viewPath": "sap.ui.yesco.mvc.view.worktimeStatus", "viewName": "WorktimeStatusDetail" },
 
         "sampleComponents": { "viewId": "sampleComponents", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Components", "title": "Components" },
         "sampleTimeline": { "viewId": "sampleTimeline", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Timeline", "title": "Timeline" },

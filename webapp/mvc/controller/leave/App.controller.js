@@ -49,13 +49,27 @@ sap.ui.define(
           },
           summary: {
             chart: {
-              showhovereffect: '1',
-              drawcrossline: '1',
+              showSum: 1,
+              showValues: 1,
+              rotateValues: 0,
+              placeValuesInside: 0,
+              divLineDashed: 0,
+              divLineColor: '#eeeeee',
+              maxColWidth: 25,
               theme: 'ocean',
-              numberSuffix: '%',
-              yAxisMinValue: 0,
-              yAxisMaxValue: 100,
-              paletteColors: _.join([this.CHARTS.ACC.color, this.CHARTS.CUR.color], ','),
+              bgColor: 'transparent',
+              valueFontSize: 9,
+              valueFontColor: '#000000',
+              valueBgColor: 'transparent',
+              showPlotBorder: 0,
+              plotBorderThickness: 3,
+              plotBorderColor: '#ffffff',
+              drawCustomLegendIcon: 1,
+              legendIconSides: 0,
+              chartTopMargin: 4,
+              chartRightMargin: 0,
+              chartBottomMargin: 0,
+              chartLeftMargin: 0,
             },
             categories: [{ category: [] }],
             dataset: [],
@@ -158,7 +172,7 @@ sap.ui.define(
 
         FusionCharts.ready(function () {
           new FusionCharts({
-            type: 'msline',
+            type: 'mscombi2d',
             renderAt: 'chart-container',
             width: '100%',
             height: '100%',
@@ -212,21 +226,21 @@ sap.ui.define(
           );
           oViewModel.setProperty('/summary/dataset', [
             {
+              seriesname: this.getBundleText(this.CHARTS.CUR.label),
+              showValues: '1',
+              color: '#7BB4EB',
+              data: _.map(mGroupByOyymm, (v) => ({ value: _.get(v, [0, this.CHARTS.CUR.propPerc], 0) })),
+            },
+            {
               seriesname: this.getBundleText(this.CHARTS.ACC.label),
-              anchorBorderColor: this.CHARTS.ACC.color,
-              anchorBgColor: this.CHARTS.ACC.color,
+              renderAs: 'line',
+              color: '#FFAC4B',
               data: _.chain(mGroupByOyymm)
                 .map((v) => ({ value: _.get(v, [0, this.CHARTS.ACC.propPerc]) }))
                 .forEach((v, i, o) => {
                   if (_.isEqual(v.value, 0)) v.value = _.get(o, [i - 1, 'value'], 0);
                 })
                 .value(),
-            },
-            {
-              seriesname: this.getBundleText(this.CHARTS.CUR.label),
-              anchorBorderColor: this.CHARTS.CUR.color,
-              anchorBgColor: this.CHARTS.CUR.color,
-              data: _.map(mGroupByOyymm, (v) => ({ value: _.get(v, [0, this.CHARTS.CUR.propPerc], 0) })),
             },
           ]);
 

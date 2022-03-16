@@ -2,7 +2,6 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
-    'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/home/portlets/AbstractPortletHandler',
@@ -13,7 +12,6 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     Fragment,
-    AppUtils,
     Client,
     ServiceNames,
     AbstractPortletHandler

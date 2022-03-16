@@ -18,10 +18,10 @@
       <VBox busyIndicatorDelay="0" busy="{/busy}">
         <IconTabBar class="type-b" expandable="false" selectedKey="{/tab/selectedKey}" select=".onSelectTabBar">
           <items>
-            <IconTabFilter text="{i18n>LABEL_15001}" key="A">
+            <IconTabFilter text="{i18n>LABEL_15001}" key="A" visible="{/authority}">
               <core:Fragment fragmentName="sap.ui.yesco.mvc.view.mssEvalKpi.fragment.tab.Category" type="XML" />
             </IconTabFilter>
-            <IconTabFilter text="{i18n>LABEL_15002}" key="B">
+            <IconTabFilter text="{i18n>LABEL_15002}" key="B" visible="{/authority}">
               <core:Fragment fragmentName="sap.ui.yesco.mvc.view.mssEvalKpi.fragment.tab.Team" type="XML" />
             </IconTabFilter>
             <IconTabFilter text="{i18n>LABEL_15003}" key="C">

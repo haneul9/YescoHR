@@ -1,8 +1,9 @@
 <core:FragmentDefinition xmlns="sap.m"
-  xmlns:core="sap.ui.core">
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
   <HBox class="contents" justifyContent="SpaceBetween">
-    <VBox width="520px" height="69vh" class="vCardBox sapUiMediumMarginEnd" visible="{/isView}">
-      <ScrollContainer height="64vh" width="100%" vertical="true">
+    <VBox width="520px" height="72vh" class="vCardBox sapUiMediumMarginEnd sticky-side-tree" visible="{/isView}">
+      <ScrollContainer height="67vh" width="100%" vertical="true">
         <Tree id="DefineTree" mode="SingleSelectMaster" items="{path: '/Define/tree'}" selectionChange=".onTreeDefinePress">
           <layoutData>
             <FlexItemData growFactor="1" />
@@ -16,7 +17,30 @@
         </Tree>
       </ScrollContainer>
     </VBox>
-    <VBox width="100%" class="mt-0-px">
+    <VBox width="100%" visible="{/Define/busy}">
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <custom:Placeholder />
+      </VBox>
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <custom:Placeholder />
+      </VBox>
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <custom:Placeholder />
+      </VBox>
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <custom:Placeholder />
+      </VBox>
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <custom:Placeholder />
+      </VBox>
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <custom:Placeholder />
+      </VBox>
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <custom:Placeholder />
+      </VBox>
+    </VBox>
+    <VBox width="100%" class="mt-0-px" visible="{= !${/Define/busy} }">
       <!-- <ScrollContainer height="69vh" width="100%" vertical="true"> -->
       <VBox class="vCardBox sapUiMediumMarginBottom">
         <HBox alignItems="Center" class="table-toolbar">
@@ -31,7 +55,7 @@
         <HBox alignItems="Center" class="table-toolbar">
           <Title level="H4" text="{i18n>LABEL_22017}" />
         </HBox>
-        <TextArea width="100%" value="{/Define/descriptionM/Zzdefin}" growing="true" enabled="false" />
+        <TextArea width="100%" class="view-box" value="{/Define/descriptionM/Zzdefin}" growing="true" enabled="false" />
       </VBox>
       <VBox class="vCardBox sapUiMediumMarginBottom">
         <HBox alignItems="Center" class="table-toolbar">

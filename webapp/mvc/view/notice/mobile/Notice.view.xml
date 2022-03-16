@@ -1,0 +1,29 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.notice.mobile.Notice"
+  xmlns="sap.m"
+  xmlns:custom="sap.ui.yesco.control"
+  xmlns:mvc="sap.ui.core.mvc">
+  <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+    <VBox class="contents">
+      <HBox justifyContent="SpaceBetween" class="header-wrap">
+        <HBox class="header">
+          <Title level="H3" text="{i18n>LABEL_08001}" class="sapUiSmallMarginEnd" />
+          <Text text="total {/listInfo/totalCount}" />
+        </HBox>
+        <!--<Image src="/asset/image/icon_tooltip.svg" size="20px" press=".ListStatusPopover.onPopover" />-->
+      </HBox>
+      <custom:MobileScrollContainer horizontal="false" vertical="true">
+        <List items="{path: '/NoticeList'}" busyIndicatorDelay="0" busy="{/busy}" class="list-wrap wrap">
+          <CustomListItem type="Active" press=".onSelectRow">
+            <VBox>
+              <Text text="{Title}" class="font-16-px font-bold" />
+              <Text text="{
+                  path: 'Sdate',
+                  type: 'sap.ui.yesco.mvc.model.type.Date'
+              }"/>
+            </VBox>
+          </CustomListItem>
+        </List>
+      </custom:MobileScrollContainer>
+    </VBox>
+  </Page>
+</mvc:View>

@@ -11,6 +11,7 @@ sap.ui.define(
     'sap/ui/yesco/mvc/model/type/Currency',
     'sap/ui/yesco/mvc/model/type/Date',
     'sap/ui/yesco/mvc/model/type/Decimal',
+    'sap/ui/yesco/mvc/model/type/Percent',
   ],
   (
     // prettier 방지용 주석
@@ -29,34 +30,56 @@ sap.ui.define(
         return {
           busy: false,
           searchConditions: {
-            Begda: moment().hours(9).toDate(),
+            Datum: moment().hours(9).toDate(),
+            Werks: '',
             Orgeh: '',
-            entryOrgeh: [],
+          },
+          entry: {
+            Werks: [],
+            Orgeh: [],
           },
           contents: {
-            A01: { busy: false, data: {} },
-            A02: { busy: false, data: [] },
-            A03: { busy: false, data: { headty: 'E', raw: [] } },
-            A04: { busy: false },
-            A05: { busy: false, data: [] },
-            A06: { busy: false, data: { headty: 'E', raw: [] } },
-            A07: { busy: false },
-            A08: { busy: false, data: [] },
+            A01: { busy: false, Headty: '', data: {} },
+            A02: { busy: false, Headty: '', data: {} },
+            A03: { busy: false, Headty: '', data: {} },
+            A04: { busy: false, Headty: '', data: {} },
+            A05: { busy: false, Headty: '' },
+            A06: { busy: false, Headty: '' },
+            A07: { busy: false, Headty: '' },
+            A08: { busy: false, Headty: '', data: {} },
+            A09: { busy: false, Headty: '', data: {} },
+            A10: { busy: false, Headty: '' },
           },
           dialog: {
             busy: false,
             rowCount: 0,
+            param: {},
             list: [],
+            sub: { list: [] },
           },
         };
       },
 
-      onObjectMatched() {
+      async onObjectMatched() {
+        const oViewModel = this.getViewModel();
+
         try {
           this.setAllBusy(true);
 
-          const oModel = this.getModel(ServiceNames.PA);
-          const mFilters = { Zyear: '2022' };
+          const oCommonModel = this.getModel(ServiceNames.COMMON);
+          const mAppointee = this.getAppointeeData();
+          const [aPersaEntry, aOrgehEntry] = await Promise.all([
+            Client.getEntitySet(oCommonModel, 'PersAreaList', { Pernr: mAppointee.Pernr }), //
+            Client.getEntitySet(oCommonModel, 'DashboardOrgList', { Werks: mAppointee.Werks, Pernr: mAppointee.Pernr }),
+          ]);
+
+          oViewModel.setProperty('/entry/Werks', aPersaEntry);
+          oViewModel.setProperty('/entry/Orgeh', aOrgehEntry);
+          oViewModel.setProperty('/searchConditions/Werks', mAppointee.Werks);
+          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
+
+          const oModel = this.getModel(ServiceNames.WORKTIME);
+          const mFilters = oViewModel.getProperty('/searchConditions');
 
           _.forEach(ChartsSetting.CHART_TYPE, (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
         } catch (oError) {
@@ -74,33 +97,37 @@ sap.ui.define(
 
       async buildChart(oModel, mFilters, mChartInfo) {
         const oViewModel = this.getViewModel();
-        const aChartDatas = await Client.getEntitySet(oModel, mChartInfo.EntityType, { ...mFilters, Headty: mChartInfo.Headty });
+        const aChartDatas = await Client.getEntitySet(oModel, 'TimeOverview', { ...mFilters, Headty: mChartInfo.Headty });
         const vDataObject = oViewModel.getProperty(`/contents/${mChartInfo.Target}/data`);
         const mChartSetting = _.chain(ChartsSetting.CHART_OPTIONS).get(mChartInfo.Chart).cloneDeep().value();
 
         oViewModel.setProperty(`/contents/${mChartInfo.Target}/Headty`, mChartInfo.Headty);
         oViewModel.setProperty(`/contents/${mChartInfo.Target}/busy`, false);
 
+        if (_.has(mChartInfo, 'Fields')) {
+          oViewModel.setProperty(
+            `/contents/${mChartInfo.Target}/data`,
+            _.chain(vDataObject)
+              .tap((obj) => _.forEach(mChartInfo.Fields, (o) => _.set(obj, o.prop, _.get(aChartDatas, o.path))))
+              .value()
+          );
+        }
+
         switch (mChartInfo.Chart) {
           case 'cylinder':
-            oViewModel.setProperty(
-              `/contents/${mChartInfo.Target}/data`,
-              _.chain(vDataObject)
-                .tap((obj) => _.forEach(mChartInfo.Fields, (o) => _.set(obj, o.prop, _.get(aChartDatas, o.path))))
-                .value()
-            );
-
-            _.chain(mChartSetting).set(['chart', 'caption'], this.getBundleText('LABEL_01130')).set(['chart', 'plottooltext'], this.getBundleText('LABEL_01131', 0)).set('value', 0).commit();
+            _.chain(mChartSetting)
+              .set(['chart', 'caption'], this.getBundleText('LABEL_01130'))
+              .set('value', _.chain(aChartDatas).get([0, 'Rte01']).toNumber().value())
+              .commit();
 
             this.callFusionChart(mChartInfo, mChartSetting);
 
             break;
-          case 'doughnut2d':
+          case 'column2d':
             _.chain(mChartSetting)
-              .set(['chart', 'paletteColors'], _.chain(ChartsSetting.COLORS).take(aChartDatas.length).join(',').value())
               .set(
                 ['data'],
-                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01 }))
+                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callDetail-${mChartInfo.Headty},${o.Cod01}` }))
               )
               .commit();
 
@@ -109,11 +136,59 @@ sap.ui.define(
             break;
           case 'bar2d':
             _.chain(mChartSetting)
-              // .set(['chart', 'yAxisMaxValue'], '120')
               .set(
                 ['data'],
                 _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callDetail-${mChartInfo.Headty},${o.Cod01}` }))
               )
+              .commit();
+
+            this.callFusionChart(mChartInfo, mChartSetting);
+
+            break;
+          case 'mscombi2d':
+            _.chain(mChartSetting)
+              .set(
+                ['categories', 0, 'category', 0],
+                _.map(aChartDatas, (o) => ({ label: o.Ttltxt }))
+              )
+              .set(['dataset', 0], {
+                seriesName: this.getBundleText('LABEL_28048'), // 당일
+                showValues: '1',
+                color: '#7BB4EB',
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01, link: `j-callDetail-${mChartInfo.Headty},${o.Cod01}` })),
+              })
+              .set(['dataset', 1], {
+                seriesName: this.getBundleText('LABEL_00196'), // 누적
+                renderAs: 'line',
+                color: '#FFAC4B',
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02, link: `j-callDetail-${mChartInfo.Headty},${o.Cod02}` })),
+              })
+              .commit();
+
+            this.callFusionChart(mChartInfo, mChartSetting);
+
+            break;
+          case 'mscolumn2d':
+            _.chain(mChartSetting)
+              .set(
+                ['categories', 0, 'category', 0],
+                _.map(aChartDatas, (o) => ({ label: o.Ttltxt }))
+              )
+              .set(['dataset', 0], {
+                seriesname: this.getBundleText('LABEL_32004'), // 법정
+                color: '#7BB4EB',
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01, link: `j-callDetail-${mChartInfo.Headty},${o.Cod01}` })),
+              })
+              .set(['dataset', 1], {
+                seriesname: 'OT',
+                color: '#FFAC4B',
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02, link: `j-callDetail-${mChartInfo.Headty},${o.Cod02}` })),
+              })
+              .set(['dataset', 2], {
+                seriesname: this.getBundleText('LABEL_32005'), // 초과인원
+                color: '#FFE479',
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt03, link: `j-callDetail-${mChartInfo.Headty},${o.Cod03}` })),
+              })
               .commit();
 
             this.callFusionChart(mChartInfo, mChartSetting);
@@ -153,7 +228,7 @@ sap.ui.define(
                       const sDisyear = oViewModel.getProperty(`/contents/${mChartInfo.Target}/data/raw/${idx}/Ttltxt`);
                       const mPayload = _.zipObject(['Headty', 'Discod', 'Disyear'], [sHeadty, 'all', sDisyear]);
 
-                      oController.openDetailDialog(mPayload);
+                      oController.callDetail(mPayload);
                     })
                     .addClass('active-link');
                 });
@@ -181,68 +256,270 @@ sap.ui.define(
         }
       },
 
-      async openDetailDialog(mPayload) {
+      async openDialog(sHeadty) {
         const oView = this.getView();
+        let oDialog = null;
+
+        switch (sHeadty) {
+          case 'A':
+            if (!this.oDetail1Dialog) {
+              this.oDetail1Dialog = await Fragment.load({
+                id: oView.getId(),
+                name: 'sap.ui.yesco.mvc.view.overviewAttendance.fragment.DialogDetail1',
+                controller: this,
+              });
+
+              oView.addDependent(this.oDetail1Dialog);
+            }
+
+            oDialog = this.oDetail1Dialog;
+            this.oDetail1Dialog.open();
+            break;
+          case 'B':
+          case 'C':
+          case 'H':
+          case 'I':
+          case 'J':
+            if (!this.oDetail3Dialog) {
+              this.oDetail3Dialog = await Fragment.load({
+                id: oView.getId(),
+                name: 'sap.ui.yesco.mvc.view.overviewAttendance.fragment.DialogDetail3',
+                controller: this,
+              });
+
+              oView.addDependent(this.oDetail3Dialog);
+            }
+
+            oDialog = this.oDetail3Dialog;
+            this.oDetail3Dialog.open();
+            break;
+          case 'D':
+          case 'E':
+          case 'F':
+          case 'G':
+            if (!this.oDetail2Dialog) {
+              this.oDetail2Dialog = await Fragment.load({
+                id: oView.getId(),
+                name: 'sap.ui.yesco.mvc.view.overviewAttendance.fragment.DialogDetail2',
+                controller: this,
+              });
+
+              oView.addDependent(this.oDetail2Dialog);
+            }
+
+            oDialog = this.oDetail2Dialog;
+            this.oDetail2Dialog.open();
+            break;
+          case 'X1':
+            if (!this.oDetail4Dialog) {
+              this.oDetail4Dialog = await Fragment.load({
+                id: oView.getId(),
+                name: 'sap.ui.yesco.mvc.view.overviewAttendance.fragment.DialogDetail4',
+                controller: this,
+              });
+
+              oView.addDependent(this.oDetail4Dialog);
+            }
+
+            oDialog = this.oDetail4Dialog;
+            this.oDetail4Dialog.open();
+            break;
+          case 'X2':
+            if (!this.oDetail5Dialog) {
+              this.oDetail5Dialog = await Fragment.load({
+                id: oView.getId(),
+                name: 'sap.ui.yesco.mvc.view.overviewAttendance.fragment.DialogDetail5',
+                controller: this,
+              });
+
+              oView.addDependent(this.oDetail5Dialog);
+            }
+
+            oDialog = this.oDetail5Dialog;
+            this.oDetail5Dialog.open();
+            break;
+          default:
+            break;
+        }
+
+        $('#fusioncharts-tooltip-element').hide();
+
+        return oDialog;
+      },
+
+      async callDetail(mPayload) {
         const oViewModel = this.getViewModel();
+        let oDialog = null;
 
         oViewModel.setProperty('/dialog/busy', true);
 
         try {
-          if (!this.oDetailDialog) {
-            this.oDetailDialog = await Fragment.load({
-              id: oView.getId(),
-              name: 'sap.ui.yesco.mvc.view.overviewAttendance.fragment.DialogDetail',
-              controller: this,
-            });
+          oDialog = await this.openDialog(mPayload.Headty);
 
-            oView.addDependent(this.oDetailDialog);
-          }
+          const mSearchConditions = oViewModel.getProperty('/searchConditions');
+          const sDetailEntity = _.chain(ChartsSetting.CHART_TYPE).find({ Headty: mPayload.Headty }).get('DetailEntity').value();
+          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), sDetailEntity, { ..._.set(mSearchConditions, 'Datum', moment(mSearchConditions.Datum).hours(9).toDate()), ..._.pick(mPayload, ['Headty', 'Discod']) });
 
-          this.oDetailDialog.open();
-
-          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.PA), _.get(mPayload, 'Entity') === 'A' ? 'HeadCountDetail' : 'HeadCountEntRetDetail', { Zyear: '2022', ..._.omit(mPayload, 'Entity') });
-
+          oViewModel.setProperty('/dialog/param', mPayload);
           oViewModel.setProperty('/dialog/rowCount', Math.min(aDetailData.length, 12));
           oViewModel.setProperty('/dialog/totalCount', _.size(aDetailData));
           oViewModel.setProperty(
             '/dialog/list',
             _.map(aDetailData, (o, i) => ({ Idx: ++i, ...o }))
           );
-          oViewModel.setProperty('/dialog/busy', false);
         } catch (oError) {
-          this.debug('Controller > m/overviewAttendance Main > openDetailDialog Error', oError);
+          this.debug('Controller > m/overviewAttendance Main > callDetail Error', oError);
 
           AppUtils.handleError(oError, {
-            onClose: () => this.oDetailDialog.close(),
+            onClose: () => oDialog.close(),
           });
         } finally {
-          if (this.byId('overviewEmpDetailTable')) this.byId('overviewEmpDetailTable').setFirstVisibleRow();
+          oViewModel.setProperty('/dialog/busy', false);
+          setTimeout(() => oDialog.getContent()[1].getItems()[0].setFirstVisibleRow(), 100);
         }
       },
 
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
-      onPressSearch() {},
+      async onChangeWerks() {
+        const oViewModel = this.getViewModel();
 
-      onPressCount(oEvent) {
-        if (oEvent['getSource'] instanceof Function) {
-          this.openDetailDialog(oEvent.getSource().data());
-        } else {
-          this.openDetailDialog(sap.ui.getCore().byId($(oEvent.currentTarget).attr('id')).data());
+        try {
+          const mAppointee = this.getAppointeeData();
+          const aOrgehEntry = Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'DashboardOrgList', {
+            Werks: oViewModel.getProperty('/searchConditions/Werks'),
+            Pernr: mAppointee.Pernr,
+          });
+
+          oViewModel.setProperty('/entry/Orgeh', aOrgehEntry);
+          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
+        } catch (oError) {
+          this.debug('Controller > m/overviewAttendance Main > onPressSearch Error', oError);
+
+          AppUtils.handleError(oError);
         }
       },
 
-      onPressDetailDialogClose() {
-        this.oDetailDialog.close();
+      onPressSearch() {
+        const oViewModel = this.getViewModel();
+
+        try {
+          this.setAllBusy(true);
+
+          const oModel = this.getModel(ServiceNames.WORKTIME);
+          const mFilters = oViewModel.getProperty('/searchConditions');
+
+          _.forEach(ChartsSetting.CHART_TYPE, (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
+        } catch (oError) {
+          this.debug('Controller > m/overviewAttendance Main > onPressSearch Error', oError);
+
+          AppUtils.handleError(oError);
+        }
       },
 
-      onPressDetailExcelDownload() {
-        const oTable = this.byId('overviewEmpDetailTable');
-        const aTableData = this.getViewModel().getProperty('/dialog/list');
-        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_28038'); // 인원현황상세
+      onPressCount(oEvent) {
+        if (oEvent['getSource'] instanceof Function) {
+          this.callDetail(oEvent.getSource().data());
+        } else {
+          this.callDetail(sap.ui.getCore().byId($(oEvent.currentTarget).attr('id')).data());
+        }
+      },
 
-        TableUtils.export({ oTable, aTableData, sFileName, aDateProps: ['Gbdat', 'Entda', 'Loada', 'Reida', 'Retda'] });
+      onPressDetail1DialogClose() {
+        this.oDetail1Dialog.close();
+      },
+
+      onPressDetail2DialogClose() {
+        this.oDetail2Dialog.close();
+      },
+
+      onPressDetail3DialogClose() {
+        this.oDetail3Dialog.close();
+      },
+
+      onPressDetail4DialogClose() {
+        this.oDetail4Dialog.close();
+      },
+      onPressDetail5DialogClose() {
+        this.oDetail5Dialog.close();
+      },
+
+      onPressEmployeeRow(oEvent) {
+        const sHost = window.location.href.split('#')[0];
+        const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
+
+        window.open(`${sHost}#/employeeView/${mRowData.Pernr}`, '_blank', 'width=1400,height=800');
+      },
+
+      async onPressEmployee2Row(oEvent) {
+        const oViewModel = this.getViewModel();
+        let oDialog;
+
+        oViewModel.setProperty('/dialog/busy', true);
+
+        try {
+          const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
+
+          oDialog = await this.openDialog('X2');
+
+          const sDiscod = oViewModel.getProperty('/dialog/param/Discod');
+          const sAwart = _.includes(['3', '4'], sDiscod) ? '2010' : '2000';
+          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'TimeOverviewDetail5', { ..._.pick(mRowData, ['Pernr', 'Begda', 'Endda']), Awart: sAwart });
+
+          oViewModel.setProperty('/dialog/sub/rowCount', Math.min(aDetailData.length, 12));
+          oViewModel.setProperty('/dialog/sub/totalCount', _.size(aDetailData));
+          oViewModel.setProperty(
+            '/dialog/sub/list',
+            _.map(aDetailData, (o, i) => ({ Idx: ++i, ...o }))
+          );
+        } catch (oError) {
+          this.debug('Controller > m/overviewAttendance Main > onPressEmployee2Row Error', oError);
+
+          AppUtils.handleError(oError, {
+            onClose: () => oDialog.close(),
+          });
+        } finally {
+          oViewModel.setProperty('/dialog/busy', false);
+        }
+      },
+
+      async onPressEmployee3Row(oEvent) {
+        const oViewModel = this.getViewModel();
+        let oDialog;
+
+        oViewModel.setProperty('/dialog/busy', true);
+
+        try {
+          const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
+
+          oDialog = await this.openDialog('X1');
+
+          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'TimeOverviewDetail4', { ..._.pick(mRowData, ['Pernr', 'Begda', 'Endda']) });
+
+          oViewModel.setProperty('/dialog/sub/rowCount', Math.min(aDetailData.length, 12));
+          oViewModel.setProperty('/dialog/sub/totalCount', _.size(aDetailData));
+          oViewModel.setProperty(
+            '/dialog/sub/list',
+            _.map(aDetailData, (o, i) => ({ Idx: ++i, ...o }))
+          );
+        } catch (oError) {
+          this.debug('Controller > m/overviewAttendance Main > onPressEmployee3Row Error', oError);
+
+          AppUtils.handleError(oError, {
+            onClose: () => oDialog.close(),
+          });
+        } finally {
+          oViewModel.setProperty('/dialog/busy', false);
+        }
+      },
+
+      onPressDetailExcelDownload(oEvent) {
+        const oTable = oEvent.getSource().getParent().getParent().getParent();
+        const aTableData = this.getViewModel().getProperty('/dialog/list');
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_28040'); // 근태현황상세
+
+        TableUtils.export({ oTable, aTableData, sFileName, aDateProps: ['Tmdat'] });
       },
 
       /*****************************************************************
@@ -255,9 +532,9 @@ sap.ui.define(
 // eslint-disable-next-line no-unused-vars
 function callDetail(sArgs) {
   const oController = sap.ui.getCore().byId('container-ehr---m_overviewAttendance').getController();
-  const aProps = ['Headty', 'Discod', 'Disyear'];
+  const aProps = ['Headty', 'Discod'];
   const aArgs = _.split(sArgs, ',');
   const mPayload = _.zipObject(_.take(aProps, aArgs.length), aArgs);
 
-  oController.openDetailDialog(mPayload);
+  oController.callDetail(mPayload);
 }

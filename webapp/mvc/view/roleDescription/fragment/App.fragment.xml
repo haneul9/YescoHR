@@ -1,7 +1,5 @@
-<mvc:View controllerName="sap.ui.yesco.mvc.controller.roleDescription.Main"
-    xmlns="sap.m"
+<core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core"
-    xmlns:mvc="sap.ui.core.mvc"
     xmlns:custom="sap.ui.yesco.control">
     <Page showHeader="false">
         <VBox class="contents-header">
@@ -14,9 +12,9 @@
             </HBox>
         </VBox>
         <HBox class="contents" justifyContent="SpaceBetween" busyIndicatorDelay="0" busy="{/busy}">
-            <VBox width="520px" height="69vh" class="vCardBox sapUiMediumMarginEnd">
-                <ScrollContainer height="64vh" width="100%" vertical="true">
-                    <Tree id="roleTree" mode="SingleSelectMaster" items="{path: '/Define/tree'}" selectionChange=".onPressTreeItem">
+            <VBox width="520px" height="80vh" class="vCardBox sapUiMediumMarginEnd sticky-side-tree">
+                <ScrollContainer height="75vh" width="100%" vertical="true">
+                    <Tree id="roleTree" mode="SingleSelectMaster" items="{ path: '/data/tree' }" selectionChange=".onPressTreeItem">
                         <layoutData>
                             <FlexItemData growFactor="1" />
                         </layoutData>
@@ -29,7 +27,48 @@
                     </Tree>
                 </ScrollContainer>
             </VBox>
-            <VBox width="100%" class="mt-0-px">
+            <VBox width="100%" visible="{/data/busy}">
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <custom:Placeholder />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <custom:Placeholder />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <custom:Placeholder />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <custom:Placeholder />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <custom:Placeholder />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <custom:Placeholder />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <custom:Placeholder />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <custom:Placeholder />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <custom:Placeholder />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <custom:Placeholder />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <custom:Placeholder />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <custom:Placeholder />
+                </VBox>
+                <VBox class="vCardBox sapUiMediumMarginBottom">
+                    <custom:Placeholder />
+                </VBox>
+            </VBox>
+            <VBox width="100%" class="mt-0-px" visible="{= !${/data/busy} }">
                 <VBox class="vCardBox sapUiMediumMarginBottom">
                     <HBox alignItems="Center" class="table-toolbar">
                         <Title level="H2" text="{i18n>LABEL_22057}" />
@@ -46,7 +85,7 @@
                     <HBox alignItems="Center" class="table-toolbar">
                         <Title level="H4" text="{i18n>LABEL_22060}" />
                     </HBox>
-                    <TextArea width="100%" value="{/data/roleM/Defin}" growing="true" enabled="false" />
+                    <TextArea width="100%" class="view-box" value="{/data/roleM/Defin}" growing="true" enabled="false" />
                 </VBox>
                 <VBox class="vCardBox sapUiMediumMarginBottom">
                     <HBox alignItems="Center" class="table-toolbar">
@@ -67,7 +106,7 @@
                     <HBox alignItems="Center" class="table-toolbar">
                         <Title level="H4" text="{i18n>LABEL_22064}" />
                     </HBox>
-                    <TextArea width="100%" value="{/data/roleM/Defin2}" growing="true" enabled="false" />
+                    <TextArea width="100%" class="view-box" value="{/data/roleM/Defin2}" growing="true" enabled="false" />
                 </VBox>
                 <VBox class="vCardBox sapUiMediumMarginBottom">
                     <HBox alignItems="Center" class="table-toolbar">
@@ -126,4 +165,4 @@
             </VBox>
         </HBox>
     </Page>
-</mvc:View>
+</core:FragmentDefinition>
