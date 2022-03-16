@@ -1404,12 +1404,12 @@
                     <VBox>
                       <Label text="" />
                     </VBox>
-                    <VBox>
+                    <VBox data-style="Type18" class="type18">
                       <Label text="1" />
                       <Text text="OFF" />
                       <Text text="" />
                     </VBox>
-                    <VBox>
+                    <VBox data-style="Type17" class="type17">
                       <Label text="2" />
                       <Text text="09:00" />
                       <Text text="18:00" />
@@ -1572,6 +1572,34 @@
                       <Label text="" />
                     </VBox>
               </grid:CSSGrid>
+
+              <HBox class="box style-02 status-wrap year-plan">
+                <VBox>
+                  <Text text="연차" class="type01" />
+                  <Text text="하계휴가" class="type02" />
+                  <Text text="기타휴가" class="type16" />
+                  <Text text="출산휴가" class="type06" />
+                </VBox>
+                <VBox >
+                  <Text text="휴직" class="type08" />
+                  <Text text="휴무" class="type09" />
+                  <Text text="징계" class="type10" />
+                </VBox>
+                <VBox >
+                  <Text text="교육" class="type11" />
+                  <Text text="출장" class="type12" />
+                </VBox>
+                <VBox>
+                  <Text text="시간외" class="type17" />
+                  <Text text="당직" class="type13" />
+                  <Text text="통합굴착" class="type14" />
+                </VBox>
+                <VBox>
+                  <Text text="신청" class="type18" />
+                  <Text text="공휴일" class="type15" />
+                </VBox>
+              </HBox>
+
               <grid:CSSGrid gridTemplateColumns="1fr 1fr" gridGap="0px" class="dl">
                 <Label text="소정근로시간 한도" />
                 <Text text="16:00" />
