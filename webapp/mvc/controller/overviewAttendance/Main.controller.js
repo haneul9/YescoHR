@@ -11,6 +11,7 @@ sap.ui.define(
     'sap/ui/yesco/mvc/model/type/Currency',
     'sap/ui/yesco/mvc/model/type/Date',
     'sap/ui/yesco/mvc/model/type/Decimal',
+    'sap/ui/yesco/mvc/model/type/Percent',
   ],
   (
     // prettier 방지용 주석
@@ -52,7 +53,9 @@ sap.ui.define(
           dialog: {
             busy: false,
             rowCount: 0,
+            param: {},
             list: [],
+            sub: { list: [] },
           },
         };
       },
@@ -307,6 +310,34 @@ sap.ui.define(
             oDialog = this.oDetail2Dialog;
             this.oDetail2Dialog.open();
             break;
+          case 'X1':
+            if (!this.oDetail4Dialog) {
+              this.oDetail4Dialog = await Fragment.load({
+                id: oView.getId(),
+                name: 'sap.ui.yesco.mvc.view.overviewAttendance.fragment.DialogDetail4',
+                controller: this,
+              });
+
+              oView.addDependent(this.oDetail4Dialog);
+            }
+
+            oDialog = this.oDetail4Dialog;
+            this.oDetail4Dialog.open();
+            break;
+          case 'X2':
+            if (!this.oDetail5Dialog) {
+              this.oDetail5Dialog = await Fragment.load({
+                id: oView.getId(),
+                name: 'sap.ui.yesco.mvc.view.overviewAttendance.fragment.DialogDetail5',
+                controller: this,
+              });
+
+              oView.addDependent(this.oDetail5Dialog);
+            }
+
+            oDialog = this.oDetail5Dialog;
+            this.oDetail5Dialog.open();
+            break;
           default:
             break;
         }
@@ -325,8 +356,11 @@ sap.ui.define(
         try {
           oDialog = await this.openDialog(mPayload.Headty);
 
-          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.PA), _.get(mPayload, 'Entity') === 'A' ? 'HeadCountDetail' : 'HeadCountEntRetDetail', { Zyear: '2022', ..._.omit(mPayload, 'Entity') });
+          const mSearchConditions = oViewModel.getProperty('/searchConditions');
+          const sDetailEntity = _.chain(ChartsSetting.CHART_TYPE).find({ Headty: mPayload.Headty }).get('DetailEntity').value();
+          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), sDetailEntity, { ..._.set(mSearchConditions, 'Datum', moment(mSearchConditions.Datum).hours(9).toDate()), ..._.pick(mPayload, ['Headty', 'Discod']) });
 
+          oViewModel.setProperty('/dialog/param', mPayload);
           oViewModel.setProperty('/dialog/rowCount', Math.min(aDetailData.length, 12));
           oViewModel.setProperty('/dialog/totalCount', _.size(aDetailData));
           oViewModel.setProperty(
@@ -404,6 +438,13 @@ sap.ui.define(
         this.oDetail3Dialog.close();
       },
 
+      onPressDetail4DialogClose() {
+        this.oDetail4Dialog.close();
+      },
+      onPressDetail5DialogClose() {
+        this.oDetail5Dialog.close();
+      },
+
       onPressEmployeeRow(oEvent) {
         const sHost = window.location.href.split('#')[0];
         const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
@@ -411,12 +452,74 @@ sap.ui.define(
         window.open(`${sHost}#/employeeView/${mRowData.Pernr}`, '_blank', 'width=1400,height=800');
       },
 
+      async onPressEmployee2Row(oEvent) {
+        const oViewModel = this.getViewModel();
+        let oDialog;
+
+        oViewModel.setProperty('/dialog/busy', true);
+
+        try {
+          const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
+
+          oDialog = await this.openDialog('X2');
+
+          const sDiscod = oViewModel.getProperty('/dialog/param/Discod');
+          const sAwart = _.includes(['3', '4'], sDiscod) ? '2010' : '2000';
+          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'TimeOverviewDetail5', { ..._.pick(mRowData, ['Pernr', 'Begda', 'Endda']), Awart: sAwart });
+
+          oViewModel.setProperty('/dialog/sub/rowCount', Math.min(aDetailData.length, 12));
+          oViewModel.setProperty('/dialog/sub/totalCount', _.size(aDetailData));
+          oViewModel.setProperty(
+            '/dialog/sub/list',
+            _.map(aDetailData, (o, i) => ({ Idx: ++i, ...o }))
+          );
+        } catch (oError) {
+          this.debug('Controller > m/overviewAttendance Main > onPressEmployee2Row Error', oError);
+
+          AppUtils.handleError(oError, {
+            onClose: () => oDialog.close(),
+          });
+        } finally {
+          oViewModel.setProperty('/dialog/busy', false);
+        }
+      },
+
+      async onPressEmployee3Row(oEvent) {
+        const oViewModel = this.getViewModel();
+        let oDialog;
+
+        oViewModel.setProperty('/dialog/busy', true);
+
+        try {
+          const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
+
+          oDialog = await this.openDialog('X1');
+
+          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'TimeOverviewDetail4', { ..._.pick(mRowData, ['Pernr', 'Begda', 'Endda']) });
+
+          oViewModel.setProperty('/dialog/sub/rowCount', Math.min(aDetailData.length, 12));
+          oViewModel.setProperty('/dialog/sub/totalCount', _.size(aDetailData));
+          oViewModel.setProperty(
+            '/dialog/sub/list',
+            _.map(aDetailData, (o, i) => ({ Idx: ++i, ...o }))
+          );
+        } catch (oError) {
+          this.debug('Controller > m/overviewAttendance Main > onPressEmployee3Row Error', oError);
+
+          AppUtils.handleError(oError, {
+            onClose: () => oDialog.close(),
+          });
+        } finally {
+          oViewModel.setProperty('/dialog/busy', false);
+        }
+      },
+
       onPressDetailExcelDownload(oEvent) {
         const oTable = oEvent.getSource().getParent().getParent().getParent();
         const aTableData = this.getViewModel().getProperty('/dialog/list');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_28040'); // 근태현황상세
 
-        TableUtils.export({ oTable, aTableData, sFileName, aDateProps: ['Datum'] });
+        TableUtils.export({ oTable, aTableData, sFileName, aDateProps: ['Tmdat'] });
       },
 
       /*****************************************************************
@@ -429,7 +532,7 @@ sap.ui.define(
 // eslint-disable-next-line no-unused-vars
 function callDetail(sArgs) {
   const oController = sap.ui.getCore().byId('container-ehr---m_overviewAttendance').getController();
-  const aProps = ['Headty', 'Discod', 'Disyear'];
+  const aProps = ['Headty', 'Discod'];
   const aArgs = _.split(sArgs, ',');
   const mPayload = _.zipObject(_.take(aProps, aArgs.length), aArgs);
 
