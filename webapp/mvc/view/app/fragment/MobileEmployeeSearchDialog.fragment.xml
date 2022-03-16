@@ -37,7 +37,7 @@
                       <FlexItemData baseSize="15%" />
                     </layoutData>
                   </Text>
-                  <Button type="Transparent" class="icon-button" icon="/asset/image/icon_phone.svg" />
+                  <Button type="Transparent" class="icon-button" icon="asset/image/icon_phone.svg" />
                 </HBox>
               </CustomListItem>
             </List>
