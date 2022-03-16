@@ -31,7 +31,7 @@
         </Text>
       </custom:DayBox>
     </grid:CSSGrid>
-    <HBox class="status-wrap year-plan" items="{/TimeTypeList}">
+    <HBox class="box style-02 status-wrap year-plan sapUiTinyMarginTop" items="{/TimeTypeList}">
       <Text text="{Coltytx}">
         <customData>
           <core:CustomData key="style" value="{classNames}" writeToDom="true" />
