@@ -94,7 +94,7 @@ sap.ui.define([], function () {
       cylinder: {
         chart: {
           caption: '', // 출근율
-          valueFontSize: 12,
+          valueFontSize: 10,
           lowerlimit: '0',
           upperlimit: '100',
           lowerlimitdisplay: '0%',
@@ -118,8 +118,8 @@ sap.ui.define([], function () {
       },
       column2d: {
         chart: {
-          baseFontSize: 12,
-          valueFontSize: 12,
+          baseFontSize: 10,
+          valueFontSize: 10,
           showValues: 1,
           rotateValues: 0,
           placeValuesInside: 0,
@@ -130,7 +130,7 @@ sap.ui.define([], function () {
           theme: 'ocean',
           bgColor: 'transparent',
           valueFontColor: '#000000',
-          valueBgColor: '#ffffff',
+          valueBgColor: 'transparent',
           showPlotBorder: 1,
           plotBorderThickness: 3,
           plotBorderColor: '#ffffff',
@@ -148,8 +148,8 @@ sap.ui.define([], function () {
       },
       bar2d: {
         chart: {
-          baseFontSize: 12,
-          valueFontSize: 12,
+          baseFontSize: 10,
+          valueFontSize: 10,
           showValues: 1,
           rotateValues: 0,
           placeValuesInside: 0,
@@ -161,7 +161,6 @@ sap.ui.define([], function () {
           bgColor: 'transparent',
           valueBgColor: 'transparent',
           valueFontColor: '#000000',
-          valueBgColor: '#ffffff',
           showPlotBorder: 1,
           plotBorderThickness: 3,
           plotBorderColor: '#ffffff',
@@ -179,8 +178,9 @@ sap.ui.define([], function () {
       },
       mscolumn2d: {
         chart: {
-          baseFontSize: 12,
-          valueFontSize: 12,
+          baseFontSize: 10,
+          valueFontSize: 10,
+          legendItemFontSize: 10,
           animation: 0,
           showValues: 1,
           rotateValues: 0,
@@ -193,7 +193,7 @@ sap.ui.define([], function () {
           theme: 'ocean',
           bgColor: 'transparent',
           valueFontColor: '#000000',
-          valueBgColor: '#ffffff',
+          valueBgColor: 'transparent',
           legendIconSides: 0,
           showPlotBorder: 1,
           plotBorderThickness: 3,
@@ -211,8 +211,9 @@ sap.ui.define([], function () {
       },
       mscombi2d: {
         chart: {
-          baseFontSize: 12,
-          valueFontSize: 12,
+          baseFontSize: 10,
+          valueFontSize: 10,
+          legendItemFontSize: 10,
           showSum: 1,
           showValues: 1,
           rotateValues: 0,
