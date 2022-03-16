@@ -383,7 +383,7 @@ sap.ui.define(
         }
 
         const oListModel = this.getViewModel();
-        const vPath = oEvent.getParameter('rowBindingContext').getPath();
+        const vPath = oEvent.getSource().getParent().getBindingContext().getPath();
         const oRowData = oListModel.getProperty(vPath);
         const aDialogList = _.chain(oListModel.getProperty('/Data/WorkingTime3Nav/results'))
           .filter((e) => {
@@ -426,7 +426,7 @@ sap.ui.define(
           });
         }
 
-        const vPath = oEvent.getParameter('rowBindingContext').getPath();
+        const vPath = oEvent.getSource().getParent().getBindingContext().getPath();
         const oListModel = this.getViewModel();
         const oRowData = oListModel.getProperty(vPath);
         const aDialogList = _.chain(oListModel.getProperty('/Data/WorkingTime4Nav/results'))
