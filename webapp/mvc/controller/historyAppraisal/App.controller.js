@@ -29,8 +29,6 @@ sap.ui.define(
             busy: false,
             isShow: true,
             treeLoaded: false,
-            treeHeight: '500px',
-            scrollHeight: '700px',
             search: { searchText: '', results: [] },
             treeData: [],
           },
@@ -46,7 +44,7 @@ sap.ui.define(
               Zyear: true,
               Pernr: false,
               Ename: false,
-              idp: false,
+              Zzappgd03: false,
             },
           },
           appointee: {},
@@ -89,7 +87,7 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         oViewModel.setProperty('/history/visible', {
-          idp: !bIsESS,
+          Zzappgd03: !bIsESS,
           Zyear: sMode === 'P',
           Pernr: sMode === 'O',
           Ename: sMode === 'O',
