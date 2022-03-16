@@ -27,7 +27,7 @@
                         </items>
                     </IconTabBar>
                 </VBox>
-                <VBox class="main-profile" busyIndicatorDelay="0" busy="{/history/busy}">
+                <VBox id="profileBody" class="main-profile" busyIndicatorDelay="0" busy="{/history/busy}">
                     <core:Fragment fragmentName="sap.ui.yesco.mvc.view.historyAppraisal.fragment.AppointeeBar" type="XML" />
                     <core:Fragment fragmentName="sap.ui.yesco.mvc.view.historyAppraisal.fragment.SearchBar" type="XML" />
                     <VBox class="vCardBox sapUiSmallMarginTop">

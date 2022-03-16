@@ -106,7 +106,11 @@ sap.ui.define(
             Ename: sPernr,
           });
 
-          oViewModel.setProperty('/appointee', { ...mAppointee, Orgtx: mAppointee.Fulln, Photo: mAppointee.Photo || 'asset/image/avatar-unknown.svg' });
+          if (_.isEmpty(mAppointee)) {
+            oViewModel.setProperty('/appointee', { Photo: 'asset/image/avatar-unknown.svg' });
+          } else {
+            oViewModel.setProperty('/appointee', { ...mAppointee, Orgtx: mAppointee.Fulln, Photo: mAppointee.Photo || 'asset/image/avatar-unknown.svg' });
+          }
         }
       },
 
@@ -220,7 +224,7 @@ sap.ui.define(
             Stat2: '3',
             Actda: moment().hours(9).toDate(),
             Ename: sSearchText,
-            Orgeh: sOrgeh,
+            Orgeh: _.isString(sOrgeh) ? sOrgeh : null,
           });
 
           oViewModel.setProperty(
@@ -248,6 +252,8 @@ sap.ui.define(
         } else if (sPrevPernr === sPernr) {
           return;
         }
+
+        oViewModel.setProperty('/history/busy', true);
 
         oViewModel.setProperty('/history/mode', 'P');
         oViewModel.setProperty('/history/search', { Otype: 'P', Zyear: null, Objid: sPernr });
