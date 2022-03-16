@@ -94,7 +94,7 @@
               <Text text="{Zzjikchtx}" width="100%" textAlign="Center" />
             </table:template>
           </table:Column>
-          <table:Column width="80px" headerSpan="5">
+          <table:Column width="80px" headerSpan="4">
             <table:multiLabels>
               <Label text="{/detail/dialog/org/Label1}" />
               <Label text="{i18n>LABEL_32004}" />
@@ -130,7 +130,7 @@
               <Text text="{Tim14}" width="100%" textAlign="Center" />
             </table:template>
           </table:Column>
-          <table:Column width="80px" headerSpan="5">
+          <table:Column width="80px" headerSpan="4">
             <table:multiLabels>
               <Label text="{/detail/dialog/org/Label2}" />
               <Label text="{i18n>LABEL_32004}" />
@@ -166,7 +166,7 @@
               <Text text="{Tim24}" width="100%" textAlign="Center" />
             </table:template>
           </table:Column>
-          <table:Column width="80px" headerSpan="5">
+          <table:Column width="80px" headerSpan="4">
             <table:multiLabels>
               <Label text="{/detail/dialog/org/Label3}" />
               <Label text="{i18n>LABEL_32004}" />
@@ -202,7 +202,7 @@
               <Text text="{Tim34}" width="100%" textAlign="Center" />
             </table:template>
           </table:Column>
-          <table:Column width="80px" headerSpan="5">
+          <table:Column width="80px" headerSpan="4">
             <table:multiLabels>
               <Label text="{/detail/dialog/org/Label4}" />
               <Label text="{i18n>LABEL_32004}" />
@@ -238,7 +238,7 @@
               <Text text="{Tim44}" width="100%" textAlign="Center" />
             </table:template>
           </table:Column>
-          <table:Column width="80px" headerSpan="5">
+          <table:Column width="80px" headerSpan="4">
             <table:multiLabels>
               <Label text="{/detail/dialog/org/Label5}" />
               <Label text="{i18n>LABEL_32004}" />
