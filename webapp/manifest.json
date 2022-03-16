@@ -119,6 +119,7 @@
 
         { "pattern": "competency", "name": "competency", "target": "competency" },
         { "pattern": "competency/{sType}/{sYear}", "name": "competency-detail", "target": "competencyDetail" },
+        { "pattern": "competencyView/{sType}/{sPernr}/{sDocid}", "name": "competency-view", "target": "competencyView" },
         { "pattern": "h/competency", "name": "h/competency", "target": "h/competency" },
         { "pattern": "h/competency/{sType}/{sYear}", "name": "h/competency-detail", "target": "competencyDetail" },
         { "pattern": "m/competency", "name": "m/competency", "target": "m/competency" },
@@ -286,6 +287,7 @@
         "m/competency": { "viewId": "m_competency", "viewPath": "sap.ui.yesco.mvc.view.competency", "viewName": "ListM" },
         "h/competencyPry": { "viewId": "h_competencyPry", "viewPath": "sap.ui.yesco.mvc.view.competency", "viewName": "ListPryH" },
         "competencyDetail": { "viewId": "competencyDetail", "viewPath": "sap.ui.yesco.mvc.view.competency", "viewName": "Detail" },
+        "competencyView": { "viewId": "competencyView", "viewPath": "sap.ui.yesco.mvc.view.competency", "viewName": "Document" },
 
         "congratulation": { "viewId": "congratulation", "viewPath": "sap.ui.yesco.mvc.view.congratulation", "viewName": "Congratulation" },
         "h/congratulation": { "viewId": "h_congratulation", "viewPath": "sap.ui.yesco.mvc.view.congratulation", "viewName": "CongratulationHass" },

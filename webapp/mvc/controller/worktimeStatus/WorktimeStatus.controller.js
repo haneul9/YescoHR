@@ -1,6 +1,7 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/core/Fragment',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/FragmentEvent',
@@ -15,6 +16,7 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
+    Fragment,
     AppUtils,
     AttachFileAction,
     FragmentEvent,
@@ -27,7 +29,9 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.worktimeStatus.WorktimeStatus', {
-      sDialChartId: 'barChart',
+      MSCOLUMN_CHART_ID: 'columnChart',
+      ORG_TABLE_ID: 'orgTable',
+      PERNR_TABLE_ID: 'pernrTable',
 
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
@@ -50,6 +54,20 @@ sap.ui.define(
             Orgeh: '',
             Disty: '1',
           },
+          detail: {
+            dialog: {
+              list: [],
+              rowCount: 2,
+            },
+            org: {
+              list: [],
+              rowCount: 2,
+            },
+            pernr: {
+              list: [],
+              rowCount: 2,
+            },
+          },
           listInfo: {
             rowCount: 1,
             totalCount: 0,
@@ -60,6 +78,23 @@ sap.ui.define(
             completeCount: 0,
           },
         };
+      },
+
+      onBeforeShow() {
+        TableUtils.adjustRowSpan({
+          oTable: this.byId(this.ORG_TABLE_ID),
+          aColIndices: [0, 1, 2],
+          sTheadOrTbody: 'thead',
+        });
+
+        TableUtils.adjustRowSpan({
+          oTable: this.byId(this.PERNR_TABLE_ID),
+          aColIndices: [0, 1, 2, 3, 4, 5],
+          sTheadOrTbody: 'thead',
+        });
+
+        TableUtils.summaryColspan({ oTable: this.byId(this.ORG_TABLE_ID), aHideIndex: [1] });
+        TableUtils.summaryColspan({ oTable: this.byId(this.PERNR_TABLE_ID), aHideIndex: [1, 2, 3, 4, 5] });
       },
 
       async onObjectMatched() {
@@ -91,21 +126,94 @@ sap.ui.define(
           // 근무시간주차별 추이
           const aWorkTime = await this.getTypeWorkTime();
 
+          oListModel.setProperty('/Data', aWorkTime);
           oListModel.setProperty('/search/Disty', aWorkTime.Disty);
           this.buildDialChart(aWorkTime.WorkingTime1Nav.results);
 
-          // const mSearch = oListModel.getProperty('/search');
-          // const mPayLoad = {
-          //   Apbeg: moment(mSearch.secondDate).hours(9).toDate(),
-          //   Apend: moment(mSearch.date).hours(9).toDate(),
-          //   Menid: this.getCurrentMenuId(),
-          //   ...mPernr,
-          // };
-          // const aTableList = await Client.getEntitySet(oModel, 'OtworkChangeApply', mPayLoad);
-          // const oTable = this.byId('workTable');
+          const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
 
-          // oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
-          // oListModel.setProperty('/List', aTableList);
+          if (oListModel.getProperty('/search/Disty') === '1') {
+            const aPernrList = aWorkTime.WorkingTime3Nav.results;
+            const mSumRow = TableUtils.generateSumRow({
+              aTableData: aPernrList,
+              mSumField: { Status: sSumLabel },
+              vCalcProps: ['Tim11', 'Tim12', 'Tim13', 'Tim14', 'Tim15', 'Tim21', 'Tim22', 'Tim23', 'Tim24', 'Tim25', 'Tim31', 'Tim32', 'Tim33', 'Tim34', 'Tim35', 'Tim41', 'Tim42', 'Tim43', 'Tim44', 'Tim45', 'Tim51', 'Tim52', 'Tim53', 'Tim54', 'Tim55'],
+            });
+
+            oListModel.setProperty('/detail/pernr/list', [...aPernrList, mSumRow]);
+            oListModel.setProperty('/detail/pernr/Label1', aPernrList[0].Wktx1);
+            oListModel.setProperty('/detail/pernr/Label2', aPernrList[0].Wktx2);
+            oListModel.setProperty('/detail/pernr/Label3', aPernrList[0].Wktx3);
+            oListModel.setProperty('/detail/pernr/Label4', aPernrList[0].Wktx4);
+            oListModel.setProperty('/detail/pernr/Label5', aPernrList[0].Wktx5);
+            oListModel.setProperty('/detail/pernr/rowCount', _.size([...aPernrList, mSumRow]));
+          } else {
+            const aOrgList = aWorkTime.WorkingTime2Nav.results;
+            const mSumRow = TableUtils.generateSumRow({
+              aTableData: aOrgList,
+              mSumField: { Status: sSumLabel },
+              vCalcProps: ['Empcnt', 'Tim11', 'Tim12', 'Tim13', 'Tim14', 'Tim15', 'Tim21', 'Tim22', 'Tim23', 'Tim24', 'Tim25', 'Tim31', 'Tim32', 'Tim33', 'Tim34', 'Tim35', 'Tim41', 'Tim42', 'Tim43', 'Tim44', 'Tim45', 'Tim51', 'Tim52', 'Tim53', 'Tim54', 'Tim55', 'Over1', 'Over2', 'Over3', 'Over4', 'Over5'],
+            });
+
+            oListModel.setProperty('/detail/org/list', [...aOrgList, mSumRow]);
+            oListModel.setProperty('/detail/org/Label1', aOrgList[0].Wktx1);
+            oListModel.setProperty('/detail/org/Label2', aOrgList[0].Wktx2);
+            oListModel.setProperty('/detail/org/Label3', aOrgList[0].Wktx3);
+            oListModel.setProperty('/detail/org/Label4', aOrgList[0].Wktx4);
+            oListModel.setProperty('/detail/org/Label5', aOrgList[0].Wktx5);
+            oListModel.setProperty('/detail/org/rowCount', _.size([...aOrgList, mSumRow]));
+          }
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oListModel.setProperty('/busy', false);
+        }
+      },
+
+      async onSearch() {
+        const oListModel = this.getViewModel();
+
+        try {
+          oListModel.setProperty('/busy', true);
+          // 근무시간주차별 추이
+          const aWorkTime = await this.getTypeWorkTime();
+
+          oListModel.setProperty('/Data', aWorkTime);
+          this.buildDialChart(aWorkTime.WorkingTime1Nav.results);
+
+          const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
+
+          if (oListModel.getProperty('/search/Disty') === '1') {
+            const aPernrList = aWorkTime.WorkingTime3Nav.results;
+            const mSumRow = TableUtils.generateSumRow({
+              aTableData: aPernrList,
+              mSumField: { Status: sSumLabel },
+              vCalcProps: ['Tim11', 'Tim12', 'Tim13', 'Tim14', 'Tim15', 'Tim21', 'Tim22', 'Tim23', 'Tim24', 'Tim25', 'Tim31', 'Tim32', 'Tim33', 'Tim34', 'Tim35', 'Tim41', 'Tim42', 'Tim43', 'Tim44', 'Tim45', 'Tim51', 'Tim52', 'Tim53', 'Tim54', 'Tim55'],
+            });
+
+            oListModel.setProperty('/detail/pernr/list', [...aPernrList, mSumRow]);
+            oListModel.setProperty('/detail/pernr/Label1', aPernrList[0].Wktx1);
+            oListModel.setProperty('/detail/pernr/Label2', aPernrList[0].Wktx2);
+            oListModel.setProperty('/detail/pernr/Label3', aPernrList[0].Wktx3);
+            oListModel.setProperty('/detail/pernr/Label4', aPernrList[0].Wktx4);
+            oListModel.setProperty('/detail/pernr/Label5', aPernrList[0].Wktx5);
+            oListModel.setProperty('/detail/pernr/rowCount', _.size([...aPernrList, mSumRow]));
+          } else {
+            const aOrgList = aWorkTime.WorkingTime2Nav.results;
+            const mSumRow = TableUtils.generateSumRow({
+              aTableData: aOrgList,
+              mSumField: { Status: sSumLabel },
+              vCalcProps: ['Empcnt', 'Tim11', 'Tim12', 'Tim13', 'Tim14', 'Tim15', 'Tim21', 'Tim22', 'Tim23', 'Tim24', 'Tim25', 'Tim31', 'Tim32', 'Tim33', 'Tim34', 'Tim35', 'Tim41', 'Tim42', 'Tim43', 'Tim44', 'Tim45', 'Tim51', 'Tim52', 'Tim53', 'Tim54', 'Tim55', 'Over1', 'Over2', 'Over3', 'Over4', 'Over5'],
+            });
+
+            oListModel.setProperty('/detail/org/list', [...aOrgList, mSumRow]);
+            oListModel.setProperty('/detail/org/Label1', aOrgList[0].Wktx1);
+            oListModel.setProperty('/detail/org/Label2', aOrgList[0].Wktx2);
+            oListModel.setProperty('/detail/org/Label3', aOrgList[0].Wktx3);
+            oListModel.setProperty('/detail/org/Label4', aOrgList[0].Wktx4);
+            oListModel.setProperty('/detail/org/Label5', aOrgList[0].Wktx5);
+            oListModel.setProperty('/detail/org/rowCount', _.size([...aOrgList, mSumRow]));
+          }
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -114,24 +222,55 @@ sap.ui.define(
       },
 
       async onDate() {
-        const oListModel = this.getViewModel();
-        const aWorkTime = await this.getTypeWorkTime();
-
-        this.buildDialChart(aWorkTime.WorkingTime1Nav.results);
+        // const aWorkTime = await this.getTypeWorkTime();
+        // this.buildDialChart(aWorkTime.WorkingTime1Nav.results);
       },
 
       async onArea() {
-        const oListModel = this.getViewModel();
-        const aWorkTime = await this.getTypeWorkTime();
-
-        this.buildDialChart(aWorkTime.WorkingTime1Nav.results);
+        // const aWorkTime = await this.getTypeWorkTime();
+        // this.buildDialChart(aWorkTime.WorkingTime1Nav.results);
       },
 
       async onOrg() {
-        const oListModel = this.getViewModel();
-        const aWorkTime = await this.getTypeWorkTime();
+        // const aWorkTime = await this.getTypeWorkTime();
+        // this.buildDialChart(aWorkTime.WorkingTime1Nav.results);
+      },
 
-        this.buildDialChart(aWorkTime.WorkingTime1Nav.results);
+      async onGubun() {
+        const oListModel = this.getViewModel();
+        const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
+
+        if (oListModel.getProperty('/search/Disty') === '1') {
+          const aPernrList = oListModel.getProperty('/Data/WorkingTime3Nav/results');
+          const mSumRow = TableUtils.generateSumRow({
+            aTableData: aPernrList,
+            mSumField: { Status: sSumLabel },
+            vCalcProps: ['Tim11', 'Tim12', 'Tim13', 'Tim14', 'Tim15', 'Tim21', 'Tim22', 'Tim23', 'Tim24', 'Tim25', 'Tim31', 'Tim32', 'Tim33', 'Tim34', 'Tim35', 'Tim41', 'Tim42', 'Tim43', 'Tim44', 'Tim45', 'Tim51', 'Tim52', 'Tim53', 'Tim54', 'Tim55'],
+          });
+
+          oListModel.setProperty('/detail/pernr/list', [...aPernrList, mSumRow]);
+          oListModel.setProperty('/detail/pernr/Label1', aPernrList[0].Wktx1);
+          oListModel.setProperty('/detail/pernr/Label2', aPernrList[0].Wktx2);
+          oListModel.setProperty('/detail/pernr/Label3', aPernrList[0].Wktx3);
+          oListModel.setProperty('/detail/pernr/Label4', aPernrList[0].Wktx4);
+          oListModel.setProperty('/detail/pernr/Label5', aPernrList[0].Wktx5);
+          oListModel.setProperty('/detail/pernr/rowCount', _.size([...aPernrList, mSumRow]));
+        } else {
+          const aOrgList = oListModel.getProperty('/Data/WorkingTime2Nav/results');
+          const mSumRow = TableUtils.generateSumRow({
+            aTableData: aOrgList,
+            mSumField: { Status: sSumLabel },
+            vCalcProps: ['Empcnt', 'Tim11', 'Tim12', 'Tim13', 'Tim14', 'Tim15', 'Tim21', 'Tim22', 'Tim23', 'Tim24', 'Tim25', 'Tim31', 'Tim32', 'Tim33', 'Tim34', 'Tim35', 'Tim41', 'Tim42', 'Tim43', 'Tim44', 'Tim45', 'Tim51', 'Tim52', 'Tim53', 'Tim54', 'Tim55', 'Over1', 'Over2', 'Over3', 'Over4', 'Over5'],
+          });
+
+          oListModel.setProperty('/detail/org/list', [...aOrgList, mSumRow]);
+          oListModel.setProperty('/detail/org/Label1', aOrgList[0].Wktx1);
+          oListModel.setProperty('/detail/org/Label2', aOrgList[0].Wktx2);
+          oListModel.setProperty('/detail/org/Label3', aOrgList[0].Wktx3);
+          oListModel.setProperty('/detail/org/Label4', aOrgList[0].Wktx4);
+          oListModel.setProperty('/detail/org/Label5', aOrgList[0].Wktx5);
+          oListModel.setProperty('/detail/org/rowCount', _.size([...aOrgList, mSumRow]));
+        }
       },
 
       // 근무시간주차별 추이
@@ -155,15 +294,27 @@ sap.ui.define(
         return {
           //Cosmetics
           showValue: 1,
-          valueFontSize: 12,
-          showPivotBorder: 0,
+          baseFontSize: 13,
+          valueFontSize: 13,
+          legendItemFontSize: 13,
+          chartBottomMargin: 0,
+          divLineColor: '#eeeeee',
+          divLineDashed: 0,
+          drawCustomLegendIcon: 1,
+          legendIconSides: 1,
+          numDivLines: 3,
+          placeValuesInside: 0,
+          plotBorderColor: '#ffffff',
+          rotateValues: 0,
+          valueBgColor: 'transparent',
+          valueFontColor: '#000000',
           bgColor: 'transparent',
           theme: 'ocean',
         };
       },
 
       buildDialChart(aWorkTimeList = []) {
-        const oChart = FusionCharts(this.sDialChartId);
+        const oChart = FusionCharts(this.MSCOLUMN_CHART_ID);
         const aList = _.chain(aWorkTimeList)
           .map((e) => {
             return { label: e.Weektx };
@@ -187,13 +338,11 @@ sap.ui.define(
             })
           )
           .value();
-        debugger;
-        aWorkTimeList;
 
         if (!oChart) {
           FusionCharts.ready(() => {
             new FusionCharts({
-              id: this.sDialChartId,
+              id: this.MSCOLUMN_CHART_ID,
               type: 'mscolumn2d',
               renderAt: 'chart-bar-container',
               width: '100%',
@@ -239,14 +388,17 @@ sap.ui.define(
                 {
                   seriesname: this.getBundleText('LABEL_32004'), // 법정
                   data: aList.v1,
+                  color: '#5B9BD5',
                 },
                 {
                   seriesname: this.getBundleText('LABEL_01205'), // OT
                   data: aList.v2,
+                  color: '#EE7827',
                 },
                 {
                   seriesname: this.getBundleText('LABEL_32005'), // 초과인원
                   data: aList.v3,
+                  color: '#A6A6A6',
                 },
               ],
             },
@@ -256,47 +408,55 @@ sap.ui.define(
         }
       },
 
-      // 근무시간
-      formatTime(sTime = '') {
-        return !sTime ? '0' : `${sTime.slice(-4, -2)}:${sTime.slice(-2)}`;
+      onOrgClick(oEvent) {
+        this.openDialog(oEvent, oEvent.getParameter('rowBindingContext').getPath().split('/')[2]);
       },
 
-      onClick() {
-        this.getRouter().navTo('workTimeChange-detail', { oDataKey: 'N' });
+      onPernrClick(oEvent) {
+        this.openDialog(oEvent, oEvent.getParameter('rowBindingContext').getPath().split('/')[2]);
       },
 
-      async onSearch() {
-        const oListModel = this.getViewModel();
+      openDialog(oEvent, sKey) {
+        if (!this._pDetailDialog) {
+          const oView = this.getView();
 
-        try {
-          oListModel.setProperty('/busy', true);
-
-          const mPernr = {};
-
-          if (this.isHass()) {
-            const sPernr = this.getAppointeeProperty('Pernr');
-
-            mPernr.Pernr = sPernr;
-          }
-
-          const mSearch = oListModel.getProperty('/search');
-          const mPayLoad = {
-            Apbeg: moment(mSearch.secondDate).hours(9).toDate(),
-            Apend: moment(mSearch.date).hours(9).toDate(),
-            Menid: this.getCurrentMenuId(),
-            ...mPernr,
-          };
-          const oModel = this.getModel(ServiceNames.WORKTIME);
-          const aTableList = await Client.getEntitySet(oModel, 'OtworkChangeApply', mPayLoad);
-          const oTable = this.byId('workTable');
-
-          oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
-          oListModel.setProperty('/List', aTableList);
-        } catch (oError) {
-          AppUtils.handleError(oError);
-        } finally {
-          oListModel.setProperty('/busy', false);
+          this._pDetailDialog = Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.mvc.view.worktimeStatus.fragment.DetailDialog',
+            controller: this,
+          }).then(function (oDialog) {
+            oView.addDependent(oDialog);
+            return oDialog;
+          });
         }
+
+        const vPath = oEvent.getParameter('rowBindingContext').getPath();
+        const oDetailModel = this.getViewModel();
+        const oRowData = oDetailModel.getProperty(vPath);
+        let aDialogList = [];
+
+        if (sKey === 'pernr') {
+          aDialogList = _.chain(oDetailModel.getProperty('/Data/WorkingTime4Nav/results'))
+            .filter((e) => {
+              return e.Pernr === oRowData.Pernr;
+            })
+            .map((e, i) => {
+              return { ...e, No: i + 1 };
+            })
+            .value();
+        } else {
+        }
+
+        this._pDetailDialog.then(async function (oDialog) {
+          oDetailModel.setProperty('/detail/dialog/list', aDialogList);
+          oDetailModel.setProperty('/detail/dialog/rowCount', _.size(aDialogList));
+          oDialog.open();
+        });
+      },
+
+      // Dialog Close
+      onDialogClose(oEvent) {
+        oEvent.getSource().getParent().close();
       },
 
       onSelectRow(oEvent) {
@@ -305,14 +465,6 @@ sap.ui.define(
         const oRowData = oListModel.getProperty(vPath);
 
         this.getRouter().navTo('workTimeChange-detail', { oDataKey: oRowData.Appno });
-      },
-
-      onPressExcelDownload() {
-        const oTable = this.byId('workTable');
-        const aTableData = this.getViewModel().getProperty('/List');
-        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_32001'); // {근로시간현황}_목록
-
-        TableUtils.export({ oTable, aTableData, sFileName });
       },
     });
   }

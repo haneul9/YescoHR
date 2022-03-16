@@ -61,6 +61,7 @@ sap.ui.define(
           param: {},
           type: '',
           year: moment().format('YYYY'),
+          listInfo: {},
           appointee: {},
           tab: { selectedKey: Constants.TAB.ABILITY },
           stage: {
@@ -110,6 +111,7 @@ sap.ui.define(
 
         oViewModel.setData(this.initializeModel());
         oViewModel.setProperty('/busy', true);
+        oViewModel.setProperty('/listInfo', mListRoute);
 
         try {
           const oView = this.getView();
@@ -362,8 +364,7 @@ sap.ui.define(
 
       async createProcess({ code, label }) {
         const oViewModel = this.getViewModel();
-        const sType = oViewModel.getProperty('/type');
-        const sListRouteName = _.get(Constants.LIST_PAGE, [sType, 'route']);
+        const sListRouteName = oViewModel.getProperty('/listInfo/route');
 
         oViewModel.setProperty('/busy', true);
 
@@ -389,14 +390,14 @@ sap.ui.define(
           await MessageBox.success(this.getBundleText('MSG_00007', label), {
             onClose: () => {
               if (!bIsSave) this.getRouter().navTo(sListRouteName);
-              oViewModel.setProperty('/busy', false);
             },
           });
         } catch (oError) {
           this.debug(`Controller > ${sListRouteName} Detail > createProcess Error`, oError);
 
-          oViewModel.setProperty('/busy', false);
           AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
         }
       },
 

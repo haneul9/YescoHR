@@ -8,7 +8,6 @@
     <VBox class="portlet portlet-box portlet-p06" visible="{= !${/contents/A01/busy} }">
         <HBox class="portlet-header">
             <Title level="H2" text="{i18n>LABEL_28022}" />
-            <Text text="{i18n>LABEL_28040}" class="desc-txt" />
             <Text text="">
                 <layoutData>
                     <FlexItemData growFactor="1" />
@@ -48,16 +47,6 @@
                 </VBox>
                 <VBox justifyContent="Center" alignItems="Center">
                     <Label design="Bold" text="{i18n>LABEL_00188}" />
-                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt04', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount" class="team-member-count font-24-px">
-                        <customData>
-                            <core:CustomData key="table-key" value="4" writeToDom="true" />
-                            <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
-                            <core:CustomData key="Discod" value="{/contents/A01/data/Cnt04C}" />
-                        </customData>
-                    </ObjectStatus>
-                </VBox>
-                <VBox justifyContent="Center" alignItems="Center">
-                    <Label design="Bold" text="{i18n>LABEL_01123}" />
                     <ObjectStatus text="{ path: '/contents/A01/data/Cnt03', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount" class="team-member-count font-24-px">
                         <customData>
                             <core:CustomData key="table-key" value="3" writeToDom="true" />
@@ -67,17 +56,17 @@
                     </ObjectStatus>
                 </VBox>
                 <VBox justifyContent="Center" alignItems="Center">
-                    <Label design="Bold" text="{i18n>LABEL_01126}" />
-                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt06', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount" class="team-member-count font-24-px">
+                    <Label design="Bold" text="{i18n>LABEL_01123}" />
+                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt04', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount" class="team-member-count font-24-px">
                         <customData>
-                            <core:CustomData key="table-key" value="6" writeToDom="true" />
+                            <core:CustomData key="table-key" value="4" writeToDom="true" />
                             <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
-                            <core:CustomData key="Discod" value="{/contents/A01/data/Cnt06C}" />
+                            <core:CustomData key="Discod" value="{/contents/A01/data/Cnt04C}" />
                         </customData>
                     </ObjectStatus>
                 </VBox>
                 <VBox justifyContent="Center" alignItems="Center">
-                    <Label design="Bold" text="{i18n>LABEL_01125}" />
+                    <Label design="Bold" text="{i18n>LABEL_01126}" />
                     <ObjectStatus text="{ path: '/contents/A01/data/Cnt05', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount" class="team-member-count font-24-px">
                         <customData>
                             <core:CustomData key="table-key" value="5" writeToDom="true" />
@@ -87,22 +76,32 @@
                     </ObjectStatus>
                 </VBox>
                 <VBox justifyContent="Center" alignItems="Center">
-                    <Label design="Bold" text="{i18n>LABEL_01174}" />
-                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount" class="team-member-count font-24-px">
+                    <Label design="Bold" text="{i18n>LABEL_01125}" />
+                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt06', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount" class="team-member-count font-24-px">
                         <customData>
-                            <core:CustomData key="table-key" value="1" writeToDom="true" />
+                            <core:CustomData key="table-key" value="6" writeToDom="true" />
                             <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
-                            <core:CustomData key="Discod" value="{/contents/A01/data/Cnt01C}" />
+                            <core:CustomData key="Discod" value="{/contents/A01/data/Cnt06C}" />
+                        </customData>
+                    </ObjectStatus>
+                </VBox>
+                <VBox justifyContent="Center" alignItems="Center">
+                    <Label design="Bold" text="{i18n>LABEL_20007}" />
+                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt07', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount" class="team-member-count font-24-px">
+                        <customData>
+                            <core:CustomData key="table-key" value="7" writeToDom="true" />
+                            <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
+                            <core:CustomData key="Discod" value="{/contents/A01/data/Cnt07C}" />
                         </customData>
                     </ObjectStatus>
                 </VBox>
                 <VBox justifyContent="Center" alignItems="Center">
                     <Label design="Bold" text="{i18n>LABEL_01205}" />
-                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt04', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount" class="team-member-count font-24-px">
+                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt08', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount" class="team-member-count font-24-px">
                         <customData>
-                            <core:CustomData key="table-key" value="4" writeToDom="true" />
+                            <core:CustomData key="table-key" value="8" writeToDom="true" />
                             <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
-                            <core:CustomData key="Discod" value="{/contents/A01/data/Cnt04C}" />
+                            <core:CustomData key="Discod" value="{/contents/A01/data/Cnt08C}" />
                         </customData>
                     </ObjectStatus>
                 </VBox>

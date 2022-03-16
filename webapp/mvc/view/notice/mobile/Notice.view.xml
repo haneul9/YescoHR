@@ -9,7 +9,7 @@
           <Title level="H3" text="{i18n>LABEL_08001}" class="sapUiSmallMarginEnd" />
           <Text text="total {/listInfo/totalCount}" />
         </HBox>
-        <Image src="/asset/image/icon_tooltip.svg" size="20px" press=".ListStatusPopover.onPopover" />
+        <!--<Image src="/asset/image/icon_tooltip.svg" size="20px" press=".ListStatusPopover.onPopover" />-->
       </HBox>
       <custom:MobileScrollContainer horizontal="false" vertical="true">
         <List items="{path: '/NoticeList'}" busyIndicatorDelay="0" busy="{/busy}" class="list-wrap wrap">

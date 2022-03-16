@@ -15,7 +15,7 @@
         </VBox>
         <VBox class="contents">
             <HBox>
-                <VBox id="sideBody" class="vCardBox side-navigation expanded sapUiSmallMarginEnd" height="{/sideNavigation/height}">
+                <VBox id="sideBody" class="vCardBox side-navigation expanded sapUiSmallMarginEnd sticky-side-tree" height="82vh">
                     <ToggleButton icon="sap-icon://navigation-left-arrow" class="icon-button toggle-navi" press=".onToggleNavigation" />
                     <IconTabBar selectedKey="{/sideNavigation/selectedKey}" expandable="false" visible="{= ${/sideNavigation/isShow}}" select=".onSelectSideTab">
                         <layoutData>
@@ -27,7 +27,7 @@
                         </items>
                     </IconTabBar>
                 </VBox>
-                <VBox class="main-profile" busyIndicatorDelay="0" busy="{/history/busy}">
+                <VBox id="profileBody" class="main-profile" busyIndicatorDelay="0" busy="{/history/busy}">
                     <core:Fragment fragmentName="sap.ui.yesco.mvc.view.historyAppraisal.fragment.AppointeeBar" type="XML" />
                     <core:Fragment fragmentName="sap.ui.yesco.mvc.view.historyAppraisal.fragment.SearchBar" type="XML" />
                     <VBox class="vCardBox sapUiSmallMarginTop">

@@ -29,8 +29,6 @@ sap.ui.define(
             busy: false,
             isShow: true,
             treeLoaded: false,
-            treeHeight: '500px',
-            scrollHeight: '700px',
             search: { searchText: '', results: [] },
             treeData: [],
           },
@@ -46,7 +44,7 @@ sap.ui.define(
               Zyear: true,
               Pernr: false,
               Ename: false,
-              idp: false,
+              Zzappgd03: false,
             },
           },
           appointee: {},
@@ -57,26 +55,23 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         try {
+          const mAppointee = this.getAppointeeData();
+
           oViewModel.setSizeLimit(500);
           oViewModel.setData(this.initializeModel());
           oViewModel.setProperty('/busy', true);
 
           if (sRouteName === 'historyAppraisal') {
-            oViewModel.setProperty('/isMSS', false);
+            oViewModel.setProperty('/isESS', true);
           } else {
-            const iSideViewHeight = Math.floor($(document).height() - this.byId('sideBody').getParent().$().offset().top - 20);
-            const iScrollViewHeight = Math.floor($(document).height() - this.byId('sideEmployeeList').getParent().$().offset().top - 36);
+            oViewModel.setProperty('/isESS', false);
+            oViewModel.setProperty('/sideNavigation/search/searchText', mAppointee.Orgtx);
 
-            oViewModel.setProperty('/isMSS', true);
-            oViewModel.setProperty('/sideNavigation/height', `${iSideViewHeight}px`);
-            oViewModel.setProperty('/sideNavigation/scrollHeight', `${iScrollViewHeight}px`);
-            oViewModel.setProperty('/sideNavigation/search/searchText', this.getAppointeeProperty('Orgtx'));
-
-            await this.setAppointee(this.getAppointeeProperty('Pernr'));
-            await this.onPressEmployeeSearch();
+            await this.setAppointee(mAppointee.Pernr);
+            await this.onPressEmployeeSearch(mAppointee.Orgeh);
           }
 
-          oViewModel.setProperty('/history/search', { Otype: 'P', Zyear: null, Objid: this.getAppointeeProperty('Pernr') });
+          oViewModel.setProperty('/history/search', { Otype: 'P', Zyear: null, Objid: mAppointee.Pernr });
 
           await this.onPressSearch();
         } catch (oError) {
@@ -90,9 +85,10 @@ sap.ui.define(
 
       setVisibleColumns(bIsESS, sMode) {
         const oViewModel = this.getViewModel();
+        const sPersg = this.getAppointeeProperty('Persg');
 
         oViewModel.setProperty('/history/visible', {
-          idp: !bIsESS,
+          Zzappgd03: !bIsESS && sPersg === 'A',
           Zyear: sMode === 'P',
           Pernr: sMode === 'O',
           Ename: sMode === 'O',
@@ -109,20 +105,42 @@ sap.ui.define(
             Ename: sPernr,
           });
 
-          oViewModel.setProperty('/appointee', { ...mAppointee, Orgtx: mAppointee.Fulln, Photo: mAppointee.Photo || 'asset/image/avatar-unknown.svg' });
+          if (_.isEmpty(mAppointee)) {
+            oViewModel.setProperty('/appointee', { Photo: 'asset/image/avatar-unknown.svg' });
+          } else {
+            oViewModel.setProperty('/appointee', { ...mAppointee, Orgtx: mAppointee.Fulln, Photo: mAppointee.Photo || 'asset/image/avatar-unknown.svg' });
+          }
         }
       },
 
       onPressRowPerformance(oEvent) {
+        const sHost = window.location.href.split('#')[0];
         const oRowData = oEvent.getSource().getParent().getBindingContext().getObject();
 
-        this.debug(oRowData);
+        if (!oRowData.Zdocid1) return;
+
+        window.open(`${sHost}#/performanceView/ME/${oRowData.Pernr}/${oRowData.Zdocid1}`, '_blank', 'width=1400,height=800');
       },
 
       onPressRowCompetency(oEvent) {
+        const sHost = window.location.href.split('#')[0];
         const oRowData = oEvent.getSource().getParent().getBindingContext().getObject();
 
-        this.debug(oRowData);
+        if (!oRowData.Zdocid2) return;
+
+        window.open(`${sHost}#/competencyView/ME/${oRowData.Pernr}/${oRowData.Zdocid2}`, '_blank', 'width=1300,height=800');
+      },
+
+      onPressRowMulti(oEvent) {
+        const oRowData = oEvent.getSource().getParent().getBindingContext().getObject();
+
+        this.debug(oRowData.Zdocid3);
+      },
+
+      onPressRowDevelop(oEvent) {
+        const oRowData = oEvent.getSource().getParent().getBindingContext().getObject();
+
+        this.debug(oRowData.Zdocid4);
       },
 
       openPerformance(sObjid) {
@@ -160,13 +178,10 @@ sap.ui.define(
         const bTreeLoaded = oViewModel.getProperty('/sideNavigation/treeLoaded');
 
         if (!bTreeLoaded && sSelectedKey === 'tree') {
-          const oSideTree = this.byId('OrganizationTree');
           const aReturnTreeData = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'AuthOrgTree', { Datum: moment().hour(9).toDate(), Xpern: 'X' });
           const mConvertedTreeData = this.transformTreeData({ aTreeData: aReturnTreeData, sRootId: '00000000' });
-          const iTreeViewHeight = Math.max(Math.floor($(document).height() - oSideTree.$().offset().top - 35), 500);
 
           oViewModel.setProperty('/sideNavigation/treeData', mConvertedTreeData);
-          oViewModel.setProperty('/sideNavigation/treeHeight', `${iTreeViewHeight}px`);
         }
 
         oViewModel.setProperty('/sideNavigation/treeLoaded', true);
@@ -188,7 +203,7 @@ sap.ui.define(
         return mGroupedByParents[sRootId];
       },
 
-      async onPressEmployeeSearch() {
+      async onPressEmployeeSearch(sOrgeh) {
         const oViewModel = this.getViewModel();
         const sSearchText = oViewModel.getProperty('/sideNavigation/search/searchText');
 
@@ -208,6 +223,7 @@ sap.ui.define(
             Stat2: '3',
             Actda: moment().hours(9).toDate(),
             Ename: sSearchText,
+            Orgeh: _.isString(sOrgeh) ? sOrgeh : null,
           });
 
           oViewModel.setProperty(
@@ -235,6 +251,8 @@ sap.ui.define(
         } else if (sPrevPernr === sPernr) {
           return;
         }
+
+        oViewModel.setProperty('/history/busy', true);
 
         oViewModel.setProperty('/history/mode', 'P');
         oViewModel.setProperty('/history/search', { Otype: 'P', Zyear: null, Objid: sPernr });
@@ -277,7 +295,7 @@ sap.ui.define(
             _.map(aRowData, (o) => _.omit(o, '__metadata'))
           );
 
-          this.setVisibleColumns(oViewModel.getProperty('/isMSS'), mListPayload.Otype);
+          this.setVisibleColumns(oViewModel.getProperty('/isESS'), mListPayload.Otype);
         } catch (oError) {
           this.debug('Controller > historyAppraisal > onPressSearch Error', oError);
 
