@@ -11,6 +11,7 @@ sap.ui.define(
     'sap/ui/yesco/mvc/model/type/Currency',
     'sap/ui/yesco/mvc/model/type/Date',
     'sap/ui/yesco/mvc/model/type/Decimal',
+    'sap/ui/yesco/mvc/model/type/Percent',
   ],
   (
     // prettier 방지용 주석
@@ -38,21 +39,23 @@ sap.ui.define(
             Orgeh: [],
           },
           contents: {
-            A01: { busy: false, data: {} },
-            A02: { busy: false, data: {} },
-            A03: { busy: false, data: {} },
-            A04: { busy: false, data: {} },
-            A05: { busy: false },
-            A06: { busy: false },
-            A07: { busy: false },
-            A08: { busy: false, data: {} },
-            A09: { busy: false, data: {} },
-            A10: { busy: false },
+            A01: { busy: false, Headty: '', data: {} },
+            A02: { busy: false, Headty: '', data: {} },
+            A03: { busy: false, Headty: '', data: {} },
+            A04: { busy: false, Headty: '', data: {} },
+            A05: { busy: false, Headty: '' },
+            A06: { busy: false, Headty: '' },
+            A07: { busy: false, Headty: '' },
+            A08: { busy: false, Headty: '', data: {} },
+            A09: { busy: false, Headty: '', data: {} },
+            A10: { busy: false, Headty: '' },
           },
           dialog: {
             busy: false,
             rowCount: 0,
+            param: {},
             list: [],
+            sub: { list: [] },
           },
         };
       },
@@ -152,13 +155,13 @@ sap.ui.define(
                 seriesName: this.getBundleText('LABEL_28048'), // 당일
                 showValues: '1',
                 color: '#7BB4EB',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01 })),
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01, link: `j-callDetail-${mChartInfo.Headty},${o.Cod01}` })),
               })
               .set(['dataset', 1], {
                 seriesName: this.getBundleText('LABEL_00196'), // 누적
                 renderAs: 'line',
                 color: '#FFAC4B',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02 })),
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02, link: `j-callDetail-${mChartInfo.Headty},${o.Cod02}` })),
               })
               .commit();
 
@@ -174,17 +177,17 @@ sap.ui.define(
               .set(['dataset', 0], {
                 seriesname: this.getBundleText('LABEL_32004'), // 법정
                 color: '#7BB4EB',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01 })),
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01, link: `j-callDetail-${mChartInfo.Headty},${o.Cod01}` })),
               })
               .set(['dataset', 1], {
                 seriesname: 'OT',
                 color: '#FFAC4B',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02 })),
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02, link: `j-callDetail-${mChartInfo.Headty},${o.Cod02}` })),
               })
               .set(['dataset', 2], {
                 seriesname: this.getBundleText('LABEL_32005'), // 초과인원
                 color: '#FFE479',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt03 })),
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt03, link: `j-callDetail-${mChartInfo.Headty},${o.Cod03}` })),
               })
               .commit();
 
@@ -307,9 +310,39 @@ sap.ui.define(
             oDialog = this.oDetail2Dialog;
             this.oDetail2Dialog.open();
             break;
+          case 'X1':
+            if (!this.oDetail4Dialog) {
+              this.oDetail4Dialog = await Fragment.load({
+                id: oView.getId(),
+                name: 'sap.ui.yesco.mvc.view.overviewAttendance.fragment.DialogDetail4',
+                controller: this,
+              });
+
+              oView.addDependent(this.oDetail4Dialog);
+            }
+
+            oDialog = this.oDetail4Dialog;
+            this.oDetail4Dialog.open();
+            break;
+          case 'X2':
+            if (!this.oDetail5Dialog) {
+              this.oDetail5Dialog = await Fragment.load({
+                id: oView.getId(),
+                name: 'sap.ui.yesco.mvc.view.overviewAttendance.fragment.DialogDetail5',
+                controller: this,
+              });
+
+              oView.addDependent(this.oDetail5Dialog);
+            }
+
+            oDialog = this.oDetail5Dialog;
+            this.oDetail5Dialog.open();
+            break;
           default:
             break;
         }
+
+        $('#fusioncharts-tooltip-element').hide();
 
         return oDialog;
       },
@@ -323,8 +356,11 @@ sap.ui.define(
         try {
           oDialog = await this.openDialog(mPayload.Headty);
 
-          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.PA), _.get(mPayload, 'Entity') === 'A' ? 'HeadCountDetail' : 'HeadCountEntRetDetail', { Zyear: '2022', ..._.omit(mPayload, 'Entity') });
+          const mSearchConditions = oViewModel.getProperty('/searchConditions');
+          const sDetailEntity = _.chain(ChartsSetting.CHART_TYPE).find({ Headty: mPayload.Headty }).get('DetailEntity').value();
+          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), sDetailEntity, { ..._.set(mSearchConditions, 'Datum', moment(mSearchConditions.Datum).hours(9).toDate()), ..._.pick(mPayload, ['Headty', 'Discod']) });
 
+          oViewModel.setProperty('/dialog/param', mPayload);
           oViewModel.setProperty('/dialog/rowCount', Math.min(aDetailData.length, 12));
           oViewModel.setProperty('/dialog/totalCount', _.size(aDetailData));
           oViewModel.setProperty(
@@ -339,7 +375,7 @@ sap.ui.define(
           });
         } finally {
           oViewModel.setProperty('/dialog/busy', false);
-          oDialog.getContent()[0].getItems()[0].setFirstVisibleRow();
+          setTimeout(() => oDialog.getContent()[1].getItems()[0].setFirstVisibleRow(), 100);
         }
       },
 
@@ -394,6 +430,21 @@ sap.ui.define(
         this.oDetail1Dialog.close();
       },
 
+      onPressDetail2DialogClose() {
+        this.oDetail2Dialog.close();
+      },
+
+      onPressDetail3DialogClose() {
+        this.oDetail3Dialog.close();
+      },
+
+      onPressDetail4DialogClose() {
+        this.oDetail4Dialog.close();
+      },
+      onPressDetail5DialogClose() {
+        this.oDetail5Dialog.close();
+      },
+
       onPressEmployeeRow(oEvent) {
         const sHost = window.location.href.split('#')[0];
         const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
@@ -401,12 +452,74 @@ sap.ui.define(
         window.open(`${sHost}#/employeeView/${mRowData.Pernr}`, '_blank', 'width=1400,height=800');
       },
 
+      async onPressEmployee2Row(oEvent) {
+        const oViewModel = this.getViewModel();
+        let oDialog;
+
+        oViewModel.setProperty('/dialog/busy', true);
+
+        try {
+          const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
+
+          oDialog = await this.openDialog('X2');
+
+          const sDiscod = oViewModel.getProperty('/dialog/param/Discod');
+          const sAwart = _.includes(['3', '4'], sDiscod) ? '2010' : '2000';
+          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'TimeOverviewDetail5', { ..._.pick(mRowData, ['Pernr', 'Begda', 'Endda']), Awart: sAwart });
+
+          oViewModel.setProperty('/dialog/sub/rowCount', Math.min(aDetailData.length, 12));
+          oViewModel.setProperty('/dialog/sub/totalCount', _.size(aDetailData));
+          oViewModel.setProperty(
+            '/dialog/sub/list',
+            _.map(aDetailData, (o, i) => ({ Idx: ++i, ...o }))
+          );
+        } catch (oError) {
+          this.debug('Controller > m/overviewAttendance Main > onPressEmployee2Row Error', oError);
+
+          AppUtils.handleError(oError, {
+            onClose: () => oDialog.close(),
+          });
+        } finally {
+          oViewModel.setProperty('/dialog/busy', false);
+        }
+      },
+
+      async onPressEmployee3Row(oEvent) {
+        const oViewModel = this.getViewModel();
+        let oDialog;
+
+        oViewModel.setProperty('/dialog/busy', true);
+
+        try {
+          const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
+
+          oDialog = await this.openDialog('X1');
+
+          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'TimeOverviewDetail4', { ..._.pick(mRowData, ['Pernr', 'Begda', 'Endda']) });
+
+          oViewModel.setProperty('/dialog/sub/rowCount', Math.min(aDetailData.length, 12));
+          oViewModel.setProperty('/dialog/sub/totalCount', _.size(aDetailData));
+          oViewModel.setProperty(
+            '/dialog/sub/list',
+            _.map(aDetailData, (o, i) => ({ Idx: ++i, ...o }))
+          );
+        } catch (oError) {
+          this.debug('Controller > m/overviewAttendance Main > onPressEmployee3Row Error', oError);
+
+          AppUtils.handleError(oError, {
+            onClose: () => oDialog.close(),
+          });
+        } finally {
+          oViewModel.setProperty('/dialog/busy', false);
+        }
+      },
+
       onPressDetailExcelDownload(oEvent) {
         const oTable = oEvent.getSource().getParent().getParent().getParent();
         const aTableData = this.getViewModel().getProperty('/dialog/list');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_28040'); // 근태현황상세
 
-        TableUtils.export({ oTable, aTableData, sFileName, aDateProps: ['Datum'] });
+        TableUtils.export({ oTable, aTableData, sFileName, aDateProps: ['Tmdat'] });
       },
 
       /*****************************************************************
@@ -419,7 +532,7 @@ sap.ui.define(
 // eslint-disable-next-line no-unused-vars
 function callDetail(sArgs) {
   const oController = sap.ui.getCore().byId('container-ehr---m_overviewAttendance').getController();
-  const aProps = ['Headty', 'Discod', 'Disyear'];
+  const aProps = ['Headty', 'Discod'];
   const aArgs = _.split(sArgs, ',');
   const mPayload = _.zipObject(_.take(aProps, aArgs.length), aArgs);
 

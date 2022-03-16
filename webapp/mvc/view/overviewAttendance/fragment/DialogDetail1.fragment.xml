@@ -21,7 +21,13 @@
                         </m:HBox>
                     </extension>
                     <columns>
-                        <Column width="15%" filterProperty="OrgtxD" sortProperty="OrgtxD">
+                        <Column width="4%" filterProperty="Idx" sortProperty="Idx">
+                            <m:Label text="No."/>
+                            <template>
+                                <m:Text text="{Idx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                            </template>
+                        </Column>
+                        <Column width="12%" filterProperty="OrgtxD" sortProperty="OrgtxD">
                             <m:Label text="{i18n>LABEL_28034}"/>
                             <template>
                                 <m:Text text="{OrgtxD}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
@@ -54,7 +60,7 @@
                         <Column width="auto" filterProperty="Datum" sortProperty="Datum">
                             <m:Label text="{i18n>LABEL_00170}"/>
                             <template>
-                                <m:Text text="{path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date'}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                                <m:Text text="{path: 'Tmdat', type: 'sap.ui.yesco.mvc.model.type.Date'}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
                         <Column width="auto" filterProperty="Atext" sortProperty="Atext">

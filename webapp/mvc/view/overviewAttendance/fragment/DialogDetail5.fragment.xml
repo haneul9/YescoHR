@@ -8,12 +8,12 @@
                 <custom:Placeholder />
             </m:VBox>
             <m:VBox class="dialog-content-table" visible="{= !${/dialog/busy} }">
-                <Table width="100%" selectionMode="None" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/list}" visibleRowCount="{/dialog/rowCount}" noData="{i18n>MSG_00001}">
+                <Table width="100%" selectionMode="None" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/sub/list}" visibleRowCount="{/dialog/sub/rowCount}" noData="{i18n>MSG_00001}">
                     <extension>
                         <m:HBox class="header-wrap" justifyContent="SpaceBetween">
                             <m:HBox class="header" alignItems="Center">
                                 <m:Title level="H3" text="{i18n>LABEL_28033}" class="sapUiSmallMarginEnd" />
-                                <m:Text text="total {/dialog/totalCount}" />
+                                <m:Text text="total {/dialog/sub/totalCount}" />
                             </m:HBox>
                             <m:HBox>
                                 <m:Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressDetailExcelDownload" />
@@ -42,7 +42,7 @@
                         <Column width="auto" filterProperty="Ename" sortProperty="Ename">
                             <m:Label text="{i18n>LABEL_00210}"/>
                             <template>
-                                <m:Link text="{Ename}" class="showLine" width="100%" textAlign="Center" press=".onPressEmployee3Row" />
+                                <m:Link text="{Ename}" class="showLine" width="100%" textAlign="Center" press=".onPressEmployeeRow" />
                             </template>
                         </Column>
                         <Column width="auto" filterProperty="Zzjikgbtx" sortProperty="Zzjikgbtx">
@@ -57,34 +57,22 @@
                                 <m:Text text="{Zzjikchtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
-                        <Column width="auto" filterProperty="Nomtot" sortProperty="Nomtot">
-                            <m:Label text="{i18n>LABEL_32004}"/>
+                        <Column width="auto" filterProperty="Datum" sortProperty="Datum">
+                            <m:Label text="{i18n>LABEL_00170}"/>
                             <template>
-                                <m:Text text="{ path: 'Nomtot', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                                <m:Text text="{path: 'Tmdat', type: 'sap.ui.yesco.mvc.model.type.Date'}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
-                        <Column width="auto" filterProperty="Holtot" sortProperty="Holtot">
-                            <m:Label text="OT"/>
+                        <Column width="auto" filterProperty="Atext" sortProperty="Atext">
+                            <m:Label text="{i18n>LABEL_04010}"/>
                             <template>
-                                <m:Text text="{ path: 'Holtot', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                                <m:Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
-                        <Column width="auto" filterProperty="Dedhr" sortProperty="Dedhr">
-                            <m:Label text="{i18n>LABEL_01123}"/>
+                        <Column width="15%" filterProperty="Atrsn" sortProperty="Atrsn">
+                            <m:Label text="{i18n>LABEL_00154}"/>
                             <template>
-                                <m:Text text="{ path: 'Dedhr', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                            </template>
-                        </Column>
-                        <Column width="auto" filterProperty="Holhr" sortProperty="Holhr">
-                            <m:Label text="{i18n>LABEL_13028}"/>
-                            <template>
-                                <m:Text text="{ path: 'Holhr', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                            </template>
-                        </Column>
-                        <Column width="auto" filterProperty="Overyn" sortProperty="Overyn">
-                            <m:Label text="{i18n>LABEL_28053}"/>
-                            <template>
-                                <m:Text text="{Overyn}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                                <m:Text text="{Atrsn}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
                     </columns>
@@ -92,7 +80,7 @@
             </m:VBox>
         </m:content>
         <m:buttons>
-            <m:Button text="{i18n>LABEL_00115}" press=".onPressDetail3DialogClose"/>
+            <m:Button text="{i18n>LABEL_00115}" press=".onPressDetail5DialogClose"/>
         </m:buttons>
     </m:Dialog>
 </core:FragmentDefinition>

@@ -12,7 +12,7 @@
         <ObjectStatus text="{i18n>LABEL_32008}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication05" />
       </HBox>
     </HBox>
-    <table:Table id="orgTable" selectionMode="None" cellClick=".onOrgClick" fixedColumnCount="3" fixedBottomRowCount="1" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/detail/org/list}" visibleRowCount="{= ${/detail/org/rowCount} > 10 ? 10 : ${/detail/org/rowCount} }" noData="{i18n>MSG_00001}">
+    <table:Table id="orgTable" selectionMode="None" fixedBottomRowCount="1" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/detail/org/list}" visibleRowCount="{= ${/detail/org/rowCount} > 10 ? 10 : ${/detail/org/rowCount} }" noData="{i18n>MSG_00001}">
       <table:columns>
         <table:Column width="50px">
           <table:multiLabels>
@@ -40,7 +40,11 @@
             <Label text="{i18n>LABEL_00224}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Orgtx}" width="100%" textAlign="Center" />
+            <Link width="100%" class="sapMLnkLabel" textAlign="Center" press=".onOrgClick" text="{Orgtx}">
+              <layoutData>
+                <FlexItemData growFactor="1" />
+              </layoutData>
+            </Link>
           </table:template>
         </table:Column>
         <table:Column width="80px">
