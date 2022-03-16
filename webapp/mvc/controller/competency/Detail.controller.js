@@ -390,14 +390,14 @@ sap.ui.define(
           await MessageBox.success(this.getBundleText('MSG_00007', label), {
             onClose: () => {
               if (!bIsSave) this.getRouter().navTo(sListRouteName);
-              oViewModel.setProperty('/busy', false);
             },
           });
         } catch (oError) {
           this.debug(`Controller > ${sListRouteName} Detail > createProcess Error`, oError);
 
-          oViewModel.setProperty('/busy', false);
           AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
         }
       },
 
