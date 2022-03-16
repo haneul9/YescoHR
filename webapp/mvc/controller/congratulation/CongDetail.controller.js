@@ -843,7 +843,7 @@ sap.ui.define(
           appno: sAppno,
           apptp: this.getApprovalType(),
           maxFileCount: 10,
-          fileTypes: ['ppt', 'pptx', 'doc', 'docx', 'xls', 'xlsx', 'jpg', 'jpeg', 'bmp', 'gif', 'png', 'pdf'],
+          fileTypes: ['ppt', 'pptx', 'doc', 'docx', 'xls', 'xlsx', 'jpg', 'jpeg', 'txt', 'bmp', 'gif', 'png', 'pdf'],
         });
       },
     });
