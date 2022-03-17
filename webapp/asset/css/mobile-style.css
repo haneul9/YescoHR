@@ -21,8 +21,6 @@
 .sapUiSizeCompact .sapMInputBase:not(.sapMTextArea) {height:48px !important}
 .sapUiSizeCompact .portlet .sapMInputBase:not(.sapMTextArea) {height:38px !important}
 
-.sapUiMedia-StdExt-Phone .contents {margin:0 auto; max-width:100%; min-width:100%; padding-bottom:20px}
-
 .sapMPageFooter {border-top:8px solid #ebeef2}
 
 .sapUiMedia-StdExt-Phone .sapMPageHeader {display: block;text-align:center;height: 3.0rem;line-height:3.0rem;background-color:#fff;}
@@ -43,13 +41,9 @@
 .sapUiMedia-StdExt-Phone .sapMPage:not([data-form-style=request]) .sapUiLayoutCSSGrid.form-grid > * {height:100%; min-height:34px; height:34px}
 .sapUiMedia-StdExt-Phone .sapMPage:not([data-form-style=request]) .sapUiLayoutCSSGrid.form-grid .sapMFlexBox .sapMFlexItem {min-height:34px!important}
 
-.sapUiMedia-StdExt-Phone .contents {width:100%; max-width:inherit; min-width:auto; margin-top:0; padding-top:20px; padding-bottom:0px}
-.sapUiMedia-StdExt-Phone .contents > .sapMVBox + .sapMVBox  {border-top:8px solid #ebeef2}
-.sapUiMedia-StdExt-Phone .contents h2.sapMTitle {display:flex; padding-bottom:8px; margin-bottom:8px; font-size:20px; font-weight:700; border-bottom:1px solid #000}
-
 .sapUiMedia-StdExt-Phone .app-menu-toolbar {width:100%; border-top:1px solid #DFE2EB}
 
-.sapUiMedia-StdExt-Phone .contents {width:100%; max-width:inherit; min-width:auto; margin-top:0; padding-top:20px; padding-bottom:0px}
+.sapUiMedia-StdExt-Phone .contents {margin:0 auto; width:100%; max-width:inherit; min-width:auto; height:100%; padding-top:20px; padding-bottom:0px}
 .sapUiMedia-StdExt-Phone .contents > .sapMVBox + .sapMVBox {border-top:8px solid #ebeef2}
 .sapUiMedia-StdExt-Phone .contents > .header-wrap {padding-top:0}
 .sapUiMedia-StdExt-Phone .contents h2.sapMTitle {display:flex; padding-bottom:8px; margin-bottom:8px; font-size:20px; font-weight:700; border-bottom:1px solid #000}
@@ -126,6 +120,7 @@ html.sap-phone .sapMDialog.sapMDialogStretched {border:none; box-shadow:0; borde
 .sapMListHdrText, .sapUiSizeCompact .sapMTB.sapMTBHeader-CTX, .sapMPopoverHeader .sapMBarMiddle>.sapMBarPH {height:48px; line-height:48px; padding-left:20px; padding-right:20px; border-bottom:0px solid #cccccc; font-size:16px}
 .sapUiMedia-Std-Phone .sapUiSizeCompact.notification-popover .sapMFlexBox {align-self:center; height:48px!important}
 .sapUiMedia-Std-Phone .sapUiSizeCompact.notification-popover .sapMPopoverHeader .sapMTitle {vertical-align:middle; font-size:16px}
+.mobile-logout-button {margin-right:-11px}
 
 /* mobile search popover */
 .sapMPopover.full-popover.search {top:50%!important; background-color:#F4F5F7}
