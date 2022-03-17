@@ -141,6 +141,11 @@
         
         { "pattern": "m/commuteConfirm", "name": "m/commuteConfirm", "target": "m/commuteConfirm" },
 
+        { "pattern": "driveRecord", "name": "driveRecord", "target": "driveRecord" },
+        { "pattern": "driveRecord/{oDataKey}", "name": "driveRecord-detail", "target": "driveRecordDetail" },
+        { "pattern": "h/driveRecord", "name": "h/driveRecord", "target": "driveRecord" },
+        { "pattern": "h/driveRecord/{oDataKey}", "name": "h/driveRecord-detail", "target": "driveRecordDetail" },
+
         { "pattern": "educationHistory", "name": "educationHistory", "target": "educationHistory" },
         { "pattern": "educationHistory/{oDataKey}", "name": "educationHistory-detail", "target": "educationHistoryDetail" },
         { "pattern": "h/educationHistory", "name": "h/educationHistory", "target": "educationHistory" },
@@ -303,6 +308,9 @@
         "m/commuteConfirm": { "viewId": "m_commuteConfirm", "viewPath": "sap.ui.yesco.mvc.view.commuteConfirm", "viewName": "commuteConfirm" },
         
         "consolidAppBox": { "viewId": "consolidAppBox", "viewPath": "sap.ui.yesco.mvc.view.consolidAppBox", "viewName": "ConsolidAppBox" },
+
+        "driveRecord": { "viewId": "driveRecord", "viewPath": "sap.ui.yesco.mvc.view.driveRecord", "viewName": "DriveRecord" },
+        "driveRecordDetail": { "viewId": "driveRecordDetail", "viewPath": "sap.ui.yesco.mvc.view.driveRecord", "viewName": "DriveRecordDetail" },
 
         "educationHistory": { "viewId": "educationHistory", "viewPath": "sap.ui.yesco.mvc.view.educationHistory", "viewName": "EducationHistory" },
         "educationHistoryDetail": { "viewId": "educationHistoryDetail", "viewPath": "sap.ui.yesco.mvc.view.educationHistory", "viewName": "EducationHistoryDetail" },

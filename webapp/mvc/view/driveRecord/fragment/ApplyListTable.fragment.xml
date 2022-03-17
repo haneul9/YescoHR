@@ -1,0 +1,47 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:table="sap.ui.table"
+  xmlns:core="sap.ui.core">
+  <table:Table id="driveTable" class="row-link" rows="{/List}" visibleRowCount="{/listInfo/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
+    <table:columns>
+      <table:Column width="auto" sortProperty="DatumTxt" filterProperty="DatumTxt">
+        <Label text="{i18n>LABEL_33006}"/>
+        <table:template>
+          <Text text="{DatumTxt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="auto" sortProperty="Drvkm" filterProperty="Drvkm">
+        <Label text="{i18n>LABEL_33007}"/>
+        <table:template>
+          <Text text="{Drvkm}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="auto" sortProperty="DevtyTxt" filterProperty="DevtyTxt">
+        <Label text="{i18n>LABEL_17006}"/>
+        <table:template>
+          <Text text="{DevtyTxt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="auto" sortProperty="Zbigo" filterProperty="Zbigo">
+        <Label text="{i18n>LABEL_00163}"/>
+        <table:template>
+          <Text text="{Zbigo}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="auto" sortProperty="Regdt" filterProperty="Regdt">
+        <Label text="{i18n>LABEL_00321}"/>
+        <table:template>
+          <Text text="{
+              path: 'Regdt',
+              type: 'sap.ui.yesco.mvc.model.type.Date'
+          }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="auto" sortProperty="RegprZzjikgb" filterProperty="RegprZzjikgb">
+        <Label text="{i18n>LABEL_08004}"/>
+        <table:template>
+          <Text text="{RegprZzjikgb}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+    </table:columns>
+  </table:Table>
+</core:FragmentDefinition>

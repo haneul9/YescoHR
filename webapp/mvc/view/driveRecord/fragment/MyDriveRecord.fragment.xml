@@ -1,0 +1,20 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <VBox class="hCardBox summary-box" width="33%" busyIndicatorDelay="0" busy="{/busy}">
+        <VBox>
+            <HBox justifyContent="SpaceBetween" class="title">
+                <Title level="H2" text="{i18n>LABEL_33002}" />
+            </HBox>
+            <HBox class="mt-50-px">
+                <VBox width="40%" class="summary-info">
+                    <Label design="Bold" text="{i18n>LABEL_25005}" />
+                    <ObjectStatus text="{/Total/Carno}" state="Indication05" />
+                </VBox>
+                <VBox class="summary-info">
+                    <Label design="Bold" text="{i18n>LABEL_33004}" />
+                    <ObjectStatus text="{/Total/Datum}" state="Indication05" />
+                </VBox>
+            </HBox>
+        </VBox>
+    </VBox>
+</core:FragmentDefinition>
