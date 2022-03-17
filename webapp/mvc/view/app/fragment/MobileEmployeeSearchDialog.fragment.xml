@@ -2,42 +2,43 @@
   xmlns:core="sap.ui.core">
   <Dialog contentWidth="100%" contentHeight="300px" showHeader="false" verticalScrolling="false" busy="{busy}" busyIndicatorDelay="0" class="half-dialog">
     <content>
-      <VBox>
-        <Input selectedKey="{searchField}" id="emp-search-field" placeholder="{i18n>LABEL_00211}" width="100%" startSuggestion="2" suggest=".onSuggest" class="mb-20-px" />
+      <VBox height="100%">
+        <SearchField id="emp-search-field" placeholder="{i18n>LABEL_00211}" width="100%" liveChange=".onLiveChange" class="mb-20-px" />
         <ScrollContainer horizontal="false" vertical="true" width="100%" height="100%">
-          <layoutData>
-            <FlexItemData maxHeight="300px" />
-          </layoutData>
           <content>
             <List id="emp-search-list" items="{ path: 'employees', templateShareable: false }" rememberSelections="false" showSeparators="None" noDataText="{i18n>MSG_00001}" class="emp-search-list">
               <CustomListItem>
                 <HBox alignItems="Center" height="30px">
                   <Image src="{Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="24px" height="24px">
                     <layoutData>
-                      <FlexItemData baseSize="10%" />
+                      <FlexItemData baseSize="30px" maxWidth="30px" />
                     </layoutData>
                   </Image>
                   <Text text="{Ename}" tooltip="{Ename} {Pernr} {Fulln} {Zzjikgbt}" wrapping="false" class="name">
                     <layoutData>
-                      <FlexItemData baseSize="25%" />
+                      <FlexItemData baseSize="70px" maxWidth="70px" />
                     </layoutData>
                   </Text>
                   <Text text="{Pernr}" tooltip="{Ename} {Pernr} {Fulln} {Zzjikgbt}" wrapping="false">
                     <layoutData>
-                      <FlexItemData baseSize="20%" />
+                      <FlexItemData baseSize="50px" maxWidth="50px" />
                     </layoutData>
                   </Text>
                   <Text text="{Fulln}" tooltip="{Ename} {Pernr} {Fulln} {Zzjikgbt}" wrapping="false">
                     <layoutData>
-                      <FlexItemData baseSize="30%" />
+                      <FlexItemData growFactor="1" maxWidth="calc(100% - 246px)" styleClass="pr-4-px" />
                     </layoutData>
                   </Text>
                   <Text text="{Zzjikgbt}" tooltip="{Ename} {Pernr} {Fulln} {Zzjikgbt}" wrapping="false">
                     <layoutData>
-                      <FlexItemData baseSize="15%" />
+                      <FlexItemData baseSize="60px" maxWidth="60px" />
                     </layoutData>
                   </Text>
-                  <Button type="Transparent" class="icon-button" icon="asset/image/icon_phone.svg" />
+                  <Button type="Transparent" class="icon-button" icon="asset/image/icon_phone.svg" press=".onPress">
+                    <layoutData>
+                      <FlexItemData baseSize="32px" maxWidth="32px" />
+                    </layoutData>
+                  </Button>
                 </HBox>
               </CustomListItem>
             </List>

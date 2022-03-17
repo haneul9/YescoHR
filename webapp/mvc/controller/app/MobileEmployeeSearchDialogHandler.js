@@ -7,6 +7,7 @@ sap.ui.define(
     'sap/ui/yesco/common/Debuggable',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/model/type/Date', // XML expression binding용 type preloading
     'sap/ui/yesco/mvc/model/type/Time',
   ],
@@ -17,7 +18,8 @@ sap.ui.define(
     JSONModel,
     Debuggable,
     Client,
-    ServiceNames
+    ServiceNames,
+    MessageBox
   ) => {
     'use strict';
 
@@ -64,9 +66,9 @@ sap.ui.define(
         this.setBusy(false);
       },
 
-      async showSuggestionData(sTerm) {
+      async showSuggestionData(sValue) {
         this.setBusy(true);
-        const aEmployees = await this.readSuggestionData(sTerm);
+        const aEmployees = await this.readSuggestionData(sValue);
         aEmployees.forEach((o) => {
           o.Pernr = o.Pernr.replace(/^0+/, '');
         });
@@ -75,57 +77,44 @@ sap.ui.define(
         this.setBusy(false);
       },
 
-      async readSuggestionData(sTerm) {
+      async readSuggestionData(sValue) {
         const oModel = this.oController.getModel(ServiceNames.COMMON);
         const mFilters = {
           Stat2: '3',
           Accty: 'Z',
         };
 
-        if (/[0-9]+/.test(sTerm)) {
-          mFilters.Pernr = sTerm;
+        if (/^[0-9]+$/.test(sValue)) {
+          mFilters.Pernr = sValue;
         } else {
-          mFilters.Ename = sTerm;
+          mFilters.Ename = sValue;
         }
 
         return Client.getEntitySet(oModel, 'EmpSearchResult', mFilters);
       },
 
-      onSuggest(oEvent) {
-        const sTerm = oEvent.getParameter('suggestValue');
-        this.showSuggestionData(sTerm);
-
-        // const oInput = oEvent.getSource();
-        // this._oOpenSearchProvider.suggest(sTerm, (sValue, aSuggestions) => {
-        //   if (sValue === oInput.getValue()) {
-        //     oInput.destroySuggestionItems();
-        //     aSuggestions.forEach((sText) => {
-        //       oInput.addSuggestionItem(new Item({ text: sText }));
-        //     });
-        //   }
-        // });
-      },
-
       onLiveChange(oEvent) {
-        const sValue = oEvent.getParameter('newValue');
-        let aFilters = [];
-        if (sValue) {
-          aFilters = [
-            new Filter(
-              [
-                new Filter('Ename', (sEname) => {
-                  return (sEname || '').toUpperCase().indexOf(sValue.toUpperCase()) > -1;
-                }),
-                new Filter('Pernr', (sPernr) => {
-                  return (sPernr || '').toUpperCase().indexOf(sValue.toUpperCase()) > -1;
-                }),
-              ],
-              false
-            ),
-          ];
+        if (this.liveChangeInterval) {
+          clearInterval(this.liveChangeInterval);
         }
 
-        this.oController.byId('emp-search-list').getBinding('items').filter(aFilters);
+        const sValue = $.trim(oEvent.getParameter('newValue'));
+        if (!sValue || sValue.length < 2) {
+          this.oDialogModel.setProperty('/employees', []);
+          return;
+        }
+
+        this.liveChangeInterval = setInterval(() => {
+          clearInterval(this.liveChangeInterval);
+          this.showSuggestionData(sValue);
+        }, 500);
+      },
+
+      onPress(oEvent) {
+        const oContext = oEvent.getSource().getBindingContext();
+        const { Ename, Pernr, Fulln, Zzjikgbt } = oContext.getProperty();
+
+        MessageBox.information(`${Ename} ${Pernr} ${Fulln} ${Zzjikgbt}`);
       },
 
       onDialogToggle() {

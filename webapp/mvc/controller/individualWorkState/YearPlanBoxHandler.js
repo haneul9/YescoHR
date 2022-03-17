@@ -34,12 +34,9 @@ sap.ui.define(
         // 근태유형 색상
         const aTimeTypeList = await Client.getEntitySet(oModel, 'TimeTypeLegend', { Werks: sWerks });
 
-        oViewModel.setProperty(
-          '/TimeTypeList',
-          _.each(aTimeTypeList, (e) => {
-            e.classNames = e.Colty;
-          })
-        );
+        _.forEach(aTimeTypeList, (e) => {
+          oViewModel.setProperty(`/TimeTypes/${e.Colty}`, true);
+        });
         oViewModel.setProperty(
           '/yearPlan',
           _.each(aList1, (e) => {

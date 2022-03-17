@@ -87,7 +87,7 @@ sap.ui.define(
       },
 
       async savePushToken() {
-        if (typeof window.YescoApp === undefined) {
+        if (typeof window.YescoApp === 'undefined') {
           return;
         }
 
