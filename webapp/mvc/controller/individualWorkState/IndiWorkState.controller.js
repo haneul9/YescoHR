@@ -65,7 +65,7 @@ sap.ui.define(
             Ottime: 0,
             WorkTime: 0,
           },
-          TimeTypeList: [],
+          TimeTypes: {},
           DailyWorkList: [],
           DailyWorkCount: 1,
           yearPlan: [],
