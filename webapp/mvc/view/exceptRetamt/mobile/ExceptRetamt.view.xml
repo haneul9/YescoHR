@@ -1,0 +1,29 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.exceptRetamt.mobile.ExceptRetamt"
+  xmlns="sap.m"
+	xmlns:grid="sap.ui.layout.cssgrid"
+	xmlns:core="sap.ui.core"
+	xmlns:custom="sap.ui.yesco.control"
+	xmlns:mvc="sap.ui.core.mvc">
+	<Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+		<VBox class="contents">
+			<core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.OverviewListHeader" type="XML" class="sapUiSmallMarginBottom"/>
+			<custom:MobileScrollContainer horizontal="false" vertical="true">
+				<List items="{path: '/list'}" busyIndicatorDelay="0" busy="{/busy}" class="list-wrap wrap">
+					<CustomListItem type="Active" press=".onSelectRow">
+						<grid:CSSGrid gridTemplateColumns="2fr 2fr" gridGap="1px 0">
+							<VBox alignItems="Start">
+								<ObjectStatus text="{ path: 'Paydt', type: 'sap.ui.yesco.mvc.model.type.Date'}" 
+											  state="{ path: 'Ocrsn', formatter: '.onChangeIndication' }"/>
+								<ObjectStatus text="{Ocrtx}" 
+											  state="{ path: 'Ocrsn', formatter: '.onChangeIndication' }"/>
+							</VBox>
+							<VBox alignItems="End" justifyContent="Center">							
+								<Text text="{ path: 'Bet06', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="End" class="font-20-px font-bold"></Text>
+							</VBox>								
+						</grid:CSSGrid>
+					</CustomListItem>
+				</List>
+			</custom:MobileScrollContainer>
+		</VBox>
+	</Page>
+</mvc:View>
