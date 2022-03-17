@@ -126,6 +126,7 @@ html.sap-phone .sapMDialog.sapMDialogStretched {border:none; box-shadow:0; borde
 .sapMListHdrText, .sapUiSizeCompact .sapMTB.sapMTBHeader-CTX, .sapMPopoverHeader .sapMBarMiddle>.sapMBarPH {height:48px; line-height:48px; padding-left:20px; padding-right:20px; border-bottom:0px solid #cccccc; font-size:16px}
 .sapUiMedia-Std-Phone .sapUiSizeCompact.notification-popover .sapMFlexBox {align-self:center; height:48px!important}
 .sapUiMedia-Std-Phone .sapUiSizeCompact.notification-popover .sapMPopoverHeader .sapMTitle {vertical-align:middle; font-size:16px}
+.mobile-logout-button {margin-right:-11px}
 
 /* mobile search popover */
 .sapMPopover.full-popover.search {top:50%!important; background-color:#F4F5F7}
