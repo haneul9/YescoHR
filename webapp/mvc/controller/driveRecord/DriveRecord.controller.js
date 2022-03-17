@@ -45,8 +45,8 @@ sap.ui.define(
           busy: false,
           Data: [],
           UseList: [
-            { Zcode: 'A', Ztext: this.getBundleText('LABEL_33013') }, // 출퇴근
-            { Zcode: 'A', Ztext: this.getBundleText('LABEL_33014') }, // 업무
+            { Zcode: 'A', Ztext: this.getBundleText('LABEL_34013') }, // 출퇴근
+            { Zcode: 'A', Ztext: this.getBundleText('LABEL_34014') }, // 업무
           ],
           Total: {},
           mMyDriveRecord: {},
@@ -313,7 +313,7 @@ sap.ui.define(
       onPressExcelDownload() {
         const oTable = this.byId(this.DRIVE_TABLE_ID);
         const aTableData = this.getViewModel().getProperty('/List');
-        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_33001'); // {차량운행기록부}_목록
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_34001'); // {차량운행기록부}_목록
 
         TableUtils.export({ oTable, aTableData, sFileName });
       },

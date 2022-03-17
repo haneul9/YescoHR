@@ -4,13 +4,13 @@
   <table:Table id="driveTable" class="row-link" rows="{/List}" visibleRowCount="{/listInfo/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
     <table:columns>
       <table:Column width="auto" sortProperty="DatumTxt" filterProperty="DatumTxt">
-        <Label text="{i18n>LABEL_33006}"/>
+        <Label text="{i18n>LABEL_34006}"/>
         <table:template>
           <Text text="{DatumTxt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Drvkm" filterProperty="Drvkm">
-        <Label text="{i18n>LABEL_33007}"/>
+        <Label text="{i18n>LABEL_34007}"/>
         <table:template>
           <Text text="{Drvkm}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>

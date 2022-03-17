@@ -8,7 +8,7 @@
             <Button type="Transparent" press=".onSearch" class="icon-button search" />
         </HBox>
         <grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="8px">
-            <Label text="{i18n>LABEL_33003}" design="Bold" />
+            <Label text="{i18n>LABEL_34003}" design="Bold" />
             <custom:DateRangeSelection dateValue="{ path: '/search/driveDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/search/driveSecondDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" />
             <Label text="{i18n>LABEL_00321}" design="Bold" />
             <custom:DateRangeSelection dateValue="{ path: '/search/date', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/search/secondDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" />

@@ -2,7 +2,7 @@
     xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:core="sap.ui.core"
     xmlns:custom="sap.ui.yesco.control">
-    <Dialog title="{i18n>LABEL_33005}" contentWidth="1000px" contentHeight="auto">
+    <Dialog title="{i18n>LABEL_34005}" contentWidth="1000px" contentHeight="auto">
         <buttons>
             <Button text="{i18n>LABEL_00106}" type="Emphasized" press=".onRegistBtn" />
             <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" />
@@ -15,18 +15,18 @@
                     <VBox>
                         <Text text="{/dialog/Carno}"/>
                     </VBox>
-                    <Label text="{i18n>LABEL_33008}" />
+                    <Label text="{i18n>LABEL_34008}" />
                     <VBox alignItems="End">
                         <Input value="{
                             path: '/dialog/Begkm',
                             type: 'sap.ui.yesco.mvc.model.type.Currency'
                         }" textAlign="End" maxLength="11" liveChange=".onMileage" class="required"/>
                     </VBox>
-                    <Label text="{i18n>LABEL_33009}"/>
+                    <Label text="{i18n>LABEL_34009}"/>
                     <VBox>
                         <custom:DatePicker maxDate="{/maxDate}" width="88%" dateValue="{ path: '/dialog/Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="required"/>
                     </VBox>
-                    <Label text="{i18n>LABEL_33010}"/>
+                    <Label text="{i18n>LABEL_34010}"/>
                     <VBox alignItems="End">
                         <Input value="{
                             path: '/dialog/Endkm',
@@ -39,7 +39,7 @@
                             <core:Item text="{Ztext}" key="{Zcode}" />
                         </ComboBox>
                     </VBox>
-                    <Label text="{i18n>LABEL_33011}"/>
+                    <Label text="{i18n>LABEL_34011}"/>
                     <VBox alignItems="End">
                         <Input value="{
                             path: '/dialog/Drvkm',
@@ -53,7 +53,7 @@
                             <grid:GridItemLayoutData gridColumn="2 / 5"/>
                         </layoutData>
                     </VBox>
-                    <Label text="{i18n>LABEL_33012}" visible="{= ${/dialog/New} !== 'O' }"/>
+                    <Label text="{i18n>LABEL_34012}" visible="{= ${/dialog/New} !== 'O' }"/>
                     <VBox visible="{= ${/dialog/New} !== 'O' }">
                         <Text text="{/dialog/Regdt} / {/dialog/Regtm}"/>
                     </VBox>
