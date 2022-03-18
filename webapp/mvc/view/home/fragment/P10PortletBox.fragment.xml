@@ -20,18 +20,18 @@
       <Button visible="{hasLink}" icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" press=".onPressLink" />
     </HBox>
     <HBox class="portlet-body">
-      <FlexBox width="37%" class="mt-10-px">
+      <HBox width="100%" class="no-data" visible="{= ${listCount} === 0 }">
+        <Text text="{i18n>MSG_01103}" />
+      </HBox>
+      <FlexBox width="37%" class="mt-10-px" visible="{= ${listCount} !== 0 }">
         <core:HTML content='&lt;div id="portlet-p10-chart-container"&gt;&lt;/div&gt;' />
       </FlexBox>
-      <VBox class="mt-10-px">
+      <VBox class="mt-10-px" visible="{= ${listCount} &gt; 0 }">
         <layoutData>
           <FlexItemData growFactor="1" maxWidth="63%" />
         </layoutData>
         <ScrollContainer>
-          <HBox width="100%" class="no-data" visible="{= ${listCount} === 0 }">
-            <Text text="{i18n>MSG_00001}" />
-          </HBox>
-          <VBox width="100%" height="100%" items="{list}" visible="{= ${listCount} &gt; 0 }" justifyContent="SpaceBetween">
+          <VBox width="100%" height="100%" items="{list}" justifyContent="SpaceBetween">
             <HBox width="100%" alignItems="Center">
               <core:Icon src="sap-icon://color-fill" width="16px" height="16px" class="pr-5-px">
                 <core:customData>
