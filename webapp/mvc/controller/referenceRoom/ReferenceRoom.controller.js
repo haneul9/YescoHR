@@ -5,7 +5,7 @@ sap.ui.define(
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/ComboEntry',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
@@ -15,7 +15,7 @@ sap.ui.define(
     MessageBox,
     AttachFileAction,
     AppUtils,
-    ComboEntry,
+    Client,
     ServiceNames,
     BaseController
   ) => {
@@ -28,53 +28,10 @@ sap.ui.define(
           busy: false,
           Hass: this.isHass(),
           FormData: {},
-          ManagerList: [
-            {
-              Atext: '인재개발팀',
-              Zname: '이수만 차장',
-            },
-            {
-              Atext: '인재개발팀',
-              Zname: '정재훈 과장',
-            },
-            {
-              Atext: '노경지원팀',
-              Zname: '이재훈 대리',
-            },
-          ],
-          ReferenceList: [
-            {
-              Stext: '예스코',
-              Child: [
-                // pretter 방지주석
-                { Stext: '인사' },
-                { Stext: '조직' },
-                { Stext: '근태' },
-                { Stext: '급여' },
-                {
-                  Stext: '복리후생',
-                  Child: [
-                    // pretter 방지주석
-                    { Stext: '경조금' },
-                    { Stext: '의료비' },
-                    { Stext: '학자금' },
-                    { Stext: '주택융자' },
-                    { Stext: '건강검진' },
-                    { Stext: '개인연금' },
-                    { Stext: '동호회' },
-                    { Stext: '차량유지비' },
-                  ],
-                },
-                { Stext: '평가' },
-                { Stext: '교육' },
-              ],
-            },
-          ],
-          AccType: [
-            { Zcode: '1', Ztext: 'ESS>의료비신청(4410)' },
-            { Zcode: '2', Ztext: 'HASS>의료비신청(8430)' },
-            { Zcode: '3', Ztext: 'ESS>의료비신청(4410)' },
-          ],
+          ManagerList: [],
+          TreeFullList: [],
+          ReferenceList: [],
+          AccType: [],
         };
       },
 
@@ -84,6 +41,8 @@ sap.ui.define(
         oViewModel.setData(this.initializeModel());
 
         try {
+          oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.COMMON, 'HelpInfoTab2')));
+
           oViewModel.setProperty('/FormData', {
             Title: '의료비',
             Menu: '예스코 > 복리후생 > 의료비',
@@ -97,27 +56,101 @@ sap.ui.define(
             C: '3',
           });
 
+          const aTree = await this.getReferenceRoom();
+          const tree = [];
+          const aTree2 = _.chain(aTree.HelpInfo1Nav.results)
+            .map((o) => _.omit(o, '__metadata'))
+            .map((e) => {
+              if (e.L4id) {
+                return { ...e, id: e.L4id, title: e.L4tx, use: e.L4use };
+              } else if (e.L3id) {
+                return { ...e, id: e.L3id, title: e.L3tx, use: e.L3use };
+              } else if (e.L2id) {
+                return { ...e, id: e.L2id, title: e.L2tx, use: e.L2use };
+              } else if (e.L1id) {
+                return { ...e, id: e.L1id, title: e.L1tx, use: e.L1use };
+              }
+            })
+            .value();
+          const aTree3 = _.keyBy(aTree2, 'id');
+          const aTree4 = _.groupBy(aTree2, (e) => {
+            return !!e.L4id ? 'L3id' : !!e.L3id ? 'L2id' : !!e.L2id ? 'L1id' : '';
+          });
+          debugger;
+          // $.each(aTree.HelpInfo1Nav.results, function (i, o) {
+          //   delete o.__metadata;
+
+          //   if (o.L4id) {
+          //     const mapId = [o.L1id, o.L2id, o.L3id].join();
+          //     if (treeMap[mapId]) {
+          //       treeMap[mapId].push($.extend(o, { title: o.L4txt }));
+          //     } else {
+          //       treeMap[mapId] = [$.extend(o, { title: o.L4txt })];
+          //     }
+          //   } else if (o.L3id) {
+          //     // eslint-disable-next-line no-redeclare
+          //     const mapId = [o.L1id, o.L2id, ''].join();
+          //     if (treeMap[mapId]) {
+          //       treeMap[mapId].push($.extend(o, { title: o.L3txt }));
+          //     } else {
+          //       treeMap[mapId] = [$.extend(o, { title: o.L3txt })];
+          //     }
+
+          //     mapId = [o.L1id, o.L2id, o.L3id].join();
+          //     if (!treeMap[mapId]) {
+          //       o.nodes = treeMap[mapId] = [];
+          //     }
+          //   } else if (o.L2id) {
+          //     // eslint-disable-next-line no-redeclare
+          //     const mapId = [o.L1id, '', ''].join();
+          //     if (treeMap[mapId]) {
+          //       treeMap[mapId].push($.extend(o, { title: o.L2txt }));
+          //     } else {
+          //       treeMap[mapId] = [$.extend(o, { title: o.L2txt })];
+          //     }
+
+          //     mapId = [o.L1id, o.L2id, ''].join();
+          //     if (!treeMap[mapId]) {
+          //       o.nodes = treeMap[mapId] = [];
+          //     }
+          //   } else {
+          //     // eslint-disable-next-line no-redeclare
+          //     const mapId = [o.L1id, '', ''].join();
+          //     o.title = o.L1txt;
+          //     o.nodes = treeMap[mapId] = [];
+          //     tree.push(o);
+          //   }
+          // });
+
+          oViewModel.setProperty('/TreeFullList', tree);
+          oViewModel.setProperty('/ReferenceList', tree);
+
           this.oDataChangeTree();
           this.settingsAttachTable();
-          // const oSessionData = this.getSessionData();
-          // const aComList = await this.areaList();
-          // oViewModel.setProperty('/CompanyCode', aComList);
-          // const aPartList = await this.partList();
-          // oViewModel.setProperty('/PartCode', aPartList);
-          // this.setYears();
-          // oViewModel.setProperty('/search', {
-          //   Werks: oSessionData.Werks,
-          //   Orgeh: _.get(aPartList, [0, 'Orgeh']),
-          //   Orgtx: _.get(aPartList, [0, 'Orgtx']),
-          //   Zyear: String(new Date().getFullYear()),
-          // });
-          // this.onSearch();
         } catch (oError) {
           this.debug(oError);
           AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/busy', false);
         }
+      },
+
+      // tree정보 다받아옴
+      async getReferenceRoom() {
+        const oModel = this.getModel(ServiceNames.COMMON);
+        const mAppointee = this.getAppointeeData();
+        const mPayLoad = {
+          Pernr: mAppointee.Pernr,
+          Werks: mAppointee.Werks,
+          Menid: this.getCurrentMenuId(),
+          Prcty: 'T',
+          HelpInfo1Nav: [],
+          HelpInfo2Nav: [],
+          HelpInfo3Nav: [],
+          HelpInfo4Nav: [],
+        };
+
+        return await Client.deep(oModel, 'HelpInfo', mPayLoad);
       },
 
       // PDF출력파일 첨부
@@ -138,7 +171,7 @@ sap.ui.define(
 
       // override AttachFileCode
       getApprovalType() {
-        return 'HR02';
+        return 'INFO';
       },
 
       // 관리자조회 Dialog 닫기클릭

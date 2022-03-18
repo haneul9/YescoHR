@@ -53,7 +53,7 @@
         <Text text="{i18n>LABEL_18036}" class="type14" />
       </VBox>
       <VBox>
-        <Text text="{i18n>LABEL_00121}" class="type18" />
+        <Text text="{i18n>LABEL_23007}" class="type18" />
       </VBox>
       <VBox>
         <Text text="{i18n>LABEL_00180}" class="type15" />
