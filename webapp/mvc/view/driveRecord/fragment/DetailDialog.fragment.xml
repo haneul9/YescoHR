@@ -1,0 +1,68 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:core="sap.ui.core"
+    xmlns:custom="sap.ui.yesco.control">
+    <Dialog title="{i18n>LABEL_34005}" contentWidth="1000px" contentHeight="auto">
+        <buttons>
+            <Button text="{i18n>LABEL_00106}" type="Emphasized" press=".onRegistBtn" />
+            <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" />
+            <Button text="{i18n>LABEL_00115}" press=".onDialogClose" />
+        </buttons>
+        <content>
+            <VBox class="vCardBox">
+                <grid:CSSGrid gridTemplateColumns="2fr 3fr 2fr 3fr" gridGap="1px 0" class="form-grid">
+                    <Label text="{i18n>LABEL_25005}" />
+                    <VBox>
+                        <Text text="{/dialog/Carno}"/>
+                    </VBox>
+                    <Label text="{i18n>LABEL_34008}" />
+                    <VBox alignItems="End">
+                        <Input value="{
+                            path: '/dialog/Begkm',
+                            type: 'sap.ui.yesco.mvc.model.type.Currency'
+                        }" textAlign="End" maxLength="11" liveChange=".onMileage" class="required"/>
+                    </VBox>
+                    <Label text="{i18n>LABEL_34009}"/>
+                    <VBox>
+                        <custom:DatePicker maxDate="{/maxDate}" width="88%" dateValue="{ path: '/dialog/Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="required"/>
+                    </VBox>
+                    <Label text="{i18n>LABEL_34010}"/>
+                    <VBox alignItems="End">
+                        <Input value="{
+                            path: '/dialog/Endkm',
+                            type: 'sap.ui.yesco.mvc.model.type.Currency'
+                        }" textAlign="End" maxLength="11" liveChange=".onMileage" class="required"/>
+                    </VBox>
+                    <Label text="{i18n>LABEL_17006}"/>
+                    <VBox>
+                        <ComboBox items="{/UseList}" selectedKey="{/dialog/Devty}" class="required">
+                            <core:Item text="{Ztext}" key="{Zcode}" />
+                        </ComboBox>
+                    </VBox>
+                    <Label text="{i18n>LABEL_34011}"/>
+                    <VBox alignItems="End">
+                        <Input value="{
+                            path: '/dialog/Drvkm',
+                            type: 'sap.ui.yesco.mvc.model.type.Currency'
+                        }" textAlign="End" maxLength="11" liveChange=".onMileage" class="required"/>
+                    </VBox>
+                    <Label text="{i18n>LABEL_00163}"/>
+                    <VBox>
+                        <Input value="{/dialog/Zbigo}" maxLength="{/FieldLimit/Zbigo}" />
+                        <layoutData>
+                            <grid:GridItemLayoutData gridColumn="2 / 5"/>
+                        </layoutData>
+                    </VBox>
+                    <Label text="{i18n>LABEL_34012}" visible="{= ${/dialog/New} !== 'O' }"/>
+                    <VBox visible="{= ${/dialog/New} !== 'O' }">
+                        <Text text="{/dialog/Regdt} / {/dialog/Regtm}"/>
+                    </VBox>
+                    <Label text="{i18n>LABEL_08004}" visible="{= ${/dialog/New} !== 'O' }"/>
+                    <VBox visible="{= ${/dialog/New} !== 'O' }">
+                        <Text text="{/dialog/RegprZzjikgb}"/>
+                    </VBox>
+                </grid:CSSGrid>
+            </VBox>
+        </content>
+    </Dialog>
+</core:FragmentDefinition>
