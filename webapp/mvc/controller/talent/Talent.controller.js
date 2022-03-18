@@ -247,6 +247,10 @@ sap.ui.define(
           oViewModel.setProperty(`/search/${sTargetProp}`, oControl.getSelectedKey());
         }
 
+        if (_.isEmpty(sValue)) {
+          oViewModel.setProperty(`/search/${sTargetProp}`, '');
+        }
+
         oControl.getParent().getItems()[2].getBinding('items').filter(new Filter('Zcode', FilterOperator.GE, oControl.getSelectedKey()));
       },
 
