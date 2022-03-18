@@ -2,6 +2,8 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/odata/Client',
+    'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/app/MobileMyPagePopoverHandler',
@@ -16,6 +18,8 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     AppUtils,
+    Client,
+    ServiceNames,
     MessageBox,
     BaseController,
     MobileMyPagePopoverHandler,
@@ -91,15 +95,16 @@ sap.ui.define(
           return;
         }
 
-        const oModel = this.oController.getModel(ServiceNames.COMMON);
-        const mPayload = {
-          Pernr: this.getSessionProperty('/Pernr'),
-          Token: window.YescoApp.getToken(),
-        };
-
         try {
+          const oModel = this.getModel(ServiceNames.COMMON);
+          const mPayload = {
+            Pernr: this.getSessionProperty('Pernr'),
+            Token: window.YescoApp.getToken(),
+          };
+
           await Client.create(oModel, 'PernrToken', mPayload);
         } catch (oError) {
+          alert(oError);
           this.debug('savePushToken error.', oError);
         }
       },
