@@ -224,6 +224,8 @@ sap.ui.define(
           aFiles = aFiles.filter((mFile) => mFile.New);
 
           if (!aFiles.length) {
+            oBoxModel.setProperty('/settings/appno', sAppno);
+            this.readFileList();
             resolve();
           }
 
@@ -247,6 +249,9 @@ sap.ui.define(
               }
             });
             oBoxModel.setProperty('/files', aFiles);
+
+            oBoxModel.setProperty('/settings/appno', sAppno);
+            this.readFileList();
 
             resolve();
           } catch (oError) {
