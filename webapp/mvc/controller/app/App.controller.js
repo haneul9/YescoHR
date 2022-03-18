@@ -94,7 +94,7 @@ sap.ui.define(
         const oModel = this.oController.getModel(ServiceNames.COMMON);
         const mPayload = {
           Pernr: this.getSessionProperty('/Pernr'),
-          Token: 'test-token', // window.YescoApp.getPushToken(),
+          Token: window.YescoApp.getToken(),
         };
 
         try {
