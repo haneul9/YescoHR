@@ -1,11 +1,9 @@
-
-<core:FragmentDefinition  
-    xmlns:l="sap.ui.layout"
+<core:FragmentDefinition xmlns:l="sap.ui.layout"
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
     <Dialog id="talentCompareDialog" title= '인재검색' contentWidth= '1200px' contentHeight= '665px'>
         <beginButton>
-        <Button type="Emphasized" text="확인" press=".onClick" />
+            <Button type="Emphasized" text="확인" press=".onClick" />
         </beginButton>
         <content>
             <VBox>
@@ -14,7 +12,7 @@
                         <l:BlockLayoutRow accentCells="Accent1">
                             <l:BlockLayoutCell id="Accent1">
                             </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>                        
+                            <l:BlockLayoutCell>
                                 <VBox>
                                     <Image src="asset/image/photo1.png" height="100px" />
                                     <Text text="홍길동 부장 / 팀장" />
@@ -28,7 +26,7 @@
                             </l:BlockLayoutCell>
                             <l:BlockLayoutCell>
                                 <VBox>
-                                    <Image src="asset/image/photo3.jpeg"  height="100px" />
+                                    <Image src="asset/image/photo3.jpeg" height="100px" />
                                     <Text text="홍길동 부장 / 팀장" />
                                 </VBox>
                             </l:BlockLayoutCell>
@@ -36,13 +34,13 @@
                         <l:BlockLayoutRow>
                             <l:BlockLayoutCell>
                                 <VBox>
-                                    <Label text="기본정보" />
+                                    <Label text="{i18n>LABEL_35013}" />
                                 </VBox>
                             </l:BlockLayoutCell>
                             <l:BlockLayoutCell>
                                 <VBox>
                                     <Text text="부장 / 팀장" />
-                                    <Text text="생년월일 : 1972.12.14"  />
+                                    <Text text="생년월일 : 1972.12.14" />
                                     <Text text="입사 : 2001.01.01" />
                                     <Text text="학력 : 동국대 (석사졸업) / 마케팅" />
                                     <Text text="현직무 : 홍보팀 (15년 3개월)" />
@@ -51,7 +49,7 @@
                             <l:BlockLayoutCell>
                                 <VBox>
                                     <Text text="부장 / 팀장" />
-                                    <Text text="생년월일 : 1972.12.14"  />
+                                    <Text text="생년월일 : 1972.12.14" />
                                     <Text text="입사 : 2001.01.01" />
                                     <Text text="학력 : 동국대 (석사졸업) / 마케팅" />
                                     <Text text="현직무 : 홍보팀 (15년 3개월)" />
@@ -60,7 +58,7 @@
                             <l:BlockLayoutCell>
                                 <VBox>
                                     <Text text="부장 / 팀장" />
-                                    <Text text="생년월일 : 1972.12.14"  />
+                                    <Text text="생년월일 : 1972.12.14" />
                                     <Text text="입사 : 2001.01.01" />
                                     <Text text="학력 : 동국대 (석사졸업) / 마케팅" />
                                     <Text text="현직무 : 홍보팀 (15년 3개월)" />
@@ -92,7 +90,7 @@
                                 </VBox>
                             </l:BlockLayoutCell>
                         </l:BlockLayoutRow>
-                        
+
                         <l:BlockLayoutRow>
                             <l:BlockLayoutCell>
                                 <VBox>
@@ -118,7 +116,7 @@
                         <l:BlockLayoutRow>
                             <l:BlockLayoutCell>
                                 <VBox>
-                                    <Label text="평가이력" />
+                                    <Label text="{i18n>LABEL_35014}" />
                                 </VBox>
                             </l:BlockLayoutCell>
                             <l:BlockLayoutCell>
@@ -152,11 +150,11 @@
                                 </HBox>
                             </l:BlockLayoutCell>
                         </l:BlockLayoutRow>
-                        
+
                         <l:BlockLayoutRow>
                             <l:BlockLayoutCell>
                                 <VBox>
-                                    <Label text="사내경력" />
+                                    <Label text="{i18n>LABEL_35015}" />
                                 </VBox>
                             </l:BlockLayoutCell>
                             <l:BlockLayoutCell>
@@ -181,7 +179,7 @@
                     </l:BlockLayout>
                 </l:VerticalLayout>
 
-        </VBox>
+            </VBox>
         </content>
     </Dialog>
 </core:FragmentDefinition>

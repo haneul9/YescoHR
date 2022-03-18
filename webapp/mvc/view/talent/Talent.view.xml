@@ -1,151 +1,24 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.talent.Talent"
+  xmlns:core="sap.ui.core"
   xmlns:mvc="sap.ui.core.mvc"
   xmlns="sap.m"
-  xmlns:grid="sap.ui.layout.cssgrid"
-  xmlns:custom="sap.ui.yesco.control"
-  xmlns:f="sap.f" displayBlock="true" height="100%" busyIndicatorDelay="0">
-  <Page title="인재검색" showNavButton="true">
-    <headerContent>
-			<Button icon="sap-icon://action" tooltip="Share" />
-		</headerContent>
+  xmlns:custom="sap.ui.yesco.control">
+  <Page title="{i18n>LABEL_35001}" showHeader="false">
     <VBox class="contents-header">
       <HBox justifyContent="SpaceBetween" class="breadcrumbs">
         <custom:Breadcrumbs />
         <HBox>
-          <Button type="Emphasized" class="sapUiTinyMarginEnd" text="프로파일 비교" press=".onDialog" />
-          <Button type="Emphasized" class="sapUiTinyMarginEnd" text="모바일 프로파일 비교" press=".onCompareDialogM" />
-          <Button type="Emphasized" class="sapUiTinyMarginEnd" text="상세검색" press=".onSearchDialog" />
+          <Button type="Emphasized" class="sapUiTinyMarginEnd" text="{i18n>LABEL_35002}" press=".onDialog" />
+          <Button type="Emphasized" class="sapUiTinyMarginEnd" text="{i18n>LABEL_35003}" press=".onCompareDialogM" />
+          <Button type="Emphasized" class="sapUiTinyMarginEnd" text="{i18n>LABEL_35004}" press=".onSearchDialog" />
           <Button text="{i18n>LABEL_00131}" icon="sap-icon://print" press=".onPagePrint" class="sapUiTinyMarginEnd" />
           <Button text="{i18n>LABEL_00132}" icon="sap-icon://sys-help" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
         </HBox>
       </HBox>
     </VBox>
     <VBox class="contents">
-      <VBox class="vCardBox">
-        <HBox class="form-bar" alignItems="Center">
-          <Select width="184px" forceSelection="false" selectedKey="{/SelectedProduct}">
-          </Select>
-          <Button icon="asset/image/icon_del.png" class="icon-button" type="Transparent" />
-          <Button text="검색" icon="asset/image/icon_search03.png" />
-          <Input width="520px" value="" placeholder="검색" />
-          <Button text="초기화" icon="asset/image/icon_reset.png" />
-          <Button text="상세검색" icon="asset/image/icon_sort.png" press=".onToggleExpand" />
-        </HBox>
-        <grid:CSSGrid gridTemplateColumns="repeat(4, 1fr 3fr)" gridGap="8px" class="search-filter expanded" id="searchFilterBody">
-          <Label text="검색저장" />
-          <HBox alignItems="Center">
-            <layoutData>
-              <grid:GridItemLayoutData gridColumn="span 7"/>
-            </layoutData>
-            <Input width="280px" placeholder="검색" class="sapUiTinyMarginEnd" />
-            <Button text="검색조건 저장" icon="asset/image/icon_inquiry_save.png" />
-          </HBox>
-          <Label text="직군" />
-          <Select width="100%" />
-          <Label text="직급" />
-          <Select width="100%" />
-          <Label text="직책" />
-          <Select width="100%" />
-          <Label text="나이(만)" />
-          <HBox justifyContent="SpaceBetween" alignItems="Center">
-            <Input />
-            <Text text="~" />
-            <Input />
-          </HBox>
-          <Label text="학교" />
-          <Select width="100%" />
-          <Label text="전공" />
-          <Select width="100%" />
-          <Label text="학력" />
-          <Select width="100%" />
-          <Label text="자격증" />
-          <Select width="100%" />
-          <Label text="외국어1" />
-          <HBox justifyContent="SpaceBetween" width="100%">
-            <Select width="172px"></Select>
-            <Select>
-            </Select>
-          </HBox>
-          <Label text="외국어2" />
-          <HBox justifyContent="SpaceBetween" alignItems="Center">
-            <Select width="172px"></Select>
-            <Select>
-            </Select>
-          </HBox>
-          <Label text="외국어3" />
-          <HBox justifyContent="SpaceBetween" alignItems="Center">
-            <Select width="172px"></Select>
-            <Select enabled="false">
-            </Select>
-          </HBox>
-          <Label text="성별" />
-          <Select width="100%" />
-          <Label text="직무1" />
-          <Select width="100%" />
-          <Label text="기간1" />
-          <HBox justifyContent="SpaceBetween" alignItems="Center">
-            <Input />
-            <Text text="~" />
-            <Input />
-          </HBox>
-          <Label text="직무2" />
-          <Select width="100%" />
-          <Label text="기간2" />
-          <HBox justifyContent="SpaceBetween" alignItems="Center">
-            <Input />
-            <Text text="~" />
-            <Input />
-          </HBox>
-          <Label text="직무3" />
-          <Select width="100%" />
-          <Label text="기간3" />
-          <HBox justifyContent="SpaceBetween" alignItems="Center">
-            <Input />
-            <Text text="~" />
-            <Input />
-          </HBox>
-          <Label text="직무4" />
-          <Select width="100%" />
-          <Label text="기간4" />
-          <HBox justifyContent="SpaceBetween" alignItems="Center">
-            <Input />
-            <Text text="~" />
-            <Input />
-          </HBox>
-        </grid:CSSGrid>
-      </VBox>
-      <VBox class="vCardBox">
-        <HBox class="table-toolbar" justifyContent="SpaceBetween">
-          <HBox class="title">
-            <Title text="검색결과" level="H4" />
-          </HBox>
-          <HBox class="status-wrap">
-            <ObjectStatus text="임원" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication03" />
-            <ObjectStatus text="팀장" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication04" />
-            <ObjectStatus text="팀원" icon="sap-icon://circle-task-2" state="Indication05" />
-          </HBox>
-        </HBox>
-        <f:GridList id="talentList" mode="MultiSelect" items="{ path: '/' }" selectionChange="onSelectionChange" delete="onDelete" class="talent-list sapUiResponsiveContentPadding">
-          <f:customLayout>
-            <grid:GridBasicLayout gridTemplateColumns="repeat(auto-fit, minmax(17rem, 1fr))" gridGap="20px" />
-          </f:customLayout>
-          <f:GridListItem detailPress="onDetailPress" press="onPress" counter="{Quantity}" highlight="{Status}" type="{type}">
-            <VBox height="100%">
-              <!-- <Image src="{ProductPicUrl}" width="100%" visible="{= ${onlyImage} ? true : false }" class=""/> -->
-              <HBox height="100%" class="sapUiTinyMargin" alignItems="Center" visible="{= ${onlyImage} ? false : true }">
-                <Image src="{ProductPicUrl}" width="3rem" class="sapUiSmallMarginEnd"/>
-                <VBox>
-                  <Title text="{Name}" wrapping="true"/>
-                  <Text text="{position}" />
-                  <Text text="{birth}" />
-                  <Text text="{edu}" />
-                  <Text text="{duty}" />
-                </VBox>
-              </HBox>
-            </VBox>
-          </f:GridListItem>
-        </f:GridList>
-      </VBox>
+      <core:Fragment fragmentName="sap.ui.yesco.mvc.view.talent.fragment.SearchConditions" type="XML" />
+      <core:Fragment fragmentName="sap.ui.yesco.mvc.view.talent.fragment.SearchResults" type="XML" />
     </VBox>
   </Page>
 </mvc:View>
