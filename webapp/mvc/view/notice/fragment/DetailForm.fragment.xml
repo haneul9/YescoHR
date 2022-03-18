@@ -38,7 +38,7 @@
                 <layoutData>
                     <grid:GridItemLayoutData gridColumn="2 / 5"/>
                 </layoutData>
-                <rte:RichTextEditor value="{/FormData/Detail}" showGroupTextAlign="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" showGroupStructure="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" showGroupFontStyle="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" showGroupClipboard="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" ready=".editorReady" width="99.8%" height="500px" showGroupFont="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" showGroupInsert="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" editable="{= !!${/MySelf} &amp;&amp; !!${/Hass} }"/>
+                <rte:RichTextEditor id="editor" value="{/FormData/Detail}" showGroupTextAlign="true" showGroupStructure="true" showGroupFontStyle="true" showGroupClipboard="true" readyRecurring=".afterRender" ready=".editorReady" width="99.8%" height="{= ${/Hass} &amp;&amp; ${/MySelf} ? '500px' : '100%' }" showGroupFont="true" showGroupInsert="true" editable="{= !!${/MySelf} &amp;&amp; !!${/Hass} }"/>
             </VBox>
         </grid:CSSGrid>
     </VBox>

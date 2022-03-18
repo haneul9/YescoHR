@@ -326,6 +326,27 @@ sap.ui.define(
         });
       },
 
+      afterRender() {
+        setTimeout(() => {
+          const iHeight = this.byId('editor').$().find('iframe').contents().find('html').height();
+
+          if (!iHeight) {
+            return;
+          }
+
+          const oDetailModel = this.getViewModel();
+          const sHeaderId = this.byId('editor').$().contents().contents().contents()[0].id;
+          let bDisplay = 'none';
+
+          if (oDetailModel.getProperty('/Hass') && oDetailModel.getProperty('/MySelf')) {
+            bDisplay = 'block';
+          }
+
+          $(`#${sHeaderId}`).css('display', bDisplay);
+          this.byId('editor').setHeight(`${iHeight + 70}px`);
+        }, 500);
+      },
+
       editorReady(oEvent) {
         oEvent.getSource().addButtonGroup('styleselect').addButtonGroup('table');
       },
