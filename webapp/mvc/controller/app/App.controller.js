@@ -104,7 +104,6 @@ sap.ui.define(
 
           await Client.create(oModel, 'PernrToken', mPayload);
         } catch (oError) {
-          alert(oError);
           this.debug('savePushToken error.', oError);
         }
       },
