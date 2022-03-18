@@ -23,7 +23,7 @@
           <CustomTreeItem>
             <HBox>
               <Image src="asset/image/icon_tree_node02.svg" width="16px" height="16px" />
-              <Text text="{Stext}"/>
+              <Text text="{title}"/>
             </HBox>
           </CustomTreeItem>
         </Tree>
