@@ -1,6 +1,7 @@
 sap.ui.define(
   [
     //
+    'sap/ui/core/Fragment',
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
     'sap/ui/yesco/common/AppUtils',
@@ -11,6 +12,7 @@ sap.ui.define(
   ],
   (
     //
+    Fragment,
     Filter,
     FilterOperator,
     AppUtils,
@@ -74,6 +76,7 @@ sap.ui.define(
           },
           result: {
             busy: false,
+            totalCount: 0,
             list: [],
           },
         };
@@ -83,7 +86,7 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         try {
-          oViewModel.setSizeLimit(500);
+          oViewModel.setSizeLimit(2000);
           oViewModel.setData(this.initializeModel());
           oViewModel.setProperty('/busy', true);
 
@@ -143,6 +146,7 @@ sap.ui.define(
 
           AppUtils.handleError(oError);
         } finally {
+          this.byId('searchFilterBody').removeStyleClass('expanded');
           oViewModel.setProperty('/busy', false);
         }
       },
@@ -253,10 +257,12 @@ sap.ui.define(
           const mSearch = oViewModel.getProperty('/search');
           const mFilters = mSearch.Prcty === 'A' ? _.pick(mSearch, ['Freetx', 'Prcty']) : _.omit(mSearch, 'Freetx');
           const aSearchResults = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'TalentSearch', { Pernr: this.getAppointeeProperty('Pernr'), ..._.omitBy(mFilters, _.isEmpty) });
+          const mState = { 1: 'Indication01', 2: 'Indication02', 3: 'Indication03' };
 
+          oViewModel.setProperty('/result/totalCount', aSearchResults.length);
           oViewModel.setProperty(
             '/result/list',
-            _.map(aSearchResults, (o) => _.omit(o, '__metadata'))
+            _.map(aSearchResults, (o) => ({ ..._.omit(o, '__metadata'), ColtyState: mState[o.Colty] }))
           );
         } catch (oError) {
           throw oError;
@@ -288,7 +294,7 @@ sap.ui.define(
       async onPressSearch() {
         const oViewModel = this.getViewModel();
 
-        oViewModel.setProperty('result/busy', true);
+        oViewModel.setProperty('/result/busy', true);
 
         try {
           this.validSearchConditions();
@@ -299,7 +305,7 @@ sap.ui.define(
 
           AppUtils.handleError(oError);
         } finally {
-          setTimeout(() => oViewModel.setProperty('result/busy', false), 200);
+          setTimeout(() => oViewModel.setProperty('/result/busy', false), 200);
         }
       },
 
@@ -323,11 +329,21 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const sPrcty = oViewModel.getProperty('/search/Prcty');
 
+        this.clearSearchResults();
+
         if (sPrcty === 'A') {
           this.resetSimpleSearch();
         } else {
           this.resetComplexSearch();
         }
+      },
+
+      clearSearchResults() {
+        this.getViewModel().setProperty('/result', {
+          busy: false,
+          totalCount: 0,
+          list: [],
+        });
       },
 
       resetSimpleSearch() {

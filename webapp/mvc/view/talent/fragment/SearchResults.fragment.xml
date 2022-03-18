@@ -17,11 +17,12 @@
                 <ObjectStatus text="{i18n>LABEL_35012}" icon="sap-icon://circle-task-2" state="Indication05" />
             </HBox>
         </HBox>
-        <f:GridList id="talentList" mode="MultiSelect" items="{ path: '/result/list' }" selectionChange="onSelectionChange" delete="onDelete" class="talent-list sapUiResponsiveContentPadding">
+        <f:GridList id="talentList" mode="MultiSelect" items="{ path: '/result/list' }" selectionChange="onSelectionChange" delete="onDelete" class="talent-list sapUiResponsiveContentPadding" visible="{= ${/result/totalCount} !== 0 }">
             <f:customLayout>
-                <grid:GridBasicLayout gridTemplateColumns="repeat(auto-fit, minmax(17rem, 1fr))" gridGap="20px" />
+                <!-- <grid:GridBasicLayout gridTemplateColumns="repeat(auto-fit, minmax(17rem, 1fr))" gridGap="20px" /> -->
+                <grid:GridBasicLayout gridTemplateColumns="repeat(5, 17rem)" gridGap="20px" />
             </f:customLayout>
-            <f:GridListItem detailPress="onDetailPress" press="onPress" highlight="{Colty}">
+            <f:GridListItem detailPress="onDetailPress" press="onPress" highlight="{ColtyState}">
                 <VBox height="100%">
                     <HBox height="100%" class="sapUiTinyMargin" alignItems="Center">
                         <Image src="{PicUrl}" width="3rem" class="sapUiSmallMarginEnd"/>

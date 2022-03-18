@@ -928,7 +928,7 @@ span.sapMBtnInner.sapMBtnEmphasized {text-shadow:none}
 .sapUiSizeCompact .sapMSlt>.sapMSltArrow{line-height:40px; width:2.5rem}
 .sapUiSizeCompact .sapMSlt>.sapMSltLabel {padding:11px 0 11px 11px !important; line-height:1; color:#222222; font-size:15px; font-weight:500}
 .sapUiSizeCompact .sapMSlt>.sapMSltLabel .sapMSelectListItemText {line-height:normal}
-.sapUiSizeCompact .sapMTokenizer .sapMToken {height:30px; margin:0 5px 0 0; padding:6px 10px 6px 6px; border-radius:3px; border:solid 1px #dddfe2; background-color:#e7e8ea; font-size:11px; font-weight:500; font-stretch:normal; font-style:normal; line-height:1.45; letter-spacing:normal; text-align:left; color:#222222}
+.sapUiSizeCompact .sapMTokenizer .sapMToken {height:30px; min-width: 47px; margin:0 5px 0 0; padding:6px 0px 6px 6px; border-radius:3px; border:solid 1px #dddfe2; background-color:#e7e8ea; font-size:11px; font-weight:500; font-stretch:normal; font-style:normal; line-height:1.45; letter-spacing:normal; text-align:left; color:#222222}
 .sapUiSizeCompact .sapMTokenText, .sapUiSizeCompact .sapMTokenIcon {font-size:11px; font-weight:500; font-stretch:normal; font-style:normal; line-height:1.45; letter-spacing:normal; text-align:left; color:#222222}
 .sapUiSizeCompact .sapMTokenIcon.sapUiIcon::before {content:'\e03e'}
 .sapMTokenizerIndicator {padding-left:11px}
@@ -1595,6 +1595,9 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .talent-list.sapFGridList .sapMImg {width:76px!important; height:100px!important; margin-right:10px!important}
 .talent-list.sapFGridList .sapMTitle.sapMTitleStyleAuto {margin-bottom:8px; font-size:14px; font-weight:700}
 .talent-list.sapFGridList .sapMLabel, .talent-list.sapFGridList .sapMText {font-size:11px; font-weight:400}
+.talent-list.sapFGridList .sapMLIBHighlight.sapMLIBHighlightIndication01 { background: #27c840; }
+.talent-list.sapFGridList .sapMLIBHighlight.sapMLIBHighlightIndication02 { background: #FD5F58; }
+.talent-list.sapFGridList .sapMLIBHighlight.sapMLIBHighlightIndication03 { background: #007BFF; }
 .sapMLIBHighlightExecutives {background:#65B8FF}/*임원*/
 .sapMLIBHighlightInformation {background:#A1E094}/*팀장*/
 .sapMLIBHighlightWarning {background:#FFE479}/*팀원*/
