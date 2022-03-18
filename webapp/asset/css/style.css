@@ -149,9 +149,9 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p09 img {vertical-align:sub}
 .portlet-p09 .sapMCLI .sapMText {vertical-align:middle}
 .portlet-p10 [data-appraisal-status-color] {margin-right:0px; border:1px solid; border-radius:3px; font-size:0.6rem; min-width:40px; line-height:16px; height:17px; text-align:center !important}
-.portlet-p10 [data-appraisal-status-color="1"] {color:#1bae49}
+.portlet-p10 [data-appraisal-status-color="3"] {color:#1bae49}
 .portlet-p10 [data-appraisal-status-color="2"] {color:#df9f0f}
-.portlet-p10 [data-appraisal-status-color="3"] {color:#767676}
+.portlet-p10 [data-appraisal-status-color="1"] {color:#767676}
 .portlet-p10 [data-appraisal-status-color="4"] {color:#9655f0}
 .portlet-p10 [data-appraisal-chart-color="1"] {color:#f5a369}
 .portlet-p10 [data-appraisal-chart-color="2"] {color:#faca74}
