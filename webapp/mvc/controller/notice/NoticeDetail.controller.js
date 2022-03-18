@@ -91,6 +91,7 @@ sap.ui.define(
               Notice2Nav: [],
             };
 
+            $('#readHtml').text('');
             const oModel = this.getModel(ServiceNames.COMMON);
             const oDetail = await Client.deep(oModel, 'NoticeManage', oSendObject);
 
@@ -108,6 +109,7 @@ sap.ui.define(
             });
 
             oDetailModel.setProperty('/FormData', oTargetData);
+            $('#readHtml').append(oTargetData.Detail);
           }
 
           // setTimeout(() => {
@@ -324,27 +326,6 @@ sap.ui.define(
             }
           },
         });
-      },
-
-      afterRender() {
-        setTimeout(() => {
-          const iHeight = this.byId('editor').$().find('iframe').contents().find('html').height();
-
-          if (!iHeight) {
-            return;
-          }
-
-          const oDetailModel = this.getViewModel();
-          const sHeaderId = this.byId('editor').$().contents().contents().contents()[0].id;
-          let bDisplay = 'none';
-
-          if (oDetailModel.getProperty('/Hass') && oDetailModel.getProperty('/MySelf')) {
-            bDisplay = 'block';
-          }
-
-          $(`#${sHeaderId}`).css('display', bDisplay);
-          this.byId('editor').setHeight(`${iHeight + 70}px`);
-        }, 500);
       },
 
       editorReady(oEvent) {
