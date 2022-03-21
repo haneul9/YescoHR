@@ -14,15 +14,17 @@
       </HBox>
     </VBox>
     <VBox class="contents">
-      <!-- <HBox justifyContent="SpaceAround">
-        <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBox" type="XML" />
-        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.paystub.fragment.Summary" type="XML" />
-        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.paystub.fragment.OverviewSearchCondition" type="XML" />
-      </HBox>
-      <VBox class="vCardBox">
-        <core:Fragment fragmentName="sap.ui.yesco.fragment.OverviewTableHeader" type="XML" />
-        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.paystub.fragment.OverviewTable" type="XML" />
-      </VBox> -->
+        <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
+        <!-- <core:Fragment fragmentName="sap.ui.yesco.fragment.InfoMessage" type="XML" /> -->
+        <HBox id="InfoMegBox" justifyContent="SpaceBetween" class="vCardBox info-area" visible="{= !!${/InfoMessage} }">
+            <HBox>
+                <FormattedText htmlText="{/InfoMessage}"/>
+                <core:HTML content="{/InfoMessage2}" />
+            </HBox>
+            <Button press=".FragmentEvent.onInfoMsgClose" type="Transparent" class="icon-button close"/>
+        </HBox>
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.exceptRetamt.fragment.DetailForm" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.exceptRetamt.fragment.DetailResult" type="XML" />
     </VBox>
   </Page>
 </mvc:View>
