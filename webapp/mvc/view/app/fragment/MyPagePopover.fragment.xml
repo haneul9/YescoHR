@@ -35,7 +35,7 @@
           <HBox justifyContent="SpaceBetween" alignItems="Center" height="54px" class="divider">
             <Label text="{i18n>LABEL_01602}" />
             <HBox>
-              <Text text="ver. {Version}" />
+              <Text text="ver. {AppVersion}" />
               <Link href="{DownloadLink}" target="_blank" text="{UpdateNotification}" class="ml-5-px" />
             </HBox>
           </HBox>

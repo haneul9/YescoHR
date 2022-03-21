@@ -104,8 +104,9 @@ sap.ui.define(
       transformVersionData([{ Version }]) {
         const iHostport = /^dev/.test(location.hostname) ? 8090 : 8070;
         const DownloadLink = `${location.protocol}//${location.hostname}:${iHostport}/download`;
-        const UpdateNotification = typeof window.YescoApp === 'undefined' ? '' : Version === window.YescoApp.getVersionInfo() ? this.oController.getBundleText('LABEL_01603') : this.oController.getBundleText('LABEL_01604'); // 최신 버전 : 업데이트 필요
-        return { Version, DownloadLink, UpdateNotification };
+        const AppVersion = window.YescoApp.getVersionInfo();
+        const UpdateNotification = typeof window.YescoApp === 'undefined' ? '' : Version === AppVersion ? this.oController.getBundleText('LABEL_01603') : this.oController.getBundleText('LABEL_01604'); // 최신 버전 : 업데이트 필요
+        return { Version, AppVersion, DownloadLink, UpdateNotification };
       },
 
       async onPressLogout() {
