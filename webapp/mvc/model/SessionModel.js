@@ -39,9 +39,9 @@ sap.ui.define(
           const sUrl = 'EmpLoginInfo';
           const mFilters = sPernr ? { Pernr: sPernr } : {}; // AppointeeModel용
 
-          const aResults = await Client.getEntitySet(oModel, sUrl, mFilters);
+          const aResults = Client.getEntitySet(oModel, sUrl, mFilters);
 
-          this.setData(this.curryData(aResults), true);
+          this.setData(this.curryData(await aResults), true);
 
           return Promise.resolve();
         } catch (oError) {

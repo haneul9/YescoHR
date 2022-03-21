@@ -67,6 +67,8 @@ sap.ui.define(
       },
 
       async showContentData() {
+        await this.oController.getSessionModel().getPromise();
+
         const aEmployeeData = this.readEmployeeData();
         const mEmployeeData = this.transformEmployeeData(await aEmployeeData);
         this.oMyPageModel.setData(mEmployeeData, true);
