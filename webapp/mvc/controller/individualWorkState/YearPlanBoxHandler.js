@@ -152,14 +152,18 @@ sap.ui.define(
           sBorderNames = 'Today';
         }
 
-        const oDateObject = _.filter(oScheduleData, (e) => {
+        const [oDateObject] = _.filter(oScheduleData, (e) => {
           return e.FullDate === sFormatDate;
         });
 
-        if (!_.isEmpty(oDateObject[0].Colty)) {
-          sClassNames = oDateObject[0].Colty;
+        if (!_.isEmpty(oDateObject.Colty)) {
+          sClassNames = oDateObject.Colty;
         }
-        // sStripes = oDateObject[0].inProgress;
+
+        if (oDateObject.Cssty === 'P') {
+          sStripes = 'Stripes';
+        }
+        // sStripes = oDateObject.inProgress;
 
         return this.getBoxObject({ day: sFormatDate, label: String(iDay), classNames: sClassNames, borderNames: sBorderNames, stripes: sStripes });
       },

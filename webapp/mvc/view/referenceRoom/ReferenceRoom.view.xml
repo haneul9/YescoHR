@@ -16,7 +16,7 @@
     </VBox>
     <HBox class="contents" justifyContent="SpaceBetween">
       <VBox class="vCardBox sapUiSmallMarginEnd" width="25%">
-        <Tree id="ReferenceTree" mode="SingleSelectMaster" items="{/ReferenceList}">
+        <Tree id="ReferenceTree" mode="SingleSelectMaster" selectionChange=".onSelectTree" items="{/ReferenceList}">
           <layoutData>
             <FlexItemData growFactor="1" />
           </layoutData>

@@ -34,22 +34,22 @@
                     <VBox>
                         <Text text="연차" class="type01" />
                         <Text text="하계휴가" class="type02" />
-                        <Text text="기타휴가" class="type16" />
-                        <Text text="출산휴가" class="type06" />
+                        <Text text="기타휴가" class="type03" />
+                        <Text text="출산휴가" class="type04" />
                     </VBox>
                     <VBox >
-                        <Text text="휴직" class="type08" />
-                        <Text text="휴무" class="type09" />
-                        <Text text="징계" class="type10" />
+                        <Text text="휴직" class="type11" />
+                        <Text text="휴무" class="type12" />
+                        <Text text="징계" class="type13" />
                     </VBox>
                     <VBox >
-                        <Text text="교육" class="type11" />
-                        <Text text="출장" class="type12" />
+                        <Text text="교육" class="type21" />
+                        <Text text="출장" class="type22" />
                     </VBox>
                     <VBox>
-                        <Text text="시간외" class="type17" />
-                        <Text text="당직" class="type13" />
-                        <Text text="통합굴착" class="type14" />
+                        <Text text="시간외" class="type31" />
+                        <Text text="당직" class="type32" />
+                        <Text text="통합굴착" class="type33" />
                     </VBox>
                     <VBox>
                         <Text text="신청" class="type18" />

@@ -4,7 +4,9 @@ sap.ui.define(
     'sap/ui/core/Fragment',
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -15,7 +17,9 @@ sap.ui.define(
     Fragment,
     Filter,
     FilterOperator,
+    MessageBox,
     AppUtils,
+    ComboEntry,
     UI5Error,
     Client,
     ServiceNames,
@@ -41,6 +45,12 @@ sap.ui.define(
             K: [],
             L: [],
             M: [],
+          },
+          saved: {
+            busy: false,
+            Schtl: '',
+            selectedCondition: 'ALL',
+            entry: [],
           },
           search: {
             Freetx: '',
@@ -89,6 +99,8 @@ sap.ui.define(
           oViewModel.setSizeLimit(2000);
           oViewModel.setData(this.initializeModel());
           oViewModel.setProperty('/busy', true);
+
+          this.getEntrySearchCondition();
 
           const sPernr = this.getAppointeeProperty('Pernr');
           const fCurried = Client.getEntitySet(this.getModel(ServiceNames.PA));
@@ -158,7 +170,6 @@ sap.ui.define(
             name: 'sap.ui.yesco.mvc.view.talent.fragment.CompareDialog',
             controller: this,
           }).then((oDialog) => {
-            // connect dialog to the root view of this component (models, lifecycle)
             this.getView().addDependent(oDialog);
             oDialog.open();
           });
@@ -174,7 +185,6 @@ sap.ui.define(
             name: 'sap.ui.yesco.mvc.view.talent.fragment.CompareDialogM',
             controller: this,
           }).then((oDialog) => {
-            // connect dialog to the root view of this component (models, lifecycle)
             this.getView().addDependent(oDialog);
             oDialog.open();
           });
@@ -190,7 +200,6 @@ sap.ui.define(
             name: 'sap.ui.yesco.mvc.view.talent.fragment.SearchDialog',
             controller: this,
           }).then((oDialog) => {
-            // connect dialog to the root view of this component (models, lifecycle)
             this.getView().addDependent(oDialog);
             oDialog.open();
           });
@@ -254,6 +263,185 @@ sap.ui.define(
         oControl.getParent().getItems()[2].getBinding('items').filter(new Filter('Zcode', FilterOperator.GE, oControl.getSelectedKey()));
       },
 
+      async onChangeSearchCondition() {
+        const oViewModel = this.getViewModel();
+
+        try {
+          const sSelectedCondition = oViewModel.getProperty('/saved/selectedCondition');
+
+          if (sSelectedCondition === 'ALL') return;
+
+          oViewModel.setProperty('/busy', true);
+
+          this.showComplexSearch();
+          await this.readSearchCondition(sSelectedCondition);
+        } catch (oError) {
+          this.debug('Controller > Talent > onChangeSearchCondition Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
+      },
+
+      onPressDeleteSearchCondition() {
+        if (this.getViewModel().getProperty('/saved/selectedCondition') === 'ALL') return;
+
+        MessageBox.confirm(this.getBundleText('MSG_35010'), {
+          // 검색조건을 삭제하시겠습니까?
+          onClose: (sAction) => {
+            if (MessageBox.Action.CANCEL === sAction) return;
+
+            this.deleteConditionsProcess();
+          },
+        });
+      },
+
+      async deleteConditionsProcess() {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/busy', true);
+
+        try {
+          const sSelectedCondition = oViewModel.getProperty('/saved/selectedCondition');
+
+          await Client.remove(this.getModel(ServiceNames.PA), 'TalentSearchCondition', {
+            Pernr: this.getAppointeeProperty('Pernr'),
+            Schtl: sSelectedCondition,
+          });
+
+          await this.getEntrySearchCondition();
+
+          this.resetComplexSearch();
+
+          MessageBox.success(this.getBundleText('MSG_00007', 'LABEL_00110')); // {삭제}되었습니다.
+        } catch (oError) {
+          this.debug('Controller > Talent > onPressDeleteSearchCondition Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
+      },
+
+      onPressSaveConditions() {
+        MessageBox.confirm(this.getBundleText('MSG_35008'), {
+          // 검색조건을 저장하시겠습니까?
+          onClose: (sAction) => {
+            if (MessageBox.Action.CANCEL === sAction) return;
+
+            this.saveConditionsProcess();
+          },
+        });
+      },
+
+      async saveConditionsProcess() {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/busy', true);
+
+        try {
+          const sConditionSubject = oViewModel.getProperty('/saved/Schtl');
+
+          this.validSearchConditions();
+          if (_.isEmpty(sConditionSubject)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35009') }); // 검색조건명을 입력하여 주십시오.
+
+          await this.createSearchCondition();
+
+          await this.getEntrySearchCondition();
+
+          oViewModel.setProperty('/saved/selectedCondition', sConditionSubject);
+
+          MessageBox.success(this.getBundleText('MSG_00007', 'LABEL_00103')); // {저장}되었습니다.
+        } catch (oError) {
+          this.debug('Controller > Talent > saveConditionsProcess Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
+      },
+
+      async readSearchCondition(sSelectedCondition) {
+        const oViewModel = this.getViewModel();
+
+        try {
+          const [mSearchCondition] = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'TalentSearchCondition', {
+            Pernr: this.getAppointeeProperty('Pernr'),
+            Schtl: sSelectedCondition,
+          });
+
+          const mSearch = oViewModel.getProperty('/search');
+
+          oViewModel.setProperty('/saved/Schtl', mSearchCondition.Schtl);
+          oViewModel.setProperty('/search', {
+            ...mSearch,
+            ..._.chain(mSearchCondition) //
+              .omit(['__metadata', 'Pernr', 'Schtl'])
+              .set('Jobgr', _.split(mSearchCondition.Jobgr, '|'))
+              .set('Zzjikgb', _.split(mSearchCondition.Zzjikgb, '|'))
+              .set('Zzjikch', _.split(mSearchCondition.Zzjikch, '|'))
+              .set('Schcd', _.split(mSearchCondition.Schcd, '|'))
+              .set('Major', _.split(mSearchCondition.Major, '|'))
+              .set('Slabs', _.split(mSearchCondition.Slabs, '|'))
+              .set('Cttyp', _.split(mSearchCondition.Cttyp, '|'))
+              .set('Stell1', mSearchCondition.Stell1 === '00000000' ? '' : mSearchCondition.Stell1)
+              .set('Stell2', mSearchCondition.Stell2 === '00000000' ? '' : mSearchCondition.Stell2)
+              .set('Stell3', mSearchCondition.Stell3 === '00000000' ? '' : mSearchCondition.Stell3)
+              .set('Stell4', mSearchCondition.Stell4 === '00000000' ? '' : mSearchCondition.Stell4)
+              .value(),
+          });
+        } catch (oError) {
+          throw oError;
+        }
+      },
+
+      async createSearchCondition() {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/saved/busy', true);
+
+        try {
+          const mSearch = oViewModel.getProperty('/search');
+          const mSchtl = oViewModel.getProperty('/saved/Schtl');
+
+          await Client.create(this.getModel(ServiceNames.PA), 'TalentSearchCondition', {
+            Pernr: this.getAppointeeProperty('Pernr'),
+            Schtl: mSchtl,
+            ..._.chain(mSearch)
+              .omit(['Freetx', 'Prcty'])
+              .tap((obj) => {
+                _.chain(obj)
+                  .forEach((v, p) => {
+                    if (_.isArray(v)) _.set(obj, p, _.join(v, '|'));
+                  })
+                  .commit();
+              })
+              .value(),
+          });
+        } catch (oError) {
+          throw oError;
+        } finally {
+          setTimeout(() => oViewModel.setProperty('/saved/busy', false), 200);
+        }
+      },
+
+      async getEntrySearchCondition() {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/saved/busy', true);
+
+        try {
+          const aSearchResults = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'TalentSearchCodeList', { Pernr: this.getAppointeeProperty('Pernr'), Schfld: 'N' });
+
+          oViewModel.setProperty('/saved/entry', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: _.map(aSearchResults, (o) => _.omit(o, '__metadata')) }));
+        } catch (oError) {
+          throw oError;
+        } finally {
+          setTimeout(() => oViewModel.setProperty('/saved/busy', false), 200);
+        }
+      },
+
       async readTalentSearch() {
         const oViewModel = this.getViewModel();
 
@@ -280,6 +468,7 @@ sap.ui.define(
         if (mSearch.Prcty === 'A') {
           if (_.isEmpty(mSearch.Freetx)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35006') }); // 검색어를 입력하여 주십시오.
         } else {
+          if (_.chain(mSearch).omit('Prcty').omitBy(_.isEmpty).isEmpty().value()) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35007') }); // 검색조건을 입력하여 주십시오.
           if (_.toNumber(mSearch.EeageFr) > _.toNumber(mSearch.EeageTo)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35002') }); // 나이 입력값의 최소값이 최대값보다 큽니다.
           if (!_.isEmpty(mSearch.Quali1) && _.isEmpty(mSearch.Langlv1)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35003', 'LABEL_35009', '1') }); // {외국어}{1} 값을 입력하여 주십시오.
           if (!_.isEmpty(mSearch.Quali2) && _.isEmpty(mSearch.Langlv2)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35003', 'LABEL_35009', '2') }); // {외국어}{2} 값을 입력하여 주십시오.
@@ -298,10 +487,10 @@ sap.ui.define(
       async onPressSearch() {
         const oViewModel = this.getViewModel();
 
-        oViewModel.setProperty('/result/busy', true);
-
         try {
           this.validSearchConditions();
+
+          oViewModel.setProperty('/result/busy', true);
 
           await this.readTalentSearch();
         } catch (oError) {
@@ -314,26 +503,36 @@ sap.ui.define(
       },
 
       onToggleExpand(oEvent) {
-        const oViewModel = this.getViewModel();
-        const oSearchFilterBody = this.byId('searchFilterBody');
         const bState = oEvent.getParameter('state');
 
-        oSearchFilterBody.toggleStyleClass('expanded');
-
         if (bState) {
-          oViewModel.setProperty('/search/Prcty', 'B');
-          this.resetSimpleSearch();
+          this.showComplexSearch();
         } else {
-          oViewModel.setProperty('/search/Prcty', 'A');
-          this.resetComplexSearch();
+          this.showSimpleSearch();
         }
+      },
+
+      showSimpleSearch() {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/search/Prcty', 'A');
+        this.byId('searchFilterBody').removeStyleClass('expanded');
+        this.resetComplexSearch();
+
+        this.clearSearchResults();
+      },
+
+      showComplexSearch() {
+        this.getViewModel().setProperty('/search/Prcty', 'B');
+        this.byId('searchFilterBody').addStyleClass('expanded');
+        this.resetSimpleSearch();
+
+        this.clearSearchResults();
       },
 
       onPressConditionReset() {
         const oViewModel = this.getViewModel();
         const sPrcty = oViewModel.getProperty('/search/Prcty');
-
-        this.clearSearchResults();
 
         if (sPrcty === 'A') {
           this.resetSimpleSearch();
@@ -360,6 +559,8 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const mSearch = oViewModel.getProperty('/search');
 
+        oViewModel.setProperty('/saved/selectedCondition', 'ALL');
+        oViewModel.setProperty('/saved/Schtl', '');
         oViewModel.setProperty(
           '/search',
           _.chain(mSearch)
