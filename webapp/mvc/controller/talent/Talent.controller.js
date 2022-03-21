@@ -312,8 +312,6 @@ sap.ui.define(
 
           await this.getEntrySearchCondition();
 
-          oViewModel.setProperty('/saved/selectedCondition', 'ALL');
-          oViewModel.setProperty('/saved/Schtl', '');
           this.resetComplexSearch();
 
           MessageBox.success(this.getBundleText('MSG_00007', 'LABEL_00110')); // {삭제}되었습니다.
@@ -518,7 +516,6 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         oViewModel.setProperty('/search/Prcty', 'A');
-        oViewModel.setProperty('/saved/selectedCondition', 'ALL');
         this.byId('searchFilterBody').removeStyleClass('expanded');
         this.resetComplexSearch();
 
@@ -562,6 +559,8 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const mSearch = oViewModel.getProperty('/search');
 
+        oViewModel.setProperty('/saved/selectedCondition', 'ALL');
+        oViewModel.setProperty('/saved/Schtl', '');
         oViewModel.setProperty(
           '/search',
           _.chain(mSearch)
