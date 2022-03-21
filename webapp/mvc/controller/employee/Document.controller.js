@@ -10,7 +10,6 @@ sap.ui.define(
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/PostcodeDialogHandler',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
   ],
@@ -25,7 +24,6 @@ sap.ui.define(
     ComboEntry,
     ODataReadError,
     ServiceNames,
-    PostcodeDialogHandler,
     BaseController
   ) => {
     'use strict';
@@ -121,10 +119,6 @@ sap.ui.define(
             },
           },
         };
-      },
-
-      onBeforeShow() {
-        this.PostcodeDialogHandler = new PostcodeDialogHandler(this, this.callbackPostcode.bind(this));
       },
 
       onObjectMatched(oParameter) {
