@@ -929,8 +929,9 @@ span.sapMBtnInner.sapMBtnEmphasized {text-shadow:none}
 .sapUiSizeCompact .sapMSlt>.sapMSltLabel {padding:11px 0 11px 11px !important; line-height:1; color:#222222; font-size:15px; font-weight:500}
 .sapUiSizeCompact .sapMSlt>.sapMSltLabel .sapMSelectListItemText {line-height:normal}
 .sapUiSizeCompact .sapMTokenizer .sapMToken {height:30px; min-width: 47px; margin:0 5px 0 0; padding:6px 0px 6px 6px; border-radius:3px; border:solid 1px #dddfe2; background-color:#e7e8ea; font-size:11px; font-weight:500; font-stretch:normal; font-style:normal; line-height:1.45; letter-spacing:normal; text-align:left; color:#222222}
-.sapUiSizeCompact .sapMTokenText, .sapUiSizeCompact .sapMTokenIcon {font-size:11px; font-weight:500; font-stretch:normal; font-style:normal; line-height:1.45; letter-spacing:normal; text-align:left; color:#222222}
-.sapUiSizeCompact .sapMTokenIcon.sapUiIcon::before {content:'\e03e'}
+/* .sapUiSizeCompact .sapMTokenText, .sapUiSizeCompact .sapMTokenIcon {font-size:11px; font-weight:500; font-stretch:normal; font-style:normal; line-height:1.45; letter-spacing:normal; text-align:left; color:#222222} */
+.sapUiSizeCompact .sapMTokenText, .sapUiSizeCompact .sapMTokenIcon {color:#222222}
+/* .sapUiSizeCompact .sapMTokenIcon.sapUiIcon::before {content:'\e03e'} */
 .sapMTokenizerIndicator {padding-left:11px}
 .sapMSltArrow::before {font-family:"SAP-icons"; content:"\e1ef"; font-weight:100; color:#999; font-size:18px; line-height:2}
 [role=combobox] .sapMInputBaseIcon {font-size:1rem;}
