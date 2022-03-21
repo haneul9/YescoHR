@@ -85,7 +85,7 @@ sap.ui.define(
       },
 
       transformEmployeeData([mEmployeeData = {}]) {
-        const { Photo, Ename, Zzjikgbt, Zzjikcht, Pbtxt, Fulln, Text1, Text2 } = mEmployeeData;
+        let { Photo, Ename, Zzjikgbt, Zzjikcht, Pbtxt, Fulln, Text1, Text2 } = mEmployeeData;
         Photo ||= 'asset/image/avatar-unknown.svg';
         return { Photo, Ename, Zzjikgbt, Zzjikcht, Pbtxt, Fulln, Text1, Text2 };
       },
