@@ -1603,6 +1603,9 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .sapMLIBHighlightInformation {background:#A1E094}/*팀장*/
 .sapMLIBHighlightWarning {background:#FFE479}/*팀원*/
 
+.compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow { scroll-snap-type: x mandatory; }
+.compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow > .sapUiBlockLayoutCell { scroll-snap-align: start; }
+.compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow:last-child { height: 15px; }
 .compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow:not(:last-child) { overflow: hidden; }
 .compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow > .sapUiBlockLayoutCell:first-child { position: sticky; left: 0; z-index: 1; }
 .compare-block .sapUiBlockLayoutRow.sapUiBlockHorizontalCellsRow {border-bottom:1px solid rgba(112, 112, 112, .5)}

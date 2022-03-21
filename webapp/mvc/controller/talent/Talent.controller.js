@@ -173,8 +173,11 @@ sap.ui.define(
 
           this.getView().addDependent(this.oTalentCompareDialog);
 
-          this.oTalentCompareDialog.attachAfterOpen((e) => {
-            $('#container-ehr---talent--BlockLayout > div:last').on('scroll touchmove mousewheel', function () {
+          this.oTalentCompareDialog.attachAfterOpen(() => {
+            $('#container-ehr---talent--BlockLayout > div:last').on('scroll touchmove mousewheel', function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+
               const iScrollLeft = $(this).scrollLeft();
 
               $('#container-ehr---talent--BlockLayout > div:not(:last)').each(function () {

@@ -260,6 +260,39 @@
                                 </VBox>
                             </l:BlockLayoutCell>
                         </l:BlockLayoutRow>
+
+                        <l:BlockLayoutRow scrollable="true">
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <Label text="" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <Text text="" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <Text text="" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <Text text="" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <Text text="" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <Text text="" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                        </l:BlockLayoutRow>
                     </l:BlockLayout>
                 </l:VerticalLayout>
             </VBox>
