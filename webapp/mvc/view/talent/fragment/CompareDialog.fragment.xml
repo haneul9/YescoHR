@@ -9,287 +9,91 @@
             <VBox>
                 <l:VerticalLayout id="containerLayout" width="100%" class="sapUiBlockLayoutBackgroundLight compare-block">
                     <l:BlockLayout id="BlockLayout" background="{/selectedBackground}">
-                        <l:BlockLayoutRow accentCells="Accent1" scrollable="true">
-                            <l:BlockLayoutCell id="Accent1">
-                            </l:BlockLayoutCell>
+                        <l:BlockLayoutRow content="{/compare/row1}" scrollable="{/compare/scroll}">
                             <l:BlockLayoutCell>
-                                <VBox>
-                                    <Image src="asset/image/photo1.png" height="100px" />
-                                    <Text text="홍길동 부장 / 팀장" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Image src="asset/image/photo2.png" height="100px" />
-                                    <Text text="홍길동 부장 / 팀장" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Image src="asset/image/photo3.jpeg" height="100px" />
-                                    <Text text="홍길동 부장 / 팀장" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Image src="asset/image/photo3.jpeg" height="100px" />
-                                    <Text text="홍길동 부장 / 팀장" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Image src="asset/image/photo3.jpeg" height="100px" />
-                                    <Text text="홍길동 부장 / 팀장" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                        </l:BlockLayoutRow>
-                        <l:BlockLayoutRow scrollable="true">
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Label text="{i18n>LABEL_35013}" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="부장 / 팀장" />
-                                    <Text text="생년월일 : 1972.12.14" />
-                                    <Text text="입사 : 2001.01.01" />
-                                    <Text text="학력 : 동국대 (석사졸업) / 마케팅" />
-                                    <Text text="현직무 : 홍보팀 (15년 3개월)" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="부장 / 팀장" />
-                                    <Text text="생년월일 : 1972.12.14" />
-                                    <Text text="입사 : 2001.01.01" />
-                                    <Text text="학력 : 동국대 (석사졸업) / 마케팅" />
-                                    <Text text="현직무 : 홍보팀 (15년 3개월)" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="부장 / 팀장" />
-                                    <Text text="생년월일 : 1972.12.14" />
-                                    <Text text="입사 : 2001.01.01" />
-                                    <Text text="학력 : 동국대 (석사졸업) / 마케팅" />
-                                    <Text text="현직무 : 홍보팀 (15년 3개월)" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="부장 / 팀장" />
-                                    <Text text="생년월일 : 1972.12.14" />
-                                    <Text text="입사 : 2001.01.01" />
-                                    <Text text="학력 : 동국대 (석사졸업) / 마케팅" />
-                                    <Text text="현직무 : 홍보팀 (15년 3개월)" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="부장 / 팀장" />
-                                    <Text text="생년월일 : 1972.12.14" />
-                                    <Text text="입사 : 2001.01.01" />
-                                    <Text text="학력 : 동국대 (석사졸업) / 마케팅" />
-                                    <Text text="현직무 : 홍보팀 (15년 3개월)" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                        </l:BlockLayoutRow>
-                        <l:BlockLayoutRow scrollable="true">
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Label text="직무" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="홍보 (9년 7개월)" />
-                                    <Text text="인사 (5년 6개월" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="홍보 (9년 7개월)" />
-                                    <Text text="인사 (5년 6개월" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="홍보 (9년 7개월)" />
-                                    <Text text="인사 (5년 6개월" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="홍보 (9년 7개월)" />
-                                    <Text text="인사 (5년 6개월" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="홍보 (9년 7개월)" />
-                                    <Text text="인사 (5년 6개월" />
+                                <VBox visible="{= ${type} === 'text' }">
+                                    <Image src="{PicUrl}" height="100px" />
+                                    <Text text="{Value01}" />
                                 </VBox>
                             </l:BlockLayoutCell>
                         </l:BlockLayoutRow>
 
-                        <l:BlockLayoutRow scrollable="true">
+                        <l:BlockLayoutRow content="{/compare/row2}" scrollable="{/compare/scroll}">
                             <l:BlockLayoutCell>
-                                <VBox>
-                                    <Label text="학력" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="동국대 (석사졸업) / 마케팅" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="동국대 (석사졸업) / 마케팅" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="동국대 (석사졸업) / 마케팅" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="동국대 (석사졸업) / 마케팅" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="동국대 (석사졸업) / 마케팅" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                        </l:BlockLayoutRow>
-                        <l:BlockLayoutRow scrollable="true">
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Label text="{i18n>LABEL_35014}" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <HBox justifyContent="SpaceBetween" alignItems="Center">
-                                    <VBox>
-                                        <Text text="2020년 성과A/역량A" />
-                                        <Text text="2019년 성과A/역량A" />
-                                        <Text text="2018년 성과A/역량A" />
-                                    </VBox>
-                                    <Image src="asset/image/compare_chart.png" />
-                                </HBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <HBox justifyContent="SpaceBetween" alignItems="Center">
-                                    <VBox>
-                                        <Text text="2020년 성과A/역량A" />
-                                        <Text text="2019년 성과A/역량A" />
-                                        <Text text="2018년 성과A/역량A" />
-                                    </VBox>
-                                    <Image src="asset/image/compare_chart.png" />
-                                </HBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <HBox justifyContent="SpaceBetween" alignItems="Center">
-                                    <VBox>
-                                        <Text text="2020년 성과A/역량A" />
-                                        <Text text="2019년 성과A/역량A" />
-                                        <Text text="2018년 성과A/역량A" />
-                                    </VBox>
-                                    <Image src="asset/image/compare_chart.png" />
-                                </HBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <HBox justifyContent="SpaceBetween" alignItems="Center">
-                                    <VBox>
-                                        <Text text="2020년 성과A/역량A" />
-                                        <Text text="2019년 성과A/역량A" />
-                                        <Text text="2018년 성과A/역량A" />
-                                    </VBox>
-                                    <Image src="asset/image/compare_chart.png" />
-                                </HBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <HBox justifyContent="SpaceBetween" alignItems="Center">
-                                    <VBox>
-                                        <Text text="2020년 성과A/역량A" />
-                                        <Text text="2019년 성과A/역량A" />
-                                        <Text text="2018년 성과A/역량A" />
-                                    </VBox>
-                                    <Image src="asset/image/compare_chart.png" />
-                                </HBox>
-                            </l:BlockLayoutCell>
-                        </l:BlockLayoutRow>
-
-                        <l:BlockLayoutRow scrollable="true">
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Label text="{i18n>LABEL_35015}" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="인사팀 : 2001.01.01 ~ 2010.12.31" />
-                                    <Text text="홍보팀 : 2011.01.01 ~ 현재" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="인사팀 : 2001.01.01 ~ 2010.12.31" />
-                                    <Text text="홍보팀 : 2011.01.01 ~ 현재" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="인사팀 : 2001.01.01 ~ 2010.12.31" />
-                                    <Text text="홍보팀 : 2011.01.01 ~ 현재" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="인사팀 : 2001.01.01 ~ 2010.12.31" />
-                                    <Text text="홍보팀 : 2011.01.01 ~ 현재" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="인사팀 : 2001.01.01 ~ 2010.12.31" />
-                                    <Text text="홍보팀 : 2011.01.01 ~ 현재" />
+                                <VBox items="{path: 'data', templateShareable: false}">
+                                    <Text text="{value}">
+                                        <customData>
+                                            <core:CustomData key="type" value="{type}" writeToDom="true" />
+                                        </customData>
+                                    </Text>
                                 </VBox>
                             </l:BlockLayoutCell>
                         </l:BlockLayoutRow>
 
-                        <l:BlockLayoutRow scrollable="true">
+                        <l:BlockLayoutRow content="{/compare/row3}" scrollable="{/compare/scroll}">
+                            <l:BlockLayoutCell>
+                                <VBox items="{path: 'data', templateShareable: false}">
+                                    <Text text="{value}">
+                                        <customData>
+                                            <core:CustomData key="type" value="{type}" writeToDom="true" />
+                                        </customData>
+                                    </Text>
+                                </VBox>
+                            </l:BlockLayoutCell>
+                        </l:BlockLayoutRow>
+
+                        <l:BlockLayoutRow content="{/compare/row4}" scrollable="{/compare/scroll}">
+                            <l:BlockLayoutCell>
+                                <VBox items="{path: 'data', templateShareable: false}">
+                                    <Text text="{value}">
+                                        <customData>
+                                            <core:CustomData key="type" value="{type}" writeToDom="true" />
+                                        </customData>
+                                    </Text>
+                                </VBox>
+                            </l:BlockLayoutCell>
+                        </l:BlockLayoutRow>
+
+                        <l:BlockLayoutRow content="{/compare/row5}" scrollable="{/compare/scroll}">
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <VBox items="{path: 'data', templateShareable: false}" visible="{= ${type} === 'label' }">
+                                        <Text text="{value}">
+                                            <customData>
+                                                <core:CustomData key="type" value="{type}" writeToDom="true" />
+                                            </customData>
+                                        </Text>
+                                    </VBox>
+                                    <HBox justifyContent="SpaceBetween" alignItems="Center" visible="{= ${type} !== 'label' }">
+                                        <VBox items="{path: 'data', templateShareable: false}">
+                                            <Text text="{value}">
+                                                <customData>
+                                                    <core:CustomData key="type" value="{type}" writeToDom="true" />
+                                                </customData>
+                                            </Text>
+                                        </VBox>
+                                        <Image src="asset/image/compare_chart.png" />
+                                    </HBox>
+                                </VBox>
+                            </l:BlockLayoutCell>
+                        </l:BlockLayoutRow>
+
+                        <l:BlockLayoutRow content="{/compare/row6}" scrollable="{/compare/scroll}">
+                            <l:BlockLayoutCell>
+                                <VBox items="{path: 'data', templateShareable: false}">
+                                    <Text text="{value}">
+                                        <customData>
+                                            <core:CustomData key="type" value="{type}" writeToDom="true" />
+                                        </customData>
+                                    </Text>
+                                </VBox>
+                            </l:BlockLayoutCell>
+                        </l:BlockLayoutRow>
+
+                        <l:BlockLayoutRow content="{/compare/row7}" scrollable="{/compare/scroll}" visible="{/compare/scroll}">
                             <l:BlockLayoutCell>
                                 <VBox>
                                     <Label text="" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="" />
                                 </VBox>
                             </l:BlockLayoutCell>
                         </l:BlockLayoutRow>

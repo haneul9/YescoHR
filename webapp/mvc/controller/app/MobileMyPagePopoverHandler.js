@@ -77,13 +77,15 @@ sap.ui.define(
         const mFilters = {
           Ename: this.oController.getSessionProperty('Pernr'),
           Actda: moment().hour(9).toDate(),
-          Zflag: 'X',
+          Zflag: 'X', // 근속 기간 조회
+          Accty: 'Y', // 본인 데이터 조회
         };
 
         return Client.getEntitySet(oCommonModel, 'EmpSearchResult', mFilters);
       },
 
-      transformEmployeeData([{ Photo, Ename, Zzjikgbt, Zzjikcht, Pbtxt, Fulln, Text1, Text2 }]) {
+      transformEmployeeData([mEmployeeData = {}]) {
+        const { Photo, Ename, Zzjikgbt, Zzjikcht, Pbtxt, Fulln, Text1, Text2 } = mEmployeeData;
         Photo ||= 'asset/image/avatar-unknown.svg';
         return { Photo, Ename, Zzjikgbt, Zzjikcht, Pbtxt, Fulln, Text1, Text2 };
       },

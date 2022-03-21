@@ -89,6 +89,205 @@ sap.ui.define(
             totalCount: 0,
             list: [],
           },
+          compare: {
+            scroll: true,
+            row1: [
+              { type: 'label' }, //
+              { type: 'text', PicUrl: 'asset/image/photo1.png', Value01: '홍길동 부장/팀장' },
+              { type: 'text', PicUrl: 'asset/image/photo2.png', Value01: '홍길동 부장/팀장' },
+              { type: 'text', PicUrl: 'asset/image/photo3.jpeg', Value01: '홍길동 부장/팀장' },
+              { type: 'text', PicUrl: 'asset/image/photo1.png', Value01: '홍길동 부장/팀장' },
+              { type: 'text', PicUrl: 'asset/image/photo2.png', Value01: '홍길동 부장/팀장' },
+            ],
+            row2: [
+              { data: [{ type: 'label', value: '기본정보' }] }, // LABEL_35013
+              {
+                data: [
+                  { type: 'text', value: '부장 / 팀장' }, //
+                  { type: 'text', value: '생년월일 : 1972.12.14' },
+                  { type: 'text', value: '입사 : 2001.01.01' },
+                  { type: 'text', value: '학력 : 동국대 (석사졸업) / 마케팅' },
+                  { type: 'text', value: '현직무 : 홍보팀 (15년 3개월)' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '부장 / 팀장' }, //
+                  { type: 'text', value: '생년월일 : 1972.12.14' },
+                  { type: 'text', value: '입사 : 2001.01.01' },
+                  { type: 'text', value: '학력 : 동국대 (석사졸업) / 마케팅' },
+                  { type: 'text', value: '현직무 : 홍보팀 (15년 3개월)' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '부장 / 팀장' }, //
+                  { type: 'text', value: '생년월일 : 1972.12.14' },
+                  { type: 'text', value: '입사 : 2001.01.01' },
+                  { type: 'text', value: '학력 : 동국대 (석사졸업) / 마케팅' },
+                  { type: 'text', value: '현직무 : 홍보팀 (15년 3개월)' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '부장 / 팀장' }, //
+                  { type: 'text', value: '생년월일 : 1972.12.14' },
+                  { type: 'text', value: '입사 : 2001.01.01' },
+                  { type: 'text', value: '학력 : 동국대 (석사졸업) / 마케팅' },
+                  { type: 'text', value: '현직무 : 홍보팀 (15년 3개월)' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '부장 / 팀장' }, //
+                  { type: 'text', value: '생년월일 : 1972.12.14' },
+                  { type: 'text', value: '입사 : 2001.01.01' },
+                  { type: 'text', value: '학력 : 동국대 (석사졸업) / 마케팅' },
+                  { type: 'text', value: '현직무 : 홍보팀 (15년 3개월)' },
+                ],
+              },
+            ],
+            row3: [
+              { data: [{ type: 'label', value: '직무' }] },
+              {
+                data: [
+                  { type: 'text', value: '홍보 (9년 7개월)' }, //
+                  { type: 'text', value: '인사 (5년 6개월)' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '홍보 (9년 7개월)' }, //
+                  { type: 'text', value: '인사 (5년 6개월)' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '홍보 (9년 7개월)' }, //
+                  { type: 'text', value: '인사 (5년 6개월)' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '홍보 (9년 7개월)' }, //
+                  { type: 'text', value: '인사 (5년 6개월)' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '홍보 (9년 7개월)' }, //
+                  { type: 'text', value: '인사 (5년 6개월)' },
+                ],
+              },
+            ],
+            row4: [
+              { data: [{ type: 'label', value: '학력' }] },
+              {
+                data: [
+                  { type: 'text', value: '동국대 (석사졸업) / 마케팅' }, //
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '동국대 (석사졸업) / 마케팅' }, //
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '동국대 (석사졸업) / 마케팅' }, //
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '동국대 (석사졸업) / 마케팅' }, //
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '동국대 (석사졸업) / 마케팅' }, //
+                ],
+              },
+            ],
+            row5: [
+              { type: 'label', data: [{ type: 'label', value: '평가이력' }] },
+              {
+                data: [
+                  { type: 'text', value: '2020년 성과A/역량A' }, //
+                  { type: 'text', value: '2019년 성과A/역량A' },
+                  { type: 'text', value: '2018년 성과A/역량A' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '2020년 성과A/역량A' }, //
+                  { type: 'text', value: '2019년 성과A/역량A' },
+                  { type: 'text', value: '2018년 성과A/역량A' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '2020년 성과A/역량A' }, //
+                  { type: 'text', value: '2019년 성과A/역량A' },
+                  { type: 'text', value: '2018년 성과A/역량A' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '2020년 성과A/역량A' }, //
+                  { type: 'text', value: '2019년 성과A/역량A' },
+                  { type: 'text', value: '2018년 성과A/역량A' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '2020년 성과A/역량A' }, //
+                  { type: 'text', value: '2019년 성과A/역량A' },
+                  { type: 'text', value: '2018년 성과A/역량A' },
+                ],
+              },
+            ],
+            row6: [
+              { data: [{ type: 'label', value: '사내경력' }] },
+              {
+                data: [
+                  { type: 'text', value: '인사팀 : 2001.01.01 ~ 2010.12.31' }, //
+                  { type: 'text', value: '홍보팀 : 2011.01.01 ~ 현재' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '인사팀 : 2001.01.01 ~ 2010.12.31' }, //
+                  { type: 'text', value: '홍보팀 : 2011.01.01 ~ 현재' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '인사팀 : 2001.01.01 ~ 2010.12.31' }, //
+                  { type: 'text', value: '홍보팀 : 2011.01.01 ~ 현재' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '인사팀 : 2001.01.01 ~ 2010.12.31' }, //
+                  { type: 'text', value: '홍보팀 : 2011.01.01 ~ 현재' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '인사팀 : 2001.01.01 ~ 2010.12.31' }, //
+                  { type: 'text', value: '홍보팀 : 2011.01.01 ~ 현재' },
+                ],
+              },
+            ],
+            row7: [
+              {}, //
+              {},
+              {},
+              {},
+              {},
+              {},
+            ],
+          },
         };
       },
 
