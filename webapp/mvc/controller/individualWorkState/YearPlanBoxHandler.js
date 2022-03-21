@@ -32,11 +32,11 @@ sap.ui.define(
         // 1년근태
         const aList1 = await Client.getEntitySet(oModel, 'PersonalTimeDashboard', mPayLoad);
         // 근태유형 색상
-        const aTimeTypeList = await Client.getEntitySet(oModel, 'TimeTypeLegend', { Werks: sWerks });
+        // const aTimeTypeList = await Client.getEntitySet(oModel, 'TimeTypeLegend', { Werks: sWerks });
 
-        _.forEach(aTimeTypeList, (e) => {
-          oViewModel.setProperty(`/TimeTypes/${e.Colty}`, true);
-        });
+        // _.forEach(aTimeTypeList, (e) => {
+        //   oViewModel.setProperty(`/TimeTypes/${e.Colty}`, true);
+        // });
         oViewModel.setProperty(
           '/yearPlan',
           _.each(aList1, (e) => {
