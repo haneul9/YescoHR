@@ -1,9 +1,9 @@
 <core:FragmentDefinition xmlns:l="sap.ui.layout"
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <Dialog id="talentCompareDialog" title='인재검색' contentWidth='1200px' contentHeight='665px'>
+    <Dialog id="talentCompareDialog" title="인재검색" contentWidth="1200px">
         <beginButton>
-            <Button type="Emphasized" text="확인" press=".onClick" />
+            <Button type="Emphasized" text="확인" press=".onPressCompareDialogClose" />
         </beginButton>
         <content>
             <VBox>
@@ -12,7 +12,7 @@
                         <l:BlockLayoutRow content="{/compare/row1}" scrollable="{/compare/scroll}">
                             <l:BlockLayoutCell>
                                 <VBox visible="{= ${type} === 'text' }">
-                                    <Image src="{PicUrl}" height="100px" />
+                                    <Image src="{Picurl}" height="100px" />
                                     <Text text="{Value01}" />
                                 </VBox>
                             </l:BlockLayoutCell>
@@ -72,7 +72,7 @@
                                                 </customData>
                                             </Text>
                                         </VBox>
-                                        <Image src="asset/image/compare_chart.png" />
+                                        <Image src="asset/image/compare_chart{block9}.png" />
                                     </HBox>
                                 </VBox>
                             </l:BlockLayoutCell>
