@@ -2,6 +2,8 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/odata/Client',
+    'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/app/MobileMyPagePopoverHandler',
@@ -16,6 +18,8 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     AppUtils,
+    Client,
+    ServiceNames,
     MessageBox,
     BaseController,
     MobileMyPagePopoverHandler,
@@ -31,28 +35,34 @@ sap.ui.define(
         this.debug('App.onInit');
 
         this.bMobile = AppUtils.isMobile();
-        if (this.bMobile) {
-          setTimeout(() => {
-            this.oMobileEmployeeSearchDialogHandler = new MobileEmployeeSearchDialogHandler(this);
-          });
-          setTimeout(() => {
-            this.oMobileMyPagePopoverHandler = new MobileMyPagePopoverHandler(this);
-          });
-          setTimeout(() => {
-            this.oAppMenu = new MobileMenus(this);
-            this.getOwnerComponent().setAppMenu(this.oAppMenu);
-          });
-          setTimeout(() => {
-            this.savePushToken();
-          });
-        } else {
+        if (!this.bMobile) {
           setTimeout(() => {
             this.oAppMenu = new Menus(this);
             this.getOwnerComponent().setAppMenu(this.oAppMenu);
           });
+        } else {
+          setTimeout(() => {
+            this.initMobile();
+          }, 1000);
         }
         setTimeout(() => {
           this.oNotificationPopoverHandler = new NotificationPopoverHandler(this);
+        });
+      },
+
+      initMobile() {
+        setTimeout(() => {
+          this.savePushToken();
+        });
+        setTimeout(() => {
+          this.oAppMenu = new MobileMenus(this);
+          this.getOwnerComponent().setAppMenu(this.oAppMenu);
+        });
+        setTimeout(() => {
+          this.oMobileMyPagePopoverHandler = new MobileMyPagePopoverHandler(this);
+        });
+        setTimeout(() => {
+          this.oMobileEmployeeSearchDialogHandler = new MobileEmployeeSearchDialogHandler(this);
         });
       },
 
@@ -91,13 +101,13 @@ sap.ui.define(
           return;
         }
 
-        const oModel = this.oController.getModel(ServiceNames.COMMON);
-        const mPayload = {
-          Pernr: this.getSessionProperty('/Pernr'),
-          Token: 'test-token', // window.YescoApp.getPushToken(),
-        };
-
         try {
+          const oModel = this.getModel(ServiceNames.COMMON);
+          const mPayload = {
+            Pernr: this.getSessionProperty('Pernr'),
+            Token: window.YescoApp.getToken(),
+          };
+
           await Client.create(oModel, 'PernrToken', mPayload);
         } catch (oError) {
           this.debug('savePushToken error.', oError);
@@ -169,7 +179,12 @@ sap.ui.define(
           actions: [MessageBox.Action.YES, MessageBox.Action.NO],
           onClose: (sAction) => {
             if (sAction === MessageBox.Action.YES) {
-              location.href = '/sap/public/bc/icf/logoff';
+              if (this.bMobile) {
+                location.href = '/sap/public/bc/icf/logoff';
+              } else {
+                window.open('/sap/public/bc/ui2/zui5_yescohr/logout.html');
+                window.close();
+              }
             }
           },
         });

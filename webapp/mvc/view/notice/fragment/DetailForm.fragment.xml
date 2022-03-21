@@ -34,11 +34,17 @@
                 <Text text="{= !${/FormData/Chntm} ? '' : ${/FormData/Chntm}}"/>
             </VBox>
             <Label text="{i18n>LABEL_08008}"/>
-            <VBox id="EditorBox" class="pt-6-px pb-6-px">
+            <VBox id="EditorBox" class="pt-6-px pb-6-px" visible="{= ${/Hass} &amp;&amp; ${/MySelf} }">
                 <layoutData>
                     <grid:GridItemLayoutData gridColumn="2 / 5"/>
                 </layoutData>
-                <rte:RichTextEditor value="{/FormData/Detail}" showGroupTextAlign="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" showGroupStructure="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" showGroupFontStyle="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" showGroupClipboard="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" ready=".editorReady" width="99.8%" height="500px" showGroupFont="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" showGroupInsert="{= !!${/MySelf} &amp;&amp; !!${/Hass} }" editable="{= !!${/MySelf} &amp;&amp; !!${/Hass} }"/>
+                <rte:RichTextEditor id="editor" value="{/FormData/Detail}" showGroupTextAlign="true" showGroupStructure="true" showGroupFontStyle="true" showGroupClipboard="true" ready=".editorReady" width="99.8%" height="500px" showGroupFont="true" showGroupInsert="true" editable="{= !!${/MySelf} &amp;&amp; !!${/Hass} }"/>
+            </VBox>
+            <VBox visible="{= !${/Hass} || !${/MySelf} }">
+                <core:HTML content='&lt;div id="readHtml"&gt;&lt;/div&gt;' />
+                <layoutData>
+                    <grid:GridItemLayoutData gridColumn="2 / 5"/>
+                </layoutData>
             </VBox>
         </grid:CSSGrid>
     </VBox>

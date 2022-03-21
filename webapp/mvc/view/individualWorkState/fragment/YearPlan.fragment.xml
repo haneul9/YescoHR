@@ -5,7 +5,8 @@
   <VBox width="100%" class="vCardBox small">
     <HBox class="table-toolbar">
       <HBox class="title">
-        <Title level="H2" text="{i18n>LABEL_18032}" />
+        <Title level="H2" text="{i18n>LABEL_18032}" class="sapUiSmallMarginEnd" />
+        <Text text="{i18n>MSG_18001}" class="desc-txt ml-0" />
       </HBox>
     </HBox>
     <HBox justifyContent="Center" class="year-plan-head">
@@ -32,30 +33,30 @@
       </custom:DayBox>
     </grid:CSSGrid>
     <HBox class="box style-02 status-wrap year-plan sapUiTinyMarginTop">
-      <VBox visible="{= !!${/TimeTypes/Type01} || !!${/TimeTypes/Type02} || !!${/TimeTypes/Type16} || !!${/TimeTypes/Type06} }">
-        <Text visible="{= !!${/TimeTypes/Type01} }" text="{i18n>LABEL_20006}" class="type01" />
-        <Text visible="{= !!${/TimeTypes/Type02} }" text="{i18n>LABEL_20008}" class="type02" />
-        <Text visible="{= !!${/TimeTypes/Type16} }" text="{i18n>LABEL_18033}" class="type16" />
-        <Text visible="{= !!${/TimeTypes/Type06} }" text="{i18n>LABEL_18034}" class="type06" />
+      <VBox>
+        <Text text="{i18n>LABEL_20006}" class="type01" />
+        <Text text="{i18n>LABEL_20008}" class="type02" />
+        <Text text="{i18n>LABEL_18033}" class="type03" />
+        <Text text="{i18n>LABEL_18034}" class="type04" />
       </VBox>
-      <VBox visible="{= !!${/TimeTypes/Type08} || !!${/TimeTypes/Type09} || !!${/TimeTypes/Type10} }">
-        <Text visible="{= !!${/TimeTypes/Type08} }" text="{i18n>LABEL_00188}" class="type08" />
-        <Text visible="{= !!${/TimeTypes/Type09} }" text="{i18n>LABEL_01123}" class="type09" />
-        <Text visible="{= !!${/TimeTypes/Type10} }" text="{i18n>LABEL_18035}" class="type10" />
+      <VBox>
+        <Text text="{i18n>LABEL_00188}" class="type11" />
+        <Text text="{i18n>LABEL_01123}" class="type12" />
+        <Text text="{i18n>LABEL_18035}" class="type13" />
       </VBox>
-      <VBox visible="{= !!${/TimeTypes/Type11} || !!${/TimeTypes/Type12} }">
-        <Text visible="{= !!${/TimeTypes/Type11} }" text="{i18n>LABEL_00182}" class="type11" />
-        <Text visible="{= !!${/TimeTypes/Type12} }" text="{i18n>LABEL_00181}" class="type12" />
+      <VBox>
+        <Text text="{i18n>LABEL_00182}" class="type21" />
+        <Text text="{i18n>LABEL_00181}" class="type22" />
       </VBox>
-      <VBox visible="{= !!${/TimeTypes/Type17} || !!${/TimeTypes/Type13} || !!${/TimeTypes/Type14} }">
-        <Text visible="{= !!${/TimeTypes/Type17} }" text="{i18n>LABEL_28055}" class="type17" />
-        <Text visible="{= !!${/TimeTypes/Type13} }" text="{i18n>LABEL_00189}" class="type13" />
-        <Text visible="{= !!${/TimeTypes/Type14} }" text="{i18n>LABEL_18036}" class="type14" />
+      <VBox>
+        <Text text="{i18n>LABEL_28055}" class="type31" />
+        <Text text="{i18n>LABEL_00189}" class="type32" />
+        <Text text="{i18n>LABEL_18036}" class="type33" />
       </VBox>
-      <VBox visible="{= !!${/TimeTypes/Type18} }">
-        <Text text="{i18n>LABEL_00121}" class="type18" />
+      <VBox>
+        <Text text="{i18n>LABEL_23007}" class="type18" />
       </VBox>
-      <VBox visible="{= !!${/TimeTypes/Type15} }">
+      <VBox>
         <Text text="{i18n>LABEL_00180}" class="type15" />
       </VBox>
       <!-- <Text text="{Coltytx}">

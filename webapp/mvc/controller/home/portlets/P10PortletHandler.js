@@ -78,63 +78,29 @@ sap.ui.define(
       },
 
       async readContentData() {
-        const oModel = this.getController().getModel(ServiceNames.WORKTIME);
+        const oModel = this.getController().getModel(ServiceNames.APPRAISAL);
         const mPayload = {
-          Menid: this.getMenid('workTime'),
+          AppraisalContDetSet: [],
         };
 
-        return Client.getEntitySet(oModel, 'WorkingTime', mPayload);
+        return Client.deep(oModel, 'AppraisalCont', mPayload);
       },
 
       transformContentData(aPortletContentData = []) {
-        const aChartData = [];
-        const aList = [];
-
-        aPortletContentData.forEach((mData) => {
-          // if (mData.Gubun === '1') {
-          //   aList.push(mData);
-          // }
-        });
-
-        aChartData.push(
-          {
-            label: '정합성 있는 노경관계를 구축한다.',
-            value: 20,
-            color: '#f5a369',
-          },
-          {
-            label: '임단협의 적정성을 확보하고, 구성원들의 만족도를 제고한다.',
-            value: 20,
-            color: '#faca74',
-          },
-          {
-            label: '인력 효율성을 제고한다.',
-            value: 20,
-            color: '#b7c983',
-          },
-          {
-            label: '조직역량을 강화한다.',
-            value: 10,
-            color: '#5ac6b2',
-          },
-          {
-            label: '최적의 IT Business Solution을 제공한다.',
-            value: 10,
-            color: '#5aa7c6',
-            labelDistance: '5',
-          },
-          {
-            label: '정보시스템 지원 강화',
-            value: 10,
-            color: '#9a8db7',
-          },
-          {
-            label: '우리의 믿음이 내재화 될 수 있도록 독려하고 솔선수범한다.',
-            value: 10,
-            color: '#9a8db7',
-          }
-        );
-        aChartData.reverse();
+        const aColors = ['#f5a369', '#faca74', '#b7c983', '#5ac6b2', '#5aa7c6', '#9a8db7', '#9a8db7'];
+        const aChartData = _.chain(aPortletContentData.AppraisalContDetSet.results)
+          .map((o, i) => ({ label: o.Obj0, color: aColors[i], value: _.toNumber(o.Fwgt) }))
+          .reverse()
+          .value();
+        const aList = _.chain(aPortletContentData.AppraisalContDetSet.results)
+          .map((o, i) => ({
+            Color: _.toString(++i),
+            Itext: o.Obj0,
+            Perce: _.toNumber(o.Fwgt),
+            Acode: o.Z111,
+            Atext: o.Z111Tx,
+          }))
+          .value();
 
         if (this.oChartPromise) {
           this.oChartPromise.then(() => {
@@ -144,60 +110,8 @@ sap.ui.define(
           this.setChartData(aChartData); // 다른 메뉴를 갔다가 되돌아오는 경우
         }
 
-        aList.push(
-          {
-            Color: '1',
-            Itext: '정합성 있는 노경관계를 구축한다.',
-            Perce: 20,
-            Acode: '1',
-            Atext: '완료',
-          },
-          {
-            Color: '2',
-            Itext: '임단협의 적정성을 확보하고, 구성원들의 만족도를 제고한다.',
-            Perce: 20,
-            Acode: '1',
-            Atext: '완료',
-          },
-          {
-            Color: '3',
-            Itext: '인력 효율성을 제고한다.',
-            Perce: 20,
-            Acode: '2',
-            Atext: '진행중',
-          },
-          {
-            Color: '4',
-            Itext: '조직역량을 강화한다.',
-            Perce: 10,
-            Acode: '2',
-            Atext: '진행중',
-          },
-          {
-            Color: '5',
-            Itext: '최적의 IT Business Solution을 제공한다.',
-            Perce: 10,
-            Acode: '3',
-            Atext: '미실시',
-          },
-          {
-            Color: '6',
-            Itext: '정보시스템 지원 강화',
-            Perce: 10,
-            Acode: '4',
-            Atext: '중단',
-          },
-          {
-            Color: '6',
-            Itext: '우리의 믿음이 내재화 될 수 있도록 독려하고 솔선수범한다.',
-            Perce: 10,
-            Acode: '4',
-            Atext: '중단',
-          }
-        );
-
         return {
-          description: '목표수립 1차 평가 합의중',
+          description: `${aPortletContentData.ZzapstsNm} ${aPortletContentData.ZzapstsSubnm}`,
           list: aList,
           listCount: aList.length,
         };

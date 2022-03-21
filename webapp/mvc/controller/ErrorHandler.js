@@ -57,6 +57,16 @@ sap.ui.define(
         }
         this._bMessageOpen = true;
 
+        if (/Response did not contain a valid OData result/.test(sDetails)) {
+          // Session이 만료되었습니다.\n로그온 화면으로 이동합니다.
+          this.alert(getBundleText('MSG_00057'), {
+            onClose: () => {
+              location.reload();
+            },
+          });
+          return;
+        }
+
         MessageBox.error(this._sErrorText, {
           id: 'serviceErrorMessageBox',
           details: sDetails,

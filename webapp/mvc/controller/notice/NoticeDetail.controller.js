@@ -91,6 +91,7 @@ sap.ui.define(
               Notice2Nav: [],
             };
 
+            $('#readHtml').text('');
             const oModel = this.getModel(ServiceNames.COMMON);
             const oDetail = await Client.deep(oModel, 'NoticeManage', oSendObject);
 
@@ -108,6 +109,7 @@ sap.ui.define(
             });
 
             oDetailModel.setProperty('/FormData', oTargetData);
+            $('#readHtml').append(oTargetData.Detail);
           }
 
           // setTimeout(() => {

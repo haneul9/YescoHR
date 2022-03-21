@@ -130,7 +130,11 @@ sap.ui.define(
               mErrorData.message = errorJSON.error.innererror.errordetails[0].message;
             } else if (errorJSON.error.message) {
               // mErrorData.code = 'I';
-              mErrorData.message = errorJSON.error.message.value;
+              if (_.startsWith(errorJSON.error.message.value, 'In the context of Data Services')) {
+                mErrorData.message = 'SAP Server OData Error.\nPlease report to administrator.';
+              } else {
+                mErrorData.message = errorJSON.error.message.value;
+              }
             } else {
               // mErrorData.code = 'I';
               mErrorData.message = 'Unkown error.';

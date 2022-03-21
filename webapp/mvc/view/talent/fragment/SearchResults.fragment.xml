@@ -1,0 +1,41 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:custom="sap.ui.yesco.control">
+    <VBox class="vCardBox" visible="{/result/busy}">
+        <custom:Placeholder />
+    </VBox>
+    <VBox class="vCardBox" visible="{= !${/result/busy} }">
+        <HBox class="table-toolbar" justifyContent="SpaceBetween">
+            <HBox class="title">
+                <Title text="{i18n>LABEL_00204}" level="H4" />
+            </HBox>
+            <HBox class="status-wrap">
+                <ObjectStatus text="{i18n>LABEL_35010}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication03" />
+                <ObjectStatus text="{i18n>LABEL_35011}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication04" />
+                <ObjectStatus text="{i18n>LABEL_35012}" icon="sap-icon://circle-task-2" state="Indication05" />
+            </HBox>
+        </HBox>
+        <f:GridList id="talentList" mode="MultiSelect" items="{ path: '/result/list' }" selectionChange="onSelectionChange" delete="onDelete" class="talent-list sapUiResponsiveContentPadding" visible="{= ${/result/totalCount} !== 0 }">
+            <f:customLayout>
+                <!-- <grid:GridBasicLayout gridTemplateColumns="repeat(auto-fit, minmax(17rem, 1fr))" gridGap="20px" /> -->
+                <grid:GridBasicLayout gridTemplateColumns="repeat(5, 1fr)" gridGap="20px" />
+            </f:customLayout>
+            <f:GridListItem detailPress="onDetailPress" press="onPress" highlight="{ColtyState}">
+                <VBox height="100%">
+                    <HBox height="100%" class="sapUiTinyMargin" alignItems="Center">
+                        <Image src="{PicUrl}" width="3rem" class="sapUiSmallMarginEnd"/>
+                        <VBox>
+                            <Title text="{Linetx1}" wrapping="true"/>
+                            <Text text="{Linetx2}" />
+                            <Text text="{Linetx3}" />
+                            <Text text="{Linetx4}" />
+                            <Text text="{Linetx5}" />
+                        </VBox>
+                    </HBox>
+                </VBox>
+            </f:GridListItem>
+        </f:GridList>
+    </VBox>
+</core:FragmentDefinition>

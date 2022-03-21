@@ -63,8 +63,8 @@ sap.ui.define(
       },
 
       async refreshFavorites() {
-        const aFavorites = await this.readContentData();
-        const mFavorites = this.transformContentData(aFavorites);
+        const aFavorites = this.readContentData();
+        const mFavorites = this.transformContentData(await aFavorites);
         const oPortletModel = this.getPortletModel();
 
         oPortletModel.setProperty('/list', mFavorites.list);

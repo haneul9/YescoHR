@@ -1,45 +1,401 @@
 sap.ui.define(
   [
     //
-    'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/model/json/JSONModel',
     'sap/ui/core/Fragment',
-    'sap/m/MessageToast',
+    'sap/ui/model/Filter',
+    'sap/ui/model/FilterOperator',
+    'sap/ui/yesco/control/MessageBox',
+    'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/ComboEntry',
+    'sap/ui/yesco/common/exceptions/UI5Error',
+    'sap/ui/yesco/common/odata/Client',
+    'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/mvc/controller/BaseController',
   ],
   (
     //
-    BaseController,
-    JSONModel,
     Fragment,
-    MessageToast
+    Filter,
+    FilterOperator,
+    MessageBox,
+    AppUtils,
+    ComboEntry,
+    UI5Error,
+    Client,
+    ServiceNames,
+    BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.talent.Talent', {
-      onDialog() {
-        if (!this.byId('talentCompareDialog')) {
-          Fragment.load({
-            id: this.getView().getId(),
-            name: 'sap.ui.yesco.mvc.view.talent.fregment.CompareDialog',
-            controller: this,
-          }).then((oDialog) => {
-            // connect dialog to the root view of this component (models, lifecycle)
-            this.getView().addDependent(oDialog);
-            oDialog.open();
+      initializeModel() {
+        return {
+          busy: false,
+          entry: {
+            A: [],
+            B: [],
+            C: [],
+            D: [],
+            E: [],
+            F: [],
+            G: [],
+            H: [],
+            I: [],
+            J: [],
+            K: [],
+            L: [],
+            M: [],
+          },
+          saved: {
+            busy: false,
+            Schtl: '',
+            selectedCondition: 'ALL',
+            entry: [],
+          },
+          search: {
+            Freetx: '',
+            Prcty: 'A',
+            Jobgr: [],
+            Zzjikgb: [],
+            Zzjikch: [],
+            EeageFr: '',
+            EeageTo: '',
+            Schcd: [],
+            Major: [],
+            Slabs: [],
+            Cttyp: [],
+            Quali1: '',
+            Langlv1: '',
+            Quali2: '',
+            Langlv2: '',
+            Quali3: '',
+            Langlv3: '',
+            Gesch: '',
+            Stell1: '',
+            SyearFr1: '',
+            SyearTo1: '',
+            Stell2: '',
+            SyearFr2: '',
+            SyearTo2: '',
+            Stell3: '',
+            SyearFr3: '',
+            SyearTo3: '',
+            Stell4: '',
+            SyearFr4: '',
+            SyearTo4: '',
+          },
+          result: {
+            busy: false,
+            totalCount: 0,
+            list: [],
+          },
+          compare: {
+            scroll: true,
+            row1: [
+              { type: 'label' }, //
+              { type: 'text', PicUrl: 'asset/image/photo1.png', Value01: '홍길동 부장/팀장' },
+              { type: 'text', PicUrl: 'asset/image/photo2.png', Value01: '홍길동 부장/팀장' },
+              { type: 'text', PicUrl: 'asset/image/photo3.jpeg', Value01: '홍길동 부장/팀장' },
+              { type: 'text', PicUrl: 'asset/image/photo1.png', Value01: '홍길동 부장/팀장' },
+              { type: 'text', PicUrl: 'asset/image/photo2.png', Value01: '홍길동 부장/팀장' },
+            ],
+            row2: [
+              { data: [{ type: 'label', value: '기본정보' }] }, // LABEL_35013
+              {
+                data: [
+                  { type: 'text', value: '부장 / 팀장' }, //
+                  { type: 'text', value: '생년월일 : 1972.12.14' },
+                  { type: 'text', value: '입사 : 2001.01.01' },
+                  { type: 'text', value: '학력 : 동국대 (석사졸업) / 마케팅' },
+                  { type: 'text', value: '현직무 : 홍보팀 (15년 3개월)' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '부장 / 팀장' }, //
+                  { type: 'text', value: '생년월일 : 1972.12.14' },
+                  { type: 'text', value: '입사 : 2001.01.01' },
+                  { type: 'text', value: '학력 : 동국대 (석사졸업) / 마케팅' },
+                  { type: 'text', value: '현직무 : 홍보팀 (15년 3개월)' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '부장 / 팀장' }, //
+                  { type: 'text', value: '생년월일 : 1972.12.14' },
+                  { type: 'text', value: '입사 : 2001.01.01' },
+                  { type: 'text', value: '학력 : 동국대 (석사졸업) / 마케팅' },
+                  { type: 'text', value: '현직무 : 홍보팀 (15년 3개월)' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '부장 / 팀장' }, //
+                  { type: 'text', value: '생년월일 : 1972.12.14' },
+                  { type: 'text', value: '입사 : 2001.01.01' },
+                  { type: 'text', value: '학력 : 동국대 (석사졸업) / 마케팅' },
+                  { type: 'text', value: '현직무 : 홍보팀 (15년 3개월)' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '부장 / 팀장' }, //
+                  { type: 'text', value: '생년월일 : 1972.12.14' },
+                  { type: 'text', value: '입사 : 2001.01.01' },
+                  { type: 'text', value: '학력 : 동국대 (석사졸업) / 마케팅' },
+                  { type: 'text', value: '현직무 : 홍보팀 (15년 3개월)' },
+                ],
+              },
+            ],
+            row3: [
+              { data: [{ type: 'label', value: '직무' }] },
+              {
+                data: [
+                  { type: 'text', value: '홍보 (9년 7개월)' }, //
+                  { type: 'text', value: '인사 (5년 6개월)' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '홍보 (9년 7개월)' }, //
+                  { type: 'text', value: '인사 (5년 6개월)' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '홍보 (9년 7개월)' }, //
+                  { type: 'text', value: '인사 (5년 6개월)' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '홍보 (9년 7개월)' }, //
+                  { type: 'text', value: '인사 (5년 6개월)' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '홍보 (9년 7개월)' }, //
+                  { type: 'text', value: '인사 (5년 6개월)' },
+                ],
+              },
+            ],
+            row4: [
+              { data: [{ type: 'label', value: '학력' }] },
+              {
+                data: [
+                  { type: 'text', value: '동국대 (석사졸업) / 마케팅' }, //
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '동국대 (석사졸업) / 마케팅' }, //
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '동국대 (석사졸업) / 마케팅' }, //
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '동국대 (석사졸업) / 마케팅' }, //
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '동국대 (석사졸업) / 마케팅' }, //
+                ],
+              },
+            ],
+            row5: [
+              { type: 'label', data: [{ type: 'label', value: '평가이력' }] },
+              {
+                data: [
+                  { type: 'text', value: '2020년 성과A/역량A' }, //
+                  { type: 'text', value: '2019년 성과A/역량A' },
+                  { type: 'text', value: '2018년 성과A/역량A' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '2020년 성과A/역량A' }, //
+                  { type: 'text', value: '2019년 성과A/역량A' },
+                  { type: 'text', value: '2018년 성과A/역량A' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '2020년 성과A/역량A' }, //
+                  { type: 'text', value: '2019년 성과A/역량A' },
+                  { type: 'text', value: '2018년 성과A/역량A' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '2020년 성과A/역량A' }, //
+                  { type: 'text', value: '2019년 성과A/역량A' },
+                  { type: 'text', value: '2018년 성과A/역량A' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '2020년 성과A/역량A' }, //
+                  { type: 'text', value: '2019년 성과A/역량A' },
+                  { type: 'text', value: '2018년 성과A/역량A' },
+                ],
+              },
+            ],
+            row6: [
+              { data: [{ type: 'label', value: '사내경력' }] },
+              {
+                data: [
+                  { type: 'text', value: '인사팀 : 2001.01.01 ~ 2010.12.31' }, //
+                  { type: 'text', value: '홍보팀 : 2011.01.01 ~ 현재' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '인사팀 : 2001.01.01 ~ 2010.12.31' }, //
+                  { type: 'text', value: '홍보팀 : 2011.01.01 ~ 현재' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '인사팀 : 2001.01.01 ~ 2010.12.31' }, //
+                  { type: 'text', value: '홍보팀 : 2011.01.01 ~ 현재' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '인사팀 : 2001.01.01 ~ 2010.12.31' }, //
+                  { type: 'text', value: '홍보팀 : 2011.01.01 ~ 현재' },
+                ],
+              },
+              {
+                data: [
+                  { type: 'text', value: '인사팀 : 2001.01.01 ~ 2010.12.31' }, //
+                  { type: 'text', value: '홍보팀 : 2011.01.01 ~ 현재' },
+                ],
+              },
+            ],
+            row7: [
+              {}, //
+              {},
+              {},
+              {},
+              {},
+              {},
+            ],
+          },
+        };
+      },
+
+      async onObjectMatched() {
+        const oViewModel = this.getViewModel();
+
+        try {
+          oViewModel.setSizeLimit(2000);
+          oViewModel.setData(this.initializeModel());
+          oViewModel.setProperty('/busy', true);
+
+          this.getEntrySearchCondition();
+
+          const sPernr = this.getAppointeeProperty('Pernr');
+          const fCurried = Client.getEntitySet(this.getModel(ServiceNames.PA));
+          const [aEntryA, aEntryB, aEntryC, aEntryD, aEntryE, aEntryF, aEntryG, aEntryH, aEntryI, aEntryJ, aEntryK, aEntryL, aEntryM] = await Promise.all([
+            fCurried('TalentSearchCodeList', { Pernr: sPernr, Schfld: 'A' }), //
+            fCurried('TalentSearchCodeList', { Pernr: sPernr, Schfld: 'B' }),
+            fCurried('TalentSearchCodeList', { Pernr: sPernr, Schfld: 'C' }),
+            fCurried('TalentSearchCodeList', { Pernr: sPernr, Schfld: 'D' }),
+            fCurried('TalentSearchCodeList', { Pernr: sPernr, Schfld: 'E' }),
+            fCurried('TalentSearchCodeList', { Pernr: sPernr, Schfld: 'F' }),
+            fCurried('TalentSearchCodeList', { Pernr: sPernr, Schfld: 'G' }),
+            fCurried('TalentSearchCodeList', { Pernr: sPernr, Schfld: 'H' }),
+            fCurried('TalentSearchCodeList', { Pernr: sPernr, Schfld: 'I' }),
+            fCurried('TalentSearchCodeList', { Pernr: sPernr, Schfld: 'J' }),
+            fCurried('TalentSearchCodeList', { Pernr: sPernr, Schfld: 'K' }),
+            fCurried('TalentSearchCodeList', { Pernr: sPernr, Schfld: 'L' }),
+            fCurried('TalentSearchCodeList', { Pernr: sPernr, Schfld: 'M' }),
+          ]);
+
+          oViewModel.setProperty('/entry', {
+            A: _.map(aEntryA, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) })),
+            B: _.map(aEntryB, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) })),
+            C: _.map(aEntryC, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) })),
+            D: _.concat(
+              { Zcode: '', Ztext: '' },
+              _.map(aEntryD, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.toNumber(o.Zcode) }))
+            ),
+            E: _.map(aEntryE, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) })),
+            F: _.map(aEntryF, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) })),
+            G: _.map(aEntryG, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) })),
+            H: _.map(aEntryH, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) })),
+            I: _.concat(
+              { Zcode: '', Ztext: '' },
+              _.map(aEntryI, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) }))
+            ),
+            J: _.concat(
+              { Zcode: '', Ztext: '' },
+              _.map(aEntryJ, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) }))
+            ),
+            K: _.concat(
+              { Zcode: '', Ztext: '' },
+              _.map(aEntryK, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) }))
+            ),
+            L: _.concat(
+              { Zcode: '', Ztext: '' },
+              _.map(aEntryL, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) }))
+            ),
+            M: _.concat(
+              { Zcode: '', Ztext: '' },
+              _.map(aEntryM, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.toNumber(o.Zcode) }))
+            ),
           });
-        } else {
-          this.byId('talentCompareDialog').open();
+        } catch (oError) {
+          this.debug('Controller > Talent > onObjectMatched Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          this.byId('searchFilterBody').removeStyleClass('expanded');
+          oViewModel.setProperty('/busy', false);
         }
+      },
+
+      async onDialog() {
+        if (!this.oTalentCompareDialog) {
+          this.oTalentCompareDialog = await Fragment.load({
+            id: this.getView().getId(),
+            name: 'sap.ui.yesco.mvc.view.talent.fragment.CompareDialog',
+            controller: this,
+          });
+
+          this.getView().addDependent(this.oTalentCompareDialog);
+
+          this.oTalentCompareDialog.attachAfterOpen(() => {
+            $('#container-ehr---talent--BlockLayout > div:last').on('scroll touchmove mousewheel', function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+
+              const iScrollLeft = $(this).scrollLeft();
+
+              $('#container-ehr---talent--BlockLayout > div:not(:last)').each(function () {
+                $(this).scrollLeft(iScrollLeft);
+              });
+            });
+          });
+        }
+
+        this.oTalentCompareDialog.open();
       },
 
       onCompareDialogM() {
         if (!this.byId('talentCompareDialog')) {
           Fragment.load({
             id: this.getView().getId(),
-            name: 'sap.ui.yesco.mvc.view.talent.fregment.CompareDialogM',
+            name: 'sap.ui.yesco.mvc.view.talent.fragment.CompareDialogM',
             controller: this,
           }).then((oDialog) => {
-            // connect dialog to the root view of this component (models, lifecycle)
             this.getView().addDependent(oDialog);
             oDialog.open();
           });
@@ -52,10 +408,9 @@ sap.ui.define(
         if (!this.byId('talentSearchDialog')) {
           Fragment.load({
             id: this.getView().getId(),
-            name: 'sap.ui.yesco.mvc.view.talent.fregment.SearchDialog',
+            name: 'sap.ui.yesco.mvc.view.talent.fragment.SearchDialog',
             controller: this,
           }).then((oDialog) => {
-            // connect dialog to the root view of this component (models, lifecycle)
             this.getView().addDependent(oDialog);
             oDialog.open();
           });
@@ -67,14 +422,6 @@ sap.ui.define(
       onClick() {
         this.byId('talentCompareDialog').close();
         this.byId('talentSearchDialog').close();
-      },
-
-      /**
-       * @override
-       */
-      onBeforeShow() {
-        var oModel = new JSONModel(sap.ui.require.toUrl('sap/ui/yesco/localService/mockdata/talent.json'));
-        this.getView().setModel(oModel);
       },
 
       onModeChange(oEvent) {
@@ -109,9 +456,355 @@ sap.ui.define(
         MessageToast.show('Pressed item with Id ' + oGridListItem.getId());
       },
 
-      onToggleExpand() {
-        const osearchFilterBody = this.byId('searchFilterBody');
-        osearchFilterBody.toggleStyleClass('expanded');
+      onPairValue(oEvent) {
+        const oViewModel = this.getViewModel();
+        const oControl = oEvent.getSource();
+        const sValue = oControl.getSelectedKey();
+        const sTargetProp = oControl.data('target');
+        const sTargetValue = oViewModel.getProperty(`/search/${sTargetProp}`);
+
+        if (_.isEmpty(sTargetValue) || sValue > sTargetValue) {
+          oViewModel.setProperty(`/search/${sTargetProp}`, oControl.getSelectedKey());
+        }
+
+        if (_.isEmpty(sValue)) {
+          oViewModel.setProperty(`/search/${sTargetProp}`, '');
+        }
+
+        oControl.getParent().getItems()[2].getBinding('items').filter(new Filter('Zcode', FilterOperator.GE, oControl.getSelectedKey()));
+      },
+
+      async onChangeSearchCondition() {
+        const oViewModel = this.getViewModel();
+
+        try {
+          const sSelectedCondition = oViewModel.getProperty('/saved/selectedCondition');
+
+          if (sSelectedCondition === 'ALL') return;
+
+          oViewModel.setProperty('/busy', true);
+
+          this.showComplexSearch();
+          await this.readSearchCondition(sSelectedCondition);
+        } catch (oError) {
+          this.debug('Controller > Talent > onChangeSearchCondition Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
+      },
+
+      onPressDeleteSearchCondition() {
+        if (this.getViewModel().getProperty('/saved/selectedCondition') === 'ALL') return;
+
+        MessageBox.confirm(this.getBundleText('MSG_35010'), {
+          // 검색조건을 삭제하시겠습니까?
+          onClose: (sAction) => {
+            if (MessageBox.Action.CANCEL === sAction) return;
+
+            this.deleteConditionsProcess();
+          },
+        });
+      },
+
+      async deleteConditionsProcess() {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/busy', true);
+
+        try {
+          const sSelectedCondition = oViewModel.getProperty('/saved/selectedCondition');
+
+          await Client.remove(this.getModel(ServiceNames.PA), 'TalentSearchCondition', {
+            Pernr: this.getAppointeeProperty('Pernr'),
+            Schtl: sSelectedCondition,
+          });
+
+          await this.getEntrySearchCondition();
+
+          this.resetComplexSearch();
+
+          MessageBox.success(this.getBundleText('MSG_00007', 'LABEL_00110')); // {삭제}되었습니다.
+        } catch (oError) {
+          this.debug('Controller > Talent > onPressDeleteSearchCondition Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
+      },
+
+      onPressSaveConditions() {
+        MessageBox.confirm(this.getBundleText('MSG_35008'), {
+          // 검색조건을 저장하시겠습니까?
+          onClose: (sAction) => {
+            if (MessageBox.Action.CANCEL === sAction) return;
+
+            this.saveConditionsProcess();
+          },
+        });
+      },
+
+      async saveConditionsProcess() {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/busy', true);
+
+        try {
+          const sConditionSubject = oViewModel.getProperty('/saved/Schtl');
+
+          this.validSearchConditions();
+          if (_.isEmpty(sConditionSubject)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35009') }); // 검색조건명을 입력하여 주십시오.
+
+          await this.createSearchCondition();
+
+          await this.getEntrySearchCondition();
+
+          oViewModel.setProperty('/saved/selectedCondition', sConditionSubject);
+
+          MessageBox.success(this.getBundleText('MSG_00007', 'LABEL_00103')); // {저장}되었습니다.
+        } catch (oError) {
+          this.debug('Controller > Talent > saveConditionsProcess Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
+      },
+
+      async readSearchCondition(sSelectedCondition) {
+        const oViewModel = this.getViewModel();
+
+        try {
+          const [mSearchCondition] = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'TalentSearchCondition', {
+            Pernr: this.getAppointeeProperty('Pernr'),
+            Schtl: sSelectedCondition,
+          });
+
+          const mSearch = oViewModel.getProperty('/search');
+
+          oViewModel.setProperty('/saved/Schtl', mSearchCondition.Schtl);
+          oViewModel.setProperty('/search', {
+            ...mSearch,
+            ..._.chain(mSearchCondition) //
+              .omit(['__metadata', 'Pernr', 'Schtl'])
+              .set('Jobgr', _.split(mSearchCondition.Jobgr, '|'))
+              .set('Zzjikgb', _.split(mSearchCondition.Zzjikgb, '|'))
+              .set('Zzjikch', _.split(mSearchCondition.Zzjikch, '|'))
+              .set('Schcd', _.split(mSearchCondition.Schcd, '|'))
+              .set('Major', _.split(mSearchCondition.Major, '|'))
+              .set('Slabs', _.split(mSearchCondition.Slabs, '|'))
+              .set('Cttyp', _.split(mSearchCondition.Cttyp, '|'))
+              .set('Stell1', mSearchCondition.Stell1 === '00000000' ? '' : mSearchCondition.Stell1)
+              .set('Stell2', mSearchCondition.Stell2 === '00000000' ? '' : mSearchCondition.Stell2)
+              .set('Stell3', mSearchCondition.Stell3 === '00000000' ? '' : mSearchCondition.Stell3)
+              .set('Stell4', mSearchCondition.Stell4 === '00000000' ? '' : mSearchCondition.Stell4)
+              .value(),
+          });
+        } catch (oError) {
+          throw oError;
+        }
+      },
+
+      async createSearchCondition() {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/saved/busy', true);
+
+        try {
+          const mSearch = oViewModel.getProperty('/search');
+          const mSchtl = oViewModel.getProperty('/saved/Schtl');
+
+          await Client.create(this.getModel(ServiceNames.PA), 'TalentSearchCondition', {
+            Pernr: this.getAppointeeProperty('Pernr'),
+            Schtl: mSchtl,
+            ..._.chain(mSearch)
+              .omit(['Freetx', 'Prcty'])
+              .tap((obj) => {
+                _.chain(obj)
+                  .forEach((v, p) => {
+                    if (_.isArray(v)) _.set(obj, p, _.join(v, '|'));
+                  })
+                  .commit();
+              })
+              .value(),
+          });
+        } catch (oError) {
+          throw oError;
+        } finally {
+          setTimeout(() => oViewModel.setProperty('/saved/busy', false), 200);
+        }
+      },
+
+      async getEntrySearchCondition() {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/saved/busy', true);
+
+        try {
+          const aSearchResults = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'TalentSearchCodeList', { Pernr: this.getAppointeeProperty('Pernr'), Schfld: 'N' });
+
+          oViewModel.setProperty('/saved/entry', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: _.map(aSearchResults, (o) => _.omit(o, '__metadata')) }));
+        } catch (oError) {
+          throw oError;
+        } finally {
+          setTimeout(() => oViewModel.setProperty('/saved/busy', false), 200);
+        }
+      },
+
+      async readTalentSearch() {
+        const oViewModel = this.getViewModel();
+
+        try {
+          const mSearch = oViewModel.getProperty('/search');
+          const mFilters = mSearch.Prcty === 'A' ? _.pick(mSearch, ['Freetx', 'Prcty']) : _.omit(mSearch, 'Freetx');
+          const aSearchResults = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'TalentSearch', { Pernr: this.getAppointeeProperty('Pernr'), ..._.omitBy(mFilters, _.isEmpty) });
+          const mState = { 1: 'Indication01', 2: 'Indication02', 3: 'Indication03' };
+
+          oViewModel.setProperty('/result/totalCount', aSearchResults.length);
+          oViewModel.setProperty(
+            '/result/list',
+            _.map(aSearchResults, (o) => ({ ..._.omit(o, '__metadata'), ColtyState: mState[o.Colty] }))
+          );
+        } catch (oError) {
+          throw oError;
+        }
+      },
+
+      validSearchConditions() {
+        const oViewModel = this.getViewModel();
+        const mSearch = oViewModel.getProperty('/search');
+
+        if (mSearch.Prcty === 'A') {
+          if (_.isEmpty(mSearch.Freetx)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35006') }); // 검색어를 입력하여 주십시오.
+        } else {
+          if (_.chain(mSearch).omit('Prcty').omitBy(_.isEmpty).isEmpty().value()) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35007') }); // 검색조건을 입력하여 주십시오.
+          if (_.toNumber(mSearch.EeageFr) > _.toNumber(mSearch.EeageTo)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35002') }); // 나이 입력값의 최소값이 최대값보다 큽니다.
+          if (!_.isEmpty(mSearch.Quali1) && _.isEmpty(mSearch.Langlv1)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35003', 'LABEL_35009', '1') }); // {외국어}{1} 값을 입력하여 주십시오.
+          if (!_.isEmpty(mSearch.Quali2) && _.isEmpty(mSearch.Langlv2)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35003', 'LABEL_35009', '2') }); // {외국어}{2} 값을 입력하여 주십시오.
+          if (!_.isEmpty(mSearch.Quali3) && _.isEmpty(mSearch.Langlv3)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35003', 'LABEL_35009', '3') }); // {외국어}{3} 값을 입력하여 주십시오.
+          if (!_.isEmpty(mSearch.Stell1) && (_.isEmpty(mSearch.SyearFr1) || _.isEmpty(mSearch.SyearTo1))) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35004', '1') }); // 직무기간{1}의 시작/종료값을 모두 입력하여 주십시오.
+          if (_.toNumber(mSearch.SyearFr1) > _.toNumber(mSearch.SyearTo1)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35005', '1') }); // 직무기간{1} 입력값의 최소값이 최대값보다 큽니다.
+          if (!_.isEmpty(mSearch.Stell2) && (_.isEmpty(mSearch.SyearFr2) || _.isEmpty(mSearch.SyearTo2))) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35004', '2') }); // 직무기간{2}의 시작/종료값을 모두 입력하여 주십시오.
+          if (_.toNumber(mSearch.SyearFr2) > _.toNumber(mSearch.SyearTo2)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35005', '2') }); // 직무기간{2} 입력값의 최소값이 최대값보다 큽니다.
+          if (!_.isEmpty(mSearch.Stell3) && (_.isEmpty(mSearch.SyearFr3) || _.isEmpty(mSearch.SyearTo3))) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35004', '3') }); // 직무기간{3}의 시작/종료값을 모두 입력하여 주십시오.
+          if (_.toNumber(mSearch.SyearFr3) > _.toNumber(mSearch.SyearTo3)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35005', '3') }); // 직무기간{3} 입력값의 최소값이 최대값보다 큽니다.
+          if (!_.isEmpty(mSearch.Stell4) && (_.isEmpty(mSearch.SyearFr4) || _.isEmpty(mSearch.SyearTo4))) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35004', '4') }); // 직무기간{4}의 시작/종료값을 모두 입력하여 주십시오.
+          if (_.toNumber(mSearch.SyearFr4) > _.toNumber(mSearch.SyearTo4)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35005', '4') }); // 직무기간{4} 입력값의 최소값이 최대값보다 큽니다.
+        }
+      },
+
+      async onPressSearch() {
+        const oViewModel = this.getViewModel();
+
+        try {
+          this.validSearchConditions();
+
+          oViewModel.setProperty('/result/busy', true);
+
+          await this.readTalentSearch();
+        } catch (oError) {
+          this.debug('Controller > Talent > onObjectMatched Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          setTimeout(() => oViewModel.setProperty('/result/busy', false), 200);
+        }
+      },
+
+      onToggleExpand(oEvent) {
+        const bState = oEvent.getParameter('state');
+
+        if (bState) {
+          this.showComplexSearch();
+        } else {
+          this.showSimpleSearch();
+        }
+      },
+
+      showSimpleSearch() {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/search/Prcty', 'A');
+        this.byId('searchFilterBody').removeStyleClass('expanded');
+        this.resetComplexSearch();
+
+        this.clearSearchResults();
+      },
+
+      showComplexSearch() {
+        this.getViewModel().setProperty('/search/Prcty', 'B');
+        this.byId('searchFilterBody').addStyleClass('expanded');
+        this.resetSimpleSearch();
+
+        this.clearSearchResults();
+      },
+
+      onPressConditionReset() {
+        const oViewModel = this.getViewModel();
+        const sPrcty = oViewModel.getProperty('/search/Prcty');
+
+        if (sPrcty === 'A') {
+          this.resetSimpleSearch();
+        } else {
+          this.resetComplexSearch();
+        }
+      },
+
+      clearSearchResults() {
+        this.getViewModel().setProperty('/result', {
+          busy: false,
+          totalCount: 0,
+          list: [],
+        });
+      },
+
+      resetSimpleSearch() {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/search/Freetx', '');
+      },
+
+      resetComplexSearch() {
+        const oViewModel = this.getViewModel();
+        const mSearch = oViewModel.getProperty('/search');
+
+        oViewModel.setProperty('/saved/selectedCondition', 'ALL');
+        oViewModel.setProperty('/saved/Schtl', '');
+        oViewModel.setProperty(
+          '/search',
+          _.chain(mSearch)
+            .set('Jobgr', [])
+            .set('Zzjikgb', [])
+            .set('Zzjikch', [])
+            .set('EeageFr', '')
+            .set('EeageTo', '')
+            .set('Schcd', [])
+            .set('Major', [])
+            .set('Slabs', [])
+            .set('Cttyp', [])
+            .set('Quali1', '')
+            .set('Langlv1', '')
+            .set('Quali2', '')
+            .set('Langlv2', '')
+            .set('Quali3', '')
+            .set('Langlv3', '')
+            .set('Gesch', '')
+            .set('Stell1', '')
+            .set('SyearFr1', '')
+            .set('SyearTo1', '')
+            .set('Stell2', '')
+            .set('SyearFr2', '')
+            .set('SyearTo2', '')
+            .set('Stell3', '')
+            .set('SyearFr3', '')
+            .set('SyearTo3', '')
+            .set('Stell4', '')
+            .set('SyearFr4', '')
+            .set('SyearTo4', '')
+            .value()
+        );
       },
     });
   }

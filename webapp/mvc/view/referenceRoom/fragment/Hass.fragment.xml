@@ -4,20 +4,20 @@
   xmlns:core="sap.ui.core">
   <VBox class="vCardBox sapUiMediumMarginBottom" visible="{/Hass}">
     <HBox alignItems="Center" class="table-toolbar">
-      <Title level="H2" text="{/FormData/Title}"/>
+      <Title level="H2" text="{/FormData/title}"/>
       <Button text="{i18n>LABEL_29002}" type="Emphasized" press=".onManagerBtn" />
     </HBox>
     <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0px" class="form-grid">
       <Label text="{i18n>LABEL_01008}" />
       <VBox>
-        <Text text="{/FormData/Menu}"/>
+        <Text text="{/FormData/MenuRoute}"/>
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
       </VBox>
       <Label text="{i18n>LABEL_29003}"/>
       <VBox>
-        <Text text="{/FormData/Change}"/>
+        <Text text="{/FormData/ZchPernr}"/>
       </VBox>
       <Label text="{i18n>LABEL_08003}" />
       <VBox>
@@ -25,11 +25,39 @@
       </VBox>
       <Label text="{i18n>LABEL_29004}" />
       <VBox>
-        <TextArea placeholder="{i18n>MSG_29002}" rows="5" width="100%" value="{/FormData/Head}"/>
+        <TextArea placeholder="{i18n>MSG_29002}" rows="5" width="100%" value="{/FormData/HeadZcomment}"/>
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
       </VBox>
+      <Label text="{i18n>LABEL_29009}" />
+      <HBox>
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+        </layoutData>
+        <Label text="{i18n>LABEL_08002}" />
+        <Input value="{/FormData/Url1t}"/>
+        <Label text="{i18n>LABEL_29011}" />
+        <Input value="{/FormData/Url1}">
+          <layoutData>
+            <FlexItemData growFactor="1" />
+          </layoutData>
+        </Input>
+      </HBox>
+      <Label text="{i18n>LABEL_29010}" />
+      <HBox>
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+        </layoutData>
+        <Label text="{i18n>LABEL_08002}" />
+        <Input value="{/FormData/Url2t}"/>
+        <Label text="{i18n>LABEL_29011}" />
+        <Input value="{/FormData/Url2}">
+          <layoutData>
+            <FlexItemData growFactor="1" />
+          </layoutData>
+        </Input>
+      </HBox>
       <Label text="{i18n>LABEL_29005}" />
       <HBox justifyContent="SpaceBetween" width="100%" class="file-uploader-wrap">
         <u:FileUploader fileType="pdf" change=".onFileChange" icon="sap-icon://add" buttonText="{i18n>LABEL_00107}" width="100%" />
@@ -40,14 +68,14 @@
       </HBox>
       <Label text="{i18n>LABEL_29006}" />
       <VBox>
-        <TextArea placeholder="{i18n>MSG_29002}" rows="5" width="100%" value="{/FormData/Mid}"/>
+        <TextArea placeholder="{i18n>MSG_29002}" rows="5" width="100%" value="{/FormData/MidZcomment}"/>
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
       </VBox>
       <Label text="{i18n>LABEL_29007}" />
       <VBox>
-        <TextArea placeholder="{i18n>MSG_29002}" rows="5" width="100%" value="{/FormData/Bot}"/>
+        <TextArea placeholder="{i18n>MSG_29002}" rows="5" width="100%" value="{/FormData/BotZcomment}"/>
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
@@ -56,14 +84,14 @@
       <VBox>
         <Text text="{i18n>MSG_29001}"/>
         <HBox>
-          <ComboBox items="{/AccType}" selectedKey="{/FormData/A}" change=".onAccChange" class="mr-20-px">
-            <core:Item text="{Ztext}" key="{Zcode}" />
+          <ComboBox items="{/MenuIdList}" selectedKey="{/FormData/Menid1}" class="mr-20-px">
+            <core:Item text="{Mentx}" key="{Menid}" />
           </ComboBox>
-          <ComboBox items="{/AccType}" selectedKey="{/FormData/B}" change=".onAccChange" class="mr-20-px">
-            <core:Item text="{Ztext}" key="{Zcode}" />
+          <ComboBox items="{/MenuIdList}" selectedKey="{/FormData/Menid2}" class="mr-20-px">
+            <core:Item text="{Mentx}" key="{Menid}" />
           </ComboBox>
-          <ComboBox items="{/AccType}" selectedKey="{/FormData/C}" change=".onAccChange">
-            <core:Item text="{Ztext}" key="{Zcode}" />
+          <ComboBox items="{/MenuIdList}" selectedKey="{/FormData/Menid3}">
+            <core:Item text="{Mentx}" key="{Menid}" />
           </ComboBox>
         </HBox>
         <layoutData>

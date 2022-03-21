@@ -84,8 +84,8 @@ sap.ui.define(
       },
 
       async showContentData() {
-        const aContentData = await this.readContentData();
-        const { unreadCount, list, listCount } = this.transformContentData(aContentData);
+        const aContentData = this.readContentData();
+        const { unreadCount, list, listCount } = this.transformContentData(await aContentData);
 
         const iUnreadCount = Math.min(unreadCount, 99);
         const oNotificationModel = this.getNotificationModel();

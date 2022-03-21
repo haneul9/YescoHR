@@ -9,19 +9,19 @@
             <layoutData>
               <grid:GridItemLayoutData gridRow="span 2" />
             </layoutData>
-            <Image src="{sessionModel>/Photo}" class="member-photo" mode="Background" width="88px" height="88px" />
+            <Image src="{Photo}" class="member-photo" mode="Background" width="88px" height="88px" />
           </VBox>
           <HBox justifyContent="SpaceBetween">
-            <Label text="{sessionModel>/Ename} {sessionModel>/Zzjikgbt} / {sessionModel>/Zzjikcht}" class="name" />
-            <Image src="asset/image/icon_captain.svg" width="1.2rem" alt="Captain" />
+            <Label text="{Ename} {Zzjikgbt} / {Zzjikcht}" class="name" />
+            <Image src="asset/image/icon_captain.svg" width="1.2rem" alt="Captain" visible="{= !!${Chief}}" />
           </HBox>
           <grid:CSSGrid gridTemplateColumns="1fr 5fr">
             <Label text="{i18n>LABEL_00226}" />
-            <Label text="{sessionModel>/Pbtxt} {sessionModel>/Btrtx} {sessionModel>/Orgtx}" />
+            <Label text="{Pbtxt} {Fulln}" />
             <Label text="{i18n>LABEL_00280}" />
-            <Label text="{sessionModel>/Pbtxt} {sessionModel>/Btrtx} {sessionModel>/Orgtx}" />
+            <Label text="{Text1}" />
             <Label text="{i18n>LABEL_00222}" />
-            <Label text="{sessionModel>/Pbtxt} {sessionModel>/Btrtx} {sessionModel>/Orgtx}" />
+            <Label text="{Text2}" />
           </grid:CSSGrid>
         </grid:CSSGrid>
         <VBox width="100%" class="setting-wrap p-20-px">
@@ -29,17 +29,15 @@
             <FlexItemData growFactor="1" />
           </layoutData>
           <HBox justifyContent="SpaceBetween" alignItems="Center" height="54px">
-            <Label text="{i18n>LABEL_01601}" />
-            <Switch state="true" customTextOn=" " customTextOff=" " change=".onChangeMobilePushOnOff" />
-          </HBox>
-          <HBox justifyContent="SpaceBetween" alignItems="Center" height="54px">
             <Label text="{i18n>LABEL_01004}" />
-            <!-- <core:Icon src="sap-icon://navigation-right-arrow" alt="{i18n>LABEL_01004}" press=".onPressLogout" /> -->
-            <Button type="Transparent" class="icon-button" icon="asset/image/icon_arrow_h-r.svg" press=".onPressLogout" />
+            <Button type="Transparent" class="icon-button mobile-logout-button" icon="asset/image/icon_arrow_h-r.svg" press=".onPressLogout" />
           </HBox>
           <HBox justifyContent="SpaceBetween" alignItems="Center" height="54px" class="divider">
             <Label text="{i18n>LABEL_01602}" />
-            <Text text="ver. {Version}" />
+            <HBox>
+              <Text text="ver. {Version}" />
+              <Link href="{DownloadLink}" target="_blank" text="{UpdateNotification}" class="ml-5-px" />
+            </HBox>
           </HBox>
         </VBox>
       </VBox>
