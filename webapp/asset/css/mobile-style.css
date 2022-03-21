@@ -77,7 +77,9 @@
 .footer-menu .sapMBtnInner .sapMBtnIcon.sapMImg {width:2rem; height:2rem; max-width:2rem; max-height:2rem}
 
 /* POPOVER BASIC */
-.sapUiMedia-StdExt-Phone .sapMPopover.sapMPopoverWithoutBar .sapMPopoverCont, .sapUiMedia-StdExt-Phone .sapMPopover .sapMIBar.sapMHeader-CTX {padding:20px}
+.sapUiMedia-StdExt-Phone .sapMPopover.sapMPopoverWithoutBar .sapMPopoverCont,
+.sapUiMedia-StdExt-Phone .sapMPopover .sapMIBar.sapMHeader-CTX {padding:20px}
+.sapUiMedia-StdExt-Phone .sapMPopover.sapMPopoverWithoutBar.team-member-count-popover .sapMPopoverCont {padding:0}
 .sapMPopover .sapMPopoverScroll {overflow-y:auto; height:100%}
 
 .sapUiMedia-StdExt-Phone .sapMPopover .status-wrap {margin-right:0}

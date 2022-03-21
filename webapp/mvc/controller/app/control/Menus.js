@@ -63,7 +63,6 @@ sap.ui.define(
           oAppMenuToolbar.insertContent(
             new MenuLevel1({
               text: mMenu.Mname,
-              tooltip: `${mMenu.Mname} (${mMenu.Mnid1}:${mMenu.Menid})`,
               customData: new CustomData({ key: 'Mnid1', value: mMenu.Mnid1 }),
             })
               .addStyleClass(mMenu.StyleClasses)
