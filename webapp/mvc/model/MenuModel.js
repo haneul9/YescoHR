@@ -30,9 +30,9 @@ sap.ui.define(
             GetMenuLv4Nav: [],
           };
 
-          const oData = await Client.deep(oModel, sUrl, mPayload); // 메뉴 정보 조회
+          const oData = Client.deep(oModel, sUrl, mPayload); // 메뉴 정보 조회
 
-          this.setData(this.curryData(oData));
+          this.setData(this.curryData(await oData));
 
           return Promise.resolve();
         } catch (oError) {

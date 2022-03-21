@@ -67,6 +67,8 @@ sap.ui.define(
       },
 
       async showContentData() {
+        await this.oController.getSessionModel().getPromise();
+
         const aEmployeeData = this.readEmployeeData();
         const mEmployeeData = this.transformEmployeeData(await aEmployeeData);
         this.oMyPageModel.setData(mEmployeeData, true);
@@ -85,7 +87,7 @@ sap.ui.define(
       },
 
       transformEmployeeData([mEmployeeData = {}]) {
-        const { Photo, Ename, Zzjikgbt, Zzjikcht, Pbtxt, Fulln, Text1, Text2 } = mEmployeeData;
+        let { Photo, Ename, Zzjikgbt, Zzjikcht, Pbtxt, Fulln, Text1, Text2 } = mEmployeeData;
         Photo ||= 'asset/image/avatar-unknown.svg';
         return { Photo, Ename, Zzjikgbt, Zzjikcht, Pbtxt, Fulln, Text1, Text2 };
       },
