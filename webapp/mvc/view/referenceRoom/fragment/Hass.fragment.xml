@@ -25,7 +25,7 @@
       </VBox>
       <Label text="{i18n>LABEL_29004}" />
       <VBox>
-        <TextArea placeholder="{i18n>MSG_29002}" rows="5" width="100%" value="{/FormData/HeadZcomment}"/>
+        <TextArea placeholder="{i18n>MSG_29002}" editable="{/UserFixed}" rows="5" width="100%" value="{/FormData/HeadZcomment}"/>
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
@@ -36,9 +36,9 @@
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
         <Label text="{i18n>LABEL_08002}" />
-        <Input value="{/FormData/Url1t}"/>
+        <Input value="{/FormData/Url1t}" editable="{/UserFixed}"/>
         <Label text="{i18n>LABEL_29011}" />
-        <Input value="{/FormData/Url1}">
+        <Input value="{/FormData/Url1}" editable="{/UserFixed}">
           <layoutData>
             <FlexItemData growFactor="1" />
           </layoutData>
@@ -50,9 +50,9 @@
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
         <Label text="{i18n>LABEL_08002}" />
-        <Input value="{/FormData/Url2t}"/>
+        <Input value="{/FormData/Url2t}" editable="{/UserFixed}"/>
         <Label text="{i18n>LABEL_29011}" />
-        <Input value="{/FormData/Url2}">
+        <Input value="{/FormData/Url2}" editable="{/UserFixed}">
           <layoutData>
             <FlexItemData growFactor="1" />
           </layoutData>
@@ -60,22 +60,22 @@
       </HBox>
       <Label text="{i18n>LABEL_29005}" />
       <HBox justifyContent="SpaceBetween" width="100%" class="file-uploader-wrap">
-        <u:FileUploader fileType="pdf" change=".onFileChange" icon="sap-icon://add" buttonText="{i18n>LABEL_00107}" width="100%" />
-        <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onDeleteAttachFile" />
+        <u:FileUploader fileType="pdf" change=".onFileChange" icon="sap-icon://add" buttonText="{i18n>LABEL_00107}" width="100%" visible="{/UserFixed}" />
+        <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onDeleteAttachFile" visible="{/UserFixed}" />
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
       </HBox>
       <Label text="{i18n>LABEL_29006}" />
       <VBox>
-        <TextArea placeholder="{i18n>MSG_29002}" rows="5" width="100%" value="{/FormData/MidZcomment}"/>
+        <TextArea placeholder="{i18n>MSG_29002}" rows="5" editable="{/UserFixed}" width="100%" value="{/FormData/MidZcomment}"/>
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
       </VBox>
       <Label text="{i18n>LABEL_29007}" />
       <VBox>
-        <TextArea placeholder="{i18n>MSG_29002}" rows="5" width="100%" value="{/FormData/BotZcomment}"/>
+        <TextArea placeholder="{i18n>MSG_29002}" rows="5" editable="{/UserFixed}" width="100%" value="{/FormData/BotZcomment}"/>
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
@@ -84,13 +84,13 @@
       <VBox>
         <Text text="{i18n>MSG_29001}"/>
         <HBox>
-          <ComboBox items="{/MenuIdList}" selectedKey="{/FormData/Menid1}" class="mr-20-px">
+          <ComboBox items="{/MenuIdList}" selectedKey="{/FormData/Menid1}" enabled="{/UserFixed}" class="mr-20-px">
             <core:Item text="{Mentx}" key="{Menid}" />
           </ComboBox>
-          <ComboBox items="{/MenuIdList}" selectedKey="{/FormData/Menid2}" class="mr-20-px">
+          <ComboBox items="{/MenuIdList}" selectedKey="{/FormData/Menid2}" enabled="{/UserFixed}" class="mr-20-px">
             <core:Item text="{Mentx}" key="{Menid}" />
           </ComboBox>
-          <ComboBox items="{/MenuIdList}" selectedKey="{/FormData/Menid3}">
+          <ComboBox items="{/MenuIdList}" selectedKey="{/FormData/Menid3}" enabled="{/UserFixed}">
             <core:Item text="{Mentx}" key="{Menid}" />
           </ComboBox>
         </HBox>
