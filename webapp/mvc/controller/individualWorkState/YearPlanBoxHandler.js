@@ -70,7 +70,7 @@ sap.ui.define(
           return e.FullDate === mdate.day;
         });
 
-        if (!mSelectedDay || !mSelectedDay.Colty) {
+        if (!mSelectedDay || (!mSelectedDay.Colty && !mSelectedDay.Ottyp)) {
           return;
         }
 
@@ -158,6 +158,10 @@ sap.ui.define(
 
         if (!_.isEmpty(oDateObject.Colty)) {
           sClassNames = oDateObject.Colty;
+        }
+
+        if (!!oDateObject.Ottyp) {
+          sBorderNames = oDateObject.Ottyp;
         }
 
         if (oDateObject.Cssty === 'P') {

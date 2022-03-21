@@ -8,7 +8,8 @@
       <HBox justifyContent="SpaceBetween" class="breadcrumbs">
         <custom:Breadcrumbs />
         <HBox>
-          <Button text="{i18n>LABEL_00103}" type="Emphasized" press=".onSaveBtn" visible="{= (!!${/tab/selectedKey} &amp;&amp; !!${/BtnStat}) &amp;&amp; ${/tab/selectedKey} !== 'C' }" />
+          <Button text="{i18n>LABEL_00103}" type="Emphasized" press=".onSaveBtn" />
+          <Button text="{i18n>LABEL_00103}" type="Emphasized" press=".onSaveBtn" />
           <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
           <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
         </HBox>
@@ -28,7 +29,7 @@
           </CustomTreeItem>
         </Tree>
       </VBox>
-      <VBox class="mt-0" width="74%">
+      <VBox class="mt-0" width="74%" visible="{= !!${/FormData/title} }">
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.referenceRoom.fragment.Hass" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.referenceRoom.fragment.Ess" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
