@@ -163,19 +163,31 @@ sap.ui.define(
         }
       },
 
-      onDialog() {
-        if (!this.byId('talentCompareDialog')) {
-          Fragment.load({
+      async onDialog() {
+        if (!this.oTalentCompareDialog) {
+          this.oTalentCompareDialog = await Fragment.load({
             id: this.getView().getId(),
             name: 'sap.ui.yesco.mvc.view.talent.fragment.CompareDialog',
             controller: this,
-          }).then((oDialog) => {
-            this.getView().addDependent(oDialog);
-            oDialog.open();
           });
-        } else {
-          this.byId('talentCompareDialog').open();
+
+          this.getView().addDependent(this.oTalentCompareDialog);
+
+          this.oTalentCompareDialog.attachAfterOpen(() => {
+            $('#container-ehr---talent--BlockLayout > div:last').on('scroll touchmove mousewheel', function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+
+              const iScrollLeft = $(this).scrollLeft();
+
+              $('#container-ehr---talent--BlockLayout > div:not(:last)').each(function () {
+                $(this).scrollLeft(iScrollLeft);
+              });
+            });
+          });
         }
+
+        this.oTalentCompareDialog.open();
       },
 
       onCompareDialogM() {
