@@ -53,8 +53,10 @@ sap.ui.define(
         });
 
         this.oMyPagePopover
-          .attachBeforeOpen(() => {
-            // this.onChangeMyPageOnlyUnread();
+          .attachBeforeOpen(async () => {
+            const aVersionData = this.readVersionData();
+            const mVersionData = this.transformVersionData(await aVersionData);
+            this.oMyPageModel.setData(mVersionData, true);
           })
           .setModel(this.oMyPageModel)
           .bindElement('/');
@@ -65,13 +67,28 @@ sap.ui.define(
       },
 
       async showContentData() {
-        const aContentData = await this.readContentData();
-        const sVersion = this.transformContentData(aContentData);
-
-        this.oMyPageModel.setProperty('/Version', sVersion);
+        const aEmployeeData = this.readEmployeeData();
+        const mEmployeeData = this.transformEmployeeData(await aEmployeeData);
+        this.oMyPageModel.setData(mEmployeeData, true);
       },
 
-      async readContentData() {
+      async readEmployeeData() {
+        const oCommonModel = this.oController.getModel(ServiceNames.COMMON);
+        const mFilters = {
+          Ename: this.oController.getSessionProperty('Pernr'),
+          Actda: moment().hour(9).toDate(),
+          Zflag: 'X',
+        };
+
+        return Client.getEntitySet(oCommonModel, 'EmpSearchResult', mFilters);
+      },
+
+      transformEmployeeData([{ Photo, Ename, Zzjikgbt, Zzjikcht, Pbtxt, Fulln, Text1, Text2 }]) {
+        Photo ||= 'asset/image/avatar-unknown.svg';
+        return { Photo, Ename, Zzjikgbt, Zzjikcht, Pbtxt, Fulln, Text1, Text2 };
+      },
+
+      async readVersionData() {
         const oCommonModel = this.oController.getModel(ServiceNames.COMMON);
         const mFilters = {
           Mobos: /iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'IOS' : 'ANDROID',
@@ -80,11 +97,12 @@ sap.ui.define(
         return Client.getEntitySet(oCommonModel, 'OsVersion', mFilters);
       },
 
-      transformContentData([{ Version }]) {
-        return Version;
+      transformVersionData([{ Version }]) {
+        const iHostport = /^dev/.test(location.hostname) ? 8090 : 8070;
+        const DownloadLink = `${location.protocol}//${location.hostname}:${iHostport}/download`;
+        const UpdateNotification = typeof window.YescoApp === 'undefined' ? '' : Version === window.YescoApp.getVersionInfo() ? this.oController.getBundleText('LABEL_01603') : this.oController.getBundleText('LABEL_01604'); // 최신 버전 : 업데이트 필요
+        return { Version, DownloadLink, UpdateNotification };
       },
-
-      onChangeMobilePushOnOff() {},
 
       async onPressLogout() {
         this.oController.onPressLogout();

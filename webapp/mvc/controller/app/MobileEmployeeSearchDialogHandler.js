@@ -69,9 +69,9 @@ sap.ui.define(
       async showSuggestionData(sValue) {
         this.setBusy(true);
         const aEmployees = await this.readSuggestionData(sValue);
-        aEmployees.forEach((o) => {
-          o.Pernr = o.Pernr.replace(/^0+/, '');
-        });
+        // aEmployees.forEach((o) => {
+        //   o.Pernr = o.Pernr.replace(/^0+/, '');
+        // });
 
         this.oDialogModel.setProperty('/employees', aEmployees);
         this.setBusy(false);
@@ -80,15 +80,10 @@ sap.ui.define(
       async readSuggestionData(sValue) {
         const oModel = this.oController.getModel(ServiceNames.COMMON);
         const mFilters = {
+          Ename: sValue,
           Stat2: '3',
           Accty: 'Z',
         };
-
-        if (/^[0-9]+$/.test(sValue)) {
-          mFilters.Pernr = sValue;
-        } else {
-          mFilters.Ename = sValue;
-        }
 
         return Client.getEntitySet(oModel, 'EmpSearchResult', mFilters);
       },

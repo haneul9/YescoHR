@@ -35,28 +35,34 @@ sap.ui.define(
         this.debug('App.onInit');
 
         this.bMobile = AppUtils.isMobile();
-        if (this.bMobile) {
-          setTimeout(() => {
-            this.oMobileEmployeeSearchDialogHandler = new MobileEmployeeSearchDialogHandler(this);
-          });
-          setTimeout(() => {
-            this.oMobileMyPagePopoverHandler = new MobileMyPagePopoverHandler(this);
-          });
-          setTimeout(() => {
-            this.oAppMenu = new MobileMenus(this);
-            this.getOwnerComponent().setAppMenu(this.oAppMenu);
-          });
-          setTimeout(() => {
-            this.savePushToken();
-          });
-        } else {
+        if (!this.bMobile) {
           setTimeout(() => {
             this.oAppMenu = new Menus(this);
             this.getOwnerComponent().setAppMenu(this.oAppMenu);
           });
+        } else {
+          setTimeout(() => {
+            this.initMobile();
+          }, 1000);
         }
         setTimeout(() => {
           this.oNotificationPopoverHandler = new NotificationPopoverHandler(this);
+        });
+      },
+
+      initMobile() {
+        setTimeout(() => {
+          this.savePushToken();
+        });
+        setTimeout(() => {
+          this.oAppMenu = new MobileMenus(this);
+          this.getOwnerComponent().setAppMenu(this.oAppMenu);
+        });
+        setTimeout(() => {
+          this.oMobileMyPagePopoverHandler = new MobileMyPagePopoverHandler(this);
+        });
+        setTimeout(() => {
+          this.oMobileEmployeeSearchDialogHandler = new MobileEmployeeSearchDialogHandler(this);
         });
       },
 

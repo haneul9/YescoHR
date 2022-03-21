@@ -1,7 +1,12 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.home.mobile.Portlets"
   xmlns="sap.m"
   xmlns:mvc="sap.ui.core.mvc">
-  <ScrollContainer height="100%" vertical="true" class="mobile-portlets-grid">
+  <OverflowToolbar id="appTopToolbar" height="48px" asyncMode="true" class="app-top-toolbar" visible="{appModel>/isMobile}">
+    <HBox width="100%" height="100%" justifyContent="Center" alignItems="Center">
+      <Image src="asset/image/logo_mobile.svg" mode="Background" width="60px" height="30px" />
+    </HBox>
+  </OverflowToolbar>
+  <ScrollContainer height="calc(100% - 48px)" vertical="true" class="mobile-portlets-grid">
     <VBox id="portlets-grid" justifyContent="Center" class="sapUiSmallMarginTopBottom mx-auto px-12-px">
     </VBox>
   </ScrollContainer>
