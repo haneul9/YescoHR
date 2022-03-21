@@ -59,8 +59,8 @@ sap.ui.define(
       },
 
       async showContentData() {
-        const aPortletContentData = await this.readContentData();
-        const mPortletContentData = this.transformContentData(aPortletContentData);
+        const aPortletContentData = this.readContentData();
+        const mPortletContentData = this.transformContentData(await aPortletContentData);
 
         this.getPortletModel().setData(mPortletContentData, true);
       },

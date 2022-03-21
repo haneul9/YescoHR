@@ -32,11 +32,11 @@ sap.ui.define(
         // 1년근태
         const aList1 = await Client.getEntitySet(oModel, 'PersonalTimeDashboard', mPayLoad);
         // 근태유형 색상
-        const aTimeTypeList = await Client.getEntitySet(oModel, 'TimeTypeLegend', { Werks: sWerks });
+        // const aTimeTypeList = await Client.getEntitySet(oModel, 'TimeTypeLegend', { Werks: sWerks });
 
-        _.forEach(aTimeTypeList, (e) => {
-          oViewModel.setProperty(`/TimeTypes/${e.Colty}`, true);
-        });
+        // _.forEach(aTimeTypeList, (e) => {
+        //   oViewModel.setProperty(`/TimeTypes/${e.Colty}`, true);
+        // });
         oViewModel.setProperty(
           '/yearPlan',
           _.each(aList1, (e) => {
@@ -152,14 +152,18 @@ sap.ui.define(
           sBorderNames = 'Today';
         }
 
-        const oDateObject = _.filter(oScheduleData, (e) => {
+        const [oDateObject] = _.filter(oScheduleData, (e) => {
           return e.FullDate === sFormatDate;
         });
 
-        if (!_.isEmpty(oDateObject[0].Colty)) {
-          sClassNames = oDateObject[0].Colty;
+        if (!_.isEmpty(oDateObject.Colty)) {
+          sClassNames = oDateObject.Colty;
         }
-        // sStripes = oDateObject[0].inProgress;
+
+        if (oDateObject.Cssty === 'P') {
+          sStripes = 'Stripes';
+        }
+        // sStripes = oDateObject.inProgress;
 
         return this.getBoxObject({ day: sFormatDate, label: String(iDay), classNames: sClassNames, borderNames: sBorderNames, stripes: sStripes });
       },
