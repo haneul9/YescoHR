@@ -44,7 +44,7 @@ sap.ui.define(
           oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.COMMON, 'HelpInfoTab2')));
 
           oViewModel.setProperty('/FormData', {
-            Title: '의료비',
+            title: '의료비',
             Menu: '예스코 > 복리후생 > 의료비',
             Change: '인재개발팀 이수만 차장',
             ChangeDate: '2022.02.22. 17:34',
@@ -57,75 +57,10 @@ sap.ui.define(
           });
 
           const aTree = await this.getReferenceRoom();
-          const tree = [];
-          const aTree2 = _.chain(aTree.HelpInfo1Nav.results)
-            .map((o) => _.omit(o, '__metadata'))
-            .map((e) => {
-              if (e.L4id) {
-                return { ...e, id: e.L4id, title: e.L4tx, use: e.L4use };
-              } else if (e.L3id) {
-                return { ...e, id: e.L3id, title: e.L3tx, use: e.L3use };
-              } else if (e.L2id) {
-                return { ...e, id: e.L2id, title: e.L2tx, use: e.L2use };
-              } else if (e.L1id) {
-                return { ...e, id: e.L1id, title: e.L1tx, use: e.L1use };
-              }
-            })
-            .value();
-          const aTree3 = _.keyBy(aTree2, 'id');
-          const aTree4 = _.groupBy(aTree2, (e) => {
-            return !!e.L4id ? 'L3id' : !!e.L3id ? 'L2id' : !!e.L2id ? 'L1id' : '';
-          });
-          debugger;
-          // $.each(aTree.HelpInfo1Nav.results, function (i, o) {
-          //   delete o.__metadata;
+          const aVariat = this.oDataChangeTree(aTree.HelpInfo1Nav.results);
 
-          //   if (o.L4id) {
-          //     const mapId = [o.L1id, o.L2id, o.L3id].join();
-          //     if (treeMap[mapId]) {
-          //       treeMap[mapId].push($.extend(o, { title: o.L4txt }));
-          //     } else {
-          //       treeMap[mapId] = [$.extend(o, { title: o.L4txt })];
-          //     }
-          //   } else if (o.L3id) {
-          //     // eslint-disable-next-line no-redeclare
-          //     const mapId = [o.L1id, o.L2id, ''].join();
-          //     if (treeMap[mapId]) {
-          //       treeMap[mapId].push($.extend(o, { title: o.L3txt }));
-          //     } else {
-          //       treeMap[mapId] = [$.extend(o, { title: o.L3txt })];
-          //     }
-
-          //     mapId = [o.L1id, o.L2id, o.L3id].join();
-          //     if (!treeMap[mapId]) {
-          //       o.nodes = treeMap[mapId] = [];
-          //     }
-          //   } else if (o.L2id) {
-          //     // eslint-disable-next-line no-redeclare
-          //     const mapId = [o.L1id, '', ''].join();
-          //     if (treeMap[mapId]) {
-          //       treeMap[mapId].push($.extend(o, { title: o.L2txt }));
-          //     } else {
-          //       treeMap[mapId] = [$.extend(o, { title: o.L2txt })];
-          //     }
-
-          //     mapId = [o.L1id, o.L2id, ''].join();
-          //     if (!treeMap[mapId]) {
-          //       o.nodes = treeMap[mapId] = [];
-          //     }
-          //   } else {
-          //     // eslint-disable-next-line no-redeclare
-          //     const mapId = [o.L1id, '', ''].join();
-          //     o.title = o.L1txt;
-          //     o.nodes = treeMap[mapId] = [];
-          //     tree.push(o);
-          //   }
-          // });
-
-          oViewModel.setProperty('/TreeFullList', tree);
-          oViewModel.setProperty('/ReferenceList', tree);
-
-          this.oDataChangeTree();
+          oViewModel.setProperty('/TreeFullList', aTree.HelpInfo1Nav.results);
+          oViewModel.setProperty('/ReferenceList', aVariat);
           this.settingsAttachTable();
         } catch (oError) {
           this.debug(oError);
@@ -161,12 +96,76 @@ sap.ui.define(
         const files = oEvent.getParameter('files');
       },
 
-      // oData Tree Setting
-      oDataChangeTree() {
-        const oTree = this.byId('ReferenceTree');
+      // TreeSelect
+      onSelectTree(oEvent) {
+        const oViewModel = this.getViewModel();
+        const sPath = oEvent.getSource().getSelectedContexts()[0].getPath();
+        const mSelectedTree = oViewModel.getProperty(sPath);
 
-        oTree.collapseAll();
-        oTree.expandToLevel(1);
+        oViewModel.setProperty('/FormData', mSelectedTree);
+        debugger;
+      },
+
+      // oData Tree Setting
+      oDataChangeTree(aList = []) {
+        const oTree = this.byId('ReferenceTree');
+        let tree1 = [];
+        let tree2 = [];
+        let tree3 = [];
+        let tree4 = [];
+
+        // oTree.collapseAll();
+        // oTree.expandToLevel(1);
+        const aTree2 = _.chain(aList)
+          .map((o) => _.omit(o, '__metadata'))
+          .map((e) => {
+            if (e.L4id) {
+              return { ...e, id: e.L4id, title: e.L4tx, use: e.L4use };
+            } else if (e.L3id) {
+              return { ...e, id: e.L3id, title: e.L3tx, use: e.L3use };
+            } else if (e.L2id) {
+              return { ...e, id: e.L2id, title: e.L2tx, use: e.L2use };
+            } else if (e.L1id) {
+              return { ...e, id: e.L1id, title: e.L1tx, use: e.L1use };
+            }
+          })
+          .value();
+        _.forEach(aTree2, (e) => {
+          if (e.L4id) {
+            tree4.push(e);
+          }
+          if (e.L3id && !e.L4id) {
+            tree3.push(e);
+          }
+          if (e.L2id && !e.L3id) {
+            tree2.push(e);
+          }
+          if (e.L1id && !e.L2id) {
+            tree1.push(e);
+          }
+        });
+
+        _.forEach(tree1, (e) => {
+          e.child = _.filter(tree2, (e1) => {
+            return e.L1id === e1.L1id;
+          });
+        });
+        _.forEach(tree2, (e) => {
+          if (e.L2id) {
+            e.child = _.filter(tree3, (e1) => {
+              return e.L2id === e1.L2id;
+            });
+          }
+        });
+        _.forEach(tree3, (e) => {
+          if (e.L3id) {
+            e.child = _.filter(tree4, (e1) => {
+              return e.L3id === e1.L3id;
+            });
+          }
+        });
+
+        return tree1;
       },
 
       // override AttachFileCode
