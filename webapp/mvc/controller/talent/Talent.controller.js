@@ -190,13 +190,15 @@ sap.ui.define(
           this.getView().addDependent(this.oTalentCompareDialog);
 
           this.oTalentCompareDialog.attachAfterOpen(() => {
-            $('#container-ehr---talent--BlockLayout > div:last').on('scroll touchmove mousewheel', function (e) {
+            const sBlockId = this.byId('BlockLayout').getId();
+
+            $(`#${sBlockId} > div:last`).on('scroll touchmove mousewheel', function (e) {
               e.preventDefault();
               e.stopPropagation();
 
               const iScrollLeft = $(this).scrollLeft();
 
-              $('#container-ehr---talent--BlockLayout > div:not(:last)').each(function () {
+              $('#container-ehr---m_talent--BlockLayout > div:not(:last)').each(function () {
                 $(this).scrollLeft(iScrollLeft);
               });
             });
@@ -246,31 +248,6 @@ sap.ui.define(
 
         this.byId('talentList').setMode(sMode);
         this.byId('talentList').setHeaderText('GridList with mode ' + sMode);
-      },
-
-      onSelectionChange(oEvent) {
-        var oGridListItem = oEvent.getParameter('listItem'),
-          bSelected = oEvent.getParameter('selected');
-
-        MessageToast.show((bSelected ? 'Selected' : 'Unselected') + ' item with Id ' + oGridListItem.getId());
-      },
-
-      onDelete(oEvent) {
-        var oGridListItem = oEvent.getParameter('listItem');
-
-        MessageToast.show('Delete item with Id ' + oGridListItem.getId());
-      },
-
-      onDetailPress(oEvent) {
-        var oGridListItem = oEvent.getSource();
-
-        MessageToast.show('Request details for item with Id ' + oGridListItem.getId());
-      },
-
-      onPress(oEvent) {
-        var oGridListItem = oEvent.getSource();
-
-        MessageToast.show('Pressed item with Id ' + oGridListItem.getId());
       },
 
       async onPressCompare() {
@@ -576,7 +553,9 @@ sap.ui.define(
 
         try {
           const mSearch = oViewModel.getProperty('/search');
-          const mFilters = mSearch.Prcty === 'A' ? _.pick(mSearch, ['Freetx', 'Prcty']) : _.omit(mSearch, 'Freetx');
+          _.chain(mSearch).set('Cttyp', _.compact(mSearch.Cttyp)).set('Jobgr', _.compact(mSearch.Jobgr)).set('Major', _.compact(mSearch.Major)).set('Schcd', _.compact(mSearch.Schcd)).set('Slabs', _.compact(mSearch.Slabs)).set('Zzjikch', _.compact(mSearch.Zzjikch)).set('Zzjikgb', _.compact(mSearch.Zzjikgb)).commit();
+
+          const mFilters = mSearch.Prcty === 'A' ? _.pick(mSearch, ['Freetx', 'Prcty', 'Werks']) : _.omit(mSearch, 'Freetx');
           const aSearchResults = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'TalentSearch', { Pernr: this.getAppointeeProperty('Pernr'), ..._.omitBy(mFilters, _.isEmpty) });
           const mState = { 1: 'Indication01', 2: 'Indication02', 3: 'Indication03' };
 
