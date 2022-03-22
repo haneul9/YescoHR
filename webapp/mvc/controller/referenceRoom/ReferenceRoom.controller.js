@@ -91,6 +91,8 @@ sap.ui.define(
       // TreeSelect
       async onSelectTree(oEvent) {
         const oViewModel = this.getViewModel();
+        const sPath = oEvent.getSource().getSelectedContexts()[0].getPath();
+        const mSelectedTree = oViewModel.getProperty(sPath);
 
         if (oViewModel.getProperty('/Fixed') && oViewModel.getProperty('/UserFixed')) {
           // 현재 내용을 저장 하시겠습니까?
@@ -101,83 +103,86 @@ sap.ui.define(
               // 저장
               if (vPress === this.getBundleText('LABEL_00103')) {
                 await this.saveForm();
-                return;
               }
+
+              this.dataSetting(mSelectedTree);
             },
           });
         } else {
-          const sPath = oEvent.getSource().getSelectedContexts()[0].getPath();
-          const mSelectedTree = oViewModel.getProperty(sPath);
-          const oDetail = await this.treeDetail(mSelectedTree.L1id, mSelectedTree.L2id, mSelectedTree.L3id, mSelectedTree.L4id, mSelectedTree.Werks);
-          const aFormData = oDetail.HelpInfo2Nav.results || [];
-          const aMenuId = await this.helpMenuId(mSelectedTree.Werks);
-
-          if (mSelectedTree.Folder !== 'X') {
-            oViewModel.setProperty('/FormData', {});
-            oViewModel.setProperty('/Fixed', false);
-            oViewModel.setProperty('/UserFixed', false);
-            return;
-          }
-
-          oViewModel.setProperty('/MenuIdList', new ComboEntry({ codeKey: 'Menid', valueKey: 'Mentx', aEntries: aMenuId }));
-
-          const sHeadComment =
-            _.find(aFormData, (e) => {
-              return e.Infocd === '1';
-            }) || '';
-          const sMidComment =
-            _.find(aFormData, (e) => {
-              return e.Infocd === '2';
-            }) || '';
-          const sBotComment =
-            _.find(aFormData, (e) => {
-              return e.Infocd === '3';
-            }) || '';
-          const mDetailData = aFormData[0] || {};
-
-          oViewModel.setProperty('/FormData', {
-            ...mSelectedTree,
-            ...mDetailData,
-            ChInfo: oDetail.ChInfo,
-            HeadZcomment: sHeadComment.Zcomment,
-            MidZcomment: sMidComment.Zcomment,
-            BotZcomment: sBotComment.Zcomment,
-            Menid1: mDetailData.Menid1 || 'ALL',
-            Mentx1: mDetailData.Mentx1 || '',
-            Menid2: mDetailData.Menid2 || 'ALL',
-            Mentx2: mDetailData.Mentx2 || '',
-            Menid3: mDetailData.Menid3 || 'ALL',
-            Mentx3: mDetailData.Mentx3 || '',
-          });
-
-          const sRoutL2 = mSelectedTree.L2tx ? ` > ${mSelectedTree.L2tx}` : '';
-          const sRoutL3 = mSelectedTree.L3tx ? ` > ${mSelectedTree.L3tx}` : '';
-          const sRoutL4 = mSelectedTree.L4tx ? ` > ${mSelectedTree.L4tx}` : '';
-
-          oViewModel.setProperty('/FormData/MenuRoute', `${mSelectedTree.L1tx}${sRoutL2}${sRoutL3}${sRoutL4}`);
-
-          const oManagerList = await this.dialogManagerList(mSelectedTree.L1id, mSelectedTree.L2id, mSelectedTree.L3id, mSelectedTree.L4id, mSelectedTree.Werks);
-          const aManager = oManagerList.HelpInfo3Nav.results;
-
-          oViewModel.setProperty('/ManagerList', aManager);
-          oViewModel.setProperty('/ManagerRowCount', _.size(aManager));
-          oViewModel.setProperty('/PDFFile', {});
-          oViewModel.setProperty('/DeleteDatas', []);
-
-          let bFix = false;
-
-          if (
-            _.some(aManager, (e) => {
-              return e.Pernr === this.getAppointeeProperty('Pernr');
-            })
-          ) {
-            bFix = true;
-          }
-
-          oViewModel.setProperty('/Fixed', bFix);
-          oViewModel.setProperty('/UserFixed', false);
-          this.settingsAttachTable();
+          this.dataSetting(mSelectedTree);
         }
+      },
+
+      async dataSetting(mSelectedTree = {}) {
+        const oDetail = await this.treeDetail(mSelectedTree.L1id, mSelectedTree.L2id, mSelectedTree.L3id, mSelectedTree.L4id, mSelectedTree.Werks);
+        const aFormData = oDetail.HelpInfo2Nav.results || [];
+        const aMenuId = await this.helpMenuId(mSelectedTree.Werks);
+
+        if (mSelectedTree.Folder !== 'X') {
+          oViewModel.setProperty('/FormData', {});
+          oViewModel.setProperty('/Fixed', false);
+          oViewModel.setProperty('/UserFixed', false);
+          return;
+        }
+
+        oViewModel.setProperty('/MenuIdList', new ComboEntry({ codeKey: 'Menid', valueKey: 'Mentx', aEntries: aMenuId }));
+
+        const sHeadComment =
+          _.find(aFormData, (e) => {
+            return e.Infocd === '1';
+          }) || '';
+        const sMidComment =
+          _.find(aFormData, (e) => {
+            return e.Infocd === '2';
+          }) || '';
+        const sBotComment =
+          _.find(aFormData, (e) => {
+            return e.Infocd === '3';
+          }) || '';
+        const mDetailData = aFormData[0] || {};
+
+        oViewModel.setProperty('/FormData', {
+          ...mSelectedTree,
+          ...mDetailData,
+          ChInfo: oDetail.ChInfo,
+          HeadZcomment: sHeadComment.Zcomment,
+          MidZcomment: sMidComment.Zcomment,
+          BotZcomment: sBotComment.Zcomment,
+          Menid1: mDetailData.Menid1 || 'ALL',
+          Mentx1: mDetailData.Mentx1 || '',
+          Menid2: mDetailData.Menid2 || 'ALL',
+          Mentx2: mDetailData.Mentx2 || '',
+          Menid3: mDetailData.Menid3 || 'ALL',
+          Mentx3: mDetailData.Mentx3 || '',
+        });
+
+        const sRoutL2 = mSelectedTree.L2tx ? ` > ${mSelectedTree.L2tx}` : '';
+        const sRoutL3 = mSelectedTree.L3tx ? ` > ${mSelectedTree.L3tx}` : '';
+        const sRoutL4 = mSelectedTree.L4tx ? ` > ${mSelectedTree.L4tx}` : '';
+
+        oViewModel.setProperty('/FormData/MenuRoute', `${mSelectedTree.L1tx}${sRoutL2}${sRoutL3}${sRoutL4}`);
+
+        const oManagerList = await this.dialogManagerList(mSelectedTree.L1id, mSelectedTree.L2id, mSelectedTree.L3id, mSelectedTree.L4id, mSelectedTree.Werks);
+        const aManager = oManagerList.HelpInfo3Nav.results;
+
+        oViewModel.setProperty('/ManagerList', aManager);
+        oViewModel.setProperty('/ManagerRowCount', _.size(aManager));
+        oViewModel.setProperty('/PDFFile', {});
+        oViewModel.setProperty('/DeleteDatas', []);
+
+        let bFix = false;
+
+        if (
+          _.some(aManager, (e) => {
+            return e.Pernr === this.getAppointeeProperty('Pernr');
+          })
+        ) {
+          bFix = true;
+        }
+
+        oViewModel.setProperty('/Fixed', bFix);
+        oViewModel.setProperty('/UserFixed', false);
+        this.settingsAttachTable();
       },
 
       // 메뉴 도움말 자료실 Combo
