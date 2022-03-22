@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns:l="sap.ui.layout"
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <Dialog id="talentCompareDialog" title="인재검색" contentWidth="1200px">
+    <Dialog id="talentCompareDialog" title="인재검색" contentWidth="1400px">
         <beginButton>
             <Button type="Emphasized" text="확인" press=".onPressCompareDialogClose" />
         </beginButton>

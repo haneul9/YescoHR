@@ -32,6 +32,7 @@ sap.ui.define(
         return {
           busy: false,
           entry: {
+            Werks: [],
             A: [],
             B: [],
             C: [],
@@ -53,6 +54,7 @@ sap.ui.define(
             entry: [],
           },
           search: {
+            Werks: '',
             Freetx: '',
             Prcty: 'A',
             Jobgr: [],
@@ -113,24 +115,28 @@ sap.ui.define(
           this.getEntrySearchCondition();
 
           const sPernr = this.getAppointeeProperty('Pernr');
+          const sWerks = this.getAppointeeProperty('Werks');
           const fCurried = Client.getEntitySet(this.getModel(ServiceNames.PA));
-          const [aEntryA, aEntryB, aEntryC, aEntryD, aEntryE, aEntryF, aEntryG, aEntryH, aEntryI, aEntryJ, aEntryK, aEntryL, aEntryM] = await Promise.all([
-            fCurried('TalentSearchCodeList', { Pernr: sPernr, Schfld: 'A' }), //
-            fCurried('TalentSearchCodeList', { Pernr: sPernr, Schfld: 'B' }),
-            fCurried('TalentSearchCodeList', { Pernr: sPernr, Schfld: 'C' }),
-            fCurried('TalentSearchCodeList', { Pernr: sPernr, Schfld: 'D' }),
-            fCurried('TalentSearchCodeList', { Pernr: sPernr, Schfld: 'E' }),
-            fCurried('TalentSearchCodeList', { Pernr: sPernr, Schfld: 'F' }),
-            fCurried('TalentSearchCodeList', { Pernr: sPernr, Schfld: 'G' }),
-            fCurried('TalentSearchCodeList', { Pernr: sPernr, Schfld: 'H' }),
-            fCurried('TalentSearchCodeList', { Pernr: sPernr, Schfld: 'I' }),
-            fCurried('TalentSearchCodeList', { Pernr: sPernr, Schfld: 'J' }),
-            fCurried('TalentSearchCodeList', { Pernr: sPernr, Schfld: 'K' }),
-            fCurried('TalentSearchCodeList', { Pernr: sPernr, Schfld: 'L' }),
-            fCurried('TalentSearchCodeList', { Pernr: sPernr, Schfld: 'M' }),
+          const [aWerks, aEntryA, aEntryB, aEntryC, aEntryD, aEntryE, aEntryF, aEntryG, aEntryH, aEntryI, aEntryJ, aEntryK, aEntryL, aEntryM] = await Promise.all([
+            Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'PersAreaList', { Pernr: sPernr }), //
+            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'A' }),
+            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'B' }),
+            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'C' }),
+            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'D' }),
+            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'E' }),
+            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'F' }),
+            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'G' }),
+            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'H' }),
+            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'I' }),
+            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'J' }),
+            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'K' }),
+            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'L' }),
+            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'M' }),
           ]);
 
+          oViewModel.setProperty('/search/Werks', this.getAppointeeProperty('Werks'));
           oViewModel.setProperty('/entry', {
+            Werks: _.map(aWerks, (o) => _.omit(o, '__metadata')),
             A: _.map(aEntryA, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) })),
             B: _.map(aEntryB, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) })),
             C: _.map(aEntryC, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) })),
@@ -184,13 +190,15 @@ sap.ui.define(
           this.getView().addDependent(this.oTalentCompareDialog);
 
           this.oTalentCompareDialog.attachAfterOpen(() => {
-            $('#container-ehr---talent--BlockLayout > div:last').on('scroll touchmove mousewheel', function (e) {
+            const sBlockId = this.byId('BlockLayout').getId();
+
+            $(`#${sBlockId} > div:last`).on('scroll touchmove mousewheel', function (e) {
               e.preventDefault();
               e.stopPropagation();
 
               const iScrollLeft = $(this).scrollLeft();
 
-              $('#container-ehr---talent--BlockLayout > div:not(:last)').each(function () {
+              $('#container-ehr---m_talent--BlockLayout > div:not(:last)').each(function () {
                 $(this).scrollLeft(iScrollLeft);
               });
             });
@@ -240,31 +248,6 @@ sap.ui.define(
 
         this.byId('talentList').setMode(sMode);
         this.byId('talentList').setHeaderText('GridList with mode ' + sMode);
-      },
-
-      onSelectionChange(oEvent) {
-        var oGridListItem = oEvent.getParameter('listItem'),
-          bSelected = oEvent.getParameter('selected');
-
-        MessageToast.show((bSelected ? 'Selected' : 'Unselected') + ' item with Id ' + oGridListItem.getId());
-      },
-
-      onDelete(oEvent) {
-        var oGridListItem = oEvent.getParameter('listItem');
-
-        MessageToast.show('Delete item with Id ' + oGridListItem.getId());
-      },
-
-      onDetailPress(oEvent) {
-        var oGridListItem = oEvent.getSource();
-
-        MessageToast.show('Request details for item with Id ' + oGridListItem.getId());
-      },
-
-      onPress(oEvent) {
-        var oGridListItem = oEvent.getSource();
-
-        MessageToast.show('Pressed item with Id ' + oGridListItem.getId());
       },
 
       async onPressCompare() {
@@ -501,13 +484,13 @@ sap.ui.define(
             ...mSearch,
             ..._.chain(mSearchCondition) //
               .omit(['__metadata', 'Pernr', 'Schtl'])
-              .set('Jobgr', _.split(mSearchCondition.Jobgr, '|'))
-              .set('Zzjikgb', _.split(mSearchCondition.Zzjikgb, '|'))
-              .set('Zzjikch', _.split(mSearchCondition.Zzjikch, '|'))
-              .set('Schcd', _.split(mSearchCondition.Schcd, '|'))
-              .set('Major', _.split(mSearchCondition.Major, '|'))
-              .set('Slabs', _.split(mSearchCondition.Slabs, '|'))
-              .set('Cttyp', _.split(mSearchCondition.Cttyp, '|'))
+              .set('Jobgr', _.isEmpty(mSearchCondition.Jobgr) ? [] : _.split(mSearchCondition.Jobgr, '|'))
+              .set('Zzjikgb', _.isEmpty(mSearchCondition.Zzjikgb) ? [] : _.split(mSearchCondition.Zzjikgb, '|'))
+              .set('Zzjikch', _.isEmpty(mSearchCondition.Zzjikch) ? [] : _.split(mSearchCondition.Zzjikch, '|'))
+              .set('Schcd', _.isEmpty(mSearchCondition.Schcd) ? [] : _.split(mSearchCondition.Schcd, '|'))
+              .set('Major', _.isEmpty(mSearchCondition.Major) ? [] : _.split(mSearchCondition.Major, '|'))
+              .set('Slabs', _.isEmpty(mSearchCondition.Slabs) ? [] : _.split(mSearchCondition.Slabs, '|'))
+              .set('Cttyp', _.isEmpty(mSearchCondition.Cttyp) ? [] : _.split(mSearchCondition.Cttyp, '|'))
               .set('Stell1', mSearchCondition.Stell1 === '00000000' ? '' : mSearchCondition.Stell1)
               .set('Stell2', mSearchCondition.Stell2 === '00000000' ? '' : mSearchCondition.Stell2)
               .set('Stell3', mSearchCondition.Stell3 === '00000000' ? '' : mSearchCondition.Stell3)
@@ -570,7 +553,9 @@ sap.ui.define(
 
         try {
           const mSearch = oViewModel.getProperty('/search');
-          const mFilters = mSearch.Prcty === 'A' ? _.pick(mSearch, ['Freetx', 'Prcty']) : _.omit(mSearch, 'Freetx');
+          _.chain(mSearch).set('Cttyp', _.compact(mSearch.Cttyp)).set('Jobgr', _.compact(mSearch.Jobgr)).set('Major', _.compact(mSearch.Major)).set('Schcd', _.compact(mSearch.Schcd)).set('Slabs', _.compact(mSearch.Slabs)).set('Zzjikch', _.compact(mSearch.Zzjikch)).set('Zzjikgb', _.compact(mSearch.Zzjikgb)).commit();
+
+          const mFilters = mSearch.Prcty === 'A' ? _.pick(mSearch, ['Freetx', 'Prcty', 'Werks']) : _.omit(mSearch, 'Freetx');
           const aSearchResults = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'TalentSearch', { Pernr: this.getAppointeeProperty('Pernr'), ..._.omitBy(mFilters, _.isEmpty) });
           const mState = { 1: 'Indication01', 2: 'Indication02', 3: 'Indication03' };
 
@@ -592,7 +577,7 @@ sap.ui.define(
         if (mSearch.Prcty === 'A') {
           if (_.isEmpty(mSearch.Freetx)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35006') }); // 검색어를 입력하여 주십시오.
         } else {
-          if (_.chain(mSearch).omit('Prcty').omitBy(_.isEmpty).isEmpty().value()) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35007') }); // 검색조건을 입력하여 주십시오.
+          if (_.chain(mSearch).omit(['Prcty', 'Werks']).omitBy(_.isEmpty).isEmpty().value()) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35007') }); // 검색조건을 입력하여 주십시오.
           if (_.toNumber(mSearch.EeageFr) > _.toNumber(mSearch.EeageTo)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35002') }); // 나이 입력값의 최소값이 최대값보다 큽니다.
           if (!_.isEmpty(mSearch.Quali1) && _.isEmpty(mSearch.Langlv1)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35003', 'LABEL_35009', '1') }); // {외국어}{1} 값을 입력하여 주십시오.
           if (!_.isEmpty(mSearch.Quali2) && _.isEmpty(mSearch.Langlv2)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35003', 'LABEL_35009', '2') }); // {외국어}{2} 값을 입력하여 주십시오.

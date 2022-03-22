@@ -30,10 +30,12 @@ sap.ui.define(
       initializeModel() {
         return {
           busy: false,
+          Fixed: false,
+          UserFixed: false,
           Hass: this.isHass(),
           FormData: {},
           MenuIdList: [],
-          ManagerList: [],
+          ManagerList: [{ ManagerRowCount: 1 }],
           TreeFullList: [],
           ReferenceList: [],
           AccType: [],
@@ -52,7 +54,6 @@ sap.ui.define(
           oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.COMMON, 'HelpInfoTab2')));
           oViewModel.setProperty('/TreeFullList', aTree.HelpInfo1Nav.results);
           oViewModel.setProperty('/ReferenceList', aVariat);
-          this.settingsAttachTable();
         } catch (oError) {
           this.debug(oError);
           AppUtils.handleError(oError);
@@ -108,6 +109,26 @@ sap.ui.define(
         const sRoutL4 = mSelectedTree.L4tx ? ` > ${mSelectedTree.L4tx}` : '';
 
         oViewModel.setProperty('/FormData/MenuRoute', `${mSelectedTree.L1tx}${sRoutL2}${sRoutL3}${sRoutL4}`);
+
+        const oManagerList = await this.dialogManagerList(mSelectedTree.L1id, mSelectedTree.L2id, mSelectedTree.L3id, mSelectedTree.L4id, mSelectedTree.Werks);
+        const aManager = oManagerList.HelpInfo3Nav.results;
+
+        oViewModel.setProperty('/ManagerList', aManager);
+        oViewModel.setProperty('/ManagerRowCount', _.size(aManager));
+
+        let bFix = false;
+
+        if (
+          _.some(aManager, (e) => {
+            return e.Pernr === this.getAppointeeProperty('Pernr');
+          })
+        ) {
+          bFix = true;
+        }
+
+        oViewModel.setProperty('/Fixed', bFix);
+        oViewModel.setProperty('/UserFixed', false);
+        this.settingsAttachTable();
       },
 
       // 메뉴 도움말 자료실 Combo
@@ -243,7 +264,7 @@ sap.ui.define(
           Werks: mAppointee.Werks,
           Menid: this.getCurrentMenuId(),
           Prcty: 'A',
-          HelpInfo3Nav: [
+          HelpInfo2Nav: [
             {
               Werks: sWerks,
               L1id: sL1id,
@@ -252,6 +273,7 @@ sap.ui.define(
               L4id: sL4id,
             },
           ],
+          HelpInfo3Nav: [],
         };
 
         return await Client.deep(oModel, 'HelpInfo', mPayLoad);
@@ -268,6 +290,12 @@ sap.ui.define(
         }
 
         return false;
+      },
+
+      // 수정
+      onFixedBtn() {
+        this.getViewModel().setProperty('/UserFixed', true);
+        this.settingsAttachTable();
       },
 
       // 저장
@@ -346,11 +374,12 @@ sap.ui.define(
       // AttachFileTable Settings
       settingsAttachTable() {
         const oViewModel = this.getViewModel();
-        const sStatus = oViewModel.getProperty('/FormData/ZappStatAl');
+        const bFix1 = oViewModel.getProperty('/Fixed');
+        const bFix2 = oViewModel.getProperty('/UserFixed');
         const sAppno = oViewModel.getProperty('/FormData/Appno') || '';
 
         AttachFileAction.setAttachFile(this, {
-          Editable: !sStatus,
+          Editable: bFix1 && bFix2,
           Type: this.getApprovalType(),
           Appno: sAppno,
           Message: this.getBundleText('MSG_29003'),
