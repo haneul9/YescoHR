@@ -8,22 +8,27 @@
       <HBox justifyContent="SpaceBetween" class="breadcrumbs">
         <custom:Breadcrumbs />
         <HBox>
+          <Select class="naked-combo sapUiTinyMarginEnd" width="130px" items="{/entry/Werks}" selectedKey="{/search/Werks}" change=".onChangeWerks">
+            <core:Item text="{Pbtxt}" key="{Werks}" />
+          </Select>
           <Button type="Emphasized" class="sapUiTinyMarginEnd" text="Swap" press=".onPressSwapBtn" />
           <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
           <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
         </HBox>
       </HBox>
     </VBox>
-    <FlexBox class="organization-info">
-      <Text text="{i18n>MSG_12001}" />
-    </FlexBox>
-    <VBox class="organization-legend" items="{/orgLevel}">
-      <Label text="{ZorgLevlt}">
-        <customData>
-          <core:CustomData key="level" value="{ZorgLevl}" writeToDom="true" />
-        </customData>
-      </Label>
-    </VBox>
+    <HBox class="contents" justifyContent="SpaceBetween" alignItems="Center">
+      <FlexBox class="organization-info">
+        <Text class="desc-txt" text="{i18n>MSG_12001}" />
+      </FlexBox>
+      <HBox class="organization-legend" justifyContent="SpaceAround" items="{/orgLevel}">
+        <Label text="{ZorgLevlt}">
+          <customData>
+            <core:CustomData key="level" value="{ZorgLevl}" writeToDom="true" />
+          </customData>
+        </Label>
+      </HBox>
+    </HBox>
     <FlexBox id="ChartHolder" width="100%" height="100%" alignItems="Start" justifyContent="Center" busyIndicatorDelay="0" />
   </Page>
 </mvc:View>

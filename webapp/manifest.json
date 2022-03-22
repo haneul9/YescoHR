@@ -248,7 +248,6 @@
         { "pattern": "h/studentFunds/{oDataKey}", "name": "h/studentFunds-detail", "target": "studentFundsDetail" },
 
         { "pattern": "m/talent", "name": "m/talent", "target": "m/talent" },
-        { "pattern": "m/talent/{oDataKey}", "name": "m/talent-detail", "target": "m/talentDetail" },
 
         { "pattern": "withdrawMiddle", "name": "withdrawMiddle", "target": "withdrawMiddle" },
         { "pattern": "withdrawMiddle/{oDataKey}", "name": "withdrawMiddle-detail", "target": "withdrawMiddleDetail" },
@@ -403,7 +402,6 @@
         "studentFundsDetail": { "viewId": "studentFundsDetail", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFundsDetail" },
 
         "m/talent": { "viewId": "m_talent", "viewPath": "sap.ui.yesco.mvc.view.talent", "viewName": "Talent" },
-        "m/talentDetail": { "viewId": "m_talentDetail", "viewPath": "sap.ui.yesco.mvc.view.talent", "viewName": "TalentDetail" },
 
         "withdrawMiddle": { "viewId": "withdrawMiddle", "viewPath": "sap.ui.yesco.mvc.view.withdrawMiddle", "viewName": "WithdrawMiddle" },
         "withdrawMiddleDetail": { "viewId": "withdrawMiddleDetail", "viewPath": "sap.ui.yesco.mvc.view.withdrawMiddle", "viewName": "WithdrawMiddleDetail" },

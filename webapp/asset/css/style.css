@@ -802,11 +802,9 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .sapMTitle[data-color=blue] {color:blue}
 .sapMText[data-color=blue] {color:blue}
 
-.organization-info {position:absolute; margin-top:10px; margin-left:10px}
-.organization-info .sapMText {font-size:16px}
-.organization-legend {position:absolute; right:100px; top:110px}
-.organization-legend .sapMFlexItem {margin-top:10px}
-.organization-legend .sapMFlexItem>span>bdi {margin-left:20px; color:#343A40; font-weight:400}
+.organization-info .desc-txt {font-size:16px; margin-left: 0;}
+.organization-legend {margin-top: 0 !important;}
+.organization-legend .sapMFlexItem>span>bdi {margin-left:20px; margin-right: 8px; color:#343A40; font-weight:400}
 .organization-legend .sapMLabel[data-level="10"]::before {content:""; width:14px; height:14px; border-radius:50%; background-color:#65B8FF; position:absolute}
 .organization-legend .sapMLabel[data-level="20"]::before {content:""; width:14px; height:14px; border-radius:50%; background-color:#a6e2a0; position:absolute}
 .organization-legend .sapMLabel[data-level="30"]::before {content:""; width:14px; height:14px; border-radius:50%; background-color:#FFE479; position:absolute}
@@ -2082,6 +2080,8 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .fusion-tooltip th { font-weight: bold; word-break: keep-all; background-color: #f7f7f7; min-width: 40%; }
 
 .sticky-side-tree { position: sticky; top: 80px; }
+
+.naked-combo { border: none; }
 
 @media screen and (max-width: 480px) {
     .contents { margin: 0 auto;max-width: 100%;min-width: 100%;padding-bottom: 20px;}
