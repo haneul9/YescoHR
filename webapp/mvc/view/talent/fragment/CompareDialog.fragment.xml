@@ -12,7 +12,7 @@
                         <l:BlockLayoutRow content="{/compare/row1}" scrollable="{/compare/scroll}">
                             <l:BlockLayoutCell>
                                 <VBox visible="{= ${type} === 'text' }">
-                                    <Image src="{Picurl}" height="100px" />
+                                    <Image src="{Picurl}" height="100px" press=".onPressDialogPic" />
                                     <Text text="{Value01}" />
                                 </VBox>
                             </l:BlockLayoutCell>

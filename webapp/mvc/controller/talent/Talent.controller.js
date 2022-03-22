@@ -245,7 +245,7 @@ sap.ui.define(
             '/compare/row1',
             _.concat(
               { type: 'label' },
-              _.map(aCompareResults, (o) => ({ type: 'text', Picurl: _.isEmpty(o.Picurl) ? 'asset/image/avatar-unknown.svg' : o.Picurl, Value01: o.Value01 }))
+              _.map(aCompareResults, (o) => ({ type: 'text', Pernr: o.Pernr, Picurl: _.isEmpty(o.Picurl) ? 'asset/image/avatar-unknown.svg' : o.Picurl, Value01: o.Value01 }))
             )
           );
           oViewModel.setProperty(
@@ -699,10 +699,23 @@ sap.ui.define(
       },
 
       onPressPic(oEvent) {
-        const sHost = window.location.href.split('#')[0];
         const mRowData = oEvent.getSource().getParent().getParent().getParent().getBindingContext().getObject();
 
-        window.open(`${sHost}#/employeeView/${mRowData.Pernr}`, '_blank', 'width=1400,height=800');
+        this.openEmployeePop(mRowData.Pernr);
+      },
+
+      onPressDialogPic(oEvent) {
+        const mRowData = oEvent.getSource().getParent().getParent().getBindingContext().getObject();
+
+        this.openEmployeePop(mRowData.Pernr);
+      },
+
+      openEmployeePop(sPernr) {
+        if (!sPernr) return;
+
+        const sHost = window.location.href.split('#')[0];
+
+        window.open(`${sHost}#/employeeView/${sPernr}`, '_blank', 'width=1400,height=800');
       },
 
       resetSimpleSearch() {
