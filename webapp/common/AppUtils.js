@@ -162,6 +162,20 @@ sap.ui.define(
           });
         },
 
+        handleSessionTimeout(oError, reject) {
+          if (oError.getMessage() === 'Response did not contain a valid OData result') {
+            // Session이 만료되었습니다.\n로그온 화면으로 이동합니다.
+            MessageBox.alert(this.getBundleText('MSG_00057'), {
+              onClose: () => {
+                location.reload();
+              },
+            });
+            reject();
+          } else {
+            reject(oError);
+          }
+        },
+
         /**
          * @param {any[]}
          * @public

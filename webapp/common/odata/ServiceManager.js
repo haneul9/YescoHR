@@ -1,7 +1,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    // 'sap/ui/model/odata/v2/ODataModel',
     'sap/ui/yesco/control/ODataModel',
     'sap/ui/yesco/common/odata/ServiceNames',
   ],
@@ -10,7 +9,7 @@ sap.ui.define(
     ODataModel,
     ServiceNames
   ) => {
-    ('use strict');
+    'use strict';
 
     // localhost인 경우 ui5.yaml에 세팅된 proxy server를 경유하여 SAP로 요청이 들어가야하므로 /sap/opu/odata/sap/ 앞에 /proxy를 붙임
     const urlPrefix = (window.location.hostname === 'localhost' ? '/proxy' : '') + '/sap/opu/odata/sap/';
