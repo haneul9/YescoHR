@@ -41,7 +41,7 @@
 .sapUiMedia-StdExt-Phone .sapMPage:not([data-form-style="request"]) .sapUiLayoutCSSGrid.form-grid > * {height:100%; min-height:34px; height:34px}
 .sapUiMedia-StdExt-Phone .sapMPage:not([data-form-style="request"]) .sapUiLayoutCSSGrid.form-grid .sapMFlexBox .sapMFlexItem {min-height:34px!important}
 
-.sapUiMedia-StdExt-Phone .app-top-toolbar {background-color:#fff}
+.sapUiMedia-StdExt-Phone .app-top-toolbar {border-top:1px solid #fff; background-color:#fff}
 .sapUiMedia-StdExt-Phone .app-menu-toolbar {width:100%; border-top:1px solid #DFE2EB}
 
 .sapUiMedia-StdExt-Phone .contents {margin:0 auto; width:100%; max-width:inherit; min-width:auto; height:100%; padding-top:20px; padding-bottom:10px}
