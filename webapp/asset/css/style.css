@@ -1608,11 +1608,13 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .sapMLIBHighlightInformation {background:#A1E094}/*팀장*/
 .sapMLIBHighlightWarning {background:#FFE479}/*팀원*/
 
+#container-ehr---m_talent--talentCompareDialog-footer {z-index: 3;}
+.compare-block .sapUiBlockLayoutRow:first-child { position: sticky; top: 0; z-index: 2; }
 .compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow { scroll-snap-type: x mandatory; }
-.compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow > .sapUiBlockLayoutCell { scroll-snap-align: start; }
+.compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow > .sapUiBlockLayoutCell { scroll-snap-align: end; }
 .compare-block .sapUiBlockLayoutSizeL .sapUiBlockScrollingRow .sapUiBlockScrollableCell:first-child { width: 16%; }
 .compare-block .sapUiBlockLayoutSizeL .sapUiBlockScrollingRow .sapUiBlockScrollableCell:not(:first-child) { width: 28%; }
-.compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow:last-child { height: 15px; }
+.compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow:last-child { height: 15px; position: sticky; bottom: 0; z-index: 4; }
 .compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow:not(:last-child) { overflow: hidden; }
 .compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow > .sapUiBlockLayoutCell:first-child { position: sticky; left: 0; z-index: 1; }
 .compare-block .sapUiBlockLayoutRow .sapUiBlockLayoutCell:first-child .sapUiBlockCellContent {display: flex; flex-flow: column; justify-content: center; align-items: center;}
