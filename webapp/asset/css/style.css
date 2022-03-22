@@ -1611,7 +1611,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 
 #container-ehr---m_talent--talentCompareDialog-footer {z-index: 3;}
 .compare-block .sapUiBlockLayoutRow:first-child { position: sticky; top: 0; z-index: 2; }
-.compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow { scroll-snap-type: x mandatory; }
+.compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow { scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
 .compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow > .sapUiBlockLayoutCell { scroll-snap-align: end; }
 .compare-block .sapUiBlockLayoutSizeL .sapUiBlockScrollingRow .sapUiBlockScrollableCell:first-child { width: 16%; }
 .compare-block .sapUiBlockLayoutSizeL .sapUiBlockScrollingRow .sapUiBlockScrollableCell:not(:first-child) { width: 28%; }

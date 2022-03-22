@@ -195,14 +195,16 @@ sap.ui.define(
 
           this.oTalentCompareDialog.attachAfterOpen(() => {
             const sBlockId = this.byId('BlockLayout').getId();
+            const $lastBlock = $(`#${sBlockId} > div:last`);
 
-            $(`#${sBlockId} > div:last`).on('scroll touchmove mousewheel', function (e) {
+            $lastBlock.off('scroll touchmove mousewheel');
+            $lastBlock.on('scroll touchmove mousewheel', function (e) {
               e.preventDefault();
               e.stopPropagation();
 
               const iScrollLeft = $(this).scrollLeft();
 
-              $('#container-ehr---m_talent--BlockLayout > div:not(:last)').each(function () {
+              $(`#${sBlockId} > div:not(:last)`).each(function () {
                 $(this).scrollLeft(iScrollLeft);
               });
             });
