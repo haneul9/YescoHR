@@ -163,7 +163,7 @@ html.sap-phone .sapMDialog.sapMDialogStretched {border:none; box-shadow:0; borde
 .sapUiMedia-Std-Phone .sapMITBContainerContent {padding: 10px 0}
 
 .menu-list > .sapMFlexItem + .sapMFlexItem {margin-top:20px}
-.menu-list .sapMLnk {display:flex; justify-content:space-between; align-items:center; padding-left:10px; padding-right:10px; font-size:1rem; font-weight:600}
+.menu-list .sapMLnk {display:flex; justify-content:space-between; align-items:center; padding-left:0; padding-right:10px; font-size:1rem; font-weight:600}
 .menu-list .sapMITBText {font-size:1rem!important}
 .sapMToggleBtnPressed:not(.sapMBtnDisabled) {color:#6c757d; border-color:transparent; background:#fff !important}
 .sapUiSizeCompact .favorites-menu-list {position:absolute; bottom:0; background-color:#f4f5f7; border-top:8px solid #ebeef2; padding:20px 10px 20px 20px}
