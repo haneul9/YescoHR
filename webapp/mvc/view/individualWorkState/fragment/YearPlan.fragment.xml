@@ -28,6 +28,7 @@
           <customData>
             <core:CustomData key="day" value="{day}" />
             <core:CustomData key="stripes" value="{stripes}" writeToDom="true" />
+            <core:CustomData key="holiday" value="{holiday}" writeToDom="true" />
           </customData>
         </Text>
       </custom:DayBox>

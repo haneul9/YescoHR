@@ -313,7 +313,7 @@ sap.ui.define(
                 })
               );
             } catch (oError) {
-              reject(oError);
+              reject(AppUtils.handleError(oError));
             }
           }
 
@@ -474,7 +474,7 @@ sap.ui.define(
               resolve();
             },
             error: (oError) => {
-              reject(new ODataDeleteError(oError));
+              reject(AppUtils.handleError(oError));
             },
           });
         });

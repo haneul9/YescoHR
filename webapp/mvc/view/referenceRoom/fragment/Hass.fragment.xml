@@ -17,7 +17,7 @@
       </VBox>
       <Label text="{i18n>LABEL_29003}"/>
       <VBox>
-        <Text text="{/FormData/ZchPernr}"/>
+        <Text text="{/FormData/ChInfo}"/>
       </VBox>
       <Label text="{i18n>LABEL_08003}" />
       <VBox>
@@ -25,7 +25,7 @@
       </VBox>
       <Label text="{i18n>LABEL_29004}" />
       <VBox>
-        <TextArea placeholder="{i18n>MSG_29002}" editable="{/UserFixed}" rows="5" width="100%" value="{/FormData/HeadZcomment}"/>
+        <TextArea placeholder="{i18n>MSG_29002}" editable="{/UserFixed}" rows="5" width="100%" value="{= !${/FormData/HeadZcomment} ?  '' : !${/FormData/HeadZcomment}}"/>
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
@@ -68,14 +68,14 @@
       </HBox>
       <Label text="{i18n>LABEL_29006}" />
       <VBox>
-        <TextArea placeholder="{i18n>MSG_29002}" rows="5" editable="{/UserFixed}" width="100%" value="{/FormData/MidZcomment}"/>
+        <TextArea placeholder="{i18n>MSG_29002}" rows="5" editable="{/UserFixed}" width="100%" value="{= !${/FormData/MidZcomment} ? '' : ${/FormData/MidZcomment} }"/>
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
       </VBox>
       <Label text="{i18n>LABEL_29007}" />
       <VBox>
-        <TextArea placeholder="{i18n>MSG_29002}" rows="5" editable="{/UserFixed}" width="100%" value="{/FormData/BotZcomment}"/>
+        <TextArea placeholder="{i18n>MSG_29002}" rows="5" editable="{/UserFixed}" width="100%" value="{= !${/FormData/BotZcomment} ? '' : ${/FormData/BotZcomment} }"/>
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
@@ -84,13 +84,13 @@
       <VBox>
         <Text text="{i18n>MSG_29001}"/>
         <HBox>
-          <ComboBox items="{/MenuIdList}" selectedKey="{/FormData/Menid1}" enabled="{/UserFixed}" class="mr-20-px">
+          <ComboBox items="{/MenuIdList}" selectedKey="{= !${/FormData/Menid1} ? 'ALL' : ${/FormData/Menid1} }" editable="{/UserFixed}" class="mr-20-px">
             <core:Item text="{Mentx}" key="{Menid}" />
           </ComboBox>
-          <ComboBox items="{/MenuIdList}" selectedKey="{/FormData/Menid2}" enabled="{/UserFixed}" class="mr-20-px">
+          <ComboBox items="{/MenuIdList}" selectedKey="{= !${/FormData/Menid2} ? 'ALL' : ${/FormData/Menid2} }" editable="{/UserFixed}" class="mr-20-px">
             <core:Item text="{Mentx}" key="{Menid}" />
           </ComboBox>
-          <ComboBox items="{/MenuIdList}" selectedKey="{/FormData/Menid3}" enabled="{/UserFixed}">
+          <ComboBox items="{/MenuIdList}" selectedKey="{= !${/FormData/Menid3} ? 'ALL' : ${/FormData/Menid3} }" editable="{/UserFixed}">
             <core:Item text="{Mentx}" key="{Menid}" />
           </ComboBox>
         </HBox>
