@@ -100,6 +100,10 @@ sap.ui.define(
             row5: [],
             row6: [],
             row7: [],
+            row8: [],
+            row9: [],
+            row10: [],
+            row11: [],
           },
         };
       },
@@ -208,36 +212,6 @@ sap.ui.define(
         this.oTalentCompareDialog.open();
       },
 
-      onCompareDialogM() {
-        if (!this.byId('talentCompareDialog')) {
-          Fragment.load({
-            id: this.getView().getId(),
-            name: 'sap.ui.yesco.mvc.view.talent.fragment.CompareDialogM',
-            controller: this,
-          }).then((oDialog) => {
-            this.getView().addDependent(oDialog);
-            oDialog.open();
-          });
-        } else {
-          this.byId('talentCompareDialog').open();
-        }
-      },
-
-      onSearchDialog() {
-        if (!this.byId('talentSearchDialog')) {
-          Fragment.load({
-            id: this.getView().getId(),
-            name: 'sap.ui.yesco.mvc.view.talent.fragment.SearchDialog',
-            controller: this,
-          }).then((oDialog) => {
-            this.getView().addDependent(oDialog);
-            oDialog.open();
-          });
-        } else {
-          this.byId('talentCompareDialog').open();
-        }
-      },
-
       onClick() {
         this.byId('talentCompareDialog').close();
         this.byId('talentSearchDialog').close();
@@ -271,7 +245,7 @@ sap.ui.define(
             '/compare/row1',
             _.concat(
               { type: 'label' },
-              _.map(aCompareResults, (o) => ({ type: 'text', ..._.pick(o, ['Picurl', 'Value01']) }))
+              _.map(aCompareResults, (o) => ({ type: 'text', Picurl: _.isEmpty(o.Picurl) ? 'asset/image/avatar-unknown.svg' : o.Picurl, Value01: o.Value01 }))
             )
           );
           oViewModel.setProperty(
@@ -326,7 +300,7 @@ sap.ui.define(
           oViewModel.setProperty(
             '/compare/row6',
             _.concat(
-              { data: [{ type: 'label', value: this.getBundleText('LABEL_35015') }] }, // LABEL_35015
+              { data: [{ type: 'label', value: this.getBundleText('LABEL_35015') }] }, // 사내경력
               _.map(aCompareResults, (o) => ({
                 data: _.chain(o.Value03)
                   .split('<br>')
@@ -335,7 +309,55 @@ sap.ui.define(
               }))
             )
           );
-          oViewModel.setProperty('/compare/row7', _.times(aCompareResults.length + 1).map(_.stubObject));
+          oViewModel.setProperty(
+            '/compare/row7',
+            _.concat(
+              { data: [{ type: 'label', value: this.getBundleText('LABEL_35017') }] }, // 사외경력
+              _.map(aCompareResults, (o) => ({
+                data: _.chain(o.Value09)
+                  .split('<br>')
+                  .map((d) => ({ type: 'text', value: d }))
+                  .value(),
+              }))
+            )
+          );
+          oViewModel.setProperty(
+            '/compare/row8',
+            _.concat(
+              { data: [{ type: 'label', value: this.getBundleText('LABEL_35018') }] }, // 외국어
+              _.map(aCompareResults, (o) => ({
+                data: _.chain(o.Value08)
+                  .split('<br>')
+                  .map((d) => ({ type: 'text', value: d }))
+                  .value(),
+              }))
+            )
+          );
+          oViewModel.setProperty(
+            '/compare/row9',
+            _.concat(
+              { data: [{ type: 'label', value: this.getBundleText('LABEL_35019') }] }, // 포상
+              _.map(aCompareResults, (o) => ({
+                data: _.chain(o.Value10)
+                  .split('<br>')
+                  .map((d) => ({ type: 'text', value: d }))
+                  .value(),
+              }))
+            )
+          );
+          oViewModel.setProperty(
+            '/compare/row10',
+            _.concat(
+              { data: [{ type: 'label', value: this.getBundleText('LABEL_35020') }] }, // 징계
+              _.map(aCompareResults, (o) => ({
+                data: _.chain(o.Value11)
+                  .split('<br>')
+                  .map((d) => ({ type: 'text', value: d }))
+                  .value(),
+              }))
+            )
+          );
+          oViewModel.setProperty('/compare/row11', _.times(aCompareResults.length + 1).map(_.stubObject));
 
           this.onCompareDialog();
         } catch (oError) {
@@ -559,11 +581,10 @@ sap.ui.define(
           const aSearchResults = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'TalentSearch', { Pernr: this.getAppointeeProperty('Pernr'), ..._.omitBy(mFilters, _.isEmpty) });
           const mState = { 1: 'Indication01', 2: 'Indication02', 3: 'Indication03' };
 
-          this.byId('talentList').removeSelections();
           oViewModel.setProperty('/result/totalCount', aSearchResults.length);
           oViewModel.setProperty(
             '/result/list',
-            _.map(aSearchResults, (o) => ({ ..._.omit(o, '__metadata'), ColtyState: mState[o.Colty] }))
+            _.map(aSearchResults, (o) => ({ ..._.omit(o, '__metadata'), ColtyState: mState[o.Colty], PicUrl: _.isEmpty(o.PicUrl) ? 'asset/image/avatar-unknown.svg' : o.PicUrl }))
           );
         } catch (oError) {
           throw oError;
@@ -608,6 +629,7 @@ sap.ui.define(
           AppUtils.handleError(oError);
         } finally {
           setTimeout(() => oViewModel.setProperty('/result/busy', false), 200);
+          setTimeout(() => this.byId('talentList').removeSelections(), 300);
         }
       },
 
@@ -643,6 +665,8 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const sPrcty = oViewModel.getProperty('/search/Prcty');
 
+        this.clearSearchResults();
+
         if (sPrcty === 'A') {
           this.resetSimpleSearch();
         } else {
@@ -651,11 +675,19 @@ sap.ui.define(
       },
 
       clearSearchResults() {
+        this.byId('talentList').removeSelections();
         this.getViewModel().setProperty('/result', {
           busy: false,
           totalCount: 0,
           list: [],
         });
+      },
+
+      onPressPic(oEvent) {
+        const sHost = window.location.href.split('#')[0];
+        const mRowData = oEvent.getSource().getParent().getParent().getParent().getBindingContext().getObject();
+
+        window.open(`${sHost}#/employeeView/${mRowData.Pernr}`, '_blank', 'width=1400,height=800');
       },
 
       resetSimpleSearch() {

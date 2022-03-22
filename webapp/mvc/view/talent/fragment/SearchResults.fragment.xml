@@ -10,6 +10,7 @@
         <HBox class="table-toolbar" justifyContent="SpaceBetween">
             <HBox class="title">
                 <Title text="{i18n>LABEL_00204}" level="H4" />
+                <Text class="sapUiSmallMarginBegin" text="total {/result/totalCount}" />
             </HBox>
             <HBox class="status-wrap">
                 <ObjectStatus text="{i18n>LABEL_35010}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication03" />
@@ -25,7 +26,7 @@
             <f:GridListItem highlight="{ColtyState}">
                 <VBox height="100%">
                     <HBox height="100%" class="sapUiTinyMargin" alignItems="Center">
-                        <Image src="{PicUrl}" width="3rem" class="sapUiSmallMarginEnd"/>
+                        <Image src="{PicUrl}" width="3rem" class="sapUiSmallMarginEnd" press=".onPressPic" />
                         <VBox>
                             <Title text="{Linetx1}" wrapping="true"/>
                             <Text text="{Linetx2}" />
