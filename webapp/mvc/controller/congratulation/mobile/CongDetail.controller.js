@@ -43,6 +43,7 @@ sap.ui.define(
           FormStatus: '',
           BirthMaxDate: moment().toDate(),
           FormData: {},
+          TargetListRowCount: 1,
           benefitDate: '',
           Settings: {},
           BenefitType: [],
@@ -491,7 +492,7 @@ sap.ui.define(
                 }
 
                 oDetailModel.setProperty('/TargetList', oChildList);
-                this.byId('targetTable').setVisibleRowCount(oChildList.length);
+                oDetailModel.setProperty('/TargetListRowCount', _.size(oChildList));
               }
 
               resolve();

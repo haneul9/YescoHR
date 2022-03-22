@@ -1,23 +1,23 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:table="sap.ui.table">
-  <Dialog id= "targetSettingsDialog" title="{i18n>LABEL_02023}" contentWidth="500px" contentHeight="300px">
+  <Dialog id= "targetSettingsDialog" title="{i18n>LABEL_02023}" contentWidth="500px">
     <content>
-      <table:Table id="targetTable" width="100%" rows="{/TargetList}" visibleRowCount="1" selectionMode="None" rowHeight="44" columnHeaderHeight="45" columnHeaderVisible="false" cellClick=".TargetClick">
+      <table:Table id="targetTable" width="100%" rows="{/TargetList}" visibleRowCount="{/TargetListRowCount}" selectionMode="None" rowHeight="44" columnHeaderHeight="45" columnHeaderVisible="false" cellClick=".TargetClick">
         <table:columns>
           <table:Column width="20%">
             <table:template>
-              <Text text="{Atext}" wrapping="false" />
+              <Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" />
             </table:template>
           </table:Column>
           <table:Column width="30%">
             <table:template>
-              <Text text="{Zname}" wrapping="false" />
+              <Text text="{Zname}" width="100%" textAlign="Center" wrapping="false" />
             </table:template>
           </table:Column>
           <table:Column width="auto">
             <table:template>
-              <Text text="{Regno}" wrapping="false" />
+              <Text text="{Regno}" width="100%" textAlign="Center" wrapping="false" />
             </table:template>
           </table:Column>
         </table:columns>

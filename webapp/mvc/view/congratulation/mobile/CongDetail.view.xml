@@ -12,7 +12,7 @@
       <custom:MobileScrollContainer horizontal="false" vertical="true" excludeBottomSelector=".sapMPageFooter">
         <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
           <Title level="H2" text="경조금 신청서" />
-          <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
+          <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid border-bottom-0px">
             <Label text="{i18n>LABEL_02013}"/>
             <VBox>
               <ComboBox id="BenefitType" items="{/BenefitType}" selectedKey="{/FormData/Concode}" change="onTypeChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
@@ -68,6 +68,44 @@
             </VBox>
           </grid:CSSGrid>
           <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
+          <Title level="H2" text="{i18n>LABEL_00135}" class="mt-20-px" />
+          <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid border-bottom-0px">
+            <Label text="{i18n>LABEL_00210}"/>
+            <VBox>
+              <Text text="{/ApplyInfo/Apename}"/>
+            </VBox>
+            <Label text="{i18n>LABEL_00226}"/>
+            <VBox>
+              <Text text="{/ApplyInfo/Aporgtx}"/>
+            </VBox>
+            <Label text="{i18n>LABEL_00136}"/>
+            <VBox>
+              <Text text="{/ApplyInfo/Apjikgbtl}"/>
+            </VBox>
+            <Label text="{i18n>LABEL_00137}"/>
+            <VBox>
+              <Text text="{/ApplyInfo/Appdt}"/>
+            </VBox>
+          </grid:CSSGrid>
+          <Title level="H2" text="{i18n>LABEL_00139}" visible="{= !!${/ApprovalDetails/ZappStatAl} }" class="mt-25-px" />
+          <grid:CSSGrid visible="{= !!${/ApprovalDetails/ZappStatAl} }" gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
+            <Label text="{i18n>LABEL_00138}" />
+            <VBox>
+              <Text text="{ path: '/ApprovalDetails/Docno', formatter: '.TextUtils.getDocnoTxt' }" />
+            </VBox>
+            <Label text="{i18n>LABEL_00140}" />
+            <VBox>
+              <Text text="{/ApprovalDetails/ZappStxtAl}" />
+            </VBox>
+            <Label text="{i18n>LABEL_00141}" />
+            <VBox>
+              <Text text="{/ApprovalDetails/Sgndt}" />
+            </VBox>
+            <Label text="{i18n>LABEL_00142}" visible="{= ${/ApprovalDetails/ZappStatAl} === '45' || ${/ApprovalDetails/ZappStatAl} === '65' || !!${/ApprovalDetails/ZappResn} }" />
+            <VBox visible="{= ${/ApprovalDetails/ZappStatAl} === '45' || ${/ApprovalDetails/ZappStatAl} === '65' || !!${/ApprovalDetails/ZappResn} }">
+              <Text text="{/ApprovalDetails/ZappResn}" />
+            </VBox>
+          </grid:CSSGrid>
         </VBox>
       </custom:MobileScrollContainer>
     </VBox>
