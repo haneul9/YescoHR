@@ -559,7 +559,6 @@ sap.ui.define(
           const aSearchResults = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'TalentSearch', { Pernr: this.getAppointeeProperty('Pernr'), ..._.omitBy(mFilters, _.isEmpty) });
           const mState = { 1: 'Indication01', 2: 'Indication02', 3: 'Indication03' };
 
-          this.byId('talentList').removeSelections();
           oViewModel.setProperty('/result/totalCount', aSearchResults.length);
           oViewModel.setProperty(
             '/result/list',
@@ -608,6 +607,7 @@ sap.ui.define(
           AppUtils.handleError(oError);
         } finally {
           setTimeout(() => oViewModel.setProperty('/result/busy', false), 200);
+          setTimeout(() => this.byId('talentList').removeSelections(), 300);
         }
       },
 
