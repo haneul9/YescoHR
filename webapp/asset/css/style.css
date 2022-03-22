@@ -714,6 +714,7 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 /* .table-toolbar .sapMObjStatus{font-size:20px} */
 .vCardBox .table-toolbar .title {align-items:center}
 .vCardBox .table-toolbar .title > div {height:24px}
+.vCardBox .table-toolbar .title .sapMText {line-height: 30px;}
 .vCardBox .table-toolbar .table-actions {align-items:center}
 /* .sapMFlexBox .title {height:24px} */
 .sapMFlexBox .title .desc-txt {position:relative; top:5px}
