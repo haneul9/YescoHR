@@ -90,7 +90,54 @@
                             </l:BlockLayoutCell>
                         </l:BlockLayoutRow>
 
-                        <l:BlockLayoutRow content="{/compare/row7}" scrollable="{/compare/scroll}" visible="{/compare/scroll}">
+                        <l:BlockLayoutRow content="{/compare/row7}" scrollable="{/compare/scroll}">
+                            <l:BlockLayoutCell>
+                                <VBox items="{path: 'data', templateShareable: false}">
+                                    <Text text="{value}">
+                                        <customData>
+                                            <core:CustomData key="type" value="{type}" writeToDom="true" />
+                                        </customData>
+                                    </Text>
+                                </VBox>
+                            </l:BlockLayoutCell>
+                        </l:BlockLayoutRow>
+                        <l:BlockLayoutRow content="{/compare/row8}" scrollable="{/compare/scroll}">
+                            <l:BlockLayoutCell>
+                                <VBox items="{path: 'data', templateShareable: false}">
+                                    <Text text="{value}">
+                                        <customData>
+                                            <core:CustomData key="type" value="{type}" writeToDom="true" />
+                                        </customData>
+                                    </Text>
+                                </VBox>
+                            </l:BlockLayoutCell>
+                        </l:BlockLayoutRow>
+
+                        <l:BlockLayoutRow content="{/compare/row9}" scrollable="{/compare/scroll}">
+                            <l:BlockLayoutCell>
+                                <VBox items="{path: 'data', templateShareable: false}">
+                                    <Text text="{value}">
+                                        <customData>
+                                            <core:CustomData key="type" value="{type}" writeToDom="true" />
+                                        </customData>
+                                    </Text>
+                                </VBox>
+                            </l:BlockLayoutCell>
+                        </l:BlockLayoutRow>
+
+                        <l:BlockLayoutRow content="{/compare/row10}" scrollable="{/compare/scroll}">
+                            <l:BlockLayoutCell>
+                                <VBox items="{path: 'data', templateShareable: false}">
+                                    <Text text="{value}">
+                                        <customData>
+                                            <core:CustomData key="type" value="{type}" writeToDom="true" />
+                                        </customData>
+                                    </Text>
+                                </VBox>
+                            </l:BlockLayoutCell>
+                        </l:BlockLayoutRow>
+
+                        <l:BlockLayoutRow content="{/compare/row11}" scrollable="{/compare/scroll}" visible="{/compare/scroll}">
                             <l:BlockLayoutCell>
                                 <VBox>
                                     <Label text="" />
