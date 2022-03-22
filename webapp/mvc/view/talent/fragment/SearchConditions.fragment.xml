@@ -11,7 +11,7 @@
             </ComboBox>
             <Button icon="asset/image/icon_del.png" class="icon-button" type="Transparent" enabled="{= !${/result/busy} }" press=".onPressDeleteSearchCondition" />
             <Label text="{i18n>LABEL_00201}" />
-            <Input width="520px" value="{/search/Freetx}" placeholder="{i18n>MSG_35001}" enabled="{= ${/search/Prcty} === 'A' }" submit=".onPressSearch" />
+            <Input width="520px" maxLength="{/fieldLimit/Freetx}" value="{/search/Freetx}" placeholder="{i18n>MSG_35001}" enabled="{= ${/search/Prcty} === 'A' }" submit=".onPressSearch" />
             <Button text="{i18n>LABEL_00101}" icon="asset/image/icon_search03.png" enabled="{= !${/result/busy} }" press=".onPressSearch" />
             <Button text="{i18n>LABEL_35005}" icon="asset/image/icon_reset.png" enabled="{= !${/result/busy} }" press=".onPressConditionReset" />
             <Switch state="{= ${/search/Prcty} === 'B' }" customTextOn=" " customTextOff=" " enabled="{= !${/result/busy} }" change=".onToggleExpand" />
@@ -25,7 +25,7 @@
                 <layoutData>
                     <grid:GridItemLayoutData gridColumn="span 7"/>
                 </layoutData>
-                <Input width="280px" value="{/saved/Schtl}" placeholder="{i18n>LABEL_00101}" class="sapUiTinyMarginEnd" />
+                <Input width="280px" maxLength="{/fieldLimit/Schtl}" value="{/saved/Schtl}" placeholder="{i18n>LABEL_00101}" class="sapUiTinyMarginEnd" />
                 <Button text="{i18n>LABEL_35007}" icon="asset/image/icon_inquiry_save.png" press=".onPressSaveConditions" />
             </HBox>
             <HBox justifyContent="End" alignItems="Center">

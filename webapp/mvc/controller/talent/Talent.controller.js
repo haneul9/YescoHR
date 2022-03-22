@@ -105,6 +105,7 @@ sap.ui.define(
             row10: [],
             row11: [],
           },
+          fieldLimit: {},
         };
       },
 
@@ -173,6 +174,8 @@ sap.ui.define(
               _.map(aEntryM, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.toNumber(o.Zcode) }))
             ),
           });
+
+          oViewModel.setProperty('/fieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.PA, 'TalentSearch'), this.getEntityLimit(ServiceNames.PA, 'TalentSearchCondition')));
         } catch (oError) {
           this.debug('Controller > Talent > onObjectMatched Error', oError);
 

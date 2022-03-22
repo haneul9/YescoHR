@@ -1191,7 +1191,7 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 /* .contents .sapMHBox > .sapMFlexBox {margin-right:20px} */
 .contents .sapMHBox > .sapMFlexBox:last-child {margin-right:0px}
 .contents > .sapUiHiddenPlaceholder + .sapMFlexBox {margin-top:20px}
-.contents > .sapUiBlockLayerTabbable + .sapMFlexBox {margin-top:20px}
+.contents > .sapUiBlockLayerTabbable + .sapMFlexBox:not(.sapUiLocalBusy) {margin-top:20px}
 .appointee-box, .summary-box, .search-box {width:33%}
 .sapMFlexBox + .summary-box, .sapUiBlockLayerTabbable + .summary-box {margin-left:30px}
 .sapMFlexBox + .search-box, .sapUiBlockLayerTabbable + .search-box {margin-left:30px}
