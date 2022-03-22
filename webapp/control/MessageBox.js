@@ -25,15 +25,6 @@ sap.ui.define(
         MessageBox.confirm(vMessage, { ...mOptions, title: getBundleText('LABEL_CONFIRM') }); // 확인
       },
       error(vMessage, mOptions = {}) {
-        if (vMessage === 'Response did not contain a valid OData result') {
-          // Session이 만료되었습니다.\n로그온 화면으로 이동합니다.
-          this.alert(getBundleText('MSG_00057'), {
-            onClose: () => {
-              location.reload();
-            },
-          });
-          return;
-        }
         MessageBox.error(vMessage, { ...mOptions, title: getBundleText('LABEL_ERROR') }); // 오류
       },
       information(vMessage, mOptions = {}) {

@@ -100,7 +100,12 @@ sap.ui.define(
             row5: [],
             row6: [],
             row7: [],
+            row8: [],
+            row9: [],
+            row10: [],
+            row11: [],
           },
+          fieldLimit: {},
         };
       },
 
@@ -169,6 +174,8 @@ sap.ui.define(
               _.map(aEntryM, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.toNumber(o.Zcode) }))
             ),
           });
+
+          oViewModel.setProperty('/fieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.PA, 'TalentSearch'), this.getEntityLimit(ServiceNames.PA, 'TalentSearchCondition')));
         } catch (oError) {
           this.debug('Controller > Talent > onObjectMatched Error', oError);
 
@@ -190,13 +197,17 @@ sap.ui.define(
           this.getView().addDependent(this.oTalentCompareDialog);
 
           this.oTalentCompareDialog.attachAfterOpen(() => {
-            $('#container-ehr---talent--BlockLayout > div:last').on('scroll touchmove mousewheel', function (e) {
+            const sBlockId = this.byId('BlockLayout').getId();
+            const $lastBlock = $(`#${sBlockId} > div:last`);
+
+            $lastBlock.off('scroll touchmove mousewheel');
+            $lastBlock.on('scroll touchmove mousewheel', function (e) {
               e.preventDefault();
               e.stopPropagation();
 
               const iScrollLeft = $(this).scrollLeft();
 
-              $('#container-ehr---talent--BlockLayout > div:not(:last)').each(function () {
+              $(`#${sBlockId} > div:not(:last)`).each(function () {
                 $(this).scrollLeft(iScrollLeft);
               });
             });
@@ -204,36 +215,6 @@ sap.ui.define(
         }
 
         this.oTalentCompareDialog.open();
-      },
-
-      onCompareDialogM() {
-        if (!this.byId('talentCompareDialog')) {
-          Fragment.load({
-            id: this.getView().getId(),
-            name: 'sap.ui.yesco.mvc.view.talent.fragment.CompareDialogM',
-            controller: this,
-          }).then((oDialog) => {
-            this.getView().addDependent(oDialog);
-            oDialog.open();
-          });
-        } else {
-          this.byId('talentCompareDialog').open();
-        }
-      },
-
-      onSearchDialog() {
-        if (!this.byId('talentSearchDialog')) {
-          Fragment.load({
-            id: this.getView().getId(),
-            name: 'sap.ui.yesco.mvc.view.talent.fragment.SearchDialog',
-            controller: this,
-          }).then((oDialog) => {
-            this.getView().addDependent(oDialog);
-            oDialog.open();
-          });
-        } else {
-          this.byId('talentCompareDialog').open();
-        }
       },
 
       onClick() {
@@ -246,31 +227,6 @@ sap.ui.define(
 
         this.byId('talentList').setMode(sMode);
         this.byId('talentList').setHeaderText('GridList with mode ' + sMode);
-      },
-
-      onSelectionChange(oEvent) {
-        var oGridListItem = oEvent.getParameter('listItem'),
-          bSelected = oEvent.getParameter('selected');
-
-        MessageToast.show((bSelected ? 'Selected' : 'Unselected') + ' item with Id ' + oGridListItem.getId());
-      },
-
-      onDelete(oEvent) {
-        var oGridListItem = oEvent.getParameter('listItem');
-
-        MessageToast.show('Delete item with Id ' + oGridListItem.getId());
-      },
-
-      onDetailPress(oEvent) {
-        var oGridListItem = oEvent.getSource();
-
-        MessageToast.show('Request details for item with Id ' + oGridListItem.getId());
-      },
-
-      onPress(oEvent) {
-        var oGridListItem = oEvent.getSource();
-
-        MessageToast.show('Pressed item with Id ' + oGridListItem.getId());
       },
 
       async onPressCompare() {
@@ -287,14 +243,12 @@ sap.ui.define(
           const aPernr = _.map(aSelectedContexts, (o) => _.get(o.getObject(), 'Pernr'));
           const aCompareResults = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'TalentSearchComparison', { Pernr: aPernr });
 
-          this.debug(aCompareResults);
-
           oViewModel.setProperty('/compare/scroll', aCompareResults.length > 3);
           oViewModel.setProperty(
             '/compare/row1',
             _.concat(
               { type: 'label' },
-              _.map(aCompareResults, (o) => ({ type: 'text', ..._.pick(o, ['Picurl', 'Value01']) }))
+              _.map(aCompareResults, (o) => ({ type: 'text', Pernr: o.Pernr, Picurl: _.isEmpty(o.Picurl) ? 'asset/image/avatar-unknown.svg' : o.Picurl, Value01: o.Value01 }))
             )
           );
           oViewModel.setProperty(
@@ -349,7 +303,7 @@ sap.ui.define(
           oViewModel.setProperty(
             '/compare/row6',
             _.concat(
-              { data: [{ type: 'label', value: this.getBundleText('LABEL_35015') }] }, // LABEL_35015
+              { data: [{ type: 'label', value: this.getBundleText('LABEL_35015') }] }, // 사내경력
               _.map(aCompareResults, (o) => ({
                 data: _.chain(o.Value03)
                   .split('<br>')
@@ -358,7 +312,55 @@ sap.ui.define(
               }))
             )
           );
-          oViewModel.setProperty('/compare/row7', _.times(aCompareResults.length + 1).map(_.stubObject));
+          oViewModel.setProperty(
+            '/compare/row7',
+            _.concat(
+              { data: [{ type: 'label', value: this.getBundleText('LABEL_35017') }] }, // 사외경력
+              _.map(aCompareResults, (o) => ({
+                data: _.chain(o.Value09)
+                  .split('<br>')
+                  .map((d) => ({ type: 'text', value: d }))
+                  .value(),
+              }))
+            )
+          );
+          oViewModel.setProperty(
+            '/compare/row8',
+            _.concat(
+              { data: [{ type: 'label', value: this.getBundleText('LABEL_35018') }] }, // 외국어
+              _.map(aCompareResults, (o) => ({
+                data: _.chain(o.Value08)
+                  .split('<br>')
+                  .map((d) => ({ type: 'text', value: d }))
+                  .value(),
+              }))
+            )
+          );
+          oViewModel.setProperty(
+            '/compare/row9',
+            _.concat(
+              { data: [{ type: 'label', value: this.getBundleText('LABEL_35019') }] }, // 포상
+              _.map(aCompareResults, (o) => ({
+                data: _.chain(o.Value10)
+                  .split('<br>')
+                  .map((d) => ({ type: 'text', value: d }))
+                  .value(),
+              }))
+            )
+          );
+          oViewModel.setProperty(
+            '/compare/row10',
+            _.concat(
+              { data: [{ type: 'label', value: this.getBundleText('LABEL_35020') }] }, // 징계
+              _.map(aCompareResults, (o) => ({
+                data: _.chain(o.Value11)
+                  .split('<br>')
+                  .map((d) => ({ type: 'text', value: d }))
+                  .value(),
+              }))
+            )
+          );
+          oViewModel.setProperty('/compare/row11', _.times(aCompareResults.length + 1).map(_.stubObject));
 
           this.onCompareDialog();
         } catch (oError) {
@@ -411,6 +413,21 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/busy', false);
         }
+      },
+
+      onChangeQuali(oEvent) {
+        const oViewModel = this.getViewModel();
+        const sSeq = oEvent.getSource().data('seq');
+
+        oViewModel.setProperty(`/search/Langlv${sSeq}`, '');
+      },
+
+      onChangeStell(oEvent) {
+        const oViewModel = this.getViewModel();
+        const sSeq = oEvent.getSource().data('seq');
+
+        oViewModel.setProperty(`/search/SyearFr${sSeq}`, '');
+        oViewModel.setProperty(`/search/SyearTo${sSeq}`, '');
       },
 
       onPressDeleteSearchCondition() {
@@ -575,16 +592,17 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         try {
-          const mSearch = oViewModel.getProperty('/search');
-          const mFilters = mSearch.Prcty === 'A' ? _.pick(mSearch, ['Freetx', 'Prcty']) : _.omit(mSearch, 'Freetx');
+          const mSearch = _.cloneDeep(oViewModel.getProperty('/search'));
+          _.chain(mSearch).set('Freetx', _.chain(mSearch.Freetx).replace(/ /g, '').replace(/[,]/g, '/').value()).set('Cttyp', _.compact(mSearch.Cttyp)).set('Jobgr', _.compact(mSearch.Jobgr)).set('Major', _.compact(mSearch.Major)).set('Schcd', _.compact(mSearch.Schcd)).set('Slabs', _.compact(mSearch.Slabs)).set('Zzjikch', _.compact(mSearch.Zzjikch)).set('Zzjikgb', _.compact(mSearch.Zzjikgb)).commit();
+
+          const mFilters = mSearch.Prcty === 'A' ? _.pick(mSearch, ['Freetx', 'Prcty', 'Werks']) : _.omit(mSearch, 'Freetx');
           const aSearchResults = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'TalentSearch', { Pernr: this.getAppointeeProperty('Pernr'), ..._.omitBy(mFilters, _.isEmpty) });
           const mState = { 1: 'Indication01', 2: 'Indication02', 3: 'Indication03' };
 
-          this.byId('talentList').removeSelections();
           oViewModel.setProperty('/result/totalCount', aSearchResults.length);
           oViewModel.setProperty(
             '/result/list',
-            _.map(aSearchResults, (o) => ({ ..._.omit(o, '__metadata'), ColtyState: mState[o.Colty] }))
+            _.map(aSearchResults, (o) => ({ ..._.omit(o, '__metadata'), ColtyState: mState[o.Colty], PicUrl: _.isEmpty(o.PicUrl) ? 'asset/image/avatar-unknown.svg' : o.PicUrl }))
           );
         } catch (oError) {
           throw oError;
@@ -629,6 +647,7 @@ sap.ui.define(
           AppUtils.handleError(oError);
         } finally {
           setTimeout(() => oViewModel.setProperty('/result/busy', false), 200);
+          setTimeout(() => this.byId('talentList').removeSelections(), 300);
         }
       },
 
@@ -664,6 +683,8 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const sPrcty = oViewModel.getProperty('/search/Prcty');
 
+        this.clearSearchResults();
+
         if (sPrcty === 'A') {
           this.resetSimpleSearch();
         } else {
@@ -672,11 +693,32 @@ sap.ui.define(
       },
 
       clearSearchResults() {
+        this.byId('talentList').removeSelections();
         this.getViewModel().setProperty('/result', {
           busy: false,
           totalCount: 0,
           list: [],
         });
+      },
+
+      onPressPic(oEvent) {
+        const mRowData = oEvent.getSource().getParent().getParent().getParent().getBindingContext().getObject();
+
+        this.openEmployeePop(mRowData.Pernr);
+      },
+
+      onPressDialogPic(oEvent) {
+        const mRowData = oEvent.getSource().getParent().getParent().getBindingContext().getObject();
+
+        this.openEmployeePop(mRowData.Pernr);
+      },
+
+      openEmployeePop(sPernr) {
+        if (!sPernr) return;
+
+        const sHost = window.location.href.split('#')[0];
+
+        window.open(`${sHost}#/employeeView/${sPernr}`, '_blank', 'width=1400,height=800');
       },
 
       resetSimpleSearch() {

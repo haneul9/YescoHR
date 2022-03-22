@@ -46,7 +46,7 @@ sap.ui.define(
             error: (oError) => {
               AppUtils.debug(`${sUrl} get-entityset error.`, oError);
 
-              reject(new ODataReadError(oError));
+              AppUtils.handleSessionTimeout(new ODataReadError(oError), reject);
             },
           });
         });
@@ -63,7 +63,7 @@ sap.ui.define(
             error: (oError) => {
               AppUtils.debug(`${sUrl} get error.`, oError);
 
-              reject(new ODataReadError(oError));
+              AppUtils.handleSessionTimeout(new ODataReadError(oError), reject);
             },
           });
         });
@@ -80,7 +80,7 @@ sap.ui.define(
             error: (oError) => {
               AppUtils.debug(`${sUrl} create error.`, oError);
 
-              reject(new ODataCreateError({ oError }));
+              AppUtils.handleSessionTimeout(new ODataCreateError(oError), reject);
             },
           });
         });
@@ -97,7 +97,7 @@ sap.ui.define(
             error: (oError) => {
               AppUtils.debug(`${sUrl} deep error.`, oError);
 
-              reject(new ODataReadError(oError));
+              AppUtils.handleSessionTimeout(new ODataReadError(oError), reject);
             },
           });
         });
@@ -114,7 +114,7 @@ sap.ui.define(
             error: (oError) => {
               AppUtils.debug(`${sUrl} remove error.`, oError);
 
-              reject(new ODataDeleteError(oError));
+              AppUtils.handleSessionTimeout(new ODataDeleteError(oError), reject);
             },
           });
         });

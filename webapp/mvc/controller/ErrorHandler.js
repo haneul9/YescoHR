@@ -16,13 +16,11 @@ sap.ui.define(
     return BaseObject.extend('sap.ui.yesco.mvc.controller.ErrorHandler', {
       /**
        * Handles application errors by automatically attaching to the model events and displaying errors when needed.
-       * @class
+       *
        * @param {sap.ui.core.UIComponent} oComponent reference to the app's component
-       * @public
-       * @alias sap.ui.yesco.mvc.controller.ErrorHandler
        */
       constructor: function (oComponent) {
-        BaseObject.apply(this, [oComponent]);
+        BaseObject.call(this, oComponent);
 
         this._oResourceBundle = oComponent.getModel('i18n').getResourceBundle();
         this._oComponent = oComponent;
@@ -57,24 +55,23 @@ sap.ui.define(
         }
         this._bMessageOpen = true;
 
-        if (/Response did not contain a valid OData result/.test(sDetails)) {
-          // Session이 만료되었습니다.\n로그온 화면으로 이동합니다.
-          this.alert(getBundleText('MSG_00057'), {
+        const oError = {
+          getMessage() {
+            return sDetails.message;
+          },
+        };
+        const reject = () => {
+          MessageBox.error(this._sErrorText, {
+            id: 'serviceErrorMessageBox',
+            details: sDetails,
+            actions: [MessageBox.Action.CLOSE],
             onClose: () => {
-              location.reload();
+              this._bMessageOpen = false;
             },
           });
-          return;
-        }
+        };
 
-        MessageBox.error(this._sErrorText, {
-          id: 'serviceErrorMessageBox',
-          details: sDetails,
-          actions: [MessageBox.Action.CLOSE],
-          onClose: () => {
-            this._bMessageOpen = false;
-          },
-        });
+        AppUtils.handleSessionTimeout(oError, reject);
       },
     });
   }
