@@ -1377,7 +1377,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .employee-tree .sapMTreeItemBaseExpander { font-size: 1rem; color: #222222; }
 
 .member-photo {display:inline-block; width:auto; height:auto; background-image:url(../../asset/image/avatar-unknown.svg); background-size:100%; background-position:center top!important; background-repeat:no-repeat}
-.employee-detail .member-photo {display:inline-block; width:120px; height:160px; margin-top: 10px; margin-bottom:10px; background-image:url(../../asset/image/avatar-unknown.svg)}
+.employee-detail .member-photo {display:inline-block; width:120px; height:160px; margin-top: 9px; margin-bottom:10px; background-image:url(../../asset/image/avatar-unknown.svg)}
 .employee-detail .sapMImg.sapMNoImg {display:inline-block; background-image:url(../../asset/image/photo2.png)}
 .employee-detail .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem { min-height:35px}
 .employee-detail .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem {font-size:14px; font-weight:400}
