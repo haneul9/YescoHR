@@ -311,7 +311,8 @@ sap.ui.define(
 
           this.oDetailDialog.open();
 
-          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.PA), _.get(mPayload, 'Entity') === 'A' ? 'HeadCountDetail' : 'HeadCountEntRetDetail', { Zyear: '2022', ..._.omit(mPayload, 'Entity') });
+          const mSearchConditions = oViewModel.getProperty('/searchConditions');
+          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.PA), _.get(mPayload, 'Entity') === 'A' ? 'HeadCountDetail' : 'HeadCountEntRetDetail', { ...mSearchConditions, ..._.omit(mPayload, 'Entity') });
 
           oViewModel.setProperty('/dialog/rowCount', Math.min(aDetailData.length, 12));
           oViewModel.setProperty('/dialog/totalCount', _.size(aDetailData));
@@ -340,7 +341,7 @@ sap.ui.define(
 
         try {
           const mAppointee = this.getAppointeeData();
-          const aOrgehEntry = Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'DashboardOrgList', {
+          const aOrgehEntry = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'DashboardOrgList', {
             Werks: oViewModel.getProperty('/searchConditions/Werks'),
             Pernr: mAppointee.Pernr,
           });

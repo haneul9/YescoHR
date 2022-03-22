@@ -107,8 +107,11 @@ sap.ui.define(
             `;
           })
           .onNodeClick(function (event, sNodeId) {
-            const oViewModel = sap.ui.getCore().byId('container-ehr---m_organization--ChartHolder').getModel();
+            const oDesktop = sap.ui.getCore().byId('container-ehr---m_organization--ChartHolder');
+            const oMobile = sap.ui.getCore().byId('container-ehr---mobile_m_organization--ChartHolder');
+            const oViewModel = oDesktop ? oDesktop.getModel() : oMobile.getModel();
             const sPernr = _.find(this.data, { nodeId: sNodeId }).Pernr;
+            const aRoutePath = oDesktop ? ['employee', 'employee'] : ['mobile/employee', 'mobile/m/employee-org'];
 
             oViewModel.setProperty('/extendNode', sNodeId);
 
@@ -116,15 +119,15 @@ sap.ui.define(
               if ([...event.srcElement.classList].includes('title')) {
                 AppUtils.getAppComponent()
                   .getRouter()
-                  .navTo('employee', { pernr: 'NA', orgeh: sNodeId, orgtx: _.replace(event.srcElement.textContent, /\//g, '--') });
+                  .navTo(aRoutePath[1], { pernr: 'NA', orgeh: sNodeId, orgtx: _.replace(event.srcElement.textContent, /\//g, '--') });
               }
             } else {
               if ([...event.srcElement.classList].includes('title')) {
                 AppUtils.getAppComponent()
                   .getRouter()
-                  .navTo('employee', { pernr: sPernr, orgeh: sNodeId, orgtx: _.replace(event.srcElement.textContent, /\//g, '--') });
+                  .navTo(aRoutePath[1], { pernr: sPernr, orgeh: sNodeId, orgtx: _.replace(event.srcElement.textContent, /\//g, '--') });
               } else {
-                AppUtils.getAppComponent().getRouter().navTo('employee', { pernr: sPernr });
+                AppUtils.getAppComponent().getRouter().navTo(aRoutePath[0], { pernr: sPernr });
               }
             }
           })

@@ -387,7 +387,7 @@ sap.ui.define(
 
         try {
           const mAppointee = this.getAppointeeData();
-          const aOrgehEntry = Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'DashboardOrgList', {
+          const aOrgehEntry = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'DashboardOrgList', {
             Werks: oViewModel.getProperty('/searchConditions/Werks'),
             Pernr: mAppointee.Pernr,
           });

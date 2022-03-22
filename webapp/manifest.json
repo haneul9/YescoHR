@@ -157,6 +157,7 @@
         { "pattern": "h/employee", "name": "h/employee", "target": "h/employee" },
         { "pattern": "mobile/employee/:pernr:", "name": "mobile/employee", "target": "mobile/employee" },
         { "pattern": "mobile/m/employee", "name": "mobile/m/employee", "target": "mobile/m/employee" },
+        { "pattern": "mobile/m/employeeOrg/:pernr:/:orgtx:/:orgeh:", "name": "mobile/m/employee-org", "target": "mobile/m/employee" },
         { "pattern": "mobile/m/employee/{pernr}", "name": "mobile/m/employee-detail", "target": "mobile/employee" },
 
         { "pattern": "m/EvalKpi", "name": "m/EvalKpi", "target": "m/EvalKpi" },
@@ -209,6 +210,7 @@
         { "pattern": "mobile/notice/{Sdate}/{Seqnr}", "name": "mobile/notice-detail", "target": "mobile/noticeDetail" },
 
         { "pattern": "m/organization", "name": "m/organization", "target": "m/organization" },
+        { "pattern": "mobile/m/organization", "name": "mobile/m/organization", "target": "mobile/m/organization" },
         
         { "pattern": "m/overviewEmployee", "name": "m/overviewEmployee", "target": "m/overviewEmployee" },
         { "pattern": "m/overviewOnOff", "name": "m/overviewOnOff", "target": "m/overviewOnOff" },
@@ -371,6 +373,7 @@
         "mobile/noticeDetail": { "viewId": "mobile_noticeDetail", "viewPath": "sap.ui.yesco.mvc.view.notice.mobile", "viewName": "NoticeDetail" },
         
         "m/organization": { "viewId": "m_organization", "viewPath": "sap.ui.yesco.mvc.view.organization", "viewName": "Main" },
+        "mobile/m/organization": { "viewId": "mobile_m_organization", "viewPath": "sap.ui.yesco.mvc.view.organization.mobile", "viewName": "Main" },
         
         "m/overviewEmployee": { "viewId": "m_overviewEmployee", "viewPath": "sap.ui.yesco.mvc.view.overviewEmployee", "viewName": "Main" },
         "m/overviewOnOff": { "viewId": "m_overviewOnOff", "viewPath": "sap.ui.yesco.mvc.view.overviewOnOff", "viewName": "Main" },

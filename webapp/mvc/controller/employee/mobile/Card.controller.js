@@ -56,6 +56,22 @@ sap.ui.define(
           }
 
           this.initialList({ oViewModel, sPernr, sOrgtx, sOrgeh });
+        } else if (!_.isEmpty(oParameter.orgeh)) {
+          const sPernr = oParameter.pernr;
+          const sOrgtx = _.replace(oParameter.orgtx, /--/g, '/');
+          const sOrgeh = oParameter.orgeh;
+
+          oViewModel.setSizeLimit(1000);
+          oViewModel.setProperty('/isLoaded', true);
+          oViewModel.setProperty('/busy', true);
+          oViewModel.setProperty('/pernr', sPernr);
+          oViewModel.setProperty('/orgtx', sOrgtx);
+          oViewModel.setProperty('/orgeh', sOrgeh);
+          if (!_.isEmpty(sOrgtx)) {
+            oViewModel.setProperty('/search/searchText', sOrgtx);
+          }
+
+          this.initialList({ oViewModel, sPernr, sOrgtx, sOrgeh });
         }
       },
 
