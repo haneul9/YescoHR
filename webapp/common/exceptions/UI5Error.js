@@ -38,15 +38,15 @@ sap.ui.define(
         this.messageLevel = this.MESSAGE_LEVEL.INFORMATION;
       },
 
-      getCode: function () {
+      getCode() {
         return this.code;
       },
 
-      getMessage: function () {
+      getMessage() {
         return this.message;
       },
 
-      showErrorMessage: function (mOptions = {}) {
+      showErrorMessage(mOptions = {}) {
         const sCode = this.getCode();
         const sMessage = this.getMessage().replace(/\\n/, '\n');
 
