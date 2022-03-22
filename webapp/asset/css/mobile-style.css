@@ -288,6 +288,7 @@ html.sap-phone .sapMDialog.sapMMessageDialog>footer .sapMFooter-CTX .sapMBtn {-w
 .sapUiMedia-Std-Phone .sapMPageFloatingFooter>.sapMPageFooter .sapMIBar {display:flex; justify-content:space-between; padding:0 10px; border-radius:0}
 .sapUiMedia-Std-Phone .sapMPageWithFooter>.sapMPageFooter .sapMBtn + .sapMBtn, .sapUiMedia-Std-Phone .sapMPageWithFooter>.sapMPageFooter .sapMBtn + * + .sapMBtn {margin:0px 8px}
 .sapUiMedia-Std-Phone .sapMPageWithFooter>.sapMPageFooter .sapMBtn.sapMBarChild {margin-right:0px}
+.sapUiMedia-Std-Phone .sapMPageWithFooter>.sapMPageFooter .sapMBtn.sapMBarChild .sapMBtnInner {padding:0}
 .sapUiMedia-Std-Phone .sapMPageWithFooter>.sapMPageFooter.sapMIBar.sapMTB .sapMBarChild:last-child, .sapUiMedia-Std-Phone .sapMPageWithFooter>.sapMPageFooter .sapMIBar.sapMTB .sapMBarChild:last-child, .sapUiMedia-Std-Phone .sapMPageFooter .sapMBarChild:last-child {margin-right:0px}
 .sapUiMedia-Std-Phone .sapMPageWithFooter.sapMPageFloatingFooter>section {bottom:0; padding-bottom:5rem}
 .sapUiMedia-Std-Phone .sapMPageWithFooter.sapMPageFloatingFooter[data-form-style="retrieval"]>section {padding-bottom:0}

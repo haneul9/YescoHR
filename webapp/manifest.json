@@ -105,6 +105,8 @@
 
         { "pattern": "attendance", "name": "attendance", "target": "attendance" },
         { "pattern": "attendance/{type}/:appno:", "name": "attendance-detail", "target": "attendanceDetail" },
+        { "pattern": "mobile/attendance", "name": "mobile/attendance", "target": "mobile/attendance" },
+        { "pattern": "mobile/attendance/{type}/:appno:", "name": "mobile/attendance-detail", "target": "mobile/attendanceDetail" },
         
         { "pattern": "carMaintainCost", "name": "carMaintainCost", "target": "carMaintainCost" },
         { "pattern": "carMaintainCost/{oDataKey}/:sStatus:", "name": "carMaintainCost-detail", "target": "carMaintainCostDetail" },
@@ -281,6 +283,8 @@
 
         "attendance": { "viewId": "attendanceList", "viewPath": "sap.ui.yesco.mvc.view.attendance", "viewName": "List" },
         "attendanceDetail": { "viewId": "attendanceDetail", "viewPath": "sap.ui.yesco.mvc.view.attendance", "viewName": "Detail" },
+        "mobile/attendance": { "viewId": "mobile_attendanceList", "viewPath": "sap.ui.yesco.mvc.view.attendance.mobile", "viewName": "List" },
+        "mobile/attendanceDetail": { "viewId": "mobile_attendanceDetail", "viewPath": "sap.ui.yesco.mvc.view.attendance.mobile", "viewName": "Detail" },
 
         "carMaintainCost": { "viewId": "carMaintainCost", "viewPath": "sap.ui.yesco.mvc.view.carMaintainCost", "viewName": "CarMaintainCost" },
         "carMaintainCostDetail": { "viewId": "carMaintainCostDetail", "viewPath": "sap.ui.yesco.mvc.view.carMaintainCost", "viewName": "CarMaintainCostDetail" },

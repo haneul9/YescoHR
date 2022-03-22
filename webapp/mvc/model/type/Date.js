@@ -19,7 +19,14 @@ sap.ui.define(
      * Edm.DateTime
      */
     return SimpleType.extend('sap.ui.yesco.mvc.model.type.Date', {
+      metadata: {
+        properties: {
+          short: { type: 'boolean' },
+        },
+      },
+
       constructor: function (...args) {
+        console.log(...args);
         SimpleType.apply(this, args);
 
         const formatPattern = this.getSessionProperty('/Dtfmt');
