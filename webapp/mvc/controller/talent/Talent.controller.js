@@ -208,36 +208,6 @@ sap.ui.define(
         this.oTalentCompareDialog.open();
       },
 
-      onCompareDialogM() {
-        if (!this.byId('talentCompareDialog')) {
-          Fragment.load({
-            id: this.getView().getId(),
-            name: 'sap.ui.yesco.mvc.view.talent.fragment.CompareDialogM',
-            controller: this,
-          }).then((oDialog) => {
-            this.getView().addDependent(oDialog);
-            oDialog.open();
-          });
-        } else {
-          this.byId('talentCompareDialog').open();
-        }
-      },
-
-      onSearchDialog() {
-        if (!this.byId('talentSearchDialog')) {
-          Fragment.load({
-            id: this.getView().getId(),
-            name: 'sap.ui.yesco.mvc.view.talent.fragment.SearchDialog',
-            controller: this,
-          }).then((oDialog) => {
-            this.getView().addDependent(oDialog);
-            oDialog.open();
-          });
-        } else {
-          this.byId('talentCompareDialog').open();
-        }
-      },
-
       onClick() {
         this.byId('talentCompareDialog').close();
         this.byId('talentSearchDialog').close();
@@ -643,6 +613,8 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const sPrcty = oViewModel.getProperty('/search/Prcty');
 
+        this.clearSearchResults();
+
         if (sPrcty === 'A') {
           this.resetSimpleSearch();
         } else {
@@ -651,11 +623,19 @@ sap.ui.define(
       },
 
       clearSearchResults() {
+        this.byId('talentList').removeSelections();
         this.getViewModel().setProperty('/result', {
           busy: false,
           totalCount: 0,
           list: [],
         });
+      },
+
+      onPressPic(oEvent) {
+        const sHost = window.location.href.split('#')[0];
+        const mRowData = oEvent.getSource().getParent().getParent().getParent().getBindingContext().getObject();
+
+        window.open(`${sHost}#/employeeView/${mRowData.Pernr}`, '_blank', 'width=1400,height=800');
       },
 
       resetSimpleSearch() {

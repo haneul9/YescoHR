@@ -149,33 +149,7 @@ sap.ui.define(
           oViewModel.setProperty('/sideNavigation/search/searchText', sOrgtx);
         }
 
-        this.initialList({ oViewModel, sPernr, sOrgtx, sOrgeh });
         if (!_.isEqual(sPernr, 'NA')) this.loadProfile({ oViewModel, sPernr });
-      },
-
-      async initialList({ oViewModel, sPernr, sOrgtx, sOrgeh }) {
-        const oSideBody = this.byId('sideBody');
-        const oSideList = this.byId('sideEmployeeList');
-        const sSearchText = _.isEmpty(sOrgtx) ? sPernr : sOrgtx;
-        const sSearchOrgeh = _.isEmpty(sOrgeh) ? _.noop() : sOrgeh;
-        const aSearchResults = await this.readEmpSearchResult({ searchText: sSearchText, Orgeh: sSearchOrgeh });
-        const iSideViewHeight = Math.floor($(document).height() - oSideBody.getParent().$().offset().top - 20);
-        const iScrollViewHeight = Math.floor($(document).height() - oSideList.getParent().$().offset().top - 36);
-
-        oSideList.getBinding('items').filter([new Filter('Stat2', FilterOperator.EQ, '3')]);
-
-        oViewModel.setProperty(
-          '/sideNavigation/search/results',
-          _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? 'asset/image/avatar-unknown.svg?ssl=1' : o.Photo }))
-        );
-        oViewModel.setProperty('/sideNavigation/height', `${iSideViewHeight}px`);
-        oViewModel.setProperty('/sideNavigation/scrollHeight', `${iScrollViewHeight}px`);
-        oViewModel.setProperty('/sideNavigation/busy', false);
-
-        if (_.isEqual(sPernr, 'NA')) {
-          const sFirstPernr = _.get(aSearchResults, [0, 'Pernr'], _.noop());
-          this.loadProfile({ oViewModel, sPernr: sFirstPernr });
-        }
       },
 
       async loadProfile({ oViewModel, sPernr }) {

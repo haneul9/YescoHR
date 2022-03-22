@@ -9,8 +9,6 @@
         <custom:Breadcrumbs />
         <HBox>
           <Button type="Emphasized" class="sapUiTinyMarginEnd" text="{i18n>LABEL_35002}" press=".onPressCompare" />
-          <Button type="Emphasized" class="sapUiTinyMarginEnd" text="{i18n>LABEL_35003}" press=".onCompareDialogM" />
-          <Button type="Emphasized" class="sapUiTinyMarginEnd" text="{i18n>LABEL_35004}" press=".onSearchDialog" />
           <Button text="{i18n>LABEL_00131}" icon="sap-icon://print" press=".onPagePrint" class="sapUiTinyMarginEnd" />
           <Button text="{i18n>LABEL_00132}" icon="sap-icon://sys-help" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
         </HBox>

@@ -26,7 +26,7 @@
             <f:GridListItem highlight="{ColtyState}">
                 <VBox height="100%">
                     <HBox height="100%" class="sapUiTinyMargin" alignItems="Center">
-                        <Image src="{PicUrl}" width="3rem" class="sapUiSmallMarginEnd"/>
+                        <Image src="{PicUrl}" width="3rem" class="sapUiSmallMarginEnd" press=".onPressPic" />
                         <VBox>
                             <Title text="{Linetx1}" wrapping="true"/>
                             <Text text="{Linetx2}" />
