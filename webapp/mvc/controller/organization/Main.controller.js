@@ -49,7 +49,7 @@ sap.ui.define(
 
             const oViewModel = new JSONModel({
               extendNode: '',
-              layout: 'left',
+              layout: 'top',
               orgLevel: aOrgLevel ?? [],
               orgList: _.map(aReturnData, (o) => ({
                 ...o,
