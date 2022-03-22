@@ -238,8 +238,6 @@ sap.ui.define(
           const aPernr = _.map(aSelectedContexts, (o) => _.get(o.getObject(), 'Pernr'));
           const aCompareResults = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'TalentSearchComparison', { Pernr: aPernr });
 
-          this.debug(aCompareResults);
-
           oViewModel.setProperty('/compare/scroll', aCompareResults.length > 3);
           oViewModel.setProperty(
             '/compare/row1',
@@ -410,6 +408,21 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/busy', false);
         }
+      },
+
+      onChangeQuali(oEvent) {
+        const oViewModel = this.getViewModel();
+        const sSeq = oEvent.getSource().data('seq');
+
+        oViewModel.setProperty(`/search/Langlv${sSeq}`, '');
+      },
+
+      onChangeStell(oEvent) {
+        const oViewModel = this.getViewModel();
+        const sSeq = oEvent.getSource().data('seq');
+
+        oViewModel.setProperty(`/search/SyearFr${sSeq}`, '');
+        oViewModel.setProperty(`/search/SyearTo${sSeq}`, '');
       },
 
       onPressDeleteSearchCondition() {

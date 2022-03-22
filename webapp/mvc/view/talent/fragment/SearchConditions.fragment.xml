@@ -89,7 +89,10 @@
                 <Label text="{i18n>LABEL_35009}1" />
             </HBox>
             <HBox justifyContent="SpaceBetween" width="100%">
-                <ComboBox width="172px" selectedKey="{/search/Quali1}" items="{ path: '/entry/I', templateShareable: false }">
+                <ComboBox width="172px" selectedKey="{/search/Quali1}" items="{ path: '/entry/I', templateShareable: false }" change=".onChangeQuali">
+                    <customData>
+                        <core:CustomData key="seq" value="1" />
+                    </customData>
                     <core:Item key="{Zcode}" text="{Ztext}" />
                 </ComboBox>
                 <ComboBox class="pl-8-px" selectedKey="{/search/Langlv1}" items="{ path: '/entry/J', templateShareable: false }" enabled="{= !!${/search/Quali1} }">
@@ -100,7 +103,10 @@
                 <Label text="{i18n>LABEL_35009}2" />
             </HBox>
             <HBox justifyContent="SpaceBetween" alignItems="Center">
-                <ComboBox width="172px" selectedKey="{/search/Quali2}" items="{ path: '/entry/I', templateShareable: false }" enabled="{= !!${/search/Quali1} }">
+                <ComboBox width="172px" selectedKey="{/search/Quali2}" items="{ path: '/entry/I', templateShareable: false }" change=".onChangeQuali">
+                    <customData>
+                        <core:CustomData key="seq" value="2" />
+                    </customData>
                     <core:Item key="{Zcode}" text="{Ztext}" />
                 </ComboBox>
                 <ComboBox class="pl-8-px" selectedKey="{/search/Langlv2}" items="{ path: '/entry/J', templateShareable: false }" enabled="{= !!${/search/Quali2} }">
@@ -111,7 +117,10 @@
                 <Label text="{i18n>LABEL_35009}3" />
             </HBox>
             <HBox justifyContent="SpaceBetween" alignItems="Center">
-                <ComboBox width="172px" selectedKey="{/search/Quali3}" items="{ path: '/entry/I', templateShareable: false }" enabled="{= !!${/search/Quali2} }">
+                <ComboBox width="172px" selectedKey="{/search/Quali3}" items="{ path: '/entry/I', templateShareable: false }" change=".onChangeQuali">
+                    <customData>
+                        <core:CustomData key="seq" value="3" />
+                    </customData>
                     <core:Item key="{Zcode}" text="{Ztext}" />
                 </ComboBox>
                 <ComboBox class="pl-8-px" selectedKey="{/search/Langlv3}" items="{ path: '/entry/J', templateShareable: false }" enabled="{= !!${/search/Quali3} }">
@@ -127,7 +136,10 @@
             <HBox justifyContent="End" alignItems="Center">
                 <Label text="{i18n>LABEL_00222}1" />
             </HBox>
-            <ComboBox width="100%" selectedKey="{/search/Stell1}" items="{ path: '/entry/L', templateShareable: false }">
+            <ComboBox width="100%" selectedKey="{/search/Stell1}" items="{ path: '/entry/L', templateShareable: false }" change=".onChangeStell">
+                <customData>
+                    <core:CustomData key="seq" value="1" />
+                </customData>
                 <core:Item key="{Zcode}" text="{Ztext}" />
             </ComboBox>
             <HBox justifyContent="End" alignItems="Center">
@@ -148,7 +160,10 @@
             <HBox justifyContent="End" alignItems="Center">
                 <Label text="{i18n>LABEL_00222}2" />
             </HBox>
-            <ComboBox width="100%" selectedKey="{/search/Stell2}" items="{ path: '/entry/L', templateShareable: false }" enabled="{= !!${/search/Stell1} }">
+            <ComboBox width="100%" selectedKey="{/search/Stell2}" items="{ path: '/entry/L', templateShareable: false }" change=".onChangeStell">
+                <customData>
+                    <core:CustomData key="seq" value="2" />
+                </customData>
                 <core:Item key="{Zcode}" text="{Ztext}" />
             </ComboBox>
             <HBox justifyContent="End" alignItems="Center">
@@ -169,7 +184,10 @@
             <HBox justifyContent="End" alignItems="Center">
                 <Label text="{i18n>LABEL_00222}3" />
             </HBox>
-            <ComboBox width="100%" selectedKey="{/search/Stell3}" items="{ path: '/entry/L', templateShareable: false }" enabled="{= !!${/search/Stell2} }">
+            <ComboBox width="100%" selectedKey="{/search/Stell3}" items="{ path: '/entry/L', templateShareable: false }" change=".onChangeStell">
+                <customData>
+                    <core:CustomData key="seq" value="3" />
+                </customData>
                 <core:Item key="{Zcode}" text="{Ztext}" />
             </ComboBox>
             <HBox justifyContent="End" alignItems="Center">
@@ -183,14 +201,17 @@
                     <core:Item key="{Zcode}" text="{Ztext}" />
                 </ComboBox>
                 <Text text="~" />
-                <ComboBox selectedKey="{/search/SyearTo3}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/Stell3} }">
+                <ComboBox selectedKey="{/search/SyearTo3}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/SyearFr3} }">
                     <core:Item key="{Zcode}" text="{Ztext}" />
                 </ComboBox>
             </HBox>
             <HBox justifyContent="End" alignItems="Center">
                 <Label text="{i18n>LABEL_00222}4" />
             </HBox>
-            <ComboBox width="100%" selectedKey="{/search/Stell4}" items="{ path: '/entry/L', templateShareable: false }" enabled="{= !!${/search/SyearFr3} }">
+            <ComboBox width="100%" selectedKey="{/search/Stell4}" items="{ path: '/entry/L', templateShareable: false }" change=".onChangeStell">
+                <customData>
+                    <core:CustomData key="seq" value="4" />
+                </customData>
                 <core:Item key="{Zcode}" text="{Ztext}" />
             </ComboBox>
             <HBox justifyContent="End" alignItems="Center">
