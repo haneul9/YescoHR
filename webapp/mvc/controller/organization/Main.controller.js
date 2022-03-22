@@ -57,7 +57,7 @@ sap.ui.define(
                 Ipdat: _.isDate(o.Ipdat) ? moment(o.Ipdat).format('YYYY.MM.DD') : '',
               })),
               entry: {
-                Werks: _.map([...aWerks, ...aWerks], (o) => _.omit(o, '__metadata')),
+                Werks: _.map(aWerks, (o) => _.omit(o, '__metadata')),
               },
               search: { Werks: mAppointee.Werks },
             });
