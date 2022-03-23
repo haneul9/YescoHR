@@ -1,10 +1,10 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:core="sap.ui.core">
-    <Dialog title="인재 상세검색" horizontalScrolling="false" class="full-popover menu-popover" busy="{appModel>/isAppBusy}" busyIndicatorDelay="0">
+    <Dialog title="인재 상세검색" horizontalScrolling="false" busy="{appModel>/isAppBusy}" busyIndicatorDelay="0">
         <buttons>
-            <Button text="닫기" />
-            <Button type="Emphasized" text="확인" />
+            <Button text="{i18n>LABEL_00115}" class="flex-grow1" press=".onPressDetailClose" />
+            <Button type="Emphasized" text="{i18n>LABEL_00101}" class="flex-grow2" press=".onPressDetailSearch" />
         </buttons>
         <content>
             <VBox class="section">

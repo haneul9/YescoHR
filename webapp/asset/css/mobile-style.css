@@ -399,6 +399,8 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker .sapMDialo
 .profile-detail .sapMInputBase.sapMInputBaseReadonly:not(.sapMTextArea) input, .profile-detail .sapMLabel {padding-top:0!important; padding-bottom:0!important; font-size:16px; font-weight:500!important}
 .profile-detail .sapMInput.sapMInputBaseReadonly>div>input {padding-left:0!important}
 
+.sapUiMedia-Std-Phone .talent-list { padding-left: 20px; padding-right: 20px; }
+
 
 /* 첨부파일  */
 [id*=ATTACHBOX].vCardBox {padding:0; border:none; box-shadow:none; margin-top:20px; padding-top:10px}

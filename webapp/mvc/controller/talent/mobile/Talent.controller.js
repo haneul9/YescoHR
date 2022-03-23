@@ -31,6 +31,7 @@ sap.ui.define(
       initializeModel() {
         return {
           busy: false,
+          isLoaded: false,
           entry: {
             Werks: [],
             A: [],
@@ -111,10 +112,12 @@ sap.ui.define(
 
       async onObjectMatched() {
         const oViewModel = this.getViewModel();
+        const bIsLoaded = oViewModel.getProperty('/isLoaded');
+
+        if (bIsLoaded) return;
 
         try {
           oViewModel.setSizeLimit(2000);
-          oViewModel.setData(this.initializeModel());
           oViewModel.setProperty('/busy', true);
 
           this.getEntrySearchCondition();
@@ -185,7 +188,7 @@ sap.ui.define(
         }
       },
 
-      async onPressDetailConditionsDialog(oEvent) {
+      async onPressDetailConditionsDialog() {
         if (!this.oDetailConditionsDialog) {
           this.oDetailConditionsDialog = await Fragment.load({
             id: this.getView().getId(),
@@ -197,6 +200,33 @@ sap.ui.define(
         }
 
         this.oDetailConditionsDialog.open();
+      },
+
+      onPressDetailClose() {
+        this.oDetailConditionsDialog.close();
+      },
+
+      async onPressDetailSearch() {
+        const oViewModel = this.getViewModel();
+
+        try {
+          oViewModel.setProperty('/search/Prcty', 'B');
+          this.resetSimpleSearch();
+
+          this.validSearchConditions();
+
+          oViewModel.setProperty('/result/busy', true);
+
+          await this.readTalentSearch();
+        } catch (oError) {
+          this.debug('Controller > Talent Mobile > onPressDetailSearch Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          setTimeout(() => oViewModel.setProperty('/result/busy', false), 200);
+          setTimeout(() => this.byId('talentList').removeSelections(), 300);
+          this.oDetailConditionsDialog.close();
+        }
       },
 
       async onCompareDialog() {
@@ -422,8 +452,8 @@ sap.ui.define(
 
           oViewModel.setProperty('/busy', true);
 
-          this.showComplexSearch();
           await this.readSearchCondition(sSelectedCondition);
+          this.showComplexSearch();
         } catch (oError) {
           this.debug('Controller > Talent Mobile > onChangeSearchCondition Error', oError);
 
@@ -654,6 +684,9 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         try {
+          oViewModel.setProperty('/search/Prcty', 'A');
+          this.resetComplexSearch();
+
           this.validSearchConditions();
 
           oViewModel.setProperty('/result/busy', true);
@@ -669,32 +702,12 @@ sap.ui.define(
         }
       },
 
-      onToggleExpand(oEvent) {
-        const bState = oEvent.getParameter('state');
-
-        if (bState) {
-          this.showComplexSearch();
-        } else {
-          this.showSimpleSearch();
-        }
-      },
-
-      showSimpleSearch() {
-        const oViewModel = this.getViewModel();
-
-        oViewModel.setProperty('/search/Prcty', 'A');
-        this.byId('searchFilterBody').removeStyleClass('expanded');
-        this.resetComplexSearch();
-
-        this.clearSearchResults();
-      },
-
       showComplexSearch() {
         this.getViewModel().setProperty('/search/Prcty', 'B');
-        this.byId('searchFilterBody').addStyleClass('expanded');
         this.resetSimpleSearch();
-
         this.clearSearchResults();
+
+        this.onPressDetailConditionsDialog();
       },
 
       onPressConditionReset() {
@@ -722,21 +735,20 @@ sap.ui.define(
       onPressPic(oEvent) {
         const mRowData = oEvent.getSource().getParent().getParent().getParent().getBindingContext().getObject();
 
-        this.openEmployeePop(mRowData.Pernr);
+        this.navEmployee(mRowData.Pernr);
       },
 
       onPressDialogPic(oEvent) {
         const mRowData = oEvent.getSource().getParent().getParent().getBindingContext().getObject();
 
-        this.openEmployeePop(mRowData.Pernr);
+        this.navEmployee(mRowData.Pernr);
       },
 
-      openEmployeePop(sPernr) {
+      navEmployee(sPernr) {
         if (!sPernr) return;
 
-        const sHost = window.location.href.split('#')[0];
-
-        window.open(`${sHost}#/employeeView/${sPernr}`, '_blank', 'width=1400,height=800');
+        this.getViewModel().setProperty('/isLoaded', true);
+        this.getRouter().navTo('mobile/employee', { pernr: sPernr });
       },
 
       resetSimpleSearch() {

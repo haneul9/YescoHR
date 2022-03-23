@@ -1,12 +1,22 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.talent.mobile.Talent"
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:custom="sap.ui.yesco.control"
     xmlns:mvc="sap.ui.core.mvc">
     <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
         <VBox class="contents">
             <VBox class="search-area">
-                <HBox justifyContent="SpaceBetween" alignItems="Center">
+                <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBottom">
+                    <ComboBox width="100%" selectedKey="{/search/Werks}" items="{/entry/Werks}">
+                        <layoutData>
+                            <FlexItemData growFactor="1" />
+                        </layoutData>
+                        <core:Item key="{Werks}" text="{Pbtxt}" />
+                    </ComboBox>
+                </HBox>
+                <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBottom">
                     <ComboBox width="100%" selectedKey="{/saved/selectedCondition}" items="{/saved/entry}" enabled="{= !${/result/busy} }" change=".onChangeSearchCondition">
                         <layoutData>
                             <FlexItemData minWidth="67%" maxWidth="67%" />
@@ -15,9 +25,9 @@
                     </ComboBox>
                     <Button class="sapUiTinyMarginBegin" icon="asset/image/icon_sort.png" text="{i18n>LABEL_35004}" press=".onPressDetailConditionsDialog" />
                 </HBox>
-                <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginTop">
+                <HBox justifyContent="SpaceBetween" alignItems="Center">
                     <!-- <SearchField maxLength="{/fieldLimit/Freetx}" value="{/search/Freetx}" placeholder="{i18n>MSG_35001}" enabled="{= ${/search/Prcty} === 'A' }" search=".onPressSearch" /> -->
-                    <SearchField maxLength="{/fieldLimit/Freetx}" value="{/search/Freetx}" enabled="{= ${/search/Prcty} === 'A' }" search=".onPressSearch">
+                    <SearchField maxLength="{/fieldLimit/Freetx}" value="{/search/Freetx}" placeholder="{i18n>MSG_35012}" search=".onPressSearch">
                         <layoutData>
                             <FlexItemData minWidth="67%" maxWidth="67%" />
                         </layoutData>
@@ -33,7 +43,25 @@
                 <Image src="asset/image/icon_tooltip.svg" press=".onPressLegend" />
             </HBox>
             <custom:MobileScrollContainer excludeBottomSelector=".sapMPageFooter" horizontal="false" vertical="true">
-
+                <f:GridList id="talentList" mode="MultiSelect" items="{ path: '/result/list' }" class="talent-list sapUiResponsiveContentPadding" visible="{= ${/result/totalCount} !== 0 }">
+                    <f:customLayout>
+                        <grid:GridBasicLayout gridTemplateColumns="1fr" gridGap="20px" />
+                    </f:customLayout>
+                    <f:GridListItem highlight="{ColtyState}">
+                        <VBox height="100%">
+                            <HBox height="100%" class="sapUiTinyMargin" alignItems="Center">
+                                <Image src="{PicUrl}" width="3rem" class="sapUiSmallMarginEnd" press=".onPressPic" />
+                                <VBox>
+                                    <Title text="{Linetx1}" wrapping="true"/>
+                                    <Text text="{Linetx2}" />
+                                    <Text text="{Linetx3}" />
+                                    <Text text="{Linetx4}" />
+                                    <Text text="{Linetx5}" />
+                                </VBox>
+                            </HBox>
+                        </VBox>
+                    </f:GridListItem>
+                </f:GridList>
             </custom:MobileScrollContainer>
         </VBox>
         <footer class="wrap">

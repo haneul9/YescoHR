@@ -1589,7 +1589,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .search-filter {display:none!important; border-top:1px solid #222; padding-top:20px; margin-top:20px!important;grid-template-columns: repeat(4, 1fr 3fr);grid-gap: 8px;}
 .search-filter .sapMTextMaxWidth {padding:0 4px}
 
-.talent-list {padding:0!important}
+.sap-desktop .talent-list {padding:0!important}
 .talent-list.sapFGridList .sapUiTinyMargin {margin:5px}
 .talent-list.sapFGridList .sapMLIB:not(.sapMGHLI) {border-radius:8px 0 0 8px; border:none; box-shadow:0 2px 4px rgb(0 0 0 / 16%)}
 .talent-list.sapFGridList .sapMLIB:not(.sapMGHLI) .sapMLIBHighlight {border-top-right-radius:0; border-bottom-right-radius:0; border-top-left-radius:0; border-bottom-left-radius:0}
@@ -2085,6 +2085,9 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .sticky-side-tree { position: sticky; top: 80px; }
 
 .naked-combo { border: none; }
+
+.flex-grow1 { flex-grow: 1 !important; }
+.flex-grow2 { flex-grow: 2 !important; }
 
 @media screen and (max-width: 480px) {
     .contents { margin: 0 auto;max-width: 100%;min-width: 100%;padding-bottom: 20px;}
