@@ -83,6 +83,9 @@ sap.ui.define(
           oViewModel.setProperty('/listInfo', {
             ...TableUtils.count({ oTable, aRowData: aTableList }),
             ObjTxt1: this.getBundleText('LABEL_00197'), // 미신청
+            isShowApprove: false, // 승인 text hide
+            ObjTxt4: this.getBundleText('LABEL_10049'), // 확정취소
+            ObjTxt5: this.getBundleText('LABEL_00116'), // 확정
             // 신청기간 {0} ~ {1}
             infoMessage: `${this.getBundleText('LABEL_30007', moment(mMyCom.Begda).format('yyyy.MM.DD'), moment(mMyCom.Endda).format('yyyy.MM.DD'))}`,
           });
@@ -104,7 +107,7 @@ sap.ui.define(
           MessageBox.alert(this.getBundleText('MSG_30005'));
           return;
         } else if (
-          _.every(aSelectRows, (e) => {
+          _.some(aSelectRows, (e) => {
             return e.ZappStatAl === '60';
           })
         ) {
@@ -129,7 +132,7 @@ sap.ui.define(
               const oModel = this.getModel(ServiceNames.WORKTIME);
               const oViewModel = this.getViewModel();
 
-              await Promise.all([
+              await Promise.all(
                 _.forEach(aSelectRows, async (e) => {
                   if (!e.Appno || _.parseInt(e.Appno) === 0) {
                     const sAppno = await Appno.get.call(this);
@@ -138,9 +141,9 @@ sap.ui.define(
                     e.Appda = new Date();
                   }
 
-                  return Client.create(oModel, 'WorkScheduleConfirm', { ...e, Prcty: 'C' });
-                }),
-              ]);
+                  await Client.create(oModel, 'WorkScheduleConfirm', { ...e, Prcty: 'C' });
+                })
+              );
 
               // {확정}되었습니다.
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00116'), {
@@ -152,6 +155,9 @@ sap.ui.define(
                   oViewModel.setProperty('/listInfo', {
                     ...TableUtils.count({ oTable, aRowData: aTableList }),
                     ObjTxt1: this.getBundleText('LABEL_00197'), // 미신청
+                    isShowApprove: false, // 승인 text hide
+                    ObjTxt4: this.getBundleText('LABEL_10049'), // 확정취소
+                    ObjTxt5: this.getBundleText('LABEL_00116'), // 확정
                     // 신청기간 {0} ~ {1}
                     infoMessage: `${this.getBundleText('LABEL_30007', moment(mMyCom.Begda).format('yyyy.MM.DD'), moment(mMyCom.Endda).format('yyyy.MM.DD'))}`,
                   });
@@ -178,7 +184,7 @@ sap.ui.define(
           MessageBox.alert(this.getBundleText('MSG_30007'));
           return;
         } else if (
-          _.every(aSelectRows, (e) => {
+          _.some(aSelectRows, (e) => {
             return e.ZappStatAl !== '60';
           })
         ) {
@@ -202,11 +208,11 @@ sap.ui.define(
 
               const oModel = this.getModel(ServiceNames.WORKTIME);
 
-              await Promise.all([
+              await Promise.all(
                 _.forEach(aSelectRows, (e) => {
-                  return Client.create(oModel, 'WorkScheduleConfirm', { ...e, Prcty: 'X' });
-                }),
-              ]);
+                  Client.create(oModel, 'WorkScheduleConfirm', { ...e, Prcty: 'X' });
+                })
+              );
 
               // {확정취소}되었습니다.
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_10049'), {
@@ -218,6 +224,9 @@ sap.ui.define(
                   oViewModel.setProperty('/listInfo', {
                     ...TableUtils.count({ oTable, aRowData: aTableList }),
                     ObjTxt1: this.getBundleText('LABEL_00197'), // 미신청
+                    isShowApprove: false, // 승인 text hide
+                    ObjTxt4: this.getBundleText('LABEL_10049'), // 확정취소
+                    ObjTxt5: this.getBundleText('LABEL_00116'), // 확정
                     // 신청기간 {0} ~ {1}
                     infoMessage: `${this.getBundleText('LABEL_30007', moment(mMyCom.Begda).format('yyyy.MM.DD'), moment(mMyCom.Endda).format('yyyy.MM.DD'))}`,
                   });
@@ -252,6 +261,9 @@ sap.ui.define(
           oViewModel.setProperty('/listInfo', {
             ...TableUtils.count({ oTable, aRowData: aTableList }),
             ObjTxt1: this.getBundleText('LABEL_00197'), // 미신청
+            isShowApprove: false, // 승인 text hide
+            ObjTxt4: this.getBundleText('LABEL_10049'), // 확정취소
+            ObjTxt5: this.getBundleText('LABEL_00116'), // 확정
             // 신청기간 {0} ~ {1}
             infoMessage: `${this.getBundleText('LABEL_30007', moment(mMyCom.Begda).format('yyyy.MM.DD'), moment(mMyCom.Endda).format('yyyy.MM.DD'))}`,
           });

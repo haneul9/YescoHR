@@ -327,6 +327,29 @@ sap.ui.define(
         }
       },
 
+      // 시차출퇴근 확정용
+      CommuteStatusTxt(sValue = 0) {
+        const vValue = !parseInt(sValue, 10) ? sValue : parseInt(sValue, 10);
+
+        switch (vValue) {
+          case STATE_IN_PROGRESS0:
+            // 미신청
+            return '미신청';
+          case STATE_IN_PROGRESS1:
+          case STATE_IN_PROGRESS2:
+            // 신청
+            return '신청';
+          case STATE_REJECT2:
+            // 확정취소
+            return '확정취소';
+          case STATE_COMPLETE:
+            // 확정
+            return '확정';
+          default:
+            return '';
+        }
+      },
+
       onFileListDialog(oEvent) {
         // load asynchronous XML fragment
         const vPath = oEvent.getSource().getBindingContext().getPath();
