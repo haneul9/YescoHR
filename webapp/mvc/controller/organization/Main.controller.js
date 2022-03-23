@@ -42,7 +42,7 @@ sap.ui.define(
           if (_.isEmpty(this.getViewModel())) {
             const mAppointee = this.getAppointeeData();
             const [aWerks, aReturnData, aOrgLevel] = await Promise.all([
-              Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'PersAreaList', { Pernr: mAppointee.Pernr }),
+              Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'WerksList', { Pernr: mAppointee.Pernr }),
               this.readEmployeeOrgTree(mAppointee.Werks), //
               this.readOrglevel(),
             ]);
