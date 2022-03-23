@@ -263,7 +263,7 @@ sap.ui.define(
           return true;
         }
 
-        if (_.parseInt(mDialogData.Endkm) <= _.parseInt(mDialogData.Begkm)) {
+        if (parseFloat(mDialogData.Endkm) <= parseFloat(mDialogData.Begkm)) {
           // 주행 후 거리는 주행 전 거리보다 큰 값으로 입력하세요.
           MessageBox.alert(this.getBundleText('MSG_34002'));
           return true;
