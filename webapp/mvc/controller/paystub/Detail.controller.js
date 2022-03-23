@@ -32,7 +32,7 @@ sap.ui.define(
           busy: false,
           Seqnr: null,
           summary: { rowCount: 1, list: [] },
-          pay: { rowCount: 2, list: [] },
+          pay: { rowCount: 2, visibleHeader: true, list: [] },
           deduction: { rowCount: 2, list: [] },
           tax: { rowCount: 2, list: [] },
           work: { rowCount: 1, list: [] },
@@ -88,6 +88,7 @@ sap.ui.define(
           const aBaseList = _.groupBy(mDetail.Payslip1Nav.results, 'Uppno')[''] ?? [];
 
           oViewModel.setProperty('/summary/list', [{ ...mDetail }]);
+          oViewModel.setProperty('/pay/visibleHeader', !_.every(mDetail.Payslip1Nav.results, (o) => _.isEmpty(o.Anzhl) && _.chain(o.Betpe).toNumber().isEqual(0).value()));
           oViewModel.setProperty('/pay/list', aPayList);
           oViewModel.setProperty('/pay/rowCount', aPayList.length || 2);
           oViewModel.setProperty('/deduction/list', aDeductlist);

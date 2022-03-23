@@ -118,8 +118,8 @@ sap.ui.define(
         ];
       },
 
-      getBoxObject({ day = 'NONE', label = '', classNames = '', borderNames = 'Default', stripes = 'None' }) {
-        return { day, label, classNames, borderNames, stripes };
+      getBoxObject({ day = 'NONE', label = '', classNames = '', borderNames = 'Default', stripes = 'None', holiday = 'None' }) {
+        return { day, label, classNames, borderNames, stripes, holiday };
       },
 
       getWeekHeader() {
@@ -141,6 +141,7 @@ sap.ui.define(
         let sClassNames = '';
         let sBorderNames = 'Default';
         let sStripes = 'None';
+        let sHoliday = 'None';
 
         if (iDayNum % 6 === 0) {
           sClassNames = 'Weekend';
@@ -167,9 +168,13 @@ sap.ui.define(
         if (oDateObject.Cssty === 'P') {
           sStripes = 'Stripes';
         }
+
+        if (oDateObject.Holyn === 'X') {
+          sHoliday = 'Holiday';
+        }
         // sStripes = oDateObject.inProgress;
 
-        return this.getBoxObject({ day: sFormatDate, label: String(iDay), classNames: sClassNames, borderNames: sBorderNames, stripes: sStripes });
+        return this.getBoxObject({ day: sFormatDate, label: String(iDay), holiday: sHoliday, classNames: sClassNames, borderNames: sBorderNames, stripes: sStripes });
       },
     });
   }

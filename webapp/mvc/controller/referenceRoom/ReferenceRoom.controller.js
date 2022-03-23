@@ -8,6 +8,7 @@ sap.ui.define(
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
+    'sap/ui/yesco/common/odata/ServiceManager',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
@@ -20,12 +21,15 @@ sap.ui.define(
     ComboEntry,
     AppUtils,
     Client,
+    ServiceManager,
     ServiceNames,
     BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.referenceRoom.ReferenceRoom', {
+      PDF_FILE_TYPE: 'INF1',
+
       AttachFileAction: AttachFileAction,
       initializeModel() {
         return {
@@ -34,6 +38,8 @@ sap.ui.define(
           UserFixed: false,
           Hass: this.isHass(),
           FormData: {},
+          PDFFile: {},
+          DeleteDatas: [],
           MenuIdList: [],
           ManagerList: [{ ManagerRowCount: 1 }],
           TreeFullList: [],
@@ -82,27 +88,80 @@ sap.ui.define(
         return await Client.deep(oModel, 'HelpInfo', mPayLoad);
       },
 
-      // PDF출력파일 첨부
-      onFileChange(oEvent) {
-        const [sFile] = oEvent.getParameter('files');
-
-        this.getViewModel().setProperty('/FormData/PDFFile', sFile);
-      },
-
       // TreeSelect
       async onSelectTree(oEvent) {
         const oViewModel = this.getViewModel();
         const sPath = oEvent.getSource().getSelectedContexts()[0].getPath();
         const mSelectedTree = oViewModel.getProperty(sPath);
 
-        oViewModel.setProperty('/FormData', mSelectedTree);
+        if (oViewModel.getProperty('/Fixed') && oViewModel.getProperty('/UserFixed')) {
+          // 현재 내용을 저장 하시겠습니까?
+          MessageBox.confirm(this.getBundleText('MSG_29004'), {
+            // 저장, 취소
+            actions: [this.getBundleText('LABEL_00103'), this.getBundleText('LABEL_00118')],
+            onClose: async (vPress) => {
+              // 저장
+              if (vPress === this.getBundleText('LABEL_00103')) {
+                await this.saveForm();
+              }
+
+              this.dataSetting(mSelectedTree);
+            },
+          });
+        } else {
+          this.dataSetting(mSelectedTree);
+        }
+      },
+
+      async dataSetting(mSelectedTree = {}) {
+        const oViewModel = this.getViewModel();
         const oDetail = await this.treeDetail(mSelectedTree.L1id, mSelectedTree.L2id, mSelectedTree.L3id, mSelectedTree.L4id, mSelectedTree.Werks);
+        const aFormData = oDetail.HelpInfo2Nav.results || [];
         const aMenuId = await this.helpMenuId(mSelectedTree.Werks);
 
+        if (mSelectedTree.Folder !== 'X') {
+          oViewModel.setProperty('/FormData', {});
+          oViewModel.setProperty('/Fixed', false);
+          oViewModel.setProperty('/UserFixed', false);
+          return;
+        }
+
         oViewModel.setProperty('/MenuIdList', new ComboEntry({ codeKey: 'Menid', valueKey: 'Mentx', aEntries: aMenuId }));
-        oViewModel.setProperty('/FormData/Menid1', 'ALL');
-        oViewModel.setProperty('/FormData/Menid2', 'ALL');
-        oViewModel.setProperty('/FormData/Menid3', 'ALL');
+
+        const sHeadComment =
+          _.find(aFormData, (e) => {
+            return e.Infocd === '1';
+          }) || '';
+        const sMidComment =
+          _.find(aFormData, (e) => {
+            return e.Infocd === '2';
+          }) || '';
+        const sBotComment =
+          _.find(aFormData, (e) => {
+            return e.Infocd === '3';
+          }) || '';
+        const mDetailData = aFormData[0] || {};
+
+        oViewModel.setProperty('/FormData', {
+          ...mSelectedTree,
+          ...mDetailData,
+          ChInfo: oDetail.ChInfo,
+          HeadZcomment: sHeadComment.Zcomment,
+          MidZcomment: sMidComment.Zcomment,
+          BotZcomment: sBotComment.Zcomment,
+          Menid1: mDetailData.Menid1 || 'ALL',
+          Mentx1: mDetailData.Mentx1 || '',
+          Menid2: mDetailData.Menid2 || 'ALL',
+          Mentx2: mDetailData.Mentx2 || '',
+          Menid3: mDetailData.Menid3 || 'ALL',
+          Mentx3: mDetailData.Mentx3 || '',
+        });
+
+        if (!this.isHass()) {
+          const [mPdfUrl] = oDetail.HelpInfo4Nav.results;
+
+          oViewModel.setProperty('/FormData/Fileuri', mPdfUrl ? mPdfUrl.Fileuri : '');
+        }
 
         const sRoutL2 = mSelectedTree.L2tx ? ` > ${mSelectedTree.L2tx}` : '';
         const sRoutL3 = mSelectedTree.L3tx ? ` > ${mSelectedTree.L3tx}` : '';
@@ -115,6 +174,8 @@ sap.ui.define(
 
         oViewModel.setProperty('/ManagerList', aManager);
         oViewModel.setProperty('/ManagerRowCount', _.size(aManager));
+        oViewModel.setProperty('/PDFFile', {});
+        oViewModel.setProperty('/DeleteDatas', []);
 
         let bFix = false;
 
@@ -147,7 +208,7 @@ sap.ui.define(
           Werks: mAppointee.Werks,
           Menid: this.getCurrentMenuId(),
           Prcty: 'D',
-          HelpInfo2Nav: [
+          HelpInfo1Nav: [
             {
               Werks: sWerks,
               L1id: sL1id,
@@ -156,6 +217,8 @@ sap.ui.define(
               L4id: sL4id,
             },
           ],
+          HelpInfo2Nav: [],
+          HelpInfo4Nav: [],
         };
 
         return await Client.deep(oModel, 'HelpInfo', mPayLoad);
@@ -225,7 +288,7 @@ sap.ui.define(
 
       // override AttachFileCode
       getApprovalType() {
-        return 'INFO';
+        return 'INF2';
       },
 
       // 관리자조회 Dialog 닫기클릭
@@ -280,8 +343,8 @@ sap.ui.define(
       },
 
       checkError() {
-        const oDetailModel = this.getViewModel();
-        const mFormData = oDetailModel.getProperty('/FormData');
+        const oViewModel = this.getViewModel();
+        const mFormData = oViewModel.getProperty('/FormData');
 
         // 동호회
         if (mFormData.Zclub === 'ALL' || !mFormData.Zclub) {
@@ -293,17 +356,111 @@ sap.ui.define(
       },
 
       // 수정
-      onFixedBtn() {
-        this.getViewModel().setProperty('/UserFixed', true);
-        this.settingsAttachTable();
+      async onFixedBtn() {
+        const oModel = this.getModel(ServiceNames.COMMON);
+        const mAppointee = this.getAppointeeData();
+        const oViewModel = this.getViewModel();
+
+        try {
+          AppUtils.setAppBusy(true, this);
+
+          const mFormData = oViewModel.getProperty('/FormData');
+          const mPayLoad = {
+            Pernr: mAppointee.Pernr,
+            Werks: mAppointee.Werks,
+            Menid: this.getCurrentMenuId(),
+            Prcty: 'C',
+            HelpInfo2Nav: [
+              {
+                Werks: mFormData.Werks,
+                L1id: mFormData.L1id,
+                L2id: mFormData.L2id,
+                L3id: mFormData.L3id,
+                L4id: mFormData.L4id,
+              },
+            ],
+          };
+
+          await Client.deep(oModel, 'HelpInfo', mPayLoad);
+
+          oViewModel.setProperty('/UserFixed', true);
+          this.settingsAttachTable();
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          AppUtils.setAppBusy(false, this);
+        }
+      },
+
+      // 다른Tree 선택시 확인용 저장
+      async saveForm() {
+        try {
+          AppUtils.setAppBusy(true, this);
+
+          const oViewModel = this.getViewModel();
+          const sAppno = oViewModel.getProperty('/FormData/Appno');
+
+          if (!sAppno || _.parseInt(sAppno) === 0) {
+            const sAppno = await Appno.get.call(this);
+
+            oViewModel.setProperty('/FormData/Appno', sAppno);
+          }
+
+          const oModel = this.getModel(ServiceNames.COMMON);
+          const mAppointee = this.getAppointeeData();
+          const mFormData = oViewModel.getProperty('/FormData');
+          const mPdfFile = oViewModel.getProperty('/PDFFile');
+          let mFileObj = {};
+
+          if (!!mPdfFile) {
+            mFileObj = {
+              Zfilekey: mPdfFile.Zbinkey || mPdfFile.Zfilekey,
+              Zfilename: mPdfFile.Zfilename,
+              Appno: mFormData.Appno,
+            };
+          }
+
+          let oSendObject = {
+            Pernr: mAppointee.Pernr,
+            Werks: mFormData.Werks,
+            Menid: this.getCurrentMenuId(),
+            Prcty: 'N',
+            HelpInfo2Nav: [
+              {
+                ...mFormData,
+                Infocd: '1',
+                Zcomment: mFormData.HeadZcomment,
+              },
+              {
+                ...mFormData,
+                Infocd: '2',
+                Zcomment: mFormData.MidZcomment,
+              },
+              {
+                ...mFormData,
+                Infocd: '3',
+                Zcomment: mFormData.BotZcomment,
+              },
+            ],
+            HelpInfo4Nav: [mFileObj],
+          };
+
+          // FileUpload
+          await this.uploadFile(mFormData.Appno, this.PDF_FILE_TYPE);
+          await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
+          await Client.deep(oModel, 'HelpInfo', oSendObject);
+
+          // {저장}되었습니다.
+          MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          AppUtils.setAppBusy(false, this);
+        }
       },
 
       // 저장
       async onSaveBtn() {
-        // if (this.checkError()) {
-        //   return;
-        // }
-
         // {저장}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00103'), {
           // 저장, 취소
@@ -317,18 +474,30 @@ sap.ui.define(
             try {
               AppUtils.setAppBusy(true, this);
 
-              const oDetailModel = this.getViewModel();
-              const sAppno = oDetailModel.getProperty('/FormData/Appno');
+              const oViewModel = this.getViewModel();
+              const sAppno = oViewModel.getProperty('/FormData/Appno');
 
               if (!sAppno || _.parseInt(sAppno) === 0) {
                 const sAppno = await Appno.get.call(this);
 
-                oDetailModel.setProperty('/FormData/Appno', sAppno);
+                oViewModel.setProperty('/FormData/Appno', sAppno);
               }
 
               const oModel = this.getModel(ServiceNames.COMMON);
               const mAppointee = this.getAppointeeData();
-              const mFormData = oDetailModel.getProperty('/FormData');
+              const mFormData = oViewModel.getProperty('/FormData');
+              const mPdfFile = oViewModel.getProperty('/PDFFile');
+              let mFileObj = {};
+
+              if (!!mPdfFile) {
+                mFileObj = {
+                  Zfilekey: mPdfFile.Zbinkey || mPdfFile.Zfilekey,
+                  Zfilename: mPdfFile.Zfilename,
+                  Appno: mFormData.Appno,
+                  Zworktyp: this.PDF_FILE_TYPE,
+                };
+              }
+
               let oSendObject = {
                 Pernr: mAppointee.Pernr,
                 Werks: mFormData.Werks,
@@ -337,37 +506,181 @@ sap.ui.define(
                 HelpInfo2Nav: [
                   {
                     ...mFormData,
+                    Infocd: '1',
                     Zcomment: mFormData.HeadZcomment,
                   },
                   {
                     ...mFormData,
+                    Infocd: '2',
                     Zcomment: mFormData.MidZcomment,
                   },
                   {
                     ...mFormData,
+                    Infocd: '3',
                     Zcomment: mFormData.BotZcomment,
                   },
                 ],
-                HelpInfo4Nav: [
-                  {
-                    Appno: mFormData.Appno,
-                  },
-                ],
+                HelpInfo4Nav: [mFileObj],
               };
 
-              debugger;
               // FileUpload
+              await this.uploadFile(mFormData.Appno, this.PDF_FILE_TYPE);
               await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
               await Client.deep(oModel, 'HelpInfo', oSendObject);
 
               // {저장}되었습니다.
-              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
+              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'), {
+                onClose: () => {
+                  oViewModel.setProperty('/UserFixed', false);
+                },
+              });
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
               AppUtils.setAppBusy(false, this);
             }
           },
+        });
+      },
+
+      // PDF출력파일 첨부
+      onFileChange(oEvent) {
+        const oViewModel = this.getViewModel();
+        const [sFile] = oEvent.getParameter('files');
+        const mPdfFile = oViewModel.getProperty('/PDFFile');
+
+        sFile.New = true;
+        sFile.Zfilename = sFile.name;
+        sFile.Type = sFile.type;
+        sFile.Zbinkey = String(parseInt(Math.random() * 100000000000000));
+        sFile.Seqnr = 1;
+
+        oViewModel.setProperty('/DeleteDatas', [...oViewModel.getProperty('/DeleteDatas'), mPdfFile]);
+        oViewModel.setProperty('/PDFFile', sFile);
+      },
+
+      /*
+       * PDF File 삭제
+       */
+      onDeleteAttachFile() {
+        const oViewModel = this.getViewModel();
+        const mFileData = oViewModel.getProperty('/PDFFile');
+
+        if (!mFileData.Zfilename) {
+          return;
+        }
+
+        oViewModel.setProperty('/DeleteDatas', [...oViewModel.getProperty('/DeleteDatas'), mFileData]);
+        oViewModel.setProperty('/PDFFile', {});
+      },
+
+      /*
+       * 첨부파일 삭제 oData
+       */
+      callDeleteFileService(Appno, Seqnr) {
+        const oModel = this.getModel(ServiceNames.COMMON);
+        const sPath = oModel.createKey('/FileListSet', {
+          Appno: Appno,
+          Zworktyp: this.PDF_FILE_TYPE,
+          Zfileseq: Seqnr,
+        });
+
+        return new Promise((resolve, reject) => {
+          oModel.remove(sPath, {
+            success: () => {
+              resolve();
+            },
+            error: (oError) => {
+              reject(AppUtils.handleError(oError));
+            },
+          });
+        });
+      },
+
+      /*
+       *   첨부파일 Upload
+       */
+      uploadFile(Appno, Type) {
+        const sServiceUrl = ServiceManager.getServiceUrl('ZHR_COMMON_SRV', this.getOwnerComponent());
+        const oModel = new sap.ui.model.odata.ODataModel(sServiceUrl, true, undefined, undefined, undefined, undefined, undefined, false);
+        const oViewModel = this.getViewModel();
+        const mFile = oViewModel.getProperty('/PDFFile');
+        const aDeleteFiles = oViewModel.getProperty('/DeleteDatas') || [];
+
+        return new Promise(async (resolve, reject) => {
+          // 파일 삭제
+          if (!!aDeleteFiles.length) {
+            try {
+              Promise.all(
+                _.map(aDeleteFiles, (e) => {
+                  if (e.Seqnr) {
+                    this.callDeleteFileService(Appno, e.Seqnr);
+                  }
+                })
+              );
+            } catch (oError) {
+              reject(oError);
+            }
+          }
+
+          // 신규 등록된 파일만 업로드
+          if (!mFile || !mFile.New) return resolve();
+
+          oModel.refreshSecurityToken();
+          const oRequest = oModel._createRequest();
+          const oHeaders = {
+            'x-csrf-token': oRequest.headers['x-csrf-token'],
+            slug: [Appno, Type, encodeURI(mFile.Zfilename)].join('|'),
+          };
+
+          this.AttachFileAction.FileData = mFile;
+
+          jQuery.ajax({
+            type: 'POST',
+            async: false,
+            url: `${sServiceUrl}/FileUploadSet/`,
+            headers: oHeaders,
+            cache: false,
+            contentType: mFile.type,
+            processData: false,
+            data: mFile,
+            success: (data) => {
+              this.debug(`${this.getBundleText('MSG_00016')}, ${data}`);
+              this.AttachFileAction.FileData.New = false;
+              resolve(data);
+            },
+            error: (oError) => {
+              this.debug(`Error: ${oError}`);
+
+              // 파일 업로드에 실패하였습니다.
+              reject({ code: 'E', message: this.getBundleText('MSG_00041') });
+            },
+          });
+        });
+      },
+
+      /*
+       * PDF 첨부파일 호출
+       */
+      refreshAttachFileList(Appno, Type) {
+        const oModel = this.getModel(ServiceNames.COMMON);
+
+        return new Promise((resolve, reject) => {
+          oModel.read('/FileListSet', {
+            filters: [
+              // prettier 방지주석
+              new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, Appno),
+              new sap.ui.model.Filter('Zworktyp', sap.ui.model.FilterOperator.EQ, Type),
+            ],
+            success: (data) => {
+              const [mPdfFile] = data.results;
+
+              this.getViewModel().setProperty('/PDFFile', mPdfFile || {});
+            },
+            error: (oError) => {
+              AppUtils.handleError(oError);
+            },
+          });
         });
       },
 
@@ -378,8 +691,10 @@ sap.ui.define(
         const bFix2 = oViewModel.getProperty('/UserFixed');
         const sAppno = oViewModel.getProperty('/FormData/Appno') || '';
 
+        this.refreshAttachFileList(sAppno, this.PDF_FILE_TYPE);
+
         AttachFileAction.setAttachFile(this, {
-          Editable: bFix1 && bFix2,
+          Editable: bFix1 && bFix2 && this.isHass(),
           Type: this.getApprovalType(),
           Appno: sAppno,
           Message: this.getBundleText('MSG_29003'),

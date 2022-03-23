@@ -17,7 +17,7 @@
       </VBox>
       <Label text="{i18n>LABEL_29003}"/>
       <VBox>
-        <Text text="{/FormData/ZchPernr}"/>
+        <Text text="{/FormData/ChInfo}"/>
       </VBox>
       <Label text="{i18n>LABEL_08003}" />
       <VBox>
@@ -59,8 +59,13 @@
         </Input>
       </HBox>
       <Label text="{i18n>LABEL_29005}" />
-      <HBox justifyContent="SpaceBetween" width="100%" class="file-uploader-wrap">
-        <u:FileUploader fileType="pdf" change=".onFileChange" icon="sap-icon://add" buttonText="{i18n>LABEL_00107}" width="100%" visible="{/UserFixed}" />
+      <HBox width="100%">
+        <Input value="{/PDFFile/Zfilename}" enabled="{= !${/Fixed} || !${/UserFixed} }" editable="{= ${/Fixed} &amp;&amp; ${/UserFixed} }" class="sapUiTinyMarginEnd enabledTxt">
+          <layoutData>
+            <FlexItemData growFactor="1" />
+          </layoutData>
+        </Input>
+        <u:FileUploader fileType="pdf" change=".onFileChange" icon="sap-icon://add" buttonOnly="true" buttonText="{i18n>LABEL_00107}" visible="{/UserFixed}" />
         <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onDeleteAttachFile" visible="{/UserFixed}" />
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
@@ -84,13 +89,13 @@
       <VBox>
         <Text text="{i18n>MSG_29001}"/>
         <HBox>
-          <ComboBox items="{/MenuIdList}" selectedKey="{/FormData/Menid1}" enabled="{/UserFixed}" class="mr-20-px">
+          <ComboBox items="{/MenuIdList}" width="270px" selectedKey="{/FormData/Menid1}" editable="{/UserFixed}" class="mr-20-px">
             <core:Item text="{Mentx}" key="{Menid}" />
           </ComboBox>
-          <ComboBox items="{/MenuIdList}" selectedKey="{/FormData/Menid2}" enabled="{/UserFixed}" class="mr-20-px">
+          <ComboBox items="{/MenuIdList}" width="270px" selectedKey="{/FormData/Menid2}" editable="{/UserFixed}" class="mr-20-px">
             <core:Item text="{Mentx}" key="{Menid}" />
           </ComboBox>
-          <ComboBox items="{/MenuIdList}" selectedKey="{/FormData/Menid3}" enabled="{/UserFixed}">
+          <ComboBox items="{/MenuIdList}" width="270px" selectedKey="{/FormData/Menid3}" editable="{/UserFixed}">
             <core:Item text="{Mentx}" key="{Menid}" />
           </ComboBox>
         </HBox>

@@ -3,7 +3,7 @@
   xmlns:table="sap.ui.table">
   <Dialog id= "managerSettingsDialog" title="{i18n>LABEL_29008}" contentWidth="500px" contentHeight="auto">
     <content>
-      <table:Table id="managerTable" width="100%" rows="{/ManagerList}" visibleRowCount="{= ${/ManagerRowCount} > 5 ? 5 : ${/ManagerRowCount}}" selectionMode="None" rowHeight="44" columnHeaderHeight="45" cellClick=".onManagerClick">
+      <table:Table id="managerTable" width="100%" rows="{/ManagerList}" visibleRowCount="{= ${/ManagerRowCount} > 5 ? 5 : ${/ManagerRowCount} }" selectionMode="None" rowHeight="44" columnHeaderHeight="45">
         <table:columns>
           <table:Column width="60%">
             <Label text="{i18n>LABEL_00226}"/>

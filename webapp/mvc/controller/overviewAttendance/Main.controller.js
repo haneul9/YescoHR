@@ -69,7 +69,7 @@ sap.ui.define(
           const oCommonModel = this.getModel(ServiceNames.COMMON);
           const mAppointee = this.getAppointeeData();
           const [aPersaEntry, aOrgehEntry] = await Promise.all([
-            Client.getEntitySet(oCommonModel, 'PersAreaList', { Pernr: mAppointee.Pernr }), //
+            Client.getEntitySet(oCommonModel, 'WerksList', { Pernr: mAppointee.Pernr }), //
             Client.getEntitySet(oCommonModel, 'DashboardOrgList', { Werks: mAppointee.Werks, Pernr: mAppointee.Pernr }),
           ]);
 
@@ -387,7 +387,7 @@ sap.ui.define(
 
         try {
           const mAppointee = this.getAppointeeData();
-          const aOrgehEntry = Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'DashboardOrgList', {
+          const aOrgehEntry = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'DashboardOrgList', {
             Werks: oViewModel.getProperty('/searchConditions/Werks'),
             Pernr: mAppointee.Pernr,
           });

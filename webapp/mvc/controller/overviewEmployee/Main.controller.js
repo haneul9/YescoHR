@@ -66,7 +66,7 @@ sap.ui.define(
           const oCommonModel = this.getModel(ServiceNames.COMMON);
           const mAppointee = this.getAppointeeData();
           const [aPersaEntry, aOrgehEntry] = await Promise.all([
-            Client.getEntitySet(oCommonModel, 'PersAreaList', { Pernr: mAppointee.Pernr }), //
+            Client.getEntitySet(oCommonModel, 'WerksList', { Pernr: mAppointee.Pernr }), //
             Client.getEntitySet(oCommonModel, 'DashboardOrgList', { Werks: mAppointee.Werks, Pernr: mAppointee.Pernr }),
           ]);
 
@@ -274,7 +274,8 @@ sap.ui.define(
 
           this.oDetailDialog.open();
 
-          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'HeadCountDetail', { Zyear: '2022', ...mPayload });
+          const mSearchConditions = oViewModel.getProperty('/searchConditions');
+          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'HeadCountDetail', { ...mSearchConditions, ...mPayload });
 
           oViewModel.setProperty('/dialog/rowCount', Math.min(aDetailData.length, 12));
           oViewModel.setProperty('/dialog/totalCount', _.size(aDetailData));
@@ -303,7 +304,7 @@ sap.ui.define(
 
         try {
           const mAppointee = this.getAppointeeData();
-          const aOrgehEntry = Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'DashboardOrgList', {
+          const aOrgehEntry = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'DashboardOrgList', {
             Werks: oViewModel.getProperty('/searchConditions/Werks'),
             Pernr: mAppointee.Pernr,
           });

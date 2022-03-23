@@ -27,7 +27,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.organization.Main', {
+    return BaseController.extend('sap.ui.yesco.mvc.controller.organization.mobile.Main', {
       LAYOUT: { top: 'left', left: 'top' },
 
       async onBeforeShow() {
@@ -42,14 +42,14 @@ sap.ui.define(
           if (_.isEmpty(this.getViewModel())) {
             const mAppointee = this.getAppointeeData();
             const [aWerks, aReturnData, aOrgLevel] = await Promise.all([
-              Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'WerksList', { Pernr: mAppointee.Pernr }),
+              Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'PersAreaList', { Pernr: mAppointee.Pernr }),
               this.readEmployeeOrgTree(mAppointee.Werks), //
               this.readOrglevel(),
             ]);
 
             const oViewModel = new JSONModel({
               extendNode: '',
-              layout: 'top',
+              layout: 'left',
               orgLevel: aOrgLevel ?? [],
               orgList: _.map(aReturnData, (o) => ({
                 ...o,
@@ -68,6 +68,7 @@ sap.ui.define(
           const sExtendNode = this.getViewModel().getProperty('/extendNode') || _.noop();
           this.oD3Chart = new D3OrgChart({
             extendNode: sExtendNode,
+            layout: 'left',
             items: {
               path: '/orgList',
               template: new D3OrgChartItem({

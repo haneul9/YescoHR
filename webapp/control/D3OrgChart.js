@@ -20,6 +20,7 @@ sap.ui.define(
         properties: {
           title: { type: 'String', group: 'Misc', defaultValue: '화상조직도' },
           extendNode: { type: 'String', group: 'Misc', defaultValue: '' },
+          layout: { type: 'String', group: 'Misc', defaultValue: 'top' },
         },
         aggregations: {
           items: { type: 'sap.ui.yesco.control.D3OrgChartItem', multiple: true, singularName: 'item' },
@@ -28,8 +29,8 @@ sap.ui.define(
       },
 
       createChart: function () {
-        const oChartLayout = new sap.m.VBox({ alignItems: FlexAlignItems.Center, justifyContent: FlexJustifyContent.Center });
-        const oChartFlexBox = new sap.m.FlexBox({ width: `${$(document).width()}px`, alignItems: FlexAlignItems.Center });
+        const oChartLayout = new sap.m.VBox({ height: '100%', alignItems: FlexAlignItems.Center, justifyContent: FlexJustifyContent.Center });
+        const oChartFlexBox = new sap.m.FlexBox({ width: `${$(document).width()}px`, height: '100%', alignItems: FlexAlignItems.Center });
 
         this.sParentId = oChartFlexBox.getIdForLabel();
         oChartLayout.addItem(oChartFlexBox);
@@ -45,6 +46,7 @@ sap.ui.define(
         const layout = oControl.createChart();
 
         oRm.write('<div');
+        oRm.write(' style="height: 100%;"');
         oRm.writeControlData(layout);
         oRm.writeClasses();
         oRm.write('>');
@@ -66,7 +68,7 @@ sap.ui.define(
           .container('#' + this.sParentId)
           .svgHeight(window.innerHeight - 10)
           .data(aChartData)
-          .layout('left')
+          .layout(this.getLayout())
           .compact(false)
           .setActiveNodeCentered(true)
           .nodeWidth(() => 350)
@@ -106,8 +108,11 @@ sap.ui.define(
             `;
           })
           .onNodeClick(function (event, sNodeId) {
-            const oViewModel = sap.ui.getCore().byId('container-ehr---m_organization--ChartHolder').getModel();
+            const oDesktop = sap.ui.getCore().byId('container-ehr---m_organization--ChartHolder');
+            const oMobile = sap.ui.getCore().byId('container-ehr---mobile_m_organization--ChartHolder');
+            const oViewModel = oDesktop ? oDesktop.getModel() : oMobile.getModel();
             const sPernr = _.find(this.data, { nodeId: sNodeId }).Pernr;
+            const aRoutePath = oDesktop ? ['employee', 'employee'] : ['mobile/employee', 'mobile/m/employee-org'];
 
             oViewModel.setProperty('/extendNode', sNodeId);
 
@@ -115,15 +120,15 @@ sap.ui.define(
               if ([...event.srcElement.classList].includes('title')) {
                 AppUtils.getAppComponent()
                   .getRouter()
-                  .navTo('employee', { pernr: 'NA', orgeh: sNodeId, orgtx: _.replace(event.srcElement.textContent, /\//g, '--') });
+                  .navTo(aRoutePath[1], { pernr: 'NA', orgeh: sNodeId, orgtx: _.replace(event.srcElement.textContent, /\//g, '--') });
               }
             } else {
               if ([...event.srcElement.classList].includes('title')) {
                 AppUtils.getAppComponent()
                   .getRouter()
-                  .navTo('employee', { pernr: sPernr, orgeh: sNodeId, orgtx: _.replace(event.srcElement.textContent, /\//g, '--') });
+                  .navTo(aRoutePath[1], { pernr: sPernr, orgeh: sNodeId, orgtx: _.replace(event.srcElement.textContent, /\//g, '--') });
               } else {
-                AppUtils.getAppComponent().getRouter().navTo('employee', { pernr: sPernr });
+                AppUtils.getAppComponent().getRouter().navTo(aRoutePath[0], { pernr: sPernr });
               }
             }
           })

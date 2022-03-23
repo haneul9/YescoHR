@@ -5,12 +5,12 @@
             <HBox justifyContent="SpaceBetween" class="title">
                 <Title level="H2" text="{i18n>LABEL_34002}" />
             </HBox>
-            <HBox class="mt-50-px">
-                <VBox width="40%" class="summary-info">
+            <HBox class="mt-100-px">
+                <VBox width="40%">
                     <Label design="Bold" text="{i18n>LABEL_25005}" />
                     <ObjectStatus text="{/Total/Carno}" state="Indication05" />
                 </VBox>
-                <VBox class="summary-info">
+                <VBox>
                     <Label design="Bold" text="{i18n>LABEL_34004}" />
                     <ObjectStatus text="{/Total/Datum}" state="Indication05" />
                 </VBox>

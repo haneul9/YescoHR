@@ -108,11 +108,6 @@ sap.ui.define(
 
       // 신청
       async onApplyBtn() {
-        if (!AttachFileAction.getFileCount.call(this)) {
-          //  증빙자료를 꼭 등록하세요.
-          return MessageBox.alert(this.getBundleText('MSG_00040'));
-        }
-
         // {신청}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
           // 신청, 취소
@@ -171,7 +166,6 @@ sap.ui.define(
         AttachFileAction.setAttachFile(this, {
           Editable: !sStatus,
           Type: this.getApprovalType(),
-          Message: this.getBundleText('MSG_00040'),
           Appno: sAppno,
           Max: 10,
         });

@@ -70,9 +70,49 @@ sap.ui.define(
         };
       },
 
+      registTimeFormat(date, time) {
+        return date && time ? `${moment(date).format('YYYY.MM.DD')} / ${moment(time.ms).format('HH:mm')}` : '';
+      },
+
       // 주행거리
-      onMileage(oEvent) {
-        this.TextUtils.liveChangeCurrency(oEvent);
+      mileage(value = '') {
+        if (!value) {
+          return;
+        }
+
+        if (_.includes(value, '.')) {
+          const sReVal = value.replace(/['.']{3}/g, '.');
+          const iIndex = sReVal.indexOf('.');
+
+          value = this.TextUtils.toCurrency(sReVal.split('.')[0].slice(0, 11)) + sReVal.slice(iIndex, iIndex + 4);
+        } else {
+          value = this.TextUtils.toCurrency(value.slice(0, 11));
+        }
+
+        return value;
+      },
+
+      // 주행거리
+      getMileage(oEvent) {
+        const oDetailModel = this.getViewModel();
+        const sPath = oEvent.getSource().getBinding('value').getPath();
+        let sValue = oEvent
+          .getParameter('value')
+          .trim()
+          .replace(/[^\d'.']/g, '');
+
+        if (_.includes(sValue, '.')) {
+          const sReVal = sValue.replace(/['.']{3}/g, '.');
+          const iIndex = sReVal.indexOf('.');
+
+          sValue = this.TextUtils.toCurrency(sReVal.split('.')[0].slice(0, 11)) + sReVal.slice(iIndex, iIndex + 4);
+        } else {
+          sValue = this.TextUtils.toCurrency(sValue.slice(0, 11));
+        }
+
+        // oEvent.getSource().setMaxLength(6);
+        oDetailModel.setProperty(sPath, sValue);
+        oEvent.getSource().setValue(sValue);
       },
 
       async onObjectMatched() {
@@ -129,7 +169,7 @@ sap.ui.define(
           New: 'O',
           Datum: moment().toDate(),
           Devty: 'A',
-          Corno: oViewModel.getProperty('/Total/Carno'),
+          Carno: oViewModel.getProperty('/Total/Carno'),
           Regpr: mAppointee.Pernr,
           RegprZzjikgb: `${mAppointee.Ename} ${mAppointee.Zzjikgbt}`,
         });
@@ -218,13 +258,13 @@ sap.ui.define(
 
         if (!mDialogData.Drvkm || mDialogData.Drvkm === '0') {
           // 주행거리를 입력하세요.
-          MessageBox.alert(this.getBundleText('MSG_33001'));
+          MessageBox.alert(this.getBundleText('MSG_34001'));
           return true;
         }
 
         if (_.parseInt(mDialogData.Endkm) <= _.parseInt(mDialogData.Begkm)) {
           // 주행 후 거리는 주행 전 거리보다 큰 값으로 입력하세요.
-          MessageBox.alert(this.getBundleText('MSG_33002'));
+          MessageBox.alert(this.getBundleText('MSG_34002'));
           return true;
         }
 
@@ -263,7 +303,8 @@ sap.ui.define(
               // {등록}되었습니다.
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00106'), {
                 onClose: () => {
-                  this.onNavBack();
+                  this.byId('detailDialog').close();
+                  this.onSearch();
                 },
               });
             } catch (oError) {
@@ -293,12 +334,20 @@ sap.ui.define(
               const oViewModel = this.getViewModel();
               const oModel = this.getModel(ServiceNames.BENEFIT);
 
-              await Client.remove(oModel, 'DrivingRecordAppl', { Seqnr: oViewModel.getProperty('/dialog/Seqnr') });
+              // await Client.remove(oModel, 'DrivingRecordAppl', { Seqnr: oViewModel.getProperty('/dialog/Seqnr') });
+              const mDialogData = oViewModel.getProperty('/dialog');
+              let oSendObject = {
+                ...mDialogData,
+                Prcty: 'X',
+              };
+
+              await Client.create(oModel, 'DrivingRecordAppl', oSendObject);
 
               // {삭제}되었습니다.
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
                 onClose: () => {
-                  this.onNavBack();
+                  this.byId('detailDialog').close();
+                  this.onSearch();
                 },
               });
             } catch (oError) {

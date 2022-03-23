@@ -107,6 +107,8 @@
 
         { "pattern": "attendance", "name": "attendance", "target": "attendance" },
         { "pattern": "attendance/{type}/:appno:", "name": "attendance-detail", "target": "attendanceDetail" },
+        { "pattern": "mobile/attendance", "name": "mobile/attendance", "target": "mobile/attendance" },
+        { "pattern": "mobile/attendance/{type}/:appno:", "name": "mobile/attendance-detail", "target": "mobile/attendanceDetail" },
         
         { "pattern": "carMaintainCost", "name": "carMaintainCost", "target": "carMaintainCost" },
         { "pattern": "carMaintainCost/{oDataKey}/:sStatus:", "name": "carMaintainCost-detail", "target": "carMaintainCostDetail" },
@@ -159,6 +161,7 @@
         { "pattern": "h/employee", "name": "h/employee", "target": "h/employee" },
         { "pattern": "mobile/employee/:pernr:", "name": "mobile/employee", "target": "mobile/employee" },
         { "pattern": "mobile/m/employee", "name": "mobile/m/employee", "target": "mobile/m/employee" },
+        { "pattern": "mobile/m/employeeOrg/:pernr:/:orgtx:/:orgeh:", "name": "mobile/m/employee-org", "target": "mobile/m/employee" },
         { "pattern": "mobile/m/employee/{pernr}", "name": "mobile/m/employee-detail", "target": "mobile/employee" },
 
         { "pattern": "m/EvalKpi", "name": "m/EvalKpi", "target": "m/EvalKpi" },
@@ -211,6 +214,7 @@
         { "pattern": "mobile/notice/{Sdate}/{Seqnr}", "name": "mobile/notice-detail", "target": "mobile/noticeDetail" },
 
         { "pattern": "m/organization", "name": "m/organization", "target": "m/organization" },
+        { "pattern": "mobile/m/organization", "name": "mobile/m/organization", "target": "mobile/m/organization" },
         
         { "pattern": "m/overviewEmployee", "name": "m/overviewEmployee", "target": "m/overviewEmployee" },
         { "pattern": "m/overviewOnOff", "name": "m/overviewOnOff", "target": "m/overviewOnOff" },
@@ -250,7 +254,7 @@
         { "pattern": "h/studentFunds/{oDataKey}", "name": "h/studentFunds-detail", "target": "studentFundsDetail" },
 
         { "pattern": "m/talent", "name": "m/talent", "target": "m/talent" },
-        { "pattern": "m/talent/{oDataKey}", "name": "m/talent-detail", "target": "m/talentDetail" },
+        { "pattern": "mobile/m/talent", "name": "mobile/m/talent", "target": "mobile/m/talent" },
 
         { "pattern": "withdrawMiddle", "name": "withdrawMiddle", "target": "withdrawMiddle" },
         { "pattern": "withdrawMiddle/{oDataKey}", "name": "withdrawMiddle-detail", "target": "withdrawMiddleDetail" },
@@ -286,6 +290,8 @@
 
         "attendance": { "viewId": "attendanceList", "viewPath": "sap.ui.yesco.mvc.view.attendance", "viewName": "List" },
         "attendanceDetail": { "viewId": "attendanceDetail", "viewPath": "sap.ui.yesco.mvc.view.attendance", "viewName": "Detail" },
+        "mobile/attendance": { "viewId": "mobile_attendanceList", "viewPath": "sap.ui.yesco.mvc.view.attendance.mobile", "viewName": "List" },
+        "mobile/attendanceDetail": { "viewId": "mobile_attendanceDetail", "viewPath": "sap.ui.yesco.mvc.view.attendance.mobile", "viewName": "Detail" },
 
         "carMaintainCost": { "viewId": "carMaintainCost", "viewPath": "sap.ui.yesco.mvc.view.carMaintainCost", "viewName": "CarMaintainCost" },
         "carMaintainCostDetail": { "viewId": "carMaintainCostDetail", "viewPath": "sap.ui.yesco.mvc.view.carMaintainCost", "viewName": "CarMaintainCostDetail" },
@@ -376,6 +382,7 @@
         "mobile/noticeDetail": { "viewId": "mobile_noticeDetail", "viewPath": "sap.ui.yesco.mvc.view.notice.mobile", "viewName": "NoticeDetail" },
         
         "m/organization": { "viewId": "m_organization", "viewPath": "sap.ui.yesco.mvc.view.organization", "viewName": "Main" },
+        "mobile/m/organization": { "viewId": "mobile_m_organization", "viewPath": "sap.ui.yesco.mvc.view.organization.mobile", "viewName": "Main" },
         
         "m/overviewEmployee": { "viewId": "m_overviewEmployee", "viewPath": "sap.ui.yesco.mvc.view.overviewEmployee", "viewName": "Main" },
         "m/overviewOnOff": { "viewId": "m_overviewOnOff", "viewPath": "sap.ui.yesco.mvc.view.overviewOnOff", "viewName": "Main" },
@@ -407,7 +414,7 @@
         "studentFundsDetail": { "viewId": "studentFundsDetail", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFundsDetail" },
 
         "m/talent": { "viewId": "m_talent", "viewPath": "sap.ui.yesco.mvc.view.talent", "viewName": "Talent" },
-        "m/talentDetail": { "viewId": "m_talentDetail", "viewPath": "sap.ui.yesco.mvc.view.talent", "viewName": "TalentDetail" },
+        "mobile/m/talent": { "viewId": "mobile_m_talent", "viewPath": "sap.ui.yesco.mvc.view.talent.mobile", "viewName": "Talent" },
 
         "withdrawMiddle": { "viewId": "withdrawMiddle", "viewPath": "sap.ui.yesco.mvc.view.withdrawMiddle", "viewName": "WithdrawMiddle" },
         "withdrawMiddleDetail": { "viewId": "withdrawMiddleDetail", "viewPath": "sap.ui.yesco.mvc.view.withdrawMiddle", "viewName": "WithdrawMiddleDetail" },
