@@ -21,6 +21,7 @@ sap.ui.define(
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date',
     'sap/ui/yesco/mvc/model/type/Decimal',
+    'sap/ui/yesco/mvc/model/type/ShortYearDate',
   ],
   (
     // prettier 방지용 주석
@@ -79,6 +80,7 @@ sap.ui.define(
               search: {},
               data: {
                 Awart: 'ALL',
+                AbrtgTxt: '0일',
               },
               list: [],
             },
@@ -622,7 +624,7 @@ sap.ui.define(
         oViewModel.setProperty('/form/dialog/data/Endda', null);
         oViewModel.setProperty('/form/dialog/data/Abrst', null);
         oViewModel.setProperty('/form/dialog/data/Abrtg', null);
-        oViewModel.setProperty('/form/dialog/data/AbrtgTxt', null);
+        oViewModel.setProperty('/form/dialog/data/AbrtgTxt', '0일');
       },
 
       async onChangeLeaveDate() {
@@ -645,7 +647,7 @@ sap.ui.define(
 
           oViewModel.setProperty('/form/dialog/data/Abrst', null);
           oViewModel.setProperty('/form/dialog/data/Abrtg', null);
-          oViewModel.setProperty('/form/dialog/data/AbrtgTxt', '');
+          oViewModel.setProperty('/form/dialog/data/AbrtgTxt', '0일');
           oViewModel.setProperty('/form/dialog/calcCompleted', false);
         }
       },
@@ -883,7 +885,6 @@ sap.ui.define(
         const mCheckFields = [
           { field: 'Tmrsn', label: this.getBundleText('LABEL_04009'), type: Validator.INPUT2 }, // 근태사유
         ];
-        let oTable;
 
         if (!bCalcCompleted) {
           MessageBox.error(this.getBundleText('MSG_04001')); // 계산이 수행되지 않아 저장이 불가합니다.
@@ -904,7 +905,6 @@ sap.ui.define(
             Begda: DateUtils.parse(mInputData.Begda),
             Endda: DateUtils.parse(mInputData.Endda),
           };
-          oTable = this.byId('approveMultipleTable');
 
           if (DateUtils.format(mRowData.Begda2) === DateUtils.format(mChangedData.Begda) && DateUtils.format(mRowData.Endda2) === DateUtils.format(mChangedData.Endda)) {
             MessageBox.error(this.getBundleText('MSG_04002')); // 변경된 데이터가 없습니다.
@@ -914,7 +914,6 @@ sap.ui.define(
           oViewModel.setProperty(sRowPath, mChangedData);
         } else {
           const aListData = oViewModel.getProperty('/form/list');
-          oTable = this.byId('approveSingleTable');
 
           aListData.push({
             ...mInputData,
@@ -926,11 +925,9 @@ sap.ui.define(
           oViewModel.setProperty('/form/rowCount', aListData.length);
         }
 
-        oTable.clearSelection();
         this.toggleHasRowProperty();
 
         AppUtils.setAppBusy(false, this);
-        this.byId('formDialog').close();
       },
 
       onPressApproval() {
