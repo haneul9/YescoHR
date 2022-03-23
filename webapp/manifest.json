@@ -102,6 +102,8 @@
 
         { "pattern": "accountChange", "name": "accountChange", "target": "accountChange" },
         { "pattern": "accountChange/:oDataKey:", "name": "accountChange-detail", "target": "accountChangeDetail" },
+        { "pattern": "mobile/accountChange", "name": "mobile/accountChange", "target": "mobile/accountChange" },
+        { "pattern": "mobile/accountChange/:oDataKey:", "name": "mobile/accountChange-detail", "target": "mobile/accountChangeDetail" },
 
         { "pattern": "attendance", "name": "attendance", "target": "attendance" },
         { "pattern": "attendance/{type}/:appno:", "name": "attendance-detail", "target": "attendanceDetail" },
@@ -279,6 +281,8 @@
 
         "accountChange": { "viewId": "accountChange", "viewPath": "sap.ui.yesco.mvc.view.accountChange", "viewName": "AccountChange" },
         "accountChangeDetail": { "viewId": "accountChangeDetail", "viewPath": "sap.ui.yesco.mvc.view.accountChange", "viewName": "AccountChangeDetail" },
+        "mobile/accountChange": { "viewId": "mobile_accountChange", "viewPath": "sap.ui.yesco.mvc.view.accountChange.mobile", "viewName": "AccountChange" },
+        "mobile/accountChangeDetail": { "viewId": "mobile_accountChangeDetail", "viewPath": "sap.ui.yesco.mvc.view.accountChange.mobile", "viewName": "AccountChangeDetail" },
 
         "attendance": { "viewId": "attendanceList", "viewPath": "sap.ui.yesco.mvc.view.attendance", "viewName": "List" },
         "attendanceDetail": { "viewId": "attendanceDetail", "viewPath": "sap.ui.yesco.mvc.view.attendance", "viewName": "Detail" },
