@@ -215,27 +215,27 @@ sap.ui.define(
                 _.forEach(aSelectRows, (e) => {
                   Client.create(oModel, 'WorkScheduleConfirm', { ...e, Prcty: 'X' });
                 })
-              );
+              ).then(() => {
+                // {확정취소}되었습니다.
+                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_10049'), {
+                  onClose: async () => {
+                    const aTableList = await this.getWorkScheduleList();
+                    const oTable = this.byId('commuteTable');
+                    const mMyCom = oViewModel.getProperty('/MyCom');
 
-              // {확정취소}되었습니다.
-              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_10049'), {
-                onClose: async () => {
-                  const aTableList = await this.getWorkScheduleList();
-                  const oTable = this.byId('commuteTable');
-                  const mMyCom = oViewModel.getProperty('/MyCom');
-
-                  oViewModel.setProperty('/listInfo', {
-                    ...TableUtils.count({ oTable, aRowData: aTableList }),
-                    ObjTxt1: this.getBundleText('LABEL_00197'), // 미신청
-                    isShowApprove: false, // 승인 text hide
-                    ObjTxt4: this.getBundleText('LABEL_10049'), // 확정취소
-                    ObjTxt5: this.getBundleText('LABEL_00116'), // 확정
-                    // 신청기간 {0} ~ {1}
-                    infoMessage: `${this.getBundleText('LABEL_30007', moment(mMyCom.Begda).format('yyyy.MM.DD'), moment(mMyCom.Endda).format('yyyy.MM.DD'))}`,
-                  });
-                  oViewModel.setProperty('/CommuteList', aTableList);
-                  oTable.clearSelection();
-                },
+                    oViewModel.setProperty('/listInfo', {
+                      ...TableUtils.count({ oTable, aRowData: aTableList }),
+                      ObjTxt1: this.getBundleText('LABEL_00197'), // 미신청
+                      isShowApprove: false, // 승인 text hide
+                      ObjTxt4: this.getBundleText('LABEL_10049'), // 확정취소
+                      ObjTxt5: this.getBundleText('LABEL_00116'), // 확정
+                      // 신청기간 {0} ~ {1}
+                      infoMessage: `${this.getBundleText('LABEL_30007', moment(mMyCom.Begda).format('yyyy.MM.DD'), moment(mMyCom.Endda).format('yyyy.MM.DD'))}`,
+                    });
+                    oViewModel.setProperty('/CommuteList', aTableList);
+                    oTable.clearSelection();
+                  },
+                });
               });
             } catch (oError) {
               AppUtils.handleError(oError);

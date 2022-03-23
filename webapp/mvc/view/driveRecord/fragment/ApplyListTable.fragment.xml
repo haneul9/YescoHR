@@ -12,7 +12,10 @@
       <table:Column width="auto" sortProperty="Drvkm" filterProperty="Drvkm">
         <Label text="{i18n>LABEL_34007}"/>
         <table:template>
-          <Text text="{Drvkm}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{
+              path: 'Drvkm',
+              formatter: '.mileage'
+          }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="DevtyTxt" filterProperty="DevtyTxt">
