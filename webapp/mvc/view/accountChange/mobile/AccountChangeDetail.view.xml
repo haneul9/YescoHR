@@ -1,0 +1,62 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.accountChange.mobile.AccountChangeDetail"
+  xmlns="sap.m"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:custom="sap.ui.yesco.control">
+  <Page enableScrolling="false" floatingFooter="true" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+    <customData>
+      <core:CustomData key="form-style" value="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} ? 'request' : 'retrieval' }" writeToDom="true" />
+    </customData>
+    <VBox class="contents">
+      <custom:MobileScrollContainer horizontal="false" vertical="true" excludeBottomSelector=".sapMPageFooter">
+        <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
+          <Title level="H2" text="{i18n>LABEL_00129}" />
+          <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
+            <Label text="{i18n>LABEL_26008}"/>
+            <VBox>
+              <ComboBox items="{/AccType}" selectedKey="{/FormData/Acctty}" change=".onAccChange" editable="{= !${/FormData/ZappStatAl} }" class="required">
+                <core:Item text="{Ztext}" key="{Zcode}" />
+              </ComboBox>
+            </VBox>
+            <Label text="{= !${/FormData/ZappStatAl} ? ${i18n>LABEL_26009} : ${i18n>LABEL_25018} }"/>
+            <HBox justifyContent="SpaceBetween">
+              <CheckBox selected="{= ${/FormData/Chkyn} === 'X' }" editable="false" visible="{= !${/FormData/ZappStatAl} }" />
+              <Button text="{i18n>LABEL_26009}" press=".onAccNameCheck" visible="{= !${/FormData/ZappStatAl} }" />
+              <Text text="{/FormData/Ename}" visible="{= !!${/FormData/ZappStatAl} }" />
+            </HBox>
+            <Label text="{i18n>LABEL_26010}"/>
+            <VBox>
+              <ComboBox items="{/BankList}" selectedKey="{/FormData/Bankl}" change=".onBankList" editable="{= !${/FormData/ZappStatAl} }" class="required">
+                <core:Item text="{Banka}" key="{Bankl}" />
+              </ComboBox>
+            </VBox>
+            <Label text="{i18n>LABEL_26011}"/>
+            <VBox>
+              <Input value="{/FormData/Bankn}" maxLength="{/FieldLimit/Bankn}" liveChange=".onAccChangeInput" editable="{= !${/FormData/ZappStatAl} }" />
+            </VBox>
+            <Label text="{i18n>LABEL_26012}"/>
+            <VBox>
+              <Text text="{/FormData/BankaBef}"/>
+            </VBox>
+            <Label text="{i18n>LABEL_26013}"/>
+            <VBox>
+              <Text text="{/FormData/BanknBef}"/>
+            </VBox>
+            <Label text="{i18n>LABEL_26006}"/>            
+            <VBox>
+              <DatePicker displayFormat="yyyy-MM" value="{/FormData/PayYearMon}" change=".onDatePick" width="230px" editable="{= !${/FormData/ZappStatAl} }" />
+            </VBox>
+          </grid:CSSGrid>
+          <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
+        </VBox>
+      </custom:MobileScrollContainer>
+    </VBox>
+    <footer>
+      <OverflowToolbar>
+        <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= !${/FormData/ZappStatAl} }" />
+        <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= ${/FormData/ZappStatAl} === '20' }" />
+      </OverflowToolbar>
+    </footer>
+  </Page>
+</mvc:View>

@@ -317,7 +317,7 @@ sap.ui.define(
       },
 
       // Dialog 저장
-      onDialogSavBtn() {
+      async onDialogSavBtn() {
         if (this.checkError()) {
           return;
         }
@@ -332,9 +332,23 @@ sap.ui.define(
             .get('Ztext')
             .value(),
         };
+
+        const aDialogList = oDetailModel.getProperty('/dialog/list');
+
+        await Promise.all(
+          _.forEach(aDialogList, async (e) => {
+            const oOverTime = await this.overTime(e);
+
+            return oOverTime.Notes;
+          })
+        ).then((value) => {
+          debugger;
+        });
+
+        debugger;
         const aFilterList = [
           ...oDetailModel.getProperty('/detail/list'),
-          ..._.chain(oDetailModel.getProperty('/dialog/list'))
+          ..._.chain(aDialogList)
             .filter((e) => {
               return !!e.Pernr;
             })
@@ -346,7 +360,6 @@ sap.ui.define(
               e.Ottyp = mDialogData.Ottyp;
               e.Ottyptx = mDialogData.Ottyptx;
               e.Atrsn = mDialogData.Atrsn;
-              e.Notes = mDialogData.Notes;
             })
             .value(),
         ];
@@ -433,17 +446,23 @@ sap.ui.define(
       },
 
       // Dialog 초과근무시간
-      overTime() {
+      overTime(mData) {
         const oDetailModel = this.getViewModel();
         const mDialogData = oDetailModel.getProperty('/DialogData');
 
-        if (!mDialogData.Enduz) {
+        if (!mDialogData.Beguz || !mDialogData.Enduz) {
           return;
+        }
+
+        let sPernr = this.getAppointeeProperty('Pernr');
+
+        if (mData) {
+          sPernr = mData.Pernr;
         }
 
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const mPayLoad = {
-          Pernr: this.getAppointeeProperty('Pernr'),
+          Pernr: sPernr,
           Datum: mDialogData.Datum,
           Beguz: mDialogData.Beguz.replace(':', ''),
           Enduz: mDialogData.Enduz.replace(':', ''),

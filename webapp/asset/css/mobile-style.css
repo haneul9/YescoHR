@@ -188,10 +188,10 @@ html.sap-phone .sapMDialog.sapMDialogStretched {border:none; box-shadow:0; borde
 .sapMDialog>footer .sapMIBar.sapMTB .sapMBtn.sapMBarChild:not(.app-menu-level1) {margin-left:0px}
 .sapMDialog>footer .sapMIBar.sapMTB .sapMBtn.sapMBarChild:not(.app-menu-level1) ~ .sapMBtn.sapMBarChild {margin-left:8px}
 
-.sapUiMedia-Std-Phone .sapMDialog.sapMComboBoxBasePicker >.sapMDialogSection {padding:20px 16px}
+.sapUiMedia-Std-Phone .sapMDialog.sapMComboBoxBasePicker >.sapMDialogSection {padding:0 16px}
 .sapUiMedia-Std-Phone .sapMDialog.sapMComboBoxBasePicker >.sapMDialogSection .sapMListUl li {height:45px; margin-bottom:8px; border:1px solid #C0C0C0; border-radius:4px}
 .sapUiMedia-Std-Phone .sapMDialog.sapMComboBoxBasePicker >.sapMDialogSection .sapMListUl li.sapMLIB.sapMLIBSelected {background:#E3F6FF; border:1px solid #4DA2CD}
-.sapUiMedia-Std-Phone .sapMDialog.sapMComboBoxBasePicker .sapMDialogScroll{padding-bottom:20px}
+.sapUiMedia-Std-Phone .sapMDialog.sapMComboBoxBasePicker .sapMDialogScroll{padding-bottom:0px}
 .sapUiMedia-Std-Phone .sapMDialog.sapMComboBoxBasePicker .sapMBtnInner.sapMBtnDefault {background-color:#1D87BD; border-color:#1D87BD; color:#ffffff!important}
 
 .sapMDialog.half-dialog {width:100%!important; min-width:100%!important; height:50vh!important; top:auto!important; bottom:60px!important; left:0!important; right:0!important; border-radius:0; padding-bottom:0}
@@ -329,14 +329,14 @@ html.sap-phone .sapMDialog.sapMMessageDialog>footer .sapMFooter-CTX .sapMBtn {-w
 
 html.sap-phone .sapMDialog.sapMDialogStretched.sapMRPCalendar {top:calc(50% - 225px)!important; left:30px!important; right:30px!important}
 
-html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker {top:calc(50% - 225px)!important; left:30px!important; right:30px!important; bottom:auto!important; padding:53px 0px 0}
+html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker {top:calc(50% - 225px)!important; left:30px!important; right:30px!important; bottom:auto!important; padding:53px 0px 0; height: 333px !important; max-height: 333px !important;}
 .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>.sapMDialogTitle {height:52px}
 .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker .sapMBarPH {height:52px}
 .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker .sapMBarPH * {height:52px; line-height:2.6}
 .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>.sapMDialogTitle .sapMHeader-CTX {height:52px; line-height:52px}
 html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker .sapMBarMiddle {text-align:left; padding-left:20px}
 html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker .sapMBarRight {height:52px; line-height:52px}
-html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker >.sapMDialogSection {}
+html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker >.sapMDialogSection {height: calc(100% - 73px) !important;}
 html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker .sapMDialogFooter {border-top:1px silid #ddd}
 
 .card-box{border-bottom:8px solid #ebeef2; padding:0 20px}
@@ -416,3 +416,5 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker .sapMDialo
 [id*=ATTACHBOX] .table-actions .sapMBtnContent {display:none}
 [id*=ATTACHBOX] .table-actions .sapMBtnIcon {margin-right:0}
 [id*=ATTACHBOX] .sapUiTableContentRow.sapUiTableRowSel, [id*=ATTACHBOX] .sapUiTableRowHvr {background-color:transparent!important}
+
+.sapUiSizeCompact .sapUiCalContent>.sapUiCalMonthPicker, .sapUiSizeCompact .sapUiCalContent>.sapUiCalYearPicker {width: 100%; top: 0; padding: 0; padding-top: 10px; margin-left: -9.78rem;}
