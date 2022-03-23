@@ -100,6 +100,7 @@ sap.ui.define(
           .getParameter('value')
           .trim()
           .replace(/[^\d'.']/g, '');
+        const sPropVal = _.clone(sValue);
 
         if (_.includes(sValue, '.')) {
           const sReVal = sValue.replace(/['.']{3}/g, '.');
@@ -111,7 +112,7 @@ sap.ui.define(
         }
 
         // oEvent.getSource().setMaxLength(6);
-        oDetailModel.setProperty(sPath, sValue);
+        oDetailModel.setProperty(sPath, sPropVal);
         oEvent.getSource().setValue(sValue);
       },
 
