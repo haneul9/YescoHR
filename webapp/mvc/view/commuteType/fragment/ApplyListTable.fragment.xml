@@ -21,7 +21,7 @@
         <table:template>
           <Text text="{
                 path: 'ZappStatAl',
-                formatter: '.TableUtils.StatusTxt'
+                formatter: '.TableUtils.CommuteStatusTxt'
             }" width="100%" textAlign="Center">
             <customData>
               <core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />

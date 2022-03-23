@@ -36,10 +36,10 @@
           }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="auto" sortProperty="RegprZzjikgb" filterProperty="RegprZzjikgb">
+      <table:Column width="auto" sortProperty="Ename" filterProperty="Ename">
         <Label text="{i18n>LABEL_08004}"/>
         <table:template>
-          <Text text="{RegprZzjikgb}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Ename}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
     </table:columns>
