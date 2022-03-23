@@ -114,6 +114,7 @@ sap.ui.define(
       },
 
       async dataSetting(mSelectedTree = {}) {
+        const oViewModel = this.getViewModel();
         const oDetail = await this.treeDetail(mSelectedTree.L1id, mSelectedTree.L2id, mSelectedTree.L3id, mSelectedTree.L4id, mSelectedTree.Werks);
         const aFormData = oDetail.HelpInfo2Nav.results || [];
         const aMenuId = await this.helpMenuId(mSelectedTree.Werks);
@@ -155,6 +156,12 @@ sap.ui.define(
           Menid3: mDetailData.Menid3 || 'ALL',
           Mentx3: mDetailData.Mentx3 || '',
         });
+
+        if (!this.isHass()) {
+          const [mPdfUrl] = oDetail.HelpInfo4Nav.results;
+
+          oViewModel.setProperty('/FormData/Fileuri', mPdfUrl ? mPdfUrl.Fileuri : '');
+        }
 
         const sRoutL2 = mSelectedTree.L2tx ? ` > ${mSelectedTree.L2tx}` : '';
         const sRoutL3 = mSelectedTree.L3tx ? ` > ${mSelectedTree.L3tx}` : '';
@@ -211,6 +218,7 @@ sap.ui.define(
             },
           ],
           HelpInfo2Nav: [],
+          HelpInfo4Nav: [],
         };
 
         return await Client.deep(oModel, 'HelpInfo', mPayLoad);
@@ -335,8 +343,8 @@ sap.ui.define(
       },
 
       checkError() {
-        const oDetailModel = this.getViewModel();
-        const mFormData = oDetailModel.getProperty('/FormData');
+        const oViewModel = this.getViewModel();
+        const mFormData = oViewModel.getProperty('/FormData');
 
         // 동호회
         if (mFormData.Zclub === 'ALL' || !mFormData.Zclub) {
@@ -352,28 +360,36 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.COMMON);
         const mAppointee = this.getAppointeeData();
         const oViewModel = this.getViewModel();
-        const mFormData = oViewModel.getProperty('/FormData');
-        const mPayLoad = {
-          Pernr: mAppointee.Pernr,
-          Werks: mAppointee.Werks,
-          Menid: this.getCurrentMenuId(),
-          Prcty: 'C',
-          HelpInfo1Nav: [
-            {
-              Werks: mFormData.Werks,
-              L1id: mFormData.L1id,
-              L2id: mFormData.L2id,
-              L3id: mFormData.L3id,
-              L4id: mFormData.L4id,
-            },
-          ],
-          HelpInfo2Nav: [],
-        };
 
-        const sSave = await Client.deep(oModel, 'HelpInfo', mPayLoad);
-        debugger;
-        oViewModel.setProperty('/UserFixed', true);
-        this.settingsAttachTable();
+        try {
+          AppUtils.setAppBusy(true, this);
+
+          const mFormData = oViewModel.getProperty('/FormData');
+          const mPayLoad = {
+            Pernr: mAppointee.Pernr,
+            Werks: mAppointee.Werks,
+            Menid: this.getCurrentMenuId(),
+            Prcty: 'C',
+            HelpInfo2Nav: [
+              {
+                Werks: mFormData.Werks,
+                L1id: mFormData.L1id,
+                L2id: mFormData.L2id,
+                L3id: mFormData.L3id,
+                L4id: mFormData.L4id,
+              },
+            ],
+          };
+
+          await Client.deep(oModel, 'HelpInfo', mPayLoad);
+
+          oViewModel.setProperty('/UserFixed', true);
+          this.settingsAttachTable();
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          AppUtils.setAppBusy(false, this);
+        }
       },
 
       // 다른Tree 선택시 확인용 저장
@@ -381,19 +397,19 @@ sap.ui.define(
         try {
           AppUtils.setAppBusy(true, this);
 
-          const oDetailModel = this.getViewModel();
-          const sAppno = oDetailModel.getProperty('/FormData/Appno');
+          const oViewModel = this.getViewModel();
+          const sAppno = oViewModel.getProperty('/FormData/Appno');
 
           if (!sAppno || _.parseInt(sAppno) === 0) {
             const sAppno = await Appno.get.call(this);
 
-            oDetailModel.setProperty('/FormData/Appno', sAppno);
+            oViewModel.setProperty('/FormData/Appno', sAppno);
           }
 
           const oModel = this.getModel(ServiceNames.COMMON);
           const mAppointee = this.getAppointeeData();
-          const mFormData = oDetailModel.getProperty('/FormData');
-          const mPdfFile = oDetailModel.getProperty('/PDFFile');
+          const mFormData = oViewModel.getProperty('/FormData');
+          const mPdfFile = oViewModel.getProperty('/PDFFile');
           let mFileObj = {};
 
           if (!!mPdfFile) {
@@ -458,19 +474,19 @@ sap.ui.define(
             try {
               AppUtils.setAppBusy(true, this);
 
-              const oDetailModel = this.getViewModel();
-              const sAppno = oDetailModel.getProperty('/FormData/Appno');
+              const oViewModel = this.getViewModel();
+              const sAppno = oViewModel.getProperty('/FormData/Appno');
 
               if (!sAppno || _.parseInt(sAppno) === 0) {
                 const sAppno = await Appno.get.call(this);
 
-                oDetailModel.setProperty('/FormData/Appno', sAppno);
+                oViewModel.setProperty('/FormData/Appno', sAppno);
               }
 
               const oModel = this.getModel(ServiceNames.COMMON);
               const mAppointee = this.getAppointeeData();
-              const mFormData = oDetailModel.getProperty('/FormData');
-              const mPdfFile = oDetailModel.getProperty('/PDFFile');
+              const mFormData = oViewModel.getProperty('/FormData');
+              const mPdfFile = oViewModel.getProperty('/PDFFile');
               let mFileObj = {};
 
               if (!!mPdfFile) {
@@ -478,6 +494,7 @@ sap.ui.define(
                   Zfilekey: mPdfFile.Zbinkey || mPdfFile.Zfilekey,
                   Zfilename: mPdfFile.Zfilename,
                   Appno: mFormData.Appno,
+                  Zworktyp: this.PDF_FILE_TYPE,
                 };
               }
 
@@ -512,7 +529,11 @@ sap.ui.define(
               await Client.deep(oModel, 'HelpInfo', oSendObject);
 
               // {저장}되었습니다.
-              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
+              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'), {
+                onClose: () => {
+                  oViewModel.setProperty('/UserFixed', false);
+                },
+              });
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
@@ -673,7 +694,7 @@ sap.ui.define(
         this.refreshAttachFileList(sAppno, this.PDF_FILE_TYPE);
 
         AttachFileAction.setAttachFile(this, {
-          Editable: bFix1 && bFix2,
+          Editable: bFix1 && bFix2 && this.isHass(),
           Type: this.getApprovalType(),
           Appno: sAppno,
           Message: this.getBundleText('MSG_29003'),
