@@ -130,7 +130,11 @@ sap.ui.define(
           const aTableList = await this.getFriveRecord();
           const oTable = this.byId(this.DRIVE_TABLE_ID);
 
-          oViewModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
+          oViewModel.setProperty('/listInfo', {
+            ...TableUtils.count({ oTable, aRowData: aTableList }),
+            visibleStatus: 'X',
+            Title: this.getBundleText('LABEL_34005'), // 운행기록
+          });
           oViewModel.setProperty('/List', aTableList);
         } catch (oError) {
           AppUtils.handleError(oError);
@@ -153,7 +157,11 @@ sap.ui.define(
           const aTableList = await this.getFriveRecord();
           const oTable = this.byId(this.DRIVE_TABLE_ID);
 
-          oViewModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
+          oViewModel.setProperty('/listInfo', {
+            ...TableUtils.count({ oTable, aRowData: aTableList }),
+            visibleStatus: 'X',
+            Title: this.getBundleText('LABEL_34005'), // 운행기록
+          });
           oViewModel.setProperty('/List', aTableList);
         } catch (oError) {
           AppUtils.handleError(oError);
@@ -185,7 +193,11 @@ sap.ui.define(
           const aTableList = await this.getFriveRecord();
           const oTable = this.byId(this.DRIVE_TABLE_ID);
 
-          oViewModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
+          oViewModel.setProperty('/listInfo', {
+            ...TableUtils.count({ oTable, aRowData: aTableList }),
+            visibleStatus: 'X',
+            Title: this.getBundleText('LABEL_34005'), // 운행기록
+          });
           oViewModel.setProperty('/List', aTableList);
         } catch (oError) {
           AppUtils.handleError(oError);
