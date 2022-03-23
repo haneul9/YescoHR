@@ -122,7 +122,7 @@ sap.ui.define(
 
           await Client.create(oModel, 'PernrToken', mPayload);
         } catch (oError) {
-          this.debug('savePushToken error.', oError);
+          this.debug('requestSavePushToken error.', oError);
         }
       },
 
