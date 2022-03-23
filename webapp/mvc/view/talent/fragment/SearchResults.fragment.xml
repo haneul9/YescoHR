@@ -10,7 +10,7 @@
         <HBox class="table-toolbar" justifyContent="SpaceBetween">
             <HBox class="title">
                 <Title text="{i18n>LABEL_00204}" level="H4" />
-                <Text class="sapUiSmallMarginBegin" text="total {/result/totalCount}" />
+                <Text class="sapUiSmallMarginBegin total-txt" text="total {/result/totalCount}" />
             </HBox>
             <HBox class="status-wrap">
                 <ObjectStatus text="{i18n>LABEL_35010}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication03" />
