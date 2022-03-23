@@ -51,6 +51,9 @@ sap.ui.define(
       },
 
       initMobile() {
+        window.getToken = (sPushToken) => {
+          this.requestSavePushToken(sPushToken);
+        };
         setTimeout(() => {
           this.savePushToken();
         });
@@ -96,16 +99,25 @@ sap.ui.define(
         this.oAppMenu.moveToMenu('employee');
       },
 
-      async savePushToken() {
-        if (typeof window.YescoApp === 'undefined') {
+      savePushToken() {
+        if (!this.bMobile) {
           return;
         }
 
+        if (/android/i.test(navigator.userAgent)) {
+          const sPushToken = window.YescoApp.getToken();
+          this.requestSavePushToken(sPushToken);
+        } else if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
+          // window.webkit.messageHandlers.script.postMessage('getToken');
+        }
+      },
+
+      async requestSavePushToken(sPushToken) {
         try {
           const oModel = this.getModel(ServiceNames.COMMON);
           const mPayload = {
             Pernr: this.getSessionProperty('Pernr'),
-            Token: window.YescoApp.getToken(),
+            Token: sPushToken,
           };
 
           await Client.create(oModel, 'PernrToken', mPayload);

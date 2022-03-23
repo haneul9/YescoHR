@@ -4,14 +4,12 @@ sap.ui.define(
     'sap/ui/model/FormatException',
     'sap/ui/model/ParseException',
     'sap/ui/model/SimpleType',
-    // 'sap/ui/yesco/common/AppUtils',
   ],
   (
     // prettier 방지용 주석
     FormatException,
     ParseException,
     SimpleType
-    // AppUtils
   ) => {
     'use strict';
 
@@ -20,8 +18,6 @@ sap.ui.define(
      */
     return SimpleType.extend('sap.ui.yesco.mvc.model.type.Percent', {
       formatValue(oValue, sTargetType) {
-        // AppUtils.debug(`sap/ui/yesco/mvc/model/type/Percent.formatValue(${oValue}, ${sTargetType})`);
-
         switch (this.getPrimitiveType(sTargetType)) {
           case 'string':
           case 'any':
@@ -34,8 +30,6 @@ sap.ui.define(
       },
 
       parseValue(oValue, sTargetType) {
-        // AppUtils.debug(`sap/ui/yesco/mvc/model/type/Percent.parseValue(${oValue}, ${sTargetType})`);
-
         switch (this.getPrimitiveType(sTargetType)) {
           case 'string':
             return this._toString(oValue, sTargetType);
