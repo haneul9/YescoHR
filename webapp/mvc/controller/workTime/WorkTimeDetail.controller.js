@@ -323,6 +323,25 @@ sap.ui.define(
         }
 
         const oDetailModel = this.getViewModel();
+
+        await Promise.all(
+          _.forEach(oDetailModel.getProperty('/dialog/list'), async (e, i) => {
+            const oOverTime = await this.overTime(e);
+
+            oDetailModel.setProperty(`/dialog/list/${i}/Notes`, oOverTime.Notes);
+            this.dateMovement(i + 1);
+          })
+        );
+      },
+
+      dateMovement(index) {
+        const oDetailModel = this.getViewModel();
+        const aDialogList = oDetailModel.getProperty('/dialog/list');
+
+        if (index !== _.size(aDialogList)) {
+          return;
+        }
+
         const mDialogData = {
           ...oDetailModel.getProperty('/DialogData'),
           Ottyptx: _.chain(oDetailModel.getProperty('/CauseType'))
@@ -333,19 +352,6 @@ sap.ui.define(
             .value(),
         };
 
-        const aDialogList = oDetailModel.getProperty('/dialog/list');
-
-        await Promise.all(
-          _.forEach(aDialogList, async (e) => {
-            const oOverTime = await this.overTime(e);
-
-            return oOverTime.Notes;
-          })
-        ).then((value) => {
-          debugger;
-        });
-
-        debugger;
         const aFilterList = [
           ...oDetailModel.getProperty('/detail/list'),
           ..._.chain(aDialogList)
