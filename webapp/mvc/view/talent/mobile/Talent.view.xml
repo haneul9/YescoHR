@@ -26,7 +26,6 @@
                     <Button class="sapUiTinyMarginBegin" icon="asset/image/icon_sort.png" text="{i18n>LABEL_35004}" press=".onPressDetailConditionsDialog" />
                 </HBox>
                 <HBox justifyContent="SpaceBetween" alignItems="Center">
-                    <!-- <SearchField maxLength="{/fieldLimit/Freetx}" value="{/search/Freetx}" placeholder="{i18n>MSG_35001}" enabled="{= ${/search/Prcty} === 'A' }" search=".onPressSearch" /> -->
                     <SearchField maxLength="{/fieldLimit/Freetx}" value="{/search/Freetx}" placeholder="{i18n>MSG_35012}" search=".onPressSearch">
                         <layoutData>
                             <FlexItemData minWidth="67%" maxWidth="67%" />
