@@ -55,7 +55,10 @@
                     </VBox>
                     <Label text="{i18n>LABEL_34012}" visible="{= ${/dialog/New} !== 'O' }"/>
                     <VBox visible="{= ${/dialog/New} !== 'O' }">
-                        <Text text="{/dialog/Regdt} / {/dialog/Regtm}"/>
+                        <Text text="{
+                            parts: [ {path: '/dialog/Regdt'}, {path: '/dialog/Regtm'} ],
+                            formatter: '.registTimeFormat'
+                        }"/>
                     </VBox>
                     <Label text="{i18n>LABEL_08004}" visible="{= ${/dialog/New} !== 'O' }"/>
                     <VBox visible="{= ${/dialog/New} !== 'O' }">
