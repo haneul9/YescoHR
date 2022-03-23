@@ -1,0 +1,49 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.talent.mobile.Talent"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:custom="sap.ui.yesco.control"
+    xmlns:mvc="sap.ui.core.mvc">
+    <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+        <VBox class="contents">
+            <VBox class="search-area">
+                <HBox justifyContent="SpaceBetween" alignItems="Center">
+                    <ComboBox width="100%" selectedKey="{/saved/selectedCondition}" items="{/saved/entry}" enabled="{= !${/result/busy} }" change=".onChangeSearchCondition">
+                        <layoutData>
+                            <FlexItemData minWidth="67%" maxWidth="67%" />
+                        </layoutData>
+                        <core:Item key="{Zcode}" text="{Ztext}" />
+                    </ComboBox>
+                    <Button class="sapUiTinyMarginBegin" icon="asset/image/icon_sort.png" text="{i18n>LABEL_35004}" press=".onPressDetailConditionsDialog" />
+                </HBox>
+                <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginTop">
+                    <!-- <SearchField maxLength="{/fieldLimit/Freetx}" value="{/search/Freetx}" placeholder="{i18n>MSG_35001}" enabled="{= ${/search/Prcty} === 'A' }" search=".onPressSearch" /> -->
+                    <SearchField maxLength="{/fieldLimit/Freetx}" value="{/search/Freetx}" enabled="{= ${/search/Prcty} === 'A' }" search=".onPressSearch">
+                        <layoutData>
+                            <FlexItemData minWidth="67%" maxWidth="67%" />
+                        </layoutData>
+                    </SearchField>
+                    <Button text="{i18n>LABEL_35005}" icon="asset/image/icon_reset.png" enabled="{= !${/result/busy} }" press=".onPressConditionReset" />
+                </HBox>
+            </VBox>
+            <HBox justifyContent="SpaceBetween" class="header-wrap">
+                <HBox class="header">
+                    <Title level="H3" text="{i18n>LABEL_35003}" class="sapUiSmallMarginEnd" />
+                    <Text text="total {/result/totalCount}" />
+                </HBox>
+                <Image src="asset/image/icon_tooltip.svg" press=".onPressLegend" />
+            </HBox>
+            <custom:MobileScrollContainer excludeBottomSelector=".sapMPageFooter" horizontal="false" vertical="true">
+
+            </custom:MobileScrollContainer>
+        </VBox>
+        <footer class="wrap">
+            <OverflowToolbar>
+                <Button text="{i18n>LABEL_35002}" type="Emphasized" width="100%" press=".onPressCompare">
+                    <layoutData>
+                        <FlexItemData growFactor="1"/>
+                    </layoutData>
+                </Button>
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>

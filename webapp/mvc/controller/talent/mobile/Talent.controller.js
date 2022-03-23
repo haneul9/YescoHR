@@ -27,7 +27,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.talent.Talent', {
+    return BaseController.extend('sap.ui.yesco.mvc.controller.talent.mobile.Talent', {
       initializeModel() {
         return {
           busy: false,
@@ -177,13 +177,26 @@ sap.ui.define(
 
           oViewModel.setProperty('/fieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.PA, 'TalentSearch'), this.getEntityLimit(ServiceNames.PA, 'TalentSearchCondition')));
         } catch (oError) {
-          this.debug('Controller > Talent > onObjectMatched Error', oError);
+          this.debug('Controller > Talent Mobile > onObjectMatched Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
-          this.byId('searchFilterBody').removeStyleClass('expanded');
           oViewModel.setProperty('/busy', false);
         }
+      },
+
+      async onPressDetailConditionsDialog(oEvent) {
+        if (!this.oDetailConditionsDialog) {
+          this.oDetailConditionsDialog = await Fragment.load({
+            id: this.getView().getId(),
+            name: 'sap.ui.yesco.mvc.view.talent.mobile.fragment.DetailConditionsDialog',
+            controller: this,
+          });
+
+          this.getView().addDependent(this.oDetailConditionsDialog);
+        }
+
+        this.oDetailConditionsDialog.open();
       },
 
       async onCompareDialog() {
@@ -215,6 +228,23 @@ sap.ui.define(
         }
 
         this.oTalentCompareDialog.open();
+      },
+
+      async onPressLegend(oEvent) {
+        const oView = this.getView();
+        const oControl = oEvent.getSource();
+
+        if (!this._oLegendPopover) {
+          this._oLegendPopover = await Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.mvc.view.talent.mobile.fragment.LegendPopover',
+            controller: this,
+          });
+
+          oView.addDependent(this._oLegendPopover);
+        }
+
+        this._oLegendPopover.openBy(oControl);
       },
 
       async onPressCompare() {
@@ -352,7 +382,7 @@ sap.ui.define(
 
           this.onCompareDialog();
         } catch (oError) {
-          this.debug('Controller > Talent > onPressCompare Error', oError);
+          this.debug('Controller > Talent Mobile > onPressCompare Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
@@ -395,7 +425,7 @@ sap.ui.define(
           this.showComplexSearch();
           await this.readSearchCondition(sSelectedCondition);
         } catch (oError) {
-          this.debug('Controller > Talent > onChangeSearchCondition Error', oError);
+          this.debug('Controller > Talent Mobile > onChangeSearchCondition Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
@@ -450,7 +480,7 @@ sap.ui.define(
 
           MessageBox.success(this.getBundleText('MSG_00007', 'LABEL_00110')); // {삭제}되었습니다.
         } catch (oError) {
-          this.debug('Controller > Talent > onPressDeleteSearchCondition Error', oError);
+          this.debug('Controller > Talent Mobile > onPressDeleteSearchCondition Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
@@ -488,7 +518,7 @@ sap.ui.define(
 
           MessageBox.success(this.getBundleText('MSG_00007', 'LABEL_00103')); // {저장}되었습니다.
         } catch (oError) {
-          this.debug('Controller > Talent > saveConditionsProcess Error', oError);
+          this.debug('Controller > Talent Mobile > saveConditionsProcess Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
@@ -630,7 +660,7 @@ sap.ui.define(
 
           await this.readTalentSearch();
         } catch (oError) {
-          this.debug('Controller > Talent > onObjectMatched Error', oError);
+          this.debug('Controller > Talent Mobile > onObjectMatched Error', oError);
 
           AppUtils.handleError(oError);
         } finally {

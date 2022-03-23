@@ -22,6 +22,7 @@
 
 .sapUiSizeCompact .sapMInputBase:not(.sapMTextArea) {height:48px !important}
 .sapUiSizeCompact .portlet .sapMInputBase:not(.sapMTextArea) {height:38px !important}
+.sapUiSizeCompact .search-area .sapMInputBase:not(.sapMTextArea) {height:40px !important}
 
 .sapMPageFooter {border-top:8px solid #ebeef2}
 
@@ -284,6 +285,7 @@ html.sap-phone .sapMDialog.sapMMessageDialog>footer .sapMFooter-CTX .sapMBtn {-w
 .sapUiSizeCompact .sapMBtn {flex:1; }
 .sapUiSizeCompact .sapMBtn + .sapMBtn {margin-left:8px} 
 .sapUiSizeCompact .sapMBtnInner.sapMBtnText {border-radius:4px}
+.sapUiSizeCompact .search-area .sapMBtnInner.sapMBtnText {border-radius:20px}
 .sapContrast span.sapMBtnInner.sapMBtnEmphasized {background-color:#1D87BD; border-color:#1D87BD; text-shadow:none}
 .sapContrast span.sapMBtnInner.sapMBtnReject {background-color:#FFAAA6; border-color:#FFAAA6; text-shadow:none}
 .sapUiMedia-Std-Phone .sapMPageFloatingFooter>.sapMPageFooter {margin:0; border-top:8px solid #ebeef2; border-radius:0; right:0!important}
@@ -299,6 +301,12 @@ html.sap-phone .sapMDialog.sapMMessageDialog>footer .sapMFooter-CTX .sapMBtn {-w
 
 /* sapMPageWithFooter  */
 
+.sapUiMedia-Std-Phone .sapUiLayoutCSSGrid.complex-search {background-color:transparent!important; border-top:0px solid #F5F5F5}
+.sapUiMedia-Std-Phone .sapUiLayoutCSSGrid.complex-search .sapMInputBase:not(.sapMTextArea) {height:40px !important}
+.sapUiMedia-Std-Phone .sapUiLayoutCSSGrid.complex-search .sapMBtnInner.sapMBtnText {border-radius: 20px;}
+.sapUiMedia-Std-Phone .sapUiLayoutCSSGrid.complex-search .sapMInputBaseIcon {line-height: 2.4rem !important;}
+.sapUiMedia-Std-Phone .sapUiLayoutCSSGrid.complex-search .sapMLabel {min-height: 30px;}
+
 .sapUiMedia-Std-Phone .sapUiLayoutCSSGrid.form-grid {background-color:transparent!important; border-top:0px solid #F5F5F5}
 .sapUiLayoutCSSGrid.form-grid > * {height:100%; min-height:48px}
 .sapUiLayoutCSSGrid.form-grid .sapMFlexBox .sapMFlexItem {display:flex; padding-top:0px; min-height:48px!important}
@@ -308,6 +316,7 @@ html.sap-phone .sapMDialog.sapMMessageDialog>footer .sapMFooter-CTX .sapMBtn {-w
 .sapUiMedia-Std-Phone .sapUiLayoutCSSGrid.form-grid .sapMText, .sapUiMedia-Std-Phone .sapUiLayoutCSSGrid.form-grid input  {font-weight:600}
 .sapUiMedia-Std-Phone .sapUiLayoutCSSGrid.form-grid .sapMComboBoxBaseReadonly input  {padding-top:0!important; padding-bottom:0!important; font-weight:600}
 .sapMInputBaseIcon {line-height:2.875rem !important}
+.search-area .sapMInputBaseIcon {line-height:2.4rem !important}
 .sapIcon_Date .sapUiIcon::before {background-image:url(../image/icon_date2.svg); background-position:center}
 
 .sapUiSizeCompact .sapMSegB.type-c {height:32px; padding:0; background-color:#fff; border-color:transparent}
@@ -369,6 +378,8 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker .sapMDialo
 .sapUiMedia-Std-Phone .contents .list-wrap li .sapUiIcon:before {font-size:12.5px}
 
 .sapUiMedia-Std-Phone .sapMPageFooter .sapMIBar {padding:0 12px}
+
+.sapUiMedia-Std-Phone .search-area {width:100%; padding:0 20px 20px; border-bottom:8px solid #ebeef2}
 
 
 /* 사원프로파일 상세 탭  */

@@ -2131,7 +2131,7 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
     .search-filter .sapUiLayoutCSSGridItem:not(.sapMLabel) + .sapMLabel {min-height: 32px;margin-top:10px;font-size:16px}
     .search-field .sapMSFF {border-width:0 0 1px 0!important;}
 
-    .sapUiMedia-Std-Phone .section {}
+    .sapUiMedia-Std-Phone .section { padding: 0 10px; }
     .sapUiMedia-Std-Phone .section + .section {margin-top:30px}
     .sapUiMedia-Std-Phone .section .title-bar {height:34px;margin-bottom: 16px;font-size: 20px;font-weight: 700;border-bottom:1px solid #222;}
     .sapUiMedia-Std-Phone .section .title-bar h3.sapMTitle {font-size: 20px; font-weight: 800; color: #222;}
