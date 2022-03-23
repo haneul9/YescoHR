@@ -46,7 +46,7 @@ sap.ui.define(
           Data: [],
           UseList: [
             { Zcode: 'A', Ztext: this.getBundleText('LABEL_34013') }, // 출퇴근
-            { Zcode: 'A', Ztext: this.getBundleText('LABEL_34014') }, // 업무
+            { Zcode: 'B', Ztext: this.getBundleText('LABEL_34014') }, // 업무
           ],
           Total: {},
           mMyDriveRecord: {},

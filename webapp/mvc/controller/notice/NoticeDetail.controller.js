@@ -203,7 +203,9 @@ sap.ui.define(
                   Notice2Nav: aDetail,
                 });
 
-                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
+                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'), {
+                  onClose: () => {},
+                });
               } catch (oError) {
                 AppUtils.handleError(oError);
               } finally {
