@@ -13,7 +13,7 @@ sap.ui.define(
       metadata: {
         properties: {
           headerHeight: { type: 'int', defaultValue: '0' },
-          footerHeight: { type: 'int', defaultValue: '68' },
+          footerHeight: { type: 'int', defaultValue: '60' },
           excludeBottomSelector: { type: 'string' },
         },
       },
@@ -24,8 +24,8 @@ sap.ui.define(
         const iExcludeHeight = this.getExcludeBottomSelector() ? $(this.getExcludeBottomSelector()).outerHeight(true) : 0;
         const iScrollHeight = screen.availHeight - this.$().offset().top - this.getHeaderHeight() - this.getFooterHeight() - iExcludeHeight;
 
-        // this.setHeight(`${iScrollHeight}px`);
-        this.setHeight(`100%`);
+        this.setHeight(`${iScrollHeight}px`);
+        // this.setHeight(`100%`);
       },
     });
   }

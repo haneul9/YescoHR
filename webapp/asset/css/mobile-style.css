@@ -6,6 +6,8 @@
 .sapUiMedia-StdExt-Phone .mobile-only {display:inherit!important}
 .sapUiMedia-StdExt-Phone .sapMPageEnableScrolling {padding:0 0.0rem; background-color:#EBEEF2}
 .sapUiMedia-StdExt-Phone .sapMPage {height:100%; position:relative; isolation:isolate; z-index:0; background:#fff}
+.sapUiMedia-StdExt-Phone .sapMPage > section { height: calc(100% - 56px); }
+.sapUiMedia-StdExt-Phone .sapMPage.sapMPageWithFooter > section { height: calc(100% - 136px); }
 .sapUiMedia-StdExt-Phone .sapMScrollCont {padding:0px}
 .sapUiMedia-StdExt-Phone .sapMScrollCont .sapMScrollCont {padding:0px 20px 0 0}
 .sapUiMedia-StdExt-Phone .sapUiSizeCompact .sapMPageWithFooter.sapMPageFloatingFooter>section, .sapUiMedia-StdExt-Phone .sapUiSizeCompact .sapMPageWithHeader>section {padding-top:56px}

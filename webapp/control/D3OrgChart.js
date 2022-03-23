@@ -29,8 +29,8 @@ sap.ui.define(
       },
 
       createChart: function () {
-        const oChartLayout = new sap.m.VBox({ alignItems: FlexAlignItems.Center, justifyContent: FlexJustifyContent.Center });
-        const oChartFlexBox = new sap.m.FlexBox({ width: `${$(document).width()}px`, alignItems: FlexAlignItems.Center });
+        const oChartLayout = new sap.m.VBox({ height: '100%', alignItems: FlexAlignItems.Center, justifyContent: FlexJustifyContent.Center });
+        const oChartFlexBox = new sap.m.FlexBox({ width: `${$(document).width()}px`, height: '100%', alignItems: FlexAlignItems.Center });
 
         this.sParentId = oChartFlexBox.getIdForLabel();
         oChartLayout.addItem(oChartFlexBox);
@@ -46,6 +46,7 @@ sap.ui.define(
         const layout = oControl.createChart();
 
         oRm.write('<div');
+        oRm.write(' style="height: 100%;"');
         oRm.writeControlData(layout);
         oRm.writeClasses();
         oRm.write('>');
