@@ -836,6 +836,7 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .bgType09 { background-color:#FFFCEF}
 
 .node-button-div {display:inline-block!important; margin-left:-4px}
+.org-chart-container > div { height: 100%; }
 .org-chart-container[data-layout=left] .node-button-div > div {border-radius:50%!important; width:100%!important; height:100%!important; padding:0!important; background-color:#fff!important; border:1px solid #ccc!important; font-size:10px!important; margin:auto auto!important}
 .org-chart-container[data-layout=left] .node-button-div > div > div {margin-top:3px!important; text-align:center}
 .org-chart-container[data-layout=top] .node-button-div > div {border-radius:50%!important; width:100%!important; height:100%!important; padding:0!important; background-color:#fff!important; border:1px solid #ccc!important; font-size:10px!important; margin:auto auto!important}
