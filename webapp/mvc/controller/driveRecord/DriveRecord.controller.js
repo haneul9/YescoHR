@@ -222,13 +222,13 @@ sap.ui.define(
 
         if (!mDialogData.Drvkm || mDialogData.Drvkm === '0') {
           // 주행거리를 입력하세요.
-          MessageBox.alert(this.getBundleText('MSG_33001'));
+          MessageBox.alert(this.getBundleText('MSG_34001'));
           return true;
         }
 
         if (_.parseInt(mDialogData.Endkm) <= _.parseInt(mDialogData.Begkm)) {
           // 주행 후 거리는 주행 전 거리보다 큰 값으로 입력하세요.
-          MessageBox.alert(this.getBundleText('MSG_33002'));
+          MessageBox.alert(this.getBundleText('MSG_34002'));
           return true;
         }
 
