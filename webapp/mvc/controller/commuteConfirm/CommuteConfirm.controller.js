@@ -130,40 +130,43 @@ sap.ui.define(
               AppUtils.setAppBusy(true, this);
 
               const oModel = this.getModel(ServiceNames.WORKTIME);
+              const oCommModel = this.getModel(ServiceNames.COMMON);
               const oViewModel = this.getViewModel();
 
               await Promise.all(
                 _.forEach(aSelectRows, async (e) => {
-                  if (!e.Appno || _.parseInt(e.Appno) === 0) {
-                    const sAppno = await Appno.get.call(this);
+                  setTimeout(async () => {
+                    if (!e.Appno || _.parseInt(e.Appno) === 0) {
+                      const [mResult] = await Client.getEntitySet(oCommModel, 'CreateAppno');
 
-                    e.Appno = sAppno;
-                    e.Appda = new Date();
-                  }
+                      e.Appno = mResult.Appno;
+                      e.Appda = new Date();
+                    }
 
-                  await Client.create(oModel, 'WorkScheduleConfirm', { ...e, Prcty: 'C' });
+                    await Client.create(oModel, 'WorkScheduleConfirm', { ...e, Prcty: 'C' });
+                  }, 500);
                 })
-              );
+              ).then(() => {
+                // {확정}되었습니다.
+                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00116'), {
+                  onClose: async () => {
+                    const aTableList = await this.getWorkScheduleList();
+                    const oTable = this.byId('commuteTable');
+                    const mMyCom = oViewModel.getProperty('/MyCom');
 
-              // {확정}되었습니다.
-              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00116'), {
-                onClose: async () => {
-                  const aTableList = await this.getWorkScheduleList();
-                  const oTable = this.byId('commuteTable');
-                  const mMyCom = oViewModel.getProperty('/MyCom');
-
-                  oViewModel.setProperty('/listInfo', {
-                    ...TableUtils.count({ oTable, aRowData: aTableList }),
-                    ObjTxt1: this.getBundleText('LABEL_00197'), // 미신청
-                    isShowApprove: false, // 승인 text hide
-                    ObjTxt4: this.getBundleText('LABEL_10049'), // 확정취소
-                    ObjTxt5: this.getBundleText('LABEL_00116'), // 확정
-                    // 신청기간 {0} ~ {1}
-                    infoMessage: `${this.getBundleText('LABEL_30007', moment(mMyCom.Begda).format('yyyy.MM.DD'), moment(mMyCom.Endda).format('yyyy.MM.DD'))}`,
-                  });
-                  oViewModel.setProperty('/CommuteList', aTableList);
-                  oTable.clearSelection();
-                },
+                    oViewModel.setProperty('/listInfo', {
+                      ...TableUtils.count({ oTable, aRowData: aTableList }),
+                      ObjTxt1: this.getBundleText('LABEL_00197'), // 미신청
+                      isShowApprove: false, // 승인 text hide
+                      ObjTxt4: this.getBundleText('LABEL_10049'), // 확정취소
+                      ObjTxt5: this.getBundleText('LABEL_00116'), // 확정
+                      // 신청기간 {0} ~ {1}
+                      infoMessage: `${this.getBundleText('LABEL_30007', moment(mMyCom.Begda).format('yyyy.MM.DD'), moment(mMyCom.Endda).format('yyyy.MM.DD'))}`,
+                    });
+                    oViewModel.setProperty('/CommuteList', aTableList);
+                    oTable.clearSelection();
+                  },
+                });
               });
             } catch (oError) {
               AppUtils.handleError(oError);

@@ -335,11 +335,14 @@ sap.ui.define(
           case STATE_IN_PROGRESS0:
             // 미신청
             return '미신청';
-          case STATE_IN_PROGRESS1:
-          case STATE_IN_PROGRESS2:
+          case STATE_APPLY1:
+          case STATE_APPLY2:
+          case STATE_APPLY3:
             // 신청
             return '신청';
+          case STATE_REJECT1:
           case STATE_REJECT2:
+          case MED_STATE_REJECT:
             // 확정취소
             return '확정취소';
           case STATE_COMPLETE:
