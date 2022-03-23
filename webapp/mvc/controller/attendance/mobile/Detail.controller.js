@@ -1,4 +1,3 @@
-/* eslint-disable no-else-return */
 sap.ui.define(
   [
     // prettier 방지용 주석
@@ -46,7 +45,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.attendance.Detail', {
+    return BaseController.extend('sap.ui.yesco.mvc.controller.attendance.mobile.Detail', {
       LIST_PAGE_ID: 'container-ehr---attendanceList',
       APPTP: 'HR04',
       PAGE_TYPE: { NEW: 'A', CHANGE: 'B', CANCEL: 'C' },
@@ -59,7 +58,7 @@ sap.ui.define(
       TextUtils: TextUtils,
 
       getPreviousRouteName() {
-        return 'attendance';
+        return 'mobile/attendance';
       },
 
       initializeModel() {
@@ -91,20 +90,11 @@ sap.ui.define(
 
       onObjectMatched(oParameter) {
         if (!'A,B,C'.split(',').includes(oParameter.type)) {
-          this.getRouter().navTo('attendance');
+          this.getRouter().navTo('mobile/attendance');
           return;
         }
 
-        if (oParameter.type === this.PAGE_TYPE.CHANGE) {
-          // Multiple table generate
-          TableUtils.adjustRowSpan({
-            oTable: this.byId('approveMultipleTable'),
-            aColIndices: [8],
-            sTheadOrTbody: 'thead',
-          });
-        }
-
-        this.getAppointeeModel().setProperty('/showBarChangeButton', false);
+        // this.getAppointeeModel().setProperty('/showBarChangeButton', false);
 
         const oViewModel = this.getView().getModel();
         oViewModel.setData(this.initializeModel());
@@ -166,7 +156,7 @@ sap.ui.define(
           if (oError instanceof Error) oError = new UI5Error({ message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
 
           AppUtils.handleError(oError, {
-            onClose: () => this.getRouter().navTo('attendance'),
+            onClose: () => this.getRouter().navTo('mobile/attendance'),
           });
         }
       },
@@ -178,12 +168,11 @@ sap.ui.define(
           aRowData.map((o) => {
             if (sType === this.PAGE_TYPE.CHANGE) {
               return { ...o };
-            } else {
-              return {
-                ...o,
-                AbrtgTxt: `${Number(o.Abrtg)}일`,
-              };
             }
+            return {
+              ...o,
+              AbrtgTxt: `${Number(o.Abrtg)}일`,
+            };
           })
         );
 
@@ -493,7 +482,7 @@ sap.ui.define(
           // {임시저장|신청}되었습니다.
           MessageBox.success(this.getBundleText('MSG_00007', this.ACTION_MESSAGE[sPrcty]), {
             onClose: () => {
-              this.getRouter().navTo('attendance');
+              this.getRouter().navTo('mobile/attendance');
             },
           });
         } catch (oError) {
@@ -1008,9 +997,8 @@ sap.ui.define(
               .map((v, p) => {
                 if (_.isEqual(p, 'Begda') || _.isEqual(p, 'Endda')) {
                   return new Filter(p, FilterOperator.EQ, DateUtils.parse(v));
-                } else {
-                  return new Filter(p, FilterOperator.EQ, v);
                 }
+                return new Filter(p, FilterOperator.EQ, v);
               })
               .value(),
             success: (oData) => {
