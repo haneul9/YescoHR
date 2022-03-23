@@ -2,7 +2,7 @@
     xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:core="sap.ui.core"
     xmlns:custom="sap.ui.yesco.control">
-    <Dialog title="{i18n>LABEL_34005}" contentWidth="1000px" contentHeight="auto">
+    <Dialog id="detailDialog" title="{i18n>LABEL_34005}" contentWidth="1000px" contentHeight="auto">
         <buttons>
             <Button text="{i18n>LABEL_00106}" type="Emphasized" press=".onRegistBtn" />
             <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" />
@@ -55,7 +55,10 @@
                     </VBox>
                     <Label text="{i18n>LABEL_34012}" visible="{= ${/dialog/New} !== 'O' }"/>
                     <VBox visible="{= ${/dialog/New} !== 'O' }">
-                        <Text text="{/dialog/Regdt} / {/dialog/Regtm}"/>
+                        <Text text="{
+                            parts: [ {path: '/dialog/Regdt'}, {path: '/dialog/Regtm'} ],
+                            formatter: '.registTimeFormat'
+                        }"/>
                     </VBox>
                     <Label text="{i18n>LABEL_08004}" visible="{= ${/dialog/New} !== 'O' }"/>
                     <VBox visible="{= ${/dialog/New} !== 'O' }">

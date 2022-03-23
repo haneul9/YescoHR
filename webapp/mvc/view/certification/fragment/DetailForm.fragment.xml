@@ -24,12 +24,6 @@
           <core:Item text="{Ztext}" key="{Zcode}" />
         </ComboBox>
       </VBox>
-      <Label text="{i18n>LABEL_17013}"/>
-      <VBox>
-        <ComboBox items="{/IssuanceArea}" selectedKey="{/FormData/Btrtl}" editable="{= !${/FormData/ZappStatAl} }" class="required">
-          <core:Item text="{Btext}" key="{Btrtl}" />
-        </ComboBox>
-      </VBox>
       <Label text="{i18n>LABEL_17014}"/>
       <VBox>
         <ComboBox items="{/IssuanceList}" selectedKey="{/FormData/Usety}" editable="{= !${/FormData/ZappStatAl} }" class="required">
@@ -41,10 +35,6 @@
         <ComboBox items="{/Receive}" selectedKey="{/FormData/Recty}" editable="{= !${/FormData/ZappStatAl} }" class="required">
           <core:Item text="{Rectx}" key="{Recty}" />
         </ComboBox>
-      </VBox>
-      <Label text="{i18n>LABEL_17015}"/>
-      <VBox>
-        <Text text="{/FormData/Iyear}"/>
       </VBox>
       <Label text="{i18n>LABEL_17007}"/>
       <VBox>

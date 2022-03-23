@@ -1,4 +1,4 @@
-<mvc:View controllerName="sap.ui.yesco.mvc.controller.congratulation.mobile.Detail"
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.attendance.mobile.Detail"
   xmlns="sap.m"
   xmlns:mvc="sap.ui.core.mvc"
   xmlns:core="sap.ui.core"
@@ -6,77 +6,49 @@
   xmlns:custom="sap.ui.yesco.control">
   <Page enableScrolling="false" floatingFooter="true" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
     <customData>
-      <core:CustomData key="form-style" value="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} ? 'request' : 'retrieval' }" writeToDom="true" />
+      <core:CustomData key="form-style" value="request" writeToDom="true" />
     </customData>
     <VBox class="contents">
       <custom:MobileScrollContainer horizontal="false" vertical="true" excludeBottomSelector=".sapMPageFooter">
-        <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
-          <Title level="H2" text="경조금 신청서" />
-          <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
-            <Label text="{i18n>LABEL_02013}"/>
+        <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap with-actions">
+          <HBox class="table-toolbar">
+            <HBox class="title">
+              <Title level="H2" text="{i18n>LABEL_04002}" />
+            </HBox>
+            <HBox class="table-actions">
+              <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" press=".onPressAddBtn" />
+            </HBox>
+          </HBox>
+          <grid:CSSGrid gridTemplateColumns="2fr 5fr" gridGap="6px 0" class="form-grid">
+            <Label text="{i18n>LABEL_04010}"/>
             <VBox>
-              <ComboBox id="BenefitType" items="{/BenefitType}" selectedKey="{/FormData/Concode}" change="onTypeChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+              <ComboBox items="{/BenefitType}" selectedKey="{/FormData/Concode}" change=".onChangeAwartCombo">
                 <core:Item text="{Ztext}" key="{Zcode}" />
               </ComboBox>
             </VBox>
-            <Label text="{i18n>LABEL_02008}"/>
+            <Label text="{i18n>LABEL_04014}" />
             <VBox>
-              <ComboBox id="BenefitCause" items="{/BenefitCause}" selectedKey="{/FormData/Conresn}" change=".onCauseChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
-                <core:Item text="{Ztext}" key="{Zcode}" />
-              </ComboBox>
+              <custom:DateRangeSelection dateValue="{ path: '/FormData/Conddate', type: 'sap.ui.yesco.mvc.model.type.Date' }" change=".onChangeLeaveDate" />
             </VBox>
-            <Label text="{i18n>LABEL_02015}"/>
+            <Label text="{i18n>LABEL_04009}" />
             <VBox>
-              <ComboBox id="BenefitRelation" change=".onRelationChange" items="{/BenefitRelation}" selectedKey="{/FormData/Kdsvh}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
-                <core:Item text="{Ztext}" key="{Zcode}" />
-              </ComboBox>
-            </VBox>
-            <Label text="{i18n>LABEL_02017}"/>
-            <VBox>
-              <Input id="RelationTxt" showValueHelp="true" valueHelpRequest=".onTargetDialog" value="{/FormData/Zname}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
-            </VBox>
-            <Label text="{i18n>LABEL_02014}"/>
-            <VBox>
-              <custom:DatePicker id="BirthDatePicker" maxDate="{/BirthMaxDate}" change=".onBirthDate" dateValue="{ path: '/FormData/Zbirthday', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
-            </VBox>
-            <Label text="{i18n>LABEL_02009}"/>
-            <VBox>
-              <custom:DatePicker dateValue="{ path: '/FormData/Conddate', type: 'sap.ui.yesco.mvc.model.type.Date' }" change=".onBenefitChangeDate" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
-            </VBox>
-            <Label text="{i18n>LABEL_02016}"/>
-            <VBox>
-              <Input value="{/FormData/Zeloc}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
-            </VBox>
-            <Label text="{i18n>LABEL_02021}"/>
-            <VBox>
-              <Text text="{
-                  path: '/FormData/Zflower',
-                  formatter: '.formatFlowerTxt'
-                }"/>
-            </VBox>
-            <Label text="{i18n>LABEL_02018}"/>
-            <VBox>
-              <Text text="{/FormData/ZbacBetT}"/>
-            </VBox>
-            <Label text="{i18n>LABEL_02019}"/>
-            <VBox>
-              <Text text="{/FormData/PayrtT}"/>
-            </VBox>
-            <Label text="{i18n>LABEL_02020}"/>
-            <VBox>
-              <Text text="{/FormData/ZpayBetT}"/>
+              <Input value="{/FormData/Zeloc}" />
             </VBox>
           </grid:CSSGrid>
-          <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
+          <HBox class="table-toolbar mt-25-px">
+            <HBox class="title">
+              <Title level="H2" text="{i18n>LABEL_04002}" />
+            </HBox>
+            <HBox class="table-actions">
+              <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onPressDelBtn" />
+            </HBox>
+          </HBox>
         </VBox>
       </custom:MobileScrollContainer>
     </VBox>
     <footer>
       <OverflowToolbar>
-        <Button text="{i18n>LABEL_00104}" type="Emphasized" press=".onSaveBtn" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
-        <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
-        <Button text="{i18n>LABEL_00118}" type="Default" press=".onCancelBtn" visible="{= ${/FormData/ZappStatAl} === '20' }" class="sapUiTinyMarginEnd" />
-        <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= ${/FormData/ZappStatAl} === '10' || ${/FormData/ZappStatAl} === '45' }" />
+        <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onPressApproval" />
       </OverflowToolbar>
     </footer>
   </Page>

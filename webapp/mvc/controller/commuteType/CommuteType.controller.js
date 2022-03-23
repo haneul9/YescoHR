@@ -74,7 +74,10 @@ sap.ui.define(
 
           oListModel.setProperty('/listInfo', {
             ...TableUtils.count({ oTable, aRowData: aTableList }),
-            ObjTxt1: this.getBundleText('LABEL_00197'),
+            ObjTxt1: this.getBundleText('LABEL_00197'), // 미신청
+            isShowApprove: false, // 승인 text hide
+            ObjTxt4: this.getBundleText('LABEL_10049'), // 확정취소
+            ObjTxt5: this.getBundleText('LABEL_00116'), // 확정
           });
           oListModel.setProperty('/CommuteList', aTableList);
 
@@ -110,7 +113,10 @@ sap.ui.define(
 
           oListModel.setProperty('/listInfo', {
             ...TableUtils.count({ oTable, aRowData: aTableList }),
-            ObjTxt1: this.getBundleText('LABEL_00197'),
+            ObjTxt1: this.getBundleText('LABEL_00197'), // 미신청
+            isShowApprove: false, // 승인 text hide
+            ObjTxt4: this.getBundleText('LABEL_10049'), // 확정취소
+            ObjTxt5: this.getBundleText('LABEL_00116'), // 확정
           });
           oListModel.setProperty('/CommuteList', aTableList);
           this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
@@ -130,8 +136,8 @@ sap.ui.define(
       },
 
       onClick() {
-        const oViewModel = this.getViewModel();
-        const aSelectRow = oViewModel.getProperty('/SelectedRow');
+        const oListModel = this.getViewModel();
+        const aSelectRow = oListModel.getProperty('/SelectedRow');
 
         if (_.isEmpty(aSelectRow) || _.size(aSelectRow) > 1) {
           // 신청할 데이터를 한 건만 선택하세요.
@@ -163,7 +169,10 @@ sap.ui.define(
 
           oListModel.setProperty('/listInfo', {
             ...TableUtils.count({ oTable, aRowData: aTableList }),
-            ObjTxt1: this.getBundleText('LABEL_00197'),
+            ObjTxt1: this.getBundleText('LABEL_00197'), // 미신청
+            isShowApprove: false, // 승인 text hide
+            ObjTxt4: this.getBundleText('LABEL_10049'), // 확정취소
+            ObjTxt5: this.getBundleText('LABEL_00116'), // 확정
           });
           oListModel.setProperty('/CommuteList', aTableList);
           this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
@@ -195,10 +204,10 @@ sap.ui.define(
 
       // table 체크박스
       onRowSelection(oEvent) {
-        const oViewModel = this.getViewModel();
+        const oListModel = this.getViewModel();
         const vPath = oEvent.getSource().getBindingContext().getPath();
-        const aSelectRows = oViewModel.getProperty('/SelectedRow');
-        let mRow = oViewModel.getProperty(vPath);
+        const aSelectRows = oListModel.getProperty('/SelectedRow');
+        let mRow = oListModel.getProperty(vPath);
         let aList = [];
 
         if (!oEvent.getSource().getSelected()) {
@@ -211,7 +220,7 @@ sap.ui.define(
           aList.push(...aSelectRows, mRow);
         }
 
-        oViewModel.setProperty('/SelectedRow', aList);
+        oListModel.setProperty('/SelectedRow', aList);
       },
 
       // 나의 근무일정

@@ -52,7 +52,6 @@ sap.ui.define(
           CertiType: [],
           CertiGubun: [],
           AppPiece: [],
-          IssuanceArea: [],
           IssuanceList: [],
           Receive: [],
           Years: [],
@@ -89,11 +88,6 @@ sap.ui.define(
           const aList3 = await this.getAppPiece();
 
           oDetailModel.setProperty('/AppPiece', aList3);
-
-          // 발급처
-          const aList4 = await Client.getEntitySet(oModel, 'CertificateBtrtlList', { Werks: this.getAppointeeProperty('Werks') });
-
-          oDetailModel.setProperty('/IssuanceArea', new ComboEntry({ codeKey: 'Btrtl', valueKey: 'Btext', aEntries: aList4 }));
 
           // 발급용도
           const aList5 = await Client.getEntitySet(oModel, 'CertificateUseList');
@@ -144,7 +138,6 @@ sap.ui.define(
             Reqnt: '1',
             Certy: 'ALL',
             Reqty: 'ALL',
-            Btrtl: 'ALL',
             Usety: 'ALL',
             Recty: 'ALL',
             Appernr: this.getSessionProperty('Pernr'),
@@ -215,12 +208,6 @@ sap.ui.define(
         // 구분
         if (mFormData.Reqty === 'ALL' || !mFormData.Reqty) {
           MessageBox.alert(this.getBundleText('MSG_17003'));
-          return true;
-        }
-
-        // 발급처
-        if (mFormData.Btrtl === 'ALL' || !mFormData.Btrtl) {
-          MessageBox.alert(this.getBundleText('MSG_17004'));
           return true;
         }
 

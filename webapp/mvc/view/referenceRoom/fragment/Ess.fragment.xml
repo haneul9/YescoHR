@@ -8,50 +8,53 @@
     <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0px" class="form-grid">
       <Label text="{i18n>LABEL_01008}" />
       <VBox>
-        <Text text="{/FormData/Menu}"/>
+        <Text text="{/FormData/MenuRoute}"/>
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
-      </VBox>
-      <Label text="{i18n>LABEL_29003}"/>
-      <VBox>
-        <Text text="{/FormData/Change}"/>
-      </VBox>
-      <Label text="{i18n>LABEL_08003}" />
-      <VBox>
-        <Text text="{/FormData/ChangeDate}"/>
       </VBox>
       <Label text="{i18n>LABEL_29004}" />
       <VBox>
-        <TextArea editable="false" placeholder="{i18n>MSG_29002}" rows="5" width="100%" value="{/FormData/Head}"/>
+        <TextArea placeholder="{i18n>MSG_29002}" editable="false" rows="5" width="100%" value="{/FormData/HeadZcomment}"/>
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
       </VBox>
-      <Label text="{i18n>LABEL_29005}" />
+      <Label text="{i18n>LABEL_29009}" />
       <HBox>
-        <PDFViewer displayType="Embedded" height="500px" showDownloadButton="true" source="" width="100%">
-          <layoutData>
-            <FlexItemData growFactor="1" />
-          </layoutData>
-          <errorPlaceholder>
-
-          </errorPlaceholder>
-        </PDFViewer>
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
+        <Link target="_blank" href="{/FormData/Url1}" text="{/FormData/Url1t}"/>
+      </HBox>
+      <Label text="{i18n>LABEL_29010}" />
+      <HBox>
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+        </layoutData>
+        <Link target="_blank" href="{/FormData/Url2}" text="{/FormData/Url2t}"/>
+      </HBox>
+      <Label text="{i18n>LABEL_29005}" />
+      <HBox width="100%">
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+        </layoutData>
+        <PDFViewer source="{/FormData/Fileuri}" showDownloadButton="false" class="my-15-px">
+          <layoutData>
+            <FlexItemData growFactor="1" />
+          </layoutData>
+        </PDFViewer>
       </HBox>
       <Label text="{i18n>LABEL_29006}" />
       <VBox>
-        <TextArea editable="false" placeholder="{i18n>MSG_29002}" rows="5" width="100%" value="{/FormData/Mid}"/>
+        <TextArea placeholder="{i18n>MSG_29002}" rows="5" editable="false" width="100%" value="{/FormData/MidZcomment}"/>
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
       </VBox>
       <Label text="{i18n>LABEL_29007}" />
       <VBox>
-        <TextArea editable="false" placeholder="{i18n>MSG_29002}" rows="5" width="100%" value="{/FormData/Bot}"/>
+        <TextArea placeholder="{i18n>MSG_29002}" rows="5" editable="false" width="100%" value="{/FormData/BotZcomment}"/>
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>

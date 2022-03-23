@@ -177,12 +177,12 @@ sap.ui.define(
 
       onPressButton1() {
         // this.navTo('attendance-detail', { type: 'A' });
-        this.navTo('attendance');
+        this.navTo(this.bMobile ? 'mobile/attendance' : 'attendance');
       },
 
       onPressButton2() {
         // this.navTo('workTime-detail', { oDataKey: 'N' });
-        this.navTo('workTime');
+        this.navTo(this.bMobile ? 'mobile/workTime' : 'workTime');
       },
     });
   }

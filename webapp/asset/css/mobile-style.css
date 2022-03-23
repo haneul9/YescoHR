@@ -341,6 +341,12 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker .sapMDialo
 
 .card-box{border-bottom:8px solid #ebeef2; padding:0 20px}
 .wrap {padding-left:16px!important; padding-right:16px!important}
+.wrap.with-actions {margin-top:0; box-shadow:none; border:none; padding:0}
+.wrap.with-actions .table-toolbar {display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px solid #000; padding-bottom:8px}
+.wrap.with-actions .table-toolbar .title h2.sapMTitle {margin-bottom:0; border-bottom:none; padding-bottom:0}
+.wrap.with-actions .table-toolbar .table-actions .sapMBtnContent {display:none}
+.wrap.with-actions .table-toolbar .title + .table-actions .sapMBtn {min-width:auto}
+.wrap.with-actions .table-toolbar .title + .table-actions .sapMBtn .sapMBtnIcon {margin-right:0}
 
 .member-detail .name {font-size:20px; color:#000}
 .member-detail .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem {min-height:20px; color:#666666; font-weight:500}

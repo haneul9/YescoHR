@@ -70,6 +70,10 @@ sap.ui.define(
         };
       },
 
+      registTimeFormat(date, time) {
+        return date && time ? `${moment(date).format('YYYY.MM.DD')} / ${moment(time.ms).format('HH:mm')}` : '';
+      },
+
       // 주행거리
       onMileage(oEvent) {
         this.TextUtils.liveChangeCurrency(oEvent);
@@ -129,7 +133,7 @@ sap.ui.define(
           New: 'O',
           Datum: moment().toDate(),
           Devty: 'A',
-          Corno: oViewModel.getProperty('/Total/Carno'),
+          Carno: oViewModel.getProperty('/Total/Carno'),
           Regpr: mAppointee.Pernr,
           RegprZzjikgb: `${mAppointee.Ename} ${mAppointee.Zzjikgbt}`,
         });
@@ -218,13 +222,13 @@ sap.ui.define(
 
         if (!mDialogData.Drvkm || mDialogData.Drvkm === '0') {
           // 주행거리를 입력하세요.
-          MessageBox.alert(this.getBundleText('MSG_33001'));
+          MessageBox.alert(this.getBundleText('MSG_34001'));
           return true;
         }
 
         if (_.parseInt(mDialogData.Endkm) <= _.parseInt(mDialogData.Begkm)) {
           // 주행 후 거리는 주행 전 거리보다 큰 값으로 입력하세요.
-          MessageBox.alert(this.getBundleText('MSG_33002'));
+          MessageBox.alert(this.getBundleText('MSG_34002'));
           return true;
         }
 
@@ -263,7 +267,8 @@ sap.ui.define(
               // {등록}되었습니다.
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00106'), {
                 onClose: () => {
-                  this.onNavBack();
+                  this.byId('detailDialog').close();
+                  this.onSearch();
                 },
               });
             } catch (oError) {
@@ -298,7 +303,8 @@ sap.ui.define(
               // {삭제}되었습니다.
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
                 onClose: () => {
-                  this.onNavBack();
+                  this.byId('detailDialog').close();
+                  this.onSearch();
                 },
               });
             } catch (oError) {
