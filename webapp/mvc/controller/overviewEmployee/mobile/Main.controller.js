@@ -330,7 +330,7 @@ sap.ui.define(
           const oModel = this.getModel(ServiceNames.PA);
           const mFilters = oViewModel.getProperty('/searchConditions');
 
-          _.forEach(ChartsSetting.CHART_TYPE, (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
+          _.forEach(_.take(ChartsSetting.CHART_TYPE, 10), (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
         } catch (oError) {
           this.debug('Controller > m/overviewEmployee Main > onPressSearch Error', oError);
 

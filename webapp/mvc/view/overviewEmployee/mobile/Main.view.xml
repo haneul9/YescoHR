@@ -6,8 +6,24 @@
     xmlns:custom="sap.ui.yesco.control">
     <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
         <VBox class="contents">
+            <VBox class="search-area">
+                <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBottom">
+                    <DatePicker width="100%" displayFormat="yyyy" valueFormat="yyyy" value="{/searchConditions/Zyear}" />
+                </HBox>
+                <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBottom">
+                    <ComboBox items="{/entry/Werks}" selectedKey="{/searchConditions/Werks}" change=".onChangeWerks">
+                        <core:Item text="{Pbtxt}" key="{Werks}" />
+                    </ComboBox>
+                </HBox>
+                <HBox justifyContent="SpaceBetween" alignItems="Center">
+                    <ComboBox items="{/entry/Orgeh}" selectedKey="{/searchConditions/Orgeh}">
+                        <core:Item text="{Orgtx}" key="{Orgeh}" />
+                    </ComboBox>
+                    <Button text="{i18n>LABEL_00100}" icon="asset/image/icon_search03.png" iconDensityAware="false" press=".onPressSearch" />
+                </HBox>
+            </VBox>
             <custom:MobileScrollContainer horizontal="false" vertical="true">
-                <grid:CSSGrid gridGap="20px" gridTemplateRows="230px" gridTemplateColumns="1fr" class="mobile-grid-flow-column sapUiSmallMarginTop">
+                <grid:CSSGrid gridGap="20px" gridTemplateRows="repeat(10, 230px)" gridTemplateColumns="1fr" class="sapUiSmallMarginTop">
                     <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A01" type="XML" />
                     <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A02" type="XML" />
                     <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A03" type="XML" />
@@ -18,8 +34,8 @@
                     <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A08" type="XML" />
                     <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A09" type="XML" />
                     <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A10" type="XML" />
-                    <!-- <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A11" type="XML" /> -->
                 </grid:CSSGrid>
+                <!-- <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A11" type="XML" /> -->
             </custom:MobileScrollContainer>
         </VBox>
     </Page>
