@@ -11,7 +11,7 @@
       <HBox class="table-actions">
         <u:FileUploader id="ATTACHFILE_BTN" visible="{/Settings/Editable}" maximumFileSize="{/Settings/maximumFileSize}" fileType="{/Settings/FileTypes}" change=".AttachFileAction.onFileChange" uploadComplete= ".uploadComplete" icon="sap-icon://add" buttonText="{i18n>LABEL_00107}" buttonOnly="true" class="sapUiTinyMarginEnd">
           <u:layoutData>
-            <FlexItemData maxHeight="40px" minHeight="40px" />
+            <FlexItemData maxHeight="40px" styleClass="attachfile-button" />
           </u:layoutData>
         </u:FileUploader>
         <!-- <Button icon="sap-icon://add" text="추가" /> -->

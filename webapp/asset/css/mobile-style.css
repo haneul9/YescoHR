@@ -50,7 +50,7 @@
 .sapUiMedia-StdExt-Phone .contents {margin:0 auto; width:100%; max-width:inherit; min-width:auto; height:100%; padding-top:20px; padding-bottom:10px}
 .sapUiMedia-StdExt-Phone .contents > .sapMVBox + .sapMVBox {border-top:8px solid #ebeef2}
 .sapUiMedia-StdExt-Phone .contents > .header-wrap {padding-top:0}
-.sapUiMedia-StdExt-Phone .contents h2.sapMTitle {display:flex; padding-bottom:8px; margin-bottom:8px; font-size:20px; font-weight:700; border-bottom:1px solid #000}
+.sapUiMedia-StdExt-Phone .contents h2.sapMTitle {display:flex; margin-bottom:8px; padding-bottom:8px; font-size:20px; font-weight:700; border-bottom:1px solid #000}
 
 .sapUiMedia-StdExt-Phone .portlet + .portlet {margin-top:16px}
 .sapUiMedia-StdExt-Phone .portlet.portlet-h1 {max-height:270px; height:270px}
@@ -285,6 +285,7 @@ html.sap-phone .sapMDialog.sapMMessageDialog>footer .sapMFooter-CTX .sapMBtn {-w
 .sapUiSizeCompact .sapMBtn {flex:1; }
 .sapUiSizeCompact .sapMBtn + .sapMBtn {margin-left:8px} 
 .sapUiSizeCompact .sapMBtnInner.sapMBtnText {border-radius:4px}
+.sapUiSizeCompact .table-toolbar .table-actions .sapMBtnInner.sapMBtnText {height:24px}
 .sapUiSizeCompact .search-area .sapMBtnInner.sapMBtnText {border-radius:20px}
 .sapContrast span.sapMBtnInner.sapMBtnEmphasized {background-color:#1D87BD; border-color:#1D87BD; text-shadow:none}
 .sapContrast span.sapMBtnInner.sapMBtnReject {background-color:#FFAAA6; border-color:#FFAAA6; text-shadow:none}
@@ -307,7 +308,7 @@ html.sap-phone .sapMDialog.sapMMessageDialog>footer .sapMFooter-CTX .sapMBtn {-w
 .sapUiMedia-Std-Phone .sapUiLayoutCSSGrid.complex-search .sapMInputBaseIcon {line-height: 2.4rem !important;}
 .sapUiMedia-Std-Phone .sapUiLayoutCSSGrid.complex-search .sapMLabel {min-height: 30px;}
 
-.sapUiMedia-Std-Phone .sapUiLayoutCSSGrid.form-grid {background-color:transparent!important; border-top:0px solid #F5F5F5}
+.sapUiMedia-Std-Phone .sapUiLayoutCSSGrid.form-grid {background-color:transparent!important; border-top:none; border-bottom:none}
 .sapUiLayoutCSSGrid.form-grid > * {height:100%; min-height:48px}
 .sapUiLayoutCSSGrid.form-grid .sapMFlexBox .sapMFlexItem {display:flex; padding-top:0px; min-height:48px!important}
 .sapUiLayoutCSSGrid.form-grid [data-sum=A] { font-size: 18px !important; font-weight: 700 !important;}
@@ -339,14 +340,31 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker .sapMBarRi
 html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker >.sapMDialogSection {height: calc(100% - 73px) !important;}
 html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker .sapMDialogFooter {border-top:1px silid #ddd}
 
-.card-box{border-bottom:8px solid #ebeef2; padding:0 20px}
-.wrap {padding-left:16px!important; padding-right:16px!important}
-.wrap.with-actions {margin-top:0; box-shadow:none; border:none; padding:0}
-.wrap.with-actions .table-toolbar {display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px solid #000; padding-bottom:8px}
-.wrap.with-actions .table-toolbar .title h2.sapMTitle {margin-bottom:0; border-bottom:none; padding-bottom:0}
-.wrap.with-actions .table-toolbar .table-actions .sapMBtnContent {display:none}
-.wrap.with-actions .table-toolbar .title + .table-actions .sapMBtn {min-width:auto}
-.wrap.with-actions .table-toolbar .title + .table-actions .sapMBtn .sapMBtnIcon {margin-right:0}
+.card-box {border-bottom:8px solid #ebeef2; padding:0 20px}
+.wrap {margin-top:0; box-shadow:none; border:none; padding:0 16px!important}
+.wrap .table-toolbar {display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px solid #000; padding-bottom:8px}
+.wrap .table-toolbar .title h2.sapMTitle {margin-bottom:0; border-bottom:none; padding-bottom:0}
+.wrap .table-toolbar .table-actions .sapMBtnContent {display:none}
+.wrap .table-toolbar .title + .table-actions .sapMBtn {min-width:auto}
+.wrap .table-toolbar .title + .table-actions .sapMBtn .sapMBtnIcon {margin-right:0}
+.wrap * + .table-toolbar {margin-top:25px}
+
+/* 첨부파일  */
+[id*=ATTACHBOX].vCardBox {padding:0; border:none; box-shadow:none}
+[id*=ATTACHBOX].vCardBox .sapUiTableCnt {border:none}
+[id*=ATTACHBOX] .table-toolbar {margin-top:25px; height:auto; padding-top:0}
+[id*=ATTACHBOX] h2.sapMTitle {border-bottom:0px solid #000!important; padding-bottom:8px; margin-bottom:8px}
+[id*=ATTACHBOX] .sapUiTableColHdrCnt {display:none}
+[id*=ATTACHBOX] .sapUiTableCCnt tbody tr td:first-child, [id*=ATTACHBOX] .sapUiTableCCnt thead {display:none}
+/* [id*=ATTACHBOX] .sapUiTableCCnt tbody tr, #container-ehr---mobile_congDetail--ATTACHBOX .sapUiTableCCnt .sapUiTableCell {height:36px!important} */
+[id*=ATTACHBOX] .sapUiTableCCnt {min-height:44px !important; border-bottom:0px solid #f5f5f5; border-left:0px solid #f5f5f5; border-right:0px solid #f5f5f5; background-color:transparent}
+[id*=ATTACHBOX] .sapUiTableDataCell {border-right:0 solid #F5F5F5; border-bottom:none}
+[id*=ATTACHBOX] .sapUiTableContentRow .sapUiTableCell {height:48px !important; border-right:0px solid #f5f5f5; border-bottom:0px solid #f5f5f5}
+[id*=ATTACHBOX] .sapMLnk {font-size:16px}
+[id*=ATTACHBOX] .attachfile-button {height:24px}
+[id*=ATTACHBOX] .table-actions .sapMBtnContent {display:none}
+[id*=ATTACHBOX] .table-actions .sapMBtnIcon {margin-right:0}
+[id*=ATTACHBOX] .sapUiTableContentRow.sapUiTableRowSel, [id*=ATTACHBOX] .sapUiTableRowHvr {background-color:transparent!important}
 
 .member-detail .name {font-size:20px; color:#000}
 .member-detail .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem {min-height:20px; color:#666666; font-weight:500}
@@ -381,6 +399,7 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker .sapMDialo
 .sapUiMedia-Std-Phone .search-box + .header-wrap h3.sapMTitle, .sapUiMedia-Std-Phone .header-wrap h3.sapMTitle {font-size:20px; margin-right:10px!important}
 /* .sapUiMedia-Std-Phone .contents .list-wrap {padding-top:20px;} */
 .sapUiMedia-Std-Phone .contents .list-wrap li {min-height:76px; padding:16px; margin-bottom:8px; border:1px solid #E6E6EA; border-radius:8px; box-shadow:0px 2px 2px rgb(0 0 0 / 5%)}
+.sapUiMedia-Std-Phone .contents .list-wrap li:last-child {margin-bottom:0}
 .sapUiMedia-Std-Phone .contents .list-wrap li .sapUiIcon:before {font-size:12.5px}
 
 .sapUiMedia-Std-Phone .sapMPageFooter .sapMIBar {padding:0 12px}
@@ -401,24 +420,8 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker .sapMDialo
 
 .sapUiMedia-Std-Phone .talent-list { padding-left: 20px; padding-right: 20px; }
 
-
-/* 첨부파일  */
-[id*=ATTACHBOX].vCardBox {padding:0; border:none; box-shadow:none; margin-top:20px; padding-top:10px}
-[id*=ATTACHBOX].vCardBox .sapUiTableCnt{padding-top:10px}
-[id*=ATTACHBOX] .table-toolbar {display:flex; border-bottom:1px solid #000; height:auto}
-[id*=ATTACHBOX] h2.sapMTitle{ border-bottom:0px solid #000!important; padding-bottom:8px; margin-bottom:8px}
-[id*=ATTACHBOX] .sapUiTableColHdrCnt {display:none}
-[id*=ATTACHBOX] .sapUiTableCCnt tbody tr td:first-child, [id*=ATTACHBOX] .sapUiTableCCnt thead {display:none}
-[id*=ATTACHBOX] .sapUiTableCCnt tbody tr, #container-ehr---mobile_congDetail--ATTACHBOX .sapUiTableCCnt .sapUiTableCell {height:36px!important}
-[id*=ATTACHBOX] .sapUiTableCCnt {min-height:44px !important; border-bottom:0px solid #f5f5f5; border-left:0px solid #f5f5f5; border-right:0px solid #f5f5f5; background-color:transparent}
-[id*=ATTACHBOX] .sapUiTableDataCell {border-right:0 solid #F5F5F5; border-bottom:none}
-[id*=ATTACHBOX] .sapUiTableContentRow .sapUiTableCell {border-right:0px solid #f5f5f5; border-bottom:0px solid #f5f5f5}
-[id*=ATTACHBOX] .table-actions .sapMBtnContent {display:none}
-[id*=ATTACHBOX] .table-actions .sapMBtnIcon {margin-right:0}
-[id*=ATTACHBOX] .sapUiTableContentRow.sapUiTableRowSel, [id*=ATTACHBOX] .sapUiTableRowHvr {background-color:transparent!important}
-
 .sapUiSizeCompact .sapUiCalContent>.sapUiCalMonthPicker, .sapUiSizeCompact .sapUiCalContent>.sapUiCalYearPicker {width: 100%; top: 0; padding: 0; padding-top: 10px; margin-left: -9.78rem;}
 .sapUiSizeCompact .sapMCb {height:auto}
 .sapUiSizeCompact .sapMCbBg {top:0; left:0}
-
+div.sapUiTableSelectAllCheckBox::after, div.sapUiTableRowSelectionCell::after {width:20px; height:20px}
 

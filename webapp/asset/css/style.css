@@ -323,19 +323,17 @@ html.sap-desktop .sapMBtn:focus>.sapMFocusable { outline:none; outline-offset:-0
 .sapMInputBaseContentWrapper {border-width:1px !important; border-color:var(--BorderColorNormal); border-radius:3px} /* Input, TextArea 공통 */
 .sapMSlt {border-radius:3px}
 .sapMCb .sapMCbBg {border-radius:3px}
-div.sapUiTableSelectAllCheckBox::after, div.sapUiTableRowSelectionCell::after {border-radius:3px}
+div.sapUiTableSelectAllCheckBox::after, div.sapUiTableRowSelectionCell::after {border-width:1px; border-color:var(--BorderColorNormal); border-radius:3px}
 
 /* 공통 Border Option */
 .sapMSltState {border-width:1px}
 .sapMCbBg {border-width:1px} /* CheckBox */
-div.sapUiTableSelectAllCheckBox::after, div.sapUiTableRowSelectionCell::after {border-width:1px} /* Table CheckBox */
 
 /* 공통 Font, Border Color - Normal */
 .sapMComboBox > div {border-color:var(--BorderColorNormal)} /* ComboBox */
 .sapMSlt {border-color:var(--BorderColorNormal)} /* Select */
 .sapMRb .sapMRbB .sapMRbBOut {stroke:var(--BorderColorNormal)} /* Radio */
 .sapMCb .sapMCbBg {border-color:var(--BorderColorNormal)} /* CheckBox */
-div.sapUiTableSelectAllCheckBox::after, div.sapUiTableRowSelectionCell::after {border-color:var(--BorderColorNormal)} /* Table CheckBox */
 
 /* 공통 Font, Border Color - Hover, Active, Focus */
 .sapMInputBaseContentWrapper:hover {border-color:var(--BorderColorHover) !important}
