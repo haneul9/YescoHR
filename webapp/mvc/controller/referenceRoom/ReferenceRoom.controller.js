@@ -104,7 +104,9 @@ sap.ui.define(
               if (vPress === this.getBundleText('LABEL_00103')) {
                 await this.saveForm();
               } else {
-                await this.checkForm('N', mSelectedTree.L1id, mSelectedTree.L2id, mSelectedTree.L3id, mSelectedTree.L4id, mSelectedTree.Werks);
+                const mFormData = oViewModel.getProperty('/FormData');
+
+                await this.checkForm('N', mFormData.L1id, mFormData.L2id, mFormData.L3id, mFormData.L4id, mFormData.Werks);
               }
 
               this.dataSetting(mSelectedTree);
