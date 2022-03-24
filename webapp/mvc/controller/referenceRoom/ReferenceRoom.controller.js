@@ -102,7 +102,10 @@ sap.ui.define(
             }
 
             oViewModel.setProperty('/Settings/Visible', bFileBox);
-            setTimeout(() => $('#container-ehr---refeView--detailForm').addClass('helpPopover'), 200);
+            setTimeout(() => {
+              $('#container-ehr---refeView--detailForm').addClass('helpPopover');
+              $('#container-ehr---refeView--formGrid').addClass('helpPop');
+            }, 200);
           }
         } catch (oError) {
           this.debug(oError);
