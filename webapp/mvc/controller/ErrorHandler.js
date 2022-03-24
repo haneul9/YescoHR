@@ -2,14 +2,16 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/base/Object',
-    'sap/ui/yesco/control/MessageBox',
+    'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/control/MessageBox',
   ],
   (
     // prettier 방지용 주석
     BaseObject,
-    MessageBox,
-    ServiceNames
+    AppUtils,
+    ServiceNames,
+    MessageBox
   ) => {
     'use strict';
 

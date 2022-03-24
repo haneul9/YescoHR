@@ -29,6 +29,11 @@
         <Text text="OFF" />
         <Text text="" />
       </VBox>
+      <VBox data-style="Type18" class="type18">
+        <Label text="1" />
+        <Text text="OFF" />
+        <Text text="" />
+      </VBox>
       <VBox data-style="Type17" class="type17">
         <Label text="2" />
         <Text text="09:00" />
