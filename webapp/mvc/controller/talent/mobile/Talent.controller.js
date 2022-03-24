@@ -176,7 +176,7 @@ sap.ui.define(
 
           this.getView().addEventDelegate({
             onBeforeHide: (evt) => {
-              if (!_.endsWith(evt.toId, 'employee')) oViewModel.setProperty('/isLoaded', false);
+              if (!_.endsWith(evt.toId, 'employee') && !_.endsWith(evt.toId, 'talentCompare')) oViewModel.setProperty('/isLoaded', false);
             },
           });
         }
@@ -256,6 +256,7 @@ sap.ui.define(
             .join('|')
             .value();
 
+          oViewModel.setProperty('/isLoaded', true);
           this.getRouter().navTo('mobile/m/talent-compare', { pernrs: aPernr });
         } catch (oError) {
           this.debug('Controller > Talent Mobile > onPressCompare Error', oError);

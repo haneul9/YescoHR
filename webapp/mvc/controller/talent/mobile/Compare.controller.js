@@ -21,6 +21,7 @@ sap.ui.define(
       initializeModel() {
         return {
           busy: false,
+          isLoaded: false,
           compare: {
             data: [
               {
@@ -43,8 +44,37 @@ sap.ui.define(
         };
       },
 
+      bindScrollSync() {
+        setTimeout(() => {
+          const oBlockLayout = this.byId('BlockLayout');
+          const sBlockId = oBlockLayout.getId();
+          const $lastBlock = $(`#${sBlockId} > div`);
+
+          $lastBlock.each(function () {
+            $(this).off('scroll touchmove mousewheel');
+          });
+
+          $lastBlock.each(function () {
+            $(this).on('scroll touchmove mousewheel', function () {
+              const iScrollLeft = $(this).scrollLeft();
+
+              $lastBlock.not(this).each(function () {
+                $(this).scrollLeft(iScrollLeft);
+              });
+            });
+          });
+        }, 300);
+      },
+
       async onObjectMatched(oParameter) {
         const oViewModel = this.getViewModel();
+        const bIsLoaded = oViewModel.getProperty('/isLoaded');
+
+        if (bIsLoaded) {
+          this.bindScrollSync();
+
+          return;
+        }
 
         oViewModel.setData(this.initializeModel());
         oViewModel.setProperty('/busy', true);
@@ -65,7 +95,7 @@ sap.ui.define(
                   return {
                     colorSet: i % 2 === 0 ? 'ColorSet2' : 'ColorSet1',
                     align: 'Start',
-                    value01: [{ image: _.isEmpty(o.Picurl) ? 'asset/image/avatar-unknown.svg' : o.Picurl }, { text: o.Value01 }],
+                    value01: [{ pernr: o.Pernr, image: _.isEmpty(o.Picurl) ? 'asset/image/avatar-unknown.svg' : o.Picurl }, { text: o.Value01 }],
                     value02: _.chain(o.Value02)
                       .split('<br>')
                       .map((d) => ({ text: d }))
@@ -129,26 +159,27 @@ sap.ui.define(
           AppUtils.handleError(oError);
         } finally {
           setTimeout(() => oViewModel.setProperty('/busy', false), 200);
-          setTimeout(() => {
-            const oBlockLayout = this.byId('BlockLayout');
-            const sBlockId = oBlockLayout.getId();
-            const $lastBlock = $(`#${sBlockId} > div`);
+          this.bindScrollSync();
 
-            $lastBlock.each(function () {
-              $(this).off('scroll touchmove mousewheel');
-            });
-
-            $lastBlock.each(function () {
-              $(this).on('scroll touchmove mousewheel', function () {
-                const iScrollLeft = $(this).scrollLeft();
-
-                $lastBlock.not(this).each(function () {
-                  $(this).scrollLeft(iScrollLeft);
-                });
-              });
-            });
-          }, 300);
+          this.getView().addEventDelegate({
+            onBeforeHide: (evt) => {
+              if (!_.endsWith(evt.toId, 'employee')) oViewModel.setProperty('/isLoaded', false);
+            },
+          });
         }
+      },
+
+      onPressPic(oEvent) {
+        const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
+
+        this.navEmployee(mRowData.pernr);
+      },
+
+      navEmployee(sPernr) {
+        if (!sPernr) return;
+
+        this.getViewModel().setProperty('/isLoaded', true);
+        this.getRouter().navTo('mobile/employee', { pernr: sPernr });
       },
     });
   }
