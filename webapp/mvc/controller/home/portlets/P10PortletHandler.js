@@ -88,21 +88,28 @@ sap.ui.define(
 
       transformContentData(aPortletContentData = []) {
         const aColors = ['#f5a369', '#faca74', '#b7c983', '#5ac6b2', '#5aa7c6', '#9a8db7', '#9a8db7'];
-        const aSortedData = _.orderBy(aPortletContentData.AppraisalContDetSet.results, ['Fwgt', 'Z101', 'ElementId'], ['desc', 'asc', 'asc']);
+        const aSortedData = _.chain(aPortletContentData.AppraisalContDetSet.results)
+          .map((o) => _.set(o, 'Fwgt', _.toNumber(o.Fwgt)))
+          .orderBy(['Fwgt', 'Z101', 'ElementId'], ['desc', 'asc', 'asc']);
         const aChartData = _.chain(aSortedData)
           .cloneDeep()
-          .map((o, i) => ({ label: o.Obj0, color: aColors[i], value: _.toNumber(o.Fwgt) }))
+          .map((o, i) => ({ label: o.Obj0, color: aColors[i], value: o.Fwgt }))
           .reverse()
           .value();
         const aList = _.chain(aSortedData)
           .map((o, i) => ({
             Color: _.toString(++i),
-            Itext: o.Obj0,
+            Itext: _.truncate(o.Obj0, { length: 35 }),
             Perce: _.toNumber(o.Fwgt),
             Acode: o.Z111,
             Atext: o.Z111Tx,
           }))
           .value();
+
+        const iPercSum = _.sumBy(aChartData, 'value');
+        if (_.sumBy(aChartData, 'value') !== 100) {
+          aChartData.splice(0, 0, { label: 'N/A', color: '#F7F7F7', value: 100 - iPercSum });
+        }
 
         if (this.oChartPromise) {
           this.oChartPromise.then(() => {
