@@ -1,6 +1,8 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.referenceRoom.ReferenceRoom"
-  xmlns:mvc="sap.ui.core.mvc"
   xmlns="sap.m"
-  xmlns:core="sap.ui.core" displayBlock="true" height="100%" busyIndicatorDelay="0">
-  <core:Fragment fragmentName="sap.ui.yesco.mvc.view.referenceRoom.ReferenceRoom" type="XML" />
+  xmlns:core="sap.ui.core"
+  xmlns:mvc="sap.ui.core.mvc">
+  <Page class="popup-view sapUiSmallMarginTop" showHeader="false">
+    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.referenceRoom.ReferenceMain" type="XML" />
+  </Page>
 </mvc:View>

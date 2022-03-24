@@ -1,41 +1,8 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.referenceRoom.ReferenceRoom"
   xmlns="sap.m"
   xmlns:core="sap.ui.core"
-  xmlns:mvc="sap.ui.core.mvc"
-  xmlns:custom="sap.ui.yesco.control">
+  xmlns:mvc="sap.ui.core.mvc">
   <Page showHeader="false">
-    <VBox class="contents-header">
-      <HBox justifyContent="SpaceBetween" class="breadcrumbs">
-        <custom:Breadcrumbs />
-        <HBox>
-          <Button text="{i18n>LABEL_00108}" type="Emphasized" press=".onFixedBtn" visible="{= ${/Fixed} &amp;&amp; !${/UserFixed} &amp;&amp; ${/Hass} }" />
-          <Button text="{i18n>LABEL_00103}" type="Emphasized" press=".onSaveBtn" visible="{= ${/Fixed} &amp;&amp; ${/UserFixed} &amp;&amp; ${/Hass} }" />
-          <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
-          <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
-        </HBox>
-      </HBox>
-    </VBox>
-    <HBox class="contents" justifyContent="SpaceBetween">
-      <VBox class="vCardBox sapUiSmallMarginEnd sticky-side-tree" height="80vh" width="25%">
-        <ScrollContainer height="75vh" width="100%" vertical="true">
-          <Tree id="ReferenceTree" mode="SingleSelectMaster" selectionChange=".onSelectTree" items="{/ReferenceList}">
-            <layoutData>
-              <FlexItemData growFactor="1" />
-            </layoutData>
-            <CustomTreeItem>
-              <HBox>
-                <Image src="asset/image/icon_tree_node02.svg" visible="{= ${Folder} !== 'X' }" width="16px" height="16px" />
-                <Text text="{title}"/>
-              </HBox>
-            </CustomTreeItem>
-          </Tree>
-        </ScrollContainer>
-      </VBox>
-      <VBox class="mt-0" width="74%" visible="{= !!${/FormData/title} }">
-        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.referenceRoom.fragment.Hass" type="XML" />
-        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.referenceRoom.fragment.Ess" type="XML" />
-        <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
-      </VBox>
-    </HBox>
+    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.referenceRoom.ReferenceMain" type="XML" />
   </Page>
 </mvc:View>

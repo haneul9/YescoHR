@@ -35,6 +35,7 @@ sap.ui.define(
         return {
           busy: false,
           Fixed: false,
+          popover: true,
           UserFixed: false,
           Hass: this.isHass(),
           FormData: {},
@@ -80,6 +81,7 @@ sap.ui.define(
             const mDetailData = aFormData[0] || {};
             const oViewModel = this.getViewModel();
 
+            oViewModel.setProperty('/popover', false);
             oViewModel.setProperty('/FormData', {
               ...mDetailData,
               title: '11',
