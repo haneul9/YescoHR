@@ -49,6 +49,8 @@
             </VBox>
           </grid:CSSGrid>
           <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
+          <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.ApplyInfo" type="XML" />
+          <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.ApprovalDetails" type="XML" />
         </VBox>
       </custom:MobileScrollContainer>
     </VBox>
