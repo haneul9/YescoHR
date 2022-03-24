@@ -3,7 +3,8 @@
     "files": [
       "index.html",
       "Component-preload.js",
-      "asset/css/*.css"
+      "asset/css/**",
+      "asset/image/**"
     ],
     "conn_usestrictssl" : false,
     "conn_server": "https://yeshrsapdev.yescoholdings.com:8443/",
