@@ -389,7 +389,7 @@ sap.ui.define(
 
           const mFormData = oViewModel.getProperty('/FormData');
 
-          await this.checkForm('C', mFormData.Werks, mFormData.L1id, mFormData.L2id, mFormData.L3id, mFormData.L4id);
+          await this.checkForm('C', mFormData.L1id, mFormData.L2id, mFormData.L3id, mFormData.L4id, mFormData.Werks);
 
           oViewModel.setProperty('/UserFixed', true);
           this.settingsAttachTable();
