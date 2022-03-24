@@ -87,7 +87,7 @@ sap.ui.define(
       },
 
       transformContentData(aPortletContentData = []) {
-        const aColors = ['#f5a369', '#faca74', '#b7c983', '#5ac6b2', '#5aa7c6', '#9a8db7', '#659d36', '#67a4ff', '#CCE5FF', '#FCCCD4'];
+        const aColors = ['#f5a369', '#faca74', '#b7c983', '#5ac6b2', '#5aa7c6', '#9a8db7', '#336699', '#67a4ff', '#CCE5FF', '#FCCCD4'];
         const aSortedData = _.chain(aPortletContentData.AppraisalContDetSet.results)
           .map((o) => _.set(o, 'Fwgt', _.toNumber(o.Fwgt)))
           .orderBy(['Fwgt', 'Z101', 'ElementId'], ['desc', 'asc', 'asc']);

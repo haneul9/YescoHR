@@ -18,7 +18,7 @@
                                 <VBox alignItems="{align}" items="{path: 'value01', templateShareable: false}">
                                     <VBox>
                                         <Label text="{label}" visible="{= !!${label} }" />
-                                        <Image src="{image}" width="80px" visible="{= !!${image} }" />
+                                        <Image src="{image}" width="80px" visible="{= !!${image} }" press=".onPressPic" />
                                         <Text text="{text}" class="font-12-px" visible="{= !!${text} }" />
                                     </VBox>
                                 </VBox>
