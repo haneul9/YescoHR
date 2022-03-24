@@ -24,7 +24,7 @@
             </layoutData>
             <CustomTreeItem>
               <HBox>
-                <Image src="asset/image/icon_tree_node02.svg" visible="{= ${Folder} === 'X' }" width="16px" height="16px" />
+                <Image src="asset/image/icon_tree_node02.svg" visible="{= ${Folder} !== 'X' }" width="16px" height="16px" />
                 <Text text="{title}"/>
               </HBox>
             </CustomTreeItem>
