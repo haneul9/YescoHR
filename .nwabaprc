@@ -2,8 +2,7 @@
     "base": "./dist",
     "files": [
       "index.html",
-      "Component-preload.js",
-      "resources\\sap-ui-version.json"
+      "Component-preload.js"
     ],
     "conn_usestrictssl" : false,
     "conn_server": "https://yeshrsapdev.yescoholdings.com:8443/",
