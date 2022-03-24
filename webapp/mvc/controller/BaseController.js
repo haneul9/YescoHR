@@ -215,7 +215,6 @@ sap.ui.define(
           return;
         }
 
-        debugger;
         window.open(`${location.host}/index.html#/referenceRoom/${currentMenu.L1id}/${currentMenu.L2id}/${currentMenu.L3id}/${currentMenu.L4id}`, '_blank', 'width=1300,height=800');
       },
 
