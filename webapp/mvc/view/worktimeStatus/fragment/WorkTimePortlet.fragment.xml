@@ -4,6 +4,8 @@
     <HBox class="title mb-10-px">
       <Title level="H2" text="{i18n>LABEL_32003}" />
     </HBox>
-    <core:HTML content='&lt;div id="chart-bar-container"&gt;&lt;/div&gt;' />
+    <HBox height="250px">
+      <core:HTML content='&lt;div id="chart-bar-container"&gt;&lt;/div&gt;' />
+    </HBox>
   </VBox>
 </core:FragmentDefinition>

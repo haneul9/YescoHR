@@ -287,7 +287,7 @@ sap.ui.define(
               type: 'mscolumn2d',
               renderAt: 'chart-bar-container',
               width: '100%',
-              height: '400px',
+              height: '100%',
               dataFormat: 'json',
               dataSource: {
                 chart: this.getDialChartOption(),
