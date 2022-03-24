@@ -25,7 +25,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.overviewAttendance.Main', {
+    return BaseController.extend('sap.ui.yesco.mvc.controller.overviewAttendance.mobile.Main', {
       initializeModel() {
         return {
           busy: false,
@@ -45,10 +45,10 @@ sap.ui.define(
             A04: { busy: false, Headty: '', data: {} },
             A05: { busy: false, Headty: '' },
             A06: { busy: false, Headty: '' },
-            A07: { busy: false, Headty: '' },
+            // A07: { busy: false, Headty: '' },
             A08: { busy: false, Headty: '', data: {} },
             A09: { busy: false, Headty: '', data: {} },
-            A10: { busy: false, Headty: '' },
+            // A10: { busy: false, Headty: '' },
           },
           dialog: {
             busy: false,
@@ -81,9 +81,9 @@ sap.ui.define(
           const oModel = this.getModel(ServiceNames.WORKTIME);
           const mFilters = oViewModel.getProperty('/searchConditions');
 
-          _.forEach(ChartsSetting.CHART_TYPE, (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
+          _.forEach(_.take(ChartsSetting.CHART_TYPE, 8), (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
         } catch (oError) {
-          this.debug('Controller > m/overviewAttendance Main > onObjectMatched Error', oError);
+          this.debug('Controller > mobile/m/overviewAttendance Main > onObjectMatched Error', oError);
 
           AppUtils.handleError(oError);
         }
@@ -92,7 +92,7 @@ sap.ui.define(
       setAllBusy(bBusy) {
         const oViewModel = this.getViewModel();
 
-        _.times(10).forEach((idx) => oViewModel.setProperty(`/contents/A${_.padStart(++idx, 2, '0')}/busy`, bBusy));
+        _.times(8).forEach((idx) => oViewModel.setProperty(`/contents/A${_.padStart(++idx, 2, '0')}/busy`, bBusy));
       },
 
       async buildChart(oModel, mFilters, mChartInfo) {
@@ -368,7 +368,7 @@ sap.ui.define(
             _.map(aDetailData, (o, i) => ({ Idx: ++i, ...o }))
           );
         } catch (oError) {
-          this.debug('Controller > m/overviewAttendance Main > callDetail Error', oError);
+          this.debug('Controller > mobile/m/overviewAttendance Main > callDetail Error', oError);
 
           AppUtils.handleError(oError, {
             onClose: () => oDialog.close(),
@@ -395,7 +395,7 @@ sap.ui.define(
           oViewModel.setProperty('/entry/Orgeh', aOrgehEntry);
           oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
         } catch (oError) {
-          this.debug('Controller > m/overviewAttendance Main > onPressSearch Error', oError);
+          this.debug('Controller > mobile/m/overviewAttendance Main > onPressSearch Error', oError);
 
           AppUtils.handleError(oError);
         }
@@ -412,9 +412,9 @@ sap.ui.define(
 
           _.set(mFilters, 'Datum', moment(mFilters.Datum).hours(9).toDate());
 
-          _.forEach(ChartsSetting.CHART_TYPE, (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
+          _.forEach(_.take(ChartsSetting.CHART_TYPE, 8), (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
         } catch (oError) {
-          this.debug('Controller > m/overviewAttendance Main > onPressSearch Error', oError);
+          this.debug('Controller > mobile/m/overviewAttendance Main > onPressSearch Error', oError);
 
           AppUtils.handleError(oError);
         }
@@ -476,7 +476,7 @@ sap.ui.define(
             _.map(aDetailData, (o, i) => ({ Idx: ++i, ...o }))
           );
         } catch (oError) {
-          this.debug('Controller > m/overviewAttendance Main > onPressEmployee2Row Error', oError);
+          this.debug('Controller > mobile/m/overviewAttendance Main > onPressEmployee2Row Error', oError);
 
           AppUtils.handleError(oError, {
             onClose: () => oDialog.close(),
@@ -506,7 +506,7 @@ sap.ui.define(
             _.map(aDetailData, (o, i) => ({ Idx: ++i, ...o }))
           );
         } catch (oError) {
-          this.debug('Controller > m/overviewAttendance Main > onPressEmployee3Row Error', oError);
+          this.debug('Controller > mobile/m/overviewAttendance Main > onPressEmployee3Row Error', oError);
 
           AppUtils.handleError(oError, {
             onClose: () => oDialog.close(),
@@ -533,7 +533,7 @@ sap.ui.define(
 
 // eslint-disable-next-line no-unused-vars
 function callDetail(sArgs) {
-  const oController = sap.ui.getCore().byId('container-ehr---m_overviewAttendance').getController();
+  const oController = sap.ui.getCore().byId('container-ehr---mobile_m_overviewAttendance').getController();
   const aProps = ['Headty', 'Discod'];
   const aArgs = _.split(sArgs, ',');
   const mPayload = _.zipObject(_.take(aProps, aArgs.length), aArgs);

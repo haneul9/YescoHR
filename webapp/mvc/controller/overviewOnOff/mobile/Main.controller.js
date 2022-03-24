@@ -7,7 +7,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/controller/overviewEmployee/constants/ChartsSetting',
+    'sap/ui/yesco/mvc/controller/overviewOnOff/constants/ChartsSetting',
     'sap/ui/yesco/mvc/model/type/Date',
     'sap/ui/yesco/mvc/model/type/Decimal',
   ],
@@ -23,7 +23,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.overviewEmployee.mobile.Main', {
+    return BaseController.extend('sap.ui.yesco.mvc.controller.overviewOnOff.mobile.Main', {
       initializeModel() {
         return {
           busy: false,
@@ -37,17 +37,12 @@ sap.ui.define(
             Orgeh: [],
           },
           contents: {
-            A01: { busy: false, data: {} },
-            A02: { busy: false, data: {} },
-            A03: { busy: false, data: [] },
-            A04: { busy: false, data: [] },
-            A05: { busy: false, data: {} },
-            A06: { busy: false, data: {} },
-            A07: { busy: false, data: [] },
-            A08: { busy: false, data: [] },
-            A09: { busy: false, data: {} },
-            A10: { busy: false },
-            // A11: { busy: false },
+            A01: { busy: false, hasLink: true, data: {} },
+            A02: { busy: false, hasLink: true, data: { total: 0, legends: [] } },
+            // A03: { busy: false, hasLink: false, data: { headty: 'D', raw: [] } },
+            A04: { busy: false, hasLink: true, data: { total: 0, legends: [] } },
+            A05: { busy: false, hasLink: true, data: { total: 0, legends: [] } },
+            // A06: { busy: false, hasLink: false, data: { headty: 'E', raw: [] } },
           },
           dialog: {
             busy: false,
@@ -78,12 +73,9 @@ sap.ui.define(
           const oModel = this.getModel(ServiceNames.PA);
           const mFilters = oViewModel.getProperty('/searchConditions');
 
-          _.chain(ChartsSetting.CHART_TYPE)
-            .take(10)
-            .forEach((o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0))
-            .commit();
+          _.forEach(_.take(ChartsSetting.CHART_TYPE, 4), (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
         } catch (oError) {
-          this.debug('Controller > mobile/m/overviewEmployee Main > onObjectMatched Error', oError);
+          this.debug('Controller > mobile/m/overviewOnOff Main > onObjectMatched Error', oError);
 
           AppUtils.handleError(oError);
         }
@@ -92,128 +84,151 @@ sap.ui.define(
       setAllBusy(bBusy) {
         const oViewModel = this.getViewModel();
 
-        _.times(10).forEach((idx) => oViewModel.setProperty(`/contents/A${_.padStart(++idx, 2, '0')}/busy`, bBusy));
+        _.times(4).forEach((idx) => oViewModel.setProperty(`/contents/A${_.padStart(++idx, 2, '0')}/busy`, bBusy));
       },
 
       async buildChart(oModel, mFilters, mChartInfo) {
         const oViewModel = this.getViewModel();
-        const aChartDatas = await Client.getEntitySet(oModel, 'HeadCountOverview', { ...mFilters, Headty: mChartInfo.Headty });
+        const aChartDatas = await Client.getEntitySet(oModel, mChartInfo.EntityType, { ...mFilters, Headty: mChartInfo.Headty });
         const vDataObject = oViewModel.getProperty(`/contents/${mChartInfo.Target}/data`);
         const mChartSetting = _.chain(ChartsSetting.CHART_OPTIONS).get(mChartInfo.Chart).cloneDeep().value();
 
         oViewModel.setProperty(`/contents/${mChartInfo.Target}/Headty`, mChartInfo.Headty);
+        oViewModel.setProperty(`/contents/${mChartInfo.Target}/busy`, false);
 
-        if (!_.isUndefined(vDataObject)) {
-          if (_.isArray(vDataObject)) {
-            oViewModel.setProperty(
-              `/contents/${mChartInfo.Target}/data`,
-              _.map(aChartDatas, (o, i) => ({ ...o, Type: `type${_.padStart(++i, 2, '0')}` }))
-            );
-          } else {
+        switch (mChartInfo.Chart) {
+          case 'none':
             oViewModel.setProperty(
               `/contents/${mChartInfo.Target}/data`,
               _.chain(vDataObject)
                 .tap((obj) => _.forEach(mChartInfo.Fields, (o) => _.set(obj, o.prop, _.get(aChartDatas, o.path))))
                 .value()
             );
-          }
-        }
 
-        oViewModel.setProperty(`/contents/${mChartInfo.Target}/busy`, false);
+            break;
+          case 'stackedcolumn2d-S':
+            const aLegends = _.chain(aChartDatas)
+              .head()
+              .pickBy((v, p) => _.startsWith(p, 'Leg') && !_.isEmpty(v))
+              .values()
+              .map((v, i) => ({
+                label: v,
+                count: _.get(aChartDatas, [0, `Cnt${_.padStart(i + 1, 2, '0')}`]),
+                color: ChartsSetting.COLORS[i],
+                code: _.get(aChartDatas, [0, `Cod${_.padStart(i + 1, 2, '0')}`]),
+                value: _.get(aChartDatas, [0, `Cnt${_.padStart(i + 1, 2, '0')}`]),
+                type: `type${_.padStart(i + 1, 2, '0')}`,
+              }))
+              .value();
 
-        switch (mChartInfo.Chart) {
-          case 'column2d':
+            oViewModel.setProperty(`/contents/${mChartInfo.Target}/data/total`, _.get(aChartDatas, [0, 'Total']));
+            oViewModel.setProperty(`/contents/${mChartInfo.Target}/data/legends`, aLegends);
+
             _.chain(mChartSetting)
-              // .set(['chart', 'yAxisMaxValue'], '200')
+              .set(['categories', 0, 'category', 0], { label: _.get(aChartDatas, [0, 'Ttltxt']) })
               .set(
-                ['data'],
-                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callDetail-${mChartInfo.Headty},${o.Cod01}` }))
+                'dataset',
+                _.chain(aLegends)
+                  .cloneDeep()
+                  .reverse()
+                  .map((o) => ({ seriesname: o.label, color: o.color, data: [{ value: o.value, link: `j-callDetail-${mChartInfo.Headty},${o.code}` }] }))
+                  .value()
               )
               .commit();
 
             this.callFusionChart(mChartInfo, mChartSetting);
 
             break;
-          case 'hled':
-            if (aChartDatas.length > 2) aChartDatas.shift();
+          case 'stackedcolumn2d':
+            oViewModel.setProperty(`/contents/${mChartInfo.Target}/data/raw`, aChartDatas);
 
-            const iFirstValue = _.chain(aChartDatas).get([0, mChartInfo.UsedProp]).parseInt().value();
-            const iSecondValue = _.chain(aChartDatas).get([1, mChartInfo.UsedProp]).parseInt().value();
-            const sLimitValue = _.isEmpty(mChartInfo.Limit) ? _.chain(iFirstValue).add(iSecondValue).toString().value() : '100';
+            const aDataSet = _.chain(aChartDatas)
+              .head()
+              .pickBy((v, p) => _.startsWith(p, 'Leg') && !_.isEmpty(v))
+              .values()
+              .map((v, i) => ({
+                label: v,
+                color: ChartsSetting.COLORS[i],
+                code: _.get(aChartDatas, [0, `Cod${_.padStart(i + 1, 2, '0')}`]),
+                values: _.chain(aChartDatas)
+                  .map((o) => ({
+                    value: _.chain(o)
+                      .pick(`Cnt${_.padStart(i + 1, 2, '0')}`)
+                      .values()
+                      .head()
+                      .value(),
+                  }))
+                  .value(),
+              }))
+              .value();
 
             _.chain(mChartSetting)
-              .set(['chart', 'upperLimit'], sLimitValue)
-              .set(['value'], sLimitValue)
-              .tap((o) => {
-                _.chain(o)
-                  .set(['colorrange', 'color', 0, 'code'], '#7BB4EB')
-                  .set(['colorrange', 'color', 1, 'code'], '#FFAAAA')
-                  .set(['colorrange', 'color', 0, 'minvalue'], '0')
-                  .set(['colorrange', 'color', 0, 'maxvalue'], _.toString(iFirstValue))
-                  .set(['colorrange', 'color', 1, 'minvalue'], _.toString(iFirstValue + 1))
-                  .commit();
-
-                if (mChartInfo.RangeCount === 3) {
-                  _.chain(o)
-                    .set(['colorrange', 'color', 2, 'code'], '#ededed')
-                    .set(['colorrange', 'color', 1, 'maxvalue'], _.toString(_.add(iFirstValue, iSecondValue)))
-                    .set(['colorrange', 'color', 2, 'minvalue'], _.toString(_.add(iFirstValue, iSecondValue) + 1))
-                    .set(['colorrange', 'color', 2, 'maxvalue'], sLimitValue)
-                    .commit();
-                } else if (mChartInfo.RangeCount === 2) {
-                  _.chain(o).set(['colorrange', 'color', 1, 'maxvalue'], sLimitValue).commit();
-                }
-              })
-              .commit();
-
-            this.callFusionChart(mChartInfo, mChartSetting);
-
-            break;
-          case 'bar2d':
-            _.chain(mChartSetting)
-              // .set(['chart', 'yAxisMaxValue'], '120')
-              .set(
-                ['data'],
-                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callDetail-${mChartInfo.Headty},${o.Cod01}` }))
-              )
-              .commit();
-
-            this.callFusionChart(mChartInfo, mChartSetting);
-
-            break;
-          case 'doughnut2d':
-            _.chain(mChartSetting)
-              .set(['chart', 'paletteColors'], _.chain(ChartsSetting.COLORS).take(aChartDatas.length).join(',').value())
-              .set(
-                ['data'],
-                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01 }))
-              )
-              .commit();
-
-            this.callFusionChart(mChartInfo, mChartSetting);
-
-            break;
-          case 'mscolumn2d':
-            _.chain(mChartSetting)
-              // .set(['data', 'chart', 'yAxisMaxValue'], '60')
               .set(
                 ['categories', 0, 'category'],
                 _.map(aChartDatas, (o) => ({ label: o.Ttltxt }))
               )
-              .set(['dataset', 0], {
-                seriesname: this.getBundleText('LABEL_28025'), // 임원 1인당 직원수 (팀장포함)
-                color: '#7BB4EB',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01, link: `j-callDetail-${mChartInfo.Headty},A,${o.Ttltxt}` })),
-              })
-              .set(['dataset', 1], {
-                seriesname: this.getBundleText('LABEL_28026'), // 팀장 1인당 직원수
-                color: '#FFE479',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02, link: `j-callDetail-${mChartInfo.Headty},BA,${o.Ttltxt}` })),
-              })
+              .set(
+                'dataset',
+                _.chain(aDataSet)
+                  .reverse()
+                  .map((o) => ({ seriesname: o.label, color: o.color, data: _.map(o.values, (v, i) => ({ ...v, showValue: _.gt(v.value, mChartInfo.minDisplayValue) ? 1 : 0, link: `j-callDetail-${mChartInfo.Headty},${o.code},${_.get(aChartDatas, [i, 'Ttltxt'])}` })) }))
+                  .value()
+              )
               .commit();
 
             this.callFusionChart(mChartInfo, mChartSetting);
 
+            break;
+          case 'msstackedcolumn2dlinedy':
+            oViewModel.setProperty(`/contents/${mChartInfo.Target}/data/raw`, aChartDatas);
+
+            const aDataSet2 = _.chain(aChartDatas)
+              .head()
+              .pickBy((v, p) => _.startsWith(p, 'Leg') && !_.isEmpty(v))
+              .values()
+              .map((v, i) => ({
+                label: v,
+                color: ChartsSetting.COLORS[i],
+                code: _.get(aChartDatas, [0, `Cod${_.padStart(i + 1, 2, '0')}`]),
+                values: _.chain(aChartDatas)
+                  .map((o) => ({
+                    value: _.chain(o)
+                      .pick(`Cnt${_.padStart(i + 1, 2, '0')}`)
+                      .values()
+                      .head()
+                      .value(),
+                  }))
+                  .value(),
+              }))
+              .value();
+
+            _.chain(mChartSetting)
+              .set(
+                ['categories', 0, 'category'],
+                _.map(aChartDatas, (o) => ({ label: o.Ttltxt }))
+              )
+              .set(
+                ['dataset', 0, 'dataset'],
+                _.chain(aDataSet2)
+                  .reverse()
+                  .map((o) => ({ seriesname: o.label, color: o.color, data: _.map(o.values, (v, i) => ({ ...v, showValue: _.gt(v.value, mChartInfo.minDisplayValue) ? 1 : 0, link: `j-callDetail-${mChartInfo.Headty},${o.code},${_.get(aChartDatas, [i, 'Ttltxt'])}` })) }))
+                  .value()
+              )
+              .set(['lineset', 0], {
+                seriesname: 'Total',
+                showValues: '1',
+                valuePosition: 'ABOVE',
+                color: '#333333',
+                anchorAlpha: 30,
+                anchorBgColor: '#333333',
+                includeInLegend: 0,
+                anchorBorderThickness: '0',
+                lineThickness: '0.5',
+                data: _.map(aChartDatas, (o) => ({ value: o.Total2 })),
+              })
+              .commit();
+
+            this.callFusionChart(mChartInfo, mChartSetting);
             break;
           default:
             break;
@@ -223,19 +238,38 @@ sap.ui.define(
       callFusionChart(mChartInfo, mChartSetting) {
         if (_.isEmpty(mChartSetting)) return;
 
-        const sChartId = `employee-${_.toLower(mChartInfo.Target)}-chart`;
+        const sChartId = `employeeOnOff-${_.toLower(mChartInfo.Target)}-chart`;
 
         if (!FusionCharts(sChartId)) {
           FusionCharts.ready(() => {
             new FusionCharts({
               id: sChartId,
-              type: mChartInfo.Chart,
+              type: _.replace(mChartInfo.Chart, '-S', ''),
               renderAt: `${sChartId}-container`,
               width: '100%',
               height: '100%',
               dataFormat: 'json',
               dataSource: mChartSetting,
             }).render();
+
+            FusionCharts.addEventListener('rendered', function () {
+              if (mChartInfo.Target === 'A06' || mChartInfo.Target === 'A03') {
+                $(`#employeeOnOff-${_.toLower(mChartInfo.Target)}-chart g[class$="-parentgroup"] > g[class$="-sumlabels"] > g[class$="-sumlabels"] > text`).each(function (idx) {
+                  $(this)
+                    .off('click')
+                    .on('click', function () {
+                      const oController = sap.ui.getCore().byId('container-ehr---m_overviewOnOff').getController();
+                      const oViewModel = oController.getViewModel();
+                      const sHeadty = oViewModel.getProperty(`/contents/${mChartInfo.Target}/data/headty`);
+                      const sDisyear = oViewModel.getProperty(`/contents/${mChartInfo.Target}/data/raw/${idx}/Ttltxt`);
+                      const mPayload = _.zipObject(['Headty', 'Discod', 'Disyear'], [sHeadty, 'all', sDisyear]);
+
+                      oController.openDetailDialog(mPayload);
+                    })
+                    .addClass('active-link');
+                });
+              }
+            });
           });
         } else {
           const oChart = FusionCharts(sChartId);
@@ -268,7 +302,7 @@ sap.ui.define(
           if (!this.oDetailDialog) {
             this.oDetailDialog = await Fragment.load({
               id: oView.getId(),
-              name: 'sap.ui.yesco.mvc.view.overviewEmployee.fragment.DialogDetail',
+              name: 'sap.ui.yesco.mvc.view.overviewOnOff.fragment.DialogDetail',
               controller: this,
             });
 
@@ -278,7 +312,7 @@ sap.ui.define(
           this.oDetailDialog.open();
 
           const mSearchConditions = oViewModel.getProperty('/searchConditions');
-          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'HeadCountDetail', { ...mSearchConditions, ...mPayload });
+          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.PA), _.get(mPayload, 'Entity') === 'A' ? 'HeadCountDetail' : 'HeadCountEntRetDetail', { ...mSearchConditions, ..._.omit(mPayload, 'Entity') });
 
           oViewModel.setProperty('/dialog/rowCount', Math.min(aDetailData.length, 12));
           oViewModel.setProperty('/dialog/totalCount', _.size(aDetailData));
@@ -288,14 +322,14 @@ sap.ui.define(
           );
           oViewModel.setProperty('/dialog/busy', false);
         } catch (oError) {
-          this.debug('Controller > mobile/m/overviewEmployee Main > openDetailDialog Error', oError);
+          this.debug('Controller > mobile/m/overviewOnOff Main > openDetailDialog Error', oError);
 
           AppUtils.handleError(oError, {
             onClose: () => this.oDetailDialog.close(),
           });
         } finally {
           $('#fusioncharts-tooltip-element').hide();
-          if (this.byId('overviewEmpDetailTable')) this.byId('overviewEmpDetailTable').setFirstVisibleRow();
+          if (this.byId('overviewOnOffDetailTable')) this.byId('overviewOnOffDetailTable').setFirstVisibleRow();
         }
       },
 
@@ -315,7 +349,7 @@ sap.ui.define(
           oViewModel.setProperty('/entry/Orgeh', aOrgehEntry);
           oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
         } catch (oError) {
-          this.debug('Controller > mobile/m/overviewEmployee Main > onPressSearch Error', oError);
+          this.debug('Controller > m/overviewEmployee Main > onPressSearch Error', oError);
 
           AppUtils.handleError(oError);
         }
@@ -330,9 +364,9 @@ sap.ui.define(
           const oModel = this.getModel(ServiceNames.PA);
           const mFilters = oViewModel.getProperty('/searchConditions');
 
-          _.forEach(_.take(ChartsSetting.CHART_TYPE, 10), (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
+          _.forEach(_.take(ChartsSetting.CHART_TYPE, 4), (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
         } catch (oError) {
-          this.debug('Controller > mobile/m/overviewEmployee Main > onPressSearch Error', oError);
+          this.debug('Controller > mobile/m/overviewOnOff Main > onPressSearch Error', oError);
 
           AppUtils.handleError(oError);
         }
@@ -358,9 +392,9 @@ sap.ui.define(
       },
 
       onPressDetailExcelDownload() {
-        const oTable = this.byId('overviewEmpDetailTable');
+        const oTable = this.byId('overviewOnOffDetailTable');
         const aTableData = this.getViewModel().getProperty('/dialog/list');
-        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_28038'); // 인원현황상세
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_28049'); // 입퇴사현황상세
 
         TableUtils.export({ oTable, aTableData, sFileName, aDateProps: ['Gbdat', 'Entda', 'Loada', 'Reida', 'Retda'] });
       },
@@ -374,8 +408,8 @@ sap.ui.define(
 
 // eslint-disable-next-line no-unused-vars
 function callDetail(sArgs) {
-  const oController = sap.ui.getCore().byId('container-ehr---mobile_m_overviewEmployee').getController();
-  const aProps = ['Headty', 'Discod', 'Zyear'];
+  const oController = sap.ui.getCore().byId('container-ehr---mobile_m_overviewOnOff').getController();
+  const aProps = ['Headty', 'Discod', 'Disyear'];
   const aArgs = _.split(sArgs, ',');
   const mPayload = _.zipObject(_.take(aProps, aArgs.length), aArgs);
 
