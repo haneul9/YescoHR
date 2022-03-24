@@ -23,6 +23,9 @@
                 </m:HBox>
                 <m:HBox id="gradeByDepartContainer" items="{ path: '/department/list', templateShareable: true, filters: [{path: 'Orgeh', operator: 'NE', value1: ''}] }" class="pt-20-px">
                     <Table selectionMode="{= ${/isActive} &amp;&amp; ${/dialog/mode} === 'A' ? 'MultiToggle' : 'None' }" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/list}" noData="{i18n>MSG_00001}" rowSelectionChange=".onChangeByDepartSelection">
+                        <layoutData>
+                            <m:FlexItemData minWidth="280px" />
+                        </layoutData>
                         <customData>
                             <core:CustomData key="Orgeh" value="{Orgeh}" />
                         </customData>

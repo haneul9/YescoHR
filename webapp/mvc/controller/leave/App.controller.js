@@ -137,7 +137,7 @@ sap.ui.define(
         });
 
         oViewModel.setProperty('/list', _.isEmpty(mSumRow) ? [] : [...aRowData, mSumRow]);
-        oViewModel.setProperty('/listInfo/rowCount', TableUtils.count({ oTable, aRowData, bHasSumRow: true }).rowCount);
+        oViewModel.setProperty('/listInfo/rowCount', aRowData.length + 1);
 
         setTimeout(() => {
           TableUtils.setColorColumn({ oTable, bHasSumRow: true, mColorMap: { 7: 'bgType02', 13: 'bgType02' } });

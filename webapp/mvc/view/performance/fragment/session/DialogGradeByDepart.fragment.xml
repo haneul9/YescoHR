@@ -22,6 +22,9 @@
                 </m:HBox>
                 <m:HBox id="gradeByDepartContainer" items="{ path: '/department/list', templateShareable: true, filters: [{path: 'Zzappun2', operator: 'NE', value1: ''}] }" class="pt-20-px">
                     <Table selectionMode="{= ${/isActive} ? 'MultiToggle' : 'None' }" rows="{/dialog/list}" noData="{i18n>MSG_00001}" rowSelectionChange=".onChangeByDepartSelection">
+                        <layoutData>
+                            <m:FlexItemData minWidth="280px" />
+                        </layoutData>
                         <customData>
                             <core:CustomData key="Zzappun2" value="{Zzappun2}" />
                         </customData>

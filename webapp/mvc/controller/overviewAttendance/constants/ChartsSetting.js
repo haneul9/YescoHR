@@ -69,7 +69,6 @@ sap.ui.define([], function () {
       },
       { Headty: 'E', Target: 'A05', Chart: 'bar2d', DetailEntity: 'TimeOverviewDetail2' },
       { Headty: 'F', Target: 'A06', Chart: 'bar2d', DetailEntity: 'TimeOverviewDetail2' },
-      { Headty: 'G', Target: 'A07', Chart: 'mscombi2d', DetailEntity: 'TimeOverviewDetail2' },
       {
         Headty: 'H',
         Target: 'A08',
@@ -88,6 +87,7 @@ sap.ui.define([], function () {
           { prop: 'Rte02', path: [0, 'Rte02'] }, //
         ],
       },
+      { Headty: 'G', Target: 'A07', Chart: 'mscombi2d', DetailEntity: 'TimeOverviewDetail2' },
       { Headty: 'J', Target: 'A10', Chart: 'mscolumn2d', DetailEntity: 'TimeOverviewDetail3' },
     ],
     CHART_OPTIONS: {

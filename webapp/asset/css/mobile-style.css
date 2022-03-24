@@ -185,7 +185,7 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 .sapUiSizeCompact.sapMDialog header.sapMDialogSubHeader, .sapUiSizeCompact .sapMDialog header.sapMDialogSubHeader {height:2rem; padding:20px 16px; top:0rem}
 .sapUiSizeCompact .sapMDialog>.sapMDialogTitle .sapMBarRight .sapMBtn{min-width:auto}
 .sapUiSizeCompact .sapMDialog>.sapMDialogTitle .sapMBarRight .sapMBtn .sapMBtnDefault.sapMBtnIconFirst {color:var(--FontColorNormal) !important; border-color:transparent !important; background-color:transparent}
-.sapMDialog .sapMDialogFooter {padding:16px; height:auto; border-top:1px solid #EDF0F5}
+.sapMDialog .sapMDialogFooter {box-sizing: border-box; padding:16px; height:auto; border-top:1px solid #EDF0F5; background-color: #fff;}
 .sapMDialog .sapMDialogFooter .sapMFooter-CTX {display:flex; justify-content:space-between; padding:0; margin:0; background-color:#fff} 
 .sapMDialog>footer .sapMIBar.sapMTB .sapMBtn.sapMBarChild:not(.app-menu-level1) {margin-left:0px}
 .sapMDialog>footer .sapMIBar.sapMTB .sapMBtn.sapMBarChild:not(.app-menu-level1) ~ .sapMBtn.sapMBarChild {margin-left:8px}
@@ -405,6 +405,9 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 .contents .list-wrap li .sapUiIcon:before {font-size:12.5px}
 
 .sapMPageFooter .sapMIBar {padding:0 12px}
+.sapUiSizeCompact .sapMPageFooter .sapMInputBase:not(.sapMTextArea) {height: 40px !important;}
+.sapUiSizeCompact .sapMPageFooter .sapMInputBase:not(.sapMTextArea) .sapMInputBaseContentWrapper {background-color: #fff;}
+.sapUiSizeCompact .sapMPageFooter .sapMInputBase:not(.sapMTextArea) .sapMInputBaseContentWrapper .sapMInputBaseIcon {line-height: 2.4rem !important;}
 
 .search-area {width:100%; padding:0 20px 20px; border-bottom:8px solid #ebeef2}
 
