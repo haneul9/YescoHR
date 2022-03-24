@@ -12,8 +12,8 @@
       </HBox>
     </HBox>
   </VBox>
-  <HBox class="contents" justifyContent="SpaceBetween" visible="{/popover}">
-    <VBox class="vCardBox sapUiSmallMarginEnd sticky-side-tree" height="80vh" width="25%">
+  <HBox class="contents" justifyContent="SpaceBetween">
+    <VBox class="vCardBox sapUiSmallMarginEnd sticky-side-tree" height="80vh" width="25%" visible="{/popover}">
       <ScrollContainer height="75vh" width="100%" vertical="true">
         <Tree id="ReferenceTree" mode="SingleSelectMaster" selectionChange=".onSelectTree" items="{/ReferenceList}">
           <layoutData>

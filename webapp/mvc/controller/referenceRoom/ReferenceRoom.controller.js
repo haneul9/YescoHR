@@ -90,6 +90,16 @@ sap.ui.define(
               MidZcomment: sMidComment.Zcomment,
               BotZcomment: sBotComment.Zcomment,
             });
+
+            this.settingsAttachTable();
+
+            let bFileBox = true;
+
+            if (!AttachFileAction.getFileCount.call(this) && !this.isHass()) {
+              bFileBox = false;
+            }
+
+            oViewModel.setProperty('/Settings/Visible', bFileBox);
           }
         } catch (oError) {
           this.debug(oError);
