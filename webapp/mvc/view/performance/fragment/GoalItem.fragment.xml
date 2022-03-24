@@ -61,12 +61,13 @@
                     </VBox>
                     <VBox visible="{= ${rootPath} === 'strategy' }">
                         <layoutData>
-                            <grid:GridItemLayoutData gridColumn="2 / 8" />
+                            <grid:GridItemLayoutData gridColumn="2 / 7" />
                         </layoutData>
                         <ComboBox width="100%" class="required" selectedKey="{Z103s}" items="{ path: '/entry/topGoals', templateShareable: true }" enabled="{= ${/fieldControl/display/Z103s} === 'X' }" visible="{= ${/fieldControl/display/Z103s} !== 'H' }">
                             <core:Item key="{Objid}" text="{Stext}" />
                         </ComboBox>
                     </VBox>
+                    <HBox width="100%" visible="{= ${rootPath} === 'strategy' }" />
                     <HBox width="100%" visible="{= ${rootPath} === 'strategy' }" />
                     <VBox>
                         <Label width="100%" text="{i18n>LABEL_10024}" visible="{= ${/fieldControl/display/Ztbegda} !== 'H' }"/>
