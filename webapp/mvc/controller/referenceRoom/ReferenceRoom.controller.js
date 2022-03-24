@@ -103,6 +103,8 @@ sap.ui.define(
               // 저장
               if (vPress === this.getBundleText('LABEL_00103')) {
                 await this.saveForm();
+              } else {
+                await this.checkForm('N', mSelectedTree.L1id, mSelectedTree.L2id, mSelectedTree.L3id, mSelectedTree.L4id, mSelectedTree.Werks);
               }
 
               this.dataSetting(mSelectedTree);
@@ -318,6 +320,29 @@ sap.ui.define(
         }, 100);
       },
 
+      // 'C' 수정, 'N' 확인(수정중 트리 나갈경우)
+      async checkForm(sType = '', sL1id = '', sL2id = '', sL3id = '', sL4id = '', sWerks = '') {
+        const oModel = this.getModel(ServiceNames.COMMON);
+        const mAppointee = this.getAppointeeData();
+        const mPayLoad = {
+          Pernr: mAppointee.Pernr,
+          Werks: mAppointee.Werks,
+          Menid: this.getCurrentMenuId(),
+          Prcty: sType,
+          HelpInfo2Nav: [
+            {
+              Werks: sWerks,
+              L1id: sL1id,
+              L2id: sL2id,
+              L3id: sL3id,
+              L4id: sL4id,
+            },
+          ],
+        };
+
+        return await Client.deep(oModel, 'HelpInfo', mPayLoad);
+      },
+
       // 관리자 조회
       async dialogManagerList(sL1id = '', sL2id = '', sL3id = '', sL4id = '', sWerks = '') {
         const oModel = this.getModel(ServiceNames.COMMON);
@@ -357,31 +382,14 @@ sap.ui.define(
 
       // 수정
       async onFixedBtn() {
-        const oModel = this.getModel(ServiceNames.COMMON);
-        const mAppointee = this.getAppointeeData();
         const oViewModel = this.getViewModel();
 
         try {
           AppUtils.setAppBusy(true, this);
 
           const mFormData = oViewModel.getProperty('/FormData');
-          const mPayLoad = {
-            Pernr: mAppointee.Pernr,
-            Werks: mAppointee.Werks,
-            Menid: this.getCurrentMenuId(),
-            Prcty: 'C',
-            HelpInfo2Nav: [
-              {
-                Werks: mFormData.Werks,
-                L1id: mFormData.L1id,
-                L2id: mFormData.L2id,
-                L3id: mFormData.L3id,
-                L4id: mFormData.L4id,
-              },
-            ],
-          };
 
-          await Client.deep(oModel, 'HelpInfo', mPayLoad);
+          await this.checkForm('C', mFormData.Werks, mFormData.L1id, mFormData.L2id, mFormData.L3id, mFormData.L4id);
 
           oViewModel.setProperty('/UserFixed', true);
           this.settingsAttachTable();
@@ -424,7 +432,7 @@ sap.ui.define(
             Pernr: mAppointee.Pernr,
             Werks: mFormData.Werks,
             Menid: this.getCurrentMenuId(),
-            Prcty: 'N',
+            Prcty: 'S',
             HelpInfo2Nav: [
               {
                 ...mFormData,
