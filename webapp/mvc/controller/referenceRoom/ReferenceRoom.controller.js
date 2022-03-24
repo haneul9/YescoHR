@@ -63,6 +63,9 @@ sap.ui.define(
             oViewModel.setProperty('/TreeFullList', aTree.HelpInfo1Nav.results);
             oViewModel.setProperty('/ReferenceList', aVariat);
           } else {
+            sap.ui.getCore().byId('container-ehr---app--appMenuToolbar').setVisible(false);
+            sap.ui.getCore().byId('container-ehr---refeView--routeHeader').setVisible(false);
+
             const oDetail = await this.treeDetail(mRouteArguments.L1id, mRouteArguments.L2id, mRouteArguments.L3id, mRouteArguments.L4id, this.getAppointeeProperty('Werks'));
             const aFormData = oDetail.HelpInfo2Nav.results || [];
 
@@ -79,7 +82,6 @@ sap.ui.define(
                 return e.Infocd === '3';
               }) || '';
             const mDetailData = aFormData[0] || {};
-            const oViewModel = this.getViewModel();
 
             oViewModel.setProperty('/popover', false);
             oViewModel.setProperty('/FormData', {
@@ -95,11 +97,12 @@ sap.ui.define(
 
             let bFileBox = true;
 
-            if (!AttachFileAction.getFileCount.call(this) && !this.isHass()) {
+            if (!AttachFileAction.getFileCount.call(this)) {
               bFileBox = false;
             }
 
             oViewModel.setProperty('/Settings/Visible', bFileBox);
+            setTimeout(() => $('#container-ehr---refeView--detailForm').addClass('helpPopover'), 200);
           }
         } catch (oError) {
           this.debug(oError);
