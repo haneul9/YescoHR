@@ -316,7 +316,7 @@
                 </Select>
                 <Label text="Label" labelFor="input-cc"/>
                 <Input id="input-cc" width="250px" placeholder="Default"/>
-                <Button icon="asset/image/icon_search02.png" class="icon-button" text="조회" />
+                <Button icon="asset/image/icon_search02.png" iconDensityAware="false" class="icon-button" text="조회" />
               </HBox>
             </VBox>
           </VBox>

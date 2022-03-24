@@ -9,11 +9,11 @@
             <ComboBox width="280px" selectedKey="{/saved/selectedCondition}" items="{/saved/entry}" enabled="{= !${/result/busy} }" change=".onChangeSearchCondition">
                 <core:Item key="{Zcode}" text="{Ztext}" />
             </ComboBox>
-            <Button icon="asset/image/icon_del.png" class="icon-button" type="Transparent" enabled="{= !${/result/busy} }" press=".onPressDeleteSearchCondition" />
+            <Button icon="asset/image/icon_del.png" iconDensityAware="false" class="icon-button" type="Transparent" enabled="{= !${/result/busy} }" press=".onPressDeleteSearchCondition" />
             <Label text="{i18n>LABEL_00201}" />
             <Input width="520px" maxLength="{/fieldLimit/Freetx}" value="{/search/Freetx}" placeholder="{i18n>MSG_35001}" enabled="{= ${/search/Prcty} === 'A' }" submit=".onPressSearch" />
-            <Button text="{i18n>LABEL_00101}" icon="asset/image/icon_search03.png" enabled="{= !${/result/busy} }" press=".onPressSearch" />
-            <Button text="{i18n>LABEL_35005}" icon="asset/image/icon_reset.png" enabled="{= !${/result/busy} }" press=".onPressConditionReset" />
+            <Button text="{i18n>LABEL_00101}" icon="asset/image/icon_search03.png" iconDensityAware="false" enabled="{= !${/result/busy} }" press=".onPressSearch" />
+            <Button text="{i18n>LABEL_35005}" icon="asset/image/icon_reset.png" iconDensityAware="false" enabled="{= !${/result/busy} }" press=".onPressConditionReset" />
             <Switch state="{= ${/search/Prcty} === 'B' }" customTextOn=" " customTextOff=" " enabled="{= !${/result/busy} }" change=".onToggleExpand" />
             <Label class="pl-0" text="{i18n>LABEL_35004}" />
         </HBox>
@@ -26,7 +26,7 @@
                     <grid:GridItemLayoutData gridColumn="span 7"/>
                 </layoutData>
                 <Input width="280px" maxLength="{/fieldLimit/Schtl}" value="{/saved/Schtl}" placeholder="{i18n>LABEL_00101}" class="sapUiTinyMarginEnd" />
-                <Button text="{i18n>LABEL_35007}" icon="asset/image/icon_inquiry_save.png" press=".onPressSaveConditions" />
+                <Button text="{i18n>LABEL_35007}" icon="asset/image/icon_inquiry_save.png" iconDensityAware="false" press=".onPressSaveConditions" />
             </HBox>
             <HBox justifyContent="End" alignItems="Center">
                 <Label text="{i18n>LABEL_00218}" />

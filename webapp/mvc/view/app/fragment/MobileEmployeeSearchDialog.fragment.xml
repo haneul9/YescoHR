@@ -34,7 +34,7 @@
                       <FlexItemData baseSize="60px" maxWidth="60px" />
                     </layoutData>
                   </Text>
-                  <Button type="Transparent" class="icon-button" icon="asset/image/icon_phone.svg" press=".onPress">
+                  <Button type="Transparent" class="icon-button" icon="asset/image/icon_phone.svg" iconDensityAware="false" press=".onPress">
                     <layoutData>
                       <FlexItemData baseSize="32px" maxWidth="32px" />
                     </layoutData>

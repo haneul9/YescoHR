@@ -30,7 +30,7 @@
           </layoutData>
           <HBox justifyContent="SpaceBetween" alignItems="Center" height="54px">
             <Label text="{i18n>LABEL_01004}" />
-            <Button type="Transparent" class="icon-button mobile-logout-button" icon="asset/image/icon_arrow_h-r.svg" press=".onPressLogout" />
+            <Button type="Transparent" class="icon-button mobile-logout-button" icon="asset/image/icon_arrow_h-r.svg" iconDensityAware="false" press=".onPressLogout" />
           </HBox>
           <HBox justifyContent="SpaceBetween" alignItems="Center" height="54px" class="divider">
             <Label text="{i18n>LABEL_01602}" />

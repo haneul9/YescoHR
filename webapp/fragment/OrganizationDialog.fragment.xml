@@ -16,7 +16,7 @@
                     <custom:DatePicker dateValue="{ path: '/Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="200px" />
                     <Label text="{i18n>LABEL_00201}" />
                     <Input value="{/Stext}" width="200px" />
-                    <Button icon="asset/image/icon_search03.png" text="{i18n>LABEL_00101}" press=".onPressSearchOrg" class="icon-button" />
+                    <Button icon="asset/image/icon_search03.png" iconDensityAware="false" text="{i18n>LABEL_00101}" press=".onPressSearchOrg" class="icon-button" />
                 </HBox>
             </VBox>
             <VBox class="hCardBox">

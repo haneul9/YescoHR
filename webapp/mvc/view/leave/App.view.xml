@@ -26,7 +26,7 @@
           <ComboBox selectedKey="{/search/Qtaty}" items="{/entry/leaveType}">
             <core:Item key="{Zcode}" text="{Ztext}" />
           </ComboBox>
-          <Button text="{i18n>LABEL_00100}" icon="asset/image/icon_search03.png" press=".onPressSearch" />
+          <Button text="{i18n>LABEL_00100}" icon="asset/image/icon_search03.png" iconDensityAware="false" press=".onPressSearch" />
         </HBox>
       </VBox>
       <VBox class="vCardBox">

@@ -47,14 +47,14 @@
 
   <OverflowToolbar id="appBottomToolbar" height="60px" asyncMode="true" busy="{appModel>/isMenuBusy}" busyIndicatorDelay="0" class="app-menu-toolbar" visible="{appModel>/isMobile}">
     <HBox width="100%" justifyContent="SpaceAround" class="footer-menu">
-      <Button id="my-page" type="Transparent" icon="asset/image/icon_m_employee.svg" class="icon-button" tooltip="{i18n>LABEL_01005}" press=".onPressMobileMyPagePopoverToggle" />
+      <Button id="my-page" type="Transparent" icon="asset/image/icon_m_employee.svg" iconDensityAware="false" class="icon-button" tooltip="{i18n>LABEL_01005}" press=".onPressMobileMyPagePopoverToggle" />
       <HBox alignItems="Center" class="notification-wrapper" tooltip="{i18n>LABEL_01002}">
-        <Button id="mobile-notification-bell" type="Transparent" icon="asset/image/icon_m_notice.svg" class="icon-button" press=".onPressNotificationPopoverToggle" />
+        <Button id="mobile-notification-bell" type="Transparent" icon="asset/image/icon_m_notice.svg" iconDensityAware="false" class="icon-button" press=".onPressNotificationPopoverToggle" />
         <custom:PressableLabel text="{notificationModel>/unreadCount}" visible="{= !!${notificationModel>/showUnreadCount} }" class="notification-count" press=".onPressNotificationPopoverToggle" displayOnly="true" textAlign="Center" />
       </HBox>
-      <Button type="Transparent" icon="asset/image/icon_m_home.svg" class="icon-button" press=".navToHome" tooltip="{i18n>LABEL_01006}" />
-      <Button type="Transparent" icon="asset/image/icon_m_search.svg" class="icon-button" press=".onPressMobileSearchPopoverToggle" tooltip="{i18n>LABEL_01007}" />
-      <Button type="Transparent" icon="asset/image/icon_m_gnb.svg" class="icon-button" press=".onPressMobileMenuPopoverToggle" tooltip="{i18n>LABEL_01008}" />
+      <Button type="Transparent" icon="asset/image/icon_m_home.svg" iconDensityAware="false" class="icon-button" press=".navToHome" tooltip="{i18n>LABEL_01006}" />
+      <Button type="Transparent" icon="asset/image/icon_m_search.svg" iconDensityAware="false" class="icon-button" press=".onPressMobileSearchPopoverToggle" tooltip="{i18n>LABEL_01007}" />
+      <Button type="Transparent" icon="asset/image/icon_m_gnb.svg" iconDensityAware="false" class="icon-button" press=".onPressMobileMenuPopoverToggle" tooltip="{i18n>LABEL_01008}" />
     </HBox>
   </OverflowToolbar>
 </mvc:View>

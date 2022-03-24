@@ -24,7 +24,7 @@
                 <ComboBox items="{/Years}" selectedKey="{/search/Zyear}">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
-                <Button text="{i18n>LABEL_00100}" icon="asset/image/icon_search03.png" press=".onCasSituList"/>
+                <Button text="{i18n>LABEL_00100}" icon="asset/image/icon_search03.png" iconDensityAware="false" press=".onCasSituList"/>
             </HBox>
         </VBox>
         <VBox class="vCardBox" id="smartListBox">

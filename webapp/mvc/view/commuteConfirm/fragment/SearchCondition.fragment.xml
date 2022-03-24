@@ -13,7 +13,7 @@
           <core:Item text="{Orgtx}" key="{Orgeh}" />
         </ComboBox>
       </VBox>
-      <Button icon="asset/image/icon_search03.png" text="{i18n>LABEL_00100}" press=".onSearch" class="icon-button" />
+      <Button icon="asset/image/icon_search03.png" iconDensityAware="false" text="{i18n>LABEL_00100}" press=".onSearch" class="icon-button" />
     </grid:CSSGrid>
   </VBox>
 </core:FragmentDefinition>
