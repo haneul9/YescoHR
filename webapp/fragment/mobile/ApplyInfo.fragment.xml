@@ -1,0 +1,23 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:grid="sap.ui.layout.cssgrid">
+  <Title level="H2" text="{i18n>LABEL_00135}" class="mt-20-px" />
+  <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid border-bottom-0px">
+    <Label text="{i18n>LABEL_00210}"/>
+    <VBox>
+      <Text text="{/ApplyInfo/Apename}"/>
+    </VBox>
+    <Label text="{i18n>LABEL_00226}"/>
+    <VBox>
+      <Text text="{/ApplyInfo/Aporgtx}"/>
+    </VBox>
+    <Label text="{i18n>LABEL_00136}"/>
+    <VBox>
+      <Text text="{/ApplyInfo/Apjikgbtl}"/>
+    </VBox>
+    <Label text="{i18n>LABEL_00137}"/>
+    <VBox>
+      <Text text="{/ApplyInfo/Appdt}"/>
+    </VBox>
+  </grid:CSSGrid>
+</core:FragmentDefinition>
