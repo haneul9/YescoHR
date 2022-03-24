@@ -1624,14 +1624,17 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .compare-block .sapUiBlockLayoutRow .sapUiBlockLayoutCell:first-child .sapUiBlockCellContent {display: flex; flex-flow: column; justify-content: center; align-items: center;}
 .compare-block .sapUiBlockLayoutRow .sapUiBlockLayoutCell:first-child .sapMText[data-type=label] {font-weight: 700;}
 .compare-block .sapUiBlockLayoutRow:not(:last-child) {border-bottom:1px solid rgba(112, 112, 112, .5)}
-.compare-block .sapUiBlockLayoutRow .sapUiBlockLayoutOddCell .sapUiBlockCellContent{background-color:#fff!important}
-.compare-block .sapUiBlockLayoutRow .sapUiBlockLayoutEvenCell .sapUiBlockCellContent {background-color:#F7F7F7!important}
+.compare-block .sapUiBlockLayoutSizeL .sapUiBlockLayoutRow .sapUiBlockLayoutOddCell .sapUiBlockCellContent{background-color:#fff!important}
+.compare-block .sapUiBlockLayoutSizeL .sapUiBlockLayoutRow .sapUiBlockLayoutEvenCell .sapUiBlockCellContent {background-color:#F7F7F7!important}
 .compare-block .sapUiBlockLayoutRow div .sapUiBlockLayoutCell:first-child {max-width:200px; text-align:center}
 .compare-block .sapUiBlockLayoutRow div .sapUiBlockLayoutCell:first-child .sapMVBox {height:100%; display:inline-grid; align-items:center; font-weight:700}
 .compare-block .sapUiBlockLayoutRow:first-child .sapMText {margin-top:24px; font-weight:700}
 
-.compare-block.sapUiBlockLayoutBackgroundLight .sapUiBlockLayoutRow .sapUiBlockLayoutOddCell .sapUiBlockCellContent{background-color:#fff!important}
-.compare-block.sapUiBlockLayoutBackgroundLight .sapUiBlockLayoutRow .sapUiBlockLayoutEvenCell .sapUiBlockCellContent{background-color:#F7F7F7!important}
+.compare-block.sapUiBlockLayoutBackgroundLight .sapUiBlockLayoutSizeL .sapUiBlockLayoutRow .sapUiBlockLayoutOddCell .sapUiBlockCellContent{background-color:#fff!important}
+.compare-block.sapUiBlockLayoutBackgroundLight .sapUiBlockLayoutSizeL .sapUiBlockLayoutRow .sapUiBlockLayoutEvenCell .sapUiBlockCellContent{background-color:#F7F7F7!important}
+
+.compare-block .sapUiBlockLayoutSizeS .sapUiBlockScrollingRow.sapUiBlockLayoutBackgroundColorSet1 .sapUiBlockCellContent  { background-color: #fff !important; }
+.compare-block .sapUiBlockLayoutSizeS .sapUiBlockScrollingRow.sapUiBlockLayoutBackgroundColorSet2 .sapUiBlockCellContent { background-color: #F7F7F7 !important; }
 
 .compare-block .sapUiBlockLayoutSizeXL:not(.sapUiBlockLayoutKeepFontSize) .sapUiBlockCellContent,
 .compare-block.sapUiBlockLayoutBackgroundLight .sapUiBlockLayoutRow .sapUiBlockCellContent {padding:16px 30px; font-size:14px}
