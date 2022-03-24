@@ -1620,7 +1620,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .compare-block .sapUiBlockLayoutSizeL .sapUiBlockScrollingRow .sapUiBlockScrollableCell:first-child { width: 16%; }
 .compare-block .sapUiBlockLayoutSizeL .sapUiBlockScrollingRow .sapUiBlockScrollableCell:not(:first-child) { width: 28%; }
 .compare-block .sapUiBlockLayoutSizeS .sapUiBlockScrollingRow .sapUiBlockScrollableCell:first-child { width: 30%; min-width: 30%; }
-.compare-block .sapUiBlockLayoutSizeS .sapUiBlockScrollingRow .sapUiBlockScrollableCell:first-child .sapUiBlockCellContent { padding: 1rem 6px }
+.compare-block .sapUiBlockLayoutSizeS .sapUiBlockScrollingRow .sapUiBlockScrollableCell .sapUiBlockCellContent { padding: 1rem 6px }
 .compare-block .sapUiBlockLayoutSizeS .sapUiBlockScrollingRow .sapUiBlockScrollableCell:not(:first-child) { width: 70%; min-width: 70%; }
 .compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow:last-child { height: 13px; position: sticky; bottom: 0; z-index: 4; }
 .compare-block .sapUiBlockLayoutSizeS .sapUiBlockLayoutRow.sapUiBlockScrollingRow:last-child { height: 18px; position: sticky; bottom: 0; z-index: 4; }
