@@ -23,7 +23,7 @@
                         </layoutData>
                         <core:Item key="{Zcode}" text="{Ztext}" />
                     </ComboBox>
-                    <Button class="sapUiTinyMarginBegin" icon="asset/image/icon_sort.png" text="{i18n>LABEL_35004}" press=".onPressDetailConditionsDialog" />
+                    <Button class="sapUiTinyMarginBegin" icon="asset/image/icon_sort.png" iconDensityAware="false" text="{i18n>LABEL_35004}" press=".onPressDetailConditionsDialog" />
                 </HBox>
                 <HBox justifyContent="SpaceBetween" alignItems="Center">
                     <SearchField maxLength="{/fieldLimit/Freetx}" value="{/search/Freetx}" placeholder="{i18n>MSG_35012}" search=".onPressSearch">
@@ -31,7 +31,7 @@
                             <FlexItemData minWidth="67%" maxWidth="67%" />
                         </layoutData>
                     </SearchField>
-                    <Button text="{i18n>LABEL_35005}" icon="asset/image/icon_reset.png" enabled="{= !${/result/busy} }" press=".onPressConditionReset" />
+                    <Button text="{i18n>LABEL_35005}" icon="asset/image/icon_reset.png" iconDensityAware="false" enabled="{= !${/result/busy} }" press=".onPressConditionReset" />
                 </HBox>
             </VBox>
             <HBox justifyContent="SpaceBetween" class="header-wrap">

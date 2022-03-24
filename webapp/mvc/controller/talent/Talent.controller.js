@@ -118,6 +118,7 @@ sap.ui.define(
           oViewModel.setProperty('/busy', true);
 
           this.getEntrySearchCondition();
+          oViewModel.setProperty('/saved/selectedCondition', 'ALL');
 
           const sPernr = this.getAppointeeProperty('Pernr');
           const sWerks = this.getAppointeeProperty('Werks');

@@ -13,7 +13,7 @@
             <Label text="{i18n>LABEL_00201}" />
             <Input width="520px" maxLength="{/fieldLimit/Freetx}" value="{/search/Freetx}" placeholder="{i18n>MSG_35001}" enabled="{= ${/search/Prcty} === 'A' }" submit=".onPressSearch" />
             <Button text="{i18n>LABEL_00101}" icon="asset/image/icon_search03.png" enabled="{= !${/result/busy} }" press=".onPressSearch" />
-            <Button text="{i18n>LABEL_35005}" icon="asset/image/icon_reset.png" enabled="{= !${/result/busy} }" press=".onPressConditionReset" />
+            <Button text="{i18n>LABEL_35005}" icon="asset/image/icon_reset.png" iconDensityAware="false" enabled="{= !${/result/busy} }" press=".onPressConditionReset" />
             <Switch state="{= ${/search/Prcty} === 'B' }" customTextOn=" " customTextOff=" " enabled="{= !${/result/busy} }" change=".onToggleExpand" />
             <Label class="pl-0" text="{i18n>LABEL_35004}" />
         </HBox>
