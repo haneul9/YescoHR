@@ -405,6 +405,9 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 .contents .list-wrap li .sapUiIcon:before {font-size:12.5px}
 
 .sapMPageFooter .sapMIBar {padding:0 12px}
+.sapUiSizeCompact .sapMPageFooter .sapMInputBase:not(.sapMTextArea) {height: 40px !important;}
+.sapUiSizeCompact .sapMPageFooter .sapMInputBase:not(.sapMTextArea) .sapMInputBaseContentWrapper {background-color: #fff;}
+.sapUiSizeCompact .sapMPageFooter .sapMInputBase:not(.sapMTextArea) .sapMInputBaseContentWrapper .sapMInputBaseIcon {line-height: 2.4rem !important;}
 
 .search-area {width:100%; padding:0 20px 20px; border-bottom:8px solid #ebeef2}
 
