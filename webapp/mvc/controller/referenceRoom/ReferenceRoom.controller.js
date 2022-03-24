@@ -329,7 +329,7 @@ sap.ui.define(
           Werks: mAppointee.Werks,
           Menid: this.getCurrentMenuId(),
           Prcty: sType,
-          HelpInfo1Nav: [
+          HelpInfo2Nav: [
             {
               Werks: sWerks,
               L1id: sL1id,
