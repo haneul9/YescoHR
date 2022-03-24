@@ -1,0 +1,190 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.talent.mobile.Compare"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:custom="sap.ui.yesco.control"
+    xmlns:mvc="sap.ui.core.mvc">
+    <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+        <VBox class="contents">
+            <HBox justifyContent="SpaceBetween" class="header-wrap">
+                <HBox class="header">
+                    <Title level="H3" text="{i18n>LABEL_35002}" />
+                </HBox>
+            </HBox>
+            <custom:MobileScrollContainer horizontal="false" vertical="true">
+                <l:VerticalLayout id="containerLayout" width="100%" class="sapUiBlockLayoutBackgroundLight compare-block">
+                    <l:BlockLayout id="BlockLayout" background="{/selectedBackground}">
+                        <l:BlockLayoutRow scrollable="true" rowColorSet="ColorSet1">
+                            <l:BlockLayoutCell>
+                            </l:BlockLayoutCell>
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <Label text="기본정보" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <Label text="직무" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <Label text="학력" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <Label text="평가이력" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <Label text="사내경력" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                        </l:BlockLayoutRow>
+                        <l:BlockLayoutRow scrollable="true" rowColorSet="ColorSet2">
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <Image src="asset/image/photo1.png" width="80px" />
+                                    <Text text="홍길동 부장 / 팀장" class="font-12-px" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <Text text="부장 / 팀장" />
+                                    <Text text="생년월일 : 1972.12.14" />
+                                    <Text text="입사 : 2001.01.01" />
+                                    <Text text="학력 : 동국대 (석사졸업) / 마케팅" />
+                                    <Text text="현직무 : 홍보팀 (15년 3개월)" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <Text text="홍보 (9년 7개월)" />
+                                    <Text text="인사 (5년 6개월" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <Text text="동국대 (석사졸업) / 마케팅" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <VBox>
+                                        <Text text="2020년 성과A/역량A" />
+                                        <Text text="2019년 성과A/역량A" />
+                                        <Text text="2018년 성과A/역량A" />
+                                    </VBox>
+                                    <Image src="asset/image/compare_chart.png" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <Text text="인사팀 : 2001.01.01 ~ 2010.12.31" />
+                                    <Text text="홍보팀 : 2011.01.01 ~ 현재" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                        </l:BlockLayoutRow>
+                        <l:BlockLayoutRow scrollable="true" rowColorSet="ColorSet1">
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <Image src="asset/image/photo2.png" width="80px" />
+                                    <Text text="홍길동 부장 / 팀장" class="font-12-px" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <Text text="부장 / 팀장" />
+                                    <Text text="생년월일 : 1972.12.14" />
+                                    <Text text="입사 : 2001.01.01" />
+                                    <Text text="학력 : 동국대 (석사졸업) / 마케팅" />
+                                    <Text text="현직무 : 홍보팀 (15년 3개월)" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <Text text="홍보 (9년 7개월)" />
+                                    <Text text="인사 (5년 6개월" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <Text text="동국대 (석사졸업) / 마케팅" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <VBox>
+                                        <Text text="2020년 성과A/역량A" />
+                                        <Text text="2019년 성과A/역량A" />
+                                        <Text text="2018년 성과A/역량A" />
+                                    </VBox>
+                                    <Image src="asset/image/compare_chart.png" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <Text text="인사팀 : 2001.01.01 ~ 2010.12.31" />
+                                    <Text text="홍보팀 : 2011.01.01 ~ 현재" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                        </l:BlockLayoutRow>
+                        <l:BlockLayoutRow scrollable="true" rowColorSet="ColorSet2">
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <Image src="asset/image/photo3.jpeg" width="80px" />
+                                    <Text text="홍길동 부장 / 팀장" class="font-12-px" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <Text text="부장 / 팀장" />
+                                    <Text text="생년월일 : 1972.12.14" />
+                                    <Text text="입사 : 2001.01.01" />
+                                    <Text text="학력 : 동국대 (석사졸업) / 마케팅" />
+                                    <Text text="현직무 : 홍보팀 (15년 3개월)" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <Text text="홍보 (9년 7개월)" />
+                                    <Text text="인사 (5년 6개월" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <Text text="동국대 (석사졸업) / 마케팅" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <VBox>
+                                        <Text text="2020년 성과A/역량A" />
+                                        <Text text="2019년 성과A/역량A" />
+                                        <Text text="2018년 성과A/역량A" />
+                                    </VBox>
+                                    <Image src="asset/image/compare_chart.png" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                            <l:BlockLayoutCell>
+                                <VBox>
+                                    <Text text="인사팀 : 2001.01.01 ~ 2010.12.31" />
+                                    <Text text="홍보팀 : 2011.01.01 ~ 현재" />
+                                </VBox>
+                            </l:BlockLayoutCell>
+                        </l:BlockLayoutRow>
+                        <l:BlockLayoutRow scrollable="true" rowColorSet="ColorSet1">
+                            <l:BlockLayoutCell />
+                            <l:BlockLayoutCell />
+                            <l:BlockLayoutCell />
+                            <l:BlockLayoutCell />
+                            <l:BlockLayoutCell />
+                            <l:BlockLayoutCell />
+                        </l:BlockLayoutRow>
+                    </l:BlockLayout>
+                </l:VerticalLayout>
+            </custom:MobileScrollContainer>
+        </VBox>
+    </Page>
+</mvc:View>
