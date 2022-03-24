@@ -71,7 +71,7 @@ sap.ui.define(
       },
 
       registTimeFormat(date, time) {
-        return date && time ? `${moment(date).format('YYYY.MM.DD')} / ${moment(time.ms).format('HH:mm')}` : '';
+        return date && time ? `${moment(date).format('YYYY.MM.DD')} / ${moment(time.ms).subtract(9, 'h').format('HH:mm')}` : '';
       },
 
       // 주행거리
