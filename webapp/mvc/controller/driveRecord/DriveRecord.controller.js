@@ -46,7 +46,7 @@ sap.ui.define(
           Data: [],
           UseList: [
             { Zcode: 'A', Ztext: this.getBundleText('LABEL_34013') }, // 출퇴근
-            { Zcode: 'A', Ztext: this.getBundleText('LABEL_34014') }, // 업무
+            { Zcode: 'B', Ztext: this.getBundleText('LABEL_34014') }, // 업무
           ],
           Total: {},
           mMyDriveRecord: {},
@@ -71,7 +71,7 @@ sap.ui.define(
       },
 
       registTimeFormat(date, time) {
-        return date && time ? `${moment(date).format('YYYY.MM.DD')} / ${moment(time.ms).format('HH:mm')}` : '';
+        return date && time ? `${moment(date).format('YYYY.MM.DD')} / ${moment(time.ms).subtract(9, 'h').format('HH:mm')}` : '';
       },
 
       // 주행거리
@@ -130,7 +130,11 @@ sap.ui.define(
           const aTableList = await this.getFriveRecord();
           const oTable = this.byId(this.DRIVE_TABLE_ID);
 
-          oViewModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
+          oViewModel.setProperty('/listInfo', {
+            ...TableUtils.count({ oTable, aRowData: aTableList }),
+            visibleStatus: 'X',
+            Title: this.getBundleText('LABEL_34005'), // 운행기록
+          });
           oViewModel.setProperty('/List', aTableList);
         } catch (oError) {
           AppUtils.handleError(oError);
@@ -153,7 +157,11 @@ sap.ui.define(
           const aTableList = await this.getFriveRecord();
           const oTable = this.byId(this.DRIVE_TABLE_ID);
 
-          oViewModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
+          oViewModel.setProperty('/listInfo', {
+            ...TableUtils.count({ oTable, aRowData: aTableList }),
+            visibleStatus: 'X',
+            Title: this.getBundleText('LABEL_34005'), // 운행기록
+          });
           oViewModel.setProperty('/List', aTableList);
         } catch (oError) {
           AppUtils.handleError(oError);
@@ -185,7 +193,11 @@ sap.ui.define(
           const aTableList = await this.getFriveRecord();
           const oTable = this.byId(this.DRIVE_TABLE_ID);
 
-          oViewModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
+          oViewModel.setProperty('/listInfo', {
+            ...TableUtils.count({ oTable, aRowData: aTableList }),
+            visibleStatus: 'X',
+            Title: this.getBundleText('LABEL_34005'), // 운행기록
+          });
           oViewModel.setProperty('/List', aTableList);
         } catch (oError) {
           AppUtils.handleError(oError);
@@ -263,7 +275,7 @@ sap.ui.define(
           return true;
         }
 
-        if (_.parseInt(mDialogData.Endkm) <= _.parseInt(mDialogData.Begkm)) {
+        if (parseFloat(mDialogData.Endkm) <= parseFloat(mDialogData.Begkm)) {
           // 주행 후 거리는 주행 전 거리보다 큰 값으로 입력하세요.
           MessageBox.alert(this.getBundleText('MSG_34002'));
           return true;

@@ -245,7 +245,7 @@ sap.ui.define(
               },
             ];
           }, [])
-          .sortBy(['Osort'], ['asc'])
+          .orderBy(['Osort'], ['asc'])
           .value();
 
         const sSumLabel = this.getBundleText('LABEL_00172'); // 합계

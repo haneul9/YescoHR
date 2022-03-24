@@ -5,7 +5,7 @@
     <Dialog id="detailDialog" title="{i18n>LABEL_34005}" contentWidth="1000px" contentHeight="auto">
         <buttons>
             <Button text="{i18n>LABEL_00106}" type="Emphasized" press=".onRegistBtn" />
-            <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" />
+            <Button text="{i18n>LABEL_00110}" type="Reject" visible="{= ${/dialog/New} !== 'O' }" press=".onDeleteBtn" />
             <Button text="{i18n>LABEL_00115}" press=".onDialogClose" />
         </buttons>
         <content>

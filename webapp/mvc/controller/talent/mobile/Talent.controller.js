@@ -118,9 +118,11 @@ sap.ui.define(
 
         try {
           oViewModel.setSizeLimit(2000);
+          oViewModel.setData(this.initializeModel());
           oViewModel.setProperty('/busy', true);
 
-          this.getEntrySearchCondition();
+          await this.getEntrySearchCondition();
+          oViewModel.setProperty('/saved/selectedCondition', 'ALL');
 
           const sPernr = this.getAppointeeProperty('Pernr');
           const sWerks = this.getAppointeeProperty('Werks');
@@ -185,6 +187,12 @@ sap.ui.define(
           AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/busy', false);
+
+          this.getView().addEventDelegate({
+            onBeforeHide: (evt) => {
+              if (!_.endsWith(evt.toId, 'employee')) oViewModel.setProperty('/isLoaded', false);
+            },
+          });
         }
       },
 

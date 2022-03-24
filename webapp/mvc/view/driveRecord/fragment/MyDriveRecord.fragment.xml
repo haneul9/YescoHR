@@ -8,11 +8,11 @@
             <HBox class="mt-100-px">
                 <VBox width="40%">
                     <Label design="Bold" text="{i18n>LABEL_25005}" />
-                    <ObjectStatus text="{/Total/Carno}" state="Indication05" />
+                    <ObjectStatus text="{/Total/Carno}" class="font-25-px mt-5-px" state="Indication05" />
                 </VBox>
                 <VBox>
                     <Label design="Bold" text="{i18n>LABEL_34004}" />
-                    <ObjectStatus text="{/Total/Datum}" state="Indication05" />
+                    <ObjectStatus text="{/Total/Datum}" class="font-25-px mt-5-px" state="Indication05" />
                 </VBox>
             </HBox>
         </VBox>

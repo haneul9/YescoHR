@@ -684,6 +684,10 @@ sap.ui.define(
         });
       },
 
+      onPdfError(oEvent) {
+        oEvent.preventDefault();
+      },
+
       // AttachFileTable Settings
       settingsAttachTable() {
         const oViewModel = this.getViewModel();

@@ -39,7 +39,7 @@
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
-        <PDFViewer source="{/FormData/Fileuri}" showDownloadButton="false" class="my-15-px">
+        <PDFViewer sourceValidationFailed=".onPdfError" visible="{= !!${/FormData/Fileuri} }" source="{/FormData/Fileuri}" height="800px" showDownloadButton="false" class="my-15-px">
           <layoutData>
             <FlexItemData growFactor="1" />
           </layoutData>
