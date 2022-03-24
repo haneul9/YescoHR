@@ -2,6 +2,7 @@
     "base": "./dist",
     "files": [
       "index.html",
+      "asset/css/*.css",
       "Component-preload.js"
     ],
     "conn_usestrictssl" : false,
