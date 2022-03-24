@@ -113,7 +113,7 @@ sap.ui.define(
         }
 
         return {
-          description: `${aPortletContentData.ZzapstsNm} ${aPortletContentData.ZzapstsSubnm}`,
+          description: `${aPortletContentData.ZzapstsNm}/${aPortletContentData.ZzapstsSubnm}`,
           list: aList,
           listCount: aList.length,
         };

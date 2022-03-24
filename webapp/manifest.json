@@ -256,6 +256,7 @@
 
         { "pattern": "m/talent", "name": "m/talent", "target": "m/talent" },
         { "pattern": "mobile/m/talent", "name": "mobile/m/talent", "target": "mobile/m/talent" },
+        { "pattern": "mobile/m/talent/{pernrs}", "name": "mobile/m/talent-compare", "target": "mobile/m/talentCompare" },
 
         { "pattern": "withdrawMiddle", "name": "withdrawMiddle", "target": "withdrawMiddle" },
         { "pattern": "withdrawMiddle/{oDataKey}", "name": "withdrawMiddle-detail", "target": "withdrawMiddleDetail" },
@@ -417,6 +418,7 @@
 
         "m/talent": { "viewId": "m_talent", "viewPath": "sap.ui.yesco.mvc.view.talent", "viewName": "Talent" },
         "mobile/m/talent": { "viewId": "mobile_m_talent", "viewPath": "sap.ui.yesco.mvc.view.talent.mobile", "viewName": "Talent" },
+        "mobile/m/talentCompare": { "viewId": "mobile_m_talentCompare", "viewPath": "sap.ui.yesco.mvc.view.talent.mobile", "viewName": "Compare" },
 
         "withdrawMiddle": { "viewId": "withdrawMiddle", "viewPath": "sap.ui.yesco.mvc.view.withdrawMiddle", "viewName": "WithdrawMiddle" },
         "withdrawMiddleDetail": { "viewId": "withdrawMiddleDetail", "viewPath": "sap.ui.yesco.mvc.view.withdrawMiddle", "viewName": "WithdrawMiddleDetail" },
