@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
-  <VBox class="contents-header">
+  <VBox id="routeHeader" class="contents-header">
     <HBox justifyContent="SpaceBetween" class="breadcrumbs">
       <custom:Breadcrumbs />
       <HBox>
@@ -12,7 +12,7 @@
       </HBox>
     </HBox>
   </VBox>
-  <HBox class="contents" justifyContent="SpaceBetween">
+  <HBox id="detailForm" class="contents" justifyContent="SpaceBetween">
     <VBox class="vCardBox sapUiSmallMarginEnd sticky-side-tree" height="80vh" width="25%" visible="{/popover}">
       <ScrollContainer height="75vh" width="100%" vertical="true">
         <Tree id="ReferenceTree" mode="SingleSelectMaster" selectionChange=".onSelectTree" items="{/ReferenceList}">
