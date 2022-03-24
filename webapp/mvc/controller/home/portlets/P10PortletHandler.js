@@ -97,12 +97,17 @@ sap.ui.define(
         const aList = _.chain(aSortedData)
           .map((o, i) => ({
             Color: _.toString(++i),
-            Itext: o.Obj0,
+            Itext: _.truncate(o.Obj0, { length: 35 }),
             Perce: _.toNumber(o.Fwgt),
             Acode: o.Z111,
             Atext: o.Z111Tx,
           }))
           .value();
+
+        const iPercSum = _.sumBy(aChartData, 'value');
+        if (_.sumBy(aChartData, 'value') !== 100) {
+          aChartData.splice(0, 0, { label: 'N/A', color: '#F7F7F7', value: 100 - iPercSum });
+        }
 
         if (this.oChartPromise) {
           this.oChartPromise.then(() => {
