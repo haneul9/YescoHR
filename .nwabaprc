@@ -2,8 +2,8 @@
     "base": "./dist",
     "files": [
       "index.html",
-      "asset/css/*.css",
-      "Component-preload.js"
+      "Component-preload.js",
+      "asset/css/*.css"
     ],
     "conn_usestrictssl" : false,
     "conn_server": "https://yeshrsapdev.yescoholdings.com:8443/",
