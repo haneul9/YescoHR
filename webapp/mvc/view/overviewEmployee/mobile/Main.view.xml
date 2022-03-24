@@ -1,0 +1,26 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.overviewEmployee.mobile.Main"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:custom="sap.ui.yesco.control">
+    <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+        <VBox class="contents">
+            <custom:MobileScrollContainer horizontal="false" vertical="true">
+                <grid:CSSGrid gridGap="20px" gridTemplateRows="230px" gridTemplateColumns="1fr" class="mobile-grid-flow-column sapUiSmallMarginTop">
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A01" type="XML" />
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A02" type="XML" />
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A03" type="XML" />
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A04" type="XML" />
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A05" type="XML" />
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A06" type="XML" />
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A07" type="XML" />
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A08" type="XML" />
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A09" type="XML" />
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A10" type="XML" />
+                    <!-- <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A11" type="XML" /> -->
+                </grid:CSSGrid>
+            </custom:MobileScrollContainer>
+        </VBox>
+    </Page>
+</mvc:View>
