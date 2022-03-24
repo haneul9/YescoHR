@@ -1,7 +1,11 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:grid="sap.ui.layout.cssgrid">
-  <Title level="H2" text="{i18n>LABEL_00139}" visible="{= !!${/ApprovalDetails/ZappStatAl} }" class="mt-25-px" />
+  <HBox class="table-toolbar" visible="{= !!${/ApprovalDetails/ZappStatAl} }">
+    <HBox class="title">
+      <Title level="H2" text="{i18n>LABEL_00139}" />
+    </HBox>
+  </HBox>
   <grid:CSSGrid visible="{= !!${/ApprovalDetails/ZappStatAl} }" gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
     <Label text="{i18n>LABEL_00138}" />
     <VBox>
