@@ -208,7 +208,10 @@ sap.ui.define(
       },
 
       onPressHelp() {
-        MessageBox.alert('도움말 메뉴 개발 완료 후 정상 동작됩니다!');
+        const oMenuModel = this.getMenuModel();
+        const currentMenu = oMenuModel.getProperties(oMenuModel.getCurrentMenuId());
+
+        window.open(`${location.host}/index.html#/referenceRoom/${currentMenu.Mnid1}/${currentMenu.Mnid2}/${currentMenu.Mnid3}/${currentMenu.Menid}`, '_blank', 'width=1300,height=800');
       },
 
       /**

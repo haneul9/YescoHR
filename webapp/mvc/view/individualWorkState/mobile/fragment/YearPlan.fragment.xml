@@ -1,0 +1,223 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:custom="sap.ui.yesco.control">
+  <VBox class="section">
+    <HBox class="title-bar" justifyContent="SpaceBetween">
+      <HBox>
+        <Title level="H3" text="{i18n>LABEL_18032}" />
+      </HBox>
+    </HBox>
+    <HBox justifyContent="SpaceBetween" class="month-plan-head">
+      <Button icon="sap-icon://navigation-left-arrow" class="icon-button" />
+      <Title level="H2" text="{/year}" />
+      <Button icon="sap-icon://navigation-right-arrow" class="icon-button" />
+    </HBox>
+    <grid:CSSGrid class="month-plan-grid sapUiSmallMarginBottom" gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr" gridGap="1px" items="{path: '/plans'}" width="100%">
+      <Text text="{i18n>LABEL_18031}" class="header"/>
+      <Text text="{i18n>LABEL_18025}" class="header" />
+      <Text text="{i18n>LABEL_18026}" class="header" />
+      <Text text="{i18n>LABEL_18027}" class="header" />
+      <Text text="{i18n>LABEL_18028}" class="header" />
+      <Text text="{i18n>LABEL_18029}" class="header" />
+      <Text text="{i18n>LABEL_18030}" class="header" />
+      <VBox>
+        <Label text="" />
+      </VBox>
+      <VBox data-style="Type18" class="type18">
+        <Label text="1" />
+        <Text text="OFF" />
+        <Text text="" />
+      </VBox>
+      <VBox data-style="Type17" class="type17">
+        <Label text="2" />
+        <Text text="09:00" />
+        <Text text="18:00" />
+      </VBox>
+      <VBox>
+        <Label text="3" />
+        <Text text="09:00" />
+        <Text text="18:00" />
+      </VBox>
+      <VBox>
+        <Label text="4" />
+        <Text text="09:00" />
+        <Text text="18:00" />
+      </VBox>
+      <VBox>
+        <Label text="5" />
+        <Text text="09:00" />
+        <Text text="18:00" />
+      </VBox>
+      <VBox>
+        <Label text="6" />
+        <Text text="09:00" />
+        <Text text="18:00" />
+      </VBox>
+      <VBox>
+        <Label text="7" />
+        <Text text="09:00" />
+        <Text text="18:00" />
+      </VBox>
+      <VBox>
+        <Label text="8" />
+        <Text text="OFF" />
+        <Text text="" />
+      </VBox>
+      <VBox class="type09">
+        <Label text="9" />
+        <Text text="09:00" />
+        <Text text="18:00" />
+      </VBox>
+      <VBox data-style="Type15" class="type15">
+        <Label text="10" />
+        <Text text="09:00" />
+        <Text text="18:00" />
+      </VBox>
+      <VBox>
+        <Label text="11" />
+        <Text text="09:00" />
+        <Text text="18:00" />
+      </VBox>
+      <VBox>
+        <Label text="12" />
+        <Text text="09:00" />
+        <Text text="18:00" />
+      </VBox>
+      <VBox>
+        <Label text="13" />
+        <Text text="09:00" />
+        <Text text="18:00" />
+      </VBox>
+
+      <VBox>
+        <Label text="14" />
+        <Text text="09:00" />
+        <Text text="18:00" />
+      </VBox>
+      <VBox>
+        <Label text="15" />
+        <Text text="OFF" />
+        <Text text="" />
+      </VBox>
+      <VBox>
+        <Label text="16" />
+        <Text text="09:00" />
+        <Text text="18:00" />
+      </VBox>
+      <VBox>
+        <Label text="17" />
+        <Text text="09:00" />
+        <Text text="18:00" />
+      </VBox>
+      <VBox>
+        <Label text="18" />
+        <Text text="09:00" />
+        <Text text="18:00" />
+      </VBox>
+      <VBox>
+        <Label text="19" />
+        <Text text="09:00" />
+        <Text text="18:00" />
+      </VBox>
+      <VBox>
+        <Label text="20" />
+        <Text text="09:00" />
+        <Text text="18:00" />
+      </VBox>
+
+      <VBox>
+        <Label text="21" />
+        <Text text="09:00" />
+        <Text text="18:00" />
+      </VBox>
+      <VBox>
+        <Label text="22" />
+        <Text text="OFF" />
+        <Text text="" />
+      </VBox>
+      <VBox >
+        <Label text="23" />
+        <Text text="09:00" />
+        <Text text="18:00" />
+      </VBox>
+      <VBox >
+        <Label text="24" />
+        <Text text="09:00" />
+        <Text text="18:00" />
+      </VBox>
+      <VBox>
+        <Label text="25" />
+        <Text text="09:00" />
+        <Text text="18:00" />
+      </VBox>
+      <VBox>
+        <Label text="26" />
+        <Text text="09:00" />
+        <Text text="18:00" />
+      </VBox>
+      <VBox class="type02">
+        <Label text="27" />
+        <Text text="09:00" />
+        <Text text="18:00" />
+      </VBox>
+
+      <VBox>
+        <Label text="28" />
+        <Text text="09:00" />
+        <Text text="18:00" />
+      </VBox>
+      <VBox>
+        <Label text="29" />
+        <Text text="OFF" />
+        <Text text="" />
+      </VBox>
+      <VBox class="type01">
+        <Label text="30" />
+        <Text text="09:00" />
+        <Text text="18:00" />
+      </VBox>
+      <VBox>
+        <Label text="31" />
+        <Text text="09:00" />
+        <Text text="18:00" />
+      </VBox>
+      <VBox>
+        <Label text="" />
+      </VBox>
+      <VBox>
+        <Label text="" />
+      </VBox>
+      <VBox>
+        <Label text="" />
+      </VBox>
+    </grid:CSSGrid>
+
+    <HBox class="box style-02 status-wrap year-plan">
+      <VBox>
+        <Text text="연차" class="type01" />
+        <Text text="하계휴가" class="type02" />
+        <Text text="기타휴가" class="type16" />
+        <Text text="출산휴가" class="type06" />
+      </VBox>
+      <VBox >
+        <Text text="휴직" class="type08" />
+        <Text text="휴무" class="type09" />
+        <Text text="징계" class="type10" />
+      </VBox>
+      <VBox >
+        <Text text="교육" class="type11" />
+        <Text text="출장" class="type12" />
+      </VBox>
+      <VBox>
+        <Text text="시간외" class="type17" />
+        <Text text="당직" class="type13" />
+        <Text text="통합굴착" class="type14" />
+      </VBox>
+      <VBox>
+        <Text text="신청" class="type18" />
+        <Text text="공휴일" class="type15" />
+      </VBox>
+    </HBox>
+  </VBox>
+</core:FragmentDefinition>

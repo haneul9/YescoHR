@@ -108,7 +108,7 @@ sap.ui.define(
       },
 
       toggleDeviceStyle() {
-        if (AppUtils.getDevice() === sap.ui.Device.system.SYSTEMTYPE.PHONE) {
+        if (/android|iphone|ipad|ipod/i.test(navigator.userAgent)) {
           $('#desktopstyle').remove();
         } else {
           $('#mobilestyle').remove();

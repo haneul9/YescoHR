@@ -123,7 +123,7 @@ sap.ui.define(
         const aFormData = oDetail.HelpInfo2Nav.results || [];
         const aMenuId = await this.helpMenuId(mSelectedTree.Werks);
 
-        if (mSelectedTree.Folder !== 'X') {
+        if (mSelectedTree.Folder === 'X') {
           oViewModel.setProperty('/FormData', {});
           oViewModel.setProperty('/Fixed', false);
           oViewModel.setProperty('/UserFixed', false);

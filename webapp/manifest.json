@@ -186,6 +186,7 @@
         { "pattern": "m/historyAppraisal", "name": "m/historyAppraisal", "target": "m/historyAppraisal" },
 
         { "pattern": "individualWorkState", "name": "individualWorkState", "target": "individualWorkState" },
+        { "pattern": "mobile/individualWorkState", "name": "mobile/individualWorkState", "target": "mobile/individualWorkState" },
         
         { "pattern": "jobCompetency", "name": "jobCompetency", "target": "jobCompetency" },
         { "pattern": "jobCompetency/:objid:/:title:", "name": "jobCompetency-view", "target": "jobCompetencyView" },
@@ -358,6 +359,7 @@
         "m/historyAppraisal": { "viewId": "m_historyAppraisal", "viewPath": "sap.ui.yesco.mvc.view.historyAppraisal", "viewName": "MainM" },
 
         "individualWorkState": { "viewId": "individualWorkState", "viewPath": "sap.ui.yesco.mvc.view.individualWorkState", "viewName": "IndiWorkState" },
+        "mobile/individualWorkState": { "viewId": "mobile_individualWorkState", "viewPath": "sap.ui.yesco.mvc.view.individualWorkState.mobile", "viewName": "IndiWorkState" },
         
         "jobCompetency": { "viewId": "jobCompetency", "viewPath": "sap.ui.yesco.mvc.view.jobCompetency", "viewName": "JobCompetency" },
         "jobCompetencyView": { "viewId": "jobCompetencyView", "viewPath": "sap.ui.yesco.mvc.view.jobCompetency", "viewName": "CompetencyView" },
