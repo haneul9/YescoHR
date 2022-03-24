@@ -24,7 +24,7 @@
                     </VBox>
                     <Label text="{i18n>LABEL_34009}"/>
                     <VBox>
-                        <custom:DatePicker maxDate="{/maxDate}" width="88%" dateValue="{ path: '/dialog/Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="required"/>
+                        <custom:DatePicker maxDate="{/maxDate}" editable="{= ${/dialog/New} === 'O' }" width="88%" dateValue="{ path: '/dialog/Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="required"/>
                     </VBox>
                     <Label text="{i18n>LABEL_34010}"/>
                     <VBox alignItems="End">
