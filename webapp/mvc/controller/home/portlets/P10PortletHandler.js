@@ -88,10 +88,12 @@ sap.ui.define(
 
       transformContentData(aPortletContentData = []) {
         const aColors = ['#f5a369', '#faca74', '#b7c983', '#5ac6b2', '#5aa7c6', '#9a8db7', '#9a8db7'];
-        const aSortedData = _.orderBy(aPortletContentData.AppraisalContDetSet.results, ['Fwgt', 'Z101', 'ElementId'], ['desc', 'asc', 'asc']);
+        const aSortedData = _.chain(aPortletContentData.AppraisalContDetSet.results)
+          .map((o) => _.set(o, 'Fwgt', _.toNumber(o.Fwgt)))
+          .orderBy(['Fwgt', 'Z101', 'ElementId'], ['desc', 'asc', 'asc']);
         const aChartData = _.chain(aSortedData)
           .cloneDeep()
-          .map((o, i) => ({ label: o.Obj0, color: aColors[i], value: _.toNumber(o.Fwgt) }))
+          .map((o, i) => ({ label: o.Obj0, color: aColors[i], value: o.Fwgt }))
           .reverse()
           .value();
         const aList = _.chain(aSortedData)
