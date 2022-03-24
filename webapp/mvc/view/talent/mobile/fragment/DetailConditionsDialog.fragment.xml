@@ -12,7 +12,7 @@
                     <Label text="{i18n>LABEL_35006}" />
                     <HBox class="sapUiTinyMarginBottom" alignItems="Center">
                         <Input maxLength="{/fieldLimit/Schtl}" value="{/saved/Schtl}" placeholder="{i18n>LABEL_00101}" />
-                        <Button text="{i18n>LABEL_35007}" class="sapUiTinyMarginBegin" icon="asset/image/icon_inquiry_save.png" press=".onPressSaveConditions" />
+                        <Button text="{i18n>LABEL_35007}" class="sapUiTinyMarginBegin" icon="asset/image/icon_inquiry_save.png" iconDensityAware="false" press=".onPressSaveConditions" />
                     </HBox>
                     <Label text="{i18n>LABEL_00218}" />
                     <HBox class="sapUiTinyMarginBottom" alignItems="Center">

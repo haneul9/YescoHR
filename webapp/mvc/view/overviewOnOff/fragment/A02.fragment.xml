@@ -12,7 +12,7 @@
                     <FlexItemData growFactor="1" />
                 </layoutData>
             </Text>
-            <Button visible="{/contents/A02/hasLink}" icon="asset/image/icon_window.svg" type="Transparent" class="icon-button portlet-link-icon" />
+            <Button visible="{/contents/A02/hasLink}" icon="asset/image/icon_window.svg" iconDensityAware="false" type="Transparent" class="icon-button portlet-link-icon" />
         </HBox>
         <HBox class="portlet-body">
             <layoutData>

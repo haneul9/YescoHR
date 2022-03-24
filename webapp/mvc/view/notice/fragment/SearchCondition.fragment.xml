@@ -9,7 +9,7 @@
             <custom:DateRangeSelection dateValue="{ path: '/search/secondDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/search/date', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" />
             <Label text="{i18n>LABEL_08005}" design="Bold" />
             <Input value="{/search/title}" />
-            <Button icon="asset/image/icon_search03.png" text="{i18n>LABEL_00101}" press=".onSearch" class="icon-button" />
+            <Button icon="asset/image/icon_search03.png" iconDensityAware="false" text="{i18n>LABEL_00101}" press=".onSearch" class="icon-button" />
         </HBox>
     </VBox>
 </core:FragmentDefinition>

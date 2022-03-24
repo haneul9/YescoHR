@@ -92,13 +92,13 @@
                 <table:Column width="7%">
                     <Label text="{i18n>LABEL_00165}"/>
                     <table:template>
-                        <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_02_N.svg" visible="{= !!${Zdocid} }" press=".onPressRowDetail" />
+                        <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_02_N.svg" iconDensityAware="false" visible="{= !!${Zdocid} }" press=".onPressRowDetail" />
                     </table:template>
                 </table:Column>
                 <table:Column width="7%">
                     <Label text="{i18n>LABEL_10079}"/>
                     <table:template>
-                        <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_01_N.svg" visible="{= !!${Zzappee} }" press=".onPressRowEmployee" />
+                        <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_01_N.svg" iconDensityAware="false" visible="{= !!${Zzappee} }" press=".onPressRowEmployee" />
                     </table:template>
                 </table:Column>
             </table:columns>

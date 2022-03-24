@@ -81,7 +81,7 @@
             <table:Column width="10%" filterProperty="Atext" sortProperty="Awart">
                 <Label text="{i18n>LABEL_10099}"/>
                 <table:template>
-                    <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_02_N.svg" visible="{= !!${Zdocid4} }" press=".onPressRowDevelop" />
+                    <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_02_N.svg" iconDensityAware="false" visible="{= !!${Zdocid4} }" press=".onPressRowDevelop" />
                 </table:template>
             </table:Column>
             <table:Column width="12%" filterProperty="Atext" sortProperty="Awart">

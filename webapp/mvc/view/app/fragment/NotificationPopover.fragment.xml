@@ -23,7 +23,7 @@
       <List items="{list}" visible="{= ${listCount} &gt; 0 }" rememberSelections="false" showUnread="true" showNoData="false">
         <CustomListItem unread="{= ${Checked} !== 'X' }">
           <HBox alignItems="Center" height="42px">
-            <ToggleButton icon="{= ${Pinned} === 'X' ? 'asset/image/icon_pinned.svg' : 'asset/image/icon_pin.svg' }" pressed="{= ${Pinned} === 'X' }" press=".onPressNotificationPin" width="1rem" class="icon-button pin-toggle-icon" tooltip="{= ${Pinned} === 'X' ? ${i18n>LABEL_01408} : ${i18n>LABEL_01407} }">
+            <ToggleButton icon="{= ${Pinned} === 'X' ? 'asset/image/icon_pinned.svg' : 'asset/image/icon_pin.svg' }" iconDensityAware="false" pressed="{= ${Pinned} === 'X' }" press=".onPressNotificationPin" width="1rem" class="icon-button pin-toggle-icon" tooltip="{= ${Pinned} === 'X' ? ${i18n>LABEL_01408} : ${i18n>LABEL_01407} }">
               <layoutData>
                 <FlexItemData alignSelf="Start" />
               </layoutData>

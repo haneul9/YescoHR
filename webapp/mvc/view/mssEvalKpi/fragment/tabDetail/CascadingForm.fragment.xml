@@ -17,7 +17,7 @@
             <ComboBox items="{/Years}" selectedKey="{/search/Zyear}" change=".onYearsBtn">
                 <core:Item text="{Ztext}" key="{Zcode}" />
             </ComboBox>
-            <Button text="{i18n>LABEL_00100}" icon="asset/image/icon_search03.png" press=".onSearch"/>
+            <Button text="{i18n>LABEL_00100}" icon="asset/image/icon_search03.png" iconDensityAware="false" press=".onSearch"/>
         </HBox>
     </VBox>
     <VBox class="vCardBox">

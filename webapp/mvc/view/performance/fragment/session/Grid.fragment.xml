@@ -86,8 +86,8 @@
                                             </HBox>
                                         </VBox>
                                         <VBox width="20%" justifyContent="SpaceAround" visible="{= !!${Ename} }">
-                                            <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_02_N.svg" press=".onPressRowDetail" />
-                                            <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_01_N.svg" press=".onPressRowEmployee" />
+                                            <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_02_N.svg" iconDensityAware="false" press=".onPressRowDetail" />
+                                            <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_01_N.svg" iconDensityAware="false" press=".onPressRowEmployee" />
                                         </VBox>
                                     </HBox>
                                 </f:GridListItem>
