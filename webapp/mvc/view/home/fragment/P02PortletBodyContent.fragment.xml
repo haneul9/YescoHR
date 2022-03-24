@@ -23,7 +23,7 @@
         </VBox>
         <VBox items="{list}" width="23%">
           <HBox height="2rem" alignItems="Center" class="pl-5-px">
-            <Text text="{ path: 'Sdate', type: 'sap.ui.yesco.mvc.model.type.Date' }" wrapping="false" />
+            <Text text="{ path: 'Aedtm', type: 'sap.ui.yesco.mvc.model.type.Date' }" wrapping="false" />
           </HBox>
         </VBox>
         <VBox items="{list}" width="14%" visible="{= ${newCount} &gt; 0 }">
