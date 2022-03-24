@@ -285,147 +285,149 @@ sap.ui.define(
         this._oLegendPopover.openBy(oControl);
       },
 
-      async onPressCompare() {
-        const oViewModel = this.getViewModel();
+      onPressCompare() {
+        this.getRouter().navTo('mobile/m/talent-compare', { pernrs: '123|124|125' });
 
-        oViewModel.setProperty('/busy', true);
+        // const oViewModel = this.getViewModel();
 
-        try {
-          const oTalentList = this.byId('talentList');
-          const aSelectedContexts = oTalentList.getSelectedContexts();
+        // oViewModel.setProperty('/busy', true);
 
-          if (aSelectedContexts.length < 2) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35011') }); // 프로파일 비교할 데이터를 선택하여 주십시오.
+        // try {
+        //   const oTalentList = this.byId('talentList');
+        //   const aSelectedContexts = oTalentList.getSelectedContexts();
 
-          const aPernr = _.map(aSelectedContexts, (o) => _.get(o.getObject(), 'Pernr'));
-          const aCompareResults = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'TalentSearchComparison', { Pernr: aPernr });
+        //   if (aSelectedContexts.length < 2) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35011') }); // 프로파일 비교할 데이터를 선택하여 주십시오.
 
-          oViewModel.setProperty('/compare/scroll', aCompareResults.length > 3);
-          oViewModel.setProperty(
-            '/compare/row1',
-            _.concat(
-              { type: 'label' },
-              _.map(aCompareResults, (o) => ({ type: 'text', Pernr: o.Pernr, Picurl: _.isEmpty(o.Picurl) ? 'asset/image/avatar-unknown.svg' : o.Picurl, Value01: o.Value01 }))
-            )
-          );
-          oViewModel.setProperty(
-            '/compare/row2',
-            _.concat(
-              { data: [{ type: 'label', value: this.getBundleText('LABEL_35013') }] }, // 기본정보
-              _.map(aCompareResults, (o) => ({
-                data: _.chain(o.Value02)
-                  .split('<br>')
-                  .map((d) => ({ type: 'text', value: d }))
-                  .value(),
-              }))
-            )
-          );
-          oViewModel.setProperty(
-            '/compare/row3',
-            _.concat(
-              { data: [{ type: 'label', value: this.getBundleText('LABEL_00222') }] }, // 직무
-              _.map(aCompareResults, (o) => ({
-                data: _.chain(o.Value04)
-                  .split('<br>')
-                  .map((d) => ({ type: 'text', value: d }))
-                  .value(),
-              }))
-            )
-          );
-          oViewModel.setProperty(
-            '/compare/row4',
-            _.concat(
-              { data: [{ type: 'label', value: this.getBundleText('LABEL_35016') }] }, // 학력
-              _.map(aCompareResults, (o) => ({
-                data: _.chain(o.Value05)
-                  .split('<br>')
-                  .map((d) => ({ type: 'text', value: d }))
-                  .value(),
-              }))
-            )
-          );
-          oViewModel.setProperty(
-            '/compare/row5',
-            _.concat(
-              { type: 'label', data: [{ type: 'label', value: this.getBundleText('LABEL_35014') }] }, // 평가이력
-              _.map(aCompareResults, (o) => ({
-                block9: _.toNumber(o.Value07),
-                data: _.chain(o.Value06)
-                  .split('<br>')
-                  .map((d) => ({ type: 'text', value: d }))
-                  .value(),
-              }))
-            )
-          );
-          oViewModel.setProperty(
-            '/compare/row6',
-            _.concat(
-              { data: [{ type: 'label', value: this.getBundleText('LABEL_35015') }] }, // 사내경력
-              _.map(aCompareResults, (o) => ({
-                data: _.chain(o.Value03)
-                  .split('<br>')
-                  .map((d) => ({ type: 'text', value: d }))
-                  .value(),
-              }))
-            )
-          );
-          oViewModel.setProperty(
-            '/compare/row7',
-            _.concat(
-              { data: [{ type: 'label', value: this.getBundleText('LABEL_35017') }] }, // 사외경력
-              _.map(aCompareResults, (o) => ({
-                data: _.chain(o.Value09)
-                  .split('<br>')
-                  .map((d) => ({ type: 'text', value: d }))
-                  .value(),
-              }))
-            )
-          );
-          oViewModel.setProperty(
-            '/compare/row8',
-            _.concat(
-              { data: [{ type: 'label', value: this.getBundleText('LABEL_35018') }] }, // 외국어
-              _.map(aCompareResults, (o) => ({
-                data: _.chain(o.Value08)
-                  .split('<br>')
-                  .map((d) => ({ type: 'text', value: d }))
-                  .value(),
-              }))
-            )
-          );
-          oViewModel.setProperty(
-            '/compare/row9',
-            _.concat(
-              { data: [{ type: 'label', value: this.getBundleText('LABEL_35019') }] }, // 포상
-              _.map(aCompareResults, (o) => ({
-                data: _.chain(o.Value10)
-                  .split('<br>')
-                  .map((d) => ({ type: 'text', value: d }))
-                  .value(),
-              }))
-            )
-          );
-          oViewModel.setProperty(
-            '/compare/row10',
-            _.concat(
-              { data: [{ type: 'label', value: this.getBundleText('LABEL_35020') }] }, // 징계
-              _.map(aCompareResults, (o) => ({
-                data: _.chain(o.Value11)
-                  .split('<br>')
-                  .map((d) => ({ type: 'text', value: d }))
-                  .value(),
-              }))
-            )
-          );
-          oViewModel.setProperty('/compare/row11', _.times(aCompareResults.length + 1).map(_.stubObject));
+        //   const aPernr = _.map(aSelectedContexts, (o) => _.get(o.getObject(), 'Pernr'));
+        //   const aCompareResults = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'TalentSearchComparison', { Pernr: aPernr });
 
-          this.onCompareDialog();
-        } catch (oError) {
-          this.debug('Controller > Talent Mobile > onPressCompare Error', oError);
+        //   oViewModel.setProperty('/compare/scroll', aCompareResults.length > 3);
+        //   oViewModel.setProperty(
+        //     '/compare/row1',
+        //     _.concat(
+        //       { type: 'label' },
+        //       _.map(aCompareResults, (o) => ({ type: 'text', Pernr: o.Pernr, Picurl: _.isEmpty(o.Picurl) ? 'asset/image/avatar-unknown.svg' : o.Picurl, Value01: o.Value01 }))
+        //     )
+        //   );
+        //   oViewModel.setProperty(
+        //     '/compare/row2',
+        //     _.concat(
+        //       { data: [{ type: 'label', value: this.getBundleText('LABEL_35013') }] }, // 기본정보
+        //       _.map(aCompareResults, (o) => ({
+        //         data: _.chain(o.Value02)
+        //           .split('<br>')
+        //           .map((d) => ({ type: 'text', value: d }))
+        //           .value(),
+        //       }))
+        //     )
+        //   );
+        //   oViewModel.setProperty(
+        //     '/compare/row3',
+        //     _.concat(
+        //       { data: [{ type: 'label', value: this.getBundleText('LABEL_00222') }] }, // 직무
+        //       _.map(aCompareResults, (o) => ({
+        //         data: _.chain(o.Value04)
+        //           .split('<br>')
+        //           .map((d) => ({ type: 'text', value: d }))
+        //           .value(),
+        //       }))
+        //     )
+        //   );
+        //   oViewModel.setProperty(
+        //     '/compare/row4',
+        //     _.concat(
+        //       { data: [{ type: 'label', value: this.getBundleText('LABEL_35016') }] }, // 학력
+        //       _.map(aCompareResults, (o) => ({
+        //         data: _.chain(o.Value05)
+        //           .split('<br>')
+        //           .map((d) => ({ type: 'text', value: d }))
+        //           .value(),
+        //       }))
+        //     )
+        //   );
+        //   oViewModel.setProperty(
+        //     '/compare/row5',
+        //     _.concat(
+        //       { type: 'label', data: [{ type: 'label', value: this.getBundleText('LABEL_35014') }] }, // 평가이력
+        //       _.map(aCompareResults, (o) => ({
+        //         block9: _.toNumber(o.Value07),
+        //         data: _.chain(o.Value06)
+        //           .split('<br>')
+        //           .map((d) => ({ type: 'text', value: d }))
+        //           .value(),
+        //       }))
+        //     )
+        //   );
+        //   oViewModel.setProperty(
+        //     '/compare/row6',
+        //     _.concat(
+        //       { data: [{ type: 'label', value: this.getBundleText('LABEL_35015') }] }, // 사내경력
+        //       _.map(aCompareResults, (o) => ({
+        //         data: _.chain(o.Value03)
+        //           .split('<br>')
+        //           .map((d) => ({ type: 'text', value: d }))
+        //           .value(),
+        //       }))
+        //     )
+        //   );
+        //   oViewModel.setProperty(
+        //     '/compare/row7',
+        //     _.concat(
+        //       { data: [{ type: 'label', value: this.getBundleText('LABEL_35017') }] }, // 사외경력
+        //       _.map(aCompareResults, (o) => ({
+        //         data: _.chain(o.Value09)
+        //           .split('<br>')
+        //           .map((d) => ({ type: 'text', value: d }))
+        //           .value(),
+        //       }))
+        //     )
+        //   );
+        //   oViewModel.setProperty(
+        //     '/compare/row8',
+        //     _.concat(
+        //       { data: [{ type: 'label', value: this.getBundleText('LABEL_35018') }] }, // 외국어
+        //       _.map(aCompareResults, (o) => ({
+        //         data: _.chain(o.Value08)
+        //           .split('<br>')
+        //           .map((d) => ({ type: 'text', value: d }))
+        //           .value(),
+        //       }))
+        //     )
+        //   );
+        //   oViewModel.setProperty(
+        //     '/compare/row9',
+        //     _.concat(
+        //       { data: [{ type: 'label', value: this.getBundleText('LABEL_35019') }] }, // 포상
+        //       _.map(aCompareResults, (o) => ({
+        //         data: _.chain(o.Value10)
+        //           .split('<br>')
+        //           .map((d) => ({ type: 'text', value: d }))
+        //           .value(),
+        //       }))
+        //     )
+        //   );
+        //   oViewModel.setProperty(
+        //     '/compare/row10',
+        //     _.concat(
+        //       { data: [{ type: 'label', value: this.getBundleText('LABEL_35020') }] }, // 징계
+        //       _.map(aCompareResults, (o) => ({
+        //         data: _.chain(o.Value11)
+        //           .split('<br>')
+        //           .map((d) => ({ type: 'text', value: d }))
+        //           .value(),
+        //       }))
+        //     )
+        //   );
+        //   oViewModel.setProperty('/compare/row11', _.times(aCompareResults.length + 1).map(_.stubObject));
 
-          AppUtils.handleError(oError);
-        } finally {
-          oViewModel.setProperty('/busy', false);
-        }
+        //   this.onCompareDialog();
+        // } catch (oError) {
+        //   this.debug('Controller > Talent Mobile > onPressCompare Error', oError);
+
+        //   AppUtils.handleError(oError);
+        // } finally {
+        //   oViewModel.setProperty('/busy', false);
+        // }
       },
 
       onPressCompareDialogClose() {
