@@ -207,11 +207,15 @@ sap.ui.define(
         window.print();
       },
 
-      onPressHelp() {
+      async onPressHelp() {
         const oMenuModel = this.getMenuModel();
         const currentMenu = oMenuModel.getProperties(oMenuModel.getCurrentMenuId());
 
-        window.open(`${location.host}/index.html#/referenceRoom/${currentMenu.Mnid1}/${currentMenu.Mnid2}/${currentMenu.Mnid3}/${currentMenu.Menid}`, '_blank', 'width=1300,height=800');
+        if (!currentMenu.L1id) {
+          return;
+        }
+
+        window.open(`${location.host}/index.html#/referenceRoom/${currentMenu.L1id}/${currentMenu.L2id}/${currentMenu.L3id}/${currentMenu.L4id}`, '_blank', 'width=1300,height=800');
       },
 
       /**

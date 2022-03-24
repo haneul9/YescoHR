@@ -85,7 +85,7 @@
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
       </VBox>
-      <Label text="{i18n>LABEL_29005}" />
+      <Label text="{i18n>LABEL_29012}" />
       <VBox>
         <Text text="{i18n>MSG_29001}"/>
         <HBox>

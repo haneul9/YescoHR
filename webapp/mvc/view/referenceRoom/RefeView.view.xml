@@ -2,7 +2,7 @@
   xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:mvc="sap.ui.core.mvc">
-  <Page showHeader="false">
+  <Page class="popup-view sapUiSmallMarginTop" showHeader="false">
     <core:Fragment fragmentName="sap.ui.yesco.mvc.view.referenceRoom.ReferenceMain" type="XML" />
   </Page>
 </mvc:View>

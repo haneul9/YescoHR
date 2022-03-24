@@ -35,6 +35,7 @@ sap.ui.define(
         return {
           busy: false,
           Fixed: false,
+          popover: true,
           UserFixed: false,
           Hass: this.isHass(),
           FormData: {},
@@ -48,18 +49,58 @@ sap.ui.define(
         };
       },
 
-      async onObjectMatched() {
+      async onObjectMatched(mRouteArguments) {
         const oViewModel = this.getViewModel();
 
         oViewModel.setData(this.initializeModel());
 
         try {
-          const aTree = await this.getReferenceRoom();
-          const aVariat = this.oDataChangeTree(aTree.HelpInfo1Nav.results);
+          if (_.isEmpty(mRouteArguments)) {
+            const aTree = await this.getReferenceRoom();
+            const aVariat = this.oDataChangeTree(aTree.HelpInfo1Nav.results);
 
-          oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.COMMON, 'HelpInfoTab2')));
-          oViewModel.setProperty('/TreeFullList', aTree.HelpInfo1Nav.results);
-          oViewModel.setProperty('/ReferenceList', aVariat);
+            oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.COMMON, 'HelpInfoTab2')));
+            oViewModel.setProperty('/TreeFullList', aTree.HelpInfo1Nav.results);
+            oViewModel.setProperty('/ReferenceList', aVariat);
+          } else {
+            const oDetail = await this.treeDetail(mRouteArguments.L1id, mRouteArguments.L2id, mRouteArguments.L3id, mRouteArguments.L4id, this.getAppointeeProperty('Werks'));
+            const aFormData = oDetail.HelpInfo2Nav.results || [];
+
+            const sHeadComment =
+              _.find(aFormData, (e) => {
+                return e.Infocd === '1';
+              }) || '';
+            const sMidComment =
+              _.find(aFormData, (e) => {
+                return e.Infocd === '2';
+              }) || '';
+            const sBotComment =
+              _.find(aFormData, (e) => {
+                return e.Infocd === '3';
+              }) || '';
+            const mDetailData = aFormData[0] || {};
+            const oViewModel = this.getViewModel();
+
+            oViewModel.setProperty('/popover', false);
+            oViewModel.setProperty('/FormData', {
+              ...mDetailData,
+              title: '11',
+              ChInfo: oDetail.ChInfo,
+              HeadZcomment: sHeadComment.Zcomment,
+              MidZcomment: sMidComment.Zcomment,
+              BotZcomment: sBotComment.Zcomment,
+            });
+
+            this.settingsAttachTable();
+
+            let bFileBox = true;
+
+            if (!AttachFileAction.getFileCount.call(this) && !this.isHass()) {
+              bFileBox = false;
+            }
+
+            oViewModel.setProperty('/Settings/Visible', bFileBox);
+          }
         } catch (oError) {
           this.debug(oError);
           AppUtils.handleError(oError);
@@ -194,6 +235,14 @@ sap.ui.define(
         oViewModel.setProperty('/Fixed', bFix);
         oViewModel.setProperty('/UserFixed', false);
         this.settingsAttachTable();
+
+        let bFileBox = true;
+
+        if (!AttachFileAction.getFileCount.call(this) && !this.isHass()) {
+          bFileBox = false;
+        }
+
+        oViewModel.setProperty('/Settings/Visible', bFileBox);
       },
 
       // 메뉴 도움말 자료실 Combo
@@ -395,6 +444,14 @@ sap.ui.define(
 
           oViewModel.setProperty('/UserFixed', true);
           this.settingsAttachTable();
+
+          let bFileBox = true;
+
+          if (!AttachFileAction.getFileCount.call(this) && !this.isHass()) {
+            bFileBox = false;
+          }
+
+          oViewModel.setProperty('/Settings/Visible', bFileBox);
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {

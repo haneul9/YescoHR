@@ -13,50 +13,46 @@
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
       </VBox>
-      <Label text="{i18n>LABEL_29004}" />
-      <VBox>
-        <TextArea placeholder="{i18n>MSG_29002}" editable="false" rows="5" width="100%" value="{/FormData/HeadZcomment}"/>
+      <VBox visible="{= !!${/FormData/HeadZcomment} }">
+        <TextArea placeholder="{i18n>MSG_29002}" editable="false" rows="5" width="100%" value="{/FormData/HeadZcomment}" class="ml-20-px" />
         <layoutData>
-          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+          <grid:GridItemLayoutData gridColumn="1 / 5"/>
         </layoutData>
       </VBox>
-      <Label text="{i18n>LABEL_29009}" />
-      <HBox>
+      <HBox visible="{= !!${/FormData/Url1} }">
         <layoutData>
-          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+          <grid:GridItemLayoutData gridColumn="1 / 5"/>
         </layoutData>
-        <Link target="_blank" href="{/FormData/Url1}" text="{/FormData/Url1t}"/>
+        <Link target="_blank" href="{/FormData/Url1}" class="ml-20-px" text="{/FormData/Url1t}"/>
       </HBox>
-      <Label text="{i18n>LABEL_29010}" />
-      <HBox>
+      <HBox visible="{= !!${/FormData/Url2} }">
         <layoutData>
-          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+          <grid:GridItemLayoutData gridColumn="1 / 5"/>
         </layoutData>
-        <Link target="_blank" href="{/FormData/Url2}" text="{/FormData/Url2t}"/>
+        <Link target="_blank" href="{/FormData/Url2}" class="ml-20-px" text="{/FormData/Url2t}"/>
       </HBox>
-      <Label text="{i18n>LABEL_29005}" />
-      <HBox width="100%">
+      <Label text="{i18n>LABEL_29005}" visible="{= !!${/FormData/Fileuri} }" />
+      <HBox width="100%" visible="{= !!${/FormData/Fileuri} }">
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
-        <PDFViewer sourceValidationFailed=".onPdfError" visible="{= !!${/FormData/Fileuri} }" source="{/FormData/Fileuri}" height="800px" showDownloadButton="false" class="my-15-px">
+        <PDFViewer sourceValidationFailed=".onPdfError" source="{/FormData/Fileuri}" height="800px" showDownloadButton="false" class="my-15-px">
           <layoutData>
             <FlexItemData growFactor="1" />
           </layoutData>
         </PDFViewer>
       </HBox>
-      <Label text="{i18n>LABEL_29006}" />
-      <VBox>
+      <Label text="{i18n>LABEL_29006}" visible="{= !!${/FormData/MidZcomment} }" />
+      <VBox visible="{= !!${/FormData/MidZcomment} }">
         <TextArea placeholder="{i18n>MSG_29002}" rows="5" editable="false" width="100%" value="{/FormData/MidZcomment}"/>
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
       </VBox>
-      <Label text="{i18n>LABEL_29007}" />
-      <VBox>
-        <TextArea placeholder="{i18n>MSG_29002}" rows="5" editable="false" width="100%" value="{/FormData/BotZcomment}"/>
+      <VBox visible="{= !!${/FormData/BotZcomment} }">
+        <TextArea placeholder="{i18n>MSG_29002}" rows="5" editable="false" width="100%" value="{/FormData/BotZcomment}" class="ml-20-px" />
         <layoutData>
-          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+          <grid:GridItemLayoutData gridColumn="1 / 5"/>
         </layoutData>
       </VBox>
     </grid:CSSGrid>

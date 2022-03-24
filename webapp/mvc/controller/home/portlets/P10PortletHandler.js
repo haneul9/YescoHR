@@ -87,7 +87,7 @@ sap.ui.define(
       },
 
       transformContentData(aPortletContentData = []) {
-        const aColors = ['#f5a369', '#faca74', '#b7c983', '#5ac6b2', '#5aa7c6', '#9a8db7', '#9a8db7'];
+        const aColors = ['#f5a369', '#faca74', '#b7c983', '#5ac6b2', '#5aa7c6', '#9a8db7', '#336699', '#67a4ff', '#CCE5FF', '#FCCCD4'];
         const aSortedData = _.chain(aPortletContentData.AppraisalContDetSet.results)
           .map((o) => _.set(o, 'Fwgt', _.toNumber(o.Fwgt)))
           .orderBy(['Fwgt', 'Z101', 'ElementId'], ['desc', 'asc', 'asc']);
@@ -102,7 +102,7 @@ sap.ui.define(
             Itext: _.truncate(o.Obj0, { length: 35 }),
             Perce: _.toNumber(o.Fwgt),
             Acode: o.Z111,
-            Atext: o.Z111Tx,
+            Atext: _.isEmpty(o.Z111Tx) ? '미입력' : o.Z111Tx,
           }))
           .value();
 
