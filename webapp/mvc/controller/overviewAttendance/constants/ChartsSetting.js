@@ -185,7 +185,7 @@ sap.ui.define([], function () {
           showValues: 1,
           rotateValues: 0,
           placeValuesInside: 0,
-          yAxisMaxValue: 60,
+          yAxisMaxValue: 40,
           numDivLines: 3,
           divLineDashed: 0,
           divLineColor: '#eeeeee',

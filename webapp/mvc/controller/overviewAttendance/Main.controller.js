@@ -186,7 +186,7 @@ sap.ui.define(
               })
               .set(['dataset', 2], {
                 seriesname: this.getBundleText('LABEL_32005'), // 초과인원
-                color: '#FFE479',
+                color: '#ff5a5a',
                 data: _.map(aChartDatas, (o) => ({ value: o.Cnt03, link: `j-callDetail-${mChartInfo.Headty},${o.Cod03}` })),
               })
               .commit();
