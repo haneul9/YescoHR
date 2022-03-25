@@ -90,11 +90,13 @@ sap.ui.define(
               const sRoutL2 = mDetailData.L2tx ? ` > ${mDetailData.L2tx}` : '';
               const sRoutL3 = mDetailData.L3tx ? ` > ${mDetailData.L3tx}` : '';
               const sRoutL4 = mDetailData.L4tx ? ` > ${mDetailData.L4tx}` : '';
+              const [mPdfUrl] = oDetail.HelpInfo4Nav.results;
 
               oViewModel.setProperty('/FormData', {
                 ...mDetailData,
                 title: this.getTitle(mDetailData),
                 ChInfo: oDetail.ChInfo,
+                Fileuri: mPdfUrl ? mPdfUrl.Fileuri : '',
                 MenuRoute: `${mDetailData.L1tx}${sRoutL2}${sRoutL3}${sRoutL4}`,
                 HeadZcomment: sHeadComment.Zcomment,
                 MidZcomment: sMidComment.Zcomment,

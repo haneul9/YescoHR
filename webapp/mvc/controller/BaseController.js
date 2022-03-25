@@ -210,8 +210,13 @@ sap.ui.define(
       async onPressHelp() {
         const oMenuModel = this.getMenuModel();
         const currentMenu = oMenuModel.getProperties(oMenuModel.getCurrentMenuId());
+        let sUrl = '/hey/index.html#/referenceRoom/';
 
-        window.open(`${location.origin}/hey/index.html#/referenceRoom/${currentMenu.L1id}/${currentMenu.L2id}/${currentMenu.L3id}/${currentMenu.L4id}`, 'width=1100,height=700');
+        if (_.includes(location.origin, 'localhost')) {
+          sUrl = '/index.html#/referenceRoom/';
+        }
+
+        window.open(`${location.origin}${sUrl}${currentMenu.L1id}/${currentMenu.L2id}/${currentMenu.L3id}/${currentMenu.L4id}`, 'width=1100,height=700');
       },
 
       /**
