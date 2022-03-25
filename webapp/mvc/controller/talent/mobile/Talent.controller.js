@@ -190,6 +190,10 @@ sap.ui.define(
             controller: this,
           });
 
+          this.oDetailConditionsDialog.attachAfterOpen(() => {
+            this.scrollStartToken();
+          });
+
           this.getView().addDependent(this.oDetailConditionsDialog);
         }
 
@@ -265,6 +269,14 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/busy', false);
         }
+      },
+
+      scrollStartToken() {
+        setTimeout(() => {
+          $('.sapMTokenizer').each(function () {
+            $(this).scrollLeft(0);
+          });
+        }, 200);
       },
 
       onPressCompareDialogClose() {
