@@ -32,14 +32,19 @@ sap.ui.define(
        */
       async setEmpConditionCode(oController) {
         const oEmpModel = oController.getViewModel();
-        // const oEmpModel = oController.getOwnerComponent().getModel('employeeModel');
 
         oEmpModel.setProperty('/employeeModel/busy', true);
         try {
           const oModel = oController.getModel(ServiceNames.COMMON);
 
+          // Accty === 'Z' 일때 PersAreaList 필터조건 ZALL = 'X'
+          const PersaFilters = {};
+          if (oEmpModel.getProperty('/employeeModel/Search/Accty') === 'Z') {
+            PersaFilters.ZALL = 'X';
+          }
+
           const [aAreaList, aWorkList, aEmpList] = await Promise.all([
-            Client.getEntitySet(oModel, 'PersAreaList'), //
+            Client.getEntitySet(oModel, 'PersAreaList', PersaFilters), //
             Client.getEntitySet(oModel, 'EmpCodeList', { Field: 'STAT2' }),
             Client.getEntitySet(oModel, 'EmpCodeList', { Field: 'PERSG' }),
           ]);
@@ -309,19 +314,9 @@ sap.ui.define(
       /*
        *  사원검색 Dialog호출
        */
-      async onSearchDialog(fnCallback) {
+      async onSearchDialog(fnCallback, mInitModelData = {}) {
         const oView = this.getView();
-
-        // this.getOwnerComponent().setModel(new JSONModel({
-        //   Search: {},
-        //   SelectedEmp: [],
-        //   empList: [],
-        //   PersArea: [],
-        //   WorkType: [],
-        //   EmpGroup: [],
-        //   SubEmpGroup: [],
-        // }), 'employeeModel');
-        this.getViewModel().setProperty('/employeeModel', {
+        const mModelData = {
           Search: {},
           Enabled: {},
           SelectedEmp: [],
@@ -330,7 +325,9 @@ sap.ui.define(
           WorkType: [],
           EmpGroup: [],
           SubEmpGroup: [],
-        });
+        };
+
+        this.getViewModel().setProperty('/employeeModel', $.extend(true, mModelData, mInitModelData));
 
         if (!this.dSearchDialog) {
           this.dSearchDialog = await Fragment.load({

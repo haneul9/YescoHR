@@ -144,22 +144,27 @@ sap.ui.define(
 
       async onPressMyMemberAdd() {
         const oController = this.getController();
+        const mInitModelData = {
+          visibleEntda: false, // 입사일 숨김
+          visibleRetdt: false, // 퇴사일 숨김
+          Enabled: { Stat2: false },
+          Search: {
+            Stat2: '3',
+            Accty: 'Z', // 권한 해제 : 타사 임직원도 검색
+          },
+        };
 
-        await oController.EmployeeSearch.onSearchDialog.call(oController, (mSelectedEmp = {}, bClickedCloseButton) => {
-          if (bClickedCloseButton) {
-            return;
-          }
+        await oController.EmployeeSearch.onSearchDialog.call(
+          oController,
+          (mSelectedEmp = {}, bClickedCloseButton) => {
+            if (bClickedCloseButton) {
+              return;
+            }
 
-          this.getSelectedPortletHandler().oPortletHandler.addMyMember(mSelectedEmp.Pernr);
-        });
-
-        // 아래 검색 옵션 초기화 부분은 EmployeeSearch.onSearchDialog 호출 후 해야함, 검색창 호출시 모든 옵션을 default 값으로 초기화하기 때문
-        const oViewModel = oController.getViewModel();
-        oViewModel.setProperty('/employeeModel/visibleEntda', false); // 입사일 숨김
-        oViewModel.setProperty('/employeeModel/visibleRetdt', false); // 퇴사일 숨김
-        oViewModel.setProperty('/employeeModel/Enabled/Stat2', false);
-        oViewModel.setProperty('/employeeModel/Search/Stat2', '3');
-        oViewModel.setProperty('/employeeModel/Search/Accty', 'Z'); // 권한 해제 : 타사 임직원도 검색
+            this.getSelectedPortletHandler().oPortletHandler.addMyMember(mSelectedEmp.Pernr);
+          },
+          mInitModelData
+        );
       },
 
       onPressMyMemberRemove(oEvent) {
