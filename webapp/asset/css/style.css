@@ -1112,6 +1112,8 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 .sapUiLayoutCSSGrid.year-plan.status-wrap .sapMLabel{justify-content: left;}
 .sapUiLayoutCSSGrid.year-plan.status-wrap .sapMText{font-weight: bold;}
 .year-plan.status-wrap .sapMLabel::before {content:""; position:relative; display:inline-block; width:14px; height:14px; background-color:#888; margin-right:5px; border-radius:50%}
+.vCardBox.MultiBoxmobile {border: 0px; border-radius: 0px; padding: 10px;}
+.vCardBox.MultiBoxmobile .sapMTitle{border-bottom: 0px;}
 
 /*logout button style*/
 .sapMBtn.icon-button.logout .sapMBtnInner {background:transparent!important}

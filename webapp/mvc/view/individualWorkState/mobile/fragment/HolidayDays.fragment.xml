@@ -1,16 +1,14 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:core="sap.ui.core">
-  <VBox width="50%" class="vCardBox small sapUiMediumMarginEnd">
-    <HBox class="table-toolbar">
-      <HBox class="title">
-        <Title level="H2" text="{i18n>LABEL_18005}" />
-        <Text text="{/FullYear}" class="desc-txt" />
-      </HBox>
+  <VBox class="vCardBox small MultiBoxmobile">
+    <HBox class="title">
+      <Title level="H2" text="{i18n>LABEL_18005}" />
+      <Text text="{/FullYear}" class="desc-txt" />
     </HBox>
-    <HBox height="176px">
+    <VBox height="176px">
       <core:HTML content='&lt;div id="chart-doughnut-container"&gt;&lt;/div&gt;' />
-      <grid:CSSGrid class="status-wrap year-plan" gridTemplateColumns="2fr 1fr 1fr" gridGap="20px 50px">
+      <grid:CSSGrid class="status-wrap year-plan" gridTemplateColumns="3fr 1fr 1fr" gridGap="5px">
         <grid:layoutData>
           <FlexItemData growFactor="1"/>
         </grid:layoutData>
@@ -36,6 +34,6 @@
         <Text text="{/vacationChart/dUnPlan}일"/>
         <Text text="{/vacationChart/pUnPlan}%"/>
       </grid:CSSGrid>
-    </HBox>
+    </VBox>
   </VBox>
 </core:FragmentDefinition>

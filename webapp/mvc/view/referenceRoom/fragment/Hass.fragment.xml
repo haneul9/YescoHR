@@ -21,7 +21,7 @@
       </VBox>
       <Label text="{i18n>LABEL_08003}" />
       <VBox>
-        <Text text="{/FormData/ChangeDate}"/>
+        <Text text="{/FormData/Dattm}"/>
       </VBox>
       <Label text="{i18n>LABEL_29004}" visible="{/emptyData}" />
       <VBox visible="{/emptyData}">

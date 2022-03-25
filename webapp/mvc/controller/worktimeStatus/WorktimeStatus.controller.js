@@ -199,7 +199,7 @@ sap.ui.define(
           oListModel.setProperty('/detail/pernr/Label3', aPernrList[0].Wktx3);
           oListModel.setProperty('/detail/pernr/Label4', aPernrList[0].Wktx4);
           oListModel.setProperty('/detail/pernr/Label5', aPernrList[0].Wktx5);
-          oListModel.setProperty('/detail/pernr/rowCount', _.size(aPernrList));
+          oListModel.setProperty('/detail/pernr/rowCount', _.size(aPernrList) > 10 ? 10 : _.size(aPernrList));
         } else {
           const aOrgList = oListModel.getProperty('/Data/WorkingTime2Nav/results');
 
@@ -209,7 +209,7 @@ sap.ui.define(
           oListModel.setProperty('/detail/org/Label3', aOrgList[0].Wktx3);
           oListModel.setProperty('/detail/org/Label4', aOrgList[0].Wktx4);
           oListModel.setProperty('/detail/org/Label5', aOrgList[0].Wktx5);
-          oListModel.setProperty('/detail/org/rowCount', _.size(aOrgList));
+          oListModel.setProperty('/detail/org/rowCount', _.size(aOrgList) > 10 ? 10 : _.size(aOrgList));
           setTimeout(() => $('#container-ehr---m_worktimeStatus--orgTable-header-fixed-fixrow').addClass('h-90-px'), 50);
         }
       },
@@ -235,6 +235,11 @@ sap.ui.define(
         return {
           //Cosmetics
           showValue: 1,
+          toolTipBgColor: '#ffffff',
+          toolTipColor: '#222222',
+          showToolTipShadow: 1,
+          plotcolorintooltip: 1,
+          plottooltext: "<div class='fusion-tooltip'><table><tr><th>$seriesName-$label</th><td>$value</td></tr></table></div>",
           baseFontSize: 13,
           valueFontSize: 13,
           legendItemFontSize: 13,
@@ -390,7 +395,7 @@ sap.ui.define(
           oListModel.setProperty('/detail/dialog/org/Label3', aDialogList[0].Wktx3);
           oListModel.setProperty('/detail/dialog/org/Label4', aDialogList[0].Wktx4);
           oListModel.setProperty('/detail/dialog/org/Label5', aDialogList[0].Wktx5);
-          oListModel.setProperty('/detail/dialog/org/rowCount', _.size(aDialogList));
+          oListModel.setProperty('/detail/dialog/org/rowCount', _.size(aDialogList) > 10 ? 10 : _.size(aDialogList));
           oDialog.open();
         });
       },
@@ -422,7 +427,7 @@ sap.ui.define(
 
         this._pPernrDialog.then(async function (oDialog) {
           oListModel.setProperty('/detail/dialog/pernr/list', aDialogList);
-          oListModel.setProperty('/detail/dialog/pernr/rowCount', _.size(aDialogList));
+          oListModel.setProperty('/detail/dialog/pernr/rowCount', _.size(aDialogList) > 10 ? 10 : _.size(aDialogList));
           oDialog.open();
         });
       },
@@ -430,6 +435,24 @@ sap.ui.define(
       // Dialog Close
       onDialogClose(oEvent) {
         oEvent.getSource().getParent().close();
+      },
+
+      onPressPernrExcelDownload() {
+        const oTable = this.byId('pernrTable');
+        const aTableData = this.getViewModel().getProperty('/detail/pernr/list');
+
+        this.onPressExcelDownload(oTable, aTableData);
+      },
+      onPressOrgExcelDownload() {
+        const oTable = this.byId('orgTable');
+        const aTableData = this.getViewModel().getProperty('/detail/org/list');
+
+        this.onPressExcelDownload(oTable, aTableData);
+      },
+      onPressExcelDownload(oTable, aTableData) {
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_32001'); // {근로시간현황}_목록
+
+        // TableUtils.export({ oTable, aTableData, sFileName, bHasMultiLabel: true });
       },
     });
   }

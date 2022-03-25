@@ -20,23 +20,20 @@ sap.ui.define(
         this.oController = oController;
       },
 
-      async getYearPlan(sYear = String(moment().year())) {
+      async getYearPlan() {
         const oViewModel = this.oController.getViewModel();
+        const mSearchDate = oViewModel.getProperty('/searchDate');
         const oModel = this.oController.getModel(ServiceNames.WORKTIME);
         const sWerks = this.oController.getAppointeeProperty('Werks');
         const mPayLoad = {
           Werks: sWerks,
-          Tmyea: sYear,
+          Tmyea: mSearchDate.year,
+          Tmmon: mSearchDate.month,
         };
 
         // 1년근태
         const aList1 = await Client.getEntitySet(oModel, 'PersonalTimeDashboard', mPayLoad);
-        // 근태유형 색상
-        // const aTimeTypeList = await Client.getEntitySet(oModel, 'TimeTypeLegend', { Werks: sWerks });
 
-        // _.forEach(aTimeTypeList, (e) => {
-        //   oViewModel.setProperty(`/TimeTypes/${e.Colty}`, true);
-        // });
         oViewModel.setProperty(
           '/yearPlan',
           _.each(aList1, (e) => {
@@ -47,18 +44,22 @@ sap.ui.define(
       },
       async onPressPrevYear() {
         const oViewModel = this.oController.getViewModel();
-        const iCurrentYear = oViewModel.getProperty('/year');
+        const sFullDate = moment(oViewModel.getProperty('/searchDate/full')).subtract('month', 1).format('YYYY.MM');
 
-        oViewModel.setProperty('/year', iCurrentYear - 1);
-        await this.oController.YearPlanBoxHandler.getYearPlan(iCurrentYear - 1);
+        oViewModel.setProperty('/searchDate/year', moment(sFullDate).format('YYYY'));
+        oViewModel.setProperty('/searchDate/month', moment(sFullDate).format('MM'));
+        oViewModel.setProperty('/searchDate/full', sFullDate);
+        await this.oController.YearPlanBoxHandler.getYearPlan();
       },
 
       async onPressNextYear() {
         const oViewModel = this.oController.getViewModel();
-        const iCurrentYear = oViewModel.getProperty('/year');
+        const sFullDate = moment(oViewModel.getProperty('/searchDate/full')).add('month', 1).format('YYYY.MM');
 
-        oViewModel.setProperty('/year', iCurrentYear + 1);
-        await this.oController.YearPlanBoxHandler.getYearPlan(iCurrentYear + 1);
+        oViewModel.setProperty('/searchDate/year', moment(sFullDate).format('YYYY'));
+        oViewModel.setProperty('/searchDate/month', moment(sFullDate).format('MM'));
+        oViewModel.setProperty('/searchDate/full', sFullDate);
+        await this.oController.YearPlanBoxHandler.getYearPlan();
       },
 
       // 요일 선택시
@@ -94,15 +95,17 @@ sap.ui.define(
 
       makeCalendarControl() {
         const oViewModel = this.oController.getViewModel();
-        const mBody = _.times(12, this.getWeekBody.bind(this));
+        const mBody = _.times(1, this.getWeekBody.bind(this));
 
         oViewModel.setProperty('/plans', [...this.getWeekHeader(), ...mBody.reduce((a, b) => [...a, ...b], [])]);
       },
 
-      getWeekBody(month) {
+      getWeekBody() {
         const oViewModel = this.oController.getViewModel();
-        const iYear = oViewModel.getProperty('/year');
-        const dFirstDayOfYear = moment({ y: iYear, M: month, d: 1 });
+        const mSearchDate = oViewModel.getProperty('/searchDate');
+        const iMonth = _.subtract(mSearchDate.month, 1);
+        const sYear = mSearchDate.year;
+        const dFirstDayOfYear = moment({ y: sYear, M: iMonth, d: 1 });
         const iDaysInMonth = dFirstDayOfYear.daysInMonth();
         const iFirstDay = dFirstDayOfYear.day();
         const iLeadingNoneCount = iFirstDay === 0 ? 6 : iFirstDay - 1;
@@ -110,16 +113,11 @@ sap.ui.define(
         const aLeadingNoneBox = _.times(iLeadingNoneCount).map(() => this.getBoxObject({ classNames: 'None' })) ?? [];
         const aTrailingNoneBox = _.times(iTrailingNoneCount).map(() => this.getBoxObject({ classNames: 'None' })) ?? [];
 
-        return [
-          this.getBoxObject({ label: _.toUpper(dFirstDayOfYear.format('MMM')), classNames: 'Header' }), //
-          ...aLeadingNoneBox,
-          ..._.times(iDaysInMonth).map((d, i) => this.getActivationDayBody(month, i + 1)),
-          ...aTrailingNoneBox,
-        ];
+        return [...aLeadingNoneBox, ..._.times(iDaysInMonth).map((d, i) => this.getActivationDayBody(i + 1)), ...aTrailingNoneBox];
       },
 
-      getBoxObject({ day = 'NONE', label = '', classNames = '', borderNames = 'Default', stripes = 'None', holiday = 'None' }) {
-        return { day, label, classNames, borderNames, stripes, holiday };
+      getBoxObject({ bTime = '', eTime = '', day = 'NONE', label = '', classNames = '', borderNames = 'Default', stripes = 'None', holiday = 'None' }) {
+        return { bTime, eTime, day, label, classNames, borderNames, stripes, holiday };
       },
 
       getWeekHeader() {
@@ -128,14 +126,16 @@ sap.ui.define(
         });
         const mWeekHeaders = aWeekNames.map((o) => this.getBoxObject({ label: o, classNames: 'Header' }));
 
-        return [this.getBoxObject({ label: this.oController.getBundleText('LABEL_17005'), classNames: 'Header' }), ...mWeekHeaders, ...mWeekHeaders, ...mWeekHeaders, ...mWeekHeaders, ...mWeekHeaders, this.getBoxObject({ label: this.oController.getBundleText('LABEL_18025'), classNames: 'Header' }), this.getBoxObject({ label: this.oController.getBundleText('LABEL_18026'), classNames: 'Header' })];
+        return [...mWeekHeaders];
       },
 
-      getActivationDayBody(iMonth, iDay) {
+      getActivationDayBody(iDay) {
         const oViewModel = this.oController.getViewModel();
         const oScheduleData = oViewModel.getProperty('/yearPlan');
-        const iYear = oViewModel.getProperty('/year');
-        const dDate = moment({ y: iYear, M: iMonth, d: iDay });
+        const mSearch = oViewModel.getProperty('/searchDate');
+        const sYear = mSearch.year;
+        const iMonth = _.subtract(mSearch.month, 1);
+        const dDate = moment({ y: sYear, M: iMonth, d: iDay });
         const sFormatDate = dDate.format('YYYYMMDD');
         const iDayNum = dDate.day();
         let sClassNames = '';
@@ -172,9 +172,20 @@ sap.ui.define(
         if (oDateObject.Holyn === 'X') {
           sHoliday = 'Holiday';
         }
+
+        let sBeTime = oDateObject.Beguz;
+        let sEnTime = oDateObject.Enduz;
+
+        if (!oDateObject.Beguz || oDateObject.Beguz === '0000') {
+          sBeTime = 'OFF';
+          sEnTime = '';
+        } else {
+          sBeTime = `${sBeTime.slice(0, 2)}:${sBeTime.slice(2)}`;
+          sEnTime = `${sEnTime.slice(0, 2)}:${sEnTime.slice(2)}`;
+        }
         // sStripes = oDateObject.inProgress;
 
-        return this.getBoxObject({ day: sFormatDate, label: String(iDay), holiday: sHoliday, classNames: sClassNames, borderNames: sBorderNames, stripes: sStripes });
+        return this.getBoxObject({ bTime: sBeTime, eTime: sEnTime, day: sFormatDate, label: String(iDay), holiday: sHoliday, classNames: sClassNames, borderNames: sBorderNames, stripes: sStripes });
       },
     });
   }

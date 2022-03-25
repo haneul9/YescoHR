@@ -10,6 +10,7 @@
       <HBox class="status-wrap">
         <ObjectStatus text="{i18n>LABEL_32007}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication04" />
         <ObjectStatus text="{i18n>LABEL_32008}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication05" />
+        <!-- <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressOrgExcelDownload" busyIndicatorDelay="0" busy="{/busy}" /> -->
       </HBox>
     </HBox>
     <table:Table id="orgTable" selectionMode="None" fixedColumnCount="3" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/detail/org/list}" visibleRowCount="{/detail/org/rowCount}" noData="{i18n>MSG_00001}">
