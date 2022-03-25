@@ -19,7 +19,7 @@
                         <core:CustomData key="status" value="Z45" writeToDom="true" />
                     </customData>
                 </Text>
-                <Text text="{i18n>MSG_10021}" class="desc-txt mt-2-px ml-0-px" />
+                <Text text="{i18n>MSG_10011}" class="desc-txt mt-2-px ml-0-px" />
             </HBox>
             <HBox class="cascading-type-list">
                 <Image src="asset/image/icon_WF_Myinfo_02_N.svg" />

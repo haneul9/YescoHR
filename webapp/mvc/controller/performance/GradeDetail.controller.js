@@ -373,7 +373,7 @@ sap.ui.define(
         try {
           const oRowData = oEvent.getSource().getParent().getBindingContext().getObject();
           const aRawData = oViewModel.getProperty('/raw/list');
-          const aFilteredData = _.isEmpty(oRowData.Orgeh) ? aRawData : _.filter(aRawData, (o) => _.isEqual(o.Orgeh, oRowData.Orgeh));
+          const aFilteredData = _.isEmpty(oRowData.Zzappun1) ? aRawData : _.filter(aRawData, (o) => _.isEqual(o.Zzappun1, oRowData.Zzappun1));
 
           oViewModel.setProperty('/tab/Zzappun1', oRowData.Zzappun1);
           oViewModel.setProperty('/tab/list', aFilteredData);
@@ -419,6 +419,11 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const iSortIndex = oViewModel.getProperty('/tab/sortIndex');
 
+        oViewModel.setProperty(
+          '/tab/list',
+          _.map(oViewModel.getProperty('/tab/list'), (o) => _.set(o, 'Fapp', _.isEqual(o.Fapp, 'ALL') ? '' : o.Fapp))
+        );
+
         switch (iSortIndex) {
           case 0:
             this.orderBy('/tab/list', ['Osort', 'Zapgma', 'Fapp', 'Zzjikgb', 'Zzappee'], ['asc', 'desc', 'desc', 'asc', 'asc']);
@@ -429,22 +434,17 @@ sap.ui.define(
 
             break;
           case 2:
-            oViewModel.setProperty(
-              '/tab/list',
-              _.map(oViewModel.getProperty('/tab/list'), (o) => _.set(o, 'Fapp', _.isEqual(o.Fapp, 'ALL') ? '' : o.Fapp))
-            );
-
             this.orderBy('/tab/list', ['Fapp', 'Zapgma', 'Zzjikgb', 'Zzappee'], ['desc', 'desc', 'asc', 'asc']);
-
-            oViewModel.setProperty(
-              '/tab/list',
-              _.map(oViewModel.getProperty('/tab/list'), (o) => _.set(o, 'Fapp', _.isEqual(o.Fapp, '') ? 'ALL' : o.Fapp))
-            );
 
             break;
           default:
             break;
         }
+
+        oViewModel.setProperty(
+          '/tab/list',
+          _.map(oViewModel.getProperty('/tab/list'), (o) => _.set(o, 'Fapp', _.isEqual(o.Fapp, '') ? 'ALL' : o.Fapp))
+        );
 
         this.setEmptyCard();
       },
