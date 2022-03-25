@@ -21,7 +21,7 @@
           <FlexItemData growFactor="1" />
         </layoutData>
       </Text>
-      <Button visible="{switchable}" icon="sap-icon://decline" type="Transparent" class="icon-button portlet-close-icon" press=".onPressClose" />
+      <Button visible="{switchable}" icon="sap-icon://decline" type="Transparent" class="icon-button portlet-close-icon" press=".onPressClose" tooltip="{i18n>LABEL_00200}" />
     </HBox>
     <HBox class="portlet-body">
       <VBox class="mt-10-px">
