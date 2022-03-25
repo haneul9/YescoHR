@@ -90,12 +90,12 @@ sap.ui.define(
             rowCount: 1,
             totalCount: 0,
             ObjTxt1: this.getBundleText('LABEL_23013'), // 미입력
-            ObjTxt5: this.getBundleText('LABEL_23018'), // 결재 승인
+            ObjTxt5: this.getBundleText('LABEL_00123'), // 승인
             isShowProgress: true,
             progressCount: 0,
-            isShowApply: false,
+            isShowApply: true,
             applyCount: 0,
-            isShowApprove: true,
+            isShowApprove: false,
             approveCount: 0,
             isShowReject: true,
             rejectCount: 0,
