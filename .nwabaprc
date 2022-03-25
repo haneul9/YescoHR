@@ -2,6 +2,7 @@
     "base": "./dist",
     "files": [
       "index.html",
+      "manifest.json",
       "Component-preload.js",
       "asset/css/**",
       "asset/image/**"
