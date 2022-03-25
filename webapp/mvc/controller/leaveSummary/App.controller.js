@@ -2,7 +2,6 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/odata/Client',
@@ -15,7 +14,6 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     Fragment,
-    JSONModel,
     AppUtils,
     ComboEntry,
     Client,
@@ -91,6 +89,8 @@ sap.ui.define(
           listInfo: {
             rowCount: 1,
             totalCount: 0,
+            ObjTxt1: this.getBundleText('LABEL_23013'), // 미입력
+            ObjTxt5: this.getBundleText('LABEL_23018'), // 결재 승인
             isShowProgress: true,
             progressCount: 0,
             isShowApply: false,
@@ -99,7 +99,7 @@ sap.ui.define(
             approveCount: 0,
             isShowReject: true,
             rejectCount: 0,
-            isShowComplete: false,
+            isShowComplete: true,
             completeCount: 0,
             infoMessage: this.getBundleText('LABEL_23010', '2021.01.01~2021.12.31'),
           },
@@ -359,11 +359,14 @@ sap.ui.define(
           const oTable = this.byId(this.TABLE_ID);
           const oListInfo = oViewModel.getProperty('/listInfo');
 
-          oViewModel.setProperty('/list', _.map(aPlanList, (o) => ({ ...o, ZappStxtAl: _.isEqual(o.ZappStxtAl, '') ? '미입력' : o.ZappStxtAl })) ?? []);
+          oViewModel.setProperty(
+            '/list',
+            _.map(aPlanList, (o) => _.omit(o, '__metadata'))
+          );
           oViewModel.setProperty('/listInfo', {
             ...oListInfo,
             infoMessage: this.getBundleText('LABEL_23010', _.get(mSummary, 'Tmprd')),
-            ...TableUtils.count({ oTable, aRowData: aPlanList }),
+            ...TableUtils.count({ oTable, aRowData: aPlanList, bIncludeNullProgress: true }),
           });
 
           const mViewSummary = oViewModel.getProperty('/summary');
