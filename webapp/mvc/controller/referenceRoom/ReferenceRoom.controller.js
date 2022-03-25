@@ -212,7 +212,7 @@ sap.ui.define(
         const mDetailData = aFormData[0] || {};
         let bEmpty = true;
 
-        if (_.isEmpty(mDetailData)) {
+        if (_.isEmpty(mDetailData) || !_.parseInt(mDetailData.Appno)) {
           bEmpty = false;
           oViewModel.setProperty('/Settings/Visible', false);
         }
@@ -466,6 +466,7 @@ sap.ui.define(
           await this.checkForm('C', mFormData.L1id, mFormData.L2id, mFormData.L3id, mFormData.L4id, mFormData.Werks);
 
           oViewModel.setProperty('/UserFixed', true);
+          oViewModel.setProperty('/emptyData', true);
           this.settingsAttachTable();
         } catch (oError) {
           AppUtils.handleError(oError);
