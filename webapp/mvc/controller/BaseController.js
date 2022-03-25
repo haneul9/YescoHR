@@ -211,7 +211,7 @@ sap.ui.define(
         const oMenuModel = this.getMenuModel();
         const currentMenu = oMenuModel.getProperties(oMenuModel.getCurrentMenuId());
 
-        window.open(`${location.origin}/index.html#/referenceRoom/${currentMenu.L1id}/${currentMenu.L2id}/${currentMenu.L3id}/${currentMenu.L4id}`, 'width=1100,height=700');
+        window.open(`${location.origin}/hey/index.html#/referenceRoom/${currentMenu.L1id}/${currentMenu.L2id}/${currentMenu.L3id}/${currentMenu.L4id}`, 'width=1100,height=700');
       },
 
       /**
