@@ -112,13 +112,15 @@
         
         { "pattern": "carMaintainCost", "name": "carMaintainCost", "target": "carMaintainCost" },
         { "pattern": "carMaintainCost/{oDataKey}/:sStatus:", "name": "carMaintainCost-detail", "target": "carMaintainCostDetail" },
+        { "pattern": "h/carMaintainCost", "name": "h/carMaintainCost", "target": "h/carMaintainCost" },
+        { "pattern": "h/carMaintainCost/{oDataKey}/:sStatus:", "name": "h/carMaintainCost-detail", "target": "carMaintainCostDetail" },
         
         { "pattern": "certification", "name": "certification", "target": "certification" },
         { "pattern": "certification/{oDataKey}", "name": "certification-detail", "target": "certificationDetail" },
         
         { "pattern": "clubJoin", "name": "clubJoin", "target": "clubJoin" },
         { "pattern": "clubJoin/{oDataKey}", "name": "clubJoin-detail", "target": "clubJoinDetail" },
-        { "pattern": "h/clubJoin", "name": "h/clubJoin", "target": "clubJoin" },
+        { "pattern": "h/clubJoin", "name": "h/clubJoin", "target": "h/clubJoin" },
         { "pattern": "h/clubJoin/{oDataKey}", "name": "h/clubJoin-detail", "target": "clubJoinDetail" },
 
         { "pattern": "competency", "name": "competency", "target": "competency" },
@@ -147,12 +149,12 @@
 
         { "pattern": "driveRecord", "name": "driveRecord", "target": "driveRecord" },
         { "pattern": "driveRecord/{oDataKey}", "name": "driveRecord-detail", "target": "driveRecordDetail" },
-        { "pattern": "h/driveRecord", "name": "h/driveRecord", "target": "driveRecord" },
+        { "pattern": "h/driveRecord", "name": "h/driveRecord", "target": "h/driveRecord" },
         { "pattern": "h/driveRecord/{oDataKey}", "name": "h/driveRecord-detail", "target": "driveRecordDetail" },
 
         { "pattern": "educationHistory", "name": "educationHistory", "target": "educationHistory" },
         { "pattern": "educationHistory/{oDataKey}", "name": "educationHistory-detail", "target": "educationHistoryDetail" },
-        { "pattern": "h/educationHistory", "name": "h/educationHistory", "target": "educationHistory" },
+        { "pattern": "h/educationHistory", "name": "h/educationHistory", "target": "h/educationHistory" },
         { "pattern": "h/educationHistory/{oDataKey}", "name": "h/educationHistory-detail", "target": "educationHistoryDetail" },
 
         { "pattern": "employee/:pernr:/:orgtx:/:orgeh:", "name": "employee", "target": "employee" },
@@ -201,7 +203,7 @@
 
         { "pattern": "medical", "name": "medical", "target": "medical" },
         { "pattern": "medical/{oDataKey}", "name": "medical-detail", "target": "medicalDetail" },
-        { "pattern": "h/medical", "name": "h/medical", "target": "medical" },
+        { "pattern": "h/medical", "name": "h/medical", "target": "h/medical" },
         { "pattern": "h/medical/{oDataKey}", "name": "h/medical-detail", "target": "medicalDetail" },
         
         { "pattern": "nightduty", "name": "nightduty", "target": "nightduty" },
@@ -247,7 +249,7 @@
         { "pattern": "m/performanceSession", "name": "m/performanceSession", "target": "m/performanceSession" },
         
         { "pattern": "referenceRoom", "name": "referenceRoom", "target": "referenceRoom" },
-        { "pattern": "h/referenceRoom", "name": "h/referenceRoom", "target": "referenceRoom" },
+        { "pattern": "h/referenceRoom", "name": "h/referenceRoom", "target": "h/referenceRoom" },
         { "pattern": "referenceRoom/:L1id:/:L2id:/:L3id:/:L4id:", "name": "referenceRoom-view", "target": "refeView" },
         
         { "pattern": "roleDescription", "name": "roleDescription", "target": "roleDescription" },
@@ -255,7 +257,7 @@
 
         { "pattern": "studentFunds", "name": "studentFunds", "target": "studentFunds" },
         { "pattern": "studentFunds/{oDataKey}", "name": "studentFunds-detail", "target": "studentFundsDetail" },
-        { "pattern": "h/studentFunds", "name": "h/studentFunds", "target": "studentFunds" },
+        { "pattern": "h/studentFunds", "name": "h/studentFunds", "target": "h/studentFunds" },
         { "pattern": "h/studentFunds/{oDataKey}", "name": "h/studentFunds-detail", "target": "studentFundsDetail" },
 
         { "pattern": "m/talent", "name": "m/talent", "target": "m/talent" },
@@ -299,12 +301,14 @@
         "mobile/attendance": { "viewId": "mobile_attendanceList", "viewPath": "sap.ui.yesco.mvc.view.attendance.mobile", "viewName": "List" },
         "mobile/attendanceDetail": { "viewId": "mobile_attendanceDetail", "viewPath": "sap.ui.yesco.mvc.view.attendance.mobile", "viewName": "Detail" },
 
+        "h/carMaintainCost": { "viewId": "carMaintainCost", "viewPath": "sap.ui.yesco.mvc.view.carMaintainCost", "viewName": "CarMaintainCostH" },
         "carMaintainCost": { "viewId": "carMaintainCost", "viewPath": "sap.ui.yesco.mvc.view.carMaintainCost", "viewName": "CarMaintainCost" },
         "carMaintainCostDetail": { "viewId": "carMaintainCostDetail", "viewPath": "sap.ui.yesco.mvc.view.carMaintainCost", "viewName": "CarMaintainCostDetail" },
 
         "certification": { "viewId": "certification", "viewPath": "sap.ui.yesco.mvc.view.certification", "viewName": "Certification" },
         "certificationDetail": { "viewId": "certificationDetail", "viewPath": "sap.ui.yesco.mvc.view.certification", "viewName": "CertificationDetail" },
 
+        "h/clubJoin": { "viewId": "h_clubJoin", "viewPath": "sap.ui.yesco.mvc.view.clubJoin", "viewName": "ClubJoinH" },
         "clubJoin": { "viewId": "clubJoin", "viewPath": "sap.ui.yesco.mvc.view.clubJoin", "viewName": "ClubJoin" },
         "clubJoinDetail": { "viewId": "clubJoinDetail", "viewPath": "sap.ui.yesco.mvc.view.clubJoin", "viewName": "ClubJoinDetail" },
 
@@ -328,9 +332,11 @@
         
         "consolidAppBox": { "viewId": "consolidAppBox", "viewPath": "sap.ui.yesco.mvc.view.consolidAppBox", "viewName": "ConsolidAppBox" },
 
+        "h/driveRecord": { "viewId": "h_driveRecord", "viewPath": "sap.ui.yesco.mvc.view.driveRecord", "viewName": "DriveRecordH" },
         "driveRecord": { "viewId": "driveRecord", "viewPath": "sap.ui.yesco.mvc.view.driveRecord", "viewName": "DriveRecord" },
         "driveRecordDetail": { "viewId": "driveRecordDetail", "viewPath": "sap.ui.yesco.mvc.view.driveRecord", "viewName": "DriveRecordDetail" },
 
+        "h/educationHistory": { "viewId": "h_educationHistory", "viewPath": "sap.ui.yesco.mvc.view.educationHistory", "viewName": "EducationHistoryH" },
         "educationHistory": { "viewId": "educationHistory", "viewPath": "sap.ui.yesco.mvc.view.educationHistory", "viewName": "EducationHistory" },
         "educationHistoryDetail": { "viewId": "educationHistoryDetail", "viewPath": "sap.ui.yesco.mvc.view.educationHistory", "viewName": "EducationHistoryDetail" },
         
@@ -376,6 +382,7 @@
 
         "m/leaveSummary": { "viewId": "m_leaveSummary", "viewPath": "sap.ui.yesco.mvc.view.leaveSummary", "viewName": "App" },
 
+        "h/medical": { "viewId": "h_medical", "viewPath": "sap.ui.yesco.mvc.view.medical", "viewName": "MedicalH" },
         "medical": { "viewId": "medical", "viewPath": "sap.ui.yesco.mvc.view.medical", "viewName": "Medical" },
         "medicalDetail": { "viewId": "medicalDetail", "viewPath": "sap.ui.yesco.mvc.view.medical", "viewName": "MedicalDetail" },
         
@@ -415,13 +422,14 @@
         "performanceDetail": { "viewId": "performanceDetail", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "Detail" },
         "performanceView": { "viewId": "performanceView", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "Document" },
         
+        "h/referenceRoom": { "viewId": "h_referenceRoom", "viewPath": "sap.ui.yesco.mvc.view.referenceRoom", "viewName": "ReferenceRoomH" },
         "referenceRoom": { "viewId": "referenceRoom", "viewPath": "sap.ui.yesco.mvc.view.referenceRoom", "viewName": "ReferenceRoom" },
         "refeView": { "viewId": "refeView", "viewPath": "sap.ui.yesco.mvc.view.referenceRoom", "viewName": "RefeView" },
-        
 
         "roleDescription": { "viewId": "roleDescription", "viewPath": "sap.ui.yesco.mvc.view.roleDescription", "viewName": "MainE" },
         "m/roleDescription": { "viewId": "m_roleDescription", "viewPath": "sap.ui.yesco.mvc.view.roleDescription", "viewName": "MainM" },
 
+        "h/studentFunds": { "viewId": "h_studentFunds", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFundsH" },
         "studentFunds": { "viewId": "studentFunds", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFunds" },
         "studentFundsDetail": { "viewId": "studentFundsDetail", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFundsDetail" },
 

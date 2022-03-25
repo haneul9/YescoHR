@@ -23,15 +23,15 @@
       <VBox>
         <Text text="{/FormData/ChangeDate}"/>
       </VBox>
-      <Label text="{i18n>LABEL_29004}" />
-      <VBox>
+      <Label text="{i18n>LABEL_29004}" visible="{/emptyData}" />
+      <VBox visible="{/emptyData}">
         <TextArea placeholder="{i18n>MSG_29002}" editable="{/UserFixed}" rows="5" width="100%" value="{/FormData/HeadZcomment}"/>
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
       </VBox>
-      <Label text="{i18n>LABEL_29009}" />
-      <HBox>
+      <Label text="{i18n>LABEL_29009}" visible="{/emptyData}" />
+      <HBox visible="{/emptyData}">
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
@@ -44,8 +44,8 @@
           </layoutData>
         </Input>
       </HBox>
-      <Label text="{i18n>LABEL_29010}" />
-      <HBox>
+      <Label text="{i18n>LABEL_29010}" visible="{/emptyData}" />
+      <HBox visible="{/emptyData}">
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
@@ -58,8 +58,8 @@
           </layoutData>
         </Input>
       </HBox>
-      <Label text="{i18n>LABEL_29005}" />
-      <HBox width="100%">
+      <Label text="{i18n>LABEL_29005}" visible="{/emptyData}" />
+      <HBox width="100%" visible="{/emptyData}">
         <Input value="{/PDFFile/Zfilename}" enabled="{= !${/Fixed} || !${/UserFixed} }" editable="{= ${/Fixed} &amp;&amp; ${/UserFixed} }" class="sapUiTinyMarginEnd enabledTxt">
           <layoutData>
             <FlexItemData growFactor="1" />
@@ -71,22 +71,22 @@
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
       </HBox>
-      <Label text="{i18n>LABEL_29006}" />
-      <VBox>
+      <Label text="{i18n>LABEL_29006}" visible="{/emptyData}" />
+      <VBox visible="{/emptyData}">
         <TextArea placeholder="{i18n>MSG_29002}" rows="5" editable="{/UserFixed}" width="100%" value="{/FormData/MidZcomment}"/>
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
       </VBox>
-      <Label text="{i18n>LABEL_29007}" />
-      <VBox>
+      <Label text="{i18n>LABEL_29007}" visible="{/emptyData}" />
+      <VBox visible="{/emptyData}">
         <TextArea placeholder="{i18n>MSG_29002}" rows="5" editable="{/UserFixed}" width="100%" value="{/FormData/BotZcomment}"/>
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
       </VBox>
-      <Label text="{i18n>LABEL_29012}" />
-      <VBox>
+      <Label text="{i18n>LABEL_29012}" visible="{/emptyData}" />
+      <VBox visible="{/emptyData}">
         <Text text="{i18n>MSG_29001}"/>
         <HBox>
           <ComboBox items="{/MenuIdList}" width="270px" selectedKey="{/FormData/Menid1}" editable="{/UserFixed}" class="mr-20-px">
