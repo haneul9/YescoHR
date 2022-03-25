@@ -29,6 +29,10 @@
             <FlexItemData growFactor="1" />
           </layoutData>
           <HBox justifyContent="SpaceBetween" alignItems="Center" height="54px">
+            <Label text="{i18n>LABEL_00199}" />
+            <Button type="Transparent" class="icon-button mobile-logout-button" icon="asset/image/icon_arrow_h-r.svg" iconDensityAware="false" press=".onPressRefresh" />
+          </HBox>
+          <HBox justifyContent="SpaceBetween" alignItems="Center" height="54px">
             <Label text="{i18n>LABEL_01004}" />
             <Button type="Transparent" class="icon-button mobile-logout-button" icon="asset/image/icon_arrow_h-r.svg" iconDensityAware="false" press=".onPressLogout" />
           </HBox>
@@ -38,10 +42,6 @@
               <Text text="ver. {AppVersion}" />
               <Link href="{DownloadLink}" target="_blank" text="{UpdateNotification}" class="ml-5-px" />
             </HBox>
-          </HBox>
-          <HBox justifyContent="SpaceBetween" alignItems="Center" height="54px">
-            <Label text="{i18n>LABEL_00199}" />
-            <Button type="Transparent" class="icon-button mobile-logout-button" icon="asset/image/icon_arrow_h-r.svg" iconDensityAware="false" press=".onPressRefresh" />
           </HBox>
         </VBox>
       </VBox>

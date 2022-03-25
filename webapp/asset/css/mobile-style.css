@@ -134,17 +134,17 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 
 /* basic tab */
 .sapMITB .sapMITBContainerContent {margin:20px 0px 20px 20px}
+.full-popover.menu-popover .sapMITB .sapMITBContainerContent {margin:0}
 
 /* mobile popover tab */
 .sapMPopoverCont {position:relative; max-width:100%!important}
 
 .sapMITBScrollContainer {border-bottom:1px solid #E7E9EF}
-.sapMITH .sapMITBHead, .sapMITB .sapMITBHead {margin:0; border-bottom:0px solid #E7E9EF; height:61px}
-.sapMITBInLine.sapMITBTextOnly>.sapMITBVertical .sapMITBText {padding:0 10px; margin:1.4rem 0 0.5rem 0}
+.sapMITH .sapMITBHead, .sapMITB .sapMITBHead {margin:0; height:61px; padding:0; border-bottom:none !important; vertical-align:top}
+.sapMITBInLine.sapMITBTextOnly>.sapMITBVertical .sapMITBText {padding:0 10px; margin:24px 0 19px 0}
 
 /* menu tab */
 .sapMITBInLine.sapMITBTextOnly>.sapMITBVertical {min-width:auto; flex:none}
-.sapMITB .sapMITBHead {margin:0.0rem 0 0; vertical-align:top; padding:0; border-bottom:0px solid #e7e9ef}
 .sapMITB.sapMITBFilter {margin:0}
 
 .sapMPopover.full-popover .menu-wrap {height:calc(100% - 200px)}
@@ -160,7 +160,7 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 .sapMITBHead .sapMITBFilter .sapMITBSelected>.sapMITBContentArrow {height:0!important}
 .sapMPopover.full-popover .sapMDialogScroll .sapMDialogScrollCont .favorites-menu-list {height:200px}
 .sapMPopover.full-popover .sapMITB {height:100%}
-.sapMPopover.full-popover .sapMITBContainerContent {height:calc(100% - 103px); padding-right:15px; overflow-y:auto}
+.sapMPopover.full-popover .sapMITBContainerContent {margin:0; height:calc(100% - 103px); padding-right:15px; overflow-y:auto}
 .sapMITH .sapMITBArrowScrollLeftTextOnly.sapMITBArrowScrollLeftInLine,
 .sapMITB .sapMITBArrowScrollLeftTextOnly.sapMITBArrowScrollLeftInLine,
 .sapMITH .sapMITBArrowScrollRightTextOnly.sapMITBArrowScrollRightInLine,
