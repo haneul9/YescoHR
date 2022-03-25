@@ -132,12 +132,13 @@ sap.ui.define(
               .value()
           );
 
+          const aPpomes = _.chain(mDetailData.AppraisalSesDocDetSet.results).map('Zzappun2').uniq().value();
           const aRawData = _.map(mDetailData.AppraisalSesDocDetSet.results, (o, i) => ({
             Idx: ++i,
             ..._.omit(o, '__metadata'),
             LfappTx: _.get(mGradeMap, o.Lfapp, ''),
             FappTx: _.get(mGradeMap, o.Fapp, ''),
-            OsortSub: `${o.Osort}-${o.Orgeh}`,
+            OsortSub: _.findIndex(aPpomes, (d) => d === o.Zzappun2),
           }));
 
           oViewModel.setProperty('/raw/list', aRawData);
@@ -208,7 +209,9 @@ sap.ui.define(
         const aGrades = oViewModel.getProperty('/grade');
         const aRawList = oViewModel.getProperty('/raw/list');
         const iRawTotalCount = _.size(aRawList);
+        const aPpome = _.chain(aRawList).map('Zzappun2').uniq().value();
         const aListByDepart = _.chain(aRawList)
+          .orderBy(['OsortSub'], ['asc'])
           .groupBy('Zzappun2')
           .reduce((acc, cur) => {
             const mLFappCount = _.countBy(cur, 'Lfapp');
@@ -221,6 +224,7 @@ sap.ui.define(
             return [
               ...acc,
               {
+                Osort: _.findIndex(aPpome, (d) => d === _.get(cur, [0, 'Zzappun2'], '')),
                 Zzappun2: _.get(cur, [0, 'Zzappun2'], ''),
                 Zzappuntx2: _.get(cur, [0, 'Zzappuntx2'], ''),
                 TargetCnt: _.chain(cur)
@@ -240,6 +244,7 @@ sap.ui.define(
               },
             ];
           }, [])
+          .orderBy(['Osort'], ['asc'])
           .value();
 
         const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
@@ -296,10 +301,7 @@ sap.ui.define(
 
         try {
           const oModel = this.getModel(ServiceNames.APPRAISAL);
-          const aList = _.chain(oViewModel.getProperty('/raw/list'))
-            .filter((o) => _.isEqual(o.Fapp, '3'))
-            .cloneDeep()
-            .value();
+          const aList = _.cloneDeep(oViewModel.getProperty('/raw/list'));
           const bIsSave = _.isEqual(code, Constants.PROCESS_TYPE.SAVE.code);
 
           await Client.deep(oModel, 'AppraisalSesDoc', {
@@ -351,6 +353,7 @@ sap.ui.define(
           const aRawData = _.filter(oViewModel.getProperty('/raw/list'), (o) => _.isEqual(o.Fapp, '3'));
           const aFilteredData = _.isEmpty(oRowData.Zzappun2) ? aRawData : _.filter(aRawData, (o) => _.isEqual(o.Zzappun2, oRowData.Zzappun2));
 
+          oViewModel.setProperty('/tab/zzappun2', oRowData.Zzappun2);
           oViewModel.setProperty('/tab/list', aFilteredData);
           oViewModel.setProperty('/tab/rowCount', Math.min(_.size(aFilteredData), 10));
 
@@ -397,7 +400,7 @@ sap.ui.define(
 
         switch (iSortIndex) {
           case 0:
-            this.orderBy('/tab/list', ['Osort', 'OsortSub', 'Lfapp', 'Fapp', 'Zapgma', 'Zzjikgb', 'Zzappee'], ['asc', 'asc', 'desc', 'desc', 'desc', 'asc', 'asc']);
+            this.orderBy('/tab/list', ['OsortSub', 'Lfapp', 'Fapp', 'Zapgma', 'Zzjikgb', 'Zzappee'], ['asc', 'desc', 'desc', 'desc', 'asc', 'asc']);
 
             break;
           case 1:
@@ -574,6 +577,14 @@ sap.ui.define(
       },
 
       onPressComplete() {
+        const oViewModel = this.getViewModel();
+        const sZzappun2 = oViewModel.getProperty('/tab/zzappun2');
+
+        if (!_.isEmpty(sZzappun2)) {
+          MessageBox.alert(this.getBundleText('MSG_10018')); // 합계 인원을 조회한 후 완료하시기 바랍니다.
+          return;
+        }
+
         MessageBox.confirm(this.getBundleText('MSG_10015'), {
           onClose: (sAction) => {
             if (MessageBox.Action.CANCEL === sAction) return;

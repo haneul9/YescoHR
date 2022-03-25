@@ -52,7 +52,7 @@
                 <table:Column filterProperty="Orgtx" sortProperty="Orgtx">
                     <Label text="{i18n>LABEL_00224}"/>
                     <table:template>
-                        <Text text="{Orgtx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                        <Text text="{Zzappuntx1}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                     </table:template>
                 </table:Column>
                 <table:Column width="10%" filterProperty="Zapgme" sortProperty="Zapgme">

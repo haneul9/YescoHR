@@ -75,7 +75,7 @@ sap.ui.define(
       /**************************
        * Functions
        *************************/
-      count({ oTable, aRowData, sStatCode = 'ZappStatAl', bHasSumRow = false }) {
+      count({ oTable, aRowData, sStatCode = 'ZappStatAl', bHasSumRow = false, bIncludeNullProgress = false }) {
         const iVisibleRowCountLimit = this.calculateVisibleRowCount(oTable);
         const iDataLength = bHasSumRow ? (aRowData.length || 1) + 1 : aRowData.length;
         const oOccurCount = _.chain(aRowData)
@@ -97,7 +97,7 @@ sap.ui.define(
         return {
           rowCount: Math.min(iVisibleRowCountLimit, iDataLength),
           totalCount: aRowData.length,
-          progressCount: oOccurCount[STATE_IN_PROGRESS1] + oOccurCount[STATE_IN_PROGRESS2],
+          progressCount: bIncludeNullProgress ? oOccurCount[''] + oOccurCount[STATE_IN_PROGRESS1] + oOccurCount[STATE_IN_PROGRESS2] : oOccurCount[STATE_IN_PROGRESS1] + oOccurCount[STATE_IN_PROGRESS2],
           applyCount: oOccurCount[STATE_APPLY1] + oOccurCount[STATE_APPLY2] + oOccurCount[STATE_APPLY3],
           approveCount: oOccurCount[STATE_APPROVE],
           rejectCount: oOccurCount[STATE_REJECT1] + oOccurCount[STATE_REJECT2],
