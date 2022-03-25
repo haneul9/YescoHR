@@ -40,7 +40,7 @@ sap.ui.define(
           // Accty === 'Z' 일때 PersAreaList 필터조건 ZALL = 'X'
           const PersaFilters = {};
           if (oEmpModel.getProperty('/employeeModel/Search/Accty') === 'Z') {
-            PersaFilters.ZALL = 'X';
+            PersaFilters.Zall = 'X';
           }
 
           const [aAreaList, aWorkList, aEmpList] = await Promise.all([
