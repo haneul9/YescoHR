@@ -1,0 +1,6 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.clubJoin.ClubJoin"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:mvc="sap.ui.core.mvc">
+  <core:Fragment fragmentName="sap.ui.yesco.mvc.view.clubJoin.fragment.MainForm" type="XML" />
+</mvc:View>

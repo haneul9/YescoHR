@@ -22,6 +22,7 @@ sap.ui.define(
           true,
           {
             Id: '',
+            RefeFilebox: false,
             Appno: '',
             Type: '',
             Editable: false,
@@ -60,6 +61,13 @@ sap.ui.define(
 
           oJsonModel.setProperty('/Data', aFileList);
           oController.AttachFileAction.attachSettings(oController, sId, aFileList);
+
+          // ess자료실 첨부파일없는경우 visible처리
+          if (_.isEmpty(aFileList) && options.RefeFilebox) {
+            oJsonModel.setProperty('/Settings/Visible', false);
+          } else if (!_.isEmpty(aFileList) && options.RefeFilebox) {
+            oJsonModel.setProperty('/Settings/Visible', true);
+          }
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
