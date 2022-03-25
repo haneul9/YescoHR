@@ -36,6 +36,7 @@ sap.ui.define(
           busy: false,
           Fixed: false,
           popover: true,
+          emptyData: true,
           UserFixed: false,
           Hass: this.isHass(),
           FormData: {},
@@ -55,57 +56,59 @@ sap.ui.define(
         oViewModel.setData(this.initializeModel());
 
         try {
-          if (_.isEmpty(mRouteArguments)) {
-            const aTree = await this.getReferenceRoom();
-            const aVariat = this.oDataChangeTree(aTree.HelpInfo1Nav.results);
+          const aTree = await this.getReferenceRoom();
+          const aVariat = this.oDataChangeTree(aTree.HelpInfo1Nav.results);
 
-            oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.COMMON, 'HelpInfoTab2')));
-            oViewModel.setProperty('/TreeFullList', aTree.HelpInfo1Nav.results);
-            oViewModel.setProperty('/ReferenceList', aVariat);
-          } else {
-            sap.ui.getCore().byId('container-ehr---app--appMenuToolbar').setVisible(false);
-            sap.ui.getCore().byId('container-ehr---refeView--routeHeader').setVisible(false);
+          oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.COMMON, 'HelpInfoTab2')));
+          oViewModel.setProperty('/TreeFullList', aTree.HelpInfo1Nav.results);
+          oViewModel.setProperty('/ReferenceList', aVariat);
+          if (!_.isEmpty(mRouteArguments)) {
+            // sap.ui.getCore().byId('container-ehr---app--appMenuToolbar').setVisible(false);
+            // sap.ui.getCore().byId('container-ehr---refeView--routeHeader').setVisible(false);
 
             const oDetail = await this.treeDetail(mRouteArguments.L1id, mRouteArguments.L2id, mRouteArguments.L3id, mRouteArguments.L4id, this.getAppointeeProperty('Werks'));
             const aFormData = oDetail.HelpInfo2Nav.results || [];
+            let bTree = false;
 
-            const sHeadComment =
-              _.find(aFormData, (e) => {
-                return e.Infocd === '1';
-              }) || '';
-            const sMidComment =
-              _.find(aFormData, (e) => {
-                return e.Infocd === '2';
-              }) || '';
-            const sBotComment =
-              _.find(aFormData, (e) => {
-                return e.Infocd === '3';
-              }) || '';
-            const mDetailData = aFormData[0] || {};
+            if (_.isEmpty(aFormData)) {
+              bTree = true;
+              oViewModel.setProperty('/Settings/Visible', false);
+            } else {
+              const sHeadComment =
+                _.find(aFormData, (e) => {
+                  return e.Infocd === '1';
+                }) || '';
+              const sMidComment =
+                _.find(aFormData, (e) => {
+                  return e.Infocd === '2';
+                }) || '';
+              const sBotComment =
+                _.find(aFormData, (e) => {
+                  return e.Infocd === '3';
+                }) || '';
+              const mDetailData = aFormData[0] || {};
+              const sRoutL2 = mDetailData.L2tx ? ` > ${mDetailData.L2tx}` : '';
+              const sRoutL3 = mDetailData.L3tx ? ` > ${mDetailData.L3tx}` : '';
+              const sRoutL4 = mDetailData.L4tx ? ` > ${mDetailData.L4tx}` : '';
 
-            oViewModel.setProperty('/popover', false);
-            oViewModel.setProperty('/FormData', {
-              ...mDetailData,
-              title: '11',
-              ChInfo: oDetail.ChInfo,
-              HeadZcomment: sHeadComment.Zcomment,
-              MidZcomment: sMidComment.Zcomment,
-              BotZcomment: sBotComment.Zcomment,
-            });
+              oViewModel.setProperty('/FormData', {
+                ...mDetailData,
+                title: this.getTitle(mDetailData),
+                ChInfo: oDetail.ChInfo,
+                MenuRoute: `${mDetailData.L1tx}${sRoutL2}${sRoutL3}${sRoutL4}`,
+                HeadZcomment: sHeadComment.Zcomment,
+                MidZcomment: sMidComment.Zcomment,
+                BotZcomment: sBotComment.Zcomment,
+              });
 
-            this.settingsAttachTable();
-
-            let bFileBox = true;
-
-            if (!AttachFileAction.getFileCount.call(this)) {
-              bFileBox = false;
+              this.settingsAttachTable();
+              setTimeout(() => {
+                $('#container-ehr---refeView--detailForm').addClass('helpPopover');
+                $('#container-ehr---refeView--detailForm').addClass('helpPop');
+              }, 200);
             }
 
-            oViewModel.setProperty('/Settings/Visible', bFileBox);
-            setTimeout(() => {
-              $('#container-ehr---refeView--detailForm').addClass('helpPopover');
-              $('#container-ehr---refeView--formGrid').addClass('helpPop');
-            }, 200);
+            oViewModel.setProperty('/popover', bTree);
           }
         } catch (oError) {
           this.debug(oError);
@@ -116,6 +119,21 @@ sap.ui.define(
       },
 
       // 메뉴 경로
+      getTitle(mSelectedTree) {
+        let sTitle = '';
+
+        if (mSelectedTree.L4id) {
+          sTitle = mSelectedTree.L4tx;
+        } else if (mSelectedTree.L3id) {
+          sTitle = mSelectedTree.L3tx;
+        } else if (mSelectedTree.L2id) {
+          sTitle = mSelectedTree.L2tx;
+        } else {
+          sTitle = mSelectedTree.L1tx;
+        }
+
+        return sTitle;
+      },
 
       // tree정보 다받아옴
       async getReferenceRoom() {
@@ -192,7 +210,14 @@ sap.ui.define(
             return e.Infocd === '3';
           }) || '';
         const mDetailData = aFormData[0] || {};
+        let bEmpty = true;
 
+        if (_.isEmpty(mDetailData) || !_.parseInt(mDetailData.Appno)) {
+          bEmpty = false;
+          oViewModel.setProperty('/Settings/Visible', false);
+        }
+
+        oViewModel.setProperty('/emptyData', bEmpty);
         oViewModel.setProperty('/FormData', {
           ...mSelectedTree,
           ...mDetailData,
@@ -241,14 +266,6 @@ sap.ui.define(
         oViewModel.setProperty('/Fixed', bFix);
         oViewModel.setProperty('/UserFixed', false);
         this.settingsAttachTable();
-
-        let bFileBox = true;
-
-        if (!AttachFileAction.getFileCount.call(this) && !this.isHass()) {
-          bFileBox = false;
-        }
-
-        oViewModel.setProperty('/Settings/Visible', bFileBox);
       },
 
       // 메뉴 도움말 자료실 Combo
@@ -449,15 +466,8 @@ sap.ui.define(
           await this.checkForm('C', mFormData.L1id, mFormData.L2id, mFormData.L3id, mFormData.L4id, mFormData.Werks);
 
           oViewModel.setProperty('/UserFixed', true);
+          oViewModel.setProperty('/emptyData', true);
           this.settingsAttachTable();
-
-          let bFileBox = true;
-
-          if (!AttachFileAction.getFileCount.call(this) && !this.isHass()) {
-            bFileBox = false;
-          }
-
-          oViewModel.setProperty('/Settings/Visible', bFileBox);
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -772,6 +782,7 @@ sap.ui.define(
 
         AttachFileAction.setAttachFile(this, {
           Editable: bFix1 && bFix2 && this.isHass(),
+          RefeFilebox: true,
           Type: this.getApprovalType(),
           Appno: sAppno,
           Message: this.getBundleText('MSG_29003'),

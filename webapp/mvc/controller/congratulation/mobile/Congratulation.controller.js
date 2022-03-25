@@ -40,6 +40,7 @@ sap.ui.define(
           Data: [],
           listInfo: {
             rowCount: 1,
+            popover: true,
             totalCount: 0,
             progressCount: 0,
             applyCount: 0,

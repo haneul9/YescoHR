@@ -77,8 +77,8 @@ sap.ui.define(
 
           oDetailModel.setProperty('/BankList', new ComboEntry({ codeKey: 'Bankl', valueKey: 'Banka', aEntries: aBankList }));
 
-          // 매월 20일까지 신청한 내역에 대해서 당월급상여 시 적용됩니다.
-          // 21일 이후 신청 내역은 익월 급상여 시 적용됩니다.
+          // 매월 15일까지 신청한 내역에 대해서 당월급상여 시 적용됩니다.
+          // 16일 이후 신청 내역은 익월 급상여 시 적용됩니다.
           // 통장사본은 반드시 입력하여 주세요.
           const sMsg = `<ul>
             <li style='margin-bottom: 5px;'>${this.getBundleText('MSG_26001')}</li>

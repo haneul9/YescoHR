@@ -217,7 +217,7 @@ sap.ui.define(
         const aRawList = oViewModel.getProperty('/raw/list');
         const iRawTotalCount = _.size(aRawList);
         const aListByDepart = _.chain(aRawList)
-          .groupBy('Orgeh')
+          .groupBy('Zzappun1')
           .reduce((acc, cur) => {
             const mFappCount = _.countBy(cur, 'Fapp');
             const sDept01 = _.get(mFappCount, _.get(aGrades, [0, 'code']), 0);
@@ -229,6 +229,8 @@ sap.ui.define(
             return [
               ...acc,
               {
+                Zzappun1: _.get(cur, [0, 'Zzappun1'], ''),
+                Zzappuntx1: _.get(cur, [0, 'Zzappuntx1'], ''),
                 Orgeh: _.get(cur, [0, 'Orgeh'], ''),
                 Orgtx: _.get(cur, [0, 'Orgtx'], ''),
                 Osort: _.get(cur, [0, 'Osort'], ''),
@@ -251,7 +253,7 @@ sap.ui.define(
         const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
         const mSumRow = TableUtils.generateSumRow({
           aTableData: aListByDepart,
-          mSumField: { Orgtx: sSumLabel },
+          mSumField: { Zzappuntx1: sSumLabel },
           vCalcProps: /^Dept/,
         });
 
@@ -371,8 +373,9 @@ sap.ui.define(
         try {
           const oRowData = oEvent.getSource().getParent().getBindingContext().getObject();
           const aRawData = oViewModel.getProperty('/raw/list');
-          const aFilteredData = _.isEmpty(oRowData.Orgeh) ? aRawData : _.filter(aRawData, (o) => _.isEqual(o.Orgeh, oRowData.Orgeh));
+          const aFilteredData = _.isEmpty(oRowData.Zzappun1) ? aRawData : _.filter(aRawData, (o) => _.isEqual(o.Zzappun1, oRowData.Zzappun1));
 
+          oViewModel.setProperty('/tab/Zzappun1', oRowData.Zzappun1);
           oViewModel.setProperty('/tab/list', aFilteredData);
           oViewModel.setProperty('/tab/rowCount', Math.min(_.size(aFilteredData), 10));
 
@@ -416,6 +419,11 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const iSortIndex = oViewModel.getProperty('/tab/sortIndex');
 
+        oViewModel.setProperty(
+          '/tab/list',
+          _.map(oViewModel.getProperty('/tab/list'), (o) => _.set(o, 'Fapp', _.isEqual(o.Fapp, 'ALL') ? '' : o.Fapp))
+        );
+
         switch (iSortIndex) {
           case 0:
             this.orderBy('/tab/list', ['Osort', 'Zapgma', 'Fapp', 'Zzjikgb', 'Zzappee'], ['asc', 'desc', 'desc', 'asc', 'asc']);
@@ -426,22 +434,17 @@ sap.ui.define(
 
             break;
           case 2:
-            oViewModel.setProperty(
-              '/tab/list',
-              _.map(oViewModel.getProperty('/tab/list'), (o) => _.set(o, 'Fapp', _.isEqual(o.Fapp, 'ALL') ? '' : o.Fapp))
-            );
-
             this.orderBy('/tab/list', ['Fapp', 'Zapgma', 'Zzjikgb', 'Zzappee'], ['desc', 'desc', 'asc', 'asc']);
-
-            oViewModel.setProperty(
-              '/tab/list',
-              _.map(oViewModel.getProperty('/tab/list'), (o) => _.set(o, 'Fapp', _.isEqual(o.Fapp, '') ? 'ALL' : o.Fapp))
-            );
 
             break;
           default:
             break;
         }
+
+        oViewModel.setProperty(
+          '/tab/list',
+          _.map(oViewModel.getProperty('/tab/list'), (o) => _.set(o, 'Fapp', _.isEqual(o.Fapp, '') ? 'ALL' : o.Fapp))
+        );
 
         this.setEmptyCard();
       },
@@ -467,7 +470,7 @@ sap.ui.define(
                 .set('tmpSort', _.isEqual(sDialogMode, 'B') || _.isEqual(o.Fapp, mPayload.grade) ? 0 : 1)
                 .value()
             )
-            .orderBy(['tmpSort', 'Zapgma', 'Zzjikgb', 'Zzappee'], ['asc', 'desc', 'asc', 'asc'])
+            .orderBy(['tmpSort', 'Zapgma', 'Fapp2', 'Zzjikgb', 'Zzappee'], ['asc', 'desc', 'desc', 'asc', 'asc'])
             .value(),
         });
 
@@ -488,7 +491,7 @@ sap.ui.define(
 
                 oTable.clearSelection();
 
-                aTableRows.filter([new Filter('Orgeh', FilterOperator.EQ, oTable.data('Orgeh'))]);
+                aTableRows.filter([new Filter('Zzappun1', FilterOperator.EQ, oTable.data('Zzappun1'))]);
                 _.chain(aTableRows.getContexts())
                   .map((ctx) => ctx.getObject())
                   .filter((o) => _.isEqual(o.Fapp, sGrade))
@@ -604,7 +607,13 @@ sap.ui.define(
         const mSummary = oViewModel.getProperty('/summary/list/1');
         const aGrade = oViewModel.getProperty('/grade');
         const aRaws = oViewModel.getProperty('/raw/list');
+        const sZzappun1 = oViewModel.getProperty('/tab/Zzappun1');
         const aLevelResult = [];
+
+        if (!_.isEmpty(sZzappun1)) {
+          MessageBox.alert(this.getBundleText('MSG_10018')); // 합계 인원을 조회한 후 완료하시기 바랍니다.
+          return;
+        }
 
         if (_.some(aRaws, (o) => _.isEqual(o.Fapp, 'ALL'))) {
           MessageBox.alert(this.getBundleText('MSG_10017')); // 평가등급을 지정하지 않은 인원이 존재합니다.

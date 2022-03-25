@@ -1897,7 +1897,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .perGrade.status-wrap .sapMFlexItem .sapMText.type01::before, .perGrade-type[data-type=type03] { background-color: var(--PerformanceGradeColor1); }
 .perGrade.status-wrap .sapMFlexItem .sapMText.type02::before, .perGrade-type[data-type=type02] { background-color: var(--PerformanceGradeColor2); }
 .perGrade.status-wrap .sapMFlexItem .sapMText.type03::before, .perGrade-type[data-type=type01] { background-color: var(--PerformanceGradeColor3); }
-.perGrade.status-wrap .sapMFlexItem .sapMText.type03::before, .perGrade-type[data-type=type0ALL] { background-color: #DDE1E6; }
+.perGrade.status-wrap .sapMFlexItem .sapMText.type0ALL::before, .perGrade-type[data-type=type0ALL] { background-color: #DDE1E6; }
 .perGrade-type {justify-content: center; width:80px;height:30px;}
 
 .perGrade-depart-table .sapUiTableRowFirstFixedBottom .sapMText { font-weight: 700; }
