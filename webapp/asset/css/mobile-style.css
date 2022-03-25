@@ -426,6 +426,6 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 .talent-list { padding-left: 20px; padding-right: 20px; }
 
 .sapUiSizeCompact .sapUiCalContent>.sapUiCalMonthPicker, .sapUiSizeCompact .sapUiCalContent>.sapUiCalYearPicker {width: 100%; top: 0; padding: 0; padding-top: 10px; margin-left: -9.78rem;}
-.sapUiSizeCompact .sapMCb {height:auto}
+.sapUiSizeCompact .sapMCb {height:24px}
 .sapUiSizeCompact .sapMCbBg {top:0; left:0}
 div.sapUiTableSelectAllCheckBox::after, div.sapUiTableRowSelectionCell::after {width:20px; height:20px}
