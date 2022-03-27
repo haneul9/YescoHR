@@ -181,6 +181,17 @@ sap.ui.define(
         return _.chain(this.getOwnerComponent().getMetadataModel().getData()).get([sServiceName, sEntityType, sProperty, 'maxLength']).toInteger().value();
       },
 
+      onMobileSearchList(oEvent) {
+        const oEventSource = oEvent.getSource();
+        const oMobileSearchBox = oEventSource.getParent();
+        if (oMobileSearchBox && oMobileSearchBox.hasStyleClass('search-box')) {
+          oMobileSearchBox.toggleStyleClass('search-box-expanded', oEventSource.getSelectedKey() === '0');
+        }
+        if (typeof this.onSearchList === 'function') {
+          this.onSearchList(oEvent);
+        }
+      },
+
       /**
        * Event handler for navigating back.
        * It there is a history entry we go one step back in the browser history

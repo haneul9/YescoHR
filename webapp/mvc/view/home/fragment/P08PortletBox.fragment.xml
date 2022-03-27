@@ -37,9 +37,17 @@
               <!-- 메뉴 없는 경우 -->
               <Text text="{Title}" wrapping="false" tooltip="{Title}" visible="{= !${Mnurl} }" class="menu-link-text" />
               <!-- 메뉴 이동인 경우 -->
-              <Link text="{Title}" visible="{= !!${Mnurl} &amp;&amp; !${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" press=".handleMenuLink" class="menu-link" />
+              <Link text="{Title}" visible="{= !!${Mnurl} &amp;&amp; !${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" press=".handleMenuLink" class="menu-link">
+                <layoutData>
+                  <FlexItemData growFactor="1" />
+                </layoutData>
+              </Link>
               <!-- http|https|javascript로 시작되는 경우 -->
-              <Link text="{Title}" visible="{= !!${Mnurl} &amp;&amp; ${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" target="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuTarget' }" class="menu-link" />
+              <Link text="{Title}" visible="{= !!${Mnurl} &amp;&amp; !!${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" target="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuTarget' }" class="menu-link">
+                <layoutData>
+                  <FlexItemData growFactor="1" />
+                </layoutData>
+              </Link>
               <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }">
                 <layoutData>
                   <FlexItemData minWidth="75px" />
@@ -57,9 +65,17 @@
               <!-- 메뉴 없는 경우 -->
               <Text text="{Title}" wrapping="false" tooltip="{Title}" visible="{= !${Mnurl} }" class="menu-link-text" />
               <!-- 메뉴 이동인 경우 -->
-              <Link text="{Title}" visible="{= !!${Mnurl} &amp;&amp; !${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" press=".handleMenuLink" class="menu-link" />
+              <Link text="{Title}" visible="{= !!${Mnurl} &amp;&amp; !${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" press=".handleMenuLink" class="menu-link">
+                <layoutData>
+                  <FlexItemData growFactor="1" />
+                </layoutData>
+              </Link>
               <!-- http|https|javascript로 시작되는 경우 -->
-              <Link text="{Title}" visible="{= !!${Mnurl} &amp;&amp; ${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" target="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuTarget' }" class="menu-link" />
+              <Link text="{Title}" visible="{= !!${Mnurl} &amp;&amp; !!${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" target="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuTarget' }" class="menu-link">
+                <layoutData>
+                  <FlexItemData growFactor="1" />
+                </layoutData>
+              </Link>
               <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }">
                 <layoutData>
                   <FlexItemData minWidth="75px" />
