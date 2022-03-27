@@ -281,11 +281,8 @@ sap.ui.define(
           AppUtils.setAppBusy(false).setMenuBusy(false);
           return;
         }
-        const bHomeRoute = sRouteName && (sRouteName === 'ehrHome' || sRouteName === 'ehrMobileHome');
-        const bExistRoute = this.oAppController
-          .getOwnerComponent()
-          .getRouter()
-          .match((this.bMobile ? 'mobile/' : '') + sRouteName);
+        const bHomeRoute = !sRouteName || sRouteName === 'ehrHome' || sRouteName === 'ehrMobileHome';
+        const bExistRoute = this.oAppController.getOwnerComponent().getRouter().match(sRouteName);
         if (!bHomeRoute && !bExistRoute) {
           // 개발중입니다.
           MessageBox.alert(AppUtils.getBundleText('MSG_01005'), {
