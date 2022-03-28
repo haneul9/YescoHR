@@ -2,9 +2,10 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
+    'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/exceptions/UI5Error',
@@ -18,9 +19,10 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     Fragment,
-    JSONModel,
     MessageBox,
+    Appno,
     AppUtils,
+    AttachFileAction,
     ComboEntry,
     Client,
     UI5Error,
@@ -32,6 +34,8 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.performance.Detail', {
+      AttachFileAction: AttachFileAction,
+
       getPreviousRouteName() {
         return _.chain(this.getRouter().getHashChanger().getHash()).split('/').dropRight(2).join('/').value();
       },
@@ -79,6 +83,7 @@ sap.ui.define(
           },
           manage: {},
           summary: {},
+          opposition: { Appno: '', param: {} },
           buttons: {
             submit: {},
             goal: { ADD: { Availability: false }, DELETE: { Availability: false } },
@@ -172,6 +177,9 @@ sap.ui.define(
 
           // 상시관리
           oViewModel.setProperty('/manage', { ..._.pick({ ...mDetailData }, Constants.MANAGE_PROPERTIES) });
+
+          // 이의신청
+          oViewModel.setProperty('/opposition/param', { ..._.pick({ ...mParameter }, Constants.OPPOSITION_PROPERTIES) });
 
           // 평가 프로세스 목록 - 헤더
           let bCompleted = true;
@@ -356,7 +364,7 @@ sap.ui.define(
         if (!this.pRejectDialog) {
           this.pRejectDialog = Fragment.load({
             id: oView.getId(),
-            name: Constants.REJECT_DIALOG_ID,
+            name: 'sap.ui.yesco.mvc.view.performance.fragment.RejectDialog',
             controller: this,
           }).then((oDialog) => {
             oView.addDependent(oDialog);
@@ -364,6 +372,38 @@ sap.ui.define(
           });
         }
         this.pRejectDialog.then((oDialog) => oDialog.open());
+      },
+
+      async initializeAttachBox(bEditable) {
+        const oViewModel = this.getViewModel();
+        const sListRouteName = oViewModel.getProperty('/listInfo/route');
+
+        try {
+          const mOpposition = _.cloneDeep(oViewModel.getProperty('/opposition/param'));
+          const [mResult] = await Client.getEntitySet(this.getModel(ServiceNames.APPRAISAL), 'AppraisalDifOpi', {
+            Menid: this.getCurrentMenuId(),
+            Prcty: 'D',
+            ...mOpposition,
+          });
+          const sAppno = _.get(mResult, 'Appno');
+
+          oViewModel.setProperty('/opposition/Appno', _.isEmpty(sAppno) || _.toNumber(sAppno) === 0 ? null : sAppno);
+
+          AttachFileAction.setAttachFile(this, {
+            Editable: bEditable,
+            Type: 'APP1',
+            Appno: oViewModel.getProperty('/opposition/Appno'),
+            LinkUrl: 'https://www.google.com',
+            Max: 2,
+            FileTypes: 'jpg,jpeg,pdf,doc,docx,ppt,pptx,xls,xlsx,bmp,png'.split(','),
+          });
+        } catch (oError) {
+          this.debug(`Controller > ${sListRouteName} Detail > initializeAttachBox Error`, oError);
+
+          AppUtils.handleError(oError, {
+            onClose: () => this.pOppositionDialog.close(),
+          });
+        }
       },
 
       validation() {
@@ -433,6 +473,45 @@ sap.ui.define(
           });
         } catch (oError) {
           this.debug(`Controller > ${sListRouteName} Detail > createProcess Error`, oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
+      },
+
+      async createOppositionProcess() {
+        const oViewModel = this.getViewModel();
+        const sListRouteName = oViewModel.getProperty('/listInfo/route');
+
+        oViewModel.setProperty('/busy', true);
+
+        try {
+          const oModel = this.getModel(ServiceNames.APPRAISAL);
+          const mOpposition = _.cloneDeep(oViewModel.getProperty('/opposition/param'));
+          let sAppno = oViewModel.getProperty('/opposition/Appno');
+
+          if (_.isEmpty(sAppno)) {
+            sAppno = await Appno.get();
+            oViewModel.setProperty('/opposition/Appno', sAppno);
+          }
+
+          await AttachFileAction.uploadFile.call(this, sAppno, 'APP1');
+
+          await Client.getEntitySet(oModel, 'AppraisalDifOpi', {
+            Menid: this.getCurrentMenuId(),
+            Prcty: 'C',
+            ButtonId: 'Z_ABJCTN',
+            ...mOpposition,
+            Appno: sAppno,
+          });
+
+          // {이의신청}되었습니다.
+          MessageBox.success(this.getBundleText('MSG_00007', 'LABEL_10035'), {
+            onClose: () => this.getRouter().navTo(sListRouteName),
+          });
+        } catch (oError) {
+          this.debug(`Controller > ${sListRouteName} Detail > createOppositionProcess Error`, oError);
 
           AppUtils.handleError(oError);
         } finally {
@@ -556,13 +635,78 @@ sap.ui.define(
       },
 
       onPressCheckedButton() {
-        if (!this.validation()) return;
+        const mProcessType = Constants.PROCESS_TYPE.CONFIRM;
 
-        MessageBox.alert('Not ready yet.');
+        MessageBox.confirm(this.getBundleText('MSG_10021'), {
+          // 성과평가를 완료 하시겠습니까?
+          onClose: (sAction) => {
+            if (MessageBox.Action.CANCEL === sAction) return;
+
+            this.createProcess(mProcessType);
+          },
+        });
       },
 
-      onPressOppositionButton() {
-        MessageBox.alert('Not ready yet.');
+      async onPressOppositionButton() {
+        const oView = this.getView();
+
+        if (!this.pOppositionDialog) {
+          this.pOppositionDialog = await Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.mvc.view.performance.fragment.OppositionDialog',
+            controller: this,
+          });
+
+          this.pOppositionDialog.attachAfterOpen(() => {
+            this.initializeAttachBox(true);
+          });
+
+          oView.addDependent(this.pOppositionDialog);
+        }
+
+        this.pOppositionDialog.open();
+      },
+
+      onPressOppositionDialogSave() {
+        const iAttachLength = AttachFileAction.getFileCount.call(this);
+
+        if (iAttachLength < 1) {
+          MessageBox.alert(this.getBundleText('MSG_10023')); // 이의신청서를 첨부하세요.
+          return;
+        }
+
+        MessageBox.confirm(this.getBundleText('MSG_10022'), {
+          // 성과평가 결과에 대해 이의신청 하시겠습니까?
+          onClose: (sAction) => {
+            if (MessageBox.Action.CANCEL === sAction) return;
+
+            this.createOppositionProcess();
+          },
+        });
+      },
+
+      onPressOppositionDialogClose() {
+        this.pOppositionDialog.close();
+      },
+
+      async onPressOppositionViewButton() {
+        const oView = this.getView();
+
+        if (!this.pOppositionViewDialog) {
+          this.pOppositionViewDialog = await Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.mvc.view.performance.fragment.OppositionViewDialog',
+            controller: this,
+          });
+
+          this.pOppositionViewDialog.attachAfterOpen(() => {
+            this.initializeAttachBox(false, '');
+          });
+
+          oView.addDependent(this.pOppositionViewDialog);
+        }
+
+        this.pOppositionViewDialog.open();
       },
 
       onPressRejectButton() {

@@ -95,7 +95,7 @@ sap.ui.define(
                   return {
                     colorSet: i % 2 === 0 ? 'ColorSet2' : 'ColorSet1',
                     align: 'Start',
-                    value01: [{ pernr: o.Pernr, image: _.isEmpty(o.Picurl) ? 'asset/image/avatar-unknown.svg' : o.Picurl }, { text: o.Value01 }],
+                    value01: [{ pernr: o.Pernr, image: _.isEmpty(o.Picurl) ? 'asset/image/avatar-unknown.svg' : o.Picurl }, { text: _.chain(o.Value01).split(' ').join('\n').value() }],
                     value02: _.chain(o.Value02)
                       .split('<br>')
                       .map((d) => ({ text: d }))
@@ -136,21 +136,6 @@ sap.ui.define(
                   };
                 })
               )
-              .concat({
-                colorSet: 'ColorSet1',
-                align: 'Start',
-                value01: [],
-                value02: [],
-                value03: [],
-                value04: [],
-                value05: [],
-                value06: [],
-                value07: null,
-                value08: [],
-                value09: [],
-                value10: [],
-                value11: [],
-              })
               .value()
           );
         } catch (oError) {
