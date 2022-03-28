@@ -11,17 +11,21 @@
       <Button icon="sap-icon://navigation-right-arrow" press=".onPressNextYear" class="icon-button" />
     </HBox>
     <grid:CSSGrid class="month-plan-grid sapUiSmallMarginBottom" gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr" gridGap="1px" items="{path: '/plans'}" width="100%">
-      <Text width="100%" textAlign="Center" text="{label}" />
+      <Text width="100%" textAlign="Center" text="{label}">
+        <customData>
+          <core:CustomData key="holiday" value="{holiday}" writeToDom="true" />
+        </customData>
+      </Text>
       <VBox width="100%">
         <customData>
           <core:CustomData key="style" value="{classNames}" writeToDom="true" />
+          <core:CustomData key="holiday" value="{holiday}" writeToDom="true" />
         </customData>
         <Label width="100%" textAlign="Center" text="{label}" />
-        <Text width="100%" textAlign="Center" text="{bTime}" />
-        <Text width="100%" textAlign="Center" text="{eTime}" />
+        <Text width="100%" textAlign="Center" visible="{= !!${bTime} }" text="{bTime}" />
+        <Text width="100%" textAlign="Center" visible="{= !!${bTime} }" text="{eTime}" />
       </VBox>
     </grid:CSSGrid>
-
     <HBox class="box style-02 status-wrap year-plan">
       <VBox>
         <Text text="{i18n>LABEL_20006}" class="type01" />

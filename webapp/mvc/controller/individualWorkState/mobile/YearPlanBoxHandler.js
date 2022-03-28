@@ -109,9 +109,9 @@ sap.ui.define(
         const iDaysInMonth = dFirstDayOfYear.daysInMonth();
         const iFirstDay = dFirstDayOfYear.day();
         const iLeadingNoneCount = iFirstDay === 0 ? 6 : iFirstDay - 1;
-        const iTrailingNoneCount = 37 - iLeadingNoneCount - iDaysInMonth;
-        const aLeadingNoneBox = _.times(iLeadingNoneCount).map(() => this.getBoxObject({ classNames: 'None' })) ?? [];
-        const aTrailingNoneBox = _.times(iTrailingNoneCount).map(() => this.getBoxObject({ classNames: 'None' })) ?? [];
+        const iTrailingNoneCount = 35 - iLeadingNoneCount - iDaysInMonth;
+        const aLeadingNoneBox = _.times(iLeadingNoneCount).map(() => this.getBoxObject({ classNames: '' })) ?? [];
+        const aTrailingNoneBox = _.times(iTrailingNoneCount).map(() => this.getBoxObject({ classNames: '' })) ?? [];
 
         return [...aLeadingNoneBox, ..._.times(iDaysInMonth).map((d, i) => this.getActivationDayBody(i + 1)), ...aTrailingNoneBox];
       },
@@ -124,7 +124,7 @@ sap.ui.define(
         const aWeekNames = _.times(7, (e) => {
           return `${this.oController.getBundleText(`LABEL_180${e + 25}`)}`; // 월,화,수,목,금,토,일
         });
-        const mWeekHeaders = aWeekNames.map((o) => this.getBoxObject({ label: o, classNames: 'Header' }));
+        const mWeekHeaders = aWeekNames.map((o, i) => this.getBoxObject({ label: o, holiday: i === 5 || i === 6 ? 'Holiday' : 'None' }));
 
         return [...mWeekHeaders];
       },
@@ -144,7 +144,7 @@ sap.ui.define(
         let sHoliday = 'None';
 
         if (iDayNum % 6 === 0) {
-          sClassNames = 'Weekend';
+          sHoliday = 'Holiday';
         } else {
           sClassNames = 'Normal';
         }
@@ -169,16 +169,13 @@ sap.ui.define(
           sStripes = 'Stripes';
         }
 
-        if (oDateObject.Holyn === 'X') {
-          sHoliday = 'Holiday';
-        }
-
         let sBeTime = oDateObject.Beguz;
         let sEnTime = oDateObject.Enduz;
 
-        if (!oDateObject.Beguz || oDateObject.Beguz === '0000') {
+        if (oDateObject.Wkday === '6' || oDateObject.Wkday === '7' || oDateObject.Holyn === 'X') {
           sBeTime = 'OFF';
           sEnTime = '';
+          sHoliday = 'Holiday';
         } else {
           sBeTime = `${sBeTime.slice(0, 2)}:${sBeTime.slice(2)}`;
           sEnTime = `${sEnTime.slice(0, 2)}:${sEnTime.slice(2)}`;
