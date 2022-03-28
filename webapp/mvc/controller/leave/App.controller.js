@@ -2,19 +2,18 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/model/type/Decimal',
     'sap/ui/yesco/mvc/model/type/Pernr',
   ],
   (
     // prettier 방지용 주석
     Fragment,
-    JSONModel,
     AppUtils,
     Client,
     ServiceNames,
@@ -299,6 +298,14 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/dialog/busy', false);
         }
+      },
+
+      onPressExcelDownload() {
+        const oTable = this.byId('leaveTable');
+        const aTableData = this.getViewModel().getProperty('/list');
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_16021'); // {휴가부서별현황}_목록
+
+        TableUtils.export({ oTable, aTableData, sFileName, bHasMultiLabel: true });
       },
 
       /*****************************************************************
