@@ -16,22 +16,17 @@
                   </Image>
                   <Text text="{Ename}" tooltip="{Ename} {Pernr} {Fulln} {Zzjikgbt}" wrapping="false" class="name">
                     <layoutData>
-                      <FlexItemData baseSize="70px" maxWidth="70px" />
+                      <FlexItemData baseSize="50px" maxWidth="50px" />
                     </layoutData>
                   </Text>
-                  <Text text="{Pernr}" tooltip="{Ename} {Pernr} {Fulln} {Zzjikgbt}" wrapping="false">
+                  <Text text="{Zzjikgbt}/{Zzjikcht}" tooltip="{Ename} {Pernr} {Fulln} {Zzjikgbt}" wrapping="false">
                     <layoutData>
-                      <FlexItemData baseSize="50px" maxWidth="50px" />
+                      <FlexItemData baseSize="70px" maxWidth="70px" />
                     </layoutData>
                   </Text>
                   <Text text="{Fulln}" tooltip="{Ename} {Pernr} {Fulln} {Zzjikgbt}" wrapping="false">
                     <layoutData>
-                      <FlexItemData growFactor="1" maxWidth="calc(100% - 246px)" styleClass="pr-4-px" />
-                    </layoutData>
-                  </Text>
-                  <Text text="{Zzjikgbt}" tooltip="{Ename} {Pernr} {Fulln} {Zzjikgbt}" wrapping="false">
-                    <layoutData>
-                      <FlexItemData baseSize="60px" maxWidth="60px" />
+                      <FlexItemData growFactor="1" maxWidth="calc(100% - 182px)" styleClass="pr-4-px" />
                     </layoutData>
                   </Text>
                   <Button type="Transparent" class="icon-button" icon="asset/image/icon_phone.svg" iconDensityAware="false" press=".onPress">
