@@ -60,7 +60,7 @@ sap.ui.define(
                 decimals: '1',
                 useDataPlotColorForLabels: '1',
                 theme: 'ocean',
-                paletteColors: '#97C4EF,#FFE479,#A1E094,#FE827D',
+                paletteColors: '#5e696e,#ffc02e,#007BFF,#FD5F58',
               },
               data: [
                 {
