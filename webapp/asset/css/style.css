@@ -728,6 +728,7 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 /* .sapMFlexBox .title .sapMFlexItemAlignAuto {-webkit-align-self:center; align-self:center} */
 /* .sapMFlexBox .title + .table-actions, .table-actions {margin-top:-6px} */
 .vCardBox .table-toolbar .title + .table-actions .sapMBtn, .table-actions .sapMBtn {min-width:auto}
+.vCardBox .table-toolbar .title .sapMLnk { margin-left: 10px; position: relative; top: 5px; }
 
 .sapUiTableRowHighlight.sapUiTableRowHighlightNone {background-color:var(--BorderColorReadonly) !important}
 .sapUiTableRowHighlight.sapUiTableRowHighlightIndication01 {background-color:var(--BorderColorReadonly) !important}
@@ -1631,14 +1632,14 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .compare-block .sapUiBlockLayoutRow:first-child { position: sticky; top: 0; z-index: 2; }
 .compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow { scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
 .compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow > .sapUiBlockLayoutCell { scroll-snap-align: end; }
+.compare-block .sapUiBlockLayoutSizeS .sapUiBlockScrollingRow::-webkit-scrollbar { height: 0px !important; }
 .compare-block .sapUiBlockLayoutSizeL .sapUiBlockScrollingRow .sapUiBlockScrollableCell:first-child { width: 16%; }
 .compare-block .sapUiBlockLayoutSizeL .sapUiBlockScrollingRow .sapUiBlockScrollableCell:not(:first-child) { width: 28%; }
 .compare-block .sapUiBlockLayoutSizeS .sapUiBlockScrollingRow .sapUiBlockScrollableCell:first-child { width: 30%; min-width: 30%; }
 .compare-block .sapUiBlockLayoutSizeS .sapUiBlockScrollingRow .sapUiBlockScrollableCell .sapUiBlockCellContent { padding: 1rem 6px }
 .compare-block .sapUiBlockLayoutSizeS .sapUiBlockScrollingRow .sapUiBlockScrollableCell:not(:first-child) { width: 70%; min-width: 70%; }
-.compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow:last-child { height: 13px; position: sticky; bottom: 0; z-index: 4; }
-.compare-block .sapUiBlockLayoutSizeS .sapUiBlockLayoutRow.sapUiBlockScrollingRow:last-child { height: 18px; position: sticky; bottom: 0; z-index: 4; }
-.compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow:not(:last-child) { overflow: hidden; }
+.compare-block .sapUiBlockLayoutSizeL .sapUiBlockLayoutRow.sapUiBlockScrollingRow:last-child { height: 13px; position: sticky; bottom: 0; z-index: 4; }
+.compare-block .sapUiBlockLayoutSizeL .sapUiBlockLayoutRow.sapUiBlockScrollingRow:not(:last-child) { overflow: hidden; }
 .compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow > .sapUiBlockLayoutCell:first-child { position: sticky; left: 0; z-index: 1; }
 .compare-block .sapUiBlockLayoutRow .sapUiBlockLayoutCell:first-child .sapUiBlockCellContent {display: flex; flex-flow: column; justify-content: center; align-items: center;}
 .compare-block .sapUiBlockLayoutRow .sapUiBlockLayoutCell:first-child .sapMText[data-type=label] {font-weight: 700;}

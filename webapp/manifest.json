@@ -269,6 +269,8 @@
         
         { "pattern": "workTime", "name": "workTime", "target": "workTime" },
         { "pattern": "workTime/{oDataKey}", "name": "workTime-detail", "target": "workTimeDetail" },
+        { "pattern": "mobile/workTime", "name": "mobile/workTime", "target": "mobile/workTime" },
+        { "pattern": "mobile/workTime/{oDataKey}", "name": "mobile/workTime-detail", "target": "mobile/workTimeDetail" },
         
         { "pattern": "workTimeChange", "name": "workTimeChange", "target": "workTimeChange" },
         { "pattern": "workTimeChange/{oDataKey}", "name": "workTimeChange-detail", "target": "workTimeChangeDetail" },
@@ -442,6 +444,8 @@
 
         "workTime": { "viewId": "workTime", "viewPath": "sap.ui.yesco.mvc.view.workTime", "viewName": "WorkTime" },
         "workTimeDetail": { "viewId": "workTimeDetail", "viewPath": "sap.ui.yesco.mvc.view.workTime", "viewName": "WorkTimeDetail" },
+        "mobile/workTime": { "viewId": "mobile_workTime", "viewPath": "sap.ui.yesco.mvc.view.workTime.mobile", "viewName": "WorkTime" },
+        "mobile/workTimeDetail": { "viewId": "mobile_orkTimeDetail", "viewPath": "sap.ui.yesco.mvc.view.workTime.mobile", "viewName": "WorkTimeDetail" },
 
         "workTimeChange": { "viewId": "workTimeChange", "viewPath": "sap.ui.yesco.mvc.view.workTimeChange", "viewName": "WorkTimeChange" },
         "workTimeChangeDetail": { "viewId": "workTimeChangeDetail", "viewPath": "sap.ui.yesco.mvc.view.workTimeChange", "viewName": "WorkTimeChangeDetail" },
