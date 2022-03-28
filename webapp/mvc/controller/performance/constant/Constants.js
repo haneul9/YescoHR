@@ -15,14 +15,16 @@ sap.ui.define(
         { type: 'MB', route: 'h/performanceSry', detail: 'h/performanceSry-detail', id: 'container-ehr---h_performanceSry' },
       ],
       REJECT_DIALOG_ID: 'sap.ui.yesco.mvc.view.performance.fragment.RejectDialog',
+      OPPOSITION_DIALOG_ID: 'sap.ui.yesco.mvc.view.performance.fragment.OppositionDialog',
 
       TAB: { GOAL: 'T01', OPINION: 'T02' },
       APPRAISER_TYPE: { ME: 'ME', MA: 'MA', MB: 'MB' },
       DISPLAY_TYPE: { EDIT: 'X', DISPLAY_ONLY: 'D', HIDE: 'H', HIDDEN_VALUE: 'V' },
       GOAL_TYPE: { STRATEGY: { code: '1', name: 'strategy' }, DUTY: { code: '2', name: 'duty' } },
-      PROCESS_TYPE: { LIST: { code: 'L', label: 'LABEL_00177' }, DETAIL: { code: 'D', label: 'LABEL_00165' }, SAVE: { code: 'T', label: 'LABEL_00103' }, SEND: { code: 'C', label: 'LABEL_00175' }, APPROVE: { code: 'P', label: 'LABEL_00123' }, REJECT: { code: 'R', label: 'LABEL_00124' }, CANCEL: { code: 'W', label: 'LABEL_00118' } },
+      PROCESS_TYPE: { LIST: { code: 'L', label: 'LABEL_00177' }, DETAIL: { code: 'D', label: 'LABEL_00165' }, SAVE: { code: 'T', label: 'LABEL_00103' }, SEND: { code: 'C', label: 'LABEL_00175' }, APPROVE: { code: 'P', label: 'LABEL_00123' }, REJECT: { code: 'R', label: 'LABEL_00124' }, CANCEL: { code: 'W', label: 'LABEL_00118' }, CONFIRM: { code: 'C', label: 'LABEL_10043' } },
 
       REJECT_PROPERTIES: ['Rjctr', 'Rjctrin'],
+      OPPOSITION_PROPERTIES: ['Zzappid', 'Zdocid', 'Zzappee', 'Begda', 'Endda', 'Werks'],
       SUMMARY_PROPERTIES: ['Zmepoint', 'Zmapoint', 'Zmbgrade'],
       MANAGE_PROPERTIES: ['Z131', 'Z132', 'Z136', 'Z137', 'Z140', 'Papp1', 'Papp2', 'origin'],
       GOAL_PROPERTIES: ['Obj0', 'Fwgt', 'Z101', 'Z103', 'Z103s', 'Z109', 'Z111', 'Zapgme', 'Zapgma', 'Ztbegda', 'Ztendda', 'Zmarslt', 'Zrslt', 'Z1175', 'Z1174', 'Z1173', 'Z1172', 'Z1171', 'Z125Ee', 'Z125Er', 'origin'],
@@ -96,7 +98,9 @@ sap.ui.define(
           N: { Zapgma: { ME: 'H' }, Zmapoint: { ME: 'H' }, Zmbgrade: { MB: 'D' } },
         },
         5: {
-          X: {},
+          Q: { Zapgma: { ME: 'H' }, Zmapoint: { ME: 'H' }, Zmbgrade: { MA: 'H' } },
+          R: { Zapgma: { ME: 'H' }, Zmapoint: { ME: 'H' }, Zmbgrade: { MA: 'H' } },
+          X: { Zapgma: { ME: 'H' }, Zmapoint: { ME: 'H' }, Zmbgrade: { MA: 'H' } },
         },
       },
 
@@ -121,7 +125,9 @@ sap.ui.define(
           N: {},
         },
         5: {
-          X: {},
+          Q: {},
+          R: { OPPO_VIEW: { label: 'LABEL_10044', ME: 'X' } },
+          X: { OPPO_VIEW: { label: 'LABEL_10044', ME: 'X' } },
         },
       },
     };

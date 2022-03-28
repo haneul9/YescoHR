@@ -17,16 +17,19 @@
                             <l:BlockLayoutCell>
                                 <VBox alignItems="{align}" items="{path: 'value01', templateShareable: false}">
                                     <VBox>
-                                        <Label text="{label}" visible="{= !!${label} }" />
+                                        <layoutData>
+                                            <FlexItemData minWidth="100%" />
+                                        </layoutData>
+                                        <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
                                         <Image src="{image}" width="80px" visible="{= !!${image} }" press=".onPressPic" />
-                                        <Text text="{text}" class="font-12-px" visible="{= !!${text} }" />
+                                        <Text text="{text}" width="100%" textAlign="Center" visible="{= !!${text} }" />
                                     </VBox>
                                 </VBox>
                             </l:BlockLayoutCell>
                             <l:BlockLayoutCell>
                                 <VBox alignItems="{align}" items="{path: 'value02', templateShareable: false}">
                                     <VBox>
-                                        <Label text="{label}" visible="{= !!${label} }" />
+                                        <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
                                         <Text text="{text}" visible="{= !!${text} }" />
                                     </VBox>
                                 </VBox>
@@ -34,7 +37,7 @@
                             <l:BlockLayoutCell>
                                 <VBox alignItems="{align}" items="{path: 'value04', templateShareable: false}">
                                     <VBox>
-                                        <Label text="{label}" visible="{= !!${label} }" />
+                                        <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
                                         <Text text="{text}" visible="{= !!${text} }" />
                                     </VBox>
                                 </VBox>
@@ -42,7 +45,7 @@
                             <l:BlockLayoutCell>
                                 <VBox alignItems="{align}" items="{path: 'value05', templateShareable: false}">
                                     <VBox>
-                                        <Label text="{label}" visible="{= !!${label} }" />
+                                        <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
                                         <Text text="{text}" visible="{= !!${text} }" />
                                     </VBox>
                                 </VBox>
@@ -51,7 +54,7 @@
                                 <VBox alignItems="{align}">
                                     <VBox items="{path: 'value06', templateShareable: false}">
                                         <VBox>
-                                            <Label text="{label}" visible="{= !!${label} }" />
+                                            <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
                                             <Text text="{text}" visible="{= !!${text} }" />
                                         </VBox>
                                     </VBox>
@@ -61,7 +64,7 @@
                             <l:BlockLayoutCell>
                                 <VBox alignItems="{align}" items="{path: 'value03', templateShareable: false}">
                                     <VBox>
-                                        <Label text="{label}" visible="{= !!${label} }" />
+                                        <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
                                         <Text text="{text}" visible="{= !!${text} }" />
                                     </VBox>
                                 </VBox>
@@ -69,7 +72,7 @@
                             <l:BlockLayoutCell>
                                 <VBox alignItems="{align}" items="{path: 'value09', templateShareable: false}">
                                     <VBox>
-                                        <Label text="{label}" visible="{= !!${label} }" />
+                                        <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
                                         <Text text="{text}" visible="{= !!${text} }" />
                                     </VBox>
                                 </VBox>
@@ -77,7 +80,7 @@
                             <l:BlockLayoutCell>
                                 <VBox alignItems="{align}" items="{path: 'value08', templateShareable: false}">
                                     <VBox>
-                                        <Label text="{label}" visible="{= !!${label} }" />
+                                        <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
                                         <Text text="{text}" visible="{= !!${text} }" />
                                     </VBox>
                                 </VBox>
@@ -85,7 +88,7 @@
                             <l:BlockLayoutCell>
                                 <VBox alignItems="{align}" items="{path: 'value10', templateShareable: false}">
                                     <VBox>
-                                        <Label text="{label}" visible="{= !!${label} }" />
+                                        <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
                                         <Text text="{text}" visible="{= !!${text} }" />
                                     </VBox>
                                 </VBox>
@@ -93,152 +96,12 @@
                             <l:BlockLayoutCell>
                                 <VBox alignItems="{align}" items="{path: 'value11', templateShareable: false}">
                                     <VBox>
-                                        <Label text="{label}" visible="{= !!${label} }" />
+                                        <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
                                         <Text text="{text}" visible="{= !!${text} }" />
                                     </VBox>
                                 </VBox>
                             </l:BlockLayoutCell>
                         </l:BlockLayoutRow>
-                        <!-- <l:BlockLayoutRow scrollable="true" rowColorSet="ColorSet2">
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Image src="asset/image/photo1.png" width="80px" />
-                                    <Text text="홍길동 부장 / 팀장" class="font-12-px" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="부장 / 팀장" />
-                                    <Text text="생년월일 : 1972.12.14" />
-                                    <Text text="입사 : 2001.01.01" />
-                                    <Text text="학력 : 동국대 (석사졸업) / 마케팅" />
-                                    <Text text="현직무 : 홍보팀 (15년 3개월)" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="홍보 (9년 7개월)" />
-                                    <Text text="인사 (5년 6개월" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="동국대 (석사졸업) / 마케팅" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <VBox>
-                                        <Text text="2020년 성과A/역량A" />
-                                        <Text text="2019년 성과A/역량A" />
-                                        <Text text="2018년 성과A/역량A" />
-                                    </VBox>
-                                    <Image src="asset/image/compare_chart.png" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="인사팀 : 2001.01.01 ~ 2010.12.31" />
-                                    <Text text="홍보팀 : 2011.01.01 ~ 현재" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                        </l:BlockLayoutRow>
-                        <l:BlockLayoutRow scrollable="true" rowColorSet="ColorSet1">
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Image src="asset/image/photo2.png" width="80px" />
-                                    <Text text="홍길동 부장 / 팀장" class="font-12-px" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="부장 / 팀장" />
-                                    <Text text="생년월일 : 1972.12.14" />
-                                    <Text text="입사 : 2001.01.01" />
-                                    <Text text="학력 : 동국대 (석사졸업) / 마케팅" />
-                                    <Text text="현직무 : 홍보팀 (15년 3개월)" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="홍보 (9년 7개월)" />
-                                    <Text text="인사 (5년 6개월" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="동국대 (석사졸업) / 마케팅" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <VBox>
-                                        <Text text="2020년 성과A/역량A" />
-                                        <Text text="2019년 성과A/역량A" />
-                                        <Text text="2018년 성과A/역량A" />
-                                    </VBox>
-                                    <Image src="asset/image/compare_chart.png" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="인사팀 : 2001.01.01 ~ 2010.12.31" />
-                                    <Text text="홍보팀 : 2011.01.01 ~ 현재" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                        </l:BlockLayoutRow>
-                        <l:BlockLayoutRow scrollable="true" rowColorSet="ColorSet2">
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Image src="asset/image/photo3.jpeg" width="80px" />
-                                    <Text text="홍길동 부장 / 팀장" class="font-12-px" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="부장 / 팀장" />
-                                    <Text text="생년월일 : 1972.12.14" />
-                                    <Text text="입사 : 2001.01.01" />
-                                    <Text text="학력 : 동국대 (석사졸업) / 마케팅" />
-                                    <Text text="현직무 : 홍보팀 (15년 3개월)" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="홍보 (9년 7개월)" />
-                                    <Text text="인사 (5년 6개월" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="동국대 (석사졸업) / 마케팅" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <VBox>
-                                        <Text text="2020년 성과A/역량A" />
-                                        <Text text="2019년 성과A/역량A" />
-                                        <Text text="2018년 성과A/역량A" />
-                                    </VBox>
-                                    <Image src="asset/image/compare_chart.png" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox>
-                                    <Text text="인사팀 : 2001.01.01 ~ 2010.12.31" />
-                                    <Text text="홍보팀 : 2011.01.01 ~ 현재" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                        </l:BlockLayoutRow>
-                        <l:BlockLayoutRow scrollable="true" rowColorSet="ColorSet1">
-                            <l:BlockLayoutCell />
-                            <l:BlockLayoutCell />
-                            <l:BlockLayoutCell />
-                            <l:BlockLayoutCell />
-                            <l:BlockLayoutCell />
-                            <l:BlockLayoutCell />
-                        </l:BlockLayoutRow> -->
                     </l:BlockLayout>
                 </l:VerticalLayout>
             </custom:MobileScrollContainer>

@@ -24,15 +24,16 @@ sap.ui.define(
     'use strict';
 
     return Debuggable.extend('sap.ui.yesco.mvc.controller.app.MobileMyPagePopoverHandler', {
-      bMobile: null,
-
       /**
        * @override
        */
       constructor: function (oController) {
-        this.bMobile = AppUtils.isMobile();
         this.oController = oController;
         this.oMyPageModel = new JSONModel(this.getInitialData());
+        this.deviceOS = /iphone|ipad|ipod/i.test(navigator.userAgent) ? 'iOS' : /android/i.test(navigator.userAgent) ? 'aOS' : '';
+        this.isYescoIOS = this.deviceOS === 'iOS' && !!window.webkit && !!window.webkit.messageHandlers && !!window.webkit.messageHandlers.script;
+        this.isYescoAOS = this.deviceOS === 'aOS' && typeof window.YescoApp !== 'undefined';
+        this.iHostport = /^dev/.test(location.hostname) ? 8090 : 8070;
 
         this.init();
       },
@@ -55,13 +56,23 @@ sap.ui.define(
         this.oMyPagePopover
           .attachBeforeOpen(async () => {
             const aVersionData = this.readVersionData();
-            const mVersionData = this.transformVersionData(await aVersionData);
-            this.oMyPageModel.setData(mVersionData, true);
+            this.setVersionData(await aVersionData);
           })
           .setModel(this.oMyPageModel)
           .bindElement('/');
 
         oView.addDependent(this.oMyPagePopover);
+
+        if (this.isYescoIOS) {
+          window.getVersion = function (sAppVersion) {
+            const sVersion = this.oMyPageModel.getProperty('/Version');
+            const UpdateNotification = sVersion === sAppVersion ? this.oController.getBundleText('LABEL_01603') : this.oController.getBundleText('LABEL_01604'); // 최신 버전 : 업데이트 필요
+
+            this.oMyPageModel.setProperty('/AppVersion', sAppVersion);
+            this.oMyPageModel.setProperty('/Latest', sVersion === sAppVersion);
+            this.oMyPageModel.setProperty('/UpdateNotification', UpdateNotification);
+          };
+        }
 
         this.showContentData();
       },
@@ -87,26 +98,39 @@ sap.ui.define(
       },
 
       transformEmployeeData([mEmployeeData = {}]) {
-        let { Photo, Ename, Zzjikgbt, Zzjikcht, Pbtxt, Fulln, Text1, Text2 } = mEmployeeData;
+        let { Photo, Ename, Zzjikgbt, Zzjikcht, Chief, Pbtxt, Fulln, Text1, Text2 } = mEmployeeData;
         Photo ||= 'asset/image/avatar-unknown.svg';
-        return { Photo, Ename, Zzjikgbt, Zzjikcht, Pbtxt, Fulln, Text1, Text2 };
+        return { Photo, Ename, Zzjikgbt, Zzjikcht, Chief, Pbtxt, Fulln, Text1, Text2 };
       },
 
       async readVersionData() {
         const oCommonModel = this.oController.getModel(ServiceNames.COMMON);
         const mFilters = {
-          Mobos: /iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'IOS' : 'ANDROID',
+          Mobos: this.deviceOS === 'iOS' ? 'IOS' : 'ANDROID',
         };
 
         return Client.getEntitySet(oCommonModel, 'OsVersion', mFilters);
       },
 
-      transformVersionData([{ Version }]) {
-        const iHostport = /^dev/.test(location.hostname) ? 8090 : 8070;
-        const DownloadLink = `${location.protocol}//${location.hostname}:${iHostport}/download`;
-        const AppVersion = window.YescoApp.getVersionInfo();
-        const UpdateNotification = typeof window.YescoApp === 'undefined' ? '' : Version === AppVersion ? this.oController.getBundleText('LABEL_01603') : this.oController.getBundleText('LABEL_01604'); // 최신 버전 : 업데이트 필요
-        return { Version, AppVersion, DownloadLink, UpdateNotification };
+      setVersionData([{ Version }]) {
+        const DownloadLink = `${location.protocol}//${location.hostname}:${this.iHostport}/download`;
+
+        this.oMyPageModel.setData({ Version, DownloadLink }, true);
+
+        if (this.isYescoAOS) {
+          const sAppVersion = window.YescoApp.getVersionInfo();
+          const UpdateNotification = Version === sAppVersion ? this.oController.getBundleText('LABEL_01603') : this.oController.getBundleText('LABEL_01604'); // 최신 버전 : 업데이트 필요
+
+          this.oMyPageModel.setProperty('/AppVersion', sAppVersion);
+          this.oMyPageModel.setProperty('/Latest', Version === sAppVersion);
+          this.oMyPageModel.setProperty('/UpdateNotification', UpdateNotification);
+        } else if (this.isYescoIOS) {
+          window.webkit.messageHandlers.script.postMessage('getVersion');
+        } else {
+          this.oMyPageModel.setProperty('/AppVersion', Version);
+          this.oMyPageModel.setProperty('/Latest', true);
+          this.oMyPageModel.setProperty('/UpdateNotification', this.oController.getBundleText('LABEL_01603')); // 최신 버전
+        }
       },
 
       async onPressLogout() {

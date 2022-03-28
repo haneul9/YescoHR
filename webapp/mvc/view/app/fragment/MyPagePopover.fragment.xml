@@ -16,7 +16,7 @@
               <grid:GridItemLayoutData gridColumn="span 2" />
             </layoutData>
             <Label text="{Ename} {Zzjikgbt} / {Zzjikcht}" class="name" />
-            <Image src="asset/image/icon_captain.svg" width="1.2rem" alt="Captain" visible="{= !!${Chief}}" />
+            <Image src="asset/image/icon_captain.svg" width="1.2rem" alt="Captain" visible="{= ${Chief} === 'X' }" />
           </HBox>
           <Label text="{i18n>LABEL_00226}" class="mt-4-px" />
           <Label text="{Pbtxt} {Fulln}" class="mt-4-px" />
@@ -41,7 +41,7 @@
             <Label text="{i18n>LABEL_01602}" />
             <HBox>
               <Text text="ver. {AppVersion}" />
-              <Link href="{DownloadLink}" target="_blank" text="{UpdateNotification}" class="ml-5-px" />
+              <Link href="{DownloadLink}" target="_blank" text="{UpdateNotification}" class="download-link ml-5-px" enabled="{= !${Latest} }" />
             </HBox>
           </HBox>
         </VBox>

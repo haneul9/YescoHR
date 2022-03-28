@@ -168,8 +168,8 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .sapUiSizeCompact .portlet-p11 .sapMBtnInner {font-size:14px}
 .sapUiSizeCompact .portlet-p11 .sapMBtnInner.sapMBtnText {height:30px; border-radius:4px}
 .sapUiSizeCompact .portlet-p11 .sapMBtnContent {line-height:30px}
-.portlet-p11 .portlet-p11-objectstatus {margin-top:3px}
-.portlet-p11 .portlet-p11-objectstatus.font-15-px {margin-top:0; vertical-align:top}
+.portlet-p11 .portlet-p11-objectstatus19 {margin-top:3px; font-size:19px}
+.portlet-p11 .portlet-p11-objectstatus15 {vertical-align:top; font-size:15px}
 .portlet-p11 .portlet-p11-text.sapMText {vertical-align:top; font-size:12px}
 .portlet-p12 h2.sapMTitle {vertical-align:middle; font-size:20px; font-weight:700}
 .portlet-p12 .vacation-count-size36.sapMText {font-size:36px; line-height:1}
@@ -728,6 +728,7 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 /* .sapMFlexBox .title .sapMFlexItemAlignAuto {-webkit-align-self:center; align-self:center} */
 /* .sapMFlexBox .title + .table-actions, .table-actions {margin-top:-6px} */
 .vCardBox .table-toolbar .title + .table-actions .sapMBtn, .table-actions .sapMBtn {min-width:auto}
+.vCardBox .table-toolbar .title .sapMLnk { margin-left: 10px; position: relative; top: 5px; }
 
 .sapUiTableRowHighlight.sapUiTableRowHighlightNone {background-color:var(--BorderColorReadonly) !important}
 .sapUiTableRowHighlight.sapUiTableRowHighlightIndication01 {background-color:var(--BorderColorReadonly) !important}
@@ -1122,7 +1123,8 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 .sapUiLayoutCSSGrid.year-plan.status-wrap .sapMText{font-weight: bold;}
 .year-plan.status-wrap .sapMLabel::before {content:""; position:relative; display:inline-block; width:14px; height:14px; background-color:#888; margin-right:5px; border-radius:50%}
 .vCardBox.MultiBoxmobile {border: 0px; border-radius: 0px; padding: 10px;}
-.vCardBox.MultiBoxmobile .sapMTitle{border-bottom: 0px;}
+.vCardBox.MultiBoxmobile .sapMTitle{border-bottom: 0px; margin-bottom: 0px; padding-bottom: 0px; padding-left: 10px;}
+.vCardBox.MultiBoxmobile .sapMHBox{background-color: #ededed; height: 45px; align-items: center; }
 
 /*logout button style*/
 .sapMBtn.icon-button.logout .sapMBtnInner {background:transparent!important}
@@ -1631,14 +1633,14 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .compare-block .sapUiBlockLayoutRow:first-child { position: sticky; top: 0; z-index: 2; }
 .compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow { scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
 .compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow > .sapUiBlockLayoutCell { scroll-snap-align: end; }
+.compare-block .sapUiBlockLayoutSizeS .sapUiBlockScrollingRow::-webkit-scrollbar { height: 0px !important; }
 .compare-block .sapUiBlockLayoutSizeL .sapUiBlockScrollingRow .sapUiBlockScrollableCell:first-child { width: 16%; }
 .compare-block .sapUiBlockLayoutSizeL .sapUiBlockScrollingRow .sapUiBlockScrollableCell:not(:first-child) { width: 28%; }
 .compare-block .sapUiBlockLayoutSizeS .sapUiBlockScrollingRow .sapUiBlockScrollableCell:first-child { width: 30%; min-width: 30%; }
 .compare-block .sapUiBlockLayoutSizeS .sapUiBlockScrollingRow .sapUiBlockScrollableCell .sapUiBlockCellContent { padding: 1rem 6px }
 .compare-block .sapUiBlockLayoutSizeS .sapUiBlockScrollingRow .sapUiBlockScrollableCell:not(:first-child) { width: 70%; min-width: 70%; }
-.compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow:last-child { height: 13px; position: sticky; bottom: 0; z-index: 4; }
-.compare-block .sapUiBlockLayoutSizeS .sapUiBlockLayoutRow.sapUiBlockScrollingRow:last-child { height: 18px; position: sticky; bottom: 0; z-index: 4; }
-.compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow:not(:last-child) { overflow: hidden; }
+.compare-block .sapUiBlockLayoutSizeL .sapUiBlockLayoutRow.sapUiBlockScrollingRow:last-child { height: 13px; position: sticky; bottom: 0; z-index: 4; }
+.compare-block .sapUiBlockLayoutSizeL .sapUiBlockLayoutRow.sapUiBlockScrollingRow:not(:last-child) { overflow: hidden; }
 .compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow > .sapUiBlockLayoutCell:first-child { position: sticky; left: 0; z-index: 1; }
 .compare-block .sapUiBlockLayoutRow .sapUiBlockLayoutCell:first-child .sapUiBlockCellContent {display: flex; flex-flow: column; justify-content: center; align-items: center;}
 .compare-block .sapUiBlockLayoutRow .sapUiBlockLayoutCell:first-child .sapMText[data-type=label] {font-weight: 700;}
@@ -1862,6 +1864,15 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .year-popover.sapMPopover .sapUiLayoutCSSGrid.border-top { border-top: 1px dashed #b2b2b2}
 .year-popover.sapMPopover .sapUiLayoutCSSGrid .sapUiLayoutCSSGridItem.sapMLabel {min-height: 30px;padding-left: 15px;}
 .year-popover.sapMPopover .sapUiLayoutCSSGrid .sapMText {height: 30px; display: flex;align-items: center}
+
+.month-popover.sapMResponsivePopover {padding:0px;border: 1px solid #b2b2b2;border-radius: 4px;}
+.month-popover.sapMResponsivePopover .sapMBar {border-bottom: 1px solid #b2b2b2;}
+.month-popover.sapMResponsivePopover .sapMBar .sapMBarMiddle .sapMTitle {font-size: 16px; font-weight: 800; color: #222;}
+.month-popover.sapMResponsivePopover .sapMBarContainer {height: 40px;line-height: 40px;text-align: center;border-bottom: 0px solid #cccccc;}
+.month-popover.sapMResponsivePopover .sapMDialogSection {height: auto; padding-bottom: 0px !important; }
+.month-popover.sapMResponsivePopover .sapUiLayoutCSSGrid.border-top { border-top: 1px dashed #b2b2b2}
+.month-popover.sapMResponsivePopover .sapUiLayoutCSSGrid .sapUiLayoutCSSGridItem.sapMLabel {min-height: 30px;padding-left: 15px;}
+.month-popover.sapMResponsivePopover .sapUiLayoutCSSGrid .sapMText {height: 30px; display: flex;align-items: center}
 
 .capability-level .sapMIBar {height:auto!important;margin-bottom: 8px;}
 .capability-level .sapUiLayoutCSSGrid [data-type="head"] {display: inline-grid;padding: 0!important;justify-content: center;}

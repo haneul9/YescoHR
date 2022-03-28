@@ -1,8 +1,8 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:core="sap.ui.core">
-  <Popover title="{/YearPlan/title}" contentMinWidth="300px" class="year-popover">
-    <grid:CSSGrid gridTemplateColumns="1fr 3fr" gridRowGap="0" class="py-6-px">
+  <ResponsivePopover title="{/YearPlan/title}" contentWidth="150px" class="month-popover">
+    <grid:CSSGrid gridTemplateColumns="1fr 2fr" gridRowGap="0" class="py-6-px">
       <Label text="{i18n>LABEL_18022}:" />
       <Text text="{/YearPlan/detail/Atext1}" />
       <Label text="{i18n>LABEL_00261}:" visible="{= ${/YearPlan/detail/Atext1} !== ${i18n>LABEL_13028}}" />
@@ -22,5 +22,5 @@
       <Label text="{i18n>LABEL_00150}:" />
       <Text text="{/YearPlan/detail/Duration2}" />
     </grid:CSSGrid>
-  </Popover>
+  </ResponsivePopover>
 </core:FragmentDefinition>

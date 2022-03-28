@@ -64,8 +64,10 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 .portlet-p03p04:hover .sapMBtn.icon-button.portlet-member-remove {display:none}
 .portlet-p11 .left-box {border:none; background-color:#a3edce}
 .portlet-p11 .right-box {border:none; background-color:#b4cef2}
-.portlet-p11 .portlet-p11-objectstatus {margin-top:18px}
-.portlet-p11 .portlet-p11-objectstatus .sapMObjStatusText {color:#000 !important}
+.portlet-p11 .portlet-p11-objectstatus19,
+.portlet-p11 .portlet-p11-objectstatus15 {margin-top:0}
+.portlet-p11 .portlet-p11-objectstatus19 .sapMObjStatusText,
+.portlet-p11 .portlet-p11-objectstatus15 .sapMObjStatusText {color:#000 !important}
 .sapUiSizeCompact .portlet-p11 .sapMBtn.portlet-box {margin-top:5px; width:100%; border:none}
 .sapUiSizeCompact .portlet-p11 .sapMBtnInner.sapMBtnText {height:auto; border-radius:8px; padding:3px}
 
@@ -377,11 +379,12 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>footer .sa
 
 .mobile-grid-flow-column {display:grid; grid-template-columns:1fr!important; grid-template-rows:repeat(11, 230px)!important; grid-gap:20px 0!important; grid-auto-flow:column!important}
 
-.emp-search-list{background-color:#F4F5F7}
+.emp-search-list {background-color:#F4F5F7}
 .emp-search-list li {display:flex; align-content:center; height:40px; background-color:#F4F5F7}
 .emp-search-list li .sapMText  {vertical-align:middle}
 .emp-search-list li .name {font-weight:700; font-size:16px}
 .emp-search-list li span.sapMImg {vertical-align:middle}
+.emp-search-list li .icon-telephone {height:30px; background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M0 0h24v24H0Z" fill="none"/><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" fill="none" stroke="%23898d9c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>') no-repeat center 5px}
 
 /* .sapMLabel {font-size:16px} */
 .sapMSwt {width:40px; height:20px}
@@ -391,6 +394,8 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>footer .sa
 .sapMSwtOn .sapMSwtHandle {right:2px; left:auto}
 .setting-wrap {border-top:8px solid #ebeef2; border-bottom:8px solid #ebeef2}
 .setting-wrap .divider {border-top:1px solid #e7e9ef}
+.setting-wrap .download-link {line-height:1.45}
+.setting-wrap .download-link[disabled="true"] {color:#000}
 
 
 /* 신청 공통  */
