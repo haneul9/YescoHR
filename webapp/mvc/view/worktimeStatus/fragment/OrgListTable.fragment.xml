@@ -59,7 +59,10 @@
             <Label text="{i18n>LABEL_32004}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim11}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim11',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="80px" filterProperty="Tim12" sortProperty="Tim12">
@@ -71,7 +74,10 @@
             <Label text="{i18n>LABEL_01205}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim12}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim12',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="80px" filterProperty="Tim13" sortProperty="Tim13">
@@ -83,7 +89,10 @@
             <Label text="{i18n>LABEL_01123}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim13}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim13',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="80px" filterProperty="Tim14" sortProperty="Tim14">
@@ -95,7 +104,10 @@
             <Label text="{i18n>LABEL_13028}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim14}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim14',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="80px" filterProperty="Over1" sortProperty="Over1">
@@ -107,7 +119,10 @@
             <Label text="{i18n>LABEL_32011}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Over1}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Over1',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="80px" headerSpan="5" filterProperty="Tim21" sortProperty="Tim21">
@@ -119,7 +134,10 @@
             <Label text="{i18n>LABEL_32004}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim21}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim21',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="80px" filterProperty="Tim22" sortProperty="Tim22">
@@ -131,7 +149,10 @@
             <Label text="{i18n>LABEL_01205}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim22}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim22',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="80px" filterProperty="Tim23" sortProperty="Tim23">
@@ -143,7 +164,10 @@
             <Label text="{i18n>LABEL_01123}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim23}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim23',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="80px" filterProperty="Tim24" sortProperty="Tim24">
@@ -155,7 +179,10 @@
             <Label text="{i18n>LABEL_13028}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim24}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim24',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="80px" filterProperty="Over2" sortProperty="Over2">
@@ -167,7 +194,10 @@
             <Label text="{i18n>LABEL_32011}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Over2}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Over2',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="80px" headerSpan="5" filterProperty="Tim31" sortProperty="Tim31">
@@ -179,7 +209,10 @@
             <Label text="{i18n>LABEL_32004}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim31}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim31',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="80px" filterProperty="Tim32" sortProperty="Tim32">
@@ -191,7 +224,10 @@
             <Label text="{i18n>LABEL_01205}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim32}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim32',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="80px" filterProperty="Tim33" sortProperty="Tim33">
@@ -203,7 +239,10 @@
             <Label text="{i18n>LABEL_01123}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim33}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim33',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="80px" filterProperty="Tim34" sortProperty="Tim34">
@@ -215,7 +254,10 @@
             <Label text="{i18n>LABEL_13028}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim34}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim34',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="80px" filterProperty="Over3" sortProperty="Over3">
@@ -227,7 +269,10 @@
             <Label text="{i18n>LABEL_32011}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Over3}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Over3',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="80px" headerSpan="5" filterProperty="Tim41" sortProperty="Tim41">
@@ -239,7 +284,10 @@
             <Label text="{i18n>LABEL_32004}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim41}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim41',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="80px" filterProperty="Tim42" sortProperty="Tim42">
@@ -251,7 +299,10 @@
             <Label text="{i18n>LABEL_01205}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim42}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim42',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="80px" filterProperty="Tim43" sortProperty="Tim43">
@@ -263,7 +314,10 @@
             <Label text="{i18n>LABEL_01123}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim43}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim43',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="80px" filterProperty="Tim44" sortProperty="Tim44">
@@ -275,7 +329,10 @@
             <Label text="{i18n>LABEL_13028}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim44}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim44',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="80px" filterProperty="Over4" sortProperty="Over4">
@@ -287,7 +344,10 @@
             <Label text="{i18n>LABEL_32011}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Over4}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Over4',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="80px" headerSpan="5" filterProperty="Tim51" sortProperty="Tim51">
@@ -299,7 +359,10 @@
             <Label text="{i18n>LABEL_32004}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim51}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim51',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="80px" filterProperty="Tim52" sortProperty="Tim52">
@@ -311,7 +374,10 @@
             <Label text="{i18n>LABEL_01205}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim52}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim52',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="80px" filterProperty="Tim53" sortProperty="Tim53">
@@ -323,7 +389,10 @@
             <Label text="{i18n>LABEL_01123}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim53}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim53',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="80px" filterProperty="Tim54" sortProperty="Tim54">
@@ -335,7 +404,10 @@
             <Label text="{i18n>LABEL_13028}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim54}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim54',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="80px" filterProperty="Over5" sortProperty="Over5">
@@ -347,7 +419,10 @@
             <Label text="{i18n>LABEL_32011}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Over5}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Over5',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
       </table:columns>

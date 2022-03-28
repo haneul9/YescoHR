@@ -87,6 +87,10 @@ sap.ui.define(
         };
       },
 
+      formatTime(sValue = '0') {
+        return _.parseInt(sValue) === 0 ? '' : sValue;
+      },
+
       onBeforeShow() {
         TableUtils.adjustRowSpan({
           oTable: this.byId(this.ORG_TABLE_ID),
