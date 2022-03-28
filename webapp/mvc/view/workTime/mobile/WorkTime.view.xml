@@ -1,0 +1,46 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.workTime.mobile.WorkTime"
+	xmlns="sap.m"
+	xmlns:grid="sap.ui.layout.cssgrid"
+	xmlns:core="sap.ui.core"
+	xmlns:custom="sap.ui.yesco.control"
+	xmlns:mvc="sap.ui.core.mvc">
+	<Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+		<VBox class="contents">
+			<core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.OverviewListHeader" type="XML" class="sapUiSmallMarginBottom"/>
+			<custom:MobileScrollContainer horizontal="false" vertical="true">
+				<List items="{path: '/List'}" busyIndicatorDelay="0" busy="{/busy}" class="list-wrap wrap">
+					<CustomListItem type="Active" press=".onSelectRow">
+						<grid:CSSGrid gridTemplateColumns="2fr 2fr 1fr" gridGap="6px 0">
+							<Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="font-16-px font-bold" />
+							<Text text="{Ottyptx}"/>
+							<core:Icon src="sap-icon://circle-task-2" width="11px" height="11px" class="m-auto">
+								<core:customData>
+									<core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
+								</core:customData>
+							</core:Icon>
+							<Text text="{ parts: [{path: 'Beguz'}, {path: 'Enduz'}, {path: 'Abrst'}], formatter: '.formatTime' }"/>
+							<Text text="{Atrsn}"/>
+							<Text text="{
+									path: 'ZappStatAl',
+									formatter: '.TableUtils.StatusTxt'
+								}" class="sapMText m-auto">
+								<customData>
+									<core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
+								</customData>
+							</Text>
+						</grid:CSSGrid>
+					</CustomListItem>
+				</List>
+			</custom:MobileScrollContainer>
+		</VBox>
+		<footer class="wrap">
+			<OverflowToolbar>
+				<Button text="{i18n>LABEL_00121}" type="Emphasized" width="100%" press=".onClick">
+					<layoutData>
+						<FlexItemData growFactor="1"/>
+					</layoutData>
+				</Button>
+			</OverflowToolbar>
+		</footer>
+	</Page>
+</mvc:View>
