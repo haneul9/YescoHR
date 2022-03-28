@@ -34,10 +34,10 @@ sap.ui.define(
             year: today.format('YYYY'),
             fromMonth: today.format('MM'),
             toMonth: today.format('MM'),
-            begym: today.format('YYYYMM'),
+            begym: moment(moment().subtract(12, 'months').toDate()).format('YYYYMM'),
             endym: today.format('YYYYMM'),
             dateBox : false,
-            dateRange : "1m"
+            dateRange : "12m"
           },
           listInfo: {
             Title: this.getBundleText('LABEL_13037'), // 급상여내역
@@ -139,7 +139,7 @@ sap.ui.define(
               bDateRangeBox = false;
               break;
             case '1m':
-              dBegda = moment().subtract(1, 'months').toDate();
+              dBegda = moment().toDate();
               bDateRangeBox = false;
               break;
             case '3m':
