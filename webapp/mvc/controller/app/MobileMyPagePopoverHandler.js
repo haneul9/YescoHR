@@ -113,6 +113,10 @@ sap.ui.define(
         this.oController.onPressLogout();
       },
 
+      async onPressRefresh() {
+        location.reload();
+      },
+
       onPopoverToggle() {
         if (this.oMyPagePopover.isOpen()) {
           this.onPopoverClose();

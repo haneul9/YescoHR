@@ -12,7 +12,14 @@
                     <custom:RadioButton text="{i18n>LABEL_10092}" outerSize="50%" innerSize="35%" />
                     <custom:RadioButton text="{i18n>LABEL_10093}" outerSize="50%" innerSize="35%" />
                 </RadioButtonGroup>
-                <Text text="{i18n>MSG_10011}" class="desc-txt mt-2-px" />
+                <core:Icon src="sap-icon://notification-2" class="mt-3-px ml-10-px" color="#ff5a5a" width="30px" height="30px" />
+                <Text text="{i18n>MSG_10019}" class="desc-txt mt-2-px ml-2-px" />
+                <Text text="{i18n>MSG_10020}" class="desc-txt mt-2-px ml-0-px">
+                    <customData>
+                        <core:CustomData key="status" value="Z45" writeToDom="true" />
+                    </customData>
+                </Text>
+                <Text text="{i18n>MSG_10011}" class="desc-txt mt-2-px ml-0-px" />
             </HBox>
             <HBox class="cascading-type-list">
                 <Image src="asset/image/icon_WF_Myinfo_02_N.svg" />

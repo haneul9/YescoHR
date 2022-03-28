@@ -10,9 +10,10 @@
       <HBox class="status-wrap">
         <ObjectStatus text="{i18n>LABEL_32012}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication04" />
         <ObjectStatus text="{i18n>LABEL_32013}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication05" />
+        <!-- <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressPernrExcelDownload" busyIndicatorDelay="0" busy="{/busy}" /> -->
       </HBox>
     </HBox>
-    <table:Table id="pernrTable" selectionMode="None" fixedColumnCount="6" fixedBottomRowCount="1" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/detail/pernr/list}" visibleRowCount="{= ${/detail/pernr/rowCount} > 10 ? 10 : ${/detail/pernr/rowCount} }" noData="{i18n>MSG_00001}">
+    <table:Table id="pernrTable" selectionMode="None" fixedColumnCount="6" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/detail/pernr/list}" visibleRowCount="{/detail/pernr/rowCount}" noData="{i18n>MSG_00001}">
       <table:columns>
         <table:Column width="50px">
           <table:multiLabels>
@@ -20,21 +21,14 @@
             <Label text="{i18n>LABEL_00144}" />
           </table:multiLabels>
           <table:template>
-            <HBox>
-              <core:Icon src="sap-icon://circle-task-2" size="15px" visible="{= ${Status} !== ${i18n>LABEL_09018} }" color="{= ${Status} === '1' ? '#FD5F58' : '#007BFF' }" class="tableIcon">
-                <core:layoutData>
-                  <FlexItemData growFactor="1" />
-                </core:layoutData>
-              </core:Icon>
-              <Text text="{Status}" width="100%" textAlign="Center" visible="{= ${Status} === ${i18n>LABEL_09018} }">
-                <layoutData>
-                  <FlexItemData growFactor="1" />
-                </layoutData>
-              </Text>
-            </HBox>
+            <core:Icon src="sap-icon://circle-task-2" size="15px" color="{= ${Status} === '1' ? '#FD5F58' : '#007BFF' }" class="tableIcon">
+              <core:layoutData>
+                <FlexItemData growFactor="1" />
+              </core:layoutData>
+            </core:Icon>
           </table:template>
         </table:Column>
-        <table:Column width="190px">
+        <table:Column width="190px" filterProperty="Orgtx" sortProperty="Orgtx">
           <table:multiLabels>
             <Label text="{i18n>LABEL_00224}" />
             <Label text="{i18n>LABEL_00224}" />
@@ -43,7 +37,7 @@
             <Text text="{Orgtx}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="90px">
+        <table:Column width="90px" filterProperty="Pernr" sortProperty="Pernr">
           <table:multiLabels>
             <Label text="{i18n>LABEL_00209}" />
             <Label text="{i18n>LABEL_00209}" />
@@ -59,7 +53,7 @@
             </Link>
           </table:template>
         </table:Column>
-        <table:Column width="90px">
+        <table:Column width="90px" filterProperty="Ename" sortProperty="Ename">
           <table:multiLabels>
             <Label text="{i18n>LABEL_00210}" />
             <Label text="{i18n>LABEL_00210}" />
@@ -72,7 +66,7 @@
             </Link>
           </table:template>
         </table:Column>
-        <table:Column width="90px">
+        <table:Column width="90px" filterProperty="Zzjikgbtx" sortProperty="Zzjikgbtx">
           <table:multiLabels>
             <Label text="{i18n>LABEL_00215}" />
             <Label text="{i18n>LABEL_00215}" />
@@ -81,7 +75,7 @@
             <Text text="{Zzjikgbtx}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="90px">
+        <table:Column width="90px" filterProperty="Zzjikchtx" sortProperty="Zzjikchtx">
           <table:multiLabels>
             <Label text="{i18n>LABEL_00217}" />
             <Label text="{i18n>LABEL_00217}" />
@@ -90,184 +84,304 @@
             <Text text="{Zzjikchtx}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="80px" headerSpan="4">
+        <table:Column width="80px" headerSpan="4" filterProperty="Tim11" sortProperty="Tim11">
+          <table:customData>
+            <core:CustomData key="field" value="Tim11" />
+          </table:customData>
           <table:multiLabels>
             <Label text="{/detail/pernr/Label1}" />
             <Label text="{i18n>LABEL_32004}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim11}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim11',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="80px">
+        <table:Column width="80px" filterProperty="Tim12" sortProperty="Tim12">
+          <table:customData>
+            <core:CustomData key="field" value="Tim12" />
+          </table:customData>
           <table:multiLabels>
             <Label text="{/detail/pernr/Label1}" />
             <Label text="{i18n>LABEL_01205}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim12}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim12',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="80px">
+        <table:Column width="80px" filterProperty="Tim13" sortProperty="Tim13">
+          <table:customData>
+            <core:CustomData key="field" value="Tim13" />
+          </table:customData>
           <table:multiLabels>
             <Label text="{/detail/pernr/Label1}" />
             <Label text="{i18n>LABEL_01123}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim13}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim13',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="80px">
+        <table:Column width="80px" filterProperty="Tim14" sortProperty="Tim14">
+          <table:customData>
+            <core:CustomData key="field" value="Tim14" />
+          </table:customData>
           <table:multiLabels>
             <Label text="{/detail/pernr/Label1}" />
             <Label text="{i18n>LABEL_13028}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim14}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim14',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="80px" headerSpan="4">
+        <table:Column width="80px" headerSpan="4" filterProperty="Tim21" sortProperty="Tim21">
+          <table:customData>
+            <core:CustomData key="field" value="Tim21" />
+          </table:customData>
           <table:multiLabels>
             <Label text="{/detail/pernr/Label2}" />
             <Label text="{i18n>LABEL_32004}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim21}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim21',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="80px">
+        <table:Column width="80px" filterProperty="Tim22" sortProperty="Tim22">
+          <table:customData>
+            <core:CustomData key="field" value="Tim22" />
+          </table:customData>
           <table:multiLabels>
             <Label text="{/detail/pernr/Label2}" />
             <Label text="{i18n>LABEL_01205}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim22}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim22',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="80px">
+        <table:Column width="80px" filterProperty="Tim23" sortProperty="Tim23">
+          <table:customData>
+            <core:CustomData key="field" value="Tim23" />
+          </table:customData>
           <table:multiLabels>
             <Label text="{/detail/pernr/Label2}" />
             <Label text="{i18n>LABEL_01123}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim23}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim23',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="80px">
+        <table:Column width="80px" filterProperty="Tim24" sortProperty="Tim24">
+          <table:customData>
+            <core:CustomData key="field" value="Tim24" />
+          </table:customData>
           <table:multiLabels>
             <Label text="{/detail/pernr/Label2}" />
             <Label text="{i18n>LABEL_13028}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim24}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim24',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="80px" headerSpan="4">
+        <table:Column width="80px" headerSpan="4" filterProperty="Tim31" sortProperty="Tim31">
+          <table:customData>
+            <core:CustomData key="field" value="Tim31" />
+          </table:customData>
           <table:multiLabels>
             <Label text="{/detail/pernr/Label3}" />
             <Label text="{i18n>LABEL_32004}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim31}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim31',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="80px">
+        <table:Column width="80px" filterProperty="Tim32" sortProperty="Tim32">
+          <table:customData>
+            <core:CustomData key="field" value="Tim32" />
+          </table:customData>
           <table:multiLabels>
             <Label text="{/detail/pernr/Label3}" />
             <Label text="{i18n>LABEL_01205}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim32}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim32',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="80px">
+        <table:Column width="80px" filterProperty="Tim33" sortProperty="Tim33">
+          <table:customData>
+            <core:CustomData key="field" value="Tim33" />
+          </table:customData>
           <table:multiLabels>
             <Label text="{/detail/pernr/Label3}" />
             <Label text="{i18n>LABEL_01123}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim33}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim33',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="80px">
+        <table:Column width="80px" filterProperty="Tim34" sortProperty="Tim34">
+          <table:customData>
+            <core:CustomData key="field" value="Tim34" />
+          </table:customData>
           <table:multiLabels>
             <Label text="{/detail/pernr/Label3}" />
             <Label text="{i18n>LABEL_13028}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim34}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim34',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="80px" headerSpan="4">
+        <table:Column width="80px" headerSpan="4" filterProperty="Tim41" sortProperty="Tim41">
+          <table:customData>
+            <core:CustomData key="field" value="Tim41" />
+          </table:customData>
           <table:multiLabels>
             <Label text="{/detail/pernr/Label4}" />
             <Label text="{i18n>LABEL_32004}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim41}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim41',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="80px">
+        <table:Column width="80px" filterProperty="Tim42" sortProperty="Tim42">
+          <table:customData>
+            <core:CustomData key="field" value="Tim42" />
+          </table:customData>
           <table:multiLabels>
             <Label text="{/detail/pernr/Label4}" />
             <Label text="{i18n>LABEL_01205}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim42}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim42',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="80px">
+        <table:Column width="80px" filterProperty="Tim43" sortProperty="Tim43">
+          <table:customData>
+            <core:CustomData key="field" value="Tim43" />
+          </table:customData>
           <table:multiLabels>
             <Label text="{/detail/pernr/Label4}" />
             <Label text="{i18n>LABEL_01123}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim43}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim43',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="80px">
+        <table:Column width="80px" filterProperty="Tim44" sortProperty="Tim44">
+          <table:customData>
+            <core:CustomData key="field" value="Tim44" />
+          </table:customData>
           <table:multiLabels>
             <Label text="{/detail/pernr/Label4}" />
             <Label text="{i18n>LABEL_13028}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim44}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim44',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="80px" headerSpan="4">
+        <table:Column width="80px" headerSpan="4" filterProperty="Tim51" sortProperty="Tim51">
+          <table:customData>
+            <core:CustomData key="field" value="Tim51" />
+          </table:customData>
           <table:multiLabels>
             <Label text="{/detail/pernr/Label5}" />
             <Label text="{i18n>LABEL_32004}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim51}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim51',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="80px">
+        <table:Column width="80px" filterProperty="Tim52" sortProperty="Tim52">
+          <table:customData>
+            <core:CustomData key="field" value="Tim52" />
+          </table:customData>
           <table:multiLabels>
             <Label text="{/detail/pernr/Label5}" />
             <Label text="{i18n>LABEL_01205}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim52}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim52',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="80px">
+        <table:Column width="80px" filterProperty="Tim53" sortProperty="Tim53">
+          <table:customData>
+            <core:CustomData key="field" value="Tim53" />
+          </table:customData>
           <table:multiLabels>
             <Label text="{/detail/pernr/Label5}" />
             <Label text="{i18n>LABEL_01123}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim53}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim53',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="80px">
+        <table:Column width="80px" filterProperty="Tim54" sortProperty="Tim54">
+          <table:customData>
+            <core:CustomData key="field" value="Tim54" />
+          </table:customData>
           <table:multiLabels>
             <Label text="{/detail/pernr/Label5}" />
             <Label text="{i18n>LABEL_13028}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Tim54}" width="100%" textAlign="Center" />
+            <Text text="{
+                path: 'Tim54',
+                formatter: '.formatTime'
+            }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
       </table:columns>

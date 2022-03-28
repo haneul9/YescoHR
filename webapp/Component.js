@@ -85,7 +85,7 @@ sap.ui.define(
        */
       setAppModel() {
         setTimeout(() => {
-          this.setModel(new JSONModel({ isAppBusy: true, delay: 0, isAtHome: false, isMobile: AppUtils.getDevice() === sap.ui.Device.system.SYSTEMTYPE.PHONE }), 'appModel');
+          this.setModel(new JSONModel({ isAppBusy: true, delay: 0, isAtHome: false, isMobile: /android|iphone|ipad|ipod/i.test(navigator.userAgent) }), 'appModel');
         });
         return this;
       },
@@ -108,7 +108,7 @@ sap.ui.define(
       },
 
       toggleDeviceStyle() {
-        if (AppUtils.getDevice() === sap.ui.Device.system.SYSTEMTYPE.PHONE) {
+        if (/android|iphone|ipad|ipod/i.test(navigator.userAgent)) {
           $('#desktopstyle').remove();
         } else {
           $('#mobilestyle').remove();
@@ -273,10 +273,12 @@ sap.ui.define(
               this.readySessionModel(), // prettier 방지용 주석
               this.readyMenuModel({ mRouteArguments, mConfig, oController }),
             ]).catch((oError) => {
-              this.getRouter().getTargets().display('notFound', {
-                from: 'home',
-                error: oError,
-              });
+              this.getRouter()
+                .getTargets()
+                .display('notFound', {
+                  from: sRouteName === 'ehrMobileHome' ? 'mobileHome' : 'home',
+                  error: oError,
+                });
             });
           })
           .attachRoutePatternMatched(async (oEvent) => {
@@ -369,11 +371,9 @@ sap.ui.define(
         // in order to improve our app and the user experience (Build-Measure-Learn cycle)
         // AppUtils.debug(`User accessed route ${sRouteName}, timestamp = ${new Date().getTime()}`);
 
-        if (sRouteNameMain === 'ehrHome' || sRouteNameMain === 'ehrMobileHome') {
+        if (AppUtils.isLOCAL() || sRouteNameMain === 'ehrHome' || sRouteNameMain === 'ehrMobileHome') {
           return;
         }
-
-        if (AppUtils.isLOCAL()) return;
 
         const sMenid = this.getMenuModel().getMenid(sRouteNameMain);
         if ((AppUtils.isLOCAL() || AppUtils.isDEV()) && /^X/.test(sMenid)) {

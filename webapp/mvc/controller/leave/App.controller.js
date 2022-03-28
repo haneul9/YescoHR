@@ -2,19 +2,18 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/model/type/Decimal',
     'sap/ui/yesco/mvc/model/type/Pernr',
   ],
   (
     // prettier 방지용 주석
     Fragment,
-    JSONModel,
     AppUtils,
     Client,
     ServiceNames,
@@ -70,6 +69,11 @@ sap.ui.define(
               chartRightMargin: 0,
               chartBottomMargin: 0,
               chartLeftMargin: 0,
+              toolTipBgColor: '#ffffff',
+              toolTipColor: '#222222',
+              showToolTipShadow: 1,
+              plotcolorintooltip: 1,
+              plottooltext: "<div class='fusion-tooltip'><table><tr><th>$seriesname-$label</th><td>$value</td></tr></table></div>",
             },
             categories: [{ category: [] }],
             dataset: [],
@@ -137,7 +141,7 @@ sap.ui.define(
         });
 
         oViewModel.setProperty('/list', _.isEmpty(mSumRow) ? [] : [...aRowData, mSumRow]);
-        oViewModel.setProperty('/listInfo/rowCount', TableUtils.count({ oTable, aRowData, bHasSumRow: true }).rowCount);
+        oViewModel.setProperty('/listInfo/rowCount', aRowData.length + 1);
 
         setTimeout(() => {
           TableUtils.setColorColumn({ oTable, bHasSumRow: true, mColorMap: { 7: 'bgType02', 13: 'bgType02' } });
@@ -294,6 +298,14 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/dialog/busy', false);
         }
+      },
+
+      onPressExcelDownload() {
+        const oTable = this.byId('leaveTable');
+        const aTableData = this.getViewModel().getProperty('/list');
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_16021'); // {휴가부서별현황}_목록
+
+        TableUtils.export({ oTable, aTableData, sFileName, bHasMultiLabel: true });
       },
 
       /*****************************************************************

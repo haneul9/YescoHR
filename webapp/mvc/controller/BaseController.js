@@ -181,6 +181,17 @@ sap.ui.define(
         return _.chain(this.getOwnerComponent().getMetadataModel().getData()).get([sServiceName, sEntityType, sProperty, 'maxLength']).toInteger().value();
       },
 
+      onMobileSearchList(oEvent) {
+        const oEventSource = oEvent.getSource();
+        const oMobileSearchBox = oEventSource.getParent();
+        if (oMobileSearchBox && oMobileSearchBox.hasStyleClass('search-box')) {
+          oMobileSearchBox.toggleStyleClass('search-box-expanded', oEventSource.getSelectedKey() === '0');
+        }
+        if (typeof this.onSearchList === 'function') {
+          this.onSearchList(oEvent);
+        }
+      },
+
       /**
        * Event handler for navigating back.
        * It there is a history entry we go one step back in the browser history
@@ -207,8 +218,16 @@ sap.ui.define(
         window.print();
       },
 
-      onPressHelp() {
-        MessageBox.alert('도움말 메뉴 개발 완료 후 정상 동작됩니다!');
+      async onPressHelp() {
+        const oMenuModel = this.getMenuModel();
+        const currentMenu = oMenuModel.getProperties(oMenuModel.getCurrentMenuId());
+        let sUrl = '/hey/index.html#/referenceRoom/';
+
+        if (_.includes(location.origin, 'localhost')) {
+          sUrl = '/index.html#/referenceRoom/';
+        }
+
+        window.open(`${location.origin}${sUrl}${currentMenu.L1id}/${currentMenu.L2id}/${currentMenu.L3id}/${currentMenu.L4id}`, 'width=1100,height=700');
       },
 
       /**

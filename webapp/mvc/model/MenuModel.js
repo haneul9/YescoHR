@@ -96,6 +96,10 @@ sap.ui.define(
 
           $.extend(mMenuProperties, {
             Level: 3,
+            L1id: m.L1id,
+            L2id: m.L2id,
+            L3id: m.L3id,
+            L4id: m.L4id,
             Mnid1: m.Mnid1,
             Mnid2: m.Mnid2,
             Mnid3: m.Mnid3,

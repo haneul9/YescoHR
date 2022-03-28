@@ -1,0 +1,39 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:core="sap.ui.core">
+  <VBox class="vCardBox small MultiBoxmobile">
+    <HBox class="title">
+      <Title level="H2" text="{i18n>LABEL_18005}" />
+      <Text text="{/FullYear}" class="desc-txt" />
+    </HBox>
+    <VBox height="176px">
+      <core:HTML content='&lt;div id="chart-doughnut-container"&gt;&lt;/div&gt;' />
+      <grid:CSSGrid class="status-wrap year-plan" gridTemplateColumns="3fr 1fr 1fr" gridGap="5px">
+        <grid:layoutData>
+          <FlexItemData growFactor="1"/>
+        </grid:layoutData>
+        <Label text="{i18n>LABEL_18002}">
+          <customData>
+            <core:CustomData key="style" value="Uesd" writeToDom="true" />
+          </customData>
+        </Label>
+        <Text text="{/vacationChart/dUsed}일"/>
+        <Text text="{/vacationChart/pUsed}%"/>
+        <Label text="{i18n>LABEL_18003}">
+          <customData>
+            <core:CustomData key="style" value="Plan" writeToDom="true" />
+          </customData>
+        </Label>
+        <Text text="{/vacationChart/dPlan}일"/>
+        <Text text="{/vacationChart/pPlan}%"/>
+        <Label text="{i18n>LABEL_18004}">
+          <customData>
+            <core:CustomData key="style" value="UnUsed" writeToDom="true" />
+          </customData>
+        </Label>
+        <Text text="{/vacationChart/dUnPlan}일"/>
+        <Text text="{/vacationChart/pUnPlan}%"/>
+      </grid:CSSGrid>
+    </VBox>
+  </VBox>
+</core:FragmentDefinition>

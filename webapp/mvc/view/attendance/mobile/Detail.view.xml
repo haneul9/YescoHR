@@ -10,7 +10,7 @@
     </customData>
     <VBox class="contents">
       <custom:MobileScrollContainer horizontal="false" vertical="true" excludeBottomSelector=".sapMPageFooter">
-        <VBox height="100%" class="wrap with-actions" busy="{/busy}" busyIndicatorDelay="0">
+        <VBox height="100%" class="wrap" busy="{/busy}" busyIndicatorDelay="0">
           <HBox class="table-toolbar">
             <HBox class="title">
               <Title level="H2" text="{i18n>LABEL_04002}" />
@@ -38,7 +38,7 @@
               <Input class="required" value="{/form/dialog/data/Tmrsn}" enabled="{= ${/form/dialog/data/Awart} !== 'ALL'}" />
             </VBox>
           </grid:CSSGrid>
-          <HBox class="table-toolbar mt-25-px">
+          <HBox class="table-toolbar">
             <HBox class="title">
               <Title level="H2" text="{i18n>LABEL_00129}" />
             </HBox>

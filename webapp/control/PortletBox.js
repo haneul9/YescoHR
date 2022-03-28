@@ -45,6 +45,7 @@ sap.ui.define(
           icon: 'sap-icon://decline',
           type: 'Transparent',
           visible: '{switchable}',
+          tooltip: '{i18n>LABEL_00200}',
         })
           .addStyleClass('icon-button portlet-close-icon')
           .attachEvent('press', this.onPressClose, this);
@@ -53,6 +54,7 @@ sap.ui.define(
           icon: 'sap-icon://add',
           type: 'Transparent',
           visible: '{hasLink}',
+          tooltip: '{i18n>LABEL_00201}',
         })
           .addStyleClass('icon-button portlet-link-icon')
           .attachEvent('press', this.onPressLink, this);

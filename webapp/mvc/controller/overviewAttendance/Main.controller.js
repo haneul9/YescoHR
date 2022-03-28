@@ -92,7 +92,7 @@ sap.ui.define(
       setAllBusy(bBusy) {
         const oViewModel = this.getViewModel();
 
-        _.times(6).forEach((idx) => oViewModel.setProperty(`/contents/A${_.padStart(++idx, 2, '0')}/busy`, bBusy));
+        _.times(10).forEach((idx) => oViewModel.setProperty(`/contents/A${_.padStart(++idx, 2, '0')}/busy`, bBusy));
       },
 
       async buildChart(oModel, mFilters, mChartInfo) {
@@ -186,7 +186,7 @@ sap.ui.define(
               })
               .set(['dataset', 2], {
                 seriesname: this.getBundleText('LABEL_32005'), // 초과인원
-                color: '#FFE479',
+                color: '#ff5a5a',
                 data: _.map(aChartDatas, (o) => ({ value: o.Cnt03, link: `j-callDetail-${mChartInfo.Headty},${o.Cod03}` })),
               })
               .commit();

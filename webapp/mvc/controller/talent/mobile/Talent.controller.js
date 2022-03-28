@@ -92,20 +92,6 @@ sap.ui.define(
             totalCount: 0,
             list: [],
           },
-          compare: {
-            scroll: true,
-            row1: [],
-            row2: [],
-            row3: [],
-            row4: [],
-            row5: [],
-            row6: [],
-            row7: [],
-            row8: [],
-            row9: [],
-            row10: [],
-            row11: [],
-          },
           fieldLimit: {},
         };
       },
@@ -190,7 +176,7 @@ sap.ui.define(
 
           this.getView().addEventDelegate({
             onBeforeHide: (evt) => {
-              if (!_.endsWith(evt.toId, 'employee')) oViewModel.setProperty('/isLoaded', false);
+              if (!_.endsWith(evt.toId, 'employee') && !_.endsWith(evt.toId, 'talentCompare')) oViewModel.setProperty('/isLoaded', false);
             },
           });
         }
@@ -202,6 +188,10 @@ sap.ui.define(
             id: this.getView().getId(),
             name: 'sap.ui.yesco.mvc.view.talent.mobile.fragment.DetailConditionsDialog',
             controller: this,
+          });
+
+          this.oDetailConditionsDialog.attachAfterOpen(() => {
+            this.scrollStartToken();
           });
 
           this.getView().addDependent(this.oDetailConditionsDialog);
@@ -237,37 +227,6 @@ sap.ui.define(
         }
       },
 
-      async onCompareDialog() {
-        if (!this.oTalentCompareDialog) {
-          this.oTalentCompareDialog = await Fragment.load({
-            id: this.getView().getId(),
-            name: 'sap.ui.yesco.mvc.view.talent.fragment.CompareDialog',
-            controller: this,
-          });
-
-          this.getView().addDependent(this.oTalentCompareDialog);
-
-          this.oTalentCompareDialog.attachAfterOpen(() => {
-            const sBlockId = this.byId('BlockLayout').getId();
-            const $lastBlock = $(`#${sBlockId} > div:last`);
-
-            $lastBlock.off('scroll touchmove mousewheel');
-            $lastBlock.on('scroll touchmove mousewheel', function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-
-              const iScrollLeft = $(this).scrollLeft();
-
-              $(`#${sBlockId} > div:not(:last)`).each(function () {
-                $(this).scrollLeft(iScrollLeft);
-              });
-            });
-          });
-        }
-
-        this.oTalentCompareDialog.open();
-      },
-
       async onPressLegend(oEvent) {
         const oView = this.getView();
         const oControl = oEvent.getSource();
@@ -285,7 +244,7 @@ sap.ui.define(
         this._oLegendPopover.openBy(oControl);
       },
 
-      async onPressCompare() {
+      onPressCompare() {
         const oViewModel = this.getViewModel();
 
         oViewModel.setProperty('/busy', true);
@@ -296,129 +255,13 @@ sap.ui.define(
 
           if (aSelectedContexts.length < 2) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35011') }); // 프로파일 비교할 데이터를 선택하여 주십시오.
 
-          const aPernr = _.map(aSelectedContexts, (o) => _.get(o.getObject(), 'Pernr'));
-          const aCompareResults = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'TalentSearchComparison', { Pernr: aPernr });
+          const aPernr = _.chain(aSelectedContexts)
+            .map((o) => _.get(o.getObject(), 'Pernr'))
+            .join('|')
+            .value();
 
-          oViewModel.setProperty('/compare/scroll', aCompareResults.length > 3);
-          oViewModel.setProperty(
-            '/compare/row1',
-            _.concat(
-              { type: 'label' },
-              _.map(aCompareResults, (o) => ({ type: 'text', Pernr: o.Pernr, Picurl: _.isEmpty(o.Picurl) ? 'asset/image/avatar-unknown.svg' : o.Picurl, Value01: o.Value01 }))
-            )
-          );
-          oViewModel.setProperty(
-            '/compare/row2',
-            _.concat(
-              { data: [{ type: 'label', value: this.getBundleText('LABEL_35013') }] }, // 기본정보
-              _.map(aCompareResults, (o) => ({
-                data: _.chain(o.Value02)
-                  .split('<br>')
-                  .map((d) => ({ type: 'text', value: d }))
-                  .value(),
-              }))
-            )
-          );
-          oViewModel.setProperty(
-            '/compare/row3',
-            _.concat(
-              { data: [{ type: 'label', value: this.getBundleText('LABEL_00222') }] }, // 직무
-              _.map(aCompareResults, (o) => ({
-                data: _.chain(o.Value04)
-                  .split('<br>')
-                  .map((d) => ({ type: 'text', value: d }))
-                  .value(),
-              }))
-            )
-          );
-          oViewModel.setProperty(
-            '/compare/row4',
-            _.concat(
-              { data: [{ type: 'label', value: this.getBundleText('LABEL_35016') }] }, // 학력
-              _.map(aCompareResults, (o) => ({
-                data: _.chain(o.Value05)
-                  .split('<br>')
-                  .map((d) => ({ type: 'text', value: d }))
-                  .value(),
-              }))
-            )
-          );
-          oViewModel.setProperty(
-            '/compare/row5',
-            _.concat(
-              { type: 'label', data: [{ type: 'label', value: this.getBundleText('LABEL_35014') }] }, // 평가이력
-              _.map(aCompareResults, (o) => ({
-                block9: _.toNumber(o.Value07),
-                data: _.chain(o.Value06)
-                  .split('<br>')
-                  .map((d) => ({ type: 'text', value: d }))
-                  .value(),
-              }))
-            )
-          );
-          oViewModel.setProperty(
-            '/compare/row6',
-            _.concat(
-              { data: [{ type: 'label', value: this.getBundleText('LABEL_35015') }] }, // 사내경력
-              _.map(aCompareResults, (o) => ({
-                data: _.chain(o.Value03)
-                  .split('<br>')
-                  .map((d) => ({ type: 'text', value: d }))
-                  .value(),
-              }))
-            )
-          );
-          oViewModel.setProperty(
-            '/compare/row7',
-            _.concat(
-              { data: [{ type: 'label', value: this.getBundleText('LABEL_35017') }] }, // 사외경력
-              _.map(aCompareResults, (o) => ({
-                data: _.chain(o.Value09)
-                  .split('<br>')
-                  .map((d) => ({ type: 'text', value: d }))
-                  .value(),
-              }))
-            )
-          );
-          oViewModel.setProperty(
-            '/compare/row8',
-            _.concat(
-              { data: [{ type: 'label', value: this.getBundleText('LABEL_35018') }] }, // 외국어
-              _.map(aCompareResults, (o) => ({
-                data: _.chain(o.Value08)
-                  .split('<br>')
-                  .map((d) => ({ type: 'text', value: d }))
-                  .value(),
-              }))
-            )
-          );
-          oViewModel.setProperty(
-            '/compare/row9',
-            _.concat(
-              { data: [{ type: 'label', value: this.getBundleText('LABEL_35019') }] }, // 포상
-              _.map(aCompareResults, (o) => ({
-                data: _.chain(o.Value10)
-                  .split('<br>')
-                  .map((d) => ({ type: 'text', value: d }))
-                  .value(),
-              }))
-            )
-          );
-          oViewModel.setProperty(
-            '/compare/row10',
-            _.concat(
-              { data: [{ type: 'label', value: this.getBundleText('LABEL_35020') }] }, // 징계
-              _.map(aCompareResults, (o) => ({
-                data: _.chain(o.Value11)
-                  .split('<br>')
-                  .map((d) => ({ type: 'text', value: d }))
-                  .value(),
-              }))
-            )
-          );
-          oViewModel.setProperty('/compare/row11', _.times(aCompareResults.length + 1).map(_.stubObject));
-
-          this.onCompareDialog();
+          oViewModel.setProperty('/isLoaded', true);
+          this.getRouter().navTo('mobile/m/talent-compare', { pernrs: aPernr });
         } catch (oError) {
           this.debug('Controller > Talent Mobile > onPressCompare Error', oError);
 
@@ -426,6 +269,14 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/busy', false);
         }
+      },
+
+      scrollStartToken() {
+        setTimeout(() => {
+          $('.sapMTokenizer').each(function () {
+            $(this).scrollLeft(0);
+          });
+        }, 200);
       },
 
       onPressCompareDialogClose() {

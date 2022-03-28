@@ -1,37 +1,42 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:grid="sap.ui.layout.cssgrid"
-  xmlns:core="sap.ui.core">
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
   <Popover title="{i18n>LABEL_01005}" placement="Top" horizontalScrolling="false" verticalScrolling="false" class="full-popover" busy="{busy}" busyIndicatorDelay="0">
     <content>
       <VBox height="100%">
-        <grid:CSSGrid gridTemplateColumns="1fr 6fr" gridGap="4px 20px" class="member-detail p-20-px">
-          <VBox justifyContent="Center" alignItems="Center">
+        <grid:CSSGrid gridTemplateColumns="3fr 1fr 8fr" gridGap="2px 20px" class="mypage-emp-detail">
+          <Image src="{Photo}" class="emp-photo" mode="Background" width="88px" height="88px">
             <layoutData>
-              <grid:GridItemLayoutData gridRow="span 2" />
+              <grid:GridItemLayoutData gridRow="span 4" />
             </layoutData>
-            <Image src="{Photo}" class="member-photo" mode="Background" width="88px" height="88px" />
-          </VBox>
+          </Image>
           <HBox justifyContent="SpaceBetween">
+            <layoutData>
+              <grid:GridItemLayoutData gridColumn="span 2" />
+            </layoutData>
             <Label text="{Ename} {Zzjikgbt} / {Zzjikcht}" class="name" />
             <Image src="asset/image/icon_captain.svg" width="1.2rem" alt="Captain" visible="{= !!${Chief}}" />
           </HBox>
-          <grid:CSSGrid gridTemplateColumns="1fr 5fr">
-            <Label text="{i18n>LABEL_00226}" />
-            <Label text="{Pbtxt} {Fulln}" />
-            <Label text="{i18n>LABEL_00280}" />
-            <Label text="{Text1}" />
-            <Label text="{i18n>LABEL_00222}" />
-            <Label text="{Text2}" />
-          </grid:CSSGrid>
+          <Label text="{i18n>LABEL_00226}" class="mt-4-px" />
+          <Label text="{Pbtxt} {Fulln}" class="mt-4-px" />
+          <Label text="{i18n>LABEL_00280}" />
+          <Label text="{Text1}" />
+          <Label text="{i18n>LABEL_00222}" />
+          <Label text="{Text2}" />
         </grid:CSSGrid>
         <VBox width="100%" class="setting-wrap p-20-px">
           <layoutData>
             <FlexItemData growFactor="1" />
           </layoutData>
-          <HBox justifyContent="SpaceBetween" alignItems="Center" height="54px">
+          <custom:HBox justifyContent="SpaceBetween" alignItems="Center" height="54px" click=".onPressRefresh">
+            <Label text="{i18n>LABEL_00199}" />
+            <Button type="Transparent" class="icon-button mobile-logout-button" icon="asset/image/icon_arrow_h-r.svg" iconDensityAware="false" />
+          </custom:HBox>
+          <custom:HBox justifyContent="SpaceBetween" alignItems="Center" height="54px" click=".onPressLogout">
             <Label text="{i18n>LABEL_01004}" />
-            <Button type="Transparent" class="icon-button mobile-logout-button" icon="asset/image/icon_arrow_h-r.svg" iconDensityAware="false" press=".onPressLogout" />
-          </HBox>
+            <Button type="Transparent" class="icon-button mobile-logout-button" icon="asset/image/icon_arrow_h-r.svg" iconDensityAware="false" />
+          </custom:HBox>
           <HBox justifyContent="SpaceBetween" alignItems="Center" height="54px" class="divider">
             <Label text="{i18n>LABEL_01602}" />
             <HBox>

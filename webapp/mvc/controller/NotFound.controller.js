@@ -19,9 +19,7 @@ sap.ui.define(
       _onNotFoundDisplayed(oEvent) {
         this._oData = oEvent.getParameter('data');
 
-        // this.getModel('appModel').setProperty('/layout', 'OneColumn');
-
-        AppUtils.setAppBusy(false);
+        AppUtils.setAppBusy(false).setMenuBusy(false);
 
         if (this._oData.error) {
           AppUtils.handleError(this._oData.error);

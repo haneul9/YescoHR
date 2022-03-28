@@ -35,6 +35,8 @@ sap.ui.define(
         return {
           busy: false,
           Fixed: false,
+          popover: true,
+          emptyData: true,
           UserFixed: false,
           Hass: this.isHass(),
           FormData: {},
@@ -48,7 +50,7 @@ sap.ui.define(
         };
       },
 
-      async onObjectMatched() {
+      async onObjectMatched(mRouteArguments) {
         const oViewModel = this.getViewModel();
 
         oViewModel.setData(this.initializeModel());
@@ -60,6 +62,56 @@ sap.ui.define(
           oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.COMMON, 'HelpInfoTab2')));
           oViewModel.setProperty('/TreeFullList', aTree.HelpInfo1Nav.results);
           oViewModel.setProperty('/ReferenceList', aVariat);
+          if (!_.isEmpty(mRouteArguments)) {
+            // sap.ui.getCore().byId('container-ehr---app--appMenuToolbar').setVisible(false);
+            // sap.ui.getCore().byId('container-ehr---refeView--routeHeader').setVisible(false);
+
+            const oDetail = await this.treeDetail(mRouteArguments.L1id, mRouteArguments.L2id, mRouteArguments.L3id, mRouteArguments.L4id, this.getAppointeeProperty('Werks'));
+            const aFormData = oDetail.HelpInfo2Nav.results || [];
+            let bTree = false;
+
+            if (_.isEmpty(aFormData)) {
+              bTree = true;
+              oViewModel.setProperty('/Settings/Visible', false);
+            } else {
+              const sHeadComment =
+                _.find(aFormData, (e) => {
+                  return e.Infocd === '1';
+                }) || '';
+              const sMidComment =
+                _.find(aFormData, (e) => {
+                  return e.Infocd === '2';
+                }) || '';
+              const sBotComment =
+                _.find(aFormData, (e) => {
+                  return e.Infocd === '3';
+                }) || '';
+              const mDetailData = aFormData[0] || {};
+              const sRoutL2 = mDetailData.L2tx ? ` > ${mDetailData.L2tx}` : '';
+              const sRoutL3 = mDetailData.L3tx ? ` > ${mDetailData.L3tx}` : '';
+              const sRoutL4 = mDetailData.L4tx ? ` > ${mDetailData.L4tx}` : '';
+              const [mPdfUrl] = oDetail.HelpInfo4Nav.results;
+
+              oViewModel.setProperty('/FormData', {
+                ...mDetailData,
+                title: this.getTitle(mDetailData),
+                ChInfo: oDetail.ChInfo,
+                Fileuri: mPdfUrl ? mPdfUrl.Fileuri : '',
+                MenuRoute: `${mDetailData.L1tx}${sRoutL2}${sRoutL3}${sRoutL4}`,
+                HeadZcomment: sHeadComment.Zcomment,
+                MidZcomment: sMidComment.Zcomment,
+                BotZcomment: sBotComment.Zcomment,
+              });
+
+              this.settingsAttachTable();
+              setTimeout(() => {
+                $('#container-ehr---refeView--detailForm').addClass('helpPopover');
+                $('#container-ehr---refeView--detailForm').addClass('helpPop');
+              }, 200);
+            }
+
+            oViewModel.setProperty('/popover', bTree);
+          }
         } catch (oError) {
           this.debug(oError);
           AppUtils.handleError(oError);
@@ -69,6 +121,21 @@ sap.ui.define(
       },
 
       // 메뉴 경로
+      getTitle(mSelectedTree) {
+        let sTitle = '';
+
+        if (mSelectedTree.L4id) {
+          sTitle = mSelectedTree.L4tx;
+        } else if (mSelectedTree.L3id) {
+          sTitle = mSelectedTree.L3tx;
+        } else if (mSelectedTree.L2id) {
+          sTitle = mSelectedTree.L2tx;
+        } else {
+          sTitle = mSelectedTree.L1tx;
+        }
+
+        return sTitle;
+      },
 
       // tree정보 다받아옴
       async getReferenceRoom() {
@@ -104,7 +171,9 @@ sap.ui.define(
               if (vPress === this.getBundleText('LABEL_00103')) {
                 await this.saveForm();
               } else {
-                await this.checkForm('N', mSelectedTree.L1id, mSelectedTree.L2id, mSelectedTree.L3id, mSelectedTree.L4id, mSelectedTree.Werks);
+                const mFormData = oViewModel.getProperty('/FormData');
+
+                await this.checkForm('N', mFormData.L1id, mFormData.L2id, mFormData.L3id, mFormData.L4id, mFormData.Werks);
               }
 
               this.dataSetting(mSelectedTree);
@@ -121,7 +190,7 @@ sap.ui.define(
         const aFormData = oDetail.HelpInfo2Nav.results || [];
         const aMenuId = await this.helpMenuId(mSelectedTree.Werks);
 
-        if (mSelectedTree.Folder !== 'X') {
+        if (mSelectedTree.Folder === 'X') {
           oViewModel.setProperty('/FormData', {});
           oViewModel.setProperty('/Fixed', false);
           oViewModel.setProperty('/UserFixed', false);
@@ -143,7 +212,14 @@ sap.ui.define(
             return e.Infocd === '3';
           }) || '';
         const mDetailData = aFormData[0] || {};
+        let bEmpty = true;
 
+        if (_.isEmpty(mDetailData) || !_.parseInt(mDetailData.Appno)) {
+          bEmpty = false;
+          oViewModel.setProperty('/Settings/Visible', false);
+        }
+
+        oViewModel.setProperty('/emptyData', bEmpty);
         oViewModel.setProperty('/FormData', {
           ...mSelectedTree,
           ...mDetailData,
@@ -329,7 +405,7 @@ sap.ui.define(
           Werks: mAppointee.Werks,
           Menid: this.getCurrentMenuId(),
           Prcty: sType,
-          HelpInfo1Nav: [
+          HelpInfo2Nav: [
             {
               Werks: sWerks,
               L1id: sL1id,
@@ -389,9 +465,10 @@ sap.ui.define(
 
           const mFormData = oViewModel.getProperty('/FormData');
 
-          await this.checkForm('C', mFormData.Werks, mFormData.L1id, mFormData.L2id, mFormData.L3id, mFormData.L4id);
+          await this.checkForm('C', mFormData.L1id, mFormData.L2id, mFormData.L3id, mFormData.L4id, mFormData.Werks);
 
           oViewModel.setProperty('/UserFixed', true);
+          oViewModel.setProperty('/emptyData', true);
           this.settingsAttachTable();
         } catch (oError) {
           AppUtils.handleError(oError);
@@ -707,6 +784,7 @@ sap.ui.define(
 
         AttachFileAction.setAttachFile(this, {
           Editable: bFix1 && bFix2 && this.isHass(),
+          RefeFilebox: true,
           Type: this.getApprovalType(),
           Appno: sAppno,
           Message: this.getBundleText('MSG_29003'),

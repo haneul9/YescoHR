@@ -204,7 +204,9 @@ sap.ui.define(
                 });
 
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'), {
-                  onClose: () => {},
+                  onClose: () => {
+                    this.onNavBack();
+                  },
                 });
               } catch (oError) {
                 AppUtils.handleError(oError);

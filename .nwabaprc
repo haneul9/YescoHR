@@ -1,14 +1,21 @@
 {
     "base": "./dist",
+    "files": [
+      "index.html",
+      "manifest.json",
+      "Component-preload.js",
+      "asset/css/**",
+      "asset/image/**"
+    ],
     "conn_usestrictssl" : false,
     "conn_server": "https://yeshrsapdev.yescoholdings.com:8443/",
     "conn_client" : "100",
     "conn_user": "HR10",
     "conn_password": "qwer1234",
     "abap_bsp": "zui5_yescohr",
-    "abap_bsp_text": "UI5 upload through VSCode App",
+    "abap_bsp_text": "UI5 yesco e-HR",
     "abap_package": "zhr1",
-    "abap_transport": "YHDK900503",
+    "abap_transport": "YHDK900565",
     "calcappindex": true,
     "preserve_unselected": true
 }

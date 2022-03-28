@@ -198,11 +198,11 @@ sap.ui.define(
 
         _.chain(mSummary)
           .set('Plncnt', iYearCount)
-          .set('Plnperc', _.chain(iYearCount).divide(mSummary.Crecnt).multiply(100).floor().value())
+          .set('Plnperc', _.chain(iYearCount).divide(mSummary.Crecnt).multiply(100).floor().value() || 0)
           .set('Plncnt2', iSummerCount)
-          .set('Plnperc2', _.chain(iSummerCount).divide(mSummary.Crecnt2).multiply(100).floor().value())
+          .set('Plnperc2', _.chain(iSummerCount).divide(mSummary.Crecnt2).multiply(100).floor().value() || 0)
           .set('Usecnt3', _.add(iYearCount, iSummerCount))
-          .set('Useperc3', _.chain(_.add(iYearCount, iSummerCount)).divide(mSummary.Crecnt3).multiply(100).floor().value())
+          .set('Useperc3', _.chain(_.add(iYearCount, iSummerCount)).divide(mSummary.Crecnt3).multiply(100).floor().value() || 0)
           .commit();
       },
 

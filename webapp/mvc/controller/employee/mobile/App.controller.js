@@ -49,11 +49,13 @@ sap.ui.define(
         // INCR: '1fr 2fr', // 사내경력
         9001: '1fr 3fr', // 평가
         // PAYS: '1fr 2fr', // 급여
-        '0022': '2fr 1fr 1fr', // 학력
+        '0022': '2fr 3fr', // 학력
         9006: '3fr 3fr 2fr', // 자격
         '0183': '1fr 1fr 1fr', // 포상
         '0021': '1fr 1fr 1fr', // 가족
         EDU1: '1fr 1fr 1fr', // 교육
+        JOBC: '1fr 1fr', // 직무경력
+        JOBL: '1fr 1fr', // 직무이력
       },
 
       initializeModel() {
@@ -262,11 +264,6 @@ sap.ui.define(
                 oCSSGrid.addItem(new Label({ text: head.Header }));
                 oCSSGrid.addItem(new Input({ value: mMenu.data[index], editable: false }));
               });
-
-              if (mMenu.header.length % 2 === 1) {
-                oCSSGrid.addItem(new Label({ text: '' }));
-                oCSSGrid.addItem(new Input({ value: '', editable: false }));
-              }
 
               oSubVBox.addItem(oCSSGrid);
             }

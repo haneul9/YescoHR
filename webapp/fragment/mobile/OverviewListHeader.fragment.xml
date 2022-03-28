@@ -2,11 +2,11 @@
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
   <VBox class="search-box">
-    <SegmentedButton width="100%" selectedKey="{/search/dateRange}" selectionChange=".onSearchList" class="type-c">
+    <SegmentedButton width="100%" selectedKey="{/search/dateRange}" selectionChange=".onMobileSearchList" class="type-c">
       <items>
-        <SegmentedButtonItem text="{i18n>LABEL_00190}" key="1w" visible="{= !!${/listInfo/view1wButton} ? true : ${/listInfo/view1wButton} }"/>
+        <SegmentedButtonItem text="{i18n>LABEL_00190}" key="1w" visible="{= !!${/listInfo/view1wButton} }"/>
         <!-- <SegmentedButtonItem text="{i18n>LABEL_00191}" key="1m" /> -->
-        <SegmentedButtonItem text="{= ${/listInfo/view1wButton} === false ? ${i18n>LABEL_00198} : ${i18n>LABEL_00191} }" key="1m" />
+        <SegmentedButtonItem text="{= !${/listInfo/view1wButton} ? ${i18n>LABEL_00198} : ${i18n>LABEL_00191} }" key="1m" />
         <SegmentedButtonItem text="{i18n>LABEL_00192}" key="3m" />
         <SegmentedButtonItem text="{i18n>LABEL_00193}" key="6m" />
         <SegmentedButtonItem text="{i18n>LABEL_00194}" key="12m" />
@@ -22,7 +22,7 @@
       <Text text="total {/listInfo/totalCount}" />
       <Text text="{/listInfo/infoMessage}" visible="{= !!${/listInfo/infoMessage} }" class="desc-txt" />
     </HBox>
-    <Image src="asset/image/icon_tooltip.svg" press=".ListStatusPopover.onPopover" />
+    <Image src="asset/image/icon_tooltip.svg" press=".ListStatusPopover.onPopover" visible="{/listInfo/Popover}" />
   </HBox>
   <!-- </HBox> -->
 </core:FragmentDefinition>

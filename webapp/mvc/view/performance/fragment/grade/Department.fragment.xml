@@ -24,7 +24,7 @@
                                 <Label text="{i18n>LABEL_00224}"/>
                             </table:multiLabels>
                             <table:template>
-                                <Link text="{Orgtx}" class="showLine" width="100%" textAlign="Center" press=".onSelectRow" />
+                                <Link text="{Zzappuntx1}" class="showLine" width="100%" textAlign="Center" press=".onSelectRow" />
                             </table:template>
                         </table:Column>
                         <table:Column width="8%" filterProperty="Dept01" sortProperty="Dept01" headerSpan="2">

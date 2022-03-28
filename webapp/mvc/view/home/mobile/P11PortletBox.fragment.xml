@@ -22,7 +22,7 @@
       <VBox width="49%">
         <VBox class="portlet-box left-box">
           <Text text="{i18n>LABEL_01161}" />
-          <ObjectStatus text="{Timtx}" state="Indication05" class="portlet-p11-objectstatus" />
+          <ObjectStatus text="{Timtx}" state="Indication05" class="portlet-p11-objectstatus font-19-px" />
           <Text text="{Wktim}" class="portlet-p11-text" />
         </VBox>
         <Button text="{ButtonText1} &gt;" press=".onPressButton1" class="portlet-box" />
@@ -30,7 +30,8 @@
       <VBox width="49%">
         <VBox class="portlet-box right-box">
           <Text text="{i18n>LABEL_01162}" />
-          <ObjectStatus text="{Reltm}" state="Indication05" class="portlet-p11-objectstatus" />
+          <ObjectStatus text="{Reltm}" state="Indication05" class="portlet-p11-objectstatus font-19-px" />
+          <ObjectStatus text="{Reltx}" state="Indication05" class="portlet-p11-objectstatus font-15-px" />
           <Text text="{Wkrul}" class="portlet-p11-text" />
         </VBox>
         <Button text="{ButtonText2} &gt;" press=".onPressButton2" class="portlet-box" />
