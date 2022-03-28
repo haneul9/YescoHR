@@ -1,0 +1,88 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.idp.Detail"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:custom="sap.ui.yesco.control">
+    <Page showHeader="false">
+        <VBox class="contents-header">
+            <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+                <custom:Breadcrumbs />
+                <HBox>
+                    <Button text="{i18n>LABEL_00142}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/REJECT_REASON/Availability} === 'X' &amp;&amp; !!${/buttons/form/Rjctr} }" press=".onPressRejectViewButton" />
+                    <Button text="{i18n>LABEL_00175}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/Z_SUBMIT/Availability} === 'X' || ${/buttons/submit/COMPL_P/Availability} === 'X' }" press=".onPressSubmitButton" />
+                    <Button text="{i18n>LABEL_00117}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/COMPLETE/Availability} === 'X' }" press=".onPressCompleteButton" />
+                    <Button text="{i18n>LABEL_00123}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/APPROVE/Availability} === 'X' }" press=".onPressApproveButton" />
+                    <Button text="{i18n>LABEL_00124}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/REJECT/Availability} === 'X' }" press=".onPressRejectButton" />
+                    <Button text="{i18n>LABEL_00118}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/Z_CANCEL/Availability} === 'X' }" press=".onPressCancelButton" />
+                    <Button text="{i18n>LABEL_00103}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/SAVE/Availability} === 'X' }" press=".onPressSaveButton" />
+                    <Button text="{i18n>LABEL_00146}" class="sapUiTinyMarginEnd" press=".onNavBack" />
+                    <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
+                </HBox>
+            </HBox>
+        </VBox>
+        <VBox class="contents">
+            <core:Fragment fragmentName="sap.ui.yesco.mvc.view.idp.fragment.AppointeeBar" type="XML" />
+            <VBox class="vCardBox">
+                <HBox class="table-toolbar">
+                    <HBox alignItems="Center" class="title">
+                        <Title level="H2" text="{/year} {i18n>LABEL_36002}" />
+                    </HBox>
+                </HBox>
+                <HBox>
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.idp.fragment.Stage" type="XML" />
+                </HBox>
+            </VBox>
+            <HBox>
+                <IconTabBar class="type-b" selectedKey="{/tab/selectedKey}" expandable="false">
+                    <layoutData>
+                        <FlexItemData growFactor="1"/>
+                    </layoutData>
+                    <items>
+                        <IconTabFilter text="{i18n>LABEL_36003}" key="T01">
+                            <VBox class="vCardBox">
+                                <HBox>
+                                    <HBox alignItems="Center" class="table-toolbar">
+                                        <Title level="H2" text="{i18n>LABEL_36003}" class="sapUiMediumMarginEnd"/>
+                                        <Button text="{i18n>LABEL_36005}" />
+                                        <Button icon="sap-icon://sys-add" text="{i18n>LABEL_36006}" enabled="{= ${/currentItemsLength} &lt; 3 }" class="sapUiTinyMarginBegin" press=".addCompItem" />
+                                    </HBox>
+                                </HBox>
+                                <VBox items="{/goals/comp}">
+                                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.idp.fragment.Item" type="XML" />
+                                </VBox>
+                            </VBox>
+                        </IconTabFilter>
+                        <IconTabFilter text="{i18n>LABEL_36004}" key="T02">
+                            <VBox class="vCardBox">
+                                <HBox>
+                                    <HBox alignItems="Center" class="table-toolbar">
+                                        <Title level="H2" text="{i18n>LABEL_36004}" class="sapUiMediumMarginEnd"/>
+                                    </HBox>
+                                </HBox>
+                                <VBox>
+                                    <grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="repeat(2, 1fr 3fr)">
+                                        <VBox>
+                                            <Label width="100%" text="{i18n>LABEL_36008}" vAlign="Top" visible="{= ${/fieldControl/display/Z200r} !== 'H' }"/>
+                                        </VBox>
+                                        <VBox>
+                                            <TextArea width="100%" rows="5" value="" enabled="false" visible="{= ${/fieldControl/display/Z200r} === 'V' }" />
+                                            <TextArea width="100%" class="required" rows="5" value="{/summary/Z200r}" maxLength="{/fieldControl/limit/Z200r}" enabled="{= ${/fieldControl/display/Z200r} === 'X' }" visible="{= ${/fieldControl/display/Z200r} !== 'H' &amp;&amp; ${/fieldControl/display/Z200r} !== 'V' }" />
+                                        </VBox>
+                                        <VBox>
+                                            <Label width="100%" text="{i18n>LABEL_36009}" vAlign="Top" visible="{= ${/fieldControl/display/Fappr} !== 'H' }"/>
+                                        </VBox>
+                                        <VBox>
+                                            <TextArea width="100%" rows="5" value="" enabled="false" visible="{= ${/fieldControl/display/Fappr} === 'V' }" />
+                                            <TextArea width="100%" class="required" rows="5" value="{/summary/Fappr}" maxLength="{/fieldControl/limit/Fappr}" enabled="{= ${/fieldControl/display/Fappr} === 'X' }" visible="{= ${/fieldControl/display/Fappr} !== 'H' &amp;&amp; ${/fieldControl/display/Fappr} !== 'V' }" />
+                                        </VBox>
+                                    </grid:CSSGrid>
+                                </VBox>
+                            </VBox>
+                        </IconTabFilter>
+                    </items>
+                </IconTabBar>
+            </HBox>
+        </VBox>
+    </Page>
+</mvc:View>

@@ -1,0 +1,6 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.idp.List"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc">
+    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.idp.fragment.List" type="XML" />
+</mvc:View>
