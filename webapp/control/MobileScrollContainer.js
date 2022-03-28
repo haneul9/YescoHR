@@ -21,11 +21,14 @@ sap.ui.define(
       renderer: {},
 
       onAfterRendering: function () {
-        const iExcludeHeight = this.getExcludeBottomSelector() ? $(this.getExcludeBottomSelector()).outerHeight(true) : 0;
-        const iScrollHeight = screen.availHeight - this.$().offset().top - this.getHeaderHeight() - this.getFooterHeight() - iExcludeHeight;
+        // const iExcludeHeight = this.getExcludeBottomSelector() ? $(this.getExcludeBottomSelector()).outerHeight(true) : 0;
+        // const iScrollHeight = screen.availHeight - this.$().offset().top - this.getHeaderHeight() - this.getFooterHeight() - iExcludeHeight;
+        // this.setHeight(`${iScrollHeight}px`);
 
-        this.setHeight(`${iScrollHeight}px`);
-        // this.setHeight(`100%`);
+        const sHeight = this.getHeight();
+        if (!sHeight || sHeight === 'auto') {
+          this.setHeight(`100%`);
+        }
       },
     });
   }

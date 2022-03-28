@@ -8,8 +8,9 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 .mobile-only {display:inherit!important}
 .sapMPageEnableScrolling {padding:0 0.0rem; background-color:#EBEEF2}
 .sapMPage {height:100%; position:relative; isolation:isolate; z-index:0; background:#fff}
-.sapMPage > section { height: calc(100% - 56px); }
-.sapMPage.sapMPageWithFooter > section { height: calc(100% - 136px); }
+.sapMPage > section {height:calc(100% - 56px)}
+.sapMPage.sapMPageWithFooter > section {height:calc(100% - 136px)}
+.sapMPage.sapMPageWithFooter[data-form-style="retrieval"] > section {height:calc(100% - 56px)}
 .sapMScrollCont {padding:0px}
 .sapMScrollCont .sapMScrollCont {padding:0px 20px 0 0}
 .sapUiSizeCompact .sapMPageWithFooter.sapMPageFloatingFooter>section, .sapUiSizeCompact .sapMPageWithHeader>section {padding-top:56px}
@@ -20,7 +21,6 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 .sapMPageHeader + .sapMPageEnableScrolling {margin-top:2.6rem}
 
 .sapUiBody {background-color:#EBEEF2}
-.app-body {position:relative !important; height:calc(100% - 60px) !important; background-color:transparent}
 
 .sapUiSizeCompact .sapMInputBase:not(.sapMTextArea) {height:48px !important}
 .sapUiSizeCompact .portlet .sapMInputBase:not(.sapMTextArea) {height:38px !important}
@@ -48,11 +48,6 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 
 .app-top-toolbar {border-top:1px solid #fff; background-color:#fff}
 .app-menu-toolbar {width:100%; border-top:1px solid #DFE2EB}
-
-.contents {margin:0 auto; width:100%; max-width:100%; min-width:100%; height:100%; padding-top:20px; padding-bottom:10px}
-.contents > .sapMVBox + .sapMVBox {border-top:8px solid #ebeef2}
-.contents > .header-wrap {padding-top:0}
-.contents h2.sapMTitle {display:flex; margin-bottom:8px; padding-bottom:8px; font-size:20px; font-weight:700; border-bottom:1px solid #000}
 
 .portlet + .portlet {margin-top:16px}
 .portlet.portlet-h1 {max-height:270px; height:270px}
@@ -107,14 +102,14 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 /* .sapUiSizeCompact .sapMBarMiddle .sapMBarPH.sapMBarContainer{align-self:center; padding-right:0; padding-top:0; padding-bottom:0; height:48px; line-height:48px} */
 .sapMDialogSection {padding:0px 20px}
 .sapMDialog.sapUiPopupWithPadding:not(.sapUiNoContentPadding) .sapMDialogScrollCont {padding:0}
-.sapMDialog.sapMDialogStretched {border:none; box-shadow:0; border-radius:0; top:0!important; bottom:60px!important; padding:43px 0px 0}
+html.sap-phone .sapMDialog.sapMDialogStretched {border:none; box-shadow:0; border-radius:0; top:auto!important; bottom:61px!important; padding:43px 0px 0}
 .sapMResponsivePopover:not(.sapMRPCalendar) + .sapUiBLy {display:none!important; visibility:hidden!important; background-color:#000000; opacity:0.0}
 .sapUiSizeCompact.sapMDialog>.sapMDialogSection, .sapUiSizeCompact .sapMDialog>.sapMDialogSection {min-height:2.5rem; padding-bottom:20px}
 /* .sapMDialog.full-popover, .sapMDialog.full-popover .sapMDialogScroll{height:100%!important; overflow:hidden}
-.sapMDialog.full-popover .sapMDialogSection {height:calc(100% - 60px)!important} */
+.sapMDialog.full-popover .sapMDialogSection {height:calc(100% - 61px)!important} */
 .sapMPopover.full-popover.sapMPopoverWithoutBar .sapMPopoverCont, .sapMPopover.full-popover .sapMIBar.sapMHeader-CTX {padding:0px}
 .sapMDialog.full-popover .sapMDialogScroll, .sapMDialog.full-popover .sapMDialogScroll .sapMDialogScrollCont {height:100%!important}
-.sapMPopover.full-popover {top:0!important; right:0!important; bottom:60px!important; left:0!important; box-shadow:none}
+.sapMPopover.full-popover {top:0!important; right:0!important; bottom:61px!important; left:0!important; box-shadow:none}
 .sapMPopover.full-popover .sapMPopoverCont {height:calc(100% - 56px)!important}
 .sapMPopover.full-popover .sapMPopoverCont .sapMPopoverScroll {height:100%!important; padding-top:0}
 .sapMPopover.full-popover.notification-popover .sapMPopoverCont .sapMPopoverScroll {height:auto!important}
@@ -123,7 +118,6 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 .sapMTB-Transparent-CTX>.sapMTitleTB.sapMTitleStyleAuto, .sapMIBar .sapMBarChild:first-child {font-size:16px; font-weight:700; color:#000}
 .sapMPopover.full-popover .sapMPopoverArr  {display:none}
 .sapMListHdrText, .sapUiSizeCompact .sapMTB.sapMTBHeader-CTX, .sapMPopoverHeader .sapMBarMiddle>.sapMBarPH {height:48px; line-height:48px; padding-left:20px; padding-right:20px; border-bottom:0px solid #cccccc; font-size:16px}
-.sapUiSizeCompact.notification-popover .sapMFlexBox {align-self:center; height:48px!important}
 .sapUiSizeCompact.notification-popover .sapMPopoverHeader .sapMTitle {vertical-align:middle; font-size:16px}
 .mobile-logout-button {margin-right:-11px}
 
@@ -134,7 +128,7 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 
 /* basic tab */
 .sapMITB .sapMITBContainerContent {margin:20px 0px 20px 20px}
-.full-popover.menu-popover .sapMITB .sapMITBContainerContent {margin:0}
+.sapMITB.inner-tab-bar .sapMITBContainerContent {margin-bottom:0; padding-bottom:0}
 
 /* mobile popover tab */
 .sapMPopoverCont {position:relative; max-width:100%!important}
@@ -160,7 +154,7 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 .sapMITBHead .sapMITBFilter .sapMITBSelected>.sapMITBContentArrow {height:0!important}
 .sapMPopover.full-popover .sapMDialogScroll .sapMDialogScrollCont .favorites-menu-list {height:200px}
 .sapMPopover.full-popover .sapMITB {height:100%}
-.sapMPopover.full-popover .sapMITBContainerContent {margin:0; height:calc(100% - 103px); padding-right:15px; overflow-y:auto}
+.sapMPopover.full-popover .sapMITBContainerContent {height:calc(100% - 103px); padding-right:20px; overflow-y:auto}
 .sapMITH .sapMITBArrowScrollLeftTextOnly.sapMITBArrowScrollLeftInLine,
 .sapMITB .sapMITBArrowScrollLeftTextOnly.sapMITBArrowScrollLeftInLine,
 .sapMITH .sapMITBArrowScrollRightTextOnly.sapMITBArrowScrollRightInLine,
@@ -190,17 +184,18 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 .sapMDialog>footer .sapMIBar.sapMTB .sapMBtn.sapMBarChild:not(.app-menu-level1) {margin-left:0px}
 .sapMDialog>footer .sapMIBar.sapMTB .sapMBtn.sapMBarChild:not(.app-menu-level1) ~ .sapMBtn.sapMBarChild {margin-left:8px}
 
-.sapMDialog.sapMComboBoxBasePicker >.sapMDialogSection {padding:0 16px}
-.sapMDialog.sapMComboBoxBasePicker >.sapMDialogSection .sapMListUl li {height:45px; margin-bottom:8px; border:1px solid #C0C0C0; border-radius:4px}
+.sapMDialog.sapMComboBoxBasePicker >.sapMDialogSection {padding:20px 16px}
+.sapMDialog.sapMComboBoxBasePicker >.sapMDialogSection .sapMListUl li {height:45px; border:1px solid #C0C0C0; border-radius:4px}
+.sapMDialog.sapMComboBoxBasePicker >.sapMDialogSection .sapMListUl li + li {margin-top:8px}
 .sapMDialog.sapMComboBoxBasePicker >.sapMDialogSection .sapMListUl li.sapMLIB.sapMLIBSelected {background:#E3F6FF; border:1px solid #4DA2CD}
 .sapMDialog.sapMComboBoxBasePicker .sapMDialogScroll{padding-bottom:0px}
 .sapMDialog.sapMComboBoxBasePicker .sapMBtnInner.sapMBtnDefault {background-color:#1D87BD; border-color:#1D87BD; color:#ffffff!important}
 
-.sapMDialog.half-dialog {width:100%!important; min-width:100%!important; height:50vh!important; top:auto!important; bottom:60px!important; left:0!important; right:0!important; border-radius:0; padding-bottom:0}
+.sapMDialog.half-dialog {width:100%!important; min-width:100%!important; height:50vh!important; top:auto!important; bottom:61px!important; left:0!important; right:0!important; border-radius:0; padding-bottom:0}
 .sapMDialog.half-dialog .sapMDialogSection{padding:20px; background-color:#F4F5F7}
 .sapMDialog.half-dialog .sapMFlexBoxScroll {overflow:auto}
-#sap-ui-blocklayer-popup {bottom:60px}
-#sap-ui-blocklayer-popup.half-dialog {bottom:60px}
+#sap-ui-blocklayer-popup {bottom:61px}
+#sap-ui-blocklayer-popup.half-dialog {bottom:61px}
 
 .sapMITBSelected>.sapMITBContentArrow {border-bottom:2px solid; border-bottom-color:#1E7DB3; height:15px !important}
 
@@ -227,7 +222,7 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 .sapMDialog.sapMMessageDialog[data-sap-ui*=confirm]>footer span.sapMBtnInner {padding-left:20px; padding-right:20px; background-color:transparent!important; border-color:transparent!important; color:#1E87BE}
 .sapMDialog[role=alertdialog],
 .sapMDialog[data-sap-ui*=alert],
-.sapMDialog[data-sap-ui*=confirm] {min-height:45px; padding:47px 0px 60px; padding-bottom:60px!important; background-color:#fff; top:auto !important; bottom:60px}
+.sapMDialog[data-sap-ui*=confirm] {min-height:45px; padding:47px 0px 60px; padding-bottom:60px!important; background-color:#fff; top:auto !important; bottom:62px}
 .sapMDialog[role=alertdialog],
 .sapMDialog[data-sap-ui*=alert] {min-height:45px; padding:54px 0px 41px; padding-bottom:60px!important; background-color:#fff}
 [role=alertdialog] .sapMIBar.sapMFooter-CTX,
@@ -328,19 +323,20 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 
 .calendar-popover {}
 .sapMDialogPhone.sapMResponsivePopover.sapMRPCalendar{display:flex; justify-content:center; align-items:center; height:342px!important; top:calc(50% - 225px)!important}
-.sapUiSizeCompact .sapMDialog.sapMRPCalendar>.sapMDialogSection {padding:20px}
+.sapUiSizeCompact .sapMDialog.sapMRPCalendar>.sapMDialogSection {padding:20px 15px 20px 20px}
 
-.sapMDialog.sapMDialogStretched.sapMRPCalendar {top:calc(50% - 225px)!important; left:30px!important; right:30px!important}
+html.sap-phone .sapMDialog.sapMDialogStretched.sapMRPCalendar {top:auto!important; right:30px!important; bottom:62px!important; left:30px!important}
 
-.sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker {top:calc(50% - 225px)!important; left:30px!important; right:30px!important; bottom:auto!important; padding:53px 0px 0; height: 333px !important; max-height: 333px !important;}
-.sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>.sapMDialogTitle {height:52px}
-.sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker .sapMBarPH {height:52px}
-.sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker .sapMBarPH * {height:52px; line-height:2.6}
-.sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>.sapMDialogTitle .sapMHeader-CTX {height:52px; line-height:52px}
-.sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker .sapMBarMiddle {text-align:left; padding-left:20px}
-.sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker .sapMBarRight {height:52px; line-height:52px}
-.sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker >.sapMDialogSection {height: calc(100% - 73px) !important;}
-.sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker .sapMDialogFooter {border-top:1px silid #ddd}
+html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker {padding:53px 0 0}
+html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>.sapMDialogTitle {height:52px}
+html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker .sapMBarPH {height:52px}
+html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker .sapMBarPH * {height:52px; line-height:2.6}
+html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>.sapMDialogTitle .sapMHeader-CTX {height:52px; line-height:52px}
+html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker .sapMBarMiddle {text-align:left; padding-left:20px}
+html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker .sapMBarRight {height:52px; line-height:52px}
+html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>.sapMDialogSection {height:auto !important; max-height:calc(var(--ComboBoxItemHeight) * 6 + 32px) !important}
+html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker .sapMDialogFooter {position:relative; height:72px; border-top:1px solid #ddd; padding:0}
+html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>footer .sapMFooter-CTX {padding:0 10px; height:100%}
 
 .card-box {border-bottom:8px solid #ebeef2; padding:0 20px}
 .wrap {margin-top:0; box-shadow:none; border:none; padding:0 16px!important}
@@ -370,6 +366,10 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 
 .member-detail .name {font-size:20px; color:#000}
 .member-detail .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem {min-height:20px; color:#666666; font-weight:500}
+.mypage-emp-detail {padding:20px 16px}
+.mypage-emp-detail .emp-photo {margin-top:2px; border-radius:50%}
+.mypage-emp-detail .name {font-size:20px; color:#000}
+.mypage-emp-detail .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem {min-height:19px; color:#666666; font-weight:500}
 
 .notification-wrapper > .sapMFlexItem:last-child {top:0}
 .sapUiSizeCompact.notification-popover.sapMPopoverWithBar.sapMPopoverWithFooter:not(.sapMRPCalendar)>.sapMPopoverCont {padding:20px 0}
@@ -394,12 +394,19 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 
 
 /* 신청 공통  */
-.search-box {width:100%; padding:0 20px 20px; border-bottom:8px solid #ebeef2}
-.search-box .sapMFlexItem + .sapMFlexItem {margin-top:16px}
+.contents {margin:0 auto; width:100%; max-width:100%; min-width:100%; height:100%; padding-top:20px; padding-bottom:10px}
+.contents > .sapMVBox + .sapMVBox {border-top:8px solid #ebeef2}
+.contents > .sapMFlexBox + .sapMFlexBox {margin-top:0}
+.contents h2.sapMTitle {display:flex; margin-bottom:8px; padding-bottom:8px; font-size:20px; font-weight:700; border-bottom:1px solid #000}
 
-.search-box + .header-wrap, .header-wrap {padding: 14px 20px 10px; margin-top:0; height:auto}
-.search-box + .header-wrap h3.sapMTitle, .header-wrap h3.sapMTitle {font-size:20px; margin-right:10px!important}
-/* .contents .list-wrap {padding-top:20px;} */
+.contents > .search-box {width:100%; padding:0 20px 20px; border-bottom:8px solid #ebeef2}
+.contents > .search-box .sapMFlexItem + .sapMFlexItem {margin-top:16px}
+.contents > .header-wrap {padding-top:0}
+.contents > .search-box + .header-wrap, .header-wrap {padding:14px 20px 10px; margin-top:0; height:56px}
+.contents > .search-box + .header-wrap h3.sapMTitle, .header-wrap h3.sapMTitle {font-size:20px; margin-right:10px!important}
+.contents > .search-box + .header-wrap + .sapMFlexBoxScroll {height:calc(100% - 116px)}
+.contents > .search-box.search-box-expanded + .header-wrap + .sapMFlexBoxScroll {height:calc(100% - 180px)}
+
 .contents .list-wrap li {min-height:76px; padding:16px; margin-bottom:8px; border:1px solid #E6E6EA; border-radius:8px; box-shadow:0px 2px 2px rgb(0 0 0 / 5%)}
 .contents .list-wrap li:last-child {margin-bottom:0}
 .contents .list-wrap li .sapUiIcon:before {font-size:12.5px}
@@ -425,7 +432,8 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 
 .talent-list { padding-left: 20px; padding-right: 20px; }
 
-.sapUiSizeCompact .sapUiCalContent>.sapUiCalMonthPicker, .sapUiSizeCompact .sapUiCalContent>.sapUiCalYearPicker {width: 100%; top: 0; padding: 0; padding-top: 10px; margin-left: -9.78rem;}
+.sapUiSizeCompact .sapUiCalContent>.sapUiCalMonthPicker,
+.sapUiSizeCompact .sapUiCalContent>.sapUiCalYearPicker {margin-left:0; width:100%; top:0; left:0; padding:10px 0 0 0}
 .sapUiSizeCompact .sapMCb {height:24px}
 .sapUiSizeCompact .sapMCbBg {top:0; left:0}
 div.sapUiTableSelectAllCheckBox::after, div.sapUiTableRowSelectionCell::after {width:20px; height:20px}

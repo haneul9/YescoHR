@@ -42,6 +42,10 @@ sap.ui.define(
           });
         } else {
           setTimeout(() => {
+            this.oAppMenu = new MobileMenus(this);
+            this.getOwnerComponent().setAppMenu(this.oAppMenu);
+          });
+          setTimeout(() => {
             this.initMobile();
           }, 1000);
         }
@@ -56,10 +60,6 @@ sap.ui.define(
         };
         setTimeout(() => {
           this.savePushToken();
-        });
-        setTimeout(() => {
-          this.oAppMenu = new MobileMenus(this);
-          this.getOwnerComponent().setAppMenu(this.oAppMenu);
         });
         setTimeout(() => {
           this.oMobileMyPagePopoverHandler = new MobileMyPagePopoverHandler(this);
@@ -104,10 +104,10 @@ sap.ui.define(
           return;
         }
 
-        if (/android/i.test(navigator.userAgent)) {
+        if (/android/i.test(navigator.userAgent) && typeof window.YescoApp !== 'undefined') {
           const sPushToken = window.YescoApp.getToken();
           this.requestSavePushToken(sPushToken);
-        } else if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
+        } else if (/iphone|ipad|ipod/i.test(navigator.userAgent) && !!window.webkit && !!window.webkit.messageHandlers && !!window.webkit.messageHandlers.script) {
           // window.webkit.messageHandlers.script.postMessage('getToken');
         }
       },
@@ -187,7 +187,7 @@ sap.ui.define(
        */
       onPressLogout() {
         // 로그아웃하시겠습니까?
-        MessageBox.confirm(this.getBundleText('MSG_01004'), {
+        MessageBox.confirm(this.getBundleText('MSG_01006'), {
           actions: [MessageBox.Action.YES, MessageBox.Action.NO],
           onClose: (sAction) => {
             if (sAction === MessageBox.Action.YES) {

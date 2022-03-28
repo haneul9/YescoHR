@@ -260,28 +260,36 @@ sap.ui.define(
             const sMenuUrl = this.bMobile ? `mobile/${Mnurl}` : Mnurl;
             this.moveToMenu(sMenuUrl);
           } else {
-            this.failMenuLink();
+            this.failMenuLink(AppUtils.getBundleText('MSG_01003')); // 알 수 없는 메뉴입니다.
           }
         } catch (oError) {
-          this.failMenuLink();
+          this.failMenuLink(AppUtils.getBundleText('MSG_01004')); // 메뉴링크 확인중 오류가 발생하였습니다.\n다시 시도해주세요.
         }
       },
 
-      failMenuLink() {
-        MessageBox.error(
-          AppUtils.getBundleText('MSG_01003'), // 메뉴 오류입니다.
-          {
-            onClose: () => {
-              AppUtils.setAppBusy(false).setMenuBusy(false);
-            },
-          }
-        );
+      failMenuLink(sMessage) {
+        MessageBox.error(sMessage, {
+          onClose: () => {
+            AppUtils.setAppBusy(false).setMenuBusy(false);
+          },
+        });
       },
 
       moveToMenu(sRouteName) {
         // 같은 메뉴 클릭시
         if (HashChanger.getInstance().getHash() === sRouteName) {
           AppUtils.setAppBusy(false).setMenuBusy(false);
+          return;
+        }
+        const bHomeRoute = !sRouteName || sRouteName === 'ehrHome' || sRouteName === 'ehrMobileHome';
+        const bExistRoute = this.oAppController.getOwnerComponent().getRouter().match(sRouteName);
+        if (!bHomeRoute && !bExistRoute) {
+          // 개발중입니다.
+          MessageBox.alert(AppUtils.getBundleText('MSG_01005'), {
+            onClose: () => {
+              AppUtils.setAppBusy(false).setMenuBusy(false);
+            },
+          });
           return;
         }
 
