@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core">
-  <VBox width="100%" class="mt-10-px">
+  <VBox width="100%">
     <HBox width="100%">
       <layoutData>
         <FlexItemData growFactor="1" />
@@ -13,10 +13,11 @@
           <FlexItemData growFactor="1" />
         </layoutData>
         <Label text="{i18n>LABEL_01161}" />
-        <ObjectStatus text="{Timtx}" state="Indication05" class="portlet-p11-objectstatus" />
+        <ObjectStatus text="{Timtx}" state="Indication05" class="portlet-p11-objectstatus font-19-px" />
         <Text text="{Wktim}" class="portlet-p11-text" />
-        <Label text="{i18n>LABEL_01162}" class="mt-15-px" />
-        <ObjectStatus text="{Reltm}" state="Indication05" class="portlet-p11-objectstatus" />
+        <Label text="{i18n>LABEL_01162}" class="mt-13-px" />
+        <ObjectStatus text="{Reltm}" state="Indication05" class="portlet-p11-objectstatus font-19-px" />
+        <ObjectStatus text="{Reltx}" state="Indication05" class="portlet-p11-objectstatus font-15-px" />
         <Text text="{Wkrul}" class="portlet-p11-text" />
       </VBox>
     </HBox>
