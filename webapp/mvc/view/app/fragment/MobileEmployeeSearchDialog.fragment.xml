@@ -29,12 +29,7 @@
                       <FlexItemData growFactor="1" maxWidth="calc(100% - 174px)" styleClass="pr-4-px" />
                     </layoutData>
                   </Text>
-                  <Link enabled="{= !!${Pernr} }" href="tel:{Pernr}" subtle="true" width="20px" class="icon-telephone" />
-                  <!-- <Button type="Transparent" class="icon-button" icon="asset/image/icon_phone.svg" iconDensityAware="false" press=".onPress">
-                    <layoutData>
-                      <FlexItemData baseSize="32px" maxWidth="32px" />
-                    </layoutData>
-                  </Button> -->
+                  <Link enabled="{= !!${Phone} }" href="tel:{Phone}" subtle="true" width="20px" class="icon-telephone" />
                 </HBox>
               </CustomListItem>
             </List>
