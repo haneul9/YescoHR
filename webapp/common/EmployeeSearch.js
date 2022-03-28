@@ -36,15 +36,16 @@ sap.ui.define(
         oEmpModel.setProperty('/employeeModel/busy', true);
         try {
           const oModel = oController.getModel(ServiceNames.COMMON);
+          const mPersaFilters = {};
+          const sAccty = oEmpModel.getProperty('/employeeModel/Search/Accty') || '';
 
           // Accty === 'Z' 일때 PersAreaList 필터조건 ZALL = 'X'
-          const PersaFilters = {};
-          if (oEmpModel.getProperty('/employeeModel/Search/Accty') === 'Z') {
-            PersaFilters.Zall = 'X';
+          if (sAccty === 'Z') {
+            mPersaFilters.Zall = 'X';
           }
 
           const [aAreaList, aWorkList, aEmpList] = await Promise.all([
-            Client.getEntitySet(oModel, 'PersAreaList', PersaFilters), //
+            Client.getEntitySet(oModel, 'PersAreaList', mPersaFilters), //
             Client.getEntitySet(oModel, 'EmpCodeList', { Field: 'STAT2' }),
             Client.getEntitySet(oModel, 'EmpCodeList', { Field: 'PERSG' }),
           ]);
@@ -54,6 +55,7 @@ sap.ui.define(
           oEmpModel.setProperty('/employeeModel/EmpGroup', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aEmpList }));
           oEmpModel.setProperty('/employeeModel/SubEmpGroup', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext' }));
           oEmpModel.setProperty('/employeeModel/Search', {
+            Accty: sAccty,
             Persa: 'ALL',
             Ename: '',
             Orgeh: '',
