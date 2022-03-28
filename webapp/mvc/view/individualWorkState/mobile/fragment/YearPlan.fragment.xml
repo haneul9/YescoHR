@@ -1,6 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
-  xmlns:grid="sap.ui.layout.cssgrid">
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:custom="sap.ui.yesco.control">
   <VBox class="section p-10-px font-20-px">
     <HBox class="title">
       <Title level="H3" text="{i18n>LABEL_18032}" />
@@ -16,15 +17,15 @@
           <core:CustomData key="holiday" value="{holiday}" writeToDom="true" />
         </customData>
       </Text>
-      <VBox width="100%">
-        <customData>
+      <custom:VBox width="100%" click=".onClickDay">
+        <custom:customData>
           <core:CustomData key="style" value="{classNames}" writeToDom="true" />
           <core:CustomData key="holiday" value="{holiday}" writeToDom="true" />
-        </customData>
+        </custom:customData>
         <Label width="100%" textAlign="Center" text="{label}" />
         <Text width="100%" textAlign="Center" visible="{= !!${bTime} }" text="{bTime}" />
         <Text width="100%" textAlign="Center" visible="{= !!${bTime} }" text="{eTime}" />
-      </VBox>
+      </custom:VBox>
     </grid:CSSGrid>
     <HBox class="box style-02 status-wrap year-plan">
       <VBox>
