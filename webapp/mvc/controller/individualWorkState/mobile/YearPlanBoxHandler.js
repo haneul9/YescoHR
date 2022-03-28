@@ -66,9 +66,16 @@ sap.ui.define(
       onClickDay(oEvent) {
         const oView = this.oController.getView();
         const oViewModel = this.oController.getViewModel();
-        const mdate = oEvent.data();
+        const bContext = !!oEvent.srcControl.getParent().getBindingContext();
+
+        if (!bContext) {
+          return;
+        }
+
+        const sPath = oEvent.srcControl.getParent().getBindingContext().getPath();
+        const mSelect = oViewModel.getProperty(sPath);
         const [mSelectedDay] = _.filter(oViewModel.getProperty('/yearPlan'), (e) => {
-          return e.FullDate === mdate.day;
+          return e.FullDate === mSelect.day;
         });
 
         if (!mSelectedDay || (!mSelectedDay.Colty && !mSelectedDay.Ottyp)) {
@@ -88,6 +95,7 @@ sap.ui.define(
             return oPopover;
           });
         }
+
         this.oController._pPopover.then(function (oPopover) {
           oPopover.openBy(oEvent);
         });
