@@ -266,7 +266,7 @@ sap.ui.define(
         oViewModel.setProperty('/sideNavigation/busy', false);
 
         if (_.isEqual(sPernr, 'NA')) {
-          const sFirstPernr = _.get(aSearchResults, [0, 'Pernr'], _.noop());
+          const sFirstPernr = _.chain(aSearchResults).filter({ Stat2: '3' }).get([0, 'Pernr'], _.noop());
           this.loadProfile({ oViewModel, sPernr: sFirstPernr });
         }
       },
