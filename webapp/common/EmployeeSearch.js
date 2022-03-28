@@ -38,6 +38,7 @@ sap.ui.define(
           const oModel = oController.getModel(ServiceNames.COMMON);
           const mPersaFilters = {};
           const sAccty = oEmpModel.getProperty('/employeeModel/Search/Accty') || '';
+          const sStat2 = oEmpModel.getProperty('/employeeModel/Search/Stat2') || '';
 
           // Accty === 'Z' 일때 PersAreaList 필터조건 ZALL = 'X'
           if (sAccty === 'Z') {
@@ -59,7 +60,7 @@ sap.ui.define(
             Persa: 'ALL',
             Ename: '',
             Orgeh: '',
-            Stat2: 'ALL',
+            Stat2: sStat2,
             Persg: 'ALL',
             Persk: 'ALL',
           });

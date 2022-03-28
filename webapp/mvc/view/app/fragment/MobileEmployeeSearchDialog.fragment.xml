@@ -26,14 +26,15 @@
                   </Text>
                   <Text text="{Fulln}" tooltip="{Ename} {Pernr} {Fulln} {Zzjikgbt}" wrapping="false">
                     <layoutData>
-                      <FlexItemData growFactor="1" maxWidth="calc(100% - 182px)" styleClass="pr-4-px" />
+                      <FlexItemData growFactor="1" maxWidth="calc(100% - 174px)" styleClass="pr-4-px" />
                     </layoutData>
                   </Text>
-                  <Button type="Transparent" class="icon-button" icon="asset/image/icon_phone.svg" iconDensityAware="false" press=".onPress">
+                  <Link enabled="{= !!${Pernr} }" href="tel:{Pernr}" subtle="true" width="20px" class="icon-telephone" />
+                  <!-- <Button type="Transparent" class="icon-button" icon="asset/image/icon_phone.svg" iconDensityAware="false" press=".onPress">
                     <layoutData>
                       <FlexItemData baseSize="32px" maxWidth="32px" />
                     </layoutData>
-                  </Button>
+                  </Button> -->
                 </HBox>
               </CustomListItem>
             </List>
