@@ -7,6 +7,7 @@
       <HBox class="title">
         <Title level="H2" text="{i18n>LABEL_00248}" />
         <Text text="{/Settings/Message}" visible="{= ${/Settings/Editable} &amp;&amp; !!${/Settings/Message}}" class="desc-txt" />
+        <Link text="{i18n>LABEL_10100}" visible="{= ${/Settings/Editable} &amp;&amp; !!${/Settings/LinkUrl}}" />
       </HBox>
       <HBox class="table-actions">
         <u:FileUploader id="ATTACHFILE_BTN" visible="{/Settings/Editable}" maximumFileSize="{/Settings/maximumFileSize}" fileType="{/Settings/FileTypes}" change=".AttachFileAction.onFileChange" uploadComplete= ".uploadComplete" icon="sap-icon://add" buttonText="{i18n>LABEL_00107}" buttonOnly="true" class="sapUiTinyMarginEnd">

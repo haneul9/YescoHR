@@ -64,8 +64,10 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 .portlet-p03p04:hover .sapMBtn.icon-button.portlet-member-remove {display:none}
 .portlet-p11 .left-box {border:none; background-color:#a3edce}
 .portlet-p11 .right-box {border:none; background-color:#b4cef2}
-.portlet-p11 .portlet-p11-objectstatus {margin-top:18px}
-.portlet-p11 .portlet-p11-objectstatus .sapMObjStatusText {color:#000 !important}
+.portlet-p11 .portlet-p11-objectstatus19,
+.portlet-p11 .portlet-p11-objectstatus15 {margin-top:0}
+.portlet-p11 .portlet-p11-objectstatus19 .sapMObjStatusText,
+.portlet-p11 .portlet-p11-objectstatus15 .sapMObjStatusText {color:#000 !important}
 .sapUiSizeCompact .portlet-p11 .sapMBtn.portlet-box {margin-top:5px; width:100%; border:none}
 .sapUiSizeCompact .portlet-p11 .sapMBtnInner.sapMBtnText {height:auto; border-radius:8px; padding:3px}
 
@@ -391,6 +393,8 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>footer .sa
 .sapMSwtOn .sapMSwtHandle {right:2px; left:auto}
 .setting-wrap {border-top:8px solid #ebeef2; border-bottom:8px solid #ebeef2}
 .setting-wrap .divider {border-top:1px solid #e7e9ef}
+.setting-wrap .download-link {line-height:1.45}
+.setting-wrap .download-link[disabled="true"] {color:#000}
 
 
 /* 신청 공통  */
