@@ -69,9 +69,6 @@ sap.ui.define(
       async showSuggestionData(sValue) {
         this.setBusy(true);
         const aEmployees = await this.readSuggestionData(sValue);
-        // aEmployees.forEach((o) => {
-        //   o.Pernr = o.Pernr.replace(/^0+/, '');
-        // });
 
         this.oDialogModel.setProperty('/employees', aEmployees);
         this.setBusy(false);
@@ -103,13 +100,6 @@ sap.ui.define(
           clearInterval(this.liveChangeInterval);
           this.showSuggestionData(sValue);
         }, 500);
-      },
-
-      onPress(oEvent) {
-        const oContext = oEvent.getSource().getBindingContext();
-        const { Ename, Pernr, Fulln, Zzjikgbt } = oContext.getProperty();
-
-        MessageBox.information(`${Ename} ${Pernr} ${Fulln} ${Zzjikgbt}`);
       },
 
       onDialogToggle() {

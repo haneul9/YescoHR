@@ -38,10 +38,10 @@ sap.ui.define(
         }
         if (!Dtfmt) {
           Dtfmt = AppUtils.getAppComponent().getAppointeeModel().getProperty('/Dtfmt');
-          this.setShowFooter(true);
         }
 
-        this.setValueFormat(Dtfmt).setDisplayFormat(Dtfmt).setPlaceholder(Dtfmt).addStyleClass('sapIcon_Date');
+        this.setShowFooter(true).setValueFormat(Dtfmt).setDisplayFormat(Dtfmt).setPlaceholder(Dtfmt).addStyleClass('sapIcon_Date');
+
         if (this.getPickOnly()) {
           this.addStyleClass('pickonly-datepicker');
         }

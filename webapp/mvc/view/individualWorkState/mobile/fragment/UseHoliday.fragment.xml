@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core">
   <VBox width="100%" class="vCardBox small MultiBoxmobile">
-    <HBox justifyContent="SpaceBetween" class="table-toolbar">
+    <HBox justifyContent="SpaceBetween" class="table">
       <HBox class="title">
         <Title level="H2" text="{i18n>LABEL_18021}" />
         <Text text="{/FullYear}" class="desc-txt" />
