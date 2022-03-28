@@ -1123,6 +1123,8 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 .sapUiLayoutCSSGrid.year-plan.status-wrap .sapMText{font-weight: bold;}
 .year-plan.status-wrap .sapMLabel::before {content:""; position:relative; display:inline-block; width:14px; height:14px; background-color:#888; margin-right:5px; border-radius:50%}
 .vCardBox.MultiBoxmobile {border: 0px; border-radius: 0px; padding: 10px;}
+.vCardBox.MultiBoxmobile .desc-txt{top: 0px;}
+.vCardBox.MultiBoxmobile .pickonly-datepicker {height: 40px !important;}
 .vCardBox.MultiBoxmobile .sapMTitle{border-bottom: 0px; margin-bottom: 0px; padding-bottom: 0px;}
 .vCardBox.MultiBoxmobile .sapMHBox{margin-bottom: 16px;font-size: 20px;font-weight: 700;border-bottom: 1px solid #222; height: 45px; align-items: center; }
 
@@ -2174,8 +2176,8 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
     .sapUiMedia-Std-Phone .section .title-bar {height:34px;margin-bottom: 16px;font-size: 20px;font-weight: 700;border-bottom:1px solid #222;}
     .sapUiMedia-Std-Phone .section .title-bar h3.sapMTitle {font-size: 20px; font-weight: 800; color: #222;}
     .sapUiMedia-Std-Phone .dl *{font-size: 16px;font-weight: 600;}
-    .sapUiMedia-Std-Phone .dl .sapMLabel {font-weight: 600;}
-    .sapUiMedia-Std-Phone .dl .sapMText {text-align: right!important;}
+    .sapUiMedia-Std-Phone .dl .sapMHBox.sapMLabel {font-weight: 600;}
+    .sapUiMedia-Std-Phone .dl .sapMHBox.sapMText {text-align: right!important;}
 
     .sapUiMedia-Std-Phone .box.style-01 {padding:16px;border:1px solid #E6E6EA;border-radius: 8px;box-shadow: 0 2px 2px rgba(0, 0, 0, .05);}
 }
@@ -2185,8 +2187,9 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .sapUiMedia-Std-Phone .section .title-bar {height:34px;margin-bottom: 16px;font-size: 20px;font-weight: 700;border-bottom:1px solid #222;}
 .sapUiMedia-Std-Phone .section .title-bar h3.sapMTitle {margin-right: 10px;font-size: 20px; font-weight: 800; color: #222;}
 .sapUiMedia-Std-Phone .dl *{font-size: 16px;font-weight: 600;}
-.sapUiMedia-Std-Phone .dl .sapMLabel {font-weight: 600;}
-.sapUiMedia-Std-Phone .dl .sapMText {text-align: right!important;}
+.sapUiMedia-Std-Phone .dl .sapMHBox.mobileInnerBox {margin-bottom: 0px; border-bottom: 0; justify-content: space-between;}
+.sapUiMedia-Std-Phone .dl .sapMHBox .sapMLabel {font-weight: 600;}
+.sapUiMedia-Std-Phone .dl .sapMHBox .sapMText {text-align: right!important;}
 
 .sapUiMedia-Std-Phone .box.style-01, .box.style-01 {padding:16px;margin-right: 0;border:1px solid #E6E6EA;border-radius: 8px;box-shadow: 0 2px 2px rgba(0, 0, 0, .05);}
 .sapUiMedia-Std-Phone .box.style-02, .box.style-02 {padding:8px;margin-right: 0;border:1px solid #E5E5E5;border-radius: 8px;background-color:#F5F6F7;box-shadow: 0 2px 2px rgba(0, 0, 0, .05);}
