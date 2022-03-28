@@ -69,7 +69,7 @@
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Teamlnm" filterProperty="Teamlnm">
-        <Label text="{i18n>LABEL_28026}"/>
+        <Label text="{i18n>LABEL_35011}"/>
         <table:template>
           <Text text="{Teamlnm}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
         </table:template>
