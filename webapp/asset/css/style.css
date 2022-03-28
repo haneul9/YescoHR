@@ -1864,6 +1864,15 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .year-popover.sapMPopover .sapUiLayoutCSSGrid .sapUiLayoutCSSGridItem.sapMLabel {min-height: 30px;padding-left: 15px;}
 .year-popover.sapMPopover .sapUiLayoutCSSGrid .sapMText {height: 30px; display: flex;align-items: center}
 
+.month-popover.sapMResponsivePopover {padding:0px;border: 1px solid #b2b2b2;border-radius: 4px;}
+.month-popover.sapMResponsivePopover .sapMBar {border-bottom: 1px solid #b2b2b2;}
+.month-popover.sapMResponsivePopover .sapMBar .sapMBarMiddle .sapMTitle {font-size: 16px; font-weight: 800; color: #222;}
+.month-popover.sapMResponsivePopover .sapMBarContainer {height: 40px;line-height: 40px;text-align: center;border-bottom: 0px solid #cccccc;}
+.month-popover.sapMResponsivePopover .sapMDialogSection {height: auto; padding-bottom: 0px !important; }
+.month-popover.sapMResponsivePopover .sapUiLayoutCSSGrid.border-top { border-top: 1px dashed #b2b2b2}
+.month-popover.sapMResponsivePopover .sapUiLayoutCSSGrid .sapUiLayoutCSSGridItem.sapMLabel {min-height: 30px;padding-left: 15px;}
+.month-popover.sapMResponsivePopover .sapUiLayoutCSSGrid .sapMText {height: 30px; display: flex;align-items: center}
+
 .capability-level .sapMIBar {height:auto!important;margin-bottom: 8px;}
 .capability-level .sapUiLayoutCSSGrid [data-type="head"] {display: inline-grid;padding: 0!important;justify-content: center;}
 .capability-level .sapUiLayoutCSSGrid [data-type="head"] .sapMText {justify-content: center;font-size:14px!important;color:#222;font-weight:600;}
