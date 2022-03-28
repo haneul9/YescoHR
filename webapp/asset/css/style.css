@@ -793,6 +793,9 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type41"], .year-plan.status-wrap .sapMFlexItem .sapMText[data-style="Type41"]::before, .year-plan.status-wrap .sapMFlexItem .sapMText.type41::before, .sapMFlexBox.type41, .sapMFlexBox[data-style="Type41"], [class*=plan-grid] .type41 *, [data-style=Type41] .sapMText { background: linear-gradient(-90deg, #fff 50%, #0E60C7 50%);}/* 오전반차 */
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type42"], .year-plan.status-wrap .sapMFlexItem .sapMText[data-style="Type42"]::before, .year-plan.status-wrap .sapMFlexItem .sapMText.type42::before, .sapMFlexBox.type42, .sapMFlexBox[data-style="Type42"], [class*=plan-grid] .type42 *, [data-style=Type42] .sapMText { background: linear-gradient(-90deg, #0E60C7 50%, #fff 50%);}/* 오후반차 */
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type18"], .year-plan.status-wrap .sapMFlexItem .sapMText[data-style="Type18"]::before, .year-plan.status-wrap .sapMFlexItem .sapMText.type18::before, .sapMFlexBox.type18, .sapMFlexBox[data-style="Type18"] { background: repeating-linear-gradient(45deg, #A6A6A6, #A6A6A6 1px, transparent  2px, transparent  5px);border: 2px solid #A6A6A6!important;border-radius: 0;}/* 신청 */
+.year-plan.status-wrap .sapMFlexItem .sapMText.type06::before { background-color: #65B8FF; }
+.year-plan.status-wrap .sapMFlexItem .sapMText.type07::before { background-color: #FFAC4B; }
+.year-plan.status-wrap .sapMFlexItem .sapMText.type05::before { background-color: #A1E094; }
 
 .sapUiLayoutCSSGrid .sapMFlexBox[data-border="Default"] { border:1px solid black; --webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box}
 .sapUiLayoutCSSGrid .sapMFlexBox[data-border="Today"] .sapMText::after { content:""; display:inline-block; position:absolute; width:100%; height:100%; top:0; left:0; border:5px solid #dc3545; --webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box}
@@ -1538,6 +1541,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .year-plan-grid .sapMFlexBox[data-awart="2010"] {background-color:#FFAC4B}
 .sapUiMedia-Std-Phone .year-plan.status-wrap .sapMFlexItem {flex: auto;align-self: initial;align-items: initial;width: auto;}
 .year-plan.status-wrap .sapMFlexItem {align-self: initial;align-items: initial;flex: none; width: 170px;}
+.leave-plan.year-plan.status-wrap .sapMFlexItem {align-self: initial;align-items: initial;flex: none; width: auto; margin-right: 20px;}
 .year-plan.status-wrap .sapMFlexItem .sapMText {display:flex; justify-content:flex-start; align-items:center}
 .year-plan.status-wrap .sapMFlexItem .sapMText::before {content:""; position:relative; display:inline-block; width:14px; height:14px; background-color:#888; margin-right:5px; border-radius:50%;box-sizing: border-box;}
 
