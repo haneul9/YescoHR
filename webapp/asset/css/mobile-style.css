@@ -78,6 +78,9 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 
 .footer-menu .sapMBtnInner .sapMBtnIcon.sapMImg {width:2rem; height:2rem; max-width:2rem; max-height:2rem}
 
+.sapMPageFooter .sapMBtn:hover .sapMBtnEmphasized:not(.sapMPopup-CTX .sapMBtn:hover .sapMBtnEmphasized){color:#fff !important; border-color:#053D7A !important; outline-style:none !important; background:#053D7A !important}
+.sapMPageFooter .sapMBtn:active .sapMBtnEmphasized:not(.sapMPopup-CTX .sapMBtn:active .sapMBtnEmphasized){color:#fff !important; border-color:#053D7A !important; outline-style:none !important; background:#053D7A !important}
+
 /* POPOVER BASIC */
 .sapMPopover.sapMPopoverWithoutBar .sapMPopoverCont,
 .sapMPopover .sapMIBar.sapMHeader-CTX {padding:20px}
