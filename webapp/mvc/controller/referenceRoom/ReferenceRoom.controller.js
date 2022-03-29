@@ -72,7 +72,6 @@ sap.ui.define(
 
             if (_.isEmpty(aFormData)) {
               bTree = true;
-              oViewModel.setProperty('/Settings/Visible', false);
             } else {
               const sHeadComment =
                 _.find(aFormData, (e) => {
@@ -110,6 +109,7 @@ sap.ui.define(
               }, 200);
             }
 
+            oViewModel.setProperty('/Settings/Visible', bTree);
             oViewModel.setProperty('/popover', bTree);
           }
         } catch (oError) {
