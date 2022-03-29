@@ -254,7 +254,7 @@ sap.ui.define(
                 const vAppno = await Appno.get.call(this);
 
                 oDetailModel.setProperty('/FormData/Appno', vAppno);
-                oDetailModel.setProperty('/FormData/Appdt', new Date());
+                oDetailModel.setProperty('/FormData/Appdt', moment().toDate());
               }
 
               const oSendObject = {
@@ -309,7 +309,7 @@ sap.ui.define(
                 const vAppno = await Appno.get.call(this);
 
                 oDetailModel.setProperty('/FormData/Appno', vAppno);
-                oDetailModel.setProperty('/FormData/Appda', new Date());
+                oDetailModel.setProperty('/FormData/Appdt', moment().toDate());
               }
 
               const oModel = this.getModel(ServiceNames.PA);
