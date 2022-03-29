@@ -44,7 +44,7 @@ sap.ui.define(
       async onObjectMatched(oParameter, sRouteName) {
         try {
           this.sRouteName = sRouteName;
-          this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+          // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
 
           this.oSummaryBoxHandler ||= new SummaryBoxHandler(this);
           this.oSearchBoxHandler ||= new SearchBoxHandler(this, this.sRequestListTableId);

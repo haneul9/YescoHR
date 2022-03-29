@@ -81,7 +81,7 @@ sap.ui.define(
           });
           oListModel.setProperty('/CommuteList', aTableList);
 
-          this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+          // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -119,7 +119,7 @@ sap.ui.define(
             ObjTxt5: this.getBundleText('LABEL_00116'), // 확정
           });
           oListModel.setProperty('/CommuteList', aTableList);
-          this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+          // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -175,7 +175,7 @@ sap.ui.define(
             ObjTxt5: this.getBundleText('LABEL_00116'), // 확정
           });
           oListModel.setProperty('/CommuteList', aTableList);
-          this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+          // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {

@@ -72,7 +72,7 @@ sap.ui.define(
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
-          this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+          // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
           oListModel.setProperty('/busy', false);
         }
       },

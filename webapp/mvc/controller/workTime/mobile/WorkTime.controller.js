@@ -119,7 +119,7 @@ sap.ui.define(
           oListModel.setProperty('/MyWork', aMyWork);
           // this.buildDialChart(aMyWork);
           this.onSearch();
-          this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+          // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -130,8 +130,8 @@ sap.ui.define(
 
       // 근무시간
       formatTime(sTime1 = '', sTime2 = '', sTime3) {
-        sTime1 = !sTime1? '0' : `${sTime1.slice(-4, -2)}:${sTime1.slice(-2)}`;
-        sTime2 = !sTime2? '0' : `${sTime2.slice(-4, -2)}:${sTime2.slice(-2)}`;
+        sTime1 = !sTime1 ? '0' : `${sTime1.slice(-4, -2)}:${sTime1.slice(-2)}`;
+        sTime2 = !sTime2 ? '0' : `${sTime2.slice(-4, -2)}:${sTime2.slice(-2)}`;
 
         return sTime1 + '~' + sTime2 + '(' + sTime3 + ')';
       },
@@ -193,70 +193,70 @@ sap.ui.define(
       },
 
       async onSearchRange() {
-          const oViewModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
-          try {
-            oViewModel.setProperty('/busy', true);
+        try {
+          oViewModel.setProperty('/busy', true);
 
-            await this.onSearch();
-          } catch (oError) {
-            AppUtils.handleError(oError);
-          } finally {
-            oViewModel.setProperty('/busy', false);
-          }
+          await this.onSearch();
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       // 검색 날짜 선택
       async onSearchList(oEvent) {
-          const oViewModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
-          try {
-            const sKey = oEvent.getSource().getSelectedKey();
-            let dBegda = moment().toDate();
-            let dEndda = moment().toDate();
-            let bDateRangeBox = false;
+        try {
+          const sKey = oEvent.getSource().getSelectedKey();
+          let dBegda = moment().toDate();
+          let dEndda = moment().toDate();
+          let bDateRangeBox = false;
 
-            oViewModel.setProperty('/busy', true);
+          oViewModel.setProperty('/busy', true);
 
-            switch (sKey) {
-              case '1w':
-                dEndda = moment().subtract(7, 'day').toDate();
-                bDateRangeBox = false;
-                break;
-              case '1m':
-                dEndda = moment().subtract(1, 'months').toDate();
-                bDateRangeBox = false;
-                break;
-              case '3m':
-                dEndda = moment().subtract(3, 'months').toDate();
-                bDateRangeBox = false;
-                break;
-              case '6m':
-                dEndda = moment().subtract(6, 'months').toDate();
-                bDateRangeBox = false;
-                break;
-              case '12m':
-                dEndda = moment().subtract(12, 'months').toDate();
-                bDateRangeBox = false;
-                break;
-              case '0':
-                bDateRangeBox = true;
-                break;
-            }
-
-            if (!bDateRangeBox) {
-              oViewModel.setProperty('/search/secondDate', dBegda);
-              oViewModel.setProperty('/search/date', dEndda);
-
-              await this.onSearch();
-            }
-
-            oViewModel.setProperty('/search/dateBox', bDateRangeBox);
-          } catch (oError) {
-            AppUtils.handleError(oError);
-          } finally {
-            oViewModel.setProperty('/busy', false);
+          switch (sKey) {
+            case '1w':
+              dEndda = moment().subtract(7, 'day').toDate();
+              bDateRangeBox = false;
+              break;
+            case '1m':
+              dEndda = moment().subtract(1, 'months').toDate();
+              bDateRangeBox = false;
+              break;
+            case '3m':
+              dEndda = moment().subtract(3, 'months').toDate();
+              bDateRangeBox = false;
+              break;
+            case '6m':
+              dEndda = moment().subtract(6, 'months').toDate();
+              bDateRangeBox = false;
+              break;
+            case '12m':
+              dEndda = moment().subtract(12, 'months').toDate();
+              bDateRangeBox = false;
+              break;
+            case '0':
+              bDateRangeBox = true;
+              break;
           }
+
+          if (!bDateRangeBox) {
+            oViewModel.setProperty('/search/secondDate', dBegda);
+            oViewModel.setProperty('/search/date', dEndda);
+
+            await this.onSearch();
+          }
+
+          oViewModel.setProperty('/search/dateBox', bDateRangeBox);
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
     });
   }

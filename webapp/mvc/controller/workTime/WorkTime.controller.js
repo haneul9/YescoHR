@@ -93,7 +93,7 @@ sap.ui.define(
 
           oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
           oListModel.setProperty('/List', aTableList);
-          this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+          // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -120,7 +120,7 @@ sap.ui.define(
           oListModel.setProperty('/MyWork', aMyWork);
           this.buildDialChart(aMyWork);
           this.onSearch();
-          this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+          // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
