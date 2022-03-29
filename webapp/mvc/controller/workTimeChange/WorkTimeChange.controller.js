@@ -3,6 +3,7 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
+    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
@@ -17,6 +18,7 @@ sap.ui.define(
     // prettier 방지용 주석
     AppUtils,
     AttachFileAction,
+    EmployeeSearch,
     FragmentEvent,
     TableUtils,
     TextUtils,
@@ -27,8 +29,10 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.workTimeChange.WorkTimeChange', {
-      sDialChartId: 'dialChart',
+      sDialChartId: 'WorkAppDialChart',
+      sChartDiv: 'chart-work-change-dial-container',
 
+      EmployeeSearch: EmployeeSearch,
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
       TextUtils: TextUtils,
@@ -59,6 +63,7 @@ sap.ui.define(
       async onObjectMatched(oParameter, sRouteName) {
         const oListModel = this.getViewModel();
 
+        $(`#${this.sChartDiv}`).remove();
         oListModel.setProperty('/routeName', sRouteName);
 
         try {
@@ -172,7 +177,7 @@ sap.ui.define(
             new FusionCharts({
               id: this.sDialChartId,
               type: 'angulargauge',
-              renderAt: 'chart-dial-container',
+              renderAt: this.sChartDiv,
               width: '50%',
               height: '170px',
               dataFormat: 'json',
