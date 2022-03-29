@@ -44,8 +44,8 @@
                                 <HBox>
                                     <HBox alignItems="Center" class="table-toolbar">
                                         <Title level="H2" text="{i18n>LABEL_36003}" class="sapUiMediumMarginEnd"/>
-                                        <Button text="{i18n>LABEL_36005}" />
-                                        <Button icon="sap-icon://sys-add" text="{i18n>LABEL_36006}" enabled="{= ${/currentItemsLength} &lt; 3 }" class="sapUiTinyMarginBegin" press=".addCompItem" />
+                                        <Button type="Emphasized" text="{i18n>LABEL_36005}" />
+                                        <Button icon="sap-icon://sys-add" text="{i18n>LABEL_36006}" enabled="{= ${/currentItemsLength} &lt; 3 }" visible="{/buttons/goal/ADD/Availability}" class="sapUiTinyMarginBegin" press=".addCompItem" />
                                     </HBox>
                                 </HBox>
                                 <VBox items="{/goals/comp}">
@@ -63,18 +63,18 @@
                                 <VBox>
                                     <grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="repeat(2, 1fr 3fr)">
                                         <VBox>
-                                            <Label width="100%" text="{i18n>LABEL_36008}" vAlign="Top" visible="{= ${/fieldControl/display/Z200r} !== 'H' }"/>
+                                            <Label width="100%" text="{i18n>LABEL_36008}" vAlign="Top" visible="{= ${/fieldControl/display/Z317} !== 'H' }"/>
                                         </VBox>
                                         <VBox>
-                                            <TextArea width="100%" rows="5" value="" enabled="false" visible="{= ${/fieldControl/display/Z200r} === 'V' }" />
-                                            <TextArea width="100%" class="required" rows="5" value="{/summary/Z200r}" maxLength="{/fieldControl/limit/Z200r}" enabled="{= ${/fieldControl/display/Z200r} === 'X' }" visible="{= ${/fieldControl/display/Z200r} !== 'H' &amp;&amp; ${/fieldControl/display/Z200r} !== 'V' }" />
+                                            <TextArea width="100%" rows="5" value="" enabled="false" visible="{= ${/fieldControl/display/Z317} === 'V' }" />
+                                            <TextArea width="100%" class="required" rows="5" value="{/manage/Z317}" maxLength="{/fieldControl/limit/Z317}" enabled="{= ${/fieldControl/display/Z317} === 'X' }" visible="{= ${/fieldControl/display/Z317} !== 'H' &amp;&amp; ${/fieldControl/display/Z317} !== 'V' }" />
                                         </VBox>
                                         <VBox>
-                                            <Label width="100%" text="{i18n>LABEL_36009}" vAlign="Top" visible="{= ${/fieldControl/display/Fappr} !== 'H' }"/>
+                                            <Label width="100%" text="{i18n>LABEL_36009}" vAlign="Top" visible="{= ${/fieldControl/display/Z319} !== 'H' }"/>
                                         </VBox>
                                         <VBox>
-                                            <TextArea width="100%" rows="5" value="" enabled="false" visible="{= ${/fieldControl/display/Fappr} === 'V' }" />
-                                            <TextArea width="100%" class="required" rows="5" value="{/summary/Fappr}" maxLength="{/fieldControl/limit/Fappr}" enabled="{= ${/fieldControl/display/Fappr} === 'X' }" visible="{= ${/fieldControl/display/Fappr} !== 'H' &amp;&amp; ${/fieldControl/display/Fappr} !== 'V' }" />
+                                            <TextArea width="100%" rows="5" value="" enabled="false" visible="{= ${/fieldControl/display/Z319} === 'V' }" />
+                                            <TextArea width="100%" class="required" rows="5" value="{/manage/Z319}" maxLength="{/fieldControl/limit/Z319}" enabled="{= ${/fieldControl/display/Z319} === 'X' }" visible="{= ${/fieldControl/display/Z319} !== 'H' &amp;&amp; ${/fieldControl/display/Z319} !== 'V' }" />
                                         </VBox>
                                     </grid:CSSGrid>
                                 </VBox>
