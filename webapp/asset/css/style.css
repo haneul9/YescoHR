@@ -1115,18 +1115,25 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 .sapMBtn.icon-button.settings .sapMBtnInner:after {content:""; display:inline-block; width:27px; height:23px; background-image:url(../../asset/image/icon_settings.svg); background-repeat:no-repeat; background-position:center}
 .sapMBtn.icon-button.settings:hover .sapMBtnInner:after {background-image:url(../../asset/image/icon_settings_hover.svg)}
 
-/*개인별 근태현황 연차계획 DounutCHart*/
+/*개인별 근태현황*/
 .sapUiLayoutCSSGrid.year-plan.status-wrap .sapMLabel[data-style="Uesd"]::before { background-color:#7BB4EB}
 .sapUiLayoutCSSGrid.year-plan.status-wrap .sapMLabel[data-style="Plan"]::before { background-color:#A2EB7B}
 .sapUiLayoutCSSGrid.year-plan.status-wrap .sapMLabel[data-style="UnUsed"]::before { background-color:#FFE479}
-.sapUiLayoutCSSGrid.year-plan.status-wrap .sapMLabel{justify-content: left;}
-.sapUiLayoutCSSGrid.year-plan.status-wrap .sapMText{font-weight: bold;}
+.sapUiLayoutCSSGrid.year-plan.status-wrap .sapMLabel {justify-content: left;}
+.sapUiLayoutCSSGrid.year-plan.status-wrap .sapMText {font-weight: bold;}
+.sapUiLayoutCSSGrid.year-plan.status-wrap.year-plan-cssGrid .sapMText {font-weight: 600 !important;}
+.sapUiLayoutCSSGrid.year-plan.status-wrap.year-plan-cssGrid .sapMLabel  {font-weight: 600 !important;}
 .year-plan.status-wrap .sapMLabel::before {content:""; position:relative; display:inline-block; width:14px; height:14px; background-color:#888; margin-right:5px; border-radius:50%}
 .vCardBox.MultiBoxmobile {border: 0px; border-radius: 0px; padding: 10px;}
 .vCardBox.MultiBoxmobile .desc-txt{top: 0px;}
-.vCardBox.MultiBoxmobile .pickonly-datepicker {height: 40px !important;}
+.vCardBox.MultiBoxmobile .sapIcon_Date.pickonly-datepicker {height: 40px !important;}
 .vCardBox.MultiBoxmobile .sapMTitle{border-bottom: 0px; margin-bottom: 0px; padding-bottom: 0px;}
 .vCardBox.MultiBoxmobile .sapMHBox{margin-bottom: 16px;font-size: 20px;font-weight: 700;border-bottom: 1px solid #222; height: 45px; align-items: center; }
+.vCardBox.MultiBoxmobile .section.week-Work-summary.progressBox {padding: 0px; height: 100%;}
+.vCardBox.MultiBoxmobile .section.week-Work-summary.progressBox .weekTimeGrid {margin-top: 10px;}
+.vCardBox.MultiBoxmobile .section.week-Work-summary.progressBox .sapUiLayoutCSSGrid .sapMLabel {font-size: 16px; font-weight: 600;}
+.vCardBox.MultiBoxmobile .section.week-Work-summary.progressBox .sapUiLayoutCSSGrid .sapMText {font-size: 16px; font-weight: 600;}
+.vCardBox.MultiBoxmobile .section.week-Work-summary.progressBox .sapUiLayoutCSSGrid .sapMVBox {height: 45px; justify-content: center;}
 
 /*logout button style*/
 .sapMBtn.icon-button.logout .sapMBtnInner {background:transparent!important}

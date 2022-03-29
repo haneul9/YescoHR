@@ -497,33 +497,17 @@ sap.ui.define(
       },
 
       // 년도 선택시 화면전체조회
-      async formReflesh() {
+      async formReflesh(sBeYear) {
         const oViewModel = this.getViewModel();
 
         try {
           oViewModel.setProperty('/busy', true);
 
-          const sWerks = this.getAppointeeProperty('Werks');
-          const sYear = oViewModel.getProperty('/searchDate/year');
-
-          // 휴가계획현황
-          const mPayLoad = {
-            Werks: sWerks,
-            Tmyea: sYear,
-          };
-
           const oModel = this.getModel(ServiceNames.WORKTIME);
-          const [aPlanList] = await Client.getEntitySet(oModel, 'LeavePlan', mPayLoad);
-
-          // Doughnut Chart
-          this.setDoughChartData(aPlanList);
-
-          // 휴가유형 별 현황
-          const aVacaTypeList = await Client.getEntitySet(oModel, 'AbsQuotaList', { Menid: this.getCurrentMenuId() });
-
-          oViewModel.setProperty('/VacaTypeList', aVacaTypeList);
-
-          const sMonth = oViewModel.getProperty('/searchDate/month');
+          const sWerks = this.getAppointeeProperty('Werks');
+          const mSearchDate = oViewModel.getProperty('/searchDate');
+          const sYear = mSearchDate.year;
+          const sMonth = mSearchDate.month;
           // 근무현황
           const mTablePayLoad = {
             Werks: sWerks,
@@ -540,6 +524,24 @@ sap.ui.define(
           const aOTList = await Client.getEntitySet(oModel, 'OvertimeStatus', mTablePayLoad);
 
           oViewModel.setProperty('/OTWorkList', aOTList);
+
+          if (sBeYear !== sYear) {
+            // 휴가계획현황
+            const mPayLoad = {
+              Werks: sWerks,
+              Tmyea: sYear,
+            };
+
+            const [aPlanList] = await Client.getEntitySet(oModel, 'LeavePlan', mPayLoad);
+
+            // Doughnut Chart
+            this.setDoughChartData(aPlanList);
+
+            // 휴가유형 별 현황
+            const aVacaTypeList = await Client.getEntitySet(oModel, 'AbsQuotaList', { Menid: this.getCurrentMenuId() });
+
+            oViewModel.setProperty('/VacaTypeList', aVacaTypeList);
+          }
         } catch (oError) {
           this.debug(oError);
           AppUtils.handleError(oError);
@@ -552,15 +554,17 @@ sap.ui.define(
       },
 
       onPressPrevYear() {
+        const sBeYear = _.cloneDeep(this.getViewModel().getProperty('/searchDate/year'));
         this.YearPlanBoxHandler.onPressPrevYear();
         this.formYear();
-        this.formReflesh();
+        this.formReflesh(sBeYear);
       },
 
       onPressNextYear() {
+        const sBeYear = _.cloneDeep(this.getViewModel().getProperty('/searchDate/year'));
         this.YearPlanBoxHandler.onPressNextYear();
         this.formYear();
-        this.formReflesh();
+        this.formReflesh(sBeYear);
       },
 
       onClickDay(oEvent) {
