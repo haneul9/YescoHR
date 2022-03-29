@@ -446,7 +446,7 @@ sap.ui.define(
             oSubHBox.addItem(new sap.m.Title({ level: 'H2', text: mMenu.title }));
 
             // CRUD Buttons
-            if (_.some(this.CRUD_TABLES, (o) => o.key === mMenu.code)) {
+            if (!this.isMss() && _.some(this.CRUD_TABLES, (o) => o.key === mMenu.code)) {
               const oSubButtonBox = new sap.m.HBox({
                 items: [
                   new sap.m.Button({

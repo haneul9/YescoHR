@@ -80,6 +80,10 @@ sap.ui.define(
         return UIComponent.getRouterFor(this);
       },
 
+      isMss() {
+        return /^m\//.test(HashChanger.getInstance().getHash()) || /^mobile\/m\//.test(HashChanger.getInstance().getHash());
+      },
+
       isHass() {
         return /^h\//.test(HashChanger.getInstance().getHash());
       },
