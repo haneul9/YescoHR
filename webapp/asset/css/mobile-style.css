@@ -415,6 +415,7 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>footer .sa
 .contents > .search-box + .header-wrap + .sapMFlexBoxScroll {height:calc(100% - 116px)}
 .contents > .search-box.search-box-expanded + .header-wrap + .sapMFlexBoxScroll {height:calc(100% - 180px)}
 .contents > .search-area + .header-wrap + .sapMFlexBoxScroll {height:calc(100% - 226px)}
+.contents > .search-area.mobile-mss-overview + .sapMFlexBoxScroll {height:calc(100% - 164px)}
 .contents.mobile-mss-employee-card-list .sapMSegB {padding:0}
 .contents.mobile-mss-employee-card-list > .sapMFlexItem + .sapMFlexItem + .sapMFlexBoxScroll {margin-top:16px; height:calc(100% - 111px)}
 .contents.mobile-mss-employee-card-list .employee-card-list {padding:0 11px 0 16px}

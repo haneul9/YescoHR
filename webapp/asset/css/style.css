@@ -121,7 +121,7 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p06 g[class*=caption] tspan, .portlet-p06 g[class*=datalabel] tspan {font-size:11px}
 .portlet-p06 .today {color:grey}
 .portlet-p06 .sapUiLayoutCSSGrid {height:100%}
-.portlet-p06 .team-member-count {margin-top:8px;font-size:2rem; font-weight:500; cursor:pointer}
+.portlet-p06 .team-member-count {margin-top:8px; font-size:24px; font-weight:500; cursor:pointer}
 .portlet-p06 .team-member-count[data-table-key="1"] .sapMObjStatusText {color:#222}/* 총원 */
 .portlet-p06 .team-member-count[data-table-key="2"] .sapMObjStatusText {color:#ff5a5a}/* 휴가 */
 .portlet-p06 .team-member-count[data-table-key="3"] .sapMObjStatusText {color:#5a86ff}/* 휴무 */
