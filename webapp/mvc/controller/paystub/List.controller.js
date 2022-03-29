@@ -1,8 +1,8 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
@@ -12,8 +12,8 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     AppUtils,
+    EmployeeSearch,
     Client,
     ServiceNames,
     TableUtils,
@@ -22,8 +22,11 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.paystub.List', {
+      EmployeeSearch: EmployeeSearch,
       TableUtils: TableUtils,
       TABLE_ID: 'paystubTable',
+
+      sRouteName: '',
 
       initializeModel() {
         const today = moment();
@@ -98,24 +101,32 @@ sap.ui.define(
         TableUtils.summaryColspan({ oTable: this.byId(this.TABLE_ID), aHideIndex: [1, 2] });
       },
 
-      async onObjectMatched() {
-        const oModel = this.getModel(ServiceNames.PAY);
+      async onObjectMatched(oParameter, sRouteName) {
         const oViewModel = this.getViewModel();
-        const sYear = oViewModel.getProperty('/search/year');
+
+        try {
+          oViewModel.setProperty('/busy', true);
+          this.sRouteName = sRouteName;
+
+          this.search();
+        } catch (oError) {
+          this.debug('Controller > paystub List > onObjectMatched Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
+      },
+
+      callbackAppointeeChange() {
+        const oViewModel = this.getViewModel();
 
         try {
           oViewModel.setProperty('/busy', true);
 
-          const aRowData = await Client.getEntitySet(oModel, 'PayslipList', {
-            Menid: this.getCurrentMenuId(),
-            Begym: moment(sYear).month(0).format('YYYYMM'),
-            Endym: moment(sYear).month(11).format('YYYYMM'),
-          });
-
-          this.setTableData({ oViewModel, aRowData });
-          this.buildChart();
+          this.search();
         } catch (oError) {
-          this.debug('Controller > paystub List > onObjectMatched Error', oError);
+          this.debug('Controller > paystub List > callbackAppointeeChange Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
@@ -166,16 +177,29 @@ sap.ui.define(
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
-      async onPressSearch() {
-        const oModel = this.getModel(ServiceNames.PAY);
+      onPressSearch() {
         const oViewModel = this.getViewModel();
-        const sYear = oViewModel.getProperty('/search/year');
 
         try {
           oViewModel.setProperty('/busy', true);
 
-          const aRowData = await Client.getEntitySet(oModel, 'PayslipList', {
+          this.search();
+        } catch (oError) {
+          this.debug('Controller > paystub List > onPressSearch Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
+      },
+
+      async search() {
+        try {
+          const oViewModel = this.getViewModel();
+          const sYear = oViewModel.getProperty('/search/year');
+          const aRowData = await Client.getEntitySet(this.getModel(ServiceNames.PAY), 'PayslipList', {
             Menid: this.getCurrentMenuId(),
+            Pernr: this.getAppointeeProperty('Pernr'),
             Begym: moment(sYear).month(0).format('YYYYMM'),
             Endym: moment(sYear).month(11).format('YYYYMM'),
           });
@@ -183,11 +207,7 @@ sap.ui.define(
           this.setTableData({ oViewModel, aRowData });
           this.buildChart();
         } catch (oError) {
-          this.debug('Controller > paystub List > onPressSearch Error', oError);
-
-          AppUtils.handleError(oError);
-        } finally {
-          oViewModel.setProperty('/busy', false);
+          throw oError;
         }
       },
 
@@ -205,7 +225,7 @@ sap.ui.define(
 
         if (isNaN(oRowData.Seqnr)) return;
 
-        this.getRouter().navTo('paystub-detail', { seqnr: _.trimStart(oRowData.Seqnr, '0') });
+        this.getRouter().navTo(`${this.sRouteName}-detail`, { seqnr: _.trimStart(oRowData.Seqnr, '0') });
       },
 
       /*****************************************************************

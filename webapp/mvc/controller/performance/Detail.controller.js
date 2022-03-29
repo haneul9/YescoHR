@@ -398,6 +398,7 @@ sap.ui.define(
             Editable: bEditable,
             Type: 'APP1',
             Appno: oViewModel.getProperty('/opposition/Appno'),
+            LinkText: this.getBundleText('LABEL_10100'),
             LinkUrl: 'https://www.google.com',
             Max: 2,
             FileTypes: 'jpg,jpeg,pdf,doc,docx,ppt,pptx,xls,xlsx,bmp,png'.split(','),

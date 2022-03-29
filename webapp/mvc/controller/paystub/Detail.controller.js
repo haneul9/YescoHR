@@ -2,7 +2,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -13,7 +12,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     AppUtils,
     Client,
     ServiceNames,
@@ -69,6 +67,7 @@ sap.ui.define(
         try {
           const mDetail = await Client.deep(oModel, 'PayslipList', {
             Menid: this.getCurrentMenuId(),
+            Pernr: this.getAppointeeProperty('Pernr'),
             Seqnr: sSeqnr,
             Payslip1Nav: [],
             Payslip2Nav: [],

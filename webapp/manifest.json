@@ -176,6 +176,8 @@
 
         { "pattern": "excavation", "name": "excavation", "target": "excavation" },
         { "pattern": "excavation/{appno}", "name": "excavation-detail", "target": "excavationDetail" },
+        { "pattern": "h/excavation", "name": "h/excavation", "target": "h/excavation" },
+        { "pattern": "h/excavation/{appno}", "name": "h/excavation-detail", "target": "excavationDetail" },
 
         { "pattern": "exceptRetamt", "name": "exceptRetamt", "target": "exceptRetamt" },
         { "pattern": "mobile/exceptRetamt", "name": "mobile/exceptRetamt", "target": "mobile/exceptRetamt" },
@@ -243,6 +245,8 @@
 
         { "pattern": "paystub", "name": "paystub", "target": "paystub" },
         { "pattern": "paystub/{seqnr}", "name": "paystub-detail", "target": "paystubDetail" },
+        { "pattern": "h/paystub", "name": "h/paystub", "target": "h/paystub" },
+        { "pattern": "h/paystub/{seqnr}", "name": "h/paystub-detail", "target": "paystubDetail" },
         { "pattern": "mobile/paystub", "name": "mobile/paystub", "target": "mobile/paystub" },
         { "pattern": "mobile/paystub/{seqnr}", "name": "mobile/paystub-detail", "target": "mobile/paystubDetail" },
 
@@ -376,6 +380,7 @@
         "m/EvalKpi": { "viewId": "m_EvalKpi", "viewPath": "sap.ui.yesco.mvc.view.mssEvalKpi", "viewName": "Kpi" },
 
         "excavation": { "viewId": "excavation", "viewPath": "sap.ui.yesco.mvc.view.excavation", "viewName": "List" },
+        "h/excavation": { "viewId": "h_excavation", "viewPath": "sap.ui.yesco.mvc.view.excavation", "viewName": "ListH" },
         "excavationDetail": { "viewId": "excavationDetail", "viewPath": "sap.ui.yesco.mvc.view.excavation", "viewName": "Detail" },
 
         "exceptRetamt": { "viewId": "exceptRetamt", "viewPath": "sap.ui.yesco.mvc.view.exceptRetamt", "viewName": "ExceptRetamt" },
@@ -438,6 +443,7 @@
         "mobile/m/overviewAttendance": { "viewId": "mobile_m_overviewAttendance", "viewPath": "sap.ui.yesco.mvc.view.overviewAttendance.mobile", "viewName": "Main" },
         
         "paystub": { "viewId": "paystub", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "List" },
+        "h/paystub": { "viewId": "h_paystub", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "ListH" },
         "paystubDetail": { "viewId": "paystubDetail", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "Detail" },
         "mobile/paystub": { "viewId": "mobile_paystub", "viewPath": "sap.ui.yesco.mvc.view.paystub.mobile", "viewName": "List" },
         "mobile/paystubDetail": { "viewId": "mobile_paystubDetail", "viewPath": "sap.ui.yesco.mvc.view.paystub.mobile", "viewName": "Detail" },
