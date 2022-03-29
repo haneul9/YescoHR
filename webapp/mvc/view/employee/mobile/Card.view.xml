@@ -3,9 +3,9 @@
   xmlns:custom="sap.ui.yesco.control"
   xmlns="sap.m">
   <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
-    <VBox class="contents">
+    <VBox class="contents mobile-mss-employee-card-list">
       <SearchField value="{/search/searchText}" placeholder="{i18n>LABEL_00276}" search=".onPressEmployeeSearch" class="wrap"/>
-      <VBox class="sapUiSmallMarginTop wrap">
+      <VBox class="wrap mt-1-rem">
         <SegmentedButton width="100%" selectedKey="{/search/selectedState}" selectionChange=".onChangeStat">
           <items>
             <SegmentedButtonItem text="{i18n>LABEL_00245}" key="" />
@@ -15,7 +15,7 @@
         </SegmentedButton>
       </VBox>
       <custom:MobileScrollContainer horizontal="false" vertical="true">
-        <List id="employeeCardList" items="{path: '/results'}" class="employee-card-list sapUiSmallMarginTop wrap" busyIndicatorDelay="0" busy="{/busy}">
+        <List id="employeeCardList" items="{path: '/results'}" class="employee-card-list" busyIndicatorDelay="0" busy="{/busy}">
           <CustomListItem type="Active" press=".onClickEmployeeCard">
             <HBox>
               <VBox width="20%" justifyContent="Center" alignItems="Center">

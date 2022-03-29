@@ -76,7 +76,6 @@ sap.ui.define(
           plans: [],
           WorkMonths: [],
           VacaTypeList: [],
-          VacaTypeRowCount: 1,
           WorkTypeUseList: [],
           vacationChart: {
             dUsed: 0,
@@ -93,6 +92,10 @@ sap.ui.define(
 
       formatTime(sTime = '') {
         return !sTime ? '0' : `${sTime.slice(-4, -2)}:${sTime.slice(-2)}`;
+      },
+
+      formatZeroTime(sValue = '0') {
+        return _.parseInt(sValue) === 0 ? '0' : sValue;
       },
 
       async onObjectMatched() {
@@ -135,7 +138,6 @@ sap.ui.define(
           const aVacaTypeList = await Client.getEntitySet(oModel, 'AbsQuotaList', { Menid: this.getCurrentMenuId() });
 
           oViewModel.setProperty('/VacaTypeList', aVacaTypeList);
-          oViewModel.setProperty('/VacaTypeRowCount', _.size(aVacaTypeList));
 
           const sMonth = oViewModel.getProperty('/searchDate/month');
           // 근무현황
@@ -216,8 +218,8 @@ sap.ui.define(
             id: this.sDoughChartId,
             type: 'doughnut2d',
             renderAt: 'chart-doughnut-container',
-            width: '40%',
-            height: '100%',
+            width: '100%',
+            height: '150px',
             dataFormat: 'json',
             dataSource: {
               chart: this.getDoughnutChartOption(),
@@ -520,7 +522,6 @@ sap.ui.define(
           const aVacaTypeList = await Client.getEntitySet(oModel, 'AbsQuotaList', { Menid: this.getCurrentMenuId() });
 
           oViewModel.setProperty('/VacaTypeList', aVacaTypeList);
-          oViewModel.setProperty('/VacaTypeRowCount', _.size(aVacaTypeList));
 
           const sMonth = oViewModel.getProperty('/searchDate/month');
           // 근무현황

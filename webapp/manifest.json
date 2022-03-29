@@ -186,6 +186,11 @@
         
         { "pattern": "historyAppraisal", "name": "historyAppraisal", "target": "historyAppraisal" },
         { "pattern": "m/historyAppraisal", "name": "m/historyAppraisal", "target": "m/historyAppraisal" },
+        
+        { "pattern": "idp", "name": "idp", "target": "idp" },
+        { "pattern": "idp/{sType}/{sYear}", "name": "idp-detail", "target": "idpDetail" },
+        { "pattern": "m/idp", "name": "m/idp", "target": "m/idp" },
+        { "pattern": "m/idp/{sType}/{sYear}", "name": "m/idp-detail", "target": "idpDetail" },
 
         { "pattern": "individualWorkState", "name": "individualWorkState", "target": "individualWorkState" },
         { "pattern": "mobile/individualWorkState", "name": "mobile/individualWorkState", "target": "mobile/individualWorkState" },
@@ -369,6 +374,10 @@
         
         "historyAppraisal": { "viewId": "historyAppraisal", "viewPath": "sap.ui.yesco.mvc.view.historyAppraisal", "viewName": "MainE" },
         "m/historyAppraisal": { "viewId": "m_historyAppraisal", "viewPath": "sap.ui.yesco.mvc.view.historyAppraisal", "viewName": "MainM" },
+
+        "idp": { "viewId": "idp", "viewPath": "sap.ui.yesco.mvc.view.idp", "viewName": "ListE" },
+        "m/idp": { "viewId": "m_idp", "viewPath": "sap.ui.yesco.mvc.view.idp", "viewName": "ListM" },
+        "idpDetail": { "viewId": "idpDetail", "viewPath": "sap.ui.yesco.mvc.view.idp", "viewName": "Detail" },
 
         "individualWorkState": { "viewId": "individualWorkState", "viewPath": "sap.ui.yesco.mvc.view.individualWorkState", "viewName": "IndiWorkState" },
         "mobile/individualWorkState": { "viewId": "mobile_individualWorkState", "viewPath": "sap.ui.yesco.mvc.view.individualWorkState.mobile", "viewName": "IndividualWorkState" },
