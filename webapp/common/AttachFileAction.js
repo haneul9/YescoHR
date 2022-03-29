@@ -63,11 +63,14 @@ sap.ui.define(
           oJsonModel.setProperty('/Data', aFileList);
           oController.AttachFileAction.attachSettings(oController, sId, aFileList);
 
+          const bRefeFix = oJsonModel.getProperty('/UserFixed');
           // ess자료실 첨부파일없는경우 visible처리
-          if (_.isEmpty(aFileList) && options.RefeFilebox) {
-            oJsonModel.setProperty('/Settings/Visible', false);
-          } else if (!_.isEmpty(aFileList) && options.RefeFilebox) {
-            oJsonModel.setProperty('/Settings/Visible', true);
+          if (!bRefeFix) {
+            if (_.isEmpty(aFileList) && options.RefeFilebox) {
+              oJsonModel.setProperty('/Settings/Visible', false);
+            } else if (!_.isEmpty(aFileList) && options.RefeFilebox) {
+              oJsonModel.setProperty('/Settings/Visible', true);
+            }
           }
         } catch (oError) {
           AppUtils.handleError(oError);
