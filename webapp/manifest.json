@@ -243,6 +243,8 @@
 
         { "pattern": "paystub", "name": "paystub", "target": "paystub" },
         { "pattern": "paystub/{seqnr}", "name": "paystub-detail", "target": "paystubDetail" },
+        { "pattern": "h/paystub", "name": "h/paystub", "target": "h/paystub" },
+        { "pattern": "h/paystub/{seqnr}", "name": "h/paystub-detail", "target": "paystubDetail" },
         { "pattern": "mobile/paystub", "name": "mobile/paystub", "target": "mobile/paystub" },
         { "pattern": "mobile/paystub/{seqnr}", "name": "mobile/paystub-detail", "target": "mobile/paystubDetail" },
 
@@ -438,6 +440,7 @@
         "mobile/m/overviewAttendance": { "viewId": "mobile_m_overviewAttendance", "viewPath": "sap.ui.yesco.mvc.view.overviewAttendance.mobile", "viewName": "Main" },
         
         "paystub": { "viewId": "paystub", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "List" },
+        "h/paystub": { "viewId": "h_paystub", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "ListH" },
         "paystubDetail": { "viewId": "paystubDetail", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "Detail" },
         "mobile/paystub": { "viewId": "mobile_paystub", "viewPath": "sap.ui.yesco.mvc.view.paystub.mobile", "viewName": "List" },
         "mobile/paystubDetail": { "viewId": "mobile_paystubDetail", "viewPath": "sap.ui.yesco.mvc.view.paystub.mobile", "viewName": "Detail" },
