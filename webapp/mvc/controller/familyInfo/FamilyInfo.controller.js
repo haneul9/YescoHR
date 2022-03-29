@@ -62,7 +62,7 @@ sap.ui.define(
 
         this.onSearch();
         this.totalCount();
-        this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+        // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
       },
 
       async callbackAppointeeChange() {

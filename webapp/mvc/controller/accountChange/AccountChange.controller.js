@@ -115,7 +115,7 @@ sap.ui.define(
           oListModel.setProperty('/MyAcc', aMyAcc[0]);
 
           this.onSearch();
-          this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+          // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {

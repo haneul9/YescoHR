@@ -60,7 +60,7 @@ sap.ui.define(
       onObjectMatched() {
         this.onSearch();
         this.getTotalPay();
-        this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+        // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
       },
 
       // override AttachFileCode
@@ -72,7 +72,7 @@ sap.ui.define(
       onRefresh() {
         this.onSearch();
         this.getTotalPay();
-        this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+        // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
       },
 
       onClick() {
