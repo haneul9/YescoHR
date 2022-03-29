@@ -219,6 +219,8 @@
         
         { "pattern": "nightduty", "name": "nightduty", "target": "nightduty" },
         { "pattern": "nightduty/{sAppno}", "name": "nightduty-detail", "target": "nightdutyDetail" },
+        { "pattern": "h/nightduty", "name": "h/nightduty", "target": "h/nightduty" },
+        { "pattern": "h/nightduty/{sAppno}", "name": "h/nightduty-detail", "target": "nightdutyDetail" },
 
         { "pattern": "notice", "name": "notice", "target": "notice" },
         { "pattern": "notice/{Sdate}/{Seqnr}", "name": "notice-detail", "target": "noticeDetail" },
@@ -409,6 +411,7 @@
         "medicalDetail": { "viewId": "medicalDetail", "viewPath": "sap.ui.yesco.mvc.view.medical", "viewName": "MedicalDetail" },
         
         "nightduty": { "viewId": "nightduty", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "RequestList" },
+        "h/nightduty": { "viewId": "h_nightduty", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "RequestListH" },
         "nightdutyDetail": { "viewId": "nightdutyDetail", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "RequestDetail" },
 
         "notice": { "viewId": "notice", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "Ess" },

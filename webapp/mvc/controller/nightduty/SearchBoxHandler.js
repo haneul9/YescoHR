@@ -96,6 +96,7 @@ sap.ui.define(
         const sUrl = 'OnCallChangeApp';
         const mFilters = {
           Menid: this.oController.getCurrentMenuId(),
+          Pernr: this.oController.getAppointeeProperty('Pernr'),
           Apbeg: moment(oApbeg).hours(9).toDate(),
           Apend: moment(oApend).hours(9).toDate(),
         };
