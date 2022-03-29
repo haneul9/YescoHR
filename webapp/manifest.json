@@ -148,6 +148,8 @@
 
         { "pattern": "commuteType", "name": "commuteType", "target": "commuteType" },
         { "pattern": "commuteType/{oDataKey}/:zyymm:/:schkz:", "name": "commuteType-detail", "target": "commuteTypeDetail" },
+        { "pattern": "h/commuteType", "name": "h/commuteType", "target": "h/commuteType" },
+        { "pattern": "h/commuteType/{oDataKey}/:zyymm:/:schkz:", "name": "h/commuteType-detail", "target": "commuteTypeDetail" },
         
         { "pattern": "m/commuteConfirm", "name": "m/commuteConfirm", "target": "m/commuteConfirm" },
 
@@ -348,6 +350,7 @@
         "mobile/congratulation": { "viewId": "mobile_congratulation", "viewPath": "sap.ui.yesco.mvc.view.congratulation.mobile", "viewName": "Congratulation" },
         "mobile/congDetail": { "viewId": "mobile_congDetail", "viewPath": "sap.ui.yesco.mvc.view.congratulation.mobile", "viewName": "CongDetail" },
         
+        "h/commuteType": { "viewId": "h_commuteType", "viewPath": "sap.ui.yesco.mvc.view.commuteType", "viewName": "CommuteTypeH" },
         "commuteType": { "viewId": "commuteType", "viewPath": "sap.ui.yesco.mvc.view.commuteType", "viewName": "CommuteType" },
         "commuteTypeDetail": { "viewId": "commuteTypeDetail", "viewPath": "sap.ui.yesco.mvc.view.commuteType", "viewName": "CommuteTypeDetail" },
         
