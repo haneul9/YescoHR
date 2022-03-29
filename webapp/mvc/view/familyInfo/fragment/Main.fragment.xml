@@ -1,0 +1,27 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:custom="sap.ui.yesco.control">
+    <Page showHeader="false">
+        <VBox class="contents-header">
+            <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+                <custom:Breadcrumbs />
+                <HBox>
+                    <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onClick" class="sapUiTinyMarginEnd" />
+                    <Button icon="sap-icon://print" press=".onPagePrint" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" />
+                    <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
+                </HBox>
+            </HBox>
+        </VBox>
+        <VBox class="contents">
+            <HBox justifyContent="SpaceAround">
+                <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBox" type="XML" />
+                <core:Fragment fragmentName="sap.ui.yesco.mvc.view.familyInfo.fragment.TotalFamily" type="XML" />
+                <core:Fragment fragmentName="sap.ui.yesco.mvc.view.familyInfo.fragment.SearchCondition" type="XML" />
+            </HBox>
+            <VBox class="vCardBox">
+                <core:Fragment fragmentName="sap.ui.yesco.fragment.OverviewTableHeader" type="XML" />
+                <core:Fragment fragmentName="sap.ui.yesco.mvc.view.familyInfo.fragment.ApplyListTable" type="XML" />
+            </VBox>
+        </VBox>
+    </Page>
+</core:FragmentDefinition>

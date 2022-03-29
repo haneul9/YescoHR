@@ -1,0 +1,6 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.familyInfo.FamilyInfo"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core">
+    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.familyInfo.fragment.Main" type="XML" />
+</mvc:View>

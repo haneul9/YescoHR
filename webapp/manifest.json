@@ -176,6 +176,8 @@
         
         { "pattern": "familyInfo", "name": "familyInfo", "target": "familyInfo" },
         { "pattern": "familyInfo/{oDataKey}", "name": "familyInfo-detail", "target": "familyInfoDetail" },
+        { "pattern": "h/familyInfo", "name": "h/familyInfo", "target": "h/familyInfo" },
+        { "pattern": "h/familyInfo/{oDataKey}", "name": "h/familyInfo-detail", "target": "familyInfoDetail" },
 
         { "pattern": "healthCare", "name": "healthCare", "target": "healthCare" },
         { "pattern": "healthCare/{oDataKey}", "name": "healthCare-detail", "target": "healthCareDetail" },
@@ -363,6 +365,7 @@
         "mobile/exceptRetamt": { "viewId": "mobile_exceptRetamt", "viewPath": "sap.ui.yesco.mvc.view.exceptRetamt.mobile", "viewName": "ExceptRetamt" },
 
         "familyInfo": { "viewId": "familyInfo", "viewPath": "sap.ui.yesco.mvc.view.familyInfo", "viewName": "FamilyInfo" },
+        "h/familyInfo": { "viewId": "h_familyInfo", "viewPath": "sap.ui.yesco.mvc.view.familyInfo", "viewName": "FamilyInfoH" },
         "familyInfoDetail": { "viewId": "familyInfoDetail", "viewPath": "sap.ui.yesco.mvc.view.familyInfo", "viewName": "FamilyInfoDetail" },
 
         "healthCare": { "viewId": "healthCare", "viewPath": "sap.ui.yesco.mvc.view.healthCare", "viewName": "HealthCare" },
