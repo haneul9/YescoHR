@@ -7,32 +7,32 @@
       <Title level="H2" text="{i18n>LABEL_18015}" />
       <custom:DatePicker dateValue="{ path: '/WeekWorkDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="135px" class="pickonly-datepicker" change=".onWeekWorkTime" />
     </HBox>
-    <VBox class="week-Work-summary">
+    <VBox class="section week-Work-summary progressBox">
       <custom:VacationIndicator width="100%" total="{/WeekWork/Grp03}" used="{/WeekWork/Grp01}" used2="{/WeekWork/Grp02}" chartOnly="true" showTotal="true" usedType="WeekTime">
         <custom:layoutData>
           <FlexItemData growFactor="1" />
         </custom:layoutData>
       </custom:VacationIndicator>
-      <grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="4px">
-        <Label text="{i18n>LABEL_18016}"/>
+      <grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="4px" class="weekTimeGrid">
+        <Label text="{i18n>LABEL_18037}"/>
         <VBox>
-          <Text text="{= ${/WeekWork/Wkrultx} }"/>
+          <Text text="{= ${/WeekWork/Wkrultx} }" width="100%" class="color-06" textAlign="Right" />
         </VBox>
         <Label text="{i18n>LABEL_18020}" />
         <VBox>
-          <Text text="{/WeekWork/WorkTime}"/>
+          <Text text="{/WeekWork/WorkTime}" width="100%" class="color-06" textAlign="Right" />
         </VBox>
         <Label text="{i18n>LABEL_18017}" />
         <VBox>
-          <Text text="{/WeekWork/Tottime}{i18n>LABEL_00330}"/>
+          <Text text="{/WeekWork/Tottime}{i18n>LABEL_00330}" width="100%" class="color-06" textAlign="Right" />
         </VBox>
         <Label text="{i18n>LABEL_18018}" />
         <VBox>
-          <Text text="{/WeekWork/Bastime}{i18n>LABEL_00330}"/>
+          <Text text="{/WeekWork/Bastime}{i18n>LABEL_00330}" width="100%" class="color-06" textAlign="Right" />
         </VBox>
         <Label text="{i18n>LABEL_18019}" />
         <VBox>
-          <Text text="{/WeekWork/Ottime}{i18n>LABEL_00330}"/>
+          <Text text="{/WeekWork/Ottime}{i18n>LABEL_00330}" width="100%" class="color-06" textAlign="Right" />
         </VBox>
       </grid:CSSGrid>
     </VBox>

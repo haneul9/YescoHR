@@ -5,6 +5,7 @@
   <VBox class="section p-10-px font-20-px">
     <HBox class="title-bar">
       <Title level="H3" text="{i18n>LABEL_18032}" />
+      <Text text="{i18n>MSG_18001}" class="desc-txt ml-0" />
     </HBox>
     <HBox justifyContent="SpaceBetween" class="month-plan-head">
       <Button icon="sap-icon://navigation-left-arrow" press=".onPressPrevYear" class="icon-button" />
