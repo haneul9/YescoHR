@@ -3,9 +3,6 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/exceptions/UI5Error',
@@ -22,9 +19,6 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     Fragment,
-    Filter,
-    FilterOperator,
-    JSONModel,
     MessageBox,
     Client,
     UI5Error,
@@ -39,7 +33,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.excavation.Detail', {
-      LIST_PAGE_ID: 'container-ehr---excavationList',
       APPTP: 'HR06',
 
       AttachFileAction: AttachFileAction,
@@ -106,6 +99,8 @@ sap.ui.define(
         const oViewModel = oView.getModel();
         const sAppno = oViewModel.getProperty('/Appno');
 
+        oViewModel.setProperty('/busy', true);
+
         try {
           if (sAppno) {
             const oModel = this.getModel(ServiceNames.WORKTIME);
@@ -144,8 +139,10 @@ sap.ui.define(
           if (oError instanceof Error) oError = new UI5Error({ message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
 
           AppUtils.handleError(oError, {
-            onClose: () => this.getRouter().navTo('excavation'),
+            onClose: () => this.onNavBack(),
           });
+        } finally {
+          oViewModel.setProperty('/busy', false);
         }
       },
 
@@ -160,7 +157,7 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         if (_.isEmpty(detailData)) {
-          const mSessionData = this.getSessionData();
+          const mSessionData = this.getAppointeeData();
 
           oViewModel.setProperty('/ApplyInfo', {
             Apename: mSessionData.Ename,
@@ -240,6 +237,7 @@ sap.ui.define(
 
           await Client.create(oModel, 'DrillChangeApp', {
             Menid: this.getCurrentMenuId(),
+            Pernr: this.getAppointeeProperty('Pernr'),
             Appno: sAppno,
             Prcty: sPrcty,
             Chgrsn: sChgrsn,
@@ -249,7 +247,7 @@ sap.ui.define(
           // {신청}되었습니다.
           MessageBox.success(this.getBundleText('MSG_00007', this.getBundleText('LABEL_00121')), {
             onClose: () => {
-              this.getRouter().navTo('excavation');
+              this.onNavBack();
             },
           });
         } catch (oError) {

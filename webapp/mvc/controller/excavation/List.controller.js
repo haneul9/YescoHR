@@ -2,9 +2,9 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/DateUtils',
+    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
@@ -15,9 +15,9 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     Fragment,
-    JSONModel,
     AppUtils,
     DateUtils,
+    EmployeeSearch,
     Client,
     ServiceNames,
     TableUtils,
@@ -26,8 +26,11 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.excavation.List', {
+      EmployeeSearch: EmployeeSearch,
       TableUtils: TableUtils,
       TABLE_ID: 'excavationTable',
+
+      sRouteName: '',
 
       initializeModel() {
         const today = moment();
@@ -86,7 +89,7 @@ sap.ui.define(
         });
       },
 
-      async onObjectMatched() {
+      async onObjectMatched(oParameter, sRouteName) {
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const oViewModel = this.getViewModel();
         const sPernr = this.getAppointeeProperty('Pernr');
@@ -94,6 +97,7 @@ sap.ui.define(
         const mSummary = oViewModel.getProperty('/summary');
 
         try {
+          this.sRouteName = sRouteName;
           oViewModel.setProperty('/busy', true);
 
           const fCurriedGetEntitySet = Client.getEntitySet(oModel);
@@ -106,6 +110,33 @@ sap.ui.define(
           this.setTableData({ oViewModel, aRowData });
         } catch (oError) {
           this.debug('Controller > excavation List > initialRetrieve Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
+      },
+
+      async callbackAppointeeChange() {
+        const oViewModel = this.getViewModel();
+
+        try {
+          oViewModel.setProperty('/busy', true);
+
+          const oModel = this.getModel(ServiceNames.WORKTIME);
+          const fCurriedGetEntitySet = Client.getEntitySet(oModel);
+          const mSummary = oViewModel.getProperty('/summary');
+          const oSearchConditions = oViewModel.getProperty('/search');
+          const sPernr = this.getAppointeeProperty('Pernr');
+          const [aResultSummary, aRowData] = await Promise.all([
+            fCurriedGetEntitySet('DrillSummary', { Pernr: sPernr }), //
+            fCurriedGetEntitySet('DrillChangeApp', { Menid: this.getCurrentMenuId(), Pernr: sPernr, Apbeg: DateUtils.parse(oSearchConditions.Apbeg), Apend: DateUtils.parse(oSearchConditions.Apend) }),
+          ]);
+
+          oViewModel.setProperty('/summary', { ...mSummary, ...aResultSummary[0] });
+          this.setTableData({ oViewModel, aRowData });
+        } catch (oError) {
+          this.debug('Controller > excavation List > callbackAppointeeChange Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
@@ -152,7 +183,11 @@ sap.ui.define(
           const oModel = this.getModel(ServiceNames.WORKTIME);
           const sMode = oViewModel.getProperty('/dialog/mode');
           const sYearMonth = oViewModel.getProperty('/summary/CurrentYM');
-          const aSummaryList = await Client.getEntitySet(oModel, 'DrillList', { Prcty: sMode, Zyymm: sYearMonth });
+          const aSummaryList = await Client.getEntitySet(oModel, 'DrillList', {
+            Prcty: sMode,
+            Zyymm: sYearMonth,
+            Pernr: this.getAppointeeProperty('Pernr'),
+          });
 
           oViewModel.setProperty('/dialog/list', [...aSummaryList]);
           oViewModel.setProperty('/dialog/rowCount', aSummaryList.length || 1);
@@ -184,7 +219,11 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/dialog/busy', true);
 
-          const aSummaryList = await Client.getEntitySet(oModel, 'DrillList', { Prcty: sMode, Zyymm: sYearMonth });
+          const aSummaryList = await Client.getEntitySet(oModel, 'DrillList', {
+            Prcty: sMode,
+            Zyymm: sYearMonth,
+            Pernr: this.getAppointeeProperty('Pernr'),
+          });
 
           oViewModel.setProperty('/dialog/list', [...aSummaryList]);
           oViewModel.setProperty('/dialog/rowCount', aSummaryList.length || 1);
@@ -210,11 +249,11 @@ sap.ui.define(
         const sPath = oEvent.getParameters().rowBindingContext.getPath();
         const oRowData = this.getViewModel().getProperty(sPath);
 
-        this.getRouter().navTo('excavation-detail', { appno: oRowData.Appno });
+        this.getRouter().navTo(`${this.sRouteName}-detail`, { appno: oRowData.Appno });
       },
 
       onPressNewApprovalBtn() {
-        this.getRouter().navTo('excavation-detail', { appno: 'n' });
+        this.getRouter().navTo(`${this.sRouteName}-detail`, { appno: 'n' });
       },
 
       /*****************************************************************

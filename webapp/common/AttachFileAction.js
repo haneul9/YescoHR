@@ -31,6 +31,7 @@ sap.ui.define(
             Mode: 'S', // S: single file, M: multi file
             Max: 3,
             Message: '',
+            LinkText: '',
             LinkUrl: null,
             Visible: true,
             maximumFileSize: 10,
