@@ -282,6 +282,8 @@
         
         { "pattern": "workTime", "name": "workTime", "target": "workTime" },
         { "pattern": "workTime/{oDataKey}", "name": "workTime-detail", "target": "workTimeDetail" },
+        { "pattern": "h/workTime", "name": "h/workTime", "target": "h/workTime" },
+        { "pattern": "h/workTime/{oDataKey}", "name": "h/workTime-detail", "target": "workTimeDetail" },
         { "pattern": "mobile/workTime", "name": "mobile/workTime", "target": "mobile/workTime" },
         { "pattern": "mobile/workTime/{oDataKey}", "name": "mobile/workTime-detail", "target": "mobile/workTimeDetail" },
         
@@ -464,6 +466,7 @@
         "withdrawMiddle": { "viewId": "withdrawMiddle", "viewPath": "sap.ui.yesco.mvc.view.withdrawMiddle", "viewName": "WithdrawMiddle" },
         "withdrawMiddleDetail": { "viewId": "withdrawMiddleDetail", "viewPath": "sap.ui.yesco.mvc.view.withdrawMiddle", "viewName": "WithdrawMiddleDetail" },
 
+        "h/workTime": { "viewId": "h_workTime", "viewPath": "sap.ui.yesco.mvc.view.workTime", "viewName": "WorkTimeH" },
         "workTime": { "viewId": "workTime", "viewPath": "sap.ui.yesco.mvc.view.workTime", "viewName": "WorkTime" },
         "workTimeDetail": { "viewId": "workTimeDetail", "viewPath": "sap.ui.yesco.mvc.view.workTime", "viewName": "WorkTimeDetail" },
         "mobile/workTime": { "viewId": "mobile_workTime", "viewPath": "sap.ui.yesco.mvc.view.workTime.mobile", "viewName": "WorkTime" },
