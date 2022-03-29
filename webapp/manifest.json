@@ -117,6 +117,8 @@
         
         { "pattern": "certification", "name": "certification", "target": "certification" },
         { "pattern": "certification/{oDataKey}", "name": "certification-detail", "target": "certificationDetail" },
+        { "pattern": "h/certification", "name": "h/certification", "target": "h/certification" },
+        { "pattern": "h/certification/{oDataKey}", "name": "h/certification-detail", "target": "certificationDetail" },
         
         { "pattern": "clubJoin", "name": "clubJoin", "target": "clubJoin" },
         { "pattern": "clubJoin/{oDataKey}", "name": "clubJoin-detail", "target": "clubJoinDetail" },
@@ -315,6 +317,7 @@
         "carMaintainCostDetail": { "viewId": "carMaintainCostDetail", "viewPath": "sap.ui.yesco.mvc.view.carMaintainCost", "viewName": "CarMaintainCostDetail" },
 
         "certification": { "viewId": "certification", "viewPath": "sap.ui.yesco.mvc.view.certification", "viewName": "Certification" },
+        "h/certification": { "viewId": "h_certification", "viewPath": "sap.ui.yesco.mvc.view.certification", "viewName": "CertificationH" },
         "certificationDetail": { "viewId": "certificationDetail", "viewPath": "sap.ui.yesco.mvc.view.certification", "viewName": "CertificationDetail" },
 
         "h/clubJoin": { "viewId": "h_clubJoin", "viewPath": "sap.ui.yesco.mvc.view.clubJoin", "viewName": "ClubJoinH" },

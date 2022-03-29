@@ -1,8 +1,8 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
@@ -14,8 +14,8 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     AppUtils,
+    EmployeeSearch,
     FragmentEvent,
     TableUtils,
     TextUtils,
@@ -26,6 +26,7 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.certification.Certification', {
+      EmployeeSearch: EmployeeSearch,
       TableUtils: TableUtils,
       TextUtils: TextUtils,
       FragmentEvent: FragmentEvent,
@@ -33,6 +34,7 @@ sap.ui.define(
       initializeModel() {
         return {
           busy: false,
+          routeName: '',
           Data: [],
           LoanType: [],
           TargetCode: {},
@@ -58,48 +60,31 @@ sap.ui.define(
         };
       },
 
-      async onObjectMatched() {
+      async onObjectMatched(oParameter, sRouteName) {
+        const oListModel = this.getViewModel();
+
+        try {
+          oListModel.setProperty('/busy', true);
+          oListModel.setProperty('/routeName', sRouteName);
+
+          await this.readCertiList();
+          await this.readCertiCount();
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+          oListModel.setProperty('/busy', false);
+        }
+      },
+
+      async callbackAppointeeChange() {
         const oListModel = this.getViewModel();
 
         try {
           oListModel.setProperty('/busy', true);
 
-          const oModel = this.getModel(ServiceNames.PA);
-          const oSearch = oListModel.getProperty('/search');
-          const aTableList = await Client.getEntitySet(oModel, 'CertificateAppl', {
-            Prcty: 'L',
-            Menid: this.getCurrentMenuId(),
-            Apbeg: moment(oSearch.secondDate).hours(9).toDate(),
-            Apend: moment(oSearch.date).hours(9).toDate(),
-          });
-          const oTable = this.byId('certiTable');
-
-          oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
-          oListModel.setProperty('/listInfo/infoMessage', this.getBundleText('MSG_17001'));
-          oListModel.setProperty('/listInfo/isShowProgress', false);
-          oListModel.setProperty('/listInfo/isShowApply', true);
-          oListModel.setProperty('/listInfo/isShowApprove', false);
-          oListModel.setProperty('/listInfo/isShowReject', false);
-          oListModel.setProperty('/listInfo/isShowComplete', true);
-          oListModel.setProperty('/List', aTableList);
-
-          const aCertiList = await Client.getEntitySet(oModel, 'CertificateObjList');
-          const aCerTextList = await Client.getEntitySet(oModel, 'IssuedResults');
-
-          delete aCerTextList[0].__metadata;
-          delete aCerTextList[0].Pernr;
-
-          const aList = [];
-
-          _.map(aCerTextList[0], (v) => {
-            aList.push(v);
-          });
-
-          _.each(aCertiList, (v, i) => {
-            v.Text = aList[i];
-          });
-
-          oListModel.setProperty('/myCerti', aCertiList);
+          await this.readCertiList();
+          await this.readCertiCount();
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -108,7 +93,9 @@ sap.ui.define(
       },
 
       onClick() {
-        this.getRouter().navTo('certification-detail', { oDataKey: 'N' });
+        const sRouteName = this.getViewModel().getProperty('/routeName');
+
+        this.getRouter().navTo(`${sRouteName}-detail`, { oDataKey: 'N' });
       },
 
       async onSearch() {
@@ -117,24 +104,7 @@ sap.ui.define(
         try {
           oListModel.setProperty('/busy', true);
 
-          const oModel = this.getModel(ServiceNames.PA);
-          const oSearch = oListModel.getProperty('/search');
-          const aTableList = await Client.getEntitySet(oModel, 'CertificateAppl', {
-            Prcty: 'L',
-            Menid: this.getCurrentMenuId(),
-            Apbeg: moment(oSearch.secondDate).hours(9).toDate(),
-            Apend: moment(oSearch.date).hours(9).toDate(),
-          });
-          const oTable = this.byId('certiTable');
-
-          oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
-          oListModel.setProperty('/listInfo/infoMessage', this.getBundleText('MSG_17001'));
-          oListModel.setProperty('/listInfo/isShowProgress', false);
-          oListModel.setProperty('/listInfo/isShowApply', true);
-          oListModel.setProperty('/listInfo/isShowApprove', false);
-          oListModel.setProperty('/listInfo/isShowReject', false);
-          oListModel.setProperty('/listInfo/isShowComplete', true);
-          oListModel.setProperty('/List', aTableList);
+          await this.readCertiList();
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -142,13 +112,65 @@ sap.ui.define(
         }
       },
 
+      async readCertiList() {
+        try {
+          const oListModel = this.getViewModel();
+          const oModel = this.getModel(ServiceNames.PA);
+          const oSearch = oListModel.getProperty('/search');
+          const aTableList = await Client.getEntitySet(oModel, 'CertificateAppl', {
+            Prcty: 'L',
+            Menid: this.getCurrentMenuId(),
+            Pernr: this.getAppointeeProperty('Pernr'),
+            Apbeg: moment(oSearch.secondDate).hours(9).toDate(),
+            Apend: moment(oSearch.date).hours(9).toDate(),
+          });
+
+          oListModel.setProperty('/List', aTableList);
+          oListModel.setProperty('/listInfo', {
+            ...TableUtils.count({ oTable: this.byId('certiTable'), aRowData: aTableList }),
+            infoMessage: this.getBundleText('MSG_17001'),
+            isShowProgress: false,
+            isShowApply: true,
+            isShowApprove: false,
+            isShowReject: false,
+            isShowComplete: true,
+          });
+        } catch (oError) {
+          throw oError;
+        }
+      },
+
+      async readCertiCount() {
+        try {
+          const oListModel = this.getViewModel();
+          const oModel = this.getModel(ServiceNames.PA);
+          const [aCertiList, [mCerTextList]] = await Promise.all([
+            Client.getEntitySet(oModel, 'CertificateObjList'), //
+            Client.getEntitySet(oModel, 'IssuedResults', { Pernr: this.getAppointeeProperty('Pernr') }),
+          ]);
+
+          const aList = _.chain(mCerTextList)
+            .pickBy((v, p) => _.startsWith(p, 'Cnttx'))
+            .map((v) => v)
+            .value();
+
+          oListModel.setProperty(
+            '/myCerti',
+            _.map(aCertiList, (o, i) => _.set(o, 'Text', _.get(aList, i)))
+          );
+        } catch (oError) {
+          throw oError;
+        }
+      },
+
       onSelectRow(oEvent) {
         const vPath = oEvent.getParameter('rowBindingContext').getPath();
         const oListModel = this.getViewModel();
         const oRowData = oListModel.getProperty(vPath);
+        const sRouteName = oListModel.getProperty('/routeName');
 
         oListModel.setProperty('/parameters', oRowData);
-        this.getRouter().navTo('certification-detail', { oDataKey: oRowData.Appno });
+        this.getRouter().navTo(`${sRouteName}-detail`, { oDataKey: oRowData.Appno });
       },
 
       onPressExcelDownload() {
