@@ -29,7 +29,8 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.workTime.WorkTime', {
-      sDialChartId: 'dialChart',
+      sDialChartId: 'WorkChangeDialChart',
+      sChartDiv: 'chart-work-app-dial-container',
 
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
@@ -62,6 +63,7 @@ sap.ui.define(
       async onObjectMatched(oParameter, sRouteName) {
         const oListModel = this.getViewModel();
 
+        $(`#${this.sChartDiv}`).remove();
         oListModel.setProperty('/routeName', sRouteName);
 
         try {
@@ -162,7 +164,7 @@ sap.ui.define(
             new FusionCharts({
               id: this.sDialChartId,
               type: 'angulargauge',
-              renderAt: 'chart-dial-container',
+              renderAt: this.sChartDiv,
               width: '50%',
               height: '170px',
               dataFormat: 'json',
