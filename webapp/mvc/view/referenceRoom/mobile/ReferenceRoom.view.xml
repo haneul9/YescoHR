@@ -1,0 +1,26 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.referenceRoom.mobile.ReferenceRoom"
+  xmlns="sap.m"
+  xmlns:custom="sap.ui.yesco.control"
+  xmlns:mvc="sap.ui.core.mvc">
+  <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+    <VBox class="contents">
+      <custom:MobileScrollContainer horizontal="false" vertical="true">
+        <VBox class="sticky-side-tree pl-10-px" width="100%" visible="{/popover}">
+          <ScrollContainer width="100%" vertical="true">
+            <Tree id="ReferenceTree" mode="SingleSelectMaster" selectionChange=".onSelectTree" items="{/ReferenceList}">
+              <layoutData>
+                <FlexItemData growFactor="1" />
+              </layoutData>
+              <CustomTreeItem>
+                <HBox>
+                  <Image src="asset/image/icon_tree_node02.svg" visible="{= ${Folder} !== 'X' }" width="16px" height="16px" />
+                  <Text text="{title}"/>
+                </HBox>
+              </CustomTreeItem>
+            </Tree>
+          </ScrollContainer>
+        </VBox>
+      </custom:MobileScrollContainer>
+    </VBox>
+  </Page>
+</mvc:View>

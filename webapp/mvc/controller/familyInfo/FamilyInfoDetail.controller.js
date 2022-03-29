@@ -36,7 +36,7 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.familyInfo.FamilyInfoDetail', {
-      LIST_PAGE_ID: 'container-ehr---familyInfo',
+      LIST_PAGE_ID: { ESS: 'container-ehr---familyInfo', HASS: 'container-ehr---h_familyInfo' },
       GENDER: {
         CODE: {
           A: 'ALL',
@@ -140,7 +140,7 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
         const sKey = oDetailModel.getProperty('/FormStatus');
         const oView = this.getView();
-        const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+        const oListView = oView.getParent().getPage(this.isHass() ? this.LIST_PAGE_ID.HASS : this.LIST_PAGE_ID.ESS);
 
         if (!sKey || sKey === 'N') {
           if (!!oListView && !!oListView.getModel().getProperty('/parameter')) {
@@ -159,7 +159,7 @@ sap.ui.define(
               Endda: moment('9999-12-31').hours(9).toDate(),
             });
 
-            const mSessionData = this.getSessionData();
+            const mSessionData = this.getAppointeeData();
 
             oDetailModel.setProperty('/ApplyInfo', {
               Apename: mSessionData.Ename,
@@ -215,7 +215,9 @@ sap.ui.define(
           new Promise((resolve) => {
             // 가족관계
             oModel.read(sKdsvhtUrl, {
-              filters: [],
+              filters: [
+                new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, this.getAppointeeProperty('Pernr')), //
+              ],
               success: (oData) => {
                 if (oData) {
                   this.debug(`${sKdsvhtUrl} success.`, oData);
@@ -406,6 +408,7 @@ sap.ui.define(
                 oSendObject = oFormData;
                 oSendObject.Prcty = 'C';
                 oSendObject.Menid = sMenid;
+                oSendObject.Pernr = this.getAppointeeProperty('Pernr');
 
                 // FileUpload
                 await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());

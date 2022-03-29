@@ -3,6 +3,7 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
+    'sap/ui/core/routing/History',
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
     'sap/ui/yesco/control/MessageBox',
@@ -26,6 +27,7 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     Fragment,
+    History,
     Filter,
     FilterOperator,
     MessageBox,
@@ -47,7 +49,7 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.attendance.Detail', {
-      LIST_PAGE_ID: 'container-ehr---attendanceList',
+      LIST_PAGE_ID: { ESS: 'container-ehr---attendanceList', HASS: 'container-ehr---h_attendanceList' },
       APPTP: 'HR04',
       PAGE_TYPE: { NEW: 'A', CHANGE: 'B', CANCEL: 'C' },
       ACTION_MESSAGE: {
@@ -65,6 +67,7 @@ sap.ui.define(
       initializeModel() {
         return {
           busy: false,
+          previousName: History.getInstance().getPreviousHash(),
           type: this.PAGE_TYPE.NEW,
           Appno: null,
           ZappStatAl: null,
@@ -91,7 +94,7 @@ sap.ui.define(
 
       onObjectMatched(oParameter) {
         if (!'A,B,C'.split(',').includes(oParameter.type)) {
-          this.getRouter().navTo('attendance');
+          this.getRouter().navTo(this.getViewModel().getProperty('/previousName'));
           return;
         }
 
@@ -135,7 +138,7 @@ sap.ui.define(
             const mFilters = { Prcty: 'R' };
 
             if (_.isEqual(sAppno, 'NA')) {
-              const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+              const oListView = oView.getParent().getPage(this.isHass() ? this.LIST_PAGE_ID.HASS : this.LIST_PAGE_ID.ESS);
               const [mSelectedRowData] = oListView.getModel().getProperty('/parameter/rowData');
 
               _.chain(mFilters).set('Pernr', mSelectedRowData.Pernr).set('Awart', mSelectedRowData.Awart).set('Begda', mSelectedRowData.Begda).commit();
@@ -166,7 +169,7 @@ sap.ui.define(
           if (oError instanceof Error) oError = new UI5Error({ message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
 
           AppUtils.handleError(oError, {
-            onClose: () => this.getRouter().navTo('attendance'),
+            onClose: () => this.getRouter().navTo(oViewModel.getProperty('/previousName')),
           });
         }
       },
@@ -194,7 +197,7 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         if (_.isEmpty(detailData)) {
-          const mSessionData = this.getSessionData();
+          const mSessionData = this.getAppointeeData();
 
           oViewModel.setProperty('/ApplyInfo', {
             Apename: mSessionData.Ename,
@@ -493,7 +496,7 @@ sap.ui.define(
           // {임시저장|신청}되었습니다.
           MessageBox.success(this.getBundleText('MSG_00007', this.ACTION_MESSAGE[sPrcty]), {
             onClose: () => {
-              this.getRouter().navTo('attendance');
+              this.getRouter().navTo(oViewModel.getProperty('/previousName'));
             },
           });
         } catch (oError) {

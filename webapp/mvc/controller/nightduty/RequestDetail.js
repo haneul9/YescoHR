@@ -73,6 +73,7 @@ sap.ui.define(
         const mFilters = {
           Menid: this.oController.getCurrentMenuId(),
           Appno: sAppno,
+          Pernr: this.oController.getAppointeeProperty('Pernr'),
         };
 
         return Client.getEntitySet(oModel, 'OnCallChangeApp', mFilters);
@@ -273,6 +274,7 @@ sap.ui.define(
         const oModel = this.oController.getModel(ServiceNames.WORKTIME);
         const mPayload = {
           Menid: this.oController.getCurrentMenuId(),
+          Pernr: this.oController.getAppointeeProperty('Pernr'),
           Appno: sAppno,
           Prcty: sPrcty,
           Chgrsn: sChgrsn,

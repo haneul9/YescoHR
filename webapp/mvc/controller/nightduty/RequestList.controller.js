@@ -2,6 +2,7 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/nightduty/SummaryBoxHandler',
@@ -14,6 +15,7 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     AppUtils,
+    EmployeeSearch,
     TableUtils,
     BaseController,
     SummaryBoxHandler,
@@ -23,10 +25,13 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.nightduty.RequestList', {
       TableUtils: TableUtils,
+      EmployeeSearch: EmployeeSearch,
 
       sRequestListTableId: 'requestListTable',
       oSummaryBoxHandler: null,
       oSearchBoxHandler: null,
+
+      sRouteName: '',
 
       onBeforeShow() {
         TableUtils.adjustRowSpan({
@@ -36,8 +41,11 @@ sap.ui.define(
         });
       },
 
-      async onObjectMatched() {
+      async onObjectMatched(oParameter, sRouteName) {
         try {
+          this.sRouteName = sRouteName;
+          // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+
           this.oSummaryBoxHandler ||= new SummaryBoxHandler(this);
           this.oSearchBoxHandler ||= new SearchBoxHandler(this, this.sRequestListTableId);
 
@@ -49,6 +57,11 @@ sap.ui.define(
         }
       },
 
+      callbackAppointeeChange() {
+        this.oSummaryBoxHandler.showData();
+        this.oSearchBoxHandler.onPressIcon();
+      },
+
       onPressSummaryBoxIcon(oEvent) {
         this.oSummaryBoxHandler.onPressIcon(oEvent);
       },
@@ -58,7 +71,7 @@ sap.ui.define(
       },
 
       onPressNewRequest() {
-        this.getRouter().navTo('nightduty-detail', { sAppno: 0 });
+        this.getRouter().navTo(`${this.sRouteName}-detail`, { sAppno: 0 });
       },
 
       onPressExelDownload() {
@@ -73,7 +86,7 @@ sap.ui.define(
         const sPath = oEvent.getParameter('rowBindingContext').getPath();
         const sAppno = oEvent.getSource().getModel().getProperty(`${sPath}/Appno`);
 
-        this.getRouter().navTo('nightduty-detail', { sAppno });
+        this.getRouter().navTo(`${this.sRouteName}-detail`, { sAppno });
         // this.getRouter().getTargets().display('nightdutyDetail', { appno: sAppno });
       },
     });

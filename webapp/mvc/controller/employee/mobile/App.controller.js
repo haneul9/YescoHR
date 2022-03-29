@@ -48,7 +48,7 @@ sap.ui.define(
         // '0105': '1fr 2fr', // 연락처
         // INCR: '1fr 2fr', // 사내경력
         9001: '1fr 3fr', // 평가
-        // PAYS: '1fr 2fr', // 급여
+        PAYS: '1fr 1fr', // 급여
         '0022': '2fr 3fr', // 학력
         9006: '3fr 3fr 2fr', // 자격
         '0183': '1fr 1fr 1fr', // 포상
