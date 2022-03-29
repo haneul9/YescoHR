@@ -360,7 +360,7 @@ sap.ui.define(
             _.set(oViewModelData, ['employee', 'sub', data.Menuc1, 'contents', data.Menuc2], {
               type: data.Child,
               rowCount: 1,
-              selectionMode: _.some(this.CRUD_TABLES, (o) => o.key === data.Menuc2) ? 'MultiToggle' : 'None',
+              selectionMode: !this.isMss() && _.some(this.CRUD_TABLES, (o) => o.key === data.Menuc2) ? 'MultiToggle' : 'None',
               title: data.Menu2,
               code: data.Menuc2,
               sort: data.Sorts,
