@@ -1,9 +1,9 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
+    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
@@ -16,9 +16,9 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     AppUtils,
     AttachFileAction,
+    EmployeeSearch,
     FragmentEvent,
     TableUtils,
     TextUtils,
@@ -35,11 +35,13 @@ sap.ui.define(
       TableUtils: TableUtils,
       TextUtils: TextUtils,
       FragmentEvent: FragmentEvent,
+      EmployeeSearch: EmployeeSearch,
 
       initializeModel() {
         return {
           busy: false,
           Data: [],
+          routeName: '',
           MyWork: {},
           search: {
             secondDate: moment().subtract(1, 'month').add(1, 'day').toDate(),
@@ -57,23 +59,18 @@ sap.ui.define(
         };
       },
 
-      async onObjectMatched() {
+      async onObjectMatched(oParameter, sRouteName) {
         const oListModel = this.getViewModel();
+
+        oListModel.setProperty('/routeName', sRouteName);
 
         try {
           oListModel.setProperty('/busy', true);
 
-          const mPernr = {};
-
-          if (this.isHass()) {
-            const sPernr = this.getAppointeeProperty('Pernr');
-
-            mPernr.Pernr = sPernr;
-          }
-
+          const sPernr = this.getAppointeeProperty('Pernr');
           const mMyWorkPayLoad = {
             Menid: this.getCurrentMenuId(),
-            ...mPernr,
+            Pernr: sPernr,
           };
           const oModel = this.getModel(ServiceNames.WORKTIME);
           // 나의 근무시간현황
@@ -86,7 +83,7 @@ sap.ui.define(
             Apbeg: moment(mSearch.secondDate).hours(9).toDate(),
             Apend: moment(mSearch.date).hours(9).toDate(),
             Menid: this.getCurrentMenuId(),
-            ...mPernr,
+            Pernr: sPernr,
           };
           const aTableList = await Client.getEntitySet(oModel, 'OtWorkApply', mPayLoad);
           const oTable = this.byId('workTable');
@@ -120,7 +117,6 @@ sap.ui.define(
           oListModel.setProperty('/MyWork', aMyWork);
           this.buildDialChart(aMyWork);
           this.onSearch();
-          // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -244,7 +240,7 @@ sap.ui.define(
       },
 
       onClick() {
-        this.getRouter().navTo('workTime-detail', { oDataKey: 'N' });
+        this.getRouter().navTo(`${this.getViewModel().getProperty('/routeName')}-detail`, { oDataKey: 'N' });
       },
 
       // override AttachFileCode
@@ -258,20 +254,13 @@ sap.ui.define(
         try {
           oListModel.setProperty('/busy', true);
 
-          const mPernr = {};
-
-          if (this.isHass()) {
-            const sPernr = this.getAppointeeProperty('Pernr');
-
-            mPernr.Pernr = sPernr;
-          }
-
+          const sPernr = this.getAppointeeProperty('Pernr');
           const mSearch = oListModel.getProperty('/search');
           const mPayLoad = {
             Apbeg: moment(mSearch.secondDate).hours(9).toDate(),
             Apend: moment(mSearch.date).hours(9).toDate(),
             Menid: this.getCurrentMenuId(),
-            ...mPernr,
+            Pernr: sPernr,
           };
           const oModel = this.getModel(ServiceNames.WORKTIME);
           const aTableList = await Client.getEntitySet(oModel, 'OtWorkApply', mPayLoad);
@@ -290,8 +279,9 @@ sap.ui.define(
         const vPath = oEvent.getParameter('rowBindingContext').getPath();
         const oListModel = this.getViewModel();
         const oRowData = oListModel.getProperty(vPath);
+        const sRouteName = oListModel.getProperty('/routeName');
 
-        this.getRouter().navTo('workTime-detail', { oDataKey: oRowData.Appno });
+        this.getRouter().navTo(`${sRouteName}-detail`, { oDataKey: oRowData.Appno });
       },
 
       onPressExcelDownload() {
