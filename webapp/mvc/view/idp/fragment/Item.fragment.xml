@@ -8,7 +8,7 @@
 					<grid:CSSGrid gridTemplateColumns="50px 675px 150px repeat(4, 1fr)" gridGap="0px 11px">
 						<Label text="{ItemNo}" textAlign="Left" />
 						<VBox>
-							<Input value="{Obj0}" class="goal-subject" placeholder="{i18n>LABEL_36007}" maxLength="{/fieldControl/limit/Obj0}" enabled="{= ${/fieldControl/display/Obj0} === 'X' }" visible="{= ${/fieldControl/display/Obj0} !== 'H' }" />
+							<Input value="{Obj0}" class="goal-subject" placeholder="{i18n>LABEL_36007}" enabled="false" />
 						</VBox>
 						<HBox>
 							<Button icon="sap-icon://sys-minus" text="{i18n>LABEL_36010}" visible="{/buttons/goal/DELETE/Availability}" press=".onPressDeleteGoal">
@@ -17,18 +17,12 @@
 								</customData>
 							</Button>
 						</HBox>
-						<Label text="{i18n>LABEL_36011}" visible="{= ${/fieldControl/display/Z200} !== 'H' }" />
-						<HBox visible="{= ${/fieldControl/display/Z200} !== 'H' }">
-							<ComboBox width="100%" selectedKey="" enabled="false" items="{ path: '/entry/levels', templateShareable: true }" visible="{= ${/fieldControl/display/Z200} === 'V' }">
+						<Label text="{i18n>LABEL_36011}" visible="{= ${/fieldControl/display/Z301} !== 'H' }" />
+						<HBox visible="{= ${/fieldControl/display/Z301} !== 'H' }">
+							<ComboBox width="100%" selectedKey="" enabled="false" items="{ path: '/entry/levels', templateShareable: true }" visible="{= ${/fieldControl/display/Z301} === 'V' }">
 								<core:Item key="{ValueEid}" text="{ValueText}" />
 							</ComboBox>
-							<ComboBox width="100%" class="required" selectedKey="{Z200}" items="{ path: '/entry/levels', templateShareable: true }" enabled="{= ${/fieldControl/display/Z200} === 'X' }" visible="{= ${/fieldControl/display/Z200} !== 'V' }">
-								<customData>
-									<core:CustomData key="sRoot" value="{= ${Zvbgubun}  === '1' ? 'common' : 'duty' }" />
-									<core:CustomData key="sProp" value="Z200" />
-									<core:CustomData key="sTarget" value="{= ${Zvbgubun}  === '1' ? 'D1z200' : 'D2z200' }" />
-									<core:CustomData key="sTotTarget" value="HZ200" />
-								</customData>
+							<ComboBox width="100%" class="required" selectedKey="{Z301}" items="{ path: '/entry/levels', templateShareable: true }" enabled="{= ${/fieldControl/display/Z301} === 'X' }" visible="{= ${/fieldControl/display/Z301} !== 'V' }">
 								<core:Item key="{ValueEid}" text="{ValueText}" />
 							</ComboBox>
 						</HBox>
@@ -38,12 +32,6 @@
 								<core:Item key="{ValueEid}" text="{ValueText}" />
 							</ComboBox>
 							<ComboBox width="100%" class="required" selectedKey="{Fapp}" items="{ path: '/entry/levels', templateShareable: true }" enabled="{= ${/fieldControl/display/Fapp} === 'X' }" visible="{= ${/fieldControl/display/Fapp} !== 'V' }">
-								<customData>
-									<core:CustomData key="sRoot" value="{= ${Zvbgubun}  === '1' ? 'common' : 'duty' }" />
-									<core:CustomData key="sProp" value="Fapp" />
-									<core:CustomData key="sTarget" value="{= ${Zvbgubun}  === '1' ? 'D1fapp' : 'D2fapp' }" />
-									<core:CustomData key="sTotTarget" value="HFapp" />
-								</customData>
 								<core:Item key="{ValueEid}" text="{ValueText}" />
 							</ComboBox>
 						</HBox>
@@ -53,32 +41,32 @@
 			<content>
 				<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="repeat(2, 1fr 3fr)">
 					<VBox>
-						<Label width="100%" text="{i18n>LABEL_36013}" vAlign="Top" visible="{= ${/fieldControl/display/Z200r} !== 'H' }"/>
+						<Label width="100%" text="{i18n>LABEL_36013}" vAlign="Top" visible="{= ${/fieldControl/display/Z305} !== 'H' }"/>
 					</VBox>
 					<VBox>
-						<TextArea width="100%" rows="5" value="" enabled="false" visible="{= ${/fieldControl/display/Z200r} === 'V' }" />
-						<TextArea width="100%" class="required" rows="5" value="{/summary/Z200r}" maxLength="{/fieldControl/limit/Z200r}" enabled="{= ${/fieldControl/display/Z200r} === 'X' }" visible="{= ${/fieldControl/display/Z200r} !== 'H' &amp;&amp; ${/fieldControl/display/Z200r} !== 'V' }" />
+						<TextArea width="100%" rows="5" value="" enabled="false" visible="{= ${/fieldControl/display/Z305} === 'V' }" />
+						<TextArea width="100%" class="required" rows="5" value="{Z305}" maxLength="{/fieldControl/limit/Z305}" enabled="{= ${/fieldControl/display/Z305} === 'X' }" visible="{= ${/fieldControl/display/Z305} !== 'H' &amp;&amp; ${/fieldControl/display/Z305} !== 'V' }" />
 					</VBox>
 					<VBox>
-						<Label width="100%" text="{i18n>LABEL_36014}" wrapping="true" vAlign="Top" visible="{= ${/fieldControl/display/Fappr} !== 'H' }"/>
+						<Label width="100%" text="{i18n>LABEL_36014}" wrapping="true" vAlign="Top" visible="{= ${/fieldControl/display/Z307} !== 'H' }"/>
 					</VBox>
 					<VBox>
-						<TextArea width="100%" rows="5" value="" enabled="false" visible="{= ${/fieldControl/display/Fappr} === 'V' }" />
-						<TextArea width="100%" class="required" rows="5" value="{/summary/Fappr}" maxLength="{/fieldControl/limit/Fappr}" enabled="{= ${/fieldControl/display/Fappr} === 'X' }" visible="{= ${/fieldControl/display/Fappr} !== 'H' &amp;&amp; ${/fieldControl/display/Fappr} !== 'V' }" />
+						<TextArea width="100%" rows="5" value="" enabled="false" visible="{= ${/fieldControl/display/Z307} === 'V' }" />
+						<TextArea width="100%" class="required" rows="5" value="{Z307}" maxLength="{/fieldControl/limit/Z307}" enabled="{= ${/fieldControl/display/Z307} === 'X' }" visible="{= ${/fieldControl/display/Z307} !== 'H' &amp;&amp; ${/fieldControl/display/Z307} !== 'V' }" />
 					</VBox>
 					<VBox>
-						<Label width="100%" text="{i18n>LABEL_36015}" vAlign="Top" visible="{= ${/fieldControl/display/Z200r} !== 'H' }"/>
+						<Label width="100%" text="{i18n>LABEL_36015}" vAlign="Top" visible="{= ${/fieldControl/display/Z309} !== 'H' }"/>
 					</VBox>
 					<VBox>
-						<TextArea width="100%" rows="5" value="" enabled="false" visible="{= ${/fieldControl/display/Z200r} === 'V' }" />
-						<TextArea width="100%" class="required" rows="5" value="{/summary/Z200r}" maxLength="{/fieldControl/limit/Z200r}" enabled="{= ${/fieldControl/display/Z200r} === 'X' }" visible="{= ${/fieldControl/display/Z200r} !== 'H' &amp;&amp; ${/fieldControl/display/Z200r} !== 'V' }" />
+						<TextArea width="100%" rows="5" value="" enabled="false" visible="{= ${/fieldControl/display/Z309} === 'V' }" />
+						<TextArea width="100%" class="required" rows="5" value="{Z309}" maxLength="{/fieldControl/limit/Z309}" enabled="{= ${/fieldControl/display/Z309} === 'X' }" visible="{= ${/fieldControl/display/Z309} !== 'H' &amp;&amp; ${/fieldControl/display/Z309} !== 'V' }" />
 					</VBox>
 					<VBox>
-						<Label width="100%" text="{i18n>LABEL_36016}" wrapping="true" vAlign="Top" visible="{= ${/fieldControl/display/Fappr} !== 'H' }"/>
+						<Label width="100%" text="{i18n>LABEL_36016}" wrapping="true" vAlign="Top" visible="{= ${/fieldControl/display/Z311} !== 'H' }"/>
 					</VBox>
 					<VBox>
-						<TextArea width="100%" rows="5" value="" enabled="false" visible="{= ${/fieldControl/display/Fappr} === 'V' }" />
-						<TextArea width="100%" class="required" rows="5" value="{/summary/Fappr}" maxLength="{/fieldControl/limit/Fappr}" enabled="{= ${/fieldControl/display/Fappr} === 'X' }" visible="{= ${/fieldControl/display/Fappr} !== 'H' &amp;&amp; ${/fieldControl/display/Fappr} !== 'V' }" />
+						<TextArea width="100%" rows="5" value="" enabled="false" visible="{= ${/fieldControl/display/Z311} === 'V' }" />
+						<TextArea width="100%" class="required" rows="5" value="{Z311}" maxLength="{/fieldControl/limit/Z311}" enabled="{= ${/fieldControl/display/Z311} === 'X' }" visible="{= ${/fieldControl/display/Z311} !== 'H' &amp;&amp; ${/fieldControl/display/Z311} !== 'V' }" />
 					</VBox>
 				</grid:CSSGrid>
 			</content>
