@@ -14,6 +14,7 @@ sap.ui.define(
         SessionModel.call(this, oUIComponent);
 
         this.setProperty('/showChangeButton', false);
+        this.setProperty('/showBarChangeButton', false);
       },
 
       async retrieve() {

@@ -21,7 +21,8 @@ sap.ui.define(
     'sap/ui/yesco/common/Validator',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
+    'sap/ui/yesco/mvc/model/type/Date',
+    'sap/ui/core/AccessibleLandmarkRole', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
   ],
   (
     // prettier 방지용 주석
@@ -44,7 +45,9 @@ sap.ui.define(
     PostcodeDialogHandler,
     Validator,
     MessageBox,
-    BaseController
+    BaseController,
+    Date,
+    AccessibleLandmarkRole
   ) => {
     'use strict';
 
@@ -133,6 +136,7 @@ sap.ui.define(
           pernr: null,
           orgtx: null,
           orgeh: null,
+          showPDFButton: false,
           sideNavigation: {
             isShow: true,
             busy: false,
@@ -326,13 +330,14 @@ sap.ui.define(
           //End Dialog Combo entry set
 
           // 상단 프로필 Set
-          const { Pturl, ...oReturnData } = aProfileReturnData[0];
+          const { Pturl, Actty, ...oReturnData } = aProfileReturnData[0];
           const aTextFields = ['Dat03', 'Dat05', 'Dat08', 'Dat10', 'Dat13', 'Dat15', 'Dat18', 'Dat20', 'Dat23', 'Dat25'];
           const aConvertData = _.chain(oReturnData)
             .pickBy((v, p) => _.startsWith(p, 'Dat'))
             .map((v, k) => ({ data: v, labelOrText: _.includes(aTextFields, k) ? 'text' : 'label' }))
             .value();
 
+          oViewModel.setProperty('/showPDFButton', _.isEqual(Actty, 'X'));
           oViewModel.setProperty('/employee/header/profilePath', _.isEmpty(Pturl) ? 'asset/image/avatar-unknown.svg?ssl=1' : Pturl);
           oViewModel.setProperty('/employee/header/baseInfo', aConvertData);
           //End 상단 프로필 Set

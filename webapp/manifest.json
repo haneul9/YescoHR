@@ -117,6 +117,8 @@
         
         { "pattern": "certification", "name": "certification", "target": "certification" },
         { "pattern": "certification/{oDataKey}", "name": "certification-detail", "target": "certificationDetail" },
+        { "pattern": "h/certification", "name": "h/certification", "target": "h/certification" },
+        { "pattern": "h/certification/{oDataKey}", "name": "h/certification-detail", "target": "certificationDetail" },
         
         { "pattern": "clubJoin", "name": "clubJoin", "target": "clubJoin" },
         { "pattern": "clubJoin/{oDataKey}", "name": "clubJoin-detail", "target": "clubJoinDetail" },
@@ -176,6 +178,8 @@
         
         { "pattern": "familyInfo", "name": "familyInfo", "target": "familyInfo" },
         { "pattern": "familyInfo/{oDataKey}", "name": "familyInfo-detail", "target": "familyInfoDetail" },
+        { "pattern": "h/familyInfo", "name": "h/familyInfo", "target": "h/familyInfo" },
+        { "pattern": "h/familyInfo/{oDataKey}", "name": "h/familyInfo-detail", "target": "familyInfoDetail" },
 
         { "pattern": "healthCare", "name": "healthCare", "target": "healthCare" },
         { "pattern": "healthCare/{oDataKey}", "name": "healthCare-detail", "target": "healthCareDetail" },
@@ -315,6 +319,7 @@
         "carMaintainCostDetail": { "viewId": "carMaintainCostDetail", "viewPath": "sap.ui.yesco.mvc.view.carMaintainCost", "viewName": "CarMaintainCostDetail" },
 
         "certification": { "viewId": "certification", "viewPath": "sap.ui.yesco.mvc.view.certification", "viewName": "Certification" },
+        "h/certification": { "viewId": "h_certification", "viewPath": "sap.ui.yesco.mvc.view.certification", "viewName": "CertificationH" },
         "certificationDetail": { "viewId": "certificationDetail", "viewPath": "sap.ui.yesco.mvc.view.certification", "viewName": "CertificationDetail" },
 
         "h/clubJoin": { "viewId": "h_clubJoin", "viewPath": "sap.ui.yesco.mvc.view.clubJoin", "viewName": "ClubJoinH" },
@@ -365,6 +370,7 @@
         "mobile/exceptRetamt": { "viewId": "mobile_exceptRetamt", "viewPath": "sap.ui.yesco.mvc.view.exceptRetamt.mobile", "viewName": "ExceptRetamt" },
 
         "familyInfo": { "viewId": "familyInfo", "viewPath": "sap.ui.yesco.mvc.view.familyInfo", "viewName": "FamilyInfo" },
+        "h/familyInfo": { "viewId": "h_familyInfo", "viewPath": "sap.ui.yesco.mvc.view.familyInfo", "viewName": "FamilyInfoH" },
         "familyInfoDetail": { "viewId": "familyInfoDetail", "viewPath": "sap.ui.yesco.mvc.view.familyInfo", "viewName": "FamilyInfoDetail" },
 
         "healthCare": { "viewId": "healthCare", "viewPath": "sap.ui.yesco.mvc.view.healthCare", "viewName": "HealthCare" },
