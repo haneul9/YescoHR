@@ -107,6 +107,8 @@
 
         { "pattern": "attendance", "name": "attendance", "target": "attendance" },
         { "pattern": "attendance/{type}/:appno:", "name": "attendance-detail", "target": "attendanceDetail" },
+        { "pattern": "h/attendance", "name": "h/attendance", "target": "h/attendance" },
+        { "pattern": "h/attendance/{type}/:appno:", "name": "h/attendance-detail", "target": "attendanceDetail" },
         { "pattern": "mobile/attendance", "name": "mobile/attendance", "target": "mobile/attendance" },
         { "pattern": "mobile/attendance/{type}/:appno:", "name": "mobile/attendance-detail", "target": "mobile/attendanceDetail" },
         
@@ -310,6 +312,7 @@
         "mobile/accountChangeDetail": { "viewId": "mobile_accountChangeDetail", "viewPath": "sap.ui.yesco.mvc.view.accountChange.mobile", "viewName": "AccountChangeDetail" },
 
         "attendance": { "viewId": "attendanceList", "viewPath": "sap.ui.yesco.mvc.view.attendance", "viewName": "List" },
+        "h/attendance": { "viewId": "h_attendanceList", "viewPath": "sap.ui.yesco.mvc.view.attendance", "viewName": "ListH" },
         "attendanceDetail": { "viewId": "attendanceDetail", "viewPath": "sap.ui.yesco.mvc.view.attendance", "viewName": "Detail" },
         "mobile/attendance": { "viewId": "mobile_attendanceList", "viewPath": "sap.ui.yesco.mvc.view.attendance.mobile", "viewName": "List" },
         "mobile/attendanceDetail": { "viewId": "mobile_attendanceDetail", "viewPath": "sap.ui.yesco.mvc.view.attendance.mobile", "viewName": "Detail" },
