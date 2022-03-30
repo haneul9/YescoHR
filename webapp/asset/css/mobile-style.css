@@ -64,10 +64,11 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 .portlet-p03p04:hover .sapMBtn.icon-button.portlet-member-remove {display:none}
 .portlet-p11 .left-box {border:none; background-color:#a3edce}
 .portlet-p11 .right-box {border:none; background-color:#b4cef2}
-.portlet-p11 .portlet-p11-objectstatus19,
+.portlet-p11 .portlet-p11-objectstatus19 {margin-top:18px}
 .portlet-p11 .portlet-p11-objectstatus15 {margin-top:0}
 .portlet-p11 .portlet-p11-objectstatus19 .sapMObjStatusText,
 .portlet-p11 .portlet-p11-objectstatus15 .sapMObjStatusText {color:#000 !important}
+.portlet-p11 .portlet-p11-objectstatus15.color-transparent .sapMObjStatusText {color:transparent !important}
 .sapUiSizeCompact .portlet-p11 .sapMBtn.portlet-box {margin-top:5px; width:100%; border:none}
 .sapUiSizeCompact .portlet-p11 .sapMBtnInner.sapMBtnText {height:auto; border-radius:8px; padding:3px}
 

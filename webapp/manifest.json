@@ -316,7 +316,9 @@
         { "pattern": "sampleVacationIndicator", "name": "sampleVacationIndicator", "target": "sampleVacationIndicator" },
         { "pattern": "sampleOrgChart", "name": "sampleOrgChart", "target": "sampleOrgChart" },
         { "pattern": "sampleYearPlan", "name": "sampleYearPlan", "target": "sampleYearPlan" },
-        { "pattern": "samplePortlets", "name": "samplePortlets", "target": "samplePortlets" }
+        { "pattern": "samplePortlets", "name": "samplePortlets", "target": "samplePortlets" },
+
+        { "pattern": "mobile/sampleComponents", "name": "mobile/sampleComponents", "target": "sampleComponents" }
       ],
       "targets": {
         "home": { "viewId": "home", "viewPath": "sap.ui.yesco.mvc.view.home", "viewName": "Portlets" },
@@ -509,7 +511,9 @@
         "sampleVacationIndicator": { "viewId": "sampleVacationIndicator", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "VacationIndicator", "title": "VacationIndicator" },
         "sampleOrgChart": { "viewId": "sampleOrgChart", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "OrgChart", "title": "OrgChart" },
         "sampleYearPlan": { "viewId": "sampleYearPlan", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "YearPlan", "title": "YearPlan" },
-        "samplePortlets": { "viewId": "samplePortlets", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Portlets", "title": "Portlets" }
+        "samplePortlets": { "viewId": "samplePortlets", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Portlets", "title": "Portlets" },
+
+        "mobile/sampleComponents": { "viewId": "sampleComponents", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Components", "title": "Components" }
       }
     }
   }
