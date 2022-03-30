@@ -1,19 +1,19 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date',
-    'sap/ui/yesco/mvc/model/type/Currency'
+    'sap/ui/yesco/mvc/model/type/Currency',
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     AppUtils,
+    EmployeeSearch,
     Client,
     ServiceNames,
     FragmentEvent,
@@ -23,20 +23,19 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.exceptRetamt.ExceptRetamt', {
       FragmentEvent: FragmentEvent,
+      EmployeeSearch: EmployeeSearch,
 
       initializeModel() {
         return {
           busy: false,
           data: {
-            Retda : ''
+            Retda: '',
           },
-          InfoMessage : ''
+          InfoMessage: '',
         };
       },
 
-      onBeforeShow() {
-        
-      },
+      onBeforeShow() {},
 
       async onObjectMatched() {
         const oViewModel = this.getViewModel();
@@ -45,8 +44,8 @@ sap.ui.define(
           oViewModel.setProperty('/busy', true);
 
           let sMsg = this.getBundleText('MSG_33001'), // 1일 평균임금 계산식
-              sMsg2 = this.getBundleText('MSG_33003'); // 퇴직금 계산식
-          
+            sMsg2 = this.getBundleText('MSG_33003'); // 퇴직금 계산식
+
           sMsg = `
           <p>
             ${this.getBundleText('MSG_33001')}
@@ -63,16 +62,20 @@ sap.ui.define(
 
           oViewModel.setProperty('/InfoMessage', sMsg);
           oViewModel.setProperty('/InfoMessage2', sMsg2);
-          
-          await this.onSearch();
 
+          await this.onSearch();
         } catch (oError) {
           this.debug('Controller > exceptRetamt > onObjectMatched Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
+          this.getAppointeeModel().setProperty('/showBarChangeButton', this.isHass());
           oViewModel.setProperty('/busy', false);
         }
+      },
+
+      callbackAppointeeChange() {
+        this.onSearch();
       },
 
       /*****************************************************************
@@ -89,7 +92,7 @@ sap.ui.define(
           const aRowData = await Client.getEntitySet(oModel, 'ExpectRetAmt', {
             Menid: this.getCurrentMenuId(),
             Pernr: this.getAppointeeProperty('Pernr'),
-            Retda: (dRetda != "" ? moment(dRetda).hours(9).toDate() : null )           
+            Retda: dRetda !== '' ? moment(dRetda).hours(9).toDate() : null,
           });
 
           oViewModel.setProperty('/data', aRowData[0]);

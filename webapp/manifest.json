@@ -180,6 +180,7 @@
         { "pattern": "h/excavation/{appno}", "name": "h/excavation-detail", "target": "excavationDetail" },
 
         { "pattern": "exceptRetamt", "name": "exceptRetamt", "target": "exceptRetamt" },
+        { "pattern": "h/exceptRetamt", "name": "h/exceptRetamt", "target": "h/exceptRetamt" },
         { "pattern": "mobile/exceptRetamt", "name": "mobile/exceptRetamt", "target": "mobile/exceptRetamt" },
         
         { "pattern": "familyInfo", "name": "familyInfo", "target": "familyInfo" },
@@ -384,6 +385,7 @@
         "excavationDetail": { "viewId": "excavationDetail", "viewPath": "sap.ui.yesco.mvc.view.excavation", "viewName": "Detail" },
 
         "exceptRetamt": { "viewId": "exceptRetamt", "viewPath": "sap.ui.yesco.mvc.view.exceptRetamt", "viewName": "ExceptRetamt" },
+        "h/exceptRetamt": { "viewId": "h_exceptRetamt", "viewPath": "sap.ui.yesco.mvc.view.exceptRetamt", "viewName": "ExceptRetamtH" },
         "mobile/exceptRetamt": { "viewId": "mobile_exceptRetamt", "viewPath": "sap.ui.yesco.mvc.view.exceptRetamt.mobile", "viewName": "ExceptRetamt" },
 
         "familyInfo": { "viewId": "familyInfo", "viewPath": "sap.ui.yesco.mvc.view.familyInfo", "viewName": "FamilyInfo" },
