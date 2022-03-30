@@ -122,14 +122,14 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p06 .today {color:grey}
 .portlet-p06 .sapUiLayoutCSSGrid {height:100%}
 .portlet-p06 .team-member-count {margin-top:8px; font-size:24px; font-weight:500; cursor:pointer}
-.portlet-p06 .team-member-count[data-table-key="1"] .sapMObjStatusText {color:#222}/* 총원 */
-.portlet-p06 .team-member-count[data-table-key="2"] .sapMObjStatusText {color:#ff5a5a}/* 휴가 */
-.portlet-p06 .team-member-count[data-table-key="3"] .sapMObjStatusText {color:#5a86ff}/* 휴무 */
-.portlet-p06 .team-member-count[data-table-key="4"] .sapMObjStatusText {color:#c68dff}/* 재택 */
-.portlet-p06 .team-member-count[data-table-key="5"] .sapMObjStatusText {color:#6edecf}/* 출장 */
-.portlet-p06 .team-member-count[data-table-key="6"] .sapMObjStatusText {color:#ffc86f}/* 교육 */
-.portlet-p06 .team-member-count[data-table-key="7"] .sapMObjStatusText {color:#A9F482}/*  */
-.portlet-p06 .team-member-count[data-table-key="8"] .sapMObjStatusText {color:#ACB3FF}/*  */
+.portlet-p06 .team-member-count[data-table-key="k1"] .sapMObjStatusText {color:#222}/* 총원 */
+.portlet-p06 .team-member-count[data-table-key="k2"] .sapMObjStatusText {color:#ff5a5a}/* 휴가 */
+.portlet-p06 .team-member-count[data-table-key="k3"] .sapMObjStatusText {color:#5a86ff}/* 휴무 */
+.portlet-p06 .team-member-count[data-table-key="k4"] .sapMObjStatusText {color:#c68dff}/* 재택 */
+.portlet-p06 .team-member-count[data-table-key="k5"] .sapMObjStatusText {color:#6edecf}/* 출장 */
+.portlet-p06 .team-member-count[data-table-key="k6"] .sapMObjStatusText {color:#ffc86f}/* 교육 */
+.portlet-p06 .team-member-count[data-table-key="k7"] .sapMObjStatusText {color:#A9F482}/*  */
+.portlet-p06 .team-member-count[data-table-key="k8"] .sapMObjStatusText {color:#ACB3FF}/*  */
 .sapMPopover.team-member-count-popover {border-radius:4px}
 .sapMPopover.team-member-count-popover .sapMPopoverCont {max-height:211px !important}
 .sapMPopover.team-member-count-popover .sapUiTableCCnt,
@@ -2088,6 +2088,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .color-04, .color-04 .sapMObjStatusText {color:#FFAAAA !important;}
 .color-05 {color:#3B3E41}
 .color-06 {color:#2F88FF}
+.color-07 {color:#0C1F6B}
 .text-right {text-align: right!important;}
 .ls-small {letter-spacing: -0.3px;}
 .normal {font-weight:500;}

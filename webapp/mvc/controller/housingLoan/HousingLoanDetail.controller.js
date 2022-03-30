@@ -160,12 +160,10 @@ sap.ui.define(
         const sUrl = '/LoanAmtApplSet';
         const sViewKey = oDetailModel.getProperty('/ViewKey');
 
-        const sRedText = `<a href='#' style='color:blue;'>${this.getBundleText('LABEL_00132')}</a>`;
-
         oDetailModel.setProperty(
           '/InfoMessage',
           `<p>${this.getBundleText('MSG_07013')}</p>
-          <p>${this.getBundleText('MSG_07005', sRedText)}</p>`
+          <p>${this.getBundleText('MSG_07005')}</p>`
         );
 
         if (sViewKey === 'N' || !sViewKey) {

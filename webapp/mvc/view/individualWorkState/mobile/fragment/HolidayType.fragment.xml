@@ -10,7 +10,7 @@
 			<grid:CSSGrid gridTemplateColumns="1fr" gridGap="0px" class="dl" items="{/VacaTypeList}">
 				<HBox class="mobileInnerBox">
 					<Label text="{Kotxt}" />
-					<Text text="{i18n>LABEL_18008} {Crecnt} / {i18n>LABEL_18009} {Usecnt} / {i18n>LABEL_18010} {Balcnt}" />
+					<Text text="{i18n>LABEL_18008} {Crecnt} / {i18n>LABEL_18009} {Usecnt} / {i18n>LABEL_18010} {Balcnt}" class="color-07" />
 				</HBox>
 			</grid:CSSGrid>
 		</VBox>
