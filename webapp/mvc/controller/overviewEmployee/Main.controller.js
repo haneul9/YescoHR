@@ -124,7 +124,7 @@ sap.ui.define(
               // .set(['chart', 'yAxisMaxValue'], '200')
               .set(
                 ['data'],
-                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callDetail-${mChartInfo.Headty},${o.Cod01}` }))
+                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callEmployeeDetail-${mChartInfo.Headty},${o.Cod01}` }))
               )
               .commit();
 
@@ -171,7 +171,7 @@ sap.ui.define(
               // .set(['chart', 'yAxisMaxValue'], '120')
               .set(
                 ['data'],
-                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callDetail-${mChartInfo.Headty},${o.Cod01}` }))
+                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callEmployeeDetail-${mChartInfo.Headty},${o.Cod01}` }))
               )
               .commit();
 
@@ -200,12 +200,12 @@ sap.ui.define(
               .set(['dataset', 0], {
                 seriesname: this.getBundleText('LABEL_28025'), // 임원 1인당 직원수 (팀장포함)
                 color: '#7BB4EB',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01, link: `j-callDetail-${mChartInfo.Headty},A,${o.Ttltxt}` })),
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01, link: `j-callEmployeeDetail-${mChartInfo.Headty},A,${o.Ttltxt}` })),
               })
               .set(['dataset', 1], {
                 seriesname: this.getBundleText('LABEL_28026'), // 팀장 1인당 직원수
                 color: '#FFE479',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02, link: `j-callDetail-${mChartInfo.Headty},BA,${o.Ttltxt}` })),
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02, link: `j-callEmployeeDetail-${mChartInfo.Headty},BA,${o.Ttltxt}` })),
               })
               .commit();
 
@@ -370,7 +370,7 @@ sap.ui.define(
 );
 
 // eslint-disable-next-line no-unused-vars
-function callDetail(sArgs) {
+function callEmployeeDetail(sArgs) {
   const oController = sap.ui.getCore().byId('container-ehr---m_overviewEmployee').getController();
   const aProps = ['Headty', 'Discod', 'Zyear'];
   const aArgs = _.split(sArgs, ',');

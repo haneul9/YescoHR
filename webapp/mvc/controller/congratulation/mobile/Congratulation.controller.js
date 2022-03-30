@@ -32,9 +32,9 @@ sap.ui.define(
         return {
           busy: false,
           search: {
-            dateRange: '1w',
+            dateRange: '12m',
             secondDate: moment().toDate(),
-            date: moment().subtract(7, 'day').toDate(),
+            date: moment().subtract(1, 'year').toDate(),
             dateBox: false,
           },
           Data: [],

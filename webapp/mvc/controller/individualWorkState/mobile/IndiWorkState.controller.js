@@ -102,8 +102,13 @@ sap.ui.define(
       formatDate(dBegDa, dEndDa) {
         const sBe = dBegDa ? moment(dBegDa).format('YYYY.MM.DD') : '';
         const sEn = dEndDa ? `~${moment(dEndDa).format('YYYY.MM.DD')}` : '';
+        let sDateRange = `${sBe}${sEn}`;
 
-        return `${sBe}${sEn}`;
+        if (moment(dBegDa).format('YYYY.MM.DD') === moment(dEndDa).format('YYYY.MM.DD')) {
+          sDateRange = sBe;
+        }
+
+        return sDateRange;
       },
 
       async onObjectMatched() {

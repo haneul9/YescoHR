@@ -10,7 +10,7 @@
       <grid:CSSGrid gridTemplateColumns="1fr" gridGap="0px" class="dl" items="{/MonthWorkList}">
         <HBox class="mobileInnerBox">
           <Label text="{Wktxt}" />
-          <Text text="{i18n>LABEL_16005} {Val01} / {i18n>LABEL_16011} {Val02}" />
+          <Text text="{i18n>LABEL_16005} {Val01} / {i18n>LABEL_16011} {Val02}" class="color-07" />
         </HBox>
       </grid:CSSGrid>
     </VBox>
@@ -31,7 +31,7 @@
               } / {i18n>LABEL_13028} {
                   path: 'Val03',
                   formatter: '.formatZeroTime'
-              }" />
+              }" class="color-07" />
         </HBox>
       </grid:CSSGrid>
     </VBox>

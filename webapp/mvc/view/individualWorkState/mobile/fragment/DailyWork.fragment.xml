@@ -13,7 +13,7 @@
             parts: [ {path: 'Begda'}, {path: 'Endda'} ],
             formatter: '.formatDate'
           }"/>
-          <Label text="{Atext}" />
+          <Label text="{Atext}" class="color-07"/>
         </HBox>
       </grid:CSSGrid>
     </VBox>

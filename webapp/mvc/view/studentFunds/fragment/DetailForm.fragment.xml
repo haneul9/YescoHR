@@ -15,7 +15,7 @@
                     <core:Item text="{Znametx}" key="{Zzobjps}" />
                 </ComboBox>
             </VBox>
-            <Label text="{i18n>LABEL_03013}" width="200px" />
+            <Label text="{i18n>LABEL_03013}" width="210px" />
             <VBox>
                 <Text text="{/FormData/Cnttx}"/>
             </VBox>

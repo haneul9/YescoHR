@@ -42,9 +42,9 @@ sap.ui.define(
           Data: [],
           MyAcc: {},
           search: {
-            dateRange: '1w',
+            dateRange: '12m',
             secondDate: moment().toDate(),
-            date: moment().subtract(7, 'day').toDate(),
+            date: moment().subtract(12, 'months').toDate(),
             dateBox: false,
           },
           listInfo: {

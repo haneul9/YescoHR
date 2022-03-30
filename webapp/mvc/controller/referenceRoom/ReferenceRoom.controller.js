@@ -116,6 +116,8 @@ sap.ui.define(
 
             oViewModel.setProperty('/Settings/Visible', bTree);
             oViewModel.setProperty('/popover', bTree);
+          } else {
+            this.dataSetting(aVariat[0]);
           }
         } catch (oError) {
           this.debug(oError);
