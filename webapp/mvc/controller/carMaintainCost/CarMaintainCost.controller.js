@@ -1,9 +1,9 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
+    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
@@ -15,9 +15,9 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     AppUtils,
     AttachFileAction,
+    EmployeeSearch,
     FragmentEvent,
     TableUtils,
     TextUtils,
@@ -29,6 +29,7 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.carMaintainCost.CarMaintainCost', {
       AttachFileAction: AttachFileAction,
+      EmployeeSearch: EmployeeSearch,
       TableUtils: TableUtils,
       TextUtils: TextUtils,
       FragmentEvent: FragmentEvent,
@@ -38,6 +39,7 @@ sap.ui.define(
           busy: false,
           Data: [],
           Total: {},
+          routeName: '',
           search: {
             secondDate: new Date(2020, 0, 1),
             date: new Date(new Date().getFullYear(), 12, 0),
@@ -54,13 +56,13 @@ sap.ui.define(
         };
       },
 
-      async onObjectMatched() {
+      async onObjectMatched(oParameter, sRouteName) {
         const oListModel = this.getViewModel();
 
         try {
           oListModel.setProperty('/busy', true);
+          oListModel.setProperty('/routeName', sRouteName);
 
-          // 중도인출 List
           const oModel = this.getModel(ServiceNames.BENEFIT);
           const aMyMaintain = await Client.getEntitySet(oModel, 'MaintenanceCarReport');
 
@@ -68,6 +70,39 @@ sap.ui.define(
 
           const mSearch = oListModel.getProperty('/search');
           const mPayLoad = {
+            Pernr: this.getAppointeeProperty('Pernr'),
+            Begda: moment(mSearch.secondDate).hours(9).toDate(),
+            Endda: moment(mSearch.date).hours(9).toDate(),
+            Menid: this.getCurrentMenuId(),
+            Prcty: 'L',
+          };
+          const aTableList = await Client.getEntitySet(oModel, 'MaintenanceCarAppl', mPayLoad);
+          const oTable = this.byId('carTable');
+
+          oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
+          oListModel.setProperty('/List', aTableList);
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oListModel.setProperty('/busy', false);
+        }
+      },
+
+      // 대상자 정보 사원선택시 화면 Refresh
+      async onRefresh() {
+        const oListModel = this.getViewModel();
+
+        try {
+          oListModel.setProperty('/busy', true);
+
+          const oModel = this.getModel(ServiceNames.BENEFIT);
+          const aMyMaintain = await Client.getEntitySet(oModel, 'MaintenanceCarReport');
+
+          oListModel.setProperty('/Total', aMyMaintain[0]);
+
+          const mSearch = oListModel.getProperty('/search');
+          const mPayLoad = {
+            Pernr: this.getAppointeeProperty('Pernr'),
             Begda: moment(mSearch.secondDate).hours(9).toDate(),
             Endda: moment(mSearch.date).hours(9).toDate(),
             Menid: this.getCurrentMenuId(),
@@ -86,7 +121,7 @@ sap.ui.define(
       },
 
       onClick() {
-        this.getRouter().navTo('carMaintainCost-detail', { oDataKey: 'N' });
+        this.getRouter().navTo(`${this.getViewModel().getProperty('/routeName')}-detail`, { oDataKey: 'N' });
       },
 
       // override AttachFileCode
@@ -112,6 +147,7 @@ sap.ui.define(
 
           const mSearch = oListModel.getProperty('/search');
           const mPayLoad = {
+            Pernr: this.getAppointeeProperty('Pernr'),
             Begda: moment(mSearch.secondDate).hours(9).toDate(),
             Endda: moment(mSearch.date).hours(9).toDate(),
             Menid: this.getCurrentMenuId(),
@@ -134,8 +170,9 @@ sap.ui.define(
         const vPath = oEvent.getParameter('rowBindingContext').getPath();
         const oListModel = this.getViewModel();
         const oRowData = oListModel.getProperty(vPath);
+        const sRouteName = oListModel.getProperty('/routeName');
 
-        this.getRouter().navTo('carMaintainCost-detail', { oDataKey: oRowData.Appno, sStatus: oRowData.ZappStatAl });
+        this.getRouter().navTo(`${sRouteName}-detail`, { oDataKey: oRowData.Appno, sStatus: oRowData.ZappStatAl });
       },
 
       onPressExcelDownload() {

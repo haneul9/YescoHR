@@ -102,6 +102,8 @@
 
         { "pattern": "accountChange", "name": "accountChange", "target": "accountChange" },
         { "pattern": "accountChange/:oDataKey:", "name": "accountChange-detail", "target": "accountChangeDetail" },
+        { "pattern": "h/accountChange", "name": "h/accountChange", "target": "h/accountChange" },
+        { "pattern": "h/accountChange/:oDataKey:", "name": "h/accountChange-detail", "target": "accountChangeDetail" },
         { "pattern": "mobile/accountChange", "name": "mobile/accountChange", "target": "mobile/accountChange" },
         { "pattern": "mobile/accountChange/:oDataKey:", "name": "mobile/accountChange-detail", "target": "mobile/accountChangeDetail" },
 
@@ -288,6 +290,8 @@
 
         { "pattern": "withdrawMiddle", "name": "withdrawMiddle", "target": "withdrawMiddle" },
         { "pattern": "withdrawMiddle/{oDataKey}", "name": "withdrawMiddle-detail", "target": "withdrawMiddleDetail" },
+        { "pattern": "h/withdrawMiddle", "name": "h/withdrawMiddle", "target": "h/withdrawMiddle" },
+        { "pattern": "h/withdrawMiddle/{oDataKey}", "name": "h/withdrawMiddle-detail", "target": "withdrawMiddleDetail" },
         
         { "pattern": "workTime", "name": "workTime", "target": "workTime" },
         { "pattern": "workTime/{oDataKey}", "name": "workTime-detail", "target": "workTimeDetail" },
@@ -319,6 +323,7 @@
         "mobileHome": { "viewId": "mobileHome", "viewPath": "sap.ui.yesco.mvc.view.home.mobile", "viewName": "Portlets" },
         "notFound": { "viewId": "notFound", "viewName": "NotFound", "transition": "show" },
 
+        "h/accountChange": { "viewId": "h_accountChange", "viewPath": "sap.ui.yesco.mvc.view.accountChange", "viewName": "AccountChangeH" },
         "accountChange": { "viewId": "accountChange", "viewPath": "sap.ui.yesco.mvc.view.accountChange", "viewName": "AccountChange" },
         "accountChangeDetail": { "viewId": "accountChangeDetail", "viewPath": "sap.ui.yesco.mvc.view.accountChange", "viewName": "AccountChangeDetail" },
         "mobile/accountChange": { "viewId": "mobile_accountChange", "viewPath": "sap.ui.yesco.mvc.view.accountChange.mobile", "viewName": "AccountChange" },
@@ -330,7 +335,7 @@
         "mobile/attendance": { "viewId": "mobile_attendanceList", "viewPath": "sap.ui.yesco.mvc.view.attendance.mobile", "viewName": "List" },
         "mobile/attendanceDetail": { "viewId": "mobile_attendanceDetail", "viewPath": "sap.ui.yesco.mvc.view.attendance.mobile", "viewName": "Detail" },
 
-        "h/carMaintainCost": { "viewId": "carMaintainCost", "viewPath": "sap.ui.yesco.mvc.view.carMaintainCost", "viewName": "CarMaintainCostH" },
+        "h/carMaintainCost": { "viewId": "h_carMaintainCost", "viewPath": "sap.ui.yesco.mvc.view.carMaintainCost", "viewName": "CarMaintainCostH" },
         "carMaintainCost": { "viewId": "carMaintainCost", "viewPath": "sap.ui.yesco.mvc.view.carMaintainCost", "viewName": "CarMaintainCost" },
         "carMaintainCostDetail": { "viewId": "carMaintainCostDetail", "viewPath": "sap.ui.yesco.mvc.view.carMaintainCost", "viewName": "CarMaintainCostDetail" },
 
@@ -479,6 +484,7 @@
         "mobile/m/talent": { "viewId": "mobile_m_talent", "viewPath": "sap.ui.yesco.mvc.view.talent.mobile", "viewName": "Talent" },
         "mobile/m/talentCompare": { "viewId": "mobile_m_talentCompare", "viewPath": "sap.ui.yesco.mvc.view.talent.mobile", "viewName": "Compare" },
 
+        "h/withdrawMiddle": { "viewId": "h_withdrawMiddle", "viewPath": "sap.ui.yesco.mvc.view.withdrawMiddle", "viewName": "WithdrawMiddleH" },
         "withdrawMiddle": { "viewId": "withdrawMiddle", "viewPath": "sap.ui.yesco.mvc.view.withdrawMiddle", "viewName": "WithdrawMiddle" },
         "withdrawMiddleDetail": { "viewId": "withdrawMiddleDetail", "viewPath": "sap.ui.yesco.mvc.view.withdrawMiddle", "viewName": "WithdrawMiddleDetail" },
 

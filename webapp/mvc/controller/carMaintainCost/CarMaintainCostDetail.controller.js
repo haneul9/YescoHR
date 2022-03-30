@@ -185,6 +185,7 @@ sap.ui.define(
                 Ename: sEname,
                 Fixed: sAppCode !== 'D',
                 bPayType: false,
+                Pernr: sPernr,
                 Appty: sAppCode,
                 Payorg: 'ALL',
                 Idtype: 'ALL',
