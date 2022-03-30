@@ -149,6 +149,7 @@ sap.ui.define(
 
         try {
           oViewModel.setProperty('/busy', true);
+          oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'DrivingRecordAppl')));
 
           const [mMyDriveRecord] = await this.getMyRecord();
 

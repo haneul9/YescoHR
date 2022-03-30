@@ -137,7 +137,6 @@ sap.ui.define(
             Title: this.getBundleText('LABEL_31001'), // 교육이력
           });
           oListModel.setProperty('/EduList', aTableList);
-          // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -166,7 +165,6 @@ sap.ui.define(
             Title: this.getBundleText('LABEL_31001'), // 교육이력
           });
           oListModel.setProperty('/EduList', aTableList);
-          // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -206,7 +204,7 @@ sap.ui.define(
         const oRowData = oListModel.getProperty(vPath);
 
         oListModel.setProperty('/parameters', oRowData);
-        this.getRouter().navTo(oListModel.getProperty('/PageId'), { oDataKey: oRowData.Lcnam });
+        this.getRouter().navTo(oListModel.getProperty('/PageId'), { oDataKey: oRowData.OrgcdTxt });
       },
 
       onPressExcelDownload() {
