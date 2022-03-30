@@ -26,6 +26,11 @@ sap.ui.define(
 
       async onObjectMatched() {
         const oViewModel = this.getViewModel();
+        const oTree = this.byId('ReferenceTree');
+
+        if (oTree) {
+          oTree.removeSelections();
+        }
 
         try {
           if (_.isEmpty(oViewModel.getProperty('/TreeFullList'))) {
@@ -154,6 +159,7 @@ sap.ui.define(
         const sPath = oEvent.getSource().getSelectedContexts()[0].getPath();
         const mSelectedTree = oViewModel.getProperty(sPath);
         const mRoutKey = {
+          Title: mSelectedTree.title,
           L1id: mSelectedTree.L1id,
           L2id: mSelectedTree.L2id,
           L3id: mSelectedTree.L3id,

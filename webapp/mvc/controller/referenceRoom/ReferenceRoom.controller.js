@@ -52,8 +52,13 @@ sap.ui.define(
 
       async onObjectMatched(mRouteArguments) {
         const oViewModel = this.getViewModel();
+        const oTree = this.byId('ReferenceTree');
 
         oViewModel.setData(this.initializeModel());
+
+        if (oTree) {
+          oTree.removeSelections();
+        }
 
         try {
           const aTree = await this.getReferenceRoom();
