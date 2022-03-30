@@ -54,10 +54,10 @@ sap.ui.define(
             rowCount: 1,
           },
           appTypeList: [
-            {
-              Appty: '1',
-              Apptxt: this.getBundleText('LABEL_00116'), // 확정
-            },
+            // {
+            //   Appty: '1',
+            //   Apptxt: this.getBundleText('LABEL_00116'), // 확정
+            // },
             {
               Appty: '2',
               Apptxt: this.getBundleText('LABEL_00109'), // 변경
