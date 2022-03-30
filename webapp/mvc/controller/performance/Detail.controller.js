@@ -401,7 +401,7 @@ sap.ui.define(
             LinkText: this.getBundleText('LABEL_10100'),
             LinkUrl: 'https://www.google.com',
             Max: 2,
-            FileTypes: 'jpg,jpeg,pdf,doc,docx,ppt,pptx,xls,xlsx,bmp,png'.split(','),
+            // FileTypes: 'jpg,jpeg,pdf,doc,docx,ppt,pptx,xls,xlsx,bmp,png'.split(','),
           });
         } catch (oError) {
           this.debug(`Controller > ${sListRouteName} Detail > initializeAttachBox Error`, oError);
