@@ -2,6 +2,8 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
+    'sap/ui/model/Filter',
+    'sap/ui/model/FilterOperator',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
@@ -19,6 +21,8 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     Fragment,
+    Filter,
+    FilterOperator,
     MessageBox,
     Appno,
     AppUtils,
@@ -68,7 +72,7 @@ sap.ui.define(
           tab: { selectedKey: Constants.TAB.COMP },
           listInfo: {},
           appointee: {},
-          entry: { levels: [] },
+          entry: { levels: [], competency: [] },
           stage: {
             headers: [],
             rows: [],
@@ -288,10 +292,81 @@ sap.ui.define(
         }
       },
 
+      async openCompetencyHelpDialog() {
+        const oView = this.getView();
+
+        if (!this.pCompetencyDialog) {
+          this.pCompetencyDialog = await Fragment.load({
+            id: oView.getId(),
+            controller: this,
+            name: 'sap.ui.yesco.mvc.view.idp.fragment.CompetencyDialog',
+          });
+
+          oView.addDependent(this.pCompetencyDialog);
+        }
+
+        this.pCompetencyDialog.open();
+      },
+
+      onSearchDialogHelp(oEvent) {
+        oEvent.getParameter('itemsBinding').filter([
+          new Filter('Stext', FilterOperator.Contains, oEvent.getParameter('value')), //
+        ]);
+      },
+
+      async onCloseDialogHelp(oEvent) {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/busy', true);
+
+        try {
+          const aItems = oViewModel.getProperty('/goals/comp');
+          const mSelectedData = oEvent.getParameter('selectedItem').getBindingContext().getObject();
+
+          if (_.some(aItems, (o) => _.isEqual(o.Zobjidq, mSelectedData.Zobjidq))) {
+            throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_36001') }); // 이미 선택한 역량입니다.
+          }
+
+          const mParameter = oViewModel.getProperty('/param');
+          const sType = oViewModel.getProperty('/type');
+          const mResult = await Client.deep(this.getModel(ServiceNames.APPRAISAL), 'AppraisalIdpDoc', {
+            ...mParameter,
+            Menid: this.getCurrentMenuId(),
+            Prcty: Constants.PROCESS_TYPE.DETAIL.code,
+            Zzappgb: sType,
+            AppraisalIdpDocDetSet: [{ Obj0: mSelectedData.Stext }],
+            AppraisalBottnsSet: [],
+            AppraisalScreenSet: [],
+          });
+          const iItemsLength = aItems.length;
+          let iCurrentItemsLength = oViewModel.getProperty('/currentItemsLength') ?? 0;
+
+          oViewModel.setProperty('/currentItemsLength', ++iCurrentItemsLength);
+          oViewModel.setProperty('/goals/comp', [
+            ...aItems,
+            {
+              ..._.reduce(Constants.ITEM_PROPERTIES, (acc, cur) => ({ ...acc, [cur]: _.includes(Constants.COMBO_PROPERTIES, cur) ? 'ALL' : _.noop() }), _.stubObject()),
+              expanded: _.stubTrue(),
+              isSaved: _.stubFalse(),
+              OrderNo: String(iItemsLength),
+              ItemNo: String(iItemsLength + 1),
+              Obj0: mSelectedData.Stext,
+              Zobjidq: mSelectedData.Zobjidq,
+              Z301: _.get(mResult, ['AppraisalIdpDocDetSet', 0, 'Z301'], 'ALL'),
+            },
+          ]);
+        } catch (oError) {
+          this.debug('Controller > IDP Detail > onObjectMatched Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
+      },
+
       async addCompItem() {
         const oViewModel = this.getViewModel();
-        const aItems = oViewModel.getProperty(`/goals/comp`);
-        const iItemsLength = aItems.length;
+        const aCompetency = oViewModel.getProperty('/entry/competency');
         let iCurrentItemsLength = oViewModel.getProperty('/currentItemsLength') ?? 0;
 
         if (iCurrentItemsLength === 3) {
@@ -299,25 +374,21 @@ sap.ui.define(
           return;
         }
 
-        const mParam = oViewModel.getProperty('/param');
-        const aResults = await Client.getEntitySet(this.getModel(ServiceNames.APPRAISAL), 'AppraisalIdpYear', {
-          Pernr: this.getAppointeeProperty('Pernr'),
-          // Prcty: 'L',
-          // Werks: this.getAppointeeProperty('Werks'),
-          // ..._.pick(mParam, ['Zzappid', 'Zdocid', 'Zzappty']),
-        });
+        if (_.isEmpty(aCompetency)) {
+          const mParam = oViewModel.getProperty('/param');
+          const aResults = await Client.getEntitySet(this.getModel(ServiceNames.APPRAISAL), 'AppraisalIdpQlist', {
+            Prcty: 'L',
+            Werks: this.getAppointeeProperty('Werks'),
+            ..._.pick(mParam, ['Zzappid', 'Zdocid', 'Zzappty']),
+          });
 
-        oViewModel.setProperty('/currentItemsLength', ++iCurrentItemsLength);
-        oViewModel.setProperty(`/goals/comp`, [
-          ...aItems,
-          {
-            ..._.reduce(Constants.ITEM_PROPERTIES, (acc, cur) => ({ ...acc, [cur]: _.includes(Constants.COMBO_PROPERTIES, cur) ? 'ALL' : _.noop() }), _.stubObject()),
-            expanded: _.stubTrue(),
-            isSaved: _.stubFalse(),
-            OrderNo: String(iItemsLength),
-            ItemNo: String(iItemsLength + 1),
-          },
-        ]);
+          oViewModel.setProperty(
+            '/entry/competency',
+            _.map(aResults, (o) => _.omit(o, '__metadata'))
+          );
+        }
+
+        this.openCompetencyHelpDialog();
       },
 
       onPressDeleteGoal(oEvent) {

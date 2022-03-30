@@ -33,7 +33,7 @@
                     <core:Fragment fragmentName="sap.ui.yesco.mvc.view.idp.fragment.Stage" type="XML" />
                 </HBox>
             </VBox>
-            <HBox>
+            <HBox busyIndicatorDelay="0" busy="{/busy}">
                 <IconTabBar class="type-b" selectedKey="{/tab/selectedKey}" expandable="false">
                     <layoutData>
                         <FlexItemData growFactor="1"/>
