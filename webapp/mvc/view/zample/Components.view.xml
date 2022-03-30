@@ -7,6 +7,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <Page navButtonTooltip="" title="Components">
     <content>
+      <core:HTML content='&lt;input type="file" /&gt;' />
       <VBox width="auto" class="worklist">
         <VBox class="sapUiResponsiveMargin">
           <Title level="H3" text="Navigation" class="component-title" />

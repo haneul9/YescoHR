@@ -77,7 +77,7 @@ sap.ui.define(
 
           const sMenid = this.getCurrentMenuId();
           const sPernr = this.getAppointeeProperty('Pernr');
-         
+
           // 대상자리스트
           const aOtpList = await Client.getEntitySet(oModel, 'OtpernrList', {
             Menid: sMenid,
@@ -141,8 +141,8 @@ sap.ui.define(
 
       // 근무시간
       formatTime(sTime1 = '', sTime2 = '', sTime3) {
-        sTime1 = !sTime1? '0' : `${sTime1.slice(-4, -2)}:${sTime1.slice(-2)}`;
-        sTime2 = !sTime2? '0' : `${sTime2.slice(-4, -2)}:${sTime2.slice(-2)}`;
+        sTime1 = !sTime1 ? '0' : `${sTime1.slice(-4, -2)}:${sTime1.slice(-2)}`;
+        sTime2 = !sTime2 ? '0' : `${sTime2.slice(-4, -2)}:${sTime2.slice(-2)}`;
 
         return sTime1 + '~' + sTime2 + '(' + sTime3 + ')';
       },
@@ -494,7 +494,7 @@ sap.ui.define(
           Type: this.getApprovalType(),
           Appno: sAppno,
           Max: 10,
-          FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'txt', 'png'],
+          // FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'txt', 'png'],
         });
       },
     });
