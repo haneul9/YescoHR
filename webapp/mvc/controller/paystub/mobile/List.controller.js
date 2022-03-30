@@ -36,6 +36,8 @@ sap.ui.define(
             toMonth: today.format('MM'),
             begym: moment(moment().subtract(12, 'months').toDate()).format('YYYYMM'),
             endym: today.format('YYYYMM'),
+            secondDate: moment().toDate(),
+            date: moment().subtract(12, 'months').toDate(),
             dateBox : false,
             dateRange : "12m"
           },
@@ -160,6 +162,8 @@ sap.ui.define(
           }
 
           if (!bDateRangeBox) {
+            oViewModel.setProperty('/search/secondDate', dBegda);
+            oViewModel.setProperty('/search/date', dEndda);
             oViewModel.setProperty('/search/begym', moment(dBegda).format('YYYYMM')),
             oViewModel.setProperty('/search/endym', moment(dEndda).format('YYYYMM'));
 
