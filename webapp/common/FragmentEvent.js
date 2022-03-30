@@ -15,6 +15,13 @@ sap.ui.define(
         onCloseClick() {
           this.byId('listFileDialog').close();
         },
+
+        onTogglePanel() {
+          const oPanel = this.byId('InfoMegBoxPanel');
+
+          oPanel.getHeaderToolbar().getContent()[2].toggleStyleClass('expanded');
+          oPanel.setExpanded(!oPanel.getExpanded());
+        },
       };
     }
 );

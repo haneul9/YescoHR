@@ -13,13 +13,25 @@
         </VBox>
         <VBox class="contents">
             <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
-            <!-- <core:Fragment fragmentName="sap.ui.yesco.fragment.InfoMessage" type="XML" /> -->
             <HBox id="InfoMegBox" justifyContent="SpaceBetween" class="vCardBox info-area" visible="{= !!${/InfoMessage} }">
-                <HBox>
-                    <FormattedText htmlText="{/InfoMessage}"/>
-                    <core:HTML content="{/InfoMessage2}" />
-                </HBox>
-                <Button press=".FragmentEvent.onInfoMsgClose" type="Transparent" class="icon-button close"/>
+                <Panel id="InfoMegBoxPanel" width="auto" expandable="true" expanded="true">
+                    <layoutData>
+                        <FlexItemData growFactor="1"/>
+                    </layoutData>
+                    <headerToolbar>
+                        <OverflowToolbar height="3rem" style="Clear">
+                            <Title text="HELP"/>
+                            <ToolbarSpacer/>
+                            <Button press=".FragmentEvent.onTogglePanel" type="Transparent" class="icon-button close expanded"/>
+                        </OverflowToolbar>
+                    </headerToolbar>
+                    <content>
+                        <HBox>
+                            <FormattedText htmlText="{/InfoMessage}"/>
+                            <core:HTML content="{/InfoMessage2}" />
+                        </HBox>
+                    </content>
+                </Panel>
             </HBox>
             <core:Fragment fragmentName="sap.ui.yesco.mvc.view.exceptRetamt.fragment.DetailForm" type="XML" />
             <core:Fragment fragmentName="sap.ui.yesco.mvc.view.exceptRetamt.fragment.DetailResult" type="XML" />
