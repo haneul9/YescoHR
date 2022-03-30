@@ -334,7 +334,7 @@ sap.ui.define(
             Menid: this.getCurrentMenuId(),
             Prcty: Constants.PROCESS_TYPE.DETAIL.code,
             Zzappgb: sType,
-            AppraisalIdpDocDetSet: [{ Obj0: mSelectedData.Stext }],
+            AppraisalIdpDocDetSet: [{ Obj0: mSelectedData.Stext, ElementQid: mSelectedData.Zobjidq }],
             AppraisalBottnsSet: [],
             AppraisalScreenSet: [],
           });
