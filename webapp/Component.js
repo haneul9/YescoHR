@@ -377,12 +377,9 @@ sap.ui.define(
           try {
             const oModel = this.getModel(ServiceNames.COMMON);
             const mFilters = {
-              Menid: 'home',
+              Menid: 'HOME',
               Pernr: this.getSessionModel().getProperty('/Pernr'),
               Mobile: /android|iphone|ipad|ipod/i.test(navigator.userAgent) ? 'X' : '',
-              // Rolchk: '',
-              // Func: '',
-              // Action: '',
             };
             Client.create(oModel, 'SaveConnectLog', mFilters);
           } catch (ex) {
