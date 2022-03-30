@@ -299,6 +299,10 @@ sap.ui.define(
           showBarChangeButton: false,
         });
 
+        // 챠트 툴팁 제거
+        const $ChartTooltip = $('#fusioncharts-tooltip-element');
+        if ($ChartTooltip) $ChartTooltip.hide();
+
         this.oAppController
           .getOwnerComponent()
           .reduceViewResource() // 메뉴 이동 전 View hidden 처리로 불필요한 DOM 정보를 제거
