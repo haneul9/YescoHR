@@ -11,17 +11,17 @@
           <Title level="H2" text="{/FormData/title}"/>
           <grid:CSSGrid gridTemplateColumns="1fr" gridGap="6px 0" class="form-grid mobile-reference">
             <VBox visible="{= !!${/FormData/HeadZcomment} }">
-              <TextArea editable="false" rows="3" width="100%" value="{/FormData/HeadZcomment}" />
+              <TextArea editable="false" rows="3" growing="true" width="100%" value="{/FormData/HeadZcomment}" />
             </VBox>
             <VBox visible="{= !!${/PDFFile/Fileuri} }" class="py-10-px">
               <Link href="{/PDFFile/Fileuri}" text="{/PDFFile/Zfilename}"/>
             </VBox>
             <VBox visible="{= !!${/FormData/MidZcomment} }">
               <Label text="{i18n>LABEL_29006}" visible="{= !!${/FormData/MidZcomment} }" />
-              <TextArea rows="3" editable="false" width="100%" value="{/FormData/MidZcomment}" />
+              <TextArea rows="3" growing="true" editable="false" width="100%" value="{/FormData/MidZcomment}" />
             </VBox>
             <VBox visible="{= !!${/FormData/BotZcomment} }">
-              <TextArea rows="3" editable="false" width="100%" value="{/FormData/BotZcomment}" />
+              <TextArea rows="3" growing="true" editable="false" width="100%" value="{/FormData/BotZcomment}" />
             </VBox>
           </grid:CSSGrid>
           <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
