@@ -142,21 +142,23 @@ sap.ui.define(
 
       onPressCount(oEvent) {
         const oEventSource = oEvent.getSource();
-        this.openPopover(oEventSource, oEventSource.data('table-key'));
+        this.openPopover(oEventSource, oEventSource.data('table-key').replace(/^k/, ''));
       },
 
       async openPopover(oEventSource, sTableKey) {
-        await this.createPopover(sTableKey);
+        await this.createPopover();
 
         this.oPopover.close();
         this.oPopover.bindElement(`/table${sTableKey}`);
+
+        this.getPortletModel().setProperty('/tableKey', sTableKey);
 
         setTimeout(() => {
           this.oPopover.openBy(oEventSource);
         }, 300);
       },
 
-      async createPopover(sTableKey) {
+      async createPopover() {
         if (!this.oPopover) {
           this.oPopover = await Fragment.load({
             name: 'sap.ui.yesco.mvc.view.home.fragment.P06PortletDataPopover',
@@ -167,7 +169,14 @@ sap.ui.define(
 
           this.oPopover
             .attachBeforeOpen(async () => {
-              const oModel = this.getController().getModel(ServiceNames.WORKTIME);
+              const oController = this.getController();
+              const oPortletModel = this.getPortletModel();
+
+              const oSelectedDate = oPortletModel.getProperty('/selectedDate');
+              const sTableKey = oPortletModel.getProperty('/tableKey');
+              const mAppointee = oController.getAppointeeData();
+
+              const oModel = oController.getModel(ServiceNames.WORKTIME);
               const mPayload = {
                 Datum: moment(oSelectedDate).startOf('date').add(9, 'hours'),
                 Werks: mAppointee.Werks,
@@ -177,10 +186,11 @@ sap.ui.define(
               };
 
               const aData = await Client.getEntitySet(oModel, 'TimeOverviewDetail1', mPayload);
-              aData.forEach((mData) => {
-                mData.visiblePeriod = sTableKey !== '1';
+              oPortletModel.setProperty(`/table${sTableKey}`, {
+                visiblePeriod: sTableKey !== '1',
+                list: aData,
+                listCount: Math.min(aData.length || 1, 5),
               });
-              this.getPortletModel().setProperty(`/table${sTableKey}`, mData);
 
               const bVisiblePeriod = this.oPopover.getBindingContext().getProperty('visiblePeriod');
               this.oPopover.setContentWidth(bVisiblePeriod ? '447px' : this.bMobile ? '240px' : '249px');
