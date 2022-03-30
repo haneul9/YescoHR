@@ -11,7 +11,7 @@
         <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBottom">
           <ComboBox width="100%" selectedKey="{/search/Werks}" items="{/entry/Werks}">
             <layoutData>
-              <FlexItemData growFactor="1" />
+              <FlexItemData minWidth="67%" maxWidth="67%" />
             </layoutData>
             <core:Item key="{Werks}" text="{Pbtxt}" />
           </ComboBox>
@@ -23,7 +23,11 @@
             </layoutData>
             <core:Item key="{Zcode}" text="{Ztext}" />
           </ComboBox>
-          <Button class="sapUiTinyMarginBegin" icon="asset/image/icon_sort.png" iconDensityAware="false" text="{i18n>LABEL_35004}" press=".onPressDetailConditionsDialog" />
+          <Button class="sapUiTinyMarginBegin" width="100%" icon="asset/image/btn_DetailSearch.svg" iconDensityAware="false" text="{i18n>LABEL_35004}" press=".onPressDetailConditionsDialog">
+            <layoutData>
+              <FlexItemData minWidth="33%" maxWidth="33%" />
+            </layoutData>
+          </Button>
         </HBox>
         <HBox justifyContent="SpaceBetween" alignItems="Center">
           <SearchField maxLength="{/fieldLimit/Freetx}" value="{/search/Freetx}" placeholder="{i18n>MSG_35012}" search=".onPressSearch">
@@ -31,7 +35,11 @@
               <FlexItemData minWidth="67%" maxWidth="67%" />
             </layoutData>
           </SearchField>
-          <Button text="{i18n>LABEL_35005}" icon="asset/image/icon_reset.png" iconDensityAware="false" enabled="{= !${/result/busy} }" press=".onPressConditionReset" />
+          <Button class="sapUiTinyMarginBegin" width="100%" text="{i18n>LABEL_35005}" icon="asset/image/btn_Reflesh.svg" iconDensityAware="false" enabled="{= !${/result/busy} }" press=".onPressConditionReset">
+            <layoutData>
+              <FlexItemData minWidth="33%" maxWidth="33%" />
+            </layoutData>
+          </Button>
         </HBox>
       </VBox>
       <HBox justifyContent="SpaceBetween" class="header-wrap">
