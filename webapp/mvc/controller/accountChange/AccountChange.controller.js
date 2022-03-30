@@ -1,9 +1,9 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
+    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
@@ -15,9 +15,9 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     AppUtils,
     AttachFileAction,
+    EmployeeSearch,
     FragmentEvent,
     TableUtils,
     TextUtils,
@@ -29,6 +29,7 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.accountChange.AccountChange', {
       AttachFileAction: AttachFileAction,
+      EmployeeSearch: EmployeeSearch,
       TableUtils: TableUtils,
       TextUtils: TextUtils,
       FragmentEvent: FragmentEvent,
@@ -38,6 +39,7 @@ sap.ui.define(
           busy: false,
           Data: [],
           MyAcc: {},
+          routeName: '',
           search: {
             secondDate: moment().subtract(1, 'years').add(1, 'day').toDate(),
             date: moment().toDate(),
@@ -54,23 +56,17 @@ sap.ui.define(
         };
       },
 
-      async onObjectMatched() {
+      async onObjectMatched(oParameter, sRouteName) {
         const oListModel = this.getViewModel();
 
         try {
           oListModel.setProperty('/busy', true);
+          oListModel.setProperty('/routeName', sRouteName);
 
-          const mPernr = {};
-
-          if (this.isHass()) {
-            const sPernr = this.getAppointeeProperty('Pernr');
-
-            mPernr.Pernr = sPernr;
-          }
-
+          const sPernr = this.getAppointeeProperty('Pernr');
           const mMyAccPayLoad = {
             Menid: this.getCurrentMenuId(),
-            ...mPernr,
+            Pernr: sPernr,
           };
           const oModel = this.getModel(ServiceNames.PAY);
           // 나의 계좌정보
@@ -83,7 +79,7 @@ sap.ui.define(
             Apbeg: moment(mSearch.secondDate).hours(9).toDate(),
             Apend: moment(mSearch.date).hours(9).toDate(),
             Menid: this.getCurrentMenuId(),
-            ...mPernr,
+            Pernr: sPernr,
           };
           const aTableList = await Client.getEntitySet(oModel, 'BankAccount', mPayLoad);
           const oTable = this.byId('accTable');
@@ -104,18 +100,29 @@ sap.ui.define(
         try {
           oListModel.setProperty('/busy', true);
 
+          const sPernr = this.getAppointeeProperty('Pernr');
           const mMyAccPayLoad = {
             Menid: this.getCurrentMenuId(),
-            Pernr: this.getAppointeeProperty('Pernr'),
+            Pernr: sPernr,
           };
           const oModel = this.getModel(ServiceNames.PAY);
           // 나의 계좌정보
-          const aMyAcc = await Client.getEntitySet(oModel, 'CurrentAcctInfo', mMyAccPayLoad);
+          const [aMyAcc] = await Client.getEntitySet(oModel, 'CurrentAcctInfo', mMyAccPayLoad);
 
-          oListModel.setProperty('/MyAcc', aMyAcc[0]);
+          oListModel.setProperty('/MyAcc', aMyAcc);
 
-          this.onSearch();
-          // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+          const mSearch = oListModel.getProperty('/search');
+          const mPayLoad = {
+            Apbeg: moment(mSearch.secondDate).hours(9).toDate(),
+            Apend: moment(mSearch.date).hours(9).toDate(),
+            Menid: this.getCurrentMenuId(),
+            Pernr: sPernr,
+          };
+          const aTableList = await Client.getEntitySet(oModel, 'BankAccount', mPayLoad);
+          const oTable = this.byId('accTable');
+
+          oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
+          oListModel.setProperty('/List', aTableList);
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -128,7 +135,7 @@ sap.ui.define(
       },
 
       onClick() {
-        this.getRouter().navTo('accountChange-detail', { oDataKey: 'N' });
+        this.getRouter().navTo(`${this.getViewModel().getProperty('/routeName')}-detail`, { oDataKey: 'N' });
       },
 
       // override AttachFileCode
@@ -142,17 +149,10 @@ sap.ui.define(
         try {
           oListModel.setProperty('/busy', true);
 
-          const mPernr = {};
-
-          if (this.isHass()) {
-            const sPernr = this.getAppointeeProperty('Pernr');
-
-            mPernr.Pernr = sPernr;
-          }
-
+          const sPernr = this.getAppointeeProperty('Pernr');
           const mMyAccPayLoad = {
             Menid: this.getCurrentMenuId(),
-            ...mPernr,
+            Pernr: sPernr,
           };
           const oModel = this.getModel(ServiceNames.PAY);
           // 나의 계좌정보
@@ -165,7 +165,7 @@ sap.ui.define(
             Apbeg: moment(mSearch.secondDate).hours(9).toDate(),
             Apend: moment(mSearch.date).hours(9).toDate(),
             Menid: this.getCurrentMenuId(),
-            ...mPernr,
+            Pernr: sPernr,
           };
           const aTableList = await Client.getEntitySet(oModel, 'BankAccount', mPayLoad);
           const oTable = this.byId('accTable');
@@ -183,8 +183,9 @@ sap.ui.define(
         const vPath = oEvent.getParameter('rowBindingContext').getPath();
         const oListModel = this.getViewModel();
         const oRowData = oListModel.getProperty(vPath);
+        const sRouteName = oListModel.getProperty('/routeName');
 
-        this.getRouter().navTo('accountChange-detail', { oDataKey: oRowData.Appno });
+        this.getRouter().navTo(`${sRouteName}-detail`, { oDataKey: oRowData.Appno });
       },
 
       onPressExcelDownload() {

@@ -1,9 +1,9 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
+    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
@@ -15,9 +15,9 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     AppUtils,
     AttachFileAction,
+    EmployeeSearch,
     FragmentEvent,
     TableUtils,
     TextUtils,
@@ -29,6 +29,7 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.withdrawMiddle.WithdrawMiddle', {
       AttachFileAction: AttachFileAction,
+      EmployeeSearch: EmployeeSearch,
       TableUtils: TableUtils,
       TextUtils: TextUtils,
       FragmentEvent: FragmentEvent,
@@ -37,6 +38,7 @@ sap.ui.define(
         return {
           busy: false,
           Data: [],
+          routeName: '',
           Total: {
             Count: '',
             Pay: '',
@@ -62,7 +64,46 @@ sap.ui.define(
         };
       },
 
-      async onObjectMatched() {
+      async onObjectMatched(oParameter, sRouteName) {
+        const oListModel = this.getViewModel();
+        const oModel = this.getModel(ServiceNames.PAY);
+
+        try {
+          oListModel.setProperty('/busy', true);
+          oListModel.setProperty('/routeName', sRouteName);
+
+          const mSearch = oListModel.getProperty('/searchDate');
+          const mPayLoad = {
+            Apbeg: moment(mSearch.secondDate).hours(9).toDate(),
+            Apend: moment(mSearch.date).hours(9).toDate(),
+            Menid: this.getCurrentMenuId(),
+            Pernr: this.getAppointeeProperty('Pernr'),
+          };
+          // 중도인출 List
+          const aTableList = await Client.getEntitySet(oModel, 'MidWithdraw', mPayLoad);
+          const oTable = this.byId('withdrawTable');
+
+          oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
+          oListModel.setProperty('/listInfo/isShowProgress', false);
+          oListModel.setProperty('/listInfo/isShowApply', true);
+          oListModel.setProperty('/listInfo/isShowApprove', false);
+          oListModel.setProperty('/listInfo/isShowReject', true);
+          oListModel.setProperty('/listInfo/isShowComplete', true);
+          oListModel.setProperty('/List', aTableList);
+
+          // 나의 중도인출
+          const mMyTotal = this.withDrawCalculat(aTableList);
+
+          oListModel.setProperty('/Total', mMyTotal);
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oListModel.setProperty('/busy', false);
+        }
+      },
+
+      // 대상자 정보 사원선택시 화면 Refresh
+      async onRefresh() {
         const oListModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.PAY);
 
@@ -74,6 +115,7 @@ sap.ui.define(
             Apbeg: moment(mSearch.secondDate).hours(9).toDate(),
             Apend: moment(mSearch.date).hours(9).toDate(),
             Menid: this.getCurrentMenuId(),
+            Pernr: this.getAppointeeProperty('Pernr'),
           };
           // 중도인출 List
           const aTableList = await Client.getEntitySet(oModel, 'MidWithdraw', mPayLoad);
@@ -124,7 +166,7 @@ sap.ui.define(
       },
 
       onClick() {
-        this.getRouter().navTo('withdrawMiddle-detail', { oDataKey: 'N' });
+        this.getRouter().navTo(`${this.getViewModel().getProperty('/routeName')}-detail`, { oDataKey: 'N' });
       },
 
       formatNumber(vNum = '0') {
@@ -147,6 +189,7 @@ sap.ui.define(
             Apbeg: moment(mSearch.secondDate).hours(9).toDate(),
             Apend: moment(mSearch.date).hours(9).toDate(),
             Menid: this.getCurrentMenuId(),
+            Pernr: this.getAppointeeProperty('Pernr'),
           };
           // 중도인출 List
           const aTableList = await Client.getEntitySet(oModel, 'MidWithdraw', mPayLoad);
@@ -175,9 +218,10 @@ sap.ui.define(
         const vPath = oEvent.getParameters().rowBindingContext.getPath();
         const oListModel = this.getViewModel();
         const oRowData = oListModel.getProperty(vPath);
+        const sRouteName = oListModel.getProperty('/routeName');
 
         oListModel.setProperty('/parameter', oRowData);
-        this.getRouter().navTo('withdrawMiddle-detail', { oDataKey: oRowData.Appno });
+        this.getRouter().navTo(`${sRouteName}-detail`, { oDataKey: oRowData.Appno });
       },
 
       onPressExcelDownload() {
