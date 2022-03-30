@@ -374,6 +374,20 @@ sap.ui.define(
         // AppUtils.debug(`User accessed route ${sRouteName}, timestamp = ${new Date().getTime()}`);
 
         if (AppUtils.isLOCAL() || sRouteNameMain === 'ehrHome' || sRouteNameMain === 'ehrMobileHome') {
+          try {
+            const oModel = this.getModel(ServiceNames.COMMON);
+            const mFilters = {
+              Menid: 'home',
+              Pernr: this.getSessionModel().getProperty('/Pernr'),
+              Mobile: /android|iphone|ipad|ipod/i.test(navigator.userAgent) ? 'X' : '',
+              // Rolchk: '',
+              // Func: '',
+              // Action: '',
+            };
+            Client.create(oModel, 'SaveConnectLog', mFilters);
+          } catch (ex) {
+            AppUtils.debug('SaveConnectLog Error.', ex);
+          }
           return;
         }
 
