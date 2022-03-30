@@ -37,13 +37,11 @@ sap.ui.define(
           tax: { list: [] },
           work: { list: [] },
           base: { list: [] },
-          retroactive: { list: []}
+          retroactive: { list: [] },
         };
       },
 
-      onBeforeShow() {
-        
-      },
+      onBeforeShow() {},
 
       async onObjectMatched(oParameter) {
         const oViewModel = this.getViewModel();
@@ -68,6 +66,8 @@ sap.ui.define(
         oViewModel.setProperty('/busy', true);
 
         try {
+          this.getPdfUrl();
+
           const mDetail = await Client.deep(oModel, 'PayslipList', {
             Menid: this.getCurrentMenuId(),
             Seqnr: sSeqnr,
@@ -103,7 +103,6 @@ sap.ui.define(
           oViewModel.setProperty('/base/count', aBaseList.length);
           oViewModel.setProperty('/retroactive/list', aRetroactiveList);
           oViewModel.setProperty('/retroactive/count', aRetroactiveList.length);
-
         } catch (oError) {
           this.debug('Controller > paystub Detail > loadPage Error', oError);
 
@@ -118,7 +117,7 @@ sap.ui.define(
         const mCatsById = _.keyBy(aTreeData, 'Itmno');
         const mSumRow = TableUtils.generateSumRow({
           aTableData: mGroupedByParents[''] ?? [],
-          mSumField: { Uppno : "9999", Pyitx: this.getBundleText('LABEL_00172') }, // 합계
+          mSumField: { Uppno: '9999', Pyitx: this.getBundleText('LABEL_00172') }, // 합계
           vCalcProps: ['Betrg'],
         });
 
@@ -144,7 +143,30 @@ sap.ui.define(
             Seqnr: sSeqnr,
           });
 
-          if (mResult.Url) window.open(mResult.Url);
+          alert(mResult.Url);
+          if (mResult.Url) {
+            window.open(mResult.Url);
+          }
+        } catch (oError) {
+          this.debug('Controller > paystub Detail > onPressPDFPrint Error', oError);
+
+          AppUtils.handleError(oError);
+        }
+      },
+
+      async getPdfUrl() {
+        const oModel = this.getModel(ServiceNames.PAY);
+        const oViewModel = this.getViewModel();
+        const sSeqnr = oViewModel.getProperty('/Seqnr');
+
+        try {
+          const mResult = await Client.get(oModel, 'PayslipList', {
+            Menid: this.getCurrentMenuId(),
+            Pernr: this.getAppointeeProperty('Pernr'),
+            Seqnr: sSeqnr,
+          });
+
+          this.getViewModel().setProperty('/PdfUrl', mResult.Url);
         } catch (oError) {
           this.debug('Controller > paystub Detail > onPressPDFPrint Error', oError);
 
@@ -163,7 +185,6 @@ sap.ui.define(
 
         oViewModel.setProperty(`${sTableRootPath}/rowCount`, bExpanded ? iTableVisibleRowCount + iChildNodesLength : iTableVisibleRowCount - iChildNodesLength);
       },
-
 
       /*****************************************************************
        * ! Call OData

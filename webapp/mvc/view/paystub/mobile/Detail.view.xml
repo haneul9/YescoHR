@@ -8,16 +8,16 @@
     <customData>
       <core:CustomData key="form-style" value="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} ? 'request' : 'retrieval' }" writeToDom="true" />
     </customData>
-    <VBox class="contents">        
+    <VBox class="contents">
       <custom:MobileScrollContainer horizontal="false" vertical="true" excludeBottomSelector=".sapMPageFooter">
         <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
           <VBox>
             <Title level="H2" text="{i18n>LABEL_00173}" />
-            <grid:CSSGrid gridTemplateColumns="2fr 2fr" gridGap="7px 0" class="form-grid">        
-              <Label text="{i18n>LABEL_13006}"/>      
+            <grid:CSSGrid gridTemplateColumns="2fr 2fr" gridGap="7px 0" class="form-grid">
+              <Label text="{i18n>LABEL_13006}"/>
               <HBox alignContent="SpaceBetween" justifyContent="End">
                 <Text text="{ path: '/summary/list/0/Paydt', type: 'sap.ui.yesco.mvc.model.type.Date' }"/>
-              </HBox>          
+              </HBox>
               <Label text="{i18n>LABEL_00147}"/>
               <HBox alignContent="SpaceBetween" justifyContent="End">
                 <Text text="{/summary/list/0/Ocrtx}"/>
@@ -52,163 +52,131 @@
               </HBox>
               <Label text="{i18n>LABEL_13039}"/>
               <HBox alignContent="SpaceBetween" justifyContent="End">
-                <ObjectStatus text="{ path: '/summary/list/0/Bet08', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication03"  class="font-16-px"/>
+                <ObjectStatus text="{ path: '/summary/list/0/Bet08', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication03" class="font-16-px"/>
               </HBox>
             </grid:CSSGrid>
           </VBox>
-          
+
           <VBox class="pt-20-px">
             <Title level="H2" text="{i18n>LABEL_13015}" />
-            <grid:CSSGrid items="{path: '/pay/list'}"  gridTemplateColumns="1fr" gridGap="7px 0" class="form-grid" visible="{= ${/pay/count} > 0 ? true : false}"> 
+            <grid:CSSGrid items="{path: '/pay/list'}" gridTemplateColumns="1fr" gridGap="7px 0" class="form-grid" visible="{= ${/pay/count} > 0 ? true : false}">
               <HBox width="100%">
-               <Label text="{Pyitx}">
-               <customData>
-                 <core:CustomData
-                     key="sum"
-                     value="{= ${Sumrow} === true ? 'A' : 'B'}"
-                     writeToDom="true"
-                 />
-               </customData>
-                <layoutData>
-                  <FlexItemData growFactor="1"/>
-                </layoutData>
-               </Label>      
-               <HBox alignContent="SpaceBetween" justifyContent="End">
-               <layoutData>
-                 <FlexItemData growFactor="1"/>
-               </layoutData>
-                 <Text text="{ path: 'Betrg', type: 'sap.ui.yesco.mvc.model.type.Currency' }">
+                <Label text="{Pyitx}">
                   <customData>
-                    <core:CustomData
-                        key="sum"
-                        value="{= ${Sumrow} === true ? 'A' : 'B'}"
-                        writeToDom="true"
-                    />
+                    <core:CustomData key="sum" value="{= ${Sumrow} === true ? 'A' : 'B'}" writeToDom="true" />
                   </customData>
-                 </Text>
-               </HBox>
+                  <layoutData>
+                    <FlexItemData growFactor="1"/>
+                  </layoutData>
+                </Label>
+                <HBox alignContent="SpaceBetween" justifyContent="End">
+                  <layoutData>
+                    <FlexItemData growFactor="1"/>
+                  </layoutData>
+                  <Text text="{ path: 'Betrg', type: 'sap.ui.yesco.mvc.model.type.Currency' }">
+                    <customData>
+                      <core:CustomData key="sum" value="{= ${Sumrow} === true ? 'A' : 'B'}" writeToDom="true" />
+                    </customData>
+                  </Text>
+                </HBox>
               </HBox>
             </grid:CSSGrid>
-            <grid:CSSGrid gridTemplateColumns="1fr" gridGap="7px 0" class="form-grid" visible="{= ${/pay/count} === 0 ? true : false}">  
+            <grid:CSSGrid gridTemplateColumns="1fr" gridGap="7px 0" class="form-grid" visible="{= ${/pay/count} === 0 ? true : false}">
               <HBox width="100%" justifyContent="Center">
-               <Text text="{i18n>MSG_00001}" />
+                <Text text="{i18n>MSG_00001}" />
               </HBox>
             </grid:CSSGrid>
           </VBox>
 
           <VBox class="pt-20-px">
             <Title level="H2" text="{i18n>LABEL_13016}" />
-            <grid:CSSGrid items="{path: '/deduction/list'}" gridTemplateColumns="1fr" gridGap="7px 0" class="form-grid" visible="{= ${/deduction/count} > 0 ? true : false}">  
+            <grid:CSSGrid items="{path: '/deduction/list'}" gridTemplateColumns="1fr" gridGap="7px 0" class="form-grid" visible="{= ${/deduction/count} > 0 ? true : false}">
               <HBox width="100%">
-               <Label text="{Pyitx}">
-               <customData>
-                 <core:CustomData
-                     key="sum"
-                     value="{= ${Sumrow} === true ? 'A' : 'B'}"
-                     writeToDom="true"
-                 />
-               </customData>
-                <layoutData>
-                  <FlexItemData growFactor="1"/>
-                </layoutData>
-               </Label>      
-               <HBox alignContent="SpaceBetween" justifyContent="End">
-               <layoutData>
-                 <FlexItemData growFactor="1"/>
-               </layoutData>
-                 <Text text="{ path: 'Betrg', type: 'sap.ui.yesco.mvc.model.type.Currency' }">
+                <Label text="{Pyitx}">
                   <customData>
-                    <core:CustomData
-                        key="sum"
-                        value="{= ${Sumrow} === true ? 'A' : 'B'}"
-                        writeToDom="true"
-                    />
+                    <core:CustomData key="sum" value="{= ${Sumrow} === true ? 'A' : 'B'}" writeToDom="true" />
                   </customData>
-                 </Text>
-               </HBox>
+                  <layoutData>
+                    <FlexItemData growFactor="1"/>
+                  </layoutData>
+                </Label>
+                <HBox alignContent="SpaceBetween" justifyContent="End">
+                  <layoutData>
+                    <FlexItemData growFactor="1"/>
+                  </layoutData>
+                  <Text text="{ path: 'Betrg', type: 'sap.ui.yesco.mvc.model.type.Currency' }">
+                    <customData>
+                      <core:CustomData key="sum" value="{= ${Sumrow} === true ? 'A' : 'B'}" writeToDom="true" />
+                    </customData>
+                  </Text>
+                </HBox>
               </HBox>
             </grid:CSSGrid>
-            <grid:CSSGrid items="{path: '/deduction/list'}" gridTemplateColumns="1fr" gridGap="7px 0" class="form-grid" visible="{= ${/deduction/count} === 0 ? true : false}">  
+            <grid:CSSGrid items="{path: '/deduction/list'}" gridTemplateColumns="1fr" gridGap="7px 0" class="form-grid" visible="{= ${/deduction/count} === 0 ? true : false}">
               <HBox width="100%">
-               <Text text="{i18n>MSG_00001}" />
+                <Text text="{i18n>MSG_00001}" />
               </HBox>
             </grid:CSSGrid>
           </VBox>
 
           <VBox class="pt-20-px">
             <Title level="H2" text="{i18n>LABEL_13041}" />
-            <grid:CSSGrid items="{path: '/retroactive/list'}" gridTemplateColumns="1fr" gridGap="7px 0" class="form-grid">  
+            <grid:CSSGrid items="{path: '/retroactive/list'}" gridTemplateColumns="1fr" gridGap="7px 0" class="form-grid">
               <HBox width="100%">
-               <Label text="{Pyitx}">
-               <customData>
-                 <core:CustomData
-                     key="sum"
-                     value="{= ${Sumrow} === true ? 'A' : 'B'}"
-                     writeToDom="true"
-                 />
-               </customData>
-                <layoutData>
-                  <FlexItemData growFactor="1"/>
-                </layoutData>
-               </Label>      
-               <HBox alignContent="SpaceBetween" justifyContent="End">
-               <layoutData>
-                 <FlexItemData growFactor="1"/>
-               </layoutData>
-                 <Text text="{ path: 'Betrg', type: 'sap.ui.yesco.mvc.model.type.Currency' }">
+                <Label text="{Pyitx}">
                   <customData>
-                    <core:CustomData
-                        key="sum"
-                        value="{= ${Sumrow} === true ? 'A' : 'B'}"
-                        writeToDom="true"
-                    />
+                    <core:CustomData key="sum" value="{= ${Sumrow} === true ? 'A' : 'B'}" writeToDom="true" />
                   </customData>
-                 </Text>
-               </HBox>
+                  <layoutData>
+                    <FlexItemData growFactor="1"/>
+                  </layoutData>
+                </Label>
+                <HBox alignContent="SpaceBetween" justifyContent="End">
+                  <layoutData>
+                    <FlexItemData growFactor="1"/>
+                  </layoutData>
+                  <Text text="{ path: 'Betrg', type: 'sap.ui.yesco.mvc.model.type.Currency' }">
+                    <customData>
+                      <core:CustomData key="sum" value="{= ${Sumrow} === true ? 'A' : 'B'}" writeToDom="true" />
+                    </customData>
+                  </Text>
+                </HBox>
               </HBox>
             </grid:CSSGrid>
-            <grid:CSSGrid gridTemplateColumns="1fr" gridGap="7px 0" class="form-grid" visible="{= ${/retroactive/count} === 0 ? true : false}">  
+            <grid:CSSGrid gridTemplateColumns="1fr" gridGap="7px 0" class="form-grid" visible="{= ${/retroactive/count} === 0 ? true : false}">
               <HBox width="100%" justifyContent="Center">
-               <Text text="{i18n>MSG_00001}" />
+                <Text text="{i18n>MSG_00001}" />
               </HBox>
             </grid:CSSGrid>
           </VBox>
 
           <VBox class="pt-20-px">
             <Title level="H2" text="{i18n>LABEL_13042}" />
-            <grid:CSSGrid items="{path: '/tax/list'}" gridTemplateColumns="1fr" gridGap="7px 0" class="form-grid"  visible="{= ${/tax/count} > 0 ? true : false}">  
+            <grid:CSSGrid items="{path: '/tax/list'}" gridTemplateColumns="1fr" gridGap="7px 0" class="form-grid" visible="{= ${/tax/count} > 0 ? true : false}">
               <HBox width="100%">
-               <Label text="{Pyitx}">
-               <customData>
-                 <core:CustomData
-                     key="sum"
-                     value="{= ${Sumrow} === true ? 'A' : 'B'}"
-                     writeToDom="true"
-                 />
-               </customData>
-                <layoutData>
-                  <FlexItemData growFactor="1"/>
-                </layoutData>
-               </Label>      
-               <HBox alignContent="SpaceBetween" justifyContent="End">
-               <layoutData>
-                 <FlexItemData growFactor="1"/>
-               </layoutData>
-                 <Text text="{ path: 'Betrg', type: 'sap.ui.yesco.mvc.model.type.Currency' }">
+                <Label text="{Pyitx}">
                   <customData>
-                    <core:CustomData
-                        key="sum"
-                        value="{= ${Sumrow} === true ? 'A' : 'B'}"
-                        writeToDom="true"
-                    />
+                    <core:CustomData key="sum" value="{= ${Sumrow} === true ? 'A' : 'B'}" writeToDom="true" />
                   </customData>
-                 </Text>
-               </HBox>
+                  <layoutData>
+                    <FlexItemData growFactor="1"/>
+                  </layoutData>
+                </Label>
+                <HBox alignContent="SpaceBetween" justifyContent="End">
+                  <layoutData>
+                    <FlexItemData growFactor="1"/>
+                  </layoutData>
+                  <Text text="{ path: 'Betrg', type: 'sap.ui.yesco.mvc.model.type.Currency' }">
+                    <customData>
+                      <core:CustomData key="sum" value="{= ${Sumrow} === true ? 'A' : 'B'}" writeToDom="true" />
+                    </customData>
+                  </Text>
+                </HBox>
               </HBox>
             </grid:CSSGrid>
-            <grid:CSSGrid gridTemplateColumns="1fr" gridGap="7px 0" class="form-grid" visible="{= ${/tax/count} === 0 ? true : false}">  
+            <grid:CSSGrid gridTemplateColumns="1fr" gridGap="7px 0" class="form-grid" visible="{= ${/tax/count} === 0 ? true : false}">
               <HBox width="100%" justifyContent="Center">
-               <Text text="{i18n>MSG_00001}" />
+                <Text text="{i18n>MSG_00001}" />
               </HBox>
             </grid:CSSGrid>
           </VBox>
@@ -216,47 +184,47 @@
           <VBox class="pt-20-px">
             <Title level="H2" text="{i18n>LABEL_13018}" />
             <grid:CSSGrid gridTemplateColumns="2fr 2fr" gridGap="7px 0" class="form-grid">
-              <Label text="{i18n>LABEL_13020}"/>      
+              <Label text="{i18n>LABEL_13020}"/>
               <HBox alignContent="SpaceBetween" justifyContent="End">
                 <Text text="{ path: '/work/list/0/Tim501', type: 'sap.ui.model.type.Integer' }"/>
               </HBox>
-              <Label text="{i18n>LABEL_13021}"/>      
+              <Label text="{i18n>LABEL_13021}"/>
               <HBox alignContent="SpaceBetween" justifyContent="End">
                 <Text text="{ path: '/work/list/0/Tim502', type: 'sap.ui.model.type.Integer' }"/>
               </HBox>
-              <Label text="{i18n>LABEL_13022}"/>      
+              <Label text="{i18n>LABEL_13022}"/>
               <HBox alignContent="SpaceBetween" justifyContent="End">
                 <Text text="{ path: '/work/list/0/Tim503', type: 'sap.ui.model.type.Float' }"/>
               </HBox>
-              <Label text="{i18n>LABEL_13023}"/>      
+              <Label text="{i18n>LABEL_13023}"/>
               <HBox alignContent="SpaceBetween" justifyContent="End">
                 <Text text="{ path: '/work/list/0/Tim504', type: 'sap.ui.model.type.Float' }"/>
               </HBox>
-              <Label text="{i18n>LABEL_13024}"/>      
+              <Label text="{i18n>LABEL_13024}"/>
               <HBox alignContent="SpaceBetween" justifyContent="End">
                 <Text text="{ path: '/work/list/0/Tim505', type: 'sap.ui.model.type.Float' }"/>
               </HBox>
-              <Label text="{i18n>LABEL_13028}"/>      
+              <Label text="{i18n>LABEL_13028}"/>
               <HBox alignContent="SpaceBetween" justifyContent="End">
                 <Text text="{ path: '/work/list/0/Tim506', type: 'sap.ui.model.type.Float' }"/>
               </HBox>
-              <Label text="{i18n>LABEL_13029}"/>      
+              <Label text="{i18n>LABEL_13029}"/>
               <HBox alignContent="SpaceBetween" justifyContent="End">
                 <Text text="{ path: '/work/list/0/Tim507', type: 'sap.ui.model.type.Float' }"/>
               </HBox>
-              <Label text="{i18n>LABEL_13030}"/>      
+              <Label text="{i18n>LABEL_13030}"/>
               <HBox alignContent="SpaceBetween" justifyContent="End">
                 <Text text="{ path: '/work/list/0/Tim508', type: 'sap.ui.model.type.Float' }"/>
               </HBox>
-              <Label text="{i18n>LABEL_13025}"/>      
+              <Label text="{i18n>LABEL_13025}"/>
               <HBox alignContent="SpaceBetween" justifyContent="End">
                 <Text text="{ path: '/work/list/0/Tim509', type: 'sap.ui.model.type.Float' }"/>
               </HBox>
-              <Label text="{i18n>LABEL_13026}"/>      
+              <Label text="{i18n>LABEL_13026}"/>
               <HBox alignContent="SpaceBetween" justifyContent="End">
                 <Text text="{ path: '/work/list/0/Tim510', type: 'sap.ui.model.type.Float' }"/>
               </HBox>
-              <Label text="{i18n>LABEL_13027}"/>      
+              <Label text="{i18n>LABEL_13027}"/>
               <HBox alignContent="SpaceBetween" justifyContent="End">
                 <Text text="{ path: '/work/list/0/Tim511', type: 'sap.ui.model.type.Float' }"/>
               </HBox>
@@ -267,7 +235,8 @@
     </VBox>
     <footer>
       <OverflowToolbar>
-        <Button text="{i18n>LABEL_00171}" type="Emphasized" press=".onPressPDFPrint" />
+        <!-- <Button text="{i18n>LABEL_00171}" type="Emphasized" press=".onPressPDFPrint" /> -->
+        <Link href="{/PdfUrl}" subtle="true" target="_blank" text="{i18n>LABEL_00171}" textAlign="Center" width="100%" class="button-mimic-link" />
       </OverflowToolbar>
     </footer>
   </Page>
