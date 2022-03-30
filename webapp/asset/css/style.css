@@ -1106,7 +1106,8 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 /*close button style*/
 .sapMBtn.icon-button.close .sapMBtnInner {background:#EFE4BB!important; width:40px; height:40px}
 .sapMBtn.icon-button.close .sapMBtnInner .sapMBtnIcon {color:#484C50; font-size:22px; font-weight:200}
-.sapMBtn.icon-button.close .sapMBtnInner:after {content:""; display:inline-block; width:14px; height:14px; background-image:url(../css/images/icon_close.png); background-repeat:no-repeat; background-position:center}
+.sapMBtn.icon-button.close .sapMBtnInner:after {content:""; display:inline-block; width:14px; height:14px; background-image:url(../image/icon_arrow_cal.svg); background-repeat:no-repeat; background-position:center; transition: transform 0.4s ease-out;}
+.sapMBtn.icon-button.close.expanded .sapMBtnInner:after {content:""; display:inline-block; width:14px; height:14px; background-image:url(../image/icon_arrow_cal.svg); background-repeat:no-repeat; background-position:center; transform: rotate(-180deg); transition: transform 0.4s ease-out;}
 
 /*me button style*/
 .sapMBtn.icon-button.me .sapMBtnInner {background:transparent!important}
@@ -1215,6 +1216,9 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 .status-wrap .sapMFlexItemAlignAuto {align-self:center}
 
 .info-area {background:#F7F0D5 0% 0% no-repeat padding-box}
+.info-area .sapMPanelContent, .info-area .sapMPanelWrappingDivTb {background:#F7F0D5 0% 0% no-repeat padding-box !important; padding-left: 0 !important;}
+.info-area .sapMPanelWrappingDivTb > span { display: none; }
+.info-area .sapMPanelWrappingDivTb > div { padding-left: 0 !important; }
 .info-area .sapMFlexItemAlignAuto {-webkit-align-self:flex-start; align-self:flex-start}
 .info-area .sapMFlexItem .sapMText, .info-area .sapMFlexItem .sapMFT {min-height: 1.8rem;padding-left:4.5rem; margin-top:5px; font-size:1.25rem; font-weight:500; background-image:url(../css/images/icon_help.png); background-position:0 top; background-repeat:no-repeat}
 .info-area .sapMFlexItem .sapMFT {font-size:14px}
