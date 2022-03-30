@@ -73,6 +73,10 @@ sap.ui.define(
         }
       },
 
+      getCurrentLocationText(oArguments) {
+        return `${this.getBundleText('LABEL_29001')} > ${oArguments.Title}`;
+      },
+
       // 메뉴 경로
       getTitle(mSelectedTree) {
         let sTitle = '';

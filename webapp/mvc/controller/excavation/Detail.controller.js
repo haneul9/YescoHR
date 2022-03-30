@@ -185,7 +185,7 @@ sap.ui.define(
           Type: this.APPTP,
           Appno: sAppno,
           Max: 10,
-          FileTypes: 'jpg,jpeg,pdf,doc,docx,ppt,pptx,xls,xlsx,bmp,png'.split(','),
+          // FileTypes: 'jpg,jpeg,pdf,doc,docx,ppt,pptx,xls,xlsx,bmp,png'.split(','),
         });
       },
 

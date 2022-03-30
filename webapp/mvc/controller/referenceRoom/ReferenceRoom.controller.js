@@ -52,8 +52,13 @@ sap.ui.define(
 
       async onObjectMatched(mRouteArguments) {
         const oViewModel = this.getViewModel();
+        const oTree = this.byId('ReferenceTree');
 
         oViewModel.setData(this.initializeModel());
+
+        if (oTree) {
+          oTree.removeSelections();
+        }
 
         try {
           const aTree = await this.getReferenceRoom();
@@ -789,7 +794,7 @@ sap.ui.define(
           Appno: sAppno,
           Message: this.getBundleText('MSG_29003'),
           Max: 10,
-          FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'txt', 'png'],
+          // FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'txt', 'png'],
         });
       },
     });

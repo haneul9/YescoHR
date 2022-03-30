@@ -104,6 +104,13 @@ sap.ui.define(
         MessageBox.alert(sResponse);
       },
 
+      typeMissmatch(oEvent) {
+        const sFileName = oEvent.getParameter('fileName');
+        const sFileType = oEvent.getParameter('fileType');
+
+        MessageBox.alert(this.getBundleText('MSG_00012', sFileName, sFileType));
+      },
+
       /*
        * Upload할 첨부파일을 선택했을 경우 처리 내역
        */

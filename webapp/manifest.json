@@ -272,7 +272,7 @@
         
         { "pattern": "referenceRoom", "name": "referenceRoom", "target": "referenceRoom" },
         { "pattern": "mobile/referenceRoom", "name": "mobile/referenceRoom", "target": "mobile/referenceRoom" },
-        { "pattern": "mobile/referenceRoom/{L1id}/:L2id:/:L3id:/:L4id:", "name": "mobile/referenceRoom-detail", "target": "mobile/referenceRoomDetail" },
+        { "pattern": "mobile/referenceRoom/{Title}/{L1id}/:L2id:/:L3id:/:L4id:", "name": "mobile/referenceRoom-detail", "target": "mobile/referenceRoomDetail" },
         { "pattern": "h/referenceRoom", "name": "h/referenceRoom", "target": "h/referenceRoom" },
         { "pattern": "referenceRoom/:L1id:/:L2id:/:L3id:/:L4id:", "name": "referenceRoom-view", "target": "refeView" },
         
@@ -302,6 +302,8 @@
         
         { "pattern": "workTimeChange", "name": "workTimeChange", "target": "workTimeChange" },
         { "pattern": "workTimeChange/{oDataKey}", "name": "workTimeChange-detail", "target": "workTimeChangeDetail" },
+        { "pattern": "mobile/workTimeChange", "name": "mobile/workTimeChange", "target": "mobile/workTimeChange" },
+        { "pattern": "mobile/workTimeChange/{oDataKey}", "name": "mobile/workTimeChange-detail", "target": "mobile/workTimeChangeDetail" },
         { "pattern": "h/workTimeChange", "name": "h/workTimeChange", "target": "h/workTimeChange" },
         { "pattern": "h/workTimeChange/{oDataKey}", "name": "h/workTimeChange-detail", "target": "workTimeChangeDetail" },
         
@@ -499,6 +501,8 @@
         "h/workTimeChange": { "viewId": "h_workTimeChange", "viewPath": "sap.ui.yesco.mvc.view.workTimeChange", "viewName": "WorkTimeChangeH" },
         "workTimeChange": { "viewId": "workTimeChange", "viewPath": "sap.ui.yesco.mvc.view.workTimeChange", "viewName": "WorkTimeChange" },
         "workTimeChangeDetail": { "viewId": "workTimeChangeDetail", "viewPath": "sap.ui.yesco.mvc.view.workTimeChange", "viewName": "WorkTimeChangeDetail" },
+        "mobile/workTimeChange": { "viewId": "workTimeChange", "viewPath": "sap.ui.yesco.mvc.view.workTimeChange.mobile", "viewName": "WorkTimeChange" },
+        "mobile/workTimeChangeDetail": { "viewId": "workTimeChangeDetail", "viewPath": "sap.ui.yesco.mvc.view.workTimeChange.mobile", "viewName": "WorkTimeChangeDetail" },
 
         "m/worktimeStatus": { "viewId": "m_worktimeStatus", "viewPath": "sap.ui.yesco.mvc.view.worktimeStatus", "viewName": "WorktimeStatus" },
         "m/worktimeStatusDetail": { "viewId": "m_worktimeStatusDetail", "viewPath": "sap.ui.yesco.mvc.view.worktimeStatus", "viewName": "WorktimeStatusDetail" },

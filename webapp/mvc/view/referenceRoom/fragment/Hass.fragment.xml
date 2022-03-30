@@ -25,7 +25,7 @@
       </VBox>
       <Label text="{i18n>LABEL_29004}" visible="{/emptyData}" />
       <VBox visible="{/emptyData}">
-        <TextArea placeholder="{i18n>MSG_29002}" editable="{/UserFixed}" rows="5" width="100%" value="{/FormData/HeadZcomment}"/>
+        <TextArea placeholder="{i18n>MSG_29002}" editable="{/UserFixed}" rows="5" growing="{= !${/UserFixed} }" width="100%" value="{/FormData/HeadZcomment}"/>
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
@@ -73,14 +73,14 @@
       </HBox>
       <Label text="{i18n>LABEL_29006}" visible="{/emptyData}" />
       <VBox visible="{/emptyData}">
-        <TextArea placeholder="{i18n>MSG_29002}" rows="5" editable="{/UserFixed}" width="100%" value="{/FormData/MidZcomment}"/>
+        <TextArea placeholder="{i18n>MSG_29002}" rows="5" growing="{= !${/UserFixed} }" editable="{/UserFixed}" width="100%" value="{/FormData/MidZcomment}"/>
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
       </VBox>
       <Label text="{i18n>LABEL_29007}" visible="{/emptyData}" />
       <VBox visible="{/emptyData}">
-        <TextArea placeholder="{i18n>MSG_29002}" rows="5" editable="{/UserFixed}" width="100%" value="{/FormData/BotZcomment}"/>
+        <TextArea placeholder="{i18n>MSG_29002}" rows="5" growing="{= !${/UserFixed} }" editable="{/UserFixed}" width="100%" value="{/FormData/BotZcomment}"/>
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
