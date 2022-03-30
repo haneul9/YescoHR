@@ -634,10 +634,14 @@ sap.ui.define(
           oDetailModel.setProperty('/FormData/ZbetClass', '0');
         }
 
-        // 첨부파일
-        if (!AttachFileAction.getFileCount.call(this) && AppBtn === 'O') {
-          MessageBox.alert(this.getBundleText('MSG_03005'));
-          return true;
+        const sWerks = this.getAppointeeProperty('Werks');
+
+        if (!(sWerks === '2000' && (oFormData.Slart === '03' || oFormData.Slart === '04'))) {
+          // 첨부파일
+          if (!AttachFileAction.getFileCount.call(this) && AppBtn === 'O') {
+            MessageBox.alert(this.getBundleText('MSG_03005'));
+            return true;
+          }
         }
 
         return false;
