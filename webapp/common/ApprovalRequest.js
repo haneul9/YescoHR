@@ -106,9 +106,9 @@ sap.ui.define(
         return this.oFileAttachmentBoxHandler;
       },
 
-      setApplyInfoBoxData(mApporvalData) {
-        if (_.isEmpty(mApporvalData)) {
-          const mSessionData = this.oController.getSessionData();
+      setApplyInfoBoxData(mApprovalData) {
+        if (_.isEmpty(mApprovalData)) {
+          const mSessionData = this.oController.getAppointeeData();
 
           this.oApprovalRequestModel.setProperty('/ApplyInfo', {
             Apename: mSessionData.Ename,
@@ -116,13 +116,13 @@ sap.ui.define(
             Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
           });
         } else {
-          this.oApprovalRequestModel.setProperty('/ApplyInfo', mApporvalData);
+          this.oApprovalRequestModel.setProperty('/ApplyInfo', mApprovalData);
         }
         return this;
       },
 
-      setApprovalBoxData(mApporvalData) {
-        this.oApprovalRequestModel.setProperty('/ApprovalDetails', mApporvalData);
+      setApprovalBoxData(mApprovalData) {
+        this.oApprovalRequestModel.setProperty('/ApprovalDetails', mApprovalData);
         return this;
       },
 

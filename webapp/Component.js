@@ -296,6 +296,8 @@ sap.ui.define(
             if (oController && oController.onObjectMatched && typeof oController.onObjectMatched === 'function') {
               if (!_.startsWith(sRouteName, 'h/') && !_.startsWith(sRouteName, 'attendance')) {
                 this.getAppointeeModel().setData({ ...this.getSessionModel().getData(), showChangeButton: false, showBarChangeButton: false });
+              } else {
+                this.getAppointeeModel().setProperty('/showChangeButton', true);
               }
               oController.onObjectMatched(mRouteArguments, sRouteName);
             }
@@ -319,7 +321,7 @@ sap.ui.define(
 
         return Promise.all([
           this._saveBreadcrumbsData({ mRouteArguments, mConfig, sRouteNameMain, sRouteNameSub, oController }), //
-          this._checkRouteName(sRouteNameMain, sRouteNameSub),
+          this._checkRouteName(sRouteNameMain),
         ]);
       },
 
@@ -381,12 +383,12 @@ sap.ui.define(
         }
 
         const oModel = this.getModel(ServiceNames.COMMON);
-        const sUrl = 'GetMenuidRole';
         const mFilters = {
           Menid: sMenid,
+          Mobile: /android|iphone|ipad|ipod/i.test(navigator.userAgent) ? 'X' : '',
         };
 
-        return Client.getEntitySet(oModel, sUrl, mFilters);
+        return Client.getEntitySet(oModel, 'GetMenuidRole', mFilters);
       },
 
       /**

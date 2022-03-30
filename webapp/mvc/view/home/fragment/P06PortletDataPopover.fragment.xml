@@ -19,7 +19,7 @@
         <Column width="auto" visible="{visiblePeriod}">
           <m:Label text="{i18n>LABEL_01129}" />
           <template>
-            <m:Text text="{Period}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text" />
+            <m:Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }{= !${Endda} ? '' : ' ~ ' }{ path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text" />
           </template>
         </Column>
       </columns>

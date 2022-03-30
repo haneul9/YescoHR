@@ -12,7 +12,10 @@
         <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
           <VBox justifyContent="SpaceBetween">
             <Title level="H2" text="{/FormData/Title}" wrapping="true" />
-            <Text text="{/FormData/Chntm}" class="font-12-px"/>
+            <HBox justifyContent="SpaceBetween">
+              <Text text="{/FormData/Chntm}" class="font-12-px"/>
+              <Text text="{/FormData/ApernTxt}" class="font-12-px"/>
+            </HBox>
           </VBox>
           <core:HTML content="{/FormData/Detail}" />
           <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />

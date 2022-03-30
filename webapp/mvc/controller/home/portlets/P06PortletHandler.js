@@ -7,6 +7,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/home/portlets/AbstractPortletHandler',
     'sap/ui/yesco/mvc/model/type/Currency', // XML expression binding용 type preloading
+    'sap/ui/yesco/mvc/model/type/Date', // XML expression binding용 type preloading
     'sap/ui/yesco/mvc/model/type/DateWeekday', // XML expression binding용 type preloading
   ],
   (
@@ -74,52 +75,21 @@ sap.ui.define(
       async readContentData() {
         const oPortletModel = this.getPortletModel();
         const oSelectedDate = oPortletModel.getProperty('/selectedDate') || new Date();
+        const mAppointee = this.getController().getAppointeeData();
 
-        const oModel = this.getController().getModel(ServiceNames.COMMON);
+        const oModel = this.getController().getModel(ServiceNames.WORKTIME);
         const mPayload = {
-          Datum: oSelectedDate,
-          PortletPcountNav1: [],
-          PortletPcountNav2: [],
+          Datum: moment(oSelectedDate).startOf('date').add(9, 'hours'),
+          Werks: mAppointee.Werks,
+          Orgeh: mAppointee.Orgeh,
+          Headty: 'A',
         };
 
-        return Client.deep(oModel, 'PortletPernrCount', mPayload);
+        return Client.getEntitySet(oModel, 'TimeOverview', mPayload);
       },
 
-      transformContentData({ PortletPcountNav1, PortletPcountNav2 }) {
-        const { Datum, Week, ...mCountData } = ((PortletPcountNav1 || {}).results || [])[0] || {};
-
-        delete mCountData.__metadata;
-        delete mCountData.PortletPcountNav1;
-        delete mCountData.PortletPcountNav2;
-
-        const mTables = {};
-        ((PortletPcountNav2 || {}).results || []).forEach(({ Gubun, Pernr, Ename, Orgtx, Period }) => {
-          const mData = { Pernr, Ename, Orgtx, Period };
-          if (mTables[Gubun]) {
-            mTables[Gubun].push(mData);
-          } else {
-            mTables[Gubun] = [mData];
-          }
-        });
-
-        const oPortletModel = this.getPortletModel();
-        const mPortletContentData = {
-          counts: { Datum, Week, ...mCountData }, // Cnt01, Cnt02, Cnt03, Cnt04, Cnt05, Cnt06, Cnt07
-        };
-
-        Object.keys(mCountData).forEach((sKey) => {
-          const sTableKey = sKey.replace(/^[\D]+/, '').replace(/^0+/, '');
-          const aTableData = mTables[sTableKey] || [];
-          mPortletContentData[`table${sTableKey}`] = {
-            visiblePeriod: sTableKey !== '1',
-            list: aTableData,
-            listCount: Math.min(aTableData.length, 5),
-          };
-
-          oPortletModel.setProperty(`/table${sTableKey}/list`, []);
-        });
-
-        const fValue = Number(mCountData.Cnt07);
+      transformContentData([mPortletContentData]) {
+        const fValue = Number(mPortletContentData.Rte01);
         if (this.oChartPromise) {
           this.oChartPromise.then(() => {
             this.setChartData(fValue);
@@ -128,7 +98,7 @@ sap.ui.define(
           this.setChartData(fValue); // 다른 메뉴를 갔다가 되돌아오는 경우
         }
 
-        return mPortletContentData;
+        return { counts: mPortletContentData };
       },
 
       setChartData(fValue) {
@@ -172,21 +142,21 @@ sap.ui.define(
 
       onPressCount(oEvent) {
         const oEventSource = oEvent.getSource();
-        this.openPopover(oEventSource, `/table${oEventSource.data('table-key')}`);
+        this.openPopover(oEventSource, oEventSource.data('table-key'));
       },
 
-      async openPopover(oEventSource, sPath) {
-        await this.createPopover();
+      async openPopover(oEventSource, sTableKey) {
+        await this.createPopover(sTableKey);
 
         this.oPopover.close();
-        this.oPopover.bindElement(sPath);
+        this.oPopover.bindElement(`/table${sTableKey}`);
 
         setTimeout(() => {
           this.oPopover.openBy(oEventSource);
         }, 300);
       },
 
-      async createPopover() {
+      async createPopover(sTableKey) {
         if (!this.oPopover) {
           this.oPopover = await Fragment.load({
             name: 'sap.ui.yesco.mvc.view.home.fragment.P06PortletDataPopover',
@@ -196,7 +166,22 @@ sap.ui.define(
           this.getController().getView().addDependent(this.oPopover);
 
           this.oPopover
-            .attachBeforeOpen(() => {
+            .attachBeforeOpen(async () => {
+              const oModel = this.getController().getModel(ServiceNames.WORKTIME);
+              const mPayload = {
+                Datum: moment(oSelectedDate).startOf('date').add(9, 'hours'),
+                Werks: mAppointee.Werks,
+                Orgeh: mAppointee.Orgeh,
+                Headty: 'A',
+                Discod: sTableKey,
+              };
+
+              const aData = await Client.getEntitySet(oModel, 'TimeOverviewDetail1', mPayload);
+              aData.forEach((mData) => {
+                mData.visiblePeriod = sTableKey !== '1';
+              });
+              this.getPortletModel().setProperty(`/table${sTableKey}`, mData);
+
               const bVisiblePeriod = this.oPopover.getBindingContext().getProperty('visiblePeriod');
               this.oPopover.setContentWidth(bVisiblePeriod ? '447px' : this.bMobile ? '240px' : '249px');
             })

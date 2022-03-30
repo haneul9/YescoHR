@@ -4,6 +4,7 @@ sap.ui.define(
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
+    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
@@ -17,6 +18,7 @@ sap.ui.define(
     MessageBox,
     AppUtils,
     AttachFileAction,
+    EmployeeSearch,
     FragmentEvent,
     TableUtils,
     TextUtils,
@@ -27,6 +29,7 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.commuteType.CommuteType', {
+      EmployeeSearch: EmployeeSearch,
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
       TextUtils: TextUtils,
@@ -36,6 +39,7 @@ sap.ui.define(
         return {
           busy: false,
           CommuteList: [],
+          routeName: '',
           MyCom: {},
           SelectedRow: [],
           searchDate: {},
@@ -51,8 +55,10 @@ sap.ui.define(
         };
       },
 
-      async onObjectMatched() {
+      async onObjectMatched(oParameter, sRouteName) {
         const oListModel = this.getViewModel();
+
+        oListModel.setProperty('/routeName', sRouteName);
 
         try {
           oListModel.setProperty('/busy', true);
@@ -80,8 +86,6 @@ sap.ui.define(
             ObjTxt5: this.getBundleText('LABEL_00116'), // 확정
           });
           oListModel.setProperty('/CommuteList', aTableList);
-
-          this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -119,7 +123,6 @@ sap.ui.define(
             ObjTxt5: this.getBundleText('LABEL_00116'), // 확정
           });
           oListModel.setProperty('/CommuteList', aTableList);
-          this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -145,7 +148,7 @@ sap.ui.define(
           return;
         }
 
-        this.getRouter().navTo('commuteType-detail', { oDataKey: 'N', zyymm: aSelectRow[0].Zyymm, schkz: aSelectRow[0].Schkz });
+        this.getRouter().navTo(`${oListModel.getProperty('/routeName')}-detail`, { oDataKey: 'N', zyymm: aSelectRow[0].Zyymm, schkz: aSelectRow[0].Schkz });
       },
 
       // override AttachFileCode
@@ -175,7 +178,6 @@ sap.ui.define(
             ObjTxt5: this.getBundleText('LABEL_00116'), // 확정
           });
           oListModel.setProperty('/CommuteList', aTableList);
-          this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {

@@ -1,8 +1,6 @@
-/* eslint-disable no-useless-call */
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/core/routing/History',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
@@ -20,7 +18,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     History,
     MessageBox,
     Appno,
@@ -32,7 +29,8 @@ sap.ui.define(
     Client,
     ServiceNames,
     PostcodeDialogHandler,
-    BaseController
+    BaseController,
+    Date
   ) => {
     'use strict';
 
@@ -70,39 +68,36 @@ sap.ui.define(
         this.PostcodeDialogHandler = new PostcodeDialogHandler(this, this.callbackPostcode.bind(this));
 
         try {
-          // Input Field Imited
+          // Input Field Limited
           oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.PA, 'CertificateAppl')));
 
           const oModel = this.getModel(ServiceNames.PA);
+          const [aList1, aList2, aList3, aList4] = await Promise.all([
+            Client.getEntitySet(oModel, 'CertificateObjList'), //
+            Client.getEntitySet(oModel, 'CertificateReqList'),
+            Client.getEntitySet(oModel, 'CertificateUseList'),
+            Client.getEntitySet(oModel, 'CertificateRecList'),
+          ]);
+
           // 증명서유형
-          const aList1 = await Client.getEntitySet(oModel, 'CertificateObjList');
-
           oDetailModel.setProperty('/CertiType', new ComboEntry({ codeKey: 'Certy', valueKey: 'Certx', aEntries: aList1 }));
-
           // 구분
-          const aList2 = await Client.getEntitySet(oModel, 'CertificateReqList');
-
           oDetailModel.setProperty('/CertiGubun', new ComboEntry({ codeKey: 'Reqty', valueKey: 'Reqtx', aEntries: aList2 }));
-
-          // 신청부수
-          const aList3 = await this.getAppPiece();
-
-          oDetailModel.setProperty('/AppPiece', aList3);
-
           // 발급용도
-          const aList5 = await Client.getEntitySet(oModel, 'CertificateUseList');
-
-          oDetailModel.setProperty('/IssuanceList', new ComboEntry({ codeKey: 'Usety', valueKey: 'Usetx', aEntries: aList5 }));
-
+          oDetailModel.setProperty('/IssuanceList', new ComboEntry({ codeKey: 'Usety', valueKey: 'Usetx', aEntries: aList3 }));
           // 수령방법
-          const aList6 = await Client.getEntitySet(oModel, 'CertificateRecList');
+          oDetailModel.setProperty('/Receive', new ComboEntry({ codeKey: 'Recty', valueKey: 'Rectx', aEntries: aList4 }));
+          // 신청부수
+          oDetailModel.setProperty(
+            '/AppPiece',
+            _.times(9, (i) => ({ Zcode: String(i + 1), Ztext: i + 1 }))
+          );
 
-          oDetailModel.setProperty('/Receive', new ComboEntry({ codeKey: 'Recty', valueKey: 'Rectx', aEntries: aList6 }));
+          this.setFormData();
         } catch (oError) {
           this.debug(oError);
           AppUtils.handleError(oError);
         } finally {
-          this.setFormData();
           oDetailModel.setProperty('/busy', false);
         }
       },
@@ -132,7 +127,7 @@ sap.ui.define(
         );
 
         if (sViewKey === 'N' || !sViewKey) {
-          const mSessionData = this.getSessionData();
+          const mSessionData = this.getAppointeeData();
 
           oDetailModel.setProperty('/FormData', {
             Reqnt: '1',
@@ -140,8 +135,8 @@ sap.ui.define(
             Reqty: 'ALL',
             Usety: 'ALL',
             Recty: 'ALL',
-            Appernr: this.getSessionProperty('Pernr'),
-            Iyear: String(new Date().getFullYear()),
+            Appernr: mSessionData.Pernr,
+            Iyear: moment().format('yyyy'),
           });
 
           oDetailModel.setProperty('/ApplyInfo', {
@@ -154,6 +149,7 @@ sap.ui.define(
           const mListData = await Client.getEntitySet(oModel, 'CertificateAppl', {
             Prcty: 'D',
             Menid: this.getCurrentMenuId(),
+            Pernr: this.getAppointeeProperty('Pernr'),
             Appno: sViewKey,
           });
 
@@ -161,17 +157,6 @@ sap.ui.define(
           oDetailModel.setProperty('/ApplyInfo', mListData[0]);
           oDetailModel.setProperty('/ApprovalDetails', mListData[0]);
         }
-      },
-
-      // 신청부수
-      getAppPiece() {
-        const aYearsList = [];
-
-        for (let i = 1; i < 10; i++) {
-          aYearsList.push({ Zcode: String(i), Ztext: i });
-        }
-
-        return aYearsList;
       },
 
       // 주민등록번호 표기 checkBox
@@ -269,13 +254,14 @@ sap.ui.define(
                 const vAppno = await Appno.get.call(this);
 
                 oDetailModel.setProperty('/FormData/Appno', vAppno);
-                oDetailModel.setProperty('/FormData/Appdt', new Date());
+                oDetailModel.setProperty('/FormData/Appdt', moment().toDate());
               }
 
               const oSendObject = {
                 ...mFormData,
                 Prcty: 'P',
                 Menid: oDetailModel.getProperty('/menid'),
+                Pernr: this.getAppointeeProperty('Pernr'),
               };
 
               const oData = await Client.create(oModel, 'CertificateAppl', oSendObject);
@@ -323,7 +309,7 @@ sap.ui.define(
                 const vAppno = await Appno.get.call(this);
 
                 oDetailModel.setProperty('/FormData/Appno', vAppno);
-                oDetailModel.setProperty('/FormData/Appda', new Date());
+                oDetailModel.setProperty('/FormData/Appdt', moment().toDate());
               }
 
               const oModel = this.getModel(ServiceNames.PA);
@@ -331,6 +317,7 @@ sap.ui.define(
                 ...mFormData,
                 Prcty: 'C',
                 Menid: oDetailModel.getProperty('/menid'),
+                Pernr: this.getAppointeeProperty('Pernr'),
               };
 
               await Client.create(oModel, 'CertificateAppl', oSendObject);

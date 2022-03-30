@@ -12,11 +12,7 @@
         </VBox>
         <footer class="wrap">
             <OverflowToolbar>
-                <Button type="Emphasized" class="sapUiTinyMarginEnd" text="Swap" press=".onPressSwapBtn">
-                    <layoutData>
-                        <FlexItemData growFactor="1"/>
-                    </layoutData>
-                </Button>
+                <Button width="120px" type="Emphasized" class="sapUiTinyMarginEnd" text="Swap" press=".onPressSwapBtn" />
                 <ComboBox items="{/entry/Werks}" selectedKey="{/search/Werks}" change=".onChangeWerks">
                     <core:Item text="{Pbtxt}" key="{Werks}" />
                 </ComboBox>

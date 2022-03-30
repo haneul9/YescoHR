@@ -114,6 +114,7 @@ sap.ui.define(
 
               mFormData.Menid = this.getCurrentMenuId();
               mFormData.Waers = 'KRW';
+              mFormData.Pernr = this.getAppointeeProperty('Pernr');
 
               await Client.create(oModel, 'MidWithdraw', mFormData);
 

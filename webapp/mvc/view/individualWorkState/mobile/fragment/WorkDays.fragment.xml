@@ -1,60 +1,39 @@
 <core:FragmentDefinition xmlns="sap.m"
-  xmlns:table="sap.ui.table"
+  xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:core="sap.ui.core">
   <VBox class="vCardBox small MultiBoxmobile">
     <HBox class="title">
       <Title level="H2" text="{i18n>LABEL_18012}" />
       <Text text="{/searchDate/full}" class="desc-txt" />
     </HBox>
-    <table:Table rows="{/MonthWorkList}" visibleRowCount="6" width="100%" selectionMode="None" columnHeaderHeight="38" rowHeight="37" noData="{i18n>MSG_00001}">
-      <table:Column width="auto" sortProperty="Wktxt" filterProperty="Wktxt">
-        <Label text="{i18n>LABEL_17005}"/>
-        <table:template>
-          <Text text="{Wktxt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
-        </table:template>
-      </table:Column>
-      <table:Column width="60px" sortProperty="Val01" filterProperty="Val01">
-        <Label text="{i18n>LABEL_16005}"/>
-        <table:template>
-          <Text text="{Val01}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
-        </table:template>
-      </table:Column>
-      <table:Column width="60px" sortProperty="Val02" filterProperty="Val02">
-        <Label text="{i18n>LABEL_16011}"/>
-        <table:template>
-          <Text text="{Val02}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
-        </table:template>
-      </table:Column>
-    </table:Table>
+    <VBox class="section px-0">
+      <grid:CSSGrid gridTemplateColumns="1fr" gridGap="0px" class="dl" items="{/MonthWorkList}">
+        <HBox class="mobileInnerBox">
+          <Label text="{Wktxt}" />
+          <Text text="{i18n>LABEL_16005} {Val01} / {i18n>LABEL_16011} {Val02}" />
+        </HBox>
+      </grid:CSSGrid>
+    </VBox>
     <HBox class="title mt-15-px">
       <Title level="H2" text="{i18n>LABEL_18013}" />
       <Text text="{/searchDate/full}" class="desc-txt" />
     </HBox>
-    <table:Table rows="{/OTWorkList}" visibleRowCount="6" width="100%" selectionMode="None" columnHeaderHeight="38" rowHeight="37" noData="{i18n>MSG_00001}">
-      <table:Column width="auto" sortProperty="Ottxt" filterProperty="Ottxt">
-        <Label text="{i18n>LABEL_17005}"/>
-        <table:template>
-          <Text text="{Ottxt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
-        </table:template>
-      </table:Column>
-      <table:Column width="60px" sortProperty="Val01" filterProperty="Val01">
-        <Label text="{i18n>LABEL_18014}"/>
-        <table:template>
-          <Text text="{Val01}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
-        </table:template>
-      </table:Column>
-      <table:Column width="60px" sortProperty="Val02" filterProperty="Val02">
-        <Label text="{i18n>LABEL_13025}"/>
-        <table:template>
-          <Text text="{Val02}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
-        </table:template>
-      </table:Column>
-      <table:Column width="60px" sortProperty="Val03" filterProperty="Val03">
-        <Label text="{i18n>LABEL_13028}"/>
-        <table:template>
-          <Text text="{Val03}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
-        </table:template>
-      </table:Column>
-    </table:Table>
+    <VBox class="section px-0">
+      <grid:CSSGrid gridTemplateColumns="1fr" gridGap="0px" class="dl" items="{/OTWorkList}">
+        <HBox class="mobileInnerBox">
+          <Label text="{Ottxt}" />
+          <Text text="{i18n>LABEL_18014} {
+                  path: 'Val01',
+                  formatter: '.formatZeroTime'
+              } / {i18n>LABEL_13025} {
+                  path: 'Val02',
+                  formatter: '.formatZeroTime'
+              } / {i18n>LABEL_13028} {
+                  path: 'Val03',
+                  formatter: '.formatZeroTime'
+              }" />
+        </HBox>
+      </grid:CSSGrid>
+    </VBox>
   </VBox>
 </core:FragmentDefinition>

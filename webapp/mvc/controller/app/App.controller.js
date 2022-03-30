@@ -96,7 +96,7 @@ sap.ui.define(
       },
 
       navToProfile() {
-        this.oAppMenu.moveToMenu('employee');
+        this.oAppMenu.moveToMenu((this.bMobile ? 'mobile/' : '') + 'employee');
       },
 
       savePushToken() {

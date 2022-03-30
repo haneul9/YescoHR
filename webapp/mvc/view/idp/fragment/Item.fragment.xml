@@ -1,0 +1,75 @@
+<core:FragmentDefinition xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:grid="sap.ui.layout.cssgrid">
+	<VBox>
+		<Panel expandable="true" expanded="{expanded}" class="per-panel">
+			<headerToolbar>
+				<Toolbar height="45px" width="100%">
+					<grid:CSSGrid gridTemplateColumns="50px 675px 150px repeat(4, 1fr)" gridGap="0px 11px">
+						<Label text="{ItemNo}" textAlign="Left" />
+						<VBox>
+							<Input value="{Obj0}" class="goal-subject" placeholder="{i18n>LABEL_36007}" enabled="false" />
+						</VBox>
+						<HBox>
+							<Button icon="sap-icon://sys-minus" text="{i18n>LABEL_36010}" visible="{/buttons/goal/DELETE/Availability}" press=".onPressDeleteGoal">
+								<customData>
+									<core:CustomData key="sDeleteTargetNum" value="{OrderNo}" />
+								</customData>
+							</Button>
+						</HBox>
+						<Label text="{i18n>LABEL_36011}" visible="{= ${/fieldControl/display/Z301} !== 'H' }" />
+						<HBox visible="{= ${/fieldControl/display/Z301} !== 'H' }">
+							<ComboBox width="100%" selectedKey="" enabled="false" items="{ path: '/entry/levels', templateShareable: true }" visible="{= ${/fieldControl/display/Z301} === 'V' }">
+								<core:Item key="{ValueEid}" text="{ValueText}" />
+							</ComboBox>
+							<ComboBox width="100%" class="required" selectedKey="{Z301}" items="{ path: '/entry/levels', templateShareable: true }" enabled="{= ${/fieldControl/display/Z301} === 'X' }" visible="{= ${/fieldControl/display/Z301} !== 'V' }">
+								<core:Item key="{ValueEid}" text="{ValueText}" />
+							</ComboBox>
+						</HBox>
+						<Label text="{i18n>LABEL_36012}" visible="{= ${/fieldControl/display/Fapp} !== 'H' }" />
+						<HBox visible="{= ${/fieldControl/display/Fapp} !== 'H' }">
+							<ComboBox width="100%" selectedKey="" enabled="false" items="{ path: '/entry/levels', templateShareable: true }" visible="{= ${/fieldControl/display/Fapp} === 'V' }">
+								<core:Item key="{ValueEid}" text="{ValueText}" />
+							</ComboBox>
+							<ComboBox width="100%" class="required" selectedKey="{Fapp}" items="{ path: '/entry/levels', templateShareable: true }" enabled="{= ${/fieldControl/display/Fapp} === 'X' }" visible="{= ${/fieldControl/display/Fapp} !== 'V' }">
+								<core:Item key="{ValueEid}" text="{ValueText}" />
+							</ComboBox>
+						</HBox>
+					</grid:CSSGrid>
+				</Toolbar>
+			</headerToolbar>
+			<content>
+				<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="repeat(2, 1fr 3fr)">
+					<VBox>
+						<Label width="100%" text="{i18n>LABEL_36013}" vAlign="Top" visible="{= ${/fieldControl/display/Z305} !== 'H' }"/>
+					</VBox>
+					<VBox>
+						<TextArea width="100%" rows="5" value="" enabled="false" visible="{= ${/fieldControl/display/Z305} === 'V' }" />
+						<TextArea width="100%" class="required" rows="5" value="{Z305}" maxLength="{/fieldControl/limit/Z305}" enabled="{= ${/fieldControl/display/Z305} === 'X' }" visible="{= ${/fieldControl/display/Z305} !== 'H' &amp;&amp; ${/fieldControl/display/Z305} !== 'V' }" />
+					</VBox>
+					<VBox>
+						<Label width="100%" text="{i18n>LABEL_36014}" wrapping="true" vAlign="Top" visible="{= ${/fieldControl/display/Z307} !== 'H' }"/>
+					</VBox>
+					<VBox>
+						<TextArea width="100%" rows="5" value="" enabled="false" visible="{= ${/fieldControl/display/Z307} === 'V' }" />
+						<TextArea width="100%" class="required" rows="5" value="{Z307}" maxLength="{/fieldControl/limit/Z307}" enabled="{= ${/fieldControl/display/Z307} === 'X' }" visible="{= ${/fieldControl/display/Z307} !== 'H' &amp;&amp; ${/fieldControl/display/Z307} !== 'V' }" />
+					</VBox>
+					<VBox>
+						<Label width="100%" text="{i18n>LABEL_36015}" vAlign="Top" visible="{= ${/fieldControl/display/Z309} !== 'H' }"/>
+					</VBox>
+					<VBox>
+						<TextArea width="100%" rows="5" value="" enabled="false" visible="{= ${/fieldControl/display/Z309} === 'V' }" />
+						<TextArea width="100%" class="required" rows="5" value="{Z309}" maxLength="{/fieldControl/limit/Z309}" enabled="{= ${/fieldControl/display/Z309} === 'X' }" visible="{= ${/fieldControl/display/Z309} !== 'H' &amp;&amp; ${/fieldControl/display/Z309} !== 'V' }" />
+					</VBox>
+					<VBox>
+						<Label width="100%" text="{i18n>LABEL_36016}" wrapping="true" vAlign="Top" visible="{= ${/fieldControl/display/Z311} !== 'H' }"/>
+					</VBox>
+					<VBox>
+						<TextArea width="100%" rows="5" value="" enabled="false" visible="{= ${/fieldControl/display/Z311} === 'V' }" />
+						<TextArea width="100%" class="required" rows="5" value="{Z311}" maxLength="{/fieldControl/limit/Z311}" enabled="{= ${/fieldControl/display/Z311} === 'X' }" visible="{= ${/fieldControl/display/Z311} !== 'H' &amp;&amp; ${/fieldControl/display/Z311} !== 'V' }" />
+					</VBox>
+				</grid:CSSGrid>
+			</content>
+		</Panel>
+	</VBox>
+</core:FragmentDefinition>

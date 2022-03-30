@@ -11,8 +11,7 @@
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.individualWorkState.mobile.fragment.HolidayType" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.individualWorkState.mobile.fragment.WorkDays" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.individualWorkState.mobile.fragment.WeekWorkTime" type="XML" />
-        <!-- <core:Fragment fragmentName="sap.ui.yesco.mvc.view.individualWorkState.mobile.fragment.UseHoliday" type="XML" />
-        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.individualWorkState.mobile.fragment.DailyWork" type="XML" /> -->
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.individualWorkState.mobile.fragment.DailyWork" type="XML" />
       </custom:MobileScrollContainer>
     </VBox>
   </Page>

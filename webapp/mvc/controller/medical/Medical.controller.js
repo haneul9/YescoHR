@@ -84,7 +84,7 @@ sap.ui.define(
 
           this.onSearch();
           this.totalCount();
-          this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+          // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -96,7 +96,7 @@ sap.ui.define(
       onRefresh() {
         this.onSearch();
         this.totalCount();
-        this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+        // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
       },
 
       onClick() {

@@ -102,11 +102,15 @@
 
         { "pattern": "accountChange", "name": "accountChange", "target": "accountChange" },
         { "pattern": "accountChange/:oDataKey:", "name": "accountChange-detail", "target": "accountChangeDetail" },
+        { "pattern": "h/accountChange", "name": "h/accountChange", "target": "h/accountChange" },
+        { "pattern": "h/accountChange/:oDataKey:", "name": "h/accountChange-detail", "target": "accountChangeDetail" },
         { "pattern": "mobile/accountChange", "name": "mobile/accountChange", "target": "mobile/accountChange" },
         { "pattern": "mobile/accountChange/:oDataKey:", "name": "mobile/accountChange-detail", "target": "mobile/accountChangeDetail" },
 
         { "pattern": "attendance", "name": "attendance", "target": "attendance" },
         { "pattern": "attendance/{type}/:appno:", "name": "attendance-detail", "target": "attendanceDetail" },
+        { "pattern": "h/attendance", "name": "h/attendance", "target": "h/attendance" },
+        { "pattern": "h/attendance/{type}/:appno:", "name": "h/attendance-detail", "target": "attendanceDetail" },
         { "pattern": "mobile/attendance", "name": "mobile/attendance", "target": "mobile/attendance" },
         { "pattern": "mobile/attendance/{type}/:appno:", "name": "mobile/attendance-detail", "target": "mobile/attendanceDetail" },
         
@@ -117,6 +121,8 @@
         
         { "pattern": "certification", "name": "certification", "target": "certification" },
         { "pattern": "certification/{oDataKey}", "name": "certification-detail", "target": "certificationDetail" },
+        { "pattern": "h/certification", "name": "h/certification", "target": "h/certification" },
+        { "pattern": "h/certification/{oDataKey}", "name": "h/certification-detail", "target": "certificationDetail" },
         
         { "pattern": "clubJoin", "name": "clubJoin", "target": "clubJoin" },
         { "pattern": "clubJoin/{oDataKey}", "name": "clubJoin-detail", "target": "clubJoinDetail" },
@@ -144,6 +150,8 @@
 
         { "pattern": "commuteType", "name": "commuteType", "target": "commuteType" },
         { "pattern": "commuteType/{oDataKey}/:zyymm:/:schkz:", "name": "commuteType-detail", "target": "commuteTypeDetail" },
+        { "pattern": "h/commuteType", "name": "h/commuteType", "target": "h/commuteType" },
+        { "pattern": "h/commuteType/{oDataKey}/:zyymm:/:schkz:", "name": "h/commuteType-detail", "target": "commuteTypeDetail" },
         
         { "pattern": "m/commuteConfirm", "name": "m/commuteConfirm", "target": "m/commuteConfirm" },
 
@@ -170,12 +178,17 @@
 
         { "pattern": "excavation", "name": "excavation", "target": "excavation" },
         { "pattern": "excavation/{appno}", "name": "excavation-detail", "target": "excavationDetail" },
+        { "pattern": "h/excavation", "name": "h/excavation", "target": "h/excavation" },
+        { "pattern": "h/excavation/{appno}", "name": "h/excavation-detail", "target": "excavationDetail" },
 
         { "pattern": "exceptRetamt", "name": "exceptRetamt", "target": "exceptRetamt" },
+        { "pattern": "h/exceptRetamt", "name": "h/exceptRetamt", "target": "h/exceptRetamt" },
         { "pattern": "mobile/exceptRetamt", "name": "mobile/exceptRetamt", "target": "mobile/exceptRetamt" },
         
         { "pattern": "familyInfo", "name": "familyInfo", "target": "familyInfo" },
         { "pattern": "familyInfo/{oDataKey}", "name": "familyInfo-detail", "target": "familyInfoDetail" },
+        { "pattern": "h/familyInfo", "name": "h/familyInfo", "target": "h/familyInfo" },
+        { "pattern": "h/familyInfo/{oDataKey}", "name": "h/familyInfo-detail", "target": "familyInfoDetail" },
 
         { "pattern": "healthCare", "name": "healthCare", "target": "healthCare" },
         { "pattern": "healthCare/{oDataKey}", "name": "healthCare-detail", "target": "healthCareDetail" },
@@ -186,6 +199,11 @@
         
         { "pattern": "historyAppraisal", "name": "historyAppraisal", "target": "historyAppraisal" },
         { "pattern": "m/historyAppraisal", "name": "m/historyAppraisal", "target": "m/historyAppraisal" },
+        
+        { "pattern": "idp", "name": "idp", "target": "idp" },
+        { "pattern": "idp/{sType}/{sYear}", "name": "idp-detail", "target": "idpDetail" },
+        { "pattern": "m/idp", "name": "m/idp", "target": "m/idp" },
+        { "pattern": "m/idp/{sType}/{sYear}", "name": "m/idp-detail", "target": "idpDetail" },
 
         { "pattern": "individualWorkState", "name": "individualWorkState", "target": "individualWorkState" },
         { "pattern": "mobile/individualWorkState", "name": "mobile/individualWorkState", "target": "mobile/individualWorkState" },
@@ -208,6 +226,8 @@
         
         { "pattern": "nightduty", "name": "nightduty", "target": "nightduty" },
         { "pattern": "nightduty/{sAppno}", "name": "nightduty-detail", "target": "nightdutyDetail" },
+        { "pattern": "h/nightduty", "name": "h/nightduty", "target": "h/nightduty" },
+        { "pattern": "h/nightduty/{sAppno}", "name": "h/nightduty-detail", "target": "nightdutyDetail" },
 
         { "pattern": "notice", "name": "notice", "target": "notice" },
         { "pattern": "notice/{Sdate}/{Seqnr}", "name": "notice-detail", "target": "noticeDetail" },
@@ -228,6 +248,8 @@
 
         { "pattern": "paystub", "name": "paystub", "target": "paystub" },
         { "pattern": "paystub/{seqnr}", "name": "paystub-detail", "target": "paystubDetail" },
+        { "pattern": "h/paystub", "name": "h/paystub", "target": "h/paystub" },
+        { "pattern": "h/paystub/{seqnr}", "name": "h/paystub-detail", "target": "paystubDetail" },
         { "pattern": "mobile/paystub", "name": "mobile/paystub", "target": "mobile/paystub" },
         { "pattern": "mobile/paystub/{seqnr}", "name": "mobile/paystub-detail", "target": "mobile/paystubDetail" },
 
@@ -249,6 +271,8 @@
         { "pattern": "m/performanceSession", "name": "m/performanceSession", "target": "m/performanceSession" },
         
         { "pattern": "referenceRoom", "name": "referenceRoom", "target": "referenceRoom" },
+        { "pattern": "mobile/referenceRoom", "name": "mobile/referenceRoom", "target": "mobile/referenceRoom" },
+        { "pattern": "mobile/referenceRoom/{L1id}/:L2id:/:L3id:/:L4id:", "name": "mobile/referenceRoom-detail", "target": "mobile/referenceRoomDetail" },
         { "pattern": "h/referenceRoom", "name": "h/referenceRoom", "target": "h/referenceRoom" },
         { "pattern": "referenceRoom/:L1id:/:L2id:/:L3id:/:L4id:", "name": "referenceRoom-view", "target": "refeView" },
         
@@ -266,9 +290,13 @@
 
         { "pattern": "withdrawMiddle", "name": "withdrawMiddle", "target": "withdrawMiddle" },
         { "pattern": "withdrawMiddle/{oDataKey}", "name": "withdrawMiddle-detail", "target": "withdrawMiddleDetail" },
+        { "pattern": "h/withdrawMiddle", "name": "h/withdrawMiddle", "target": "h/withdrawMiddle" },
+        { "pattern": "h/withdrawMiddle/{oDataKey}", "name": "h/withdrawMiddle-detail", "target": "withdrawMiddleDetail" },
         
         { "pattern": "workTime", "name": "workTime", "target": "workTime" },
         { "pattern": "workTime/{oDataKey}", "name": "workTime-detail", "target": "workTimeDetail" },
+        { "pattern": "h/workTime", "name": "h/workTime", "target": "h/workTime" },
+        { "pattern": "h/workTime/{oDataKey}", "name": "h/workTime-detail", "target": "workTimeDetail" },
         { "pattern": "mobile/workTime", "name": "mobile/workTime", "target": "mobile/workTime" },
         { "pattern": "mobile/workTime/{oDataKey}", "name": "mobile/workTime-detail", "target": "mobile/workTimeDetail" },
         
@@ -276,6 +304,8 @@
         { "pattern": "workTimeChange/{oDataKey}", "name": "workTimeChange-detail", "target": "workTimeChangeDetail" },
         { "pattern": "mobile/workTimeChange", "name": "mobile/workTimeChange", "target": "mobile/workTimeChange" },
         { "pattern": "mobile/workTimeChange/{oDataKey}", "name": "mobile/workTimeChange-detail", "target": "mobile/workTimeChangeDetail" },
+        { "pattern": "h/workTimeChange", "name": "h/workTimeChange", "target": "h/workTimeChange" },
+        { "pattern": "h/workTimeChange/{oDataKey}", "name": "h/workTimeChange-detail", "target": "workTimeChangeDetail" },
         
         { "pattern": "m/worktimeStatus", "name": "m/WorktimeStatus", "target": "m/worktimeStatus" },
         { "pattern": "m/worktimeStatus/{oDataKey}", "name": "m/worktimeStatus-detail", "target": "m/worktimeStatusDetail" },
@@ -288,28 +318,33 @@
         { "pattern": "sampleVacationIndicator", "name": "sampleVacationIndicator", "target": "sampleVacationIndicator" },
         { "pattern": "sampleOrgChart", "name": "sampleOrgChart", "target": "sampleOrgChart" },
         { "pattern": "sampleYearPlan", "name": "sampleYearPlan", "target": "sampleYearPlan" },
-        { "pattern": "samplePortlets", "name": "samplePortlets", "target": "samplePortlets" }
+        { "pattern": "samplePortlets", "name": "samplePortlets", "target": "samplePortlets" },
+
+        { "pattern": "mobile/sampleComponents", "name": "mobile/sampleComponents", "target": "sampleComponents" }
       ],
       "targets": {
         "home": { "viewId": "home", "viewPath": "sap.ui.yesco.mvc.view.home", "viewName": "Portlets" },
         "mobileHome": { "viewId": "mobileHome", "viewPath": "sap.ui.yesco.mvc.view.home.mobile", "viewName": "Portlets" },
         "notFound": { "viewId": "notFound", "viewName": "NotFound", "transition": "show" },
 
+        "h/accountChange": { "viewId": "h_accountChange", "viewPath": "sap.ui.yesco.mvc.view.accountChange", "viewName": "AccountChangeH" },
         "accountChange": { "viewId": "accountChange", "viewPath": "sap.ui.yesco.mvc.view.accountChange", "viewName": "AccountChange" },
         "accountChangeDetail": { "viewId": "accountChangeDetail", "viewPath": "sap.ui.yesco.mvc.view.accountChange", "viewName": "AccountChangeDetail" },
         "mobile/accountChange": { "viewId": "mobile_accountChange", "viewPath": "sap.ui.yesco.mvc.view.accountChange.mobile", "viewName": "AccountChange" },
         "mobile/accountChangeDetail": { "viewId": "mobile_accountChangeDetail", "viewPath": "sap.ui.yesco.mvc.view.accountChange.mobile", "viewName": "AccountChangeDetail" },
 
         "attendance": { "viewId": "attendanceList", "viewPath": "sap.ui.yesco.mvc.view.attendance", "viewName": "List" },
+        "h/attendance": { "viewId": "h_attendanceList", "viewPath": "sap.ui.yesco.mvc.view.attendance", "viewName": "ListH" },
         "attendanceDetail": { "viewId": "attendanceDetail", "viewPath": "sap.ui.yesco.mvc.view.attendance", "viewName": "Detail" },
         "mobile/attendance": { "viewId": "mobile_attendanceList", "viewPath": "sap.ui.yesco.mvc.view.attendance.mobile", "viewName": "List" },
         "mobile/attendanceDetail": { "viewId": "mobile_attendanceDetail", "viewPath": "sap.ui.yesco.mvc.view.attendance.mobile", "viewName": "Detail" },
 
-        "h/carMaintainCost": { "viewId": "carMaintainCost", "viewPath": "sap.ui.yesco.mvc.view.carMaintainCost", "viewName": "CarMaintainCostH" },
+        "h/carMaintainCost": { "viewId": "h_carMaintainCost", "viewPath": "sap.ui.yesco.mvc.view.carMaintainCost", "viewName": "CarMaintainCostH" },
         "carMaintainCost": { "viewId": "carMaintainCost", "viewPath": "sap.ui.yesco.mvc.view.carMaintainCost", "viewName": "CarMaintainCost" },
         "carMaintainCostDetail": { "viewId": "carMaintainCostDetail", "viewPath": "sap.ui.yesco.mvc.view.carMaintainCost", "viewName": "CarMaintainCostDetail" },
 
         "certification": { "viewId": "certification", "viewPath": "sap.ui.yesco.mvc.view.certification", "viewName": "Certification" },
+        "h/certification": { "viewId": "h_certification", "viewPath": "sap.ui.yesco.mvc.view.certification", "viewName": "CertificationH" },
         "certificationDetail": { "viewId": "certificationDetail", "viewPath": "sap.ui.yesco.mvc.view.certification", "viewName": "CertificationDetail" },
 
         "h/clubJoin": { "viewId": "h_clubJoin", "viewPath": "sap.ui.yesco.mvc.view.clubJoin", "viewName": "ClubJoinH" },
@@ -329,6 +364,7 @@
         "mobile/congratulation": { "viewId": "mobile_congratulation", "viewPath": "sap.ui.yesco.mvc.view.congratulation.mobile", "viewName": "Congratulation" },
         "mobile/congDetail": { "viewId": "mobile_congDetail", "viewPath": "sap.ui.yesco.mvc.view.congratulation.mobile", "viewName": "CongDetail" },
         
+        "h/commuteType": { "viewId": "h_commuteType", "viewPath": "sap.ui.yesco.mvc.view.commuteType", "viewName": "CommuteTypeH" },
         "commuteType": { "viewId": "commuteType", "viewPath": "sap.ui.yesco.mvc.view.commuteType", "viewName": "CommuteType" },
         "commuteTypeDetail": { "viewId": "commuteTypeDetail", "viewPath": "sap.ui.yesco.mvc.view.commuteType", "viewName": "CommuteTypeDetail" },
         
@@ -354,12 +390,15 @@
         "m/EvalKpi": { "viewId": "m_EvalKpi", "viewPath": "sap.ui.yesco.mvc.view.mssEvalKpi", "viewName": "Kpi" },
 
         "excavation": { "viewId": "excavation", "viewPath": "sap.ui.yesco.mvc.view.excavation", "viewName": "List" },
+        "h/excavation": { "viewId": "h_excavation", "viewPath": "sap.ui.yesco.mvc.view.excavation", "viewName": "ListH" },
         "excavationDetail": { "viewId": "excavationDetail", "viewPath": "sap.ui.yesco.mvc.view.excavation", "viewName": "Detail" },
 
         "exceptRetamt": { "viewId": "exceptRetamt", "viewPath": "sap.ui.yesco.mvc.view.exceptRetamt", "viewName": "ExceptRetamt" },
+        "h/exceptRetamt": { "viewId": "h_exceptRetamt", "viewPath": "sap.ui.yesco.mvc.view.exceptRetamt", "viewName": "ExceptRetamtH" },
         "mobile/exceptRetamt": { "viewId": "mobile_exceptRetamt", "viewPath": "sap.ui.yesco.mvc.view.exceptRetamt.mobile", "viewName": "ExceptRetamt" },
 
         "familyInfo": { "viewId": "familyInfo", "viewPath": "sap.ui.yesco.mvc.view.familyInfo", "viewName": "FamilyInfo" },
+        "h/familyInfo": { "viewId": "h_familyInfo", "viewPath": "sap.ui.yesco.mvc.view.familyInfo", "viewName": "FamilyInfoH" },
         "familyInfoDetail": { "viewId": "familyInfoDetail", "viewPath": "sap.ui.yesco.mvc.view.familyInfo", "viewName": "FamilyInfoDetail" },
 
         "healthCare": { "viewId": "healthCare", "viewPath": "sap.ui.yesco.mvc.view.healthCare", "viewName": "HealthCare" },
@@ -371,6 +410,10 @@
         
         "historyAppraisal": { "viewId": "historyAppraisal", "viewPath": "sap.ui.yesco.mvc.view.historyAppraisal", "viewName": "MainE" },
         "m/historyAppraisal": { "viewId": "m_historyAppraisal", "viewPath": "sap.ui.yesco.mvc.view.historyAppraisal", "viewName": "MainM" },
+
+        "idp": { "viewId": "idp", "viewPath": "sap.ui.yesco.mvc.view.idp", "viewName": "ListE" },
+        "m/idp": { "viewId": "m_idp", "viewPath": "sap.ui.yesco.mvc.view.idp", "viewName": "ListM" },
+        "idpDetail": { "viewId": "idpDetail", "viewPath": "sap.ui.yesco.mvc.view.idp", "viewName": "Detail" },
 
         "individualWorkState": { "viewId": "individualWorkState", "viewPath": "sap.ui.yesco.mvc.view.individualWorkState", "viewName": "IndiWorkState" },
         "mobile/individualWorkState": { "viewId": "mobile_individualWorkState", "viewPath": "sap.ui.yesco.mvc.view.individualWorkState.mobile", "viewName": "IndividualWorkState" },
@@ -391,6 +434,7 @@
         "medicalDetail": { "viewId": "medicalDetail", "viewPath": "sap.ui.yesco.mvc.view.medical", "viewName": "MedicalDetail" },
         
         "nightduty": { "viewId": "nightduty", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "RequestList" },
+        "h/nightduty": { "viewId": "h_nightduty", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "RequestListH" },
         "nightdutyDetail": { "viewId": "nightdutyDetail", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "RequestDetail" },
 
         "notice": { "viewId": "notice", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "Ess" },
@@ -410,6 +454,7 @@
         "mobile/m/overviewAttendance": { "viewId": "mobile_m_overviewAttendance", "viewPath": "sap.ui.yesco.mvc.view.overviewAttendance.mobile", "viewName": "Main" },
         
         "paystub": { "viewId": "paystub", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "List" },
+        "h/paystub": { "viewId": "h_paystub", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "ListH" },
         "paystubDetail": { "viewId": "paystubDetail", "viewPath": "sap.ui.yesco.mvc.view.paystub", "viewName": "Detail" },
         "mobile/paystub": { "viewId": "mobile_paystub", "viewPath": "sap.ui.yesco.mvc.view.paystub.mobile", "viewName": "List" },
         "mobile/paystubDetail": { "viewId": "mobile_paystubDetail", "viewPath": "sap.ui.yesco.mvc.view.paystub.mobile", "viewName": "Detail" },
@@ -427,6 +472,8 @@
         "performanceView": { "viewId": "performanceView", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "Document" },
         
         "h/referenceRoom": { "viewId": "h_referenceRoom", "viewPath": "sap.ui.yesco.mvc.view.referenceRoom", "viewName": "ReferenceRoomH" },
+        "mobile/referenceRoom": { "viewId": "mobile_referenceRoom", "viewPath": "sap.ui.yesco.mvc.view.referenceRoom.mobile", "viewName": "ReferenceRoom" },
+        "mobile/referenceRoomDetail": { "viewId": "mobile_referenceRoomDetail", "viewPath": "sap.ui.yesco.mvc.view.referenceRoom.mobile", "viewName": "ReferenceRoomDetail" },
         "referenceRoom": { "viewId": "referenceRoom", "viewPath": "sap.ui.yesco.mvc.view.referenceRoom", "viewName": "ReferenceRoom" },
         "refeView": { "viewId": "refeView", "viewPath": "sap.ui.yesco.mvc.view.referenceRoom", "viewName": "RefeView" },
 
@@ -441,14 +488,17 @@
         "mobile/m/talent": { "viewId": "mobile_m_talent", "viewPath": "sap.ui.yesco.mvc.view.talent.mobile", "viewName": "Talent" },
         "mobile/m/talentCompare": { "viewId": "mobile_m_talentCompare", "viewPath": "sap.ui.yesco.mvc.view.talent.mobile", "viewName": "Compare" },
 
+        "h/withdrawMiddle": { "viewId": "h_withdrawMiddle", "viewPath": "sap.ui.yesco.mvc.view.withdrawMiddle", "viewName": "WithdrawMiddleH" },
         "withdrawMiddle": { "viewId": "withdrawMiddle", "viewPath": "sap.ui.yesco.mvc.view.withdrawMiddle", "viewName": "WithdrawMiddle" },
         "withdrawMiddleDetail": { "viewId": "withdrawMiddleDetail", "viewPath": "sap.ui.yesco.mvc.view.withdrawMiddle", "viewName": "WithdrawMiddleDetail" },
 
+        "h/workTime": { "viewId": "h_workTime", "viewPath": "sap.ui.yesco.mvc.view.workTime", "viewName": "WorkTimeH" },
         "workTime": { "viewId": "workTime", "viewPath": "sap.ui.yesco.mvc.view.workTime", "viewName": "WorkTime" },
         "workTimeDetail": { "viewId": "workTimeDetail", "viewPath": "sap.ui.yesco.mvc.view.workTime", "viewName": "WorkTimeDetail" },
         "mobile/workTime": { "viewId": "mobile_workTime", "viewPath": "sap.ui.yesco.mvc.view.workTime.mobile", "viewName": "WorkTime" },
         "mobile/workTimeDetail": { "viewId": "mobile_orkTimeDetail", "viewPath": "sap.ui.yesco.mvc.view.workTime.mobile", "viewName": "WorkTimeDetail" },
 
+        "h/workTimeChange": { "viewId": "h_workTimeChange", "viewPath": "sap.ui.yesco.mvc.view.workTimeChange", "viewName": "WorkTimeChangeH" },
         "workTimeChange": { "viewId": "workTimeChange", "viewPath": "sap.ui.yesco.mvc.view.workTimeChange", "viewName": "WorkTimeChange" },
         "workTimeChangeDetail": { "viewId": "workTimeChangeDetail", "viewPath": "sap.ui.yesco.mvc.view.workTimeChange", "viewName": "WorkTimeChangeDetail" },
         "mobile/workTimeChange": { "viewId": "workTimeChange", "viewPath": "sap.ui.yesco.mvc.view.workTimeChange.mobile", "viewName": "WorkTimeChange" },
@@ -465,7 +515,9 @@
         "sampleVacationIndicator": { "viewId": "sampleVacationIndicator", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "VacationIndicator", "title": "VacationIndicator" },
         "sampleOrgChart": { "viewId": "sampleOrgChart", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "OrgChart", "title": "OrgChart" },
         "sampleYearPlan": { "viewId": "sampleYearPlan", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "YearPlan", "title": "YearPlan" },
-        "samplePortlets": { "viewId": "samplePortlets", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Portlets", "title": "Portlets" }
+        "samplePortlets": { "viewId": "samplePortlets", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Portlets", "title": "Portlets" },
+
+        "mobile/sampleComponents": { "viewId": "sampleComponents", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Components", "title": "Components" }
       }
     }
   }

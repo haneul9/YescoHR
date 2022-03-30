@@ -15,7 +15,7 @@
         </HBox>
       </HBox>
     </VBox>
-    <VBox class="contents">
+    <VBox class="contents" busyIndicatorDelay="0" busy="{/busy}">
       <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
       <VBox class="vCardBox">
         <HBox justifyContent="SpaceBetween" class="table-toolbar">

@@ -6,9 +6,9 @@
       <Title level="H2" text="{i18n>LABEL_18005}" />
       <Text text="{/FullYear}" class="desc-txt" />
     </HBox>
-    <VBox height="176px">
+    <VBox height="100%" class="mt-15-px">
       <core:HTML content='&lt;div id="chart-doughnut-container"&gt;&lt;/div&gt;' />
-      <grid:CSSGrid class="status-wrap year-plan" gridTemplateColumns="3fr 1fr 1fr" gridGap="5px">
+      <grid:CSSGrid class="status-wrap year-plan year-plan-cssGrid" gridTemplateColumns="3fr 1fr 1fr" gridGap="5px">
         <grid:layoutData>
           <FlexItemData growFactor="1"/>
         </grid:layoutData>
@@ -17,22 +17,22 @@
             <core:CustomData key="style" value="Uesd" writeToDom="true" />
           </customData>
         </Label>
-        <Text text="{/vacationChart/dUsed}일"/>
-        <Text text="{/vacationChart/pUsed}%"/>
+        <Text text="{/vacationChart/dUsed}일" width="100%" textAlign="Right" />
+        <Text text="{/vacationChart/pUsed}%" width="100%" textAlign="Right" />
         <Label text="{i18n>LABEL_18003}">
           <customData>
             <core:CustomData key="style" value="Plan" writeToDom="true" />
           </customData>
         </Label>
-        <Text text="{/vacationChart/dPlan}일"/>
-        <Text text="{/vacationChart/pPlan}%"/>
+        <Text text="{/vacationChart/dPlan}일" width="100%" textAlign="Right" />
+        <Text text="{/vacationChart/pPlan}%" width="100%" textAlign="Right" />
         <Label text="{i18n>LABEL_18004}">
           <customData>
             <core:CustomData key="style" value="UnUsed" writeToDom="true" />
           </customData>
         </Label>
-        <Text text="{/vacationChart/dUnPlan}일"/>
-        <Text text="{/vacationChart/pUnPlan}%"/>
+        <Text text="{/vacationChart/dUnPlan}일" width="100%" textAlign="Right" />
+        <Text text="{/vacationChart/pUnPlan}%" width="100%" textAlign="Right" />
       </grid:CSSGrid>
     </VBox>
   </VBox>

@@ -1,10 +1,10 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
+    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
@@ -15,10 +15,10 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     MessageBox,
     AppUtils,
     AttachFileAction,
+    EmployeeSearch,
     FragmentEvent,
     TableUtils,
     TextUtils,
@@ -30,6 +30,7 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.familyInfo.FamilyInfo', {
       AttachFileAction: AttachFileAction,
+      EmployeeSearch: EmployeeSearch,
       TableUtils: TableUtils,
       TextUtils: TextUtils,
       FragmentEvent: FragmentEvent,
@@ -37,6 +38,7 @@ sap.ui.define(
       initializeModel() {
         return {
           busy: false,
+          routeName: '',
           Data: [],
           SelectedRow: {},
           searchDate: {
@@ -55,7 +57,15 @@ sap.ui.define(
         };
       },
 
-      onObjectMatched() {
+      onObjectMatched(oParameter, sRouteName) {
+        this.getViewModel().setProperty('/routeName', sRouteName);
+
+        this.onSearch();
+        this.totalCount();
+        // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+      },
+
+      async callbackAppointeeChange() {
         this.onSearch();
         this.totalCount();
       },
@@ -63,6 +73,7 @@ sap.ui.define(
       onClick() {
         const oViewModel = this.getViewModel();
         const mSelectRow = oViewModel.getProperty('/SelectedRow');
+        const sRouteName = oViewModel.getProperty('/routeName');
 
         if (!_.isEmpty(mSelectRow) && mSelectRow.ZappStatAl !== '60') {
           MessageBox.alert(this.getBundleText('MSG_05008'));
@@ -73,7 +84,7 @@ sap.ui.define(
           oViewModel.setProperty('/parameter', '');
         }
 
-        this.getRouter().navTo('familyInfo-detail', { oDataKey: 'N' });
+        this.getRouter().navTo(`${sRouteName}-detail`, { oDataKey: 'N' });
       },
 
       // override AttachFileCode
@@ -114,7 +125,12 @@ sap.ui.define(
         oListModel.setProperty('/busy', true);
 
         oModel.read('/FamilyInfoApplSet', {
-          filters: [new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'), new sap.ui.model.Filter('Begda', sap.ui.model.FilterOperator.EQ, dDate), new sap.ui.model.Filter('Endda', sap.ui.model.FilterOperator.EQ, dDate2)],
+          filters: [
+            new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'), //
+            new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, this.getAppointeeProperty('Pernr')),
+            new sap.ui.model.Filter('Begda', sap.ui.model.FilterOperator.EQ, dDate),
+            new sap.ui.model.Filter('Endda', sap.ui.model.FilterOperator.EQ, dDate2),
+          ],
           success: (oData) => {
             if (oData) {
               const oList = oData.results;
@@ -137,7 +153,9 @@ sap.ui.define(
         const oListModel = this.getViewModel();
 
         oModel.read('/FamInfoSummarySet', {
-          filters: [],
+          filters: [
+            new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, this.getAppointeeProperty('Pernr')), //
+          ],
           success: (oData) => {
             if (oData) {
               const oList = oData.results[0];
@@ -155,9 +173,10 @@ sap.ui.define(
         const vPath = oEvent.getParameters().rowBindingContext.getPath();
         const oListModel = this.getViewModel();
         const oRowData = oListModel.getProperty(vPath);
+        const sRouteName = oListModel.getProperty('/routeName');
 
         oListModel.setProperty('/parameter', oRowData);
-        this.getRouter().navTo('familyInfo-detail', { oDataKey: oRowData.Appno });
+        this.getRouter().navTo(`${sRouteName}-detail`, { oDataKey: oRowData.Appno });
       },
 
       onPressExcelDownload() {
