@@ -283,6 +283,13 @@ sap.ui.define(
       /**
        * FileAttachmentBox.fragment.xml
        */
+      onTypeMissMatch(oEvent) {
+        this.getFileAttachmentBoxHandler().onTypeMissMatch(oEvent);
+      },
+
+      /**
+       * FileAttachmentBox.fragment.xml
+       */
       onAttachmentRemove(oEvent) {
         this.getFileAttachmentBoxHandler().onAttachmentRemove(oEvent);
       },

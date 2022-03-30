@@ -105,6 +105,13 @@ sap.ui.define(
         MessageBox.alert(sResponse);
       },
 
+      onTypeMissMatch(oEvent) {
+        const sFileName = oEvent.getParameter('fileName');
+        const sFileType = oEvent.getParameter('fileType');
+
+        MessageBox.alert(AppUtils.getBundleText('MSG_00012', sFileName, sFileType));
+      },
+
       /**
        * 첨부 파일 선택 event handler
        */
