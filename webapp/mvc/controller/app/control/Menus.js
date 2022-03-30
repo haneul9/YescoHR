@@ -293,6 +293,12 @@ sap.ui.define(
           return;
         }
 
+        this.oAppController.getAppointeeModel().setData({
+          ...this.oAppController.getSessionModel().getData(),
+          showChangeButton: _.startsWith(sRouteName, 'h/'),
+          showBarChangeButton: false,
+        });
+
         this.oAppController
           .getOwnerComponent()
           .reduceViewResource() // 메뉴 이동 전 View hidden 처리로 불필요한 DOM 정보를 제거
