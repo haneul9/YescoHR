@@ -12,7 +12,7 @@
       <Label text="{i18n>LABEL_00150}:" />
       <Text text="{/YearPlan/detail/Duration1}" />
     </grid:CSSGrid>
-    <grid:CSSGrid gridTemplateColumns="1fr 3fr" gridRowGap="0" class="border-top py-6-px" visible="{= !!${/YearPlan/detail/Atext2} }">
+    <grid:CSSGrid gridTemplateColumns="1fr 2fr" gridRowGap="0" class="border-top py-6-px" visible="{= !!${/YearPlan/detail/Atext2} }">
       <Label text="{i18n>LABEL_18022}:" />
       <Text text="{/YearPlan/detail/Atext2}" />
       <Label text="{i18n>LABEL_00261}:" visible="{= ${/YearPlan/detail/Atext2} !== ${i18n>LABEL_13028}}" />
