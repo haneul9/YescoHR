@@ -50,12 +50,18 @@ sap.ui.define(
         const mPortletContentData = {};
         aPortletContentData.forEach((mData) => {
           if (mData.Ktart === '10') {
-            mPortletContentData.Annual = { Total: mData.Crecnt, Used: mData.Usecnt, Remain: mData.Balcnt };
+            mPortletContentData.Annual = { Total: parseFloat(mData.Crecnt), Used: parseFloat(mData.Usecnt), Remain: parseFloat(mData.Balcnt) };
           }
           if (mData.Ktart === '20') {
-            mPortletContentData.Summer = { Total: mData.Crecnt, Used: mData.Usecnt, Remain: mData.Balcnt };
+            mPortletContentData.Summer = { Total: parseFloat(mData.Crecnt), Used: parseFloat(mData.Usecnt), Remain: parseFloat(mData.Balcnt) };
           }
         });
+        if (!mPortletContentData.Annual) {
+          mPortletContentData.Annual = { Total: 0, Used: 0, Remain: 0 };
+        }
+        if (!mPortletContentData.Summer) {
+          mPortletContentData.Summer = { Total: 0, Used: 0, Remain: 0 };
+        }
 
         return mPortletContentData;
       },
