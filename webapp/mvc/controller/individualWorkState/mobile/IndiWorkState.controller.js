@@ -48,6 +48,7 @@ sap.ui.define(
           Hass: this.isHass(),
           WeekWorkDate: new Date(),
           MonthStrList: [],
+          DailyWorkList: [],
           YearPlan: [
             {
               title: '',
@@ -96,6 +97,13 @@ sap.ui.define(
 
       formatZeroTime(sValue = '0') {
         return _.parseInt(sValue) === 0 ? '0' : sValue;
+      },
+
+      formatDate(dBegDa, dEndDa) {
+        const sBe = dBegDa ? moment(dBegDa).format('YYYY.MM.DD') : '';
+        const sEn = dEndDa ? `~${moment(dEndDa).format('YYYY.MM.DD')}` : '';
+
+        return `${sBe}${sEn}`;
       },
 
       async onObjectMatched() {
@@ -173,6 +181,16 @@ sap.ui.define(
           oViewModel.setProperty('/WeekWork/Grp01', parseFloat(aWeekTime.Grp01));
           oViewModel.setProperty('/WeekWork/Grp02', parseFloat(aWeekTime.Grp02));
           oViewModel.setProperty('/WeekWork/WorkTime', `${this.formatTime(aWeekTime.Beguz)} ~ ${this.formatTime(aWeekTime.Enduz)} (${aWeekTime.Stdaz}${this.getBundleText('LABEL_00330')})`);
+
+          const mDailyWorkPayLoad = {
+            Werks: sWerks,
+            Tmyea: sYear,
+          };
+
+          // 일별 근태현황
+          const aDailyList = await Client.getEntitySet(oModel, 'ApprTimeList', mDailyWorkPayLoad);
+
+          oViewModel.setProperty('/DailyWorkList', aDailyList);
         } catch (oError) {
           this.debug(oError);
           AppUtils.handleError(oError);
@@ -290,82 +308,6 @@ sap.ui.define(
           'json'
         );
         oChart.render();
-      },
-
-      //////////////////////////// Combination Chart Setting
-      getCombiChartOption() {
-        return {
-          //Cosmetics
-          bgColor: 'transparent',
-          theme: 'ocean',
-          usePlotGradientColor: 0,
-          showDivLineSecondaryValue: 0,
-          showSecondaryLimits: 0,
-          showPlotBorder: 0,
-          baseFontSize: 13,
-          valueFontSize: 13,
-          legendItemFontSize: 13,
-          showXAxisLine: 0,
-          animation: 1,
-          divLineColor: '#dde1e6',
-          divLineDashed: 0,
-        };
-      },
-
-      buildCombiChart(aWorkTypeList) {
-        const oDetailModel = this.getViewModel();
-
-        _.chain(aWorkTypeList)
-          .set(
-            'Current',
-            _.map(aWorkTypeList, (e) => {
-              return { value: e.Cumuse };
-            })
-          )
-          .set(
-            'Monuse',
-            _.map(aWorkTypeList, (e) => {
-              return { value: e.Monuse };
-            })
-          )
-          .value();
-
-        FusionCharts.ready(() => {
-          new FusionCharts({
-            id: this.sCombiChartId,
-            type: 'mscombidy2d',
-            renderAt: 'chart-combination-container',
-            width: '100%',
-            height: '300px',
-            dataFormat: 'json',
-            dataSource: {
-              chart: this.getCombiChartOption(),
-              categories: [
-                {
-                  category: oDetailModel.getProperty('/MonthStrList'),
-                },
-              ],
-              dataset: [
-                {
-                  seriesName: this.getBundleText('LABEL_16005'),
-                  labelFontSize: '13',
-                  data: aWorkTypeList.Monuse,
-                  color: '#7bb4eb',
-                },
-                {
-                  seriesName: this.getBundleText('LABEL_00196'),
-                  labelFontSize: '13',
-                  renderAs: 'line',
-                  data: aWorkTypeList.Current,
-                  color: '#000000',
-                  anchorBgColor: '#000000',
-                  anchorRadius: '3',
-                  lineThickness: '1',
-                },
-              ],
-            },
-          }).render();
-        });
       },
 
       // Combination ReRanderring
@@ -541,6 +483,16 @@ sap.ui.define(
             const aVacaTypeList = await Client.getEntitySet(oModel, 'AbsQuotaList', { Menid: this.getCurrentMenuId() });
 
             oViewModel.setProperty('/VacaTypeList', aVacaTypeList);
+
+            const mDailyWorkPayLoad = {
+              Werks: sWerks,
+              Tmyea: sYear,
+            };
+
+            // 일별 근태현황
+            const aDailyList = await Client.getEntitySet(oModel, 'ApprTimeList', mDailyWorkPayLoad);
+
+            oViewModel.setProperty('/DailyWorkList', aDailyList);
           }
         } catch (oError) {
           this.debug(oError);
