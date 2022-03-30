@@ -23,36 +23,36 @@
       <VBox width="49%" class="portlet-box">
         <Title level="H2" text="{i18n>LABEL_01174}" />
         <HBox width="100%" class="mt-10-px" justifyContent="Center" alignItems="Baseline">
-          <Text text="{/Annual/Used}" class="vacation-count-size36 vacation-count-color" />
-          <Text text="/" class="vacation-count-size24 vacation-text-color mx-11-px" />
-          <Text text="{/Annual/Total}" class="vacation-count-size24" />
+          <Text text="{/Annual/Used}" class="vacation-count-xl vacation-count-color" />
+          <Text text="/" class="vacation-count-lg vacation-text-color mx-11-px" />
+          <Text text="{/Annual/Total}" class="vacation-count-lg" />
         </HBox>
-        <Text text="{i18n>LABEL_01178}" class="vacation-count-size12 vacation-text-color">
+        <Text text="{i18n>LABEL_01178}" class="vacation-count-xs vacation-text-color">
           <layoutData>
             <FlexItemData alignSelf="Center" />
           </layoutData>
         </Text>
         <HBox width="100%" class="mt-10-px" justifyContent="Center" alignItems="Baseline">
           <Text text="{i18n>LABEL_01176}" />
-          <Text text="{/Annual/Remain}" class="vacation-count-size24 vacation-count-color ml-5-px" />
+          <Text text="{/Annual/Remain}" class="vacation-count-lg vacation-count-color ml-5-px" />
           <Text text="{i18n>LABEL_01179}" class="vacation-count-color" />
         </HBox>
       </VBox>
       <VBox width="49%" class="portlet-box">
         <Title level="H2" text="{i18n>LABEL_01175}" />
         <HBox width="100%" class="mt-10-px" justifyContent="Center" alignItems="Baseline">
-          <Text text="{/Summer/Used}" class="vacation-count-size36 vacation-count-color" />
-          <Text text="/" class="vacation-count-size24 vacation-text-color mx-11-px" />
-          <Text text="{/Summer/Total}" class="vacation-count-size24" />
+          <Text text="{/Summer/Used}" class="vacation-count-xl vacation-count-color" />
+          <Text text="/" class="vacation-count-lg vacation-text-color mx-11-px" />
+          <Text text="{/Summer/Total}" class="vacation-count-lg" />
         </HBox>
-        <Text text="{i18n>LABEL_01178}" class="vacation-count-size12 vacation-text-color">
+        <Text text="{i18n>LABEL_01178}" class="vacation-count-xs vacation-text-color">
           <layoutData>
             <FlexItemData alignSelf="Center" />
           </layoutData>
         </Text>
         <HBox width="100%" class="mt-10-px" justifyContent="Center" alignItems="Baseline">
           <Text text="{i18n>LABEL_01177}" />
-          <Text text="{/Summer/Remain}" class="vacation-count-size24 vacation-count-color ml-5-px" />
+          <Text text="{/Summer/Remain}" class="vacation-count-lg vacation-count-color ml-5-px" />
           <Text text="{i18n>LABEL_01179}" class="vacation-count-color" />
         </HBox>
       </VBox>

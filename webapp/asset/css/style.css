@@ -172,9 +172,9 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p11 .portlet-p11-objectstatus15 {vertical-align:top; font-size:14px}
 .portlet-p11 .portlet-p11-text.sapMText {vertical-align:top; font-size:12px}
 .portlet-p12 h2.sapMTitle {vertical-align:middle; font-size:20px; font-weight:700}
-.portlet-p12 .vacation-count-size36.sapMText {font-size:36px; line-height:1}
-.portlet-p12 .vacation-count-size24.sapMText {font-size:24px}
-.portlet-p12 .vacation-count-size12.sapMText {font-size:12px}
+.portlet-p12 .vacation-count-xl.sapMText {font-size:24px; line-height:1}
+.portlet-p12 .vacation-count-lg.sapMText {font-size:20px}
+.portlet-p12 .vacation-count-xs.sapMText {font-size:12px}
 .portlet-p12 .vacation-count-color.sapMText {color:#2d94f9}
 .portlet-p12 .vacation-text-color.sapMText {color:#898d9c}
 .portlet-m21 .border-bottom {border-bottom:1px solid #dbdbdb}
@@ -824,7 +824,7 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .month-plan-grid .sapMFlexBox[data-holiday="Holiday"] .sapMText { color:#FC564F!important;}/* 공휴일 */
 .month-plan-grid .sapMFlexBox[data-holiday="Holiday"] .sapMLabel { color:#FC564F!important;}/* 공휴일 */
 .month-plan-grid .sapMText[data-holiday="Holiday"] { color:#FC564F!important;}/* 공휴일 */
-.month-plan-grid.sapUiLayoutCSSGrid .sapMFlexBox[data-stripes="Stripes"]::before { content: ''; width: 14%; height: 17%; background: repeating-linear-gradient(45deg, #A6A6A6, #A6A6A6 0px, transparent  2px, transparent  5px); position: absolute; z-index: 1;}신청
+.month-plan-grid.sapUiLayoutCSSGrid .sapMFlexBox[data-stripes="Stripes"]::before { content: ''; width: 14%; height: 70px; background: repeating-linear-gradient(45deg, #A6A6A6, #A6A6A6 0px, transparent  2px, transparent  5px); position: absolute; z-index: 1;}신청
 
 /* .sapSuiteIDCChart {width:auto !important} */
 .sapMTitle[data-color=blue] {color:blue}
