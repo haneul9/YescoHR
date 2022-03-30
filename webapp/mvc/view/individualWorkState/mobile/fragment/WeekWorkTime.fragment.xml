@@ -16,23 +16,23 @@
       <grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="4px" class="weekTimeGrid">
         <Label text="{i18n>LABEL_18037}"/>
         <VBox>
-          <Text text="{= ${/WeekWork/Wkrultx} }" width="100%" class="color-06" textAlign="Right" />
+          <Text text="{= ${/WeekWork/Wkrultx} }" width="100%" textAlign="Right" />
         </VBox>
         <Label text="{i18n>LABEL_18020}" />
         <VBox>
-          <Text text="{/WeekWork/WorkTime}" width="100%" class="color-06" textAlign="Right" />
+          <Text text="{/WeekWork/WorkTime}" width="100%" textAlign="Right" />
         </VBox>
         <Label text="{i18n>LABEL_18017}" />
         <VBox>
-          <Text text="{/WeekWork/Tottime}{i18n>LABEL_00330}" width="100%" class="color-06" textAlign="Right" />
+          <Text text="{/WeekWork/Tottime}{i18n>LABEL_00330}" width="100%" textAlign="Right" />
         </VBox>
         <Label text="{i18n>LABEL_18018}" />
         <VBox>
-          <Text text="{/WeekWork/Bastime}{i18n>LABEL_00330}" width="100%" class="color-06" textAlign="Right" />
+          <Text text="{/WeekWork/Bastime}{i18n>LABEL_00330}" width="100%" textAlign="Right" />
         </VBox>
         <Label text="{i18n>LABEL_18019}" />
         <VBox>
-          <Text text="{/WeekWork/Ottime}{i18n>LABEL_00330}" width="100%" class="color-06" textAlign="Right" />
+          <Text text="{/WeekWork/Ottime}{i18n>LABEL_00330}" width="100%" textAlign="Right" />
         </VBox>
       </grid:CSSGrid>
     </VBox>
