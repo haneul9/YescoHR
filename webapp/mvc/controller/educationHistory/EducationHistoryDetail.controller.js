@@ -20,8 +20,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.educationHistory.EducationHistoryDetail', {
-      LIST_PAGE_ID: 'container-ehr---educationHistory',
-
       TextUtils: TextUtils,
       TableUtils: TableUtils,
       FragmentEvent: FragmentEvent,
@@ -40,7 +38,7 @@ sap.ui.define(
       },
 
       // setData
-      async onObjectMatched(oParameter) {
+      async onObjectMatched() {
         const oDetailModel = this.getViewModel();
 
         oDetailModel.setData(this.initializeModel());
@@ -48,8 +46,9 @@ sap.ui.define(
         try {
           oDetailModel.setProperty('/busy', true);
 
+          const sPageId = this.isHass() ? 'container-ehr---h_educationHistory' : 'container-ehr---educationHistory';
           const oView = this.getView();
-          const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+          const oListView = oView.getParent().getPage(sPageId);
           const mParameters = oListView.getModel().getProperty('/parameters');
 
           oDetailModel.setProperty('/FormData', mParameters);
