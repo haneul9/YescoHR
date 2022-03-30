@@ -22,6 +22,7 @@
         <custom:customData>
           <core:CustomData key="style" value="{classNames}" writeToDom="true" />
           <core:CustomData key="holiday" value="{holiday}" writeToDom="true" />
+          <core:CustomData key="stripes" value="{stripes}" writeToDom="true" />
         </custom:customData>
         <Label width="100%" textAlign="Center" text="{label}" />
         <Text width="100%" textAlign="Center" visible="{= !!${bTime} }" text="{bTime}" />
