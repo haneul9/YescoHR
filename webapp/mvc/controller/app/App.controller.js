@@ -108,7 +108,7 @@ sap.ui.define(
           const sPushToken = window.YescoApp.getToken();
           this.requestSavePushToken(sPushToken);
         } else if (/iphone|ipad|ipod/i.test(navigator.userAgent) && !!window.webkit && !!window.webkit.messageHandlers && !!window.webkit.messageHandlers.script) {
-          // window.webkit.messageHandlers.script.postMessage('getToken');
+          window.webkit.messageHandlers.script.postMessage('requestToken');
         }
       },
 

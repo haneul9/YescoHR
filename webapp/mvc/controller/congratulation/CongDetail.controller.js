@@ -662,7 +662,10 @@ sap.ui.define(
               }
 
               // 파일 삭제 및 업로드
-              await this.FileAttachmentBoxHandler.upload(mFormData.Appno);
+              const oError = await this.FileAttachmentBoxHandler.upload(mFormData.Appno);
+              if (oError && oError.code === 'E') {
+                throw oError;
+              }
 
               await new Promise((resolve, reject) => {
                 const oModel = this.getModel(ServiceNames.BENEFIT);

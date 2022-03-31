@@ -244,7 +244,10 @@ sap.ui.define(
           // 파일 업로드
           try {
             while (aFiles.length) {
-              await this.uploadFile({ sAppno, sApptp, oUploadModel, sUploadUrl, mFile: aFiles.shift() });
+              const oError = await this.uploadFile({ sAppno, sApptp, oUploadModel, sUploadUrl, mFile: aFiles.shift() });
+              if (oError && oError.code === 'E') {
+                reject(oError);
+              }
             }
 
             // New flag 제거
