@@ -366,7 +366,7 @@ sap.ui.define(
           oViewModel.setProperty('/listInfo', {
             ...oListInfo,
             infoMessage: this.getBundleText('LABEL_23010', _.get(mSummary, 'Tmprd')),
-            ...TableUtils.count({ oTable, aRowData: aPlanList, bIncludeNullProgress: true }),
+            ...TableUtils.count({ oTable, aRowData: aPlanList }),
           });
 
           const mViewSummary = oViewModel.getProperty('/summary');
