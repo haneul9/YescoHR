@@ -67,16 +67,15 @@ sap.ui.define(
           oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.COMMON, 'HelpInfoTab2')));
           oViewModel.setProperty('/TreeFullList', aTree.HelpInfo1Nav.results);
           oViewModel.setProperty('/ReferenceList', aVariat);
-          if (!_.isEmpty(mRouteArguments)) {
-            // sap.ui.getCore().byId('container-ehr---app--appMenuToolbar').setVisible(false);
-            // sap.ui.getCore().byId('container-ehr---refeView--routeHeader').setVisible(false);
 
+          if (!_.isEmpty(mRouteArguments)) {
             const oDetail = await this.treeDetail(mRouteArguments.L1id, mRouteArguments.L2id, mRouteArguments.L3id, mRouteArguments.L4id, this.getAppointeeProperty('Werks'));
             const aFormData = oDetail.HelpInfo2Nav.results || [];
             let bTree = false;
 
             if (_.isEmpty(aFormData)) {
               bTree = true;
+              this.dataSetting(aVariat[0]);
             } else {
               const sHeadComment =
                 _.find(aFormData, (e) => {

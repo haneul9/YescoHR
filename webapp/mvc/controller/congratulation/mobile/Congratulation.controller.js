@@ -128,19 +128,19 @@ sap.ui.define(
               bDateRangeBox = false;
               break;
             case '1m':
-              dEndda = moment().subtract(1, 'months').toDate();
+              dEndda = moment().subtract(1, 'months').add(1, 'day').toDate();
               bDateRangeBox = false;
               break;
             case '3m':
-              dEndda = moment().subtract(3, 'months').toDate();
+              dEndda = moment().subtract(3, 'months').add(1, 'day').toDate();
               bDateRangeBox = false;
               break;
             case '6m':
-              dEndda = moment().subtract(6, 'months').toDate();
+              dEndda = moment().subtract(6, 'months').add(1, 'day').toDate();
               bDateRangeBox = false;
               break;
             case '12m':
-              dEndda = moment().subtract(12, 'months').toDate();
+              dEndda = moment().subtract(12, 'months').add(1, 'day').toDate();
               bDateRangeBox = false;
               break;
             case '0':
