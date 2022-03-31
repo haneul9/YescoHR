@@ -7,6 +7,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/model/type/Date',
     'sap/ui/yesco/mvc/model/type/Currency',
   ],
@@ -17,7 +18,8 @@ sap.ui.define(
     Client,
     ServiceNames,
     TableUtils,
-    BaseController
+    BaseController,
+    MessageBox,
   ) => {
     'use strict';
 
@@ -68,6 +70,10 @@ sap.ui.define(
           const oViewModel = this.getViewModel();
           const dRetda = oViewModel.getProperty('/data/Retda');
 
+          // 예상퇴직금 조회 서비스는 4/15까지 금액 검증 후 4/18 09시에 정식 오픈할 예정이니 양해 부탁드립니다.
+          MessageBox.alert(this.getBundleText('MSG_33005', 'LABEL_00110'));
+          return;
+          
           try {
             oViewModel.setProperty('/busy', true);
 
