@@ -19,11 +19,8 @@
                   <core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
                 </core:customData>
               </core:Icon>
-              <Text text="{Apptxt}">
-                <customData>
-                  <core:CustomData key="appty" value="{Appty}" writeToDom="true" />
-                </customData>
-              </Text>
+              <ObjectStatus text="{Apptxt}" class="font-16-px" 
+                            state="{ path: 'Appty', formatter: '.onChangeIndication' }" />
               <Text text="{Period}" />
               <Text text="{ path: 'ZappStatAl', formatter: '.TableUtils.StatusTxt' }" class="sapMText m-auto">
                 <customData>

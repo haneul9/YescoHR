@@ -34,9 +34,9 @@ sap.ui.define(
         return {
           busy: false,
           search: {
-            dateRange: '1w',
+            dateRange: '12m',
             secondDate: moment().toDate(),
-            date: moment().subtract(7, 'day').toDate(),
+            date: moment().subtract(12, 'months').toDate(),
             dateBox: false,
           },
           Data: [],
@@ -47,7 +47,7 @@ sap.ui.define(
             applyCount: 0,
             approveCount: 0,
             rejectCount: 0,
-            completeCount: 0,
+            completeCount: 0
           },
         };
       },
@@ -139,8 +139,10 @@ sap.ui.define(
 
       onSelectRow(oEvent) {
         const oViewModel = this.getViewModel();
-        const sPath = oEvent.getParameters().rowBindingContext.getPath();
-        const oRowData = this.getViewModel().getProperty(sPath);
+        const vPath = oEvent.getSource().getBindingContext().getPath();
+        const oRowData = this.getViewModel().getProperty(vPath);
+
+        if (isNaN(oRowData.Appno)) return;
 
         oViewModel.setProperty('/parameter/rowData', [oRowData]);
         this.getRouter().navTo('mobile/attendance-detail', { type: oRowData.Appty, appno: _.isEqual(oRowData.Appno, '00000000000000') ? 'NA' : oRowData.Appno });
@@ -151,12 +153,12 @@ sap.ui.define(
       },
 
       onPressModApprovalBtn() {
-        this.setRowActionParameters();
+        // this.setRowActionParameters();
         this.getRouter().navTo('mobile/attendance-detail', { type: this.PAGE_TYPE.CHANGE });
       },
 
       onPressCancApprovalBtn() {
-        this.setRowActionParameters();
+        // this.setRowActionParameters();
         this.getRouter().navTo('mobile/attendance-detail', { type: this.PAGE_TYPE.CANCEL });
       },
 
@@ -169,6 +171,11 @@ sap.ui.define(
           aSelectedIndices.map((idx) => oViewModel.getProperty(`/list/${idx}`))
         );
       },
+
+      onChangeIndication(sValue){
+        return sValue == 'A' ? 'Indication05' : (sValue == 'B' ? 'Indication03' : 'Indication04');
+      },
+
     });
   }
 );

@@ -71,7 +71,7 @@ sap.ui.define(
           form: {
             hasRow: false,
             rowCount: 1,
-            listMode: 'MultiToggle',
+            listMode: 'None',
             list: [],
             dialog: {
               calcCompleted: false,
@@ -81,8 +81,7 @@ sap.ui.define(
               data: {
                 Awart: 'ALL',
                 AbrtgTxt: '0일',
-              },
-              list: [],
+              }
             },
           },
           ApplyInfo: {},
@@ -145,6 +144,7 @@ sap.ui.define(
             this.initializeApprovalBox(aResultData[0]);
           } else {
             oViewModel.setProperty('/form/dialog/awartCodeList', await this.readAwartCodeList());
+            oViewModel.setProperty('/form/listMode', 'MultiSelect');
 
             if (_.includes([this.PAGE_TYPE.CHANGE, this.PAGE_TYPE.CANCEL], sType)) this.callDialog(sType);
 
@@ -225,10 +225,10 @@ sap.ui.define(
             this.openFormDialog();
             break;
           case 'B':
-            this.openFormChangeDialog();
+            this.openFormChange();
             break;
           case 'C':
-            this.openFormCancelDialog();
+            this.openFormCancel();
             break;
           default:
             break;
@@ -257,36 +257,26 @@ sap.ui.define(
         }, 100);
       },
 
-      async openFormChangeDialog() {
+      async openFormChange() {
         const oView = this.getView();
 
-        if (!this.oFormChangeDialog) {
-          this.oFormChangeDialog = await Fragment.load({
-            id: oView.getId(),
-            name: 'sap.ui.yesco.mvc.view.attendance.fragment.FormChangeDialog',
-            controller: this,
-          });
+        this.getViewModel().setProperty('/form/dialog/search', {
+          Begda: moment().startOf('year').hours(9).toDate(),
+          Endda: moment().endOf('year').hours(9).toDate(),
+        });
+        
+        this.retrieveChange();
+      },
 
-          this.oFormChangeDialog
-            .attachBeforeOpen(() => {
-              TableUtils.adjustRowSpan({
-                oTable: this.byId('dialogChangeTable'),
-                aColIndices: [8],
-                sTheadOrTbody: 'thead',
-              });
+      async openFormCancel() {
+        const oView = this.getView();
 
-              this.getViewModel().setProperty('/form/dialog/search', {
-                Begda: moment().startOf('year').hours(9).toDate(),
-                Endda: moment().endOf('year').hours(9).toDate(),
-              });
-              this.retrieveChange();
-            })
-            .attachAfterOpen(() => this.byId('dialogChangeTable').clearSelection());
-
-          oView.addDependent(this.oFormChangeDialog);
-        }
-
-        this.oFormChangeDialog.open();
+        this.getViewModel().setProperty('/form/dialog/search', {
+          Begda: moment().startOf('year').hours(9).toDate(),
+          Endda: moment().endOf('year').hours(9).toDate(),
+        });
+        
+        this.retrieveCancel();
       },
 
       async openHalfToOneDialog() {
@@ -336,32 +326,6 @@ sap.ui.define(
         }
 
         this.oOneToHalfDialog.open();
-      },
-
-      async openFormCancelDialog() {
-        const oView = this.getView();
-
-        if (!this.oFormCancelDialog) {
-          this.oFormCancelDialog = await Fragment.load({
-            id: oView.getId(),
-            name: 'sap.ui.yesco.mvc.view.attendance.fragment.FormCancelDialog',
-            controller: this,
-          });
-
-          this.oFormCancelDialog
-            .attachBeforeOpen(() => {
-              this.getViewModel().setProperty('/form/dialog/search', {
-                Begda: moment().startOf('year').hours(9).toDate(),
-                Endda: moment().endOf('year').hours(9).toDate(),
-              });
-              this.retrieveCancel();
-            })
-            .attachAfterOpen(() => this.byId('dialogCancelTable').clearSelection());
-
-          oView.addDependent(this.oFormCancelDialog);
-        }
-
-        this.oFormCancelDialog.open();
       },
 
       toggleHasRowProperty() {
@@ -435,7 +399,9 @@ sap.ui.define(
 
       async validChangeLeave(oEvent) {
         const oViewModel = this.getViewModel();
-        const mRowObject = oEvent.getSource().getParent().getBindingContext().getObject();
+        const mRowObject = oViewModel.getProperty('/form/dialog/data');
+
+        if(!mRowObject.Begda || !mRowObject.Endda) return;
 
         oViewModel.setProperty('/form/dialog/busy', true);
 
@@ -498,7 +464,58 @@ sap.ui.define(
 
       /*****************************************************************
        * ! Event handler
-       *****************************************************************/
+       *****************************************************************/      
+       openFormChangeDialog(oEvent){
+        const oView = this.getView();
+        const oViewModel = this.getViewModel();
+        const vPath = oEvent.getSource().getBindingContext().getPath();
+        const oRowData = this.getViewModel().getProperty(vPath);
+
+        setTimeout(() => {
+          if (!this.oFormChangeDialog) {
+            this.oFormChangeDialog = Fragment.load({
+              id: oView.getId(),
+              name: 'sap.ui.yesco.mvc.view.attendance.mobile.fragment.FormChangeDialog',
+              controller: this,
+            }).then(function (oDialog) {
+              oView.addDependent(oDialog);
+              return oDialog;
+            });
+          }
+          
+          oViewModel.setProperty('/form/dialog/data', $.extend(true, {}, oRowData));
+
+          this.oFormChangeDialog.then(function (oDialog) {
+            oDialog.open();
+          });
+        }, 100);       
+      },
+
+      openFormCancelDialog(oEvent){
+        const oView = this.getView();
+        const oViewModel = this.getViewModel();
+        const vPath = oEvent.getSource().getBindingContext().getPath();
+        const oRowData = this.getViewModel().getProperty(vPath);
+
+        setTimeout(() => {
+          if (!this.oFormCancelDialog) {
+            this.oFormCancelDialog = Fragment.load({
+              id: oView.getId(),
+              name: 'sap.ui.yesco.mvc.view.attendance.mobile.fragment.FormCancelDialog',
+              controller: this,
+            }).then(function (oDialog) {
+              oView.addDependent(oDialog);
+              return oDialog;
+            });
+          }
+          
+          oViewModel.setProperty('/form/dialog/data', $.extend(true, {}, oRowData));
+
+          this.oFormCancelDialog.then(function (oDialog) {
+            oDialog.open();
+          });
+        }, 100);       
+      },
       onSelectionChangeTableRow(oEvent) {
         if (!oEvent.getParameter('rowContext')) return;
 
@@ -518,7 +535,9 @@ sap.ui.define(
       },
 
       onChangeRowBegda(oEvent) {
-        const mRowObject = oEvent.getSource().getParent().getBindingContext().getObject();
+        // const mRowObject = oEvent.getSource().getParent().getBindingContext().getObject();
+        const oViewModel = this.getViewModel();
+        const mRowObject = oViewModel.getProperty('/form/dialog/data');
 
         _.set(mRowObject, 'Endda', mRowObject.Begda);
 
@@ -578,14 +597,16 @@ sap.ui.define(
 
       onPressDelBtn() {
         const oViewModel = this.getViewModel();
-        const sType = oViewModel.getProperty('/type');
-        const oTable = sType === 'B' ? this.byId('approveMultipleTable') : this.byId('approveSingleTable');
-        const aSelectedIndices = oTable.getSelectedIndices();
-        const aTableData = oViewModel.getProperty('/form/list');
+        const oList = this.byId('DetailList' + oViewModel.getProperty('/type')).getSelectedContexts();
+        let aDelList = [];
 
-        if (aSelectedIndices.length < 1) {
-          MessageBox.alert(this.getBundleText('MSG_00020', 'LABEL_00110')); // {삭제}할 행을 선택하세요.
-          return;
+        if (_.isEmpty(oList)) {
+          // 삭제할 데이터를 선택하세요.
+          return MessageBox.alert(this.getBundleText('MSG_00055'));
+        } else {
+          aDelList = _.map(oList, (e) => {
+            return oViewModel.getProperty(e.sPath);
+          });
         }
 
         // 선택된 행을 삭제하시겠습니까?
@@ -593,23 +614,17 @@ sap.ui.define(
           onClose: (sAction) => {
             if (MessageBox.Action.CANCEL === sAction) return;
 
-            const aGroupIds = [];
-            const aUnSelectedData = _.chain(aTableData)
-              .filter((elem, idx) => {
-                aGroupIds.push(elem.GroupId);
+            const aDiffList = _.difference(oViewModel.getProperty('/form/list'), aDelList);
 
-                return !aSelectedIndices.some(function (iIndex) {
-                  return iIndex === idx;
-                });
-              })
-              .filter((o) => !_.includes(_.compact(aGroupIds), o.GroupId))
-              .value();
+            oViewModel.setProperty('/form/list', aDiffList);
+            oViewModel.setProperty('/form/rowCount', _.size(aDiffList));
+            this.byId('DetailList' + oViewModel.getProperty('/type')).removeSelections(true);
 
-            oViewModel.setProperty('/form/list', aUnSelectedData);
-            oViewModel.setProperty('/form/rowCount', aUnSelectedData.length);
-
-            this.toggleHasRowProperty();
-            oTable.clearSelection();
+            if(oViewModel.getProperty('/type') === 'B'){
+              this.retrieveChange();
+            } else if(oViewModel.getProperty('/type') === 'C'){
+              this.retrieveCancel();
+            }
           },
         });
       },
@@ -658,11 +673,11 @@ sap.ui.define(
       },
 
       onPressFormChangeDialogClose() {
-        this.oFormChangeDialog.close();
+        this.byId('FormChangeDialog').close();
       },
 
       onPressFormCancelDialogClose() {
-        this.oFormCancelDialog.close();
+        this.byId('FormCancelDialog').close();
       },
 
       onPressHalfToOneDialogClose() {
@@ -800,39 +815,32 @@ sap.ui.define(
 
         oViewModel.setProperty('/form/dialog/busy', true);
 
+        const mInputData = oViewModel.getProperty('/form/dialog/data');
+        const aListData = oViewModel.getProperty('/form/list');
+
+        if(!mInputData.Begda || !mInputData.Endda || (!mInputData.Tmrsn || mInputData.Tmrsn.trim() == "")){
+          MessageBox.error(this.getBundleText('MSG_04008')); // 모든 필수 입력 항목 값을 입력하여 주십시오.
+          return;
+        }
+
         try {
-          const oTable = this.byId('dialogChangeTable');
-          const aSelectedIndices = oTable.getSelectedIndices();
+          aListData.push({
+            ...mInputData,
+            Begda: DateUtils.parse(mInputData.Begda),
+            Endda: DateUtils.parse(mInputData.Endda),
+            Begda2: DateUtils.parse(mInputData.Begda2),
+            Endda2: DateUtils.parse(mInputData.Endda2),
+          });
 
-          if (!aSelectedIndices.length) {
-            throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_00010', 'LABEL_04003') }); // {변경신청}할 데이터를 선택하세요.
-          }
-
-          const aDialogList = _.filter(oViewModel.getProperty('/form/dialog/list'), (o, i) => _.includes(aSelectedIndices, i));
-
-          if (_.some(aDialogList, (o) => _.isEqual(o.isValid, false))) {
-            throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_04001') }); // 계산이 수행되지 않아 저장이 불가합니다.
-          }
-
-          const aList = oViewModel.getProperty('/form/list');
-
-          oViewModel.setProperty('/form/rowCount', _.sum([aList.length, aDialogList.length]));
-          oViewModel.setProperty(
-            '/form/list',
-            _.concat(
-              aList,
-              _.map(aDialogList, (o) => _.omit(o, ['isActive', 'isValid']))
-            )
-          );
-
-          this.toggleHasRowProperty();
-          this.onPressFormChangeDialogClose();
+          oViewModel.setProperty('/form/list', aListData);
         } catch (oError) {
           this.debug('Controller > Attendance Detail > onPressFormChangeDialogSave Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/form/dialog/busy', false);
+          this.onPressFormChangeDialogClose();
+          this.retrieveChange();
         }
       },
 
@@ -841,39 +849,32 @@ sap.ui.define(
 
         oViewModel.setProperty('/form/dialog/busy', true);
 
+        const mInputData = oViewModel.getProperty('/form/dialog/data');
+        const aListData = oViewModel.getProperty('/form/list');
+
+        if((!mInputData.Tmrsn || mInputData.Tmrsn.trim() == "")){
+          MessageBox.error(this.getBundleText('MSG_04008')); // 모든 필수 입력 항목 값을 입력하여 주십시오.
+          return;
+        }
+
         try {
-          const oTable = this.byId('dialogCancelTable');
-          const aSelectedIndices = oTable.getSelectedIndices();
+          aListData.push({
+            ...mInputData,
+            Begda: DateUtils.parse(mInputData.Begda),
+            Endda: DateUtils.parse(mInputData.Endda),
+            Begda2: DateUtils.parse(mInputData.Begda2),
+            Endda2: DateUtils.parse(mInputData.Endda2),
+          });
 
-          if (!aSelectedIndices.length) {
-            throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_00010', 'LABEL_04004') }); // {취소신청}할 데이터를 선택하세요.
-          }
-
-          const aDialogList = _.filter(oViewModel.getProperty('/form/dialog/list'), (o, i) => _.includes(aSelectedIndices, i));
-          const aList = oViewModel.getProperty('/form/list');
-
-          oViewModel.setProperty('/form/rowCount', _.sum([aList.length, aDialogList.length]));
-          oViewModel.setProperty(
-            '/form/list',
-            _.concat(
-              aList,
-              _.map(aDialogList, (o) =>
-                _.chain(o)
-                  .omit('isActive')
-                  .set('AbrtgTxt', `${_.toNumber(o.Abrtg)}일`)
-                  .value()
-              )
-            )
-          );
-
-          this.toggleHasRowProperty();
-          this.onPressFormCancelDialogClose();
+          oViewModel.setProperty('/form/list', aListData);
         } catch (oError) {
           this.debug('Controller > Attendance Detail > onPressFormCancelDialogSave Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/form/dialog/busy', false);
+          this.onPressFormCancelDialogClose();
+          this.retrieveCancel();
         }
       },
 

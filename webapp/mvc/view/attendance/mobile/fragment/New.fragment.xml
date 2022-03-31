@@ -1,0 +1,63 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:custom="sap.ui.yesco.control">
+    <HBox class="table-toolbar" visible="{= !${/ZappStatAl} }" >
+        <HBox class="title">
+            <Title level="H2" text="{i18n>LABEL_04002}" />
+        </HBox>
+        <HBox class="table-actions">
+            <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" press=".onPressFormDialogSave" />
+        </HBox>
+    </HBox>
+    <grid:CSSGrid gridTemplateColumns="2fr 5fr" gridGap="6px 0" class="form-grid" visible="{= !${/ZappStatAl} }">
+        <Label text="{i18n>LABEL_04010}"/>
+        <VBox>
+            <ComboBox class="required" selectedKey="{/form/dialog/data/Awart}" editable="{= ${/type} !== 'B'}" items="{ path: '/form/dialog/awartCodeList', templateShareable: false }" change=".onChangeAwartCombo">
+            <core:Item key="{Awart}" text="{Atext}" />
+            </ComboBox>
+        </VBox>
+        <Label text="{i18n>LABEL_04014}" />
+        <VBox>
+            <HBox>
+            <custom:DateRangeSelection class="required sapIcon_Date" dateValue="{ path: '/form/dialog/data/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/form/dialog/data/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{= ${/form/dialog/data/Awart} !== 'ALL'}" change=".onChangeLeaveDate" />
+            <Input width="45px" value="{/form/dialog/data/AbrtgTxt}" editable="false" textAlign="Right" />
+            </HBox>
+        </VBox>
+        <Label text="{i18n>LABEL_04009}" />
+        <VBox>
+            <Input class="required" value="{/form/dialog/data/Tmrsn}" enabled="{= ${/form/dialog/data/Awart} !== 'ALL'}" />
+        </VBox>
+    </grid:CSSGrid>
+    
+    <HBox class="table-toolbar">
+        <HBox class="title">
+            <Title level="H2" text="{i18n>LABEL_00129}" />
+        </HBox>
+        <HBox class="table-actions">
+            <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onPressDelBtn"  visible="{= !${/ZappStatAl} }" />
+        </HBox>
+    </HBox>
+    <List id="DetailListA" items="{ path: '/form/list' }" class="list-wrap" mode="{/form/listMode}" rememberSelections="false" >
+        <CustomListItem type="Active">
+            <HBox wrap="Wrap" justifyContent="SpaceBetween" alignItems="Baseline" alignContent="SpaceBetween" class="list-item-box">              
+            <grid:CSSGrid gridTemplateColumns="1fr 2fr" gridGap="6px 10px">
+                <grid:layoutData>
+                    <FlexItemData growFactor="1" />
+                </grid:layoutData>
+                <Text text="{Atext}" class="font-16-px font-bold" />
+                <HBox>                    
+                <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' }" visible="{= (${Abrtg} * 1) === 1 }" />
+                <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ~ { path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ({AbrtgTxt})" visible="{= (${Abrtg} * 1) &gt; 1 }" />
+                </HBox>
+                <HBox />
+                <Text text="{Tmrsn}" wrapping="false">
+                <layoutData>
+                    <FlexItemData maxWidth="90%" />
+                </layoutData>
+                </Text>
+            </grid:CSSGrid>
+            </HBox>
+        </CustomListItem>
+    </List>
+</core:FragmentDefinition>

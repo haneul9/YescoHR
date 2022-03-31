@@ -2,69 +2,23 @@
   xmlns="sap.m"
   xmlns:mvc="sap.ui.core.mvc"
   xmlns:core="sap.ui.core"
-  xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control">
   <Page enableScrolling="false" floatingFooter="true" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
     <customData>
-      <core:CustomData key="form-style" value="request" writeToDom="true" />
+      <core:CustomData key="form-style" value="{= !${/ZappStatAl} ? 'request' : 'retrieval' }" writeToDom="true" />
     </customData>
     <VBox class="contents">
       <custom:MobileScrollContainer horizontal="false" vertical="true" excludeBottomSelector=".sapMPageFooter">
         <VBox height="100%" class="wrap" busy="{/busy}" busyIndicatorDelay="0">
-          <HBox class="table-toolbar">
-            <HBox class="title">
-              <Title level="H2" text="{i18n>LABEL_04002}" />
-            </HBox>
-            <HBox class="table-actions">
-              <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" press=".onPressFormDialogSave" />
-            </HBox>
-          </HBox>
-          <grid:CSSGrid gridTemplateColumns="2fr 5fr" gridGap="6px 0" class="form-grid">
-            <Label text="{i18n>LABEL_04010}"/>
-            <VBox>
-              <ComboBox class="required" selectedKey="{/form/dialog/data/Awart}" editable="{= ${/type} !== 'B'}" items="{ path: '/form/dialog/awartCodeList', templateShareable: false }" change=".onChangeAwartCombo">
-                <core:Item key="{Awart}" text="{Atext}" />
-              </ComboBox>
-            </VBox>
-            <Label text="{i18n>LABEL_04014}" />
-            <VBox>
-              <HBox>
-                <custom:DateRangeSelection class="required sapIcon_Date" dateValue="{ path: '/form/dialog/data/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/form/dialog/data/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{= ${/form/dialog/data/Awart} !== 'ALL'}" change=".onChangeLeaveDate" />
-                <Input width="45px" value="{/form/dialog/data/AbrtgTxt}" editable="false" textAlign="Right" />
-              </HBox>
-            </VBox>
-            <Label text="{i18n>LABEL_04009}" />
-            <VBox>
-              <Input class="required" value="{/form/dialog/data/Tmrsn}" enabled="{= ${/form/dialog/data/Awart} !== 'ALL'}" />
-            </VBox>
-          </grid:CSSGrid>
-          <HBox class="table-toolbar">
-            <HBox class="title">
-              <Title level="H2" text="{i18n>LABEL_00129}" />
-            </HBox>
-            <HBox class="table-actions">
-              <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onPressDelBtn" />
-            </HBox>
-          </HBox>
-          <List items="{ path: '/form/list' }" class="list-wrap">
-            <CustomListItem type="Active">
-              <HBox wrap="Wrap" justifyContent="SpaceBetween" alignItems="Baseline" alignContent="SpaceBetween" class="list-item-box">
-                <Text text="{Atext}" class="font-16-px font-bold" />
-                <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' }" visible="{= ${Abrtg} === 1 }" />
-                <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ~ { path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ({AbrtgTxt})" visible="{= ${Abrtg} &gt; 1 }" />
-                <Text text="{Tmrsn}" wrapping="false">
-                  <layoutData>
-                    <FlexItemData maxWidth="90%" />
-                  </layoutData>
-                </Text>
-                <core:Icon src="sap-icon://delete" size="14px" height="20px">
-                  <core:layoutData>
-                    <FlexItemData alignSelf="Center" />
-                  </core:layoutData>
-                </core:Icon>
-              </HBox>
-            </CustomListItem>
-          </List>
+          <VBox visible="{= ${/type} === 'A'}">
+            <core:Fragment fragmentName="sap.ui.yesco.mvc.view.attendance.mobile.fragment.New" type="XML" />
+          </VBox>
+          <VBox visible="{= ${/type} === 'B'}">
+            <core:Fragment fragmentName="sap.ui.yesco.mvc.view.attendance.mobile.fragment.Change" type="XML" />
+          </VBox>
+          <VBox visible="{= ${/type} === 'C'}">
+            <core:Fragment fragmentName="sap.ui.yesco.mvc.view.attendance.mobile.fragment.Cancel" type="XML" />
+          </VBox>
           <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.ApplyInfo" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.ApprovalDetails" type="XML" />
@@ -73,7 +27,7 @@
     </VBox>
     <footer>
       <OverflowToolbar>
-        <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onPressApproval" />
+        <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onPressApproval"  visible="{= !${/ZappStatAl} }" />
       </OverflowToolbar>
     </footer>
   </Page>
