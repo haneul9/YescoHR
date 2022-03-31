@@ -636,6 +636,7 @@ html.sap-desktop .sapContrast .sapMFooter-CTX .sapMBtnInner.sapMBtnReject, html.
 .sapUiTableColHdrCnt + .sapUiTableCtrlBefore + .sapUiTableCCnt, .sapUiTableColHdrCnt + .sapUiTableCCnt {margin-top:-1px}
 .sapUiTableCCnt {min-height:44px !important; border-bottom:1px solid #f5f5f5; border-left:1px solid #f5f5f5; border-right:1px solid #f5f5f5; background-color:#eff3f8}
 .sapUiTableCtrlCnt {min-height:44px !important}
+.dialog-content-table .sapUiTableCtrlCnt,
 .dialog-content-table .sapUiTableCCnt {min-height:34px !important}
 .sapUiTableHeaderRow { background-color:#FBFCFD}
 .sapUiTableHeaderCell:not(.sapUiTableRowActionHeaderCell):hover {background-color:#F5F9FD; color:#222}
