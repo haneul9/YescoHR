@@ -55,9 +55,6 @@ sap.ui.define(
       },
 
       initMobile() {
-        window.getToken = (sPushToken) => {
-          this.requestSavePushToken(sPushToken);
-        };
         setTimeout(() => {
           this.savePushToken();
         });
@@ -108,6 +105,11 @@ sap.ui.define(
           const sPushToken = window.YescoApp.getToken();
           this.requestSavePushToken(sPushToken);
         } else if (/iphone|ipad|ipod/i.test(navigator.userAgent) && !!window.webkit && !!window.webkit.messageHandlers && !!window.webkit.messageHandlers.script) {
+          alert('requestToken');
+          window.getToken = (sPushToken) => {
+            alert(`getToken : ${sPushToken}`);
+            this.requestSavePushToken(sPushToken);
+          };
           window.webkit.messageHandlers.script.postMessage('requestToken');
         }
       },
