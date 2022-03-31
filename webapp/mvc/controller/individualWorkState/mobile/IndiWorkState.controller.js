@@ -30,7 +30,7 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.individualWorkState.mobile.IndiWorkState', {
       sCombiChartId: 'combiChart',
-      sDoughChartId: 'doughChart',
+      sDoughChartId: 'doughChart1',
 
       TextUtils: TextUtils,
       TableUtils: TableUtils,

@@ -21,7 +21,7 @@
                     <Text text="{Zztasktx}" width="100%" textAlign="Center" />
                 </table:template>
             </table:Column>
-            <table:Column width="8%" resizable="false">
+            <table:Column width="6%" resizable="false">
                 <table:multiLabels>
                     <Label text="{i18n>LABEL_22038}" wrapping="true" />
                     <Label text="{i18n>LABEL_22038}" wrapping="true" />
@@ -42,7 +42,7 @@
                     </HBox>
                 </table:template>
             </table:Column>
-            <table:Column width="8%" resizable="false">
+            <table:Column width="6%" resizable="false">
                 <table:multiLabels>
                     <Label text="{i18n>LABEL_22038}" wrapping="true" />
                     <Label text="{i18n>LABEL_22038}" wrapping="true" />
@@ -51,7 +51,7 @@
                     <Text text="{ path: 'Zzweiht', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" />
                 </table:template>
             </table:Column>
-            <table:Column width="8%" resizable="false">
+            <table:Column width="6%" resizable="false">
                 <table:multiLabels>
                     <Label text="{i18n>LABEL_22040}" />
                     <Label text="{i18n>LABEL_22040}" />
@@ -60,7 +60,7 @@
                     <Text text="{Zzimprt}" width="100%" textAlign="Center" />
                 </table:template>
             </table:Column>
-            <table:Column width="8%" resizable="false">
+            <table:Column width="6%" resizable="false">
                 <table:multiLabels>
                     <Label text="{i18n>LABEL_22041}" />
                     <Label text="{i18n>LABEL_22041}" />
