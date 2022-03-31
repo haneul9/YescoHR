@@ -10,6 +10,15 @@ sap.ui.define(
     'use strict';
 
     return VacationIndicator.extend('sap.ui.yesco.control.VacationRatioIndicator', {
+      metadata: {
+        properties: {
+          decimal: {
+            type: 'int',
+            defaultValue: 0,
+          },
+        },
+      },
+
       renderer: {
         apiVersion: 2,
         render(oRM, oControl) {
@@ -88,7 +97,7 @@ sap.ui.define(
         },
         getPercent(fValue, oControl) {
           const fTotal = parseFloat(oControl.getTotal());
-          const fPercent = ((fValue / fTotal) * 100).toFixed(1);
+          const fPercent = ((fValue / fTotal) * 100).toFixed(oControl.getDecimal());
 
           return `${fPercent}%`;
         },

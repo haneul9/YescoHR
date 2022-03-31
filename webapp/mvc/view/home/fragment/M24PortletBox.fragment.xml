@@ -25,11 +25,11 @@
         <HBox width="100%" class="mb-10-px">
           <Label text="{i18n>LABEL_01192}" />
         </HBox>
-        <custom:VacationRatioIndicator width="100%" total="{/Annual/Total}" used="{/Annual/Used}" showTotal="false" />
+        <custom:VacationRatioIndicator width="100%" total="{/Annual/Total}" used="{/Annual/Used}" showTotal="false" decimal="2" />
         <HBox width="100%" class="mb-10-px mt-30-px">
           <Label text="{i18n>LABEL_01193}" />
         </HBox>
-        <custom:VacationRatioIndicator width="100%" total="{/Summer/Total}" used="{/Summer/Used}" showTotal="false" />
+        <custom:VacationRatioIndicator width="100%" total="{/Summer/Total}" used="{/Summer/Used}" showTotal="false" decimal="2" />
       </VBox>
     </HBox>
   </VBox>
