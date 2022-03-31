@@ -63,17 +63,6 @@ sap.ui.define(
 
         oView.addDependent(this.oMyPagePopover);
 
-        if (this.isYescoIOS) {
-          window.getVersion = function (sAppVersion) {
-            const sVersion = this.oMyPageModel.getProperty('/Version');
-            const UpdateNotification = sVersion === sAppVersion ? this.oController.getBundleText('LABEL_01603') : this.oController.getBundleText('LABEL_01604'); // 최신 버전 : 업데이트 필요
-
-            this.oMyPageModel.setProperty('/AppVersion', sAppVersion);
-            this.oMyPageModel.setProperty('/Latest', sVersion === sAppVersion);
-            this.oMyPageModel.setProperty('/UpdateNotification', UpdateNotification);
-          };
-        }
-
         this.showContentData();
       },
 
@@ -125,7 +114,15 @@ sap.ui.define(
           this.oMyPageModel.setProperty('/Latest', Version === sAppVersion);
           this.oMyPageModel.setProperty('/UpdateNotification', UpdateNotification);
         } else if (this.isYescoIOS) {
-          window.webkit.messageHandlers.script.postMessage('getVersion');
+          window.versionCheck = (sAppVersion) => {
+            const sVersion = this.oMyPageModel.getProperty('/Version');
+            const UpdateNotification = sVersion === sAppVersion ? this.oController.getBundleText('LABEL_01603') : this.oController.getBundleText('LABEL_01604'); // 최신 버전 : 업데이트 필요
+
+            this.oMyPageModel.setProperty('/AppVersion', sAppVersion);
+            this.oMyPageModel.setProperty('/Latest', sVersion === sAppVersion);
+            this.oMyPageModel.setProperty('/UpdateNotification', UpdateNotification);
+          };
+          window.webkit.messageHandlers.script.postMessage('versionCheck');
         } else {
           this.oMyPageModel.setProperty('/AppVersion', Version);
           this.oMyPageModel.setProperty('/Latest', true);

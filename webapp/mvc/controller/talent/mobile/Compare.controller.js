@@ -116,7 +116,7 @@ sap.ui.define(
                       .split('<br>')
                       .map((d) => ({ text: d }))
                       .value(),
-                    value07: o.Value07,
+                    value07: o.Value07 || '0',
                     value08: _.chain(o.Value08)
                       .split('<br>')
                       .map((d) => ({ text: d }))

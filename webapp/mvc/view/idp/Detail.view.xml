@@ -44,7 +44,7 @@
                                 <HBox>
                                     <HBox alignItems="Center" class="table-toolbar">
                                         <Title level="H2" text="{i18n>LABEL_36003}" class="sapUiMediumMarginEnd"/>
-                                        <Button type="Emphasized" text="{i18n>LABEL_36005}" press=".onPressHistory" />
+                                        <Button type="Emphasized" text="{i18n>LABEL_36005}" visible="{/buttons/hasHistory}" press=".onPressHistory" />
                                         <Button icon="sap-icon://sys-add" text="{i18n>LABEL_36006}" enabled="{= ${/currentItemsLength} &lt; 3 }" visible="{/buttons/goal/ADD/Availability}" class="sapUiTinyMarginBegin" press=".addCompItem" />
                                     </HBox>
                                 </HBox>
