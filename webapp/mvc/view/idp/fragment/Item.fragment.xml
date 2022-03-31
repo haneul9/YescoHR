@@ -5,13 +5,13 @@
 		<Panel expandable="true" expanded="{expanded}" class="per-panel">
 			<headerToolbar>
 				<Toolbar height="45px" width="100%">
-					<grid:CSSGrid gridTemplateColumns="50px 675px 150px repeat(4, 1fr)" gridGap="0px 11px">
+					<grid:CSSGrid gridTemplateColumns="{/goals/columnsTemplate}" gridGap="0px 11px">
 						<Label text="{ItemNo}" textAlign="Left" />
 						<VBox>
 							<Input value="{Obj0}" class="goal-subject" placeholder="{i18n>LABEL_36007}" enabled="false" />
 						</VBox>
-						<HBox>
-							<Button icon="sap-icon://sys-minus" text="{i18n>LABEL_36010}" visible="{/buttons/goal/DELETE/Availability}" press=".onPressDeleteGoal">
+						<HBox visible="{/buttons/goal/DELETE/Availability}">
+							<Button icon="sap-icon://sys-minus" text="{i18n>LABEL_36010}" press=".onPressDeleteGoal">
 								<customData>
 									<core:CustomData key="sDeleteTargetNum" value="{OrderNo}" />
 								</customData>
