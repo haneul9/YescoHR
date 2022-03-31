@@ -106,7 +106,7 @@ sap.ui.define(
           this.requestSavePushToken(sPushToken);
         } else if (/iphone|ipad|ipod/i.test(navigator.userAgent) && !!window.webkit && !!window.webkit.messageHandlers && !!window.webkit.messageHandlers.script) {
           alert('requestToken');
-          window.getToken = (sPushToken) => {
+          window.requestToken = (sPushToken) => {
             alert(`getToken : ${sPushToken}`);
             this.requestSavePushToken(sPushToken);
           };

@@ -114,9 +114,7 @@ sap.ui.define(
           this.oMyPageModel.setProperty('/Latest', Version === sAppVersion);
           this.oMyPageModel.setProperty('/UpdateNotification', UpdateNotification);
         } else if (this.isYescoIOS) {
-          alert('versionCheck');
           window.versionCheck = (sAppVersion) => {
-            alert(`versionCheck : ${sAppVersion}`);
             const sVersion = this.oMyPageModel.getProperty('/Version');
             const UpdateNotification = sVersion === sAppVersion ? this.oController.getBundleText('LABEL_01603') : this.oController.getBundleText('LABEL_01604'); // 최신 버전 : 업데이트 필요
 
