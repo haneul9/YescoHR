@@ -1,6 +1,7 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/mobile/ListStatusPopover',
     'sap/ui/yesco/common/odata/Client',
@@ -12,6 +13,7 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
+    MessageBox,
     AppUtils,
     ListStatusPopover,
     Client,
@@ -69,6 +71,8 @@ sap.ui.define(
       async onObjectMatched() {
         const oViewModel = this.getViewModel();
 
+        if (AppUtils.isPRD() && !this.serviceAvailable()) return;
+
         try {
           oViewModel.setProperty('/busy', true);
 
@@ -83,6 +87,17 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/busy', false);
         }
+      },
+
+      serviceAvailable() {
+        const bOpen = moment().isAfter(moment('2022-04-04 9:00', 'YYYY-MM-DD HH:mm'));
+
+        if (!bOpen)
+          MessageBox.alert(this.getBundleText('MSG_13002'), {
+            onClose: () => this.onNavBack(),
+          });
+
+        return bOpen;
       },
 
       /*****************************************************************
@@ -129,8 +144,8 @@ sap.ui.define(
 
         try {
           const sKey = oEvent.getSource().getSelectedKey();
-          let dBegda = moment();
-          let dEndda = moment();
+          let dBegda = moment().toDate();
+          let dEndda = moment().toDate();
           let bDateRangeBox = false;
 
           oViewModel.setProperty('/busy', true);
@@ -141,19 +156,19 @@ sap.ui.define(
               bDateRangeBox = false;
               break;
             case '1m':
-              dBegda = moment().toDate();
+              dBegda = moment().subtract(1, 'months').add(1, 'day').toDate();
               bDateRangeBox = false;
               break;
             case '3m':
-              dBegda = moment().subtract(3, 'months').toDate();
+              dBegda = moment().subtract(3, 'months').add(1, 'day').toDate();
               bDateRangeBox = false;
               break;
             case '6m':
-              dBegda = moment().subtract(6, 'months').toDate();
+              dBegda = moment().subtract(6, 'months').add(1, 'day').toDate();
               bDateRangeBox = false;
               break;
             case '12m':
-              dBegda = moment().subtract(12, 'months').toDate();
+              dBegda = moment().subtract(12, 'months').add(1, 'day').toDate();
               bDateRangeBox = false;
               break;
             case '0':
@@ -162,9 +177,10 @@ sap.ui.define(
           }
 
           if (!bDateRangeBox) {
-            oViewModel.setProperty('/search/secondDate', dBegda);
-            oViewModel.setProperty('/search/date', dEndda);
-            oViewModel.setProperty('/search/begym', moment(dBegda).format('YYYYMM')), oViewModel.setProperty('/search/endym', moment(dEndda).format('YYYYMM'));
+            oViewModel.setProperty('/search/date', dBegda);
+            oViewModel.setProperty('/search/secondDate', dEndda);
+            oViewModel.setProperty('/search/begym', moment(dBegda).format('YYYYMM'));
+            oViewModel.setProperty('/search/endym', moment(dEndda).format('YYYYMM'));
 
             const aList = await this.getList();
 

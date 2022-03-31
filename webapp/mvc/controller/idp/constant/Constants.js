@@ -20,7 +20,7 @@ sap.ui.define(
       ITEM_PROPERTIES: ['Obj0', 'Z301', 'Fapp', 'Z305', 'Z307', 'Z309', 'Z311'],
       MANAGE_PROPERTIES: ['Z317', 'Z319'],
       REJECT_PROPERTIES: ['Rjctr', 'Rjctrin'],
-      COMBO_PROPERTIES: ['Z301', 'Fapp'],
+      COMBO_PROPERTIES: ['Fapp'],
 
       VALIDATION_PROPERTIES: [
         { field: 'Fapp', label: 'LABEL_36012', type: Validator.SELECT1 }, // 목표수준

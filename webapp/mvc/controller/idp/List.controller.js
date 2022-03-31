@@ -27,6 +27,8 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.idp.List', {
+      EmployeeSearch: EmployeeSearch,
+
       initializeModel() {
         return {
           busy: false,
