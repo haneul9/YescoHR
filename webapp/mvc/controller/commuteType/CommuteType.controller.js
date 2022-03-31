@@ -84,6 +84,7 @@ sap.ui.define(
             isShowApprove: false, // 승인 text hide
             ObjTxt4: this.getBundleText('LABEL_10049'), // 확정취소
             ObjTxt5: this.getBundleText('LABEL_00116'), // 확정
+            infoMessage: this.getBundleText('MSG_30004'), // 신청내역에서 선택한 다음 신청 버튼을 클릭하여 주시기 바랍니다.
           });
           oListModel.setProperty('/CommuteList', aTableList);
         } catch (oError) {
