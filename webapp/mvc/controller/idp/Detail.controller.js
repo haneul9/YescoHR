@@ -5,9 +5,7 @@ sap.ui.define(
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
     'sap/ui/yesco/control/MessageBox',
-    'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/exceptions/UI5Error',
@@ -24,9 +22,7 @@ sap.ui.define(
     Filter,
     FilterOperator,
     MessageBox,
-    Appno,
     AppUtils,
-    AttachFileAction,
     ComboEntry,
     Client,
     UI5Error,
@@ -545,6 +541,8 @@ sap.ui.define(
           },
         });
       },
+
+      onPressHistory() {},
 
       onPressRejectButton() {
         const oViewModel = this.getViewModel();

@@ -1,6 +1,7 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/mobile/ListStatusPopover',
     'sap/ui/yesco/common/odata/Client',
@@ -12,6 +13,7 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
+    MessageBox,
     AppUtils,
     ListStatusPopover,
     Client,
@@ -69,6 +71,8 @@ sap.ui.define(
       async onObjectMatched() {
         const oViewModel = this.getViewModel();
 
+        if (!this.serviceAvailable()) return;
+
         try {
           oViewModel.setProperty('/busy', true);
 
@@ -83,6 +87,17 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/busy', false);
         }
+      },
+
+      serviceAvailable() {
+        const bOpen = moment().isAfter(moment('2022-04-04 9:00', 'YYYY-MM-DD HH:mm'));
+
+        if (!bOpen)
+          MessageBox.alert(this.getBundleText('MSG_13002'), {
+            onClose: () => this.onNavBack(),
+          });
+
+        return bOpen;
       },
 
       /*****************************************************************
