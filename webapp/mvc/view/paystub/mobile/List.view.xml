@@ -1,5 +1,5 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.paystub.mobile.List"
-  xmlns="sap.m"
+	xmlns="sap.m"
 	xmlns:grid="sap.ui.layout.cssgrid"
 	xmlns:core="sap.ui.core"
 	xmlns:custom="sap.ui.yesco.control"
@@ -12,14 +12,12 @@
 					<CustomListItem type="Active" press=".onSelectRow">
 						<grid:CSSGrid gridTemplateColumns="2fr 2fr" gridGap="1px 0">
 							<VBox alignItems="Start">
-								<ObjectStatus text="{ path: 'Paydt', type: 'sap.ui.yesco.mvc.model.type.Date'}" 
-											  state="{ path: 'Ocrsn', formatter: '.onChangeIndication' }"/>
-								<ObjectStatus text="{Ocrtx}" 
-											  state="{ path: 'Ocrsn', formatter: '.onChangeIndication' }"/>
+								<ObjectStatus text="{ path: 'Paydt', type: 'sap.ui.yesco.mvc.model.type.Date'}" state="{ path: 'Ocrsn', formatter: '.onChangeIndication' }"/>
+								<ObjectStatus text="{Ocrtx}" state="{ path: 'Ocrsn', formatter: '.onChangeIndication' }"/>
 							</VBox>
-							<VBox alignItems="End" justifyContent="Center">							
+							<VBox alignItems="End" justifyContent="Center">
 								<Text text="{ path: 'Bet06', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="End" class="font-20-px font-bold"></Text>
-							</VBox>								
+							</VBox>
 						</grid:CSSGrid>
 					</CustomListItem>
 				</List>

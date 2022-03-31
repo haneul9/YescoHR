@@ -1,8 +1,8 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/mobile/ListStatusPopover',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
@@ -12,8 +12,8 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     AppUtils,
+    ListStatusPopover,
     Client,
     ServiceNames,
     TableUtils,
@@ -23,6 +23,7 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.paystub.mobile.List', {
       TableUtils: TableUtils,
+      ListStatusPopover: ListStatusPopover,
       TABLE_ID: 'paystubTable',
 
       initializeModel() {
@@ -38,14 +39,15 @@ sap.ui.define(
             endym: today.format('YYYYMM'),
             secondDate: moment().toDate(),
             date: moment().subtract(12, 'months').toDate(),
-            dateBox : false,
-            dateRange : "12m"
+            dateBox: false,
+            dateRange: '12m',
           },
           listInfo: {
             Title: this.getBundleText('LABEL_13037'), // 급상여내역
-            view1wButton : false,
+            view1wButton: false,
             rowCount: 2,
             totalCount: 0,
+            Popover: false,
             // infoMessage: this.getBundleText('MSG_13001'), // 라인을 클릭하시면 상세내역이 조회됩니다.
             isShowProgress: false,
             progressCount: 0,
@@ -62,9 +64,7 @@ sap.ui.define(
         };
       },
 
-      onBeforeShow() {
-        
-      },
+      onBeforeShow() {},
 
       async onObjectMatched() {
         const oViewModel = this.getViewModel();
@@ -73,7 +73,7 @@ sap.ui.define(
           oViewModel.setProperty('/busy', true);
 
           const aList = await this.getList();
-          
+
           oViewModel.setProperty('/list', aList);
           oViewModel.setProperty('/listInfo/totalCount', _.size(aList));
         } catch (oError) {
@@ -84,7 +84,7 @@ sap.ui.define(
           oViewModel.setProperty('/busy', false);
         }
       },
-      
+
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
@@ -98,8 +98,8 @@ sap.ui.define(
         this.getRouter().navTo('mobile/paystub-detail', { seqnr: _.trimStart(oRowData.Seqnr, '0') });
       },
 
-      onChangeIndication(sValue){
-        return sValue == '' ? 'Indication05' : 'Indication04';
+      onChangeIndication(sValue) {
+        return sValue === '' ? 'Indication05' : 'Indication04';
       },
 
       // 날짜선택
@@ -109,8 +109,8 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/busy', true);
 
-          oViewModel.setProperty('/search/begym', moment(oViewModel.getProperty("/search/date")).format('YYYYMM'));
-          oViewModel.setProperty('/search/endym', moment(oViewModel.getProperty("/search/secondDate")).format('YYYYMM'));
+          oViewModel.setProperty('/search/begym', moment(oViewModel.getProperty('/search/date')).format('YYYYMM'));
+          oViewModel.setProperty('/search/endym', moment(oViewModel.getProperty('/search/secondDate')).format('YYYYMM'));
 
           const aList = await this.getList();
 
@@ -129,8 +129,8 @@ sap.ui.define(
 
         try {
           const sKey = oEvent.getSource().getSelectedKey();
-          let dBegda = moment();
-          let dEndda = moment();
+          let dBegda = moment().toDate();
+          let dEndda = moment().toDate();
           let bDateRangeBox = false;
 
           oViewModel.setProperty('/busy', true);
@@ -141,19 +141,19 @@ sap.ui.define(
               bDateRangeBox = false;
               break;
             case '1m':
-              dBegda = moment().toDate();
+              dBegda = moment().subtract(1, 'months').add(1, 'day').toDate();
               bDateRangeBox = false;
               break;
             case '3m':
-              dBegda = moment().subtract(3, 'months').toDate();
+              dBegda = moment().subtract(3, 'months').add(1, 'day').toDate();
               bDateRangeBox = false;
               break;
             case '6m':
-              dBegda = moment().subtract(6, 'months').toDate();
+              dBegda = moment().subtract(6, 'months').add(1, 'day').toDate();
               bDateRangeBox = false;
               break;
             case '12m':
-              dBegda = moment().subtract(12, 'months').toDate();
+              dBegda = moment().subtract(12, 'months').add(1, 'day').toDate();
               bDateRangeBox = false;
               break;
             case '0':
@@ -162,9 +162,9 @@ sap.ui.define(
           }
 
           if (!bDateRangeBox) {
-            oViewModel.setProperty('/search/secondDate', dBegda);
-            oViewModel.setProperty('/search/date', dEndda);
-            oViewModel.setProperty('/search/begym', moment(dBegda).format('YYYYMM')),
+            oViewModel.setProperty('/search/date', dBegda);
+            oViewModel.setProperty('/search/secondDate', dEndda);
+            oViewModel.setProperty('/search/begym', moment(dBegda).format('YYYYMM'));
             oViewModel.setProperty('/search/endym', moment(dEndda).format('YYYYMM'));
 
             const aList = await this.getList();
@@ -185,18 +185,18 @@ sap.ui.define(
        * ! Call oData
        *****************************************************************/
 
-       async getList(){
-          const oModel = this.getModel(ServiceNames.PAY);
-          const oViewModel = this.getViewModel();
-          const sBegym = oViewModel.getProperty('/search/begym'),
-                sEndym = oViewModel.getProperty('/search/endym');
+      async getList() {
+        const oModel = this.getModel(ServiceNames.PAY);
+        const oViewModel = this.getViewModel();
+        const sBegym = oViewModel.getProperty('/search/begym'),
+          sEndym = oViewModel.getProperty('/search/endym');
 
-          return await Client.getEntitySet(oModel, 'PayslipList', {
-              Menid: this.getCurrentMenuId(),
-              Begym: sBegym,
-              Endym: sEndym
-          });
-       }
+        return await Client.getEntitySet(oModel, 'PayslipList', {
+          Menid: this.getCurrentMenuId(),
+          Begym: sBegym,
+          Endym: sEndym,
+        });
+      },
     });
   }
 );
