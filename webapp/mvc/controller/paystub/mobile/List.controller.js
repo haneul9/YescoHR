@@ -80,6 +80,7 @@ sap.ui.define(
 
           oViewModel.setProperty('/list', aList);
           oViewModel.setProperty('/listInfo/totalCount', _.size(aList));
+          oViewModel.setProperty('/listInfo/Popover', false);
         } catch (oError) {
           this.debug('Controller > mobile paystub List > onObjectMatched Error', oError);
 
