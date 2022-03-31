@@ -75,6 +75,7 @@ sap.ui.define(
           },
           currentItemsLength: 0,
           goals: {
+            columnsTemplate: '50px 675px 150px repeat(4, 1fr)',
             valid: [],
             comp: [],
           },
@@ -232,6 +233,7 @@ sap.ui.define(
           }
 
           // 직무역량
+          oViewModel.setProperty('/goals/columnsTemplate', _.isEqual(_.get(mConvertScreen, 'Obj0'), Constants.DISPLAY_TYPE.EDIT) ? '50px 675px 150px repeat(4, 1fr)' : '50px 825px repeat(4, 1fr)');
           oViewModel.setProperty(`/goals/comp`, _.map(mDetailData.AppraisalIdpDocDetSet.results, this.initializeItem.bind(this)) ?? []);
           oViewModel.setProperty('/currentItemsLength', _.size(mDetailData.AppraisalIdpDocDetSet.results));
           oViewModel.setProperty(
