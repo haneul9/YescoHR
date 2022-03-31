@@ -137,8 +137,12 @@ sap.ui.define(
               type: exportLibrary.EdmType.String,
             }));
 
+        const aColumnFilter = _.reject(aColumns, (e) => {
+          return !e.property;
+        });
+
         aDateProps.forEach((prop) => {
-          const mDateColumn = _.find(aColumns, { property: prop });
+          const mDateColumn = _.find(aColumnFilter, { property: prop });
 
           if (!_.isEmpty(mDateColumn)) {
             mDateColumn.type = exportLibrary.EdmType.Date;
@@ -148,7 +152,7 @@ sap.ui.define(
 
         const oSettings = {
           workbook: {
-            columns: aColumns,
+            columns: aColumnFilter,
             hierarchyLevel: 'Level',
           },
           dataSource: aTableData,

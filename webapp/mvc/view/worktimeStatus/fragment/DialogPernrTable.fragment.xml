@@ -23,19 +23,19 @@
               <core:Icon src="sap-icon://circle-task-2" size="15px" color="{= ${Status} === '1' ? '#FD5F58' : '#007BFF' }" class="tableIcon"/>
             </table:template>
           </table:Column>
-          <table:Column width="50px">
+          <table:Column width="50px" filterProperty="No" sortProperty="No">
             <Label text="{i18n>LABEL_00164}" />
             <table:template>
               <Text text="{No}" width="100%" textAlign="Center" />
             </table:template>
           </table:Column>
-          <table:Column width="190px">
+          <table:Column width="190px" filterProperty="Orgtx" sortProperty="Orgtx">
             <Label text="{i18n>LABEL_00227}" />
             <table:template>
               <Text text="{Orgtx}" width="100%" textAlign="Center" />
             </table:template>
           </table:Column>
-          <table:Column width="90px">
+          <table:Column width="90px" filterProperty="Pernr" sortProperty="Pernr">
             <Label text="{i18n>LABEL_00209}" />
             <table:template>
               <Text text="{
@@ -44,43 +44,43 @@
               }" width="100%" textAlign="Center" />
             </table:template>
           </table:Column>
-          <table:Column width="90px">
+          <table:Column width="90px" filterProperty="Ename" sortProperty="Ename">
             <Label text="{i18n>LABEL_00210}" />
             <table:template>
               <Text text="{Ename}" width="100%" textAlign="Center" />
             </table:template>
           </table:Column>
-          <table:Column width="90px">
+          <table:Column width="90px" filterProperty="Zzjikgbtx" sortProperty="Zzjikgbtx">
             <Label text="{i18n>LABEL_00215}" />
             <table:template>
               <Text text="{Zzjikgbtx}" width="100%" textAlign="Center" />
             </table:template>
           </table:Column>
-          <table:Column width="90px">
+          <table:Column width="90px" filterProperty="Zzjikchtx" sortProperty="Zzjikchtx">
             <Label text="{i18n>LABEL_00217}" />
             <table:template>
               <Text text="{Zzjikchtx}" width="100%" textAlign="Center" />
             </table:template>
           </table:Column>
-          <table:Column width="80px">
+          <table:Column width="80px" filterProperty="Weekno" sortProperty="Weekno">
             <Label text="{i18n>LABEL_32015}" />
             <table:template>
               <Text text="{Weekno}" width="100%" textAlign="Center" />
             </table:template>
           </table:Column>
-          <table:Column width="80px">
+          <table:Column width="80px" filterProperty="Daytx" sortProperty="Daytx">
             <Label text="{i18n>LABEL_06102}" />
             <table:template>
               <Text text="{Daytx}" width="100%" textAlign="Center" />
             </table:template>
           </table:Column>
-          <table:Column width="80px">
+          <table:Column width="80px" filterProperty="Offyn" sortProperty="Offyn">
             <Label text="{i18n>LABEL_06103}" />
             <table:template>
               <Text text="{Offyn}" width="100%" textAlign="Center" />
             </table:template>
           </table:Column>
-          <table:Column width="140px">
+          <table:Column width="140px" filterProperty="Datum" sortProperty="Datum">
             <Label text="{i18n>LABEL_00170}" />
             <table:template>
               <Text text="{
@@ -89,49 +89,49 @@
               }" width="100%" textAlign="Center" />
             </table:template>
           </table:Column>
-          <table:Column width="80px">
+          <table:Column width="80px" filterProperty="Bashr" sortProperty="Bashr">
             <Label text="{i18n>LABEL_32016}" />
             <table:template>
               <Text text="{Bashr}" width="100%" textAlign="Center" />
             </table:template>
           </table:Column>
-          <table:Column width="80px">
+          <table:Column width="80px" filterProperty="Addhr" sortProperty="Addhr">
             <Label text="{i18n>LABEL_32017}" />
             <table:template>
               <Text text="{Addhr}" width="100%" textAlign="Center" />
             </table:template>
           </table:Column>
-          <table:Column width="80px">
+          <table:Column width="80px" filterProperty="Dedhr" sortProperty="Dedhr">
             <Label text="{i18n>LABEL_00186}" />
             <table:template>
               <Text text="{Dedhr}" width="100%" textAlign="Center" />
             </table:template>
           </table:Column>
-          <table:Column width="80px">
+          <table:Column width="80px" filterProperty="Holhr" sortProperty="Holhr">
             <Label text="{i18n>LABEL_13028}" />
             <table:template>
               <Text text="{Holhr}" width="100%" textAlign="Center" />
             </table:template>
           </table:Column>
-          <table:Column width="80px">
+          <table:Column width="80px" filterProperty="Nomtot" sortProperty="Nomtot">
             <Label text="{i18n>LABEL_32004}" />
             <table:template>
               <Text text="{Nomtot}" width="100%" textAlign="Center" />
             </table:template>
           </table:Column>
-          <table:Column width="80px">
+          <table:Column width="80px" filterProperty="Holtot" sortProperty="Holtot">
             <Label text="{i18n>LABEL_01205}" />
             <table:template>
               <Text text="{Holtot}" width="100%" textAlign="Center" />
             </table:template>
           </table:Column>
-          <table:Column width="80px">
+          <table:Column width="80px" filterProperty="NomtotC" sortProperty="NomtotC">
             <Label text="{i18n>LABEL_32018}" />
             <table:template>
               <Text text="{NomtotC}" width="100%" textAlign="Center" />
             </table:template>
           </table:Column>
-          <table:Column width="80px">
+          <table:Column width="80px" filterProperty="HoltotC" sortProperty="HoltotC">
             <Label text="{i18n>LABEL_32019}" />
             <table:template>
               <Text text="{HoltotC}" width="100%" textAlign="Center" />
