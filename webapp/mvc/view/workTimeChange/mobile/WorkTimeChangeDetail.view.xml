@@ -6,11 +6,11 @@
   xmlns:custom="sap.ui.yesco.control">
   <Page enableScrolling="false" floatingFooter="true" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
     <customData>
-      <core:CustomData key="form-style" value="request" writeToDom="true" />
+      <core:CustomData key="form-style" value="{= ${/Fixed} ? 'request' : 'retrieval' }"  writeToDom="true" />
     </customData>
     <VBox class="contents">
-      <custom:MobileScrollContainer horizontal="false" vertical="true" excludeBottomSelector=".sapMPageFooter">
-        <VBox height="100%" class="wrap with-actions" busy="{/busy}" busyIndicatorDelay="0">
+      <custom:MobileScrollContainer horizontal="false" vertical="true" class="form-grid" >
+        <VBox height="100%" class="wrap" busy="{/busy}" busyIndicatorDelay="0">
             <HBox class="table-toolbar" visible="{= ${/Fixed}}">
               <HBox class="title">
                 <Title level="H2" text="{i18n>LABEL_04002}" />

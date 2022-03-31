@@ -6,7 +6,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <Page enableScrolling="false" floatingFooter="true" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
     <customData>
-      <core:CustomData key="form-style" value="request" writeToDom="true" />
+      <core:CustomData key="form-style" value="{= ${/Fixed} ? 'request' : 'retrieval' }" writeToDom="true" />
     </customData>
     <VBox class="contents">
       <custom:MobileScrollContainer horizontal="false" vertical="true" excludeBottomSelector=".sapMPageFooter">
