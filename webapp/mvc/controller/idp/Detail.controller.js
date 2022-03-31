@@ -79,6 +79,7 @@ sap.ui.define(
             comp: [],
           },
           buttons: {
+            hasHistory: false,
             submit: {},
             goal: { ADD: { Availability: false }, DELETE: { Availability: false } },
             form: {
@@ -126,9 +127,10 @@ sap.ui.define(
 
           const oModel = this.getModel(ServiceNames.APPRAISAL);
           const fCurriedGetEntitySet = Client.getEntitySet(oModel);
-          const [aStepList, aGrades, mDetailData] = await Promise.all([
+          const [aStepList, aGrades, aYears, mDetailData] = await Promise.all([
             fCurriedGetEntitySet('AppStatusStepList', { Werks: this.getSessionProperty('Werks'), Zzappid: mParameter.Zzappid, Zzappty: mParameter.Zzappty }),
             fCurriedGetEntitySet('AppGradeList'),
+            fCurriedGetEntitySet('AppraisalIdpYear', { Pernr: mParameter.Zzappee }),
             Client.deep(oModel, 'AppraisalIdpDoc', {
               ...mParameter,
               Menid: this.getCurrentMenuId(),
@@ -139,6 +141,9 @@ sap.ui.define(
               AppraisalScreenSet: [],
             }),
           ]);
+
+          // 이력 Button
+          oViewModel.setProperty('/buttons/hasHistory', !_.isEmpty(aYears));
 
           // Combo Entry
           oViewModel.setProperty('/entry/levels', new ComboEntry({ codeKey: 'ValueEid', valueKey: 'ValueText', aEntries: aGrades }) ?? []);
@@ -542,7 +547,12 @@ sap.ui.define(
         });
       },
 
-      onPressHistory() {},
+      onPressHistory() {
+        const sHost = window.location.href.split('#')[0];
+        const sPernr = this.getViewModel().getProperty('/appointee/Pernr');
+
+        window.open(`${sHost}#/idpView/${sPernr}`, '_blank', 'width=1400,height=800');
+      },
 
       onPressRejectButton() {
         const oViewModel = this.getViewModel();

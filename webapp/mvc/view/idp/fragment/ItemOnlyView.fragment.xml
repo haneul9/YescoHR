@@ -1,0 +1,58 @@
+<core:FragmentDefinition xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:grid="sap.ui.layout.cssgrid">
+	<VBox>
+		<Panel expandable="true" expanded="{expanded}" class="per-panel">
+			<headerToolbar>
+				<Toolbar height="45px" width="100%">
+					<grid:CSSGrid gridTemplateColumns="50px 575px repeat(4, 1fr)" gridGap="0px 11px">
+						<Label text="{ItemNo}" textAlign="Left" />
+						<VBox>
+							<Input value="{Obj0}" class="goal-subject" placeholder="{i18n>LABEL_36007}" enabled="false" />
+						</VBox>
+						<Label text="{i18n>LABEL_36011}" />
+						<HBox>
+							<ComboBox width="100%" class="required" selectedKey="{Z301}" items="{ path: '/entry/levels', templateShareable: true }" enabled="false">
+								<core:Item key="{ValueEid}" text="{ValueText}" />
+							</ComboBox>
+						</HBox>
+						<Label text="{i18n>LABEL_36012}" />
+						<HBox>
+							<ComboBox width="100%" class="required" selectedKey="{Fapp}" items="{ path: '/entry/levels', templateShareable: true }" enabled="false">
+								<core:Item key="{ValueEid}" text="{ValueText}" />
+							</ComboBox>
+						</HBox>
+					</grid:CSSGrid>
+				</Toolbar>
+			</headerToolbar>
+			<content>
+				<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="repeat(2, 1fr 3fr)">
+					<VBox>
+						<Label width="100%" text="{i18n>LABEL_36013}" vAlign="Top" />
+					</VBox>
+					<VBox>
+						<TextArea width="100%" class="required" rows="5" value="{Z305}" enabled="false" />
+					</VBox>
+					<VBox>
+						<Label width="100%" text="{i18n>LABEL_36014}" wrapping="true" vAlign="Top" />
+					</VBox>
+					<VBox>
+						<TextArea width="100%" class="required" rows="5" value="{Z307}" enabled="false" />
+					</VBox>
+					<VBox>
+						<Label width="100%" text="{i18n>LABEL_36015}" vAlign="Top" />
+					</VBox>
+					<VBox>
+						<TextArea width="100%" class="required" rows="5" value="{Z309}" enabled="false" />
+					</VBox>
+					<VBox>
+						<Label width="100%" text="{i18n>LABEL_36016}" wrapping="true" vAlign="Top" />
+					</VBox>
+					<VBox>
+						<TextArea width="100%" class="required" rows="5" value="{Z311}" enabled="false" />
+					</VBox>
+				</grid:CSSGrid>
+			</content>
+		</Panel>
+	</VBox>
+</core:FragmentDefinition>
