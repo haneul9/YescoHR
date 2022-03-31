@@ -13,8 +13,8 @@
                         <Title level="H2" text="{/plans/headerTxt}" />
                         <Title level="H4" class="sapUiMediumMarginBegin" text="{/plans/planTxt}" />
                     </HBox>
-                    <HBox class="status-wrap year-plan">
-                        <Text text="{i18n>LABEL_20006}" class="type02" />
+                    <HBox class="status-wrap year-plan leave-plan">
+                        <Text text="{i18n>LABEL_20006}" class="type06" />
                         <Text text="{i18n>LABEL_20007}" class="type07" />
                         <Text text="{i18n>LABEL_20008}" class="type05" />
                     </HBox>
