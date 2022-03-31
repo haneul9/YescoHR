@@ -811,8 +811,8 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type42"], .year-plan.status-wrap .sapMFlexItem .sapMText[data-style="Type42"]::before, .year-plan.status-wrap .sapMFlexItem .sapMText.type42::before, .sapMFlexBox.type42, .sapMFlexBox[data-style="Type42"], [class*=plan-grid] .type42 *, [data-style=Type42] .sapMText { background: linear-gradient(-90deg, #0E60C7 50%, #fff 50%) !important;}/* 오후반차 */
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type18"], .year-plan.status-wrap .sapMFlexItem .sapMText[data-style="Type18"]::before, .year-plan.status-wrap .sapMFlexItem .sapMText.type18::before, .sapMFlexBox.type18, .sapMFlexBox[data-style="Type18"] { background: repeating-linear-gradient(45deg, #A6A6A6, #A6A6A6 1px, transparent  2px, transparent  5px);border: 2px solid #A6A6A6!important;border-radius: 0;}/* 신청 */
 .year-plan.status-wrap .sapMFlexItem .sapMText.type06::before { background-color: #65B8FF; }
-.year-plan.status-wrap .sapMFlexItem .sapMText.type07::before { background-color: #FFAC4B; }
-.year-plan.status-wrap .sapMFlexItem .sapMText.type05::before { background-color: #A1E094; }
+.year-plan.status-wrap .sapMFlexItem .sapMText.type07::before { background-color: #FFE479; }
+.year-plan.status-wrap .sapMFlexItem .sapMText.type05::before { background-color: #FFAC4B; }
 
 .sapUiLayoutCSSGrid .sapMFlexBox[data-border="Default"] { border:1px solid black; --webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box}
 .sapUiLayoutCSSGrid .sapMFlexBox[data-border="Today"] .sapMText::after { content:""; display:inline-block; position:absolute; width:100%; height:100%; top:0; left:0; border:5px solid #dc3545; --webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box}
@@ -905,7 +905,7 @@ span.sapMBtnInner.sapMBtnEmphasized {text-shadow:none}
 
 /*message box*/
 .sapMText{color:var(--FontColorNormal); font-size:14px; font-weight:500; line-height:1.45; align-self:center}
-.sapMMsgStripInformation {border-radius:3px; border:solid 1px#b8daff; background-color:#cce5ff; height:29px; padding:6px 13px 8px 20px; min-height:auto; line-height:1}
+.sapMMsgStripInformation {border-radius:3px; border:solid 1px #b8daff; background-color:#cce5ff; height:29px; padding:6px 13px 8px 20px; min-height:auto; line-height:1}
 .sapMMsgStripError {border-radius:3px; border:solid 1px #f5c6cb; background-color:#f8d7da; height:29px; padding:6px 13px 8px 20px; min-height:auto; line-height:1}
 .sapMMsgStripError .sapMText {color:#721c24}
 .sapMMsgStripWarning {border-radius:3px; border:solid 1px #ffeeba; background-color:#fff3cd; height:29px; padding:6px 13px 8px 20px; min-height:auto; line-height:1}

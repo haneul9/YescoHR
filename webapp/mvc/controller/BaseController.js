@@ -8,7 +8,6 @@ sap.ui.define(
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/exceptions/UI5Error',
-    'sap/ui/yesco/control/MessageBox',
   ],
   (
     // prettier 방지용 주석
@@ -18,8 +17,7 @@ sap.ui.define(
     History,
     JSONModel,
     AppUtils,
-    UI5Error,
-    MessageBox
+    UI5Error
   ) => {
     'use strict';
 

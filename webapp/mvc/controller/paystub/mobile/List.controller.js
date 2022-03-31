@@ -1,8 +1,8 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/mobile/ListStatusPopover',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
@@ -12,8 +12,8 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     AppUtils,
+    ListStatusPopover,
     Client,
     ServiceNames,
     TableUtils,
@@ -23,6 +23,7 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.paystub.mobile.List', {
       TableUtils: TableUtils,
+      ListStatusPopover: ListStatusPopover,
       TABLE_ID: 'paystubTable',
 
       initializeModel() {
@@ -46,6 +47,7 @@ sap.ui.define(
             view1wButton: false,
             rowCount: 2,
             totalCount: 0,
+            Popover: false,
             // infoMessage: this.getBundleText('MSG_13001'), // 라인을 클릭하시면 상세내역이 조회됩니다.
             isShowProgress: false,
             progressCount: 0,
@@ -97,7 +99,7 @@ sap.ui.define(
       },
 
       onChangeIndication(sValue) {
-        return sValue == '' ? 'Indication05' : 'Indication04';
+        return sValue === '' ? 'Indication05' : 'Indication04';
       },
 
       // 날짜선택

@@ -171,9 +171,7 @@ sap.ui.define(
           };
           const oModel = this.getModel(ServiceNames.WORKTIME);
           const aTableList = await Client.getEntitySet(oModel, 'OtWorkApply', mPayLoad);
-          const oTable = this.byId('workTable');
-
-          oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
+          
           oListModel.setProperty('/List', aTableList);
         } catch (oError) {
           AppUtils.handleError(oError);
