@@ -448,6 +448,9 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>footer .sa
 
 .talent-list { padding-left: 20px; padding-right: 20px; }
 
+.notice-mobile-content img { width: 100%; }
+/* .notice-mobile-content p { font-family:Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif !important; } */
+
 .sapUiSizeCompact .sapUiCalContent>.sapUiCalMonthPicker,
 .sapUiSizeCompact .sapUiCalContent>.sapUiCalYearPicker {margin-left:0; width:100%; top:0; left:0; padding:10px 0 0 0}
 .sapUiSizeCompact .sapMCb {height:24px}
