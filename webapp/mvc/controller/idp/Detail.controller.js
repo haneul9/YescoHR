@@ -79,6 +79,7 @@ sap.ui.define(
           },
           currentItemsLength: 0,
           goals: {
+            valid: [],
             comp: [],
           },
           buttons: {
@@ -292,6 +293,73 @@ sap.ui.define(
         }
       },
 
+      changeTab(sTabKey) {
+        this.getViewModel().setProperty('/tab/selectedKey', sTabKey);
+      },
+
+      validation() {
+        const oViewModel = this.getViewModel();
+        const aItem = _.cloneDeep(oViewModel.getProperty('/goals/comp'));
+        const mManage = _.cloneDeep(oViewModel.getProperty('/manage'));
+        const aValid = _.cloneDeep(oViewModel.getProperty('/goals/valid'));
+        const aGoalValid = _.filter(aValid, (o) => _.includes(Constants.ITEM_PROPERTIES, o.field));
+        const aManageValid = _.filter(aValid, (o) => _.includes(Constants.MANAGE_PROPERTIES, o.field));
+
+        if (_.isEmpty(aItem)) {
+          MessageBox.alert(this.getBundleText('MSG_36002')); // 직무역량을 1개 이상 추가하여 개발계획을 수립하시기 바랍니다.
+          return;
+        }
+
+        if (_.some(aItem, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: aGoalValid, sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` }))) {
+          this.changeTab(Constants.TAB.COMP);
+          return false;
+        }
+        if (!Validator.check({ mFieldValue: mManage, aFieldProperties: aManageValid })) {
+          this.changeTab(Constants.TAB.OPPO);
+          return false;
+        }
+
+        return true;
+      },
+
+      async createProcess({ code, label }) {
+        const oViewModel = this.getViewModel();
+        const sListRouteName = oViewModel.getProperty('/listInfo/route');
+
+        oViewModel.setProperty('/busy', true);
+
+        try {
+          const oModel = this.getModel(ServiceNames.APPRAISAL);
+          const mParameter = _.cloneDeep(oViewModel.getProperty('/param'));
+          const mManage = _.cloneDeep(oViewModel.getProperty('/manage'));
+          const mReject = _.cloneDeep(oViewModel.getProperty('/buttons/form'));
+          const aItem = _.cloneDeep(oViewModel.getProperty('/goals/comp'));
+          const bIsSave = _.isEqual(code, Constants.PROCESS_TYPE.SAVE.code);
+
+          await Client.deep(oModel, 'AppraisalIdpDoc', {
+            ...mParameter,
+            ...mManage,
+            ...mReject,
+            Menid: this.getCurrentMenuId(),
+            Prcty: code,
+            AppraisalIdpDocDetSet: aItem,
+          });
+
+          // {저장|전송|승인|취소}되었습니다.
+          MessageBox.success(this.getBundleText('MSG_00007', label), {
+            onClose: () => {
+              if (!bIsSave) this.getRouter().navTo(sListRouteName);
+            },
+          });
+        } catch (oError) {
+          this.debug(`Controller > ${sListRouteName} Detail > createProcess Error`, oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
+      },
+
       async openCompetencyHelpDialog() {
         const oView = this.getView();
 
@@ -352,7 +420,7 @@ sap.ui.define(
               ItemNo: String(iItemsLength + 1),
               Obj0: mSelectedData.Stext,
               Zobjidq: mSelectedData.Zobjidq,
-              Z301: _.get(mResult, ['AppraisalIdpDocDetSet', 0, 'Z301'], 'ALL'),
+              Z301: _.get(mResult, ['AppraisalIdpDocDetSet', 0, 'Z301'], ''),
             },
           ]);
         } catch (oError) {
@@ -362,6 +430,22 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/busy', false);
         }
+      },
+
+      async openRejectDialog() {
+        const oView = this.getView();
+
+        if (!this.pRejectDialog) {
+          this.pRejectDialog = await Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.mvc.view.idp.fragment.RejectDialog',
+            controller: this,
+          });
+
+          oView.addDependent(this.pRejectDialog);
+        }
+
+        this.pRejectDialog.open();
       },
 
       async addCompItem() {
@@ -431,8 +515,8 @@ sap.ui.define(
 
         if (!this.validation()) return;
 
-        MessageBox.confirm(this.getBundleText('MSG_00006', mProcessType.label), {
-          // {전송}하시겠습니까?
+        MessageBox.confirm(this.getBundleText('MSG_36003', mProcessType.label), {
+          // {전송}하신 후 수정할 수 없습니다. {전송}하시겠습니까?
           onClose: (sAction) => {
             if (MessageBox.Action.CANCEL === sAction) return;
 
@@ -453,7 +537,7 @@ sap.ui.define(
         if (!this.validation()) return;
 
         MessageBox.confirm(this.getBundleText('MSG_00006', mProcessType.label), {
-          // {승인}하시겠습니까?
+          // {승인}하신 후 수정할 수 없습니다. {승인}하시겠습니까?
           onClose: (sAction) => {
             if (MessageBox.Action.CANCEL === sAction) return;
 
@@ -467,6 +551,28 @@ sap.ui.define(
 
         oViewModel.setProperty('/buttons/form/isRejectProcess', true);
         this.openRejectDialog();
+      },
+
+      onPressRejectDialogClose() {
+        this.pRejectDialog.close();
+      },
+
+      onCheckReject(oEvent) {
+        this.getViewModel().setProperty('/buttons/form/confirmEnable', !!oEvent.getSource().getValue());
+      },
+
+      onPressRejectDialogSave() {
+        const mProcessType = Constants.PROCESS_TYPE.REJECT;
+
+        MessageBox.confirm(this.getBundleText('MSG_00006', mProcessType.label), {
+          // {반려}하시겠습니까?
+          onClose: (sAction) => {
+            if (MessageBox.Action.CANCEL === sAction) return;
+
+            this.createProcess(mProcessType);
+            this.onPressRejectDialogClose();
+          },
+        });
       },
 
       onPressCancelButton() {
