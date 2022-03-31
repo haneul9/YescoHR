@@ -42,7 +42,7 @@ sap.ui.define(
           LoanType: [],
           search: {
             date: moment().endOf('year').hours(9).toDate(),
-            secondDate: moment().subtract(11, 'year').set('month', 1).set('date', 1).hours(9).toDate(),
+            secondDate: moment().set('year', 1900).set('month', 0).set('date', 1).hours(9).toDate(),
           },
           listInfo: {
             rowCount: 1,

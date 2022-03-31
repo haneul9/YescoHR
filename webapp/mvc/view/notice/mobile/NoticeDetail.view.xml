@@ -9,7 +9,7 @@
     </customData>
     <VBox class="contents">
       <custom:MobileScrollContainer horizontal="false" vertical="true" excludeBottomSelector=".sapMPageFooter">
-        <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
+        <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap notice-mobile-content">
           <VBox justifyContent="SpaceBetween">
             <Title level="H2" text="{/FormData/Title}" wrapping="true" />
             <HBox justifyContent="SpaceBetween">

@@ -142,18 +142,20 @@ sap.ui.define(
 
       onPressCount(oEvent) {
         const oEventSource = oEvent.getSource();
-        this.openPopover(oEventSource, oEventSource.data('table-key').replace(/^k/, ''));
+        this.openPopover(oEventSource, oEventSource.data('count'), oEventSource.data('table-key').replace(/^k/, ''));
       },
 
-      async openPopover(oEventSource, sTableKey) {
+      async openPopover(oEventSource, sCount, sTableKey) {
         await this.createPopover();
 
         this.oPopover.close();
+        if (sCount === '0') {
+          return;
+        }
         this.oPopover.bindElement(`/table${sTableKey}`);
 
-        this.getPortletModel().setProperty('/tableKey', sTableKey);
-
-        setTimeout(() => {
+        setTimeout(async () => {
+          await this.retrieveEmpList(sTableKey);
           this.oPopover.openBy(oEventSource);
         }, 300);
       },
@@ -167,36 +169,35 @@ sap.ui.define(
 
           this.getController().getView().addDependent(this.oPopover);
 
-          this.oPopover
-            .attachBeforeOpen(async () => {
-              const oController = this.getController();
-              const oPortletModel = this.getPortletModel();
-
-              const oSelectedDate = oPortletModel.getProperty('/selectedDate');
-              const sTableKey = oPortletModel.getProperty('/tableKey');
-              const mAppointee = oController.getAppointeeData();
-
-              const oModel = oController.getModel(ServiceNames.WORKTIME);
-              const mPayload = {
-                Datum: moment(oSelectedDate).startOf('date').add(9, 'hours'),
-                Werks: mAppointee.Werks,
-                Orgeh: mAppointee.Orgeh,
-                Headty: 'A',
-                Discod: sTableKey,
-              };
-
-              const aData = await Client.getEntitySet(oModel, 'TimeOverviewDetail1', mPayload);
-              oPortletModel.setProperty(`/table${sTableKey}`, {
-                visiblePeriod: sTableKey !== '1',
-                list: aData,
-                listCount: Math.min(aData.length || 1, 5),
-              });
-
-              const bVisiblePeriod = this.oPopover.getBindingContext().getProperty('visiblePeriod');
-              this.oPopover.setContentWidth(bVisiblePeriod ? '447px' : this.bMobile ? '240px' : '249px');
-            })
-            .setModel(this.getPortletModel());
+          this.oPopover.setModel(this.getPortletModel());
         }
+      },
+
+      async retrieveEmpList(sTableKey) {
+        const oController = this.getController();
+        const oPortletModel = this.getPortletModel();
+
+        const oSelectedDate = oPortletModel.getProperty('/selectedDate');
+        const mAppointee = oController.getAppointeeData();
+
+        const oModel = oController.getModel(ServiceNames.WORKTIME);
+        const mPayload = {
+          Datum: moment(oSelectedDate).startOf('date').add(9, 'hours'),
+          Werks: mAppointee.Werks,
+          Orgeh: mAppointee.Orgeh,
+          Headty: 'A',
+          Discod: sTableKey,
+        };
+
+        const aData = await Client.getEntitySet(oModel, 'TimeOverviewDetail1', mPayload);
+        oPortletModel.setProperty(`/table${sTableKey}`, {
+          visiblePeriod: sTableKey !== '1',
+          list: aData,
+          listCount: Math.min(aData.length || 1, 5),
+        });
+
+        const bVisiblePeriod = this.oPopover.getBindingContext().getProperty('visiblePeriod');
+        this.oPopover.setContentWidth(bVisiblePeriod ? '447px' : this.bMobile ? '240px' : '249px');
       },
 
       onAfterDragAndDrop() {

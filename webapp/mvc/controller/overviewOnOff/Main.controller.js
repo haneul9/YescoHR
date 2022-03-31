@@ -131,7 +131,7 @@ sap.ui.define(
                 _.chain(aLegends)
                   .cloneDeep()
                   .reverse()
-                  .map((o) => ({ seriesname: o.label, color: o.color, data: [{ value: o.value, link: `j-callDetail-${mChartInfo.Headty},${o.code}` }] }))
+                  .map((o) => ({ seriesname: o.label, color: o.color, data: [{ value: o.value, link: `j-callOnOffDetail-${mChartInfo.Headty},${o.code}` }] }))
                   .value()
               )
               .commit();
@@ -171,7 +171,7 @@ sap.ui.define(
                 'dataset',
                 _.chain(aDataSet)
                   .reverse()
-                  .map((o) => ({ seriesname: o.label, color: o.color, data: _.map(o.values, (v, i) => ({ ...v, showValue: _.gt(v.value, mChartInfo.minDisplayValue) ? 1 : 0, link: `j-callDetail-${mChartInfo.Headty},${o.code},${_.get(aChartDatas, [i, 'Ttltxt'])}` })) }))
+                  .map((o) => ({ seriesname: o.label, color: o.color, data: _.map(o.values, (v, i) => ({ ...v, showValue: _.gt(v.value, mChartInfo.minDisplayValue) ? 1 : 0, link: `j-callOnOffDetail-${mChartInfo.Headty},${o.code},${_.get(aChartDatas, [i, 'Ttltxt'])}` })) }))
                   .value()
               )
               .commit();
@@ -211,7 +211,7 @@ sap.ui.define(
                 ['dataset', 0, 'dataset'],
                 _.chain(aDataSet2)
                   .reverse()
-                  .map((o) => ({ seriesname: o.label, color: o.color, data: _.map(o.values, (v, i) => ({ ...v, showValue: _.gt(v.value, mChartInfo.minDisplayValue) ? 1 : 0, link: `j-callDetail-${mChartInfo.Headty},${o.code},${_.get(aChartDatas, [i, 'Ttltxt'])}` })) }))
+                  .map((o) => ({ seriesname: o.label, color: o.color, data: _.map(o.values, (v, i) => ({ ...v, showValue: _.gt(v.value, mChartInfo.minDisplayValue) ? 1 : 0, link: `j-callOnOffDetail-${mChartInfo.Headty},${o.code},${_.get(aChartDatas, [i, 'Ttltxt'])}` })) }))
                   .value()
               )
               .set(['lineset', 0], {
@@ -407,7 +407,7 @@ sap.ui.define(
 );
 
 // eslint-disable-next-line no-unused-vars
-function callDetail(sArgs) {
+function callOnOffDetail(sArgs) {
   const oController = sap.ui.getCore().byId('container-ehr---m_overviewOnOff').getController();
   const aProps = ['Headty', 'Discod', 'Disyear'];
   const aArgs = _.split(sArgs, ',');

@@ -93,7 +93,7 @@
                                 <m:Text text="{ path: 'Plncnt', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
-                        <Column width="auto" filterProperty="Plnrte" sortProperty="Plnrte">
+                        <Column width="8%" filterProperty="Plnrte" sortProperty="Plnrte">
                             <m:Label text="{i18n>LABEL_28052}"/>
                             <template>
                                 <m:Text text="{ path: 'Plnrte', type: 'sap.ui.yesco.mvc.model.type.Percent' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />

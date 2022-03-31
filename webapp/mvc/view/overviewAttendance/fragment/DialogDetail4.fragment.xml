@@ -51,7 +51,7 @@
                                 <m:Text text="{Zzjikchtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
-                        <Column width="auto" filterProperty="Datum" sortProperty="Datum">
+                        <Column width="8%" filterProperty="Datum" sortProperty="Datum">
                             <m:Label text="{i18n>LABEL_00170}"/>
                             <template>
                                 <m:Text text="{path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date'}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
@@ -72,25 +72,25 @@
                         <Column width="auto" filterProperty="Bashr" sortProperty="Bashr">
                             <m:Label text="{i18n>LABEL_28054}"/>
                             <template>
-                                <m:Text text="{Bashr}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                                <m:Text text="{ path: 'Bashr', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
                         <Column width="auto" filterProperty="Addhr" sortProperty="Addhr">
                             <m:Label text="{i18n>LABEL_28055}"/>
                             <template>
-                                <m:Text text="{Addhr}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                                <m:Text text="{ path: 'Addhr', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
                         <Column width="auto" filterProperty="Dedhr" sortProperty="Dedhr">
                             <m:Label text="{i18n>LABEL_01123}"/>
                             <template>
-                                <m:Text text="{Dedhr}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                                <m:Text text="{ path: 'Dedhr', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
                         <Column width="auto" filterProperty="Holhr" sortProperty="Holhr">
                             <m:Label text="{i18n>LABEL_13028}"/>
                             <template>
-                                <m:Text text="{Holhr}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                                <m:Text text="{ path: 'Holhr', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                             </template>
                         </Column>
                         <Column width="auto" filterProperty="Nomtotc" sortProperty="Nomtotc">

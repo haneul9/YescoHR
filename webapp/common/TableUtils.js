@@ -75,13 +75,15 @@ sap.ui.define(
       /**************************
        * Functions
        *************************/
-      count({ oTable, aRowData, sStatCode = 'ZappStatAl', bHasSumRow = false, bIncludeNullProgress = false }) {
+      count({ oTable, aRowData, sStatCode = 'ZappStatAl', bHasSumRow = false }) {
         const iVisibleRowCountLimit = this.calculateVisibleRowCount(oTable);
         const iDataLength = bHasSumRow ? (aRowData.length || 1) + 1 : aRowData.length;
         const oOccurCount = _.chain(aRowData)
           .map(sStatCode)
           .countBy()
           .defaults({
+            ['']: 0,
+            [STATE_IN_PROGRESS0]: 0,
             [STATE_IN_PROGRESS1]: 0,
             [STATE_IN_PROGRESS2]: 0,
             [STATE_APPLY1]: 0,
@@ -97,7 +99,7 @@ sap.ui.define(
         return {
           rowCount: Math.min(iVisibleRowCountLimit, iDataLength),
           totalCount: aRowData.length,
-          progressCount: bIncludeNullProgress ? oOccurCount[''] + oOccurCount[STATE_IN_PROGRESS1] + oOccurCount[STATE_IN_PROGRESS2] : oOccurCount[STATE_IN_PROGRESS1] + oOccurCount[STATE_IN_PROGRESS2],
+          progressCount: oOccurCount[''] + oOccurCount[STATE_IN_PROGRESS0] + oOccurCount[STATE_IN_PROGRESS1] + oOccurCount[STATE_IN_PROGRESS2],
           applyCount: oOccurCount[STATE_APPLY1] + oOccurCount[STATE_APPLY2] + oOccurCount[STATE_APPLY3],
           approveCount: oOccurCount[STATE_APPROVE],
           rejectCount: oOccurCount[STATE_REJECT1] + oOccurCount[STATE_REJECT2],
@@ -137,8 +139,12 @@ sap.ui.define(
               type: exportLibrary.EdmType.String,
             }));
 
+        const aColumnFilter = _.reject(aColumns, (e) => {
+          return !e.property;
+        });
+
         aDateProps.forEach((prop) => {
-          const mDateColumn = _.find(aColumns, { property: prop });
+          const mDateColumn = _.find(aColumnFilter, { property: prop });
 
           if (!_.isEmpty(mDateColumn)) {
             mDateColumn.type = exportLibrary.EdmType.Date;
@@ -148,7 +154,7 @@ sap.ui.define(
 
         const oSettings = {
           workbook: {
-            columns: aColumns,
+            columns: aColumnFilter,
             hierarchyLevel: 'Level',
           },
           dataSource: aTableData,

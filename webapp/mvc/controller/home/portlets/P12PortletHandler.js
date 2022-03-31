@@ -40,23 +40,30 @@ sap.ui.define(
       async readContentData() {
         const oModel = this.getController().getModel(ServiceNames.WORKTIME);
         const mPayload = {
-          Menid: this.getMenid('workTime'),
+          Menid: this.getMenid('individualWorkState'),
         };
 
-        return Client.getEntitySet(oModel, 'WorkingTime', mPayload);
+        return Client.getEntitySet(oModel, 'AbsQuotaList', mPayload);
       },
 
       transformContentData(aPortletContentData = []) {
+        const mPortletContentData = {};
         aPortletContentData.forEach((mData) => {
-          // if (mData.Gubun === '1') {
-          //   aList.push(mData);
-          // }
+          if (mData.Ktart === '10') {
+            mPortletContentData.Annual = { Total: parseFloat(mData.Crecnt), Used: parseFloat(mData.Usecnt), Remain: parseFloat(mData.Balcnt) };
+          }
+          if (mData.Ktart === '20') {
+            mPortletContentData.Summer = { Total: parseFloat(mData.Crecnt), Used: parseFloat(mData.Usecnt), Remain: parseFloat(mData.Balcnt) };
+          }
         });
+        if (!mPortletContentData.Annual) {
+          mPortletContentData.Annual = { Total: 0, Used: 0, Remain: 0 };
+        }
+        if (!mPortletContentData.Summer) {
+          mPortletContentData.Summer = { Total: 0, Used: 0, Remain: 0 };
+        }
 
-        return {
-          Annual: { Total: 15, Used: 10, Remain: 5 },
-          Summer: { Total: 5, Used: 2, Remain: 3 },
-        };
+        return mPortletContentData;
       },
     });
   }

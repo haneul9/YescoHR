@@ -44,21 +44,23 @@ sap.ui.define(
       },
       async onPressPrevYear() {
         const oViewModel = this.oController.getViewModel();
-        const sFullDate = moment(oViewModel.getProperty('/searchDate/full')).subtract('month', 1).format('YYYY.MM');
+        const sFullDa = oViewModel.getProperty('/searchDate/full').replace('.', '-');
+        const sFullDate = moment(sFullDa).subtract(1, 'month').format('YYYY-MM');
 
         oViewModel.setProperty('/searchDate/year', moment(sFullDate).format('YYYY'));
         oViewModel.setProperty('/searchDate/month', moment(sFullDate).format('MM'));
-        oViewModel.setProperty('/searchDate/full', sFullDate);
+        oViewModel.setProperty('/searchDate/full', sFullDate.replace('-', '.'));
         await this.oController.YearPlanBoxHandler.getYearPlan();
       },
 
       async onPressNextYear() {
         const oViewModel = this.oController.getViewModel();
-        const sFullDate = moment(oViewModel.getProperty('/searchDate/full')).add('month', 1).format('YYYY.MM');
+        const sFullDa = oViewModel.getProperty('/searchDate/full').replace('.', '-');
+        const sFullDate = moment(sFullDa).add(1, 'month').format('YYYY-MM');
 
         oViewModel.setProperty('/searchDate/year', moment(sFullDate).format('YYYY'));
         oViewModel.setProperty('/searchDate/month', moment(sFullDate).format('MM'));
-        oViewModel.setProperty('/searchDate/full', sFullDate);
+        oViewModel.setProperty('/searchDate/full', sFullDate.replace('-', '.'));
         await this.oController.YearPlanBoxHandler.getYearPlan();
       },
 

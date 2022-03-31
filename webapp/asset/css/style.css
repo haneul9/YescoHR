@@ -122,6 +122,7 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p06 .today {color:grey}
 .portlet-p06 .sapUiLayoutCSSGrid {height:100%}
 .portlet-p06 .team-member-count {margin-top:8px; font-size:24px; font-weight:500; cursor:pointer}
+.portlet-p06 .team-member-count[data-count="0"] {cursor:default}
 .portlet-p06 .team-member-count[data-table-key="k1"] .sapMObjStatusText {color:#222}/* 총원 */
 .portlet-p06 .team-member-count[data-table-key="k2"] .sapMObjStatusText {color:#ff5a5a}/* 휴가 */
 .portlet-p06 .team-member-count[data-table-key="k3"] .sapMObjStatusText {color:#5a86ff}/* 휴무 */
@@ -172,9 +173,9 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p11 .portlet-p11-objectstatus15 {vertical-align:top; font-size:14px}
 .portlet-p11 .portlet-p11-text.sapMText {vertical-align:top; font-size:12px}
 .portlet-p12 h2.sapMTitle {vertical-align:middle; font-size:20px; font-weight:700}
-.portlet-p12 .vacation-count-size36.sapMText {font-size:36px; line-height:1}
-.portlet-p12 .vacation-count-size24.sapMText {font-size:24px}
-.portlet-p12 .vacation-count-size12.sapMText {font-size:12px}
+.portlet-p12 .vacation-count-xl.sapMText {font-size:24px; line-height:1}
+.portlet-p12 .vacation-count-lg.sapMText {font-size:20px}
+.portlet-p12 .vacation-count-xs.sapMText {font-size:12px}
 .portlet-p12 .vacation-count-color.sapMText {color:#2d94f9}
 .portlet-p12 .vacation-text-color.sapMText {color:#898d9c}
 .portlet-m21 .border-bottom {border-bottom:1px solid #dbdbdb}
@@ -636,6 +637,7 @@ html.sap-desktop .sapContrast .sapMFooter-CTX .sapMBtnInner.sapMBtnReject, html.
 .sapUiTableColHdrCnt + .sapUiTableCtrlBefore + .sapUiTableCCnt, .sapUiTableColHdrCnt + .sapUiTableCCnt {margin-top:-1px}
 .sapUiTableCCnt {min-height:44px !important; border-bottom:1px solid #f5f5f5; border-left:1px solid #f5f5f5; border-right:1px solid #f5f5f5; background-color:#eff3f8}
 .sapUiTableCtrlCnt {min-height:44px !important}
+.dialog-content-table .sapUiTableCtrlCnt,
 .dialog-content-table .sapUiTableCCnt {min-height:34px !important}
 .sapUiTableHeaderRow { background-color:#FBFCFD}
 .sapUiTableHeaderCell:not(.sapUiTableRowActionHeaderCell):hover {background-color:#F5F9FD; color:#222}
@@ -661,7 +663,7 @@ html.sap-desktop .sapContrast .sapMFooter-CTX .sapMBtnInner.sapMBtnReject, html.
 .sapUiTableRowFirstFixedBottom td {background-color:#eff3f8}
 
 /* GNB */
-.megadrop-menu-layer {box-sizing:border-box; position:absolute; z-index:4; top:59px; min-height:243px; border-radius:0; padding-bottom:15px; color:#222; background-color:#fff; box-shadow:0 3px 5px 0 rgb(0 0 0 / 10%), 0 0 0 1px rgb(0 0 0 / 5%)}
+.megadrop-menu-layer {box-sizing:border-box; position:absolute; z-index:20; top:59px; min-height:243px; border-radius:0; padding-bottom:15px; color:#222; background-color:#fff; box-shadow:0 3px 5px 0 rgb(0 0 0 / 10%), 0 0 0 1px rgb(0 0 0 / 5%)}
 .megadrop-menu-layer:before {content:""; height:0px !important; width:100%; border-bottom:1px solid #ccc; position:absolute; top:0; left:0; right:0}
 .megadrop-menu-layer .sapMIBar.sapMTB .sapMBarChild {font-size:17px; font-weight:800; color:#002866; letter-spacing:-0.2px}
 .megadrop-menu-layer .sapMTBStandard {border-bottom:1px solid transparent}
@@ -824,7 +826,7 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .month-plan-grid .sapMFlexBox[data-holiday="Holiday"] .sapMText { color:#FC564F!important;}/* 공휴일 */
 .month-plan-grid .sapMFlexBox[data-holiday="Holiday"] .sapMLabel { color:#FC564F!important;}/* 공휴일 */
 .month-plan-grid .sapMText[data-holiday="Holiday"] { color:#FC564F!important;}/* 공휴일 */
-.month-plan-grid.sapUiLayoutCSSGrid .sapMFlexBox[data-stripes="Stripes"]::before { content: ''; width: 14%; height: 17%; background: repeating-linear-gradient(45deg, #A6A6A6, #A6A6A6 0px, transparent  2px, transparent  5px); position: absolute; z-index: 1;}신청
+.month-plan-grid.sapUiLayoutCSSGrid .sapMFlexBox[data-stripes="Stripes"]::before { content: ''; width: 14%; height: 70px; background: repeating-linear-gradient(45deg, #A6A6A6, #A6A6A6 0px, transparent  2px, transparent  5px); position: absolute; z-index: 0;} /* 신청 */
 
 /* .sapSuiteIDCChart {width:auto !important} */
 .sapMTitle[data-color=blue] {color:blue}
@@ -903,7 +905,7 @@ span.sapMBtnInner.sapMBtnEmphasized {text-shadow:none}
 
 /*message box*/
 .sapMText{color:var(--FontColorNormal); font-size:14px; font-weight:500; line-height:1.45; align-self:center}
-.sapMMsgStripInformation {border-radius:3px; border:solid 1px#b8daff; background-color:#cce5ff; height:29px; padding:6px 13px 8px 20px; min-height:auto; line-height:1}
+.sapMMsgStripInformation {border-radius:3px; border:solid 1px #b8daff; background-color:#cce5ff; height:29px; padding:6px 13px 8px 20px; min-height:auto; line-height:1}
 .sapMMsgStripError {border-radius:3px; border:solid 1px #f5c6cb; background-color:#f8d7da; height:29px; padding:6px 13px 8px 20px; min-height:auto; line-height:1}
 .sapMMsgStripError .sapMText {color:#721c24}
 .sapMMsgStripWarning {border-radius:3px; border:solid 1px #ffeeba; background-color:#fff3cd; height:29px; padding:6px 13px 8px 20px; min-height:auto; line-height:1}
@@ -1794,7 +1796,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .portlet.type-b .sapMGTSubHdrTxt .sapMText {font-size:11px; background:none}
 
 .portlet-vacation-summary .vacation-indicator {height:40px}
-.portlet-vacation-summary .vacation-indicator div {height:40px; border-radius:20px; line-height:40px; font-size:20px; font-weight:700; text-align:right}
+.portlet-vacation-summary .vacation-indicator div {height:40px; border-radius:20px; line-height:40px; font-size:20px; font-weight:700}
 .portlet-vacation-summary .vacation-indicator .vacation-indicator-gauge .vacation-indicator-remain {z-index:2; color:transparent; background-color:#e7ebee}
 .portlet-vacation-summary .vacation-indicator .vacation-indicator-gauge .vacation-indicator-used {z-index:3; color:transparent; background-color:#a0c7ec}
 .portlet-vacation-summary .vacation-indicator.vacation-indicator-middle .vacation-indicator-text > div {padding:0 1rem}

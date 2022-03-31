@@ -18,7 +18,7 @@
           <core:CustomData key="holiday" value="{holiday}" writeToDom="true" />
         </customData>
       </Text>
-      <custom:VBox width="100%" click=".onClickDay">
+      <custom:VBox width="100%" click=".onClickDay" height="70px">
         <custom:customData>
           <core:CustomData key="style" value="{classNames}" writeToDom="true" />
           <core:CustomData key="holiday" value="{holiday}" writeToDom="true" />

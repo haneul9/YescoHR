@@ -456,7 +456,7 @@ sap.ui.define(
       onPressExcelDownload(oTable, aTableData) {
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_32001'); // {근로시간현황}_목록
 
-        // TableUtils.export({ oTable, aTableData, sFileName, bHasMultiLabel: true });
+        TableUtils.export({ oTable, aTableData, sFileName, bHasMultiLabel: true });
       },
     });
   }
