@@ -25,17 +25,17 @@
         <Panel expandable="true" expanded="true" width="auto" class="timeline-wrap" visible="{= !!${/employee/header/timeline} }">
             <content>
                 <VBox class="timeline">
-                    <HBox justifyContent="SpaceAround" items="{path: '/employee/header/timeline'}">
+                    <HBox justifyContent="SpaceBetween" items="{path: '/employee/header/timeline'}">
                         <VBox width="20%" alignItems="Center">
                             <Text text="{Dattx}" />
                         </VBox>
                     </HBox>
-                    <HBox justifyContent="SpaceAround" items="{path: '/employee/header/timeline'}" class="lineItem-wrap">
+                    <HBox justifyContent="SpaceBetween" items="{path: '/employee/header/timeline'}" class="lineItem-wrap">
                         <VBox width="20%" alignItems="Center">
                             <core:Icon src="sap-icon://employee" class="lineItem" />
                         </VBox>
                     </HBox>
-                    <HBox justifyContent="SpaceAround" items="{path: '/employee/header/timeline'}">
+                    <HBox justifyContent="SpaceBetween" items="{path: '/employee/header/timeline'}">
                         <VBox width="20%" alignItems="Center">
                             <Text text="{Datum}" />
                         </VBox>
