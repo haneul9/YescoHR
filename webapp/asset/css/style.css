@@ -905,7 +905,7 @@ span.sapMBtnInner.sapMBtnEmphasized {text-shadow:none}
 
 /*message box*/
 .sapMText{color:var(--FontColorNormal); font-size:14px; font-weight:500; line-height:1.45; align-self:center}
-.sapMMsgStripInformation {border-radius:3px; border:solid 1px#b8daff; background-color:#cce5ff; height:29px; padding:6px 13px 8px 20px; min-height:auto; line-height:1}
+.sapMMsgStripInformation {border-radius:3px; border:solid 1px #b8daff; background-color:#cce5ff; height:29px; padding:6px 13px 8px 20px; min-height:auto; line-height:1}
 .sapMMsgStripError {border-radius:3px; border:solid 1px #f5c6cb; background-color:#f8d7da; height:29px; padding:6px 13px 8px 20px; min-height:auto; line-height:1}
 .sapMMsgStripError .sapMText {color:#721c24}
 .sapMMsgStripWarning {border-radius:3px; border:solid 1px #ffeeba; background-color:#fff3cd; height:29px; padding:6px 13px 8px 20px; min-height:auto; line-height:1}
