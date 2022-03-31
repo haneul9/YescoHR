@@ -36,7 +36,7 @@
           <Label design="Bold" text="{i18n>LABEL_01121}" />
           <ObjectStatus text="{ path: 'counts/Cnt01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt01} > 0 }" press=".onPressCount" class="team-member-count">
             <customData>
-              <core:CustomData key="count" value="{counts/Cnt01}" writeToDom="true" />
+              <core:CustomData key="popover" value="{= ${counts/Cnt01} === '0' ? 'N' : 'Y' }" writeToDom="true" />
               <core:CustomData key="table-key" value="k{counts/Cod01}" writeToDom="true" />
             </customData>
           </ObjectStatus>
@@ -45,7 +45,7 @@
           <Label design="Bold" text="{i18n>LABEL_01122}" />
           <ObjectStatus text="{ path: 'counts/Cnt02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt02} > 0 }" press=".onPressCount" class="team-member-count">
             <customData>
-              <core:CustomData key="count" value="{counts/Cnt02}" writeToDom="true" />
+              <core:CustomData key="popover" value="{= ${counts/Cnt02} === '0' ? 'N' : 'Y' }" writeToDom="true" />
               <core:CustomData key="table-key" value="k{counts/Cod02}" writeToDom="true" />
             </customData>
           </ObjectStatus>
@@ -54,7 +54,7 @@
           <Label design="Bold" text="{i18n>LABEL_00188}" />
           <ObjectStatus text="{ path: 'counts/Cnt03', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt03} > 0 }" press=".onPressCount" class="team-member-count">
             <customData>
-              <core:CustomData key="count" value="{counts/Cnt03}" writeToDom="true" />
+              <core:CustomData key="popover" value="{= ${counts/Cnt03} === '0' ? 'N' : 'Y' }" writeToDom="true" />
               <core:CustomData key="table-key" value="k{counts/Cod03}" writeToDom="true" />
             </customData>
           </ObjectStatus>
@@ -63,7 +63,7 @@
           <Label design="Bold" text="{i18n>LABEL_01123}" />
           <ObjectStatus text="{ path: 'counts/Cnt04', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt04} > 0 }" press=".onPressCount" class="team-member-count">
             <customData>
-              <core:CustomData key="count" value="{counts/Cnt04}" writeToDom="true" />
+              <core:CustomData key="popover" value="{= ${counts/Cnt04} === '0' ? 'N' : 'Y' }" writeToDom="true" />
               <core:CustomData key="table-key" value="k{counts/Cod04}" writeToDom="true" />
             </customData>
           </ObjectStatus>
@@ -72,7 +72,7 @@
           <Label design="Bold" text="{i18n>LABEL_01126}" />
           <ObjectStatus text="{ path: 'counts/Cnt05', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt05} > 0 }" press=".onPressCount" class="team-member-count">
             <customData>
-              <core:CustomData key="count" value="{counts/Cnt05}" writeToDom="true" />
+              <core:CustomData key="popover" value="{= ${counts/Cnt05} === '0' ? 'N' : 'Y' }" writeToDom="true" />
               <core:CustomData key="table-key" value="k{counts/Cod05}" writeToDom="true" />
             </customData>
           </ObjectStatus>
@@ -81,7 +81,7 @@
           <Label design="Bold" text="{i18n>LABEL_01125}" />
           <ObjectStatus text="{ path: 'counts/Cnt06', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt06} > 0 }" press=".onPressCount" class="team-member-count">
             <customData>
-              <core:CustomData key="count" value="{counts/Cnt06}" writeToDom="true" />
+              <core:CustomData key="popover" value="{= ${counts/Cnt06} === '0' ? 'N' : 'Y' }" writeToDom="true" />
               <core:CustomData key="table-key" value="k{counts/Cod06}" writeToDom="true" />
             </customData>
           </ObjectStatus>
@@ -90,7 +90,7 @@
           <Label design="Bold" text="{i18n>LABEL_20007}" />
           <ObjectStatus text="{ path: 'counts/Cnt07', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt07} > 0 }" press=".onPressCount" class="team-member-count">
             <customData>
-              <core:CustomData key="count" value="{counts/Cnt07}" writeToDom="true" />
+              <core:CustomData key="popover" value="{= ${counts/Cnt07} === '0' ? 'N' : 'Y' }" writeToDom="true" />
               <core:CustomData key="table-key" value="k{counts/Cod07}" writeToDom="true" />
             </customData>
           </ObjectStatus>
@@ -99,7 +99,7 @@
           <Label design="Bold" text="{i18n>LABEL_01205}" />
           <ObjectStatus text="{ path: 'counts/Cnt08', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt08} > 0 }" press=".onPressCount" class="team-member-count">
             <customData>
-              <core:CustomData key="count" value="{counts/Cnt08}" writeToDom="true" />
+              <core:CustomData key="popover" value="{= ${counts/Cnt08} === '0' ? 'N' : 'Y' }" writeToDom="true" />
               <core:CustomData key="table-key" value="k{counts/Cod08}" writeToDom="true" />
             </customData>
           </ObjectStatus>

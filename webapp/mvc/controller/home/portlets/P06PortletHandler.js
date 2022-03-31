@@ -142,14 +142,14 @@ sap.ui.define(
 
       onPressCount(oEvent) {
         const oEventSource = oEvent.getSource();
-        this.openPopover(oEventSource, oEventSource.data('count'), oEventSource.data('table-key').replace(/^k/, ''));
+        this.openPopover(oEventSource, oEventSource.data('popover'), oEventSource.data('table-key').replace(/^k/, ''));
       },
 
-      async openPopover(oEventSource, sCount, sTableKey) {
+      async openPopover(oEventSource, sPopover, sTableKey) {
         await this.createPopover();
 
         this.oPopover.close();
-        if (sCount === '0') {
+        if (sPopover === 'N') {
           return;
         }
         this.oPopover.bindElement(`/table${sTableKey}`);
