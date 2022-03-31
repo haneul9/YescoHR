@@ -80,7 +80,7 @@ sap.ui.define(
             error: (oError) => {
               AppUtils.debug(`${sUrl} create error.`, oError);
 
-              AppUtils.handleSessionTimeout(new ODataCreateError(oError), reject);
+              AppUtils.handleSessionTimeout(new ODataCreateError({ oError }), reject);
             },
           });
         });
