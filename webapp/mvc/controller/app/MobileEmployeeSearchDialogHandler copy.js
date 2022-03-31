@@ -52,11 +52,11 @@ sap.ui.define(
         });
 
         this.oDialog
-          .attachBeforeOpen(() => {
-            $('#sap-ui-static').append('<div id="sap-ui-blocklayer-popup" tabindex="0" class="sapUiBLy sapMPopoverBLayer half-dialog" style="z-index:8; visibility:visible"></div>');
+          .attachAfterOpen(() => {
+            $('#sap-ui-blocklayer-popup').toggleClass('half-dialog', true);
           })
-          .attachBeforeClose(() => {
-            $('#sap-ui-blocklayer-popup').remove();
+          .attachAfterClose(() => {
+            $('#sap-ui-blocklayer-popup').toggleClass('half-dialog', false);
           })
           .setModel(this.oDialogModel)
           .bindElement('/');
@@ -106,8 +106,7 @@ sap.ui.define(
         if (this.oDialog.isOpen()) {
           this.onDialogClose();
         } else {
-          this.oDialog.openBy(this.oController.byId('contact-search'));
-          this.setBusy(false);
+          this.oDialog.open();
         }
       },
 

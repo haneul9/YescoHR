@@ -35,24 +35,25 @@ sap.ui.define(
       },
 
       async readContentData() {
+        const oPortletModel = this.getPortletModel();
+        const oSelectedDate = oPortletModel.getProperty('/selectedDate') || new Date();
+        const mAppointee = this.getController().getAppointeeData();
+
         const oModel = this.getController().getModel(ServiceNames.WORKTIME);
         const mPayload = {
-          Menid: this.getMenid('workTime'),
+          Datum: moment(oSelectedDate).startOf('date').add(9, 'hours'),
+          Werks: mAppointee.Werks,
+          Orgeh: mAppointee.Orgeh,
+          Headty: 'D',
         };
 
-        return Client.getEntitySet(oModel, 'WorkingTime', mPayload);
+        return Client.getEntitySet(oModel, 'TimeOverview', mPayload);
       },
 
-      transformContentData(aPortletContentData = []) {
-        aPortletContentData.forEach((mData) => {
-          // if (mData.Gubun === '1') {
-          //   aList.push(mData);
-          // }
-        });
-
+      transformContentData([{ Cnt01 = '0', Cnt03 = '0' }]) {
         return {
-          Annual: { Total: 15, Used: 10 },
-          Summer: { Total: 5, Used: 2 },
+          Annual: { Total: 100, Used: parseFloat(Cnt01) },
+          Summer: { Total: 100, Used: parseFloat(Cnt03) },
         };
       },
     });
