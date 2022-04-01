@@ -398,9 +398,19 @@ sap.ui.define(
             throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_36001') }); // 이미 선택한 역량입니다.
           }
 
+          const oModel = this.getModel(ServiceNames.APPRAISAL);
           const mParameter = oViewModel.getProperty('/param');
           const sType = oViewModel.getProperty('/type');
-          const mResult = await Client.deep(this.getModel(ServiceNames.APPRAISAL), 'AppraisalIdpDoc', {
+
+          // 저장
+          await Client.create(oModel, 'AppraisalIdpQlist', {
+            Prcty: 'A',
+            Werks: this.getAppointeeProperty('Werks'),
+            ..._.pick(mSelectedData, ['Zobjidqk', 'Zobjidq']),
+            ..._.pick(mParameter, ['Zzappid', 'Zzappty', 'Zdocid']),
+          });
+
+          const mResult = await Client.deep(oModel, 'AppraisalIdpDoc', {
             ...mParameter,
             Menid: this.getCurrentMenuId(),
             Prcty: Constants.PROCESS_TYPE.DETAIL.code,
