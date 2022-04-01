@@ -1,6 +1,7 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.app.App"
   xmlns="sap.m"
   xmlns:custom="sap.ui.yesco.control"
+  xmlns:core="sap.ui.core"
   xmlns:mvc="sap.ui.core.mvc" displayBlock="true">
   <OverflowToolbar id="appMenuToolbar" asyncMode="true" busy="{appModel>/isMenuBusy}" busyIndicatorDelay="0" class="app-menu-toolbar" height="60px" visible="{= !${appModel>/isMobile} }">
     <ImageContent id="logo-image" src="{ path: 'sessionModel>/Werks', formatter: '.getLogoPath' }" description="{sessionModel>/Pbtxt} eHR Home" press=".navToHome" class="home-logo">
@@ -46,6 +47,9 @@
   <App id="app" class="app-body" autoFocus="false" busy="{appModel>/isAppBusy}" busyIndicatorDelay="0" />
 
   <OverflowToolbar id="appBottomToolbar" height="60px" asyncMode="true" busy="{appModel>/isMenuBusy}" busyIndicatorDelay="0" class="app-menu-toolbar" visible="{appModel>/isMobile}">
+    <customData>
+      <core:CustomData key="background" value="{appModel>/homebarBackground}" writeToDom="true" />
+    </customData>
     <HBox width="100%" justifyContent="SpaceAround" class="footer-menu">
       <Button id="my-page" type="Transparent" icon="asset/image/icon_m_employee.svg" iconDensityAware="false" class="icon-button" tooltip="{i18n>LABEL_01005}" press=".onPressMobileMyPagePopoverToggle" />
       <HBox alignItems="Center" class="notification-wrapper" tooltip="{i18n>LABEL_01002}">

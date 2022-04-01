@@ -64,6 +64,11 @@ sap.ui.define(
         setTimeout(() => {
           this.oMobileEmployeeSearchDialogHandler = new MobileEmployeeSearchDialogHandler(this);
         });
+        setTimeout(() => {
+          this.getOwnerComponent()
+            .getAppModel()
+            .setProperty('/homebarBackground', AppUtils.isLOCAL() || AppUtils.isDEV() || AppUtils.isQAS() ? 'dev' : 'prd');
+        });
       },
 
       getAppMenu() {

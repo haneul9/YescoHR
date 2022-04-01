@@ -48,6 +48,7 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 
 .app-top-toolbar {border-top:1px solid #fff; background-color:#fff}
 .app-menu-toolbar {width:100%; border-top:1px solid #DFE2EB}
+[data-background="dev"], [data-background="dev"] * {background-color:#f4fce3}
 
 .portlet + .portlet {margin-top:16px}
 .portlet.portlet-h1 {max-height:270px; height:270px}
