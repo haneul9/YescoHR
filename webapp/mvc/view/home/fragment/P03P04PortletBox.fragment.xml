@@ -51,9 +51,9 @@
               <Image src="{Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="30px" height="30px" />
               <Text text="{Ename}" tooltip="{Ename}" wrapping="false" class="portlet-member-name" />
               <Text text="{Zzjikgbt}" tooltip="{Zzjikgbt}" wrapping="false" class="portlet-member-position" />
-              <Text text="{Orgtx}" tooltip="{Orgtx}" wrapping="false" class="portlet-member-org">
+              <Text text="{Orgtx}" tooltip="{Orgtx}" wrapping="false">
                 <layoutData>
-                  <FlexItemData growFactor="1" />
+                  <FlexItemData growFactor="1" styleClass="portlet-member-org" />
                 </layoutData>
               </Text>
               <Text text="{Atext}" tooltip="{Atext}" wrapping="false" class="portlet-member-status">
@@ -73,9 +73,9 @@
               <Image src="{Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="30px" height="30px" />
               <Text text="{Ename}" tooltip="{Ename}" wrapping="false" class="portlet-member-name" />
               <Text text="{Zzjikgbt}" tooltip="{Zzjikgbt}" wrapping="false" class="portlet-member-position" />
-              <Text text="{Orgtx}" tooltip="{Orgtx}" wrapping="false" class="portlet-member-org">
+              <Text text="{Orgtx}" tooltip="{Orgtx}" wrapping="false">
                 <layoutData>
-                  <FlexItemData growFactor="1" />
+                  <FlexItemData growFactor="1" styleClass="portlet-member-org" />
                 </layoutData>
               </Text>
               <Text text="{Atext}" tooltip="{Atext}" wrapping="false" class="portlet-member-status">

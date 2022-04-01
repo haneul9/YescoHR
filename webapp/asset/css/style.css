@@ -111,8 +111,8 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p03p04 .portlet-members > .sapMFlexItem:last-child {margin-right:0}
 .portlet-p03p04 .portlet-member-name {font-weight:700; margin-right:15px; width:49px}
 .portlet-p03p04 .portlet-member-position {margin-right:12px; width:49px}
-.portlet-p03p04 .portlet-members .portlet-member-org {width:100%}
-.portlet-p03p04:hover .portlet-members.my-members .portlet-member-org {width:85px}
+.portlet-p03p04 .portlet-members .portlet-member-org {width:calc(100% - 210px)}
+.portlet-p03p04:hover .portlet-members.my-members .portlet-member-org {width:calc(100% - 241px)}
 .portlet-p03p04 .sapMBtn.icon-button.portlet-member-remove {display:none}
 .portlet-p03p04:hover .sapMBtn.icon-button.portlet-member-remove {display:inline-flex; margin-left:10px}
 .portlet-p05 .sapMListUl .sapMLIB:not(.sapMComboBoxBaseItem) {margin-top:11px}
