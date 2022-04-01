@@ -16,6 +16,7 @@ sap.ui.define(
     'sap/ui/yesco/common/exceptions/ODataDeleteError',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/exceptions/ODataUpdateError',
+    'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/PostcodeDialogHandler',
     'sap/ui/yesco/common/Validator',
@@ -40,6 +41,7 @@ sap.ui.define(
     ODataDeleteError,
     ODataReadError,
     ODataUpdateError,
+    UI5Error,
     ServiceNames,
     PostcodeDialogHandler,
     Validator,
@@ -67,7 +69,6 @@ sap.ui.define(
             { label: 'LABEL_00271', field: 'Begda', type: Validator.INPUT1 }, // 적용시작일
             { label: 'LABEL_00272', field: 'State', type: Validator.SELECT2 }, // 시/도
             { label: 'LABEL_00273', field: 'Pstlz', type: Validator.INPUT2 }, // 우편번호
-            { label: 'LABEL_00274', field: 'Zzaddr2', type: Validator.INPUT2 }, // 상세주소
           ],
         },
         EDUCATION: {
@@ -84,6 +85,9 @@ sap.ui.define(
             { label: 'LABEL_00288', field: 'Zzschcd', type: Validator.INPUT2 }, // 학교
             { label: 'LABEL_00289', field: 'Zzmajo1', type: Validator.INPUT1 }, // 전공
             { label: 'LABEL_00290', field: 'Slabs', type: Validator.SELECT2 }, // 학위
+            { label: 'LABEL_00293', field: 'Zzentba', type: Validator.SELECT2 }, // 입사전/후
+            { label: 'LABEL_00339', field: 'Zznwtns', type: Validator.SELECT1 }, // 신입/편입
+            { label: 'LABEL_00340', field: 'Zzdyngt', type: Validator.SELECT1 }, // 주간/야간
             { label: 'LABEL_00248', field: 'Appno', type: Validator.FILE }, // 첨부파일
           ],
         },
@@ -97,9 +101,7 @@ sap.ui.define(
             { label: 'LABEL_00306', field: 'Quali', type: Validator.SELECT1 }, // 외국어구분
             { label: 'LABEL_00307', field: 'Exmty', type: Validator.SELECT1 }, // 시험구분
             { label: 'LABEL_00308', field: 'Appor', type: Validator.INPUT1 }, // 평가기관
-            { label: 'LABEL_00309', field: 'Eamgr', type: Validator.SELECT1 }, // 등급
             { label: 'LABEL_00310', field: 'Eamdt', type: Validator.INPUT1 }, // 평가일
-            { label: 'LABEL_00311', field: 'Tpont', type: Validator.INPUT2 }, // 종합점수
             { label: 'LABEL_00248', field: 'Appno', type: Validator.FILE }, // 첨부파일
           ],
         },
@@ -889,6 +891,11 @@ sap.ui.define(
               sUrl = this.CRUD_TABLES.LANGUAGE.url;
               aFieldProperties = this.CRUD_TABLES.LANGUAGE.valid;
               sAppno = await this.uploadInputFormFiles(this.CRUD_TABLES.LANGUAGE.key);
+
+              // 등급/점수 Validation(Eamgr, Tpont)
+              if (mFieldValue.Eamgr === 'ALL' && (_.isEmpty(mFieldValue.Tpont) || _.toNumber(mFieldValue.Tpont) === 0)) {
+                throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_00003', 'LABEL_00341') }); // {등급 또는 점수}를 입력하세요.
+              }
 
               mInputData = {
                 ...mFieldValue,

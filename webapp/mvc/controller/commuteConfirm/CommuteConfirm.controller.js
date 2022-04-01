@@ -278,11 +278,14 @@ sap.ui.define(
       // table 체크박스
       onRowSelection(oEvent) {
         const oViewModel = this.getViewModel();
+        const oTable = oEvent.getSource();
+        const aSelectedIndices = oTable.getSelectedIndices();
+        const aMappedIndices = oTable.getBindingInfo('rows').binding.aIndices;
 
         oViewModel.setProperty(
           '/SelectedRows',
-          _.map(oEvent.getSource().getSelectedIndices(), (e) => {
-            return oViewModel.getProperty(`/CommuteList/${e}`);
+          _.map(aSelectedIndices, (e) => {
+            return oViewModel.getProperty(`/CommuteList/${aMappedIndices[e]}`);
           })
         );
       },

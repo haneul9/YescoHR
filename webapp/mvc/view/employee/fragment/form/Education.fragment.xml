@@ -40,18 +40,18 @@
         </ComboBox>
         <Label text="{i18n>LABEL_00291}" />
         <CheckBox selected="{/employee/dialog/form/Zzfinyn}" />
-        <Label text="{i18n>LABEL_00292}" />
-        <CheckBox selected="{/employee/dialog/form/Zzrecab}" />
+        <!-- <Label text="{i18n>LABEL_00292}" />
+        <CheckBox selected="{/employee/dialog/form/Zzrecab}" /> -->
         <Label text="{i18n>LABEL_00293}" />
-        <ComboBox width="100%" selectedKey="{/employee/dialog/form/Zzentba}" items="{ path: '/employee/dialog/school1Entry' }">
+        <ComboBox width="100%" class="required" selectedKey="{/employee/dialog/form/Zzentba}" items="{ path: '/employee/dialog/school1Entry' }">
             <core:Item key="{code}" text="{text}" />
         </ComboBox>
         <Label text="{i18n>LABEL_00296}/{i18n>LABEL_00297}" />
-        <ComboBox width="100%" selectedKey="{/employee/dialog/form/Zznwtns}" items="{ path: '/employee/dialog/school2Entry' }">
+        <ComboBox width="100%" class="required" selectedKey="{/employee/dialog/form/Zznwtns}" items="{ path: '/employee/dialog/school2Entry' }">
             <core:Item key="{code}" text="{text}" />
         </ComboBox>
         <Label text="{i18n>LABEL_00298}/{i18n>LABEL_00299}" />
-        <ComboBox width="100%" selectedKey="{/employee/dialog/form/Zzdyngt}" items="{ path: '/employee/dialog/school3Entry' }">
+        <ComboBox width="100%" class="required" selectedKey="{/employee/dialog/form/Zzdyngt}" items="{ path: '/employee/dialog/school3Entry' }">
             <core:Item key="{code}" text="{text}" />
         </ComboBox>
         <Label text="{i18n>LABEL_00300}" />
