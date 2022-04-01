@@ -67,7 +67,7 @@ sap.ui.define(
         setTimeout(() => {
           this.getOwnerComponent()
             .getAppModel()
-            .setProperty('/homebarBackground', AppUtils.isLOCAL() || AppUtils.isDEV() || AppUtils.isQAS() ? 'dev' : 'prd');
+            .setProperty('/homebarBackground', /^localhost/.test(location.hostname) || /^(yeshrsapdev|devhrportal)/.test(location.hostname) ? 'dev' : 'prd');
         });
       },
 
