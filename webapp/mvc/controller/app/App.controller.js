@@ -192,7 +192,7 @@ sap.ui.define(
           onClose: (sAction) => {
             if (sAction === MessageBox.Action.YES) {
               if (this.bMobile) {
-                location.href = '/sap/public/bc/icf/logoff';
+                location.href = '/sap/public/bc/icf/logoff?from=logoff';
               } else {
                 window.open('/sap/public/bc/ui2/zui5_yescohr/logout.html');
                 window.close();

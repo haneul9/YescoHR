@@ -10,8 +10,7 @@
     </layoutData>
     <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
       <Title level="H2" text="{title}" visible="{= !${hideTitle} }" />
-      <Image src="asset/image/icon_human_green.svg" width="12px" class="ml-8-px" />
-      <Image src="asset/image/icon_human_orange.svg" width="12px" class="ml-3-px" />
+      <Text text="{sessionModel>/Orgtx}" class="desc-txt" />
       <Text text="">
         <layoutData>
           <FlexItemData growFactor="1" />
