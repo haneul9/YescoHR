@@ -34,12 +34,13 @@ sap.ui.define(
         return {
           busy: false,
           quota: {
-            10: { Kotxt: this.getBundleText('LABEL_04015'), Crecnt: 0, Usecnt: 0 }, // 연차
-            20: { Kotxt: this.getBundleText('LABEL_04016'), Crecnt: 0, Usecnt: 0 }, // 1년미만연차
-            30: { Kotxt: this.getBundleText('LABEL_04019'), Crecnt: 0, Usecnt: 0 }, // 연차(1년미만)쿼터
+            isSecondVisible: false,
+            10: { Kotxt: this.getBundleText('LABEL_04015'), Crecnt: 0, Usecnt: 0 }, // 연차쿼터
+            15: { Kotxt: this.getBundleText('LABEL_04019'), Crecnt: 0, Usecnt: 0 }, // 연차(1년미만)쿼터
+            20: { Kotxt: this.getBundleText('LABEL_04016'), Crecnt: 0, Usecnt: 0 }, // 하계휴가쿼터
+            30: { Kotxt: this.getBundleText('LABEL_04008'), Crecnt: 0, Usecnt: 0 }, // 보건휴가
             40: { Kotxt: this.getBundleText('LABEL_04017'), Crecnt: 0, Usecnt: 0 }, // 장기근속휴가
-            50: { Kotxt: this.getBundleText('LABEL_04008'), Crecnt: 0, Usecnt: 0 }, // 보건휴가
-            60: { Kotxt: this.getBundleText('LABEL_04018'), Crecnt: 0, Usecnt: 0 }, // 가족돌봄휴가
+            50: { Kotxt: this.getBundleText('LABEL_04018'), Crecnt: 0, Usecnt: 0 }, // 가족돌봄휴가
           },
           search: {
             Apbeg: moment().startOf('year').hours(9).toDate(),
@@ -97,15 +98,15 @@ sap.ui.define(
               ...acc,
               [Ktart]: {
                 Kotxt,
-                Crecnt: parseInt(Crecnt, 10) ?? 0,
-                Usecnt: parseInt(Usecnt, 10) ?? 0,
-                Balcnt: parseInt(Balcnt, 10) ?? 0,
+                Crecnt: _.toNumber(Crecnt) ?? 0,
+                Usecnt: _.toNumber(Usecnt) ?? 0,
+                Balcnt: _.toNumber(Balcnt) ?? 0,
               },
             }),
             {}
           );
 
-          oViewModel.setProperty('/quota', { ...mQuota, ...mQuotaResult });
+          oViewModel.setProperty('/quota', { ...mQuota, ...mQuotaResult, isSecondVisible: _.isEqual(this.getAppointeeProperty('Werks'), '2000') });
         } catch (oError) {
           this.debug('Controller > Attendance List > initialRetrieve Error', oError);
 

@@ -13,7 +13,7 @@
                 }" state="Indication05" class="sapUiSmallMarginBottom" />
                 <Text text="{i18n>MSG_05007}" />
             </HBox>
-            <HBox class="desc pt-16-px">
+            <HBox class="desc pt-16-px" visible="{/Total/isVisible}">
                 <Text text="{i18n>MSG_05003}"/>
                 <ObjectStatus text="{
                     path: '/Total/Famamt',
@@ -21,7 +21,7 @@
                 }" state="Indication05" class="font-30-px"/>
                 <Text text="{i18n>MSG_05002}"/>
             </HBox>
-            <Text text="{i18n>MSG_05004}" class="col-j pt-18-px" />
+            <Text text="{i18n>MSG_05004}" class="col-j pt-18-px" visible="{/Total/isVisible}" />
         </VBox>
     </VBox>
 </core:FragmentDefinition>
