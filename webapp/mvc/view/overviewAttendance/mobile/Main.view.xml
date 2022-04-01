@@ -8,18 +8,32 @@
     <VBox class="contents">
       <VBox class="search-area mobile-mss-overview">
         <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBottom">
-          <custom:DatePicker dateValue="{ path: '/searchConditions/Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
+          <custom:DatePicker dateValue="{ path: '/searchConditions/Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }">
+            <custom:layoutData>
+              <FlexItemData minWidth="67%" maxWidth="67%" />
+            </custom:layoutData>
+          </custom:DatePicker>
         </HBox>
         <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBottom">
           <ComboBox items="{/entry/Werks}" selectedKey="{/searchConditions/Werks}" change=".onChangeWerks">
+            <layoutData>
+              <FlexItemData minWidth="67%" maxWidth="67%" />
+            </layoutData>
             <core:Item text="{Pbtxt}" key="{Werks}" />
           </ComboBox>
         </HBox>
         <HBox justifyContent="SpaceBetween" alignItems="Center">
           <ComboBox items="{/entry/Orgeh}" selectedKey="{/searchConditions/Orgeh}">
+            <layoutData>
+              <FlexItemData minWidth="67%" maxWidth="67%" />
+            </layoutData>
             <core:Item text="{Orgtx}" key="{Orgeh}" />
           </ComboBox>
-          <Button text="{i18n>LABEL_00100}" icon="asset/image/icon_search03.png" iconDensityAware="false" press=".onPressSearch" />
+          <Button class="sapUiTinyMarginBegin" text="{i18n>LABEL_00100}" icon="asset/image/icon_search03.png" iconDensityAware="false" press=".onPressSearch">
+            <layoutData>
+              <FlexItemData minWidth="33%" maxWidth="33%" />
+            </layoutData>
+          </Button>
         </HBox>
       </VBox>
       <custom:MobileScrollContainer horizontal="false" vertical="true">
