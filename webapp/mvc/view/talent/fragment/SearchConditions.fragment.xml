@@ -10,7 +10,7 @@
         <core:Item key="{Zcode}" text="{Ztext}" />
       </ComboBox>
       <Button icon="asset/image/icon_del.png" iconDensityAware="false" class="icon-button" type="Transparent" enabled="{= !${/result/busy} }" press=".onPressDeleteSearchCondition" />
-      <Label text="{i18n>LABEL_00339}" />
+      <Label text="{i18n>LABEL_00201}" />
       <Input width="520px" maxLength="{/fieldLimit/Freetx}" value="{/search/Freetx}" placeholder="{i18n>MSG_35001}" enabled="{= ${/search/Prcty} === 'A' }" submit=".onPressSearch" />
       <Button text="{i18n>LABEL_00101}" icon="asset/image/icon_search03.png" iconDensityAware="false" enabled="{= !${/result/busy} }" press=".onPressSearch" />
       <Button text="{i18n>LABEL_35005}" icon="asset/image/icon_reset.png" iconDensityAware="false" enabled="{= !${/result/busy} }" press=".onPressConditionReset" />

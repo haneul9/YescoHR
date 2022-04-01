@@ -19,7 +19,7 @@
         </layoutData>
       </Text>
       <Button visible="{switchable}" icon="sap-icon://decline" type="Transparent" class="icon-button portlet-close-icon" press=".onPressClose" tooltip="{i18n>LABEL_00200}" />
-      <Button visible="{hasLink}" icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" press=".onPressLink" tooltip="{i18n>LABEL_00339}" />
+      <Button visible="{hasLink}" icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" press=".onPressLink" tooltip="{i18n>LABEL_00342}" />
     </HBox>
     <HBox class="portlet-body">
       <grid:CSSGrid gridTemplateColumns="1fr 3fr 3fr 3fr 3fr" gridGap="0px" class="mt-10-px">

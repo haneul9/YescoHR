@@ -54,7 +54,7 @@ sap.ui.define(
           icon: 'sap-icon://add',
           type: 'Transparent',
           visible: '{hasLink}',
-          tooltip: '{i18n>LABEL_00339}',
+          tooltip: '{i18n>LABEL_00342}',
         })
           .addStyleClass('icon-button portlet-link-icon')
           .attachEvent('press', this.onPressLink, this);
