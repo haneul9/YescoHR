@@ -99,7 +99,7 @@ sap.ui.define(
        * @public
        */
       isPRD() {
-        return /^(yeshrsapprdv|hrportal)/.test(location.hostname);
+        return /^(yeshrsapprdv|yeshrsapprd|yeshrsapap|hrportal)/.test(location.hostname);
       },
 
       isMobile() {

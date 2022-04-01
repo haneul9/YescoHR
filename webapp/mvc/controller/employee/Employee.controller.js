@@ -22,7 +22,6 @@ sap.ui.define(
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date',
-    'sap/ui/core/AccessibleLandmarkRole', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
   ],
   (
     // prettier 방지용 주석
@@ -45,9 +44,7 @@ sap.ui.define(
     PostcodeDialogHandler,
     Validator,
     MessageBox,
-    BaseController,
-    Date,
-    AccessibleLandmarkRole
+    BaseController
   ) => {
     'use strict';
 
@@ -242,6 +239,18 @@ sap.ui.define(
         oViewModel.setProperty('/orgtx', sOrgtx);
         oViewModel.setProperty('/orgeh', sOrgeh);
 
+        // ESS 사번으로만 접근시 사이드 리스트 HIDE
+        if (!this.isMss() && !this.isHass() && _.isEmpty(oParameter.orgtx) && _.isEmpty(oParameter.orgeh)) {
+          this.byId('sideBody').setVisible(false);
+          this.byId('profileBody').toggleStyleClass('expanded', true);
+
+          this.loadProfile({ oViewModel, sPernr });
+          return;
+        }
+
+        this.byId('sideBody').setVisible(true);
+        this.byId('profileBody').toggleStyleClass('expanded', false);
+
         if (!_.isEmpty(sOrgtx)) {
           oViewModel.setProperty('/sideNavigation/search/searchText', sOrgtx);
         }
@@ -413,6 +422,7 @@ sap.ui.define(
 
           AppUtils.handleError(oError);
         } finally {
+          AppUtils.setAppBusy(false).setMenuBusy(false);
           oViewModel.setProperty('/employee/busy', false);
         }
       },

@@ -625,6 +625,8 @@ sap.ui.define(
             } else if(oViewModel.getProperty('/type') === 'C'){
               this.retrieveCancel();
             }
+
+            this.toggleHasRowProperty();
           },
         });
       },
@@ -840,6 +842,7 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/form/dialog/busy', false);
           this.onPressFormChangeDialogClose();
+          this.toggleHasRowProperty();
           this.retrieveChange();
         }
       },
@@ -874,6 +877,7 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/form/dialog/busy', false);
           this.onPressFormCancelDialogClose();
+          this.toggleHasRowProperty();
           this.retrieveCancel();
         }
       },
@@ -932,6 +936,12 @@ sap.ui.define(
       },
 
       onPressApproval() {
+        const oViewModel = this.getViewModel();
+        if(oViewModel.getProperty('/form/list').length == 0){
+          MessageBox.error(this.getBundleText('MSG_04002')); // 변경된 데이터가 없습니다.
+          return;
+        }
+
         AppUtils.setAppBusy(true, this);
 
         const sPrcty = 'C';

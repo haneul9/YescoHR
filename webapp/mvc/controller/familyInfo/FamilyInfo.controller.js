@@ -54,6 +54,9 @@ sap.ui.define(
             rejectCount: 0,
             completeCount: 0,
           },
+          Total: {
+            isVisible: false,
+          },
         };
       },
 
@@ -160,7 +163,7 @@ sap.ui.define(
             if (oData) {
               const oList = oData.results[0];
 
-              oListModel.setProperty('/Total', oList);
+              oListModel.setProperty('/Total', { ...oList, isVisible: _.isEqual(this.getAppointeeProperty('Werks'), '2000') });
             }
           },
           error: (oError) => {
