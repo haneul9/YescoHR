@@ -410,32 +410,50 @@ sap.ui.define(
             ..._.pick(mParameter, ['Zzappid', 'Zzappty', 'Zdocid']),
           });
 
-          const mResult = await Client.deep(oModel, 'AppraisalIdpDoc', {
+          // 문서 재조회
+          const mDetailData = await Client.deep(oModel, 'AppraisalIdpDoc', {
             ...mParameter,
             Menid: this.getCurrentMenuId(),
             Prcty: Constants.PROCESS_TYPE.DETAIL.code,
             Zzappgb: sType,
-            AppraisalIdpDocDetSet: [{ Obj0: mSelectedData.Stext, ElementQid: mSelectedData.Zobjidq }],
+            AppraisalIdpDocDetSet: [],
             AppraisalBottnsSet: [],
             AppraisalScreenSet: [],
           });
-          const iItemsLength = aItems.length;
-          let iCurrentItemsLength = oViewModel.getProperty('/currentItemsLength') ?? 0;
 
-          oViewModel.setProperty('/currentItemsLength', ++iCurrentItemsLength);
-          oViewModel.setProperty('/goals/comp', [
-            ...aItems,
-            {
-              ..._.reduce(Constants.ITEM_PROPERTIES, (acc, cur) => ({ ...acc, [cur]: _.includes(Constants.COMBO_PROPERTIES, cur) ? 'ALL' : _.noop() }), _.stubObject()),
-              expanded: _.stubTrue(),
-              isSaved: _.stubFalse(),
-              OrderNo: String(iItemsLength),
-              ItemNo: String(iItemsLength + 1),
-              Obj0: mSelectedData.Stext,
-              Zobjidq: mSelectedData.Zobjidq,
-              Z301: _.get(mResult, ['AppraisalIdpDocDetSet', 0, 'Z301'], ''),
-            },
-          ]);
+          // 팀장의견
+          oViewModel.setProperty('/manage', { ..._.pick({ ...mDetailData }, Constants.MANAGE_PROPERTIES) });
+
+          // 직무역량
+          oViewModel.setProperty(`/goals/comp`, _.map(mDetailData.AppraisalIdpDocDetSet.results, this.initializeItem.bind(this)) ?? []);
+          oViewModel.setProperty('/currentItemsLength', _.size(mDetailData.AppraisalIdpDocDetSet.results));
+
+          // const mResult = await Client.deep(oModel, 'AppraisalIdpDoc', {
+          //   ...mParameter,
+          //   Menid: this.getCurrentMenuId(),
+          //   Prcty: Constants.PROCESS_TYPE.DETAIL.code,
+          //   Zzappgb: sType,
+          //   AppraisalIdpDocDetSet: [{ Obj0: mSelectedData.Stext, ElementQid: mSelectedData.Zobjidq }],
+          //   AppraisalBottnsSet: [],
+          //   AppraisalScreenSet: [],
+          // });
+          // const iItemsLength = aItems.length;
+          // let iCurrentItemsLength = oViewModel.getProperty('/currentItemsLength') ?? 0;
+
+          // oViewModel.setProperty('/currentItemsLength', ++iCurrentItemsLength);
+          // oViewModel.setProperty('/goals/comp', [
+          //   ...aItems,
+          //   {
+          //     ..._.reduce(Constants.ITEM_PROPERTIES, (acc, cur) => ({ ...acc, [cur]: _.includes(Constants.COMBO_PROPERTIES, cur) ? 'ALL' : _.noop() }), _.stubObject()),
+          //     expanded: _.stubTrue(),
+          //     isSaved: _.stubFalse(),
+          //     OrderNo: String(iItemsLength),
+          //     ItemNo: String(iItemsLength + 1),
+          //     Obj0: mSelectedData.Stext,
+          //     Zobjidq: mSelectedData.Zobjidq,
+          //     Z301: _.get(mResult, ['AppraisalIdpDocDetSet', 0, 'Z301'], ''),
+          //   },
+          // ]);
         } catch (oError) {
           this.debug('Controller > IDP Detail > onObjectMatched Error', oError);
 
