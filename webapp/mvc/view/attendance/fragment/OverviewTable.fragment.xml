@@ -68,10 +68,10 @@
             <Text text="{ path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
           </table:template>
         </table:Column>
-        <table:Column width="8%" filterProperty="Period" sortProperty="Range">
+        <table:Column width="8%" filterProperty="Abrtg" sortProperty="Abrtg">
           <Label text="{i18n>LABEL_00150}"/>
           <table:template>
-            <Text text="{Period}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+            <Text text="{ path: 'Abrtg', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
           </table:template>
         </table:Column>
         <table:Column width="8%" filterProperty="Appdt" sortProperty="Endda">
