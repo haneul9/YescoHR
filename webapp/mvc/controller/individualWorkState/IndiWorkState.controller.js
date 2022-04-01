@@ -343,6 +343,11 @@ sap.ui.define(
           animation: 1,
           divLineColor: '#dde1e6',
           divLineDashed: 0,
+          toolTipBgColor: '#ffffff',
+          toolTipColor: '#222222',
+          showToolTipShadow: 1,
+          plotcolorintooltip: 1,
+          plottooltext: "<div class='fusion-tooltip'><table><tr><th>$seriesname-$label</th><td>$value</td></tr></table></div>",
         };
       },
 
