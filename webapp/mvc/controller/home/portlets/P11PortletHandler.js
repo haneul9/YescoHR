@@ -95,7 +95,12 @@ sap.ui.define(
         }
 
         mPortletData.ButtonText1 = this.getMenuName(this.getMenid('attendance'));
-        mPortletData.ButtonText2 = this.getMenuName(this.getMenid('workTime'));
+        const Werks = this.getController().getSessionProperty('Werks');
+        if ('1000,4000'.split(',').includes(Werks)) {
+          mPortletData.ButtonText2 = this.getMenuName(this.getMenid('individualWorkState'));
+        } else {
+          mPortletData.ButtonText2 = this.getMenuName(this.getMenid('workTime'));
+        }
 
         return mPortletData;
       },
@@ -182,7 +187,12 @@ sap.ui.define(
 
       onPressButton2() {
         // this.navTo('workTime-detail', { oDataKey: 'N' });
-        this.navTo(this.bMobile ? 'mobile/workTime' : 'workTime');
+        const Werks = this.getController().getSessionProperty('Werks');
+        if ('1000,4000'.split(',').includes(Werks)) {
+          this.navTo(this.bMobile ? 'mobile/individualWorkState' : 'individualWorkState');
+        } else {
+          this.navTo(this.bMobile ? 'mobile/workTime' : 'workTime');
+        }
       },
     });
   }
