@@ -53,7 +53,7 @@ sap.ui.define(
         9006: '3fr 3fr 2fr', // 자격
         '0183': '1fr 1fr 1fr', // 포상
         '0021': '1fr 1fr 1fr', // 가족
-        // EDU1: '2fr 3fr', // 교육
+        EDU1: '1fr 1fr', // 교육
         JOBC: '1fr 1fr', // 직무경력
         JOBL: '1fr 1fr', // 직무이력
       },
