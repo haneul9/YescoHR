@@ -48,7 +48,7 @@ sap.ui.define(
 
       initializeItem(obj, index) {
         return {
-          expanded: _.stubFalse(),
+          expanded: _.stubTrue(),
           isSaved: _.stubTrue(),
           OrderNo: String(index),
           ItemNo: String(index + 1),
@@ -128,10 +128,15 @@ sap.ui.define(
 
           const oModel = this.getModel(ServiceNames.APPRAISAL);
           const fCurriedGetEntitySet = Client.getEntitySet(oModel);
-          const [aStepList, aGrades, aYears, mDetailData] = await Promise.all([
+          const [aStepList, aGrades, aYears, aQlist, mDetailData] = await Promise.all([
             fCurriedGetEntitySet('AppStatusStepList', { Werks: this.getSessionProperty('Werks'), Zzappid: mParameter.Zzappid, Zzappty: mParameter.Zzappty }),
             fCurriedGetEntitySet('AppGradeList'),
             fCurriedGetEntitySet('AppraisalIdpYear', { Pernr: mParameter.Zzappee }),
+            fCurriedGetEntitySet('AppraisalIdpQlist', {
+              Prcty: 'L',
+              Werks: this.getAppointeeProperty('Werks'),
+              ..._.pick(mParameter, ['Zzappid', 'Zdocid', 'Zzappty']),
+            }),
             Client.deep(oModel, 'AppraisalIdpDoc', {
               ...mParameter,
               Menid: this.getCurrentMenuId(),
@@ -148,6 +153,12 @@ sap.ui.define(
 
           // Combo Entry
           oViewModel.setProperty('/entry/levels', new ComboEntry({ codeKey: 'ValueEid', valueKey: 'ValueText', aEntries: aGrades }) ?? []);
+
+          // 직무역량
+          oViewModel.setProperty(
+            '/entry/competency',
+            _.map(aQlist, (o) => _.omit(o, '__metadata'))
+          );
 
           // 팀장의견
           oViewModel.setProperty('/manage', { ..._.pick({ ...mDetailData }, Constants.MANAGE_PROPERTIES) });
@@ -427,33 +438,6 @@ sap.ui.define(
           // 직무역량
           oViewModel.setProperty(`/goals/comp`, _.map(mDetailData.AppraisalIdpDocDetSet.results, this.initializeItem.bind(this)) ?? []);
           oViewModel.setProperty('/currentItemsLength', _.size(mDetailData.AppraisalIdpDocDetSet.results));
-
-          // const mResult = await Client.deep(oModel, 'AppraisalIdpDoc', {
-          //   ...mParameter,
-          //   Menid: this.getCurrentMenuId(),
-          //   Prcty: Constants.PROCESS_TYPE.DETAIL.code,
-          //   Zzappgb: sType,
-          //   AppraisalIdpDocDetSet: [{ Obj0: mSelectedData.Stext, ElementQid: mSelectedData.Zobjidq }],
-          //   AppraisalBottnsSet: [],
-          //   AppraisalScreenSet: [],
-          // });
-          // const iItemsLength = aItems.length;
-          // let iCurrentItemsLength = oViewModel.getProperty('/currentItemsLength') ?? 0;
-
-          // oViewModel.setProperty('/currentItemsLength', ++iCurrentItemsLength);
-          // oViewModel.setProperty('/goals/comp', [
-          //   ...aItems,
-          //   {
-          //     ..._.reduce(Constants.ITEM_PROPERTIES, (acc, cur) => ({ ...acc, [cur]: _.includes(Constants.COMBO_PROPERTIES, cur) ? 'ALL' : _.noop() }), _.stubObject()),
-          //     expanded: _.stubTrue(),
-          //     isSaved: _.stubFalse(),
-          //     OrderNo: String(iItemsLength),
-          //     ItemNo: String(iItemsLength + 1),
-          //     Obj0: mSelectedData.Stext,
-          //     Zobjidq: mSelectedData.Zobjidq,
-          //     Z301: _.get(mResult, ['AppraisalIdpDocDetSet', 0, 'Z301'], ''),
-          //   },
-          // ]);
         } catch (oError) {
           this.debug('Controller > IDP Detail > onObjectMatched Error', oError);
 
@@ -481,26 +465,11 @@ sap.ui.define(
 
       async addCompItem() {
         const oViewModel = this.getViewModel();
-        const aCompetency = oViewModel.getProperty('/entry/competency');
         let iCurrentItemsLength = oViewModel.getProperty('/currentItemsLength') ?? 0;
 
         if (iCurrentItemsLength === 3) {
           MessageBox.alert(this.getBundleText('MSG_10002')); // 더 이상 추가 할 수 없습니다.
           return;
-        }
-
-        if (_.isEmpty(aCompetency)) {
-          const mParam = oViewModel.getProperty('/param');
-          const aResults = await Client.getEntitySet(this.getModel(ServiceNames.APPRAISAL), 'AppraisalIdpQlist', {
-            Prcty: 'L',
-            Werks: this.getAppointeeProperty('Werks'),
-            ..._.pick(mParam, ['Zzappid', 'Zdocid', 'Zzappty']),
-          });
-
-          oViewModel.setProperty(
-            '/entry/competency',
-            _.map(aResults, (o) => _.omit(o, '__metadata'))
-          );
         }
 
         this.openCompetencyHelpDialog();
@@ -512,24 +481,45 @@ sap.ui.define(
 
         // 삭제하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00049'), {
-          onClose: (sAction) => {
+          onClose: async (sAction) => {
             if (MessageBox.Action.CANCEL === sAction) return;
 
+            const oModel = this.getModel(ServiceNames.APPRAISAL);
+            const mParameter = oViewModel.getProperty('/param');
+            const aCompetency = oViewModel.getProperty('/entry/competency');
             const { sDeleteTargetNum } = oSource.data();
             const aGoalItems = oViewModel.getProperty(`/goals/comp`);
-            const bIsSavedGoalItem = _.chain(aGoalItems).find({ OrderNo: sDeleteTargetNum }).get('isSaved').value();
-            let iCurrentItemsLength = oViewModel.getProperty('/currentItemsLength') ?? 0;
+            const sElementQid = _.chain(aGoalItems).find({ OrderNo: sDeleteTargetNum }).get('ElementQid').value();
+            const sZobjidqk = _.chain(aCompetency).find({ Zobjidq: sElementQid }).get('Zobjidqk').value();
 
-            oViewModel.setProperty('/currentItemsLength', --iCurrentItemsLength);
-            oViewModel.setProperty(
-              `/goals/comp`,
-              _.chain(aGoalItems)
-                .reject({ OrderNo: sDeleteTargetNum })
-                .map((o, i) => ({ ...o, OrderNo: String(i), ItemNo: String(i + 1) }))
-                .value()
-            );
+            // 삭제
+            await Client.remove(oModel, 'AppraisalIdpQlist', {
+              Prcty: 'X',
+              Werks: this.getAppointeeProperty('Werks'),
+              Zobjidq: sElementQid,
+              Zobjidqk: sZobjidqk,
+              ..._.pick(mParameter, ['Zzappid', 'Zzappty', 'Zdocid']),
+            });
 
-            if (bIsSavedGoalItem) MessageBox.success(this.getBundleText('MSG_10004')); // 저장 버튼을 클릭하여 삭제를 완료하시기 바랍니다.
+            const sType = oViewModel.getProperty('/type');
+
+            // 문서 재조회
+            const mDetailData = await Client.deep(oModel, 'AppraisalIdpDoc', {
+              ...mParameter,
+              Menid: this.getCurrentMenuId(),
+              Prcty: Constants.PROCESS_TYPE.DETAIL.code,
+              Zzappgb: sType,
+              AppraisalIdpDocDetSet: [],
+              AppraisalBottnsSet: [],
+              AppraisalScreenSet: [],
+            });
+
+            // 팀장의견
+            oViewModel.setProperty('/manage', { ..._.pick({ ...mDetailData }, Constants.MANAGE_PROPERTIES) });
+
+            // 직무역량
+            oViewModel.setProperty(`/goals/comp`, _.map(mDetailData.AppraisalIdpDocDetSet.results, this.initializeItem.bind(this)) ?? []);
+            oViewModel.setProperty('/currentItemsLength', _.size(mDetailData.AppraisalIdpDocDetSet.results));
           },
         });
       },
