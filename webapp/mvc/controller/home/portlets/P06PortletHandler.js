@@ -21,7 +21,7 @@ sap.ui.define(
     'use strict';
 
     /**
-     * 근무 현황 Portlet
+     * 조직근무현황 Portlet
      */
     return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.P06PortletHandler', {
       sChartId: 'portlet-p06-chart',
