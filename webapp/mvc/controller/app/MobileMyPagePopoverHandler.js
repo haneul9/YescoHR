@@ -1,10 +1,9 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/m/PlacementType',
     'sap/ui/core/Fragment',
     'sap/ui/model/json/JSONModel',
-    'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Debuggable',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -13,10 +12,9 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    PlacementType,
     Fragment,
     JSONModel,
-    AppUtils,
+    MessageBox,
     Debuggable,
     Client,
     ServiceNames
@@ -28,12 +26,13 @@ sap.ui.define(
        * @override
        */
       constructor: function (oController) {
-        this.oController = oController;
-        this.oMyPageModel = new JSONModel(this.getInitialData());
         this.deviceOS = /iphone|ipad|ipod/i.test(navigator.userAgent) ? 'iOS' : /android/i.test(navigator.userAgent) ? 'aOS' : '';
         this.isYescoIOS = this.deviceOS === 'iOS' && !!window.webkit && !!window.webkit.messageHandlers && !!window.webkit.messageHandlers.script;
         this.isYescoAOS = this.deviceOS === 'aOS' && typeof window.YescoApp !== 'undefined';
         this.iHostport = /^dev/.test(location.hostname) ? 8090 : 8070;
+
+        this.oController = oController;
+        this.oMyPageModel = new JSONModel(this.getInitialData());
 
         this.init();
       },
@@ -159,6 +158,10 @@ sap.ui.define(
           bBusy ? 0 : 500
         );
         return this;
+      },
+
+      showLocalInfo() {
+        MessageBox.alert(`Host\n${location.host}\n\nUser-Agent\n${navigator.userAgent}`);
       },
     });
   }

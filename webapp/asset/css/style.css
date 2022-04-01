@@ -2096,6 +2096,10 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .normal {font-weight:500;}
 .display-flex {display: flex;}
 text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link .sapMImg {cursor: pointer;}
+.all-transparent, .all-transparent * {border-color:transparent; color:transparent; background-color:transparent}
+.sapUiSizeCompact .all-transparent .sapMListSwp {right:0}
+.sapUiSizeCompact .all-transparent .sapMBtnInner {min-width:auto}
+.sapUiSizeCompact .all-transparent .sapMBtnIcon {margin:0}
 
 .portlet-box .employee-total-count .sapMObjStatusText {font-weight: 500;}
 .portlet-box .employee-count {width:100%; text-align:center}

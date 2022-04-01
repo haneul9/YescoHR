@@ -44,6 +44,17 @@
               <Link href="{DownloadLink}" target="_blank" text="{UpdateNotification}" class="download-link ml-5-px" enabled="{= !${Latest} }" />
             </HBox>
           </HBox>
+          <VBox justifyContent="End" class="all-transparent">
+            <layoutData>
+              <FlexItemData growFactor="1" />
+            </layoutData>
+            <List>
+              <StandardListItem title="." />
+              <swipeContent>
+                <Button icon="sap-icon://sys-help" iconDensityAware="false" type="Transparent" press=".showLocalInfo" class="icon-button" />
+              </swipeContent>
+            </List>
+          </VBox>
         </VBox>
       </VBox>
     </content>

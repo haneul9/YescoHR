@@ -168,19 +168,28 @@ sap.ui.define(
       async onAccNameCheck() {
         if (this.checkError()) return;
 
-        const oDetailModel = this.getViewModel();
-        const mFormData = oDetailModel.getProperty('/FormData');
-        const oModel = this.getModel(ServiceNames.PAY);
-        const mPayLoad = {
-          Menid: this.getCurrentMenuId(),
-          Pernr: this.getAppointeeProperty('Pernr'),
-          Bankl: mFormData.Bankl,
-          Bankn: mFormData.Bankn,
-        };
-        // 실명확인
-        const aAccCheck = await Client.getEntitySet(oModel, 'CheckAccount', mPayLoad);
+        try {
+          const oDetailModel = this.getViewModel();
+          const mFormData = oDetailModel.getProperty('/FormData');
+          const oModel = this.getModel(ServiceNames.PAY);
+          const mPayLoad = {
+            Menid: this.getCurrentMenuId(),
+            Pernr: this.getAppointeeProperty('Pernr'),
+            Bankl: mFormData.Bankl,
+            Bankn: mFormData.Bankn,
+          };
 
-        oDetailModel.setProperty('/FormData/Chkyn', aAccCheck[0].Chkyn);
+          // 실명확인
+          const [{ Chkyn }] = await Client.getEntitySet(oModel, 'CheckAccount', mPayLoad);
+
+          oDetailModel.setProperty('/FormData/Chkyn', Chkyn);
+
+          if (Chkyn === 'X') {
+            MessageBox.alert(this.getBundleText('MSG_26007')); // 확인되었습니다.
+          }
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        }
       },
 
       // 지급년월
