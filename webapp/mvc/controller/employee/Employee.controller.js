@@ -67,7 +67,6 @@ sap.ui.define(
             { label: 'LABEL_00271', field: 'Begda', type: Validator.INPUT1 }, // 적용시작일
             { label: 'LABEL_00272', field: 'State', type: Validator.SELECT2 }, // 시/도
             { label: 'LABEL_00273', field: 'Pstlz', type: Validator.INPUT2 }, // 우편번호
-            { label: 'LABEL_00274', field: 'Zzaddr2', type: Validator.INPUT2 }, // 상세주소
           ],
         },
         EDUCATION: {
@@ -84,6 +83,9 @@ sap.ui.define(
             { label: 'LABEL_00288', field: 'Zzschcd', type: Validator.INPUT2 }, // 학교
             { label: 'LABEL_00289', field: 'Zzmajo1', type: Validator.INPUT1 }, // 전공
             { label: 'LABEL_00290', field: 'Slabs', type: Validator.SELECT2 }, // 학위
+            { label: 'LABEL_00293', field: 'Zzentba', type: Validator.SELECT2 }, // 입사전/후
+            { label: 'LABEL_00339', field: 'Zznwtns', type: Validator.SELECT1 }, // 신입/편입
+            { label: 'LABEL_00340', field: 'Zzdyngt', type: Validator.SELECT1 }, // 주간/야간
             { label: 'LABEL_00248', field: 'Appno', type: Validator.FILE }, // 첨부파일
           ],
         },

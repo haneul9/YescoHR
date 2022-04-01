@@ -25,6 +25,6 @@
         <Label text="{i18n>LABEL_00152}" />
         <Input width="100%" value="{/employee/dialog/form/Zzaddr1}" editable="false" />
         <Label text="{i18n>LABEL_00274}" />
-        <Input width="100%" class="required" value="{/employee/dialog/form/Zzaddr2}" />
+        <Input width="100%" value="{/employee/dialog/form/Zzaddr2}" />
     </grid:CSSGrid>
 </core:FragmentDefinition>
