@@ -862,8 +862,17 @@ sap.ui.define(
               break;
             case this.CRUD_TABLES.EDUCATION.key:
               sUrl = this.CRUD_TABLES.EDUCATION.url;
-              aFieldProperties = this.CRUD_TABLES.EDUCATION.valid;
+              aFieldProperties = _.includes(['S1', 'S2', 'S3'], mFieldValue.Slart) ? _.reject(this.CRUD_TABLES.EDUCATION.valid, { field: 'Zzmajo1' }) : this.CRUD_TABLES.EDUCATION.valid;
               sAppno = await this.uploadInputFormFiles(this.CRUD_TABLES.EDUCATION.key);
+
+              if (_.includes(['S1', 'S2', 'S3'], mFieldValue.Slart)) {
+                delete mFieldValue.Zzmajo1;
+                delete mFieldValue.Zzmajo1tx;
+
+                aFieldProperties = _.reject(this.CRUD_TABLES.EDUCATION.valid, { field: 'Zzmajo1' });
+              } else {
+                aFieldProperties = this.CRUD_TABLES.EDUCATION.valid;
+              }
 
               mInputData = {
                 ...mFieldValue,

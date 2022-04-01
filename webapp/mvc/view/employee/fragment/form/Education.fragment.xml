@@ -28,8 +28,8 @@
                 <core:CustomData key="helpName" value="SCHOOL" />
             </customData>
         </Input>
-        <Label text="{i18n>LABEL_00289}" />
-        <Input width="100%" class="required" value="{/employee/dialog/form/Zzmajo1tx}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpRequest">
+        <Label text="{i18n>LABEL_00289}" visible="{= ['S4', 'S5', 'S6', 'S7'].includes(${/employee/dialog/form/Slart}) }" />
+        <Input width="100%" class="required" value="{/employee/dialog/form/Zzmajo1tx}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressHelpRequest" visible="{= ['S4', 'S5', 'S6', 'S7'].includes(${/employee/dialog/form/Slart}) }">
             <customData>
                 <core:CustomData key="helpName" value="MAJOR" />
             </customData>
