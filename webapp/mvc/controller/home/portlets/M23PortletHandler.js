@@ -68,34 +68,41 @@ sap.ui.define(
       },
 
       async readContentData() {
+        const oPortletModel = this.getPortletModel();
+        const oSelectedDate = oPortletModel.getProperty('/selectedDate') || new Date();
+        const mAppointee = this.getController().getAppointeeData();
+
         const oModel = this.getController().getModel(ServiceNames.WORKTIME);
         const mPayload = {
-          Menid: this.getMenid('workTime'),
+          Datum: moment(oSelectedDate).startOf('date').add(9, 'hours'),
+          Werks: mAppointee.Werks,
+          Orgeh: mAppointee.Orgeh,
+          Headty: 'B',
         };
 
-        return Client.getEntitySet(oModel, 'WorkingTime', mPayload);
+        return Client.getEntitySet(oModel, 'TimeOverview', mPayload);
       },
 
-      transformContentData([mPortletData = {}]) {
+      transformContentData([{ Rte01 = '0', Rte02 = '0' }]) {
         if (this.oChartPromise) {
           this.oChartPromise.then(() => {
-            this.setChartData(mPortletData);
+            this.setChartData(Rte01);
           });
         } else {
-          this.setChartData(mPortletData); // 다른 메뉴를 갔다가 되돌아오는 경우
+          this.setChartData(Rte01); // 다른 메뉴를 갔다가 되돌아오는 경우
         }
 
-        return mPortletData;
+        return { Rte01, Text: this.getController().getBundleText('LABEL_01182', Rte02) };
       },
 
-      setChartData(mPortletData) {
+      setChartData(Rte01) {
         const oChart = FusionCharts(this.sChartId);
         oChart.setChartData(
           {
             chart: this.getChartOption(),
-            colorrange: this.getChartColorrangeOption(mPortletData.Alwtm, mPortletData.Maxtm),
+            colorrange: this.getChartColorrangeOption(40, 52),
             dials: {
-              dial: [this.getChartDialOption(mPortletData)],
+              dial: [this.getChartDialOption(Rte01)],
             },
           },
           'json'
@@ -146,9 +153,9 @@ sap.ui.define(
         };
       },
 
-      getChartDialOption(mPortletData) {
+      getChartDialOption(Rte01) {
         return {
-          value: mPortletData.Reltm,
+          value: Rte01,
           valueY: 142,
           baseWidth: 4,
           rearExtension: 0,
