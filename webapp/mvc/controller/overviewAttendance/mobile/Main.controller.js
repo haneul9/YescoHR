@@ -127,7 +127,7 @@ sap.ui.define(
             _.chain(mChartSetting)
               .set(
                 ['data'],
-                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callDetail-${mChartInfo.Headty},${o.Cod01}` }))
+                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callAttendanceDetail-${mChartInfo.Headty},${o.Cod01}` }))
               )
               .commit();
 
@@ -138,7 +138,7 @@ sap.ui.define(
             _.chain(mChartSetting)
               .set(
                 ['data'],
-                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callDetail-${mChartInfo.Headty},${o.Cod01}` }))
+                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callAttendanceDetail-${mChartInfo.Headty},${o.Cod01}` }))
               )
               .commit();
 
@@ -155,13 +155,13 @@ sap.ui.define(
                 seriesName: this.getBundleText('LABEL_28048'), // 당일
                 showValues: '1',
                 color: '#7BB4EB',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01, link: `j-callDetail-${mChartInfo.Headty},${o.Cod01}` })),
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01, link: `j-callAttendanceDetail-${mChartInfo.Headty},${o.Cod01}` })),
               })
               .set(['dataset', 1], {
                 seriesName: this.getBundleText('LABEL_00196'), // 누적
                 renderAs: 'line',
                 color: '#FFAC4B',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02, link: `j-callDetail-${mChartInfo.Headty},${o.Cod02}` })),
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02, link: `j-callAttendanceDetail-${mChartInfo.Headty},${o.Cod02}` })),
               })
               .commit();
 
@@ -177,17 +177,17 @@ sap.ui.define(
               .set(['dataset', 0], {
                 seriesname: this.getBundleText('LABEL_32004'), // 법정
                 color: '#7BB4EB',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01, link: `j-callDetail-${mChartInfo.Headty},${o.Cod01}` })),
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01, link: `j-callAttendanceDetail-${mChartInfo.Headty},${o.Cod01}` })),
               })
               .set(['dataset', 1], {
                 seriesname: 'OT',
                 color: '#FFAC4B',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02, link: `j-callDetail-${mChartInfo.Headty},${o.Cod02}` })),
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02, link: `j-callAttendanceDetail-${mChartInfo.Headty},${o.Cod02}` })),
               })
               .set(['dataset', 2], {
                 seriesname: this.getBundleText('LABEL_32005'), // 초과인원
                 color: '#FFE479',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt03, link: `j-callDetail-${mChartInfo.Headty},${o.Cod03}` })),
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt03, link: `j-callAttendanceDetail-${mChartInfo.Headty},${o.Cod03}` })),
               })
               .commit();
 
@@ -532,7 +532,7 @@ sap.ui.define(
 );
 
 // eslint-disable-next-line no-unused-vars
-function callDetail(sArgs) {
+function callAttendanceDetail(sArgs) {
   const oController = sap.ui.getCore().byId('container-ehr---mobile_m_overviewAttendance').getController();
   const aProps = ['Headty', 'Discod'];
   const aArgs = _.split(sArgs, ',');
