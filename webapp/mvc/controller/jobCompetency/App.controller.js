@@ -126,6 +126,7 @@ sap.ui.define(
         const aFormatTree = this.oDataChangeTree(aTreeList, 'CompTree');
 
         oViewModel.setProperty('/Competency', {
+          busy: false,
           isLoaded: true,
           Title: aTreeList[0].Stext,
           Defin: '',
