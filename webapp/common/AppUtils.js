@@ -93,7 +93,7 @@ sap.ui.define(
        * @public
        */
       isQAS() {
-        return /^(yeshrsapdev|qashrportal)/.test(location.hostname) && /sap-client=300/i.test(location.search);
+        return /^(yeshrsapdev|devhrportal)/.test(location.hostname) && /sap-client=300/i.test(location.search);
       },
       /**
        * @public
