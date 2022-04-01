@@ -625,6 +625,8 @@ sap.ui.define(
             } else if(oViewModel.getProperty('/type') === 'C'){
               this.retrieveCancel();
             }
+
+            this.toggleHasRowProperty();
           },
         });
       },
