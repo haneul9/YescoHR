@@ -18,7 +18,7 @@
         <Label text="{i18n>LABEL_00308}" />
         <Input width="100%" class="required" value="{/employee/dialog/form/Appor}" />
         <Label text="{i18n>LABEL_00309}" />
-        <ComboBox width="100%" class="required" selectedKey="{/employee/dialog/form/Eamgr}" items="{ path: '/employee/dialog/gradeList' }">
+        <ComboBox width="100%" selectedKey="{/employee/dialog/form/Eamgr}" items="{ path: '/employee/dialog/gradeList' }">
             <core:Item key="{Eamgr}" text="{Eamgrtx}" />
         </ComboBox>
         <Label text="{i18n>LABEL_00310}" />
