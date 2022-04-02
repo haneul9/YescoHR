@@ -1257,7 +1257,8 @@ sap.ui.define(
           const oModel = this.getModel(ServiceNames.COMMON);
           const sUrl = '/EmpSearchResultSet';
           const aFilters = [
-            new Filter('Zflag', FilterOperator.EQ, 'X'), //
+            new Filter('Menid', FilterOperator.EQ, this.getCurrentMenuId()), //
+            new Filter('Zflag', FilterOperator.EQ, 'X'),
             new Filter('Actda', FilterOperator.EQ, moment().hour(9).toDate()),
             new Filter('Ename', FilterOperator.EQ, searchText),
           ];
