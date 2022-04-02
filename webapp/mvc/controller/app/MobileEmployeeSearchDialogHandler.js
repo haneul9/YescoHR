@@ -53,10 +53,15 @@ sap.ui.define(
 
         this.oDialog
           .attachBeforeOpen(() => {
-            $('#sap-ui-static').append('<div id="sap-ui-blocklayer-popup" tabindex="0" class="sapUiBLy sapMPopoverBLayer half-dialog" style="z-index:8; visibility:visible"></div>');
+            const blocklayer = $('#popover-blocklayer');
+            if (blocklayer.length) {
+              blocklayer.show();
+            } else {
+              $('#sap-ui-static').append('<div id="popover-blocklayer" tabindex="0" class="sapUiBLy sapMPopoverBLayer half-popover" style="z-index:8"></div>');
+            }
           })
           .attachBeforeClose(() => {
-            $('#sap-ui-blocklayer-popup').remove();
+            $('#popover-blocklayer').hide();
           })
           .setModel(this.oDialogModel)
           .bindElement('/');
