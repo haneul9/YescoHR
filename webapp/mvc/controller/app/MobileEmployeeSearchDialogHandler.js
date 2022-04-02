@@ -52,16 +52,19 @@ sap.ui.define(
         });
 
         this.oDialog
-          .attachBeforeOpen(() => {
-            const blocklayer = $('#popover-blocklayer');
-            if (blocklayer.length) {
-              blocklayer.show();
-            } else {
-              $('#sap-ui-static').append('<div id="popover-blocklayer" tabindex="0" class="sapUiBLy sapMPopoverBLayer half-popover" style="z-index:8"></div>');
-            }
+          .attachAfterOpen(() => {
+            setTimeout(() => {
+              $('#sap-ui-blocklayer-popup')
+                .off('click')
+                .on('click', () => {
+                  this.onDialogClose();
+                });
+            }, 100);
           })
           .attachBeforeClose(() => {
-            $('#popover-blocklayer').hide();
+            setTimeout(() => {
+              $('#sap-ui-blocklayer-popup').off('click');
+            });
           })
           .setModel(this.oDialogModel)
           .bindElement('/');

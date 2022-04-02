@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core">
-  <Popover placement="Top" showArrow="false" showHeader="false" horizontalScrolling="false" verticalScrolling="false" class="half-popover" busy="{busy}" busyIndicatorDelay="0">
+  <Popover modal="true" placement="Top" showArrow="false" showHeader="false" horizontalScrolling="false" verticalScrolling="false" class="half-popover" busy="{busy}" busyIndicatorDelay="0">
     <content>
       <HBox class="px-20-px">
         <SearchField id="emp-search-field" placeholder="{i18n>LABEL_00211}" width="100%" liveChange=".onLiveChange">
