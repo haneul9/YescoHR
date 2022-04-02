@@ -123,7 +123,7 @@ sap.ui.define(
       },
 
       serviceAvailable() {
-        const bOpen = moment().isAfter(moment('2022-04-04 9:00', 'YYYY-MM-DD HH:mm'));
+        const bOpen = moment().isAfter(moment('2022-04-03 12:00', 'YYYY-MM-DD HH:mm'));
 
         if (!bOpen)
           MessageBox.alert(this.getBundleText('MSG_13002'), {
