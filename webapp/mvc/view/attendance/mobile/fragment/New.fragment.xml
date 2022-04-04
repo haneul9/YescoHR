@@ -47,7 +47,7 @@
                 </grid:layoutData>
                 <Text text="{Atext}" class="font-16-px font-bold" />
                 <HBox>                    
-                <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' }" visible="{= (${Abrtg} * 1) === 1 }" />
+                <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' }" visible="{= (${Abrtg} * 1) &lt;= 1 }" />
                 <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ~ { path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ({AbrtgTxt})" visible="{= (${Abrtg} * 1) &gt; 1 }" />
                 </HBox>
                 <HBox />
