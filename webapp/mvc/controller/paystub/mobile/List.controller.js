@@ -191,8 +191,13 @@ sap.ui.define(
       async getList() {
         const oModel = this.getModel(ServiceNames.PAY);
         const oViewModel = this.getViewModel();
-        const sBegym = oViewModel.getProperty('/search/begym'),
-          sEndym = oViewModel.getProperty('/search/endym');
+        const dBegda = oViewModel.getProperty('/search/date');
+        const sBegym = oViewModel.getProperty('/search/begym');
+        const sEndym = oViewModel.getProperty('/search/endym');
+
+        if (dBegda.getFullYear() < 2022) {
+          MessageBox.alert(this.getBundleText('MSG_13003'));
+        }
 
         return await Client.getEntitySet(oModel, 'PayslipList', {
           Menid: this.getCurrentMenuId(),
