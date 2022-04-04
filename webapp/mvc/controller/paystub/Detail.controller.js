@@ -142,7 +142,9 @@ sap.ui.define(
             Seqnr: sSeqnr,
           });
 
-          if (mResult.Url) window.open(mResult.Url);
+          if (mResult.Url) {
+            window.open(mResult.Url);
+          }
         } catch (oError) {
           this.debug('Controller > paystub Detail > onPressPDFPrint Error', oError);
 
