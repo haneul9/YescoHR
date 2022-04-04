@@ -166,7 +166,7 @@
         { "pattern": "h/educationHistory/{oDataKey}", "name": "h/educationHistory-detail", "target": "educationHistoryDetail" },
 
         { "pattern": "employee/:pernr:/:orgtx:/:orgeh:", "name": "employee", "target": "employee" },
-        { "pattern": "employeeView/{pernr}", "name": "employee-view", "target": "employeeView" },
+        { "pattern": "employeeView/{pernr}/:usrty:", "name": "employee-view", "target": "employeeView" },
         { "pattern": "m/employee", "name": "m/employee", "target": "m/employee" },
         { "pattern": "h/employee", "name": "h/employee", "target": "h/employee" },
         { "pattern": "mobile/employee/:pernr:", "name": "mobile/employee", "target": "mobile/employee" },

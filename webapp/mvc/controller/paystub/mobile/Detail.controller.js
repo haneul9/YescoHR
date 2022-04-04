@@ -143,8 +143,12 @@ sap.ui.define(
             Seqnr: sSeqnr,
           });
 
-          alert(mResult.Url);
+          // alert(mResult.Url);
           if (mResult.Url) {
+            if (AppUtils.isPRD()) {
+              mResult.Url = `https://hrportal.yescoholdings.com:443/${_.chain(mResult.Url).split('/').drop(3).join('/').value()}`;
+            }
+
             window.open(mResult.Url);
           }
         } catch (oError) {
@@ -165,6 +169,10 @@ sap.ui.define(
             Pernr: this.getAppointeeProperty('Pernr'),
             Seqnr: sSeqnr,
           });
+
+          if (mResult.Url && AppUtils.isPRD()) {
+            mResult.Url = `https://hrportal.yescoholdings.com:443/${_.chain(mResult.Url).split('/').drop(3).join('/').value()}`;
+          }
 
           this.getViewModel().setProperty('/PdfUrl', mResult.Url);
         } catch (oError) {
