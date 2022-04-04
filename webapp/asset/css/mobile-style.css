@@ -43,12 +43,13 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 
 .sapMPage:not([data-form-style="request"]) .form-grid .sapMInputBase:not(.sapMTextArea),
 .sapMPage:not([data-form-style="request"]) .form-grid .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem{height:34px !important}
-.sapMPage:not([data-form-style="request"]) .sapUiLayoutCSSGrid.form-grid > * {height:100%; min-height:34px; height:34px}
+.sapMPage:not([data-form-style="request"]) .sapUiLayoutCSSGrid.form-grid > * {height:100%; min-height:34px}
 .sapMPage:not([data-form-style="request"]) .sapUiLayoutCSSGrid.form-grid .sapMFlexBox .sapMFlexItem {min-height:34px!important}
 
 .app-top-toolbar {border-top:1px solid #fff; background-color:#fff}
-.app-menu-toolbar {width:100%; border-top:1px solid #DFE2EB}
-[data-background="dev"], [data-background="dev"] * {background-color:#f4fce3}
+.app-menu-toolbar {width:100%; border-top:1px solid #dfe2eb}
+.notification-wrapper .unread-count {top:0; height:15px}
+[data-background="dev"], [data-background="dev"] *:not(.unread-count, .unread-count bdi) {background-color:#f4fce3}
 
 .portlet + .portlet {margin-top:16px}
 .portlet.portlet-h1 {max-height:270px; height:270px}
@@ -383,7 +384,6 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>footer .sa
 .mypage-emp-detail .name {font-size:20px; color:#000}
 .mypage-emp-detail .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem {min-height:19px; color:#666666; font-weight:500}
 
-.notification-wrapper > .sapMFlexItem:last-child {top:0}
 .sapUiSizeCompact.notification-popover.sapMPopoverWithBar.sapMPopoverWithFooter:not(.sapMRPCalendar)>.sapMPopoverCont {padding:20px 0}
 .sapUiSizeCompact.notification-popover .sapMBtn.toggle-icon {margin-right:0; margin-left:15px}
 

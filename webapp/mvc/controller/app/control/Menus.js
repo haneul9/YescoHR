@@ -308,13 +308,6 @@ sap.ui.define(
           .reduceViewResource() // 메뉴 이동 전 View hidden 처리로 불필요한 DOM 정보를 제거
           .getRouter()
           .navTo(sRouteName);
-        // this.oAppController
-        //   .getRouter()
-        //   .getTargets()
-        //   .display(sRouteName)
-        //   .then(() => {
-        //     AppUtils.setAppBusy(false).setMenuBusy(false);
-        //   });
       },
     });
   }
