@@ -91,9 +91,10 @@ sap.ui.define(
       },
 
       serviceAvailable() {
-        const bOpen = moment().isAfter(moment('2022-04-03 12:00', 'YYYY-MM-DD HH:mm'));
+        const bOpen = moment().isAfter(moment('2022-04-04 18:00', 'YYYY-MM-DD HH:mm'));
+        const sWerks = this.getAppointeeProperty('Werks');
 
-        if (!bOpen)
+        if (!bOpen && !_.isEqual(sWerks, '2000'))
           MessageBox.alert(this.getBundleText('MSG_13002'), {
             onClose: () => this.onNavBack(),
           });
