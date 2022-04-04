@@ -147,9 +147,10 @@ sap.ui.define(
       },
 
       onPressRowDevelop(oEvent) {
+        const sHost = window.location.href.split('#')[0];
         const oRowData = oEvent.getSource().getParent().getBindingContext().getObject();
 
-        this.debug(oRowData.Zdocid4);
+        window.open(`${sHost}#/idpView/${oRowData.Pernr}/${oRowData.Zyear}`, '_blank', 'width=1400,height=800');
       },
 
       openPerformance(sObjid) {

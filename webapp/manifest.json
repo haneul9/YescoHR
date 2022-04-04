@@ -202,7 +202,7 @@
         
         { "pattern": "idp", "name": "idp", "target": "idp" },
         { "pattern": "idp/{sType}/{sYear}", "name": "idp-detail", "target": "idpDetail" },
-        { "pattern": "idpView/{sPernr}", "name": "idp-view", "target": "idpView" },
+        { "pattern": "idpView/{sPernr}/:sZyear:", "name": "idp-view", "target": "idpView" },
         { "pattern": "m/idp", "name": "m/idp", "target": "m/idp" },
         { "pattern": "m/idp/{sType}/{sYear}", "name": "m/idp-detail", "target": "idpDetail" },
 
