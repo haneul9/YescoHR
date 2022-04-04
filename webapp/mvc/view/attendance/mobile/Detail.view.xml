@@ -27,7 +27,7 @@
     </VBox>
     <footer>
       <OverflowToolbar>
-        <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onPressApproval" visible="{= !${/ZappStatAl} }" enabled="{= ${/form/hasRow}}" />
+        <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onPressApproval" visible="{= !${/ZappStatAl} }" />
       </OverflowToolbar>
     </footer>
   </Page>

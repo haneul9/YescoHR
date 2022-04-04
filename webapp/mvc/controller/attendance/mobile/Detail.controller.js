@@ -928,6 +928,8 @@ sap.ui.define(
 
           oViewModel.setProperty('/form/list', aListData);
           oViewModel.setProperty('/form/rowCount', aListData.length);
+          
+          oViewModel.setProperty('/form/dialog/data', {Awart: 'ALL'});
         }
 
         this.toggleHasRowProperty();
@@ -938,7 +940,7 @@ sap.ui.define(
       onPressApproval() {
         const oViewModel = this.getViewModel();
         if(oViewModel.getProperty('/form/list').length == 0){
-          MessageBox.error(this.getBundleText('MSG_04002')); // 변경된 데이터가 없습니다.
+          MessageBox.error(this.getBundleText('MSG_04009')); // 신청내역이 존재하지 않습니다.
           return;
         }
 
