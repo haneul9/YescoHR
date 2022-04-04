@@ -94,8 +94,11 @@ sap.ui.define(
           oViewModel.setProperty('/work/list', aTimeList);
           oViewModel.setProperty('/work/rowCount', aTimeList.length || 1);
           oViewModel.setProperty('/base/isShow', !_.every(aBaseList, (o) => _.isEmpty(o.Caltx)));
-          oViewModel.setProperty('/base/list', aBaseList);
-          oViewModel.setProperty('/base/rowCount', aBaseList.length || 1);
+          oViewModel.setProperty(
+            '/base/list',
+            _.filter(aBaseList, (o) => !_.isEmpty(o.Caltx))
+          );
+          oViewModel.setProperty('/base/rowCount', _.filter(aBaseList, (o) => !_.isEmpty(o.Caltx)).length || 1);
 
           setTimeout(() => {
             if (!bShowHeader) TableUtils.summaryColspan({ oTable: this.byId('payTable'), aHideIndex: [1, 2] });

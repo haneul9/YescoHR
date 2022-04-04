@@ -54,7 +54,11 @@
       <Button id="my-page" type="Transparent" icon="asset/image/icon_m_employee.svg" iconDensityAware="false" class="icon-button" tooltip="{i18n>LABEL_01005}" press=".onPressMobileMyPagePopoverToggle" />
       <HBox alignItems="Center" class="notification-wrapper" tooltip="{i18n>LABEL_01002}">
         <Button id="mobile-notification-bell" type="Transparent" icon="asset/image/icon_m_notice.svg" iconDensityAware="false" class="icon-button" press=".onPressNotificationPopoverToggle" />
-        <custom:PressableLabel text="{notificationModel>/unreadCount}" visible="{= !!${notificationModel>/showUnreadCount} }" class="notification-count" press=".onPressNotificationPopoverToggle" displayOnly="true" textAlign="Center" />
+        <custom:PressableLabel text="{notificationModel>/unreadCount}" visible="{= !!${notificationModel>/showUnreadCount} }" class="notification-count" press=".onPressNotificationPopoverToggle" displayOnly="true" textAlign="Center">
+          <custom:layoutData>
+            <FlexItemData styleClass="unread-count" />
+          </custom:layoutData>
+        </custom:PressableLabel>
       </HBox>
       <Button type="Transparent" icon="asset/image/icon_m_home.svg" iconDensityAware="false" class="icon-button" press=".navToHome" tooltip="{i18n>LABEL_01006}" />
       <Button id="contact-search" type="Transparent" icon="asset/image/icon_m_search.svg" iconDensityAware="false" class="icon-button" press=".onPressMobileSearchPopoverToggle" tooltip="{i18n>LABEL_01007}" />
