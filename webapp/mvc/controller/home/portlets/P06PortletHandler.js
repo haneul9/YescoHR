@@ -61,7 +61,7 @@ sap.ui.define(
               height: '100%',
               dataFormat: 'json',
               dataSource: {
-                chart: this.getChartOption(0),
+                chart: this.getChartOption(),
                 value: 0,
               },
               events: {
@@ -105,7 +105,7 @@ sap.ui.define(
         const oChart = FusionCharts(this.sChartId);
         oChart.setChartData(
           {
-            chart: this.getChartOption(fValue),
+            chart: this.getChartOption(),
             value: fValue,
           },
           'json'
@@ -113,7 +113,7 @@ sap.ui.define(
         oChart.render();
       },
 
-      getChartOption(fValue) {
+      getChartOption() {
         return {
           caption: AppUtils.getBundleText('LABEL_01130'), // 출근율
           lowerlimit: '0',
@@ -122,13 +122,17 @@ sap.ui.define(
           upperlimitdisplay: '100%',
           numbersuffix: '%',
           cylfillcolor: '#5d62b5',
-          plottooltext: AppUtils.getBundleText('LABEL_01131', fValue), // 출근율: <b>{fValue}%</b>
           cylfillhoveralpha: '85',
-          animation: 1,
-          refreshInstantly: 1,
-          theme: 'ocean',
           cylFillColor: '#30c4ee',
           cylYScale: 10,
+          animation: 1,
+          refreshInstantly: 1,
+          toolTipBgColor: '#ffffff',
+          toolTipColor: '#222222',
+          showToolTipShadow: 1,
+          plotcolorintooltip: 1,
+          plottooltext: AppUtils.getBundleText('LABEL_01131', '$dataValue'), // 출근율: <b>$dataValue%</b>
+          theme: 'ocean',
         };
       },
 

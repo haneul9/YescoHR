@@ -157,6 +157,11 @@ sap.ui.define(
           chartTopRight: 0,
           chartTopBottom: 0,
           chartTopLeft: 0,
+          toolTipBgColor: '#ffffff',
+          toolTipColor: '#222222',
+          showToolTipShadow: 1,
+          plotcolorintooltip: 1,
+          plottooltext: '<div class="fusion-tooltip"><table><tr><th>$label</th><td>$value</td></tr></table></div>',
           theme: 'ocean',
         };
       },

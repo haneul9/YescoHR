@@ -158,6 +158,11 @@ sap.ui.define(
           plotBorderColor: '#ffffff',
           chartBottomMargin: 0,
           drawCustomLegendIcon: 1,
+          toolTipBgColor: '#ffffff',
+          toolTipColor: '#222222',
+          showToolTipShadow: 1,
+          plotcolorintooltip: 1,
+          plottooltext: '<div class="fusion-tooltip"><table><tr><th>$label</th><td>$value</td></tr></table></div>',
         };
       },
 
