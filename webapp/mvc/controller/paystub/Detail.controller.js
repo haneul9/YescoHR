@@ -96,6 +96,7 @@ sap.ui.define(
           oViewModel.setProperty('/tax/rowCount', aTaxIncomeList.length || 2);
           oViewModel.setProperty('/work/list', aTimeList);
           oViewModel.setProperty('/work/rowCount', aTimeList.length || 1);
+          oViewModel.setProperty('/base/isShow', !_.every(aBaseList, (o) => _.isEmpty(o.Caltx)));
           oViewModel.setProperty('/base/list', aBaseList);
           oViewModel.setProperty('/base/rowCount', aBaseList.length || 1);
 
