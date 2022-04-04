@@ -940,7 +940,9 @@ sap.ui.define(
       onPressApproval() {
         const oViewModel = this.getViewModel();
         if(oViewModel.getProperty('/form/list').length == 0){
-          MessageBox.error(this.getBundleText('MSG_04009')); // 신청내역이 존재하지 않습니다.
+          const sMessage = oViewModel.getProperty('/type') == this.PAGE_TYPE.NEW ? this.getBundleText('MSG_04009') + '\n' +this.getBundleText('MSG_04010') : this.getBundleText('MSG_04009');
+           // 신청내역이 존재하지 않습니다. (신규신청 등록 후 +버튼을 클릭하여 주시기 바랍니다.)
+          MessageBox.error(sMessage);
           return;
         }
 
