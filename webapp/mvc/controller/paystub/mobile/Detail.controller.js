@@ -171,7 +171,7 @@ sap.ui.define(
           });
 
           if (mResult.Url && AppUtils.isPRD()) {
-            mResult.Url = `https://hrportal.yescoholdings.com:443/${_.chain(mResult.Url).split('/').drop(3).join('/').value()}?saml2=disabled`;
+            mResult.Url = `https://hrportal.yescoholdings.com:443/${_.chain(mResult.Url).split('/').drop(3).join('/').value()}`;
           }
 
           this.getViewModel().setProperty('/PdfUrl', mResult.Url);
