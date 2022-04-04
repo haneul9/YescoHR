@@ -166,7 +166,7 @@
         { "pattern": "h/educationHistory/{oDataKey}", "name": "h/educationHistory-detail", "target": "educationHistoryDetail" },
 
         { "pattern": "employee/:pernr:/:orgtx:/:orgeh:", "name": "employee", "target": "employee" },
-        { "pattern": "employeeView/{pernr}", "name": "employee-view", "target": "employeeView" },
+        { "pattern": "employeeView/{pernr}/:usrty:", "name": "employee-view", "target": "employeeView" },
         { "pattern": "m/employee", "name": "m/employee", "target": "m/employee" },
         { "pattern": "h/employee", "name": "h/employee", "target": "h/employee" },
         { "pattern": "mobile/employee/:pernr:", "name": "mobile/employee", "target": "mobile/employee" },
@@ -202,7 +202,7 @@
         
         { "pattern": "idp", "name": "idp", "target": "idp" },
         { "pattern": "idp/{sType}/{sYear}", "name": "idp-detail", "target": "idpDetail" },
-        { "pattern": "idpView/{sPernr}", "name": "idp-view", "target": "idpView" },
+        { "pattern": "idpView/{sPernr}/:sZyear:", "name": "idp-view", "target": "idpView" },
         { "pattern": "m/idp", "name": "m/idp", "target": "m/idp" },
         { "pattern": "m/idp/{sType}/{sYear}", "name": "m/idp-detail", "target": "idpDetail" },
 

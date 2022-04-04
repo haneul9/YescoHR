@@ -125,6 +125,7 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const sRoute = this.getRouter().getHashChanger().getHash();
         const mSessionData = this.getAppointeeData();
+        const sUsrty = _.defaultTo(oParameter.usrty, '');
         let sPernr = oParameter.pernr || mSessionData.Pernr;
         let sOrgtx = _.replace(oParameter.orgtx, /--/g, '/') ?? _.noop();
         let sOrgeh = oParameter.orgeh ?? _.noop();
@@ -149,10 +150,10 @@ sap.ui.define(
           oViewModel.setProperty('/sideNavigation/search/searchText', sOrgtx);
         }
 
-        if (!_.isEqual(sPernr, 'NA')) this.loadProfile({ oViewModel, sPernr });
+        if (!_.isEqual(sPernr, 'NA')) this.loadProfile({ oViewModel, sPernr, sUsrty });
       },
 
-      async loadProfile({ oViewModel, sPernr }) {
+      async loadProfile({ oViewModel, sPernr, sUsrty }) {
         const oViewModelData = oViewModel.getData();
         const oModel = this.getModel(ServiceNames.PA);
         let mFilters = {};
@@ -179,7 +180,7 @@ sap.ui.define(
           ] = await Promise.all([
             this.readOdata({ sUrl: '/EmpProfileHeaderNewSet', mFilters }),
             this.readOdata({ sUrl: '/EmpProfileMilestoneSet', mFilters }),
-            this.readOdata({ sUrl: '/EmpProfileMenuSet', mFilters }),
+            this.readOdata({ sUrl: '/EmpProfileMenuSet', mFilters: { ...mFilters, Usrty: sUsrty } }),
             this.readOdata({ sUrl: '/CountryCodeSet' }),
             this.readOdata({ sUrl: '/MajorCodeSet' }),
             this.readOdata({ sUrl: '/CertificateCodeSet' }),

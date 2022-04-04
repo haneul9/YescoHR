@@ -71,8 +71,6 @@ sap.ui.define(
       async onObjectMatched() {
         const oViewModel = this.getViewModel();
 
-        if (AppUtils.isPRD() && !this.serviceAvailable()) return;
-
         try {
           oViewModel.setProperty('/busy', true);
 
@@ -88,17 +86,6 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/busy', false);
         }
-      },
-
-      serviceAvailable() {
-        const bOpen = moment().isAfter(moment('2022-04-03 12:00', 'YYYY-MM-DD HH:mm'));
-
-        if (!bOpen)
-          MessageBox.alert(this.getBundleText('MSG_13002'), {
-            onClose: () => this.onNavBack(),
-          });
-
-        return bOpen;
       },
 
       /*****************************************************************
@@ -204,8 +191,13 @@ sap.ui.define(
       async getList() {
         const oModel = this.getModel(ServiceNames.PAY);
         const oViewModel = this.getViewModel();
-        const sBegym = oViewModel.getProperty('/search/begym'),
-          sEndym = oViewModel.getProperty('/search/endym');
+        const dBegda = oViewModel.getProperty('/search/date');
+        const sBegym = oViewModel.getProperty('/search/begym');
+        const sEndym = oViewModel.getProperty('/search/endym');
+
+        if (dBegda.getFullYear() < 2022) {
+          MessageBox.alert(this.getBundleText('MSG_13003'));
+        }
 
         return await Client.getEntitySet(oModel, 'PayslipList', {
           Menid: this.getCurrentMenuId(),

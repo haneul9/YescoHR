@@ -63,13 +63,14 @@ sap.ui.define(
           oViewModel.setData(this.initializeModel());
           oViewModel.setProperty('/busy', true);
 
+          await this.setAppointee(mAppointee.Pernr);
+
           if (sRouteName === 'historyAppraisal') {
             oViewModel.setProperty('/isESS', true);
           } else {
             oViewModel.setProperty('/isESS', false);
             oViewModel.setProperty('/sideNavigation/search/searchText', mAppointee.Orgtx);
 
-            await this.setAppointee(mAppointee.Pernr);
             await this.onPressEmployeeSearch(mAppointee.Orgeh);
           }
 
@@ -112,7 +113,7 @@ sap.ui.define(
             if (_.isEmpty(mAppointee)) {
               oViewModel.setProperty('/appointee', { Photo: 'asset/image/avatar-unknown.svg' });
             } else {
-              oViewModel.setProperty('/appointee', { ...mAppointee, Orgtx: mAppointee.Fulln, Photo: mAppointee.Photo || 'asset/image/avatar-unknown.svg' });
+              oViewModel.setProperty('/appointee', { ...mAppointee, Werks: mAppointee.Persa, Orgtx: mAppointee.Fulln, Photo: mAppointee.Photo || 'asset/image/avatar-unknown.svg' });
             }
           }
         } catch (oError) {
@@ -147,9 +148,10 @@ sap.ui.define(
       },
 
       onPressRowDevelop(oEvent) {
+        const sHost = window.location.href.split('#')[0];
         const oRowData = oEvent.getSource().getParent().getBindingContext().getObject();
 
-        this.debug(oRowData.Zdocid4);
+        window.open(`${sHost}#/idpView/${oRowData.Pernr}/${oRowData.Zyear}`, '_blank', 'width=1400,height=800');
       },
 
       openPerformance(sObjid) {
@@ -290,6 +292,15 @@ sap.ui.define(
 
       async onPressSearch() {
         const oViewModel = this.getViewModel();
+        const sWerks = oViewModel.getProperty('/appointee/Werks');
+
+        if (_.isEqual(sWerks, '3000')) {
+          oViewModel.setProperty('/history/rowCount', 1);
+          oViewModel.setProperty('/history/list', []);
+          oViewModel.setProperty('/history/busy', false);
+
+          return;
+        }
 
         oViewModel.setProperty('/history/busy', true);
 

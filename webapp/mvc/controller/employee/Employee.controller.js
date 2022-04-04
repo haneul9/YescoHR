@@ -313,7 +313,7 @@ sap.ui.define(
           ] = await Promise.all([
             this.readOdata({ sUrl: '/EmpProfileHeaderNewSet', mFilters }),
             this.readOdata({ sUrl: '/EmpProfileMilestoneSet', mFilters }),
-            this.readOdata({ sUrl: '/EmpProfileMenuSet', mFilters }),
+            this.readOdata({ sUrl: '/EmpProfileMenuSet', mFilters: { ...mFilters, Usrty: this.isMss() ? 'M' : this.isHass() ? 'H' : '' } }),
             this.readOdata({ sUrl: '/CountryCodeSet' }),
             this.readOdata({ sUrl: '/MajorCodeSet' }),
             this.readOdata({ sUrl: '/CertificateCodeSet' }),

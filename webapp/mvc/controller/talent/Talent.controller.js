@@ -706,8 +706,9 @@ sap.ui.define(
         if (!sPernr) return;
 
         const sHost = window.location.href.split('#')[0];
+        const sUsrty = this.isMss() ? 'M' : this.isHass() ? 'H' : '';
 
-        window.open(`${sHost}#/employeeView/${sPernr}`, '_blank', 'width=1400,height=800');
+        window.open(`${sHost}#/employeeView/${sPernr}/${sUsrty}`, '_blank', 'width=1400,height=800');
       },
 
       resetSimpleSearch() {

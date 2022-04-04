@@ -69,7 +69,7 @@
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.paystub.fragment.WorkTable" type="XML" />
         </HBox>
       </VBox>
-      <VBox class="vCardBox">
+      <VBox class="vCardBox" visible="{/base/isShow}">
         <HBox alignItems="Center" class="table-toolbar">
           <HBox class="title">
             <Title level="H2" text="{i18n>LABEL_13019}" />
