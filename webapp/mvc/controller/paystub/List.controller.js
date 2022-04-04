@@ -106,8 +106,6 @@ sap.ui.define(
       async onObjectMatched(oParameter, sRouteName) {
         const oViewModel = this.getViewModel();
 
-        if (AppUtils.isPRD() && !this.serviceAvailable()) return;
-
         try {
           oViewModel.setProperty('/busy', true);
           this.sRouteName = sRouteName;
@@ -120,19 +118,6 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/busy', false);
         }
-      },
-
-      serviceAvailable() {
-        const sWerks = this.getAppointeeProperty('Werks');
-        const bOpen = moment().isAfter(moment('2022-04-04 18:00', 'YYYY-MM-DD HH:mm')) && _.isEqual(sWerks, '2000');
-
-        if (!bOpen) {
-          MessageBox.alert(this.getBundleText('MSG_13002'), {
-            onClose: () => this.onNavBack(),
-          });
-        }
-
-        return bOpen;
       },
 
       async callbackAppointeeChange() {
