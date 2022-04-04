@@ -471,7 +471,7 @@ sap.ui.define(
             AppraisalDocDetailSet: [...aStrategy, ...aDuty],
           });
 
-          // {저장|전송|승인|취소}되었습니다.
+          // {저장|전송|승인|취소|완료}되었습니다.
           MessageBox.success(this.getBundleText('MSG_00007', label), {
             onClose: () => {
               if (!bIsSave) this.getRouter().navTo(sListRouteName);
@@ -794,9 +794,18 @@ sap.ui.define(
       },
 
       onPressCompleteButton() {
+        const mProcessType = Constants.PROCESS_TYPE.COMPLETE;
+
         if (!this.validation()) return;
 
-        MessageBox.alert('Not ready yet.');
+        MessageBox.confirm(this.getBundleText('MSG_00006', mProcessType.label), {
+          // {완료}하시겠습니까?
+          onClose: (sAction) => {
+            if (MessageBox.Action.CANCEL === sAction) return;
+
+            this.createProcess(mProcessType);
+          },
+        });
       },
 
       /*****************************************************************
