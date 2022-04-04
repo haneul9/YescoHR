@@ -48,7 +48,7 @@ sap.ui.define(
           listCount: 0,
           unreadCount: 0,
           showUnreadCount: false,
-          maxRows: this.bMobile ? Math.ceil((screen.availHeight - 143) / 69) : 5,
+          maxRows: this.bMobile ? Math.ceil((screen.availHeight - 143) / 69) : Math.floor(screen.availHeight / 69),
         };
       },
 
