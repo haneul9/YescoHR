@@ -100,7 +100,7 @@ sap.ui.define(
             aMenuReturnData,
           ] = await Promise.all([
             fCurriedPA('EmpProfileHeaderNew', mFilters), //
-            fCurriedPA('EmpProfileMenu', _.pick(mFilters, 'Pernr')),
+            fCurriedPA('EmpProfileMenu', { ..._.pick(mFilters, 'Pernr'), Usrty: this.isMss() ? 'M' : this.isHass() ? 'H' : '' }),
           ]);
 
           // 상단 프로필 Set
