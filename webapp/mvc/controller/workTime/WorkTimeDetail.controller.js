@@ -494,14 +494,22 @@ sap.ui.define(
         }
 
         const aList = oDetailModel.getProperty('/dialog/list');
+        const aDetailList = oDetailModel.getProperty('/detail/list');
         const aFilter = _.filter(aList, (e) => {
           return !!e.Pernr;
         });
         // 동일사번/일자
         if (
-          !!_.find(oDetailModel.getProperty('/detail/list'), (e) => {
-            return moment(e.Datum).format('YYYY.MM.DD') === moment(mDialogData.Datum).format('YYYY.MM.DD');
-          }) ||
+          !!_.chain(aDetailList)
+            .filter((e) => {
+              return _.find(aList, (e1) => {
+                return e.Pernr === _.trimStart(e1.Pernr, '0');
+              });
+            })
+            .find((e) => {
+              return moment(e.Datum).format('YYYY.MM.DD') === moment(mDialogData.Datum).format('YYYY.MM.DD') && e.Beguz === mDialogData.Beguz.replace(':', '') && e.Enduz === mDialogData.Enduz.replace(':', '');
+            })
+            .value() ||
           _.chain(aFilter)
             .map((e) => {
               return (e.Pernr = _.trimStart(e.Pernr, '0'));
