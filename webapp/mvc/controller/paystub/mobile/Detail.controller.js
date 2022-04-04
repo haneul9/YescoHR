@@ -66,7 +66,7 @@ sap.ui.define(
         oViewModel.setProperty('/busy', true);
 
         try {
-          this.getPdfUrl();
+          // this.getPdfUrl();
 
           const mDetail = await Client.deep(oModel, 'PayslipList', {
             Menid: this.getCurrentMenuId(),
@@ -149,7 +149,19 @@ sap.ui.define(
               mResult.Url = `https://hrportal.yescoholdings.com:443/${_.chain(mResult.Url).split('/').drop(3).join('/').value()}`;
             }
 
-            window.open(mResult.Url);
+            const oLink = document.createElement('a');
+            const oTextNode = document.createTextNode('Print');
+
+            oLink.appendChild(oTextNode);
+            oLink.title = 'print';
+            oLink.target = '_blank';
+            oLink.href = mResult.Url;
+
+            document.body.appendChild(oLink);
+            oLink.click();
+            document.body.removeChild(oLink);
+
+            // window.open(mResult.Url);
           }
         } catch (oError) {
           this.debug('Controller > paystub Detail > onPressPDFPrint Error', oError);
