@@ -80,6 +80,7 @@ sap.ui.define(
           const sSearchText = _.isEmpty(sOrgtx) ? sPernr : sOrgtx;
           const sSearchOrgeh = _.isEmpty(sOrgeh) ? _.noop() : sOrgeh;
           const aSearchResults = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'EmpSearchResult', {
+            Menid: this.getCurrentMenuId(),
             Zflag: 'X',
             Actda: moment().hours(9).toDate(),
             Ename: sSearchText,
@@ -114,6 +115,7 @@ sap.ui.define(
 
         try {
           const aSearchResults = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'EmpSearchResult', {
+            Menid: this.getCurrentMenuId(),
             Zflag: 'X',
             Actda: moment().hours(9).toDate(),
             Ename: sSearchText,

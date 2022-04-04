@@ -52,11 +52,19 @@ sap.ui.define(
         });
 
         this.oDialog
-          .attachBeforeOpen(() => {
-            $('#sap-ui-static').append('<div id="sap-ui-blocklayer-popup" tabindex="0" class="sapUiBLy sapMPopoverBLayer half-dialog" style="z-index:8; visibility:visible"></div>');
+          .attachAfterOpen(() => {
+            setTimeout(() => {
+              $('#sap-ui-blocklayer-popup')
+                .off('click')
+                .on('click', () => {
+                  this.onDialogClose();
+                });
+            }, 100);
           })
           .attachBeforeClose(() => {
-            $('#sap-ui-blocklayer-popup').remove();
+            setTimeout(() => {
+              $('#sap-ui-blocklayer-popup').off('click');
+            });
           })
           .setModel(this.oDialogModel)
           .bindElement('/');

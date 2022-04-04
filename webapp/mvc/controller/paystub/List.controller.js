@@ -112,7 +112,7 @@ sap.ui.define(
           oViewModel.setProperty('/busy', true);
           this.sRouteName = sRouteName;
 
-          this.search();
+          await this.search();
         } catch (oError) {
           this.debug('Controller > paystub List > onObjectMatched Error', oError);
 
@@ -123,7 +123,7 @@ sap.ui.define(
       },
 
       serviceAvailable() {
-        const bOpen = moment().isAfter(moment('2022-04-04 9:00', 'YYYY-MM-DD HH:mm'));
+        const bOpen = moment().isAfter(moment('2022-04-03 12:00', 'YYYY-MM-DD HH:mm'));
 
         if (!bOpen)
           MessageBox.alert(this.getBundleText('MSG_13002'), {
@@ -133,13 +133,13 @@ sap.ui.define(
         return bOpen;
       },
 
-      callbackAppointeeChange() {
+      async callbackAppointeeChange() {
         const oViewModel = this.getViewModel();
 
         try {
           oViewModel.setProperty('/busy', true);
 
-          this.search();
+          await this.search();
         } catch (oError) {
           this.debug('Controller > paystub List > callbackAppointeeChange Error', oError);
 
@@ -192,13 +192,13 @@ sap.ui.define(
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
-      onPressSearch() {
+      async onPressSearch() {
         const oViewModel = this.getViewModel();
 
         try {
           oViewModel.setProperty('/busy', true);
 
-          this.search();
+          await this.search();
         } catch (oError) {
           this.debug('Controller > paystub List > onPressSearch Error', oError);
 

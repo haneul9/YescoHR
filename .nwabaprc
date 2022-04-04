@@ -17,7 +17,7 @@
     "abap_bsp": "zui5_yescohr",
     "abap_bsp_text": "UI5 yesco e-HR",
     "abap_package": "zhr1",
-    "abap_transport": "YHDK900866",
+    "abap_transport": "YHDK900876",
     "calcappindex": true,
     "preserve_unselected": true
 }
