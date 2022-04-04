@@ -235,8 +235,8 @@
     </VBox>
     <footer>
       <OverflowToolbar>
-        <Button text="{i18n>LABEL_00171}" type="Emphasized" press=".onPressPDFPrint" />
-        <!-- <Link href="{/PdfUrl}" subtle="true" target="_blank" text="{i18n>LABEL_00171}" textAlign="Center" width="100%" class="button-mimic-link" /> -->
+        <!-- <Button text="{i18n>LABEL_00171}" type="Emphasized" press=".onPressPDFPrint" /> -->
+        <Link href="{/PdfUrl}" subtle="true" target="_blank" text="{i18n>LABEL_00171}" textAlign="Center" width="100%" class="button-mimic-link" />
       </OverflowToolbar>
     </footer>
   </Page>

@@ -2,7 +2,6 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/control/MessageBox',
-    'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/FragmentEvent',
@@ -16,7 +15,6 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     MessageBox,
-    Appno,
     AppUtils,
     AttachFileAction,
     FragmentEvent,
