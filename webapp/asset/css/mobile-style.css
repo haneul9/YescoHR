@@ -14,9 +14,6 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 .sapMScrollCont {padding:0px}
 .sapMScrollCont .sapMScrollCont {padding:0px 20px 0 0}
 .sapUiSizeCompact .sapMPageWithFooter.sapMPageFloatingFooter>section, .sapUiSizeCompact .sapMPageWithHeader>section {padding-top:56px}
-/* .sapUiSizeCompact .sapMPageWithHeader>section > * {padding:0px 20px !important}
-.sapUiSizeCompact .sapMPageWithHeader>section > .sapMScrollCont {padding:0 20px !important} */
-/* .sapUiSizeCompact .sapMPageWithHeader>section .sapMSegB {width:100%; margin:20px!important} */
 
 .sapMPageHeader + .sapMPageEnableScrolling {margin-top:2.6rem}
 
@@ -98,23 +95,18 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 .sapMPopoverFooter {display:none}
 .sapMDialogTitle [data-sap-ui*=closeButton].sapMBtn {min-width:auto!important}
 .sapMDialogTitle [data-sap-ui*=closeButton].sapMBtn .sapMBtnDefault.sapMBtnIconFirst{border-color:transparent!important; background-color:transparent}
-/* .sapMDialog .sapMDialogTitle, .sapUiSizeCompact .sapMPopoverHeader .sapMBar {height:42px} */
 .sapMDialog>header.sapMDialogTitle .sapMTitle {color:#262C2F; margin:0; vertical-align:middle; font-size:20px}
 .sapUiSizeCompact.sapMDialog>.sapMDialogTitle .sapMHeader-CTX, 
 .sapUiSizeCompact .sapMDialog>.sapMDialogTitle .sapMHeader-CTX, 
 .sapUiSizeCompact.sapMDialog>.sapMDialogTitle .sapMSubHeader-CTX, 
 .sapUiSizeCompact .sapMDialog>.sapMDialogTitle .sapMSubHeader-CTX, 
-/* .sapMDialog.sapMPopup-CTX>header .sapMHeader-CTX {align-items:center; height:42px; padding-top:0; padding-bottom:0; box-sizing:border-box; border-bottom:1px solid #E6E6E6; margin-bottom:8px} */
 .sapMPanelHdr, .sapMDialog>header.sapMDialogTitle {font-size:20px; font-weight:600; height:42px; line-height:42px; padding:0 0px}
 .sapUiSizeCompact .sapMBarRight {height:100%; display:flex; align-items:center}
-/* .sapUiSizeCompact .sapMBarMiddle .sapMBarPH.sapMBarContainer{align-self:center; padding-right:0; padding-top:0; padding-bottom:0; height:48px; line-height:48px} */
 .sapMDialogSection {padding:0px 20px}
 .sapMDialog.sapUiPopupWithPadding:not(.sapUiNoContentPadding) .sapMDialogScrollCont {padding:0}
 html.sap-phone .sapMDialog.sapMDialogStretched {border:none; box-shadow:0; border-radius:0; top:auto!important; bottom:61px!important; padding:43px 0px 0}
 .sapMResponsivePopover:not(.sapMRPCalendar) + .sapUiBLy {display:none!important; visibility:hidden!important; background-color:#000000; opacity:0.0}
 .sapUiSizeCompact.sapMDialog>.sapMDialogSection, .sapUiSizeCompact .sapMDialog>.sapMDialogSection {min-height:2.5rem; padding-bottom:20px}
-/* .sapMDialog.full-popover, .sapMDialog.full-popover .sapMDialogScroll{height:100%!important; overflow:hidden}
-.sapMDialog.full-popover .sapMDialogSection {height:calc(100% - 61px)!important} */
 .sapMPopover.full-popover.sapMPopoverWithoutBar .sapMPopoverCont, .sapMPopover.full-popover .sapMIBar.sapMHeader-CTX {padding:0px}
 .sapMDialog.full-popover .sapMDialogScroll, .sapMDialog.full-popover .sapMDialogScroll .sapMDialogScrollCont {height:100%!important}
 .sapMPopover.full-popover {top:0!important; right:0!important; bottom:61px!important; left:0!important; box-shadow:none}
@@ -215,7 +207,6 @@ html.sap-phone .sapMDialog.sapMDialogStretched {border:none; box-shadow:0; borde
 /* MessageDialog  */
 .sapMMessageDialog .sapMDialogSection{padding:20px; text-align:center}
 .sapMMessageDialog .sapMDialogSection .sapMText {font-size:16px} 
-.sapMMessageDialog .sapMDialogTitle {}
 .sapMDialog.sapMMessageDialog.sapMMessageBoxQuestion .sapMDialogTitle>.sapMBar {box-shadow:none}
 .sapUiSizeCompact .sapMDialog[role=alertdialog]>.sapMDialogTitle,
 .sapUiSizeCompact .sapMDialog[data-sap-ui*=alert]>.sapMDialogTitle,
@@ -272,24 +263,6 @@ html.sap-phone .sapMDialog.sapMDialogStretched {border:none; box-shadow:0; borde
 .sapMDialog[data-sap-ui*=warning]>footer span.sapMBtnInner.sapMBtnEmphasized, 
 .sapMDialog[data-sap-ui*=error]>footer span.sapMBtnInner.sapMBtnEmphasized {min-width:28%}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .sapContrast.sapMIBar-CTX.sapMFooter-CTX, 
 .sapContrast .sapMIBar-CTX.sapMFooter-CTX {display:flex; justify-content:center; color:#fafafa; text-shadow:0 0 0 #000000; box-shadow:none; background-color:#F4F4F7; background-image:none; border-top:0px solid #475b6d; height:72px}
 .sapUiSizeCompact .sapMBtn {flex:1; }
@@ -311,7 +284,6 @@ html.sap-phone .sapMDialog.sapMDialogStretched {border:none; box-shadow:0; borde
 .sapContrast span.sapMBtnInner.sapMBtnReject {color:#fff}
 
 /* sapMPageWithFooter  */
-
 .sapUiLayoutCSSGrid.complex-search {background-color:transparent!important; border-top:0px solid #F5F5F5}
 .sapUiLayoutCSSGrid.complex-search .sapMInputBase:not(.sapMTextArea) {height:40px !important}
 .sapUiLayoutCSSGrid.complex-search .sapMBtnInner.sapMBtnText {border-radius: 20px;}
@@ -334,7 +306,6 @@ html.sap-phone .sapMDialog.sapMDialogStretched {border:none; box-shadow:0; borde
 .sapUiSizeCompact .sapMSegB.type-c .sapMSegBBtn.sapMSegBBtnSel .sapMSegBBtnInner {background-color:#0A1E5A; color:#fff}
 .sapUiSizeCompact .sapMSegB.type-c .sapMSegBBtn .sapMSegBBtnInner{background-color:#fff; border:1px solid #ccc; border-radius:20px; line-height:29px; font-weight:500; font-size:14px}
 
-.calendar-popover {}
 .sapMDialogPhone.sapMResponsivePopover.sapMRPCalendar{display:flex; justify-content:center; align-items:center; height:342px!important; top:calc(50% - 225px)!important}
 .sapUiSizeCompact .sapMDialog.sapMRPCalendar>.sapMDialogSection {padding:20px 15px 20px 20px}
 
@@ -367,7 +338,6 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>footer .sa
 [id*=ATTACHBOX] h2.sapMTitle {border-bottom:0px solid #000!important; padding-bottom:8px; margin-bottom:8px}
 [id*=ATTACHBOX] .sapUiTableColHdrCnt {display:none}
 [id*=ATTACHBOX] .sapUiTableCCnt tbody tr td:first-child, [id*=ATTACHBOX] .sapUiTableCCnt thead {display:none}
-/* [id*=ATTACHBOX] .sapUiTableCCnt tbody tr, #container-ehr---mobile_congDetail--ATTACHBOX .sapUiTableCCnt .sapUiTableCell {height:36px!important} */
 [id*=ATTACHBOX] .sapUiTableCCnt {min-height:44px !important; border-bottom:0px solid #f5f5f5; border-left:0px solid #f5f5f5; border-right:0px solid #f5f5f5; background-color:transparent}
 [id*=ATTACHBOX] .sapUiTableDataCell {border-right:0 solid #F5F5F5; border-bottom:none}
 [id*=ATTACHBOX] .sapUiTableContentRow .sapUiTableCell {height:48px !important; border-right:0px solid #f5f5f5; border-bottom:0px solid #f5f5f5}
@@ -446,7 +416,6 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>footer .sa
 .profile-detail h4 {display:block; border-bottom:1px solid #000; margin-bottom:12px; padding-bottom:10px}
 .profile-detail li .sapMText {align-self:self-start; font-size:16px; letter-spacing:-1px}
 .profile-detail li.sapMLIB {border-bottom:0; margin-bottom:16px}
-/* .profile-detail li.sapMLIB .sapUiLayoutCSSGrid {align-items:flex-start; align-content:flex-start; display:flex} */
 .profile-detail .sapMInputBase.sapMInputBaseReadonly {height:40px !important}
 .profile-detail .sapMInputBase.sapMInputBaseReadonly:not(.sapMTextArea) {height:40px !important}
 .profile-detail .sapMInputBase.sapMInputBaseReadonly:not(.sapMTextArea) input, .profile-detail .sapMLabel {padding-top:0!important; padding-bottom:0!important; font-size:16px; font-weight:500!important}
@@ -455,7 +424,6 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>footer .sa
 .talent-list { padding-left: 20px; padding-right: 20px; }
 
 .notice-mobile-content img { width: 100%; }
-/* .notice-mobile-content p { font-family:Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif !important; } */
 
 .sapUiSizeCompact .sapUiCalContent>.sapUiCalMonthPicker,
 .sapUiSizeCompact .sapUiCalContent>.sapUiCalYearPicker {margin-left:0; width:100%; top:0; left:0; padding:10px 0 0 0}
