@@ -170,6 +170,10 @@ sap.ui.define(
             Seqnr: sSeqnr,
           });
 
+          if (mResult.Url && AppUtils.isPRD()) {
+            mResult.Url = `https://hrportal.yescoholdings.com:443/${_.chain(mResult.Url).split('/').drop(3).join('/').value()}`;
+          }
+
           this.getViewModel().setProperty('/PdfUrl', mResult.Url);
         } catch (oError) {
           this.debug('Controller > paystub Detail > onPressPDFPrint Error', oError);
