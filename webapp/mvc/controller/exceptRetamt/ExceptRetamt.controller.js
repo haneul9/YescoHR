@@ -19,7 +19,7 @@ sap.ui.define(
     ServiceNames,
     FragmentEvent,
     BaseController,
-    MessageBox,
+    MessageBox
   ) => {
     'use strict';
 
@@ -41,6 +41,8 @@ sap.ui.define(
 
       async onObjectMatched() {
         const oViewModel = this.getViewModel();
+
+        if (AppUtils.isPRD() && !this.serviceAvailable()) return;
 
         try {
           oViewModel.setProperty('/busy', true);
@@ -76,6 +78,18 @@ sap.ui.define(
         }
       },
 
+      serviceAvailable() {
+        const bOpen = moment().isAfter(moment('2022-04-18 09:00', 'YYYY-MM-DD HH:mm'));
+
+        if (!bOpen)
+          // 예상퇴직금 조회 서비스는 4/15까지 금액 검증 후 4/18 09시에 정식 오픈할 예정이니 양해 부탁드립니다.
+          MessageBox.alert(this.getBundleText('MSG_33005', 'LABEL_00110'), {
+            onClose: () => this.onNavBack(),
+          });
+
+        return bOpen;
+      },
+
       callbackAppointeeChange() {
         this.onSearch();
       },
@@ -87,10 +101,6 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.PAY);
         const oViewModel = this.getViewModel();
         const dRetda = oViewModel.getProperty('/data/Retda');
-
-        // 예상퇴직금 조회 서비스는 4/15까지 금액 검증 후 4/18 09시에 정식 오픈할 예정이니 양해 부탁드립니다.
-        MessageBox.alert(this.getBundleText('MSG_33005', 'LABEL_00110'));
-        return;
 
         try {
           oViewModel.setProperty('/busy', true);
