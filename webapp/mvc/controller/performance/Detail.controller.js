@@ -648,7 +648,7 @@ sap.ui.define(
           onClose: (sAction) => {
             if (MessageBox.Action.CANCEL === sAction) return;
 
-            this.createProcess(mProcessType);
+            this.createProcess({...mProcessType, label: 'LABEL_10102'});
           },
         });
       },
