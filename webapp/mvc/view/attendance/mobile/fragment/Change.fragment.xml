@@ -1,60 +1,60 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:grid="sap.ui.layout.cssgrid"
-    xmlns:custom="sap.ui.yesco.control">
-    <HBox class="table-toolbar" visible="{= !${/ZappStatAl} }" >
-        <HBox class="title">
-            <Title level="H2" text="{i18n>LABEL_04024}" />
-        </HBox>
-        <HBox class="table-actions">
-            <custom:DateRangeSelection dateValue="{ path: '/form/dialog/search/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/form/dialog/search/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" change=".retrieveChange" />
-        </HBox>
+  xmlns:core="sap.ui.core"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:custom="sap.ui.yesco.control">
+  <HBox class="table-toolbar" visible="{= !${/ZappStatAl} }">
+    <HBox class="title">
+      <Title level="H2" text="{i18n>LABEL_04024}" />
     </HBox>
-    <List items="{ path: '/form/dialog/list' }" class="list-wrap" rememberSelections="false" visible="{= !${/ZappStatAl} }" >
-        <CustomListItem type="Active" press=".openFormChangeDialog" >
-        <HBox wrap="Wrap" justifyContent="SpaceBetween" alignItems="Baseline" alignContent="SpaceBetween" class="list-item-box">              
-            <grid:CSSGrid gridTemplateColumns="1fr 2fr" gridGap="6px 5px">
-                <grid:layoutData>
-                    <FlexItemData growFactor="1" />
-                </grid:layoutData>
-                <Text text="{Atext2}" class="font-bold" />
-                <Text text="{ path: 'Begda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ~ { path: 'Endda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ({Abrtg2})" />
-            </grid:CSSGrid>
-        </HBox>
-        </CustomListItem>
-    </List>
+    <HBox class="table-actions">
+      <custom:DateRangeSelection dateValue="{ path: '/form/dialog/search/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/form/dialog/search/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" change=".retrieveChange" />
+    </HBox>
+  </HBox>
+  <List items="{ path: '/form/dialog/list' }" class="list-wrap" rememberSelections="false" visible="{= !${/ZappStatAl} }">
+    <CustomListItem type="Active" press=".openFormChangeDialog">
+      <HBox wrap="Wrap" justifyContent="SpaceBetween" alignItems="Baseline" alignContent="SpaceBetween" class="list-item-box">
+        <grid:CSSGrid gridTemplateColumns="1fr 2fr" gridGap="6px 5px">
+          <grid:layoutData>
+            <FlexItemData growFactor="1" />
+          </grid:layoutData>
+          <Text text="{Atext2}" class="font-bold" />
+          <Text text="{ path: 'Begda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ~ { path: 'Endda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ({Abrtg2})" />
+        </grid:CSSGrid>
+      </HBox>
+    </CustomListItem>
+  </List>
 
-    <HBox class="table-toolbar">
-        <HBox class="title">
-            <Title level="H2" text="{i18n>LABEL_00129}" />
-        </HBox>
-        <HBox class="table-actions">
-            <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onPressDelBtn"  visible="{= !${/ZappStatAl} }" />
-        </HBox>
+  <HBox class="table-toolbar">
+    <HBox class="title">
+      <Title level="H2" text="{i18n>LABEL_00129}" />
     </HBox>
-    <List id="DetailListB" items="{ path: '/form/list' }" class="list-wrap" mode="{/form/listMode}" rememberSelections="false" >
-        <CustomListItem type="Active">
-            <HBox wrap="Wrap" justifyContent="SpaceBetween" alignItems="Baseline" alignContent="SpaceBetween" class="list-item-box">              
-                <grid:CSSGrid gridTemplateColumns="1fr 2fr" gridGap="6px 10px">
-                    <grid:layoutData>
-                        <FlexItemData growFactor="1" />
-                    </grid:layoutData>
-                    <Text text="{Atext}" class="font-16-px font-bold" />
-                    <HBox>
-                        <Text text="{i18n>LABEL_04026}: " />
-                        <Text text="{ path: 'Begda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ~ { path: 'Endda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' }({Abrtg})" />
-                    </HBox>
-                    <Text text="{Tmrsn}" wrapping="false">
-                        <layoutData>
-                            <FlexItemData maxWidth="90%" />
-                        </layoutData>
-                    </Text>
-                    <HBox>
-                        <Text text="{i18n>LABEL_04027}: " />
-                        <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ~ { path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' }({Abrtg2})" />                    
-                    </HBox>
-                </grid:CSSGrid>
-            </HBox>
-        </CustomListItem>
-    </List>
+    <HBox class="table-actions">
+      <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onPressDelBtn" visible="{= !${/ZappStatAl} }" />
+    </HBox>
+  </HBox>
+  <List id="DetailListB" items="{ path: '/form/list' }" class="list-wrap request" mode="{/form/listMode}" rememberSelections="false">
+    <CustomListItem type="Active">
+      <HBox wrap="Wrap" justifyContent="SpaceBetween" alignItems="Baseline" alignContent="SpaceBetween" class="list-item-box">
+        <grid:CSSGrid gridTemplateColumns="1fr 2fr" gridGap="6px 10px">
+          <grid:layoutData>
+            <FlexItemData growFactor="1" />
+          </grid:layoutData>
+          <Text text="{Atext}" class="font-16-px font-bold" />
+          <HBox>
+            <Text text="{i18n>LABEL_04026}: " />
+            <Text text="{ path: 'Begda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ~ { path: 'Endda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' }({Abrtg})" />
+          </HBox>
+          <Text text="{Tmrsn}" wrapping="false">
+            <layoutData>
+              <FlexItemData maxWidth="90%" />
+            </layoutData>
+          </Text>
+          <HBox>
+            <Text text="{i18n>LABEL_04027}: " />
+            <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ~ { path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' }({Abrtg2})" />
+          </HBox>
+        </grid:CSSGrid>
+      </HBox>
+    </CustomListItem>
+  </List>
 </core:FragmentDefinition>

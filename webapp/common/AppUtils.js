@@ -172,7 +172,6 @@ sap.ui.define(
               location.reload();
             },
           });
-          reject();
         } else {
           reject(oError);
         }
