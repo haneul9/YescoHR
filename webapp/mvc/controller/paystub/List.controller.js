@@ -26,6 +26,8 @@ sap.ui.define(
       TableUtils: TableUtils,
       TABLE_ID: 'paystubTable',
 
+      CHART_ID: 'paystubSummaryChart',
+
       sRouteName: '',
 
       initializeModel() {
@@ -160,18 +162,25 @@ sap.ui.define(
       },
 
       buildChart() {
+        const oChart = FusionCharts(this.CHART_ID);
         const mDataSource = this.getViewModel().getProperty('/summary/dataSources');
 
-        FusionCharts.ready(function () {
-          new FusionCharts({
-            type: 'pie2d',
-            renderAt: 'chart-container',
-            width: '180',
-            height: '160',
-            dataFormat: 'json',
-            dataSource: mDataSource,
-          }).render();
-        });
+        if (!oChart) {
+          FusionCharts.ready(() => {
+            new FusionCharts({
+              id: this.CHART_ID,
+              type: 'pie2d',
+              renderAt: 'chart-container',
+              width: '180',
+              height: '160',
+              dataFormat: 'json',
+              dataSource: mDataSource,
+            }).render();
+          });
+        } else {
+          oChart.setChartData(mDataSource);
+          oChart.render();
+        }
       },
 
       /*****************************************************************
