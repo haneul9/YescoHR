@@ -537,6 +537,63 @@ sap.ui.define(
         this.validChangeLeave(oEvent);
       },
 
+      onPressAMToPM() {
+        const oViewModel = this.getViewModel();
+        const oTable = this.byId('dialogChangeTable');
+        const aSelectedIndices = oTable.getSelectedIndices();
+        const aDialogList = oViewModel.getProperty('/form/dialog/list');
+        const aSelectedData = _.chain(aDialogList)
+          .filter((o, i) => _.includes(aSelectedIndices, i))
+          .cloneDeep()
+          .value();
+
+        if (aSelectedData.length !== 1 || _.get(aSelectedData, [0, 'Awart2']) !== '2001') {
+          MessageBox.alert(this.getBundleText('MSG_04011')); // 반차(오후)로 변경하고자 하는 반차(오전) 1건만 선택하여 주십시오.
+          return;
+        }
+
+        const aAwarts = oViewModel.getProperty('/form/dialog/awartCodeList');
+        const aList = oViewModel.getProperty('/form/list');
+
+        _.chain(aSelectedData)
+          .set([0, 'Awart'], '2002')
+          .set([0, 'Atext'], _.chain(aAwarts).find({ Awart: '2002' }).get('Atext').value())
+          .commit();
+
+        oViewModel.setProperty('/form/rowCount', _.sum([aList.length, aSelectedData.length]));
+        oViewModel.setProperty('/form/list', _.concat(aList, aSelectedData));
+
+        this.toggleHasRowProperty();
+        this.onPressFormChangeDialogClose();
+      },
+
+      onPressPMToAM() {
+        const oViewModel = this.getViewModel();
+        const oTable = this.byId('dialogChangeTable');
+        const aSelectedIndices = oTable.getSelectedIndices();
+        const aDialogList = oViewModel.getProperty('/form/dialog/list');
+        const aSelectedData = _.filter(aDialogList, (o, i) => _.includes(aSelectedIndices, i));
+
+        if (aSelectedData.length !== 1 || _.get(aSelectedData, [0, 'Awart2']) !== '2002') {
+          MessageBox.alert(this.getBundleText('MSG_04012')); // 반차(오전)로 변경하고자 하는 반차(오후) 1건만 선택하여 주십시오.
+          return;
+        }
+
+        const aAwarts = oViewModel.getProperty('/form/dialog/awartCodeList');
+        const aList = oViewModel.getProperty('/form/list');
+
+        _.chain(aSelectedData)
+          .set([0, 'Awart'], '2001')
+          .set([0, 'Atext'], _.chain(aAwarts).find({ Awart: '2001' }).get('Atext').value())
+          .commit();
+
+        oViewModel.setProperty('/form/rowCount', _.sum([aList.length, aSelectedData.length]));
+        oViewModel.setProperty('/form/list', _.concat(aList, aSelectedData));
+
+        this.toggleHasRowProperty();
+        this.onPressFormChangeDialogClose();
+      },
+
       onPressHalfToOne() {
         const oViewModel = this.getViewModel();
         const oTable = this.byId('dialogChangeTable');
