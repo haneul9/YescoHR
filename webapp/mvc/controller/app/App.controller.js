@@ -65,9 +65,8 @@ sap.ui.define(
           this.oMobileEmployeeSearchDialogHandler = new MobileEmployeeSearchDialogHandler(this);
         });
         setTimeout(() => {
-          this.getOwnerComponent()
-            .getAppModel()
-            .setProperty('/homebarBackground', /^localhost/.test(location.hostname) || /^(yeshrsapdev|devhrportal)/.test(location.hostname) ? 'dev' : 'prd');
+          const sHost = /^localhost/.test(location.hostname) || /^(yeshrsapdev|devhrportal)/.test(location.hostname) ? 'dev' : 'prd';
+          this.getOwnerComponent().getAppModel().setProperty('/homebarBackground', sHost);
         });
       },
 

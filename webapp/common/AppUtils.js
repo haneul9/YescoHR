@@ -103,7 +103,7 @@ sap.ui.define(
       },
 
       isMobile() {
-        return this.getDevice() === sap.ui.Device.system.SYSTEMTYPE.PHONE;
+        return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
       },
 
       /**
