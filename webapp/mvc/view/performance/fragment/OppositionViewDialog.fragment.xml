@@ -8,7 +8,7 @@
         <Panel expanded="true" headerText="{i18n>LABEL_10035}">
             <content>
                 <VBox>
-                    <TextArea width="100%" value="{/opposition/ZzabjfbTx}" growing="true" growingMaxLines="35" editable="false" />
+                    <TextArea width="100%" value="{/opposition/ZzabjfbTx}" growing="true" growingMaxLines="35" enabled="false" />
                     <VBox items="{/opposition/files}">
                         <Link text="{Zfilename}" href="{Fileuri}" />
                     </VBox>
