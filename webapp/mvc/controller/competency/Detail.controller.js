@@ -168,6 +168,10 @@ sap.ui.define(
             return mReturn;
           });
 
+          if (_.isEqual(`${sZzapsts}${sZzapstsSub}`, '5X')) {
+            _.chain(aStageHeader).last().set('completed', true).commit();
+          }
+
           // 평가 프로세스 목록 - 하위
           bCompleted = true;
           const aGroupStageByApStatusName = _.chain(aStepList)

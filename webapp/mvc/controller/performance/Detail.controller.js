@@ -195,6 +195,10 @@ sap.ui.define(
             return mReturn;
           });
 
+          if (_.isEqual(`${sZzapsts}${sLogicalZzapstsSub}`, '5X')) {
+            _.chain(aStageHeader).last().set('completed', true).commit();
+          }
+
           // 평가 프로세스 목록 - 하위
           bCompleted = true;
           const aGroupStageByApStatusName = _.chain(aStepList)
@@ -648,7 +652,7 @@ sap.ui.define(
           onClose: (sAction) => {
             if (MessageBox.Action.CANCEL === sAction) return;
 
-            this.createProcess({...mProcessType, label: 'LABEL_10102'});
+            this.createProcess({ ...mProcessType, label: 'LABEL_10102' });
           },
         });
       },
