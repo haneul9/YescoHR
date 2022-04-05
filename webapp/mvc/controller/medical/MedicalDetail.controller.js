@@ -5,7 +5,6 @@ sap.ui.define(
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
     'sap/ui/core/Fragment',
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
@@ -28,7 +27,6 @@ sap.ui.define(
     Filter,
     FilterOperator,
     Fragment,
-    JSONModel,
     MessageBox,
     Appno,
     AppUtils,
@@ -1135,7 +1133,7 @@ sap.ui.define(
       },
 
       // Dialog Close
-      onDialogClose(oEvent) {
+      onDialogClose() {
         this.byId('DetailHisDialog').close();
       },
 

@@ -1,7 +1,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/odata/Client',
@@ -13,7 +12,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    MessageBox,
     AppUtils,
     EmployeeSearch,
     Client,

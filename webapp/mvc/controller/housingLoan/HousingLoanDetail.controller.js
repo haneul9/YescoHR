@@ -2,7 +2,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
@@ -22,7 +21,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     MessageBox,
     Appno,
     AppUtils,
@@ -117,7 +115,7 @@ sap.ui.define(
         const mFormData = oDetailModel.getProperty('/FormData');
 
         if (sValue > parseFloat(sAmountCode) && !!mFormData.Lntyp) {
-          const sAmountFormat = new Intl.NumberFormat('ko-KR').format(sAmountCode);
+          // const sAmountFormat = new Intl.NumberFormat('ko-KR').format(sAmountCode);
           const sFormAmount = new Intl.NumberFormat('ko-KR').format(mFormData.Lnamt);
 
           // MessageBox.alert(this.getBundleText('MSG_07006', mFormData.Lntyptx, sAmountFormat));

@@ -1,7 +1,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/FragmentEvent',
@@ -17,7 +16,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     AppUtils,
     AttachFileAction,
     FragmentEvent,
@@ -171,7 +169,7 @@ sap.ui.define(
           };
           const oModel = this.getModel(ServiceNames.WORKTIME);
           const aTableList = await Client.getEntitySet(oModel, 'OtWorkApply', mPayLoad);
-          
+
           oListModel.setProperty('/List', aTableList);
         } catch (oError) {
           AppUtils.handleError(oError);

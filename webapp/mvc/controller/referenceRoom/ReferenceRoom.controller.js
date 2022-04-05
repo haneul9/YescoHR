@@ -756,7 +756,7 @@ sap.ui.define(
       refreshAttachFileList(Appno, Type) {
         const oModel = this.getModel(ServiceNames.COMMON);
 
-        return new Promise((resolve, reject) => {
+        return new Promise(() => {
           oModel.read('/FileListSet', {
             filters: [
               // prettier 방지주석

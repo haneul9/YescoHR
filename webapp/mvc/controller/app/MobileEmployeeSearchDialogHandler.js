@@ -2,24 +2,20 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
-    'sap/ui/model/Filter',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/Debuggable',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/model/type/Date', // XML expression binding용 type preloading
     'sap/ui/yesco/mvc/model/type/Time',
   ],
   (
     // prettier 방지용 주석
     Fragment,
-    Filter,
     JSONModel,
     Debuggable,
     Client,
-    ServiceNames,
-    MessageBox
+    ServiceNames
   ) => {
     'use strict';
 

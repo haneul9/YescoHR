@@ -60,7 +60,7 @@ sap.ui.define(
         }
       },
 
-      getCurrentLocationText(oArguments) {
+      getCurrentLocationText() {
         return this.getBundleText('LABEL_00165');
       },
     });

@@ -2,7 +2,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TextUtils',
@@ -16,7 +15,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     AppUtils,
     FragmentEvent,
     TextUtils,
@@ -506,7 +504,7 @@ sap.ui.define(
           oViewModel.setProperty('/busy', false);
         }
       },
-      getCurrentLocationText(oArguments) {
+      getCurrentLocationText() {
         return this.getBundleText('LABEL_18001'); // My Time Calendar
       },
 

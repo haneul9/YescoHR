@@ -2,7 +2,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/core/Fragment',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
@@ -20,7 +19,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    Fragment,
     MessageBox,
     Appno,
     AppUtils,
@@ -160,11 +158,8 @@ sap.ui.define(
 
       // 신청내역 추가
       onAddDetail() {
-        const oView = this.getView();
-
         setTimeout(() => {
           const oDetailModel = this.getViewModel();
-          const oModel = this.getModel(ServiceNames.WORKTIME);
           const oEmpData = this.getAppointeeData();
 
           let aList = [];
@@ -196,16 +191,16 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
 
         const oList = this.byId('DetailList').getSelectedContexts();
-        let aDelList = [];
 
         if (_.isEmpty(oList)) {
           // 삭제할 데이터를 선택하세요.
-          return MessageBox.alert(this.getBundleText('MSG_00055'));
-        } else {
-          aDelList = _.map(oList, (e) => {
-            return oDetailModel.getProperty(e.sPath);
-          });
+          MessageBox.alert(this.getBundleText('MSG_00055'));
+          return;
         }
+
+        const aDelList = _.map(oList, (e) => {
+          return oDetailModel.getProperty(e.sPath);
+        });
 
         const aDiffList = _.difference(oDetailModel.getProperty('/detail/list'), aDelList);
         const iLength = _.size(aDiffList);
