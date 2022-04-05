@@ -14,8 +14,6 @@ sap.ui.define(
         { type: 'MB', route: 'm/performanceSry', detail: 'm/performanceSry-detail', id: 'container-ehr---m_performanceSry' },
         { type: 'MB', route: 'h/performanceSry', detail: 'h/performanceSry-detail', id: 'container-ehr---h_performanceSry' },
       ],
-      REJECT_DIALOG_ID: 'sap.ui.yesco.mvc.view.performance.fragment.RejectDialog',
-      OPPOSITION_DIALOG_ID: 'sap.ui.yesco.mvc.view.performance.fragment.OppositionDialog',
 
       TAB: { GOAL: 'T01', OPINION: 'T02' },
       APPRAISER_TYPE: { ME: 'ME', MA: 'MA', MB: 'MB' },

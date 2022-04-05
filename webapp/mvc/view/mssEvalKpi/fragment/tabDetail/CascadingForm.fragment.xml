@@ -48,7 +48,7 @@
                     <table:template>
                         <HBox>
                             <Text visible="{= !${Url} }" text="{Stext}" wrapping="false" class="tableRow_Text"/>
-                            <Link visible="{= !!${Url} }" href="{Url}" text="{Stext}"/>
+                            <Link visible="{= !!${Url} }" text="{Stext}" press=".onPressLink" />
                         </HBox>
                     </table:template>
                 </table:Column>

@@ -168,6 +168,10 @@ sap.ui.define(
             return mReturn;
           });
 
+          if (_.isEqual(`${sZzapsts}${sZzapstsSub}`, '5X')) {
+            _.chain(aStageHeader).last().set('completed', true).commit();
+          }
+
           // 평가 프로세스 목록 - 하위
           bCompleted = true;
           const aGroupStageByApStatusName = _.chain(aStepList)
@@ -331,7 +335,7 @@ sap.ui.define(
         if (!this.pRejectDialog) {
           this.pRejectDialog = Fragment.load({
             id: oView.getId(),
-            name: Constants.REJECT_DIALOG_ID,
+            name: 'sap.ui.yesco.mvc.view.competency.fragment.RejectDialog',
             controller: this,
           }).then((oDialog) => {
             oView.addDependent(oDialog);

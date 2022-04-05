@@ -47,7 +47,7 @@ sap.ui.define(
             applyCount: 0,
             approveCount: 0,
             rejectCount: 0,
-            completeCount: 0
+            completeCount: 0,
           },
         };
       },
@@ -172,10 +172,9 @@ sap.ui.define(
         );
       },
 
-      onChangeIndication(sValue){
-        return sValue == 'A' ? 'Indication05' : (sValue == 'B' ? 'Indication03' : 'Indication04');
+      onChangeIndication(sValue) {
+        return sValue === 'A' ? 'Indication05' : sValue === 'B' ? 'Indication03' : 'Indication04';
       },
-
     });
   }
 );

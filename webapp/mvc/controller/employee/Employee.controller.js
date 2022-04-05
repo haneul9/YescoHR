@@ -1232,7 +1232,10 @@ sap.ui.define(
 
       async onEmployeePrint() {
         try {
-          const [mResult] = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'PerCardPrint', { Gubun: 'S' });
+          const [mResult] = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'PerCardPrint', {
+            Pernr: this.getViewModel().getProperty('/pernr') || this.getAppointeeProperty('Pernr'),
+            Gubun: 'S',
+          });
 
           if (!_.isEmpty(mResult.Url)) window.open(mResult.Url, '_blank');
         } catch (oError) {

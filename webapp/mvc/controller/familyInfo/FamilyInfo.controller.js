@@ -114,7 +114,12 @@ sap.ui.define(
         const iSelectedIndex = oEventSource.getSelectedIndex();
 
         oEventSource.setSelectedIndex(iSelectedIndex);
-        oViewModel.setProperty('/SelectedRow', oViewModel.getProperty(`/FamilyList/${iSelectedIndex}`));
+
+        const oContext = oEvent.getParameter('rowContext');
+
+        if (!!oContext) {
+          oViewModel.setProperty('/SelectedRow', oViewModel.getProperty(oContext.getPath()));
+        }
       },
 
       onSearch() {

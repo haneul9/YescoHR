@@ -2,8 +2,8 @@
     xmlns:core="sap.ui.core">
     <Dialog showHeader="false" contentWidth="800px">
         <buttons>
-            <Button type="Emphasized" text="{i18n>LABEL_10035}" press=".onPressOppositionDialogSave"/>
-            <Button text="{i18n>LABEL_00115}" press=".onPressOppositionDialogClose"/>
+            <Button text="{i18n>LABEL_10035}" type="Emphasized" press=".onPressOppositionDialogSave" />
+            <Button text="{i18n>LABEL_00115}" press=".onPressOppositionDialogClose" />
         </buttons>
         <Panel expanded="true" headerText="{i18n>LABEL_10035}">
             <content>

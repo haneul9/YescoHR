@@ -15,7 +15,6 @@ sap.ui.define(
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/Validator',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -39,7 +38,6 @@ sap.ui.define(
     AttachFileAction,
     Client,
     ServiceNames,
-    TableUtils,
     TextUtils,
     Validator,
     BaseController
@@ -81,7 +79,7 @@ sap.ui.define(
               data: {
                 Awart: 'ALL',
                 AbrtgTxt: '0일',
-              }
+              },
             },
           },
           ApplyInfo: {},
@@ -258,24 +256,20 @@ sap.ui.define(
       },
 
       async openFormChange() {
-        const oView = this.getView();
-
         this.getViewModel().setProperty('/form/dialog/search', {
           Begda: moment().startOf('year').hours(9).toDate(),
           Endda: moment().endOf('year').hours(9).toDate(),
         });
-        
+
         this.retrieveChange();
       },
 
       async openFormCancel() {
-        const oView = this.getView();
-
         this.getViewModel().setProperty('/form/dialog/search', {
           Begda: moment().startOf('year').hours(9).toDate(),
           Endda: moment().endOf('year').hours(9).toDate(),
         });
-        
+
         this.retrieveCancel();
       },
 
@@ -397,11 +391,11 @@ sap.ui.define(
         }
       },
 
-      async validChangeLeave(oEvent) {
+      async validChangeLeave() {
         const oViewModel = this.getViewModel();
         const mRowObject = oViewModel.getProperty('/form/dialog/data');
 
-        if(!mRowObject.Begda || !mRowObject.Endda) return;
+        if (!mRowObject.Begda || !mRowObject.Endda) return;
 
         oViewModel.setProperty('/form/dialog/busy', true);
 
@@ -464,8 +458,8 @@ sap.ui.define(
 
       /*****************************************************************
        * ! Event handler
-       *****************************************************************/      
-       openFormChangeDialog(oEvent){
+       *****************************************************************/
+      openFormChangeDialog(oEvent) {
         const oView = this.getView();
         const oViewModel = this.getViewModel();
         const vPath = oEvent.getSource().getBindingContext().getPath();
@@ -482,16 +476,16 @@ sap.ui.define(
               return oDialog;
             });
           }
-          
+
           oViewModel.setProperty('/form/dialog/data', $.extend(true, {}, oRowData));
 
           this.oFormChangeDialog.then(function (oDialog) {
             oDialog.open();
           });
-        }, 100);       
+        }, 100);
       },
 
-      openFormCancelDialog(oEvent){
+      openFormCancelDialog(oEvent) {
         const oView = this.getView();
         const oViewModel = this.getViewModel();
         const vPath = oEvent.getSource().getBindingContext().getPath();
@@ -508,13 +502,13 @@ sap.ui.define(
               return oDialog;
             });
           }
-          
+
           oViewModel.setProperty('/form/dialog/data', $.extend(true, {}, oRowData));
 
           this.oFormCancelDialog.then(function (oDialog) {
             oDialog.open();
           });
-        }, 100);       
+        }, 100);
       },
       onSelectionChangeTableRow(oEvent) {
         if (!oEvent.getParameter('rowContext')) return;
@@ -598,16 +592,14 @@ sap.ui.define(
       onPressDelBtn() {
         const oViewModel = this.getViewModel();
         const oList = this.byId('DetailList' + oViewModel.getProperty('/type')).getSelectedContexts();
-        let aDelList = [];
 
         if (_.isEmpty(oList)) {
           // 삭제할 데이터를 선택하세요.
-          return MessageBox.alert(this.getBundleText('MSG_00055'));
-        } else {
-          aDelList = _.map(oList, (e) => {
-            return oViewModel.getProperty(e.sPath);
-          });
+          MessageBox.alert(this.getBundleText('MSG_00055'));
+          return;
         }
+
+        const aDelList = _.map(oList, (e) => oViewModel.getProperty(e.sPath));
 
         // 선택된 행을 삭제하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00021'), {
@@ -620,9 +612,9 @@ sap.ui.define(
             oViewModel.setProperty('/form/rowCount', _.size(aDiffList));
             this.byId('DetailList' + oViewModel.getProperty('/type')).removeSelections(true);
 
-            if(oViewModel.getProperty('/type') === 'B'){
+            if (oViewModel.getProperty('/type') === 'B') {
               this.retrieveChange();
-            } else if(oViewModel.getProperty('/type') === 'C'){
+            } else if (oViewModel.getProperty('/type') === 'C') {
               this.retrieveCancel();
             }
 
@@ -820,7 +812,7 @@ sap.ui.define(
         const mInputData = oViewModel.getProperty('/form/dialog/data');
         const aListData = oViewModel.getProperty('/form/list');
 
-        if(!mInputData.Begda || !mInputData.Endda || (!mInputData.Tmrsn || mInputData.Tmrsn.trim() == "")){
+        if (!mInputData.Begda || !mInputData.Endda || !mInputData.Tmrsn || mInputData.Tmrsn.trim() === '') {
           MessageBox.error(this.getBundleText('MSG_04008')); // 모든 필수 입력 항목 값을 입력하여 주십시오.
           return;
         }
@@ -855,7 +847,7 @@ sap.ui.define(
         const mInputData = oViewModel.getProperty('/form/dialog/data');
         const aListData = oViewModel.getProperty('/form/list');
 
-        if((!mInputData.Tmrsn || mInputData.Tmrsn.trim() == "")){
+        if (!mInputData.Tmrsn || mInputData.Tmrsn.trim() === '') {
           MessageBox.error(this.getBundleText('MSG_04008')); // 모든 필수 입력 항목 값을 입력하여 주십시오.
           return;
         }
@@ -928,8 +920,8 @@ sap.ui.define(
 
           oViewModel.setProperty('/form/list', aListData);
           oViewModel.setProperty('/form/rowCount', aListData.length);
-          
-          oViewModel.setProperty('/form/dialog/data', {Awart: 'ALL'});
+
+          oViewModel.setProperty('/form/dialog/data', { Awart: 'ALL' });
         }
 
         this.toggleHasRowProperty();
@@ -939,9 +931,9 @@ sap.ui.define(
 
       onPressApproval() {
         const oViewModel = this.getViewModel();
-        if(oViewModel.getProperty('/form/list').length == 0){
-          const sMessage = oViewModel.getProperty('/type') == this.PAGE_TYPE.NEW ? this.getBundleText('MSG_04009') + '\n' +this.getBundleText('MSG_04010') : this.getBundleText('MSG_04009');
-           // 신청내역이 존재하지 않습니다. (신규신청 등록 후 +버튼을 클릭하여 주시기 바랍니다.)
+        if (oViewModel.getProperty('/form/list').length === 0) {
+          const sMessage = oViewModel.getProperty('/type') === this.PAGE_TYPE.NEW ? this.getBundleText('MSG_04009') + '\n' + this.getBundleText('MSG_04010') : this.getBundleText('MSG_04009');
+          // 신청내역이 존재하지 않습니다. (신규신청 등록 후 +버튼을 클릭하여 주시기 바랍니다.)
           MessageBox.error(sMessage);
           return;
         }

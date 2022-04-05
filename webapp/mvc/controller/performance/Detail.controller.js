@@ -153,7 +153,7 @@ sap.ui.define(
             fCurriedGetEntitySet('AppStatusStepList', { Werks: this.getSessionProperty('Werks'), Zzappid: mParameter.Zzappid, Zzappty: mParameter.Zzappty }),
             fCurriedGetEntitySet('RelaUpTarget', { Zzappee: mParameter.Zzappee }),
             fCurriedGetEntitySet('AppValueList', { VClass: 'Q', VType: '807' }),
-            fCurriedGetEntitySet('AppValueList', { VClass: 'Q', VType: '801' }),
+            fCurriedGetEntitySet('AppValueList', { VClass: 'Q', VType: '810' }),
             fCurriedGetEntitySet('AppGradeList'),
             Client.deep(oModel, 'AppraisalDoc', {
               ...mParameter,
@@ -194,6 +194,10 @@ sap.ui.define(
             if (_.isEqual(o.ApStatus, sZzapsts)) bCompleted = false;
             return mReturn;
           });
+
+          if (_.isEqual(`${sZzapsts}${sLogicalZzapstsSub}`, '5X')) {
+            _.chain(aStageHeader).last().set('completed', true).commit();
+          }
 
           // 평가 프로세스 목록 - 하위
           bCompleted = true;
@@ -643,12 +647,12 @@ sap.ui.define(
       onPressCheckedButton() {
         const mProcessType = Constants.PROCESS_TYPE.CONFIRM;
 
-        MessageBox.confirm(this.getBundleText('MSG_10021'), {
-          // 성과평가를 완료 하시겠습니까?
+        MessageBox.confirm(this.getBundleText('MSG_10024'), {
+          // 이의신청을 철회하고, 성과평가를 완료 하시겠습니까?
           onClose: (sAction) => {
             if (MessageBox.Action.CANCEL === sAction) return;
 
-            this.createProcess(mProcessType);
+            this.createProcess({ ...mProcessType, label: 'LABEL_10102' });
           },
         });
       },
