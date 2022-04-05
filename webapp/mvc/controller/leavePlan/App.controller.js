@@ -141,17 +141,14 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const mSummary = oViewModel.getProperty('/summary');
         const mButtons = oViewModel.getProperty('/buttons');
+        const iZappStatAl = _.toNumber(mSummary.ZappStatAl);
+
+        _.set(mButtons, 'PRINT', _.isEqual(iZappStatAl, 20) || _.isEqual(iZappStatAl, 60));
 
         if (!_.isEqual(mSummary.Prdyn, 'X')) {
           _.forOwn(mButtons, (value, key, object) => _.set(object, key, false));
         } else {
-          const iZappStatAl = _.toNumber(mSummary.ZappStatAl);
-
-          _.chain(mButtons)
-            .set('SAVE', !_.inRange(iZappStatAl, 11, 65))
-            .set('APPROVAL', !_.inRange(iZappStatAl, 11, 65))
-            .set('PRINT', _.isEqual(iZappStatAl, 20) || _.isEqual(iZappStatAl, 60))
-            .commit();
+          _.chain(mButtons).set('SAVE', !_.inRange(iZappStatAl, 11, 65)).set('APPROVAL', !_.inRange(iZappStatAl, 11, 65)).commit();
         }
       },
 
