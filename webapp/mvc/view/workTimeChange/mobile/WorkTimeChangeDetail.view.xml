@@ -61,7 +61,7 @@
               <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onDelDetail" visible="{= ${/Fixed}}" />
             </HBox>
           </HBox>
-          <List id="DetailList" items="{ path: '/detail/list' }" class="list-wrap" mode="{= !${/Fixed} ? 'None' : 'MultiSelect' }" rememberSelections="false">
+          <List id="DetailList" items="{ path: '/detail/list' }" class="list-wrap request" mode="{= !${/Fixed} ? 'None' : 'MultiSelect' }" rememberSelections="false">
             <CustomListItem type="Active">
               <HBox wrap="Wrap" justifyContent="SpaceBetween" alignItems="Baseline" alignContent="SpaceBetween" class="list-item-box">
                 <grid:CSSGrid gridTemplateColumns="2fr 2fr" gridGap="6px 25px">
