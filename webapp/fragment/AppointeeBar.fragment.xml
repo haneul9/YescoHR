@@ -8,6 +8,6 @@
       <Text text="{appointeeModel>/Pbtxt} {appointeeModel>/Btrtx}"/>
       <Text text="{appointeeModel>/Orgtx}"/>
     </HBox>
-    <Button type="Transparent" press=".EmployeeSearch.onSearchDialog.call($controller, $controller.callbackAppointeeChange)" icon="asset/image/icon_me.png" visible="{appointeeModel>/showBarChangeButton}" class="icon-button" />
+    <Button type="Transparent" press=".EmployeeSearch.onSearchDialog.call($controller, $controller.callbackAppointeeChange)" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_me.png" visible="{appointeeModel>/showBarChangeButton}" class="icon-button" />
   </HBox>
 </core:FragmentDefinition>

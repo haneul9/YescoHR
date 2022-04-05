@@ -91,7 +91,7 @@ sap.ui.define(
 
           oViewModel.setProperty(
             '/results',
-            _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? 'asset/image/avatar-unknown.svg' : o.Photo }))
+            _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? '/sap/public/bc/ui2/zui5_yescohr/images/avatar-unknown.svg' : o.Photo }))
           );
         } catch (oError) {
           this.debug('Controller > Mobile-Employee-Card > initialList Error', oError);
@@ -123,7 +123,7 @@ sap.ui.define(
 
           oViewModel.setProperty(
             '/results',
-            _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? 'asset/image/avatar-unknown.svg' : o.Photo }))
+            _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? '/sap/public/bc/ui2/zui5_yescohr/images/avatar-unknown.svg' : o.Photo }))
           );
         } catch (oError) {
           this.debug('Controller > Mobile-Employee-Card > onPressEmployeeSearch Error', oError);

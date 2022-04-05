@@ -63,7 +63,7 @@ sap.ui.define(
           busy: false,
           pernr: null,
           header: {
-            profilePath: 'asset/image/avatar-unknown.svg',
+            profilePath: '/sap/public/bc/ui2/zui5_yescohr/images/avatar-unknown.svg',
             name: '',
             chief: false,
             baseInfo: [],
@@ -107,7 +107,7 @@ sap.ui.define(
           const { Pturl, Dat01, Dat08, ...oReturnData } = aProfileReturnData[0];
 
           _.chain(oViewModelData)
-            .set(['header', 'profilePath'], _.isEmpty(Pturl) ? 'asset/image/avatar-unknown.svg' : Pturl)
+            .set(['header', 'profilePath'], _.isEmpty(Pturl) ? '/sap/public/bc/ui2/zui5_yescohr/images/avatar-unknown.svg' : Pturl)
             .set(['header', 'name'], Dat01)
             .set(['header', 'chief'], _.isEqual(Dat08, 'X'))
             .set(

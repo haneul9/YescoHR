@@ -41,7 +41,7 @@ sap.ui.define(
           const oViewModel = new JSONModel({
             orgList: [
               ...aReturnData.map((o) => {
-                if (!o.Photo) o.Photo = 'asset/image/avatar-unknown.svg?ssl=1';
+                if (!o.Photo) o.Photo = this.getImageURL('avatar-unknown.svg');
                 o.Ipdat = o.Ipdat ? moment(o.Ipdat).format('YYYY.MM.DD') : '';
 
                 return o;

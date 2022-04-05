@@ -111,9 +111,9 @@ sap.ui.define(
             });
 
             if (_.isEmpty(mAppointee)) {
-              oViewModel.setProperty('/appointee', { Photo: 'asset/image/avatar-unknown.svg' });
+              oViewModel.setProperty('/appointee', { Photo: '/sap/public/bc/ui2/zui5_yescohr/images/avatar-unknown.svg' });
             } else {
-              oViewModel.setProperty('/appointee', { ...mAppointee, Werks: mAppointee.Persa, Orgtx: mAppointee.Fulln, Photo: mAppointee.Photo || 'asset/image/avatar-unknown.svg' });
+              oViewModel.setProperty('/appointee', { ...mAppointee, Werks: mAppointee.Persa, Orgtx: mAppointee.Fulln, Photo: mAppointee.Photo || '/sap/public/bc/ui2/zui5_yescohr/images/avatar-unknown.svg' });
             }
           }
         } catch (oError) {
@@ -202,7 +202,7 @@ sap.ui.define(
         aTreeData = _.map(aTreeData, (o) =>
           _.chain(o)
             .omit(['Datum', '__metadata'])
-            .set('ref', o.Otype === 'O' ? _.noop() : o.Xchif === 'X' ? 'asset/image/icon_employee.svg' : 'asset/image/icon_employee.svg')
+            .set('ref', o.Otype === 'O' ? _.noop() : o.Xchif === 'X' ? '/sap/public/bc/ui2/zui5_yescohr/images/icon_employee.svg' : '/sap/public/bc/ui2/zui5_yescohr/images/icon_employee.svg')
             .value()
         );
 
@@ -239,7 +239,7 @@ sap.ui.define(
 
           oViewModel.setProperty(
             '/sideNavigation/search/results',
-            _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? 'asset/image/avatar-unknown.svg?ssl=1' : o.Photo }))
+            _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? '/sap/public/bc/ui2/zui5_yescohr/images/avatar-unknown.svg?ssl=1' : o.Photo }))
           );
         } catch (oError) {
           this.debug('Controller > historyAppraisal > onPressEmployeeSearch Error', oError);

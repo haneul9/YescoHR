@@ -237,7 +237,7 @@ sap.ui.define(
             '/compare/row1',
             _.concat(
               { type: 'label' },
-              _.map(aCompareResults, (o) => ({ type: 'text', Pernr: o.Pernr, Picurl: _.isEmpty(o.Picurl) ? 'asset/image/avatar-unknown.svg' : o.Picurl, Value01: o.Value01 }))
+              _.map(aCompareResults, (o) => ({ type: 'text', Pernr: o.Pernr, Picurl: _.isEmpty(o.Picurl) ? this.getImageURL('avatar-unknown.svg') : o.Picurl, Value01: o.Value01 }))
             )
           );
           oViewModel.setProperty(
@@ -591,7 +591,7 @@ sap.ui.define(
           oViewModel.setProperty('/result/totalCount', aSearchResults.length);
           oViewModel.setProperty(
             '/result/list',
-            _.map(aSearchResults, (o) => ({ ..._.omit(o, '__metadata'), ColtyState: mState[o.Colty], PicUrl: _.isEmpty(o.PicUrl) ? 'asset/image/avatar-unknown.svg' : o.PicUrl }))
+            _.map(aSearchResults, (o) => ({ ..._.omit(o, '__metadata'), ColtyState: mState[o.Colty], PicUrl: _.isEmpty(o.PicUrl) ? this.getImageURL('avatar-unknown.svg') : o.PicUrl }))
           );
         } catch (oError) {
           throw oError;

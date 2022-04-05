@@ -106,6 +106,10 @@ sap.ui.define(
         return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
       },
 
+      getImageURL(sImageName) {
+        return `/sap/public/bc/ui2/zui5_yescohr/images/${sImageName}`;
+      },
+
       /**
        * @public
        */

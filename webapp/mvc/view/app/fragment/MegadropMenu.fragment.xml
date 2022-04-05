@@ -17,7 +17,7 @@
         <CustomListItem>
           <HBox alignItems="Center" height="20px">
             <ToggleButton type="Transparent" icon="{= ${Favor} ? 'sap-icon://favorite' : 'sap-icon://unfavorite' }" press=".toggleFavorite" pressed="{Favor}" class="icon-button menu-favorite-icon" visible="{= !${Zample} }" />
-            <Image width="15px" class="dummy-favorite-icon" src="asset/image/icon_star2.svg" visible="{Zample}" />
+            <Image width="15px" class="dummy-favorite-icon" src="/sap/public/bc/ui2/zui5_yescohr/images/icon_star2.svg" visible="{Zample}" />
             <!-- 메뉴 이동인 경우 -->
             <Link text="{Mname}" visible="{= !!${Mnurl} &amp;&amp; !${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" press=".handleMenuLink" class="menu-link" />
             <!-- http|https|javascript로 시작되는 경우 -->

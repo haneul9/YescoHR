@@ -53,7 +53,7 @@ sap.ui.define(
               orgLevel: aOrgLevel ?? [],
               orgList: _.map(aReturnData, (o) => ({
                 ...o,
-                Photo: _.isEmpty(o.Photo) ? 'asset/image/avatar-unknown.svg' : o.Photo,
+                Photo: _.isEmpty(o.Photo) ? '/sap/public/bc/ui2/zui5_yescohr/images/avatar-unknown.svg' : o.Photo,
                 Ipdat: _.isDate(o.Ipdat) ? moment(o.Ipdat).format('YYYY.MM.DD') : '',
               })),
               entry: {
@@ -124,7 +124,7 @@ sap.ui.define(
             '/orgList',
             _.map(aReturnData, (o) => ({
               ...o,
-              Photo: _.isEmpty(o.Photo) ? 'asset/image/avatar-unknown.svg' : o.Photo,
+              Photo: _.isEmpty(o.Photo) ? this.getImageURL('avatar-unknown.svg') : o.Photo,
               Ipdat: _.isDate(o.Ipdat) ? moment(o.Ipdat).format('YYYY.MM.DD') : '',
             }))
           );

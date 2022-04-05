@@ -121,7 +121,7 @@ sap.ui.define(
         aMembers.forEach((mData) => {
           delete mData.__metadata;
 
-          mData.Photo ||= 'asset/image/avatar-unknown.svg';
+          mData.Photo ||= '/sap/public/bc/ui2/zui5_yescohr/images/avatar-unknown.svg';
         });
 
         return {

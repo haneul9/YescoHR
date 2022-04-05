@@ -1,45 +1,45 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:custom="sap.ui.yesco.control">
-    <VBox class="portlet portlet-box" visible="{/contents/A07/busy}">
-        <custom:Placeholder />
-    </VBox>
-    <VBox class="portlet portlet-box" visible="{= !${/contents/A07/busy} }">
-        <HBox class="portlet-header">
-            <Title level="H2" text="{i18n>LABEL_28015}" />
-            <Image src="asset/image/icon_human_green.svg" width="12px" class="ml-8-px" />
-            <Text text="">
-                <layoutData>
-                    <FlexItemData growFactor="1" />
-                </layoutData>
-            </Text>
-            <Button visible="{hasLink}" icon="asset/image/icon_window.svg" iconDensityAware="false" type="Transparent" class="icon-button portlet-link-icon" />
-        </HBox>
-        <HBox class="portlet-body">
-            <layoutData>
-                <FlexItemData growFactor="1" />
-            </layoutData>
-            <VBox width="73%">
-                <core:HTML content='&lt;div id="employee-a07-chart-container"&gt;&lt;/div&gt;'>
-                    <core:layoutData>
-                        <FlexItemData growFactor="1" />
-                    </core:layoutData>
-                </core:HTML>
-            </VBox>
-            <VBox width="27%" items="{ path: '/contents/A07/data', templateShareable: false }" class="legend-wrap">
-                <custom:HBox justifyContent="SpaceBetween" class="active-link" click=".onPressCount">
-                    <custom:customData>
-                        <core:CustomData key="Headty" value="{/contents/A07/Headty}" />
-                        <core:CustomData key="Discod" value="{Cod01}" />
-                    </custom:customData>
-                    <Label text="{Ttltxt} :" class="legend">
-                        <customData>
-                            <core:CustomData key="legend" value="{Type}" writeToDom="true" />
-                        </customData>
-                    </Label>
-                    <Text text=" {Cnt01}" />
-                </custom:HBox>
-            </VBox>
-        </HBox>
-    </VBox>
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <VBox class="portlet portlet-box" visible="{/contents/A07/busy}">
+    <custom:Placeholder />
+  </VBox>
+  <VBox class="portlet portlet-box" visible="{= !${/contents/A07/busy} }">
+    <HBox class="portlet-header">
+      <Title level="H2" text="{i18n>LABEL_28015}" />
+      <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_human_green.svg" width="12px" class="ml-8-px" />
+      <Text text="">
+        <layoutData>
+          <FlexItemData growFactor="1" />
+        </layoutData>
+      </Text>
+      <Button visible="{hasLink}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_window.svg" iconDensityAware="false" type="Transparent" class="icon-button portlet-link-icon" />
+    </HBox>
+    <HBox class="portlet-body">
+      <layoutData>
+        <FlexItemData growFactor="1" />
+      </layoutData>
+      <VBox width="73%">
+        <core:HTML content='&lt;div id="employee-a07-chart-container"&gt;&lt;/div&gt;'>
+          <core:layoutData>
+            <FlexItemData growFactor="1" />
+          </core:layoutData>
+        </core:HTML>
+      </VBox>
+      <VBox width="27%" items="{ path: '/contents/A07/data', templateShareable: false }" class="legend-wrap">
+        <custom:HBox justifyContent="SpaceBetween" class="active-link" click=".onPressCount">
+          <custom:customData>
+            <core:CustomData key="Headty" value="{/contents/A07/Headty}" />
+            <core:CustomData key="Discod" value="{Cod01}" />
+          </custom:customData>
+          <Label text="{Ttltxt} :" class="legend">
+            <customData>
+              <core:CustomData key="legend" value="{Type}" writeToDom="true" />
+            </customData>
+          </Label>
+          <Text text=" {Cnt01}" />
+        </custom:HBox>
+      </VBox>
+    </HBox>
+  </VBox>
 </core:FragmentDefinition>

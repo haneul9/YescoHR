@@ -24,7 +24,7 @@
                     <FlexItemData growFactor="1" />
                   </layoutData>
                 </Text>
-                <Image src="asset/image/icon_captain.svg" width="1.2rem" alt="Captain" visible="{= !!${Chief}}" />
+                <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_captain.svg" width="1.2rem" alt="Captain" visible="{= !!${Chief}}" />
               </HBox>
               <HBox class="organization">
                 <Label text="{i18n>LABEL_00226}" />

@@ -28,7 +28,7 @@
         </VBox>
         <VBox items="{list}" width="14%" visible="{= ${newCount} &gt; 0 }">
           <HBox height="2rem" justifyContent="End" alignItems="Center">
-            <!-- <Image src="asset/image/icon_new.png" tooltip="{i18n>LABEL_00105}" visible="{= ${Newitem} === 'X' }" /> -->
+            <!-- <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_new.png" tooltip="{i18n>LABEL_00105}" visible="{= ${Newitem} === 'X' }" /> -->
             <Text text="NEW" wrapping="false" visible="{= ${Newitem} === 'X' }" class="icon-mimic" />
           </HBox>
         </VBox>

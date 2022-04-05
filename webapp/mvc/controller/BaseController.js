@@ -303,6 +303,10 @@ sap.ui.define(
         return this.FileAttachmentBoxHandler;
       },
 
+      getImageURL(sImageName) {
+        return AppUtils.getImageURL(sImageName);
+      },
+
       /**
        * Convenience method for logging.
        * @protected

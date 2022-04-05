@@ -1,118 +1,118 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:f="sap.f"
-    xmlns:dnd="sap.ui.core.dnd"
-    xmlns:dnd-grid="sap.f.dnd"
-    xmlns:core="sap.ui.core"
-    xmlns:custom="sap.ui.yesco.control">
-    <VBox width="100%" class="vCardBox" busyIndicatorDelay="0" busy="{/tab/busy}">
-        <HBox justifyContent="SpaceBetween" class="table-toolbar">
-            <HBox class="title">
-                <RadioButtonGroup columns="3" selectedIndex="{/tab/sortIndex}" select=".onSort">
-                    <custom:RadioButton text="{i18n>LABEL_10091}" innerSize="35%" />
-                    <custom:RadioButton text="{i18n>LABEL_10092}" outerSize="50%" innerSize="35%" />
-                    <custom:RadioButton text="{i18n>LABEL_10093}" outerSize="50%" innerSize="35%" />
-                </RadioButtonGroup>
-                <core:Icon src="sap-icon://notification-2" class="mt-3-px ml-10-px" color="#ff5a5a" width="30px" height="30px" />
-                <Text text="{i18n>MSG_10019}" class="desc-txt mt-2-px ml-2-px" />
-                <Text text="{i18n>MSG_10020}" class="desc-txt mt-2-px ml-0-px">
-                    <customData>
-                        <core:CustomData key="status" value="Z45" writeToDom="true" />
-                    </customData>
-                </Text>
-                <Text text="{i18n>MSG_10011}" class="desc-txt mt-2-px ml-0-px" />
-            </HBox>
-            <HBox class="cascading-type-list">
-                <Image src="asset/image/icon_WF_Myinfo_02_N.svg" />
-                <Text text="{i18n>LABEL_10080}" textAlign="Center" width="100%"/>
-                <Image src="asset/image/icon_WF_Myinfo_01_N.svg" width="1.2rem" />
-                <Text text="{i18n>LABEL_10079}" textAlign="Center" width="100%"/>
-            </HBox>
+  xmlns:f="sap.f"
+  xmlns:dnd="sap.ui.core.dnd"
+  xmlns:dnd-grid="sap.f.dnd"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <VBox width="100%" class="vCardBox" busyIndicatorDelay="0" busy="{/tab/busy}">
+    <HBox justifyContent="SpaceBetween" class="table-toolbar">
+      <HBox class="title">
+        <RadioButtonGroup columns="3" selectedIndex="{/tab/sortIndex}" select=".onSort">
+          <custom:RadioButton text="{i18n>LABEL_10091}" innerSize="35%" />
+          <custom:RadioButton text="{i18n>LABEL_10092}" outerSize="50%" innerSize="35%" />
+          <custom:RadioButton text="{i18n>LABEL_10093}" outerSize="50%" innerSize="35%" />
+        </RadioButtonGroup>
+        <core:Icon src="sap-icon://notification-2" class="mt-3-px ml-10-px" color="#ff5a5a" width="30px" height="30px" />
+        <Text text="{i18n>MSG_10019}" class="desc-txt mt-2-px ml-2-px" />
+        <Text text="{i18n>MSG_10020}" class="desc-txt mt-2-px ml-0-px">
+          <customData>
+            <core:CustomData key="status" value="Z45" writeToDom="true" />
+          </customData>
+        </Text>
+        <Text text="{i18n>MSG_10011}" class="desc-txt mt-2-px ml-0-px" />
+      </HBox>
+      <HBox class="cascading-type-list">
+        <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_WF_Myinfo_02_N.svg" />
+        <Text text="{i18n>LABEL_10080}" textAlign="Center" width="100%"/>
+        <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_WF_Myinfo_01_N.svg" width="1.2rem" />
+        <Text text="{i18n>LABEL_10079}" textAlign="Center" width="100%"/>
+      </HBox>
+    </HBox>
+    <VBox id="gridBox" class="perGrade-wrap perSession" items="{/grids}">
+      <VBox>
+        <HBox items="{ path: 'grades', templateShareable: false }" visible="{= ${Zzappgr} === 'X' }">
+          <layoutData>
+            <FlexItemData growFactor="1" />
+          </layoutData>
+          <custom:HBox width="{width}" class="grade-name active-link" alignItems="Center" click=".onClickGrade">
+            <custom:customData>
+              <core:CustomData key="grade" value="{code}" />
+              <core:CustomData key="gradeTx" value="{text}" />
+            </custom:customData>
+            <Text width="100%" textAlign="Center" text="{text}">
+              <layoutData>
+                <FlexItemData growFactor="1" />
+              </layoutData>
+            </Text>
+          </custom:HBox>
         </HBox>
-        <VBox id="gridBox" class="perGrade-wrap perSession" items="{/grids}">
-            <VBox>
-                <HBox items="{ path: 'grades', templateShareable: false }" visible="{= ${Zzappgr} === 'X' }">
-                    <layoutData>
-                        <FlexItemData growFactor="1" />
-                    </layoutData>
-                    <custom:HBox width="{width}" class="grade-name active-link" alignItems="Center" click=".onClickGrade">
-                        <custom:customData>
-                            <core:CustomData key="grade" value="{code}" />
-                            <core:CustomData key="gradeTx" value="{text}" />
-                        </custom:customData>
-                        <Text width="100%" textAlign="Center" text="{text}">
-                            <layoutData>
-                                <FlexItemData growFactor="1" />
-                            </layoutData>
-                        </Text>
-                    </custom:HBox>
-                </HBox>
-                <HBox items="{ path: 'grades', templateShareable: false }" visible="{= ${Zzappgr} !== 'X' }">
-                    <layoutData>
-                        <FlexItemData growFactor="1" />
-                    </layoutData>
-                    <VBox width="{width}">
-                        <HBox visible="{active}">
-                            <layoutData>
-                                <FlexItemData growFactor="1" />
-                            </layoutData>
-                            <f:GridContainer width="100%" class="perGrade-container" snapToRow="true" items="{ path: '/tab/list', templateShareable: true, filters: [{path: 'Lfapp', operator: 'EQ', value1: '3'}, {path: 'Zzappgr', operator: 'EQ', value1: 'Y2'}] }">
-                                <f:layoutData>
-                                    <FlexItemData growFactor="1" />
-                                </f:layoutData>
-                                <f:customData>
-                                    <core:CustomData key="Zzappgr" value="{Zzappgr}" />
-                                    <core:CustomData key="Lfapp" value="{code}" />
-                                </f:customData>
-                                <f:layout>
-                                    <f:GridContainerSettings columnSize="170px" gap="12px" />
-                                </f:layout>
-                                <f:dragDropConfig>
-                                    <dnd:DragInfo groupName="{Zzappgr}" sourceAggregation="items" enabled="{/isActive}" />
-                                    <dnd-grid:GridDropInfo groupName="{Zzappgr}" targetAggregation="items" dropLayout="Horizontal" dropPosition="Between" drop=".onDrop" enabled="{/isActive}" />
-                                </f:dragDropConfig>
-                                <f:GridListItem>
-                                    <HBox height="80px">
-                                        <HBox width="100%" class="empty-card" justifyContent="Center" visible="{= !${Ename} }">
-                                            <Text text="{i18n>MSG_10012}" />
-                                        </HBox>
-                                        <VBox width="80%" justifyContent="SpaceAround" visible="{= !!${Ename} }">
-                                            <HBox width="100%">
-                                                <VBox width="25%" justifyContent="Center" alignItems="Center">
-                                                    <Image src="{Photo}" width="2rem" class="member-photo" mode="Background" />
-                                                </VBox>
-                                                <VBox width="75%" justifyContent="Center" alignItems="Start">
-                                                    <Text text="{Ename}" class="name" />
-                                                    <Text text="{Orgtx} / {Zzjikgbt}" class="depart" />
-                                                </VBox>
-                                            </HBox>
-                                            <HBox width="100%" class="score-box">
-                                                <Text text="{i18n>LABEL_10081}" />
-                                                <ObjectStatus text="{ path: 'Zapgme', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" state="Indication05" />
-                                                <Text text="{i18n>LABEL_10082}" />
-                                                <ObjectStatus text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" state="Indication05" />
-                                            </HBox>
-                                        </VBox>
-                                        <VBox width="20%" justifyContent="SpaceAround" visible="{= !!${Ename} }">
-                                            <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_02_N.svg" iconDensityAware="false" press=".onPressRowDetail" />
-                                            <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_01_N.svg" iconDensityAware="false" press=".onPressRowEmployee" />
-                                        </VBox>
-                                    </HBox>
-                                </f:GridListItem>
-                            </f:GridContainer>
-                        </HBox>
-                        <HBox class="group-label" alignItems="Center" visible="{= !${active} }">
-                            <layoutData>
-                                <FlexItemData growFactor="1" />
-                            </layoutData>
-                            <Text width="100%" textAlign="Center" text="{text}">
-                                <layoutData>
-                                    <FlexItemData growFactor="1" />
-                                </layoutData>
-                            </Text>
-                        </HBox>
+        <HBox items="{ path: 'grades', templateShareable: false }" visible="{= ${Zzappgr} !== 'X' }">
+          <layoutData>
+            <FlexItemData growFactor="1" />
+          </layoutData>
+          <VBox width="{width}">
+            <HBox visible="{active}">
+              <layoutData>
+                <FlexItemData growFactor="1" />
+              </layoutData>
+              <f:GridContainer width="100%" class="perGrade-container" snapToRow="true" items="{ path: '/tab/list', templateShareable: true, filters: [{path: 'Lfapp', operator: 'EQ', value1: '3'}, {path: 'Zzappgr', operator: 'EQ', value1: 'Y2'}] }">
+                <f:layoutData>
+                  <FlexItemData growFactor="1" />
+                </f:layoutData>
+                <f:customData>
+                  <core:CustomData key="Zzappgr" value="{Zzappgr}" />
+                  <core:CustomData key="Lfapp" value="{code}" />
+                </f:customData>
+                <f:layout>
+                  <f:GridContainerSettings columnSize="170px" gap="12px" />
+                </f:layout>
+                <f:dragDropConfig>
+                  <dnd:DragInfo groupName="{Zzappgr}" sourceAggregation="items" enabled="{/isActive}" />
+                  <dnd-grid:GridDropInfo groupName="{Zzappgr}" targetAggregation="items" dropLayout="Horizontal" dropPosition="Between" drop=".onDrop" enabled="{/isActive}" />
+                </f:dragDropConfig>
+                <f:GridListItem>
+                  <HBox height="80px">
+                    <HBox width="100%" class="empty-card" justifyContent="Center" visible="{= !${Ename} }">
+                      <Text text="{i18n>MSG_10012}" />
+                    </HBox>
+                    <VBox width="80%" justifyContent="SpaceAround" visible="{= !!${Ename} }">
+                      <HBox width="100%">
+                        <VBox width="25%" justifyContent="Center" alignItems="Center">
+                          <Image src="{Photo}" width="2rem" class="member-photo" mode="Background" />
+                        </VBox>
+                        <VBox width="75%" justifyContent="Center" alignItems="Start">
+                          <Text text="{Ename}" class="name" />
+                          <Text text="{Orgtx} / {Zzjikgbt}" class="depart" />
+                        </VBox>
+                      </HBox>
+                      <HBox width="100%" class="score-box">
+                        <Text text="{i18n>LABEL_10081}" />
+                        <ObjectStatus text="{ path: 'Zapgme', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" state="Indication05" />
+                        <Text text="{i18n>LABEL_10082}" />
+                        <ObjectStatus text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" state="Indication05" />
+                      </HBox>
                     </VBox>
-                </HBox>
-            </VBox>
-        </VBox>
+                    <VBox width="20%" justifyContent="SpaceAround" visible="{= !!${Ename} }">
+                      <Button type="Transparent" class="mnw-0" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_WF_Myinfo_02_N.svg" iconDensityAware="false" press=".onPressRowDetail" />
+                      <Button type="Transparent" class="mnw-0" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_WF_Myinfo_01_N.svg" iconDensityAware="false" press=".onPressRowEmployee" />
+                    </VBox>
+                  </HBox>
+                </f:GridListItem>
+              </f:GridContainer>
+            </HBox>
+            <HBox class="group-label" alignItems="Center" visible="{= !${active} }">
+              <layoutData>
+                <FlexItemData growFactor="1" />
+              </layoutData>
+              <Text width="100%" textAlign="Center" text="{text}">
+                <layoutData>
+                  <FlexItemData growFactor="1" />
+                </layoutData>
+              </Text>
+            </HBox>
+          </VBox>
+        </HBox>
+      </VBox>
     </VBox>
+  </VBox>
 </core:FragmentDefinition>

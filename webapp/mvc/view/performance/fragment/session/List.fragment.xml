@@ -1,107 +1,107 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:table="sap.ui.table"
-    xmlns:core="sap.ui.core"
-    xmlns:custom="sap.ui.yesco.control">
-    <VBox width="100%" class="vCardBox" busyIndicatorDelay="0" busy="{/tab/busy}">
-        <HBox justifyContent="SpaceBetween" class="header-wrap">
-            <HBox class="header">
-                <RadioButtonGroup columns="3" selectedIndex="{/tab/sortIndex}" select=".onSort">
-                    <custom:RadioButton text="{i18n>LABEL_10091}" innerSize="35%" />
-                    <custom:RadioButton text="{i18n>LABEL_10092}" outerSize="50%" innerSize="35%" />
-                    <custom:RadioButton text="{i18n>LABEL_10093}" outerSize="50%" innerSize="35%" />
-                </RadioButtonGroup>
-            </HBox>
-            <HBox>
-                <HBox class="status-wrap perGrade">
-                    <Text text="{/grade/0/ValueText}" class="type00" />
-                    <Text text="{/grade/1/ValueText}" class="type01" />
-                </HBox>
-                <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressExcelDownload" />
-            </HBox>
+  xmlns:table="sap.ui.table"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <VBox width="100%" class="vCardBox" busyIndicatorDelay="0" busy="{/tab/busy}">
+    <HBox justifyContent="SpaceBetween" class="header-wrap">
+      <HBox class="header">
+        <RadioButtonGroup columns="3" selectedIndex="{/tab/sortIndex}" select=".onSort">
+          <custom:RadioButton text="{i18n>LABEL_10091}" innerSize="35%" />
+          <custom:RadioButton text="{i18n>LABEL_10092}" outerSize="50%" innerSize="35%" />
+          <custom:RadioButton text="{i18n>LABEL_10093}" outerSize="50%" innerSize="35%" />
+        </RadioButtonGroup>
+      </HBox>
+      <HBox>
+        <HBox class="status-wrap perGrade">
+          <Text text="{/grade/0/ValueText}" class="type00" />
+          <Text text="{/grade/1/ValueText}" class="type01" />
         </HBox>
-        <table:Table id="performanceSessionTable" class="perGrade-table" rows="{ path: '/tab/list', templateShareable: true, filters: [{ path: 'Zzappun2', operator: 'NE', value1: 'EMPTY'}] }" visibleRowCount="{/tab/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
-            <table:rowSettingsTemplate>
-                <table:RowSettings highlight="{ path: 'Lfapp', formatter: '.formatRowHighlight' }"/>
-            </table:rowSettingsTemplate>
-            <table:columns>
-                <table:Column width="4%" filterProperty="Idx" sortProperty="Idx">
-                    <Label text="No."/>
-                    <table:template>
-                        <Text text="{Idx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-                    </table:template>
-                </table:Column>
-                <table:Column width="8%" filterProperty="Zzappee" sortProperty="Zzappee">
-                    <Label text="{i18n>LABEL_00209}"/>
-                    <table:template>
-                        <Text text="{ path: 'Zzappee', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-                    </table:template>
-                </table:Column>
-                <table:Column width="8%" filterProperty="Ename" sortProperty="Ename">
-                    <Label text="{i18n>LABEL_00210}"/>
-                    <table:template>
-                        <Text text="{Ename}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-                    </table:template>
-                </table:Column>
-                <table:Column width="8%" filterProperty="Zzjikgbt" sortProperty="Zzjikgbt">
-                    <Label text="{i18n>LABEL_00215}"/>
-                    <table:template>
-                        <Text text="{Zzjikgbt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-                    </table:template>
-                </table:Column>
-                <table:Column filterProperty="Zzappuntx2" sortProperty="Zzappuntx2">
-                    <Label text="{i18n>LABEL_10094}"/>
-                    <table:template>
-                        <Text text="{Zzappuntx2}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-                    </table:template>
-                </table:Column>
-                <table:Column filterProperty="Orgtx" sortProperty="Orgtx">
-                    <Label text="{i18n>LABEL_00224}"/>
-                    <table:template>
-                        <Text text="{Orgtx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-                    </table:template>
-                </table:Column>
-                <table:Column width="8%" filterProperty="Zapgme" sortProperty="Zapgme">
-                    <Label text="{i18n>LABEL_10003}"/>
-                    <table:template>
-                        <Text text="{ path: 'Zapgme', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-                    </table:template>
-                </table:Column>
-                <table:Column width="8%" filterProperty="Zapgma" sortProperty="Zapgma">
-                    <Label text="{i18n>LABEL_10022}"/>
-                    <table:template>
-                        <Text text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-                    </table:template>
-                </table:Column>
-                <table:Column width="8%" filterProperty="Fapp" sortProperty="Fapp">
-                    <Label text="{i18n>LABEL_10078}"/>
-                    <table:template>
-                        <Text text="{FappTx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-                    </table:template>
-                </table:Column>
-                <table:Column width="12%" filterProperty="Lfapp" sortProperty="Lfapp">
-                    <Label text="{i18n>LABEL_10095}"/>
-                    <table:template>
-                        <VBox>
-                            <Text text="{LfappTx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text" visible="{= !${/isActive} }" />
-                            <ComboBox selectedKey="{Lfapp}" items="{ path: '/gradeEntry', templateShareable: true }" visible="{/isActive}" change=".onChangeLfapp">
-                                <core:Item text="{ValueText}" key="{ValueEid}" />
-                            </ComboBox>
-                        </VBox>
-                    </table:template>
-                </table:Column>
-                <table:Column width="7%">
-                    <Label text="{i18n>LABEL_00165}"/>
-                    <table:template>
-                        <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_02_N.svg" iconDensityAware="false" visible="{= !!${Zdocid} }" press=".onPressRowDetail" />
-                    </table:template>
-                </table:Column>
-                <table:Column width="7%">
-                    <Label text="{i18n>LABEL_10079}"/>
-                    <table:template>
-                        <Button type="Transparent" class="mnw-0" icon="asset/image/icon_WF_Myinfo_01_N.svg" iconDensityAware="false" visible="{= !!${Zzappee} }" press=".onPressRowEmployee" />
-                    </table:template>
-                </table:Column>
-            </table:columns>
-        </table:Table>
-    </VBox>
+        <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressExcelDownload" />
+      </HBox>
+    </HBox>
+    <table:Table id="performanceSessionTable" class="perGrade-table" rows="{ path: '/tab/list', templateShareable: true, filters: [{ path: 'Zzappun2', operator: 'NE', value1: 'EMPTY'}] }" visibleRowCount="{/tab/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
+      <table:rowSettingsTemplate>
+        <table:RowSettings highlight="{ path: 'Lfapp', formatter: '.formatRowHighlight' }"/>
+      </table:rowSettingsTemplate>
+      <table:columns>
+        <table:Column width="4%" filterProperty="Idx" sortProperty="Idx">
+          <Label text="No."/>
+          <table:template>
+            <Text text="{Idx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+        <table:Column width="8%" filterProperty="Zzappee" sortProperty="Zzappee">
+          <Label text="{i18n>LABEL_00209}"/>
+          <table:template>
+            <Text text="{ path: 'Zzappee', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+        <table:Column width="8%" filterProperty="Ename" sortProperty="Ename">
+          <Label text="{i18n>LABEL_00210}"/>
+          <table:template>
+            <Text text="{Ename}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+        <table:Column width="8%" filterProperty="Zzjikgbt" sortProperty="Zzjikgbt">
+          <Label text="{i18n>LABEL_00215}"/>
+          <table:template>
+            <Text text="{Zzjikgbt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+        <table:Column filterProperty="Zzappuntx2" sortProperty="Zzappuntx2">
+          <Label text="{i18n>LABEL_10094}"/>
+          <table:template>
+            <Text text="{Zzappuntx2}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+        <table:Column filterProperty="Orgtx" sortProperty="Orgtx">
+          <Label text="{i18n>LABEL_00224}"/>
+          <table:template>
+            <Text text="{Orgtx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+        <table:Column width="8%" filterProperty="Zapgme" sortProperty="Zapgme">
+          <Label text="{i18n>LABEL_10003}"/>
+          <table:template>
+            <Text text="{ path: 'Zapgme', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+        <table:Column width="8%" filterProperty="Zapgma" sortProperty="Zapgma">
+          <Label text="{i18n>LABEL_10022}"/>
+          <table:template>
+            <Text text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+        <table:Column width="8%" filterProperty="Fapp" sortProperty="Fapp">
+          <Label text="{i18n>LABEL_10078}"/>
+          <table:template>
+            <Text text="{FappTx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+        <table:Column width="12%" filterProperty="Lfapp" sortProperty="Lfapp">
+          <Label text="{i18n>LABEL_10095}"/>
+          <table:template>
+            <VBox>
+              <Text text="{LfappTx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text" visible="{= !${/isActive} }" />
+              <ComboBox selectedKey="{Lfapp}" items="{ path: '/gradeEntry', templateShareable: true }" visible="{/isActive}" change=".onChangeLfapp">
+                <core:Item text="{ValueText}" key="{ValueEid}" />
+              </ComboBox>
+            </VBox>
+          </table:template>
+        </table:Column>
+        <table:Column width="7%">
+          <Label text="{i18n>LABEL_00165}"/>
+          <table:template>
+            <Button type="Transparent" class="mnw-0" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_WF_Myinfo_02_N.svg" iconDensityAware="false" visible="{= !!${Zdocid} }" press=".onPressRowDetail" />
+          </table:template>
+        </table:Column>
+        <table:Column width="7%">
+          <Label text="{i18n>LABEL_10079}"/>
+          <table:template>
+            <Button type="Transparent" class="mnw-0" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_WF_Myinfo_01_N.svg" iconDensityAware="false" visible="{= !!${Zzappee} }" press=".onPressRowEmployee" />
+          </table:template>
+        </table:Column>
+      </table:columns>
+    </table:Table>
+  </VBox>
 </core:FragmentDefinition>

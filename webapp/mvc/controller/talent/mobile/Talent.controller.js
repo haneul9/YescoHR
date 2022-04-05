@@ -509,7 +509,7 @@ sap.ui.define(
           oViewModel.setProperty('/result/totalCount', aSearchResults.length);
           oViewModel.setProperty(
             '/result/list',
-            _.map(aSearchResults, (o) => ({ ..._.omit(o, '__metadata'), ColtyState: mState[o.Colty], PicUrl: _.isEmpty(o.PicUrl) ? 'asset/image/avatar-unknown.svg' : o.PicUrl }))
+            _.map(aSearchResults, (o) => ({ ..._.omit(o, '__metadata'), ColtyState: mState[o.Colty], PicUrl: _.isEmpty(o.PicUrl) ? this.getImageURL('avatar-unknown.svg') : o.PicUrl }))
           );
         } catch (oError) {
           throw oError;

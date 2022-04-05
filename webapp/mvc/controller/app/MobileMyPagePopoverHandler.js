@@ -87,7 +87,7 @@ sap.ui.define(
 
       transformEmployeeData([mEmployeeData = {}]) {
         let { Photo, Ename, Zzjikgbt, Zzjikcht, Chief, Pbtxt, Fulln, Text1, Text2 } = mEmployeeData;
-        Photo ||= 'asset/image/avatar-unknown.svg';
+        Photo ||= '/sap/public/bc/ui2/zui5_yescohr/images/avatar-unknown.svg';
         return { Photo, Ename, Zzjikgbt, Zzjikcht, Chief, Pbtxt, Fulln, Text1, Text2 };
       },
 

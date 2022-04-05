@@ -46,7 +46,7 @@
           "items": [
             {
               "title": "홍길동",
-              "icon": "../asset/image/photo4.jpeg",
+              "icon": "/sap/public/bc/ui2/zui5_yescohr/images/photo4.jpeg",
               "info": "부장",
               "Name": "인사팀",
               "Description": "근무중"

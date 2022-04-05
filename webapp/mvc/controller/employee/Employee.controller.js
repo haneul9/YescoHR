@@ -156,7 +156,7 @@ sap.ui.define(
             width: '73%',
             busy: true,
             header: {
-              profilePath: 'asset/image/avatar-unknown.svg',
+              profilePath: '/sap/public/bc/ui2/zui5_yescohr/images/avatar-unknown.svg',
               baseInfo: [],
               timeline: null,
             },
@@ -274,7 +274,7 @@ sap.ui.define(
 
         oViewModel.setProperty(
           '/sideNavigation/search/results',
-          _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? 'asset/image/avatar-unknown.svg?ssl=1' : o.Photo }))
+          _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? '/sap/public/bc/ui2/zui5_yescohr/images/avatar-unknown.svg?ssl=1' : o.Photo }))
         );
         oViewModel.setProperty('/sideNavigation/height', `${iSideViewHeight}px`);
         oViewModel.setProperty('/sideNavigation/scrollHeight', `${iScrollViewHeight}px`);
@@ -349,7 +349,7 @@ sap.ui.define(
             .value();
 
           oViewModel.setProperty('/showPDFButton', _.isEqual(Actty, 'X'));
-          oViewModel.setProperty('/employee/header/profilePath', _.isEmpty(Pturl) ? 'asset/image/avatar-unknown.svg?ssl=1' : Pturl);
+          oViewModel.setProperty('/employee/header/profilePath', _.isEmpty(Pturl) ? '/sap/public/bc/ui2/zui5_yescohr/images/avatar-unknown.svg?ssl=1' : Pturl);
           oViewModel.setProperty('/employee/header/baseInfo', aConvertData);
           //End 상단 프로필 Set
 
@@ -637,7 +637,7 @@ sap.ui.define(
         aTreeData = _.map(aTreeData, (o) =>
           _.chain(o)
             .omit(['Datum', '__metadata'])
-            .set('ref', o.Otype === 'O' ? _.noop() : o.Xchif === 'X' ? 'asset/image/icon_employee.svg' : 'asset/image/icon_employee.svg')
+            .set('ref', o.Otype === 'O' ? _.noop() : o.Xchif === 'X' ? '/sap/public/bc/ui2/zui5_yescohr/images/icon_employee.svg' : '/sap/public/bc/ui2/zui5_yescohr/images/icon_employee.svg')
             .value()
         );
 
@@ -739,7 +739,7 @@ sap.ui.define(
 
           oViewModel.setProperty(
             '/sideNavigation/search/results',
-            _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? 'asset/image/avatar-unknown.svg?ssl=1' : o.Photo }))
+            _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? '/sap/public/bc/ui2/zui5_yescohr/images/avatar-unknown.svg?ssl=1' : o.Photo }))
           );
         } catch (oError) {
           this.debug('Controller > Employee > onPressEmployeeSearch Error', oError);

@@ -144,7 +144,7 @@ sap.ui.define(
           Ename: sPernr,
         });
 
-        oViewModel.setProperty('/appointee', { ...mAppointee, Orgtx: mAppointee.Fulln, Photo: mAppointee.Photo || 'asset/image/avatar-unknown.svg' });
+        oViewModel.setProperty('/appointee', { ...mAppointee, Orgtx: mAppointee.Fulln, Photo: mAppointee.Photo || this.getImageURL('avatar-unknown.svg') });
       },
 
       /*****************************************************************

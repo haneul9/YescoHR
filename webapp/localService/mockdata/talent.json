@@ -2,7 +2,7 @@
 	{		
 		"Linetx1": "홍길동 부장 / 팀장",
         "Linetx2": "부장 / 팀장 ",
-		"PicUrl": "asset/image/photo1.png",
+		"PicUrl": "/sap/public/bc/ui2/zui5_yescohr/images/photo1.png",
 		"Colty": "Success",
         "Linetx3": "동국대(석사졸업)/마케팅",
         "Linetx4": "생년월일 : 1972.12.14 / 입사 : 2001. 01.01",
@@ -11,7 +11,7 @@
     {		
 		"Linetx1": "홍길동 부장 / 팀장",
         "Linetx2": "부장 / 팀장 ",
-		"PicUrl": "asset/image/photo2.png",
+		"PicUrl": "/sap/public/bc/ui2/zui5_yescohr/images/photo2.png",
 		"Colty": "Information",
         "Linetx3": "동국대(석사졸업)/마케팅",
         "Linetx4": "1972.12.14",
@@ -20,7 +20,7 @@
     {		
 		"Linetx1": "홍길동 부장 / 팀장",
         "Linetx2": "부장 / 팀장 ",
-		"PicUrl": "asset/image/photo3.jpeg",
+		"PicUrl": "/sap/public/bc/ui2/zui5_yescohr/images/photo3.jpeg",
 		"Colty": "Error",
         "Linetx3": "동국대(석사졸업)/마케팅",
         "Linetx4": "1972.12.14",
@@ -29,7 +29,7 @@
     {		
 		"Linetx1": "홍길동 부장 / 팀장",
         "Linetx2": "부장 / 팀장 ",
-		"PicUrl": "asset/image/photo4.jpeg",
+		"PicUrl": "/sap/public/bc/ui2/zui5_yescohr/images/photo4.jpeg",
 		"Colty": "Warning",
         "Linetx3": "동국대(석사졸업)/마케팅",
         "Linetx4": "1972.12.14",
@@ -38,7 +38,7 @@
     {		
 		"Linetx1": "홍길동 부장 / 팀장",
         "Linetx2": "부장 / 팀장 ",
-		"PicUrl": "asset/image/photo1.png",
+		"PicUrl": "/sap/public/bc/ui2/zui5_yescohr/images/photo1.png",
 		"Colty": "Information",
         "Linetx3": "동국대(석사졸업)/마케팅",
         "Linetx4": "1972.12.14",
@@ -47,7 +47,7 @@
     {		
 		"Linetx1": "홍길동 부장 / 팀장",
         "Linetx2": "부장 / 팀장 ",
-		"PicUrl": "asset/image/photo1.png",
+		"PicUrl": "/sap/public/bc/ui2/zui5_yescohr/images/photo1.png",
 		"Colty": "Information",
         "Linetx3": "동국대(석사졸업)/마케팅",
         "Linetx4": "1972.12.14",
@@ -56,7 +56,7 @@
     {		
 		"Linetx1": "홍길동 부장 / 팀장",
         "Linetx2": "부장 / 팀장 ",
-		"PicUrl": "asset/image/photo1.png",
+		"PicUrl": "/sap/public/bc/ui2/zui5_yescohr/images/photo1.png",
 		"Colty": "Information",
         "Linetx3": "동국대(석사졸업)/마케팅",
         "Linetx4": "1972.12.14",
@@ -65,7 +65,7 @@
 	{
 		"Linetx1": "홍길동 부장 / 팀장",
         "Linetx2": "부장 / 팀장 ",
-		"PicUrl": "asset/image/photo1.png",
+		"PicUrl": "/sap/public/bc/ui2/zui5_yescohr/images/photo1.png",
 		"Colty": "Information",
         "Linetx3": "동국대(석사졸업)/마케팅",
         "Linetx4": "1972.12.14",

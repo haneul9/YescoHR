@@ -16,7 +16,7 @@
               <grid:GridItemLayoutData gridColumn="span 2" />
             </layoutData>
             <Label text="{Ename} {Zzjikgbt} / {Zzjikcht}" class="name" />
-            <Image src="asset/image/icon_captain.svg" width="1.2rem" alt="Captain" visible="{= ${Chief} === 'X' }" />
+            <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_captain.svg" width="1.2rem" alt="Captain" visible="{= ${Chief} === 'X' }" />
           </HBox>
           <Label text="{i18n>LABEL_00226}" class="mt-4-px" />
           <Label text="{Pbtxt} {Fulln}" class="mt-4-px" />
@@ -31,11 +31,11 @@
           </layoutData>
           <custom:HBox justifyContent="SpaceBetween" alignItems="Center" height="54px" click=".onPressRefresh">
             <Label text="{i18n>LABEL_00199}" />
-            <Button type="Transparent" class="icon-button mobile-logout-button" icon="asset/image/icon_arrow_h-r.svg" iconDensityAware="false" />
+            <Button type="Transparent" class="icon-button mobile-logout-button" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_arrow_h-r.svg" iconDensityAware="false" />
           </custom:HBox>
           <custom:HBox justifyContent="SpaceBetween" alignItems="Center" height="54px" click=".onPressLogout">
             <Label text="{i18n>LABEL_01004}" />
-            <Button type="Transparent" class="icon-button mobile-logout-button" icon="asset/image/icon_arrow_h-r.svg" iconDensityAware="false" />
+            <Button type="Transparent" class="icon-button mobile-logout-button" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_arrow_h-r.svg" iconDensityAware="false" />
           </custom:HBox>
           <HBox justifyContent="SpaceBetween" alignItems="Center" height="54px" class="divider">
             <Label text="{i18n>LABEL_01602}" />

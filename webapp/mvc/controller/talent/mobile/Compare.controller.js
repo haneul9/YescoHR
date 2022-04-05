@@ -95,7 +95,7 @@ sap.ui.define(
                   return {
                     colorSet: i % 2 === 0 ? 'ColorSet2' : 'ColorSet1',
                     align: 'Start',
-                    value01: [{ pernr: o.Pernr, image: _.isEmpty(o.Picurl) ? 'asset/image/avatar-unknown.svg' : o.Picurl }, { text: _.chain(o.Value01).split(' ').join('\n').value() }],
+                    value01: [{ pernr: o.Pernr, image: _.isEmpty(o.Picurl) ? this.getImageURL('avatar-unknown.svg') : o.Picurl }, { text: _.chain(o.Value01).split(' ').join('\n').value() }],
                     value02: _.chain(o.Value02)
                       .split('<br>')
                       .map((d) => ({ text: d }))

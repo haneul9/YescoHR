@@ -1,34 +1,34 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:custom="sap.ui.yesco.control">
-    <VBox class="portlet portlet-box" visible="{/contents/A09/busy}">
-        <custom:Placeholder />
-    </VBox>
-    <VBox class="portlet portlet-box" visible="{= !${/contents/A09/busy} }">
-        <HBox class="portlet-header">
-            <Title level="H2" text="{i18n>LABEL_28017}" />
-            <Image src="asset/image/icon_human_green.svg" width="12px" class="ml-8-px" />
-            <Text text="">
-                <layoutData>
-                    <FlexItemData growFactor="1" />
-                </layoutData>
-            </Text>
-            <Button visible="{hasLink}" icon="asset/image/icon_window.svg" iconDensityAware="false" type="Transparent" class="icon-button portlet-link-icon" />
-        </HBox>
-        <HBox class="portlet-body">
-            <layoutData>
-                <FlexItemData growFactor="1" />
-            </layoutData>
-            <VBox width="25%" height="100%">
-                <Label text="{/contents/A09/data/Cnt01}" class="font-42-px color-03 normal ls-small"/>
-            </VBox>
-            <VBox width="75%">
-                <core:HTML content='&lt;div id="employee-a09-chart-container"&gt;&lt;/div&gt;'>
-                    <core:layoutData>
-                        <FlexItemData growFactor="1" />
-                    </core:layoutData>
-                </core:HTML>
-            </VBox>
-        </HBox>
-    </VBox>
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <VBox class="portlet portlet-box" visible="{/contents/A09/busy}">
+    <custom:Placeholder />
+  </VBox>
+  <VBox class="portlet portlet-box" visible="{= !${/contents/A09/busy} }">
+    <HBox class="portlet-header">
+      <Title level="H2" text="{i18n>LABEL_28017}" />
+      <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_human_green.svg" width="12px" class="ml-8-px" />
+      <Text text="">
+        <layoutData>
+          <FlexItemData growFactor="1" />
+        </layoutData>
+      </Text>
+      <Button visible="{hasLink}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_window.svg" iconDensityAware="false" type="Transparent" class="icon-button portlet-link-icon" />
+    </HBox>
+    <HBox class="portlet-body">
+      <layoutData>
+        <FlexItemData growFactor="1" />
+      </layoutData>
+      <VBox width="25%" height="100%">
+        <Label text="{/contents/A09/data/Cnt01}" class="font-42-px color-03 normal ls-small"/>
+      </VBox>
+      <VBox width="75%">
+        <core:HTML content='&lt;div id="employee-a09-chart-container"&gt;&lt;/div&gt;'>
+          <core:layoutData>
+            <FlexItemData growFactor="1" />
+          </core:layoutData>
+        </core:HTML>
+      </VBox>
+    </HBox>
+  </VBox>
 </core:FragmentDefinition>
