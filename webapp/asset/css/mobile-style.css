@@ -405,7 +405,7 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>footer .sa
 .contents .list-wrap li:last-child {margin-bottom:0}
 .contents .list-wrap li .sapUiIcon:before {font-size:12.5px}
 .contents .list-wrap.request li {border:1px solid #4da2cd; background-color:#e3f6ff}
-.contents .list-wrap.request li .sapMCb {margin-left:-2px !important; width:2.5rem}
+.contents .list-wrap.request li .sapMCb {margin-top:-2px; margin-left:-2px !important; width:2.5rem; height:3rem}
 
 .sapMPageFooter .sapMIBar {padding:0 12px}
 .sapUiSizeCompact .sapMPageFooter .sapMInputBase:not(.sapMTextArea) {height: 40px !important;}
