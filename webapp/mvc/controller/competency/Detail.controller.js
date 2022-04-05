@@ -335,7 +335,7 @@ sap.ui.define(
         if (!this.pRejectDialog) {
           this.pRejectDialog = Fragment.load({
             id: oView.getId(),
-            name: Constants.REJECT_DIALOG_ID,
+            name: 'sap.ui.yesco.mvc.view.competency.fragment.RejectDialog',
             controller: this,
           }).then((oDialog) => {
             oView.addDependent(oDialog);

@@ -12,7 +12,6 @@ sap.ui.define(
         { type: 'MA', route: 'm/competency', detail: 'm/competency-detail', id: 'container-ehr---m_competency' },
         { type: 'MA', route: 'h/competencyPry', detail: 'h/competencyPry-detail', id: 'container-ehr---h_competencyPry' },
       ],
-      REJECT_DIALOG_ID: 'sap.ui.yesco.mvc.view.competency.fragment.RejectDialog',
 
       TAB: { ABILITY: 'T01', OPINION: 'T02' },
       APPRAISER_TYPE: { ME: 'ME', MA: 'MA' },
