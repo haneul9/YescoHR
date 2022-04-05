@@ -63,7 +63,7 @@ sap.ui.define(
           mEntityType[o.name] = {};
 
           o.property.forEach((p) => {
-            mEntityType[o.name][p.name] = { ...p, label: _.find(p.extensions, { name: 'label' }).value };
+            mEntityType[o.name][p.name] = { ...p, label: (_.find(p.extensions, { name: 'label' }) || {}).value };
           });
 
           if (Array.isArray(o.navigationProperty)) {

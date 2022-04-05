@@ -45,6 +45,7 @@ sap.ui.define(
       initializeModel() {
         return {
           busy: false,
+          previousName: '',
           Appno: null,
           ZappStatAl: null,
           form: {
@@ -78,12 +79,13 @@ sap.ui.define(
         });
       },
 
-      async onObjectMatched(oParameter) {
+      async onObjectMatched(oParameter, sRouteName) {
         const oViewModel = this.getView().getModel();
 
         oViewModel.setSizeLimit(10000);
         oViewModel.setData(this.initializeModel());
         oViewModel.setProperty('/Appno', oParameter.appno === 'n' ? null : oParameter.appno);
+        oViewModel.setProperty('/previousName', _.chain(sRouteName).split('-', 1).head().value());
 
         this.loadPage();
       },
@@ -139,7 +141,7 @@ sap.ui.define(
           if (oError instanceof Error) oError = new UI5Error({ message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
 
           AppUtils.handleError(oError, {
-            onClose: () => this.onNavBack(),
+            onClose: () => this.getRouter().navTo(oViewModel.getProperty('/previousName')),
           });
         } finally {
           oViewModel.setProperty('/busy', false);
@@ -246,9 +248,7 @@ sap.ui.define(
 
           // {신청}되었습니다.
           MessageBox.success(this.getBundleText('MSG_00007', this.getBundleText('LABEL_00121')), {
-            onClose: () => {
-              this.onNavBack();
-            },
+            onClose: () => this.getRouter().navTo(oViewModel.getProperty('/previousName')),
           });
         } catch (oError) {
           this.debug('Controller > excavation Detail > createProcess Error', oError);
