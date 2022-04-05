@@ -26,6 +26,7 @@ sap.ui.define(
     return BaseController.extend('sap.ui.yesco.mvc.controller.leave.App', {
       TableUtils: TableUtils,
       TABLE_ID: 'leaveTable',
+      CHART_LEAVE_ID: 'LeaveMonthlyChart',
       PERSONAL_DIALOG_ID: 'sap.ui.yesco.mvc.view.leave.fragment.PersonalDialog',
       PERSONAL_TABLE_ID: 'leaveByPersonalTable',
 
@@ -172,18 +173,25 @@ sap.ui.define(
       },
 
       buildChart() {
+        const oChart = FusionCharts(this.CHART_LEAVE_ID);
         const mDataSource = this.getViewModel().getProperty('/summary');
 
-        FusionCharts.ready(function () {
-          new FusionCharts({
-            type: 'mscombi2d',
-            renderAt: 'chart-container',
-            width: '100%',
-            height: '100%',
-            dataFormat: 'json',
-            dataSource: mDataSource,
-          }).render();
-        });
+        if (!oChart) {
+          FusionCharts.ready(() => {
+            new FusionCharts({
+              id: this.CHART_LEAVE_ID,
+              type: 'mscombi2d',
+              renderAt: 'chart-container',
+              width: '100%',
+              height: '100%',
+              dataFormat: 'json',
+              dataSource: mDataSource,
+            }).render();
+          });
+        } else {
+          oChart.setChartData(mDataSource);
+          oChart.render();
+        }
       },
 
       /*****************************************************************
