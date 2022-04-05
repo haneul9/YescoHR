@@ -76,7 +76,7 @@ sap.ui.define(
 
       getLogoPath(sWerks = 'init') {
         this.byId('logo-image').toggleStyleClass(`logo-${sWerks}`, true);
-        return `asset/image/logo-${sWerks}.png`;
+        return `/sap/public/bc/ui2/zui5_yescohr/images/logo-${sWerks}.png`;
       },
 
       navToHome() {

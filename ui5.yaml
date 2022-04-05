@@ -20,6 +20,16 @@ server:
         query:
           saml2: 'disabled'
           sap-client: '300'
+    - name: ui5-middleware-simpleproxy
+      afterMiddleware: compression
+      mountPath: /sap/public/bc/ui2/zui5_yescohr
+      configuration:
+        baseUri: 'https://yeshrsapdev.yescoholdings.com:8443/sap/public/bc/ui2/zui5_yescohr'
+        username: UI5_MIDDLEWARE_SIMPLE_PROXY_USERNAME
+        password: UI5_MIDDLEWARE_SIMPLE_PROXY_PASSWORD
+        query:
+          saml2: 'disabled'
+          sap-client: '300'
 resources:
   configuration:
     propertiesFileSourceEncoding: UTF-8
