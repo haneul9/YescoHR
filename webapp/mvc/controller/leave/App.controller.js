@@ -181,7 +181,7 @@ sap.ui.define(
             new FusionCharts({
               id: this.CHART_LEAVE_ID,
               type: 'mscombi2d',
-              renderAt: 'chart-container',
+              renderAt: 'chart-leave-container',
               width: '100%',
               height: '100%',
               dataFormat: 'json',

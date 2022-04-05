@@ -36,7 +36,7 @@
           </HBox>
         </HBox>
         <HBox height="250px">
-          <core:HTML content="&lt;div id='chart-container'&gt;&lt;/div&gt;" />
+          <core:HTML content="&lt;div id='chart-leave-container'&gt;&lt;/div&gt;" />
         </HBox>
       </VBox>
       <VBox class="vCardBox">
