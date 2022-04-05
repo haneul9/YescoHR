@@ -67,7 +67,7 @@ sap.ui.define(
       initializeModel() {
         return {
           busy: false,
-          previousName: History.getInstance().getPreviousHash(),
+          previousName: '',
           type: this.PAGE_TYPE.NEW,
           Appno: null,
           ZappStatAl: null,
@@ -92,9 +92,9 @@ sap.ui.define(
         };
       },
 
-      onObjectMatched(oParameter) {
+      onObjectMatched(oParameter, sRouteName) {
         if (!'A,B,C'.split(',').includes(oParameter.type)) {
-          this.getRouter().navTo(this.getViewModel().getProperty('/previousName'));
+          this.onNavBack();
           return;
         }
 
@@ -113,6 +113,7 @@ sap.ui.define(
         oViewModel.setData(this.initializeModel());
         oViewModel.setProperty('/type', oParameter.type);
         oViewModel.setProperty('/Appno', oParameter.appno);
+        oViewModel.setProperty('/previousName', _.chain(sRouteName).split('-', 1).head().value());
 
         this.loadPage();
       },
