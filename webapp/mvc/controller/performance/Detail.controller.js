@@ -643,8 +643,8 @@ sap.ui.define(
       onPressCheckedButton() {
         const mProcessType = Constants.PROCESS_TYPE.CONFIRM;
 
-        MessageBox.confirm(this.getBundleText('MSG_10021'), {
-          // 성과평가를 완료 하시겠습니까?
+        MessageBox.confirm(this.getBundleText('MSG_10024'), {
+          // 이의신청을 철회하고, 성과평가를 완료 하시겠습니까?
           onClose: (sAction) => {
             if (MessageBox.Action.CANCEL === sAction) return;
 
