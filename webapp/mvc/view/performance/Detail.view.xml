@@ -9,6 +9,7 @@
 			<HBox justifyContent="SpaceBetween" class="breadcrumbs">
 				<custom:Breadcrumbs />
 				<HBox>
+					<Button text="{i18n>LABEL_00103}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/SAVE/Availability} === 'X' }" press=".onPressSaveButton" />
 					<Button text="{i18n>LABEL_10034}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/DIAGNOSIS/Availability} === 'X' }" press=".onPressDiagnosisButton" />
 					<Button text="{i18n>LABEL_00142}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/REJECT_REASON/Availability} === 'X' &amp;&amp; !!${/buttons/form/Rjctr} }" press=".onPressRejectViewButton" />
 					<Button text="{i18n>LABEL_10032}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/TOP_GOAL/Availability} === 'X' &amp;&amp; !!${/buttons/form/Zdocid2} }" press=".onPressTopGoal" />
@@ -19,7 +20,6 @@
 					<Button text="{i18n>LABEL_10044}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/OPPO_VIEW/Availability} === 'X' }" press=".onPressOppositionViewButton" />
 					<Button text="{i18n>LABEL_00124}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/REJECT/Availability} === 'X' }" press=".onPressRejectButton" />
 					<Button text="{i18n>LABEL_00118}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/Z_CANCEL/Availability} === 'X' }" press=".onPressCancelButton" />
-					<Button text="{i18n>LABEL_00103}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/SAVE/Availability} === 'X' }" press=".onPressSaveButton" />
 					<Button text="{i18n>LABEL_00146}" class="sapUiTinyMarginEnd" press=".onNavBack" />
 					<Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
 				</HBox>
