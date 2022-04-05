@@ -48,7 +48,7 @@ sap.ui.define(
 
       initializeItem(obj, index) {
         return {
-          expanded: _.stubTrue(),
+          expanded: _.stubFalse(),
           isSaved: _.stubTrue(),
           OrderNo: String(index),
           ItemNo: String(index + 1),
