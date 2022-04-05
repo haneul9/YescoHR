@@ -590,7 +590,7 @@ sap.ui.define(
           onClose: (sAction) => {
             if (MessageBox.Action.CANCEL === sAction) return;
 
-            this.createProcess(Constants.PROCESS_TYPE.SEND);
+            this.createProcess({ ...Constants.PROCESS_TYPE.SEND, label: 'LABEL_00117' });
           },
         });
       },
