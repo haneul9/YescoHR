@@ -305,7 +305,7 @@ html.sap-phone .sapMDialog.sapMDialogStretched {border:none; box-shadow:0; borde
 .sapUiLayoutCSSGrid.form-grid .sapMComboBoxBaseReadonly input  {padding-top:0!important; padding-bottom:0!important; font-weight:600}
 .sapMInputBaseIcon {line-height:2.875rem !important}
 .search-area .sapMInputBaseIcon {line-height:2.4rem !important}
-.sapIcon_Date .sapUiIcon::before {background-image:url(../image/icon_date2.svg); background-position:center}
+.sapIcon_Date .sapUiIcon::before {background-image:url(/sap/public/bc/ui2/zui5_yescohr/images/icon_date2.svg); background-position:center}
 
 .sapUiSizeCompact .sapMSegB.type-c {height:32px; padding:0; background-color:#fff; border-color:transparent}
 .sapUiSizeCompact .sapMSegB.type-c .sapMSegBBtn.sapMSegBBtnSel .sapMSegBBtnInner {background-color:#0A1E5A; color:#fff}
