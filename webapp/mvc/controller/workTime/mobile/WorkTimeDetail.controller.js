@@ -346,7 +346,7 @@ sap.ui.define(
         }
 
         const aList = oDetailModel.getProperty('/dialog/list');
-        const aDetailList = oDetailModel.getProperty('/detail/list');
+        const aDetailList = _.cloneDeep(oDetailModel.getProperty('/detail/list'));
         const aFilter = _.filter(aList, (e) => {
           return !!e.Pernr;
         });
