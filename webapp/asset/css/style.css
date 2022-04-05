@@ -95,7 +95,7 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p02 .portlet-body .icon-mimic {border:1px solid #387fe9; border-radius:3px; padding:0 4px; font-size:10px; color:#387fe9; cursor:default}
 .portlet-p02 .portlet-body .sapUiIcon {vertical-align:text-top}
 .portlet-p03p04 .sapMImg {width:30px; height:30px; margin-right:15px; border:1px solid #fff; box-sizing:border-box}
-.portlet-p03p04 [data-portlet-member-status] {margin-right:0px; border:1px solid; border-radius:3px; font-size:0.6rem!important; min-width:40px; line-height:16px; height:17px; text-align:center !important}
+.portlet-p03p04 [data-portlet-member-status] {margin-right:0px; border:1px solid; border-radius:3px; font-size:0.6rem!important; min-width:40px; max-width:40px; line-height:16px; height:17px; text-align:center !important}
 .portlet-p03p04 [data-portlet-member-status=""] {border-color:transparent; color:transparent}
 .portlet-p03p04 [data-portlet-member-status="1"] {border-color:#ff5a5a; background-color:transparent; color:#ff5a5a}/* 휴가중 */
 .portlet-p03p04 [data-portlet-member-status="2"] {border-color:#6edecf; background-color:transparent; color:#6edecf}/* 출장중 */
@@ -150,7 +150,7 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p08 .portlet-todo-list .menu-link {width:100%; line-height:40px}
 .portlet-p09 img {vertical-align:sub}
 .portlet-p09 .sapMCLI .sapMText {vertical-align:middle}
-.portlet-p10 [data-appraisal-status-color] {margin-right:0px; border:1px solid; border-radius:3px; font-size:0.6rem; min-width:40px; line-height:16px; height:17px; text-align:center !important}
+.portlet-p10 [data-appraisal-status-color] {margin-right:0px; border:1px solid; border-radius:3px; font-size:0.6rem; min-width:40px; max-width:40px; line-height:16px; height:17px; text-align:center !important}
 .portlet-p10 [data-appraisal-status-color="3"] {color:#1bae49}
 .portlet-p10 [data-appraisal-status-color="2"] {color:#df9f0f}
 .portlet-p10 [data-appraisal-status-color="1"] {color:#767676}
