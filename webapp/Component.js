@@ -85,7 +85,16 @@ sap.ui.define(
        */
       setAppModel() {
         setTimeout(() => {
-          this.setModel(new JSONModel({ isAppBusy: true, delay: 0, isAtHome: false, isMobile: /android|iphone|ipad|ipod/i.test(navigator.userAgent) }), 'appModel');
+          this.setModel(
+            new JSONModel({
+              delay: 0,
+              isAppBusy: true,
+              isAtHome: false,
+              isMobile: /android|iphone|ipad|ipod/i.test(navigator.userAgent),
+              homebarBackground: 'prd',
+            }),
+            'appModel'
+          );
         });
         return this;
       },
