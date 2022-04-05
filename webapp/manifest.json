@@ -69,7 +69,7 @@
     },
     "resources": {
       "css": [
-        { "uri": "asset/css/webfonts/pretendard-subset.css" },
+        { "uri": "asset/css/pretendard-subset.css" },
         { "uri": "asset/css/style.css", "id": "desktopstyle" },
         { "uri": "asset/css/mobile-style.css", "id": "mobilestyle" },
         { "uri": "asset/css/placeholder.css" },
