@@ -195,7 +195,7 @@ sap.ui.define(
             new FusionCharts({
               id: this.CHART_ID,
               type: 'pie2d',
-              renderAt: 'chart-container',
+              renderAt: 'chart-leaveSummary-container',
               width: '180',
               height: '160',
               dataFormat: 'json',

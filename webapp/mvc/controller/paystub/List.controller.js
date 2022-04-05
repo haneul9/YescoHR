@@ -170,7 +170,7 @@ sap.ui.define(
             new FusionCharts({
               id: this.CHART_ID,
               type: 'pie2d',
-              renderAt: 'chart-container',
+              renderAt: 'chart-paystub-container',
               width: '180',
               height: '160',
               dataFormat: 'json',

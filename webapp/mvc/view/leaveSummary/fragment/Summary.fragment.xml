@@ -11,7 +11,7 @@
         <layoutData>
           <grid:GridItemLayoutData gridRow="1 / 6" />
         </layoutData>
-        <core:HTML content="&lt;div id='chart-container'&gt;&lt;/div&gt;" />
+        <core:HTML content="&lt;div id='chart-leaveSummary-container'&gt;&lt;/div&gt;" />
       </FlexBox>
       <Label text="{i18n>LABEL_23013}" />
       <Text text="{ path: '/summary/Cnt01', type: 'sap.ui.model.type.Integer' }" />
