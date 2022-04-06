@@ -9,7 +9,7 @@
             <content>
                 <VBox>
                     <TextArea width="100%" value="{/opposition/ZzabjfbTx}" growing="true" growingMaxLines="35" enabled="false" />
-                    <VBox items="{/opposition/files}">
+                    <VBox items="{/opposition/files}" class="sapUiSmallMarginTop">
                         <Link text="{Zfilename}" href="{Fileuri}" />
                     </VBox>
                 </VBox>
