@@ -369,7 +369,7 @@
         "commuteType": { "viewId": "commuteType", "viewPath": "sap.ui.yesco.mvc.view.commuteType", "viewName": "CommuteType" },
         "commuteTypeDetail": { "viewId": "commuteTypeDetail", "viewPath": "sap.ui.yesco.mvc.view.commuteType", "viewName": "CommuteTypeDetail" },
         
-        "m/commuteConfirm": { "viewId": "m_commuteConfirm", "viewPath": "sap.ui.yesco.mvc.view.commuteConfirm", "viewName": "commuteConfirm" },
+        "m/commuteConfirm": { "viewId": "m_commuteConfirm", "viewPath": "sap.ui.yesco.mvc.view.commuteConfirm", "viewName": "CommuteConfirm" },
         
         "consolidAppBox": { "viewId": "consolidAppBox", "viewPath": "sap.ui.yesco.mvc.view.consolidAppBox", "viewName": "ConsolidAppBox" },
 
