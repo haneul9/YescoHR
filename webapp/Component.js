@@ -10,10 +10,10 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceManager',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/ErrorHandler',
+    'sap/ui/yesco/mvc/model/AppointeeModel',
     'sap/ui/yesco/mvc/model/MenuModel',
     'sap/ui/yesco/mvc/model/Models',
     'sap/ui/yesco/mvc/model/SessionModel',
-    'sap/ui/yesco/mvc/model/AppointeeModel',
   ],
   (
     // prettier 방지용 주석
@@ -26,10 +26,10 @@ sap.ui.define(
     ServiceManager,
     ServiceNames,
     ErrorHandler,
+    AppointeeModel,
     MenuModel,
     Models,
-    SessionModel,
-    AppointeeModel
+    SessionModel
   ) => {
     'use strict';
 
@@ -52,8 +52,10 @@ sap.ui.define(
       init(...aArgs) {
         $('body').toggleClass(this.getContentDensityClass(), true);
 
-        this.toggleDeviceStyle();
         moment.locale(navigator.language || 'ko');
+
+        this.bIsMobile = /android|iphone|ipad|ipod/i.test(navigator.userAgent);
+        this.toggleDeviceStyle();
 
         this.setDeviceModel() // 디바이스 모델 생성
           .setAppModel() // Busy indicator 값 저장 모델 생성
@@ -90,7 +92,7 @@ sap.ui.define(
               delay: 0,
               isAppBusy: true,
               isAtHome: false,
-              isMobile: /android|iphone|ipad|ipod/i.test(navigator.userAgent),
+              isMobile: this.bIsMobile,
               homebarBackground: 'prd',
             }),
             'appModel'
@@ -117,7 +119,7 @@ sap.ui.define(
       },
 
       toggleDeviceStyle() {
-        if (/android|iphone|ipad|ipod/i.test(navigator.userAgent)) {
+        if (this.bIsMobile) {
           $('#desktopstyle').remove();
         } else {
           $('#mobilestyle').remove();
@@ -274,7 +276,24 @@ sap.ui.define(
             oView.setVisible(false);
 
             setTimeout(() => {
-              this.getAppModel().setProperty('/isAtHome', sRouteName === 'ehrHome' || sRouteName === 'ehrMobileHome');
+              const bIsAtHome = sRouteName === 'ehrHome' || sRouteName === 'ehrMobileHome';
+              this.getAppModel().setProperty('/isAtHome', bIsAtHome);
+
+              if (bIsAtHome) {
+                this.readySessionModel()
+                  .then(() => {
+                    const oModel = this.getModel(ServiceNames.COMMON);
+                    const mFilters = {
+                      Menid: 'HOME',
+                      Pernr: this.getSessionModel().getProperty('/Pernr'),
+                      Mobile: this.bIsMobile ? 'X' : '',
+                    };
+                    Client.create(oModel, 'SaveConnectLog', mFilters);
+                  })
+                  .catch((oError) => {
+                    AppUtils.debug('SaveConnectLog Error.', oError);
+                  });
+              }
             });
 
             // 화면에서 사용될 Model들이 모두 초기화된 후 동작될 수 있도록 Promise 처리하여 변수로 저장
@@ -373,22 +392,10 @@ sap.ui.define(
        * @param {string} sRouteNameMain
        */
       async _checkRouteName(sRouteNameMain) {
-        // do something, i.e. send usage statistics to back end
-        // in order to improve our app and the user experience (Build-Measure-Learn cycle)
+        // do something, i.e. send usage statistics to back end in order to improve our app and the user experience (Build-Measure-Learn cycle)
         // AppUtils.debug(`User accessed route ${sRouteName}, timestamp = ${new Date().getTime()}`);
 
         if (AppUtils.isLOCAL() || sRouteNameMain === 'ehrHome' || sRouteNameMain === 'ehrMobileHome') {
-          try {
-            const oModel = this.getModel(ServiceNames.COMMON);
-            const mFilters = {
-              Menid: 'HOME',
-              Pernr: this.getSessionModel().getProperty('/Pernr'),
-              Mobile: /android|iphone|ipad|ipod/i.test(navigator.userAgent) ? 'X' : '',
-            };
-            Client.create(oModel, 'SaveConnectLog', mFilters);
-          } catch (ex) {
-            AppUtils.debug('SaveConnectLog Error.', ex);
-          }
           return;
         }
 
@@ -400,7 +407,7 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.COMMON);
         const mFilters = {
           Menid: sMenid,
-          Mobile: /android|iphone|ipad|ipod/i.test(navigator.userAgent) ? 'X' : '',
+          Mobile: this.bIsMobile ? 'X' : '',
         };
 
         return Client.getEntitySet(oModel, 'GetMenuidRole', mFilters);
