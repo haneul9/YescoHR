@@ -98,8 +98,8 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p03p04 [data-portlet-member-status] {margin-right:0px; border:1px solid; border-radius:3px; font-size:0.6rem !important; min-width:40px; max-width:40px; line-height:16px; height:17px; text-align:center !important}
 .portlet-p03p04 [data-portlet-member-status=""] {border-color:transparent; color:transparent}
 .portlet-p03p04 [data-portlet-member-status="1"] {border-color:#0e60c7; background-color:transparent; color:#0e60c7}/* 휴가중 */
-.portlet-p03p04 [data-portlet-member-status="2"] {border-color:#18b810; background-color:transparent; color:#18b810}/* 출장중 */
-.portlet-p03p04 [data-portlet-member-status="3"] {border-color:#8aea8a; background-color:transparent; color:#8aea8a}/* 교육중 */
+.portlet-p03p04 [data-portlet-member-status="2"] {border-color:#8aea8a; background-color:transparent; color:#8aea8a}/* 출장중 */
+.portlet-p03p04 [data-portlet-member-status="3"] {border-color:#18b810; background-color:transparent; color:#18b810}/* 교육중 */
 .portlet-p03p04 [data-portlet-member-status="4"] {border-color:#c68dff; background-color:transparent; color:#c68dff}/* 파견중 */
 .portlet-p03p04 [data-portlet-member-status="H"] {border-color:#ffca3c; background-color:transparent; color:#ffca3c}/* 휴일 */
 .portlet-p03p04 [data-portlet-member-status="W"] {border-color:#222; background-color:transparent; color:#222}/* 근무중 */
@@ -127,8 +127,8 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p06 .team-member-count[data-table-key*="2"] .sapMObjStatusText {color:#0e60c7}/* 휴가 */
 .portlet-p06 .team-member-count[data-table-key*="3"] .sapMObjStatusText {color:#e0a517}/* 휴직 */
 .portlet-p06 .team-member-count[data-table-key*="4"] .sapMObjStatusText {color:#ffca3c}/* 휴무 */
-.portlet-p06 .team-member-count[data-table-key*="5"] .sapMObjStatusText {color:#18b810}/* 출장 */
-.portlet-p06 .team-member-count[data-table-key*="6"] .sapMObjStatusText {color:#8aea8a}/* 교육 */
+.portlet-p06 .team-member-count[data-table-key*="5"] .sapMObjStatusText {color:#18b810}/* 교육 */
+.portlet-p06 .team-member-count[data-table-key*="6"] .sapMObjStatusText {color:#8aea8a}/* 출장 */
 .portlet-p06 .team-member-count[data-table-key*="7"] .sapMObjStatusText {color:#84bbfe}/* 반차 */
 .portlet-p06 .team-member-count[data-table-key*="8"] .sapMObjStatusText {color:#e18eff}/* OT */
 .sapMPopover.team-member-count-popover {border-radius:4px}
@@ -764,7 +764,7 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 [data-style="Type12"] .sapMText, [data-style="Type12"] .sapMLabel {background-color:transparent !important; color:#fff !important}/* 휴무 */
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type13"], .year-plan.status-wrap .sapMFlexItem .sapMText[data-style="Type13"]::before, .year-plan.status-wrap .sapMFlexItem .sapMText.type13::before, .sapMFlexBox.type13, .sapMFlexBox[data-style="Type13"] {background-color:#ffecb9 !important}/* 징계 */
 [data-style="Type13"] .sapMText, [data-style="Type13"] .sapMLabel {background-color:transparent !important}/* 징계 */
-.sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type21"], .year-plan.status-wrap .sapMFlexItem .sapMText[data-style="Type21"]::before, .year-plan.status-wrap .sapMFlexItem .sapMText.type21::before, .sapMFlexBox.type21, .sapMFlexBox[data-style="Type21"] {background-color:#00b800 !important; color:#fff !important}/* 교육 */
+.sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type21"], .year-plan.status-wrap .sapMFlexItem .sapMText[data-style="Type21"]::before, .year-plan.status-wrap .sapMFlexItem .sapMText.type21::before, .sapMFlexBox.type21, .sapMFlexBox[data-style="Type21"] {background-color:#18b810 !important; color:#fff !important}/* 교육 */
 [data-style="Type21"] .sapMText, [data-style="Type21"] .sapMLabel {background-color:transparent !important; color:#fff !important}/* 교육 */
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type22"], .year-plan.status-wrap .sapMFlexItem .sapMText[data-style="Type22"]::before, .year-plan.status-wrap .sapMFlexItem .sapMText.type22::before, .sapMFlexBox.type22, .sapMFlexBox[data-style="Type22"] {background-color:#8aea8a !important}/* 출장 */
 [data-style="Type22"] .sapMText, [data-style="Type22"] .sapMLabel {background-color:transparent !important}/* 출장 */
