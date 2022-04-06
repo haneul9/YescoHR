@@ -64,6 +64,15 @@
           <m:Text text="{Crecnt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
         </template>
       </Column>
+      <Column width="5%" filterProperty="Plncnt" sortProperty="Plncnt">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_23002}"/>
+          <m:Label text="{i18n>LABEL_23007}"/>
+        </multiLabels>
+        <template>
+          <m:Text text="{Plncnt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
       <Column width="5%" filterProperty="Usecnt" sortProperty="Usecnt">
         <multiLabels>
           <m:Label text="{i18n>LABEL_23002}"/>
@@ -91,15 +100,6 @@
           <m:Text text="{Balcnt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
         </template>
       </Column>
-      <Column width="5%" filterProperty="Plncnt" sortProperty="Plncnt">
-        <multiLabels>
-          <m:Label text="{i18n>LABEL_23002}"/>
-          <m:Label text="{i18n>LABEL_23007}"/>
-        </multiLabels>
-        <template>
-          <m:Text text="{Plncnt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-        </template>
-      </Column>
       <Column width="5%" filterProperty="Crecnt2" sortProperty="Crecnt2" headerSpan="5">
         <multiLabels>
           <m:Label text="{i18n>LABEL_23008}"/>
@@ -107,6 +107,15 @@
         </multiLabels>
         <template>
           <m:Text text="{Crecnt2}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+        </template>
+      </Column>
+      <Column width="5%" filterProperty="Plncnt2" sortProperty="Plncnt2">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_23008}"/>
+          <m:Label text="{i18n>LABEL_23007}"/>
+        </multiLabels>
+        <template>
+          <m:Text text="{Plncnt2}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
         </template>
       </Column>
       <Column width="5%" filterProperty="Usecnt2" sortProperty="Usecnt2">
@@ -134,15 +143,6 @@
         </multiLabels>
         <template>
           <m:Text text="{Balcnt2}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-        </template>
-      </Column>
-      <Column width="5%" filterProperty="Plncnt2" sortProperty="Plncnt2">
-        <multiLabels>
-          <m:Label text="{i18n>LABEL_23008}"/>
-          <m:Label text="{i18n>LABEL_23007}"/>
-        </multiLabels>
-        <template>
-          <m:Text text="{Plncnt2}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
         </template>
       </Column>
       <Column width="6%">

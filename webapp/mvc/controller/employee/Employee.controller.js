@@ -1336,6 +1336,8 @@ sap.ui.define(
           const oModel = this.getModel(ServiceNames.PA);
           const sAction = oViewModel.getProperty('/employee/dialog/action');
 
+          if (this.isHass()) _.set(mInputData, 'Pernr', oViewModel.getProperty('/pernr'));
+
           oModel.create(sUrl, mInputData, {
             success: () => {
               resolve();
