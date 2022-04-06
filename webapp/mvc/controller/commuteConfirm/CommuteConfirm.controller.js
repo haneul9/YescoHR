@@ -77,7 +77,7 @@ sap.ui.define(
 
           oViewModel.setProperty('/search', {
             date: moment(dDate).format('yyyyMM'),
-            dept: aOrgList[0].Orgeh,
+            dept: this.getSessionProperty('Orgeh'),
           });
 
           const aTableList = await this.getWorkScheduleList();
