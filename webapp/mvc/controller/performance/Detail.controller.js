@@ -176,7 +176,7 @@ sap.ui.define(
           oViewModel.setProperty('/summary', {
             ..._.chain({ ...mDetailData })
               .pick(Constants.SUMMARY_PROPERTIES)
-              .set('Zmbgrade', _.isEmpty(mDetailData.Zmbgrade) ? 'ALL' : mDetailData.Zmbgrade)
+              .set('Zmbgrade', _.isEmpty(mDetailData.Lfapp) ? (_.isEmpty(mDetailData.Zmbgrade) ? 'ALL' : mDetailData.Zmbgrade) : mDetailData.Lfapp)
               .value(),
           });
 
@@ -490,7 +490,7 @@ sap.ui.define(
         }
       },
 
-      async createOppositionProcess() {
+      async createOppositionProcess(sPrcty) {
         const oViewModel = this.getViewModel();
         const sListRouteName = oViewModel.getProperty('/listInfo/route');
 
@@ -501,23 +501,25 @@ sap.ui.define(
           const mOpposition = _.cloneDeep(oViewModel.getProperty('/opposition/param'));
           let sAppno = oViewModel.getProperty('/opposition/Appno');
 
-          if (_.isEmpty(sAppno)) {
-            sAppno = await Appno.get();
-            oViewModel.setProperty('/opposition/Appno', sAppno);
-          }
+          if (_.isEqual(sPrcty, 'C')) {
+            if (_.isEmpty(sAppno)) {
+              sAppno = await Appno.get();
+              oViewModel.setProperty('/opposition/Appno', sAppno);
+            }
 
-          await AttachFileAction.uploadFile.call(this, sAppno, 'APP1');
+            await AttachFileAction.uploadFile.call(this, sAppno, 'APP1');
+          }
 
           await Client.getEntitySet(oModel, 'AppraisalDifOpi', {
             Menid: this.getCurrentMenuId(),
-            Prcty: 'C',
-            ButtonId: 'Z_ABJCTN',
+            Prcty: sPrcty,
+            ButtonId: _.isEqual(sPrcty, 'C') ? 'Z_ABJCTN' : 'Z_ICHKED',
             ...mOpposition,
             Appno: sAppno,
           });
 
-          // {이의신청}되었습니다.
-          MessageBox.success(this.getBundleText('MSG_00007', 'LABEL_10035'), {
+          // {이의신청|이의신청철회}되었습니다.
+          MessageBox.success(this.getBundleText('MSG_00007', _.isEqual(sPrcty, 'C') ? 'LABEL_10035' : 'LABEL_10101'), {
             onClose: () => this.getRouter().navTo(sListRouteName),
           });
         } catch (oError) {
@@ -645,14 +647,12 @@ sap.ui.define(
       },
 
       onPressCheckedButton() {
-        const mProcessType = Constants.PROCESS_TYPE.CONFIRM;
-
         MessageBox.confirm(this.getBundleText('MSG_10024'), {
           // 이의신청을 철회하고, 성과평가를 완료 하시겠습니까?
           onClose: (sAction) => {
             if (MessageBox.Action.CANCEL === sAction) return;
 
-            this.createProcess({ ...mProcessType, label: 'LABEL_10102' });
+            this.createOppositionProcess('W');
           },
         });
       },
@@ -690,7 +690,7 @@ sap.ui.define(
           onClose: (sAction) => {
             if (MessageBox.Action.CANCEL === sAction) return;
 
-            this.createOppositionProcess();
+            this.createOppositionProcess('C');
           },
         });
       },
