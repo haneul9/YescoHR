@@ -3,10 +3,11 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
     'sap/ui/model/json/JSONModel',
-    'sap/ui/yesco/control/MessageBox',
+    'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/Debuggable',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/model/type/Date', // XML expression binding용 type preloading
     'sap/ui/yesco/mvc/model/type/Time',
   ],
@@ -14,10 +15,11 @@ sap.ui.define(
     // prettier 방지용 주석
     Fragment,
     JSONModel,
-    MessageBox,
+    AppUtils,
     Debuggable,
     Client,
-    ServiceNames
+    ServiceNames,
+    MessageBox
   ) => {
     'use strict';
 
@@ -87,7 +89,7 @@ sap.ui.define(
 
       transformEmployeeData([mEmployeeData = {}]) {
         let { Photo, Ename, Zzjikgbt, Zzjikcht, Chief, Pbtxt, Fulln, Text1, Text2 } = mEmployeeData;
-        Photo ||= '/sap/public/bc/ui2/zui5_yescohr/images/avatar-unknown.svg';
+        Photo ||= AppUtils.getUnknownAvatarImageURL();
         return { Photo, Ename, Zzjikgbt, Zzjikcht, Chief, Pbtxt, Fulln, Text1, Text2 };
       },
 

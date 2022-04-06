@@ -38,10 +38,11 @@ sap.ui.define(
             this.readOrglevel(),
           ]);
 
+          const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
           const oViewModel = new JSONModel({
             orgList: [
               ...aReturnData.map((o) => {
-                if (!o.Photo) o.Photo = this.getImageURL('avatar-unknown.svg');
+                if (!o.Photo) o.Photo = sUnknownAvatarImageURL;
                 o.Ipdat = o.Ipdat ? moment(o.Ipdat).format('YYYY.MM.DD') : '';
 
                 return o;

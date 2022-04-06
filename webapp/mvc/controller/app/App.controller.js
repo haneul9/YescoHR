@@ -76,7 +76,7 @@ sap.ui.define(
 
       getLogoPath(sWerks = 'init') {
         this.byId('logo-image').toggleStyleClass(`logo-${sWerks}`, true);
-        return `/sap/public/bc/ui2/zui5_yescohr/images/logo-${sWerks}.png`;
+        return this.getImageURL(`logo-${sWerks}.png`);
       },
 
       navToHome() {
@@ -198,7 +198,7 @@ sap.ui.define(
               if (this.bMobile) {
                 location.href = '/sap/public/bc/icf/logoff?from=logoff';
               } else {
-                window.open('/sap/public/bc/ui2/zui5_yescohr/logout.html');
+                window.open(this.getImageURL('logout.html'));
                 window.close();
               }
             }

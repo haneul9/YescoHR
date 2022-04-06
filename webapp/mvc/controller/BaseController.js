@@ -307,6 +307,10 @@ sap.ui.define(
         return AppUtils.getImageURL(sImageName);
       },
 
+      getUnknownAvatarImageURL() {
+        return AppUtils.getUnknownAvatarImageURL();
+      },
+
       /**
        * Convenience method for logging.
        * @protected

@@ -62,7 +62,7 @@ sap.ui.define(
             width: '73%',
             busy: true,
             header: {
-              profilePath: '/sap/public/bc/ui2/zui5_yescohr/images/avatar-unknown.svg',
+              profilePath: this.getUnknownAvatarImageURL(),
               baseInfo: [],
               timeline: null,
             },
@@ -215,7 +215,7 @@ sap.ui.define(
             .map((v, k) => ({ data: v, labelOrText: _.includes(aTextFields, k) ? 'text' : 'label' }))
             .value();
 
-          oViewModel.setProperty('/employee/header/profilePath', _.isEmpty(Pturl) ? '/sap/public/bc/ui2/zui5_yescohr/images/avatar-unknown.svg?ssl=1' : Pturl);
+          oViewModel.setProperty('/employee/header/profilePath', _.isEmpty(Pturl) ? this.getUnknownAvatarImageURL() : Pturl);
           oViewModel.setProperty('/employee/header/baseInfo', aConvertData);
           //End 상단 프로필 Set
 

@@ -27,7 +27,7 @@ sap.ui.define(
           DTFMTYYYYMM: 'YYYY.MM',
           DTFMTYYYY: 'YYYY',
           Werks: 'init',
-          Photo: AppUtils.getImageURL('avatar-unknown.svg'),
+          Photo: AppUtils.getUnknownAvatarImageURL(),
         };
       },
 
@@ -67,7 +67,7 @@ sap.ui.define(
         mSessionData.DtfmtYYYY = mSessionData.Dtfmt.replace(/([a-zA-Z]{4}).*/, '$1');
         mSessionData.DTFMTYYYYMM = mSessionData.DTFMT.replace(/([a-zA-Z]{4})([^a-zA-Z]?)([a-zA-Z]{2}).*/, '$1$2$3');
         mSessionData.DTFMTYYYY = mSessionData.DTFMT.replace(/([a-zA-Z]{4}).*/, '$1');
-        mSessionData.Photo ||= AppUtils.getImageURL('avatar-unknown.svg');
+        mSessionData.Photo ||= AppUtils.getUnknownAvatarImageURL();
 
         return mSessionData;
       },

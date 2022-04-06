@@ -6,7 +6,6 @@
       "manifest.json",
       "Component-preload.js",
       "asset/css/**",
-      "asset/image/**",
       "i18n/**"
     ],
     "conn_usestrictssl" : false,
@@ -19,5 +18,5 @@
     "abap_package": "zhr1",
     "abap_transport": "YHDK901091",
     "calcappindex": true,
-    "preserve_unselected": true
+    "preserve_unselected": false
 }

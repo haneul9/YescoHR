@@ -116,7 +116,7 @@ sap.ui.define(
           Ename: sPernr,
         });
 
-        oViewModel.setProperty('/appointee', { ...mAppointee, Orgtx: mAppointee.Fulln, Photo: mAppointee.Photo || '/sap/public/bc/ui2/zui5_yescohr/images/avatar-unknown.svg' });
+        oViewModel.setProperty('/appointee', { ...mAppointee, Orgtx: mAppointee.Fulln, Photo: mAppointee.Photo || this.getUnknownAvatarImageURL() });
       },
 
       async onChangeYear(oEvent) {
