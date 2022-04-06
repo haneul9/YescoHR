@@ -242,6 +242,33 @@ sap.ui.define(
         }
       },
 
+      // onToggleExpanded(oEvent) {
+      //   try {
+      //     const oGrid = oEvent.getSource().getParent().getParent().getParent();
+      //     const oBox = oEvent.getSource().getParent().getParent();
+
+      //     oGrid.getItems().forEach((o) => {
+      //       if (oBox === o) {
+      //         o.toggleStyleClass('expanded', !o.hasStyleClass('expanded'));
+
+      //         const oChart = FusionCharts(`employee-${o.data('key')}-chart`);
+      //         if (oChart) oChart.render();
+      //       } else if (o.hasStyleClass('expanded')) {
+      //         o.removeStyleClass('expanded');
+
+      //         const oChart = FusionCharts(`employee-${o.data('key')}-chart`);
+      //         if (oChart) oChart.render();
+      //       }
+      //     });
+      //   } catch (oError) {
+      //     this.debug('Controller > m/overviewEmployee Main > onToggleExpanded Error', oError);
+
+      //     AppUtils.handleError(oError);
+      //   }
+      // },
+
+      onToggleExpanded() {},
+
       formatDetailRowHighlight(sValue) {
         switch (_.toNumber(sValue)) {
           case 1:

@@ -2151,6 +2151,10 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .flex-grow1 { flex-grow: 1 !important; }
 .flex-grow2 { flex-grow: 2 !important; }
 
+/* .boardroom-grid > .sapMFlexBox { grid-row: span 1; grid-column: span 1; transition-property: grid-row, grid-column; transition-duration: 1s; transition-timing-function: ease-out; } */
+.boardroom-grid > .sapMFlexBox.expanded { grid-row: span 2; grid-column: span 2; }
+.boardroom-grid > .sapMFlexBox.expanded .legend-wrap * { font-size: 14px; }
+
 @media screen and (max-width: 884px) {
     .contents { margin: 0 auto;max-width: 100%;min-width: 100%;padding-bottom: 20px;}
     .search-filter {grid-template-columns: 1fr; grid-gap: 1px 0;padding-top: 0;margin-top: 0!important;border-top: 0px solid #222;}
