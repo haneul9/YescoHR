@@ -118,7 +118,7 @@ sap.ui.define(
       },
 
       transformMembersData(aMembers = []) {
-        const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
+        const sUnknownAvatarImageURL = AppUtils.getUnknownAvatarImageURL();
         aMembers.forEach((mData) => {
           delete mData.__metadata;
 
