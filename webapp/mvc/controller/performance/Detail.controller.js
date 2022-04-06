@@ -260,7 +260,7 @@ sap.ui.define(
             .commit();
 
           // 조회모드
-          if (_.isEqual(sZonlydsp, 'X') && !(_.isEqual(sZzapsts, '5') && _.includes(['Q', 'R'], sLogicalZzapstsSub))) {
+          if (_.isEqual(sZonlydsp, 'X')) {
             _.forEach(mButtons.goal, (v) => _.set(v, 'Availability', _.stubFalse()));
             _.chain(mButtons.submit)
               .filter({ process: true })
