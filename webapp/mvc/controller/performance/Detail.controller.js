@@ -397,6 +397,7 @@ sap.ui.define(
           const sAppno = _.get(mResult, 'Appno');
 
           oViewModel.setProperty('/opposition/Appno', _.isEmpty(sAppno) || _.toNumber(sAppno) === 0 ? null : sAppno);
+          oViewModel.setProperty('/opposition/ZzabjfbTx', _.get(mResult, 'ZzabjfbTx'));
 
           AttachFileAction.setAttachFile(this, {
             Editable: bEditable,
@@ -709,29 +710,8 @@ sap.ui.define(
             controller: this,
           });
 
-          this.pOppositionViewDialog.attachBeforeOpen(async () => {
-            const oViewModel = this.getViewModel();
-            const mOpposition = _.cloneDeep(oViewModel.getProperty('/opposition/param'));
-            const [mResult] = await Client.getEntitySet(this.getModel(ServiceNames.APPRAISAL), 'AppraisalDifOpi', {
-              Menid: this.getCurrentMenuId(),
-              Prcty: 'D',
-              ...mOpposition,
-            });
-
-            let sAppno = _.get(mResult, 'Appno');
-            sAppno = _.isEmpty(sAppno) || _.toNumber(sAppno) === 0 ? null : sAppno;
-
-            oViewModel.setProperty('/opposition/Appno', sAppno);
-            oViewModel.setProperty('/opposition/ZzabjfbTx', _.get(mResult, 'ZzabjfbTx'));
-
-            // 파일 조회
-            if (!_.isEmpty(sAppno)) {
-              const aFileList = await AttachFileAction.readFileList(sAppno, 'APP1');
-
-              if (!_.isEmpty(aFileList)) {
-                oViewModel.setProperty('/opposition/files', aFileList);
-              }
-            }
+          this.pOppositionViewDialog.attachAfterOpen(async () => {
+            this.initializeAttachBox(false);
           });
 
           oView.addDependent(this.pOppositionViewDialog);

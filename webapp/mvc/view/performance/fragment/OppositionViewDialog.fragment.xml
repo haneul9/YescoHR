@@ -8,10 +8,8 @@
         <Panel expanded="true" headerText="{i18n>LABEL_10035}">
             <content>
                 <VBox>
-                    <TextArea width="100%" value="{/opposition/ZzabjfbTx}" growing="true" growingMaxLines="35" enabled="false" />
-                    <VBox items="{/opposition/files}" class="sapUiSmallMarginTop">
-                        <Link text="{Zfilename}" href="{Fileuri}" />
-                    </VBox>
+                    <TextArea width="100%" value="{/opposition/ZzabjfbTx}" rows="5" class="sapUiSmallMarginBottom" growing="true" growingMaxLines="35" enabled="false" />
+                    <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
                 </VBox>
             </content>
         </Panel>
