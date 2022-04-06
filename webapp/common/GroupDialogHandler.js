@@ -97,6 +97,9 @@ sap.ui.define(
         if (_.isEmpty(aSelectedIndices)) {
           MessageBox.alert(this.oController.getBundleText('MSG_00054')); // 부서를 선택하세요.
           return;
+        } else if (aSelectedIndices.length > 1) {
+          MessageBox.alert(this.oController.getBundleText('MSG_00028')); // 부서를 하나만 선택하여 주십시오.
+          return;
         }
 
         this.fCallback(_.map(aSelectedIndices, (v) => _.get(aOrgList, v)));
