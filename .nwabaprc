@@ -6,7 +6,8 @@
       "manifest.json",
       "Component-preload.js",
       "asset/css/**",
-      "i18n/**"
+      "i18n/**",
+      "mvc/model/models.js"
     ],
     "conn_usestrictssl" : false,
     "conn_server": "https://yeshrsapdev.yescoholdings.com:8443/",
