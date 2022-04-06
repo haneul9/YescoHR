@@ -25,7 +25,7 @@ sap.ui.define(
        * @override
        * @returns {sap.ui.base.Object}
        */
-      constructor: function ({ code = this.LEVEL.ERROR, message }) {
+      constructor: function ({ code = this.LEVEL.ERROR, message, httpStatusCode = 0 }) {
         this.MESSAGE_LEVEL = {
           INFORMATION: [this.LEVEL.INFORMATION, this.LEVEL.ALERT, this.LEVEL.WARNING, this.LEVEL.ERROR],
           ALERT: [this.LEVEL.ALERT, this.LEVEL.WARNING, this.LEVEL.ERROR],
@@ -36,6 +36,11 @@ sap.ui.define(
         this.code = code;
         this.message = message;
         this.messageLevel = this.MESSAGE_LEVEL.INFORMATION;
+        this.httpStatusCode = httpStatusCode;
+      },
+
+      getHttpStatusCode() {
+        return this.httpStatusCode;
       },
 
       getCode() {
