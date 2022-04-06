@@ -156,7 +156,7 @@ sap.ui.define(
             width: '73%',
             busy: true,
             header: {
-              profilePath: '/sap/public/bc/ui2/zui5_yescohr/images/avatar-unknown.svg',
+              profilePath: this.getUnknownAvatarImageURL(),
               baseInfo: [],
               timeline: null,
             },
@@ -269,12 +269,13 @@ sap.ui.define(
         const aSearchResults = await this.readEmpSearchResult({ searchText: sSearchText, Orgeh: sSearchOrgeh });
         const iSideViewHeight = Math.floor($(document).height() - oSideBody.getParent().$().offset().top - 20);
         const iScrollViewHeight = Math.floor($(document).height() - oSideList.getParent().$().offset().top - 36);
+        const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
 
         oSideList.getBinding('items').filter([new Filter('Stat2', FilterOperator.EQ, '3')]);
 
         oViewModel.setProperty(
           '/sideNavigation/search/results',
-          _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? '/sap/public/bc/ui2/zui5_yescohr/images/avatar-unknown.svg?ssl=1' : o.Photo }))
+          _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? sUnknownAvatarImageURL : o.Photo }))
         );
         oViewModel.setProperty('/sideNavigation/height', `${iSideViewHeight}px`);
         oViewModel.setProperty('/sideNavigation/scrollHeight', `${iScrollViewHeight}px`);
@@ -349,7 +350,7 @@ sap.ui.define(
             .value();
 
           oViewModel.setProperty('/showPDFButton', _.isEqual(Actty, 'X'));
-          oViewModel.setProperty('/employee/header/profilePath', _.isEmpty(Pturl) ? '/sap/public/bc/ui2/zui5_yescohr/images/avatar-unknown.svg?ssl=1' : Pturl);
+          oViewModel.setProperty('/employee/header/profilePath', _.isEmpty(Pturl) ? this.getUnknownAvatarImageURL() : Pturl);
           oViewModel.setProperty('/employee/header/baseInfo', aConvertData);
           //End 상단 프로필 Set
 
@@ -634,10 +635,11 @@ sap.ui.define(
       },
 
       transformTreeData({ aTreeData, sRootId }) {
+        const sImageURL = this.getImageURL('icon_employee.svg');
         aTreeData = _.map(aTreeData, (o) =>
           _.chain(o)
             .omit(['Datum', '__metadata'])
-            .set('ref', o.Otype === 'O' ? _.noop() : o.Xchif === 'X' ? '/sap/public/bc/ui2/zui5_yescohr/images/icon_employee.svg' : '/sap/public/bc/ui2/zui5_yescohr/images/icon_employee.svg')
+            .set('ref', o.Otype === 'O' ? _.noop() : o.Xchif === 'X' ? sImageURL : sImageURL)
             .value()
         );
 
@@ -737,9 +739,10 @@ sap.ui.define(
         try {
           const aSearchResults = await this.readEmpSearchResult({ searchText: sSearchText });
 
+          const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
           oViewModel.setProperty(
             '/sideNavigation/search/results',
-            _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? '/sap/public/bc/ui2/zui5_yescohr/images/avatar-unknown.svg?ssl=1' : o.Photo }))
+            _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? sUnknownAvatarImageURL : o.Photo }))
           );
         } catch (oError) {
           this.debug('Controller > Employee > onPressEmployeeSearch Error', oError);

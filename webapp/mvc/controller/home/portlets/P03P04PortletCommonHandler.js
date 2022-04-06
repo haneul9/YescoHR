@@ -118,10 +118,11 @@ sap.ui.define(
       },
 
       transformMembersData(aMembers = []) {
+        const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
         aMembers.forEach((mData) => {
           delete mData.__metadata;
 
-          mData.Photo ||= '/sap/public/bc/ui2/zui5_yescohr/images/avatar-unknown.svg';
+          mData.Photo ||= sUnknownAvatarImageURL;
         });
 
         return {

@@ -47,13 +47,14 @@ sap.ui.define(
               this.readOrglevel(),
             ]);
 
+            const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
             const oViewModel = new JSONModel({
               extendNode: '',
               layout: 'left',
               orgLevel: aOrgLevel ?? [],
               orgList: _.map(aReturnData, (o) => ({
                 ...o,
-                Photo: _.isEmpty(o.Photo) ? '/sap/public/bc/ui2/zui5_yescohr/images/avatar-unknown.svg' : o.Photo,
+                Photo: _.isEmpty(o.Photo) ? sUnknownAvatarImageURL : o.Photo,
                 Ipdat: _.isDate(o.Ipdat) ? moment(o.Ipdat).format('YYYY.MM.DD') : '',
               })),
               entry: {
@@ -120,11 +121,12 @@ sap.ui.define(
           const sWerks = oViewModel.getProperty('/search/Werks');
           const aReturnData = await this.readEmployeeOrgTree(sWerks);
 
+          const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
           oViewModel.setProperty(
             '/orgList',
             _.map(aReturnData, (o) => ({
               ...o,
-              Photo: _.isEmpty(o.Photo) ? this.getImageURL('avatar-unknown.svg') : o.Photo,
+              Photo: _.isEmpty(o.Photo) ? sUnknownAvatarImageURL : o.Photo,
               Ipdat: _.isDate(o.Ipdat) ? moment(o.Ipdat).format('YYYY.MM.DD') : '',
             }))
           );

@@ -110,6 +110,10 @@ sap.ui.define(
         return `/sap/public/bc/ui2/zui5_yescohr/images/${sImageName}`;
       },
 
+      getUnknownAvatarImageURL() {
+        return this.getImageURL('avatar-unknown.svg');
+      },
+
       /**
        * @public
        */
