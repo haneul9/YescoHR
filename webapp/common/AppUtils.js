@@ -168,6 +168,8 @@ sap.ui.define(
             }
           } else if (oError instanceof UI5Error) {
             oError.showErrorMessage(mOptions);
+          } else if (_.isObject(oError) && _.has(oError, 'message')) {
+            new UI5Error({ code: oError.code ?? 'E', message: oError.message }).showErrorMessage(mOptions);
           }
         });
       },
