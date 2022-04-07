@@ -480,7 +480,6 @@ sap.ui.define(
         oDetailModel.setProperty('/FormData/Lnsta', '');
         oDetailModel.setProperty('/FormData/Pvbet', '0');
         oDetailModel.setProperty('/FormData/Pvcnt', '0');
-        oDetailModel.setProperty('/FormData/PybetTot', '0');
         oDetailModel.setProperty('/FormData/Paymm', '');
         oDetailModel.setProperty('/FormData/Rjbet', '0');
         oDetailModel.setProperty('/FormData/Rjcnt', '0');
@@ -1266,7 +1265,6 @@ sap.ui.define(
             Recpgb: 'ALL',
             Pratetx: oDetailModel.getProperty('/FormData/Pratetx'),
             Prate: oDetailModel.getProperty('/FormData/Prate'),
-            Pybet: '0',
             isNew: true,
           });
 
