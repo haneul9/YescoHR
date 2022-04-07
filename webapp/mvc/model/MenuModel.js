@@ -315,6 +315,7 @@ sap.ui.define(
         }
 
         let aMobileRecentMenus = this.getProperty('/mobileRecentMenus');
+        _.remove(aMobileRecentMenus, (mMenuProperties) => mMenuProperties.Menid === mMenu.Menid);
         aMobileRecentMenus.unshift(mMenu);
 
         let iMobileRecentMenusCount = aMobileRecentMenus.length;
