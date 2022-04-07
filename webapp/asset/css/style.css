@@ -1372,7 +1372,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .timeline .lineItem-wrap > .sapMFlexItem:nth-child(6) .lineItem.sapUiIcon::after {content:""; width:35px; height:35px; background-image:url(/sap/public/bc/ui2/zui5_yescohr/images/icon_timeline06.png); background-repeat:no-repeat; background-position:center}
 .timeline .lineItem-wrap > .sapMFlexItem .lineItem.sapUiIcon::before {content:attr(data-sap-ui-icon-content); font-weight:normal; -webkit-font-smoothing:antialiased; display:none}
 
-.side-navigation {width:0%; transition:width 0.5s; padding:25px 10px; overflow:hidden}
+.side-navigation {width:0%; transition:width 0.5s; padding:25px 10px; overflow:hidden; position: sticky; top: 80px;}
 .side-navigation .sapMFlexItem:not(:first-child) {opacity:0}
 .side-navigation.expanded {width:27%; transition:width 0.5s; padding:25px 30px}
 .side-navigation.expanded .sapMFlexItem:not(:first-child) {opacity:1}
