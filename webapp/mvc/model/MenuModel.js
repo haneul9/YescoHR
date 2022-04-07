@@ -61,7 +61,6 @@ sap.ui.define(
         const mMenidToProperties = {}; // mMenidToProperties[Menid] -> Menu
         const aFavoriteMenids = [];
         const aMobileFavoriteMenus = [];
-        // const mMobileRecentMenus = [];
 
         // 샘플 메뉴 추가
         this.appendSampleMenu({ aLevel1, aLevel2, aLevel3, aLevel4 });
@@ -217,6 +216,18 @@ sap.ui.define(
 
         if (this.bMobile) {
           mModelData.mobileFavoriteMenus = aMobileFavoriteMenus;
+
+          if (localStorage && localStorage.getItem instanceof Function) {
+            const aMobileRecentMenus = JSON.parse(localStorage.getItem('com.yescoholdings.ehr.mobile.recent.menus') || '[]');
+            mModelData.mobileRecentMenus = aMobileRecentMenus.filter((mMenu) => {
+              return !!mMenidToProperties[mMenu.Menid];
+            });
+            mModelData.mobileRecentMenusCount = mModelData.mobileRecentMenus.length;
+            localStorage.setItem('com.yescoholdings.ehr.mobile.recent.menus', JSON.stringify(mModelData.mobileRecentMenus));
+          } else {
+            mModelData.mobileRecentMenus = [];
+            mModelData.mobileRecentMenusCount = 0;
+          }
         }
 
         return mModelData;
@@ -289,6 +300,34 @@ sap.ui.define(
         }
 
         this.refresh();
+      },
+
+      /**
+       * Mobile 최근 사용 메뉴 추가
+       * @param {object|string} vParam
+       */
+      addRecentMenu(vParam) {
+        let mMenu;
+        if (_.isString(vParam)) {
+          mMenu = this.getProperties(vParam);
+        } else {
+          mMenu = vParam;
+        }
+
+        let aMobileRecentMenus = this.getProperty('/mobileRecentMenus');
+        aMobileRecentMenus.unshift(mMenu);
+
+        let iMobileRecentMenusCount = aMobileRecentMenus.length;
+        if (iMobileRecentMenusCount > 10) {
+          aMobileRecentMenus = aMobileRecentMenus.slice(0, 9);
+          iMobileRecentMenusCount = 10;
+        }
+
+        this.setProperty('/mobileRecentMenus', aMobileRecentMenus);
+        this.setProperty('/mobileRecentMenusCount', iMobileRecentMenusCount);
+        if (localStorage && localStorage.getItem instanceof Function) {
+          localStorage.setItem('com.yescoholdings.ehr.mobile.recent.menus', JSON.stringify(aMobileRecentMenus));
+        }
       },
 
       /**

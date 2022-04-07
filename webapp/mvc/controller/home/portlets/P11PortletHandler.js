@@ -181,18 +181,26 @@ sap.ui.define(
       },
 
       onPressButton1() {
-        // this.navTo('attendance-detail', { type: 'A' });
-        this.navTo(this.bMobile ? 'mobile/attendance' : 'attendance');
+        const oMenuModel = this.getController().getMenuModel();
+        const sRouteName = this.bMobile ? 'mobile/attendance' : 'attendance';
+
+        oMenuModel.addRecentMenu(oMenuModel.getMenid(sRouteName));
+        this.navTo(sRouteName);
       },
 
       onPressButton2() {
-        // this.navTo('workTime-detail', { oDataKey: 'N' });
+        const oMenuModel = this.getController().getMenuModel();
         const Werks = this.getController().getSessionProperty('Werks');
+
+        let sRouteName;
         if ('1000,4000'.split(',').includes(Werks)) {
-          this.navTo(this.bMobile ? 'mobile/individualWorkState' : 'individualWorkState');
+          sRouteName = this.bMobile ? 'mobile/individualWorkState' : 'individualWorkState';
         } else {
-          this.navTo(this.bMobile ? 'mobile/workTime' : 'workTime');
+          sRouteName = this.bMobile ? 'mobile/workTime' : 'workTime';
         }
+
+        oMenuModel.addRecentMenu(oMenuModel.getMenid(sRouteName));
+        this.navTo(sRouteName);
       },
     });
   }

@@ -48,9 +48,6 @@
             <layoutData>
               <FlexItemData growFactor="1" />
             </layoutData>
-            <List>
-              <StandardListItem title="{recentMenus}" visible="{visibleRecentMenus}" />
-            </List>
             <List class="all-transparent">
               <StandardListItem title="." />
               <swipeContent>

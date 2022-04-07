@@ -218,12 +218,16 @@ sap.ui.define(
        */
       async handleMenuLink(oEvent) {
         const oEventSource = oEvent.getSource();
+        const oContext = oEventSource.getBindingContext();
         if (oEventSource instanceof Link) {
-          const sHref = oEvent.getSource().getProperty('href');
+          const sHref = oEventSource.getProperty('href');
           if (/^https?:/.test(sHref) || (sHref !== 'javascript:;' && /^javascript:/.test(sHref))) {
             setTimeout(() => {
               this.toggleSelectedMenuStyle(false);
               this.closeMenuLayer(true);
+              if (this.bMobile) {
+                this.oMenuModel.addRecentMenu(oContext.getProperty());
+              }
             });
             return;
           }
@@ -235,8 +239,10 @@ sap.ui.define(
           this.closeMenuLayer(true);
         });
 
-        const oContext = oEventSource.getBindingContext();
         if (oContext.getProperty('Mepop')) {
+          if (this.bMobile) {
+            this.oMenuModel.addRecentMenu(oContext.getProperty());
+          }
           return;
         }
 
@@ -257,6 +263,9 @@ sap.ui.define(
 
           const { Mnurl } = await Client.get(oCommonModel, 'GetMenuUrl', mKeyMap);
           if (Mnurl) {
+            if (this.bMobile) {
+              this.oMenuModel.addRecentMenu(oContext.getProperty());
+            }
             const sMenuUrl = this.bMobile ? `mobile/${Mnurl}` : Mnurl;
             this.moveToMenu(sMenuUrl);
           } else {

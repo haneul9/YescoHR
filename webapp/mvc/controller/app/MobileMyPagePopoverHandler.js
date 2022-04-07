@@ -33,14 +33,6 @@ sap.ui.define(
         this.isYescoAOS = this.deviceOS === 'aOS' && typeof window.YescoApp !== 'undefined';
         this.iHostport = /^dev/.test(location.hostname) ? 8090 : 8070;
 
-        (localStorage || { setItem() {} }).setItem(
-          'com.yescoholdings.ehr.mobile.recent.menus',
-          JSON.stringify({
-            hi: 1,
-            hello: 2,
-          })
-        );
-
         this.oController = oController;
         this.oMyPageModel = new JSONModel(this.getInitialData());
 
@@ -50,14 +42,6 @@ sap.ui.define(
       getInitialData() {
         return {
           busy: true,
-          visibleRecentMenus: !AppUtils.isPRD(),
-          recentMenus: (
-            localStorage || {
-              getItem() {
-                return 'NONE';
-              },
-            }
-          ).getItem('com.yescoholdings.ehr.mobile.recent.menus'),
         };
       },
 
