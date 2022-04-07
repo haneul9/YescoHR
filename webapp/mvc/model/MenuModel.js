@@ -61,6 +61,7 @@ sap.ui.define(
         const mMenidToProperties = {}; // mMenidToProperties[Menid] -> Menu
         const aFavoriteMenids = [];
         const aMobileFavoriteMenus = [];
+        // const mMobileRecentMenus = [];
 
         // 샘플 메뉴 추가
         this.appendSampleMenu({ aLevel1, aLevel2, aLevel3, aLevel4 });
