@@ -249,10 +249,9 @@ sap.ui.define(
         } else if (this.isMss()) {
           oViewModel.setProperty('/activeReg', false);
         } else if (_.isEmpty(oParameter.orgtx) && _.isEmpty(oParameter.orgeh)) {
-          oViewModel.setProperty('/activeReg', true);
+          oViewModel.setProperty('/activeReg', _.isEmpty(oParameter.pernr));
 
-          this.byId('sideBody').setVisible(false);
-          this.byId('profileBody').toggleStyleClass('expanded', true);
+          this.toggleSideContainer(false);
 
           this.loadProfile({ oViewModel, sPernr });
           return;
@@ -260,8 +259,7 @@ sap.ui.define(
           oViewModel.setProperty('/activeReg', false);
         }
 
-        this.byId('sideBody').setVisible(true);
-        this.byId('profileBody').toggleStyleClass('expanded', false);
+        this.toggleSideContainer(true);
 
         if (!_.isEmpty(sOrgtx)) {
           oViewModel.setProperty('/sideNavigation/search/searchText', sOrgtx);
@@ -269,6 +267,11 @@ sap.ui.define(
 
         this.initialList({ oViewModel, sPernr, sOrgtx, sOrgeh });
         if (!_.isEqual(sPernr, 'NA')) this.loadProfile({ oViewModel, sPernr });
+      },
+
+      toggleSideContainer(bToggled) {
+        this.byId('sideBody').setVisible(bToggled);
+        this.byId('profileBody').toggleStyleClass('expanded', !bToggled);
       },
 
       async initialList({ oViewModel, sPernr, sOrgtx, sOrgeh }) {
