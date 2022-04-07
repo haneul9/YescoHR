@@ -400,7 +400,7 @@ sap.ui.define(
         }
 
         const sMenid = this.getMenuModel().getMenid(sRouteNameMain);
-        if ((AppUtils.isLOCAL() || AppUtils.isDEV()) && /^X/.test(sMenid)) {
+        if (AppUtils.isDEV() && /^X/.test(sMenid)) {
           return;
         }
 
