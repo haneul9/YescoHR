@@ -165,6 +165,7 @@ sap.ui.define(
             },
             sub: {},
             dialog: {
+              activeButton: false,
               subKey: null,
               subLabel: null,
               action: null,
@@ -834,6 +835,7 @@ sap.ui.define(
             break;
         }
 
+        oViewModel.setProperty('/employee/dialog/activeButton', true);
         this.openInputFormDialog();
       },
 
@@ -848,6 +850,8 @@ sap.ui.define(
         let aFieldProperties = [];
         let sUrl = '';
         let sAppno = '';
+
+        oViewModel.setProperty('/employee/dialog/activeButton', false);
 
         try {
           AppUtils.setAppBusy(true, this);
@@ -945,6 +949,7 @@ sap.ui.define(
 
           AppUtils.handleError(oError);
         } finally {
+          oViewModel.setProperty('/employee/dialog/activeButton', true);
           AppUtils.setAppBusy(false, this);
         }
       },
