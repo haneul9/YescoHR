@@ -85,18 +85,20 @@
               <FlexItemData baseSize="20%" />
             </layoutData>
           </Text>
-          <ObjectStatus text="{ path: 'counts/Cnt51', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount">
+          <ObjectStatus text="{ path: 'counts/Cnt51', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt51} > 0 }" press=".onPressCount">
             <customData>
               <!-- 입사자 직원 -->
+              <core:CustomData key="popover" value="{= ${counts/Cnt51} === 0 ? 'N' : 'Y' }" writeToDom="true" />
               <core:CustomData key="table-key" value="A1" writeToDom="true" />
             </customData>
             <layoutData>
               <FlexItemData baseSize="20%" styleClass="employee-count-blue" />
             </layoutData>
           </ObjectStatus>
-          <ObjectStatus text="{ path: 'counts/Cnt52', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount">
+          <ObjectStatus text="{ path: 'counts/Cnt52', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt52} > 0 }" press=".onPressCount">
             <customData>
               <!-- 입사자 임원 -->
+              <core:CustomData key="popover" value="{= ${counts/Cnt52} === 0 ? 'N' : 'Y' }" writeToDom="true" />
               <core:CustomData key="table-key" value="A2" writeToDom="true" />
             </customData>
             <layoutData>
@@ -118,18 +120,20 @@
               <FlexItemData baseSize="20%" />
             </layoutData>
           </Text>
-          <ObjectStatus text="{ path: 'counts/Cnt61', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount">
+          <ObjectStatus text="{ path: 'counts/Cnt61', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt61} > 0 }" press=".onPressCount">
             <customData>
               <!-- 퇴사자 직원 -->
+              <core:CustomData key="popover" value="{= ${counts/Cnt61} === 0 ? 'N' : 'Y' }" writeToDom="true" />
               <core:CustomData key="table-key" value="B1" writeToDom="true" />
             </customData>
             <layoutData>
               <FlexItemData baseSize="20%" styleClass="employee-count-yellow" />
             </layoutData>
           </ObjectStatus>
-          <ObjectStatus text="{ path: 'counts/Cnt62', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount">
+          <ObjectStatus text="{ path: 'counts/Cnt62', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt62} > 0 }" press=".onPressCount">
             <customData>
               <!-- 퇴사자 임원 -->
+              <core:CustomData key="popover" value="{= ${counts/Cnt62} === 0 ? 'N' : 'Y' }" writeToDom="true" />
               <core:CustomData key="table-key" value="B2" writeToDom="true" />
             </customData>
             <layoutData>

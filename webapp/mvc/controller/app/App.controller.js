@@ -74,9 +74,10 @@ sap.ui.define(
         return this.oAppMenu;
       },
 
-      getLogoPath(sWerks = 'init') {
-        this.byId('logo-image').toggleStyleClass(`logo-${sWerks}`, true);
-        return this.getImageURL(`logo-${sWerks}.png`);
+      getLogoPath(sWerks) {
+        const logoName = '1000,2000,3000'.split(',').includes(sWerks) ? `logo-${sWerks}` : 'logo-1000';
+        this.byId('logo-image').toggleStyleClass(logoName, true);
+        return this.getImageURL(`${logoName}.png`);
       },
 
       navToHome() {

@@ -27,7 +27,7 @@ html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl):not(.showLine) {text-decoratio
 .app-menu-toolbar:before {content:""; height:59px !important; width:100%; background-color:#fff; position:fixed; top:0; left:0; right:0; z-index:-1}
 .app-menu-toolbar:after {content:""; height:0 !important; width:100%; background-color:#fff; border-bottom:1px solid #ccc; position:fixed; top:59px; left:0; right:0; box-shadow:0 1px 3px rgb(0 0 0 / 15%); z-index:3}
 .sapMIBar.sapMTB .sapMBarChild.home-logo {margin-left:1px}
-.sapMImageContent.logo-init {width:145px; height:43px}
+.sapMImageContent.logo-init,
 .sapMImageContent.logo-1000 {width:182px; height:30px}
 .sapMImageContent.logo-2000 {width:145px; height:43px}
 .sapMImageContent.logo-3000 {width:203px; height:25px} /* {width:308px; height:43px} */
@@ -122,7 +122,7 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p06 .today {color:grey}
 .portlet-p06 .sapUiLayoutCSSGrid {height:100%}
 .portlet-p06 .team-member-count {margin-top:8px; font-size:24px; font-weight:500; cursor:pointer}
-.portlet-p06 .team-member-count[data-count="0"] {cursor:default}
+.portlet-p06 .team-member-count[data-popover="N"] {cursor:default}
 .portlet-p06 .team-member-count[data-table-key*="1"] .sapMObjStatusText {color:#222}/* 총원 */
 .portlet-p06 .team-member-count[data-table-key*="2"] .sapMObjStatusText {color:#0e60c7}/* 휴가 */
 .portlet-p06 .team-member-count[data-table-key*="3"] .sapMObjStatusText {color:#e0a517}/* 휴직 */
@@ -185,6 +185,7 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-m21 .employee-count-yellow {width:100%; text-align:center}
 .portlet-m21 .employee-count-blue .sapMObjStatusText {color:#0088ff}
 .portlet-m21 .employee-count-yellow .sapMObjStatusText {color:#ff8900}
+.portlet-m21 [data-popover="N"] .sapMObjStatusLink:hover .sapMObjStatusText {cursor:default}
 .portlet-m23 .portlet-body .sapMText {font-size:13px; letter-spacing:-.5px}
 .portlet-m23 .portlet-body .sapMText.portlet-m23-worktime, .portlet-m23 .portlet-body .sapMText.portlet-m23-worktime-unit {color:#387fe9}
 .portlet-m23 .portlet-body .sapMText.portlet-m23-worktime {margin-left:.3rem}
