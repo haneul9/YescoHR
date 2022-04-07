@@ -8,7 +8,7 @@
       <HBox justifyContent="SpaceBetween" class="breadcrumbs">
         <custom:Breadcrumbs />
         <HBox>
-          <Select class="naked-combo sapUiTinyMarginEnd" width="130px" items="{/entry/Werks}" selectedKey="{/search/Werks}" change=".onChangeWerks">
+          <Select class="sapUiTinyMarginEnd" width="200px" items="{/entry/Werks}" selectedKey="{/search/Werks}" change=".onChangeWerks">
             <core:Item text="{Pbtxt}" key="{Werks}" />
           </Select>
           <Button type="Emphasized" class="sapUiTinyMarginEnd" text="Swap" press=".onPressSwapBtn" />

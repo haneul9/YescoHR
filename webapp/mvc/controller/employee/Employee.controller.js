@@ -135,6 +135,7 @@ sap.ui.define(
           pernr: null,
           orgtx: null,
           orgeh: null,
+          activeReg: false,
           showPDFButton: false,
           sideNavigation: {
             isShow: true,
@@ -243,16 +244,22 @@ sap.ui.define(
         oViewModel.setProperty('/orgeh', sOrgeh);
 
         // ESS 사번으로만 접근시 사이드 리스트 HIDE
-        if (!this.isMss() && !this.isHass() && _.isEmpty(oParameter.orgtx) && _.isEmpty(oParameter.orgeh)) {
-          this.byId('sideBody').setVisible(false);
-          this.byId('profileBody').toggleStyleClass('expanded', true);
+        if (this.isHass()) {
+          oViewModel.setProperty('/activeReg', true);
+        } else if (this.isMss()) {
+          oViewModel.setProperty('/activeReg', false);
+        } else if (_.isEmpty(oParameter.orgtx) && _.isEmpty(oParameter.orgeh)) {
+          oViewModel.setProperty('/activeReg', _.isEmpty(oParameter.pernr));
+
+          this.toggleSideContainer(false);
 
           this.loadProfile({ oViewModel, sPernr });
           return;
+        } else {
+          oViewModel.setProperty('/activeReg', false);
         }
 
-        this.byId('sideBody').setVisible(true);
-        this.byId('profileBody').toggleStyleClass('expanded', false);
+        this.toggleSideContainer(true);
 
         if (!_.isEmpty(sOrgtx)) {
           oViewModel.setProperty('/sideNavigation/search/searchText', sOrgtx);
@@ -260,6 +267,11 @@ sap.ui.define(
 
         this.initialList({ oViewModel, sPernr, sOrgtx, sOrgeh });
         if (!_.isEqual(sPernr, 'NA')) this.loadProfile({ oViewModel, sPernr });
+      },
+
+      toggleSideContainer(bToggled) {
+        this.byId('sideBody').setVisible(bToggled);
+        this.byId('profileBody').toggleStyleClass('expanded', !bToggled);
       },
 
       async initialList({ oViewModel, sPernr, sOrgtx, sOrgeh }) {
@@ -374,11 +386,12 @@ sap.ui.define(
             aContentRequests.push(this.readOdata({ sUrl: '/EmpProfileContentsTabSet', mFilters: { Menuc: data.Menuc1, ...mFilters } }));
           });
 
+          const bActiveReg = oViewModel.getProperty('/activeReg');
           aSubMenus.forEach((data) => {
             _.set(oViewModelData, ['employee', 'sub', data.Menuc1, 'contents', data.Menuc2], {
               type: data.Child,
               rowCount: 1,
-              selectionMode: !this.isMss() && _.some(this.CRUD_TABLES, (o) => o.key === data.Menuc2) ? 'MultiToggle' : 'None',
+              selectionMode: bActiveReg && _.some(this.CRUD_TABLES, (o) => o.key === data.Menuc2) ? 'MultiToggle' : 'None',
               title: data.Menu2,
               code: data.Menuc2,
               sort: data.Sorts,
@@ -465,7 +478,8 @@ sap.ui.define(
             oSubHBox.addItem(new sap.m.Title({ level: 'H2', text: mMenu.title }));
 
             // CRUD Buttons
-            if (!this.isMss() && _.some(this.CRUD_TABLES, (o) => o.key === mMenu.code)) {
+            const bActiveReg = oViewModel.getProperty('/activeReg');
+            if (bActiveReg && _.some(this.CRUD_TABLES, (o) => o.key === mMenu.code)) {
               const oSubButtonBox = new sap.m.HBox({
                 items: [
                   new sap.m.Button({
