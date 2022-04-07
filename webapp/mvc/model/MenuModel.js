@@ -319,7 +319,7 @@ sap.ui.define(
 
         let iMobileRecentMenusCount = aMobileRecentMenus.length;
         if (iMobileRecentMenusCount > 10) {
-          aMobileRecentMenus = aMobileRecentMenus.slice(0, 9);
+          aMobileRecentMenus = aMobileRecentMenus.slice(0, 10);
           iMobileRecentMenusCount = 10;
         }
 
