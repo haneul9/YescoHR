@@ -172,7 +172,7 @@ sap.ui.define(
         }
 
         if (!!oDateObject.Ottyp) {
-          sBorderNames = oDateObject.Ottyp;
+          sClassNames = oDateObject.Ottyp;
         }
 
         if (oDateObject.Cssty === 'P') {
