@@ -17,7 +17,7 @@
             <Label text="{i18n>LABEL_00203}" />
             <Button press=".EmployeeSearch.onEmpSearch" class="icon-button search" />
           </HBox>
-          <grid:CSSGrid gridTemplateRows="1fr 2fr" gridGap="6px 0px" class="form-grid type-d">
+          <grid:CSSGrid gridTemplateRows="1fr 2fr" gridGap="6px 0px" class="form-grid type-d form-search">
             <Label text="{i18n>LABEL_00237}" />
             <VBox>
               <ComboBox items="{/employeeModel/PersArea}" selectedKey="{/employeeModel/Search/Persa}" width="100%">

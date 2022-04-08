@@ -20,7 +20,7 @@
         </HBox>
       </VBox>
       <VBox class="hCardBox">
-        <table:Table id="orgTable" rows="{/employeeModel/org/orgList}" rowSelectionChange=".EmployeeSearch.onOrgListRowSelection" visibleRowCount="{/employeeModel/org/orgListLength}" rowHeight="44" columnHeaderHeight="45">
+        <table:Table id="orgTable" class="radio-selection-table" rows="{/employeeModel/org/orgList}" enableSelectAll="false" rowSelectionChange=".EmployeeSearch.onOrgListRowSelection" visibleRowCount="{/employeeModel/org/orgListLength}" rowHeight="44" columnHeaderHeight="45">
           <table:columns>
             <table:Column width="auto" sortProperty="Stext" filterProperty="Stext">
               <Label text="{i18n>LABEL_00227}"/>

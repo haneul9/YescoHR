@@ -2,26 +2,20 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
   ],
   (
     // prettier 방지용 주석
     Fragment,
-    Filter,
-    FilterOperator,
     AppUtils,
     ComboEntry,
     Client,
     ServiceNames,
-    ODataReadError,
     MessageBox
   ) => {
     'use strict';
@@ -37,8 +31,8 @@ sap.ui.define(
         try {
           const oModel = oController.getModel(ServiceNames.COMMON);
           const mPersaFilters = {};
-          const sAccty = oEmpModel.getProperty('/employeeModel/Search/Accty') || '';
-          const sStat2 = oEmpModel.getProperty('/employeeModel/Search/Stat2') || '';
+          const sAccty = oEmpModel.getProperty('/employeeModel/Search/Accty') || _.noop();
+          const sStat2 = oEmpModel.getProperty('/employeeModel/Search/Stat2') || 'ALL';
 
           // Accty === 'Z' 일때 PersAreaList 필터조건 ZALL = 'X'
           if (sAccty === 'Z') {
@@ -58,8 +52,8 @@ sap.ui.define(
           oEmpModel.setProperty('/employeeModel/Search', {
             Accty: sAccty,
             Persa: 'ALL',
-            Ename: '',
-            Orgeh: '',
+            Ename: _.noop(),
+            Orgeh: _.noop(),
             Stat2: sStat2,
             Persg: 'ALL',
             Persk: 'ALL',
@@ -77,149 +71,87 @@ sap.ui.define(
       /*
        *  사원하위그룹 Code
        */
-      onSubEmpCode(oEvent) {
-        const oModel = this.getModel(ServiceNames.COMMON);
+      async onSubEmpCode(oEvent) {
         const oEmpModel = this.getViewModel();
-        const sKey = oEvent.getSource().getSelectedKey();
-        const sUrl = '/EmpCodeListSet';
 
-        oEmpModel.setProperty('/employeeModel/Search/Persk', 'ALL');
+        try {
+          const sKey = oEvent.getSource().getSelectedKey();
 
-        if (!sKey || sKey === 'ALL') return;
+          oEmpModel.setProperty('/employeeModel/Search/Persk', 'ALL');
 
-        // 사원하위
-        oModel.read(sUrl, {
-          filters: [
-            new Filter('Field', FilterOperator.EQ, 'PERSK'), //
-            new Filter('Excod', FilterOperator.EQ, sKey),
-          ],
-          success: (oData) => {
-            if (oData) {
-              const aList = oData.results;
+          if (!sKey || sKey === 'ALL') return;
 
-              this.debug(`${sUrl} success.`, oData);
-              oEmpModel.setProperty('/employeeModel/SubEmpGroup', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
-            }
-          },
-          error: (oError) => {
-            this.debug(`${sUrl} error.`, oError);
-            AppUtils.handleError(new ODataReadError(oError));
-          },
-        });
+          const aSubEmpGroups = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'EmpCodeList', {
+            Field: 'PERSK',
+            Excod: sKey,
+          });
+
+          oEmpModel.setProperty('/employeeModel/SubEmpGroup', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aSubEmpGroups }));
+        } catch (oError) {
+          this.debug('Common > EmployeeSearch > onSubEmpCode Error', oError);
+
+          AppUtils.handleError(oError);
+        }
       },
 
       /*
        *  조직검색
        */
-      onOrgList() {
+      async onOrgList() {
         const oEmpModel = this.getViewModel();
+
         oEmpModel.setProperty('/employeeModel/org/busy', true);
 
-        const { Persa: Werks, Date: Datum, Word: Stext } = oEmpModel.getProperty('/employeeModel/org');
-        const oOrgTable = AppUtils.getAppComponent().byId(`${this.getView().getId()}GroupDetail--orgTable`);
-        oOrgTable.clearSelection();
+        try {
+          const oOrgTable = AppUtils.getAppComponent().byId(`${this.getView().getId()}GroupDetail--orgTable`);
+          oOrgTable.clearSelection();
 
-        const aFilters = [];
-        if (Werks && Werks !== 'ALL') {
-          aFilters.push(new Filter('Werks', FilterOperator.EQ, Werks));
+          const { Persa: Werks, Date: Datum, Word: Stext } = oEmpModel.getProperty('/employeeModel/org');
+          const aOrgResults = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'OrgList', {
+            Werks,
+            Stext,
+            Datum: moment(Datum).hours(9).toDate(),
+          });
+
+          oEmpModel.setProperty('/employeeModel/org/orgList', aOrgResults);
+          oEmpModel.setProperty('/employeeModel/org/orgListLength', Math.min(aOrgResults.length, 4));
+        } catch (oError) {
+          this.debug('Common > EmployeeSearch > onOrgList Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oEmpModel.setProperty('/employeeModel/org/busy', false);
         }
-        if (Datum) {
-          aFilters.push(new Filter('Datum', FilterOperator.EQ, Datum));
-        }
-        if (Stext) {
-          aFilters.push(new Filter('Stext', FilterOperator.EQ, Stext));
-        }
-
-        const oModel = this.getModel(ServiceNames.COMMON);
-        const sUrl = '/OrgListSet';
-
-        // 사원그룹
-        oModel.read(sUrl, {
-          filters: aFilters,
-          success: (oData) => {
-            if (oData) {
-              this.debug(`${sUrl} success.`, oData);
-
-              const aList = oData.results;
-              const iLength = aList.length;
-
-              oEmpModel.setProperty('/employeeModel/org/orgList', aList);
-              oEmpModel.setProperty('/employeeModel/org/orgListLength', iLength > 4 ? 4 : iLength);
-            }
-            oEmpModel.setProperty('/employeeModel/org/busy', false);
-          },
-          error: (oError) => {
-            this.debug(`${sUrl} error.`, oError);
-
-            oEmpModel.setProperty('/employeeModel/org/busy', false);
-            AppUtils.handleError(new ODataReadError(oError));
-          },
-        });
       },
 
       /*
        *  검색버튼
        */
-      onEmpSearch() {
+      async onEmpSearch() {
         const oEmpModel = this.getViewModel();
-        const { Ename, Orgeh, Accty, Persa, Stat2, Persg, Persk } = oEmpModel.getProperty('/employeeModel/Search');
-        const sMenid = this.getCurrentMenuId();
-        const aFilters = [new Filter('Menid', FilterOperator.EQ, sMenid)];
 
-        if (Ename) {
-          aFilters.push(new Filter('Ename', FilterOperator.EQ, Ename));
-        }
-        if (Orgeh) {
-          aFilters.push(new Filter('Orgeh', FilterOperator.EQ, Orgeh));
-        }
-        if (Accty) {
-          aFilters.push(new Filter('Accty', FilterOperator.EQ, Accty)); // 타사 임직원까지 모두 검색해야하는 경우 : Z
-        }
-        if (Persa && Persa !== 'ALL') {
-          aFilters.push(new Filter('Persa', FilterOperator.EQ, Persa));
-        }
-        if (Stat2 && Stat2 !== 'ALL') {
-          aFilters.push(new Filter('Stat2', FilterOperator.EQ, Stat2));
-        }
-        if (Persg && Persg !== 'ALL') {
-          aFilters.push(new Filter('Persg', FilterOperator.EQ, Persg));
-        }
-        if (Persk && Persk !== 'ALL') {
-          aFilters.push(new Filter('Persk', FilterOperator.EQ, Persk));
-        }
-
+        oEmpModel.setProperty('/employeeModel/busy', true);
         oEmpModel.setProperty('/employeeModel/empList', []);
         oEmpModel.setProperty('/employeeModel/empListLength', 1);
-        oEmpModel.setProperty('/employeeModel/busy', true);
 
-        this.byId('empTable').clearSelection();
+        try {
+          this.byId('empTable').clearSelection();
 
-        const oModel = this.getModel(ServiceNames.COMMON);
-        const sUrl = '/EmpSearchResultSet';
+          const mSearchConditions = oEmpModel.getProperty('/employeeModel/Search');
+          const aResults = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'EmpSearchResult', {
+            Menid: this.getCurrentMenuId(),
+            ..._.pick(mSearchConditions, ['Ename', 'Orgeh', 'Accty', 'Persa', 'Stat2', 'Persg', 'Persk']),
+          });
 
-        // 사원검색
-        oModel.read(sUrl, {
-          filters: aFilters,
-          success: (oData) => {
-            if (oData) {
-              this.debug(`${sUrl} success.`, oData);
+          oEmpModel.setProperty('/employeeModel/empList', aResults);
+          oEmpModel.setProperty('/employeeModel/empListLength', Math.min(aResults.length, 15));
+        } catch (oError) {
+          this.debug('Common > EmployeeSearch > onEmpSearch Error', oError);
 
-              const aList = oData.results;
-              const iLength = aList.length;
-
-              oEmpModel.setProperty('/employeeModel/empList', aList);
-              oEmpModel.setProperty('/employeeModel/empListLength', iLength > 15 ? 15 : iLength);
-            }
-
-            oEmpModel.setProperty('/employeeModel/busy', false);
-          },
-          error: (oError) => {
-            this.debug(`${sUrl} error.`, oError);
-
-            AppUtils.handleError(new ODataReadError(oError));
-            oEmpModel.setProperty('/employeeModel/busy', false);
-          },
-        });
+          AppUtils.handleError(oError);
+        } finally {
+          oEmpModel.setProperty('/employeeModel/busy', false);
+        }
       },
 
       /*
@@ -279,23 +211,13 @@ sap.ui.define(
         const oEventSource = oEvent.getSource();
         const aSelected = oEventSource.getSelectedIndices();
         const oEmpModel = this.getViewModel();
+        const iSelectedRowIndex = oEvent.getParameter('rowIndex');
 
         if (!aSelected) return;
 
-        if (aSelected.length > 1) {
-          oEventSource.clearSelection();
-          return MessageBox.alert(this.getBundleText('MSG_00028'));
-        }
+        oEventSource.setSelectionInterval(iSelectedRowIndex, iSelectedRowIndex);
 
-        const aSelectionDatas = [];
-
-        oEmpModel.setProperty('/employeeModel/org/SelectedOrg', []);
-
-        aSelected.forEach((e) => {
-          aSelectionDatas.push(oEmpModel.getProperty(`/employeeModel/org/orgList/${e}`));
-        });
-
-        oEmpModel.setProperty('/employeeModel/org/SelectedOrg', aSelectionDatas);
+        oEmpModel.setProperty('/employeeModel/org/SelectedOrg', [oEmpModel.getProperty(`/employeeModel/org/orgList/${iSelectedRowIndex}`)]);
       },
 
       /*
@@ -306,11 +228,11 @@ sap.ui.define(
         const aSelectedOrg = oEmpModel.getProperty('/employeeModel/org/SelectedOrg');
 
         if (!aSelectedOrg.length) {
-          return MessageBox.alert(this.getBundleText('MSG_00004', 'LABEL_00228'));
+          // return MessageBox.alert(this.getBundleText('MSG_00004', 'LABEL_00228'));
         }
 
-        oEmpModel.setProperty('/employeeModel/Search/Pbtxt', aSelectedOrg[0].Stext);
-        oEmpModel.setProperty('/employeeModel/Search/Orgeh', aSelectedOrg[0].Orgeh);
+        oEmpModel.setProperty('/employeeModel/Search/Pbtxt', _.isEmpty(aSelectedOrg) ? '' : aSelectedOrg[0].Stext);
+        oEmpModel.setProperty('/employeeModel/Search/Orgeh', _.isEmpty(aSelectedOrg) ? null : aSelectedOrg[0].Orgeh);
         oEvent.getSource().getParent().close();
       },
 
@@ -363,11 +285,11 @@ sap.ui.define(
       /*
        *  조직검색 Dialog호출
        */
-      onGroupDetail() {
+      async onGroupDetail() {
         const oView = this.getView();
 
         this.getViewModel().setProperty('/employeeModel/org', {
-          Date: '',
+          Date: moment().toDate(),
           Word: '',
           orgListLength: 1,
           orgList: [],
@@ -376,19 +298,20 @@ sap.ui.define(
         });
 
         if (!this.dGroupDialog) {
-          this.dGroupDialog = Fragment.load({
+          this.dGroupDialog = await Fragment.load({
             id: `${oView.getId()}GroupDetail`,
             name: 'sap.ui.yesco.fragment.GroupDetail',
             controller: this,
-          }).then(function (oDialog) {
-            oView.addDependent(oDialog);
-            return oDialog;
           });
+
+          this.dGroupDialog.attachAfterOpen(() => {
+            this.EmployeeSearch.onOrgList.call(this);
+          });
+
+          oView.addDependent(this.dGroupDialog);
         }
 
-        this.dGroupDialog.then(function (oDialog) {
-          oDialog.open();
-        });
+        this.dGroupDialog.open();
       },
     };
   }

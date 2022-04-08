@@ -2,13 +2,9 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/exceptions/UI5Error',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
-    'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/DateUtils',
@@ -25,13 +21,9 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     Fragment,
-    Filter,
-    FilterOperator,
     MessageBox,
     ComboEntry,
     UI5Error,
-    ODataReadError,
-    ODataCreateError,
     Appno,
     AppUtils,
     DateUtils,
@@ -74,7 +66,7 @@ sap.ui.define(
             dialog: {
               calcCompleted: false,
               selectedRowPath: null,
-              awartCodeList: new ComboEntry({ codeKey: 'Awart', valueKey: 'Atext' }),
+              awartCodeList: [],
               search: {},
               data: {
                 Awart: 'ALL',
@@ -141,7 +133,9 @@ sap.ui.define(
             this.initializeApplyInfoBox(aResultData[0]);
             this.initializeApprovalBox(aResultData[0]);
           } else {
-            oViewModel.setProperty('/form/dialog/awartCodeList', await this.readAwartCodeList());
+            const aAwartResults = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'AwartCodeList');
+
+            oViewModel.setProperty('/form/dialog/awartCodeList', new ComboEntry({ codeKey: 'Awart', valueKey: 'Atext', aEntries: aAwartResults }));
             oViewModel.setProperty('/form/listMode', 'MultiSelect');
 
             if (_.includes([this.PAGE_TYPE.CHANGE, this.PAGE_TYPE.CANCEL], sType)) this.callDialog(sType);
@@ -426,10 +420,11 @@ sap.ui.define(
 
       async createProcess({ sPrcty = 'C' }) {
         const oViewModel = this.getViewModel();
-        const iAttachLength = AttachFileAction.getFileCount.call(this);
-        let sAppno = oViewModel.getProperty('/Appno');
 
         try {
+          const iAttachLength = AttachFileAction.getFileCount.call(this);
+          let sAppno = oViewModel.getProperty('/Appno');
+
           if (!sAppno) {
             sAppno = await Appno.get();
             oViewModel.setProperty('/Appno', sAppno);
@@ -438,6 +433,20 @@ sap.ui.define(
           if (iAttachLength > 0) {
             await AttachFileAction.uploadFile.call(this, sAppno, this.APPTP);
           }
+
+          const aTableData = _.cloneDeep(oViewModel.getProperty('/form/list'));
+          const mAppointeeData = this.getAppointeeData();
+          const sAppty = oViewModel.getProperty('/type');
+
+          await Client.deep(this.getModel(ServiceNames.WORKTIME), 'LeaveApplContent', {
+            Menid: this.getCurrentMenuId(),
+            Pernr: mAppointeeData.Pernr,
+            Orgeh: mAppointeeData.Orgeh,
+            Appno: sAppno,
+            Prcty: sPrcty,
+            Appty: sAppty, // A:신규, B:변경, C:취소
+            LeaveApplNav1: aTableData.map((o) => ({ ...o, Pernr: mAppointeeData.Pernr })),
+          });
 
           await this.createLeaveApplContent(sPrcty);
 
@@ -641,7 +650,13 @@ sap.ui.define(
         const mFormData = oViewModel.getProperty('/form/dialog/data');
 
         try {
-          const mResultData = await this.readLeaveApplEmpList({ Prcty: 'C', Menid: this.getCurrentMenuId(), ..._.pick(mFormData, ['Awart', 'Begda', 'Endda']) });
+          const [mResultData] = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'LeaveApplEmpList', {
+            Prcty: 'C',
+            Menid: this.getCurrentMenuId(),
+            Awart: mFormData.Awart,
+            Begda: DateUtils.parse(mFormData.Begda),
+            Endda: DateUtils.parse(mFormData.Endda),
+          });
 
           if (!_.isEmpty(mResultData)) {
             oViewModel.setProperty('/form/dialog/data/Abrst', mResultData.Abrst);
@@ -959,107 +974,6 @@ sap.ui.define(
       /*****************************************************************
        * ! Call OData
        *****************************************************************/
-      readAwartCodeList() {
-        return new Promise((resolve, reject) => {
-          const oModel = this.getModel(ServiceNames.WORKTIME);
-          const oViewModel = this.getViewModel();
-          const sUrl = '/AwartCodeListSet';
-          const aAwartCodeList = oViewModel.getProperty('/form/dialog/awartCodeList');
-
-          if (aAwartCodeList.length > 1) {
-            resolve(aAwartCodeList);
-          }
-
-          oModel.read(sUrl, {
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(new ComboEntry({ codeKey: 'Awart', valueKey: 'Atext', aEntries: oData.results }));
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
-
-      /**
-       *
-       * @param {String} Prcty - R: 상세조회, C: 계산
-       * @returns
-       */
-      readLeaveApplEmpList(mFilters) {
-        return new Promise((resolve, reject) => {
-          const oModel = this.getModel(ServiceNames.WORKTIME);
-          const sUrl = '/LeaveApplEmpListSet';
-
-          oModel.read(sUrl, {
-            filters: _.chain(mFilters)
-              .omitBy(_.isNil)
-              .map((v, p) => {
-                if (_.isEqual(p, 'Begda') || _.isEqual(p, 'Endda')) {
-                  return new Filter(p, FilterOperator.EQ, DateUtils.parse(v));
-                }
-                return new Filter(p, FilterOperator.EQ, v);
-              })
-              .value(),
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results[0] ?? {});
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
-
-      /**
-       *
-       * @param {String} sPrcty -  T:임시저장, C:신청
-       * @returns
-       */
-      createLeaveApplContent(sPrcty) {
-        const oModel = this.getModel(ServiceNames.WORKTIME);
-        const oViewModel = this.getViewModel();
-        const mAppointeeData = this.getAppointeeData();
-        const aTableData = oViewModel.getProperty('/form/list');
-        const sAppty = oViewModel.getProperty('/type');
-        const sAppno = oViewModel.getProperty('/Appno');
-        const sMenid = this.getCurrentMenuId();
-        const sUrl = '/LeaveApplContentSet';
-        let aLeaveApplNav1 = [...aTableData];
-
-        return new Promise((resolve, reject) => {
-          const oPayload = {
-            Menid: sMenid,
-            Pernr: mAppointeeData.Pernr,
-            Orgeh: mAppointeeData.Orgeh,
-            Appno: sAppno,
-            Prcty: sPrcty,
-            Appty: sAppty, // A:신규, B:변경, C:취소
-            LeaveApplNav1: aLeaveApplNav1.map((o) => ({ ...o, Pernr: mAppointeeData.Pernr })),
-          };
-
-          oModel.create(sUrl, oPayload, {
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results ?? []);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataCreateError({ oError })); // {신청}중 오류가 발생하였습니다.
-            },
-          });
-        });
-      },
     });
   }
 );

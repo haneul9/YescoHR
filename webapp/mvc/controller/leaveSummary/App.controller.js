@@ -121,8 +121,8 @@ sap.ui.define(
         this.GroupDialogHandler = new GroupDialogHandler(this, ([mOrgData]) => {
           const oViewModel = this.getViewModel();
 
-          oViewModel.setProperty('/search/Orgeh', mOrgData.Orgeh);
-          oViewModel.setProperty('/search/Orgtx', mOrgData.Stext);
+          oViewModel.setProperty('/search/Orgeh', _.isEmpty(mOrgData) ? null : mOrgData.Orgeh);
+          oViewModel.setProperty('/search/Orgtx', _.isEmpty(mOrgData) ? '' : mOrgData.Stext);
         });
 
         TableUtils.adjustRowSpan({
