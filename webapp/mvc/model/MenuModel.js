@@ -17,7 +17,10 @@ sap.ui.define(
 
     return UIComponentBaseModel.extend('sap.ui.yesco.mvc.model.MenuModel', {
       async retrieve() {
-        this.bMobile = _.isEqual(AppUtils.getDevice(), sap.ui.Device.system.SYSTEMTYPE.PHONE);
+        this.bMobile = AppUtils.isMobile();
+
+        const sPernr = this.getUIComponent().getSessionModel().getProperty('/Pernr');
+        this.sMobileRecentMenuLocalStorgaeKey = `ehr.mobile.recent.menus.${sPernr}`;
 
         try {
           const oModel = this.getUIComponent().getModel(ServiceNames.COMMON);
@@ -218,12 +221,12 @@ sap.ui.define(
           mModelData.mobileFavoriteMenus = aMobileFavoriteMenus;
 
           if (localStorage && localStorage.getItem instanceof Function) {
-            const aMobileRecentMenus = JSON.parse(localStorage.getItem('com.yescoholdings.ehr.mobile.recent.menus') || '[]');
+            const aMobileRecentMenus = JSON.parse(localStorage.getItem(this.sMobileRecentMenuLocalStorgaeKey) || '[]');
             mModelData.mobileRecentMenus = aMobileRecentMenus.filter((mMenu) => {
               return !!mMenidToProperties[mMenu.Menid];
             });
             mModelData.mobileRecentMenusCount = mModelData.mobileRecentMenus.length;
-            localStorage.setItem('com.yescoholdings.ehr.mobile.recent.menus', JSON.stringify(mModelData.mobileRecentMenus));
+            localStorage.setItem(this.sMobileRecentMenuLocalStorgaeKey, JSON.stringify(mModelData.mobileRecentMenus));
           } else {
             mModelData.mobileRecentMenus = [];
             mModelData.mobileRecentMenusCount = 0;
@@ -327,7 +330,7 @@ sap.ui.define(
         this.setProperty('/mobileRecentMenus', aMobileRecentMenus);
         this.setProperty('/mobileRecentMenusCount', iMobileRecentMenusCount);
         if (localStorage && localStorage.getItem instanceof Function) {
-          localStorage.setItem('com.yescoholdings.ehr.mobile.recent.menus', JSON.stringify(aMobileRecentMenus));
+          localStorage.setItem(this.sMobileRecentMenuLocalStorgaeKey, JSON.stringify(aMobileRecentMenus));
         }
       },
 

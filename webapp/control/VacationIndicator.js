@@ -65,44 +65,60 @@ sap.ui.define(
         }
 
         setTimeout(() => {
+          const fUsed2 = parseFloat(this.getUsed2() || 0);
+          const fUsed = parseFloat(this.getUsed() || 0);
+
           if (bShowTotal) {
-            let sRemain = '66.66666%';
-            let sUsed = '33.33333%';
+            let sRemainWidth = '66.6666666%';
+            let sUsedWidth = '33.3333333%';
 
             if (this.getUsedType() === 'WeekTime') {
-              const fTotal = this.getTotal();
-              const fUsed = this.getUsed();
-              const fUsed2 = this.getUsed2();
-
-              sRemain = this._getWeekTimePercent(fTotal, fUsed2);
-              sUsed = this._getWeekTimePercent(fTotal, fUsed);
+              sRemainWidth = this._getUsedWidth(fUsed2);
+              sUsedWidth = this._getUsedWidth(fUsed);
             }
 
-            $indicator.find('.vacation-indicator-remain').show().css('width', sRemain).toggleClass('vacation-indicator-animation', true);
-            $indicator.find('.vacation-indicator-used').show().css('width', sUsed).toggleClass('vacation-indicator-animation', true);
+            const $remain = $indicator.find('.vacation-indicator-remain').show();
+            if (fUsed2 > 0) {
+              $remain.css('width', sRemainWidth);
+            }
+            $remain.toggleClass('vacation-indicator-animation', true);
+
+            const $used = $indicator
+              .find('.vacation-indicator-used')
+              .toggleClass('vacation-indicator-zero', fUsed === 0)
+              .show();
+            if (fUsed > 0) {
+              $used.css('width', sUsedWidth);
+            }
+            $used.toggleClass('vacation-indicator-animation', true);
           } else {
+            const sUsedWidth = this._getUsedWidth(fUsed);
+
             $indicator.find('.vacation-indicator-remain').toggleClass('w-100', true);
-            $indicator.find('.vacation-indicator-used').show().css('width', this._getUsedPercent()).toggleClass('vacation-indicator-animation', true);
+            const $used = $indicator
+              .find('.vacation-indicator-used')
+              .toggleClass('vacation-indicator-zero', fUsed === 0)
+              .show();
+            if (fUsed > 0) {
+              $used.css('width', sUsedWidth);
+            }
+            $used.toggleClass('vacation-indicator-animation', true);
           }
         }, 300);
       },
 
-      // 개인별 근태현황 주 52시간 현황
-      _getWeekTimePercent(fTotal = 0, fUsed = 0) {
-        let fTimePercent = (parseFloat(fUsed) / parseFloat(fTotal)) * 100;
-
-        return `${fTimePercent}%`;
-      },
-
-      _getUsedPercent() {
+      _getUsedWidth(fUsed) {
         const fTotal = parseFloat(this.getTotal());
-        const fUsed = parseFloat(this.getUsed());
         const fMinPercent = 18;
         const fMaxPercent = 82;
-        let fUsedPercent = (fUsed / fTotal) * 100;
 
-        fUsedPercent = fUsedPercent < fMinPercent ? fMinPercent : fUsedPercent;
-        fUsedPercent = fUsedPercent < 100 && fUsedPercent > fMaxPercent ? fMaxPercent : fUsedPercent;
+        let fUsedPercent = fTotal === 0 ? 0 : (fUsed / fTotal) * 100;
+        if (fUsedPercent === 0) {
+          return '.5rem';
+        } else if (fUsedPercent === 100) {
+          return '100%';
+        }
+        fUsedPercent = Math.min(Math.max(fUsedPercent, fMinPercent), fMaxPercent);
         return `${fUsedPercent}%`;
       },
 

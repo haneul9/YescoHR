@@ -201,11 +201,11 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 @keyframes vacation-indicator-gauge {
  from {width:0}
 }
-.vacation-indicator {box-sizing:border-box; overflow:hidden; position:relative; height:20px}
-.vacation-indicator div {box-sizing:border-box; position:absolute; left:0; height:20px; border-radius:10px; line-height:20px; font-size:.875rem; font-weight:normal}
-.vacation-indicator.vacation-indicator-show-total .vacation-indicator-text > div {text-align:right}
+.vacation-indicator {box-sizing:border-box; overflow:hidden; position:relative; height:1.25rem}
+.vacation-indicator div {box-sizing:border-box; position:absolute; left:0; display:flex; align-items:center; height:100%; border-radius:.625rem; font-size:.875rem; font-weight:normal}
+.vacation-indicator.vacation-indicator-show-total .vacation-indicator-text > div {justify-content:end}
 .vacation-indicator.vacation-indicator-top,
-.vacation-indicator.vacation-indicator-bottom {height:40px}
+.vacation-indicator.vacation-indicator-bottom {height:2.5rem}
 .vacation-indicator.vacation-indicator-top .vacation-indicator-gauge,
 .vacation-indicator.vacation-indicator-bottom .vacation-indicator-text {top:0}
 .vacation-indicator.vacation-indicator-top .vacation-indicator-text,
@@ -213,18 +213,23 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .vacation-indicator.vacation-indicator-middle .vacation-indicator-text > div {padding:0 .5rem; color:#fff}
 .vacation-indicator.vacation-indicator-top .vacation-indicator-text > div,
 .vacation-indicator.vacation-indicator-bottom .vacation-indicator-text > div {padding:0; color:#000}
-.vacation-indicator.vacation-indicator-middle .vacation-indicator-text .vacation-indicator-zero.vacation-indicator-remain {color:#ffc02e}
-.vacation-indicator.vacation-indicator-middle .vacation-indicator-text .vacation-indicator-zero.vacation-indicator-used {color:#fd5f58}
 .vacation-indicator .vacation-indicator-gauge {overflow:hidden}
-.vacation-indicator .vacation-indicator-gauge > div {text-align:right}
+.vacation-indicator .vacation-indicator-gauge > div {justify-content:end}
 .vacation-indicator .vacation-indicator-gauge .vacation-indicator-total {z-index:1; color:transparent; background-color:#2f88ff}
 .vacation-indicator .vacation-indicator-gauge .vacation-indicator-remain {z-index:2; color:transparent; background-color:#ffc02e}
 .vacation-indicator .vacation-indicator-gauge .vacation-indicator-used {z-index:3; color:transparent; background-color:#fd5f58}
-.vacation-indicator .vacation-indicator-gauge .vacation-indicator-used.vacation-indicator-zero {background-color:transparent}
+.vacation-indicator .vacation-indicator-gauge .vacation-indicator-used.vacation-indicator-zero {width:.5rem}
 .vacation-indicator .vacation-indicator-text,
 .vacation-indicator .vacation-indicator-text div {z-index:4; background-color:transparent}
-.vacation-indicator .vacation-indicator-text .vacation-indicator-remain {text-align:right}
+.vacation-indicator .vacation-indicator-text .vacation-indicator-remain {justify-content:end}
 .vacation-indicator .vacation-indicator-animation {animation-name:vacation-indicator-gauge; animation-duration:2s; animation-fill-mode:forwards}
+
+.vacation-indicator.x2 {height:2.5rem}
+.vacation-indicator.x2 div {border-radius:1.25rem; font-size:1.25rem; font-weight:bold}
+.vacation-indicator.x2.vacation-indicator-top,
+.vacation-indicator.x2.vacation-indicator-bottom {height:5rem}
+.vacation-indicator.x2.vacation-indicator-middle .vacation-indicator-text > div {padding:0 1rem}
+.vacation-indicator.x2 .vacation-indicator-gauge .vacation-indicator-used.vacation-indicator-zero {width:1rem}
 
 [data-new-attachment="O"] {text-decoration:none; cursor:default; color:#000}
 [data-new-attachment="O"]:hover,
@@ -1710,11 +1715,8 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .portlet .sapMGTSubHdrTxt .sapMText {font-size:14px; background:linear-gradient(transparent 70%, #a8ffbe 60%) no-repeat}
 .portlet.type-b .sapMGTSubHdrTxt .sapMText {font-size:11px; background:none}
 
-.portlet-vacation-summary .vacation-indicator {height:40px}
-.portlet-vacation-summary .vacation-indicator div {height:40px; border-radius:20px; line-height:40px; font-size:20px; font-weight:700}
-.portlet-vacation-summary .vacation-indicator .vacation-indicator-gauge .vacation-indicator-remain {z-index:2; color:transparent; background-color:#e7ebee}
-.portlet-vacation-summary .vacation-indicator .vacation-indicator-gauge .vacation-indicator-used {z-index:3; color:transparent; background-color:#a0c7ec}
-.portlet-vacation-summary .vacation-indicator.vacation-indicator-middle .vacation-indicator-text > div {padding:0 1rem}
+.portlet-vacation-summary .vacation-indicator .vacation-indicator-gauge .vacation-indicator-remain {background-color:#e7ebee}
+.portlet-vacation-summary .vacation-indicator .vacation-indicator-gauge .vacation-indicator-used {background-color:#a0c7ec}
 .portlet-vacation-summary .vacation-indicator.vacation-indicator-middle .vacation-indicator-text > div.vacation-indicator-remain {color:#000}
 
 .portlet.team-member-list .sapMImg {width:30px; height:30px; border-radius:50%}
@@ -1756,8 +1758,6 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 
 .week-Work-summary {padding:43px 20px; border-radius:8px; height:233px}
 .week-Work-summary .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem {min-height:auto}
-.week-Work-summary .vacation-indicator {height:40px}
-.week-Work-summary .vacation-indicator div {box-sizing:border-box; position:absolute; left:0; height:100%; border-radius:20px; line-height:20px; font-size:.875rem; font-weight:normal}
 .week-Work-summary .sapUiLayoutCSSGrid .sapMFlexItem {align-items:flex-end; display:flex}
 .week-Work-summary .sapUiLayoutCSSGrid .sapMFlexItem .sapMText {font-size:50px; align-self:flex-end; height:auto}
 .week-Work-summary .sapUiLayoutCSSGrid .sapMFlexItem + .sapMFlexItem .sapMText {margin-bottom:13px; margin-left:6px; font-size:20px; align-self:flex-end; height:auto}

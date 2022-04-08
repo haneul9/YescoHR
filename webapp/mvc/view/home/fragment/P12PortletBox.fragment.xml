@@ -26,12 +26,12 @@
           <Label text="{i18n>LABEL_01172}" />
           <Label text="{/Annual/Total}" class="desc-txt2" />
         </HBox>
-        <custom:VacationIndicator width="100%" total="{/Annual/Total}" used="{/Annual/Used}" showTotal="false" />
+        <custom:VacationIndicator width="100%" total="{/Annual/Total}" used="{/Annual/Used}" showTotal="false" class="x2" />
         <HBox width="100%" class="mb-10-px mt-30-px">
           <Label text="{i18n>LABEL_01173}" />
           <Label text="{/Summer/Total}" class="desc-txt2" />
         </HBox>
-        <custom:VacationIndicator width="100%" total="{/Summer/Total}" used="{/Summer/Used}" showTotal="false" />
+        <custom:VacationIndicator width="100%" total="{/Summer/Total}" used="{/Summer/Used}" showTotal="false" class="x2" />
       </VBox>
     </HBox>
   </VBox>
