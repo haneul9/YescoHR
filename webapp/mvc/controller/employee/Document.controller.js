@@ -2,13 +2,11 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/layout/cssgrid/CSSGrid',
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/table/Table',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/DateUtils',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
@@ -16,13 +14,11 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     CSSGrid,
-    Filter,
-    FilterOperator,
     Table,
     AppUtils,
+    Client,
     DateUtils,
     ComboEntry,
-    ODataReadError,
     ServiceNames,
     BaseController
   ) => {
@@ -164,6 +160,7 @@ sap.ui.define(
 
         try {
           // 1. 상단 프로필, 탭 메뉴, 주소유형, 시/도
+          const fCurriedGetEntitySet = Client.getEntitySet(oModel);
           const [
             aProfileReturnData, //
             aMilestoneReturnData,
@@ -178,18 +175,18 @@ sap.ui.define(
             aLanguageTypeList,
             aTestGradeList,
           ] = await Promise.all([
-            this.readOdata({ sUrl: '/EmpProfileHeaderNewSet', mFilters }),
-            this.readOdata({ sUrl: '/EmpProfileMilestoneSet', mFilters }),
-            this.readOdata({ sUrl: '/EmpProfileMenuSet', mFilters: { ...mFilters, Usrty: sUsrty } }),
-            this.readOdata({ sUrl: '/CountryCodeSet' }),
-            this.readOdata({ sUrl: '/MajorCodeSet' }),
-            this.readOdata({ sUrl: '/CertificateCodeSet' }),
-            this.readOdata({ sUrl: '/CertificateGradeCodeSet' }),
-            this.readComboEntry({ oModel, sUrl: '/PaCodeListSet', sPath: 'typeList', mFilters: { Cdnum: 'CM0002', Grcod: '0006' } }),
-            this.readComboEntry({ oModel, sUrl: '/CityListSet', sPath: 'sidoList', sPernr, mEntryInfo: { codeKey: 'State', valueKey: 'Bezei' } }),
-            this.readComboEntry({ oModel, sUrl: '/SchoolTypeCodeSet', sPath: 'schoolTypeList', mEntryInfo: { codeKey: 'Slart', valueKey: 'Stext' } }),
-            this.readComboEntry({ oModel, sUrl: '/LanguageTypeCodeSet', sPath: 'languageTypeList', mEntryInfo: { codeKey: 'Quali', valueKey: 'Qualitx' } }),
-            this.readComboEntry({ oModel, sUrl: '/TestGradeCodeSet', sPath: 'gradeList', mEntryInfo: { codeKey: 'Eamgr', valueKey: 'Eamgrtx' } }),
+            fCurriedGetEntitySet('EmpProfileHeaderNew', mFilters),
+            fCurriedGetEntitySet('EmpProfileMilestone', mFilters),
+            fCurriedGetEntitySet('EmpProfileMenu', { ...mFilters, Usrty: sUsrty }),
+            fCurriedGetEntitySet('CountryCode'),
+            fCurriedGetEntitySet('MajorCode'),
+            fCurriedGetEntitySet('CertificateCode'),
+            fCurriedGetEntitySet('CertificateGradeCode'),
+            fCurriedGetEntitySet('PaCodeList', { Cdnum: 'CM0002', Grcod: '0006' }),
+            fCurriedGetEntitySet('CityList', { Pernr: sPernr }),
+            fCurriedGetEntitySet('SchoolTypeCode'),
+            fCurriedGetEntitySet('LanguageTypeCode'),
+            fCurriedGetEntitySet('TestGradeCode'),
           ]);
 
           // Milestone set
@@ -198,13 +195,13 @@ sap.ui.define(
           // Dialog Combo entry set
           oViewModel.setProperty('/employee/dialog/countryList', aCountryList);
           oViewModel.setProperty('/employee/dialog/majorList', aMajorList);
-          oViewModel.setProperty('/employee/dialog/typeList', aAddressTypeData);
-          oViewModel.setProperty('/employee/dialog/sidoList', aAddressCityData);
-          oViewModel.setProperty('/employee/dialog/schoolTypeList', aSchoolTypeList);
-          oViewModel.setProperty('/employee/dialog/languageTypeList', aLanguageTypeList);
-          oViewModel.setProperty('/employee/dialog/gradeList', aTestGradeList);
           oViewModel.setProperty('/employee/dialog/certificateList', aCertList);
           oViewModel.setProperty('/employee/dialog/certificateGradeList', aCertGradeList);
+          oViewModel.setProperty('/employee/dialog/typeList', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aAddressTypeData }));
+          oViewModel.setProperty('/employee/dialog/sidoList', new ComboEntry({ codeKey: 'State', valueKey: 'Bezei', aEntries: aAddressCityData }));
+          oViewModel.setProperty('/employee/dialog/schoolTypeList', new ComboEntry({ codeKey: 'Slart', valueKey: 'Stext', aEntries: aSchoolTypeList }));
+          oViewModel.setProperty('/employee/dialog/languageTypeList', new ComboEntry({ codeKey: 'Quali', valueKey: 'Qualitx', aEntries: aLanguageTypeList }));
+          oViewModel.setProperty('/employee/dialog/gradeList', new ComboEntry({ codeKey: 'Eamgr', valueKey: 'Eamgrtx', aEntries: aTestGradeList }));
           //End Dialog Combo entry set
 
           // 상단 프로필 Set
@@ -234,8 +231,8 @@ sap.ui.define(
 
             _.set(oViewModelData, ['employee', 'sub', data.Menuc1], { contents: {} });
 
-            aHeaderRequests.push(this.readOdata({ sUrl: '/EmpProfileHeaderTabSet', mFilters: { Menuc: data.Menuc1, ...mFilters } }));
-            aContentRequests.push(this.readOdata({ sUrl: '/EmpProfileContentsTabSet', mFilters: { Menuc: data.Menuc1, ...mFilters } }));
+            aHeaderRequests.push(fCurriedGetEntitySet('EmpProfileHeaderTab', { Menuc: data.Menuc1, ...mFilters }));
+            aContentRequests.push(fCurriedGetEntitySet('EmpProfileContentsTab', { Menuc: data.Menuc1, ...mFilters }));
           });
 
           aSubMenus.forEach((data) => {
@@ -378,78 +375,6 @@ sap.ui.define(
       /*****************************************************************
        * ! Call oData
        *****************************************************************/
-      readEmpSearchResult({ searchText, Orgeh }) {
-        return new Promise((resolve, reject) => {
-          const oModel = this.getModel(ServiceNames.COMMON);
-          const sUrl = '/EmpSearchResultSet';
-          const aFilters = [
-            new Filter('Menid', FilterOperator.EQ, this.getCurrentMenuId()), //
-            new Filter('Zflag', FilterOperator.EQ, 'X'),
-            new Filter('Actda', FilterOperator.EQ, moment().hour(9).toDate()),
-            new Filter('Ename', FilterOperator.EQ, searchText),
-          ];
-
-          if (!_.isEmpty(Orgeh)) aFilters.push(new Filter('Orgeh', FilterOperator.EQ, Orgeh));
-
-          oModel.read(sUrl, {
-            filters: aFilters,
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
-
-      readComboEntry({ oModel, sUrl, sPath, sPernr, mFilters = {}, mEntryInfo = { codeKey: 'Zcode', valueKey: 'Ztext' } }) {
-        return new Promise((resolve, reject) => {
-          const oViewModel = this.getViewModel();
-          const mEntries = oViewModel.getProperty(`/employee/dialog/${sPath}`);
-
-          if (sPath && mEntries.length > 1) resolve(mEntries);
-          if (sPernr) mFilters.Pernr = sPernr;
-
-          oModel.read(sUrl, {
-            filters: _.map(mFilters, (v, p) => new Filter(p, FilterOperator.EQ, v)),
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(new ComboEntry({ ...mEntryInfo, aEntries: oData.results }));
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
-
-      readOdata({ sUrl, mFilters = {} }) {
-        return new Promise((resolve, reject) => {
-          const oModel = this.getModel(ServiceNames.PA);
-
-          oModel.read(sUrl, {
-            filters: _.map(mFilters, (v, p) => new Filter(p, FilterOperator.EQ, v)),
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError)); // {조회}중 오류가 발생하였습니다.
-            },
-          });
-        });
-      },
     });
   }
 );
