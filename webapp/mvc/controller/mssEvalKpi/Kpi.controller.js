@@ -85,8 +85,8 @@ sap.ui.define(
             oViewModel.setProperty('/situation/segmentKey', 'A');
 
             this.GroupDialogHandler = new GroupDialogHandler(this, ([mOrgData]) => {
-              oViewModel.setProperty('/search/Orgeh', mOrgData.Orgeh);
-              oViewModel.setProperty('/search/Orgtx', mOrgData.Stext);
+              oViewModel.setProperty('/search/Orgeh', _.isEmpty(mOrgData) ? null : mOrgData.Orgeh);
+              oViewModel.setProperty('/search/Orgtx', _.isEmpty(mOrgData) ? '' : mOrgData.Stext);
             });
 
             oViewModel.setProperty('/CascadingSitu', {
@@ -269,8 +269,8 @@ sap.ui.define(
             oViewModel.setProperty('/situation/segmentKey', 'A');
 
             this.GroupDialogHandler = new GroupDialogHandler(this, ([mOrgData]) => {
-              oViewModel.setProperty('/search/Orgeh', mOrgData.Orgeh);
-              oViewModel.setProperty('/search/Orgtx', mOrgData.Stext);
+              oViewModel.setProperty('/search/Orgeh', _.isEmpty(mOrgData) ? null : mOrgData.Orgeh);
+              oViewModel.setProperty('/search/Orgtx', _.isEmpty(mOrgData) ? '' : mOrgData.Stext);
             });
 
             oViewModel.setProperty('/CascadingSitu', {

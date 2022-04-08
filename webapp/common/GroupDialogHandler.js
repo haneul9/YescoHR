@@ -94,13 +94,13 @@ sap.ui.define(
         const aOrgList = this.oGroupDialog.getModel().getProperty('/orglist');
         const aSelectedIndices = this.oTable.getSelectedIndices();
 
-        if (_.isEmpty(aSelectedIndices)) {
-          MessageBox.alert(this.oController.getBundleText('MSG_00054')); // 부서를 선택하세요.
-          return;
-        } else if (aSelectedIndices.length > 1) {
-          MessageBox.alert(this.oController.getBundleText('MSG_00028')); // 부서를 하나만 선택하여 주십시오.
-          return;
-        }
+        // if (_.isEmpty(aSelectedIndices)) {
+        //   MessageBox.alert(this.oController.getBundleText('MSG_00054')); // 부서를 선택하세요.
+        //   return;
+        // } else if (aSelectedIndices.length > 1) {
+        //   MessageBox.alert(this.oController.getBundleText('MSG_00028')); // 부서를 하나만 선택하여 주십시오.
+        //   return;
+        // }
 
         this.fCallback(_.map(aSelectedIndices, (v) => _.get(aOrgList, v)));
         this.oGroupDialog.close();
@@ -112,6 +112,12 @@ sap.ui.define(
 
       onPressSearchOrg() {
         this.readDialogData();
+      },
+
+      onOrganizationRowSelection(oEvent) {
+        const iSelectedRowIndex = oEvent.getParameter('rowIndex');
+
+        oEvent.getSource().setSelectionInterval(iSelectedRowIndex, iSelectedRowIndex);
       },
     });
   }

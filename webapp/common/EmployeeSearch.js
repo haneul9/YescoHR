@@ -211,23 +211,13 @@ sap.ui.define(
         const oEventSource = oEvent.getSource();
         const aSelected = oEventSource.getSelectedIndices();
         const oEmpModel = this.getViewModel();
+        const iSelectedRowIndex = oEvent.getParameter('rowIndex');
 
         if (!aSelected) return;
 
-        if (aSelected.length > 1) {
-          oEventSource.clearSelection();
-          return MessageBox.alert(this.getBundleText('MSG_00028'));
-        }
+        oEventSource.setSelectionInterval(iSelectedRowIndex, iSelectedRowIndex);
 
-        const aSelectionDatas = [];
-
-        oEmpModel.setProperty('/employeeModel/org/SelectedOrg', []);
-
-        aSelected.forEach((e) => {
-          aSelectionDatas.push(oEmpModel.getProperty(`/employeeModel/org/orgList/${e}`));
-        });
-
-        oEmpModel.setProperty('/employeeModel/org/SelectedOrg', aSelectionDatas);
+        oEmpModel.setProperty('/employeeModel/org/SelectedOrg', [oEmpModel.getProperty(`/employeeModel/org/orgList/${iSelectedRowIndex}`)]);
       },
 
       /*
@@ -295,7 +285,7 @@ sap.ui.define(
       /*
        *  조직검색 Dialog호출
        */
-      onGroupDetail() {
+      async onGroupDetail() {
         const oView = this.getView();
 
         this.getViewModel().setProperty('/employeeModel/org', {
@@ -308,19 +298,20 @@ sap.ui.define(
         });
 
         if (!this.dGroupDialog) {
-          this.dGroupDialog = Fragment.load({
+          this.dGroupDialog = await Fragment.load({
             id: `${oView.getId()}GroupDetail`,
             name: 'sap.ui.yesco.fragment.GroupDetail',
             controller: this,
-          }).then(function (oDialog) {
-            oView.addDependent(oDialog);
-            return oDialog;
           });
+
+          this.dGroupDialog.attachAfterOpen(() => {
+            this.EmployeeSearch.onOrgList.call(this);
+          });
+
+          oView.addDependent(this.dGroupDialog);
         }
 
-        this.dGroupDialog.then(function (oDialog) {
-          oDialog.open();
-        });
+        this.dGroupDialog.open();
       },
     };
   }
