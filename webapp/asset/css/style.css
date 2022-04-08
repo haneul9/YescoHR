@@ -334,7 +334,8 @@ html.sap-desktop .sapMBtn:focus>.sapMFocusable {outline:none; outline-offset:-0.
 .sapMSlt {border-radius:3px}
 .sapMCb .sapMCbBg {border-radius:3px}
 div.sapUiTableSelectAllCheckBox::after, div.sapUiTableRowSelectionCell::after {border-width:1px; border-color:var(--BorderColorNormal); border-radius:3px}
-.radio-selection-table div.sapUiTableRowSelectionCell::after {border-radius:8px !important}
+.radio-selection-table div.sapUiTableRowSelectionCell::after { border-radius:8px; }
+.sapUiTableSelModeMultiToggle.radio-selection-table .sapUiTableRowSel .sapUiTableRowSelectionCell::after { content: '\e255'; padding-left: 1px; padding-bottom: 0.1px; }
 
 /* 공통 Border Option */
 .sapMSltState {border-width:1px}
