@@ -28,6 +28,7 @@
             <core:Item text="{Orgtx}" key="{Orgeh}" />
           </ComboBox>
           <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onPressSearch"/>
+          <Button text="{i18n>LABEL_28058}" type="Emphasized" class="sapUiTinyMarginBegin" press=".onPressExcept"/>
         </HBox>
         <VBox justifyContent="Center" alignItems="Center">
           <HBox>

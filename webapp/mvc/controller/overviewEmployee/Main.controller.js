@@ -362,6 +362,10 @@ sap.ui.define(
         }
       },
 
+      onPressExcept() {
+        this.openDetailDialog({ Headty: 'L' });
+      },
+
       onPressCount(oEvent) {
         if (oEvent['getSource'] instanceof Function) {
           this.openDetailDialog(oEvent.getSource().data());
