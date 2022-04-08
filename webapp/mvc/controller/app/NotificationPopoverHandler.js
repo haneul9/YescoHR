@@ -48,7 +48,6 @@ sap.ui.define(
           listCount: 0,
           unreadCount: 0,
           showUnreadCount: false,
-          maxRows: this.bMobile ? Math.ceil((screen.availHeight - 143) / 69) : 0,
         };
       },
 
@@ -88,7 +87,6 @@ sap.ui.define(
 
         oNotificationModel.setProperty('/showUnreadCount', unreadCount > 0);
         oNotificationModel.setProperty('/unreadCount', `${unreadCount > 99 ? '+' : ''}${iUnreadCount}`);
-        oNotificationModel.setProperty('/maxRows', Math.min(Math.floor(screen.availHeight / 69) - 2, listCount));
         oNotificationModel.setProperty('/listCount', listCount);
         oNotificationModel.setProperty('/list', list);
       },
@@ -162,7 +160,6 @@ sap.ui.define(
 
         oNotificationModel.setProperty('/showUnreadCount', iUnreadCount > 0);
         oNotificationModel.setProperty('/unreadCount', `${iUnreadCount === 99 ? '+' : ''}${iUnreadCount}`);
-        oNotificationModel.setProperty('/maxRows', Math.min(Math.floor(screen.availHeight / 69) - 2, listCount + iPrevListCount));
         oNotificationModel.setProperty('/listCount', listCount + iPrevListCount);
         oNotificationModel.setProperty('/list', iPrevList);
 

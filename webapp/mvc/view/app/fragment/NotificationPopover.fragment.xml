@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
-  <custom:Popover placement="{placement}" horizontalScrolling="false" class="notification-popover" busy="{busy}" busyIndicatorDelay="0" initialFocus="notification-popover-close" scroll=".onScroll" maxRows="{maxRows}">
+  <custom:Popover placement="{placement}" horizontalScrolling="false" class="notification-popover" busy="{busy}" busyIndicatorDelay="0" initialFocus="notification-popover-close" scroll=".onScroll">
     <custom:customHeader>
       <HBox class="notification-popover-header">
         <Title text="{i18n>LABEL_01401}" level="H3" />
@@ -22,7 +22,7 @@
       </HBox>
       <List items="{list}" visible="{= ${listCount} &gt; 0 }" rememberSelections="false" showUnread="true" showNoData="false">
         <CustomListItem unread="{= ${Checked} !== 'X' }">
-          <HBox alignItems="Center" height="42px">
+          <HBox alignItems="Center">
             <ToggleButton icon="{= ${Pinned} === 'X' ? '/sap/public/bc/ui2/zui5_yescohr/images/icon_pinned.svg' : '/sap/public/bc/ui2/zui5_yescohr/images/icon_pin.svg' }" iconDensityAware="false" pressed="{= ${Pinned} === 'X' }" press=".onPressNotificationPin" width="1rem" class="icon-button pin-toggle-icon" tooltip="{= ${Pinned} === 'X' ? ${i18n>LABEL_01408} : ${i18n>LABEL_01407} }">
               <layoutData>
                 <FlexItemData alignSelf="Start" />
