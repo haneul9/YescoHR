@@ -1,28 +1,24 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/FileListDialogHandler',
     'sap/ui/yesco/common/TableUtils',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Date',
     'sap/ui/yesco/mvc/model/type/Currency',
   ],
   (
     // prettier 방지용 주석
-    Filter,
-    FilterOperator,
     AppUtils,
     EmployeeSearch,
     FileListDialogHandler,
     TableUtils,
+    Client,
     ServiceNames,
-    ODataReadError,
     BaseController
   ) => {
     'use strict';
@@ -37,6 +33,7 @@ sap.ui.define(
         return {
           busy: false,
           Data: [],
+          routeName: '',
           searchDate: {
             date: moment().hours(9).toDate(),
             secondDate: moment().subtract(1, 'month').add(1, 'day').hours(9).toDate(),
@@ -57,10 +54,10 @@ sap.ui.define(
         this.FileListDialogHandler = new FileListDialogHandler(this);
       },
 
-      onObjectMatched() {
+      onObjectMatched(oParameter, sRouteName) {
+        this.getViewModel().setProperty('/routeName', sRouteName);
         this.onSearch();
         this.getTotalPay();
-        // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
       },
 
       // override AttachFileCode
@@ -72,11 +69,10 @@ sap.ui.define(
       onRefresh() {
         this.onSearch();
         this.getTotalPay();
-        // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
       },
 
       onClick() {
-        this.getRouter().navTo(this.isHass() ? 'h/congratulation-detail' : 'congratulation-detail', { oDataKey: 'N' });
+        this.getRouter().navTo(`${this.getViewModel().getProperty('/routeName')}-detail`, { oDataKey: 'N' });
       },
 
       formatNumber(vNum) {
@@ -91,82 +87,61 @@ sap.ui.define(
         return vPay;
       },
 
-      getTotalPay() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oTotalModel = this.getViewModel();
-        const sUrl = '/ConExpenseMyconSet';
-        const aFilters = [];
+      // 나의 경조금
+      async getTotalPay() {
+        const oViewModel = this.getViewModel();
 
-        if (this.isHass()) {
-          const sPernr = this.getAppointeeProperty('Pernr');
+        try {
+          const oModel = this.getModel(ServiceNames.BENEFIT);
+          const [oTotal] = await Client.getEntitySet(oModel, 'ConExpenseMycon', { Pernr: this.getAppointeeProperty('Pernr') });
 
-          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
+          oViewModel.setProperty('/Total', oTotal);
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
         }
-
-        oModel.read(sUrl, {
-          filters: aFilters,
-          success: (oData) => {
-            if (oData) {
-              this.debug(`${sUrl} success.`, oData);
-              const oTotal = oData.results[0];
-
-              oTotalModel.setProperty('/Total', oTotal);
-            }
-          },
-          error: (oError) => {
-            AppUtils.handleError(new ODataReadError(oError));
-          },
-        });
       },
 
-      onSearch() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oListModel = this.getViewModel();
-        const oTable = this.byId('conguTable');
-        const oSearchDate = oListModel.getProperty('/searchDate');
-        const dDate = moment(oSearchDate.secondDate).hours(9).toDate();
-        const dDate2 = moment(oSearchDate.date).hours(9).toDate();
-        const sMenid = this.getCurrentMenuId();
-        const aFilters = [
-          new Filter('Prcty', FilterOperator.EQ, 'L'), // prettier 방지용 주석
-          new Filter('Menid', FilterOperator.EQ, sMenid),
-          new Filter('Apbeg', FilterOperator.EQ, dDate),
-          new Filter('Apend', FilterOperator.EQ, dDate2),
-        ];
+      // 경조금 내역조회
+      async onSearch() {
+        const oViewModel = this.getViewModel();
 
-        oListModel.setProperty('/busy', true);
+        try {
+          oViewModel.setProperty('/busy', true);
 
-        if (this.isHass()) {
-          const sPernr = this.getAppointeeProperty('Pernr');
+          const oModel = this.getModel(ServiceNames.BENEFIT);
+          const oSearchDate = oViewModel.getProperty('/searchDate');
+          const dDate = moment(oSearchDate.secondDate).hours(9).toDate();
+          const dDate2 = moment(oSearchDate.date).hours(9).toDate();
+          const sMenid = this.getCurrentMenuId();
+          const mPayLoad = {
+            Pernr: this.getAppointeeProperty('Pernr'),
+            Prcty: 'L',
+            Menid: sMenid,
+            Apbeg: dDate,
+            Apend: dDate2,
+          };
 
-          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
-          this.getTotalPay();
+          const aTableList = await Client.getEntitySet(oModel, 'ConExpenseAppl', mPayLoad);
+          const oTable = this.byId('conguTable');
+
+          oViewModel.setProperty('/CongList', aTableList);
+          oViewModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
         }
-
-        oModel.read('/ConExpenseApplSet', {
-          filters: aFilters,
-          success: (oData) => {
-            if (oData) {
-              const oList = oData.results;
-
-              oListModel.setProperty('/CongList', oList);
-              oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: oList }));
-              oListModel.setProperty('/busy', false);
-            }
-          },
-          error: (oError) => {
-            AppUtils.handleError(new ODataReadError(oError));
-
-            oListModel.setProperty('/busy', false);
-          },
-        });
       },
 
       onSelectRow(oEvent) {
+        const oListModel = this.getViewModel();
         const vPath = oEvent.getParameter('rowBindingContext').getPath();
         const oRowData = this.getViewModel().getProperty(vPath);
+        const sRouteName = oListModel.getProperty('/routeName');
 
-        this.getRouter().navTo(this.isHass() ? 'h/congratulation-detail' : 'congratulation-detail', { oDataKey: oRowData.Appno });
+        this.getRouter().navTo(`${sRouteName}-detail`, { oDataKey: oRowData.Appno });
       },
 
       onPressExcelDownload() {
