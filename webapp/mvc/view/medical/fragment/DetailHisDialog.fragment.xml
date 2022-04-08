@@ -41,7 +41,7 @@
                             <core:Item text="{Ztext}" key="{Zcode}" />
                         </ComboBox>
                     </VBox>
-                    <Label text="{i18n>LABEL_09023}" visible="{= ${/DialogData/ZappStat} === 'P' }" />
+                    <Label text="{i18n>LABEL_09027}" visible="{= ${/DialogData/ZappStat} === 'P' }" />
                     <FlexBox alignItems="Start" justifyContent="End" visible="{= ${/DialogData/ZappStat} === 'P' }">
                         <Text text="{ path: '/DialogData/Mobet', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
                     </FlexBox>
