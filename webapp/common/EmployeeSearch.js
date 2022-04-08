@@ -238,11 +238,11 @@ sap.ui.define(
         const aSelectedOrg = oEmpModel.getProperty('/employeeModel/org/SelectedOrg');
 
         if (!aSelectedOrg.length) {
-          return MessageBox.alert(this.getBundleText('MSG_00004', 'LABEL_00228'));
+          // return MessageBox.alert(this.getBundleText('MSG_00004', 'LABEL_00228'));
         }
 
-        oEmpModel.setProperty('/employeeModel/Search/Pbtxt', aSelectedOrg[0].Stext);
-        oEmpModel.setProperty('/employeeModel/Search/Orgeh', aSelectedOrg[0].Orgeh);
+        oEmpModel.setProperty('/employeeModel/Search/Pbtxt', _.isEmpty(aSelectedOrg) ? '' : aSelectedOrg[0].Stext);
+        oEmpModel.setProperty('/employeeModel/Search/Orgeh', _.isEmpty(aSelectedOrg) ? null : aSelectedOrg[0].Orgeh);
         oEvent.getSource().getParent().close();
       },
 
