@@ -57,14 +57,15 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/busy', true);
 
-          const oModel = this.getModel(ServiceNames.COMMON);
+          const oModel = this.getModel(ServiceNames.WORKTIME);
           const mAppointee = this.getAppointeeData();
           const mPayLoad = {
             Pernr: mAppointee.Pernr,
+            Actty: this.isHass() ? 'H' : 'M',
             Werks: mAppointee.Werks,
           };
 
-          const aOrgList = await Client.getEntitySet(oModel, 'DashboardOrgList', mPayLoad);
+          const aOrgList = await Client.getEntitySet(oModel, 'MssOrgList', mPayLoad);
 
           oViewModel.setProperty('/OrgList', aOrgList);
 
@@ -306,6 +307,7 @@ sap.ui.define(
         const mSearch = oViewModel.getProperty('/search');
         const mPayLoad = {
           Prcty: 'L',
+          Actty: this.isHass() ? 'H' : 'M',
           Orgeh: mSearch.dept,
           Zyymm: mSearch.date,
           Pernr: this.getAppointeeProperty('Pernr'),

@@ -154,6 +154,7 @@
         { "pattern": "h/commuteType/{oDataKey}/:zyymm:/:schkz:", "name": "h/commuteType-detail", "target": "commuteTypeDetail" },
         
         { "pattern": "m/commuteConfirm", "name": "m/commuteConfirm", "target": "m/commuteConfirm" },
+        { "pattern": "h/commuteTypeConfirm", "name": "h/commuteTypeConfirm", "target": "h/commuteTypeConfirm" },
 
         { "pattern": "driveRecord", "name": "driveRecord", "target": "driveRecord" },
         { "pattern": "driveRecord/{oDataKey}", "name": "driveRecord-detail", "target": "driveRecordDetail" },
@@ -372,6 +373,7 @@
         "commuteTypeDetail": { "viewId": "commuteTypeDetail", "viewPath": "sap.ui.yesco.mvc.view.commuteType", "viewName": "CommuteTypeDetail" },
         
         "m/commuteConfirm": { "viewId": "m_commuteConfirm", "viewPath": "sap.ui.yesco.mvc.view.commuteConfirm", "viewName": "CommuteConfirm" },
+        "h/commuteTypeConfirm": { "viewId": "h_commuteTypeConfirm", "viewPath": "sap.ui.yesco.mvc.view.commuteConfirm", "viewName": "CommuteConfirmH" },
         
         "consolidAppBox": { "viewId": "consolidAppBox", "viewPath": "sap.ui.yesco.mvc.view.consolidAppBox", "viewName": "ConsolidAppBox" },
 
