@@ -20,7 +20,7 @@ sap.ui.define(
         this.bMobile = AppUtils.isMobile();
 
         const sPernr = this.getUIComponent().getSessionModel().getProperty('/Pernr');
-        this.sMobileRecentMenuLocalStorgaeKey = `ehr.mobile.recent.menus.${sPernr}`;
+        this.sRecentMenuLocalStorgaeKey = `ehr.recent.menus.${sPernr}`;
 
         try {
           const oModel = this.getUIComponent().getModel(ServiceNames.COMMON);
@@ -217,20 +217,18 @@ sap.ui.define(
           breadcrumbs: {}, // 현재 메뉴의 breadcrumbs 정보 object, Component.js 참조
         };
 
-        if (this.bMobile) {
-          mModelData.mobileFavoriteMenus = aMobileFavoriteMenus;
+        mModelData.mobileFavoriteMenus = aMobileFavoriteMenus;
 
-          if (localStorage && localStorage.getItem instanceof Function) {
-            const aMobileRecentMenus = JSON.parse(localStorage.getItem(this.sMobileRecentMenuLocalStorgaeKey) || '[]');
-            mModelData.mobileRecentMenus = aMobileRecentMenus.filter((mMenu) => {
-              return !!mMenidToProperties[mMenu.Menid];
-            });
-            mModelData.mobileRecentMenusCount = mModelData.mobileRecentMenus.length;
-            localStorage.setItem(this.sMobileRecentMenuLocalStorgaeKey, JSON.stringify(mModelData.mobileRecentMenus));
-          } else {
-            mModelData.mobileRecentMenus = [];
-            mModelData.mobileRecentMenusCount = 0;
-          }
+        if (localStorage && localStorage.getItem instanceof Function) {
+          const aRecentMenus = JSON.parse(localStorage.getItem(this.sRecentMenuLocalStorgaeKey) || '[]');
+          mModelData.recentMenus = aRecentMenus.filter((mMenu) => {
+            return !!mMenidToProperties[mMenu.Menid];
+          });
+          mModelData.recentMenusCount = mModelData.recentMenus.length;
+          localStorage.setItem(this.sRecentMenuLocalStorgaeKey, JSON.stringify(mModelData.recentMenus));
+        } else {
+          mModelData.recentMenus = [];
+          mModelData.recentMenusCount = 0;
         }
 
         return mModelData;
@@ -317,20 +315,20 @@ sap.ui.define(
           mMenu = vParam;
         }
 
-        let aMobileRecentMenus = this.getProperty('/mobileRecentMenus');
-        _.remove(aMobileRecentMenus, (mMenuProperties) => mMenuProperties.Menid === mMenu.Menid);
-        aMobileRecentMenus.unshift(mMenu);
+        let aRecentMenus = this.getProperty('/recentMenus');
+        _.remove(aRecentMenus, (mMenuProperties) => mMenuProperties.Menid === mMenu.Menid);
+        aRecentMenus.unshift(mMenu);
 
-        let iMobileRecentMenusCount = aMobileRecentMenus.length;
-        if (iMobileRecentMenusCount > 10) {
-          aMobileRecentMenus = aMobileRecentMenus.slice(0, 10);
-          iMobileRecentMenusCount = 10;
+        let iRecentMenusCount = aRecentMenus.length;
+        if (iRecentMenusCount > 10) {
+          aRecentMenus = aRecentMenus.slice(0, 10);
+          iRecentMenusCount = 10;
         }
 
-        this.setProperty('/mobileRecentMenus', aMobileRecentMenus);
-        this.setProperty('/mobileRecentMenusCount', iMobileRecentMenusCount);
+        this.setProperty('/recentMenus', aRecentMenus);
+        this.setProperty('/recentMenusCount', iRecentMenusCount);
         if (localStorage && localStorage.getItem instanceof Function) {
-          localStorage.setItem(this.sMobileRecentMenuLocalStorgaeKey, JSON.stringify(aMobileRecentMenus));
+          localStorage.setItem(this.sRecentMenuLocalStorgaeKey, JSON.stringify(aRecentMenus));
         }
       },
 
