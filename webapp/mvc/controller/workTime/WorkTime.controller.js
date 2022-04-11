@@ -95,7 +95,7 @@ sap.ui.define(
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
-          $(`#${this.sDialChartId}`).css({ top: '-5px', left: '-8px', zoom: '1.3' });
+          // $(`#${this.sDialChartId}`).css({ top: '-5px', left: '-8px', zoom: '1.3' });
           oListModel.setProperty('/busy', false);
         }
       },
@@ -121,18 +121,19 @@ sap.ui.define(
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
-          $(`#${this.sDialChartId}`).css({ top: '-5px', left: '-8px', zoom: '1.3' });
+          // $(`#${this.sDialChartId}`).css({ top: '-5px', left: '-8px', zoom: '1.3' });
           oListModel.setProperty('/busy', false);
         }
       },
 
-      getDialChartOption() {
+      getDialChartOption(iGaugeOriginY) {
         return {
           //Cosmetics
           showValue: 1,
-          valueFontSize: 12,
+          baseFontSize: 14,
+          valueFontSize: 14,
           showTooltip: 0,
-          gaugeOriginY: 110,
+          gaugeOriginY: iGaugeOriginY,
           gaugeOuterRadius: 75,
           gaugeInnerRadius: 53,
           majorTMNumber: 13,
@@ -147,16 +148,13 @@ sap.ui.define(
           bgColor: 'transparent',
           pivotRadius: 3,
           pivotFillColor: '#000',
-          chartLeftMargin: -20,
-          chartRightMargin: 0,
-          chartTopMargin: 0,
-          chartBottomMargin: -150,
           theme: 'ocean',
         };
       },
 
       buildDialChart(aWorkTypeList) {
         const oChart = FusionCharts(this.sDialChartId);
+        const iGaugeOriginY = 150 * 0.75; // 75 + 38 : (chart box height 50%) + (chart real height 50%)
 
         if (!oChart) {
           FusionCharts.ready(() => {
@@ -164,11 +162,11 @@ sap.ui.define(
               id: this.sDialChartId,
               type: 'angulargauge',
               renderAt: this.sChartDiv,
-              width: '40%',
-              height: '170px',
+              width: '230px',
+              height: '150px',
               dataFormat: 'json',
               dataSource: {
-                chart: this.getDialChartOption(),
+                chart: this.getDialChartOption(iGaugeOriginY),
                 colorrange: {
                   color: [
                     {
@@ -187,7 +185,7 @@ sap.ui.define(
                   dial: [
                     {
                       value: aWorkTypeList.Reltm,
-                      valueY: 123,
+                      valueY: iGaugeOriginY + 13,
                       baseWidth: 4,
                       rearExtension: 0,
                     },
@@ -199,7 +197,7 @@ sap.ui.define(
         } else {
           oChart.setChartData(
             {
-              chart: this.getDialChartOption(),
+              chart: this.getDialChartOption(iGaugeOriginY),
               colorrange: {
                 color: [
                   {
@@ -218,7 +216,7 @@ sap.ui.define(
                 dial: [
                   {
                     value: aWorkTypeList.Reltm,
-                    valueY: 123,
+                    valueY: iGaugeOriginY + 13,
                     baseWidth: 4,
                     rearExtension: 0,
                   },

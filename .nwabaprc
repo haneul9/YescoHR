@@ -16,7 +16,7 @@
     "conn_password": "qwer1234",
     "abap_bsp": "zui5_yescohr",
     "abap_bsp_text": "UI5 yesco e-HR",
-    "abap_package": "zhr1",
+    "abap_package": "ZHR1",
     "abap_transport": "YHDK901347",
     "calcappindex": true,
     "preserve_unselected": false

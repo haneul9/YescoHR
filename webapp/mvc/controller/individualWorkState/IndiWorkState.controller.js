@@ -210,7 +210,6 @@ sap.ui.define(
           this.debug(oError);
           AppUtils.handleError(oError);
         } finally {
-          $(`#${this.sDialChartId}`).css({ top: '0', left: '-5px', zoom: '2' });
           oViewModel.setProperty('/busy', false);
         }
       },
@@ -458,15 +457,16 @@ sap.ui.define(
       },
 
       // WeekWorkTime Chart
-      getDialChartOption() {
+      getDialChartOption(iGaugeOriginY) {
         return {
           //Cosmetics
           showValue: 1,
-          valueFontSize: 12,
+          baseFontSize: 14,
+          valueFontSize: 14,
           showTooltip: 0,
-          gaugeOriginY: 110,
-          gaugeOuterRadius: 75,
-          gaugeInnerRadius: 53,
+          gaugeOriginY: iGaugeOriginY,
+          gaugeOuterRadius: 150,
+          gaugeInnerRadius: 110,
           majorTMNumber: 13,
           majorTMColor: '#333',
           majorTMHeight: -2.5,
@@ -479,10 +479,6 @@ sap.ui.define(
           bgColor: 'transparent',
           pivotRadius: 3,
           pivotFillColor: '#000',
-          chartLeftMargin: -20,
-          chartRightMargin: 0,
-          chartTopMargin: 0,
-          chartBottomMargin: -150,
           theme: 'ocean',
           paletteThemeColor: 'transparent',
         };
@@ -490,6 +486,7 @@ sap.ui.define(
 
       buildDialChart(mWorkTypeList) {
         const oChart = FusionCharts(this.sDialChartId);
+        const iGaugeOriginY = 225; // 150 + 75 : (chart box height 50%) + (chart real height 50%)
 
         if (!oChart) {
           FusionCharts.ready(() => {
@@ -497,11 +494,11 @@ sap.ui.define(
               id: this.sDialChartId,
               type: 'angulargauge',
               renderAt: this.sDialChartDiv,
-              width: '30%',
-              height: '134px',
+              width: '480px',
+              height: '300px',
               dataFormat: 'json',
               dataSource: {
-                chart: this.getDialChartOption(),
+                chart: this.getDialChartOption(iGaugeOriginY),
                 colorrange: {
                   color: [
                     {
@@ -520,7 +517,7 @@ sap.ui.define(
                   dial: [
                     {
                       value: mWorkTypeList.Reltm,
-                      valueY: 123,
+                      valueY: iGaugeOriginY + 13,
                       baseWidth: 4,
                       rearExtension: 0,
                     },
@@ -532,7 +529,7 @@ sap.ui.define(
         } else {
           oChart.setChartData(
             {
-              chart: this.getDialChartOption(),
+              chart: this.getDialChartOption(iGaugeOriginY),
               colorrange: {
                 color: [
                   {
@@ -551,7 +548,7 @@ sap.ui.define(
                 dial: [
                   {
                     value: mWorkTypeList.Reltm,
-                    valueY: 123,
+                    valueY: iGaugeOriginY + 13,
                     baseWidth: 4,
                     rearExtension: 0,
                   },
@@ -619,7 +616,6 @@ sap.ui.define(
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
-          $(`#${this.sDialChartId}`).css({ top: '0', left: '-5px', zoom: '2' });
           oViewModel.setProperty('/busy', false);
         }
       },

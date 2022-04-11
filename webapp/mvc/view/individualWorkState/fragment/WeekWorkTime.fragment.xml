@@ -6,13 +6,17 @@
       <Title level="H2" text="{i18n>LABEL_18015}" />
       <custom:DatePicker dateValue="{ path: '/WeekWorkDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="200px" change=".onWeekWorkTime" />
     </HBox>
-    <HBox class="week-work-time">
+    <HBox alignItems="Center" class="week-work-time">
       <core:HTML content='&lt;div id="chart-weekWork-app-dial-container"&gt;&lt;/div&gt;' />
       <VBox alignItems="End" width="100%" class="workTime-summary-box">
         <Label text="today"/>
         <ObjectStatus text="{/WeekWork/Timtx}" state="Indication05" />
         <Text text="{/WeekWork/Wktim}" />
-        <Label text="this week" class="mt-10-px"/>
+        <Label text="this week">
+          <layoutData>
+            <FlexItemData styleClass="mt-25-px" />
+          </layoutData>
+        </Label>
         <ObjectStatus text="{/WeekWork/Reltm} {/WeekWork/Reltx}" state="Indication05" />
         <Text text="{/WeekWork/Wkrul}" />
       </VBox>

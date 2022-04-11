@@ -4,7 +4,7 @@
     <VBox>
       <HBox class="title" alignItems="End">
         <Title level="H2" text="{i18n>LABEL_27002}" />
-        <Text text="{i18n>LABEL_27003}" />
+        <Text text="{i18n>LABEL_27003}" class="sapUiSmallMarginBegin" />
       </HBox>
       <HBox alignItems="Start">
         <core:HTML content='&lt;div id="chart-work-change-dial-container"&gt;&lt;/div&gt;' />
