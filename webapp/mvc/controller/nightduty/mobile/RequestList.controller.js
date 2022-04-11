@@ -23,7 +23,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.nightduty.RequestList', {
+    return BaseController.extend('sap.ui.yesco.mvc.controller.nightduty.mobile.RequestList', {
       TableUtils: TableUtils,
       EmployeeSearch: EmployeeSearch,
 

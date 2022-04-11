@@ -448,8 +448,6 @@ sap.ui.define(
             LeaveApplNav1: aTableData.map((o) => ({ ...o, Pernr: mAppointeeData.Pernr })),
           });
 
-          await this.createLeaveApplContent(sPrcty);
-
           // {임시저장|신청}되었습니다.
           MessageBox.success(this.getBundleText('MSG_00007', this.ACTION_MESSAGE[sPrcty]), {
             onClose: () => {

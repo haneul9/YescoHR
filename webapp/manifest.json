@@ -229,6 +229,8 @@
         { "pattern": "nightduty/{sAppno}", "name": "nightduty-detail", "target": "nightdutyDetail" },
         { "pattern": "h/nightduty", "name": "h/nightduty", "target": "h/nightduty" },
         { "pattern": "h/nightduty/{sAppno}", "name": "h/nightduty-detail", "target": "nightdutyDetail" },
+        { "pattern": "mobile/nightduty", "name": "mobile/nightduty", "target": "mobile/nightduty" },
+        { "pattern": "mobile/nightduty/{sAppno}", "name": "mobile/nightduty-detail", "target": "mobile/nightdutyDetail" },
 
         { "pattern": "notice", "name": "notice", "target": "notice" },
         { "pattern": "notice/{Sdate}/{Seqnr}", "name": "notice-detail", "target": "noticeDetail" },
@@ -438,11 +440,13 @@
         "nightduty": { "viewId": "nightduty", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "RequestList" },
         "h/nightduty": { "viewId": "h_nightduty", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "RequestListH" },
         "nightdutyDetail": { "viewId": "nightdutyDetail", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "RequestDetail" },
+        "mobile/nightduty": { "viewId": "mobile_nightduty", "viewPath": "sap.ui.yesco.mvc.view.nightduty.mobile", "viewName": "RequestList" },
+        "mobile/nightdutyDetail": { "viewId": "mobile_nightdutyDetail", "viewPath": "sap.ui.yesco.mvc.view.nightduty.mobile", "viewName": "RequestDetail" },
 
         "notice": { "viewId": "notice", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "Ess" },
         "h/notice": { "viewId": "h_notice", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "Hass" },
         "noticeDetail": { "viewId": "noticeDetail", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "NoticeDetail" },
-        "mobile/notice": { "viewId": "notice", "viewPath": "sap.ui.yesco.mvc.view.notice.mobile", "viewName": "Notice" },
+        "mobile/notice": { "viewId": "mobile_notice", "viewPath": "sap.ui.yesco.mvc.view.notice.mobile", "viewName": "Notice" },
         "mobile/noticeDetail": { "viewId": "mobile_noticeDetail", "viewPath": "sap.ui.yesco.mvc.view.notice.mobile", "viewName": "NoticeDetail" },
         
         "m/organization": { "viewId": "m_organization", "viewPath": "sap.ui.yesco.mvc.view.organization", "viewName": "Main" },
@@ -503,8 +507,8 @@
         "h/workTimeChange": { "viewId": "h_workTimeChange", "viewPath": "sap.ui.yesco.mvc.view.workTimeChange", "viewName": "WorkTimeChangeH" },
         "workTimeChange": { "viewId": "workTimeChange", "viewPath": "sap.ui.yesco.mvc.view.workTimeChange", "viewName": "WorkTimeChange" },
         "workTimeChangeDetail": { "viewId": "workTimeChangeDetail", "viewPath": "sap.ui.yesco.mvc.view.workTimeChange", "viewName": "WorkTimeChangeDetail" },
-        "mobile/workTimeChange": { "viewId": "workTimeChange", "viewPath": "sap.ui.yesco.mvc.view.workTimeChange.mobile", "viewName": "WorkTimeChange" },
-        "mobile/workTimeChangeDetail": { "viewId": "workTimeChangeDetail", "viewPath": "sap.ui.yesco.mvc.view.workTimeChange.mobile", "viewName": "WorkTimeChangeDetail" },
+        "mobile/workTimeChange": { "viewId": "mobile_workTimeChange", "viewPath": "sap.ui.yesco.mvc.view.workTimeChange.mobile", "viewName": "WorkTimeChange" },
+        "mobile/workTimeChangeDetail": { "viewId": "mobile_workTimeChangeDetail", "viewPath": "sap.ui.yesco.mvc.view.workTimeChange.mobile", "viewName": "WorkTimeChangeDetail" },
 
         "m/worktimeStatus": { "viewId": "m_worktimeStatus", "viewPath": "sap.ui.yesco.mvc.view.worktimeStatus", "viewName": "WorktimeStatus" },
         "m/worktimeStatusDetail": { "viewId": "m_worktimeStatusDetail", "viewPath": "sap.ui.yesco.mvc.view.worktimeStatus", "viewName": "WorktimeStatusDetail" },
@@ -519,7 +523,7 @@
         "sampleYearPlan": { "viewId": "sampleYearPlan", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "YearPlan", "title": "YearPlan" },
         "samplePortlets": { "viewId": "samplePortlets", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Portlets", "title": "Portlets" },
 
-        "mobile/sampleComponents": { "viewId": "sampleComponents", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Components", "title": "Components" }
+        "mobile/sampleComponents": { "viewId": "mobile_sampleComponents", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Components", "title": "Components" }
       }
     }
   }

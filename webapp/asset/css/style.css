@@ -647,19 +647,18 @@ html.sap-desktop .sapContrast .sapMFooter-CTX .sapMBtnInner.sapMBtnReject, html.
 .sapUiTableRowFirstFixedBottom td {background-color:#eff3f8}
 
 /* GNB */
-.megadrop-menu-layer {box-sizing:border-box; position:absolute; z-index:20; top:59px; min-height:243px; border-radius:0; padding-bottom:15px; color:#222; background-color:#fff; box-shadow:0 3px 5px 0 rgb(0 0 0 / 10%), 0 0 0 1px rgb(0 0 0 / 5%)}
-.megadrop-menu-layer:before {content:""; height:0px !important; width:100%; border-bottom:1px solid #ccc; position:absolute; top:0; left:0; right:0}
-.megadrop-menu-layer .sapMIBar.sapMTB .sapMBarChild {font-size:17px; font-weight:800; color:#002866; letter-spacing:-0.2px}
-.megadrop-menu-layer .sapMTBStandard {border-bottom:1px solid transparent}
-.megadrop-menu-layer .sapMListUl .sapMLIB:not(.sapMComboBoxBaseItem) {margin-top:15px}
-.megadrop-menu-layer .sapMListUl .sapMLIB:first-child {margin-top:5px}
-.megadrop-menu-layer .sapMTB-Transparent-CTX.sapMTB {padding-left:0 !important; height:3.5rem !important}
-.megadrop-menu-layer .sapMLIBFocusable:focus {outline:0px dotted #000; outline-offset:-2px}
+.sapUiSizeCompact .megadrop-menu-layer {box-sizing:border-box; position:absolute; z-index:20; top:59px; min-height:243px; border-radius:0; padding-bottom:20px; color:#222; background-color:#fff; box-shadow:0 3px 5px 0 rgb(0 0 0 / 10%), 0 0 0 1px rgb(0 0 0 / 5%)}
+.sapUiSizeCompact .megadrop-menu-layer:before {content:""; height:0px !important; width:100%; border-bottom:1px solid #ccc; position:absolute; top:0; left:0; right:0}
+.sapUiSizeCompact .megadrop-menu-layer .sapMIBar.sapMTB {padding:0; height:3.5rem; line-height:3.5rem}
+.sapUiSizeCompact .megadrop-menu-layer .sapMIBar.sapMTB .sapMBarChild {font-size:17px; font-weight:800; color:#002866; letter-spacing:-0.2px}
+.sapUiSizeCompact .megadrop-menu-layer .sapMTBStandard {border-bottom:1px solid transparent}
+.sapUiSizeCompact .megadrop-menu-layer .sapMListUl .sapMLIB:not(.sapMComboBoxBaseItem) {margin-top:15px}
+.sapUiSizeCompact .megadrop-menu-layer .sapMListUl .sapMLIB:first-child {margin-top:5px}
+.sapUiSizeCompact .megadrop-menu-layer .sapMLIBFocusable:focus {outline:0px dotted #000; outline-offset:-2px}
 .menu-favorite-icon {margin-right:6px; vertical-align:middle}
 .menu-favorite-icon [data-sap-ui-icon-content=""]::before {content:""; display:inline-block; width:15px; height:15px; background-image:url(/sap/public/bc/ui2/zui5_yescohr/images/icon_star2_on.svg); background-position:center; background-repeat:no-repeat; background-size:15px}
 .menu-favorite-icon [data-sap-ui-icon-content=""]::before {content:""; display:inline-block; width:15px; height:15px; background-image:url(/sap/public/bc/ui2/zui5_yescohr/images/icon_star3.svg); background-position:center; background-repeat:no-repeat; background-size:15px}
 .menu-link {color:#555 !important; font-size:14px; vertical-align:middle}
-.megadrop-menu-layer.sapUiSizeCompact .sapMTB.sapMTBHeader-CTX {padding:0}
 .dummy-favorite-icon {margin-top:-1px; margin-right:6px; vertical-align:middle}
 
 .sapMPopover {color:#222; border-radius:0; box-shadow:0 3px 5px 0 rgb(0 0 0 / 10%), 0 0 0 1px rgb(0 0 0 / 5%)}

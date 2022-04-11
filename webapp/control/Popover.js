@@ -57,7 +57,6 @@ sap.ui.define(
         const iScrollMarginBottom = oCont.scrollHeight - oCont.scrollTop;
         const iGrowHeight = $Cont.height();
 
-        console.log(oCont.scrollTop, iScrollMarginBottom, iGrowHeight, iScrollMarginBottom - iGrowHeight);
         return oCont.scrollTop > 0 && iScrollMarginBottom === iGrowHeight;
       },
     });
