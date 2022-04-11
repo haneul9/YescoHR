@@ -29,7 +29,7 @@ sap.ui.define(
     return BaseController.extend('sap.ui.yesco.mvc.controller.individualWorkState.IndiWorkState', {
       sCombiChartId: 'combiChart',
       sDoughChartId: 'doughChart',
-      sDialChartId: 'WorkChangeDialChart',
+      sDialChartId: 'WeekWorkDialChart',
       sDialChartDiv: 'chart-weekWork-app-dial-container',
 
       TextUtils: TextUtils,
