@@ -5,7 +5,7 @@
   xmlns:table="sap.ui.table">
   <VBox class="vCardBox">
     <HBox class="form-bar" justifyContent="Start" alignItems="Center">
-      <Label text="{i18n>LABEL_00220}" />
+      <Label text="{i18n>LABEL_00237}" />
       <ComboBox items="{/CompanyCode}" selectedKey="{/search/Werks}" change=".onCompSelect">
         <core:Item text="{Pbtxt}" key="{Werks}" />
       </ComboBox>

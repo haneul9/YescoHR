@@ -876,6 +876,13 @@ sap.ui.define(
 
       // 저장
       onSaveBtn() {
+        const oViewModel = this.getViewModel();
+        const sTabKey = oViewModel.getProperty('/tab/selectedKey');
+
+        if (sTabKey === 'B' && _.isEmpty(oViewModel.getProperty('/Tmp'))) {
+          return MessageBox.alert(this.getBundleText('MSG_15006')); // Cascading할 부서가 존재하지 않습니다.
+        }
+
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00103'), {
           // {저장}하시겠습니까?
           actions: [this.getBundleText('LABEL_00103'), this.getBundleText('LABEL_00118')], // 저장, 취소
@@ -888,8 +895,6 @@ sap.ui.define(
             try {
               AppUtils.setAppBusy(true, this);
 
-              const oViewModel = this.getViewModel();
-              const sTabKey = oViewModel.getProperty('/tab/selectedKey');
               const aList = [];
               let aGridData = [];
 
