@@ -134,8 +134,8 @@ sap.ui.define(
           valueFontSize: 14,
           showTooltip: 0,
           gaugeOriginY: iGaugeOriginY,
-          gaugeOuterRadius: 75,
-          gaugeInnerRadius: 53,
+          gaugeOuterRadius: 85,
+          gaugeInnerRadius: 60,
           majorTMNumber: 13,
           majorTMColor: '#333',
           majorTMHeight: -2.5,
@@ -145,6 +145,7 @@ sap.ui.define(
           showPlotBorder: 0,
           showGaugeBorder: 0,
           showPivotBorder: 0,
+          chartLeftMargin: 0,
           bgColor: 'transparent',
           pivotRadius: 3,
           pivotFillColor: '#000',
@@ -154,7 +155,7 @@ sap.ui.define(
 
       buildDialChart(aWorkTypeList) {
         const oChart = FusionCharts(this.sDialChartId);
-        const iGaugeOriginY = 150 * 0.75; // 75 + 38 : (chart box height 50%) + (chart real height 50%)
+        const iGaugeOriginY = 150 * 0.75; // chart box height 75%
 
         if (!oChart) {
           FusionCharts.ready(() => {
@@ -162,7 +163,7 @@ sap.ui.define(
               id: this.sDialChartId,
               type: 'angulargauge',
               renderAt: this.sChartDiv,
-              width: '230px',
+              width: '225px',
               height: '150px',
               dataFormat: 'json',
               dataSource: {
