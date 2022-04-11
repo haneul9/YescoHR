@@ -1068,6 +1068,11 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 .sapUiLayoutCSSGrid.year-plan.status-wrap .sapMText {font-weight:bold}
 .sapUiLayoutCSSGrid.year-plan.status-wrap.year-plan-cssGrid .sapMText {font-weight:600 !important}
 .sapUiLayoutCSSGrid.year-plan.status-wrap.year-plan-cssGrid .sapMLabel  {font-weight:600 !important}
+.week-work-time.sapMHBox {height: 100%; align-items: end;}
+.week-work-time.sapMHBox .sapMObjStatus{font-size: 25px;}
+.week-work-time.sapMHBox .sapMLabel{font-size: 16px; margin-bottom: 10px;}
+.week-work-time.sapMHBox .sapMText{margin-bottom: 15px;}
+.week-work-time.sapMHBox .workTime-summary-box{height: 220px;}
 .year-plan.status-wrap .sapMLabel::before {content:""; position:relative; display:inline-block; width:14px; height:14px; background-color:#888; margin-right:5px; border-radius:50%}
 .vCardBox.MultiBoxmobile {border:0px; border-radius:0px; padding:10px}
 .vCardBox.MultiBoxmobile .desc-txt {top:0px}

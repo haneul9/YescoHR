@@ -96,7 +96,7 @@ sap.ui.define(
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
-          $(`#${this.sDialChartId}`).css({ top: '20px' });
+          $(`#${this.sDialChartId}`).css({ top: '-5px', left: '-8px', zoom: '1.3' });
           oListModel.setProperty('/busy', false);
         }
       },
@@ -135,7 +135,7 @@ sap.ui.define(
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
-          $(`#${this.sDialChartId}`).css({ top: '20px' });
+          $(`#${this.sDialChartId}`).css({ top: '-5px', left: '-8px', zoom: '1.3' });
           oListModel.setProperty('/busy', false);
         }
       },
@@ -178,7 +178,7 @@ sap.ui.define(
               id: this.sDialChartId,
               type: 'angulargauge',
               renderAt: this.sChartDiv,
-              width: '50%',
+              width: '40%',
               height: '170px',
               dataFormat: 'json',
               dataSource: {
