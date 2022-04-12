@@ -232,12 +232,13 @@ sap.ui.define(
           const aPernr = _.map(aSelectedContexts, (o) => _.get(o.getObject(), 'Pernr'));
           const aCompareResults = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'TalentSearchComparison', { Pernr: aPernr });
 
+          const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
           oViewModel.setProperty('/compare/scroll', aCompareResults.length > 3);
           oViewModel.setProperty(
             '/compare/row1',
             _.concat(
               { type: 'label' },
-              _.map(aCompareResults, (o) => ({ type: 'text', Pernr: o.Pernr, Picurl: _.isEmpty(o.Picurl) ? 'asset/image/avatar-unknown.svg' : o.Picurl, Value01: o.Value01 }))
+              _.map(aCompareResults, (o) => ({ type: 'text', Pernr: o.Pernr, Picurl: _.isEmpty(o.Picurl) ? sUnknownAvatarImageURL : o.Picurl, Value01: o.Value01 }))
             )
           );
           oViewModel.setProperty(
@@ -588,10 +589,11 @@ sap.ui.define(
           const aSearchResults = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'TalentSearch', { Pernr: this.getAppointeeProperty('Pernr'), ..._.omitBy(mFilters, _.isEmpty) });
           const mState = { 1: 'Indication01', 2: 'Indication02', 3: 'Indication03' };
 
+          const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
           oViewModel.setProperty('/result/totalCount', aSearchResults.length);
           oViewModel.setProperty(
             '/result/list',
-            _.map(aSearchResults, (o) => ({ ..._.omit(o, '__metadata'), ColtyState: mState[o.Colty], PicUrl: _.isEmpty(o.PicUrl) ? 'asset/image/avatar-unknown.svg' : o.PicUrl }))
+            _.map(aSearchResults, (o) => ({ ..._.omit(o, '__metadata'), ColtyState: mState[o.Colty], PicUrl: _.isEmpty(o.PicUrl) ? sUnknownAvatarImageURL : o.PicUrl }))
           );
         } catch (oError) {
           throw oError;
@@ -706,8 +708,9 @@ sap.ui.define(
         if (!sPernr) return;
 
         const sHost = window.location.href.split('#')[0];
+        const sUsrty = this.isMss() ? 'M' : this.isHass() ? 'H' : '';
 
-        window.open(`${sHost}#/employeeView/${sPernr}`, '_blank', 'width=1400,height=800');
+        window.open(`${sHost}#/employeeView/${sPernr}/${sUsrty}`, '_blank', 'width=1400,height=800');
       },
 
       resetSimpleSearch() {

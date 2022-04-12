@@ -1,218 +1,221 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:custom="sap.ui.yesco.control">
-    <VBox class="portlet portlet-box" visible="{/contents/A01/busy}">
-        <custom:Placeholder />
-    </VBox>
-    <VBox class="portlet portlet-box portlet-m21" visible="{= !${/contents/A01/busy} }">
-        <HBox class="portlet-header">
-            <Title level="H2" text="{i18n>LABEL_28002}" />
-            <Image src="asset/image/icon_human_green.svg" width="12px" class="ml-8-px" />
-            <Image src="asset/image/icon_human_orange.svg" width="12px" class="ml-3-px" />
-            <Text text="">
-                <layoutData>
-                    <FlexItemData growFactor="1" />
-                </layoutData>
-            </Text>
-            <Button visible="{hasLink}" icon="asset/image/icon_window.svg" iconDensityAware="false" type="Transparent" class="icon-button portlet-link-icon" />
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <VBox class="portlet portlet-box" visible="{/contents/A01/busy}">
+    <custom:Placeholder />
+  </VBox>
+  <VBox class="portlet portlet-box portlet-m21" visible="{= !${/contents/A01/busy} }">
+    <customData>
+      <core:CustomData key="key" value="a01" />
+    </customData>
+    <HBox class="portlet-header">
+      <Title level="H2" text="{i18n>LABEL_28002}" />
+      <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_human_green.svg" width="12px" class="ml-8-px" />
+      <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_human_orange.svg" width="12px" class="ml-3-px" />
+      <Text text="">
+        <layoutData>
+          <FlexItemData growFactor="1" />
+        </layoutData>
+      </Text>
+      <Button visible="{hasLink}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_window.svg" iconDensityAware="false" type="Transparent" class="icon-button portlet-link-icon" press=".onToggleExpanded" />
+    </HBox>
+    <HBox class="portlet-body">
+      <VBox width="30%">
+        <ObjectStatus text="{/contents/A01/data/Cnt01}" class="mt-15-px font-3-rem color-03" active="true" press=".onPressCount">
+          <customData>
+            <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
+            <core:CustomData key="Discod" value="{/contents/A01/data/Cnt01C}" />
+          </customData>
+        </ObjectStatus>
+        <ObjectStatus text="{i18n>LABEL_01213} : {/contents/A01/data/Cnt02}" class="mt-10-px color-03" active="true" press=".onPressCount">
+          <layoutData>
+            <FlexItemData styleClass="employee-total-count" />
+          </layoutData>
+          <customData>
+            <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
+            <core:CustomData key="Discod" value="{/contents/A01/data/Cnt02C}" />
+          </customData>
+        </ObjectStatus>
+        <ObjectStatus text="{i18n>LABEL_01212} : {/contents/A01/data/Cnt03}" class="mt-5-px color-03" active="true" press=".onPressCount">
+          <layoutData>
+            <FlexItemData styleClass="employee-total-count" />
+          </layoutData>
+          <customData>
+            <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
+            <core:CustomData key="Discod" value="{/contents/A01/data/Cnt03C}" />
+          </customData>
+        </ObjectStatus>
+      </VBox>
+      <VBox class="ml-5-px">
+        <layoutData>
+          <FlexItemData growFactor="1" />
+        </layoutData>
+        <HBox width="100%" height="22px" justifyContent="End" alignItems="Center" class="border-bottom">
+          <Text text="{i18n>LABEL_01211}" textAlign="Center" width="100%">
+            <layoutData>
+              <FlexItemData baseSize="20%" />
+            </layoutData>
+          </Text>
+          <Text text="{i18n>LABEL_01213}" textAlign="Center" width="100%">
+            <layoutData>
+              <FlexItemData baseSize="20%" />
+            </layoutData>
+          </Text>
+          <Text text="{i18n>LABEL_01212}" textAlign="Center" width="100%">
+            <layoutData>
+              <FlexItemData baseSize="20%" />
+            </layoutData>
+          </Text>
         </HBox>
-        <HBox class="portlet-body">
-            <VBox width="30%">
-                <ObjectStatus text="{/contents/A01/data/Cnt01}" class="mt-15-px font-3-rem color-03" active="true" press=".onPressCount">
-                    <customData>
-                        <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
-                        <core:CustomData key="Discod" value="{/contents/A01/data/Cnt01C}" />
-                    </customData>
-                </ObjectStatus>
-                <ObjectStatus text="{i18n>LABEL_01213} : {/contents/A01/data/Cnt02}" class="mt-10-px color-03" active="true" press=".onPressCount">
-                    <layoutData>
-                        <FlexItemData styleClass="employee-total-count" />
-                    </layoutData>
-                    <customData>
-                        <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
-                        <core:CustomData key="Discod" value="{/contents/A01/data/Cnt02C}" />
-                    </customData>
-                </ObjectStatus>
-                <ObjectStatus text="{i18n>LABEL_01212} : {/contents/A01/data/Cnt03}" class="mt-5-px color-03" active="true" press=".onPressCount">
-                    <layoutData>
-                        <FlexItemData styleClass="employee-total-count" />
-                    </layoutData>
-                    <customData>
-                        <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
-                        <core:CustomData key="Discod" value="{/contents/A01/data/Cnt03C}" />
-                    </customData>
-                </ObjectStatus>
-            </VBox>
-            <VBox class="ml-5-px">
-                <layoutData>
-                    <FlexItemData growFactor="1" />
-                </layoutData>
-                <HBox width="100%" height="22px" justifyContent="End" alignItems="Center" class="border-bottom">
-                    <Text text="{i18n>LABEL_01211}" textAlign="Center" width="100%">
-                        <layoutData>
-                            <FlexItemData baseSize="20%" />
-                        </layoutData>
-                    </Text>
-                    <Text text="{i18n>LABEL_01213}" textAlign="Center" width="100%">
-                        <layoutData>
-                            <FlexItemData baseSize="20%" />
-                        </layoutData>
-                    </Text>
-                    <Text text="{i18n>LABEL_01212}" textAlign="Center" width="100%">
-                        <layoutData>
-                            <FlexItemData baseSize="20%" />
-                        </layoutData>
-                    </Text>
-                </HBox>
-                <HBox width="100%" height="33px" alignItems="Center" class="border-bottom">
-                    <layoutData>
-                        <FlexItemData growFactor="1" />
-                    </layoutData>
-                    <Label text="{i18n>LABEL_01214}" textAlign="Center" width="100%">
-                        <layoutData>
-                            <FlexItemData growFactor="1" />
-                        </layoutData>
-                    </Label>
-                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt40', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount">
-                        <layoutData>
-                            <FlexItemData baseSize="20%" styleClass="employee-count" />
-                        </layoutData>
-                        <customData>
-                            <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
-                            <core:CustomData key="Discod" value="{/contents/A01/data/Cnt40C}" />
-                        </customData>
-                    </ObjectStatus>
-                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt41', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount">
-                        <layoutData>
-                            <FlexItemData baseSize="20%" styleClass="employee-count" />
-                        </layoutData>
-                        <customData>
-                            <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
-                            <core:CustomData key="Discod" value="{/contents/A01/data/Cnt41C}" />
-                        </customData>
-                    </ObjectStatus>
-                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt42', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount">
-                        <layoutData>
-                            <FlexItemData baseSize="20%" styleClass="employee-count" />
-                        </layoutData>
-                        <customData>
-                            <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
-                            <core:CustomData key="Discod" value="{/contents/A01/data/Cnt42C}" />
-                        </customData>
-                    </ObjectStatus>
-                </HBox>
-                <HBox width="100%" height="33px" alignItems="Center" class="border-bottom">
-                    <layoutData>
-                        <FlexItemData growFactor="1" />
-                    </layoutData>
-                    <Label text="{i18n>LABEL_01215}" textAlign="Center" width="100%">
-                        <layoutData>
-                            <FlexItemData growFactor="1" />
-                        </layoutData>
-                    </Label>
-                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt50', type: 'sap.ui.yesco.mvc.model.type.Currency' }" class="color-03" active="true" press=".onPressCount">
-                        <layoutData>
-                            <FlexItemData baseSize="20%" styleClass="employee-count" />
-                        </layoutData>
-                        <customData>
-                            <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
-                            <core:CustomData key="Discod" value="{/contents/A01/data/Cnt50C}" />
-                        </customData>
-                    </ObjectStatus>
-                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt51', type: 'sap.ui.yesco.mvc.model.type.Currency' }" class="color-03" active="true" press=".onPressCount">
-                        <layoutData>
-                            <FlexItemData baseSize="20%" styleClass="employee-count" />
-                        </layoutData>
-                        <customData>
-                            <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
-                            <core:CustomData key="Discod" value="{/contents/A01/data/Cnt51C}" />
-                        </customData>
-                    </ObjectStatus>
-                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt52', type: 'sap.ui.yesco.mvc.model.type.Currency' }" class="color-03" active="true" press=".onPressCount">
-                        <layoutData>
-                            <FlexItemData baseSize="20%" styleClass="employee-count" />
-                        </layoutData>
-                        <customData>
-                            <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
-                            <core:CustomData key="Discod" value="{/contents/A01/data/Cnt52C}" />
-                        </customData>
-                    </ObjectStatus>
-                </HBox>
-                <HBox width="100%" height="33px" alignItems="Center" class="border-bottom">
-                    <layoutData>
-                        <FlexItemData growFactor="1" />
-                    </layoutData>
-                    <Label text="{i18n>LABEL_01216}" textAlign="Center" width="100%">
-                        <layoutData>
-                            <FlexItemData growFactor="1" />
-                        </layoutData>
-                    </Label>
-                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt60', type: 'sap.ui.yesco.mvc.model.type.Currency' }" class="color-04" active="true" press=".onPressCount">
-                        <layoutData>
-                            <FlexItemData baseSize="20%" styleClass="employee-count" />
-                        </layoutData>
-                        <customData>
-                            <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
-                            <core:CustomData key="Discod" value="{/contents/A01/data/Cnt60C}" />
-                        </customData>
-                    </ObjectStatus>
-                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt61', type: 'sap.ui.yesco.mvc.model.type.Currency' }" class="color-04" active="true" press=".onPressCount">
-                        <layoutData>
-                            <FlexItemData baseSize="20%" styleClass="employee-count" />
-                        </layoutData>
-                        <customData>
-                            <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
-                            <core:CustomData key="Discod" value="{/contents/A01/data/Cnt61C}" />
-                        </customData>
-                    </ObjectStatus>
-                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt62', type: 'sap.ui.yesco.mvc.model.type.Currency' }" class="color-04" active="true" press=".onPressCount">
-                        <layoutData>
-                            <FlexItemData baseSize="20%" styleClass="employee-count" />
-                        </layoutData>
-                        <customData>
-                            <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
-                            <core:CustomData key="Discod" value="{/contents/A01/data/Cnt62C}" />
-                        </customData>
-                    </ObjectStatus>
-                </HBox>
-                <HBox width="100%" height="33px" alignItems="Center" class="border-bottom">
-                    <layoutData>
-                        <FlexItemData growFactor="1" />
-                    </layoutData>
-                    <Label text="{i18n>LABEL_01217}" textAlign="Center" width="100%">
-                        <layoutData>
-                            <FlexItemData growFactor="1" />
-                        </layoutData>
-                    </Label>
-                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt70', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount">
-                        <layoutData>
-                            <FlexItemData baseSize="20%" styleClass="employee-count" />
-                        </layoutData>
-                        <customData>
-                            <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
-                            <core:CustomData key="Discod" value="{/contents/A01/data/Cnt70C}" />
-                        </customData>
-                    </ObjectStatus>
-                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt71', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount">
-                        <layoutData>
-                            <FlexItemData baseSize="20%" styleClass="employee-count" />
-                        </layoutData>
-                        <customData>
-                            <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
-                            <core:CustomData key="Discod" value="{/contents/A01/data/Cnt71C}" />
-                        </customData>
-                    </ObjectStatus>
-                    <ObjectStatus text="{ path: '/contents/A01/data/Cnt72', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount">
-                        <layoutData>
-                            <FlexItemData baseSize="20%" styleClass="employee-count" />
-                        </layoutData>
-                        <customData>
-                            <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
-                            <core:CustomData key="Discod" value="{/contents/A01/data/Cnt72C}" />
-                        </customData>
-                    </ObjectStatus>
-                </HBox>
-            </VBox>
+        <HBox width="100%" height="33px" alignItems="Center" class="border-bottom">
+          <layoutData>
+            <FlexItemData growFactor="1" />
+          </layoutData>
+          <Label text="{i18n>LABEL_01214}" textAlign="Center" width="100%">
+            <layoutData>
+              <FlexItemData growFactor="1" />
+            </layoutData>
+          </Label>
+          <ObjectStatus text="{ path: '/contents/A01/data/Cnt40', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount">
+            <layoutData>
+              <FlexItemData baseSize="20%" styleClass="employee-count" />
+            </layoutData>
+            <customData>
+              <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
+              <core:CustomData key="Discod" value="{/contents/A01/data/Cnt40C}" />
+            </customData>
+          </ObjectStatus>
+          <ObjectStatus text="{ path: '/contents/A01/data/Cnt41', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount">
+            <layoutData>
+              <FlexItemData baseSize="20%" styleClass="employee-count" />
+            </layoutData>
+            <customData>
+              <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
+              <core:CustomData key="Discod" value="{/contents/A01/data/Cnt41C}" />
+            </customData>
+          </ObjectStatus>
+          <ObjectStatus text="{ path: '/contents/A01/data/Cnt42', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount">
+            <layoutData>
+              <FlexItemData baseSize="20%" styleClass="employee-count" />
+            </layoutData>
+            <customData>
+              <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
+              <core:CustomData key="Discod" value="{/contents/A01/data/Cnt42C}" />
+            </customData>
+          </ObjectStatus>
         </HBox>
-    </VBox>
+        <HBox width="100%" height="33px" alignItems="Center" class="border-bottom">
+          <layoutData>
+            <FlexItemData growFactor="1" />
+          </layoutData>
+          <Label text="{i18n>LABEL_01215}" textAlign="Center" width="100%">
+            <layoutData>
+              <FlexItemData growFactor="1" />
+            </layoutData>
+          </Label>
+          <ObjectStatus text="{ path: '/contents/A01/data/Cnt50', type: 'sap.ui.yesco.mvc.model.type.Currency' }" class="color-03" active="true" press=".onPressCount">
+            <layoutData>
+              <FlexItemData baseSize="20%" styleClass="employee-count" />
+            </layoutData>
+            <customData>
+              <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
+              <core:CustomData key="Discod" value="{/contents/A01/data/Cnt50C}" />
+            </customData>
+          </ObjectStatus>
+          <ObjectStatus text="{ path: '/contents/A01/data/Cnt51', type: 'sap.ui.yesco.mvc.model.type.Currency' }" class="color-03" active="true" press=".onPressCount">
+            <layoutData>
+              <FlexItemData baseSize="20%" styleClass="employee-count" />
+            </layoutData>
+            <customData>
+              <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
+              <core:CustomData key="Discod" value="{/contents/A01/data/Cnt51C}" />
+            </customData>
+          </ObjectStatus>
+          <ObjectStatus text="{ path: '/contents/A01/data/Cnt52', type: 'sap.ui.yesco.mvc.model.type.Currency' }" class="color-03" active="true" press=".onPressCount">
+            <layoutData>
+              <FlexItemData baseSize="20%" styleClass="employee-count" />
+            </layoutData>
+            <customData>
+              <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
+              <core:CustomData key="Discod" value="{/contents/A01/data/Cnt52C}" />
+            </customData>
+          </ObjectStatus>
+        </HBox>
+        <HBox width="100%" height="33px" alignItems="Center" class="border-bottom">
+          <layoutData>
+            <FlexItemData growFactor="1" />
+          </layoutData>
+          <Label text="{i18n>LABEL_01216}" textAlign="Center" width="100%">
+            <layoutData>
+              <FlexItemData growFactor="1" />
+            </layoutData>
+          </Label>
+          <ObjectStatus text="{ path: '/contents/A01/data/Cnt60', type: 'sap.ui.yesco.mvc.model.type.Currency' }" class="color-04" active="true" press=".onPressCount">
+            <layoutData>
+              <FlexItemData baseSize="20%" styleClass="employee-count" />
+            </layoutData>
+            <customData>
+              <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
+              <core:CustomData key="Discod" value="{/contents/A01/data/Cnt60C}" />
+            </customData>
+          </ObjectStatus>
+          <ObjectStatus text="{ path: '/contents/A01/data/Cnt61', type: 'sap.ui.yesco.mvc.model.type.Currency' }" class="color-04" active="true" press=".onPressCount">
+            <layoutData>
+              <FlexItemData baseSize="20%" styleClass="employee-count" />
+            </layoutData>
+            <customData>
+              <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
+              <core:CustomData key="Discod" value="{/contents/A01/data/Cnt61C}" />
+            </customData>
+          </ObjectStatus>
+          <ObjectStatus text="{ path: '/contents/A01/data/Cnt62', type: 'sap.ui.yesco.mvc.model.type.Currency' }" class="color-04" active="true" press=".onPressCount">
+            <layoutData>
+              <FlexItemData baseSize="20%" styleClass="employee-count" />
+            </layoutData>
+            <customData>
+              <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
+              <core:CustomData key="Discod" value="{/contents/A01/data/Cnt62C}" />
+            </customData>
+          </ObjectStatus>
+        </HBox>
+        <HBox width="100%" height="33px" alignItems="Center" class="border-bottom">
+          <layoutData>
+            <FlexItemData growFactor="1" />
+          </layoutData>
+          <Label text="{i18n>LABEL_01217}" textAlign="Center" width="100%">
+            <layoutData>
+              <FlexItemData growFactor="1" />
+            </layoutData>
+          </Label>
+          <ObjectStatus text="{ path: '/contents/A01/data/Cnt70', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount">
+            <layoutData>
+              <FlexItemData baseSize="20%" styleClass="employee-count" />
+            </layoutData>
+            <customData>
+              <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
+              <core:CustomData key="Discod" value="{/contents/A01/data/Cnt70C}" />
+            </customData>
+          </ObjectStatus>
+          <ObjectStatus text="{ path: '/contents/A01/data/Cnt71', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount">
+            <layoutData>
+              <FlexItemData baseSize="20%" styleClass="employee-count" />
+            </layoutData>
+            <customData>
+              <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
+              <core:CustomData key="Discod" value="{/contents/A01/data/Cnt71C}" />
+            </customData>
+          </ObjectStatus>
+          <ObjectStatus text="{ path: '/contents/A01/data/Cnt72', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount">
+            <layoutData>
+              <FlexItemData baseSize="20%" styleClass="employee-count" />
+            </layoutData>
+            <customData>
+              <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
+              <core:CustomData key="Discod" value="{/contents/A01/data/Cnt72C}" />
+            </customData>
+          </ObjectStatus>
+        </HBox>
+      </VBox>
+    </HBox>
+  </VBox>
 </core:FragmentDefinition>

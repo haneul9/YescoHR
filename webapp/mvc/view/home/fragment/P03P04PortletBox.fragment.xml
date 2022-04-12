@@ -22,7 +22,7 @@
           <SegmentedButtonItem text="{i18n>LABEL_01112}" key="MY" />
         </items>
       </SegmentedButton>
-      <Button icon="asset/image/icon_write.png" iconDensityAware="false" type="Transparent" class="icon-button" visible="{= !!${myMembersActive} &amp;&amp; ${selectedMembersButton} === 'MY' }" press=".onPressMyMemberAdd" />
+      <Button icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_write.png" iconDensityAware="false" type="Transparent" class="icon-button" visible="{= !!${myMembersActive} &amp;&amp; ${selectedMembersButton} === 'MY' }" press=".onPressMyMemberAdd" />
       <Text text="">
         <layoutData>
           <FlexItemData growFactor="1" />
@@ -83,7 +83,7 @@
                   <core:CustomData key="portlet-member-status" value="{Icon}" writeToDom="true" />
                 </customData>
               </Text>
-              <Button icon="asset/image/icon_remove.png" iconDensityAware="false" type="Transparent" class="icon-button portlet-member-remove" press=".onPressMyMemberRemove" />
+              <Button icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_remove.png" iconDensityAware="false" type="Transparent" class="icon-button portlet-member-remove" press=".onPressMyMemberRemove" />
             </HBox>
           </VBox>
         </ScrollContainer>

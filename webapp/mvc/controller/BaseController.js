@@ -79,7 +79,8 @@ sap.ui.define(
       },
 
       isMss() {
-        return /^m\//.test(HashChanger.getInstance().getHash()) || /^mobile\/m\//.test(HashChanger.getInstance().getHash());
+        const sHash = HashChanger.getInstance().getHash();
+        return /^m\//.test(sHash) || /^mobile\/m\//.test(sHash);
       },
 
       isHass() {
@@ -301,6 +302,14 @@ sap.ui.define(
 
       getFileAttachmentBoxHandler() {
         return this.FileAttachmentBoxHandler;
+      },
+
+      getImageURL(sImageName) {
+        return AppUtils.getImageURL(sImageName);
+      },
+
+      getUnknownAvatarImageURL() {
+        return AppUtils.getUnknownAvatarImageURL();
       },
 
       /**

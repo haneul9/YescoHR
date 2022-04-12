@@ -2,7 +2,6 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
@@ -16,7 +15,6 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     Fragment,
-    JSONModel,
     MessageBox,
     Appno,
     AppUtils,
@@ -143,18 +141,15 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const mSummary = oViewModel.getProperty('/summary');
         const mButtons = oViewModel.getProperty('/buttons');
+        const iZappStatAl = _.toNumber(mSummary.ZappStatAl);
 
         if (!_.isEqual(mSummary.Prdyn, 'X')) {
           _.forOwn(mButtons, (value, key, object) => _.set(object, key, false));
         } else {
-          const iZappStatAl = _.toNumber(mSummary.ZappStatAl);
-
-          _.chain(mButtons)
-            .set('SAVE', !_.inRange(iZappStatAl, 11, 65))
-            .set('APPROVAL', !_.inRange(iZappStatAl, 11, 65))
-            .set('PRINT', _.isEqual(iZappStatAl, 20) || _.isEqual(iZappStatAl, 60))
-            .commit();
+          _.chain(mButtons).set('SAVE', !_.inRange(iZappStatAl, 11, 65)).set('APPROVAL', !_.inRange(iZappStatAl, 11, 65)).commit();
         }
+
+        _.set(mButtons, 'PRINT', _.isEqual(iZappStatAl, 20) || _.isEqual(iZappStatAl, 60));
       },
 
       async setHolPlanSeqno() {

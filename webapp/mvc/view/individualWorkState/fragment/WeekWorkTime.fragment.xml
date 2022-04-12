@@ -1,43 +1,25 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
-  xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control">
   <VBox width="50%" class="vCardBox small">
     <HBox justifyContent="SpaceBetween" class="table-toolbar">
       <Title level="H2" text="{i18n>LABEL_18015}" />
       <custom:DatePicker dateValue="{ path: '/WeekWorkDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="200px" change=".onWeekWorkTime" />
     </HBox>
-    <HBox justifyContent="Start" class="pb-18-px">
-      <Text text="{i18n>LABEL_18016}"/>
-      <Text text="{= ${/WeekWork/Wkrultx} }" class="desc-txt"/>
+    <HBox alignItems="Center" class="week-work-time">
+      <core:HTML content='&lt;div id="chart-weekWork-app-dial-container"&gt;&lt;/div&gt;' />
+      <VBox alignItems="End" width="100%" class="workTime-summary-box">
+        <Label text="today"/>
+        <ObjectStatus text="{/WeekWork/Timtx}" state="Indication05" />
+        <Text text="{/WeekWork/Wktim}" />
+        <Label text="this week">
+          <layoutData>
+            <FlexItemData styleClass="mt-25-px" />
+          </layoutData>
+        </Label>
+        <ObjectStatus text="{/WeekWork/Reltm} {/WeekWork/Reltx}" state="Indication05" />
+        <Text text="{/WeekWork/Wkrul}" />
+      </VBox>
     </HBox>
-    <VBox class="week-Work-summary">
-      <grid:CSSGrid gridTemplateColumns="2fr 2fr 2fr" gridGap="4px">
-        <Label text="{i18n>LABEL_18017}" />
-        <Label text="{i18n>LABEL_18018}" />
-        <Label text="{i18n>LABEL_18019}" />
-        <HBox>
-          <Text text="{/WeekWork/Tottime}"/>
-          <Text text="{i18n>LABEL_00330}"/>
-        </HBox>
-        <HBox>
-          <Text text="{/WeekWork/Bastime}"/>
-          <Text text="{i18n>LABEL_00330}"/>
-        </HBox>
-        <HBox>
-          <Text text="{/WeekWork/Ottime}"/>
-          <Text text="{i18n>LABEL_00330}"/>
-        </HBox>
-      </grid:CSSGrid>
-      <custom:VacationIndicator width="100%" total="{/WeekWork/Grp03}" used="{/WeekWork/Grp01}" used2="{/WeekWork/Grp02}" chartOnly="true" showTotal="true" usedType="WeekTime">
-        <custom:layoutData>
-          <FlexItemData growFactor="1" />
-        </custom:layoutData>
-      </custom:VacationIndicator>
-      <HBox class="pt-10-px font-medium">
-        <Text text="{i18n>LABEL_18020}" class="font-medium mr-10-px"/>
-        <Text text="{/WeekWork/WorkTime}" class="font-medium"/>
-      </HBox>
-    </VBox>
   </VBox>
 </core:FragmentDefinition>

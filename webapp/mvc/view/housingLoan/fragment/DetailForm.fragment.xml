@@ -24,19 +24,19 @@
                 </ComboBox>
                 <Input value="{/FormData/Asmtdtx}" maxLength="{/FieldLimit/Asmtdtx}" editable="false" visible="{= ${/FormData/Lnsta} !== '10' &amp;&amp; !!${/FormData/Lnsta} }" />
             </VBox>
-            <Label text="{i18n>LABEL_07020}"/>
+            <Label text="{= ${/HideBox} ? ${i18n>LABEL_07020} : '' }"/>
             <VBox>
-                <ComboBox items="{/HouseType}" selectedKey="{/FormData/Htype}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required">
+                <ComboBox items="{/HouseType}" selectedKey="{/FormData/Htype}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" visible="{/HideBox}" class="required">
                     <core:Item text="{Ztext}" key="{Zcode}" />
                 </ComboBox>
             </VBox>
-            <Label text="{i18n>LABEL_07021}"/>
-            <HBox>
+            <Label text="{i18n>LABEL_07021}" visible="{/HideBox}"/>
+            <HBox visible="{/HideBox}">
                 <Input value="{/FormData/Zsize}" maxLength="6" liveChange=".areaSize" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="sapUiTinyMarginEnd required"/>
                 <Text text="{/baseArea/Text}"/>
             </HBox>
-            <Label text="{i18n>LABEL_00152}"/>
-            <VBox>
+            <Label text="{i18n>LABEL_00152}" visible="{/HideBox}"/>
+            <VBox visible="{/HideBox}">
                 <Input value="{/FormData/Addre}" maxLength="{/FieldLimit/Addre}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required"/>
             </VBox>
             <Label text="{i18n>LABEL_07022}"/>

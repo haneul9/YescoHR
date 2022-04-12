@@ -2,7 +2,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
@@ -19,7 +18,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     MessageBox,
     Appno,
     AppUtils,
@@ -148,9 +146,8 @@ sap.ui.define(
       },
 
       // 계좌구분 선택
-      onAccChange(oEvent) {
+      onAccChange() {
         const oDetailModel = this.getViewModel();
-        const sKey = oEvent.getSource().getSelectedKey();
 
         oDetailModel.setProperty('/FormData/Chkyn', '');
         oDetailModel.setProperty('/FormData/Bankl', 'ALL');

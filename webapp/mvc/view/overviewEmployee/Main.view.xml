@@ -27,22 +27,23 @@
           <ComboBox items="{/entry/Orgeh}" selectedKey="{/searchConditions/Orgeh}">
             <core:Item text="{Orgtx}" key="{Orgeh}" />
           </ComboBox>
-          <Button text="{i18n>LABEL_00100}" icon="asset/image/icon_search03.png" iconDensityAware="false" press=".onPressSearch"/>
+          <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onPressSearch"/>
+          <Button text="{i18n>LABEL_28058}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onPressExcept"/>
         </HBox>
         <VBox justifyContent="Center" alignItems="Center">
           <HBox>
             <HBox justifyContent="SpaceBetween" alignItems="Center">
-              <Image src="asset/image/icon_human_green.svg" width="12px" />
+              <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_human_green.svg" width="12px" />
               <Text text="{i18n>LABEL_28003}" class="pl-8-px font-11-px display-flex" />
             </HBox>
             <HBox class="ml-16-px" justifyContent="SpaceBetween" alignItems="Center">
-              <Image src="asset/image/icon_human_orange.svg" width="12px" />
+              <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_human_orange.svg" width="12px" />
               <Text text="{i18n>LABEL_28004}" class="pl-8-px font-11-px display-flex" />
             </HBox>
           </HBox>
         </VBox>
       </HBox>
-      <grid:CSSGrid gridGap="20px" gridTemplateRows="repeat(3, 230px)" gridTemplateColumns="repeat(4, 1fr)" class="mobile-grid-flow-column sapUiSmallMarginTop">
+      <grid:CSSGrid gridGap="20px" gridAutoRows="230px" gridTemplateColumns="repeat(4, 1fr)" class="boardroom-grid mobile-grid-flow-column sapUiSmallMarginTop">
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A01" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A02" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A03" type="XML" />

@@ -2,24 +2,20 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
-    'sap/ui/model/Filter',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/Debuggable',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/model/type/Date', // XML expression binding용 type preloading
     'sap/ui/yesco/mvc/model/type/Time',
   ],
   (
     // prettier 방지용 주석
     Fragment,
-    Filter,
     JSONModel,
     Debuggable,
     Client,
-    ServiceNames,
-    MessageBox
+    ServiceNames
   ) => {
     'use strict';
 
@@ -38,6 +34,7 @@ sap.ui.define(
       getInitialData() {
         return {
           busy: true,
+          linkType: this.oController.isMss() ? 'M' : '',
           employees: null,
         };
       },
@@ -110,17 +107,27 @@ sap.ui.define(
         }, 500);
       },
 
-      onDialogToggle() {
+      onDialogToggle(oEvent) {
         if (this.oDialog.isOpen()) {
           this.onDialogClose();
         } else {
-          this.oDialog.openBy(this.oController.byId('contact-search'));
+          this.oDialog.openBy(oEvent.getSource());
           this.setBusy(false);
         }
       },
 
       onDialogClose() {
         this.oDialog.close();
+      },
+
+      navToProfile(oEvent) {
+        const sLinkType = this.oDialogModel.getProperty('/linkType');
+        if (sLinkType !== 'M') {
+          return;
+        }
+
+        const sPernr = oEvent.getSource().getBindingContext().getProperty('Pernr');
+        this.oController.reduceViewResource().getRouter().navTo('mobile/m/employee-detail', { pernr: sPernr });
       },
 
       setBusy(bBusy = true) {

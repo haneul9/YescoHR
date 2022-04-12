@@ -15,7 +15,7 @@ sap.ui.define(
       TAB: { COMP: 'T01', OPPO: 'T02' },
       APPRAISER_TYPE: { ME: 'ME', MA: 'MA', MB: 'MB' },
       DISPLAY_TYPE: { EDIT: 'X', DISPLAY_ONLY: 'D', HIDE: 'H', HIDDEN_VALUE: 'V' },
-      PROCESS_TYPE: { LIST: { code: 'L', label: 'LABEL_00177' }, DETAIL: { code: 'D', label: 'LABEL_00165' }, SAVE: { code: 'T', label: 'LABEL_00103' }, SEND: { code: 'C', label: 'LABEL_00175' }, APPROVE: { code: 'P', label: 'LABEL_00123' }, REJECT: { code: 'R', label: 'LABEL_00124' }, CANCEL: { code: 'W', label: 'LABEL_00118' }, CONFIRM: { code: 'C', label: 'LABEL_10043' } },
+      PROCESS_TYPE: { LIST: { code: 'L', label: 'LABEL_00177' }, DETAIL: { code: 'D', label: 'LABEL_00165' }, SAVE: { code: 'T', label: 'LABEL_00103' }, SEND: { code: 'C', label: 'LABEL_00175' }, APPROVE: { code: 'P', label: 'LABEL_00123' }, REJECT: { code: 'R', label: 'LABEL_00124' }, CANCEL: { code: 'W', label: 'LABEL_10048' }, CONFIRM: { code: 'C', label: 'LABEL_10043' }, COMPLETE: { code: 'C', label: 'LABEL_00117' } },
 
       ITEM_PROPERTIES: ['Obj0', 'Z301', 'Fapp', 'Z305', 'Z307', 'Z309', 'Z311'],
       MANAGE_PROPERTIES: ['Z317', 'Z319'],
@@ -64,6 +64,13 @@ sap.ui.define(
         },
         3: {
           S: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X' }, SAVE: { process: true, label: 'LABEL_00103', ME: 'X', MA: 'X' } },
+        },
+        4: {
+          S: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X' }, SAVE: { process: true, label: 'LABEL_00103', ME: 'X', MA: '' } },
+          T: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X' }, SAVE: { process: true, label: 'LABEL_00103', ME: '', MA: 'X' } },
+        },
+        5: {
+          X: { REJECT_REASON: { label: 'LABEL_00142', ME: 'X', MA: 'X' } },
         },
       },
     };

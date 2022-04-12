@@ -48,7 +48,7 @@ sap.ui.define(
 
       initializeItem(obj, index) {
         return {
-          expanded: _.stubTrue(),
+          expanded: _.stubFalse(),
           isSaved: _.stubTrue(),
           OrderNo: String(index),
           ItemNo: String(index + 1),
@@ -303,7 +303,7 @@ sap.ui.define(
             Ename: sPernr,
           });
 
-          oViewModel.setProperty('/appointee', { ...mAppointee, Orgtx: mAppointee.Fulln, Photo: mAppointee.Photo || 'asset/image/avatar-unknown.svg' });
+          oViewModel.setProperty('/appointee', { ...mAppointee, Orgtx: mAppointee.Fulln, Photo: mAppointee.Photo || this.getUnknownAvatarImageURL() });
         }
       },
 
@@ -359,7 +359,7 @@ sap.ui.define(
             AppraisalIdpDocDetSet: aItem,
           });
 
-          // {저장|전송|승인|취소}되었습니다.
+          // {저장|전송|승인|전송취소}되었습니다.
           MessageBox.success(this.getBundleText('MSG_00007', label), {
             onClose: () => {
               if (!bIsSave) this.getRouter().navTo(sListRouteName);
@@ -547,9 +547,18 @@ sap.ui.define(
       },
 
       onPressCompleteButton() {
+        const mProcessType = Constants.PROCESS_TYPE.COMPLETE;
+
         if (!this.validation()) return;
 
-        MessageBox.alert('Not ready yet.');
+        MessageBox.confirm(this.getBundleText('MSG_00006', mProcessType.label), {
+          // {완료}하신 후 수정할 수 없습니다. {완료}하시겠습니까?
+          onClose: (sAction) => {
+            if (MessageBox.Action.CANCEL === sAction) return;
+
+            this.createProcess(mProcessType);
+          },
+        });
       },
 
       onPressApproveButton() {
@@ -607,7 +616,7 @@ sap.ui.define(
         const mProcessType = Constants.PROCESS_TYPE.CANCEL;
 
         MessageBox.confirm(this.getBundleText('MSG_00006', mProcessType.label), {
-          // {취소}하시겠습니까?
+          // {전송취소}하시겠습니까?
           onClose: (sAction) => {
             if (MessageBox.Action.CANCEL === sAction) return;
 

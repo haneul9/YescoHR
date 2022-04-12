@@ -387,7 +387,7 @@ sap.ui.define(
         const sServiceUrl = ServiceManager.getServiceUrl('ZHR_COMMON_SRV', this.getOwnerComponent());
         const oModel = new sap.ui.model.odata.ODataModel(sServiceUrl, true, undefined, undefined, undefined, undefined, undefined, false);
 
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
           for (let i = 0; i < aFiles.length; i++) {
             oModel.refreshSecurityToken();
 

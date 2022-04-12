@@ -6,18 +6,23 @@
       "manifest.json",
       "Component-preload.js",
       "asset/css/**",
-      "asset/image/**",
-      "i18n/**"
+      "i18n/**",
+      "mvc/model/models.js"
     ],
     "conn_usestrictssl" : false,
     "conn_server": "https://yeshrsapdev.yescoholdings.com:8443/",
-    "conn_client" : "100",
+    "conn_client": "100",
     "conn_user": "HR10",
     "conn_password": "qwer1234",
     "abap_bsp": "zui5_yescohr",
     "abap_bsp_text": "UI5 yesco e-HR",
+<<<<<<< HEAD
     "abap_package": "zhr1",
     "abap_transport": "YHDK900876",
+=======
+    "abap_package": "ZHR1",
+    "abap_transport": "YHDK901427",
+>>>>>>> 40ecab2a5dc2968ffb98f0954460eee7dc5562a2
     "calcappindex": true,
-    "preserve_unselected": true
+    "preserve_unselected": false
 }

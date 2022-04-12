@@ -29,8 +29,7 @@ sap.ui.define(
     Client,
     ServiceNames,
     PostcodeDialogHandler,
-    BaseController,
-    Date
+    BaseController
   ) => {
     'use strict';
 

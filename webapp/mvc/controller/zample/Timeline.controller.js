@@ -28,7 +28,7 @@ sap.ui.define(
 
       oData.Employees.forEach(function (oEmployee) {
         oEmployee.HireDateTime = oDateParser.parse(oEmployee.HireDateTime);
-        oEmployee.Photo = sap.ui.require.toUrl(`sap/ui/yesco/asset/image/${oEmployee.Photo}`);
+        oEmployee.Photo = sap.ui.require.toUrl(this.getImageURL(oEmployee.Photo));
       });
 
       oModel.updateBindings(true);

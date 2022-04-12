@@ -2,7 +2,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
@@ -19,7 +18,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     MessageBox,
     Appno,
     AppUtils,
@@ -470,12 +468,12 @@ sap.ui.define(
                 Menid: this.getCurrentMenuId(),
               };
 
-              await Client.create(oModel, 'MaintenanceCarAppl', oSendObject);
-
               // FileUpload
               if (!!AttachFileAction.getFileCount.call(this)) {
                 await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
               }
+
+              await Client.create(oModel, 'MaintenanceCarAppl', oSendObject);
 
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103')); // {저장}되었습니다.
             } catch (oError) {
@@ -522,14 +520,14 @@ sap.ui.define(
                 Menid: oDetailModel.getProperty('/menid'),
               };
 
-              const oModel = this.getModel(ServiceNames.BENEFIT);
-
-              await Client.create(oModel, 'MaintenanceCarAppl', oSendObject);
-
               // FileUpload
               if (!!AttachFileAction.getFileCount.call(this)) {
                 await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
               }
+
+              const oModel = this.getModel(ServiceNames.BENEFIT);
+
+              await Client.create(oModel, 'MaintenanceCarAppl', oSendObject);
 
               // {신청}되었습니다.
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {

@@ -34,10 +34,10 @@
         <Label text="{i18n>LABEL_00311}" />
         <Input type="Number" width="50%" class="required" value="{/employee/dialog/form/Tpont}" enabled="false" />
         <Label text="{i18n>LABEL_00316}" />
-        <HBox>
+        <HBox alignItems="Center">
             <Link text="{/employee/dialog/form/Zfilename}" width="80%" textAlign="Begin" visible="{= !!${/employee/dialog/form/Zfilename}}" press=".onPressFileLink">
                 <layoutData>
-                    <FlexItemData growFactor="1" />
+                    <FlexItemData growFactor="1" maxWidth="200px" />
                 </layoutData>
             </Link>
             <u:FileUploader buttonOnly="true" buttonText="{i18n>LABEL_00243}" maximumFileSize="{/employee/dialog/file/settings/maximumFileSize}" fileType="{/employee/dialog/file/settings/fileType}" change=".onInputFormFileChange" />

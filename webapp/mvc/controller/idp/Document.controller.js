@@ -72,7 +72,7 @@ sap.ui.define(
           oViewModel.setProperty('/entry/levels', new ComboEntry({ codeKey: 'ValueEid', valueKey: 'ValueText', aEntries: aGrades }) ?? []);
 
           const aYears = await Client.getEntitySet(oModel, 'AppraisalIdpYear', { Pernr: sPernr });
-          const sPrevYear = moment().subtract(1, 'years').format('YYYY');
+          const sPrevYear = _.isEmpty(oParameter.sZyear) ? moment().subtract(1, 'years').format('YYYY') : oParameter.sZyear;
           oViewModel.setProperty('/searchConditions/Zyear', sPrevYear);
           oViewModel.setProperty('/entry/years', aYears || []);
 
@@ -116,7 +116,7 @@ sap.ui.define(
           Ename: sPernr,
         });
 
-        oViewModel.setProperty('/appointee', { ...mAppointee, Orgtx: mAppointee.Fulln, Photo: mAppointee.Photo || 'asset/image/avatar-unknown.svg' });
+        oViewModel.setProperty('/appointee', { ...mAppointee, Orgtx: mAppointee.Fulln, Photo: mAppointee.Photo || this.getUnknownAvatarImageURL() });
       },
 
       async onChangeYear(oEvent) {

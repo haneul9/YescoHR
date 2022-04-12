@@ -19,14 +19,8 @@
                 </core:customData>
               </core:Icon>
               <Text text="{Zname}"/>
-              <Text text="{
-								path: 'Conddate',
-								type: 'sap.ui.yesco.mvc.model.type.Date'
-							}"/>
-              <Text text="{
-									path: 'ZappStatAl',
-									formatter: '.TableUtils.StatusTxt'
-								}" class="sapMText m-auto">
+              <Text text="{ path: 'Conddate', type: 'sap.ui.yesco.mvc.model.type.Date' }"/>
+              <Text text="{ path: 'ZappStatAl', formatter: '.TableUtils.StatusTxt' }" class="sapMText m-auto">
                 <customData>
                   <core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
                 </customData>

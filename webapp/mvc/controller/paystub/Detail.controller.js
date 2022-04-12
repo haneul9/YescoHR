@@ -38,10 +38,6 @@ sap.ui.define(
         };
       },
 
-      onBeforeShow() {
-        TableUtils.summaryColspan({ oTable: this.byId('payTable'), aHideIndex: [1, 2] });
-      },
-
       async onObjectMatched(oParameter) {
         const oViewModel = this.getViewModel();
 
@@ -77,6 +73,7 @@ sap.ui.define(
 
           // Paylist
           const aPayList = this.transformTreeData({ aTreeData: mDetail.Payslip1Nav.results });
+          const bShowHeader = !_.every(mDetail.Payslip1Nav.results, (o) => _.isEmpty(o.Anzhl) && _.chain(o.Betpe).toNumber().isEqual(0).value());
           // Deductlist
           const aDeductlist = this.transformTreeData({ aTreeData: mDetail.Payslip2Nav.results });
           // TaxIncomeList
@@ -87,7 +84,7 @@ sap.ui.define(
           const aBaseList = _.groupBy(mDetail.Payslip1Nav.results, 'Uppno')[''] ?? [];
 
           oViewModel.setProperty('/summary/list', [{ ...mDetail }]);
-          oViewModel.setProperty('/pay/visibleHeader', !_.every(mDetail.Payslip1Nav.results, (o) => _.isEmpty(o.Anzhl) && _.chain(o.Betpe).toNumber().isEqual(0).value()));
+          oViewModel.setProperty('/pay/visibleHeader', bShowHeader);
           oViewModel.setProperty('/pay/list', aPayList);
           oViewModel.setProperty('/pay/rowCount', aPayList.length || 2);
           oViewModel.setProperty('/deduction/list', aDeductlist);
@@ -96,10 +93,15 @@ sap.ui.define(
           oViewModel.setProperty('/tax/rowCount', aTaxIncomeList.length || 2);
           oViewModel.setProperty('/work/list', aTimeList);
           oViewModel.setProperty('/work/rowCount', aTimeList.length || 1);
-          oViewModel.setProperty('/base/list', aBaseList);
-          oViewModel.setProperty('/base/rowCount', aBaseList.length || 1);
+          oViewModel.setProperty('/base/isShow', !_.every(aBaseList, (o) => _.isEmpty(o.Caltx)));
+          oViewModel.setProperty(
+            '/base/list',
+            _.filter(aBaseList, (o) => !_.isEmpty(o.Caltx))
+          );
+          oViewModel.setProperty('/base/rowCount', _.filter(aBaseList, (o) => !_.isEmpty(o.Caltx)).length || 1);
 
           setTimeout(() => {
+            if (!bShowHeader) TableUtils.summaryColspan({ oTable: this.byId('payTable'), aHideIndex: [1, 2] });
             TableUtils.setColorColumn({ oTable: this.byId('summaryTable'), mColorMap: { 5: 'bgType01', 7: 'bgType02', 9: 'bgType03' } });
             TableUtils.setColorColumn({ oTable: this.byId('workTable'), mColorMap: { 0: 'bgType01', 1: 'bgType01' } });
           }, 100);
@@ -143,7 +145,9 @@ sap.ui.define(
             Seqnr: sSeqnr,
           });
 
-          if (mResult.Url) window.open(mResult.Url);
+          if (mResult.Url) {
+            window.open(mResult.Url);
+          }
         } catch (oError) {
           this.debug('Controller > paystub Detail > onPressPDFPrint Error', oError);
 

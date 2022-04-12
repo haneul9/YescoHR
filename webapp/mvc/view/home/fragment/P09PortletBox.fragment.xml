@@ -24,7 +24,7 @@
       <VBox width="47%" class="mt-10-px">
         <HBox width="100%" height="20px" alignItems="Center">
           <Label text="{i18n>LABEL_01151}" design="Bold" displayOnly="true" />
-          <Image alt="{i18n>LABEL_01151}" src="asset/image/icon_birthday.svg" width="20px" class="ml-5-px" />
+          <Image alt="{i18n>LABEL_01151}" src="/sap/public/bc/ui2/zui5_yescohr/images/icon_birthday.svg" width="20px" class="ml-5-px" />
         </HBox>
         <VBox height="calc(100% - 30px)" class="mt-10-px">
           <ScrollContainer>
@@ -51,7 +51,7 @@
       <VBox width="47%" class="mt-10-px">
         <HBox width="100%" height="20px" alignItems="Center">
           <Label text="{i18n>LABEL_01152}" design="Bold" displayOnly="true" />
-          <Image alt="{i18n>LABEL_01152}" src="asset/image/icon_wedding.svg" width="20px" class="ml-5-px" />
+          <Image alt="{i18n>LABEL_01152}" src="/sap/public/bc/ui2/zui5_yescohr/images/icon_wedding.svg" width="20px" class="ml-5-px" />
         </HBox>
         <VBox height="calc(100% - 30px)" class="mt-10-px">
           <ScrollContainer>

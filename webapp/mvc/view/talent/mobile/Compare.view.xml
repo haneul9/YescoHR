@@ -1,110 +1,110 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.talent.mobile.Compare"
-    xmlns="sap.m"
-    xmlns:l="sap.ui.layout"
-    xmlns:custom="sap.ui.yesco.control"
-    xmlns:mvc="sap.ui.core.mvc">
-    <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
-        <VBox class="contents">
-            <HBox justifyContent="SpaceBetween" class="header-wrap">
-                <HBox class="header">
-                    <Title level="H3" text="{i18n>LABEL_35002}" />
-                </HBox>
-            </HBox>
-            <custom:MobileScrollContainer horizontal="false" vertical="true">
-                <l:VerticalLayout id="containerLayout" width="100%" class="sapUiBlockLayoutBackgroundLight compare-block" busyIndicatorDelay="0" busy="{/busy}">
-                    <l:BlockLayout id="BlockLayout" background="Mixed" content="{/compare/data}">
-                        <l:BlockLayoutRow scrollable="true" rowColorSet="{colorSet}">
-                            <l:BlockLayoutCell>
-                                <VBox alignItems="{align}" items="{path: 'value01', templateShareable: false}">
-                                    <VBox>
-                                        <layoutData>
-                                            <FlexItemData minWidth="100%" />
-                                        </layoutData>
-                                        <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
-                                        <Image src="{image}" width="80px" visible="{= !!${image} }" press=".onPressPic" />
-                                        <Text text="{text}" width="100%" textAlign="Center" visible="{= !!${text} }" />
-                                    </VBox>
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox alignItems="{align}" items="{path: 'value02', templateShareable: false}">
-                                    <VBox>
-                                        <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
-                                        <Text text="{text}" visible="{= !!${text} }" />
-                                    </VBox>
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox alignItems="{align}" items="{path: 'value04', templateShareable: false}">
-                                    <VBox>
-                                        <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
-                                        <Text text="{text}" visible="{= !!${text} }" />
-                                    </VBox>
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox alignItems="{align}" items="{path: 'value05', templateShareable: false}">
-                                    <VBox>
-                                        <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
-                                        <Text text="{text}" visible="{= !!${text} }" />
-                                    </VBox>
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox alignItems="{align}">
-                                    <VBox items="{path: 'value06', templateShareable: false}">
-                                        <VBox>
-                                            <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
-                                            <Text text="{text}" visible="{= !!${text} }" />
-                                        </VBox>
-                                    </VBox>
-                                    <Image src="asset/image/compare_chart{value07}.svg" visible="{= !!${value07} }" />
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox alignItems="{align}" items="{path: 'value03', templateShareable: false}">
-                                    <VBox>
-                                        <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
-                                        <Text text="{text}" visible="{= !!${text} }" />
-                                    </VBox>
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox alignItems="{align}" items="{path: 'value09', templateShareable: false}">
-                                    <VBox>
-                                        <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
-                                        <Text text="{text}" visible="{= !!${text} }" />
-                                    </VBox>
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox alignItems="{align}" items="{path: 'value08', templateShareable: false}">
-                                    <VBox>
-                                        <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
-                                        <Text text="{text}" visible="{= !!${text} }" />
-                                    </VBox>
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox alignItems="{align}" items="{path: 'value10', templateShareable: false}">
-                                    <VBox>
-                                        <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
-                                        <Text text="{text}" visible="{= !!${text} }" />
-                                    </VBox>
-                                </VBox>
-                            </l:BlockLayoutCell>
-                            <l:BlockLayoutCell>
-                                <VBox alignItems="{align}" items="{path: 'value11', templateShareable: false}">
-                                    <VBox>
-                                        <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
-                                        <Text text="{text}" visible="{= !!${text} }" />
-                                    </VBox>
-                                </VBox>
-                            </l:BlockLayoutCell>
-                        </l:BlockLayoutRow>
-                    </l:BlockLayout>
-                </l:VerticalLayout>
-            </custom:MobileScrollContainer>
-        </VBox>
-    </Page>
+  xmlns="sap.m"
+  xmlns:l="sap.ui.layout"
+  xmlns:custom="sap.ui.yesco.control"
+  xmlns:mvc="sap.ui.core.mvc">
+  <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+    <VBox class="contents">
+      <HBox justifyContent="SpaceBetween" class="header-wrap">
+        <HBox class="header">
+          <Title level="H3" text="{i18n>LABEL_35002}" />
+        </HBox>
+      </HBox>
+      <custom:MobileScrollContainer horizontal="false" vertical="true">
+        <l:VerticalLayout id="containerLayout" width="100%" class="sapUiBlockLayoutBackgroundLight compare-block" busyIndicatorDelay="0" busy="{/busy}">
+          <l:BlockLayout id="BlockLayout" background="Mixed" content="{/compare/data}">
+            <l:BlockLayoutRow scrollable="true" rowColorSet="{colorSet}">
+              <l:BlockLayoutCell>
+                <VBox alignItems="{align}" items="{path: 'value01', templateShareable: false}">
+                  <VBox>
+                    <layoutData>
+                      <FlexItemData minWidth="100%" />
+                    </layoutData>
+                    <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
+                    <Image src="{image}" width="80px" visible="{= !!${image} }" press=".onPressPic" />
+                    <Text text="{text}" width="100%" textAlign="Center" visible="{= !!${text} }" />
+                  </VBox>
+                </VBox>
+              </l:BlockLayoutCell>
+              <l:BlockLayoutCell>
+                <VBox alignItems="{align}" items="{path: 'value02', templateShareable: false}">
+                  <VBox>
+                    <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
+                    <Text text="{text}" visible="{= !!${text} }" />
+                  </VBox>
+                </VBox>
+              </l:BlockLayoutCell>
+              <l:BlockLayoutCell>
+                <VBox alignItems="{align}" items="{path: 'value04', templateShareable: false}">
+                  <VBox>
+                    <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
+                    <Text text="{text}" visible="{= !!${text} }" />
+                  </VBox>
+                </VBox>
+              </l:BlockLayoutCell>
+              <l:BlockLayoutCell>
+                <VBox alignItems="{align}" items="{path: 'value05', templateShareable: false}">
+                  <VBox>
+                    <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
+                    <Text text="{text}" visible="{= !!${text} }" />
+                  </VBox>
+                </VBox>
+              </l:BlockLayoutCell>
+              <l:BlockLayoutCell>
+                <VBox alignItems="{align}">
+                  <VBox items="{path: 'value06', templateShareable: false}">
+                    <VBox>
+                      <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
+                      <Text text="{text}" visible="{= !!${text} }" />
+                    </VBox>
+                  </VBox>
+                  <Image src="/sap/public/bc/ui2/zui5_yescohr/images/compare_chart{value07}.svg" visible="{= !!${value07} }" />
+                </VBox>
+              </l:BlockLayoutCell>
+              <l:BlockLayoutCell>
+                <VBox alignItems="{align}" items="{path: 'value03', templateShareable: false}">
+                  <VBox>
+                    <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
+                    <Text text="{text}" visible="{= !!${text} }" />
+                  </VBox>
+                </VBox>
+              </l:BlockLayoutCell>
+              <l:BlockLayoutCell>
+                <VBox alignItems="{align}" items="{path: 'value09', templateShareable: false}">
+                  <VBox>
+                    <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
+                    <Text text="{text}" visible="{= !!${text} }" />
+                  </VBox>
+                </VBox>
+              </l:BlockLayoutCell>
+              <l:BlockLayoutCell>
+                <VBox alignItems="{align}" items="{path: 'value08', templateShareable: false}">
+                  <VBox>
+                    <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
+                    <Text text="{text}" visible="{= !!${text} }" />
+                  </VBox>
+                </VBox>
+              </l:BlockLayoutCell>
+              <l:BlockLayoutCell>
+                <VBox alignItems="{align}" items="{path: 'value10', templateShareable: false}">
+                  <VBox>
+                    <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
+                    <Text text="{text}" visible="{= !!${text} }" />
+                  </VBox>
+                </VBox>
+              </l:BlockLayoutCell>
+              <l:BlockLayoutCell>
+                <VBox alignItems="{align}" items="{path: 'value11', templateShareable: false}">
+                  <VBox>
+                    <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
+                    <Text text="{text}" visible="{= !!${text} }" />
+                  </VBox>
+                </VBox>
+              </l:BlockLayoutCell>
+            </l:BlockLayoutRow>
+          </l:BlockLayout>
+        </l:VerticalLayout>
+      </custom:MobileScrollContainer>
+    </VBox>
+  </Page>
 </mvc:View>

@@ -1,12 +1,9 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/D3OrgChart',
@@ -14,12 +11,9 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    Filter,
-    FilterOperator,
     JSONModel,
     BaseController,
     AppUtils,
-    ODataReadError,
     Client,
     ServiceNames,
     D3OrgChart,
@@ -40,20 +34,26 @@ sap.ui.define(
       async onObjectMatched() {
         try {
           if (_.isEmpty(this.getViewModel())) {
+            const fCurriedPA = Client.getEntitySet(this.getModel(ServiceNames.PA));
             const mAppointee = this.getAppointeeData();
-            const [aWerks, aReturnData, aOrgLevel] = await Promise.all([
-              Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'WerksList', { Pernr: mAppointee.Pernr }),
-              this.readEmployeeOrgTree(mAppointee.Werks), //
-              this.readOrglevel(),
+            const [aWerks, aOrgLevel, aReturnData] = await Promise.all([
+              Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'WerksList', { Pernr: mAppointee.Pernr }), //
+              fCurriedPA('Orglevel'),
+              fCurriedPA('EmployeeOrgTree', {
+                Menid: this.getCurrentMenuId(),
+                Werks: mAppointee.Werks,
+                Stdat: moment().hour(9).toDate(),
+              }),
             ]);
 
+            const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
             const oViewModel = new JSONModel({
               extendNode: '',
               layout: 'top',
               orgLevel: aOrgLevel ?? [],
               orgList: _.map(aReturnData, (o) => ({
                 ...o,
-                Photo: _.isEmpty(o.Photo) ? 'asset/image/avatar-unknown.svg' : o.Photo,
+                Photo: _.isEmpty(o.Photo) ? sUnknownAvatarImageURL : o.Photo,
                 Ipdat: _.isDate(o.Ipdat) ? moment(o.Ipdat).format('YYYY.MM.DD') : '',
               })),
               entry: {
@@ -117,13 +117,18 @@ sap.ui.define(
           this.chartHolder.removeAllItems();
 
           const sWerks = oViewModel.getProperty('/search/Werks');
-          const aReturnData = await this.readEmployeeOrgTree(sWerks);
+          const aReturnData = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'EmployeeOrgTree', {
+            Menid: this.getCurrentMenuId(),
+            Werks: sWerks,
+            Stdat: moment().hour(9).toDate(),
+          });
 
+          const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
           oViewModel.setProperty(
             '/orgList',
             _.map(aReturnData, (o) => ({
               ...o,
-              Photo: _.isEmpty(o.Photo) ? 'asset/image/avatar-unknown.svg' : o.Photo,
+              Photo: _.isEmpty(o.Photo) ? sUnknownAvatarImageURL : o.Photo,
               Ipdat: _.isDate(o.Ipdat) ? moment(o.Ipdat).format('YYYY.MM.DD') : '',
             }))
           );
@@ -165,51 +170,6 @@ sap.ui.define(
       /*****************************************************************
        * ! Call oData
        *****************************************************************/
-      readEmployeeOrgTree(sWerks) {
-        const oModel = this.getModel(ServiceNames.PA);
-        const sMenid = this.getCurrentMenuId();
-        const sUrl = '/EmployeeOrgTreeSet';
-
-        return new Promise((resolve, reject) => {
-          oModel.read(sUrl, {
-            filters: [
-              new Filter('Menid', FilterOperator.EQ, sMenid), //
-              new Filter('Werks', FilterOperator.EQ, sWerks),
-              new Filter('Stdat', FilterOperator.EQ, moment().hour(9).toDate()),
-            ],
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
-
-      readOrglevel() {
-        const oModel = this.getModel(ServiceNames.PA);
-        const sUrl = '/OrglevelSet';
-
-        return new Promise((resolve, reject) => {
-          oModel.read(sUrl, {
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
     });
   }
 );

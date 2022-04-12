@@ -1,12 +1,10 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/mvc/model/type/Date',
   ],
   (
     // prettier 방지용 주석
-    AppUtils,
     TypeDate
   ) => {
     'use strict';

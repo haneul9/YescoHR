@@ -89,9 +89,10 @@ sap.ui.define(
 
           this.onChangeStat();
 
+          const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
           oViewModel.setProperty(
             '/results',
-            _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? 'asset/image/avatar-unknown.svg' : o.Photo }))
+            _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? sUnknownAvatarImageURL : o.Photo }))
           );
         } catch (oError) {
           this.debug('Controller > Mobile-Employee-Card > initialList Error', oError);
@@ -121,9 +122,10 @@ sap.ui.define(
             Ename: sSearchText,
           });
 
+          const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
           oViewModel.setProperty(
             '/results',
-            _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? 'asset/image/avatar-unknown.svg' : o.Photo }))
+            _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? sUnknownAvatarImageURL : o.Photo }))
           );
         } catch (oError) {
           this.debug('Controller > Mobile-Employee-Card > onPressEmployeeSearch Error', oError);

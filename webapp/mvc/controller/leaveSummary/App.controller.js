@@ -28,6 +28,8 @@ sap.ui.define(
       TableUtils: TableUtils,
       TABLE_ID: 'leaveSummaryTable',
 
+      CHART_ID: 'leaveSummaryChart',
+
       GroupDialogHandler: null,
 
       AWART_COUNT: { 2000: 1, 2010: 1, 2001: 0.5, 2002: 0.5 },
@@ -119,8 +121,8 @@ sap.ui.define(
         this.GroupDialogHandler = new GroupDialogHandler(this, ([mOrgData]) => {
           const oViewModel = this.getViewModel();
 
-          oViewModel.setProperty('/search/Orgeh', mOrgData.Orgeh);
-          oViewModel.setProperty('/search/Orgtx', mOrgData.Stext);
+          oViewModel.setProperty('/search/Orgeh', _.isEmpty(mOrgData) ? null : mOrgData.Orgeh);
+          oViewModel.setProperty('/search/Orgtx', _.isEmpty(mOrgData) ? '' : mOrgData.Stext);
         });
 
         TableUtils.adjustRowSpan({
@@ -185,18 +187,25 @@ sap.ui.define(
       },
 
       buildChart() {
+        const oChart = FusionCharts(this.CHART_ID);
         const mDataSource = this.getViewModel().getProperty('/summary/dataSources');
 
-        FusionCharts.ready(function () {
-          new FusionCharts({
-            type: 'pie2d',
-            renderAt: 'chart-container',
-            width: '180',
-            height: '160',
-            dataFormat: 'json',
-            dataSource: mDataSource,
-          }).render();
-        });
+        if (!oChart) {
+          FusionCharts.ready(() => {
+            new FusionCharts({
+              id: this.CHART_ID,
+              type: 'pie2d',
+              renderAt: 'chart-leaveSummary-container',
+              width: '180',
+              height: '160',
+              dataFormat: 'json',
+              dataSource: mDataSource,
+            }).render();
+          });
+        } else {
+          oChart.setChartData(mDataSource);
+          oChart.render();
+        }
       },
 
       getBoxObject({ day = 'NONE', label = '', classNames = '', awart = '' }) {

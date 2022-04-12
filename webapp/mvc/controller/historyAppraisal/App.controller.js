@@ -63,13 +63,14 @@ sap.ui.define(
           oViewModel.setData(this.initializeModel());
           oViewModel.setProperty('/busy', true);
 
+          await this.setAppointee(mAppointee.Pernr);
+
           if (sRouteName === 'historyAppraisal') {
             oViewModel.setProperty('/isESS', true);
           } else {
             oViewModel.setProperty('/isESS', false);
             oViewModel.setProperty('/sideNavigation/search/searchText', mAppointee.Orgtx);
 
-            await this.setAppointee(mAppointee.Pernr);
             await this.onPressEmployeeSearch(mAppointee.Orgeh);
           }
 
@@ -109,10 +110,11 @@ sap.ui.define(
               Ename: sPernr,
             });
 
+            const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
             if (_.isEmpty(mAppointee)) {
-              oViewModel.setProperty('/appointee', { Photo: 'asset/image/avatar-unknown.svg' });
+              oViewModel.setProperty('/appointee', { Photo: sUnknownAvatarImageURL });
             } else {
-              oViewModel.setProperty('/appointee', { ...mAppointee, Orgtx: mAppointee.Fulln, Photo: mAppointee.Photo || 'asset/image/avatar-unknown.svg' });
+              oViewModel.setProperty('/appointee', { ...mAppointee, Werks: mAppointee.Persa, Orgtx: mAppointee.Fulln, Photo: mAppointee.Photo || sUnknownAvatarImageURL });
             }
           }
         } catch (oError) {
@@ -147,9 +149,10 @@ sap.ui.define(
       },
 
       onPressRowDevelop(oEvent) {
+        const sHost = window.location.href.split('#')[0];
         const oRowData = oEvent.getSource().getParent().getBindingContext().getObject();
 
-        this.debug(oRowData.Zdocid4);
+        window.open(`${sHost}#/idpView/${oRowData.Pernr}/${oRowData.Zyear}`, '_blank', 'width=1400,height=800');
       },
 
       openPerformance(sObjid) {
@@ -197,10 +200,11 @@ sap.ui.define(
       },
 
       transformTreeData({ aTreeData, sRootId }) {
+        const sImageURL = this.getImageURL('icon_employee.svg');
         aTreeData = _.map(aTreeData, (o) =>
           _.chain(o)
             .omit(['Datum', '__metadata'])
-            .set('ref', o.Otype === 'O' ? _.noop() : o.Xchif === 'X' ? 'asset/image/icon_employee.svg' : 'asset/image/icon_employee.svg')
+            .set('ref', o.Otype === 'O' ? _.noop() : o.Xchif === 'X' ? sImageURL : sImageURL)
             .value()
         );
 
@@ -235,9 +239,10 @@ sap.ui.define(
             Orgeh: _.isString(sOrgeh) ? sOrgeh : null,
           });
 
+          const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
           oViewModel.setProperty(
             '/sideNavigation/search/results',
-            _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? 'asset/image/avatar-unknown.svg?ssl=1' : o.Photo }))
+            _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? sUnknownAvatarImageURL : o.Photo }))
           );
         } catch (oError) {
           this.debug('Controller > historyAppraisal > onPressEmployeeSearch Error', oError);
@@ -290,6 +295,15 @@ sap.ui.define(
 
       async onPressSearch() {
         const oViewModel = this.getViewModel();
+        const sWerks = oViewModel.getProperty('/appointee/Werks');
+
+        if (_.isEqual(sWerks, '3000')) {
+          oViewModel.setProperty('/history/rowCount', 1);
+          oViewModel.setProperty('/history/list', []);
+          oViewModel.setProperty('/history/busy', false);
+
+          return;
+        }
 
         oViewModel.setProperty('/history/busy', true);
 

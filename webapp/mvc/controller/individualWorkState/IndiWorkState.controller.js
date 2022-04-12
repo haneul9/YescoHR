@@ -2,7 +2,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TextUtils',
@@ -16,7 +15,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     AppUtils,
     FragmentEvent,
     TextUtils,
@@ -31,6 +29,8 @@ sap.ui.define(
     return BaseController.extend('sap.ui.yesco.mvc.controller.individualWorkState.IndiWorkState', {
       sCombiChartId: 'combiChart',
       sDoughChartId: 'doughChart',
+      sDialChartId: 'WeekWorkDialChart',
+      sDialChartDiv: 'chart-weekWork-app-dial-container',
 
       TextUtils: TextUtils,
       TableUtils: TableUtils,
@@ -89,6 +89,10 @@ sap.ui.define(
 
       formatTime(sTime = '') {
         return !sTime ? '0' : `${sTime.slice(-4, -2)}:${sTime.slice(-2)}`;
+      },
+
+      weekTimeFormat(sTime1, sTime2) {
+        return !sTime1 || !sTime2 ? '0' : `${sTime1.slice(-4, -2)}:${sTime1.slice(-2)} ~ ${sTime2.slice(-4, -2)}:${sTime2.slice(-2)}`;
       },
 
       async onObjectMatched() {
@@ -155,21 +159,16 @@ sap.ui.define(
           oViewModel.setProperty('/OTWorkList', aOTList);
 
           const mWeekWorkPayLoad = {
-            Werks: sWerks,
+            Menid: this.getCurrentMenuId(),
+            Pernr: this.getAppointeeProperty('Pernr'),
             Datum: moment(oViewModel.getProperty('/WeekWorkDate')).hours(9).toDate(),
           };
 
           // 주 52시간 현황
-          const [aWeekTime] = await Client.getEntitySet(oModel, 'WorkLimitStatus', mWeekWorkPayLoad);
+          const [mWeekTime] = await Client.getEntitySet(oModel, 'WorkingTime', mWeekWorkPayLoad);
 
-          oViewModel.setProperty('/WeekWork/Wkrultx', aWeekTime.Wkrultx);
-          oViewModel.setProperty('/WeekWork/Tottime', parseFloat(aWeekTime.Tottime));
-          oViewModel.setProperty('/WeekWork/Bastime', parseFloat(aWeekTime.Bastime));
-          oViewModel.setProperty('/WeekWork/Ottime', parseFloat(aWeekTime.Ottime));
-          oViewModel.setProperty('/WeekWork/Grp03', parseFloat(aWeekTime.Grp03));
-          oViewModel.setProperty('/WeekWork/Grp01', parseFloat(aWeekTime.Grp01));
-          oViewModel.setProperty('/WeekWork/Grp02', parseFloat(aWeekTime.Grp02));
-          oViewModel.setProperty('/WeekWork/WorkTime', `${this.formatTime(aWeekTime.Beguz)} ~ ${this.formatTime(aWeekTime.Enduz)} (${aWeekTime.Stdaz}${this.getBundleText('LABEL_00330')})`);
+          this.buildDialChart(mWeekTime);
+          oViewModel.setProperty('/WeekWork', mWeekTime);
 
           // 근태유형 Combo
           const aWorkTypeCodeList = await Client.getEntitySet(oModel, 'AwartCodeList');
@@ -457,6 +456,111 @@ sap.ui.define(
         oChart.render();
       },
 
+      // WeekWorkTime Chart
+      getDialChartOption(iGaugeOriginY) {
+        return {
+          //Cosmetics
+          showValue: 1,
+          baseFontSize: 14,
+          valueFontSize: 14,
+          showTooltip: 0,
+          gaugeOriginY: iGaugeOriginY,
+          gaugeOuterRadius: 150,
+          gaugeInnerRadius: 110,
+          majorTMNumber: 13,
+          majorTMColor: '#333',
+          majorTMHeight: -2.5,
+          majorTMThickness: 1,
+          tickValueDistance: 5,
+          tickValueStep: 10,
+          showPlotBorder: 0,
+          showGaugeBorder: 0,
+          showPivotBorder: 0,
+          bgColor: 'transparent',
+          pivotRadius: 3,
+          pivotFillColor: '#000',
+          theme: 'ocean',
+          paletteThemeColor: 'transparent',
+        };
+      },
+
+      buildDialChart(mWorkTypeList) {
+        const oChart = FusionCharts(this.sDialChartId);
+        const iGaugeOriginY = 225; // 150 + 75 : (chart box height 50%) + (chart real height 50%)
+
+        if (!oChart) {
+          FusionCharts.ready(() => {
+            new FusionCharts({
+              id: this.sDialChartId,
+              type: 'angulargauge',
+              renderAt: this.sDialChartDiv,
+              width: '480px',
+              height: '300px',
+              dataFormat: 'json',
+              dataSource: {
+                chart: this.getDialChartOption(iGaugeOriginY),
+                colorrange: {
+                  color: [
+                    {
+                      minvalue: '0',
+                      maxvalue: mWorkTypeList.Alwtm,
+                      code: '#34649d',
+                    },
+                    {
+                      minvalue: mWorkTypeList.Alwtm,
+                      maxvalue: mWorkTypeList.Maxtm,
+                      code: '#fdde17',
+                    },
+                  ],
+                },
+                dials: {
+                  dial: [
+                    {
+                      value: mWorkTypeList.Reltm,
+                      valueY: iGaugeOriginY + 13,
+                      baseWidth: 4,
+                      rearExtension: 0,
+                    },
+                  ],
+                },
+              },
+            }).render();
+          });
+        } else {
+          oChart.setChartData(
+            {
+              chart: this.getDialChartOption(iGaugeOriginY),
+              colorrange: {
+                color: [
+                  {
+                    minvalue: '0',
+                    maxvalue: mWorkTypeList.Alwtm,
+                    code: '#34649d',
+                  },
+                  {
+                    minvalue: mWorkTypeList.Alwtm,
+                    maxvalue: mWorkTypeList.Maxtm,
+                    code: '#fdde17',
+                  },
+                ],
+              },
+              dials: {
+                dial: [
+                  {
+                    value: mWorkTypeList.Reltm,
+                    valueY: iGaugeOriginY + 13,
+                    baseWidth: 4,
+                    rearExtension: 0,
+                  },
+                ],
+              },
+            },
+            'json'
+          );
+          oChart.render();
+        }
+      },
+
       getFormatFloat(sVal = '0') {
         return parseFloat(sVal);
       },
@@ -494,21 +598,26 @@ sap.ui.define(
       // 주 52시간 현황 날짜선택
       async onWeekWorkTime() {
         const oViewModel = this.getViewModel();
-        const oModel = this.getModel(ServiceNames.WORKTIME);
-        const mWeekWorkPayLoad = {
-          Werks: this.getAppointeeProperty('Werks'),
-          Datum: moment(oViewModel.getProperty('/WeekWorkDate')).hours(9).toDate(),
-        };
-        // 주 52시간 현황
-        const [aWeekTime] = await Client.getEntitySet(oModel, 'WorkLimitStatus', mWeekWorkPayLoad);
-        oViewModel.setProperty('/WeekWork/Wkrultx', aWeekTime.Wkrultx);
-        oViewModel.setProperty('/WeekWork/Tottime', parseFloat(aWeekTime.Tottime));
-        oViewModel.setProperty('/WeekWork/Bastime', parseFloat(aWeekTime.Bastime));
-        oViewModel.setProperty('/WeekWork/Ottime', parseFloat(aWeekTime.Ottime));
-        oViewModel.setProperty('/WeekWork/Grp03', parseFloat(aWeekTime.Grp03));
-        oViewModel.setProperty('/WeekWork/Grp01', parseFloat(aWeekTime.Grp01));
-        oViewModel.setProperty('/WeekWork/Grp02', parseFloat(aWeekTime.Grp02));
-        oViewModel.setProperty('/WeekWork/WorkTime', `${this.formatTime(aWeekTime.Beguz)} ~ ${this.formatTime(aWeekTime.Enduz)} (${aWeekTime.Stdaz}${this.getBundleText('LABEL_00330')})`);
+
+        try {
+          oViewModel.setProperty('/busy', true);
+
+          const oModel = this.getModel(ServiceNames.WORKTIME);
+          const mWeekWorkPayLoad = {
+            Menid: this.getCurrentMenuId(),
+            Pernr: this.getAppointeeProperty('Pernr'),
+            Datum: moment(oViewModel.getProperty('/WeekWorkDate')).hours(9).toDate(),
+          };
+          // 주 52시간 현황
+          const [mWeekTime] = await Client.getEntitySet(oModel, 'WorkingTime', mWeekWorkPayLoad);
+
+          this.buildDialChart(mWeekTime);
+          oViewModel.setProperty('/WeekWork', mWeekTime);
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       // 근태유형별 연간사용현황 Combo
@@ -623,7 +732,7 @@ sap.ui.define(
           oViewModel.setProperty('/busy', false);
         }
       },
-      getCurrentLocationText(oArguments) {
+      getCurrentLocationText() {
         return this.getBundleText('LABEL_18001'); // My Time Calendar
       },
 

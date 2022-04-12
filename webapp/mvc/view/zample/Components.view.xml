@@ -317,7 +317,7 @@
                 </Select>
                 <Label text="Label" labelFor="input-cc"/>
                 <Input id="input-cc" width="250px" placeholder="Default"/>
-                <Button icon="asset/image/icon_search02.png" iconDensityAware="false" class="icon-button" text="조회" />
+                <Button icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search02.png" iconDensityAware="false" class="icon-button" text="조회" />
               </HBox>
             </VBox>
           </VBox>
@@ -1383,7 +1383,7 @@
                   <Text text="도움말" class="desc-txt" />
                 </HBox>
                 <HBox>
-                  <Image src="asset/image/icon_tooltip.svg" size="20px" press=".onPopover" />
+                  <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_tooltip.svg" size="20px" press=".onPopover" />
                 </HBox>
               </HBox>
               <VBox class="box style-01">

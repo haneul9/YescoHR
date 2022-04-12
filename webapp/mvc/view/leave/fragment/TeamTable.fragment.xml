@@ -3,7 +3,7 @@
     xmlns:core="sap.ui.core">
     <Table id="leaveTable" fixedBottomRowCount="1" selectionMode="None" class="row-link" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/list}" visibleRowCount="{/listInfo/rowCount}" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
         <columns>
-            <Column width="" filterProperty="Orgtx" sortProperty="Orgtx">
+            <Column width="auto">
                 <multiLabels>
                     <m:Label text="{i18n>LABEL_00224}"/>
                     <m:Label text="{i18n>LABEL_00224}"/>
@@ -12,7 +12,7 @@
                     <m:Text text="{Orgtx}" width="100%" textAlign="Center" />
                 </template>
             </Column>
-            <Column width="5%" filterProperty="Empcnt" sortProperty="Empcnt">
+            <Column width="5%">
                 <multiLabels>
                     <m:Label text="{i18n>LABEL_16004}"/>
                     <m:Label text="{i18n>LABEL_16004}"/>
@@ -21,7 +21,7 @@
                     <m:Text text="{ path: 'Empcnt', type: 'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </template>
             </Column>
-            <Column width="7%" filterProperty="Inw01" sortProperty="Inw01" headerSpan="6">
+            <Column width="7%" headerSpan="6">
                 <customData>
                     <core:CustomData key="field" value="Inw01" />
                 </customData>
@@ -33,7 +33,7 @@
                     <m:Text text="{ path: 'Inw01', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </template>
             </Column>
-            <Column width="7%" filterProperty="Inw02" sortProperty="Inw02">
+            <Column width="7%">
                 <customData>
                     <core:CustomData key="field" value="Inw02" />
                 </customData>
@@ -45,7 +45,7 @@
                     <m:Text text="{ path: 'Inw02', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </template>
             </Column>
-            <Column width="7%" filterProperty="Inw03" sortProperty="Inw03">
+            <Column width="7%">
                 <customData>
                     <core:CustomData key="field" value="Inw03" />
                 </customData>
@@ -57,7 +57,7 @@
                     <m:Text text="{ path: 'Inw03', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </template>
             </Column>
-            <Column width="7%" filterProperty="Inw04" sortProperty="Inw04">
+            <Column width="7%">
                 <customData>
                     <core:CustomData key="field" value="Inw04" />
                 </customData>
@@ -69,7 +69,7 @@
                     <m:Text text="{ path: 'Inw04', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </template>
             </Column>
-            <Column width="7%" filterProperty="Inw05" sortProperty="Inw05">
+            <Column width="7%">
                 <customData>
                     <core:CustomData key="field" value="Inw05" />
                 </customData>
@@ -81,7 +81,7 @@
                     <m:Text text="{ path: 'Inw05', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </template>
             </Column>
-            <Column width="7%" filterProperty="Inw06" sortProperty="Inw06">
+            <Column width="7%">
                 <customData>
                     <core:CustomData key="field" value="Inw06" />
                 </customData>
@@ -93,7 +93,7 @@
                     <m:Text text="{ path: 'Inw06', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </template>
             </Column>
-            <Column width="7%" filterProperty="Inw07" sortProperty="Inw07" headerSpan="6">
+            <Column width="7%" headerSpan="6">
                 <customData>
                     <core:CustomData key="field" value="Inw07" />
                 </customData>
@@ -105,7 +105,7 @@
                     <m:Text text="{ path: 'Inw07', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </template>
             </Column>
-            <Column width="7%" filterProperty="Inw08" sortProperty="Inw08">
+            <Column width="7%">
                 <customData>
                     <core:CustomData key="field" value="Inw08" />
                 </customData>
@@ -117,7 +117,7 @@
                     <m:Text text="{ path: 'Inw08', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </template>
             </Column>
-            <Column width="7%" filterProperty="Inw09" sortProperty="Inw09">
+            <Column width="7%">
                 <customData>
                     <core:CustomData key="field" value="Inw09" />
                 </customData>
@@ -129,7 +129,7 @@
                     <m:Text text="{ path: 'Inw09', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </template>
             </Column>
-            <Column width="7%" filterProperty="Inw10" sortProperty="Inw10">
+            <Column width="7%">
                 <customData>
                     <core:CustomData key="field" value="Inw10" />
                 </customData>
@@ -141,7 +141,7 @@
                     <m:Text text="{ path: 'Inw10', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </template>
             </Column>
-            <Column width="7%" filterProperty="Inw11" sortProperty="Inw11">
+            <Column width="7%">
                 <customData>
                     <core:CustomData key="field" value="Inw11" />
                 </customData>
@@ -153,7 +153,7 @@
                     <m:Text text="{ path: 'Inw11', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </template>
             </Column>
-            <Column width="7%" filterProperty="Inw12" sortProperty="Inw12">
+            <Column width="7%">
                 <customData>
                     <core:CustomData key="field" value="Inw12" />
                 </customData>

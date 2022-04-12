@@ -96,7 +96,10 @@ sap.ui.define(
           return fTotal - fUsed;
         },
         getPercent(fValue, oControl) {
-          const fTotal = parseFloat(oControl.getTotal());
+          const fTotal = parseFloat(oControl.getTotal() || 0);
+          if (fTotal === 0) {
+            return '.5rem';
+          }
           const fPercent = ((fValue / fTotal) * 100).toFixed(oControl.getDecimal());
 
           return `${fPercent}%`;

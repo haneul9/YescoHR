@@ -3,11 +3,11 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
-    'sap/ui/model/json/JSONModel',
     'sap/ui/core/Fragment',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/GroupDialogHandler',
     'sap/ui/yesco/common/exceptions/ODataReadError',
@@ -18,11 +18,11 @@ sap.ui.define(
     //
     Filter,
     FilterOperator,
-    JSONModel,
     Fragment,
     MessageBox,
     AppUtils,
     ComboEntry,
+    Client,
     ServiceNames,
     GroupDialogHandler,
     ODataReadError,
@@ -85,8 +85,8 @@ sap.ui.define(
             oViewModel.setProperty('/situation/segmentKey', 'A');
 
             this.GroupDialogHandler = new GroupDialogHandler(this, ([mOrgData]) => {
-              oViewModel.setProperty('/search/Orgeh', mOrgData.Orgeh);
-              oViewModel.setProperty('/search/Orgtx', mOrgData.Stext);
+              oViewModel.setProperty('/search/Orgeh', _.isEmpty(mOrgData) ? null : mOrgData.Orgeh);
+              oViewModel.setProperty('/search/Orgtx', _.isEmpty(mOrgData) ? '' : mOrgData.Stext);
             });
 
             oViewModel.setProperty('/CascadingSitu', {
@@ -269,8 +269,8 @@ sap.ui.define(
             oViewModel.setProperty('/situation/segmentKey', 'A');
 
             this.GroupDialogHandler = new GroupDialogHandler(this, ([mOrgData]) => {
-              oViewModel.setProperty('/search/Orgeh', mOrgData.Orgeh);
-              oViewModel.setProperty('/search/Orgtx', mOrgData.Stext);
+              oViewModel.setProperty('/search/Orgeh', _.isEmpty(mOrgData) ? null : mOrgData.Orgeh);
+              oViewModel.setProperty('/search/Orgtx', _.isEmpty(mOrgData) ? '' : mOrgData.Stext);
             });
 
             oViewModel.setProperty('/CascadingSitu', {
@@ -322,6 +322,46 @@ sap.ui.define(
             },
           });
         });
+      },
+
+      async onPressLink(oEvent) {
+        const oViewModel = this.getViewModel();
+        const vPath = oEvent.getSource().getParent().getBindingContext().getPath();
+        const oRowData = oViewModel.getProperty(vPath);
+        const [oUrl] = await this.getUrl(oRowData);
+
+        window.open(oUrl.Url, '_blank');
+      },
+
+      // GridContainer의 정의서 url
+      async onUrlPress(oEvent) {
+        const oViewModel = this.getViewModel();
+        const vPath = oEvent.getSource().getBindingContext().getPath();
+        const oRowData = oViewModel.getProperty(vPath);
+        const [oUrl] = await this.getUrl(oRowData);
+
+        window.open(oUrl.Url, '_blank');
+      },
+
+      // kpiFileUrl
+      async getUrl(mSelectedRow = {}) {
+        const oViewModel = this.getViewModel();
+
+        try {
+          oViewModel.setProperty('/busy', true);
+
+          const oModel = this.getModel(ServiceNames.APPRAISAL);
+          const mPayLoad = {
+            Zfilekey: mSelectedRow.Zfilekey,
+            Zfiledoc: mSelectedRow.Zfiledoc,
+          };
+
+          return await Client.getEntitySet(oModel, 'KpiCascadingFileUrl', mPayLoad);
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       // Cascading 현황 SegmaneBtn
@@ -542,11 +582,6 @@ sap.ui.define(
         oEvent.getSource().getParent().close();
       },
 
-      // GridContainer의 정의서 url
-      onUrlPress(oEvent) {
-        window.open(this.getViewModel().getProperty(`${oEvent.getSource().getBindingContext().getPath()}/Url`), '_blank');
-      },
-
       // 수행 팀 목록 조회
       getTeamList(mSelectedRow = {}) {
         const oModel = this.getModel(ServiceNames.APPRAISAL);
@@ -738,10 +773,10 @@ sap.ui.define(
       // table cascading조회
       getAllCascading() {
         const oModel = this.getModel(ServiceNames.APPRAISAL);
-        const oListModel = this.getViewModel();
-        const oSearch = oListModel.getProperty('/search');
+        const oViewModel = this.getViewModel();
+        const oSearch = oViewModel.getProperty('/search');
         const mFilters = {
-          Gubun: oListModel.getProperty('/tab/selectedKey'),
+          Gubun: oViewModel.getProperty('/tab/selectedKey'),
           ..._.pick(oSearch, ['Werks', 'Orgeh', 'Zyear']),
         };
 
@@ -765,9 +800,9 @@ sap.ui.define(
       // grid cascading조회
       getPartCascading(sOrgeh = '') {
         const oModel = this.getModel(ServiceNames.APPRAISAL);
-        const oListModel = this.getViewModel();
-        const oSearch = oListModel.getProperty('/search');
-        const sKey = oListModel.getProperty('/tab/selectedKey');
+        const oViewModel = this.getViewModel();
+        const oSearch = oViewModel.getProperty('/search');
+        const sKey = oViewModel.getProperty('/tab/selectedKey');
         const mFilters = {
           Gubun: sKey,
           Orgeh: sOrgeh || oSearch.Orgeh,
@@ -841,6 +876,13 @@ sap.ui.define(
 
       // 저장
       onSaveBtn() {
+        const oViewModel = this.getViewModel();
+        const sTabKey = oViewModel.getProperty('/tab/selectedKey');
+
+        if (sTabKey === 'B' && _.isEmpty(oViewModel.getProperty('/Tmp'))) {
+          return MessageBox.alert(this.getBundleText('MSG_15006')); // Cascading할 부서가 존재하지 않습니다.
+        }
+
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00103'), {
           // {저장}하시겠습니까?
           actions: [this.getBundleText('LABEL_00103'), this.getBundleText('LABEL_00118')], // 저장, 취소
@@ -853,8 +895,6 @@ sap.ui.define(
             try {
               AppUtils.setAppBusy(true, this);
 
-              const oViewModel = this.getViewModel();
-              const sTabKey = oViewModel.getProperty('/tab/selectedKey');
               const aList = [];
               let aGridData = [];
 

@@ -23,7 +23,7 @@
             </layoutData>
             <core:Item key="{Zcode}" text="{Ztext}" />
           </ComboBox>
-          <Button class="sapUiTinyMarginBegin" width="100%" icon="asset/image/btn_DetailSearch.svg" iconDensityAware="false" text="{i18n>LABEL_35004}" press=".onPressDetailConditionsDialog">
+          <Button class="sapUiTinyMarginBegin" width="100%" icon="/sap/public/bc/ui2/zui5_yescohr/images/btn_DetailSearch.svg" iconDensityAware="false" text="{i18n>LABEL_35004}" press=".onPressDetailConditionsDialog">
             <layoutData>
               <FlexItemData minWidth="33%" maxWidth="33%" />
             </layoutData>
@@ -35,7 +35,7 @@
               <FlexItemData minWidth="67%" maxWidth="67%" />
             </layoutData>
           </SearchField>
-          <Button class="sapUiTinyMarginBegin" width="100%" text="{i18n>LABEL_35005}" icon="asset/image/btn_Reflesh.svg" iconDensityAware="false" enabled="{= !${/result/busy} }" press=".onPressConditionReset">
+          <Button class="sapUiTinyMarginBegin" width="100%" text="{i18n>LABEL_35005}" icon="/sap/public/bc/ui2/zui5_yescohr/images/btn_Reflesh.svg" iconDensityAware="false" enabled="{= !${/result/busy} }" press=".onPressConditionReset">
             <layoutData>
               <FlexItemData minWidth="33%" maxWidth="33%" />
             </layoutData>
@@ -47,7 +47,7 @@
           <Title level="H3" text="{i18n>LABEL_35003}" class="sapUiSmallMarginEnd" />
           <Text text="total {/result/totalCount}" />
         </HBox>
-        <Image src="asset/image/icon_tooltip.svg" press=".onPressLegend" />
+        <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_tooltip.svg" press=".onPressLegend" />
       </HBox>
       <custom:MobileScrollContainer excludeBottomSelector=".sapMPageFooter" horizontal="false" vertical="true">
         <f:GridList id="talentList" mode="MultiSelect" items="{ path: '/result/list' }" class="talent-list sapUiResponsiveContentPadding" visible="{= ${/result/totalCount} !== 0 }">

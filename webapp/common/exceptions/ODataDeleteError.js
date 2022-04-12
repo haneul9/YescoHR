@@ -14,8 +14,9 @@ sap.ui.define(
        */
       constructor: function (oError) {
         const { code, message } = oError ? AppUtils.parseError(oError) : { code: 'E', message: AppUtils.getBundleText('MSG_00008', 'LABEL_00110') };
+        const { statusCode } = oError;
 
-        UI5Error.prototype.constructor.call(this, { code, message });
+        UI5Error.prototype.constructor.call(this, { code, message, httpStatusCode: statusCode });
       },
     });
   }

@@ -1,7 +1,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/FragmentEvent',
@@ -16,7 +15,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     AppUtils,
     AttachFileAction,
     FragmentEvent,
@@ -48,7 +46,7 @@ sap.ui.define(
             dateBox: false,
           },
           listInfo: {
-            totalCount: 0
+            totalCount: 0,
           },
         };
       },
@@ -84,7 +82,7 @@ sap.ui.define(
             Menid: this.getCurrentMenuId(),
             ...mPernr,
           };
-          
+
           const aList = await Client.getEntitySet(oModel, 'BankAccount', mPayLoad);
 
           oListModel.setProperty('/listInfo/totalCount', _.size(aList));
@@ -97,7 +95,7 @@ sap.ui.define(
       },
 
       formatYear(sYearMon) {
-        return !sYearMon ? '' : `${sYearMon.slice(0, 4)}-${sYearMon.slice(4)}` + ` ` + this.getBundleText("LABEL_26015");
+        return !sYearMon ? '' : `${sYearMon.slice(0, 4)}-${sYearMon.slice(4)}` + ` ` + this.getBundleText('LABEL_26015');
       },
 
       onClick() {
@@ -172,72 +170,71 @@ sap.ui.define(
 
       // 날짜선택
       async onSearchRange() {
-          const oViewModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
-          try {
-            oViewModel.setProperty('/busy', true);
+        try {
+          oViewModel.setProperty('/busy', true);
 
-            await this.onSearch();
-          } catch (oError) {
-            AppUtils.handleError(oError);
-          } finally {
-            oViewModel.setProperty('/busy', false);
-          }
+          await this.onSearch();
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       // 검색 날짜 선택
       async onSearchList(oEvent) {
-          const oViewModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
-          try {
-            const sKey = oEvent.getSource().getSelectedKey();
-            let dBegda = moment().toDate();
-            let dEndda = moment().toDate();
-            let bDateRangeBox = false;
+        try {
+          const sKey = oEvent.getSource().getSelectedKey();
+          let dBegda = moment().toDate();
+          let dEndda = moment().toDate();
+          let bDateRangeBox = false;
 
-            oViewModel.setProperty('/busy', true);
+          oViewModel.setProperty('/busy', true);
 
-            switch (sKey) {
-              case '1w':
-                dEndda = moment().subtract(7, 'day').toDate();
-                bDateRangeBox = false;
-                break;
-              case '1m':
-                dEndda = moment().subtract(1, 'months').toDate();
-                bDateRangeBox = false;
-                break;
-              case '3m':
-                dEndda = moment().subtract(3, 'months').toDate();
-                bDateRangeBox = false;
-                break;
-              case '6m':
-                dEndda = moment().subtract(6, 'months').toDate();
-                bDateRangeBox = false;
-                break;
-              case '12m':
-                dEndda = moment().subtract(12, 'months').toDate();
-                bDateRangeBox = false;
-                break;
-              case '0':
-                bDateRangeBox = true;
-                break;
-            }
-
-            if (!bDateRangeBox) {
-              oViewModel.setProperty('/search/secondDate', dBegda);
-              oViewModel.setProperty('/search/date', dEndda);
-
-              await this.onSearch();
-            }
-
-            oViewModel.setProperty('/search/dateBox', bDateRangeBox);
-          } catch (oError) {
-            AppUtils.handleError(oError);
-          } finally {
-            oViewModel.setProperty('/busy', false);
+          switch (sKey) {
+            case '1w':
+              dEndda = moment().subtract(7, 'day').toDate();
+              bDateRangeBox = false;
+              break;
+            case '1m':
+              dEndda = moment().subtract(1, 'months').toDate();
+              bDateRangeBox = false;
+              break;
+            case '3m':
+              dEndda = moment().subtract(3, 'months').toDate();
+              bDateRangeBox = false;
+              break;
+            case '6m':
+              dEndda = moment().subtract(6, 'months').toDate();
+              bDateRangeBox = false;
+              break;
+            case '12m':
+              dEndda = moment().subtract(12, 'months').toDate();
+              bDateRangeBox = false;
+              break;
+            case '0':
+              bDateRangeBox = true;
+              break;
           }
-      },
 
+          if (!bDateRangeBox) {
+            oViewModel.setProperty('/search/secondDate', dBegda);
+            oViewModel.setProperty('/search/date', dEndda);
+
+            await this.onSearch();
+          }
+
+          oViewModel.setProperty('/search/dateBox', bDateRangeBox);
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
+      },
     });
   }
 );

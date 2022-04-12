@@ -1,0 +1,172 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:core="sap.ui.core">
+  <VBox class="portlet portlet-box portlet-m21" tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
+    <customData>
+      <core:CustomData key="portlet-switchable" value="{switchable}" />
+    </customData>
+    <layoutData>
+      <f:GridContainerItemLayoutData rows="{height}" columns="{width}" />
+    </layoutData>
+    <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
+      <Title level="H2" text="{title}" visible="{= !${hideTitle} }" />
+      <Text text="{sessionModel>/Orgtx}, {i18n>LABEL_01181}" class="desc-txt" />
+      <Text text="">
+        <layoutData>
+          <FlexItemData growFactor="1" />
+        </layoutData>
+      </Text>
+      <Button visible="{switchable}" icon="sap-icon://decline" type="Transparent" class="icon-button portlet-close-icon" press=".onPressClose" tooltip="{i18n>LABEL_00200}" />
+      <Button visible="{hasLink}" icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" press=".onPressLink" tooltip="{i18n>LABEL_00342}" />
+    </HBox>
+    <HBox class="portlet-body">
+      <VBox width="30%">
+        <ObjectStatus text="{counts/Cnt01}" state="Indication05" class="mt-15-px font-3-rem" />
+        <ObjectStatus text="{i18n>LABEL_01213} : {counts/Cnt02}" state="Indication05" class="mt-13-px" />
+        <ObjectStatus text="{i18n>LABEL_01212} : {counts/Cnt03}" state="Indication05" class="mt-7-px" />
+      </VBox>
+      <VBox class="ml-5-px">
+        <layoutData>
+          <FlexItemData growFactor="1" />
+        </layoutData>
+        <HBox width="100%" height="22px" justifyContent="End" alignItems="Center" class="border-bottom">
+          <Text text="{i18n>LABEL_01211}" textAlign="Center" width="100%">
+            <layoutData>
+              <FlexItemData baseSize="20%" />
+            </layoutData>
+          </Text>
+          <Text text="{i18n>LABEL_01213}" textAlign="Center" width="100%">
+            <layoutData>
+              <FlexItemData baseSize="20%" />
+            </layoutData>
+          </Text>
+          <Text text="{i18n>LABEL_01212}" textAlign="Center" width="100%">
+            <layoutData>
+              <FlexItemData baseSize="20%" />
+            </layoutData>
+          </Text>
+        </HBox>
+        <HBox width="100%" alignItems="Center" class="border-bottom">
+          <layoutData>
+            <FlexItemData growFactor="1" />
+          </layoutData>
+          <Label text="{i18n>LABEL_01214}" textAlign="Center" width="100%">
+            <layoutData>
+              <FlexItemData growFactor="1" />
+            </layoutData>
+          </Label>
+          <Text text="{ path: 'counts/Cnt40', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+            <layoutData>
+              <FlexItemData baseSize="20%" />
+            </layoutData>
+          </Text>
+          <Text text="{ path: 'counts/Cnt41', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+            <layoutData>
+              <FlexItemData baseSize="20%" />
+            </layoutData>
+          </Text>
+          <Text text="{ path: 'counts/Cnt42', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+            <layoutData>
+              <FlexItemData baseSize="20%" />
+            </layoutData>
+          </Text>
+        </HBox>
+        <HBox width="100%" alignItems="Center" class="border-bottom">
+          <layoutData>
+            <FlexItemData growFactor="1" />
+          </layoutData>
+          <Label text="{i18n>LABEL_01215}" textAlign="Center" width="100%">
+            <layoutData>
+              <FlexItemData growFactor="1" />
+            </layoutData>
+          </Label>
+          <Text text="{ path: 'counts/Cnt50', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+            <layoutData>
+              <FlexItemData baseSize="20%" />
+            </layoutData>
+          </Text>
+          <ObjectStatus text="{ path: 'counts/Cnt51', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt51} > 0 }" press=".onPressCount">
+            <customData>
+              <!-- 입사자 직원 -->
+              <core:CustomData key="popover" value="{= ${counts/Cnt51} === 0 ? 'N' : 'Y' }" writeToDom="true" />
+              <core:CustomData key="table-key" value="A1" writeToDom="true" />
+            </customData>
+            <layoutData>
+              <FlexItemData baseSize="20%" styleClass="employee-count-blue" />
+            </layoutData>
+          </ObjectStatus>
+          <ObjectStatus text="{ path: 'counts/Cnt52', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt52} > 0 }" press=".onPressCount">
+            <customData>
+              <!-- 입사자 임원 -->
+              <core:CustomData key="popover" value="{= ${counts/Cnt52} === 0 ? 'N' : 'Y' }" writeToDom="true" />
+              <core:CustomData key="table-key" value="A2" writeToDom="true" />
+            </customData>
+            <layoutData>
+              <FlexItemData baseSize="20%" styleClass="employee-count-blue" />
+            </layoutData>
+          </ObjectStatus>
+        </HBox>
+        <HBox width="100%" alignItems="Center" class="border-bottom">
+          <layoutData>
+            <FlexItemData growFactor="1" />
+          </layoutData>
+          <Label text="{i18n>LABEL_01216}" textAlign="Center" width="100%">
+            <layoutData>
+              <FlexItemData growFactor="1" />
+            </layoutData>
+          </Label>
+          <Text text="{ path: 'counts/Cnt60', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+            <layoutData>
+              <FlexItemData baseSize="20%" />
+            </layoutData>
+          </Text>
+          <ObjectStatus text="{ path: 'counts/Cnt61', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt61} > 0 }" press=".onPressCount">
+            <customData>
+              <!-- 퇴사자 직원 -->
+              <core:CustomData key="popover" value="{= ${counts/Cnt61} === 0 ? 'N' : 'Y' }" writeToDom="true" />
+              <core:CustomData key="table-key" value="B1" writeToDom="true" />
+            </customData>
+            <layoutData>
+              <FlexItemData baseSize="20%" styleClass="employee-count-yellow" />
+            </layoutData>
+          </ObjectStatus>
+          <ObjectStatus text="{ path: 'counts/Cnt62', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt62} > 0 }" press=".onPressCount">
+            <customData>
+              <!-- 퇴사자 임원 -->
+              <core:CustomData key="popover" value="{= ${counts/Cnt62} === 0 ? 'N' : 'Y' }" writeToDom="true" />
+              <core:CustomData key="table-key" value="B2" writeToDom="true" />
+            </customData>
+            <layoutData>
+              <FlexItemData baseSize="20%" styleClass="employee-count-yellow" />
+            </layoutData>
+          </ObjectStatus>
+        </HBox>
+        <HBox width="100%" alignItems="Center" class="border-bottom">
+          <layoutData>
+            <FlexItemData growFactor="1" />
+          </layoutData>
+          <Label text="{i18n>LABEL_01217}" textAlign="Center" width="100%">
+            <layoutData>
+              <FlexItemData growFactor="1" />
+            </layoutData>
+          </Label>
+          <Text text="{ path: 'counts/Cnt70', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+            <layoutData>
+              <FlexItemData baseSize="20%" />
+            </layoutData>
+          </Text>
+          <Text text="{ path: 'counts/Cnt71', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+            <layoutData>
+              <FlexItemData baseSize="20%" />
+            </layoutData>
+          </Text>
+          <Text text="{ path: 'counts/Cnt72', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+            <layoutData>
+              <FlexItemData baseSize="20%" />
+            </layoutData>
+          </Text>
+        </HBox>
+      </VBox>
+    </HBox>
+  </VBox>
+</core:FragmentDefinition>

@@ -1,12 +1,14 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/model/base/UIComponentBaseModel',
   ],
   (
     // prettier 방지용 주석
+    AppUtils,
     Client,
     ServiceNames,
     UIComponentBaseModel
@@ -25,7 +27,7 @@ sap.ui.define(
           DTFMTYYYYMM: 'YYYY.MM',
           DTFMTYYYY: 'YYYY',
           Werks: 'init',
-          Photo: 'asset/image/avatar-unknown.svg',
+          Photo: AppUtils.getUnknownAvatarImageURL(),
         };
       },
 
@@ -65,7 +67,7 @@ sap.ui.define(
         mSessionData.DtfmtYYYY = mSessionData.Dtfmt.replace(/([a-zA-Z]{4}).*/, '$1');
         mSessionData.DTFMTYYYYMM = mSessionData.DTFMT.replace(/([a-zA-Z]{4})([^a-zA-Z]?)([a-zA-Z]{2}).*/, '$1$2$3');
         mSessionData.DTFMTYYYY = mSessionData.DTFMT.replace(/([a-zA-Z]{4}).*/, '$1');
-        mSessionData.Photo ||= 'asset/image/avatar-unknown.svg';
+        mSessionData.Photo ||= AppUtils.getUnknownAvatarImageURL();
 
         return mSessionData;
       },

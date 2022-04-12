@@ -2,15 +2,14 @@
     xmlns:core="sap.ui.core">
     <Dialog showHeader="false" contentWidth="800px">
         <buttons>
+            <Button text="{i18n>LABEL_10101}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/Z_ICHKED/Availability} === 'X' }" press=".onPressCheckedButton" />
             <Button text="{i18n>LABEL_00115}" press=".onPressOppositionViewDialogClose"/>
         </buttons>
         <Panel expanded="true" headerText="{i18n>LABEL_10035}">
             <content>
                 <VBox>
-                    <TextArea width="100%" value="{/opposition/ZzabjfbTx}" growing="true" growingMaxLines="35" editable="false" />
-                    <VBox items="{/opposition/files}">
-                        <Link text="{Zfilename}" href="{Fileuri}" />
-                    </VBox>
+                    <TextArea width="100%" value="{/opposition/ZzabjfbTx}" rows="5" class="sapUiSmallMarginBottom" growing="true" growingMaxLines="35" enabled="false" />
+                    <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
                 </VBox>
             </content>
         </Panel>

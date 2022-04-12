@@ -2,20 +2,15 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/exceptions/UI5Error',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
-    'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/DateUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/Validator',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -26,20 +21,15 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     Fragment,
-    Filter,
-    FilterOperator,
     MessageBox,
     ComboEntry,
     UI5Error,
-    ODataReadError,
-    ODataCreateError,
     Appno,
     AppUtils,
     DateUtils,
     AttachFileAction,
     Client,
     ServiceNames,
-    TableUtils,
     TextUtils,
     Validator,
     BaseController
@@ -76,12 +66,12 @@ sap.ui.define(
             dialog: {
               calcCompleted: false,
               selectedRowPath: null,
-              awartCodeList: new ComboEntry({ codeKey: 'Awart', valueKey: 'Atext' }),
+              awartCodeList: [],
               search: {},
               data: {
                 Awart: 'ALL',
                 AbrtgTxt: '0일',
-              }
+              },
             },
           },
           ApplyInfo: {},
@@ -143,7 +133,9 @@ sap.ui.define(
             this.initializeApplyInfoBox(aResultData[0]);
             this.initializeApprovalBox(aResultData[0]);
           } else {
-            oViewModel.setProperty('/form/dialog/awartCodeList', await this.readAwartCodeList());
+            const aAwartResults = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'AwartCodeList');
+
+            oViewModel.setProperty('/form/dialog/awartCodeList', new ComboEntry({ codeKey: 'Awart', valueKey: 'Atext', aEntries: aAwartResults }));
             oViewModel.setProperty('/form/listMode', 'MultiSelect');
 
             if (_.includes([this.PAGE_TYPE.CHANGE, this.PAGE_TYPE.CANCEL], sType)) this.callDialog(sType);
@@ -258,24 +250,20 @@ sap.ui.define(
       },
 
       async openFormChange() {
-        const oView = this.getView();
-
         this.getViewModel().setProperty('/form/dialog/search', {
           Begda: moment().startOf('year').hours(9).toDate(),
           Endda: moment().endOf('year').hours(9).toDate(),
         });
-        
+
         this.retrieveChange();
       },
 
       async openFormCancel() {
-        const oView = this.getView();
-
         this.getViewModel().setProperty('/form/dialog/search', {
           Begda: moment().startOf('year').hours(9).toDate(),
           Endda: moment().endOf('year').hours(9).toDate(),
         });
-        
+
         this.retrieveCancel();
       },
 
@@ -397,11 +385,11 @@ sap.ui.define(
         }
       },
 
-      async validChangeLeave(oEvent) {
+      async validChangeLeave() {
         const oViewModel = this.getViewModel();
         const mRowObject = oViewModel.getProperty('/form/dialog/data');
 
-        if(!mRowObject.Begda || !mRowObject.Endda) return;
+        if (!mRowObject.Begda || !mRowObject.Endda) return;
 
         oViewModel.setProperty('/form/dialog/busy', true);
 
@@ -432,10 +420,11 @@ sap.ui.define(
 
       async createProcess({ sPrcty = 'C' }) {
         const oViewModel = this.getViewModel();
-        const iAttachLength = AttachFileAction.getFileCount.call(this);
-        let sAppno = oViewModel.getProperty('/Appno');
 
         try {
+          const iAttachLength = AttachFileAction.getFileCount.call(this);
+          let sAppno = oViewModel.getProperty('/Appno');
+
           if (!sAppno) {
             sAppno = await Appno.get();
             oViewModel.setProperty('/Appno', sAppno);
@@ -445,27 +434,41 @@ sap.ui.define(
             await AttachFileAction.uploadFile.call(this, sAppno, this.APPTP);
           }
 
-          await this.createLeaveApplContent(sPrcty);
+          const aTableData = _.cloneDeep(oViewModel.getProperty('/form/list'));
+          const mAppointeeData = this.getAppointeeData();
+          const sAppty = oViewModel.getProperty('/type');
+
+          await Client.deep(this.getModel(ServiceNames.WORKTIME), 'LeaveApplContent', {
+            Menid: this.getCurrentMenuId(),
+            Pernr: mAppointeeData.Pernr,
+            Orgeh: mAppointeeData.Orgeh,
+            Appno: sAppno,
+            Prcty: sPrcty,
+            Appty: sAppty, // A:신규, B:변경, C:취소
+            LeaveApplNav1: aTableData.map((o) => ({ ...o, Pernr: mAppointeeData.Pernr })),
+          });
 
           // {임시저장|신청}되었습니다.
           MessageBox.success(this.getBundleText('MSG_00007', this.ACTION_MESSAGE[sPrcty]), {
             onClose: () => {
               this.getRouter().navTo('mobile/attendance');
+              AppUtils.setAppBusy(false, this);
             },
           });
         } catch (oError) {
           this.debug('Controller > Attendance Detail > createProcess Error', oError);
 
           AppUtils.handleError(oError);
-        } finally {
           AppUtils.setAppBusy(false, this);
+        } finally {
+          // AppUtils.setAppBusy(false, this);
         }
       },
 
       /*****************************************************************
        * ! Event handler
-       *****************************************************************/      
-       openFormChangeDialog(oEvent){
+       *****************************************************************/
+      openFormChangeDialog(oEvent) {
         const oView = this.getView();
         const oViewModel = this.getViewModel();
         const vPath = oEvent.getSource().getBindingContext().getPath();
@@ -482,16 +485,16 @@ sap.ui.define(
               return oDialog;
             });
           }
-          
+
           oViewModel.setProperty('/form/dialog/data', $.extend(true, {}, oRowData));
 
           this.oFormChangeDialog.then(function (oDialog) {
             oDialog.open();
           });
-        }, 100);       
+        }, 100);
       },
 
-      openFormCancelDialog(oEvent){
+      openFormCancelDialog(oEvent) {
         const oView = this.getView();
         const oViewModel = this.getViewModel();
         const vPath = oEvent.getSource().getBindingContext().getPath();
@@ -508,13 +511,13 @@ sap.ui.define(
               return oDialog;
             });
           }
-          
+
           oViewModel.setProperty('/form/dialog/data', $.extend(true, {}, oRowData));
 
           this.oFormCancelDialog.then(function (oDialog) {
             oDialog.open();
           });
-        }, 100);       
+        }, 100);
       },
       onSelectionChangeTableRow(oEvent) {
         if (!oEvent.getParameter('rowContext')) return;
@@ -598,16 +601,14 @@ sap.ui.define(
       onPressDelBtn() {
         const oViewModel = this.getViewModel();
         const oList = this.byId('DetailList' + oViewModel.getProperty('/type')).getSelectedContexts();
-        let aDelList = [];
 
         if (_.isEmpty(oList)) {
           // 삭제할 데이터를 선택하세요.
-          return MessageBox.alert(this.getBundleText('MSG_00055'));
-        } else {
-          aDelList = _.map(oList, (e) => {
-            return oViewModel.getProperty(e.sPath);
-          });
+          MessageBox.alert(this.getBundleText('MSG_00055'));
+          return;
         }
+
+        const aDelList = _.map(oList, (e) => oViewModel.getProperty(e.sPath));
 
         // 선택된 행을 삭제하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00021'), {
@@ -620,9 +621,9 @@ sap.ui.define(
             oViewModel.setProperty('/form/rowCount', _.size(aDiffList));
             this.byId('DetailList' + oViewModel.getProperty('/type')).removeSelections(true);
 
-            if(oViewModel.getProperty('/type') === 'B'){
+            if (oViewModel.getProperty('/type') === 'B') {
               this.retrieveChange();
-            } else if(oViewModel.getProperty('/type') === 'C'){
+            } else if (oViewModel.getProperty('/type') === 'C') {
               this.retrieveCancel();
             }
 
@@ -649,7 +650,13 @@ sap.ui.define(
         const mFormData = oViewModel.getProperty('/form/dialog/data');
 
         try {
-          const mResultData = await this.readLeaveApplEmpList({ Prcty: 'C', Menid: this.getCurrentMenuId(), ..._.pick(mFormData, ['Awart', 'Begda', 'Endda']) });
+          const [mResultData] = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'LeaveApplEmpList', {
+            Prcty: 'C',
+            Menid: this.getCurrentMenuId(),
+            Awart: mFormData.Awart,
+            Begda: DateUtils.parse(mFormData.Begda),
+            Endda: DateUtils.parse(mFormData.Endda),
+          });
 
           if (!_.isEmpty(mResultData)) {
             oViewModel.setProperty('/form/dialog/data/Abrst', mResultData.Abrst);
@@ -820,7 +827,7 @@ sap.ui.define(
         const mInputData = oViewModel.getProperty('/form/dialog/data');
         const aListData = oViewModel.getProperty('/form/list');
 
-        if(!mInputData.Begda || !mInputData.Endda || (!mInputData.Tmrsn || mInputData.Tmrsn.trim() == "")){
+        if (!mInputData.Begda || !mInputData.Endda || !mInputData.Tmrsn || mInputData.Tmrsn.trim() === '') {
           MessageBox.error(this.getBundleText('MSG_04008')); // 모든 필수 입력 항목 값을 입력하여 주십시오.
           return;
         }
@@ -855,7 +862,7 @@ sap.ui.define(
         const mInputData = oViewModel.getProperty('/form/dialog/data');
         const aListData = oViewModel.getProperty('/form/list');
 
-        if((!mInputData.Tmrsn || mInputData.Tmrsn.trim() == "")){
+        if (!mInputData.Tmrsn || mInputData.Tmrsn.trim() === '') {
           MessageBox.error(this.getBundleText('MSG_04008')); // 모든 필수 입력 항목 값을 입력하여 주십시오.
           return;
         }
@@ -928,6 +935,8 @@ sap.ui.define(
 
           oViewModel.setProperty('/form/list', aListData);
           oViewModel.setProperty('/form/rowCount', aListData.length);
+
+          oViewModel.setProperty('/form/dialog/data', { Awart: 'ALL' });
         }
 
         this.toggleHasRowProperty();
@@ -937,8 +946,10 @@ sap.ui.define(
 
       onPressApproval() {
         const oViewModel = this.getViewModel();
-        if(oViewModel.getProperty('/form/list').length == 0){
-          MessageBox.error(this.getBundleText('MSG_04002')); // 변경된 데이터가 없습니다.
+        if (oViewModel.getProperty('/form/list').length === 0) {
+          const sMessage = oViewModel.getProperty('/type') === this.PAGE_TYPE.NEW ? this.getBundleText('MSG_04009') + '\n' + this.getBundleText('MSG_04010') : this.getBundleText('MSG_04009');
+          // 신청내역이 존재하지 않습니다. (신규신청 등록 후 +버튼을 클릭하여 주시기 바랍니다.)
+          MessageBox.error(sMessage);
           return;
         }
 
@@ -963,107 +974,6 @@ sap.ui.define(
       /*****************************************************************
        * ! Call OData
        *****************************************************************/
-      readAwartCodeList() {
-        return new Promise((resolve, reject) => {
-          const oModel = this.getModel(ServiceNames.WORKTIME);
-          const oViewModel = this.getViewModel();
-          const sUrl = '/AwartCodeListSet';
-          const aAwartCodeList = oViewModel.getProperty('/form/dialog/awartCodeList');
-
-          if (aAwartCodeList.length > 1) {
-            resolve(aAwartCodeList);
-          }
-
-          oModel.read(sUrl, {
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(new ComboEntry({ codeKey: 'Awart', valueKey: 'Atext', aEntries: oData.results }));
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
-
-      /**
-       *
-       * @param {String} Prcty - R: 상세조회, C: 계산
-       * @returns
-       */
-      readLeaveApplEmpList(mFilters) {
-        return new Promise((resolve, reject) => {
-          const oModel = this.getModel(ServiceNames.WORKTIME);
-          const sUrl = '/LeaveApplEmpListSet';
-
-          oModel.read(sUrl, {
-            filters: _.chain(mFilters)
-              .omitBy(_.isNil)
-              .map((v, p) => {
-                if (_.isEqual(p, 'Begda') || _.isEqual(p, 'Endda')) {
-                  return new Filter(p, FilterOperator.EQ, DateUtils.parse(v));
-                }
-                return new Filter(p, FilterOperator.EQ, v);
-              })
-              .value(),
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results[0] ?? {});
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
-
-      /**
-       *
-       * @param {String} sPrcty -  T:임시저장, C:신청
-       * @returns
-       */
-      createLeaveApplContent(sPrcty) {
-        const oModel = this.getModel(ServiceNames.WORKTIME);
-        const oViewModel = this.getViewModel();
-        const mAppointeeData = this.getAppointeeData();
-        const aTableData = oViewModel.getProperty('/form/list');
-        const sAppty = oViewModel.getProperty('/type');
-        const sAppno = oViewModel.getProperty('/Appno');
-        const sMenid = this.getCurrentMenuId();
-        const sUrl = '/LeaveApplContentSet';
-        let aLeaveApplNav1 = [...aTableData];
-
-        return new Promise((resolve, reject) => {
-          const oPayload = {
-            Menid: sMenid,
-            Pernr: mAppointeeData.Pernr,
-            Orgeh: mAppointeeData.Orgeh,
-            Appno: sAppno,
-            Prcty: sPrcty,
-            Appty: sAppty, // A:신규, B:변경, C:취소
-            LeaveApplNav1: aLeaveApplNav1.map((o) => ({ ...o, Pernr: mAppointeeData.Pernr })),
-          };
-
-          oModel.create(sUrl, oPayload, {
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results ?? []);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataCreateError({ oError })); // {신청}중 오류가 발생하였습니다.
-            },
-          });
-        });
-      },
     });
   }
 );

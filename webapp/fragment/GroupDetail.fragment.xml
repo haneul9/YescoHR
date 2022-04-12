@@ -16,11 +16,11 @@
           <custom:DatePicker dateValue="{ path: '/employeeModel/org/Date', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="200px" />
           <Label text="{i18n>LABEL_00201}" />
           <Input value="{/employeeModel/org/Word}" width="200px" submit=".EmployeeSearch.onOrgList" />
-          <Button icon="asset/image/icon_search03.png" iconDensityAware="false" text="{i18n>LABEL_00101}" press=".EmployeeSearch.onOrgList" class="icon-button" />
+          <Button icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" text="{i18n>LABEL_00101}" press=".EmployeeSearch.onOrgList" class="icon-button" />
         </HBox>
       </VBox>
       <VBox class="hCardBox">
-        <table:Table id="orgTable" rows="{/employeeModel/org/orgList}" rowSelectionChange=".EmployeeSearch.onOrgListRowSelection" visibleRowCount="{/employeeModel/org/orgListLength}" rowHeight="44" columnHeaderHeight="45">
+        <table:Table id="orgTable" class="radio-selection-table" rows="{/employeeModel/org/orgList}" enableSelectAll="false" rowSelectionChange=".EmployeeSearch.onOrgListRowSelection" visibleRowCount="{/employeeModel/org/orgListLength}" rowHeight="44" columnHeaderHeight="45">
           <table:columns>
             <table:Column width="auto" sortProperty="Stext" filterProperty="Stext">
               <Label text="{i18n>LABEL_00227}"/>

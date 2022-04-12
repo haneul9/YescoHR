@@ -14,14 +14,12 @@ sap.ui.define(
         { type: 'MB', route: 'm/performanceSry', detail: 'm/performanceSry-detail', id: 'container-ehr---m_performanceSry' },
         { type: 'MB', route: 'h/performanceSry', detail: 'h/performanceSry-detail', id: 'container-ehr---h_performanceSry' },
       ],
-      REJECT_DIALOG_ID: 'sap.ui.yesco.mvc.view.performance.fragment.RejectDialog',
-      OPPOSITION_DIALOG_ID: 'sap.ui.yesco.mvc.view.performance.fragment.OppositionDialog',
 
       TAB: { GOAL: 'T01', OPINION: 'T02' },
       APPRAISER_TYPE: { ME: 'ME', MA: 'MA', MB: 'MB' },
       DISPLAY_TYPE: { EDIT: 'X', DISPLAY_ONLY: 'D', HIDE: 'H', HIDDEN_VALUE: 'V' },
       GOAL_TYPE: { STRATEGY: { code: '1', name: 'strategy' }, DUTY: { code: '2', name: 'duty' } },
-      PROCESS_TYPE: { LIST: { code: 'L', label: 'LABEL_00177' }, DETAIL: { code: 'D', label: 'LABEL_00165' }, SAVE: { code: 'T', label: 'LABEL_00103' }, SEND: { code: 'C', label: 'LABEL_00175' }, APPROVE: { code: 'P', label: 'LABEL_00123' }, REJECT: { code: 'R', label: 'LABEL_00124' }, CANCEL: { code: 'W', label: 'LABEL_00118' }, CONFIRM: { code: 'C', label: 'LABEL_10043' } },
+      PROCESS_TYPE: { LIST: { code: 'L', label: 'LABEL_00177' }, DETAIL: { code: 'D', label: 'LABEL_00165' }, SAVE: { code: 'T', label: 'LABEL_00103' }, SEND: { code: 'C', label: 'LABEL_00175' }, APPROVE: { code: 'P', label: 'LABEL_00123' }, REJECT: { code: 'R', label: 'LABEL_00124' }, CANCEL: { code: 'W', label: 'LABEL_00118' }, CONFIRM: { code: 'C', label: 'LABEL_10043' }, COMPLETE: { code: 'C', label: 'LABEL_00117' } },
 
       REJECT_PROPERTIES: ['Rjctr', 'Rjctrin'],
       OPPOSITION_PROPERTIES: ['Zzappid', 'Zdocid', 'Zzappee', 'Begda', 'Endda', 'Werks'],

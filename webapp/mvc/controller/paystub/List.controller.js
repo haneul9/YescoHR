@@ -1,7 +1,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/odata/Client',
@@ -13,7 +12,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    MessageBox,
     AppUtils,
     EmployeeSearch,
     Client,
@@ -27,6 +25,8 @@ sap.ui.define(
       EmployeeSearch: EmployeeSearch,
       TableUtils: TableUtils,
       TABLE_ID: 'paystubTable',
+
+      CHART_ID: 'paystubSummaryChart',
 
       sRouteName: '',
 
@@ -106,13 +106,11 @@ sap.ui.define(
       async onObjectMatched(oParameter, sRouteName) {
         const oViewModel = this.getViewModel();
 
-        if (AppUtils.isPRD() && !this.serviceAvailable()) return;
-
         try {
           oViewModel.setProperty('/busy', true);
           this.sRouteName = sRouteName;
 
-          this.search();
+          await this.search();
         } catch (oError) {
           this.debug('Controller > paystub List > onObjectMatched Error', oError);
 
@@ -122,24 +120,13 @@ sap.ui.define(
         }
       },
 
-      serviceAvailable() {
-        const bOpen = moment().isAfter(moment('2022-04-04 9:00', 'YYYY-MM-DD HH:mm'));
-
-        if (!bOpen)
-          MessageBox.alert(this.getBundleText('MSG_13002'), {
-            onClose: () => this.onNavBack(),
-          });
-
-        return bOpen;
-      },
-
-      callbackAppointeeChange() {
+      async callbackAppointeeChange() {
         const oViewModel = this.getViewModel();
 
         try {
           oViewModel.setProperty('/busy', true);
 
-          this.search();
+          await this.search();
         } catch (oError) {
           this.debug('Controller > paystub List > callbackAppointeeChange Error', oError);
 
@@ -175,30 +162,37 @@ sap.ui.define(
       },
 
       buildChart() {
+        const oChart = FusionCharts(this.CHART_ID);
         const mDataSource = this.getViewModel().getProperty('/summary/dataSources');
 
-        FusionCharts.ready(function () {
-          new FusionCharts({
-            type: 'pie2d',
-            renderAt: 'chart-container',
-            width: '180',
-            height: '160',
-            dataFormat: 'json',
-            dataSource: mDataSource,
-          }).render();
-        });
+        if (!oChart) {
+          FusionCharts.ready(() => {
+            new FusionCharts({
+              id: this.CHART_ID,
+              type: 'pie2d',
+              renderAt: 'chart-paystub-container',
+              width: '180',
+              height: '160',
+              dataFormat: 'json',
+              dataSource: mDataSource,
+            }).render();
+          });
+        } else {
+          oChart.setChartData(mDataSource);
+          oChart.render();
+        }
       },
 
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
-      onPressSearch() {
+      async onPressSearch() {
         const oViewModel = this.getViewModel();
 
         try {
           oViewModel.setProperty('/busy', true);
 
-          this.search();
+          await this.search();
         } catch (oError) {
           this.debug('Controller > paystub List > onPressSearch Error', oError);
 

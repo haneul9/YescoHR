@@ -11,6 +11,8 @@
                         <custom:DateRangeSelection dateValue="{ path: '/form/dialog/search/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/form/dialog/search/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" change=".retrieveChange" />
                     </m:HBox>
                     <m:HBox>
+                        <m:Button text="{i18n>LABEL_04030}" class="sapUiTinyMarginEnd" press=".onPressAMToPM" />
+                        <m:Button text="{i18n>LABEL_04031}" class="sapUiTinyMarginEnd" press=".onPressPMToAM" />
                         <m:Button text="{i18n>LABEL_04020}" class="sapUiTinyMarginEnd" press=".onPressHalfToOne" />
                         <m:Button text="{i18n>LABEL_04021}" press=".onPressOneToHalf" />
                     </m:HBox>

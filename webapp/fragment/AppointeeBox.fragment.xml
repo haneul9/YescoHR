@@ -3,7 +3,7 @@
   <VBox class="hCardBox appointee-box">
     <HBox justifyContent="SpaceBetween" class="title">
       <Title text="{i18n>LABEL_00128}" level="H2" />
-      <Button type="Transparent" press=".EmployeeSearch.onSearchDialog.call($controller, $controller.callbackAppointeeChange)" icon="asset/css/images/icon_me.png" visible="{appointeeModel>/showChangeButton}" class="icon-button" />
+      <Button type="Transparent" press=".EmployeeSearch.onSearchDialog.call($controller, $controller.callbackAppointeeChange)" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_me.png" visible="{appointeeModel>/showChangeButton}" class="icon-button" />
     </HBox>
     <HBox height="146px">
       <VBox width="146px">

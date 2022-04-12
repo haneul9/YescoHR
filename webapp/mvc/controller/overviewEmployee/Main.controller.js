@@ -79,6 +79,10 @@ sap.ui.define(
           const mFilters = oViewModel.getProperty('/searchConditions');
 
           _.forEach(ChartsSetting.CHART_TYPE, (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
+
+          const iFullAgeCountingYear = moment().year() - 1;
+          oViewModel.setProperty('/contents/A02/data/ageMGen', `${iFullAgeCountingYear - 1995}~${iFullAgeCountingYear - 1980}`);
+          oViewModel.setProperty('/contents/A02/data/ageZGen', `${iFullAgeCountingYear - 2010}~${iFullAgeCountingYear - 1996}`);
         } catch (oError) {
           this.debug('Controller > m/overviewEmployee Main > onObjectMatched Error', oError);
 
@@ -120,13 +124,19 @@ sap.ui.define(
 
         switch (mChartInfo.Chart) {
           case 'column2d':
+            let fColumn2dMaxValues = 0;
             _.chain(mChartSetting)
               // .set(['chart', 'yAxisMaxValue'], '200')
               .set(
                 ['data'],
-                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callEmployeeDetail-${mChartInfo.Headty},${o.Cod01}` }))
+                _.map(aChartDatas, (o) => {
+                  fColumn2dMaxValues = Math.max(fColumn2dMaxValues, Number(o.Cnt01));
+                  return { label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callEmployeeDetail-${mChartInfo.Headty},${o.Cod01}` };
+                })
               )
               .commit();
+
+            mChartSetting.chart.yAxisMaxValue = Math.ceil(fColumn2dMaxValues * 1.3);
 
             this.callFusionChart(mChartInfo, mChartSetting);
 
@@ -191,6 +201,7 @@ sap.ui.define(
 
             break;
           case 'mscolumn2d':
+            let fMscolumn2dMaxValues = 0;
             _.chain(mChartSetting)
               // .set(['data', 'chart', 'yAxisMaxValue'], '60')
               .set(
@@ -200,14 +211,22 @@ sap.ui.define(
               .set(['dataset', 0], {
                 seriesname: this.getBundleText('LABEL_28025'), // 임원 1인당 직원수 (팀장포함)
                 color: '#7BB4EB',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01, link: `j-callEmployeeDetail-${mChartInfo.Headty},A,${o.Ttltxt}` })),
+                data: _.map(aChartDatas, (o) => {
+                  fMscolumn2dMaxValues = Math.max(fMscolumn2dMaxValues, Number(o.Cnt01));
+                  return { value: o.Cnt01, link: `j-callEmployeeDetail-${mChartInfo.Headty},A,${o.Ttltxt}` };
+                }),
               })
               .set(['dataset', 1], {
                 seriesname: this.getBundleText('LABEL_28026'), // 팀장 1인당 직원수
                 color: '#FFE479',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02, link: `j-callEmployeeDetail-${mChartInfo.Headty},BA,${o.Ttltxt}` })),
+                data: _.map(aChartDatas, (o) => {
+                  fMscolumn2dMaxValues = Math.max(fMscolumn2dMaxValues, Number(o.Cnt02));
+                  return { value: o.Cnt02, link: `j-callEmployeeDetail-${mChartInfo.Headty},BA,${o.Ttltxt}` };
+                }),
               })
               .commit();
+
+            mChartSetting.chart.yAxisMaxValue = Math.ceil(fMscolumn2dMaxValues * 1.5);
 
             this.callFusionChart(mChartInfo, mChartSetting);
 
@@ -217,16 +236,16 @@ sap.ui.define(
         }
       },
 
-      callFusionChart(mChartInfo, mChartSetting) {
+      callFusionChart({ Target, Chart }, mChartSetting) {
         if (_.isEmpty(mChartSetting)) return;
 
-        const sChartId = `employee-${_.toLower(mChartInfo.Target)}-chart`;
+        const sChartId = `employee-${_.toLower(Target)}-chart`;
 
         if (!FusionCharts(sChartId)) {
           FusionCharts.ready(() => {
             new FusionCharts({
               id: sChartId,
-              type: mChartInfo.Chart,
+              type: Chart,
               renderAt: `${sChartId}-container`,
               width: '100%',
               height: '100%',
@@ -241,6 +260,33 @@ sap.ui.define(
           setTimeout(() => oChart.render(), 200);
         }
       },
+
+      // onToggleExpanded(oEvent) {
+      //   try {
+      //     const oGrid = oEvent.getSource().getParent().getParent().getParent();
+      //     const oBox = oEvent.getSource().getParent().getParent();
+
+      //     oGrid.getItems().forEach((o) => {
+      //       if (oBox === o) {
+      //         o.toggleStyleClass('expanded', !o.hasStyleClass('expanded'));
+
+      //         const oChart = FusionCharts(`employee-${o.data('key')}-chart`);
+      //         if (oChart) oChart.render();
+      //       } else if (o.hasStyleClass('expanded')) {
+      //         o.removeStyleClass('expanded');
+
+      //         const oChart = FusionCharts(`employee-${o.data('key')}-chart`);
+      //         if (oChart) oChart.render();
+      //       }
+      //     });
+      //   } catch (oError) {
+      //     this.debug('Controller > m/overviewEmployee Main > onToggleExpanded Error', oError);
+
+      //     AppUtils.handleError(oError);
+      //   }
+      // },
+
+      onToggleExpanded() {},
 
       formatDetailRowHighlight(sValue) {
         switch (_.toNumber(sValue)) {
@@ -335,6 +381,10 @@ sap.ui.define(
         }
       },
 
+      onPressExcept() {
+        this.openDetailDialog({ Headty: 'L' });
+      },
+
       onPressCount(oEvent) {
         if (oEvent['getSource'] instanceof Function) {
           this.openDetailDialog(oEvent.getSource().data());
@@ -350,8 +400,9 @@ sap.ui.define(
       onPressEmployeeRow(oEvent) {
         const sHost = window.location.href.split('#')[0];
         const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
+        const sUsrty = this.isMss() ? 'M' : this.isHass() ? 'H' : '';
 
-        window.open(`${sHost}#/employeeView/${mRowData.Pernr}`, '_blank', 'width=1400,height=800');
+        window.open(`${sHost}#/employeeView/${mRowData.Pernr}/${sUsrty}`, '_blank', 'width=1400,height=800');
       },
 
       onPressDetailExcelDownload() {

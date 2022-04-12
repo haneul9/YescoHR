@@ -2,7 +2,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -13,7 +12,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     AppUtils,
     Client,
     ServiceNames,
@@ -23,6 +21,8 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.paystub.mobile.Detail', {
+      fIntervalReadPDF: null,
+
       getPreviousRouteName() {
         return 'mobile/paystub';
       },
@@ -66,8 +66,6 @@ sap.ui.define(
         oViewModel.setProperty('/busy', true);
 
         try {
-          this.getPdfUrl();
-
           const mDetail = await Client.deep(oModel, 'PayslipList', {
             Menid: this.getCurrentMenuId(),
             Seqnr: sSeqnr,
@@ -103,12 +101,19 @@ sap.ui.define(
           oViewModel.setProperty('/base/count', aBaseList.length);
           oViewModel.setProperty('/retroactive/list', aRetroactiveList);
           oViewModel.setProperty('/retroactive/count', aRetroactiveList.length);
+
+          await this.getPdfUrl();
+          this.fIntervalReadPDF = setInterval(() => this.getPdfUrl(), 25000);
         } catch (oError) {
           this.debug('Controller > paystub Detail > loadPage Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/busy', false);
+
+          this.getView().addEventDelegate({
+            onBeforeHide: () => clearInterval(this.fIntervalReadPDF),
+          });
         }
       },
 
@@ -143,8 +148,12 @@ sap.ui.define(
             Seqnr: sSeqnr,
           });
 
-          alert(mResult.Url);
+          // alert(mResult.Url);
           if (mResult.Url) {
+            if (AppUtils.isPRD()) {
+              mResult.Url = `https://hrportal.yescoholdings.com:443/${_.chain(mResult.Url).split('/').drop(3).join('/').value()}`;
+            }
+
             window.open(mResult.Url);
           }
         } catch (oError) {
@@ -165,6 +174,10 @@ sap.ui.define(
             Pernr: this.getAppointeeProperty('Pernr'),
             Seqnr: sSeqnr,
           });
+
+          if (mResult.Url && AppUtils.isPRD()) {
+            mResult.Url = `https://hrportal.yescoholdings.com:443/${_.chain(mResult.Url).split('/').drop(3).join('/').value()}`;
+          }
 
           this.getViewModel().setProperty('/PdfUrl', mResult.Url);
         } catch (oError) {

@@ -63,7 +63,7 @@ sap.ui.define(
           busy: false,
           pernr: null,
           header: {
-            profilePath: 'asset/image/avatar-unknown.svg',
+            profilePath: this.getUnknownAvatarImageURL(),
             name: '',
             chief: false,
             baseInfo: [],
@@ -100,14 +100,14 @@ sap.ui.define(
             aMenuReturnData,
           ] = await Promise.all([
             fCurriedPA('EmpProfileHeaderNew', mFilters), //
-            fCurriedPA('EmpProfileMenu', _.pick(mFilters, 'Pernr')),
+            fCurriedPA('EmpProfileMenu', { ..._.pick(mFilters, 'Pernr'), Usrty: this.isMss() ? 'M' : this.isHass() ? 'H' : '' }),
           ]);
 
           // 상단 프로필 Set
           const { Pturl, Dat01, Dat08, ...oReturnData } = aProfileReturnData[0];
 
           _.chain(oViewModelData)
-            .set(['header', 'profilePath'], _.isEmpty(Pturl) ? 'asset/image/avatar-unknown.svg' : Pturl)
+            .set(['header', 'profilePath'], _.isEmpty(Pturl) ? this.getUnknownAvatarImageURL() : Pturl)
             .set(['header', 'name'], Dat01)
             .set(['header', 'chief'], _.isEqual(Dat08, 'X'))
             .set(

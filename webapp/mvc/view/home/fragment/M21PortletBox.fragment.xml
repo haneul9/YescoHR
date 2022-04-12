@@ -21,9 +21,21 @@
     </HBox>
     <HBox class="portlet-body">
       <VBox width="30%">
-        <ObjectStatus text="{counts/Cnt01}" state="Indication05" class="mt-15-px font-3-rem" />
-        <ObjectStatus text="{i18n>LABEL_01213} : {counts/Cnt02}" state="Indication05" class="mt-13-px" />
-        <ObjectStatus text="{i18n>LABEL_01212} : {counts/Cnt03}" state="Indication05" class="mt-7-px" />
+        <ObjectStatus text="{ path: '/contents/0/Cnt01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/0/Cnt01} > 0 }" press=".onPressCount" class="mt-15-px font-3-rem color-03">
+          <customData>
+            <core:CustomData key="Discod" value="{/contents/0/Cod01}" />
+          </customData>
+        </ObjectStatus>
+        <ObjectStatus text="{i18n>LABEL_01213} : {path: '/contents/0/Cnt02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/0/Cnt02} > 0 }" press=".onPressCount" class="mt-13-px color-03">
+          <customData>
+            <core:CustomData key="Discod" value="{/contents/0/Cod02}" />
+          </customData>
+        </ObjectStatus>
+        <ObjectStatus text="{i18n>LABEL_01212} : {path: '/contents/0/Cnt03', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/0/Cnt03} > 0 }" press=".onPressCount" class="mt-7-px color-03">
+          <customData>
+            <core:CustomData key="Discod" value="{/contents/0/Cod03}" />
+          </customData>
+        </ObjectStatus>
       </VBox>
       <VBox class="ml-5-px">
         <layoutData>
@@ -55,21 +67,33 @@
               <FlexItemData growFactor="1" />
             </layoutData>
           </Label>
-          <Text text="{ path: 'counts/Cnt40', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+          <!-- 전년말 기준 : 전체 -->
+          <ObjectStatus text="{ path: '/contents/1/Cnt01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/1/Cnt01} > 0 }" press=".onPressCount">
+            <customData>
+              <core:CustomData key="Discod" value="{/contents/1/Cod01}" />
+            </customData>
             <layoutData>
-              <FlexItemData baseSize="20%" />
+              <FlexItemData baseSize="20%" styleClass="employee-count" />
             </layoutData>
-          </Text>
-          <Text text="{ path: 'counts/Cnt41', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+          </ObjectStatus>
+          <!-- 전년말 기준 : 직원 -->
+          <ObjectStatus text="{ path: '/contents/1/Cnt02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/1/Cnt02} > 0 }" press=".onPressCount">
+            <customData>
+              <core:CustomData key="Discod" value="{/contents/1/Cod02}" />
+            </customData>
             <layoutData>
-              <FlexItemData baseSize="20%" />
+              <FlexItemData baseSize="20%" styleClass="employee-count" />
             </layoutData>
-          </Text>
-          <Text text="{ path: 'counts/Cnt42', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+          </ObjectStatus>
+          <!-- 전년말 기준 : 임원 -->
+          <ObjectStatus text="{ path: '/contents/1/Cnt03', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/1/Cnt03} > 0 }" press=".onPressCount">
+            <customData>
+              <core:CustomData key="Discod" value="{/contents/1/Cod03}" />
+            </customData>
             <layoutData>
-              <FlexItemData baseSize="20%" />
+              <FlexItemData baseSize="20%" styleClass="employee-count" />
             </layoutData>
-          </Text>
+          </ObjectStatus>
         </HBox>
         <HBox width="100%" alignItems="Center" class="border-bottom">
           <layoutData>
@@ -80,27 +104,31 @@
               <FlexItemData growFactor="1" />
             </layoutData>
           </Label>
-          <Text text="{ path: 'counts/Cnt50', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
-            <layoutData>
-              <FlexItemData baseSize="20%" />
-            </layoutData>
-          </Text>
-          <ObjectStatus text="{ path: 'counts/Cnt51', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount">
+          <!-- 입사자 인원 : 전체 -->
+          <ObjectStatus text="{ path: '/contents/2/Cnt01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/2/Cnt01} > 0 }" press=".onPressCount" class="color-03">
             <customData>
-              <!-- 입사자 직원 -->
-              <core:CustomData key="table-key" value="A1" writeToDom="true" />
+              <core:CustomData key="Discod" value="{/contents/2/Cod01}" />
             </customData>
             <layoutData>
-              <FlexItemData baseSize="20%" styleClass="employee-count-blue" />
+              <FlexItemData baseSize="20%" styleClass="employee-count" />
             </layoutData>
           </ObjectStatus>
-          <ObjectStatus text="{ path: 'counts/Cnt52', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount">
+          <!-- 입사자 인원 : 직원 -->
+          <ObjectStatus text="{ path: '/contents/2/Cnt02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/2/Cnt02} > 0 }" press=".onPressCount" class="color-03">
             <customData>
-              <!-- 입사자 임원 -->
-              <core:CustomData key="table-key" value="A2" writeToDom="true" />
+              <core:CustomData key="Discod" value="{/contents/2/Cod02}" />
             </customData>
             <layoutData>
-              <FlexItemData baseSize="20%" styleClass="employee-count-blue" />
+              <FlexItemData baseSize="20%" styleClass="employee-count" />
+            </layoutData>
+          </ObjectStatus>
+          <!-- 입사자 인원 : 임원 -->
+          <ObjectStatus text="{ path: '/contents/2/Cnt03', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/2/Cnt03} > 0 }" press=".onPressCount" class="color-03">
+            <customData>
+              <core:CustomData key="Discod" value="{/contents/2/Cod03}" />
+            </customData>
+            <layoutData>
+              <FlexItemData baseSize="20%" styleClass="employee-count" />
             </layoutData>
           </ObjectStatus>
         </HBox>
@@ -113,27 +141,31 @@
               <FlexItemData growFactor="1" />
             </layoutData>
           </Label>
-          <Text text="{ path: 'counts/Cnt60', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
-            <layoutData>
-              <FlexItemData baseSize="20%" />
-            </layoutData>
-          </Text>
-          <ObjectStatus text="{ path: 'counts/Cnt61', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount">
+          <!-- 퇴사자 인원 : 전체 -->
+          <ObjectStatus text="{ path: '/contents/3/Cnt01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/3/Cnt01} > 0 }" press=".onPressCount" class="color-04">
             <customData>
-              <!-- 퇴사자 직원 -->
-              <core:CustomData key="table-key" value="B1" writeToDom="true" />
+              <core:CustomData key="Discod" value="{/contents/3/Cod01}" />
             </customData>
             <layoutData>
-              <FlexItemData baseSize="20%" styleClass="employee-count-yellow" />
+              <FlexItemData baseSize="20%" styleClass="employee-count" />
             </layoutData>
           </ObjectStatus>
-          <ObjectStatus text="{ path: 'counts/Cnt62', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount">
+          <!-- 퇴사자 인원 : 직원 -->
+          <ObjectStatus text="{ path: '/contents/3/Cnt02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/3/Cnt02} > 0 }" press=".onPressCount" class="color-04">
             <customData>
-              <!-- 퇴사자 임원 -->
-              <core:CustomData key="table-key" value="B2" writeToDom="true" />
+              <core:CustomData key="Discod" value="{/contents/3/Cod02}" />
             </customData>
             <layoutData>
-              <FlexItemData baseSize="20%" styleClass="employee-count-yellow" />
+              <FlexItemData baseSize="20%" styleClass="employee-count" />
+            </layoutData>
+          </ObjectStatus>
+          <!-- 퇴사자 인원 : 임원 -->
+          <ObjectStatus text="{ path: '/contents/3/Cnt03', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/3/Cnt03} > 0 }" press=".onPressCount" class="color-04">
+            <customData>
+              <core:CustomData key="Discod" value="{/contents/3/Cod03}" />
+            </customData>
+            <layoutData>
+              <FlexItemData baseSize="20%" styleClass="employee-count" />
             </layoutData>
           </ObjectStatus>
         </HBox>
@@ -146,21 +178,33 @@
               <FlexItemData growFactor="1" />
             </layoutData>
           </Label>
-          <Text text="{ path: 'counts/Cnt70', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+          <!-- 휴직중 인원 : 전체 -->
+          <ObjectStatus text="{ path: '/contents/4/Cnt01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/4/Cnt01} > 0 }" press=".onPressCount">
+            <customData>
+              <core:CustomData key="Discod" value="{/contents/4/Cod01}" />
+            </customData>
             <layoutData>
-              <FlexItemData baseSize="20%" />
+              <FlexItemData baseSize="20%" styleClass="employee-count" />
             </layoutData>
-          </Text>
-          <Text text="{ path: 'counts/Cnt71', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+          </ObjectStatus>
+          <!-- 휴직중 인원 : 직원 -->
+          <ObjectStatus text="{ path: '/contents/4/Cnt02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/4/Cnt02} > 0 }" press=".onPressCount">
+            <customData>
+              <core:CustomData key="Discod" value="{/contents/4/Cod02}" />
+            </customData>
             <layoutData>
-              <FlexItemData baseSize="20%" />
+              <FlexItemData baseSize="20%" styleClass="employee-count" />
             </layoutData>
-          </Text>
-          <Text text="{ path: 'counts/Cnt72', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%">
+          </ObjectStatus>
+          <!-- 휴직중 인원 : 임원 -->
+          <ObjectStatus text="{ path: '/contents/4/Cnt03', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/4/Cnt03} > 0 }" press=".onPressCount">
+            <customData>
+              <core:CustomData key="Discod" value="{/contents/4/Cod03}" />
+            </customData>
             <layoutData>
-              <FlexItemData baseSize="20%" />
+              <FlexItemData baseSize="20%" styleClass="employee-count" />
             </layoutData>
-          </Text>
+          </ObjectStatus>
         </HBox>
       </VBox>
     </HBox>

@@ -58,6 +58,9 @@ sap.ui.define(
         this._bMessageOpen = true;
 
         const oError = {
+          getHttpStatusCode() {
+            return sDetails.statusCode;
+          },
           getMessage() {
             return sDetails.message;
           },

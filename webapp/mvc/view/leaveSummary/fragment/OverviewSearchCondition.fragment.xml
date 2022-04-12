@@ -16,7 +16,7 @@
                 <core:Item key="{Seqno}" text="{Seqno}" />
             </ComboBox>
             <Label text="{i18n>LABEL_23001}" design="Bold" />
-            <SearchField value="{/search/Orgtx}" search=".onPressSearchOrgeh" />
+            <Input value="{/search/Orgtx}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onPressSearchOrgeh" />
         </grid:CSSGrid>
     </VBox>
 </core:FragmentDefinition>

@@ -13,7 +13,7 @@
                 <items>
                   <HBox alignItems="Center" height="20px">
                     <!-- <ToggleButton type="Transparent" icon="{= ${Favor} ? 'sap-icon://favorite' : 'sap-icon://unfavorite' }" press=".toggleFavorite" pressed="{Favor}" class="icon-button menu-favorite-icon" visible="{= !${Zample} }" />
-                    <Image width="15px" class="dummy-favorite-icon" src="asset/image/icon_star2.svg" visible="{= !!${Zample} }" /> -->
+                    <Image width="15px" class="dummy-favorite-icon" src="/sap/public/bc/ui2/zui5_yescohr/images/icon_star2.svg" visible="{= !!${Zample} }" /> -->
                     <!-- 메뉴 이동인 경우 -->
                     <Link text="{Mname}" visible="{= !!${Mnurl} &amp;&amp; !${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" press=".handleMenuLink" class="menu-link">
                       <layoutData>
@@ -36,8 +36,16 @@
       </HBox>
       <HBox width="100%" height="200px" class="favorites-menu-list">
         <ScrollContainer horizontal="false" vertical="true" width="100%" height="100%">
+          <layoutData>
+            <FlexItemData growFactor="1" />
+          </layoutData>
           <content>
-            <HBox wrap="Wrap" items="{mobileFavoriteMenus}">
+            <HBox height="100px" justifyContent="Center" alignItems="Start" visible="{= ${recentMenusCount} === 0 }" class="portlet-body">
+              <HBox width="100%" class="no-data">
+                <Text text="{i18n>MSG_00058}" />
+              </HBox>
+            </HBox>
+            <HBox wrap="Wrap" items="{recentMenus}" visible="{= ${recentMenusCount} &gt; 0 }">
               <HBox>
                 <!-- 메뉴 이동인 경우 -->
                 <Link text="{Mname}" visible="{= !!${Mnurl} &amp;&amp; !${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" press=".handleMenuLink" class="menu-link-button" />

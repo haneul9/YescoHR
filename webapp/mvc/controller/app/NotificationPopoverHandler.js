@@ -48,7 +48,6 @@ sap.ui.define(
           listCount: 0,
           unreadCount: 0,
           showUnreadCount: false,
-          maxRows: this.bMobile ? Math.ceil((screen.availHeight - 143) / 69) : 5,
         };
       },
 
@@ -60,10 +59,6 @@ sap.ui.define(
           name: 'sap.ui.yesco.mvc.view.app.fragment.NotificationPopover',
           controller: this,
         });
-
-        if (this.bMobile) {
-          this.oNotificationPopover.addStyleClass('full-popover');
-        }
 
         const oNotificationModel = this.getNotificationModel();
 

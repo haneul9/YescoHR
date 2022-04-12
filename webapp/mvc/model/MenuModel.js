@@ -17,7 +17,10 @@ sap.ui.define(
 
     return UIComponentBaseModel.extend('sap.ui.yesco.mvc.model.MenuModel', {
       async retrieve() {
-        this.bMobile = _.isEqual(AppUtils.getDevice(), sap.ui.Device.system.SYSTEMTYPE.PHONE);
+        this.bMobile = AppUtils.isMobile();
+
+        const sPernr = this.getUIComponent().getSessionModel().getProperty('/Pernr');
+        this.sRecentMenuLocalStorgaeKey = `ehr.recent.menus.${sPernr}`;
 
         try {
           const oModel = this.getUIComponent().getModel(ServiceNames.COMMON);
@@ -214,9 +217,7 @@ sap.ui.define(
           breadcrumbs: {}, // 현재 메뉴의 breadcrumbs 정보 object, Component.js 참조
         };
 
-        if (this.bMobile) {
-          mModelData.mobileFavoriteMenus = aMobileFavoriteMenus;
-        }
+        mModelData.mobileFavoriteMenus = aMobileFavoriteMenus;
 
         return mModelData;
       },
@@ -288,6 +289,17 @@ sap.ui.define(
         }
 
         this.refresh();
+      },
+
+      /**
+       * Mobile 최근 사용 메뉴 추가
+       * @param {array} aMenus
+       */
+      setRecentMenu(aMenus = []) {
+        const aRecentMenus = aMenus.map(({ Menid }) => this.getProperties(Menid));
+
+        this.setProperty('/recentMenus', aRecentMenus);
+        this.setProperty('/recentMenusCount', aRecentMenus.length);
       },
 
       /**

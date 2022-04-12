@@ -2,7 +2,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/core/Fragment',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
@@ -20,7 +19,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    Fragment,
     MessageBox,
     Appno,
     AppUtils,
@@ -160,11 +158,8 @@ sap.ui.define(
 
       // 신청내역 추가
       onAddDetail() {
-        const oView = this.getView();
-
         setTimeout(() => {
           const oDetailModel = this.getViewModel();
-          const oModel = this.getModel(ServiceNames.WORKTIME);
           const oEmpData = this.getAppointeeData();
 
           let aList = [];
@@ -196,16 +191,16 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
 
         const oList = this.byId('DetailList').getSelectedContexts();
-        let aDelList = [];
 
         if (_.isEmpty(oList)) {
           // 삭제할 데이터를 선택하세요.
-          return MessageBox.alert(this.getBundleText('MSG_00055'));
-        } else {
-          aDelList = _.map(oList, (e) => {
-            return oDetailModel.getProperty(e.sPath);
-          });
+          MessageBox.alert(this.getBundleText('MSG_00055'));
+          return;
         }
+
+        const aDelList = _.map(oList, (e) => {
+          return oDetailModel.getProperty(e.sPath);
+        });
 
         const aDiffList = _.difference(oDetailModel.getProperty('/detail/list'), aDelList);
         const iLength = _.size(aDiffList);
@@ -351,14 +346,22 @@ sap.ui.define(
         }
 
         const aList = oDetailModel.getProperty('/dialog/list');
+        const aDetailList = _.cloneDeep(oDetailModel.getProperty('/detail/list'));
         const aFilter = _.filter(aList, (e) => {
           return !!e.Pernr;
         });
         // 동일사번/일자
         if (
-          !!_.find(oDetailModel.getProperty('/detail/list'), (e) => {
-            return moment(e.Datum).format('YYYY.MM.DD') === moment(mDialogData.Datum).format('YYYY.MM.DD');
-          }) ||
+          !!_.chain(aDetailList)
+            .filter((e) => {
+              return _.find(aList, (e1) => {
+                return e.Pernr === _.trimStart(e1.Pernr, '0');
+              });
+            })
+            .find((e) => {
+              return moment(e.Datum).format('YYYY.MM.DD') === moment(mDialogData.Datum).format('YYYY.MM.DD') && e.Beguz === mDialogData.Beguz.replace(':', '') && e.Enduz === mDialogData.Enduz.replace(':', '');
+            })
+            .value() ||
           _.chain(aFilter)
             .map((e) => {
               return (e.Pernr = _.trimStart(e.Pernr, '0'));

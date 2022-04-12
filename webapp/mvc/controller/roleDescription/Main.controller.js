@@ -112,7 +112,7 @@ sap.ui.define(
           });
           oViewModel.setProperty('/data/role3', {
             rowCount: mDeepRoleResult.RoleDescription3Set.results.length,
-            list: _.map(mDeepRoleResult.RoleDescription3Set.results, (o) => _.chain(o).omit('__metadata').set('Weith', _.toNumber(o.Weith)).value()),
+            list: _.map(mDeepRoleResult.RoleDescription3Set.results, (o) => _.chain(o).omit('__metadata').set('Weith', _.toNumber(o.Weith)).set('Dtail', _.replace(o.Dtail, /<br>/gi, '\n')).value()),
           });
           oViewModel.setProperty('/data/role4', {
             rowCount: mDeepRoleResult.RoleDescription4Set.results.length,

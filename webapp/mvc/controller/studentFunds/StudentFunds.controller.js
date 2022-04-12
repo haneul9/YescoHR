@@ -3,7 +3,6 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/EmployeeSearch',
@@ -20,7 +19,6 @@ sap.ui.define(
     // prettier 방지용 주석
     Filter,
     FilterOperator,
-    JSONModel,
     AppUtils,
     AttachFileAction,
     EmployeeSearch,
@@ -64,14 +62,12 @@ sap.ui.define(
       onObjectMatched() {
         this.onSearch();
         this.totalCount();
-        // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
       },
 
       // 대상자 정보 사원선택시 화면 Refresh
       onRefresh() {
         this.onSearch();
         this.totalCount();
-        // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
       },
 
       // override AttachFileCode

@@ -562,8 +562,9 @@ sap.ui.define(
       onPressRowEmployee(oEvent) {
         const sHost = window.location.href.split('#')[0];
         const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
+        const sUsrty = this.isMss() ? 'M' : this.isHass() ? 'H' : '';
 
-        window.open(`${sHost}#/employeeView/${mRowData.Zzappee}`, '_blank', 'width=1400,height=800');
+        window.open(`${sHost}#/employeeView/${mRowData.Zzappee}/${sUsrty}`, '_blank', 'width=1400,height=800');
       },
 
       onChangeByDepartSelection(oEvent) {
@@ -641,7 +642,7 @@ sap.ui.define(
           onClose: (sAction) => {
             if (MessageBox.Action.CANCEL === sAction) return;
 
-            this.createProcess(Constants.PROCESS_TYPE.SEND);
+            this.createProcess({ ...Constants.PROCESS_TYPE.SEND, label: 'LABEL_00117' });
           },
         });
       },

@@ -15,7 +15,7 @@
           </VBox>
           <HBox justifyContent="SpaceBetween">
             <Label text="{/header/name}" class="name" />
-            <Image src="asset/image/icon_captain.svg" width="1.2rem" alt="Captain" visible="{= !!${/header/chief}}" />
+            <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_captain.svg" width="1.2rem" alt="Captain" visible="{= !!${/header/chief}}" />
           </HBox>
           <grid:CSSGrid items="{path: '/header/baseInfo'}" gridTemplateColumns="1fr">
             <Label text="{data}">

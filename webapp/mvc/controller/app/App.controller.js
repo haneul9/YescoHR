@@ -65,9 +65,8 @@ sap.ui.define(
           this.oMobileEmployeeSearchDialogHandler = new MobileEmployeeSearchDialogHandler(this);
         });
         setTimeout(() => {
-          this.getOwnerComponent()
-            .getAppModel()
-            .setProperty('/homebarBackground', /^localhost/.test(location.hostname) || /^(yeshrsapdev|devhrportal)/.test(location.hostname) ? 'dev' : 'prd');
+          const sHost = /^localhost/.test(location.hostname) || /^(yeshrsapdev|devhrportal)/.test(location.hostname) ? 'dev' : 'prd';
+          this.getOwnerComponent().getAppModel().setProperty('/homebarBackground', sHost);
         });
       },
 
@@ -75,9 +74,10 @@ sap.ui.define(
         return this.oAppMenu;
       },
 
-      getLogoPath(sWerks = 'init') {
-        this.byId('logo-image').toggleStyleClass(`logo-${sWerks}`, true);
-        return `asset/image/logo-${sWerks}.png`;
+      getLogoPath(sWerks) {
+        const logoName = '1000,2000,3000'.split(',').includes(sWerks) ? `logo-${sWerks}` : 'logo-1000';
+        this.byId('logo-image').toggleStyleClass(logoName, true);
+        return this.getImageURL(`${logoName}.png`);
       },
 
       navToHome() {
@@ -167,12 +167,12 @@ sap.ui.define(
       /**
        * 검색 : 모바일 하단 5버튼
        */
-      onPressMobileSearchPopoverToggle() {
+      onPressMobileSearchPopoverToggle(oEvent) {
         this.oNotificationPopoverHandler.onPopoverClose();
         this.oMobileMyPagePopoverHandler.onPopoverClose();
         this.oAppMenu.closeMenuLayer();
 
-        this.oMobileEmployeeSearchDialogHandler.onDialogToggle();
+        this.oMobileEmployeeSearchDialogHandler.onDialogToggle(oEvent);
       },
 
       /**
@@ -199,7 +199,7 @@ sap.ui.define(
               if (this.bMobile) {
                 location.href = '/sap/public/bc/icf/logoff?from=logoff';
               } else {
-                window.open('/sap/public/bc/ui2/zui5_yescohr/logout.html');
+                window.open(this.getImageURL('logout.html'));
                 window.close();
               }
             }

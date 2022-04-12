@@ -29,7 +29,7 @@
             </layoutData>
             <core:Item text="{Orgtx}" key="{Orgeh}" />
           </ComboBox>
-          <Button class="sapUiTinyMarginBegin" text="{i18n>LABEL_00100}" icon="asset/image/icon_search03.png" iconDensityAware="false" press=".onPressSearch">
+          <Button class="sapUiTinyMarginBegin" text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onPressSearch">
             <layoutData>
               <FlexItemData minWidth="33%" maxWidth="33%" />
             </layoutData>

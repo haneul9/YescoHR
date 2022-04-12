@@ -2,7 +2,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
@@ -22,7 +21,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    JSONModel,
     MessageBox,
     Appno,
     AppUtils,
@@ -52,6 +50,7 @@ sap.ui.define(
         return {
           menid: '',
           ViewKey: '',
+          HideBox: true,
           FormData: {},
           baseArea: {},
           loanAmount: {},
@@ -117,7 +116,7 @@ sap.ui.define(
         const mFormData = oDetailModel.getProperty('/FormData');
 
         if (sValue > parseFloat(sAmountCode) && !!mFormData.Lntyp) {
-          const sAmountFormat = new Intl.NumberFormat('ko-KR').format(sAmountCode);
+          // const sAmountFormat = new Intl.NumberFormat('ko-KR').format(sAmountCode);
           const sFormAmount = new Intl.NumberFormat('ko-KR').format(mFormData.Lnamt);
 
           // MessageBox.alert(this.getBundleText('MSG_07006', mFormData.Lntyptx, sAmountFormat));
@@ -215,8 +214,12 @@ sap.ui.define(
                 const oTargetData = oData;
 
                 oDetailModel.setProperty('/FormData', oTargetData);
-                oDetailModel.setProperty('/ApplyInfo', oTargetData);
-                // oDetailModel.setProperty('/ApplyInfo/Appdt', oTargetData.Appda);
+                oDetailModel.setProperty('/ApplyInfo', {
+                  ...oTargetData,
+                  Aporgtx: !oTargetData.Aporgtx || oTargetData.Aporgtx === '/' ? '' : oTargetData.Aporgtx,
+                  Appdt: !oTargetData.Appdt || _.parseInt(oTargetData.Appdt.replaceAll('.', '').replaceAll(':', '').replaceAll(' ', '')) === 0 ? '' : oTargetData.Appdt,
+                });
+                oDetailModel.setProperty('/HideBox', this.isHideBox(oTargetData.Lntyp));
 
                 if (oTargetData.Lnsta === '40' || oTargetData.Lnsta === '60') {
                   const iHistoryLength = oData.LoanAmtRecordSet.results.length;
@@ -413,6 +416,18 @@ sap.ui.define(
           },
         });
       },
+
+      // 융자구분이 LB(생활안전자금) || SB(주식매입자금)일 경우 Hide
+      isHideBox(sKey = '') {
+        let bHide = true;
+
+        if (_.isEqual(sKey, 'SB') || _.isEqual(sKey, 'LB')) {
+          bHide = false;
+        }
+
+        return bHide;
+      },
+
       // 융자구분 선택시
       onLaonType(oEvent) {
         const oDetailModel = this.getViewModel();
@@ -420,6 +435,7 @@ sap.ui.define(
 
         if (sKey === 'ALL' || !sKey) return;
 
+        oDetailModel.setProperty('/HideBox', this.isHideBox(sKey));
         oDetailModel.getProperty('/LaonType').forEach((e) => {
           if (e.Zcode === sKey) {
             oDetailModel.setProperty('/FormData/Lntyptx', e.Ztext);
@@ -474,22 +490,24 @@ sap.ui.define(
           return true;
         }
 
-        // 주택종류
-        if (oFormData.Htype === 'ALL' || !oFormData.Htype) {
-          MessageBox.alert(this.getBundleText('MSG_07009'));
-          return true;
-        }
+        if (oDetailModel.getProperty('/HideBox')) {
+          // 주택종류
+          if (oFormData.Htype === 'ALL' || !oFormData.Htype) {
+            MessageBox.alert(this.getBundleText('MSG_07009'));
+            return true;
+          }
 
-        // 건평
-        if (!oFormData.Zsize) {
-          MessageBox.alert(this.getBundleText('MSG_07010'));
-          return true;
-        }
+          // 건평
+          if (!oFormData.Zsize) {
+            MessageBox.alert(this.getBundleText('MSG_07010'));
+            return true;
+          }
 
-        // 주소
-        if (!oFormData.Addre) {
-          MessageBox.alert(this.getBundleText('MSG_07011'));
-          return true;
+          // 주소
+          if (!oFormData.Addre) {
+            MessageBox.alert(this.getBundleText('MSG_07011'));
+            return true;
+          }
         }
 
         // 융자금액

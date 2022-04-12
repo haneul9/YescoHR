@@ -2,7 +2,6 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/control/MessageBox',
-    'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/FragmentEvent',
@@ -16,7 +15,6 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     MessageBox,
-    Appno,
     AppUtils,
     AttachFileAction,
     FragmentEvent,
@@ -69,6 +67,15 @@ sap.ui.define(
           const aOrgList = await Client.getEntitySet(oModel, 'DashboardOrgList', mPayLoad);
 
           oViewModel.setProperty('/OrgList', aOrgList);
+          // const oModel = this.getModel(ServiceNames.WORKTIME);
+          // const mAppointee = this.getAppointeeData();
+          // const mPayLoad = {
+          //   Pernr: mAppointee.Pernr,
+          //   Actty: this.isHass() ? 'H' : 'M',
+          //   Werks: mAppointee.Werks,
+          // };
+
+          // const aOrgList = await Client.getEntitySet(oModel, 'MssOrgList', mPayLoad);
 
           // 나의 근무일정
           const [mMyCom] = await this.getMySchedule();
@@ -79,7 +86,7 @@ sap.ui.define(
 
           oViewModel.setProperty('/search', {
             date: moment(dDate).format('yyyyMM'),
-            dept: aOrgList[0].Orgeh,
+            dept: this.getSessionProperty('Orgeh'),
           });
 
           const aTableList = await this.getWorkScheduleList();
@@ -308,6 +315,7 @@ sap.ui.define(
         const mSearch = oViewModel.getProperty('/search');
         const mPayLoad = {
           Prcty: 'L',
+          Actty: this.isHass() ? 'H' : 'M',
           Orgeh: mSearch.dept,
           Zyymm: mSearch.date,
           Pernr: this.getAppointeeProperty('Pernr'),

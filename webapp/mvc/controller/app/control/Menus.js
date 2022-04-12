@@ -156,6 +156,7 @@ sap.ui.define(
             Mnid1: Mnid1,
             Mnid2: Mnid2,
             Mnid3: Mnid3,
+            Mobile: '',
           };
 
           if (Favor) {
@@ -218,12 +219,16 @@ sap.ui.define(
        */
       async handleMenuLink(oEvent) {
         const oEventSource = oEvent.getSource();
+        const oContext = oEventSource.getBindingContext();
         if (oEventSource instanceof Link) {
-          const sHref = oEvent.getSource().getProperty('href');
+          const sHref = oEventSource.getProperty('href');
           if (/^https?:/.test(sHref) || (sHref !== 'javascript:;' && /^javascript:/.test(sHref))) {
             setTimeout(() => {
               this.toggleSelectedMenuStyle(false);
               this.closeMenuLayer(true);
+              if (this.bMobile) {
+                this.saveFavorite(oContext.getProperty());
+              }
             });
             return;
           }
@@ -235,8 +240,10 @@ sap.ui.define(
           this.closeMenuLayer(true);
         });
 
-        const oContext = oEventSource.getBindingContext();
         if (oContext.getProperty('Mepop')) {
+          if (this.bMobile) {
+            this.saveFavorite(oContext.getProperty());
+          }
           return;
         }
 
@@ -257,6 +264,9 @@ sap.ui.define(
 
           const { Mnurl } = await Client.get(oCommonModel, 'GetMenuUrl', mKeyMap);
           if (Mnurl) {
+            if (this.bMobile) {
+              this.saveFavorite(oContext.getProperty());
+            }
             const sMenuUrl = this.bMobile ? `mobile/${Mnurl}` : Mnurl;
             this.moveToMenu(sMenuUrl);
           } else {
@@ -308,13 +318,6 @@ sap.ui.define(
           .reduceViewResource() // 메뉴 이동 전 View hidden 처리로 불필요한 DOM 정보를 제거
           .getRouter()
           .navTo(sRouteName);
-        // this.oAppController
-        //   .getRouter()
-        //   .getTargets()
-        //   .display(sRouteName)
-        //   .then(() => {
-        //     AppUtils.setAppBusy(false).setMenuBusy(false);
-        //   });
       },
     });
   }

@@ -1,63 +1,63 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:dnd="sap.ui.core.dnd"
-    xmlns:dnd-grid="sap.f.dnd"
-    xmlns:grid="sap.ui.layout.cssgrid"
-    xmlns:f="sap.f">
-    <VBox class="contents">
-        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.mssEvalKpi.fragment.tabDetail.CascadingForm" type="XML" />
+  xmlns:core="sap.ui.core"
+  xmlns:dnd="sap.ui.core.dnd"
+  xmlns:dnd-grid="sap.f.dnd"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:f="sap.f">
+  <VBox class="contents">
+    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.mssEvalKpi.fragment.tabDetail.CascadingForm" type="XML" />
 
-        <VBox width="100%" class="vCardBox">
-            <HBox justifyContent="SpaceBetween" class="table-toolbar">
-                <HBox class="title">
-                    <Title level="H4" text="{i18n>LABEL_15004} {i18n>LABEL_15018}" />
-                    <Text text="{i18n>MSG_15005}" class="desc-txt"/>
-                </HBox>
-                <HBox class="cascading-type-list">
-                    <Image src="asset/image/icon_cascading_type01.png"/>
-                    <Text text="{i18n>LABEL_15014}" textAlign="Center" width="100%"/>
-                    <Image src="asset/image/icon_cascading_type02.png"/>
-                    <Text text="{i18n>LABEL_15015}" textAlign="Center" width="100%"/>
-                    <Image src="asset/image/icon_cascading_type03.png"/>
-                    <Text text="{i18n>LABEL_15016}" textAlign="Center" width="100%"/>
-                    <Image src="asset/image/icon_cascading_type04.png"/>
-                    <Text text="{i18n>LABEL_15017}" textAlign="Center" width="100%"/>
-                </HBox>
-            </HBox>
-            <HBox class="cascading-wrap">
-                <Label text="{/search/Orgtx}" class="Org-name">
-                    <layoutData>
-                        <FlexItemData />
-                    </layoutData>
-                </Label>
-                <f:GridList items="{/PartList}" class="part-cascading-list">
-                    <f:layoutData>
-                        <FlexItemData growFactor="1"/>
-                    </f:layoutData>
-                    <f:dragDropConfig>
-                        <dnd:DragInfo sourceAggregation="items" dragStart=".onDragStart" />
-                        <dnd-grid:GridDropInfo targetAggregation="items" dropPosition="Between" dropLayout="Horizontal" drop=".onDrop" />
-                    </f:dragDropConfig>
-                    <f:customLayout>
-                        <grid:GridBoxLayout boxMinWidth="30px" boxWidth="280px" />
-                    </f:customLayout>
-                    <f:GridListItem>
-                        <VBox height="80px">
-                            <layoutData>
-                                <FlexItemData growFactor="1" shrinkFactor="0" />
-                            </layoutData>
-                            <HBox>
-                                <Image visible="{= ${Otype} === '90' }" src="asset/image/icon_cascading_type01.png" />
-                                <Image visible="{= ${Otype} === '91' }" src="asset/image/icon_cascading_type02.png" />
-                                <Image visible="{= !!${Zteam} }" src="asset/image/icon_cascading_type03.png" press=".onPressTeam" />
-                                <Image visible="{= !!${Url} }" src="asset/image/icon_cascading_type04.png" press=".onUrlPress" />
-                            </HBox>
-                            <Title text="{Stext}" />
-                            <Text text="{Ztext}" wrapping="false" />
-                        </VBox>
-                    </f:GridListItem>
-                </f:GridList>
-            </HBox>
-        </VBox>
+    <VBox width="100%" class="vCardBox">
+      <HBox justifyContent="SpaceBetween" class="table-toolbar">
+        <HBox class="title">
+          <Title level="H4" text="{i18n>LABEL_15004} {i18n>LABEL_15018}" />
+          <Text text="{i18n>MSG_15005}" class="desc-txt"/>
+        </HBox>
+        <HBox class="cascading-type-list">
+          <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_cascading_type01.png"/>
+          <Text text="{i18n>LABEL_15014}" textAlign="Center" width="100%"/>
+          <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_cascading_type02.png"/>
+          <Text text="{i18n>LABEL_15015}" textAlign="Center" width="100%"/>
+          <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_cascading_type03.png"/>
+          <Text text="{i18n>LABEL_15016}" textAlign="Center" width="100%"/>
+          <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_cascading_type04.png"/>
+          <Text text="{i18n>LABEL_15017}" textAlign="Center" width="100%"/>
+        </HBox>
+      </HBox>
+      <HBox class="cascading-wrap">
+        <Label text="{/search/Orgtx}" class="Org-name">
+          <layoutData>
+            <FlexItemData />
+          </layoutData>
+        </Label>
+        <f:GridList items="{/PartList}" class="part-cascading-list">
+          <f:layoutData>
+            <FlexItemData growFactor="1"/>
+          </f:layoutData>
+          <f:dragDropConfig>
+            <dnd:DragInfo sourceAggregation="items" dragStart=".onDragStart" />
+            <dnd-grid:GridDropInfo targetAggregation="items" dropPosition="Between" dropLayout="Horizontal" drop=".onDrop" />
+          </f:dragDropConfig>
+          <f:customLayout>
+            <grid:GridBoxLayout boxMinWidth="30px" boxWidth="280px" />
+          </f:customLayout>
+          <f:GridListItem>
+            <VBox height="80px">
+              <layoutData>
+                <FlexItemData growFactor="1" shrinkFactor="0" />
+              </layoutData>
+              <HBox>
+                <Image visible="{= ${Otype} === '90' }" src="/sap/public/bc/ui2/zui5_yescohr/images/icon_cascading_type01.png" />
+                <Image visible="{= ${Otype} === '91' }" src="/sap/public/bc/ui2/zui5_yescohr/images/icon_cascading_type02.png" />
+                <Image visible="{= !!${Zteam} }" src="/sap/public/bc/ui2/zui5_yescohr/images/icon_cascading_type03.png" press=".onPressTeam" />
+                <Image visible="{= !!${Url} }" src="/sap/public/bc/ui2/zui5_yescohr/images/icon_cascading_type04.png" press=".onUrlPress" />
+              </HBox>
+              <Title text="{Stext}" />
+              <Text text="{Ztext}" wrapping="false" />
+            </VBox>
+          </f:GridListItem>
+        </f:GridList>
+      </HBox>
     </VBox>
+  </VBox>
 </core:FragmentDefinition>

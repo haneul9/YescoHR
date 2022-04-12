@@ -12,10 +12,6 @@ sap.ui.define(
     'sap/ui/yesco/common/DateUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/exceptions/ODataCreateError',
-    'sap/ui/yesco/common/exceptions/ODataDeleteError',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
-    'sap/ui/yesco/common/exceptions/ODataUpdateError',
     'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/PostcodeDialogHandler',
@@ -37,10 +33,6 @@ sap.ui.define(
     DateUtils,
     AttachFileAction,
     ComboEntry,
-    ODataCreateError,
-    ODataDeleteError,
-    ODataReadError,
-    ODataUpdateError,
     UI5Error,
     ServiceNames,
     PostcodeDialogHandler,
@@ -63,6 +55,7 @@ sap.ui.define(
           label: 'LABEL_00283',
           path: 'address',
           url: '/AddressInfoSet',
+          odata: 'AddressInfo',
           pk: ['Subty', 'Begda'],
           valid: [
             { label: 'LABEL_00270', field: 'Subty', type: Validator.SELECT1 }, // 주소유형
@@ -76,6 +69,7 @@ sap.ui.define(
           label: 'LABEL_00303',
           path: 'education',
           url: '/EducationChangeSet',
+          odata: 'EducationChange',
           pk: ['Seqnr', 'Begda', 'Endda', 'Subty'],
           valid: [
             { label: 'LABEL_00284', field: 'Slart', type: Validator.SELECT1 }, // 학교구분
@@ -96,6 +90,7 @@ sap.ui.define(
           label: 'LABEL_00305',
           path: 'language',
           url: '/LanguageTestChangeSet',
+          odata: 'LanguageTestChange',
           pk: ['Seqnr', 'Begda', 'Endda'],
           valid: [
             { label: 'LABEL_00306', field: 'Quali', type: Validator.SELECT1 }, // 외국어구분
@@ -110,6 +105,7 @@ sap.ui.define(
           label: 'LABEL_00317',
           path: 'certificate',
           url: '/CertificateChangeSet',
+          odata: 'CertificateChange',
           pk: ['Seqnr', 'Begda', 'Endda'],
           valid: [
             { label: 'LABEL_00318', field: 'Cttyp', type: Validator.INPUT1 }, // 자격증
@@ -135,6 +131,7 @@ sap.ui.define(
           pernr: null,
           orgtx: null,
           orgeh: null,
+          activeReg: false,
           showPDFButton: false,
           sideNavigation: {
             isShow: true,
@@ -156,7 +153,7 @@ sap.ui.define(
             width: '73%',
             busy: true,
             header: {
-              profilePath: 'asset/image/avatar-unknown.svg',
+              profilePath: this.getUnknownAvatarImageURL(),
               baseInfo: [],
               timeline: null,
             },
@@ -165,6 +162,7 @@ sap.ui.define(
             },
             sub: {},
             dialog: {
+              activeButton: false,
               subKey: null,
               subLabel: null,
               action: null,
@@ -242,16 +240,22 @@ sap.ui.define(
         oViewModel.setProperty('/orgeh', sOrgeh);
 
         // ESS 사번으로만 접근시 사이드 리스트 HIDE
-        if (!this.isMss() && !this.isHass() && _.isEmpty(oParameter.orgtx) && _.isEmpty(oParameter.orgeh)) {
-          this.byId('sideBody').setVisible(false);
-          this.byId('profileBody').toggleStyleClass('expanded', true);
+        if (this.isHass()) {
+          oViewModel.setProperty('/activeReg', true);
+        } else if (this.isMss()) {
+          oViewModel.setProperty('/activeReg', false);
+        } else if (_.isEmpty(oParameter.orgtx) && _.isEmpty(oParameter.orgeh)) {
+          oViewModel.setProperty('/activeReg', _.isEmpty(oParameter.pernr));
+
+          this.toggleSideContainer(false);
 
           this.loadProfile({ oViewModel, sPernr });
           return;
+        } else {
+          oViewModel.setProperty('/activeReg', false);
         }
 
-        this.byId('sideBody').setVisible(true);
-        this.byId('profileBody').toggleStyleClass('expanded', false);
+        this.toggleSideContainer(true);
 
         if (!_.isEmpty(sOrgtx)) {
           oViewModel.setProperty('/sideNavigation/search/searchText', sOrgtx);
@@ -261,28 +265,47 @@ sap.ui.define(
         if (!_.isEqual(sPernr, 'NA')) this.loadProfile({ oViewModel, sPernr });
       },
 
+      toggleSideContainer(bToggled) {
+        this.byId('sideBody').setVisible(bToggled);
+        this.byId('profileBody').toggleStyleClass('expanded', !bToggled);
+      },
+
       async initialList({ oViewModel, sPernr, sOrgtx, sOrgeh }) {
-        const oSideBody = this.byId('sideBody');
-        const oSideList = this.byId('sideEmployeeList');
-        const sSearchText = _.isEmpty(sOrgtx) ? sPernr : sOrgtx;
-        const sSearchOrgeh = _.isEmpty(sOrgeh) ? _.noop() : sOrgeh;
-        const aSearchResults = await this.readEmpSearchResult({ searchText: sSearchText, Orgeh: sSearchOrgeh });
-        const iSideViewHeight = Math.floor($(document).height() - oSideBody.getParent().$().offset().top - 20);
-        const iScrollViewHeight = Math.floor($(document).height() - oSideList.getParent().$().offset().top - 36);
+        try {
+          const oSideBody = this.byId('sideBody');
+          const oSideList = this.byId('sideEmployeeList');
+          const sSearchText = _.isEmpty(sOrgtx) ? sPernr : sOrgtx;
+          const sSearchOrgeh = _.isEmpty(sOrgeh) ? _.noop() : sOrgeh;
+          const aSearchResults = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'EmpSearchResult', {
+            Menid: this.getCurrentMenuId(),
+            Zflag: 'X',
+            Actda: moment().hour(9).toDate(),
+            Ename: sSearchText,
+            Orgeh: sSearchOrgeh,
+          });
 
-        oSideList.getBinding('items').filter([new Filter('Stat2', FilterOperator.EQ, '3')]);
+          oSideList.getBinding('items').filter([new Filter('Stat2', FilterOperator.EQ, '3')]);
 
-        oViewModel.setProperty(
-          '/sideNavigation/search/results',
-          _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? 'asset/image/avatar-unknown.svg?ssl=1' : o.Photo }))
-        );
-        oViewModel.setProperty('/sideNavigation/height', `${iSideViewHeight}px`);
-        oViewModel.setProperty('/sideNavigation/scrollHeight', `${iScrollViewHeight}px`);
-        oViewModel.setProperty('/sideNavigation/busy', false);
+          const iSideViewHeight = Math.floor($(document).height() - oSideBody.getParent().$().offset().top - 20);
+          const iScrollViewHeight = Math.floor($(document).height() - oSideList.getParent().$().offset().top - 36);
+          const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
 
-        if (_.isEqual(sPernr, 'NA')) {
-          const sFirstPernr = _.chain(aSearchResults).filter({ Stat2: '3' }).get([0, 'Pernr'], _.noop());
-          this.loadProfile({ oViewModel, sPernr: sFirstPernr });
+          oViewModel.setProperty(
+            '/sideNavigation/search/results',
+            _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? sUnknownAvatarImageURL : o.Photo }))
+          );
+          oViewModel.setProperty('/sideNavigation/height', `${iSideViewHeight}px`);
+          oViewModel.setProperty('/sideNavigation/scrollHeight', `${iScrollViewHeight}px`);
+          oViewModel.setProperty('/sideNavigation/busy', false);
+
+          if (_.isEqual(sPernr, 'NA')) {
+            const sFirstPernr = _.chain(aSearchResults).filter({ Stat2: '3' }).get([0, 'Pernr'], _.noop());
+            this.loadProfile({ oViewModel, sPernr: sFirstPernr });
+          }
+        } catch (oError) {
+          this.debug('Controller > Employee > initialList Error', oError);
+
+          AppUtils.handleError(oError);
         }
       },
 
@@ -297,6 +320,7 @@ sap.ui.define(
 
         try {
           // 1. 상단 프로필, 탭 메뉴, 주소유형, 시/도
+          const fCurriedGetEntitySet = Client.getEntitySet(oModel);
           const [
             aProfileReturnData, //
             aMilestoneReturnData,
@@ -311,18 +335,18 @@ sap.ui.define(
             aLanguageTypeList,
             aTestGradeList,
           ] = await Promise.all([
-            this.readOdata({ sUrl: '/EmpProfileHeaderNewSet', mFilters }),
-            this.readOdata({ sUrl: '/EmpProfileMilestoneSet', mFilters }),
-            this.readOdata({ sUrl: '/EmpProfileMenuSet', mFilters }),
-            this.readOdata({ sUrl: '/CountryCodeSet' }),
-            this.readOdata({ sUrl: '/MajorCodeSet' }),
-            this.readOdata({ sUrl: '/CertificateCodeSet' }),
-            this.readOdata({ sUrl: '/CertificateGradeCodeSet' }),
-            this.readComboEntry({ oModel, sUrl: '/PaCodeListSet', sPath: 'typeList', mFilters: { Cdnum: 'CM0002', Grcod: '0006' } }),
-            this.readComboEntry({ oModel, sUrl: '/CityListSet', sPath: 'sidoList', sPernr, mEntryInfo: { codeKey: 'State', valueKey: 'Bezei' } }),
-            this.readComboEntry({ oModel, sUrl: '/SchoolTypeCodeSet', sPath: 'schoolTypeList', mEntryInfo: { codeKey: 'Slart', valueKey: 'Stext' } }),
-            this.readComboEntry({ oModel, sUrl: '/LanguageTypeCodeSet', sPath: 'languageTypeList', mEntryInfo: { codeKey: 'Quali', valueKey: 'Qualitx' } }),
-            this.readComboEntry({ oModel, sUrl: '/TestGradeCodeSet', sPath: 'gradeList', mEntryInfo: { codeKey: 'Eamgr', valueKey: 'Eamgrtx' } }),
+            fCurriedGetEntitySet('EmpProfileHeaderNew', mFilters),
+            fCurriedGetEntitySet('EmpProfileMilestone', mFilters),
+            fCurriedGetEntitySet('EmpProfileMenu', { ...mFilters, Usrty: this.isMss() ? 'M' : this.isHass() ? 'H' : _.noop() }),
+            fCurriedGetEntitySet('CountryCode'),
+            fCurriedGetEntitySet('MajorCode'),
+            fCurriedGetEntitySet('CertificateCode'),
+            fCurriedGetEntitySet('CertificateGradeCode'),
+            fCurriedGetEntitySet('PaCodeList', { Cdnum: 'CM0002', Grcod: '0006' }),
+            fCurriedGetEntitySet('CityList', { Pernr: sPernr }),
+            fCurriedGetEntitySet('SchoolTypeCode'),
+            fCurriedGetEntitySet('LanguageTypeCode'),
+            fCurriedGetEntitySet('TestGradeCode'),
           ]);
 
           // Milestone set
@@ -331,13 +355,13 @@ sap.ui.define(
           // Dialog Combo entry set
           oViewModel.setProperty('/employee/dialog/countryList', aCountryList);
           oViewModel.setProperty('/employee/dialog/majorList', aMajorList);
-          oViewModel.setProperty('/employee/dialog/typeList', aAddressTypeData);
-          oViewModel.setProperty('/employee/dialog/sidoList', aAddressCityData);
-          oViewModel.setProperty('/employee/dialog/schoolTypeList', aSchoolTypeList);
-          oViewModel.setProperty('/employee/dialog/languageTypeList', aLanguageTypeList);
-          oViewModel.setProperty('/employee/dialog/gradeList', aTestGradeList);
           oViewModel.setProperty('/employee/dialog/certificateList', aCertList);
           oViewModel.setProperty('/employee/dialog/certificateGradeList', aCertGradeList);
+          oViewModel.setProperty('/employee/dialog/typeList', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aAddressTypeData }));
+          oViewModel.setProperty('/employee/dialog/sidoList', new ComboEntry({ codeKey: 'State', valueKey: 'Bezei', aEntries: aAddressCityData }));
+          oViewModel.setProperty('/employee/dialog/schoolTypeList', new ComboEntry({ codeKey: 'Slart', valueKey: 'Stext', aEntries: aSchoolTypeList }));
+          oViewModel.setProperty('/employee/dialog/languageTypeList', new ComboEntry({ codeKey: 'Quali', valueKey: 'Qualitx', aEntries: aLanguageTypeList }));
+          oViewModel.setProperty('/employee/dialog/gradeList', new ComboEntry({ codeKey: 'Eamgr', valueKey: 'Eamgrtx', aEntries: aTestGradeList }));
           //End Dialog Combo entry set
 
           // 상단 프로필 Set
@@ -349,7 +373,7 @@ sap.ui.define(
             .value();
 
           oViewModel.setProperty('/showPDFButton', _.isEqual(Actty, 'X'));
-          oViewModel.setProperty('/employee/header/profilePath', _.isEmpty(Pturl) ? 'asset/image/avatar-unknown.svg?ssl=1' : Pturl);
+          oViewModel.setProperty('/employee/header/profilePath', _.isEmpty(Pturl) ? this.getUnknownAvatarImageURL() : Pturl);
           oViewModel.setProperty('/employee/header/baseInfo', aConvertData);
           //End 상단 프로필 Set
 
@@ -368,15 +392,16 @@ sap.ui.define(
 
             _.set(oViewModelData, ['employee', 'sub', data.Menuc1], { contents: {} });
 
-            aHeaderRequests.push(this.readOdata({ sUrl: '/EmpProfileHeaderTabSet', mFilters: { Menuc: data.Menuc1, ...mFilters } }));
-            aContentRequests.push(this.readOdata({ sUrl: '/EmpProfileContentsTabSet', mFilters: { Menuc: data.Menuc1, ...mFilters } }));
+            aHeaderRequests.push(fCurriedGetEntitySet('EmpProfileHeaderTab', { Menuc: data.Menuc1, ...mFilters }));
+            aContentRequests.push(fCurriedGetEntitySet('EmpProfileContentsTab', { Menuc: data.Menuc1, ...mFilters }));
           });
 
+          const bActiveReg = oViewModel.getProperty('/activeReg');
           aSubMenus.forEach((data) => {
             _.set(oViewModelData, ['employee', 'sub', data.Menuc1, 'contents', data.Menuc2], {
               type: data.Child,
               rowCount: 1,
-              selectionMode: !this.isMss() && _.some(this.CRUD_TABLES, (o) => o.key === data.Menuc2) ? 'MultiToggle' : 'None',
+              selectionMode: bActiveReg && _.some(this.CRUD_TABLES, (o) => o.key === data.Menuc2) ? 'MultiToggle' : 'None',
               title: data.Menu2,
               code: data.Menuc2,
               sort: data.Sorts,
@@ -463,7 +488,8 @@ sap.ui.define(
             oSubHBox.addItem(new sap.m.Title({ level: 'H2', text: mMenu.title }));
 
             // CRUD Buttons
-            if (!this.isMss() && _.some(this.CRUD_TABLES, (o) => o.key === mMenu.code)) {
+            const bActiveReg = oViewModel.getProperty('/activeReg');
+            if (bActiveReg && _.some(this.CRUD_TABLES, (o) => o.key === mMenu.code)) {
               const oSubButtonBox = new sap.m.HBox({
                 items: [
                   new sap.m.Button({
@@ -605,7 +631,7 @@ sap.ui.define(
           const mMenuInfo = _.find(oViewModel.getProperty('/employee/tab/menu'), { Menuc2: sMenuKey });
           const sSubTablePath = `/employee/sub/${mMenuInfo.Menuc1}/contents/${mMenuInfo.Menuc2}`;
           const mFilters = { Pernr: mMenuInfo.Pernr, Menuc: mMenuInfo.Menuc1 };
-          const aReturnContents = await this.readOdata({ sUrl: '/EmpProfileContentsTabSet', mFilters });
+          const aReturnContents = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'EmpProfileContentsTab', mFilters);
           const aTableData = _.filter(aReturnContents, { Menuc: mMenuInfo.Menuc2 });
 
           oViewModel.setProperty(`${sSubTablePath}/data`, aTableData);
@@ -634,10 +660,11 @@ sap.ui.define(
       },
 
       transformTreeData({ aTreeData, sRootId }) {
+        const sImageURL = this.getImageURL('icon_employee.svg');
         aTreeData = _.map(aTreeData, (o) =>
           _.chain(o)
             .omit(['Datum', '__metadata'])
-            .set('ref', o.Otype === 'O' ? _.noop() : o.Xchif === 'X' ? 'asset/image/icon_employee.svg' : 'asset/image/icon_employee.svg')
+            .set('ref', o.Otype === 'O' ? _.noop() : o.Xchif === 'X' ? sImageURL : sImageURL)
             .value()
         );
 
@@ -694,22 +721,29 @@ sap.ui.define(
 
       async onSelectSideTab(oEvent) {
         const oViewModel = this.getView().getModel();
-        const sSelectedKey = oEvent.getParameter('key');
-        const bTreeLoaded = oViewModel.getProperty('/sideNavigation/treeLoaded');
 
-        if (!bTreeLoaded && sSelectedKey === 'tree') {
-          const oSideTree = this.byId('OrganizationTree');
-          const aReturnTreeData = await this.readOdata({ sUrl: '/AuthOrgTreeSet', mFilters: { Datum: moment().hour(9).toDate(), Xpern: 'X' } });
-          const mConvertedTreeData = this.transformTreeData({ aTreeData: aReturnTreeData, sRootId: '00000000' });
-          const iTreeViewHeight = Math.max(Math.floor($(document).height() - oSideTree.$().offset().top - 35), 500);
+        try {
+          const sSelectedKey = oEvent.getParameter('key');
+          const bTreeLoaded = oViewModel.getProperty('/sideNavigation/treeLoaded');
 
-          this.debug('mConvertedTreeData', mConvertedTreeData);
+          if (!bTreeLoaded && sSelectedKey === 'tree') {
+            const oSideTree = this.byId('OrganizationTree');
+            const aReturnTreeData = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'AuthOrgTree', { Datum: moment().hour(9).toDate(), Xpern: 'X' });
+            const mConvertedTreeData = this.transformTreeData({ aTreeData: aReturnTreeData, sRootId: '00000000' });
+            const iTreeViewHeight = Math.max(Math.floor($(document).height() - oSideTree.$().offset().top - 35), 500);
 
-          oViewModel.setProperty('/sideNavigation/treeData', mConvertedTreeData);
-          oViewModel.setProperty('/sideNavigation/treeHeight', `${iTreeViewHeight}px`);
+            this.debug('mConvertedTreeData', mConvertedTreeData);
+
+            oViewModel.setProperty('/sideNavigation/treeData', mConvertedTreeData);
+            oViewModel.setProperty('/sideNavigation/treeHeight', `${iTreeViewHeight}px`);
+          }
+
+          oViewModel.setProperty('/sideNavigation/treeLoaded', true);
+        } catch (oError) {
+          this.debug('Controller > Employee > onSelectSideTab Error', oError);
+
+          AppUtils.handleError(oError);
         }
-
-        oViewModel.setProperty('/sideNavigation/treeLoaded', true);
       },
 
       async onChangeStat() {
@@ -735,11 +769,17 @@ sap.ui.define(
         }
 
         try {
-          const aSearchResults = await this.readEmpSearchResult({ searchText: sSearchText });
+          const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
+          const aSearchResults = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'EmpSearchResult', {
+            Menid: this.getCurrentMenuId(),
+            Zflag: 'X',
+            Actda: moment().hour(9).toDate(),
+            Ename: sSearchText,
+          });
 
           oViewModel.setProperty(
             '/sideNavigation/search/results',
-            _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? 'asset/image/avatar-unknown.svg?ssl=1' : o.Photo }))
+            _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? sUnknownAvatarImageURL : o.Photo }))
           );
         } catch (oError) {
           this.debug('Controller > Employee > onPressEmployeeSearch Error', oError);
@@ -831,6 +871,7 @@ sap.ui.define(
             break;
         }
 
+        oViewModel.setProperty('/employee/dialog/activeButton', true);
         this.openInputFormDialog();
       },
 
@@ -843,15 +884,17 @@ sap.ui.define(
         const sPrcty = sAction === 'A' ? 'C' : 'U';
         let mInputData = {};
         let aFieldProperties = [];
-        let sUrl = '';
+        let sOdataEntity = '';
         let sAppno = '';
+
+        oViewModel.setProperty('/employee/dialog/activeButton', false);
 
         try {
           AppUtils.setAppBusy(true, this);
 
           switch (sMenuKey) {
             case this.CRUD_TABLES.ADDRESS.key:
-              sUrl = this.CRUD_TABLES.ADDRESS.url;
+              sOdataEntity = this.CRUD_TABLES.ADDRESS.odata;
               aFieldProperties = this.CRUD_TABLES.ADDRESS.valid;
 
               const oSido = _.find(oViewModel.getProperty('/employee/dialog/sidoList'), { State: mFieldValue.State });
@@ -863,7 +906,7 @@ sap.ui.define(
 
               break;
             case this.CRUD_TABLES.EDUCATION.key:
-              sUrl = this.CRUD_TABLES.EDUCATION.url;
+              sOdataEntity = this.CRUD_TABLES.EDUCATION.odata;
               aFieldProperties = _.includes(['S1', 'S2', 'S3'], mFieldValue.Slart) ? _.reject(this.CRUD_TABLES.EDUCATION.valid, { field: 'Zzmajo1' }) : this.CRUD_TABLES.EDUCATION.valid;
               sAppno = await this.uploadInputFormFiles(this.CRUD_TABLES.EDUCATION.key);
 
@@ -888,7 +931,7 @@ sap.ui.define(
 
               break;
             case this.CRUD_TABLES.LANGUAGE.key:
-              sUrl = this.CRUD_TABLES.LANGUAGE.url;
+              sOdataEntity = this.CRUD_TABLES.LANGUAGE.odata;
               aFieldProperties = this.CRUD_TABLES.LANGUAGE.valid;
               sAppno = await this.uploadInputFormFiles(this.CRUD_TABLES.LANGUAGE.key);
 
@@ -908,7 +951,7 @@ sap.ui.define(
 
               break;
             case this.CRUD_TABLES.CERTIFICATE.key:
-              sUrl = this.CRUD_TABLES.CERTIFICATE.url;
+              sOdataEntity = this.CRUD_TABLES.CERTIFICATE.odata;
               aFieldProperties = this.CRUD_TABLES.CERTIFICATE.valid;
               sAppno = await this.uploadInputFormFiles(this.CRUD_TABLES.CERTIFICATE.key);
 
@@ -928,7 +971,11 @@ sap.ui.define(
 
           if (!Validator.check({ mFieldValue: mInputData, aFieldProperties })) return;
 
-          await this.createInputForm({ oViewModel, sUrl, mInputData });
+          if (this.isHass()) {
+            _.set(mInputData, 'Pernr', oViewModel.getProperty('/pernr'));
+          }
+
+          await Client.create(this.getModel(ServiceNames.PA), sOdataEntity, mInputData);
 
           // {추가|수정}되었습니다.
           MessageBox.success(this.getBundleText('MSG_00007', sActionText), {
@@ -942,6 +989,7 @@ sap.ui.define(
 
           AppUtils.handleError(oError);
         } finally {
+          oViewModel.setProperty('/employee/dialog/activeButton', true);
           AppUtils.setAppBusy(false, this);
         }
       },
@@ -966,7 +1014,7 @@ sap.ui.define(
         try {
           const mTableInfo = this.CRUD_TABLES[_.upperCase(sMenuKey)];
           const aFields = mTableInfo.pk;
-          const sUrl = mTableInfo.url;
+          const sOdataEntity = mTableInfo.odata;
           const sLabel = this.getBundleText(mTableInfo.label);
           const mFilters = this.getTableRowData({ oViewModel, oTable, aSelectedIndices, aFields });
 
@@ -993,11 +1041,9 @@ sap.ui.define(
               break;
           }
 
-          const aTableRowDetail = await this.readOdata({ sUrl, mFilters });
+          const [mTableRowDetail] = await Client.getEntitySet(oModel, sOdataEntity, mFilters);
 
-          if (_.isEmpty(aTableRowDetail)) throw Error(this.getBundleText('MSG_00034')); // 조회할 수 없습니다.
-
-          const mTableRowDetail = aTableRowDetail[0];
+          if (_.isEmpty(mTableRowDetail)) throw Error(this.getBundleText('MSG_00034')); // 조회할 수 없습니다.
 
           // 체크박스 value <-> Boolean 변환
           if (_.has(mTableRowDetail, 'Zzfinyn')) mTableRowDetail.Zzfinyn = mTableRowDetail.Zzfinyn === 'X';
@@ -1009,18 +1055,18 @@ sap.ui.define(
           if (_.has(mTableRowDetail, 'Slart')) {
             const mFilters = { Slart: mTableRowDetail.Slart };
             const [aSchoolList, aDegreeList] = await Promise.all([
-              this.readOdata({ sUrl: '/SchoolCodeSet', mFilters }), //
-              this.readComboEntry({ oModel, sUrl: '/DegreeCodeSet', mFilters, mEntryInfo: { codeKey: 'Slabs', valueKey: 'Stext' } }),
+              Client.getEntitySet(oModel, 'SchoolCode', mFilters), //
+              Client.getEntitySet(oModel, 'DegreeCode', mFilters),
             ]);
 
-            oViewModel.setProperty('/employee/dialog/degreeList', aDegreeList);
             oViewModel.setProperty('/employee/dialog/schoolList', aSchoolList);
+            oViewModel.setProperty('/employee/dialog/degreeList', new ComboEntry({ codeKey: 'Slabs', valueKey: 'Stext', aEntries: aDegreeList }));
           } else if (_.has(mTableRowDetail, 'Quali')) {
             // 시험구분 엔트리 조회
             const mFilters = { Quali: mTableRowDetail.Quali };
-            const aExamList = await this.readComboEntry({ oModel, sUrl: '/TestTypeCodeSet', mFilters, mEntryInfo: { codeKey: 'Exmty', valueKey: 'Exmtytx' } });
+            const aExamList = await Client.getEntitySet(oModel, 'TestTypeCode', mFilters);
 
-            oViewModel.setProperty('/employee/dialog/examTypeList', aExamList);
+            oViewModel.setProperty('/employee/dialog/examTypeList', new ComboEntry({ codeKey: 'Exmty', valueKey: 'Exmtytx', aEntries: aExamList }));
           }
 
           // 파일 조회
@@ -1067,7 +1113,7 @@ sap.ui.define(
             if (!sAction || sAction !== MessageBox.Action.CANCEL) {
               const mTableInfo = this.CRUD_TABLES[_.upperCase(sMenuKey)];
               const aFields = mTableInfo.pk;
-              const sUrl = mTableInfo.url;
+              const sOdataEntity = mTableInfo.odata;
               const mPayload = this.getTableRowData({ oViewModel, oTable, aSelectedIndices, aFields });
 
               try {
@@ -1087,7 +1133,7 @@ sap.ui.define(
                     break;
                 }
 
-                await this.deleteTableRow({ sUrl, mPayload });
+                await Client.remove(this.getModel(ServiceNames.PA), sOdataEntity, mPayload);
 
                 oTable.clearSelection();
                 this.refreshTableContents({ oViewModel, sMenuKey: sSelectedMenuCode });
@@ -1123,13 +1169,13 @@ sap.ui.define(
 
           const mFilters = { Slart: sSlart };
           const [aSchoolList, aDegreeList] = await Promise.all([
-            this.readOdata({ sUrl: '/SchoolCodeSet', mFilters }),
-            this.readComboEntry({ oModel, sUrl: '/DegreeCodeSet', mFilters, mEntryInfo: { codeKey: 'Slabs', valueKey: 'Stext' } }), //
+            Client.getEntitySet(oModel, 'SchoolCode', mFilters), //
+            Client.getEntitySet(oModel, 'DegreeCode', mFilters),
           ]);
 
           oViewModel.setProperty('/employee/dialog/form/Slabs', 'ALL');
-          oViewModel.setProperty('/employee/dialog/degreeList', aDegreeList);
           oViewModel.setProperty('/employee/dialog/schoolList', aSchoolList);
+          oViewModel.setProperty('/employee/dialog/degreeList', new ComboEntry({ codeKey: 'Slabs', valueKey: 'Stext', aEntries: aDegreeList }));
         } catch (oError) {
           this.debug('Controller > Employee > onChangeSchoolType Error', oError);
 
@@ -1155,10 +1201,10 @@ sap.ui.define(
           oViewModel.setProperty('/employee/dialog/busy/Exmty', true);
 
           const mFilters = { Quali: sQuali };
-          const aExamList = await this.readComboEntry({ oModel, sUrl: '/TestTypeCodeSet', mFilters, mEntryInfo: { codeKey: 'Exmty', valueKey: 'Exmtytx' } });
+          const aExamList = await Client.getEntitySet(oModel, 'TestTypeCode', mFilters);
 
           oViewModel.setProperty('/employee/dialog/form/Exmty', 'ALL');
-          oViewModel.setProperty('/employee/dialog/examTypeList', aExamList);
+          oViewModel.setProperty('/employee/dialog/examTypeList', new ComboEntry({ codeKey: 'Exmty', valueKey: 'Exmtytx', aEntries: aExamList }));
         } catch (oError) {
           this.debug('Controller > Employee > onChangeLanguageType Error', oError);
 
@@ -1232,7 +1278,10 @@ sap.ui.define(
 
       async onEmployeePrint() {
         try {
-          const [mResult] = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'PerCardPrint', { Gubun: 'S' });
+          const [mResult] = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'PerCardPrint', {
+            Pernr: this.getViewModel().getProperty('/pernr') || this.getAppointeeProperty('Pernr'),
+            Gubun: 'S',
+          });
 
           if (!_.isEmpty(mResult.Url)) window.open(mResult.Url, '_blank');
         } catch (oError) {
@@ -1252,114 +1301,6 @@ sap.ui.define(
       /*****************************************************************
        * ! Call oData
        *****************************************************************/
-      readEmpSearchResult({ searchText, Orgeh }) {
-        return new Promise((resolve, reject) => {
-          const oModel = this.getModel(ServiceNames.COMMON);
-          const sUrl = '/EmpSearchResultSet';
-          const aFilters = [
-            new Filter('Menid', FilterOperator.EQ, this.getCurrentMenuId()), //
-            new Filter('Zflag', FilterOperator.EQ, 'X'),
-            new Filter('Actda', FilterOperator.EQ, moment().hour(9).toDate()),
-            new Filter('Ename', FilterOperator.EQ, searchText),
-          ];
-
-          if (!_.isEmpty(Orgeh)) aFilters.push(new Filter('Orgeh', FilterOperator.EQ, Orgeh));
-
-          oModel.read(sUrl, {
-            filters: aFilters,
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
-
-      readComboEntry({ oModel, sUrl, sPath, sPernr, mFilters = {}, mEntryInfo = { codeKey: 'Zcode', valueKey: 'Ztext' } }) {
-        return new Promise((resolve, reject) => {
-          const oViewModel = this.getViewModel();
-          const mEntries = oViewModel.getProperty(`/employee/dialog/${sPath}`);
-
-          if (sPath && mEntries.length > 1) resolve(mEntries);
-          if (sPernr) mFilters.Pernr = sPernr;
-
-          oModel.read(sUrl, {
-            filters: _.map(mFilters, (v, p) => new Filter(p, FilterOperator.EQ, v)),
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(new ComboEntry({ ...mEntryInfo, aEntries: oData.results }));
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
-      },
-
-      readOdata({ sUrl, mFilters = {} }) {
-        return new Promise((resolve, reject) => {
-          const oModel = this.getModel(ServiceNames.PA);
-
-          oModel.read(sUrl, {
-            filters: _.map(mFilters, (v, p) => new Filter(p, FilterOperator.EQ, v)),
-            success: (oData) => {
-              this.debug(`${sUrl} success.`, oData);
-
-              resolve(oData.results);
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(new ODataReadError(oError)); // {조회}중 오류가 발생하였습니다.
-            },
-          });
-        });
-      },
-
-      createInputForm({ oViewModel, sUrl, mInputData }) {
-        return new Promise((resolve, reject) => {
-          const oModel = this.getModel(ServiceNames.PA);
-          const sAction = oViewModel.getProperty('/employee/dialog/action');
-
-          oModel.create(sUrl, mInputData, {
-            success: () => {
-              resolve();
-            },
-            error: (oError) => {
-              this.debug(`${sUrl} error.`, oError);
-
-              reject(sAction === 'U' ? new ODataUpdateError(oError) : new ODataCreateError('A', oError));
-            },
-          });
-        });
-      },
-
-      deleteTableRow({ sUrl, mPayload }) {
-        return new Promise((resolve, reject) => {
-          const oModel = this.getModel(ServiceNames.PA);
-          const sUrlByKey = oModel.createKey(sUrl, mPayload);
-
-          oModel.remove(sUrlByKey, {
-            success: () => {
-              resolve();
-            },
-            error: (oError) => {
-              this.debug(`${sUrlByKey} error.`, oError);
-
-              reject(new ODataDeleteError(oError)); // {삭제}중 오류가 발생하였습니다.
-            },
-          });
-        });
-      },
     });
   }
 );
