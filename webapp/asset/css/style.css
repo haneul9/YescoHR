@@ -815,7 +815,7 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .organization-legend .sapMLabel[data-level="40"]::before {content:""; width:14px; height:14px; border-radius:50%; background-color:#c1a7ff; position:absolute}
 .organization-legend .sapMLabel[data-level="50"]::before {content:""; width:14px; height:14px; border-radius:50%; background-color:#d0c0a6; position:absolute}
 .org-container {display:grid; grid-template-rows:40px 45px 25px 25px 25px; grid-template-columns:100px 1fr 1fr; column-gap:10px; border-radius:8px; background-color:white; border:1px solid lightgray; overflow:hidden}
-.org-container .title {grid-column:1 / 4; font-size:14px; font-weight:bold; text-align:center; background-color:#959ba3; color:#222; line-height:40px}
+.org-container .title {grid-column:1 / 4; font-size:17px; font-weight:bold; text-align:center; background-color:#959ba3; color:#222; line-height:40px}
 .org-container .title.level10 {background-color:#65b8ff}
 .org-container .title.level20 {background-color:#a6e2a0}
 .org-container .title.level30 {background-color:#ffe479}
