@@ -452,14 +452,16 @@ sap.ui.define(
           MessageBox.success(this.getBundleText('MSG_00007', this.ACTION_MESSAGE[sPrcty]), {
             onClose: () => {
               this.getRouter().navTo('mobile/attendance');
+              AppUtils.setAppBusy(false, this);
             },
           });
         } catch (oError) {
           this.debug('Controller > Attendance Detail > createProcess Error', oError);
 
           AppUtils.handleError(oError);
-        } finally {
           AppUtils.setAppBusy(false, this);
+        } finally {
+          // AppUtils.setAppBusy(false, this);
         }
       },
 

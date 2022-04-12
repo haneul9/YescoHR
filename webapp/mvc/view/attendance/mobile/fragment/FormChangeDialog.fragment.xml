@@ -12,7 +12,7 @@
                 </VBox>
                 <Label text="{i18n>LABEL_00149}" />
                 <VBox>
-                    <custom:DatePicker class="required" minDate="{/form/dialog/data/Begda}" dateValue="{ path: '/form/dialog/data/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" change=".validChangeLeave" />
+                    <custom:DatePicker class="required" minDate="{/form/dialog/data/Begda}" dateValue="{ path: '/form/dialog/data/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{= ${/form/dialog/data/Abrtg2} !== '1.00' }" change=".validChangeLeave" />
                 </VBox>
                 <Label text="{i18n>LABEL_04013}" />
                 <VBox>
