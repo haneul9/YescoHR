@@ -46,12 +46,11 @@
           <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_female.svg" />
         </custom:HBox>
       </HBox>
-      <HBox>
-        <layoutData>
+      <core:HTML content='&lt;div id="employee-a06-chart-container"&gt;&lt;/div&gt;'>
+        <core:layoutData>
           <FlexItemData growFactor="1" />
-        </layoutData>
-        <core:HTML content='&lt;div id="employee-a06-chart-container"&gt;&lt;/div&gt;' />
-      </HBox>
+        </core:layoutData>
+      </core:HTML>
     </VBox>
   </VBox>
 </core:FragmentDefinition>

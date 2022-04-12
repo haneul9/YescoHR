@@ -29,15 +29,15 @@
             </layoutData>
             <core:Item text="{Orgtx}" key="{Orgeh}" />
           </ComboBox>
-          <Button class="sapUiTinyMarginBegin" text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onPressSearch">
+          <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onPressSearch" width="100%" class="sapUiTinyMarginBegin">
             <layoutData>
-              <FlexItemData minWidth="33%" maxWidth="33%" />
+              <FlexItemData growFactor="1" maxWidth="33%" />
             </layoutData>
           </Button>
         </HBox>
       </VBox>
-      <custom:MobileScrollContainer horizontal="false" vertical="true">
-        <grid:CSSGrid gridGap="20px" gridTemplateRows="repeat(10, 230px)" gridTemplateColumns="1fr" class="sapUiSmallMarginTop">
+      <custom:MobileScrollContainer horizontal="false" vertical="true" class="sapUiNativeScrollbars px-12-px">
+        <grid:CSSGrid gridGap="20px" gridTemplateRows="repeat(10, 230px)" gridTemplateColumns="1fr" class="mt-20-px mb-11-px">
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A01" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A02" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A03" type="XML" />

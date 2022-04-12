@@ -23,14 +23,14 @@
       <layoutData>
         <FlexItemData growFactor="1" />
       </layoutData>
-      <VBox width="75%">
+      <VBox width="70%">
         <core:HTML content='&lt;div id="employee-a03-chart-container"&gt;&lt;/div&gt;'>
           <core:layoutData>
             <FlexItemData growFactor="1" />
           </core:layoutData>
         </core:HTML>
       </VBox>
-      <VBox width="25%" items="{ path: '/contents/A03/data', templateShareable: false }" class="legend-wrap">
+      <VBox width="30%" items="{ path: '/contents/A03/data', templateShareable: false }" class="legend-wrap">
         <custom:HBox justifyContent="SpaceBetween" class="active-link" click=".onPressCount">
           <custom:customData>
             <core:CustomData key="Headty" value="{/contents/A03/Headty}" />

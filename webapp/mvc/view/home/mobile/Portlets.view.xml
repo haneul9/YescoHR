@@ -6,7 +6,7 @@
       <Image src="/sap/public/bc/ui2/zui5_yescohr/images/logo_mobile_home.png" mode="Background" width="63px" height="30px" class="mt-2-px" />
     </HBox>
   </OverflowToolbar>
-  <ScrollContainer height="calc(100% - 48px)" vertical="true" class="mobile-portlets-grid">
+  <ScrollContainer height="calc(100% - 48px)" vertical="true" class="sapUiNativeScrollbars">
     <VBox id="portlets-grid" justifyContent="Center" class="sapUiSmallMarginTopBottom mx-auto px-12-px">
     </VBox>
   </ScrollContainer>

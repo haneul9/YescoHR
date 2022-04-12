@@ -25,6 +25,11 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.overviewEmployee.Main', {
       initializeModel() {
+        const iFullAgeCountingYear = moment().year() - 1;
+        const mData = {
+          ageMGen: `${iFullAgeCountingYear - 1995}~${iFullAgeCountingYear - 1980}`,
+          ageZGen: `${iFullAgeCountingYear - 2010}~${iFullAgeCountingYear - 1996}`,
+        };
         return {
           busy: false,
           searchConditions: {
@@ -38,7 +43,7 @@ sap.ui.define(
           },
           contents: {
             A01: { busy: false, data: {} },
-            A02: { busy: false, data: {} },
+            A02: { busy: false, data: mData },
             A03: { busy: false, data: [] },
             A04: { busy: false, data: [] },
             A05: { busy: false, data: {} },
@@ -79,10 +84,6 @@ sap.ui.define(
           const mFilters = oViewModel.getProperty('/searchConditions');
 
           _.forEach(ChartsSetting.CHART_TYPE, (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
-
-          const iFullAgeCountingYear = moment().year() - 1;
-          oViewModel.setProperty('/contents/A02/data/ageMGen', `${iFullAgeCountingYear - 1995}~${iFullAgeCountingYear - 1980}`);
-          oViewModel.setProperty('/contents/A02/data/ageZGen', `${iFullAgeCountingYear - 2010}~${iFullAgeCountingYear - 1996}`);
         } catch (oError) {
           this.debug('Controller > m/overviewEmployee Main > onObjectMatched Error', oError);
 

@@ -278,8 +278,8 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 }
 
 /* 공통 Scroll Bar */
-html:not(.sapUiNativeScrollbars) :not(.mobile-portlets-grid)::-webkit-scrollbar {width:5px !important; background:none !important}
-html:not(.sapUiNativeScrollbars) :not(.mobile-portlets-grid)::-webkit-scrollbar-thumb {border-radius:5px !important; background-color:#c1c3c8 !important}
+html:not(.sapUiNativeScrollbars) :not(.sapUiNativeScrollbars)::-webkit-scrollbar {width:5px !important; background:none !important}
+html:not(.sapUiNativeScrollbars) :not(.sapUiNativeScrollbars)::-webkit-scrollbar-thumb {border-radius:5px !important; background-color:#c1c3c8 !important}
 
 /* 공통 Margin, Padding */
 /* .sapMTextArea > div {padding:0.1875rem}
@@ -2002,9 +2002,11 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .color-06 {color:#2f88ff}
 .color-07 {color:#0c1f6b}
 .text-right {text-align:right !important}
-.ls-small {letter-spacing:-0.3px}
+.letter-spacing-xs {letter-spacing:-0.6px}
+.letter-spacing-sm {letter-spacing:-0.3px}
 .normal {font-weight:500}
 .display-flex {display:flex}
+.overflow-visible {overflow:visible}
 text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link .sapMImg {cursor:pointer}
 .all-transparent, .all-transparent * {border-color:transparent; color:transparent; background-color:transparent}
 .sapUiSizeCompact .all-transparent .sapMListSwp {right:0}
@@ -2019,6 +2021,7 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .small-table-input .sapMInputBaseContentWrapper input {padding-top:0px !important; padding-bottom:0px !important}
 .small-table-input .sapMInputBaseIcon {line-height:1.7rem !important}
 
+.fusioncharts-container svg {background-color:rgba(255,255,255,0) !important}
 #employee-a02-chart-container {height:66px}
 #employee-a06-chart-container {height:76px}
 

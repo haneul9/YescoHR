@@ -31,7 +31,7 @@
             <core:CustomData key="Headty" value="{/contents/A05/Headty}" />
             <core:CustomData key="Discod" value="all" />
           </custom:customData>
-          <Label text="{/contents/A05/data/total}" class="font-42-px color-03 normal ls-small"/>
+          <Label text="{/contents/A05/data/total}" class="font-42-px color-03 normal letter-spacing-sm"/>
         </custom:HBox>
         <VBox items="{ path: '/contents/A05/data/legends', templateShareable: false }" class="legend-wrap sapUiSmallMarginTop">
           <custom:HBox justifyContent="SpaceBetween" class="active-link" click=".onPressCount">

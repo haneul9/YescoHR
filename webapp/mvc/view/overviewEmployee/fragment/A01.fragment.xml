@@ -21,7 +21,7 @@
     </HBox>
     <HBox class="portlet-body">
       <VBox width="30%">
-        <ObjectStatus text="{/contents/A01/data/Cnt01}" class="mt-15-px font-3-rem color-03" active="true" press=".onPressCount">
+        <ObjectStatus text="{/contents/A01/data/Cnt01}" class="mt-15-px font-2h-rem color-03 normal overflow-visible" active="true" press=".onPressCount">
           <customData>
             <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
             <core:CustomData key="Discod" value="{/contents/A01/data/Cnt01C}" />

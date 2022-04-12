@@ -60,20 +60,19 @@
           <Text text="{/contents/A02/data/Title20}" class="font-34-px lh-34-px color-02 pl-4-px" />
         </custom:HBox>
       </HBox>
-      <HBox>
-        <layoutData>
+      <core:HTML content='&lt;div id="employee-a02-chart-container"&gt;&lt;/div&gt;'>
+        <core:layoutData>
           <FlexItemData growFactor="1" />
-        </layoutData>
-        <core:HTML content='&lt;div id="employee-a02-chart-container"&gt;&lt;/div&gt;' />
-      </HBox>
+        </core:layoutData>
+      </core:HTML>
       <HBox justifyContent="SpaceBetween">
         <VBox>
           <Label text="{i18n>LABEL_28031}" class="font-14-px" />
-          <Text text="{i18n>MSG_28001} ({/contents/A02/data/ageMGen}{i18n>LABEL_28059})" class="font-14-px ls-small" />
+          <Text text="{i18n>MSG_28001} ({/contents/A02/data/ageMGen}{i18n>LABEL_28059})" class="font-14-px letter-spacing-xs" />
         </VBox>
         <VBox alignItems="End">
           <Label text="{i18n>LABEL_28032}" class="font-14-px text-right" />
-          <Text text="{i18n>MSG_28002} ({/contents/A02/data/ageZGen}{i18n>LABEL_28059})" class="font-14-px text-right ls-small" />
+          <Text text="{i18n>MSG_28002} ({/contents/A02/data/ageZGen}{i18n>LABEL_28059})" class="font-14-px text-right letter-spacing-xs" />
         </VBox>
       </HBox>
     </VBox>
