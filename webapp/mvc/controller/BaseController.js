@@ -79,7 +79,8 @@ sap.ui.define(
       },
 
       isMss() {
-        return /^m\//.test(HashChanger.getInstance().getHash()) || /^mobile\/m\//.test(HashChanger.getInstance().getHash());
+        const sHash = HashChanger.getInstance().getHash();
+        return /^m\//.test(sHash) || /^mobile\/m\//.test(sHash);
       },
 
       isHass() {

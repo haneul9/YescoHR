@@ -3,7 +3,7 @@
   <Popover modal="true" placement="Top" showArrow="false" showHeader="false" horizontalScrolling="false" verticalScrolling="false" class="half-popover" busy="{busy}" busyIndicatorDelay="0">
     <content>
       <HBox class="px-20-px">
-        <SearchField id="emp-search-field" placeholder="{i18n>LABEL_00211}" width="100%" liveChange=".onLiveChange">
+        <SearchField placeholder="{i18n>LABEL_00211}" width="100%" liveChange=".onLiveChange">
           <layoutData>
             <FlexItemData growFactor="1" />
           </layoutData>
@@ -11,29 +11,34 @@
       </HBox>
       <ScrollContainer horizontal="false" vertical="true" width="100%" height="calc(100% - 60px)" class="mt-20-px">
         <content>
-          <List id="emp-search-list" items="{ path: 'employees', templateShareable: false }" rememberSelections="false" showSeparators="None" noDataText="{i18n>MSG_00001}" class="emp-search-list">
+          <List items="{ path: 'employees', templateShareable: false }" rememberSelections="false" showSeparators="None" noDataText="{i18n>MSG_00001}" class="emp-search-list">
             <CustomListItem>
               <HBox alignItems="Center" height="30px">
-                <Image src="{Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="24px" height="24px">
+                <Image src="{Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="24px" height="24px" press=".navToProfile">
                   <layoutData>
                     <FlexItemData baseSize="30px" maxWidth="30px" />
                   </layoutData>
                 </Image>
-                <Text text="{Ename}" tooltip="{Ename} {Pernr} {Fulln} {Zzjikgbt}" wrapping="false" class="name">
+                <Link text="{Ename}" subtle="true" width="100%" class="name" press=".navToProfile">
                   <layoutData>
                     <FlexItemData baseSize="70px" maxWidth="70px" />
                   </layoutData>
-                </Text>
-                <Text text="{Zzjikgbt}/{Zzjikcht}" tooltip="{Ename} {Pernr} {Fulln} {Zzjikgbt}" wrapping="false">
+                </Link>
+                <Link text="{Zzjikgbt}/{Zzjikcht}" subtle="true" width="100%" press=".navToProfile">
                   <layoutData>
                     <FlexItemData baseSize="90px" maxWidth="90px" />
                   </layoutData>
-                </Text>
-                <Text text="{Fulln}" tooltip="{Ename} {Pernr} {Fulln} {Zzjikgbt}" wrapping="false">
+                </Link>
+                <Link text="{Fulln}" subtle="true" width="100%" press=".navToProfile">
                   <layoutData>
-                    <FlexItemData growFactor="1" maxWidth="calc(100% - 214px)" styleClass="pr-4-px" />
+                    <FlexItemData growFactor="1" maxWidth="calc(100% - 243px)" styleClass="pr-4-px" />
                   </layoutData>
-                </Text>
+                </Link>
+                <Link visible="{= ${linkType} === 'M' }" subtle="true" width="20px" class="icon-search" press=".navToProfile">
+                  <layoutData>
+                    <FlexItemData styleClass="pr-9-px" />
+                  </layoutData>
+                </Link>
                 <Link enabled="{= !!${Phone} }" href="tel:{Phone}" subtle="true" width="20px" class="icon-telephone" />
               </HBox>
             </CustomListItem>

@@ -5,16 +5,18 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/home/portlets/AbstractPortletHandler',
+    'sap/ui/yesco/mvc/controller/home/portlets/dialog/M21PortletDialogHandler',
+    'sap/ui/yesco/mvc/controller/home/portlets/dialog/M21PortletMobileDialogHandler',
     'sap/ui/yesco/mvc/model/type/Currency', // XML expression binding용 type preloading
-    'sap/ui/yesco/mvc/model/type/Date', // XML expression binding용 type preloading
-    'sap/ui/yesco/mvc/model/type/Pernr', // XML expression binding용 type preloading
   ],
   (
     // prettier 방지용 주석
     Fragment,
     Client,
     ServiceNames,
-    AbstractPortletHandler
+    AbstractPortletHandler,
+    M21PortletDialogHandler,
+    M21PortletMobileDialogHandler
   ) => {
     'use strict';
 
@@ -33,94 +35,43 @@ sap.ui.define(
         const iPortletHeight = oPortletModel.getProperty('/height');
         oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(`portlet-h${iPortletHeight}`);
 
-        this.getController().byId(this.sContainerId).addItem(oPortletBox);
+        const oController = this.getController();
+        oController.byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);
+
+        this.oDialogHandler = this.bMobile ? new M21PortletMobileDialogHandler(oController, oPortletModel) : new M21PortletDialogHandler(oController, oPortletModel);
       },
 
       async readContentData() {
-        const oModel = this.getController().getModel(ServiceNames.COMMON);
+        const oModel = this.getController().getModel(ServiceNames.PA);
+        const oSessionModel = this.getController().getSessionModel();
         const mPayload = {
-          PortletPerCnt1Nav: [],
-          PortletPerCnt2Nav: [],
+          Zyear: moment().year(),
+          Werks: oSessionModel.getProperty('/Werks'),
+          Orgeh: oSessionModel.getProperty('/Orgeh'),
+          Headty: 'A',
         };
 
-        return Client.deep(oModel, 'PortletPernrCnt', mPayload);
+        return Client.getEntitySet(oModel, 'HeadCountOverview', mPayload);
       },
 
-      transformContentData({ PortletPerCnt1Nav, PortletPerCnt2Nav }) {
-        const mCountData = ((PortletPerCnt1Nav || {}).results || [])[0] || {};
-
-        delete mCountData.__metadata;
-        delete mCountData.PortletPerCnt1Nav;
-        delete mCountData.PortletPerCnt2Nav;
-
-        const mTables = {
-          A1: [],
-          A2: [],
-          B1: [],
-          B2: [],
-        };
-        ((PortletPerCnt2Nav || {}).results || []).forEach(({ Gub01, Gub02, Pernr, Ename, Orgtx, Stltx, Datum }) => {
-          const sTableKey = `${Gub01}${Gub02}`;
-          const mData = { Gub01, Gub02, Pernr, Ename, Orgtx, Stltx, Datum };
-
-          mTables[sTableKey].push(mData);
+      transformContentData(aPortletContentData = []) {
+        aPortletContentData.forEach((mPortletContentData) => {
+          delete mPortletContentData.__metadata;
         });
 
-        const oPortletModel = this.getPortletModel();
-        const mPortletContentData = {
-          counts: mCountData,
+        return {
+          contents: aPortletContentData,
         };
-
-        Object.keys(mTables).forEach((sTableKey) => {
-          const aTableData = mTables[sTableKey] || [];
-          mPortletContentData[`table${sTableKey}`] = {
-            category: sTableKey.charAt(0),
-            list: aTableData,
-            listCount: Math.min(aTableData.length, 5),
-          };
-
-          oPortletModel.setProperty(`/table${sTableKey}/list`, []);
-        });
-
-        return mPortletContentData;
       },
 
       onPressCount(oEvent) {
-        const oEventSource = oEvent.getSource();
-        this.openPopover(oEventSource, oEventSource.data('popover'), oEventSource.data('table-key').replace(/^k/, ''));
-      },
-
-      async openPopover(oEventSource, sPopover, sTableKey) {
-        await this.createPopover();
-
-        this.oPopover.close();
-        if (sPopover === 'N') {
-          return;
-        }
-        this.oPopover.bindElement(`/table${sTableKey}`);
-
-        setTimeout(() => {
-          this.oPopover.openBy(oEventSource);
-        }, 300);
-      },
-
-      async createPopover() {
-        if (!this.oPopover) {
-          this.oPopover = await Fragment.load({
-            name: 'sap.ui.yesco.mvc.view.home.fragment.M21PortletDataPopover',
-            controller: this,
-          });
-
-          this.getController().getView().addDependent(this.oPopover);
-
-          this.oPopover.setModel(this.getPortletModel());
-        }
+        this.oDialogHandler.openDialog(oEvent);
       },
 
       destroy() {
-        if (this.oPopover) {
-          this.oPopover.destroy();
+        if (this.oDialogHandler) {
+          this.oDialogHandler.destroy();
         }
 
         AbstractPortletHandler.prototype.destroy.call(this);

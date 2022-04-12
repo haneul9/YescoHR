@@ -34,6 +34,7 @@ sap.ui.define(
       getInitialData() {
         return {
           busy: true,
+          linkType: this.oController.isMss() ? 'M' : '',
           employees: null,
         };
       },
@@ -106,17 +107,27 @@ sap.ui.define(
         }, 500);
       },
 
-      onDialogToggle() {
+      onDialogToggle(oEvent) {
         if (this.oDialog.isOpen()) {
           this.onDialogClose();
         } else {
-          this.oDialog.openBy(this.oController.byId('contact-search'));
+          this.oDialog.openBy(oEvent.getSource());
           this.setBusy(false);
         }
       },
 
       onDialogClose() {
         this.oDialog.close();
+      },
+
+      navToProfile(oEvent) {
+        const sLinkType = this.oDialogModel.getProperty('/linkType');
+        if (sLinkType !== 'M') {
+          return;
+        }
+
+        const sPernr = oEvent.getSource().getBindingContext().getProperty('Pernr');
+        this.oController.reduceViewResource().getRouter().navTo('mobile/m/employee-detail', { pernr: sPernr });
       },
 
       setBusy(bBusy = true) {

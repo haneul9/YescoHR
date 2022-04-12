@@ -167,12 +167,12 @@ sap.ui.define(
       /**
        * 검색 : 모바일 하단 5버튼
        */
-      onPressMobileSearchPopoverToggle() {
+      onPressMobileSearchPopoverToggle(oEvent) {
         this.oNotificationPopoverHandler.onPopoverClose();
         this.oMobileMyPagePopoverHandler.onPopoverClose();
         this.oAppMenu.closeMenuLayer();
 
-        this.oMobileEmployeeSearchDialogHandler.onDialogToggle();
+        this.oMobileEmployeeSearchDialogHandler.onDialogToggle(oEvent);
       },
 
       /**

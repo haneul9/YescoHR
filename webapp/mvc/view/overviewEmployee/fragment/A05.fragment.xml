@@ -22,10 +22,10 @@
       <layoutData>
         <FlexItemData growFactor="1" />
       </layoutData>
-      <VBox width="30%" height="100%">
+      <VBox width="25%" height="100%">
         <Label text="{/contents/A05/data/Cnt01}" class="font-42-px color-03 normal ls-small"/>
       </VBox>
-      <VBox width="70%">
+      <VBox width="75%">
         <core:HTML content='&lt;div id="employee-a05-chart-container"&gt;&lt;/div&gt;'>
           <core:layoutData>
             <FlexItemData growFactor="1" />
