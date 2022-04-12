@@ -194,7 +194,7 @@ sap.ui.define(
       async openFormDialog() {
         const oView = this.getView();
 
-        AppUtils.setAppBusy(true, this);
+        AppUtils.setAppBusy(true);
 
         if (!this.pDrillDialog) {
           this.pDrillDialog = Fragment.load({
@@ -255,7 +255,7 @@ sap.ui.define(
 
           AppUtils.handleError(oError);
         } finally {
-          AppUtils.setAppBusy(false, this);
+          AppUtils.setAppBusy(false);
         }
       },
 
@@ -431,7 +431,7 @@ sap.ui.define(
       },
 
       onPressSummaryDialogClose(oEvent) {
-        AppUtils.setAppBusy(false, this);
+        AppUtils.setAppBusy(false);
 
         oEvent.getSource().getParent().getContent()[1].getItems()[0].clearSelection();
         this.byId('summaryDialog').close();
@@ -453,14 +453,14 @@ sap.ui.define(
           return;
         }
 
-        AppUtils.setAppBusy(true, this);
+        AppUtils.setAppBusy(true);
 
         // {신청}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
           actions: [this.getBundleText('LABEL_00121'), MessageBox.Action.CANCEL],
           onClose: (sAction) => {
             if (!sAction || sAction === MessageBox.Action.CANCEL) {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
               return;
             }
 

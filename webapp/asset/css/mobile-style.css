@@ -437,3 +437,6 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>footer .sa
 div.sapUiTableSelectAllCheckBox::after, div.sapUiTableRowSelectionCell::after {width:20px; height:20px}
 
 .sapMIBar.sapMTB .sapMBarChild.button-mimic-link {margin:0 6px !important; line-height:40px; border-radius:4px; border-color:#1d87bd; font-size:15px; color:#fff; background-color:#1d87bd}
+
+.sapMIBar-CTX.sapMHeader-CTX :not(.sapMBtnDisabled)>.sapMBtnActive, .sapMIBar-CTX.sapMFooter-CTX :not(.sapMBtnDisabled)>.sapMBtnActive {border-color:transparent; background-color:transparent}
+:not(.sapMBtnDisabled)>.sapMBtnInner.sapMBtnActive .sapMBtnIcon {color:#346187}

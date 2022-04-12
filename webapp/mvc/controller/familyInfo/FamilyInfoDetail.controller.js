@@ -386,7 +386,7 @@ sap.ui.define(
           onClose: async (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00121')) {
               try {
-                AppUtils.setAppBusy(true, this);
+                AppUtils.setAppBusy(true);
 
                 const oDetailModel = this.getViewModel();
                 const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
@@ -430,7 +430,7 @@ sap.ui.define(
               } catch (oError) {
                 AppUtils.handleError(oError);
               } finally {
-                AppUtils.setAppBusy(false, this);
+                AppUtils.setAppBusy(false);
               }
             }
           },
@@ -446,7 +446,7 @@ sap.ui.define(
           actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
           onClose: (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00110')) {
-              AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true);
 
               const sPath = oModel.createKey('/FamilyInfoApplSet', {
                 Appno: oDetailModel.getProperty('/FormData/Appno'),
@@ -456,14 +456,14 @@ sap.ui.define(
                 success: () => {
                   MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
                     onClose: () => {
-                      AppUtils.setAppBusy(false, this);
+                      AppUtils.setAppBusy(false);
                       this.onNavBack();
                     },
                   });
                 },
                 error: (oError) => {
                   AppUtils.handleError(new ODataDeleteError(oError));
-                  AppUtils.setAppBusy(false, this);
+                  AppUtils.setAppBusy(false);
                 },
               });
             }

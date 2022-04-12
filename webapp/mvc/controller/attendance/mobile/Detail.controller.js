@@ -230,7 +230,7 @@ sap.ui.define(
       async openFormDialog() {
         const oView = this.getView();
 
-        AppUtils.setAppBusy(true, this);
+        AppUtils.setAppBusy(true);
 
         setTimeout(() => {
           if (!this.pFormDialog) {
@@ -452,16 +452,16 @@ sap.ui.define(
           MessageBox.success(this.getBundleText('MSG_00007', this.ACTION_MESSAGE[sPrcty]), {
             onClose: () => {
               this.getRouter().navTo('mobile/attendance');
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
             },
           });
         } catch (oError) {
           this.debug('Controller > Attendance Detail > createProcess Error', oError);
 
           AppUtils.handleError(oError);
-          AppUtils.setAppBusy(false, this);
+          AppUtils.setAppBusy(false);
         } finally {
-          // AppUtils.setAppBusy(false, this);
+          // AppUtils.setAppBusy(false);
         }
       },
 
@@ -677,7 +677,7 @@ sap.ui.define(
       },
 
       onPressFormDialogClose() {
-        AppUtils.setAppBusy(false, this);
+        AppUtils.setAppBusy(false);
         this.byId('formDialog').close();
       },
 
@@ -941,7 +941,7 @@ sap.ui.define(
 
         this.toggleHasRowProperty();
 
-        AppUtils.setAppBusy(false, this);
+        AppUtils.setAppBusy(false);
       },
 
       onPressApproval() {
@@ -953,7 +953,7 @@ sap.ui.define(
           return;
         }
 
-        AppUtils.setAppBusy(true, this);
+        AppUtils.setAppBusy(true);
 
         const sPrcty = 'C';
 
@@ -962,7 +962,7 @@ sap.ui.define(
           actions: [this.getBundleText('LABEL_00121'), MessageBox.Action.CANCEL],
           onClose: (sAction) => {
             if (!sAction || sAction === MessageBox.Action.CANCEL) {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
               return;
             }
 

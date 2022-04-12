@@ -592,7 +592,7 @@ sap.ui.define(
             const oViewModel = this.getViewModel();
 
             try {
-              AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true);
 
               const mFormData = oViewModel.getProperty('/FormData');
               const sAppno = mFormData.Appno;
@@ -624,7 +624,7 @@ sap.ui.define(
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
             }
           },
         });
@@ -652,7 +652,7 @@ sap.ui.define(
             const oViewModel = this.getViewModel();
 
             try {
-              AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true);
 
               const mFormData = oViewModel.getProperty('/FormData');
               const sAppno = mFormData.Appno;
@@ -684,7 +684,7 @@ sap.ui.define(
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
             }
           },
         });
@@ -698,7 +698,7 @@ sap.ui.define(
           actions: [this.getBundleText('LABEL_00114'), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00114')) {
-              AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true);
 
               try {
                 const oModel = this.getModel(ServiceNames.BENEFIT);
@@ -717,7 +717,7 @@ sap.ui.define(
               } catch (oError) {
                 AppUtils.handleError(oError);
               } finally {
-                AppUtils.setAppBusy(false, this);
+                AppUtils.setAppBusy(false);
               }
             }
           },
@@ -733,7 +733,7 @@ sap.ui.define(
               return;
             }
 
-            AppUtils.setAppBusy(true, this);
+            AppUtils.setAppBusy(true);
 
             try {
               const oModel = this.getModel(ServiceNames.BENEFIT);
@@ -749,7 +749,7 @@ sap.ui.define(
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
             }
           },
         });

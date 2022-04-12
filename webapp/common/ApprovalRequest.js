@@ -143,7 +143,7 @@ sap.ui.define(
        * 임시저장 button click event handler
        */
       confirmSave() {
-        AppUtils.setAppBusy(true, this);
+        AppUtils.setAppBusy(true);
 
         const sMessage = AppUtils.getBundleText('MSG_00006', 'LABEL_00104'); // {임시저장}하시겠습니까?
         const sActionYes = AppUtils.getBundleText('LABEL_00104'); // 임시저장
@@ -152,7 +152,7 @@ sap.ui.define(
           actions: [sActionYes, MessageBox.Action.CANCEL],
           onClose: (sAction) => {
             if (!sAction || sAction === MessageBox.Action.CANCEL) {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
               return;
             }
 
@@ -165,13 +165,13 @@ sap.ui.define(
        * 신청 button click event handler
        */
       confirmRequest() {
-        AppUtils.setAppBusy(true, this);
+        AppUtils.setAppBusy(true);
 
         try {
           this.oRequestDetail.validateRequestData();
         } catch (oError) {
           AppUtils.handleError(oError);
-          AppUtils.setAppBusy(false, this);
+          AppUtils.setAppBusy(false);
           return;
         }
 
@@ -182,7 +182,7 @@ sap.ui.define(
           actions: [sActionYes, MessageBox.Action.CANCEL],
           onClose: (sAction) => {
             if (!sAction || sAction === MessageBox.Action.CANCEL) {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
               return;
             }
 
@@ -220,7 +220,7 @@ sap.ui.define(
 
           AppUtils.handleError(oError);
         } finally {
-          AppUtils.setAppBusy(false, this);
+          AppUtils.setAppBusy(false);
         }
       },
 

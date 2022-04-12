@@ -302,7 +302,7 @@ sap.ui.define(
             const oViewModel = this.getViewModel();
 
             try {
-              AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true);
 
               const mDialogData = oViewModel.getProperty('/dialog');
               let oSendObject = {
@@ -324,7 +324,7 @@ sap.ui.define(
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
             }
           },
         });
@@ -342,7 +342,7 @@ sap.ui.define(
               return;
             }
 
-            AppUtils.setAppBusy(true, this);
+            AppUtils.setAppBusy(true);
 
             try {
               const oViewModel = this.getViewModel();
@@ -367,7 +367,7 @@ sap.ui.define(
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
             }
           },
         });

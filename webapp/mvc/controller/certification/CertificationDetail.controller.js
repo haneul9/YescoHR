@@ -247,7 +247,7 @@ sap.ui.define(
             }
 
             try {
-              AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true);
 
               if (!sStatus) {
                 const vAppno = await Appno.get.call(this);
@@ -278,7 +278,7 @@ sap.ui.define(
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
             }
           },
         });
@@ -302,7 +302,7 @@ sap.ui.define(
               const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
               const mFormData = oDetailModel.getProperty('/FormData');
 
-              AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true);
 
               if (!sStatus) {
                 const vAppno = await Appno.get.call(this);
@@ -330,7 +330,7 @@ sap.ui.define(
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
             }
           },
         });
@@ -351,7 +351,7 @@ sap.ui.define(
             }
 
             try {
-              AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true);
 
               await Client.remove(oModel, 'CertificateAppl', { Appno: oDetailModel.getProperty('/FormData/Appno') });
 
@@ -365,7 +365,7 @@ sap.ui.define(
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
             }
           },
         });
