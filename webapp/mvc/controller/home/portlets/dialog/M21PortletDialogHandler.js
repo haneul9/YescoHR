@@ -53,7 +53,7 @@ sap.ui.define(
         oView.addDependent(this.oDialog);
       },
 
-      async openDialog(sDiscod) {
+      async openDialog(oEvent) {
         this.oPortletModel.setProperty('/dialog/busy', true);
 
         try {
@@ -65,7 +65,7 @@ sap.ui.define(
             Werks: oSessionModel.getProperty('/Werks'),
             Orgeh: oSessionModel.getProperty('/Orgeh'),
             Headty: 'A',
-            Discod: sDiscod,
+            Discod: oEvent.getSource().data('Discod'),
           };
           const aDetailData = await Client.getEntitySet(this.oController.getModel(ServiceNames.PA), 'HeadCountDetail', mPayload);
 
