@@ -3,12 +3,16 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/odata/Client',
+    'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/app/control/Menus',
   ],
   (
     // prettier 방지용 주석
     Fragment,
     AppUtils,
+    Client,
+    ServiceNames,
     Menus
   ) => {
     'use strict';
@@ -18,6 +22,10 @@ sap.ui.define(
         this.oMenuLayer = await Fragment.load({
           name: 'sap.ui.yesco.mvc.view.app.fragment.MenuPopover',
           controller: this,
+        });
+
+        this.oMenuLayer.attachBeforeOpen(() => {
+          this.refreshFavorites();
         });
 
         this.oAppController.getView().addDependent(this.oMenuLayer);
@@ -43,6 +51,45 @@ sap.ui.define(
         setTimeout(() => {
           this.oMenuLayer.close();
         });
+      },
+
+      async saveFavorite({ Menid, Mnid1, Mnid2, Mnid3 }) {
+        try {
+          const oCommonModel = this.oAppController.getModel(ServiceNames.COMMON);
+          const sUrl = 'PortletFavoriteMenu';
+          const mPayload = {
+            Menid: Menid,
+            Mnid1: Mnid1,
+            Mnid2: Mnid2,
+            Mnid3: Mnid3,
+            Mobile: 'X',
+          };
+
+          await Client.create(oCommonModel, sUrl, mPayload);
+
+          this.refreshFavorites();
+
+          return true;
+        } catch (oError) {
+          if (oError instanceof UI5Error) {
+            oError.code = oError.LEVEL.INFORMATION;
+          }
+          AppUtils.handleError(oError);
+
+          return false;
+        }
+      },
+
+      async refreshFavorites() {
+        const oCommonModel = this.oAppController.getModel(ServiceNames.COMMON);
+        const sUrl = 'PortletFavoriteMenu';
+        const mPayload = {
+          Mobile: 'X',
+        };
+
+        const aRecentMenus = await Client.getEntitySet(oCommonModel, sUrl, mPayload);
+
+        this.oMenuModel.setRecentMenu(aRecentMenus);
       },
 
       /**

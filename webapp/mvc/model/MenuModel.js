@@ -219,18 +219,6 @@ sap.ui.define(
 
         mModelData.mobileFavoriteMenus = aMobileFavoriteMenus;
 
-        if (localStorage && localStorage.getItem instanceof Function) {
-          const aRecentMenus = JSON.parse(localStorage.getItem(this.sRecentMenuLocalStorgaeKey) || '[]');
-          mModelData.recentMenus = aRecentMenus.filter((mMenu) => {
-            return !!mMenidToProperties[mMenu.Menid];
-          });
-          mModelData.recentMenusCount = mModelData.recentMenus.length;
-          localStorage.setItem(this.sRecentMenuLocalStorgaeKey, JSON.stringify(mModelData.recentMenus));
-        } else {
-          mModelData.recentMenus = [];
-          mModelData.recentMenusCount = 0;
-        }
-
         return mModelData;
       },
 
@@ -305,31 +293,13 @@ sap.ui.define(
 
       /**
        * Mobile 최근 사용 메뉴 추가
-       * @param {object|string} vParam
+       * @param {array} aMenus
        */
-      addRecentMenu(vParam) {
-        let mMenu;
-        if (_.isString(vParam)) {
-          mMenu = this.getProperties(vParam);
-        } else {
-          mMenu = vParam;
-        }
-
-        let aRecentMenus = this.getProperty('/recentMenus');
-        _.remove(aRecentMenus, (mMenuProperties) => mMenuProperties.Menid === mMenu.Menid);
-        aRecentMenus.unshift(mMenu);
-
-        let iRecentMenusCount = aRecentMenus.length;
-        if (iRecentMenusCount > 10) {
-          aRecentMenus = aRecentMenus.slice(0, 10);
-          iRecentMenusCount = 10;
-        }
+      setRecentMenu(aMenus = []) {
+        const aRecentMenus = aMenus.map(({ Menid }) => this.getProperties(Menid));
 
         this.setProperty('/recentMenus', aRecentMenus);
-        this.setProperty('/recentMenusCount', iRecentMenusCount);
-        if (localStorage && localStorage.getItem instanceof Function) {
-          localStorage.setItem(this.sRecentMenuLocalStorgaeKey, JSON.stringify(aRecentMenus));
-        }
+        this.setProperty('/recentMenusCount', aRecentMenus.length);
       },
 
       /**

@@ -156,6 +156,7 @@ sap.ui.define(
             Mnid1: Mnid1,
             Mnid2: Mnid2,
             Mnid3: Mnid3,
+            Mobile: '',
           };
 
           if (Favor) {
@@ -226,7 +227,7 @@ sap.ui.define(
               this.toggleSelectedMenuStyle(false);
               this.closeMenuLayer(true);
               if (this.bMobile) {
-                this.oMenuModel.addRecentMenu(oContext.getProperty());
+                this.saveFavorite(oContext.getProperty());
               }
             });
             return;
@@ -241,7 +242,7 @@ sap.ui.define(
 
         if (oContext.getProperty('Mepop')) {
           if (this.bMobile) {
-            this.oMenuModel.addRecentMenu(oContext.getProperty());
+            this.saveFavorite(oContext.getProperty());
           }
           return;
         }
@@ -264,7 +265,7 @@ sap.ui.define(
           const { Mnurl } = await Client.get(oCommonModel, 'GetMenuUrl', mKeyMap);
           if (Mnurl) {
             if (this.bMobile) {
-              this.oMenuModel.addRecentMenu(oContext.getProperty());
+              this.saveFavorite(oContext.getProperty());
             }
             const sMenuUrl = this.bMobile ? `mobile/${Mnurl}` : Mnurl;
             this.moveToMenu(sMenuUrl);
