@@ -135,7 +135,12 @@ sap.ui.define(
             visibleStatus: 'X',
             Title: this.getBundleText('LABEL_34005'), // 운행기록
           });
-          oViewModel.setProperty('/List', aTableList);
+          oViewModel.setProperty(
+            '/List',
+            _.map(aTableList, (e) => {
+              return { ...e, Endkm: _.toString(_.add(parseFloat(e.Begkm), parseFloat(e.Drvkm))), Begkm: _.toString(parseFloat(e.Begkm)), Drvkm: _.toString(parseFloat(e.Drvkm)) };
+            })
+          );
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -163,7 +168,12 @@ sap.ui.define(
             visibleStatus: 'X',
             Title: this.getBundleText('LABEL_34005'), // 운행기록
           });
-          oViewModel.setProperty('/List', aTableList);
+          oViewModel.setProperty(
+            '/List',
+            _.map(aTableList, (e) => {
+              return { ...e, Endkm: _.toString(_.add(parseFloat(e.Begkm), parseFloat(e.Drvkm))), Begkm: _.toString(parseFloat(e.Begkm)), Drvkm: _.toString(parseFloat(e.Drvkm)) };
+            })
+          );
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -203,7 +213,12 @@ sap.ui.define(
             visibleStatus: 'X',
             Title: this.getBundleText('LABEL_34005'), // 운행기록
           });
-          oViewModel.setProperty('/List', aTableList);
+          oViewModel.setProperty(
+            '/List',
+            _.map(aTableList, (e) => {
+              return { ...e, Endkm: _.toString(_.add(parseFloat(e.Begkm), parseFloat(e.Drvkm))), Begkm: _.toString(parseFloat(e.Begkm)), Drvkm: _.toString(parseFloat(e.Drvkm)) };
+            })
+          );
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {

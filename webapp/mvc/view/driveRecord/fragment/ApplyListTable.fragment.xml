@@ -9,6 +9,24 @@
           <Text text="{DatumTxt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
+      <table:Column width="auto" sortProperty="Begkm" filterProperty="Begkm">
+        <Label text="{i18n>LABEL_34008}"/>
+        <table:template>
+          <Text text="{
+              path: 'Begkm',
+              formatter: '.mileage'
+          }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="auto" sortProperty="Endkm" filterProperty="Endkm">
+        <Label text="{i18n>LABEL_34010}"/>
+        <table:template>
+          <Text text="{
+              path: 'Endkm',
+              formatter: '.mileage'
+          }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
       <table:Column width="auto" sortProperty="Drvkm" filterProperty="Drvkm">
         <Label text="{i18n>LABEL_34007}"/>
         <table:template>
