@@ -11,7 +11,7 @@
                     <ObjectStatus text="{/Total/Carno}" class="font-25-px mt-5-px" state="Indication05" />
                 </VBox>
                 <VBox>
-                    <Label design="Bold" text="{i18n>LABEL_34004}" />
+                    <Label design="Bold" text="{i18n>LABEL_34015}" />
                     <ObjectStatus text="{/Total/Datum}" class="font-25-px mt-5-px" state="Indication05" />
                 </VBox>
             </HBox>

@@ -14,24 +14,16 @@
                     <Label text="{i18n>LABEL_25005}" />
                     <VBox>
                         <Text text="{/dialog/Carno}"/>
-                    </VBox>
-                    <Label text="{i18n>LABEL_34008}" />
-                    <VBox alignItems="End">
-                        <Input value="{
-                            path: '/dialog/Begkm',
-                            formatter: '.mileage'
-                        }" textAlign="End" liveChange=".getMileage" class="required"/>
+                        <layoutData>
+                            <grid:GridItemLayoutData gridColumn="2 / 5"/>
+                        </layoutData>
                     </VBox>
                     <Label text="{i18n>LABEL_34009}"/>
                     <VBox>
-                        <custom:DatePicker maxDate="{/maxDate}" editable="{= ${/dialog/New} === 'O' }" width="88%" dateValue="{ path: '/dialog/Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="required"/>
-                    </VBox>
-                    <Label text="{i18n>LABEL_34010}"/>
-                    <VBox alignItems="End">
-                        <Input value="{
-                            path: '/dialog/Endkm',
-                            formatter: '.mileage'
-                        }" textAlign="End" liveChange=".getMileage" class="required"/>
+                        <custom:DatePicker maxDate="{/maxDate}" editable="{= ${/dialog/New} === 'O' }" width="33%" dateValue="{ path: '/dialog/Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="required"/>
+                        <layoutData>
+                            <grid:GridItemLayoutData gridColumn="2 / 5"/>
+                        </layoutData>
                     </VBox>
                     <Label text="{i18n>LABEL_17006}"/>
                     <VBox>
