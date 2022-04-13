@@ -86,16 +86,16 @@ sap.ui.define(
           this.getAppointeeModel().setProperty('/showChangeButton', true);
 
           if (!this.isHass() && !this.isMss()) {
-            const mAppointee = this.getAppointeeData();
+            const mSession = this.getSessionData();
 
             oViewModel.setProperty('/employeeModelSettings/Enabled', {
               Persa: false,
               Orgeh: false,
             });
             oViewModel.setProperty('/employeeModelSettings/Search', {
-              Persa: mAppointee.Werks,
-              Orgeh: mAppointee.Orgeh,
-              Pbtxt: mAppointee.Orgtx,
+              Persa: mSession.Werks,
+              Orgeh: mSession.Orgeh,
+              Pbtxt: mSession.Orgtx,
             });
           }
 
