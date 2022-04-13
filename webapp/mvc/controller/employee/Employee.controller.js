@@ -944,10 +944,20 @@ sap.ui.define(
                 ...mFieldValue,
                 Prcty: sPrcty,
                 Appno: sAppno,
-                Begda: mFieldValue.Eamdt ? DateUtils.parse(mFieldValue.Eamdt) : mFieldValue.Begda,
-                Endda: mFieldValue.Eamdt ? DateUtils.parse(mFieldValue.Eamdt) : mFieldValue.Endda,
                 Eamdt: mFieldValue.Eamdt ? DateUtils.parse(mFieldValue.Eamdt) : mFieldValue.Eamdt,
               };
+
+              if (sPrcty === 'C') {
+                _.chain(mInputData)
+                  .set('Begda', mFieldValue.Eamdt ? DateUtils.parse(mFieldValue.Eamdt) : _.noop())
+                  .set('Endda', mFieldValue.Eamdt ? DateUtils.parse(mFieldValue.Eamdt) : _.noop())
+                  .commit();
+              } else {
+                _.chain(mInputData)
+                  .set('Begda', mFieldValue.Begda ? DateUtils.parse(mFieldValue.Begda) : _.noop())
+                  .set('Endda', mFieldValue.Endda ? DateUtils.parse(mFieldValue.Endda) : _.noop())
+                  .commit();
+              }
 
               break;
             case this.CRUD_TABLES.CERTIFICATE.key:
