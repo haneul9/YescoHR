@@ -31,15 +31,11 @@
                 </Link>
                 <Link text="{Fulln}" subtle="true" width="100%" press=".navToProfile">
                   <layoutData>
-                    <FlexItemData growFactor="1" maxWidth="calc(100% - 243px)" styleClass="pr-4-px" />
+                    <FlexItemData growFactor="1" maxWidth="calc(100% - 213px)" styleClass="pr-4-px" />
                   </layoutData>
                 </Link>
-                <Link visible="{= ${linkType} === 'M' }" subtle="true" width="20px" class="icon-search" press=".navToProfile">
-                  <layoutData>
-                    <FlexItemData styleClass="pr-9-px" />
-                  </layoutData>
-                </Link>
-                <Link enabled="{= !!${Phone} }" href="tel:{Phone}" subtle="true" width="20px" class="icon-telephone" />
+                <Link visible="{= ${linkType} === 'M' }" subtle="true" width="20px" class="icon-search" press=".navToProfile" />
+                <Link visible="{= ${linkType} !== 'M' }" enabled="{= !!${Phone} }" href="tel:{Phone}" subtle="true" width="20px" class="icon-telephone" />
               </HBox>
             </CustomListItem>
           </List>
