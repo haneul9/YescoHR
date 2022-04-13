@@ -273,7 +273,7 @@ sap.ui.define(
             });
           }
 
-          this._pDetailDialog.then(async function (oDialog) {
+          this._pDetailDialog.then(function (oDialog) {
             oViewModel.setProperty('/dialog', mRowData);
             oDialog.open();
           });
