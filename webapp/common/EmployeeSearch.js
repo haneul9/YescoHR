@@ -31,8 +31,15 @@ sap.ui.define(
         try {
           const oModel = oController.getModel(ServiceNames.COMMON);
           const mPersaFilters = {};
-          const sAccty = oEmpModel.getProperty('/employeeModel/Search/Accty') || _.noop();
-          const sStat2 = oEmpModel.getProperty('/employeeModel/Search/Stat2') || 'ALL';
+          const mSearch = oEmpModel.getProperty('/employeeModel/Search');
+          const sStat2 = mSearch.Stat2 || 'ALL';
+          const sPersa = mSearch.Persa || 'ALL';
+          const sPersg = mSearch.Persg || 'ALL';
+          const sPersk = mSearch.Persk || 'ALL';
+          const sAccty = mSearch.Accty || _.noop();
+          const sEname = mSearch.Ename || _.noop();
+          const sOrgeh = mSearch.Orgeh || _.noop();
+          const sPbtxt = mSearch.Pbtxt || _.noop();
 
           // Accty === 'Z' 일때 PersAreaList 필터조건 ZALL = 'X'
           if (sAccty === 'Z') {
@@ -51,12 +58,13 @@ sap.ui.define(
           oEmpModel.setProperty('/employeeModel/SubEmpGroup', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext' }));
           oEmpModel.setProperty('/employeeModel/Search', {
             Accty: sAccty,
-            Persa: 'ALL',
-            Ename: _.noop(),
-            Orgeh: _.noop(),
+            Persa: sPersa,
+            Ename: sEname,
+            Orgeh: sOrgeh,
+            Pbtxt: sPbtxt,
             Stat2: sStat2,
-            Persg: 'ALL',
-            Persk: 'ALL',
+            Persg: sPersg,
+            Persk: sPersk,
           });
 
           return true;
@@ -241,9 +249,11 @@ sap.ui.define(
        */
       async onSearchDialog(fnCallback, mInitModelData = {}) {
         const oView = this.getView();
+        const oViewModel = this.getViewModel();
+        const mEmployeeSettings = oViewModel.getProperty('/employeeModelSettings') ?? {};
         const mModelData = {
           Search: {},
-          Enabled: {},
+          Enabled: { Persa: true, Ename: true, Orgeh: true, Stat2: true, Persg: true, Persk: true },
           SelectedEmp: [],
           empList: [],
           PersArea: [],
@@ -252,7 +262,9 @@ sap.ui.define(
           SubEmpGroup: [],
         };
 
-        this.getViewModel().setProperty('/employeeModel', $.extend(true, mModelData, mInitModelData));
+        oViewModel.setProperty('/employeeModel', _.assignIn(mModelData, mInitModelData));
+        oViewModel.setProperty('/employeeModel/Search', { ...mModelData.Search, ..._.get(mEmployeeSettings, 'Search', {}) });
+        oViewModel.setProperty('/employeeModel/Enabled', { ...mModelData.Enabled, ..._.get(mEmployeeSettings, 'Enabled', {}) });
 
         if (!this.dSearchDialog) {
           this.dSearchDialog = await Fragment.load({
