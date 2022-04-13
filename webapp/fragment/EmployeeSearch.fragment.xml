@@ -20,17 +20,17 @@
           <grid:CSSGrid gridTemplateRows="1fr 2fr" gridGap="6px 0px" class="form-grid type-d form-search">
             <Label text="{i18n>LABEL_00237}" />
             <VBox>
-              <ComboBox items="{/employeeModel/PersArea}" selectedKey="{/employeeModel/Search/Persa}" width="100%">
+              <ComboBox items="{/employeeModel/PersArea}" selectedKey="{/employeeModel/Search/Persa}" enabled="{/employeeModel/Enabled/Persa}" width="100%">
                 <core:Item text="{Pbtxt}" key="{Werks}" />
               </ComboBox>
             </VBox>
             <Label text="{i18n>LABEL_00211}" />
             <VBox>
-              <Input value="{/employeeModel/Search/Ename}" submit=".EmployeeSearch.onEmpSearch" />
+              <Input value="{/employeeModel/Search/Ename}" enabled="{/employeeModel/Enabled/Ename}" submit=".EmployeeSearch.onEmpSearch" />
             </VBox>
             <Label text="{i18n>LABEL_00226}" />
             <VBox>
-              <Input value="{/employeeModel/Search/Pbtxt}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".EmployeeSearch.onGroupDetail" />
+              <Input value="{/employeeModel/Search/Pbtxt}" enabled="{/employeeModel/Enabled/Orgeh}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".EmployeeSearch.onGroupDetail" />
             </VBox>
             <Label text="{i18n>LABEL_00240}" />
             <VBox>
@@ -40,13 +40,13 @@
             </VBox>
             <Label text="{i18n>LABEL_00238}" />
             <VBox>
-              <ComboBox items="{/employeeModel/EmpGroup}" selectedKey="{/employeeModel/Search/Persg}" change=".EmployeeSearch.onSubEmpCode" width="100%">
+              <ComboBox items="{/employeeModel/EmpGroup}" selectedKey="{/employeeModel/Search/Persg}" enabled="{/employeeModel/Enabled/Persg}" change=".EmployeeSearch.onSubEmpCode" width="100%">
                 <core:Item text="{Ztext}" key="{Zcode}" />
               </ComboBox>
             </VBox>
             <Label text="{i18n>LABEL_00327}" />
             <VBox>
-              <ComboBox items="{/employeeModel/SubEmpGroup}" selectedKey="{/employeeModel/Search/Persk}" width="100%">
+              <ComboBox items="{/employeeModel/SubEmpGroup}" selectedKey="{/employeeModel/Search/Persk}" enabled="{/employeeModel/Enabled/Persk}" width="100%">
                 <core:Item text="{Ztext}" key="{Zcode}" />
               </ComboBox>
             </VBox>

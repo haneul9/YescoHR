@@ -29,7 +29,7 @@
             </VBox>
             <Label text="{i18n>LABEL_21016}"/>
             <VBox>
-                <DatePicker dateValue="{/FormData/Pyear}" displayFormat="yyyy" valueFormat="yyyy" editable="{/Fixed}" class="required"/>
+                <Input value="{/FormData/Pyear}" maxLength="{/FieldLimit/Pyear}" liveChange=".onNumberTxt" width="250px" editable="{/Fixed}" class="required"/>
             </VBox>
             <Label text="{i18n>LABEL_21017}"/>
             <VBox>
