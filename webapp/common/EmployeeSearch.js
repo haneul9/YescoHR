@@ -32,7 +32,7 @@ sap.ui.define(
           const oModel = oController.getModel(ServiceNames.COMMON);
           const mPersaFilters = {};
           const mSearch = oEmpModel.getProperty('/employeeModel/Search');
-          const sStat2 = mSearch.Stat2 || 'ALL';
+          const sStat2 = mSearch.Stat2 || '3';
           const sPersa = mSearch.Persa || 'ALL';
           const sPersg = mSearch.Persg || 'ALL';
           const sPersk = mSearch.Persk || 'ALL';
