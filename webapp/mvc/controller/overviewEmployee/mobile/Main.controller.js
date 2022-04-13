@@ -7,6 +7,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/controller/home/portlets/popup/M21PortletMobilePopoverHandler',
     'sap/ui/yesco/mvc/controller/overviewEmployee/constants/ChartsSetting',
     'sap/ui/yesco/mvc/model/type/Date',
     'sap/ui/yesco/mvc/model/type/Decimal',
@@ -19,6 +20,7 @@ sap.ui.define(
     ServiceNames,
     TableUtils,
     BaseController,
+    M21PortletMobilePopoverHandler,
     ChartsSetting
   ) => {
     'use strict';
@@ -87,6 +89,10 @@ sap.ui.define(
             .take(10)
             .forEach((o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0))
             .commit();
+
+          if (this.bMobile) {
+            this.oMobilePopoverHandler = new M21PortletMobilePopoverHandler(this, oViewModel);
+          }
         } catch (oError) {
           this.debug('Controller > mobile/m/overviewEmployee Main > onObjectMatched Error', oError);
 
@@ -360,7 +366,11 @@ sap.ui.define(
 
       onPressCount(oEvent) {
         if (oEvent['getSource'] instanceof Function) {
-          this.openDetailDialog(oEvent.getSource().data());
+          if (this.bMobile) {
+            this.oMobilePopoverHandler.openDialog(oEvent);
+          } else {
+            this.openDetailDialog(oEvent.getSource().data());
+          }
         } else {
           this.openDetailDialog(sap.ui.getCore().byId($(oEvent.currentTarget).attr('id')).data());
         }
@@ -384,6 +394,25 @@ sap.ui.define(
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_28038'); // 인원현황상세
 
         TableUtils.export({ oTable, aTableData, sFileName, aDateProps: ['Gbdat', 'Entda', 'Loada', 'Reida', 'Retda'] });
+      },
+
+      onPressSearchAreaToggle(oEvent) {
+        const oEventSource = oEvent.getSource();
+        const oSearchArea = oEventSource.getParent().getParent();
+        const bExpanded = oSearchArea.hasStyleClass('row-4');
+
+        oEventSource.toggleStyleClass('expanded', !bExpanded);
+        oSearchArea.toggleStyleClass('row-4', !bExpanded);
+        oSearchArea.toggleStyleClass('row-2', bExpanded);
+      },
+
+      onChangeFontSize(oEvent) {
+        const sFontSize = oEvent.getSource().getSelectedKey();
+        document.querySelector(':root').style.setProperty('--StatisticsFontSize', sFontSize);
+      },
+
+      reduceViewResource() {
+        return this;
       },
 
       /*****************************************************************

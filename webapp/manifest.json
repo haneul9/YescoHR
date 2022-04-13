@@ -80,7 +80,8 @@
         { "uri": "asset/css/util/margin.css" },
         { "uri": "asset/css/util/padding.css" },
         { "uri": "asset/css/util/border.css" },
-        { "uri": "asset/css/util/width-height.css" }
+        { "uri": "asset/css/util/width-height.css" },
+        { "uri": "asset/css/util/align.css" }
       ]
     },
     "routing": {

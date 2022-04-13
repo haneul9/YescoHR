@@ -9,7 +9,7 @@
           </layoutData>
         </SearchField>
       </HBox>
-      <ScrollContainer horizontal="false" vertical="true" width="100%" height="calc(100% - 60px)" class="mt-20-px">
+      <ScrollContainer horizontal="false" vertical="true" width="100%" height="calc(100% - 60px)" class="sapUiNativeScrollbars mt-20-px">
         <content>
           <List items="{ path: 'employees', templateShareable: false }" rememberSelections="false" showSeparators="None" noDataText="{i18n>MSG_00001}" class="emp-search-list">
             <CustomListItem>

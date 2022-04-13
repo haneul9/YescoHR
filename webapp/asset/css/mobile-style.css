@@ -23,6 +23,7 @@ html:not(.sapUiNativeScrollbars) .sapMPopoverCont::-webkit-scrollbar {width:0 !i
 .sapUiSizeCompact .sapMInputBase:not(.sapMTextArea) {height:48px !important}
 .sapUiSizeCompact .portlet .sapMInputBase:not(.sapMTextArea) {height:38px !important}
 .sapUiSizeCompact .search-area .sapMInputBase:not(.sapMTextArea) {height:40px !important}
+.sapUiSizeCompact .search-area .sapMBtnInner.sapMBtnText {border-radius:20px}
 
 .sapMPageFooter {border-top:8px solid #ebeef2}
 
@@ -276,7 +277,6 @@ html.sap-phone .sapMDialog.sapMDialogStretched {border:none; box-shadow:0; borde
 .sapUiSizeCompact .sapMBtn + .sapMBtn {margin-left:8px} 
 .sapUiSizeCompact .sapMBtnInner.sapMBtnText {border-radius:4px}
 .sapUiSizeCompact .table-toolbar .table-actions .sapMBtnInner.sapMBtnText {height:24px}
-.sapUiSizeCompact .search-area .sapMBtnInner.sapMBtnText {border-radius:20px}
 .sapContrast span.sapMBtnInner.sapMBtnEmphasized {background-color:#1d87bd; border-color:#1d87bd; text-shadow:none}
 .sapContrast span.sapMBtnInner.sapMBtnReject {background-color:#ffaaa6; border-color:#ffaaa6; text-shadow:none}
 .sapMPageFloatingFooter>.sapMPageFooter {margin:0; border-top:8px solid #ebeef2; border-radius:0; right:0 !important}
@@ -397,8 +397,18 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>footer .sa
 .contents > .search-box + .header-wrap h3.sapMTitle, .header-wrap h3.sapMTitle {font-size:20px; margin-right:10px !important}
 .contents > .search-box + .header-wrap + .sapMFlexBoxScroll {height:calc(100% - 116px)}
 .contents > .search-box.search-box-expanded + .header-wrap + .sapMFlexBoxScroll {height:calc(100% - 180px)}
+.contents > .search-area {overflow:hidden}
+.contents > .search-area.row-1 {height:68px}
+.contents > .search-area.row-2 {height:116px}
+.contents > .search-area.row-3 {height:164px}
+.contents > .search-area.row-4 {height:212px}
+.contents > .search-area.row-5 {height:260px}
+.contents > .search-area.row-1 + .sapMFlexBoxScroll {height:calc(100% - 68px)}
+.contents > .search-area.row-2 + .sapMFlexBoxScroll {height:calc(100% - 116px)}
+.contents > .search-area.row-3 + .sapMFlexBoxScroll {height:calc(100% - 164px)}
+.contents > .search-area.row-4 + .sapMFlexBoxScroll {height:calc(100% - 212px)}
+.contents > .search-area.row-5 + .sapMFlexBoxScroll {height:calc(100% - 260px)}
 .contents > .search-area + .header-wrap + .sapMFlexBoxScroll {height:calc(100% - 226px)}
-.contents > .search-area.mobile-mss-overview + .sapMFlexBoxScroll {height:calc(100% - 164px)}
 .contents.mobile-mss-employee-card-list .sapMSegB {padding:0}
 .contents.mobile-mss-employee-card-list > .sapMFlexItem + .sapMFlexItem + .sapMFlexBoxScroll {margin-top:16px; height:calc(100% - 111px)}
 .contents.mobile-mss-employee-card-list .employee-card-list {padding:0 11px 0 16px}
@@ -444,4 +454,20 @@ div.sapUiTableSelectAllCheckBox::after, div.sapUiTableRowSelectionCell::after {w
 .sapMIBar-CTX.sapMHeader-CTX :not(.sapMBtnDisabled)>.sapMBtnActive, .sapMIBar-CTX.sapMFooter-CTX :not(.sapMBtnDisabled)>.sapMBtnActive {border-color:transparent; background-color:transparent}
 :not(.sapMBtnDisabled)>.sapMBtnInner.sapMBtnActive .sapMBtnIcon {color:#346187}
 
-/* #employee-a02-chart-container {margin:0 -15px; width:calc(100% + 30px)} */
+/* MSS 인원현황 */
+.mobile-mt-15-px {margin-top:15px}
+.led-chart [class*="Label-group"] tspan,
+.bar-chart [class*="Label-group"] tspan,
+.bar-chart [class*="Name-group"] tspan,
+.bar-chart [class*="datalabel"] tspan,
+.column-chart [class*="Label-group"] tspan,
+.column-chart [class*="Name-group"] tspan,
+.column-chart [class*="datalabel"] tspan,
+.doughnut-chart [class*="datalabel"] tspan {font-size:var(--StatisticsFontSize)}
+
+.mss-overview .statistic-box,
+.mss-overview .statistic-text,
+.mss-overview .statistic-text.sapMText,
+.mss-overview .statistic-text.sapMLabel,
+.mss-overview .statistic-text.sapMObjStatus,
+.mss-overview .statistic-text bdi {line-height:22px; font-size:var(--StatisticsFontSize) !important}

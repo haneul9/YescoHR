@@ -6,49 +6,72 @@
   xmlns:custom="sap.ui.yesco.control">
   <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
     <VBox class="contents">
-      <VBox class="search-area mobile-mss-overview">
-        <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBottom">
-          <DatePicker width="100%" displayFormat="yyyy" valueFormat="yyyy" value="{/searchConditions/Zyear}">
-            <layoutData>
-              <FlexItemData minWidth="67%" maxWidth="67%" />
-            </layoutData>
-          </DatePicker>
-        </HBox>
-        <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBottom">
-          <ComboBox items="{/entry/Werks}" selectedKey="{/searchConditions/Werks}" change=".onChangeWerks">
-            <layoutData>
-              <FlexItemData minWidth="67%" maxWidth="67%" />
-            </layoutData>
+      <HBox alignItems="End" class="search-area row-4">
+        <VBox width="67%">
+          <layoutData>
+            <FlexItemData maxWidth="67%" />
+          </layoutData>
+          <DatePicker width="100%" displayFormat="yyyy" valueFormat="yyyy" value="{/searchConditions/Zyear}" />
+          <ComboBox width="100%" items="{/entry/Werks}" selectedKey="{/searchConditions/Werks}" change=".onChangeWerks" class="sapUiTinyMarginTop">
             <core:Item text="{Pbtxt}" key="{Werks}" />
           </ComboBox>
-        </HBox>
-        <HBox justifyContent="SpaceBetween" alignItems="Center">
-          <ComboBox items="{/entry/Orgeh}" selectedKey="{/searchConditions/Orgeh}">
-            <layoutData>
-              <FlexItemData minWidth="67%" maxWidth="67%" />
-            </layoutData>
+          <ComboBox width="100%" items="{/entry/Orgeh}" selectedKey="{/searchConditions/Orgeh}" class="sapUiTinyMarginTop">
             <core:Item text="{Orgtx}" key="{Orgeh}" />
           </ComboBox>
-          <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onPressSearch" width="100%" class="sapUiTinyMarginBegin">
-            <layoutData>
-              <FlexItemData growFactor="1" maxWidth="33%" />
-            </layoutData>
-          </Button>
-        </HBox>
-      </VBox>
+          <HBox class="sapUiTinyMarginTop info-icon-area">
+            <HBox height="40px" alignItems="Center" class="ml-16-px">
+              <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_human_green.svg" width="12px" />
+              <Text text="{i18n>LABEL_28003}" class="pl-8-px font-14-px display-flex" />
+            </HBox>
+            <HBox height="40px" alignItems="Center" class="ml-16-px">
+              <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_human_orange.svg" width="12px" />
+              <Text text="{i18n>LABEL_28004}" class="pl-8-px font-14-px display-flex" />
+            </HBox>
+            <ComboBox width="80px" selectedKey="12px" change=".onChangeFontSize" selectionChange=".onChangeFontSize" class="ml-16-px">
+              <core:Item text="10px" key="10px" />
+              <core:Item text="11px" key="11px" />
+              <core:Item text="12px" key="12px" />
+              <core:Item text="13px" key="13px" />
+              <core:Item text="14px" key="14px" />
+              <core:Item text="15px" key="15px" />
+              <core:Item text="16px" key="16px" />
+              <core:Item text="17px" key="17px" />
+              <core:Item text="18px" key="18px" />
+            </ComboBox>
+          </HBox>
+        </VBox>
+        <VBox width="33%" justifyContent="End" class="pl-8-px">
+          <layoutData>
+            <FlexItemData growFactor="1" maxWidth="33%" />
+          </layoutData>
+          <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onPressSearch" width="100%" class="sapUiTinyMarginTop" />
+          <Button press=".onPressSearchAreaToggle" width="100%" class="icon-button close expanded sapUiTinyMarginTop" />
+        </VBox>
+      </HBox>
       <custom:MobileScrollContainer horizontal="false" vertical="true" class="sapUiNativeScrollbars px-12-px">
-        <grid:CSSGrid gridGap="20px" gridTemplateRows="repeat(10, 230px)" gridTemplateColumns="1fr" class="mt-20-px mb-11-px">
+        <grid:CSSGrid gridGap="20px" gridTemplateRows="repeat(10, 270px)" gridTemplateColumns="1fr" class="mss-overview mt-20-px mb-11-px">
+          <!-- 인원현황 -->
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A01" type="XML" />
+          <!-- 세대별 현황 -->
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A02" type="XML" />
-          <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A03" type="XML" />
-          <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A04" type="XML" />
-          <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A05" type="XML" />
+          <!-- 성별 현황 -->
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A06" type="XML" />
+          <!-- 유형별 현황 -->
+          <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A03" type="XML" />
+          <!-- 직책별 현황 -->
+          <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A04" type="XML" />
+          <!-- 직급별 현황 -->
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A07" type="XML" />
+          <!-- 직군별 현황 -->
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A08" type="XML" />
+          <!-- 평균 근속 -->
+          <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A05" type="XML" />
+          <!-- 평균 연령 -->
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A09" type="XML" />
+          <!-- 조직별 현황 -->
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A10" type="XML" />
         </grid:CSSGrid>
+        <!-- 임원/팀장 1인당 직원수 -->
         <!-- <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A11" type="XML" /> -->
       </custom:MobileScrollContainer>
     </VBox>
