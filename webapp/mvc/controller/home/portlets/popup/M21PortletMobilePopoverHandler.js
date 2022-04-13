@@ -24,7 +24,7 @@ sap.ui.define(
     /**
      * 인원 현황 Portlet (임원용) Mobile Dialog Handler
      */
-    return Debuggable.extend('sap.ui.yesco.mvc.controller.home.portlets.dialog.M21PortletMobileDialogHandler', {
+    return Debuggable.extend('sap.ui.yesco.mvc.controller.home.portlets.popup.M21PortletMobilePopoverHandler', {
       /**
        * @override
        */
@@ -38,21 +38,21 @@ sap.ui.define(
       async init() {
         const oView = this.oController.getView();
 
-        this.oDialog = await Fragment.load({
+        this.oPopover = await Fragment.load({
           id: oView.getId(),
-          name: 'sap.ui.yesco.mvc.view.app.fragment.MobileEmployeeSearchDialog',
+          name: 'sap.ui.yesco.mvc.view.app.fragment.MobileEmployeeSearchPopover',
           controller: this,
         });
 
-        this.oPortletModel.setProperty('/dialog', { busy: true, linkType: 'M', employees: null });
+        this.oPortletModel.setProperty('/popover', { busy: true, linkType: 'M', employees: null });
 
-        this.oDialog
+        this.oPopover
           .attachAfterOpen(() => {
             setTimeout(() => {
               $('#sap-ui-blocklayer-popup')
                 .off('click')
                 .on('click', () => {
-                  this.onPressDetailDialogClose();
+                  this.closePopover();
                 });
             }, 100);
           })
@@ -62,15 +62,15 @@ sap.ui.define(
             });
           })
           .setModel(this.oPortletModel)
-          .bindElement('/dialog');
+          .bindElement('/popover');
 
-        oView.addDependent(this.oDialog);
+        oView.addDependent(this.oPopover);
       },
 
       onLiveChange(oEvent) {
         const sValue = $.trim(oEvent.getParameter('newValue'));
         if (!sValue) {
-          this.oDialog.getContent()[1].getContent()[0].getBinding('items').filter([]);
+          this.oPopover.getContent()[1].getContent()[0].getBinding('items').filter([]);
           return;
         }
 
@@ -82,14 +82,17 @@ sap.ui.define(
           and: false,
         });
 
-        this.oDialog.getContent()[1].getContent()[0].getBinding('items').filter(aFilters);
+        this.oPopover.getContent()[1].getContent()[0].getBinding('items').filter(aFilters);
       },
 
       async openDialog(oEvent) {
-        this.oPortletModel.setProperty('/dialog/busy', true);
-
         try {
           const oEventSource = oEvent.getSource();
+          setTimeout(() => {
+            this.oPortletModel.setProperty('/popover/busy', true);
+            this.oPopover.openBy(oEventSource);
+          });
+
           const oSessionModel = this.oController.getSessionModel();
           const mPayload = {
             Zyear: moment().year(),
@@ -101,24 +104,22 @@ sap.ui.define(
           const aDetailData = await Client.getEntitySet(this.oController.getModel(ServiceNames.PA), 'HeadCountDetail', mPayload);
 
           this.oPortletModel.setProperty(
-            '/dialog/employees',
+            '/popover/employees',
             aDetailData.map(({ Photo, Ename, Pernr, Zzjikgbtx, Zzjikchtx, Orgtx }) => ({ Photo, Ename, Pernr, Zzjikcht: Zzjikgbtx, Zzjikgbt: Zzjikchtx, Fulln: Orgtx, linkType: 'M' }))
           );
-
-          this.oDialog.openBy(oEventSource);
         } catch (oError) {
-          this.oController.debug('M21PortletMobileDialogHandler > openDialog Error', oError);
+          this.oController.debug('M21PortletMobilePopoverHandler > openDialog Error', oError);
 
           AppUtils.handleError(oError, {
-            onClose: () => this.oDialog.close(),
+            onClose: () => this.oPopover.close(),
           });
         } finally {
-          this.oPortletModel.setProperty('/dialog/busy', false);
+          this.oPortletModel.setProperty('/popover/busy', false);
         }
       },
 
-      onPressDetailDialogClose() {
-        this.oDialog.close();
+      closePopover() {
+        this.oPopover.close();
       },
 
       navToProfile(oEvent) {
@@ -129,7 +130,7 @@ sap.ui.define(
       setBusy(bBusy = true) {
         setTimeout(
           () => {
-            this.oPortletModel.setProperty('/dialog/busy', bBusy);
+            this.oPortletModel.setProperty('/popover/busy', bBusy);
           },
           bBusy ? 0 : 500
         );
@@ -137,7 +138,7 @@ sap.ui.define(
       },
 
       destroy() {
-        this.oDialog.destroy();
+        this.oPopover.destroy();
       },
     });
   }

@@ -1,13 +1,14 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/m/InstanceManager',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/app/MobileMyPagePopoverHandler',
-    'sap/ui/yesco/mvc/controller/app/MobileEmployeeSearchDialogHandler',
+    'sap/ui/yesco/mvc/controller/app/MobileEmployeeSearchPopoverHandler',
     'sap/ui/yesco/mvc/controller/app/NotificationPopoverHandler',
     'sap/ui/yesco/mvc/controller/app/control/Menus',
     'sap/ui/yesco/mvc/controller/app/control/MobileMenus',
@@ -17,13 +18,14 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
+    InstanceManager,
     AppUtils,
     Client,
     ServiceNames,
     MessageBox,
     BaseController,
     MobileMyPagePopoverHandler,
-    MobileEmployeeSearchDialogHandler,
+    MobileEmployeeSearchPopoverHandler,
     NotificationPopoverHandler,
     Menus,
     MobileMenus
@@ -62,7 +64,7 @@ sap.ui.define(
           this.oMobileMyPagePopoverHandler = new MobileMyPagePopoverHandler(this);
         });
         setTimeout(() => {
-          this.oMobileEmployeeSearchDialogHandler = new MobileEmployeeSearchDialogHandler(this);
+          this.oMobileEmployeeSearchPopoverHandler = new MobileEmployeeSearchPopoverHandler(this);
         });
         setTimeout(() => {
           const sHost = /^localhost/.test(location.hostname) || /^(yeshrsapdev|devhrportal)/.test(location.hostname) ? 'dev' : 'prd';
@@ -84,9 +86,7 @@ sap.ui.define(
         this.oAppMenu.closeMenuLayer();
 
         if (this.bMobile) {
-          this.oNotificationPopoverHandler.onPopoverClose();
-          this.oMobileMyPagePopoverHandler.onPopoverClose();
-          this.oMobileEmployeeSearchDialogHandler.onDialogClose();
+          InstanceManager.closeAllPopovers();
         }
 
         const sCurrentMenuViewId = this.getCurrentMenuViewId();
@@ -139,8 +139,7 @@ sap.ui.define(
         oEvent.cancelBubble();
 
         if (this.bMobile) {
-          this.oMobileMyPagePopoverHandler.onPopoverClose();
-          this.oMobileEmployeeSearchDialogHandler.onDialogClose();
+          InstanceManager.closeAllPopovers();
           this.oAppMenu.closeMenuLayer();
         }
         this.oNotificationPopoverHandler.onPopoverToggle();
@@ -157,8 +156,7 @@ sap.ui.define(
        * My Page : 모바일 하단 5버튼
        */
       onPressMobileMyPagePopoverToggle() {
-        this.oNotificationPopoverHandler.onPopoverClose();
-        this.oMobileEmployeeSearchDialogHandler.onDialogClose();
+        InstanceManager.closeAllPopovers();
         this.oAppMenu.closeMenuLayer();
 
         this.oMobileMyPagePopoverHandler.onPopoverToggle();
@@ -168,11 +166,10 @@ sap.ui.define(
        * 검색 : 모바일 하단 5버튼
        */
       onPressMobileSearchPopoverToggle(oEvent) {
-        this.oNotificationPopoverHandler.onPopoverClose();
-        this.oMobileMyPagePopoverHandler.onPopoverClose();
+        InstanceManager.closeAllPopovers();
         this.oAppMenu.closeMenuLayer();
 
-        this.oMobileEmployeeSearchDialogHandler.onDialogToggle(oEvent);
+        this.oMobileEmployeeSearchPopoverHandler.onPopoverToggle(oEvent);
       },
 
       /**
@@ -180,9 +177,7 @@ sap.ui.define(
        * @param {sap.ui.base.Event} oEvent
        */
       onPressMobileMenuPopoverToggle(oEvent) {
-        this.oNotificationPopoverHandler.onPopoverClose();
-        this.oMobileMyPagePopoverHandler.onPopoverClose();
-        this.oMobileEmployeeSearchDialogHandler.onDialogClose();
+        InstanceManager.closeAllPopovers();
 
         this.oAppMenu.toggleMenuLayer(oEvent);
       },

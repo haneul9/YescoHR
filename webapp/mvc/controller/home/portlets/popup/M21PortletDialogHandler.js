@@ -22,7 +22,7 @@ sap.ui.define(
     /**
      * 인원 현황 Portlet (임원용) Dialog Handler
      */
-    return Debuggable.extend('sap.ui.yesco.mvc.controller.home.portlets.dialog.M21PortletDialogHandler', {
+    return Debuggable.extend('sap.ui.yesco.mvc.controller.home.portlets.popup.M21PortletDialogHandler', {
       /**
        * @override
        */
