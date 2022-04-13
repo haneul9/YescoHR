@@ -1079,6 +1079,7 @@ sap.ui.define(
             }
           }
 
+          oViewModel.setProperty('/employee/dialog/activeButton', true);
           this.openInputFormDialog(oEvent);
           oTable.clearSelection();
         } catch (oError) {
