@@ -191,6 +191,10 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/busy', true);
 
+          const [mMyDriveRecord] = await this.getMyRecord();
+
+          oViewModel.setProperty('/Total', mMyDriveRecord);
+
           const aTableList = await this.getFriveRecord();
           const oTable = this.byId(this.DRIVE_TABLE_ID);
 
