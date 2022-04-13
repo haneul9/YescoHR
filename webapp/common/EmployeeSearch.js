@@ -67,6 +67,10 @@ sap.ui.define(
             Persk: sPersk,
           });
 
+          const bInitialSearch = oEmpModel.getProperty('/employeeModel/InitialSearch');
+
+          if (bInitialSearch) this.onEmpSearch.call(oController);
+
           return true;
         } catch (oError) {
           AppUtils.handleError(oError);
@@ -252,6 +256,7 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const mEmployeeSettings = oViewModel.getProperty('/employeeModelSettings') ?? {};
         const mModelData = {
+          InitialSearch: false,
           Search: {},
           Enabled: { Persa: true, Ename: true, Orgeh: true, Stat2: true, Persg: true, Persk: true },
           SelectedEmp: [],
@@ -262,7 +267,7 @@ sap.ui.define(
           SubEmpGroup: [],
         };
 
-        oViewModel.setProperty('/employeeModel', _.assignIn(mModelData, mInitModelData));
+        oViewModel.setProperty('/employeeModel', { ..._.assignIn(mModelData, mInitModelData), InitialSearch: _.get(mEmployeeSettings, 'InitialSearch', false) });
         oViewModel.setProperty('/employeeModel/Search', { ...mModelData.Search, ..._.get(mEmployeeSettings, 'Search', {}) });
         oViewModel.setProperty('/employeeModel/Enabled', { ...mModelData.Enabled, ..._.get(mEmployeeSettings, 'Enabled', {}) });
 

@@ -35,6 +35,7 @@ sap.ui.define(
           busy: false,
           routeName: '',
           employeeModelSettings: {
+            InitialSearch: false,
             Enabled: { Persa: true, Orgeh: true },
             Search: { Persa: 'ALL', Pbtxt: null, Orgeh: null },
           },
@@ -88,6 +89,7 @@ sap.ui.define(
           if (!this.isHass() && !this.isMss()) {
             const mSession = this.getSessionData();
 
+            oViewModel.setProperty('/employeeModelSettings/InitialSearch', true);
             oViewModel.setProperty('/employeeModelSettings/Enabled', {
               Persa: false,
               Orgeh: false,
