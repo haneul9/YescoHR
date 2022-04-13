@@ -77,6 +77,7 @@ sap.ui.define(
             Begda: moment(mSearch.secondDate).hours(9).toDate(),
             Endda: moment(mSearch.date).hours(9).toDate(),
             Ptype: mSearch.Ptype,
+            Prcty: 'L',
           };
           const aTableList = await Client.getEntitySet(oModel, 'HealthCareContents', mPayLoad);
           const oTable = this.byId('healthTable');
@@ -115,6 +116,7 @@ sap.ui.define(
           Begda: moment(mSearch.secondDate).hours(9).toDate(),
           Endda: moment(mSearch.date).hours(9).toDate(),
           Ptype: mSearch.Ptype,
+          Prcty: 'L',
         };
 
         oListModel.setProperty('/busy', true);

@@ -101,6 +101,7 @@ sap.ui.define(
             Begda: mListData.Begda,
             Endda: mListData.Endda,
             Seqnr: sDataKey,
+            Prcty: 'D',
           };
           const [aCareDetail] = await Client.getEntitySet(oModel, 'HealthCareContents', mPayLoad);
 
