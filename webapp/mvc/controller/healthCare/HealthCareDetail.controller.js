@@ -44,6 +44,16 @@ sap.ui.define(
         };
       },
 
+      // 대상자 출생년도
+      onNumberTxt(oEvent) {
+        const oEventSource = oEvent.getSource();
+        const sPath = oEventSource.getBinding('value').getPath();
+        const sValue = _.trimStart(oEvent.getParameter('value'), '0').replace(/[^\d]/g, '');
+
+        oEventSource.setValue(sValue);
+        oEventSource.getModel().setProperty(sPath, sValue);
+      },
+
       async onObjectMatched(oParameter) {
         const sDataKey = oParameter.oDataKey;
         const oDetailModel = this.getViewModel();
@@ -93,7 +103,6 @@ sap.ui.define(
             Seqnr: sDataKey,
           };
           const [aCareDetail] = await Client.getEntitySet(oModel, 'HealthCareContents', mPayLoad);
-          aCareDetail.Pyear = moment(aCareDetail.Pyear)._d;
 
           oDetailModel.setProperty('/FormData', aCareDetail);
           oDetailModel.setProperty('/minDate', moment(`${aCareDetail.Gjahr}-01-01`).toDate());
@@ -125,8 +134,6 @@ sap.ui.define(
           MessageBox.alert(this.getBundleText('MSG_21005')); //대상자 출생연도를 선택하세요.
           return true;
         }
-
-        mFormData.Pyear = moment(mFormData.Pyear).format('YYYY');
 
         // 검진 구분
         if (mFormData.Itype === 'ALL' || !mFormData.Itype) {
