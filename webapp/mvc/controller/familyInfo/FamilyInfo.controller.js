@@ -61,11 +61,15 @@ sap.ui.define(
       },
 
       onObjectMatched(oParameter, sRouteName) {
-        this.getViewModel().setProperty('/routeName', sRouteName);
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/routeName', sRouteName);
+        this.byId('familyTable').setSelectedIndex(-1);
+        oViewModel.setProperty('/SelectedRow', {});
 
         this.onSearch();
         this.totalCount();
-        // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+        this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
       },
 
       async callbackAppointeeChange() {
@@ -87,7 +91,7 @@ sap.ui.define(
           oViewModel.setProperty('/parameter', '');
         }
 
-        this.getRouter().navTo(`${sRouteName}-detail`, { oDataKey: 'N' });
+        this.getRouter().navTo(`${sRouteName}-detail`, { oDataKey: 'N', status: mSelectRow.ZappStatAl });
       },
 
       // override AttachFileCode
@@ -113,12 +117,16 @@ sap.ui.define(
         const oEventSource = oEvent.getSource();
         const iSelectedIndex = oEventSource.getSelectedIndex();
 
-        oEventSource.setSelectedIndex(iSelectedIndex);
+        if (iSelectedIndex !== -1) {
+          oEventSource.setSelectedIndex(iSelectedIndex);
 
-        const oContext = oEvent.getParameter('rowContext');
+          const oContext = oEvent.getParameter('rowContext');
 
-        if (!!oContext) {
-          oViewModel.setProperty('/SelectedRow', oViewModel.getProperty(oContext.getPath()));
+          if (!!oContext) {
+            oViewModel.setProperty('/SelectedRow', oViewModel.getProperty(oContext.getPath()));
+          }
+        } else {
+          oViewModel.setProperty('/SelectedRow', {});
         }
       },
 

@@ -187,9 +187,9 @@
         { "pattern": "mobile/exceptRetamt", "name": "mobile/exceptRetamt", "target": "mobile/exceptRetamt" },
         
         { "pattern": "familyInfo", "name": "familyInfo", "target": "familyInfo" },
-        { "pattern": "familyInfo/{oDataKey}", "name": "familyInfo-detail", "target": "familyInfoDetail" },
+        { "pattern": "familyInfo/{oDataKey}/:status:", "name": "familyInfo-detail", "target": "familyInfoDetail" },
         { "pattern": "h/familyInfo", "name": "h/familyInfo", "target": "h/familyInfo" },
-        { "pattern": "h/familyInfo/{oDataKey}", "name": "h/familyInfo-detail", "target": "familyInfoDetail" },
+        { "pattern": "h/familyInfo/{oDataKey}/:status:", "name": "h/familyInfo-detail", "target": "familyInfoDetail" },
 
         { "pattern": "healthCare", "name": "healthCare", "target": "healthCare" },
         { "pattern": "healthCare/{oDataKey}", "name": "healthCare-detail", "target": "healthCareDetail" },
