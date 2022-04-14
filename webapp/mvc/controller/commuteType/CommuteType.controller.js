@@ -87,6 +87,7 @@ sap.ui.define(
             infoMessage: this.getBundleText('MSG_30004'), // 신청내역에서 선택한 다음 신청 버튼을 클릭하여 주시기 바랍니다.
           });
           oListModel.setProperty('/CommuteList', aTableList);
+          this.getAppointeeModel().setProperty('/showBarChangeButton', this.isHass());
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
