@@ -38,8 +38,10 @@ sap.ui.define(
       AttachFileAction: AttachFileAction,
       TextUtils: TextUtils,
 
+      sRouteName: '',
+
       getPreviousRouteName() {
-        return 'excavation';
+        return this.getViewModel().getProperty('/previousName');
       },
 
       initializeModel() {
