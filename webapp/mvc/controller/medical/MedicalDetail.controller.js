@@ -61,6 +61,7 @@ sap.ui.define(
           ReWriteStat: false,
           ViewKey: '',
           sYear: '',
+          previousName: '',
           FormData: {},
           DialogData: {},
           TargetDetails: {},
@@ -84,7 +85,11 @@ sap.ui.define(
         };
       },
 
-      async onObjectMatched(oParameter) {
+      getPreviousRouteName() {
+        return this.getViewModel().getProperty('/previousName');
+      },
+
+      async onObjectMatched(oParameter, sRouteName) {
         const sDataKey = oParameter.oDataKey;
         const oDetailModel = this.getViewModel();
 
@@ -96,6 +101,7 @@ sap.ui.define(
           // Input Field Imited
           oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'MedExpenseAppl')));
           oDetailModel.setProperty('/FieldLimitPop', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'MedExpenseItem')));
+          oDetailModel.setProperty('/previousName', _.chain(sRouteName).split('-', 1).head().value());
 
           const aAppList = await this.getTargetList();
 

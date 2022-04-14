@@ -45,6 +45,7 @@ sap.ui.define(
       initializeModel() {
         return {
           ViewKey: '',
+          previousName: '',
           menId: '',
           AmountRate: 0,
           FormData: {
@@ -67,7 +68,11 @@ sap.ui.define(
         return sAction;
       },
 
-      onObjectMatched(oParameter) {
+      getPreviousRouteName() {
+        return this.getViewModel().getProperty('/previousName');
+      },
+
+      onObjectMatched(oParameter, sRouteName) {
         const sDataKey = oParameter.oDataKey;
         const oDetailModel = this.getViewModel();
         const sMenid = this.getCurrentMenuId();
@@ -79,6 +84,7 @@ sap.ui.define(
 
         // Input Field Imited
         oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'SchExpenseAppl')));
+        oDetailModel.setProperty('/previousName', _.chain(sRouteName).split('-', 1).head().value());
 
         this.getList()
           .then(() => {

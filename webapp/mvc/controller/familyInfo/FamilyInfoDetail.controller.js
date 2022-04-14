@@ -97,6 +97,10 @@ sap.ui.define(
         };
       },
 
+      getPreviousRouteName() {
+        return this.getViewModel().getProperty('/previousName');
+      },
+
       // setData
       async onObjectMatched(oParameter, sRouteName) {
         const oViewModel = this.getViewModel();

@@ -43,6 +43,7 @@ sap.ui.define(
 
       initializeModel() {
         return {
+          previousName: '',
           Fixed: true,
           DelBtn: false,
           FieldLimit: {},
@@ -63,7 +64,11 @@ sap.ui.define(
         };
       },
 
-      async onObjectMatched(oParameter) {
+      getPreviousRouteName() {
+        return this.getViewModel().getProperty('/previousName');
+      },
+
+      async onObjectMatched(oParameter, sRouteName) {
         const sDataKey = oParameter.oDataKey;
         const oDetailModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.WORKTIME);
@@ -73,6 +78,7 @@ sap.ui.define(
         try {
           // Input Field Imited
           oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.WORKTIME, 'OtWorkApply')));
+          oDetailModel.setProperty('/previousName', _.chain(sRouteName).split('-', 1).head().value());
           oDetailModel.setProperty('/busy', true);
 
           const sMenid = this.getCurrentMenuId();

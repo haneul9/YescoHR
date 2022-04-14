@@ -32,15 +32,21 @@ sap.ui.define(
 
       initializeModel() {
         return {
+          previousName: '',
           FormData: {},
           busy: false,
         };
       },
 
-      async onObjectMatched(oParameter) {
+      getPreviousRouteName() {
+        return this.getViewModel().getProperty('/previousName');
+      },
+
+      async onObjectMatched(oParameter, sRouteName) {
         const oDetailModel = this.getViewModel();
 
         oDetailModel.setData(this.initializeModel());
+        oDetailModel.setProperty('/previousName', _.chain(sRouteName).split('-', 1).head().value());
         oDetailModel.setProperty('/busy', true);
 
         try {
