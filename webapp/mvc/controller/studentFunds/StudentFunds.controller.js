@@ -1,32 +1,28 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Currency',
     'sap/ui/yesco/mvc/model/type/Date',
   ],
   (
     // prettier 방지용 주석
-    Filter,
-    FilterOperator,
     AppUtils,
     AttachFileAction,
     EmployeeSearch,
     FragmentEvent,
     TableUtils,
     TextUtils,
+    Client,
     ServiceNames,
-    ODataReadError,
     BaseController
   ) => {
     'use strict';
@@ -40,9 +36,11 @@ sap.ui.define(
 
       initializeModel() {
         return {
+          routeName: '',
           detailName: this.isHass() ? 'h/studentFunds-detail' : 'studentFunds-detail',
           busy: false,
           Data: [],
+          StudentList: [],
           searchDate: {
             date: moment().hours(9).toDate(),
             secondDate: moment().subtract(1, 'month').add(1, 'day').hours(9).toDate(),
@@ -59,15 +57,59 @@ sap.ui.define(
         };
       },
 
-      onObjectMatched() {
-        this.onSearch();
-        this.totalCount();
+      async onObjectMatched(oParameter, sRouteName) {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/routeName', sRouteName);
+
+        try {
+          oViewModel.setProperty('/busy', true);
+
+          const aList = await this.getStudentFundList();
+          const oTable = this.byId('studentTable');
+
+          oViewModel.setProperty('/StudentList', aList);
+          oViewModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aList }));
+
+          const [mTotal] = await this.totalCount();
+          const sYear = mTotal.Zyear;
+
+          mTotal.Zbetrg = mTotal.Zbetrg.replace(/\./g, '');
+          mTotal.Zyear = sYear === '0000' ? moment().format('YYYY') : sYear;
+
+          oViewModel.setProperty('/Total', mTotal);
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       // 대상자 정보 사원선택시 화면 Refresh
-      onRefresh() {
-        this.onSearch();
-        this.totalCount();
+      async onRefresh() {
+        const oViewModel = this.getViewModel();
+
+        try {
+          oViewModel.setProperty('/busy', true);
+
+          const aList = await this.getStudentFundList();
+          const oTable = this.byId('studentTable');
+
+          oViewModel.setProperty('/StudentList', aList);
+          oViewModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aList }));
+
+          const [mTotal] = await this.totalCount();
+          const sYear = mTotal.Zyear;
+
+          mTotal.Zbetrg = mTotal.Zbetrg.replace(/\./g, '');
+          mTotal.Zyear = sYear === '0000' ? moment().format('YYYY') : sYear;
+
+          oViewModel.setProperty('/Total', mTotal);
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       // override AttachFileCode
@@ -76,7 +118,7 @@ sap.ui.define(
       },
 
       onClick() {
-        this.getRouter().navTo(this.getViewModel().getProperty('/detailName'), { oDataKey: 'N' });
+        this.getRouter().navTo(`${this.getViewModel().getProperty('/routeName')}-detail`, { oDataKey: 'N' });
       },
 
       formatNumber(vNum = '0') {
@@ -88,95 +130,73 @@ sap.ui.define(
       },
 
       thisYear(sYear = String(moment().format('YYYY'))) {
-        return this.getBundleText('MSG_03012', sYear);
+        return this.getBundleText('MSG_03012', sYear); // {0}년 학자금 신청 내역입니다.
       },
 
-      onSearch() {
+      async onSearch() {
+        const oViewModel = this.getViewModel();
+
+        try {
+          oViewModel.setProperty('/busy', true);
+
+          const aList = await this.getStudentFundList();
+          const oTable = this.byId('studentTable');
+
+          oViewModel.setProperty('/StudentList', aList);
+          oViewModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aList }));
+
+          const [mTotal] = await this.totalCount();
+          const sYear = mTotal.Zyear;
+
+          mTotal.Zbetrg = mTotal.Zbetrg.replace(/\./g, '');
+          mTotal.Zyear = sYear === '0000' ? moment().format('YYYY') : sYear;
+
+          oViewModel.setProperty('/Total', mTotal);
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
+      },
+
+      // 학자금 신청내역
+      async getStudentFundList() {
+        const oViewModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oListModel = this.getViewModel();
-        const oTable = this.byId('studentTable');
-        const oSearchDate = oListModel.getProperty('/searchDate');
-        const dDate = moment(oSearchDate.secondDate).hours(9).toDate();
-        const dDate2 = moment(oSearchDate.date).hours(9).toDate();
+        const mSearch = oViewModel.getProperty('/searchDate');
+        const dDate = moment(mSearch.secondDate).hours(9).toDate();
+        const dDate2 = moment(mSearch.date).hours(9).toDate();
         const sMenid = this.getCurrentMenuId();
+        const mPayLoad = {
+          Prcty: 'L',
+          Menid: sMenid,
+          Apbeg: dDate,
+          Apend: dDate2,
+          Pernr: this.getAppointeeProperty('Pernr'),
+        };
 
-        oListModel.setProperty('/busy', true);
-
-        const aFilters = [
-          // prettier 방지용 주석
-          new Filter('Prcty', FilterOperator.EQ, 'L'),
-          new Filter('Menid', FilterOperator.EQ, sMenid),
-          new Filter('Apbeg', FilterOperator.EQ, dDate),
-          new Filter('Apend', FilterOperator.EQ, dDate2),
-        ];
-
-        if (this.isHass()) {
-          const sPernr = this.getAppointeeProperty('Pernr');
-
-          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
-          this.totalCount();
-        }
-
-        oModel.read('/SchExpenseApplSet', {
-          filters: aFilters,
-          success: (oData) => {
-            if (oData) {
-              const oList = oData.results;
-
-              oListModel.setProperty('/StudentList', oList);
-              oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: oList }));
-              oListModel.setProperty('/busy', false);
-            }
-          },
-          error: (oError) => {
-            AppUtils.handleError(new ODataReadError(oError));
-            oListModel.setProperty('/busy', false);
-          },
-        });
+        return await Client.getEntitySet(oModel, 'SchExpenseAppl', mPayLoad);
       },
 
-      totalCount() {
+      // 나의 학자금 현황
+      async totalCount() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oListModel = this.getViewModel();
-        const aFilters = [];
 
-        if (this.isHass()) {
-          const sPernr = this.getAppointeeProperty('Pernr');
-
-          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
-        }
-
-        oModel.read('/SchExpenseMyschSet', {
-          filters: aFilters,
-          success: (oData) => {
-            if (oData) {
-              const oList = oData.results[0];
-              const sYear = oList.Zyear;
-
-              oList.Zbetrg = oList.Zbetrg.replace(/\./g, '');
-              oList.Zyear = sYear === '0000' ? moment().format('YYYY') : sYear;
-
-              oListModel.setProperty('/Total', oList);
-            }
-          },
-          error: (oError) => {
-            AppUtils.handleError(new ODataReadError(oError));
-          },
-        });
+        return await Client.getEntitySet(oModel, 'SchExpenseMysch', { Pernr: this.getAppointeeProperty('Pernr') });
       },
 
       onSelectRow(oEvent) {
-        const oListModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
         const vPath = oEvent.getParameters().rowBindingContext.getPath();
-        const oRowData = oListModel.getProperty(vPath);
+        const oRowData = oViewModel.getProperty(vPath);
 
-        this.getRouter().navTo(oListModel.getProperty('/detailName'), { oDataKey: oRowData.Appno });
+        this.getRouter().navTo(oViewModel.getProperty('/detailName'), { oDataKey: oRowData.Appno });
       },
 
       onPressExcelDownload() {
         const oTable = this.byId('studentTable');
         const aTableData = this.getViewModel().getProperty('/StudentList');
-        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_03028');
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_03028'); // {학자금 신청}_목록
 
         TableUtils.export({ oTable, aTableData, sFileName });
       },
