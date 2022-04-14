@@ -41,6 +41,7 @@ sap.ui.define(
 
       initializeModel() {
         return {
+          routeName: '',
           menid: this.getCurrentMenuId(),
           Hass: this.isHass(),
           previousName: History.getInstance().getPreviousHash(),
@@ -56,13 +57,14 @@ sap.ui.define(
         };
       },
 
-      async onObjectMatched(oParameter) {
+      async onObjectMatched(oParameter, sRouteName) {
         const sDataKey = oParameter.oDataKey;
         const oDetailModel = this.getViewModel();
 
         oDetailModel.setData(this.initializeModel());
         oDetailModel.setProperty('/busy', true);
         oDetailModel.setProperty('/ViewKey', sDataKey);
+        oDetailModel.setProperty('/routeName', _.chain(sRouteName).split('-', 1).head().value());
 
         this.PostcodeDialogHandler = new PostcodeDialogHandler(this, this.callbackPostcode.bind(this));
 
@@ -109,7 +111,14 @@ sap.ui.define(
 
       // 이전화면
       onPreBack() {
-        this.getRouter().navTo(this.getViewModel().getProperty('/previousName'));
+        const oViewModel = this.getViewModel();
+        let sRouteName = oViewModel.getProperty('/previousName');
+
+        if (!sRouteName) {
+          sRouteName = oViewModel.getProperty('/routeName');
+        }
+
+        this.getRouter().navTo(sRouteName);
       },
 
       // FormData Settings

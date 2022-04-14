@@ -133,7 +133,7 @@ sap.ui.define(
       },
 
       // 나의 근무일정 대상년월 Text
-      formatSchedule(sYymm = moment().format('yyyy.MM'), dSDate, dEDate) {
+      formatSchedule(sYymm = moment().format('yyyy-MM'), dSDate, dEDate) {
         const dS = moment(dSDate).format('yyyy.MM.DD') || moment().format('yyyy.MM.DD');
         const dD = moment(dEDate).format('yyyy.MM.DD') || moment().format('yyyy.MM.DD');
 

@@ -4,11 +4,11 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
+    'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/TableUtils',
@@ -25,11 +25,11 @@ sap.ui.define(
     // prettier 방지용 주석
     Filter,
     FilterOperator,
-    JSONModel,
     MessageBox,
     Appno,
     AppUtils,
     ComboEntry,
+    UI5Error,
     FragmentEvent,
     TextUtils,
     TableUtils,
@@ -87,7 +87,14 @@ sap.ui.define(
           oDetailModel.setProperty('/ClubType', new ComboEntry({ codeKey: 'Zclub', valueKey: 'Zclubtx', aEntries: aList }));
           this.setFormData();
         } catch (oError) {
-          AppUtils.handleError(oError);
+          if (oError instanceof Error) oError = new UI5Error({ message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
+
+          this.debug(oError);
+          AppUtils.handleError(oError, {
+            onClose: () => {
+              this.getRouter().navTo(oViewModel.getProperty('/previousName'));
+            },
+          });
         } finally {
           oDetailModel.setProperty('/busy', false);
         }

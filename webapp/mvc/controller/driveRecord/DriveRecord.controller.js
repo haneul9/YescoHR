@@ -74,6 +74,15 @@ sap.ui.define(
         return date && time ? `${moment(date).format('YYYY.MM.DD')} / ${moment(time.ms).subtract(9, 'h').format('HH:mm')}` : '';
       },
 
+      // 총 주행거리
+      totalMileage(value = '') {
+        if (!value) {
+          return;
+        }
+
+        return `${this.TextUtils.toCurrency(parseFloat(_.replace(_.replace(value, ' km', ''), ',', '')))} km`;
+      },
+
       // 주행거리
       mileage(value = '') {
         if (!value) {
