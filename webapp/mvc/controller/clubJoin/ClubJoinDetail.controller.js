@@ -43,7 +43,7 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.clubJoin.ClubJoinDetail', {
-      LIST_PAGE_ID: 'container-ehr---clubJoin',
+      LIST_PAGE_ID: { E: 'container-ehr---clubJoin', H: 'container-ehr---h_clubJoin' },
 
       TextUtils: TextUtils,
       TableUtils: TableUtils,
@@ -147,7 +147,7 @@ sap.ui.define(
             aFilter.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
           }
 
-          const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+          const oListView = oView.getParent().getPage(this.isHass() ? this.LIST_PAGE_ID.H : this.LIST_PAGE_ID.E);
 
           if (!!oListView && !!oListView.getModel().getProperty('/parameters')) {
             const mListData = oListView.getModel().getProperty('/parameters');
