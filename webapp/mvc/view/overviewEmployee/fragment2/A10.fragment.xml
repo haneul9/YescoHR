@@ -1,15 +1,15 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
-  <VBox class="portlet portlet-box" visible="{/contents/A05/busy}">
+  <VBox class="portlet portlet-box" visible="{/contents/A10/busy}">
     <custom:Placeholder />
   </VBox>
-  <VBox class="portlet portlet-box" visible="{= !${/contents/A05/busy} }">
+  <VBox class="portlet portlet-box" visible="{= !${/contents/A10/busy} }">
     <customData>
-      <core:CustomData key="key" value="a05" />
+      <core:CustomData key="key" value="a10" />
     </customData>
     <HBox class="portlet-header">
-      <Title level="H2" text="{i18n>LABEL_28013}" />
+      <Title level="H2" text="{i18n>LABEL_28018}" />
       <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_human_green.svg" width="12px" class="ml-8-px" tooltip="{i18n>LABEL_28003}" />
       <Text text="">
         <layoutData>
@@ -22,11 +22,7 @@
       <layoutData>
         <FlexItemData growFactor="1" />
       </layoutData>
-      <HBox width="100%" justifyContent="Center" alignItems="Baseline">
-        <Label text="{ path: '/contents/A05/data/Cnt01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" class="lh-70-px font-40-px color-03 normal" />
-        <Text text="{i18n>LABEL_28060}" class="font-20-px color-03 normal" />
-      </HBox>
-      <core:HTML content='&lt;div id="employee-a05-chart-container" class="column-chart"&gt;&lt;/div&gt;'>
+      <core:HTML content='&lt;div id="employee-a10-chart-container" class="bar-chart"&gt;&lt;/div&gt;'>
         <core:layoutData>
           <FlexItemData growFactor="1" />
         </core:layoutData>

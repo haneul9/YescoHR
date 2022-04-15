@@ -61,6 +61,12 @@ sap.ui.define(
               $('#sap-ui-blocklayer-popup').off('click');
             });
           })
+          .attachAfterClose(() => {
+            setTimeout(() => {
+              this.oPopover.getContent()[1].getContent()[0].getBinding('items').filter([]);
+              this.oPortletModel.setProperty('/popover/employees', []);
+            });
+          })
           .setModel(this.oPortletModel)
           .bindElement('/popover');
 

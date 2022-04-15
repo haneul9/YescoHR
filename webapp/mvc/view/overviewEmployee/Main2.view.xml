@@ -45,18 +45,18 @@
           <Text text="{i18n>LABEL_28004}" class="ml-8-px font-14-px" />
         </HBox>
       </HBox>
-      <grid:CSSGrid gridGap="20px" gridAutoRows="230px" gridTemplateColumns="repeat(4, 1fr)" class="boardroom-grid mobile-grid-flow-column sapUiSmallMarginTop">
-        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A01" type="XML" />
-        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A02" type="XML" />
-        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A03" type="XML" />
-        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A04" type="XML" />
-        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A05" type="XML" />
-        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A06" type="XML" />
-        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A07" type="XML" />
-        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A08" type="XML" />
-        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A09" type="XML" />
-        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A10" type="XML" />
-        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A11" type="XML" />
+      <grid:CSSGrid gridGap="20px" gridAutoRows="310px" gridTemplateColumns="repeat(4, 1fr)" class="boardroom-grid mobile-grid-flow-column sapUiSmallMarginTop">
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment2.A01" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment2.A02" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment2.A03" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment2.A04" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment2.A05" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment2.A06" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment2.A07" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment2.A08" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment2.A09" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment2.A10" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment2.A11" type="XML" />
       </grid:CSSGrid>
     </VBox>
   </Page>

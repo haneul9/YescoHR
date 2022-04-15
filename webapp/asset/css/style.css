@@ -80,12 +80,12 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p01 {position:relative; padding:20px}
 .portlet-p01:before {position:absolute; top:64px; left:82px; right:158px; bottom:48px; content:""; width:162px; height:158px; background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/portlet_bg.svg'); background-position:center; filter:blur(50px); -webkit-filter:blur(50px); -moz-filter:blur(50px); -o-filter:blur(50px); -ms-filter:blur(50px)}
 .portlet-p01 .my-info {text-align:center}
-.portlet-p01 .my-info .sapMText {text-align:center; font-size:12px}
+.portlet-p01 .my-info .sapMText {line-height:14px; text-align:center; font-size:14px; font-weight:700}
 .portlet-p01 .my-info .sapMImg {margin-bottom:16px}
-.portlet-p01 .my-info .name {margin-bottom:5px; font-size:20px}
-.portlet-p01 .my-info .position {font-size:12px; color:#333; line-height:14px; font-weight:700}
-.portlet-p01 .my-info .team {font-size:12px; color:#333; line-height:14px}
-.portlet-p01 .my-info .org {font-size:12px; color:#767676; line-height:14px}
+.portlet-p01 .my-info .name {margin-bottom:5px; line-height:1.45; font-size:20px}
+.portlet-p01 .my-info .position {color:#333}
+.portlet-p01 .my-info .team {color:#333}
+.portlet-p01 .my-info .org {color:#767676}
 .portlet-p01 .my-info-summary {margin-left:56px} 
 .portlet-p01 .my-info-summary .sapMLabel {margin-bottom:2px}
 .portlet-p01 .my-info-summary .sapMText {font-size:20px; font-weight:700} 
@@ -268,7 +268,7 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 --BackgroundColorFocus:#fff;
 /**/
 --ComboBoxItemHeight:53px;
---StatisticsFontSize:12px;
+--StatisticsFontSize:14px;
 /* 평가 */
 --PerformanceGradeColor0:#24a3fb;
 --PerformanceGradeColor1:#81daea;
@@ -1664,7 +1664,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 
 /* Boardroom */
 .legend-wrap * {display:flex; font-size:14px; font-weight:600}
-.legend-wrap > .sapMFlexBox {margin-bottom:2px}
+.legend-wrap > .sapMFlexBox {line-height:22px}
 .legend-wrap > .sapMFlexBox .sapMText {padding-left:4px}
 .legend {display:flex; align-items:center}
 .legend:before {content:""; display:inline-block; margin-right:8px; width:12px; height:12px; border-radius:50%}
