@@ -197,8 +197,9 @@ sap.ui.define(
         const oTable = this.byId('studentTable');
         const aTableData = this.getViewModel().getProperty('/StudentList');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_03028'); // {학자금 신청}_목록
+        const aDateProps = ['Appda', 'Sgnda', 'Zpayym'];
 
-        TableUtils.export({ oTable, aTableData, sFileName });
+        TableUtils.export({ oTable, aTableData, sFileName, aDateProps });
       },
     });
   }

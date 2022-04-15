@@ -103,8 +103,9 @@ sap.ui.define(
         const oTable = this.byId('repayHisTable');
         const aTableData = this.getViewModel().getProperty('/RepayHisList');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_07033');
+        const aDateProps = ['Datum'];
 
-        TableUtils.export({ oTable, aTableData, sFileName });
+        TableUtils.export({ oTable, aTableData, sFileName, aDateProps });
       },
 
       // 융자금액 입력시

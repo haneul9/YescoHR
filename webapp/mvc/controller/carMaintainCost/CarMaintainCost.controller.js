@@ -181,8 +181,9 @@ sap.ui.define(
         const oTable = this.byId('carTable');
         const aTableData = this.getViewModel().getProperty('/List');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_25001');
+        const aDateProps = ['Appda'];
 
-        TableUtils.export({ oTable, aTableData, sFileName });
+        TableUtils.export({ oTable, aTableData, sFileName, aDateProps });
       },
     });
   }
