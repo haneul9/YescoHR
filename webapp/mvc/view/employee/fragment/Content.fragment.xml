@@ -16,7 +16,6 @@
       <HBox>
         <VBox id="sideBody" class="vCardBox side-navigation expanded sapUiSmallMarginEnd" height="{/sideNavigation/height}">
           <ToggleButton icon="sap-icon://navigation-left-arrow" press=".onToggleNavigation" class="icon-button toggle-navi" />
-          <!-- 펼침버튼 디자인 변경-->
           <IconTabBar selectedKey="{/sideNavigation/selectedKey}" expandable="false" visible="{= ${/sideNavigation/isShow}}" select=".onSelectSideTab">
             <layoutData>
               <FlexItemData growFactor="1"/>

@@ -1392,8 +1392,8 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .side-navigation .sapMFlexItem:not(:first-child) {opacity:0}
 .side-navigation.expanded {width:27%; transition:width 0.5s; padding:25px 30px}
 .side-navigation.expanded .sapMFlexItem:not(:first-child) {opacity:1}
-.side-navigation .sapMBtn.icon-button.toggle-navi {left:-10px}
-.side-navigation.expanded .sapMBtn.icon-button.toggle-navi {left:-31px}
+.side-navigation .sapMBtn.icon-button.toggle-navi {left:-10px;}
+.side-navigation.expanded .sapMBtn.icon-button.toggle-navi {left:377px;}
 .side-navigation .sapMScrollCont:hover::-webkit-scrollbar {width:13px !important}
 .main-profile {width:73%; transition:width 0.5s}
 .main-profile.expanded {width:100%}
