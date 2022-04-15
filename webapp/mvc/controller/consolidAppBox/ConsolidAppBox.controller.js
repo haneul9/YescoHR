@@ -217,10 +217,11 @@ sap.ui.define(
 
       onPressExcelDownload() {
         const oTable = this.byId('consolidTable');
-        const aTableData = this.getViewModel().getProperty('/ZappStatAl');
+        const aTableData = this.getViewModel().getProperty('/List');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_19001');
+        const aDateProps = ['ZreqDate', 'ZappPdate'];
 
-        TableUtils.export({ oTable, aTableData, sFileName });
+        TableUtils.export({ oTable, aTableData, sFileName, aDateProps });
       },
     });
   }

@@ -126,18 +126,21 @@ sap.ui.define(
         const sToday = moment().format('YYYYMMDD');
         const aColumns = !_.isEmpty(aCustomColumns)
           ? aCustomColumns
-          : oTable.getColumns().map((col) => ({
-              label: bHasMultiLabel
-                ? [
-                    ...col.getMultiLabels().reduce((acc, cur) => {
-                      acc.add(cur.getText());
-                      return acc;
-                    }, new Set()),
-                  ].join('-')
-                : col.getLabel().getText(),
-              property: !!col.getTemplate().getBindingInfo('text') ? (col.getTemplate().getBindingInfo('text').parts[0].path === sStatCode ? sStatTxt : col.getTemplate().getBindingInfo('text').parts[0].path) : !!col.getTemplate().getBindingInfo('visible') ? col.getTemplate().getBindingInfo('visible').parts[0].path : !!col.getTemplate().getBindingInfo('selectedKey') ? col.getTemplate().getBindingInfo('selectedKey').parts[0].path : '',
-              type: exportLibrary.EdmType.String,
-            }));
+          : _.chain(oTable.getColumns())
+              .filter((col) => !_.isEmpty(col.getLabel()))
+              .map((col) => ({
+                label: bHasMultiLabel
+                  ? [
+                      ...col.getMultiLabels().reduce((acc, cur) => {
+                        acc.add(cur.getText());
+                        return acc;
+                      }, new Set()),
+                    ].join('-')
+                  : col.getLabel().getText(),
+                property: !!col.getTemplate().getBindingInfo('text') ? (col.getTemplate().getBindingInfo('text').parts[0].path === sStatCode ? sStatTxt : col.getTemplate().getBindingInfo('text').parts[0].path) : !!col.getTemplate().getBindingInfo('visible') ? col.getTemplate().getBindingInfo('visible').parts[0].path : !!col.getTemplate().getBindingInfo('selectedKey') ? col.getTemplate().getBindingInfo('selectedKey').parts[0].path : '',
+                type: exportLibrary.EdmType.String,
+              }))
+              .value();
 
         const aColumnFilter = _.reject(aColumns, (e) => {
           return !e.property;

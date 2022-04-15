@@ -399,8 +399,9 @@ sap.ui.define(
         const oTable = this.byId(this.DRIVE_TABLE_ID);
         const aTableData = this.getViewModel().getProperty('/List');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_34001'); // {차량운행기록부}_목록
+        const aDateProps = ['Regdt'];
 
-        TableUtils.export({ oTable, aTableData, sFileName });
+        TableUtils.export({ oTable, aTableData, sFileName, aDateProps });
       },
     });
   }

@@ -211,8 +211,9 @@ sap.ui.define(
         const oTable = this.byId('eduTable');
         const aTableData = this.getViewModel().getProperty('/EduList');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_31001');
+        const aDateProps = ['Begda', 'Endda'];
 
-        TableUtils.export({ oTable, aTableData, sFileName });
+        TableUtils.export({ oTable, aTableData, sFileName, aDateProps });
       },
     });
   }

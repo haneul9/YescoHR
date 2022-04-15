@@ -256,8 +256,9 @@ sap.ui.define(
         const oTable = this.byId('commuteTable');
         const aTableData = this.getViewModel().getProperty('/CommuteList');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_30001');
+        const aDateProps = ['Appda', 'Sgnda'];
 
-        TableUtils.export({ oTable, aTableData, sFileName });
+        TableUtils.export({ oTable, aTableData, sFileName, aDateProps });
       },
     });
   }
