@@ -6,6 +6,7 @@ sap.ui.define(
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
+    'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/TableUtils',
@@ -20,6 +21,7 @@ sap.ui.define(
     Appno,
     AppUtils,
     AttachFileAction,
+    UI5Error,
     FragmentEvent,
     TextUtils,
     TableUtils,
@@ -30,7 +32,7 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.commuteType.CommuteTypeDetail', {
-      LIST_PAGE_ID: 'container-ehr---commuteType',
+      LIST_PAGE_ID: { E: 'container-ehr---commuteType', H: 'container-ehr---h_commuteType' },
 
       AttachFileAction: AttachFileAction,
       TextUtils: TextUtils,
@@ -39,6 +41,7 @@ sap.ui.define(
 
       initializeModel() {
         return {
+          previousName: '',
           FormData: {},
           Settings: {},
           WorkType: [],
@@ -47,15 +50,16 @@ sap.ui.define(
       },
 
       // setData
-      async onObjectMatched(oParameter) {
-        const oDetailModel = this.getViewModel();
+      async onObjectMatched(oParameter, sRouteName) {
+        const oViewModel = this.getViewModel();
 
-        oDetailModel.setData(this.initializeModel());
+        oViewModel.setData(this.initializeModel());
+        oViewModel.setProperty('/previousName', _.chain(sRouteName).split('-', 1).head().value());
 
         try {
           // Input Field Imited
-          oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.WORKTIME, 'WorkScheduleApply')));
-          oDetailModel.setProperty('/busy', true);
+          oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.WORKTIME, 'WorkScheduleApply')));
+          oViewModel.setProperty('/busy', true);
 
           const sPernr = this.getAppointeeProperty('Pernr');
           const oModel = this.getModel(ServiceNames.WORKTIME);
@@ -64,33 +68,39 @@ sap.ui.define(
             Pernr: sPernr,
           });
 
-          oDetailModel.setProperty('/WorkType', aOtpList);
+          oViewModel.setProperty('/WorkType', aOtpList);
 
           const sDataKey = oParameter.oDataKey;
 
           if (sDataKey === 'N' || !sDataKey) {
             const oView = this.getView();
-            const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+            const oListView = oView.getParent().getPage(this.isHass() ? this.LIST_PAGE_ID.H : this.LIST_PAGE_ID.E);
             const [oTargetData] = oListView.getModel().getProperty('/SelectedRow');
             const sZyymm = oParameter.zyymm;
             const sSchkz = oParameter.schkz;
 
-            oDetailModel.setProperty('/FormData', {
+            oViewModel.setProperty('/FormData', {
               Appno: oTargetData.Appno,
               Pernr: sPernr,
               Zyymm: sZyymm,
               Schkz: sSchkz,
             });
-            oDetailModel.setProperty('/ApplyInfo', oTargetData);
-            oDetailModel.setProperty('/ApprovalDetails', oTargetData);
+            oViewModel.setProperty('/ApplyInfo', oTargetData);
+            oViewModel.setProperty('/ApprovalDetails', oTargetData);
           }
 
           this.settingsAttachTable();
         } catch (oError) {
+          if (oError instanceof Error) oError = new UI5Error({ message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
+
           this.debug(oError);
-          AppUtils.handleError(oError);
+          AppUtils.handleError(oError, {
+            onClose: () => {
+              this.getRouter().navTo(oViewModel.getProperty('/previousName'));
+            },
+          });
         } finally {
-          oDetailModel.setProperty('/busy', false);
+          oViewModel.setProperty('/busy', false);
         }
       },
 
@@ -118,20 +128,20 @@ sap.ui.define(
             }
 
             try {
-              AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true);
 
-              const oDetailModel = this.getViewModel();
-              const sAppno = oDetailModel.getProperty('/FormData/Appno');
+              const oViewModel = this.getViewModel();
+              const sAppno = oViewModel.getProperty('/FormData/Appno');
 
               if (!sAppno || _.parseInt(sAppno) === 0) {
                 const sAppno = await Appno.get.call(this);
 
-                oDetailModel.setProperty('/FormData/Appno', sAppno);
-                oDetailModel.setProperty('/FormData/Appda', new Date());
+                oViewModel.setProperty('/FormData/Appno', sAppno);
+                oViewModel.setProperty('/FormData/Appda', new Date());
               }
 
               const oModel = this.getModel(ServiceNames.WORKTIME);
-              const oFormData = oDetailModel.getProperty('/FormData');
+              const oFormData = oViewModel.getProperty('/FormData');
               let oSendObject = {
                 ...oFormData,
                 Prcty: 'C',
@@ -150,7 +160,7 @@ sap.ui.define(
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
             }
           },
         });
@@ -158,9 +168,9 @@ sap.ui.define(
 
       // AttachFileTable Settings
       settingsAttachTable() {
-        const oDetailModel = this.getViewModel();
-        const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
-        const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
+        const oViewModel = this.getViewModel();
+        const sStatus = oViewModel.getProperty('/FormData/ZappStatAl');
+        const sAppno = oViewModel.getProperty('/FormData/Appno') || '';
 
         AttachFileAction.setAttachFile(this, {
           Editable: !sStatus,

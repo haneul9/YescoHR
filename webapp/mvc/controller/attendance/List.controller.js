@@ -34,6 +34,11 @@ sap.ui.define(
         return {
           busy: false,
           routeName: '',
+          employeeModelSettings: {
+            InitialSearch: false,
+            Enabled: { Persa: true, Orgeh: true },
+            Search: { Persa: 'ALL', Pbtxt: null, Orgeh: null },
+          },
           quota: {
             isSecondVisible: false,
             10: { Kotxt: this.getBundleText('LABEL_04015'), Crecnt: 0, Usecnt: 0 }, // 연차쿼터
@@ -80,6 +85,21 @@ sap.ui.define(
           oViewModel.setProperty('/busy', true);
           oViewModel.setProperty('/routeName', sRouteName);
           this.getAppointeeModel().setProperty('/showChangeButton', true);
+
+          if (!this.isHass() && !this.isMss()) {
+            const mSession = this.getSessionData();
+
+            oViewModel.setProperty('/employeeModelSettings/InitialSearch', true);
+            oViewModel.setProperty('/employeeModelSettings/Enabled', {
+              Persa: false,
+              Orgeh: false,
+            });
+            oViewModel.setProperty('/employeeModelSettings/Search', {
+              Persa: mSession.Werks,
+              Orgeh: mSession.Orgeh,
+              Pbtxt: mSession.Orgtx,
+            });
+          }
 
           const fCurriedGetEntitySet = Client.getEntitySet(oModel);
           const [aQuotaResultData, aRowData] = await Promise.all([

@@ -1,37 +1,37 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:custom="sap.ui.yesco.control">
-    <VBox class="portlet portlet-box" visible="{/contents/A02/busy}">
-        <custom:Placeholder />
-    </VBox>
-    <VBox class="portlet portlet-box" visible="{= !${/contents/A02/busy} }">
-        <HBox class="portlet-header">
-            <Title level="H2" text="{i18n>LABEL_28041}" />
-            <Text class="desc-txt" text="{/contents/A02/data/Rte02}" />
-            <Text text="">
-                <layoutData>
-                    <FlexItemData growFactor="1" />
-                </layoutData>
-            </Text>
-        </HBox>
-        <HBox class="portlet-body">
-            <layoutData>
-                <FlexItemData growFactor="1" />
-            </layoutData>
-            <custom:HBox width="24%" height="100%" class="active-link" click=".onPressCount">
-                <custom:customData>
-                    <core:CustomData key="Headty" value="{/contents/A02/Headty}" />
-                    <core:CustomData key="Discod" value="0" />
-                </custom:customData>
-                <Label text="{/contents/A02/data/Rte01}" class="font-30-px color-03 pt-8-px normal ls-small"/>
-            </custom:HBox>
-            <VBox width="76%">
-                <core:HTML content='&lt;div id="attendance-a02-chart-container"&gt;&lt;/div&gt;'>
-                    <core:layoutData>
-                        <FlexItemData growFactor="1" />
-                    </core:layoutData>
-                </core:HTML>
-            </VBox>
-        </HBox>
-    </VBox>
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <VBox class="portlet portlet-box" visible="{/contents/A02/busy}">
+    <custom:Placeholder />
+  </VBox>
+  <VBox class="portlet portlet-box" visible="{= !${/contents/A02/busy} }">
+    <HBox class="portlet-header">
+      <Title level="H2" text="{i18n>LABEL_28041}" />
+      <Text class="desc-txt" text="{/contents/A02/data/Rte02}" />
+      <Text text="">
+        <layoutData>
+          <FlexItemData growFactor="1" />
+        </layoutData>
+      </Text>
+    </HBox>
+    <HBox class="portlet-body">
+      <layoutData>
+        <FlexItemData growFactor="1" />
+      </layoutData>
+      <custom:HBox width="24%" height="100%" class="active-link" click=".onPressCount">
+        <custom:customData>
+          <core:CustomData key="Headty" value="{/contents/A02/Headty}" />
+          <core:CustomData key="Discod" value="0" />
+        </custom:customData>
+        <Label text="{/contents/A02/data/Rte01}" class="font-30-px color-03 pt-8-px normal letter-spacing-sm"/>
+      </custom:HBox>
+      <VBox width="76%">
+        <core:HTML content='&lt;div id="attendance-a02-chart-container"&gt;&lt;/div&gt;'>
+          <core:layoutData>
+            <FlexItemData growFactor="1" />
+          </core:layoutData>
+        </core:HTML>
+      </VBox>
+    </HBox>
+  </VBox>
 </core:FragmentDefinition>

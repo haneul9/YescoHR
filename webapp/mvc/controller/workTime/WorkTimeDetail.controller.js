@@ -43,6 +43,7 @@ sap.ui.define(
 
       initializeModel() {
         return {
+          previousName: '',
           Fixed: true,
           DelBtn: false,
           FieldLimit: {},
@@ -63,7 +64,11 @@ sap.ui.define(
         };
       },
 
-      async onObjectMatched(oParameter) {
+      getPreviousRouteName() {
+        return this.getViewModel().getProperty('/previousName');
+      },
+
+      async onObjectMatched(oParameter, sRouteName) {
         const sDataKey = oParameter.oDataKey;
         const oDetailModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.WORKTIME);
@@ -73,6 +78,7 @@ sap.ui.define(
         try {
           // Input Field Imited
           oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.WORKTIME, 'OtWorkApply')));
+          oDetailModel.setProperty('/previousName', _.chain(sRouteName).split('-', 1).head().value());
           oDetailModel.setProperty('/busy', true);
 
           const sMenid = this.getCurrentMenuId();
@@ -543,7 +549,7 @@ sap.ui.define(
             }
 
             try {
-              AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true);
 
               const oDetailModel = this.getViewModel();
               const sAppno = await Appno.get.call(this);
@@ -564,7 +570,7 @@ sap.ui.define(
               const oCheck = await Client.deep(oModel, 'OtWorkApply', oSendObject);
 
               if (!!oCheck.Retmsg) {
-                AppUtils.setAppBusy(false, this);
+                AppUtils.setAppBusy(false);
                 oCheck.Retmsg = _.replace(oCheck.Retmsg, '\\n', '\n');
 
                 // {신청}하시겠습니까?
@@ -578,7 +584,7 @@ sap.ui.define(
                     }
 
                     try {
-                      AppUtils.setAppBusy(true, this);
+                      AppUtils.setAppBusy(true);
 
                       // FileUpload
                       if (!!AttachFileAction.getFileCount.call(this)) {
@@ -628,7 +634,7 @@ sap.ui.define(
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
             }
           },
         });

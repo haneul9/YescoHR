@@ -6,7 +6,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
     <VBox class="contents">
-      <VBox class="search-area mobile-mss-overview">
+      <VBox class="search-area row-3">
         <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBottom">
           <DatePicker width="100%" displayFormat="yyyy" valueFormat="yyyy" value="{/searchConditions/Zyear}">
             <layoutData>

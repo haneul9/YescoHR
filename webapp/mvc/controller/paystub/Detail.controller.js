@@ -21,8 +21,10 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.paystub.Detail', {
+      sRouteName: '',
+
       getPreviousRouteName() {
-        return 'paystub';
+        return _.chain(this.sRouteName).split('-', 1).head().value();
       },
 
       initializeModel() {
@@ -38,8 +40,10 @@ sap.ui.define(
         };
       },
 
-      async onObjectMatched(oParameter) {
+      async onObjectMatched(oParameter, sRouteName) {
         const oViewModel = this.getViewModel();
+
+        this.sRouteName = sRouteName;
 
         oViewModel.setData(this.initializeModel());
         oViewModel.setProperty('/Seqnr', oParameter.seqnr);

@@ -467,7 +467,7 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         try {
-          AppUtils.setAppBusy(true, this);
+          AppUtils.setAppBusy(true);
 
           const mFormData = oViewModel.getProperty('/FormData');
 
@@ -479,14 +479,14 @@ sap.ui.define(
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
-          AppUtils.setAppBusy(false, this);
+          AppUtils.setAppBusy(false);
         }
       },
 
       // 다른Tree 선택시 확인용 저장
       async saveForm() {
         try {
-          AppUtils.setAppBusy(true, this);
+          AppUtils.setAppBusy(true);
 
           const oViewModel = this.getViewModel();
           const sAppno = oViewModel.getProperty('/FormData/Appno');
@@ -546,7 +546,7 @@ sap.ui.define(
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
-          AppUtils.setAppBusy(false, this);
+          AppUtils.setAppBusy(false);
         }
       },
 
@@ -563,7 +563,7 @@ sap.ui.define(
             }
 
             try {
-              AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true);
 
               const oViewModel = this.getViewModel();
               const sAppno = oViewModel.getProperty('/FormData/Appno');
@@ -628,7 +628,7 @@ sap.ui.define(
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
             }
           },
         });

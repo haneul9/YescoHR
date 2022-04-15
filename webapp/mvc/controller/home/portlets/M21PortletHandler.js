@@ -5,8 +5,8 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/home/portlets/AbstractPortletHandler',
-    'sap/ui/yesco/mvc/controller/home/portlets/dialog/M21PortletDialogHandler',
-    'sap/ui/yesco/mvc/controller/home/portlets/dialog/M21PortletMobileDialogHandler',
+    'sap/ui/yesco/mvc/controller/home/portlets/popup/M21PortletDialogHandler',
+    'sap/ui/yesco/mvc/controller/home/portlets/popup/M21PortletMobilePopoverHandler',
     'sap/ui/yesco/mvc/model/type/Currency', // XML expression binding용 type preloading
   ],
   (
@@ -16,7 +16,7 @@ sap.ui.define(
     ServiceNames,
     AbstractPortletHandler,
     M21PortletDialogHandler,
-    M21PortletMobileDialogHandler
+    M21PortletMobilePopoverHandler
   ) => {
     'use strict';
 
@@ -39,7 +39,7 @@ sap.ui.define(
         oController.byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);
 
-        this.oDialogHandler = this.bMobile ? new M21PortletMobileDialogHandler(oController, oPortletModel) : new M21PortletDialogHandler(oController, oPortletModel);
+        this.oPopupHandler = this.bMobile ? new M21PortletMobilePopoverHandler(oController, oPortletModel) : new M21PortletDialogHandler(oController, oPortletModel);
       },
 
       async readContentData() {
@@ -66,12 +66,12 @@ sap.ui.define(
       },
 
       onPressCount(oEvent) {
-        this.oDialogHandler.openDialog(oEvent);
+        this.oPopupHandler.openDialog(oEvent);
       },
 
       destroy() {
-        if (this.oDialogHandler) {
-          this.oDialogHandler.destroy();
+        if (this.oPopupHandler) {
+          this.oPopupHandler.destroy();
         }
 
         AbstractPortletHandler.prototype.destroy.call(this);

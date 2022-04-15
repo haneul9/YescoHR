@@ -19,14 +19,14 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return Debuggable.extend('sap.ui.yesco.mvc.controller.app.MobileEmployeeSearchDialogHandler', {
+    return Debuggable.extend('sap.ui.yesco.mvc.controller.app.MobileEmployeeSearchPopoverHandler', {
       /**
        * @override
        */
       constructor: function (oController) {
         this.oController = oController;
-        this.oDialogModel = new JSONModel(this.getInitialData());
-        this.oDialogModel.setSizeLimit(10000);
+        this.oPopoverModel = new JSONModel(this.getInitialData());
+        this.oPopoverModel.setSizeLimit(10000);
 
         this.init();
       },
@@ -42,19 +42,19 @@ sap.ui.define(
       async init() {
         const oView = this.oController.getView();
 
-        this.oDialog = await Fragment.load({
+        this.oPopover = await Fragment.load({
           id: oView.getId(),
-          name: 'sap.ui.yesco.mvc.view.app.fragment.MobileEmployeeSearchDialog',
+          name: 'sap.ui.yesco.mvc.view.app.fragment.MobileEmployeeSearchPopover',
           controller: this,
         });
 
-        this.oDialog
+        this.oPopover
           .attachAfterOpen(() => {
             setTimeout(() => {
               $('#sap-ui-blocklayer-popup')
                 .off('click')
                 .on('click', () => {
-                  this.onDialogClose();
+                  this.onPopoverClose();
                 });
             }, 100);
           })
@@ -63,10 +63,10 @@ sap.ui.define(
               $('#sap-ui-blocklayer-popup').off('click');
             });
           })
-          .setModel(this.oDialogModel)
+          .setModel(this.oPopoverModel)
           .bindElement('/');
 
-        oView.addDependent(this.oDialog);
+        oView.addDependent(this.oPopover);
 
         this.setBusy(false);
       },
@@ -75,7 +75,7 @@ sap.ui.define(
         this.setBusy(true);
         const aEmployees = await this.readSuggestionData(sValue);
 
-        this.oDialogModel.setProperty('/employees', aEmployees);
+        this.oPopoverModel.setProperty('/employees', aEmployees);
         this.setBusy(false);
       },
 
@@ -97,7 +97,7 @@ sap.ui.define(
 
         const sValue = $.trim(oEvent.getParameter('newValue'));
         if (!sValue || sValue.length < 2) {
-          this.oDialogModel.setProperty('/employees', []);
+          this.oPopoverModel.setProperty('/employees', []);
           return;
         }
 
@@ -107,21 +107,21 @@ sap.ui.define(
         }, 500);
       },
 
-      onDialogToggle(oEvent) {
-        if (this.oDialog.isOpen()) {
-          this.onDialogClose();
+      onPopoverToggle(oEvent) {
+        if (this.oPopover.isOpen()) {
+          this.onPopoverClose();
         } else {
-          this.oDialog.openBy(oEvent.getSource());
+          this.oPopover.openBy(oEvent.getSource());
           this.setBusy(false);
         }
       },
 
-      onDialogClose() {
-        this.oDialog.close();
+      onPopoverClose() {
+        this.oPopover.close();
       },
 
       navToProfile(oEvent) {
-        const sLinkType = this.oDialogModel.getProperty('/linkType');
+        const sLinkType = this.oPopoverModel.getProperty('/linkType');
         if (sLinkType !== 'M') {
           return;
         }
@@ -133,7 +133,7 @@ sap.ui.define(
       setBusy(bBusy = true) {
         setTimeout(
           () => {
-            this.oDialogModel.setProperty('/busy', bBusy);
+            this.oPopoverModel.setProperty('/busy', bBusy);
           },
           bBusy ? 0 : 500
         );

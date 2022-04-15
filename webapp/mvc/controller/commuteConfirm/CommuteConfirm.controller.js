@@ -139,7 +139,7 @@ sap.ui.define(
             }
 
             try {
-              AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true);
 
               const oModel = this.getModel(ServiceNames.WORKTIME);
               const oCommModel = this.getModel(ServiceNames.COMMON);
@@ -178,7 +178,7 @@ sap.ui.define(
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
             }
           },
         });
@@ -214,7 +214,7 @@ sap.ui.define(
             }
 
             try {
-              AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true);
 
               const oModel = this.getModel(ServiceNames.WORKTIME);
 
@@ -243,7 +243,7 @@ sap.ui.define(
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
             }
           },
         });

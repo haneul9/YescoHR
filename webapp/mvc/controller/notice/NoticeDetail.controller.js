@@ -164,7 +164,7 @@ sap.ui.define(
           onClose: async (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00103')) {
               try {
-                AppUtils.setAppBusy(true, this);
+                AppUtils.setAppBusy(true);
 
                 const oDetailModel = this.getViewModel();
                 const sAppno = oDetailModel.getProperty('/FormData/Appno');
@@ -211,7 +211,7 @@ sap.ui.define(
               } catch (oError) {
                 AppUtils.handleError(oError);
               } finally {
-                AppUtils.setAppBusy(false, this);
+                AppUtils.setAppBusy(false);
               }
             }
           },
@@ -227,7 +227,7 @@ sap.ui.define(
           onClose: async (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00106')) {
               try {
-                AppUtils.setAppBusy(true, this);
+                AppUtils.setAppBusy(true);
                 const oDetailModel = this.getViewModel();
                 const sAppno = oDetailModel.getProperty('/FormData/Appno');
 
@@ -275,7 +275,7 @@ sap.ui.define(
               } catch (error) {
                 AppUtils.handleError(error);
               } finally {
-                AppUtils.setAppBusy(false, this);
+                AppUtils.setAppBusy(false);
               }
             }
           },
@@ -291,7 +291,7 @@ sap.ui.define(
           actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
           onClose: (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00110')) {
-              AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true);
 
               const oFormData = this.getViewModel().getProperty('/FormData');
               const aList = oFormData.Detail.match(new RegExp('.{1,' + 4000 + '}', 'g'));
@@ -320,11 +320,11 @@ sap.ui.define(
                       this.onNavBack();
                     },
                   });
-                  AppUtils.setAppBusy(false, this);
+                  AppUtils.setAppBusy(false);
                 },
                 error: (oError) => {
                   AppUtils.handleError(new ODataDeleteError(oError));
-                  AppUtils.setAppBusy(false, this);
+                  AppUtils.setAppBusy(false);
                 },
               });
             }

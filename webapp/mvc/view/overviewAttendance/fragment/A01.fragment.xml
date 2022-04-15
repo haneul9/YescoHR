@@ -104,7 +104,7 @@
           <layoutData>
             <grid:GridItemLayoutData gridColumn="span 4" />
           </layoutData>
-          <Text text="{i18n>MSG_28003}" class="font-9-px ls-small" />
+          <Text text="{i18n>MSG_28003}" class="font-9-px letter-spacing-sm" />
         </HBox>
       </grid:CSSGrid>
     </VBox>

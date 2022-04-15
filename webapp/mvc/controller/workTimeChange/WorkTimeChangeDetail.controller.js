@@ -41,6 +41,7 @@ sap.ui.define(
 
       initializeModel() {
         return {
+          previousName: '',
           Fixed: true,
           timeEdit: true,
           DelBtn: false,
@@ -72,6 +73,10 @@ sap.ui.define(
         };
       },
 
+      getPreviousRouteName() {
+        return this.getViewModel().getProperty('/previousName');
+      },
+
       onBeforeShow() {
         TableUtils.adjustRowSpan({
           oTable: this.byId('workTimeTable'),
@@ -80,7 +85,7 @@ sap.ui.define(
         });
       },
 
-      async onObjectMatched(oParameter) {
+      async onObjectMatched(oParameter, sRouteName) {
         const sDataKey = oParameter.oDataKey;
         const oDetailModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.WORKTIME);
@@ -90,6 +95,7 @@ sap.ui.define(
         try {
           // Input Field Imited
           oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.WORKTIME, 'OtworkChangeApply')));
+          oDetailModel.setProperty('/previousName', _.chain(sRouteName).split('-', 1).head().value());
           oDetailModel.setProperty('/busy', true);
 
           if (sDataKey === 'N' || !sDataKey) {
@@ -386,7 +392,7 @@ sap.ui.define(
             }
 
             try {
-              AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true);
 
               const oDetailModel = this.getViewModel();
               const sAppno = await Appno.get.call(this);
@@ -407,7 +413,7 @@ sap.ui.define(
               const oCheck = await Client.deep(oModel, 'OtworkChangeApply', oSendObject);
 
               if (!!oCheck.Retmsg) {
-                AppUtils.setAppBusy(false, this);
+                AppUtils.setAppBusy(false);
                 oCheck.Retmsg = _.replace(oCheck.Retmsg, '\\n', '\n');
 
                 // {신청}하시겠습니까?
@@ -421,7 +427,7 @@ sap.ui.define(
                     }
 
                     try {
-                      AppUtils.setAppBusy(true, this);
+                      AppUtils.setAppBusy(true);
 
                       // FileUpload
                       if (!!AttachFileAction.getFileCount.call(this)) {
@@ -471,7 +477,7 @@ sap.ui.define(
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
             }
           },
         });

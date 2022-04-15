@@ -32,15 +32,21 @@ sap.ui.define(
 
       initializeModel() {
         return {
+          previousName: '',
           FormData: {},
           busy: false,
         };
       },
 
-      async onObjectMatched(oParameter) {
+      getPreviousRouteName() {
+        return this.getViewModel().getProperty('/previousName');
+      },
+
+      async onObjectMatched(oParameter, sRouteName) {
         const oDetailModel = this.getViewModel();
 
         oDetailModel.setData(this.initializeModel());
+        oDetailModel.setProperty('/previousName', _.chain(sRouteName).split('-', 1).head().value());
         oDetailModel.setProperty('/busy', true);
 
         try {
@@ -106,7 +112,7 @@ sap.ui.define(
             }
 
             try {
-              AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true);
 
               const oModel = this.getModel(ServiceNames.PAY);
               const oDetailModel = this.getViewModel();
@@ -126,7 +132,7 @@ sap.ui.define(
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
             }
           },
         });
@@ -144,7 +150,7 @@ sap.ui.define(
             }
 
             try {
-              AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true);
 
               const oModel = this.getModel(ServiceNames.PAY);
               const oDetailModel = this.getViewModel();
@@ -160,7 +166,7 @@ sap.ui.define(
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
             }
           },
         });

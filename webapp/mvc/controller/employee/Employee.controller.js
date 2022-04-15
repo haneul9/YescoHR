@@ -569,7 +569,7 @@ sap.ui.define(
       openInputFormDialog() {
         const oView = this.getView();
 
-        AppUtils.setAppBusy(true, this);
+        AppUtils.setAppBusy(true);
 
         setTimeout(() => {
           if (!this._pInputFormDialog) {
@@ -583,7 +583,7 @@ sap.ui.define(
             });
           }
           this._pInputFormDialog.then(function (oDialog) {
-            AppUtils.setAppBusy(false, this);
+            AppUtils.setAppBusy(false);
             oDialog.open();
           });
         }, 100);
@@ -595,7 +595,7 @@ sap.ui.define(
         const aItems = oViewModel.getProperty(`/employee/dialog/${path}`);
         const sInputCode = oViewModel.getProperty(`/employee/dialog/form/${codeKey}`);
 
-        AppUtils.setAppBusy(true, this);
+        AppUtils.setAppBusy(true);
 
         if (!this[`_p${fragmentName}`]) {
           this[`_p${fragmentName}`] = Fragment.load({
@@ -621,7 +621,7 @@ sap.ui.define(
           );
 
           oViewModel.setProperty('/employee/dialog/selectedHelpDialog', { codeKey, valueKey });
-          AppUtils.setAppBusy(false, this);
+          AppUtils.setAppBusy(false);
           oDialog.open();
         });
       },
@@ -890,7 +890,7 @@ sap.ui.define(
         oViewModel.setProperty('/employee/dialog/activeButton', false);
 
         try {
-          AppUtils.setAppBusy(true, this);
+          AppUtils.setAppBusy(true);
 
           switch (sMenuKey) {
             case this.CRUD_TABLES.ADDRESS.key:
@@ -944,10 +944,20 @@ sap.ui.define(
                 ...mFieldValue,
                 Prcty: sPrcty,
                 Appno: sAppno,
-                Begda: mFieldValue.Eamdt ? DateUtils.parse(mFieldValue.Eamdt) : mFieldValue.Begda,
-                Endda: mFieldValue.Eamdt ? DateUtils.parse(mFieldValue.Eamdt) : mFieldValue.Endda,
                 Eamdt: mFieldValue.Eamdt ? DateUtils.parse(mFieldValue.Eamdt) : mFieldValue.Eamdt,
               };
+
+              if (sPrcty === 'C') {
+                _.chain(mInputData)
+                  .set('Begda', mFieldValue.Eamdt ? DateUtils.parse(mFieldValue.Eamdt) : _.noop())
+                  .set('Endda', mFieldValue.Eamdt ? DateUtils.parse(mFieldValue.Eamdt) : _.noop())
+                  .commit();
+              } else {
+                _.chain(mInputData)
+                  .set('Begda', mFieldValue.Begda ? DateUtils.parse(mFieldValue.Begda) : _.noop())
+                  .set('Endda', mFieldValue.Endda ? DateUtils.parse(mFieldValue.Endda) : _.noop())
+                  .commit();
+              }
 
               break;
             case this.CRUD_TABLES.CERTIFICATE.key:
@@ -990,7 +1000,7 @@ sap.ui.define(
           AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/employee/dialog/activeButton', true);
-          AppUtils.setAppBusy(false, this);
+          AppUtils.setAppBusy(false);
         }
       },
 
@@ -1079,6 +1089,7 @@ sap.ui.define(
             }
           }
 
+          oViewModel.setProperty('/employee/dialog/activeButton', true);
           this.openInputFormDialog(oEvent);
           oTable.clearSelection();
         } catch (oError) {
@@ -1104,7 +1115,7 @@ sap.ui.define(
           return;
         }
 
-        AppUtils.setAppBusy(true, this);
+        AppUtils.setAppBusy(true);
 
         // {삭제}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
@@ -1146,7 +1157,7 @@ sap.ui.define(
               }
             }
 
-            AppUtils.setAppBusy(false, this);
+            AppUtils.setAppBusy(false);
           },
         });
       },
@@ -1252,7 +1263,7 @@ sap.ui.define(
       },
 
       onInputFormDialogClose() {
-        AppUtils.setAppBusy(false, this);
+        AppUtils.setAppBusy(false);
         this.byId('inputFormDialog').close();
       },
 

@@ -23,25 +23,25 @@
       <layoutData>
         <FlexItemData growFactor="1" />
       </layoutData>
-      <VBox width="73%">
-        <core:HTML content='&lt;div id="employee-a04-chart-container"&gt;&lt;/div&gt;'>
+      <VBox width="65%">
+        <core:HTML content='&lt;div id="employee-a04-chart-container" class="doughnut-chart"&gt;&lt;/div&gt;'>
           <core:layoutData>
             <FlexItemData growFactor="1" />
           </core:layoutData>
         </core:HTML>
       </VBox>
-      <VBox width="27%" items="{ path: '/contents/A04/data', templateShareable: false }" class="legend-wrap">
+      <VBox width="35%" items="{ path: '/contents/A04/data', templateShareable: false }" class="legend-wrap">
         <custom:HBox justifyContent="SpaceBetween" class="active-link" click=".onPressCount">
           <custom:customData>
             <core:CustomData key="Headty" value="{/contents/A04/Headty}" />
             <core:CustomData key="Discod" value="{Cod01}" />
           </custom:customData>
-          <Label text="{Ttltxt} :" class="legend">
+          <Label text="{Ttltxt} :" class="statistic-text legend">
             <customData>
               <core:CustomData key="legend" value="{Type}" writeToDom="true" />
             </customData>
           </Label>
-          <Text text=" {Cnt01}" />
+          <Text text=" { path: 'Cnt01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" class="statistic-text" />
         </custom:HBox>
       </VBox>
     </HBox>

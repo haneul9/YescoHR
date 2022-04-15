@@ -74,6 +74,15 @@ sap.ui.define(
         return date && time ? `${moment(date).format('YYYY.MM.DD')} / ${moment(time.ms).subtract(9, 'h').format('HH:mm')}` : '';
       },
 
+      // 총 주행거리
+      totalMileage(value = '') {
+        if (!value) {
+          return;
+        }
+
+        return `${this.TextUtils.toCurrency(parseFloat(_.replace(_.replace(value, ' km', ''), ',', '')))} km`;
+      },
+
       // 주행거리
       mileage(value = '') {
         if (!value) {
@@ -135,7 +144,12 @@ sap.ui.define(
             visibleStatus: 'X',
             Title: this.getBundleText('LABEL_34005'), // 운행기록
           });
-          oViewModel.setProperty('/List', aTableList);
+          oViewModel.setProperty(
+            '/List',
+            _.map(aTableList, (e) => {
+              return { ...e, Endkm: _.toString(_.add(parseFloat(e.Begkm), parseFloat(e.Drvkm))), Begkm: _.toString(parseFloat(e.Begkm)), Drvkm: _.toString(parseFloat(e.Drvkm)) };
+            })
+          );
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -163,7 +177,12 @@ sap.ui.define(
             visibleStatus: 'X',
             Title: this.getBundleText('LABEL_34005'), // 운행기록
           });
-          oViewModel.setProperty('/List', aTableList);
+          oViewModel.setProperty(
+            '/List',
+            _.map(aTableList, (e) => {
+              return { ...e, Endkm: _.toString(_.add(parseFloat(e.Begkm), parseFloat(e.Drvkm))), Begkm: _.toString(parseFloat(e.Begkm)), Drvkm: _.toString(parseFloat(e.Drvkm)) };
+            })
+          );
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -191,6 +210,10 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/busy', true);
 
+          const [mMyDriveRecord] = await this.getMyRecord();
+
+          oViewModel.setProperty('/Total', mMyDriveRecord);
+
           const aTableList = await this.getFriveRecord();
           const oTable = this.byId(this.DRIVE_TABLE_ID);
 
@@ -199,7 +222,12 @@ sap.ui.define(
             visibleStatus: 'X',
             Title: this.getBundleText('LABEL_34005'), // 운행기록
           });
-          oViewModel.setProperty('/List', aTableList);
+          oViewModel.setProperty(
+            '/List',
+            _.map(aTableList, (e) => {
+              return { ...e, Endkm: _.toString(_.add(parseFloat(e.Begkm), parseFloat(e.Drvkm))), Begkm: _.toString(parseFloat(e.Begkm)), Drvkm: _.toString(parseFloat(e.Drvkm)) };
+            })
+          );
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -254,7 +282,7 @@ sap.ui.define(
             });
           }
 
-          this._pDetailDialog.then(async function (oDialog) {
+          this._pDetailDialog.then(function (oDialog) {
             oViewModel.setProperty('/dialog', mRowData);
             oDialog.open();
           });
@@ -273,12 +301,6 @@ sap.ui.define(
         if (!mDialogData.Drvkm || mDialogData.Drvkm === '0') {
           // 주행거리를 입력하세요.
           MessageBox.alert(this.getBundleText('MSG_34001'));
-          return true;
-        }
-
-        if (parseFloat(mDialogData.Endkm) <= parseFloat(mDialogData.Begkm)) {
-          // 주행 후 거리는 주행 전 거리보다 큰 값으로 입력하세요.
-          MessageBox.alert(this.getBundleText('MSG_34002'));
           return true;
         }
 
@@ -302,7 +324,7 @@ sap.ui.define(
             const oViewModel = this.getViewModel();
 
             try {
-              AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true);
 
               const mDialogData = oViewModel.getProperty('/dialog');
               let oSendObject = {
@@ -324,7 +346,7 @@ sap.ui.define(
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
             }
           },
         });
@@ -342,7 +364,7 @@ sap.ui.define(
               return;
             }
 
-            AppUtils.setAppBusy(true, this);
+            AppUtils.setAppBusy(true);
 
             try {
               const oViewModel = this.getViewModel();
@@ -367,7 +389,7 @@ sap.ui.define(
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
             }
           },
         });

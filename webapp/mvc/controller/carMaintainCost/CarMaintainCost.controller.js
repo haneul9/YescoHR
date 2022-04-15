@@ -64,13 +64,14 @@ sap.ui.define(
           oListModel.setProperty('/routeName', sRouteName);
 
           const oModel = this.getModel(ServiceNames.BENEFIT);
-          const aMyMaintain = await Client.getEntitySet(oModel, 'MaintenanceCarReport');
+          const sPernr = this.getAppointeeProperty('Pernr');
+          const aMyMaintain = await Client.getEntitySet(oModel, 'MaintenanceCarReport', { Pernr: sPernr });
 
           oListModel.setProperty('/Total', aMyMaintain[0]);
 
           const mSearch = oListModel.getProperty('/search');
           const mPayLoad = {
-            Pernr: this.getAppointeeProperty('Pernr'),
+            Pernr: sPernr,
             Begda: moment(mSearch.secondDate).hours(9).toDate(),
             Endda: moment(mSearch.date).hours(9).toDate(),
             Menid: this.getCurrentMenuId(),
@@ -96,13 +97,14 @@ sap.ui.define(
           oListModel.setProperty('/busy', true);
 
           const oModel = this.getModel(ServiceNames.BENEFIT);
-          const aMyMaintain = await Client.getEntitySet(oModel, 'MaintenanceCarReport');
+          const sPernr = this.getAppointeeProperty('Pernr');
+          const aMyMaintain = await Client.getEntitySet(oModel, 'MaintenanceCarReport', { Pernr: sPernr });
 
           oListModel.setProperty('/Total', aMyMaintain[0]);
 
           const mSearch = oListModel.getProperty('/search');
           const mPayLoad = {
-            Pernr: this.getAppointeeProperty('Pernr'),
+            Pernr: sPernr,
             Begda: moment(mSearch.secondDate).hours(9).toDate(),
             Endda: moment(mSearch.date).hours(9).toDate(),
             Menid: this.getCurrentMenuId(),

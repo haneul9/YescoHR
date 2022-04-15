@@ -4,11 +4,11 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
+    'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/TableUtils',
@@ -25,11 +25,11 @@ sap.ui.define(
     // prettier 방지용 주석
     Filter,
     FilterOperator,
-    JSONModel,
     MessageBox,
     Appno,
     AppUtils,
     ComboEntry,
+    UI5Error,
     FragmentEvent,
     TextUtils,
     TableUtils,
@@ -43,7 +43,7 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.clubJoin.ClubJoinDetail', {
-      LIST_PAGE_ID: 'container-ehr---clubJoin',
+      LIST_PAGE_ID: { E: 'container-ehr---clubJoin', H: 'container-ehr---h_clubJoin' },
 
       TextUtils: TextUtils,
       TableUtils: TableUtils,
@@ -87,7 +87,14 @@ sap.ui.define(
           oDetailModel.setProperty('/ClubType', new ComboEntry({ codeKey: 'Zclub', valueKey: 'Zclubtx', aEntries: aList }));
           this.setFormData();
         } catch (oError) {
-          AppUtils.handleError(oError);
+          if (oError instanceof Error) oError = new UI5Error({ message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
+
+          this.debug(oError);
+          AppUtils.handleError(oError, {
+            onClose: () => {
+              this.getRouter().navTo(oViewModel.getProperty('/previousName'));
+            },
+          });
         } finally {
           oDetailModel.setProperty('/busy', false);
         }
@@ -147,7 +154,7 @@ sap.ui.define(
             aFilter.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
           }
 
-          const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
+          const oListView = oView.getParent().getPage(this.isHass() ? this.LIST_PAGE_ID.H : this.LIST_PAGE_ID.E);
 
           if (!!oListView && !!oListView.getModel().getProperty('/parameters')) {
             const mListData = oListView.getModel().getProperty('/parameters');
@@ -302,7 +309,7 @@ sap.ui.define(
           onClose: async (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00103')) {
               try {
-                AppUtils.setAppBusy(true, this);
+                AppUtils.setAppBusy(true);
 
                 if (!sAppno) {
                   const sAppno = await Appno.get.call(this);
@@ -333,7 +340,7 @@ sap.ui.define(
               } catch (oError) {
                 AppUtils.handleError(oError);
               } finally {
-                AppUtils.setAppBusy(false, this);
+                AppUtils.setAppBusy(false);
               }
             }
           },
@@ -354,7 +361,7 @@ sap.ui.define(
           onClose: async (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00121')) {
               try {
-                AppUtils.setAppBusy(true, this);
+                AppUtils.setAppBusy(true);
 
                 if (!sAppno) {
                   const sAppno = await Appno.get.call(this);
@@ -389,7 +396,7 @@ sap.ui.define(
               } catch (oError) {
                 AppUtils.handleError(oError);
               } finally {
-                AppUtils.setAppBusy(false, this);
+                AppUtils.setAppBusy(false);
               }
             }
           },
@@ -405,7 +412,7 @@ sap.ui.define(
           actions: [this.getBundleText('LABEL_00114'), this.getBundleText('LABEL_00118')],
           onClose: (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00114')) {
-              AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true);
 
               let oSendObject = {};
 
@@ -416,7 +423,7 @@ sap.ui.define(
 
               oModel.create('/ClubJoinApplSet', oSendObject, {
                 success: () => {
-                  AppUtils.setAppBusy(false, this);
+                  AppUtils.setAppBusy(false);
                   MessageBox.alert(this.getBundleText('MSG_00039', 'LABEL_00121'), {
                     onClose: () => {
                       this.onNavBack();
@@ -425,7 +432,7 @@ sap.ui.define(
                 },
                 error: (oError) => {
                   AppUtils.handleError(new ODataCreateError({ oError }));
-                  AppUtils.setAppBusy(false, this);
+                  AppUtils.setAppBusy(false);
                 },
               });
             }
@@ -442,7 +449,7 @@ sap.ui.define(
           actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
           onClose: (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00110')) {
-              AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true);
 
               const sPath = oModel.createKey('/ClubJoinApplSet', {
                 Appno: oDetailModel.getProperty('/FormData/Appno'),
@@ -450,7 +457,7 @@ sap.ui.define(
 
               oModel.remove(sPath, {
                 success: () => {
-                  AppUtils.setAppBusy(false, this);
+                  AppUtils.setAppBusy(false);
                   MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
                     onClose: () => {
                       this.onNavBack();
@@ -459,7 +466,7 @@ sap.ui.define(
                 },
                 error: (oError) => {
                   AppUtils.handleError(new ODataDeleteError(oError));
-                  AppUtils.setAppBusy(false, this);
+                  AppUtils.setAppBusy(false);
                 },
               });
             }

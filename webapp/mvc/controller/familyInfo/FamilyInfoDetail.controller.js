@@ -6,6 +6,7 @@ sap.ui.define(
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
+    'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -22,6 +23,7 @@ sap.ui.define(
     Appno,
     AppUtils,
     ComboEntry,
+    UI5Error,
     FragmentEvent,
     TextUtils,
     ServiceNames,
@@ -68,6 +70,7 @@ sap.ui.define(
 
       initializeModel() {
         return {
+          previousName: '',
           FormStatus: '',
           werks: this.getAppointeeProperty('Werks'),
           FormData: {},
@@ -94,20 +97,37 @@ sap.ui.define(
         };
       },
 
+      getPreviousRouteName() {
+        return this.getViewModel().getProperty('/previousName');
+      },
+
       // setData
-      async onObjectMatched(oParameter) {
+      async onObjectMatched(oParameter, sRouteName) {
         const oViewModel = this.getViewModel();
         const sDataKey = oParameter.oDataKey;
+        const sStatus = oParameter.status;
 
-        oViewModel.setData(this.initializeModel());
-        oViewModel.setProperty('/busy', true);
-        // Input Field Imited
-        oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.PA, 'FamilyInfoAppl')));
-        oViewModel.setProperty('/FormStatus', sDataKey);
-        await this.getCodeList();
-        await this.setFormData();
+        try {
+          oViewModel.setData(this.initializeModel());
+          oViewModel.setProperty('/previousName', _.chain(sRouteName).split('-', 1).head().value());
+          oViewModel.setProperty('/busy', true);
+          // Input Field Imited
+          oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.PA, 'FamilyInfoAppl')));
+          oViewModel.setProperty('/FormStatus', sDataKey);
+          await this.getCodeList();
+          await this.setFormData(sStatus);
+        } catch (oError) {
+          if (oError instanceof Error) oError = new UI5Error({ message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
 
-        this.getViewModel().setProperty('/busy', false);
+          this.debug(oError);
+          AppUtils.handleError(oError, {
+            onClose: () => {
+              this.getRouter().navTo(oViewModel.getProperty('/previousName'));
+            },
+          });
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       // override AttachFileCode
@@ -134,7 +154,7 @@ sap.ui.define(
         return sValue;
       },
 
-      setFormData() {
+      setFormData(sStatus = '') {
         const oDetailModel = this.getViewModel();
         const sKey = oDetailModel.getProperty('/FormStatus');
         const oView = this.getView();
@@ -144,6 +164,8 @@ sap.ui.define(
           if (!!oListView && !!oListView.getModel().getProperty('/parameter')) {
             oDetailModel.setProperty('/Fixed', true);
             oDetailModel.setProperty('/FormData', oListView.getModel().getProperty('/parameter'));
+          } else if (!!sStatus && !oListView && !oListView.getModel().getProperty('/parameter')) {
+            throw Error();
           } else {
             const oAppointeeData = this.getAppointeeData();
 
@@ -386,7 +408,7 @@ sap.ui.define(
           onClose: async (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00121')) {
               try {
-                AppUtils.setAppBusy(true, this);
+                AppUtils.setAppBusy(true);
 
                 const oDetailModel = this.getViewModel();
                 const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
@@ -430,7 +452,7 @@ sap.ui.define(
               } catch (oError) {
                 AppUtils.handleError(oError);
               } finally {
-                AppUtils.setAppBusy(false, this);
+                AppUtils.setAppBusy(false);
               }
             }
           },
@@ -446,7 +468,7 @@ sap.ui.define(
           actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
           onClose: (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00110')) {
-              AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true);
 
               const sPath = oModel.createKey('/FamilyInfoApplSet', {
                 Appno: oDetailModel.getProperty('/FormData/Appno'),
@@ -456,14 +478,14 @@ sap.ui.define(
                 success: () => {
                   MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
                     onClose: () => {
-                      AppUtils.setAppBusy(false, this);
+                      AppUtils.setAppBusy(false);
                       this.onNavBack();
                     },
                   });
                 },
                 error: (oError) => {
                   AppUtils.handleError(new ODataDeleteError(oError));
-                  AppUtils.setAppBusy(false, this);
+                  AppUtils.setAppBusy(false);
                 },
               });
             }

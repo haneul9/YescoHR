@@ -87,6 +87,7 @@ sap.ui.define(
             infoMessage: this.getBundleText('MSG_30004'), // 신청내역에서 선택한 다음 신청 버튼을 클릭하여 주시기 바랍니다.
           });
           oListModel.setProperty('/CommuteList', aTableList);
+          this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -132,7 +133,7 @@ sap.ui.define(
       },
 
       // 나의 근무일정 대상년월 Text
-      formatSchedule(sYymm = moment().format('yyyy.MM'), dSDate, dEDate) {
+      formatSchedule(sYymm = moment().format('yyyy-MM'), dSDate, dEDate) {
         const dS = moment(dSDate).format('yyyy.MM.DD') || moment().format('yyyy.MM.DD');
         const dD = moment(dEDate).format('yyyy.MM.DD') || moment().format('yyyy.MM.DD');
 

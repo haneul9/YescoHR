@@ -181,15 +181,14 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-m21 .border-bottom {border-bottom:1px solid #dbdbdb}
 .portlet-m21 .font-3-rem {font-weight:500}
 .portlet-m21 .sapMLabel {justify-content:center}
-.portlet-m21 .employee-count-blue,
-.portlet-m21 .employee-count-yellow {width:100%; text-align:center}
-.portlet-m21 .employee-count-blue .sapMObjStatusText {color:#0088ff}
-.portlet-m21 .employee-count-yellow .sapMObjStatusText {color:#ff8900}
 .portlet-m21 [data-popover="N"] .sapMObjStatusLink:hover .sapMObjStatusText {cursor:default}
 .portlet-m23 .portlet-body .sapMText {font-size:13px; letter-spacing:-.5px}
 .portlet-m23 .portlet-body .sapMText.portlet-m23-worktime, .portlet-m23 .portlet-body .sapMText.portlet-m23-worktime-unit {color:#387fe9}
 .portlet-m23 .portlet-body .sapMText.portlet-m23-worktime {margin-left:.3rem}
 .portlet-m23 .portlet-body .sapMText.portlet-m23-worktime {line-height:1.2; font-size:19px}
+
+.portlet-box .statistic-text.sapMObjStatus {width:100%; text-align:center}
+.portlet-box .statistic-text.sapMObjStatus .sapMObjStatusText {color:var(--FontColorNormal); font-weight:500}
 
 .sapMLnkSubtle {color:#222}
 .sapMLnkLabel {color:#222}
@@ -269,6 +268,7 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 --BackgroundColorFocus:#fff;
 /**/
 --ComboBoxItemHeight:53px;
+--StatisticsFontSize:12px;
 /* 평가 */
 --PerformanceGradeColor0:#24a3fb;
 --PerformanceGradeColor1:#81daea;
@@ -278,8 +278,8 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 }
 
 /* 공통 Scroll Bar */
-html:not(.sapUiNativeScrollbars) :not(.mobile-portlets-grid)::-webkit-scrollbar {width:5px !important; background:none !important}
-html:not(.sapUiNativeScrollbars) :not(.mobile-portlets-grid)::-webkit-scrollbar-thumb {border-radius:5px !important; background-color:#c1c3c8 !important}
+html:not(.sapUiNativeScrollbars) :not(.sapUiNativeScrollbars)::-webkit-scrollbar {width:5px !important; background:none !important}
+html:not(.sapUiNativeScrollbars) :not(.sapUiNativeScrollbars)::-webkit-scrollbar-thumb {border-radius:5px !important; background-color:#c1c3c8 !important}
 
 /* 공통 Margin, Padding */
 /* .sapMTextArea > div {padding:0.1875rem}
@@ -365,14 +365,12 @@ div.sapUiTableSelectAllCheckBox::after, div.sapUiTableRowSelectionCell::after {b
 .sapMSltFocused {border-color:var(--BorderColorFocus) !important}
 
 .sapMRb .sapMRbB:hover .sapMRbBOut {stroke:var(--BorderColorHover) !important}
-/*.sapMRb .sapMRbB:hover .sapMRbBInn {fill:var(--BorderColorHover) !important}*/
 .sapMRb .sapMRbB:active .sapMRbBOut {stroke:var(--BorderColorActive) !important}
 .sapMRb .sapMRbB:active .sapMRbBInn {fill:var(--BorderColorActive) !important}
 .sapMRbSel .sapMRbB .sapMRbBOut {stroke:var(--BorderColorFocus) !important}
 .sapMRbSel .sapMRbB .sapMRbBInn {fill:var(--BorderColorFocus) !important}
 
 .sapMCb .sapMCbBg:hover {border-color:var(--BorderColorHover) !important}
-/*.sapMCb .sapMCbBg:hover:before {display:inline-block; content:"\e05b"; font-family:"SAP-icons"}*/
 .sapMCb .sapMCbBg:active {border-color:var(--BorderColorActive) !important}
 .sapMCb .sapMCbMarkChecked {border-color:var(--BorderColorNormal) !important; border-width:2px}
 
@@ -1044,10 +1042,13 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 .sapMBtn.icon-button.menu-favorite-icon:active span.sapMBtnInner.sapMToggleBtnPressed.sapMBtnActive .sapMBtnIcon {color:#fdb500 !important; background-color:transparent}
 
 /*close button style*/
-.sapMBtn.icon-button.close .sapMBtnInner {background:#efe4bb !important; width:40px; height:40px}
+.sapMBtn.icon-button.close .sapMBtnInner {width:40px; height:40px}
 .sapMBtn.icon-button.close .sapMBtnInner .sapMBtnIcon {color:#484c50; font-size:22px; font-weight:200}
 .sapMBtn.icon-button.close .sapMBtnInner:after {content:""; display:inline-block; width:14px; height:14px; background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/icon_arrow_cal.svg'); background-repeat:no-repeat; background-position:center; transition:transform 0.4s ease-out}
 .sapMBtn.icon-button.close.expanded .sapMBtnInner:after {content:""; display:inline-block; width:14px; height:14px; background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/icon_arrow_cal.svg'); background-repeat:no-repeat; background-position:center; transform:rotate(-180deg); transition:transform 0.4s ease-out}
+.info-area .sapMBtn.icon-button.close .sapMBtnInner {background:#efe4bb !important}
+.search-area .sapMBtn.icon-button.close .sapMBtnInner {width:inherit; border-color:#eeeeef !important; background:#f9fafa !important}
+.info-icon-area {border-radius:3px; background-color:#f9fafa}
 
 /*me button style*/
 .sapMBtn.icon-button.me .sapMBtnInner {background:transparent !important}
@@ -2001,24 +2002,22 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .color-05 {color:#3b3e41}
 .color-06 {color:#2f88ff}
 .color-07 {color:#0c1f6b}
-.text-right {text-align:right !important}
-.ls-small {letter-spacing:-0.3px}
+.letter-spacing-xs {letter-spacing:-0.6px}
+.letter-spacing-sm {letter-spacing:-0.3px}
 .normal {font-weight:500}
 .display-flex {display:flex}
+.overflow-visible {overflow:visible}
 text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link .sapMImg {cursor:pointer}
 .all-transparent, .all-transparent * {border-color:transparent; color:transparent; background-color:transparent}
 .sapUiSizeCompact .all-transparent .sapMListSwp {right:0}
 .sapUiSizeCompact .all-transparent .sapMBtnInner {min-width:auto}
 .sapUiSizeCompact .all-transparent .sapMBtnIcon {margin:0}
 
-.portlet-box .employee-total-count .sapMObjStatusText {font-weight:500}
-.portlet-box .employee-count {width:100%; text-align:center}
-.portlet-box .employee-count .sapMObjStatusText {color:var(--FontColorNormal); font-weight:500}
-
 .sapUiSizeCompact .sapMInputBase.small-table-input {height:30px !important}
 .small-table-input .sapMInputBaseContentWrapper input {padding-top:0px !important; padding-bottom:0px !important}
 .small-table-input .sapMInputBaseIcon {line-height:1.7rem !important}
 
+.fusioncharts-container svg {background-color:rgba(255,255,255,0) !important}
 #employee-a02-chart-container {height:66px}
 #employee-a06-chart-container {height:76px}
 

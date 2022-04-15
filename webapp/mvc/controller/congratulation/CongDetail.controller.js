@@ -38,6 +38,7 @@ sap.ui.define(
       initializeModel() {
         return {
           BirthMaxDate: moment().toDate(),
+          previousName: '',
           FormData: {},
           benefitDate: '',
           Settings: {},
@@ -54,12 +55,16 @@ sap.ui.define(
         return sAction;
       },
 
+      getPreviousRouteName() {
+        return this.getViewModel().getProperty('/previousName');
+      },
+
       // override AttachFileCode
       getApprovalType() {
         return 'HR01';
       },
 
-      async onObjectMatched(oParameter) {
+      async onObjectMatched(oParameter, sRouteName) {
         const sDataKey = oParameter.oDataKey;
         const oViewModel = this.getViewModel();
 
@@ -69,6 +74,7 @@ sap.ui.define(
         try {
           // Input Field Imited
           oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'ConExpenseAppl')));
+          oViewModel.setProperty('/previousName', _.chain(sRouteName).split('-', 1).head().value());
 
           const oModel = this.getModel(ServiceNames.BENEFIT);
           const mAppointeeData = this.getAppointeeData();
@@ -592,7 +598,7 @@ sap.ui.define(
             const oViewModel = this.getViewModel();
 
             try {
-              AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true);
 
               const mFormData = oViewModel.getProperty('/FormData');
               const sAppno = mFormData.Appno;
@@ -624,7 +630,7 @@ sap.ui.define(
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
             }
           },
         });
@@ -652,7 +658,7 @@ sap.ui.define(
             const oViewModel = this.getViewModel();
 
             try {
-              AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true);
 
               const mFormData = oViewModel.getProperty('/FormData');
               const sAppno = mFormData.Appno;
@@ -684,7 +690,7 @@ sap.ui.define(
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
             }
           },
         });
@@ -698,7 +704,7 @@ sap.ui.define(
           actions: [this.getBundleText('LABEL_00114'), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
             if (vPress && vPress === this.getBundleText('LABEL_00114')) {
-              AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true);
 
               try {
                 const oModel = this.getModel(ServiceNames.BENEFIT);
@@ -717,7 +723,7 @@ sap.ui.define(
               } catch (oError) {
                 AppUtils.handleError(oError);
               } finally {
-                AppUtils.setAppBusy(false, this);
+                AppUtils.setAppBusy(false);
               }
             }
           },
@@ -733,7 +739,7 @@ sap.ui.define(
               return;
             }
 
-            AppUtils.setAppBusy(true, this);
+            AppUtils.setAppBusy(true);
 
             try {
               const oModel = this.getModel(ServiceNames.BENEFIT);
@@ -749,7 +755,7 @@ sap.ui.define(
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
             }
           },
         });

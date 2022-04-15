@@ -7,6 +7,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/controller/home/portlets/popup/M21PortletMobilePopoverHandler',
     'sap/ui/yesco/mvc/controller/overviewEmployee/constants/ChartsSetting',
     'sap/ui/yesco/mvc/model/type/Date',
     'sap/ui/yesco/mvc/model/type/Decimal',
@@ -19,12 +20,18 @@ sap.ui.define(
     ServiceNames,
     TableUtils,
     BaseController,
+    M21PortletMobilePopoverHandler,
     ChartsSetting
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.overviewEmployee.mobile.Main', {
       initializeModel() {
+        const iFullAgeCountingYear = moment().year() - 1;
+        const mData = {
+          ageMGen: `${iFullAgeCountingYear - 1995}~${iFullAgeCountingYear - 1980}`,
+          ageZGen: `${iFullAgeCountingYear - 2010}~${iFullAgeCountingYear - 1996}`,
+        };
         return {
           busy: false,
           searchConditions: {
@@ -38,7 +45,7 @@ sap.ui.define(
           },
           contents: {
             A01: { busy: false, data: {} },
-            A02: { busy: false, data: {} },
+            A02: { busy: false, data: mData },
             A03: { busy: false, data: [] },
             A04: { busy: false, data: [] },
             A05: { busy: false, data: {} },
@@ -82,6 +89,10 @@ sap.ui.define(
             .take(10)
             .forEach((o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0))
             .commit();
+
+          if (this.bMobile) {
+            this.oMobilePopoverHandler = new M21PortletMobilePopoverHandler(this, oViewModel);
+          }
         } catch (oError) {
           this.debug('Controller > mobile/m/overviewEmployee Main > onObjectMatched Error', oError);
 
@@ -123,13 +134,19 @@ sap.ui.define(
 
         switch (mChartInfo.Chart) {
           case 'column2d':
+            let fColumn2dMaxValues = 0;
             _.chain(mChartSetting)
               // .set(['chart', 'yAxisMaxValue'], '200')
               .set(
                 ['data'],
-                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callEmployeeDetail-${mChartInfo.Headty},${o.Cod01}` }))
+                _.map(aChartDatas, (o) => {
+                  fColumn2dMaxValues = Math.max(fColumn2dMaxValues, Number(o.Cnt01));
+                  return { label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callEmployeeDetail-${mChartInfo.Headty},${o.Cod01}` };
+                })
               )
               .commit();
+
+            mChartSetting.chart.yAxisMaxValue = Math.ceil(fColumn2dMaxValues * 1.3);
 
             this.callFusionChart(mChartInfo, mChartSetting);
 
@@ -194,6 +211,7 @@ sap.ui.define(
 
             break;
           case 'mscolumn2d':
+            let fMscolumn2dMaxValues = 0;
             _.chain(mChartSetting)
               // .set(['data', 'chart', 'yAxisMaxValue'], '60')
               .set(
@@ -203,14 +221,22 @@ sap.ui.define(
               .set(['dataset', 0], {
                 seriesname: this.getBundleText('LABEL_28025'), // 임원 1인당 직원수 (팀장포함)
                 color: '#7BB4EB',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01, link: `j-callEmployeeDetail-${mChartInfo.Headty},A,${o.Ttltxt}` })),
+                data: _.map(aChartDatas, (o) => {
+                  fMscolumn2dMaxValues = Math.max(fMscolumn2dMaxValues, Number(o.Cnt01));
+                  return { value: o.Cnt01, link: `j-callEmployeeDetail-${mChartInfo.Headty},A,${o.Ttltxt}` };
+                }),
               })
               .set(['dataset', 1], {
                 seriesname: this.getBundleText('LABEL_28026'), // 팀장 1인당 직원수
                 color: '#FFE479',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02, link: `j-callEmployeeDetail-${mChartInfo.Headty},BA,${o.Ttltxt}` })),
+                data: _.map(aChartDatas, (o) => {
+                  fMscolumn2dMaxValues = Math.max(fMscolumn2dMaxValues, Number(o.Cnt02));
+                  return { value: o.Cnt02, link: `j-callEmployeeDetail-${mChartInfo.Headty},BA,${o.Ttltxt}` };
+                }),
               })
               .commit();
+
+            mChartSetting.chart.yAxisMaxValue = Math.ceil(fMscolumn2dMaxValues * 1.5);
 
             this.callFusionChart(mChartInfo, mChartSetting);
 
@@ -220,16 +246,16 @@ sap.ui.define(
         }
       },
 
-      callFusionChart(mChartInfo, mChartSetting) {
+      callFusionChart({ Target, Chart }, mChartSetting) {
         if (_.isEmpty(mChartSetting)) return;
 
-        const sChartId = `employee-${_.toLower(mChartInfo.Target)}-chart`;
+        const sChartId = `employee-${_.toLower(Target)}-chart`;
 
         if (!FusionCharts(sChartId)) {
           FusionCharts.ready(() => {
             new FusionCharts({
               id: sChartId,
-              type: mChartInfo.Chart,
+              type: Chart,
               renderAt: `${sChartId}-container`,
               width: '100%',
               height: '100%',
@@ -340,7 +366,11 @@ sap.ui.define(
 
       onPressCount(oEvent) {
         if (oEvent['getSource'] instanceof Function) {
-          this.openDetailDialog(oEvent.getSource().data());
+          if (this.bMobile) {
+            this.oMobilePopoverHandler.openDialog(oEvent);
+          } else {
+            this.openDetailDialog(oEvent.getSource().data());
+          }
         } else {
           this.openDetailDialog(sap.ui.getCore().byId($(oEvent.currentTarget).attr('id')).data());
         }
@@ -364,6 +394,25 @@ sap.ui.define(
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_28038'); // 인원현황상세
 
         TableUtils.export({ oTable, aTableData, sFileName, aDateProps: ['Gbdat', 'Entda', 'Loada', 'Reida', 'Retda'] });
+      },
+
+      onPressSearchAreaToggle(oEvent) {
+        const oEventSource = oEvent.getSource();
+        const oSearchArea = oEventSource.getParent().getParent();
+        const bExpanded = oSearchArea.hasStyleClass('row-4');
+
+        oEventSource.toggleStyleClass('expanded', !bExpanded);
+        oSearchArea.toggleStyleClass('row-4', !bExpanded);
+        oSearchArea.toggleStyleClass('row-2', bExpanded);
+      },
+
+      onChangeFontSize(oEvent) {
+        const sFontSize = oEvent.getSource().getSelectedKey();
+        document.querySelector(':root').style.setProperty('--StatisticsFontSize', sFontSize);
+      },
+
+      reduceViewResource() {
+        return this;
       },
 
       /*****************************************************************

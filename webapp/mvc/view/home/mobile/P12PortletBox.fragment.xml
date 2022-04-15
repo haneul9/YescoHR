@@ -21,7 +21,7 @@
     </HBox>
     <HBox class="portlet-body" justifyContent="SpaceBetween">
       <VBox width="49%" class="portlet-box">
-        <Title level="H2" text="{i18n>LABEL_01174}" />
+        <Title level="H2" text="{i18n>LABEL_01174}" class="font-1b-rem" />
         <HBox width="100%" class="mt-10-px" justifyContent="Center" alignItems="Baseline">
           <Text text="{/Annual/Used}" class="vacation-count-xl vacation-count-color" />
           <Text text="/" class="vacation-count-lg vacation-text-color mx-11-px" />
@@ -39,7 +39,7 @@
         </HBox>
       </VBox>
       <VBox width="49%" class="portlet-box">
-        <Title level="H2" text="{i18n>LABEL_01175}" />
+        <Title level="H2" text="{i18n>LABEL_01175}" class="font-1b-rem" />
         <HBox width="100%" class="mt-10-px" justifyContent="Center" alignItems="Baseline">
           <Text text="{/Summer/Used}" class="vacation-count-xl vacation-count-color" />
           <Text text="/" class="vacation-count-lg vacation-text-color mx-11-px" />

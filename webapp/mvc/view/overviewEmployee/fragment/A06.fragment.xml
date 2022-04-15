@@ -31,7 +31,7 @@
           <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_male.svg" />
           <VBox>
             <Text text="{/contents/A06/data/Cnt11}&#37;" class="color-01 font-20-px" />
-            <Text text="{/contents/A06/data/Cnt12}{i18n>LABEL_00159}" class="color-01" />
+            <Text text="{ path: '/contents/A06/data/Cnt12', type: 'sap.ui.yesco.mvc.model.type.Currency' }{i18n>LABEL_00159}" class="statistic-text color-01" />
           </VBox>
         </custom:HBox>
         <custom:HBox class="active-link" click=".onPressCount">
@@ -41,17 +41,16 @@
           </custom:customData>
           <VBox alignItems="End">
             <Text text="{/contents/A06/data/Cnt21}&#37;" class="color-02 font-20-px" />
-            <Text text="{/contents/A06/data/Cnt22}{i18n>LABEL_00159}" class="color-02" />
+            <Text text="{ path: '/contents/A06/data/Cnt22', type: 'sap.ui.yesco.mvc.model.type.Currency' }{i18n>LABEL_00159}" class="statistic-text color-02" />
           </VBox>
           <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_female.svg" />
         </custom:HBox>
       </HBox>
-      <HBox>
-        <layoutData>
+      <core:HTML content='&lt;div id="employee-a06-chart-container" class="led-chart"&gt;&lt;/div&gt;'>
+        <core:layoutData>
           <FlexItemData growFactor="1" />
-        </layoutData>
-        <core:HTML content='&lt;div id="employee-a06-chart-container"&gt;&lt;/div&gt;' />
-      </HBox>
+        </core:layoutData>
+      </core:HTML>
     </VBox>
   </VBox>
 </core:FragmentDefinition>

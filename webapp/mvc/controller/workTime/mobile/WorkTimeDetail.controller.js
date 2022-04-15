@@ -395,7 +395,7 @@ sap.ui.define(
             }
 
             try {
-              AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true);
 
               const oDetailModel = this.getViewModel();
               const sAppno = await Appno.get.call(this);
@@ -416,7 +416,7 @@ sap.ui.define(
               const oCheck = await Client.deep(oModel, 'OtWorkApply', oSendObject);
 
               if (!!oCheck.Retmsg) {
-                AppUtils.setAppBusy(false, this);
+                AppUtils.setAppBusy(false);
                 oCheck.Retmsg = _.replace(oCheck.Retmsg, '\\n', '\n');
 
                 // {신청}하시겠습니까?
@@ -430,7 +430,7 @@ sap.ui.define(
                     }
 
                     try {
-                      AppUtils.setAppBusy(true, this);
+                      AppUtils.setAppBusy(true);
 
                       // FileUpload
                       if (!!AttachFileAction.getFileCount.call(this)) {
@@ -480,7 +480,7 @@ sap.ui.define(
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
             }
           },
         });

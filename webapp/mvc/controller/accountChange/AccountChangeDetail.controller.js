@@ -40,6 +40,7 @@ sap.ui.define(
 
       initializeModel() {
         return {
+          previousName: '',
           Hass: this.isHass(),
           FormData: {},
           FieldLimit: {},
@@ -58,7 +59,11 @@ sap.ui.define(
         };
       },
 
-      async onObjectMatched(oParameter) {
+      getPreviousRouteName() {
+        return this.getViewModel().getProperty('/previousName');
+      },
+
+      async onObjectMatched(oParameter, sRouteName) {
         const sDataKey = oParameter.oDataKey;
         const oDetailModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.PAY);
@@ -69,6 +74,7 @@ sap.ui.define(
         try {
           // Input Field Imited
           oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.PAY, 'BankAccount')));
+          oDetailModel.setProperty('/previousName', _.chain(sRouteName).split('-', 1).head().value());
 
           // 변경은행
           const aBankList = await Client.getEntitySet(oModel, 'BanklCodeList');
@@ -251,7 +257,7 @@ sap.ui.define(
             }
 
             try {
-              AppUtils.setAppBusy(true, this);
+              AppUtils.setAppBusy(true);
 
               const oDetailModel = this.getViewModel();
               const sAppno = oDetailModel.getProperty('/FormData/Appno');
@@ -287,7 +293,7 @@ sap.ui.define(
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
             }
           },
         });
@@ -305,7 +311,7 @@ sap.ui.define(
               return;
             }
 
-            AppUtils.setAppBusy(true, this);
+            AppUtils.setAppBusy(true);
 
             try {
               const oDetailModel = this.getViewModel();
@@ -322,7 +328,7 @@ sap.ui.define(
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
-              AppUtils.setAppBusy(false, this);
+              AppUtils.setAppBusy(false);
             }
           },
         });

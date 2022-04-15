@@ -144,7 +144,20 @@ sap.ui.define(
           vCalcProps: ['Empcnt', ..._.times(12, (i) => `Inw${_.padStart(i + 1, 2, '0')}`)],
         });
 
-        oViewModel.setProperty('/list', _.isEmpty(mSumRow) ? [] : [...aRowData, mSumRow]);
+        const iTotalLength = aRowData.length;
+        oViewModel.setProperty(
+          '/list',
+          _.isEmpty(mSumRow)
+            ? []
+            : [
+                ...aRowData,
+                _.forEach(mSumRow, (v, p) => {
+                  if (_.startsWith(p, 'Inw')) {
+                    _.set(mSumRow, p, _.chain(v).divide(iTotalLength).floor(2).value());
+                  }
+                }),
+              ]
+        );
         oViewModel.setProperty('/listInfo/rowCount', aRowData.length + 1);
 
         setTimeout(() => {
