@@ -1247,6 +1247,8 @@ html.sap-desktop .sapMDialog>footer .sapContrast.sapMIBar.sapMFooter-CTX .sapMBt
 .sapMDialog .hCardBox, .sapMDialog .vCardBox {background:#fff; border:1px solid #cfcfcf; box-shadow:none}
 .sapMDialogSection {padding-bottom:20px}
 
+.conspicuous-disabled.sapMInputBaseDisabled .sapMInputBaseContentWrapper .sapMInputBaseInner {color:#222 !important}
+
 /* 자료실 */
 .sapUiLayoutCSSGrid .sapMPDFViewerError {width:100%; height:90%}
 .helpPopover {justify-content:center}
