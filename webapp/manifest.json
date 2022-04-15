@@ -245,6 +245,7 @@
         
         { "pattern": "m/overviewEmployee", "name": "m/overviewEmployee", "target": "m/overviewEmployee" },
         { "pattern": "mobile/m/overviewEmployee", "name": "mobile/m/overviewEmployee", "target": "mobile/m/overviewEmployee" },
+        { "pattern": "mobile/m/overviewEmployee2", "name": "mobile/m/overviewEmployee2", "target": "mobile/m/overviewEmployee2" },
         { "pattern": "m/overviewOnOff", "name": "m/overviewOnOff", "target": "m/overviewOnOff" },
         { "pattern": "mobile/m/overviewOnOff", "name": "mobile/m/overviewOnOff", "target": "mobile/m/overviewOnOff" },
         { "pattern": "m/overviewAttendance", "name": "m/overviewAttendance", "target": "m/overviewAttendance" },
@@ -456,6 +457,7 @@
         
         "m/overviewEmployee": { "viewId": "m_overviewEmployee", "viewPath": "sap.ui.yesco.mvc.view.overviewEmployee", "viewName": "Main" },
         "mobile/m/overviewEmployee": { "viewId": "mobile_m_overviewEmployee", "viewPath": "sap.ui.yesco.mvc.view.overviewEmployee.mobile", "viewName": "Main" },
+        "mobile/m/overviewEmployee2": { "viewId": "mobile_m_overviewEmployee2", "viewPath": "sap.ui.yesco.mvc.view.overviewEmployee.mobile", "viewName": "Main2" },
         "m/overviewOnOff": { "viewId": "m_overviewOnOff", "viewPath": "sap.ui.yesco.mvc.view.overviewOnOff", "viewName": "Main" },
         "mobile/m/overviewOnOff": { "viewId": "mobile_m_overviewOnOff", "viewPath": "sap.ui.yesco.mvc.view.overviewOnOff.mobile", "viewName": "Main" },
         "m/overviewAttendance": { "viewId": "m_overviewAttendance", "viewPath": "sap.ui.yesco.mvc.view.overviewAttendance", "viewName": "Main" },

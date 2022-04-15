@@ -1,0 +1,49 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <VBox class="portlet portlet-box" visible="{/contents/A07/busy}">
+    <custom:Placeholder />
+  </VBox>
+  <VBox class="portlet portlet-box" visible="{= !${/contents/A07/busy} }">
+    <customData>
+      <core:CustomData key="key" value="a07" />
+    </customData>
+    <HBox class="portlet-header">
+      <Title level="H2" text="{i18n>LABEL_28015}" />
+      <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_human_green.svg" width="12px" class="ml-8-px" tooltip="{i18n>LABEL_28003}" />
+      <Text text="">
+        <layoutData>
+          <FlexItemData growFactor="1" />
+        </layoutData>
+      </Text>
+      <Button visible="{hasLink}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_window.svg" iconDensityAware="false" type="Transparent" class="icon-button portlet-link-icon" press=".onToggleExpanded" />
+    </HBox>
+    <VBox class="portlet-body">
+      <layoutData>
+        <FlexItemData growFactor="1" />
+      </layoutData>
+      <core:HTML content='&lt;div id="employee-a07-chart-container" class="doughnut-chart"&gt;&lt;/div&gt;'>
+        <core:layoutData>
+          <FlexItemData styleClass="h-70" />
+        </core:layoutData>
+      </core:HTML>
+      <HBox width="100%" items="{ path: '/contents/A07/data', templateShareable: false }" wrap="Wrap" justifyContent="SpaceBetween" alignContent="End" class="legend-wrap">
+        <layoutData>
+          <FlexItemData growFactor="1" />
+        </layoutData>
+        <custom:HBox justifyContent="SpaceBetween" class="active-link" click=".onPressCount" width="40%">
+          <custom:customData>
+            <core:CustomData key="Headty" value="{/contents/A07/Headty}" />
+            <core:CustomData key="Discod" value="{Cod01}" />
+          </custom:customData>
+          <Label text="{Ttltxt} :" class="statistic-text legend">
+            <customData>
+              <core:CustomData key="legend" value="{Type}" writeToDom="true" />
+            </customData>
+          </Label>
+          <Text text=" { path: 'Cnt01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" class="statistic-text" />
+        </custom:HBox>
+      </HBox>
+    </VBox>
+  </VBox>
+</core:FragmentDefinition>
