@@ -94,7 +94,7 @@ sap.ui.define(
       },
 
       formatZeroTime(sValue = '0') {
-        return _.parseInt(sValue) === 0 ? '0' : sValue;
+        return parseFloat(sValue) === 0 ? '0' : sValue;
       },
 
       formatDate(dBegDa, dEndDa) {
