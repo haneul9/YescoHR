@@ -9,7 +9,11 @@
     <script>
     const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     if (isMobile && !/#\/mobile/.test(location.href)) {
-      location.href = (location.href.replace(/#$/, '')) + '#/mobile';
+      if (/#\/?/.test(location.href)) {
+        location.href = location.href.replace(/#(\/)?/, '#/mobile$1');
+      } else {
+        location.href = location.href.replace(/index\.html/, 'index.html#/mobile');
+      }
     }
     </script>
     <link rel="preload" as="image" href="/sap/public/bc/ui2/zui5_yescohr/images/logo_mobile.svg" />

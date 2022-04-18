@@ -34,6 +34,10 @@ sap.ui.define(
         this.oController = oController;
         this.oPortletModel = new JSONModel(mPortletData);
 
+        this.oAppComponent = oController.getOwnerComponent();
+        this.oAppMenu = this.oAppComponent.getAppMenu();
+        this.oMenuModel = this.oAppComponent.getMenuModel();
+
         this.init();
       },
 
@@ -120,6 +124,12 @@ sap.ui.define(
       navTo(...aArgs) {
         AppUtils.setMenuBusy(true).setAppBusy(true);
 
+        if (this.bMobile && !/^mobile/.test(aArgs[0])) {
+          aArgs[0] = `mobile/${aArgs[0]}`;
+        }
+
+        this.getMenuModel().setRecentMenu([{ Menid: this.getMenid(aArgs[0]) }]);
+
         this.getController()
           .reduceViewResource()
           .getRouter()
@@ -155,10 +165,16 @@ sap.ui.define(
         return this.oPortletBox;
       },
 
+      getAppMenu() {
+        return this.oAppMenu;
+      },
+
+      getMenuModel() {
+        return this.oMenuModel;
+      },
+
       getMenid(sMenuUrl) {
-        return AppUtils.getAppComponent()
-          .getMenuModel()
-          .getMenid(this.bMobile ? `mobile/${sMenuUrl}` : sMenuUrl);
+        return this.getMenuModel().getMenid(this.bMobile ? `mobile/${sMenuUrl}` : sMenuUrl);
       },
 
       setBusy(bBusy = true, sPath = '/busy') {

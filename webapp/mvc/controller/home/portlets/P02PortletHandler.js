@@ -52,7 +52,7 @@ sap.ui.define(
         const sSeqnr = oContext.getProperty('Seqnr');
         const iSdate = oContext.getProperty('Sdate').getTime();
 
-        this.navTo((this.bMobile ? 'mobile/' : '') + 'notice-detail', { Sdate: iSdate, Seqnr: sSeqnr });
+        this.navTo('notice-detail', { Sdate: iSdate, Seqnr: sSeqnr });
       },
     });
   }
