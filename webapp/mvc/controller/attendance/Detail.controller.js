@@ -708,8 +708,9 @@ sap.ui.define(
 
         try {
           const [mResultData] = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'LeaveApplEmpList', {
-            Prcty: 'C',
             Menid: this.getCurrentMenuId(),
+            Prcty: 'C',
+            Pernr: this.getAppointeeProperty('Pernr'),
             Awart: mFormData.Awart,
             Begda: moment(mFormData.Begda).hours(9).toDate(),
             Endda: moment(mFormData.Endda).hours(9).toDate(),
