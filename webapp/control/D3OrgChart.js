@@ -57,6 +57,7 @@ sap.ui.define(
 
       onAfterRendering: function () {
         const mItems = this.getItems();
+        const iSvgHeightPadding = AppUtils.isMobile() ? 276 : 10;
         let aChartData = [];
 
         mItems.forEach((item) => {
@@ -66,7 +67,7 @@ sap.ui.define(
         this.oD3Chart = null;
         this.oD3Chart = new d3.OrgChart()
           .container('#' + this.sParentId)
-          .svgHeight(window.innerHeight - 10)
+          .svgHeight(window.innerHeight - iSvgHeightPadding)
           .data(aChartData)
           .layout(this.getLayout())
           .compact(false)
@@ -75,7 +76,7 @@ sap.ui.define(
           .initialZoom(0.8)
           .nodeHeight(() => 170)
           .childrenMargin(() => 40)
-          .compactMarginBetween(() => 15)
+          .compactMarginBetween(() => 25)
           .compactMarginPair(() => 80)
           .linkUpdate(function (d) {
             d3.select(this)

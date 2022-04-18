@@ -22,6 +22,7 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.organization.Main', {
+      COMPACT: 1,
       LAYOUT: { top: 'left', left: 'top' },
 
       async onBeforeShow() {
@@ -33,6 +34,8 @@ sap.ui.define(
 
       async onObjectMatched() {
         try {
+          let aThirdLevelNodeIds = [];
+
           if (_.isEmpty(this.getViewModel())) {
             const fCurriedPA = Client.getEntitySet(this.getModel(ServiceNames.PA));
             const mAppointee = this.getAppointeeData();
@@ -63,6 +66,15 @@ sap.ui.define(
             });
             oViewModel.setSizeLimit(1000);
             this.setViewModel(oViewModel);
+
+            if (mAppointee.Werks === '1000') {
+              aThirdLevelNodeIds = _.chain(aReturnData)
+                .filter({ Upobjid: _.chain(aReturnData).find({ Upobjid: '' }).get('Objid').value() })
+                .map((o) => {
+                  return _.chain(aReturnData).filter({ Upobjid: o.Objid }).head().get('Objid').value();
+                })
+                .value();
+            }
           }
 
           const sExtendNode = this.getViewModel().getProperty('/extendNode') || _.noop();
@@ -88,6 +100,16 @@ sap.ui.define(
           });
 
           this.chartHolder.addItem(this.oD3Chart);
+
+          if (!_.isEmpty(aThirdLevelNodeIds)) {
+            setTimeout(() => {
+              const oChartControl = this.oD3Chart.getChart();
+
+              aThirdLevelNodeIds.forEach((d) => oChartControl.setExpanded(d));
+
+              oChartControl.render().fit();
+            }, 200);
+          }
         } catch (oError) {
           this.debug('Controller > organization Main > onObjectMatched Error', oError);
 
@@ -107,6 +129,14 @@ sap.ui.define(
 
         oViewModel.setProperty('/layout', sLayout);
         oChart.layout(sLayout).render().fit();
+      },
+
+      onPressCompactBtn() {
+        this.oD3Chart
+          .getChart()
+          .compact(!!(this.COMPACT++ % 2))
+          .render()
+          .fit();
       },
 
       async onChangeWerks() {
@@ -158,6 +188,23 @@ sap.ui.define(
           });
 
           this.chartHolder.addItem(this.oD3Chart);
+
+          if (sWerks === '1000') {
+            const aThirdLevelNodeIds = _.chain(aReturnData)
+              .filter({ Upobjid: _.chain(aReturnData).find({ Upobjid: '' }).get('Objid').value() })
+              .map((o) => {
+                return _.chain(aReturnData).filter({ Upobjid: o.Objid }).head().get('Objid').value();
+              })
+              .value();
+
+            setTimeout(() => {
+              const oChartControl = this.oD3Chart.getChart();
+
+              aThirdLevelNodeIds.forEach((d) => oChartControl.setExpanded(d));
+
+              oChartControl.render().fit();
+            }, 200);
+          }
         } catch (oError) {
           this.debug('Controller > Organization > onChangeWerks Error', oError);
 

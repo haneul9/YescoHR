@@ -4,7 +4,18 @@
     xmlns="sap.m">
     <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
         <VBox class="contents">
-            <FlexBox id="ChartHolder" class="org-chart-container" width="100%" height="100%" alignItems="Start" justifyContent="Center" busyIndicatorDelay="0">
+            <HBox alignItems="End" class="search-area row-1">
+                <layoutData>
+                    <FlexItemData minHeight="68px" />
+                </layoutData>
+                <ComboBox width="100%" items="{/entry/Werks}" selectedKey="{/search/Werks}" change=".onChangeWerks">
+                    <layoutData>
+                        <FlexItemData minWidth="100%" maxWidth="100%" />
+                    </layoutData>
+                    <core:Item text="{Pbtxt}" key="{Werks}" />
+                </ComboBox>
+            </HBox>
+            <FlexBox id="ChartHolder" class="org-chart-container mt-1-px" width="100%" height="100%" alignItems="Start" justifyContent="Center" busyIndicatorDelay="0">
                 <customData>
                     <core:CustomData key="layout" value="{/layout}" writeToDom="true" />
                 </customData>
@@ -12,10 +23,8 @@
         </VBox>
         <footer class="wrap">
             <OverflowToolbar>
-                <Button width="120px" type="Emphasized" class="sapUiTinyMarginEnd" text="Swap" press=".onPressSwapBtn" />
-                <ComboBox items="{/entry/Werks}" selectedKey="{/search/Werks}" change=".onChangeWerks">
-                    <core:Item text="{Pbtxt}" key="{Werks}" />
-                </ComboBox>
+                <Button type="Emphasized" class="sapUiTinyMarginEnd" text="Swap" press=".onPressSwapBtn" />
+                <Button type="Emphasized" class="sapUiTinyMarginEnd" text="Compact" press=".onPressCompactBtn" />
             </OverflowToolbar>
         </footer>
     </Page>
