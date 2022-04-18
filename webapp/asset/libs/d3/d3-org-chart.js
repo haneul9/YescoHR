@@ -95,7 +95,7 @@
             left: (t) => (t ? '<div style="margin-top:-10px;line-height:1.2;font-size:25px;height:22px">‹</div>' : '<div style="margin-top:-10px;font-size:25px;height:23px">›</div>'),
             bottom: (t) => (t ? '<div style="margin-top:-20px;font-size:25px">ˬ</div>' : '<div style="margin-top:0px;line-height:1.2;height:11px;font-size:25px">ˆ</div>'),
             right: (t) => (t ? '<div style="margin-top:-10px;font-size:25px;height:23px">›</div>' : '<div style="margin-top:-10px;line-height:1.2;font-size:25px;height:22px">‹</div>'),
-            top: (t) => (t ? '<div style="margin-top:0px;line-height:1.2;height:11px;font-size:25px">ˆ</div>' : '<div style="margin-top:-20px;font-size:25px">ˬ</div>'),
+            top: (t) => (t ? '<div style="margin-top:10px;line-height:1.2;height:11px;font-size:25px">ˆ</div>' : '<div style="margin-top:-20px;font-size:25px">ˬ</div>'),
           }[e.layout](t.children)}  </div>`;
         },
         layoutBindings: {
