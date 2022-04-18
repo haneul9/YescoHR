@@ -119,20 +119,6 @@ sap.ui.define(
             this.initializeApplyInfoBox(mDetail);
             this.initializeApprovalBox(mDetail);
           } else {
-            const oModel = this.getModel(ServiceNames.COMMON);
-            const aEmployees = await Client.getEntitySet(oModel, 'EmpSearchResult', {
-              Menid: this.getCurrentMenuId(),
-              Persa: this.getAppointeeProperty('Werks'),
-              Stat2: '3',
-              Zflag: 'X',
-              Actda: moment().hour(9).toDate(),
-            });
-
-            oViewModel.setProperty(
-              '/form/employees',
-              aEmployees.map((o) => ({ ...o, Pernr: _.trimStart(o.Pernr, '0') }))
-            );
-
             this.initializeApplyInfoBox();
           }
 
@@ -195,22 +181,41 @@ sap.ui.define(
 
       async openFormDialog() {
         const oView = this.getView();
+        const oViewModel = this.getViewModel();
 
         AppUtils.setAppBusy(true);
 
         if (!this.pDrillDialog) {
-          this.pDrillDialog = Fragment.load({
+          this.pDrillDialog = await Fragment.load({
             id: oView.getId(),
             name: 'sap.ui.yesco.mvc.view.excavation.fragment.DialogTable',
             controller: this,
-          }).then(function (oDialog) {
-            oView.addDependent(oDialog);
-            return oDialog;
           });
+
+          this.pDrillDialog.attachBeforeOpen(async () => {
+            const aEmployeeList = oViewModel.getProperty('/form/employees');
+
+            if (_.isEmpty(aEmployeeList)) {
+              const oModel = this.getModel(ServiceNames.COMMON);
+              const aEmployees = await Client.getEntitySet(oModel, 'EmpSearchResult', {
+                Menid: this.getCurrentMenuId(),
+                Persa: this.getAppointeeProperty('Werks'),
+                Stat2: '3',
+                Zflag: 'X',
+                Actda: moment().hour(9).toDate(),
+              });
+
+              oViewModel.setProperty(
+                '/form/employees',
+                aEmployees.map((o) => ({ ..._.pick(o, ['Ename', 'Fulln', 'Zzjikgbt']), Pernr: _.trimStart(o.Pernr, '0') }))
+              );
+            }
+          });
+
+          oView.addDependent(this.pDrillDialog);
         }
-        this.pDrillDialog.then(function (oDialog) {
-          oDialog.open();
-        });
+
+        this.pDrillDialog.open();
       },
 
       toggleHasRowProperty() {
