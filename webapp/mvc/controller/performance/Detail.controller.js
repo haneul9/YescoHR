@@ -248,6 +248,7 @@ sap.ui.define(
             .tap((o) => {
               _.chain(Constants.BUTTON_STATUS_MAP)
                 .get([sZzapsts, sLogicalZzapstsSub])
+                .omitBy({ standard: true })
                 .forOwn((v, k) =>
                   _.chain(o.submit)
                     .set([k, 'Availability'], _.get(v, sType))
@@ -255,6 +256,13 @@ sap.ui.define(
                     .set([k, 'process'], _.get(v, 'process', _.stubFalse()))
                     .commit()
                 )
+                .commit();
+            })
+            .tap((o) => {
+              _.chain(Constants.BUTTON_STATUS_MAP)
+                .get([sZzapsts, sLogicalZzapstsSub])
+                .pickBy({ standard: true })
+                .forOwn((v, k) => _.set(o.submit, [k, 'Availability'], _.get(v, sType, _.get(o.submit, [k, 'Availability'], ''))))
                 .commit();
             })
             .commit();
