@@ -181,25 +181,13 @@ sap.ui.define(
       },
 
       onPressButton1() {
-        const oMenuModel = this.getController().getMenuModel();
-        const sRouteName = this.bMobile ? 'mobile/attendance' : 'attendance';
-
-        oMenuModel.addRecentMenu(oMenuModel.getMenid(sRouteName));
-        this.navTo(sRouteName);
+        this.navTo('attendance');
       },
 
       onPressButton2() {
-        const oMenuModel = this.getController().getMenuModel();
         const Werks = this.getController().getSessionProperty('Werks');
+        const sRouteName = '1000,4000'.split(',').includes(Werks) ? 'individualWorkState' : 'workTime';
 
-        let sRouteName;
-        if ('1000,4000'.split(',').includes(Werks)) {
-          sRouteName = this.bMobile ? 'mobile/individualWorkState' : 'individualWorkState';
-        } else {
-          sRouteName = this.bMobile ? 'mobile/workTime' : 'workTime';
-        }
-
-        oMenuModel.addRecentMenu(oMenuModel.getMenid(sRouteName));
         this.navTo(sRouteName);
       },
     });
