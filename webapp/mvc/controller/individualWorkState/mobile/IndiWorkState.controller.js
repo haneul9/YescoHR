@@ -224,9 +224,9 @@ sap.ui.define(
       buildDoughChart(aPlanList) {
         const oDetailModel = this.getViewModel();
         const mPlan = {
-          dUsed: parseInt(aPlanList.Cnt01),
-          dPlan: parseInt(aPlanList.Cnt02),
-          dUnPlan: parseInt(aPlanList.Cnt03),
+          dUsed: parseFloat(aPlanList.Cnt01),
+          dPlan: parseFloat(aPlanList.Cnt02),
+          dUnPlan: parseFloat(aPlanList.Cnt03),
           pUsed: parseFloat(aPlanList.Rte01),
           pPlan: parseFloat(aPlanList.Rte02),
           pUnPlan: parseFloat(aPlanList.Rte03),
@@ -274,9 +274,9 @@ sap.ui.define(
         const oChart = FusionCharts(this.sDoughChartId);
         const oDetailModel = this.getViewModel();
         const mPlan = {
-          dUsed: parseInt(aPlanList.Cnt01),
-          dPlan: parseInt(aPlanList.Cnt02),
-          dUnPlan: parseInt(aPlanList.Cnt03),
+          dUsed: parseFloat(aPlanList.Cnt01),
+          dPlan: parseFloat(aPlanList.Cnt02),
+          dUnPlan: parseFloat(aPlanList.Cnt03),
           pUsed: parseFloat(aPlanList.Rte01),
           pPlan: parseFloat(aPlanList.Rte02),
           pUnPlan: parseFloat(aPlanList.Rte03),
