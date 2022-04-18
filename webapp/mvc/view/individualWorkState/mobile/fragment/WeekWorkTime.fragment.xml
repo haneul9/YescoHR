@@ -8,7 +8,7 @@
       <custom:DatePicker dateValue="{ path: '/WeekWorkDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="135px" class="pickonly-datepicker" change=".onWeekWorkTime" />
     </HBox>
     <VBox class="section week-Work-summary progressBox">
-      <grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="4px" class="weekTimeGrid">
+      <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="4px" class="weekTimeGrid">
         <Label text="{i18n>LABEL_18037}"/>
         <VBox>
           <Text text="{= ${/WeekWork/Wkrultx} }" width="100%" textAlign="Right" class="color-07" />
