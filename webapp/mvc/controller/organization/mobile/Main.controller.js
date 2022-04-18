@@ -22,7 +22,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.organization.mobile.Main', {
-      COMPACT: 1,
       LAYOUT: { top: 'left', left: 'top' },
 
       async onBeforeShow() {
@@ -52,6 +51,7 @@ sap.ui.define(
             const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
             const oViewModel = new JSONModel({
               extendNode: '',
+              compact: false,
               layout: 'left',
               orgLevel: aOrgLevel ?? [],
               orgList: _.map(aReturnData, (o) => ({
@@ -133,11 +133,12 @@ sap.ui.define(
       },
 
       onPressCompactBtn() {
-        this.oD3Chart
-          .getChart()
-          .compact(!!(this.COMPACT++ % 2))
-          .render()
-          .fit();
+        const oViewModel = this.getViewModel();
+        const oChart = this.oD3Chart.getChart();
+        const bCompact = oChart.compact();
+
+        oViewModel.setProperty('/compact', !bCompact);
+        oChart.compact(!bCompact).render().fit();
       },
 
       async onChangeWerks() {
@@ -165,10 +166,12 @@ sap.ui.define(
           );
 
           const sLayout = oViewModel.getProperty('/layout');
+          const bCompact = oViewModel.getProperty('/compact');
 
           this.oD3Chart = new D3OrgChart({
             extendNode: null,
             layout: sLayout,
+            compact: bCompact,
             items: {
               path: '/orgList',
               template: new D3OrgChartItem({
@@ -199,11 +202,10 @@ sap.ui.define(
               .value();
 
             setTimeout(() => {
-              const oChartControl = this.oD3Chart.getChart();
+              const oChart = this.oD3Chart.getChart();
 
-              aThirdLevelNodeIds.forEach((d) => oChartControl.setExpanded(d));
-
-              oChartControl.render().fit();
+              aThirdLevelNodeIds.forEach((d) => oChart.setExpanded(d));
+              oChart.render().fit();
             }, 200);
           }
         } catch (oError) {

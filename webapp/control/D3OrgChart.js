@@ -21,6 +21,7 @@ sap.ui.define(
           title: { type: 'String', group: 'Misc', defaultValue: '화상조직도' },
           extendNode: { type: 'String', group: 'Misc', defaultValue: '' },
           layout: { type: 'String', group: 'Misc', defaultValue: 'top' },
+          compact: { type: 'Boolean', group: 'Misc', defaultValue: false },
         },
         aggregations: {
           items: { type: 'sap.ui.yesco.control.D3OrgChartItem', multiple: true, singularName: 'item' },
@@ -70,7 +71,7 @@ sap.ui.define(
           .svgHeight(window.innerHeight - iSvgHeightPadding)
           .data(aChartData)
           .layout(this.getLayout())
-          .compact(false)
+          .compact(this.getCompact())
           .setActiveNodeCentered(true)
           .nodeWidth(() => 350)
           .initialZoom(0.8)
