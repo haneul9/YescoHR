@@ -42,7 +42,7 @@ sap.ui.define(
         return {
           Hass: this.isHass(),
           minDate: moment().toDate(),
-          maxDate: moment().toDate(),
+          maxDate: moment().add(1, 'month').toDate(),
           DatePickLabel: '',
           FormData: {
             Fixed: true,
