@@ -149,7 +149,7 @@ sap.ui.define(
 
             if (!!oTargetData.Pernr) {
               if (oTargetData.Appty === 'I') {
-                dMinDate = moment('10000101').toDate();
+                dMinDate = moment().subtract(1000, 'years').toDate();
                 dMaxDate = dMoment.toDate();
                 sDatePickLabel = this.getBundleText('LABEL_25021'); // 지원시작일
               } else {
@@ -157,7 +157,7 @@ sap.ui.define(
                 const sDate = dMoment.date() === 1 ? moment(`${iYear}${_.padStart(dMoment.month() + 1, 2, '0')}`).toDate() : moment(`${iYear}${_.padStart(dMoment.month() + 2, 2, '0')}`).toDate();
 
                 dMinDate = dMoment.toDate();
-                dMaxDate = moment('99991231').toDate();
+                dMaxDate = moment().add(1000, 'years').toDate();
                 sDatePickLabel = this.getBundleText('LABEL_25014'); // 차량등록일/변경일
                 oTargetData.Cardt = sDate;
               }
@@ -190,7 +190,7 @@ sap.ui.define(
                 Payty: 'ALL',
                 Bankl: 'ALL',
               });
-              oDetailModel.setProperty('/minDate', moment('10000101').toDate());
+              oDetailModel.setProperty('/minDate', moment().subtract(1000, 'years').toDate());
               oDetailModel.setProperty('/maxDate', moment().toDate());
               oDetailModel.setProperty('/DatePickLabel', this.getBundleText('LABEL_25021')); //지원시작일
 
@@ -207,19 +207,21 @@ sap.ui.define(
             });
 
             if (oTargetData.Appty === 'I') {
-              dMinDate = moment('10000101').toDate();
+              dMinDate = moment().subtract(1000, 'years').toDate();
               dMaxDate = dMoment.toDate();
             } else {
               dMinDate = dMoment.toDate();
-              dMaxDate = moment('99991231').toDate();
+              dMaxDate = moment().add(1000, 'years').toDate();
             }
 
+            const bFix = oTargetData.Appty !== 'D' && oTargetData.ZappStatAl === '10';
+
+            oDetailModel.setProperty('/minDate', bFix ? dMinDate : moment().subtract(1000, 'years').toDate());
+            oDetailModel.setProperty('/maxDate', bFix ? dMaxDate : moment().add(1000, 'years').toDate());
             oDetailModel.setProperty('/FormData', oTargetData);
-            oDetailModel.setProperty('/minDate', dMinDate);
-            oDetailModel.setProperty('/maxDate', dMaxDate);
             oDetailModel.setProperty('/DatePickLabel', this.getBundleText('LABEL_25021')); // 지원시작일
             oDetailModel.setProperty('/FormData/Ename', sEname);
-            oDetailModel.setProperty('/FormData/Fixed', oTargetData.Appty !== 'D' && oTargetData.ZappStatAl === '10');
+            oDetailModel.setProperty('/FormData/Fixed', bFix);
             oDetailModel.setProperty('/FormData/bPayType', oTargetData.Payty !== 'PAY');
             oDetailModel.setProperty('/ApplyInfo', oTargetData);
             oDetailModel.setProperty('/ApprovalDetails', oTargetData);
