@@ -12,7 +12,6 @@ sap.ui.define(
     'sap/ui/yesco/mvc/controller/ErrorHandler',
     'sap/ui/yesco/mvc/model/AppointeeModel',
     'sap/ui/yesco/mvc/model/MenuModel',
-    'sap/ui/yesco/mvc/model/Models',
     'sap/ui/yesco/mvc/model/SessionModel',
   ],
   (
@@ -28,7 +27,6 @@ sap.ui.define(
     ErrorHandler,
     AppointeeModel,
     MenuModel,
-    Models,
     SessionModel
   ) => {
     'use strict';
@@ -77,7 +75,10 @@ sap.ui.define(
        */
       setDeviceModel() {
         setTimeout(() => {
-          this.setModel(Models.createDeviceModel(), 'device');
+          const oDeviceModel = new JSONModel(Device);
+          oDeviceModel.setDefaultBindingMode('OneWay');
+
+          this.setModel(oDeviceModel, 'device');
         });
         return this;
       },
