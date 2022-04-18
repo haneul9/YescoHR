@@ -24,7 +24,7 @@
         <footer class="wrap">
             <OverflowToolbar>
                 <Button type="Emphasized" class="sapUiTinyMarginEnd" text="Swap" press=".onPressSwapBtn" />
-                <Button type="Emphasized" class="sapUiTinyMarginEnd" text="Compact" press=".onPressCompactBtn" />
+                <Button type="Emphasized" class="sapUiTinyMarginEnd" text="{= ${/compact} ? 'Normal' : 'Compact'  }" press=".onPressCompactBtn" />
             </OverflowToolbar>
         </footer>
     </Page>

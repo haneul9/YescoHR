@@ -12,7 +12,7 @@
             <core:Item text="{Pbtxt}" key="{Werks}" />
           </Select>
           <Button type="Emphasized" class="sapUiTinyMarginEnd" text="Swap" press=".onPressSwapBtn" />
-          <Button type="Emphasized" class="sapUiTinyMarginEnd" text="Compact" press=".onPressCompactBtn" />
+          <Button type="Emphasized" class="sapUiTinyMarginEnd" text="{= ${/compact} ? 'Normal' : 'Compact'  }" press=".onPressCompactBtn" />
           <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
           <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
         </HBox>
