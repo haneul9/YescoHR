@@ -138,7 +138,7 @@ sap.ui.define(
               ? _.chain(oTable.getColumns())
                   .map((col) => ({
                     ...this._getEdmType(col),
-                    property: this._getPropertyName(col, sStatCode, sStatTxt),
+                    property: this._getPropertyPath(col, sStatCode, sStatTxt),
                     label: this._getLabelText(col),
                   }))
                   .reject({ property: '' })
@@ -162,6 +162,8 @@ sap.ui.define(
       },
 
       _getLabelText(oColumn) {
+        if (!oColumn) return '';
+
         const mAggregations = oColumn.mAggregations;
 
         if (!_.chain(mAggregations).get('label').isEmpty().value()) {
@@ -177,7 +179,7 @@ sap.ui.define(
         return '';
       },
 
-      _getPropertyName(oColumn, sStatCode, sStatTxt) {
+      _getPropertyPath(oColumn, sStatCode, sStatTxt) {
         if (!oColumn || !oColumn.getTemplate()) return '';
 
         const sPropertyPath = _.chain(oColumn.getTemplate().mBindingInfos).values().head().get(['parts', 0, 'path'], '').value();
