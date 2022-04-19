@@ -43,7 +43,7 @@
         <HBox justifyContent="SpaceBetween" alignItems="Center" class="table-toolbar">
           <HBox class="title">
             <Title level="H2" text="{i18n>LABEL_16003}" />
-            <Text text="{i18n>MSG_16001}" class="desc-txt" />
+            <Text text="{i18n>MSG_16002}" class="desc-txt" />
           </HBox>
           <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressExcelDownload" />
         </HBox>
