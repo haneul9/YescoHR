@@ -2,8 +2,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/core/Fragment',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
@@ -24,8 +22,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    Filter,
-    FilterOperator,
     Fragment,
     MessageBox,
     Appno,
@@ -91,28 +87,28 @@ sap.ui.define(
 
       async onObjectMatched(oParameter, sRouteName) {
         const sDataKey = oParameter.oDataKey;
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
-        oDetailModel.setData(this.initializeModel());
-        oDetailModel.setProperty('/busy', true);
-        oDetailModel.setProperty('/ViewKey', sDataKey);
+        oViewModel.setData(this.initializeModel());
+        oViewModel.setProperty('/busy', true);
+        oViewModel.setProperty('/ViewKey', sDataKey);
 
         try {
           // Input Field Imited
-          oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'MedExpenseAppl')));
-          oDetailModel.setProperty('/FieldLimitPop', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'MedExpenseItem')));
-          oDetailModel.setProperty('/previousName', _.chain(sRouteName).split('-', 1).head().value());
+          oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'MedExpenseAppl')));
+          oViewModel.setProperty('/FieldLimitPop', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'MedExpenseItem')));
+          oViewModel.setProperty('/previousName', _.chain(sRouteName).split('-', 1).head().value());
 
           const aAppList = await this.getTargetList();
 
-          oDetailModel.setProperty('/TargetList', new ComboEntry({ codeKey: 'Kdsvh', valueKey: 'Znametx', aEntries: aAppList }));
+          oViewModel.setProperty('/TargetList', new ComboEntry({ codeKey: 'Kdsvh', valueKey: 'Znametx', aEntries: aAppList }));
 
           this.setFormData();
         } catch (oError) {
           this.debug(oError);
           AppUtils.handleError(oError);
         } finally {
-          oDetailModel.setProperty('/busy', false);
+          oViewModel.setProperty('/busy', false);
         }
       },
 
@@ -135,9 +131,6 @@ sap.ui.define(
 
       // FormData Settings
       async setFormData() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const sViewKey = oDetailModel.getProperty('/ViewKey');
         const sWerks = this.getAppointeeProperty('Werks');
         let sMsg = '';
 
@@ -212,213 +205,151 @@ sap.ui.define(
           </dl>`;
         }
 
-        oDetailModel.setProperty('/InfoMessage', sMsg);
+        const oViewModel = this.getViewModel();
 
-        const sYear = await this.getTotalYear();
+        oViewModel.setProperty('/InfoMessage', sMsg);
 
-        oDetailModel.setProperty('/sYear', sYear);
+        const [oTotal] = await this.getTotalYear();
+
+        oViewModel.setProperty('/sYear', oTotal.Zyear);
+
+        const sViewKey = oViewModel.getProperty('/ViewKey');
 
         if (sViewKey === 'N' || !sViewKey) {
-          const mSessionData = this.getSessionData();
           const mAppointeeData = this.getAppointeeData();
 
-          oDetailModel.setProperty('/FormData', {
+          oViewModel.setProperty('/FormData', {
             Pernr: mAppointeeData.Pernr,
             Kdsvh: 'ALL',
             Apcnt: '0',
             Pvcnt: '0',
             Rjcnt: '0',
-            Pyyea: sYear,
+            Pyyea: oTotal.Zyear,
           });
 
-          oDetailModel.setProperty('/ApplyInfo', {
+          const mSessionData = this.getSessionData();
+
+          oViewModel.setProperty('/ApplyInfo', {
             Apename: mSessionData.Ename,
             Aporgtx: `${mSessionData.Btrtx} / ${mSessionData.Orgtx}`,
             Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
           });
-
-          this.settingsAttachTable();
         } else {
-          let oSendObject = {};
+          const oModel = this.getModel(ServiceNames.BENEFIT);
+          const mSendObject = {
+            Pernr: this.getAppointeeProperty('Pernr'),
+            Prcty: 'D',
+            Appno: sViewKey,
+            MedExpenseItemSet: [],
+          };
 
-          if (this.isHass()) {
-            const sPernr = this.getAppointeeProperty('Pernr');
+          const oTargetData = await Client.create(oModel, 'MedExpenseAppl', mSendObject);
+          const aHisList = oTargetData.MedExpenseItemSet.results;
 
-            oSendObject.Pernr = sPernr;
-          }
+          oViewModel.setProperty('/FormData', oTargetData);
+          oViewModel.setProperty('/ApplyInfo', oTargetData);
+          oViewModel.setProperty('/TargetDetails', oTargetData);
+          oViewModel.setProperty('/HisList', aHisList);
+          oViewModel.setProperty(
+            '/ReWriteBtn',
+            !!_.find(aHisList, (e) => {
+              return e.ZappStat === 'F';
+            })
+          );
+          const iHisLength = aHisList.length;
 
-          oSendObject.Prcty = 'D';
-          oSendObject.Appno = sViewKey;
-          oSendObject.MedExpenseItemSet = [];
-
-          oDetailModel.setProperty('/busy', true);
-
-          oModel.create('/MedExpenseApplSet', oSendObject, {
-            success: (oData) => {
-              if (oData) {
-                const oTargetData = oData;
-                const aHisList = oData.MedExpenseItemSet.results;
-
-                oDetailModel.setProperty('/FormData', oTargetData);
-                oDetailModel.setProperty('/ApplyInfo', oTargetData);
-                oDetailModel.setProperty('/TargetDetails', oTargetData);
-
-                oDetailModel.setProperty('/HisList', aHisList);
-                oDetailModel.setProperty(
-                  '/ReWriteBtn',
-                  !!_.find(aHisList, (e) => {
-                    return e.ZappStat === 'F';
-                  })
-                );
-                const iHisLength = aHisList.length;
-
-                oDetailModel.setProperty('/listInfo', {
-                  rowCount: iHisLength > 10 ? 10 : iHisLength,
-                });
-
-                this.getReceiptList(oTargetData.Famgb, oTargetData.Adult);
-                oDetailModel.setProperty('/busy', false);
-              }
-              this.settingsAttachTable();
-            },
-            error: (oError) => {
-              AppUtils.handleError(new ODataReadError(oError));
-              oDetailModel.setProperty('/busy', false);
-            },
+          oViewModel.setProperty('/listInfo', {
+            rowCount: iHisLength > 10 ? 10 : iHisLength,
           });
+
+          this.getReceiptList(oTargetData.Famgb, oTargetData.Adult);
         }
+
+        this.settingsAttachTable();
       },
 
-      getTotalYear() {
+      async getTotalYear() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
-        const aFilters = [];
 
-        if (this.isHass()) {
-          const sPernr = this.getAppointeeProperty('Pernr');
-
-          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
-        }
-
-        return new Promise((resolve, reject) => {
-          oModel.read('/MedExpenseMymedSet', {
-            filters: aFilters,
-            success: (oData) => {
-              if (oData) {
-                resolve(oData.results[0].Zyear);
-              }
-            },
-            error: (oError) => {
-              this.debug(oError);
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
+        return await Client.getEntitySet(oModel, 'MedExpenseMymed', { Pernr: this.getAppointeeProperty('Pernr') });
       },
 
       async getReceiptList(sKey, sAdult) {
         const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
         const sWerks = this.getSessionProperty('Werks');
         const sViewKey = this.getViewModel().getProperty('/ViewKey');
         let sAppno = '';
         let sPyyea = '';
 
         if (!!sViewKey && sViewKey !== 'N') {
-          const mFormData = oDetailModel.getProperty('/FormData');
+          const mFormData = oViewModel.getProperty('/FormData');
 
           sAppno = mFormData.Appno;
           sKey = mFormData.Famgb;
           sAdult = mFormData.Adult;
           sPyyea = mFormData.Pyyea;
         } else {
-          const aYearData = await Client.getEntitySet(oModel, 'MedExpenseMymed');
+          const [oYearData] = await Client.getEntitySet(oModel, 'MedExpenseMymed');
 
-          sPyyea = aYearData[0].Zyear;
+          sPyyea = oYearData.Zyear;
         }
 
-        const aFilters = [
-          // prettier 방지주석
-          new Filter('Adult', FilterOperator.EQ, sAdult),
-          new Filter('Famgb', FilterOperator.EQ, sKey),
-          new Filter('Werks', FilterOperator.EQ, sWerks),
-          new Filter('Pyyea', FilterOperator.EQ, sPyyea),
-          new Filter('Appno', FilterOperator.EQ, sAppno),
-        ];
+        const mPayLoad = {
+          Adult: sAdult,
+          Famgb: sKey,
+          Werks: sWerks,
+          Pyyea: sPyyea,
+          Appno: sAppno,
+          Pernr: this.getAppointeeProperty('Pernr'),
+        };
 
-        if (this.isHass()) {
-          const sPernr = this.getAppointeeProperty('Pernr');
-
-          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
-        }
+        const aReceiptList = await Client.getEntitySet(oModel, 'MedExpenseReceiptList', mPayLoad);
 
         // 영수증구분
-        oModel.read('/MedExpenseReceiptListSet', {
-          filters: aFilters,
-          success: (oData) => {
-            if (oData) {
-              oDetailModel.setProperty('/ReceiptType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: oData.results }));
-            }
-          },
-          error: (oError) => {
-            AppUtils.handleError(new ODataReadError(oError));
-          },
-        });
+        oViewModel.setProperty('/ReceiptType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aReceiptList }));
       },
 
       async getTargetList() {
-        return new Promise((resolve, reject) => {
-          const oModel = this.getModel(ServiceNames.BENEFIT);
-          const aFilters = [new Filter('Datum', FilterOperator.EQ, new Date())];
+        const oModel = this.getModel(ServiceNames.BENEFIT);
+        const mPayLoad = {
+          Datum: new Date(),
+          Pernr: this.getAppointeeProperty('Pernr'),
+        };
 
-          if (this.isHass()) {
-            const sPernr = this.getAppointeeProperty('Pernr');
-
-            aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
-          }
-
-          // 신청대상
-          oModel.read('/MedExpenseSupportListSet', {
-            filters: aFilters,
-            success: (oData) => {
-              if (oData) {
-                resolve(oData.results);
-              }
-            },
-            error: (oError) => {
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
+        return Client.getEntitySet(oModel, 'MedExpenseSupportList', mPayLoad);
       },
 
       // 신청대상 선택시
       async onTargetList(oEvent) {
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
         const sTargetPath = oEvent.getSource().getSelectedItem().getBindingContext().getPath();
-        const mSelectedDetail = oDetailModel.getProperty(sTargetPath);
+        const mSelectedDetail = oViewModel.getProperty(sTargetPath);
 
-        oDetailModel.setProperty('/TargetDetails', mSelectedDetail);
-        oDetailModel.setProperty('/FormData/Adult', mSelectedDetail.Adult);
-        oDetailModel.setProperty('/FormData/Zname', mSelectedDetail.Zname);
-        oDetailModel.setProperty('/FormData/Znametx', mSelectedDetail.Znametx);
-        oDetailModel.setProperty('/FormData/Famsa', mSelectedDetail.Famsa);
-        oDetailModel.setProperty('/FormData/Objps', mSelectedDetail.Objps);
-        oDetailModel.setProperty('/FormData/Kdsvh', mSelectedDetail.Kdsvh);
-        oDetailModel.setProperty('/FormData/Famgb', mSelectedDetail.Famgb);
-        oDetailModel.setProperty('/FormData/Pratetx', mSelectedDetail.Pratetx);
-        oDetailModel.setProperty('/FormData/Prate', mSelectedDetail.Prate);
+        oViewModel.setProperty('/TargetDetails', mSelectedDetail);
+        oViewModel.setProperty('/FormData/Adult', mSelectedDetail.Adult);
+        oViewModel.setProperty('/FormData/Zname', mSelectedDetail.Zname);
+        oViewModel.setProperty('/FormData/Znametx', mSelectedDetail.Znametx);
+        oViewModel.setProperty('/FormData/Famsa', mSelectedDetail.Famsa);
+        oViewModel.setProperty('/FormData/Objps', mSelectedDetail.Objps);
+        oViewModel.setProperty('/FormData/Kdsvh', mSelectedDetail.Kdsvh);
+        oViewModel.setProperty('/FormData/Famgb', mSelectedDetail.Famgb);
+        oViewModel.setProperty('/FormData/Pratetx', mSelectedDetail.Pratetx);
+        oViewModel.setProperty('/FormData/Prate', mSelectedDetail.Prate);
 
-        if (oEvent.getSource().getSelectedItem().getBindingContext().getPath().substr(-1) === '0') return;
+        if (oEvent.getSource().getSelectedItem().getBindingContext().getPath().substr(-1) === '0') {
+          return;
+        }
 
-        oDetailModel.setProperty('/HisList', []);
-        oDetailModel.setProperty('/listInfo/rowCount', 0);
+        oViewModel.setProperty('/HisList', []);
+        oViewModel.setProperty('/listInfo/rowCount', 0);
         this.getReceiptList(mSelectedDetail.Famgb, mSelectedDetail.Adult);
       },
 
       // 신청액 & 신청건수
       setAppAmount() {
-        const oDetailModel = this.getViewModel();
-        const aSumAmount = oDetailModel.getProperty('/HisList').map((a) => a.Bettot);
+        const oViewModel = this.getViewModel();
+        const aSumAmount = oViewModel.getProperty('/HisList').map((a) => a.Bettot);
 
         if (!aSumAmount.length) return;
 
@@ -426,14 +357,17 @@ sap.ui.define(
           return parseInt(acc) + parseInt(cur);
         });
 
-        oDetailModel.setProperty('/FormData/Apbet', String(iAmount));
-        oDetailModel.setProperty('/FormData/Apcnt', String(aSumAmount.length));
+        _.chain(oViewModel.getProperty('/FormData'))
+          // prettier 방지
+          .set('Apbet', String(iAmount))
+          .set('Apcnt', String(aSumAmount.length))
+          .commit();
       },
 
       // 상세내역 No
       addSeqnrNum() {
-        const oDetailModel = this.getViewModel();
-        const aHisList = oDetailModel.getProperty('/HisList');
+        const oViewModel = this.getViewModel();
+        const aHisList = oViewModel.getProperty('/HisList');
         let iSeqnr = 0;
 
         aHisList.forEach((e) => {
@@ -441,12 +375,12 @@ sap.ui.define(
           e.Seqnr = String(iSeqnr);
         });
 
-        oDetailModel.setProperty('/HisList', aHisList);
+        oViewModel.setProperty('/HisList', aHisList);
       },
 
       checkError() {
-        const oDetailModel = this.getViewModel();
-        const mFormData = oDetailModel.getProperty('/FormData');
+        const oViewModel = this.getViewModel();
+        const mFormData = oViewModel.getProperty('/FormData');
 
         // 신청대상
         if (mFormData.Kdsvh === 'ALL' || !mFormData.Kdsvh) {
@@ -460,7 +394,7 @@ sap.ui.define(
           return true;
         }
 
-        const aHisList = oDetailModel.getProperty('/HisList');
+        const aHisList = oViewModel.getProperty('/HisList');
 
         // 상세내역
         if (!aHisList.length) {
@@ -480,20 +414,20 @@ sap.ui.define(
       },
       // 재작성
       onRewriteBtn() {
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
-        oDetailModel.setProperty('/FormData/Appno', '');
-        oDetailModel.setProperty('/FormData/Lnsta', '');
-        oDetailModel.setProperty('/FormData/Pvbet', '0');
-        oDetailModel.setProperty('/FormData/Pvcnt', '0');
-        oDetailModel.setProperty('/FormData/Paymm', '');
-        oDetailModel.setProperty('/FormData/Rjbet', '0');
-        oDetailModel.setProperty('/FormData/Rjcnt', '0');
-        oDetailModel.setProperty('/FormData/ZappResn', '');
-        oDetailModel.setProperty('/ReWriteBtn', false);
-        oDetailModel.setProperty('/ReWriteStat', true);
+        oViewModel.setProperty('/FormData/Appno', '');
+        oViewModel.setProperty('/FormData/Lnsta', '');
+        oViewModel.setProperty('/FormData/Pvbet', '0');
+        oViewModel.setProperty('/FormData/Pvcnt', '0');
+        oViewModel.setProperty('/FormData/Paymm', '');
+        oViewModel.setProperty('/FormData/Rjbet', '0');
+        oViewModel.setProperty('/FormData/Rjcnt', '0');
+        oViewModel.setProperty('/FormData/ZappResn', '');
+        oViewModel.setProperty('/ReWriteBtn', false);
+        oViewModel.setProperty('/ReWriteStat', true);
 
-        const aHisList = _.chain(oDetailModel.getProperty('/HisList'))
+        const aHisList = _.chain(oViewModel.getProperty('/HisList'))
           .filter((e) => {
             return e.ZappStat === 'F';
           })
@@ -502,73 +436,70 @@ sap.ui.define(
           })
           .value();
 
-        oDetailModel.setProperty('/HisList', aHisList);
-        oDetailModel.setProperty('/listInfo/rowCount', _.size(aHisList));
+        oViewModel.setProperty('/HisList', aHisList);
+        oViewModel.setProperty('/listInfo/rowCount', _.size(aHisList));
         this.setAppAmount();
         this.settingsAttachTable();
       },
 
       // 임시저장
       onSaveBtn() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const sAppno = oDetailModel.getProperty('/FormData/Appno');
-        const mFormData = oDetailModel.getProperty('/FormData');
-
         if (this.checkError()) return;
 
+        // {저장}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00103'), {
+          // 저장
           title: this.getBundleText('LABEL_09010'),
+          // 저장, 취소
           actions: [this.getBundleText('LABEL_00103'), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
-            if (vPress && vPress === this.getBundleText('LABEL_00103')) {
-              try {
-                AppUtils.setAppBusy(true);
+            // 저장
+            if (!vPress || vPress !== this.getBundleText('LABEL_00103')) {
+              return;
+            }
 
-                if (!sAppno) {
-                  const sAppno = await Appno.get.call(this);
+            AppUtils.setAppBusy(true);
 
-                  oDetailModel.setProperty('/FormData/Appno', sAppno);
-                  oDetailModel.setProperty('/FormData/Appda', new Date());
-                }
+            try {
+              const oViewModel = this.getViewModel();
+              const mFormData = oViewModel.getProperty('/FormData');
 
-                let oSendObject = {};
+              if (!mFormData.Appno) {
+                const sAppno = await Appno.get.call(this);
 
-                oSendObject = mFormData;
-                oSendObject.Prcty = 'T';
-                oSendObject.Menid = oDetailModel.getProperty('/menid');
-                oSendObject.Waers = 'KRW';
-                oSendObject.MedExpenseItemSet = oDetailModel.getProperty('/HisList');
-                // FileUpload
-                if (!!AttachFileAction.getFileCount.call(this)) {
-                  await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
-                }
-
-                const aDeleteDatas = oDetailModel.getProperty('/RemoveFiles');
-
-                if (!!aDeleteDatas.length) {
-                  await aDeleteDatas.forEach((e) => {
-                    AttachFileAction.deleteFile(e.Appno2, this.getApprovalType());
-                  });
-                }
-
-                await new Promise((resolve, reject) => {
-                  oModel.create('/MedExpenseApplSet', oSendObject, {
-                    success: () => {
-                      resolve();
-                    },
-                    error: (oError) => {
-                      reject(new ODataCreateError({ oError }));
-                    },
-                  });
-                });
-
-                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
-              } catch (oError) {
-                AppUtils.handleError(oError);
-              } finally {
-                AppUtils.setAppBusy(false);
+                _.chain(mFormData).set('Appno', sAppno).set('Appda', new Date()).commit();
               }
+
+              // FileUpload
+              if (!!AttachFileAction.getFileCount.call(this)) {
+                await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
+              }
+
+              const aDeleteDatas = oViewModel.getProperty('/RemoveFiles');
+
+              if (!!aDeleteDatas.length) {
+                await aDeleteDatas.forEach((e) => {
+                  AttachFileAction.deleteFile(e.Appno2, this.getApprovalType());
+                });
+              }
+
+              const oModel = this.getModel(ServiceNames.BENEFIT);
+              const mSendObject = {
+                ...mFormData,
+                Prcty: 'T',
+                Menid: oViewModel.getProperty('/menid'),
+                Waers: 'KRW',
+                MedExpenseItemSet: oViewModel.getProperty('/HisList'),
+              };
+
+              await Client.create(oModel, 'MedExpenseAppl', mSendObject);
+
+              // {저장}되었습니다.
+              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
+            } catch (oError) {
+              AppUtils.handleError(oError);
+            } finally {
+              AppUtils.setAppBusy(false);
             }
           },
         });
@@ -576,70 +507,64 @@ sap.ui.define(
 
       // 신청
       onApplyBtn() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const sAppno = oDetailModel.getProperty('/FormData/Appno');
-        const mFormData = oDetailModel.getProperty('/FormData');
-
         if (this.checkError()) return;
 
+        // {신청}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
-          title: this.getBundleText('LABEL_09010'),
+          // 신청, 취소
           actions: [this.getBundleText('LABEL_00121'), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
-            if (vPress && vPress === this.getBundleText('LABEL_00121')) {
-              try {
-                AppUtils.setAppBusy(true);
+            // 신청
+            if (!vPress || vPress !== this.getBundleText('LABEL_00121')) {
+              return;
+            }
 
-                if (!sAppno) {
-                  const sAppno = await Appno.get.call(this);
+            try {
+              AppUtils.setAppBusy(true);
 
-                  oDetailModel.setProperty('/FormData/Appno', sAppno);
-                  oDetailModel.setProperty('/FormData/Appda', new Date());
-                }
+              const oViewModel = this.getViewModel();
+              const mFormData = oViewModel.getProperty('/FormData');
 
-                let oSendObject = {};
+              if (!mFormData.Appno) {
+                const sAppno = await Appno.get.call(this);
 
-                oSendObject = mFormData;
-                oSendObject.Prcty = 'C';
-                oSendObject.Menid = oDetailModel.getProperty('/menid');
-                oSendObject.Waers = 'KRW';
-                oSendObject.MedExpenseItemSet = oDetailModel.getProperty('/HisList');
-
-                // FileUpload
-                if (!!AttachFileAction.getFileCount.call(this)) {
-                  await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
-                }
-
-                const aDeleteDatas = oDetailModel.getProperty('/RemoveFiles');
-
-                if (!!aDeleteDatas.length) {
-                  await aDeleteDatas.forEach((e) => {
-                    AttachFileAction.deleteFile(e.Appno2, this.getApprovalType());
-                  });
-                }
-
-                await new Promise((resolve, reject) => {
-                  oModel.create('/MedExpenseApplSet', oSendObject, {
-                    success: () => {
-                      resolve();
-                    },
-                    error: (oError) => {
-                      reject(new ODataCreateError({ oError }));
-                    },
-                  });
-                });
-
-                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
-                  onClose: () => {
-                    this.onNavBack();
-                  },
-                });
-              } catch (oError) {
-                AppUtils.handleError(oError);
-              } finally {
-                AppUtils.setAppBusy(false);
+                _.chain(mFormData).set('Appno', sAppno).set('Appda', new Date()).commit();
               }
+
+              // FileUpload
+              if (!!AttachFileAction.getFileCount.call(this)) {
+                await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
+              }
+
+              const aDeleteDatas = oViewModel.getProperty('/RemoveFiles');
+
+              if (!!aDeleteDatas.length) {
+                await aDeleteDatas.forEach((e) => {
+                  AttachFileAction.deleteFile(e.Appno2, this.getApprovalType());
+                });
+              }
+
+              const oModel = this.getModel(ServiceNames.BENEFIT);
+              const mSendObject = {
+                ...mFormData,
+                Prcty: 'C',
+                Menid: oViewModel.getProperty('/menid'),
+                Waers: 'KRW',
+                MedExpenseItemSet: oViewModel.getProperty('/HisList'),
+              };
+
+              await Client.create(oModel, 'MedExpenseAppl', mSendObject);
+
+              // {신청}되었습니다.
+              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
+                onClose: () => {
+                  this.onNavBack();
+                },
+              });
+            } catch (oError) {
+              AppUtils.handleError(oError);
+            } finally {
+              AppUtils.setAppBusy(false);
             }
           },
         });
@@ -647,74 +572,65 @@ sap.ui.define(
 
       // 취소
       onCancelBtn() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-
+        // {취소}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00118'), {
-          title: this.getBundleText('LABEL_09010'),
+          // 확인, 취소
           actions: [this.getBundleText('LABEL_00114'), this.getBundleText('LABEL_00118')],
-          onClose: (vPress) => {
-            if (vPress && vPress === this.getBundleText('LABEL_00114')) {
-              AppUtils.setAppBusy(true);
-
-              let oSendObject = {};
-
-              oSendObject = oDetailModel.getProperty('/FormData');
-              oSendObject.Prcty = 'W';
-              oSendObject.Menid = oDetailModel.getProperty('/menid');
-
-              delete oSendObject.isNew;
-
-              oModel.create('/MedExpenseApplSet', oSendObject, {
-                success: () => {
-                  AppUtils.setAppBusy(false);
-                  MessageBox.alert(this.getBundleText('MSG_00039', 'LABEL_00121'), {
-                    onClose: () => {
-                      this.onNavBack();
-                    },
-                  });
-                },
-                error: (oError) => {
-                  AppUtils.handleError(new ODataCreateError({ oError }));
-                  AppUtils.setAppBusy(false);
-                },
-              });
+          onClose: async (vPress) => {
+            // 취소
+            if (!vPress || vPress !== this.getBundleText('LABEL_00114')) {
+              return;
             }
+
+            AppUtils.setAppBusy(true);
+
+            const oModel = this.getModel(ServiceNames.BENEFIT);
+            const oViewModel = this.getViewModel();
+            const mSendObject = {
+              ...oViewModel.getProperty('/FormData'),
+              Prcty: 'W',
+              Menid: oViewModel.getProperty('/menid'),
+            };
+
+            delete mSendObject.isNew;
+
+            await Client.create(oModel, 'MedExpenseAppl', mSendObject);
+
+            // {취소}되었습니다.
+            MessageBox.alert(this.getBundleText('MSG_00039', 'LABEL_00121'), {
+              onClose: () => {
+                this.onNavBack();
+              },
+            });
           },
         });
       },
 
       // 삭제
       onDeleteBtn() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-
+        // {삭제}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
-          title: this.getBundleText('LABEL_09010'),
+          // 삭제, 취소
           actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
-          onClose: (vPress) => {
-            if (vPress && vPress === this.getBundleText('LABEL_00110')) {
-              AppUtils.setAppBusy(true);
-
-              const sPath = oModel.createKey('/MedExpenseApplSet', {
-                Appno: oDetailModel.getProperty('/FormData/Appno'),
-              });
-
-              oModel.remove(sPath, {
-                success: () => {
-                  AppUtils.setAppBusy(false);
-                  MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
-                    onClose: () => {
-                      this.onNavBack();
-                    },
-                  });
-                },
-                error: (oError) => {
-                  AppUtils.handleError(new ODataDeleteError(oError));
-                  AppUtils.setAppBusy(false);
-                },
-              });
+          onClose: async (vPress) => {
+            // 삭제
+            if (!vPress || vPress !== this.getBundleText('LABEL_00110')) {
+              return;
             }
+
+            AppUtils.setAppBusy(true);
+
+            const oModel = this.getModel(ServiceNames.BENEFIT);
+            const oViewModel = this.getViewModel();
+
+            await Client.remove(oModel, 'MedExpenseAppl', { Appno: oViewModel.getProperty('/FormData/Appno') });
+
+            // {삭제}되었습니다.
+            MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
+              onClose: () => {
+                this.onNavBack();
+              },
+            });
           },
         });
       },
@@ -762,6 +678,7 @@ sap.ui.define(
 
                 // 유효한 날짜체크
                 if (iBaseYear !== iDateYear || iBaseYear !== iSecDateYear) {
+                  // 선택가능한 진료기간은 {0}년 입니다.
                   MessageBox.alert(oDetailController.getController().getBundleText('MSG_09060', iBaseYear));
                   oDateRange.setDateValue(new Date());
                   oDateRange.setSecondDateValue(new Date());
@@ -817,6 +734,7 @@ sap.ui.define(
               });
 
               if (bSucces) {
+                // 영수증 구분을 확인하세요.
                 MessageBox.alert(oDetailController.getController().getBundleText('MSG_09016'));
                 oViewModel.setProperty('/DialogData/Recpgb', 'ALL');
                 return;
@@ -829,14 +747,15 @@ sap.ui.define(
 
       // 상세내역 추가
       onAddDetails() {
-        const oDetailModel = this.getViewModel();
-        const sAppTarget = oDetailModel.getProperty('/FormData/Kdsvh');
+        const oViewModel = this.getViewModel();
+        const sAppTarget = oViewModel.getProperty('/FormData/Kdsvh');
 
         if (!sAppTarget || sAppTarget === 'ALL') {
+          // 신청대상을 입력하세요.
           return MessageBox.alert(this.getBundleText('MSG_09023'));
         }
 
-        oDetailModel.setProperty('/DialogData', []);
+        oViewModel.setProperty('/DialogData', []);
 
         this.setDialogData();
 
@@ -866,20 +785,21 @@ sap.ui.define(
 
       // 상세내역 삭제
       onDelDetails() {
-        const oDetailModel = this.getViewModel();
-        const aDeleteDatas = oDetailModel.getProperty('/HisDeleteDatas');
+        const oViewModel = this.getViewModel();
+        const aDeleteDatas = oViewModel.getProperty('/HisDeleteDatas');
 
         if (!aDeleteDatas.length) {
+          // {삭제}할 행을 선택하세요.
           return MessageBox.alert(this.getBundleText('MSG_00020', 'LABEL_00110'));
         }
 
-        oDetailModel.setProperty('/RemoveFiles', aDeleteDatas);
-        const aHisList = oDetailModel.getProperty('/HisList');
+        oViewModel.setProperty('/RemoveFiles', aDeleteDatas);
+        const aHisList = oViewModel.getProperty('/HisList');
         const aNoInclued = aHisList.filter((e) => !aDeleteDatas.includes(e));
         const oHisTable = this.byId('medHisTable');
 
-        oDetailModel.setProperty('/HisList', aNoInclued);
-        oDetailModel.setProperty('/listInfo/rowCount', aNoInclued.length);
+        oViewModel.setProperty('/HisList', aNoInclued);
+        oViewModel.setProperty('/listInfo/rowCount', aNoInclued.length);
         oHisTable.clearSelection();
         this.setAppAmount();
         this.addSeqnrNum();
@@ -887,16 +807,15 @@ sap.ui.define(
 
       // AttachFileTable Settings
       settingsAttachTable() {
-        const oDetailModel = this.getViewModel();
-        const sStatus = oDetailModel.getProperty('/FormData/Lnsta');
-        const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
+        const oViewModel = this.getViewModel();
+        const sStatus = oViewModel.getProperty('/FormData/Lnsta');
+        const sAppno = oViewModel.getProperty('/FormData/Appno') || '';
 
         AttachFileAction.setAttachFile(this, {
           Editable: !sStatus || sStatus === '10',
           Type: this.getApprovalType(),
           Appno: sAppno,
           Max: 10,
-          // FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'txt', 'png'],
         });
       },
 
@@ -907,8 +826,8 @@ sap.ui.define(
 
       // 진료내역 check
       checkClinicDetail() {
-        const oDetailModel = this.getViewModel();
-        const mDialogData = oDetailModel.getProperty('/DialogData');
+        const oViewModel = this.getViewModel();
+        const mDialogData = oViewModel.getProperty('/DialogData');
 
         // 진료기간
         if (!mDialogData.Begda) {
@@ -941,13 +860,13 @@ sap.ui.define(
         }
 
         // 금여 or 비급여 한도체크
-        if (oDetailModel.getProperty('/DialogLimit')) {
+        if (oViewModel.getProperty('/DialogLimit')) {
           MessageBox.alert(this.getBundleText('MSG_09024'));
           return true;
         }
 
-        const mReciptDetails = oDetailModel.getProperty('/ReciptDetails');
-        const mTargetDetails = oDetailModel.getProperty('/TargetDetails');
+        const mReciptDetails = oViewModel.getProperty('/ReciptDetails');
+        const mTargetDetails = oViewModel.getProperty('/TargetDetails');
 
         if (!!mReciptDetails) {
           // 급여인경우
@@ -994,52 +913,38 @@ sap.ui.define(
       },
 
       checkedDialogData(aDetailList = []) {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const mFormData = oDetailModel.getProperty('/FormData');
-
-        let oSendObject = {};
-
         aDetailList.forEach((e) => {
           e.Waers = 'KRW';
         });
 
-        oSendObject = mFormData;
-        oSendObject.Prcty = '1';
-        oSendObject.MedExpenseItemSet = aDetailList;
+        const oViewModel = this.getViewModel();
+        const oModel = this.getModel(ServiceNames.BENEFIT);
+        const mSendObject = {
+          ...oViewModel.getProperty('/FormData'),
+          Prcty: '1',
+          MedExpenseItemSet: aDetailList,
+        };
 
-        return new Promise((resolve, reject) => {
-          oModel.create('/MedExpenseApplSet', oSendObject, {
-            success: () => {
-              resolve(true);
-            },
-            error: (oError) => {
-              reject(new ODataCreateError({ oError }));
-            },
-          });
-        });
+        return Client.create(oModel, 'MedExpenseAppl', mSendObject);
       },
 
       // Dialog 등록
       async onHisRegBtn() {
-        const oDetailModel = this.getViewModel();
-        const mDialogData = oDetailModel.getProperty('/DialogData');
-        const oTable = this.byId('medHisTable');
-
         if (this.checkClinicDetail()) return;
 
         try {
+          const oViewModel = this.getViewModel();
+          const mDialogData = oViewModel.getProperty('/DialogData');
+
           AppUtils.setAppBusy(true);
 
           if (!mDialogData.Appno2 || _.parseInt(mDialogData.Appno2) === 0) {
-            const vAppno = await Appno.get.call(this);
+            const sAppno = await Appno.get.call(this);
 
-            oDetailModel.setProperty('/DialogData/Appno2', vAppno);
+            _.set(mDialogData, 'Appno2', sAppno);
           }
 
-          mDialogData.Waers = 'KRW';
-
-          const aHisList = [mDialogData, ...oDetailModel.getProperty('/HisList')];
+          const aHisList = [_.set(mDialogData, 'Waers', 'KRW'), ...oViewModel.getProperty('/HisList')];
           const aDetail = [];
 
           aHisList.forEach((e) => {
@@ -1053,8 +958,10 @@ sap.ui.define(
 
           await this.checkedDialogData(aHisList);
 
-          oDetailModel.setProperty('/HisList', aDetail);
-          oDetailModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aHisList, sStatCode: 'ZappStat' }));
+          const oTable = this.byId('medHisTable');
+
+          oViewModel.setProperty('/HisList', aDetail);
+          oViewModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aHisList, sStatCode: 'ZappStat' }));
 
           this.setAppAmount();
           this.addSeqnrNum();
@@ -1072,10 +979,10 @@ sap.ui.define(
             sFile = 'X';
           }
 
-          oDetailModel.setProperty('/DialogData/Attyn', sFile);
+          oViewModel.setProperty('/DialogData/Attyn', sFile);
           this.byId('DetailHisDialog').close();
         } catch (oError) {
-          oDetailModel.setProperty('/DialogData/isNew', true);
+          oViewModel.setProperty('/DialogData/isNew', true);
           AppUtils.handleError(oError);
         } finally {
           AppUtils.setAppBusy(false);
@@ -1084,22 +991,22 @@ sap.ui.define(
 
       // Dialog 수정
       async onHisUpBtn() {
-        const oDetailModel = this.getViewModel();
-        const mDialogData = oDetailModel.getProperty('/DialogData');
-        const aHisList = oDetailModel.getProperty('/HisList');
-
         if (this.checkClinicDetail()) return;
 
         try {
           AppUtils.setAppBusy(true);
 
-          if (!mDialogData.Appno2 || (!mDialogData.Appno2 && !mDialogData.ZappStat) || _.parseInt(mDialogData.Appno2) === 0) {
-            const vAppno = await Appno.get.call(this);
+          const oViewModel = this.getViewModel();
+          const mDialogData = oViewModel.getProperty('/DialogData');
 
-            oDetailModel.setProperty('/DialogData/Appno2', vAppno);
+          if (!mDialogData.Appno2 || (!mDialogData.Appno2 && !mDialogData.ZappStat) || _.parseInt(mDialogData.Appno2) === 0) {
+            const sAppno = await Appno.get.call(this);
+
+            _.set(mDialogData, 'Appno2', sAppno);
           }
 
           const aDetail = [];
+          const aHisList = oViewModel.getProperty('/HisList');
 
           aHisList.forEach((e) => {
             if (e.Appno2 === mDialogData.Appno2) {
@@ -1113,7 +1020,8 @@ sap.ui.define(
 
           await this.checkedDialogData(aDetail);
           await AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.getApprovalType(), this.DIALOG_FILE_ID);
-          oDetailModel.setProperty('/HisList', aDetail);
+
+          oViewModel.setProperty('/HisList', aDetail);
 
           const oDialogModel = this.getViewModel(this.DIALOG_FILE_ID);
 
@@ -1127,7 +1035,7 @@ sap.ui.define(
             sFile = 'X';
           }
 
-          oDetailModel.setProperty('/DialogData/Attyn', sFile);
+          oViewModel.setProperty('/DialogData/Attyn', sFile);
           this.setAppAmount();
           this.byId('DetailHisDialog').close();
         } catch (oError) {
@@ -1147,14 +1055,14 @@ sap.ui.define(
         const oEventSource = oEvent.getSource();
         const sPath = oEventSource.getBinding('value').getPath();
         const sValue = oEvent.getParameter('value').trim().replace(/[^\d]/g, '');
-        const oDetailModel = this.getViewModel();
-        const mReciptDetails = oDetailModel.getProperty('/ReciptDetails');
-        const mTargetDetails = oDetailModel.getProperty('/TargetDetails');
+        const oViewModel = this.getViewModel();
+        const mReciptDetails = oViewModel.getProperty('/ReciptDetails');
+        const mTargetDetails = oViewModel.getProperty('/TargetDetails');
         const iValue = parseInt(sValue);
         const iActCost = iValue * parseFloat(mTargetDetails.Prate);
         let sAmount = sValue;
 
-        oDetailModel.setProperty('/DialogLimit', false);
+        oViewModel.setProperty('/DialogLimit', false);
 
         if (!!mReciptDetails) {
           // 급여인경우
@@ -1163,7 +1071,7 @@ sap.ui.define(
 
             if (iBet01 < iActCost) {
               MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet01Basic, this.TextUtils.toCurrency(parseInt(iBet01 / parseFloat(mTargetDetails.Prate)))));
-              oDetailModel.setProperty('/DialogLimit', true);
+              oViewModel.setProperty('/DialogLimit', true);
             }
           } else {
             const iBet02 = parseInt(mReciptDetails.Bet02);
@@ -1173,7 +1081,7 @@ sap.ui.define(
               if (iBet02 < iActCost) {
                 // 비급여 추가한도를 초과했을경우
                 MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet02Basic, this.TextUtils.toCurrency(parseInt(iBet02 / parseFloat(mTargetDetails.Prate)))));
-                oDetailModel.setProperty('/DialogLimit', true);
+                oViewModel.setProperty('/DialogLimit', true);
               }
             } else {
               const iAddBet02 = parseInt(sAddBet02);
@@ -1181,29 +1089,29 @@ sap.ui.define(
               if (iAddBet02 < iActCost) {
                 // 비급여 한도를 초과했을경우
                 MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet02AddBasic, this.TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
-                oDetailModel.setProperty('/DialogLimit', true);
+                oViewModel.setProperty('/DialogLimit', true);
               }
             }
           }
         }
 
         oEventSource.setValue(this.TextUtils.toCurrency(sAmount));
-        oDetailModel.setProperty(sPath, !sAmount ? '0' : sAmount);
+        oViewModel.setProperty(sPath, !sAmount ? '0' : sAmount);
 
         setTimeout(() => {
-          const mDialogData = oDetailModel.getProperty('/DialogData');
+          const mDialogData = oViewModel.getProperty('/DialogData');
           const iBet01 = parseInt(mDialogData.Bet01) || 0;
           const iBet02 = parseInt(mDialogData.Bet02) || 0;
 
-          oDetailModel.setProperty('/DialogData/Bettot', String(iBet01 + iBet02));
+          oViewModel.setProperty('/DialogData/Bettot', String(iBet01 + iBet02));
         }, 100);
       },
 
       // 상세내역 Click
       onDetailsRow(oEvent) {
+        const oViewModel = this.getViewModel();
         const vPath = oEvent.getParameter('rowBindingContext').getPath();
-        const oDetailModel = this.getViewModel();
-        const oRowData = oDetailModel.getProperty(vPath);
+        const oRowData = oViewModel.getProperty(vPath);
 
         this.setDialogData(oRowData);
 
@@ -1234,75 +1142,74 @@ sap.ui.define(
       // 상세내역Table checkbox
       onRowSelection(oEvent) {
         const aSelected = oEvent.getSource().getSelectedIndices();
-        const oDetailModel = this.getViewModel();
 
         if (!aSelected) return;
 
+        const oViewModel = this.getViewModel();
         const aDeleteDatas = [];
 
-        oDetailModel.setProperty('/HisDeleteDatas', []);
+        oViewModel.setProperty('/HisDeleteDatas', []);
 
         aSelected.forEach((e) => {
-          aDeleteDatas.push(oDetailModel.getProperty(`/HisList/${e}`));
+          aDeleteDatas.push(oViewModel.getProperty(`/HisList/${e}`));
         });
 
-        oDetailModel.setProperty('/HisDeleteDatas', aDeleteDatas);
+        oViewModel.setProperty('/HisDeleteDatas', aDeleteDatas);
       },
 
       // 영수증 구분선택시 데이터 셋팅
       onRecipt(oEvent) {
         const sKey = oEvent.getSource().getSelectedKey();
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
-        oDetailModel.getProperty('/ReceiptType').forEach((e) => {
+        oViewModel.getProperty('/ReceiptType').forEach((e) => {
           if (sKey === e.Zcode) {
-            oDetailModel.setProperty('/ReciptDetails', e);
-            oDetailModel.setProperty('/DialogData/Recpgbtx', e.Ztext);
+            oViewModel.setProperty('/ReciptDetails', e);
+            oViewModel.setProperty('/DialogData/Recpgbtx', e.Ztext);
           }
         });
       },
 
       // Dialog SettingData
       async setDialogData(mRowData) {
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
         if (!mRowData) {
-          oDetailModel.setProperty('/DialogData', {
+          oViewModel.setProperty('/DialogData', {
             Recpgb: 'ALL',
-            Pratetx: oDetailModel.getProperty('/FormData/Pratetx'),
-            Prate: oDetailModel.getProperty('/FormData/Prate'),
+            Pratetx: oViewModel.getProperty('/FormData/Pratetx'),
+            Prate: oViewModel.getProperty('/FormData/Prate'),
             isNew: true,
           });
 
-          oDetailModel.setProperty('/ReWriteStat', true);
+          oViewModel.setProperty('/ReWriteStat', true);
         } else {
-          const sLnsta = oDetailModel.getProperty('/FormData/Lnsta');
+          const sLnsta = oViewModel.getProperty('/FormData/Lnsta');
           const bRewrit = !mRowData.ZappStat && (!sLnsta || sLnsta === '10');
 
-          oDetailModel.setProperty('/ReWriteStat', bRewrit);
-          oDetailModel.setProperty('/DialogData', _.cloneDeep(mRowData));
-          oDetailModel.setProperty('/DialogData/isNew', false);
+          oViewModel.setProperty('/ReWriteStat', bRewrit);
+          oViewModel.setProperty('/DialogData', _.cloneDeep(mRowData));
+          oViewModel.setProperty('/DialogData/isNew', false);
         }
 
-        const dBegda = oDetailModel.getProperty('/DialogData/Begda');
-        const iYear = dBegda ? moment(dBegda).year() : parseInt(oDetailModel.getProperty('/sYear'));
+        const dBegda = oViewModel.getProperty('/DialogData/Begda');
+        const iYear = dBegda ? moment(dBegda).year() : parseInt(oViewModel.getProperty('/sYear'));
 
-        oDetailModel.setProperty('/DialogData/minDate', new Date(iYear, 0, 1));
-        oDetailModel.setProperty('/DialogData/maxDate', new Date());
+        oViewModel.setProperty('/DialogData/minDate', new Date(iYear, 0, 1));
+        oViewModel.setProperty('/DialogData/maxDate', new Date());
       },
 
       // Dialog AttachFileTable Settings
       settingsAttachDialog() {
-        const oDetailModel = this.getViewModel();
-        const sAppno = oDetailModel.getProperty('/DialogData/Appno2') || '';
+        const oViewModel = this.getViewModel();
+        const sAppno = oViewModel.getProperty('/DialogData/Appno2') || '';
 
         AttachFileAction.setAttachFile(this, {
           Id: this.DIALOG_FILE_ID,
-          Editable: oDetailModel.getProperty('/ReWriteStat'),
+          Editable: oViewModel.getProperty('/ReWriteStat'),
           Type: this.getApprovalType(),
           Appno: sAppno,
           Max: 1,
-          // FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'txt', 'png'],
         });
       },
     });

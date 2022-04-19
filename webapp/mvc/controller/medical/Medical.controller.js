@@ -11,10 +11,11 @@ sap.ui.define(
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/model/type/Currency',
-    'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
+    'sap/ui/yesco/mvc/model/type/Date',
   ],
   (
     // prettier 방지용 주석
@@ -28,6 +29,7 @@ sap.ui.define(
     TableUtils,
     TextUtils,
     ServiceNames,
+    Client,
     ODataReadError,
     BaseController
   ) => {
@@ -42,7 +44,7 @@ sap.ui.define(
 
       initializeModel() {
         return {
-          detailName: this.isHass() ? 'h/medical-detail' : 'medical-detail',
+          routeName: '',
           busy: false,
           Data: [],
           LoanType: [],
@@ -67,38 +69,57 @@ sap.ui.define(
         };
       },
 
-      async onObjectMatched() {
-        const oListModel = this.getViewModel();
+      async onObjectMatched(oParameter, sRouteName) {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/routeName', sRouteName);
+        oViewModel.setProperty('/busy', true);
 
         try {
-          oListModel.setProperty('/busy', true);
-          const aList = await this.getFamilyCode();
+          const aFamilyList = await this.getFamilyCode();
 
-          oListModel.setProperty('/FamilyCode', new ComboEntry({ codeKey: 'Famgb', valueKey: 'Znametx', aEntries: aList }));
-          oListModel.setProperty('/search/Famgb', 'ALL');
-          oListModel.setProperty('/search/Famsa', 'ALL');
-          oListModel.setProperty('/search/Objps', 'ALL');
-          oListModel.setProperty('/search/Kdsvh', 'ALL');
+          oViewModel.setProperty('/FamilyCode', new ComboEntry({ codeKey: 'Famgb', valueKey: 'Znametx', aEntries: aFamilyList }));
+          oViewModel.setProperty('/search/Famgb', 'ALL');
+          oViewModel.setProperty('/search/Famsa', 'ALL');
+          oViewModel.setProperty('/search/Objps', 'ALL');
+          oViewModel.setProperty('/search/Kdsvh', 'ALL');
 
-          this.onSearch();
+          this.getApplyList();
           this.totalCount();
-          // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+          this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
-          oListModel.setProperty('/busy', false);
+          oViewModel.setProperty('/busy', false);
         }
       },
 
       // 대상자 정보 사원선택시 화면 Refresh
-      onRefresh() {
-        this.onSearch();
-        this.totalCount();
-        // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+      async onRefresh() {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/busy', true);
+
+        try {
+          const aFamilyList = await this.getFamilyCode();
+
+          oViewModel.setProperty('/FamilyCode', new ComboEntry({ codeKey: 'Famgb', valueKey: 'Znametx', aEntries: aFamilyList }));
+          oViewModel.setProperty('/search/Famgb', 'ALL');
+          oViewModel.setProperty('/search/Famsa', 'ALL');
+          oViewModel.setProperty('/search/Objps', 'ALL');
+          oViewModel.setProperty('/search/Kdsvh', 'ALL');
+
+          this.getApplyList();
+          this.totalCount();
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       onClick() {
-        this.getRouter().navTo(this.getViewModel().getProperty('/detailName'), { oDataKey: 'N' });
+        this.getRouter().navTo(`${this.getViewModel().getProperty('/routeName')}-detail`, { oDataKey: 'N' });
       },
 
       formatDate(sDate = '') {
@@ -127,125 +148,84 @@ sap.ui.define(
       },
 
       async onSearch() {
+        this.getApplyList();
+      },
+
+      async getApplyList() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oListModel = this.getViewModel();
-        const oSearch = oListModel.getProperty('/search');
-        const dDate = moment(oSearch.secondDate).hours(9).toDate();
-        const dDate2 = moment(oSearch.date).hours(9).toDate();
+        const oViewModel = this.getViewModel();
+        const mSearch = oViewModel.getProperty('/search');
+        const dDate = moment(mSearch.secondDate).hours(9).toDate();
+        const dDate2 = moment(mSearch.date).hours(9).toDate();
         const sMenid = this.getCurrentMenuId();
         let sFamgb = '';
         let sFamsa = '';
         let sObjps = '';
         let sKdsvh = '';
 
-        oListModel.setProperty('/busy', true);
-
-        if (!!oSearch.Famgb && oSearch.Famgb !== 'ALL') {
-          sFamgb = oSearch.Famgb;
-          sFamsa = oSearch.Famsa;
-          sObjps = oSearch.Objps;
-          sKdsvh = oSearch.Kdsvh;
+        if (!!mSearch.Famgb && mSearch.Famgb !== 'ALL') {
+          sFamgb = mSearch.Famgb;
+          sFamsa = mSearch.Famsa;
+          sObjps = mSearch.Objps;
+          sKdsvh = mSearch.Kdsvh;
         }
 
-        const aFilters = [
-          // prettier 방지주석
-          new Filter('Prcty', FilterOperator.EQ, 'L'),
-          new Filter('Menid', FilterOperator.EQ, sMenid),
-          new Filter('Apbeg', FilterOperator.EQ, dDate),
-          new Filter('Apend', FilterOperator.EQ, dDate2),
-          new Filter('Famgb', FilterOperator.EQ, sFamgb),
-          new Filter('Famsa', FilterOperator.EQ, sFamsa),
-          new Filter('Objps', FilterOperator.EQ, sObjps),
-          new Filter('Kdsvh', FilterOperator.EQ, sKdsvh),
-        ];
+        oViewModel.setProperty('/busy', true);
 
-        if (this.isHass()) {
-          const sPernr = this.getAppointeeProperty('Pernr');
+        try {
+          const mPayLoad = {
+            Prcty: 'L',
+            Menid: sMenid,
+            Apbeg: dDate,
+            Apend: dDate2,
+            Famgb: sFamgb,
+            Famsa: sFamsa,
+            Objps: sObjps,
+            Kdsvh: sKdsvh,
+            Pernr: this.getAppointeeProperty('Pernr'),
+          };
 
-          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
-          const aList = await this.getFamilyCode();
-          oListModel.setProperty('/FamilyCode', new ComboEntry({ codeKey: 'Famgb', valueKey: 'Znametx', aEntries: aList }));
-          oListModel.setProperty('/search/Famgb', 'ALL');
-          oListModel.setProperty('/search/Famsa', 'ALL');
-          oListModel.setProperty('/search/Objps', 'ALL');
-          oListModel.setProperty('/search/Kdsvh', 'ALL');
+          const aList = await Client.getEntitySet(oModel, 'MedExpenseAppl', mPayLoad);
+          const oTable = this.byId('medTable');
+
+          oViewModel.setProperty('/List', aList);
+          oViewModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aList, sStatCode: 'Lnsta' }));
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
         }
-
-        oModel.read('/MedExpenseApplSet', {
-          filters: aFilters,
-          success: (oData) => {
-            if (oData) {
-              const aMedList = oData.results;
-              const oTable = this.byId('medTable');
-
-              oListModel.setProperty('/List', aMedList);
-              oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aMedList, sStatCode: 'Lnsta' }));
-            }
-            oListModel.setProperty('/busy', false);
-          },
-          error: (oError) => {
-            this.debug(oError);
-            AppUtils.handleError(new ODataReadError(oError));
-            oListModel.setProperty('/busy', false);
-          },
-        });
       },
 
       getFamilyCode() {
-        return new Promise((resolve, reject) => {
-          const oModel = this.getModel(ServiceNames.BENEFIT);
-          const aFilters = [new Filter('Datum', FilterOperator.EQ, new Date())];
+        const oModel = this.getModel(ServiceNames.BENEFIT);
+        const mPayLoad = {
+          Datum: new Date(),
+          Pernr: this.getAppointeeProperty('Pernr'),
+        };
 
-          if (this.isHass()) {
-            const sPernr = this.getAppointeeProperty('Pernr');
-
-            aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
-          }
-
-          oModel.read('/MedExpenseSupportListSet', {
-            filters: aFilters,
-            success: (oData) => {
-              if (oData) {
-                resolve(oData.results);
-              }
-            },
-            error: (oError) => {
-              reject(oError);
-            },
-          });
-        });
+        return Client.getEntitySet(oModel, 'MedExpenseSupportList', mPayLoad);
       },
 
-      totalCount() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oListModel = this.getViewModel();
-        const aFilters = [];
+      async totalCount() {
+        const oViewModel = this.getViewModel();
 
-        if (this.isHass()) {
-          const sPernr = this.getAppointeeProperty('Pernr');
+        oViewModel.setProperty('/busy', true);
 
-          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
+        try {
+          const oModel = this.getModel(ServiceNames.BENEFIT);
+          const [mTotal] = await Client.getEntitySet(oModel, 'MedExpenseMymed', { Pernr: this.getAppointeeProperty('Pernr') });
+
+          oViewModel.setProperty('/Total', mTotal);
+
+          if (!!mTotal.Note) {
+            oViewModel.setProperty('/listInfo/infoMessage', mTotal.Note);
+          }
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
         }
-
-        oModel.read('/MedExpenseMymedSet', {
-          filters: aFilters,
-          success: (oData) => {
-            if (oData) {
-              const oList = oData.results[0];
-
-              oListModel.setProperty('/Total', oList);
-
-              if (!!oList.Note) {
-                oListModel.setProperty('/listInfo/infoMessage', oList.Note);
-              }
-            }
-          },
-          error: (oError) => {
-            this.debug(oError);
-            AppUtils.handleError(new ODataReadError(oError));
-            oListModel.setProperty('/busy', false);
-          },
-        });
       },
 
       // 대상자 선택시
@@ -271,10 +251,10 @@ sap.ui.define(
 
       onSelectRow(oEvent) {
         const vPath = oEvent.getParameter('rowBindingContext').getPath();
-        const oListModel = this.getViewModel();
-        const oRowData = oListModel.getProperty(vPath);
+        const oViewModel = this.getViewModel();
+        const oRowData = oViewModel.getProperty(vPath);
 
-        this.getRouter().navTo(oListModel.getProperty('/detailName'), { oDataKey: oRowData.Appno });
+        this.getRouter().navTo(`${oViewModel.getProperty('/routeName')}-detail`, { oDataKey: oRowData.Appno });
       },
 
       onPressExcelDownload() {
