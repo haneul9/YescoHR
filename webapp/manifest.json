@@ -176,6 +176,8 @@
         { "pattern": "mobile/m/employee/{pernr}", "name": "mobile/m/employee-detail", "target": "mobile/employee" },
 
         { "pattern": "m/EvalKpi", "name": "m/EvalKpi", "target": "m/EvalKpi" },
+        { "pattern": "kpiProgress", "name": "kpiProgress", "target": "kpiProgress" },
+        { "pattern": "m/KpiProgress", "name": "m/KpiProgress", "target": "m/KpiProgress" },
 
         { "pattern": "excavation", "name": "excavation", "target": "excavation" },
         { "pattern": "excavation/{appno}", "name": "excavation-detail", "target": "excavationDetail" },
@@ -397,6 +399,8 @@
         "mobile/m/employee": { "viewId": "mobile_m_employee", "viewPath": "sap.ui.yesco.mvc.view.employee.mobile", "viewName": "Card" },
 
         "m/EvalKpi": { "viewId": "m_EvalKpi", "viewPath": "sap.ui.yesco.mvc.view.mssEvalKpi", "viewName": "Kpi" },
+        "kpiProgress": { "viewId": "kpiProgress", "viewPath": "sap.ui.yesco.mvc.view.mssEvalKpi", "viewName": "KpiProgress" },
+        "m/KpiProgress": { "viewId": "m_KpiProgress", "viewPath": "sap.ui.yesco.mvc.view.mssEvalKpi", "viewName": "KpiProgressM" },
 
         "excavation": { "viewId": "excavation", "viewPath": "sap.ui.yesco.mvc.view.excavation", "viewName": "List" },
         "h/excavation": { "viewId": "h_excavation", "viewPath": "sap.ui.yesco.mvc.view.excavation", "viewName": "ListH" },
