@@ -172,11 +172,9 @@ sap.ui.define(
 
       onPressExcelDownload() {
         const oTable = this.byId('loanTable');
-        const aTableData = this.getViewModel().getProperty('/List');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_07001');
-        const aDateProps = ['Appda', 'Begda', 'Endda', 'Lstdt', 'Rpdat1', 'Rpdat2', 'RpdatMid'];
 
-        TableUtils.export({ oTable, aTableData, sFileName, aDateProps, sStatCode: 'Lnsta', sStatTxt: 'Lnstatx' });
+        TableUtils.export({ oTable, sFileName, sStatCode: 'Lnsta', sStatTxt: 'Lnstatx' });
       },
     });
   }

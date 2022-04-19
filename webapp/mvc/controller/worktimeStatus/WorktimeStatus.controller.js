@@ -443,20 +443,18 @@ sap.ui.define(
 
       onPressPernrExcelDownload() {
         const oTable = this.byId('pernrTable');
-        const aTableData = this.getViewModel().getProperty('/detail/pernr/list');
 
-        this.onPressExcelDownload(oTable, aTableData);
+        this.onPressExcelDownload(oTable);
       },
       onPressOrgExcelDownload() {
         const oTable = this.byId('orgTable');
-        const aTableData = this.getViewModel().getProperty('/detail/org/list');
 
-        this.onPressExcelDownload(oTable, aTableData);
+        this.onPressExcelDownload(oTable);
       },
-      onPressExcelDownload(oTable, aTableData) {
+      onPressExcelDownload(oTable) {
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_32001'); // {근로시간현황}_목록
 
-        TableUtils.export({ oTable, aTableData, sFileName, bHasMultiLabel: true });
+        TableUtils.export({ oTable, sFileName });
       },
     });
   }

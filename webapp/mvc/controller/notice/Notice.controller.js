@@ -117,11 +117,9 @@ sap.ui.define(
 
       onPressExcelDownload() {
         const oTable = this.byId('noticeTable');
-        const aTableData = this.getViewModel().getProperty('/NoticeList');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_08001');
-        const aDateProps = ['Sdate'];
 
-        TableUtils.export({ oTable, aTableData, sFileName, aDateProps });
+        TableUtils.export({ oTable, sFileName });
       },
     });
   }

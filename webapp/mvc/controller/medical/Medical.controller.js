@@ -259,11 +259,9 @@ sap.ui.define(
 
       onPressExcelDownload() {
         const oTable = this.byId('medTable');
-        const aTableData = this.getViewModel().getProperty('/List');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_09010');
-        const aDateProps = ['Appda'];
 
-        TableUtils.export({ oTable, aTableData, sFileName, aDateProps, sStatCode: 'Lnsta', sStatTxt: 'Lnstatx' });
+        TableUtils.export({ oTable, sFileName, sStatCode: 'Lnsta', sStatTxt: 'Lnstatx' });
       },
     });
   }

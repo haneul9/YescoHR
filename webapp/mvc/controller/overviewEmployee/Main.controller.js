@@ -408,10 +408,9 @@ sap.ui.define(
 
       onPressDetailExcelDownload() {
         const oTable = this.byId('overviewEmpDetailTable');
-        const aTableData = this.getViewModel().getProperty('/dialog/list');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_28038'); // 인원현황상세
 
-        TableUtils.export({ oTable, aTableData, sFileName, aDateProps: ['Gbdat', 'Entda', 'Loada', 'Reida', 'Retda'] });
+        TableUtils.export({ oTable, sFileName });
       },
 
       /*****************************************************************

@@ -34,6 +34,8 @@ sap.ui.define(
 
       AWART_COUNT: { 2000: 1, 2010: 1, 2001: 0.5, 2002: 0.5 },
 
+      sRouteName: '',
+
       initializeModel() {
         return {
           busy: false,
@@ -132,11 +134,14 @@ sap.ui.define(
         });
       },
 
-      async onObjectMatched() {
+      async onObjectMatched(oParameter, sRouteName) {
         const oViewModel = this.getViewModel();
 
+        this.sRouteName = sRouteName;
         oViewModel.setSizeLimit(500);
         oViewModel.setData(this.initializeModel());
+
+        this.getAppointeeModel().setProperty('/showChangeButton', false);
 
         try {
           oViewModel.setProperty('/busy', true);
@@ -187,15 +192,15 @@ sap.ui.define(
       },
 
       buildChart() {
-        const oChart = FusionCharts(this.CHART_ID);
+        const oChart = FusionCharts(`${this.sRouteName}-${this.CHART_ID}`);
         const mDataSource = this.getViewModel().getProperty('/summary/dataSources');
 
         if (!oChart) {
           FusionCharts.ready(() => {
             new FusionCharts({
-              id: this.CHART_ID,
+              id: `${this.sRouteName}-${this.CHART_ID}`,
               type: 'pie2d',
-              renderAt: 'chart-leaveSummary-container',
+              renderAt: `chart-${this.sRouteName}-container`,
               width: '180',
               height: '160',
               dataFormat: 'json',
@@ -418,10 +423,9 @@ sap.ui.define(
 
       onPressExcelDownload() {
         const oTable = this.byId(this.TABLE_ID);
-        const aTableData = this.getViewModel().getProperty('/list');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_23015'); // {연간휴가계획현황}_목록
 
-        TableUtils.export({ oTable, aTableData, sFileName, aDateProps: [], bHasMultiLabel: true });
+        TableUtils.export({ oTable, sFileName });
       },
 
       /*****************************************************************

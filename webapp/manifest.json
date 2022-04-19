@@ -176,6 +176,8 @@
         { "pattern": "mobile/m/employee/{pernr}", "name": "mobile/m/employee-detail", "target": "mobile/employee" },
 
         { "pattern": "m/EvalKpi", "name": "m/EvalKpi", "target": "m/EvalKpi" },
+        { "pattern": "kpiProgress", "name": "kpiProgress", "target": "kpiProgress" },
+        { "pattern": "m/KpiProgress", "name": "m/KpiProgress", "target": "m/KpiProgress" },
 
         { "pattern": "excavation", "name": "excavation", "target": "excavation" },
         { "pattern": "excavation/{appno}", "name": "excavation-detail", "target": "excavationDetail" },
@@ -216,10 +218,12 @@
         { "pattern": "jobDefine/:objid:", "name": "jobDefine-view", "target": "jobDefineView" },
 
         { "pattern": "m/leave", "name": "m/leave", "target": "m/leave" },
+        { "pattern": "h/leave", "name": "h/leave", "target": "h/leave" },
         
         { "pattern": "leavePlan/:Plnyy:/:Seqno:", "name": "leavePlan", "target": "leavePlan" },
         
         { "pattern": "m/leaveSummary", "name": "m/leaveSummary", "target": "m/leaveSummary" },
+        { "pattern": "h/leaveSummary", "name": "h/leaveSummary", "target": "h/leaveSummary" },
 
         { "pattern": "medical", "name": "medical", "target": "medical" },
         { "pattern": "medical/{oDataKey}", "name": "medical-detail", "target": "medicalDetail" },
@@ -395,6 +399,8 @@
         "mobile/m/employee": { "viewId": "mobile_m_employee", "viewPath": "sap.ui.yesco.mvc.view.employee.mobile", "viewName": "Card" },
 
         "m/EvalKpi": { "viewId": "m_EvalKpi", "viewPath": "sap.ui.yesco.mvc.view.mssEvalKpi", "viewName": "Kpi" },
+        "kpiProgress": { "viewId": "kpiProgress", "viewPath": "sap.ui.yesco.mvc.view.mssEvalKpi", "viewName": "KpiProgress" },
+        "m/KpiProgress": { "viewId": "m_KpiProgress", "viewPath": "sap.ui.yesco.mvc.view.mssEvalKpi", "viewName": "KpiProgressM" },
 
         "excavation": { "viewId": "excavation", "viewPath": "sap.ui.yesco.mvc.view.excavation", "viewName": "List" },
         "h/excavation": { "viewId": "h_excavation", "viewPath": "sap.ui.yesco.mvc.view.excavation", "viewName": "ListH" },
@@ -432,10 +438,12 @@
         "jobDefineView": { "viewId": "jobDefineView", "viewPath": "sap.ui.yesco.mvc.view.jobCompetency", "viewName": "JobView" },
         
         "m/leave": { "viewId": "m_leave", "viewPath": "sap.ui.yesco.mvc.view.leave", "viewName": "App" },
+        "h/leave": { "viewId": "h_leave", "viewPath": "sap.ui.yesco.mvc.view.leave", "viewName": "AppH" },
         
         "leavePlan": { "viewId": "leavePlan", "viewPath": "sap.ui.yesco.mvc.view.leavePlan", "viewName": "App" },
 
         "m/leaveSummary": { "viewId": "m_leaveSummary", "viewPath": "sap.ui.yesco.mvc.view.leaveSummary", "viewName": "App" },
+        "h/leaveSummary": { "viewId": "h_leaveSummary", "viewPath": "sap.ui.yesco.mvc.view.leaveSummary", "viewName": "AppH" },
 
         "h/medical": { "viewId": "h_medical", "viewPath": "sap.ui.yesco.mvc.view.medical", "viewName": "MedicalH" },
         "medical": { "viewId": "medical", "viewPath": "sap.ui.yesco.mvc.view.medical", "viewName": "Medical" },

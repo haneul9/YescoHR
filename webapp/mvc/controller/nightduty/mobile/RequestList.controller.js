@@ -75,10 +75,9 @@ sap.ui.define(
 
       onPressExelDownload() {
         const oTable = this.byId(this.sRequestListTableId);
-        const aTableData = this.oSearchBoxHandler.getRequestListTableData();
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_06001'); // {당직변경신청}_목록
 
-        TableUtils.export({ oTable, aTableData, sFileName });
+        TableUtils.export({ oTable, sFileName });
       },
 
       onSelectRow(oEvent) {

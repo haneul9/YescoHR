@@ -147,11 +147,9 @@ sap.ui.define(
 
       onPressExcelDownload() {
         const oTable = this.byId('healthTable');
-        const aTableData = this.getViewModel().getProperty('/List');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_21001');
-        const aDateProps = ['Begda'];
 
-        TableUtils.export({ oTable, aTableData, sFileName, aDateProps });
+        TableUtils.export({ oTable, sFileName });
       },
     });
   }

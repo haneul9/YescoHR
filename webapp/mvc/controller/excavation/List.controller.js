@@ -238,11 +238,9 @@ sap.ui.define(
 
       onPressExcelDownload() {
         const oTable = this.byId(this.TABLE_ID);
-        const aTableData = this.getViewModel().getProperty('/list');
-        const aDateProps = ['Datum', 'Appda', 'Sgnda'];
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_11002'); // {통합굴착야간근무변경신청}_목록
 
-        TableUtils.export({ oTable, aTableData, sFileName, aDateProps, bHasMultiLabel: true });
+        TableUtils.export({ oTable, sFileName });
       },
 
       onSelectRow(oEvent) {

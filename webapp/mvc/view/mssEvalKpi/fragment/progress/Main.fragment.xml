@@ -1,0 +1,91 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control"
+  xmlns:table="sap.ui.table">
+  <Page showHeader="false">
+    <VBox class="contents-header">
+      <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+        <custom:Breadcrumbs />
+        <HBox>
+          <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
+          <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
+        </HBox>
+      </HBox>
+    </VBox>
+    <HBox class="contents" justifyContent="SpaceBetween">
+      <VBox busyIndicatorDelay="0" busy="{/busy}">
+        <VBox class="vCardBox sapUiTinyMarginBottom">
+          <HBox class="form-bar" justifyContent="Start" alignItems="Center">
+            <Label text="{i18n>LABEL_00237}" />
+            <ComboBox items="{/CompanyCode}" selectedKey="{/search/Werks}">
+              <core:Item text="{Pbtxt}" key="{Werks}" />
+            </ComboBox>
+            <Label text="{i18n>LABEL_15026}" />
+            <ComboBox items="{/Years}" selectedKey="{/search/Syear}">
+              <core:Item text="{Ztext}" key="{Zcode}" />
+            </ComboBox>
+            <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onSearch"/>
+          </HBox>
+        </VBox>
+        <VBox class="vCardBox">
+          <table:Table id="progressTable" rows="{/List}" visibleRowCount="{/listInfo/rowCount}" width="100%" busyIndicatorDelay="0" busy="{/busy}" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
+            <table:extension>
+              <HBox class="table-toolbar">
+                <HBox class="title">
+                  <Title level="H4" text="{i18n>LABEL_15024}" />
+                </HBox>
+              </HBox>
+            </table:extension>
+            <table:columns>
+              <table:Column width="150px">
+                <Label text="{i18n>LABEL_15009}"/>
+                <table:template>
+                  <Text text="{Otext}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+              </table:Column>
+              <table:Column width="300px">
+                <Label text="{i18n>LABEL_15010}"/>
+                <table:template>
+                  <HBox>
+                    <Text visible="{= !${Url} }" text="{Objtx9091}" wrapping="false" class="tableRow_Text"/>
+                    <Link visible="{= !!${Url} }" text="{Objtx9091}" press=".onPressLink" />
+                  </HBox>
+                </table:template>
+              </table:Column>
+              <table:Column width="auto">
+                <Label text="{i18n>LABEL_15011}"/>
+                <table:template>
+                  <Text text="{Ztext}" textAlign="Begin" width="100%" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+              </table:Column>
+              <table:Column width="auto">
+                <Label text="{i18n>LABEL_15025}"/>
+                <table:template>
+                  <Text text="{Orgtx}" width="200px" wrapping="false" class="tableRow_Text"/>
+                </table:template>
+              </table:Column>
+              <table:Column width="100px">
+                <Label text="{i18n>LABEL_15012}"/>
+                <table:template>
+                  <Link text="{Tmcnt}" press=".onPressTeam" textAlign="End" width="100%" class="tableRow_Text" />
+                </table:template>
+              </table:Column>
+              <table:Column width="100px">
+                <Label text="{i18n>LABEL_15013}"/>
+                <table:template>
+                  <Link text="{Prgrt}" press=".onPressProgress" textAlign="End" width="100%" class="tableRow_Text" />
+                </table:template>
+              </table:Column>
+              <table:Column width="10px">
+                <Label text="Comment"/>
+                <table:template>
+                  <Button type="Transparent" icon="sap-icon://attachment" visible="{= !!${Cmmnt} }" class="mnw-0" press=".onFileListDialog"/>
+                </table:template>
+              </table:Column>
+            </table:columns>
+          </table:Table>
+        </VBox>
+      </VBox>
+    </HBox>
+  </Page>
+</core:FragmentDefinition>
