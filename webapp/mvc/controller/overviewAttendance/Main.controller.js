@@ -519,10 +519,9 @@ sap.ui.define(
 
       onPressDetailExcelDownload(oEvent) {
         const oTable = oEvent.getSource().getParent().getParent().getParent();
-        const aTableData = this.getViewModel().getProperty('/dialog/list');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_28040'); // 근태현황상세
 
-        TableUtils.export({ oTable, aTableData, sFileName, aDateProps: ['Tmdat'] });
+        TableUtils.export({ oTable, sFileName });
       },
 
       /*****************************************************************

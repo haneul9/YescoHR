@@ -190,11 +190,9 @@ sap.ui.define(
 
       onPressExcelDownload() {
         const oTable = this.byId('accTable');
-        const aTableData = this.getViewModel().getProperty('/List');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_26001');
-        const aDateProps = ['ZreqDate', 'ZappDate'];
 
-        TableUtils.export({ oTable, aTableData, sFileName, aDateProps });
+        TableUtils.export({ oTable, sFileName });
       },
     });
   }

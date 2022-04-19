@@ -423,10 +423,9 @@ sap.ui.define(
 
       onPressExcelDownload() {
         const oTable = this.byId(this.TABLE_ID);
-        const aTableData = this.getViewModel().getProperty('/list');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_23015'); // {연간휴가계획현황}_목록
 
-        TableUtils.export({ oTable, aTableData, sFileName, aDateProps: [], bHasMultiLabel: true });
+        TableUtils.export({ oTable, sFileName });
       },
 
       /*****************************************************************

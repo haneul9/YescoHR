@@ -226,11 +226,9 @@ sap.ui.define(
 
       onPressExcelDownload() {
         const oTable = this.byId('withdrawTable');
-        const aTableData = this.getViewModel().getProperty('/List');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_24001');
-        const aDateProps = ['Wtdat', 'ZreqDate', 'ZappDate'];
 
-        TableUtils.export({ oTable, aTableData, sFileName, aDateProps });
+        TableUtils.export({ oTable, sFileName });
       },
     });
   }

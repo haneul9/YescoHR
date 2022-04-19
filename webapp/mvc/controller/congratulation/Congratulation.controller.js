@@ -146,11 +146,9 @@ sap.ui.define(
 
       onPressExcelDownload() {
         const oTable = this.byId('conguTable');
-        const aTableData = this.getViewModel().getProperty('/CongList');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_02022');
-        const aDateProps = ['Conddate', 'Appda', 'Sgnda', 'Paydt'];
 
-        TableUtils.export({ oTable, aTableData, sFileName, aDateProps });
+        TableUtils.export({ oTable, sFileName });
       },
 
       onPressFileListDialogOpen(oEvent) {

@@ -103,10 +103,9 @@ sap.ui.define(
 
       onPressDetailExcelDownload() {
         const oTable = this.oController.byId('overviewEmpDetailTable');
-        const aTableData = this.oPortletModel.getProperty('/dialog/list');
         const sFileName = this.oController.getBundleText('LABEL_00282', 'LABEL_28038'); // 인원현황상세
 
-        TableUtils.export({ oTable, aTableData, sFileName, aDateProps: ['Gbdat', 'Entda', 'Loada', 'Reida', 'Retda'] });
+        TableUtils.export({ oTable, sFileName });
       },
 
       formatDetailRowHighlight(sValue) {

@@ -179,11 +179,9 @@ sap.ui.define(
 
       onPressExcelDownload() {
         const oTable = this.byId('carTable');
-        const aTableData = this.getViewModel().getProperty('/List');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_25001');
-        const aDateProps = ['Appda'];
 
-        TableUtils.export({ oTable, aTableData, sFileName, aDateProps });
+        TableUtils.export({ oTable, sFileName });
       },
     });
   }

@@ -70,6 +70,13 @@ sap.ui.define(
         }
       },
 
+      onExcel001() {
+        const oTable = this.byId('comp-table-001');
+        const sFileName = this.getBundleText('LABEL_00282', 'Component001Table');
+
+        TableUtils.export({ oTable, sFileName });
+      },
+
       summaryColspan() {
         const $firstTD = $('#container-ehr---sampleComponents--groupTable-rows-row3-col0');
         const $firstCheckbox = $('#container-ehr---sampleComponents--groupTable-rowsel3');
@@ -167,7 +174,7 @@ sap.ui.define(
         this.byId('searchDialog').close();
         this.byId('searchFieldDialog').close();
       },
-      
+
       onEmployeeClose() {
         this.byId('employeeDialog').close();
       },

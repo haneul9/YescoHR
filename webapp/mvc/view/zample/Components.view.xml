@@ -943,10 +943,11 @@
         <HBox class="sapUiResponsiveMargin" width="auto">
           <VBox>
             <Title level="H3" text="Table" class="component-title" />
-            <table:Table width="1555px" rows="{/ProductCollection}" selectionMode="MultiToggle" visibleRowCount="7" ariaLabelledBy="title">
+            <table:Table id="comp-table-001" width="1555px" rows="{/ProductCollection}" selectionMode="MultiToggle" visibleRowCount="7" ariaLabelledBy="title">
               <table:extension>
                 <OverflowToolbar style="Clear">
                   <Title id="title" text="Products" />
+                  <Button text="Excel" press=".onExcel001" />
                 </OverflowToolbar>
               </table:extension>
               <table:columns>
@@ -959,7 +960,7 @@
                 <table:Column width="180px" hAlign="Center" filterProperty="ProductId" sortProperty="ProductId">
                   <Label text="Product Id"/>
                   <table:template>
-                    <Input value="{ProductId}"/>
+                    <Input value="{ProductId}" />
                   </table:template>
                 </table:Column>
                 <table:Column width="90.5px" hAlign="End" filterProperty="Quantity" sortProperty="Quantity">
@@ -1043,7 +1044,7 @@
                 <table:Column width="180px" hAlign="Center" filterProperty="ProductId" sortProperty="ProductId">
                   <Label text="Product Id"/>
                   <table:template>
-                    <Input value="{ProductId}"/>
+                    <Input value="{ProductId}" />
                   </table:template>
                 </table:Column>
                 <table:Column width="90.5px" hAlign="End" filterProperty="Quantity" sortProperty="Quantity">

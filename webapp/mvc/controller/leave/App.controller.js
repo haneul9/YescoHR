@@ -329,10 +329,9 @@ sap.ui.define(
 
       onPressExcelDownload() {
         const oTable = this.byId('leaveTable');
-        const aTableData = this.getViewModel().getProperty('/list');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_16021'); // {휴가부서별현황}_목록
 
-        TableUtils.export({ oTable, aTableData, sFileName, bHasMultiLabel: true });
+        TableUtils.export({ oTable, sFileName });
       },
 
       /*****************************************************************

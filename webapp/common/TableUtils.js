@@ -120,62 +120,69 @@ sap.ui.define(
         return iVisibleRowCount;
       },
 
-      export({ oTable, aTableData, sFileName, sStatCode = 'ZappStatAl', sStatTxt = 'ZappStxtAl', bHasMultiLabel = false, aDateProps = [], aCustomColumns = [] }) {
-        if (!aTableData.length) return;
+      export({ oTable, sFileName, aTableData = [], aCustomColumns = [], sStatCode = 'ZappStatAl', sStatTxt = 'ZappStxtAl' }) {
+        if (!oTable) return;
 
-        const sToday = moment().format('YYYYMMDD');
-        const aColumns = !_.isEmpty(aCustomColumns)
-          ? aCustomColumns
-          : bHasMultiLabel
-          ? _.chain(oTable.getColumns())
-              .filter((col) => !_.isEmpty(col.getMultiLabels()))
-              .map((col) => ({
-                label: [
-                  ...col.getMultiLabels().reduce((acc, cur) => {
-                    acc.add(cur.getText());
-                    return acc;
-                  }, new Set()),
-                ].join('-'),
-                property: !!col.getTemplate().getBindingInfo('text') ? (col.getTemplate().getBindingInfo('text').parts[0].path === sStatCode ? sStatTxt : col.getTemplate().getBindingInfo('text').parts[0].path) : !!col.getTemplate().getBindingInfo('visible') ? col.getTemplate().getBindingInfo('visible').parts[0].path : !!col.getTemplate().getBindingInfo('selectedKey') ? col.getTemplate().getBindingInfo('selectedKey').parts[0].path : '',
-                type: exportLibrary.EdmType.String,
-              }))
-              .value()
-          : _.chain(oTable.getColumns())
-              .filter((col) => !_.isEmpty(col.getLabel()))
-              .map((col) => ({
-                label: col.getLabel().getText(),
-                property: !!col.getTemplate().getBindingInfo('text') ? (col.getTemplate().getBindingInfo('text').parts[0].path === sStatCode ? sStatTxt : col.getTemplate().getBindingInfo('text').parts[0].path) : !!col.getTemplate().getBindingInfo('visible') ? col.getTemplate().getBindingInfo('visible').parts[0].path : !!col.getTemplate().getBindingInfo('selectedKey') ? col.getTemplate().getBindingInfo('selectedKey').parts[0].path : '',
-                type: exportLibrary.EdmType.String,
-              }))
-              .value();
+        const oTableBinding = oTable.getBinding();
+        const aExportTableRowData = _.isEmpty(aTableData) ? oTableBinding.getModel().getProperty(oTableBinding.getPath()) : aTableData;
 
-        const aColumnFilter = _.reject(aColumns, (e) => {
-          return !e.property;
-        });
+        if (!aExportTableRowData.length) return;
 
-        aDateProps.forEach((prop) => {
-          const mDateColumn = _.find(aColumnFilter, { property: prop });
-
-          if (!_.isEmpty(mDateColumn)) {
-            mDateColumn.type = exportLibrary.EdmType.Date;
-            mDateColumn.format = 'yyyy.mm.dd';
-          }
-        });
-
-        const oSettings = {
-          workbook: {
-            columns: aColumnFilter,
-            hierarchyLevel: 'Level',
-          },
-          dataSource: aTableData,
-          fileName: `${sFileName}_${sToday}.xlsx`,
+        const oSheet = new Spreadsheet({
           worker: false,
-        };
+          dataSource: aExportTableRowData,
+          fileName: `${sFileName}_${moment().format('YYYYMMDD')}.xlsx`,
+          workbook: {
+            hierarchyLevel: 'Level',
+            columns: _.isEmpty(aCustomColumns)
+              ? _.chain(oTable.getColumns())
+                  .map((col) => ({
+                    ...this._getEdmType(col),
+                    property: this._getPropertyName(col, sStatCode, sStatTxt),
+                    label: this._getLabelText(col),
+                  }))
+                  .reject({ property: '' })
+                  .reject({ label: '' })
+                  .value()
+              : aCustomColumns,
+          },
+        });
 
-        const oSheet = new Spreadsheet(oSettings);
         oSheet.build().finally(function () {
           oSheet.destroy();
         });
+      },
+
+      _getEdmType(oColumn) {
+        if (!oColumn || !oColumn.getTemplate()) return { type: exportLibrary.EdmType.String };
+
+        const sPropertyTypeName = _.chain(oColumn.getTemplate().mBindingInfos).values().head().get(['parts', 0, 'type', 'sName'], '').value();
+
+        return _.isEqual(sPropertyTypeName, 'CustomDate') ? { type: exportLibrary.EdmType.Date, format: 'yyyy.mm.dd' } : { type: exportLibrary.EdmType.String };
+      },
+
+      _getLabelText(oColumn) {
+        const mAggregations = oColumn.mAggregations;
+
+        if (!_.chain(mAggregations).get('label').isEmpty().value()) {
+          return oColumn.getLabel().getText();
+        } else if (!_.chain(mAggregations).get('multiLabels').isEmpty().value()) {
+          return _.chain(oColumn.getMultiLabels())
+            .reduce((acc, cur) => [...acc, cur.getText()], [])
+            .uniq()
+            .join('-')
+            .value();
+        }
+
+        return '';
+      },
+
+      _getPropertyName(oColumn, sStatCode, sStatTxt) {
+        if (!oColumn || !oColumn.getTemplate()) return '';
+
+        const sPropertyPath = _.chain(oColumn.getTemplate().mBindingInfos).values().head().get(['parts', 0, 'path'], '').value();
+
+        return _.isEqual(sPropertyPath, sStatCode) ? sStatTxt : sPropertyPath;
       },
 
       /**

@@ -222,10 +222,9 @@ sap.ui.define(
 
       onPressExcelDownload() {
         const oTable = this.byId(this.TABLE_ID);
-        const aTableData = this.getViewModel().getProperty('/list');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_13036'); // {급여명세서}_목록
 
-        TableUtils.export({ oTable, aTableData, sFileName, aDateProps: ['Paydt'] });
+        TableUtils.export({ oTable, sFileName });
       },
 
       onSelectRow(oEvent) {

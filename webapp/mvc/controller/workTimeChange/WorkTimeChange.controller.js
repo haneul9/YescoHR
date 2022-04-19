@@ -298,11 +298,9 @@ sap.ui.define(
 
       onPressExcelDownload() {
         const oTable = this.byId('workTable');
-        const aTableData = this.getViewModel().getProperty('/List');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_27001');
-        const aDateProps = ['Datum', 'Appda', 'Sgnda'];
 
-        TableUtils.export({ oTable, aTableData, sFileName, aDateProps });
+        TableUtils.export({ oTable, sFileName });
       },
     });
   }

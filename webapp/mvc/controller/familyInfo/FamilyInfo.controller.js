@@ -197,11 +197,9 @@ sap.ui.define(
 
       onPressExcelDownload() {
         const oTable = this.byId('familyTable');
-        const aTableData = this.getViewModel().getProperty('/FamilyList');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_05001');
-        const aDateProps = ['Begda', 'Endda', 'ZreqDate', 'ZappDate'];
 
-        TableUtils.export({ oTable, aTableData, sFileName, aDateProps });
+        TableUtils.export({ oTable, sFileName });
       },
     });
   }
