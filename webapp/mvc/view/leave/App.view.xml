@@ -36,14 +36,14 @@
           </HBox>
         </HBox>
         <HBox height="250px">
-          <core:HTML content="&lt;div id='chart-leave-container'&gt;&lt;/div&gt;" />
+          <core:HTML content="&lt;div id='chart-m/leave-container'&gt;&lt;/div&gt;" />
         </HBox>
       </VBox>
       <VBox class="vCardBox">
         <HBox justifyContent="SpaceBetween" alignItems="Center" class="table-toolbar">
           <HBox class="title">
             <Title level="H2" text="{i18n>LABEL_16003}" />
-            <Text text="{i18n>MSG_16001}" class="desc-txt" />
+            <Text text="{i18n>MSG_16002}" class="desc-txt" />
           </HBox>
           <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressExcelDownload" />
         </HBox>

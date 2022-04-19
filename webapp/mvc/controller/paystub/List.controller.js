@@ -162,15 +162,15 @@ sap.ui.define(
       },
 
       buildChart() {
-        const oChart = FusionCharts(this.CHART_ID);
+        const oChart = FusionCharts(`${this.sRouteName}-${this.CHART_ID}`);
         const mDataSource = this.getViewModel().getProperty('/summary/dataSources');
 
         if (!oChart) {
           FusionCharts.ready(() => {
             new FusionCharts({
-              id: this.CHART_ID,
+              id: `${this.sRouteName}-${this.CHART_ID}`,
               type: 'pie2d',
-              renderAt: 'chart-paystub-container',
+              renderAt: `chart-${this.sRouteName}-container`,
               width: '180',
               height: '160',
               dataFormat: 'json',
