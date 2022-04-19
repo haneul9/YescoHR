@@ -60,7 +60,7 @@
         </VBox>
       </HBox>
       <custom:MobileScrollContainer horizontal="false" vertical="true" class="sapUiNativeScrollbars px-12-px">
-        <grid:CSSGrid gridGap="20px" gridTemplateRows="repeat(10, 270px)" gridTemplateColumns="1fr" class="mss-overview mt-20-px mb-11-px">
+        <grid:CSSGrid gridGap="20px" gridTemplateRows="repeat(10, 270px)" gridTemplateColumns="1fr" class="overviews mt-20-px mb-11-px">
           <!-- 인원현황 -->
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A01" type="XML" />
           <!-- 세대별 현황 -->

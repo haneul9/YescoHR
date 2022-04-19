@@ -408,7 +408,7 @@ sap.ui.define(
 
       onChangeFontSize(oEvent) {
         const sFontSize = oEvent.getSource().getSelectedKey();
-        document.querySelector(':root').style.setProperty('--StatisticsFontSize', sFontSize);
+        document.querySelector(':root').style.setProperty('--StatisticNumberFontSize', sFontSize);
       },
 
       reduceViewResource() {

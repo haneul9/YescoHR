@@ -21,7 +21,7 @@ sap.ui.define(
     'use strict';
 
     /**
-     * 인원 현황 Portlet (임원용)
+     * 인원현황 Portlet (임원용)
      */
     return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.M21PortletHandler', {
       async addPortlet() {

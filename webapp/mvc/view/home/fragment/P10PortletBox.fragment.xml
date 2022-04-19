@@ -1,6 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:f="sap.f"
   xmlns:core="sap.ui.core">
+  <!-- 성과관리 -->
   <VBox class="portlet portlet-box portlet-p10" tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
     <customData>
       <core:CustomData key="portlet-switchable" value="{switchable}" />

@@ -1,6 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:f="sap.f"
   xmlns:core="sap.ui.core">
+  <!-- 부서원 현황 / 내동료 현황 -->
   <VBox class="portlet portlet-box portlet-p03p04" tooltip="{=
       ${selectedMembersButton} === 'ORG' ? ${orgMembers/tooltip} : (
       ${selectedMembersButton} === 'MY' ? ${myMembers/tooltip} : ''
@@ -56,10 +57,13 @@
                   <FlexItemData growFactor="1" styleClass="portlet-member-org" />
                 </layoutData>
               </Text>
-              <Text text="{Atext}" tooltip="{Atext}" wrapping="false" class="portlet-member-status">
+              <Text text="{Atext}" textAlign="Center" tooltip="{Atext}" wrapping="false" width="50px" class="portlet-member-status">
                 <customData>
                   <core:CustomData key="portlet-member-status" value="{Icon}" writeToDom="true" />
                 </customData>
+                <layoutData>
+                  <FlexItemData minWidth="56px" maxWidth="56px" />
+                </layoutData>
               </Text>
             </HBox>
           </VBox>
@@ -78,10 +82,13 @@
                   <FlexItemData growFactor="1" styleClass="portlet-member-org" />
                 </layoutData>
               </Text>
-              <Text text="{Atext}" tooltip="{Atext}" wrapping="false" class="portlet-member-status">
+              <Text text="{Atext}" textAlign="Center" tooltip="{Atext}" wrapping="false" width="50px" class="portlet-member-status">
                 <customData>
                   <core:CustomData key="portlet-member-status" value="{Icon}" writeToDom="true" />
                 </customData>
+                <layoutData>
+                  <FlexItemData minWidth="56px" maxWidth="56px" />
+                </layoutData>
               </Text>
               <Button icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_remove.png" iconDensityAware="false" type="Transparent" class="icon-button portlet-member-remove" press=".onPressMyMemberRemove" />
             </HBox>

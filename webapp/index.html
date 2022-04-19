@@ -7,12 +7,17 @@
     <link rel="shortcut icon" href="/sap/public/bc/ui2/zui5_yescohr/images/favicon.ico" />
     <style id="for-print"></style>
     <script>
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    if (isMobile && !/#\/mobile/.test(location.href)) {
-      if (/#\/?/.test(location.href)) {
-        location.href = location.href.replace(/#(\/)?/, '#/mobile$1');
-      } else {
-        location.href = location.href.replace(/index\.html/, 'index.html#/mobile');
+    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      if (!/#\/mobile/.test(location.href)) {
+        if (/#\/?/.test(location.href)) {
+          location.href = location.href.replace(/#(\/)?/, '#/mobile$1');
+        } else {
+          location.href = location.href.replace(/index\.html/, 'index.html#/mobile');
+        }
+      }
+    } else {
+      if (/#\/mobile/.test(location.href)) {
+        location.href = location.href.replace(/#\/mobile/, '#');
       }
     }
     </script>
@@ -34,9 +39,9 @@
       id="sap-ui-bootstrap"
       src="resources/sap-ui-cachebuster/sap-ui-core.js"
       data-sap-ui-oninit="module:sap/ui/core/ComponentSupport"
-      data-sap-ui-appCacheBuster="./"
       data-sap-ui-compatVersion="edge"
       data-sap-ui-frameOptions="allow"
+      data-sap-ui-appCacheBuster="./"
       data-sap-ui-theme="sap_belize"
       data-sap-ui-async="true"
       data-sap-ui-resourceroots='{

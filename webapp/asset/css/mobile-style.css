@@ -463,11 +463,11 @@ div.sapUiTableSelectAllCheckBox::after, div.sapUiTableRowSelectionCell::after {w
 .column-chart [class*="Label-group"] tspan,
 .column-chart [class*="Name-group"] tspan,
 .column-chart [class*="datalabel"] tspan,
-.doughnut-chart [class*="datalabel"] tspan {font-size:var(--StatisticsFontSize)}
+.doughnut-chart [class*="datalabel"] tspan {font-size:var(--StatisticNumberFontSize)}
 
-.mss-overview .statistic-box,
-.mss-overview .statistic-text,
-.mss-overview .statistic-text.sapMText,
-.mss-overview .statistic-text.sapMLabel,
-.mss-overview .statistic-text.sapMObjStatus,
-.mss-overview .statistic-text bdi {line-height:22px; font-size:var(--StatisticsFontSize) !important}
+.overviews .statistic-box,
+.overviews .statistic-text,
+.overviews .statistic-text.sapMText,
+.overviews .statistic-text.sapMLabel,
+.overviews .statistic-text.sapMObjStatus,
+.overviews .statistic-text bdi {line-height:22px; font-size:var(--StatisticNumberFontSize) !important}
