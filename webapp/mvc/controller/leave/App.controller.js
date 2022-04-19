@@ -35,6 +35,8 @@ sap.ui.define(
         CUR: { color: '#2972c8', label: 'LABEL_16020', prop: 'Monuse', propPerc: 'Monrte' },
       },
 
+      sRouteName: '',
+
       initializeModel() {
         return {
           busy: false,
@@ -103,9 +105,10 @@ sap.ui.define(
         });
       },
 
-      async onObjectMatched() {
+      async onObjectMatched(oParameter, sRouteName) {
         const oViewModel = this.getViewModel();
 
+        this.sRouteName = sRouteName;
         oViewModel.setData(this.initializeModel());
 
         try {
@@ -189,15 +192,15 @@ sap.ui.define(
       },
 
       buildChart() {
-        const oChart = FusionCharts(this.CHART_LEAVE_ID);
+        const oChart = FusionCharts(`${this.sRouteName}-${this.CHART_LEAVE_ID}`);
         const mDataSource = this.getViewModel().getProperty('/summary');
 
         if (!oChart) {
           FusionCharts.ready(() => {
             new FusionCharts({
-              id: this.CHART_LEAVE_ID,
+              id: `${this.sRouteName}-${this.CHART_LEAVE_ID}`,
               type: 'mscombi2d',
-              renderAt: 'chart-leave-container',
+              renderAt: `chart-${this.sRouteName}-container`,
               width: '100%',
               height: '100%',
               dataFormat: 'json',
