@@ -143,7 +143,7 @@ sap.ui.define(
         if (this.oMyPagePopover.isOpen()) {
           this.onPopoverClose();
         } else {
-          this.oMyPagePopover.openBy(this.oController.byId('my-page'));
+          this.oMyPagePopover.openBy(this.oController.byId('mobile-basis-mypage'));
           this.setBusy(false);
         }
       },

@@ -71,7 +71,7 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet .sapMBtn.icon-button.portlet-link-icon .sapMBtnIcon {font-size:18px; line-height:110%; margin-top:-3px}
 .portlet-header + .portlet-body {height:calc(100% - 34px)}
 .portlet-body {width:100%; height:100%}
-.portlet-body .sapMFlexBoxScroll .sapMScrollCont {width:100% !important; height:100% !important; padding-right:5px; overflow:hidden auto !important}
+.portlet-body .sapMFlexBoxScroll .sapMScrollCont {width:100% !important; height:calc(100% + .5px) !important; padding-right:5px; overflow:hidden auto !important}
 .portlet-body .no-data, .vCardBox.no-data {display:flex; justify-content:center; align-items:center; color:#ccc; height:calc(100% - 24px) !important}
 .portlet-body .no-data .sapMText:before, .vCardBox.no-data .sapMText::before {content:""; display:block; width:26px; height:26px; margin:0 auto 6px; background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/no-data.svg'); background-size:100%}
 .portlet-body .no-data .sapMText, .vCardBox.no-data .sapMText {color:#ccc}
@@ -1511,7 +1511,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .year-plan-head .sapMBtnIcon {margin-left:0; margin-right:0px}
 .year-plan-head h2.sapMTitle {justify-content:center}
 .year-plan-grid {background-color:#e5e5e5; border:1px solid #e5e5e5}
-.year-plan-grid .sapMFlexBox, .year-plan-grid .sapMText {height:40px; display:flex; justify-content:center; align-items:center; font-size:11px; font-weight:700}
+.year-plan-grid .sapMFlexBox, .year-plan-grid .sapMText {height:40px; display:flex; justify-content:center; align-items:center; font-size:11px; font-weight:700; cursor:default}
 .year-plan-grid .sapMFlexBox[data-border="Default"] {border:0px solid black}
 .year-plan-grid .sapMFlexBox[data-style="Header"] {background-color:#f7f7f7}
 .year-plan-grid .sapMFlexBox[data-style="Weekend"] {background-color:#d9dcdf}
@@ -1682,8 +1682,10 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .sapUiSizeCompact.notification-popover li:not(.sapMLIBUnread) .sapMBtn.toggle-icon bdi {border:1px solid #ddd; color:#222}
 
 /* Boardroom */
-.legend-wrap * {display:flex; font-size:14px; font-weight:600}
-.legend-wrap > .sapMFlexBox {line-height:22px}
+.legend-wrap * {display:flex; font-size:var(--StatisticNumberFontSize); font-weight:600}
+.legend-wrap > .sapMFlexBox {padding-top:8px}
+.legend-wrap > .sapMFlexBox:nth-child(1),
+.legend-wrap > .sapMFlexBox:nth-child(2) {padding-top:0}
 .legend-wrap > .sapMFlexBox .sapMText {padding-left:4px}
 .legend {display:flex; align-items:center}
 .legend:before {content:""; display:inline-block; margin-right:8px; width:12px; height:12px; border-radius:50%}

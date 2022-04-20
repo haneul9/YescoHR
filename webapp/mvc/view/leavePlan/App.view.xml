@@ -36,7 +36,7 @@
           </HBox>
         </HBox>
         <grid:CSSGrid id="yearPlanGrid" class="year-plan-grid" gridTemplateColumns="70px 70px repeat(31, 1fr)" gridGap="1px" items="{path: '/plans/grid'}">
-          <custom:DayBox width="100%" click=".onClickDay">
+          <custom:DayBox width="100%" press=".onClickDay">
             <custom:customData>
               <core:CustomData key="day" value="{day}" />
               <core:CustomData key="style" value="{classNames}" writeToDom="true" />

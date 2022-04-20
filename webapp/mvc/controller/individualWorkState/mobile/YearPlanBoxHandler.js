@@ -65,17 +65,15 @@ sap.ui.define(
       },
 
       // 요일 선택시
-      onClickDay(oEvent) {
-        const oView = this.oController.getView();
-        const oViewModel = this.oController.getViewModel();
-        const bContext = !!oEvent.srcControl.getParent().getBindingContext();
-
-        if (!bContext) {
+      async onClickDay(oEvent) {
+        const oEventSource = oEvent.getSource();
+        const oContext = oEventSource.getBindingContext();
+        if (!oContext) {
           return;
         }
 
-        const sPath = oEvent.srcControl.getParent().getBindingContext().getPath();
-        const mSelect = oViewModel.getProperty(sPath);
+        const oViewModel = this.oController.getViewModel();
+        const mSelect = oContext.getProperty();
         const [mSelectedDay] = _.filter(oViewModel.getProperty('/yearPlan'), (e) => {
           return e.FullDate === mSelect.day;
         });
@@ -87,20 +85,19 @@ sap.ui.define(
         oViewModel.setProperty('/YearPlan/detail', mSelectedDay);
         oViewModel.setProperty('/YearPlan/title', moment(mSelectedDay.FullDate).format('YYYY.MM.DD'));
 
-        if (!this.oController._pPopover) {
-          this.oController._pPopover = Fragment.load({
+        if (!this.oController._oPopover) {
+          const oView = this.oController.getView();
+
+          this.oController._oPopover = await Fragment.load({
             id: oView.getId(),
             name: 'sap.ui.yesco.mvc.view.individualWorkState.mobile.fragment.YearPlanPopover',
             controller: this.oController,
-          }).then(function (oPopover) {
-            oView.addDependent(oPopover);
-            return oPopover;
           });
+
+          oView.addDependent(this.oController._oPopover);
         }
 
-        this.oController._pPopover.then(function (oPopover) {
-          oPopover.openBy(oEvent);
-        });
+        this.oController._oPopover.openBy(oEventSource);
       },
 
       makeCalendarControl() {

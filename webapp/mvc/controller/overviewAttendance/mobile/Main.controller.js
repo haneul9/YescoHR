@@ -3,9 +3,10 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/TableUtils',
+    'sap/ui/yesco/common/mobile/MobileEmployeeListPopoverHandler',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/overviewAttendance/constants/ChartsSetting',
     'sap/ui/yesco/mvc/model/type/Currency',
@@ -17,9 +18,10 @@ sap.ui.define(
     // prettier 방지용 주석
     Fragment,
     AppUtils,
+    TableUtils,
+    MobileEmployeeListPopoverHandler,
     Client,
     ServiceNames,
-    TableUtils,
     BaseController,
     ChartsSetting
   ) => {
@@ -82,6 +84,10 @@ sap.ui.define(
           const mFilters = oViewModel.getProperty('/searchConditions');
 
           _.forEach(_.take(ChartsSetting.CHART_TYPE, 8), (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
+
+          if (this.bMobile) {
+            this.oPopupHandler = new MobileEmployeeListPopoverHandler(this);
+          }
         } catch (oError) {
           this.debug('Controller > mobile/m/overviewAttendance Main > onObjectMatched Error', oError);
 
@@ -421,10 +427,10 @@ sap.ui.define(
       },
 
       onPressCount(oEvent) {
-        if (oEvent['getSource'] instanceof Function) {
-          this.callDetail(oEvent.getSource().data());
+        if (this.bMobile) {
+          this.oPopupHandler.openPopover(oEvent);
         } else {
-          this.callDetail(sap.ui.getCore().byId($(oEvent.currentTarget).attr('id')).data());
+          this.callDetail(oEvent.getSource().data());
         }
       },
 

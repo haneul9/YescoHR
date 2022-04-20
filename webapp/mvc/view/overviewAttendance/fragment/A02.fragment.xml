@@ -18,7 +18,7 @@
       <layoutData>
         <FlexItemData growFactor="1" />
       </layoutData>
-      <custom:HBox width="24%" height="100%" class="active-link" click=".onPressCount">
+      <custom:HBox width="24%" height="100%" class="active-link" press=".onPressCount">
         <custom:customData>
           <core:CustomData key="Headty" value="{/contents/A02/Headty}" />
           <core:CustomData key="Discod" value="0" />

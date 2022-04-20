@@ -421,11 +421,7 @@ sap.ui.define(
       },
 
       onPressCount(oEvent) {
-        if (oEvent['getSource'] instanceof Function) {
-          this.callDetailPopup(oEvent.getSource().data());
-        } else {
-          this.callDetailPopup(sap.ui.getCore().byId($(oEvent.currentTarget).attr('id')).data());
-        }
+        this.callDetailPopup(oEvent.getSource().data());
       },
 
       onPressDetail1DialogClose() {

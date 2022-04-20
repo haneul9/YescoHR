@@ -12,13 +12,13 @@
       <Label text="{/searchDate/full}" class="font-16-px" />
       <Button icon="sap-icon://navigation-right-arrow" press=".onPressNextYear" class="icon-button" />
     </HBox>
-    <grid:CSSGrid class="month-plan-grid sapUiSmallMarginBottom" gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr" items="{path: '/plans'}" width="100%">
+    <grid:CSSGrid class="month-plan-grid sapUiSmallMarginBottom" gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr" items="{path: '/plans'}">
       <Text width="100%" textAlign="Center" text="{label}">
         <customData>
           <core:CustomData key="holiday" value="{holiday}" writeToDom="true" />
         </customData>
       </Text>
-      <custom:VBox width="100%" click=".onClickDay" height="70px">
+      <custom:VBox width="100%" press=".onClickDay" height="70px">
         <custom:customData>
           <core:CustomData key="style" value="{classNames}" writeToDom="true" />
           <core:CustomData key="holiday" value="{holiday}" writeToDom="true" />

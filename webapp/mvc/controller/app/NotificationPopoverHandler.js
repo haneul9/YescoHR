@@ -306,7 +306,7 @@ sap.ui.define(
         if (this.oNotificationPopover.isOpen()) {
           this.onPopoverClose();
         } else {
-          const sId = this.bMobile ? 'mobile-notification-bell' : 'notification-bell';
+          const sId = this.bMobile ? 'mobile-basis-notification' : 'notification-bell';
           this.oNotificationPopover.openBy(this.getController().byId(sId));
         }
       },

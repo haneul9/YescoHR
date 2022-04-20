@@ -84,6 +84,14 @@ sap.ui.define(
           const mFilters = oViewModel.getProperty('/searchConditions');
 
           _.forEach(ChartsSetting.CHART_TYPE, (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
+
+          window.callEmployeeDetail = (sArgs) => {
+            const aProps = ['Headty', 'Discod', 'Zyear'];
+            const aArgs = _.split(sArgs, ',');
+            const mPayload = _.zipObject(_.take(aProps, aArgs.length), aArgs);
+
+            this.openDetailDialog(mPayload);
+          };
         } catch (oError) {
           this.debug('Controller > m/overviewEmployee Main > onObjectMatched Error', oError);
 
@@ -387,11 +395,7 @@ sap.ui.define(
       },
 
       onPressCount(oEvent) {
-        if (oEvent['getSource'] instanceof Function) {
-          this.openDetailDialog(oEvent.getSource().data());
-        } else {
-          this.openDetailDialog(sap.ui.getCore().byId($(oEvent.currentTarget).attr('id')).data());
-        }
+        this.openDetailDialog(oEvent.getSource().data());
       },
 
       onPressDetailDialogClose() {
@@ -419,13 +423,3 @@ sap.ui.define(
     });
   }
 );
-
-// eslint-disable-next-line no-unused-vars
-function callEmployeeDetail(sArgs) {
-  const oController = sap.ui.getCore().byId('container-ehr---m_overviewEmployee').getController();
-  const aProps = ['Headty', 'Discod', 'Zyear'];
-  const aArgs = _.split(sArgs, ',');
-  const mPayload = _.zipObject(_.take(aProps, aArgs.length), aArgs);
-
-  oController.openDetailDialog(mPayload);
-}

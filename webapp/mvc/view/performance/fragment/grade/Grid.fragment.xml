@@ -30,7 +30,7 @@
     </HBox>
     <HBox id="gridBox" class="perGrade-wrap" items="{/grids}">
       <VBox width="25%">
-        <custom:HBox width="100%" class="grade-name active-link" alignItems="Center" click=".onClickGrade">
+        <custom:HBox width="100%" class="grade-name active-link" alignItems="Center" press=".onClickGrade">
           <custom:customData>
             <core:CustomData key="grade" value="{code}" />
             <core:CustomData key="gradeTx" value="{text}" />

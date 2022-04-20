@@ -28,7 +28,7 @@
           <FlexItemData minHeight="70%" />
         </core:layoutData>
       </core:HTML>
-      <!-- 범례 항목의 갯수가 적은 경우 하단으로 붙고 항목이 많아지면 점점 높이가 증가하다가 35% 이상이되면 scroll이 생성되는 구조 : HBox > ScrollContainer > HBox -->
+      <!-- 범례 항목의 갯수가 적은 경우 하단으로 붙고 항목이 많아지면 점점 높이가 증가하다가 30% 이상이되면 scroll이 생성되는 구조 : HBox > ScrollContainer > HBox -->
       <HBox width="100%">
         <layoutData>
           <FlexItemData maxHeight="30%" />
@@ -38,7 +38,7 @@
             <FlexItemData growFactor="1" />
           </layoutData>
           <HBox width="100%" items="{ path: '/contents/A04/data', templateShareable: false }" wrap="Wrap" justifyContent="SpaceBetween" alignContent="End" class="legend-wrap">
-            <custom:HBox justifyContent="SpaceBetween" class="active-link" click=".onPressCount" width="40%">
+            <custom:HBox justifyContent="SpaceBetween" class="active-link" press=".onPressCount" width="40%">
               <custom:customData>
                 <core:CustomData key="Headty" value="{/contents/A04/Headty}" />
                 <core:CustomData key="Discod" value="{Cod01}" />

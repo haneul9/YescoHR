@@ -13,9 +13,6 @@ sap.ui.define(
 
     return Popover.extend('sap.ui.yesco.control.Popover', {
       metadata: {
-        properties: {
-          maxRows: { type: 'int', defaultValue: 5 },
-        },
         events: {
           scroll: {},
         },
@@ -29,13 +26,10 @@ sap.ui.define(
         this.oPopup.setAutoClose(false);
         if (AppUtils.isMobile()) {
           const iAvailHeight = screen.availHeight - 48 - 60; // (.sapMPopoverHeader height) - (.sapMPopoverFooter height)
-          this.setContentHeight(`${iAvailHeight}px`);
-          this.setContentWidth('100%');
-          this.addStyleClass('full-popover');
+          this.setContentHeight(`${iAvailHeight}px`).setContentWidth('100%').addStyleClass('full-popover');
         } else {
           const iAvailHeight = screen.availHeight - 51 - 83 - 60 - 10; // (Popover offset top) - (.sapMPopoverHeader height) - (.sapMPopoverFooter height) - (bottom 10)
-          this.setContentHeight(`${iAvailHeight}px`);
-          this.setContentWidth('490px');
+          this.setContentHeight(`${iAvailHeight}px`).setContentWidth('490px');
         }
       },
 

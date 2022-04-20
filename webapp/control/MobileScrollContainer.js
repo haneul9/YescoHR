@@ -27,7 +27,7 @@ sap.ui.define(
 
         const sHeight = this.getHeight();
         if (!sHeight || sHeight === 'auto') {
-          this.setHeight(`100%`);
+          this.setHeight('100%');
         }
       },
     });

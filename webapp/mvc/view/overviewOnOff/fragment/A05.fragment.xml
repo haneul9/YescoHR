@@ -26,7 +26,7 @@
         </core:HTML>
       </VBox>
       <VBox width="25%">
-        <custom:HBox class="active-link" click=".onPressCount">
+        <custom:HBox class="active-link" press=".onPressCount">
           <custom:customData>
             <core:CustomData key="Headty" value="{/contents/A05/Headty}" />
             <core:CustomData key="Discod" value="all" />
@@ -34,7 +34,7 @@
           <Label text="{/contents/A05/data/total}" class="font-42-px color-03 normal letter-spacing-sm"/>
         </custom:HBox>
         <VBox items="{ path: '/contents/A05/data/legends', templateShareable: false }" class="legend-wrap sapUiSmallMarginTop">
-          <custom:HBox justifyContent="SpaceBetween" class="active-link" click=".onPressCount">
+          <custom:HBox justifyContent="SpaceBetween" class="active-link" press=".onPressCount">
             <custom:customData>
               <core:CustomData key="Headty" value="{/contents/A05/Headty}" />
               <core:CustomData key="Discod" value="{code}" />

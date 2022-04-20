@@ -3,11 +3,11 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/TableUtils',
+    'sap/ui/yesco/common/mobile/MobileEmployeeListPopoverHandler',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/controller/home/portlets/popup/M21PortletMobilePopoverHandler',
     'sap/ui/yesco/mvc/controller/overviewEmployee/constants/ChartsSetting',
     'sap/ui/yesco/mvc/model/type/Date',
     'sap/ui/yesco/mvc/model/type/Decimal',
@@ -16,11 +16,11 @@ sap.ui.define(
     // prettier 방지용 주석
     Fragment,
     AppUtils,
+    TableUtils,
+    MobileEmployeeListPopoverHandler,
     Client,
     ServiceNames,
-    TableUtils,
     BaseController,
-    M21PortletMobilePopoverHandler,
     ChartsSetting
   ) => {
     'use strict';
@@ -91,8 +91,22 @@ sap.ui.define(
             .commit();
 
           if (this.bMobile) {
-            this.oMobilePopoverHandler = new M21PortletMobilePopoverHandler(this, oViewModel);
+            this.oPopupHandler = new MobileEmployeeListPopoverHandler(this);
           }
+
+          window.callEmployeeDetail = (sArgs) => {
+            $('#fusioncharts-tooltip-element').css('z-index', 7);
+
+            const aProps = ['Headty', 'Discod', 'Zyear'];
+            const aArgs = _.split(sArgs, ',');
+            const mPayload = _.zipObject(_.take(aProps, aArgs.length), aArgs);
+
+            if (this.bMobile) {
+              this.oPopupHandler.openPopover(mPayload);
+            } else {
+              this.openDetailDialog(mPayload);
+            }
+          };
         } catch (oError) {
           this.debug('Controller > mobile/m/overviewEmployee Main > onObjectMatched Error', oError);
 
@@ -365,14 +379,10 @@ sap.ui.define(
       },
 
       onPressCount(oEvent) {
-        if (oEvent['getSource'] instanceof Function) {
-          if (this.bMobile) {
-            this.oMobilePopoverHandler.openDialog(oEvent);
-          } else {
-            this.openDetailDialog(oEvent.getSource().data());
-          }
+        if (this.bMobile) {
+          this.oPopupHandler.openPopover(oEvent);
         } else {
-          this.openDetailDialog(sap.ui.getCore().byId($(oEvent.currentTarget).attr('id')).data());
+          this.openDetailDialog(oEvent.getSource().data());
         }
       },
 
@@ -420,13 +430,3 @@ sap.ui.define(
     });
   }
 );
-
-// eslint-disable-next-line no-unused-vars
-function callEmployeeDetail(sArgs) {
-  const oController = sap.ui.getCore().byId('container-ehr---mobile_m_overviewEmployee').getController();
-  const aProps = ['Headty', 'Discod', 'Zyear'];
-  const aArgs = _.split(sArgs, ',');
-  const mPayload = _.zipObject(_.take(aProps, aArgs.length), aArgs);
-
-  oController.openDetailDialog(mPayload);
-}

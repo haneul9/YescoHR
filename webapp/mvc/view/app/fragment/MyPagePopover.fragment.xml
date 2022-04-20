@@ -29,11 +29,11 @@
           <layoutData>
             <FlexItemData growFactor="1" />
           </layoutData>
-          <custom:HBox justifyContent="SpaceBetween" alignItems="Center" height="54px" click=".onPressRefresh">
+          <custom:HBox justifyContent="SpaceBetween" alignItems="Center" height="54px" press=".onPressRefresh">
             <Label text="{i18n>LABEL_00199}" />
             <Button type="Transparent" class="icon-button mobile-logout-button" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_arrow_h-r.svg" iconDensityAware="false" />
           </custom:HBox>
-          <custom:HBox justifyContent="SpaceBetween" alignItems="Center" height="54px" click=".onPressLogout">
+          <custom:HBox justifyContent="SpaceBetween" alignItems="Center" height="54px" press=".onPressLogout">
             <Label text="{i18n>LABEL_01004}" />
             <Button type="Transparent" class="icon-button mobile-logout-button" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_arrow_h-r.svg" iconDensityAware="false" />
           </custom:HBox>

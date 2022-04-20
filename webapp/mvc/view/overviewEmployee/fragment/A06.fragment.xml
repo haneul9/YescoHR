@@ -23,7 +23,7 @@
         <FlexItemData growFactor="1" />
       </layoutData>
       <HBox width="100%" justifyContent="SpaceBetween" class="mt-30-px">
-        <custom:HBox class="active-link" click=".onPressCount">
+        <custom:HBox class="active-link" press=".onPressCount">
           <custom:customData>
             <core:CustomData key="Headty" value="{/contents/A06/Headty}" />
             <core:CustomData key="Discod" value="{/contents/A06/data/Cod01}" />
@@ -34,7 +34,7 @@
             <Text text="{ path: '/contents/A06/data/Cnt12', type: 'sap.ui.yesco.mvc.model.type.Currency' }{i18n>LABEL_00159}" class="statistic-text color-01" />
           </VBox>
         </custom:HBox>
-        <custom:HBox class="active-link" click=".onPressCount">
+        <custom:HBox class="active-link" press=".onPressCount">
           <custom:customData>
             <core:CustomData key="Headty" value="{/contents/A06/Headty}" />
             <core:CustomData key="Discod" value="{/contents/A06/data/Cod02}" />

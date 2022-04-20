@@ -292,10 +292,9 @@ sap.ui.define(
 
         this.calcMonthLeaveCount();
 
-        this._pPopover.then(function (oPopover) {
-          oPopover.close();
-          _.forEach(aAwarts, (o) => _.set(o, 'selected', false));
-        });
+        this._oPopover.close();
+
+        _.forEach(aAwarts, (o) => _.set(o, 'selected', false));
       },
 
       async onPressSearch() {
@@ -347,13 +346,13 @@ sap.ui.define(
         }
       },
 
-      onClickDay(oEvent) {
-        const oView = this.getView();
-        const oViewModel = this.getViewModel();
-        const { day: sDay, style: sStyle, awart: sAwart } = oEvent.data();
+      async onClickDay(oEvent) {
+        const oEventSource = oEvent.getSource();
+        const { day: sDay, style: sStyle, awart: sAwart } = oEventSource.data();
 
         if (_.isEqual(sDay, 'NONE') || !_.isEqual(sStyle, 'Normal')) return;
 
+        const oViewModel = this.getViewModel();
         const aAwarts = oViewModel.getProperty('/entry/AwartList');
         _.chain(aAwarts)
           .forEach((o) => _.set(o, 'selected', false))
@@ -364,19 +363,19 @@ sap.ui.define(
         oViewModel.setProperty('/plans/selectedDay', sDay);
         oViewModel.setProperty('/entry/AwartList', aAwarts);
 
-        if (!this._pPopover) {
-          this._pPopover = Fragment.load({
+        if (!this._oPopover) {
+          const oView = this.getView();
+
+          this._oPopover = await Fragment.load({
             id: oView.getId(),
             name: 'sap.ui.yesco.mvc.view.leavePlan.fragment.AwartPopover',
             controller: this,
-          }).then(function (oPopover) {
-            oView.addDependent(oPopover);
-            return oPopover;
           });
+
+          oView.addDependent(this._oPopover);
         }
-        this._pPopover.then(function (oPopover) {
-          oPopover.openBy(oEvent);
-        });
+
+        this._oPopover.openBy(oEventSource);
       },
 
       onPressSignatureClear() {

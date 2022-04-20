@@ -7,37 +7,25 @@ sap.ui.define(
 
     return VBox.extend('sap.ui.yesco.control.VBox', {
       metadata: {
-        properties: {
-          click: { type: 'function' },
-          mouseover: { type: 'function' },
-          mouseout: { type: 'function' },
+        events: {
+          press: {},
+          hover: {},
+          leave: {},
         },
       },
 
       renderer: {},
 
       onclick() {
-        const fnClick = this.getClick();
-
-        if (fnClick instanceof Function) {
-          return fnClick.apply(this, arguments);
-        }
+        this.firePress();
       },
 
       onmouseover() {
-        const fnMouseover = this.getMouseover();
-
-        if (fnMouseover instanceof Function) {
-          return fnMouseover(this);
-        }
+        this.fireHover();
       },
 
       onmouseout() {
-        const fnMouseout = this.getMouseout();
-
-        if (fnMouseout instanceof Function) {
-          return fnMouseout(this);
-        }
+        this.fireLeave();
       },
     });
   }

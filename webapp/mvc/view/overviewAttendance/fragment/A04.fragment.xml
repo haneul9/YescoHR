@@ -19,7 +19,7 @@
         <FlexItemData growFactor="1" />
       </layoutData>
       <HBox>
-        <custom:VBox width="50%" height="100%" class="active-link" click=".onPressCount">
+        <custom:VBox width="50%" height="100%" class="active-link" press=".onPressCount">
           <custom:customData>
             <core:CustomData key="Headty" value="{/contents/A04/Headty}" />
             <core:CustomData key="Discod" value="{/contents/A04/data/Cnt01C}" />
@@ -27,7 +27,7 @@
           <Label text="{i18n>LABEL_28045}" class="font-16-px pb-10-px"/>
           <Label text="{/contents/A04/data/Cnt01}" class="font-30-px color-03 normal letter-spacing-sm"/>
         </custom:VBox>
-        <custom:VBox width="50%" height="100%" class="active-link" click=".onPressCount">
+        <custom:VBox width="50%" height="100%" class="active-link" press=".onPressCount">
           <custom:customData>
             <core:CustomData key="Headty" value="{/contents/A04/Headty}" />
             <core:CustomData key="Discod" value="{/contents/A04/data/Cnt03C}" />
@@ -37,7 +37,7 @@
         </custom:VBox>
       </HBox>
       <HBox class="pt-6-px">
-        <custom:VBox width="50%" height="100%" class="active-link" click=".onPressCount">
+        <custom:VBox width="50%" height="100%" class="active-link" press=".onPressCount">
           <custom:customData>
             <core:CustomData key="Headty" value="{/contents/A04/Headty}" />
             <core:CustomData key="Discod" value="{/contents/A04/data/Cnt02C}" />
@@ -45,7 +45,7 @@
           <Label text="{i18n>LABEL_28047}" class="font-16-px pb-10-px"/>
           <Label text="{/contents/A04/data/Cnt02}" class="font-30-px color-03 normal letter-spacing-sm"/>
         </custom:VBox>
-        <custom:VBox width="50%" height="100%" class="active-link" click=".onPressCount">
+        <custom:VBox width="50%" height="100%" class="active-link" press=".onPressCount">
           <custom:customData>
             <core:CustomData key="Headty" value="{/contents/A04/Headty}" />
             <core:CustomData key="Discod" value="{/contents/A04/data/Cnt04C}" />

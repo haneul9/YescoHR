@@ -30,7 +30,7 @@
         </core:HTML>
       </VBox>
       <VBox width="35%" items="{ path: '/contents/A08/data', templateShareable: false }" class="legend-wrap">
-        <custom:HBox justifyContent="SpaceBetween" class="active-link" click=".onPressCount">
+        <custom:HBox justifyContent="SpaceBetween" class="active-link" press=".onPressCount">
           <custom:customData>
             <core:CustomData key="Headty" value="{/contents/A08/Headty}" />
             <core:CustomData key="Discod" value="{Cod01}" />

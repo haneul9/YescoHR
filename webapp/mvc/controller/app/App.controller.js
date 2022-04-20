@@ -3,12 +3,12 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/m/InstanceManager',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/mobile/MobileEmployeeSearchPopoverHandler',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/app/MobileMyPagePopoverHandler',
-    'sap/ui/yesco/mvc/controller/app/MobileEmployeeSearchPopoverHandler',
     'sap/ui/yesco/mvc/controller/app/NotificationPopoverHandler',
     'sap/ui/yesco/mvc/controller/app/control/Menus',
     'sap/ui/yesco/mvc/controller/app/control/MobileMenus',
@@ -20,12 +20,12 @@ sap.ui.define(
     // prettier 방지용 주석
     InstanceManager,
     AppUtils,
+    MobileEmployeeSearchPopoverHandler,
     Client,
     ServiceNames,
     MessageBox,
     BaseController,
     MobileMyPagePopoverHandler,
-    MobileEmployeeSearchPopoverHandler,
     NotificationPopoverHandler,
     Menus,
     MobileMenus
@@ -169,7 +169,7 @@ sap.ui.define(
         InstanceManager.closeAllPopovers();
         this.oAppMenu.closeMenuLayer();
 
-        this.oMobileEmployeeSearchPopoverHandler.onPopoverToggle(oEvent);
+        this.oMobileEmployeeSearchPopoverHandler.togglePopover(oEvent);
       },
 
       /**

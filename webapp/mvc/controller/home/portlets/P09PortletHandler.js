@@ -39,7 +39,7 @@ sap.ui.define(
       },
 
       async readContentData() {
-        const sSelectedYearMonth = this.getController().byId('selectedYearMonth').getValue() || moment().format('YYYYMM');
+        const sSelectedYearMonth = moment(this.getPortletModel().getProperty('/selectedYearMonth')).format('YYYYMM');
 
         const oModel = this.getController().getModel(ServiceNames.COMMON);
         const mFilters = {
