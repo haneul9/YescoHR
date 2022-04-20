@@ -46,17 +46,17 @@ sap.ui.define(
       },
 
       async onObjectMatched(oParameter) {
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
-        oDetailModel.setData(this.initializeModel());
-        oDetailModel.setProperty('/busy', true);
+        oViewModel.setData(this.initializeModel());
+        oViewModel.setProperty('/busy', true);
 
         try {
           const sSdate = new Date(parseInt(oParameter.Sdate)) || oParameter.Sdate;
           const sSeqnr = oParameter.Seqnr;
           const sMenid = this.getCurrentMenuId();
 
-          oDetailModel.setProperty('/Menid', sMenid);
+          oViewModel.setProperty('/Menid', sMenid);
           const sWerks = this.getSessionProperty('Werks');
           let oSendObject = {
             Prcty: '1',
@@ -74,7 +74,7 @@ sap.ui.define(
           const oDetailData = oDetail.Notice2Nav.results;
 
           if (this.getSessionProperty('Pernr') === oTargetData.Apern) {
-            oDetailModel.setProperty('/MySelf', true);
+            oViewModel.setProperty('/MySelf', true);
           }
 
           oTargetData.Detail = '';
@@ -83,7 +83,7 @@ sap.ui.define(
             oTargetData.Detail += e.Detail;
           });
 
-          oDetailModel.setProperty('/FormData', oTargetData);
+          oViewModel.setProperty('/FormData', oTargetData);
 
           // setTimeout(() => {
           //   this.setTextEditor();
@@ -93,7 +93,7 @@ sap.ui.define(
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
-          oDetailModel.setProperty('/busy', false);
+          oViewModel.setProperty('/busy', false);
         }
       },
 
@@ -106,8 +106,8 @@ sap.ui.define(
           this.byId('EditorBox').destroyItems();
         }
 
-        const oDetailModel = this.getViewModel();
-        const bStat = !!oDetailModel.getProperty('/MySelf') && !!oDetailModel.getProperty('/Hass');
+        const oViewModel = this.getViewModel();
+        const bStat = !!oViewModel.getProperty('/MySelf') && !!oViewModel.getProperty('/Hass');
         const oRichTextEditor = new RTE('myRTE', {
           editorType: sap.ui.richtexteditor.EditorType.TinyMCE4, // 'TinyMCE4',
           layoutData: new sap.m.FlexItemData({ growFactor: 1 }),
@@ -120,7 +120,7 @@ sap.ui.define(
           showGroupStructure: bStat,
           showGroupFontStyle: bStat,
           showGroupClipboard: bStat,
-          value: oDetailModel.getProperty('/FormData/Detail'),
+          value: oViewModel.getProperty('/FormData/Detail'),
           editable: bStat,
           ready: function () {
             this.addButtonGroup('styleselect').addButtonGroup('table');
@@ -132,10 +132,10 @@ sap.ui.define(
 
       // AttachFileTable Settings
       settingsAttachTable() {
-        const oDetailModel = this.getViewModel();
-        const bHass = oDetailModel.getProperty('/Hass');
-        const bMySelf = oDetailModel.getProperty('/MySelf');
-        const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
+        const oViewModel = this.getViewModel();
+        const bHass = oViewModel.getProperty('/Hass');
+        const bMySelf = oViewModel.getProperty('/MySelf');
+        const sAppno = oViewModel.getProperty('/FormData/Appno') || '';
 
         AttachFileAction.setAttachFile(this, {
           Editable: !!bHass && !!bMySelf,

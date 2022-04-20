@@ -14,7 +14,7 @@
     </VBox>
     <HBox class="contents" justifyContent="SpaceBetween">
       <VBox busyIndicatorDelay="0" busy="{/busy}">
-        <VBox class="vCardBox sapUiTinyMarginBottom">
+        <VBox class="vCardBox sapUiMediumMarginBottom">
           <HBox class="form-bar" justifyContent="Start" alignItems="Center">
             <Label text="{i18n>LABEL_00237}" />
             <ComboBox items="{/CompanyCode}" selectedKey="{/search/Werks}">
@@ -43,7 +43,7 @@
                   <Text text="{Otext}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
               </table:Column>
-              <table:Column width="300px">
+              <table:Column width="250px">
                 <Label text="{i18n>LABEL_15010}"/>
                 <table:template>
                   <HBox>
@@ -58,10 +58,10 @@
                   <Text text="{Ztext}" textAlign="Begin" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
               </table:Column>
-              <table:Column width="auto">
+              <table:Column width="300px">
                 <Label text="{i18n>LABEL_15025}"/>
                 <table:template>
-                  <Text text="{Orgtx}" width="200px" wrapping="false" class="tableRow_Text"/>
+                  <Text text="{Orgtx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
                 </table:template>
               </table:Column>
               <table:Column width="100px">
@@ -76,10 +76,10 @@
                   <Link text="{Prgrt}" press=".onPressProgress" textAlign="End" width="100%" class="tableRow_Text" />
                 </table:template>
               </table:Column>
-              <table:Column width="10px">
+              <table:Column width="100px">
                 <Label text="Comment"/>
                 <table:template>
-                  <Button type="Transparent" icon="sap-icon://attachment" visible="{= !!${Cmmnt} }" class="mnw-0" press=".onFileListDialog"/>
+                  <Button type="Transparent" icon="sap-icon://notification-2" visible="{= ${Cmmnt} === 'X' }" class="mnw-0" press=".onCommentDialog"/>
                 </table:template>
               </table:Column>
             </table:columns>
