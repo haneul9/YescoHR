@@ -1,0 +1,19 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core">
+  <Dialog showHeader="false" contentWidth="400px" contentHeight="auto">
+    <buttons>
+      <Button text="{i18n>LABEL_00115}" press=".onCloseClick" />
+    </buttons>
+    <content>
+      <HBox justifyContent="Center" class="table-toolbar mb-10-px">
+        <Title level="H4" text="{i18n>LABEL_15028}" />
+      </HBox>
+      <!-- <TextArea enabled="false" growing="true" rows="5" width="100%" value="{/totalComment}"/> -->
+      <HBox id="totalComm" class="comment-box">
+        <layoutData>
+          <FlexItemData growFactor="1" />
+        </layoutData>
+      </HBox>
+    </content>
+  </Dialog>
+</core:FragmentDefinition>

@@ -1,3 +1,34 @@
-<c:FragmentDefinition xmlns="sap.m"
-  xmlns:c="sap.ui.core">
-</c:FragmentDefinition>
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:grid="sap.ui.layout.cssgrid">
+  <Dialog id="progressDialog" showHeader="false" contentWidth="1000px" contentHeight="180px">
+    <buttons>
+      <Button text="{i18n>LABEL_00103}" class="sapUiTinyMarginEnd" type="Emphasized" press=".onSaveBtn" />
+      <Button text="{i18n>LABEL_00115}" press=".onCloseClick" />
+    </buttons>
+    <content>
+      <HBox alignItems="Center" class="table-toolbar">
+        <HBox class="title">
+          <Title level="H4" text="{/title/year}" />
+          <Title level="H4" text="{/title/name}" class="color-08 mx-5-px" />
+          <Title level="H4" text="-" />
+          <Title level="H4" text="{/title/part}" class="color-03 mx-5-px" />
+          <Title level="H4" text="{i18n>LABEL_15027}" />
+          <Text text="{i18n>MSG_15007}" class="desc-txt ml-15-px" />
+        </HBox>
+      </HBox>
+      <grid:CSSGrid gridTemplateColumns="100px repeat(12, 1fr)" gridGap="1px 0" class="form-grid" items="{/detail}">
+        <VBox>
+          <VBox visible="{= ${hide} }">
+            <Label text="{month}" width="100%" textAlign="Center" class="pl-20-px" />
+            <Label text="{progress}" width="100%" textAlign="Center" />
+          </VBox>
+          <VBox visible="{= !${hide} }">
+            <Link text="{Smntx}" press=".onPressLink" width="100%" textAlign="Center" />
+            <Input value="{Prgrt}" maxLength="6" class="mx-2-px" liveChange=".progressInput" width="100%" textAlign="End" />
+          </VBox>
+        </VBox>
+      </grid:CSSGrid>
+    </content>
+  </Dialog>
+</core:FragmentDefinition>
