@@ -28,7 +28,7 @@
 
     <HBox alignItems="Center" class="notification-wrapper">
       <Button id="notification-bell" type="Transparent" class="icon-button notification" press=".onPressNotificationPopoverToggle" tooltip="{i18n>LABEL_01002}" />
-      <custom:PressableLabel text="{notificationModel>/unreadCount}" visible="{= !!${notificationModel>/showUnreadCount} }" class="notification-count" press=".onPressNotificationPopoverToggle" displayOnly="true" textAlign="Center" />
+      <custom:PressableLabel text="{notificationModel>/unreadCount}" visible="{= !!${notificationModel>/showUnreadCount} }" class="notification-count display-none" press=".onPressNotificationPopoverToggle" displayOnly="true" textAlign="Center" />
     </HBox>
 
     <Button type="Transparent" visible="{appModel>/isAtHome}" class="icon-button settings" press=".onPressPortletsP13nDialogOpen" tooltip="{i18n>LABEL_01003}">
@@ -54,7 +54,7 @@
       <Button id="mobile-basis-mypage" type="Transparent" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_m_employee.svg" iconDensityAware="false" class="icon-button" press=".onPressMobileMyPagePopoverToggle" tooltip="{i18n>LABEL_01005}" />
       <HBox alignItems="Center" class="notification-wrapper" tooltip="{i18n>LABEL_01002}">
         <Button id="mobile-basis-notification" type="Transparent" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_m_notice.svg" iconDensityAware="false" class="icon-button" press=".onPressNotificationPopoverToggle" />
-        <custom:PressableLabel text="{notificationModel>/unreadCount}" visible="{= !!${notificationModel>/showUnreadCount} }" class="notification-count" press=".onPressNotificationPopoverToggle" displayOnly="true" textAlign="Center">
+        <custom:PressableLabel text="{notificationModel>/unreadCount}" visible="{= !!${notificationModel>/showUnreadCount} }" class="notification-count display-none" press=".onPressNotificationPopoverToggle" displayOnly="true" textAlign="Center">
           <custom:layoutData>
             <FlexItemData styleClass="unread-count" />
           </custom:layoutData>

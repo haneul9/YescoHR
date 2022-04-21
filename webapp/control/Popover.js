@@ -36,13 +36,10 @@ sap.ui.define(
       onAfterRendering(...aArgs) {
         Popover.prototype.onAfterRendering.apply(this, aArgs);
 
-        if (!this.bScrollEventRegistered) {
-          this.$()
-            .find('.sapMPopoverScroll')[0]
-            .addEventListener('scroll', _.throttle(this.fireScroll.bind(this), 1000));
-
-          this.bScrollEventRegistered = true;
-        }
+        this.$()
+          .find('.sapMPopoverScroll')
+          .off('scroll')
+          .on('scroll', _.throttle(this.fireScroll.bind(this), 1000));
       },
 
       isScrollBottom() {
@@ -52,6 +49,15 @@ sap.ui.define(
         const iGrowHeight = $Cont.height();
 
         return oCont.scrollTop > 0 && iScrollMarginBottom === iGrowHeight;
+      },
+
+      calcDimension() {
+        const $Cont = this.$().find('.sapMPopoverScroll');
+        const oCont = $Cont[0];
+        const iScrollMarginBottom = oCont.scrollHeight - oCont.scrollTop;
+        const iGrowHeight = $Cont.height();
+
+        console.log(`scrollHeight: ${oCont.scrollHeight}, scrollTop: ${oCont.scrollTop}, height: ${iGrowHeight}, iScrollMarginBottom: ${iScrollMarginBottom}`);
       },
     });
   }

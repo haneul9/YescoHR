@@ -47,6 +47,7 @@ html:not(.sapUiNativeScrollbars) .sapMPopoverCont::-webkit-scrollbar {width:0 !i
 
 .app-top-toolbar {border-top:1px solid #fff; background-color:#fff}
 .app-menu-toolbar {width:100%; border-top:1px solid #dfe2eb}
+.notification-wrapper .display-none {display:none}
 .notification-wrapper .unread-count {top:0; height:15px}
 [data-background="dev"], [data-background="dev"] *:not(.unread-count, .unread-count bdi) {background-color:#f4fce3}
 
