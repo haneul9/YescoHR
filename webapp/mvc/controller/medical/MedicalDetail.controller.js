@@ -932,8 +932,9 @@ sap.ui.define(
       async onHisRegBtn() {
         if (this.checkClinicDetail()) return;
 
+        const oViewModel = this.getViewModel();
+
         try {
-          const oViewModel = this.getViewModel();
           const mDialogData = oViewModel.getProperty('/DialogData');
 
           AppUtils.setAppBusy(true);
