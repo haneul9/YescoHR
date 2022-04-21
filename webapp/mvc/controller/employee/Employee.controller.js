@@ -54,7 +54,6 @@ sap.ui.define(
           key: '0006',
           label: 'LABEL_00283',
           path: 'address',
-          url: '/AddressInfoSet',
           odata: 'AddressInfo',
           pk: ['Subty', 'Begda'],
           valid: [
@@ -68,9 +67,8 @@ sap.ui.define(
           key: '0022',
           label: 'LABEL_00303',
           path: 'education',
-          url: '/EducationChangeSet',
           odata: 'EducationChange',
-          pk: ['Seqnr', 'Begda', 'Endda', 'Subty'],
+          pk: ['Subty', 'Seqnr', 'Seqnr2', 'Begda', 'Endda', 'Prcty'],
           valid: [
             { label: 'LABEL_00284', field: 'Slart', type: Validator.SELECT1 }, // 학교구분
             { label: 'LABEL_00285', field: 'Begda', type: Validator.INPUT1 }, // 입학일
@@ -89,9 +87,8 @@ sap.ui.define(
           key: '9002',
           label: 'LABEL_00305',
           path: 'language',
-          url: '/LanguageTestChangeSet',
           odata: 'LanguageTestChange',
-          pk: ['Seqnr', 'Begda', 'Endda'],
+          pk: ['Seqnr', 'Seqnr2', 'Begda', 'Endda', 'Prcty'],
           valid: [
             { label: 'LABEL_00306', field: 'Quali', type: Validator.SELECT1 }, // 외국어구분
             { label: 'LABEL_00307', field: 'Exmty', type: Validator.SELECT1 }, // 시험구분
@@ -104,9 +101,8 @@ sap.ui.define(
           key: '9006',
           label: 'LABEL_00317',
           path: 'certificate',
-          url: '/CertificateChangeSet',
           odata: 'CertificateChange',
-          pk: ['Seqnr', 'Begda', 'Endda'],
+          pk: ['Seqnr', 'Seqnr2', 'Begda', 'Endda', 'Prcty'],
           valid: [
             { label: 'LABEL_00318', field: 'Cttyp', type: Validator.INPUT1 }, // 자격증
             { label: 'LABEL_00309', field: 'Ctgrd', type: Validator.INPUT1 }, // 등급
@@ -512,8 +508,20 @@ sap.ui.define(
                     enabled: '{= !!${/employee/sub/' + menuKey + '/contents/' + mMenu.code + '/data}.length }',
                     press: this.onPressDeleteTable.bind(this),
                   }).addStyleClass('icon-button'),
+                  new sap.m.Button({
+                    icon: 'sap-icon://cancel',
+                    text: this.getBundleText('LABEL_00122'), // 신청취소
+                    customData: [new sap.ui.core.CustomData({ key: 'code', value: mMenu.code })],
+                    enabled: '{= !!${/employee/sub/' + menuKey + '/contents/' + mMenu.code + '/data}.length }',
+                    visible: !_.isEqual(mMenu.code, this.CRUD_TABLES.ADDRESS.key),
+                    press: this.onPressCancelTable.bind(this),
+                  }).addStyleClass('icon-button'),
                 ],
               }).addStyleClass('table-actions');
+
+              if (!_.isEqual(mMenu.code, this.CRUD_TABLES.ADDRESS.key)) {
+                oSubButtonBox.getItems()[2].addStyleClass('sapUiTinyMarginEnd');
+              }
 
               oSubHBox.addItem(oSubButtonBox);
             }
@@ -649,7 +657,7 @@ sap.ui.define(
         const mMenu = _.find(oViewModel.getProperty('/employee/tab/menu'), { Menuc2: oRowData.Menuc });
         const aHeaderData = _.filter(oViewModel.getProperty(`/employee/sub/${mMenu.Menuc1}/contents/${mMenu.Menuc2}/header`), _.size);
         const mFieldSet = aFields.reduce((acc, cur) => {
-          acc[cur] = oRowData[`Value${_.padStart(_.findIndex(aHeaderData, { Fieldname: _.upperCase(cur) }) + 1, 2, '0')}`];
+          acc[cur] = oRowData[`Value${_.padStart(_.findIndex(aHeaderData, { Fieldname: _.chain(cur).upperCase().replace(/ /g, '').value() }) + 1, 2, '0')}`];
           return acc;
         }, {});
 
@@ -877,20 +885,21 @@ sap.ui.define(
 
       async onSaveInputForm() {
         const oViewModel = this.getView().getModel();
-        const mFieldValue = oViewModel.getProperty('/employee/dialog/form');
-        const sAction = oViewModel.getProperty('/employee/dialog/action');
-        const sActionText = oViewModel.getProperty('/employee/dialog/actionText');
-        const sMenuKey = oViewModel.getProperty('/employee/dialog/subKey');
-        const sPrcty = sAction === 'A' ? 'C' : 'U';
-        let mInputData = {};
-        let aFieldProperties = [];
-        let sOdataEntity = '';
-        let sAppno = '';
 
         oViewModel.setProperty('/employee/dialog/activeButton', false);
 
         try {
           AppUtils.setAppBusy(true);
+
+          const mFieldValue = oViewModel.getProperty('/employee/dialog/form');
+          const sAction = oViewModel.getProperty('/employee/dialog/action');
+          const sMenuKey = oViewModel.getProperty('/employee/dialog/subKey');
+          const sPrcty = sAction === 'A' ? 'C' : 'U';
+          let sActionText = oViewModel.getProperty('/employee/dialog/actionText');
+          let mInputData = {};
+          let aFieldProperties = [];
+          let sOdataEntity = '';
+          let sAppno = '';
 
           switch (sMenuKey) {
             case this.CRUD_TABLES.ADDRESS.key:
@@ -909,6 +918,7 @@ sap.ui.define(
               sOdataEntity = this.CRUD_TABLES.EDUCATION.odata;
               aFieldProperties = _.includes(['S1', 'S2', 'S3'], mFieldValue.Slart) ? _.reject(this.CRUD_TABLES.EDUCATION.valid, { field: 'Zzmajo1' }) : this.CRUD_TABLES.EDUCATION.valid;
               sAppno = await this.uploadInputFormFiles(this.CRUD_TABLES.EDUCATION.key);
+              sActionText = `${sActionText}${this.getBundleText('LABEL_00121')}`; // 신청
 
               if (_.includes(['S1', 'S2', 'S3'], mFieldValue.Slart)) {
                 delete mFieldValue.Zzmajo1;
@@ -934,6 +944,7 @@ sap.ui.define(
               sOdataEntity = this.CRUD_TABLES.LANGUAGE.odata;
               aFieldProperties = this.CRUD_TABLES.LANGUAGE.valid;
               sAppno = await this.uploadInputFormFiles(this.CRUD_TABLES.LANGUAGE.key);
+              sActionText = `${sActionText}${this.getBundleText('LABEL_00121')}`; // 신청
 
               // 등급/점수 Validation(Eamgr, Tpont)
               if (mFieldValue.Eamgr === 'ALL' && (_.isEmpty(mFieldValue.Tpont) || _.toNumber(mFieldValue.Tpont) === 0)) {
@@ -964,42 +975,65 @@ sap.ui.define(
               sOdataEntity = this.CRUD_TABLES.CERTIFICATE.odata;
               aFieldProperties = this.CRUD_TABLES.CERTIFICATE.valid;
               sAppno = await this.uploadInputFormFiles(this.CRUD_TABLES.CERTIFICATE.key);
+              sActionText = `${sActionText}${this.getBundleText('LABEL_00121')}`; // 신청
 
               mInputData = {
                 ...mFieldValue,
                 Prcty: sPrcty,
                 Appno: sAppno,
-                Begda: mFieldValue.Regdt ? DateUtils.parse(mFieldValue.Regdt) : mFieldValue.Begda,
-                Endda: mFieldValue.Regdt ? DateUtils.parse(mFieldValue.Regdt) : mFieldValue.Endda,
                 Regdt: mFieldValue.Regdt ? DateUtils.parse(mFieldValue.Regdt) : mFieldValue.Regdt,
               };
+
+              if (sPrcty === 'C') {
+                _.chain(mInputData)
+                  .set('Begda', mFieldValue.Regdt ? DateUtils.parse(mFieldValue.Regdt) : _.noop())
+                  .set('Endda', mFieldValue.Regdt ? DateUtils.parse(mFieldValue.Regdt) : _.noop())
+                  .commit();
+              } else {
+                _.chain(mInputData)
+                  .set('Begda', mFieldValue.Begda ? DateUtils.parse(mFieldValue.Begda) : _.noop())
+                  .set('Endda', mFieldValue.Endda ? DateUtils.parse(mFieldValue.Endda) : _.noop())
+                  .commit();
+              }
 
               break;
             default:
               break;
           }
 
-          if (!Validator.check({ mFieldValue: mInputData, aFieldProperties })) return;
+          if (this.isHass()) _.set(mInputData, 'Pernr', oViewModel.getProperty('/pernr'));
 
-          if (this.isHass()) {
-            _.set(mInputData, 'Pernr', oViewModel.getProperty('/pernr'));
+          if (!Validator.check({ mFieldValue: mInputData, aFieldProperties })) {
+            oViewModel.setProperty('/employee/dialog/activeButton', true);
+            return;
           }
 
-          await Client.create(this.getModel(ServiceNames.PA), sOdataEntity, mInputData);
+          MessageBox.confirm(this.getBundleText('MSG_00006', sActionText), {
+            actions: [oViewModel.getProperty('/employee/dialog/actionText'), MessageBox.Action.CANCEL],
+            onClose: async (sAction) => {
+              if (!sAction || sAction === MessageBox.Action.CANCEL) {
+                oViewModel.setProperty('/employee/dialog/activeButton', true);
+                return;
+              }
 
-          // {추가|수정}되었습니다.
-          MessageBox.success(this.getBundleText('MSG_00007', sActionText), {
-            onClose: () => {
-              this.refreshTableContents({ oViewModel, sMenuKey });
-              this.onInputFormDialogClose();
+              await Client.create(this.getModel(ServiceNames.PA), sOdataEntity, mInputData);
+
+              // {등록|수정}되었습니다.
+              MessageBox.success(this.getBundleText('MSG_00007', sActionText), {
+                onClose: () => {
+                  oViewModel.setProperty('/employee/dialog/activeButton', true);
+                  this.refreshTableContents({ oViewModel, sMenuKey });
+                  this.onInputFormDialogClose();
+                },
+              });
             },
           });
         } catch (oError) {
           this.debug('Controller > Employee > onSaveInputForm Error', oError);
 
+          oViewModel.setProperty('/employee/dialog/activeButton', true);
           AppUtils.handleError(oError);
         } finally {
-          oViewModel.setProperty('/employee/dialog/activeButton', true);
           AppUtils.setAppBusy(false);
         }
       },
@@ -1012,12 +1046,10 @@ sap.ui.define(
         const aSelectedIndices = oTable.getSelectedIndices();
         const sSelectedMenuCode = oControl.data('code');
         const sMenuKey = _.lowerCase(_.findKey(this.CRUD_TABLES, { key: sSelectedMenuCode }));
+        const sActionTextCode = !_.isEqual(sSelectedMenuCode, this.CRUD_TABLES.ADDRESS.key) ? 'LABEL_00343' : 'LABEL_00108';
 
-        if (aSelectedIndices.length < 1) {
-          MessageBox.alert(this.getBundleText('MSG_00010', 'LABEL_00108')); // {수정}할 데이터를 선택하세요.
-          return;
-        } else if (aSelectedIndices.length > 1) {
-          MessageBox.alert(this.getBundleText('MSG_00038')); // 하나의 행만 선택하세요.
+        if (aSelectedIndices.length !== 1) {
+          MessageBox.alert(this.getBundleText('MSG_00059', sActionTextCode)); // {0}할 데이터를 한 건만 선택하여 주십시오.
           return;
         }
 
@@ -1027,6 +1059,12 @@ sap.ui.define(
           const sOdataEntity = mTableInfo.odata;
           const sLabel = this.getBundleText(mTableInfo.label);
           const mFilters = this.getTableRowData({ oViewModel, oTable, aSelectedIndices, aFields });
+
+          if (!_.isEmpty(mFilters.Prcty)) {
+            throw new UI5Error({ code: 'A', message: AppUtils.getBundleText('MSG_00060') }); // 신청중인 데이터는 중복신청이 불가합니다.
+          } else {
+            delete mFilters.Prcty;
+          }
 
           oViewModel.setProperty('/employee/dialog/subKey', sSelectedMenuCode);
           oViewModel.setProperty('/employee/dialog/subLabel', sLabel);
@@ -1053,7 +1091,7 @@ sap.ui.define(
 
           const [mTableRowDetail] = await Client.getEntitySet(oModel, sOdataEntity, mFilters);
 
-          if (_.isEmpty(mTableRowDetail)) throw Error(this.getBundleText('MSG_00034')); // 조회할 수 없습니다.
+          if (_.isEmpty(mTableRowDetail)) throw new UI5Error({ code: 'A', message: AppUtils.getBundleText('MSG_00034') }); // 조회할 수 없습니다.
 
           // 체크박스 value <-> Boolean 변환
           if (_.has(mTableRowDetail, 'Zzfinyn')) mTableRowDetail.Zzfinyn = mTableRowDetail.Zzfinyn === 'X';
@@ -1106,27 +1144,30 @@ sap.ui.define(
         const aSelectedIndices = oTable.getSelectedIndices();
         const sSelectedMenuCode = oControl.data('code');
         const sMenuKey = _.lowerCase(_.findKey(this.CRUD_TABLES, { key: sSelectedMenuCode }));
+        const sActionTextCode = !_.isEqual(sSelectedMenuCode, this.CRUD_TABLES.ADDRESS.key) ? 'LABEL_00344' : 'LABEL_00110';
 
-        if (aSelectedIndices.length < 1) {
-          MessageBox.alert(this.getBundleText('MSG_00010', 'LABEL_00110')); // {삭제}할 데이터를 선택하세요.
+        if (aSelectedIndices.length !== 1) {
+          MessageBox.alert(this.getBundleText('MSG_00059', sActionTextCode)); // {0}할 데이터를 한 건만 선택하여 주십시오.
           return;
-        } else if (aSelectedIndices.length > 1) {
-          MessageBox.alert(this.getBundleText('MSG_00038')); // 하나의 행만 선택하세요.
+        }
+
+        const mTableInfo = this.CRUD_TABLES[_.upperCase(sMenuKey)];
+        const aFields = mTableInfo.pk;
+        const sOdataEntity = mTableInfo.odata;
+        const mPayload = this.getTableRowData({ oViewModel, oTable, aSelectedIndices, aFields });
+
+        if (!_.isEmpty(mPayload.Prcty)) {
+          MessageBox.alert(this.getBundleText('MSG_00060')); // 신청중인 데이터는 중복신청이 불가합니다.
           return;
         }
 
         AppUtils.setAppBusy(true);
 
         // {삭제}하시겠습니까?
-        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
-          actions: [this.getBundleText('LABEL_00110'), MessageBox.Action.CANCEL], // 삭제
+        MessageBox.confirm(this.getBundleText('MSG_00006', sActionTextCode), {
+          actions: [this.getBundleText(sActionTextCode), MessageBox.Action.CANCEL], // 삭제
           onClose: async (sAction) => {
-            if (!sAction || sAction !== MessageBox.Action.CANCEL) {
-              const mTableInfo = this.CRUD_TABLES[_.upperCase(sMenuKey)];
-              const aFields = mTableInfo.pk;
-              const sOdataEntity = mTableInfo.odata;
-              const mPayload = this.getTableRowData({ oViewModel, oTable, aSelectedIndices, aFields });
-
+            if (!!sAction && sAction !== MessageBox.Action.CANCEL) {
               try {
                 switch (sMenuKey) {
                   case this.CRUD_TABLES.ADDRESS.path:
@@ -1144,14 +1185,88 @@ sap.ui.define(
                     break;
                 }
 
+                if (!_.isEqual(sSelectedMenuCode, this.CRUD_TABLES.ADDRESS.key)) {
+                  _.chain(mPayload).set('Prcty', 'D').commit();
+
+                  await Client.create(this.getModel(ServiceNames.PA), sOdataEntity, mPayload);
+                } else {
+                  await Client.remove(this.getModel(ServiceNames.PA), sOdataEntity, mPayload);
+                }
+
+                oTable.clearSelection();
+                this.refreshTableContents({ oViewModel, sMenuKey: sSelectedMenuCode });
+
+                MessageBox.success(this.getBundleText('MSG_00007', sActionTextCode)); // {삭제}되었습니다.
+              } catch (oError) {
+                this.debug('Controller > Employee > onPressDeleteTable Error', oError);
+
+                AppUtils.handleError(oError);
+              }
+            }
+
+            AppUtils.setAppBusy(false);
+          },
+        });
+      },
+
+      onPressCancelTable(oEvent) {
+        const oViewModel = this.getView().getModel();
+        const oControl = oEvent.getSource();
+        const oTable = oControl.getParent().getParent().getParent().getItems()[1];
+        const aSelectedIndices = oTable.getSelectedIndices();
+        const sSelectedMenuCode = oControl.data('code');
+        const sMenuKey = _.lowerCase(_.findKey(this.CRUD_TABLES, { key: sSelectedMenuCode }));
+        const mTableInfo = this.CRUD_TABLES[_.upperCase(sMenuKey)];
+        const aFields = mTableInfo.pk;
+        const sOdataEntity = mTableInfo.odata;
+        let mPayload = {};
+
+        try {
+          if (aSelectedIndices.length !== 1) {
+            throw new UI5Error({ code: 'A', message: AppUtils.getBundleText('MSG_00059', 'LABEL_00122') }); // {신청취소}할 데이터를 한 건만 선택하여 주십시오.
+          }
+
+          mPayload = this.getTableRowData({ oViewModel, oTable, aSelectedIndices, aFields });
+
+          if (_.isEmpty(mPayload.Prcty)) {
+            throw new UI5Error({ code: 'A', message: AppUtils.getBundleText('MSG_00061') }); // 신청중인 데이터가 아닙니다.
+          }
+        } catch (oError) {
+          AppUtils.handleError(oError);
+          return;
+        }
+
+        AppUtils.setAppBusy(true);
+
+        // {신청취소}하시겠습니까?
+        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00122'), {
+          actions: [this.getBundleText('LABEL_00122'), MessageBox.Action.CANCEL], // 삭제
+          onClose: async (sAction) => {
+            if (!!sAction && sAction !== MessageBox.Action.CANCEL) {
+              try {
+                switch (sMenuKey) {
+                  case this.CRUD_TABLES.EDUCATION.path:
+                  case this.CRUD_TABLES.ADDRESS.path:
+                  case this.CRUD_TABLES.LANGUAGE.path:
+                  case this.CRUD_TABLES.CERTIFICATE.path:
+                    mPayload.Begda = DateUtils.parse(mPayload.Begda);
+                    mPayload.Endda = DateUtils.parse(mPayload.Endda);
+
+                    break;
+                  default:
+                    break;
+                }
+
+                delete mPayload.Prcty;
+
                 await Client.remove(this.getModel(ServiceNames.PA), sOdataEntity, mPayload);
 
                 oTable.clearSelection();
                 this.refreshTableContents({ oViewModel, sMenuKey: sSelectedMenuCode });
 
-                MessageBox.success(this.getBundleText('MSG_00007', 'LABEL_00110')); // {삭제}되었습니다.
+                MessageBox.success(this.getBundleText('MSG_00007', 'LABEL_00122')); // {신청취소}되었습니다.
               } catch (oError) {
-                this.debug('Controller > Employee > onPressDeleteTable Error', oError);
+                this.debug('Controller > Employee > onPressCancelTable Error', oError);
 
                 AppUtils.handleError(oError);
               }
