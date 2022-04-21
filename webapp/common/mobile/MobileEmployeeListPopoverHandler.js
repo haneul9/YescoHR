@@ -37,6 +37,7 @@ sap.ui.define(
         return {
           popover: {
             busy: true,
+            resizable: true,
             terms: null,
             employees: null,
           },

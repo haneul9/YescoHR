@@ -76,6 +76,8 @@ sap.ui.define(
         oView.addDependent(this.oNotificationPopover);
 
         this.showContentData();
+
+        $('.notification-count').removeClass('display-none');
       },
 
       async showContentData() {
