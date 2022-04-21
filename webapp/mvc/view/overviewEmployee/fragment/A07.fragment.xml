@@ -29,7 +29,7 @@
           </core:layoutData>
         </core:HTML>
       </VBox>
-      <VBox width="35%" items="{ path: '/contents/A07/data', templateShareable: false }" class="legend-wrap">
+      <VBox width="35%" items="{ path: '/contents/A07/data', templateShareable: false }" class="legend-wrap legend-wrap-old">
         <custom:HBox justifyContent="SpaceBetween" class="active-link" press=".onPressCount">
           <custom:customData>
             <core:CustomData key="Headty" value="{/contents/A07/Headty}" />

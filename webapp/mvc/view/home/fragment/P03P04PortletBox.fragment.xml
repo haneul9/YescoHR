@@ -1,6 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:f="sap.f"
-  xmlns:core="sap.ui.core">
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
   <!-- 부서원 현황 / 내동료 현황 -->
   <VBox class="portlet portlet-box portlet-p03p04" tooltip="{=
       ${selectedMembersButton} === 'ORG' ? ${orgMembers/tooltip} : (
@@ -48,7 +49,7 @@
             <Text text="{i18n>MSG_00001}" />
           </HBox>
           <VBox width="100%" items="{orgMembers/list}" visible="{= ${orgMembers/listCount} &gt; 0 }" class="portlet-members">
-            <HBox width="100%" alignItems="Center">
+            <custom:HBox width="100%" alignItems="Center" press=".navToProfile">
               <Image src="{Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="30px" height="30px" />
               <Text text="{Ename}" tooltip="{Ename}" wrapping="false" class="portlet-member-name" />
               <Text text="{Zzjikgbt}" tooltip="{Zzjikgbt}" wrapping="false" class="portlet-member-position" />
@@ -65,7 +66,7 @@
                   <FlexItemData minWidth="56px" maxWidth="56px" />
                 </layoutData>
               </Text>
-            </HBox>
+            </custom:HBox>
           </VBox>
         </ScrollContainer>
         <ScrollContainer visible="{= !!${myMembersActive} &amp;&amp; ${selectedMembersButton} === 'MY' }">
@@ -73,7 +74,7 @@
             <Text text="{i18n>MSG_00001}" />
           </HBox>
           <VBox width="100%" items="{myMembers/list}" visible="{= ${myMembers/listCount} &gt; 0 }" class="portlet-members my-members">
-            <HBox width="100%" alignItems="Center">
+            <custom:HBox width="100%" alignItems="Center" press=".navToProfile">
               <Image src="{Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="30px" height="30px" />
               <Text text="{Ename}" tooltip="{Ename}" wrapping="false" class="portlet-member-name" />
               <Text text="{Zzjikgbt}" tooltip="{Zzjikgbt}" wrapping="false" class="portlet-member-position" />
@@ -91,7 +92,7 @@
                 </layoutData>
               </Text>
               <Button icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_remove.png" iconDensityAware="false" type="Transparent" class="icon-button portlet-member-remove" press=".onPressMyMemberRemove" />
-            </HBox>
+            </custom:HBox>
           </VBox>
         </ScrollContainer>
       </VBox>

@@ -136,6 +136,18 @@ sap.ui.define(
           .navTo(...aArgs);
       },
 
+      navToProfile(oEvent) {
+        if (AppUtils.isPRD()) {
+          return;
+        }
+
+        const oContext = oEvent.getSource().getBindingContext();
+        // if (oContext.getProperty('') === 'M') {
+        const sPernr = oContext.getProperty('Pernr');
+        this.getController().reduceViewResource().getRouter().navTo('mobile/m/employee-detail', { pernr: sPernr });
+        // }
+      },
+
       onAfterDragAndDrop() {},
 
       setController(oController) {

@@ -123,8 +123,7 @@ sap.ui.define(
       export({ oTable, sFileName, aTableData = [], aCustomColumns = [], sStatCode = 'ZappStatAl', sStatTxt = 'ZappStxtAl' }) {
         if (!oTable) return;
 
-        const oTableBinding = oTable.getBinding();
-        const aExportTableRowData = _.isEmpty(aTableData) ? oTableBinding.getModel().getProperty(oTableBinding.getPath()) : aTableData;
+        const aExportTableRowData = _.isEmpty(aTableData) ? this._getTableRowData(oTable) : aTableData;
 
         if (!aExportTableRowData.length) return;
 
@@ -151,6 +150,15 @@ sap.ui.define(
         oSheet.build().finally(function () {
           oSheet.destroy();
         });
+      },
+
+      _getTableRowData(oTable) {
+        const oTableBinding = oTable.getBinding();
+        const oTableBindingContext = oTableBinding.getContext();
+        if (oTableBindingContext) {
+          return oTableBindingContext.getProperty(oTableBinding.getPath());
+        }
+        return oTableBinding.getModel().getProperty(oTableBinding.getPath());
       },
 
       _getEdmType(oColumn) {

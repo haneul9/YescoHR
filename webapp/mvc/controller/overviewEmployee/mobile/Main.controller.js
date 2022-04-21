@@ -1,9 +1,7 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/core/Fragment',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/mobile/MobileEmployeeListPopoverHandler',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -14,9 +12,7 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    Fragment,
     AppUtils,
-    TableUtils,
     MobileEmployeeListPopoverHandler,
     Client,
     ServiceNames,
@@ -90,9 +86,7 @@ sap.ui.define(
             .forEach((o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0))
             .commit();
 
-          if (this.bMobile) {
-            this.oPopupHandler = new MobileEmployeeListPopoverHandler(this);
-          }
+          this.oPopupHandler = new MobileEmployeeListPopoverHandler(this);
 
           window.callEmployeeDetail = (sArgs) => {
             $('#fusioncharts-tooltip-element').css('z-index', 7);
@@ -101,11 +95,7 @@ sap.ui.define(
             const aArgs = _.split(sArgs, ',');
             const mPayload = _.zipObject(_.take(aProps, aArgs.length), aArgs);
 
-            if (this.bMobile) {
-              this.oPopupHandler.openPopover(mPayload);
-            } else {
-              this.openDetailDialog(mPayload);
-            }
+            this.oPopupHandler.openPopover(mPayload);
           };
         } catch (oError) {
           this.debug('Controller > mobile/m/overviewEmployee Main > onObjectMatched Error', oError);
@@ -285,60 +275,6 @@ sap.ui.define(
         }
       },
 
-      formatDetailRowHighlight(sValue) {
-        switch (_.toNumber(sValue)) {
-          case 1:
-            return sap.ui.core.IndicationColor.Indication03;
-          case 2:
-            return sap.ui.core.IndicationColor.Indication02;
-          case 3:
-            return sap.ui.core.IndicationColor.Indication04;
-          default:
-            return null;
-        }
-      },
-
-      async openDetailDialog(mPayload) {
-        const oView = this.getView();
-        const oViewModel = this.getViewModel();
-
-        oViewModel.setProperty('/dialog/busy', true);
-
-        try {
-          if (!this.oDetailDialog) {
-            this.oDetailDialog = await Fragment.load({
-              id: oView.getId(),
-              name: 'sap.ui.yesco.mvc.view.overviewEmployee.fragment.DialogDetail',
-              controller: this,
-            });
-
-            oView.addDependent(this.oDetailDialog);
-          }
-
-          this.oDetailDialog.open();
-
-          const mSearchConditions = oViewModel.getProperty('/searchConditions');
-          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'HeadCountDetail', { ...mSearchConditions, ...mPayload });
-
-          oViewModel.setProperty('/dialog/rowCount', Math.min(aDetailData.length, 12));
-          oViewModel.setProperty('/dialog/totalCount', _.size(aDetailData));
-          oViewModel.setProperty(
-            '/dialog/list',
-            _.map(aDetailData, (o, i) => ({ Idx: ++i, ...o }))
-          );
-          oViewModel.setProperty('/dialog/busy', false);
-        } catch (oError) {
-          this.debug('Controller > mobile/m/overviewEmployee Main > openDetailDialog Error', oError);
-
-          AppUtils.handleError(oError, {
-            onClose: () => this.oDetailDialog.close(),
-          });
-        } finally {
-          $('#fusioncharts-tooltip-element').hide();
-          if (this.byId('overviewEmpDetailTable')) this.byId('overviewEmpDetailTable').setFirstVisibleRow();
-        }
-      },
-
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
@@ -379,30 +315,7 @@ sap.ui.define(
       },
 
       onPressCount(oEvent) {
-        if (this.bMobile) {
-          this.oPopupHandler.openPopover(oEvent);
-        } else {
-          this.openDetailDialog(oEvent.getSource().data());
-        }
-      },
-
-      onPressDetailDialogClose() {
-        this.oDetailDialog.close();
-      },
-
-      onPressEmployeeRow(oEvent) {
-        const sHost = window.location.href.split('#')[0];
-        const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
-        const sUsrty = this.isMss() ? 'M' : this.isHass() ? 'H' : '';
-
-        window.open(`${sHost}#/employeeView/${mRowData.Pernr}/${sUsrty}`, '_blank', 'width=1400,height=800');
-      },
-
-      onPressDetailExcelDownload() {
-        const oTable = this.byId('overviewEmpDetailTable');
-        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_28038'); // 인원현황상세
-
-        TableUtils.export({ oTable, sFileName });
+        this.oPopupHandler.openPopover(oEvent);
       },
 
       onPressSearchAreaToggle(oEvent) {
