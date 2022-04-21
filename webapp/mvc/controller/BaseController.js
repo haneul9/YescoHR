@@ -33,6 +33,8 @@ sap.ui.define(
           this.setViewModel(new JSONModel(this.initializeModel()));
         }
 
+        this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+
         // 각 업무 controller에서는 onInit overriding 대신 onBeforeShow, onAfterShow를 사용할 것
         this.getView().addEventDelegate(
           {
