@@ -59,7 +59,7 @@
 					</VBox>
 					<VBox>
 						<TextArea width="100%" rows="5" value="" enabled="false" visible="{= ${/fieldControl/display/Z309} === 'V' }" />
-						<TextArea width="100%" class="required" rows="5" value="{Z309}" maxLength="{/fieldControl/limit/Z309}" enabled="{= ${/fieldControl/display/Z309} === 'X' }" visible="{= ${/fieldControl/display/Z309} !== 'H' &amp;&amp; ${/fieldControl/display/Z309} !== 'V' }" />
+						<TextArea width="100%" rows="5" value="{Z309}" maxLength="{/fieldControl/limit/Z309}" enabled="{= ${/fieldControl/display/Z309} === 'X' }" visible="{= ${/fieldControl/display/Z309} !== 'H' &amp;&amp; ${/fieldControl/display/Z309} !== 'V' }" />
 					</VBox>
 					<VBox>
 						<Label width="100%" text="{i18n>LABEL_36016}" wrapping="true" vAlign="Top" visible="{= ${/fieldControl/display/Z311} !== 'H' }"/>
