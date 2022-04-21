@@ -59,7 +59,7 @@ sap.ui.define(
               type: 'cylinder',
               renderAt: `${this.sChartId}-container`,
               width: 110,
-              height: '100%',
+              height: '95%',
               dataFormat: 'json',
               dataSource: {
                 chart: this.getChartOption(),

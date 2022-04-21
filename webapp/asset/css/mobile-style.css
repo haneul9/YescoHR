@@ -74,6 +74,7 @@ html:not(.sapUiNativeScrollbars) .sapMPopoverCont::-webkit-scrollbar {width:0 !i
 .sapUiSizeCompact .portlet-p03p04 .portlet-header .icon-button {display:none}
 .portlet:hover .sapMBtn.icon-button.portlet-close-icon {visibility:hidden}
 .portlet-p03p04:hover .sapMBtn.icon-button.portlet-member-remove {display:none}
+.portlet-p06 .font-12-px {letter-spacing:-0.6px}
 .portlet-p11 .left-box {border:none; background-color:#a3edce}
 .portlet-p11 .right-box {border:none; background-color:#b4cef2}
 .portlet-p11 .portlet-p11-objectstatus19 {margin-top:18px}
