@@ -26,7 +26,7 @@ sap.ui.define(
         { field: 'Fapp', label: 'LABEL_36012', type: Validator.SELECT1 }, // 목표수준
         { field: 'Z305', label: 'LABEL_36013', type: Validator.INPUT1 }, // 개발계획
         { field: 'Z307', label: 'LABEL_36014', type: Validator.INPUT1 }, // 교육과정 및\n자기개발활동
-        { field: 'Z309', label: 'LABEL_36015', type: Validator.INPUT1 }, // 필요지원사항
+        // { field: 'Z309', label: 'LABEL_36015', type: Validator.INPUT1 }, // 필요지원사항
         { field: 'Z311', label: 'LABEL_36016', type: Validator.INPUT2 }, // 개발결과
         { field: 'Z317', label: 'LABEL_36017', type: Validator.INPUT1 }, // 팀장의견-개발계획/활동
         { field: 'Z319', label: 'LABEL_36018', type: Validator.INPUT2 }, // 팀장의견-개발결과
