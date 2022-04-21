@@ -28,18 +28,18 @@
                 <FlexItemData baseSize="16px" maxWidth="16px" alignSelf="Start" />
               </layoutData>
             </ToggleButton>
-            <VBox class="subject" width="calc(100% - 126px)">
+            <VBox class="subject">
               <Text text="{Msg}" />
               <Text text="{AdateFormatted} { path: 'Atime', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } }" class="notification-datetime" />
             </VBox>
             <core:Icon size="13px" src="sap-icon://inspect" visible="{= !!${Menid} }" press=".onPressNotificationLink" tooltip="{i18n>LABEL_01409}">
               <core:layoutData>
-                <FlexItemData minWidth="39px" maxWidth="100px" growFactor="1" styleClass="align-right" />
+                <FlexItemData styleClass="link-icon" />
               </core:layoutData>
             </core:Icon>
-            <ToggleButton text="{= ${Checked} !== 'X' ? ${i18n>LABEL_01405} : ${i18n>LABEL_01404} }" pressed="{= ${Checked} !== 'X' }" press=".onPressNotificationReadToggle" class="toggle-icon" tooltip="{= ${Checked} !== 'X' ? ${i18n>LABEL_01410} : ${i18n>LABEL_01411} }">
+            <ToggleButton text="{= ${Checked} !== 'X' ? ${i18n>LABEL_01405} : ${i18n>LABEL_01404} }" pressed="{= ${Checked} !== 'X' }" press=".onPressNotificationReadToggle" tooltip="{= ${Checked} !== 'X' ? ${i18n>LABEL_01410} : ${i18n>LABEL_01411} }">
               <layoutData>
-                <FlexItemData minWidth="61px" maxWidth="100px" growFactor="1" styleClass="align-right" />
+                <FlexItemData styleClass="toggle-read-icon" />
               </layoutData>
             </ToggleButton>
           </HBox>

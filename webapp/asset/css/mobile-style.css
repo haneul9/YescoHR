@@ -51,11 +51,15 @@ html:not(.sapUiNativeScrollbars) .sapMPopoverCont::-webkit-scrollbar {width:0 !i
 .notification-wrapper .unread-count {top:0; height:15px}
 [data-background="dev"], [data-background="dev"] *:not(.unread-count, .unread-count bdi) {background-color:#f4fce3}
 
-.sapUiSizeCompact.notification-popover.sapMPopoverWithBar.sapMPopoverWithFooter:not(.sapMRPCalendar)>.sapMPopoverCont {padding-top:20px}
+.sapUiSizeCompact.notification-popover.sapMPopoverWithBar.sapMPopoverWithFooter:not(.sapMRPCalendar)>.sapMPopoverCont {min-width:100%; padding-top:20px}
 .sapUiSizeCompact.notification-popover .notification-popover-header {height:48px}
 .sapUiSizeCompact.notification-popover .notification-popover-header .sapMTitle {font-size:16px}
 .sapUiSizeCompact.notification-popover .sapMPopoverCont {border-bottom:8px solid #ebeef2}
-.sapUiSizeCompact.notification-popover .sapMBtn.toggle-icon {margin-right:0; margin-left:15px}/* read, unread toggle */
+.sapUiSizeCompact.notification-popover .sapMFlexBox.subject {flex-grow:1}
+.sapUiSizeCompact.notification-popover .link-icon,
+.sapUiSizeCompact.notification-popover .toggle-read-icon {padding-left:15px}
+.sapUiSizeCompact.notification-popover .link-icon {min-width:28px !important}
+.sapUiSizeCompact.notification-popover .toggle-read-icon {flex-grow:0 !important; min-width:48px !important; padding-right:0}/* read, unread toggle */
 
 .portlet + .portlet {margin-top:16px}
 .portlet.portlet-h1 {max-height:270px; height:270px}

@@ -1672,15 +1672,18 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .sapUiSizeCompact.notification-popover .sapMText {white-space:normal; color:#222; font-weight:600}
 .sapUiSizeCompact.notification-popover .no-data .sapMText {color:#ccc}
 .sapUiSizeCompact.notification-popover .sapMFlexBox {align-self:center}
-.sapUiSizeCompact.notification-popover .sapMFlexBox.subject {width:65%; margin-left:10px}
+.sapUiSizeCompact.notification-popover .sapMFlexBox.subject {width:calc(100% - 126px) !important; margin-left:10px}
 .sapUiSizeCompact.notification-popover .sapMFlexBox.subject * {align-self:flex-start}
-.sapUiSizeCompact.notification-popover .align-right {text-align:right}
 .sapUiSizeCompact.notification-popover .notification-datetime {font-weight:400; color:#959595; font-size:12px}
-.sapUiSizeCompact.notification-popover .sapMBtn.toggle-icon {margin-right:5px; min-width:auto}
-.sapUiSizeCompact.notification-popover .sapMBtn.toggle-icon .sapMBtnInner.sapMBtnText {width:100%; height:18px; border:none; padding:0; justify-content:flex-end; background-color:transparent}
-.sapUiSizeCompact.notification-popover .sapMBtn.toggle-icon .sapMBtnContent {line-height:18px}
-.sapUiSizeCompact.notification-popover .sapMBtn.toggle-icon bdi {padding:2px 3px; border:1px solid #387fe9; border-radius:3px; font-size:10px; color:#387fe9}
-.sapUiSizeCompact.notification-popover li:not(.sapMLIBUnread) .sapMBtn.toggle-icon bdi {border:1px solid #ddd; color:#222}
+.sapUiSizeCompact.notification-popover .link-icon,
+.sapUiSizeCompact.notification-popover .toggle-read-icon {box-sizing:border-box; max-width:100px !important; text-align:right}
+.sapUiSizeCompact.notification-popover .link-icon {min-width:39px !important}
+.sapUiSizeCompact.notification-popover .toggle-read-icon {flex-grow:1 !important; min-width:61px !important; padding-right:5px}
+.sapUiSizeCompact.notification-popover .toggle-read-icon .sapMBtn {min-width:auto; line-height:18px}
+.sapUiSizeCompact.notification-popover .toggle-read-icon .sapMBtnInner.sapMBtnText {width:100%; height:18px; border:none; padding:0; justify-content:flex-end; background-color:transparent}
+.sapUiSizeCompact.notification-popover .toggle-read-icon .sapMBtnContent {line-height:18px}
+.sapUiSizeCompact.notification-popover .toggle-read-icon bdi {padding:2px 3px; border:1px solid #387fe9; border-radius:3px; font-size:10px; color:#387fe9}
+.sapUiSizeCompact.notification-popover li:not(.sapMLIBUnread) .toggle-read-icon bdi {border:1px solid #ddd; color:#222}
 
 /* Boardroom */
 .legend-wrap * {display:flex; font-size:var(--StatisticNumberFontSize); font-weight:600}
