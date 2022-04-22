@@ -95,8 +95,9 @@ sap.ui.define(
             const aProps = ['Headty', 'Discod', 'Zyear'];
             const aArgs = _.split(sArgs, ',');
             const mPayload = _.zipObject(_.take(aProps, aArgs.length), aArgs);
+            const mSearchConditions = this.getViewModel().getProperty('/searchConditions');
 
-            this.oPopupHandler.openDialog(mPayload);
+            this.oPopupHandler.openDialog({ ...mSearchConditions, ...mPayload });
           };
         } catch (oError) {
           this.debug('Controller > m/overviewEmployee Main > onObjectMatched Error', oError);
@@ -347,7 +348,10 @@ sap.ui.define(
       },
 
       onPressCount(oEvent) {
-        this.oPopupHandler.openDialog(oEvent.getSource().data());
+        const mSearchConditions = this.getViewModel().getProperty('/searchConditions');
+        const mPayload = oEvent.getSource().data();
+
+        this.oPopupHandler.openDialog({ ...mSearchConditions, ...mPayload });
       },
 
       /*****************************************************************

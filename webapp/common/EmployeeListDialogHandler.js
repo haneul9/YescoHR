@@ -71,15 +71,23 @@ sap.ui.define(
             this.oDialog.open();
           });
 
-          const oSessionModel = this.oController.getSessionModel();
-          const mData = oParam instanceof sap.ui.base.Event ? oParam.getSource().data() : oParam;
-          const mPayload = {
-            Zyear: moment().year(),
-            Werks: oSessionModel.getProperty('/Werks'),
-            Orgeh: oSessionModel.getProperty('/Orgeh'),
-            Headty: mData.Headty,
-            Discod: mData.Discod,
-          };
+          let mPayload;
+          if (oParam instanceof sap.ui.base.Event) {
+            // Portlet 같은 곳에서 Headty, Discod 만 넘어오는 경우
+            const oSessionModel = this.oController.getSessionModel();
+            const oEventSourceData = oParam.getSource().data();
+            mPayload = {
+              Zyear: moment().year(),
+              Werks: oSessionModel.getProperty('/Werks'),
+              Orgeh: oSessionModel.getProperty('/Orgeh'),
+              Headty: oEventSourceData.Headty,
+              Discod: oEventSourceData.Discod,
+            };
+          } else {
+            // MSS 인원현황 메뉴 같은 곳에서 oParam에 검색 조건이 모두 포함되어 넘어오는 경우
+            mPayload = oParam;
+          }
+
           const aEmployees = await Client.getEntitySet(this.oController.getModel(ServiceNames.PA), 'HeadCountDetail', mPayload);
 
           this.oDialogModel.setProperty('/dialog/rowCount', Math.min(aEmployees.length, 12));
@@ -146,6 +154,7 @@ sap.ui.define(
 
       destroy() {
         this.oDialog.destroy();
+        this.oDialogModel.destroy();
       },
     });
   }

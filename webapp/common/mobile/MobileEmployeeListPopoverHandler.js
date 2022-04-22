@@ -96,33 +96,34 @@ sap.ui.define(
 
       async openPopover(oParam) {
         try {
-          let oEventSource, mData;
-          if (oParam instanceof sap.ui.base.Event) {
-            oEventSource = oParam.getSource();
-            mData = oEventSource.data();
-          } else {
-            oEventSource = AppUtils.getAppController().byId('mobile-basis-home');
-            mData = oParam;
-          }
           setTimeout(() => {
             this.setBusy();
-            this.oPopover.openBy(oEventSource);
+            this.oPopover.openBy(AppUtils.getAppController().byId('mobile-basis-home'));
           });
 
-          const oSessionModel = this.oController.getSessionModel();
-          const mPayload = {
-            Zyear: moment().year(),
-            Werks: oSessionModel.getProperty('/Werks'),
-            Orgeh: oSessionModel.getProperty('/Orgeh'),
-            Headty: mData.Headty,
-            Discod: mData.Discod,
-          };
-          const aDetailData = await Client.getEntitySet(this.oController.getModel(ServiceNames.PA), 'HeadCountDetail', mPayload);
+          let mPayload;
+          if (oParam instanceof sap.ui.base.Event) {
+            // Portlet 같은 곳에서 Headty, Discod 만 넘어오는 경우
+            const oSessionModel = this.oController.getSessionModel();
+            const oEventSourceData = oParam.getSource().data();
+            mPayload = {
+              Zyear: moment().year(),
+              Werks: oSessionModel.getProperty('/Werks'),
+              Orgeh: oSessionModel.getProperty('/Orgeh'),
+              Headty: oEventSourceData.Headty,
+              Discod: oEventSourceData.Discod,
+            };
+          } else {
+            // MSS 인원현황 메뉴 같은 곳에서 oParam에 검색 조건이 모두 포함되어 넘어오는 경우
+            mPayload = oParam;
+          }
+
+          const aEmployees = await Client.getEntitySet(this.oController.getModel(ServiceNames.PA), 'HeadCountDetail', mPayload);
           const sUnknownAvatarImageURL = AppUtils.getUnknownAvatarImageURL();
 
           this.oPopoverModel.setProperty(
             '/popover/employees',
-            aDetailData.map(({ Photo, Ename, Pernr, Zzjikgbtx, Zzjikchtx, Orgtx }) => ({ Photo: Photo || sUnknownAvatarImageURL, Ename, Pernr, Zzjikcht: Zzjikgbtx, Zzjikgbt: Zzjikchtx, Fulln: Orgtx, IconMode: this.sIconMode }))
+            aEmployees.map(({ Photo, Ename, Pernr, Zzjikgbtx, Zzjikchtx, Orgtx }) => ({ Photo: Photo || sUnknownAvatarImageURL, Ename, Pernr, Zzjikcht: Zzjikgbtx, Zzjikgbt: Zzjikchtx, Fulln: Orgtx, IconMode: this.sIconMode }))
           );
         } catch (oError) {
           AppUtils.debug('MobileEmployeeListPopover > openPopover Error', oError);
@@ -158,6 +159,10 @@ sap.ui.define(
       },
 
       navToProfile(oEvent) {
+        if (this.sIconMode !== 'Profile') {
+          return;
+        }
+
         const oContext = oEvent.getSource().getBindingContext();
         // if (oContext.getProperty('') === 'M') {
         const sPernr = oContext.getProperty('Pernr');
@@ -174,8 +179,6 @@ sap.ui.define(
         );
         return this;
       },
-
-      noop() {},
 
       destroy() {
         this.oPopover.destroy();
