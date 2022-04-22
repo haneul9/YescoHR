@@ -60,10 +60,10 @@ sap.ui.define(
       },
 
       serviceAvailable() {
-        const bOpen = moment().isAfter(moment('2022-04-18 09:00', 'YYYY-MM-DD HH:mm'));
+        const bOpen = moment().isAfter(moment('2022-04-29 09:00', 'YYYY-MM-DD HH:mm'));
 
         if (!bOpen)
-          // 예상퇴직금 조회 서비스는 4/15까지 금액 검증 후 4/18 09시에 정식 오픈할 예정이니 양해 부탁드립니다.
+          // 예상퇴직금 조회 서비스는 금액 검증 후 4/29 09시에 정식 오픈할 예정이니 양해 부탁드립니다.
           MessageBox.alert(this.getBundleText('MSG_33005', 'LABEL_00110'), {
             onClose: () => this.onNavBack(),
           });
