@@ -70,12 +70,12 @@ sap.ui.define(
           let mPayload;
           if (oParam instanceof sap.ui.base.Event) {
             // Portlet 같은 곳에서 Headty, Discod 만 넘어오는 경우
-            const oSessionModel = this.oController.getSessionModel();
+            const oSessionProperty = this.oController.getSessionModel().getData();
             const oEventSourceData = oParam.getSource().data();
             mPayload = {
               Zyear: moment().year(),
-              Werks: oSessionModel.getProperty('/Werks'),
-              Orgeh: oSessionModel.getProperty('/Orgeh'),
+              Werks: oSessionProperty.Werks,
+              Orgeh: oSessionProperty.Orgeh,
               Headty: oEventSourceData.Headty,
               Discod: oEventSourceData.Discod,
             };
