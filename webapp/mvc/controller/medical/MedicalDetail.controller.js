@@ -126,7 +126,7 @@ sap.ui.define(
       // FormData Settings
       async setFormData() {
         const sWerks = this.getAppointeeProperty('Werks');
-        const sCommMsg = `<br/><span style='color: #006bd3;'>※ </span>
+        const sCommMsg = `<span style='color: #006bd3;'>※ </span>
           <span'>${this.getBundleText('MSG_05017')}</span>
           <span style='color: #006bd3; margin-left: -3px;'>${this.getBundleText('MSG_05018')}</span><br/>
           &nbsp;&nbsp;&nbsp;&nbsp;<span style='color: #006bd3;'>${this.getBundleText('MSG_05019')}</span><br/>
@@ -153,6 +153,7 @@ sap.ui.define(
               </li>
             </ul>
             <p>${this.getBundleText('MSG_09015')}</p>
+            <br/>
             ${sCommMsg}`;
         } else if (sWerks === '1000' || sWerks === '4000' || sWerks === '5000') {
           sMsg = `<ol>
