@@ -184,14 +184,6 @@
           <VBox class="pt-20-px">
             <Title level="H2" text="{i18n>LABEL_13018}" />
             <grid:CSSGrid gridTemplateColumns="2fr 2fr" gridGap="7px 0" class="form-grid">
-              <Label text="{i18n>LABEL_13020}"/>
-              <HBox alignContent="SpaceBetween" justifyContent="End">
-                <Text text="{ path: '/work/list/0/Tim501', type: 'sap.ui.model.type.Integer' }"/>
-              </HBox>
-              <Label text="{i18n>LABEL_13021}"/>
-              <HBox alignContent="SpaceBetween" justifyContent="End">
-                <Text text="{ path: '/work/list/0/Tim502', type: 'sap.ui.model.type.Integer' }"/>
-              </HBox>
               <Label text="{i18n>LABEL_13022}"/>
               <HBox alignContent="SpaceBetween" justifyContent="End">
                 <Text text="{ path: '/work/list/0/Tim503', type: 'sap.ui.model.type.Float' }"/>
